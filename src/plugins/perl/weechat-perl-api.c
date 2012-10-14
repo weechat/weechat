@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 2003-2012 Sebastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2005-2008 Emmanuel Bouthenot <kolter@openics.org>
+ * Copyright (C) 2012 Simon Arlott
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -2561,11 +2562,12 @@ XS (XS_weechat_api_hook_process_hashtable)
 
 int
 weechat_perl_api_hook_connect_cb (void *data, int status, int gnutls_rc,
-                                  const char *error, const char *ip_address)
+                                  int sock, const char *error,
+                                  const char *ip_address)
 {
     struct t_plugin_script_cb *script_callback;
-    void *func_argv[5];
-    char str_status[32], str_gnutls_rc[32];
+    void *func_argv[6];
+    char str_status[32], str_gnutls_rc[32], str_sock[32];
     char empty_arg[1] = { '\0' };
     int *rc, ret;
 
@@ -2575,17 +2577,19 @@ weechat_perl_api_hook_connect_cb (void *data, int status, int gnutls_rc,
     {
         snprintf (str_status, sizeof (str_status), "%d", status);
         snprintf (str_gnutls_rc, sizeof (str_gnutls_rc), "%d", gnutls_rc);
+        snprintf (str_sock, sizeof (str_sock), "%d", sock);
 
         func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         func_argv[1] = str_status;
         func_argv[2] = str_gnutls_rc;
-        func_argv[3] = (ip_address) ? (char *)ip_address : empty_arg;
-        func_argv[4] = (error) ? (char *)error : empty_arg;
+        func_argv[3] = str_sock;
+        func_argv[4] = (ip_address) ? (char *)ip_address : empty_arg;
+        func_argv[5] = (error) ? (char *)error : empty_arg;
 
         rc = (int *) weechat_perl_exec (script_callback->script,
                                         WEECHAT_SCRIPT_EXEC_INT,
                                         script_callback->function,
-                                        "sssss", func_argv);
+                                        "ssssss", func_argv);
 
         if (!rc)
             ret = WEECHAT_RC_ERROR;
@@ -2625,8 +2629,8 @@ XS (XS_weechat_api_hook_connect)
                                                          proxy,
                                                          address,
                                                          SvIV (ST (2)), /* port */
-                                                         SvIV (ST (3)), /* sock */
-                                                         SvIV (ST (4)), /* ipv6 */
+                                                         SvIV (ST (3)), /* ipv6 */
+                                                         SvIV (ST (4)), /* retry */
                                                          NULL, /* gnutls session */
                                                          NULL, /* gnutls callback */
                                                          0,    /* gnutls DH key size */
@@ -5840,6 +5844,7 @@ weechat_perl_api_init (pTHX)
     newCONSTSUB (stash, "weechat::WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR", newSViv (WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR));
     newCONSTSUB (stash, "weechat::WEECHAT_HOOK_CONNECT_MEMORY_ERROR", newSViv (WEECHAT_HOOK_CONNECT_MEMORY_ERROR));
     newCONSTSUB (stash, "weechat::WEECHAT_HOOK_CONNECT_TIMEOUT", newSViv (WEECHAT_HOOK_CONNECT_TIMEOUT));
+    newCONSTSUB (stash, "weechat::WEECHAT_HOOK_CONNECT_SOCKET_ERROR", newSViv (WEECHAT_HOOK_CONNECT_SOCKET_ERROR));
 
     newCONSTSUB (stash, "weechat::WEECHAT_HOOK_SIGNAL_STRING", newSVpv (WEECHAT_HOOK_SIGNAL_STRING, PL_na));
     newCONSTSUB (stash, "weechat::WEECHAT_HOOK_SIGNAL_INT", newSVpv (WEECHAT_HOOK_SIGNAL_INT, PL_na));

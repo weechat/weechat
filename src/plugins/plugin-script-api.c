@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2003-2012 Sebastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2012 Simon Arlott
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -694,12 +695,13 @@ struct t_hook *
 plugin_script_api_hook_connect (struct t_weechat_plugin *weechat_plugin,
                                 struct t_plugin_script *script,
                                 const char *proxy, const char *address, int port,
-                                int sock, int ipv6, void *gnutls_sess,
-                                void *gnutls_cb, int gnutls_dhkey_size,
+                                int ipv6, int retry,
+                                void *gnutls_sess, void *gnutls_cb,
+                                int gnutls_dhkey_size,
                                 const char *gnutls_priorities,
                                 const char *local_hostname,
                                 int (*callback)(void *data, int status,
-                                                int gnutls_rc,
+                                                int gnutls_rc, int sock,
                                                 const char *error,
                                                 const char *ip_address),
                                 const char *function,
@@ -712,7 +714,7 @@ plugin_script_api_hook_connect (struct t_weechat_plugin *weechat_plugin,
     if (!script_cb)
         return NULL;
 
-    new_hook = weechat_hook_connect (proxy, address, port, sock, ipv6,
+    new_hook = weechat_hook_connect (proxy, address, port, ipv6, retry,
                                      gnutls_sess, gnutls_cb, gnutls_dhkey_size,
                                      gnutls_priorities, local_hostname,
                                      callback, script_cb);

@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 2006-2007 Emmanuel Bouthenot <kolter@openics.org>
  * Copyright (C) 2006-2012 Sebastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2012 Simon Arlott
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -2727,11 +2728,12 @@ weechat_lua_api_hook_process_hashtable (lua_State *L)
 
 int
 weechat_lua_api_hook_connect_cb (void *data, int status, int gnutls_rc,
-                                 const char *error, const char *ip_address)
+                                 int sock, const char *error,
+                                 const char *ip_address)
 {
     struct t_plugin_script_cb *script_callback;
-    void *func_argv[5];
-    char str_status[32], str_gnutls_rc[32];
+    void *func_argv[6];
+    char str_status[32], str_gnutls_rc[32], str_sock[32];
     char empty_arg[1] = { '\0' };
     int *rc, ret;
 
@@ -2741,17 +2743,19 @@ weechat_lua_api_hook_connect_cb (void *data, int status, int gnutls_rc,
     {
         snprintf (str_status, sizeof (str_status), "%d", status);
         snprintf (str_gnutls_rc, sizeof (str_gnutls_rc), "%d", gnutls_rc);
+        snprintf (str_sock, sizeof (str_sock), "%d", sock);
 
         func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         func_argv[1] = str_status;
         func_argv[2] = str_gnutls_rc;
-        func_argv[3] = (ip_address) ? (char *)ip_address : empty_arg;
-        func_argv[4] = (error) ? (char *)error : empty_arg;
+        func_argv[3] = str_sock;
+        func_argv[4] = (ip_address) ? (char *)ip_address : empty_arg;
+        func_argv[5] = (error) ? (char *)error : empty_arg;
 
         rc = (int *) weechat_lua_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       "sssss", func_argv);
+                                       "ssssss", func_argv);
 
         if (!rc)
             ret = WEECHAT_RC_ERROR;
@@ -2775,7 +2779,7 @@ static int
 weechat_lua_api_hook_connect (lua_State *L)
 {
     const char *proxy, *address, *local_hostname, *function, *data;
-    int port, sock, ipv6;
+    int port, ipv6, retry;
     char *result;
 
     API_FUNC(1, "hook_connect", API_RETURN_EMPTY);
@@ -2785,8 +2789,8 @@ weechat_lua_api_hook_connect (lua_State *L)
     proxy = lua_tostring (lua_current_interpreter, -8);
     address = lua_tostring (lua_current_interpreter, -7);
     port = lua_tonumber (lua_current_interpreter, -6);
-    sock = lua_tonumber (lua_current_interpreter, -5);
-    ipv6 = lua_tonumber (lua_current_interpreter, -4);
+    ipv6 = lua_tonumber (lua_current_interpreter, -5);
+    retry = lua_tonumber (lua_current_interpreter, -4);
     local_hostname = lua_tostring (lua_current_interpreter, -3);
     function = lua_tostring (lua_current_interpreter, -2);
     data = lua_tostring (lua_current_interpreter, -1);
@@ -2796,8 +2800,8 @@ weechat_lua_api_hook_connect (lua_State *L)
                                                          proxy,
                                                          address,
                                                          port,
-                                                         sock,
                                                          ipv6,
+                                                         retry,
                                                          NULL, /* gnutls session */
                                                          NULL, /* gnutls callback */
                                                          0,    /* gnutls DH key size */
@@ -6234,6 +6238,16 @@ weechat_lua_api_constant_weechat_hook_connect_timeout (lua_State *L)
 }
 
 static int
+weechat_lua_api_constant_weechat_hook_connect_socket_error (lua_State *L)
+{
+    /* make C compiler happy */
+    (void) L;
+
+    lua_pushnumber (lua_current_interpreter, WEECHAT_HOOK_CONNECT_SOCKET_ERROR);
+    return 1;
+}
+
+static int
 weechat_lua_api_constant_weechat_hook_signal_string (lua_State *L)
 {
     /* make C compiler happy */
@@ -6496,6 +6510,7 @@ const struct luaL_Reg weechat_lua_api_funcs[] = {
     { "WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR", &weechat_lua_api_constant_weechat_hook_connect_gnutls_handshake_error },
     { "WEECHAT_HOOK_CONNECT_MEMORY_ERROR", &weechat_lua_api_constant_weechat_hook_connect_memory_error },
     { "WEECHAT_HOOK_CONNECT_TIMEOUT", &weechat_lua_api_constant_weechat_hook_connect_timeout },
+    { "WEECHAT_HOOK_CONNECT_SOCKET_ERROR", &weechat_lua_api_constant_weechat_hook_connect_socket_error },
 
     { "WEECHAT_HOOK_SIGNAL_STRING", &weechat_lua_api_constant_weechat_hook_signal_string },
     { "WEECHAT_HOOK_SIGNAL_INT", &weechat_lua_api_constant_weechat_hook_signal_int },

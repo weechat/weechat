@@ -139,10 +139,12 @@
   'addresses_count' (integer) +
   'addresses_array' (string, array_size: "addresses_count") +
   'ports_array' (integer, array_size: "addresses_count") +
+  'retry_array' (integer, array_size: "addresses_count") +
   'index_current_address' (integer) +
   'current_address' (string) +
   'current_ip' (string) +
   'current_port' (integer) +
+  'current_retry' (integer) +
   'sock' (integer) +
   'hook_connect' (pointer, hdata: "hook") +
   'hook_fd' (pointer, hdata: "hook") +

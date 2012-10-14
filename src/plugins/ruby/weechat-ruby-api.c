@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 2003-2012 Sebastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2005-2007 Emmanuel Bouthenot <kolter@openics.org>
+ * Copyright (C) 2012 Simon Arlott
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -3056,11 +3057,12 @@ weechat_ruby_api_hook_process_hashtable (VALUE class, VALUE command,
 
 int
 weechat_ruby_api_hook_connect_cb (void *data, int status, int gnutls_rc,
-                                  const char *error, const char *ip_address)
+                                  int sock, const char *error,
+                                  const char *ip_address)
 {
     struct t_plugin_script_cb *script_callback;
-    void *func_argv[5];
-    char str_status[32], str_gnutls_rc[32];
+    void *func_argv[6];
+    char str_status[32], str_gnutls_rc[32], str_sock[32];
     char empty_arg[1] = { '\0' };
     int *rc, ret;
 
@@ -3070,17 +3072,19 @@ weechat_ruby_api_hook_connect_cb (void *data, int status, int gnutls_rc,
     {
         snprintf (str_status, sizeof (str_status), "%d", status);
         snprintf (str_gnutls_rc, sizeof (str_gnutls_rc), "%d", gnutls_rc);
+        snprintf (str_sock, sizeof (str_sock), "%d", sock);
 
         func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         func_argv[1] = str_status;
         func_argv[2] = str_gnutls_rc;
-        func_argv[3] = (ip_address) ? (char *)ip_address : empty_arg;
-        func_argv[4] = (error) ? (char *)error : empty_arg;
+        func_argv[3] = str_sock;
+        func_argv[4] = (ip_address) ? (char *)ip_address : empty_arg;
+        func_argv[5] = (error) ? (char *)error : empty_arg;
 
         rc = (int *) weechat_ruby_exec (script_callback->script,
                                         WEECHAT_SCRIPT_EXEC_INT,
                                         script_callback->function,
-                                        "sssss", func_argv);
+                                        "ssssss", func_argv);
 
         if (!rc)
             ret = WEECHAT_RC_ERROR;
@@ -3102,25 +3106,25 @@ weechat_ruby_api_hook_connect_cb (void *data, int status, int gnutls_rc,
 
 static VALUE
 weechat_ruby_api_hook_connect (VALUE class, VALUE proxy, VALUE address,
-                               VALUE port, VALUE sock, VALUE ipv6,
+                               VALUE port, VALUE ipv6, VALUE retry,
                                VALUE local_hostname, VALUE function,
                                VALUE data)
 {
     char *c_proxy, *c_address, *c_local_hostname, *c_function, *c_data, *result;
-    int c_port, c_sock, c_ipv6;
+    int c_port, c_ipv6, c_retry;
     VALUE return_value;
 
     API_FUNC(1, "hook_connect", API_RETURN_EMPTY);
-    if (NIL_P (proxy) || NIL_P (address) || NIL_P (port) || NIL_P (sock)
-        || NIL_P (ipv6) || NIL_P (local_hostname) || NIL_P (function)
+    if (NIL_P (proxy) || NIL_P (address) || NIL_P (port) || NIL_P (ipv6)
+        || NIL_P (retry) || NIL_P (local_hostname) || NIL_P (function)
         || NIL_P (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     Check_Type (proxy, T_STRING);
     Check_Type (address, T_STRING);
     Check_Type (port, T_FIXNUM);
-    Check_Type (sock, T_FIXNUM);
     Check_Type (ipv6, T_FIXNUM);
+    Check_Type (retry, T_FIXNUM);
     Check_Type (local_hostname, T_STRING);
     Check_Type (function, T_STRING);
     Check_Type (data, T_STRING);
@@ -3128,8 +3132,8 @@ weechat_ruby_api_hook_connect (VALUE class, VALUE proxy, VALUE address,
     c_proxy = StringValuePtr (proxy);
     c_address = StringValuePtr (address);
     c_port = FIX2INT (port);
-    c_sock = FIX2INT (sock);
     c_ipv6 = FIX2INT (ipv6);
+    c_retry = FIX2INT (retry);
     c_local_hostname = StringValuePtr (local_hostname);
     c_function = StringValuePtr (function);
     c_data = StringValuePtr (data);
@@ -3139,8 +3143,8 @@ weechat_ruby_api_hook_connect (VALUE class, VALUE proxy, VALUE address,
                                                          c_proxy,
                                                          c_address,
                                                          c_port,
-                                                         c_sock,
                                                          c_ipv6,
+                                                         c_retry,
                                                          NULL, /* gnutls session */
                                                          NULL, /* gnutls callback */
                                                          0,    /* gnutls DH key size */
@@ -6708,6 +6712,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_const(ruby_mWeechat, "WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR", INT2NUM(WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR));
     rb_define_const(ruby_mWeechat, "WEECHAT_HOOK_CONNECT_MEMORY_ERROR", INT2NUM(WEECHAT_HOOK_CONNECT_MEMORY_ERROR));
     rb_define_const(ruby_mWeechat, "WEECHAT_HOOK_CONNECT_TIMEOUT", INT2NUM(WEECHAT_HOOK_CONNECT_TIMEOUT));
+    rb_define_const(ruby_mWeechat, "WEECHAT_HOOK_CONNECT_SOCKET_ERROR", INT2NUM(WEECHAT_HOOK_CONNECT_SOCKET_ERROR));
 
     rb_define_const(ruby_mWeechat, "WEECHAT_HOOK_SIGNAL_STRING", rb_str_new2(WEECHAT_HOOK_SIGNAL_STRING));
     rb_define_const(ruby_mWeechat, "WEECHAT_HOOK_SIGNAL_INT", rb_str_new2(WEECHAT_HOOK_SIGNAL_INT));

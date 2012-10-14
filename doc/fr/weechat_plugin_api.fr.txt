@@ -7224,8 +7224,8 @@ Prototype :
 struct t_hook *weechat_hook_connect (const char *proxy,
                                      const char *address,
                                      int port,
-                                     int sock,
                                      int ipv6,
+                                     int retry,
                                      void *gnutls_sess,
                                      void *gnutls_cb,
                                      int gnutls_dhkey_size,
@@ -7234,6 +7234,7 @@ struct t_hook *weechat_hook_connect (const char *proxy,
                                      int (*callback)(void *data,
                                                      int status,
                                                      int gnutls_rc,
+                                                     int sock,
                                                      const char *error,
                                                      const char *ip_address),
                                      void *callback_data);
@@ -7245,8 +7246,10 @@ Paramètres :
   une connexion sans proxy)
 * 'address' : nom ou adresse IP de la machine à laquelle se connecter
 * 'port' : numéro de port
-* 'sock' : socket utilisée pour la connexion
-* 'ipv6' : 1 pour utiliser IPv6, 0 pour utiliser IPv4
+* 'ipv6' : 1 pour utiliser IPv6 (avec repli sur IPv4), 0 pour utiliser seulement
+  IPv4
+* 'retry' : numéro de nouvelle tentative, utilisé pour se rabattre sur les
+  adresses IPv4 si la connexion IPv6 échoue
 * 'gnutls_sess' : GnuTLS session (optionnel)
 * 'gnutls_cb' : callback pour GnuTLS (optionnel)
 * 'gnutls_dhkey_size' : taille de clé utilisée pour l'échange de clé
@@ -7277,7 +7280,9 @@ Paramètres :
     "poignée de main" GnuTLS
 *** 'WEECHAT_HOOK_CONNECT_MEMORY_ERROR' : mémoire insuffisante
 *** 'WEECHAT_HOOK_CONNECT_TIMEOUT' : temps maximum dépassé
+*** 'WEECHAT_HOOK_CONNECT_SOCKET_ERROR' : erreur de création socket
 ** 'gnutls_rc' : valeur retour de 'gnutls_handshake()'
+** 'sock' : socket utilisée pour la connexion
 ** 'const char *error' : valeur retour de 'gnutls_strerror(gnutls_rc)'
 ** 'const char *ip_address' : adresse IP trouvée
 ** valeur de retour :
@@ -7330,6 +7335,9 @@ my_connect_cb (void *data, int status, int gnutls_rc, const char *error,
         case WEECHAT_HOOK_CONNECT_TIMEOUT:
             /* ... */
             break;
+        case WEECHAT_HOOK_CONNECT_SOCKET_ERROR:
+            /* ... */
+            break;
     }
     return WEECHAT_RC_OK;
 }
@@ -7371,6 +7379,8 @@ def my_connect_cb(data, status, gnutls_rc, error, ip_address):
     elif status == WEECHAT_HOOK_CONNECT_MEMORY_ERROR:
         # ...
     elif status == WEECHAT_HOOK_CONNECT_TIMEOUT:
+        # ...
+    elif status == WEECHAT_HOOK_CONNECT_SOCKET_ERROR:
         # ...
     return weechat.WEECHAT_RC_OK
 

@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.0-dev, 2012-10-12
+v0.4.0-dev, 2012-10-14
 
 
 Version 0.4.0 (under dev!)
@@ -9,6 +9,10 @@ Version 0.4.0 (under dev!)
 
 * core: fix wrapping of words with wide chars (the break was made before the
   correct position)
+* api: connect with IPv6 by default in hook_connect (with fallback to IPv4),
+  shuffle list of hosts for a same address, add argument "retry" for
+  hook_connect, move "sock" from hook_connect arguments to callback of
+  hook_connect (task #11205)
 * aspell: add bar item "aspell_dict" (dictionary used on current buffer)
 * irc: add option "-noswitch" for command /join (task #12275)
 * irc: fix crash when message 352 has too few arguments (bug #37513)

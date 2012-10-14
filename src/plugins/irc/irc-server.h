@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2003-2012 Sebastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2012 Simon Arlott
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -140,11 +141,14 @@ struct t_irc_server
     int addresses_count;            /* number of addresses                   */
     char **addresses_array;         /* addresses (after split)               */
     int *ports_array;               /* ports for addresses                   */
+    int *retry_array;               /* retry count per address               */
     int index_current_address;      /* current address index in array        */
     char *current_address;          /* current address                       */
     char *current_ip;               /* current IP address                    */
     int current_port;               /* current port                          */
-    int sock;                       /* socket for server (IPv4 or IPv6)      */
+    int current_retry;              /* current retry count (increment if a   */
+                                    /* connected server fails in any way)    */
+    int sock;                       /* socket for server                     */
     struct t_hook *hook_connect;    /* connection hook                       */
     struct t_hook *hook_fd;         /* hook for server socket                */
     struct t_hook *hook_timer_connection; /* timer for connection            */

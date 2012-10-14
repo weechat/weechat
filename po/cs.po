@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-10-09 21:22+0200\n"
+"POT-Creation-Date: 2012-10-14 09:22+0200\n"
 "PO-Revision-Date: 2012-09-29 11:42+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5465,8 +5465,10 @@ msgstr ""
 msgid "proxy used for this server (optional)"
 msgstr "proxy použitá pro tento server (volitelné)"
 
-msgid "use IPv6 protocol for server communication"
-msgstr "použít protokol IPv6 pro komunikaci se serverem"
+msgid ""
+"use IPv6 protocol for server communication (try IPv6 then fallback to IPv4); "
+"if disabled, only IPv4 is used"
+msgstr ""
 
 msgid "use SSL for server communication"
 msgstr "použít SSL pro komunikaci se serverem"
@@ -6793,6 +6795,10 @@ msgid "%s%s: timeout"
 msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
 
 #, fuzzy, c-format
+msgid "%s%s: unable to create socket"
+msgstr "%s%s: nemohu vytvořit server"
+
+#, fuzzy, c-format
 msgid "%sgnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
 msgstr ""
 "gnutls: připojují se pomocí %d-bit Diffie-Hellman zdílenéhé výměny tajemství"
@@ -6881,28 +6887,16 @@ msgstr ""
 "podporou GNUtls"
 
 #, fuzzy, c-format
-msgid "%s%s: connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
+msgid "%s%s: connecting to server %s/%d%s via %s proxy %s/%d%s..."
 msgstr "%s: připojuji se k serveru %s/%d%s%s přes %s proxy %s/%d%s..."
 
-#, c-format
-msgid "Connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
+#, fuzzy, c-format
+msgid "Connecting to server %s/%d%s via %s proxy %s/%d%s..."
 msgstr "Připojuji se k serveru %s/%d%s%s přes %s proxy %s/%d%s..."
 
-#, c-format
-msgid "%s%s: connecting to server %s/%d%s%s..."
+#, fuzzy, c-format
+msgid "%s%s: connecting to server %s/%d%s..."
 msgstr "%s%s: připojuji se k serveru %s/%d%s%s..."
-
-#, c-format
-msgid "%s%s: cannot create socket"
-msgstr "%s%s nemohu vytvořit soket"
-
-#, c-format
-msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
-msgstr "%s%s: nemohu nastavit nastavení sketu \"SO_REUSEADDR\""
-
-#, c-format
-msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
-msgstr "%s%s: nemohu nastavit nastavení soketu \"SO_KEEPALIVE\""
 
 #, fuzzy, c-format
 msgid "%s%s: reconnecting to server..."
@@ -7763,6 +7757,18 @@ msgstr "%s%s: nemohu akceptovat klienta na portu %d (%s.%s)"
 #, fuzzy, c-format
 msgid "%s%s: IP address \"%s\" not allowed for relay"
 msgstr "%s%s: adresa \"%s\" nenalezena"
+
+#, c-format
+msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
+msgstr "%s%s: nemohu nastavit nastavení sketu \"SO_REUSEADDR\""
+
+#, c-format
+msgid "%s%s: cannot create socket"
+msgstr "%s%s nemohu vytvořit soket"
+
+#, c-format
+msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
+msgstr "%s%s: nemohu nastavit nastavení soketu \"SO_KEEPALIVE\""
 
 #, fuzzy, c-format
 msgid "%s%s: error with \"bind\" on port %d (%s%s%s)"
@@ -9073,6 +9079,9 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#~ msgid "use IPv6 protocol for server communication"
+#~ msgstr "použít protokol IPv6 pro komunikaci se serverem"
 
 #~ msgid "global decoding charset"
 #~ msgstr "globální znaková sada pro dekódování"

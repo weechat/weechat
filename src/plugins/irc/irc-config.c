@@ -1347,7 +1347,8 @@ irc_config_server_new_option (struct t_config_file *config_file,
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "boolean",
-                N_("use IPv6 protocol for server communication"),
+                N_("use IPv6 protocol for server communication (try IPv6 then "
+                   "fallback to IPv4); if disabled, only IPv4 is used"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,

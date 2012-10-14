@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 2003-2012 Sebastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2005-2007 Emmanuel Bouthenot <kolter@openics.org>
+ * Copyright (C) 2012 Simon Arlott
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -2674,11 +2675,12 @@ weechat_python_api_hook_process_hashtable (PyObject *self, PyObject *args)
 
 int
 weechat_python_api_hook_connect_cb (void *data, int status, int gnutls_rc,
-                                    const char *error, const char *ip_address)
+                                    int sock, const char *error,
+                                    const char *ip_address)
 {
     struct t_plugin_script_cb *script_callback;
-    void *func_argv[5];
-    char str_status[32], str_gnutls_rc[32], empty_arg[1] = { '\0' };
+    void *func_argv[6];
+    char str_status[32], str_gnutls_rc[32], str_sock[32], empty_arg[1] = { '\0' };
     int *rc, ret;
 
     script_callback = (struct t_plugin_script_cb *)data;
@@ -2687,17 +2689,19 @@ weechat_python_api_hook_connect_cb (void *data, int status, int gnutls_rc,
     {
         snprintf (str_status, sizeof (str_status), "%d", status);
         snprintf (str_gnutls_rc, sizeof (str_gnutls_rc), "%d", gnutls_rc);
+        snprintf (str_sock, sizeof (str_sock), "%d", sock);
 
         func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         func_argv[1] = str_status;
         func_argv[2] = str_gnutls_rc;
-        func_argv[3] = (ip_address) ? (char *)ip_address : empty_arg;
-        func_argv[4] = (error) ? (char *)error : empty_arg;
+        func_argv[3] = str_sock;
+        func_argv[4] = (ip_address) ? (char *)ip_address : empty_arg;
+        func_argv[5] = (error) ? (char *)error : empty_arg;
 
         rc = (int *) weechat_python_exec (script_callback->script,
                                           WEECHAT_SCRIPT_EXEC_INT,
                                           script_callback->function,
-                                          "sssss", func_argv);
+                                          "ssssss", func_argv);
 
         if (!rc)
             ret = WEECHAT_RC_ERROR;
@@ -2721,20 +2725,20 @@ static PyObject *
 weechat_python_api_hook_connect (PyObject *self, PyObject *args)
 {
     char *proxy, *address, *local_hostname, *function, *data, *result;
-    int port, sock, ipv6;
+    int port, ipv6, retry;
     PyObject *return_value;
 
     API_FUNC(1, "hook_connect", API_RETURN_EMPTY);
     proxy = NULL;
     address = NULL;
     port = 0;
-    sock = 0;
     ipv6 = 0;
+    retry = 0;
     local_hostname = NULL;
     function = NULL;
     data = NULL;
-    if (!PyArg_ParseTuple (args, "ssiiisss", &proxy, &address, &port, &sock,
-                           &ipv6, &local_hostname, &function, &data))
+    if (!PyArg_ParseTuple (args, "ssiiisss", &proxy, &address, &port, &ipv6,
+                           &retry, &local_hostname, &function, &data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     result = API_PTR2STR(plugin_script_api_hook_connect (weechat_python_plugin,
@@ -2742,8 +2746,8 @@ weechat_python_api_hook_connect (PyObject *self, PyObject *args)
                                                          proxy,
                                                          address,
                                                          port,
-                                                         sock,
                                                          ipv6,
+                                                         retry,
                                                          NULL, /* gnutls session */
                                                          NULL, /* gnutls callback */
                                                          0,    /* gnutls DH key size */

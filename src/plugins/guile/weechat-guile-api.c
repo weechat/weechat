@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2011-2012 Sebastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2012 Simon Arlott
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -2476,11 +2477,12 @@ weechat_guile_api_hook_process_hashtable (SCM command, SCM options, SCM timeout,
 
 int
 weechat_guile_api_hook_connect_cb (void *data, int status, int gnutls_rc,
-                                   const char *error, const char *ip_address)
+                                   int sock, const char *error,
+                                   const char *ip_address)
 {
     struct t_plugin_script_cb *script_callback;
-    void *func_argv[5];
-    char str_status[32], str_gnutls_rc[32];
+    void *func_argv[6];
+    char str_status[32], str_gnutls_rc[32], str_sock[32];
     char empty_arg[1] = { '\0' };
     int *rc, ret;
 
@@ -2490,17 +2492,19 @@ weechat_guile_api_hook_connect_cb (void *data, int status, int gnutls_rc,
     {
         snprintf (str_status, sizeof (str_status), "%d", status);
         snprintf (str_gnutls_rc, sizeof (str_gnutls_rc), "%d", gnutls_rc);
+        snprintf (str_sock, sizeof (str_sock), "%d", sock);
 
         func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         func_argv[1] = str_status;
         func_argv[2] = str_gnutls_rc;
-        func_argv[3] = (ip_address) ? (char *)ip_address : empty_arg;
-        func_argv[4] = (error) ? (char *)error : empty_arg;
+        func_argv[3] = str_sock;
+        func_argv[4] = (ip_address) ? (char *)ip_address : empty_arg;
+        func_argv[5] = (error) ? (char *)error : empty_arg;
 
         rc = (int *) weechat_guile_exec (script_callback->script,
                                          WEECHAT_SCRIPT_EXEC_INT,
                                          script_callback->function,
-                                         "sssss", func_argv);
+                                         "ssssss", func_argv);
 
         if (!rc)
             ret = WEECHAT_RC_ERROR;
@@ -2521,8 +2525,8 @@ weechat_guile_api_hook_connect_cb (void *data, int status, int gnutls_rc,
  */
 
 SCM
-weechat_guile_api_hook_connect (SCM proxy, SCM address, SCM port, SCM sock,
-                                SCM ipv6, SCM local_hostname, SCM function,
+weechat_guile_api_hook_connect (SCM proxy, SCM address, SCM port, SCM ipv6,
+                                SCM retry, SCM local_hostname, SCM function,
                                 SCM data)
 {
     char *result;
@@ -2530,8 +2534,8 @@ weechat_guile_api_hook_connect (SCM proxy, SCM address, SCM port, SCM sock,
 
     API_FUNC(1, "hook_connect", API_RETURN_EMPTY);
     if (!scm_is_string (proxy) || !scm_is_string (address)
-        || !scm_is_integer (port) || !scm_is_integer (sock)
-        || !scm_is_integer (ipv6) || !scm_is_string (local_hostname)
+        || !scm_is_integer (port) || !scm_is_integer (ipv6)
+        || !scm_is_integer (retry) || !scm_is_string (local_hostname)
         || !scm_is_string (function) || !scm_is_string (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2540,8 +2544,8 @@ weechat_guile_api_hook_connect (SCM proxy, SCM address, SCM port, SCM sock,
                                                          scm_i_string_chars (proxy),
                                                          scm_i_string_chars (address),
                                                          scm_to_int (port),
-                                                         scm_to_int (sock),
                                                          scm_to_int (ipv6),
+                                                         scm_to_int (retry),
                                                          NULL, /* gnutls session */
                                                          NULL, /* gnutls callback */
                                                          0,    /* gnutls DH key size */
@@ -5567,6 +5571,7 @@ weechat_guile_api_module_init (void *data)
     scm_c_define ("weechat:WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR", scm_from_int (WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR));
     scm_c_define ("weechat:WEECHAT_HOOK_CONNECT_MEMORY_ERROR", scm_from_int (WEECHAT_HOOK_CONNECT_MEMORY_ERROR));
     scm_c_define ("weechat:WEECHAT_HOOK_CONNECT_TIMEOUT", scm_from_int (WEECHAT_HOOK_CONNECT_TIMEOUT));
+    scm_c_define ("weechat:WEECHAT_HOOK_CONNECT_SOCKET_ERROR", scm_from_int (WEECHAT_HOOK_CONNECT_SOCKET_ERROR));
 
     scm_c_define ("weechat:WEECHAT_HOOK_SIGNAL_STRING", scm_from_locale_string (WEECHAT_HOOK_SIGNAL_STRING));
     scm_c_define ("weechat:WEECHAT_HOOK_SIGNAL_INT", scm_from_locale_string (WEECHAT_HOOK_SIGNAL_INT));
@@ -5608,6 +5613,7 @@ weechat_guile_api_module_init (void *data)
                   "weechat:WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR",
                   "weechat:WEECHAT_HOOK_CONNECT_MEMORY_ERROR",
                   "weechat:WEECHAT_HOOK_CONNECT_TIMEOUT",
+                  "weechat:WEECHAT_HOOK_CONNECT_SOCKET_ERROR",
                   "weechat:WEECHAT_HOOK_SIGNAL_STRING",
                   "weechat:WEECHAT_HOOK_SIGNAL_INT",
                   "weechat:WEECHAT_HOOK_SIGNAL_POINTER",

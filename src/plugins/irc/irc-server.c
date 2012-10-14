@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 2003-2012 Sebastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2005-2010 Emmanuel Bouthenot <kolter@openics.org>
+ * Copyright (C) 2012 Simon Arlott
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -82,7 +83,7 @@ char *irc_server_option_string[IRC_SERVER_NUM_OPTIONS] =
 };
 
 char *irc_server_option_default[IRC_SERVER_NUM_OPTIONS] =
-{ "", "", "off",
+{ "", "", "on",
   "off", "", "NORMAL", "2048", "on",
   "", "",
   "plain", "", "", "15",
@@ -362,6 +363,11 @@ irc_server_set_addresses (struct t_irc_server *server, const char *addresses)
         free (server->ports_array);
         server->ports_array = NULL;
     }
+    if (server->retry_array)
+    {
+        free (server->retry_array);
+        server->retry_array = NULL;
+    }
 
     /* set new addresses/ports */
     if (addresses && addresses[0])
@@ -370,6 +376,7 @@ irc_server_set_addresses (struct t_irc_server *server, const char *addresses)
                                                         ",", 0, 0,
                                                         &server->addresses_count);
         server->ports_array = malloc (server->addresses_count * sizeof (server->ports_array[0]));
+        server->retry_array = malloc (server->addresses_count * sizeof (server->retry_array[0]));
         for (i = 0; i < server->addresses_count; i++)
         {
             pos = strchr (server->addresses_array[i], '/');
@@ -386,6 +393,7 @@ irc_server_set_addresses (struct t_irc_server *server, const char *addresses)
             {
                 server->ports_array[i] = IRC_SERVER_DEFAULT_PORT;
             }
+            server->retry_array[i] = 0;
         }
     }
 }
@@ -401,8 +409,13 @@ irc_server_set_index_current_address (struct t_irc_server *server, int index)
     {
         free (server->current_address);
         server->current_address = NULL;
+
+        /* copy current retry value before loading next server */
+        if (server->index_current_address < server->addresses_count)
+            server->retry_array[server->index_current_address] = server->current_retry;
     }
     server->current_port = 0;
+    server->current_retry = 0;
 
     if (server->addresses_count > 0)
     {
@@ -410,6 +423,7 @@ irc_server_set_index_current_address (struct t_irc_server *server, int index)
         server->index_current_address = index;
         server->current_address = strdup (server->addresses_array[index]);
         server->current_port = server->ports_array[index];
+        server->current_retry = server->retry_array[index];
     }
 }
 
@@ -860,10 +874,12 @@ irc_server_alloc (const char *name)
     new_server->addresses_count = 0;
     new_server->addresses_array = NULL;
     new_server->ports_array = NULL;
+    new_server->retry_array = NULL;
     new_server->index_current_address = 0;
     new_server->current_address = NULL;
     new_server->current_ip = NULL;
     new_server->current_port = 0;
+    new_server->current_retry = 0;
     new_server->sock = -1;
     new_server->hook_connect = NULL;
     new_server->hook_fd = NULL;
@@ -1331,6 +1347,8 @@ irc_server_free_data (struct t_irc_server *server)
         weechat_string_free_split (server->addresses_array);
     if (server->ports_array)
         free (server->ports_array);
+    if (server->retry_array)
+        free (server->retry_array);
     if (server->current_address)
         free (server->current_address);
     if (server->current_ip)
@@ -3022,7 +3040,7 @@ irc_server_switch_address (struct t_irc_server *server, int connection)
  */
 
 int
-irc_server_connect_cb (void *data, int status, int gnutls_rc,
+irc_server_connect_cb (void *data, int status, int gnutls_rc, int sock,
                        const char *error, const char *ip_address)
 {
     struct t_irc_server *server;
@@ -3037,7 +3055,8 @@ irc_server_connect_cb (void *data, int status, int gnutls_rc,
     switch (status)
     {
         case WEECHAT_HOOK_CONNECT_OK:
-            /* login to server */
+            /* set socket and IP */
+            server->sock = sock;
             if (server->current_ip)
                 free (server->current_ip);
             server->current_ip = (ip_address) ? strdup (ip_address) : NULL;
@@ -3052,6 +3071,7 @@ irc_server_connect_cb (void *data, int status, int gnutls_rc,
                                                1, 0, 0,
                                                &irc_server_recv_cb,
                                                server);
+            /* login to server */
             irc_server_login (server);
             break;
         case WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND:
@@ -3101,6 +3121,7 @@ irc_server_connect_cb (void *data, int status, int gnutls_rc,
                                 error);
             }
             irc_server_close_connection (server);
+            server->current_retry++;
             irc_server_switch_address (server, 1);
             break;
         case WEECHAT_HOOK_CONNECT_PROXY_ERROR:
@@ -3147,6 +3168,7 @@ irc_server_connect_cb (void *data, int status, int gnutls_rc,
                                 error);
             }
             irc_server_close_connection (server);
+            server->current_retry++;
             irc_server_reconnect_schedule (server);
             break;
         case WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR:
@@ -3176,6 +3198,7 @@ irc_server_connect_cb (void *data, int status, int gnutls_rc,
             (void) gnutls_rc;
 #endif
             irc_server_close_connection (server);
+            server->current_retry++;
             irc_server_switch_address (server, 1);
             break;
         case WEECHAT_HOOK_CONNECT_MEMORY_ERROR:
@@ -3204,7 +3227,23 @@ irc_server_connect_cb (void *data, int status, int gnutls_rc,
                                 error);
             }
             irc_server_close_connection (server);
+            server->current_retry++;
             irc_server_switch_address (server, 1);
+            break;
+        case WEECHAT_HOOK_CONNECT_SOCKET_ERROR:
+            weechat_printf (server->buffer,
+                            _("%s%s: unable to create socket"),
+                            weechat_prefix ("error"), IRC_PLUGIN_NAME);
+            if (error && error[0])
+            {
+                weechat_printf (server->buffer,
+                                _("%s%s: error: %s"),
+                                weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                                error);
+            }
+            irc_server_close_connection (server);
+            server->current_retry++;
+            irc_server_reconnect_schedule (server);
             break;
     }
 
@@ -3618,7 +3657,7 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
 int
 irc_server_connect (struct t_irc_server *server)
 {
-    int set, length, flags;
+    int length;
     char *option_name;
     struct t_config_option *proxy_type, *proxy_ipv6, *proxy_address, *proxy_port;
     const char *proxy, *str_proxy_type, *str_proxy_address;
@@ -3737,26 +3776,22 @@ irc_server_connect (struct t_irc_server *server)
     if (proxy_type)
     {
         weechat_printf (server->buffer,
-                        _("%s%s: connecting to server %s/%d%s%s via %s "
+                        _("%s%s: connecting to server %s/%d%s via %s "
                           "proxy %s/%d%s..."),
                         weechat_prefix ("network"),
                         IRC_PLUGIN_NAME,
                         server->current_address,
                         server->current_port,
-                        (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_IPV6)) ?
-                        " (IPv6)" : "",
                         (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SSL)) ?
                         " (SSL)" : "",
                         str_proxy_type,
                         str_proxy_address,
                         weechat_config_integer (proxy_port),
                         (weechat_config_boolean (proxy_ipv6)) ? " (IPv6)" : "");
-        weechat_log_printf (_("Connecting to server %s/%d%s%s via %s proxy "
+        weechat_log_printf (_("Connecting to server %s/%d%s via %s proxy "
                               "%s/%d%s..."),
                             server->current_address,
                             server->current_port,
-                            (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_IPV6)) ?
-                            " (IPv6)" : "",
                             (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SSL)) ?
                             " (SSL)" : "",
                             str_proxy_type,
@@ -3767,77 +3802,24 @@ irc_server_connect (struct t_irc_server *server)
     else
     {
         weechat_printf (server->buffer,
-                        _("%s%s: connecting to server %s/%d%s%s..."),
+                        _("%s%s: connecting to server %s/%d%s..."),
                         weechat_prefix ("network"),
                         IRC_PLUGIN_NAME,
                         server->current_address,
                         server->current_port,
-                        (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_IPV6)) ?
-                        " (IPv6)" : "",
                         (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SSL)) ?
                         " (SSL)" : "");
-        weechat_log_printf (_("%s%s: connecting to server %s/%d%s%s..."),
+        weechat_log_printf (_("%s%s: connecting to server %s/%d%s..."),
                             "",
                             IRC_PLUGIN_NAME,
                             server->current_address,
                             server->current_port,
-                            (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_IPV6)) ?
-                            " (IPv6)" : "",
                             (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SSL)) ?
                             " (SSL)" : "");
     }
 
     /* close connection if opened */
     irc_server_close_connection (server);
-
-    /* create socket and set options */
-    if (proxy_type)
-    {
-        server->sock = socket ((weechat_config_integer (proxy_ipv6)) ?
-                               AF_INET6 : AF_INET,
-                               SOCK_STREAM, 0);
-    }
-    else
-    {
-        server->sock = socket ((IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_IPV6)) ?
-                               AF_INET6 : AF_INET,
-                               SOCK_STREAM, 0);
-    }
-    if (server->sock == -1)
-    {
-        weechat_printf (server->buffer,
-                        _("%s%s: cannot create socket"),
-                        weechat_prefix ("error"), IRC_PLUGIN_NAME);
-        return 0;
-    }
-
-    /* set SO_REUSEADDR option for socket */
-    set = 1;
-    if (setsockopt (server->sock, SOL_SOCKET, SO_REUSEADDR,
-        (void *) &set, sizeof (set)) == -1)
-    {
-        weechat_printf (server->buffer,
-                        _("%s%s: cannot set socket option "
-                          "\"SO_REUSEADDR\""),
-                        weechat_prefix ("error"), IRC_PLUGIN_NAME);
-    }
-
-    /* set SO_KEEPALIVE option for socket */
-    set = 1;
-    if (setsockopt (server->sock, SOL_SOCKET, SO_KEEPALIVE,
-        (void *) &set, sizeof (set)) == -1)
-    {
-        weechat_printf (server->buffer,
-                        _("%s%s: cannot set socket option "
-                          "\"SO_KEEPALIVE\""),
-                        weechat_prefix ("error"), IRC_PLUGIN_NAME);
-    }
-
-    /* set flag O_NONBLOCK on socket */
-    flags = fcntl (server->sock, F_GETFL);
-    if (flags == -1)
-        flags = 0;
-    fcntl (server->sock, F_SETFL, flags | O_NONBLOCK);
 
     /* init SSL if asked and connect */
     server->ssl_connected = 0;
@@ -3847,8 +3829,9 @@ irc_server_connect (struct t_irc_server *server)
     server->hook_connect = weechat_hook_connect (proxy,
                                                  server->current_address,
                                                  server->current_port,
-                                                 server->sock,
-                                                 IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_IPV6),
+                                                 proxy_type ? weechat_config_integer (proxy_ipv6)
+                                                 : IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_IPV6),
+                                                 server->current_retry,
                                                  (server->ssl_connected) ? &server->gnutls_sess : NULL,
                                                  (server->ssl_connected) ? irc_server_gnutls_callback : NULL,
                                                  IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SSL_DHKEY_SIZE),
@@ -3860,7 +3843,9 @@ irc_server_connect (struct t_irc_server *server)
     server->hook_connect = weechat_hook_connect (proxy,
                                                  server->current_address,
                                                  server->current_port,
-                                                 server->sock,
+                                                 proxy_type ? weechat_config_integer (proxy_ipv6)
+                                                 : IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_IPV6),
+                                                 server->current_retry,
                                                  IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_IPV6),
                                                  NULL, NULL, 0, NULL,
                                                  IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_LOCAL_HOSTNAME),
@@ -3965,6 +3950,9 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
                         weechat_prefix ("network"),
                         IRC_PLUGIN_NAME);
     }
+
+    if (reconnect)
+        server->current_retry++;
 
     if (switch_address)
         irc_server_switch_address (server, 0);
@@ -4444,10 +4432,12 @@ irc_server_hdata_server_cb (void *data, const char *hdata_name)
         WEECHAT_HDATA_VAR(struct t_irc_server, addresses_count, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, addresses_array, STRING, 0, "addresses_count", NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, ports_array, INTEGER, 0, "addresses_count", NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, retry_array, INTEGER, 0, "addresses_count", NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, index_current_address, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, current_address, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, current_ip, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, current_port, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, current_retry, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, sock, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, hook_connect, POINTER, 0, NULL, "hook");
         WEECHAT_HDATA_VAR(struct t_irc_server, hook_fd, POINTER, 0, NULL, "hook");
@@ -4646,6 +4636,8 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_string (ptr_item, "current_ip", server->current_ip))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "current_port", server->current_port))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "current_retry", server->current_retry))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "sock", server->sock))
         return 0;
@@ -4962,10 +4954,12 @@ irc_server_print_log ()
         weechat_log_printf ("  addresses_count. . . : %d",    ptr_server->addresses_count);
         weechat_log_printf ("  addresses_array. . . : 0x%lx", ptr_server->addresses_array);
         weechat_log_printf ("  ports_array. . . . . : 0x%lx", ptr_server->ports_array);
+        weechat_log_printf ("  retry_array. . . . . : 0x%lx", ptr_server->retry_array);
         weechat_log_printf ("  index_current_address: %d",    ptr_server->index_current_address);
         weechat_log_printf ("  current_address. . . : '%s'",  ptr_server->current_address);
         weechat_log_printf ("  current_ip . . . . . : '%s'",  ptr_server->current_ip);
         weechat_log_printf ("  current_port . . . . : %d",    ptr_server->current_port);
+        weechat_log_printf ("  current_retry. . . . : %d",    ptr_server->current_retry);
         weechat_log_printf ("  sock . . . . . . . . : %d",    ptr_server->sock);
         weechat_log_printf ("  hook_connect . . . . : 0x%lx", ptr_server->hook_connect);
         weechat_log_printf ("  hook_fd. . . . . . . : 0x%lx", ptr_server->hook_fd);

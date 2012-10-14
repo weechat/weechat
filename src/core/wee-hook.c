@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2003-2012 Sebastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2012 Simon Arlott
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -1713,13 +1714,16 @@ hook_process_run (struct t_hook *hook_process)
 
 struct t_hook *
 hook_connect (struct t_weechat_plugin *plugin, const char *proxy,
-              const char *address, int port, int sock, int ipv6,
+              const char *address, int port, int ipv6, int retry,
               void *gnutls_sess, void *gnutls_cb, int gnutls_dhkey_size,
               const char *gnutls_priorities, const char *local_hostname,
               t_hook_callback_connect *callback, void *callback_data)
 {
     struct t_hook *new_hook;
     struct t_hook_connect *new_hook_connect;
+#ifdef HOOK_CONNECT_MAX_SOCKETS
+    int i;
+#endif
 
 #ifndef HAVE_GNUTLS
     /* make C compiler happy */
@@ -1729,7 +1733,7 @@ hook_connect (struct t_weechat_plugin *plugin, const char *proxy,
     (void) gnutls_priorities;
 #endif
 
-    if ((sock < 0) || !address || (port <= 0) || !callback)
+    if (!address || (port <= 0) || !callback)
         return NULL;
 
     new_hook = malloc (sizeof (*new_hook));
@@ -1750,8 +1754,9 @@ hook_connect (struct t_weechat_plugin *plugin, const char *proxy,
     new_hook_connect->proxy = (proxy) ? strdup (proxy) : NULL;
     new_hook_connect->address = strdup (address);
     new_hook_connect->port = port;
-    new_hook_connect->sock = sock;
+    new_hook_connect->sock = -1;
     new_hook_connect->ipv6 = ipv6;
+    new_hook_connect->retry = retry;
 #ifdef HAVE_GNUTLS
     new_hook_connect->gnutls_sess = gnutls_sess;
     new_hook_connect->gnutls_cb = gnutls_cb;
@@ -1763,6 +1768,8 @@ hook_connect (struct t_weechat_plugin *plugin, const char *proxy,
         strdup (local_hostname) : NULL;
     new_hook_connect->child_read = -1;
     new_hook_connect->child_write = -1;
+    new_hook_connect->child_recv = -1;
+    new_hook_connect->child_send = -1;
     new_hook_connect->child_pid = 0;
     new_hook_connect->hook_child_timer = NULL;
     new_hook_connect->hook_fd = NULL;
@@ -1770,6 +1777,13 @@ hook_connect (struct t_weechat_plugin *plugin, const char *proxy,
     new_hook_connect->handshake_hook_timer = NULL;
     new_hook_connect->handshake_fd_flags = 0;
     new_hook_connect->handshake_ip_address = NULL;
+#ifdef HOOK_CONNECT_MAX_SOCKETS
+    for (i = 0; i < HOOK_CONNECT_MAX_SOCKETS; i++)
+    {
+        new_hook_connect->sock_v4[i] = -1;
+        new_hook_connect->sock_v6[i] = -1;
+    }
+#endif
 
     hook_add_to_list (new_hook);
 
@@ -3166,6 +3180,19 @@ unhook (struct t_hook *hook)
                     close (HOOK_CONNECT(hook, child_read));
                 if (HOOK_CONNECT(hook, child_write) != -1)
                     close (HOOK_CONNECT(hook, child_write));
+                if (HOOK_CONNECT(hook, child_recv) != -1)
+                    close (HOOK_CONNECT(hook, child_recv));
+                if (HOOK_CONNECT(hook, child_send) != -1)
+                    close (HOOK_CONNECT(hook, child_send));
+#ifdef HOOK_CONNECT_MAX_SOCKETS
+                for (i = 0; i < HOOK_CONNECT_MAX_SOCKETS; i++)
+                {
+                    if (HOOK_CONNECT(hook, sock_v4[i]) != -1)
+                        close (HOOK_CONNECT(hook, sock_v4[i]));
+                    if (HOOK_CONNECT(hook, sock_v6[i]) != -1)
+                        close (HOOK_CONNECT(hook, sock_v6[i]));
+                }
+#endif
                 break;
             case HOOK_TYPE_PRINT:
                 if (HOOK_PRINT(hook, message))
@@ -3478,6 +3505,8 @@ hook_add_to_infolist_type (struct t_infolist *infolist, int type,
                         return 0;
                     if (!infolist_new_var_integer (ptr_item, "ipv6", HOOK_CONNECT(ptr_hook, ipv6)))
                         return 0;
+                    if (!infolist_new_var_integer (ptr_item, "retry", HOOK_CONNECT(ptr_hook, retry)))
+                        return 0;
 #ifdef HAVE_GNUTLS
                     if (!infolist_new_var_pointer (ptr_item, "gnutls_sess", HOOK_CONNECT(ptr_hook, gnutls_sess)))
                         return 0;
@@ -3491,6 +3520,10 @@ hook_add_to_infolist_type (struct t_infolist *infolist, int type,
                     if (!infolist_new_var_integer (ptr_item, "child_read", HOOK_CONNECT(ptr_hook, child_read)))
                         return 0;
                     if (!infolist_new_var_integer (ptr_item, "child_write", HOOK_CONNECT(ptr_hook, child_write)))
+                        return 0;
+                    if (!infolist_new_var_integer (ptr_item, "child_recv", HOOK_CONNECT(ptr_hook, child_recv)))
+                        return 0;
+                    if (!infolist_new_var_integer (ptr_item, "child_send", HOOK_CONNECT(ptr_hook, child_send)))
                         return 0;
                     if (!infolist_new_var_integer (ptr_item, "child_pid", HOOK_CONNECT(ptr_hook, child_pid)))
                         return 0;
@@ -3886,6 +3919,7 @@ hook_print_log ()
                         log_printf ("    port. . . . . . . . . : %d",    HOOK_CONNECT(ptr_hook, port));
                         log_printf ("    sock. . . . . . . . . : %d",    HOOK_CONNECT(ptr_hook, sock));
                         log_printf ("    ipv6. . . . . . . . . : %d",    HOOK_CONNECT(ptr_hook, ipv6));
+                        log_printf ("    retry . . . . . . . . : %d",    HOOK_CONNECT(ptr_hook, retry));
 #ifdef HAVE_GNUTLS
                         log_printf ("    gnutls_sess . . . . . : 0x%lx", HOOK_CONNECT(ptr_hook, gnutls_sess));
                         log_printf ("    gnutls_cb . . . . . . : 0x%lx", HOOK_CONNECT(ptr_hook, gnutls_cb));
@@ -3895,6 +3929,8 @@ hook_print_log ()
                         log_printf ("    local_hostname. . . . : '%s'",  HOOK_CONNECT(ptr_hook, local_hostname));
                         log_printf ("    child_read. . . . . . : %d",    HOOK_CONNECT(ptr_hook, child_read));
                         log_printf ("    child_write . . . . . : %d",    HOOK_CONNECT(ptr_hook, child_write));
+                        log_printf ("    child_recv. . . . . . : %d",    HOOK_CONNECT(ptr_hook, child_recv));
+                        log_printf ("    child_send. . . . . . : %d",    HOOK_CONNECT(ptr_hook, child_send));
                         log_printf ("    child_pid . . . . . . : %d",    HOOK_CONNECT(ptr_hook, child_pid));
                         log_printf ("    hook_child_timer. . . : 0x%lx", HOOK_CONNECT(ptr_hook, hook_child_timer));
                         log_printf ("    hook_fd . . . . . . . : 0x%lx", HOOK_CONNECT(ptr_hook, hook_fd));
@@ -3902,6 +3938,13 @@ hook_print_log ()
                         log_printf ("    handshake_hook_timer. : 0x%lx", HOOK_CONNECT(ptr_hook, handshake_hook_timer));
                         log_printf ("    handshake_fd_flags. . : %d",    HOOK_CONNECT(ptr_hook, handshake_fd_flags));
                         log_printf ("    handshake_ip_address. : '%s'",  HOOK_CONNECT(ptr_hook, handshake_ip_address));
+#ifdef HOOK_CONNECT_MAX_SOCKETS
+                        for (i = 0; i < HOOK_CONNECT_MAX_SOCKETS; i++)
+                        {
+                            log_printf ("    sock_v4[%d]. . . . . . : '%d'", HOOK_CONNECT(ptr_hook, sock_v4[i]));
+                            log_printf ("    sock_v6[%d]. . . . . . : '%d'", HOOK_CONNECT(ptr_hook, sock_v6[i]));
+                        }
+#endif
                     }
                     break;
                 case HOOK_TYPE_PRINT:

@@ -2,6 +2,7 @@
  * Copyright (C) 2003-2012 Sebastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2005-2010 Emmanuel Bouthenot <kolter@openics.org>
  * Copyright (C) 2010 Gu1ll4um3r0m41n <aeroxteam@gmail.com>
+ * Copyright (C) 2012 Simon Arlott
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -38,6 +39,7 @@
 #include <netdb.h>
 #include <errno.h>
 #include <gcrypt.h>
+#include <sys/time.h>
 
 #ifdef HAVE_GNUTLS
 #include <gnutls/gnutls.h>
@@ -645,19 +647,44 @@ void
 network_connect_child (struct t_hook *hook_connect)
 {
     struct t_proxy *ptr_proxy;
-    struct addrinfo hints, *res, *res_local, *ptr_res;
+    struct addrinfo hints, *res_local, *res_remote, *ptr_res, *ptr_loc;
+    char port[NI_MAXSERV + 1];
     char status_str[2], *ptr_address, *status_with_string;
-    char ipv4_address[INET_ADDRSTRLEN + 1], ipv6_address[INET6_ADDRSTRLEN + 1];
+    char remote_address[NI_MAXHOST + 1];
     char status_without_string[1 + 5 + 1];
     const char *error;
     int rc, length, num_written;
+    int sock, set, flags;
+#ifdef HOOK_CONNECT_MAX_SOCKETS
+    int j;
+#else
+    struct msghdr msg;
+    struct cmsghdr *cmsg;
+    char msg_buf[CMSG_SPACE(sizeof (sock))];
+#endif
+    /*
+     * indicates that something is wrong with whichever group of
+     * servers is being tried first after connecting, so start at
+     * a different offset to increase the chance of success
+     */
+    int retry, rand_num, i;
+    int num_groups, tmp_num_groups, num_hosts, tmp_host;
+    struct addrinfo **res_reorder;
+    int last_af;
+    struct timeval tv_time;
 
-    res = NULL;
     res_local = NULL;
+    res_remote = NULL;
+    res_reorder = NULL;
+    port[0] = '\0';
 
     status_str[1] = '\0';
+    status_with_string = NULL;
 
     ptr_address = NULL;
+
+    gettimeofday (&tv_time, NULL);
+    srand ((tv_time.tv_sec * tv_time.tv_usec) ^ getpid ());
 
     ptr_proxy = NULL;
     if (HOOK_CONNECT(hook_connect, proxy)
@@ -672,18 +699,86 @@ network_connect_child (struct t_hook *hook_connect)
             num_written = write (HOOK_CONNECT(hook_connect, child_write),
                                  status_without_string, strlen (status_without_string));
             (void) num_written;
-            return;
+            goto end;
         }
     }
 
+    /* get info about peer */
+    memset (&hints, 0, sizeof (hints));
+    hints.ai_socktype = SOCK_STREAM;
+#ifdef AI_ADDRCONFIG
+    hints.ai_flags = AI_ADDRCONFIG;
+#endif
     if (ptr_proxy)
     {
-        /* get info about peer */
-        memset (&hints, 0, sizeof (hints));
         hints.ai_family = (CONFIG_BOOLEAN(ptr_proxy->options[PROXY_OPTION_IPV6])) ?
-            AF_INET6 : AF_INET;
+            AF_UNSPEC : AF_INET;
+        snprintf (port, sizeof (port), "%d", CONFIG_INTEGER(ptr_proxy->options[PROXY_OPTION_PORT]));
+        rc = getaddrinfo (CONFIG_STRING(ptr_proxy->options[PROXY_OPTION_ADDRESS]),
+                          port, &hints, &res_remote);
+    }
+    else
+    {
+        hints.ai_family = HOOK_CONNECT(hook_connect, ipv6) ? AF_UNSPEC : AF_INET;
+        snprintf (port, sizeof (port), "%d", HOOK_CONNECT(hook_connect, port));
+        rc = getaddrinfo (HOOK_CONNECT(hook_connect, address), port, &hints, &res_remote);
+    }
+
+    if (rc != 0)
+    {
+        /* address not found */
+        status_with_string = NULL;
+        error = gai_strerror (rc);
+        if (error)
+        {
+            length = 1 + 5 + strlen (error) + 1;
+            status_with_string = malloc (length);
+            if (status_with_string)
+            {
+                snprintf (status_with_string, length, "%c%05d%s",
+                          '0' + WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND,
+                          (int)strlen (error), error);
+            }
+        }
+        if (status_with_string)
+        {
+            num_written = write (HOOK_CONNECT(hook_connect, child_write),
+                                 status_with_string, strlen (status_with_string));
+        }
+        else
+        {
+            snprintf (status_without_string, sizeof (status_without_string),
+                      "%c00000", '0' + WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND);
+            num_written = write (HOOK_CONNECT(hook_connect, child_write),
+                                 status_without_string, strlen (status_without_string));
+        }
+        (void) num_written;
+        goto end;
+    }
+
+    if (!res_remote)
+    {
+        /* address not found */
+        snprintf (status_without_string, sizeof (status_without_string),
+                  "%c00000", '0' + WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND);
+        num_written = write (HOOK_CONNECT(hook_connect, child_write),
+                             status_without_string, strlen (status_without_string));
+        (void) num_written;
+        goto end;
+    }
+
+    /* set local hostname/IP if asked by user */
+    if (HOOK_CONNECT(hook_connect, local_hostname)
+        && HOOK_CONNECT(hook_connect, local_hostname[0]))
+    {
+        memset (&hints, 0, sizeof (hints));
+        hints.ai_family = AF_UNSPEC;
         hints.ai_socktype = SOCK_STREAM;
-        rc = getaddrinfo (CONFIG_STRING(ptr_proxy->options[PROXY_OPTION_ADDRESS]), NULL, &hints, &res);
+#ifdef AI_ADDRCONFIG
+        hints.ai_flags = AI_ADDRCONFIG;
+#endif
+        rc = getaddrinfo (HOOK_CONNECT(hook_connect, local_hostname),
+                          NULL, &hints, &res_local);
         if (rc != 0)
         {
             /* address not found */
@@ -696,7 +791,7 @@ network_connect_child (struct t_hook *hook_connect)
                 if (status_with_string)
                 {
                     snprintf (status_with_string, length, "%c%05d%s",
-                              '0' + WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND,
+                              '0' + WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR,
                               (int)strlen (error), error);
                 }
             }
@@ -708,254 +803,256 @@ network_connect_child (struct t_hook *hook_connect)
             else
             {
                 snprintf (status_without_string, sizeof (status_without_string),
-                          "%c00000", '0' + WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND);
+                          "%c00000", '0' + WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR);
                 num_written = write (HOOK_CONNECT(hook_connect, child_write),
                                      status_without_string, strlen (status_without_string));
             }
-            if (status_with_string)
-                free (status_with_string);
             (void) num_written;
-            return;
-        }
-        if (!res)
-        {
-            /* adddress not found */
-            snprintf (status_without_string, sizeof (status_without_string),
-                      "%c00000", '0' + WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND);
-            num_written = write (HOOK_CONNECT(hook_connect, child_write),
-                                 status_without_string, strlen (status_without_string));
-            (void) num_written;
-            return;
-        }
-        if ((CONFIG_BOOLEAN(ptr_proxy->options[PROXY_OPTION_IPV6]) && (res->ai_family != AF_INET6))
-            || ((!CONFIG_BOOLEAN(ptr_proxy->options[PROXY_OPTION_IPV6]) && (res->ai_family != AF_INET))))
-        {
-            /* IP address not found */
-            snprintf (status_without_string, sizeof (status_without_string),
-                      "%c00000", '0' + WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND);
-            num_written = write (HOOK_CONNECT(hook_connect, child_write),
-                                 status_without_string, strlen (status_without_string));
-            (void) num_written;
-            freeaddrinfo (res);
-            return;
+            goto end;
         }
 
-        if (CONFIG_BOOLEAN(ptr_proxy->options[PROXY_OPTION_IPV6]))
-            ((struct sockaddr_in6 *)(res->ai_addr))->sin6_port = htons (CONFIG_INTEGER(ptr_proxy->options[PROXY_OPTION_PORT]));
-        else
-            ((struct sockaddr_in *)(res->ai_addr))->sin_port = htons (CONFIG_INTEGER(ptr_proxy->options[PROXY_OPTION_PORT]));
+        if (!res_local)
+        {
+            /* address not found */
+            snprintf (status_without_string, sizeof (status_without_string),
+                      "%c00000", '0' + WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR);
+            num_written = write (HOOK_CONNECT(hook_connect, child_write),
+                                 status_without_string, strlen (status_without_string));
+            (void) num_written;
+            goto end;
+        }
+    }
+
+    /* res_local != NULL now indicates that bind() is required */
+
+    /*
+     * count all the groups of hosts by tracking family, e.g.
+     * 0 = [2001:db8::1, 2001:db8::2,
+     * 1 =  192.0.2.1, 192.0.2.2,
+     * 2 =  2002:c000:201::1, 2002:c000:201::2]
+     */
+    last_af = AF_UNSPEC;
+    num_groups = 0;
+    num_hosts = 0;
+    for (ptr_res = res_remote; ptr_res; ptr_res = ptr_res->ai_next)
+    {
+        if (ptr_res->ai_family != last_af)
+            if (last_af != AF_UNSPEC)
+                num_groups++;
+
+        num_hosts++;
+        last_af = ptr_res->ai_family;
+    }
+    if (last_af != AF_UNSPEC)
+        num_groups++;
+
+    res_reorder = malloc (sizeof (*res_reorder) * num_hosts);
+    if (!res_reorder)
+    {
+        snprintf (status_without_string, sizeof (status_without_string),
+                  "%c00000", '0' + WEECHAT_HOOK_CONNECT_MEMORY_ERROR);
+        num_written = write (HOOK_CONNECT(hook_connect, child_write),
+                             status_without_string, strlen (status_without_string));
+        (void) num_written;
+        goto end;
+    }
+
+    /* reorder groups */
+    retry = HOOK_CONNECT(hook_connect, retry);
+    if (num_groups > 0)
+    {
+        retry %= num_groups;
+        i = 0;
+
+        last_af = AF_UNSPEC;
+        tmp_num_groups = 0;
+        tmp_host = i; /* start of current group */
+
+        /* top of list */
+        for (ptr_res = res_remote; ptr_res; ptr_res = ptr_res->ai_next)
+        {
+            if (ptr_res->ai_family != last_af)
+            {
+                if (last_af != AF_UNSPEC)
+                    tmp_num_groups++;
+
+                tmp_host = i;
+            }
+
+            if (tmp_num_groups >= retry)
+            {
+                /* shuffle while adding */
+                rand_num = tmp_host + (rand() % ((i + 1) - tmp_host));
+                if (rand_num == i)
+                    res_reorder[i++] = ptr_res;
+                else
+                {
+                    res_reorder[i++] = res_reorder[rand_num];
+                    res_reorder[rand_num] = ptr_res;
+                }
+            }
+
+            last_af = ptr_res->ai_family;
+        }
+
+        last_af = AF_UNSPEC;
+        tmp_num_groups = 0;
+        tmp_host = i; /* start of current group */
+
+        /* remainder of list */
+        for (ptr_res = res_remote; ptr_res; ptr_res = ptr_res->ai_next)
+        {
+            if (ptr_res->ai_family != last_af)
+            {
+                if (last_af != AF_UNSPEC)
+                    tmp_num_groups++;
+
+                tmp_host = i;
+            }
+
+            if (tmp_num_groups < retry)
+            {
+                /* shuffle while adding */
+                rand_num = tmp_host + (rand() % ((i + 1) - tmp_host));
+                if (rand_num == i)
+                    res_reorder[i++] = ptr_res;
+                else
+                {
+                    res_reorder[i++] = res_reorder[rand_num];
+                    res_reorder[rand_num] = ptr_res;
+                }
+            }
+            else
+                break;
+
+            last_af = ptr_res->ai_family;
+        }
+    }
+    else
+    {
+        /* no IP addresses found (all AF_UNSPEC) */
+        snprintf (status_without_string, sizeof (status_without_string),
+                  "%c00000", '0' + WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND);
+        num_written = write (HOOK_CONNECT(hook_connect, child_write),
+                             status_without_string, strlen (status_without_string));
+        (void) num_written;
+        goto end;
+    }
+
+    status_str[0] = '0' + WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND;
+
+    /* try all IP addresses found, stop when connection is ok */
+    sock = -1;
+    for (i = 0; i < num_hosts; i++)
+    {
+        ptr_res = res_reorder[i];
+
+#ifdef HOOK_CONNECT_MAX_SOCKETS
+        /* use pre-created socket pool */
+        sock = -1;
+        for (j = 0; j < HOOK_CONNECT_MAX_SOCKETS; j++)
+        {
+            if (ptr_res->ai_family == AF_INET)
+            {
+                sock = HOOK_CONNECT(hook_connect, sock_v4[j]);
+                if (sock != -1)
+                {
+                    HOOK_CONNECT(hook_connect, sock_v4[j]) = -1;
+                    break;
+                }
+            }
+            else if (ptr_res->ai_family == AF_INET6)
+            {
+                sock = HOOK_CONNECT(hook_connect, sock_v6[j]);
+                if (sock != -1)
+                {
+                    HOOK_CONNECT(hook_connect, sock_v6[j]) = -1;
+                    break;
+                }
+            }
+        }
+        if (sock < 0)
+            continue;
+#else
+        /* create a socket */
+        sock = socket (ptr_res->ai_family,
+                       ptr_res->ai_socktype,
+                       ptr_res->ai_protocol);
+#endif
+        if (sock < 0)
+        {
+            status_str[0] = '0' + WEECHAT_HOOK_CONNECT_SOCKET_ERROR;
+            continue;
+        }
+
+        /* set SO_REUSEADDR option for socket */
+        set = 1;
+        setsockopt (sock, SOL_SOCKET, SO_REUSEADDR, (void *) &set, sizeof (set));
+
+        /* set SO_KEEPALIVE option for socket */
+        set = 1;
+        setsockopt (sock, SOL_SOCKET, SO_KEEPALIVE, (void *) &set, sizeof (set));
+
+        /* set flag O_NONBLOCK on socket */
+        flags = fcntl (sock, F_GETFL);
+        if (flags == -1)
+            flags = 0;
+        fcntl (sock, F_SETFL, flags | O_NONBLOCK);
+
+        if (res_local)
+        {
+            rc = -1;
+
+            /* bind local hostname/IP if asked by user */
+            for (ptr_loc = res_local; ptr_loc; ptr_loc = ptr_loc->ai_next)
+            {
+                if (ptr_loc->ai_family != ptr_res->ai_family)
+                    continue;
+
+                rc = bind (sock, ptr_loc->ai_addr, ptr_loc->ai_addrlen);
+                if (rc < 0)
+                    continue;
+            }
+
+            if (rc < 0)
+            {
+                status_str[0] = '0' + WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR;
+                close (sock);
+                sock = -1;
+                continue;
+            }
+        }
 
         /* connect to peer */
-        if (!network_connect (HOOK_CONNECT(hook_connect, sock),
-                              res->ai_addr, res->ai_addrlen))
+        if (network_connect (sock, ptr_res->ai_addr, ptr_res->ai_addrlen))
         {
-            /* connection refused */
-            snprintf (status_without_string, sizeof (status_without_string),
-                      "%c00000", '0' + WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED);
-            num_written = write (HOOK_CONNECT(hook_connect, child_write),
-                                 status_without_string, strlen (status_without_string));
-            (void) num_written;
-            freeaddrinfo (res);
-            return;
+            status_str[0] = '0' + WEECHAT_HOOK_CONNECT_OK;
+            rc = getnameinfo (ptr_res->ai_addr, ptr_res->ai_addrlen,
+                              remote_address, sizeof (remote_address),
+                              NULL, 0, NI_NUMERICHOST);
+            if (rc == 0)
+                ptr_address = remote_address;
+            break;
         }
+        else
+        {
+            status_str[0] = '0' + WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED;
+            close (sock);
+            sock = -1;
+        }
+    }
 
+    HOOK_CONNECT(hook_connect, sock) = sock;
+
+    if (ptr_proxy && status_str[0] == '0' + WEECHAT_HOOK_CONNECT_OK)
+    {
         if (!network_pass_proxy (HOOK_CONNECT(hook_connect, proxy),
                                  HOOK_CONNECT(hook_connect, sock),
                                  HOOK_CONNECT(hook_connect, address),
                                  HOOK_CONNECT(hook_connect, port)))
         {
             /* proxy fails to connect to peer */
-            snprintf (status_without_string, sizeof (status_without_string),
-                      "%c00000", '0' + WEECHAT_HOOK_CONNECT_PROXY_ERROR);
-            num_written = write (HOOK_CONNECT(hook_connect, child_write),
-                                 status_without_string, strlen (status_without_string));
-            (void) num_written;
-            freeaddrinfo (res);
-            return;
-        }
-
-        status_str[0] = '0' + WEECHAT_HOOK_CONNECT_OK;
-    }
-    else
-    {
-        /* set local hostname/IP if asked by user */
-        if (HOOK_CONNECT(hook_connect, local_hostname)
-            && HOOK_CONNECT(hook_connect, local_hostname[0]))
-        {
-            memset (&hints, 0, sizeof(hints));
-            hints.ai_family = (HOOK_CONNECT(hook_connect, ipv6)) ? AF_INET6 : AF_INET;
-            hints.ai_socktype = SOCK_STREAM;
-            rc = getaddrinfo (HOOK_CONNECT(hook_connect, local_hostname),
-                              NULL, &hints, &res_local);
-            if (rc != 0)
-            {
-                /* fails to set local hostname/IP */
-                status_with_string = NULL;
-                error = gai_strerror (rc);
-                if (error)
-                {
-                    length = 1 + 5 + strlen (error) + 1;
-                    status_with_string = malloc (length);
-                    if (status_with_string)
-                    {
-                        snprintf (status_with_string, length, "%c%05d%s",
-                                  '0' + WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR,
-                                  (int)strlen (error), error);
-                    }
-                }
-                if (status_with_string)
-                {
-                    num_written = write (HOOK_CONNECT(hook_connect, child_write),
-                                         status_with_string, strlen (status_with_string));
-                }
-                else
-                {
-                    snprintf (status_without_string, sizeof (status_without_string),
-                              "%c00000", '0' + WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR);
-                    num_written = write (HOOK_CONNECT(hook_connect, child_write),
-                                         status_without_string, strlen (status_without_string));
-                }
-                if (status_with_string)
-                    free (status_with_string);
-                (void) num_written;
-                if (res_local)
-                    freeaddrinfo (res_local);
-                return;
-            }
-            else if (!res_local
-                     || (HOOK_CONNECT(hook_connect, ipv6)
-                         && (res_local->ai_family != AF_INET6))
-                     || ((!HOOK_CONNECT(hook_connect, ipv6)
-                          && (res_local->ai_family != AF_INET))))
-            {
-                /* fails to set local hostname/IP */
-                snprintf (status_without_string, sizeof (status_without_string),
-                          "%c00000", '0' + WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR);
-                num_written = write (HOOK_CONNECT(hook_connect, child_write),
-                                     status_without_string, strlen (status_without_string));
-                (void) num_written;
-                if (res_local)
-                    freeaddrinfo (res_local);
-                return;
-            }
-            if (bind (HOOK_CONNECT(hook_connect, sock),
-                      res_local->ai_addr, res_local->ai_addrlen) < 0)
-            {
-                /* fails to set local hostname/IP */
-                snprintf (status_without_string, sizeof (status_without_string),
-                          "%c00000", '0' + WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR);
-                num_written = write (HOOK_CONNECT(hook_connect, child_write),
-                                     status_without_string, strlen (status_without_string));
-                (void) num_written;
-                if (res_local)
-                    freeaddrinfo (res_local);
-                return;
-            }
-        }
-
-        /* get info about peer */
-        memset (&hints, 0, sizeof(hints));
-        hints.ai_family = (HOOK_CONNECT(hook_connect, ipv6)) ? AF_INET6 : AF_INET;
-        hints.ai_socktype = SOCK_STREAM;
-        rc = getaddrinfo (HOOK_CONNECT(hook_connect, address),
-                          NULL, &hints, &res);
-        if (rc != 0)
-        {
-            status_with_string = NULL;
-            error = gai_strerror (rc);
-            if (error)
-            {
-                length = 1 + 5 + strlen (error) + 1;
-                status_with_string = malloc (length);
-                if (status_with_string)
-                {
-                    snprintf (status_with_string, length, "%c%05d%s",
-                              '0' + WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND,
-                              (int)strlen (error), error);
-                }
-            }
-            if (status_with_string)
-            {
-                num_written = write (HOOK_CONNECT(hook_connect, child_write),
-                                     status_with_string, strlen (status_with_string));
-            }
-            else
-            {
-                snprintf (status_without_string, sizeof (status_without_string),
-                          "%c00000", '0' + WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND);
-                num_written = write (HOOK_CONNECT(hook_connect, child_write),
-                                     status_without_string, strlen (status_without_string));
-            }
-            if (status_with_string)
-                free (status_with_string);
-            (void) num_written;
-            if (res)
-                freeaddrinfo (res);
-            if (res_local)
-                freeaddrinfo (res_local);
-            return;
-        }
-        else if (!res)
-        {
-            /* address not found */
-            snprintf (status_without_string, sizeof (status_without_string),
-                      "%c00000", '0' + WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND);
-            num_written = write (HOOK_CONNECT(hook_connect, child_write),
-                                 status_without_string, strlen (status_without_string));
-            (void) num_written;
-            if (res)
-                freeaddrinfo (res);
-            if (res_local)
-                freeaddrinfo (res_local);
-            return;
-        }
-
-        status_str[0] = '0' + WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND;
-
-        /* try all IP addresses found, stop when connection is ok */
-        for (ptr_res = res; ptr_res; ptr_res = ptr_res->ai_next)
-        {
-            /* skip IP address if it's not good family */
-            if ((HOOK_CONNECT(hook_connect, ipv6) && (ptr_res->ai_family != AF_INET6))
-                || ((!HOOK_CONNECT(hook_connect, ipv6) && (ptr_res->ai_family != AF_INET))))
-                continue;
-
-            /* connect to peer */
-            if (HOOK_CONNECT(hook_connect, ipv6))
-                ((struct sockaddr_in6 *)(ptr_res->ai_addr))->sin6_port =
-                    htons (HOOK_CONNECT(hook_connect, port));
-            else
-                ((struct sockaddr_in *)(ptr_res->ai_addr))->sin_port =
-                    htons (HOOK_CONNECT(hook_connect, port));
-
-            if (network_connect (HOOK_CONNECT(hook_connect, sock),
-                                 ptr_res->ai_addr, ptr_res->ai_addrlen))
-            {
-                status_str[0] = '0' + WEECHAT_HOOK_CONNECT_OK;
-                if (HOOK_CONNECT(hook_connect, ipv6))
-                {
-                    if (inet_ntop (AF_INET6,
-                                   &((struct sockaddr_in6 *)(ptr_res->ai_addr))->sin6_addr,
-                                   ipv6_address,
-                                   INET6_ADDRSTRLEN))
-                    {
-                        ptr_address = ipv6_address;
-                    }
-                }
-                else
-                {
-                    if (inet_ntop (AF_INET,
-                                   &((struct sockaddr_in *)(ptr_res->ai_addr))->sin_addr,
-                                   ipv4_address,
-                                   INET_ADDRSTRLEN))
-                    {
-                        ptr_address = ipv4_address;
-                    }
-                }
-                break;
-            }
-            else
-                status_str[0] = '0' + WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED;
+            status_str[0] = '0' + WEECHAT_HOOK_CONNECT_PROXY_ERROR;
         }
     }
 
@@ -978,7 +1075,6 @@ network_connect_child (struct t_hook *hook_connect)
             num_written = write (HOOK_CONNECT(hook_connect, child_write),
                                  status_with_string, strlen (status_with_string));
             (void) num_written;
-            free (status_with_string);
         }
         else
         {
@@ -988,6 +1084,24 @@ network_connect_child (struct t_hook *hook_connect)
                                  status_without_string, strlen (status_without_string));
             (void) num_written;
         }
+
+        /* send the socket to the parent process */
+#ifndef HOOK_CONNECT_MAX_SOCKETS
+        memset (&msg, 0, sizeof (msg));
+        msg.msg_control = msg_buf;
+        msg.msg_controllen = sizeof (msg_buf);
+        cmsg = CMSG_FIRSTHDR(&msg);
+        cmsg->cmsg_level = SOL_SOCKET;
+        cmsg->cmsg_type = SCM_RIGHTS;
+        cmsg->cmsg_len = CMSG_LEN(sizeof (sock));
+        memcpy(CMSG_DATA(cmsg), &sock, sizeof (sock));
+        msg.msg_controllen = cmsg->cmsg_len;
+        num_written = sendmsg (HOOK_CONNECT(hook_connect, child_send), &msg, 0);
+        (void) num_written;
+#else
+        num_written = write (HOOK_CONNECT(hook_connect, child_write), &sock, sizeof (sock));
+        (void) num_written;
+#endif
     }
     else
     {
@@ -998,10 +1112,15 @@ network_connect_child (struct t_hook *hook_connect)
         (void) num_written;
     }
 
-    if (res)
-        freeaddrinfo (res);
+end:
+    if (status_with_string)
+        free (status_with_string);
+    if (res_reorder)
+        free (res_reorder);
     if (res_local)
         freeaddrinfo (res_local);
+    if (res_remote)
+        freeaddrinfo (res_remote);
 }
 
 /*
@@ -1023,7 +1142,7 @@ network_connect_child_timer_cb (void *arg_hook_connect, int remaining_calls)
     (void) (HOOK_CONNECT(hook_connect, callback))
         (hook_connect->callback_data,
          WEECHAT_HOOK_CONNECT_TIMEOUT,
-         0, NULL, NULL);
+         0, -1, NULL, NULL);
     unhook (hook_connect);
 
     return WEECHAT_RC_OK;
@@ -1066,8 +1185,8 @@ network_connect_gnutls_handshake_fd_cb (void *arg_hook_connect, int fd)
     {
         (void) (HOOK_CONNECT(hook_connect, callback))
             (hook_connect->callback_data,
-             WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR,
-             rc,
+             WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR, rc,
+             HOOK_CONNECT(hook_connect, sock),
              gnutls_strerror (rc),
              HOOK_CONNECT(hook_connect, handshake_ip_address));
         unhook (hook_connect);
@@ -1086,8 +1205,8 @@ network_connect_gnutls_handshake_fd_cb (void *arg_hook_connect, int fd)
         {
             (void) (HOOK_CONNECT(hook_connect, callback))
                 (hook_connect->callback_data,
-                 WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR,
-                 rc,
+                 WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR, rc,
+                 HOOK_CONNECT(hook_connect, sock),
                  "Error in the certificate.",
                  HOOK_CONNECT(hook_connect, handshake_ip_address));
             unhook (hook_connect);
@@ -1096,8 +1215,10 @@ network_connect_gnutls_handshake_fd_cb (void *arg_hook_connect, int fd)
 #endif
         unhook (HOOK_CONNECT(hook_connect, handshake_hook_fd));
         (void) (HOOK_CONNECT(hook_connect, callback))
-                (hook_connect->callback_data, WEECHAT_HOOK_CONNECT_OK, 0, NULL,
-                 HOOK_CONNECT(hook_connect, handshake_ip_address));
+                (hook_connect->callback_data,
+                 WEECHAT_HOOK_CONNECT_OK, 0,
+                 HOOK_CONNECT(hook_connect, sock),
+                 NULL, HOOK_CONNECT(hook_connect, handshake_ip_address));
         unhook (hook_connect);
     }
 
@@ -1127,6 +1248,7 @@ network_connect_gnutls_handshake_timer_cb (void *arg_hook_connect,
             (hook_connect->callback_data,
              WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR,
              GNUTLS_E_EXPIRED,
+             HOOK_CONNECT(hook_connect, sock),
              gnutls_strerror (GNUTLS_E_EXPIRED),
              HOOK_CONNECT(hook_connect, handshake_ip_address));
     unhook (hook_connect);
@@ -1149,6 +1271,14 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
 #ifdef HAVE_GNUTLS
     int rc, direction;
 #endif
+    int sock;
+#ifdef HOOK_CONNECT_MAX_SOCKETS
+    int i;
+#else
+    struct msghdr msg;
+    struct cmsghdr *cmsg;
+    char msg_buf[CMSG_SPACE(sizeof (sock))];
+#endif
 
     /* make C compiler happy */
     (void) fd;
@@ -1157,10 +1287,11 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
 
     cb_error = NULL;
     cb_ip_address = NULL;
+    sock = -1;
 
     num_read = read (HOOK_CONNECT(hook_connect, child_read),
                      buffer, sizeof (buffer));
-    if (num_read > 0)
+    if (num_read == sizeof (buffer))
     {
         if (buffer[0] - '0' == WEECHAT_HOOK_CONNECT_OK)
         {
@@ -1189,6 +1320,41 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
                     }
                 }
             }
+
+#ifndef HOOK_CONNECT_MAX_SOCKETS
+            /* receive the socket from the child process */
+            memset (&msg, 0, sizeof (msg));
+            msg.msg_control = msg_buf;
+            msg.msg_controllen = sizeof (msg_buf);
+
+            if (recvmsg (HOOK_CONNECT(hook_connect, child_recv), &msg, 0) >= 0)
+            {
+                cmsg = CMSG_FIRSTHDR(&msg);
+                if (cmsg != NULL
+                    && cmsg->cmsg_level == SOL_SOCKET
+                    && cmsg->cmsg_type == SCM_RIGHTS
+                    && cmsg->cmsg_len >= sizeof (sock))
+                {
+                    memcpy(&sock, CMSG_DATA(cmsg), sizeof (sock));
+                }
+            }
+#else
+            num_read = read (HOOK_CONNECT(hook_connect, child_read), &sock, sizeof (sock));
+            (void) num_read;
+
+            /* prevent unhook process from closing the socket */
+            for (i = 0; i < HOOK_CONNECT_MAX_SOCKETS; i++)
+            {
+                if (HOOK_CONNECT(hook_connect, sock_v4[i]) == sock)
+                    HOOK_CONNECT(hook_connect, sock_v4[i]) = -1;
+
+                if (HOOK_CONNECT(hook_connect, sock_v6[i]) == sock)
+                    HOOK_CONNECT(hook_connect, sock_v6[i]) = -1;
+            }
+#endif
+
+            HOOK_CONNECT(hook_connect, sock) = sock;
+
 #ifdef HAVE_GNUTLS
             if (HOOK_CONNECT(hook_connect, gnutls_sess))
             {
@@ -1240,7 +1406,7 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
                     (void) (HOOK_CONNECT(hook_connect, callback))
                         (hook_connect->callback_data,
                          WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR,
-                         rc,
+                         rc, sock,
                          gnutls_strerror (rc),
                          cb_ip_address);
                     unhook (hook_connect);
@@ -1261,7 +1427,7 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
                     (void) (HOOK_CONNECT(hook_connect, callback))
                         (hook_connect->callback_data,
                          WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR,
-                         rc,
+                         rc, sock,
                          "Error in the certificate.",
                          cb_ip_address);
                     unhook (hook_connect);
@@ -1303,7 +1469,14 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
         }
         (void) (HOOK_CONNECT(hook_connect, callback))
             (hook_connect->callback_data, buffer[0] - '0', 0,
-             cb_error, cb_ip_address);
+             sock, cb_error, cb_ip_address);
+        unhook (hook_connect);
+    }
+    else
+    {
+        (void) (HOOK_CONNECT(hook_connect, callback))
+            (hook_connect->callback_data, WEECHAT_HOOK_CONNECT_MEMORY_ERROR,
+             0, sock, cb_error, cb_ip_address);
         unhook (hook_connect);
     }
 
@@ -1323,6 +1496,11 @@ void
 network_connect_with_fork (struct t_hook *hook_connect)
 {
     int child_pipe[2];
+#ifdef HOOK_CONNECT_MAX_SOCKETS
+    int i;
+#else
+    int child_socket[2];
+#endif
 #ifdef HAVE_GNUTLS
     int rc;
     const char *pos_error;
@@ -1338,7 +1516,7 @@ network_connect_with_fork (struct t_hook *hook_connect)
             (void) (HOOK_CONNECT(hook_connect, callback))
                 (hook_connect->callback_data,
                  WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR,
-                 0, NULL, NULL);
+                 0, -1, NULL, NULL);
             unhook (hook_connect);
             return;
         }
@@ -1350,7 +1528,7 @@ network_connect_with_fork (struct t_hook *hook_connect)
             (void) (HOOK_CONNECT(hook_connect, callback))
                 (hook_connect->callback_data,
                  WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR,
-                 0, _("invalid priorities"), NULL);
+                 0, -1, _("invalid priorities"), NULL);
             unhook (hook_connect);
             return;
         }
@@ -1368,12 +1546,33 @@ network_connect_with_fork (struct t_hook *hook_connect)
         (void) (HOOK_CONNECT(hook_connect, callback))
             (hook_connect->callback_data,
              WEECHAT_HOOK_CONNECT_MEMORY_ERROR,
-             0, NULL, NULL);
+             0, -1, NULL, NULL);
         unhook (hook_connect);
         return;
     }
     HOOK_CONNECT(hook_connect, child_read) = child_pipe[0];
     HOOK_CONNECT(hook_connect, child_write) = child_pipe[1];
+
+#ifndef HOOK_CONNECT_MAX_SOCKETS
+    /* create socket for child process */
+    if (socketpair (AF_LOCAL, SOCK_DGRAM, 0, child_socket) < 0)
+    {
+        (void) (HOOK_CONNECT(hook_connect, callback))
+            (hook_connect->callback_data,
+             WEECHAT_HOOK_CONNECT_MEMORY_ERROR,
+             0, -1, NULL, NULL);
+        unhook (hook_connect);
+        return;
+    }
+    HOOK_CONNECT(hook_connect, child_recv) = child_socket[0];
+    HOOK_CONNECT(hook_connect, child_send) = child_socket[1];
+#else
+    for (i = 0; i < HOOK_CONNECT_MAX_SOCKETS; i++)
+    {
+        HOOK_CONNECT(hook_connect, sock_v4[i]) = socket (AF_INET, SOCK_STREAM, 0);
+        HOOK_CONNECT(hook_connect, sock_v6[i]) = socket (AF_INET6, SOCK_STREAM, 0);
+    }
+#endif
 
     switch (pid = fork ())
     {
@@ -1382,13 +1581,16 @@ network_connect_with_fork (struct t_hook *hook_connect)
             (void) (HOOK_CONNECT(hook_connect, callback))
                 (hook_connect->callback_data,
                  WEECHAT_HOOK_CONNECT_MEMORY_ERROR,
-                 0, NULL, NULL);
+                 0, -1, NULL, NULL);
             unhook (hook_connect);
             return;
         /* child process */
         case 0:
             setuid (getuid ());
             close (HOOK_CONNECT(hook_connect, child_read));
+#ifndef HOOK_CONNECT_MAX_SOCKETS
+            close (HOOK_CONNECT(hook_connect, child_recv));
+#endif
             network_connect_child (hook_connect);
             _exit (EXIT_SUCCESS);
     }
@@ -1396,6 +1598,10 @@ network_connect_with_fork (struct t_hook *hook_connect)
     HOOK_CONNECT(hook_connect, child_pid) = pid;
     close (HOOK_CONNECT(hook_connect, child_write));
     HOOK_CONNECT(hook_connect, child_write) = -1;
+#ifndef HOOK_CONNECT_MAX_SOCKETS
+    close (HOOK_CONNECT(hook_connect, child_send));
+    HOOK_CONNECT(hook_connect, child_send) = -1;
+#endif
     HOOK_CONNECT(hook_connect, hook_child_timer) = hook_timer (hook_connect->plugin,
                                                                CONFIG_INTEGER(config_network_connection_timeout) * 1000,
                                                                0, 1,

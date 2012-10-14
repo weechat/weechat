@@ -2,6 +2,7 @@
  * Copyright (C) 2008-2010 Dmitry Kobylin <fnfal@academ.tsc.ru>
  * Copyright (C) 2008 Julien Louis <ptitlouis@sysif.net>
  * Copyright (C) 2008-2012 Sebastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2012 Simon Arlott
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -2997,11 +2998,12 @@ weechat_tcl_api_hook_process_hashtable (ClientData clientData,
 
 int
 weechat_tcl_api_hook_connect_cb (void *data, int status, int gnutls_rc,
-                                 const char *error, const char *ip_address)
+                                 int sock, const char *error,
+                                 const char *ip_address)
 {
     struct t_plugin_script_cb *script_callback;
-    void *func_argv[5];
-    char str_status[32], str_gnutls_rc[32];
+    void *func_argv[6];
+    char str_status[32], str_gnutls_rc[32], str_sock[32];
     char empty_arg[1] = { '\0' };
     int *rc, ret;
 
@@ -3011,17 +3013,19 @@ weechat_tcl_api_hook_connect_cb (void *data, int status, int gnutls_rc,
     {
         snprintf (str_status, sizeof (str_status), "%d", status);
         snprintf (str_gnutls_rc, sizeof (str_gnutls_rc), "%d", gnutls_rc);
+        snprintf (str_sock, sizeof (str_sock), "%d", sock);
 
         func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         func_argv[1] = str_status;
         func_argv[2] = str_gnutls_rc;
-        func_argv[3] = (ip_address) ? (char *)ip_address : empty_arg;
-        func_argv[4] = (error) ? (char *)error : empty_arg;
+        func_argv[3] = str_sock;
+        func_argv[4] = (ip_address) ? (char *)ip_address : empty_arg;
+        func_argv[5] = (error) ? (char *)error : empty_arg;
 
         rc = (int *) weechat_tcl_exec (script_callback->script,
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script_callback->function,
-                                       "sssss", func_argv);
+                                       "ssssss", func_argv);
 
         if (!rc)
             ret = WEECHAT_RC_ERROR;
@@ -3047,15 +3051,15 @@ weechat_tcl_api_hook_connect (ClientData clientData, Tcl_Interp *interp,
 {
     Tcl_Obj *objp;
     char *proxy, *address, *local_hostname, *function, *data, *result;
-    int i, port, sock, ipv6;
+    int i, port, ipv6, retry;
 
     API_FUNC(1, "hook_connect", API_RETURN_EMPTY);
     if (objc < 9)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     if ((Tcl_GetIntFromObj (interp, objv[3], &port) != TCL_OK)
-        || (Tcl_GetIntFromObj (interp, objv[4], &sock) != TCL_OK)
-        || (Tcl_GetIntFromObj (interp, objv[5], &ipv6) != TCL_OK))
+        || (Tcl_GetIntFromObj (interp, objv[4], &ipv6) != TCL_OK)
+        || (Tcl_GetIntFromObj (interp, objv[5], &retry) != TCL_OK))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     proxy = Tcl_GetStringFromObj (objv[1], &i);
@@ -3069,8 +3073,8 @@ weechat_tcl_api_hook_connect (ClientData clientData, Tcl_Interp *interp,
                                                          proxy,
                                                          address,
                                                          port,
-                                                         sock,
                                                          ipv6,
+                                                         retry,
                                                          NULL, /* gnutls session */
                                                          NULL, /* gnutls callback */
                                                          0,    /* gnutls DH key size */
@@ -6464,6 +6468,8 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_CONNECT_MEMORY_ERROR", Tcl_GetStringFromObj (objp, &i), 0);
     Tcl_SetIntObj (objp, WEECHAT_HOOK_CONNECT_TIMEOUT);
     Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_CONNECT_TIMEOUT", Tcl_GetStringFromObj (objp, &i), 0);
+    Tcl_SetIntObj (objp, WEECHAT_HOOK_CONNECT_SOCKET_ERROR);
+    Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_CONNECT_SOCKET_ERROR", Tcl_GetStringFromObj (objp, &i), 0);
 
     Tcl_SetStringObj (objp, WEECHAT_HOOK_SIGNAL_STRING, -1);
     Tcl_SetVar (interp, "weechat::WEECHAT_HOOK_SIGNAL_STRING", Tcl_GetStringFromObj (objp, &i), 0);

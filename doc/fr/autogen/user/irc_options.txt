@@ -459,9 +459,9 @@
 ** valeurs: toute chaîne (valeur par défaut: `"WeeChat %v"`)
 
 * [[option_irc.server_default.ipv6]] *irc.server_default.ipv6*
-** description: `utiliser le protocole IPv6 pour la communication avec le serveur`
+** description: `utiliser le protocole IPv6 pour la communication avec le serveur (essayer IPv6 puis repli sur l'IPv4); si désactivé, seulemenent l'IPv4 est utilisé`
 ** type: booléen
-** valeurs: on, off (valeur par défaut: `off`)
+** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_irc.server_default.local_hostname]] *irc.server_default.local_hostname*
 ** description: `nom local de machine/IP personnalisé pour le serveur (optionnel, si non renseigné, le nom de machine local est utilisé)`

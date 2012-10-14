@@ -45,8 +45,12 @@ struct timeval;
  * some functions in this file, then please update API version below.
  */
 
-/* API version (used to check that plugin has same API and can be loaded) */
-#define WEECHAT_PLUGIN_API_VERSION "20120827-01"
+/*
+ * API version (used to check that plugin has same API and can be loaded):
+ * please change the date with current one; for a second change at same
+ * date, increment the 01, otherwise please keep 01.
+ */
+#define WEECHAT_PLUGIN_API_VERSION "20121014-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -138,6 +142,7 @@ struct timeval;
 #define WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR 7
 #define WEECHAT_HOOK_CONNECT_MEMORY_ERROR           8
 #define WEECHAT_HOOK_CONNECT_TIMEOUT                9
+#define WEECHAT_HOOK_CONNECT_SOCKET_ERROR           10
 
 /* action for gnutls callback: verify or set certificate */
 #define WEECHAT_HOOK_CONNECT_GNUTLS_CB_VERIFY_CERT  0
@@ -535,8 +540,8 @@ struct t_weechat_plugin
                                     const char *proxy,
                                     const char *address,
                                     int port,
-                                    int sock,
                                     int ipv6,
+                                    int retry,
                                     void *gnutls_sess, void *gnutls_cb,
                                     int gnutls_dhkey_size,
                                     const char *gnutls_priorities,
@@ -544,6 +549,7 @@ struct t_weechat_plugin
                                     int (*callback)(void *data,
                                                     int status,
                                                     int gnutls_rc,
+                                                    int sock,
                                                     const char *error,
                                                     const char *ip_address),
                                     void *callback_data);
@@ -1330,13 +1336,14 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->hook_process_hashtable(weechat_plugin, __command,   \
                                            __options, __timeout,        \
                                             __callback, __callback_data)
-#define weechat_hook_connect(__proxy, __address, __port, __sock,        \
-                            __ipv6, __gnutls_sess, __gnutls_cb,         \
+#define weechat_hook_connect(__proxy, __address, __port, __ipv6,        \
+                             __retry, __gnutls_sess, __gnutls_cb,       \
                              __gnutls_dhkey_size, __gnutls_priorities,  \
-                             __local_hostname,  __callback, __data)     \
+                             __local_hostname, __callback, __data)      \
     weechat_plugin->hook_connect(weechat_plugin, __proxy, __address,    \
-                                 __port, __sock, __ipv6, __gnutls_sess, \
-                                 __gnutls_cb, __gnutls_dhkey_size,      \
+                                 __port, __ipv6, __retry,               \
+                                 __gnutls_sess, __gnutls_cb,            \
+                                 __gnutls_dhkey_size,                   \
                                  __gnutls_priorities, __local_hostname, \
                                  __callback, __data)
 #define weechat_hook_print(__buffer, __tags, __msg, __strip__colors,    \

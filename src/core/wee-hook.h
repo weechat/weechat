@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2003-2012 Sebastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2012 Simon Arlott
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -24,6 +25,18 @@
 
 #ifdef HAVE_GNUTLS
 #include <gnutls/gnutls.h>
+#endif
+
+#ifdef __CYGWIN__
+/*
+ * For the connect hook, when this is defined an array of sockets will
+ * be passed from the parent process to the child process instead of using
+ * SCM_RIGHTS to pass a socket back from the child process to parent process.
+ *
+ * This allows connections to work on Windows but it limits the number of
+ * IPs that can be attempted each time.
+ */
+#define HOOK_CONNECT_MAX_SOCKETS 4
 #endif
 
 struct t_gui_bar;
@@ -212,7 +225,7 @@ struct t_hook_process
 /* hook connect */
 
 typedef int (t_hook_callback_connect)(void *data, int status,
-                                      int gnutls_rc,
+                                      int gnutls_rc, int sock,
                                       const char *error,
                                       const char *ip_address);
 
@@ -235,8 +248,9 @@ struct t_hook_connect
     char *proxy;                       /* proxy (optional)                  */
     char *address;                     /* peer address                      */
     int port;                          /* peer port                         */
-    int sock;                          /* socket (created by caller)        */
-    int ipv6;                          /* IPv6 connection ?                 */
+    int ipv6;                          /* use IPv6                          */
+    int sock;                          /* socket (set when connected)       */
+    int retry;                         /* retry count                       */
 #ifdef HAVE_GNUTLS
     gnutls_session_t *gnutls_sess;     /* GnuTLS session (SSL connection)   */
     gnutls_callback_t *gnutls_cb;      /* GnuTLS callback during handshake  */
@@ -246,6 +260,8 @@ struct t_hook_connect
     char *local_hostname;              /* force local hostname (optional)   */
     int child_read;                    /* to read data in pipe from child   */
     int child_write;                   /* to write data in pipe for child   */
+    int child_recv;                    /* to read data from child socket    */
+    int child_send;                    /* to write data to child socket     */
     pid_t child_pid;                   /* pid of child process (connecting) */
     struct t_hook *hook_child_timer;   /* timer for child process timeout   */
     struct t_hook *hook_fd;            /* pointer to fd hook                */
@@ -253,6 +269,10 @@ struct t_hook_connect
     struct t_hook *handshake_hook_timer; /* timer for handshake timeout     */
     int handshake_fd_flags;            /* socket flags saved for handshake  */
     char *handshake_ip_address;        /* ip address (used for handshake)   */
+#ifdef HOOK_CONNECT_MAX_SOCKETS
+    int sock_v4[HOOK_CONNECT_MAX_SOCKETS];  /* IPv4 sockets for connecting  */
+    int sock_v6[HOOK_CONNECT_MAX_SOCKETS];  /* IPv6 sockets for connecting  */
+#endif
 };
 
 /* hook print */
@@ -457,7 +477,7 @@ extern struct t_hook *hook_process_hashtable (struct t_weechat_plugin *plugin,
                                               void *callback_data);
 extern struct t_hook *hook_connect (struct t_weechat_plugin *plugin,
                                     const char *proxy, const char *address,
-                                    int port, int sock, int ipv6,
+                                    int port, int ipv6, int retry,
                                     void *gnutls_session, void *gnutls_cb,
                                     int gnutls_dhkey_size,
                                     const char *gnutls_priorities,

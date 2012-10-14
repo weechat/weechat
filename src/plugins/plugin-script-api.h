@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2003-2012 Sebastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2012 Simon Arlott
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -180,8 +181,8 @@ extern struct t_hook *plugin_script_api_hook_connect (struct t_weechat_plugin *w
                                                       const char *proxy,
                                                       const char *address,
                                                       int port,
-                                                      int sock,
                                                       int ipv6,
+                                                      int retry,
                                                       void *gnutls_sess,
                                                       void *gnutls_cb,
                                                       int gnutls_dhkey_size,
@@ -190,6 +191,7 @@ extern struct t_hook *plugin_script_api_hook_connect (struct t_weechat_plugin *w
                                                       int (*callback)(void *data,
                                                                       int status,
                                                                       int gnutls_rc,
+                                                                      int sock,
                                                                       const char *error,
                                                                       const char *ip_address),
                                                       const char *function,

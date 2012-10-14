@@ -459,9 +459,9 @@
 ** 値: 未制約文字列 (デフォルト値: `"WeeChat %v"`)
 
 * [[option_irc.server_default.ipv6]] *irc.server_default.ipv6*
-** 説明: `サーバとの通信に IPv6 を利用`
+** 説明: `use IPv6 protocol for server communication (try IPv6 then fallback to IPv4); if disabled, only IPv4 is used`
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `off`)
+** 値: on, off (デフォルト値: `on`)
 
 * [[option_irc.server_default.local_hostname]] *irc.server_default.local_hostname*
 ** 説明: `サーバで使用するカスタムホスト名/IP アドレス (任意、空の場合はローカルホスト名が使われる)`
