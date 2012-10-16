@@ -14,6 +14,8 @@ Version 0.4.0 (under dev!)
   hook_connect, move "sock" from hook_connect arguments to callback of
   hook_connect (task #11205)
 * aspell: add bar item "aspell_dict" (dictionary used on current buffer)
+* irc: remove local variable "away" in server/channels buffers after server
+  disconnection (bug #37582)
 * irc: add option "-noswitch" for command /join (task #12275)
 * irc: fix crash when message 352 has too few arguments (bug #37513)
 * irc: remove unneeded server disconnect when server buffer is closed and server

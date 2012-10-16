@@ -3930,11 +3930,14 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
                 weechat_unhook (ptr_channel->hook_autorejoin);
                 ptr_channel->hook_autorejoin = NULL;
             }
+            weechat_buffer_set (ptr_channel->buffer, "localvar_del_away", "");
             weechat_printf (ptr_channel->buffer,
                             _("%s%s: disconnected from server"),
                             weechat_prefix ("network"),
                             IRC_PLUGIN_NAME);
         }
+        /* remove away status on server buffer */
+        weechat_buffer_set (server->buffer, "localvar_del_away", "");
     }
 
     irc_server_close_connection (server);
