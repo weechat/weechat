@@ -22,6 +22,7 @@
  */
 
 #include <stdlib.h>
+#include <string.h>
 
 #include "../weechat-plugin.h"
 #include "relay.h"
@@ -65,7 +66,7 @@ relay_protocol_search (const char *name)
 
     for (i = 0; i < RELAY_NUM_PROTOCOLS; i++)
     {
-        if (weechat_strcasecmp (relay_protocol_string[i], name) == 0)
+        if (strcmp (relay_protocol_string[i], name) == 0)
             return i;
     }
 

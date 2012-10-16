@@ -2,34 +2,42 @@
 [command]*`relay`* リレー管理::
 ........................................
 /relay  list|listfull|listrelay
-        add <protocol.name> <port>
-        del <protocol.name>
+        add [ipv4.][ipv6.][ssl.]<protocol.name> <port>
+        del [ipv4.][ipv6.][ssl.]<protocol.name>
         raw
         sslcertkey
 
-         list: リレーするクライアントをリストアップ (アクティブなもののみ)
-     listfull: リレーするクライアントをリストアップ (詳細、全てのリレー)
-    listrelay: リレーをリストアップ (名前とポート番号)
-          add: プロトコル + 名前のリレーを追加
-          del: プロトコル + 名前のリレーを削除
-protocol.name: リレーするプロトコルと名前:
-                 - プロトコル "irc": 名前は共有するサーバ
-                 - プロトコル "weechat" (名前は使われていない)
-               注意: SSL を有効化するには "ssl." を protocol の最初に付ける
-         port: リレーに使うポート番号
-          raw: 生 Relay データバッファを開く
-   sslcertkey: オプション relay.network.ssl_cert_key のパスを使って SSL 証明書/鍵を設定
+         list: list relay clients (only active relays)
+     listfull: list relay clients (verbose, all relays)
+    listrelay: list relays (name and port)
+          add: add relay for a protocol + name
+          del: remove relay for a protocol + name
+         ipv4: force use of IPv4
+         ipv6: force use of IPv6
+          ssl: enable SSL
+protocol.name: protocol and name to relay:
+                 - protocol "irc": name is the server to share
+                 - protocol "weechat" (name is not used)
+         port: port used for relay
+          raw: open buffer with raw Relay data
+   sslcertkey: set SSL certificate/key using path in option relay.network.ssl_cert_key
 
-引数無しの場合、リレークライアントのリストを含むバッファを開く
+Without argument, this command opens buffer with list of relay clients.
 
-例:
-  サーバ "freenode" に対する irc プロキシを設定:
+Examples:
+  irc proxy, for server "freenode":
     /relay add irc.freenode 8000
-  サーバ "freenode" に対する SSL を有効化した irc プロキシを設定:
+  irc proxy, for server "freenode", with SSL:
     /relay add ssl.irc.freenode 8001
-  weechat プロトコル:
+  weechat protocol:
     /relay add weechat 9000
-  SSL を有効化した weechat プロトコル:
+  weechat protocol with SSL:
     /relay add ssl.weechat 9001
+  weechat protocol with SSL, using only IPv4:
+    /relay add ipv4.ssl.weechat 9001
+  weechat protocol with SSL, using only IPv6:
+    /relay add ipv6.ssl.weechat 9001
+  weechat protocol with SSL, using IPv4 + IPv6:
+    /relay add ipv4.ipv6.ssl.weechat 9001
 ........................................
 

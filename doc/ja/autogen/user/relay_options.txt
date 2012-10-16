@@ -54,7 +54,7 @@
 ** 値: 0 .. 65535 (デフォルト値: `256`)
 
 * [[option_relay.network.allowed_ips]] *relay.network.allowed_ips*
-** 説明: `リレーに使用する IP アドレスの正規表現 (大文字小文字の区別無し、最初に "(?-i)" をつければ区別有り)、例: "^(123.45.67.89|192.160.*)$"`
+** 説明: `regular expression with IPs allowed to use relay (case insensitive, use "(?-i)" at beginning to make it case sensitive); if IPv6 is enabled and that connection is made using IPv4, it will be IPv4-mapped IPv6 address (like: "::ffff:127.0.0.1"), example: "^((::ffff:)?123.45.67.89|192.160.*)$"`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
@@ -67,6 +67,11 @@
 ** 説明: `WeeChat プロトコルでクライアントに送信するパケットの圧縮レベル (0 = 圧縮しない、1 = 低圧縮 ... 9 = 高圧縮)`
 ** タイプ: 整数
 ** 値: 0 .. 9 (デフォルト値: `6`)
+
+* [[option_relay.network.ipv6]] *relay.network.ipv6*
+** 説明: `listen on IPv6 socket by default (in addition to IPv4 which is default); protocols IPv4 and IPv6 can be forced (individually or together) in the protocol name (see /help relay)`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
 
 * [[option_relay.network.max_clients]] *relay.network.max_clients*
 ** 説明: `ポートに接続するクライアントの最大数`

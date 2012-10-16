@@ -2,8 +2,8 @@
 [command]*`relay`* relay control::
 ........................................
 /relay  list|listfull|listrelay
-        add <protocol.name> <port>
-        del <protocol.name>
+        add [ipv4.][ipv6.][ssl.]<protocol.name> <port>
+        del [ipv4.][ipv6.][ssl.]<protocol.name>
         raw
         sslcertkey
 
@@ -12,10 +12,12 @@
     listrelay: list relays (name and port)
           add: add relay for a protocol + name
           del: remove relay for a protocol + name
+         ipv4: force use of IPv4
+         ipv6: force use of IPv6
+          ssl: enable SSL
 protocol.name: protocol and name to relay:
                  - protocol "irc": name is the server to share
                  - protocol "weechat" (name is not used)
-               Note: the protocol can be prefixed by "ssl." to enable SSL
          port: port used for relay
           raw: open buffer with raw Relay data
    sslcertkey: set SSL certificate/key using path in option relay.network.ssl_cert_key
@@ -31,5 +33,11 @@ Examples:
     /relay add weechat 9000
   weechat protocol with SSL:
     /relay add ssl.weechat 9001
+  weechat protocol with SSL, using only IPv4:
+    /relay add ipv4.ssl.weechat 9001
+  weechat protocol with SSL, using only IPv6:
+    /relay add ipv6.ssl.weechat 9001
+  weechat protocol with SSL, using IPv4 + IPv6:
+    /relay add ipv4.ipv6.ssl.weechat 9001
 ........................................
 

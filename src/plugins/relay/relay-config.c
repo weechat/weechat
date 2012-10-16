@@ -55,6 +55,7 @@ struct t_config_option *relay_config_color_status[RELAY_NUM_STATUS];
 struct t_config_option *relay_config_network_allowed_ips;
 struct t_config_option *relay_config_network_bind_address;
 struct t_config_option *relay_config_network_compression_level;
+struct t_config_option *relay_config_network_ipv6;
 struct t_config_option *relay_config_network_max_clients;
 struct t_config_option *relay_config_network_password;
 struct t_config_option *relay_config_network_ssl_cert_key;
@@ -119,8 +120,9 @@ relay_config_change_network_allowed_ips (void *data,
 }
 
 /*
- * relay_config_change_network_bind_address_cb: callback called when user changes
- *                                              network bind address option
+ * relay_config_change_network_bind_address_cb: callback called when user
+ *                                              changes network bind address
+ *                                              option
  */
 
 void
@@ -136,6 +138,31 @@ relay_config_change_network_bind_address_cb (void *data,
     for (ptr_server = relay_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
+        relay_server_close_socket (ptr_server);
+        relay_server_create_socket (ptr_server);
+    }
+}
+
+/*
+ * relay_config_change_network_ipv6_cb: callback called when user changes ipv6
+ *                                      option
+ */
+
+void
+relay_config_change_network_ipv6_cb (void *data, struct t_config_option *option)
+{
+    struct t_relay_server *ptr_server;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+    for (ptr_server = relay_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        relay_server_get_protocol_args (ptr_server->protocol_string,
+                                        &ptr_server->ipv4, &ptr_server->ipv6,
+                                        NULL, NULL, NULL);
         relay_server_close_socket (ptr_server);
         relay_server_create_socket (ptr_server);
     }
@@ -238,7 +265,7 @@ relay_config_create_option_port (void *data,
                                  const char *option_name,
                                  const char *value)
 {
-    int rc, protocol_number, ssl;
+    int rc, protocol_number, ipv4, ipv6, ssl;
     char *error, *protocol, *protocol_args;
     long port;
     struct t_relay_server *ptr_server;
@@ -251,8 +278,8 @@ relay_config_create_option_port (void *data,
     protocol_number = -1;
     port = -1;
 
-    relay_server_get_protocol_args (option_name,
-                                    &ssl, &protocol, &protocol_args);
+    relay_server_get_protocol_args (option_name, &ipv4, &ipv6, &ssl,
+                                    &protocol, &protocol_args);
 
 #ifndef HAVE_GNUTLS
     if (ssl)
@@ -323,7 +350,8 @@ relay_config_create_option_port (void *data,
 
     if (rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
     {
-        if (relay_server_new (protocol_number, protocol_args, port, ssl))
+        if (relay_server_new (option_name, protocol_number, protocol_args,
+                              port, ipv4, ipv6, ssl))
         {
             /* create config option */
             weechat_config_new_option (
@@ -479,8 +507,10 @@ relay_config_init ()
         relay_config_file, ptr_section,
         "allowed_ips", "string",
         N_("regular expression with IPs allowed to use relay (case insensitive, "
-           "use \"(?-i)\" at beginning to make it case sensitive), example: "
-           "\"^(123.45.67.89|192.160.*)$\""),
+           "use \"(?-i)\" at beginning to make it case sensitive); if IPv6 is "
+           "enabled and that connection is made using IPv4, it will be "
+           "IPv4-mapped IPv6 address (like: \"::ffff:127.0.0.1\"), example: "
+           "\"^((::ffff:)?123.45.67.89|192.160.*)$\""),
         NULL, 0, 0, "", NULL, 0, NULL, NULL,
         &relay_config_change_network_allowed_ips, NULL, NULL, NULL);
     relay_config_network_bind_address = weechat_config_new_option (
@@ -499,6 +529,14 @@ relay_config_init ()
            "compression)"),
         NULL, 0, 9, "6", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL);
+    relay_config_network_ipv6 = weechat_config_new_option (
+        relay_config_file, ptr_section,
+        "ipv6", "boolean",
+        N_("listen on IPv6 socket by default (in addition to IPv4 which is "
+            "default); protocols IPv4 and IPv6 can be forced (individually or "
+           "together) in the protocol name (see /help relay)"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL,
+        &relay_config_change_network_ipv6_cb, NULL, NULL, NULL);
     relay_config_network_max_clients = weechat_config_new_option (
         relay_config_file, ptr_section,
         "max_clients", "integer",

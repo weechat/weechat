@@ -54,7 +54,7 @@
 ** valeurs: 0 .. 65535 (valeur par défaut: `256`)
 
 * [[option_relay.network.allowed_ips]] *relay.network.allowed_ips*
-** description: `expression régulière avec les IPs autorisées pour le relai (insensible à la casse, utilisez "(?-i)" en début de chaîne pour la rendre sensible à la casse), exemple: "^(123.45.67.89|192.160.*)$"`
+** description: `expression régulière avec les IPs autorisées pour le relai (insensible à la casse, utilisez "(?-i)" en début de chaîne pour la rendre sensible à la casse); si l'IPv6 est activé et qu'une connexion est faite en IPv4, il y aura une adresse IPv4 encapsulée dans une IPv6 (comme: "::ffff:127.0.0.1"), exemple: "^((::ffff:)?123.45.67.89|192.160.*)$"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
@@ -67,6 +67,11 @@
 ** description: `niveau de compression pour les paquets envoyés au client avec le protocole WeeChat (0 = désactiver la compression, 1 = peu de compression ... 9 = meilleure compression)`
 ** type: entier
 ** valeurs: 0 .. 9 (valeur par défaut: `6`)
+
+* [[option_relay.network.ipv6]] *relay.network.ipv6*
+** description: `écouter en IPv6 sur la socket par défaut (en plus de l'IPv4 qui est par défaut); les protocoles IPv4 et IPv6 peuvent être forcés (individuellement ou ensemble) dans le nom du protocole (voir /help relay)`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_relay.network.max_clients]] *relay.network.max_clients*
 ** description: `nombre maximum de clients qui se connectent sur un port`

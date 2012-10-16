@@ -149,16 +149,14 @@ relay_command_server_list ()
             }
 
             weechat_printf (NULL,
-                            _("  port %s%d%s, relay: %s%s%s%s%s%s, started on: %s"),
+                            _("  port %s%d%s, relay: %s%s%s, %s, started on: %s"),
                             RELAY_COLOR_CHAT_BUFFER,
                             ptr_server->port,
                             RELAY_COLOR_CHAT,
                             RELAY_COLOR_CHAT_BUFFER,
-                            (ptr_server->ssl) ? "ssl." : "",
-                            relay_protocol_string[ptr_server->protocol],
-                            (ptr_server->protocol_args) ? "." : "",
-                            (ptr_server->protocol_args) ? ptr_server->protocol_args : "",
+                            ptr_server->protocol_string,
                             RELAY_COLOR_CHAT,
+                            ((ptr_server->ipv4 && ptr_server->ipv6) ? "IPv4+6" : ((ptr_server->ipv6) ? "IPv6" : "IPv4")),
                             date_start);
             i++;
         }
@@ -315,8 +313,8 @@ relay_command_init ()
     weechat_hook_command ("relay",
                           N_("relay control"),
                           N_("list|listfull|listrelay"
-                             " || add <protocol.name> <port>"
-                             " || del <protocol.name>"
+                             " || add [ipv4.][ipv6.][ssl.]<protocol.name> <port>"
+                             " || del [ipv4.][ipv6.][ssl.]<protocol.name>"
                              " || raw"
                              " || sslcertkey"),
                           N_("         list: list relay clients (only active "
@@ -326,13 +324,14 @@ relay_command_init ()
                              "    listrelay: list relays (name and port)\n"
                              "          add: add relay for a protocol + name\n"
                              "          del: remove relay for a protocol + name\n"
+                             "         ipv4: force use of IPv4\n"
+                             "         ipv6: force use of IPv6\n"
+                             "          ssl: enable SSL\n"
                              "protocol.name: protocol and name to relay:\n"
                              "                 - protocol \"irc\": name is the "
                              "server to share\n"
                              "                 - protocol \"weechat\" (name is "
                              "not used)\n"
-                             "               Note: the protocol can be prefixed "
-                             "by \"ssl.\" to enable SSL\n"
                              "         port: port used for relay\n"
                              "          raw: open buffer with raw Relay data\n"
                              "   sslcertkey: set SSL certificate/key using path "
@@ -347,7 +346,13 @@ relay_command_init ()
                              "  weechat protocol:\n"
                              "    /relay add weechat 9000\n"
                              "  weechat protocol with SSL:\n"
-                             "    /relay add ssl.weechat 9001"),
+                             "    /relay add ssl.weechat 9001\n"
+                             "  weechat protocol with SSL, using only IPv4:\n"
+                             "    /relay add ipv4.ssl.weechat 9001\n"
+                             "  weechat protocol with SSL, using only IPv6:\n"
+                             "    /relay add ipv6.ssl.weechat 9001\n"
+                             "  weechat protocol with SSL, using IPv4 + IPv6:\n"
+                             "    /relay add ipv4.ipv6.ssl.weechat 9001"),
                           "list %(relay_relays)"
                           " || listfull %(relay_relays)"
                           " || listrelay"

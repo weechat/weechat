@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-10-14 09:22+0200\n"
+"POT-Creation-Date: 2012-10-16 13:26+0200\n"
 "PO-Revision-Date: 2012-09-29 11:42+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -7620,7 +7620,7 @@ msgid "Listening on ports:"
 msgstr "リッスンポート:"
 
 #, fuzzy, c-format
-msgid "  port %s%d%s, relay: %s%s%s%s%s%s, started on: %s"
+msgid "  port %s%d%s, relay: %s%s%s, %s, started on: %s"
 msgstr "  ポート %s%d%s、リレー: %s%s%s%s%s、開始日時: %s"
 
 msgid "No server for relay"
@@ -7641,23 +7641,27 @@ msgstr "%s%s: リレー \"%s\" が見つかりません"
 msgid "relay control"
 msgstr "リレー管理"
 
+#, fuzzy
 msgid ""
-"list|listfull|listrelay || add <protocol.name> <port> || del <protocol.name> "
-"|| raw || sslcertkey"
+"list|listfull|listrelay || add [ipv4.][ipv6.][ssl.]<protocol.name> <port> || "
+"del [ipv4.][ipv6.][ssl.]<protocol.name> || raw || sslcertkey"
 msgstr ""
 "list|listfull|listrelay || add <protocol.name> <port> || del <protocol.name> "
 "|| raw || sslcertkey"
 
+#, fuzzy
 msgid ""
 "         list: list relay clients (only active relays)\n"
 "     listfull: list relay clients (verbose, all relays)\n"
 "    listrelay: list relays (name and port)\n"
 "          add: add relay for a protocol + name\n"
 "          del: remove relay for a protocol + name\n"
+"         ipv4: force use of IPv4\n"
+"         ipv6: force use of IPv6\n"
+"          ssl: enable SSL\n"
 "protocol.name: protocol and name to relay:\n"
 "                 - protocol \"irc\": name is the server to share\n"
 "                 - protocol \"weechat\" (name is not used)\n"
-"               Note: the protocol can be prefixed by \"ssl.\" to enable SSL\n"
 "         port: port used for relay\n"
 "          raw: open buffer with raw Relay data\n"
 "   sslcertkey: set SSL certificate/key using path in option relay.network."
@@ -7673,7 +7677,13 @@ msgid ""
 "  weechat protocol:\n"
 "    /relay add weechat 9000\n"
 "  weechat protocol with SSL:\n"
-"    /relay add ssl.weechat 9001"
+"    /relay add ssl.weechat 9001\n"
+"  weechat protocol with SSL, using only IPv4:\n"
+"    /relay add ipv4.ssl.weechat 9001\n"
+"  weechat protocol with SSL, using only IPv6:\n"
+"    /relay add ipv6.ssl.weechat 9001\n"
+"  weechat protocol with SSL, using IPv4 + IPv6:\n"
+"    /relay add ipv4.ipv6.ssl.weechat 9001"
 msgstr ""
 "         list: リレーするクライアントをリストアップ (アクティブなもののみ)\n"
 "     listfull: リレーするクライアントをリストアップ (詳細、全てのリレー)\n"
@@ -7767,10 +7777,12 @@ msgstr "\"認証失敗\" 状態のテキスト色"
 msgid "text color for \"disconnected\" status"
 msgstr "\"接続切断\" 状態のテキスト色"
 
+#, fuzzy
 msgid ""
 "regular expression with IPs allowed to use relay (case insensitive, use \"(?-"
-"i)\" at beginning to make it case sensitive), example: \"^(123.45.67.89|"
-"192.160.*)$\""
+"i)\" at beginning to make it case sensitive); if IPv6 is enabled and that "
+"connection is made using IPv4, it will be IPv4-mapped IPv6 address (like: "
+"\"::ffff:127.0.0.1\"), example: \"^((::ffff:)?123.45.67.89|192.160.*)$\""
 msgstr ""
 "リレーに使用する IP アドレスの正規表現 (大文字小文字の区別無し、最初に \"(?-"
 "i)\" をつければ区別有り)、例: \"^(123.45.67.89|192.160.*)$\""
@@ -7788,6 +7800,12 @@ msgid ""
 msgstr ""
 "WeeChat プロトコルでクライアントに送信するパケットの圧縮レベル (0 = 圧縮しな"
 "い、1 = 低圧縮 ... 9 = 高圧縮)"
+
+msgid ""
+"listen on IPv6 socket by default (in addition to IPv4 which is default); "
+"protocols IPv4 and IPv6 can be forced (individually or together) in the "
+"protocol name (see /help relay)"
+msgstr ""
 
 msgid "maximum number of clients connecting to a port"
 msgstr "ポートに接続するクライアントの最大数"
@@ -7820,12 +7838,12 @@ msgstr "%s%s: SSL 優先度の初期化に失敗"
 msgid "Relay raw messages"
 msgstr "Relay 生メッセージ"
 
-#, c-format
-msgid "%s: socket closed for %s%s%s (port %d)"
+#, fuzzy, c-format
+msgid "%s: socket closed for %s (port %d)"
 msgstr "%s: %s%s%s (ポート %d) のソケットが閉じられました"
 
-#, c-format
-msgid "%s%s: cannot accept client on port %d (%s%s%s)"
+#, fuzzy, c-format
+msgid "%s%s: cannot accept client on port %d (%s)"
 msgstr "%s%s: ポート %d (%s%s%s) ではクライアントを受け付けません"
 
 #, c-format
@@ -7840,16 +7858,20 @@ msgstr "%s%s: ソケットオプション \"SO_REUSEADDR\" の設定に失敗"
 msgid "%s%s: cannot create socket"
 msgstr "%s%s: ソケットの作成に失敗"
 
+#, fuzzy, c-format
+msgid "%s%s: cannot set socket option \"IPV6_V6ONLY\" to value %d"
+msgstr "%s%s: ソケットオプション \"SO_KEEPALIVE\" の設定に失敗"
+
 #, c-format
 msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
 msgstr "%s%s: ソケットオプション \"SO_KEEPALIVE\" の設定に失敗"
 
-#, c-format
-msgid "%s%s: error with \"bind\" on port %d (%s%s%s)"
+#, fuzzy, c-format
+msgid "%s%s: error with \"bind\" on port %d (%s)"
 msgstr "%s%s: ポート %d (%s%s%s) での \"bind\" にエラー"
 
-#, c-format
-msgid "%s: listening on port %d (relay: %s%s%s,%s max %d clients)"
+#, fuzzy, c-format
+msgid "%s: listening on port %d (relay: %s, %s, max %d clients)"
 msgstr ""
 "%s: ポート %d をリッスンしています (リレー: %s%s%s、%s 最大 %d クライアント)"
 

@@ -84,7 +84,6 @@ relay_completion_relays_cb (void *data, const char *completion_item,
                             struct t_gui_completion *completion)
 {
     struct t_relay_server *ptr_server;
-    char protocol_name[512];
 
     /* make C compiler happy */
     (void) data;
@@ -94,12 +93,8 @@ relay_completion_relays_cb (void *data, const char *completion_item,
     for (ptr_server = relay_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
-        snprintf (protocol_name, sizeof (protocol_name), "%s%s%s%s",
-                  (ptr_server->ssl) ? "ssl." : "",
-                  relay_protocol_string[ptr_server->protocol],
-                  (ptr_server->protocol_args) ? "." : "",
-                  (ptr_server->protocol_args) ? ptr_server->protocol_args : "");
-        weechat_hook_completion_list_add (completion, protocol_name,
+        weechat_hook_completion_list_add (completion,
+                                          ptr_server->protocol_string,
                                           0, WEECHAT_LIST_POS_SORT);
     }
 

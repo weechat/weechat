@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-10-14 09:22+0200\n"
+"POT-Creation-Date: 2012-10-16 13:26+0200\n"
 "PO-Revision-Date: 2012-09-29 11:43+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7092,7 +7092,7 @@ msgid "Listening on ports:"
 msgstr "Список сокращений:\n"
 
 #, fuzzy, c-format
-msgid "  port %s%d%s, relay: %s%s%s%s%s%s, started on: %s"
+msgid "  port %s%d%s, relay: %s%s%s, %s, started on: %s"
 msgstr "%s%s%s отсутствует: %s\n"
 
 #, fuzzy
@@ -7115,8 +7115,8 @@ msgid "relay control"
 msgstr ""
 
 msgid ""
-"list|listfull|listrelay || add <protocol.name> <port> || del <protocol.name> "
-"|| raw || sslcertkey"
+"list|listfull|listrelay || add [ipv4.][ipv6.][ssl.]<protocol.name> <port> || "
+"del [ipv4.][ipv6.][ssl.]<protocol.name> || raw || sslcertkey"
 msgstr ""
 
 msgid ""
@@ -7125,10 +7125,12 @@ msgid ""
 "    listrelay: list relays (name and port)\n"
 "          add: add relay for a protocol + name\n"
 "          del: remove relay for a protocol + name\n"
+"         ipv4: force use of IPv4\n"
+"         ipv6: force use of IPv6\n"
+"          ssl: enable SSL\n"
 "protocol.name: protocol and name to relay:\n"
 "                 - protocol \"irc\": name is the server to share\n"
 "                 - protocol \"weechat\" (name is not used)\n"
-"               Note: the protocol can be prefixed by \"ssl.\" to enable SSL\n"
 "         port: port used for relay\n"
 "          raw: open buffer with raw Relay data\n"
 "   sslcertkey: set SSL certificate/key using path in option relay.network."
@@ -7144,7 +7146,13 @@ msgid ""
 "  weechat protocol:\n"
 "    /relay add weechat 9000\n"
 "  weechat protocol with SSL:\n"
-"    /relay add ssl.weechat 9001"
+"    /relay add ssl.weechat 9001\n"
+"  weechat protocol with SSL, using only IPv4:\n"
+"    /relay add ipv4.ssl.weechat 9001\n"
+"  weechat protocol with SSL, using only IPv6:\n"
+"    /relay add ipv6.ssl.weechat 9001\n"
+"  weechat protocol with SSL, using IPv4 + IPv6:\n"
+"    /relay add ipv4.ipv6.ssl.weechat 9001"
 msgstr ""
 
 msgid "all possible protocol.name for relay plugin"
@@ -7224,8 +7232,9 @@ msgstr "цвет \"соединения\" в окне DCC"
 
 msgid ""
 "regular expression with IPs allowed to use relay (case insensitive, use \"(?-"
-"i)\" at beginning to make it case sensitive), example: \"^(123.45.67.89|"
-"192.160.*)$\""
+"i)\" at beginning to make it case sensitive); if IPv6 is enabled and that "
+"connection is made using IPv4, it will be IPv4-mapped IPv6 address (like: "
+"\"::ffff:127.0.0.1\"), example: \"^((::ffff:)?123.45.67.89|192.160.*)$\""
 msgstr ""
 
 msgid ""
@@ -7236,6 +7245,12 @@ msgstr ""
 msgid ""
 "compression level for packets sent to client with WeeChat protocol (0 = "
 "disable compression, 1 = low compression ... 9 = best compression)"
+msgstr ""
+
+msgid ""
+"listen on IPv6 socket by default (in addition to IPv4 which is default); "
+"protocols IPv4 and IPv6 can be forced (individually or together) in the "
+"protocol name (see /help relay)"
 msgstr ""
 
 msgid "maximum number of clients connecting to a port"
@@ -7270,11 +7285,11 @@ msgid "Relay raw messages"
 msgstr "выводить отладочные сообщения"
 
 #, fuzzy, c-format
-msgid "%s: socket closed for %s%s%s (port %d)"
+msgid "%s: socket closed for %s (port %d)"
 msgstr "FIFO pipe закрыт\n"
 
 #, fuzzy, c-format
-msgid "%s%s: cannot accept client on port %d (%s%s%s)"
+msgid "%s%s: cannot accept client on port %d (%s)"
 msgstr "%s невозможно создать сокет\n"
 
 #, fuzzy, c-format
@@ -7290,16 +7305,20 @@ msgid "%s%s: cannot create socket"
 msgstr "%s невозможно создать сокет\n"
 
 #, fuzzy, c-format
+msgid "%s%s: cannot set socket option \"IPV6_V6ONLY\" to value %d"
+msgstr "%s не могу установить настройку сокета \"SO_KEEPALIVE\"\n"
+
+#, fuzzy, c-format
 msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
 msgstr "%s не могу установить настройку сокета \"SO_KEEPALIVE\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s: error with \"bind\" on port %d (%s%s%s)"
+msgid "%s%s: error with \"bind\" on port %d (%s)"
 msgstr "%s невозможно создать сокет\n"
 
-#, c-format
-msgid "%s: listening on port %d (relay: %s%s%s,%s max %d clients)"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s: listening on port %d (relay: %s, %s, max %d clients)"
+msgstr "%s невозможно создать сокет\n"
 
 #, fuzzy, c-format
 msgid "%s%s: not enough memory for listening on new port"
