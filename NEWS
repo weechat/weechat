@@ -12,7 +12,7 @@ Important release notes:
 * IPv6 is now used by default to connect to IRC servers, with fallback to IPv4.
   The option irc.server_default.ipv6 is now "on" by default. If IPv6 is not
   enabled or fails, IPv4 will be used. The "ipv6" option in server is now used
-  to disable IPv6 and force IPv6 (if option is turned "off").
+  to disable IPv6 and force IPv4 (if option is turned "off").
 * relay is now listening by default on an IPv6 socket (new option
   relay.network.ipv6, on by default), so connections with IPv4 will have
   IPv4-mapped IPv6 addresses, like: "::ffff:127.0.0.1" (for "127.0.0.1");
