@@ -20,7 +20,7 @@
 #
 
 #
-# weercd - the WeeChat flood IRC server
+# weercd - the WeeChat IRC server for testing purposes
 #
 # weercd is an IRC server that is designed to test client resistance and memory
 # usage (quickly detect memory leaks, for example with client scripts).
@@ -53,13 +53,13 @@
 import sys, socket, select, time, random, string, re
 
 NAME    = 'weercd'
-VERSION = '0.5'
+VERSION = '0.6'
 
 options = {
     'host'       : ['',      'Host for socket bind'],
     'port'       : ['7777',  'Port for socket bind'],
     'debug'      : ['off',   'Debug (on/off)'],
-    'action'     : ['flood', 'Action of server: "flood" = flood client, "user" = send custom messages to client'],
+    'action'     : ['flood', 'Action of server: "flood" = flood client, "user" = type messages to send to client, "file" = messages sent from a file'],
     'wait'       : ['0',     'Time to wait before flooding client (float, in seconds)'],
     'sleep'      : ['0',     'Sleep for select, delay between 2 messages sent to client (float, in seconds)'],
     'nickused'   : ['0',     'Send 433 (nickname already in use) this number of times before accepting nick'],
@@ -67,6 +67,7 @@ options = {
     'maxnicks'   : ['100',   'Max nicks per channel'],
     'usernotices': ['on',    'Send notices to user (on/off)'],
     'channotices': ['on',    'Send notices to channels (on/off)'],
+    'file'       : ['',      'Filename used for sending messages to client (only for action "file")'],
 }
 
 def usage():
@@ -130,6 +131,7 @@ def strrand(minlength=1, maxlength=50, spaces=False):
 class Client:
     def __init__(self, sock, addr, **kwargs):
         self.sock, self.addr = sock, addr
+        self.action = getoption('action')
         self.nick = ''
         self.nicknumber = 0
         self.channels = {}
@@ -143,13 +145,28 @@ class Client:
         self.usernotices = (getoption('usernotices') == 'on')
         self.channotices = (getoption('channotices') == 'on')
         self.starttime = time.time()
+        self.file = None
+        if self.action == 'file':
+            self.filename = getoption('file')
+            if not self.filename:
+                print('Error: please specify file name with option "file=..."')
+                return
+            try:
+                self.file = open(self.filename, 'r')
+            except IOError:
+                print('Error: unable to open file "%s"' % self.filename)
+                return
         self.connect()
         if not self.quit:
-            action = getoption('action')
-            if action == 'flood':
+            if self.action == 'flood':
                 self.action_flood()
-            elif action == 'user':
+            elif self.action == 'user':
                 self.action_user()
+            elif self.action == 'file':
+                self.action_file()
+            else:
+                print('Unknown action: "%s"' % self.action)
+                return
 
     def send(self, data):
         """Send one message to client."""
@@ -208,7 +225,7 @@ class Client:
                     self.send(':%s 433 * %s :Nickname is already in use.' % (NAME, self.nick))
                     self.nick = ''
                     count -= 1
-            self.send(':%s 001 %s :Welcome to the WeeChat IRC flood server' % (NAME, self.nick))
+            self.send(':%s 001 %s :Welcome to the WeeChat IRC server' % (NAME, self.nick))
             self.send(':%s 002 %s :Your host is %s, running version %s' % (NAME, self.nick, NAME, VERSION))
             self.send(':%s 003 %s :Are you solid like a rock?' % (NAME, self.nick))
             self.send(':%s 004 %s :Let\'s see!' % (NAME, self.nick))
@@ -319,13 +336,38 @@ class Client:
             return
 
     def action_user(self):
-        """Send custom messages to client"""
+        """User enters messages to send to client."""
         try:
             while 1:
                 sys.stdout.write('Message to send to client: ')
                 sys.stdout.flush()
                 message = sys.stdin.readline()
                 self.send(message)
+        except Exception as e:
+            self.endmsg = 'connection lost'
+            self.endexcept = e
+            return
+        except KeyboardInterrupt:
+            self.endmsg = 'interrupted'
+            return
+
+    def action_file(self):
+        """Send messages from a file to client."""
+        try:
+            count = 0
+            for line in self.file:
+                if not line.startswith('//'):
+                    self.read(self.sleep)
+                    self.send(line.replace('${nick}', self.nick))
+                    count += 1
+            self.file.close()
+            sys.stdout.write('%d messages sent, press Enter to restart server' % count)
+            sys.stdout.flush()
+            sys.stdin.readline()
+        except IOError as e:
+            self.endmsg = 'unable to open file "%s"' % self.filename
+            self.endexcept = e
+            return
         except Exception as e:
             self.endmsg = 'connection lost'
             self.endexcept = e
@@ -357,7 +399,7 @@ def main():
     readconfig('%s.conf' % NAME)
     for arg in sys.argv:
         setoption(arg)
-    print('%s %s - WeeChat flood IRC server' % (NAME, VERSION))
+    print('%s %s - WeeChat IRC server' % (NAME, VERSION))
     while 1:
         print('Options: %s' % getdictoptions())
         print('Listening on port %s (ctrl-C to exit)' % getoption('port'))
