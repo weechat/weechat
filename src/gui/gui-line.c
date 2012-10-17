@@ -200,7 +200,7 @@ gui_line_get_prefix_for_display (struct t_gui_line *line,
 
 int
 gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
-                    int with_suffix, int first_line, int force_prefix_for_line)
+                    int with_suffix, int first_line)
 {
     int length_time, length_buffer, length_suffix, prefix_length;
 
@@ -252,10 +252,7 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
         return length_time + length_buffer;
     }
 
-    if (force_prefix_for_line)
-        prefix_length = line->data->prefix_length;
-    else
-        gui_line_get_prefix_for_display (line, NULL, &prefix_length, NULL);
+    gui_line_get_prefix_for_display (line, NULL, &prefix_length, NULL);
 
     if (CONFIG_INTEGER(config_look_prefix_align) == CONFIG_LOOK_PREFIX_ALIGN_NONE)
     {

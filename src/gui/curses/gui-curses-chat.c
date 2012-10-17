@@ -458,8 +458,7 @@ gui_chat_display_word (struct t_gui_window *window,
     while (ptr_data && ptr_data[0])
     {
         /* insert spaces for aligning text under time/nick */
-        length_align = gui_line_get_align (window->buffer, line, 0, 0,
-                                           GUI_WINDOW_OBJECTS(window)->force_prefix_for_line);
+        length_align = gui_line_get_align (window->buffer, line, 0, 0);
         if ((window->win_chat_cursor_x == 0)
             && (*lines_displayed > 0)
             /* FIXME: modify arbitraty value for non aligning messages on time/nick? */
@@ -771,17 +770,8 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
     }
 
     /* get prefix for display */
-    if (GUI_WINDOW_OBJECTS(window)->force_prefix_for_line)
-    {
-        ptr_prefix = line->data->prefix;
-        prefix_length = line->data->prefix_length;
-        ptr_prefix_color = NULL;
-    }
-    else
-    {
-        gui_line_get_prefix_for_display (line, &ptr_prefix, &prefix_length,
-                                         &ptr_prefix_color);
-    }
+    gui_line_get_prefix_for_display (line, &ptr_prefix, &prefix_length,
+                                     &ptr_prefix_color);
     if (ptr_prefix)
     {
         ptr_prefix2 = NULL;
@@ -1022,17 +1012,6 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     if (!line)
         return 0;
 
-    if ((count == 0) && !GUI_WINDOW_OBJECTS(window)->first_line_with_prefix)
-    {
-        GUI_WINDOW_OBJECTS(window)->first_line_with_prefix = line;
-        GUI_WINDOW_OBJECTS(window)->force_prefix_for_line = 1;
-    }
-    else
-    {
-        if (line != GUI_WINDOW_OBJECTS(window)->first_line_with_prefix)
-            GUI_WINDOW_OBJECTS(window)->force_prefix_for_line = 0;
-    }
-
     if (simulate)
     {
         x = window->win_chat_cursor_x;
@@ -1123,8 +1102,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
             if (word_length > 0)
             {
                 line_align = gui_line_get_align (window->buffer, line, 1,
-                                                 (lines_displayed == 0) ? 1 : 0,
-                                                 GUI_WINDOW_OBJECTS(window)->force_prefix_for_line);
+                                                 (lines_displayed == 0) ? 1 : 0);
                 if ((window->win_chat_cursor_x + word_length_with_spaces > gui_chat_get_real_width (window))
                     && (word_length <= gui_chat_get_real_width (window) - line_align))
                 {
@@ -1384,8 +1362,6 @@ gui_chat_draw_formatted_buffer (struct t_gui_window *window)
     struct t_gui_line *ptr_line;
     int line_pos, count, old_scrolling, old_lines_after;
 
-    GUI_WINDOW_OBJECTS(window)->first_line_with_prefix = NULL;
-
     /* display at position of scrolling */
     if (window->scroll->start_line)
     {
@@ -1402,7 +1378,6 @@ gui_chat_draw_formatted_buffer (struct t_gui_window *window)
     }
 
     count = 0;
-    GUI_WINDOW_OBJECTS(window)->first_line_with_prefix = NULL;
 
     if (line_pos > 0)
     {
@@ -1420,7 +1395,6 @@ gui_chat_draw_formatted_buffer (struct t_gui_window *window)
             (ptr_line == gui_line_get_first_displayed (window->buffer));
 
     /* display lines */
-    GUI_WINDOW_OBJECTS(window)->first_line_with_prefix = NULL;
     while (ptr_line && (window->win_chat_cursor_y <= window->win_chat_height - 1))
     {
         count = gui_chat_display_line (window, ptr_line, 0, 0);

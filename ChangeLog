@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.0-dev, 2012-10-16
+v0.4.0-dev, 2012-10-17
 
 
 Version 0.4.0 (under dev!)
 --------------------------
 
+* core: fix display problem when option weechat.look.prefix_same_nick is set
+  (problem with nick displayed in first line of screen) (bug #37556)
 * core: fix wrapping of words with wide chars (the break was made before the
   correct position)
 * api: connect with IPv6 by default in hook_connect (with fallback to IPv4),
