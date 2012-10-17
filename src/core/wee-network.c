@@ -661,6 +661,8 @@ network_connect_child (struct t_hook *hook_connect)
     struct msghdr msg;
     struct cmsghdr *cmsg;
     char msg_buf[CMSG_SPACE(sizeof (sock))];
+    struct iovec iov[1];
+    char iov_data[1] = { 0 };
 #endif
     /*
      * indicates that something is wrong with whichever group of
@@ -1090,6 +1092,14 @@ network_connect_child (struct t_hook *hook_connect)
         memset (&msg, 0, sizeof (msg));
         msg.msg_control = msg_buf;
         msg.msg_controllen = sizeof (msg_buf);
+
+        /* send 1 byte of data (not required on Linux, required by BSD/OSX) */
+        memset (iov, 0, sizeof (iov));
+        iov[0].iov_base = iov_data;
+        iov[0].iov_len = 1;
+        msg.msg_iov = iov;
+        msg.msg_iovlen = 1;
+
         cmsg = CMSG_FIRSTHDR(&msg);
         cmsg->cmsg_level = SOL_SOCKET;
         cmsg->cmsg_type = SCM_RIGHTS;
@@ -1278,6 +1288,8 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
     struct msghdr msg;
     struct cmsghdr *cmsg;
     char msg_buf[CMSG_SPACE(sizeof (sock))];
+    struct iovec iov[1];
+    char iov_data[1];
 #endif
 
     /* make C compiler happy */
@@ -1326,6 +1338,13 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
             memset (&msg, 0, sizeof (msg));
             msg.msg_control = msg_buf;
             msg.msg_controllen = sizeof (msg_buf);
+
+            /* recv 1 byte of data (not required on Linux, required by BSD/OSX) */
+            memset (iov, 0, sizeof (iov));
+            iov[0].iov_base = iov_data;
+            iov[0].iov_len = 1;
+            msg.msg_iov = iov;
+            msg.msg_iovlen = 1;
 
             if (recvmsg (HOOK_CONNECT(hook_connect, child_recv), &msg, 0) >= 0)
             {
