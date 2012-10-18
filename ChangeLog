@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.0-dev, 2012-10-17
+v0.4.0-dev, 2012-10-18
 
 
 Version 0.4.0 (under dev!)
 --------------------------
 
+* core: fix display of zoomed/merged buffer (with number >= 2) after switching
+  to it (bug #37593)
 * core: fix display problem when option weechat.look.prefix_same_nick is set
   (problem with nick displayed in first line of screen) (bug #37556)
 * core: fix wrapping of words with wide chars (the break was made before the

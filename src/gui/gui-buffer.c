@@ -2303,7 +2303,7 @@ gui_buffer_set_active_buffer (struct t_gui_buffer *buffer)
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
-        if (ptr_buffer->active)
+        if ((ptr_buffer->number == buffer->number) && (ptr_buffer->active))
         {
             active = ptr_buffer->active;
             break;
