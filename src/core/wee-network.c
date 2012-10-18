@@ -57,7 +57,7 @@
 int network_init_ok = 0;
 
 #ifdef HAVE_GNUTLS
-gnutls_certificate_credentials gnutls_xcred; /* GnuTLS client credentials   */
+gnutls_certificate_credentials_t gnutls_xcred; /* GnuTLS client credentials */
 #endif
 
 
@@ -1388,7 +1388,7 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
                 fcntl (HOOK_CONNECT(hook_connect, sock), F_SETFL,
                        HOOK_CONNECT(hook_connect, handshake_fd_flags) | O_NONBLOCK);
                 gnutls_transport_set_ptr (*HOOK_CONNECT(hook_connect, gnutls_sess),
-                                          (gnutls_transport_ptr) ((ptrdiff_t) HOOK_CONNECT(hook_connect, sock)));
+                                          (gnutls_transport_ptr_t) ((ptrdiff_t) HOOK_CONNECT(hook_connect, sock)));
                 if (HOOK_CONNECT(hook_connect, gnutls_dhkey_size) > 0)
                 {
                     gnutls_dh_set_prime_bits (*HOOK_CONNECT(hook_connect, gnutls_sess),
@@ -1555,7 +1555,7 @@ network_connect_with_fork (struct t_hook *hook_connect)
                                 GNUTLS_CRD_CERTIFICATE,
                                 gnutls_xcred);
         gnutls_transport_set_ptr (*HOOK_CONNECT(hook_connect, gnutls_sess),
-                                  (gnutls_transport_ptr) ((unsigned long) HOOK_CONNECT(hook_connect, sock)));
+                                  (gnutls_transport_ptr_t) ((unsigned long) HOOK_CONNECT(hook_connect, sock)));
     }
 #endif
 
