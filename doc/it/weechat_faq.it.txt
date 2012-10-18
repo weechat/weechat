@@ -566,7 +566,7 @@ hanno scritto di recente):
 Con un filtro globale (nasconde *tutti* entrata/uscita/abbandono):
 
 ----------------------------------------
-/filter add jpk * irc_join,irc_part,irc_quit *
+/filter add joinquit * irc_join,irc_part,irc_quit *
 ----------------------------------------
 
 [NOTE]

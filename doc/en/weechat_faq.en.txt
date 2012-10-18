@@ -546,7 +546,7 @@ With smart filter (keep join/part/quit from users who spoke recently):
 With a global filter (hide *all* join/part/quit):
 
 ----------------------------------------
-/filter add jpk * irc_join,irc_part,irc_quit *
+/filter add joinquit * irc_join,irc_part,irc_quit *
 ----------------------------------------
 
 [NOTE]

@@ -570,7 +570,7 @@ ont parlé récemment) :
 Avec un filtre global (pour cacher *tous* les join/part/quit) :
 
 ----------------------------------------
-/filter add jpk * irc_join,irc_part,irc_quit *
+/filter add joinquit * irc_join,irc_part,irc_quit *
 ----------------------------------------
 
 [NOTE]

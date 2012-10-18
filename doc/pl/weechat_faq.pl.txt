@@ -554,7 +554,7 @@ piszących niedawno):
 Za pomocą globalnego filtru (ukrywa *wszystkie* wejścia/opuszczenia/wyjścia):
 
 ----------------------------------------
-/filter add jpk * irc_join,irc_part,irc_quit *
+/filter add joinquit * irc_join,irc_part,irc_quit *
 ----------------------------------------
 
 [NOTE]
