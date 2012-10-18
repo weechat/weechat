@@ -7,6 +7,8 @@ v0.4.0-dev, 2012-10-18
 Version 0.4.0 (under dev!)
 --------------------------
 
+* core: add option "-quit" for command /upgrade (save session and quit without
+  restarting WeeChat, for delayed restoration)
 * core: fix display of zoomed/merged buffer (with number >= 2) after switching
   to it (bug #37593)
 * core: fix display problem when option weechat.look.prefix_same_nick is set

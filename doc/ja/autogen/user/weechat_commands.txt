@@ -587,19 +587,30 @@ option: オプションの名前 ("*" で始めるか終わるかすれば大量
 [[command_weechat_upgrade]]
 [command]*`upgrade`* サーバとの接続を維持して WeeChat をアップグレード::
 ........................................
-/upgrade  [<path_to_binary>]
+/upgrade  [<path_to_binary>|-quit]
 
-path_to_binary: WeeChat バイナリへのパス (デフォルトは現在のバイナリ)
+path_to_binary: path to WeeChat binary (default is current binary)
+         -quit: close *ALL* connections, save session and quit WeeChat, which makes possible a delayed restoration (see below)
 
-このコマンドは起動中の WeeChat セッションのアップグレードと再読み込みを行います。このコマンドを実行する前に、新しい WeeChat バイナリをコンパイルするか、パッケージマネージャでインストールしなければいけません。
+This command upgrades and reloads a running WeeChat session. The new WeeChat binary must have been compiled or installed with a package manager before running this command.
 
-注意: SSL 接続はアップグレード中に破棄されます、これは今のところ GnuTLS では SSL セッションのリロードができないからです。アップグレードの後に自動的に再接続されます。
+Note: SSL connections are lost during upgrade, because reload of SSL sessions is currently not possible with GnuTLS. There is automatic reconnection after upgrade.
 
-アップグレードは 4 つの手順を踏みます:
-  1. コアとプラグイン (バッファ、履歴、...) のセッションをファイルに保存
-  2. 全てのプラグインをアンロード (設定ファイル (*.conf) はディスクに書き込まれます)
-  3. WeeChat 設定を保存 (weechat.conf)
-  4. 新しい WeeChat バイナリを実行してセッションをリロード。
+Upgrade process has 4 steps:
+  1. save session into files for core and plugins (buffers, history, ..)
+  2. unload all plugins (configuration files (*.conf) are written on disk)
+  3. save WeeChat configuration (weechat.conf)
+  4. execute new WeeChat binary and reload session.
+
+With option "-quit", the process is slightly different:
+  1. close *ALL* connections (irc, xfer, relay, ...)
+  2. save session into files (*.upgrade)
+  3. unload all plugins
+  4. save WeeChat configuration
+  5. quit WeeChat
+Then later you can restore session with command: weechat-curses --upgrade
+IMPORTANT: you must restore the session with exactly same configuration (files *.conf).
+It is possible to restore WeeChat session on another machine if you copy the content of directory "~/.weechat"
 ........................................
 
 [[command_weechat_uptime]]

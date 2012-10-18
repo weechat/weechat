@@ -587,9 +587,10 @@ Exemples:
 [[command_weechat_upgrade]]
 [command]*`upgrade`* mettre à jour WeeChat sans se déconnecter des serveurs::
 ........................................
-/upgrade  [<chemin_vers_binaire>]
+/upgrade  [<chemin_vers_binaire>|-quit]
 
 chemin_vers_binaire: chemin vers le binaire WeeChat (par défaut le binaire courant)
+              -quit: fermer *TOUTES* les connexions, sauver la session et quitter, ce qui rend possible une restauration différée (voir ci-dessous)
 
 Cette commande met à jour et recharge une session de WeeChat qui tourne. Le nouveau binaire WeeChat doit avoir été compilé ou installé via un gestionnaire de paquet avant de lancer cette commande.
 
@@ -599,7 +600,17 @@ Le processus de mise à jour comporte 4 étapes :
   1. sauvegarder la session pour le coeur et les extensions (tampons, historique, ...)
   2. décharger toutes les extensions (les fichiers de configuration (*.conf) sont écrits sur disque)
   3. sauvegarder la configuration WeeChat (weechat.conf)
-  4. exécuter le nouveau binaire WeeChat et recharger la session.
+  4. exécuter le nouveau binaire WeeChat et recharger la session.<
+
+Avec l'option "-quit", le processus est légèrement différent :
+  1. fermer *TOUTES* les connexions
+  2. sauvegarder la session (fichiers *.upgrade)
+  3. décharger les extensions
+  4. sauvegarder la configuration WeeChat
+  5. quitter WeeChat
+Et plus tard vous pouvez restaurer la session avec la commande: weechat-curses --upgrade
+IMPORTANT: vous devez restaurer la session avec exactement la même configuration (fichiers *.conf).
+Il est également possible de restaurer la session WeeChat sur une autre machine si vous y copiez le contenu du répertoire "~/.weechat".
 ........................................
 
 [[command_weechat_uptime]]

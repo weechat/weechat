@@ -587,9 +587,10 @@ Examples:
 [[command_weechat_upgrade]]
 [command]*`upgrade`* upgrade WeeChat without disconnecting from servers::
 ........................................
-/upgrade  [<path_to_binary>]
+/upgrade  [<path_to_binary>|-quit]
 
 path_to_binary: path to WeeChat binary (default is current binary)
+         -quit: close *ALL* connections, save session and quit WeeChat, which makes possible a delayed restoration (see below)
 
 This command upgrades and reloads a running WeeChat session. The new WeeChat binary must have been compiled or installed with a package manager before running this command.
 
@@ -600,6 +601,16 @@ Upgrade process has 4 steps:
   2. unload all plugins (configuration files (*.conf) are written on disk)
   3. save WeeChat configuration (weechat.conf)
   4. execute new WeeChat binary and reload session.
+
+With option "-quit", the process is slightly different:
+  1. close *ALL* connections (irc, xfer, relay, ...)
+  2. save session into files (*.upgrade)
+  3. unload all plugins
+  4. save WeeChat configuration
+  5. quit WeeChat
+Then later you can restore session with command: weechat-curses --upgrade
+IMPORTANT: you must restore the session with exactly same configuration (files *.conf).
+It is possible to restore WeeChat session on another machine if you copy the content of directory "~/.weechat"
 ........................................
 
 [[command_weechat_uptime]]

@@ -7777,7 +7777,7 @@ Arguments:
   command `/quit` issued by user
 
 | weechat | upgrade |
-  - |
+  string: "quit" if "-quit" argument was given for /upgrade, otherwise NULL |
   command `/upgrade` issued by user
 
 | weechat | upgrade_ended +

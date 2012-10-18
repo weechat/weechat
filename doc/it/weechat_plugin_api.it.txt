@@ -7844,8 +7844,9 @@ Argomenti:
   string: argomenti per /quit |
   comando `/quit` digitato dall'utente
 
+// TRANSLATION MISSING
 | weechat | upgrade |
-  - |
+  string: "quit" if "-quit" argument was given for /upgrade, otherwise NULL |
   comando `/upgrade` digitato dall'utente
 
 | weechat | upgrade_ended +

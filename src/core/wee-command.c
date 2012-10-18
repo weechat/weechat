@@ -4622,12 +4622,11 @@ COMMAND_CALLBACK(upgrade)
     char *ptr_binary;
     char *exec_args[7] = { NULL, "-a", "--dir", NULL, "--upgrade", NULL };
     struct stat stat_buf;
-    int rc;
+    int rc, quit;
 
     /* make C compiler happy */
     (void) data;
     (void) buffer;
-    (void) argv;
 
     /*
      * it is forbidden to upgrade while there are some background process
@@ -4642,40 +4641,48 @@ COMMAND_CALLBACK(upgrade)
         return WEECHAT_RC_OK;
     }
 
+    ptr_binary = NULL;
+    quit = 0;
+
     if (argc > 1)
     {
-        ptr_binary = string_expand_home (argv_eol[1]);
-        if (ptr_binary)
+        if (string_strcasecmp (argv[1], "-quit") == 0)
+            quit = 1;
+        else
         {
-            /* check if weechat binary is here and executable by user */
-            rc = stat (ptr_binary, &stat_buf);
-            if ((rc != 0) || (!S_ISREG(stat_buf.st_mode)))
+            ptr_binary = string_expand_home (argv_eol[1]);
+            if (ptr_binary)
             {
-                gui_chat_printf (NULL,
-                                 _("%sCan't upgrade: WeeChat binary \"%s\" "
-                                   "does not exist"),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 ptr_binary);
-                free (ptr_binary);
-                return WEECHAT_RC_OK;
-            }
-            if ((!(stat_buf.st_mode & S_IXUSR)) && (!(stat_buf.st_mode & S_IXGRP))
-                && (!(stat_buf.st_mode & S_IXOTH)))
-            {
-                gui_chat_printf (NULL,
-                                 _("%sCan't upgrade: WeeChat binary \"%s\" "
-                                   "does not have execute permissions"),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 ptr_binary);
-                free (ptr_binary);
-                return WEECHAT_RC_OK;
+                /* check if weechat binary is here and executable by user */
+                rc = stat (ptr_binary, &stat_buf);
+                if ((rc != 0) || (!S_ISREG(stat_buf.st_mode)))
+                {
+                    gui_chat_printf (NULL,
+                                     _("%sCan't upgrade: WeeChat binary \"%s\" "
+                                       "does not exist"),
+                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                     ptr_binary);
+                    free (ptr_binary);
+                    return WEECHAT_RC_OK;
+                }
+                if ((!(stat_buf.st_mode & S_IXUSR)) && (!(stat_buf.st_mode & S_IXGRP))
+                    && (!(stat_buf.st_mode & S_IXOTH)))
+                {
+                    gui_chat_printf (NULL,
+                                     _("%sCan't upgrade: WeeChat binary \"%s\" "
+                                       "does not have execute permissions"),
+                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                     ptr_binary);
+                    free (ptr_binary);
+                    return WEECHAT_RC_OK;
+                }
             }
         }
     }
-    else
+    if (!ptr_binary && !quit)
         ptr_binary = strdup (weechat_argv0);
 
-    if (!ptr_binary)
+    if (!ptr_binary && !quit)
     {
         gui_chat_printf (NULL,
                          _("%sNot enough memory"),
@@ -4683,24 +4690,26 @@ COMMAND_CALLBACK(upgrade)
         return WEECHAT_RC_OK;
     }
 
-    gui_chat_printf (NULL,
-                     _("Upgrading WeeChat with binary file: \"%s\"..."),
-                     ptr_binary);
+    if (ptr_binary)
+    {
+        gui_chat_printf (NULL,
+                         _("Upgrading WeeChat with binary file: \"%s\"..."),
+                         ptr_binary);
+    }
 
     /* send "upgrade" signal to plugins */
-    hook_signal_send ("upgrade", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+    hook_signal_send ("upgrade", WEECHAT_HOOK_SIGNAL_STRING,
+                      (quit) ? "quit" : NULL);
 
     if (!upgrade_weechat_save ())
     {
         gui_chat_printf (NULL,
                          _("%sError: unable to save session in file"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-        free (ptr_binary);
+        if (ptr_binary)
+            free (ptr_binary);
         return WEECHAT_RC_OK;
     }
-
-    exec_args[0] = ptr_binary;
-    exec_args[3] = strdup (weechat_home);
 
     weechat_quit = 1;
     weechat_upgrading = 1;
@@ -4713,6 +4722,14 @@ COMMAND_CALLBACK(upgrade)
     gui_main_end (1);
     log_close ();
 
+    if (quit)
+    {
+        exit (0);
+        return WEECHAT_RC_OK;
+    }
+
+    exec_args[0] = ptr_binary;
+    exec_args[3] = strdup (weechat_home);
     execvp (exec_args[0], exec_args);
 
     /* this code should not be reached if execvp is ok */
@@ -6116,9 +6133,12 @@ command_init ()
                   &command_unset, NULL);
     hook_command (NULL, "upgrade",
                   N_("upgrade WeeChat without disconnecting from servers"),
-                  N_("[<path_to_binary>]"),
+                  N_("[<path_to_binary>|-quit]"),
                   N_("path_to_binary: path to WeeChat binary (default is "
-                     "current binary)\n\n"
+                     "current binary)\n"
+                     "         -quit: close *ALL* connections, save session "
+                     "and quit WeeChat, which makes possible a delayed "
+                     "restoration (see below)\n\n"
                      "This command upgrades and reloads a running WeeChat "
                      "session. The new WeeChat binary must have been compiled "
                      "or installed with a package manager before running this "
@@ -6133,7 +6153,20 @@ command_init ()
                      "  2. unload all plugins (configuration files (*.conf) "
                      "are written on disk)\n"
                      "  3. save WeeChat configuration (weechat.conf)\n"
-                     "  4. execute new WeeChat binary and reload session."),
+                     "  4. execute new WeeChat binary and reload session.\n\n"
+                     "With option \"-quit\", the process is slightly "
+                     "different:\n"
+                     "  1. close *ALL* connections (irc, xfer, relay, ...)\n"
+                     "  2. save session into files (*.upgrade)\n"
+                     "  3. unload all plugins\n"
+                     "  4. save WeeChat configuration\n"
+                     "  5. quit WeeChat\n"
+                     "Then later you can restore session with command: "
+                     "weechat-curses --upgrade\n"
+                     "IMPORTANT: you must restore the session with exactly "
+                     "same configuration (files *.conf).\n"
+                     "It is possible to restore WeeChat session on another "
+                     "machine if you copy the content of directory \"~/.weechat\""),
                   "%(filename)",
                   &command_upgrade, NULL);
     hook_command (NULL, "uptime",

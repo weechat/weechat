@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-10-16 13:26+0200\n"
+"POT-Creation-Date: 2012-10-18 20:40+0200\n"
 "PO-Revision-Date: 2012-09-29 11:42+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1875,12 +1875,15 @@ msgstr ""
 msgid "upgrade WeeChat without disconnecting from servers"
 msgstr "aktualizovat WeeChat bez odpojení od serveru"
 
-msgid "[<path_to_binary>]"
+#, fuzzy
+msgid "[<path_to_binary>|-quit]"
 msgstr "[<cesta_k_binárce>]"
 
 #, fuzzy
 msgid ""
 "path_to_binary: path to WeeChat binary (default is current binary)\n"
+"         -quit: close *ALL* connections, save session and quit WeeChat, "
+"which makes possible a delayed restoration (see below)\n"
 "\n"
 "This command upgrades and reloads a running WeeChat session. The new WeeChat "
 "binary must have been compiled or installed with a package manager before "
@@ -1894,7 +1897,19 @@ msgid ""
 "  1. save session into files for core and plugins (buffers, history, ..)\n"
 "  2. unload all plugins (configuration files (*.conf) are written on disk)\n"
 "  3. save WeeChat configuration (weechat.conf)\n"
-"  4. execute new WeeChat binary and reload session."
+"  4. execute new WeeChat binary and reload session.\n"
+"\n"
+"With option \"-quit\", the process is slightly different:\n"
+"  1. close *ALL* connections (irc, xfer, relay, ...)\n"
+"  2. save session into files (*.upgrade)\n"
+"  3. unload all plugins\n"
+"  4. save WeeChat configuration\n"
+"  5. quit WeeChat\n"
+"Then later you can restore session with command: weechat-curses --upgrade\n"
+"IMPORTANT: you must restore the session with exactly same configuration "
+"(files *.conf).\n"
+"It is possible to restore WeeChat session on another machine if you copy the "
+"content of directory \"~/.weechat\""
 msgstr ""
 "cesta_k_binárce: cesta k binárce WeeChat (výchozí je aktuální binárka)\n"
 "\n"
@@ -8750,6 +8765,10 @@ msgid "%s: chat closed with %s (%d.%d.%d.%d)"
 msgstr "%s: rozhovor zavřen s %s (%d.%d.%d.%d)"
 
 #, c-format
+msgid "%s%s: aborting active xfer: \"%s\" from %s"
+msgstr "%s%s: ruším aktivní xfer: \"%s\" od %s"
+
+#, c-format
 msgid "%s%s: not enough memory for new xfer"
 msgstr "%s%s: nedostatek paměti pro nový xfer"
 
@@ -8830,10 +8849,6 @@ msgid ""
 msgstr ""
 "%s%s: nelze akceptovat obnovení souboru \"%s\" (port: %d, počáteční pozice: "
 "%llu): xfer nenalezen nebo není připraven pro přenos"
-
-#, c-format
-msgid "%s%s: aborting active xfer: \"%s\" from %s"
-msgstr "%s%s: ruším aktivní xfer: \"%s\" od %s"
 
 #, c-format
 msgid "%s%s: error sending data to \"%s\" via xfer chat"

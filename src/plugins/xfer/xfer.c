@@ -74,6 +74,9 @@ int xfer_count = 0;                    /* number of xfer                    */
 int xfer_signal_upgrade_received = 0;  /* signal "upgrade" received ?       */
 
 
+void xfer_disconnect_all ();
+
+
 /*
  * xfer_valid: check if a xfer pointer exists
  *             return 1 if xfer exists
@@ -111,9 +114,11 @@ xfer_signal_upgrade_cb (void *data, const char *signal, const char *type_data,
     (void) data;
     (void) signal;
     (void) type_data;
-    (void) signal_data;
 
     xfer_signal_upgrade_received = 1;
+
+    if (signal_data && (strcmp (signal_data, "quit") == 0))
+        xfer_disconnect_all ();
 
     return WEECHAT_RC_OK;
 }
@@ -337,6 +342,35 @@ xfer_close (struct t_xfer *xfer, enum t_xfer_status status)
     {
         close (xfer->file);
         xfer->file = -1;
+    }
+}
+
+/*
+ * xfer_disconnect_all: disconnect all active xfer (with a socket)
+ */
+
+void
+xfer_disconnect_all ()
+{
+    struct t_xfer *ptr_xfer;
+
+    for (ptr_xfer = xfer_list; ptr_xfer; ptr_xfer = ptr_xfer->next_xfer)
+    {
+        if (ptr_xfer->sock >= 0)
+        {
+            if (ptr_xfer->status == XFER_STATUS_ACTIVE)
+            {
+                weechat_printf (NULL,
+                                _("%s%s: aborting active xfer: \"%s\" from %s"),
+                                weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                                ptr_xfer->filename, ptr_xfer->remote_nick);
+                weechat_log_printf (_("%s%s: aborting active xfer: \"%s\" from %s"),
+                                    "", XFER_PLUGIN_NAME,
+                                    ptr_xfer->filename,
+                                    ptr_xfer->remote_nick);
+            }
+            xfer_close (ptr_xfer, XFER_STATUS_FAILED);
+        }
     }
 }
 
@@ -1486,8 +1520,6 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 int
 weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
-    struct t_xfer *ptr_xfer;
-
     /* make C compiler happy */
     (void) plugin;
 
@@ -1496,26 +1528,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     if (xfer_signal_upgrade_received)
         xfer_upgrade_save ();
     else
-    {
-        for (ptr_xfer = xfer_list; ptr_xfer; ptr_xfer = ptr_xfer->next_xfer)
-        {
-            if (ptr_xfer->sock >= 0)
-            {
-                if (ptr_xfer->status == XFER_STATUS_ACTIVE)
-                {
-                    weechat_printf (NULL,
-                                    _("%s%s: aborting active xfer: \"%s\" from %s"),
-                                    weechat_prefix ("error"), XFER_PLUGIN_NAME,
-                                    ptr_xfer->filename, ptr_xfer->remote_nick);
-                    weechat_log_printf (_("%s%s: aborting active xfer: \"%s\" from %s"),
-                                        "", XFER_PLUGIN_NAME,
-                                        ptr_xfer->filename,
-                                        ptr_xfer->remote_nick);
-                }
-                xfer_close (ptr_xfer, XFER_STATUS_FAILED);
-            }
-        }
-    }
+        xfer_disconnect_all ();
 
     return WEECHAT_RC_OK;
 }

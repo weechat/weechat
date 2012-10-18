@@ -587,19 +587,30 @@ Esempi:
 [[command_weechat_upgrade]]
 [command]*`upgrade`* aggiorna WeeChat senza disconnettere dai server::
 ........................................
-/upgrade  [<path_del_binario>]
+/upgrade  [<path_to_binary>|-quit]
 
-path_del_binario: path del binario di WeeChat (di default è il corrente)
+path_to_binary: path to WeeChat binary (default is current binary)
+         -quit: close *ALL* connections, save session and quit WeeChat, which makes possible a delayed restoration (see below)
 
-Questo comando aggiorna e ricarica una sessione di WeeChat in esecuzione. Il nuovo binario di WeeChat deve essere stato compilato o installato con un gestore pacchetti prima di eseguire questo comando.
+This command upgrades and reloads a running WeeChat session. The new WeeChat binary must have been compiled or installed with a package manager before running this command.
 
-Nota: le connessioni SSL vengono perdute durante l'aggiornamento, poiché il nuovo caricamento delle sessioni SSL non è ancora possibile con GnuTLS. La riconnessione automatica avviene dopo l'aggiornamento.
+Note: SSL connections are lost during upgrade, because reload of SSL sessions is currently not possible with GnuTLS. There is automatic reconnection after upgrade.
 
-Il processo di aggiornamento è diviso in 4 fasi:
-  1. salva la sessione in file per il core e i plugin (buffer, cronologia, ..)
-  2. scarica tutti i plugin (i file di configurazione (*.conf) vengono scritti su disco)
-  3. salva la configurazione di WeeChat (weechat.conf)
-  4. esegui il nuovo binario di WeeChat e carica la sessione.
+Upgrade process has 4 steps:
+  1. save session into files for core and plugins (buffers, history, ..)
+  2. unload all plugins (configuration files (*.conf) are written on disk)
+  3. save WeeChat configuration (weechat.conf)
+  4. execute new WeeChat binary and reload session.
+
+With option "-quit", the process is slightly different:
+  1. close *ALL* connections (irc, xfer, relay, ...)
+  2. save session into files (*.upgrade)
+  3. unload all plugins
+  4. save WeeChat configuration
+  5. quit WeeChat
+Then later you can restore session with command: weechat-curses --upgrade
+IMPORTANT: you must restore the session with exactly same configuration (files *.conf).
+It is possible to restore WeeChat session on another machine if you copy the content of directory "~/.weechat"
 ........................................
 
 [[command_weechat_uptime]]
