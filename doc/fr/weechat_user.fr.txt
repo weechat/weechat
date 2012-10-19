@@ -101,7 +101,7 @@ compiler WeeChat.
 | libaspell-dev          |             |        | extension aspell
 | python-dev             | ≥ 2.5 ^(3)^ |        | extension python
 | libperl-dev            |             |        | extension perl
-| ruby1.8-dev            |             |        | extension ruby
+| ruby1.9.1-dev          | ≥ 1.8       |        | extension ruby
 | liblua5.1-0-dev        |             |        | extension lua
 | tcl-dev                | ≥ 8.5       |        | extension tcl
 | guile-1.8-dev          |             |        | extention guile (scheme)

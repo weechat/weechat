@@ -99,7 +99,7 @@ compile WeeChat.
 | libaspell-dev          |             |          | aspell plugin
 | python-dev             | ≥ 2.5 ^(3)^ |          | python plugin
 | libperl-dev            |             |          | perl plugin
-| ruby1.8-dev            |             |          | ruby plugin
+| ruby1.9.1-dev          | ≥ 1.8       |          | ruby plugin
 | liblua5.1-0-dev        |             |          | lua plugin
 | tcl-dev                | ≥ 8.5       |          | tcl plugin
 | guile-1.8-dev          |             |          | guile (scheme) plugin

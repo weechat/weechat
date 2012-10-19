@@ -102,7 +102,7 @@ welche Pakete optional genutzt werden können.
 | libaspell-dev          |             |          | aspell Erweiterung
 | python-dev             | ≥ 2.5 ^(3)^ |          | python Erweiterung
 | libperl-dev            |             |          | perl Erweiterung
-| ruby1.8-dev            |             |          | ruby Erweiterung
+| ruby1.9.1-dev          | ≥ 1.8       |          | ruby Erweiterung
 | liblua5.1-0-dev        |             |          | lua Erweiterung
 | tcl-dev                | ≥ 8.5       |          | tcl Erweiterung
 | guile-1.8-dev          |             |          | guile (scheme) Erweiterung
