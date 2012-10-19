@@ -14067,8 +14067,8 @@ C example:
 
 [source,C]
 ----------------------------------------
-weechat_printf (NULL, "variables in hdata: %s" weechat_hdata_get_string (hdata, "var_keys"));
-weechat_printf (NULL, "lists in hdata: %s" weechat_hdata_get_string (hdata, "list_keys"));
+weechat_printf (NULL, "variables in hdata: %s", weechat_hdata_get_string (hdata, "var_keys"));
+weechat_printf (NULL, "lists in hdata: %s", weechat_hdata_get_string (hdata, "list_keys"));
 ----------------------------------------
 
 Script (Python):
