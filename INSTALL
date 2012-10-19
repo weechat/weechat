@@ -4,6 +4,13 @@ WeeChat Installation instructions
 You can build WeeChat with cmake (recommended way) or autotools.
 
 
+Dependencies
+------------
+
+List of dependencies can be found in user's guide, see page with WeeChat docs:
+http://www.weechat.org/doc
+
+
 With cmake
 ----------
 
