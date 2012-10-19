@@ -239,7 +239,7 @@ relay_server_sock_cb (void *data, int fd)
         client_addr_size = sizeof (struct sockaddr_in);
     }
 
-    memset (&client_addr, 0, client_addr_size);
+    memset (ptr_addr, 0, client_addr_size);
 
     client_fd = accept (server->sock, (struct sockaddr *)ptr_addr,
                         &client_addr_size);
