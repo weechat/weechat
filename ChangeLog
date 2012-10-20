@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.0-dev, 2012-10-18
+v0.4.0-dev, 2012-10-20
 
 
 Version 0.4.0 (under dev!)
@@ -20,6 +20,8 @@ Version 0.4.0 (under dev!)
   hook_connect, move "sock" from hook_connect arguments to callback of
   hook_connect (task #11205)
 * aspell: add bar item "aspell_dict" (dictionary used on current buffer)
+* irc: send whois on self nick when /whois is done without argument on a channel
+  (task #12273)
 * irc: remove local variable "away" in server/channels buffers after server
   disconnection (bug #37582)
 * irc: add option "-noswitch" for command /join (task #12275)

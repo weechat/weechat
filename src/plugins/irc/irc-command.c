@@ -4910,7 +4910,13 @@ irc_command_whois (void *data, struct t_gui_buffer *buffer, int argc,
         }
         else
         {
-            IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "whois");
+            if (ptr_server->nick)
+            {
+                irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                                  "WHOIS %s", ptr_server->nick);
+            }
+            else
+                IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "whois");
         }
     }
 
@@ -5604,9 +5610,12 @@ irc_command_init ()
                           "%(irc_channels)", &irc_command_who, NULL);
     weechat_hook_command ("whois",
                           N_("query information about user(s)"),
-                          N_("[<server>] <nick>[,<nick>...]"),
+                          N_("[<server>] [<nick>[,<nick>...]]"),
                           N_("server: server name\n"
-                             "  nick: nick (may be a mask)"),
+                             "  nick: nick (may be a mask)\n\n"
+                             "Without argument, this command will do a whois on:\n"
+                             "- your own nick if buffer is a server/channel\n"
+                             "- remote nick if buffer is a private."),
                           "%(nicks)", &irc_command_whois, NULL);
     weechat_hook_command ("whowas",
                           N_("ask for information about a nick which no "

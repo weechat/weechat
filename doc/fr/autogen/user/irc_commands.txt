@@ -736,10 +736,14 @@ masque: information qui correspond à ce masque uniquement
 [[command_irc_whois]]
 [command]*`whois`* demander les informations sur le(s) utilisateur(s)::
 ........................................
-/whois  [<serveur>] <pseudo>[,<pseudo>...]
+/whois  [<serveur>] [<pseudo>[,<pseudo>...]]
 
-serveur: nom du serveur
+serveur: nom de serveur
  pseudo: pseudo (peut être un masque)
+
+Sans paramètre, cette commande effectuera un whois sur :
+- votre propre pseudo si le tampon est un serveur/canal
+- le pseudo distant si le tampon est un privé.
 ........................................
 
 [[command_irc_whowas]]

@@ -736,10 +736,14 @@ mask: マスクにマッチする情報
 [[command_irc_whois]]
 [command]*`whois`* ユーザに関する情報を要求::
 ........................................
-/whois  [<server>] <nick>[,<nick>...]
+/whois  [<server>] [<nick>[,<nick>...]]
 
-server: サーバ名
-  nick: ニックネーム (マスクが使えるかも)
+server: server name
+  nick: nick (may be a mask)
+
+Without argument, this command will do a whois on:
+- your own nick if buffer is a server/channel
+- remote nick if buffer is a private.
 ........................................
 
 [[command_irc_whowas]]

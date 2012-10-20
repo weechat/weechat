@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-10-18 20:40+0200\n"
+"POT-Creation-Date: 2012-10-20 16:43+0200\n"
 "PO-Revision-Date: 2012-09-29 11:43+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4959,16 +4959,17 @@ msgid "query information about user(s)"
 msgstr "запросить информацию и пользователе(-ях)"
 
 #, fuzzy
-msgid "[<server>] <nick>[,<nick>...]"
+msgid "[<server>] [<nick>[,<nick>...]]"
 msgstr "[сервер] ник[, ник]"
 
-#, fuzzy
 msgid ""
 "server: server name\n"
-"  nick: nick (may be a mask)"
+"  nick: nick (may be a mask)\n"
+"\n"
+"Without argument, this command will do a whois on:\n"
+"- your own nick if buffer is a server/channel\n"
+"- remote nick if buffer is a private."
 msgstr ""
-"сервер: название сервера\n"
-"   ник: ник (может быть маской)"
 
 #, fuzzy
 msgid "ask for information about a nick which no longer exists"
@@ -8625,6 +8626,14 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#, fuzzy
+#~ msgid ""
+#~ "server: server name\n"
+#~ "  nick: nick (may be a mask)"
+#~ msgstr ""
+#~ "сервер: название сервера\n"
+#~ "   ник: ник (может быть маской)"
 
 #~ msgid "use IPv6 protocol for server communication"
 #~ msgstr "использовать IPv6 при связи с сервером"
