@@ -54,7 +54,7 @@
 ** Werte: 0 .. 65535 (Standardwert: `256`)
 
 * [[option_relay.network.allowed_ips]] *relay.network.allowed_ips*
-** Beschreibung: `regular expression with IPs allowed to use relay (case insensitive, use "(?-i)" at beginning to make it case sensitive); if IPv6 is enabled and that connection is made using IPv4, it will be IPv4-mapped IPv6 address (like: "::ffff:127.0.0.1"), example: "^((::ffff:)?123.45.67.89|192.160.*)$"`
+** Beschreibung: `regulärer Ausdruck für IP Adressen die auf das Relay zugreifen dürfen (zwischen Groß- und Kleinschreibung nicht dabei nicht unterschieden. Um zwischen Groß-und Kleinschreibung zu unterscheiden muss am Wortanfang "(?-i)" genutzt werden) . Sollte IPv6 aktiviert sein und es wird eine IPv4 Verbindung aufgebaut, werden die IPv6 Adressen nach IPv4 gewandelt  (siehe: "::ffff:127.0.0.1"), Beispiele: "^((::ffff:)?123.45.67.89|192.160.*)$"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -69,7 +69,7 @@
 ** Werte: 0 .. 9 (Standardwert: `6`)
 
 * [[option_relay.network.ipv6]] *relay.network.ipv6*
-** Beschreibung: `listen on IPv6 socket by default (in addition to IPv4 which is default); protocols IPv4 and IPv6 can be forced (individually or together) in the protocol name (see /help relay)`
+** Beschreibung: `lauscht standardmäßig am IPv6 Socket (zusätzlich zu IPv4, welches als Standardprotokoll genutzt wird); mittels des Protokollnamens kann das IPv4 und IPv6 Protokoll, einzeln oder gemeinsam, erzwungen werden (siehe /help relay)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 

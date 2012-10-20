@@ -214,14 +214,14 @@ nick: Nickname
 ........................................
 /join  [-noswitch] [-server <server>] [<channel1>[,<channel2>...]] [<key1>[,<key2>...]]
 
--noswitch: do not switch to new buffer
-   server: send to this server (internal name)
-  channel: channel name to join
-      key: key to join the channel (channels with a key must be the first in list)
+-noswitch: es wird nicht zu dem angegebenen Channel gewechselt
+   server: an angegebenen Server (interner Name) senden
+  channel: Name des Channels, der betreten werden soll
+      key: Zugriffsschlüssel für einen Channel (Channel, die einen Zugriffsschlüssel benötigen, müssen zuerst aufgeführt werden)
 
-Examples:
+Beispiele:
   /join #weechat
-  /join #protectedchan,#weechat key
+  /join #geschützter_Channel,#weechat Zugriffsschlüssel
   /join -server freenode #weechat
   /join -noswitch #weechat
 ........................................

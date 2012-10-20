@@ -91,12 +91,9 @@ welche Pakete optional genutzt werden können.
 | cmake                  |             | *ja*     | zum kompilieren (autotools ist möglich. cmake wird aber empfohlen)
 | libncursesw5-dev ^(2)^ |             | *ja*     | ncurses Oberfläche
 | libcurl4-gnutls-dev    |             | *ja*     | URL Transfer
-// TRANSLATION MISSING
-| zlib1g-dev             |             | *ja*     | compression of packets in relay plugin (weechat protocol), script plugin
-// TRANSLATION MISSING
-| libgcrypt11-dev        |             | *ja*     | SASL Authentifikation am IRC Server mittels DH-BLOWFISH Methode, script plugin
-// TRANSLATION MISSING
-| libgnutls-dev          | ≥ 2.2.0     |          | SSL Verbindung zu einem IRC Server, support of SSL in relay plugin
+| zlib1g-dev             |             | *ja*     | Kompression für Pakete, die mittels Relay- (WeeChat Protokoll), Script-Erweiterung übertragen werden
+| libgcrypt11-dev        |             | *ja*     | SASL Authentifikation am IRC Server mittels DH-BLOWFISH Methode, Script-Erweiterung
+| libgnutls-dev          | ≥ 2.2.0     |          | SSL Verbindung zu einem IRC Server, Unterstützung von SSL in der Relay-Erweiterung
 | gettext                |             |          | Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch)
 | ca-certificates        |             |          | Zertifikate für SSL Verbindungen
 | libaspell-dev          |             |          | aspell Erweiterung
@@ -677,8 +674,7 @@ Tastenbefehle für Buffer / Fenster
 | @k(C-)@k(l)               | Fenster wird neu gezeichnet | /window refresh
 | @k(C-)@k(s) , @k(C-)@k(u) | setzt für alle Buffer die Markierung für ungelesene Nachrichten | /input set_unread
 | @k(C-)@k(x)               | sind mehrere Buffer zu einem Buffer zusammen gefügt wechselt man diese durch | /input switch_active_buffer
-// TRANSLATION MISSING
-| @k(A-)@k(x)               | Zoom on merged buffer (@k(A-)@k(x) again: display all merged buffers) | /input zoom_merged_buffer
+| @k(A-)@k(x)               | Zoom eines zusammengefügten Buffers (@k(A-)@k(x) ein zweites mal: alle zusammengefügten Buffer werden angezeigt) | /input zoom_merged_buffer
 | @k(PgUp)                  | eine Seite im Verlaufsspeicher des Buffers nach oben blättern | /window page_up
 | @k(PgDn)                  | eine Seite im Verlaufsspeicher des Buffer nach unten blättern | /window page_down
 | @k(A-)@k(PgUp)            | einige Zeilen im Verlaufsspeicher des Buffer nach oben blättern | /window scroll_up
@@ -779,23 +775,22 @@ Tasten für "mouse"-Kontext
 
 Diese Tasten werden im Kontext "mouse" verwendet, wenn eine Mausfunktion genutzt worden ist.
 
-// TRANSLATION MISSING (6)
 [width="100%",cols="^.^3,^.^3,^.^3,.^10,.^8l",options="header"]
 |========================================
 | Maustaste ^(1)^ | Mausgeste | Bereich | Beschreibung | Befehl
 | ◾◽◽     | -            | Chat                 | wechselt zum Fenster | /window ${_window_number}
 | ◾◽◽     | links        | Chat                 | zum vorherigen Buffer springen | /window ${_window_number};/buffer +1
 | ◾◽◽     | rechts       | Chat                 | zum nächsten Buffer springen | /window ${_window_number};/buffer +1
-| ◾◽◽     | links(lang)  | Chat                 | Switch to first buffer | /window ${_window_number};/buffer 1
+| ◾◽◽     | links(lang)  | Chat                 | wechselt zum ersten Buffer | /window ${_window_number};/buffer 1
 | ◾◽◽     | rechts(lang) | Chat                 | wechselt zum letzten Buffer | /window ${_window_number};/input jump_last_buffer
-| ◾◽◽     | -            | chat (script buffer) | Select line in script buffer | /script go ${_chat_line_y}
-| ◽◽◾     | -            | chat (script buffer) | Install/remove script | /script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}
-| ⇑       | -            | Chat                 | einige Zeilen im Verlaufsspeicher des Buffer nach oben blättern | /window scroll_up -window ${_window_number}
-| ⇓       | -            | Chat                 | einige Zeilen im Verlaufsspeicher des Buffer nach unten blättern | /window scroll_down -window ${_window_number}
-| ⇑       | -            | chat (script buffer) | Move 5 lines up in script buffer | /script up 5
-| ⇓       | -            | chat (script buffer) | Move 5 lines down in script buffer | /script down 5
-| @k(C-)⇑ | -            | chat                 | Scroll horizontally to the left | /window scroll_horiz -window ${_window_number} -10%
-| @k(C-)⇓ | -            | chat                 | Scroll horizontally to the right | /window scroll_horiz -window ${_window_number} +10%
+| ◾◽◽     | -            | chat (script buffer) | wählt einen Eintrag im Script-Buffer aus | /script go ${_chat_line_y}
+| ◽◽◾     | -            | chat (script buffer) | installiert/entfernt ein Skript | /script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}
+| ⇑       | -            | Chat                 | mehrere Zeilen im Verlaufsspeicher des Buffer nach oben blättern | /window scroll_up -window ${_window_number}
+| ⇓       | -            | Chat                 | mehrere Zeilen im Verlaufsspeicher des Buffer nach unten blättern | /window scroll_down -window ${_window_number}
+| ⇑       | -            | chat (script buffer) | fünf Zeilen nach oben blättern, im Script-Buffer | /script up 5
+| ⇓       | -            | chat (script buffer) | fünf Zeilen nach unten blättern, im Script-Buffer | /script down 5
+| @k(C-)⇑ | -            | chat                 | horizontal, nach links scrollen | /window scroll_horiz -window ${_window_number} -10%
+| @k(C-)⇓ | -            | chat                 | horizontal, nach rechts scrollen | /window scroll_horiz -window ${_window_number} +10%
 | ◾◽◽     | hoch         | Nickliste            | Nickliste um eine Seite nach oben blättern | /bar scroll nicklist ${_window_number} -100%
 | ◾◽◽     | runter       | Nickliste            | Nickliste um eine Seite nach unten blättern | /bar scroll nicklist ${_window_number} +100%
 | ◾◽◽     | hoch(lang)   | Nickliste            | springt zum Anfang der Nickliste | /bar scroll nicklist ${_window_number} b
@@ -811,9 +806,8 @@ Diese Tasten werden im Kontext "mouse" verwendet, wenn eine Mausfunktion genutzt
 | ◽◾◽     | -            | überall              | aktiviert den Cursor-Modus an dieser Position | /cursor go ${_x},${_y}
 |========================================
 
-// TRANSLATION MISSING
 [NOTE]
-^(1)^ "⇑" and "⇓" are wheel up and down.
+^(1)^ "⇑" und "⇓" sind Symbole für Mausrad hoch/runter.
 
 [[mouse]]
 Mausunterstützung
@@ -2206,26 +2200,25 @@ Lautet die Befehlszeile `/oper nick password` wird diese in der Befehlszeile als
 `/oper nick ********` dargestellt.
 
 [[scripts_plugins]]
-Skripten Erweiterungen
-~~~~~~~~~~~~~~~~~~~~~~
+Erweiterungen für Skripten
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 WeeChat unterstützt sechs Skript-Erweiterungen: Python, Perl, Ruby, Lua, Tcl und Guile
 (scheme).
-Diese Erweiterungen können für die jeweilige Sprache die Skripten laden, ausführen und
-entfernen.
+Mit diesen Erweiterungen kann für die jeweilige Skript-Sprache, Skripten geladen, ausgeführt
+und entfernt werden.
 
-// TRANSLATION MISSING
-Another plugin called "script" is a scripts manager and is used to load/unload
-scripts of any language, and install/remove scripts of WeeChat scripts
-repository, which are visible at this URL: http://www.weechat.org/scripts
+Eine weitere Erweiterung ist "script". Dies ist ein Skripten-Manager mit dem es möglich ist,
+unabhängig von der Skript-Sprache, Skripten zu laden und zu entfernen. Des weiteren können
+Skripten, aus dem Skript-Repository, installiert und deinstalliert werden. Das Skript-Repository
+kann unter folgender URL eingesehen werden: http://www.weechat.org/scripts
 
-Sollten Sie Interesse daran haben wie man Skripten für WeeChat erstellt dann lesen Sie
+Sollten wir Ihr Interesse geweckt haben, selber Skripten für WeeChat zu programmieren, dann lesen Sie
 bitte die 'WeeChat Scripting Guide'.
 
-// TRANSLATION MISSING
 [[script_options]]
-Script options (script.conf)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Script Optionen (script.conf)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 include::autogen/user/script_options.txt[]
 

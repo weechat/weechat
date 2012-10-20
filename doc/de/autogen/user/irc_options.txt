@@ -459,7 +459,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"WeeChat %v"`)
 
 * [[option_irc.server_default.ipv6]] *irc.server_default.ipv6*
-** Beschreibung: `use IPv6 protocol for server communication (try IPv6 then fallback to IPv4); if disabled, only IPv4 is used`
+** Beschreibung: `bei der Kommunikation mit dem Server wird das IPv6 Protokoll genutzt (sollte IPv6 nicht genutzt werden können, wird automatisch auf IPv4 zurückgegriffen); wird die Funktion deaktiviert, dann wird ausschließlich IPv4 genutzt.`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 

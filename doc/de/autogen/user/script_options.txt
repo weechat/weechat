@@ -154,7 +154,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_script.look.sort]] *script.look.sort*
-** Beschreibung: `Standardsortierung für Skripten im Skript Buffer: durch Kommata getrennte Liste von Bezeichnern: a=Autor, A=automatisch geladen, d=Datum wann das Skript hinzugefügt wurde, e=Dateierweiterung, i=installiert, l=Programmiersprache, n=Skriptname, o=obsolete, p=empfohlen, r=Skript wird ausgeführt, u=Datum der letzten Überarbeitung; mittels des Zeichens "-", vor dem entsprechenden Bezeichner, kann die Darstellung umgekehrt  werden; Beispiel: "i,u": installierte Skripten werden zuerst dargestellt, sortiert nach dem Datum ihrer letzten Überarbeitung`
+** Beschreibung: `Standardsortierung für Skripten im Skript Buffer: durch Kommata getrennte Liste von Bezeichnern: a=Autor, A=automatisch geladen, d=Datum wann das Skript hinzugefügt wurde, e=Dateierweiterung, i=installiert, l=Programmiersprache, n=Skriptname, o=obsolete, p=empfohlen, r=Skript wird ausgeführt, u=Datum der letzten Überarbeitung; mit Hilfe des Zeichens "-", vor dem entsprechenden Bezeichner, kann die Darstellung umgekehrt werden. Beispiel: "i,u": installierte Skripten werden zuerst dargestellt, sortiert nach dem Datum ihrer letzten Überarbeitung`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"p,n"`)
 

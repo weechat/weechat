@@ -494,7 +494,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `", "`)
 
 * [[option_weechat.look.hotlist_count_max]] *weechat.look.hotlist_count_max*
-** Beschreibung: `maximale Anzahl an Nachrichten für den Nachrichtenzähler in der Hotlist, pro Buffer (0 = der Nachrichtenzähler wird nicht dargestellt)`
+** Beschreibung: `maximale Anzahl an Nachrichten für den Nachrichtenzähler in der Hotlist, für jeden Buffer (0 = der Nachrichtenzähler wird nicht dargestellt, siehe weechat.look.buffer_notify_default)`
 ** Typ: integer
 ** Werte: 0 .. 4 (Standardwert: `2`)
 
