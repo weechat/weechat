@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-10-20 16:43+0200\n"
+"POT-Creation-Date: 2012-10-20 17:54+0200\n"
 "PO-Revision-Date: 2012-09-29 11:43+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5602,10 +5602,6 @@ msgstr ""
 "интервал между проверками на отсутствие (в минутах, 0 = не проверять никогда)"
 
 #, fuzzy
-msgid "send unknown commands to server"
-msgstr "отсылать неизвестные команды IRC серверу"
-
-#, fuzzy
 msgid ""
 "interval between two checks for notify with IRC command \"ison\" (in minutes)"
 msgstr ""
@@ -5617,6 +5613,15 @@ msgid ""
 "minutes)"
 msgstr ""
 "интервал между проверками на отсутствие (в минутах, 0 = не проверять никогда)"
+
+#, fuzzy
+msgid "send unknown commands to server"
+msgstr "отсылать неизвестные команды IRC серверу"
+
+msgid ""
+"double the nick in /whois command (if only one nick is given), to get idle "
+"time in answer; for example: \"/whois nick\" will send \"whois nick nick\""
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%sCTCP requested by %s%s%s: %s%s%s%s%s%s"

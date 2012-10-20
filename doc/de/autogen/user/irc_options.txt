@@ -373,6 +373,11 @@
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
+* [[option_irc.network.whois_double_nick]] *irc.network.whois_double_nick*
+** Beschreibung: `double the nick in /whois command (if only one nick is given), to get idle time in answer; for example: "/whois nick" will send "whois nick nick"`
+** Typ: boolesch
+** Werte: on, off (Standardwert: `on`)
+
 * [[option_irc.server_default.addresses]] *irc.server_default.addresses*
 ** Beschreibung: `Liste der Hostnamen/Ports oder IP/Ports des Servers (durch Komma getrennt)`
 ** Typ: Zeichenkette

@@ -373,6 +373,11 @@
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 
+* [[option_irc.network.whois_double_nick]] *irc.network.whois_double_nick*
+** descrizione: `double the nick in /whois command (if only one nick is given), to get idle time in answer; for example: "/whois nick" will send "whois nick nick"`
+** tipo: bool
+** valori: on, off (valore predefinito: `on`)
+
 * [[option_irc.server_default.addresses]] *irc.server_default.addresses*
 ** descrizione: `elenco di host/porte o IP/porte per il server (separati da virgole)`
 ** tipo: stringa

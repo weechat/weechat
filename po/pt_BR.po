@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-10-20 16:43+0200\n"
+"POT-Creation-Date: 2012-10-20 17:54+0200\n"
 "PO-Revision-Date: 2012-09-29 11:43+0200\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5749,9 +5749,6 @@ msgid ""
 "seconds)"
 msgstr ""
 
-msgid "send unknown commands to server"
-msgstr "enviar comandos desconhecidos ao servidor"
-
 msgid ""
 "interval between two checks for notify with IRC command \"ison\" (in minutes)"
 msgstr ""
@@ -5764,6 +5761,14 @@ msgid ""
 msgstr ""
 "intervalo entre duas verificações por notificação com o comando IRC \"whois"
 "\" (em minutos)"
+
+msgid "send unknown commands to server"
+msgstr "enviar comandos desconhecidos ao servidor"
+
+msgid ""
+"double the nick in /whois command (if only one nick is given), to get idle "
+"time in answer; for example: \"/whois nick\" will send \"whois nick nick\""
+msgstr ""
 
 #, c-format
 msgid "%sCTCP requested by %s%s%s: %s%s%s%s%s%s"

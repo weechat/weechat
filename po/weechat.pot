@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-10-20 16:43+0200\n"
+"POT-Creation-Date: 2012-10-20 17:54+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4831,9 +4831,6 @@ msgid ""
 "seconds)"
 msgstr ""
 
-msgid "send unknown commands to server"
-msgstr ""
-
 msgid ""
 "interval between two checks for notify with IRC command \"ison\" (in minutes)"
 msgstr ""
@@ -4841,6 +4838,14 @@ msgstr ""
 msgid ""
 "interval between two checks for notify with IRC command \"whois\" (in "
 "minutes)"
+msgstr ""
+
+msgid "send unknown commands to server"
+msgstr ""
+
+msgid ""
+"double the nick in /whois command (if only one nick is given), to get idle "
+"time in answer; for example: \"/whois nick\" will send \"whois nick nick\""
 msgstr ""
 
 #, c-format

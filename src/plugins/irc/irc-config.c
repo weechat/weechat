@@ -131,6 +131,7 @@ struct t_config_option *irc_config_network_lag_refresh_interval;
 struct t_config_option *irc_config_network_notify_check_ison;
 struct t_config_option *irc_config_network_notify_check_whois;
 struct t_config_option *irc_config_network_send_unknown_commands;
+struct t_config_option *irc_config_network_whois_double_nick;
 
 /* IRC config, server section */
 
@@ -2520,12 +2521,6 @@ irc_config_init ()
         N_("interval between two refreshs of lag item, when lag is increasing "
            "(in seconds)"),
         NULL, 1, 3600, "1", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-    irc_config_network_send_unknown_commands = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "send_unknown_commands", "boolean",
-        N_("send unknown commands to server"),
-        NULL, 0, 0, "off", NULL, 0, NULL, NULL,
-        &irc_config_change_network_send_unknown_commands, NULL, NULL, NULL);
     irc_config_network_notify_check_ison = weechat_config_new_option (
         irc_config_file, ptr_section,
         "notify_check_ison", "integer",
@@ -2540,6 +2535,19 @@ irc_config_init ()
            "(in minutes)"),
         NULL, 1, 60 * 24 * 7, "5", NULL, 0, NULL, NULL,
         &irc_config_change_network_notify_check_whois, NULL, NULL, NULL);
+    irc_config_network_send_unknown_commands = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "send_unknown_commands", "boolean",
+        N_("send unknown commands to server"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL,
+        &irc_config_change_network_send_unknown_commands, NULL, NULL, NULL);
+    irc_config_network_whois_double_nick = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "whois_double_nick", "boolean",
+        N_("double the nick in /whois command (if only one nick is given), to "
+           "get idle time in answer; for example: \"/whois nick\" will send "
+           "\"whois nick nick\""),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
 
     /* msgbuffer */
     ptr_section = weechat_config_new_section (irc_config_file, "msgbuffer",

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-10-20 16:43+0200\n"
+"POT-Creation-Date: 2012-10-20 17:54+0200\n"
 "PO-Revision-Date: 2012-09-29 11:42+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -6149,9 +6149,6 @@ msgstr ""
 "遅延時間が増加する場合、遅延アイテムの 2 回のリフレッシュの間のインターバル "
 "(秒単位)"
 
-msgid "send unknown commands to server"
-msgstr "未定義のコマンドをサーバに送信"
-
 msgid ""
 "interval between two checks for notify with IRC command \"ison\" (in minutes)"
 msgstr ""
@@ -6162,6 +6159,14 @@ msgid ""
 "minutes)"
 msgstr ""
 "IRC コマンド \"whois\" による通知の 2 回のチェックの間のインターバル (分単位)"
+
+msgid "send unknown commands to server"
+msgstr "未定義のコマンドをサーバに送信"
+
+msgid ""
+"double the nick in /whois command (if only one nick is given), to get idle "
+"time in answer; for example: \"/whois nick\" will send \"whois nick nick\""
+msgstr ""
 
 #, c-format
 msgid "%sCTCP requested by %s%s%s: %s%s%s%s%s%s"

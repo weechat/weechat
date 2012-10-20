@@ -4888,37 +4888,47 @@ int
 irc_command_whois (void *data, struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
+    int double_nick;
+    const char *ptr_nick;
+
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("whois", 1);
 
     /* make C compiler happy */
     (void) data;
-    (void) argv;
+
+    double_nick = weechat_config_boolean (irc_config_network_whois_double_nick);
+    ptr_nick = NULL;
 
     if (argc > 1)
     {
-        irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                          "WHOIS %s", argv_eol[1]);
+        if ((argc > 2) || strchr (argv_eol[1], ','))
+        {
+            /* do not double nick if we have more than one argument or a comma */
+            double_nick = 0;
+            ptr_nick = argv_eol[1];
+        }
+        else
+            ptr_nick = argv[1];
     }
     else
     {
-        if (ptr_channel
-            && (ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE))
-        {
-            irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                              "WHOIS %s", ptr_channel->name);
-        }
-        else
-        {
-            if (ptr_server->nick)
-            {
-                irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                                  "WHOIS %s", ptr_server->nick);
-            }
-            else
-                IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "whois");
-        }
+        if (ptr_channel && (ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE))
+            ptr_nick = ptr_channel->name;
+        else if (ptr_server->nick)
+            ptr_nick = ptr_server->nick;
     }
+
+    if (!ptr_nick)
+    {
+        IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "whois");
+    }
+
+    irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                      "WHOIS %s%s%s",
+                      ptr_nick,
+                      (double_nick) ? " " : "",
+                      (double_nick) ? ptr_nick : "");
 
     return WEECHAT_RC_OK;
 }

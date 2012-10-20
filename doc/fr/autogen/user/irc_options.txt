@@ -373,6 +373,11 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `off`)
 
+* [[option_irc.network.whois_double_nick]] *irc.network.whois_double_nick*
+** description: `doubler le pseudo dans la commande /whois (si un seul pseudo est donné), pour avoir le temps d'inactivité; par exemple: "/whois pseudo" enverra "whois pseudo pseudo"`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `on`)
+
 * [[option_irc.server_default.addresses]] *irc.server_default.addresses*
 ** description: `liste de nom/port ou IP/port pour le serveur (séparés par des virgules)`
 ** type: chaîne

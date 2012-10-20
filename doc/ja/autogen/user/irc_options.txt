@@ -373,6 +373,11 @@
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `off`)
 
+* [[option_irc.network.whois_double_nick]] *irc.network.whois_double_nick*
+** 説明: `double the nick in /whois command (if only one nick is given), to get idle time in answer; for example: "/whois nick" will send "whois nick nick"`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
 * [[option_irc.server_default.addresses]] *irc.server_default.addresses*
 ** 説明: `サーバのホスト名/ポート番号又は IP アドレス/ポート番号のリスト (コンマ区切り)`
 ** タイプ: 文字列
