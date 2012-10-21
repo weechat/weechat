@@ -41,7 +41,6 @@
 #include "wee-infolist.h"
 #include "wee-list.h"
 #include "wee-log.h"
-#include "wee-hook.h"
 #include "wee-proxy.h"
 #include "wee-string.h"
 #include "../gui/gui-bar.h"
