@@ -3829,8 +3829,7 @@ irc_server_connect (struct t_irc_server *server)
     server->hook_connect = weechat_hook_connect (proxy,
                                                  server->current_address,
                                                  server->current_port,
-                                                 proxy_type ? weechat_config_integer (proxy_ipv6)
-                                                 : IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_IPV6),
+                                                 proxy_type ? weechat_config_integer (proxy_ipv6) : IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_IPV6),
                                                  server->current_retry,
                                                  (server->ssl_connected) ? &server->gnutls_sess : NULL,
                                                  (server->ssl_connected) ? irc_server_gnutls_callback : NULL,
@@ -3843,10 +3842,8 @@ irc_server_connect (struct t_irc_server *server)
     server->hook_connect = weechat_hook_connect (proxy,
                                                  server->current_address,
                                                  server->current_port,
-                                                 proxy_type ? weechat_config_integer (proxy_ipv6)
-                                                 : IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_IPV6),
+                                                 proxy_type ? weechat_config_integer (proxy_ipv6) : IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_IPV6),
                                                  server->current_retry,
-                                                 IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_IPV6),
                                                  NULL, NULL, 0, NULL,
                                                  IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_LOCAL_HOSTNAME),
                                                  &irc_server_connect_cb,
