@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-11-02 17:45+0100\n"
+"POT-Creation-Date: 2012-11-02 18:08+0100\n"
 "PO-Revision-Date: 2012-09-29 11:42+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -5181,6 +5181,22 @@ msgstr ""
 "  nick: プライベート会話を行うニックネーム\n"
 "  text: 送信テキスト"
 
+#, fuzzy
+msgid "quiet nicks or hosts"
+msgstr "ニックネームかホストの禁止設定を解除"
+
+#, fuzzy
+msgid ""
+"channel: channel for quiet\n"
+"   nick: user or host to quiet\n"
+"\n"
+"Without argument, this command display quiet list for current channel."
+msgstr ""
+"channel: バン対象チャンネル\n"
+"   nick: バンするユーザ名かホスト名\n"
+"\n"
+"引数無しの場合は、現在のチャンネルのバンリストを表示。"
+
 msgid "send raw data to server without parsing"
 msgstr "パースせずにサーバ宛に生データを送信"
 
@@ -6807,6 +6823,15 @@ msgid "%s%s: nickname \"%s\" is unavailable, trying nickname \"%s\""
 msgstr ""
 "%s%s: ニックネーム \"%s\" は利用できません、ニックネーム \"%s\" を試行してい"
 "ます"
+
+#. TRANSLATORS: "%s" after "on" is a date
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s quieted by %s%s %s(%s%s%s)%s on %s"
+msgstr "%s%s[%s%s%s] %s%s%s は %s%s %s(%s%s%s)%s によって %s に招待されました"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s quieted by %s%s %s(%s%s%s)"
+msgstr "%s%s[%s%s%s] %s%s%s は %s%s %s(%s%s%s) によって招待されました"
 
 #, c-format
 msgid "%s%s: command \"%s\" not found:"

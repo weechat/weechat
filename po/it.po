@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-11-02 17:45+0100\n"
+"POT-Creation-Date: 2012-11-02 18:08+0100\n"
 "PO-Revision-Date: 2012-09-29 11:42+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5286,6 +5286,22 @@ msgstr ""
 "  nick: nick per la conversazione privata\n"
 " testo: testo da inviare"
 
+#, fuzzy
+msgid "quiet nicks or hosts"
+msgstr "rimuove il ban da nick o host"
+
+#, fuzzy
+msgid ""
+"channel: channel for quiet\n"
+"   nick: user or host to quiet\n"
+"\n"
+"Without argument, this command display quiet list for current channel."
+msgstr ""
+"canale: canale per il ban\n"
+"  nick: utente o host su cui effettuare il ban\n"
+"\n"
+"Senza argomento, il comando mostra la lista dei ban per il canale corrente."
+
 msgid "send raw data to server without parsing"
 msgstr "invia dati grezzi al server senza analisi"
 
@@ -6960,6 +6976,15 @@ msgstr "%s: il nick \"%s\" è già in uso, tentativo con il nick #%d (\"%s\")"
 msgid "%s%s: nickname \"%s\" is unavailable, trying nickname \"%s\""
 msgstr ""
 "%s%s: il nick \"%s\" non è disponibile, tentativo con il nick #%d (\"%s\")"
+
+#. TRANSLATORS: "%s" after "on" is a date
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s quieted by %s%s %s(%s%s%s)%s on %s"
+msgstr "%s%s[%s%s%s] %s%s%s invitato da %s%s %s(%s%s%s)%s il %s"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s quieted by %s%s %s(%s%s%s)"
+msgstr "%s%s[%s%s%s] %s%s%s invitato da %s%s %s(%s%s%s)"
 
 #, c-format
 msgid "%s%s: command \"%s\" not found:"

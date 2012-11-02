@@ -467,6 +467,17 @@ server: an diesen Server senden (interner Name)
   text: Text der gesendet werden soll
 ........................................
 
+[[command_irc_quiet]]
+[command]*`quiet`* quiet nicks or hosts::
+........................................
+/quiet  [<channel>] [<nick> [<nick>...]]
+
+channel: channel for quiet
+   nick: user or host to quiet
+
+Without argument, this command display quiet list for current channel.
+........................................
+
 [[command_irc_quote]]
 [command]*`quote`* Daten direkt an Server senden (siehe RFC 2812)::
 ........................................

@@ -467,6 +467,17 @@ server: 送信先サーバ (内部サーバ名)
   text: 送信テキスト
 ........................................
 
+[[command_irc_quiet]]
+[command]*`quiet`* quiet nicks or hosts::
+........................................
+/quiet  [<channel>] [<nick> [<nick>...]]
+
+channel: channel for quiet
+   nick: user or host to quiet
+
+Without argument, this command display quiet list for current channel.
+........................................
+
 [[command_irc_quote]]
 [command]*`quote`* パースせずにサーバ宛に生データを送信::
 ........................................

@@ -1988,6 +1988,10 @@ weechat::
 | 433     |               | ニックネームが使用されています
 | 438     |               | ニックネームを変更する権限がありません
 | 671     | whois         | whois (セキュアな接続)
+// TRANSLATION MISSING
+| 728     | quietlist     | quiet list
+// TRANSLATION MISSING
+| 729     | quietlist     | end of quiet list
 | 901     |               | ログインに成功
 |========================================
 

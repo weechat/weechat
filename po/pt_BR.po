@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-11-02 17:45+0100\n"
+"POT-Creation-Date: 2012-11-02 18:08+0100\n"
 "PO-Revision-Date: 2012-09-29 11:43+0200\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4913,6 +4913,17 @@ msgid ""
 "  text: text to send"
 msgstr ""
 
+#, fuzzy
+msgid "quiet nicks or hosts"
+msgstr "obter apelido de host IRC"
+
+msgid ""
+"channel: channel for quiet\n"
+"   nick: user or host to quiet\n"
+"\n"
+"Without argument, this command display quiet list for current channel."
+msgstr ""
+
 msgid "send raw data to server without parsing"
 msgstr ""
 
@@ -6411,6 +6422,15 @@ msgstr "%s: apelido \"%s\" já está em uso, tentando apelido #%d (\"%s\")"
 #, fuzzy, c-format
 msgid "%s%s: nickname \"%s\" is unavailable, trying nickname \"%s\""
 msgstr "%s%s: apelido \"%s\" está indisponível, tentando apelido #%d (\"%s\")"
+
+#. TRANSLATORS: "%s" after "on" is a date
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s quieted by %s%s %s(%s%s%s)%s on %s"
+msgstr "%s%s[%s%s%s] %s%s%s convidado por %s%s %s(%s%s%s)%s em %s"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s quieted by %s%s %s(%s%s%s)"
+msgstr "%s%s[%s%s%s] %s%s%s convidado por %s%s %s(%s%s%s)"
 
 #, c-format
 msgid "%s%s: command \"%s\" not found:"

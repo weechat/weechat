@@ -467,6 +467,17 @@ server: send to this server (internal name)
   text: text to send
 ........................................
 
+[[command_irc_quiet]]
+[command]*`quiet`* quiet nicks or hosts::
+........................................
+/quiet  [<channel>] [<nick> [<nick>...]]
+
+channel: channel for quiet
+   nick: user or host to quiet
+
+Without argument, this command display quiet list for current channel.
+........................................
+
 [[command_irc_quote]]
 [command]*`quote`* send raw data to server without parsing::
 ........................................

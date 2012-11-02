@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-11-02 17:45+0100\n"
+"POT-Creation-Date: 2012-11-02 18:08+0100\n"
 "PO-Revision-Date: 2012-10-19 17:57+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -5524,6 +5524,23 @@ msgstr ""
 "  nick: Nickname für privaten Chat\n"
 "  text: Text der gesendet werden soll"
 
+#, fuzzy
+msgid "quiet nicks or hosts"
+msgstr "Bann aufheben (Nicks oder Hosts)"
+
+#, fuzzy
+msgid ""
+"channel: channel for quiet\n"
+"   nick: user or host to quiet\n"
+"\n"
+"Without argument, this command display quiet list for current channel."
+msgstr ""
+"channel: Channel in dem der Bann ausgeführt werden soll\n"
+"   nick: User oder Host für den der Bann gelten soll\n"
+"\n"
+"Ohne Angabe von Argumenten wird die Ban-Liste für den aktuellen Channel "
+"angezeigt."
+
 msgid "send raw data to server without parsing"
 msgstr "Daten direkt an Server senden (siehe RFC 2812)"
 
@@ -7271,6 +7288,15 @@ msgid "%s%s: nickname \"%s\" is unavailable, trying nickname \"%s\""
 msgstr ""
 "%s%s: Der Nickname \"%s\" ist nicht verfügbar. Es wird nun versucht den "
 "Nicknamen \"%s\" zu nutzen"
+
+#. TRANSLATORS: "%s" after "on" is a date
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s quieted by %s%s %s(%s%s%s)%s on %s"
+msgstr "%s%s[%s%s%s] %s%s%s wurde von %s%s %s(%s%s%s)%s eingeladen am %s"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s quieted by %s%s %s(%s%s%s)"
+msgstr "%s%s[%s%s%s] %s%s%s wurde von %s%s %s(%s%s%s) eingeladen"
 
 #, c-format
 msgid "%s%s: command \"%s\" not found:"

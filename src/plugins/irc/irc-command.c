@@ -3461,6 +3461,88 @@ irc_command_query (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
+ * irc_command_quiet: quiet nicks or hosts
+ */
+
+int
+irc_command_quiet (void *data, struct t_gui_buffer *buffer, int argc,
+                   char **argv, char **argv_eol)
+{
+    char *pos_channel;
+    int pos_args;
+
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
+    IRC_COMMAND_CHECK_SERVER("quiet", 1);
+
+    /* make C compiler happy */
+    (void) data;
+    (void) argv_eol;
+
+    if (argc > 1)
+    {
+        if (irc_channel_is_channel (ptr_server, argv[1]))
+        {
+            pos_channel = argv[1];
+            pos_args = 2;
+        }
+        else
+        {
+            pos_channel = NULL;
+            pos_args = 1;
+        }
+
+        /* channel not given, use default buffer */
+        if (!pos_channel)
+        {
+            if (ptr_channel && (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL))
+                pos_channel = ptr_channel->name;
+            else
+            {
+                weechat_printf (ptr_server->buffer,
+                                _("%s%s: \"%s\" command can only be "
+                                  "executed in a channel buffer"),
+                                weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                                "quiet");
+                return WEECHAT_RC_OK;
+            }
+        }
+
+        if (argv[pos_args])
+        {
+            /* loop on users */
+            while (argv[pos_args])
+            {
+                irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                                  "MODE %s +q %s",
+                                  pos_channel, argv[pos_args]);
+                pos_args++;
+            }
+        }
+        else
+        {
+            irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                              "MODE %s +q",
+                              pos_channel);
+        }
+    }
+    else
+    {
+        if (!ptr_channel)
+        {
+            weechat_printf (ptr_server->buffer,
+                            _("%s%s: \"%s\" command can only be "
+                              "executed in a channel buffer"),
+                            weechat_prefix ("error"), IRC_PLUGIN_NAME, "quiet");
+            return WEECHAT_RC_OK;
+        }
+        irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                          "MODE %s +q", ptr_channel->name);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * irc_command_quote: send raw data to server
  */
 
@@ -5399,6 +5481,14 @@ irc_command_init ()
                              "  nick: nick for private conversation\n"
                              "  text: text to send"),
                           "%(nicks)|-server %(irc_servers) %-", &irc_command_query, NULL);
+    weechat_hook_command ("quiet",
+                          N_("quiet nicks or hosts"),
+                          N_("[<channel>] [<nick> [<nick>...]]"),
+                          N_("channel: channel for quiet\n"
+                             "   nick: user or host to quiet\n\n"
+                             "Without argument, this command display quiet list "
+                             "for current channel."),
+                          "%(irc_channel_nicks_hosts)", &irc_command_quiet, NULL);
     weechat_hook_command ("quote",
                           N_("send raw data to server without parsing"),
                           N_("[-server <server>] <data>"),

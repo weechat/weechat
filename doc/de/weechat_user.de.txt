@@ -2082,6 +2082,10 @@ Unvollständige Liste der IRC Nachrichten bzw. Alias die angepasst werden könne
 | 433       |               | Nickname wird schon verwendet
 | 438       |               | nicht autorisiert um Nicknamen zu ändern
 | 671       | whois         | whois (sichere Verbindung)
+// TRANSLATION MISSING
+| 728       | quietlist     | quiet list
+// TRANSLATION MISSING
+| 729       | quietlist     | end of quiet list
 | 901       |               | Sie sind nun eingelogged
 |========================================
 

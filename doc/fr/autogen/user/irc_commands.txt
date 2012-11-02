@@ -467,6 +467,17 @@ serveur: envoyer à ce serveur (nom interne)
   texte: texte à envoyer
 ........................................
 
+[[command_irc_quiet]]
+[command]*`quiet`* faire taire des pseudos ou hôtes::
+........................................
+/quiet  [<canal>] [<pseudo> [<pseudo>...]]
+
+ canal: nom du canal pour faire taire
+pseudo: pseudo ou hôte à faire taire
+
+Sans paramètre, cette commande affiche la liste des "quiet" pour le canal courant.
+........................................
+
 [[command_irc_quote]]
 [command]*`quote`* envoyer des données brutes au serveur sans analyse::
 ........................................

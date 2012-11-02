@@ -2052,6 +2052,8 @@ Non-comprehensive list of IRC messages or alias that you can customize:
 | 433     |               | nickname already in use
 | 438     |               | not authorized to change nickname
 | 671     | whois         | whois (secure connection)
+| 728     | quietlist     | quiet list
+| 729     | quietlist     | end of quiet list
 | 901     |               | you are now logged in
 |========================================
 

@@ -2102,6 +2102,10 @@ personalizzare:
 | 433       |               | nick già utilizzato
 | 438       |               | non autorizzato a cambiare nick
 | 671       | whois         | whois (connessione sicura)
+// TRANSLATION MISSING
+| 728       | quietlist     | quiet list
+// TRANSLATION MISSING
+| 729       | quietlist     | end of quiet list
 | 901       |               | ora si è loggati
 |========================================
 

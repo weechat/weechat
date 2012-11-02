@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-11-02 17:45+0100\n"
+"POT-Creation-Date: 2012-11-02 18:08+0100\n"
 "PO-Revision-Date: 2012-09-29 11:42+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4627,6 +4627,20 @@ msgstr ""
 "becenév: privát beszélgetésre hívott felhasználó beceneve\n"
 " szöveg: küldendő üzenet"
 
+#, fuzzy
+msgid "quiet nicks or hosts"
+msgstr "gép vagy felhasználó tiltásának visszavonása"
+
+#, fuzzy
+msgid ""
+"channel: channel for quiet\n"
+"   nick: user or host to quiet\n"
+"\n"
+"Without argument, this command display quiet list for current channel."
+msgstr ""
+"szoba: szoba ahol a parancsot végrehajtjuk\n"
+"  név: felhasználó vagy gép melyen a parancsot végrehajtjuk"
+
 msgid "send raw data to server without parsing"
 msgstr "formázás nélküli nyers üzenet küldése a szervernek"
 
@@ -6262,6 +6276,15 @@ msgstr "%s: a(z) \"%s\" név már foglalt, próbálom a második nevet: \"%s\"\n
 #, fuzzy, c-format
 msgid "%s%s: nickname \"%s\" is unavailable, trying nickname \"%s\""
 msgstr "%s: a(z) \"%s\" név már foglalt, próbálom a második nevet: \"%s\"\n"
+
+#. TRANSLATORS: "%s" after "on" is a date
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s quieted by %s%s %s(%s%s%s)%s on %s"
+msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s quieted by %s%s %s(%s%s%s)"
+msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
 
 #, fuzzy, c-format
 msgid "%s%s: command \"%s\" not found:"

@@ -2115,6 +2115,8 @@ Liste non exhaustive des messages ou alias que vous pouvez paramétrer :
 | 433     |               | pseudo déjà en cours d'utilisation
 | 438     |               | pas autorisé à changer de pseudo
 | 671     | whois         | whois (connexion sécurisée)
+| 728     | quietlist     | liste des "quiet"
+| 729     | quietlist     | fin de la liste des "quiet"
 | 901     |               | vous êtes maintenant identifié
 |========================================
 

@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-11-02 17:45+0100\n"
+"POT-Creation-Date: 2012-11-02 18:08+0100\n"
 "PO-Revision-Date: 2012-09-29 11:42+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5291,6 +5291,22 @@ msgstr ""
 "   apodo: apodo con quien iniciar la conversación privada\n"
 "   texto: texto a enviar"
 
+#, fuzzy
+msgid "quiet nicks or hosts"
+msgstr "remueve vetos a apodos o máquinas"
+
+#, fuzzy
+msgid ""
+"channel: channel for quiet\n"
+"   nick: user or host to quiet\n"
+"\n"
+"Without argument, this command display quiet list for current channel."
+msgstr ""
+"canal: canal para el veto\n"
+"apodo: apodo o host a vetar\n"
+"\n"
+"Sin argumentos, este comando muestra la lista de vetos del canal actual."
+
 msgid "send raw data to server without parsing"
 msgstr "enviar datos brutos al servidor sin analizar"
 
@@ -6958,6 +6974,15 @@ msgstr "%s%s: el apodo \"%s\" ya está en uso, probando con el apodo \"%s\""
 #, c-format
 msgid "%s%s: nickname \"%s\" is unavailable, trying nickname \"%s\""
 msgstr "%s%s: el apodo \"%s\" no está disponible, probando con el apodo \"%s\""
+
+#. TRANSLATORS: "%s" after "on" is a date
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s quieted by %s%s %s(%s%s%s)%s on %s"
+msgstr "%s%s[%s%s%s] %s%s%s invitado por %s%s %s(%s%s%s)%s el %s"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s quieted by %s%s %s(%s%s%s)"
+msgstr "%s%s[%s%s%s] %s%s%s invitado por %s%s %s(%s%s%s)"
 
 #, c-format
 msgid "%s%s: command \"%s\" not found:"

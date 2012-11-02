@@ -4307,6 +4307,122 @@ IRC_PROTOCOL_CALLBACK(438)
 }
 
 /*
+ * irc_protocol_cb_728: '728' command received (quietlist)
+ */
+
+IRC_PROTOCOL_CALLBACK(728)
+{
+    struct t_irc_channel *ptr_channel;
+    struct t_gui_buffer *ptr_buffer;
+    time_t datetime;
+
+    /*
+     * 728 message looks like:
+     *   :server 728 mynick #channel mode quietmask nick!user@host 1351350090
+     */
+
+    IRC_PROTOCOL_MIN_ARGS(6);
+
+    ptr_channel = irc_channel_search (server, argv[3]);
+    ptr_buffer = (ptr_channel && ptr_channel->nicks) ?
+        ptr_channel->buffer : server->buffer;
+    if (argc >= 8)
+    {
+        datetime = (time_t)(atol (argv[7]));
+        weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, NULL,
+                                                              command, "quietlist",
+                                                              ptr_buffer),
+                             irc_protocol_tags (command, "irc_numeric", NULL),
+                             /* TRANSLATORS: "%s" after "on" is a date */
+                             _("%s%s[%s%s%s] %s%s%s quieted by "
+                               "%s%s %s(%s%s%s)%s on %s"),
+                             weechat_prefix ("network"),
+                             IRC_COLOR_CHAT_DELIMITERS,
+                             IRC_COLOR_CHAT_CHANNEL,
+                             argv[3],
+                             IRC_COLOR_CHAT_DELIMITERS,
+                             IRC_COLOR_CHAT_HOST,
+                             argv[5],
+                             IRC_COLOR_RESET,
+                             irc_nick_color_for_server_message (server, NULL,
+                                                                irc_message_get_nick_from_host (argv[5])),
+                             irc_message_get_nick_from_host (argv[6]),
+                             IRC_COLOR_CHAT_DELIMITERS,
+                             IRC_COLOR_CHAT_HOST,
+                             irc_message_get_address_from_host (argv[6]),
+                             IRC_COLOR_CHAT_DELIMITERS,
+                             IRC_COLOR_RESET,
+                             weechat_util_get_time_string (&datetime));
+    }
+    else
+    {
+        weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, NULL,
+                                                              command, "quietlist",
+                                                              ptr_buffer),
+                             irc_protocol_tags (command, "irc_numeric", NULL),
+                             _("%s%s[%s%s%s] %s%s%s quieted by "
+                               "%s%s %s(%s%s%s)"),
+                             weechat_prefix ("network"),
+                             IRC_COLOR_CHAT_DELIMITERS,
+                             IRC_COLOR_CHAT_CHANNEL,
+                             argv[3],
+                             IRC_COLOR_CHAT_DELIMITERS,
+                             IRC_COLOR_CHAT_HOST,
+                             argv[5],
+                             IRC_COLOR_RESET,
+                             irc_nick_color_for_server_message (server, NULL,
+                                                                irc_message_get_nick_from_host (argv[6])),
+                             irc_message_get_nick_from_host (argv[6]),
+                             IRC_COLOR_CHAT_DELIMITERS,
+                             IRC_COLOR_CHAT_HOST,
+                             irc_message_get_address_from_host (argv[6]),
+                             IRC_COLOR_CHAT_DELIMITERS);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * irc_protocol_cb_729: '729' command received (end of quietlist)
+ */
+
+IRC_PROTOCOL_CALLBACK(729)
+{
+    char *pos_args;
+    struct t_irc_channel *ptr_channel;
+    struct t_gui_buffer *ptr_buffer;
+
+    /*
+     * 729 message looks like:
+     *   :server 729 mynick #channel mode :End of Channel Quiet List
+     */
+
+    IRC_PROTOCOL_MIN_ARGS(5);
+
+    pos_args = (argc > 5) ?
+        ((argv_eol[5][0] == ':') ? argv_eol[5] + 1 : argv_eol[5]) : NULL;
+
+    ptr_channel = irc_channel_search (server, argv[3]);
+    ptr_buffer = (ptr_channel && ptr_channel->nicks) ?
+        ptr_channel->buffer : server->buffer;
+    weechat_printf_tags (irc_msgbuffer_get_target_buffer (server, NULL,
+                                                          command, "quietlist",
+                                                          ptr_buffer),
+                         irc_protocol_tags (command, "irc_numeric", NULL),
+                         "%s%s[%s%s%s]%s%s%s",
+                         weechat_prefix ("network"),
+                         IRC_COLOR_CHAT_DELIMITERS,
+                         IRC_COLOR_CHAT_CHANNEL,
+                         argv[3],
+                         IRC_COLOR_CHAT_DELIMITERS,
+                         IRC_COLOR_RESET,
+                         (pos_args) ? " " : "",
+                         (pos_args) ? pos_args : "");
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * irc_protocol_cb_900: '900' command (logged in as (SASL))
  */
 
@@ -4540,6 +4656,8 @@ irc_protocol_recv_command (struct t_irc_server *server,
           { "501", /* unknown mode flag */ 1, 0, &irc_protocol_cb_generic_error },
           { "502", /* can't change mode for other users */ 1, 0, &irc_protocol_cb_generic_error },
           { "671", /* whois (secure connection) */ 1, 0, &irc_protocol_cb_whois_nick_msg },
+          { "728", /* quietlist */ 1, 0, &irc_protocol_cb_728 },
+          { "729", /* end of quietlist */ 1, 0, &irc_protocol_cb_729 },
           { "900", /* logged in as (SASL) */ 1, 0, &irc_protocol_cb_900 },
           { "901", /* you are now logged in */ 1, 0, &irc_protocol_cb_901 },
           { "903", /* SASL authentication successful */ 1, 0, &irc_protocol_cb_sasl_end },
