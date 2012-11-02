@@ -230,7 +230,8 @@ To force a string comparison, add double quotes around each expression, for exam
 
 Some variables are replaced in expression, using the format ${variable}, variable can be, by order of prioity :
   1. the name of an option (file.section.option)
-  2. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
+  2. the name of a local variable in buffer
+  3. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
 Format for hdata can be one of following:
   hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
   hdata(list).var1.var2...: start with a hdata using a list, for example:

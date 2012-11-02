@@ -36,6 +36,7 @@
 #include "wee-hdata.h"
 #include "wee-hook.h"
 #include "wee-string.h"
+#include "../gui/gui-buffer.h"
 #include "../gui/gui-color.h"
 #include "../gui/gui-window.h"
 #include "../plugins/plugin.h"
@@ -212,7 +213,8 @@ end:
  *                       by order of priority:
  *                         1. an extra variable (from hashtable "extra_vars")
  *                         2. an name of option (file.section.option)
- *                         3. a hdata name/variable
+ *                         3. a buffer local variable
+ *                         4. a hdata name/variable
  *                       Examples:
  *                         option: ${weechat.look.scroll_amount}
  *                         hdata : ${window.buffer.full_name}
@@ -224,6 +226,7 @@ eval_replace_vars_cb (void *data, const char *text)
 {
     struct t_hashtable *pointers, *extra_vars;
     struct t_config_option *ptr_option;
+    struct t_gui_buffer *ptr_buffer;
     char str_value[64], *value, *pos, *pos1, *pos2, *hdata_name, *list_name;
     char *tmp;
     const char *ptr_value;
@@ -233,12 +236,12 @@ eval_replace_vars_cb (void *data, const char *text)
     pointers = (struct t_hashtable *)(((void **)data)[0]);
     extra_vars = (struct t_hashtable *)(((void **)data)[1]);
 
-    /* first look for var in hashtable "extra_vars" */
+    /* 1. look for var in hashtable "extra_vars" */
     ptr_value = hashtable_get (extra_vars, text);
     if (ptr_value)
         return strdup (ptr_value);
 
-    /* look for name of option: if found, return this value */
+    /* 2. look for name of option: if found, return this value */
     config_file_search_with_string (text, NULL, NULL, &ptr_option, NULL);
     if (ptr_option)
     {
@@ -261,7 +264,16 @@ eval_replace_vars_cb (void *data, const char *text)
         }
     }
 
-    /* look for hdata */
+    /* 3. look for local variable in buffer */
+    ptr_buffer = hashtable_get (pointers, "buffer");
+    if (ptr_buffer)
+    {
+        ptr_value = hashtable_get (ptr_buffer->local_variables, text);
+        if (ptr_value)
+            return strdup (ptr_value);
+    }
+
+    /* 4. look for hdata */
     value = NULL;
     hdata_name = NULL;
     list_name = NULL;

@@ -230,7 +230,8 @@ Pour forcer une comparaison de chaînes, ajoutez des guillemets autour de chaque
 
 Des variables sont remplacées dans l'expression, en utilisant le format ${variable}, la variable pouvant être, par ordre de priorité :
   1. le nom d'une option (fichier.section.option)
-  2. le nom d'un hdata/variable (la valeur est automatiquement convertie en chaîne), par défaut "window" et "buffer" pointent vers la fenêtre et le tampon courants.
+  2. le nom d'une variable locale du tampon
+  3. le nom d'un hdata/variable (la valeur est automatiquement convertie en chaîne), par défaut "window" et "buffer" pointent vers la fenêtre et le tampon courants.
 Le format du hdata peut être le suivant :
   hdata.var1.var2...: démarrer avec un hdata (le pointeur doit être connu), et demander les variables l'une après l'autre (d'autres hdata peuvent être suivis)
   hdata(list).var1.var2...: démarrer avec un hdata en utlisant une liste, par exemple :
