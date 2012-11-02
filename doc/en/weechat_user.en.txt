@@ -1103,11 +1103,22 @@ List of gestures (only for buttons, not wheel):
 | gesture-right-long | ≥ 40
 |========================================
 
+List of incomplete events (only for buttons, useful for plugins/scripts):
+
+[width="50%",cols="3m,4",options="header"]
+|========================================
+| Event      | Description
+| event-down | button was pressed but not released yet
+| event-drag | mouse was moved with button pressed down
+|========================================
+
 Example of events:
 
 * `button1`
 * `ctrl-button1`
 * `button1-gesture-right`
+* `button1-event-down`
+* `button1-event-drag`
 * `alt-button2-gesture-down-long`
 * `wheelup`
 * `ctrl-alt-wheeldown`

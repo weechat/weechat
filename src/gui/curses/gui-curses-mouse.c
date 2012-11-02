@@ -32,6 +32,7 @@
 #include "../../core/weechat.h"
 #include "../../core/wee-config.h"
 #include "../../core/wee-hook.h"
+#include "../../core/wee-string.h"
 #include "../../core/wee-utf8.h"
 #include "../../plugins/plugin.h"
 #include "../gui-bar.h"
@@ -314,9 +315,6 @@ gui_mouse_event_code2key (const char *code)
         }
     }
 
-    if (!MOUSE_CODE_END(code[0]))
-        return NULL;
-
     /* add name of button event */
     for (i = 0; gui_mouse_button_codes[i][0]; i++)
     {
@@ -325,6 +323,21 @@ gui_mouse_event_code2key (const char *code)
             strcat (key, gui_mouse_button_codes[i][1]);
             break;
         }
+    }
+
+    if (!MOUSE_CODE_END(code[0]))
+    {
+        strcat (key, "-event-");
+        if (MOUSE_CODE_MOTION(code[0])) {
+            strcat (key, "drag");
+        }
+        else
+        {
+            gui_mouse_event_x[1] = gui_mouse_event_x[0];
+            gui_mouse_event_y[1] = gui_mouse_event_y[0];
+            strcat (key, "down");
+        }
+        return key;
     }
 
     /*
@@ -412,6 +425,7 @@ void
 gui_mouse_event_end ()
 {
     const char *mouse_key;
+    int bare_event;
 
     gui_mouse_event_pending = 0;
 
@@ -426,9 +440,11 @@ gui_mouse_event_end ()
     mouse_key = gui_mouse_event_code2key (gui_key_combo_buffer);
     if (mouse_key && mouse_key[0])
     {
+        bare_event = string_match (mouse_key, "*-event-*", 1);
         if (gui_mouse_grab)
         {
-            gui_mouse_grab_end (mouse_key);
+            if (!bare_event)
+                gui_mouse_grab_end (mouse_key);
         }
         else
         {
@@ -436,7 +452,8 @@ gui_mouse_event_end ()
             (void) gui_key_focus (mouse_key,
                                   GUI_KEY_CONTEXT_MOUSE);
         }
-        gui_mouse_event_reset ();
+        if (!bare_event)
+            gui_mouse_event_reset ();
     }
 
     gui_key_combo_buffer[0] = '\0';

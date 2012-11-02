@@ -1126,11 +1126,23 @@ Elenco di azioni (solo per i pulsanti, non la rotellina):
 | gesture-right-long | ≥ 40
 |========================================
 
+// TRANSLATION MISSING
+List of incomplete events (only for buttons, useful for plugins/scripts):
+
+[width="50%",cols="3m,4",options="header"]
+|========================================
+| Event      | Description
+| event-down | button was pressed but not released yet
+| event-drag | mouse was moved with button pressed down
+|========================================
+
 Esempio di eventi:
 
 * `button1`
 * `ctrl-button1`
 * `button1-gesture-right`
+* `button1-event-down`
+* `button1-event-drag`
 * `alt-button2-gesture-down-long`
 * `wheelup`
 * `ctrl-alt-wheeldown`

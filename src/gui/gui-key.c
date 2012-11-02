@@ -1009,6 +1009,11 @@ gui_key_focus_command (const char *key, int context,
         if (gui_key_cmp (key, ptr_key->area_key, context) != 0)
             continue;
 
+        /* ignore mouse event if not explicit requested */
+        if ((context == GUI_KEY_CONTEXT_MOUSE) &&
+            (string_match (key, "*-event-*", 1) != string_match (ptr_key->area_key, "*-event-*", 1)))
+            continue;
+
         /* check if focus is matching with key */
         matching = gui_key_focus_matching (ptr_key, hashtable_focus);
         if (!matching)

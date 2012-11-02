@@ -1133,11 +1133,23 @@ Liste des gestes (seulement pour les boutons, pas la roulette) :
 | gesture-right-long | ≥ 40
 |========================================
 
-Exemple d'évènements :
+Liste des évènements incomplets (seulement pour les boutons, pratique pour les
+extensions/scripts) :
+
+[width="50%",cols="3m,4",options="header"]
+|========================================
+| Evènement  | Description
+| event-down | le bouton a été pressé mais pas encore relâché
+| event-drag | la souris a bougé avec le bouton pressé
+|========================================
+
+Exemples d'évènements :
 
 * `button1`
 * `ctrl-button1`
 * `button1-gesture-right`
+* `button1-event-down`
+* `button1-event-drag`
 * `alt-button2-gesture-down-long`
 * `wheelup`
 * `ctrl-alt-wheeldown`
