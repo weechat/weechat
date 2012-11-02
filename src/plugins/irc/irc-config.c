@@ -120,6 +120,7 @@ struct t_config_option *irc_config_color_topic_new;
 
 /* IRC config, network section */
 
+struct t_config_option *irc_config_network_alternate_nick;
 struct t_config_option *irc_config_network_autoreconnect_delay_growing;
 struct t_config_option *irc_config_network_autoreconnect_delay_max;
 struct t_config_option *irc_config_network_colors_receive;
@@ -2471,6 +2472,14 @@ irc_config_init ()
         return 0;
     }
 
+    irc_config_network_alternate_nick = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "alternate_nick", "boolean",
+        N_("get an alternate nick when the nick is already used on server: add "
+           "some \"_\" until the nick has a length of 9, and then replace last "
+           "char (or the two last chars) by a number from 1 to 99, until we "
+           "find a nick not used on server"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_network_autoreconnect_delay_growing = weechat_config_new_option (
         irc_config_file, ptr_section,
         "autoreconnect_delay_growing", "integer",

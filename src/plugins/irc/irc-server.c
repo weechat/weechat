@@ -551,10 +551,13 @@ irc_server_get_alternate_nick (struct t_irc_server *server)
             return nick;
         }
 
-        /*
-         * we have tried all nicks in list, then use main nick
-         * and we will add "_" and then number if needed
-         */
+        /* now we have tried all nicks in list */
+
+        /* if alternate nick is disabled, just return NULL */
+        if (!weechat_config_boolean (irc_config_network_alternate_nick))
+            return NULL;
+
+        /* use main nick and we will add "_" and then number if needed */
         server->nick_alternate_number = 0;
         snprintf (nick, sizeof (nick), "%s", server->nicks_array[0]);
     }

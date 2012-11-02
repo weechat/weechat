@@ -318,6 +318,11 @@
 ** type: boolean
 ** values: on, off (default value: `off`)
 
+* [[option_irc.network.alternate_nick]] *irc.network.alternate_nick*
+** description: `get an alternate nick when the nick is already used on server: add some "_" until the nick has a length of 9, and then replace last char (or the two last chars) by a number from 1 to 99, until we find a nick not used on server`
+** type: boolean
+** values: on, off (default value: `on`)
+
 * [[option_irc.network.autoreconnect_delay_growing]] *irc.network.autoreconnect_delay_growing*
 ** description: `growing factor for autoreconnect delay to server (1 = always same delay, 2 = delay*2 for each retry, ..)`
 ** type: integer

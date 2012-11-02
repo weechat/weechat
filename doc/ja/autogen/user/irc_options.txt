@@ -318,6 +318,11 @@
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `off`)
 
+* [[option_irc.network.alternate_nick]] *irc.network.alternate_nick*
+** 説明: `get an alternate nick when the nick is already used on server: add some "_" until the nick has a length of 9, and then replace last char (or the two last chars) by a number from 1 to 99, until we find a nick not used on server`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
 * [[option_irc.network.autoreconnect_delay_growing]] *irc.network.autoreconnect_delay_growing*
 ** 説明: `サーバに自動再接続する際の遅延間隔に関する増加係数 (1 = 遅延間隔は常に同じ, 2 = リトライごとに遅延間隔を 2 倍、..)`
 ** タイプ: 整数

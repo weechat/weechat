@@ -318,6 +318,11 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `off`)
 
+* [[option_irc.network.alternate_nick]] *irc.network.alternate_nick*
+** description: `obtenir un pseudo alternatif lorsque le pseudo est déjà utilisé sur le serveur: ajouter des "_" jusqu'à ce que le pseudo ait une longeur de 9, puis remplacer le dernier caractère (ou les deux derniers) par un nombre de 1 à 99, jusqu'à trouver un pseudo non utilisé sur le serveur`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `on`)
+
 * [[option_irc.network.autoreconnect_delay_growing]] *irc.network.autoreconnect_delay_growing*
 ** description: `facteur de croissance du délai d'autoreconnection au serveur (1 = toujours le même délai, 2 = délai*2 pour chaque tentative, etc...)`
 ** type: entier

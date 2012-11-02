@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-11-02 15:35+0100\n"
+"POT-Creation-Date: 2012-11-02 17:45+0100\n"
 "PO-Revision-Date: 2012-09-29 11:42+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -6192,6 +6192,12 @@ msgstr "古いチャンネルトピックの色 (トピックが変更された�
 
 msgid "color for new channel topic (when topic is changed)"
 msgstr "新しいチャンネルトピックの色 (トピックが変更されたとき)"
+
+msgid ""
+"get an alternate nick when the nick is already used on server: add some \"_"
+"\" until the nick has a length of 9, and then replace last char (or the two "
+"last chars) by a number from 1 to 99, until we find a nick not used on server"
+msgstr ""
 
 msgid ""
 "growing factor for autoreconnect delay to server (1 = always same delay, 2 = "
