@@ -39,7 +39,9 @@ extern Tcl_Obj *weechat_tcl_hashtable_to_dict (Tcl_Interp *interp,
                                                struct t_hashtable *hashtable);
 extern struct t_hashtable *weechat_tcl_dict_to_hashtable (Tcl_Interp *interp,
                                                           Tcl_Obj *dict,
-                                                          int hashtable_size);
+                                                          int size,
+                                                          const char *type_keys,
+                                                          const char *type_values);
 extern void *weechat_tcl_exec (struct t_plugin_script *script,
                                int ret_type, const char *function,
                                const char *format, void **argv);

@@ -176,13 +176,52 @@ gui_bar_item_search_with_plugin (struct t_weechat_plugin *plugin,
 }
 
 /*
- * gui_bar_item_used_in_a_bar: return 1 if an item is used in at least one bar
- *                             if partial_name == 1, then search a bar that
- *                             contains item beginning with "item_name"
+ * gui_bar_item_used_in_bar: return 1 if an item is used in the bar
+ *                           if partial_name == 1, then search if an item
+ *                           begins with "item_name"
  */
 
 int
-gui_bar_item_used_in_a_bar (const char *item_name, int partial_name)
+gui_bar_item_used_in_bar (struct t_gui_bar *bar, const char *item_name,
+                          int partial_name)
+{
+    int i, j, length;
+
+    length = strlen (item_name);
+
+    for (i = 0; i < bar->items_count; i++)
+    {
+        for (j = 0; j < bar->items_subcount[i]; j++)
+        {
+            if (bar->items_name[i][j])
+            {
+                if ((partial_name
+                     && strncmp (bar->items_name[i][j],
+                                 item_name, length) == 0)
+                    || (!partial_name
+                        && strcmp (bar->items_name[i][j],
+                                   item_name) == 0))
+                {
+                    return 1;
+                }
+            }
+        }
+    }
+
+    /* item not used in the bar */
+    return 0;
+}
+
+/*
+ * gui_bar_item_used_in_at_least_one_bar: return 1 if an item is used in at
+ *                                        least one bar
+ *                                        if partial_name == 1, then search a
+ *                                        bar that contains item beginning with
+ *                                        "item_name"
+ */
+
+int
+gui_bar_item_used_in_at_least_one_bar (const char *item_name, int partial_name)
 {
     struct t_gui_bar *ptr_bar;
     int i, j, length;
@@ -211,7 +250,7 @@ gui_bar_item_used_in_a_bar (const char *item_name, int partial_name)
         }
     }
 
-    /* item not used by any bar */
+    /* item not used in any bar */
     return 0;
 }
 

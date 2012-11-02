@@ -39,6 +39,7 @@
 #include "wee-config.h"
 #include "wee-config-file.h"
 #include "wee-debug.h"
+#include "wee-eval.h"
 #include "wee-hashtable.h"
 #include "wee-hdata.h"
 #include "wee-hook.h"
@@ -1438,6 +1439,73 @@ COMMAND_CALLBACK(debug)
                 }
             }
         }
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * command_eval: evaluate expression and send result to buffer
+ */
+
+COMMAND_CALLBACK(eval)
+{
+    int print_only;
+    char *result, *ptr_args;
+
+    /* make C compiler happy */
+    (void) buffer;
+    (void) data;
+    (void) argv;
+
+    print_only = 0;
+
+    if (argc < 2)
+        return WEECHAT_RC_OK;
+
+    ptr_args = argv_eol[1];
+    if (string_strcasecmp (argv[1], "-n") == 0)
+    {
+        print_only = 1;
+        ptr_args = argv_eol[2];
+    }
+
+    if (ptr_args)
+    {
+        result = eval_expression (ptr_args, NULL, NULL);
+        if (print_only)
+        {
+            gui_chat_printf_date_tags (NULL, 0, "no_log", ">> %s", ptr_args);
+            if (result)
+            {
+                gui_chat_printf_date_tags (NULL, 0, "no_log", "== %s[%s%s%s]",
+                                           GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                                           GUI_COLOR(GUI_COLOR_CHAT),
+                                           result,
+                                           GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+            }
+            else
+            {
+                gui_chat_printf_date_tags (NULL, 0, "no_log", "== %s<%s%s%s>",
+                                           GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                                           GUI_COLOR(GUI_COLOR_CHAT),
+                                           _("error"),
+                                           GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+            }
+        }
+        else
+        {
+            if (result)
+                input_data (buffer, result);
+            else
+            {
+                gui_chat_printf (NULL,
+                                 _("%sError in expression to evaluate"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+            }
+        }
+        if (result)
+            free (result);
     }
 
     return WEECHAT_RC_OK;
@@ -5438,8 +5506,8 @@ command_init ()
     hook_command (NULL, "bar",
                   N_("manage bars"),
                   N_("list|listfull|listitems"
-                     " || add <name> <type>[,<cond1>[,<cond2>...]] <position> "
-                     "<size> <separator> <item1>[,<item2>...]"
+                     " || add <name> <type>[,<condition>] <position> <size> "
+                     "<separator> <item1>[,<item2>...]"
                      " || default [input|title|status|nicklist]"
                      " || del <name>|-all"
                      " || set <name> <option> <value>"
@@ -5453,12 +5521,15 @@ command_init ()
                      "         type:   root: outside windows,\n"
                      "               window: inside windows, with optional "
                      "conditions (see below)\n"
-                     "    cond1,...: condition(s) for displaying bar (only for "
+                     "    condition: condition(s) for displaying bar (only for "
                      "type \"window\"):\n"
                      "                 active: on active window\n"
                      "               inactive: on inactive windows\n"
                      "               nicklist: on windows with nicklist\n"
-                     "               without condition, bar is always displayed\n"
+                     "               other condition: see /help "
+                     "weechat.bar.xxx.conditions and /help eval\n"
+                     "               without condition, the bar is always "
+                     "displayed\n"
                      "     position: bottom, top, left or right\n"
                      "         size: size of bar (in chars)\n"
                      "    separator: 1 for using separator (line), 0 or nothing "
@@ -5683,6 +5754,69 @@ command_init ()
                   " || term"
                   " || windows",
                   &command_debug, NULL);
+    hook_command (NULL, "eval",
+                  N_("evaluate expression and send result to buffer"),
+                  N_("[-n] <expression>"
+                     " || [-n] <expression1> <operator> <expression2>"),
+                  N_("        -n: display result without sending it to buffer "
+                     "(debug mode)\n"
+                     "expression: expression to evaluate, variables with format "
+                     "${variable} are replaced (see below)\n"
+                     "  operator: a logical or comparison operator:\n"
+                     "            - logical operators:\n"
+                     "                &&  boolean \"and\"\n"
+                     "                ||  boolean \"or\"\n"
+                     "            - comparison operators:\n"
+                     "                ==  equal\n"
+                     "                !=  not equal\n"
+                     "                <=  less or equal\n"
+                     "                <   less\n"
+                     "                >=  greater or equal\n"
+                     "                >   greater\n"
+                     "                =~  is matching regex\n"
+                     "                !~  is NOT matching regex\n\n"
+                     "An expression is considered as \"true\" if it is not NULL, "
+                     "not empty, and different from \"0\".\n"
+                     "The comparison is made using integers if the two "
+                     "expressions are valid integers.\n"
+                     "To force a string comparison, add double quotes around "
+                     "each expression, for example:\n"
+                     "  50 > 100      ==> 0\n"
+                     "  \"50\" > \"100\"  ==> 1\n\n"
+                     "Some variables are replaced in expression, using the "
+                     "format ${variable}, variable can be, by order of prioity :\n"
+                     "  1. the name of an option (file.section.option)\n"
+                     "  2. a hdata name/variable (the value is automatically "
+                     "converted to string), by default \"window\" and \"buffer\" "
+                     "point to current window/buffer.\n"
+                     "Format for hdata can be one of following:\n"
+                     "  hdata.var1.var2...: start with a hdata (pointer must be "
+                     "known), and ask variables one after one (other hdata can "
+                     "be followed)\n"
+                     "  hdata(list).var1.var2...: start with a hdata using a "
+                     "list, for example:\n"
+                     "    ${buffer[gui_buffers].full_name}: full name of first "
+                     "buffer in linked list of buffers\n"
+                     "    ${plugin[weechat_plugins].name}: name of first plugin "
+                     "in linked list of plugins\n"
+                     "For name of hdata and variables, please look at \"Plugin "
+                     "API reference\", function \"weechat_hdata_get\".\n\n"
+                     "Examples:\n"
+                     "  /eval -n ${weechat.look.scroll_amount}  ==> 3\n"
+                     "  /eval -n ${window}                      ==> 0x2549aa0\n"
+                     "  /eval -n ${window.buffer}               ==> 0x2549320\n"
+                     "  /eval -n ${window.buffer.full_name}     ==> core.weechat\n"
+                     "  /eval -n ${window.buffer.number}        ==> 1\n"
+                     "  /eval -n ${window.buffer.number} > 2    ==> 0\n"
+                     "  /eval -n ${window.win_width} > 100      ==> 1\n"
+                     "  /eval -n (8 > 12) || (5 > 2)            ==> 1\n"
+                     "  /eval -n (8 > 12) && (5 > 2)            ==> 0\n"
+                     "  /eval -n abcd =~ ^ABC                   ==> 1\n"
+                     "  /eval -n abcd =~ (?-i)^ABC              ==> 0\n"
+                     "  /eval -n abcd =~ (?-i)^abc              ==> 1\n"
+                     "  /eval -n abcd !~ abc                    ==> 0"),
+                  "-n",
+                  &command_eval, NULL);
     hook_command (NULL, "filter",
                   N_("filter messages in buffers, to hide/show them according "
                      "to tags or regex"),

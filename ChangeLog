@@ -1,12 +1,13 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.0-dev, 2012-10-20
+v0.4.0-dev, 2012-11-02
 
 
 Version 0.4.0 (under dev!)
 --------------------------
 
+* core: add command /eval, use expression in conditions for bars
 * core: add option "-quit" for command /upgrade (save session and quit without
   restarting WeeChat, for delayed restoration)
 * core: fix display of zoomed/merged buffer (with number >= 2) after switching
@@ -15,6 +16,7 @@ Version 0.4.0 (under dev!)
   (problem with nick displayed in first line of screen) (bug #37556)
 * core: fix wrapping of words with wide chars (the break was made before the
   correct position)
+* api: add new function "string_eval_expression"
 * api: connect with IPv6 by default in hook_connect (with fallback to IPv4),
   shuffle list of hosts for a same address, add argument "retry" for
   hook_connect, move "sock" from hook_connect arguments to callback of

@@ -437,6 +437,40 @@ XS (XS_weechat_api_string_input_for_buffer)
 }
 
 /*
+ * weechat::string_eval_expression: evaluate expression and return result
+ */
+
+XS (XS_weechat_api_string_eval_expression)
+{
+    char *expr, *result;
+    struct t_hashtable *pointers, *extra_vars;
+    dXSARGS;
+
+    API_FUNC(1, "string_eval_expression", API_RETURN_EMPTY);
+    if (items < 3)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    expr = SvPV_nolen (ST (0));
+    pointers = weechat_perl_hash_to_hashtable (ST (1),
+                                               WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                               WEECHAT_HASHTABLE_STRING,
+                                               WEECHAT_HASHTABLE_POINTER);
+    extra_vars = weechat_perl_hash_to_hashtable (ST (2),
+                                                 WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                 WEECHAT_HASHTABLE_STRING,
+                                                 WEECHAT_HASHTABLE_STRING);
+
+    result = weechat_string_eval_expression (expr, pointers, extra_vars);
+
+    if (pointers)
+        weechat_hashtable_free (pointers);
+    if (extra_vars)
+        weechat_hashtable_free (extra_vars);
+
+    API_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat::mkdir_home: create a directory in WeeChat home
  */
 
@@ -2003,7 +2037,9 @@ XS (XS_weechat_api_key_bind)
 
     context = SvPV_nolen (ST (0));
     hashtable = weechat_perl_hash_to_hashtable (ST (1),
-                                                WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+                                                WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                WEECHAT_HASHTABLE_STRING,
+                                                WEECHAT_HASHTABLE_STRING);
 
     num_keys = weechat_key_bind (context, hashtable);
 
@@ -2537,7 +2573,9 @@ XS (XS_weechat_api_hook_process_hashtable)
 
     command = SvPV_nolen (ST (0));
     options = weechat_perl_hash_to_hashtable (ST (1),
-                                              WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+                                              WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                              WEECHAT_HASHTABLE_STRING,
+                                              WEECHAT_HASHTABLE_STRING);
     function = SvPV_nolen (ST (3));
     data = SvPV_nolen (ST (4));
 
@@ -2951,7 +2989,9 @@ XS (XS_weechat_api_hook_hsignal_send)
 
     signal = SvPV_nolen (ST (0));
     hashtable = weechat_perl_hash_to_hashtable (ST (1),
-                                                WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+                                                WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                WEECHAT_HASHTABLE_STRING,
+                                                WEECHAT_HASHTABLE_STRING);
 
     weechat_hook_hsignal_send (signal, hashtable);
 
@@ -4663,7 +4703,9 @@ XS (XS_weechat_api_info_get_hashtable)
 
     info_name = SvPV_nolen (ST (0));
     hashtable = weechat_perl_hash_to_hashtable (ST (1),
-                                                WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+                                                WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                WEECHAT_HASHTABLE_STRING,
+                                                WEECHAT_HASHTABLE_STRING);
 
     result_hashtable = weechat_info_get_hashtable (info_name, hashtable);
     result_hash = weechat_perl_hashtable_to_hash (result_hashtable);
@@ -5428,7 +5470,9 @@ XS (XS_weechat_api_hdata_update)
     hdata = SvPV_nolen (ST (0));
     pointer = SvPV_nolen (ST (1));
     hashtable = weechat_perl_hash_to_hashtable (ST (2),
-                                                WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+                                                WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                WEECHAT_HASHTABLE_STRING,
+                                                WEECHAT_HASHTABLE_STRING);
 
     value = weechat_hdata_update (API_STR2PTR(hdata),
                                   API_STR2PTR(pointer),
@@ -5630,6 +5674,7 @@ weechat_perl_api_init (pTHX)
     API_DEF_FUNC(string_remove_color);
     API_DEF_FUNC(string_is_command_char);
     API_DEF_FUNC(string_input_for_buffer);
+    API_DEF_FUNC(string_eval_expression);
     API_DEF_FUNC(mkdir_home);
     API_DEF_FUNC(mkdir);
     API_DEF_FUNC(mkdir_parents);

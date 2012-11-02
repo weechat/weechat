@@ -37,7 +37,9 @@ extern SCM guile_port;
 
 extern SCM weechat_guile_hashtable_to_alist (struct t_hashtable *hashtable);
 extern struct t_hashtable *weechat_guile_alist_to_hashtable (SCM dict,
-                                                             int hashtable_size);
+                                                             int size,
+                                                             const char *type_keys,
+                                                             const char *type_values);
 extern void *weechat_guile_exec (struct t_plugin_script *script,
                                   int ret_type, const char *function,
                                   char *format, void **argv);

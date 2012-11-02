@@ -198,22 +198,21 @@ weechat_guile_hashtable_to_alist (struct t_hashtable *hashtable)
 
 /*
  * weechat_guile_alist_to_hashtable: get WeeChat hashtable with Guile alist
- *                                   Hashtable returned has type string for
- *                                   both keys and values
  *                                   Note: hashtable has to be released after
  *                                   use with call to weechat_hashtable_free()
  */
 
 struct t_hashtable *
-weechat_guile_alist_to_hashtable (SCM alist, int hashtable_size)
+weechat_guile_alist_to_hashtable (SCM alist, int size, const char *type_keys,
+                                  const char *type_values)
 {
     struct t_hashtable *hashtable;
     int length, i;
     SCM pair;
 
-    hashtable = weechat_hashtable_new (hashtable_size,
-                                       WEECHAT_HASHTABLE_STRING,
-                                       WEECHAT_HASHTABLE_STRING,
+    hashtable = weechat_hashtable_new (size,
+                                       type_keys,
+                                       type_values,
                                        NULL,
                                        NULL);
     if (!hashtable)
@@ -223,11 +222,24 @@ weechat_guile_alist_to_hashtable (SCM alist, int hashtable_size)
     for (i = 0; i < length; i++)
     {
         pair = scm_list_ref (alist, scm_from_int (i));
-        weechat_hashtable_set (hashtable,
-                               scm_i_string_chars (scm_list_ref (pair,
-                                                                 scm_from_int (0))),
-                               scm_i_string_chars (scm_list_ref (pair,
-                                                                 scm_from_int (1))));
+        if (strcmp (type_values, WEECHAT_HASHTABLE_STRING) == 0)
+        {
+            weechat_hashtable_set (hashtable,
+                                   scm_i_string_chars (scm_list_ref (pair,
+                                                                     scm_from_int (0))),
+                                   scm_i_string_chars (scm_list_ref (pair,
+                                                                     scm_from_int (1))));
+        }
+        else if (strcmp (type_values, WEECHAT_HASHTABLE_POINTER) == 0)
+        {
+            weechat_hashtable_set (hashtable,
+                                   scm_i_string_chars (scm_list_ref (pair,
+                                                                     scm_from_int (0))),
+                                   plugin_script_str2ptr (weechat_guile_plugin,
+                                                          NULL, NULL,
+                                                          scm_i_string_chars (scm_list_ref (pair,
+                                                                                            scm_from_int (1)))));
+        }
     }
 
     return hashtable;
@@ -305,7 +317,9 @@ weechat_guile_exec (struct t_plugin_script *script,
     else if (ret_type == WEECHAT_SCRIPT_EXEC_HASHTABLE)
     {
         ret_value = weechat_guile_alist_to_hashtable (rc,
-                                                      WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+                                                      WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                      WEECHAT_HASHTABLE_STRING,
+                                                      WEECHAT_HASHTABLE_STRING);
     }
     else
     {

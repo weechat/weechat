@@ -147,32 +147,43 @@ int
 weechat_ruby_hash_foreach_cb (VALUE key, VALUE value, void *arg)
 {
     struct t_hashtable *hashtable;
+    const char *type_values;
 
     hashtable = (struct t_hashtable *)arg;
     if ((TYPE(key) == T_STRING) && (TYPE(value) == T_STRING))
     {
-        weechat_hashtable_set (hashtable, StringValuePtr(key),
-                               StringValuePtr(value));
+        type_values = weechat_hashtable_get_string (hashtable, "type_values");
+        if (strcmp (type_values, WEECHAT_HASHTABLE_STRING) == 0)
+        {
+            weechat_hashtable_set (hashtable, StringValuePtr(key),
+                                   StringValuePtr(value));
+        }
+        else if (strcmp (type_values, WEECHAT_HASHTABLE_POINTER) == 0)
+        {
+            weechat_hashtable_set (hashtable, StringValuePtr(key),
+                                   plugin_script_str2ptr (weechat_ruby_plugin,
+                                                          NULL, NULL,
+                                                          StringValuePtr(value)));
+        }
     }
     return 0;
 }
 
 /*
  * weechat_ruby_hash_to_hashtable: get WeeChat hashtable with ruby hashtable
- *                                 Hashtable returned has type string for
- *                                 both keys and values
  *                                 Note: hashtable has to be released after use
  *                                 with call to weechat_hashtable_free()
  */
 
 struct t_hashtable *
-weechat_ruby_hash_to_hashtable (VALUE hash, int hashtable_size)
+weechat_ruby_hash_to_hashtable (VALUE hash, int size, const char *type_keys,
+                                const char *type_values)
 {
     struct t_hashtable *hashtable;
 
-    hashtable = weechat_hashtable_new (hashtable_size,
-                                       WEECHAT_HASHTABLE_STRING,
-                                       WEECHAT_HASHTABLE_STRING,
+    hashtable = weechat_hashtable_new (size,
+                                       type_keys,
+                                       type_values,
                                        NULL,
                                        NULL);
     if (!hashtable)
@@ -375,7 +386,9 @@ weechat_ruby_exec (struct t_plugin_script *script,
     else if (ret_type == WEECHAT_SCRIPT_EXEC_HASHTABLE)
     {
         ret_value = weechat_ruby_hash_to_hashtable (rc,
-                                                    WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+                                                    WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                    WEECHAT_HASHTABLE_STRING,
+                                                    WEECHAT_HASHTABLE_STRING);
     }
     else
     {

@@ -40,7 +40,9 @@ extern void weechat_lua_pushhashtable (lua_State *interpreter,
                                        struct t_hashtable *hashtable);
 extern struct t_hashtable *weechat_lua_tohashtable (lua_State *interpreter,
                                                     int index,
-                                                    int hashtable_size);
+                                                    int size,
+                                                    const char *type_keys,
+                                                    const char *type_values);
 extern void *weechat_lua_exec (struct t_plugin_script *script, int ret_type,
                                const char *function,
                                const char *format, void **argv);

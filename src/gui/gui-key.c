@@ -950,6 +950,29 @@ gui_key_focus_matching (struct t_gui_key *key,
 }
 
 /*
+ * gui_key_focus_command_replace_cb: callback for replacing values in string
+ *                                   with a hashtable
+ */
+
+char *
+gui_key_focus_command_replace_cb (void *data, const char *text)
+{
+    struct t_hashtable *ptr_hashtable;
+    const char *ptr_value;
+
+    ptr_hashtable = (struct t_hashtable *)data;
+
+    if (ptr_hashtable)
+    {
+        ptr_value = hashtable_get (ptr_hashtable, text);
+        if (ptr_value)
+            return strdup (ptr_value);
+    }
+
+    return NULL;
+}
+
+/*
  * gui_key_focus_command: run command according to focus
  *                        return 1 if a command was executed, otherwise 0
  */
@@ -1038,9 +1061,10 @@ gui_key_focus_command (const char *key, int context,
                 }
                 else
                 {
-                    command = string_replace_with_hashtable (commands[i],
-                                                             hashtable,
-                                                             &errors);
+                    command = string_replace_with_callback (commands[i],
+                                                            &gui_key_focus_command_replace_cb,
+                                                            hashtable,
+                                                            &errors);
                     if (command)
                     {
                         if (errors == 0)

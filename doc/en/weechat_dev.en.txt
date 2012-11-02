@@ -99,6 +99,7 @@ WeeChat "core" reside in following directories:
 |    wee-config-file.c          | Configuration file management
 |    wee-config.c               | Configuration options for WeeChat core (options weechat.*)
 |    wee-debug.c                | Some debug functions
+|    wee-eval.c                 | Evaluate expressions with references to internal vars
 |    wee-hashtable.c            | Hashtables
 |    wee-hdata.c                | Hdata (direct access to data using hashtables)
 |    wee-hook.c                 | Hooks

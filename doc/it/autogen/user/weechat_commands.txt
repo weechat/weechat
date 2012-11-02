@@ -11,49 +11,50 @@ messaggio: messaggio di assenza (se non specificato, lo stato di assenza viene r
 [command]*`bar`* gestione delle barre::
 ........................................
 /bar  list|listfull|listitems
-      add <nome> <tipo>[,<cond1>[,<cond2>...]] <posizione> <dimensione> <separatore> <item1>[,<item2>...]
+      add <name> <type>[,<condition>] <position> <size> <separator> <item1>[,<item2>...]
       default [input|title|status|nicklist]
-      del <nome>|-all
-      set <nome> <opzione> <valore>
-      hide|show|toggle <nome>
-      scroll <nome> <finestra> <scroll_value>
+      del <name>|-all
+      set <name> <option> <value>
+      hide|show|toggle <name>
+      scroll <name> <window> <scroll_value>
 
-         list: elenca tutte le barre
-     listfull: elenca tutte le barre (dettagliato)
-    listitems: elenca tutti gli elementi della barra
-          add: aggiunge una nuova barra
-         nome: nome della barra (deve essere unico)
-         tipo:   root: al di fuori delle finestre,
-               window: all'interno delle finestre, con opzioni condizionali (a seguire)
-    cond1,...: condizione(i) per visualizzare la barra (solo per il tipo "window"):
-                 active: sulla finestra attiva
-               inactive: sulle finestre inattive
-               nicklist: sulle finestre con la lista nick
-               senza condizione, viene sempre mostrata
-    posizione: bottom (basso), top (alto), left (sinistra) o right (destra)
-   dimensione: dimensione della barra (in caratteri)
-   separatore: 1 per usarlo (riga), 0 o nulla equivale a nessun separatore
-    item1,...: elementi per questa barra (possono essere separati da virgole (spazio tra gli elementi) o "+" (elementi incollati))
-      default: crea una barra predefinita (saranno tutte predefinite se non viene dato un nome per la barra)
-          del: elimina una barra (o tutte le barre con -all)
-          set: imposta un valore per la proprietà di una barra
-      opzione: opzione da cambiare (per una lista di opzioni, consultare /set weechat.bar.<barname>.*)
-       valore: nuovo valore per l'opzione
-         hide: nasconde una barra
-         show: mostra una barra nascosta
-       toggle: nasconde/mostra una barra
-       scroll: scorre una barra
-     finestra: numero della finestra (usare '*' per la finestra corrente o le barre root)
- scroll_value: valore per lo scorrimento: 'x' o 'y', seguite da '+', '-', 'b' (inizio) or 'e' (fine), valore (per +/-), e %% opzionale (per scorrere di %% di larghezza/altezza, altrimenti il valore è il numero di caratteri)
+         list: list all bars
+     listfull: list all bars (verbose)
+    listitems: list all bar items
+          add: add a new bar
+         name: name of bar (must be unique)
+         type:   root: outside windows,
+               window: inside windows, with optional conditions (see below)
+    condition: condition(s) for displaying bar (only for type "window"):
+                 active: on active window
+               inactive: on inactive windows
+               nicklist: on windows with nicklist
+               other condition: see /help weechat.bar.xxx.conditions and /help eval
+               without condition, the bar is always displayed
+     position: bottom, top, left or right
+         size: size of bar (in chars)
+    separator: 1 for using separator (line), 0 or nothing means no separator
+    item1,...: items for this bar (items can be separated by comma (space between items) or "+" (glued items))
+      default: create a default bar (all default bars if no bar name is given)
+          del: delete a bar (or all bars with -all)
+          set: set a value for a bar property
+       option: option to change (for options list, look at /set weechat.bar.<barname>.*)
+        value: new value for option
+         hide: hide a bar
+         show: show an hidden bar
+       toggle: hide/show a bar
+       scroll: scroll bar
+       window: window number (use '*' for current window or for root bars)
+ scroll_value: value for scroll: 'x' or 'y' (optional), followed by '+', '-', 'b' (beginning) or 'e' (end), value (for +/-), and optional % (to scroll by % of width/height, otherwise value is number of chars)
 
-Esempi:
-  crea una barra con l'ora, numero del buffer + nome, e completamento:
-    /bar add miabarra root bottom 1 0 [time],buffer_number+:+buffer_name,completion
-  nasconde una barra:
-    /bar hide miabarra
-  scorre la lista nick di 10 righe in basso sul buffer corrente:
+Examples:
+  create a bar with time, buffer number + name, and completion:
+    /bar add mybar root bottom 1 0 [time],buffer_number+:+buffer_name,completion
+  hide a bar:
+    /bar hide mybar
+  scroll nicklist 10 lines down on current buffer:
     /bar scroll nicklist * y+10
-  scorre fino alla fine della lista nick sul buffer corrente:
+  scroll to end of nicklist on current buffer:
     /bar scroll nicklist * ye
 ........................................
 
@@ -197,6 +198,60 @@ infolists: mostra informazioni sulle liste info
      tags: mostra tag per le righe
      term: mostra informazioni sul terminale
   windows: mostra l'albero delle finestre
+........................................
+
+[[command_weechat_eval]]
+[command]*`eval`* evaluate expression and send result to buffer::
+........................................
+/eval  [-n] <expression>
+       [-n] <expression1> <operator> <expression2>
+
+        -n: display result without sending it to buffer (debug mode)
+expression: expression to evaluate, variables with format ${variable} are replaced (see below)
+  operator: a logical or comparison operator:
+            - logical operators:
+                &&  boolean "and"
+                ||  boolean "or"
+            - comparison operators:
+                ==  equal
+                !=  not equal
+                <=  less or equal
+                <   less
+                >=  greater or equal
+                >   greater
+                =~  is matching regex
+                !~  is NOT matching regex
+
+An expression is considered as "true" if it is not NULL, not empty, and different from "0".
+The comparison is made using integers if the two expressions are valid integers.
+To force a string comparison, add double quotes around each expression, for example:
+  50 > 100      ==> 0
+  "50" > "100"  ==> 1
+
+Some variables are replaced in expression, using the format ${variable}, variable can be, by order of prioity :
+  1. the name of an option (file.section.option)
+  2. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
+Format for hdata can be one of following:
+  hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
+  hdata(list).var1.var2...: start with a hdata using a list, for example:
+    ${buffer[gui_buffers].full_name}: full name of first buffer in linked list of buffers
+    ${plugin[weechat_plugins].name}: name of first plugin in linked list of plugins
+For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
+
+Examples:
+  /eval -n ${weechat.look.scroll_amount}  ==> 3
+  /eval -n ${window}                      ==> 0x2549aa0
+  /eval -n ${window.buffer}               ==> 0x2549320
+  /eval -n ${window.buffer.full_name}     ==> core.weechat
+  /eval -n ${window.buffer.number}        ==> 1
+  /eval -n ${window.buffer.number} > 2    ==> 0
+  /eval -n ${window.win_width} > 100      ==> 1
+  /eval -n (8 > 12) || (5 > 2)            ==> 1
+  /eval -n (8 > 12) && (5 > 2)            ==> 0
+  /eval -n abcd =~ ^ABC                   ==> 1
+  /eval -n abcd =~ (?-i)^ABC              ==> 0
+  /eval -n abcd =~ (?-i)^abc              ==> 1
+  /eval -n abcd !~ abc                    ==> 0
 ........................................
 
 [[command_weechat_filter]]

@@ -461,6 +461,42 @@ weechat_lua_api_string_input_for_buffer (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_string_eval_expression: evaluate an expression and return
+ *                                         result
+ */
+
+static int
+weechat_lua_api_string_eval_expression (lua_State *L)
+{
+    const char *expr;
+    struct t_hashtable *pointers, *extra_vars;
+    char *result;
+
+    API_FUNC(1, "string_eval_expression", API_RETURN_EMPTY);
+    if (lua_gettop (lua_current_interpreter) < 3)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    expr = lua_tostring (lua_current_interpreter, -3);
+    pointers = weechat_lua_tohashtable (lua_current_interpreter, -2,
+                                        WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                        WEECHAT_HASHTABLE_STRING,
+                                        WEECHAT_HASHTABLE_POINTER);
+    extra_vars = weechat_lua_tohashtable (lua_current_interpreter, -1,
+                                          WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                          WEECHAT_HASHTABLE_STRING,
+                                          WEECHAT_HASHTABLE_STRING);
+
+    result = weechat_string_eval_expression (expr, pointers, extra_vars);
+
+    if (pointers)
+        weechat_hashtable_free (pointers);
+    if (extra_vars)
+        weechat_hashtable_free (extra_vars);
+
+    API_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_lua_api_mkdir_home: create a directory in WeeChat home
  */
 
@@ -2133,7 +2169,9 @@ weechat_lua_api_key_bind (lua_State *L)
 
     context = lua_tostring (lua_current_interpreter, -2);
     hashtable = weechat_lua_tohashtable (lua_current_interpreter, -1,
-                                         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+                                         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                         WEECHAT_HASHTABLE_STRING,
+                                         WEECHAT_HASHTABLE_STRING);
 
     num_keys = weechat_key_bind (context, hashtable);
 
@@ -2702,7 +2740,9 @@ weechat_lua_api_hook_process_hashtable (lua_State *L)
 
     command = lua_tostring (lua_current_interpreter, -5);
     options = weechat_lua_tohashtable (lua_current_interpreter, -4,
-                                       WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+                                       WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       WEECHAT_HASHTABLE_STRING);
     timeout = lua_tonumber (lua_current_interpreter, -3);
     function = lua_tostring (lua_current_interpreter, -2);
     data = lua_tostring (lua_current_interpreter, -1);
@@ -3127,7 +3167,9 @@ weechat_lua_api_hook_hsignal_send (lua_State *L)
 
     signal = lua_tostring (lua_current_interpreter, -2);
     hashtable = weechat_lua_tohashtable (lua_current_interpreter, -1,
-                                         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+                                         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                         WEECHAT_HASHTABLE_STRING,
+                                         WEECHAT_HASHTABLE_STRING);
 
     weechat_hook_hsignal_send (signal, hashtable);
 
@@ -4899,7 +4941,9 @@ weechat_lua_api_info_get_hashtable (lua_State *L)
 
     info_name = lua_tostring (lua_current_interpreter, -2);
     table = weechat_lua_tohashtable (lua_current_interpreter, -1,
-                                     WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+                                     WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                     WEECHAT_HASHTABLE_STRING,
+                                     WEECHAT_HASHTABLE_STRING);
 
     result_hashtable = weechat_info_get_hashtable (info_name, table);
 
@@ -5695,7 +5739,9 @@ weechat_lua_api_hdata_update (lua_State *L)
     hdata = lua_tostring (lua_current_interpreter, -3);
     pointer = lua_tostring (lua_current_interpreter, -2);
     hashtable = weechat_lua_tohashtable (lua_current_interpreter, -1,
-                                         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+                                         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                         WEECHAT_HASHTABLE_STRING,
+                                         WEECHAT_HASHTABLE_STRING);
 
     value = weechat_hdata_update (API_STR2PTR(hdata),
                                   API_STR2PTR(pointer),
@@ -6296,6 +6342,7 @@ const struct luaL_Reg weechat_lua_api_funcs[] = {
     API_DEF_FUNC(string_remove_color),
     API_DEF_FUNC(string_is_command_char),
     API_DEF_FUNC(string_input_for_buffer),
+    API_DEF_FUNC(string_eval_expression),
     API_DEF_FUNC(mkdir_home),
     API_DEF_FUNC(mkdir),
     API_DEF_FUNC(mkdir_parents),

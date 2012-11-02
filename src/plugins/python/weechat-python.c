@@ -232,23 +232,23 @@ weechat_python_hashtable_to_dict (struct t_hashtable *hashtable)
 /*
  * weechat_python_dict_to_hashtable: get WeeChat hashtable with python
  *                                   dictionary
- *                                   Hashtable returned has type string for
- *                                   both keys and values
  *                                   Note: hashtable has to be released after
  *                                   use with call to weechat_hashtable_free()
  */
 
 struct t_hashtable *
-weechat_python_dict_to_hashtable (PyObject *dict, int hashtable_size)
+weechat_python_dict_to_hashtable (PyObject *dict, int size,
+                                  const char *type_keys,
+                                  const char *type_values)
 {
     struct t_hashtable *hashtable;
     PyObject *key, *value;
     Py_ssize_t pos;
     char *str_key, *str_value;
 
-    hashtable = weechat_hashtable_new (hashtable_size,
-                                       WEECHAT_HASHTABLE_STRING,
-                                       WEECHAT_HASHTABLE_STRING,
+    hashtable = weechat_hashtable_new (size,
+                                       type_keys,
+                                       type_values,
                                        NULL,
                                        NULL);
     if (!hashtable)
@@ -275,7 +275,17 @@ weechat_python_dict_to_hashtable (PyObject *dict, int hashtable_size)
             str_value = weechat_python_unicode_to_string (value);
 
         if (str_key)
-            weechat_hashtable_set (hashtable, str_key, str_value);
+        {
+            if (strcmp (type_values, WEECHAT_HASHTABLE_STRING) == 0)
+                weechat_hashtable_set (hashtable, str_key, str_value);
+            else if (strcmp (type_values, WEECHAT_HASHTABLE_POINTER) == 0)
+            {
+                weechat_hashtable_set (hashtable, str_key,
+                                       plugin_script_str2ptr (weechat_python_plugin,
+                                                              NULL, NULL,
+                                                              str_value));
+            }
+        }
 
         if (str_key)
             free (str_key);
@@ -388,7 +398,9 @@ weechat_python_exec (struct t_plugin_script *script,
     else if (ret_type == WEECHAT_SCRIPT_EXEC_HASHTABLE)
     {
         ret_value = weechat_python_dict_to_hashtable (rc,
-                                                      WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+                                                      WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                      WEECHAT_HASHTABLE_STRING,
+                                                      WEECHAT_HASHTABLE_STRING);
         Py_XDECREF(rc);
     }
     else

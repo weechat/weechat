@@ -34,7 +34,7 @@ enum t_gui_bar_option
     GUI_BAR_OPTION_HIDDEN = 0,          /* true if bar is hidden            */
     GUI_BAR_OPTION_PRIORITY,            /* bar priority                     */
     GUI_BAR_OPTION_TYPE,                /* type (root or window)            */
-    GUI_BAR_OPTION_CONDITIONS,          /* conditions for display           */
+    GUI_BAR_OPTION_CONDITIONS,          /* condition(s) for display         */
     GUI_BAR_OPTION_POSITION,            /* bottom, top, left, right         */
     GUI_BAR_OPTION_FILLING_TOP_BOTTOM,  /* filling when pos. is top/bottom  */
     GUI_BAR_OPTION_FILLING_LEFT_RIGHT,  /* filling when pos. is left/right  */
@@ -84,8 +84,6 @@ struct t_gui_bar
     struct t_config_option *options[GUI_BAR_NUM_OPTIONS];
 
     /* internal vars */
-    int conditions_count;               /* number of conditions             */
-    char **conditions_array;            /* bar conditions (after split)     */
     int items_count;                    /* number of bar items              */
     int *items_subcount;                /* number of sub items              */
     char ***items_array;                /* bar items (after split)          */

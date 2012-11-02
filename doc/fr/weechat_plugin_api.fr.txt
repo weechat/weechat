@@ -1677,6 +1677,61 @@ str2 = weechat.string_input_for_buffer("/test")  # ""
 str3 = weechat.string_input_for_buffer("//test") # "/test"
 ----------------------------------------
 
+weechat_string_eval_expression
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.4.0._
+
+Evalue l'expression et retourne le résultat sous forme de chaîne.
+Les variables spéciales avec le format `${variable}` sont étendues (voir la
+commande `/eval` dans le 'Guide utilisateur WeeChat').
+
+Prototype :
+
+[source,C]
+----------------------------------------
+char *weechat_string_eval_expression (const char *expr,
+                                      struct t_hashtable *pointers,
+                                      struct t_hashtable *extra_vars);
+----------------------------------------
+
+Paramètres :
+
+* 'expr' : l'expression à évaluer
+* 'pointers' : hashtable avec les pointeurs (les clés doivent être des chaînes,
+  les valeurs doivent être des pointeurs); les pointeurs "window" et "buffer"
+  sont automatiquement ajoutés s'ils ne sont pas dans la hashtable (avec le
+  pointer vers fenêtre/tampon courants) (peut être NULL)
+* 'extra_vars' : variables additionnelles qui seront étendues (peut être NULL)
+
+Valeur de retour :
+
+* expression évaluée (doit être libérée après un appel à "free" après
+  utilisation), ou NULL si problème (expression invalide ou pas assez de
+  mémoire)
+
+Exemples en C :
+
+[source,C]
+----------------------------------------
+char *str1 = weechat_string_eval_expression ("${buffer.full_name}", NULL, NULL);       /* "core.weechat" */
+char *str2 = weechat_string_eval_expression ("${window.win_width} > 100", NULL, NULL); /* "1" */
+char *str3 = weechat_string_eval_expression ("abc =~ def", NULL, NULL);                /* "0" */
+----------------------------------------
+
+Script (Python) :
+
+[source,python]
+----------------------------------------
+# prototype
+str = weechat.string_eval_expression(expr, pointers, extra_vars)
+
+# exemples
+str1 = weechat.string_input_for_buffer("${buffer.full_name}", {}, {})       # "core.weechat"
+str2 = weechat.string_input_for_buffer("${window.win_width} > 100", {}, {}) # "1"
+str3 = weechat.string_input_for_buffer("abc =~ def", {}, {})                # "0"
+----------------------------------------
+
 [[utf-8]]
 UTF-8
 ~~~~~

@@ -325,8 +325,6 @@
 | weechat | bar | barra |
   'name' (string) +
   'options' (pointer) +
-  'conditions_count' (integer) +
-  'conditions_array' (string, array_size: "conditions_count") +
   'items_count' (integer) +
   'items_subcount' (pointer) +
   'items_array' (pointer) +

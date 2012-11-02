@@ -169,14 +169,13 @@ weechat_perl_hashtable_to_hash (struct t_hashtable *hashtable)
 
 /*
  * weechat_perl_hash_to_hashtable: get WeeChat hashtable with perl hash
- *                                 Hashtable returned has type string for
- *                                 both keys and values
  *                                 Note: hashtable has to be released after use
  *                                 with call to weechat_hashtable_free()
  */
 
 struct t_hashtable *
-weechat_perl_hash_to_hashtable (SV *hash, int hashtable_size)
+weechat_perl_hash_to_hashtable (SV *hash, int size, const char *type_keys,
+                                const char *type_values)
 {
     struct t_hashtable *hashtable;
     HV *hash2;
@@ -184,9 +183,9 @@ weechat_perl_hash_to_hashtable (SV *hash, int hashtable_size)
     char *str_key;
     I32 retlen;
 
-    hashtable = weechat_hashtable_new (hashtable_size,
-                                       WEECHAT_HASHTABLE_STRING,
-                                       WEECHAT_HASHTABLE_STRING,
+    hashtable = weechat_hashtable_new (size,
+                                       type_keys,
+                                       type_values,
                                        NULL,
                                        NULL);
     if (!hashtable)
@@ -198,7 +197,15 @@ weechat_perl_hash_to_hashtable (SV *hash, int hashtable_size)
         hv_iterinit (hash2);
         while ((value = hv_iternextsv (hash2, &str_key, &retlen)))
         {
-            weechat_hashtable_set (hashtable, str_key, SvPV (value, PL_na));
+            if (strcmp (type_values, WEECHAT_HASHTABLE_STRING) == 0)
+                weechat_hashtable_set (hashtable, str_key, SvPV (value, PL_na));
+            else if (strcmp (type_values, WEECHAT_HASHTABLE_POINTER) == 0)
+            {
+                weechat_hashtable_set (hashtable, str_key,
+                                       plugin_script_str2ptr (weechat_perl_plugin,
+                                                              NULL, NULL,
+                                                              SvPV (value, PL_na)));
+            }
         }
     }
 
@@ -316,7 +323,9 @@ weechat_perl_exec (struct t_plugin_script *script,
             else if (ret_type == WEECHAT_SCRIPT_EXEC_HASHTABLE)
             {
                 ret_value = weechat_perl_hash_to_hashtable (POPs,
-                                                            WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+                                                            WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                            WEECHAT_HASHTABLE_STRING,
+                                                            WEECHAT_HASHTABLE_STRING);
             }
             else
             {

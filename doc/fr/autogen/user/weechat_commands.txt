@@ -11,7 +11,7 @@ message: message pour l'absence (si pas de message donné, le statut d'absence e
 [command]*`bar`* gestion des barres::
 ........................................
 /bar  list|listfull|listitems
-      add <nom> <type>[,<cond1>[,<cond2>...]] <position> <taille> <séparateur> <objet1>[,<objet2>...]
+      add <nom> <type>[,<conditions>] <position> <taille> <séparateur> <objet1>[,<objet2>...]
       default [input|title|status|nicklist]
       del <nom>|-all
       set <nom> <option> <valeur>
@@ -25,10 +25,11 @@ message: message pour l'absence (si pas de message donné, le statut d'absence e
           nom: nom de la barre (doit être unique)
          type:   root: en dehors des fenêtres
                window: dans les fenêtres, avec condition(s) optionnelle(s) (voir ci-dessous)
-    cond1,...: condition(s) pour afficher cette barre (seulement pour le type "window"):
+    condition: condition(s) pour afficher cette barre (seulement pour le type "window"):
                  active: sur la fenêtre active
                inactive: sur les fenêtres inactives
                nicklist: sur les fenêtres avec liste de pseudos
+               autre condition: voir /help weechat.bar.xxx.conditions et /help eval
                sans condition, la barre est toujours affichée
      position: bottom (bas), top (haut), left (gauche) ou right (droite)
        taille: taille de la barre (en caractères)
@@ -197,6 +198,60 @@ infolists: afficher des infos sur les infolists
      tags: afficher les étiquettes pour les lignes
      term: afficher des infos sur le terminal
   windows: afficher l'arbre des fenêtres
+........................................
+
+[[command_weechat_eval]]
+[command]*`eval`* évaluer une expression et envoyer le résultat au tampon::
+........................................
+/eval  [-n] <expression>
+       [-n] <expression1> <opérateur> <expression2>
+
+        -n: afficher le résultat sans envoyer au tampon (mode debug)
+expression: expression à évaluer, les variables avec le format ${variable} sont remplacées (voir ci-dessous)
+ opérateur: un opérateur logique ou de comparaison :
+            - opérateurs logiques :
+                &&  "et" booléen
+                ||  "ou" booléen
+            - opérateurs de comparaison :
+                ==  égal
+                !=  non égal
+                <=  inférieur ou égal
+                <   inférieur
+                >=  supérieur ou égal
+                >   supérieur
+                =~  correspond à l'expression régulière
+                !~  ne correspond PAS à l'expression régulière
+
+Une expression est considérée comme "vraie" si elle est non NULL, non vide, et différente de "0".
+La comparaison est faite en utilisant des entiers si les deux expressions sont des entiers valides.
+Pour forcer une comparaison de chaînes, ajoutez des guillemets autour de chaque expression, par exemple :
+  50 > 100      ==> 0
+  "50" > "100"  ==> 1
+
+Des variables sont remplacées dans l'expression, en utilisant le format ${variable}, la variable pouvant être, par ordre de priorité :
+  1. le nom d'une option (fichier.section.option)
+  2. le nom d'un hdata/variable (la valeur est automatiquement convertie en chaîne), par défaut "window" et "buffer" pointent vers la fenêtre et le tampon courants.
+Le format du hdata peut être le suivant :
+  hdata.var1.var2...: démarrer avec un hdata (le pointeur doit être connu), et demander les variables l'une après l'autre (d'autres hdata peuvent être suivis)
+  hdata(list).var1.var2...: démarrer avec un hdata en utlisant une liste, par exemple :
+    ${buffer[gui_buffers].full_name}: nom complet du premier tampon dans la liste chaînée des tampons
+    ${plugin[weechat_plugins].name}: nom de la première extension dans la liste chaînée des extensions
+Pour le nom du hdata et des variables, voir la "Référence API extension", fonction "weechat_hdata_get".
+
+Exemples:
+  /eval -n ${weechat.look.scroll_amount}  ==> 3
+  /eval -n ${window}                      ==> 0x2549aa0
+  /eval -n ${window.buffer}               ==> 0x2549320
+  /eval -n ${window.buffer.full_name}     ==> core.weechat
+  /eval -n ${window.buffer.number}        ==> 1
+  /eval -n ${window.buffer.number} > 2    ==> 0
+  /eval -n ${window.win_width} > 100      ==> 1
+  /eval -n (8 > 12) || (5 > 2)            ==> 1
+  /eval -n (8 > 12) && (5 > 2)            ==> 0
+  /eval -n abcd =~ ^ABC                   ==> 1
+  /eval -n abcd =~ (?-i)^ABC              ==> 0
+  /eval -n abcd =~ (?-i)^abc              ==> 1
+  /eval -n abcd !~ abc                    ==> 0
 ........................................
 
 [[command_weechat_filter]]

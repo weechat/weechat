@@ -11,49 +11,50 @@ message: 離席メッセージ (メッセージが無い場合は、離席状態
 [command]*`bar`* バーの管理::
 ........................................
 /bar  list|listfull|listitems
-      add <name> <type>[,<cond1>[,<cond2>...]] <position> <size> <separator> <item1>[,<item2>...]
+      add <name> <type>[,<condition>] <position> <size> <separator> <item1>[,<item2>...]
       default [input|title|status|nicklist]
       del <name>|-all
       set <name> <option> <value>
       hide|show|toggle <name>
       scroll <name> <window> <scroll_value>
 
-         list: 全てのバーをリストアップ
-     listfull: 全てのバーをリストアップ (詳細)
-    listitems: 全てのバーアイテムをリストアップ
-          add: 新しいバーを追加
-         name: バーの名称 (ユニークな)
-         type:   root: 外側のウィンドウ、
-               window: 内側のウィンドウ、任意の状態を取れる (以下を参照)
-    cond1,...: バーの表示状態 (タイプが "window" のバー以外は無効):
-                 active: アクティブウィンドウに表示
-               inactive: 非アクティブウィンドウに表示
-               nicklist: ニックネームリストを持つウィンドウに表示
-               表示状態の指定が無ければ、バーは常に表示されます。
-     position: bottom、top、left、right
-         size: バーのサイズ (文字数で指定)
-    separator: 1 はセパレータ (線) を使用、0 または指定無しはセパレータ無し
-    item1,...: バーのアイテム (アイテムはコンマ (アイテム間にスペース) または "+" (アイテム間にスペース無し) で区切ります)
-      default: デフォルトバーを作成 (バーの名前が無ければ全てのデフォルトバーが作成されます)
-          del: バーを削除 (-all を付ければ全てのバーを削除)
-          set: バー属性に値を設定
-       option: 変更するオプション (オプション一覧は /set weechat.bar.<barname>.* を参照)
-        value: オプションの新しい値
-         hide: バーを隠す
-         show: 隠されたバーを表示
-       toggle: バーの非表示/表示を切り替え
-       scroll: バーをスクロール
-       window: ウィンドウ番号 (現在のウィンドウかルートバーを指定するには '*' を使う)
- scroll_value: スクロールする量: 'x' または 'y' (任意)の後に、'+' か '-' か 'b' (最初) か 'e' (最後)の後に、値 (+/- を付けて)、任意で % (スクロールする幅/高さの割合、% が無ければ値は文字数と解釈されます)
+         list: list all bars
+     listfull: list all bars (verbose)
+    listitems: list all bar items
+          add: add a new bar
+         name: name of bar (must be unique)
+         type:   root: outside windows,
+               window: inside windows, with optional conditions (see below)
+    condition: condition(s) for displaying bar (only for type "window"):
+                 active: on active window
+               inactive: on inactive windows
+               nicklist: on windows with nicklist
+               other condition: see /help weechat.bar.xxx.conditions and /help eval
+               without condition, the bar is always displayed
+     position: bottom, top, left or right
+         size: size of bar (in chars)
+    separator: 1 for using separator (line), 0 or nothing means no separator
+    item1,...: items for this bar (items can be separated by comma (space between items) or "+" (glued items))
+      default: create a default bar (all default bars if no bar name is given)
+          del: delete a bar (or all bars with -all)
+          set: set a value for a bar property
+       option: option to change (for options list, look at /set weechat.bar.<barname>.*)
+        value: new value for option
+         hide: hide a bar
+         show: show an hidden bar
+       toggle: hide/show a bar
+       scroll: scroll bar
+       window: window number (use '*' for current window or for root bars)
+ scroll_value: value for scroll: 'x' or 'y' (optional), followed by '+', '-', 'b' (beginning) or 'e' (end), value (for +/-), and optional % (to scroll by % of width/height, otherwise value is number of chars)
 
-例:
-  時間、バー番号 + 名前、補完候補からなるバーを作成:
+Examples:
+  create a bar with time, buffer number + name, and completion:
     /bar add mybar root bottom 1 0 [time],buffer_number+:+buffer_name,completion
-  バーを隠す:
+  hide a bar:
     /bar hide mybar
-  現在のバッファに対応したニックネームリストを10行分、下方向にスクロール:
+  scroll nicklist 10 lines down on current buffer:
     /bar scroll nicklist * y+10
-  現在のバッファに対応したニックネームリストを最後までスクロール:
+  scroll to end of nicklist on current buffer:
     /bar scroll nicklist * ye
 ........................................
 
@@ -197,6 +198,60 @@ infolists: infolist に関する情報を表示
      tags: 行のタグを表示
      term: ターミナルに関する情報を表示
   windows: ウィンドウツリーの情報を表示
+........................................
+
+[[command_weechat_eval]]
+[command]*`eval`* evaluate expression and send result to buffer::
+........................................
+/eval  [-n] <expression>
+       [-n] <expression1> <operator> <expression2>
+
+        -n: display result without sending it to buffer (debug mode)
+expression: expression to evaluate, variables with format ${variable} are replaced (see below)
+  operator: a logical or comparison operator:
+            - logical operators:
+                &&  boolean "and"
+                ||  boolean "or"
+            - comparison operators:
+                ==  equal
+                !=  not equal
+                <=  less or equal
+                <   less
+                >=  greater or equal
+                >   greater
+                =~  is matching regex
+                !~  is NOT matching regex
+
+An expression is considered as "true" if it is not NULL, not empty, and different from "0".
+The comparison is made using integers if the two expressions are valid integers.
+To force a string comparison, add double quotes around each expression, for example:
+  50 > 100      ==> 0
+  "50" > "100"  ==> 1
+
+Some variables are replaced in expression, using the format ${variable}, variable can be, by order of prioity :
+  1. the name of an option (file.section.option)
+  2. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
+Format for hdata can be one of following:
+  hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
+  hdata(list).var1.var2...: start with a hdata using a list, for example:
+    ${buffer[gui_buffers].full_name}: full name of first buffer in linked list of buffers
+    ${plugin[weechat_plugins].name}: name of first plugin in linked list of plugins
+For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
+
+Examples:
+  /eval -n ${weechat.look.scroll_amount}  ==> 3
+  /eval -n ${window}                      ==> 0x2549aa0
+  /eval -n ${window.buffer}               ==> 0x2549320
+  /eval -n ${window.buffer.full_name}     ==> core.weechat
+  /eval -n ${window.buffer.number}        ==> 1
+  /eval -n ${window.buffer.number} > 2    ==> 0
+  /eval -n ${window.win_width} > 100      ==> 1
+  /eval -n (8 > 12) || (5 > 2)            ==> 1
+  /eval -n (8 > 12) && (5 > 2)            ==> 0
+  /eval -n abcd =~ ^ABC                   ==> 1
+  /eval -n abcd =~ (?-i)^ABC              ==> 0
+  /eval -n abcd =~ (?-i)^abc              ==> 1
+  /eval -n abcd !~ abc                    ==> 0
 ........................................
 
 [[command_weechat_filter]]

@@ -11,49 +11,50 @@ message: Abwesenheitsnachricht (ohne eine Nachricht wird der Abwesenheitszustand
 [command]*`bar`* Infobars verwalten::
 ........................................
 /bar  list|listfull|listitems
-      add <name> <type>[,<cond1>[,<cond2>...]] <position> <size> <separator> <item1>[,<item2>...]
+      add <name> <type>[,<condition>] <position> <size> <separator> <item1>[,<item2>...]
       default [input|title|status|nicklist]
       del <name>|-all
       set <name> <option> <value>
       hide|show|toggle <name>
       scroll <name> <window> <scroll_value>
 
-         list: listet alle Infobars auf
-     listfull: listet alle Infobars detailliert auf (Standardaufruf)
-    listitems: listet alle Items auf, die in den Infobars genutzt werden
-          add: füge eine neue Infobar hinzu
-         name: Name der Infobar (muss einmalig sein)
-         type:   root: außerhalb des Fensters,
-               window: innerhalb des Fensters, mit optionalen Merkmalen (siehe unten)
-    cond1,...: Merkmal(e) für eine Infobar (nur nutzbar mit der Type-Option "window"):
-                 active: in einem aktiven Fenster
-               inactive: in einem inaktiven Fenster
-               nicklist: in Fenstern mit einer Nickliste
-               werden keine Merkmale angegeben, ist die Infobar immer sichtbar
-     position: bottom (unten), top (oben), left (links) oder right (rechts)
-         size: Größe der Infobar (in Zeichen)
-    separator: 1 um eine Trennlinien zu zeichnen, bei 0 oder ohne eine Angabe wird keine Trennlinien gezeichnet
-    item1,...: Items die in der Infobar genutzt werden sollen (Items können durch Kommata oder Leerzeichen getrennt werden ("+" (verbindet Items))
-      default: erstellt standardisierte Infobars
-          del: entfernt eine Infobar (alle Infobars können mit der Option "-all" entfernt werden).
-          set: setzt einen Wert für Infobar
-       option: Option die verändert werden soll (für eine Liste aller möglichen Optionen, bitte folgenden Befehl nutzen: /set weechat.bar.<barname>.*)
-        value: neuer Wert für Option
-         hide: Infobar wird ausgeblendet
-         show: zeigt eine ausgeblendete Infobar an
-       toggle: zeigt/versteckt eine Infobar
-       scroll: scrollt Infobar hoch/runter
-       window: Nummer des Fensters (nutze '*' für aktuelles Fenster oder für die Root-Bars)
- scroll_value: Werte für Scroll-Funktion: 'x' oder 'y', gefolgt von '+', '-', 'b' (Beginn) oder 'e' (Ende), Wert (für +/-), und optional % (zum scrollen der Breite/Höhe in %, ansonsten wird dieser Wert als Anzahl der Zeichen interpretiert um die gescrollt werden soll)
+         list: list all bars
+     listfull: list all bars (verbose)
+    listitems: list all bar items
+          add: add a new bar
+         name: name of bar (must be unique)
+         type:   root: outside windows,
+               window: inside windows, with optional conditions (see below)
+    condition: condition(s) for displaying bar (only for type "window"):
+                 active: on active window
+               inactive: on inactive windows
+               nicklist: on windows with nicklist
+               other condition: see /help weechat.bar.xxx.conditions and /help eval
+               without condition, the bar is always displayed
+     position: bottom, top, left or right
+         size: size of bar (in chars)
+    separator: 1 for using separator (line), 0 or nothing means no separator
+    item1,...: items for this bar (items can be separated by comma (space between items) or "+" (glued items))
+      default: create a default bar (all default bars if no bar name is given)
+          del: delete a bar (or all bars with -all)
+          set: set a value for a bar property
+       option: option to change (for options list, look at /set weechat.bar.<barname>.*)
+        value: new value for option
+         hide: hide a bar
+         show: show an hidden bar
+       toggle: hide/show a bar
+       scroll: scroll bar
+       window: window number (use '*' for current window or for root bars)
+ scroll_value: value for scroll: 'x' or 'y' (optional), followed by '+', '-', 'b' (beginning) or 'e' (end), value (for +/-), and optional % (to scroll by % of width/height, otherwise value is number of chars)
 
-Beispiele:
-  erstellt eine Infobar mit den Items: time, buffer number + name, und Vervollständigung:
+Examples:
+  create a bar with time, buffer number + name, and completion:
     /bar add mybar root bottom 1 0 [time],buffer_number+:+buffer_name,completion
-  versteckt die Infobar (meinebar):
-    /bar hide meinebar
-  scrollt die Nickliste im aktuellen Buffer um 10 Zeilen nach unten:
+  hide a bar:
+    /bar hide mybar
+  scroll nicklist 10 lines down on current buffer:
     /bar scroll nicklist * y+10
-  scrollt zum Ende der Nicklist im aktuellen Buffer:
+  scroll to end of nicklist on current buffer:
     /bar scroll nicklist * ye
 ........................................
 
@@ -197,6 +198,60 @@ infolists: zeigt Information über die Infolists an
      tags: zeigt für jede einzelne Zeile die dazugehörigen Schlagwörter an
      term: gibt Informationen über das Terminal und verfügbare Farben aus
   windows: zeigt die Fensterstruktur an
+........................................
+
+[[command_weechat_eval]]
+[command]*`eval`* evaluate expression and send result to buffer::
+........................................
+/eval  [-n] <expression>
+       [-n] <expression1> <operator> <expression2>
+
+        -n: display result without sending it to buffer (debug mode)
+expression: expression to evaluate, variables with format ${variable} are replaced (see below)
+  operator: a logical or comparison operator:
+            - logical operators:
+                &&  boolean "and"
+                ||  boolean "or"
+            - comparison operators:
+                ==  equal
+                !=  not equal
+                <=  less or equal
+                <   less
+                >=  greater or equal
+                >   greater
+                =~  is matching regex
+                !~  is NOT matching regex
+
+An expression is considered as "true" if it is not NULL, not empty, and different from "0".
+The comparison is made using integers if the two expressions are valid integers.
+To force a string comparison, add double quotes around each expression, for example:
+  50 > 100      ==> 0
+  "50" > "100"  ==> 1
+
+Some variables are replaced in expression, using the format ${variable}, variable can be, by order of prioity :
+  1. the name of an option (file.section.option)
+  2. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
+Format for hdata can be one of following:
+  hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
+  hdata(list).var1.var2...: start with a hdata using a list, for example:
+    ${buffer[gui_buffers].full_name}: full name of first buffer in linked list of buffers
+    ${plugin[weechat_plugins].name}: name of first plugin in linked list of plugins
+For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
+
+Examples:
+  /eval -n ${weechat.look.scroll_amount}  ==> 3
+  /eval -n ${window}                      ==> 0x2549aa0
+  /eval -n ${window.buffer}               ==> 0x2549320
+  /eval -n ${window.buffer.full_name}     ==> core.weechat
+  /eval -n ${window.buffer.number}        ==> 1
+  /eval -n ${window.buffer.number} > 2    ==> 0
+  /eval -n ${window.win_width} > 100      ==> 1
+  /eval -n (8 > 12) || (5 > 2)            ==> 1
+  /eval -n (8 > 12) && (5 > 2)            ==> 0
+  /eval -n abcd =~ ^ABC                   ==> 1
+  /eval -n abcd =~ (?-i)^ABC              ==> 0
+  /eval -n abcd =~ (?-i)^abc              ==> 1
+  /eval -n abcd !~ abc                    ==> 0
 ........................................
 
 [[command_weechat_filter]]

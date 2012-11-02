@@ -108,20 +108,19 @@ weechat_lua_pushhashtable (lua_State *interpreter, struct t_hashtable *hashtable
 
 /*
  * weechat_lua_hash_to_hashtable: get WeeChat hashtable with lua hash (on stack)
- *                                Hashtable returned has type string for
- *                                both keys and values
  *                                Note: hashtable has to be released after use
  *                                with call to weechat_hashtable_free()
  */
 
 struct t_hashtable *
-weechat_lua_tohashtable (lua_State *interpreter, int index, int hashtable_size)
+weechat_lua_tohashtable (lua_State *interpreter, int index, int size,
+                         const char *type_keys, const char *type_values)
 {
     struct t_hashtable *hashtable;
 
-    hashtable = weechat_hashtable_new (hashtable_size,
-                                       WEECHAT_HASHTABLE_STRING,
-                                       WEECHAT_HASHTABLE_STRING,
+    hashtable = weechat_hashtable_new (size,
+                                       type_keys,
+                                       type_values,
                                        NULL,
                                        NULL);
     if (!hashtable)
@@ -130,9 +129,20 @@ weechat_lua_tohashtable (lua_State *interpreter, int index, int hashtable_size)
     lua_pushnil (interpreter);
     while (lua_next (interpreter, index - 1) != 0)
     {
-        weechat_hashtable_set (hashtable,
-                               lua_tostring (interpreter, -2),
-                               lua_tostring (interpreter, -1));
+        if (strcmp (type_values, WEECHAT_HASHTABLE_STRING) == 0)
+        {
+            weechat_hashtable_set (hashtable,
+                                   lua_tostring (interpreter, -2),
+                                   lua_tostring (interpreter, -1));
+        }
+        else if (strcmp (type_values, WEECHAT_HASHTABLE_POINTER) == 0)
+        {
+            weechat_hashtable_set (hashtable,
+                                   lua_tostring (interpreter, -2),
+                                   plugin_script_str2ptr (weechat_lua_plugin,
+                                                          NULL, NULL,
+                                                          lua_tostring (interpreter, -1)));
+        }
         /* remove value from stack (keep key for next iteration) */
         lua_pop (interpreter, 1);
     }
@@ -209,7 +219,9 @@ weechat_lua_exec (struct t_plugin_script *script, int ret_type,
     else if (ret_type == WEECHAT_SCRIPT_EXEC_HASHTABLE)
     {
         ret_value = weechat_lua_tohashtable (lua_current_interpreter, -1,
-                                             WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+                                             WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                             WEECHAT_HASHTABLE_STRING,
+                                             WEECHAT_HASHTABLE_STRING);
     }
     else
     {

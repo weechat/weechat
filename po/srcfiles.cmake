@@ -13,6 +13,8 @@ SET(WEECHAT_SOURCES
 ./src/core/wee-config.h
 ./src/core/wee-debug.c
 ./src/core/wee-debug.h
+./src/core/wee-eval.c
+./src/core/wee-eval.h
 ./src/core/wee-hook.c
 ./src/core/wee-hook.h
 ./src/core/wee-infolist.c

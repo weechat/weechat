@@ -49,7 +49,6 @@
 #include "weechat.h"
 #include "wee-string.h"
 #include "wee-config.h"
-#include "wee-hashtable.h"
 #include "wee-utf8.h"
 #include "../gui/gui-color.h"
 #include "../plugins/plugin.h"
@@ -1774,27 +1773,28 @@ string_input_for_buffer (const char *string)
 }
 
 /*
- * string_replace_with_hashtable: replace ${codes} with value from hashtable
- *                                "errors" is set with number of keys not found
- *                                in hashtable
+ * string_replace_with_callback: replace ${codes} using a callback that return
+ *                               replacement value (this value must be newly
+ *                               allocated because it will be freed in this
+ *                               function)
+ *                               "errors" is set with number of keys not found
+ *                               by callback
  */
 
 char *
-string_replace_with_hashtable (const char *string,
-                               struct t_hashtable *hashtable,
-                               int *errors)
+string_replace_with_callback (const char *string,
+                              char *(*callback)(void *data, const char *text),
+                              void *callback_data,
+                              int *errors)
 {
     int length, length_value, index_string, index_result;
-    char *result, *result2, *key;
-    const char *pos_end_name, *ptr_value;
+    char *result, *result2, *key, *value;
+    const char *pos_end_name;
 
     *errors = 0;
 
     if (!string)
         return NULL;
-
-    if (!hashtable)
-        return strdup (string);
 
     length = strlen (string) + 1;
     result = malloc (length);
@@ -1820,10 +1820,10 @@ string_replace_with_hashtable (const char *string,
                                           pos_end_name - (string + index_string + 2));
                     if (key)
                     {
-                        ptr_value = (const char *)hashtable_get (hashtable, key);
-                        if (ptr_value)
+                        value = (*callback) (callback_data, key);
+                        if (value)
                         {
-                            length_value = strlen (ptr_value);
+                            length_value = strlen (value);
                             length += length_value;
                             result2 = realloc (result, length);
                             if (!result2)
@@ -1831,13 +1831,15 @@ string_replace_with_hashtable (const char *string,
                                 if (result)
                                     free (result);
                                 free (key);
+                                free (value);
                                 return NULL;
                             }
                             result = result2;
-                            strcpy (result + index_result, ptr_value);
+                            strcpy (result + index_result, value);
                             index_result += length_value;
                             index_string += pos_end_name - string -
                                 index_string + 1;
+                            free (value);
                         }
                         else
                         {

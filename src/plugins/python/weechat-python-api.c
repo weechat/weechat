@@ -444,6 +444,43 @@ weechat_python_api_string_input_for_buffer (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_api_string_eval_expression: evaluate expression and return
+ *                                            result
+ */
+
+static PyObject *
+weechat_python_api_string_eval_expression (PyObject *self, PyObject *args)
+{
+    char *expr, *result;
+    struct t_hashtable *pointers, *extra_vars;
+    PyObject *dict, *dict2, *return_value;
+
+    API_FUNC(1, "string_eval_expression", API_RETURN_EMPTY);
+    expr = NULL;
+    pointers = NULL;
+    extra_vars = NULL;
+    if (!PyArg_ParseTuple (args, "sOO", &expr, &dict, &dict2))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+    pointers = weechat_python_dict_to_hashtable (dict,
+                                                 WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                 WEECHAT_HASHTABLE_STRING,
+                                                 WEECHAT_HASHTABLE_POINTER);
+    extra_vars = weechat_python_dict_to_hashtable (dict2,
+                                                   WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                   WEECHAT_HASHTABLE_STRING,
+                                                   WEECHAT_HASHTABLE_STRING);
+
+    result = weechat_string_eval_expression (expr, pointers, extra_vars);
+
+    if (pointers)
+        weechat_hashtable_free (pointers);
+    if (extra_vars)
+        weechat_hashtable_free (extra_vars);
+
+    API_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_python_api_mkdir_home: create a directory in WeeChat home
  */
 
@@ -2081,7 +2118,9 @@ weechat_python_api_key_bind (PyObject *self, PyObject *args)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
     hashtable = weechat_python_dict_to_hashtable (dict,
-                                                  WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+                                                  WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                  WEECHAT_HASHTABLE_STRING,
+                                                  WEECHAT_HASHTABLE_STRING);
 
     num_keys = weechat_key_bind (context, hashtable);
 
@@ -2652,7 +2691,9 @@ weechat_python_api_hook_process_hashtable (PyObject *self, PyObject *args)
                            &data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
     options = weechat_python_dict_to_hashtable (dict,
-                                                WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+                                                WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                WEECHAT_HASHTABLE_STRING,
+                                                WEECHAT_HASHTABLE_STRING);
 
     result = API_PTR2STR(plugin_script_api_hook_process_hashtable (weechat_python_plugin,
                                                                    python_current_script,
@@ -3077,7 +3118,9 @@ weechat_python_api_hook_hsignal_send (PyObject *self, PyObject *args)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     hashtable = weechat_python_dict_to_hashtable (dict,
-                                                  WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+                                                  WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                  WEECHAT_HASHTABLE_STRING,
+                                                  WEECHAT_HASHTABLE_STRING);
 
     weechat_hook_hsignal_send (signal, hashtable);
 
@@ -4840,7 +4883,9 @@ weechat_python_api_info_get_hashtable (PyObject *self, PyObject *args)
     if (!PyArg_ParseTuple (args, "sO", &info_name, &dict))
         API_WRONG_ARGS(API_RETURN_EMPTY);
     hashtable = weechat_python_dict_to_hashtable (dict,
-                                                  WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+                                                  WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                  WEECHAT_HASHTABLE_STRING,
+                                                  WEECHAT_HASHTABLE_STRING);
 
     result_hashtable = weechat_info_get_hashtable (info_name, hashtable);
     result_dict = weechat_python_hashtable_to_dict (result_hashtable);
@@ -5613,7 +5658,9 @@ weechat_python_api_hdata_update (PyObject *self, PyObject *args)
     if (!PyArg_ParseTuple (args, "ssO", &hdata, &pointer, &dict))
         API_WRONG_ARGS(API_RETURN_INT(0));
     hashtable = weechat_python_dict_to_hashtable (dict,
-                                                  WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+                                                  WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                  WEECHAT_HASHTABLE_STRING,
+                                                  WEECHAT_HASHTABLE_STRING);
 
     value = weechat_hdata_update (API_STR2PTR(hdata),
                                   API_STR2PTR(pointer),
@@ -5807,6 +5854,7 @@ PyMethodDef weechat_python_funcs[] =
     API_DEF_FUNC(string_remove_color),
     API_DEF_FUNC(string_is_command_char),
     API_DEF_FUNC(string_input_for_buffer),
+    API_DEF_FUNC(string_eval_expression),
     API_DEF_FUNC(mkdir_home),
     API_DEF_FUNC(mkdir),
     API_DEF_FUNC(mkdir_parents),

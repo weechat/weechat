@@ -27,6 +27,7 @@ wee-completion.c wee-completion.h
 wee-config.c wee-config.h
 wee-config-file.c wee-config-file.h
 wee-debug.c wee-debug.h
+wee-eval.c wee-eval.h
 wee-hashtable.c wee-hashtable.h
 wee-hdata.c wee-hdata.h
 wee-hook.c wee-hook.h

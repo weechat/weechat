@@ -39,6 +39,7 @@
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
+#include "../core/wee-eval.h"
 #include "../core/wee-hashtable.h"
 #include "../core/wee-hdata.h"
 #include "../core/wee-hook.h"
@@ -521,6 +522,7 @@ plugin_load (const char *filename, int argc, char **argv)
         new_plugin->string_decode_base64 = &string_decode_base64;
         new_plugin->string_is_command_char = &string_is_command_char;
         new_plugin->string_input_for_buffer = &string_input_for_buffer;
+        new_plugin->string_eval_expression = &eval_expression;
 
         new_plugin->utf8_has_8bits = &utf8_has_8bits;
         new_plugin->utf8_is_valid = &utf8_is_valid;

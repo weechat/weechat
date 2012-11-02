@@ -612,6 +612,45 @@ weechat_tcl_api_string_input_for_buffer (ClientData clientData, Tcl_Interp *inte
 }
 
 /*
+ * weechat_tcl_api_string_eval_expression: evaluate an expression and return
+ *                                         result
+ */
+
+static int
+weechat_tcl_api_string_eval_expression (ClientData clientData,
+                                        Tcl_Interp *interp,
+                                        int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *expr, *result;
+    struct t_hashtable *pointers, *extra_vars;
+    int i;
+
+    API_FUNC(1, "string_eval_expression", API_RETURN_EMPTY);
+    if (objc < 4)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    expr = Tcl_GetStringFromObj (objv[1], &i);
+    pointers = weechat_tcl_dict_to_hashtable (interp, objv[2],
+                                              WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                              WEECHAT_HASHTABLE_STRING,
+                                              WEECHAT_HASHTABLE_POINTER);
+    extra_vars = weechat_tcl_dict_to_hashtable (interp, objv[3],
+                                                WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                WEECHAT_HASHTABLE_STRING,
+                                                WEECHAT_HASHTABLE_STRING);
+
+    result = weechat_string_eval_expression (expr, pointers, extra_vars);
+
+    if (pointers)
+        weechat_hashtable_free (pointers);
+    if (extra_vars)
+        weechat_hashtable_free (extra_vars);
+
+    API_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_tcl_api_mkdir_home: create a directory in WeeChat home
  */
 
@@ -2372,7 +2411,9 @@ weechat_tcl_api_key_bind (ClientData clientData, Tcl_Interp *interp,
 
     context = Tcl_GetStringFromObj (objv[1], &i);
     hashtable = weechat_tcl_dict_to_hashtable (interp, objv[2],
-                                               WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+                                               WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                               WEECHAT_HASHTABLE_STRING,
+                                               WEECHAT_HASHTABLE_STRING);
 
     num_keys = weechat_key_bind (context, hashtable);
 
@@ -2973,7 +3014,9 @@ weechat_tcl_api_hook_process_hashtable (ClientData clientData,
 
     command = Tcl_GetStringFromObj (objv[1], &i);
     options = weechat_tcl_dict_to_hashtable (interp, objv[2],
-                                             WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+                                             WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                             WEECHAT_HASHTABLE_STRING,
+                                             WEECHAT_HASHTABLE_STRING);
     function = Tcl_GetStringFromObj (objv[4], &i);
     data = Tcl_GetStringFromObj (objv[5], &i);
 
@@ -3416,7 +3459,9 @@ weechat_tcl_api_hook_hsignal_send (ClientData clientData, Tcl_Interp *interp,
 
     signal = Tcl_GetStringFromObj (objv[1], &i);
     hashtable = weechat_tcl_dict_to_hashtable (interp, objv[2],
-                                               WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+                                               WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                               WEECHAT_HASHTABLE_STRING,
+                                               WEECHAT_HASHTABLE_STRING);
 
     weechat_hook_hsignal_send (signal, hashtable);
 
@@ -5320,7 +5365,9 @@ weechat_tcl_api_info_get_hashtable (ClientData clientData, Tcl_Interp *interp,
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     hashtable = weechat_tcl_dict_to_hashtable (interp, objv[2],
-                                               WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+                                               WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                               WEECHAT_HASHTABLE_STRING,
+                                               WEECHAT_HASHTABLE_STRING);
 
     result_hashtable = weechat_info_get_hashtable (Tcl_GetStringFromObj (objv[1], &i),
                                                    hashtable);
@@ -6178,7 +6225,9 @@ weechat_tcl_api_hdata_update (ClientData clientData, Tcl_Interp *interp,
     hdata = Tcl_GetStringFromObj (objv[1], &i);
     pointer = Tcl_GetStringFromObj (objv[2], &i);
     hashtable = weechat_tcl_dict_to_hashtable (interp, objv[3],
-                                               WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+                                               WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                               WEECHAT_HASHTABLE_STRING,
+                                               WEECHAT_HASHTABLE_STRING);
 
     value = weechat_hdata_update (API_STR2PTR(hdata),
                                   API_STR2PTR(pointer),
@@ -6495,6 +6544,7 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     API_DEF_FUNC(string_remove_color);
     API_DEF_FUNC(string_is_command_char);
     API_DEF_FUNC(string_input_for_buffer);
+    API_DEF_FUNC(string_eval_expression);
     API_DEF_FUNC(mkdir_home);
     API_DEF_FUNC(mkdir);
     API_DEF_FUNC(mkdir_parents);

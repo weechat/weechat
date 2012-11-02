@@ -421,6 +421,44 @@ weechat_guile_api_string_input_for_buffer (SCM string)
 }
 
 /*
+ * weechat_guile_api_string_eval_expression: evaluate an expression and return
+ *                                           result
+ */
+
+SCM
+weechat_guile_api_string_eval_expression (SCM expr, SCM pointers,
+                                          SCM extra_vars)
+{
+    char *result;
+    SCM return_value;
+    struct t_hashtable *c_pointers, *c_extra_vars;
+
+    API_FUNC(1, "string_eval_expression", API_RETURN_EMPTY);
+    if (!scm_is_string (expr) || !scm_list_p (pointers)
+        || !scm_list_p (extra_vars))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    c_pointers = weechat_guile_alist_to_hashtable (pointers,
+                                                   WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                   WEECHAT_HASHTABLE_STRING,
+                                                   WEECHAT_HASHTABLE_POINTER);
+    c_extra_vars = weechat_guile_alist_to_hashtable (extra_vars,
+                                                     WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                     WEECHAT_HASHTABLE_STRING,
+                                                     WEECHAT_HASHTABLE_STRING);
+
+    result = weechat_string_eval_expression (scm_i_string_chars (expr),
+                                             c_pointers, c_extra_vars);
+
+    if (c_pointers)
+        weechat_hashtable_free (c_pointers);
+    if (c_extra_vars)
+        weechat_hashtable_free (c_extra_vars);
+
+    API_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_guile_api_mkdir_home: create a directory in WeeChat home
  */
 
@@ -1933,7 +1971,9 @@ weechat_guile_api_key_bind (SCM context, SCM keys)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
     c_keys = weechat_guile_alist_to_hashtable (keys,
-                                               WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+                                               WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                               WEECHAT_HASHTABLE_STRING,
+                                               WEECHAT_HASHTABLE_STRING);
 
     num_keys = weechat_key_bind (scm_i_string_chars (context), c_keys);
 
@@ -2454,7 +2494,9 @@ weechat_guile_api_hook_process_hashtable (SCM command, SCM options, SCM timeout,
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     c_options = weechat_guile_alist_to_hashtable (options,
-                                                  WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+                                                  WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                  WEECHAT_HASHTABLE_STRING,
+                                                  WEECHAT_HASHTABLE_STRING);
 
     result = API_PTR2STR(plugin_script_api_hook_process_hashtable (weechat_guile_plugin,
                                                                    guile_current_script,
@@ -2861,7 +2903,9 @@ weechat_guile_api_hook_hsignal_send (SCM signal, SCM hashtable)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     c_hashtable = weechat_guile_alist_to_hashtable (hashtable,
-                                                    WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+                                                    WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                    WEECHAT_HASHTABLE_STRING,
+                                                    WEECHAT_HASHTABLE_STRING);
 
     weechat_hook_hsignal_send (scm_i_string_chars (signal), c_hashtable);
 
@@ -4462,7 +4506,9 @@ weechat_guile_api_info_get_hashtable (SCM info_name, SCM hash)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     c_hashtable = weechat_guile_alist_to_hashtable (hash,
-                                                    WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+                                                    WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                    WEECHAT_HASHTABLE_STRING,
+                                                    WEECHAT_HASHTABLE_STRING);
 
     result_hashtable = weechat_info_get_hashtable (scm_i_string_chars (info_name),
                                                    c_hashtable);
@@ -5160,7 +5206,9 @@ weechat_guile_api_hdata_update (SCM hdata, SCM pointer, SCM hashtable)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
     c_hashtable = weechat_guile_alist_to_hashtable (hashtable,
-                                                    WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+                                                    WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                    WEECHAT_HASHTABLE_STRING,
+                                                    WEECHAT_HASHTABLE_STRING);
 
     value = weechat_hdata_update (API_STR2PTR(scm_i_string_chars (hdata)),
                                   API_STR2PTR(scm_i_string_chars (pointer)),
@@ -5358,6 +5406,7 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(string_remove_color, 2);
     API_DEF_FUNC(string_is_command_char, 1);
     API_DEF_FUNC(string_input_for_buffer, 1);
+    API_DEF_FUNC(string_eval_expression, 3);
     API_DEF_FUNC(mkdir_home, 2);
     API_DEF_FUNC(mkdir, 2);
     API_DEF_FUNC(mkdir_parents, 2);

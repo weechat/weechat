@@ -508,6 +508,47 @@ weechat_ruby_api_string_input_for_buffer (VALUE class, VALUE string)
 }
 
 /*
+ * weechat_ruby_api_string_eval_expression: evaluate an expression and return
+ *                                          result
+ */
+
+static VALUE
+weechat_ruby_api_string_eval_expression (VALUE class, VALUE expr,
+                                         VALUE pointers, VALUE extra_vars)
+{
+    char *c_expr, *result;
+    struct t_hashtable *c_pointers, *c_extra_vars;
+    VALUE return_value;
+
+    API_FUNC(1, "string_eval_expression", API_RETURN_EMPTY);
+    if (NIL_P (expr) || NIL_P (pointers) || NIL_P (extra_vars))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    Check_Type (expr, T_STRING);
+    Check_Type (pointers, T_HASH);
+    Check_Type (extra_vars, T_HASH);
+
+    c_expr = StringValuePtr (expr);
+    c_pointers = weechat_ruby_hash_to_hashtable (pointers,
+                                                 WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                 WEECHAT_HASHTABLE_STRING,
+                                                 WEECHAT_HASHTABLE_POINTER);
+    c_extra_vars = weechat_ruby_hash_to_hashtable (extra_vars,
+                                                   WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                   WEECHAT_HASHTABLE_STRING,
+                                                   WEECHAT_HASHTABLE_STRING);
+
+    result = weechat_string_eval_expression (c_expr, c_pointers, c_extra_vars);
+
+    if (c_pointers)
+        weechat_hashtable_free (c_pointers);
+    if (c_extra_vars)
+        weechat_hashtable_free (c_extra_vars);
+
+    API_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_ruby_api_mkdir_home: create a directory in WeeChat home
  */
 
@@ -2389,7 +2430,9 @@ weechat_ruby_api_key_bind (VALUE class, VALUE context, VALUE keys)
 
     c_context = StringValuePtr (context);
     c_keys = weechat_ruby_hash_to_hashtable (keys,
-                                             WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+                                             WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                             WEECHAT_HASHTABLE_STRING,
+                                             WEECHAT_HASHTABLE_STRING);
 
     num_keys = weechat_key_bind (c_context, c_keys);
 
@@ -3031,7 +3074,9 @@ weechat_ruby_api_hook_process_hashtable (VALUE class, VALUE command,
 
     c_command = StringValuePtr (command);
     c_options = weechat_ruby_hash_to_hashtable (options,
-                                                WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+                                                WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                WEECHAT_HASHTABLE_STRING,
+                                                WEECHAT_HASHTABLE_STRING);
     c_timeout = FIX2INT (timeout);
     c_function = StringValuePtr (function);
     c_data = StringValuePtr (data);
@@ -3498,7 +3543,9 @@ weechat_ruby_api_hook_hsignal_send (VALUE class, VALUE signal, VALUE hashtable)
 
     c_signal = StringValuePtr (signal);
     c_hashtable = weechat_ruby_hash_to_hashtable (hashtable,
-                                                  WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+                                                  WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                  WEECHAT_HASHTABLE_STRING,
+                                                  WEECHAT_HASHTABLE_STRING);
 
     weechat_hook_hsignal_send (c_signal, c_hashtable);
 
@@ -5543,7 +5590,9 @@ weechat_ruby_api_info_get_hashtable (VALUE class, VALUE info_name,
 
     c_info_name = StringValuePtr (info_name);
     c_hashtable = weechat_ruby_hash_to_hashtable (hash,
-                                                  WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+                                                  WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                  WEECHAT_HASHTABLE_STRING,
+                                                  WEECHAT_HASHTABLE_STRING);
 
     result_hashtable = weechat_info_get_hashtable (c_info_name, c_hashtable);
     result_hash = weechat_ruby_hashtable_to_hash (result_hashtable);
@@ -6465,7 +6514,9 @@ weechat_ruby_api_hdata_update (VALUE class, VALUE hdata, VALUE pointer,
     c_hdata = StringValuePtr (hdata);
     c_pointer = StringValuePtr (pointer);
     c_hashtable = weechat_ruby_hash_to_hashtable (hashtable,
-                                                  WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+                                                  WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                  WEECHAT_HASHTABLE_STRING,
+                                                  WEECHAT_HASHTABLE_STRING);
 
     value = weechat_hdata_update (API_STR2PTR(c_hdata),
                                   API_STR2PTR(c_pointer),
@@ -6732,6 +6783,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(string_remove_color, 2);
     API_DEF_FUNC(string_is_command_char, 1);
     API_DEF_FUNC(string_input_for_buffer, 1);
+    API_DEF_FUNC(string_eval_expression, 3);
     API_DEF_FUNC(mkdir_home, 2);
     API_DEF_FUNC(mkdir, 2);
     API_DEF_FUNC(mkdir_parents, 2);

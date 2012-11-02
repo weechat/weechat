@@ -1654,6 +1654,59 @@ str2 = weechat.string_input_for_buffer("/test")  # ""
 str3 = weechat.string_input_for_buffer("//test") # "/test"
 ----------------------------------------
 
+weechat_string_eval_expression
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+_New in version 0.4.0._
+
+Evaluate an expression and return result as a string.
+Special variables with format `${variable}` are expanded (see command `/eval` in
+'WeeChat User's guide').
+
+Prototype:
+
+[source,C]
+----------------------------------------
+char *weechat_string_eval_expression (const char *expr,
+                                      struct t_hashtable *pointers,
+                                      struct t_hashtable *extra_vars);
+----------------------------------------
+
+Arguments:
+
+* 'expr': the expression to evaluate
+* 'pointers': hashtable with pointers (keys must be string, values must be
+  pointer); pointers "window" and "buffer" are automatically added if they are
+  not in hashtable (with pointer to current window/buffer) (can be NULL)
+* 'extra_vars': extra variables that will be expanded (can be NULL)
+
+Return value:
+
+* evaluated expression (must be freed by calling "free" after use), or NULL
+  if problem (invalid expression or not enough memory)
+
+C examples:
+
+[source,C]
+----------------------------------------
+char *str1 = weechat_string_eval_expression ("${buffer.full_name}", NULL, NULL);       /* "core.weechat" */
+char *str2 = weechat_string_eval_expression ("${window.win_width} > 100", NULL, NULL); /* "1" */
+char *str3 = weechat_string_eval_expression ("abc =~ def", NULL, NULL);                /* "0" */
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+str = weechat.string_eval_expression(expr, pointers, extra_vars)
+
+# examples
+str1 = weechat.string_input_for_buffer("${buffer.full_name}", {}, {})       # "core.weechat"
+str2 = weechat.string_input_for_buffer("${window.win_width} > 100", {}, {}) # "1"
+str3 = weechat.string_input_for_buffer("abc =~ def", {}, {})                # "0"
+----------------------------------------
+
 [[utf-8]]
 UTF-8
 ~~~~~

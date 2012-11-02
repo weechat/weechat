@@ -1163,6 +1163,16 @@ config_weechat_proxy_read_cb (void *data, struct t_config_file *config_file,
                         proxy_create_option_temp (ptr_temp_proxy, index_option,
                                                   value);
                     }
+                    else
+                    {
+                        gui_chat_printf (NULL,
+                                         _("%sWarning: unknown option for "
+                                           "section \"%s\": %s (value: \"%s\")"),
+                                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                         section->name,
+                                         option_name,
+                                         value);
+                    }
                 }
 
                 free (proxy_name);
@@ -1231,6 +1241,16 @@ config_weechat_bar_read_cb (void *data, struct t_config_file *config_file,
                     {
                         gui_bar_create_option_temp (ptr_temp_bar, index_option,
                                                     value);
+                    }
+                    else
+                    {
+                        gui_chat_printf (NULL,
+                                         _("%sWarning: unknown option for "
+                                           "section \"%s\": %s (value: \"%s\")"),
+                                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                         section->name,
+                                         option_name,
+                                         value);
                     }
                 }
 

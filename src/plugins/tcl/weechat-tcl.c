@@ -125,24 +125,23 @@ weechat_tcl_hashtable_to_dict (Tcl_Interp *interp,
 
 /*
  * weechat_tcl_dict_to_hashtable: get WeeChat hashtable with tcl dict
- *                                Hashtable returned has type string for
- *                                both keys and values
  *                                Note: hashtable has to be released after
  *                                use with call to weechat_hashtable_free()
  */
 
 struct t_hashtable *
 weechat_tcl_dict_to_hashtable (Tcl_Interp *interp, Tcl_Obj *dict,
-                               int hashtable_size)
+                               int size, const char *type_keys,
+                               const char *type_values)
 {
     struct t_hashtable *hashtable;
     Tcl_DictSearch search;
     Tcl_Obj *key, *value;
     int done;
 
-    hashtable = weechat_hashtable_new (hashtable_size,
-                                       WEECHAT_HASHTABLE_STRING,
-                                       WEECHAT_HASHTABLE_STRING,
+    hashtable = weechat_hashtable_new (size,
+                                       type_keys,
+                                       type_values,
                                        NULL,
                                        NULL);
     if (!hashtable)
@@ -152,9 +151,20 @@ weechat_tcl_dict_to_hashtable (Tcl_Interp *interp, Tcl_Obj *dict,
     {
         for (; !done ; Tcl_DictObjNext(&search, &key, &value, &done))
         {
-            weechat_hashtable_set (hashtable,
-                                   Tcl_GetString (key),
-                                   Tcl_GetString (value));
+            if (strcmp (type_values, WEECHAT_HASHTABLE_STRING) == 0)
+            {
+                weechat_hashtable_set (hashtable,
+                                       Tcl_GetString (key),
+                                       Tcl_GetString (value));
+            }
+            else if (strcmp (type_values, WEECHAT_HASHTABLE_POINTER) == 0)
+            {
+                weechat_hashtable_set (hashtable,
+                                       Tcl_GetString (key),
+                                       plugin_script_str2ptr (weechat_tcl_plugin,
+                                                              NULL, NULL,
+                                                              Tcl_GetString (value)));
+            }
         }
     }
     Tcl_DictObjDone(&search);
@@ -246,7 +256,9 @@ weechat_tcl_exec (struct t_plugin_script *script,
         {
             ret_val = weechat_tcl_dict_to_hashtable (interp,
                                                      Tcl_GetObjResult (interp),
-                                                     WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE);
+                                                     WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                     WEECHAT_HASHTABLE_STRING,
+                                                     WEECHAT_HASHTABLE_STRING);
         }
 
         tcl_current_script = old_tcl_script;

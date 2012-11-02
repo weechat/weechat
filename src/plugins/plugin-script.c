@@ -286,7 +286,7 @@ plugin_script_str2ptr (struct t_weechat_plugin *weechat_plugin,
         return (void *)value;
 
 invalid:
-    if (weechat_plugin->debug >= 1)
+    if ((weechat_plugin->debug >= 1) && script_name && function_name)
     {
         ptr_buffer = weechat_buffer_search_main ();
         if (ptr_buffer)

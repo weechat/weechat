@@ -1,7 +1,7 @@
 WeeChat Release Notes
 =====================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.0-dev, 2012-10-16
+v0.4.0-dev, 2012-11-02
 
 
 Version 0.4.0 (under dev!)
@@ -9,6 +9,10 @@ Version 0.4.0 (under dev!)
 
 Important release notes:
 
+* conditions in bars have changed, and now an expression is evaluated.
+  If you have a value with many conditions in a bar, like: `nicklist,active`,
+  you must now use an expression like: `${nicklist} && ${active}` (see
+  the chapter about bars in the 'WeeChat User's guide').
 * IPv6 is now used by default to connect to IRC servers, with fallback to IPv4.
   The option irc.server_default.ipv6 is now "on" by default. If IPv6 is not
   enabled or fails, IPv4 will be used. The "ipv6" option in server is now used

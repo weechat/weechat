@@ -565,6 +565,229 @@ Exemple de découpage vertical + horizontal :
                   (tampon n°3)
 ........................................
 
+[[bars]]
+Barres
+~~~~~~
+
+Une 'barre' est une zone à côté de la discussion qui peut contenir tout type de
+texte.
+
+Les options de barre sont définies avec les options `weechat.bar.nom.option` où
+`nom` et le nom de la barre et `option` l'option pour cette barre.
+
+Liste des options de barre :
+
+[width="100%",cols="2m,2,10",options="header"]
+|========================================
+| Option | Valeurs | Description
+
+| type | `root`, `window` |
+  Une barre avec le type `root` est affichée exactement une fois à l'écran, en
+  dehors de toutes les fenêtres. Il n'y a pas de barre root par défaut, mais un
+  exemple est la barre 'buffers' créée par le script 'buffers.pl' (barre
+  latérale avec la liste des tampons). +
+  Une barre avec le type `window` est affichée dans chaque fenêtre, par exemple
+  si vous découpez l'écran (avec `/window splith` ou `/window splitv`), vous
+  aurez une barre dans chaque fenêtre. Les quatre barres par défaut ('title',
+  'status', 'input', 'nicklist') sont de type `window`.
+
+| position | `top`, `bottom`, `left`, `right` |
+  Position de la barre : au dessus/en dessous de la discussion, sur la
+  gauche/droite.
+
+| priority | entier ≥ 0 |
+  Priorité de la barre : elle est utilisée pour ordonner les barres à l'écran,
+  quand plusieurs barres utilisent le même type et position. +
+  Les barres sont affichées depuis le bord de l'écran vers le centre. Une
+  priorité plus haute affichera la barre au début, donc près du bord. +
+  Exemple : la barre 'input' a une priorité de 1000, donc elle est affichée
+  avant la barre 'status', qui a une priorité de 500.
+
+| size | entier ≥ 0 |
+  La taille de la barre : nombre de colonnes pour une position left/right,
+  nombre de lignes pour une position top/bottom. Une taille de `0` signifie
+  automatique, donc la taille sera calculée en fonction du contenu affiché dans
+  la barre.
+
+| size_max | entier ≥ 0 |
+  La taille maximum pour la barre, `0` = pas de limite (cette option est
+  utilisée seulement si `size` = `0`).
+
+| color_bg | couleur |
+  La couleur par défaut du fond de la barre.
+
+| color_fg | couleur |
+  La couleur par défaut du texte dans la barre.
+
+| color_delim | couleur |
+  La couleur des délimiteurs dans la barre.
+
+| hidden | `on`, `off` |
+  Lorsque l'option est `on`, la barre est cachée. +
+  Note : plutôt que de changer cette option, il est préférable d'utiliser la
+  commande `/bar`, par exemple : `/bar toggle nicklist` (voir la commande
+  <<command_weechat_bar,/bar>>).
+
+| separator | `on`, `off` |
+  Lorsque l'option est `on`, un séparateur (ligne) est affiché entre la barre et
+  les autres barres (ou la discussion).
+
+| items | chaîne |
+  Une liste d'objets (voir <<bar_items,objets>> pour plus d'infos).
+
+| filling_left_right | `horizontal`, `vertical`, `columns_horizontal`, `columns_vertical` |
+  Type de remplissage pour la barre lorsqu'elle a une position `left` ou
+  `right` (voir <<bar_filling,remplissage>> pour plus d'infos).
+
+| filling_top_bottom | `horizontal`, `vertical`, `columns_horizontal`, `columns_vertical` |
+  Type de remplissage pour la barre lorsqu'elle a une position `top` ou `bottom`
+  (voir <<bar_filling,remplissage>> pour plus d'infos).
+
+| conditions | chaîne |
+  Les conditions pour afficher la barre (voir <<bar_conditions,conditions>> pour
+  plus d'infos).
+|========================================
+
+[[bar_items]]
+Objets
+^^^^^^
+
+L'option 'items' est une chaîne avec une liste d'objets de barre, séparés par
+une virgule (espace entre les objets à l'écran) ou un "+" (objets collés).
+
+La liste des objets de barre est affichée avec la commande `/bar listitems`.
+
+Exemple de barre avec les objets
+"[time],buffer_number+:+buffer_plugin+.+buffer_name" :
+
+........................................
+┌─────────────────────────────────────────────────────────────────────────────────────────┐
+│[12:55] 3:irc/freenode.#weechat                                                          │
+└─────────────────────────────────────────────────────────────────────────────────────────┘
+........................................
+
+[[bar_filling]]
+Remplissage
+^^^^^^^^^^^
+
+Il y a quatre types de remplissage :
+
+* `horizontal` : les objets sont affichés horizontalement, de gauche à droite.
+  S'il y a des retours à la ligne dans les objets, un espace est utilisé pour
+  séparer les lignes.
+* `vertical` : les objets sont affichés de haut en bas. S'il y a des retours à
+  la ligne dans les objets, une nouvelle ligne est utilisée pour séparer les
+  lignes.
+* `columns_horizontal` : les objets sont affichés en utilisant des colonnes, où
+  le texte est aligné à gauche. Le premier objet est en haut à gauche, le second
+  est sur la même ligne, sur la droite.
+* `columns_vertical` : les objets sont affichés en utilisant des colonnes, où
+  le texte est aligné à gauche. Le premier objet est en haut à gauche, le second
+  est sur la ligne en dessous.
+
+Les barres par défaut 'title', 'status' et 'input' ont un remplissage
+'horizontal', et la barre par défaut 'nicklist' a un remplissage 'vertical'.
+
+Quelques exemples de remplissage pour la barre 'nicklist' :
+
+........................................
+┌──────────────────────────────────────────────────┐
+│Welcome to #test, this is a test channel          │
+│12:54:15 peter | hey!                    │@carl   │
+│12:55:01  +Max | hello                   │@jessika│
+│                                         │@maddy  │
+│                                         │%Diego  │
+│                                         │%Melody │
+│                                         │+Max    │
+│                                         │ celia  │
+│                                         │ Eva    │
+│                                         │ freddy │
+│                                         │ Harold^│
+│                                         │ henry4 │
+│                                         │ jimmy17│
+│                                         │ jodie ▼│
+│[12:55] [6] [irc/freenode] 3:#test(+n){24}        │
+└──────────────────────────────────────────────────┘
+                filling_left_right = vertical ▲
+
+┌──────────────────────────────────────────────────┐
+│Welcome to #test, this is a test channel          │
+│12:54:15 peter | hey!           │@carl     lee    │
+│12:55:01  +Max | hello          │@jessika  louise │
+│                                │@maddy    mario  │
+│                                │%Diego    mark   │
+│                                │%Melody   peter  │
+│                                │+Max      Rachel │
+│                                │ celia    richard│
+│                                │ Eva      sheryl │
+│                                │ freddy   Vince  │
+│                                │ Harold^  warren │
+│                                │ henry4   zack   │
+│                                │ jimmy17         │
+│                                │ jodie           │
+│[12:55] [6] [irc/freenode] 3:#test(+n){24}        │
+└──────────────────────────────────────────────────┘
+        filling_left_right = columns_vertical ▲
+
+┌───────────────────────────────────────────────────────────────────────┐
+│@carl    %Diego    celia    Harold^  jodie    mario    Rachel   Vince  │
+│@jessika %Melody   Eva      henry4   lee      mark     richard  warren │
+│@maddy   +Max      freddy   jimmy17  louise   peter    sheryl   zack   │
+│───────────────────────────────────────────────────────────────────────│
+│                                                                       │
+        filling_top_bottom = columns_vertical ▲
+
+┌───────────────────────────────────────────────────────────────────────┐
+│@carl    @jessika @maddy   %Diego   %Melody  +Max      celia    Eva    │
+│ freddy   Harold^  henry4   jimmy17  jodie    lee      louise   mario  │
+│ mark     peter    Rachel   richard  sheryl   Vince    warren   zack   │
+│───────────────────────────────────────────────────────────────────────│
+│                                                                       │
+      filling_top_bottom = columns_horizontal ▲
+........................................
+
+[[bar_conditions]]
+Conditions
+^^^^^^^^^^
+
+L'option 'conditions' est uen chaîne évaluée pour savoir si la barre doit être
+affichée ou non dans la fenêtre (elle est utilisée seulement pour les barres
+avec type 'window').
+
+La chaîne peut être :
+
+* 'active' : la fenêtre doit être active
+* 'inactive' : la fenêtre doit être inactive
+* 'nicklist' : le tampon affiché dans la fenêtre doit avoir une liste de pseudos
+* une expression : elle est évaluée comme booléen (voir la commande
+  <<command_weechat_eval,/eval>>)
+
+Pour une expression, les variables suivantes sont disponibles :
+
+* `${active}` : vrai si la fenêtre est active
+* `${inactive}` : vrai si la fenêtre est inactive
+* `$[nicklist}` : vrai si le tampon affiché dans la fenêtre a une liste de
+  pseudos
+
+Les pointeurs suivants sont disponibles :
+
+* `${window}` : la fenêtre où la condition est évaluée
+* `${buffer}` : le tampon de la fenêtre où la condition est évaluée
+
+Exemple pour afficher la liste de pseudos dans tous les tampons possédant une
+liste de pseudos, et seulement si la largeur de fenêtre est supérieurs à 100 :
+
+----------------------------------------
+/set weechat.bar.nicklist.conditions "${nicklist} && ${window.win_width} > 100"
+----------------------------------------
+
+Même condition, mais affichier toujours la liste de pseudos sur le tampon
+'&bitlbee' (même si la fenêtre est petite) :
+
+----------------------------------------
+/set weechat.bar.nicklist.conditions "${nicklist} && (${window.win_width} > 100 || ${buffer.full_name} == irc.bitlbee.&bitlbee)"
+----------------------------------------
+
 [[notify_levels]]
 Niveaux de notification
 ~~~~~~~~~~~~~~~~~~~~~~~

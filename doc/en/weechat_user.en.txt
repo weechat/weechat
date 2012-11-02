@@ -554,6 +554,218 @@ Example of vertical + horizontal splits:
                   (buffer #3)
 ........................................
 
+[[bars]]
+Bars
+~~~~
+
+A 'bar' is an area beside the chat that can contain any type of text.
+
+The bar options can be set with options `weechat.bar.name.option` where `name`
+is the name of the bar and `option` the option for this bar.
+
+List of bar options:
+
+[width="100%",cols="2m,2,10",options="header"]
+|========================================
+| Option | Values | Description
+
+| type | `root`, `window` |
+  A bar with type `root` is displayed exactly one time on screen, outside all
+  windows. There is no root bar by default, but an example is the bar 'buffers'
+  created by script 'buffers.pl' (sidebar with list of buffers). +
+  A bar with type `window` is displayed in each window, for example if you
+  split one time the screen (with `/window splith` or `/window splitv`), you
+  will have one bar in each window. The four default bars ('title', 'status',
+  'input', 'nicklist') have type `window`.
+
+| position | `top`, `bottom`, `left`, `right` |
+  Position of the bar: above/below chat, on the left/right.
+
+| priority | integer ≥ 0 |
+  Priority for display of bar: this is used for ordering the bars on screen when
+  many bars have same type and position. +
+  The bars are displayed from the edge of the screen to the center. A higher
+  priority will display bar at the beginning, so closer to the edge. +
+  Example: 'input' bar has priority 1000, so it is displayed before the 'status'
+  bar, which has priority 500.
+
+| size | integer ≥ 0 |
+  The size of the bar: number of columns for position left/right, number
+  of lines for position top/tobbom. A size of `0` means automatic, so the size
+  will be computed according to content displayed in bar.
+
+| size_max | integer ≥ 0 |
+  The maximum size for a bar, `0` = no limit (this option is used only if
+  `size` = `0`).
+
+| color_bg | color |
+  The default background color for the bar.
+
+| color_fg | color |
+  The default text color for the bar.
+
+| color_delim | color |
+  The color for delimiters in bar.
+
+| hidden | `on`, `off` |
+  When option is `on`, the bar is hidden. +
+  Note: instead of changing this option, the command `/bar` is preferred, for
+  example: `/bar toggle nicklist` (see command <<command_weechat_bar,/bar>>).
+
+| separator | `on`, `off` |
+  When option is `on`, a separator (line) is displayed between this bar and
+  other bars (or chat).
+
+| items | string |
+  A list of 'items' (see <<bar_items,items>> for more info).
+
+| filling_left_right | `horizontal`, `vertical`, `columns_horizontal`, `columns_vertical` |
+  Type of filling for a bar which has position `left` or `right` (see
+  <<bar_filling,filling>> for more info).
+
+| filling_top_bottom | `horizontal`, `vertical`, `columns_horizontal`, `columns_vertical` |
+  Type of filling for a bar which has position `top` or `bottom` (see
+  <<bar_filling,filling>> for more info).
+
+| conditions | string |
+  The conditions to display the bar (see <<bar_conditions,conditions>> for more
+  info).
+|========================================
+
+[[bar_items]]
+Items
+^^^^^
+
+The option 'items' is a string with a list of bar items, separated by a comma
+(space between items on screen) or "+" (glued items).
+
+The list of bar items is displayed with command `/bar listitems`.
+
+Example of bar with items "[time],buffer_number+:+buffer_plugin+.+buffer_name":
+
+........................................
+┌─────────────────────────────────────────────────────────────────────────────────────────┐
+│[12:55] 3:irc/freenode.#weechat                                                          │
+└─────────────────────────────────────────────────────────────────────────────────────────┘
+........................................
+
+[[bar_filling]]
+Filling
+^^^^^^^
+
+There are four types of filling:
+
+* `horizontal`: the items are displayed horizontally, from left to right. If
+  there are new lines in items, a space is used to separate lines.
+* `vertical`: the items are displayed from top to bottom. If there are new
+  lines in items, a new line is used to separate lines.
+* `columns_horizontal`: items are displayed using columns, where text is
+  aligned on the left. The first item is on top left, the second is on same
+  line, on the right.
+* `columns_vertical`: items are displayed using columns, where text is aligned
+  on the left. The first item is on top left, the second is one line below.
+
+Default bars 'title', 'status' and 'input' have 'horizontal' filling, and
+default bar 'nicklist' has 'vertical' filling.
+
+Some examples of filling for bar 'nicklist':
+
+........................................
+┌──────────────────────────────────────────────────┐
+│Welcome to #test, this is a test channel          │
+│12:54:15 peter | hey!                    │@carl   │
+│12:55:01  +Max | hello                   │@jessika│
+│                                         │@maddy  │
+│                                         │%Diego  │
+│                                         │%Melody │
+│                                         │+Max    │
+│                                         │ celia  │
+│                                         │ Eva    │
+│                                         │ freddy │
+│                                         │ Harold^│
+│                                         │ henry4 │
+│                                         │ jimmy17│
+│                                         │ jodie ▼│
+│[12:55] [6] [irc/freenode] 3:#test(+n){24}        │
+└──────────────────────────────────────────────────┘
+                filling_left_right = vertical ▲
+
+┌──────────────────────────────────────────────────┐
+│Welcome to #test, this is a test channel          │
+│12:54:15 peter | hey!           │@carl     lee    │
+│12:55:01  +Max | hello          │@jessika  louise │
+│                                │@maddy    mario  │
+│                                │%Diego    mark   │
+│                                │%Melody   peter  │
+│                                │+Max      Rachel │
+│                                │ celia    richard│
+│                                │ Eva      sheryl │
+│                                │ freddy   Vince  │
+│                                │ Harold^  warren │
+│                                │ henry4   zack   │
+│                                │ jimmy17         │
+│                                │ jodie           │
+│[12:55] [6] [irc/freenode] 3:#test(+n){24}        │
+└──────────────────────────────────────────────────┘
+        filling_left_right = columns_vertical ▲
+
+┌───────────────────────────────────────────────────────────────────────┐
+│@carl    %Diego    celia    Harold^  jodie    mario    Rachel   Vince  │
+│@jessika %Melody   Eva      henry4   lee      mark     richard  warren │
+│@maddy   +Max      freddy   jimmy17  louise   peter    sheryl   zack   │
+│───────────────────────────────────────────────────────────────────────│
+│                                                                       │
+        filling_top_bottom = columns_vertical ▲
+
+┌───────────────────────────────────────────────────────────────────────┐
+│@carl    @jessika @maddy   %Diego   %Melody  +Max      celia    Eva    │
+│ freddy   Harold^  henry4   jimmy17  jodie    lee      louise   mario  │
+│ mark     peter    Rachel   richard  sheryl   Vince    warren   zack   │
+│───────────────────────────────────────────────────────────────────────│
+│                                                                       │
+      filling_top_bottom = columns_horizontal ▲
+........................................
+
+[[bar_conditions]]
+Conditions
+^^^^^^^^^^
+
+The option 'conditions' is a string evaluated to know if the bar is displayed
+or not in the window (it is used only for bars with type 'window').
+
+The string can be:
+
+* 'active': the window must be active
+* 'inactive': the window must be inactive
+* 'nicklist': the buffer displayed in window must have a nicklist
+* an expression: it is evaluated as boolean (see command
+  <<command_weechat_eval,/eval>>)
+
+For the expression, following variables are available:
+
+* `${active}`: true if window is active
+* `${inactive}`: true if window is inactive
+* `$[nicklist}`: true if buffer displayed in window has a nicklist
+
+Following pointers are available:
+
+* `${window}`: the window where condition is evaluated
+* `${buffer}`: the buffer of window where condition is evaluated
+
+Exemple to display nicklist bar in all buffers with a nicklist, and only if
+width of window is > 100 :
+
+----------------------------------------
+/set weechat.bar.nicklist.conditions "${nicklist} && ${window.win_width} > 100"
+----------------------------------------
+
+Same condition, but always display nicklist on buffer '&bitlbee' (even if window
+is small):
+
+----------------------------------------
+/set weechat.bar.nicklist.conditions "${nicklist} && (${window.win_width} > 100 || ${buffer.full_name} == irc.bitlbee.&bitlbee)"
+----------------------------------------
+
 [[notify_levels]]
 Notify levels
 ~~~~~~~~~~~~~
