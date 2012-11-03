@@ -4345,7 +4345,7 @@ IRC_PROTOCOL_CALLBACK(728)
                              argv[5],
                              IRC_COLOR_RESET,
                              irc_nick_color_for_server_message (server, NULL,
-                                                                irc_message_get_nick_from_host (argv[5])),
+                                                                irc_message_get_nick_from_host (argv[6])),
                              irc_message_get_nick_from_host (argv[6]),
                              IRC_COLOR_CHAT_DELIMITERS,
                              IRC_COLOR_CHAT_HOST,
