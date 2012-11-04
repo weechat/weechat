@@ -731,7 +731,7 @@ Following pointers are available:
 * `${window}`: the window where condition is evaluated
 * `${buffer}`: the buffer of window where condition is evaluated
 
-Exemple to display nicklist bar in all buffers with a nicklist, and only if
+Example to display nicklist bar in all buffers with a nicklist, and only if
 width of window is > 100 :
 
 ----------------------------------------
@@ -1472,7 +1472,7 @@ Example of suggestions with english dictionary (`en`):
 └─────────────────────────────────────────────────────────────────────────────────┘
 ........................................
 
-Exemple of suggestions with english and french dictionaries (`en,fr`):
+Example of suggestions with english and french dictionaries (`en,fr`):
 
 ........................................
 │[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune/prime,primer,primé] │
