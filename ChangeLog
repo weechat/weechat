@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.0-dev, 2012-11-02
+v0.4.0-dev, 2012-11-04
 
 
 Version 0.4.0 (under dev!)
@@ -23,6 +23,8 @@ Version 0.4.0 (under dev!)
   hook_connect, move "sock" from hook_connect arguments to callback of
   hook_connect (task #11205)
 * aspell: add bar item "aspell_dict" (dictionary used on current buffer)
+* aspell: fix creation of spellers when number of dictionaries is different
+  between two buffers
 * irc: add command /quiet, fix display of messages 728/729 (quiet list, end of
   quiet list) (task #12278)
 * irc: add option irc.network.alternate_nick to disable dynamic nick generation

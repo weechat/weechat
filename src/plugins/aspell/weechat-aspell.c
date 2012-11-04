@@ -20,7 +20,7 @@
  */
 
 /*
- * weechat-aspell.c: aspell plugin for WeeChat: use color to show mispelled
+ * weechat-aspell.c: aspell plugin for WeeChat: use color to show misspelled
  *                   words in input line
  */
 
@@ -302,21 +302,28 @@ weechat_aspell_spellers_already_ok (const char *dict_list)
     if (!dict_list || !weechat_aspell_spellers)
         return 0;
 
-    rc = 0;
+    rc = 1;
 
     argv = weechat_string_split (dict_list, ",", 0, 0, &argc);
     if (argv)
     {
         ptr_speller = weechat_aspell_spellers;
-        for (i = 0; (i < argc) && ptr_speller; i++)
+        for (i = 0; i < argc; i++)
         {
-            if (strcmp (ptr_speller->lang, argv[i]) == 0)
+            if (!ptr_speller)
             {
-                rc = 1;
+                rc = 0;
+                break;
+            }
+            if (strcmp (ptr_speller->lang, argv[i]) != 0)
+            {
+                rc = 0;
                 break;
             }
             ptr_speller = ptr_speller->next_speller;
         }
+        if (ptr_speller && ptr_speller->next_speller)
+            rc = 0;
         weechat_string_free_split (argv);
     }
 
