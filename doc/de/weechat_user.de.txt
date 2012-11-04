@@ -47,7 +47,6 @@ Um WeeChat zu installieren wird folgendes benötigt:
 * 'root' Privilegien (um WeeChat im Systemverzeichnis zu installieren)
 * ncurses Bibliothek
 
-
 [[install]]
 Installation
 ------------
@@ -301,7 +300,6 @@ Sollte WeeChat abgestürzt sein, muss der Befehl `bt full` genutzt werden:
 ----------------------------------------
 (gdb) bt full
 ----------------------------------------
-
 
 [[usage]]
 Nutzung
@@ -1409,7 +1407,6 @@ WeeChat Befehle
 
 include::autogen/user/weechat_commands.txt[]
 
-
 [[plugins]]
 Erweiterungen
 -------------
@@ -1520,6 +1517,33 @@ Um zum Beispiel die Option "ignore-case" einzuschalten:
 ----------------------------------------
 /set aspell.option.ignore-case "true"
 ----------------------------------------
+
+// TRANSLATION MISSING
+[[aspell_suggestions]]
+Suggestions
+^^^^^^^^^^^
+
+Suggestions are displayed in a bar item called "aspell_suggest". The number of
+suggestions is set in option 'aspell.check.suggestions'.
+
+To enable suggestions you must set option 'aspell.check.suggestions' to an
+integer ≥ 0 and add the bar item "aspell_suggest" to a bar, like 'status'.
+
+Example of suggestions with english dictionary (`en`):
+
+........................................
+│[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune]                    │
+│[@Flashy] prinr █                                                                │
+└─────────────────────────────────────────────────────────────────────────────────┘
+........................................
+
+Exemple of suggestions with english and french dictionaries (`en,fr`):
+
+........................................
+│[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune/prime,primer,primé] │
+│[@Flashy] prinr █                                                                │
+└─────────────────────────────────────────────────────────────────────────────────┘
+........................................
 
 [[charset_plugin]]
 Charset Erweiterung
@@ -2515,7 +2539,6 @@ Befehle
 
 include::autogen/user/xfer_commands.txt[]
 
-
 [[authors]]
 Autoren
 -------
@@ -2545,7 +2568,6 @@ Patches::
     JD Horelick, Stefano Pigozzi, Gu1ll4um3r0m41n, Kyle Fuller,
     Quentin Glidic (SardemFF7), Simon Kuhnle, Mateusz Poszwa, Peter Boström,
     Arvydas Sidorenko, Simon Arlott
-
 
 [[support]]
 Unterstützung

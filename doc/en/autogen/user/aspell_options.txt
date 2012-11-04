@@ -23,6 +23,11 @@
 ** type: boolean
 ** values: on, off (default value: `off`)
 
+* [[option_aspell.check.suggestions]] *aspell.check.suggestions*
+** description: `number of suggestions to display in bar item "aspell_suggest" for each dictionary set in buffer (-1 = disable suggestions, 0 = display all possible suggestions in all languages)`
+** type: integer
+** values: -1 .. 2147483647 (default value: `-1`)
+
 * [[option_aspell.check.word_min_length]] *aspell.check.word_min_length*
 ** description: `minimum length for a word to be spell checked (use 0 to check all words)`
 ** type: integer

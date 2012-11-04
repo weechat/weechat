@@ -23,6 +23,11 @@
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `off`)
 
+* [[option_aspell.check.suggestions]] *aspell.check.suggestions*
+** 説明: `number of suggestions to display in bar item "aspell_suggest" for each dictionary set in buffer (-1 = disable suggestions, 0 = display all possible suggestions in all languages)`
+** タイプ: 整数
+** 値: -1 .. 2147483647 (デフォルト値: `-1`)
+
 * [[option_aspell.check.word_min_length]] *aspell.check.word_min_length*
 ** 説明: `スペルチェックを行う単語長の最小値 (0 の場合は全ての単語をチェック)`
 ** タイプ: 整数

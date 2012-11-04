@@ -48,7 +48,6 @@ Pour installer WeeChat, vous devez avoir :
 * droits "root" (pour installer WeeChat dans un répertoire système)
 * la bibliothèque ncurses
 
-
 [[install]]
 Installation
 ------------
@@ -309,7 +308,6 @@ Ensuite comme pour un crash, utilisez la commande `bt full` :
 ----------------------------------------
 (gdb) bt full
 ----------------------------------------
-
 
 [[usage]]
 Utilisation
@@ -1430,7 +1428,6 @@ Commandes WeeChat
 
 include::autogen/user/weechat_commands.txt[]
 
-
 [[plugins]]
 Extensions
 ----------
@@ -1543,6 +1540,33 @@ Par exemple, pour activer l'option "ignore-case":
 ----------------------------------------
 /set aspell.option.ignore-case "true"
 ----------------------------------------
+
+[[aspell_suggestions]]
+Suggestions
+^^^^^^^^^^^
+
+Les suggestions sont affichées dans un objet de barre appelé "aspell_suggest".
+Le nombre de suggestions est défini dans l'option 'aspell.check.suggestions'.
+
+Pour activer les suggestions, vous devez modifier l'option
+'aspell.check.suggestions' avec un entier ≥ 0 et ajouter l'objet de barre
+"aspell_suggest" à une barre, par exemple 'status'.
+
+Exemple de suggestions avec un dictionnaire anglais (`en`) :
+
+........................................
+│[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune]                    │
+│[@Flashy] prinr █                                                                │
+└─────────────────────────────────────────────────────────────────────────────────┘
+........................................
+
+Exemple de suggestions avec des dictionnaires anglais et français (`en,fr`) :
+
+........................................
+│[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune/prime,primer,primé] │
+│[@Flashy] prinr █                                                                │
+└─────────────────────────────────────────────────────────────────────────────────┘
+........................................
 
 [[charset_plugin]]
 Extension Charset
@@ -2546,7 +2570,6 @@ Commandes
 
 include::autogen/user/xfer_commands.txt[]
 
-
 [[authors]]
 Auteurs
 -------
@@ -2576,7 +2599,6 @@ Patchs::
     JD Horelick, Stefano Pigozzi, Gu1ll4um3r0m41n, Kyle Fuller,
     Quentin Glidic (SardemFF7), Simon Kuhnle, Mateusz Poszwa, Peter Boström,
     Arvydas Sidorenko, Simon Arlott
-
 
 [[support]]
 Support

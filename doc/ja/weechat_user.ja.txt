@@ -43,7 +43,6 @@ WeeChat をインストールするには、以下のものが必要です:
 * 'root' 特権 (WeeChat をシステムディレクトリにインストールする場合)
 * ncurses ライブラリ
 
-
 [[install]]
 == インストール方法 ==
 
@@ -286,7 +285,6 @@ gdb /usr/bin/weechat-curses 12345
 ----------------------------------------
 (gdb) bt full
 ----------------------------------------
-
 
 [[usage]]
 == 使い方 ==
@@ -1352,7 +1350,6 @@ include::autogen/user/weechat_options.txt[]
 
 include::autogen/user/weechat_commands.txt[]
 
-
 [[plugins]]
 == プラグイン ==
 
@@ -1456,6 +1453,32 @@ $ aspell config
 /set aspell.option.ignore-case "true"
 ----------------------------------------
 
+// TRANSLATION MISSING
+[[aspell_suggestions]]
+Suggestions
+^^^^^^^^^^^
+
+Suggestions are displayed in a bar item called "aspell_suggest". The number of
+suggestions is set in option 'aspell.check.suggestions'.
+
+To enable suggestions you must set option 'aspell.check.suggestions' to an
+integer ≥ 0 and add the bar item "aspell_suggest" to a bar, like 'status'.
+
+Example of suggestions with english dictionary (`en`):
+
+........................................
+│[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune]                    │
+│[@Flashy] prinr █                                                                │
+└─────────────────────────────────────────────────────────────────────────────────┘
+........................................
+
+Exemple of suggestions with english and french dictionaries (`en,fr`):
+
+........................................
+│[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune/prime,primer,primé] │
+│[@Flashy] prinr █                                                                │
+└─────────────────────────────────────────────────────────────────────────────────┘
+........................................
 
 [[charset_plugin]]
 === Charset プラグイン ===
@@ -2379,7 +2402,6 @@ include::autogen/user/xfer_options.txt[]
 
 include::autogen/user/xfer_commands.txt[]
 
-
 [[authors]]
 == 作者 ==
 
@@ -2406,7 +2428,6 @@ include::autogen/user/xfer_commands.txt[]
     JD Horelick、Stefano Pigozzi、Gu1ll4um3r0m41n、Kyle Fuller、
     Quentin Glidic (SardemFF7)、Simon Kuhnle、Mateusz Poszwa、Peter Boström、
     Arvydas Sidorenko、Simon Arlott
-
 
 [[support]]
 == サポート ==

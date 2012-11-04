@@ -49,7 +49,6 @@ Per poter installare WeeChat, è necessario:
   sistema)
 * librerie ncurses
 
-
 [[install]]
 Installazione
 -------------
@@ -315,7 +314,6 @@ Poi, come per un crash, usare il comando `bt full`:
 ----------------------------------------
 (gdb) bt full
 ----------------------------------------
-
 
 [[usage]]
 Utilizzo
@@ -1421,7 +1419,6 @@ Comandi di WeeChat
 
 include::autogen/user/weechat_commands.txt[]
 
-
 [[plugins]]
 Plugin
 ------
@@ -1533,6 +1530,33 @@ Ad esempio, per abilitare l'opzione "ignore-case":
 ----------------------------------------
 /set aspell.option.ignore-case "true"
 ----------------------------------------
+
+// TRANSLATION MISSING
+[[aspell_suggestions]]
+Suggestions
+^^^^^^^^^^^
+
+Suggestions are displayed in a bar item called "aspell_suggest". The number of
+suggestions is set in option 'aspell.check.suggestions'.
+
+To enable suggestions you must set option 'aspell.check.suggestions' to an
+integer ≥ 0 and add the bar item "aspell_suggest" to a bar, like 'status'.
+
+Example of suggestions with english dictionary (`en`):
+
+........................................
+│[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune]                    │
+│[@Flashy] prinr █                                                                │
+└─────────────────────────────────────────────────────────────────────────────────┘
+........................................
+
+Exemple of suggestions with english and french dictionaries (`en,fr`):
+
+........................................
+│[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune/prime,primer,primé] │
+│[@Flashy] prinr █                                                                │
+└─────────────────────────────────────────────────────────────────────────────────┘
+........................................
 
 [[charset_plugin]]
 Plugin Charset
@@ -2532,7 +2556,6 @@ Comandi
 
 include::autogen/user/xfer_commands.txt[]
 
-
 [[authors]]
 Autori
 ------
@@ -2562,7 +2585,6 @@ Patch::
     JD Horelick, Stefano Pigozzi, Gu1ll4um3r0m41n, Kyle Fuller,
     Quentin Glidic (SardemFF7), Simon Kuhnle, Mateusz Poszwa, Peter Boström,
     Arvydas Sidorenko, Simon Arlott
-
 
 [[support]]
 Supporto

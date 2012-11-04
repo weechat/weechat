@@ -46,6 +46,7 @@ struct t_config_option *weechat_aspell_config_check_default_dict;
 struct t_config_option *weechat_aspell_config_check_during_search;
 struct t_config_option *weechat_aspell_config_check_enabled;
 struct t_config_option *weechat_aspell_config_check_real_time;
+struct t_config_option *weechat_aspell_config_check_suggestions;
 struct t_config_option *weechat_aspell_config_check_word_min_length;
 
 
@@ -130,6 +131,22 @@ weechat_aspell_config_change_enabled (void *data, struct t_config_option *option
 
     /* refresh input */
     weechat_bar_item_update ("input_text");
+}
+
+/*
+ * weechat_aspell_config_change_suggestions: called when number of suggestions
+ *                                           is changed
+ */
+
+void
+weechat_aspell_config_change_suggestions (void *data,
+                                          struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+    weechat_bar_item_update ("aspell_suggest");
 }
 
 /*
@@ -452,6 +469,14 @@ weechat_aspell_config_init ()
         N_("real-time spell checking of words (slower, disabled by default: "
            "words are checked only if there's delimiter after)"),
         NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    weechat_aspell_config_check_suggestions = weechat_config_new_option (
+        weechat_aspell_config_file, ptr_section,
+        "suggestions", "integer",
+        N_("number of suggestions to display in bar item \"aspell_suggest\" "
+           "for each dictionary set in buffer (-1 = disable suggestions, "
+           "0 = display all possible suggestions in all languages)"),
+        NULL, -1, INT_MAX, "-1", NULL, 0,
+        NULL, NULL, &weechat_aspell_config_change_suggestions, NULL, NULL, NULL);
     weechat_aspell_config_check_word_min_length = weechat_config_new_option (
         weechat_aspell_config_file, ptr_section,
         "word_min_length", "integer",

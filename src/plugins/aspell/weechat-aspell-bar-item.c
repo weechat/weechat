@@ -50,13 +50,53 @@ weechat_aspell_bar_item_dict (void *data, struct t_gui_bar_item *item,
         window = weechat_current_window ();
 
     buffer = weechat_window_get_pointer (window, "buffer");
-
     if (buffer)
     {
         dict_list = weechat_aspell_get_dict (buffer);
         if (dict_list)
             return strdup (dict_list);
     }
+
+    return NULL;
+}
+
+/*
+ * weechat_aspell_bar_item_suggest: bar item with aspell suggestions
+ */
+
+char *
+weechat_aspell_bar_item_suggest (void *data, struct t_gui_bar_item *item,
+                                 struct t_gui_window *window)
+{
+    struct t_gui_buffer *buffer;
+    const char *suggestions;
+    char str_delim[128], *suggestions2;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) item;
+
+    if (!window)
+        window = weechat_current_window ();
+
+    buffer = weechat_window_get_pointer (window, "buffer");
+    if (buffer)
+    {
+        suggestions = weechat_buffer_get_string (buffer,
+                                                 "localvar_aspell_suggest");
+        if (suggestions)
+        {
+            snprintf (str_delim, sizeof (str_delim),
+                      "%s/%s",
+                      weechat_color ("bar_delim"),
+                      weechat_color ("bar_fg"));
+            suggestions2 = weechat_string_replace (suggestions, "/", str_delim);
+            if (suggestions2)
+                return suggestions2;
+            return strdup (suggestions);
+        }
+    }
+
     return NULL;
 }
 
@@ -68,4 +108,5 @@ void
 weechat_aspell_bar_item_init ()
 {
     weechat_bar_item_new ("aspell_dict", &weechat_aspell_bar_item_dict, NULL);
+    weechat_bar_item_new ("aspell_suggest", &weechat_aspell_bar_item_suggest, NULL);
 }

@@ -44,7 +44,7 @@ weechat_aspell_speller_exists (const char *lang)
 {
     struct AspellConfig *config;
     AspellDictInfoList *list;
-    AspellDictInfoEnumeration *el;
+    AspellDictInfoEnumeration *elements;
     const AspellDictInfo *dict;
     int rc;
 
@@ -52,9 +52,9 @@ weechat_aspell_speller_exists (const char *lang)
 
     config = new_aspell_config ();
     list = get_aspell_dict_info_list (config);
-    el = aspell_dict_info_list_elements (list);
+    elements = aspell_dict_info_list_elements (list);
 
-    while ((dict = aspell_dict_info_enumeration_next (el)))
+    while ((dict = aspell_dict_info_enumeration_next (elements)) != NULL)
     {
         if (strcmp (dict->name, lang) == 0)
         {
@@ -63,7 +63,7 @@ weechat_aspell_speller_exists (const char *lang)
         }
     }
 
-    delete_aspell_dict_info_enumeration (el);
+    delete_aspell_dict_info_enumeration (elements);
     delete_aspell_config (config);
 
     return rc;

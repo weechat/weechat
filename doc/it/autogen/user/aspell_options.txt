@@ -23,6 +23,11 @@
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 
+* [[option_aspell.check.suggestions]] *aspell.check.suggestions*
+** descrizione: `number of suggestions to display in bar item "aspell_suggest" for each dictionary set in buffer (-1 = disable suggestions, 0 = display all possible suggestions in all languages)`
+** tipo: intero
+** valori: -1 .. 2147483647 (valore predefinito: `-1`)
+
 * [[option_aspell.check.word_min_length]] *aspell.check.word_min_length*
 ** descrizione: `lunghezza minima per una parola da controllare (0 per controllarle tutte)`
 ** tipo: intero

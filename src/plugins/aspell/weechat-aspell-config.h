@@ -31,6 +31,7 @@ extern struct t_config_option *weechat_aspell_config_check_default_dict;
 extern struct t_config_option *weechat_aspell_config_check_during_search;
 extern struct t_config_option *weechat_aspell_config_check_enabled;
 extern struct t_config_option *weechat_aspell_config_check_real_time;
+extern struct t_config_option *weechat_aspell_config_check_suggestions;
 extern struct t_config_option *weechat_aspell_config_check_word_min_length;
 
 extern char **weechat_aspell_commands_to_check;

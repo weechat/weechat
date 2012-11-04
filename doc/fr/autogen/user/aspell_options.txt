@@ -23,6 +23,11 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `off`)
 
+* [[option_aspell.check.suggestions]] *aspell.check.suggestions*
+** description: `nombre de suggestions à afficher dans l'objet de barre "aspell_suggest" pour chaque dictionnaire du tampon (-1 = désactiver les suggestions, 0 = afficher toutes les suggestions possibles dans toutes les langues)`
+** type: entier
+** valeurs: -1 .. 2147483647 (valeur par défaut: `-1`)
+
 * [[option_aspell.check.word_min_length]] *aspell.check.word_min_length*
 ** description: `longueur minimum d'un mot pour que l'otrhographe soit vérifiée (utilisez 0 pour vérifier tous les mots)`
 ** type: entier
