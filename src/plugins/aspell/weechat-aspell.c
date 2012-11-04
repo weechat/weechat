@@ -360,8 +360,8 @@ weechat_aspell_create_spellers (struct t_gui_buffer *buffer)
                 weechat_string_free_split (argv);
             }
         }
+        weechat_bar_item_update ("aspell_dict");
     }
-    weechat_bar_item_update ("aspell_dict");
 }
 
 /*
