@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.0-dev, 2012-11-04
+v0.4.0-dev, 2012-11-05
 
 
 Version 0.4.0 (under dev!)
@@ -27,6 +27,7 @@ Version 0.4.0 (under dev!)
   aspell.check.suggestions (task #12061)
 * aspell: fix creation of spellers when number of dictionaries is different
   between two buffers
+* irc: fix refresh of bar item "away" after command /away or /disconnect
 * irc: add command /quiet, fix display of messages 728/729 (quiet list, end of
   quiet list) (task #12278)
 * irc: add option irc.network.alternate_nick to disable dynamic nick generation

@@ -540,9 +540,6 @@ irc_command_away_server (struct t_irc_server *server, const char *arguments,
                 }
             }
             irc_server_set_away (server, server->nick, 0);
-
-            /* ask refresh for "away" item */
-            weechat_bar_item_update ("away");
         }
         else
         {
@@ -554,6 +551,9 @@ irc_command_away_server (struct t_irc_server *server, const char *arguments,
                             _("%s: future away removed"),
                             IRC_PLUGIN_NAME);
         }
+
+        /* ask refresh for "away" item */
+        weechat_bar_item_update ("away");
     }
 }
 
@@ -1422,6 +1422,9 @@ irc_command_disconnect_one_server (struct t_irc_server *server,
     }
     irc_command_quit_server (server, reason);
     irc_server_disconnect (server, 0, 0);
+
+    /* ask refresh for "away" item */
+    weechat_bar_item_update ("away");
 
     /* disconnect ok */
     return 1;
