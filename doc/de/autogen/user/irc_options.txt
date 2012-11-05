@@ -319,7 +319,7 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_irc.network.alternate_nick]] *irc.network.alternate_nick*
-** Beschreibung: `get an alternate nick when the nick is already used on server: add some "_" until the nick has a length of 9, and then replace last char (or the two last chars) by a number from 1 to 99, until we find a nick not used on server`
+** Beschreibung: `bezieht einen alternativen Nick, sofern alle voreingestellten Nicks am Server schon genutzt werden. Dazu wird das Zeichen "_" an den Nick an gehangen, sofern der Nick nicht mehr als neun Zeichen besitzt. Andernfalls wird das letzte bzw. vorletzte Zeichen durch eine Zahl zwischen 1 und 99 ersetzt, bis ein freier Nick für den Server gefunden wird`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -379,7 +379,7 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_irc.network.whois_double_nick]] *irc.network.whois_double_nick*
-** Beschreibung: `double the nick in /whois command (if only one nick is given), to get idle time in answer; for example: "/whois nick" will send "whois nick nick"`
+** Beschreibung: `dupliziert den Nick, für den /whois Befehl (falls nur ein Nick angegeben wird), um die Idle-Zeit zu erhalten. Zum Beispiel: "/whois nick" wird als "whois nick nick" verschickt`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
