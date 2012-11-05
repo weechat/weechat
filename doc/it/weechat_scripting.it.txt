@@ -100,9 +100,10 @@ Argomenti:
 * 'version': stringa, versione dello script
 * 'license': stringa, licenza dello script
 * 'description': stringa, breve descrizione dello script
+// TRANSLATION MISSING
 * 'shutdown_function': stringa, nome della funzione chiamata quando lo script
-  viene scaricato (opzionale)
-* 'charset': stringa, set caratteri dello script (opzionale, se il proprio script è in UTF-8,
+  viene scaricato (can be empty string)
+* 'charset': stringa, set caratteri dello script (se il proprio script è in UTF-8,
   è possibile utilizzare un valore nullo qui, dato che UTF-8 è il set caratteri predefinito)
 
 Esempio di script, per ogni linguaggio:

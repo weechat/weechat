@@ -99,9 +99,10 @@ Argumenty:
 * 'wersja': string, wersja
 * 'licencja': string, licencja
 * 'opis': string, krótki opis skryptu
+// TRANSLATION MISSING
 * 'funkcja_wyłączająca': string, nazwa funkcji wywoływanej podczas wyładowania skryptu
-  (opcjonalne)
-* 'kodowanie': string, kodowane skryptu (opcjonalne, jeśli skrypt jest napisany
+  (can be empty string)
+* 'kodowanie': string, kodowane skryptu (jeśli skrypt jest napisany
   w UTF-8 można nie podawać tej wartości - UTF-8 to domyślne kodowanie)
 
 Przykład dla skryptu w każdym z języków:

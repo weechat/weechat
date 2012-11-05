@@ -101,10 +101,10 @@ Paramètres :
 * 'license' : chaîne, licence du script
 * 'description' : chaîne, description courte du script
 * 'shutdown_function' : chaîne, nom de la fonction appelée lorsque le script
-  est déchargé (optionnel)
-* 'charset' : chaîne, jeu de caractères du script (optionnel, si votre script
-  est UTF-8, vous pouvez utiliser une valeur vide ici, car UTF-8 est le jeu de
-  caractères par défaut)
+  est déchargé (peut être une chaîne vide)
+* 'charset' : chaîne, jeu de caractères du script (si votre script est UTF-8,
+  vous pouvez utiliser une valeur vide ici, car UTF-8 est le jeu de caractères
+  par défaut)
 
 Exemple, pour chaque langage :
 
