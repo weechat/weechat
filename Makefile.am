@@ -31,7 +31,7 @@ EXTRA_DIST = CMakeLists.txt \
              cmake/cmake_uninstall.cmake.in \
              cmake/FindAsciidoc.cmake \
              cmake/FindAspell.cmake \
-             cmake/FindGcrypt.cmake \
+             cmake/FindGCRYPT.cmake \
              cmake/FindGettext.cmake \
              cmake/FindGnuTLS.cmake \
              cmake/FindIconv.cmake \

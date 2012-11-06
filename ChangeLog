@@ -1,12 +1,13 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.0-dev, 2012-11-05
+v0.4.0-dev, 2012-11-06
 
 
 Version 0.4.0 (under dev!)
 --------------------------
 
+* core: stop cmake if gcrypt lib is not found (bug #37671)
 * core: add incomplete mouse events "event-down" and "event-drag" (task #11840)
 * core: add command /eval, use expression in conditions for bars
 * core: add option "-quit" for command /upgrade (save session and quit without
