@@ -28,6 +28,7 @@ Version 0.4.0 (under dev!)
   aspell.check.suggestions (task #12061)
 * aspell: fix creation of spellers when number of dictionaries is different
   between two buffers
+* irc: fix crash when decoding IRC colors in strings (bug #37704)
 * irc: fix refresh of bar item "away" after command /away or /disconnect
 * irc: add command /quiet, fix display of messages 728/729 (quiet list, end of
   quiet list) (task #12278)
