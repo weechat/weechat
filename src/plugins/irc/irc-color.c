@@ -68,6 +68,10 @@ irc_color_decode (const char *string, int keep_colors)
     const char *remapped_color;
     int fg, bg, bold, reverse, italic, underline, rc;
 
+    /*
+     * create output string with size of length*2 (with min 128 bytes),
+     * this string will be realloc() later with a larger size if needed
+     */
     out_length = (strlen (string) * 2) + 1;
     if (out_length < 128)
         out_length = 128;
@@ -75,6 +79,7 @@ irc_color_decode (const char *string, int keep_colors)
     if (!out)
         return NULL;
 
+    /* initialize attributes */
     bold = 0;
     reverse = 0;
     italic = 0;
@@ -220,6 +225,10 @@ irc_color_decode (const char *string, int keep_colors)
                 }
                 break;
             default:
+                /*
+                 * we are not on an IRC color code, just copy the UTF-8 char
+                 * into "str_to_add"
+                 */
                 length = weechat_utf8_char_size ((char *)ptr_string);
                 if (length == 0)
                     length = 1;
@@ -228,17 +237,21 @@ irc_color_decode (const char *string, int keep_colors)
                 ptr_string += length;
                 break;
         }
+        /* add "str_to_add" (if not empty) to "out" */
         if (str_to_add[0])
         {
+            /* if "out" is too small for adding "str_to_add", do a realloc() */
             length_to_add = strlen (str_to_add);
-            if (out_pos + length_to_add >= out_length)
+            if (out_pos + length_to_add + 1 > out_length)
             {
+                /* try to double the size of "out" */
                 out_length *= 2;
                 out2 = realloc (out, out_length);
                 if (!out2)
                     return (char *)out;
                 out = out2;
             }
+            /* add "str_to_add" to "out" */
             memcpy (out + out_pos, str_to_add, length_to_add + 1);
             out_pos += length_to_add;
         }
