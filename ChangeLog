@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.0-dev, 2012-11-09
+v0.4.0-dev, 2012-11-14
 
 
 Version 0.4.0 (under dev!)
@@ -28,6 +28,8 @@ Version 0.4.0 (under dev!)
   aspell.check.suggestions (task #12061)
 * aspell: fix creation of spellers when number of dictionaries is different
   between two buffers
+* irc: fix crash on /upgrade (free channels before server data when a server
+  is destroyed) (bug #37736)
 * irc: fix crash when decoding IRC colors in strings (bug #37704)
 * irc: fix refresh of bar item "away" after command /away or /disconnect
 * irc: add command /quiet, fix display of messages 728/729 (quiet list, end of

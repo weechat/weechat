@@ -1338,7 +1338,21 @@ irc_server_free_data (struct t_irc_server *server)
     if (!server)
         return;
 
-    /* free data */
+    /* free linked lists */
+    for (i = 0; i < IRC_SERVER_NUM_OUTQUEUES_PRIO; i++)
+    {
+        irc_server_outqueue_free_all (server, i);
+    }
+    irc_redirect_free_all (server);
+    irc_notify_free_all (server);
+    irc_channel_free_all (server);
+
+    /* free hashtables */
+    weechat_hashtable_free (server->join_manual);
+    weechat_hashtable_free (server->join_channel_key);
+    weechat_hashtable_free (server->join_noswitch);
+
+    /* free server data */
     for (i = 0; i < IRC_SERVER_NUM_OPTIONS; i++)
     {
         if (server->options[i])
@@ -1389,17 +1403,6 @@ irc_server_free_data (struct t_irc_server *server)
         regfree (server->cmd_list_regexp);
         free (server->cmd_list_regexp);
     }
-    for (i = 0; i < IRC_SERVER_NUM_OUTQUEUES_PRIO; i++)
-    {
-        irc_server_outqueue_free_all (server, i);
-    }
-    irc_notify_free_all (server);
-    weechat_hashtable_free (server->join_manual);
-    weechat_hashtable_free (server->join_channel_key);
-    weechat_hashtable_free (server->join_noswitch);
-    irc_redirect_free_all (server);
-    if (server->channels)
-        irc_channel_free_all (server);
     if (server->buffer_as_string)
         free (server->buffer_as_string);
 }

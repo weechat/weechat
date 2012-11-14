@@ -838,7 +838,10 @@ irc_channel_free (struct t_irc_server *server, struct t_irc_channel *channel)
     if (channel->next_channel)
         (channel->next_channel)->prev_channel = channel->prev_channel;
 
-    /* free data */
+    /* free linked lists */
+    irc_nick_free_all (server, channel);
+
+    /* free channel data */
     if (channel->name)
         free (channel->name);
     if (channel->topic)
@@ -847,7 +850,6 @@ irc_channel_free (struct t_irc_server *server, struct t_irc_channel *channel)
         free (channel->modes);
     if (channel->key)
         free (channel->key);
-    irc_nick_free_all (server, channel);
     if (channel->away_message)
         free (channel->away_message);
     if (channel->pv_remote_nick_color)
