@@ -1,3 +1,10 @@
+weechat (0.3.9.1-1) unstable; urgency=low
+
+  * New upstream release
+    - fix crash when decoding IRC colors in strings
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Fri, 09 Nov 2012 23:11:09 +0000
+
 weechat (0.3.9-1) unstable; urgency=low
 
   * New upstream release

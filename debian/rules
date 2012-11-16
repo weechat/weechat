@@ -8,9 +8,11 @@ LDFLAGS = -Wl,-Bsymbolic-functions
 DPKG_EXPORT_BUILDFLAGS = 1
 -include /usr/share/dpkg/buildflags.mk
 
-builddir/Makefile:
-	mkdir -p builddir
-	cd builddir && \
+BUILDDIR = builddir
+
+$(BUILDDIR)/Makefile:
+	mkdir -p $(BUILDDIR)
+	cd $(BUILDDIR) && \
 	cmake .. \
 		-DCMAKE_INSTALL_PREFIX:FILEPATH=/usr \
 		-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
@@ -19,14 +21,7 @@ builddir/Makefile:
 		-DCMAKE_SKIP_RPATH:BOOL=ON \
 		-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
 
-#build: build-stamp
-#build-stamp: builddir/Makefile
-#	dh_testdir
-#	$(MAKE) -C builddir VERBOSE=1
-#	touch $@
-
-override_dh_auto_build: builddir/Makefile
-	$(MAKE) -C builddir
+override_dh_auto_build: $(BUILDDIR)/Makefile
 	dh_auto_build
 
 override_dh_auto_configure:
@@ -34,16 +29,8 @@ override_dh_auto_configure:
 	# debhelper try to use it but that's not needed
 	echo
 
-override_dh_install:
-	$(MAKE) -C builddir DESTDIR=$(CURDIR)/debian/tmp install
-	dh_install
-
 override_dh_strip:
 	dh_strip --dbg-package=weechat-dbg
 
-clean:
-	rm -rf builddir
-	dh $@
-
 %:
-	dh $@
+	dh $@ --parallel --builddirectory=$(BUILDDIR)
