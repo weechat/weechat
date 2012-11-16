@@ -129,8 +129,9 @@ weechat_aspell_config_change_enabled (void *data, struct t_config_option *option
 
     aspell_enabled = weechat_config_boolean (option);
 
-    /* refresh input */
+    /* refresh input and aspell suggestions */
     weechat_bar_item_update ("input_text");
+    weechat_bar_item_update ("aspell_suggest");
 }
 
 /*

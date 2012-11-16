@@ -76,6 +76,9 @@ weechat_aspell_bar_item_suggest (void *data, struct t_gui_bar_item *item,
     (void) data;
     (void) item;
 
+    if (!aspell_enabled)
+        return NULL;
+
     if (!window)
         window = weechat_current_window ();
 
