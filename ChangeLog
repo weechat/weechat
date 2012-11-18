@@ -1,8 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.3.9.1, 2012-11-09
+v0.3.9.2, 2012-11-18
 
+
+Version 0.3.9.2 (2012-11-18)
+----------------------------
+
+* core: do not call shell to execute command in hook_process (fix security
+  problem when a plugin/script gives untrusted command) (bug #37764)
 
 Version 0.3.9.1 (2012-11-09)
 ----------------------------
