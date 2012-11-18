@@ -1388,9 +1388,9 @@ hook_process (struct t_weechat_plugin *plugin,
 void
 hook_process_child (struct t_hook *hook_process)
 {
-    char *exec_args[4] = { "sh", "-c", NULL, NULL };
+    char **exec_args;
     const char *ptr_url;
-    int rc;
+    int rc, i;
 
     /*
      * close stdin, so that process will fail to read stdin (process reading
@@ -1429,10 +1429,24 @@ hook_process_child (struct t_hook *hook_process)
     else
     {
         /* launch command */
-        exec_args[2] = HOOK_PROCESS(hook_process, command);
-        execvp (exec_args[0], exec_args);
+        exec_args = string_split_shell (HOOK_PROCESS(hook_process, command));
+        if (exec_args)
+        {
+            if (weechat_debug_core >= 1)
+            {
+                log_printf ("hook_process, command='%s'",
+                            HOOK_PROCESS(hook_process, command));
+                for (i = 0; exec_args[i]; i++)
+                {
+                    log_printf ("  args[%02d] == '%s'", i, exec_args[i]);
+                }
+            }
+            execvp (exec_args[0], exec_args);
+        }
 
         /* should not be executed if execvp was ok */
+        if (exec_args)
+            string_free_split (exec_args);
         fprintf (stderr, "Error with command '%s'\n",
                  HOOK_PROCESS(hook_process, command));
         rc = EXIT_FAILURE;
