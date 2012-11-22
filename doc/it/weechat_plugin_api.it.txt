@@ -6946,6 +6946,15 @@ weechat_hook_process
 
 Hook su un processo (lanciato con un fork), e cattura l'output.
 
+[NOTE]
+// TRANSLATION MISSING
+Since version 0.3.9.2, the shell is not used any more to execute the command.
+WeeChat makes an automatic split of command and arguments (like the shell does).
+If the split is not correct (according to quotes in your command), or if you
+want to use shell, you can use function
+<<_weechat_hook_process_hashtable,weechat_hook_process_hashtable>> with
+arguments in the hashtable 'options' (_new in version 0.4.0_).
+
 Prototipo:
 
 [source,C]
@@ -7098,9 +7107,14 @@ struct t_hook *weechat_hook_process_hashtable (const char *command,
 Gli argomenti sono gli stessi della funzione
 <<_weechat_hook_process,weechat_hook_process>>, con un argomento aggiuntivo:
 
-* 'options': le opzioni per il comando eseguito (consultare la tabella in
-  basso); la tabella hash è duplicata nella funzione, per cui è possibile
-  liberarla dopo questa chiamata
+* 'options': le opzioni per il comando eseguito; la tabella hash è duplicata
+  nella funzione, per cui è possibile liberarla dopo questa chiamata
+
+// TRANSLATION MISSING
+For a standard command (not beginning with "url:"), the hashtable 'options' can
+contain arguments for command (and then 'command' must be only the command
+without arguments) (_new in version 0.4.0_). +
+The keys in hashtable must be: 'arg1', 'arg2', ...
 
 Per il comando "url:..." sono disponibili le seguenti opzioni (consultare
 `man curl_easy_setopt` per la descrizione di ogni opzione):
@@ -7155,6 +7169,7 @@ my_process_cb (void *data, const char *command, int return_code,
     return WEECHAT_RC_OK;
 }
 
+/* example 1: download URL */
 struct t_hashtable *options = weechat_hashtable_new (8,
                                                      WEECHAT_HASHTABLE_STRING,
                                                      WEECHAT_HASHTABLE_STRING,
@@ -7168,6 +7183,42 @@ if (options)
                                                                      20000,
                                                                      &my_process_cb, NULL);
     weechat_hashtable_free (options);
+}
+
+/* example 2: execute a notify program with a message from someone */
+struct t_hashtable *options_cmd1 = weechat_hashtable_new (8,
+                                                          WEECHAT_HASHTABLE_STRING,
+                                                          WEECHAT_HASHTABLE_STRING,
+                                                          NULL,
+                                                          NULL);
+if (options_cmd1)
+{
+    weechat_hashtable_set (options_cmd1, "arg1", "-from");
+    weechat_hashtable_set (options_cmd1, "arg2", nick);
+    weechat_hashtable_set (options_cmd1, "arg3", "-msg");
+    weechat_hashtable_set (options_cmd1, "arg4", message); /* unsafe argument */
+    struct t_hook *my_process_hook = weechat_hook_process_hashtable ("my-notify-command",
+                                                                     options_cmd1,
+                                                                     20000,
+                                                                     &my_process_cb, NULL);
+    weechat_hashtable_free (options_cmd1);
+}
+
+/* example 3: call shell to execute a command (command must be SAFE) */
+struct t_hashtable *options_cmd2 = weechat_hashtable_new (8,
+                                                          WEECHAT_HASHTABLE_STRING,
+                                                          WEECHAT_HASHTABLE_STRING,
+                                                          NULL,
+                                                          NULL);
+if (options_cmd2)
+{
+    weechat_hashtable_set (options_cmd2, "arg1", "-c");
+    weechat_hashtable_set (options_cmd2, "arg2", "ls -l /tmp | grep something");
+    struct t_hook *my_process_hook = weechat_hook_process_hashtable ("sh",
+                                                                     options_cmd2,
+                                                                     20000,
+                                                                     &my_process_cb, NULL);
+    weechat_hashtable_free (options_cmd2);
 }
 ----------------------------------------
 
@@ -7191,9 +7242,24 @@ def my_process_cb(data, command, return_code, out, err):
         weechat.prnt("", "stderr: %s" % err)
     return weechat.WEECHAT_RC_OK
 
-hook = weechat.hook_process_hashtable("url:http://www.weechat.org/",
-                                      { "file_out": "/tmp/weechat.org.html" },
-                                      20000, "my_process_cb", "")
+# example 1: download URL
+hook1 = weechat.hook_process_hashtable("url:http://www.weechat.org/",
+                                       { "file_out": "/tmp/weechat.org.html" },
+                                       20000, "my_process_cb", "")
+
+# example 2: execute a notify program with a message from someone
+hook2 = weechat.hook_process_hashtable("my-notify-command",
+                                       { "arg1": "-from",
+                                         "arg2": nick,
+                                         "arg3": "-msg",
+                                         "arg4": message }, # unsafe argument
+                                       20000, "my_process_cb", "")
+
+# example 3: call shell to execute a command (command must be SAFE)
+hook3 = weechat.hook_process_hashtable("sh",
+                                       { "arg1": "-c",
+                                         "arg2": "ls -l /tmp | grep something" },
+                                       20000, "my_process_cb", "")
 ----------------------------------------
 
 weechat_hook_connect

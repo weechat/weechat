@@ -1,14 +1,12 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.0-dev, 2012-11-18
+v0.4.0-dev, 2012-11-22
 
 
 Version 0.4.0 (under dev!)
 --------------------------
 
-* core: do not call shell to execute command in hook_process (fix security
-  problem when a plugin/script gives untrusted command) (bug #37764)
 * core: stop cmake if gcrypt lib is not found (bug #37671)
 * core: add incomplete mouse events "event-down" and "event-drag" (task #11840)
 * core: add command /eval, use expression in conditions for bars
@@ -20,6 +18,10 @@ Version 0.4.0 (under dev!)
   (problem with nick displayed in first line of screen) (bug #37556)
 * core: fix wrapping of words with wide chars (the break was made before the
   correct position)
+* api: use hashtable "options" for command arguments in function
+  hook_process_hashtable (optional, default is a split of string with command)
+* api: do not call shell to execute command in hook_process (fix security
+  problem when a plugin/script gives untrusted command) (bug #37764)
 * api: add new function "string_eval_expression"
 * api: connect with IPv6 by default in hook_connect (with fallback to IPv4),
   shuffle list of hosts for a same address, add argument "retry" for

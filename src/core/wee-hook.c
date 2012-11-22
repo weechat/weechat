@@ -1388,9 +1388,9 @@ hook_process (struct t_weechat_plugin *plugin,
 void
 hook_process_child (struct t_hook *hook_process)
 {
-    char **exec_args;
+    char **exec_args, str_arg[64];
     const char *ptr_url;
-    int rc, i;
+    int rc, i, num_args;
 
     /*
      * close stdin, so that process will fail to read stdin (process reading
@@ -1429,7 +1429,50 @@ hook_process_child (struct t_hook *hook_process)
     else
     {
         /* launch command */
-        exec_args = string_split_shell (HOOK_PROCESS(hook_process, command));
+        num_args = 0;
+        if (HOOK_PROCESS(hook_process, options))
+        {
+            /*
+             * count number of arguments given in the hashable options,
+             * keys are: "arg1", "arg2", ...
+             */
+            while (1)
+            {
+                snprintf (str_arg, sizeof (str_arg), "arg%d", num_args + 1);
+                if (!hashtable_has_key (HOOK_PROCESS(hook_process, options), str_arg))
+                    break;
+                num_args++;
+            }
+        }
+        if (num_args > 0)
+        {
+            /*
+             * if at least one argument was found in hashtable option, the
+             * "command" contains only path to binary (without arguments), and
+             * the arguments are in hashtable
+             */
+            exec_args = malloc ((num_args + 2) * sizeof (exec_args[0]));
+            if (exec_args)
+            {
+                exec_args[0] = HOOK_PROCESS(hook_process, command);
+                for (i = 1; i <= num_args; i++)
+                {
+                    snprintf (str_arg, sizeof (str_arg), "arg%d", i);
+                    exec_args[i] = (char *)hashtable_get (HOOK_PROCESS(hook_process, options),
+                                                          str_arg);
+                }
+                exec_args[num_args + 1] = NULL;
+            }
+        }
+        else
+        {
+            /*
+             * if no arguments were found in hashtable, make an automatic split
+             * of command, like the shell does
+             */
+            exec_args = string_split_shell (HOOK_PROCESS(hook_process, command));
+        }
+
         if (exec_args)
         {
             if (weechat_debug_core >= 1)
