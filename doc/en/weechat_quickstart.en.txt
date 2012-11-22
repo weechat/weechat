@@ -153,7 +153,7 @@ Join/part IRC channels
 `/part [quit message]`::
     part a channel (keeping buffer open)
 
-`/close [quit message]`::
+`/close`::
     close server or channel buffer (`/close` is an alias for `/buffer close`)
 
 

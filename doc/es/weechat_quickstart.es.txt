@@ -164,7 +164,7 @@ join/part y canales IRC
 `/part [mensaje de partida]`::
     sale de un canal (mantiene el buffer abierto)
 
-`/close [mensaje de partida]`::
+`/close`::
     cierra un servidor o el buffer de un canal
      (`/close` es un alias de `/buffer close`)
 

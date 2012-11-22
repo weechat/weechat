@@ -160,7 +160,7 @@ Entrare/uscire dai canali IRC
 `/part [messaggio di uscita]`::
     esce da un canale (mantenendo il buffer aperto)
 
-`/close [messaggio di uscita]`::
+`/close`::
     chiude il buffer del server o del canale (`/close è un alias per `/buffer
     close`)
 

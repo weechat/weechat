@@ -167,7 +167,7 @@ Betreten/verlassen der IRC-Channel
 `/part [quit message]`::
     Einen Channel verlassen (der Buffer bleibt geöffnet)
 
-`/close [quit message]`::
+`/close`::
     Schließen eines Server- oder Channel-Buffers (`/close` ist ein Alias für `/buffer close`)
 
 

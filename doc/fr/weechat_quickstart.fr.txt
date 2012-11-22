@@ -161,7 +161,7 @@ Joindre/quitter les canaux IRC
 `/part [message de fin]`::
     quitter un canal (en laissant le tampon ouvert)
 
-`/close [message de fin]`::
+`/close`::
     quitter un canal et fermer le tampon (`/close` est un alias sur
     `/buffer close`)
 
