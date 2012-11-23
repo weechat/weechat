@@ -181,8 +181,6 @@ extern int gui_color_assign_by_diff (int *color, const char *color_name,
 extern int gui_color_get_weechat_colors_number ();
 extern int gui_color_get_term_colors ();
 extern const char *gui_color_get_name (int num_color);
-extern void gui_color_init_pair (int number);
-extern void gui_color_init_pairs ();
 extern void gui_color_init_weechat ();
 extern void gui_color_display_terminal_colors ();
 extern void gui_color_buffer_display ();
