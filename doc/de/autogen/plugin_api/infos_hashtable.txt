@@ -2,7 +2,7 @@
 |========================================
 | Erweiterung | Name | Beschreibung | Hashtable (Eingabe) | Hashtable (Ausgabe)
 
-| irc | irc_message_parse | Parse eine IRC Nachricht | "message": IRC Nachricht, "server": Servername (optional) | "nick": nick, "host": host, "command": command, "channel": channel, "arguments": arguments (beinhaltet Channel)
+| irc | irc_message_parse | Parse eine IRC Nachricht | "message": IRC Nachricht, "server": Servername (optional) | "tags": tags, "message_without_tags": message without the tags, "nick": nick, "host": host, "command": command, "channel": channel, "arguments": arguments (includes channel)
 
 | irc | irc_message_split | dient zum Aufteilen einer überlangen IRC Nachricht (in maximal 512 Bytes große Nachrichten) | "message": IRC Nachricht, "server": Servername (optional) | "msg1" ... "msgN": Nachrichten die versendet werden sollen (ohne abschließendes "\r\n"), "args1" ... "argsN": Argumente für Nachrichten, "count": Anzahl der Nachrichten
 

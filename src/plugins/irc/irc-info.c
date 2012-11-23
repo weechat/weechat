@@ -622,9 +622,11 @@ irc_info_init ()
                                  N_("\"message\": IRC message, "
                                     "\"server\": server name (optional)"),
                                  /* TRANSLATORS: please do not translate key names (enclosed by quotes) */
-                                 N_("\"nick\": nick, \"host\": host, "
-                                    "\"command\": command, \"channel\": channel, "
-                                    "\"arguments\": arguments (includes channel)"),
+                                 N_("\"tags\": tags, \"message_without_tags\": "
+                                    "message without the tags, \"nick\": nick, "
+                                    "\"host\": host, \"command\": command, "
+                                    "\"channel\": channel, \"arguments\": "
+                                    "arguments (includes channel)"),
                                  &irc_info_get_info_hashtable_cb, NULL);
     weechat_hook_info_hashtable ("irc_message_split",
                                  N_("split an IRC message (to fit in 512 bytes)"),

@@ -24,6 +24,7 @@ struct t_irc_server;
 struct t_irc_channel;
 
 extern void irc_message_parse (struct t_irc_server *server, const char *message,
+                               char **tags, char **message_without_tags,
                                char **nick, char **host, char **command,
                                char **channel, char **arguments);
 extern struct t_hashtable *irc_message_parse_to_hashtable (struct t_irc_server *server,

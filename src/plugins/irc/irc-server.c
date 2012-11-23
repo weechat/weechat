@@ -2072,7 +2072,7 @@ irc_server_sendf (struct t_irc_server *server, int flags, const char *tags,
     for (i = 0; i < items_count; i++)
     {
         /* run modifier "irc_out1_xxx" (like "irc_out_xxx", but before split) */
-        irc_message_parse (server, items[i],
+        irc_message_parse (server, items[i], NULL, NULL,
                            &nick, NULL, &command, &channel, NULL);
         snprintf (str_modifier, sizeof (str_modifier),
                   "irc_out1_%s",
@@ -2301,8 +2301,8 @@ void
 irc_server_msgq_flush ()
 {
     struct t_irc_message *next;
-    char *ptr_data, *new_msg, *new_msg2, *ptr_msg, *ptr_msg2, *pos;
-    char *nick, *host, *command, *channel, *arguments;
+    char *ptr_data, *new_msg, *new_msg2, *ptr_msg, *ptr_msg2, *ptr_msg3, *pos;
+    char *tags, *nick, *host, *command, *channel, *arguments;
     char *msg_decoded, *msg_decoded_without_color;
     char str_modifier[128], modifier_data[256];
 
@@ -2325,8 +2325,8 @@ irc_server_msgq_flush ()
                                    ptr_data);
 
                     irc_message_parse (irc_recv_msgq->server,
-                                       ptr_data, NULL, NULL, &command, NULL,
-                                       NULL);
+                                       ptr_data, NULL, NULL, NULL, NULL,
+                                       &command, NULL, NULL);
                     snprintf (str_modifier, sizeof (str_modifier),
                               "irc_in_%s",
                               (command) ? command : "unknown");
@@ -2362,9 +2362,9 @@ irc_server_msgq_flush ()
                                                ptr_msg);
                             }
 
-                            irc_message_parse (irc_recv_msgq->server,
-                                               ptr_msg, &nick, &host, &command,
-                                               &channel, &arguments);
+                            irc_message_parse (irc_recv_msgq->server, ptr_msg,
+                                               &tags, NULL, &nick, &host,
+                                               &command, &channel, &arguments);
 
                             /* convert charset for message */
                             if (channel
@@ -2436,8 +2436,25 @@ irc_server_msgq_flush ()
                                 else
                                 {
                                     /* message not redirected, display it */
+                                    ptr_msg3 = ptr_msg2;
+                                    if (ptr_msg3[0] == '@')
+                                    {
+                                        /* skip tags in message */
+                                        ptr_msg3 = strchr (ptr_msg3, ' ');
+                                        if (ptr_msg3)
+                                        {
+                                            while (ptr_msg3[0] == ' ')
+                                            {
+                                                ptr_msg3++;
+                                            }
+                                        }
+                                        else
+                                            ptr_msg3 = ptr_msg2;
+                                    }
                                     irc_protocol_recv_command (irc_recv_msgq->server,
-                                                               ptr_msg2, command,
+                                                               ptr_msg3,
+                                                               tags,
+                                                               command,
                                                                channel);
                                 }
                             }

@@ -2,7 +2,7 @@
 |========================================
 | Plugin | Name | Description | Hashtable (input) | Hashtable (output)
 
-| irc | irc_message_parse | parse an IRC message | "message": IRC message, "server": server name (optional) | "nick": nick, "host": host, "command": command, "channel": channel, "arguments": arguments (includes channel)
+| irc | irc_message_parse | parse an IRC message | "message": IRC message, "server": server name (optional) | "tags": tags, "message_without_tags": message without the tags, "nick": nick, "host": host, "command": command, "channel": channel, "arguments": arguments (includes channel)
 
 | irc | irc_message_split | split an IRC message (to fit in 512 bytes) | "message": IRC message, "server": server name (optional) | "msg1" ... "msgN": messages to send (without final "\r\n"), "args1" ... "argsN": arguments of messages, "count": number of messages
 

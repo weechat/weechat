@@ -31,12 +31,14 @@ struct t_irc_ctcp_reply
 
 extern const char *irc_ctcp_get_default_reply (const char *ctcp);
 extern void irc_ctcp_display_reply_from_nick (struct t_irc_server *server,
+                                              time_t date,
                                               const char *command,
                                               const char *nick,
                                               char *arguments);
-extern void irc_ctcp_recv (struct t_irc_server *server, const char *command,
-                           struct t_irc_channel *channel, const char *address,
-                           const char *nick, const char *remote_nick,
-                           char *arguments, char *message);
+extern void irc_ctcp_recv (struct t_irc_server *server, time_t date,
+                           const char *command, struct t_irc_channel *channel,
+                           const char *address, const char *nick,
+                           const char *remote_nick, char *arguments,
+                           char *message);
 
 #endif /* __WEECHAT_IRC_CTCP_H */

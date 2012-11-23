@@ -2,7 +2,7 @@
 |========================================
 | Plugin | Nome | Descrizione | Tabella hash (input) | Tabella hash (output)
 
-| irc | irc_message_parse | controlla un messaggio IRC | "message": messaggio IRC, "server": nome server (opzionale) | "nick": nick, "host": nome host, "command": comando, "channel": canale, "arguments": argomenti (include il canale)
+| irc | irc_message_parse | controlla un messaggio IRC | "message": messaggio IRC, "server": nome server (opzionale) | "tags": tags, "message_without_tags": message without the tags, "nick": nick, "host": host, "command": command, "channel": channel, "arguments": arguments (includes channel)
 
 | irc | irc_message_split | divide un messaggio IRC (per adattarlo in 512 byte) | "message": messaggio IRC, "server": nome server (opzionale) | "msg1" ... "msgN": messaggio da inviare (senza "\r\n" finale), "args1" ... "argsN": argomenti dei messaggi, "count": numero di messaggi
 
