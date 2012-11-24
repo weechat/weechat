@@ -23,6 +23,11 @@
  *                 according to RFC 1459, 2810, 2811 and 2812
  */
 
+/* this define is needed for strptime() (not on OpenBSD) */
+#if !defined(__OpenBSD__)
+#define _XOPEN_SOURCE 700
+#endif
+
 #ifndef __USE_XOPEN
 #define __USE_XOPEN
 #endif
@@ -4663,9 +4668,10 @@ time_t
 irc_protocol_get_message_tag_time (struct t_hashtable *tags)
 {
     const char *tag_time;
-    char *tag_time2, *pos, *error;
-    int value;
     time_t time_value;
+    struct tm tm_date;
+
+    tzset();
 
     if (!tags)
         return 0;
@@ -4673,25 +4679,25 @@ irc_protocol_get_message_tag_time (struct t_hashtable *tags)
     time_value = 0;
 
     tag_time = weechat_hashtable_get (tags, "time");
-    if (tag_time)
+    if (!tag_time)
+        return time_value;
+
+    /* initialize structure, because strptime does not do it */
+    memset (&tm_date, 0, sizeof (struct tm));
+
+    if (strchr (tag_time, '-'))
     {
-        tag_time2 = strdup (tag_time);
-        if (tag_time2)
-        {
-            pos = tag_time2;
-            while (isdigit ((unsigned char)pos[0]))
-            {
-                pos++;
-            }
-            pos[0] = '\0';
-            if (tag_time2[0])
-            {
-                value = (int)strtol (tag_time2, &error, 10);
-                if (error && !error[0] && (value >= 0))
-                    time_value = (time_t)value;
-            }
-            free (tag_time2);
-        }
+        /* date is with ISO 8601 format: "2012-11-24T07:41:02.018Z" */
+        strptime (tag_time, "%FT%T%z", &tm_date);
+        if (tm_date.tm_year > 0)
+            time_value = mktime (&tm_date) - timezone;
+    }
+    else
+    {
+        /* date is with timestamp format: "1353403519.478" */
+        strptime (tag_time, "%s", &tm_date);
+        if (tm_date.tm_year > 0)
+            time_value = mktime (&tm_date);
     }
 
     return time_value;
