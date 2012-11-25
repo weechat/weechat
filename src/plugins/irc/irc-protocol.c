@@ -4668,10 +4668,8 @@ time_t
 irc_protocol_get_message_tag_time (struct t_hashtable *tags)
 {
     const char *tag_time;
-    time_t time_value;
-    struct tm tm_date;
-
-    tzset();
+    time_t time_value, time_msg, time_gm, time_local;
+    struct tm tm_date, tm_date_gm, tm_date_local;
 
     if (!tags)
         return 0;
@@ -4690,7 +4688,14 @@ irc_protocol_get_message_tag_time (struct t_hashtable *tags)
         /* date is with ISO 8601 format: "2012-11-24T07:41:02.018Z" */
         strptime (tag_time, "%FT%T%z", &tm_date);
         if (tm_date.tm_year > 0)
-            time_value = mktime (&tm_date) - timezone;
+        {
+            time_msg = mktime (&tm_date);
+            gmtime_r (&time_msg, &tm_date_gm);
+            localtime_r (&time_msg, &tm_date_local);
+            time_gm = mktime (&tm_date_gm);
+            time_local = mktime (&tm_date_local);
+            time_value = mktime (&tm_date_local) + (time_local - time_gm);
+        }
     }
     else
     {
