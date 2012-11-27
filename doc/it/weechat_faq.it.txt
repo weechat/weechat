@@ -12,7 +12,6 @@ essere usato preferibilmente con l'ultima versione stabile di WeeChat.
 Generale
 --------
 
-
 [[weechat_name]]
 Da dove viene il nome "WeeChat"?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -22,7 +21,6 @@ Quindi il nome completo è "Wee Enhanced Envoronment for Chat."
 
 "Wee" significa anche "molto piccolo" (e sì, c'è un altro significato, ma
 non c'entra con WeeChat!).
-
 
 [[why_choose_weechat]]
 Perché scegliere WeeChat? X-Chat ed Irssi vanno così bene...
@@ -51,14 +49,11 @@ Alcune caratteristiche (versione ≥ 0.3.x):
 * multi-piattaforma
 * 100% GPL e libero
 
-
 Maggiori informazioni su http://www.weechat.org/features
-
 
 [[compilation_install]]
 Compilazione / installazione
 ----------------------------
-
 
 [[gui]]
 Ho sentito parlare di molte interfacce per WeeChat. Come si possono compilare/utilizzare?
@@ -67,7 +62,6 @@ Ho sentito parlare di molte interfacce per WeeChat. Come si possono compilare/ut
 Ad oggi è disponibile solo l'interfaccia Curses.
 
 Altre interfacce saranno disponibili come client remoti (in fase di sviluppo).
-
 
 [[compile_git]]
 Non è possibile compilare WeeChat dopo aver clonato il repository git, perché?
@@ -84,7 +78,6 @@ il repository git. È bene notare che potrebbe non corrispondere
 esattamente alla base git ed è meno conveniente rispetto al clone di git
 per l'installazione degli aggiornamenti.
 
-
 [[lost]]
 Ho avviato WeeChat, ma mi sono perso, cosa posso fare?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -95,11 +88,9 @@ Tasti e comandi sono elencati nella documentazione.
 Si raccomanda ai nuovi utenti di leggere la guida rapida (consultare la pagina
 della documentazione sul sito).
 
-
 [[display]]
 Visualizzare
 ------------
-
 
 [[charset]]
 Non riesco a vedere alcuni caratteri con gli accenti, cosa posso fare?
@@ -130,7 +121,6 @@ Si raccomanda il locale UTF-8 per WeeChat. Se si utilizza ISO o un altro
 locale, per favore verificare che *tutte* le impostazioni (terminale, screen)
 siano ISO e *non* UTF-8.
 
-
 [[bars_background]]
 Barre come quella del titolo e di stato non sono complete, il colore di sfondo si ferma dopo il testo, perché?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -147,7 +137,6 @@ A seconda di dove viene eseguito WeeChat, si dovrebbe avere:
 
 Se necessario, correggere la variabile TERM: `export TERM="xxx"`.
 
-
 [[screen_weird_chars]]
 Quando uso weechat con screen/tmux, appaiono dei caratteri strani, come posso risolvere il problema?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -161,7 +150,6 @@ Per esempio, 'xterm-color' potrebbe visualizzare questo tipo di caratteri strani
 
 Se necessario, correggere la variabile TERM: `export TERM="xxx"`.
 
-
 [[osx_display_broken]]
 Ho compilato WeeChat su OS X, e vedo "(null)" dovunque sullo schermo, cosa non va?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -171,7 +159,6 @@ col sistema).
 
 Inoltre, su OS X, si raccomanda di installare WeeChat con il gestore pacchetti
 Homebrew.
-
 
 [[buffer_vs_window]]
 Ho sentito parlare di "buffer" e "finestre", qual è la differenza?
@@ -185,7 +172,6 @@ un buffer. È possibile dividere lo schermo in più finestre.
 
 Ogni finestra visualizza un buffer. Un buffer può essere nascosto (non visualizzato
 da una finestra) o visualizzato da una o più finestre.
-
 
 [[buffers_list]]
 Come si può visualizzare la lista dei buffer sulla sinistra?
@@ -205,7 +191,6 @@ Per spostare la barra in basso:
 /set weechat.bar.buffers.position bottom
 ----------------------------------------
 
-
 [[customize_prefix]]
 Come si può ridurre la lunghezza dei nick o rimuovere l'allineamento nella finestra di chat?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -222,7 +207,6 @@ Per rimuovere l'allineamento dei nick:
 ----------------------------------------
 /set weechat.look.prefix_align none
 ----------------------------------------
-
 
 // TRANSLATION MISSING
 [[input_bar_size]]
@@ -244,7 +228,6 @@ Max size of 2:
 ----------------------------------------
 /set weechat.bar.input.size_max 2
 ----------------------------------------
-
 
 [[one_input_root_bar]]
 È possibile mostrare solo una barra di input per tutte le finestre (dopo lo split)?
@@ -268,7 +251,6 @@ non viene usato da un'altra barra:
 /bar del rootinput
 ----------------------------------------
 
-
 [[terminal_copy_paste]]
 Come posso copiare/incollare testo senza incollare la lista nick?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -282,7 +264,6 @@ Un'altra soluzione è spostare la lista nick in alto o in basso, per esempio:
 ----------------------------------------
 /set weechat.bar.nicklist.position top
 ----------------------------------------
-
 
 [[urls]]
 Come posso cliccare su URL lunghi (più di una riga)?
@@ -329,7 +310,6 @@ shortenurl.py::
 
 Elenco di script a proposito di URL: http://www.weechat.org/scripts/stable/tag/url
 
-
 [[change_locale_without_quit]]
 Voglio cambiare la lingua utilizzata da WeeChat per i messaggi, ma senza uscire da WeeChat, è possibile?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -344,7 +324,6 @@ e digitare questi comandi quando viene caricato lo script:
 
 Per avere i messaggi in inglese con la codifica UTF-8 per il terminale, per gli
 utenti ISO, digitare: `/shell setenv LANG=en_US`.
-
 
 [[256_colors]]
 Come posso usare 256 colori in WeeChat?
@@ -385,7 +364,6 @@ opzioni (opzionale: si possono aggiungere gli alias ai colori con il comando `/c
 Per favore consultare la guida per l'utente per maggiori informazioni sulla gestione
 dei colori.
 
-
 [[search_text]]
 Come posso cercare testo nel buffer (come /lastlog con irssi)?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -396,11 +374,9 @@ E per passare alle notifiche: @k(A-)@k(p)/@k(n).
 Consultare la guida per l'utente per maggiori informazioni su questa funzione
 (combinazioni tasti predefiniti).
 
-
 [[key_bindings]]
 Associazioni dei tasti
 ----------------------
-
 
 [[meta_keys]]
 Alcuni tasti meta (alt + tasto) non funzionano, perché?
@@ -420,7 +396,6 @@ UXTerm*metaSendsEscape: true
 
 Al termine, ricaricare la configurazione (`xrdb -override ~/.Xresources`) o riavviare X.
 
-
 [[customize_key_bindings]]
 Come posso personalizzare le associazioni dei tasti?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -429,7 +404,6 @@ Le associazioni dei tasti sono personalizzabili con il comando `/key`.
 
 Il tasto predefinito @k(A-)@k(k) consente di registrare il codice tasto ed
 inserirlo nella riga di comando.
-
 
 [[jump_to_buffer_11_or_higher]]
 Qual è il tasto per passare al buffer 11 (o superiore)?
@@ -446,7 +420,6 @@ Il tasto è @k(A-)@k(j) seguito da due numeri, ad esempio @k(A-)@k(j) e @k(1),
 
 List of default keys is in User's guide.
 L'elenco dei tasti predefiniti è nella Guida dell'utente.
-
 
 [[global_history]]
 Come si può usare la cronologia globale (invece di quella del buffer) con i tasti su e giù?
@@ -468,11 +441,9 @@ code press @k(A-)@k(k) then key (up or down).
 I tasti "meta2-A" e "meta2-B" possono essere differenti nel proprio terminale.
 Per trovare il codice tasto digitare @k(A-)@k(k) poi il tast (su o giù).
 
-
 [[mouse]]
 Mouse
 -----
-
 
 [[mouse_not_working]]
 Il mouse non funziona affatto, cosa posso fare?
@@ -505,7 +476,6 @@ Per disabilitare il mouse nel terminale:
 $ printf '\033[?1002l'
 ----------------------------------------
 
-
 [[mouse_coords]]
 Il mouse non fa nulla per X o Y maggiori di 94, perché?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -516,7 +486,6 @@ non funziona per X/Y maggiori di 94.
 Bisogna utilizzare un terminale che supporti le coordinate UTF-8 per il mouse,
 come rxvt-unicode.
 
-
 [[mouse_select_paste]]
 Come posso selezionare o incollare del testo nel terminale quando il mouse è abilitato in WeeChat?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -526,11 +495,82 @@ Quando il mouse è abilitato in WeeChat, è possibile usare il modificatore
 disabilitato (in alcuni terminali come iTerm, bisogna usare @k(-A-) invece di
 @k(-S-)).
 
-
 [[irc]]
 IRC
 ---
 
+[[irc_ssl_connection]]
+Ho dei problemi nella connessione al server con SSL, cosa posso fare?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Se si verificano problemi con l'handshake gnutls, si può cercare di
+usare una chiave Diffie-Hellman più piccola (la predefinita è 2048):
+
+----------------------------------------
+/set irc.server.freenode.ssl_dhkey_size 1024
+----------------------------------------
+
+Se si verificano errori con i certificati, è possibile disabilitare "ssl_verify"
+(attenzione, la connessione in questo modo sarà meno sicura):
+
+----------------------------------------
+/set irc.server.freenode.ssl_verify off
+----------------------------------------
+
+[[irc_ssl_handshake_error]]
+Alla connessione al server con SSL ottengo solo l'errore "handshake TLS fallito", cosa posso fare?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Provare una stringa di priorità diversa (solo WeeChat ≥ 0.3.5), sostituendo
+"xxx" con il nome del server:
+
+----------------------------------------
+/set irc.server.xxx.ssl_priorities "NORMAL:-VERS-TLS-ALL:+VERS-TLS1.0:+VERS-SSL3.0:%COMPAT"
+----------------------------------------
+
+[[irc_ssl_freenode]]
+Come ci si può connettere al server freenode via SSL?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Impostare l'opzione 'weechat.network.gnutls_ca_file' con il file dei certificati:
+
+----------------------------------------
+/set weechat.network.gnutls_ca_file "/etc/ssl/certs/ca-certificates.crt"
+----------------------------------------
+
+[NOTE]
+Verificare la presenza di questo file sul sistema (solitamente installato dal
+pacchetto "ca-certificates").
+
+Impostare la porta del server, SSL, dhkey_size, poi riconnettersi:
+
+----------------------------------------
+/set irc.server.freenode.addresses "chat.freenode.net/7000"
+/set irc.server.freenode.ssl on
+/set irc.server.freenode.ssl_dhkey_size 1024
+/connect freenode
+----------------------------------------
+
+// TRANSLATION MISSING
+[[irc_sasl]]
+How can I be identified before joining channels?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If server supports SASL, you should use that instead of sending command for
+nickserv authentication, for example:
+
+----------------------------------------
+/set irc.server_default.sasl_mechanism dh-blowfish
+/set irc.server.freenode.sasl_username "mynick"
+/set irc.server.freenode.sasl_password "xxxxxxx"
+----------------------------------------
+
+If server does not support SASL, you can add a delay (between command and join
+of channels):
+
+----------------------------------------
+/set irc.server.freenode.command_delay 5
+----------------------------------------
 
 [[ignore_vs_filter]]
 Qual è la differenza tra i comandi /ignore e /filter?
@@ -549,7 +589,6 @@ o espressioni regolari per il prefisso ed il contenuto delle righe.
 Le righe filtrate vengono solo nascoste, non eliminate, ed è possibile
 visualizzarle se i filtri vengono disabilitati (il comando predefinito
 @k(A-)@k(=) abilita/disabilita i filtri).
-
 
 [[filter_irc_join_part_quit]]
 Come posso filtrare i messaggi di entrata/uscita/abbandono sui canali IRC?
@@ -571,7 +610,6 @@ Con un filtro globale (nasconde *tutti* entrata/uscita/abbandono):
 
 [NOTE]
 Per aiuto: `/help filter` e `/help irc.look.smart_filter`
-
 
 [[filter_irc_join_channel_messages]]
 Come posso filtrare i messaggi visualizzati all'ingresso su un canale IRC?
@@ -596,7 +634,6 @@ Esempi:
 ----------------------------------------
 /filter add irc_join_topic_date * irc_332,irc_333 *
 ----------------------------------------
-
 
 [[filter_voice_messages]]
 Come posso filtrare i messaggi voice (ad esempio su server Bitlbee)?
@@ -633,7 +670,6 @@ modificata è il voice):
 /filter add hidevoices * irc_mode (\+|\-)v
 ----------------------------------------
 
-
 [[color_away_nicks]]
 Come posso vedere i nick assenti nella lista nick?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -656,7 +692,6 @@ massimo 25 nick:
 Per WeeChat ≤ 0.3.3, le opzioni sono 'irc.network.away_check' e
 'irc.network.away_check_max_nicks'.
 
-
 [[highlight_notification]]
 Come posso essere avvisato quando qualcuno mi cerca in un canale?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -671,73 +706,15 @@ Per 'launcher.pl', bisogna impostare il comando:
 
 Altri script correlati: http://www.weechat.org/scripts/stable/tag/notify/
 
-
-[[irc_ssl_connection]]
-Ho dei problemi nella connessione al server con SSL, cosa posso fare?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Se si verificano problemi con l'handshake gnutls, si può cercare di
-usare una chiave Diffie-Hellman più piccola (la predefinita è 2048):
-
-----------------------------------------
-/set irc.server.freenode.ssl_dhkey_size 1024
-----------------------------------------
-
-Se si verificano errori con i certificati, è possibile disabilitare "ssl_verify"
-(attenzione, la connessione in questo modo sarà meno sicura):
-
-----------------------------------------
-/set irc.server.freenode.ssl_verify off
-----------------------------------------
-
-
-[[irc_ssl_handshake_error]]
-Alla connessione al server con SSL ottengo solo l'errore "handshake TLS fallito", cosa posso fare?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Provare una stringa di priorità diversa (solo WeeChat ≥ 0.3.5), sostituendo
-"xxx" con il nome del server:
-
-----------------------------------------
-/set irc.server.xxx.ssl_priorities "NORMAL:-VERS-TLS-ALL:+VERS-TLS1.0:+VERS-SSL3.0:%COMPAT"
-----------------------------------------
-
-
-[[irc_ssl_freenode]]
-Come ci si può connettere al server freenode via SSL?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Impostare l'opzione 'weechat.network.gnutls_ca_file' con il file dei certificati:
-
-----------------------------------------
-/set weechat.network.gnutls_ca_file "/etc/ssl/certs/ca-certificates.crt"
-----------------------------------------
-
-[NOTE]
-Verificare la presenza di questo file sul sistema (solitamente installato dal
-pacchetto "ca-certificates").
-
-Impostare la porta del server, SSL, dhkey_size, poi riconnettersi:
-
-----------------------------------------
-/set irc.server.freenode.addresses "chat.freenode.net/7000"
-/set irc.server.freenode.ssl on
-/set irc.server.freenode.ssl_dhkey_size 1024
-/connect freenode
-----------------------------------------
-
-
 [[irc_target_buffer]]
 Come si può modificare il buffer destinazione per i comandi sui buffer uniti (come i buffer con i server)?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Il tasto predefinito è @k(C-)@k(x) (il comando è: `/input switch_active_buffer`).
 
-
 [[plugins_scripts]]
 Plugin / script
 ---------------
-
 
 [[openbsd_plugins]]
 Uso OpenBSD e WeeChat non carica nessun plugin, cosa c'è che non va?
@@ -751,7 +728,6 @@ Si deve impostare in questo modo:
 /set weechat.plugin.extension ".so.0.0"
 /plugin autoload
 ----------------------------------------
-
 
 [[load_scripts]]
 Come posso caricare gli script Perl/Python/Ruby/Lua/Tcl? Sono compatibili con gli altri client IRC?
@@ -768,11 +744,9 @@ Note:
   all'avvio di WeeChat.
 * è disponibile un plugin 'tcl' con la versione ≥ 0.3.0.
 
-
 [[settings]]
 Impostazioni
 ------------
-
 
 [[memory_usage]]
 Come posso ottimizzare WeeChat per poter utilizzare meno memoria?
@@ -789,11 +763,9 @@ Esistono diversi trucchi per ottimizzare l'uso della memoria:
   impostare il valore dell'opzione 'weechat.history.max_buffer_lines_minutes'
 * ridurre il valore dell'opzione 'weechat.history.max_commands'
 
-
 [[development]]
 Sviluppo
 --------
-
 
 [[bug_task_patch]]
 Come posso segnalare bug, richiedere nuove funzionalità o inviare patch?
@@ -810,7 +782,6 @@ Esistono 3 modi:
   le email dello sviluppatore:
   http://www.weechat.org/about
   (è possibile iscriversi ed inviare alla mailing list "support")
-
 
 [[gdb_error_threads]]
 Quando eseguo WeeChat in gdb, c'è un errore riguardo ai thread, cosa posso fare?
@@ -834,7 +805,6 @@ $ LD_PRELOAD=/lib/libpthread.so.0 gdb /path/to/weechat-curses
 (gdb) run
 ----------------------------------------
 
-
 [[supported_os]]
 Qual è la lista delle piattaforme supportate da WeeChat? Verrà effettuato il port su altri sistemi operativi?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -844,7 +814,6 @@ La lista completa è su questa pagina: http://www.weechat.org/download
 Facciamo del nostro meglio per portarlo su più piattaforme possibili. L'aiuto
 per gli OS che non abbiamo, e su cui testare WeeChat, è ben accetto.
 
-
 [[help_developers]]
 Voglio aiutare gli sviluppatori di WeeChat. Cosa posso fare?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -853,7 +822,6 @@ Ci sono molti compiti da fare (testing, scrittura del codice, documentazione, ..
 
 Per favore contattateci su IRC o via mail e consultate la pagina di supporto:
 http://www.weechat.org/support
-
 
 [[donate]]
 Posso donare denaro o altre cose agli sviluppatori di WeeChat?

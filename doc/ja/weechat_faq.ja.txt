@@ -10,7 +10,6 @@ Sébastien Helleu <flashcode@flashtux.org>
 [[general]]
 == 一般 ==
 
-
 [[weechat_name]]
 === "WeeChat" という名前の由来は何ですか? ===
 
@@ -19,7 +18,6 @@ Sébastien Helleu <flashcode@flashtux.org>
 
 "Wee" はまた "とても小さい" を意味します。(もちろん、
 その他の意味もありますが、それは WeeChat とは関係ありませんよ!)。
-
 
 [[why_choose_weechat]]
 === WeeChat を選ぶ理由は何ですか? X-Chat や Irssi は最高なのに... ===
@@ -50,10 +48,8 @@ Sébastien Helleu <flashcode@flashtux.org>
 
 こののページに関するより詳しい情報: http://www.weechat.org/features
 
-
 [[compilation_install]]
 == コンパイル / インストール ==
-
 
 [[gui]]
 === WeeChat には多くの GUI があると聞きました。コンパイル/利用方法を教えてください。 ===
@@ -61,7 +57,6 @@ Sébastien Helleu <flashcode@flashtux.org>
 今のところ利用可能なのは Curses GUI だけです。
 
 その他の GUI はリモートクライアントとして利用可能になる予定です(現在開発中)。
-
 
 [[compile_git]]
 === git リポジトリをクローンした後に WeeChat をコンパイルできません。 ===
@@ -76,7 +71,6 @@ autotools を使って (cmake を使わずに) コンパイルする場合、
 リポジトリからほぼ毎日ビルドされます。このパッケージは厳密には git ベースではなく、
 アップデートをインストールする場合には git をクローンする方法よりも不便であることに注意してください。
 
-
 [[lost]]
 === WeeChat を起動しました。でも何をすればいいかわかりません。 ===
 
@@ -86,10 +80,8 @@ autotools を使って (cmake を使わずに) コンパイルする場合、
 新しいユーザはクイックスタートガイドを読むことをお勧めします
 (ウェブサイトのドキュメントページを参照)。
 
-
 [[display]]
 == 表示 ==
-
 
 [[charset]]
 === いくつかの文字が見えません。どうすれば良いですか。 ===
@@ -116,7 +108,6 @@ WeeChat は UTF-8 ロケールを推奨します。ISO 又はその他のロケ�
 *全ての* 設定 (ターミナル、screen、..) が ISO であり、
 UTF-8 *でない* ことを確認してください。
 
-
 [[bars_background]]
 === タイトルやステータスバー等の背景色が行末ではなくテキストの最後で終わってしまいます。 ===
 
@@ -132,7 +123,6 @@ WeeChat を起動した場所に依存しますが、以下の値を持つはず
 
 もし必要であれば、TERM 変数を修正してください: `export TERM="xxx"`
 
-
 [[screen_weird_chars]]
 === weechat を screen/tmux の中で使っている場合、おかしなランダム文字列が表示されます。どうすれば直りますか。 ===
 
@@ -144,7 +134,6 @@ WeeChat を起動した場所に依存しますが、以下の値を持つはず
 
 もし必要であれば、TERM 変数を修正してください: `export TERM="xxx"`
 
-
 [[osx_display_broken]]
 === OS X 上で WeeChat をコンパイルした場合、"(null)" という文字列が至る所に表示されます。 ===
 
@@ -153,7 +142,6 @@ ncurses を使ってみてください。
 
 さらに OS X では、Homebrew パッケージマネージャを使って
 WeeChat をインストールすることをお勧めします。
-
 
 [[buffer_vs_window]]
 === "バッファ" と "ウィンドウ" の違いは何ですか。 ===
@@ -166,7 +154,6 @@ WeeChat をインストールすることをお勧めします。
 
 それぞれのウィンドウは 1 つのバッファの内容を表示します。バッファを隠す
 (ウィンドウで表示させない) ことや 1 つ以上のウィンドウに表示させることも出来ます。
-
 
 [[buffers_list]]
 === どうすれば左側にバッファリストを表示できますか。 ===
@@ -185,7 +172,6 @@ WeeChat をインストールすることをお勧めします。
 /set weechat.bar.buffers.position bottom
 ----------------------------------------
 
-
 [[customize_prefix]]
 === どうすればチャットエリア内のニックネームの最大長さを短く、又はニックネーム整列機能を無効化できますか。 ===
 
@@ -200,7 +186,6 @@ WeeChat をインストールすることをお勧めします。
 ----------------------------------------
 /set weechat.look.prefix_align none
 ----------------------------------------
-
 
 [[input_bar_size]]
 === コマンドラインの行数を増やすにはどうすればいいですか。 ===
@@ -220,7 +205,6 @@ WeeChat をインストールすることをお勧めします。
 ----------------------------------------
 /set weechat.bar.input.size_max 2
 ----------------------------------------
-
 
 [[one_input_root_bar]]
 === 全てのウィンドウに対して入力バーの数を 1 つだけにすることができますか (画面分割されている場合)。 ===
@@ -243,7 +227,6 @@ WeeChat は自動的にデフォルトバー "input" を作成します:
 /bar del rootinput
 ----------------------------------------
 
-
 [[terminal_copy_paste]]
 === どうすればニックネームリストを選択せずにテキストだけをコピー/ペーストできますか。 ===
 
@@ -255,7 +238,6 @@ konsole、gnome-terminal、...)。通常、キーは @k(C-)@k(A-) マウス選�
 ----------------------------------------
 /set weechat.bar.nicklist.position top
 ----------------------------------------
-
 
 [[urls]]
 === どうすれば長い (一行以上に渡る) URL をクリックできますか。 ===
@@ -300,7 +282,6 @@ shortenurl.py::
 
 URL に関するスクリプトのリスト: http://www.weechat.org/scripts/stable/tag/url
 
-
 [[change_locale_without_quit]]
 === WeeChat が出力するメッセージの言語を、再起動せずに変更したいです。このようなことは可能ですか。 ===
 
@@ -314,7 +295,6 @@ URL に関するスクリプトのリスト: http://www.weechat.org/scripts/stab
 
 UTF-8 エンコードされた英語メッセージが表示されるようになります、
 ISO ユーザは以下のようにして下さい: `/shell setenv LANG=en_US`
-
 
 [[256_colors]]
 === どうすれば WeeChat で 256 色が使えますか。 ===
@@ -352,7 +332,6 @@ term screen-256color
 
 色管理に関するより詳しい情報はユーザーガイドを読んでください。
 
-
 [[search_text]]
 === どうすればバッファ内の文字列を検索できますか (irssi の /lastlog の様に)。 ===
 
@@ -361,10 +340,8 @@ term screen-256color
 
 この機能に関するより詳しい情報はユーザーガイドを参照してください (デフォルトのキー割り当て)。
 
-
 [[key_bindings]]
 == キー割り当て ==
-
 
 [[meta_keys]]
 === いくつかのメタキーが (alt + key) が動きません。 ===
@@ -383,14 +360,12 @@ UXTerm*metaSendsEscape: true
 
 このファイルを再読み込みするか (`xrdb -override ~/.Xresources`) 又は X を再起動してください。
 
-
 [[customize_key_bindings]]
 === どうすればキー割り当てをカスタマイズできますか。 ===
 
 キー割り当ては `/key` コマンドでカスタマイズできます。
 
 デフォルトキー @k(A-)@k(k) でキーコードを取り込み、これをコマンドラインに入力できます。
-
 
 [[jump_to_buffer_11_or_higher]]
 === バッファ 11 番 (又はそれ以上の番号) にジャンプするキーは何ですか。 ===
@@ -405,7 +380,6 @@ UXTerm*metaSendsEscape: true
 ----------------------------------------
 
 デフォルトキー割り当てのリストはユーザーガイドを参照してください。
-
 
 [[global_history]]
 === どうすればグローバルヒストリを (バッファヒストリの代わりに) 上下矢印キーで使えますか。 ===
@@ -424,10 +398,8 @@ UXTerm*metaSendsEscape: true
 "meta2-A" と "meta2-B" キーはターミナルによって異なります。 キーコードを
 見つけるには @k(A-)@k(k) の後にキー (上矢印又は下矢印) を押してください。
 
-
 [[mouse]]
 == マウス ==
-
 
 [[mouse_not_working]]
 === マウスが少しも動きません。どうすれば良いですか。 ===
@@ -458,7 +430,6 @@ $ printf '\033[?1002h'
 $ printf '\033[?1002l'
 ----------------------------------------
 
-
 [[mouse_coords]]
 === マウスの位置座標 X 又は Y が 94 よりも大きい場合にマウス機能が正しく動きません。 ===
 
@@ -468,17 +439,84 @@ $ printf '\033[?1002l'
 マウスの位置座標を指定するのに UTF-8 座標をサポートしているターミナルを使ってください、
 例えば rxvt-unicode 等です。
 
-
 [[mouse_select_paste]]
 === WeeChat でマウスが利用可能な場合、ターミナルのテキストを選択したり、貼り付けるにはどうすれば良いですか。 ===
 
 WeeChat でマウスが利用可能な場合、@k(-S-) キーを押しながらターミナルをクリックして選択してください、
 マウスが無効化されます (例えば iTerm 等の場合、@k(-S-) の代わりに @k(-A-) を使ってください)。
 
-
 [[irc]]
 == IRC ==
 
+[[irc_ssl_connection]]
+=== SSL を使うサーバへの接続中に問題が発生しました。どうすればいいですか。 ===
+
+gnutls ハンドシェイクに関するエラーの場合、Diffie-Hellman キー
+(デフォルトは 2048) のサイズを小さくすることを試してみてください:
+
+----------------------------------------
+/set irc.server.freenode.ssl_dhkey_size 1024
+----------------------------------------
+
+証明書に関するエラーの場合、"ssl_verify" を無効化してください
+(接続の機密保護がより甘くなることに注意):
+
+----------------------------------------
+/set irc.server.freenode.ssl_verify off
+----------------------------------------
+
+[[irc_ssl_handshake_error]]
+=== SSL を使うサーバへの接続中に、"TLS handshake failed" というエラーだけが表示されます。どうすれば良いですか。 ===
+
+異なる優先順位文字列を試してみてください (WeeChat 0.3.5 以上)、
+"xxx" はサーバ名に書き換えてください。
+
+----------------------------------------
+/set irc.server.xxx.ssl_priorities "NORMAL:-VERS-TLS-ALL:+VERS-TLS1.0:+VERS-SSL3.0:%COMPAT"
+----------------------------------------
+
+[[irc_ssl_freenode]]
+=== どうすれば SSL を使って freenode サーバに接続できますか。 ===
+
+オプション 'weechat.network.gnutls_ca_file' に証明書ファイルへのパスを設定してください。
+
+----------------------------------------
+/set weechat.network.gnutls_ca_file "/etc/ssl/certs/ca-certificates.crt"
+----------------------------------------
+
+[NOTE]
+設定したファイルが自分のシステムに存在することを確認してください
+(一般に "ca-certificates" パッケージで提供されます)。
+
+サーバポート、SSL、dhkey_size を設定の後に接続してください:
+
+----------------------------------------
+/set irc.server.freenode.addresses "chat.freenode.net/7000"
+/set irc.server.freenode.ssl on
+/set irc.server.freenode.ssl_dhkey_size 1024
+/connect freenode
+----------------------------------------
+
+// TRANSLATION MISSING
+[[irc_sasl]]
+How can I be identified before joining channels?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If server supports SASL, you should use that instead of sending command for
+nickserv authentication, for example:
+
+----------------------------------------
+/set irc.server_default.sasl_mechanism dh-blowfish
+/set irc.server.freenode.sasl_username "mynick"
+/set irc.server.freenode.sasl_password "xxxxxxx"
+----------------------------------------
+
+If server does not support SASL, you can add a delay (between command and join
+of channels):
+
+----------------------------------------
+/set irc.server.freenode.command_delay 5
+----------------------------------------
 
 [[ignore_vs_filter]]
 === /ignore と /filter コマンドの違いは何ですか。 ===
@@ -495,7 +533,6 @@ WeeChat でマウスが利用可能な場合、@k(-S-) キーを押しながら�
 バッファ内の行のプレフィックスと内容に対して付けられたタグや正規表現にマッチする行をフィルタできます。
 フィルタされた行は隠されているだけで、削除はされていません、
 フィルタを無効化すれば見えるようになります (デフォルトでは @k(A-)@k(=) でフィルタの有効無効の切り替えが出来ます)。
-
 
 [[filter_irc_join_part_quit]]
 === どうすれば IRC チャンネルへの参加/退出/終了メッセージをフィルタできますか。 ===
@@ -515,7 +552,6 @@ WeeChat でマウスが利用可能な場合、@k(-S-) キーを押しながら�
 
 [NOTE]
 ヘルプを見るには: `/help filter` か `/help irc.look.smart_filter`
-
 
 [[filter_irc_join_channel_messages]]
 === どうすれば IRC チャンネルに参加した際に表示される一部のメッセージをフィルタできますか。 ===
@@ -539,7 +575,6 @@ IRC 生サーバ (`/server raw`) を参照することで、
 ----------------------------------------
 /filter add irc_join_topic_date * irc_332,irc_333 *
 ----------------------------------------
-
 
 [[filter_voice_messages]]
 === どうすれば voice メッセージをフィルタできますか (例えば Bitlbee サーバ上で)。 ===
@@ -573,7 +608,6 @@ WeeChat で離席中のニックネームをチェックするには、
 /filter add hidevoices * irc_mode (\+|\-)v
 ----------------------------------------
 
-
 [[color_away_nicks]]
 === どうすればニックネームリストから離席中のニックネームを確認できますか。 ===
 
@@ -595,7 +629,6 @@ WeeChat で離席中のニックネームをチェックするには、
 WeeChat 0.3.3 以下では、オプション名が 'irc.network.away_check' と
 'irc.network.away_check_max_nicks' になっています。
 
-
 [[highlight_notification]]
 === どうすればあるチャンネルで自分が呼ばれたら警告できますか。 ===
 
@@ -609,68 +642,13 @@ WeeChat 0.3.3 以下では、オプション名が 'irc.network.away_check' と
 
 この問題に対するその他のスクリプトは: http://www.weechat.org/scripts/stable/tag/notify/
 
-
-[[irc_ssl_connection]]
-=== SSL を使うサーバへの接続中に問題が発生しました。どうすればいいですか。 ===
-
-gnutls ハンドシェイクに関するエラーの場合、Diffie-Hellman キー
-(デフォルトは 2048) のサイズを小さくすることを試してみてください:
-
-----------------------------------------
-/set irc.server.freenode.ssl_dhkey_size 1024
-----------------------------------------
-
-証明書に関するエラーの場合、"ssl_verify" を無効化してください
-(接続の機密保護がより甘くなることに注意):
-
-----------------------------------------
-/set irc.server.freenode.ssl_verify off
-----------------------------------------
-
-
-[[irc_ssl_handshake_error]]
-=== SSL を使うサーバへの接続中に、"TLS handshake failed" というエラーだけが表示されます。どうすれば良いですか。 ===
-
-異なる優先順位文字列を試してみてください (WeeChat 0.3.5 以上)、
-"xxx" はサーバ名に書き換えてください。
-
-----------------------------------------
-/set irc.server.xxx.ssl_priorities "NORMAL:-VERS-TLS-ALL:+VERS-TLS1.0:+VERS-SSL3.0:%COMPAT"
-----------------------------------------
-
-
-[[irc_ssl_freenode]]
-=== どうすれば SSL を使って freenode サーバに接続できますか。 ===
-
-オプション 'weechat.network.gnutls_ca_file' に証明書ファイルへのパスを設定してください。
-
-----------------------------------------
-/set weechat.network.gnutls_ca_file "/etc/ssl/certs/ca-certificates.crt"
-----------------------------------------
-
-[NOTE]
-設定したファイルが自分のシステムに存在することを確認してください
-(一般に "ca-certificates" パッケージで提供されます)。
-
-サーバポート、SSL、dhkey_size を設定の後に接続してください:
-
-----------------------------------------
-/set irc.server.freenode.addresses "chat.freenode.net/7000"
-/set irc.server.freenode.ssl on
-/set irc.server.freenode.ssl_dhkey_size 1024
-/connect freenode
-----------------------------------------
-
-
 [[irc_target_buffer]]
 === どうすればマージされたバッファ内であるコマンドを発行するターゲットバッファを変更できますか。 ===
 
 デフォルトのキーは @k(C-)@k(x) です (コマンドは: `/input switch_active_buffer`)。
 
-
 [[plugins_scripts]]
 == プラグイン / スクリプト ==
-
 
 [[openbsd_plugins]]
 === OpenBSD と WeeChat を使っている場合、プラグインが 1 つもロードされません。 ===
@@ -683,7 +661,6 @@ OpenBSD では、プラグインファイル名の末尾が ".so.0.0" です (Li
 /set weechat.plugin.extension ".so.0.0"
 /plugin autoload
 ----------------------------------------
-
 
 [[load_scripts]]
 === どうすれば Perl/Python/Ruby/Lua/Tcl スクリプトをロードできますか。スクリプトは他の IRC クライアントのものと互換性がありますか。 ===
@@ -699,10 +676,8 @@ OpenBSD では、プラグインファイル名の末尾が ".so.0.0" です (Li
   WeeChat の起動時に自動的にロードされます。
 * 'tcl' プラグインはバージョン 0.3.0 以上で利用できます。
 
-
 [[settings]]
 == 設定 ==
-
 
 [[memory_usage]]
 === どうすれば WeeChat のメモリ使用量を節約できますか。 ===
@@ -718,10 +693,8 @@ OpenBSD では、プラグインファイル名の末尾が ".so.0.0" です (Li
   'weechat.history.max_buffer_lines_minutes' オプションに値を設定してください。
 * 'weechat.history.max_commands' オプションの値を減らしてください。
 
-
 [[development]]
 == 開発 ==
-
 
 [[bug_task_patch]]
 === どのようにバグ報告、新機能のリクエスト、パッチ送信すればよいですか。 ===
@@ -736,7 +709,6 @@ OpenBSD では、プラグインファイル名の末尾が ".so.0.0" です (Li
 . メールで開発者に連絡、開発者のメールアドレスはサポートページを参照:
   http://www.weechat.org/about
   ("support" メーリングリストを購読して送信することもできます)
-
 
 [[gdb_error_threads]]
 === gdb で WeeChat を実行する場合、スレッドに関するエラーが発生します。 ===
@@ -758,7 +730,6 @@ $ LD_PRELOAD=/lib/libpthread.so.0 gdb /path/to/weechat-curses
 (gdb) run
 ----------------------------------------
 
-
 [[supported_os]]
 === WeeChat をサポートするプラットフォームのリストを教えてください。他のオペレーティングシステムへの移植予定はありますか。 ===
 
@@ -767,7 +738,6 @@ $ LD_PRELOAD=/lib/libpthread.so.0 gdb /path/to/weechat-curses
 我々は可能な限り多くのプラットフォームに移植することに最善を尽くしています。
 我々が持っていない OS で WeeChat をテストすることを歓迎します。
 
-
 [[help_developers]]
 === どうすれば WeeChat 開発者を手伝えますか。 ===
 
@@ -775,7 +745,6 @@ $ LD_PRELOAD=/lib/libpthread.so.0 gdb /path/to/weechat-curses
 
 IRC かメールで連絡を取り、サポートページを確認してください:
 http://www.weechat.org/support
-
 
 [[donate]]
 === WeeChat 開発者にお金か何かを贈りたいのですが。 ===
