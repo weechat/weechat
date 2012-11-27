@@ -4348,22 +4348,25 @@ command_set_display_option (struct t_config_option *option,
                             const char *message)
 {
     const char *color_name;
-    char str_default[128];
     const char *display_undefined = _("(undefined)");
     const char *display_default;
+    char str_default[128];
+    int is_file_plugins_conf;
 
     display_default = NULL;
+    is_file_plugins_conf = (option->config_file && option->config_file->name
+                            && (strcmp (option->config_file->name, "plugins") == 0));
 
     if (option->value)
     {
-        if (!option->default_value)
+        if (!is_file_plugins_conf && !option->default_value)
         {
             display_default = display_undefined;
         }
         switch (option->type)
         {
             case CONFIG_OPTION_TYPE_BOOLEAN:
-                if (option->default_value
+                if (!is_file_plugins_conf && option->default_value
                     && (CONFIG_BOOLEAN(option) != CONFIG_BOOLEAN_DEFAULT(option)))
                 {
                     snprintf (str_default, sizeof (str_default), "%s",
@@ -4389,7 +4392,7 @@ command_set_display_option (struct t_config_option *option,
                                            (display_default) ? ")" : "");
                 break;
             case CONFIG_OPTION_TYPE_INTEGER:
-                if (option->default_value
+                if (!is_file_plugins_conf && option->default_value
                     && (CONFIG_INTEGER(option) != CONFIG_INTEGER_DEFAULT(option)))
                 {
                     if (option->string_values)
@@ -4445,7 +4448,7 @@ command_set_display_option (struct t_config_option *option,
                 }
                 break;
             case CONFIG_OPTION_TYPE_STRING:
-                if (option->default_value
+                if (!is_file_plugins_conf && option->default_value
                     && (strcmp (CONFIG_STRING(option), CONFIG_STRING_DEFAULT(option)) != 0))
                 {
                     display_default = CONFIG_STRING_DEFAULT(option);
@@ -4473,7 +4476,7 @@ command_set_display_option (struct t_config_option *option,
                                            (display_default) ? ")" : "");
                 break;
             case CONFIG_OPTION_TYPE_COLOR:
-                if (option->default_value
+                if (!is_file_plugins_conf && option->default_value
                     && (CONFIG_COLOR(option) != CONFIG_COLOR_DEFAULT(option)))
                 {
                     display_default = gui_color_get_name (CONFIG_COLOR_DEFAULT(option));
