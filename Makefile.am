@@ -28,22 +28,25 @@ SUBDIRS = po $(doc_dir) intl src
 EXTRA_DIST = CMakeLists.txt \
              config.rpath \
              config.h.cmake \
-             cmake/cmake_uninstall.cmake.in \
+             cmake/CMakeParseArguments.cmake \
              cmake/FindAsciidoc.cmake \
              cmake/FindAspell.cmake \
              cmake/FindGCRYPT.cmake \
              cmake/FindGettext.cmake \
              cmake/FindGnuTLS.cmake \
+             cmake/FindGuile.cmake \
              cmake/FindIconv.cmake \
              cmake/FindLua.cmake \
              cmake/FindNcurses.cmake \
+             cmake/FindPackageHandleStandardArgs.cmake \
              cmake/FindPerl.cmake \
              cmake/FindPkgConfig.cmake \
              cmake/FindPython.cmake \
              cmake/FindRuby.cmake \
              cmake/FindSourcehighlight.cmake \
              cmake/FindTCL.cmake \
-             cmake/FindGuile.cmake \
+             cmake/FindZLIB.cmake \
+             cmake/cmake_uninstall.cmake.in \
              cmake/makedist.sh.in \
              po/CMakeLists.txt \
              po/srcfiles.cmake \
