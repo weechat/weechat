@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-11-26 17:35+0100\n"
+"POT-Creation-Date: 2012-11-27 22:36+0100\n"
 "PO-Revision-Date: 2012-09-29 11:42+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8875,8 +8875,8 @@ msgstr "selhalo"
 msgid "aborted"
 msgstr "zrušeno"
 
-#, c-format
-msgid "%s%s: file %s %s %s: %s"
+#, fuzzy, c-format
+msgid "%s%s: file %s %s %s (%ld.%ld.%ld.%ld): %s"
 msgstr "%s%s: soubor %s %s %s: %s"
 
 msgid "sent to"
@@ -8891,8 +8891,8 @@ msgstr "OK"
 msgid "FAILED"
 msgstr "SELHALO"
 
-#, c-format
-msgid "%s: chat closed with %s (%d.%d.%d.%d)"
+#, fuzzy, c-format
+msgid "%s: chat closed with %s (%ld.%ld.%ld.%ld)"
 msgstr "%s: rozhovor zavřen s %s (%d.%d.%d.%d)"
 
 #, c-format
@@ -8905,20 +8905,20 @@ msgstr "%s%s: nedostatek paměti pro nový xfer"
 
 #, fuzzy, c-format
 msgid ""
-"%s: incoming file from %s (%s.%s), ip: %d.%d.%d.%d, name: %s, %llu bytes "
+"%s: incoming file from %s (%ld.%ld.%ld.%ld, %s.%s), name: %s, %llu bytes "
 "(protocol: %s)"
 msgstr "%s: příchozí soubor od %s (%d.%d.%d.%d): %s, %llu bytů (protokol: %s)"
 
 #, fuzzy, c-format
 msgid ""
-"%s: sending file to %s (%s.%s): %s (local filename: %s), %llu bytes "
+"%s: offering file to %s (%s.%s), name: %s (local filename: %s), %llu bytes "
 "(protocol: %s)"
 msgstr ""
 "%s: posílám soubor k %s: %s (lokální jméno souboru: %s), %llu bytů "
 "(protokol: %s)"
 
 #, fuzzy, c-format
-msgid "%s: incoming chat request from %s (%s.%s), ip: %d.%d.%d.%d"
+msgid "%s: incoming chat request from %s (%ld.%ld.%ld.%ld, %s.%s)"
 msgstr "%s: příchozí požadavek rozhovoru od %s (%d.%d.%d.%d)"
 
 #, fuzzy, c-format
@@ -8985,8 +8985,8 @@ msgstr ""
 msgid "%s%s: error sending data to \"%s\" via xfer chat"
 msgstr "%s%s: chyba posílání dat k \"%s\" přes xfer chat"
 
-#, c-format
-msgid "Connected to %s (%d.%d.%d.%d) via xfer chat"
+#, fuzzy, c-format
+msgid "Connected to %s (%ld.%ld.%ld.%ld) via xfer chat"
 msgstr "Připojeno na %s (%d.%d.%d.%d) přes xfer rozhovor"
 
 #, c-format
@@ -9009,10 +9009,10 @@ msgid "%3d. %s, chat with %s (local nick: %s), started on %s, status: %s%s"
 msgstr ""
 "%3d. %s, komunikace s %s (lokální přezdívka: %s), začalo %s, status: %s%s"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %d.%d."
-"%d.%d (port %d)"
+"     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %ld."
+"%ld.%ld.%ld (port %d)"
 msgstr ""
 "     plugin: %s (id: %s), soubor: %llu bytů (pozice: %llu), adresa: %d.%d.%d."
 "%d (port %d)"
@@ -9195,6 +9195,14 @@ msgstr "%s%s: nemohu zapisovat do lokálního souboru"
 #, c-format
 msgid "%s%s: unable to fork"
 msgstr "%s%s: nemohu provést fork"
+
+#, fuzzy, c-format
+msgid ""
+"%s: sending file to %s (%ld.%ld.%ld.%ld, %s.%s), name: %s (local filename: "
+"%s), %llu bytes (protocol: %s)"
+msgstr ""
+"%s: posílám soubor k %s: %s (lokální jméno souboru: %s), %llu bytů "
+"(protokol: %s)"
 
 #, c-format
 msgid "%s%s: unable to create socket for sending file"

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-11-26 17:35+0100\n"
+"POT-Creation-Date: 2012-11-27 22:36+0100\n"
 "PO-Revision-Date: 2012-09-29 11:43+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8375,7 +8375,7 @@ msgid "aborted"
 msgstr "Отменено"
 
 #, fuzzy, c-format
-msgid "%s%s: file %s %s %s: %s"
+msgid "%s%s: file %s %s %s (%ld.%ld.%ld.%ld): %s"
 msgstr "DCC: файл %s%s%s"
 
 #, fuzzy
@@ -8393,7 +8393,7 @@ msgid "FAILED"
 msgstr "НЕУДАЧА"
 
 #, fuzzy, c-format
-msgid "%s: chat closed with %s (%d.%d.%d.%d)"
+msgid "%s: chat closed with %s (%ld.%ld.%ld.%ld)"
 msgstr "DCC-чат закончен с %s%s %s(%s%d.%d.%d.%d%s)\n"
 
 #, fuzzy, c-format
@@ -8406,18 +8406,18 @@ msgstr "%s недостаточно памяти для нового DCC\n"
 
 #, fuzzy, c-format
 msgid ""
-"%s: incoming file from %s (%s.%s), ip: %d.%d.%d.%d, name: %s, %llu bytes "
+"%s: incoming file from %s (%ld.%ld.%ld.%ld, %s.%s), name: %s, %llu bytes "
 "(protocol: %s)"
 msgstr "Входящий файл от %s%s%s (%s%d.%d.%d.%d%s)%s: %s%s%s, %s%lu%s байт\n"
 
 #, fuzzy, c-format
 msgid ""
-"%s: sending file to %s (%s.%s): %s (local filename: %s), %llu bytes "
+"%s: offering file to %s (%s.%s), name: %s (local filename: %s), %llu bytes "
 "(protocol: %s)"
 msgstr "Отправляю файл %s%s%s: %s%s%s (файл: %s%s%s), %s%lu%s байт\n"
 
 #, fuzzy, c-format
-msgid "%s: incoming chat request from %s (%s.%s), ip: %d.%d.%d.%d"
+msgid "%s: incoming chat request from %s (%ld.%ld.%ld.%ld, %s.%s)"
 msgstr "Входящий запрос на DCC-чат от %s%s%s (%s%d.%d.%d.%d%s)\n"
 
 #, fuzzy, c-format
@@ -8486,7 +8486,7 @@ msgid "%s%s: error sending data to \"%s\" via xfer chat"
 msgstr "%s ошибка при отправке данных \"%s\" через DCC-чат\n"
 
 #, fuzzy, c-format
-msgid "Connected to %s (%d.%d.%d.%d) via xfer chat"
+msgid "Connected to %s (%ld.%ld.%ld.%ld) via xfer chat"
 msgstr "Соединён с %s%s %s(%s%d.%d.%d.%d%s)%s DCC-чатом\n"
 
 #, fuzzy, c-format
@@ -8509,8 +8509,8 @@ msgstr ""
 
 #, c-format
 msgid ""
-"     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %d.%d."
-"%d.%d (port %d)"
+"     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %ld."
+"%ld.%ld.%ld (port %d)"
 msgstr ""
 
 #. TRANSLATORS: "%s" after "started on" is a date
@@ -8700,6 +8700,12 @@ msgstr "%s DCC: не могу записать локальный файл\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to fork"
 msgstr "%s DCC: не могу forkнуться\n"
+
+#, fuzzy, c-format
+msgid ""
+"%s: sending file to %s (%ld.%ld.%ld.%ld, %s.%s), name: %s (local filename: "
+"%s), %llu bytes (protocol: %s)"
+msgstr "Отправляю файл %s%s%s: %s%s%s (файл: %s%s%s), %s%lu%s байт\n"
 
 #, fuzzy, c-format
 msgid "%s%s: unable to create socket for sending file"

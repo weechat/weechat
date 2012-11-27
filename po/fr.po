@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-11-26 17:35+0100\n"
-"PO-Revision-Date: 2012-11-26 15:08+0100\n"
+"POT-Creation-Date: 2012-11-27 22:36+0100\n"
+"PO-Revision-Date: 2012-11-27 22:28+0100\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -9430,8 +9430,8 @@ msgid "aborted"
 msgstr "interrompu"
 
 #, c-format
-msgid "%s%s: file %s %s %s: %s"
-msgstr "%s%s: fichier %s %s %s: %s"
+msgid "%s%s: file %s %s %s (%ld.%ld.%ld.%ld): %s"
+msgstr "%s%s: fichier %s %s %s (%ld.%ld.%ld.%ld): %s"
 
 msgid "sent to"
 msgstr "envoyé à"
@@ -9446,8 +9446,8 @@ msgid "FAILED"
 msgstr "ECHOUE"
 
 #, c-format
-msgid "%s: chat closed with %s (%d.%d.%d.%d)"
-msgstr "%s: discussion fermée avec %s (%d.%d.%d.%d)"
+msgid "%s: chat closed with %s (%ld.%ld.%ld.%ld)"
+msgstr "%s: discussion fermée avec %s (%ld.%ld.%ld.%ld)"
 
 #, c-format
 msgid "%s%s: aborting active xfer: \"%s\" from %s"
@@ -9459,23 +9459,23 @@ msgstr "%s%s: pas assez de mémoire pour un nouveau xfer"
 
 #, c-format
 msgid ""
-"%s: incoming file from %s (%s.%s), ip: %d.%d.%d.%d, name: %s, %llu bytes "
+"%s: incoming file from %s (%ld.%ld.%ld.%ld, %s.%s), name: %s, %llu bytes "
 "(protocol: %s)"
 msgstr ""
-"%s: réception fichier de %s (%s.%s), ip: %d.%d.%d.%d, nom: %s, %llu octets "
+"%s: réception fichier de %s (%ld.%ld.%ld.%ld, %s.%s), nom: %s, %llu octets "
 "(protocole: %s)"
 
 #, c-format
 msgid ""
-"%s: sending file to %s (%s.%s): %s (local filename: %s), %llu bytes "
+"%s: offering file to %s (%s.%s), name: %s (local filename: %s), %llu bytes "
 "(protocol: %s)"
 msgstr ""
-"%s: envoi fichier à %s (%s.%s): %s (nom local: %s), %llu octets (protocole: "
-"%s)"
+"%s: offre de fichier pour %s (%s.%s), nom: %s (nom local: %s), %llu octets "
+"(protocole: %s)"
 
 #, c-format
-msgid "%s: incoming chat request from %s (%s.%s), ip: %d.%d.%d.%d"
-msgstr "%s: demande de discussion reçue de %s (%s.%s), ip: %d.%d.%d.%d"
+msgid "%s: incoming chat request from %s (%ld.%ld.%ld.%ld, %s.%s)"
+msgstr "%s: demande de discussion reçue de %s (%ld.%ld.%ld.%ld, %s.%s)"
 
 #, c-format
 msgid "%s: sending chat request to %s (%s.%s)"
@@ -9544,8 +9544,8 @@ msgid "%s%s: error sending data to \"%s\" via xfer chat"
 msgstr "%s%s: erreur d'envoi de données à \"%s\" via discussion xfer"
 
 #, c-format
-msgid "Connected to %s (%d.%d.%d.%d) via xfer chat"
-msgstr "Connecté à %s (%d.%d.%d.%d) via discussion xfer"
+msgid "Connected to %s (%ld.%ld.%ld.%ld) via xfer chat"
+msgstr "Connecté à %s (%ld.%ld.%ld.%ld) via discussion xfer"
 
 #, c-format
 msgid "%s%s: can't find xfer for buffer \"%s\""
@@ -9569,11 +9569,11 @@ msgstr ""
 
 #, c-format
 msgid ""
-"     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %d.%d."
-"%d.%d (port %d)"
+"     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %ld."
+"%ld.%ld.%ld (port %d)"
 msgstr ""
 "     extension: %s (id: %s), fichier: %llu octets (position: %llu), "
-"addresse: %d.%d.%d.%d (port %d)"
+"addresse: %ld.%ld.%ld.%ld (port %d)"
 
 #. TRANSLATORS: "%s" after "started on" is a date
 #, c-format
@@ -9760,6 +9760,14 @@ msgid "%s%s: unable to fork"
 msgstr "%s%s: impossible de créer un processus"
 
 #, c-format
+msgid ""
+"%s: sending file to %s (%ld.%ld.%ld.%ld, %s.%s), name: %s (local filename: "
+"%s), %llu bytes (protocol: %s)"
+msgstr ""
+"%s: envoi fichier à %s (%ld.%ld.%ld.%ld, %s.%s), nom: %s (nom local: %s), "
+"%llu octets (protocole: %s)"
+
+#, c-format
 msgid "%s%s: unable to create socket for sending file"
 msgstr "%s%s: impossible de créer la socket pour l'envoi du fichier"
 
@@ -9806,37 +9814,3 @@ msgstr "Type"
 
 msgid "Constants"
 msgstr "Constantes"
-
-#~ msgid ""
-#~ "condition(s) for displaying bar (for bars of type \"window\"): \"active\" "
-#~ "= window must be active, \"inactive\" = window must be inactive, "
-#~ "\"nicklist\" = buffer must have a nicklist"
-#~ msgstr ""
-#~ "condition(s) pour afficher la barre (pour les barres de type \"window\"): "
-#~ "\"active\" = la fenêtre doit être active, \"inactive\" = la fenêtre doit "
-#~ "être inactive, \"nicklist\" = le tampon doit avoir une liste de pseudos"
-
-#~ msgid ""
-#~ "server: server name\n"
-#~ "  nick: nick (may be a mask)"
-#~ msgstr ""
-#~ "serveur: nom du serveur\n"
-#~ " pseudo: pseudo (peut être un masque)"
-
-#~ msgid "use IPv6 protocol for server communication"
-#~ msgstr "utiliser le protocole IPv6 pour la communication avec le serveur"
-
-#~ msgid "global decoding charset"
-#~ msgstr "charset de décodage global"
-
-#~ msgid "global encoding charset"
-#~ msgstr "charset d'encodage global"
-
-#~ msgid "alt+v=back to list"
-#~ msgstr "alt+v=retour à la liste"
-
-#~ msgid "%s: connecting to server %s/%d%s%s..."
-#~ msgstr "%s: connexion au serveur %s/%d%s%s..."
-
-#~ msgid "%s: disconnected from server"
-#~ msgstr "%s: déconnecté du serveur"

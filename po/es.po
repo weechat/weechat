@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-11-26 17:35+0100\n"
+"POT-Creation-Date: 2012-11-27 22:36+0100\n"
 "PO-Revision-Date: 2012-09-29 11:42+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9147,8 +9147,8 @@ msgstr "falló"
 msgid "aborted"
 msgstr "abortado"
 
-#, c-format
-msgid "%s%s: file %s %s %s: %s"
+#, fuzzy, c-format
+msgid "%s%s: file %s %s %s (%ld.%ld.%ld.%ld): %s"
 msgstr "%s%s: archivo %s %s %s: %s"
 
 msgid "sent to"
@@ -9163,8 +9163,8 @@ msgstr "OK"
 msgid "FAILED"
 msgstr "FALLÓ"
 
-#, c-format
-msgid "%s: chat closed with %s (%d.%d.%d.%d)"
+#, fuzzy, c-format
+msgid "%s: chat closed with %s (%ld.%ld.%ld.%ld)"
 msgstr "%s: charla con %s cerrada (%d.%d.%d.%d)"
 
 #, c-format
@@ -9175,24 +9175,24 @@ msgstr "%s%s: abortando la transferencia activa: \"%s\" desde %s"
 msgid "%s%s: not enough memory for new xfer"
 msgstr "%s%s: no hay memoria suficiente para una nueva transferencia"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%s: incoming file from %s (%s.%s), ip: %d.%d.%d.%d, name: %s, %llu bytes "
+"%s: incoming file from %s (%ld.%ld.%ld.%ld, %s.%s), name: %s, %llu bytes "
 "(protocol: %s)"
 msgstr ""
 "%s: archivo entrante desde %s (%s.%s), ip: %d.%d.%d.%d, nombre: %s, %llu "
 "bytes (protocolo: %s)"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%s: sending file to %s (%s.%s): %s (local filename: %s), %llu bytes "
+"%s: offering file to %s (%s.%s), name: %s (local filename: %s), %llu bytes "
 "(protocol: %s)"
 msgstr ""
 "%s: enviando archivo a %s (%s.%s): %s (nombre del archivo local: %s), %llu "
 "bytes (protocolo: %s)"
 
-#, c-format
-msgid "%s: incoming chat request from %s (%s.%s), ip: %d.%d.%d.%d"
+#, fuzzy, c-format
+msgid "%s: incoming chat request from %s (%ld.%ld.%ld.%ld, %s.%s)"
 msgstr "%s: recibida petición de charla desde %s (%s.%s), ip: %d.%d.%d.%d"
 
 #, c-format
@@ -9263,8 +9263,8 @@ msgstr ""
 msgid "%s%s: error sending data to \"%s\" via xfer chat"
 msgstr "%s%s: error al enviar información a \"%s\" vía charla xfer"
 
-#, c-format
-msgid "Connected to %s (%d.%d.%d.%d) via xfer chat"
+#, fuzzy, c-format
+msgid "Connected to %s (%ld.%ld.%ld.%ld) via xfer chat"
 msgstr "Conectado a %s (%d.%d.%d.%d) vía charla xfer"
 
 #, c-format
@@ -9287,10 +9287,10 @@ msgid "%3d. %s, chat with %s (local nick: %s), started on %s, status: %s%s"
 msgstr ""
 "%3d. %s, conversación con %s (apodo local: %s), iniciado en %s, estado: %s%s"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %d.%d."
-"%d.%d (port %d)"
+"     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %ld."
+"%ld.%ld.%ld (port %d)"
 msgstr ""
 "     plugin: %s (id: %s), archivo: %llu bytes (posición: %llu), dirección: "
 "%d.%d.%d.%d (puerto %d)"
@@ -9478,6 +9478,14 @@ msgstr "%s%s: no es posible escribir el archivo local"
 #, c-format
 msgid "%s%s: unable to fork"
 msgstr "%s%s: no es posible bifurcarse"
+
+#, fuzzy, c-format
+msgid ""
+"%s: sending file to %s (%ld.%ld.%ld.%ld, %s.%s), name: %s (local filename: "
+"%s), %llu bytes (protocol: %s)"
+msgstr ""
+"%s: enviando archivo a %s (%s.%s): %s (nombre del archivo local: %s), %llu "
+"bytes (protocolo: %s)"
 
 #, c-format
 msgid "%s%s: unable to create socket for sending file"

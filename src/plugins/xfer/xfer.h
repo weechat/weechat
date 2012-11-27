@@ -78,8 +78,8 @@ enum t_xfer_error
 
 /* xfer blocksize */
 
-#define XFER_BLOCKSIZE_MIN    1024     /* min blocksize when sending file   */
-#define XFER_BLOCKSIZE_MAX  102400     /* max blocksize when sending file   */
+#define XFER_BLOCKSIZE_MIN    1024     /* min blocksize                     */
+#define XFER_BLOCKSIZE_MAX  102400     /* max blocksize                     */
 
 /* separator in filenames */
 
@@ -119,7 +119,8 @@ struct t_xfer
     char *filename;                    /* filename                          */
     unsigned long long size;           /* file size                         */
     char *proxy;                       /* proxy to use (optional)           */
-    unsigned long address;             /* local or remote IP address        */
+    unsigned long local_address;       /* local IP address                  */
+    unsigned long remote_address;      /* remote IP address                 */
     int port;                          /* remote port                       */
 
     /* internal data */

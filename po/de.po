@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-11-26 17:35+0100\n"
+"POT-Creation-Date: 2012-11-27 22:36+0100\n"
 "PO-Revision-Date: 2012-11-04 15:41+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -9685,8 +9685,8 @@ msgstr "fehlgeschlagen"
 msgid "aborted"
 msgstr "abgebrochen"
 
-#, c-format
-msgid "%s%s: file %s %s %s: %s"
+#, fuzzy, c-format
+msgid "%s%s: file %s %s %s (%ld.%ld.%ld.%ld): %s"
 msgstr "%s%s: Datei %s %s %s: %s"
 
 msgid "sent to"
@@ -9701,8 +9701,8 @@ msgstr "OK"
 msgid "FAILED"
 msgstr "FEHLGESCHLAGEN"
 
-#, c-format
-msgid "%s: chat closed with %s (%d.%d.%d.%d)"
+#, fuzzy, c-format
+msgid "%s: chat closed with %s (%ld.%ld.%ld.%ld)"
 msgstr "%s: Chat mit %s (%d.%d.%d.%d) geschlossen"
 
 #, c-format
@@ -9714,24 +9714,24 @@ msgid "%s%s: not enough memory for new xfer"
 msgstr ""
 "%s%s: Für einen neuen Transfer steht nicht ausreichend Speicher zur Verfügung"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%s: incoming file from %s (%s.%s), ip: %d.%d.%d.%d, name: %s, %llu bytes "
+"%s: incoming file from %s (%ld.%ld.%ld.%ld, %s.%s), name: %s, %llu bytes "
 "(protocol: %s)"
 msgstr ""
 "%s: eingehende Datei von %s (%s.%s), IP: %d.%d.%d.%d, Name: %s, %llu Bytes "
 "(Protokoll: %s)"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%s: sending file to %s (%s.%s): %s (local filename: %s), %llu bytes "
+"%s: offering file to %s (%s.%s), name: %s (local filename: %s), %llu bytes "
 "(protocol: %s)"
 msgstr ""
 "%s: sende Datei an %s (%s.%s): %s (lokaler Dateiname: %s), %llu Bytes "
 "(Protokoll: %s)"
 
-#, c-format
-msgid "%s: incoming chat request from %s (%s.%s), ip: %d.%d.%d.%d"
+#, fuzzy, c-format
+msgid "%s: incoming chat request from %s (%ld.%ld.%ld.%ld, %s.%s)"
 msgstr "%s: eingehende Chatanforderung von %s (%s.%s), ip: %d.%d.%d.%d"
 
 #, c-format
@@ -9801,8 +9801,8 @@ msgstr ""
 msgid "%s%s: error sending data to \"%s\" via xfer chat"
 msgstr "%s%s: Fehler beim Senden von Daten an \"%s\" via Transfer-Chat"
 
-#, c-format
-msgid "Connected to %s (%d.%d.%d.%d) via xfer chat"
+#, fuzzy, c-format
+msgid "Connected to %s (%ld.%ld.%ld.%ld) via xfer chat"
 msgstr "Verbindung zu %s (%d.%d.%d.%d) via Transfer-Chat aufgebaut"
 
 #, c-format
@@ -9825,10 +9825,10 @@ msgstr ""
 "%3d. %s, Der Chat mit %s (lokaler Nick: %s), wurde am %s gestartet, Status: "
 "%s%s"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %d.%d."
-"%d.%d (port %d)"
+"     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %ld."
+"%ld.%ld.%ld (port %d)"
 msgstr ""
 "     Erweiterung: %s (id: %s), Datei: %llu Bytes (Position: %llu), Adresse: "
 "%d.%d.%d.%d (Port %d)"
@@ -10016,6 +10016,14 @@ msgstr "%s%s: Die lokale Datei kann nicht erstellt werden"
 #, c-format
 msgid "%s%s: unable to fork"
 msgstr "%s%s: es kann kein fork erstellt werden"
+
+#, fuzzy, c-format
+msgid ""
+"%s: sending file to %s (%ld.%ld.%ld.%ld, %s.%s), name: %s (local filename: "
+"%s), %llu bytes (protocol: %s)"
+msgstr ""
+"%s: sende Datei an %s (%s.%s): %s (lokaler Dateiname: %s), %llu Bytes "
+"(Protokoll: %s)"
 
 #, c-format
 msgid "%s%s: unable to create socket for sending file"

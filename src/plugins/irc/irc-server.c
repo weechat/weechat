@@ -4297,7 +4297,7 @@ irc_server_xfer_send_ready_cb (void *data, const char *signal,
                                           (spaces_in_name) ? "\"" : "",
                                           filename,
                                           (spaces_in_name) ? "\"" : "",
-                                          weechat_infolist_string (infolist, "address"),
+                                          weechat_infolist_string (infolist, "local_address"),
                                           weechat_infolist_integer (infolist, "port"),
                                           weechat_infolist_string (infolist, "size"));
                     }
@@ -4307,7 +4307,7 @@ irc_server_xfer_send_ready_cb (void *data, const char *signal,
                                           IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                                           "PRIVMSG %s :\01DCC CHAT chat %s %d\01",
                                           weechat_infolist_string (infolist, "remote_nick"),
-                                          weechat_infolist_string (infolist, "address"),
+                                          weechat_infolist_string (infolist, "local_address"),
                                           weechat_infolist_integer (infolist, "port"));
                     }
                 }

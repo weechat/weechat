@@ -341,13 +341,13 @@ xfer_chat_open_buffer (struct t_xfer *xfer)
         }
 
         weechat_printf (xfer->buffer,
-                        _("Connected to %s (%d.%d.%d.%d) via "
+                        _("Connected to %s (%ld.%ld.%ld.%ld) via "
                           "xfer chat"),
                         xfer->remote_nick,
-                        xfer->address >> 24,
-                        (xfer->address >> 16) & 0xff,
-                        (xfer->address >> 8) & 0xff,
-                        xfer->address & 0xff);
+                        xfer->remote_address >> 24,
+                        (xfer->remote_address >> 16) & 0xff,
+                        (xfer->remote_address >> 8) & 0xff,
+                        xfer->remote_address & 0xff);
 
         free (name);
     }

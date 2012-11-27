@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-11-26 17:35+0100\n"
+"POT-Creation-Date: 2012-11-27 22:36+0100\n"
 "PO-Revision-Date: 2012-09-29 11:43+0200\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8500,8 +8500,8 @@ msgstr "falhou"
 msgid "aborted"
 msgstr "abortado"
 
-#, c-format
-msgid "%s%s: file %s %s %s: %s"
+#, fuzzy, c-format
+msgid "%s%s: file %s %s %s (%ld.%ld.%ld.%ld): %s"
 msgstr "%s%s: arquivo %s %s %s: %s"
 
 msgid "sent to"
@@ -8516,8 +8516,8 @@ msgstr "OK"
 msgid "FAILED"
 msgstr "FALHOU"
 
-#, c-format
-msgid "%s: chat closed with %s (%d.%d.%d.%d)"
+#, fuzzy, c-format
+msgid "%s: chat closed with %s (%ld.%ld.%ld.%ld)"
 msgstr "%s: chat terminado com %s (%d.%d.%d.%d)"
 
 #, c-format
@@ -8528,24 +8528,24 @@ msgstr "%s%s: abortando transferência ativa: \"%s\" de %s"
 msgid "%s%s: not enough memory for new xfer"
 msgstr "%s%s: memória insuficiente para nova transferência"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%s: incoming file from %s (%s.%s), ip: %d.%d.%d.%d, name: %s, %llu bytes "
+"%s: incoming file from %s (%ld.%ld.%ld.%ld, %s.%s), name: %s, %llu bytes "
 "(protocol: %s)"
 msgstr ""
 "%s: recebendo arquivo de %s (%s.%s), ip: %d.%d.%d.%d, nome: %s, %llu bytes "
 "(protocolo: %s)"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%s: sending file to %s (%s.%s): %s (local filename: %s), %llu bytes "
+"%s: offering file to %s (%s.%s), name: %s (local filename: %s), %llu bytes "
 "(protocol: %s)"
 msgstr ""
 "%s: enviando arquivo para %s (%s.%s): %s (arquivo local: %s), %llu bytes "
 "(protocolo: %s)"
 
-#, c-format
-msgid "%s: incoming chat request from %s (%s.%s), ip: %d.%d.%d.%d"
+#, fuzzy, c-format
+msgid "%s: incoming chat request from %s (%ld.%ld.%ld.%ld, %s.%s)"
 msgstr "%s: requisição de chat recebida de %s (%s.%s), ip: %d.%d.%d.%d"
 
 #, c-format
@@ -8617,8 +8617,8 @@ msgstr ""
 msgid "%s%s: error sending data to \"%s\" via xfer chat"
 msgstr "%s%s: erro ao enviar dados para \"%s\" via chat de transferência"
 
-#, c-format
-msgid "Connected to %s (%d.%d.%d.%d) via xfer chat"
+#, fuzzy, c-format
+msgid "Connected to %s (%ld.%ld.%ld.%ld) via xfer chat"
 msgstr "Conectado a %s (%d.%d.%d.%d) via chat de transferência"
 
 #, c-format
@@ -8643,8 +8643,8 @@ msgstr ""
 
 #, c-format
 msgid ""
-"     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %d.%d."
-"%d.%d (port %d)"
+"     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %ld."
+"%ld.%ld.%ld (port %d)"
 msgstr ""
 
 #. TRANSLATORS: "%s" after "started on" is a date
@@ -8828,6 +8828,14 @@ msgstr "%s%s: não foi possível escrever o arquivo local"
 #, c-format
 msgid "%s%s: unable to fork"
 msgstr "%s%s: não foi possível efetuar o fork"
+
+#, fuzzy, c-format
+msgid ""
+"%s: sending file to %s (%ld.%ld.%ld.%ld, %s.%s), name: %s (local filename: "
+"%s), %llu bytes (protocol: %s)"
+msgstr ""
+"%s: enviando arquivo para %s (%s.%s): %s (arquivo local: %s), %llu bytes "
+"(protocolo: %s)"
 
 #, c-format
 msgid "%s%s: unable to create socket for sending file"

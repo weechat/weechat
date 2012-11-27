@@ -215,6 +215,22 @@ xfer_network_send_file_fork (struct t_xfer *xfer)
             _exit (EXIT_SUCCESS);
     }
 
+    weechat_printf (NULL,
+                    _("%s: sending file to %s (%ld.%ld.%ld.%ld, %s.%s), "
+                      "name: %s (local filename: %s), %llu bytes (protocol: %s)"),
+                    XFER_PLUGIN_NAME,
+                    xfer->remote_nick,
+                    xfer->remote_address >> 24,
+                    (xfer->remote_address >> 16) & 0xff,
+                    (xfer->remote_address >> 8) & 0xff,
+                    xfer->remote_address & 0xff,
+                    xfer->plugin_name,
+                    xfer->plugin_id,
+                    xfer->filename,
+                    xfer->local_filename,
+                    xfer->size,
+                    xfer_protocol_string[xfer->protocol]);
+
     /* parent process */
     xfer->child_pid = pid;
     close (xfer->child_write);
@@ -364,7 +380,7 @@ xfer_network_fd_cb (void *arg_xfer, int fd)
                 xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
                 return WEECHAT_RC_OK;
             }
-            xfer->address = ntohl (addr.sin_addr.s_addr);
+            xfer->remote_address = ntohl (addr.sin_addr.s_addr);
             xfer->status = XFER_STATUS_ACTIVE;
             xfer->start_transfer = time (NULL);
             xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
@@ -406,7 +422,7 @@ xfer_network_fd_cb (void *arg_xfer, int fd)
                 xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
                 return WEECHAT_RC_OK;
             }
-            xfer->address = ntohl (addr.sin_addr.s_addr);
+            xfer->remote_address = ntohl (addr.sin_addr.s_addr);
             xfer->status = XFER_STATUS_ACTIVE;
             xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
             xfer->hook_fd = weechat_hook_fd (xfer->sock,
@@ -506,8 +522,8 @@ xfer_network_connect (struct t_xfer *xfer)
             flags = 0;
         if (fcntl (xfer->sock, F_SETFL, flags | O_NONBLOCK) == -1)
             return 0;
-        weechat_network_connect_to (xfer->proxy, xfer->sock, xfer->address,
-                                    xfer->port);
+        weechat_network_connect_to (xfer->proxy, xfer->sock,
+                                    xfer->remote_address, xfer->port);
 
         xfer->hook_fd = weechat_hook_fd (xfer->sock,
                                          1, 0, 0,

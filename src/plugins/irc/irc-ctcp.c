@@ -572,7 +572,7 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
                 weechat_infolist_new_var_string (item, "size", pos_size);
                 weechat_infolist_new_var_string (item, "proxy",
                                                  IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_PROXY));
-                weechat_infolist_new_var_string (item, "address", pos_addr);
+                weechat_infolist_new_var_string (item, "remote_address", pos_addr);
                 weechat_infolist_new_var_integer (item, "port", atoi (pos_port));
                 weechat_hook_signal_send ("xfer_add",
                                           WEECHAT_HOOK_SIGNAL_POINTER,
@@ -878,7 +878,7 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
                 weechat_infolist_new_var_string (item, "charset_modifier", charset_modifier);
                 weechat_infolist_new_var_string (item, "proxy",
                                                  IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_PROXY));
-                weechat_infolist_new_var_string (item, "address", pos_addr);
+                weechat_infolist_new_var_string (item, "remote_address", pos_addr);
                 weechat_infolist_new_var_integer (item, "port", atoi (pos_port));
                 weechat_hook_signal_send ("xfer_add",
                                           WEECHAT_HOOK_SIGNAL_POINTER,

@@ -1149,7 +1149,7 @@ irc_command_dcc (void *data, struct t_gui_buffer *buffer, int argc,
                     weechat_infolist_new_var_string (item, "filename", argv_eol[3]);
                     snprintf (str_address, sizeof (str_address),
                               "%lu", address);
-                    weechat_infolist_new_var_string (item, "address", str_address);
+                    weechat_infolist_new_var_string (item, "local_address", str_address);
                     weechat_infolist_new_var_integer (item, "socket", ptr_server->sock);
                     weechat_hook_signal_send ("xfer_add",
                                               WEECHAT_HOOK_SIGNAL_POINTER,
@@ -1181,7 +1181,7 @@ irc_command_dcc (void *data, struct t_gui_buffer *buffer, int argc,
                     weechat_infolist_new_var_string (item, "charset_modifier", charset_modifier);
                     snprintf (str_address, sizeof (str_address),
                               "%lu", address);
-                    weechat_infolist_new_var_string (item, "address", str_address);
+                    weechat_infolist_new_var_string (item, "local_address", str_address);
                     weechat_hook_signal_send ("xfer_add",
                                               WEECHAT_HOOK_SIGNAL_POINTER,
                                               infolist);

@@ -189,7 +189,7 @@ xfer_dcc_recv_file_child (struct t_xfer *xfer)
 
     /* first connect to sender (blocking) */
     if (!weechat_network_connect_to (xfer->proxy, xfer->sock,
-                                     xfer->address, xfer->port))
+                                     xfer->remote_address, xfer->port))
     {
         xfer_network_write_pipe (xfer, XFER_STATUS_FAILED,
                                  XFER_ERROR_CONNECT_SENDER);
