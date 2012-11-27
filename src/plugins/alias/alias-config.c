@@ -214,7 +214,7 @@ alias_config_cmd_new_option (const char *name, const char *command)
 {
     weechat_config_new_option (alias_config_file, alias_config_section_cmd,
                                name, "string", NULL,
-                               NULL, 0, 0, "", command, 0,
+                               NULL, 0, 0, NULL, command, 0,
                                NULL, NULL,
                                &alias_config_cmd_change_cb, NULL,
                                &alias_config_cmd_delete_cb, NULL);
@@ -273,7 +273,7 @@ alias_config_completion_new_option (const char *name, const char *completion)
     weechat_config_new_option (alias_config_file,
                                alias_config_section_completion,
                                name, "string", NULL,
-                               NULL, 0, 0, "", completion, 0,
+                               NULL, 0, 0, NULL, completion, 0,
                                NULL, NULL,
                                &alias_config_completion_change_cb, NULL,
                                &alias_config_completion_delete_cb, NULL);
