@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-11-23 20:19+0100\n"
+"POT-Creation-Date: 2012-11-26 17:35+0100\n"
 "PO-Revision-Date: 2012-09-29 11:43+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -734,6 +734,10 @@ msgstr "Настройки pluginов сохранены\n"
 #, fuzzy, c-format
 msgid "%sError: failed to save options to %s"
 msgstr "%s не могу сохранить конфигурационный файл pluginов\n"
+
+#, fuzzy
+msgid "default: "
+msgstr "  . значение по умолчанию: %d\n"
 
 msgid "(unknown)"
 msgstr "(неизвестен)"

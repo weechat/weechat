@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-11-23 20:19+0100\n"
+"POT-Creation-Date: 2012-11-26 17:35+0100\n"
 "PO-Revision-Date: 2012-09-29 11:42+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -682,6 +682,10 @@ msgstr "%s にオプションを保存しました"
 #, c-format
 msgid "%sError: failed to save options to %s"
 msgstr "%sエラー: %s へのオプションの保存に失敗しました"
+
+#, fuzzy
+msgid "default: "
+msgstr "デフォルト値"
 
 msgid "(unknown)"
 msgstr "(未定義)"
