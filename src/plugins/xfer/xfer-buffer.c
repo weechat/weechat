@@ -48,7 +48,7 @@ xfer_buffer_refresh (const char *hotlist)
     char str_color[256], suffix[32], status[64], date[128], eta[128];
     char *progress_bar, *str_pos, *str_total, *str_bytes_per_sec;
     int i, length, line, progress_bar_size, num_bars;
-    unsigned long long pct_complete;
+    unsigned long long pos, pct_complete;
     struct tm *date_tmp;
 
     if (xfer_buffer)
@@ -145,6 +145,7 @@ xfer_buffer_refresh (const char *hotlist)
             else
             {
                 /* build progress bar */
+                pos = (ptr_xfer->pos <= ptr_xfer->size) ? ptr_xfer->pos : ptr_xfer->size;
                 progress_bar = NULL;
                 progress_bar_size = weechat_config_integer (xfer_config_look_progress_bar_size);
                 if (progress_bar_size > 0)
@@ -159,7 +160,7 @@ xfer_buffer_refresh (const char *hotlist)
                             num_bars = 0;
                     }
                     else
-                        num_bars = (int)(((float)(ptr_xfer->pos)/(float)(ptr_xfer->size)) * (float)progress_bar_size);
+                        num_bars = (int)(((float)(pos)/(float)(ptr_xfer->size)) * (float)progress_bar_size);
                     for (i = 0; i < num_bars - 1; i++)
                     {
                         strcat (progress_bar, "=");
@@ -182,10 +183,10 @@ xfer_buffer_refresh (const char *hotlist)
                         pct_complete = 0;
                 }
                 else
-                    pct_complete = (unsigned long long)(((float)(ptr_xfer->pos)/(float)(ptr_xfer->size)) * 100);
+                    pct_complete = (unsigned long long)(((float)(pos)/(float)(ptr_xfer->size)) * 100);
 
                 /* position, total and bytes per second */
-                str_pos = weechat_string_format_size (ptr_xfer->pos);
+                str_pos = weechat_string_format_size (pos);
                 str_total = weechat_string_format_size (ptr_xfer->size);
                 str_bytes_per_sec = weechat_string_format_size (ptr_xfer->bytes_per_sec);
 

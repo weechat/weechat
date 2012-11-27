@@ -56,6 +56,8 @@ Version 0.4.0 (under dev!)
   "ipv4." and/or "ipv6." before protocol name, to force IPv4/IPv6 (task #12270)
 * relay: add missing "ssl." in output of /relay listrelay
 * script: fix compilation on OS X
+* xfer: limit bytes received to file size (for DCC file received), fix crash
+  when displaying a xfer file with pos greater than size
 
 Version 0.3.9.2 (2012-11-18)
 ----------------------------
