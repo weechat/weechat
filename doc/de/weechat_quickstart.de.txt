@@ -27,25 +27,25 @@ Um Optionen zu setzen benutzt man `/set config.section.option value`.
 oder der Name einer Erweiterung), 'section' ein Abschnitt dieser Konfiguration und 'option'
 der Name der betreffenden Option).
 
-WeeChat benutzt den neu eingestellten Wert umgehend (WeeChat muss also *niemals* neu gestartet
+WeeChat benutzt einen neu eingestellten Wert umgehend (WeeChat muss also *niemals* neu gestartet
 werden, nach dem die Konfiguration verändert wurde).
 
 Du kannst die Option `/set` mit teilweise ausgeschriebenen Namen und dem
-Platzhalter "*" am Beginn oder Ende verwenden um alle Optionen anzuzeigen die
-diese Zeichenkette enthalten.
+Platzhalter "*", am Beginn oder Ende, verwenden um alle Optionen anzuzeigen die
+dieser Zeichenkette entsprechen.
 
 Zum Beispiel:
 
 `/set`::
-    Anzeige aller Optionen (WeeChat und Erweiterungen)
+    zeit alle Optionen an (WeeChat und Erweiterungen)
 
 `/set weechat.*`::
-    Anzeige der WeeChat Optionen
+    zeit alle WeeChat Optionen an
 
 `/set irc.*`::
-    Anzeige der Optionen des IRC-Erweiterung
+    zeit alle Optionen der IRC-Erweiterung an
 
-Du kannst mit `/help` Hilfe für Optionen auflisten lassen, z.B.:
+Du kannst dir mit dem Befehl `/help` eine Hilfe für Optionen anzeigen lassen, z.B.:
 `/help weechat.look.highlight`.
 
 Beim Beenden von WeeChat werden alle Einstellungen gespeichert (mittels `/save`
@@ -60,8 +60,8 @@ verwenden möchte).
 Kern (Core) vs Erweiterungen
 ----------------------------
 
-Der Kern (core) von WeeChat ist ausschließlich dazu da Daten auf dem Bildschirm
-darzustellen um mit dem Benutzer zu interagieren. Dies bedeutet, WeeChat an sich
+Der Kern (core) von WeeChat ist ausschließlich dazu da, Daten auf dem Bildschirm
+darzustellen, um mit dem Benutzer zu interagieren. Dies bedeutet, WeeChat an sich
 -also nur WeeChat core- ohne jegliche Erweiterung ist unbrauchbar.
 (an die treuen User: IRC war ein Teil des Kerns bei Versionen ≤ 0.2.6)
 
@@ -87,15 +87,15 @@ Wie bei jedem Befehl kannst Du Dir, falls Du nicht mehr weiter kommst, mit
 Setzen eigener IRC-Server Optionen
 ----------------------------------
 
-WeeChat verwendet Vorgabewerte für alle Server (so genannte "fall backs") falls
+WeeChat verwendet Vorgabewerte für alle Server (so genannte "fall backs"), falls
 Du keine eigenen Werte für entsprechende Server-Optionen bestimmt haben solltest.
-Diese Vorgabeoptionen sind "irc.server_default.*".
+Diese Vorgabewerte sind in "irc.server_default.*" beschrieben.
 
 Für jede Server-Option benutzt WeeChat den entsprechend gesetzten Wert - falls
 definiert (nicht "null"). Andernfalls verwendet WeeChat Vorgabewerte
 ("irc.server_default.xxx").
 
-Als Beispiel erwähnt ist die Vorgabe (default) nicks, die auf dem Un*x Login
+Als Beispiel erwähnt ist die Vorgabe (default) für Nicks, die auf dem Un*x Login
 basiert. Diese Vorgabe kann nun für den oftc-Server mittels folgendem Befehl
 überschrieben werden:
 
@@ -111,17 +111,15 @@ herzustellen:
 
   /set irc.server.oftc.autoconnect on
 
-// TRANSLATION MISSING
-If SASL is available on server, you can use it for authentication (you will be
-identified before you join channels):
+Sollte der Server SASL unterstützen, kann man sich damit Authentifizieren
+(dadurch identifiziert man sich beim Server, bevor man Channels (Chaträume) betritt):
 
   /set irc.server_default.sasl_mechanism dh-blowfish
   /set irc.server.oftc.sasl_username "mynick"
   /set irc.server.oftc.sasl_password "xxxxxxx"
 
-// TRANSLATION MISSING
-To run a command after connection to server, for example to authenticate
-with nickserv (only if you don't use SASL for authentication):
+Unterstützt der Server keine SASL Authentifizierung, muss man sich bei "nickserv"
+identifizieren:
 
   /set irc.server.oftc.command "/msg nickserv identify xxxxxxx"
 
@@ -134,12 +132,12 @@ Verbindung zum Server zu erreichen:
   /set irc.server.oftc.autojoin "#channel1,#channel2"
 
 Um einen Wert der Server-Optionen zu entfernen und stattdessen wieder den
-Vorgabewert (default) zu nutzen, z.B. Nutzung der Vorgabe-Nicks
+Vorgabewert (default) zu nutzen, z.B. Nutzung der vorgegebenen Nicks
 (irc.server_default.nicks):
 
   /set irc.server.oftc.nicks null
 
-Andere Optionen: Du kannst andere Optionen mit folgendem Befehl setzen ("xxx"
+Andere Optionen: Du kannst andere Optionen mit folgendem Befehl festlegen ("xxx"
 ist der Optionsname):
 
   /set irc.server.oftc.xxx value
@@ -153,16 +151,16 @@ Verbinden mit dem IRC-Server und auto-join der Channel
 
 [NOTE]
 Dieser Befehl kann dazu benutzt werden um einen neuen Server zu erstellen und
-sich mit ihm zu verbinden ohne den Befehl `/server` zu benutzen (sollte ich
+sich mit ihm zu verbinden, ohne den Befehl `/server` zu benutzen (sollte ich
 wiederholen, dass Du die Hilfe zu diesem Befehl mit `/help connect` aufrufen
 kannst?).
 
 Standardmäßig werden die Server-Buffer und der Buffer des Kerns von WeeChat -der
 core-Buffer- zusammengelegt. Um zwischen dem core-Buffer und den Server-Buffern
-umzuschalten kannst Du ctrl-X benutzen.
+zu wechseln, kannst Du ctrl-X benutzen.
 
-Es ist möglich das automatische Zusammenlegen der Server-Buffer zu deaktivieren
-um eigenständige Buffer zu haben:
+Es ist möglich das automatische Zusammenlegen der Server-Buffer zu deaktivieren,
+um eigenständige Server-Buffer zu nutzen:
 
   /set irc.look.server_buffer independent
 
@@ -185,12 +183,12 @@ Betreten/verlassen der IRC-Channel
 Buffer/Fenster Verwaltung
 -------------------------
 
-Ein Buffer ist eine, Erweiterung mit einer Nummer, einer Kategorie und einem
+Ein Buffer ist eine Erweiterung mit einer Nummer, einer Kategorie und einem
 Namen, verbundene Komponente. Ein Buffer beinhaltet die auf dem Bildschirm
 dargestellten Daten.
 
 Ein Fenster ist die Ansicht eines Buffers. Standard ist ein Fenster, das einen
-Buffer darstellt. Wenn Du den Bildschirm aufteilst wirst Du mehrere Fenster mit
+Buffer darstellt. Wenn Du den Bildschirm aufteilst, wirst Du mehrere Fenster mit
 mehreren Buffer gleichzeitig sehen.
 
 Befehle, welche Buffer und Fenster verwalten:
@@ -249,7 +247,7 @@ Erweiterungen/Skripten
 Bei einigen Distributionen wie z.B. Debian, sind die Erweiterungen über separate Pakete
 erhältlich (z.B. weechat-plugins).
 Erweiterungen werden -sofern welche gefunden worden sind- automatisch geladen (Bitte beachte
-die Dokumentation zum Laden/Entladen von Erweiterungen oder Skripten).
+die Dokumentation zum installieren/entfernen von Erweiterungen und/oder Skripten).
 
 Viele externe Skripten (der Mitarbeitenden) sind für WeeChat verfügbar, siehe:
 http://www.weechat.org/scripts
@@ -262,7 +260,7 @@ weitere Informationen zur Bedienung).
 Weitere Dokumentation
 ---------------------
 
-Nun kannst Du WeeChat nutzen, für weitere Fragen lese die FAQ/Dokumentation:
+Nun kannst Du WeeChat nutzen, für weitere Fragen lese die FAQ und/oder Dokumentation:
 http://www.weechat.org/doc
 
 Viel Spass mit WeeChat!

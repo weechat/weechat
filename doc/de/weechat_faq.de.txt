@@ -561,22 +561,21 @@ Connect durchführen:
 /connect freenode
 ----------------------------------------
 
-// TRANSLATION MISSING
 [[irc_sasl]]
-How can I be identified before joining channels?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Wie kann ich mich, vor dem Betreten von Channels, identifizieren?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If server supports SASL, you should use that instead of sending command for
-nickserv authentication, for example:
+Sollte der Server SASL unterstützen, ist es ratsam auf diese Funktion zurückzugreifen
+und sich nicht mittels "nickserv" zu authentifizieren. Zum Beispiel:
 
 ----------------------------------------
 /set irc.server_default.sasl_mechanism dh-blowfish
-/set irc.server.freenode.sasl_username "mynick"
+/set irc.server.freenode.sasl_username "meinNick"
 /set irc.server.freenode.sasl_password "xxxxxxx"
 ----------------------------------------
 
-If server does not support SASL, you can add a delay (between command and join
-of channels):
+Unterstützt der Server keine SASL Authentifizierung, kann eine Verzögerung aktiviert
+werden um sich, vor dem Betreten von Channels, bei "nickserv" zu identifizieren:
 
 ----------------------------------------
 /set irc.server.freenode.command_delay 5
