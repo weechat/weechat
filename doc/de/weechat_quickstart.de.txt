@@ -99,7 +99,7 @@ Als Beispiel erwähnt ist die Vorgabe (default) nicks, die auf dem Un*x Login
 basiert. Diese Vorgabe kann nun für den oftc-Server mittels folgendem Befehl
 überschrieben werden:
 
-  /set irc.server.oftc.nicks "mynick1,mynick2,mynick3,mynick4,mynick5"
+  /set irc.server.oftc.nicks "mynick,mynick2,mynick3,mynick4,mynick5"
 
 Um einen User- und realen Namen zu setzen:
 
@@ -111,12 +111,22 @@ herzustellen:
 
   /set irc.server.oftc.autoconnect on
 
-Um einen Befehl nach der Verbindung zum Server auszuführen, z.B. identifizieren
-beim nickserv:
+// TRANSLATION MISSING
+If SASL is available on server, you can use it for authentication (you will be
+identified before you join channels):
 
-  /set irc.server.oftc.command "/msg nickserv identify xxxxxx"
+  /set irc.server_default.sasl_mechanism dh-blowfish
+  /set irc.server.oftc.sasl_username "mynick"
+  /set irc.server.oftc.sasl_password "xxxxxxx"
 
-Hinweis: Mehrere Befehle können mittels ';' (Semikolon) getrennt werden.
+// TRANSLATION MISSING
+To run a command after connection to server, for example to authenticate
+with nickserv (only if you don't use SASL for authentication):
+
+  /set irc.server.oftc.command "/msg nickserv identify xxxxxxx"
+
+[NOTE]
+Mehrere Befehle können mittels ';' (Semikolon) getrennt werden.
 
 Um ein auto-join (automatisches 'betreten') von Channels (Räumen) nach der
 Verbindung zum Server zu erreichen:

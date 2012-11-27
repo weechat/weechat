@@ -84,7 +84,7 @@ IRC 等全てのネットワークプロトコルはそれぞれ異なるプラ�
 例えばデフォルトでは (un*x ログイン名をベースにした)
 ニックネームが設定されますが、以下のコマンドで oftc サーバ用の設定として上書きすることが可能です:
 
-  /set irc.server.oftc.nicks "mynick1,mynick2,mynick3,mynick4,mynick5"
+  /set irc.server.oftc.nicks "mynick,mynick2,mynick3,mynick4,mynick5"
 
 ユーザ名と実名を設定する場合:
 
@@ -95,12 +95,22 @@ IRC 等全てのネットワークプロトコルはそれぞれ異なるプラ�
 
   /set irc.server.oftc.autoconnect on
 
-サーバに接続後にコマンドを送信したい場合、例えば
-nickserv の認証を行う場合:
+// TRANSLATION MISSING
+If SASL is available on server, you can use it for authentication (you will be
+identified before you join channels):
 
-  /set irc.server.oftc.command "/msg nickserv identify xxxxxx"
+  /set irc.server_default.sasl_mechanism dh-blowfish
+  /set irc.server.oftc.sasl_username "mynick"
+  /set irc.server.oftc.sasl_password "xxxxxxx"
 
-備考: ';' (セミコロン) で繋ぐことで複数のコマンドを設定することができます
+// TRANSLATION MISSING
+To run a command after connection to server, for example to authenticate
+with nickserv (only if you don't use SASL for authentication):
+
+  /set irc.server.oftc.command "/msg nickserv identify xxxxxxx"
+
+[NOTE]
+';' (セミコロン) で繋ぐことで複数のコマンドを設定することができます
 
 チャンネルへの自動参加を設定する場合:
 

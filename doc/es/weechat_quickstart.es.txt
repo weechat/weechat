@@ -99,7 +99,7 @@ Por ejemplo, tenemos el nick por defecto (que se basa en su login) pero
 usted puedes sobreescribirlo para el servidor identificado como oftc
 de la siguiente manera:
 
-  /set irc.server.oftc.nicks "nick1,nick2,nick3,nick4,nick5"
+  /set irc.server.oftc.nicks "nick,nick2,nick3,nick4,nick5"
 
 También para configurar el nombre de usuario y el nombre real:
 
@@ -110,12 +110,22 @@ Para que el servidor se conecte cuando WeeChat inicie:
 
   /set irc.server.oftc.autoconnect on
 
-Para correr un comando después de establecer la conexión, por
-ejemplo, una identificación con el nickserv:
+// TRANSLATION MISSING
+If SASL is available on server, you can use it for authentication (you will be
+identified before you join channels):
 
-  /set irc.server.oftc.command "/msg nickserv identify xxxxxx"
+  /set irc.server_default.sasl_mechanism dh-blowfish
+  /set irc.server.oftc.sasl_username "nick"
+  /set irc.server.oftc.sasl_password "xxxxxxx"
 
-Nota: varios comandos pueden ser escritos separados por ';' (punto y coma)
+// TRANSLATION MISSING
+To run a command after connection to server, for example to authenticate
+with nickserv (only if you don't use SASL for authentication):
+
+  /set irc.server.oftc.command "/msg nickserv identify xxxxxxx"
+
+[NOTE]
+Varios comandos pueden ser escritos separados por ';' (punto y coma).
 
 Para unirse automáticamente a canales cuando el servidor se conecte:
 
