@@ -334,7 +334,7 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                 }
 
                 size_on_screen = utf8_char_size_screen (utf_char);
-                if (size_on_screen > 0)
+                if (size_on_screen >= 0)
                 {
                     if (hide_chars_if_scrolling
                         && (x_with_hidden < bar_window->scroll_x))

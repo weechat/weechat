@@ -391,7 +391,7 @@ gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
             {
                 return chars_displayed;
             }
-            if (display_char && (size_on_screen > 0))
+            if (display_char && (size_on_screen >= 0))
             {
                 if (!simulate)
                 {

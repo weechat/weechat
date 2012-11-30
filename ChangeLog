@@ -1,12 +1,13 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.0-dev, 2012-11-27
+v0.4.0-dev, 2012-11-30
 
 
 Version 0.4.0 (under dev!)
 --------------------------
 
+* core: fix display of combining chars (bug #37775)
 * core: display default values for changed config options in output of /set
 * core: stop cmake if gcrypt lib is not found (bug #37671)
 * core: add incomplete mouse events "event-down" and "event-drag" (task #11840)
