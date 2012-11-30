@@ -772,8 +772,11 @@ Damit WeeChat weniger Speicher benötigt, solltest Du folgende Tipps umsetzen:
 * nutze die aktuelle Version (man kann davon ausgehen das eine aktuelle Version
   weniger Speicherlecks besitzt, als eine vorherige Version)
 * lade keine Erweiterungen die Du nicht benötigst. Zum Beispiel: ASpell, Fifo,
-  Logger, Perl, Python, Ruby, Lua, Tcl, Xfer (wird für DCC benötigst)
+  Logger, Perl, Python, Ruby, Lua, Tcl, Guile, Xfer (wird für DCC benötigst)
 * installiere ausschließlich Skripten die Du auch nutzt
+// TRANSLATION MISSING
+* do not load certificates if SSL is *NOT* used: set empty string in option
+  'weechat.network.gnutls_ca_file'
 * der Wert der Option 'weechat.history.max_buffer_lines_number' sollte möglichst
   niedrig eingestellt werden oder die Option 'weechat.history.max_buffer_lines_minutes'
   verwendet werden.

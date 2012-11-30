@@ -757,8 +757,11 @@ Esistono diversi trucchi per ottimizzare l'uso della memoria:
 * utilizzare l'ultima versione stabile (si suppone che abbia meno falle di memoria
   rispetto le versioni precedenti)
 * non caricare alcuni plugin se non vengono utilizzati, ad esempio: aspell, fifo,
-  logger, perl, python, ruby, lua, tcl, xfer (usato per DCC)
+  logger, perl, python, ruby, lua, tcl, guile, xfer (usato per DCC)
 * caricare solo gli script veramente necessari
+// TRANSLATION MISSING
+* do not load certificates if SSL is *NOT* used: set empty string in option
+  'weechat.network.gnutls_ca_file'
 * ridurre il valore dell'opzione 'weechat.history.max_buffer_lines_number'  oppure
   impostare il valore dell'opzione 'weechat.history.max_buffer_lines_minutes'
 * ridurre il valore dell'opzione 'weechat.history.max_commands'

@@ -764,9 +764,11 @@ Vous pouvez essayer les astuces suivantes pour consommer moins de mémoire :
 * utiliser la dernière version stable (elle est supposée avoir moins de fuites
   de mémoire que les versions plus anciennes)
 * ne pas charger les extensions si vous ne les utilisez pas, par exemple :
-  aspell, fifo, logger, perl, python, ruby, lua, tcl, xfer (utilisé pour les
-  DCC)
+  aspell, fifo, logger, perl, python, ruby, lua, tcl, guile, xfer (utilisé pour
+  les DCC)
 * charger uniquement les scripts dont vous avez vraiment besoin
+* ne pas charger les certificats si SSL n'est *PAS* utilisé : affecter une
+  chaîne vide pour l'option 'weechat.network.gnutls_ca_file'
 * réduire la valeur de l'option 'weechat.history.max_buffer_lines_number' ou
   affecter une valeur à l'option 'weechat.history.max_buffer_lines_minutes'
 * réduire la valeur de l'option 'weechat.history.max_commands'

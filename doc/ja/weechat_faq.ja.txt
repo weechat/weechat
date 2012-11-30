@@ -687,8 +687,11 @@ OpenBSD では、プラグインファイル名の末尾が ".so.0.0" です (Li
 * 最新の安定版を使う
   (古いバージョンよりもメモリリークの可能性が減ると思われます)
 * 使わないプラグインのロードを禁止する、例えば: aspell、fifo、
-  logger、perl、python、ruby、lua、tcl、xfer (DCC で使用)
+  logger、perl、python、ruby、lua、tcl、guile, xfer (DCC で使用)
 * 本当に必要なスクリプトだけをロード
+// TRANSLATION MISSING
+* do not load certificates if SSL is *NOT* used: set empty string in option
+  'weechat.network.gnutls_ca_file'
 * 'weechat.history.max_buffer_lines_number' オプションの値を減らすか、
   'weechat.history.max_buffer_lines_minutes' オプションに値を設定してください。
 * 'weechat.history.max_commands' オプションの値を減らしてください。
