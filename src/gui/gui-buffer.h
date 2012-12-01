@@ -120,7 +120,7 @@ struct t_gui_buffer
                             const char *nick2);
     void *nickcmp_callback_data;       /* data for callback                 */
 
-    /* inupt */
+    /* input */
     int input;                         /* = 1 if input is enabled           */
     int (*input_callback)(void *data,  /* called when user send data        */
                           struct t_gui_buffer *buffer,
