@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-11-27 22:36+0100\n"
+"POT-Creation-Date: 2012-12-01 15:15+0100\n"
 "PO-Revision-Date: 2012-09-29 11:43+0200\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2734,23 +2734,21 @@ msgstr ""
 "número máximo de linhas para serem coladas sem perguntar ao usuário (0 = "
 "desabilita essa característica)"
 
-msgid "prefix for error messages"
-msgstr "prefixo para mensagens de erro"
+msgid "prefix for error messages, colors are allowed with format \"${color}\""
+msgstr ""
 
-msgid "prefix for network messages"
-msgstr "prefixo para mensagens de rede"
+msgid ""
+"prefix for network messages, colors are allowed with format \"${color}\""
+msgstr ""
 
-msgid "prefix for action messages"
-msgstr "prefixo para mensagens de ação"
+msgid "prefix for action messages, colors are allowed with format \"${color}\""
+msgstr ""
 
-# Find a better translation to "join messages" or maybe just let "join"
-# untranslated?
-#, fuzzy
-msgid "prefix for join messages"
-msgstr "prefixo para mensagens de join"
+msgid "prefix for join messages, colors are allowed with format \"${color}\""
+msgstr ""
 
-msgid "prefix for quit messages"
-msgstr "prefixo para mensagens de saída"
+msgid "prefix for quit messages, colors are allowed with format \"${color}\""
+msgstr ""
 
 msgid "prefix alignment (none, left, right (default))"
 msgstr "alinhamento de prefixo (none, left, right (default))"
@@ -8885,6 +8883,24 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#~ msgid "prefix for error messages"
+#~ msgstr "prefixo para mensagens de erro"
+
+#~ msgid "prefix for network messages"
+#~ msgstr "prefixo para mensagens de rede"
+
+#~ msgid "prefix for action messages"
+#~ msgstr "prefixo para mensagens de ação"
+
+# Find a better translation to "join messages" or maybe just let "join"
+# untranslated?
+#, fuzzy
+#~ msgid "prefix for join messages"
+#~ msgstr "prefixo para mensagens de join"
+
+#~ msgid "prefix for quit messages"
+#~ msgstr "prefixo para mensagens de saída"
 
 #~ msgid ""
 #~ "condition(s) for displaying bar (for bars of type \"window\"): \"active\" "

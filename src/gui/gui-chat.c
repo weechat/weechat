@@ -91,7 +91,12 @@ gui_chat_init ()
 void
 gui_chat_prefix_build ()
 {
-    char prefix[128];
+    const char *ptr_prefix;
+    char prefix[512], *pos_color;
+    int prefix_color[GUI_CHAT_NUM_PREFIXES] =
+        { GUI_COLOR_CHAT_PREFIX_ERROR, GUI_COLOR_CHAT_PREFIX_NETWORK,
+          GUI_COLOR_CHAT_PREFIX_ACTION, GUI_COLOR_CHAT_PREFIX_JOIN,
+          GUI_COLOR_CHAT_PREFIX_QUIT };
     int i;
 
     for (i = 0; i < GUI_CHAT_NUM_PREFIXES; i++)
@@ -101,32 +106,19 @@ gui_chat_prefix_build ()
             free (gui_chat_prefix[i]);
             gui_chat_prefix[i] = NULL;
         }
+
+        ptr_prefix = CONFIG_STRING(config_look_prefix[i]);
+        pos_color = strstr (ptr_prefix, "${");
+
+        snprintf(prefix, sizeof (prefix), "%s%s\t",
+                 (!pos_color || (pos_color > ptr_prefix)) ? GUI_COLOR(prefix_color[i]) : "",
+                 ptr_prefix);
+
+        if (pos_color)
+            gui_chat_prefix[i] = gui_color_string_replace_colors (prefix);
+        else
+            gui_chat_prefix[i] = strdup (prefix);
     }
-
-    snprintf (prefix, sizeof (prefix), "%s%s\t",
-              GUI_COLOR(GUI_COLOR_CHAT_PREFIX_ERROR),
-              CONFIG_STRING(config_look_prefix[GUI_CHAT_PREFIX_ERROR]));
-    gui_chat_prefix[GUI_CHAT_PREFIX_ERROR] = strdup (prefix);
-
-    snprintf (prefix, sizeof (prefix), "%s%s\t",
-              GUI_COLOR(GUI_COLOR_CHAT_PREFIX_NETWORK),
-              CONFIG_STRING(config_look_prefix[GUI_CHAT_PREFIX_NETWORK]));
-    gui_chat_prefix[GUI_CHAT_PREFIX_NETWORK] = strdup (prefix);
-
-    snprintf (prefix, sizeof (prefix), "%s%s\t",
-              GUI_COLOR(GUI_COLOR_CHAT_PREFIX_ACTION),
-              CONFIG_STRING(config_look_prefix[GUI_CHAT_PREFIX_ACTION]));
-    gui_chat_prefix[GUI_CHAT_PREFIX_ACTION] = strdup (prefix);
-
-    snprintf (prefix, sizeof (prefix), "%s%s\t",
-              GUI_COLOR(GUI_COLOR_CHAT_PREFIX_JOIN),
-              CONFIG_STRING(config_look_prefix[GUI_CHAT_PREFIX_JOIN]));
-    gui_chat_prefix[GUI_CHAT_PREFIX_JOIN] = strdup (prefix);
-
-    snprintf (prefix, sizeof (prefix), "%s%s\t",
-              GUI_COLOR(GUI_COLOR_CHAT_PREFIX_QUIT),
-              CONFIG_STRING(config_look_prefix[GUI_CHAT_PREFIX_QUIT]));
-    gui_chat_prefix[GUI_CHAT_PREFIX_QUIT] = strdup (prefix);
 }
 
 /*

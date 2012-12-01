@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-11-27 22:36+0100\n"
+"POT-Creation-Date: 2012-12-01 15:15+0100\n"
 "PO-Revision-Date: 2012-09-29 11:42+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2655,20 +2655,21 @@ msgstr ""
 "maximální počet řádků pro vložení bez dotazování uživatele (0 = vypnout tuto "
 "vlastnost)"
 
-msgid "prefix for error messages"
-msgstr "prefix pro chybové zprávy"
+msgid "prefix for error messages, colors are allowed with format \"${color}\""
+msgstr ""
 
-msgid "prefix for network messages"
-msgstr "prefix pro zprávy sítě"
+msgid ""
+"prefix for network messages, colors are allowed with format \"${color}\""
+msgstr ""
 
-msgid "prefix for action messages"
-msgstr "prefix pro zprávy akcí"
+msgid "prefix for action messages, colors are allowed with format \"${color}\""
+msgstr ""
 
-msgid "prefix for join messages"
-msgstr "prefix pro zprávy připojení"
+msgid "prefix for join messages, colors are allowed with format \"${color}\""
+msgstr ""
 
-msgid "prefix for quit messages"
-msgstr "prefix pro zprávy ukončení"
+msgid "prefix for quit messages, colors are allowed with format \"${color}\""
+msgstr ""
 
 msgid "prefix alignment (none, left, right (default))"
 msgstr "zarovnání prefixu (none, left, right (výchozí))"
@@ -9252,6 +9253,21 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#~ msgid "prefix for error messages"
+#~ msgstr "prefix pro chybové zprávy"
+
+#~ msgid "prefix for network messages"
+#~ msgstr "prefix pro zprávy sítě"
+
+#~ msgid "prefix for action messages"
+#~ msgstr "prefix pro zprávy akcí"
+
+#~ msgid "prefix for join messages"
+#~ msgstr "prefix pro zprávy připojení"
+
+#~ msgid "prefix for quit messages"
+#~ msgstr "prefix pro zprávy ukončení"
 
 #~ msgid ""
 #~ "server: server name\n"

@@ -2117,27 +2117,32 @@ config_weechat_init_options ()
     config_look_prefix[GUI_CHAT_PREFIX_ERROR] = config_file_new_option (
         weechat_config_file, ptr_section,
         "prefix_error", "string",
-        N_("prefix for error messages"),
+        N_("prefix for error messages, colors are allowed with format "
+           "\"${color}\""),
         NULL, 0, 0, "=!=", NULL, 0, NULL, NULL, &config_change_prefix, NULL, NULL, NULL);
     config_look_prefix[GUI_CHAT_PREFIX_NETWORK] = config_file_new_option (
         weechat_config_file, ptr_section,
         "prefix_network", "string",
-        N_("prefix for network messages"),
+        N_("prefix for network messages, colors are allowed with format "
+           "\"${color}\""),
         NULL, 0, 0, "--", NULL, 0, NULL, NULL, &config_change_prefix, NULL, NULL, NULL);
     config_look_prefix[GUI_CHAT_PREFIX_ACTION] = config_file_new_option (
         weechat_config_file, ptr_section,
         "prefix_action", "string",
-        N_("prefix for action messages"),
+        N_("prefix for action messages, colors are allowed with format "
+           "\"${color}\""),
         NULL, 0, 0, " *", NULL, 0, NULL, NULL, &config_change_prefix, NULL, NULL, NULL);
     config_look_prefix[GUI_CHAT_PREFIX_JOIN] = config_file_new_option (
         weechat_config_file, ptr_section,
         "prefix_join", "string",
-        N_("prefix for join messages"),
+        N_("prefix for join messages, colors are allowed with format "
+           "\"${color}\""),
         NULL, 0, 0, "-->", NULL, 0, NULL, NULL, &config_change_prefix, NULL, NULL, NULL);
     config_look_prefix[GUI_CHAT_PREFIX_QUIT] = config_file_new_option (
         weechat_config_file, ptr_section,
         "prefix_quit", "string",
-        N_("prefix for quit messages"),
+        N_("prefix for quit messages, colors are allowed with format "
+           "\"${color}\""),
         NULL, 0, 0, "<--", NULL, 0, NULL, NULL, &config_change_prefix, NULL, NULL, NULL);
     config_look_prefix_align = config_file_new_option (
         weechat_config_file, ptr_section,

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-11-27 22:36+0100\n"
+"POT-Creation-Date: 2012-12-01 15:15+0100\n"
 "PO-Revision-Date: 2012-09-29 11:43+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2317,24 +2317,21 @@ msgstr ""
 "максимальное количество строк, вставляемых без подтверждения (0 = отключить "
 "подтверждение)"
 
-#, fuzzy
-msgid "prefix for error messages"
-msgstr "выводить отладочные сообщения"
-
-msgid "prefix for network messages"
+msgid "prefix for error messages, colors are allowed with format \"${color}\""
 msgstr ""
 
-#, fuzzy
-msgid "prefix for action messages"
-msgstr "ответить на ping"
+msgid ""
+"prefix for network messages, colors are allowed with format \"${color}\""
+msgstr ""
 
-#, fuzzy
-msgid "prefix for join messages"
-msgstr "цвет  текущего окна с сообщениями"
+msgid "prefix for action messages, colors are allowed with format \"${color}\""
+msgstr ""
 
-#, fuzzy
-msgid "prefix for quit messages"
-msgstr "сообщение о выходе по-умолчанию"
+msgid "prefix for join messages, colors are allowed with format \"${color}\""
+msgstr ""
+
+msgid "prefix for quit messages, colors are allowed with format \"${color}\""
+msgstr ""
 
 #, fuzzy
 msgid "prefix alignment (none, left, right (default))"
@@ -8758,6 +8755,22 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#, fuzzy
+#~ msgid "prefix for error messages"
+#~ msgstr "выводить отладочные сообщения"
+
+#, fuzzy
+#~ msgid "prefix for action messages"
+#~ msgstr "ответить на ping"
+
+#, fuzzy
+#~ msgid "prefix for join messages"
+#~ msgstr "цвет  текущего окна с сообщениями"
+
+#, fuzzy
+#~ msgid "prefix for quit messages"
+#~ msgstr "сообщение о выходе по-умолчанию"
 
 #, fuzzy
 #~ msgid ""

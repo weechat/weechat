@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-11-27 22:36+0100\n"
+"POT-Creation-Date: 2012-12-01 15:15+0100\n"
 "PO-Revision-Date: 2012-09-29 11:42+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2820,20 +2820,21 @@ msgstr ""
 "número máximo de líneas que el usuario puede pegar sin pedir confirmación "
 "(-1 = deshabilitar esta función)"
 
-msgid "prefix for error messages"
-msgstr "prefijo para mensajes de error"
+msgid "prefix for error messages, colors are allowed with format \"${color}\""
+msgstr ""
 
-msgid "prefix for network messages"
-msgstr "prefijo para mensajes de la red"
+msgid ""
+"prefix for network messages, colors are allowed with format \"${color}\""
+msgstr ""
 
-msgid "prefix for action messages"
-msgstr "prefijo para mensajes de acción"
+msgid "prefix for action messages, colors are allowed with format \"${color}\""
+msgstr ""
 
-msgid "prefix for join messages"
-msgstr "prefijo para mensajes de unión"
+msgid "prefix for join messages, colors are allowed with format \"${color}\""
+msgstr ""
 
-msgid "prefix for quit messages"
-msgstr "prefijo para mensajes de salida"
+msgid "prefix for quit messages, colors are allowed with format \"${color}\""
+msgstr ""
 
 # none, left, right are option names, keep in english
 msgid "prefix alignment (none, left, right (default))"
@@ -9534,6 +9535,21 @@ msgstr "Tipo"
 
 msgid "Constants"
 msgstr "Constantes"
+
+#~ msgid "prefix for error messages"
+#~ msgstr "prefijo para mensajes de error"
+
+#~ msgid "prefix for network messages"
+#~ msgstr "prefijo para mensajes de la red"
+
+#~ msgid "prefix for action messages"
+#~ msgstr "prefijo para mensajes de acción"
+
+#~ msgid "prefix for join messages"
+#~ msgstr "prefijo para mensajes de unión"
+
+#~ msgid "prefix for quit messages"
+#~ msgstr "prefijo para mensajes de salida"
 
 #~ msgid ""
 #~ "condition(s) for displaying bar (for bars of type \"window\"): \"active\" "

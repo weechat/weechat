@@ -609,7 +609,7 @@
 ** 値: -1 .. 2147483647 (デフォルト値: `1`)
 
 * [[option_weechat.look.prefix_action]] *weechat.look.prefix_action*
-** 説明: `アクションメッセージのプレフィックス`
+** 説明: `prefix for action messages, colors are allowed with format "${color}"`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `" *"`)
 
@@ -649,22 +649,22 @@
 ** 値: 未制約文字列 (デフォルト値: `"+"`)
 
 * [[option_weechat.look.prefix_error]] *weechat.look.prefix_error*
-** 説明: `エラーメッセージのプレフィックス`
+** 説明: `prefix for error messages, colors are allowed with format "${color}"`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"=!="`)
 
 * [[option_weechat.look.prefix_join]] *weechat.look.prefix_join*
-** 説明: `join メッセージのプレフィックス`
+** 説明: `prefix for join messages, colors are allowed with format "${color}"`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"-->"`)
 
 * [[option_weechat.look.prefix_network]] *weechat.look.prefix_network*
-** 説明: `ネットワークメッセージのプレフィックス`
+** 説明: `prefix for network messages, colors are allowed with format "${color}"`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"--"`)
 
 * [[option_weechat.look.prefix_quit]] *weechat.look.prefix_quit*
-** 説明: `quit メッセージのプレフィックス`
+** 説明: `prefix for quit messages, colors are allowed with format "${color}"`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"<--"`)
 

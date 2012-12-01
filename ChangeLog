@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.0-dev, 2012-11-30
+v0.4.0-dev, 2012-12-01
 
 
 Version 0.4.0 (under dev!)
 --------------------------
 
+* core: add color support in options
+  weechat.look.prefix_{action|error|join|network|quit} (task #9555)
 * core: fix display of combining chars (bug #37775)
 * core: display default values for changed config options in output of /set
 * core: stop cmake if gcrypt lib is not found (bug #37671)

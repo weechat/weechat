@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-11-27 22:36+0100\n"
+"POT-Creation-Date: 2012-12-01 15:15+0100\n"
 "PO-Revision-Date: 2012-11-04 15:41+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -3005,20 +3005,21 @@ msgstr ""
 "maximale Anzahl an Zeilen die eingefügt werden dürfen, ohne dass der "
 "Anwender gefragt wird (-1 = schaltet diese Funktion ab)"
 
-msgid "prefix for error messages"
-msgstr "Präfix für Fehlermeldungen"
+msgid "prefix for error messages, colors are allowed with format \"${color}\""
+msgstr ""
 
-msgid "prefix for network messages"
-msgstr "Präfix für Netzwerkmeldungen"
+msgid ""
+"prefix for network messages, colors are allowed with format \"${color}\""
+msgstr ""
 
-msgid "prefix for action messages"
-msgstr "Präfix für Action-Nachrichten"
+msgid "prefix for action messages, colors are allowed with format \"${color}\""
+msgstr ""
 
-msgid "prefix for join messages"
-msgstr "Präfix für Join-Nachrichten"
+msgid "prefix for join messages, colors are allowed with format \"${color}\""
+msgstr ""
 
-msgid "prefix for quit messages"
-msgstr "Präfix für Quit-Nachrichten"
+msgid "prefix for quit messages, colors are allowed with format \"${color}\""
+msgstr ""
 
 msgid "prefix alignment (none, left, right (default))"
 msgstr ""
@@ -10073,6 +10074,21 @@ msgstr "Type"
 
 msgid "Constants"
 msgstr "Konstanten"
+
+#~ msgid "prefix for error messages"
+#~ msgstr "Präfix für Fehlermeldungen"
+
+#~ msgid "prefix for network messages"
+#~ msgstr "Präfix für Netzwerkmeldungen"
+
+#~ msgid "prefix for action messages"
+#~ msgstr "Präfix für Action-Nachrichten"
+
+#~ msgid "prefix for join messages"
+#~ msgstr "Präfix für Join-Nachrichten"
+
+#~ msgid "prefix for quit messages"
+#~ msgstr "Präfix für Quit-Nachrichten"
 
 #~ msgid ""
 #~ "condition(s) for displaying bar (for bars of type \"window\"): \"active\" "

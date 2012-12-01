@@ -609,7 +609,7 @@
 ** valeurs: -1 .. 2147483647 (valeur par défaut: `1`)
 
 * [[option_weechat.look.prefix_action]] *weechat.look.prefix_action*
-** description: `préfixe pour les messages d'action`
+** description: `préfixe pour les messages d'action, les couleurs sont autorisées avec le format "${couleur}"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `" *"`)
 
@@ -649,22 +649,22 @@
 ** valeurs: toute chaîne (valeur par défaut: `"+"`)
 
 * [[option_weechat.look.prefix_error]] *weechat.look.prefix_error*
-** description: `préfixe pour les messages d'erreur`
+** description: `préfixe pour les messages d'erreur, les couleurs sont autorisées avec le format "${couleur}"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"=!="`)
 
 * [[option_weechat.look.prefix_join]] *weechat.look.prefix_join*
-** description: `préfixe pour les messages d'arrivée`
+** description: `préfixe pour les messages d'arrivée, les couleurs sont autorisées avec le format "${couleur}"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"-->"`)
 
 * [[option_weechat.look.prefix_network]] *weechat.look.prefix_network*
-** description: `préfixe pour les messages réseau`
+** description: `préfixe pour les messages réseau, les couleurs sont autorisées avec le format "${couleur}"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"--"`)
 
 * [[option_weechat.look.prefix_quit]] *weechat.look.prefix_quit*
-** description: `préfixe pour les messages de départ`
+** description: `préfixe pour les messages de départ, les couleurs sont autorisées avec le format "${couleur}"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"<--"`)
 

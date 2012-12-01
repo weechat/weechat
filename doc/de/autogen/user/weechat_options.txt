@@ -609,7 +609,7 @@
 ** Werte: -1 .. 2147483647 (Standardwert: `1`)
 
 * [[option_weechat.look.prefix_action]] *weechat.look.prefix_action*
-** Beschreibung: `Präfix für Action-Nachrichten`
+** Beschreibung: `prefix for action messages, colors are allowed with format "${color}"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `" *"`)
 
@@ -649,22 +649,22 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"+"`)
 
 * [[option_weechat.look.prefix_error]] *weechat.look.prefix_error*
-** Beschreibung: `Präfix für Fehlermeldungen`
+** Beschreibung: `prefix for error messages, colors are allowed with format "${color}"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"=!="`)
 
 * [[option_weechat.look.prefix_join]] *weechat.look.prefix_join*
-** Beschreibung: `Präfix für Join-Nachrichten`
+** Beschreibung: `prefix for join messages, colors are allowed with format "${color}"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"-->"`)
 
 * [[option_weechat.look.prefix_network]] *weechat.look.prefix_network*
-** Beschreibung: `Präfix für Netzwerkmeldungen`
+** Beschreibung: `prefix for network messages, colors are allowed with format "${color}"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"--"`)
 
 * [[option_weechat.look.prefix_quit]] *weechat.look.prefix_quit*
-** Beschreibung: `Präfix für Quit-Nachrichten`
+** Beschreibung: `prefix for quit messages, colors are allowed with format "${color}"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"<--"`)
 

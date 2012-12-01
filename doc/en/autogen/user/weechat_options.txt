@@ -609,7 +609,7 @@
 ** values: -1 .. 2147483647 (default value: `1`)
 
 * [[option_weechat.look.prefix_action]] *weechat.look.prefix_action*
-** description: `prefix for action messages`
+** description: `prefix for action messages, colors are allowed with format "${color}"`
 ** type: string
 ** values: any string (default value: `" *"`)
 
@@ -649,22 +649,22 @@
 ** values: any string (default value: `"+"`)
 
 * [[option_weechat.look.prefix_error]] *weechat.look.prefix_error*
-** description: `prefix for error messages`
+** description: `prefix for error messages, colors are allowed with format "${color}"`
 ** type: string
 ** values: any string (default value: `"=!="`)
 
 * [[option_weechat.look.prefix_join]] *weechat.look.prefix_join*
-** description: `prefix for join messages`
+** description: `prefix for join messages, colors are allowed with format "${color}"`
 ** type: string
 ** values: any string (default value: `"-->"`)
 
 * [[option_weechat.look.prefix_network]] *weechat.look.prefix_network*
-** description: `prefix for network messages`
+** description: `prefix for network messages, colors are allowed with format "${color}"`
 ** type: string
 ** values: any string (default value: `"--"`)
 
 * [[option_weechat.look.prefix_quit]] *weechat.look.prefix_quit*
-** description: `prefix for quit messages`
+** description: `prefix for quit messages, colors are allowed with format "${color}"`
 ** type: string
 ** values: any string (default value: `"<--"`)
 
