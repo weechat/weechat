@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.0-dev, 2012-12-01
+v0.4.0-dev, 2012-12-02
 
 
 Version 0.4.0 (under dev!)
 --------------------------
 
+* core: execute command with higher priority when many commands with same name
+  are found with different priorities
 * core: add color support in options
   weechat.look.prefix_{action|error|join|network|quit} (task #9555)
 * core: fix display of combining chars (bug #37775)

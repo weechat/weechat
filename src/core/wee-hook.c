@@ -656,9 +656,9 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
                    struct t_weechat_plugin *plugin, const char *string)
 {
     struct t_hook *ptr_hook, *next_hook;
-    struct t_hook *hook_for_plugin, *hook_for_other_plugin;
+    struct t_hook *hook_plugin, *hook_other_plugin, *hook_other_plugin2;
     char **argv, **argv_eol, *ptr_command_name;
-    int argc, rc, number_for_other_plugin;
+    int argc, rc, count_other_plugin;
 
     if (!buffer || !string || !string[0])
         return -1;
@@ -681,9 +681,10 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
 
     hook_exec_start ();
 
-    hook_for_plugin = NULL;
-    hook_for_other_plugin = NULL;
-    number_for_other_plugin = 0;
+    hook_plugin = NULL;
+    hook_other_plugin = NULL;
+    hook_other_plugin2 = NULL;
+    count_other_plugin = 0;
     ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND];
     while (ptr_hook)
     {
@@ -695,16 +696,18 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
         {
             if (ptr_hook->plugin == plugin)
             {
-                if (!hook_for_plugin)
-                    hook_for_plugin = ptr_hook;
+                if (!hook_plugin)
+                    hook_plugin = ptr_hook;
             }
             else
             {
                 if (any_plugin)
                 {
-                    if (!hook_for_other_plugin)
-                        hook_for_other_plugin = ptr_hook;
-                    number_for_other_plugin++;
+                    if (!hook_other_plugin)
+                        hook_other_plugin = ptr_hook;
+                    else if (!hook_other_plugin2)
+                        hook_other_plugin2 = ptr_hook;
+                    count_other_plugin++;
                 }
             }
         }
@@ -712,31 +715,53 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
         ptr_hook = next_hook;
     }
 
-    if (!hook_for_plugin && !hook_for_other_plugin)
+    if (!hook_plugin && !hook_other_plugin)
     {
-        /* command not found */
+        /* command not found at all */
         rc = -1;
     }
     else
     {
-        if (!hook_for_plugin && (number_for_other_plugin > 1))
+        if (!hook_plugin && (count_other_plugin > 1)
+            && (hook_other_plugin->priority == hook_other_plugin2->priority))
         {
             /*
              * ambiguous: no command for current plugin, but more than one
-             * command was found for other plugins, we don't know which one to
-             * run!
+             * command was found for other plugins with the same priority
+             * => we don't know which one to run!
              */
             rc = -2;
         }
         else
         {
-            ptr_hook = (hook_for_plugin) ?
-                hook_for_plugin : hook_for_other_plugin;
-
-            if (ptr_hook->running >= HOOK_COMMAND_MAX_CALLS)
-                rc = -3;
+            if (hook_plugin && hook_other_plugin)
+            {
+                /*
+                 * if we have a command in current plugin and another plugin,
+                 * choose the command with the higher priority (if priority
+                 * is the same, always choose the command for the current
+                 * plugin)
+                 */
+                ptr_hook = (hook_other_plugin->priority > hook_plugin->priority) ?
+                    hook_other_plugin : hook_plugin;
+            }
             else
             {
+                /*
+                 * choose the command for current plugin, if found, otherwise
+                 * use command found in another plugin
+                 */
+                ptr_hook = (hook_plugin) ? hook_plugin : hook_other_plugin;
+            }
+
+            if (ptr_hook->running >= HOOK_COMMAND_MAX_CALLS)
+            {
+                /* loop in execution of command => do NOT execute again */
+                rc = -3;
+            }
+            else
+            {
+                /* execute the command! */
                 ptr_hook->running++;
                 rc = (int) (HOOK_COMMAND(ptr_hook, callback))
                     (ptr_hook->callback_data, buffer, argc, argv, argv_eol);
