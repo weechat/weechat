@@ -508,18 +508,27 @@ alias_find_pos (const char *name)
 void
 alias_hook_command (struct t_alias *alias)
 {
-    char *str_completion;
+    char *str_priority_name, *str_completion;
     int length;
 
-    str_completion = NULL;
+    /*
+     * build string with priority and name: the alias priority is 2000, which
+     * is higher than default one (1000), so the alias is executed before a
+     * command (if a command with same name exists in core or in another plugin)
+     */
+    length = strlen (alias->name) + 16 + 1;
+    str_priority_name = malloc (length);
+    if (str_priority_name)
+        snprintf (str_priority_name, length, "2000|%s", alias->name);
 
+    /*
+     * if alias has no custom completion, then default is to complete with
+     * completion template of target command, for example if alias is
+     * "/alias test /buffer", then str_completion will be "%%buffer"
+     */
+    str_completion = NULL;
     if (!alias->completion)
     {
-        /*
-         * if alias has no custom completion, then default is to complete with
-         * completion template of target command, for example if alias is
-         * "/alias test /buffer", then str_completion will be "%%buffer"
-         */
         length = 2 + strlen (alias->command) + 1;
         str_completion = malloc (length);
         if (str_completion)
@@ -530,11 +539,14 @@ alias_hook_command (struct t_alias *alias)
         }
     }
 
-    alias->hook = weechat_hook_command (alias->name, alias->command,
+    alias->hook = weechat_hook_command ((str_priority_name) ? str_priority_name : alias->name,
+                                        alias->command,
                                         NULL, NULL,
                                         (str_completion) ? str_completion : alias->completion,
                                         &alias_cb, alias);
 
+    if (str_priority_name)
+        free (str_priority_name);
     if (str_completion)
         free (str_completion);
 }

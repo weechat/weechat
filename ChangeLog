@@ -33,6 +33,8 @@ Version 0.4.0 (under dev!)
   shuffle list of hosts for a same address, add argument "retry" for
   hook_connect, move "sock" from hook_connect arguments to callback of
   hook_connect (task #11205)
+* alias: give higher priority to aliases (2000) so that they take precedence
+  over an existing command
 * aspell: add bar items "aspell_dict" (dictionary used on current buffer) and
   "aspell_suggest" (suggestions for misspelled word at cursor), add option
   aspell.check.suggestions (task #12061)
