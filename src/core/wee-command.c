@@ -5778,7 +5778,11 @@ command_init ()
                   " || unalias %(palette_colors)"
                   " || reset",
                   &command_color, NULL);
-    hook_command (NULL, "command",
+    /*
+     * give high priority (50000) so that an alias will not take precedence
+     * over this command
+     */
+    hook_command (NULL, "50000|command",
                   N_("launch explicit WeeChat or plugin command"),
                   N_("<plugin> <command>"),
                   N_(" plugin: plugin name ('weechat' for WeeChat internal "
@@ -6007,7 +6011,11 @@ command_init ()
                      "value: number of history entries to show"),
                   "clear",
                   &command_history, NULL);
-    hook_command (NULL, "input",
+    /*
+     * give high priority (50000) so that an alias will not take precedence
+     * over this command
+     */
+    hook_command (NULL, "50000|input",
                   N_("functions for command line"),
                   N_("<action> [<arguments>]"),
                   N_("list of actions:\n"
