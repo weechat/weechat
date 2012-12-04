@@ -6240,14 +6240,14 @@ Paramètres :
 
 * 'prefix' : nom du préfixe :
 
-[width="70%",cols="^2e,^1l,^3,5",options="header"]
+[width="70%",cols="^2e,^1,^3,5",options="header"]
 |========================================
 | Préfixe | Valeur | Couleur                   | Description
-| error   | =!=    | jaune ("yellow")          | message d'erreur
-| network | --     | violet ("magenta")        | message du réseau
-| action  | *      | blanc ("white")           | action personnelle
-| join    | -->    | vert clair ("lightgreen") | quelqu'un a rejoint la discussion
-| quit    | <--    | rouge clair ("lightred")  | quelqu'un a quitté la discussion
+| error   | `=!=`  | jaune ("yellow")          | message d'erreur
+| network | `--`   | violet ("magenta")        | message du réseau
+| action  | `*`    | blanc ("white")           | action personnelle
+| join    | `-->`  | vert clair ("lightgreen") | quelqu'un a rejoint la discussion
+| quit    | `<--`  | rouge clair ("lightred")  | quelqu'un a quitté la discussion
 |========================================
 
 [NOTE]

@@ -6182,14 +6182,14 @@ Argomenti:
 
 * 'prefix': nome del prefisso:
 
-[width="70%",cols="^2e,^1l,^3,5",options="header"]
+[width="70%",cols="^2e,^1,^3,5",options="header"]
 |========================================
 | Prefisso | Valore | Colore       | Descrizione
-| error    | =!=    | giallo       | messaggio di errore
-| network  | --     | magenta      | messaggio dalla rete
-| action   | *      | bianco       | azione automatica
-| join     | -->    | verde chiaro | qualcuno entra nella chat corrente
-| quit     | <--    | rosso chiaro | qualcuno lascia la chat corrente
+| error    | `=!=`  | giallo       | messaggio di errore
+| network  | `--`   | magenta      | messaggio dalla rete
+| action   | `*`    | bianco       | azione automatica
+| join     | `-->`  | verde chiaro | qualcuno entra nella chat corrente
+| quit     | `<--`  | rosso chiaro | qualcuno lascia la chat corrente
 |========================================
 
 [NOTE]

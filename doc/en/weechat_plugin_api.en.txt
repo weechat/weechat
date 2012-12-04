@@ -6167,14 +6167,14 @@ Arguments:
 
 * 'prefix': name of prefix:
 
-[width="70%",cols="^2e,^1l,^3,5",options="header"]
+[width="70%",cols="^2e,^1,^3,5",options="header"]
 |========================================
 | Prefix  | Value | Color      | Description
-| error   | =!=   | yellow     | error message
-| network | --    | magenta    | message from network
-| action  | *     | white      | self action
-| join    | -->   | lightgreen | someone joins current chat
-| quit    | <--   | lightred   | someone leaves current chat
+| error   | `=!=` | yellow     | error message
+| network | `--`  | magenta    | message from network
+| action  | `*`   | white      | self action
+| join    | `-->` | lightgreen | someone joins current chat
+| quit    | `<--` | lightred   | someone leaves current chat
 |========================================
 
 [NOTE]
