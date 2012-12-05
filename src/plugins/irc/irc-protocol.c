@@ -631,6 +631,8 @@ IRC_PROTOCOL_CALLBACK(join)
 IRC_PROTOCOL_CALLBACK(kick)
 {
     char *pos_comment;
+    const char *ptr_autorejoin;
+    int rejoin;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick, *ptr_nick_kicked;
 
@@ -696,7 +698,20 @@ IRC_PROTOCOL_CALLBACK(kick)
          * more
          */
         irc_nick_free_all (server, ptr_channel);
-        if (IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AUTOREJOIN))
+
+        /* read option "autorejoin" in server */
+        rejoin = IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_AUTOREJOIN);
+
+        /*
+         * if buffer has a local variable "autorejoin", use it
+         * (it has higher priority than server option
+         */
+        ptr_autorejoin = weechat_buffer_get_string (ptr_channel->buffer,
+                                                    "localvar_autorejoin");
+        if (ptr_autorejoin)
+            rejoin = weechat_config_string_to_boolean (ptr_autorejoin);
+
+        if (rejoin)
         {
             if (IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AUTOREJOIN_DELAY) == 0)
             {

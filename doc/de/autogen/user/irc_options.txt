@@ -419,7 +419,7 @@
 ** Werte: 1 .. 65535 (Standardwert: `10`)
 
 * [[option_irc.server_default.autorejoin]] *irc.server_default.autorejoin*
-** Beschreibung: `Channels automatisch betreten, falls man rausgeworfen wurde`
+** Beschreibung: `automatically rejoin channels after kick; you can define a buffer local variable on a channel to override this value (name of variable: "autorejoin", value: "on" or "off")`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 

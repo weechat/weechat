@@ -419,7 +419,7 @@
 ** valori: 1 .. 65535 (valore predefinito: `10`)
 
 * [[option_irc.server_default.autorejoin]] *irc.server_default.autorejoin*
-** descrizione: `rientra automaticamente nei canali dopo il kick`
+** descrizione: `automatically rejoin channels after kick; you can define a buffer local variable on a channel to override this value (name of variable: "autorejoin", value: "on" or "off")`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 

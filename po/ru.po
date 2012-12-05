@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-12-05 18:27+0100\n"
+"POT-Creation-Date: 2012-12-05 19:17+0100\n"
 "PO-Revision-Date: 2012-09-29 11:43+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5305,9 +5305,11 @@ msgstr ""
 "разделённый запятыми список каналов, на которые заходить при подключении к "
 "серверу (например, \"#chan1,#chan2,#chan3 key1,key2\")"
 
-#, fuzzy
-msgid "automatically rejoin channels after kick"
-msgstr "автоматически перезаходить на каналы после кика"
+msgid ""
+"automatically rejoin channels after kick; you can define a buffer local "
+"variable on a channel to override this value (name of variable: \"autorejoin"
+"\", value: \"on\" or \"off\")"
+msgstr ""
 
 #, fuzzy
 msgid "delay (in seconds) before autorejoin (after kick)"
@@ -8756,6 +8758,10 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#, fuzzy
+#~ msgid "automatically rejoin channels after kick"
+#~ msgstr "автоматически перезаходить на каналы после кика"
 
 #, fuzzy
 #~ msgid "prefix for error messages"

@@ -419,7 +419,7 @@
 ** 値: 1 .. 65535 (デフォルト値: `10`)
 
 * [[option_irc.server_default.autorejoin]] *irc.server_default.autorejoin*
-** 説明: `キックされた後に自動的に再度参加`
+** 説明: `automatically rejoin channels after kick; you can define a buffer local variable on a channel to override this value (name of variable: "autorejoin", value: "on" or "off")`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `off`)
 

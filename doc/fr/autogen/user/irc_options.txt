@@ -419,7 +419,7 @@
 ** valeurs: 1 .. 65535 (valeur par défaut: `10`)
 
 * [[option_irc.server_default.autorejoin]] *irc.server_default.autorejoin*
-** description: `rejoindre automatiquement les canaux après un "kick"`
+** description: `rejoindre automatiquement les canaux après un "kick"; vous pouvez définir une variable locale de tampon sur un canal pour remplacer cette valeur (nom de la variable: "autorejoin", valeur: "on" ou "off")`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `off`)
 

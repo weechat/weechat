@@ -1631,7 +1631,10 @@ irc_config_server_new_option (struct t_config_file *config_file,
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "boolean",
-                N_("automatically rejoin channels after kick"),
+                N_("automatically rejoin channels after kick; you can define "
+                   "a buffer local variable on a channel to override this "
+                   "value (name of variable: \"autorejoin\", value: \"on\" or "
+                   "\"off\")"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
