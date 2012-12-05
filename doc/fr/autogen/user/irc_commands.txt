@@ -56,7 +56,7 @@ Sans paramètre, cette commande affiche la liste des bans pour le canal courant.
 [command]*`connect`* se connecter à un/plusieurs serveur(s) IRC::
 ........................................
 /connect  [<serveur> [<serveur>...] [-<option>[=<valeur>]] [-no<option>] [-nojoin] [-switch]
-          -all|-open [-nojoin] [-switch]
+          -all|-auto|-open [-nojoin] [-switch]
 
  serveur: nom du serveur, qui peut être :
           - nom interne de serveur (créé par /server add, usage recommandé)
@@ -65,6 +65,7 @@ Sans paramètre, cette commande affiche la liste des bans pour le canal courant.
   option: définir l'option pour le serveur (pour une option booléenne, la valeur peut être omise)
 nooption: définir l'option booléenne à 'off' (par exemple: -nossl)
     -all: se connecter à tous les serveurs définis dans la configuration
+   -auto: se connecter aux serveurs qui ont "autoconnect" activé
    -open: se connecter à tous les serveurs ouverts qui ne sont pas actuellement connectés
  -nojoin: ne rejoindre aucun canal (même si l'autojoin est activé pour le serveur)
  -switch: basculer vers l'adresse suivante du serveur

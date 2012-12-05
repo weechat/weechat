@@ -55,27 +55,28 @@ Senza argomento, il comando mostra la lista dei ban per il canale corrente.
 [[command_irc_connect]]
 [command]*`connect`* connette ad uno o più server IRC::
 ........................................
-/connect  <server> [<server>...] [-<opzione>[=<valore>]] [-no<option>] [-nojoin] [-switch]
-          -all|-open [-nojoin] [-switch]
+/connect  <server> [<server>...] [-<option>[=<value>]] [-no<option>] [-nojoin] [-switch]
+          -all|-auto|-open [-nojoin] [-switch]
 
-    server: nome del server, che può essere:
-            - nome interno del server (creato da /server add, uso raccomandato)
-            - nome host/porta o IP/porta (in questo modo viene creato un server
-    TEMPORANEO), la porta 6667 è la predefinita
-            - URL con il formato: irc[6][s]://[nick[:password]@]irc.esempio.org[:porta][/#canale1][,#canale2[...]]
-   opzione: imposta opzione per il server (per un'opzione bool, il valore può essere omesso)
-  nooption: imposta un'opzione bool su 'off' (ad esempio: -nossl)
-      -all: connette a tutti i server definiti nella configurazione
-     -open: connette a tutti i server aperti a cui non si è connessi
-   -nojoin: non entra su nessun canale (anche se l'ingresso automatico è attivo sul server)
-   -switch: passa al successivo indirizzo del server
+    server: server name, which can be:
+            - internal server name (created by /server add, recommended usage)
+            - hostname/port or IP/port (this will create a TEMPORARY server), port is 6667 by default
+            - URL with format: irc[6][s]://[nickname[:password]@]irc.example.org[:port][/#channel1][,#channel2[...]]
+    option: set option for server (for boolean option, value can be omitted)
+  nooption: set boolean option to 'off' (for example: -nossl)
+      -all: connect to all servers defined in configuration
+     -auto: connect to servers with autoconnect enabled
+     -open: connect to all opened servers that are not currently connected
+   -nojoin: do not join any channel (even if autojoin is enabled on server)
+   -switch: switch to next server address
 
-Esempi:
+Examples:
   /connect freenode
   /connect irc.oftc.net/6667
   /connect irc6.oftc.net/6667 -ipv6
   /connect irc6.oftc.net/6697 -ipv6 -ssl
-  /connect mio.server.org/6697 -ssl -password=test
+  /connect my.server.org/6697 -ssl -password=test
+  /connect irc://nick@irc.oftc.net/#channel
   /connect -switch
 ........................................
 
