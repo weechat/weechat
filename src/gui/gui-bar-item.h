@@ -80,7 +80,8 @@ extern int gui_bar_item_used_in_bar (struct t_gui_bar *bar,
                                      const char *item_name,
                                      int partial_name);
 extern int gui_bar_item_used_in_at_least_one_bar (const char *item_name,
-                                                  int partial_name);
+                                                  int partial_name,
+                                                  int ignore_hidden_bars);
 extern void gui_bar_item_set_prefix_name_suffix (const char *item_name,
                                                  char **prefix, char **name,
                                                  char **suffix);

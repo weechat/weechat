@@ -1842,7 +1842,8 @@ gui_bar_create_default_input ()
     char *buf;
 
     /* search an input_text item */
-    if (!gui_bar_item_used_in_at_least_one_bar (gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT], 1))
+    if (!gui_bar_item_used_in_at_least_one_bar (gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT],
+                                                1, 0))
     {
         ptr_bar = gui_bar_search (GUI_BAR_DEFAULT_NAME_INPUT);
         if (ptr_bar)

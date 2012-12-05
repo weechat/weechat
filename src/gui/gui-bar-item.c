@@ -221,7 +221,8 @@ gui_bar_item_used_in_bar (struct t_gui_bar *bar, const char *item_name,
  */
 
 int
-gui_bar_item_used_in_at_least_one_bar (const char *item_name, int partial_name)
+gui_bar_item_used_in_at_least_one_bar (const char *item_name, int partial_name,
+                                       int ignore_hidden_bars)
 {
     struct t_gui_bar *ptr_bar;
     int i, j, length;
@@ -230,6 +231,13 @@ gui_bar_item_used_in_at_least_one_bar (const char *item_name, int partial_name)
 
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
+        /* if bar is hidden and that hidden bars are ignored, just skip it */
+        if (ignore_hidden_bars
+            && CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN]))
+        {
+            continue;
+        }
+
         for (i = 0; i < ptr_bar->items_count; i++)
         {
             for (j = 0; j < ptr_bar->items_subcount[i]; j++)

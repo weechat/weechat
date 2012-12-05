@@ -45,6 +45,7 @@
 #include "../plugins/plugin.h"
 #include "gui-key.h"
 #include "gui-bar.h"
+#include "gui-bar-item.h"
 #include "gui-bar-window.h"
 #include "gui-buffer.h"
 #include "gui-chat.h"
@@ -1584,16 +1585,21 @@ gui_key_paste_check (int bracketed_paste)
     int max_lines;
 
     max_lines = CONFIG_INTEGER(config_look_paste_max_lines);
-    if (max_lines >= 0)
+
+    if ((max_lines < 0)
+        || !gui_bar_item_used_in_at_least_one_bar (gui_bar_item_names[GUI_BAR_ITEM_INPUT_PASTE],
+                                                   0, 1))
     {
-        if (!bracketed_paste && (max_lines == 0))
-            max_lines = 1;
-        if (gui_key_get_paste_lines () > max_lines)
-        {
-            /* ask user what to do */
-            gui_key_paste_start ();
-            return 1;
-        }
+        return 0;
+    }
+
+    if (!bracketed_paste && (max_lines == 0))
+        max_lines = 1;
+    if (gui_key_get_paste_lines () > max_lines)
+    {
+        /* ask user what to do */
+        gui_key_paste_start ();
+        return 1;
     }
 
     return 0;
