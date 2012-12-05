@@ -763,7 +763,7 @@ irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
                      char **argv, char **argv_eol)
 {
     int i, nb_connect, connect_ok, all_servers, all_opened, switch_address;
-    int no_join;
+    int no_join, autoconnect;
     char *name;
 
     IRC_BUFFER_GET_SERVER(buffer);
@@ -778,6 +778,7 @@ irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
     all_opened = 0;
     switch_address = 0;
     no_join = 0;
+    autoconnect = 0;
     for (i = 1; i < argc; i++)
     {
         if (weechat_strcasecmp (argv[i], "-all") == 0)
@@ -788,6 +789,8 @@ irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
             switch_address = 1;
         else if (weechat_strcasecmp (argv[i], "-nojoin") == 0)
             no_join = 1;
+        else if (weechat_strcasecmp (argv[i], "-auto") == 0)
+            autoconnect = 1;
     }
 
     if (all_opened)
@@ -813,6 +816,23 @@ irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
              ptr_server = ptr_server->next_server)
         {
             if (!ptr_server->is_connected && (!ptr_server->hook_connect))
+            {
+                if (!irc_command_connect_one_server (ptr_server,
+                                                     switch_address, no_join))
+                {
+                    connect_ok = 0;
+                }
+            }
+        }
+        return (connect_ok) ? WEECHAT_RC_OK : WEECHAT_RC_ERROR;
+    }
+    else if (autoconnect)
+    {
+        for (ptr_server = irc_servers; ptr_server;
+             ptr_server = ptr_server->next_server)
+        {
+            if (!ptr_server->is_connected && (!ptr_server->hook_connect)
+                && (IRC_SERVER_OPTION_BOOLEAN(ptr_server, IRC_SERVER_OPTION_AUTOCONNECT)))
             {
                 if (!irc_command_connect_one_server (ptr_server,
                                                      switch_address, no_join))
@@ -5108,7 +5128,7 @@ irc_command_init ()
                           N_("connect to IRC server(s)"),
                           N_("<server> [<server>...] [-<option>[=<value>]] "
                              "[-no<option>] [-nojoin] [-switch]"
-                             " || -all|-open [-nojoin] [-switch]"),
+                             " || -all|-auto|-open [-nojoin] [-switch]"),
                           N_("    server: server name, which can be:\n"
                              "            - internal server name (created by "
                              "/server add, recommended usage)\n"
@@ -5124,6 +5144,8 @@ irc_command_init ()
                              "example: -nossl)\n"
                              "      -all: connect to all servers defined in "
                              "configuration\n"
+                             "     -auto: connect to servers with autoconnect "
+                             "enabled\n"
                              "     -open: connect to all opened servers that "
                              "are not currently connected\n"
                              "   -nojoin: do not join any channel (even if "
@@ -5137,7 +5159,7 @@ irc_command_init ()
                              "  /connect my.server.org/6697 -ssl -password=test\n"
                              "  /connect irc://nick@irc.oftc.net/#channel\n"
                              "  /connect -switch"),
-                          "%(irc_servers)|-all|-open|-nojoin|-switch|%*",
+                          "%(irc_servers)|-all|-auto|-open|-nojoin|-switch|%*",
                           &irc_command_connect, NULL);
     weechat_hook_command ("ctcp",
                           N_("send a CTCP message (Client-To-Client Protocol)"),

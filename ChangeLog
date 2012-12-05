@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.0-dev, 2012-12-02
+v0.4.0-dev, 2012-12-05
 
 
 Version 0.4.0 (under dev!)
@@ -42,6 +42,7 @@ Version 0.4.0 (under dev!)
   aspell.check.suggestions (task #12061)
 * aspell: fix creation of spellers when number of dictionaries is different
   between two buffers
+* irc: add option "-auto" for command /connect (task #9340)
 * irc: add support of "server-time" capability (task #12255)
 * irc: add support of tags in messages
 * irc: fix crash on /upgrade (free channels before server data when a server
