@@ -1,7 +1,7 @@
 WeeChat Release Notes
 =====================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.0-dev, 2012-11-18
+v0.4.0-dev, 2012-12-05
 
 
 Version 0.4.0 (under dev!)
@@ -178,6 +178,8 @@ Important release notes:
 
 * if you are using `/upgrade` from a previous release, then you must reconnect
   to IRC servers in order to use new command /wallchops.
+* option 'irc.look.show_away_once' has been renamed to
+  'irc.look.display_pv_away_once'
 * option 'irc.network.lag_min_show' is now in milliseconds, you should set new
   value: your current value multiplied by 1000 (new default value is 500).
 
