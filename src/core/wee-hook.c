@@ -1413,7 +1413,7 @@ hook_process (struct t_weechat_plugin *plugin,
 void
 hook_process_child (struct t_hook *hook_process)
 {
-    char **exec_args, str_arg[64];
+    char **exec_args, *arg0, str_arg[64];
     const char *ptr_url, *ptr_arg;
     int rc, i, num_args;
 
@@ -1503,6 +1503,12 @@ hook_process_child (struct t_hook *hook_process)
 
         if (exec_args)
         {
+            arg0 = string_expand_home (exec_args[0]);
+            if (arg0)
+            {
+                free (exec_args[0]);
+                exec_args[0] = arg0;
+            }
             if (weechat_debug_core >= 1)
             {
                 log_printf ("hook_process, command='%s'",
