@@ -1414,7 +1414,7 @@ void
 hook_process_child (struct t_hook *hook_process)
 {
     char **exec_args, str_arg[64];
-    const char *ptr_url;
+    const char *ptr_url, *ptr_arg;
     int rc, i, num_args;
 
     /*
@@ -1464,7 +1464,9 @@ hook_process_child (struct t_hook *hook_process)
             while (1)
             {
                 snprintf (str_arg, sizeof (str_arg), "arg%d", num_args + 1);
-                if (!hashtable_has_key (HOOK_PROCESS(hook_process, options), str_arg))
+                ptr_arg = hashtable_get (HOOK_PROCESS(hook_process, options),
+                                         str_arg);
+                if (!ptr_arg)
                     break;
                 num_args++;
             }
@@ -1479,12 +1481,13 @@ hook_process_child (struct t_hook *hook_process)
             exec_args = malloc ((num_args + 2) * sizeof (exec_args[0]));
             if (exec_args)
             {
-                exec_args[0] = HOOK_PROCESS(hook_process, command);
+                exec_args[0] = strdup (HOOK_PROCESS(hook_process, command));
                 for (i = 1; i <= num_args; i++)
                 {
                     snprintf (str_arg, sizeof (str_arg), "arg%d", i);
-                    exec_args[i] = (char *)hashtable_get (HOOK_PROCESS(hook_process, options),
-                                                          str_arg);
+                    ptr_arg = hashtable_get (HOOK_PROCESS(hook_process, options),
+                                             str_arg);
+                    exec_args[i] = (ptr_arg) ? strdup (ptr_arg) : NULL;
                 }
                 exec_args[num_args + 1] = NULL;
             }
