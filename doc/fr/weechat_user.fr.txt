@@ -2570,36 +2570,6 @@ Commandes
 
 include::autogen/user/xfer_commands.txt[]
 
-[[authors]]
-Auteurs
--------
-
-[[developers]]
-Développeurs
-~~~~~~~~~~~~
-
-Développeur principal::
-    Sébastien Helleu (FlashCode)
-
-[[contributors]]
-Contributeurs
-~~~~~~~~~~~~~
-
-Empaqueteurs::
-    Emmanuel Bouthenot (kolter), Julien Louis (ptitlouis), Odin
-
-Traductions::
-    Jiri Golembiovsky (GolemJ), soltys, Nils Görs (nils_2), rettub,
-    Frank Zacharias, Pavel Shevchuk, Elián Hanisch (m4v), Voroskoi,
-    Marco Paolone, Ivan Sichmann Freitas, Lázaro A., Ryuunosuke Ayanokouzi,
-    Quico Noizeux
-
-Patchs::
-    Dmitry Kobylin, Rudolf Polzer, Jim Ramsay, Pistos, Gwenn, Dominik Honnef,
-    JD Horelick, Stefano Pigozzi, Gu1ll4um3r0m41n, Kyle Fuller,
-    Quentin Glidic (SardemFF7), Simon Kuhnle, Mateusz Poszwa, Peter Boström,
-    Arvydas Sidorenko, Simon Arlott
-
 [[support]]
 Support
 -------
@@ -2612,7 +2582,6 @@ Moyens d'obtenir du support :
 
 * IRC : serveur 'irc.freenode.net', canaux '#weechat' (anglais) et
   '#weechat-fr' (français)
-* Forum WeeChat : http://forums.flashtux.org/
 * Liste de diffusion :
 ** inscription : http://mail.nongnu.org/mailman/listinfo/weechat-support
 ** envoi d'un mail à weechat-support@nongnu.org

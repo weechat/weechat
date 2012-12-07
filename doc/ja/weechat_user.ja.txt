@@ -2402,33 +2402,6 @@ include::autogen/user/xfer_options.txt[]
 
 include::autogen/user/xfer_commands.txt[]
 
-[[authors]]
-== 作者 ==
-
-[[developers]]
-=== 開発者 ===
-
-主任開発者::
-    Sébastien Helleu (FlashCode)
-
-[[contributors]]
-=== 貢献者 ===
-
-パッケージ化::
-    Emmanuel Bouthenot (kolter)、Julien Louis (ptitlouis)、Odin
-
-翻訳::
-    Jiri Golembiovsky (GolemJ)、soltys、Nils Görs (nils_2)、rettub、
-    Frank Zacharias、Pavel Shevchuk、Elián Hanisch (m4v)、Voroskoi、
-    Marco Paolone、Ivan Sichmann Freitas、Lázaro A.、Ryuunosuke Ayanokouzi、
-    Quico Noizeux
-
-パッチ::
-    Dmitry Kobylin、Rudolf Polzer、Jim Ramsay、Pistos、Gwenn、Dominik Honnef、
-    JD Horelick、Stefano Pigozzi、Gu1ll4um3r0m41n、Kyle Fuller、
-    Quentin Glidic (SardemFF7)、Simon Kuhnle、Mateusz Poszwa、Peter Boström、
-    Arvydas Sidorenko、Simon Arlott
-
 [[support]]
 == サポート ==
 
@@ -2440,7 +2413,6 @@ include::autogen/user/xfer_commands.txt[]
 
 * IRC: サーバ 'irc.freenode.net' 、チャンネル '#weechat' (英語) と
   '#weechat-fr' (フランス語)
-* WeeChat フォーラム: http://forums.flashtux.org/
 * メーリングリスト:
 ** 購読: http://mail.nongnu.org/mailman/listinfo/weechat-support
 ** weechat-support@nongnu.org 宛にメールを送信
