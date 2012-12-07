@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.0-dev, 2012-12-05
+v0.4.0-dev, 2012-12-07
 
 
 Version 0.4.0 (under dev!)
 --------------------------
 
+* core: fix scroll of one page down when weechat.look.scroll_page_percent is
+  less than 100 (bug #37875)
 * core: disable paste detection and confirmation if bar item "input_paste" is
   not used in a visible bar (task #12327)
 * core: use high priority (50000) for commands /command and /input so that an

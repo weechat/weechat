@@ -1307,12 +1307,11 @@ gui_window_page_down (struct t_gui_window *window)
                                               &window->scroll->start_line_pos,
                                               num_lines);
 
-                /* check if we can display all */
+                /* check if we can display all lines in chat area */
                 ptr_line = window->scroll->start_line;
                 line_pos = window->scroll->start_line_pos;
-                gui_chat_calculate_line_diff (window, &ptr_line,
-                                              &line_pos,
-                                              num_lines);
+                gui_chat_calculate_line_diff (window, &ptr_line, &line_pos,
+                                              window->win_chat_height - 1);
                 if (!ptr_line)
                 {
                     window->scroll->start_line = NULL;
@@ -1399,11 +1398,10 @@ gui_window_scroll_down (struct t_gui_window *window)
                                               &window->scroll->start_line_pos,
                                               CONFIG_INTEGER(config_look_scroll_amount));
 
-                /* check if we can display all */
+                /* check if we can display all lines in chat area */
                 ptr_line = window->scroll->start_line;
                 line_pos = window->scroll->start_line_pos;
-                gui_chat_calculate_line_diff (window, &ptr_line,
-                                              &line_pos,
+                gui_chat_calculate_line_diff (window, &ptr_line, &line_pos,
                                               window->win_chat_height - 1);
 
                 if (!ptr_line)
