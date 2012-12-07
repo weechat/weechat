@@ -6,48 +6,55 @@ Developers
 
 * General code
 
-** Sébastien Helleu <flashcode@flashtux.org>
-*** Web: http://www.weechat.org/
-*** IRC: 'FlashCode' on irc.freenode.net
-
+** Sébastien Helleu (FlashCode) <flashcode@flashtux.org>
 
 * Scripts plugins, debian packager
 
-** Emmanuel Bouthenot <kolter@openics.org>
-*** IRC: 'kolter' on irc.freenode.net
+** Emmanuel Bouthenot (kolter) <kolter@openics.org>
 
 
 Contributors
 ------------
 
-* Julien Louis <ptitlouis@sysif.net>, IRC: 'ptitlouis'
-* Rudolf Polzer <rpolzer-rp@durchnull.de>, IRC: 'divVerent'
-* Jiri Golembiovsky <golemj@gmail.com>, IRC: 'GolemJ'
-* Jim Ramsay <i.am@jimramsay.com>, IRC: 'lack'
-* Odin <odin@dtdm.org>, IRC: 'Odin'
-* Pistos, IRC: 'pistos'
-* Gwenn, IRC: 'gwenn'
-* Voroskoi, IRC: 'voroskoi'
-* Frank Zacharias
-* Pavel Shevchuk, IRC: 'Stalwart'
-* soltys
-* Nils Görs
-* rettub
-* Elián Hanisch, IRC: 'm4v'
-* Marco Paolone
+Alphabetically:
+
+* Arvydas Sidorenko
 * Dmitry Kobylin
 * Dominik Honnef
-* JD Horelick, IRC: 'jdhore'
-* Stefano Pigozzi
-* Ivan Sichmann Freitas
+* Elián Hanisch (m4v)
+* Frank Zacharias
 * Gu1ll4um3r0m41n
+* gwenn
+* Ivan Sichmann Freitas
+* JD Horelick (jdhore)
+* Jim Ramsay (lack)
+* Jiri Golembiovsky (GolemJ)
+* Julien Louis (ptitlouis)
+* Kyle Fuller (kylef)
+* Lázaro A.
+* Marco Paolone
+* Mateusz Poszwa
+* Nils Görs (nils_2)
+* Odin
+* Pavel Shevchuk (Stalwart)
+* Peter Boström (pbos)
+* pistos
+* Quentin Glidic (SardemFF7)
+* Quico Noizeux
+* rettub
+* Rudolf Polzer (divVerent)
+* Ryuunosuke Ayanokouzi
+* Simon Arlott
+* Simon Kuhnle
+* soltys
+* Stefano Pigozzi
+* voroskoi
 
 
 Contact
 -------
 
-Whole team is connected to IRC:
-server: 'irc.freenode.net', channels: '#weechat' (english) and '#weechat-fr' (french)
+Developers are connected to IRC:
 
-
-See README file for license detail.
+* server: 'irc.freenode.net'
+* channels: '#weechat' (english) and '#weechat-fr' (french)
