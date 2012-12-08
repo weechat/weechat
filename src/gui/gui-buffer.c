@@ -3151,7 +3151,7 @@ gui_buffer_hdata_buffer_cb (void *data, const char *hdata_name)
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_buffer", "next_buffer",
-                       0, NULL, NULL);
+                       0, 0, NULL, NULL);
     if (hdata)
     {
         HDATA_VAR(struct t_gui_buffer, plugin, POINTER, 0, NULL, "plugin");
@@ -3240,7 +3240,7 @@ gui_buffer_hdata_input_undo_cb (void *data, const char *hdata_name)
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_undo", "next_undo",
-                       0, NULL, NULL);
+                       0, 0, NULL, NULL);
     if (hdata)
     {
         HDATA_VAR(struct t_gui_input_undo, data, STRING, 0, NULL, NULL);
@@ -3264,7 +3264,7 @@ gui_buffer_hdata_buffer_visited_cb (void *data, const char *hdata_name)
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_buffer", "next_buffer",
-                       0, NULL, NULL);
+                       0, 0, NULL, NULL);
     if (hdata)
     {
         HDATA_VAR(struct t_gui_buffer_visited, buffer, POINTER, 0, NULL, "buffer");

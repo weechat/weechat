@@ -964,7 +964,7 @@ irc_notify_hdata_notify_cb (void *data, const char *hdata_name)
     (void) data;
 
     hdata = weechat_hdata_new (hdata_name, "prev_notify", "next_notify",
-                               0, NULL, NULL);
+                               0, 0, NULL, NULL);
     if (hdata)
     {
         WEECHAT_HDATA_VAR(struct t_irc_notify, server, POINTER, 0, NULL, "irc_server");

@@ -4440,7 +4440,7 @@ irc_server_hdata_server_cb (void *data, const char *hdata_name)
     (void) data;
 
     hdata = weechat_hdata_new (hdata_name, "prev_server", "next_server",
-                               0, NULL, NULL);
+                               0, 0, NULL, NULL);
     if (hdata)
     {
         WEECHAT_HDATA_VAR(struct t_irc_server, name, STRING, 0, NULL, NULL);

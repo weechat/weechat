@@ -13130,7 +13130,7 @@ les variables du hdata.
 weechat_hdata_new
 ^^^^^^^^^^^^^^^^^
 
-_Nouveau dans la version 0.3.6, mis à jour dans la 0.3.9._
+_Nouveau dans la version 0.3.6, mis à jour dans la 0.3.9 et 0.4.0._
 
 Créé un "hdata".
 
@@ -13152,7 +13152,7 @@ Prototype :
 [source,C]
 ----------------------------------------
 struct t_hdata *weechat_hdata_new (const char *hdata_name, const char *var_prev, const char *var_next,
-                                   int delete_allowed,
+                                   int create_allowed, int delete_allowed,
                                    int (*callback_update)(void *data,
                                                           struct t_hdata *hdata,
                                                           void *pointer,
@@ -13169,6 +13169,8 @@ Paramètres :
 * 'var_next' : nom de la variable dans la structure qui est un pointeur vers
   l'élément suivant dans la liste (peut être NULL si une telle variable
   n'existe pas)
+* 'create_allowed' : 1 si la création de structure est autorisée, sinon 0
+  (_nouveau dans la version 0.4.0_)
 * 'delete_allowed' : 1 si la suppression de structure est autorisée, sinon 0
   (_nouveau dans la version 0.3.9_)
 * 'callback_update' : fonction appelée pour mettre à jour des données dans le
@@ -13190,7 +13192,7 @@ Exemple en C :
 
 [source,C]
 ----------------------------------------
-struct t_hdata *hdata = weechat_hdata_new ("myplugin_list", "prev", "next", 0, &callback_update, NULL);
+struct t_hdata *hdata = weechat_hdata_new ("myplugin_list", "prev", "next", 0, 0, &callback_update, NULL);
 ----------------------------------------
 
 [NOTE]
@@ -14324,11 +14326,14 @@ Paramètres :
   variables, les valeurs sont les nouvelles valeurs pour les variables (clés et
   valeurs sont des chaînes de caractères), quelqes clés spéciales sont
   acceptées :
-** clé '__delete_allowed' (avec n'importe quelle valeur) : retourne 1 si la
+** clé `__create_allowed` (avec n'importe quelle valeur) : retourne 1 si la
+   création est autorisée pour la strucrure, sinon 0
+   (_nouveau dans la version 0.4.0_)
+** clé `__delete_allowed` (avec n'importe quelle valeur) : retourne 1 si la
    suppression est autorisée pour la structure, sinon 0
-** clé '__update_allowed', la valeur est le nom d'une variable : retourne 1 si
+** clé `__update_allowed`, la valeur est le nom d'une variable : retourne 1 si
    la mise à jour est autorisée pour la variable, sinon 0
-** clé '__delete' (avec n'importe quelle valeur) : supprime la structure
+** clé `__delete` (avec n'importe quelle valeur) : supprime la structure
    (si autorisé)
 
 Valeur de retour :

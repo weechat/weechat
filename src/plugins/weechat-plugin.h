@@ -50,7 +50,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20121102-01"
+#define WEECHAT_PLUGIN_API_VERSION "20121208-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -843,7 +843,7 @@ struct t_weechat_plugin
     struct t_hdata *(*hdata_new) (struct t_weechat_plugin *plugin,
                                   const char *hdata_name, const char *var_prev,
                                   const char *var_next,
-                                  int delete_allowed,
+                                  int create_allowed, int delete_allowed,
                                   int (*callback_update)(void *data,
                                                          struct t_hdata *hdata,
                                                          void *pointer,
@@ -1623,11 +1623,11 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 
 /* hdata */
 #define weechat_hdata_new(__hdata_name, __var_prev, __var_next,         \
-                          __delete_allowed, __callback_update,          \
-                          __callback_update_data)                       \
+                          __create_allowed, __delete_allowed,           \
+                          __callback_update, __callback_update_data)    \
     weechat_plugin->hdata_new(weechat_plugin, __hdata_name, __var_prev, \
-                              __var_next, __delete_allowed,             \
-                              __callback_update,                        \
+                              __var_next, __create_allowed,             \
+                              __delete_allowed, __callback_update,      \
                               __callback_update_data)
 #define weechat_hdata_new_var(__hdata, __name, __offset, __type,        \
                               __update_allowed, __array_size,           \

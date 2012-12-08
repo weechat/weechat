@@ -29,9 +29,9 @@ struct t_gui_history
     struct t_gui_history *prev_history;/* link to previous text/command     */
 };
 
-extern struct t_gui_history *history_global;
-extern struct t_gui_history *last_history_global;
-extern struct t_gui_history *history_global_ptr;
+extern struct t_gui_history *gui_history;
+extern struct t_gui_history *last_gui_history;
+extern struct t_gui_history *gui_history_ptr;
 
 extern void gui_history_buffer_add (struct t_gui_buffer *buffer,
                                     const char *string);

@@ -391,7 +391,7 @@ gui_input_return (struct t_gui_buffer *buffer)
             gui_completion_stop (window->buffer->completion, 1);
             gui_buffer_undo_free_all (window->buffer);
             window->buffer->ptr_history = NULL;
-            history_global_ptr = NULL;
+            gui_history_ptr = NULL;
             gui_input_optimize_size (window->buffer);
             gui_input_text_changed_modifier_and_signal (window->buffer, 0);
             input_data (window->buffer, command);
@@ -1215,8 +1215,8 @@ gui_input_history_global_previous (struct t_gui_buffer *buffer)
     if (window)
     {
         gui_input_history_previous (window,
-                                    history_global,
-                                    &history_global_ptr);
+                                    gui_history,
+                                    &gui_history_ptr);
     }
 }
 
@@ -1234,8 +1234,8 @@ gui_input_history_global_next (struct t_gui_buffer *buffer)
     if (window)
     {
         gui_input_history_next (window,
-                                history_global,
-                                &history_global_ptr);
+                                gui_history,
+                                &gui_history_ptr);
     }
 }
 

@@ -356,7 +356,7 @@ upgrade_weechat_save ()
         return 0;
 
     rc = 1;
-    rc &= upgrade_weechat_save_history (upgrade_file, last_history_global);
+    rc &= upgrade_weechat_save_history (upgrade_file, last_gui_history);
     rc &= upgrade_weechat_save_buffers (upgrade_file);
     rc &= upgrade_weechat_save_misc (upgrade_file);
     rc &= upgrade_weechat_save_hotlist (upgrade_file);

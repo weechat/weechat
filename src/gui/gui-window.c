@@ -1610,7 +1610,7 @@ gui_window_hdata_window_cb (void *data, const char *hdata_name)
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_window", "next_window",
-                       0, NULL, NULL);
+                       0, 0, NULL, NULL);
     if (hdata)
     {
         HDATA_VAR(struct t_gui_window, number, INTEGER, 0, NULL, NULL);
@@ -1657,7 +1657,7 @@ gui_window_hdata_window_scroll_cb (void *data, const char *hdata_name)
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_scroll", "next_scroll",
-                       0, NULL, NULL);
+                       0, 0, NULL, NULL);
     if (hdata)
     {
         HDATA_VAR(struct t_gui_window_scroll, buffer, POINTER, 0, NULL, "buffer");
@@ -1686,7 +1686,7 @@ gui_window_hdata_window_tree_cb (void *data, const char *hdata_name)
     /* make C compiler happy */
     (void) data;
 
-    hdata = hdata_new (NULL, hdata_name, NULL, NULL, 0, NULL, NULL);
+    hdata = hdata_new (NULL, hdata_name, NULL, NULL, 0, 0, NULL, NULL);
     if (hdata)
     {
         HDATA_VAR(struct t_gui_window_tree, parent_node, POINTER, 0, NULL, hdata_name);

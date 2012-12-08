@@ -319,7 +319,7 @@ irc_ignore_hdata_ignore_cb (void *data, const char *hdata_name)
     (void) data;
 
     hdata = weechat_hdata_new (hdata_name, "prev_ignore", "next_ignore",
-                               0, NULL, NULL);
+                               0, 0, NULL, NULL);
     if (hdata)
     {
         WEECHAT_HDATA_VAR(struct t_irc_ignore, number, INTEGER, 0, NULL, NULL);

@@ -2607,7 +2607,7 @@ config_file_hdata_config_file_cb (void *data, const char *hdata_name)
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_config", "next_config",
-                       0, NULL, NULL);
+                       0, 0, NULL, NULL);
     if (hdata)
     {
         HDATA_VAR(struct t_config_file, plugin, POINTER, 0, NULL, "plugin");
@@ -2639,7 +2639,7 @@ config_file_hdata_config_section_cb (void *data, const char *hdata_name)
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_section", "next_section",
-                       0, NULL, NULL);
+                       0, 0, NULL, NULL);
     if (hdata)
     {
         HDATA_VAR(struct t_config_section, config_file, POINTER, 0, NULL, "config_file");
@@ -2677,7 +2677,7 @@ config_file_hdata_config_option_cb (void *data, const char *hdata_name)
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_option", "next_option",
-                       0, NULL, NULL);
+                       0, 0, NULL, NULL);
     if (hdata)
     {
         HDATA_VAR(struct t_config_option, config_file, POINTER, 0, NULL, "config_file");

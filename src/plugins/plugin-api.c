@@ -641,7 +641,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
         if (ptr_infolist)
         {
             for (ptr_history = (pointer) ?
-                     ((struct t_gui_buffer *)pointer)->history : history_global;
+                     ((struct t_gui_buffer *)pointer)->history : gui_history;
                  ptr_history; ptr_history = ptr_history->next_history)
             {
                 if (!gui_history_add_to_infolist (ptr_infolist, ptr_history))

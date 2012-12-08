@@ -976,7 +976,7 @@ irc_redirect_hdata_redirect_pattern_cb (void *data, const char *hdata_name)
     (void) data;
 
     hdata = weechat_hdata_new (hdata_name, "prev_redirect", "next_redirect",
-                               0, NULL, NULL);
+                               0, 0, NULL, NULL);
     if (hdata)
     {
         WEECHAT_HDATA_VAR(struct t_irc_redirect_pattern, name, STRING, 0, NULL, NULL);
@@ -1006,7 +1006,7 @@ irc_redirect_hdata_redirect_cb (void *data, const char *hdata_name)
     (void) data;
 
     hdata = weechat_hdata_new (hdata_name, "prev_redirect", "next_redirect",
-                               0, NULL, NULL);
+                               0, 0, NULL, NULL);
     if (hdata)
     {
         WEECHAT_HDATA_VAR(struct t_irc_redirect, server, POINTER, 0, NULL, "irc_server");

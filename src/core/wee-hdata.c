@@ -75,7 +75,7 @@ hdata_free_var (struct t_hashtable *hashtable,
 struct t_hdata *
 hdata_new (struct t_weechat_plugin *plugin, const char *hdata_name,
            const char *var_prev, const char *var_next,
-           int delete_allowed,
+           int create_allowed, int delete_allowed,
            int (*callback_update)(void *data,
                                   struct t_hdata *hdata,
                                   void *pointer,
@@ -107,6 +107,7 @@ hdata_new (struct t_weechat_plugin *plugin, const char *hdata_name,
                                               NULL,
                                               NULL);
         hashtable_set (weechat_hdata, hdata_name, new_hdata);
+        new_hdata->create_allowed = create_allowed;
         new_hdata->delete_allowed = delete_allowed;
         new_hdata->callback_update = callback_update;
         new_hdata->callback_update_data = callback_update_data;
@@ -816,6 +817,10 @@ hdata_update (struct t_hdata *hdata, void *pointer,
     if (!hdata || !hashtable || !hdata->callback_update)
         return 0;
 
+    /* check if create of structure is allowed */
+    if (hashtable_has_key (hashtable, "__create_allowed"))
+        return (int)hdata->create_allowed;
+
     /* check if delete of structure is allowed */
     if (hashtable_has_key (hashtable, "__delete_allowed"))
         return (int)hdata->delete_allowed;
@@ -831,9 +836,6 @@ hdata_update (struct t_hdata *hdata, void *pointer,
             return 0;
         return (var->update_allowed) ? 1 : 0;
     }
-
-    if (!pointer)
-        return 0;
 
     /* update data */
     hdata->update_pending = 1;
@@ -1003,6 +1005,7 @@ hdata_print_log_map_cb (void *data, struct t_hashtable *hashtable,
     log_printf ("  hash_list. . . . . . . : 0x%lx (hashtable: '%s')",
                 ptr_hdata->hash_list,
                 hashtable_get_string (ptr_hdata->hash_list, "keys_values"));
+    log_printf ("  create_allowed . . . . : %d",    (int)ptr_hdata->create_allowed);
     log_printf ("  delete_allowed . . . . : %d",    (int)ptr_hdata->delete_allowed);
     log_printf ("  callback_update. . . . : 0x%lx", ptr_hdata->callback_update);
     log_printf ("  callback_update_data . : 0x%lx", ptr_hdata->callback_update_data);

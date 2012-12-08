@@ -1032,7 +1032,7 @@ irc_nick_hdata_nick_cb (void *data, const char *hdata_name)
     (void) data;
 
     hdata = weechat_hdata_new (hdata_name, "prev_nick", "next_nick",
-                               0, NULL, NULL);
+                               0, 0, NULL, NULL);
     if (hdata)
     {
         WEECHAT_HDATA_VAR(struct t_irc_nick, name, STRING, 0, NULL, NULL);

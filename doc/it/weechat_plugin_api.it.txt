@@ -13069,7 +13069,7 @@ weechat_hdata_new
 ^^^^^^^^^^^^^^^^^
 
 // TRANSLATION MISSING
-_Novità nella versione 0.3.6, updated in 0.3.9._
+_Novità nella versione 0.3.6, updated in 0.3.9 and 0.4.0._
 
 Crea un nuovo hdata.
 
@@ -13090,7 +13090,7 @@ Prototipo:
 [source,C]
 ----------------------------------------
 struct t_hdata *weechat_hdata_new (const char *hdata_name, const char *var_prev, const char *var_next,
-                                   int delete_allowed,
+                                   int create_allowed, int delete_allowed,
                                    int (*callback_update)(void *data,
                                                           struct t_hdata *hdata,
                                                           void *pointer,
@@ -13105,6 +13105,9 @@ Argomenti:
   precedente nella lista (può essere NULL se non è disponibile tale variabile)
 * 'var_next': nome della variabile nella struttura che è puntatore all'elemento
   successivo nella lista (può essere NULL se non è disponibile tale variabile)
+// TRANSLATION MISSING
+* 'create_allowed': 1 if create of structure is allowed, otherwise 0
+  (_novità nella versione 0.4.0_)
 // TRANSLATION MISSING
 * 'delete_allowed': 1 if delete of structure is allowed, otherwise 0
   (_novità nella versione 0.3.9_)
@@ -13127,7 +13130,7 @@ Valore restituito:
 Esempio in C:
 source,C]
 ----------------------------------------
-struct t_hdata *hdata = weechat_hdata_new ("myplugin_list", "prev", "next", 0, &callback_update, NULL);
+struct t_hdata *hdata = weechat_hdata_new ("myplugin_list", "prev", "next", 0, 0, &callback_update, NULL);
 ----------------------------------------
 
 [NOTE]
@@ -14264,11 +14267,14 @@ Argomenti:
 * 'hashtable': variables to update: keys are name of variables, values are new
   values for variables (keys and values are string), some special keys are
   allowed:
-** key '__delete_allowed' (with any value): return 1 if delete is allowed for
+// TRANSLATION MISSING
+** key `__create_allowed` (with any value): return 1 if create is allowed for
+   structure, otherwise 0 (_new in version 0.4.0_)
+** key `__delete_allowed` (with any value): return 1 if delete is allowed for
    structure, otherwise 0
-** key '__update_allowed', value is name of a variable: return 1 if update is
+** key `__update_allowed`, value is name of a variable: return 1 if update is
    allowed for this variable, otherwise 0
-** key '__delete' (with any value): delete structure (if allowed)
+** key `__delete` (with any value): delete structure (if allowed)
 
 Valore restituito:
 

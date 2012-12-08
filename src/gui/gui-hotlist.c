@@ -475,7 +475,7 @@ gui_hotlist_hdata_hotlist_cb (void *data, const char *hdata_name)
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_hotlist", "next_hotlist",
-                       0, NULL, NULL);
+                       0, 0, NULL, NULL);
     if (hdata)
     {
         HDATA_VAR(struct t_gui_hotlist, priority, INTEGER, 0, NULL, NULL);

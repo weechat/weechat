@@ -48,6 +48,7 @@ struct t_hdata
     struct t_hashtable *hash_list;     /* hashtable with pointers on lists  */
                                        /* (used to search objects)          */
 
+    char create_allowed;               /* create allowed?                   */
     char delete_allowed;               /* delete allowed?                   */
     int (*callback_update)             /* update callback                   */
     (void *data,
@@ -67,7 +68,7 @@ extern char *hdata_type_string[];
 extern struct t_hdata *hdata_new (struct t_weechat_plugin *plugin,
                                   const char *hdata_name, const char *var_prev,
                                   const char *var_next,
-                                  int delete_allowed,
+                                  int create_allowed, int delete_allowed,
                                   int (*callback_update)(void *data,
                                                          struct t_hdata *hdata,
                                                          void *pointer,

@@ -561,8 +561,10 @@
   'text' (string) +
   'next_history' (pointer, hdata: "history") +
   'prev_history' (pointer, hdata: "history") |
- |
-  -
+  `__create` +
+  `__delete` |
+  'gui_history' +
+  'last_gui_history'
 
 | weechat | hotlist | ホットリスト |
   'priority' (integer) +

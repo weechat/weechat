@@ -1470,7 +1470,7 @@ script_repo_hdata_script_cb (void *data, const char *hdata_name)
     (void) data;
 
     hdata = weechat_hdata_new (hdata_name, "prev_script", "next_script",
-                               0, NULL, NULL);
+                               0, 0, NULL, NULL);
     if (hdata)
     {
         WEECHAT_HDATA_VAR(struct t_script_repo, name, STRING, 0, NULL, NULL);

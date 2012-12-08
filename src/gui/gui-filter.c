@@ -450,7 +450,7 @@ gui_filter_hdata_filter_cb (void *data, const char *hdata_name)
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_filter", "next_filter",
-                       0, NULL, NULL);
+                       0, 0, NULL, NULL);
     if (hdata)
     {
         HDATA_VAR(struct t_gui_filter, enabled, INTEGER, 0, NULL, NULL);

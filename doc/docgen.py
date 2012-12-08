@@ -231,10 +231,14 @@ def get_hdata():
                         if variables_update:
                             variables_update += ' +\n'
                         variables_update += '  %s' % item['text']
+                if weechat.hdata_update(ptr_hdata, '', { '__create_allowed' : '' }):
+                    if variables_update:
+                        variables_update += ' +\n'
+                    variables_update += '  `__create`'
                 if weechat.hdata_update(ptr_hdata, '', { '__delete_allowed' : '' }):
                     if variables_update:
                         variables_update += ' +\n'
-                    variables_update += '  \'__delete\''
+                    variables_update += '  `__delete`'
             hdata[plugin][hdata_name]['vars'] = '\n%s' % variables
             hdata[plugin][hdata_name]['vars_update'] = '\n%s' % variables_update
 

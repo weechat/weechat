@@ -1203,7 +1203,7 @@ plugin_script_hdata_script (struct t_weechat_plugin *weechat_plugin,
     struct t_hdata *hdata;
 
     hdata = weechat_hdata_new (hdata_name, "prev_script", "next_script",
-                               0, NULL, NULL);
+                               0, 0, NULL, NULL);
     if (hdata)
     {
         WEECHAT_HDATA_VAR(struct t_plugin_script, filename, STRING, 0, NULL, NULL);

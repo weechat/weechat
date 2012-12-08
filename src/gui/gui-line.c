@@ -1351,7 +1351,7 @@ gui_line_hdata_lines_cb (void *data, const char *hdata_name)
     /* make C compiler happy */
     (void) data;
 
-    hdata = hdata_new (NULL, hdata_name, NULL, NULL, 0, NULL, NULL);
+    hdata = hdata_new (NULL, hdata_name, NULL, NULL, 0, 0, NULL, NULL);
     if (hdata)
     {
         HDATA_VAR(struct t_gui_lines, first_line, POINTER, 0, NULL, "line");
@@ -1379,7 +1379,7 @@ gui_line_hdata_line_cb (void *data, const char *hdata_name)
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_line", "next_line",
-                       0, NULL, NULL);
+                       0, 0, NULL, NULL);
     if (hdata)
     {
         HDATA_VAR(struct t_gui_line, data, POINTER, 0, NULL, "line_data");
@@ -1486,7 +1486,7 @@ gui_line_hdata_line_data_cb (void *data, const char *hdata_name)
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, NULL, NULL,
-                       0, &gui_line_hdata_line_data_update_cb, NULL);
+                       0, 0, &gui_line_hdata_line_data_update_cb, NULL);
     if (hdata)
     {
         HDATA_VAR(struct t_gui_line_data, buffer, POINTER, 0, NULL, "buffer");

@@ -1220,7 +1220,7 @@ plugin_hdata_plugin_cb (void *data, const char *hdata_name)
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_plugin", "next_plugin",
-                       0, NULL, NULL);
+                       0, 0, NULL, NULL);
     if (hdata)
     {
         HDATA_VAR(struct t_weechat_plugin, filename, STRING, 0, NULL, NULL);

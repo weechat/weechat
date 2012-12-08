@@ -1215,7 +1215,7 @@ gui_completion_hdata_completion_cb (void *data, const char *hdata_name)
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, NULL, NULL,
-                       0, NULL, NULL);
+                       0, 0, NULL, NULL);
     if (hdata)
     {
         HDATA_VAR(struct t_gui_completion, buffer, POINTER, 0, NULL, "buffer");
@@ -1255,7 +1255,7 @@ gui_completion_hdata_completion_partial_cb (void *data, const char *hdata_name)
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_item", "next_item",
-                       0, NULL, NULL);
+                       0, 0, NULL, NULL);
     if (hdata)
     {
         HDATA_VAR(struct t_gui_completion_partial, word, STRING, 0, NULL, NULL);

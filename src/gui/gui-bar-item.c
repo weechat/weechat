@@ -1900,7 +1900,7 @@ gui_bar_item_hdata_bar_item_cb (void *data, const char *hdata_name)
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_item", "next_item",
-                       0, NULL, NULL);
+                       0, 0, NULL, NULL);
     if (hdata)
     {
         HDATA_VAR(struct t_gui_bar_item, plugin, POINTER, 0, NULL, "plugin");

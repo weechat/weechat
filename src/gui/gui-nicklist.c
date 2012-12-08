@@ -972,7 +972,7 @@ gui_nicklist_hdata_nick_group_cb (void *data, const char *hdata_name)
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_group", "next_group",
-                       0, NULL, NULL);
+                       0, 0, NULL, NULL);
     if (hdata)
     {
         HDATA_VAR(struct t_gui_nick_group, name, STRING, 0, NULL, NULL);
@@ -1003,7 +1003,7 @@ gui_nicklist_hdata_nick_cb (void *data, const char *hdata_name)
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_nick", "next_nick",
-                       0, NULL, NULL);
+                       0, 0, NULL, NULL);
     if (hdata)
     {
         HDATA_VAR(struct t_gui_nick, group, POINTER, 0, NULL, "nick_group");
