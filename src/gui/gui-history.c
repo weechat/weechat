@@ -235,6 +235,7 @@ gui_history_hdata_history_update_cb (void *data,
 
     /* make C compiler happy */
     (void) data;
+    (void) hdata;
 
     rc = 0;
 
