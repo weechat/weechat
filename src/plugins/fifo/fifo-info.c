@@ -28,7 +28,7 @@
 
 
 /*
- * fifo_info_get_info_cb: callback called when fifo info is asked
+ * Returns info about FIFO pipe.
  */
 
 const char *
@@ -48,13 +48,12 @@ fifo_info_get_info_cb (void *data, const char *info_name,
 }
 
 /*
- * fifo_info_init: initialize info and infolist hooks for fifo plugin
+ * Hooks info for fifo plugin.
  */
 
 void
 fifo_info_init ()
 {
-    /* fifo info hooks */
     weechat_hook_info ("fifo_filename", N_("name of FIFO pipe"), NULL,
                        &fifo_info_get_info_cb, NULL);
 }

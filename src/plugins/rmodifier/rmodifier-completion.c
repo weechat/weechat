@@ -29,7 +29,7 @@
 
 
 /*
- * rmodifier_completion_cb: callback for completion with list of rmodifiers
+ * Adds list of rmodifiers to completion list.
  */
 
 int
@@ -55,7 +55,7 @@ rmodifier_completion_cb (void *data, const char *completion_item,
 }
 
 /*
- * rmodifier_completion_init: initialize rmodifier plugin
+ * Hooks completion.
  */
 
 void

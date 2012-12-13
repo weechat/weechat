@@ -89,10 +89,11 @@ struct t_config_option *script_config_scripts_url;
 
 
 /*
- * script_config_get_diff_command: get diff command
- *                                 if option is "auto", try to find git, and
- *                                 fallbacks on "diff" if not found
- *                                 return NULL if no diff command is set
+ * Gets the diff command (option "script.look.diff_command").
+ *
+ * If option is "auto", try to find git, and fallbacks on "diff" if not found.
+ *
+ * Returns NULL if no diff command is set.
  */
 
 const char *
@@ -142,8 +143,9 @@ script_config_get_diff_command ()
 }
 
 /*
- * script_config_get_dir: get local directory for script
- *                        Note: result must be freed after use
+ * Gets local directory for script.
+ *
+ * Note: result must be freed after use.
  */
 
 char *
@@ -173,9 +175,10 @@ script_config_get_dir ()
 }
 
 /*
- * script_config_get_xml_filename: get filename with scripts (by default
- *                                 "/home/xxx/.weechat/script/plugins.xml.gz")
- *                                 Note: result must be freed after use
+ * Gets filename with script
+ * (by default "/home/xxx/.weechat/script/plugins.xml.gz").
+ *
+ * Note: result must be freed after use.
  */
 
 char *
@@ -194,13 +197,13 @@ script_config_get_xml_filename ()
 }
 
 /*
- * script_config_get_script_download_filename: get filename for a script to
- *                                             download, for eample:
- *                                             "/home/xxx/.weechat/script/iset.pl"
- *                                             (if suffix is not NULL, it is
- *                                             added to filename)
- *                                             Note: result must be freed after
- *                                             use
+ * Gets filename for a script to download.
+ *
+ * If suffix is not NULL, it is added to filename.
+ *
+ * Example: "/home/xxx/.weechat/script/iset.pl"
+ *
+ * Note: result must be freed after use.
  */
 
 char *
@@ -227,8 +230,7 @@ script_config_get_script_download_filename (struct t_script_repo *script,
 }
 
 /*
- * script_config_refresh_cb: callback called when script buffer needs to be
- *                           refreshed
+ * Callback for changes on options that require a refresh of script buffer.
  */
 
 void
@@ -243,8 +245,8 @@ script_config_refresh_cb (void *data, struct t_config_option *option)
 }
 
 /*
- * script_config_reload_scripts_cb: callback called list of scripts must be
- *                                  reloaded from file (plugins.xml.gz)
+ * Callback for changes on options that require a reload of list of scripts
+ * (file plugins.xml.gz).
  */
 
 void
@@ -263,8 +265,7 @@ script_config_reload_scripts_cb (void *data, struct t_config_option *option)
 }
 
 /*
- * script_config_change_use_keys_cb: callback called when option "use_keys" is
- *                                   changed
+ * Callback for changes on option "script.look.use_keys".
  */
 
 void
@@ -279,8 +280,7 @@ script_config_change_use_keys_cb (void *data, struct t_config_option *option)
 }
 
 /*
- * script_config_change_hold_cb: callback called when list of scripts to "hold"
- *                               is changed
+ * Callback for changes on option "script.scripts.hold".
  */
 
 void
@@ -296,9 +296,10 @@ script_config_change_hold_cb (void *data, struct t_config_option *option)
 }
 
 /*
- * script_config_hold: hold a script
- *                     Note: the option is changed, but the status "held"
- *                     in script is NOT updated by this function
+ * Holds a script.
+ *
+ * Note: the option is changed, but the status "held" in script is NOT updated
+ * by this function.
  */
 
 void
@@ -339,9 +340,10 @@ script_config_hold (const char *name_with_extension)
 }
 
 /*
- * script_config_unhold: unhold a script
- *                       Note: the option is changed, but the status "held"
- *                       in script is NOT updated by this function
+ * Unholds a script.
+ *
+ * Note: the option is changed, but the status "held" in script is NOT updated
+ * by this function.
  */
 
 void
@@ -378,7 +380,7 @@ script_config_unhold (const char *name_with_extension)
 }
 
 /*
- * script_config_reaload: reload script configuration file
+ * Reloads script configuration file.
  */
 
 int
@@ -391,8 +393,11 @@ script_config_reload (void *data, struct t_config_file *config_file)
 }
 
 /*
- * script_config_init: init script configuration file
- *                     return: 1 if ok, 0 if error
+ * Initializes script configuration file.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -699,7 +704,7 @@ script_config_init ()
 }
 
 /*
- * script_config_read: read script configuration file
+ * Reads script configuration file.
  */
 
 int
@@ -709,7 +714,7 @@ script_config_read ()
 }
 
 /*
- * script_config_write: write script configuration file
+ * Writes script configuration file.
  */
 
 int
@@ -719,7 +724,7 @@ script_config_write ()
 }
 
 /*
- * script_config_free: free script configuration file
+ * Frees script configuration file.
  */
 
 void

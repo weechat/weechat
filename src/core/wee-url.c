@@ -846,7 +846,9 @@ struct t_url_option url_options[] =
 
 
 /*
- * weeurl_search_constant: search a constant in array of constants
+ * Searches for a constant in array of constants.
+ *
+ * Returns index of constant, -1 if not found.
  */
 
 int
@@ -867,8 +869,9 @@ weeurl_search_constant (struct t_url_constant *constants, const char *name)
 }
 
 /*
- * weeurl_get_mask_value: get value of mask using constants
- *                        string_mask has format: "const1+const2+const3"
+ * Gets value of mask using constants.
+ *
+ * Argument "string_mask" has format: "const1+const2+const3".
  */
 
 long
@@ -902,7 +905,9 @@ weeurl_get_mask_value (struct t_url_constant *constants,
 }
 
 /*
- * weeurl_search_option: search an url option in table of options
+ * Searches for an URL option in table of options.
+ *
+ * Returns index of option, -1 if not found.
  */
 
 int
@@ -923,7 +928,7 @@ weeurl_search_option (const char *name)
 }
 
 /*
- * weeurl_read: read callback for curl, used to read data from a file
+ * Reads data from a file (callback called to read a file).
  */
 
 size_t
@@ -933,7 +938,7 @@ weeurl_read (void *buffer, size_t size, size_t nmemb, void *stream)
 }
 
 /*
- * weeurl_write: write callback for curl, used to write data in a file
+ * Writes data in a file (callback called to write a file).
  */
 
 size_t
@@ -943,8 +948,8 @@ weeurl_write (void *buffer, size_t size, size_t nmemb, void *stream)
 }
 
 /*
- * weeurl_set_options: callback called for each option in hashtable "options",
- *                     it sets option in CURL easy handle
+ * Sets option in CURL easy handle (callback called for each option in hashtable
+ * "options").
  */
 
 void
@@ -1031,13 +1036,14 @@ weeurl_option_map_cb (void *data,
 }
 
 /*
- * weeurl_download: download URL, using options
- *                  return code:
- *                    0: ok
- *                    1: invalid url
- *                    2: error downloading url
- *                    3: memory error
- *                    4: file error
+ * Downloads URL using options.
+ *
+ * Returns:
+ *   0: OK
+ *   1: invalid URL
+ *   2: error downloading URL
+ *   3: not enough memory
+ *   4: file error
  */
 
 int
@@ -1117,8 +1123,11 @@ end:
 }
 
 /*
- * weeurl_option_add_to_infolist: add an url option in an infolist
- *                                return 1 if ok, 0 if error
+ * Adds an URL option in an infolist.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int

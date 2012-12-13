@@ -31,8 +31,7 @@
 
 
 /*
- * relay_completion_protocol_name_cb: callback for completion with protocol and
- *                                    name
+ * Adds protocol and name to completion list.
  */
 
 int
@@ -74,8 +73,7 @@ relay_completion_protocol_name_cb (void *data, const char *completion_item,
 }
 
 /*
- * relay_completion_relays_cb: callback for completion with protocol and name
- *                             of current relays
+ * Adds protocol and name of current relays to completion list.
  */
 
 int
@@ -102,7 +100,7 @@ relay_completion_relays_cb (void *data, const char *completion_item,
 }
 
 /*
- * relay_completion_free_port_cb: callback for completion with a free port
+ * Adds free ports to completion list.
  */
 
 int
@@ -137,7 +135,7 @@ relay_completion_free_port_cb (void *data, const char *completion_item,
 }
 
 /*
- * relay_completion_init: init completion for relay plugin
+ * Hooks completions.
  */
 
 void

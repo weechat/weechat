@@ -35,7 +35,7 @@
 
 
 /*
- * xfer_chat_send: send data to remote host via xfer chat
+ * Sends data to remote host via xfer chat.
  */
 
 int
@@ -48,7 +48,7 @@ xfer_chat_send (struct t_xfer *xfer, const char *buffer, int size_buf)
 }
 
 /*
- * xfer_chat_sendf: send formatted data to remote host via DCC CHAT
+ * Sends formatted data to remote host via DCC CHAT.
  */
 
 void
@@ -86,7 +86,7 @@ xfer_chat_sendf (struct t_xfer *xfer, const char *format, ...)
 }
 
 /*
- * xfer_chat_recv_cb: receive data from xfer chat remote host
+ * Receives data from xfer chat remote host.
  */
 
 int
@@ -223,8 +223,7 @@ xfer_chat_recv_cb (void *arg_xfer, int fd)
 }
 
 /*
- * xfer_chat_buffer_input_cb: callback called when user send data to xfer chat
- *                            buffer
+ * Callback called when user sends data to xfer chat buffer.
  */
 
 int
@@ -265,8 +264,7 @@ xfer_chat_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
- * xfer_chat_close_buffer_cb: callback called when a buffer with direct chat
- *                            is closed
+ * Callback called when a buffer with direct chat is closed.
  */
 
 int
@@ -295,7 +293,7 @@ xfer_chat_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
 }
 
 /*
- * xfer_chat_open_buffer: create buffer for DCC chat
+ * Creates buffer for DCC chat.
  */
 
 void

@@ -36,7 +36,7 @@
 
 
 /*
- * relay_command_client_list: list clients
+ * Displays list of clients.
  */
 
 void
@@ -120,8 +120,7 @@ relay_command_client_list (int full)
 }
 
 /*
- * relay_command_server_list: list servers (list of port on which we are
- *                            listening)
+ * Displays list of servers (list of ports on which we are listening).
  */
 
 void
@@ -166,7 +165,7 @@ relay_command_server_list ()
 }
 
 /*
- * relay_command_relay: command /relay
+ * Callback for command "/relay".
  */
 
 int
@@ -304,7 +303,7 @@ relay_command_relay (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * relay_command_init: add /relay command
+ * Hooks command.
  */
 
 void

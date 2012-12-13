@@ -56,8 +56,7 @@ int *weechat_aspell_length_commands_to_check = NULL;
 
 
 /*
- * weechat_aspell_config_change_commands: called when list of commands is
- *                                        changed
+ * Callback for changes on option "aspell.check.commands".
  */
 
 void
@@ -102,8 +101,7 @@ weechat_aspell_config_change_commands (void *data,
 }
 
 /*
- * weechat_aspell_config_change_default_dict: called when default dictionary
- *                                            is changed
+ * Callback for changes on option "aspell.check.default_dict".
  */
 
 void
@@ -118,7 +116,7 @@ weechat_aspell_config_change_default_dict (void *data,
 }
 
 /*
- * weechat_aspell_config_change_enabled: called when aspell state is changed
+ * Callback for changes on option "aspell.check.enabled".
  */
 
 void
@@ -135,8 +133,7 @@ weechat_aspell_config_change_enabled (void *data, struct t_config_option *option
 }
 
 /*
- * weechat_aspell_config_change_suggestions: called when number of suggestions
- *                                           is changed
+ * Callback for changes on option "aspell.check.suggestions".
  */
 
 void
@@ -151,7 +148,7 @@ weechat_aspell_config_change_suggestions (void *data,
 }
 
 /*
- * weechat_aspell_config_dict_change: called when a dictionary is changed
+ * Callback for changes on a dictionary.
  */
 
 void
@@ -166,7 +163,7 @@ weechat_aspell_config_dict_change (void *data,
 }
 
 /*
- * weechat_aspell_config_dict_delete_option: delete option in "dict" section
+ * Callback called when an option is deleted in section "dict".
  */
 
 int
@@ -188,7 +185,7 @@ weechat_aspell_config_dict_delete_option (void *data,
 }
 
 /*
- * weechat_aspell_config_dict_create_option: create option in "dict" section
+ * Creates an option in section "dict".
  */
 
 int
@@ -257,7 +254,7 @@ weechat_aspell_config_dict_create_option (void *data,
 }
 
 /*
- * weechat_aspell_config_option_change: called when an aspell option is changed
+ * Callback for changes on an aspell option.
  */
 
 void
@@ -273,7 +270,7 @@ weechat_aspell_config_option_change (void *data,
 }
 
 /*
- * weechat_aspell_config_option_delete_option: delete option in "option" section
+ * Callback called when an option is deleted in section "option".
  */
 
 int
@@ -296,7 +293,7 @@ weechat_aspell_config_option_delete_option (void *data,
 }
 
 /*
- * weechat_aspell_config_option_create_option: create option in "option" section
+ * Callback called when an option is created in section "option".
  */
 
 int
@@ -366,7 +363,7 @@ weechat_aspell_config_option_create_option (void *data,
 }
 
 /*
- * weechat_aspell_config_get_dict: get a dictionary list for a buffer
+ * Gets a list of dictionaries for a buffer.
  */
 
 struct t_config_option *
@@ -378,7 +375,7 @@ weechat_aspell_config_get_dict (const char *name)
 }
 
 /*
- * weechat_aspell_config_set_dict: set a dictionary list for a buffer
+ * Sets a list of dictionaries for a buffer.
  */
 
 int
@@ -392,8 +389,11 @@ weechat_aspell_config_set_dict (const char *name, const char *value)
 }
 
 /*
- * weechat_aspell_config_init: init aspell configuration file
- *                             return: 1 if ok, 0 if error
+ * Initializes aspell configuration file.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -519,7 +519,7 @@ weechat_aspell_config_init ()
 }
 
 /*
- * weechat_aspell_config_read: read aspell configuration file
+ * Reads aspell configuration file.
  */
 
 int
@@ -538,7 +538,7 @@ weechat_aspell_config_read ()
 }
 
 /*
- * weechat_aspell_config_write: write aspell configuration file
+ * Writes aspell configuration file.
  */
 
 int
@@ -548,7 +548,7 @@ weechat_aspell_config_write ()
 }
 
 /*
- * aspell_config_free: free aspell configuration
+ * Frees aspell configuration.
  */
 
 void

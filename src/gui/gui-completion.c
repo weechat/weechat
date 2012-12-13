@@ -50,7 +50,7 @@
 
 
 /*
- * gui_completion_buffer_init: init completion for a buffer
+ * Initializes completion for a buffer.
  */
 
 void
@@ -82,7 +82,9 @@ gui_completion_buffer_init (struct t_gui_completion *completion,
 }
 
 /*
- * gui_completion_partial_list_add: add an item to partial completions list
+ * Adds an item to partial completion list.
+ *
+ * Returns pointer to new item, NULL if error.
  */
 
 struct t_gui_completion_partial *
@@ -109,7 +111,7 @@ gui_completion_partial_list_add (struct t_gui_completion *completion,
 }
 
 /*
- * gui_completion_partial_free: remove an item from partial completions list
+ * Removes an item from partial completion list.
  */
 
 void
@@ -134,7 +136,7 @@ gui_completion_partial_list_free (struct t_gui_completion *completion,
 }
 
 /*
- * gui_completion_partial_free: remove partial completions list
+ * Removes partial completion list.
  */
 
 void
@@ -148,7 +150,7 @@ gui_completion_partial_list_free_all (struct t_gui_completion *completion)
 }
 
 /*
- * gui_completion_free_data: free data in completion
+ * Frees data in completion.
  */
 
 void
@@ -180,7 +182,7 @@ gui_completion_free_data (struct t_gui_completion *completion)
 }
 
 /*
- * gui_completion_free: free completion
+ * Frees completion.
  */
 
 void
@@ -191,8 +193,7 @@ gui_completion_free (struct t_gui_completion *completion)
 }
 
 /*
- * gui_completion_stop: stop completion (for example after 1 arg of command
- *                      with 1 arg)
+ * Stops completion (for example after 1 argument of command with 1 argument).
  */
 
 void
@@ -210,7 +211,9 @@ gui_completion_stop (struct t_gui_completion *completion,
 }
 
 /*
- * gui_completion_search_command: search command hook
+ * Searches for a command hook.
+ *
+ * Returns pointer to hook found, NULL if not found.
  */
 
 struct t_hook *
@@ -241,8 +244,11 @@ gui_completion_search_command (struct t_weechat_plugin *plugin,
 }
 
 /*
- * gui_completion_nick_has_ignored_chars: return 1 if nick has one or more
- *                                        ignored chars for nick comparison
+ * Checks if nick has one or more ignored chars (for nick comparison).
+ *
+ * Returns:
+ *   1: nick has one or more ignored chars
+ *   0: nick has no ignored chars
  */
 
 int
@@ -267,8 +273,9 @@ gui_completion_nick_has_ignored_chars (const char *string)
 }
 
 /*
- * gui_completion_nick_strdup_ignore_chars: duplicate a nick and ignore some
- *                                          chars
+ * Duplicates a nick and ignores some chars.
+ *
+ * Note: result must be freed after use.
  */
 
 char *
@@ -299,8 +306,13 @@ gui_completion_nick_strdup_ignore_chars (const char *string)
 }
 
 /*
- * gui_completion_nickncmp: locale and case independent string comparison
- *                          with max length for nicks (alpha or digits only)
+ * Locale and case independent string comparison with max length for nicks
+ * (alpha or digits only).
+ *
+ * Returns:
+ *   < 0: base_word < nick
+ *     0: base_word == nick
+ *   > 0: base_word > nick
  */
 
 int
@@ -328,7 +340,7 @@ gui_completion_nickncmp (const char *base_word, const char *nick, int max)
 }
 
 /*
- * gui_completion_list_add: add a word to completion word list
+ * Adds a word to completion list.
  */
 
 void
@@ -362,7 +374,7 @@ gui_completion_list_add (struct t_gui_completion *completion, const char *word,
 }
 
 /*
- * gui_completion_custom: custom completion by a plugin
+ * Custom completion by a plugin.
  */
 
 void
@@ -377,7 +389,7 @@ gui_completion_custom (struct t_gui_completion *completion,
 }
 
 /*
- * gui_completion_build_list_template: build data list according to a template
+ * Builds data list according to a template.
  */
 
 void
@@ -455,8 +467,7 @@ gui_completion_build_list_template (struct t_gui_completion *completion,
 }
 
 /*
- * gui_completion_get_matching_template: get template matching arguments for
- *                                       command
+ * Gets template matching arguments for command.
  */
 
 int
@@ -484,8 +495,7 @@ gui_completion_get_matching_template (struct t_gui_completion *completion,
 }
 
 /*
- * gui_completion_get_template_for_args: get template according to user
- *                                       arguments for command
+ * Gets template according to user arguments for command.
  */
 
 char *
@@ -533,8 +543,7 @@ gui_completion_get_template_for_args (struct t_gui_completion *completion,
 }
 
 /*
- * gui_completion_build_list: build data list according to command and
- *                            argument index
+ * Builds data list according to command and argument index.
  */
 
 void
@@ -610,7 +619,7 @@ gui_completion_build_list (struct t_gui_completion *completion)
 }
 
 /*
- * gui_completion_find_context: find context for completion
+ * Finds context for completion.
  */
 
 void
@@ -773,14 +782,14 @@ gui_completion_find_context (struct t_gui_completion *completion,
 }
 
 /*
- * gui_completion_common_prefix_size: find common prefix size in matching items
- *                                    (case is ignored)
- *                                    if utf_char is not null, only words
- *                                    beginning with this char are compared
- *                                    (all other words are ignored)
- *                                    for example with items:
- *                                        FlashCode, flashy, flashouille
- *                                    common prefix size is 5 ("flash")
+ * Finds common prefix size in matching items (case is ignored).
+ *
+ * If utf_char is not null, only words beginning with this char are compared
+ * (all other words are ignored).
+ *
+ * For example with items:
+ *   FlashCode, flashy, flashouille
+ *   => common prefix size is 5 ("flash")
  */
 
 int
@@ -818,8 +827,7 @@ gui_completion_common_prefix_size (struct t_weelist *list,
 }
 
 /*
- * gui_completion_partial_build_list: build list with possible completions
- *                                    when a partial completion occurs
+ * Builds list with possible completions when a partial completion occurs.
  */
 
 void
@@ -888,7 +896,7 @@ gui_completion_partial_build_list (struct t_gui_completion *completion,
 }
 
 /*
- * gui_completion_complete: complete word using matching items
+ * Completes word using matching items.
  */
 
 void
@@ -1059,7 +1067,7 @@ gui_completion_complete (struct t_gui_completion *completion)
 }
 
 /*
- * gui_completion_command: complete a command
+ * Completes a command.
  */
 
 void
@@ -1087,7 +1095,7 @@ gui_completion_command (struct t_gui_completion *completion)
 }
 
 /*
- * gui_completion_auto: auto complete: nick, filename or channel
+ * Auto-completes: nick, filename or channel.
  */
 
 void
@@ -1114,7 +1122,7 @@ gui_completion_auto (struct t_gui_completion *completion)
 }
 
 /*
- * gui_completion_search: complete word according to context
+ * Completes word according to context.
  */
 
 void
@@ -1182,7 +1190,7 @@ gui_completion_search (struct t_gui_completion *completion, int direction,
 }
 
 /*
- * gui_completion_get_string: get a completion property as string
+ * Gets a completion property as string.
  */
 
 const char *
@@ -1203,7 +1211,7 @@ gui_completion_get_string (struct t_gui_completion *completion,
 }
 
 /*
- * gui_completion_hdata_completion_cb: return hdata for completion
+ * Returns hdata for completion.
  */
 
 struct t_hdata *
@@ -1242,8 +1250,7 @@ gui_completion_hdata_completion_cb (void *data, const char *hdata_name)
 }
 
 /*
- * gui_completion_hdata_completion_partial_cb: return hdata for partial
- *                                             completion
+ * Returns hdata for partial completion.
  */
 
 struct t_hdata *
@@ -1267,7 +1274,7 @@ gui_completion_hdata_completion_partial_cb (void *data, const char *hdata_name)
 }
 
 /*
- * gui_completion_print_log: print completion list in log (usually for crash dump)
+ * Prints completion list in WeeChat log file (usually for crash dump).
  */
 
 void

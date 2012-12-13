@@ -48,9 +48,12 @@ char *comparisons[EVAL_NUM_COMPARISONS] = { "==", "!=", "<=", "<", ">=", ">",
 
 
 /*
- * eval_is_true: return 1 if value is true, 0 otherwise
- *               A value is true if string is non-NULL, non-empty and different
- *               from "0".
+ * Checks if a value is true: a value is true if string is non-NULL, non-empty
+ * and different from "0".
+ *
+ * Returns:
+ *   1: value is true
+ *   0: value is false
  */
 
 int
@@ -60,8 +63,9 @@ eval_is_true (const char *value)
 }
 
 /*
- * eval_hdata_get_value: get value of hdata using "path" to a variable
- *                       Note: result must be freed after use
+ * Gets value of hdata using "path" to a variable.
+ *
+ * Note: result must be freed after use.
  */
 
 char *
@@ -209,16 +213,16 @@ end:
 }
 
 /*
- * eval_replace_vars_cb: callback to replace variables, which can be,
- *                       by order of priority:
- *                         1. an extra variable (from hashtable "extra_vars")
- *                         2. an name of option (file.section.option)
- *                         3. a buffer local variable
- *                         4. a hdata name/variable
- *                       Examples:
- *                         option: ${weechat.look.scroll_amount}
- *                         hdata : ${window.buffer.full_name}
- *                                 ${window.buffer.local_variables.type}
+ * Replaces variables, which can be, by order of priority:
+ *   1. an extra variable (from hashtable "extra_vars")
+ *   2. an name of option (file.section.option)
+ *   3. a buffer local variable
+ *   4. a hdata name/variable
+ *
+ * Examples:
+ *   option: ${weechat.look.scroll_amount}
+ *   hdata : ${window.buffer.full_name}
+ *           ${window.buffer.local_variables.type}
  */
 
 char *
@@ -329,7 +333,7 @@ end:
 }
 
 /*
- * eval_replace_vars: replace variables in a string
+ * Replaces variables in a string.
  */
 
 char *
@@ -349,7 +353,17 @@ eval_replace_vars (const char *expr, struct t_hashtable *pointers,
 }
 
 /*
- * eval_compare: compate two expressions
+ * Compares two expressions.
+ *
+ * Returns:
+ *   "1": comparison is true
+ *   "0": comparison is false
+ *
+ * Examples:
+ *   "15 > 2": returns "1"
+ *   "abc == def": returns "0"
+ *
+ * Note: result must be freed after use.
  */
 
 char *
@@ -440,12 +454,13 @@ end:
 }
 
 /*
- * eval_expression_internal: evaluate an expression and return a string with
- *                           the result (see function eval_expression())
- *                           (should not be called directly)
- *                           Argument keep_parentheses is almost always 0,
- *                           it is 1 only if the expression is a regex (to keep
- *                           flags inside the parentheses)
+ * Evaluates an expression (this function must not be called directly).
+ *
+ * Argument keep_parentheses is almost always 0, it is 1 only if the expression
+ * is a regex (to keep flags inside the parentheses).
+ *
+ * For return value, see function eval_expression().
+ * Note: result must be freed after use.
  */
 
 char *
@@ -635,31 +650,33 @@ end:
 }
 
 /*
- * eval_expression: evaluate an expression and return a string with the result
- *                  The hashtable "pointers" must have string for keys, pointer
- *                  for values.
- *                  The hashtable "extra_vars" must have string for keys and
- *                  values.
- *                  The expression can contain:
- *                  - conditions:  ==  != <  <=  >  >=
- *                  - logical operators:  &&  ||
- *                  - parentheses for priority
- *                  Examples (the [ ] are NOT part of result):
- *                    >> ${window.buffer.number}
- *                    == [2]
- *                    >> buffer:${window.buffer.full_name}
- *                    == [buffer:irc.freenode.#weechat]
- *                    >> ${window.buffer.full_name} == irc.freenode.#weechat
- *                    == [1]
- *                    >> ${window.buffer.full_name} == irc.freenode.#test
- *                    == [0]
- *                    >> ${window.win_width}
- *                    == [112]
- *                    >> ${window.win_height}
- *                    == [40]
- *                    >> ${window.win_width} >= 30 && ${window.win_height} >= 20
- *                    == [1]
- *                  Note: result must be freed after use
+ * Evaluates an expression.
+ *
+ * The hashtable "pointers" must have string for keys, pointer for values.
+ * The hashtable "extra_vars" must have string for keys and values.
+ *
+ * The expression can contain:
+ *   - conditions:  ==  != <  <=  >  >=
+ *   - logical operators:  &&  ||
+ *   - parentheses for priority
+ *
+ * Examples (the [ ] are NOT part of result):
+ *   >> ${window.buffer.number}
+ *   == [2]
+ *   >> buffer:${window.buffer.full_name}
+ *   == [buffer:irc.freenode.#weechat]
+ *   >> ${window.buffer.full_name} == irc.freenode.#weechat
+ *   == [1]
+ *   >> ${window.buffer.full_name} == irc.freenode.#test
+ *   == [0]
+ *   >> ${window.win_width}
+ *   == [112]
+ *   >> ${window.win_height}
+ *   == [40]
+ *   >> ${window.win_width} >= 30 && ${window.win_height} >= 20
+ *   == [1]
+ *
+ * Note: result must be freed after use.
  */
 
 char *

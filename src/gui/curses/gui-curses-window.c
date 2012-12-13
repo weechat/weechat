@@ -67,7 +67,7 @@ int gui_window_saved_style[4];         /* current style saved               */
 
 
 /*
- * gui_window_get_width: get screen width (terminal width in chars for Curses)
+ * Gets screen width (terminal width in chars for Curses).
  */
 
 int
@@ -77,7 +77,7 @@ gui_window_get_width ()
 }
 
 /*
- * gui_window_get_height: get screen height (terminal height in chars for Curses)
+ * Gets screen height (terminal height in chars for Curses).
  */
 
 int
@@ -87,7 +87,7 @@ gui_window_get_height ()
 }
 
 /*
- * gui_window_read_terminal_size: read terminal size
+ * Reads terminal size.
  */
 
 void
@@ -111,7 +111,11 @@ gui_window_read_terminal_size ()
 }
 
 /*
- * gui_window_objects_init: init Curses windows
+ * Initializes Curses windows.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -132,7 +136,7 @@ gui_window_objects_init (struct t_gui_window *window)
 }
 
 /*
- * gui_window_objects_free: free Curses windows for a window
+ * Frees Curses windows for a window.
  */
 
 void
@@ -159,7 +163,7 @@ gui_window_objects_free (struct t_gui_window *window, int free_separators)
 }
 
 /*
- * gui_window_clear_weechat: clear a Curses window with a weechat color
+ * Clears a Curses window with a WeeChat color.
  */
 
 void
@@ -174,7 +178,7 @@ gui_window_clear_weechat (WINDOW *window, int weechat_color)
 }
 
 /*
- * gui_window_clear: clear a Curses window
+ * Clears a Curses window.
  */
 
 void
@@ -199,7 +203,7 @@ gui_window_clear (WINDOW *window, int fg, int bg)
 }
 
 /*
- * gui_window_clrtoeol: clear until end of line with current background
+ * Clears until end of line with current background.
  */
 
 void
@@ -212,7 +216,7 @@ gui_window_clrtoeol (WINDOW *window)
 }
 
 /*
- * gui_window_save_style: save current style
+ * Saves current style.
  */
 
 void
@@ -225,7 +229,7 @@ gui_window_save_style ()
 }
 
 /*
- * gui_window_restore_style: restore style values
+ * Restores style values.
  */
 
 void
@@ -238,8 +242,7 @@ gui_window_restore_style ()
 }
 
 /*
- * gui_window_reset_style: reset style (color and attr) with a weechat color
- *                         for a window
+ * Resets style (color and attr) with a WeeChat color for a window.
  */
 
 void
@@ -256,7 +259,7 @@ gui_window_reset_style (WINDOW *window, int weechat_color)
 }
 
 /*
- * gui_window_reset_color: reset color with a weechat color for a window
+ * Resets color with a WeeChat color for a window.
  */
 
 void
@@ -267,7 +270,7 @@ gui_window_reset_color (WINDOW *window, int weechat_color)
 }
 
 /*
- * gui_window_set_color_style: set style for color
+ * Sets style for color.
  */
 
 void
@@ -278,7 +281,7 @@ gui_window_set_color_style (WINDOW *window, int style)
 }
 
 /*
- * gui_window_remove_color_style: remove style for color
+ * Removes style for color.
  */
 
 void
@@ -289,7 +292,7 @@ gui_window_remove_color_style (WINDOW *window, int style)
 }
 
 /*
- * gui_window_set_color: set color for a window
+ * Sets color for a window.
  */
 
 void
@@ -302,7 +305,7 @@ gui_window_set_color (WINDOW *window, int fg, int bg)
 }
 
 /*
- * gui_window_set_weechat_color: set WeeChat color for window
+ * Sets WeeChat color for window.
  */
 
 void
@@ -335,8 +338,7 @@ gui_window_set_weechat_color (WINDOW *window, int num_color)
 }
 
 /*
- * gui_window_set_custom_color_fg: set a custom color for a window
- *                                 (foreground only)
+ * Sets a custom color for a window (foreground only).
  */
 
 void
@@ -400,8 +402,7 @@ gui_window_set_custom_color_fg (WINDOW *window, int fg)
 }
 
 /*
- * gui_window_set_custom_color_bg: set a custom color for a window
- *                                 (background only)
+ * Sets a custom color for a window (background only).
  */
 
 void
@@ -432,8 +433,7 @@ gui_window_set_custom_color_bg (WINDOW *window, int bg)
 }
 
 /*
- * gui_window_set_custom_color_fg_bg: set a custom color for a window
- *                                    (foreground and background)
+ * Sets a custom color for a window (foreground and background).
  */
 
 void
@@ -502,8 +502,7 @@ gui_window_set_custom_color_fg_bg (WINDOW *window, int fg, int bg)
 }
 
 /*
- * gui_window_set_custom_color_pair: set a custom color for a window
- *                                   (pair number)
+ * Sets a custom color for a window (pair number).
  */
 
 void
@@ -518,10 +517,10 @@ gui_window_set_custom_color_pair (WINDOW *window, int pair)
 }
 
 /*
- * gui_window_string_apply_color_fg: apply foreground color code in string and
- *                                   move string pointer after color in string
- *                                   If window is NULL, no color is applied but
- *                                   string pointer is moved anyway
+ * Applies foreground color code in string and moves string pointer after color
+ * in string.
+ *
+ * If window is NULL, no color is applied but string pointer is moved anyway.
  */
 
 void
@@ -590,10 +589,10 @@ gui_window_string_apply_color_fg (unsigned char **string, WINDOW *window)
 }
 
 /*
- * gui_window_string_apply_color_bg: apply background color code in string and
- *                                   move string pointer after color in string
- *                                   If window is NULL, no color is applied but
- *                                   string pointer is moved anyway
+ * Applies background color code in string and moves string pointer after color
+ * in string.
+ *
+ * If window is NULL, no color is applied but string pointer is moved anyway.
  */
 
 void
@@ -649,11 +648,10 @@ gui_window_string_apply_color_bg (unsigned char **string, WINDOW *window)
 }
 
 /*
- * gui_window_string_apply_color_fg_bg: apply foreground + background color
- *                                      code in string and move string pointer
- *                                      after color in string
- *                                      If window is NULL, no color is applied
- *                                      but string pointer is moved anyway
+ * Applies foreground + background color code in string and moves string pointer
+ * after color in string.
+ *
+ * If window is NULL, no color is applied but string pointer is moved anyway.
  */
 
 void
@@ -769,11 +767,10 @@ gui_window_string_apply_color_fg_bg (unsigned char **string, WINDOW *window)
 }
 
 /*
- * gui_window_string_apply_color_pair: apply pair color code in string and
- *                                     move string pointer after color in
- *                                     string
- *                                     If window is NULL, no color is applied
- *                                     but string pointer is moved anyway
+ * Applies pair color code in string and moves string pointer after color in
+ * string.
+ *
+ * If window is NULL, no color is applied but string pointer is moved anyway.
  */
 
 void
@@ -807,12 +804,10 @@ gui_window_string_apply_color_pair (unsigned char **string, WINDOW *window)
 }
 
 /*
- * gui_window_string_apply_color_weechat: apply weechat color code in string
- *                                        and move string pointer after color
- *                                        in string
- *                                        If window is NULL, no color is
- *                                        applied but string pointer is moved
- *                                        anyway
+ * Applies weechat color code in string and moves string pointer after color in
+ * string.
+ *
+ * If window is NULL, no color is applied but string pointer is moved anyway.
  */
 
 void
@@ -846,12 +841,10 @@ gui_window_string_apply_color_weechat (unsigned char **string, WINDOW *window)
 }
 
 /*
- * gui_window_string_apply_color_set_attr: apply "set attribute" color code in
- *                                         string and move string pointer after
- *                                         color in string
- *                                         If window is NULL, no color is
- *                                         applied but string pointer is moved
- *                                         anyway
+ * Applies "set attribute" color code in string and moves string pointer after
+ * color in string.
+ *
+ * If window is NULL, no color is applied but string pointer is moved anyway.
  */
 
 void
@@ -888,12 +881,10 @@ gui_window_string_apply_color_set_attr (unsigned char **string, WINDOW *window)
 }
 
 /*
- * gui_window_string_apply_color_remove_attr: apply "remove attribute" color
- *                                            code in string and move string
- *                                            pointer after color in string
- *                                            If window is NULL, no color is
- *                                            applied but string pointer is
- *                                            moved anyway
+ * Applies "remove attribute" color code in string and moves string pointer
+ * after color in string.
+ *
+ * If window is NULL, no color is applied but string pointer is moved anyway.
  */
 
 void
@@ -930,8 +921,7 @@ gui_window_string_apply_color_remove_attr (unsigned char **string, WINDOW *windo
 }
 
 /*
- * gui_window_calculate_pos_size: calculate position and size for a buffer and
- *                                subwindows
+ * Calculates position and size for a buffer and subwindows.
  */
 
 void
@@ -972,7 +962,7 @@ gui_window_calculate_pos_size (struct t_gui_window *window)
 }
 
 /*
- * gui_window_draw_separators: draw window separators
+ * Draws window separators.
  */
 
 void
@@ -1041,7 +1031,7 @@ gui_window_draw_separators (struct t_gui_window *window)
 }
 
 /*
- * gui_window_redraw_buffer: redraw a buffer
+ * Redraws a buffer.
  */
 
 void
@@ -1054,7 +1044,7 @@ gui_window_redraw_buffer (struct t_gui_buffer *buffer)
 }
 
 /*
- * gui_window_redraw_all_buffers: redraw all buffers
+ * Redraws all buffers.
  */
 
 void
@@ -1073,7 +1063,7 @@ gui_window_redraw_all_buffers ()
 }
 
 /*
- * gui_window_switch_to_buffer: switch to another buffer in a window
+ * Switches to another buffer in a window.
  */
 
 void
@@ -1192,7 +1182,7 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
 }
 
 /*
- * gui_window_switch: switch to another window
+ * Switches to another window.
  */
 
 void
@@ -1229,7 +1219,7 @@ gui_window_switch (struct t_gui_window *window)
 }
 
 /*
- * gui_window_page_up: display previous page on buffer
+ * Displays previous page on buffer.
  */
 
 void
@@ -1278,7 +1268,7 @@ gui_window_page_up (struct t_gui_window *window)
 }
 
 /*
- * gui_window_page_down: display next page on buffer
+ * Displays next page on buffer.
  */
 
 void
@@ -1334,7 +1324,7 @@ gui_window_page_down (struct t_gui_window *window)
 }
 
 /*
- * gui_window_scroll_up: display previous few lines in buffer
+ * Displays previous few lines in buffer.
  */
 
 void
@@ -1376,7 +1366,7 @@ gui_window_scroll_up (struct t_gui_window *window)
 }
 
 /*
- * gui_window_scroll_down: display next few lines in buffer
+ * Displays next few lines in buffer.
  */
 
 void
@@ -1426,7 +1416,7 @@ gui_window_scroll_down (struct t_gui_window *window)
 }
 
 /*
- * gui_window_scroll_top: scroll to top of buffer
+ * Scrolls to top of buffer.
  */
 
 void
@@ -1461,7 +1451,7 @@ gui_window_scroll_top (struct t_gui_window *window)
 }
 
 /*
- * gui_window_scroll_bottom: scroll to bottom of buffer
+ * Scrolls to bottom of buffer.
  */
 
 void
@@ -1504,10 +1494,13 @@ gui_window_scroll_bottom (struct t_gui_window *window)
 }
 
 /*
- * gui_window_auto_resize: auto-resize all windows, according to % of global size
- *                         This function is called after a terminal resize.
- *                         Returns 0 if ok, -1 if all window should be merged
- *                         (not enough space according to windows %)
+ * Auto-resizes all windows, according to % of global size.
+ *
+ * This function is called after a terminal resize.
+ *
+ * Returns:
+ *    0: OK
+ *   -1: all windows must be merged (not enough space)
  */
 
 int
@@ -1583,7 +1576,7 @@ gui_window_auto_resize (struct t_gui_window_tree *tree,
 }
 
 /*
- * gui_window_refresh_windows: auto resize and refresh all windows
+ * Auto-resizes and refreshes all windows.
  */
 
 void
@@ -1644,7 +1637,9 @@ gui_window_refresh_windows ()
 }
 
 /*
- * gui_window_split_horizontal: split a window horizontally
+ * Horizontally splits a window.
+ *
+ * Returns pointer to new window, NULL if error.
  */
 
 struct t_gui_window *
@@ -1693,7 +1688,9 @@ gui_window_split_horizontal (struct t_gui_window *window, int percentage)
 }
 
 /*
- * gui_window_split_vertical: split a window vertically
+ * Vertically splits a window.
+ *
+ * Returns pointer to new window, NULL if error.
  */
 
 struct t_gui_window *
@@ -1744,7 +1741,7 @@ gui_window_split_vertical (struct t_gui_window *window, int percentage)
 }
 
 /*
- * gui_window_resize: resize window
+ * Resizes window.
  */
 
 void
@@ -1786,7 +1783,7 @@ gui_window_resize (struct t_gui_window *window, int percentage)
 }
 
 /*
- * gui_window_resize_delta: resize window using delta percentage
+ * Resizes window using delta percentage.
  */
 
 void
@@ -1832,7 +1829,11 @@ gui_window_resize_delta (struct t_gui_window *window, int delta_percentage)
 }
 
 /*
- * gui_window_merge: merge window with its sister
+ * Merges window with its sister.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -1882,7 +1883,7 @@ gui_window_merge (struct t_gui_window *window)
 }
 
 /*
- * gui_window_merge_all: merge all windows into only one
+ * Merges all windows into only one.
  */
 
 void
@@ -1924,12 +1925,12 @@ gui_window_merge_all (struct t_gui_window *window)
 }
 
 /*
- * gui_window_side_by_side: return a code about position of 2 windows:
- *                          0 = they're not side by side
- *                          1 = side by side (win2 is over the win1)
- *                          2 = side by side (win2 on the right)
- *                          3 = side by side (win2 below win1)
- *                          4 = side by side (win2 on the left)
+ * Returns a code about position of 2 windows:
+ *   0 = they're not side by side
+ *   1 = side by side: win2 is over the win1
+ *   2 = side by side: win2 on the right
+ *   3 = side by side: win2 below win1
+ *   4 = side by side: win2 on the left
  */
 
 int
@@ -1987,7 +1988,7 @@ gui_window_side_by_side (struct t_gui_window *win1, struct t_gui_window *win2)
 }
 
 /*
- * gui_window_switch_up: search and switch to a window over current window
+ * Searches and switches to a window over current window.
  */
 
 void
@@ -2011,7 +2012,7 @@ gui_window_switch_up (struct t_gui_window *window)
 }
 
 /*
- * gui_window_switch_down: search and switch to a window below current window
+ * Searches and switches to a window below current window.
  */
 
 void
@@ -2035,7 +2036,7 @@ gui_window_switch_down (struct t_gui_window *window)
 }
 
 /*
- * gui_window_switch_left: search and switch to a window on the left of current window
+ * Searches and switches to a window on the left of current window.
  */
 
 void
@@ -2059,7 +2060,7 @@ gui_window_switch_left (struct t_gui_window *window)
 }
 
 /*
- * gui_window_switch_right: search and switch to a window on the right of current window
+ * Searches and switches to a window on the right of current window.
  */
 
 void
@@ -2083,8 +2084,7 @@ gui_window_switch_right (struct t_gui_window *window)
 }
 
 /*
- * gui_window_balance_count: count number of windows in a tree with a given
- *                           split, for balancing windows
+ * Counts number of windows in a tree with a given split, for balancing windows.
  */
 
 int
@@ -2110,9 +2110,11 @@ gui_window_balance_count (struct t_gui_window_tree *tree, int split_horizontal)
 }
 
 /*
- * gui_window_balance: balance windows (set all splits to 50%)
- *                     return 1 if some windows have been balanced
- *                            0 if nothing was changed
+ * Balances windows (set all splits to 50%).
+ *
+ * Returns:
+ *   1: some windows have been balanced
+ *   0: nothing was changed
  */
 
 int
@@ -2148,12 +2150,14 @@ gui_window_balance (struct t_gui_window_tree *tree)
 }
 
 /*
- * gui_window_swap: swap buffers of two windows
- *                  direction can be: 0 = auto (swap with sister)
- *                                    1 = window above
- *                                    2 = window on the right
- *                                    3 = window below
- *                                    4 = window on the left
+ * Swaps buffers of two windows.
+ *
+ * Argument "direction" can be:
+ *   0 = auto (swap with sister)
+ *   1 = window above
+ *   2 = window on the right
+ *   3 = window below
+ *   4 = window on the left
  */
 
 void
@@ -2205,9 +2209,9 @@ gui_window_swap (struct t_gui_window *window, int direction)
 }
 
 /*
- * gui_window_refresh_screen: called when term size is modified
- *                            full_refresh == 1 when Ctrl+L is pressed,
- *                            or if terminal is resized
+ * Called when terminal size is modified.
+ *
+ * Argument full_refresh == 1 when Ctrl+L is pressed, or if terminal is resized.
  */
 
 void
@@ -2225,7 +2229,7 @@ gui_window_refresh_screen (int full_refresh)
 }
 
 /*
- * gui_window_set_title: set terminal title
+ * Sets terminal title.
  */
 
 void
@@ -2313,7 +2317,7 @@ gui_window_set_title (const char *title)
 }
 
 /*
- * gui_window_send_clipboard: copy text to clipboard (sent to terminal)
+ * Copies text to clipboard (sent to terminal).
  */
 
 void
@@ -2335,7 +2339,7 @@ gui_window_send_clipboard (const char *storage_unit, const char *text)
 }
 
 /*
- * gui_window_set_bracketed_paste_mode: enable/disable bracketed paste mode
+ * Enables/disables bracketed paste mode.
  */
 
 void
@@ -2357,7 +2361,7 @@ gui_window_set_bracketed_paste_mode (int enable)
 }
 
 /*
- * gui_window_move_cursor: move cursor on screen (for cursor mode)
+ * Moves cursor on screen (for cursor mode).
  */
 
 void
@@ -2371,7 +2375,7 @@ gui_window_move_cursor ()
 }
 
 /*
- * gui_window_term_display_infos: display some infos about terminal and colors
+ * Displays some infos about terminal and colors.
  */
 
 void
@@ -2384,8 +2388,8 @@ gui_window_term_display_infos ()
 }
 
 /*
- * gui_window_objects_print_log: print window Curses objects infos in log
- *                               (usually for crash dump)
+ * Prints window Curses objects infos in WeeChat log file (usually for crash
+ * dump).
  */
 
 void

@@ -370,16 +370,23 @@ Some basic rules you *must* follow when you write C code:
 * Use 4 spaces for indentation. Don't use tabs, they are evil.
 * Try to not exceed 80 chars by line, except if this is needed to increase
   readability.
-* Use comments `/* comment */` (not C99-style comments like `// comment`), and
-  format them like this:
+* Use comments `/* comment */` (not C99-style comments like `// comment`).
+* Add a comment before any function, to explain what does the function (always
+  use a multi-line comment, even if description is very short).
+
+Example:
 
 [source,C]
 ----------------------------------------
 /*
- * foo: this is the description of the function
+ * Checks if a string with boolean value is valid.
+ *
+ * Returns:
+ *   1: boolean value is valid
+ *   0: boolean value is NOT valid
  */
 
-void
+int
 foo ()
 {
     int i;
@@ -388,8 +395,8 @@ foo ()
     i = 1;
 
     /*
-     * multi-line comment: this is a very long
-     * description about next block of code
+     * multi-line comment: this is a very long description about next block
+     * of code
      */
     i = 2;
     printf ("%d\n", i);
@@ -426,34 +433,13 @@ if (nicks_count == 1)
 }
 ----------------------------------------
 
-* Add a comment before any function, to explain what does the function, and
-  indent it like this (note that return type of function is on a line alone):
-
-[source,C]
-----------------------------------------
-/*
- * foo: this is the description of the function
- */
-
-void
-foo ()
-{
-    int i;
-
-    for (i = 0; i < 10; i++)
-    {
-        bar (i);
-    }
-}
-----------------------------------------
-
 * Use empty lines to separate many different blocks inside functions, and if
   possible add a comment for each one, like this:
 
 [source,C]
 ----------------------------------------
 /*
- * irc_server_outqueue_send: send a message from outqueue
+ * Sends a message from out queue.
  */
 
 void
@@ -676,7 +662,9 @@ Example: creation of a new window (from 'src/gui/gui-window.c'):
 [source,C]
 ----------------------------------------
 /*
- * gui_window_new: create a new window
+ * Creates a new window.
+ *
+ * Returns pointer to new window, NULL if error.
  */
 
 struct t_gui_window *

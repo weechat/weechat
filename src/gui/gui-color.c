@@ -54,8 +54,9 @@ struct t_weelist *gui_color_list_with_alias = NULL;
 
 
 /*
- * gui_color_search_config: search a color with configuration option name
- *                          return color string, NULL if not found
+ * Searches for a color with configuration option name.
+ *
+ * Returns color string, NULL if not found.
  */
 
 const char *
@@ -85,8 +86,9 @@ gui_color_search_config (const char *color_name)
 }
 
 /*
- * gui_color_attr_get_flag: return flag for attribute char of a color
- *                          If char is unknown, 0 is returned
+ * Returns flag for attribute char of a color.
+ *
+ * Returns 0 if char is unknown.
  */
 
 int
@@ -111,9 +113,9 @@ gui_color_attr_get_flag (char c)
 }
 
 /*
- * gui_color_attr_build_string: build string with attributes of color
- *                              The str_attr must be at least 5 bytes long
- *                              (4 for attributes + final '\0')
+ * Builds string with attributes of color.
+ *
+ * The str_attr must be at least 6 bytes long (5 for attributes + final '\0').
  */
 
 void
@@ -138,7 +140,7 @@ gui_color_attr_build_string (int color, char *str_attr)
 }
 
 /*
- * gui_color_get_custom: get a custom color with a name (GUI dependent)
+ * Gets a custom color with a name.
  */
 
 const char *
@@ -393,13 +395,14 @@ gui_color_get_custom (const char *color_name)
 }
 
 /*
- * gui_color_decode: parses a message and remove WeeChat color codes
- *                   if replacement is not NULL and not empty, it is used to
- *                      replace color codes by first char of replacement (and
- *                      next chars in string are NOT removed)
- *                   if replacement is NULL or empty, color codes are removed,
- *                      with following chars if they are related to color code
- *                   After use, string returned has to be free()
+ * Removes WeeChat color codes from a message.
+ *
+ * If replacement is not NULL and not empty, it is used to replace color codes
+ * by first char of replacement (and next chars in string are NOT removed).
+ * If replacement is NULL or empty, color codes are removed, with following
+ * chars if they are related to color code.
+ *
+ * Note: result must be freed after use.
  */
 
 char *
@@ -582,9 +585,9 @@ gui_color_decode (const char *string, const char *replacement)
 }
 
 /*
- * gui_color_string_replace_colors: replace colors in string with color codes
- *                                  colors are using format: ${name} where name
- *                                  is a color name
+ * Replaces colors in string with color codes.
+ *
+ * Colors are using format: ${name} where name is a color name.
  */
 
 char *
@@ -661,7 +664,7 @@ gui_color_string_replace_colors (const char *string)
 }
 
 /*
- * gui_color_free: free a color
+ * Frees a color.
  */
 
 void
@@ -677,8 +680,7 @@ gui_color_free (struct t_gui_color *color)
 }
 
 /*
- * gui_color_palette_free_value_cb: callback called to free value in hashtable
- *                                  when item in hashtable is removed
+ * Callback called to free value in hashtable when item in hashtable is removed.
  */
 
 void
@@ -698,7 +700,7 @@ gui_color_palette_free_value_cb (struct t_hashtable *hashtable,
 }
 
 /*
- * gui_color_palette_alloc_structs: allocate hashtables and lists for palette
+ * Allocates hashtables and lists for palette.
  */
 
 void
@@ -730,8 +732,9 @@ gui_color_palette_alloc_structs ()
 }
 
 /*
- * gui_color_palette_get_alias: get color pair number with alias
- *                              return -1 if alias is not found
+ * Gets color pair number with alias.
+ *
+ * Returns -1 if alias is not found.
  */
 
 int
@@ -751,7 +754,7 @@ gui_color_palette_get_alias (const char *alias)
 }
 
 /*
- * gui_color_palette_get: get a color palette with number
+ * Gets a color palette with number.
  */
 
 struct t_gui_color_palette *
@@ -765,7 +768,7 @@ gui_color_palette_get (int number)
 }
 
 /*
- * gui_color_palette_add: add a color in palette
+ * Adds a color in palette.
  */
 
 void
@@ -790,7 +793,7 @@ gui_color_palette_add (int number, const char *value)
 }
 
 /*
- * gui_color_palette_remove: remove a color in palette
+ * Removes a color in palette.
  */
 
 void
@@ -815,7 +818,7 @@ gui_color_palette_remove (int number)
 }
 
 /*
- * gui_color_palette_free_structs: free hashtables and lists for palette
+ * Frees hashtables and lists for palette.
  */
 
 void

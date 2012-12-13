@@ -84,9 +84,11 @@ void plugin_remove (struct t_weechat_plugin *plugin);
 
 
 /*
- * plugin_valid: check if a plugin pointer exists
- *               return 1 if plugin exists
- *                      0 if plugin is not found
+ * Checks if a plugin pointer is valid.
+ *
+ * Returns:
+ *   1: plugin exists
+ *   0: plugin does not exist
  */
 
 int
@@ -109,7 +111,9 @@ plugin_valid (struct t_weechat_plugin *plugin)
 }
 
 /*
- * plugin_search: search a plugin by name
+ * Searches for a plugin by name.
+ *
+ * Returns pointer to plugin found, NULL if not found.
  */
 
 struct t_weechat_plugin *
@@ -132,7 +136,7 @@ plugin_search (const char *name)
 }
 
 /*
- * plugin_get_name: get name of plugin with a pointer
+ * Gets name of a plugin with a pointer.
  */
 
 const char *
@@ -144,8 +148,12 @@ plugin_get_name (struct t_weechat_plugin *plugin)
 }
 
 /*
- * plugin_check_extension_allowed: check if extension of filename is allowed
- *                                 by option "weechat.plugin.extension"
+ * Checks if extension of filename is allowed by option
+ * "weechat.plugin.extension".
+ *
+ * Returns:
+ *   1: extension allowed
+ *   0: extension not allowed
  */
 
 int
@@ -177,11 +185,13 @@ plugin_check_extension_allowed (const char *filename)
 }
 
 /*
- * plugin_check_autoload: check if a plugin can be autoloaded or not
- *                        return 1 if plugin can be autoloaded
- *                               0 if plugin can NOT be autoloaded
- *                        list of autoloaded plugins is set in option
- *                        "weechat.plugin.autoload"
+ * Checks if a plugin can be autoloaded.
+ *
+ * List of autoloaded plugins is set in option "weechat.plugin.autoload".
+ *
+ * Returns:
+ *   1: plugin can be autoloaded
+ *   0: plugin can not be autoloaded
  */
 
 int
@@ -273,7 +283,7 @@ plugin_check_autoload (const char *filename)
 }
 
 /*
- * plugin_find_pos: find position for a plugin (for sorting plugins list)
+ * Searches for position of plugin (to keep list sorted).
  */
 
 struct t_weechat_plugin *
@@ -291,8 +301,9 @@ plugin_find_pos (struct t_weechat_plugin *plugin)
 }
 
 /*
- * plugin_load: load a WeeChat plugin (a dynamic library)
- *              return: pointer to new WeeChat plugin, NULL if error
+ * Loads a WeeChat plugin (a dynamic library).
+ *
+ * Returns a pointer to new WeeChat plugin, NULL if error.
  */
 
 struct t_weechat_plugin *
@@ -857,8 +868,8 @@ plugin_load (const char *filename, int argc, char **argv)
 }
 
 /*
- * plugin_auto_load_file: load a file found by plugin_auto_load,
- *                        but only it this is really a dynamic library
+ * Loads a file found by function plugin_auto_load, but only if this is really a
+ * dynamic library.
  */
 
 void
@@ -873,8 +884,7 @@ plugin_auto_load_file (void *args, const char *filename)
 }
 
 /*
- * plugin_auto_load: auto-load WeeChat plugins, from user and system
- *                   directories
+ * Auto-loads WeeChat plugins, from user and system directories.
  */
 
 void
@@ -938,7 +948,7 @@ plugin_auto_load (int argc, char **argv)
 }
 
 /*
- * plugin_remove: remove a WeeChat plugin
+ * Removes a WeeChat plugin.
  */
 
 void
@@ -973,7 +983,7 @@ plugin_remove (struct t_weechat_plugin *plugin)
     if (plugin->next_plugin)
         (plugin->next_plugin)->prev_plugin = plugin->prev_plugin;
 
-    /* remove all config files */
+    /* remove all configuration files */
     config_file_free_all_plugin (plugin);
 
     /* remove all hooks */
@@ -1012,7 +1022,7 @@ plugin_remove (struct t_weechat_plugin *plugin)
 }
 
 /*
- * plugin_unload: unload a WeeChat plugin
+ * Unloads a WeeChat plugin.
  */
 
 void
@@ -1041,7 +1051,7 @@ plugin_unload (struct t_weechat_plugin *plugin)
 }
 
 /*
- * plugin_unload_name: unload a WeeChat plugin by name
+ * Unloads a WeeChat plugin by name.
  */
 
 void
@@ -1062,7 +1072,7 @@ plugin_unload_name (const char *name)
 }
 
 /*
- * plugin_unload_all: unload all WeeChat plugins
+ * Unloads all WeeChat plugins.
  */
 
 void
@@ -1086,7 +1096,7 @@ plugin_unload_all ()
 }
 
 /*
- * plugin_reload_name: reload a WeeChat plugin by name
+ * Reloads a WeeChat plugin by name.
  */
 
 void
@@ -1116,7 +1126,7 @@ plugin_reload_name (const char *name, int argc, char **argv)
 }
 
 /*
- * plugin_display_short_list: print list of plugins on one line
+ * Displays list of loaded plugins on one line.
  */
 
 void
@@ -1167,7 +1177,7 @@ plugin_display_short_list ()
 }
 
 /*
- * plugin_init: init plugin support
+ * Initializes plugin support.
  */
 
 void
@@ -1191,13 +1201,13 @@ plugin_init (int auto_load, int argc, char *argv[])
 }
 
 /*
- * plugin_end: end plugin support
+ * Ends plugin support.
  */
 
 void
 plugin_end ()
 {
-    /* write plugins config options */
+    /* write plugins configuration options */
     plugin_config_write ();
 
     /* unload all plugins */
@@ -1208,7 +1218,7 @@ plugin_end ()
 }
 
 /*
- * plugin_hdata_plugin_cb: return hdata for plugin
+ * Gets hdata for plugin.
  */
 
 struct t_hdata *
@@ -1241,8 +1251,11 @@ plugin_hdata_plugin_cb (void *data, const char *hdata_name)
 }
 
 /*
- * plugin_add_to_infolist: add a plugin in an infolist
- *                         return 1 if ok, 0 if error
+ * Adds a plugin in an infolist.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -1287,7 +1300,7 @@ plugin_add_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * plugin_print_log: print plugin infos in log (usually for crash dump)
+ * Prints plugins in WeeChat log file (usually for crash dump).
  */
 
 void

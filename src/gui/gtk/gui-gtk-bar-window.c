@@ -38,7 +38,7 @@
 
 
 /*
- * gui_bar_window_objects_init: init Gtk windows for bar window
+ * Initializes Gtk windows for bar window.
  */
 
 int
@@ -57,7 +57,7 @@ gui_bar_window_objects_init (struct t_gui_bar_window *bar_window)
 }
 
 /*
- * gui_window_objects_free: free Gtk windows for a bar window
+ * Frees Gtk windows for a bar window.
  */
 
 void
@@ -68,7 +68,7 @@ gui_bar_window_objects_free (struct t_gui_bar_window *bar_window)
 }
 
 /*
- * gui_bar_window_create_win: create curses window for bar
+ * Creates curses window for bar.
  */
 
 void
@@ -80,8 +80,9 @@ gui_bar_window_create_win (struct t_gui_bar_window *bar_window)
 }
 
 /*
- * gui_bar_window_print_string: print a string text on a bar window
- *                              return number of chars displayed on screen
+ * Prints a string text on a bar window.
+ *
+ * Returns number of chars displayed on screen.
  */
 
 int
@@ -97,7 +98,7 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
 }
 
 /*
- * gui_bar_window_draw: draw a bar for a window
+ * Draws a bar for a window.
  */
 
 void
@@ -111,7 +112,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
 }
 
 /*
- * gui_bar_window_objects_print_log: print bar window infos in log (usually for crash dump)
+ * Prints bar window infos in WeeChat log file (usually for crash dump).
  */
 
 void

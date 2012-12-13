@@ -98,7 +98,7 @@ extern void boot_DynaLoader (pTHX_ CV* cv);
 
 
 /*
- * weechat::register: startup function for all WeeChat Perl scripts
+ * Registers a perl script.
  */
 
 XS (XS_weechat_api_register)
@@ -173,7 +173,10 @@ XS (XS_weechat_api_register)
 }
 
 /*
- * weechat::plugin_get_name: get name of plugin (return "core" for WeeChat core)
+ * Wrappers for functions in scripting API.
+ *
+ * For more info about these functions, look at their implementation in WeeChat
+ * core.
  */
 
 XS (XS_weechat_api_plugin_get_name)
@@ -190,10 +193,6 @@ XS (XS_weechat_api_plugin_get_name)
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat::charser_set: set script charset
- */
-
 XS (XS_weechat_api_charset_set)
 {
     dXSARGS;
@@ -207,10 +206,6 @@ XS (XS_weechat_api_charset_set)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat::iconv_to_internal: convert string to internal WeeChat charset
- */
 
 XS (XS_weechat_api_iconv_to_internal)
 {
@@ -229,11 +224,6 @@ XS (XS_weechat_api_iconv_to_internal)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat::iconv_from_internal: convert string from WeeChat inernal charset
- *                               to another one
- */
-
 XS (XS_weechat_api_iconv_from_internal)
 {
     char *result, *charset, *string;
@@ -251,10 +241,6 @@ XS (XS_weechat_api_iconv_from_internal)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat::gettext: get translated string
- */
-
 XS (XS_weechat_api_gettext)
 {
     const char *result;
@@ -268,10 +254,6 @@ XS (XS_weechat_api_gettext)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat::ngettext: get translated string with plural form
- */
 
 XS (XS_weechat_api_ngettext)
 {
@@ -292,12 +274,6 @@ XS (XS_weechat_api_ngettext)
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat::string_match: return 1 if string matches a mask
- *                        mask can begin or end with "*", no other "*"
- *                        are allowed inside mask
- */
-
 XS (XS_weechat_api_string_match)
 {
     int value;
@@ -314,12 +290,6 @@ XS (XS_weechat_api_string_match)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat::string_has_highlight: return 1 if string contains a highlight
- *                                (using list of words to highlight)
- *                                return 0 if no highlight is found in string
- */
-
 XS (XS_weechat_api_string_has_highlight)
 {
     int value;
@@ -334,13 +304,6 @@ XS (XS_weechat_api_string_has_highlight)
 
     API_RETURN_INT(value);
 }
-
-/*
- * weechat::string_has_highlight_regex: return 1 if string contains a highlight
- *                                      (using regular expression)
- *                                      return 0 if no highlight is found in
- *                                      string
- */
 
 XS (XS_weechat_api_string_has_highlight_regex)
 {
@@ -357,12 +320,6 @@ XS (XS_weechat_api_string_has_highlight_regex)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat::string_mask_to_regex: convert a mask (string with only "*" as
- *                                wildcard) to a regex, paying attention to
- *                                special chars in a regex
- */
-
 XS (XS_weechat_api_string_mask_to_regex)
 {
     char *result;
@@ -376,10 +333,6 @@ XS (XS_weechat_api_string_mask_to_regex)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat::string_remove_color: remove WeeChat color codes from string
- */
 
 XS (XS_weechat_api_string_remove_color)
 {
@@ -398,11 +351,6 @@ XS (XS_weechat_api_string_remove_color)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat::string_is_command_char: check if first char of string is a command
- *                                  char
- */
-
 XS (XS_weechat_api_string_is_command_char)
 {
     int value;
@@ -417,11 +365,6 @@ XS (XS_weechat_api_string_is_command_char)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat::string_input_for_buffer: return string with input text for buffer
- *                                   or empty string if it's a command
- */
-
 XS (XS_weechat_api_string_input_for_buffer)
 {
     const char *result;
@@ -435,10 +378,6 @@ XS (XS_weechat_api_string_input_for_buffer)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat::string_eval_expression: evaluate expression and return result
- */
 
 XS (XS_weechat_api_string_eval_expression)
 {
@@ -470,10 +409,6 @@ XS (XS_weechat_api_string_eval_expression)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat::mkdir_home: create a directory in WeeChat home
- */
-
 XS (XS_weechat_api_mkdir_home)
 {
     dXSARGS;
@@ -488,10 +423,6 @@ XS (XS_weechat_api_mkdir_home)
 
     API_RETURN_ERROR;
 }
-
-/*
- * weechat::mkdir: create a directory
- */
 
 XS (XS_weechat_api_mkdir)
 {
@@ -508,11 +439,6 @@ XS (XS_weechat_api_mkdir)
     API_RETURN_ERROR;
 }
 
-/*
- * weechat::mkdir_parents: create a directory and make parent directories as
- *                         needed
- */
-
 XS (XS_weechat_api_mkdir_parents)
 {
     dXSARGS;
@@ -527,10 +453,6 @@ XS (XS_weechat_api_mkdir_parents)
 
     API_RETURN_ERROR;
 }
-
-/*
- * weechat::list_new: create a new list
- */
 
 XS (XS_weechat_api_list_new)
 {
@@ -547,10 +469,6 @@ XS (XS_weechat_api_list_new)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat::list_add: add a string to list
- */
 
 XS (XS_weechat_api_list_add)
 {
@@ -574,10 +492,6 @@ XS (XS_weechat_api_list_add)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat::list_search: search a string in list
- */
-
 XS (XS_weechat_api_list_search)
 {
     char *result, *weelist, *data;
@@ -595,10 +509,6 @@ XS (XS_weechat_api_list_search)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat::list_search_pos: search position of a string in list
- */
 
 XS (XS_weechat_api_list_search_pos)
 {
@@ -618,10 +528,6 @@ XS (XS_weechat_api_list_search_pos)
     API_RETURN_INT(pos);
 }
 
-/*
- * weechat::list_casesearch: search a string in list (ignore case)
- */
-
 XS (XS_weechat_api_list_casesearch)
 {
     char *result, *weelist, *data;
@@ -639,11 +545,6 @@ XS (XS_weechat_api_list_casesearch)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat::list_casesearch_pos: search position of a string in list
- *                               (ignore case)
- */
 
 XS (XS_weechat_api_list_casesearch_pos)
 {
@@ -663,10 +564,6 @@ XS (XS_weechat_api_list_casesearch_pos)
     API_RETURN_INT(pos);
 }
 
-/*
- * weechat::list_get: get item by position
- */
-
 XS (XS_weechat_api_list_get)
 {
     char *result;
@@ -681,10 +578,6 @@ XS (XS_weechat_api_list_get)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat::list_set: set new value for item
- */
 
 XS (XS_weechat_api_list_set)
 {
@@ -703,10 +596,6 @@ XS (XS_weechat_api_list_set)
     API_RETURN_OK;
 }
 
-/*
- * weechat::list_next: get next item
- */
-
 XS (XS_weechat_api_list_next)
 {
     char *result;
@@ -720,10 +609,6 @@ XS (XS_weechat_api_list_next)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat::list_prev: get previous item
- */
 
 XS (XS_weechat_api_list_prev)
 {
@@ -739,10 +624,6 @@ XS (XS_weechat_api_list_prev)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat::list_string: get string value of item
- */
-
 XS (XS_weechat_api_list_string)
 {
     const char *result;
@@ -757,10 +638,6 @@ XS (XS_weechat_api_list_string)
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat::list_size: get number of elements in list
- */
-
 XS (XS_weechat_api_list_size)
 {
     int size;
@@ -774,10 +651,6 @@ XS (XS_weechat_api_list_size)
 
     API_RETURN_INT(size);
 }
-
-/*
- * weechat::list_remove: remove item from list
- */
 
 XS (XS_weechat_api_list_remove)
 {
@@ -797,10 +670,6 @@ XS (XS_weechat_api_list_remove)
     API_RETURN_OK;
 }
 
-/*
- * weechat::list_remove_all: remove all items from list
- */
-
 XS (XS_weechat_api_list_remove_all)
 {
     dXSARGS;
@@ -814,10 +683,6 @@ XS (XS_weechat_api_list_remove_all)
     API_RETURN_OK;
 }
 
-/*
- * weechat::list_free: free list
- */
-
 XS (XS_weechat_api_list_free)
 {
     dXSARGS;
@@ -830,10 +695,6 @@ XS (XS_weechat_api_list_free)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_perl_api_config_reload_cb: callback for config reload
- */
 
 int
 weechat_perl_api_config_reload_cb (void *data,
@@ -872,10 +733,6 @@ weechat_perl_api_config_reload_cb (void *data,
     return WEECHAT_CONFIG_READ_FILE_NOT_FOUND;
 }
 
-/*
- * weechat::config_new: create a new configuration file
- */
-
 XS (XS_weechat_api_config_new)
 {
     char *result, *name, *function, *data;
@@ -898,10 +755,6 @@ XS (XS_weechat_api_config_new)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_perl_api_config_section_read_cb: callback for reading option in section
- */
 
 int
 weechat_perl_api_config_section_read_cb (void *data,
@@ -948,10 +801,6 @@ weechat_perl_api_config_section_read_cb (void *data,
     return WEECHAT_CONFIG_OPTION_SET_ERROR;
 }
 
-/*
- * weechat_perl_api_config_section_write_cb: callback for writing section
- */
-
 int
 weechat_perl_api_config_section_write_cb (void *data,
                                           struct t_config_file *config_file,
@@ -991,11 +840,6 @@ weechat_perl_api_config_section_write_cb (void *data,
     return WEECHAT_CONFIG_WRITE_ERROR;
 }
 
-/*
- * weechat_perl_api_config_section_write_default_cb: callback for writing
- *                                                   default values for section
- */
-
 int
 weechat_perl_api_config_section_write_default_cb (void *data,
                                                   struct t_config_file *config_file,
@@ -1034,10 +878,6 @@ weechat_perl_api_config_section_write_default_cb (void *data,
 
     return WEECHAT_CONFIG_WRITE_ERROR;
 }
-
-/*
- * weechat_perl_api_config_section_create_option_cb: callback to create an option
- */
 
 int
 weechat_perl_api_config_section_create_option_cb (void *data,
@@ -1084,10 +924,6 @@ weechat_perl_api_config_section_create_option_cb (void *data,
     return WEECHAT_CONFIG_OPTION_SET_ERROR;
 }
 
-/*
- * weechat_perl_api_config_section_delete_option_cb: callback to delete an option
- */
-
 int
 weechat_perl_api_config_section_delete_option_cb (void *data,
                                                   struct t_config_file *config_file,
@@ -1132,10 +968,6 @@ weechat_perl_api_config_section_delete_option_cb (void *data,
 
     return WEECHAT_CONFIG_OPTION_UNSET_ERROR;
 }
-
-/*
- * weechat::config_new_section: create a new section in configuration file
- */
 
 XS (XS_weechat_api_config_new_section)
 {
@@ -1188,10 +1020,6 @@ XS (XS_weechat_api_config_new_section)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat::config_search_section: search section in configuration file
- */
-
 XS (XS_weechat_api_config_search_section)
 {
     char *result, *config_file, *section_name;
@@ -1209,11 +1037,6 @@ XS (XS_weechat_api_config_search_section)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_perl_api_config_option_check_value_cb: callback for checking new
- *                                                value for option
- */
 
 int
 weechat_perl_api_config_option_check_value_cb (void *data,
@@ -1254,10 +1077,6 @@ weechat_perl_api_config_option_check_value_cb (void *data,
     return 0;
 }
 
-/*
- * weechat_perl_api_config_option_change_cb: callback for option changed
- */
-
 void
 weechat_perl_api_config_option_change_cb (void *data,
                                           struct t_config_option *option)
@@ -1287,10 +1106,6 @@ weechat_perl_api_config_option_change_cb (void *data,
     }
 }
 
-/*
- * weechat_perl_api_config_option_delete_cb: callback when option is deleted
- */
-
 void
 weechat_perl_api_config_option_delete_cb (void *data,
                                           struct t_config_option *option)
@@ -1319,10 +1134,6 @@ weechat_perl_api_config_option_delete_cb (void *data,
             free (rc);
     }
 }
-
-/*
- * weechat::config_new_option: create a new option in section
- */
 
 XS (XS_weechat_api_config_new_option)
 {
@@ -1377,10 +1188,6 @@ XS (XS_weechat_api_config_new_option)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat::config_search_option: search option in configuration file or section
- */
-
 XS (XS_weechat_api_config_search_option)
 {
     char *result, *config_file, *section, *option_name;
@@ -1401,10 +1208,6 @@ XS (XS_weechat_api_config_search_option)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat::config_string_to_boolean: return boolean value of a string
- */
-
 XS (XS_weechat_api_config_string_to_boolean)
 {
     int value;
@@ -1418,10 +1221,6 @@ XS (XS_weechat_api_config_string_to_boolean)
 
     API_RETURN_INT(value);
 }
-
-/*
- * weechat::config_option_reset: reset an option with default value
- */
 
 XS (XS_weechat_api_config_option_reset)
 {
@@ -1440,10 +1239,6 @@ XS (XS_weechat_api_config_option_reset)
 
     API_RETURN_INT(rc);
 }
-
-/*
- * weechat::config_option_set: set new value for option
- */
 
 XS (XS_weechat_api_config_option_set)
 {
@@ -1465,10 +1260,6 @@ XS (XS_weechat_api_config_option_set)
     API_RETURN_INT(rc);
 }
 
-/*
- * weechat::config_option_set_null: set null (undefined) value for option
- */
-
 XS (XS_weechat_api_config_option_set_null)
 {
     int rc;
@@ -1487,10 +1278,6 @@ XS (XS_weechat_api_config_option_set_null)
     API_RETURN_INT(rc);
 }
 
-/*
- * weechat::config_option_unset: unset an option
- */
-
 XS (XS_weechat_api_config_option_unset)
 {
     int rc;
@@ -1507,10 +1294,6 @@ XS (XS_weechat_api_config_option_unset)
 
     API_RETURN_INT(rc);
 }
-
-/*
- * weechat::config_option_rename: rename an option
- */
 
 XS (XS_weechat_api_config_option_rename)
 {
@@ -1530,10 +1313,6 @@ XS (XS_weechat_api_config_option_rename)
     API_RETURN_OK;
 }
 
-/*
- * weechat::config_option_is_null: return 1 if value of option is null
- */
-
 XS (XS_weechat_api_config_option_is_null)
 {
     int value;
@@ -1547,11 +1326,6 @@ XS (XS_weechat_api_config_option_is_null)
 
     API_RETURN_INT(value);
 }
-
-/*
- * weechat::config_option_default_is_null: return 1 if default value of option
- *                                         is null
- */
 
 XS (XS_weechat_api_config_option_default_is_null)
 {
@@ -1567,10 +1341,6 @@ XS (XS_weechat_api_config_option_default_is_null)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat::config_boolean: return boolean value of option
- */
-
 XS (XS_weechat_api_config_boolean)
 {
     int value;
@@ -1584,10 +1354,6 @@ XS (XS_weechat_api_config_boolean)
 
     API_RETURN_INT(value);
 }
-
-/*
- * weechat::config_boolean_default: return default boolean value of option
- */
 
 XS (XS_weechat_api_config_boolean_default)
 {
@@ -1603,10 +1369,6 @@ XS (XS_weechat_api_config_boolean_default)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat::config_integer: return integer value of option
- */
-
 XS (XS_weechat_api_config_integer)
 {
     int value;
@@ -1620,10 +1382,6 @@ XS (XS_weechat_api_config_integer)
 
     API_RETURN_INT(value);
 }
-
-/*
- * weechat::config_integer_default: return default integer value of option
- */
 
 XS (XS_weechat_api_config_integer_default)
 {
@@ -1639,10 +1397,6 @@ XS (XS_weechat_api_config_integer_default)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat::config_string: return string value of option
- */
-
 XS (XS_weechat_api_config_string)
 {
     const char *result;
@@ -1656,10 +1410,6 @@ XS (XS_weechat_api_config_string)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat::config_string_default: return default string value of option
- */
 
 XS (XS_weechat_api_config_string_default)
 {
@@ -1675,10 +1425,6 @@ XS (XS_weechat_api_config_string_default)
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat::config_color: return color value of option
- */
-
 XS (XS_weechat_api_config_color)
 {
     const char *result;
@@ -1693,10 +1439,6 @@ XS (XS_weechat_api_config_color)
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat::config_color_default: return default color value of option
- */
-
 XS (XS_weechat_api_config_color_default)
 {
     const char *result;
@@ -1710,10 +1452,6 @@ XS (XS_weechat_api_config_color_default)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat::config_write_option: write an option in configuration file
- */
 
 XS (XS_weechat_api_config_write_option)
 {
@@ -1732,10 +1470,6 @@ XS (XS_weechat_api_config_write_option)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat::config_write_line: write a line in configuration file
- */
 
 XS (XS_weechat_api_config_write_line)
 {
@@ -1756,10 +1490,6 @@ XS (XS_weechat_api_config_write_line)
     API_RETURN_OK;
 }
 
-/*
- * weechat::config_write: write configuration file
- */
-
 XS (XS_weechat_api_config_write)
 {
     int rc;
@@ -1773,10 +1503,6 @@ XS (XS_weechat_api_config_write)
 
     API_RETURN_INT(rc);
 }
-
-/*
- * weechat::config_read: read configuration file
- */
 
 XS (XS_weechat_api_config_read)
 {
@@ -1792,10 +1518,6 @@ XS (XS_weechat_api_config_read)
     API_RETURN_INT(rc);
 }
 
-/*
- * weechat::config_reload: reload configuration file
- */
-
 XS (XS_weechat_api_config_reload)
 {
     int rc;
@@ -1809,10 +1531,6 @@ XS (XS_weechat_api_config_reload)
 
     API_RETURN_INT(rc);
 }
-
-/*
- * weechat::config_option_free: free an option in configuration file
- */
 
 XS (XS_weechat_api_config_option_free)
 {
@@ -1829,11 +1547,6 @@ XS (XS_weechat_api_config_option_free)
     API_RETURN_OK;
 }
 
-/*
- * weechat::config_section_free_options: free options of a section in
- *                                       configuration file
- */
-
 XS (XS_weechat_api_config_section_free_options)
 {
     dXSARGS;
@@ -1848,10 +1561,6 @@ XS (XS_weechat_api_config_section_free_options)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat::config_section_free: free section in configuration file
- */
 
 XS (XS_weechat_api_config_section_free)
 {
@@ -1868,10 +1577,6 @@ XS (XS_weechat_api_config_section_free)
     API_RETURN_OK;
 }
 
-/*
- * weechat::config_free: free configuration file
- */
-
 XS (XS_weechat_api_config_free)
 {
     dXSARGS;
@@ -1887,10 +1592,6 @@ XS (XS_weechat_api_config_free)
     API_RETURN_OK;
 }
 
-/*
- * weechat::config_get: get config option
- */
-
 XS (XS_weechat_api_config_get)
 {
     char *result;
@@ -1904,10 +1605,6 @@ XS (XS_weechat_api_config_get)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat::config_get_plugin: get value of a plugin option
- */
 
 XS (XS_weechat_api_config_get_plugin)
 {
@@ -1924,10 +1621,6 @@ XS (XS_weechat_api_config_get_plugin)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat::config_is_set_plugin: check if a plugin option is set
- */
 
 XS (XS_weechat_api_config_is_set_plugin)
 {
@@ -1947,10 +1640,6 @@ XS (XS_weechat_api_config_is_set_plugin)
 
     API_RETURN_INT(rc);
 }
-
-/*
- * weechat::config_set_plugin: set value of a plugin option
- */
 
 XS (XS_weechat_api_config_set_plugin)
 {
@@ -1973,10 +1662,6 @@ XS (XS_weechat_api_config_set_plugin)
     API_RETURN_INT(rc);
 }
 
-/*
- * weechat::config_set_desc_plugin: set description of a plugin option
- */
-
 XS (XS_weechat_api_config_set_desc_plugin)
 {
     char *option, *description;
@@ -1997,10 +1682,6 @@ XS (XS_weechat_api_config_set_desc_plugin)
     API_RETURN_OK;
 }
 
-/*
- * weechat::config_unset_plugin: unset a plugin option
- */
-
 XS (XS_weechat_api_config_unset_plugin)
 {
     char *option;
@@ -2019,10 +1700,6 @@ XS (XS_weechat_api_config_unset_plugin)
 
     API_RETURN_INT(rc);
 }
-
-/*
- * weechat::key_bind: bind key(s)
- */
 
 XS (XS_weechat_api_key_bind)
 {
@@ -2049,10 +1726,6 @@ XS (XS_weechat_api_key_bind)
     API_RETURN_INT(num_keys);
 }
 
-/*
- * weechat::key_unbind: unbind key(s)
- */
-
 XS (XS_weechat_api_key_unbind)
 {
     char *context, *key;
@@ -2071,10 +1744,6 @@ XS (XS_weechat_api_key_unbind)
     API_RETURN_INT(num_keys);
 }
 
-/*
- * weechat::prefix: get a prefix, used for display
- */
-
 XS (XS_weechat_api_prefix)
 {
     const char *result;
@@ -2089,10 +1758,6 @@ XS (XS_weechat_api_prefix)
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat::color: get a color code, used for display
- */
-
 XS (XS_weechat_api_color)
 {
     const char *result;
@@ -2106,10 +1771,6 @@ XS (XS_weechat_api_color)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat::print: print message in a buffer
- */
 
 XS (XS_weechat_api_print)
 {
@@ -2130,11 +1791,6 @@ XS (XS_weechat_api_print)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat::print_date_tags: print message in a buffer with optional date and
- *                           tags
- */
 
 XS (XS_weechat_api_print_date_tags)
 {
@@ -2159,10 +1815,6 @@ XS (XS_weechat_api_print_date_tags)
     API_RETURN_OK;
 }
 
-/*
- * weechat::print_y: print message in a buffer with free content
- */
-
 XS (XS_weechat_api_print_y)
 {
     char *buffer, *message;
@@ -2184,10 +1836,6 @@ XS (XS_weechat_api_print_y)
     API_RETURN_OK;
 }
 
-/*
- * weechat::log_print: print message in WeeChat log file
- */
-
 XS (XS_weechat_api_log_print)
 {
     dXSARGS;
@@ -2203,10 +1851,6 @@ XS (XS_weechat_api_log_print)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_perl_api_hook_command_cb: callback for command hooked
- */
 
 int
 weechat_perl_api_hook_command_cb (void *data, struct t_gui_buffer *buffer,
@@ -2249,10 +1893,6 @@ weechat_perl_api_hook_command_cb (void *data, struct t_gui_buffer *buffer,
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat::hook_command: hook a command
- */
-
 XS (XS_weechat_api_hook_command)
 {
     char *result, *command, *description, *args, *args_description;
@@ -2284,10 +1924,6 @@ XS (XS_weechat_api_hook_command)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_perl_api_hook_command_run_cb: callback for command_run hooked
- */
 
 int
 weechat_perl_api_hook_command_run_cb (void *data, struct t_gui_buffer *buffer,
@@ -2327,10 +1963,6 @@ weechat_perl_api_hook_command_run_cb (void *data, struct t_gui_buffer *buffer,
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat::hook_command_run: hook a command_run
- */
-
 XS (XS_weechat_api_hook_command_run)
 {
     char *result, *command, *function, *data;
@@ -2353,10 +1985,6 @@ XS (XS_weechat_api_hook_command_run)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_perl_api_hook_timer_cb: callback for timer hooked
- */
 
 int
 weechat_perl_api_hook_timer_cb (void *data, int remaining_calls)
@@ -2395,10 +2023,6 @@ weechat_perl_api_hook_timer_cb (void *data, int remaining_calls)
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat::hook_timer: hook a timer
- */
-
 XS (XS_weechat_api_hook_timer)
 {
     char *result;
@@ -2419,10 +2043,6 @@ XS (XS_weechat_api_hook_timer)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_perl_api_hook_fd_cb: callback for fd hooked
- */
 
 int
 weechat_perl_api_hook_fd_cb (void *data, int fd)
@@ -2460,10 +2080,6 @@ weechat_perl_api_hook_fd_cb (void *data, int fd)
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat::hook_fd: hook a fd
- */
-
 XS (XS_weechat_api_hook_fd)
 {
     char *result;
@@ -2485,10 +2101,6 @@ XS (XS_weechat_api_hook_fd)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_perl_api_hook_process_cb: callback for process hooked
- */
 
 int
 weechat_perl_api_hook_process_cb (void *data,
@@ -2529,10 +2141,6 @@ weechat_perl_api_hook_process_cb (void *data,
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat::hook_process: hook a process
- */
-
 XS (XS_weechat_api_hook_process)
 {
     char *command, *function, *data, *result;
@@ -2556,10 +2164,6 @@ XS (XS_weechat_api_hook_process)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat::hook_process_hashtable: hook a process with options in a hashtable
- */
 
 XS (XS_weechat_api_hook_process_hashtable)
 {
@@ -2593,10 +2197,6 @@ XS (XS_weechat_api_hook_process_hashtable)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_perl_api_hook_connect_cb: callback for connect hooked
- */
 
 int
 weechat_perl_api_hook_connect_cb (void *data, int status, int gnutls_rc,
@@ -2643,10 +2243,6 @@ weechat_perl_api_hook_connect_cb (void *data, int status, int gnutls_rc,
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat::hook_connect: hook a connection
- */
-
 XS (XS_weechat_api_hook_connect)
 {
     char *proxy, *address, *local_hostname, *function, *data, *result;
@@ -2680,10 +2276,6 @@ XS (XS_weechat_api_hook_connect)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_perl_api_hook_print_cb: callback for print hooked
- */
 
 int
 weechat_perl_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
@@ -2745,10 +2337,6 @@ weechat_perl_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat::hook_print: hook a print
- */
-
 XS (XS_weechat_api_hook_print)
 {
     char *result, *buffer, *tags, *message, *function, *data;
@@ -2776,10 +2364,6 @@ XS (XS_weechat_api_hook_print)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_perl_api_hook_signal_cb: callback for signal hooked
- */
 
 int
 weechat_perl_api_hook_signal_cb (void *data, const char *signal, const char *type_data,
@@ -2837,10 +2421,6 @@ weechat_perl_api_hook_signal_cb (void *data, const char *signal, const char *typ
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat::hook_signal: hook a signal
- */
-
 XS (XS_weechat_api_hook_signal)
 {
     char *result, *signal, *function, *data;
@@ -2863,10 +2443,6 @@ XS (XS_weechat_api_hook_signal)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat::hook_signal_send: send a signal
- */
 
 XS (XS_weechat_api_hook_signal_send)
 {
@@ -2906,10 +2482,6 @@ XS (XS_weechat_api_hook_signal_send)
     API_RETURN_ERROR;
 }
 
-/*
- * weechat_perl_api_hook_hsignal_cb: callback for hsignal hooked
- */
-
 int
 weechat_perl_api_hook_hsignal_cb (void *data, const char *signal,
                                   struct t_hashtable *hashtable)
@@ -2946,10 +2518,6 @@ weechat_perl_api_hook_hsignal_cb (void *data, const char *signal,
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat::hook_hsignal: hook a hsignal
- */
-
 XS (XS_weechat_api_hook_hsignal)
 {
     char *result, *signal, *function, *data;
@@ -2972,10 +2540,6 @@ XS (XS_weechat_api_hook_hsignal)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat::hook_hsignal_send: send a hsignal
- */
 
 XS (XS_weechat_api_hook_hsignal_send)
 {
@@ -3000,10 +2564,6 @@ XS (XS_weechat_api_hook_hsignal_send)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_perl_api_hook_config_cb: callback for config option hooked
- */
 
 int
 weechat_perl_api_hook_config_cb (void *data, const char *option, const char *value)
@@ -3040,10 +2600,6 @@ weechat_perl_api_hook_config_cb (void *data, const char *option, const char *val
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat::hook_config: hook a config option
- */
-
 XS (XS_weechat_api_hook_config)
 {
     char *result, *option, *function, *data;
@@ -3066,10 +2622,6 @@ XS (XS_weechat_api_hook_config)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_perl_api_hook_completion_cb: callback for completion hooked
- */
 
 int
 weechat_perl_api_hook_completion_cb (void *data, const char *completion_item,
@@ -3113,10 +2665,6 @@ weechat_perl_api_hook_completion_cb (void *data, const char *completion_item,
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat::hook_completion: hook a completion
- */
-
 XS (XS_weechat_api_hook_completion)
 {
     char *result, *completion, *description, *function, *data;
@@ -3142,10 +2690,6 @@ XS (XS_weechat_api_hook_completion)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat::hook_completion_list_add: add a word to list for a completion
- */
-
 XS (XS_weechat_api_hook_completion_list_add)
 {
     char *completion, *word, *where;
@@ -3166,10 +2710,6 @@ XS (XS_weechat_api_hook_completion_list_add)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_perl_api_hook_modifier_cb: callback for modifier hooked
- */
 
 char *
 weechat_perl_api_hook_modifier_cb (void *data, const char *modifier,
@@ -3197,10 +2737,6 @@ weechat_perl_api_hook_modifier_cb (void *data, const char *modifier,
     return NULL;
 }
 
-/*
- * weechat::hook_modifier: hook a modifier
- */
-
 XS (XS_weechat_api_hook_modifier)
 {
     char *result, *modifier, *function, *data;
@@ -3224,10 +2760,6 @@ XS (XS_weechat_api_hook_modifier)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat::hook_modifier_exec: execute a modifier hook
- */
-
 XS (XS_weechat_api_hook_modifier_exec)
 {
     char *result, *modifier, *modifier_data, *string;
@@ -3245,10 +2777,6 @@ XS (XS_weechat_api_hook_modifier_exec)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_perl_api_hook_info_cb: callback for info hooked
- */
 
 const char *
 weechat_perl_api_hook_info_cb (void *data, const char *info_name,
@@ -3274,10 +2802,6 @@ weechat_perl_api_hook_info_cb (void *data, const char *info_name,
 
     return NULL;
 }
-
-/*
- * weechat::hook_info: hook an info
- */
 
 XS (XS_weechat_api_hook_info)
 {
@@ -3306,10 +2830,6 @@ XS (XS_weechat_api_hook_info)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_perl_api_hook_info_hashtable_cb: callback for info_hashtable hooked
- */
-
 struct t_hashtable *
 weechat_perl_api_hook_info_hashtable_cb (void *data, const char *info_name,
                                          struct t_hashtable *hashtable)
@@ -3334,10 +2854,6 @@ weechat_perl_api_hook_info_hashtable_cb (void *data, const char *info_name,
 
     return NULL;
 }
-
-/*
- * weechat::hook_info_hashtable: hook an info_hashtable
- */
 
 XS (XS_weechat_api_hook_info_hashtable)
 {
@@ -3368,10 +2884,6 @@ XS (XS_weechat_api_hook_info_hashtable)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_perl_api_hook_infolist_cb: callback for infolist hooked
- */
 
 struct t_infolist *
 weechat_perl_api_hook_infolist_cb (void *data, const char *infolist_name,
@@ -3405,10 +2917,6 @@ weechat_perl_api_hook_infolist_cb (void *data, const char *infolist_name,
     return NULL;
 }
 
-/*
- * weechat::hook_infolist: hook an infolist
- */
-
 XS (XS_weechat_api_hook_infolist)
 {
     char *result, *infolist_name, *description, *pointer_description;
@@ -3439,10 +2947,6 @@ XS (XS_weechat_api_hook_infolist)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_perl_api_hook_focus_cb: callback for focus hooked
- */
-
 struct t_hashtable *
 weechat_perl_api_hook_focus_cb (void *data,
                                 struct t_hashtable *info)
@@ -3467,10 +2971,6 @@ weechat_perl_api_hook_focus_cb (void *data,
     return NULL;
 }
 
-/*
- * weechat::hook_focus: hook a focus
- */
-
 XS (XS_weechat_api_hook_focus)
 {
     char *result, *area, *function, *data;
@@ -3494,10 +2994,6 @@ XS (XS_weechat_api_hook_focus)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat::unhook: unhook something
- */
-
 XS (XS_weechat_api_unhook)
 {
     dXSARGS;
@@ -3513,10 +3009,6 @@ XS (XS_weechat_api_unhook)
     API_RETURN_OK;
 }
 
-/*
- * weechat::unhook_all: unhook all for script
- */
-
 XS (XS_weechat_api_unhook_all)
 {
     dXSARGS;
@@ -3531,10 +3023,6 @@ XS (XS_weechat_api_unhook_all)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_perl_api_buffer_input_data_cb: callback for input data in a buffer
- */
 
 int
 weechat_perl_api_buffer_input_data_cb (void *data, struct t_gui_buffer *buffer,
@@ -3573,10 +3061,6 @@ weechat_perl_api_buffer_input_data_cb (void *data, struct t_gui_buffer *buffer,
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat_perl_api_buffer_close_cb: callback for buffer closed
- */
-
 int
 weechat_perl_api_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
 {
@@ -3612,10 +3096,6 @@ weechat_perl_api_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat::buffer_new: create a new buffer
- */
-
 XS (XS_weechat_api_buffer_new)
 {
     char *result, *name, *function_input, *data_input, *function_close;
@@ -3645,10 +3125,6 @@ XS (XS_weechat_api_buffer_new)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat::buffer_search: search a buffer
- */
-
 XS (XS_weechat_api_buffer_search)
 {
     char *result, *plugin, *name;
@@ -3666,10 +3142,6 @@ XS (XS_weechat_api_buffer_search)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat::buffer_search_main: search main buffer (WeeChat core buffer)
- */
-
 XS (XS_weechat_api_buffer_search_main)
 {
     char *result;
@@ -3685,10 +3157,6 @@ XS (XS_weechat_api_buffer_search_main)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat::current_buffer: get current buffer
- */
 
 XS (XS_weechat_api_current_buffer)
 {
@@ -3706,10 +3174,6 @@ XS (XS_weechat_api_current_buffer)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat::buffer_clear: clear a buffer
- */
-
 XS (XS_weechat_api_buffer_clear)
 {
     dXSARGS;
@@ -3722,10 +3186,6 @@ XS (XS_weechat_api_buffer_clear)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat::buffer_close: close a buffer
- */
 
 XS (XS_weechat_api_buffer_close)
 {
@@ -3742,10 +3202,6 @@ XS (XS_weechat_api_buffer_close)
     API_RETURN_OK;
 }
 
-/*
- * weechat::buffer_merge: merge a buffer to another buffer
- */
-
 XS (XS_weechat_api_buffer_merge)
 {
     dXSARGS;
@@ -3760,10 +3216,6 @@ XS (XS_weechat_api_buffer_merge)
     API_RETURN_OK;
 }
 
-/*
- * weechat::buffer_unmerge: unmerge a buffer from group of merged buffers
- */
-
 XS (XS_weechat_api_buffer_unmerge)
 {
     dXSARGS;
@@ -3777,10 +3229,6 @@ XS (XS_weechat_api_buffer_unmerge)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat::buffer_get_integer: get a buffer property as integer
- */
 
 XS (XS_weechat_api_buffer_get_integer)
 {
@@ -3800,10 +3248,6 @@ XS (XS_weechat_api_buffer_get_integer)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat::buffer_get_string: get a buffer property as string
- */
-
 XS (XS_weechat_api_buffer_get_string)
 {
     char *buffer, *property;
@@ -3821,10 +3265,6 @@ XS (XS_weechat_api_buffer_get_string)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat::buffer_get_pointer: get a buffer property as pointer
- */
 
 XS (XS_weechat_api_buffer_get_pointer)
 {
@@ -3844,10 +3284,6 @@ XS (XS_weechat_api_buffer_get_pointer)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat::buffer_set: set a buffer property
- */
-
 XS (XS_weechat_api_buffer_set)
 {
     char *buffer, *property, *value;
@@ -3866,11 +3302,6 @@ XS (XS_weechat_api_buffer_set)
     API_RETURN_OK;
 }
 
-/*
- * weechat::buffer_string_replace_local_var: replace local variables ($var) in a string,
- *                                           using value of local variables
- */
-
 XS (XS_weechat_api_buffer_string_replace_local_var)
 {
     char *buffer, *string, *result;
@@ -3887,10 +3318,6 @@ XS (XS_weechat_api_buffer_string_replace_local_var)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat::buffer_match_list: return 1 if buffer matches list of buffers
- */
 
 XS (XS_weechat_api_buffer_match_list)
 {
@@ -3910,10 +3337,6 @@ XS (XS_weechat_api_buffer_match_list)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat::current_window: get current window
- */
-
 XS (XS_weechat_api_current_window)
 {
     char *result;
@@ -3930,10 +3353,6 @@ XS (XS_weechat_api_current_window)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat::window_search_with_buffer: search a window with buffer pointer
- */
-
 XS (XS_weechat_api_window_search_with_buffer)
 {
     char *result;
@@ -3948,10 +3367,6 @@ XS (XS_weechat_api_window_search_with_buffer)
     API_RETURN_STRING_FREE(result);
 }
 
-
-/*
- * weechat::window_get_integer: get a window property as integer
- */
 
 XS (XS_weechat_api_window_get_integer)
 {
@@ -3971,10 +3386,6 @@ XS (XS_weechat_api_window_get_integer)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat::window_get_string: get a window property as string
- */
-
 XS (XS_weechat_api_window_get_string)
 {
     char *window, *property;
@@ -3992,10 +3403,6 @@ XS (XS_weechat_api_window_get_string)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat::window_get_pointer: get a window property as pointer
- */
 
 XS (XS_weechat_api_window_get_pointer)
 {
@@ -4015,10 +3422,6 @@ XS (XS_weechat_api_window_get_pointer)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat::window_set_title: set window title
- */
-
 XS (XS_weechat_api_window_set_title)
 {
     dXSARGS;
@@ -4031,10 +3434,6 @@ XS (XS_weechat_api_window_set_title)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat::nicklist_add_group: add a group in nicklist
- */
 
 XS (XS_weechat_api_nicklist_add_group)
 {
@@ -4059,10 +3458,6 @@ XS (XS_weechat_api_nicklist_add_group)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat::nicklist_search_group: search a group in nicklist
- */
-
 XS (XS_weechat_api_nicklist_search_group)
 {
     char *result, *buffer, *from_group, *name;
@@ -4082,10 +3477,6 @@ XS (XS_weechat_api_nicklist_search_group)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat::nicklist_add_nick: add a nick in nicklist
- */
 
 XS (XS_weechat_api_nicklist_add_nick)
 {
@@ -4114,10 +3505,6 @@ XS (XS_weechat_api_nicklist_add_nick)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat::nicklist_search_nick: search a nick in nicklist
- */
-
 XS (XS_weechat_api_nicklist_search_nick)
 {
     char *result, *buffer, *from_group, *name;
@@ -4138,10 +3525,6 @@ XS (XS_weechat_api_nicklist_search_nick)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat::nicklist_remove_group: remove a group from nicklist
- */
-
 XS (XS_weechat_api_nicklist_remove_group)
 {
     char *buffer, *group;
@@ -4159,10 +3542,6 @@ XS (XS_weechat_api_nicklist_remove_group)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat::nicklist_remove_nick: remove a nick from nicklist
- */
 
 XS (XS_weechat_api_nicklist_remove_nick)
 {
@@ -4182,10 +3561,6 @@ XS (XS_weechat_api_nicklist_remove_nick)
     API_RETURN_OK;
 }
 
-/*
- * weechat::nicklist_remove_all: remove all groups/nicks from nicklist
- */
-
 XS (XS_weechat_api_nicklist_remove_all)
 {
     dXSARGS;
@@ -4198,10 +3573,6 @@ XS (XS_weechat_api_nicklist_remove_all)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat::nicklist_group_get_integer: get a group property as integer
- */
 
 XS (XS_weechat_api_nicklist_group_get_integer)
 {
@@ -4224,10 +3595,6 @@ XS (XS_weechat_api_nicklist_group_get_integer)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat::nicklist_group_get_string: get a group property as string
- */
-
 XS (XS_weechat_api_nicklist_group_get_string)
 {
     char *buffer, *group, *property;
@@ -4249,10 +3616,6 @@ XS (XS_weechat_api_nicklist_group_get_string)
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat::nicklist_group_get_pointer: get a group property as pointer
- */
-
 XS (XS_weechat_api_nicklist_group_get_pointer)
 {
     char *result, *buffer, *group, *property;
@@ -4272,10 +3635,6 @@ XS (XS_weechat_api_nicklist_group_get_pointer)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat::nicklist_group_set: set a group property
- */
 
 XS (XS_weechat_api_nicklist_group_set)
 {
@@ -4299,10 +3658,6 @@ XS (XS_weechat_api_nicklist_group_set)
     API_RETURN_OK;
 }
 
-/*
- * weechat::nicklist_nick_get_integer: get a nick property as integer
- */
-
 XS (XS_weechat_api_nicklist_nick_get_integer)
 {
     char *buffer, *nick, *property;
@@ -4323,10 +3678,6 @@ XS (XS_weechat_api_nicklist_nick_get_integer)
 
     API_RETURN_INT(value);
 }
-
-/*
- * weechat::nicklist_nick_get_string: get a nick property as string
- */
 
 XS (XS_weechat_api_nicklist_nick_get_string)
 {
@@ -4349,10 +3700,6 @@ XS (XS_weechat_api_nicklist_nick_get_string)
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat::nicklist_nick_get_pointer: get a nick property as pointer
- */
-
 XS (XS_weechat_api_nicklist_nick_get_pointer)
 {
     char *result, *buffer, *nick, *property;
@@ -4372,10 +3719,6 @@ XS (XS_weechat_api_nicklist_nick_get_pointer)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat::nicklist_nick_set: set a nick property
- */
 
 XS (XS_weechat_api_nicklist_nick_set)
 {
@@ -4399,10 +3742,6 @@ XS (XS_weechat_api_nicklist_nick_set)
     API_RETURN_OK;
 }
 
-/*
- * weechat::bar_item_search: search a bar item
- */
-
 XS (XS_weechat_api_bar_item_search)
 {
     char *result;
@@ -4416,10 +3755,6 @@ XS (XS_weechat_api_bar_item_search)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_perl_api_bar_item_build_cb: callback for building bar item
- */
 
 char *
 weechat_perl_api_bar_item_build_cb (void *data, struct t_gui_bar_item *item,
@@ -4453,10 +3788,6 @@ weechat_perl_api_bar_item_build_cb (void *data, struct t_gui_bar_item *item,
     return NULL;
 }
 
-/*
- * weechat::bar_item_new: add a new bar item
- */
-
 XS (XS_weechat_api_bar_item_new)
 {
     char *result, *name, *function, *data;
@@ -4480,10 +3811,6 @@ XS (XS_weechat_api_bar_item_new)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat::bar_item_update: update a bar item on screen
- */
-
 XS (XS_weechat_api_bar_item_update)
 {
     dXSARGS;
@@ -4496,10 +3823,6 @@ XS (XS_weechat_api_bar_item_update)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat::bar_item_remove: remove a bar item
- */
 
 XS (XS_weechat_api_bar_item_remove)
 {
@@ -4516,10 +3839,6 @@ XS (XS_weechat_api_bar_item_remove)
     API_RETURN_OK;
 }
 
-/*
- * weechat::bar_search: search a bar
- */
-
 XS (XS_weechat_api_bar_search)
 {
     char *result;
@@ -4533,10 +3852,6 @@ XS (XS_weechat_api_bar_search)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat::bar_new: add a new bar
- */
 
 XS (XS_weechat_api_bar_new)
 {
@@ -4584,10 +3899,6 @@ XS (XS_weechat_api_bar_new)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat::bar_set: set a bar property
- */
-
 XS (XS_weechat_api_bar_set)
 {
     char *bar, *property, *value;
@@ -4606,10 +3917,6 @@ XS (XS_weechat_api_bar_set)
     API_RETURN_OK;
 }
 
-/*
- * weechat::bar_update: update a bar on screen
- */
-
 XS (XS_weechat_api_bar_update)
 {
     dXSARGS;
@@ -4623,10 +3930,6 @@ XS (XS_weechat_api_bar_update)
     API_RETURN_OK;
 }
 
-/*
- * weechat::bar_remove: remove a bar
- */
-
 XS (XS_weechat_api_bar_remove)
 {
     dXSARGS;
@@ -4639,10 +3942,6 @@ XS (XS_weechat_api_bar_remove)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat::command: execute a command on a buffer
- */
 
 XS (XS_weechat_api_command)
 {
@@ -4664,10 +3963,6 @@ XS (XS_weechat_api_command)
     API_RETURN_OK;
 }
 
-/*
- * weechat::info_get: get info (as string)
- */
-
 XS (XS_weechat_api_info_get)
 {
     char *info_name, *arguments;
@@ -4685,10 +3980,6 @@ XS (XS_weechat_api_info_get)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat::info_get_hashtable: get info (as hashtable)
- */
 
 XS (XS_weechat_api_info_get_hashtable)
 {
@@ -4718,10 +4009,6 @@ XS (XS_weechat_api_info_get_hashtable)
     API_RETURN_OBJ(result_hash);
 }
 
-/*
- * weechat::infolist_new: create new infolist
- */
-
 XS (XS_weechat_api_infolist_new)
 {
     char *result;
@@ -4738,10 +4025,6 @@ XS (XS_weechat_api_infolist_new)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat::infolist_new_item: create new item in infolist
- */
-
 XS (XS_weechat_api_infolist_new_item)
 {
     char *infolist, *result;
@@ -4757,10 +4040,6 @@ XS (XS_weechat_api_infolist_new_item)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat::infolist_new_var_integer: create new integer variable in infolist
- */
 
 XS (XS_weechat_api_infolist_new_var_integer)
 {
@@ -4780,10 +4059,6 @@ XS (XS_weechat_api_infolist_new_var_integer)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat::infolist_new_var_string: create new string variable in infolist
- */
 
 XS (XS_weechat_api_infolist_new_var_string)
 {
@@ -4805,10 +4080,6 @@ XS (XS_weechat_api_infolist_new_var_string)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat::infolist_new_var_pointer: create new pointer variable in infolist
- */
-
 XS (XS_weechat_api_infolist_new_var_pointer)
 {
     char *infolist, *name, *value, *result;
@@ -4829,10 +4100,6 @@ XS (XS_weechat_api_infolist_new_var_pointer)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat::infolist_new_var_time: create new time variable in infolist
- */
-
 XS (XS_weechat_api_infolist_new_var_time)
 {
     char *infolist, *name, *result;
@@ -4851,10 +4118,6 @@ XS (XS_weechat_api_infolist_new_var_time)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat::infolist_get: get list with infos
- */
 
 XS (XS_weechat_api_infolist_get)
 {
@@ -4876,10 +4139,6 @@ XS (XS_weechat_api_infolist_get)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat::infolist_next: move item pointer to next item in infolist
- */
-
 XS (XS_weechat_api_infolist_next)
 {
     int value;
@@ -4893,10 +4152,6 @@ XS (XS_weechat_api_infolist_next)
 
     API_RETURN_INT(value);
 }
-
-/*
- * weechat::infolist_prev: move item pointer to previous item in infolist
- */
 
 XS (XS_weechat_api_infolist_prev)
 {
@@ -4912,11 +4167,6 @@ XS (XS_weechat_api_infolist_prev)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat::infolist_reset_item_cursor: reset pointer to current item in
- *                                      infolist
- */
-
 XS (XS_weechat_api_infolist_reset_item_cursor)
 {
     dXSARGS;
@@ -4929,10 +4179,6 @@ XS (XS_weechat_api_infolist_reset_item_cursor)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat::infolist_fields: get list of fields for current item of infolist
- */
 
 XS (XS_weechat_api_infolist_fields)
 {
@@ -4947,10 +4193,6 @@ XS (XS_weechat_api_infolist_fields)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat::infolist_integer: get integer value of a variable in infolist
- */
 
 XS (XS_weechat_api_infolist_integer)
 {
@@ -4970,10 +4212,6 @@ XS (XS_weechat_api_infolist_integer)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat::infolist_string: get string value of a variable in infolist
- */
-
 XS (XS_weechat_api_infolist_string)
 {
     char *infolist, *variable;
@@ -4992,10 +4230,6 @@ XS (XS_weechat_api_infolist_string)
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat::infolist_pointer: get pointer value of a variable in infolist
- */
-
 XS (XS_weechat_api_infolist_pointer)
 {
     char *infolist, *variable;
@@ -5013,10 +4247,6 @@ XS (XS_weechat_api_infolist_pointer)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat::infolist_time: get time value of a variable in infolist
- */
 
 XS (XS_weechat_api_infolist_time)
 {
@@ -5042,10 +4272,6 @@ XS (XS_weechat_api_infolist_time)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat::infolist_free: free infolist
- */
-
 XS (XS_weechat_api_infolist_free)
 {
     dXSARGS;
@@ -5058,10 +4284,6 @@ XS (XS_weechat_api_infolist_free)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat::hdata_get: get hdata
- */
 
 XS (XS_weechat_api_hdata_get)
 {
@@ -5078,10 +4300,6 @@ XS (XS_weechat_api_hdata_get)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat::hdata_get_var_offset: get offset of variable in hdata
- */
 
 XS (XS_weechat_api_hdata_get_var_offset)
 {
@@ -5101,10 +4319,6 @@ XS (XS_weechat_api_hdata_get_var_offset)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat::hdata_get_var_type_string: get type of variable as string in hdata
- */
-
 XS (XS_weechat_api_hdata_get_var_type_string)
 {
     const char *result;
@@ -5122,10 +4336,6 @@ XS (XS_weechat_api_hdata_get_var_type_string)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat::hdata_get_var_array_size: get array size for variable in hdata
- */
 
 XS (XS_weechat_api_hdata_get_var_array_size)
 {
@@ -5148,11 +4358,6 @@ XS (XS_weechat_api_hdata_get_var_array_size)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat::hdata_get_var_array_size_string: get array size for variable in
- *                                           hdata (as string)
- */
-
 XS (XS_weechat_api_hdata_get_var_array_size_string)
 {
     const char *result;
@@ -5174,10 +4379,6 @@ XS (XS_weechat_api_hdata_get_var_array_size_string)
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat::hdata_get_var_hdata: get hdata for variable in hdata
- */
-
 XS (XS_weechat_api_hdata_get_var_hdata)
 {
     const char *result;
@@ -5195,10 +4396,6 @@ XS (XS_weechat_api_hdata_get_var_hdata)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat::hdata_get_list: get list pointer in hdata
- */
 
 XS (XS_weechat_api_hdata_get_list)
 {
@@ -5218,10 +4415,6 @@ XS (XS_weechat_api_hdata_get_list)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat::hdata_check_pointer: check pointer with hdata/list
- */
 
 XS (XS_weechat_api_hdata_check_pointer)
 {
@@ -5244,10 +4437,6 @@ XS (XS_weechat_api_hdata_check_pointer)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat::hdata_move: move pointer to another element in list
- */
-
 XS (XS_weechat_api_hdata_move)
 {
     char *result, *hdata, *pointer;
@@ -5268,10 +4457,6 @@ XS (XS_weechat_api_hdata_move)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat::hdata_char: get char value of a variable in structure using hdata
- */
 
 XS (XS_weechat_api_hdata_char)
 {
@@ -5294,11 +4479,6 @@ XS (XS_weechat_api_hdata_char)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat::hdata_integer: get integer value of a variable in structure using
- *                         hdata
- */
-
 XS (XS_weechat_api_hdata_integer)
 {
     char *hdata, *pointer, *name;
@@ -5319,10 +4499,6 @@ XS (XS_weechat_api_hdata_integer)
 
     API_RETURN_INT(value);
 }
-
-/*
- * weechat::hdata_long: get long value of a variable in structure using hdata
- */
 
 XS (XS_weechat_api_hdata_long)
 {
@@ -5345,11 +4521,6 @@ XS (XS_weechat_api_hdata_long)
     API_RETURN_LONG(value);
 }
 
-/*
- * weechat::hdata_string: get string value of a variable in structure using
- *                        hdata
- */
-
 XS (XS_weechat_api_hdata_string)
 {
     char *hdata, *pointer, *name;
@@ -5371,11 +4542,6 @@ XS (XS_weechat_api_hdata_string)
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat::hdata_pointer: get pointer value of a variable in structure using
- *                         hdata
- */
-
 XS (XS_weechat_api_hdata_pointer)
 {
     char *hdata, *pointer, *name;
@@ -5396,10 +4562,6 @@ XS (XS_weechat_api_hdata_pointer)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat::hdata_time: get time value of a variable in structure using hdata
- */
 
 XS (XS_weechat_api_hdata_time)
 {
@@ -5425,11 +4587,6 @@ XS (XS_weechat_api_hdata_time)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat::hdata_hashtable: get hashtable value of a variable in structure
- *                           using hdata
- */
-
 XS (XS_weechat_api_hdata_hashtable)
 {
     char *hdata, *pointer, *name;
@@ -5451,10 +4608,6 @@ XS (XS_weechat_api_hdata_hashtable)
 
     API_RETURN_OBJ(result_hash);
 }
-
-/*
- * weechat::hdata_update: update data in a hdata
- */
 
 XS (XS_weechat_api_hdata_update)
 {
@@ -5484,10 +4637,6 @@ XS (XS_weechat_api_hdata_update)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat::hdata_get_string: get hdata property as string
- */
-
 XS (XS_weechat_api_hdata_get_string)
 {
     char *hdata, *property;
@@ -5506,10 +4655,6 @@ XS (XS_weechat_api_hdata_get_string)
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat::upgrade_new: create an upgrade file
- */
-
 XS (XS_weechat_api_upgrade_new)
 {
     char *result, *filename;
@@ -5526,10 +4671,6 @@ XS (XS_weechat_api_upgrade_new)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat::upgrade_write_object: write object in upgrade file
- */
 
 XS (XS_weechat_api_upgrade_write_object)
 {
@@ -5550,10 +4691,6 @@ XS (XS_weechat_api_upgrade_write_object)
 
     API_RETURN_INT(rc);
 }
-
-/*
- * weechat_perl_api_upgrade_read_cb: callback for reading object in upgrade file
- */
 
 int
 weechat_perl_api_upgrade_read_cb (void *data,
@@ -5600,10 +4737,6 @@ weechat_perl_api_upgrade_read_cb (void *data,
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat::config_upgrade_read: read upgrade file
- */
-
 XS (XS_weechat_api_upgrade_read)
 {
     char *upgrade_file, *function, *data;
@@ -5628,10 +4761,6 @@ XS (XS_weechat_api_upgrade_read)
     API_RETURN_INT(rc);
 }
 
-/*
- * weechat::upgrade_close: close upgrade file
- */
-
 XS (XS_weechat_api_upgrade_close)
 {
     char *upgrade_file;
@@ -5649,7 +4778,7 @@ XS (XS_weechat_api_upgrade_close)
 }
 
 /*
- * weechat_perl_api_init: initialize subroutines
+ * Initializes perl functions and constants.
  */
 
 void

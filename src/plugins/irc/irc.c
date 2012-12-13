@@ -61,7 +61,7 @@ int irc_signal_upgrade_received = 0;   /* signal "upgrade" received ?       */
 
 
 /*
- * irc_signal_quit_cb: callback for "quit" signal
+ * Callback for signal "quit".
  */
 
 int
@@ -88,7 +88,7 @@ irc_signal_quit_cb (void *data, const char *signal, const char *type_data,
 }
 
 /*
- * irc_signal_upgrade_cb: callback for "upgrade" signal
+ * Callback for signal "upgrade".
  */
 
 int
@@ -152,7 +152,7 @@ irc_signal_upgrade_cb (void *data, const char *signal, const char *type_data,
 }
 
 /*
- * weechat_plugin_init: initialize IRC plugin
+ * Initializes IRC plugin.
  */
 
 int
@@ -248,7 +248,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 }
 
 /*
- * weechat_plugin_end: end IRC plugin
+ * Ends IRC plugin.
  */
 
 int

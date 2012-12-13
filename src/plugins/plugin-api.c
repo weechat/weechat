@@ -66,7 +66,7 @@
 
 
 /*
- * plugin_api_charset_set: set plugin charset
+ * Sets plugin charset.
  */
 
 void
@@ -82,7 +82,7 @@ plugin_api_charset_set (struct t_weechat_plugin *plugin, const char *charset)
 }
 
 /*
- * plugin_api_gettext: translate a string using gettext
+ * Translates a string using gettext.
  */
 
 const char *
@@ -92,7 +92,7 @@ plugin_api_gettext (const char *string)
 }
 
 /*
- * plugin_api_ngettext: translate a string using gettext
+ * Translates a string using gettext (with plural form).
  */
 
 const char *
@@ -106,7 +106,7 @@ plugin_api_ngettext (const char *single, const char *plural, int count)
 }
 
 /*
- * plugin_api_config_get: get value of an option
+ * Gets pointer on an option.
  */
 
 struct t_config_option *
@@ -120,7 +120,7 @@ plugin_api_config_get (const char *option_name)
 }
 
 /*
- * plugin_api_config_get_plugin: get value of a plugin config option
+ * Gets value of a plugin option.
  */
 
 const char *
@@ -141,7 +141,11 @@ plugin_api_config_get_plugin (struct t_weechat_plugin *plugin,
 }
 
 /*
- * plugin_api_config_is_set_plugin: return 1 if plugin option is set, otherwise 0
+ * Checks if a plugin option is set.
+ *
+ * Returns:
+ *   1: plugin option is set
+ *   0: plugin option does not exist
  */
 
 int
@@ -161,7 +165,7 @@ plugin_api_config_is_set_plugin (struct t_weechat_plugin *plugin,
 }
 
 /*
- * plugin_api_config_set_plugin: set value of a plugin config option
+ * Sets value of a plugin option.
  */
 
 int
@@ -175,7 +179,7 @@ plugin_api_config_set_plugin (struct t_weechat_plugin *plugin,
 }
 
 /*
- * plugin_api_config_set_desc_plugin: set description of a plugin config option
+ * Sets description of a plugin option.
  */
 
 void
@@ -188,7 +192,7 @@ plugin_api_config_set_desc_plugin (struct t_weechat_plugin *plugin,
 }
 
 /*
- * plugin_api_config_unset_plugin: unset plugin config option
+ * Unsets a plugin option.
  */
 
 int
@@ -208,7 +212,7 @@ plugin_api_config_unset_plugin (struct t_weechat_plugin *plugin,
 }
 
 /*
- * plugin_api_prefix: return a prefix for display with printf
+ * Returns a prefix for display with printf.
  */
 
 const char *
@@ -232,7 +236,7 @@ plugin_api_prefix (const char *prefix)
 }
 
 /*
- * plugin_api_color: return a WeeChat color for display with printf
+ * Returns a WeeChat color for display with printf.
  */
 
 const char *
@@ -252,7 +256,7 @@ plugin_api_color (const char *color_name)
 }
 
 /*
- * plugin_api_command: execute a command (simulate user entry)
+ * Executes a command on a buffer (simulates user entry).
  */
 
 void
@@ -273,7 +277,7 @@ plugin_api_command (struct t_weechat_plugin *plugin,
 }
 
 /*
- * plugin_api_info_get_inernal: get info about WeeChat
+ * Gets info about WeeChat.
  */
 
 const char *
@@ -384,10 +388,9 @@ plugin_api_info_get_internal (void *data, const char *info_name,
 }
 
 /*
- * plugin_api_infolist_get_internal: get list with infos about WeeChat structures
- *                                   WARNING: caller has to free string returned
- *                                            by this function after use, with
- *                                            weechat_infolist_free()
+ * Gets infolist about WeeChat.
+ *
+ * Note: result must be freed with function "weechat_infolist_free".
  */
 
 struct t_infolist *
@@ -872,9 +875,11 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
 }
 
 /*
- * plugin_api_infolist_next: move item pointer to next item in a list
- *                           return 1 if pointer is still ok
- *                                  0 if end of list was reached
+ * Moves item pointer to next item in an infolist.
+ *
+ * Returns:
+ *   1: pointer is still OK
+ *   0: end of infolist was reached
  */
 
 int
@@ -887,9 +892,11 @@ plugin_api_infolist_next (struct t_infolist *infolist)
 }
 
 /*
- * plugin_api_infolist_prev: move item pointer to previous item in a list
- *                           return 1 if pointer is still ok
- *                                  0 if beginning of list was reached
+ * Moves pointer to previous item in an infolist.
+ *
+ * Returns:
+ *   1: pointer is still OK
+ *   0: beginning of infolist was reached
  */
 
 int
@@ -902,7 +909,7 @@ plugin_api_infolist_prev (struct t_infolist *infolist)
 }
 
 /*
- * plugin_api_infolist_reset_item_cursor: reset item cursor in infolist
+ * Resets item cursor in infolist.
  */
 
 void
@@ -915,7 +922,7 @@ plugin_api_infolist_reset_item_cursor (struct t_infolist *infolist)
 }
 
 /*
- * plugin_api_infolist_fields: get list of fields for current list item
+ * Gets list of fields for current infolist item.
  */
 
 const char *
@@ -928,7 +935,7 @@ plugin_api_infolist_fields (struct t_infolist *infolist)
 }
 
 /*
- * plugin_api_infolist_integer: get an integer variable value in current list item
+ * Gets integer value for a variable in current infolist item.
  */
 
 int
@@ -941,7 +948,7 @@ plugin_api_infolist_integer (struct t_infolist *infolist, const char *var)
 }
 
 /*
- * plugin_api_infolist_string: get a string variable value in current list item
+ * Gets string value for a variable in current infolist item.
  */
 
 const char *
@@ -954,7 +961,7 @@ plugin_api_infolist_string (struct t_infolist *infolist, const char *var)
 }
 
 /*
- * plugin_api_infolist_pointer: get a pointer variable value in current list item
+ * Gets pointer value for a variable in current infolist item.
  */
 
 void *
@@ -967,7 +974,9 @@ plugin_api_infolist_pointer (struct t_infolist *infolist, const char *var)
 }
 
 /*
- * plugin_api_infolist_buffer: get a buffer variable value in current list item
+ * Gets buffer value for a variable in current infolist item.
+ *
+ * Argument "size" is set with the size of buffer.
  */
 
 void *
@@ -981,7 +990,7 @@ plugin_api_infolist_buffer (struct t_infolist *infolist, const char *var,
 }
 
 /*
- * plugin_api_infolist_time: get a time variable value in current list item
+ * Gets time value for a variable in current infolist item.
  */
 
 time_t
@@ -994,7 +1003,7 @@ plugin_api_infolist_time (struct t_infolist *infolist, const char *var)
 }
 
 /*
- * plugin_api_infolist_free: free an infolist
+ * Frees an infolist.
  */
 
 void
@@ -1005,7 +1014,7 @@ plugin_api_infolist_free (struct t_infolist *infolist)
 }
 
 /*
- * plugin_api_init: init plugin API
+ * Initializes plugin API.
  */
 
 void

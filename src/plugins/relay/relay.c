@@ -56,7 +56,10 @@ struct t_hook *relay_hook_timer = NULL;
 
 
 /*
- * relay_protocol_search: search a protocol by name
+ * Searches for a protocol.
+ *
+ * Returns index of protocol in enum t_relay_protocol, -1 if protocol is not
+ * found.
  */
 
 int
@@ -75,7 +78,7 @@ relay_protocol_search (const char *name)
 }
 
 /*
- * relay_signal_upgrade_cb: callback for "upgrade" signal
+ * Callback for signal "upgrade".
  */
 
 int
@@ -144,7 +147,7 @@ relay_signal_upgrade_cb (void *data, const char *signal, const char *type_data,
 }
 
 /*
- * relay_debug_dump_cb: callback for "debug_dump" signal
+ * Callback for signal "debug_dump".
  */
 
 int
@@ -175,7 +178,7 @@ relay_debug_dump_cb (void *data, const char *signal, const char *type_data,
 }
 
 /*
- * weechat_plugin_init: initialize relay plugin
+ * Initializes relay plugin.
  */
 
 int
@@ -227,7 +230,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 }
 
 /*
- * weechat_plugin_end: end relay plugin
+ * Ends relay plugin.
  */
 
 int

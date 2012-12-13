@@ -30,7 +30,7 @@
 
 
 /*
- * gui_mouse_enable: enable mouse
+ * Enables mouse.
  */
 
 void
@@ -40,7 +40,7 @@ gui_mouse_enable ()
 }
 
 /*
- * gui_mouse_disable: disable mouse
+ * Disables mouse.
  */
 
 void
@@ -50,7 +50,7 @@ gui_mouse_disable ()
 }
 
 /*
- * gui_mouse_display_state: display state of mouse
+ * Displays state of mouse.
  */
 
 void
@@ -60,7 +60,7 @@ gui_mouse_display_state ()
 }
 
 /*
- * gui_mouse_grab_init: init "grab mode"
+ * Initializes "grab mode".
  */
 
 void
@@ -72,7 +72,7 @@ gui_mouse_grab_init (int area)
 }
 
 /*
- * gui_mouse_event_init: init mouse event
+ * Initializes mouse event.
  */
 
 void
@@ -82,7 +82,7 @@ gui_mouse_event_init ()
 }
 
 /*
- * gui_mouse_event_code2key: get key name with a mouse code
+ * Gets key name with a mouse code.
  */
 
 const char *
@@ -96,7 +96,7 @@ gui_mouse_event_code2key (const char *code)
 }
 
 /*
- * gui_mouse_event_end: end mouse event
+ * Ends mouse event.
  */
 
 void

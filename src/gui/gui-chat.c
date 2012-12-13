@@ -60,8 +60,8 @@ char *gui_chat_lines_waiting_buffer = NULL;     /* lines waiting for core   */
 
 
 /*
- * gui_chat_init: init some variables for chat area
- *                (called before reading WeeChat config file)
+ * Initializes some variables for chat area (called before reading WeeChat
+ * configuration file).
  */
 
 void
@@ -84,8 +84,7 @@ gui_chat_init ()
 }
 
 /*
- * gui_chat_prefix_build: build prefix with colors
- *                        (called after reading WeeChat config file)
+ * Builds prefix with colors (called after reading WeeChat configuration file).
  */
 
 void
@@ -122,8 +121,11 @@ gui_chat_prefix_build ()
 }
 
 /*
- * gui_chat_utf_char_valid: return 1 if utf char is valid for screen
- *                          otherwise return 0
+ * Checks if an UTF-8 char is valid for screen.
+ *
+ * Returns:
+ *   1: char is valid
+ *   0: char is not valid
  */
 
 int
@@ -144,8 +146,8 @@ gui_chat_utf_char_valid (const char *utf_char)
 }
 
 /*
- * gui_chat_strlen_screen: returns number of char needed on sreen to display a
- *                         word special chars like color, bold, .. are ignored
+ * Returns number of char needed on screen to display a word (special chars like
+ * colors/attributes are ignored).
  */
 
 int
@@ -170,8 +172,8 @@ gui_chat_strlen_screen (const char *string)
 }
 
 /*
- * gui_chat_string_add_offset: move forward N chars in a string, skipping all
- *                             formatting chars (like colors,..)
+ * Moves forward N chars in a string, skipping all formatting chars (like
+ * colors/attributes).
  */
 
 char *
@@ -192,9 +194,8 @@ gui_chat_string_add_offset (const char *string, int offset)
 }
 
 /*
- * gui_chat_string_add_offset_screen: move forward N chars (using size on screen)
- *                                    in a string, skipping all formatting chars
- *                                    (like colors,..)
+ * Moves forward N chars (using size on screen) in a string, skipping all
+ * formatting chars (like colors/attributes).
  */
 
 char *
@@ -218,8 +219,8 @@ gui_chat_string_add_offset_screen (const char *string, int offset_screen)
 }
 
 /*
- * gui_chat_string_real_pos: get real position in string
- *                           (ignoring color/bold/.. chars)
+ * Gets real position in string (ignoring formatting chars like
+ * colors/attributes).
  */
 
 int
@@ -255,10 +256,10 @@ gui_chat_string_real_pos (const char *string, int pos)
 }
 
 /*
- * gui_chat_get_word_info: returns info about next word: beginning, end, length
- *                         Note: the word_{start|end}_offset are in bytes, but
- *                         word_length(_with_spaces) are in number of chars on
- *                         screen.
+ * Returns info about next word: beginning, end, length.
+ *
+ * Note: the word_{start|end}_offset are in bytes, but word_length(_with_spaces)
+ * are in number of chars on screen.
  */
 
 void
@@ -323,7 +324,9 @@ gui_chat_get_word_info (struct t_gui_window *window,
 }
 
 /*
- * gu_chat_get_time_string: get time string, for display (with colors)
+ * Gets time string, for display (with colors).
+ *
+ * Note: result must be freed after use.
  */
 
 char *
@@ -431,8 +434,8 @@ gui_chat_get_time_string (time_t date)
 }
 
 /*
- * gui_chat_get_time_length: calculates time length with a time format
- *                           (format can include color codes with format ${name})
+ * Calculates time length with a time format (format can include color codes
+ * with format ${name}).
  */
 
 int
@@ -460,7 +463,7 @@ gui_chat_get_time_length ()
 }
 
 /*
- * gui_chat_change_time_format: change time format for all lines of all buffers
+ * Changes time format for all lines of all buffers.
  */
 
 void
@@ -486,7 +489,7 @@ gui_chat_change_time_format ()
 }
 
 /*
- * gui_chat_build_string_prefix_message: build a string with prefix and message
+ * Builds a string with prefix and message.
  */
 
 char *
@@ -528,7 +531,7 @@ gui_chat_build_string_prefix_message (struct t_gui_line *line)
 }
 
 /*
- * gui_chat_build_string_prefix_message: build a string with message and tags
+ * Builds a string with message and tags.
  */
 
 
@@ -567,10 +570,10 @@ gui_chat_build_string_message_tags (struct t_gui_line *line)
 }
 
 /*
- * gui_chat_printf_date_tags: display a message in a buffer with optional
- *                            date and tags
- *                            Info: this function works only with formatted
- *                            buffers (not buffers with free content)
+ * Displays a message in a buffer with optional date and tags.
+ *
+ * Note: this function works only with formatted buffers (not buffers with free
+ * content).
  */
 
 void
@@ -770,9 +773,10 @@ end:
 }
 
 /*
- * gui_chat_printf_y: display a message on a line in a buffer with free content
- *                    Info: this function works only with free content
- *                    buffers (not formatted buffers)
+ * Displays a message on a line in a buffer with free content.
+ *
+ * Note: this function works only with free content buffers (not formatted
+ * buffers).
  */
 
 void
@@ -852,7 +856,7 @@ gui_chat_printf_y (struct t_gui_buffer *buffer, int y, const char *message, ...)
 }
 
 /*
- * gui_chat_print_lines_waiting_buffer: print lines waiting for buffer
+ * Prints lines that are waiting for buffer.
  */
 
 void
@@ -886,7 +890,7 @@ gui_chat_print_lines_waiting_buffer ()
 }
 
 /*
- * gui_chat_hsignal_chat_quote_line_cb: quote a line
+ * Quotes a line.
  */
 
 int
@@ -940,7 +944,7 @@ gui_chat_hsignal_quote_line_cb (void *data, const char *signal,
 }
 
 /*
- * gui_chat_end: free some variables allocated for chat area
+ * Frees some variables allocated for chat area.
  */
 
 void

@@ -62,7 +62,7 @@ gnutls_certificate_credentials_t gnutls_xcred; /* GnuTLS client credentials */
 
 
 /*
- * network_set_gnutls_ca_file: set trust file with option gnutls_ca_file
+ * Sets trust file with option "gnutls_ca_file".
  */
 
 void
@@ -90,7 +90,7 @@ network_set_gnutls_ca_file ()
 }
 
 /*
- * network_init: init network
+ * Initializes network.
  */
 
 void
@@ -131,7 +131,7 @@ network_init ()
 }
 
 /*
- * network_end: end network
+ * Ends network.
  */
 
 void
@@ -151,10 +151,12 @@ network_end ()
 }
 
 /*
- * network_send_with_retry: send data on a socket with retry
- *                          return number of bytes sent, or -1 if error
- *                          Note: this function is blocking, it must be called
- *                          only in a forked process
+ * Sends data on a socket with retry.
+ *
+ * WARNING: this function is blocking, it must be called only in a forked
+ * process.
+ *
+ * Returns number of bytes sent, -1 if error.
  */
 
 int
@@ -181,10 +183,12 @@ network_send_with_retry (int sock, const void *buffer, int length, int flags)
 }
 
 /*
- * network_recv_with_retry: receive data on a socket with retry
- *                          return number of bytes received, or -1 if error
- *                          Note: this function is blocking, it must be called
- *                          only in a forked process
+ * Receives data on a socket with retry.
+ *
+ * WARNING: this function is blocking, it must be called only in a forked
+ * process.
+ *
+ * Returns number of bytes received, -1 if error.
  */
 
 int
@@ -211,12 +215,14 @@ network_recv_with_retry (int sock, void *buffer, int length, int flags)
 }
 
 /*
- * network_pass_httpproxy: establish connection/authentification to an
- *                         http proxy
- *                         return 1 if connection is ok
- *                                0 if error
- *                         Note: this function is blocking, it must be called
- *                         only in a forked process
+ * Establishes a connection and authenticates with a HTTP proxy.
+ *
+ * WARNING: this function is blocking, it must be called only in a forked
+ * process.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -262,10 +268,11 @@ network_pass_httpproxy (struct t_proxy *proxy, int sock, const char *address,
 }
 
 /*
- * network_resolve: resolve hostname on its IP address
- *                  (works with ipv4 and ipv6)
- *                  return 1 if resolution is ok
- *                         0 if error
+ * Resolves a hostname to its IP address (works with IPv4 and IPv6).
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -306,20 +313,22 @@ network_resolve (const char *hostname, char *ip, int *version)
 }
 
 /*
- * network_pass_socks4proxy: establish connection/authentification thru a
- *                           socks4 proxy
- *                           return 1 if connection is ok
- *                                  0 if error
- *                           Note: this function is blocking, it must be called
- *                           only in a forked process
+ * Establishes a connection and authenticates with a socks4 proxy.
+ *
+ * The socks4 protocol is explained here: http://en.wikipedia.org/wiki/SOCKS
+ *
+ * WARNING: this function is blocking, it must be called only in a forked
+ * process.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
 network_pass_socks4proxy (struct t_proxy *proxy, int sock, const char *address,
                           int port)
 {
-    /* socks4 protocol is explained here: http://en.wikipedia.org/wiki/SOCKS */
-
     struct t_network_socks4 socks4;
     unsigned char buffer[24];
     char ip_addr[NI_MAXHOST];
@@ -349,23 +358,23 @@ network_pass_socks4proxy (struct t_proxy *proxy, int sock, const char *address,
 }
 
 /*
- * network_pass_socks5proxy: establish connection/authentification thru a
- *                           socks5 proxy
- *                           return 1 if connection is ok
- *                                  0 if error
- *                           Note: this function is blocking, it must be called
- *                           only in a forked process
+ * Establishes a connection and authenticates with a socks5 proxy.
+ *
+ * The socks5 protocol is explained in RFC 1928.
+ * The socks5 authentication with username/pass is explained in RFC 1929.
+ *
+ * WARNING: this function is blocking, it must be called only in a forked
+ * process.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
 network_pass_socks5proxy (struct t_proxy *proxy, int sock, const char *address,
                           int port)
 {
-    /*
-     * socks5 protocol is explained in RFC 1928
-     * socks5 authentication with username/pass is explained in RFC 1929
-     */
-
     struct t_network_socks5 socks5;
     unsigned char buffer[288];
     int username_len, password_len, addr_len, addr_buffer_len;
@@ -506,11 +515,14 @@ network_pass_socks5proxy (struct t_proxy *proxy, int sock, const char *address,
 }
 
 /*
- * network_pass_proxy: establish connection/authentification to a proxy
- *                     return 1 if connection is ok
- *                            0 if error
- *                     Note: this function is blocking, it must be called
- *                     only in a forked process
+ * Establishes a connection and authenticates with a proxy.
+ *
+ * WARNING: this function is blocking, it must be called only in a forked
+ * process.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -541,11 +553,14 @@ network_pass_proxy (const char *proxy, int sock, const char *address, int port)
 }
 
 /*
- * network_connect: connect to a remote host and wait for connection if socket
- *                  is non blocking
- *                  return 1 if connect is ok, 0 if connect failed
- *                  Note: this function is blocking, it must be called
- *                  only in a forked process
+ * Connects to a remote host and wait for connection if socket is non blocking.
+ *
+ * WARNING: this function is blocking, it must be called only in a forked
+ * process.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -584,11 +599,14 @@ network_connect (int sock, const struct sockaddr *addr, socklen_t addrlen)
 }
 
 /*
- * network_connect_to: connect to a remote host
- *                     return 1 if connection is ok
- *                            0 if error
- *                     Note: this function is blocking, it must be called
- *                     only in a forked process
+ * Connects to a remote host.
+ *
+ * WARNING: this function is blocking, it must be called only in a forked
+ * process.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -640,7 +658,7 @@ network_connect_to (const char *proxy, int sock,
 }
 
 /*
- * network_connect_child: child process trying to connect to peer
+ * Connects to peer in a child process.
  */
 
 void
@@ -1134,7 +1152,7 @@ end:
 }
 
 /*
- * network_connect_child_timer_cb: timer for timeout of child process
+ * Timer callback for timeout of child process.
  */
 
 int
@@ -1159,9 +1177,10 @@ network_connect_child_timer_cb (void *arg_hook_connect, int remaining_calls)
 }
 
 /*
- * network_connect_gnutls_handshake_fd_cb: callback for gnutls handshake
- *                                         (used to not block WeeChat if
- *                                         handshake takes some time to finish)
+ * Callback for GnuTLS handshake.
+ *
+ * This callback is used to not block WeeChat (handshake takes some time to
+ * finish).
  */
 
 #ifdef HAVE_GNUTLS
@@ -1237,7 +1256,7 @@ network_connect_gnutls_handshake_fd_cb (void *arg_hook_connect, int fd)
 #endif
 
 /*
- * network_connect_gnutls_handshake_timer_cb: timer for timeout on handshake
+ * Timer callback for timeout of handshake.
  */
 
 #ifdef HAVE_GNUTLS
@@ -1268,7 +1287,7 @@ network_connect_gnutls_handshake_timer_cb (void *arg_hook_connect,
 #endif
 
 /*
- * network_connect_child_read_cb: read connection progress from child process
+ * Reads connection progress from child process.
  */
 
 int
@@ -1508,7 +1527,7 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
 }
 
 /*
- * network_connect_with_fork: connect with fork (called by hook_connect() only!)
+ * Connects with fork (called by hook_connect() only!).
  */
 
 void

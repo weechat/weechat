@@ -38,7 +38,7 @@
 
 
 /*
- * irc_display_hide_password: hide IRC password(s) in a string
+ * Hides IRC password(s) in a string.
  */
 
 void
@@ -102,7 +102,7 @@ irc_display_hide_password (char *string, int look_for_nickserv)
 }
 
 /*
- * irc_display_away: display away on all channels of all servers
+ * Displays away on all channels of all servers.
  */
 
 void
@@ -131,7 +131,7 @@ irc_display_away (struct t_irc_server *server, const char *string1,
 }
 
 /*
- * irc_display_server: display server infos
+ * Displays server options.
  */
 
 void

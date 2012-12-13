@@ -43,8 +43,11 @@
 
 
 /*
- * xfer_network_create_pipe: create pipe for communication with child process
- *                           return 1 if ok, 0 if error
+ * Creates pipe for communication with child process.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -69,7 +72,7 @@ xfer_network_create_pipe (struct t_xfer *xfer)
 }
 
 /*
- * xfer_network_write_pipe: write data into pipe
+ * Writes data into pipe.
  */
 
 void
@@ -85,7 +88,7 @@ xfer_network_write_pipe (struct t_xfer *xfer, int status, int error)
 }
 
 /*
- * xfer_network_child_read_cb: read data from child via pipe
+ * Reads data from child via pipe.
  */
 
 int
@@ -174,7 +177,7 @@ xfer_network_child_read_cb (void *arg_xfer, int fd)
 }
 
 /*
- * xfer_network_send_file_fork: fork process for sending file
+ * Forks process for sending file.
  */
 
 void
@@ -242,7 +245,7 @@ xfer_network_send_file_fork (struct t_xfer *xfer)
 }
 
 /*
- * xfer_network_recv_file_fork: fork process for receiving file
+ * Forks process for receiving file.
  */
 
 void
@@ -300,7 +303,7 @@ xfer_network_recv_file_fork (struct t_xfer *xfer)
 }
 
 /*
- * xfer_network_child_kill: kill child process and close pipe
+ * Kills child process and closes pipe.
  */
 
 void
@@ -328,7 +331,7 @@ xfer_network_child_kill (struct t_xfer *xfer)
 }
 
 /*
- * xfer_network_fd_cb: callback called when data is available on xfer socket
+ * Callback called when data is available on xfer socket.
  */
 
 int
@@ -437,8 +440,8 @@ xfer_network_fd_cb (void *arg_xfer, int fd)
 }
 
 /*
- * xfer_network_timer_cb: callback called to check if there's a timeout for xfer
- *                        (called only one time for xfer)
+ * Callback called to check if there's a timeout for xfer (called only one time
+ * for xfer).
  */
 
 int
@@ -466,7 +469,11 @@ xfer_network_timer_cb (void *arg_xfer, int remaining_calls)
 }
 
 /*
- * xfer_network_connect: connect to another host
+ * Connects to another host.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -537,7 +544,7 @@ xfer_network_connect (struct t_xfer *xfer)
 }
 
 /*
- * xfer_network_connect_init: connect to sender and init file or chat
+ * Connects to sender and initializes file or chat.
  */
 
 void
@@ -567,7 +574,7 @@ xfer_network_connect_init (struct t_xfer *xfer)
 }
 
 /*
- * xfer_network_accept: accept a xfer file or chat request
+ * Accepts a xfer file or chat request.
  */
 
 void

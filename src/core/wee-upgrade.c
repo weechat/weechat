@@ -59,8 +59,12 @@ struct t_gui_layout_window *upgrade_layout_windows = NULL;
 
 
 /*
- * upgrade_weechat_save_history: save history info to upgrade file
- *                               (from last to first, to restore it in good order)
+ * Saves history in WeeChat upgrade file (from last to first, to restore it in
+ * good order).
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -109,7 +113,11 @@ upgrade_weechat_save_history (struct t_upgrade_file *upgrade_file,
 }
 
 /*
- * upgrade_weechat_save_buffers: save buffers info to upgrade file
+ * Saves buffers in WeeChat upgrade file.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -194,7 +202,11 @@ upgrade_weechat_save_buffers (struct t_upgrade_file *upgrade_file)
 }
 
 /*
- * upgrade_weechat_save_misc: save miscellaneous info to upgrade file
+ * Saves miscellaneous info in WeeChat upgrade file.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -239,7 +251,11 @@ upgrade_weechat_save_misc (struct t_upgrade_file *upgrade_file)
 }
 
 /*
- * upgrade_weechat_save_hotlist: save hotlist info to upgrade file
+ * Saves hotlist in WeeChat upgrade file.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -272,8 +288,11 @@ upgrade_weechat_save_hotlist (struct t_upgrade_file *upgrade_file)
 }
 
 /*
- * upgrade_weechat_save_layout_window_tree: save tree with layout for windows
- *                                          to upgrade file
+ * Saves tree with layout for windows in WeeChat upgrade file.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -319,7 +338,11 @@ upgrade_weechat_save_layout_window_tree (struct t_upgrade_file *upgrade_file,
 }
 
 /*
- * upgrade_weechat_save_layout_window: save layout for windows to upgrade file
+ * Saves layout for windows in WeeChat upgrade file.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -341,8 +364,11 @@ upgrade_weechat_save_layout_window (struct t_upgrade_file *upgrade_file)
 }
 
 /*
- * upgrade_weechat_save: save upgrade file
- *                       return 1 if ok, 0 if error
+ * Saves WeeChat upgrade file.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -368,7 +394,7 @@ upgrade_weechat_save ()
 }
 
 /*
- * upgrade_weechat_read_cb: callback for reading upgrade file
+ * Reads WeeChat upgrade file.
  */
 
 int
@@ -679,8 +705,11 @@ upgrade_weechat_read_cb (void *data,
 }
 
 /*
- * upgrade_weechat_load: load upgrade file
- *                       return 1 if ok, 0 if error
+ * Loads WeeChat upgrade file.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -726,7 +755,8 @@ upgrade_weechat_load ()
 }
 
 /*
- * upgrade_weechat_remove_file_cb: callback called to remove a .upgrade file
+ * Removes a .upgrade file (callback called for each .upgrade file in WeeChat
+ * home directory).
  */
 
 void
@@ -744,8 +774,7 @@ upgrade_weechat_remove_file_cb (void *data, const char *filename)
 }
 
 /*
- * upgrade_weechat_end: remove *.upgrade files after upgrade and send signal
- *                      "weechat_upgrade_done"
+ * Removes *.upgrade files after upgrade and send signal "weechat_upgrade_done".
  */
 
 void

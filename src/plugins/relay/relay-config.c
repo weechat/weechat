@@ -66,8 +66,7 @@ regex_t *relay_config_regex_allowed_ips = NULL;
 
 
 /*
- * relay_config_refresh_cb: callback called when user changes relay option that
- *                          needs a refresh of relay list
+ * Callback for changes on options that require a refresh of relay list.
  */
 
 void
@@ -82,7 +81,7 @@ relay_config_refresh_cb (void *data, struct t_config_option *option)
 }
 
 /*
- * relay_config_change_network_allowed_ips: called when allowed ips changes
+ * Callback for changes on option "relay.network.allowed_ips".
  */
 
 void
@@ -120,9 +119,7 @@ relay_config_change_network_allowed_ips (void *data,
 }
 
 /*
- * relay_config_change_network_bind_address_cb: callback called when user
- *                                              changes network bind address
- *                                              option
+ * Callback for changes on option "relay.network.bind_address".
  */
 
 void
@@ -144,8 +141,7 @@ relay_config_change_network_bind_address_cb (void *data,
 }
 
 /*
- * relay_config_change_network_ipv6_cb: callback called when user changes ipv6
- *                                      option
+ * Callback for changes on option "relay.network.ipv6".
  */
 
 void
@@ -169,7 +165,7 @@ relay_config_change_network_ipv6_cb (void *data, struct t_config_option *option)
 }
 
 /*
- * relay_config_change_network_ssl_cert_key: called when ssl_cert_key is changed
+ * Callback for changes on option "relay.network.ssl_cert_key".
  */
 
 void
@@ -185,8 +181,11 @@ relay_config_change_network_ssl_cert_key (void *data,
 }
 
 /*
- * relay_config_change_port_cb: callback called when relay port option is
- *                              modified
+ * Checks if a port is valid.
+ *
+ * Returns:
+ *   1: port is valid
+ *   0: port is not valid
  */
 
 int
@@ -216,8 +215,7 @@ relay_config_check_port_cb (void *data, struct t_config_option *option,
 }
 
 /*
- * relay_config_change_port_cb: callback called when relay port option is
- *                              modified
+ * Callback for changes on options in section "port".
  */
 
 void
@@ -237,8 +235,7 @@ relay_config_change_port_cb (void *data, struct t_config_option *option)
 }
 
 /*
- * relay_config_delete_port_cb: callback called when relay port option is
- *                              deleted
+ * Callback called when an option is deleted in section "port".
  */
 
 void
@@ -255,7 +252,7 @@ relay_config_delete_port_cb (void *data, struct t_config_option *option)
 }
 
 /*
- * relay_config_create_option_port: create a relay for a port
+ * Callback called when an option is created in section "port".
  */
 
 int
@@ -353,7 +350,7 @@ relay_config_create_option_port (void *data,
         if (relay_server_new (option_name, protocol_number, protocol_args,
                               port, ipv4, ipv6, ssl))
         {
-            /* create config option */
+            /* create configuration option */
             weechat_config_new_option (
                 config_file, section,
                 option_name, "integer", NULL,
@@ -376,7 +373,7 @@ relay_config_create_option_port (void *data,
 }
 
 /*
- * relay_config_reload: reload relay configuration file
+ * Reloads relay configuration file.
  */
 
 int
@@ -389,8 +386,11 @@ relay_config_reload (void *data, struct t_config_file *config_file)
 }
 
 /*
- * relay_config_init: init relay configuration file
- *                    return: 1 if ok, 0 if error
+ * Initializes relay configuration file.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -576,7 +576,7 @@ relay_config_init ()
 }
 
 /*
- * relay_config_read: read relay configuration file
+ * Reads relay configuration file.
  */
 
 int
@@ -586,7 +586,7 @@ relay_config_read ()
 }
 
 /*
- * relay_config_write: write relay configuration file
+ * Writes relay configuration file.
  */
 
 int

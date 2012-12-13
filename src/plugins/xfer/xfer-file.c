@@ -39,8 +39,11 @@
 
 
 /*
- * xfer_file_resume: resume a download
- *                   return 1 if ok, 0 if not resumable
+ * Resumes a download.
+ *
+ * Returns:
+ *   1: OK
+ *   0: not resumable
  */
 
 int
@@ -70,9 +73,10 @@ xfer_file_resume (struct t_xfer *xfer, const char *filename)
 }
 
 /*
- * xfer_file_find_filename: find local filename for a xfer
- *                          if type if file/recv, add a suffix (like .1) if needed
- *                          if download is resumable, set "start_resume" to good value
+ * Searches for local filename for a xfer.
+ *
+ * If type is file/recv, adds a suffix (like .1) if needed.
+ * If download is resumable, sets "start_resume" to good value.
  */
 
 void
@@ -169,7 +173,7 @@ xfer_file_find_filename (struct t_xfer *xfer)
 }
 
 /*
- * xfer_file_calculate_speed: calculate xfer speed (for files only)
+ * Calculates xfer speed (for files only).
  */
 
 void

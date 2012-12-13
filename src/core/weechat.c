@@ -99,18 +99,7 @@ char *weechat_startup_commands = NULL; /* startup commands (-r flag)        */
 
 
 /*
- * weechat_init_vars: initialize some variables
- */
-
-void
-weechat_init_vars ()
-{
-    weechat_first_start_time = time (NULL);
-    gettimeofday (&weechat_current_start_timeval, NULL);
-}
-
-/*
- * weechat_display_copyright: display WeeChat copyright
+ * Displays WeeChat copyright on standard output.
  */
 
 void
@@ -128,7 +117,7 @@ weechat_display_copyright ()
 }
 
 /*
- * weechat_display_usage: display WeeChat usage
+ * Displays WeeChat usage on standard output.
  */
 
 void
@@ -163,7 +152,7 @@ weechat_display_usage (char *exec_name)
 }
 
 /*
- * weechat_display_keys: display WeeChat default keys
+ * Displays WeeChat default keys on standard output.
  */
 
 void
@@ -197,7 +186,9 @@ weechat_display_keys ()
 }
 
 /*
- * weechat_parse_args: parse command line args
+ * Parses command line arguments.
+ *
+ * Arguments argc and argv come from main() function.
  */
 
 void
@@ -317,11 +308,14 @@ weechat_parse_args (int argc, char *argv[])
 }
 
 /*
- * weechat_create_home_dirs: create WeeChat directories
+ * Creates WeeChat home directory (by default ~/.weechat).
+ *
+ * Any error in this function is fatal: WeeChat can not run without a home
+ * directory.
  */
 
 void
-weechat_create_home_dirs ()
+weechat_create_home_dir ()
 {
     char *ptr_home, *config_weechat_home = WEECHAT_HOME;
     int dir_length;
@@ -398,7 +392,7 @@ weechat_create_home_dirs ()
 }
 
 /*
- * weechat_welcome_message: display WeeChat welcome message - yeah!
+ * Displays WeeChat welcome message.
  */
 
 void
@@ -431,7 +425,7 @@ weechat_welcome_message ()
 }
 
 /*
- * weechat_shutdown: shutdown WeeChat
+ * Shutdowns WeeChat.
  */
 
 void
@@ -454,13 +448,14 @@ weechat_shutdown (int return_code, int crash)
 }
 
 /*
- * main: WeeChat startup
+ * Entry point for WeeChat.
  */
 
 int
 main (int argc, char *argv[])
 {
-    weechat_init_vars ();               /* initialize some variables        */
+    weechat_first_start_time = time (NULL); /* initialize start time        */
+    gettimeofday (&weechat_current_start_timeval, NULL);
 
     setlocale (LC_ALL, "");             /* initialize gettext               */
 #ifdef ENABLE_NLS
@@ -491,7 +486,7 @@ main (int argc, char *argv[])
     if (!config_weechat_init ())        /* init options with default values */
         exit (EXIT_FAILURE);
     weechat_parse_args (argc, argv);    /* parse command line args          */
-    weechat_create_home_dirs ();        /* create WeeChat directories       */
+    weechat_create_home_dir ();         /* create WeeChat home directory    */
     log_init ();                        /* init log file                    */
     if (config_weechat_read () < 0)     /* read WeeChat configuration       */
         exit (EXIT_FAILURE);

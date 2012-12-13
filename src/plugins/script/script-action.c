@@ -44,7 +44,7 @@ void script_action_install (int quiet);
 
 
 /*
- * script_action_list: list loaded scripts (all languages)
+ * Lists loaded scripts (all languages).
  */
 
 void
@@ -95,8 +95,9 @@ script_action_list ()
 }
 
 /*
- * script_action_list_input: list loaded scripts (all languages) in input
- *                           (send it to buffer if send_to_buffer == 1)
+ * Lists loaded scripts (all languages) in input.
+ *
+ * Sends input to buffer if send_to_buffer == 1.
  */
 
 void
@@ -154,7 +155,7 @@ script_action_list_input (int send_to_buffer)
 }
 
 /*
- * script_action_load: load a script
+ * Loads a script.
  */
 
 void
@@ -197,7 +198,7 @@ script_action_load (const char *name, int quiet)
 }
 
 /*
- * script_action_unload: unload a script
+ * Unloads a script.
  */
 
 void
@@ -303,7 +304,7 @@ script_action_unload (const char *name, int quiet)
 }
 
 /*
- * script_action_reload: reload a script
+ * Reloads a script.
  */
 
 void
@@ -409,7 +410,7 @@ script_action_reload (const char *name, int quiet)
 }
 
 /*
- * script_action_installnext_timer_cb: callback called to install next script
+ * Installs next script.
  */
 
 int
@@ -424,8 +425,7 @@ script_action_installnext_timer_cb (void *data, int remaining_calls)
 }
 
 /*
- * script_action_install_process_cb: callback called when script is downloaded
- *                                   (for installing it)
+ * Installs script (after download of script).
  */
 
 int
@@ -494,9 +494,7 @@ script_action_install_process_cb (void *data, const char *command,
 }
 
 /*
- * script_action_get_next_script_to_install: get next script to install
- *                                           according to "install_order" in
- *                                           script
+ * Gets next script to install according to "install_order" in scripts.
  */
 
 struct t_script_repo *
@@ -521,7 +519,7 @@ script_action_get_next_script_to_install ()
 }
 
 /*
- * script_action_install: install script(s) marked for install
+ * Installs scrip(s) marked for install.
  */
 
 void
@@ -594,7 +592,7 @@ script_action_install (int quiet)
 }
 
 /*
- * script_action_remove: remove a script
+ * Removes a script.
  */
 
 void
@@ -672,8 +670,11 @@ script_action_remove (const char *name, int quiet)
 }
 
 /*
- * script_action_hold: (un)hold a script
- *                     return 1 if ok, 0 if error
+ * Un(hold)s a script.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -722,9 +723,8 @@ script_action_hold (const char *name, int quiet)
 }
 
 /*
- * script_action_show_diff_process_cb: callback called when script is
- *                                     downloaded (for showing source code
- *                                     below script detail)
+ * Shows a diff between script installed and script in repository (after
+ * download of script).
  */
 
 int
@@ -814,9 +814,7 @@ script_action_show_diff_process_cb (void *data, const char *command,
 }
 
 /*
- * script_action_show_source_process_cb: callback called when script is
- *                                       downloaded (for showing source code
- *                                       below script detail)
+ * Shows source code of script (after download of script).
  */
 
 int
@@ -951,7 +949,7 @@ script_action_show_source_process_cb (void *data, const char *command,
 }
 
 /*
- * script_action_show: show detailed info on a script
+ * Shows detailed info on a script.
  */
 
 void
@@ -1029,7 +1027,7 @@ script_action_show (const char *name, int quiet)
 }
 
 /*
- * script_action_showdiff: jump to diff on buffer with detail of script
+ * Jumps to diff on buffer with detail of script.
  */
 
 void
@@ -1066,8 +1064,11 @@ script_action_showdiff ()
 }
 
 /*
- * script_action_run: run planned actions
- *                    return 1 if an action was executed, otherwise 0
+ * Runs planned actions.
+ *
+ * Returns:
+ *   1: at least an action was executed
+ *   0: no action executed
  */
 
 int
@@ -1304,7 +1305,7 @@ script_action_run ()
 
 
 /*
- * script_action_add: add an action to list of actions
+ * Adds an action to list of actions.
  */
 
 void
@@ -1332,9 +1333,10 @@ script_action_add (const char *action)
 }
 
 /*
- * script_action_schedule: schedule action
- *                         if "need_repository" is 1, then the action will be
- *                         executed only when the repository file is up-to-date
+ * Schedules an action.
+ *
+ * If "need_repository" is 1, then the action will be executed only when the
+ * repository file is up-to-date.
  */
 
 void

@@ -175,7 +175,9 @@ char *aspell_url_prefix[] =
 
 
 /*
- * weechat_aspell_build_option_name: build option name with a buffer
+ * Builds full name of buffer.
+ *
+ * Note: result must be freed after use.
  */
 
 char *
@@ -202,9 +204,10 @@ weechat_aspell_build_option_name (struct t_gui_buffer *buffer)
 }
 
 /*
- * weechat_aspell_get_dict: get dictionary list for a buffer
- *                          we first try with all arguments, then remove one by
- *                          one to find dict (from specific to general dict)
+ * Gets dictionary list for a buffer.
+ *
+ * First tries with all arguments, then removes one by one to find dict (from
+ * specific to general dict).
  */
 
 const char *
@@ -259,7 +262,7 @@ weechat_aspell_get_dict (struct t_gui_buffer *buffer)
 }
 
 /*
- * weechat_aspell_set_dict: set a dictionary list for a buffer
+ * Sets a list of dictionaries for a buffer.
  */
 
 void
@@ -285,9 +288,11 @@ weechat_aspell_set_dict (struct t_gui_buffer *buffer, const char *value)
 }
 
 /*
- * weechat_aspell_spellers_already_ok: check if current spellers are already ok
- *                                     return 1 if already ok, 0 if spellers
- *                                     must be free then created again
+ * Checks if current spellers are already OK.
+ *
+ * Returns:
+ *   1: already OK
+ *   0: spellers must be changed
  */
 
 int
@@ -332,7 +337,7 @@ weechat_aspell_spellers_already_ok (const char *dict_list)
 }
 
 /*
- * weechat_aspell_create_spellers: create spellers for a buffer
+ * Creates spellers for a buffer.
  */
 
 void
@@ -366,9 +371,9 @@ weechat_aspell_create_spellers (struct t_gui_buffer *buffer)
 }
 
 /*
- * weechat_aspell_iso_to_lang: convert an aspell iso lang code in its english
- *                             full name
+ * Converts an aspell ISO lang code in its English full name.
  *
+ * Note: result must be freed after use.
  */
 
 char *
@@ -387,8 +392,9 @@ weechat_aspell_iso_to_lang (const char *code)
 }
 
 /*
- * weechat_aspell_iso_to_country: convert an aspell iso country code in its
- *                                english full name
+ * Converts an aspell ISO country code in its English full name.
+ *
+ * Note: result must be freed after use.
  */
 
 char *
@@ -407,8 +413,7 @@ weechat_aspell_iso_to_country (const char *code)
 }
 
 /*
- * weechat_aspell_speller_list_dicts: list all aspell dict installed on system
- *                                    and display them
+ * Displays list of aspell dictionaries installed on system.
  */
 
 void
@@ -486,7 +491,7 @@ weechat_aspell_speller_list_dicts ()
 }
 
 /*
- * weechat_aspell_add_word : add a word in personal dictionary
+ * Adds a word in personal dictionary.
  */
 
 void
@@ -533,8 +538,11 @@ weechat_aspell_add_word (const char *lang, const char *word)
 }
 
 /*
- * weechat_aspell_command_authorized: return 1 if command is authorized for
- *                                    spell checking, otherwise 0
+ * Checks if command is authorized for spell checking.
+ *
+ * Returns:
+ *   1: command authorized
+ *   0: command not authorized
  */
 
 int
@@ -563,7 +571,11 @@ weechat_aspell_command_authorized (const char *command)
 }
 
 /*
- * weechat_aspell_string_is_url: detect if a word is an url
+ * Checks if a word is an URL.
+ *
+ * Returns:
+ *   1: word is an URL
+ *   0: word is not an URL
  */
 
 int
@@ -583,8 +595,11 @@ weechat_aspell_string_is_url (const char *word)
 }
 
 /*
- * weechat_aspell_string_is_simili_number: detect if a word is made of chars and
- *                                         punctuation
+ * Checks if a word is made of digits and punctuation.
+ *
+ * Returns:
+ *   1: word has only digits and punctuation
+ *   0: word has some other chars (not digits neither punctuation)
  */
 
 int
@@ -603,13 +618,16 @@ weechat_aspell_string_is_simili_number (const char *word)
         word = weechat_utf8_next_char (word);
     }
 
-    /* there's only digit or punctuation */
+    /* there are only digits or punctuation */
     return 1;
 }
 
 /*
- * weechat_aspell_check_word: spell check a word
- *                            return 1 if word is ok, 0 if word is misspelled
+ * Spell checks a word.
+ *
+ * Returns:
+ *   1: word is OK
+ *   0: word is misspelled
  */
 
 int
@@ -653,11 +671,11 @@ weechat_aspell_check_word (struct t_gui_buffer *buffer, const char *word)
 }
 
 /*
- * weechat_aspell_get_suggestions: get suggestions for a word
- *                                 A string is returned with format:
- *                                 "suggest1,suggest2,suggest3"
- *                                 Note: result (if not NULL) must be free()
- *                                 after use.
+ * Gets suggestions for a word.
+ *
+ * Returns a string with format: "suggest1,suggest2,suggest3".
+ *
+ * Note: result (if not NULL) must be freed after use.
  */
 
 char *
@@ -721,7 +739,7 @@ weechat_aspell_get_suggestions (const char *word)
 }
 
 /*
- * weechat_aspell_modifier_cb: modifier for input text
+ * Updates input text by adding color for misspelled words.
  */
 
 char *
@@ -1009,7 +1027,7 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
 }
 
 /*
- * weechat_aspell_command_cb: callback for /aspell command
+ * Callback for command "/aspell".
  */
 
 int
@@ -1148,7 +1166,7 @@ weechat_aspell_command_cb (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
- * weechat_aspell_completion_langs_cb: completion with aspell langs
+ * Adds aspell langs to completion list.
  */
 
 int
@@ -1174,7 +1192,7 @@ weechat_aspell_completion_langs_cb (void *data, const char *completion_item,
 }
 
 /*
- * weechat_aspell_buffer_switch_cb: called on "buffer_switch" signal
+ * Refreshes bar items on signal "buffer_switch".
  */
 
 int
@@ -1195,7 +1213,7 @@ weechat_aspell_buffer_switch_cb (void *data, const char *signal,
 }
 
 /*
- * weechat_aspell_window_switch_cb: called on "window_switch" signal
+ * Refreshes bar items on signal "window_switch".
  */
 
 int
@@ -1216,7 +1234,7 @@ weechat_aspell_window_switch_cb (void *data, const char *signal,
 }
 
 /*
- * weechat_plugin_init : init aspell plugin
+ * Initializes aspell plugin.
  */
 
 int
@@ -1292,7 +1310,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 }
 
 /*
- * weechat_plugin_end : end aspell plugin
+ * Ends aspell plugin.
  */
 
 int

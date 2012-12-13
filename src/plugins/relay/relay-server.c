@@ -45,20 +45,24 @@ struct t_relay_server *last_relay_server = NULL;
 
 
 /*
- * relay_server_get_protocol_args: get protocol, arguments and options
- *                                 from a string with format
- *                                 "options.protocol.args", examples:
- *                                   irc.freenode
- *                                   ssl.irc.freenode
- *                                   ipv4.irc.freenode
- *                                   ipv6.irc.freenode
- *                                   ipv4.ipv6.irc.freenode
- *                                   ipv6.ssl.irc.freenode
- *                                   weechat
- *                                   ssl.weechat
- *                                   ipv6.ssl.weechat
- *                                 Note: *protocol and *protocol_args must be
- *                                 freed after use
+ * Extracts protocol, arguments and options from a string with format
+ * "options.protocol.args".
+ *
+ * Examples:
+ *
+ *   string                    ipv4 ipv6 ssl protocol protocol_args
+ *   ---------------------------------------------------------------
+ *   irc.freenode              1    1    0   irc      freenode
+ *   ssl.irc.freenode          1    1    1   irc      freenode
+ *   ipv4.irc.freenode         1    0    0   irc      freenode
+ *   ipv6.irc.freenode         0    1    0   irc      freenode
+ *   ipv4.ipv6.irc.freenode    1    1    0   irc      freenode
+ *   ipv6.ssl.irc.freenode     0    1    1   irc      freenode
+ *   weechat                   1    1    0   weechat
+ *   ssl.weechat               1    1    1   weechat
+ *   ipv6.ssl.weechat          0    1    1   weechat
+ *
+ * Note: *protocol and *protocol_args must be freed after use.
  */
 
 void
@@ -142,7 +146,9 @@ relay_server_get_protocol_args (const char *protocol_and_args,
 }
 
 /*
- * relay_server_search: search server by protocol.args
+ * Searches for a server by protocol.args.
+ *
+ * Returns pointer to server, NULL if not found.
  */
 
 struct t_relay_server *
@@ -161,7 +167,9 @@ relay_server_search (const char *protocol_and_args)
 }
 
 /*
- * relay_server_search_port: search server by port
+ * Searches for a server by port.
+ *
+ * Returns pointer to new server, NULL if not found.
  */
 
 struct t_relay_server *
@@ -181,7 +189,7 @@ relay_server_search_port (int port)
 }
 
 /*
- * relay_server_close_socket: close socket for a relay server
+ * Closes socket for a relay server.
  */
 
 void
@@ -208,7 +216,7 @@ relay_server_close_socket (struct t_relay_server *server)
 }
 
 /*
- * relay_server_sock_cb: read data from a client which is connecting on socket
+ * Reads data from a client which is connecting on socket.
  */
 
 int
@@ -316,7 +324,11 @@ relay_server_sock_cb (void *data, int fd)
 }
 
 /*
- * relay_server_create_socket: create socket and server on port
+ * Creates socket and server on port.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -454,7 +466,9 @@ relay_server_create_socket (struct t_relay_server *server)
 }
 
 /*
- * relay_server_new: add a socket relaying on a port
+ * Adds a socket relaying on a port.
+ *
+ * Returns pointer to new server, NULL if error.
  */
 
 struct t_relay_server *
@@ -519,7 +533,7 @@ relay_server_new (const char *protocol_string, enum t_relay_protocol protocol,
 }
 
 /*
- * relay_server_update_port: update port in a server
+ * Updates port in a server.
  */
 
 void
@@ -534,7 +548,7 @@ relay_server_update_port (struct t_relay_server *server, int port)
 }
 
 /*
- * relay_server_free: remove a server
+ * Removes a server.
  */
 
 void
@@ -571,7 +585,7 @@ relay_server_free (struct t_relay_server *server)
 }
 
 /*
- * relay_server_free_all: remove all servers
+ * Removes all servers.
  */
 
 void
@@ -584,7 +598,7 @@ relay_server_free_all ()
 }
 
 /*
- * relay_server_print_log: print server infos in log (usually for crash dump)
+ * Prints servers in WeeChat log file (usually for crash dump).
  */
 
 void

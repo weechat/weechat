@@ -106,7 +106,7 @@ char python_buffer_output[128];
 
 
 /*
- * weechat_python_set_python2_bin: set path to python 2.x interpreter
+ * Sets path to python 2.x interpreter.
  */
 
 void
@@ -154,9 +154,9 @@ weechat_python_set_python2_bin ()
 }
 
 /*
- * weechat_python_unicode_to_string: convert a python unicode to a C UTF-8
- *                                   string
- *                                   Note: result has to be freed after use
+ * Converts a python unicode to a C UTF-8 string.
+ *
+ * Note: result must be freed after use.
  */
 
 char *
@@ -179,8 +179,7 @@ weechat_python_unicode_to_string (PyObject *obj)
 }
 
 /*
- * weechat_python_hashtable_map_cb: callback called for each key/value in a
- *                                  hashtable
+ * Callback called for each key/value in a hashtable.
  */
 
 void
@@ -206,8 +205,7 @@ weechat_python_hashtable_map_cb (void *data,
 }
 
 /*
- * weechat_python_hashtable_to_dict: get python dictionary with a WeeChat
- *                                   hashtable
+ * Gets python dictionary with a WeeChat hashtable.
  */
 
 PyObject *
@@ -230,10 +228,9 @@ weechat_python_hashtable_to_dict (struct t_hashtable *hashtable)
 }
 
 /*
- * weechat_python_dict_to_hashtable: get WeeChat hashtable with python
- *                                   dictionary
- *                                   Note: hashtable has to be released after
- *                                   use with call to weechat_hashtable_free()
+ * Gets WeeChat hashtable with python dictionary.
+ *
+ * Note: hashtable must be freed after use.
  */
 
 struct t_hashtable *
@@ -297,7 +294,7 @@ weechat_python_dict_to_hashtable (PyObject *dict, int size,
 }
 
 /*
- * weechat_python_exec: execute a python function
+ * Executes a python function.
  */
 
 void *
@@ -429,7 +426,7 @@ weechat_python_exec (struct t_plugin_script *script,
 }
 
 /*
- * weechat_python_output: redirection for stdout and stderr
+ * Redirection for stdout and stderr.
  */
 
 static PyObject *
@@ -485,7 +482,7 @@ weechat_python_output (PyObject *self, PyObject *args)
 }
 
 /*
- * weechat_python_init_module_weechat: initialize the "weechat" module
+ * Initializes the "weechat" module.
  */
 
 #if PY_MAJOR_VERSION >= 3
@@ -572,7 +569,11 @@ void weechat_python_init_module_weechat ()
 }
 
 /*
- * weechat_python_load: load a Python script
+ * Loads a python script.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -761,7 +762,7 @@ weechat_python_load (const char *filename)
 }
 
 /*
- * weechat_python_load_cb: callback for script_auto_load() function
+ * Callback for script_auto_load() function.
  */
 
 void
@@ -774,7 +775,7 @@ weechat_python_load_cb (void *data, const char *filename)
 }
 
 /*
- * weechat_python_unload: unload a Python script
+ * Unloads a python script.
  */
 
 void
@@ -827,7 +828,7 @@ weechat_python_unload (struct t_plugin_script *script)
 }
 
 /*
- * weechat_python_unload_name: unload a Python script by name
+ * Unloads a python script by name.
  */
 
 void
@@ -855,7 +856,7 @@ weechat_python_unload_name (const char *name)
 }
 
 /*
- * weechat_python_unload_all: unload all Python scripts
+ * Unloads all python scripts.
  */
 
 void
@@ -868,7 +869,7 @@ weechat_python_unload_all ()
 }
 
 /*
- * weechat_python_reload_name: reload a Python script by name
+ * Reloads a python script by name.
  */
 
 void
@@ -903,7 +904,7 @@ weechat_python_reload_name (const char *name)
 }
 
 /*
- * weechat_python_cmd: callback for "/python" command
+ * Callback for command "/python".
  */
 
 int
@@ -975,7 +976,7 @@ weechat_python_command_cb (void *data, struct t_gui_buffer *buffer,
             }
             if (weechat_strcasecmp (argv[1], "load") == 0)
             {
-                /* load Python script */
+                /* load python script */
                 path_script = plugin_script_search_path (weechat_python_plugin,
                                                          ptr_name);
                 weechat_python_load ((path_script) ? path_script : ptr_name);
@@ -984,12 +985,12 @@ weechat_python_command_cb (void *data, struct t_gui_buffer *buffer,
             }
             else if (weechat_strcasecmp (argv[1], "reload") == 0)
             {
-                /* reload one Python script */
+                /* reload one python script */
                 weechat_python_reload_name (ptr_name);
             }
             else if (weechat_strcasecmp (argv[1], "unload") == 0)
             {
-                /* unload Python script */
+                /* unload python script */
                 weechat_python_unload_name (ptr_name);
             }
             python_quiet = 0;
@@ -1008,7 +1009,7 @@ weechat_python_command_cb (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
- * weechat_python_completion_cb: callback for script completion
+ * Adds python scripts to completion list.
  */
 
 int
@@ -1027,7 +1028,7 @@ weechat_python_completion_cb (void *data, const char *completion_item,
 }
 
 /*
- * weechat_python_info_cb: callback for info
+ * Returns python info.
  */
 
 const char *
@@ -1059,7 +1060,7 @@ weechat_python_info_cb (void *data, const char *info_name,
 }
 
 /*
- * weechat_python_hdata_cb: callback for hdata
+ * Returns hdata for python scripts.
  */
 
 struct t_hdata *
@@ -1074,7 +1075,7 @@ weechat_python_hdata_cb (void *data, const char *hdata_name)
 }
 
 /*
- * weechat_python_infolist_cb: callback for infolist
+ * Returns infolist with python scripts.
  */
 
 struct t_infolist *
@@ -1098,8 +1099,7 @@ weechat_python_infolist_cb (void *data, const char *infolist_name,
 }
 
 /*
- * weechat_python_signal_debug_dump_cb: dump Python plugin data in WeeChat log
- *                                      file
+ * Dumps python plugin data in WeeChat log file.
  */
 
 int
@@ -1121,8 +1121,7 @@ weechat_python_signal_debug_dump_cb (void *data, const char *signal,
 }
 
 /*
- * weechat_python_signal_buffer_closed_cb: callback called when a buffer is
- *                                         closed
+ * Callback called when a buffer is closed.
  */
 
 int
@@ -1142,7 +1141,7 @@ weechat_python_signal_buffer_closed_cb (void *data, const char *signal,
 }
 
 /*
- * weechat_python_timer_action_cb: timer for executing actions
+ * Timer for executing actions.
  */
 
 int
@@ -1176,8 +1175,7 @@ weechat_python_timer_action_cb (void *data, int remaining_calls)
 }
 
 /*
- * weechat_python_signal_script_action_cb: callback called when a script action
- *                                         is asked (install/remove a script)
+ * Callback called when a script action is asked (install/remove a script).
  */
 
 int
@@ -1212,7 +1210,7 @@ weechat_python_signal_script_action_cb (void *data, const char *signal,
 }
 
 /*
- * weechat_plugin_init: initialize Python plugin
+ * Initializes python plugin.
  */
 
 int
@@ -1283,7 +1281,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 }
 
 /*
- * weechat_plugin_end: shutdown Python interface
+ * Ends python plugin.
  */
 
 int
@@ -1294,7 +1292,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     plugin_script_end (plugin, &python_scripts, &weechat_python_unload_all);
     python_quiet = 0;
 
-    /* free Python interpreter */
+    /* free python interpreter */
     if (python_mainThreadState != NULL)
     {
         /* PyEval_AcquireLock (); */

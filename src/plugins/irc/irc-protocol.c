@@ -58,7 +58,11 @@
 
 
 /*
- * irc_protocol_is_numeric_command: return 1 if given string is 100% numeric
+ * Checks if a command is numeric.
+ *
+ * Returns:
+ *   1: all chars are numeric
+ *   0: command has other chars (not numeric)
  */
 
 int
@@ -74,7 +78,7 @@ irc_protocol_is_numeric_command (const char *str)
 }
 
 /*
- * irc_protocol_log_level_for_command: get log level for IRC command
+ * Gets log level for IRC command.
  */
 
 int
@@ -99,8 +103,7 @@ irc_protocol_log_level_for_command (const char *command)
 }
 
 /*
- * irc_protocol_tags: build tags list with IRC command and optional tags and
- *                    nick
+ * Builds tags list with IRC command and optional tags and nick.
  */
 
 const char *
@@ -139,7 +142,11 @@ irc_protocol_tags (const char *command, const char *tags, const char *nick)
 }
 
 /*
- * irc_protocol_cb_authenticate: 'authenticate' message received
+ * Callback for the IRC message "AUTHENTICATE".
+ *
+ * Message looks like:
+ *   AUTHENTICATE +
+ *   AUTHENTICATE QQDaUzXAmVffxuzFy77XWBGwABBQAgdinelBrKZaR3wE7nsIETuTVY=
  */
 
 IRC_PROTOCOL_CALLBACK(authenticate)
@@ -147,12 +154,6 @@ IRC_PROTOCOL_CALLBACK(authenticate)
     int sasl_mechanism;
     const char *sasl_username, *sasl_password;
     char *answer;
-
-    /*
-     * AUTHENTICATE message looks like:
-     *   AUTHENTICATE +
-     *   AUTHENTICATE QQDaUzXAmVffxuzFy77XWBGwABBQAgdinelBrKZaR3wE7nsIETuTVY=
-     */
 
     IRC_PROTOCOL_MIN_ARGS(2);
 
@@ -201,7 +202,12 @@ IRC_PROTOCOL_CALLBACK(authenticate)
 }
 
 /*
- * irc_protocol_cb_cap: 'cap' message received (client capability)
+ * Callback for the IRC message "CAP": client capability.
+ *
+ * Message looks like:
+ *   :server CAP * LS :identify-msg multi-prefix sasl
+ *   :server CAP * ACK :sasl
+ *   :server CAP * NAK :sasl
  */
 
 IRC_PROTOCOL_CALLBACK(cap)
@@ -210,13 +216,6 @@ IRC_PROTOCOL_CALLBACK(cap)
     const char *ptr_cap_option;
     int num_caps_supported, num_caps_requested, sasl_requested, sasl_to_do;
     int i, j, timeout, length;
-
-    /*
-     * CAP message looks like:
-     *   :server CAP * LS :identify-msg multi-prefix sasl
-     *   :server CAP * ACK :sasl
-     *   :server CAP * NAK :sasl
-     */
 
     IRC_PROTOCOL_MIN_ARGS(4);
 
@@ -379,17 +378,15 @@ IRC_PROTOCOL_CALLBACK(cap)
 }
 
 /*
- * irc_protocol_cb_error: error received from server
+ * Callback for the IRC message "ERROR".
+ *
+ * Message looks like:
+ *   ERROR :Closing Link: irc.server.org (Bad Password)
  */
 
 IRC_PROTOCOL_CALLBACK(error)
 {
     char *ptr_args;
-
-    /*
-     * ERROR message looks like:
-     *   ERROR :Closing Link: irc.server.org (Bad Password)
-     */
 
     IRC_PROTOCOL_MIN_ARGS(2);
 
@@ -413,8 +410,11 @@ IRC_PROTOCOL_CALLBACK(error)
 }
 
 /*
- * irc_protocol_cb_generic_error: generic error (callback used by many error
- *                                messages, but not for message "ERROR")
+ * Callback for an IRC error message (used by many error messages, but not for
+ * message "ERROR").
+ *
+ * Example of error:
+ *   :server 404 nick #channel :Cannot send to channel
  */
 
 IRC_PROTOCOL_CALLBACK(generic_error)
@@ -423,11 +423,6 @@ IRC_PROTOCOL_CALLBACK(generic_error)
     char *chan_nick, *args;
     struct t_irc_channel *ptr_channel;
     struct t_gui_buffer *ptr_buffer;
-
-    /*
-     * example of error:
-     *   :server 404 nick #channel :Cannot send to channel
-     */
 
     IRC_PROTOCOL_MIN_ARGS(4);
 
@@ -472,16 +467,14 @@ IRC_PROTOCOL_CALLBACK(generic_error)
 }
 
 /*
- * irc_protocol_cb_invite: 'invite' message received
+ * Callback for the IRC message "INVITE".
+ *
+ * Message looks like:
+ *   :nick!user@host INVITE mynick :#channel
  */
 
 IRC_PROTOCOL_CALLBACK(invite)
 {
-    /*
-     * INVITE message looks like:
-     *   :nick!user@host INVITE mynick :#channel
-     */
-
     IRC_PROTOCOL_MIN_ARGS(4);
     IRC_PROTOCOL_CHECK_HOST;
 
@@ -506,7 +499,10 @@ IRC_PROTOCOL_CALLBACK(invite)
 }
 
 /*
- * irc_protocol_cb_join: 'join' message received
+ * Callback for the IRC message "JOIN".
+ *
+ * Message looks like:
+ *   :nick!user@host JOIN :#channel
  */
 
 IRC_PROTOCOL_CALLBACK(join)
@@ -516,11 +512,6 @@ IRC_PROTOCOL_CALLBACK(join)
     struct t_irc_channel_speaking *ptr_nick_speaking;
     char *pos_channel;
     int local_join, display_host;
-
-    /*
-     * JOIN message looks like:
-     *   :nick!user@host JOIN :#channel
-     */
 
     IRC_PROTOCOL_MIN_ARGS(3);
     IRC_PROTOCOL_CHECK_HOST;
@@ -625,7 +616,10 @@ IRC_PROTOCOL_CALLBACK(join)
 }
 
 /*
- * irc_protocol_cb_kick: 'kick' message received
+ * Callback for the IRC message "KICK".
+ *
+ * Message looks like:
+ *   :nick1!user@host KICK #channel nick2 :kick reason
  */
 
 IRC_PROTOCOL_CALLBACK(kick)
@@ -635,11 +629,6 @@ IRC_PROTOCOL_CALLBACK(kick)
     int rejoin;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick, *ptr_nick_kicked;
-
-    /*
-     * KICK message looks like:
-     *   :nick1!user@host KICK #channel nick2 :kick reason
-     */
 
     IRC_PROTOCOL_MIN_ARGS(4);
     IRC_PROTOCOL_CHECK_HOST;
@@ -743,7 +732,10 @@ IRC_PROTOCOL_CALLBACK(kick)
 }
 
 /*
- * irc_protocol_cb_kill: 'kill' message received
+ * Callback for the IRC message "KILL".
+ *
+ * Message looks like:
+ *   :nick1!user@host KILL mynick :kill reason
  */
 
 IRC_PROTOCOL_CALLBACK(kill)
@@ -751,11 +743,6 @@ IRC_PROTOCOL_CALLBACK(kill)
     char *pos_comment;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick, *ptr_nick_killed;
-
-    /*
-     * KILL message looks like:
-     *   :nick1!user@host KILL mynick :kill reason
-     */
 
     IRC_PROTOCOL_MIN_ARGS(3);
     IRC_PROTOCOL_CHECK_HOST;
@@ -825,7 +812,10 @@ IRC_PROTOCOL_CALLBACK(kill)
 }
 
 /*
- * irc_protocol_cb_mode: 'mode' message received
+ * Callback for the IRC message "MODE".
+ *
+ * Message looks like:
+ *   :nick!user@host MODE #test +o nick
  */
 
 IRC_PROTOCOL_CALLBACK(mode)
@@ -834,11 +824,6 @@ IRC_PROTOCOL_CALLBACK(mode)
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
     struct t_gui_buffer *ptr_buffer;
-
-    /*
-     * MODE message looks like:
-     *   :nick!user@host MODE #test +o nick
-     */
 
     IRC_PROTOCOL_MIN_ARGS(4);
     IRC_PROTOCOL_CHECK_HOST;
@@ -892,7 +877,10 @@ IRC_PROTOCOL_CALLBACK(mode)
 }
 
 /*
- * irc_protocol_cb_nick: 'nick' message received
+ * Callback for the IRC message "NICK".
+ *
+ * Message looks like:
+ *   :oldnick!user@host NICK :newnick
  */
 
 IRC_PROTOCOL_CALLBACK(nick)
@@ -902,11 +890,6 @@ IRC_PROTOCOL_CALLBACK(nick)
     char *new_nick, *old_color, *buffer_name;
     int local_nick;
     struct t_irc_channel_speaking *ptr_nick_speaking;
-
-    /*
-     * NICK message looks like:
-     *   :oldnick!user@host NICK :newnick
-     */
 
     IRC_PROTOCOL_MIN_ARGS(3);
     IRC_PROTOCOL_CHECK_HOST;
@@ -1024,7 +1007,12 @@ IRC_PROTOCOL_CALLBACK(nick)
 }
 
 /*
- * irc_protocol_cb_notice: 'notice' message received
+ * Callback for the IRC message "NOTICE".
+ *
+ * Message looks like:
+ *   NOTICE AUTH :*** Looking up your hostname...
+ *   :nick!user@host NOTICE mynick :notice text
+ *   :nick!user@host NOTICE #channel :notice text
  */
 
 IRC_PROTOCOL_CALLBACK(notice)
@@ -1034,13 +1022,6 @@ IRC_PROTOCOL_CALLBACK(notice)
     struct t_irc_nick *ptr_nick;
     int notify_private, is_channel, notice_op, notice_voice;
     struct t_gui_buffer *ptr_buffer;
-
-    /*
-     * NOTICE message looks like:
-     *   NOTICE AUTH :*** Looking up your hostname...
-     *   :nick!user@host NOTICE mynick :notice text
-     *   :nick!user@host NOTICE #channel :notice text
-     */
 
     IRC_PROTOCOL_MIN_ARGS(3);
 
@@ -1254,7 +1235,14 @@ IRC_PROTOCOL_CALLBACK(notice)
 }
 
 /*
- * irc_protocol_cb_part: 'part' message received
+ * Callback for the IRC message "PART".
+ *
+ * Message looks like:
+ *   :nick!user@host PART #channel :part message
+ *
+ * On undernet server, it can be:
+ *   :nick!user@host PART :#channel
+ *   :nick!user@host PART #channel :part message
  */
 
 IRC_PROTOCOL_CALLBACK(part)
@@ -1264,14 +1252,6 @@ IRC_PROTOCOL_CALLBACK(part)
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
     struct t_irc_channel_speaking *ptr_nick_speaking;
-
-    /*
-     * PART message looks like:
-     *   :nick!user@host PART #channel :part message
-     * On undernet server, it can be:
-     *   :nick!user@host PART :#channel
-     *   :nick!user@host PART #channel :part message
-     */
 
     IRC_PROTOCOL_MIN_ARGS(3);
     IRC_PROTOCOL_CHECK_HOST;
@@ -1410,16 +1390,14 @@ IRC_PROTOCOL_CALLBACK(part)
 }
 
 /*
- * irc_protocol_cb_ping: 'ping' command received
+ * Callback for the IRC message "PING".
+ *
+ * Message looks like:
+ *   PING :arguments
  */
 
 IRC_PROTOCOL_CALLBACK(ping)
 {
-    /*
-     * PING message looks like:
-     *   PING :server
-     */
-
     IRC_PROTOCOL_MIN_ARGS(2);
 
     irc_server_sendf (server, 0, NULL, "PONG :%s",
@@ -1429,7 +1407,10 @@ IRC_PROTOCOL_CALLBACK(ping)
 }
 
 /*
- * irc_protocol_cb_pong: 'pong' command received
+ * Callback for the IRC message "PONG".
+ *
+ * Message looks like:
+ *   :server PONG server :arguments
  */
 
 IRC_PROTOCOL_CALLBACK(pong)
@@ -1460,7 +1441,16 @@ IRC_PROTOCOL_CALLBACK(pong)
 }
 
 /*
- * irc_protocol_cb_privmsg: 'privmsg' command received
+ * Callback for the IRC message "PRIVMSG".
+ *
+ * Message looks like:
+ *   :nick!user@host PRIVMSG #channel :message for channel here
+ *   :nick!user@host PRIVMSG mynick :message for private here
+ *   :nick!user@host PRIVMSG #channel :\01ACTION is testing action\01
+ *   :nick!user@host PRIVMSG mynick :\01ACTION is testing action\01
+ *   :nick!user@host PRIVMSG #channel :\01VERSION\01
+ *   :nick!user@host PRIVMSG mynick :\01VERSION\01
+ *   :nick!user@host PRIVMSG mynick :\01DCC SEND file.txt 1488915698 50612 128\01
  */
 
 IRC_PROTOCOL_CALLBACK(privmsg)
@@ -1470,17 +1460,6 @@ IRC_PROTOCOL_CALLBACK(privmsg)
     int msg_op, msg_voice, is_channel, nick_is_me;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
-
-    /*
-     * PRIVMSG message looks like:
-     *   :nick!user@host PRIVMSG #channel :message for channel here
-     *   :nick!user@host PRIVMSG mynick :message for private here
-     *   :nick!user@host PRIVMSG #channel :\01ACTION is testing action\01
-     *   :nick!user@host PRIVMSG mynick :\01ACTION is testing action\01
-     *   :nick!user@host PRIVMSG #channel :\01VERSION\01
-     *   :nick!user@host PRIVMSG mynick :\01VERSION\01
-     *   :nick!user@host PRIVMSG mynick :\01DCC SEND file.txt 1488915698 50612 128\01
-     */
 
     IRC_PROTOCOL_MIN_ARGS(4);
     IRC_PROTOCOL_CHECK_HOST;
@@ -1655,7 +1634,10 @@ IRC_PROTOCOL_CALLBACK(privmsg)
 }
 
 /*
- * irc_protocol_cb_quit: 'quit' command received
+ * Callback for the IRC message "QUIT".
+ *
+ * Message looks like:
+ *   :nick!user@host QUIT :quit message
  */
 
 IRC_PROTOCOL_CALLBACK(quit)
@@ -1665,11 +1647,6 @@ IRC_PROTOCOL_CALLBACK(quit)
     struct t_irc_nick *ptr_nick;
     struct t_irc_channel_speaking *ptr_nick_speaking;
     int local_quit, display_host;
-
-    /*
-     * QUIT message looks like:
-     *   :nick!user@host QUIT :quit message
-     */
 
     IRC_PROTOCOL_MIN_ARGS(2);
     IRC_PROTOCOL_CHECK_HOST;
@@ -1773,8 +1750,7 @@ IRC_PROTOCOL_CALLBACK(quit)
 }
 
 /*
- * irc_protocol_cb_server_mode_reason: command received from server (numeric),
- *                                     format: "mode :reason"
+ * Callback for an IRC message with mode and reason (numeric).
  */
 
 IRC_PROTOCOL_CALLBACK(server_mode_reason)
@@ -1809,7 +1785,7 @@ IRC_PROTOCOL_CALLBACK(server_mode_reason)
 }
 
 /*
- * irc_protocol_cb_numeric: numeric command received from server
+ * Callback for a numeric IRC message.
  */
 
 IRC_PROTOCOL_CALLBACK(numeric)
@@ -1841,7 +1817,10 @@ IRC_PROTOCOL_CALLBACK(numeric)
 }
 
 /*
- * irc_protocol_cb_topic: 'topic' command received
+ * Callback for the IRC message "TOPIC".
+ *
+ * Message looks like:
+ *   :nick!user@host TOPIC #channel :new topic for channel
  */
 
 IRC_PROTOCOL_CALLBACK(topic)
@@ -1850,11 +1829,6 @@ IRC_PROTOCOL_CALLBACK(topic)
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
     struct t_gui_buffer *ptr_buffer;
-
-    /*
-     * TOPIC message looks like:
-     *   :nick!user@host TOPIC #channel :new topic for channel
-     */
 
     IRC_PROTOCOL_MIN_ARGS(3);
 
@@ -1980,16 +1954,14 @@ IRC_PROTOCOL_CALLBACK(topic)
 }
 
 /*
- * irc_protocol_cb_wallops: 'wallops' command received
+ * Callback for the IRC message "WALLOPS".
+ *
+ * Message looks like:
+ *   :nick!user@host WALLOPS :message from admin
  */
 
 IRC_PROTOCOL_CALLBACK(wallops)
 {
-    /*
-     * WALLOPS message looks like:
-     *   :nick!user@host WALLOPS :message from admin
-     */
-
     IRC_PROTOCOL_MIN_ARGS(3);
 
     if (ignored)
@@ -2015,7 +1987,10 @@ IRC_PROTOCOL_CALLBACK(wallops)
 }
 
 /*
- * irc_protocol_cb_001: '001' command (connected to irc server)
+ * Callback for the IRC message "001": connected to irc server.
+ *
+ * Message looks like:
+ *   :server 001 mynick :Welcome to the dancer-ircd Network
  */
 
 IRC_PROTOCOL_CALLBACK(001)
@@ -2023,11 +1998,6 @@ IRC_PROTOCOL_CALLBACK(001)
     char **commands, **ptr_cmd, *vars_replaced;
     char *away_msg;
     const char *ptr_command;
-
-    /*
-     * 001 message looks like:
-     *   :server 001 mynick :Welcome to the dancer-ircd Network
-     */
 
     IRC_PROTOCOL_MIN_ARGS(3);
 
@@ -2097,21 +2067,19 @@ IRC_PROTOCOL_CALLBACK(001)
 }
 
 /*
- * irc_protocol_cb_005: '005' command (some infos from server)
+ * Callback for the IRC message "005": some infos from server.
+ *
+ * Message looks like:
+ *   :server 005 mynick MODES=4 CHANLIMIT=#:20 NICKLEN=16 USERLEN=10
+ *     HOSTLEN=63 TOPICLEN=450 KICKLEN=450 CHANNELLEN=30 KEYLEN=23
+ *     CHANTYPES=# PREFIX=(ov)@+ CASEMAPPING=ascii CAPAB IRCD=dancer
+ *     :are available on this server
  */
 
 IRC_PROTOCOL_CALLBACK(005)
 {
     char *pos, *pos2, *pos_start, *error, *isupport2;
     int length_isupport, length, nick_max_length, casemapping;
-
-    /*
-     * 005 message looks like:
-     *   :server 005 mynick MODES=4 CHANLIMIT=#:20 NICKLEN=16 USERLEN=10
-     *     HOSTLEN=63 TOPICLEN=450 KICKLEN=450 CHANNELLEN=30 KEYLEN=23
-     *     CHANTYPES=# PREFIX=(ov)@+ CASEMAPPING=ascii CAPAB IRCD=dancer
-     *     :are available on this server
-     */
 
     IRC_PROTOCOL_MIN_ARGS(4);
 
@@ -2227,16 +2195,14 @@ IRC_PROTOCOL_CALLBACK(005)
 }
 
 /*
- * irc_protocol_cb_221: '221' command (user mode string)
+ * Callback for the IRC message "221": user mode string.
+ *
+ * Message looks like:
+ *   :server 221 nick :+s
  */
 
 IRC_PROTOCOL_CALLBACK(221)
 {
-    /*
-     * 221 message looks like:
-     *   :server 221 nick :+s
-     */
-
     IRC_PROTOCOL_MIN_ARGS(4);
 
     weechat_printf_date_tags (irc_msgbuffer_get_target_buffer (server, argv[2],
@@ -2265,9 +2231,13 @@ IRC_PROTOCOL_CALLBACK(221)
 }
 
 /*
- * irc_protocol_cb_301: '301' command (away message)
- *                      received when we are talking to a user in private
- *                      and that remote user is away (we receive away message)
+ * Callback for the IRC message "301": away message.
+ *
+ * Message is received when we are talking to a user in private and that remote
+ * user is away (we receive away message).
+ *
+ * Message looks like:
+ *   :server 301 mynick nick :away message for nick
  */
 
 IRC_PROTOCOL_CALLBACK(301)
@@ -2275,11 +2245,6 @@ IRC_PROTOCOL_CALLBACK(301)
     char *pos_away_msg;
     struct t_irc_channel *ptr_channel;
     struct t_gui_buffer *ptr_buffer;
-
-    /*
-     * 301 message looks like:
-     *   :server 301 mynick nick :away message for nick
-     */
 
     IRC_PROTOCOL_MIN_ARGS(3);
 
@@ -2323,16 +2288,14 @@ IRC_PROTOCOL_CALLBACK(301)
 }
 
 /*
- * irc_protocol_cb_303: '303' command (ison)
+ * Callback for the IRC message "303": ison.
+ *
+ * Message looks like:
+ *   :server 303 mynick :nick1 nick2
  */
 
 IRC_PROTOCOL_CALLBACK(303)
 {
-    /*
-     * 303 message looks like:
-     *   :server 303 mynick :nick1 nick2
-     */
-
     IRC_PROTOCOL_MIN_ARGS(4);
 
     weechat_printf_date_tags (irc_msgbuffer_get_target_buffer (server, NULL,
@@ -2348,16 +2311,14 @@ IRC_PROTOCOL_CALLBACK(303)
 }
 
 /*
- * irc_protocol_cb_305: '305' command (unaway)
+ * Callback for the IRC message "305": unaway.
+ *
+ * Message looks like:
+ *   :server 305 mynick :Does this mean you're really back?
  */
 
 IRC_PROTOCOL_CALLBACK(305)
 {
-    /*
-     * 305 message looks like:
-     *   :server 305 mynick :Does this mean you're really back?
-     */
-
     IRC_PROTOCOL_MIN_ARGS(3);
 
     if (argc > 3)
@@ -2381,16 +2342,14 @@ IRC_PROTOCOL_CALLBACK(305)
 }
 
 /*
- * irc_protocol_cb_306: '306' command (now away)
+ * Callback for the IRC message "306": now away.
+ *
+ * Message looks like:
+ *   :server 306 mynick :We'll miss you
  */
 
 IRC_PROTOCOL_CALLBACK(306)
 {
-    /*
-     * 306 message looks like:
-     *   :server 306 mynick :We'll miss you
-     */
-
     IRC_PROTOCOL_MIN_ARGS(3);
 
     if (argc > 3)
@@ -2414,16 +2373,14 @@ IRC_PROTOCOL_CALLBACK(306)
 }
 
 /*
- * irc_protocol_cb_whois_nick_msg: a whois command with nick and message
+ * Callback for the whois messages with nick and message.
+ *
+ * Message looks like:
+ *   :server 319 flashy FlashCode :some text here
  */
 
 IRC_PROTOCOL_CALLBACK(whois_nick_msg)
 {
-    /*
-     * messages look like:
-     *   :server 319 flashy FlashCode :some text here
-     */
-
     IRC_PROTOCOL_MIN_ARGS(5);
 
     weechat_printf_date_tags (irc_msgbuffer_get_target_buffer (server, argv[3],
@@ -2445,16 +2402,14 @@ IRC_PROTOCOL_CALLBACK(whois_nick_msg)
 }
 
 /*
- * irc_protocol_cb_whowas_nick_msg: a whowas command with nick and message
+ * Callback for the whowas messages with nick and message.
+ *
+ * Message looks like:
+ *   :server 369 flashy FlashCode :some text here
  */
 
 IRC_PROTOCOL_CALLBACK(whowas_nick_msg)
 {
-    /*
-     * messages look like:
-     *   :server 369 flashy FlashCode :some text here
-     */
-
     IRC_PROTOCOL_MIN_ARGS(5);
 
     weechat_printf_date_tags (irc_msgbuffer_get_target_buffer (server, argv[3],
@@ -2476,16 +2431,14 @@ IRC_PROTOCOL_CALLBACK(whowas_nick_msg)
 }
 
 /*
- * irc_protocol_cb_311: '311' command (whois, user)
+ * Callback for the IRC message "311": whois, user.
+ *
+ * Message looks like:
+ *   :server 311 mynick nick user host * :realname here
  */
 
 IRC_PROTOCOL_CALLBACK(311)
 {
-    /*
-     * 311 message looks like:
-     *   :server 311 mynick nick user host * :realname here
-     */
-
     IRC_PROTOCOL_MIN_ARGS(8);
 
     weechat_printf_date_tags (irc_msgbuffer_get_target_buffer (server, argv[3],
@@ -2511,16 +2464,14 @@ IRC_PROTOCOL_CALLBACK(311)
 }
 
 /*
- * irc_protocol_cb_312: '312' command (whois, server)
+ * Callback for the IRC message "312": whois, server.
+ *
+ * Message looks like:
+ *   :server 312 mynick nick irc.freenode.net :http://freenode.net/
  */
 
 IRC_PROTOCOL_CALLBACK(312)
 {
-    /*
-     * 312 message looks like:
-     *   :server 312 mynick nick irc.freenode.net :http://freenode.net/
-     */
-
     IRC_PROTOCOL_MIN_ARGS(6);
 
     weechat_printf_date_tags (irc_msgbuffer_get_target_buffer (server, argv[3],
@@ -2546,16 +2497,14 @@ IRC_PROTOCOL_CALLBACK(312)
 }
 
 /*
- * irc_protocol_cb_314: '314' command (whowas)
+ * Callback for the IRC message "314": whowas.
+ *
+ * Message looks like:
+ *   :server 314 mynick nick user host * :realname here
  */
 
 IRC_PROTOCOL_CALLBACK(314)
 {
-    /*
-     * 314 message looks like:
-     *   :server 314 mynick nick user host * :realname here
-     */
-
     IRC_PROTOCOL_MIN_ARGS(8);
 
     weechat_printf_date_tags (irc_msgbuffer_get_target_buffer (server, argv[3],
@@ -2581,17 +2530,15 @@ IRC_PROTOCOL_CALLBACK(314)
 }
 
 /*
- * irc_protocol_cb_315: '315' command (end of /who)
+ * Callback for the IRC message "315": end of /who.
+ *
+ * Message looks like:
+ *   :server 315 mynick #channel :End of /WHO list.
  */
 
 IRC_PROTOCOL_CALLBACK(315)
 {
     struct t_irc_channel *ptr_channel;
-
-    /*
-     * 315 message looks like:
-     *   :server 315 mynick #channel :End of /WHO list.
-     */
 
     IRC_PROTOCOL_MIN_ARGS(5);
 
@@ -2621,7 +2568,10 @@ IRC_PROTOCOL_CALLBACK(315)
 }
 
 /*
- * irc_protocol_cb_317: '317' command (whois, idle)
+ * Callback for the IRC message "317": whois, idle.
+ *
+ * Message looks like:
+ *   :server 317 mynick nick 122877 1205327880 :seconds idle, signon time
  */
 
 IRC_PROTOCOL_CALLBACK(317)
@@ -2629,11 +2579,6 @@ IRC_PROTOCOL_CALLBACK(317)
     int idle_time, day, hour, min, sec;
     time_t datetime;
     struct t_gui_buffer *ptr_buffer;
-
-    /*
-     * 317 message looks like:
-     *   :server 317 mynick nick 122877 1205327880 :seconds idle, signon time
-     */
 
     IRC_PROTOCOL_MIN_ARGS(6);
 
@@ -2717,17 +2662,15 @@ IRC_PROTOCOL_CALLBACK(317)
 }
 
 /*
- * irc_protocol_cb_321: '321' command (/list start)
+ * Callback for the IRC message "321": /list start.
+ *
+ * Message looks like:
+ *   :server 321 mynick Channel :Users  Name
  */
 
 IRC_PROTOCOL_CALLBACK(321)
 {
     char *pos_args;
-
-    /*
-     * 321 message looks like:
-     *   :server 321 mynick Channel :Users  Name
-     */
 
     IRC_PROTOCOL_MIN_ARGS(4);
 
@@ -2749,17 +2692,15 @@ IRC_PROTOCOL_CALLBACK(321)
 }
 
 /*
- * irc_protocol_cb_322: '322' command (channel for /list)
+ * Callback for the IRC message "322": channel for /list.
+ *
+ * Message looks like:
+ *   :server 322 mynick #channel 3 :topic of channel
  */
 
 IRC_PROTOCOL_CALLBACK(322)
 {
     char *pos_topic;
-
-    /*
-     * 322 message looks like:
-     *   :server 322 mynick #channel 3 :topic of channel
-     */
 
     IRC_PROTOCOL_MIN_ARGS(5);
 
@@ -2791,17 +2732,15 @@ IRC_PROTOCOL_CALLBACK(322)
 }
 
 /*
- * irc_protocol_cb_323: '323' command (end of /list)
+ * Callback for the IRC message "323": end of /list.
+ *
+ * Message looks like:
+ *   :server 323 mynick :End of /LIST
  */
 
 IRC_PROTOCOL_CALLBACK(323)
 {
     char *pos_args;
-
-    /*
-     * 323 message looks like:
-     *   :server 323 mynick :End of /LIST
-     */
 
     IRC_PROTOCOL_MIN_ARGS(3);
 
@@ -2821,17 +2760,15 @@ IRC_PROTOCOL_CALLBACK(323)
 }
 
 /*
- * irc_protocol_cb_324: '324' command (channel mode)
+ * Callback for the IRC message "324": channel mode.
+ *
+ * Message looks like:
+ *   :server 324 mynick #channel +nt
  */
 
 IRC_PROTOCOL_CALLBACK(324)
 {
     struct t_irc_channel *ptr_channel;
-
-    /*
-     * 324 message looks like:
-     *   :server 324 mynick #channel +nt
-     */
 
     IRC_PROTOCOL_MIN_ARGS(4);
 
@@ -2864,18 +2801,16 @@ IRC_PROTOCOL_CALLBACK(324)
 }
 
 /*
- * irc_protocol_cb_327: '327' command (whois, host)
+ * Callback for the IRC message "327": whois, host.
+ *
+ * Message looks like:
+ *   :server 327 mynick nick host ip :real hostname/ip
  */
 
 IRC_PROTOCOL_CALLBACK(327)
 {
     char *pos_realname;
     struct t_gui_buffer *ptr_buffer;
-
-    /*
-     * 327 message looks like:
-     *   :server 327 mynick nick host ip :real hostname/ip
-     */
 
     IRC_PROTOCOL_MIN_ARGS(6);
 
@@ -2926,17 +2861,15 @@ IRC_PROTOCOL_CALLBACK(327)
 }
 
 /*
- * irc_protocol_cb_328: '328' channel URL
+ * Callback for the IRC message "328": channel URL.
+ *
+ * Message looks like:
+ *   :server 328 mynick #channel :http://sample.url.com/
  */
 
 IRC_PROTOCOL_CALLBACK(328)
 {
     struct t_irc_channel *ptr_channel;
-
-    /*
-     * 328 message looks like:
-     *   :server 328 mynick #channel :http://sample.url.com/
-     */
 
     IRC_PROTOCOL_MIN_ARGS(5);
 
@@ -2961,18 +2894,16 @@ IRC_PROTOCOL_CALLBACK(328)
 }
 
 /*
- * irc_protocol_cb_329: '329' command received (channel creation date)
+ * Callback for the IRC message "329": channel creation date.
+ *
+ * Message looks like:
+ *   :server 329 mynick #channel 1205327894
  */
 
 IRC_PROTOCOL_CALLBACK(329)
 {
     struct t_irc_channel *ptr_channel;
     time_t datetime;
-
-    /*
-     * 329 message looks like:
-     *   :server 329 mynick #channel 1205327894
-     */
 
     IRC_PROTOCOL_MIN_ARGS(5);
 
@@ -3013,23 +2944,19 @@ IRC_PROTOCOL_CALLBACK(329)
 }
 
 /*
- * irc_protocol_cb_330_343: '330' command (whois, is logged in as),
- *                          '343' command (whois, is opered as)
+ * Callback for the IRC messages "330" (whois, is logged in as), and "343"
+ * (whois, is opered as).
+ *
+ * Messages look like:
+ *   :server 330 mynick nick1 nick2 :is logged in as
+ *   :server 330 mynick #channel http://sample.url.com/
+ *   :server 343 mynick nick1 nick2 :is opered as
  */
 
 IRC_PROTOCOL_CALLBACK(330_343)
 {
     struct t_irc_channel *ptr_channel;
     struct t_gui_buffer *ptr_buffer;
-
-    /*
-     * 330 message looks like:
-     *   :server 330 mynick nick1 nick2 :is logged in as
-     *   or:
-     *   :server 330 mynick #channel http://sample.url.com/
-     * 343 message looks like:
-     *   :server 343 mynick nick1 nick2 :is opered as
-     */
 
     IRC_PROTOCOL_MIN_ARGS(5);
 
@@ -3078,18 +3005,16 @@ IRC_PROTOCOL_CALLBACK(330_343)
 }
 
 /*
- * irc_protocol_cb_331: '331' command received (no topic for channel)
+ * Callback for the IRC message "331": no topic for channel.
+ *
+ * Message looks like:
+ *   :server 331 mynick #channel :There isn't a topic.
  */
 
 IRC_PROTOCOL_CALLBACK(331)
 {
     struct t_irc_channel *ptr_channel;
     struct t_gui_buffer *ptr_buffer;
-
-    /*
-     * 331 message looks like:
-     *   :server 331 mynick #channel :There isn't a topic.
-     */
 
     IRC_PROTOCOL_MIN_ARGS(4);
 
@@ -3109,7 +3034,10 @@ IRC_PROTOCOL_CALLBACK(331)
 }
 
 /*
- * irc_protocol_cb_332: '332' command received (topic of channel)
+ * Callback for the IRC message "332": topic of channel.
+ *
+ * Message looks like:
+ *   :server 332 mynick #channel :topic of channel
  */
 
 IRC_PROTOCOL_CALLBACK(332)
@@ -3117,11 +3045,6 @@ IRC_PROTOCOL_CALLBACK(332)
     char *pos_topic, *topic_no_color, *topic_color;
     struct t_irc_channel *ptr_channel;
     struct t_gui_buffer *ptr_buffer;
-
-    /*
-     * 332 message looks like:
-     *   :server 332 mynick #channel :topic of channel
-     */
 
     IRC_PROTOCOL_MIN_ARGS(4);
 
@@ -3172,7 +3095,11 @@ IRC_PROTOCOL_CALLBACK(332)
 }
 
 /*
- * irc_protocol_cb_333: '333' command received (infos about topic (nick / date))
+ * Callback for the IRC message "333": infos about topic (nick / date).
+ *
+ * Message looks like:
+ *   :server 333 mynick #channel nick!user@host 1205428096
+ *   :server 333 mynick #channel 1205428096
  */
 
 IRC_PROTOCOL_CALLBACK(333)
@@ -3182,13 +3109,6 @@ IRC_PROTOCOL_CALLBACK(333)
     time_t datetime;
     const char *topic_nick, *topic_address;
     int arg_date;
-
-    /*
-     * 333 message looks like:
-     *   :server 333 mynick #channel nick!user@host 1205428096
-     *   or:
-     *   :server 333 mynick #channel 1205428096
-     */
 
     IRC_PROTOCOL_MIN_ARGS(5);
 
@@ -3290,16 +3210,14 @@ IRC_PROTOCOL_CALLBACK(333)
 }
 
 /*
- * irc_protocol_cb_338: '338' command (whois, host)
+ * Callback for the IRC message "338": whois, host.
+ *
+ * Message looks like:
+ *   :server 338 mynick nick host :actually using host
  */
 
 IRC_PROTOCOL_CALLBACK(338)
 {
-    /*
-     * 338 message looks like:
-     *   :server 338 mynick nick host :actually using host
-     */
-
     IRC_PROTOCOL_MIN_ARGS(6);
 
     weechat_printf_date_tags (irc_msgbuffer_get_target_buffer (server, argv[3],
@@ -3323,16 +3241,14 @@ IRC_PROTOCOL_CALLBACK(338)
 }
 
 /*
- * irc_protocol_cb_341: '341' command received (inviting)
+ * Callback for the IRC message "341": inviting.
+ *
+ * Message looks like:
+ *   :server 341 mynick nick #channel
  */
 
 IRC_PROTOCOL_CALLBACK(341)
 {
-    /*
-     * 341 message looks like:
-     *   :server 341 mynick nick #channel
-     */
-
     IRC_PROTOCOL_MIN_ARGS(5);
 
     weechat_printf_date_tags (irc_msgbuffer_get_target_buffer (server, argv[2],
@@ -3357,16 +3273,14 @@ IRC_PROTOCOL_CALLBACK(341)
 }
 
 /*
- * irc_protocol_cb_344: '344' command (channel reop)
+ * Callback for the IRC message "344": channel reop.
+ *
+ * Message looks like:
+ *   :server 344 mynick #channel nick!user@host
  */
 
 IRC_PROTOCOL_CALLBACK(344)
 {
-    /*
-     * 344 message looks like:
-     *   :server 344 mynick #channel nick!user@host
-     */
-
     IRC_PROTOCOL_MIN_ARGS(5);
 
     weechat_printf_date_tags (irc_msgbuffer_get_target_buffer (server, NULL,
@@ -3386,16 +3300,14 @@ IRC_PROTOCOL_CALLBACK(344)
 }
 
 /*
- * irc_protocol_cb_345: '345' command (end of channel reop)
+ * Callback for the IRC message "345": end of channel reop.
+ *
+ * Message looks like:
+ *   :server 345 mynick #channel :End of Channel Reop List
  */
 
 IRC_PROTOCOL_CALLBACK(345)
 {
-    /*
-     * 345 message looks like:
-     *   :server 345 mynick #channel :End of Channel Reop List
-     */
-
     IRC_PROTOCOL_MIN_ARGS(5);
 
     weechat_printf_date_tags (irc_msgbuffer_get_target_buffer (server, NULL,
@@ -3414,7 +3326,11 @@ IRC_PROTOCOL_CALLBACK(345)
 }
 
 /*
- * irc_protocol_cb_346: '346' command received (channel invite list)
+ * Callback for the IRC message "346": channel invite list.
+ *
+ * Message looks like:
+ *   :server 346 mynick #channel invitemask nick!user@host 1205590879
+ *   :server 346 mynick #channel invitemask
  */
 
 IRC_PROTOCOL_CALLBACK(346)
@@ -3423,13 +3339,6 @@ IRC_PROTOCOL_CALLBACK(346)
     struct t_gui_buffer *ptr_buffer;
     time_t datetime;
     const char *invite_nick, *invite_address;
-
-    /*
-     * 346 message looks like:
-     *   :server 346 mynick #channel invitemask nick!user@host 1205590879
-     *   or:
-     *   :server 346 mynick #channel invitemask
-     */
 
     IRC_PROTOCOL_MIN_ARGS(5);
 
@@ -3517,7 +3426,10 @@ IRC_PROTOCOL_CALLBACK(346)
 }
 
 /*
- * irc_protocol_cb_347: '347' command received (end of channel invite list)
+ * Callback for the IRC message "347": end of channel invite list.
+ *
+ * Message looks like:
+ *   :server 347 mynick #channel :End of Channel Invite List
  */
 
 IRC_PROTOCOL_CALLBACK(347)
@@ -3525,11 +3437,6 @@ IRC_PROTOCOL_CALLBACK(347)
     char *pos_args;
     struct t_irc_channel *ptr_channel;
     struct t_gui_buffer *ptr_buffer;
-
-    /*
-     * 347 message looks like:
-     *   :server 347 mynick #channel :End of Channel Invite List
-     */
 
     IRC_PROTOCOL_MIN_ARGS(4);
 
@@ -3558,7 +3465,11 @@ IRC_PROTOCOL_CALLBACK(347)
 }
 
 /*
- * irc_protocol_cb_348: '348' command received (channel exception list)
+ * Callback for the IRC message "348": channel exception list.
+ *
+ * Message looks like:
+ *   :server 348 mynick #channel nick1!user1@host1 nick2!user2@host2 1205585109
+ *   (nick2 is nick who set exception on nick1)
  */
 
 IRC_PROTOCOL_CALLBACK(348)
@@ -3567,12 +3478,6 @@ IRC_PROTOCOL_CALLBACK(348)
     struct t_gui_buffer *ptr_buffer;
     time_t datetime;
     const char *exception_nick, *exception_address;
-
-    /*
-     * 348 message looks like:
-     *   :server 348 mynick #channel nick1!user1@host1 nick2!user2@host2 1205585109
-     *   (nick2 is nick who set exception on nick1)
-     */
 
     IRC_PROTOCOL_MIN_ARGS(5);
 
@@ -3633,7 +3538,10 @@ IRC_PROTOCOL_CALLBACK(348)
 }
 
 /*
- * irc_protocol_cb_349: '349' command received (end of channel exception list)
+ * Callback for the IRC message "349": end of channel exception list.
+ *
+ * Message looks like:
+ *   :server 349 mynick #channel :End of Channel Exception List
  */
 
 IRC_PROTOCOL_CALLBACK(349)
@@ -3641,11 +3549,6 @@ IRC_PROTOCOL_CALLBACK(349)
     char *pos_args;
     struct t_irc_channel *ptr_channel;
     struct t_gui_buffer *ptr_buffer;
-
-    /*
-     * 349 message looks like:
-     *   :server 349 mynick #channel :End of Channel Exception List
-     */
 
     IRC_PROTOCOL_MIN_ARGS(4);
 
@@ -3674,17 +3577,15 @@ IRC_PROTOCOL_CALLBACK(349)
 }
 
 /*
- * irc_protocol_cb_351: '351' command received (server version)
+ * Callback for the IRC message "351": server version.
+ *
+ * Message looks like:
+ *   :server 351 mynick dancer-ircd-1.0.36(2006/07/23_13:11:50). server :iMZ dncrTS/v4
  */
 
 IRC_PROTOCOL_CALLBACK(351)
 {
     struct t_gui_buffer *ptr_buffer;
-
-    /*
-     * 351 message looks like:
-     *   :server 351 mynick dancer-ircd-1.0.36(2006/07/23_13:11:50). server :iMZ dncrTS/v4
-     */
 
     IRC_PROTOCOL_MIN_ARGS(5);
 
@@ -3717,7 +3618,10 @@ IRC_PROTOCOL_CALLBACK(351)
 }
 
 /*
- * irc_protocol_cb_352: '352' command (who)
+ * Callback for the IRC message "352": who.
+ *
+ * Message looks like:
+ *   :server 352 mynick #channel user host server nick (*) (H/G) :0 flashcode
  */
 
 IRC_PROTOCOL_CALLBACK(352)
@@ -3726,11 +3630,6 @@ IRC_PROTOCOL_CALLBACK(352)
     int arg_start, length;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
-
-    /*
-     * 352 message looks like:
-     *   :server 352 mynick #channel user host server nick (*) (H/G) :0 flashcode
-     */
 
     IRC_PROTOCOL_MIN_ARGS(5);
 
@@ -3816,7 +3715,10 @@ IRC_PROTOCOL_CALLBACK(352)
 }
 
 /*
- * irc_protocol_cb_353: '353' command received (list of users on a channel)
+ * Callback for the IRC message "353": list of users on a channel.
+ *
+ * Message looks like:
+ *   :server 353 mynick = #channel :mynick nick1 @nick2 +nick3
  */
 
 IRC_PROTOCOL_CALLBACK(353)
@@ -3826,11 +3728,6 @@ IRC_PROTOCOL_CALLBACK(353)
     int args, i, away;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
-
-    /*
-     * 353 message looks like:
-     *   :server 353 mynick = #channel :mynick nick1 @nick2 +nick3
-     */
 
     IRC_PROTOCOL_MIN_ARGS(5);
 
@@ -3916,7 +3813,10 @@ IRC_PROTOCOL_CALLBACK(353)
 }
 
 /*
- * irc_protocol_cb_366: '366' command received (end of /names list)
+ * Callback for the IRC message "366": end of /names list.
+ *
+ * Message looks like:
+ *   :server 366 mynick #channel :End of /NAMES list.
  */
 
 IRC_PROTOCOL_CALLBACK(366)
@@ -3927,11 +3827,6 @@ IRC_PROTOCOL_CALLBACK(366)
     int num_nicks, num_op, num_halfop, num_voice, num_normal, length, i;
     char *string;
     const char *prefix, *prefix_color, *nickname;
-
-    /*
-     * 366 message looks like:
-     *   :server 366 mynick #channel :End of /NAMES list.
-     */
 
     IRC_PROTOCOL_MIN_ARGS(5);
 
@@ -4093,7 +3988,10 @@ IRC_PROTOCOL_CALLBACK(366)
 }
 
 /*
- * irc_protocol_cb_367: '367' command received (banlist)
+ * Callback for the IRC message "367": banlist.
+ *
+ * Message looks like:
+ *   :server 367 mynick #channel banmask nick!user@host 1205590879
  */
 
 IRC_PROTOCOL_CALLBACK(367)
@@ -4101,11 +3999,6 @@ IRC_PROTOCOL_CALLBACK(367)
     struct t_irc_channel *ptr_channel;
     struct t_gui_buffer *ptr_buffer;
     time_t datetime;
-
-    /*
-     * 367 message looks like:
-     *   :server 367 mynick #channel banmask nick!user@host 1205590879
-     */
 
     IRC_PROTOCOL_MIN_ARGS(5);
 
@@ -4171,7 +4064,10 @@ IRC_PROTOCOL_CALLBACK(367)
 }
 
 /*
- * irc_protocol_cb_368: '368' command received (end of banlist)
+ * Callback for the IRC message "368": end of banlist.
+ *
+ * Message looks like:
+ *   :server 368 mynick #channel :End of Channel Ban List
  */
 
 IRC_PROTOCOL_CALLBACK(368)
@@ -4179,11 +4075,6 @@ IRC_PROTOCOL_CALLBACK(368)
     char *pos_args;
     struct t_irc_channel *ptr_channel;
     struct t_gui_buffer *ptr_buffer;
-
-    /*
-     * 368 message looks like:
-     *   :server 368 mynick #channel :End of Channel Ban List
-     */
 
     IRC_PROTOCOL_MIN_ARGS(4);
 
@@ -4212,18 +4103,16 @@ IRC_PROTOCOL_CALLBACK(368)
 }
 
 /*
- * irc_protocol_cb_432: '432' command received (erroneous nickname)
+ * Callback for the IRC message "432": erroneous nickname.
+ *
+ * Message looks like:
+ *   :server 432 * mynick :Erroneous Nickname
  */
 
 IRC_PROTOCOL_CALLBACK(432)
 {
     const char *alternate_nick;
     struct t_gui_buffer *ptr_buffer;
-
-    /*
-     * 432 message looks like:
-     *   :server 432 * mynick :Erroneous Nickname
-     */
 
     irc_protocol_cb_generic_error (server,
                                    date, nick, address, host, command,
@@ -4262,18 +4151,16 @@ IRC_PROTOCOL_CALLBACK(432)
 }
 
 /*
- * irc_protocol_cb_433: '433' command received (nickname already in use)
+ * Callback for the IRC message "433": nickname already in use.
+ *
+ * Message looks like:
+ *   :server 433 * mynick :Nickname is already in use.
  */
 
 IRC_PROTOCOL_CALLBACK(433)
 {
     const char *alternate_nick;
     struct t_gui_buffer *ptr_buffer;
-
-    /*
-     * 433 message looks like:
-     *   :server 433 * mynick :Nickname is already in use.
-     */
 
     if (!server->is_connected)
     {
@@ -4315,19 +4202,16 @@ IRC_PROTOCOL_CALLBACK(433)
 }
 
 /*
- * irc_protocol_cb_437: '437' command received (nick/channel temporarily
- *                      unavailable)
+ * Callback for the IRC message "437": nick/channel temporarily unavailable.
+ *
+ * Message looks like:
+ *   :server 437 * mynick :Nick/channel is temporarily unavailable
  */
 
 IRC_PROTOCOL_CALLBACK(437)
 {
     const char *alternate_nick;
     struct t_gui_buffer *ptr_buffer;
-
-    /*
-     * 437 message looks like:
-     *   :server 437 * mynick :Nick/channel is temporarily unavailable
-     */
 
     irc_protocol_cb_generic_error (server,
                                    date, nick, address, host, command,
@@ -4370,18 +4254,15 @@ IRC_PROTOCOL_CALLBACK(437)
 }
 
 /*
- * irc_protocol_cb_438: '438' command received (not authorized to change
- *                      nickname)
+ * Callback for the IRC message "438": not authorized to change nickname.
+ *
+ * Message looks like:
+ *   :server 438 mynick newnick :Nick change too fast. Please wait 30 seconds.
  */
 
 IRC_PROTOCOL_CALLBACK(438)
 {
     struct t_gui_buffer *ptr_buffer;
-
-    /*
-     * 438 message looks like:
-     *   :server 438 mynick newnick :Nick change too fast. Please wait 30 seconds.
-     */
 
     IRC_PROTOCOL_MIN_ARGS(4);
 
@@ -4414,7 +4295,10 @@ IRC_PROTOCOL_CALLBACK(438)
 }
 
 /*
- * irc_protocol_cb_728: '728' command received (quietlist)
+ * Callback for the IRC message "728": quietlist.
+ *
+ * Message looks like:
+ *   :server 728 mynick #channel mode quietmask nick!user@host 1351350090
  */
 
 IRC_PROTOCOL_CALLBACK(728)
@@ -4422,11 +4306,6 @@ IRC_PROTOCOL_CALLBACK(728)
     struct t_irc_channel *ptr_channel;
     struct t_gui_buffer *ptr_buffer;
     time_t datetime;
-
-    /*
-     * 728 message looks like:
-     *   :server 728 mynick #channel mode quietmask nick!user@host 1351350090
-     */
 
     IRC_PROTOCOL_MIN_ARGS(6);
 
@@ -4492,7 +4371,10 @@ IRC_PROTOCOL_CALLBACK(728)
 }
 
 /*
- * irc_protocol_cb_729: '729' command received (end of quietlist)
+ * Callback for the IRC message "729": end of quietlist.
+ *
+ * Message looks like:
+ *   :server 729 mynick #channel mode :End of Channel Quiet List
  */
 
 IRC_PROTOCOL_CALLBACK(729)
@@ -4500,11 +4382,6 @@ IRC_PROTOCOL_CALLBACK(729)
     char *pos_args;
     struct t_irc_channel *ptr_channel;
     struct t_gui_buffer *ptr_buffer;
-
-    /*
-     * 729 message looks like:
-     *   :server 729 mynick #channel mode :End of Channel Quiet List
-     */
 
     IRC_PROTOCOL_MIN_ARGS(5);
 
@@ -4533,16 +4410,14 @@ IRC_PROTOCOL_CALLBACK(729)
 }
 
 /*
- * irc_protocol_cb_900: '900' command (logged in as (SASL))
+ * Callback for the IRC message "900": logged in as (SASL).
+ *
+ * Message looks like:
+ *   :server 900 mynick nick!user@host mynick :You are now logged in as mynick
  */
 
 IRC_PROTOCOL_CALLBACK(900)
 {
-    /*
-     * 900 message looks like:
-     *   :server 900 mynick nick!user@host mynick :You are now logged in as mynick
-     */
-
     IRC_PROTOCOL_MIN_ARGS(6);
 
     weechat_printf_date_tags (irc_msgbuffer_get_target_buffer (server, argv[3],
@@ -4562,16 +4437,14 @@ IRC_PROTOCOL_CALLBACK(900)
 }
 
 /*
- * irc_protocol_cb_901: '901' command received (you are now logged in)
+ * Callback for the IRC message "901": you are now logged in.
+ *
+ * Message looks like:
+ *   :server 901 mynick nick user host :You are now logged in. (id nick, username user, hostname host)
  */
 
 IRC_PROTOCOL_CALLBACK(901)
 {
-    /*
-     * 901 message looks like:
-     *   :server 901 mynick nick user host :You are now logged in. (id nick, username user, hostname host)
-     */
-
     IRC_PROTOCOL_MIN_ARGS(6);
 
     if (argc >= 7)
@@ -4596,18 +4469,15 @@ IRC_PROTOCOL_CALLBACK(901)
 }
 
 /*
- * irc_protocol_cb_sasl_end: '903' to '907' command received
+ * Callback for the IRC messages "903" to "907".
+ *
+ * Messages look like:
+ *   :server 903 nick :SASL authentication successful
+ *   :server 904 nick :SASL authentication failed
  */
 
 IRC_PROTOCOL_CALLBACK(sasl_end)
 {
-    /*
-     * 903 message looks like:
-     *   :server 903 nick :SASL authentication successful
-     * 904 message looks like:
-     *   :server 904 nick :SASL authentication failed
-     */
-
     irc_protocol_cb_numeric (server,
                              date, nick, address, host, command,
                              ignored, argc, argv, argv_eol);
@@ -4619,12 +4489,14 @@ IRC_PROTOCOL_CALLBACK(sasl_end)
 }
 
 /*
- * irc_protocol_get_message_tags: return hashtable with tags for an IRC message
- *                                example, if tags == "aaa=bbb;ccc;example.com/ddd=eee"
- *                                hashtable will have following keys/values:
- *                                  "aaa" => "bbb"
- *                                  "ccc" => NULL
- *                                  "example.com/ddd" => "eee"
+ * Returns hashtable with tags for an IRC message.
+ *
+ * Example:
+ *   if tags == "aaa=bbb;ccc;example.com/ddd=eee",
+ *   hashtable will have following keys/values:
+ *     "aaa" => "bbb"
+ *     "ccc" => NULL
+ *     "example.com/ddd" => "eee"
  */
 
 struct t_hashtable *
@@ -4674,9 +4546,9 @@ irc_protocol_get_message_tags (const char *tags)
 }
 
 /*
- * irc_protocol_get_message_tag_time: get value of time in tags
- *                                    if no tag "time" is in tags, value 0 is
- *                                    returned
+ * Gets value of time in tags.
+ *
+ * Returns value of tag "time", 0 if not found.
  */
 
 time_t
@@ -4724,9 +4596,9 @@ irc_protocol_get_message_tag_time (struct t_hashtable *tags)
 }
 
 /*
- * irc_protocol_recv_command: execute action when an IRC message is received
- *                            Argument "irc_message" is the full message
- *                            without optional tags.
+ * Executes action when an IRC message is received.
+ *
+ * Argument "irc_message" is the full message without optional tags.
  */
 
 void

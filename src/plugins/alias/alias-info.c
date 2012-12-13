@@ -28,7 +28,7 @@
 
 
 /*
- * alias_info_get_infolist_cb: callback called when alias infolist is asked
+ * Returns infolist with alias info.
  */
 
 struct t_infolist *
@@ -88,13 +88,12 @@ alias_info_get_infolist_cb (void *data, const char *infolist_name,
 }
 
 /*
- * alias_info_init: initialize info and infolist hooks for alias plugin
+ * Hooks infolist for alias plugin.
  */
 
 void
 alias_info_init ()
 {
-    /* alias infolist hooks */
     weechat_hook_infolist ("alias", N_("list of aliases"),
                            N_("alias pointer (optional)"),
                            N_("alias name (can start or end with \"*\" as wildcard) (optional)"),

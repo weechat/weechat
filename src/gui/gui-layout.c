@@ -55,7 +55,7 @@ struct t_gui_window *gui_layout_ptr_current_window = NULL;
 
 
 /*
- * gui_layout_buffer_remove: remove a buffer layout
+ * Removes a buffer layout.
  */
 
 void
@@ -83,7 +83,7 @@ gui_layout_buffer_remove (struct t_gui_layout_buffer **layout_buffers,
 }
 
 /*
- * gui_layout_buffer_remove_all: remove all buffer layouts
+ * Removes all buffer layouts.
  */
 
 void
@@ -98,7 +98,7 @@ gui_layout_buffer_remove_all (struct t_gui_layout_buffer **layout_buffers,
 }
 
 /*
- * gui_layout_buffer_reset: reset layout for buffers
+ * Resets layout for buffers.
  */
 
 void
@@ -117,7 +117,9 @@ gui_layout_buffer_reset (struct t_gui_layout_buffer **layout_buffers,
 }
 
 /*
- * gui_layout_buffer_add: add a buffer layout
+ * Adds a buffer layout.
+ *
+ * Returns pointer to buffer layout, NULL if error.
  */
 
 struct t_gui_layout_buffer *
@@ -150,7 +152,7 @@ gui_layout_buffer_add (struct t_gui_layout_buffer **layout_buffers,
 }
 
 /*
- * gui_layout_buffer_get_number: get layout number for a plugin/buffer
+ * Gets layout number for a plugin/buffer.
  */
 
 void
@@ -190,7 +192,7 @@ gui_layout_buffer_get_number (struct t_gui_layout_buffer *layout_buffers,
 }
 
 /*
- * gui_layout_buffer_get_number_all: get layout numbers for all buffers
+ * Gets layout numbers for all buffers.
  */
 
 void
@@ -213,7 +215,7 @@ gui_layout_buffer_get_number_all (struct t_gui_layout_buffer *layout_buffers)
 }
 
 /*
- * gui_layout_buffer_save: save current layout for buffers
+ * Saves current layout for buffers.
  */
 
 void
@@ -241,7 +243,7 @@ gui_layout_buffer_save (struct t_gui_layout_buffer **layout_buffers,
 }
 
 /*
- * gui_layout_buffer_apply: apply a layout for buffers
+ * Applies a layout for buffers.
  */
 
 void
@@ -292,7 +294,7 @@ gui_layout_buffer_apply (struct t_gui_layout_buffer *layout_buffers)
 }
 
 /*
- * gui_layout_window_remove: remove a window layout
+ * Removes a window layout.
  */
 
 void
@@ -314,7 +316,7 @@ gui_layout_window_remove (struct t_gui_layout_window *layout_window)
 }
 
 /*
- * gui_layout_window_remove_all: remove all window layouts
+ * Removes all window layouts.
  */
 
 void
@@ -328,7 +330,7 @@ gui_layout_window_remove_all (struct t_gui_layout_window **layout_windows)
 }
 
 /*
- * gui_layout_window_reset: reset layout for windows
+ * Resets layout for windows.
  */
 
 void
@@ -354,8 +356,9 @@ gui_layout_window_reset (struct t_gui_layout_window **layout_windows)
 }
 
 /*
- * gui_layout_window_search_by_id: search a layout window by internal id
- *                                 in a layout
+ * Searches for a window layout by internal id in a layout.
+ *
+ * Returns pointer to window layout found, NULL if not found.
  */
 
 struct t_gui_layout_window *
@@ -388,7 +391,9 @@ gui_layout_window_search_by_id (struct t_gui_layout_window *layout_windows,
 }
 
 /*
- * gui_layout_window_add: add a window layout
+ * Adds a window layout.
+ *
+ * Returns pointer to new window layout, NULL if not found.
  */
 
 struct t_gui_layout_window *
@@ -432,7 +437,7 @@ gui_layout_window_add (struct t_gui_layout_window **layout_windows,
 }
 
 /*
- * gui_layout_window_save_tree: save tree of windows
+ * Saves tree of windows.
  */
 
 void
@@ -477,8 +482,9 @@ gui_layout_window_save_tree (struct t_gui_layout_window **layout_windows,
 }
 
 /*
- * gui_layout_window_save: save current layout for windows
- *                         return internal id of current window
+ * Saves current layout for windows.
+ *
+ * Returns internal id of current window.
  */
 
 int
@@ -495,7 +501,7 @@ gui_layout_window_save (struct t_gui_layout_window **layout_windows)
 }
 
 /*
- * gui_layout_window_check_buffer: check if buffer can be assigned to one window
+ * Checks if buffer can be assigned to one window.
  */
 
 void
@@ -520,9 +526,8 @@ gui_layout_window_check_buffer (struct t_gui_buffer *buffer)
 }
 
 /*
- * gui_layout_window_check_all_buffers: for each window, check if another
- *                                      buffer should be assigned, and if yes,
- *                                      assign it
+ * For each window, checks if another buffer should be assigned, and if yes,
+ * assigns it.
  */
 
 void
@@ -550,8 +555,8 @@ gui_layout_window_check_all_buffers ()
 }
 
 /*
- * gui_layout_window_apply_tree: apply tree windows (resplit screen according
- *                               to windows tree and assing buffer to windows)
+ * Applies tree windows (re-splits screen according to windows tree and assigns
+ * buffer to windows).
  */
 
 void
@@ -601,7 +606,7 @@ gui_layout_window_apply_tree (struct t_gui_layout_window *layout_window,
 }
 
 /*
- * gui_layout_window_apply: apply current layout for windows
+ * Applies current layout for windows.
  */
 
 void
@@ -628,8 +633,7 @@ gui_layout_window_apply (struct t_gui_layout_window *layout_windows,
 }
 
 /*
- * gui_layout_save_on_exit: save layout according to option
- *                          "save_layout_on_exit"
+ * Saves layout according to option "save_layout_on_exit".
  */
 
 void
@@ -654,8 +658,11 @@ gui_layout_save_on_exit ()
 }
 
 /*
- * gui_layout_buffer_add_to_infolist: add a buffer layout in an infolist
- *                                    return 1 if ok, 0 if error
+ * Adds a buffer layout in an infolist.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -682,8 +689,11 @@ gui_layout_buffer_add_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * gui_layout_window_add_to_infolist: add a window layout in an infolist
- *                                    return 1 if ok, 0 if error
+ * Adds a window layout in an infolist.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -724,8 +734,7 @@ gui_layout_window_add_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * gui_layout_print_log_window: print windows layout infos in log (usually for
- *                              crash dump)
+ * Prints windows layout infos in WeeChat log file (usually for crash dump).
  */
 
 void
@@ -755,7 +764,7 @@ gui_layout_print_log_window (struct t_gui_layout_window *layout_window,
 }
 
 /*
- * gui_layout_print_log: print layout infos in log (usually for crash dump)
+ * Prints layout infos in WeeChat log file (usually for crash dump).
  */
 
 void

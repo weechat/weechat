@@ -63,7 +63,7 @@ int fifo_read();
 
 
 /*
- * fifo_remove_old_pipes: remove old fifo pipes in directory
+ * Removes old FIFO pipes in directory.
  */
 
 void
@@ -114,7 +114,7 @@ fifo_remove_old_pipes ()
 }
 
 /*
- * fifo_create: create FIFO pipe for remote control
+ * Creates FIFO pipe for remote control.
  */
 
 void
@@ -187,7 +187,7 @@ fifo_create ()
 }
 
 /*
- * fifo_remove: remove FIFO pipe
+ * Removes FIFO pipe.
  */
 
 void
@@ -231,7 +231,7 @@ fifo_remove ()
 }
 
 /*
- * fifo_exec: execute a command/text received by FIFO pipe
+ * Executes a command/text received in FIFO pipe.
  */
 
 void
@@ -301,15 +301,19 @@ fifo_exec (const char *text)
 }
 
 /*
- * fifo_read: read data in FIFO pipe
+ * Reads data in FIFO pipe.
  */
 
 int
-fifo_read ()
+fifo_read (void *data, int fd)
 {
     static char buffer[4096 + 2];
     char *buf2, *pos, *ptr_buf, *next_ptr_buf;
     int num_read;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) fd;
 
     num_read = read (fifo_fd, buffer, sizeof (buffer) - 2);
     if (num_read > 0)
@@ -402,7 +406,7 @@ fifo_read ()
 }
 
 /*
- * fifo_config_cb: fifo config callback (called when fifo option is changed)
+ * Callback for changes on option "plugins.var.fifo.fifo".
  */
 
 int
@@ -427,7 +431,7 @@ fifo_config_cb (void *data, const char *option, const char *value)
 }
 
 /*
- * weechat_plugin_init: initialize fifo plugin
+ * Initializes fifo plugin.
  */
 
 int
@@ -453,7 +457,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 }
 
 /*
- * weechat_plugin_end: end fifo plugin
+ * Ends fifo plugin.
  */
 
 int

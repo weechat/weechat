@@ -127,8 +127,7 @@ char *perl_weechat_code =
 
 
 /*
- * weechat_perl_hashtable_map_cb: callback called for each key/value in a
- *                                hashtable
+ * Callback called for each key/value in a hashtable.
  */
 
 void
@@ -148,7 +147,7 @@ weechat_perl_hashtable_map_cb (void *data,
 }
 
 /*
- * weechat_perl_hashtable_to_hash: get perl hash with a WeeChat hashtable
+ * Gets perl hash with a WeeChat hashtable.
  */
 
 HV *
@@ -168,9 +167,9 @@ weechat_perl_hashtable_to_hash (struct t_hashtable *hashtable)
 }
 
 /*
- * weechat_perl_hash_to_hashtable: get WeeChat hashtable with perl hash
- *                                 Note: hashtable has to be released after use
- *                                 with call to weechat_hashtable_free()
+ * Gets WeeChat hashtable with perl hash.
+ *
+ * Note: hashtable must be freed after use.
  */
 
 struct t_hashtable *
@@ -213,7 +212,7 @@ weechat_perl_hash_to_hashtable (SV *hash, int size, const char *type_keys,
 }
 
 /*
- * weechat_perl_exec: execute a perl function
+ * Executes a perl function.
  */
 
 void *
@@ -363,7 +362,11 @@ weechat_perl_exec (struct t_plugin_script *script,
 }
 
 /*
- * weechat_perl_load: load a Perl script
+ * Loads a perl script.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -547,7 +550,7 @@ weechat_perl_load (const char *filename)
 }
 
 /*
- * weechat_perl_load_cb: callback for weechat_script_auto_load() function
+ * Callback for weechat_script_auto_load() function.
  */
 
 void
@@ -560,7 +563,7 @@ weechat_perl_load_cb (void *data, const char *filename)
 }
 
 /*
- * weechat_perl_unload: unload a Perl script
+ * Unloads a perl script.
  */
 
 void
@@ -623,7 +626,7 @@ weechat_perl_unload (struct t_plugin_script *script)
 }
 
 /*
- * weechat_perl_unload_name: unload a Perl script by name
+ * Unloads a perl script by name.
  */
 
 void
@@ -651,7 +654,7 @@ weechat_perl_unload_name (const char *name)
 }
 
 /*
- * weechat_perl_unload_all: unload all Perl scripts
+ * Unloads all perl scripts.
  */
 
 void
@@ -664,7 +667,7 @@ weechat_perl_unload_all ()
 }
 
 /*
- * weechat_perl_reload_name: reload a Perl script by name
+ * Reloads a perl script by name.
  */
 
 void
@@ -699,7 +702,7 @@ weechat_perl_reload_name (const char *name)
 }
 
 /*
- * weechat_perl_command_cb: callback for "/perl" command
+ * Callback for command "/perl".
  */
 
 int
@@ -771,7 +774,7 @@ weechat_perl_command_cb (void *data, struct t_gui_buffer *buffer,
             }
             if (weechat_strcasecmp (argv[1], "load") == 0)
             {
-                /* load Perl script */
+                /* load perl script */
                 path_script = plugin_script_search_path (weechat_perl_plugin,
                                                          ptr_name);
                 weechat_perl_load ((path_script) ? path_script : ptr_name);
@@ -780,12 +783,12 @@ weechat_perl_command_cb (void *data, struct t_gui_buffer *buffer,
             }
             else if (weechat_strcasecmp (argv[1], "reload") == 0)
             {
-                /* reload one Perl script */
+                /* reload one perl script */
                 weechat_perl_reload_name (ptr_name);
             }
             else if (weechat_strcasecmp (argv[1], "unload") == 0)
             {
-                /* unload Perl script */
+                /* unload perl script */
                 weechat_perl_unload_name (ptr_name);
             }
             perl_quiet = 0;
@@ -803,7 +806,7 @@ weechat_perl_command_cb (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
- * weechat_perl_completion_cb: callback for script completion
+ * Adds perl scripts to completion list.
  */
 
 int
@@ -822,7 +825,7 @@ weechat_perl_completion_cb (void *data, const char *completion_item,
 }
 
 /*
- * weechat_perl_hdata_cb: callback for hdata
+ * Returns hdata for perl scripts.
  */
 
 struct t_hdata *
@@ -837,7 +840,7 @@ weechat_perl_hdata_cb (void *data, const char *hdata_name)
 }
 
 /*
- * weechat_perl_infolist_cb: callback for infolist
+ * Returns infolist with perl scripts.
  */
 
 struct t_infolist *
@@ -861,7 +864,7 @@ weechat_perl_infolist_cb (void *data, const char *infolist_name,
 }
 
 /*
- * weechat_perl_signal_debug_dump_cb: dump Perl plugin data in WeeChat log file
+ * Dumps perl plugin data in WeeChat log file.
  */
 
 int
@@ -883,7 +886,7 @@ weechat_perl_signal_debug_dump_cb (void *data, const char *signal,
 }
 
 /*
- * weechat_perl_signal_buffer_closed_cb: callback called when a buffer is closed
+ * Callback called when a buffer is closed.
  */
 
 int
@@ -902,7 +905,7 @@ weechat_perl_signal_buffer_closed_cb (void *data, const char *signal,
 }
 
 /*
- * weechat_perl_timer_action_cb: timer for executing actions
+ * Timer for executing actions.
  */
 
 int
@@ -936,8 +939,7 @@ weechat_perl_timer_action_cb (void *data, int remaining_calls)
 }
 
 /*
- * weechat_perl_signal_script_action_cb: callback called when a script action
- *                                       is asked (install/remove a script)
+ * Callback called when a script action is asked (install/remove a script).
  */
 
 int
@@ -972,8 +974,7 @@ weechat_perl_signal_script_action_cb (void *data, const char *signal,
 }
 
 /*
- * weechat_perl_signal_quit_upgrade_cb: callback called when exiting or
- *                                      upgrading WeeChat
+ * Callback called when exiting or upgrading WeeChat.
  */
 
 int
@@ -993,7 +994,7 @@ weechat_perl_signal_quit_upgrade_cb (void *data, const char *signal,
 }
 
 /*
- * weechat_plugin_init: initialize Perl plugin
+ * Initializes perl plugin.
  */
 
 int
@@ -1056,7 +1057,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 }
 
 /*
- * weechat_plugin_end: end Perl plugin
+ * Ends perl plugin.
  */
 
 int

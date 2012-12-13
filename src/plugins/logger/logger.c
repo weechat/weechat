@@ -59,11 +59,14 @@ struct t_hook *logger_timer = NULL;    /* timer to flush log files          */
 
 
 /*
- * logger_get_file_path: get logger file path option, special vars are replaced:
- *                       - "%h" (at beginning of string): WeeChat home
- *                       - "~": user home
- *                       - date/time specifiers (see man strftime)
- *                       note: returned value has to be free() after use
+ * Gets logger file path option.
+ *
+ * Special vars are replaced:
+ *   - "%h" (at beginning of string): WeeChat home
+ *   - "~": user home
+ *   - date/time specifiers (see man strftime)
+ *
+ * Note: returned value must freed after use.
  */
 
 char *
@@ -129,9 +132,11 @@ end:
 }
 
 /*
- * logger_create_directory: create logger directory
- *                          return 1 if success (directory created or already
- *                          exists), 0 if failed
+ * Creates logger directory.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -156,7 +161,9 @@ logger_create_directory ()
 }
 
 /*
- * logger_build_option_name: build option name with a buffer
+ * Builds full name of buffer.
+ *
+ * Note: value must be freed after use.
  */
 
 char *
@@ -183,7 +190,9 @@ logger_build_option_name (struct t_gui_buffer *buffer)
 }
 
 /*
- * logger_get_level_for_buffer: get logging level for buffer (0 = disabled, 1..9)
+ * Gets logging level for buffer.
+ *
+ * Returns level between 0 and 9 (0 = logging disabled).
  */
 
 int
@@ -239,9 +248,10 @@ logger_get_level_for_buffer (struct t_gui_buffer *buffer)
 }
 
 /*
- * logger_get_mask_for_buffer: get filename mask for a buffer
- *                             we first try with all arguments, then remove one by
- *                             one to find mask (from specific to general mask)
+ * Gets filename mask for a buffer.
+ *
+ * First tries with all arguments, then removes one by one to find mask (from
+ * specific to general mask).
  */
 
 const char *
@@ -296,11 +306,13 @@ logger_get_mask_for_buffer (struct t_gui_buffer *buffer)
 }
 
 /*
- * logger_get_mask_expanded: get expanded mask for a buffer, special vars are
- *                           replaced:
- *                           - local variables of buffer ($plugin, $name, ..)
- *                           - date/time specifiers (see man strftime)
- *                           note: returned value has to be free() after use
+ * Gets expanded mask for a buffer.
+ *
+ * Special vars are replaced:
+ *   - local variables of buffer ($plugin, $name, ..)
+ *   - date/time specifiers (see man strftime)
+ *
+ * Note: result must be freed after use.
  */
 
 char *
@@ -386,7 +398,7 @@ end:
 }
 
 /*
- * logger_get_filename: build log filename for a buffer
+ * Builds log filename for a buffer.
  */
 
 char *
@@ -451,7 +463,7 @@ end:
 }
 
 /*
- * logger_set_log_filename: set log filename for a logger buffer
+ * Sets log filename for a logger buffer.
  */
 
 void
@@ -508,7 +520,7 @@ logger_set_log_filename (struct t_logger_buffer *logger_buffer)
 }
 
 /*
- * logger_write_line: write a line to log file
+ * Writes a line to log file.
  */
 
 void
@@ -609,7 +621,7 @@ logger_write_line (struct t_logger_buffer *logger_buffer,
 }
 
 /*
- * logger_stop: stop log for a logger buffer
+ * Stops log for a logger buffer.
  */
 
 void
@@ -646,7 +658,7 @@ logger_stop (struct t_logger_buffer *logger_buffer, int write_info_line)
 }
 
 /*
- * logger_stop_all: end log for all buffers
+ * Ends log for all buffers.
  */
 
 void
@@ -659,7 +671,7 @@ logger_stop_all (int write_info_line)
 }
 
 /*
- * logger_start_buffer: start a log for a buffer
+ * Starts logging for a buffer.
  */
 
 void
@@ -711,7 +723,7 @@ logger_start_buffer (struct t_gui_buffer *buffer, int write_info_line)
 }
 
 /*
- * logger_start_buffer_all: start log buffer for all buffers
+ * Starts logging for all buffers.
  */
 
 void
@@ -733,7 +745,7 @@ logger_start_buffer_all (int write_info_line)
 }
 
 /*
- * logger_list: show logging status for buffers
+ * Displays logging status for buffers.
  */
 
 void
@@ -790,7 +802,7 @@ logger_list ()
 }
 
 /*
- * logger_set_buffer: enable/disable log on a buffer
+ * Enables/disables logging on a buffer.
  */
 
 void
@@ -818,7 +830,7 @@ logger_set_buffer (struct t_gui_buffer *buffer, const char *value)
 }
 
 /*
- * logger_command_cb: callback for /logger command
+ * Callback for command "/logger".
  */
 
 int
@@ -855,7 +867,7 @@ logger_command_cb (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
- * logger_buffer_opened_signal_cb: callback for "buffer_opened" signal
+ * Callback for signal "buffer_opened".
  */
 
 int
@@ -873,7 +885,7 @@ logger_buffer_opened_signal_cb (void *data, const char *signal,
 }
 
 /*
- * logger_buffer_closing_signal_cb: callback for "buffer_closing" signal
+ * Callback for signal "buffer_closing".
  */
 
 int
@@ -891,7 +903,7 @@ logger_buffer_closing_signal_cb (void *data, const char *signal,
 }
 
 /*
- * logger_buffer_renamed_signal_cb: callback for "buffer_closing" signal
+ * Callback for signal "buffer_renamed".
  */
 
 int
@@ -910,7 +922,7 @@ logger_buffer_renamed_signal_cb (void *data, const char *signal,
 }
 
 /*
- * logger_backlog: display backlog for a buffer (by reading end of log file)
+ * Displays backlog for a buffer (by reading end of log file).
  */
 
 void
@@ -1020,7 +1032,7 @@ logger_backlog (struct t_gui_buffer *buffer, const char *filename, int lines)
 }
 
 /*
- * logger_backlog_signal_cb: callback for "logger_backlog" signal
+ * Callback for signal "logger_backlog".
  */
 
 int
@@ -1059,7 +1071,7 @@ logger_backlog_signal_cb (void *data, const char *signal,
 }
 
 /*
- * logger_start_signal_cb: callback for "logger_start" signal
+ * Callback for signal "logger_start".
  */
 
 int
@@ -1077,7 +1089,7 @@ logger_start_signal_cb (void *data, const char *signal, const char *type_data,
 }
 
 /*
- * logger_stop_signal_cb: callback for "logger_stop" signal
+ * Callback for signal "logger_stop".
  */
 
 int
@@ -1099,9 +1111,10 @@ logger_stop_signal_cb (void *data, const char *signal, const char *type_data,
 }
 
 /*
- * logger_adjust_log_filenames: adjust log filenames for all buffers
- *                              filename can change if config option is changed,
- *                              or if day of system date has changed
+ * Adjusts log filenames for all buffers.
+ *
+ * Filename can change if configuration option is changed, or if day of system
+ * date has changed.
  */
 
 void
@@ -1142,7 +1155,7 @@ logger_adjust_log_filenames ()
 }
 
 /*
- * logger_day_changed_signal_cb: callback for "day_changed" signal
+ * Callback for signal "day_changed".
  */
 
 int
@@ -1161,7 +1174,7 @@ logger_day_changed_signal_cb (void *data, const char *signal,
 }
 
 /*
- * logger_line_log_level: get log level for a line (with its tags)
+ * Gets log level for a line (using its tags).
  */
 
 int
@@ -1190,7 +1203,7 @@ logger_line_log_level (int tags_count, const char **tags)
 }
 
 /*
- * logger_print_cb: callback for print hook
+ * Callback for print hooked.
  */
 
 int
@@ -1239,7 +1252,7 @@ logger_print_cb (void *data, struct t_gui_buffer *buffer, time_t date,
 }
 
 /*
- * logger_timer_cb: callback for logger timer
+ * Callback for logger timer.
  */
 
 int
@@ -1273,7 +1286,7 @@ logger_timer_cb (void *data, int remaining_calls)
 }
 
 /*
- * weechat_plugin_init: initialize logger plugin
+ * Initializes logger plugin.
  */
 
 int
@@ -1348,7 +1361,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 }
 
 /*
- * weechat_plugin_end: end logger plugin
+ * Ends logger plugin.
  */
 
 int

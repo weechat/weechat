@@ -57,9 +57,11 @@ int relay_client_count = 0;            /* number of clients                 */
 
 
 /*
- * relay_client_valid: check if a client pointer exists
- *                     return 1 if client exists
- *                            0 if client is not found
+ * Checks if a client pointer is valid.
+ *
+ * Returns:
+ *   1: client exists
+ *   0: client does not exist
  */
 
 int
@@ -82,7 +84,9 @@ relay_client_valid (struct t_relay_client *client)
 }
 
 /*
- * relay_client_search_by_number: search a client by number (first client is 0)
+ * Searches for a client by number (first client is 0).
+ *
+ * Returns pointer to client found, NULL if not found.
  */
 
 struct t_relay_client *
@@ -105,7 +109,9 @@ relay_client_search_by_number (int number)
 }
 
 /*
- * relay_client_search_by_id: search a client by id
+ * Searches for a client by id.
+ *
+ * Returns pointer to client found, NULL if not found.
  */
 
 struct t_relay_client *
@@ -125,7 +131,7 @@ relay_client_search_by_id (int id)
 }
 
 /*
- * relay_client_set_desc: set description for client
+ * Sets description for a client.
  */
 
 void
@@ -149,8 +155,7 @@ relay_client_set_desc (struct t_relay_client *client)
 }
 
 /*
- * relay_client_handshake_timer_cb: timer called to do the handshake with the
- *                                  client (for SSL connection only)
+ * Timer callback for handshake with client (for SSL connection only).
  */
 
 #ifdef HAVE_GNUTLS
@@ -214,7 +219,7 @@ relay_client_handshake_timer_cb (void *data, int remaining_calls)
 #endif
 
 /*
- * relay_client_recv_cb: read data from a client
+ * Reads data from a client.
  */
 
 int
@@ -303,7 +308,7 @@ relay_client_recv_cb (void *arg_client, int fd)
 }
 
 /*
- * relay_client_outqueue_add: add a message in out queue
+ * Adds a message in out queue.
  */
 
 void
@@ -338,7 +343,7 @@ relay_client_outqueue_add (struct t_relay_client *client, const char *data,
 }
 
 /*
- * relay_client_outqueue_free: free a message in out queue
+ * Frees a message in out queue.
  */
 
 void
@@ -371,7 +376,7 @@ relay_client_outqueue_free (struct t_relay_client *client,
 }
 
 /*
- * relay_client_outqueue_free_all: free all outqueued messages
+ * Frees all messages in out queue.
  */
 
 void
@@ -384,9 +389,9 @@ relay_client_outqueue_free_all (struct t_relay_client *client)
 }
 
 /*
- * relay_client_send: send data to client (add in outqueue if it's impossible
- *                    to send now)
- *                    return number of bytes sent to client
+ * Sends data to client (adds in out queue if it's impossible to send now).
+ *
+ * Returns number of bytes sent to client, -1 if error.
  */
 
 int
@@ -487,8 +492,7 @@ relay_client_send (struct t_relay_client *client, const char *data,
 }
 
 /*
- * relay_client_timer_cb: timer called each second to perform some operations
- *                        on clients
+ * Timer callback, called each second.
  */
 
 int
@@ -618,7 +622,9 @@ relay_client_timer_cb (void *data, int remaining_calls)
 }
 
 /*
- * relay_client_new: create a new client
+ * Creates a new client.
+ *
+ * Returns pointer to new client, NULL if error.
  */
 
 struct t_relay_client *
@@ -763,7 +769,9 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
 }
 
 /*
- * relay_client_new_with_infolist: create a new client using an infolist
+ * Creates a new client using an infolist.
+ *
+ * This is called to restore clients after /upgrade.
  */
 
 struct t_relay_client *
@@ -839,7 +847,7 @@ relay_client_new_with_infolist (struct t_infolist *infolist)
 }
 
 /*
- * relay_client_set_status: set status for a client
+ * Sets status for a client.
  */
 
 void
@@ -912,7 +920,7 @@ relay_client_set_status (struct t_relay_client *client,
 }
 
 /*
- * relay_client_free: remove a client
+ * Removes a client.
  */
 
 void
@@ -976,7 +984,7 @@ relay_client_free (struct t_relay_client *client)
 }
 
 /*
- * relay_client_free_all: remove all clients
+ * Removes all clients.
  */
 
 void
@@ -989,7 +997,7 @@ relay_client_free_all ()
 }
 
 /*
- * relay_client_disconnect: disconnect one client
+ * Disconnects one client.
  */
 
 void
@@ -1002,7 +1010,7 @@ relay_client_disconnect (struct t_relay_client *client)
 }
 
 /*
- * relay_client_disconnect_all: disconnect from all clients
+ * Disconnects all clients.
  */
 
 void
@@ -1018,8 +1026,11 @@ relay_client_disconnect_all ()
 }
 
 /*
- * relay_client_add_to_infolist: add a client in an infolist
- *                               return 1 if ok, 0 if error
+ * Adds a client in an infolist.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -1093,7 +1104,7 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * relay_client_print_log: print client infos in log (usually for crash dump)
+ * Prints clients in WeeChat log file (usually for crash dump).
  */
 
 void

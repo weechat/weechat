@@ -37,9 +37,8 @@
 
 
 /*
- * irc_buffer_get_server_and_channel: get IRC server and channel pointers with
- *                                    a buffer pointer
- *                                    (buffer may be a server or a channel)
+ * Gets IRC server and channel pointers with a buffer pointer (buffer may be a
+ * server or a channel).
  */
 
 void
@@ -87,7 +86,7 @@ irc_buffer_get_server_and_channel (struct t_gui_buffer *buffer,
 }
 
 /*
- * irc_buffer_build_name: build buffer name with a server and a channel
+ * Builds buffer name with a server and a channel.
  */
 
 char *
@@ -110,7 +109,7 @@ irc_buffer_build_name (const char *server, const char *channel)
 }
 
 /*
- * irc_buffer_close_cb: callback called when a buffer is closed
+ * Callback called when a buffer is closed.
  */
 
 int
@@ -162,12 +161,14 @@ irc_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
 }
 
 /*
- * irc_buffer_nickcmp_cb: callback for comparing nick in nicklist
- *                        (called when searching a nick in nicklist)
- *                        Return (according to casemapping of irc server):
- *                           0 if nick1 == nick2
- *                          -1 if nick1 < nick2
- *                          +1 if nick1 > nick2
+ * Callback for comparing two nicks in nicklist (called when searching a nick in
+ * nicklist).
+ * The "casemapping" of server is used in comparison.
+ *
+ * Returns:
+ *  -1: nick1 < nick2
+ *   0: nick1 == nick2
+ *   1: nick2 > nick2
  */
 
 int
@@ -185,9 +186,10 @@ irc_buffer_nickcmp_cb (void *data,
 }
 
 /*
- * irc_buffer_search_first_for_all_servers: search first server buffer that
- *                                          will be used to merge all IRC
- *                                          server buffers
+ * Searches for first server buffer that will be used to merge all IRC server
+ * buffers.
+ *
+ * Returns pointer to buffer found, NULL if not found.
  */
 
 struct t_gui_buffer *

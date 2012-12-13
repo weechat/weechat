@@ -36,10 +36,12 @@
 
 
 /*
- * relay_weechat_protocol_get_buffer: get buffer pointer with argument from a
- *                                    command, which can be a pointer
- *                                    ("0x12345") or a full name
- *                                    ("irc.freenode.#weechat")
+ * Gets buffer pointer with argument from a command.
+ *
+ * The argument "arg" can be a pointer ("0x12345678") or a full name
+ * ("irc.freenode.#weechat").
+ *
+ * Returns pointer to buffer found, NULL if not found.
  */
 
 struct t_gui_buffer *
@@ -88,7 +90,7 @@ relay_weechat_protocol_get_buffer (const char *arg)
 }
 
 /*
- * relay_weechat_protocol_cb_init: 'init' command from client
+ * Callback for command "init" (from client).
  */
 
 RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
@@ -131,7 +133,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
 }
 
 /*
- * relay_weechat_protocol_cb_hdata: 'hdata' command from client
+ * Callback for command "hdata" (from client).
  */
 
 RELAY_WEECHAT_PROTOCOL_CALLBACK(hdata)
@@ -153,7 +155,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(hdata)
 }
 
 /*
- * relay_weechat_protocol_cb_info: 'info' command from client
+ * Callback for command "info" (from client).
  */
 
 RELAY_WEECHAT_PROTOCOL_CALLBACK(info)
@@ -179,7 +181,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(info)
 }
 
 /*
- * relay_weechat_protocol_cb_infolist: 'infolist' command from client
+ * Callback for command "infolist" (from client).
  */
 
 RELAY_WEECHAT_PROTOCOL_CALLBACK(infolist)
@@ -213,7 +215,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(infolist)
 }
 
 /*
- * relay_weechat_protocol_cb_nicklist: 'nicklist' command from client
+ * Callback for command "nicklist" (from client).
  */
 
 RELAY_WEECHAT_PROTOCOL_CALLBACK(nicklist)
@@ -244,7 +246,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(nicklist)
 }
 
 /*
- * relay_weechat_protocol_cb_input: 'input' command from client
+ * Callback for command "input" (from client).
  */
 
 RELAY_WEECHAT_PROTOCOL_CALLBACK(input)
@@ -266,7 +268,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(input)
 }
 
 /*
- * relay_weechat_protocol_signal_buffer_cb: callback for "buffer_*" signals
+ * Callback for signals "buffers_*".
  */
 
 int
@@ -485,10 +487,8 @@ relay_weechat_protocol_signal_buffer_cb (void *data, const char *signal,
 }
 
 /*
- * relay_weechat_protocol_nicklist_map_cb: callback for entries in hashtable
- *                                         "buffers_nicklist" of client
- *                                         (send nicklist for each buffer in
- *                                         this hashtable)
+ * Callback for entries in hashtable "buffers_nicklist" of client (sends
+ * nicklist for each buffer in this hashtable).
  */
 
 void
@@ -532,7 +532,7 @@ relay_weechat_protocol_nicklist_map_cb (void *data,
 }
 
 /*
- * relay_weechat_protocol_timer_nicklist_cb: callback for nicklist timer
+ * Callback for nicklist timer.
  */
 
 int
@@ -559,7 +559,7 @@ relay_weechat_protocol_timer_nicklist_cb (void *data, int remaining_calls)
 }
 
 /*
- * relay_weechat_protocol_signal_nicklist_cb: callback for "nicklist_*" signals
+ * Callback for signals "nicklist_*".
  */
 
 int
@@ -600,7 +600,7 @@ relay_weechat_protocol_signal_nicklist_cb (void *data, const char *signal,
 }
 
 /*
- * relay_weechat_protocol_signal_upgrade_cb: callback for "upgrade*" signals
+ * Callback for signals "upgrade*".
  */
 
 int
@@ -637,7 +637,7 @@ relay_weechat_protocol_signal_upgrade_cb (void *data, const char *signal,
 }
 
 /*
- * relay_weechat_protocol_cb_sync: 'sync' command from client
+ * Callback for command "sync" (from client).
  */
 
 RELAY_WEECHAT_PROTOCOL_CALLBACK(sync)
@@ -711,7 +711,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(sync)
 }
 
 /*
- * relay_weechat_protocol_cb_desync: 'desync' command from client
+ * Callback for command "desync" (from client).
  */
 
 RELAY_WEECHAT_PROTOCOL_CALLBACK(desync)
@@ -796,7 +796,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(desync)
 }
 
 /*
- * relay_weechat_protocol_cb_test: 'test' command from client
+ * Callback for command "test" (from client).
  */
 
 RELAY_WEECHAT_PROTOCOL_CALLBACK(test)
@@ -872,7 +872,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(test)
 }
 
 /*
- * relay_weechat_protocol_cb_quit: 'quit' command from client
+ * Callback for command "quit" (from client).
  */
 
 RELAY_WEECHAT_PROTOCOL_CALLBACK(quit)
@@ -885,7 +885,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(quit)
 }
 
 /*
- * relay_weechat_protocol_recv: read a command from client
+ * Reads a command from a client.
  */
 
 void

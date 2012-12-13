@@ -72,8 +72,7 @@ Tcl_Interp* cinterp;
 
 
 /*
- * weechat_tcl_hashtable_map_cb: callback called for each key/value in a
- *                               hashtable
+ * Callback called for each key/value in a hashtable.
  */
 
 void
@@ -99,7 +98,7 @@ weechat_tcl_hashtable_map_cb (void *data,
 }
 
 /*
- * weechat_tcl_hashtable_to_dict: get tcl dict with a WeeChat hashtable
+ * Gets tcl dict with a WeeChat hashtable.
  */
 
 Tcl_Obj *
@@ -124,9 +123,9 @@ weechat_tcl_hashtable_to_dict (Tcl_Interp *interp,
 }
 
 /*
- * weechat_tcl_dict_to_hashtable: get WeeChat hashtable with tcl dict
- *                                Note: hashtable has to be released after
- *                                use with call to weechat_hashtable_free()
+ * Gets WeeChat hashtable with tcl dict.
+ *
+ * Note: hashtable must be freed after use.
  */
 
 struct t_hashtable *
@@ -173,7 +172,7 @@ weechat_tcl_dict_to_hashtable (Tcl_Interp *interp, Tcl_Obj *dict,
 }
 
 /*
- * weechat_tcl_exec: execute a tcl function
+ * Executes a tcl function.
  */
 
 void *
@@ -284,7 +283,11 @@ weechat_tcl_exec (struct t_plugin_script *script,
 }
 
 /*
- * weechat_tcl_load: load a Tcl script
+ * Loads a tcl script.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -362,7 +365,7 @@ weechat_tcl_load (const char *filename)
 }
 
 /*
- * weechat_tcl_load_cb: callback for weechat_script_auto_load() function
+ * Callback for weechat_script_auto_load() function.
  */
 
 void
@@ -375,7 +378,7 @@ weechat_tcl_load_cb (void *data, const char *filename)
 }
 
 /*
- * weechat_tcl_unload: unload a Tcl script
+ * Unloads a tcl script.
  */
 
 void
@@ -420,7 +423,7 @@ weechat_tcl_unload (struct t_plugin_script *script)
 }
 
 /*
- * weechat_tcl_unload_name: unload a Tcl script by name
+ * Unloads a tcl script by name.
  */
 
 void
@@ -448,7 +451,7 @@ weechat_tcl_unload_name (const char *name)
 }
 
 /*
- * weechat_tcl_unload_all: unload all Tcl scripts
+ * Unloads all tcl scripts.
  */
 
 void
@@ -461,7 +464,7 @@ weechat_tcl_unload_all ()
 }
 
 /*
- * weechat_tcl_reload_name: reload a Tcl script by name
+ * Reloads a tcl script by name.
  */
 
 void
@@ -496,7 +499,7 @@ weechat_tcl_reload_name (const char *name)
 }
 
 /*
- * weechat_tcl_command_cb: callback for "/tcl" command
+ * Callback for command "/tcl".
  */
 
 int
@@ -568,7 +571,7 @@ weechat_tcl_command_cb (void *data, struct t_gui_buffer *buffer,
             }
             if (weechat_strcasecmp (argv[1], "load") == 0)
             {
-                /* load Tcl script */
+                /* load tcl script */
                 path_script = plugin_script_search_path (weechat_tcl_plugin,
                                                          ptr_name);
                 weechat_tcl_load ((path_script) ? path_script : ptr_name);
@@ -577,12 +580,12 @@ weechat_tcl_command_cb (void *data, struct t_gui_buffer *buffer,
             }
             else if (weechat_strcasecmp (argv[1], "reload") == 0)
             {
-                /* reload one Tcl script */
+                /* reload one tcl script */
                 weechat_tcl_reload_name (ptr_name);
             }
             else if (weechat_strcasecmp (argv[1], "unload") == 0)
             {
-                /* unload Tcl script */
+                /* unload tcl script */
                 weechat_tcl_unload_name (ptr_name);
             }
             tcl_quiet = 0;
@@ -600,7 +603,7 @@ weechat_tcl_command_cb (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
- * weechat_tcl_completion_cb: callback for script completion
+ * Adds tcl scripts to completion list.
  */
 
 int
@@ -619,7 +622,7 @@ weechat_tcl_completion_cb (void *data, const char *completion_item,
 }
 
 /*
- * weechat_tcl_hdata_cb: callback for hdata
+ * Returns hdata for tcl scripts.
  */
 
 struct t_hdata *
@@ -634,7 +637,7 @@ weechat_tcl_hdata_cb (void *data, const char *hdata_name)
 }
 
 /*
- * weechat_tcl_infolist_cb: callback for infolist
+ * Returns infolist with tcl scripts.
  */
 
 struct t_infolist *
@@ -658,7 +661,7 @@ weechat_tcl_infolist_cb (void *data, const char *infolist_name,
 }
 
 /*
- * weechat_tcl_signal_debug_dump_cb: dump Tcl plugin data in WeeChat log file
+ * Dumps tcl plugin data in WeeChat log file.
  */
 
 int
@@ -680,7 +683,7 @@ weechat_tcl_signal_debug_dump_cb (void *data, const char *signal,
 }
 
 /*
- * weechat_tcl_signal_buffer_closed_cb: callback called when a buffer is closed
+ * Callback called when a buffer is closed.
  */
 
 int
@@ -699,7 +702,7 @@ weechat_tcl_signal_buffer_closed_cb (void *data, const char *signal,
 }
 
 /*
- * weechat_tcl_timer_action_cb: timer for executing actions
+ * Timer for executing actions.
  */
 
 int
@@ -733,8 +736,7 @@ weechat_tcl_timer_action_cb (void *data, int remaining_calls)
 }
 
 /*
- * weechat_tcl_signal_script_action_cb: callback called when a script action
- *                                      is asked (install/remove a script)
+ * Callback called when a script action is asked (install/remove a script).
  */
 
 int
@@ -769,7 +771,7 @@ weechat_tcl_signal_script_action_cb (void *data, const char *signal,
 }
 
 /*
- * weechat_plugin_init: initialize Tcl plugin
+ * Initializes tcl plugin.
  */
 
 int
@@ -800,7 +802,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 }
 
 /*
- * weechat_plugin_end: end Tcl plugin
+ * Ends tcl plugin.
  */
 
 int

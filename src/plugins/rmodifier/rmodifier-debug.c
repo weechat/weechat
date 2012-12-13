@@ -30,7 +30,7 @@
 
 
 /*
- * rmodifier_debug_signal_debug_dump_cb: dump rmodifier data in WeeChat log file
+ * Dumps rmodifier data in WeeChat log file.
  */
 
 int
@@ -60,7 +60,7 @@ rmodifier_debug_signal_debug_dump_cb (void *data, const char *signal,
 }
 
 /*
- * rmodifier_debug_init: initialize debug for rmodifier plugin
+ * Initializes debug for rmodifier plugin.
  */
 
 void

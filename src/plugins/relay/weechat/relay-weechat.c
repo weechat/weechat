@@ -48,7 +48,10 @@ char *relay_weechat_partial_message = NULL;
 
 
 /*
- * relay_weechat_compression_search: search a compression by name
+ * Searches for a compression.
+ *
+ * Returns index of compression in enum t_relay_weechat_compression, -1 if
+ * compression is not found.
  */
 
 int
@@ -67,7 +70,7 @@ relay_weechat_compression_search (const char *compression)
 }
 
 /*
- * relay_weechat_hook_signals: hook signals for a client
+ * Hooks signals for a client.
  */
 
 void
@@ -88,7 +91,7 @@ relay_weechat_hook_signals (struct t_relay_client *client)
 }
 
 /*
- * relay_weechat_unhook_signals: unhook signals for a client
+ * Unhooks signals for a client.
  */
 
 void
@@ -112,7 +115,7 @@ relay_weechat_unhook_signals (struct t_relay_client *client)
 }
 
 /*
- * relay_weechat_hook_timer_nicklist: timer to update nicklists for a client
+ * Hooks timer to update nicklist.
  */
 
 void
@@ -125,7 +128,7 @@ relay_weechat_hook_timer_nicklist (struct t_relay_client *client)
 }
 
 /*
- * relay_weechat_recv: read data from client
+ * Reads data from a client.
  */
 
 void
@@ -176,7 +179,7 @@ relay_weechat_recv (struct t_relay_client *client, const char *data)
 }
 
 /*
- * relay_weechat_close_connection: called when connection with client is closed
+ * Closes connection with a client.
  */
 
 void
@@ -186,7 +189,7 @@ relay_weechat_close_connection (struct t_relay_client *client)
 }
 
 /*
- * relay_weechat_alloc: init relay data specific to weechat protocol
+ * Initializes relay data specific to WeeChat protocol.
  */
 
 void
@@ -222,8 +225,9 @@ relay_weechat_alloc (struct t_relay_client *client)
 }
 
 /*
- * relay_weechat_alloc_with_infolist: init relay data specific to weechat
- *                                    protocol with an infolist
+ * Initializes relay data specific to WeeChat protocol with an infolist.
+ *
+ * This is called after /upgrade.
  */
 
 void
@@ -297,7 +301,7 @@ relay_weechat_alloc_with_infolist (struct t_relay_client *client,
 }
 
 /*
- * relay_weechat_free: free relay data specific to weechat protocol
+ * Frees relay data specific to WeeChat protocol.
  */
 
 void
@@ -323,8 +327,11 @@ relay_weechat_free (struct t_relay_client *client)
 }
 
 /*
- * relay_weechat_add_to_infolist: add client weechat data in an infolist item
- *                                return 1 if ok, 0 if error
+ * Adds client WeeChat data in an infolist.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -347,8 +354,7 @@ relay_weechat_add_to_infolist (struct t_infolist_item *item,
 }
 
 /*
- * relay_weechat_print_log: print weechat client infos in log (usually for
- *                          crash dump)
+ * Prints client WeeChat data in WeeChat log file (usually for crash dump).
  */
 
 void

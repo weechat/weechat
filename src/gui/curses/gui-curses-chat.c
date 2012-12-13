@@ -45,8 +45,10 @@
 
 
 /*
- * gui_chat_get_real_width: return real width: width - 1 if nicklist is at right,
- *                          for good copy/paste (without nicklist separator)
+ * Gets real width for chat.
+ *
+ * Returns width - 1 if nicklist is at right, for good copy/paste (without
+ * nicklist separator).
  */
 
 int
@@ -60,8 +62,11 @@ gui_chat_get_real_width (struct t_gui_window *window)
 }
 
 /*
- * gui_chat_marker_for_line: return 1 if marker must be displayed after this
- *                           line, or 0 if it must not
+ * Checks if marker must be displayed after this line.
+ *
+ * Returns:
+ *   1: marker must be displayed after this line
+ *   0: marker must not be displayed after this line
  */
 
 int
@@ -102,8 +107,8 @@ gui_chat_marker_for_line (struct t_gui_buffer *buffer, struct t_gui_line *line)
 }
 
 /*
- * gui_chat_reset_style: reset style using color depending on window (active or
- *                       not) and line (buffer selected in merged buffer or not)
+ * Resets style using color depending on window (active or not) and line (buffer
+ * selected in merged buffer or not).
  */
 
 void
@@ -141,7 +146,7 @@ gui_chat_reset_style (struct t_gui_window *window, struct t_gui_line *line,
 }
 
 /*
- * gui_chat_display_new_line: display a new line
+ * Displays a new line.
  */
 
 void
@@ -166,8 +171,7 @@ gui_chat_display_new_line (struct t_gui_window *window,
 }
 
 /*
- * gui_chat_display_horizontal_line: display an horizontal line (marker for
- *                                   data not read)
+ * Displays an horizontal line (marker for data not read).
  */
 
 void
@@ -204,9 +208,8 @@ gui_chat_display_horizontal_line (struct t_gui_window *window, int simulate)
 }
 
 /*
- * gui_chat_string_next_char: returns next char of a word (for display)
- *                            special chars like colors, bold, .. are skipped
- *                            and optionaly applied
+ * Returns next char of a word (for display), special chars like
+ * colors/attributes are skipped and optionally applied.
  */
 
 char *
@@ -340,9 +343,10 @@ gui_chat_string_next_char (struct t_gui_window *window, struct t_gui_line *line,
 }
 
 /*
- * gui_chat_display_word_raw: display word on chat buffer, letter by letter
- *                            special chars like color, bold, .. are interpreted
- *                            return number of chars displayed on screen
+ * Displays word on chat buffer, letter by letter, special chars like
+ * colors/attributes are interpreted.
+ *
+ * Returns number of chars displayed on screen.
  */
 
 int
@@ -413,8 +417,9 @@ gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
 }
 
 /*
- * gui_chat_display_word: display a word on chat buffer
- *                        return number of chars displayed on screen
+ * Displays a word on chat buffer.
+ *
+ * Returns number of chars displayed on screen.
  */
 
 int
@@ -586,8 +591,7 @@ gui_chat_display_word (struct t_gui_window *window,
 }
 
 /*
- * gui_chat_display_time_to_prefix: display time, buffer name (for merged
- *                                  buffers) and prefix for a line
+ * Displays time, buffer name (for merged buffers) and prefix for a line.
  */
 
 void
@@ -988,14 +992,14 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
 }
 
 /*
- * gui_chat_display_line: display a line in the chat window
- *                        if count == 0, display whole line
- *                        if count > 0, display 'count' lines
- *                          (beginning from the end)
- *                        if simulate == 1, nothing is displayed
- *                          (for counting how many lines would have been
- *                          displayed)
- *                        return number of lines displayed (or simulated)
+ * Displays a line in the chat window.
+ *
+ * If count == 0, display whole line.
+ * If count > 0, display 'count' lines (beginning from the end).
+ * If simulate == 1, nothing is displayed (for counting how many lines would
+ * have been displayed).
+ *
+ * Returns number of lines displayed (or simulated).
  */
 
 int
@@ -1221,8 +1225,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
 }
 
 /*
- * gui_chat_display_line_y: display a line in the chat window (for a buffer
- *                          with free content)
+ * Displays a line in the chat window (for a buffer with free content).
  */
 
 void
@@ -1253,8 +1256,7 @@ gui_chat_display_line_y (struct t_gui_window *window, struct t_gui_line *line,
 }
 
 /*
- * gui_chat_calculate_line_diff: returns pointer to line & offset for a
- *                               difference with given line
+ * Returns pointer to line & offset for a difference with given line.
  */
 
 void
@@ -1353,7 +1355,7 @@ gui_chat_calculate_line_diff (struct t_gui_window *window,
 }
 
 /*
- * gui_chat_draw_formatted_buffer: draw chat window for a formatted buffer
+ * Draws chat window for a formatted buffer.
  */
 
 void
@@ -1460,7 +1462,7 @@ gui_chat_draw_formatted_buffer (struct t_gui_window *window)
 }
 
 /*
- *gui_chat_draw_free_buffer: draw chat window for a free buffer
+ * Draws chat window for a free buffer.
  */
 
 void
@@ -1499,7 +1501,7 @@ gui_chat_draw_free_buffer (struct t_gui_window *window, int clear_chat)
 }
 
 /*
- * gui_chat_draw: draw chat window for a buffer
+ * Draws chat window for a buffer.
  */
 
 void

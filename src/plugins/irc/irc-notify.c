@@ -46,10 +46,13 @@ struct t_hook *irc_notify_hsignal = NULL;
 
 
 /*
- * irc_notify_valid: check if a notify pointer exists for a server
- *                   if server is NULL, search in all servers
- *                   return 1 if notify exists
- *                          0 if notify is not found
+ * Checks if a notify pointer is valid.
+ *
+ * If server is NULL, searches in all servers.
+ *
+ * Returns:
+ *   1: notify exists
+ *   0: notify does not exist
  */
 
 int
@@ -89,7 +92,9 @@ irc_notify_valid (struct t_irc_server *server, struct t_irc_notify *notify)
 }
 
 /*
- * irc_notify_search: search a notify
+ * Searches for a notify.
+ *
+ * Returns pointer to notify found, NULL if not found.
  */
 
 struct t_irc_notify *
@@ -112,8 +117,7 @@ irc_notify_search (struct t_irc_server *server, const char *nick)
 }
 
 /*
- * irc_notify_set_server_option: set server option "notify" with notify
- *                               list on server
+ * Sets server option "notify" with notify list on server.
  */
 
 void
@@ -177,7 +181,9 @@ irc_notify_set_server_option (struct t_irc_server *server)
 }
 
 /*
- * irc_notify_new: add new notify
+ * Adds a new notify.
+ *
+ * Returns pointer to new notify, NULL if error.
  */
 
 struct t_irc_notify *
@@ -212,8 +218,7 @@ irc_notify_new (struct t_irc_server *server, const char *nick, int check_away)
 }
 
 /*
- * irc_notify_check_now: check now ison/whois for a notify (called when a
- *                       notify is added)
+ * Checks now ison/whois for a notify (called when a notify is added).
  */
 
 void
@@ -241,8 +246,7 @@ irc_notify_check_now (struct t_irc_notify *notify)
 }
 
 /*
- * irc_notify_new_for_server: create notify list for server with option
- *                            "irc.server.xxx.notify"
+ * Creates a notify list for server with option "irc.server.xxx.notify".
  */
 
 void
@@ -294,8 +298,7 @@ irc_notify_new_for_server (struct t_irc_server *server)
 }
 
 /*
- * irc_notify_new_for_all_servers: create notify list for all servers with
- *                                 option "irc.server.xxx.notify"
+ * Creates a notify list for all servers with option "irc.server.xxx.notify".
  */
 
 void
@@ -311,7 +314,7 @@ irc_notify_new_for_all_servers ()
 }
 
 /*
- * irc_notify_free: remove a notify on a server
+ * Removes a notify on a server.
  */
 
 void
@@ -343,7 +346,7 @@ irc_notify_free (struct t_irc_server *server, struct t_irc_notify *notify)
 }
 
 /*
- * irc_notify_free_all: remove all notify on a server
+ * Removes all notify on a server.
  */
 
 void
@@ -356,7 +359,7 @@ irc_notify_free_all (struct t_irc_server *server)
 }
 
 /*
- * irc_notify_display: display a notify
+ * Displays a notify.
  */
 
 void
@@ -404,8 +407,7 @@ irc_notify_display (struct t_irc_server *server, struct t_gui_buffer *buffer,
 }
 
 /*
- * irc_notify_display_list: display notify list for a server
- *                          (or all servers if server is NULL)
+ * Displays notify list for a server (or all servers if server is NULL).
  */
 
 void
@@ -464,8 +466,8 @@ irc_notify_display_list (struct t_irc_server *server)
 }
 
 /*
- * irc_notify_get_tags: get tags for message displayed
- *                      (concatenation of "irc_notify" and tags from option)
+ * Gets tags for message displayed (concatenation of "irc_notify" and tags from
+ * option).
  */
 
 const char *
@@ -487,7 +489,7 @@ irc_notify_get_tags (struct t_config_option *option, const char *type,
 }
 
 /*
- * irc_notify_send_signal: send signal on notify event
+ * Sends a signal on a notify event.
  */
 
 void
@@ -519,8 +521,8 @@ irc_notify_send_signal (struct t_irc_notify *notify,
 }
 
 /*
- * irc_notify_set_is_on_server: set flag "is_on_server" for a notify
- *                              and display message if user was not on server
+ * Sets flag "is_on_server" for a notify and display message if user was not on
+ * server.
  */
 
 void
@@ -558,8 +560,8 @@ irc_notify_set_is_on_server (struct t_irc_notify *notify,
 }
 
 /*
- * irc_notify_set_away_message: set away message for a notify
- *                              and display message if away status has changed
+ * Sets away message for a notify and display message if away status has
+ * changed.
  */
 
 void
@@ -629,8 +631,7 @@ irc_notify_set_away_message (struct t_irc_notify *notify,
 }
 
 /*
- * irc_notify_hsignal_cb: callback for hsignal on redirected commands
- *                        "ison" and "whois"
+ * Callback for hsignal on redirected commands "ison" and "whois".
  */
 
 int
@@ -819,7 +820,7 @@ irc_notify_hsignal_cb (void *data, const char *signal,
 }
 
 /*
- * irc_notify_timer_ison_cb: timer called to send "ison" command to servers
+ * Timer called to send "ison" command to servers.
  */
 
 int
@@ -906,7 +907,7 @@ irc_notify_timer_ison_cb (void *data, int remaining_calls)
 }
 
 /*
- * irc_notify_timer_whois_cb: timer called to send "whois" command to servers
+ * Timer called to send "whois" command to servers.
  */
 
 int
@@ -952,7 +953,7 @@ irc_notify_timer_whois_cb (void *data, int remaining_calls)
 }
 
 /*
- * irc_notify_hdata_notify_cb: return hdata for notify
+ * Returns hdata for notify.
  */
 
 struct t_hdata *
@@ -980,8 +981,11 @@ irc_notify_hdata_notify_cb (void *data, const char *hdata_name)
 }
 
 /*
- * irc_notify_add_to_infolist: add a notify in an infolist
- *                             return 1 if ok, 0 if error
+ * Adds a notify in an infolist.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -1014,7 +1018,7 @@ irc_notify_add_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * irc_notify_print_log: print notify infos in log (usually for crash dump)
+ * Prints notify infos in WeeChat log file (usually for crash dump).
  */
 
 void
@@ -1039,7 +1043,7 @@ irc_notify_print_log (struct t_irc_server *server)
 }
 
 /*
- * irc_notify_hook_timer_ison: hook timer to send "ison" command
+ * Hooks timer to send "ison" command.
  */
 
 void
@@ -1054,7 +1058,7 @@ irc_notify_hook_timer_ison ()
 }
 
 /*
- * irc_notify_hook_timer_whois: hook timer to send "whois" command
+ * Hooks timer to send "whois" command.
  */
 
 void
@@ -1069,7 +1073,7 @@ irc_notify_hook_timer_whois ()
 }
 
 /*
- * irc_notify_init: hook timers and hsignals
+ * Hooks timers and hsignal.
  */
 
 void
@@ -1084,7 +1088,7 @@ irc_notify_init ()
 }
 
 /*
- * irc_notify_end: remove timers and hsignals
+ * Removes timers and hsignal.
  */
 
 void

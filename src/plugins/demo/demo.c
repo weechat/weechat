@@ -46,7 +46,7 @@ struct t_weechat_plugin *weechat_demo_plugin = NULL;
 
 
 /*
- * demo_printf_command_cb: demo command for printf
+ * Callback for command "/demo_printf".
  */
 
 int
@@ -80,7 +80,7 @@ demo_printf_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * demo_buffer_input_data_cb: callback for input data on buffer
+ * Callback for input data on buffer.
  */
 
 int
@@ -101,7 +101,7 @@ demo_buffer_input_data_cb (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
- * demo_buffer_close_cb: callback for buffer closed
+ * Callback called when buffer is closed.
  */
 
 int
@@ -122,7 +122,7 @@ demo_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
 }
 
 /*
- * demo_buffer_command_cb: demo command for creatig new buffer
+ * Callback for command "/demo_buffer".
  */
 
 int
@@ -153,7 +153,7 @@ demo_buffer_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * demo_infolist_print: display an infolist
+ * Displays an infolist.
  */
 
 void
@@ -226,7 +226,7 @@ demo_infolist_print (struct t_infolist *infolist, const char *item_name)
 }
 
 /*
- * demo_info_command_cb: demo command for info_get
+ * Callback for command "/demo_info".
  */
 
 int
@@ -256,7 +256,8 @@ demo_info_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
                 weechat_printf (NULL,
                                 "  %s: %s",
                                 weechat_infolist_string (infolist, "info_name"),
-                                weechat_gettext (weechat_infolist_string (infolist, "description")));
+                                weechat_gettext (weechat_infolist_string (infolist,
+                                                                          "description")));
             }
             weechat_infolist_free (infolist);
         }
@@ -266,7 +267,7 @@ demo_info_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * demo_infolist_command_cb: demo command for list
+ * Callback for command "/demo_infolist".
  */
 
 int
@@ -311,7 +312,7 @@ demo_infolist_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * demo_signal_cb: callback for signal hook
+ * Callback for a signal hooked.
  */
 
 int
@@ -357,7 +358,7 @@ demo_signal_cb (void *data, const char *signal, const char *type_data,
 }
 
 /*
- * weechat_plugin_init: initialize demo plugin
+ * Initializes demo plugin.
  */
 
 int
@@ -409,7 +410,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 }
 
 /*
- * weechat_plugin_end: end demo plugin
+ * Ends demo plugin.
  */
 
 int

@@ -34,7 +34,11 @@
 
 
 /*
- * relay_upgrade_save_all_data: save relay data to upgrade file
+ * Saves relay data in relay upgrade file.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -89,8 +93,11 @@ relay_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
 }
 
 /*
- * relay_upgrade_save: save upgrade file
- *                     return 1 if ok, 0 if error
+ * Saves relay upgrade file.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -111,8 +118,8 @@ relay_upgrade_save ()
 }
 
 /*
- * relay_upgrade_set_buffer_callbacks: restore buffers callbacks (input and
- *                                     close) for buffers created by relay plugin
+ * Restores buffer callbacks (input and close) for buffers created by relay
+ * plugin.
  */
 
 void
@@ -148,7 +155,7 @@ relay_upgrade_set_buffer_callbacks ()
 }
 
 /*
- * relay_upgrade_read_cb: read callback for relay upgrade file
+ * Reads relay upgrade file.
  */
 
 int
@@ -181,8 +188,11 @@ relay_upgrade_read_cb (void *data,
 }
 
 /*
- * relay_upgrade_load: load upgrade file
- *                    return 1 if ok, 0 if error
+ * Loads relay upgrade file.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int

@@ -83,7 +83,7 @@
 
 
 /*
- * weechat_ruby_api_register: startup function for all WeeChat Ruby scripts
+ * Registers a ruby script.
  */
 
 static VALUE
@@ -168,8 +168,10 @@ weechat_ruby_api_register (VALUE class, VALUE name, VALUE author,
 }
 
 /*
- * weechat_ruby_api_plugin_get_name: get name of plugin (return "core" for
- *                                   WeeChat core)
+ * Wrappers for functions in scripting API.
+ *
+ * For more info about these functions, look at their implementation in WeeChat
+ * core.
  */
 
 static VALUE
@@ -191,10 +193,6 @@ weechat_ruby_api_plugin_get_name (VALUE class, VALUE plugin)
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat_ruby_api_charset_set: set script charset
- */
-
 static VALUE
 weechat_ruby_api_charset_set (VALUE class, VALUE charset)
 {
@@ -212,10 +210,6 @@ weechat_ruby_api_charset_set (VALUE class, VALUE charset)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_ruby_api_iconv_to_internal: convert string to internal WeeChat charset
- */
 
 static VALUE
 weechat_ruby_api_iconv_to_internal (VALUE class, VALUE charset, VALUE string)
@@ -238,11 +232,6 @@ weechat_ruby_api_iconv_to_internal (VALUE class, VALUE charset, VALUE string)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_ruby_api_iconv_from_internal: convert string from WeeChat internal
- *                                       charset to another one
- */
-
 static VALUE
 weechat_ruby_api_iconv_from_internal (VALUE class, VALUE charset, VALUE string)
 {
@@ -264,10 +253,6 @@ weechat_ruby_api_iconv_from_internal (VALUE class, VALUE charset, VALUE string)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_ruby_api_gettext: get translated string
- */
-
 static VALUE
 weechat_ruby_api_gettext (VALUE class, VALUE string)
 {
@@ -286,10 +271,6 @@ weechat_ruby_api_gettext (VALUE class, VALUE string)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat_ruby_api_ngettext: get translated string with plural form
- */
 
 static VALUE
 weechat_ruby_api_ngettext (VALUE class, VALUE single, VALUE plural,
@@ -316,12 +297,6 @@ weechat_ruby_api_ngettext (VALUE class, VALUE single, VALUE plural,
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat_ruby_api_string_match: return 1 if string matches a mask
- *                                mask can begin or end with "*", no other "*"
- *                                are allowed inside mask
- */
-
 static VALUE
 weechat_ruby_api_string_match (VALUE class, VALUE string, VALUE mask,
                                VALUE case_sensitive)
@@ -346,14 +321,6 @@ weechat_ruby_api_string_match (VALUE class, VALUE string, VALUE mask,
     API_RETURN_INT(value);
 }
 
-/*
- * weechat_ruby_api_string_has_highlight: return 1 if string contains a
- *                                        highlight (using list of words to
- *                                        highlight)
- *                                        return 0 if no highlight is found in
- *                                        string
- */
-
 static VALUE
 weechat_ruby_api_string_has_highlight (VALUE class, VALUE string,
                                        VALUE highlight_words)
@@ -375,14 +342,6 @@ weechat_ruby_api_string_has_highlight (VALUE class, VALUE string,
 
     API_RETURN_INT(value);
 }
-
-/*
- * weechat_ruby_api_string_has_highlight_regex: return 1 if string contains a
- *                                              highlight (using regular
- *                                              expression)
- *                                              return 0 if no highlight is
- *                                              found in string
- */
 
 static VALUE
 weechat_ruby_api_string_has_highlight_regex (VALUE class, VALUE string,
@@ -406,13 +365,6 @@ weechat_ruby_api_string_has_highlight_regex (VALUE class, VALUE string,
     API_RETURN_INT(value);
 }
 
-/*
- * weechat_ruby_api_string_mask_to_regex: convert a mask (string with only
- *                                        "*" as wildcard) to a regex, paying
- *                                        attention to special chars in a
- *                                        regex
- */
-
 static VALUE
 weechat_ruby_api_string_mask_to_regex (VALUE class, VALUE mask)
 {
@@ -431,10 +383,6 @@ weechat_ruby_api_string_mask_to_regex (VALUE class, VALUE mask)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_ruby_api_string_remove_color: remove WeeChat color codes from string
- */
 
 static VALUE
 weechat_ruby_api_string_remove_color (VALUE class, VALUE string,
@@ -458,11 +406,6 @@ weechat_ruby_api_string_remove_color (VALUE class, VALUE string,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_ruby_api_string_is_command_char: check if first char of string is a
- *                                          command char
- */
-
 static VALUE
 weechat_ruby_api_string_is_command_char (VALUE class, VALUE string)
 {
@@ -482,12 +425,6 @@ weechat_ruby_api_string_is_command_char (VALUE class, VALUE string)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat_ruby_api_string_input_for_buffer: return string with input text
- *                                           for buffer or empty string if
- *                                           it's a command
- */
-
 static VALUE
 weechat_ruby_api_string_input_for_buffer (VALUE class, VALUE string)
 {
@@ -506,11 +443,6 @@ weechat_ruby_api_string_input_for_buffer (VALUE class, VALUE string)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat_ruby_api_string_eval_expression: evaluate an expression and return
- *                                          result
- */
 
 static VALUE
 weechat_ruby_api_string_eval_expression (VALUE class, VALUE expr,
@@ -548,10 +480,6 @@ weechat_ruby_api_string_eval_expression (VALUE class, VALUE expr,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_ruby_api_mkdir_home: create a directory in WeeChat home
- */
-
 static VALUE
 weechat_ruby_api_mkdir_home (VALUE class, VALUE directory, VALUE mode)
 {
@@ -573,10 +501,6 @@ weechat_ruby_api_mkdir_home (VALUE class, VALUE directory, VALUE mode)
 
     API_RETURN_ERROR;
 }
-
-/*
- * weechat_ruby_api_mkdir: create a directory
- */
 
 static VALUE
 weechat_ruby_api_mkdir (VALUE class, VALUE directory, VALUE mode)
@@ -600,11 +524,6 @@ weechat_ruby_api_mkdir (VALUE class, VALUE directory, VALUE mode)
     API_RETURN_ERROR;
 }
 
-/*
- * weechat_ruby_api_mkdir_parents: create a directory and make parent
- *                                 directories as needed
- */
-
 static VALUE
 weechat_ruby_api_mkdir_parents (VALUE class, VALUE directory, VALUE mode)
 {
@@ -627,10 +546,6 @@ weechat_ruby_api_mkdir_parents (VALUE class, VALUE directory, VALUE mode)
     API_RETURN_ERROR;
 }
 
-/*
- * weechat_ruby_api_list_new: create a new list
- */
-
 static VALUE
 weechat_ruby_api_list_new (VALUE class)
 {
@@ -642,10 +557,6 @@ weechat_ruby_api_list_new (VALUE class)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat_ruby_api_list_add: add a string to list
- */
 
 static VALUE
 weechat_ruby_api_list_add (VALUE class, VALUE weelist, VALUE data, VALUE where,
@@ -675,10 +586,6 @@ weechat_ruby_api_list_add (VALUE class, VALUE weelist, VALUE data, VALUE where,
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat_ruby_api_list_search: search a string in list
- */
-
 static VALUE
 weechat_ruby_api_list_search (VALUE class, VALUE weelist, VALUE data)
 {
@@ -699,10 +606,6 @@ weechat_ruby_api_list_search (VALUE class, VALUE weelist, VALUE data)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat_ruby_api_list_search_pos: search position of a string in list
- */
 
 static VALUE
 weechat_ruby_api_list_search_pos (VALUE class, VALUE weelist, VALUE data)
@@ -725,10 +628,6 @@ weechat_ruby_api_list_search_pos (VALUE class, VALUE weelist, VALUE data)
     API_RETURN_INT(pos);
 }
 
-/*
- * weechat_ruby_api_list_casesearch: search a string in list (ignore case)
- */
-
 static VALUE
 weechat_ruby_api_list_casesearch (VALUE class, VALUE weelist, VALUE data)
 {
@@ -750,11 +649,6 @@ weechat_ruby_api_list_casesearch (VALUE class, VALUE weelist, VALUE data)
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat_ruby_api_list_casesearch_pos: search position of a string in list
- *                                       (ignore case)
- */
-
 static VALUE
 weechat_ruby_api_list_casesearch_pos (VALUE class, VALUE weelist, VALUE data)
 {
@@ -775,10 +669,6 @@ weechat_ruby_api_list_casesearch_pos (VALUE class, VALUE weelist, VALUE data)
 
     API_RETURN_INT(pos);
 }
-
-/*
- * weechat_ruby_api_list_get: get item by position
- */
 
 static VALUE
 weechat_ruby_api_list_get (VALUE class, VALUE weelist, VALUE position)
@@ -802,10 +692,6 @@ weechat_ruby_api_list_get (VALUE class, VALUE weelist, VALUE position)
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat_ruby_api_list_set: set new value for item
- */
-
 static VALUE
 weechat_ruby_api_list_set (VALUE class, VALUE item, VALUE new_value)
 {
@@ -827,10 +713,6 @@ weechat_ruby_api_list_set (VALUE class, VALUE item, VALUE new_value)
     API_RETURN_OK;
 }
 
-/*
- * weechat_ruby_api_list_next: get next item
- */
-
 static VALUE
 weechat_ruby_api_list_next (VALUE class, VALUE item)
 {
@@ -849,10 +731,6 @@ weechat_ruby_api_list_next (VALUE class, VALUE item)
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat_ruby_api_list_prev: get previous item
- */
-
 static VALUE
 weechat_ruby_api_list_prev (VALUE class, VALUE item)
 {
@@ -870,10 +748,6 @@ weechat_ruby_api_list_prev (VALUE class, VALUE item)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat_ruby_api_list_string: get string value of item
- */
 
 static VALUE
 weechat_ruby_api_list_string (VALUE class, VALUE item)
@@ -894,10 +768,6 @@ weechat_ruby_api_list_string (VALUE class, VALUE item)
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat_ruby_api_list_size: get number of elements in list
- */
-
 static VALUE
 weechat_ruby_api_list_size (VALUE class, VALUE weelist)
 {
@@ -916,10 +786,6 @@ weechat_ruby_api_list_size (VALUE class, VALUE weelist)
 
     API_RETURN_INT(size);
 }
-
-/*
- * weechat_ruby_api_list_remove: remove item from list
- */
 
 static VALUE
 weechat_ruby_api_list_remove (VALUE class, VALUE weelist, VALUE item)
@@ -942,10 +808,6 @@ weechat_ruby_api_list_remove (VALUE class, VALUE weelist, VALUE item)
     API_RETURN_OK;
 }
 
-/*
- * weechat_ruby_api_list_remove_all: remove all items from list
- */
-
 static VALUE
 weechat_ruby_api_list_remove_all (VALUE class, VALUE weelist)
 {
@@ -964,10 +826,6 @@ weechat_ruby_api_list_remove_all (VALUE class, VALUE weelist)
     API_RETURN_OK;
 }
 
-/*
- * weechat_ruby_api_list_free: free list
- */
-
 static VALUE
 weechat_ruby_api_list_free (VALUE class, VALUE weelist)
 {
@@ -985,10 +843,6 @@ weechat_ruby_api_list_free (VALUE class, VALUE weelist)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_ruby_api_config_reload_cb: callback for config reload
- */
 
 int
 weechat_ruby_api_config_reload_cb (void *data,
@@ -1027,10 +881,6 @@ weechat_ruby_api_config_reload_cb (void *data,
     return WEECHAT_CONFIG_READ_FILE_NOT_FOUND;
 }
 
-/*
- * weechat_ruby_api_config_new: create a new configuration file
- */
-
 static VALUE
 weechat_ruby_api_config_new (VALUE class, VALUE name, VALUE function,
                              VALUE data)
@@ -1059,10 +909,6 @@ weechat_ruby_api_config_new (VALUE class, VALUE name, VALUE function,
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_ruby_api_config_read_cb: callback for reading option in section
- */
 
 int
 weechat_ruby_api_config_read_cb (void *data,
@@ -1108,10 +954,6 @@ weechat_ruby_api_config_read_cb (void *data,
     return WEECHAT_CONFIG_OPTION_SET_ERROR;
 }
 
-/*
- * weechat_ruby_api_config_section_write_cb: callback for writing section
- */
-
 int
 weechat_ruby_api_config_section_write_cb (void *data,
                                           struct t_config_file *config_file,
@@ -1151,11 +993,6 @@ weechat_ruby_api_config_section_write_cb (void *data,
     return WEECHAT_CONFIG_WRITE_ERROR;
 }
 
-/*
- * weechat_ruby_api_config_section_write_default_cb: callback for writing
- *                                                   default values for section
- */
-
 int
 weechat_ruby_api_config_section_write_default_cb (void *data,
                                                   struct t_config_file *config_file,
@@ -1194,10 +1031,6 @@ weechat_ruby_api_config_section_write_default_cb (void *data,
 
     return WEECHAT_CONFIG_WRITE_ERROR;
 }
-
-/*
- * weechat_ruby_api_config_section_create_option_cb: callback to create an option
- */
 
 int
 weechat_ruby_api_config_section_create_option_cb (void *data,
@@ -1244,10 +1077,6 @@ weechat_ruby_api_config_section_create_option_cb (void *data,
     return WEECHAT_CONFIG_OPTION_SET_ERROR;
 }
 
-/*
- * weechat_ruby_api_config_section_delete_option_cb: callback to delete an option
- */
-
 int
 weechat_ruby_api_config_section_delete_option_cb (void *data,
                                                   struct t_config_file *config_file,
@@ -1292,10 +1121,6 @@ weechat_ruby_api_config_section_delete_option_cb (void *data,
 
     return WEECHAT_CONFIG_OPTION_UNSET_ERROR;
 }
-
-/*
- * weechat_ruby_api_config_new_section: create a new section in configuration file
- */
 
 static VALUE
 weechat_ruby_api_config_new_section (VALUE class, VALUE config_file,
@@ -1384,10 +1209,6 @@ weechat_ruby_api_config_new_section (VALUE class, VALUE config_file,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_ruby_api_config_search_section: search section in configuration file
- */
-
 static VALUE
 weechat_ruby_api_config_search_section (VALUE class, VALUE config_file,
                                         VALUE section_name)
@@ -1410,11 +1231,6 @@ weechat_ruby_api_config_search_section (VALUE class, VALUE config_file,
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_ruby_api_config_option_check_value_cb: callback for checking new
- *                                                value for option
- */
 
 int
 weechat_ruby_api_config_option_check_value_cb (void *data,
@@ -1455,10 +1271,6 @@ weechat_ruby_api_config_option_check_value_cb (void *data,
     return 0;
 }
 
-/*
- * weechat_ruby_api_config_option_change_cb: callback for option changed
- */
-
 void
 weechat_ruby_api_config_option_change_cb (void *data,
                                           struct t_config_option *option)
@@ -1488,10 +1300,6 @@ weechat_ruby_api_config_option_change_cb (void *data,
     }
 }
 
-/*
- * weechat_ruby_api_config_option_delete_cb: callback when option is deleted
- */
-
 void
 weechat_ruby_api_config_option_delete_cb (void *data,
                                           struct t_config_option *option)
@@ -1520,10 +1328,6 @@ weechat_ruby_api_config_option_delete_cb (void *data,
             free (rc);
     }
 }
-
-/*
- * weechat_ruby_api_config_new_option: create a new option in section
- */
 
 static VALUE
 weechat_ruby_api_config_new_option (VALUE class, VALUE config_file,
@@ -1617,10 +1421,6 @@ weechat_ruby_api_config_new_option (VALUE class, VALUE config_file,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_ruby_api_config_search_option: search option in configuration file or section
- */
-
 static VALUE
 weechat_ruby_api_config_search_option (VALUE class, VALUE config_file,
                                        VALUE section, VALUE option_name)
@@ -1647,10 +1447,6 @@ weechat_ruby_api_config_search_option (VALUE class, VALUE config_file,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_ruby_api_config_string_to_boolean: return boolean value of a string
- */
-
 static VALUE
 weechat_ruby_api_config_string_to_boolean (VALUE class, VALUE text)
 {
@@ -1669,10 +1465,6 @@ weechat_ruby_api_config_string_to_boolean (VALUE class, VALUE text)
 
     API_RETURN_INT(value);
 }
-
-/*
- * weechat_ruby_api_config_option_reset: reset option with default value
- */
 
 static VALUE
 weechat_ruby_api_config_option_reset (VALUE class, VALUE option,
@@ -1696,10 +1488,6 @@ weechat_ruby_api_config_option_reset (VALUE class, VALUE option,
 
     API_RETURN_INT(rc);
 }
-
-/*
- * weechat_ruby_api_config_option_set: set new value for option
- */
 
 static VALUE
 weechat_ruby_api_config_option_set (VALUE class, VALUE option, VALUE new_value,
@@ -1727,11 +1515,6 @@ weechat_ruby_api_config_option_set (VALUE class, VALUE option, VALUE new_value,
     API_RETURN_INT(rc);
 }
 
-/*
- * weechat_ruby_api_config_option_set_null: set null (undefined) value for
- *                                          option
- */
-
 static VALUE
 weechat_ruby_api_config_option_set_null (VALUE class, VALUE option,
                                          VALUE run_callback)
@@ -1755,10 +1538,6 @@ weechat_ruby_api_config_option_set_null (VALUE class, VALUE option,
     API_RETURN_INT(rc);
 }
 
-/*
- * weechat_ruby_api_config_option_unset: unset an option
- */
-
 static VALUE
 weechat_ruby_api_config_option_unset (VALUE class, VALUE option)
 {
@@ -1777,10 +1556,6 @@ weechat_ruby_api_config_option_unset (VALUE class, VALUE option)
 
     API_RETURN_INT(rc);
 }
-
-/*
- * weechat_ruby_api_config_option_rename: rename an option
- */
 
 static VALUE
 weechat_ruby_api_config_option_rename (VALUE class, VALUE option,
@@ -1804,10 +1579,6 @@ weechat_ruby_api_config_option_rename (VALUE class, VALUE option,
     API_RETURN_OK;
 }
 
-/*
- * weechat_ruby_api_config_option_is_null: return 1 if value of option is null
- */
-
 static VALUE
 weechat_ruby_api_config_option_is_null (VALUE class, VALUE option)
 {
@@ -1826,10 +1597,6 @@ weechat_ruby_api_config_option_is_null (VALUE class, VALUE option)
 
     API_RETURN_INT(value);
 }
-
-/*
- * weechat_ruby_api_config_option_default_is_null: return 1 if value of option is null
- */
 
 static VALUE
 weechat_ruby_api_config_option_default_is_null (VALUE class, VALUE option)
@@ -1850,10 +1617,6 @@ weechat_ruby_api_config_option_default_is_null (VALUE class, VALUE option)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat_ruby_api_config_boolean: return boolean value of option
- */
-
 static VALUE
 weechat_ruby_api_config_boolean (VALUE class, VALUE option)
 {
@@ -1872,10 +1635,6 @@ weechat_ruby_api_config_boolean (VALUE class, VALUE option)
 
     API_RETURN_INT(value);
 }
-
-/*
- * weechat_ruby_api_config_boolean_default: return default boolean value of option
- */
 
 static VALUE
 weechat_ruby_api_config_boolean_default (VALUE class, VALUE option)
@@ -1896,10 +1655,6 @@ weechat_ruby_api_config_boolean_default (VALUE class, VALUE option)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat_ruby_api_config_integer: return integer value of option
- */
-
 static VALUE
 weechat_ruby_api_config_integer (VALUE class, VALUE option)
 {
@@ -1918,10 +1673,6 @@ weechat_ruby_api_config_integer (VALUE class, VALUE option)
 
     API_RETURN_INT(value);
 }
-
-/*
- * weechat_ruby_api_config_integer_default: return default integer value of option
- */
 
 static VALUE
 weechat_ruby_api_config_integer_default (VALUE class, VALUE option)
@@ -1942,10 +1693,6 @@ weechat_ruby_api_config_integer_default (VALUE class, VALUE option)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat_ruby_api_config_string: return string value of option
- */
-
 static VALUE
 weechat_ruby_api_config_string (VALUE class, VALUE option)
 {
@@ -1964,10 +1711,6 @@ weechat_ruby_api_config_string (VALUE class, VALUE option)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat_ruby_api_config_string_default: return default string value of option
- */
 
 static VALUE
 weechat_ruby_api_config_string_default (VALUE class, VALUE option)
@@ -1988,10 +1731,6 @@ weechat_ruby_api_config_string_default (VALUE class, VALUE option)
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat_ruby_api_config_color: return color value of option
- */
-
 static VALUE
 weechat_ruby_api_config_color (VALUE class, VALUE option)
 {
@@ -2011,10 +1750,6 @@ weechat_ruby_api_config_color (VALUE class, VALUE option)
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat_ruby_api_config_color_default: return default color value of option
- */
-
 static VALUE
 weechat_ruby_api_config_color_default (VALUE class, VALUE option)
 {
@@ -2033,10 +1768,6 @@ weechat_ruby_api_config_color_default (VALUE class, VALUE option)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat_ruby_api_config_write_option: write an option in configuration file
- */
 
 static VALUE
 weechat_ruby_api_config_write_option (VALUE class, VALUE config_file,
@@ -2059,10 +1790,6 @@ weechat_ruby_api_config_write_option (VALUE class, VALUE config_file,
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_ruby_api_config_write_line: write a line in configuration file
- */
 
 static VALUE
 weechat_ruby_api_config_write_line (VALUE class, VALUE config_file,
@@ -2090,10 +1817,6 @@ weechat_ruby_api_config_write_line (VALUE class, VALUE config_file,
     API_RETURN_OK;
 }
 
-/*
- * weechat_ruby_api_config_write: write configuration file
- */
-
 static VALUE
 weechat_ruby_api_config_write (VALUE class, VALUE config_file)
 {
@@ -2112,10 +1835,6 @@ weechat_ruby_api_config_write (VALUE class, VALUE config_file)
 
     API_RETURN_INT(rc);
 }
-
-/*
- * weechat_ruby_api_config_read: read configuration file
- */
 
 static VALUE
 weechat_ruby_api_config_read (VALUE class, VALUE config_file)
@@ -2136,10 +1855,6 @@ weechat_ruby_api_config_read (VALUE class, VALUE config_file)
     API_RETURN_INT(rc);
 }
 
-/*
- * weechat_ruby_api_config_reload: reload configuration file
- */
-
 static VALUE
 weechat_ruby_api_config_reload (VALUE class, VALUE config_file)
 {
@@ -2158,10 +1873,6 @@ weechat_ruby_api_config_reload (VALUE class, VALUE config_file)
 
     API_RETURN_INT(rc);
 }
-
-/*
- * weechat_ruby_api_config_option_free: free an option in configuration file
- */
 
 static VALUE
 weechat_ruby_api_config_option_free (VALUE class, VALUE option)
@@ -2183,11 +1894,6 @@ weechat_ruby_api_config_option_free (VALUE class, VALUE option)
     API_RETURN_OK;
 }
 
-/*
- * weechat_ruby_api_config_section_free_options: free all options of a section
- *                                               in configuration file
- */
-
 static VALUE
 weechat_ruby_api_config_section_free_options (VALUE class, VALUE section)
 {
@@ -2207,10 +1913,6 @@ weechat_ruby_api_config_section_free_options (VALUE class, VALUE section)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_ruby_api_config_section_free: free section in configuration file
- */
 
 static VALUE
 weechat_ruby_api_config_section_free (VALUE class, VALUE section)
@@ -2232,10 +1934,6 @@ weechat_ruby_api_config_section_free (VALUE class, VALUE section)
     API_RETURN_OK;
 }
 
-/*
- * weechat_ruby_api_config_free: free configuration file
- */
-
 static VALUE
 weechat_ruby_api_config_free (VALUE class, VALUE config_file)
 {
@@ -2256,10 +1954,6 @@ weechat_ruby_api_config_free (VALUE class, VALUE config_file)
     API_RETURN_OK;
 }
 
-/*
- * weechat_ruby_api_config_get: get config option
- */
-
 static VALUE
 weechat_ruby_api_config_get (VALUE class, VALUE option)
 {
@@ -2278,10 +1972,6 @@ weechat_ruby_api_config_get (VALUE class, VALUE option)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_ruby_api_config_get_plugin: get value of a plugin option
- */
 
 static VALUE
 weechat_ruby_api_config_get_plugin (VALUE class, VALUE option)
@@ -2304,10 +1994,6 @@ weechat_ruby_api_config_get_plugin (VALUE class, VALUE option)
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat_ruby_api_config_is_set_plugin: check if a plugin option is set
- */
-
 static VALUE
 weechat_ruby_api_config_is_set_plugin (VALUE class, VALUE option)
 {
@@ -2328,10 +2014,6 @@ weechat_ruby_api_config_is_set_plugin (VALUE class, VALUE option)
 
     API_RETURN_INT(rc);
 }
-
-/*
- * weechat_ruby_api_config_set_plugin: set value of a plugin option
- */
 
 static VALUE
 weechat_ruby_api_config_set_plugin (VALUE class, VALUE option, VALUE value)
@@ -2357,10 +2039,6 @@ weechat_ruby_api_config_set_plugin (VALUE class, VALUE option, VALUE value)
     API_RETURN_INT(rc);
 }
 
-/*
- * weechat_ruby_api_config_set_desc_plugin: set description of a plugin option
- */
-
 static VALUE
 weechat_ruby_api_config_set_desc_plugin (VALUE class, VALUE option,
                                          VALUE description)
@@ -2385,10 +2063,6 @@ weechat_ruby_api_config_set_desc_plugin (VALUE class, VALUE option,
     API_RETURN_OK;
 }
 
-/*
- * weechat_ruby_api_config_unset_plugin: unset plugin option
- */
-
 static VALUE
 weechat_ruby_api_config_unset_plugin (VALUE class, VALUE option)
 {
@@ -2409,10 +2083,6 @@ weechat_ruby_api_config_unset_plugin (VALUE class, VALUE option)
 
     API_RETURN_INT(rc);
 }
-
-/*
- * weechat_ruby_api_key_bind: bind key(s)
- */
 
 static VALUE
 weechat_ruby_api_key_bind (VALUE class, VALUE context, VALUE keys)
@@ -2442,10 +2112,6 @@ weechat_ruby_api_key_bind (VALUE class, VALUE context, VALUE keys)
     API_RETURN_INT(num_keys);
 }
 
-/*
- * weechat_ruby_api_key_unbind: unbind key(s)
- */
-
 static VALUE
 weechat_ruby_api_key_unbind (VALUE class, VALUE context, VALUE key)
 {
@@ -2467,10 +2133,6 @@ weechat_ruby_api_key_unbind (VALUE class, VALUE context, VALUE key)
     API_RETURN_INT(num_keys);
 }
 
-/*
- * weechat_ruby_api_prefix: get a prefix, used for display
- */
-
 static VALUE
 weechat_ruby_api_prefix (VALUE class, VALUE prefix)
 {
@@ -2490,10 +2152,6 @@ weechat_ruby_api_prefix (VALUE class, VALUE prefix)
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat_ruby_api_color: get a color code, used for display
- */
-
 static VALUE
 weechat_ruby_api_color (VALUE class, VALUE color)
 {
@@ -2512,10 +2170,6 @@ weechat_ruby_api_color (VALUE class, VALUE color)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat_ruby_api_print: print message in a buffer
- */
 
 static VALUE
 weechat_ruby_api_print (VALUE class, VALUE buffer, VALUE message)
@@ -2539,11 +2193,6 @@ weechat_ruby_api_print (VALUE class, VALUE buffer, VALUE message)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_ruby_api_print_date_tags: print message in a buffer with optional
- *                                   date and tags
- */
 
 static VALUE
 weechat_ruby_api_print_date_tags (VALUE class, VALUE buffer, VALUE date,
@@ -2576,10 +2225,6 @@ weechat_ruby_api_print_date_tags (VALUE class, VALUE buffer, VALUE date,
     API_RETURN_OK;
 }
 
-/*
- * weechat_ruby_api_print_y: print message in a buffer with free content
- */
-
 static VALUE
 weechat_ruby_api_print_y (VALUE class, VALUE buffer, VALUE y, VALUE message)
 {
@@ -2607,10 +2252,6 @@ weechat_ruby_api_print_y (VALUE class, VALUE buffer, VALUE y, VALUE message)
     API_RETURN_OK;
 }
 
-/*
- * weechat_ruby_api_log_print: print message in WeeChat log file
- */
-
 static VALUE
 weechat_ruby_api_log_print (VALUE class, VALUE message)
 {
@@ -2630,10 +2271,6 @@ weechat_ruby_api_log_print (VALUE class, VALUE message)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_ruby_api_hook_command_cb: callback for command hooked
- */
 
 int
 weechat_ruby_api_hook_command_cb (void *data, struct t_gui_buffer *buffer,
@@ -2675,10 +2312,6 @@ weechat_ruby_api_hook_command_cb (void *data, struct t_gui_buffer *buffer,
 
     return WEECHAT_RC_ERROR;
 }
-
-/*
- * weechat_ruby_api_hook_command: hook a command
- */
 
 static VALUE
 weechat_ruby_api_hook_command (VALUE class, VALUE command, VALUE description,
@@ -2725,10 +2358,6 @@ weechat_ruby_api_hook_command (VALUE class, VALUE command, VALUE description,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_ruby_api_hook_command_run_cb: callback for command_run hooked
- */
-
 int
 weechat_ruby_api_hook_command_run_cb (void *data, struct t_gui_buffer *buffer,
                                       const char *command)
@@ -2767,10 +2396,6 @@ weechat_ruby_api_hook_command_run_cb (void *data, struct t_gui_buffer *buffer,
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat_ruby_api_hook_command_run: hook a command_run
- */
-
 static VALUE
 weechat_ruby_api_hook_command_run (VALUE class, VALUE command, VALUE function,
                                    VALUE data)
@@ -2799,10 +2424,6 @@ weechat_ruby_api_hook_command_run (VALUE class, VALUE command, VALUE function,
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_ruby_api_hook_timer_cb: callback for timer hooked
- */
 
 int
 weechat_ruby_api_hook_timer_cb (void *data, int remaining_calls)
@@ -2841,10 +2462,6 @@ weechat_ruby_api_hook_timer_cb (void *data, int remaining_calls)
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat_ruby_api_hook_timer: hook a timer
- */
-
 static VALUE
 weechat_ruby_api_hook_timer (VALUE class, VALUE interval, VALUE align_second,
                              VALUE max_calls, VALUE function, VALUE data)
@@ -2882,10 +2499,6 @@ weechat_ruby_api_hook_timer (VALUE class, VALUE interval, VALUE align_second,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_ruby_api_hook_fd_cb: callback for fd hooked
- */
-
 int
 weechat_ruby_api_hook_fd_cb (void *data, int fd)
 {
@@ -2921,10 +2534,6 @@ weechat_ruby_api_hook_fd_cb (void *data, int fd)
 
     return WEECHAT_RC_ERROR;
 }
-
-/*
- * weechat_ruby_api_hook_fd: hook a fd
- */
 
 static VALUE
 weechat_ruby_api_hook_fd (VALUE class, VALUE fd, VALUE read, VALUE write,
@@ -2966,10 +2575,6 @@ weechat_ruby_api_hook_fd (VALUE class, VALUE fd, VALUE read, VALUE write,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_ruby_api_hook_process_cb: callback for process hooked
- */
-
 int
 weechat_ruby_api_hook_process_cb (void *data,
                                   const char *command, int return_code,
@@ -3009,10 +2614,6 @@ weechat_ruby_api_hook_process_cb (void *data,
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat_ruby_api_hook_process: hook a process
- */
-
 static VALUE
 weechat_ruby_api_hook_process (VALUE class, VALUE command, VALUE timeout,
                                VALUE function, VALUE data)
@@ -3045,11 +2646,6 @@ weechat_ruby_api_hook_process (VALUE class, VALUE command, VALUE timeout,
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_ruby_api_hook_process_hashtable: hook a process with options in
- *                                          a hashtable
- */
 
 static VALUE
 weechat_ruby_api_hook_process_hashtable (VALUE class, VALUE command,
@@ -3096,10 +2692,6 @@ weechat_ruby_api_hook_process_hashtable (VALUE class, VALUE command,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_ruby_api_hook_connect_cb: callback for connect hooked
- */
-
 int
 weechat_ruby_api_hook_connect_cb (void *data, int status, int gnutls_rc,
                                   int sock, const char *error,
@@ -3144,10 +2736,6 @@ weechat_ruby_api_hook_connect_cb (void *data, int status, int gnutls_rc,
 
     return WEECHAT_RC_ERROR;
 }
-
-/*
- * weechat_ruby_api_hook_connect: hook a connection
- */
 
 static VALUE
 weechat_ruby_api_hook_connect (VALUE class, VALUE proxy, VALUE address,
@@ -3201,10 +2789,6 @@ weechat_ruby_api_hook_connect (VALUE class, VALUE proxy, VALUE address,
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_ruby_api_hook_print_cb: callback for print hooked
- */
 
 int
 weechat_ruby_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
@@ -3266,10 +2850,6 @@ weechat_ruby_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat_ruby_api_hook_print: hook a print
- */
-
 static VALUE
 weechat_ruby_api_hook_print (VALUE class, VALUE buffer, VALUE tags,
                              VALUE message, VALUE strip_colors, VALUE function,
@@ -3310,10 +2890,6 @@ weechat_ruby_api_hook_print (VALUE class, VALUE buffer, VALUE tags,
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_ruby_api_hook_signal_cb: callback for signal hooked
- */
 
 int
 weechat_ruby_api_hook_signal_cb (void *data, const char *signal, const char *type_data,
@@ -3371,10 +2947,6 @@ weechat_ruby_api_hook_signal_cb (void *data, const char *signal, const char *typ
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat_ruby_api_hook_signal: hook a signal
- */
-
 static VALUE
 weechat_ruby_api_hook_signal (VALUE class, VALUE signal, VALUE function,
                               VALUE data)
@@ -3403,10 +2975,6 @@ weechat_ruby_api_hook_signal (VALUE class, VALUE signal, VALUE function,
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_ruby_api_hook_signal_send: send a signal
- */
 
 static VALUE
 weechat_ruby_api_hook_signal_send (VALUE class, VALUE signal, VALUE type_data,
@@ -3451,10 +3019,6 @@ weechat_ruby_api_hook_signal_send (VALUE class, VALUE signal, VALUE type_data,
     API_RETURN_ERROR;
 }
 
-/*
- * weechat_ruby_api_hook_hsignal_cb: callback for hsignal hooked
- */
-
 int
 weechat_ruby_api_hook_hsignal_cb (void *data, const char *signal,
                                   struct t_hashtable *hashtable)
@@ -3491,10 +3055,6 @@ weechat_ruby_api_hook_hsignal_cb (void *data, const char *signal,
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat_ruby_api_hook_hsignal: hook a hsignal
- */
-
 static VALUE
 weechat_ruby_api_hook_hsignal (VALUE class, VALUE signal, VALUE function,
                                VALUE data)
@@ -3524,10 +3084,6 @@ weechat_ruby_api_hook_hsignal (VALUE class, VALUE signal, VALUE function,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_ruby_api_hook_hsignal_send: send a hsignal
- */
-
 static VALUE
 weechat_ruby_api_hook_hsignal_send (VALUE class, VALUE signal, VALUE hashtable)
 {
@@ -3554,10 +3110,6 @@ weechat_ruby_api_hook_hsignal_send (VALUE class, VALUE signal, VALUE hashtable)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_ruby_api_hook_config_cb: callback for config option hooked
- */
 
 int
 weechat_ruby_api_hook_config_cb (void *data, const char *option, const char *value)
@@ -3594,10 +3146,6 @@ weechat_ruby_api_hook_config_cb (void *data, const char *option, const char *val
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat_ruby_api_hook_config: hook a config option
- */
-
 static VALUE
 weechat_ruby_api_hook_config (VALUE class, VALUE option, VALUE function,
                               VALUE data)
@@ -3626,10 +3174,6 @@ weechat_ruby_api_hook_config (VALUE class, VALUE option, VALUE function,
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_ruby_api_hook_completion_cb: callback for completion hooked
- */
 
 int
 weechat_ruby_api_hook_completion_cb (void *data, const char *completion_item,
@@ -3673,10 +3217,6 @@ weechat_ruby_api_hook_completion_cb (void *data, const char *completion_item,
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat_ruby_api_hook_completion: hook a completion
- */
-
 static VALUE
 weechat_ruby_api_hook_completion (VALUE class, VALUE completion,
                                   VALUE description, VALUE function,
@@ -3711,10 +3251,6 @@ weechat_ruby_api_hook_completion (VALUE class, VALUE completion,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_ruby_api_hook_completion_list_add: add a word to list for a completion
- */
-
 static VALUE
 weechat_ruby_api_hook_completion_list_add (VALUE class, VALUE completion,
                                            VALUE word, VALUE nick_completion,
@@ -3746,10 +3282,6 @@ weechat_ruby_api_hook_completion_list_add (VALUE class, VALUE completion,
     API_RETURN_OK;
 }
 
-/*
- * weechat_ruby_api_hook_modifier_cb: callback for modifier hooked
- */
-
 char *
 weechat_ruby_api_hook_modifier_cb (void *data, const char *modifier,
                                    const char *modifier_data,  const char *string)
@@ -3775,10 +3307,6 @@ weechat_ruby_api_hook_modifier_cb (void *data, const char *modifier,
 
     return NULL;
 }
-
-/*
- * weechat_ruby_api_hook_modifier: hook a modifier
- */
 
 static VALUE
 weechat_ruby_api_hook_modifier (VALUE class, VALUE modifier, VALUE function,
@@ -3809,10 +3337,6 @@ weechat_ruby_api_hook_modifier (VALUE class, VALUE modifier, VALUE function,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_ruby_api_hook_modifier_exec: execute a modifier hook
- */
-
 static VALUE
 weechat_ruby_api_hook_modifier_exec (VALUE class, VALUE modifier,
                                      VALUE modifier_data, VALUE string)
@@ -3836,10 +3360,6 @@ weechat_ruby_api_hook_modifier_exec (VALUE class, VALUE modifier,
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_ruby_api_hook_info_cb: callback for info hooked
- */
 
 const char *
 weechat_ruby_api_hook_info_cb (void *data, const char *info_name,
@@ -3865,10 +3385,6 @@ weechat_ruby_api_hook_info_cb (void *data, const char *info_name,
 
     return NULL;
 }
-
-/*
- * weechat_ruby_api_hook_info: hook an info
- */
 
 static VALUE
 weechat_ruby_api_hook_info (VALUE class, VALUE info_name, VALUE description,
@@ -3907,10 +3423,6 @@ weechat_ruby_api_hook_info (VALUE class, VALUE info_name, VALUE description,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_ruby_api_hook_info_hashtable_cb: callback for info_hashtable hooked
- */
-
 struct t_hashtable *
 weechat_ruby_api_hook_info_hashtable_cb (void *data, const char *info_name,
                                          struct t_hashtable *hashtable)
@@ -3935,10 +3447,6 @@ weechat_ruby_api_hook_info_hashtable_cb (void *data, const char *info_name,
 
     return NULL;
 }
-
-/*
- * weechat_ruby_api_hook_info_hashtable: hook an info_hashtable
- */
 
 static VALUE
 weechat_ruby_api_hook_info_hashtable (VALUE class, VALUE info_name,
@@ -3984,10 +3492,6 @@ weechat_ruby_api_hook_info_hashtable (VALUE class, VALUE info_name,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_ruby_api_hook_infolist_cb: callback for infolist hooked
- */
-
 struct t_infolist *
 weechat_ruby_api_hook_infolist_cb (void *data, const char *infolist_name,
                                    void *pointer, const char *arguments)
@@ -4019,10 +3523,6 @@ weechat_ruby_api_hook_infolist_cb (void *data, const char *infolist_name,
 
     return NULL;
 }
-
-/*
- * weechat_ruby_api_hook_infolist: hook an infolist
- */
 
 static VALUE
 weechat_ruby_api_hook_infolist (VALUE class, VALUE infolist_name,
@@ -4067,10 +3567,6 @@ weechat_ruby_api_hook_infolist (VALUE class, VALUE infolist_name,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_ruby_api_hook_focus_cb: callback for focus hooked
- */
-
 struct t_hashtable *
 weechat_ruby_api_hook_focus_cb (void *data, struct t_hashtable *info)
 {
@@ -4093,10 +3589,6 @@ weechat_ruby_api_hook_focus_cb (void *data, struct t_hashtable *info)
 
     return NULL;
 }
-
-/*
- * weechat_ruby_api_hook_focus: hook a focus
- */
 
 static VALUE
 weechat_ruby_api_hook_focus (VALUE class, VALUE area, VALUE function,
@@ -4127,10 +3619,6 @@ weechat_ruby_api_hook_focus (VALUE class, VALUE area, VALUE function,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_ruby_api_unhook: unhook something
- */
-
 static VALUE
 weechat_ruby_api_unhook (VALUE class, VALUE hook)
 {
@@ -4151,10 +3639,6 @@ weechat_ruby_api_unhook (VALUE class, VALUE hook)
     API_RETURN_OK;
 }
 
-/*
- * weechat_ruby_api_unhook_all: unhook all for script
- */
-
 static VALUE
 weechat_ruby_api_unhook_all (VALUE class)
 {
@@ -4164,10 +3648,6 @@ weechat_ruby_api_unhook_all (VALUE class)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_ruby_api_buffer_input_data_cb: callback for input data in a buffer
- */
 
 int
 weechat_ruby_api_buffer_input_data_cb (void *data, struct t_gui_buffer *buffer,
@@ -4207,10 +3687,6 @@ weechat_ruby_api_buffer_input_data_cb (void *data, struct t_gui_buffer *buffer,
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat_ruby_api_buffer_close_cb: callback for closed buffer
- */
-
 int
 weechat_ruby_api_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
 {
@@ -4246,10 +3722,6 @@ weechat_ruby_api_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
 
     return WEECHAT_RC_ERROR;
 }
-
-/*
- * weechat_ruby_api_buffer_new: create a new buffer
- */
 
 static VALUE
 weechat_ruby_api_buffer_new (VALUE class, VALUE name, VALUE function_input,
@@ -4290,10 +3762,6 @@ weechat_ruby_api_buffer_new (VALUE class, VALUE name, VALUE function_input,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_ruby_api_buffer_search: search a buffer
- */
-
 static VALUE
 weechat_ruby_api_buffer_search (VALUE class, VALUE plugin, VALUE name)
 {
@@ -4315,10 +3783,6 @@ weechat_ruby_api_buffer_search (VALUE class, VALUE plugin, VALUE name)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_ruby_api_buffer_search_main: search main buffer (WeeChat core buffer)
- */
-
 static VALUE
 weechat_ruby_api_buffer_search_main (VALUE class)
 {
@@ -4332,10 +3796,6 @@ weechat_ruby_api_buffer_search_main (VALUE class)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_ruby_api_current_buffer: get current buffer
- */
-
 static VALUE
 weechat_ruby_api_current_buffer (VALUE class)
 {
@@ -4348,10 +3808,6 @@ weechat_ruby_api_current_buffer (VALUE class)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_ruby_api_buffer_clear: clear a buffer
- */
 
 static VALUE
 weechat_ruby_api_buffer_clear (VALUE class, VALUE buffer)
@@ -4370,10 +3826,6 @@ weechat_ruby_api_buffer_clear (VALUE class, VALUE buffer)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_ruby_api_buffer_close: close a buffer
- */
 
 static VALUE
 weechat_ruby_api_buffer_close (VALUE class, VALUE buffer)
@@ -4394,10 +3846,6 @@ weechat_ruby_api_buffer_close (VALUE class, VALUE buffer)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_ruby_api_buffer_merge: merge a buffer to another buffer
- */
 
 static VALUE
 weechat_ruby_api_buffer_merge (VALUE class, VALUE buffer, VALUE target_buffer)
@@ -4420,11 +3868,6 @@ weechat_ruby_api_buffer_merge (VALUE class, VALUE buffer, VALUE target_buffer)
     API_RETURN_OK;
 }
 
-/*
- * weechat_ruby_api_buffer_unmerge: unmerge a buffer from a group of merged
- *                                  buffers
- */
-
 static VALUE
 weechat_ruby_api_buffer_unmerge (VALUE class, VALUE buffer, VALUE number)
 {
@@ -4445,10 +3888,6 @@ weechat_ruby_api_buffer_unmerge (VALUE class, VALUE buffer, VALUE number)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_ruby_api_buffer_get_integer: get a buffer property as integer
- */
 
 static VALUE
 weechat_ruby_api_buffer_get_integer (VALUE class, VALUE buffer, VALUE property)
@@ -4472,10 +3911,6 @@ weechat_ruby_api_buffer_get_integer (VALUE class, VALUE buffer, VALUE property)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat_ruby_api_buffer_get_string: get a buffer property as string
- */
-
 static VALUE
 weechat_ruby_api_buffer_get_string (VALUE class, VALUE buffer, VALUE property)
 {
@@ -4498,10 +3933,6 @@ weechat_ruby_api_buffer_get_string (VALUE class, VALUE buffer, VALUE property)
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat_ruby_api_buffer_get_pointer: get a buffer property as pointer
- */
-
 static VALUE
 weechat_ruby_api_buffer_get_pointer (VALUE class, VALUE buffer, VALUE property)
 {
@@ -4523,10 +3954,6 @@ weechat_ruby_api_buffer_get_pointer (VALUE class, VALUE buffer, VALUE property)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_ruby_api_buffer_set: set a buffer property
- */
 
 static VALUE
 weechat_ruby_api_buffer_set (VALUE class, VALUE buffer, VALUE property,
@@ -4553,11 +3980,6 @@ weechat_ruby_api_buffer_set (VALUE class, VALUE buffer, VALUE property,
     API_RETURN_OK;
 }
 
-/*
- * weechat_ruby_api_buffer_string_replace_local_var: replace local variables ($var) in a string,
- *                                                   using value of local variables
- */
-
 static VALUE
 weechat_ruby_api_buffer_string_replace_local_var (VALUE class, VALUE buffer, VALUE string)
 {
@@ -4578,10 +4000,6 @@ weechat_ruby_api_buffer_string_replace_local_var (VALUE class, VALUE buffer, VAL
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_ruby_api_buffer_match_list: return 1 if buffer matches list of buffers
- */
 
 static VALUE
 weechat_ruby_api_buffer_match_list (VALUE class, VALUE buffer, VALUE string)
@@ -4605,10 +4023,6 @@ weechat_ruby_api_buffer_match_list (VALUE class, VALUE buffer, VALUE string)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat_ruby_api_current_window: get current window
- */
-
 static VALUE
 weechat_ruby_api_current_window (VALUE class)
 {
@@ -4621,11 +4035,6 @@ weechat_ruby_api_current_window (VALUE class)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_ruby_api_window_search_with_buffer: search a window with buffer
- *                                             pointer
- */
 
 static VALUE
 weechat_ruby_api_window_search_with_buffer (VALUE class, VALUE buffer)
@@ -4645,10 +4054,6 @@ weechat_ruby_api_window_search_with_buffer (VALUE class, VALUE buffer)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_ruby_api_window_get_integer: get a window property as integer
- */
 
 static VALUE
 weechat_ruby_api_window_get_integer (VALUE class, VALUE window, VALUE property)
@@ -4672,10 +4077,6 @@ weechat_ruby_api_window_get_integer (VALUE class, VALUE window, VALUE property)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat_ruby_api_window_get_string: get a window property as string
- */
-
 static VALUE
 weechat_ruby_api_window_get_string (VALUE class, VALUE window, VALUE property)
 {
@@ -4697,10 +4098,6 @@ weechat_ruby_api_window_get_string (VALUE class, VALUE window, VALUE property)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat_ruby_api_window_get_pointer: get a window property as pointer
- */
 
 static VALUE
 weechat_ruby_api_window_get_pointer (VALUE class, VALUE window, VALUE property)
@@ -4724,10 +4121,6 @@ weechat_ruby_api_window_get_pointer (VALUE class, VALUE window, VALUE property)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_ruby_api_window_set_title: set window title
- */
-
 static VALUE
 weechat_ruby_api_window_set_title (VALUE class, VALUE title)
 {
@@ -4745,10 +4138,6 @@ weechat_ruby_api_window_set_title (VALUE class, VALUE title)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_ruby_api_nicklist_add_group: add a group in nicklist
- */
 
 static VALUE
 weechat_ruby_api_nicklist_add_group (VALUE class, VALUE buffer,
@@ -4785,10 +4174,6 @@ weechat_ruby_api_nicklist_add_group (VALUE class, VALUE buffer,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_ruby_api_nicklist_search_group: search a group in nicklist
- */
-
 static VALUE
 weechat_ruby_api_nicklist_search_group (VALUE class, VALUE buffer,
                                         VALUE from_group, VALUE name)
@@ -4814,10 +4199,6 @@ weechat_ruby_api_nicklist_search_group (VALUE class, VALUE buffer,
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_ruby_api_nicklist_add_nick: add a nick in nicklist
- */
 
 static VALUE
 weechat_ruby_api_nicklist_add_nick (VALUE class, VALUE buffer, VALUE group,
@@ -4861,10 +4242,6 @@ weechat_ruby_api_nicklist_add_nick (VALUE class, VALUE buffer, VALUE group,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_ruby_api_nicklist_search_nick: search a nick in nicklist
- */
-
 static VALUE
 weechat_ruby_api_nicklist_search_nick (VALUE class, VALUE buffer,
                                        VALUE from_group, VALUE name)
@@ -4891,10 +4268,6 @@ weechat_ruby_api_nicklist_search_nick (VALUE class, VALUE buffer,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_ruby_api_nicklist_remove_group: remove a group from nicklist
- */
-
 static VALUE
 weechat_ruby_api_nicklist_remove_group (VALUE class, VALUE buffer, VALUE group)
 {
@@ -4915,10 +4288,6 @@ weechat_ruby_api_nicklist_remove_group (VALUE class, VALUE buffer, VALUE group)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_ruby_api_nicklist_remove_nick: remove a nick from nicklist
- */
 
 static VALUE
 weechat_ruby_api_nicklist_remove_nick (VALUE class, VALUE buffer, VALUE nick)
@@ -4941,10 +4310,6 @@ weechat_ruby_api_nicklist_remove_nick (VALUE class, VALUE buffer, VALUE nick)
     API_RETURN_OK;
 }
 
-/*
- * weechat_ruby_api_nicklist_remove_all: remove all groups/nicks from nicklist
- */
-
 static VALUE
 weechat_ruby_api_nicklist_remove_all (VALUE class, VALUE buffer)
 {
@@ -4962,10 +4327,6 @@ weechat_ruby_api_nicklist_remove_all (VALUE class, VALUE buffer)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_ruby_api_nicklist_group_get_integer: get a group property as integer
- */
 
 static VALUE
 weechat_ruby_api_nicklist_group_get_integer (VALUE class, VALUE buffer,
@@ -4993,10 +4354,6 @@ weechat_ruby_api_nicklist_group_get_integer (VALUE class, VALUE buffer,
     API_RETURN_INT(value);
 }
 
-/*
- * weechat_ruby_api_nicklist_group_get_string: get a group property as string
- */
-
 static VALUE
 weechat_ruby_api_nicklist_group_get_string (VALUE class, VALUE buffer,
                                             VALUE group, VALUE property)
@@ -5023,10 +4380,6 @@ weechat_ruby_api_nicklist_group_get_string (VALUE class, VALUE buffer,
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat_ruby_api_nicklist_group_get_pointer: get a group property as pointer
- */
-
 static VALUE
 weechat_ruby_api_nicklist_group_get_pointer (VALUE class, VALUE buffer,
                                              VALUE group, VALUE property)
@@ -5052,10 +4405,6 @@ weechat_ruby_api_nicklist_group_get_pointer (VALUE class, VALUE buffer,
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_ruby_api_nicklist_group_set: set a group property
- */
 
 static VALUE
 weechat_ruby_api_nicklist_group_set (VALUE class, VALUE buffer, VALUE group,
@@ -5085,10 +4434,6 @@ weechat_ruby_api_nicklist_group_set (VALUE class, VALUE buffer, VALUE group,
     API_RETURN_OK;
 }
 
-/*
- * weechat_ruby_api_nicklist_nick_get_integer: get a nick property as integer
- */
-
 static VALUE
 weechat_ruby_api_nicklist_nick_get_integer (VALUE class, VALUE buffer,
                                             VALUE nick, VALUE property)
@@ -5114,10 +4459,6 @@ weechat_ruby_api_nicklist_nick_get_integer (VALUE class, VALUE buffer,
 
     API_RETURN_INT(value);
 }
-
-/*
- * weechat_ruby_api_nicklist_nick_get_string: get a nick property as string
- */
 
 static VALUE
 weechat_ruby_api_nicklist_nick_get_string (VALUE class, VALUE buffer,
@@ -5145,10 +4486,6 @@ weechat_ruby_api_nicklist_nick_get_string (VALUE class, VALUE buffer,
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat_ruby_api_nicklist_nick_get_pointer: get a nick property as pointer
- */
-
 static VALUE
 weechat_ruby_api_nicklist_nick_get_pointer (VALUE class, VALUE buffer,
                                             VALUE nick, VALUE property)
@@ -5174,10 +4511,6 @@ weechat_ruby_api_nicklist_nick_get_pointer (VALUE class, VALUE buffer,
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_ruby_api_nicklist_nick_set: set a nick property
- */
 
 static VALUE
 weechat_ruby_api_nicklist_nick_set (VALUE class, VALUE buffer, VALUE nick,
@@ -5207,10 +4540,6 @@ weechat_ruby_api_nicklist_nick_set (VALUE class, VALUE buffer, VALUE nick,
     API_RETURN_OK;
 }
 
-/*
- * weechat_ruby_api_bar_item_search: search a bar item
- */
-
 static VALUE
 weechat_ruby_api_bar_item_search (VALUE class, VALUE name)
 {
@@ -5229,10 +4558,6 @@ weechat_ruby_api_bar_item_search (VALUE class, VALUE name)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_ruby_api_bar_item_build_cb: callback for building bar item
- */
 
 char *
 weechat_ruby_api_bar_item_build_cb (void *data, struct t_gui_bar_item *item,
@@ -5266,10 +4591,6 @@ weechat_ruby_api_bar_item_build_cb (void *data, struct t_gui_bar_item *item,
     return NULL;
 }
 
-/*
- * weechat_ruby_api_bar_item_new: add a new bar item
- */
-
 static VALUE
 weechat_ruby_api_bar_item_new (VALUE class, VALUE name, VALUE function,
                                VALUE data)
@@ -5299,10 +4620,6 @@ weechat_ruby_api_bar_item_new (VALUE class, VALUE name, VALUE function,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_ruby_api_bar_item_update: update a bar item on screen
- */
-
 static VALUE
 weechat_ruby_api_bar_item_update (VALUE class, VALUE name)
 {
@@ -5320,10 +4637,6 @@ weechat_ruby_api_bar_item_update (VALUE class, VALUE name)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_ruby_api_bar_item_remove: remove a bar item
- */
 
 static VALUE
 weechat_ruby_api_bar_item_remove (VALUE class, VALUE item)
@@ -5345,10 +4658,6 @@ weechat_ruby_api_bar_item_remove (VALUE class, VALUE item)
     API_RETURN_OK;
 }
 
-/*
- * weechat_ruby_api_bar_search: search a bar
- */
-
 static VALUE
 weechat_ruby_api_bar_search (VALUE class, VALUE name)
 {
@@ -5367,10 +4676,6 @@ weechat_ruby_api_bar_search (VALUE class, VALUE name)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_ruby_api_bar_new: add a new bar
- */
 
 static VALUE
 weechat_ruby_api_bar_new (VALUE class, VALUE name, VALUE hidden,
@@ -5445,10 +4750,6 @@ weechat_ruby_api_bar_new (VALUE class, VALUE name, VALUE hidden,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_ruby_api_bar_set: set a bar property
- */
-
 static VALUE
 weechat_ruby_api_bar_set (VALUE class, VALUE bar, VALUE property, VALUE value)
 {
@@ -5473,10 +4774,6 @@ weechat_ruby_api_bar_set (VALUE class, VALUE bar, VALUE property, VALUE value)
     API_RETURN_OK;
 }
 
-/*
- * weechat_ruby_api_bar_update: update a bar on screen
- */
-
 static VALUE
 weechat_ruby_api_bar_update (VALUE class, VALUE name)
 {
@@ -5495,10 +4792,6 @@ weechat_ruby_api_bar_update (VALUE class, VALUE name)
     API_RETURN_OK;
 }
 
-/*
- * weechat_ruby_api_bar_remove: remove a bar
- */
-
 static VALUE
 weechat_ruby_api_bar_remove (VALUE class, VALUE bar)
 {
@@ -5516,10 +4809,6 @@ weechat_ruby_api_bar_remove (VALUE class, VALUE bar)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_ruby_api_command: send command to server
- */
 
 static VALUE
 weechat_ruby_api_command (VALUE class, VALUE buffer, VALUE command)
@@ -5544,10 +4833,6 @@ weechat_ruby_api_command (VALUE class, VALUE buffer, VALUE command)
     API_RETURN_OK;
 }
 
-/*
- * weechat_ruby_api_info_get: get info (as string)
- */
-
 static VALUE
 weechat_ruby_api_info_get (VALUE class, VALUE info_name, VALUE arguments)
 {
@@ -5568,10 +4853,6 @@ weechat_ruby_api_info_get (VALUE class, VALUE info_name, VALUE arguments)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat_ruby_api_info_get_hashtable: get info (as hashtable)
- */
 
 static VALUE
 weechat_ruby_api_info_get_hashtable (VALUE class, VALUE info_name,
@@ -5605,10 +4886,6 @@ weechat_ruby_api_info_get_hashtable (VALUE class, VALUE info_name,
     return result_hash;
 }
 
-/*
- * weechat_ruby_api_infolist_new: create new infolist
- */
-
 static VALUE
 weechat_ruby_api_infolist_new (VALUE class)
 {
@@ -5621,10 +4898,6 @@ weechat_ruby_api_infolist_new (VALUE class)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_ruby_api_infolist_new_item: create new item in infolist
- */
 
 static VALUE
 weechat_ruby_api_infolist_new_item (VALUE class, VALUE infolist)
@@ -5644,11 +4917,6 @@ weechat_ruby_api_infolist_new_item (VALUE class, VALUE infolist)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_ruby_api_infolist_new_var_integer: create new integer variable in
- *                                            infolist
- */
 
 static VALUE
 weechat_ruby_api_infolist_new_var_integer (VALUE class, VALUE infolist,
@@ -5677,11 +4945,6 @@ weechat_ruby_api_infolist_new_var_integer (VALUE class, VALUE infolist,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_ruby_api_infolist_new_var_string: create new string variable in
- *                                           infolist
- */
-
 static VALUE
 weechat_ruby_api_infolist_new_var_string (VALUE class, VALUE infolist,
                                           VALUE name, VALUE value)
@@ -5708,11 +4971,6 @@ weechat_ruby_api_infolist_new_var_string (VALUE class, VALUE infolist,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_ruby_api_infolist_new_var_pointer: create new pointer variable in
- *                                            infolist
- */
-
 static VALUE
 weechat_ruby_api_infolist_new_var_pointer (VALUE class, VALUE infolist,
                                            VALUE name, VALUE value)
@@ -5738,10 +4996,6 @@ weechat_ruby_api_infolist_new_var_pointer (VALUE class, VALUE infolist,
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_ruby_api_infolist_new_var_time: create new time variable in infolist
- */
 
 static VALUE
 weechat_ruby_api_infolist_new_var_time (VALUE class, VALUE infolist,
@@ -5770,10 +5024,6 @@ weechat_ruby_api_infolist_new_var_time (VALUE class, VALUE infolist,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_ruby_api_infolist_get: get list with infos
- */
-
 static VALUE
 weechat_ruby_api_infolist_get (VALUE class, VALUE name, VALUE pointer,
                                VALUE arguments)
@@ -5800,10 +5050,6 @@ weechat_ruby_api_infolist_get (VALUE class, VALUE name, VALUE pointer,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_ruby_api_infolist_next: move item pointer to next item in infolist
- */
-
 static VALUE
 weechat_ruby_api_infolist_next (VALUE class, VALUE infolist)
 {
@@ -5822,10 +5068,6 @@ weechat_ruby_api_infolist_next (VALUE class, VALUE infolist)
 
     API_RETURN_INT(value);
 }
-
-/*
- * weechat_ruby_api_infolist_prev: move item pointer to previous item in infolist
- */
 
 static VALUE
 weechat_ruby_api_infolist_prev (VALUE class, VALUE infolist)
@@ -5846,11 +5088,6 @@ weechat_ruby_api_infolist_prev (VALUE class, VALUE infolist)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat_ruby_api_infolist_reset_item_cursor: reset pointer to current item
- *                                              in infolist
- */
-
 static VALUE
 weechat_ruby_api_infolist_reset_item_cursor (VALUE class, VALUE infolist)
 {
@@ -5868,10 +5105,6 @@ weechat_ruby_api_infolist_reset_item_cursor (VALUE class, VALUE infolist)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_ruby_api_infolist_fields: get list of fields for current item of infolist
- */
 
 static VALUE
 weechat_ruby_api_infolist_fields (VALUE class, VALUE infolist)
@@ -5891,10 +5124,6 @@ weechat_ruby_api_infolist_fields (VALUE class, VALUE infolist)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat_ruby_api_infolist_integer: get integer value of a variable in infolist
- */
 
 static VALUE
 weechat_ruby_api_infolist_integer (VALUE class, VALUE infolist, VALUE variable)
@@ -5917,10 +5146,6 @@ weechat_ruby_api_infolist_integer (VALUE class, VALUE infolist, VALUE variable)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat_ruby_api_infolist_string: get string value of a variable in infolist
- */
-
 static VALUE
 weechat_ruby_api_infolist_string (VALUE class, VALUE infolist, VALUE variable)
 {
@@ -5942,10 +5167,6 @@ weechat_ruby_api_infolist_string (VALUE class, VALUE infolist, VALUE variable)
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat_ruby_api_infolist_pointer: get pointer value of a variable in infolist
- */
-
 static VALUE
 weechat_ruby_api_infolist_pointer (VALUE class, VALUE infolist, VALUE variable)
 {
@@ -5966,10 +5187,6 @@ weechat_ruby_api_infolist_pointer (VALUE class, VALUE infolist, VALUE variable)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_ruby_api_infolist_time: get time value of a variable in infolist
- */
 
 static VALUE
 weechat_ruby_api_infolist_time (VALUE class, VALUE infolist, VALUE variable)
@@ -5999,10 +5216,6 @@ weechat_ruby_api_infolist_time (VALUE class, VALUE infolist, VALUE variable)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_ruby_api_infolist_free: free infolist
- */
-
 static VALUE
 weechat_ruby_api_infolist_free (VALUE class, VALUE infolist)
 {
@@ -6020,10 +5233,6 @@ weechat_ruby_api_infolist_free (VALUE class, VALUE infolist)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_ruby_api_hdata_get: get hdata
- */
 
 static VALUE
 weechat_ruby_api_hdata_get (VALUE class, VALUE name)
@@ -6043,10 +5252,6 @@ weechat_ruby_api_hdata_get (VALUE class, VALUE name)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_ruby_api_hdata_get_var_offset: get offset of variable in hdata
- */
 
 static VALUE
 weechat_ruby_api_hdata_get_var_offset (VALUE class, VALUE hdata, VALUE name)
@@ -6069,11 +5274,6 @@ weechat_ruby_api_hdata_get_var_offset (VALUE class, VALUE hdata, VALUE name)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat_ruby_api_hdata_get_var_type_string: get type of variable as string
- *                                             in hdata
- */
-
 static VALUE
 weechat_ruby_api_hdata_get_var_type_string (VALUE class, VALUE hdata,
                                             VALUE name)
@@ -6095,10 +5295,6 @@ weechat_ruby_api_hdata_get_var_type_string (VALUE class, VALUE hdata,
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat_ruby_api_hdata_get_var_array_size: get array size for variable in hdata
- */
 
 static VALUE
 weechat_ruby_api_hdata_get_var_array_size (VALUE class, VALUE hdata, VALUE pointer,
@@ -6126,11 +5322,6 @@ weechat_ruby_api_hdata_get_var_array_size (VALUE class, VALUE hdata, VALUE point
     API_RETURN_INT(value);
 }
 
-/*
- * weechat_ruby_api_hdata_get_var_array_size_string: get array size for variable
- *                                                   in hdata (as string)
- */
-
 static VALUE
 weechat_ruby_api_hdata_get_var_array_size_string (VALUE class, VALUE hdata,
                                                   VALUE pointer, VALUE name)
@@ -6157,10 +5348,6 @@ weechat_ruby_api_hdata_get_var_array_size_string (VALUE class, VALUE hdata,
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat_ruby_api_hdata_get_var_hdata: get hdata for variable in hdata
- */
-
 static VALUE
 weechat_ruby_api_hdata_get_var_hdata (VALUE class, VALUE hdata, VALUE name)
 {
@@ -6181,10 +5368,6 @@ weechat_ruby_api_hdata_get_var_hdata (VALUE class, VALUE hdata, VALUE name)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat_ruby_api_hdata_get_list: get list pointer in hdata
- */
 
 static VALUE
 weechat_ruby_api_hdata_get_list (VALUE class, VALUE hdata, VALUE name)
@@ -6207,10 +5390,6 @@ weechat_ruby_api_hdata_get_list (VALUE class, VALUE hdata, VALUE name)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_ruby_api_hdata_check_pointer: check pointer with hdata/list
- */
 
 static VALUE
 weechat_ruby_api_hdata_check_pointer (VALUE class, VALUE hdata, VALUE list,
@@ -6237,10 +5416,6 @@ weechat_ruby_api_hdata_check_pointer (VALUE class, VALUE hdata, VALUE list,
 
     API_RETURN_INT(value);
 }
-
-/*
- * weechat_ruby_api_hdata_move: move pointer to another element in list
- */
 
 static VALUE
 weechat_ruby_api_hdata_move (VALUE class, VALUE hdata, VALUE pointer,
@@ -6269,11 +5444,6 @@ weechat_ruby_api_hdata_move (VALUE class, VALUE hdata, VALUE pointer,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_ruby_api_hdata_char: get char value of a variable in structure using
- *                              hdata
- */
-
 static VALUE
 weechat_ruby_api_hdata_char (VALUE class, VALUE hdata, VALUE pointer,
                              VALUE name)
@@ -6299,11 +5469,6 @@ weechat_ruby_api_hdata_char (VALUE class, VALUE hdata, VALUE pointer,
 
     API_RETURN_INT(value);
 }
-
-/*
- * weechat_ruby_api_hdata_integer: get integer value of a variable in structure
- *                                 using hdata
- */
 
 static VALUE
 weechat_ruby_api_hdata_integer (VALUE class, VALUE hdata, VALUE pointer,
@@ -6331,11 +5496,6 @@ weechat_ruby_api_hdata_integer (VALUE class, VALUE hdata, VALUE pointer,
     API_RETURN_INT(value);
 }
 
-/*
- * weechat_ruby_api_hdata_long: get long value of a variable in structure using
- *                              hdata
- */
-
 static VALUE
 weechat_ruby_api_hdata_long (VALUE class, VALUE hdata, VALUE pointer,
                              VALUE name)
@@ -6361,11 +5521,6 @@ weechat_ruby_api_hdata_long (VALUE class, VALUE hdata, VALUE pointer,
 
     API_RETURN_LONG(value);
 }
-
-/*
- * weechat_ruby_api_hdata_string: get string value of a variable in structure
- *                                using hdata
- */
 
 static VALUE
 weechat_ruby_api_hdata_string (VALUE class, VALUE hdata, VALUE pointer,
@@ -6393,11 +5548,6 @@ weechat_ruby_api_hdata_string (VALUE class, VALUE hdata, VALUE pointer,
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat_ruby_api_hdata_pointer: get pointer value of a variable in structure
- *                                 using hdata
- */
-
 static VALUE
 weechat_ruby_api_hdata_pointer (VALUE class, VALUE hdata, VALUE pointer,
                                 VALUE name)
@@ -6423,11 +5573,6 @@ weechat_ruby_api_hdata_pointer (VALUE class, VALUE hdata, VALUE pointer,
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_ruby_api_hdata_time: get time value of a variable in structure using
- *                              hdata
- */
 
 static VALUE
 weechat_ruby_api_hdata_time (VALUE class, VALUE hdata, VALUE pointer,
@@ -6459,11 +5604,6 @@ weechat_ruby_api_hdata_time (VALUE class, VALUE hdata, VALUE pointer,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_ruby_api_hdata_hashtable: get hashtable value of a variable in
- *                                   structure using hdata
- */
-
 static VALUE
 weechat_ruby_api_hdata_hashtable (VALUE class, VALUE hdata, VALUE pointer,
                                   VALUE name)
@@ -6490,10 +5630,6 @@ weechat_ruby_api_hdata_hashtable (VALUE class, VALUE hdata, VALUE pointer,
 
     return result_hash;
 }
-
-/*
- * weechat_ruby_api_hdata_update: update data in a hdata
- */
 
 static VALUE
 weechat_ruby_api_hdata_update (VALUE class, VALUE hdata, VALUE pointer,
@@ -6528,10 +5664,6 @@ weechat_ruby_api_hdata_update (VALUE class, VALUE hdata, VALUE pointer,
     API_RETURN_INT(value);
 }
 
-/*
- * weechat_ruby_api_hdata_get_string: get hdata property as string
- */
-
 static VALUE
 weechat_ruby_api_hdata_get_string (VALUE class, VALUE hdata, VALUE property)
 {
@@ -6553,10 +5685,6 @@ weechat_ruby_api_hdata_get_string (VALUE class, VALUE hdata, VALUE property)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat_ruby_api_upgrade_new: create an upgrade file
- */
 
 static VALUE
 weechat_ruby_api_upgrade_new (VALUE class, VALUE filename, VALUE write)
@@ -6580,10 +5708,6 @@ weechat_ruby_api_upgrade_new (VALUE class, VALUE filename, VALUE write)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_ruby_api_upgrade_write_object: write object in upgrade file
- */
 
 static VALUE
 weechat_ruby_api_upgrade_write_object (VALUE class, VALUE upgrade_file,
@@ -6610,10 +5734,6 @@ weechat_ruby_api_upgrade_write_object (VALUE class, VALUE upgrade_file,
 
     API_RETURN_INT(rc);
 }
-
-/*
- * weechat_ruby_api_upgrade_read_cb: callback for reading object in upgrade file
- */
 
 int
 weechat_ruby_api_upgrade_read_cb (void *data,
@@ -6660,10 +5780,6 @@ weechat_ruby_api_upgrade_read_cb (void *data,
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat_ruby_api_upgrade_read: read upgrade file
- */
-
 static VALUE
 weechat_ruby_api_upgrade_read (VALUE class, VALUE upgrade_file,
                                VALUE function, VALUE data)
@@ -6693,10 +5809,6 @@ weechat_ruby_api_upgrade_read (VALUE class, VALUE upgrade_file,
     API_RETURN_INT(rc);
 }
 
-/*
- * weechat_ruby_api_upgrade_close: close upgrade file
- */
-
 static VALUE
 weechat_ruby_api_upgrade_close (VALUE class, VALUE upgrade_file)
 {
@@ -6716,7 +5828,7 @@ weechat_ruby_api_upgrade_close (VALUE class, VALUE upgrade_file)
 }
 
 /*
- * weechat_ruby_api_init: init Ruby API: add variables and functions
+ * Initializes ruby functions and constants.
  */
 
 void

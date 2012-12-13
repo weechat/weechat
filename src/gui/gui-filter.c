@@ -49,9 +49,12 @@ int gui_filters_enabled = 1;                       /* filters enabled?      */
 
 
 /*
- * gui_filter_line_has_tag_no_filter: return 1 if line has tag "no_filter",
- *                                    which means that line should never
- *                                    been filtered (always displayed)
+ * Checks if a line has tag "no_filter" (which means that line should never been
+ * filtered: it is always displayed).
+ *
+ * Returns:
+ *   1: line has tag "no_filter"
+ *   0: line does not have tag "no_filter"
  */
 
 int
@@ -70,8 +73,11 @@ gui_filter_line_has_tag_no_filter (struct t_gui_line *line)
 }
 
 /*
- * gui_filter_check_line: return 1 if a line should be displayed, or
- *                        0 if line is hidden (tag or regex found)
+ * Checks if a line must be displayed or not (filtered).
+ *
+ * Returns:
+ *   1: line must be displayed (not filtered)
+ *   0: line must be hidden (filtered)
  */
 
 int
@@ -126,7 +132,7 @@ gui_filter_check_line (struct t_gui_line *line)
 }
 
 /*
- * gui_filter_buffer: filter a buffer, using message filters
+ * Filters a buffer, using message filters.
  */
 
 void
@@ -169,7 +175,7 @@ gui_filter_buffer (struct t_gui_buffer *buffer)
 }
 
 /*
- * gui_filter_all_buffers: filter all buffers, using message filters
+ * Filters all buffers, using message filters.
  */
 
 void
@@ -185,7 +191,7 @@ gui_filter_all_buffers ()
 }
 
 /*
- * gui_filter_global_enable: enable message filtering
+ * Enables message filtering.
  */
 
 void
@@ -201,7 +207,7 @@ gui_filter_global_enable ()
 }
 
 /*
- * gui_filter_global_disable: disable message filtering
+ * Disables message filtering.
  */
 
 void
@@ -217,7 +223,9 @@ gui_filter_global_disable ()
 }
 
 /*
- * gui_filter_search_by_name: search a filter by name
+ * Searches for a filter by name.
+ *
+ * Returns pointer to filter found, NULL if not found.
  */
 
 struct t_gui_filter *
@@ -237,7 +245,9 @@ gui_filter_search_by_name (const char *name)
 }
 
 /*
- * gui_filter_new: create a new filter
+ * Creates a new filter.
+ *
+ * Returns pointer to new filter, NULL if error.
  */
 
 struct t_gui_filter *
@@ -357,7 +367,11 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
 }
 
 /*
- * gui_filter_rename: rename a filter
+ * Renames a filter.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -376,7 +390,7 @@ gui_filter_rename (struct t_gui_filter *filter, const char *new_name)
 }
 
 /*
- * gui_filter_free: remove a filter
+ * Removes a filter.
  */
 
 void
@@ -425,7 +439,7 @@ gui_filter_free (struct t_gui_filter *filter)
 }
 
 /*
- * gui_filter_free_all: remove all filters
+ * Removes all filters.
  */
 
 void
@@ -438,7 +452,7 @@ gui_filter_free_all ()
 }
 
 /*
- * gui_filter_hdata_filter_cb: return hdata for filter
+ * Returns hdata for filter.
  */
 
 struct t_hdata *
@@ -473,8 +487,11 @@ gui_filter_hdata_filter_cb (void *data, const char *hdata_name)
 }
 
 /*
- * gui_filter_add_to_infolist: add a filter in an infolist
- *                             return 1 if ok, 0 if error
+ * Add a filter in an infolist.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -516,7 +533,7 @@ gui_filter_add_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * gui_filter_print_log: print filter infos in log (usually for crash dump)
+ * Prints filter infos in WeeChat log file (usually for crash dump).
  */
 
 void

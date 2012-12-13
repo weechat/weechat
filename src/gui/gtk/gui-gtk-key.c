@@ -37,7 +37,7 @@
 
 
 /*
- * gui_key_default_bindings: create default key bindings
+ * Creates default key bindings.
  */
 
 void
@@ -48,7 +48,7 @@ gui_key_default_bindings (int context)
 }
 
 /*
- * gui_key_read: read keyboard chars
+ * Reads keyboard chars.
  */
 
 void

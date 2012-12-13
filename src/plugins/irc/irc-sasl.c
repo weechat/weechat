@@ -38,9 +38,9 @@ char *irc_sasl_mechanism_string[IRC_NUM_SASL_MECHANISMS] =
 
 
 /*
- * irc_sasl_mechanism_plain: build answer for SASL authentication, using
- *                           mechanism "PLAIN"
- *                           Note: result must be freed after use
+ * Builds answer for SASL authentication, using mechanism "PLAIN".
+ *
+ * Note: result must be freed after use.
  */
 
 char *
@@ -71,16 +71,15 @@ irc_sasl_mechanism_plain (const char *sasl_username, const char *sasl_password)
 }
 
 /*
- * irc_sasl_mechanism_dh_blowfish: build answer for SASL authentication, using
- *                                 mechanism "DH-BLOWFISH"
- *                                 Note: result must be freed after use
+ * Builds answer for SASL authentication, using mechanism "DH-BLOWFISH".
  *
- *                                 data_base64 is a concatenation of 3 strings,
- *                                 each string is composed of 2 bytes (length
- *                                 of string), followed by content of string:
- *                                   1. a prime number
- *                                   2. a generator number
- *                                   3. server-generated public key
+ * Argument data_base64 is a concatenation of 3 strings, each string is composed
+ * of 2 bytes (length of string), followed by content of string:
+ *   1. a prime number
+ *   2. a generator number
+ *   3. server-generated public key
+ *
+ * Note: result must be freed after use.
  */
 
 char *

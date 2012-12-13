@@ -38,7 +38,7 @@ int xfer_buffer_selected_line = 0;
 
 
 /*
- * xfer_buffer_refresh: update a xfer in buffer and update hotlist for xfer buffer
+ * Updates a xfer in buffer and updates hotlist for xfer buffer.
  */
 
 void
@@ -244,8 +244,7 @@ xfer_buffer_refresh (const char *hotlist)
 }
 
 /*
- * xfer_buffer_input_cb: callback called when user send data to xfer list
- *                       buffer
+ * Callback called when user send data to xfer list buffer.
  */
 
 int
@@ -309,7 +308,7 @@ xfer_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
- * xfer_buffer_close_cb: callback called when xfer buffer is closed
+ * Callback called when xfer buffer is closed.
  */
 
 int
@@ -325,7 +324,7 @@ xfer_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
 }
 
 /*
- * xfer_buffer_open: open xfer buffer (to display list of xfer)
+ * Opens xfer buffer (to display list of xfer).
  */
 
 void

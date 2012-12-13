@@ -70,8 +70,7 @@ char *alias_default_list[][2] =
 
 
 /*
- * alias_config_cmd_change_cb: callback called when alias option is modified
- *                             in section "cmd" (command)
+ * Callback for changes on options in section "cmd" (command).
  */
 
 void
@@ -93,8 +92,7 @@ alias_config_cmd_change_cb (void *data, struct t_config_option *option)
 }
 
 /*
- * alias_config_cmd_delete_cb: callback called when alias option is deleted
- *                             in section "cmd" (command)
+ * Callback called when an option is deleted in section "cmd" (command).
  */
 
 void
@@ -119,8 +117,7 @@ alias_config_cmd_delete_cb (void *data, struct t_config_option *option)
 }
 
 /*
- * alias_config_completion_change_cb: callback called when alias completion is
- *                                    modified in section "completion"
+ * Callback for changes on options in section "completion".
  */
 
 void
@@ -140,8 +137,7 @@ alias_config_completion_change_cb (void *data, struct t_config_option *option)
 }
 
 /*
- * alias_config_completion_delete_cb: callback called when alias completion is
- *                                    deleted in section "completion"
+ * Callback called when an option is deleted in section "completion".
  */
 
 void
@@ -160,7 +156,7 @@ alias_config_completion_delete_cb (void *data, struct t_config_option *option)
 }
 
 /*
- * alias_config_reload: reload alias configuration file
+ * Reloads alias configuration file.
  */
 
 int
@@ -177,8 +173,7 @@ alias_config_reload (void *data, struct t_config_file *config_file)
 }
 
 /*
- * alias_config_cmd_write_default_cb: write default aliases in configuration
- *                                    file in section "cmd" (command)
+ * Writes default aliases in configuration file in section "cmd" (command).
  */
 
 int
@@ -206,7 +201,7 @@ alias_config_cmd_write_default_cb (void *data,
 }
 
 /*
- * alias_config_cmd_new_option: create new option in section "cmd" (command)
+ * Creates a new option in section "cmd" (command).
  */
 
 void
@@ -221,8 +216,7 @@ alias_config_cmd_new_option (const char *name, const char *command)
 }
 
 /*
- * alias_config_cmd_create_option_cb: create an alias in section "cmd"
- *                                    (command)
+ * Callback called when an option is created in section "cmd" (command).
  */
 
 int
@@ -239,7 +233,7 @@ alias_config_cmd_create_option_cb (void *data,
     (void) config_file;
     (void) section;
 
-    /* create config option */
+    /* create configuration option */
     alias_config_cmd_new_option (option_name, value);
 
     /* create alias */
@@ -264,7 +258,7 @@ alias_config_cmd_create_option_cb (void *data,
 }
 
 /*
- * alias_config_completion_new_option: create new option in section "completion"
+ * Creates a new option in section "completion".
  */
 
 void
@@ -280,8 +274,7 @@ alias_config_completion_new_option (const char *name, const char *completion)
 }
 
 /*
- * alias_config_completion_create_option_cb: create a completion for an alias
- *                                           in section "completion"
+ * Callback called when an option is created in section "completion".
  */
 
 int
@@ -309,7 +302,7 @@ alias_config_completion_create_option_cb (void *data,
         return WEECHAT_CONFIG_OPTION_SET_ERROR;
     }
 
-    /* create config option */
+    /* create configuration option */
     alias_config_completion_new_option (option_name, value);
 
     /* create/update completion in alias */
@@ -319,8 +312,11 @@ alias_config_completion_create_option_cb (void *data,
 }
 
 /*
- * alias_config_init: init alias configuration file
- *                    return: 1 if ok, 0 if error
+ * Initializes alias configuration file.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -367,7 +363,7 @@ alias_config_init ()
 }
 
 /*
- * alias_config_read: read alias configuration file
+ * Reads alias configuration file.
  */
 
 int
@@ -377,7 +373,7 @@ alias_config_read ()
 }
 
 /*
- * alias_config_write: write alias configuration file
+ * Writes alias configuration file.
  */
 
 int

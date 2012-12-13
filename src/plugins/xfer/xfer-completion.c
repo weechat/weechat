@@ -31,7 +31,7 @@
 
 
 /*
- * xfer_completion_nick_cb: callback for completion with nick
+ * Adds nicks to completion list.
  */
 
 int
@@ -64,7 +64,7 @@ xfer_completion_nick_cb (void *data, const char *completion_item,
 }
 
 /*
- * xfer_completion_init: init completion for xfer plugin
+ * Hooks completion.
  */
 
 void

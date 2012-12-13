@@ -29,8 +29,7 @@
 
 
 /*
- * rmodifier_info_get_infolist_cb: callback called when rmodifier infolist is
- *                                 asked
+ * Returns infolist with rmodifier info.
  */
 
 struct t_infolist *
@@ -90,13 +89,12 @@ rmodifier_info_get_infolist_cb (void *data, const char *infolist_name,
 }
 
 /*
- * rmodifier_info_init: initialize info and infolist hooks for rmodifier plugin
+ * Hooks infolist.
  */
 
 void
 rmodifier_info_init ()
 {
-    /* rmodifier infolist hooks */
     weechat_hook_infolist ("rmodifier", N_("list of rmodifiers"),
                            N_("rmodifier pointer (optional)"),
                            N_("rmodifier name (can start or end with \"*\" as "

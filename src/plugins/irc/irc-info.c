@@ -39,8 +39,7 @@
 
 
 /*
- * irc_info_create_string_with_pointer: create a string with a pointer inside
- *                                      an IRC structure
+ * Creates a string with a pointer inside an IRC structure.
  */
 
 void
@@ -62,7 +61,7 @@ irc_info_create_string_with_pointer (char **string, void *pointer)
 }
 
 /*
- * irc_info_get_info_cb: callback called when IRC info is asked
+ * Returns IRC info.
  */
 
 const char *
@@ -243,8 +242,7 @@ irc_info_get_info_cb (void *data, const char *info_name,
 }
 
 /*
- * irc_info_get_info_hashtable_cb: callback called when IRC info_hashtable is
- *                                 asked
+ * Returns IRC info with hashtable.
  */
 
 struct t_hashtable *
@@ -288,7 +286,7 @@ irc_info_get_info_hashtable_cb (void *data, const char *info_name,
 }
 
 /*
- * irc_info_get_infolist_cb: callback called when IRC infolist is asked
+ * Returns infolist with IRC info.
  */
 
 struct t_infolist *
@@ -572,7 +570,7 @@ irc_info_get_infolist_cb (void *data, const char *infolist_name,
 }
 
 /*
- * irc_info_init: initialize info and infolist hooks for IRC plugin
+ * Hooks info, infolist, hdata IRC plugin.
  */
 
 void

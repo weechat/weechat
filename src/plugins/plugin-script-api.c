@@ -34,7 +34,7 @@
 
 
 /*
- * plugin_script_api_charset_set: set charset for script
+ * Sets charset for script.
  */
 
 void
@@ -48,8 +48,9 @@ plugin_script_api_charset_set (struct t_plugin_script *script,
 }
 
 /*
- * plugin_script_api_config_new: create a new configuration file
- *                               return new configuration file, NULL if error
+ * Creates a new configuration file.
+ *
+ * Returns pointer to new configuration file, NULL if error.
  */
 
 struct t_config_file *
@@ -79,9 +80,9 @@ plugin_script_api_config_new (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_config_new_section: create a new section in configuration
- *                                       file
- *                                       return new section, NULL if error
+ * Creates a new section in configuration file.
+ *
+ * Returns pointer to new section, NULL if error.
  */
 
 struct t_config_section *
@@ -188,8 +189,9 @@ plugin_script_api_config_new_section (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_config_new_option: create a new option in section
- *                                      return new option, NULL if error
+ * Creates a new option in section.
+ *
+ * Returns pointer to new option, NULL if error.
  */
 
 struct t_config_option *
@@ -268,7 +270,7 @@ plugin_script_api_config_new_option (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_config_option_free: free an option in configuration file
+ * Frees an option in configuration file.
  */
 
 void
@@ -296,8 +298,7 @@ plugin_script_api_config_option_free (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_config_section_free_options: free all options of a section in
- *                                                configuration file
+ * Frees all option of a section in configuration file.
  */
 
 void
@@ -326,7 +327,7 @@ plugin_script_api_config_section_free_options (struct t_weechat_plugin *weechat_
 }
 
 /*
- * plugin_script_api_config_section_free: free a section in configuration file
+ * Frees a section in configuration file.
  */
 
 void
@@ -354,7 +355,7 @@ plugin_script_api_config_section_free (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_config_free: free configuration file
+ * Frees a configuration file.
  */
 
 void
@@ -382,7 +383,7 @@ plugin_script_api_config_free (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_printf: print a message
+ * Prints a message.
  */
 
 void
@@ -406,8 +407,7 @@ plugin_script_api_printf (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_printf_date_tags: print a message with optional date and
- *                                     tags
+ * Prints a message with optional date and tags.
  */
 
 void
@@ -434,7 +434,7 @@ plugin_script_api_printf_date_tags (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_printf_y: print a message on a buffer with free content
+ * Prints a message on a buffer with free content.
  */
 
 void
@@ -459,7 +459,7 @@ plugin_script_api_printf_y (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_log_printf: add a message in WeeChat log file
+ * Prints a message in WeeChat log file.
  */
 
 void
@@ -483,8 +483,9 @@ plugin_script_api_log_printf (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_hook_command: hook a command
- *                                 return new hook, NULL if error
+ * Hooks a command.
+ *
+ * Returns pointer to new hook, NULL if error.
  */
 
 struct t_hook *
@@ -522,8 +523,9 @@ plugin_script_api_hook_command (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_hook_command_run: hook a command_run
- *                                     return new hook, NULL if error
+ * Hooks a command when it's run by WeeChat.
+ *
+ * Returns pointer to new hook, NULL if error.
  */
 
 struct t_hook *
@@ -557,8 +559,9 @@ plugin_script_api_hook_command_run (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_hook_timer: hook a timer
- *                               return new hook, NULL if error
+ * Hooks a timer.
+ *
+ * Returns pointer to new hook, NULL if error.
  */
 
 struct t_hook *
@@ -591,8 +594,9 @@ plugin_script_api_hook_timer (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_hook_fd: hook a fd
- *                            return new hook, NULL if error
+ * Hooks a fd event.
+ *
+ * Returns pointer to new hook, NULL if error.
  */
 
 struct t_hook *
@@ -625,8 +629,9 @@ plugin_script_api_hook_fd (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_hook_process_hashtable: hook a process
- *                                           return new hook, NULL if error
+ * Hooks a process (using fork) with options in hashtable.
+ *
+ * Returns pointer to new hook, NULL if error.
  */
 
 struct t_hook *
@@ -664,8 +669,9 @@ plugin_script_api_hook_process_hashtable (struct t_weechat_plugin *weechat_plugi
 }
 
 /*
- * plugin_script_api_hook_process: hook a process
- *                                 return new hook, NULL if error
+ * Hooks a process (using fork).
+ *
+ * Returns pointer to new hook, NULL if error.
  */
 
 struct t_hook *
@@ -687,8 +693,9 @@ plugin_script_api_hook_process (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_hook_connect: hook a connection
- *                                 return new hook, NULL if error
+ * Hooks a connection to a peer (using fork).
+ *
+ * Returns pointer to new hook, NULL if error.
  */
 
 struct t_hook *
@@ -730,8 +737,9 @@ plugin_script_api_hook_connect (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_hook_print: hook a print
- *                               return new hook, NULL if error
+ * Hooks a message printed by WeeChat.
+ *
+ * Returns pointer to new hook, NULL if error.
  */
 
 struct t_hook *
@@ -771,8 +779,9 @@ plugin_script_api_hook_print (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_hook_signal: hook a signal
- *                                return new hook, NULL if error
+ * Hooks a signal.
+ *
+ * Returns pointer to new hook, NULL if error.
  */
 
 struct t_hook *
@@ -805,8 +814,9 @@ plugin_script_api_hook_signal (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_hook_hsignal: hook a hsignal
- *                                 return new hook, NULL if error
+ * Hooks a hsignal (signal with hashtable).
+ *
+ * Returns pointer to new hook, NULL if error.
  */
 
 struct t_hook *
@@ -838,8 +848,9 @@ plugin_script_api_hook_hsignal (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_hook_config: hook a config option
- *                                return new hook, NULL if error
+ * Hooks a configuration option.
+ *
+ * Returns pointer to new hook, NULL if error.
  */
 
 struct t_hook *
@@ -871,8 +882,9 @@ plugin_script_api_hook_config (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_hook_completion: hook a completion
- *                                    return new hook, NULL if error
+ * Hooks a completion.
+ *
+ * Returns pointer to new hook, NULL if error.
  */
 
 struct t_hook *
@@ -908,8 +920,9 @@ plugin_script_api_hook_completion (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_hook_modifier: hook a modifier
- *                                  return new hook, NULL if error
+ * Hooks a modifier.
+ *
+ * Returns pointer to new hook, NULL if error.
  */
 
 struct t_hook *
@@ -942,8 +955,9 @@ plugin_script_api_hook_modifier (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_hook_info: hook an info
- *                              return new hook, NULL if error
+ * Hooks an info.
+ *
+ * Returns pointer to new hook, NULL if error.
  */
 
 struct t_hook *
@@ -979,8 +993,9 @@ plugin_script_api_hook_info (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_hook_info_hashtable: hook an info_hashtable
- *                                        return new hook, NULL if error
+ * Hooks an info using hashtable.
+ *
+ * Returns pointer to new hook, NULL if error.
  */
 
 struct t_hook *
@@ -1019,8 +1034,9 @@ plugin_script_api_hook_info_hashtable (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_hook_infolist: hook an infolist
- *                                  return new hook, NULL if error
+ * Hooks an infolist.
+ *
+ * Returns pointer to new hook, NULL if error.
  */
 
 struct t_hook *
@@ -1059,8 +1075,9 @@ plugin_script_api_hook_infolist (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_hook_focus: hook a focus
- *                               return new hook, NULL if error
+ * Hooks a focus.
+ *
+ * Returns pointer to new hook, NULL if error.
  */
 
 struct t_hook *
@@ -1092,7 +1109,7 @@ plugin_script_api_hook_focus (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_unhook: unhook something
+ * Unhooks something.
  */
 
 void
@@ -1120,7 +1137,7 @@ plugin_script_api_unhook (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_unhook_all: remove all hooks from a script
+ * Unhooks everything for a script.
  */
 
 void
@@ -1145,7 +1162,7 @@ plugin_script_api_unhook_all (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_buffer_new: create a new buffer
+ * Creates a new buffer.
  */
 
 struct t_gui_buffer *
@@ -1204,7 +1221,7 @@ plugin_script_api_buffer_new (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_buffer_close: close a buffer
+ * Closes a buffer.
  */
 
 void
@@ -1232,7 +1249,9 @@ plugin_script_api_buffer_close (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_bar_item_new: add a new bar item
+ * Adds a new bar item.
+ *
+ * Returns pointer to new bar item, NULL if error.
  */
 
 struct t_gui_bar_item *
@@ -1264,7 +1283,7 @@ plugin_script_api_bar_item_new (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_bar_item_remove: remove a bar item
+ * Removes a bar item.
  */
 
 void
@@ -1292,7 +1311,7 @@ plugin_script_api_bar_item_remove (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_command: execute a command (simulate user entry)
+ * Executes a command on a buffer (simulates user entry).
  */
 
 void
@@ -1312,8 +1331,7 @@ plugin_script_api_command (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_config_get_plugin: get a value of a script option
- *                                      format in file is "plugin.script.option"
+ * Gets value of a script option (format in file is "plugin.script.option").
  */
 
 const char *
@@ -1340,7 +1358,11 @@ plugin_script_api_config_get_plugin (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_config_is_set_plugin: check if a script option is set
+ * Checks if a script option is set.
+ *
+ * Returns:
+ *   1: script option is set
+ *   0: script option does not exist
  */
 
 int
@@ -1367,8 +1389,7 @@ plugin_script_api_config_is_set_plugin (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_config_set_plugin: set value of a script config option
- *                                      format in file is "plugin.script.option"
+ * Sets value of a script option (format in file is "plugin.script.option").
  */
 
 int
@@ -1395,8 +1416,7 @@ plugin_script_api_config_set_plugin (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_config_set_plugin: set value of a script config option
- *                                      format in file is "plugin.script.option"
+ * Sets description of a script option.
  */
 
 void
@@ -1420,8 +1440,7 @@ plugin_script_api_config_set_desc_plugin (struct t_weechat_plugin *weechat_plugi
 }
 
 /*
- * plugin_script_api_config_unset_plugin: unset script config option
- *                                        format in file is "plugin.script.option"
+ * Unsets a script option.
  */
 
 int
@@ -1448,8 +1467,11 @@ plugin_script_api_config_unset_plugin (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * plugin_script_api_upgrade_read: read upgrade file
- *                                 return 1 if ok, 0 if error
+ * Reads upgrade file.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int

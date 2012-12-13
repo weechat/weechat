@@ -75,9 +75,11 @@ void gui_bar_free_bar_windows (struct t_gui_bar *bar);
 
 
 /*
- * gui_bar_valid: check if a bar pointer exists
- *                return 1 if bar exists
- *                       0 if bar is not found
+ * Checks if a bar pointer is valid.
+ *
+ * Returns:
+ *   1: bar exists
+ *   0: bar does not exist
  */
 
 int
@@ -99,9 +101,9 @@ gui_bar_valid (struct t_gui_bar *bar)
 }
 
 /*
- * gui_bar_search_option search a bar option name
- *                       return index of option in array
- *                       "gui_bar_option_string", or -1 if not found
+ * Searches for a bar option name.
+ *
+ * Returns index of option in enum t_gui_bar_option, -1 if not found.
  */
 
 int
@@ -123,8 +125,9 @@ gui_bar_search_option (const char *option_name)
 }
 
 /*
- * gui_bar_search_type: search type number with string
- *                      return -1 if type is not found
+ * Searches for a bar type.
+ *
+ * Returns index of type in enum t_gui_bar_type, -1 if not found.
  */
 
 int
@@ -146,8 +149,9 @@ gui_bar_search_type (const char *type)
 }
 
 /*
- * gui_bar_search_position: search position number with string
- *                          return -1 if type is not found
+ * Searches for a bar position.
+ *
+ * Returns index of position in enum t_gui_bar_position, -1 if not found.
  */
 
 int
@@ -169,10 +173,10 @@ gui_bar_search_position (const char *position)
 }
 
 /*
- * gui_bar_get_min_width: return minimum width of a bar window displayed for
- *                        a bar
- *                        for example, if a bar is displayed in 3 windows,
- *                        this function return min width of these 3 bar windows
+ * Returns minimum width of a bar window displayed for a bar.
+ *
+ * For example, if a bar is displayed in 3 windows, this function returns min
+ * width of these 3 bar windows.
  */
 
 int
@@ -206,10 +210,10 @@ gui_bar_get_min_width (struct t_gui_bar *bar)
 }
 
 /*
- * gui_bar_get_min_height: return minimum height of a bar window displayed for
- *                         a bar
- *                         for example, if a bar is displayed in 3 windows,
- *                         this function return min width of these 3 bar windows
+ * Returns minimum height of a bar window displayed for a bar.
+ *
+ * For example, if a bar is displayed in 3 windows, this function returns min
+ * width of these 3 bar windows.
  */
 
 int
@@ -243,9 +247,11 @@ gui_bar_get_min_height (struct t_gui_bar *bar)
 }
 
 /*
- * gui_bar_check_size_add: check if "add_size" is ok for bar
- *                         return 1 if new size is ok
- *                                0 if new size is too big
+ * Checks if "add_size" is ok for bar.
+ *
+ * Returns:
+ *   1: new size is OK
+ *   0: new size is too big
  */
 
 int
@@ -288,8 +294,8 @@ gui_bar_check_size_add (struct t_gui_bar *bar, int add_size)
 }
 
 /*
- * gui_bar_get_filling: return filling option for bar, according to filling
- *                      for current bar position
+ * Returns filling option for bar, according to filling for current bar
+ * position.
  */
 
 enum t_gui_bar_filling
@@ -303,8 +309,7 @@ gui_bar_get_filling (struct t_gui_bar *bar)
 }
 
 /*
- * gui_bar_find_pos: find position for a bar in list (keeping list sorted
- *                   by priority)
+ * Searches for position of a bar in list (to keep list sorted by priority).
  */
 
 struct t_gui_bar *
@@ -323,8 +328,7 @@ gui_bar_find_pos (struct t_gui_bar *bar)
 }
 
 /*
- * gui_bar_insert: insert a bar to the list (at good position, according to
- *                 priority)
+ * Inserts a bar to the list (at good position, according to priority).
  */
 
 void
@@ -365,9 +369,11 @@ gui_bar_insert (struct t_gui_bar *bar)
 }
 
 /*
- * gui_bar_check_conditions_for_window: return 1 if bar should be displayed in
- *                                      this window, according to condition(s)
- *                                      on bar
+ * Checks if bar must be displayed in window according to conditions.
+ *
+ * Returns:
+ *   1: bar must be displayed
+ *   0: bar must not be displayed
  */
 
 int
@@ -460,7 +466,7 @@ gui_bar_check_conditions_for_window (struct t_gui_bar *bar,
 }
 
 /*
- * gui_bar_root_get_size: get total bar size ("root" type) for a position
+ * Gets total bar size ("root" type) for a position.
  */
 
 int
@@ -490,7 +496,9 @@ gui_bar_root_get_size (struct t_gui_bar *bar, enum t_gui_bar_position position)
 }
 
 /*
- * gui_bar_search: search a bar by name
+ * Searches for a bar by name.
+ *
+ * Returns pointer to bar found, NULL if not found.
  */
 
 struct t_gui_bar *
@@ -512,8 +520,9 @@ gui_bar_search (const char *name)
 }
 
 /*
- * gui_bar_search_with_option_name: search a bar with name of option
- *                                  (like "uptime.type")
+ * Searches for a bar with name of option (like "status.type").
+ *
+ * Returns pointer to bar found, NULL if not found.
  */
 
 struct t_gui_bar *
@@ -543,7 +552,7 @@ gui_bar_search_with_option_name (const char *option_name)
 }
 
 /*
- * gui_bar_content_build_bar_windows: rebuild content of bar windows for a bar
+ * Rebuilds content of bar windows for a bar.
  */
 
 void
@@ -575,7 +584,7 @@ gui_bar_content_build_bar_windows (struct t_gui_bar *bar)
 }
 
 /*
- * gui_bar_ask_refresh: ask refresh for bar
+ * Asks refresh for bar.
  */
 
 void
@@ -585,7 +594,7 @@ gui_bar_ask_refresh (struct t_gui_bar *bar)
 }
 
 /*
- * gui_bar_refresh: ask for bar refresh on screen (for all windows where bar is)
+ * Asks for bar refresh on screen (for all windows where bar is).
  */
 
 void
@@ -606,7 +615,7 @@ gui_bar_refresh (struct t_gui_bar *bar)
 }
 
 /*
- * gui_bar_draw: draw a bar
+ * Draws a bar.
  */
 
 void
@@ -642,7 +651,7 @@ gui_bar_draw (struct t_gui_bar *bar)
 }
 
 /*
- * gui_bar_apply_current_size: apply new size for all bar windows of bar
+ * Applies new size for all bar windows of bar.
  */
 
 void
@@ -677,7 +686,7 @@ gui_bar_apply_current_size (struct t_gui_bar *bar)
 }
 
 /*
- * gui_bar_free_items_arrays: free arrays with items for a bar
+ * Frees arrays with items for a bar.
  */
 
 void
@@ -734,7 +743,7 @@ gui_bar_free_items_arrays (struct t_gui_bar *bar)
 }
 
 /*
- * gui_bar_set_items_array: build array with items for a bar
+ * Builds array with items for a bar.
  */
 
 void
@@ -783,7 +792,9 @@ gui_bar_set_items_array (struct t_gui_bar *bar, const char *items)
 }
 
 /*
- * gui_bar_config_check_type: callback for checking bar type before changing it
+ * Callback for checking bar type before changing it.
+ *
+ * Returns always 0 because changing the type of a bar is not allowed.
  */
 
 int
@@ -803,7 +814,7 @@ gui_bar_config_check_type (void *data, struct t_config_option *option,
 }
 
 /*
- * gui_bar_config_change_hidden: callback when "hidden" flag is changed
+ * Callback called when "hidden" flag is changed.
  */
 
 void
@@ -864,7 +875,7 @@ gui_bar_config_change_hidden (void *data, struct t_config_option *option)
 }
 
 /*
- * gui_bar_config_change_priority: callback when priority is changed
+ * Callback called when "priority" is changed.
  */
 
 void
@@ -919,7 +930,7 @@ gui_bar_config_change_priority (void *data, struct t_config_option *option)
 }
 
 /*
- * gui_bar_config_change_conditions: callback when conditions is changed
+ * Callback called when "conditions" is changed.
  */
 
 void
@@ -933,7 +944,7 @@ gui_bar_config_change_conditions (void *data, struct t_config_option *option)
 }
 
 /*
- * gui_bar_config_change_position: callback when position is changed
+ * Callback called when "position" is changed.
  */
 
 void
@@ -952,7 +963,7 @@ gui_bar_config_change_position (void *data, struct t_config_option *option)
 }
 
 /*
- * gui_bar_config_change_filling: callback when filling is changed
+ * Callback called when "filling" is changed.
  */
 
 void
@@ -971,7 +982,11 @@ gui_bar_config_change_filling (void *data, struct t_config_option *option)
 }
 
 /*
- * gui_bar_config_check_size: callback for checking bar size before changing it
+ * Callback for checking bar size before changing it.
+ *
+ * Returns:
+ *   1: new size is OK
+ *   0: new size is NOT OK
  */
 
 int
@@ -1037,7 +1052,7 @@ gui_bar_config_check_size (void *data, struct t_config_option *option,
 }
 
 /*
- * gui_bar_config_change_size: callback when size is changed
+ * Callback called when "size" is changed.
  */
 
 void
@@ -1057,7 +1072,7 @@ gui_bar_config_change_size (void *data, struct t_config_option *option)
 }
 
 /*
- * gui_bar_config_change_size_max: callback when max size is changed
+ * Callback called when "size_max" is changed.
  */
 
 void
@@ -1086,7 +1101,7 @@ gui_bar_config_change_size_max (void *data, struct t_config_option *option)
 }
 
 /*
- * gui_bar_config_change_color: callback when color (fg or bg) is changed
+ * Callback when color (fg or bg) is changed.
  */
 
 void
@@ -1103,7 +1118,7 @@ gui_bar_config_change_color (void *data, struct t_config_option *option)
 }
 
 /*
- * gui_bar_config_change_separator: callback when separator is changed
+ * Callback called when "separator" is changed.
  */
 
 void
@@ -1120,7 +1135,7 @@ gui_bar_config_change_separator (void *data, struct t_config_option *option)
 }
 
 /*
- * gui_bar_config_change_items: callback when items is changed
+ * Callback called when "items" is changed.
  */
 
 void
@@ -1142,7 +1157,7 @@ gui_bar_config_change_items (void *data, struct t_config_option *option)
 }
 
 /*
- * gui_bar_set_name: set name for a bar
+ * Sets name for a bar.
  */
 
 void
@@ -1196,8 +1211,11 @@ gui_bar_set_name (struct t_gui_bar *bar, const char *name)
 }
 
 /*
- * gui_bar_set: set a property for a bar
- *              return: 1 if ok, 0 if error
+ * Sets a property for a bar.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -1288,10 +1306,10 @@ gui_bar_set (struct t_gui_bar *bar, const char *property, const char *value)
 }
 
 /*
- * gui_bar_default_items: return default items for a bar name
- *                        default bars (input, title, status, nicklist) have
- *                        default items, all other bars have empty default
- *                        items
+ * Returns default items for a bar name.
+ *
+ * Default bars (input, title, status, nicklist) have default items, all other
+ * bars have empty default items.
  */
 
 const char *
@@ -1311,7 +1329,9 @@ gui_bar_default_items (const char *bar_name)
 }
 
 /*
- * gui_bar_create_option: create an option for a bar
+ * Creates an option for a bar.
+ *
+ * Returns pointer to new option, NULL if error.
  */
 
 struct t_config_option *
@@ -1479,8 +1499,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
 }
 
 /*
- * gui_bar_create_option_temp: create option for a temporary bar (when reading
- *                             config file)
+ * Creates option for a temporary bar (when reading configuration file).
  */
 
 void
@@ -1543,7 +1562,9 @@ gui_bar_create_option_temp (struct t_gui_bar *temp_bar, int index_option,
 }
 
 /*
- * gui_bar_alloc: allocate and initialize new bar structure
+ * Allocates and initializes new bar structure.
+ *
+ * Returns pointer to new bar, NULL if error.
  */
 
 struct t_gui_bar *
@@ -1575,7 +1596,9 @@ gui_bar_alloc (const char *name)
 }
 
 /*
- * gui_bar_new_with_options: create a new bar with options
+ * Creates a new bar with options.
+ *
+ * Returns pointer to new bar, NULL if error.
  */
 
 struct t_gui_bar *
@@ -1651,7 +1674,9 @@ gui_bar_new_with_options (const char *name,
 }
 
 /*
- * gui_bar_new: create a new bar
+ * Creates a new bar.
+ *
+ * Returns pointer to new bar, NULL if error.
  */
 
 struct t_gui_bar *
@@ -1760,7 +1785,7 @@ gui_bar_new (const char *name, const char *hidden, const char *priority,
 }
 
 /*
- * gui_bar_use_temp_bars: use temp bars (created by reading config file)
+ * Uses temporary bars (created by reading configuration file).
  */
 
 void
@@ -1831,7 +1856,7 @@ gui_bar_use_temp_bars ()
 }
 
 /*
- * gui_bar_create_default_input: create default input bar if it does not exist
+ * Creates default input bar if it does not exist.
  */
 
 void
@@ -1895,7 +1920,7 @@ gui_bar_create_default_input ()
 }
 
 /*
- * gui_bar_create_default_title: create default title bar if it does not exist
+ * Creates default title bar if it does not exist.
  */
 
 void
@@ -1931,7 +1956,7 @@ gui_bar_create_default_title ()
 }
 
 /*
- * gui_bar_create_default_status: create default status bar if it does not exist
+ * Creates default status bar if it does not exist.
  */
 
 void
@@ -1967,7 +1992,7 @@ gui_bar_create_default_status ()
 }
 
 /*
- * gui_bar_create_default_nicklist: create default nicklist bar if it does not exist
+ * Creates default nicklist bar if it does not exist.
  */
 
 void
@@ -2003,7 +2028,7 @@ gui_bar_create_default_nicklist ()
 }
 
 /*
- * gui_bar_create_default: create default bars if they do not exist
+ * Creates default bars if they do not exist.
  */
 
 void
@@ -2016,7 +2041,7 @@ gui_bar_create_default ()
 }
 
 /*
- * gui_bar_update: update a bar on screen
+ * Updates a bar on screen.
  */
 
 void
@@ -2035,8 +2060,11 @@ gui_bar_update (const char *name)
 }
 
 /*
- * gui_bar_scroll: scroll a bar
- *                 return 1 if scroll is ok, 0 if error
+ * Scrolls a bar.
+ *
+ * Returns:
+ *   1: scroll OK
+ *   0: error
  */
 
 int
@@ -2151,7 +2179,7 @@ gui_bar_scroll (struct t_gui_bar *bar, struct t_gui_window *window,
 }
 
 /*
- * gui_bar_free: delete a bar
+ * Deletes a bar.
  */
 
 void
@@ -2195,7 +2223,7 @@ gui_bar_free (struct t_gui_bar *bar)
 }
 
 /*
- * gui_bar_free_all: delete all bars
+ * Deletes all bars.
  */
 
 void
@@ -2208,7 +2236,7 @@ gui_bar_free_all ()
 }
 
 /*
- * gui_bar_free_bar_windows: free bar windows for a bar
+ * Frees bar windows for a bar.
  */
 
 void
@@ -2241,7 +2269,7 @@ gui_bar_free_bar_windows (struct t_gui_bar *bar)
 }
 
 /*
- * gui_bar_hdata_bar_cb: return hdata for bar
+ * Returns hdata for bar.
  */
 
 struct t_hdata *
@@ -2275,8 +2303,11 @@ gui_bar_hdata_bar_cb (void *data, const char *hdata_name)
 }
 
 /*
- * gui_bar_add_to_infolist: add a bar in an infolist
- *                          return 1 if ok, 0 if error
+ * Adds a bar in an infolist.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -2354,7 +2385,7 @@ gui_bar_add_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * gui_bar_print_log: print bar infos in log (usually for crash dump)
+ * Prints bar infos in WeeChat log file (usually for crash dump).
  */
 
 void

@@ -31,8 +31,8 @@
 
 
 /*
- * weechat_aspell_bar_item_dict: bar item with aspell dictionary used on
- *                               current buffer
+ * Returns content of bar item "aspell_dict": aspell dictionary used on current
+ * buffer.
  */
 
 char *
@@ -61,7 +61,7 @@ weechat_aspell_bar_item_dict (void *data, struct t_gui_bar_item *item,
 }
 
 /*
- * weechat_aspell_bar_item_suggest: bar item with aspell suggestions
+ * Returns content of bar item "aspell_suggest": aspell suggestions.
  */
 
 char *
@@ -104,7 +104,7 @@ weechat_aspell_bar_item_suggest (void *data, struct t_gui_bar_item *item,
 }
 
 /*
- * weechat_aspell_bar_item_init: initialize aspell bar items
+ * Initializes aspell bar items.
  */
 
 void

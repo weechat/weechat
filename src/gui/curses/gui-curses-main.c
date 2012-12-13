@@ -63,8 +63,9 @@ int gui_reload_config = 0;
 int gui_term_cols = 0;
 int gui_term_lines = 0;
 
+
 /*
- * gui_main_pre_init: pre-initialize GUI (called before gui_init)
+ * Pre-initializes GUI (called before gui_init).
  */
 
 void
@@ -82,7 +83,7 @@ gui_main_pre_init (int *argc, char **argv[])
 }
 
 /*
- * gui_main_init: init GUI
+ * Initializes GUI.
  */
 
 void
@@ -104,7 +105,7 @@ gui_main_init ()
 
     gui_color_init ();
 
-    /* build prefixes according to config */
+    /* build prefixes according to configuration */
     gui_chat_prefix_build ();
 
     refresh ();
@@ -182,7 +183,7 @@ gui_main_init ()
 }
 
 /*
- * gui_main_signal_sigquit: quit WeeChat
+ * Callback for system signal SIGQUIT: quits WeeChat.
  */
 
 void
@@ -195,7 +196,7 @@ gui_main_signal_sigquit ()
 }
 
 /*
- * gui_main_signal_sigterm: quit WeeChat
+ * Callback for system signal SIGTERM: quits WeeChat.
  */
 
 void
@@ -208,7 +209,7 @@ gui_main_signal_sigterm ()
 }
 
 /*
- * gui_main_signal_sighup: reload WeeChat configuration
+ * Callback for system signal SIGHUP: reloads WeeChat configuration.
  */
 
 void
@@ -217,14 +218,14 @@ gui_main_signal_sighup ()
     /*
      * SIGHUP signal is received when terminal is closed (exit of WeeChat
      * without using /quit command), that's why we set only flag to reload
-     * config files later (when terminal is closed, config files are NOT
+     * configuration files later (when terminal is closed, config files are NOT
      * reloaded, but they are if signal SIGHUP is sent to WeeChat by user)
      */
     gui_reload_config = 1;
 }
 
 /*
- * gui_main_signal_sigwinch: called when signal SIGWINCH is received
+ * Callback for system signal SIGWINCH: refreshes screen.
  */
 
 void
@@ -234,7 +235,7 @@ gui_main_signal_sigwinch ()
 }
 
 /*
- * gui_main_refreshs: refreshs for windows, buffers, bars
+ * Refreshs for windows, buffers, bars.
  */
 
 void
@@ -304,7 +305,7 @@ gui_main_refreshs ()
 }
 
 /*
- * gui_main_loop: main loop for WeeChat with ncurses GUI
+ * Main loop for WeeChat with ncurses GUI.
  */
 
 void
@@ -382,9 +383,10 @@ gui_main_loop ()
 }
 
 /*
- * gui_main_end: GUI end
- *               clean_exit is 0 when WeeChat is crashing (we don't clean
- *               objects because WeeChat can crash again during this cleanup...)
+ * Ends GUI.
+ *
+ * Argument "clean_exit" is 0 when WeeChat is crashing (we don't clean objects
+ * because WeeChat can crash again during this cleanup...).
  */
 
 void

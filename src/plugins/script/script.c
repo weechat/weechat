@@ -56,8 +56,9 @@ struct t_hook *script_timer_refresh = NULL;
 
 
 /*
- * script_language_search: search language and return index
- *                         return -1 if not found
+ * Searches for a language.
+ *
+ * Returns index of language, -1 if not found.
  */
 
 int
@@ -76,9 +77,9 @@ script_language_search (const char *language)
 }
 
 /*
- * script_language_search_by_extension: search language by extension and return
- *                                      index
- *                                      return -1 if not found
+ * Searches for a language by extension.
+ *
+ * Returns index of language, -1 if not found.
  */
 
 int
@@ -97,8 +98,7 @@ script_language_search_by_extension (const char *extension)
 }
 
 /*
- * script_get_loaded_plugins_and_scripts: get loaded plugins (in array of
- *                                        integers) and scripts (in hashtable)
+ * Gets loaded plugins (in array of integers) and scripts (in hashtable).
  */
 
 void
@@ -167,7 +167,7 @@ script_get_loaded_plugins_and_scripts ()
 }
 
 /*
- * script_debug_dump_cb: callback for "debug_dump" signal
+ * Callback for signal "debug_dump".
  */
 
 int
@@ -197,7 +197,7 @@ script_debug_dump_cb (void *data, const char *signal, const char *type_data,
 }
 
 /*
- * script_timer_refresh_cb: callback for timer used to refresh list of scripts
+ * Callback for timer to refresh list of scripts.
  */
 
 int
@@ -217,8 +217,7 @@ script_timer_refresh_cb (void *data, int remaining_calls)
 }
 
 /*
- * script_signal_plugin_cb: callback for signals "plugin_loaded" and
- *                          "plugin_unloaded"
+ * Callback for signals "plugin_loaded" and "plugin_unloaded".
  */
 
 int
@@ -246,8 +245,7 @@ script_signal_plugin_cb (void *data, const char *signal, const char *type_data,
 }
 
 /*
- * script_signal_script_cb: callback for signals "xxx_script_yyy"
- *                          (example: "python_script_loaded")
+ * Callback for signals "xxx_script_yyy" (example: "python_script_loaded").
  */
 
 int
@@ -275,7 +273,7 @@ script_signal_script_cb (void *data, const char *signal, const char *type_data,
 }
 
 /*
- * script_focus_chat_cb: callback called when a mouse action occurs in chat area
+ * Callback called when a mouse action occurs in chat area.
  */
 
 struct t_hashtable *
@@ -352,7 +350,7 @@ script_focus_chat_cb (void *data, struct t_hashtable *info)
 }
 
 /*
- * weechat_plugin_init: initialize script plugin
+ * Initializes script plugin.
  */
 
 int
@@ -407,7 +405,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 }
 
 /*
- * weechat_plugin_end: end script plugin
+ * Ends script plugin.
  */
 
 int

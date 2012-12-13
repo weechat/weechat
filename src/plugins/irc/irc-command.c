@@ -51,7 +51,7 @@
 
 
 /*
- * irc_command_mode_nicks: send mode change for many nicks on a channel
+ * Sends mode change for many nicks on a channel.
  */
 
 void
@@ -83,7 +83,8 @@ irc_command_mode_nicks (struct t_irc_server *server, const char *channel,
 }
 
 /*
- * irc_command_admin: find information about the administrator of the server
+ * Callback for command "/admin": finds information about the administrator of
+ * the server.
  */
 
 int
@@ -112,9 +113,9 @@ irc_command_admin (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_exec_all_channels: execute a command on all channels
- *                                if server is NULL, command is executed on all
- *                                channels of all connected servers
+ * Executes a command on all channels.
+ *
+ * If server is NULL, executes command on all channels of all connected servers.
  */
 
 void
@@ -186,8 +187,8 @@ irc_command_exec_all_channels (struct t_irc_server *server,
 }
 
 /*
- * irc_command_allchan: execute a command on all channels of all connected
- *                      servers
+ * Callback for command "/allchan": executes a command on all channels of all
+ * connected servers.
  */
 
 int
@@ -236,7 +237,7 @@ irc_command_allchan (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_exec_all_servers: execute a command on all connected channels
+ * Executes a command on all connected channels.
  */
 
 void
@@ -295,7 +296,7 @@ irc_command_exec_all_servers (const char *exclude_servers, const char *command)
 }
 
 /*
- * irc_command_allserv: execute a command on all connected servers
+ * Callback for command "/allserv": executes a command on all connected servers.
  */
 
 int
@@ -335,7 +336,7 @@ irc_command_allserv (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_me_channel_display: display a ctcp action on channel
+ * Displays a ctcp action on a channel.
  */
 
 void
@@ -367,7 +368,7 @@ irc_command_me_channel_display (struct t_irc_server *server,
 }
 
 /*
- * irc_command_me_channel: send a ctcp action to a channel
+ * Sends a ctcp action to a channel.
  */
 
 void
@@ -403,7 +404,7 @@ irc_command_me_channel (struct t_irc_server *server,
 }
 
 /*
- * irc_command_me_all_channels: send a ctcp action to all channels of a server
+ * Sends a ctcp action to all channels of a server.
  */
 
 void
@@ -420,7 +421,7 @@ irc_command_me_all_channels (struct t_irc_server *server, const char *arguments)
 }
 
 /*
- * irc_command_away_server: toggle away status for one server
+ * Toggles away status for one server.
  */
 
 void
@@ -558,7 +559,7 @@ irc_command_away_server (struct t_irc_server *server, const char *arguments,
 }
 
 /*
- * irc_command_away: toggle away status
+ * Callback for command "/away": toggles away status.
  */
 
 int
@@ -599,7 +600,7 @@ irc_command_away (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_run_away: catch command /away when it is run
+ * Callback for command /away when it's run ("command_run" hooked).
  */
 
 int
@@ -626,7 +627,7 @@ irc_command_run_away (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
- * irc_command_ban: bans nicks or hosts
+ * Callback for command "/ban": bans nicks or hosts.
  */
 
 int
@@ -708,8 +709,11 @@ irc_command_ban (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_connect_one_server: connect to one server
- *                                 return 0 if error, 1 if ok
+ * Connects to one server.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -755,7 +759,7 @@ irc_command_connect_one_server (struct t_irc_server *server,
 }
 
 /*
- * irc_command_connect: connect to server(s)
+ * Callback for command "/connect": connects to server(s).
  */
 
 int
@@ -934,7 +938,7 @@ irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_ctcp: send a ctcp message
+ * Callback for command "/ctcp": sends a ctcp message.
  */
 
 int
@@ -1014,7 +1018,7 @@ irc_command_ctcp (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_cycle: leave and rejoin a channel
+ * Callback for command "/cycle": leaves and rejoins a channel.
  */
 
 int
@@ -1118,7 +1122,7 @@ irc_command_cycle (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_dcc: DCC control (file or chat)
+ * Callback for command "/dcc": DCC control (file or chat).
  */
 
 int
@@ -1227,7 +1231,8 @@ irc_command_dcc (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_dehalfop: remove half operator privileges from nickname(s)
+ * Callback for command "/dehalfop": removes half operator privileges from
+ * nickname(s).
  */
 
 int
@@ -1268,7 +1273,7 @@ irc_command_dehalfop (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_deop: remove operator privileges from nickname(s)
+ * Callback for command "/deop": removes operator privileges from nickname(s).
  */
 
 int
@@ -1309,7 +1314,7 @@ irc_command_deop (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_devoice: remove voice from nickname(s)
+ * Callback for command "/devoice": removes voice from nickname(s).
  */
 
 int
@@ -1350,7 +1355,7 @@ irc_command_devoice (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_die: shutdown the server
+ * Callback for command "/die": shutdowns the server.
  */
 
 int
@@ -1379,7 +1384,7 @@ irc_command_die (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_quit_server: send QUIT to a server
+ * Sends QUIT to a server.
  */
 
 void
@@ -1414,8 +1419,11 @@ irc_command_quit_server (struct t_irc_server *server, const char *arguments)
 }
 
 /*
- * irc_command_disconnect_one_server: disconnect from a server
- *                                    return 0 if error, 1 if ok
+ * Disconnects from a server.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -1451,7 +1459,7 @@ irc_command_disconnect_one_server (struct t_irc_server *server,
 }
 
 /*
- * irc_command_disconnect: disconnect from server(s)
+ * Callback for command "/disconnect": disconnects from server(s).
  */
 
 int
@@ -1527,7 +1535,8 @@ irc_command_disconnect (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_halfop: give half operator privileges to nickname(s)
+ * Callback for command "/halfop": gives half operator privileges to
+ * nickname(s).
  */
 
 int
@@ -1568,7 +1577,7 @@ irc_command_halfop (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_ignore_display: display an ignore
+ * Displays an ignore.
  */
 
 void
@@ -1594,7 +1603,7 @@ irc_command_ignore_display (struct t_irc_ignore *ignore)
 }
 
 /*
- * irc_command_ignore: add or remove ignore
+ * Callback for command "/ignore": adds or removes ignore.
  */
 
 int
@@ -1754,7 +1763,7 @@ irc_command_ignore (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_info: get information describing the server
+ * Callback for command "/info": gets information describing the server.
  */
 
 int
@@ -1783,7 +1792,7 @@ irc_command_info (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_invite: invite a nick on a channel
+ * Callback for command "/invite": invites a nick on a channel.
  */
 
 int
@@ -1846,7 +1855,7 @@ error:
 }
 
 /*
- * irc_command_ison: check if a nickname is currently on IRC
+ * Callback for command "/ison": checks if a nickname is currently on IRC.
  */
 
 int
@@ -1874,7 +1883,7 @@ irc_command_ison (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_join_server: send JOIN command on a server
+ * Sends JOIN command to a server.
  */
 
 void
@@ -2008,7 +2017,7 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
 }
 
 /*
- * irc_command_join: join a new channel
+ * Callback for command "/join": joins a new channel.
  */
 
 int
@@ -2077,7 +2086,7 @@ irc_command_join (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_kick: forcibly remove a user from a channel
+ * Callback for command "/kick": forcibly removes a user from a channel.
  */
 
 int
@@ -2150,7 +2159,8 @@ irc_command_kick (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_kickban: forcibly remove a user from a channel and ban it
+ * Callback for command "/kickban": forcibly removes a user from a channel and
+ * bans it.
  */
 
 int
@@ -2265,7 +2275,7 @@ irc_command_kickban (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_kill: close client-server connection
+ * Callback for command "/kill": closes client-server connection.
  */
 
 int
@@ -2292,8 +2302,8 @@ irc_command_kill (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_links: list all servernames which are known by the server
- *                    answering the query
+ * Callback for command "/links": lists all server names which are known by the
+ * server answering the query.
  */
 
 int
@@ -2322,7 +2332,7 @@ irc_command_links (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_list: close client-server connection
+ * Callback for command "/list": lists channels and their topic.
  */
 
 int
@@ -2420,7 +2430,8 @@ irc_command_list (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_lusers: get statistics about ths size of the IRC network
+ * Callback for command "/lusers": gets statistics about the size of the IRC
+ * network.
  */
 
 int
@@ -2449,7 +2460,7 @@ irc_command_lusers (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_map: show a graphical map of the IRC network
+ * Callback for command "/map": shows a graphical map of the IRC network.
  */
 
 int
@@ -2478,7 +2489,7 @@ irc_command_map (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_me: send a ctcp action to the current channel
+ * Callback for command "/me": sends a ctcp action to the current channel.
  */
 
 int
@@ -2507,7 +2518,7 @@ irc_command_me (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
 }
 
 /*
- * irc_command_mode_server: send MODE command on a server
+ * Sends MODE command on a server.
  */
 
 void
@@ -2533,7 +2544,7 @@ irc_command_mode_server (struct t_irc_server *server,
 }
 
 /*
- * irc_command_mode: change mode for channel/nickname
+ * Callback for command "/mode": changes mode for channel/nickname.
  */
 
 int
@@ -2588,7 +2599,7 @@ irc_command_mode (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_motd: get the "Message Of The Day"
+ * Callback for command "/motd": gets the "Message Of The Day".
  */
 
 int
@@ -2617,7 +2628,7 @@ irc_command_motd (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_msg: send a message to a nick or channel
+ * Callback for command "/msg": sends a message to a nick or channel.
  */
 
 int
@@ -2815,7 +2826,7 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_names: list nicknames on channels
+ * Callback for command "/names": lists nicknames on channels.
  */
 
 int
@@ -2856,7 +2867,7 @@ irc_command_names (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_send_nick_server: change nickname on a server
+ * Changes nickname on a server.
  */
 
 void
@@ -2875,7 +2886,7 @@ irc_send_nick_server (struct t_irc_server *server, const char *nickname)
 }
 
 /*
- * irc_command_nick: change nickname
+ * Callback for command "/nick": changes nickname.
  */
 
 int
@@ -2918,7 +2929,7 @@ irc_command_nick (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_notice: send notice message
+ * Callback for command "/notice": sends notice message.
  */
 
 int
@@ -3009,7 +3020,7 @@ irc_command_notice (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_notify: add or remove notify
+ * Callback for command "/notify": adds or removes notify.
  */
 
 int
@@ -3190,7 +3201,7 @@ irc_command_notify (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_op: give operator privileges to nickname(s)
+ * Callback for command "/op": gives operator privileges to nickname(s).
  */
 
 int
@@ -3231,7 +3242,7 @@ irc_command_op (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
 }
 
 /*
- * irc_command_oper: get oper privileges
+ * Callback for command "/oper": gets oper privileges.
  */
 
 int
@@ -3259,7 +3270,7 @@ irc_command_oper (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_part_channel: send a part message for a channel
+ * Sends a part message for a channel.
  */
 
 void
@@ -3293,7 +3304,7 @@ irc_command_part_channel (struct t_irc_server *server, const char *channel_name,
 }
 
 /*
- * irc_command_part: leave a channel or close a private window
+ * Callback for command "/part": leaves a channel or close a private window.
  */
 
 int
@@ -3357,7 +3368,7 @@ irc_command_part (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_ping: ping a server
+ * Callback for command "/ping": pings a server.
  */
 
 int
@@ -3385,7 +3396,7 @@ irc_command_ping (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_pong: send pong answer to a daemon
+ * Callback for command "/pong": sends pong answer to a daemon.
  */
 
 int
@@ -3413,7 +3424,7 @@ irc_command_pong (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_query: start private conversation with a nick
+ * Callback for command "/query": starts private conversation with a nick.
  */
 
 int
@@ -3484,7 +3495,7 @@ irc_command_query (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_quiet: quiet nicks or hosts
+ * Callback for command "/quiet": quiets nicks or hosts.
  */
 
 int
@@ -3566,7 +3577,7 @@ irc_command_quiet (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_quote: send raw data to server
+ * Callback for command "/quote": sends raw data to server.
  */
 
 int
@@ -3606,8 +3617,11 @@ irc_command_quote (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_reconnect_one_server: reconnect to a server
- *                                   return 0 if error, 1 if ok
+ * Reconnects to a server.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -3646,7 +3660,7 @@ irc_command_reconnect_one_server (struct t_irc_server *server,
 }
 
 /*
- * irc_command_reconnect: reconnect to server(s)
+ * Callback for command "/reconnect": reconnects to server(s).
  */
 
 int
@@ -3738,7 +3752,7 @@ irc_command_reconnect (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_rehash: tell the server to reload its config file
+ * Callback for command "/rehash": tells the server to reload its config file.
  */
 
 int
@@ -3767,7 +3781,7 @@ irc_command_rehash (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_restart: tell the server to restart itself
+ * Callback for command "/restart": tells the server to restart itself.
  */
 
 int
@@ -3796,7 +3810,7 @@ irc_command_restart (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_sajoin: forces a user to join channel(s)
+ * Callback for command "/sajoin": forces a user to join channel(s).
  */
 
 int
@@ -3823,7 +3837,8 @@ irc_command_sajoin (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_samode: change mode on channel, without having operator status
+ * Callback for command "/samode": changes mode on channel, without having
+ * operator status.
  */
 
 int
@@ -3850,7 +3865,7 @@ irc_command_samode (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_sanick: forces a user to use another nick
+ * Callback for command "/sanick": forces a user to use another nick.
  */
 
 int
@@ -3877,7 +3892,7 @@ irc_command_sanick (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_sapart: forces a user to leave channel(s)
+ * Callback for command "/sapart": forces a user to leave channel(s).
  */
 
 int
@@ -3904,7 +3919,7 @@ irc_command_sapart (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_saquit: forces a user to quit server with a reason
+ * Callback for command "/saquit": forces a user to quit server with a reason.
  */
 
 int
@@ -3931,7 +3946,7 @@ irc_command_saquit (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_server: manage IRC servers
+ * Callback for command "/server": manages IRC servers.
  */
 
 int
@@ -4306,7 +4321,7 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_service: register a new service
+ * Callback for command "/service": registers a new service.
  */
 
 int
@@ -4334,7 +4349,8 @@ irc_command_service (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_servlist: list services currently connected to the network
+ * Callback for command "/servlist": lists services currently connected to the
+ * network.
  */
 
 int
@@ -4363,7 +4379,7 @@ irc_command_servlist (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_squery: deliver a message to a service
+ * Callback for command "/squery": delivers a message to a service.
  */
 
 int
@@ -4398,7 +4414,7 @@ irc_command_squery (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_squit: disconnect server links
+ * Callback for command "/squit": disconnects server links.
  */
 
 int
@@ -4423,7 +4439,7 @@ irc_command_squit (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_stats: query statistics about server
+ * Callback for command "/stats": queries statistics about server.
  */
 
 int
@@ -4452,8 +4468,8 @@ irc_command_stats (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_summon: give users who are on a host running an IRC server
- *                     a message asking them to please join IRC
+ * Callback for command "/summon": gives users who are on a host running an IRC
+ * server a message asking them to please join IRC.
  */
 
 int
@@ -4481,7 +4497,7 @@ irc_command_summon (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_time: query local time from server
+ * Callback for command "/time": queries local time from server.
  */
 
 int
@@ -4510,7 +4526,7 @@ irc_command_time (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_topic: get/set topic for a channel
+ * Callback for command "/topic": gets/sets topic for a channel.
  */
 
 int
@@ -4581,7 +4597,7 @@ irc_command_topic (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_trace: find the route to specific server
+ * Callback for command "/trace": finds the route to specific server.
  */
 
 int
@@ -4610,7 +4626,7 @@ irc_command_trace (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_unban: unbans nicks or hosts
+ * Callback for command "/unban": unbans nicks or hosts.
  */
 
 int
@@ -4677,7 +4693,8 @@ irc_command_unban (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_userhost: return a list of information about nicknames
+ * Callback for command "/userhost": returns a list of information about
+ * nicknames.
  */
 
 int
@@ -4705,7 +4722,7 @@ irc_command_userhost (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_users: list of users logged into the server
+ * Callback for command "/users": list of users logged into the server.
  */
 
 int
@@ -4734,8 +4751,8 @@ irc_command_users (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_version: gives the version info of nick or server (current or
- *                      specified)
+ * Callback for command "/version": gives the version info of nick or server
+ * (current or specified).
  */
 
 int
@@ -4773,7 +4790,7 @@ irc_command_version (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_voice: give voice to nickname(s)
+ * Callback for command "/voice": gives voice to nickname(s).
  */
 
 int
@@ -4813,7 +4830,7 @@ irc_command_voice (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_wallchops: send a notice to channel ops
+ * Callback for command "/wallchops": sends a notice to channel ops.
  */
 
 int
@@ -4928,8 +4945,8 @@ irc_command_wallchops (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_wallops: send a message to all currently connected users who
- *                      have set the 'w' user mode for themselves
+ * Callback for command "/wallops": sends a message to all currently connected
+ * users who have set the 'w' user mode for themselves.
  */
 
 int
@@ -4957,7 +4974,8 @@ irc_command_wallops (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_who: generate a query which returns a list of information
+ * Callback for command "/who": generates a query which returns a list of
+ * information.
  */
 
 int
@@ -4986,7 +5004,7 @@ irc_command_who (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_whois: query information about user(s)
+ * Callback for command "/whois": queries information about user(s).
  */
 
 int
@@ -5039,7 +5057,8 @@ irc_command_whois (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_whowas: ask for information about a nickname which no longer exists
+ * Callback for command "/whowas": asks for information about a nickname which
+ * no longer exists.
  */
 
 int
@@ -5067,7 +5086,7 @@ irc_command_whowas (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * irc_command_init: init IRC commands (create hooks)
+ * Hooks IRC commands.
  */
 
 void

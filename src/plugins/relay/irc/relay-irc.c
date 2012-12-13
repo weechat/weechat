@@ -45,8 +45,11 @@ char *relay_irc_ignore_commands[] = { "pong", "quit", NULL };
 
 
 /*
- * relay_irc_command_relayed: return 1 if IRC command has to be relayed to
- *                            client, or 0 if command must NOT be relayed
+ * Checks if IRC command has to be relayed to client.
+ *
+ * Returns:
+ *   1: command must be relayed
+ *   0: command must not be relayed
  */
 
 int
@@ -68,8 +71,11 @@ relay_irc_command_relayed (const char *irc_command)
 }
 
 /*
- * relay_irc_command_ignored: return 1 if IRC command from client has to be
- *                            ignored
+ * Checks if an IRC command from client must be ignored.
+ *
+ * Returns:
+ *   1: command must be ignored
+ *   0: command must not be ignored
  */
 
 int
@@ -91,7 +97,9 @@ relay_irc_command_ignored (const char *irc_command)
 }
 
 /*
- * relay_irc_message_parse: parse IRC message
+ * Parses an IRC message.
+ *
+ * Returns hashtable with parsed message, NULL if error.
  */
 
 struct t_hashtable *
@@ -133,7 +141,7 @@ end:
 }
 
 /*
- * relay_irc_sendf: send formatted data to client
+ * Sends formatted data to client.
  */
 
 void
@@ -198,10 +206,10 @@ relay_irc_sendf (struct t_relay_client *client, const char *format, ...)
 }
 
 /*
- * relay_irc_signal_irc_in2_cb: callback for "irc_in2" signal
- *                              It is called when something is received on IRC
- *                              server, and message can be relayed (or not) to
- *                              client.
+ * Callback for signal "irc_in2".
+ *
+ * This is called when something is received on IRC server, and message can be
+ * relayed (or not) to client.
  */
 
 int
@@ -267,11 +275,9 @@ relay_irc_signal_irc_in2_cb (void *data, const char *signal,
 }
 
 /*
- * relay_irc_tag_relay_client_id: get id of client by looking for tag
- *                                "relay_client_NNN" in list of tags
- *                                (comma separated list)
- *                                Return number found, or -1 if tag is not
- *                                found.
+ * Gets id of client by looking for tag "relay_client_NNN" in list of tags (comma separated list).
+ *
+ * Returns number found (NNN), -1 if not found.
  */
 
 int
@@ -309,10 +315,10 @@ relay_irc_tag_relay_client_id (const char *tags)
 }
 
 /*
- * relay_irc_signal_irc_outtags_cb: callback for "irc_out" signal
- *                                  It is called when a message is sent to IRC
- *                                  server (by irc plugin or any other
- *                                  plugin/script).
+ * Callback for signal "irc_out".
+ *
+ * This is called when a message is sent to IRC server (by irc plugin or any
+ * other plugin/script).
  */
 
 int
@@ -424,9 +430,9 @@ end:
 }
 
 /*
- * relay_irc_signal_irc_disc_cb: callback for "irc_disconnected" signal
- *                               It is called when connection to a server is
- *                               lost.
+ * Callback for signal "irc_disconnected".
+ *
+ * This is called when connection to an IRC server is lost.
  */
 
 int
@@ -451,8 +457,9 @@ relay_irc_signal_irc_disc_cb (void *data, const char *signal,
 }
 
 /*
- * relay_irc_hsignal_irc_redir_cb: callback for "irc_redirection_*" hsignals
- *                                 It is called when a command is redirected.
+ * Callback for hsignals "irc_redirection_*".
+ *
+ * This is called when an IRC command is redirected.
  */
 
 int
@@ -494,7 +501,7 @@ relay_irc_hsignal_irc_redir_cb (void *data, const char *signal,
 }
 
 /*
- * relay_irc_send_join: send join for a channel to client
+ * Sends IRC "JOIN" for a channel to client.
  */
 
 void
@@ -613,7 +620,7 @@ relay_irc_send_join (struct t_relay_client *client,
 }
 
 /*
- * relay_irc_send_join_channels: send join for all channels of server to client
+ * Sends IRC "JOIN" for all channels of an IRC server to client.
  */
 
 void
@@ -639,7 +646,7 @@ relay_irc_send_join_channels (struct t_relay_client *client)
 }
 
 /*
- * relay_irc_input_send: send text or command on an IRC buffer
+ * Sends text or command on an IRC buffer.
  */
 
 void
@@ -684,7 +691,7 @@ relay_irc_input_send (struct t_relay_client *client, const char *irc_channel,
 }
 
 /*
- * relay_irc_hook_signals: hook signals for a client
+ * Hooks signals for a client.
  */
 
 void
@@ -735,7 +742,7 @@ relay_irc_hook_signals (struct t_relay_client *client)
 }
 
 /*
- * relay_irc_recv_one_msg: read one message from client
+ * Reads one message from client.
  */
 
 void
@@ -1141,7 +1148,7 @@ end:
 }
 
 /*
- * relay_irc_recv: read data from client
+ * Reads data from a client.
  */
 
 void
@@ -1162,7 +1169,7 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
 }
 
 /*
- * relay_irc_close_connection: called when connection with client is closed
+ * Closes connection with client.
  */
 
 void
@@ -1192,7 +1199,7 @@ relay_irc_close_connection (struct t_relay_client *client)
 }
 
 /*
- * relay_irc_alloc: init relay data specific to IRC protocol
+ * Initializes relay data specific to IRC protocol.
  */
 
 void
@@ -1219,8 +1226,9 @@ relay_irc_alloc (struct t_relay_client *client)
 }
 
 /*
- * relay_irc_alloc_with_infolist: init relay data specific to IRC protocol
- *                                using an infolist
+ * Initializes relay data specific to IRC protocol using an infolist.
+ *
+ * This is called after /upgrade.
  */
 
 void
@@ -1255,7 +1263,7 @@ relay_irc_alloc_with_infolist (struct t_relay_client *client,
 }
 
 /*
- * relay_irc_free: free relay data specific to IRC protocol
+ * Frees relay data specific to IRC protocol.
  */
 
 void
@@ -1283,8 +1291,11 @@ relay_irc_free (struct t_relay_client *client)
 }
 
 /*
- * relay_irc_add_to_infolist: add client irc data in an infolist item
- *                            return 1 if ok, 0 if error
+ * Adds client IRC data in an infolist.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -1317,7 +1328,7 @@ relay_irc_add_to_infolist (struct t_infolist_item *item,
 }
 
 /*
- * relay_irc_print_log: print IRC client infos in log (usually for crash dump)
+ * Prints client IRC data in WeeChat log file (usually for crash dump).
  */
 
 void

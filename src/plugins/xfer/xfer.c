@@ -78,9 +78,11 @@ void xfer_disconnect_all ();
 
 
 /*
- * xfer_valid: check if a xfer pointer exists
- *             return 1 if xfer exists
- *                    0 if xfer is not found
+ * Checks if a xfer pointer is valid.
+ *
+ * Returns:
+ *   1: xfer exists
+ *   0: xfer does not exist
  */
 
 int
@@ -103,7 +105,7 @@ xfer_valid (struct t_xfer *xfer)
 }
 
 /*
- * xfer_signal_upgrade_cb: callback for "upgrade" signal
+ * Callback for signal "upgrade".
  */
 
 int
@@ -125,7 +127,7 @@ xfer_signal_upgrade_cb (void *data, const char *signal, const char *type_data,
 
 
 /*
- * xfer_create_directories: create directories for xfer plugin
+ * Creates directories for xfer plugin.
  */
 
 void
@@ -150,8 +152,9 @@ xfer_create_directories ()
 }
 
 /*
- * xfer_search_type: search xfer type with a string
- *                   return -1 if not found
+ * Searches for xfer type.
+ *
+ * Returns index of type in enum t_xfer_type, -1 if not found.
  */
 
 int
@@ -170,8 +173,9 @@ xfer_search_type (const char *type)
 }
 
 /*
- * xfer_search_protocol: search xfer protocol with a string
- *                       return -1 if not found
+ * Searches for xfer protocol.
+ *
+ * Returns index of protocol in enum t_xfer_protocol, -1 if not found.
  */
 
 int
@@ -190,7 +194,9 @@ xfer_search_protocol (const char *protocol)
 }
 
 /*
- * xfer_search: search a xfer
+ * Searches for a xfer.
+ *
+ * Returns pointer to xfer found, NULL if not found.
  */
 
 struct t_xfer *
@@ -214,7 +220,9 @@ xfer_search (const char *plugin_name, const char *plugin_id, enum t_xfer_type ty
 }
 
 /*
- * xfer_search_by_number: search a xfer by number (first xfer is 0)
+ * Searches for a xfer by number (first xfer is 0).
+ *
+ * Returns pointer to xfer found, NULL if not found.
  */
 
 struct t_xfer *
@@ -236,7 +244,9 @@ xfer_search_by_number (int number)
 }
 
 /*
- * xfer_search_by_buffer: search a xfer by buffer (for chat only)
+ * Searches for a xfer by buffer (for chat only).
+ *
+ * Returns pointer to xfer found, NULL if not found.
  */
 
 struct t_xfer *
@@ -258,7 +268,7 @@ xfer_search_by_buffer (struct t_gui_buffer *buffer)
 }
 
 /*
- * xfer_close: close a xfer
+ * Closes a xfer.
  */
 
 void
@@ -347,7 +357,7 @@ xfer_close (struct t_xfer *xfer, enum t_xfer_status status)
 }
 
 /*
- * xfer_disconnect_all: disconnect all active xfer (with a socket)
+ * Disconnects all active xfer (with a socket).
  */
 
 void
@@ -376,8 +386,11 @@ xfer_disconnect_all ()
 }
 
 /*
- * xfer_port_in_use: return 1 if a port is in used
- *                   (by an active or connecting xfer)
+ * Checks if a port is in used.
+ *
+ * Returns:
+ *   1: port is in used (by an active or connecting xfer)
+ *   0: port is not in used
  */
 
 int
@@ -397,7 +410,7 @@ xfer_port_in_use (int port)
 }
 
 /*
- * xfer_send_signal: send a signal for a xfer
+ * Sends a signal for a xfer.
  */
 
 void
@@ -439,7 +452,9 @@ xfer_send_signal (struct t_xfer *xfer, const char *signal)
 }
 
 /*
- * xfer_alloc: allocate a new xfer
+ * Allocates a new xfer.
+ *
+ * Returns pointer to new xfer, NULL if error.
  */
 
 struct t_xfer *
@@ -506,7 +521,9 @@ xfer_alloc ()
 }
 
 /*
- * xfer_new: add a xfer to list
+ * Adds a xfer to list.
+ *
+ * Returns pointer to new xfer, NULL if error.
  */
 
 struct t_xfer *
@@ -674,7 +691,7 @@ xfer_new (const char *plugin_name, const char *plugin_id,
 }
 
 /*
- * xfer_free: free xfer struct and remove it from list
+ * Frees xfer struct and removes it from list.
  */
 
 void
@@ -726,7 +743,7 @@ xfer_free (struct t_xfer *xfer)
 }
 
 /*
- * xfer_add_cb: callback for "xfer_add" signal
+ * Callback for signal "xfer_add".
  */
 
 int
@@ -1089,7 +1106,7 @@ error:
 }
 
 /*
- * xfer_start_resume_cb: callback called when resume is accepted by sender
+ * Callback called when resume is accepted by sender.
  */
 
 int
@@ -1173,8 +1190,7 @@ error:
 }
 
 /*
- * xfer_accept_resume_cb: callback called when sender receives resume request
- *                        from recever
+ * Callback called when sender receives resume request from receiver.
  */
 
 int
@@ -1265,8 +1281,11 @@ error:
 }
 
 /*
- * xfer_add_to_infolist: add a xfer in an infolist
- *                       return 1 if ok, 0 if error
+ * Adds a xfer in an infolist.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -1379,7 +1398,7 @@ xfer_add_to_infolist (struct t_infolist *infolist, struct t_xfer *xfer)
 }
 
 /*
- * xfer_print_log: print xfer infos in log (usually for crash dump)
+ * Prints xfer infos in WeeChat log file (usually for crash dump).
  */
 
 void
@@ -1442,7 +1461,7 @@ xfer_print_log ()
 }
 
 /*
- * xfer_debug_dump_cb: callback for "debug_dump" signal
+ * Callback for signal "debug_dump".
  */
 
 int
@@ -1472,7 +1491,7 @@ xfer_debug_dump_cb (void *data, const char *signal, const char *type_data,
 }
 
 /*
- * weechat_plugin_init: initialize xfer plugin
+ * Initializes xfer plugin.
  */
 
 int
@@ -1519,7 +1538,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 }
 
 /*
- * weechat_plugin_end: end xfer plugin
+ * Ends xfer plugin.
  */
 
 int

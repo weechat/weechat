@@ -50,7 +50,9 @@
 
 
 /*
- * gui_lines_alloc: alloc structure "t_gui_lines" and initialize it
+ * Allocates structure "t_gui_lines" and initializes it.
+ *
+ * Returns pointer to new lines, NULL if error.
  */
 
 struct t_gui_lines *
@@ -75,7 +77,7 @@ gui_lines_alloc ()
 }
 
 /*
- * gui_lines_free: free a "t_gui_lines" structure
+ * Frees a "t_gui_lines" structure.
  */
 
 void
@@ -85,9 +87,11 @@ gui_lines_free (struct t_gui_lines *lines)
 }
 
 /*
- * gui_line_prefix_is_same_nick_as_previous: return 1 if prefix on line is a
- *                                           nick and is the same as nick on
- *                                           previour line, otherwise 0
+ * Checks if prefix on line is a nick and is the same as nick on previous line.
+ *
+ * Returns:
+ *   1: prefix is a nick and same as nick on previous line
+ *   0: prefix is not a nick, or different from nick on previous line
  */
 
 int
@@ -137,12 +141,11 @@ gui_line_prefix_is_same_nick_as_previous (struct t_gui_line *line)
 }
 
 /*
- * gui_line_get_prefix_for_display: get prefix and its length (for display only)
- *                                  if the prefix can be hidden (same nick as
- *                                  previous message), and if the option is
- *                                  enabled (not empty string), then this
- *                                  this function will return empty prefix or
- *                                  prefix from option
+ * Gets prefix and its length (for display only).
+ *
+ * If the prefix can be hidden (same nick as previous message), and if the
+ * option is enabled (not empty string), then returns empty prefix or prefix
+ * from option.
  */
 
 void
@@ -195,7 +198,7 @@ gui_line_get_prefix_for_display (struct t_gui_line *line,
 }
 
 /*
- * gui_line_get_align: get alignment for a line
+ * Gets alignment for a line.
  */
 
 int
@@ -276,8 +279,11 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
 }
 
 /*
- * gui_line_is_displayed: return 1 if line is displayed (no filter on line,
- *                        or filters disabled), 0 if line is hidden
+ * Checks if a line is displayed (no filter on line or filters disabled).
+ *
+ * Returns:
+ *   1: line is displayed
+ *   0: line is hidden
  */
 
 int
@@ -292,7 +298,9 @@ gui_line_is_displayed (struct t_gui_line *line)
 }
 
 /*
- * gui_line_get_first_displayed: get first line displayed of a buffer
+ * Gets the first line displayed of a buffer.
+ *
+ * Returns pointer to first line displayed, NULL if not found.
  */
 
 struct t_gui_line *
@@ -310,7 +318,9 @@ gui_line_get_first_displayed (struct t_gui_buffer *buffer)
 }
 
 /*
- * gui_line_get_last_displayed: get last line displayed of a buffer
+ * Gets the last line displayed of a buffer.
+ *
+ * Returns pointer to last line displayed, NULL if not found.
  */
 
 struct t_gui_line *
@@ -328,7 +338,9 @@ gui_line_get_last_displayed (struct t_gui_buffer *buffer)
 }
 
 /*
- * gui_line_get_prev_displayed: get previous line displayed
+ * Gets previous line displayed.
+ *
+ * Returns pointer to previous line displayed, NULL if not found.
  */
 
 struct t_gui_line *
@@ -346,7 +358,9 @@ gui_line_get_prev_displayed (struct t_gui_line *line)
 }
 
 /*
- * gui_line_get_next_displayed: get next line displayed
+ * Gets next line displayed.
+ *
+ * Returns pointer to next line displayed, NULL if not found.
  */
 
 struct t_gui_line *
@@ -364,7 +378,11 @@ gui_line_get_next_displayed (struct t_gui_line *line)
 }
 
 /*
- * gui_line_search_text: search for text in a line
+ * Searches for text in a line.
+ *
+ * Returns:
+ *   1: text found in line
+ *   0: text not found in line
  */
 
 int
@@ -407,8 +425,11 @@ gui_line_search_text (struct t_gui_line *line, const char *text,
 }
 
 /*
- * gui_line_match_regex: return 1 if message matches regex
- *                       0 if it doesn't match
+ * Checks if a line matches regex.
+ *
+ * Returns:
+ *   1: line matches regex
+ *   0: line does not match regex
  */
 
 int
@@ -462,8 +483,11 @@ gui_line_match_regex (struct t_gui_line *line, regex_t *regex_prefix,
 }
 
 /*
- * gui_line_match_tags: return 1 if line matches tags
- *                      0 if it doesn't match any tag in array
+ * Checks if line matches tags.
+ *
+ * Returns:
+ *   1: line matches tags
+ *   0: line does not match tags
  */
 
 int
@@ -494,8 +518,7 @@ gui_line_match_tags (struct t_gui_line *line, int tags_count,
 }
 
 /*
- * gui_line_search_tag_starting_with: return pointer on tag starting with "tag",
- *                                    NULL if such tag is not found
+ * Returns pointer on tag starting with "tag", NULL if such tag is not found.
  */
 
 const char *
@@ -519,8 +542,7 @@ gui_line_search_tag_starting_with (struct t_gui_line *line, const char *tag)
 }
 
 /*
- * gui_line_get_nick_tag: get nick in tags: return "xxx" if tag "nick_xxx"
- *                        is found
+ * Gets nick in tags: returns "xxx" if tag "nick_xxx" is found.
  */
 
 const char *
@@ -536,8 +558,12 @@ gui_line_get_nick_tag (struct t_gui_line *line)
 }
 
 /*
- * gui_line_has_highlight: return 1 if given message contains highlight (with
- *                         a string in global highlight or buffer highlight)
+ * Checks if a line has highlight (with a string in global highlight or buffer
+ * highlight).
+ *
+ * Returns:
+ *   1: line has highlight
+ *   0: line has no highlight
  */
 
 int
@@ -634,8 +660,11 @@ gui_line_has_highlight (struct t_gui_line *line)
 }
 
 /*
- * gui_line_has_offline_nick: return 1 if nick of line is offline
- *                            (not in nicklist any more)
+ * Checks if nick of line is offline (not in nicklist any more).
+ *
+ * Returns:
+ *   1: nick is offline
+ *   0: nick is still there (in nicklist)
  */
 
 int
@@ -660,8 +689,7 @@ gui_line_has_offline_nick (struct t_gui_line *line)
 }
 
 /*
- * gui_line_compute_buffer_max_length: compute "buffer_max_length" for a
- *                                     "t_gui_lines" structure
+ * Computes "buffer_max_length" for a "t_gui_lines" structure.
  */
 
 void
@@ -687,8 +715,7 @@ gui_line_compute_buffer_max_length (struct t_gui_buffer *buffer,
 }
 
 /*
- * gui_line_compute_prefix_max_length: compute "prefix_max_length" for a
- *                                     "t_gui_lines" structure
+ * Computes "prefix_max_length" for a "t_gui_lines" structure.
  */
 
 void
@@ -708,7 +735,7 @@ gui_line_compute_prefix_max_length (struct t_gui_lines *lines)
 }
 
 /*
- * gui_line_add_to_list: add a line to a "t_gui_lines" structure
+ * Adds a line to a "t_gui_lines" structure.
  */
 
 void
@@ -734,7 +761,7 @@ gui_line_add_to_list (struct t_gui_lines *lines,
 }
 
 /*
- * gui_line_remove_from_list: remove a line from a "t_gui_lines" structure
+ * Removes a line from a "t_gui_lines" structure.
  */
 
 void
@@ -817,7 +844,7 @@ gui_line_remove_from_list (struct t_gui_buffer *buffer,
 }
 
 /*
- * gui_line_mixed_add: add line to mixed lines for a buffer
+ * Adds line to mixed lines for a buffer.
  */
 
 void
@@ -835,7 +862,7 @@ gui_line_mixed_add (struct t_gui_lines *lines,
 }
 
 /*
- * gui_line_mixed_free_buffer: free all mixed lines matching a buffer
+ * Frees all mixed lines matching a buffer.
  */
 
 void
@@ -864,7 +891,7 @@ gui_line_mixed_free_buffer (struct t_gui_buffer *buffer)
 }
 
 /*
- * gui_line_mixed_free_all: free all mixed lines in a buffer
+ * Frees all mixed lines in a buffer.
  */
 
 void
@@ -883,7 +910,7 @@ gui_line_mixed_free_all (struct t_gui_buffer *buffer)
 }
 
 /*
- * gui_line_free: delete a line from a buffer
+ * Deletes a line from a buffer.
  */
 
 void
@@ -913,7 +940,7 @@ gui_line_free (struct t_gui_buffer *buffer, struct t_gui_line *line)
 }
 
 /*
- * gui_line_free_all: delete all formatted lines from a buffer
+ * Deletes all formatted lines from a buffer.
  */
 
 void
@@ -926,9 +953,10 @@ gui_line_free_all (struct t_gui_buffer *buffer)
 }
 
 /*
- * gui_line_get_notify_level: get notify level for a line
- *                            return -1 if "notify_none" is found (no notify
- *                            for line)
+ * Gets notify level for a line.
+ *
+ * Returns notify level of line, -1 if tag "notify_none" is found (meaning no
+ * notify at all for line).
  */
 
 int
@@ -951,7 +979,7 @@ gui_line_get_notify_level (struct t_gui_line *line)
 }
 
 /*
- * gui_line_add: add a new line for a buffer
+ * Adds a new line for a buffer.
  */
 
 struct t_gui_line *
@@ -1128,7 +1156,7 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
 }
 
 /*
- * gui_line_add_y: add or update a line for a buffer with free content
+ * Adds or updates a line for a buffer with free content.
  */
 
 void
@@ -1227,8 +1255,7 @@ gui_line_add_y (struct t_gui_buffer *buffer, int y, const char *message)
 }
 
 /*
- * gui_line_clear: clear prefix and message on a line
- *                 (used on buffers with free content only)
+ * Clears prefix and message on a line (used on buffers with free content only).
  */
 
 void
@@ -1244,8 +1271,7 @@ gui_line_clear (struct t_gui_line *line)
 }
 
 /*
- * gui_line_mix_buffers: mix lines of a buffer (or group of buffers) with a new
- *                       buffer
+ * Mixes lines of a buffer (or group of buffers) with a new buffer.
  */
 
 void
@@ -1340,7 +1366,7 @@ gui_line_mix_buffers (struct t_gui_buffer *buffer)
 }
 
 /*
- * gui_line_hdata_lines_cb: return hdata for lines
+ * Returns hdata for lines.
  */
 
 struct t_hdata *
@@ -1367,7 +1393,7 @@ gui_line_hdata_lines_cb (void *data, const char *hdata_name)
 }
 
 /*
- * gui_line_hdata_line_cb: return hdata for line
+ * Returns hdata for line.
  */
 
 struct t_hdata *
@@ -1390,7 +1416,7 @@ gui_line_hdata_line_cb (void *data, const char *hdata_name)
 }
 
 /*
- * gui_line_hdata_line_data_update_cb: callback for updating data of a line
+ * Callback for updating data of a line.
  */
 
 int
@@ -1474,7 +1500,7 @@ gui_line_hdata_line_data_update_cb (void *data,
 }
 
 /*
- * gui_line_hdata_line_data_cb: return hdata for line data
+ * Returns hdata for line data.
  */
 
 struct t_hdata *
@@ -1507,8 +1533,11 @@ gui_line_hdata_line_data_cb (void *data, const char *hdata_name)
 }
 
 /*
- * gui_line_add_to_infolist: add a line in an infolist
- *                           return 1 if ok, 0 if error
+ * Adds a line in an infolist.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -1581,7 +1610,7 @@ gui_line_add_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * gui_lines_print_log: print lines structure infos in log (usually for crash dump)
+ * Prints lines structure infos in WeeChat log file (usually for crash dump).
  */
 
 void

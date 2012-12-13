@@ -30,7 +30,7 @@
 
 
 /*
- * relay_info_get_infolist_cb: callback called when relay infolist is asked
+ * Returns infolist with relay info.
  */
 
 struct t_infolist *
@@ -86,13 +86,12 @@ relay_info_get_infolist_cb (void *data, const char *infolist_name,
 }
 
 /*
- * relay_info_init: initialize info and infolist hooks for relay plugin
+ * Hooks infolist for relay plugin.
  */
 
 void
 relay_info_init ()
 {
-    /* relay infolist hooks */
     weechat_hook_infolist ("relay", N_("list of relay clients"),
                            N_("relay pointer (optional)"),
                            NULL,

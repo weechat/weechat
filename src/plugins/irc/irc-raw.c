@@ -43,7 +43,7 @@ struct t_irc_raw_message *last_irc_raw_message = NULL;
 
 
 /*
- * irc_raw_message_print: print an irc raw message
+ * Prints an irc raw message.
  */
 
 void
@@ -60,7 +60,7 @@ irc_raw_message_print (struct t_irc_raw_message *raw_message)
 }
 
 /*
- * irc_raw_open: open IRC raw buffer
+ * Opens IRC raw buffer.
  */
 
 void
@@ -112,7 +112,7 @@ irc_raw_open (int switch_to_buffer)
 }
 
 /*
- * irc_raw_message_free: free a raw message and remove it from list
+ * Frees a raw message and removes it from list.
  */
 
 void
@@ -148,7 +148,7 @@ irc_raw_message_free (struct t_irc_raw_message *raw_message)
 }
 
 /*
- * irc_raw_message_free_all: free all raw messages
+ * Frees all raw messages.
  */
 
 void
@@ -161,7 +161,7 @@ irc_raw_message_free_all ()
 }
 
 /*
- * irc_raw_message_remove_old: remove old raw messages if limit has been reached
+ * Removes old raw messages if limit has been reached.
  */
 
 void
@@ -177,7 +177,9 @@ irc_raw_message_remove_old ()
 }
 
 /*
- * irc_raw_message_add_to_list: add new message to list
+ * Adds a new raw message to list.
+ *
+ * Returns pointer to new raw message, NULL if error.
  */
 
 struct t_irc_raw_message *
@@ -214,7 +216,9 @@ irc_raw_message_add_to_list (time_t date, const char *prefix,
 }
 
 /*
- * irc_raw_message_add: add new message to list
+ * Adds a new raw message to list.
+ *
+ * Returns pointer to new raw message, NULL if error.
  */
 
 struct t_irc_raw_message *
@@ -305,7 +309,7 @@ irc_raw_message_add (struct t_irc_server *server, int flags,
 }
 
 /*
- * irc_raw_print: print a message on IRC raw buffer
+ * Prints a message on IRC raw buffer.
  */
 
 void
@@ -332,8 +336,11 @@ irc_raw_print (struct t_irc_server *server, int flags,
 }
 
 /*
- * irc_raw_add_to_infolist: add a raw message in an infolist
- *                          return 1 if ok, 0 if error
+ * Adds a raw message in an infolist.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int

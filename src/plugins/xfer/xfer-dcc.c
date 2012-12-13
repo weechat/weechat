@@ -40,7 +40,7 @@
 
 
 /*
- * xfer_dcc_send_file_child: child process for sending file with DCC protocol
+ * Child process for sending file with DCC protocol.
  */
 
 void
@@ -175,7 +175,7 @@ xfer_dcc_send_file_child (struct t_xfer *xfer)
 }
 
 /*
- * xfer_dcc_recv_file_child: child process for receiving file
+ * Child process for receiving file with DCC protocol.
  */
 
 void

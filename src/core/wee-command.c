@@ -71,13 +71,17 @@
 
 
 /*
- * command_away: toggle away status
+ * Callback for command "/away".
+ *
+ * The command /away in core does nothing, so this function is empty.
+ * Plugins that need /away command can use hook_command_run() to do something
+ * when user issues the /away command.
  */
 
 COMMAND_EMPTY(away)
 
 /*
- * command_bar_list: list bars
+ * Displays a list of bars.
  */
 
 void
@@ -151,7 +155,7 @@ command_bar_list (int full)
 }
 
 /*
- * command_bar: manage bars
+ * Callback for command "/bar": manages bars.
  */
 
 COMMAND_CALLBACK(bar)
@@ -466,7 +470,7 @@ COMMAND_CALLBACK(bar)
 }
 
 /*
- * command_buffer_display_localvar: display local variable for a buffer
+ * Displays a local variable for a buffer.
  */
 
 void
@@ -497,7 +501,7 @@ command_buffer_display_localvar (void *data,
 }
 
 /*
- * command_buffer: manage buffers
+ * Callback for command "/buffer": manages buffers.
  */
 
 COMMAND_CALLBACK(buffer)
@@ -1026,7 +1030,8 @@ COMMAND_CALLBACK(buffer)
 }
 
 /*
- * command_color: define custom colors and display palette of colors
+ * Callback for command "/color": defines custom colors and displays palette of
+ * colors.
  */
 
 COMMAND_CALLBACK(color)
@@ -1170,7 +1175,7 @@ COMMAND_CALLBACK(color)
 }
 
 /*
- * command_command: launch explicit WeeChat or plugin command
+ * Callback for command "/command": launches explicit WeeChat or plugin command.
  */
 
 COMMAND_CALLBACK(command)
@@ -1217,7 +1222,7 @@ COMMAND_CALLBACK(command)
 }
 
 /*
- * command_cursor: free movement of cursor on screen
+ * Callback for command "/cursor": free movement of cursor on screen.
  */
 
 COMMAND_CALLBACK(cursor)
@@ -1301,7 +1306,7 @@ COMMAND_CALLBACK(cursor)
 }
 
 /*
- * command_debug: control debug for core/plugins
+ * Callback for command "/debug": controls debug for core/plugins.
  */
 
 COMMAND_CALLBACK(debug)
@@ -1445,7 +1450,8 @@ COMMAND_CALLBACK(debug)
 }
 
 /*
- * command_eval: evaluate expression and send result to buffer
+ * Callback for command "/eval": evaluates an expression and sends result to
+ * buffer.
  */
 
 COMMAND_CALLBACK(eval)
@@ -1522,7 +1528,7 @@ COMMAND_CALLBACK(eval)
 }
 
 /*
- * command_filter_display: display one filter
+ * Displays one filter.
  */
 
 void
@@ -1546,7 +1552,7 @@ command_filter_display (struct t_gui_filter *filter)
 }
 
 /*
- * command_filter: manage message filters
+ * Callback for command "/filter": manages message filters.
  */
 
 COMMAND_CALLBACK(filter)
@@ -1827,8 +1833,7 @@ COMMAND_CALLBACK(filter)
 }
 
 /*
- * command_help_list_plugin_commands: display help for commands of a plugin
- *                                    (or core commands if plugin is NULL)
+ * Displays help for commands of a plugin (or core commands if plugin is NULL).
  */
 
 void
@@ -1949,7 +1954,7 @@ command_help_list_plugin_commands (struct t_weechat_plugin *plugin,
 }
 
 /*
- * command_help_list_commands: display help for commands
+ * Displays help for commands.
  */
 
 void
@@ -1969,7 +1974,7 @@ command_help_list_commands (int verbose)
 }
 
 /*
- * command_help: display help about commands
+ * Callback for command "/help": displays help about commands and options.
  */
 
 COMMAND_CALLBACK(help)
@@ -2359,7 +2364,7 @@ COMMAND_CALLBACK(help)
 }
 
 /*
- * command_history: display current buffer history
+ * Callback for command "/history": displays command history for current buffer.
  */
 
 COMMAND_CALLBACK(history)
@@ -2414,7 +2419,7 @@ COMMAND_CALLBACK(history)
 }
 
 /*
- * command_input: input actions (used by key bindings)
+ * Callback for command "/input": input actions (used by key bindings).
  */
 
 COMMAND_CALLBACK(input)
@@ -2531,7 +2536,7 @@ COMMAND_CALLBACK(input)
 }
 
 /*
- * command_key_display: display a key binding
+ * Displays a key binding.
  */
 
 void
@@ -2568,7 +2573,7 @@ command_key_display (struct t_gui_key *key, struct t_gui_key *default_key)
 }
 
 /*
- * command_key_display_list: display a list of keys
+ * Displays a list of keys.
  */
 
 void
@@ -2596,8 +2601,8 @@ command_key_display_list (const char *message_no_key,
 }
 
 /*
- * command_key_display_listdiff: list differences between default and current
- *                               keys (keys added, redefined or removed)
+ * Displays differences between default and current keys (keys added, redefined
+ * or removed).
  */
 
 void
@@ -2679,7 +2684,7 @@ command_key_display_listdiff (int context)
 }
 
 /*
- * command_key_reset: reset a key for a given context
+ * Resets a key for a given context.
  */
 
 int
@@ -2768,7 +2773,7 @@ command_key_reset (int context, const char *key)
 }
 
 /*
- * command_key: bind/unbind keys
+ * Callback for command "/key": binds/unbinds keys.
  */
 
 COMMAND_CALLBACK(key)
@@ -3077,7 +3082,7 @@ COMMAND_CALLBACK(key)
 }
 
 /*
- * command_layout_display_tree: display tree of windows
+ * Displays a tree of windows.
  */
 
 void
@@ -3135,7 +3140,7 @@ command_layout_display_tree (struct t_gui_layout_window *layout_window,
 }
 
 /*
- * command_layout: save/apply buffers/windows layout
+ * Callback for command "/layout": saves/applies buffers/windows layout.
  */
 
 COMMAND_CALLBACK(layout)
@@ -3245,7 +3250,7 @@ COMMAND_CALLBACK(layout)
 }
 
 /*
- * command_mouse_timer_cb: callback for mouse timer
+ * Callback for mouse timer.
  */
 
 int
@@ -3270,7 +3275,7 @@ command_mouse_timer_cb (void *data, int remaining_calls)
 }
 
 /*
- * command_mouse_timer: timer for toggling mouse
+ * Timer for toggling mouse.
  */
 
 void
@@ -3288,7 +3293,7 @@ command_mouse_timer (const char *delay)
 }
 
 /*
- * command_mouse: mouse control
+ * Callback for command "/mouse": controls mouse.
  */
 
 COMMAND_CALLBACK(mouse)
@@ -3356,7 +3361,7 @@ COMMAND_CALLBACK(mouse)
 }
 
 /*
- * command_mute: execute a command mute
+ * Callback for command "/mute": silently executes a command.
  */
 
 COMMAND_CALLBACK(mute)
@@ -3425,7 +3430,7 @@ COMMAND_CALLBACK(mute)
 }
 
 /*
- * command_plugin_list: list loaded plugins
+ * Displays a list of loaded plugins.
  */
 
 void
@@ -3646,7 +3651,7 @@ command_plugin_list (const char *name, int full)
                     }
                 }
 
-                /* config options hooked */
+                /* configuration options hooked */
                 hook_found = 0;
                 for (ptr_hook = weechat_hooks[HOOK_TYPE_CONFIG]; ptr_hook;
                      ptr_hook = ptr_hook->next_hook)
@@ -3721,7 +3726,7 @@ command_plugin_list (const char *name, int full)
 }
 
 /*
- * command_plugin: list/load/unload WeeChat plugins
+ * Callback for command "/plugin": lists/loads/unloads WeeChat plugins.
  */
 
 COMMAND_CALLBACK(plugin)
@@ -3836,7 +3841,7 @@ COMMAND_CALLBACK(plugin)
 }
 
 /*
- * command_proxy_list: list proxies
+ * Displays a list of proxies.
  */
 
 void
@@ -3874,7 +3879,7 @@ command_proxy_list ()
 }
 
 /*
- * command_proxy: manage proxies
+ * Callback for command "/proxy": manages proxies.
  */
 
 COMMAND_CALLBACK(proxy)
@@ -4006,7 +4011,7 @@ COMMAND_CALLBACK(proxy)
 }
 
 /*
- * command_quit: quit WeeChat
+ * Callback for command "/quit": quits WeeChat.
  */
 
 COMMAND_CALLBACK(quit)
@@ -4055,7 +4060,7 @@ COMMAND_CALLBACK(quit)
 }
 
 /*
- * command_reload_file: reload a configuration file
+ * Reloads a configuration file.
  */
 
 void
@@ -4085,7 +4090,7 @@ command_reload_file (struct t_config_file *config_file)
 }
 
 /*
- * command_reload: reload WeeChat and plugins options from disk
+ * Callback for command "/reload": reloads a configuration file.
  */
 
 COMMAND_CALLBACK(reload)
@@ -4128,7 +4133,7 @@ COMMAND_CALLBACK(reload)
 }
 
 /*
- * command_repeat_timer_cb: callback for repeat timer
+ * Callback for repeat timer.
  */
 
 int
@@ -4169,7 +4174,7 @@ command_repeat_timer_cb (void *data, int remaining_calls)
 }
 
 /*
- * command_repeat: execute a command several times
+ * Callback for command "/repeat": executes a command several times.
  */
 
 COMMAND_CALLBACK(repeat)
@@ -4255,7 +4260,7 @@ COMMAND_CALLBACK(repeat)
 }
 
 /*
- * command_save_file: save a configuration file to disk
+ * Saves a configuration file to disk.
  */
 
 void
@@ -4277,7 +4282,7 @@ command_save_file (struct t_config_file *config_file)
 }
 
 /*
- * command_save: save configuration files to disk
+ * Callback for command "/save": saves configuration files to disk.
  */
 
 COMMAND_CALLBACK(save)
@@ -4322,7 +4327,7 @@ COMMAND_CALLBACK(save)
 }
 
 /*
- * command_set_display_section: display configuration section
+ * Displays a configuration section.
  */
 
 void
@@ -4340,7 +4345,7 @@ command_set_display_section (struct t_config_file *config_file,
 }
 
 /*
- * command_set_display_option: display configuration option
+ * Displays a configuration option.
  */
 
 void
@@ -4521,8 +4526,9 @@ command_set_display_option (struct t_config_option *option,
 }
 
 /*
- * command_set_display_option_list: display list of options
- *                                  return: number of options displayed
+ * Displays a list of options.
+ *
+ * Returns the number of options displayed.
  */
 
 int
@@ -4579,7 +4585,7 @@ command_set_display_option_list (const char *message, const char *search)
 }
 
 /*
- * command_set: set config options
+ * Callback for command "/set": sets configuration options.
  */
 
 COMMAND_CALLBACK(set)
@@ -4690,7 +4696,7 @@ COMMAND_CALLBACK(set)
 }
 
 /*
- * command_unset: unset/reset config options
+ * Callback for command "/unset": unsets/resets configuration options.
  */
 
 COMMAND_CALLBACK(unset)
@@ -4781,7 +4787,7 @@ COMMAND_CALLBACK(unset)
 }
 
 /*
- * command_upgrade: upgrade WeeChat
+ * Callback for command "/upgrade": upgrades WeeChat.
  */
 
 COMMAND_CALLBACK(upgrade)
@@ -4916,7 +4922,7 @@ COMMAND_CALLBACK(upgrade)
 }
 
 /*
- * command_uptime: display WeeChat uptime
+ * Callback for command "/uptime": displays WeeChat uptime.
  */
 
 COMMAND_CALLBACK(uptime)
@@ -4989,7 +4995,7 @@ COMMAND_CALLBACK(uptime)
 }
 
 /*
- * command_version_display: display WeeChat version
+ * Displays WeeChat version.
  */
 
 void
@@ -5066,7 +5072,7 @@ command_version_display (struct t_gui_buffer *buffer,
 }
 
 /*
- * command_version: display WeeChat version
+ * Callback for command "/version": displays WeeChat version.
  */
 
 COMMAND_CALLBACK(version)
@@ -5098,7 +5104,7 @@ COMMAND_CALLBACK(version)
 }
 
 /*
- * command_wait_timer_cb: callback for timer set by command_wait
+ * Callback for timer set by command_wait.
  */
 
 int
@@ -5139,7 +5145,7 @@ command_wait_timer_cb (void *data, int remaining_calls)
 }
 
 /*
- * command_wait: schedule a command execution in future
+ * Callback for command "/wait": schedules a command execution in future.
  */
 
 COMMAND_CALLBACK(wait)
@@ -5215,7 +5221,7 @@ COMMAND_CALLBACK(wait)
 }
 
 /*
- * command_window: manage windows
+ * Callback for command "/window": manages windows.
  */
 
 COMMAND_CALLBACK(window)
@@ -5588,7 +5594,7 @@ COMMAND_CALLBACK(window)
 }
 
 /*
- * command_init: hook WeeChat commands
+ * Hooks WeeChat core commands.
  */
 
 void
@@ -6551,7 +6557,7 @@ command_init ()
 }
 
 /*
- * command_exec_list: execute command list
+ * Executes a list of commands (separated by ";").
  */
 
 void
@@ -6576,7 +6582,7 @@ command_exec_list (const char *command_list)
 }
 
 /*
- * command_startup: execute command at startup
+ * Executes commands at startup.
  */
 
 void

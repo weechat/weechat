@@ -33,7 +33,7 @@
 
 
 /*
- * xfer_command_me: send a ctcp action to remote host
+ * Callback for command "/me": sends a ctcp action to remote host.
  */
 
 int
@@ -76,7 +76,7 @@ xfer_command_me (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * xfer_command_xfer_list: list xfer
+ * Displays a list of xfer.
  */
 
 void
@@ -193,7 +193,7 @@ xfer_command_xfer_list (int full)
 }
 
 /*
- * xfer_command_xfer: command /xfer
+ * Callback for command "/xfer".
  */
 
 int
@@ -245,7 +245,7 @@ xfer_command_xfer (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * xfer_command_init: add /xfer command
+ * Hooks commands.
  */
 
 void

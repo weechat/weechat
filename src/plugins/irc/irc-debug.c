@@ -33,7 +33,7 @@
 
 
 /*
- * irc_debug_signal_debug_dump_cb: dump IRC data in WeeChat log file
+ * Dumps IRC data in WeeChat log file.
  */
 
 int
@@ -65,7 +65,7 @@ irc_debug_signal_debug_dump_cb (void *data, const char *signal,
 }
 
 /*
- * irc_debug_init: initialize debug for IRC plugin
+ * Initializes debug for IRC plugin.
  */
 
 void

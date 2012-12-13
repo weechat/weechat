@@ -60,7 +60,7 @@ int debug_dump_active = 0;
 
 
 /*
- * debug_dump: write dump to WeeChat log file
+ * Writes dump of data to WeeChat log file.
  */
 
 void
@@ -116,7 +116,10 @@ debug_dump (int crash)
 }
 
 /*
- * debug_dump_cb: callback for "debug_dump" signal hooked
+ * Callback for signal "debug_dump".
+ *
+ * This function is called when WeeChat is crashing or when command
+ * "/debug dump" is issued.
  */
 
 int
@@ -135,8 +138,9 @@ debug_dump_cb (void *data, const char *signal, const char *type_data,
 }
 
 /*
- * debug_sigsegv: SIGSEGV handler: save crash log to
- *                <weechat_home>/weechat.log and exit
+ * Callback for system signal SIGSEGV handler.
+ *
+ * Writes dump of data and backtrace to WeeChat log file, then exit.
  */
 
 void
@@ -168,7 +172,9 @@ debug_sigsegv ()
 }
 
 /*
- * debug_buffer_cb: callback for "debug_buffer" signal hooked
+ * Callback for signal "debug_buffer".
+ *
+ * This function is called when command "/debug buffer" is issued.
  */
 
 int
@@ -186,7 +192,7 @@ debug_buffer_cb (void *data, const char *signal, const char *type_data,
 }
 
 /*
- * debug_windows_tree_display: display tree of windows
+ * Displays tree of windows (this function must not be called directly).
  */
 
 void
@@ -238,7 +244,7 @@ debug_windows_tree_display (struct t_gui_window_tree *tree, int indent)
 }
 
 /*
- * debug_windows_tree_display: display tree of windows
+ * Displays tree of windows.
  */
 
 void
@@ -250,7 +256,9 @@ debug_windows_tree ()
 }
 
 /*
- * debug_windows_cb: callback for "debug_windows" signal hooked
+ * Callback for signal "debug_windows".
+ *
+ * This function is called when command "/debug windows" is issued.
  */
 
 int
@@ -269,7 +277,7 @@ debug_windows_cb (void *data, const char *signal, const char *type_data,
 }
 
 /*
- * debug_memory: display information about dynamic memory allocation
+ * Displays information about dynamic memory allocation.
  */
 
 void
@@ -300,7 +308,7 @@ debug_memory ()
 }
 
 /*
- * debug_hdata_hash_var_map_cb: function called for each variable in hdata
+ * Callback called for each variable in hdata.
  */
 
 void
@@ -323,7 +331,7 @@ debug_hdata_hash_var_map_cb (void *data,
 }
 
 /*
- * debug_hdata_hash_list_map_cb: function called for each list in hdata
+ * Callback called for each list in hdata.
  */
 
 void
@@ -342,7 +350,7 @@ debug_hdata_hash_list_map_cb (void *data,
 }
 
 /*
- * debug_hdata_map_cb: function called for each hdata in memory
+ * Callback called for each hdata in memory.
  */
 
 void
@@ -398,7 +406,7 @@ debug_hdata_map_cb (void *data, struct t_hashtable *hashtable,
 }
 
 /*
- * debug_hdata: display list of hdata in memory
+ * Displays a list of hdata in memory.
  */
 
 void
@@ -416,7 +424,7 @@ debug_hdata ()
 }
 
 /*
- * debug_hooks: display infos about hooks
+ * Displays info about hooks.
  */
 
 void
@@ -445,7 +453,7 @@ debug_hooks ()
 }
 
 /*
- * debug_infolists: display list of infolists in memory
+ * Displays a list of infolists in memory.
  */
 
 void
@@ -534,7 +542,7 @@ debug_infolists ()
 }
 
 /*
- * debug_init: hook signals for debug
+ * Hooks signals for debug.
  */
 
 void

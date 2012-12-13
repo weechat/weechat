@@ -48,7 +48,7 @@ int gui_cursor_y = 0;                  /* position of cursor in cursor mode */
 
 
 /*
- * gui_cursor_mode_toggle: toggle cursor mode
+ * Toggles cursor mode.
  */
 
 void
@@ -75,7 +75,7 @@ gui_cursor_mode_toggle ()
 }
 
 /*
- * gui_cursor_debug_set: set debug for cursor mode
+ * Sets debug for cursor mode.
  */
 
 void
@@ -93,7 +93,7 @@ gui_cursor_debug_set (int debug)
 }
 
 /*
- * gui_cursor_display_debug_info: display debug info about (x,y) in input
+ * Displays debug info about (x,y) in input.
  */
 
 void
@@ -130,7 +130,7 @@ gui_cursor_display_debug_info ()
 }
 
 /*
- * gui_cursor_move_xy: set cursor at position (x,y)
+ * Sets cursor at position (x,y).
  */
 
 void
@@ -157,7 +157,7 @@ gui_cursor_move_xy (int x, int y)
 }
 
 /*
- * gui_cursor_move_add_xy: move cursor by adding values to (x,y)
+ * Moves cursor by adding values to (x,y).
  */
 
 void
@@ -184,8 +184,7 @@ gui_cursor_move_add_xy (int add_x, int add_y)
 }
 
 /*
- * gui_cursor_move_area_add_xy: move cursor to another area by adding values to
- *                              (x,y)
+ * Moves cursor to another area by adding values to (x,y).
  */
 
 void
@@ -267,7 +266,7 @@ gui_cursor_move_area_add_xy (int add_x, int add_y)
 }
 
 /*
- * gui_cursor_move_area: move cursor to another area by name
+ * Moves cursor to another area by name.
  */
 
 void

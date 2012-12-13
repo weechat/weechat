@@ -46,13 +46,13 @@ struct t_proxy *weechat_proxies = NULL;    /* first proxy                   */
 struct t_proxy *last_weechat_proxy = NULL; /* last proxy                    */
 
 struct t_proxy *weechat_temp_proxies = NULL;    /* proxies used when        */
-struct t_proxy *last_weechat_temp_proxy = NULL; /* reading config           */
+struct t_proxy *last_weechat_temp_proxy = NULL; /* reading configuration    */
 
 
 /*
- * proxy_search_option search a proxy option name
- *                     return index of option in array
- *                     "proxy_option_string", or -1 if not found
+ * Searches for a proxy option.
+ *
+ * Returns index of option in enum t_proxy_option, -1 if option is not found.
  */
 
 int
@@ -74,8 +74,9 @@ proxy_search_option (const char *option_name)
 }
 
 /*
- * proxy_search_type: search type number with string
- *                    return -1 if type is not found
+ * Searches for a proxy type.
+ *
+ * Returns index of option in enum t_proxy_type, -1 if type is not found.
  */
 
 int
@@ -97,7 +98,9 @@ proxy_search_type (const char *type)
 }
 
 /*
- * proxy_search: search a proxy by name
+ * Searches for a proxy by name.
+ *
+ * Returns pointer to proxy found, NULL if not found.
  */
 
 struct t_proxy *
@@ -120,8 +123,9 @@ proxy_search (const char *name)
 }
 
 /*
- * proxy_search_with_option_name: search a proxy with name of option
- *                                (like "local_proxy.address")
+ * Searches for a proxy by option name.
+ *
+ * Returns pointer to proxy found, NULL if not found.
  */
 
 struct t_proxy *
@@ -152,7 +156,7 @@ proxy_search_with_option_name (const char *option_name)
 }
 
 /*
- * proxy_set_name: set name for a proxy
+ * Sets name for a proxy.
  */
 
 void
@@ -190,8 +194,11 @@ proxy_set_name (struct t_proxy *proxy, const char *name)
 }
 
 /*
- * proxy_set: set a property for a proxy
- *            return: 1 if ok, 0 if error
+ * Sets a property for a proxy.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -240,7 +247,9 @@ proxy_set (struct t_proxy *proxy, const char *property, const char *value)
 }
 
 /*
- * proxy_create_option: create an option for a proxy
+ * Creates an option for a proxy.
+ *
+ * Returns pointer to new option, NULL if error.
  */
 
 struct t_config_option *
@@ -321,8 +330,7 @@ proxy_create_option (const char *proxy_name, int index_option,
 }
 
 /*
- * proxy_create_option_temp: create option for a temporary proxy (when reading
- *                           config file)
+ * Creates an option for a temporary proxy (when reading configuration file).
  */
 
 void
@@ -339,7 +347,9 @@ proxy_create_option_temp (struct t_proxy *temp_proxy, int index_option,
 }
 
 /*
- * proxy_alloc: allocate and initialize new proxy structure
+ * Allocates and initializes a new proxy structure.
+ *
+ * Returns pointer to new proxy, NULL if error.
  */
 
 struct t_proxy *
@@ -364,7 +374,9 @@ proxy_alloc (const char *name)
 }
 
 /*
- * proxy_new_with_options: create a new proxy with options
+ * Creates a new proxy with options.
+ *
+ * Returns pointer to new proxy, NULL if error.
  */
 
 struct t_proxy *
@@ -403,7 +415,9 @@ proxy_new_with_options (const char *name,
 }
 
 /*
- * proxy_new: create a new proxy
+ * Creates a new proxy.
+ *
+ * Returns pointer to new proxy, NULL if error.
  */
 
 struct t_proxy *
@@ -462,7 +476,7 @@ proxy_new (const char *name, const char *type, const char *ipv6,
 }
 
 /*
- * proxy_use_temp_proxies: use temp proxies (created by reading config file)
+ * Uses temporary proxies (created by reading configuration file).
  */
 
 void
@@ -525,7 +539,7 @@ proxy_use_temp_proxies ()
 }
 
 /*
- * proxy_free: delete a proxy
+ * Frees a proxy.
  */
 
 void
@@ -558,7 +572,7 @@ proxy_free (struct t_proxy *proxy)
 }
 
 /*
- * proxy_free_all: delete all proxies
+ * Frees all proxies.
  */
 
 void
@@ -571,7 +585,7 @@ proxy_free_all ()
 }
 
 /*
- * proxy_print_log: print proxy infos in log (usually for crash dump)
+ * Prints proxies in WeeChat log file (usually for crash dump).
  */
 
 void

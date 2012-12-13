@@ -31,7 +31,7 @@
 
 
 /*
- * script_info_get_infolist_cb: callback called when script infolist is asked
+ * Returns infolist with script info.
  */
 
 struct t_infolist *
@@ -91,7 +91,7 @@ script_info_get_infolist_cb (void *data, const char *infolist_name,
 }
 
 /*
- * script_info_init: initialize info, infolist and hdata hooks for script plugin
+ * Hooks infolist and hdata.
  */
 
 void

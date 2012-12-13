@@ -63,7 +63,7 @@ GtkWidget *gui_gtk_label1;
 
 
 /*
- * gui_main_pre_init: pre-initialize GUI (called before gui_init)
+ * Pre-initializes GUI (called before gui_init).
  */
 
 void
@@ -80,7 +80,7 @@ gui_main_pre_init (int *argc, char **argv[])
 }
 
 /*
- * gui_main_init: init GUI
+ * Initializes GUI.
  */
 
 void
@@ -93,7 +93,7 @@ gui_main_init ()
 
     gui_color_init ();
 
-    /* build prefixes according to config */
+    /* build prefixes according to configuration */
     gui_chat_prefix_build ();
 
     /* init clipboard buffer */
@@ -217,7 +217,7 @@ gui_main_init ()
 }
 
 /*
- * gui_main_loop: main loop for WeeChat with Gtk GUI
+ * Main loop for WeeChat with Gtk GUI.
  */
 
 void
@@ -228,9 +228,10 @@ gui_main_loop ()
 }
 
 /*
- * gui_main_end: GUI end
- *               clean_exit is 0 when WeeChat is crashing (we don't clean
- *               objects because WeeChat can crash again during this cleanup...)
+ * Ends GUI.
+ *
+ * Argument "clean_exit" is 0 when WeeChat is crashing (we don't clean objects
+ * because WeeChat can crash again during this cleanup...).
  */
 
 void

@@ -35,8 +35,11 @@ struct t_aspell_speller *last_weechat_aspell_speller = NULL;
 
 
 /*
- * weechat_aspell_speller_exists: return 1 if an aspell dict exists for a lang,
- *                                0 otherwise
+ * Checks if an aspell dictionary exists for a lang.
+ *
+ * Returns:
+ *   1: aspell dict exists for the lang
+ *   0: aspell dict does not exist for the lang
  */
 
 int
@@ -70,9 +73,10 @@ weechat_aspell_speller_exists (const char *lang)
 }
 
 /*
- * weechat_aspell_speller_check_dictionaries: check dictionaries (called when
- *                                            user creates/changes dictionaries
- *                                            for a buffer)
+ * Checks if dictionaries are valid (called when user creates/changes
+ * dictionaries for a buffer).
+ *
+ * An error is displayed for each invalid dictionary found.
  */
 
 void
@@ -102,7 +106,9 @@ weechat_aspell_speller_check_dictionaries (const char *dict_list)
 }
 
 /*
- * weechat_aspell_speller_search: search a speller
+ * Searches for a speller by lang.
+ *
+ * Returns pointer to speller found, NULL if not found.
  */
 
 struct t_aspell_speller *
@@ -122,7 +128,9 @@ weechat_aspell_speller_search (const char *lang)
 }
 
 /*
- * weechat_aspell_speller_new: create and add a new speller instance
+ * Creates and adds a new speller instance.
+ *
+ * Returns pointer to new speller, NULL if error.
  */
 
 struct t_aspell_speller *
@@ -195,14 +203,14 @@ weechat_aspell_speller_new (const char *lang)
         weechat_aspell_spellers = new_speller;
     last_weechat_aspell_speller = new_speller;
 
-    /* free config */
+    /* free configuration */
     delete_aspell_config (config);
 
     return new_speller;
 }
 
 /*
- * weechat_aspell_speller_free: remove a speller instance
+ * Removes a speller instance.
  */
 
 void
@@ -241,7 +249,7 @@ weechat_aspell_speller_free (struct t_aspell_speller *speller)
 }
 
 /*
- * weechat_aspell_speller_free_all: free all spellers
+ * Frees all spellers.
  */
 
 void

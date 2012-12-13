@@ -41,9 +41,11 @@
 
 
 /*
- * irc_channel_valid: check if a channel pointer exists for a server
- *                    return 1 if channel exists
- *                           0 if channel is not found
+ * Checks if a channel pointer is valid for a server.
+ *
+ * Returns:
+ *   1: channel exists for server
+ *   0: channel does not exist for server
  */
 
 int
@@ -66,7 +68,7 @@ irc_channel_valid (struct t_irc_server *server, struct t_irc_channel *channel)
 }
 
 /*
- * irc_channel_move_near_server: move new channel/pv buffer near server
+ * Moves new channel/pv buffer near server.
  */
 
 void
@@ -140,8 +142,9 @@ irc_channel_move_near_server (struct t_irc_server *server, int channel_type,
 }
 
 /*
- * irc_channel_new: allocate a new channel for a server and add it to channels
- *                  list
+ * Creates a new channel in a server.
+ *
+ * Returns pointer to new channel, NULL if error.
  */
 
 struct t_irc_channel *
@@ -353,7 +356,7 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
 }
 
 /*
- * irc_channel_set_topic: set topic for a channel
+ * Sets topic for a channel.
  */
 
 void
@@ -368,7 +371,7 @@ irc_channel_set_topic (struct t_irc_channel *channel, const char *topic)
 }
 
 /*
- * irc_channel_set_modes: set modes for a channel
+ * Sets modes for a channel.
  */
 
 void
@@ -381,7 +384,9 @@ irc_channel_set_modes (struct t_irc_channel *channel, const char *modes)
 }
 
 /*
- * irc_channel_search: returns pointer on a channel with name
+ * Searches for a channel by name.
+ *
+ * Returns pointer to channel found, NULL if not found.
  */
 
 struct t_irc_channel *
@@ -402,7 +407,11 @@ irc_channel_search (struct t_irc_server *server, const char *channel_name)
 }
 
 /*
- * irc_channel_is_channel: returns 1 if string is a channel for given server
+ * Checks if a string is a valid channel name.
+ *
+ * Returns:
+ *   1: string is a channel name
+ *   0: string is not a channel name
  */
 
 int
@@ -422,7 +431,7 @@ irc_channel_is_channel (struct t_irc_server *server, const char *string)
 }
 
 /*
- * irc_channel_remove_away: remove away for all nicks on a channel
+ * Removes away for all nicks on a channel.
  */
 
 void
@@ -441,7 +450,7 @@ irc_channel_remove_away (struct t_irc_server *server,
 }
 
 /*
- * irc_channel_check_away: check for away on a channel
+ * Checks for away on a channel.
  */
 
 void
@@ -464,7 +473,7 @@ irc_channel_check_away (struct t_irc_server *server,
 }
 
 /*
- * irc_channel_set_away: set/unset away status for a channel
+ * Sets/unsets away status for a channel.
  */
 
 void
@@ -483,7 +492,7 @@ irc_channel_set_away (struct t_irc_server *server,
 }
 
 /*
- * irc_channel_nick_speaking_add_to_list: add a nick speaking on a channel
+ * Adds a nick speaking on a channel.
  */
 
 void
@@ -522,7 +531,7 @@ irc_channel_nick_speaking_add_to_list (struct t_irc_channel *channel,
 }
 
 /*
- * irc_channel_nick_speaking_add: add a nick speaking on a channel
+ * Adds a nick speaking on a channel.
  */
 
 void
@@ -540,7 +549,7 @@ irc_channel_nick_speaking_add (struct t_irc_channel *channel,
 }
 
 /*
- * irc_channel_nick_speaking_rename: rename a nick speaking on a channel
+ * Renames a nick speaking on a channel.
  */
 
 void
@@ -563,8 +572,9 @@ irc_channel_nick_speaking_rename (struct t_irc_channel *channel,
 }
 
 /*
- * irc_channel_nick_speaking_time_search: search a nick speaking time on a
- *                                        channel
+ * Searches for a nick speaking time on a channel.
+ *
+ * Returns pointer to nick speaking time, NULL if not found.
  */
 
 struct t_irc_channel_speaking *
@@ -595,7 +605,7 @@ irc_channel_nick_speaking_time_search (struct t_irc_server *server,
 }
 
 /*
- * irc_channel_nick_speaking_time_free: free a nick speaking on a channel
+ * Frees a nick speaking on a channel.
  */
 
 void
@@ -620,7 +630,7 @@ irc_channel_nick_speaking_time_free (struct t_irc_channel *channel,
 }
 
 /*
- * irc_channel_nick_speaking_time_free_all: free all nick speaking on a channel
+ * Frees all nick speaking on a channel.
  */
 
 void
@@ -634,7 +644,7 @@ irc_channel_nick_speaking_time_free_all (struct t_irc_channel *channel)
 }
 
 /*
- * irc_channel_nick_speaking_time_remove_old: remove old nicks speaking
+ * Removes old nicks speaking.
  */
 
 void
@@ -656,7 +666,7 @@ irc_channel_nick_speaking_time_remove_old (struct t_irc_channel *channel)
 }
 
 /*
- * irc_channel_nick_speaking_time_add: add a nick speaking time on a channel
+ * Adds a nick speaking time on a channel.
  */
 
 void
@@ -690,8 +700,7 @@ irc_channel_nick_speaking_time_add (struct t_irc_server *server,
 }
 
 /*
- * irc_channel_nick_speaking_time_rename: rename a nick speaking time on a
- *                                        channel
+ * Renames a nick speaking time on a channel.
  */
 
 void
@@ -714,7 +723,7 @@ irc_channel_nick_speaking_time_rename (struct t_irc_server *server,
 }
 
 /*
- * irc_channel_rejoin: rejoin a channel (for example after kick)
+ * Rejoins a channel (for example after kick).
  */
 
 void
@@ -731,7 +740,7 @@ irc_channel_rejoin (struct t_irc_server *server, struct t_irc_channel *channel)
 }
 
 /*
- * irc_channel_autorejoin_cb: callback for autorejoin on a channel
+ * Callback for autorejoin on a channel.
  */
 
 int
@@ -770,9 +779,8 @@ irc_channel_autorejoin_cb (void *data, int remaining_calls)
 }
 
 /*
- * irc_channel_display_nick_back_in_pv: display a message in pv buffer if nick
- *                                      is back and if private has flag
- *                                      "has_quit_server"
+ * Displays a message in pv buffer if nick is back and if private has flag
+ * "has_quit_server".
  */
 
 void
@@ -813,7 +821,7 @@ irc_channel_display_nick_back_in_pv (struct t_irc_server *server,
 }
 
 /*
- * irc_channel_free: free a channel and remove it from channels list
+ * Frees a channel and remove it from channels list.
  */
 
 void
@@ -870,7 +878,7 @@ irc_channel_free (struct t_irc_server *server, struct t_irc_channel *channel)
 }
 
 /*
- * irc_channel_free_all: free all allocated channels for a server
+ * Frees all channels for a server.
  */
 
 void
@@ -883,7 +891,7 @@ irc_channel_free_all (struct t_irc_server *server)
 }
 
 /*
- * irc_channel_hdata_channel_cb: return hdata for channel
+ * Returns hdata for channel.
  */
 
 struct t_hdata *
@@ -928,7 +936,7 @@ irc_channel_hdata_channel_cb (void *data, const char *hdata_name)
 }
 
 /*
- * irc_channel_hdata_channel_speaking_cb: return hdata for channel_speaking
+ * Returns hdata for channel_speaking.
  */
 
 struct t_hdata *
@@ -952,8 +960,11 @@ irc_channel_hdata_channel_speaking_cb (void *data, const char *hdata_name)
 }
 
 /*
- * irc_channel_add_to_infolist: add a channel in an infolist
- *                              return 1 if ok, 0 if error
+ * Adds a channel in an infolist.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -1055,7 +1066,7 @@ irc_channel_add_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * irc_channel_print_log: print channel infos in log (usually for crash dump)
+ * Prints channel infos in WeeChat log file (usually for crash dump).
  */
 
 void

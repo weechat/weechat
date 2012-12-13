@@ -39,8 +39,7 @@ int relay_buffer_selected_line = 0;
 
 
 /*
- * relay_buffer_refresh: update a client in buffer and update hotlist for
- *                       relay buffer
+ * Updates a client in buffer and updates hotlist for relay buffer.
  */
 
 void
@@ -151,8 +150,7 @@ relay_buffer_refresh (const char *hotlist)
 }
 
 /*
- * relay_buffer_input_cb: callback called when user send data to client list
- *                        buffer
+ * Callback for input data in relay buffer.
  */
 
 int
@@ -215,7 +213,7 @@ relay_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
- * relay_buffer_close_cb: callback called when relay buffer is closed
+ * Callback called when relay buffer is closed.
  */
 
 int
@@ -237,7 +235,7 @@ relay_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
 }
 
 /*
- * relay_buffer_open: open relay buffer (to display list of clients)
+ * Opens relay buffer.
  */
 
 void

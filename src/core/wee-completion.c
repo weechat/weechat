@@ -55,7 +55,7 @@
 
 
 /*
- * completion_list_add_bars_names_cb: add bars names to completion list
+ * Adds bar names to completion list.
  */
 
 int
@@ -81,7 +81,7 @@ completion_list_add_bars_names_cb (void *data,
 }
 
 /*
- * completion_list_add_bars_options: add bars options to completion list
+ * Adds bar options to completion list.
  */
 
 int
@@ -107,7 +107,7 @@ completion_list_add_bars_options_cb (void *data,
 }
 
 /*
- * completion_list_add_buffers_names_cb: add buffers names to completion list
+ * Adds buffer names to completion list.
  */
 
 int
@@ -134,7 +134,7 @@ completion_list_add_buffers_names_cb (void *data,
 }
 
 /*
- * completion_list_add_buffers_numbers_cb: add buffers numbers to completion list
+ * Adds buffer numbers to completion list.
  */
 
 int
@@ -163,8 +163,7 @@ completion_list_add_buffers_numbers_cb (void *data,
 }
 
 /*
- * completion_list_add_buffers_plugins_names_cb: add plugins + buffers names to
- *                                               completion list
+ * Adds plugin+buffer names to completion list.
  */
 
 int
@@ -191,8 +190,7 @@ completion_list_add_buffers_plugins_names_cb (void *data,
 }
 
 /*
- * completion_list_add_buffer_properties_set_cb: add buffer properties (that
- *                                               can be set) to completion list
+ * Adds buffer properties (that can be set) to completion list.
  */
 
 int
@@ -219,8 +217,7 @@ completion_list_add_buffer_properties_set_cb (void *data,
 }
 
 /*
- * completion_list_add_buffer_properties_get_cb: add buffer properties (that
- *                                               can be read) to completion list
+ * Adds buffer properties (that can be read) to completion list.
  */
 
 int
@@ -259,7 +256,7 @@ completion_list_add_buffer_properties_get_cb (void *data,
 }
 
 /*
- * completion_list_add_windows_numbers_cb: add windows numbers to completion list
+ * Adds window numbers to completion list.
  */
 
 int
@@ -287,7 +284,7 @@ completion_list_add_windows_numbers_cb (void *data,
 }
 
 /*
- * completion_list_map_add_palette_color_cb: add palette color in completion
+ * Adds a palette color to completion list.
  */
 
 void
@@ -305,7 +302,7 @@ completion_list_map_add_palette_color_cb (void *data,
 }
 
 /*
- * completion_list_add_palette_colors_cb: add colors (in section "palette")
+ * Adds palette colors to completion list.
  */
 
 int
@@ -327,7 +324,7 @@ completion_list_add_palette_colors_cb (void *data,
 }
 
 /*
- * completion_list_add_config_files_cb: add config files to completion list
+ * Adds configuration files to completion list.
  */
 
 int
@@ -354,7 +351,7 @@ completion_list_add_config_files_cb (void *data,
 }
 
 /*
- * completion_list_add_filename: add filename to completion list
+ * Adds path/filename to completion list.
  */
 
 int
@@ -463,7 +460,7 @@ completion_list_add_filename_cb (void *data,
 }
 
 /*
- * completion_list_add_filters_cb: add filters to completion list
+ * Adds filter names to completion list.
  */
 
 int
@@ -490,7 +487,7 @@ completion_list_add_filters_cb (void *data,
 }
 
 /*
- * completion_list_add_commands_cb: add command hooks to completion list
+ * Adds command hooks to completion list.
  */
 
 int
@@ -521,7 +518,7 @@ completion_list_add_commands_cb (void *data,
 }
 
 /*
- * completion_list_add_infos_cb: add info hooks to completion list
+ * Adds info hooks to completion list.
  */
 
 int
@@ -552,7 +549,7 @@ completion_list_add_infos_cb (void *data,
 }
 
 /*
- * completion_list_add_infolists_cb: add infolist hooks to completion list
+ * Adds infolist hooks to completion list.
  */
 
 int
@@ -583,7 +580,7 @@ completion_list_add_infolists_cb (void *data,
 }
 
 /*
- * completion_list_add_nicks_cb: add nicks to completion list
+ * Adds nicks to completion list.
  */
 
 int
@@ -608,8 +605,10 @@ completion_list_add_nicks_cb (void *data,
                           completion);
     if (weelist_size (completion->completion_list) == count_before)
     {
-        /* no plugin overrides nick completion, then we use default nick */
-        /* completion, wich nicks of nicklist, in order of nicklist */
+        /*
+         * no plugin overrides nick completion => use default nick
+         * completion, with nicks of nicklist, in order of nicklist
+         */
         ptr_group = NULL;
         ptr_nick = NULL;
         gui_nicklist_get_next_item (completion->buffer,
@@ -631,8 +630,7 @@ completion_list_add_nicks_cb (void *data,
 }
 
 /*
- * completion_list_add_config_options_cb: add config option to completion
- *                                            list
+ * Adds configuration options to completion list.
  */
 
 int
@@ -683,7 +681,7 @@ completion_list_add_config_options_cb (void *data,
 }
 
 /*
- * completion_list_add_plugins_cb: add plugin name to completion list
+ * Adds plugin names to completion list.
  */
 
 int
@@ -710,9 +708,9 @@ completion_list_add_plugins_cb (void *data,
 }
 
 /*
- * completion_list_add_plugins_commands_cb: add plugin commands to completion
- *                                          list (plugin name is previous
- *                                          argument)
+ * Adds plugin commands to completion list.
+ *
+ * The plugin name is read in previous argument.
  */
 
 int
@@ -773,26 +771,9 @@ completion_list_add_plugins_commands_cb (void *data,
 }
 
 /*
- * completion_list_map_add_color_alias_cb: add color alias in completion
- */
-
-void
-completion_list_map_add_color_alias_cb (void *data,
-                                        struct t_hashtable *hashtable,
-                                        const void *key, const void *value)
-{
-    /* make C compiler happy */
-    (void) hashtable;
-    (void) value;
-
-    gui_completion_list_add ((struct t_gui_completion *)data,
-                             (char *)key,
-                             0, WEECHAT_LIST_POS_SORT);
-}
-
-/*
- * completion_list_add_config_option_values_cb: add option value to completion
- *                                              list
+ * Adds value of option to completion list.
+ *
+ * The option name is read in previous argument.
  */
 
 int
@@ -1044,8 +1025,7 @@ completion_list_add_config_option_values_cb (void *data,
 }
 
 /*
- * completion_list_add_weechat_commands_cb: add WeeChat commands to
- *                                          completion list
+ * Adds WeeChat commands to completion list.
  */
 
 int
@@ -1079,7 +1059,7 @@ completion_list_add_weechat_commands_cb (void *data,
 }
 
 /*
- * completion_list_add_proxies_names_cb: add proxies names to completion list
+ * Adds proxy names to completion list.
  */
 
 int
@@ -1106,7 +1086,7 @@ completion_list_add_proxies_names_cb (void *data,
 }
 
 /*
- * completion_list_add_proxies_options: add proxies options to completion list
+ * Adds proxy options to completion list.
  */
 
 int
@@ -1132,7 +1112,7 @@ completion_list_add_proxies_options_cb (void *data,
 }
 
 /*
- * completion_list_add_keys_contexts_cb: add keys contexts to completion list
+ * Adds key contexts to completion list.
  */
 
 int
@@ -1158,7 +1138,7 @@ completion_list_add_keys_contexts_cb (void *data,
 }
 
 /*
- * completion_list_add_keys_codes_cb: add keys to completion list
+ * Adds keys to completion list.
  */
 
 int
@@ -1193,9 +1173,8 @@ completion_list_add_keys_codes_cb (void *data,
 }
 
 /*
- * completion_list_add_keys_codes_for_reset_cb: add keys that can be reset
- *                                              (keys added, redefined or
- *                                              removed) to completion list
+ * Adds keys that can be reset (keys added, redefined or removed) to completion
+ * list.
  */
 
 int
@@ -1252,8 +1231,8 @@ completion_list_add_keys_codes_for_reset_cb (void *data,
 }
 
 /*
- * completion_list_add_cursor_areas_cb: add areas for free cursor movement
- *                                      ("chat" and bar names)
+ * Adds areas for free cursor movement ("chat" and bar names) to completion
+ * list.
  */
 
 int
@@ -1293,7 +1272,7 @@ completion_list_add_cursor_areas_cb (void *data,
 }
 
 /*
- * completion_init: add hooks for completions done by WeeChat core
+ * Adds hooks for completions done by WeeChat core.
  */
 
 void

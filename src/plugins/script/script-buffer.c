@@ -41,7 +41,7 @@ int script_buffer_detail_script_line_diff = -1;
 
 
 /*
- * script_buffer_display_line_script: display a line with script
+ * Displays a line with script.
  */
 
 void
@@ -332,8 +332,9 @@ script_buffer_display_line_script (int line, struct t_script_repo *script)
 }
 
 /*
- * script_buffer_detail_label: get header of a line for detail of script
- *                             The returned string is aligned on the right
+ * Gets header of a line for detail of script.
+ *
+ * Returns a string aligned on the right.
  */
 
 const char *
@@ -355,7 +356,7 @@ script_buffer_detail_label (const char *text, int max_length)
 }
 
 /*
- * script_buffer_display_detail_script: display detail on a script
+ * Displays detail on a script.
  */
 
 void
@@ -481,7 +482,7 @@ script_buffer_display_detail_script (struct t_script_repo *script)
 }
 
 /*
- * script_buffer_refresh: update list of scripts in script buffer
+ * Updates list of scripts in script buffer.
  */
 
 void
@@ -543,7 +544,7 @@ script_buffer_refresh (int clear)
 }
 
 /*
- * script_buffer_set_current_line: set current selected line in script buffer
+ * Sets current selected line.
  */
 
 void
@@ -564,7 +565,7 @@ script_buffer_set_current_line (int line)
 }
 
 /*
- * script_buffer_show_detail_script: show detailed info on a script
+ * Shows detailed info on a script.
  */
 
 void
@@ -586,7 +587,7 @@ script_buffer_show_detail_script (struct t_script_repo *script)
 }
 
 /*
- * script_buffer_get_window_info: get infos about window
+ * Gets info about a window.
  */
 
 void
@@ -622,8 +623,11 @@ script_buffer_get_window_info (struct t_gui_window *window,
 }
 
 /*
- * script_buffer_check_line_outside_window: check if current line is outside
- *                                          window
+ * Checks if current line is outside window.
+ *
+ * Returns:
+ *   1: line is outside window
+ *   0: line is inside window
  */
 
 void
@@ -653,8 +657,7 @@ script_buffer_check_line_outside_window ()
 }
 
 /*
- * script_buffer_window_scrolled_cb: called when signal "window_scrolled" is
- *                                   received
+ * Callback for signal "window_scrolled".
  */
 
 int
@@ -698,8 +701,7 @@ script_buffer_window_scrolled_cb (void *data, const char *signal,
 }
 
 /*
- * script_buffer_input_cb: callback called when user send data to script list
- *                         buffer
+ * Callback for user data in script buffer.
  */
 
 int
@@ -771,7 +773,7 @@ script_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
- * script_buffer_close_cb: callback called when script buffer is closed
+ * Callback called when script buffer is closed.
  */
 
 int
@@ -789,8 +791,8 @@ script_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
 }
 
 /*
- * script_buffer_set_callbacks: restore buffers callbacks (input and close) for
- *                              buffer created by script plugin
+ * Restore buffer callbacks (input and close) for buffer created by script
+ * plugin.
  */
 
 void
@@ -808,7 +810,7 @@ script_buffer_set_callbacks ()
 }
 
 /*
- * script_buffer_set_keys: set keys on script buffer
+ * Sets keys on script buffer.
  */
 
 void
@@ -845,7 +847,7 @@ script_buffer_set_keys ()
 }
 
 /*
- * script_buffer_open: open script buffer (to display list of scripts)
+ * Opens script buffer.
  */
 
 void

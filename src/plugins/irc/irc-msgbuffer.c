@@ -37,7 +37,9 @@
 
 
 /*
- * irc_msgbuffer_get_option: get pointer to option with IRC message
+ * Gets pointer to option with IRC message.
+ *
+ * Returns pointer to option found, NULL if not found.
  */
 
 struct t_config_option *
@@ -51,7 +53,7 @@ irc_msgbuffer_get_option (struct t_irc_server *server, const char *message)
         snprintf (option_name, sizeof (option_name),
                   "%s.%s", server->name, message);
 
-        /* search for msgbuffer in config file, for server */
+        /* search for msgbuffer in configuration file, for server */
         ptr_option = weechat_config_search_option (irc_config_file,
                                                    irc_config_section_msgbuffer,
                                                    option_name);
@@ -59,27 +61,28 @@ irc_msgbuffer_get_option (struct t_irc_server *server, const char *message)
             return ptr_option;
     }
 
-    /* search for msgbuffer in config file */
+    /* search for msgbuffer in configuration file */
     ptr_option = weechat_config_search_option (irc_config_file,
                                                irc_config_section_msgbuffer,
                                                message);
     if (ptr_option)
         return ptr_option;
 
-    /* no msgbuffer found in config */
+    /* no msgbuffer found in configuration */
     return NULL;
 }
 
 
 /*
- * irc_msgbuffer_get_target_buffer: get target for IRC message
- *                                  message is IRC message
- *                                    (for example: "invite", "312")
- *                                  alias is optional alias for message
- *                                    (for example "whois")
- *                                  default_buffer is used if no target is
- *                                    defined (optional, by default server
- *                                    buffer is used)
+ * Gets target for IRC message.
+ *
+ * Arguments:
+ *   message: IRC message (for example: "invite", "312")
+ *   alias: optional alias for message (for example "whois")
+ *   default_buffer: used if no target is defined (optional, by default server
+ *                   buffer is used).
+ *
+ * Returns pointer to buffer found, NULL if not found.
  */
 
 struct t_gui_buffer *

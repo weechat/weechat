@@ -44,7 +44,7 @@ char *hdata_type_string[8] =
 
 
 /*
- * hdata_free_var: free a hdata variable
+ * Frees a hdata variable.
  */
 
 void
@@ -69,7 +69,9 @@ hdata_free_var (struct t_hashtable *hashtable,
 }
 
 /*
- * hdata_new: create a new hdata
+ * Creates a new hdata.
+ *
+ * Returns pointer to new hdata, NULL if error.
  */
 
 struct t_hdata *
@@ -118,7 +120,7 @@ hdata_new (struct t_weechat_plugin *plugin, const char *hdata_name,
 }
 
 /*
- * hdata_new_var: add a new variable (offset/type) in a hdata
+ * Adds a new variable in a hdata.
  */
 
 void
@@ -144,7 +146,7 @@ hdata_new_var (struct t_hdata *hdata, const char *name, int offset, int type,
 }
 
 /*
- * hdata_new_list: add a new list pointer in a hdata
+ * Adds a new list pointer in a hdata.
  */
 
 void
@@ -157,7 +159,7 @@ hdata_new_list (struct t_hdata *hdata, const char *name, void *pointer)
 }
 
 /*
- * hdata_get_var_offset: get offset of variable
+ * Gets offset of variable in hdata.
  */
 
 int
@@ -176,7 +178,7 @@ hdata_get_var_offset (struct t_hdata *hdata, const char *name)
 }
 
 /*
- * hdata_get_var_type: get type of variable (as integer)
+ * Gets type of variable in hdata (as integer).
  */
 
 int
@@ -195,7 +197,7 @@ hdata_get_var_type (struct t_hdata *hdata, const char *name)
 }
 
 /*
- * hdata_get_var_type_string: get type of variable (as string)
+ * Gets type of variable in hdata (as string).
  */
 
 const char *
@@ -214,10 +216,9 @@ hdata_get_var_type_string (struct t_hdata *hdata, const char *name)
 }
 
 /*
- * hdata_get_var_array_size: get array size for variable (if variable is an
- *                           array)
- *                           return -1 if if variable is not an array
- *                           (or if error)
+ * Gets size of array for a variable (if variable is an array).
+ *
+ * Returns size of array, -1 if variable is not an array (or if error).
  */
 
 int
@@ -311,7 +312,7 @@ hdata_get_var_array_size (struct t_hdata *hdata, void *pointer,
 }
 
 /*
- * hdata_get_var_array_size_string: get array size for variable as string
+ * Gets size of array for variable as string.
  */
 
 const char *
@@ -334,8 +335,9 @@ hdata_get_var_array_size_string (struct t_hdata *hdata, void *pointer,
 }
 
 /*
- * hdata_get_var_hdata: get hdata name for a variable (NULL if variable has
- *                      no hdata)
+ * Gets hdata name for a variable.
+ *
+ * Returns hdata name, NULL if variable has no hdata.
  */
 
 const char *
@@ -354,7 +356,7 @@ hdata_get_var_hdata (struct t_hdata *hdata, const char *name)
 }
 
 /*
- * hdata_get_var: get pointer to content of variable using hdata var name
+ * Gets pointer to content of variable using hdata variable name.
  */
 
 void *
@@ -373,8 +375,7 @@ hdata_get_var (struct t_hdata *hdata, void *pointer, const char *name)
 }
 
 /*
- * hdata_get_var_at_offset: get pointer to content of variable using hdata var
- *                          offset
+ * Gets pointer to content of variable using hdata variable offset.
  */
 
 void *
@@ -387,7 +388,7 @@ hdata_get_var_at_offset (struct t_hdata *hdata, void *pointer, int offset)
 }
 
 /*
- * hdata_get_list: get a list pointer
+ * Gets a list pointer in hdata.
  */
 
 void *
@@ -406,9 +407,11 @@ hdata_get_list (struct t_hdata *hdata, const char *name)
 }
 
 /*
- * hdata_check_pointer: check if a pointer is valid for a given hdata/list
- *                      return 1 if pointer exists in list
- *                             0 if pointer does not exist
+ * Checks if a pointer is valid for a given hdata/list.
+ *
+ * Returns:
+ *   1: pointer exists in list
+ *   0: pointer does not exist
  */
 
 int
@@ -433,7 +436,7 @@ hdata_check_pointer (struct t_hdata *hdata, void *list, void *pointer)
 }
 
 /*
- * hdata_move: move pointer to another element in list
+ * Moves pointer to another element in list.
  */
 
 void *
@@ -459,11 +462,12 @@ hdata_move (struct t_hdata *hdata, void *pointer, int count)
 }
 
 /*
- * hdata_get_index_and_name: extract index from name of variable
- *                           A name can contain index with this format:
- *                           "N|name" (where N is an integer >= 0)
- *                           "index" is set to N, "ptr_name" points to start
- *                           of name in string (after the "|" if found)
+ * Extracts index from name of a variable.
+ *
+ * A name can contain index with this format: "NNN|name" (where NNN is an
+ * integer >= 0).
+ * Argument "index" is set to N, "ptr_name" points to start of name in string
+ * (after the "|" if found).
  */
 
 void
@@ -501,7 +505,7 @@ hdata_get_index_and_name (const char *name, int *index, const char **ptr_name)
 }
 
 /*
- * hdata_char: get char value of a variable in structure using hdata
+ * Gets char value of a variable in hdata.
  */
 
 char
@@ -531,7 +535,7 @@ hdata_char (struct t_hdata *hdata, void *pointer, const char *name)
 }
 
 /*
- * hdata_integer: get integer value of a variable in structure using hdata
+ * Gets integer value of a variable in hdata.
  */
 
 int
@@ -561,7 +565,7 @@ hdata_integer (struct t_hdata *hdata, void *pointer, const char *name)
 }
 
 /*
- * hdata_long: get long value of a variable in structure using hdata
+ * Gets long value of a variable in hdata.
  */
 
 long
@@ -591,7 +595,7 @@ hdata_long (struct t_hdata *hdata, void *pointer, const char *name)
 }
 
 /*
- * hdata_string: get string value of a variable in structure using hdata
+ * Gets string value of a variable in hdata.
  */
 
 const char *
@@ -621,7 +625,7 @@ hdata_string (struct t_hdata *hdata, void *pointer, const char *name)
 }
 
 /*
- * hdata_pointer: get pointer value of a variable in structure using hdata
+ * Gets pointer value of a variable in hdata.
  */
 
 void *
@@ -651,7 +655,7 @@ hdata_pointer (struct t_hdata *hdata, void *pointer, const char *name)
 }
 
 /*
- * hdata_time: get time value of a variable in structure using hdata
+ * Gets time value of a variable in hdata.
  */
 
 time_t
@@ -681,7 +685,7 @@ hdata_time (struct t_hdata *hdata, void *pointer, const char *name)
 }
 
 /*
- * hdata_hashtable: get hashtable value of a variable in structure using hdata
+ * Gets hashtable value of a variable in hdata.
  */
 
 struct t_hashtable *
@@ -710,12 +714,16 @@ hdata_hashtable (struct t_hdata *hdata, void *pointer, const char *name)
     return NULL;
 }
 
-/* hdata_set: set value for a variable in hdata
- *            WARNING: this is dangerous, and only some variables can be set
- *                     by this function (this depends on hdata, see API doc
- *                     for more info) and this function can be called *ONLY*
- *                     in an "update" callback (in hdata).
- *            Return 1 if ok (value set), 0 if error (or not allowed)
+/*
+ * Sets value for a variable in hdata.
+ *
+ * WARNING: this is dangerous, and only some variables can be set by this
+ * function (this depends on hdata, see API doc for more info) and this
+ * function can be called *ONLY* in an "update" callback (in hdata).
+ *
+ * Returns:
+ *   1: OK (value set)
+ *   0: error (or not allowed)
  */
 
 int
@@ -795,15 +803,17 @@ hdata_set (struct t_hdata *hdata, void *pointer, const char *name,
 }
 
 /*
- * hdata_update: update some data in hdata
- *               The hashtable contains keys with new values.
- *               A special key "__delete" can be used to delete the whole
- *               structure at pointer (if allowed for this hdata).
- *               WARNING: this is dangerous, and only some data can be updated
- *                        by this function (this depends on hdata, see API doc
- *                        for more info)
- *               Return number of variables updated or 0 if nothing has been
- *               updated. In case of deletion, return 1 if ok, 0 if error.
+ * Updates some data in hdata.
+ *
+ * The hashtable contains keys with new values.
+ * A special key "__delete" can be used to delete the whole structure at
+ * pointer (if allowed for this hdata).
+ *
+ * WARNING: this is dangerous, and only some data can be updated by this
+ * function (this depends on hdata, see API doc for more info).
+ *
+ * Returns number of variables updated, 0 if nothing has been updated.
+ * In case of deletion, returns 1 if OK, 0 if error.
  */
 
 int
@@ -847,7 +857,7 @@ hdata_update (struct t_hdata *hdata, void *pointer,
 }
 
 /*
- * hdata_get_string: get a hdata property as string
+ * Gets a hdata property as string.
  */
 
 const char *
@@ -877,7 +887,7 @@ hdata_get_string (struct t_hdata *hdata, const char *property)
 }
 
 /*
- * hdata_free: free a hdata
+ * Frees a hdata.
  */
 
 void
@@ -896,7 +906,7 @@ hdata_free (struct t_hdata *hdata)
 }
 
 /*
- * hdata_free_all_plugin_map_cb: function called for each hdata in memory
+ * Frees hdata for a plugin (callback called for each hdata in memory).
  */
 
 void
@@ -915,7 +925,7 @@ hdata_free_all_plugin_map_cb (void *data, struct t_hashtable *hashtable,
 }
 
 /*
- * hdata_free_all_plugin: free all hdata created by a plugin
+ * Frees all hdata created by a plugin.
  */
 
 void
@@ -925,7 +935,7 @@ hdata_free_all_plugin (struct t_weechat_plugin *plugin)
 }
 
 /*
- * hdata_free_all_map_cb: function called for each hdata in memory
+ * Frees hdata (callback called for each hdata in memory).
  */
 
 void
@@ -944,7 +954,7 @@ hdata_free_all_map_cb (void *data, struct t_hashtable *hashtable,
 }
 
 /*
- * hdata_free_all: free all hdata
+ * Frees all hdata.
  */
 
 void
@@ -954,7 +964,8 @@ hdata_free_all ()
 }
 
 /*
- * hdata_print_log_var_map_cb: function called for each variable in hdata
+ * Prints variable of a hdata in WeeChat log file (callback called for each
+ * variable in hdata).
  */
 
 void
@@ -979,7 +990,7 @@ hdata_print_log_var_map_cb (void *data, struct t_hashtable *hashtable,
 }
 
 /*
- * hdata_print_log_map_cb: function called for each hdata in memory
+ * Prints hdata in WeeChat log file (callback called for each hdata in memory).
  */
 
 void
@@ -1014,7 +1025,7 @@ hdata_print_log_map_cb (void *data, struct t_hashtable *hashtable,
 }
 
 /*
- * hdata_print_log: print hdata in log (usually for crash dump)
+ * Prints hdata in WeeChat log file (usually for crash dump).
  */
 
 void
@@ -1024,7 +1035,7 @@ hdata_print_log ()
 }
 
 /*
- * hdata_init: create hashtable with hdata
+ * Initializes hdata: creates a hashtable with hdata.
  */
 
 void
@@ -1038,7 +1049,7 @@ hdata_init ()
 }
 
 /*
- * hdata_end: free all hdata and hashtable with hdata
+ * Frees all hdata and hashtable with hdata.
  */
 
 void

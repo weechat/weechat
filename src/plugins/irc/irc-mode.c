@@ -34,22 +34,24 @@
 
 
 /*
- * irc_mode_get_chanmode_type: get type of channel mode, which is a letter from
- *                             'A' to 'D':
- *                               A = Mode that adds or removes a nick or address to a list. Always has a parameter.
- *                               B = Mode that changes a setting and always has a parameter.
- *                               C = Mode that changes a setting and only has a parameter when set.
- *                               D = Mode that changes a setting and never has a parameter.
- *                             Example:
- *                               CHANMODES=beI,k,l,imnpstaqr
- *                               A = { b, e, I }
- *                               B = { k }
- *                               C = { l }
- *                               D = { i, m, n, p, s, t, a, q, r }
- *                             Note: Modes of type A return the list when there is no parameter present.
- *                             Note: Some clients assumes that any mode not listed is of type D.
- *                             Note: Modes in PREFIX are not listed but could be considered type B.
- *                             More info: http://www.irc.org/tech_docs/005.html
+ * Gets type of channel mode, which is a letter from 'A' to 'D':
+ *   A = Mode that adds or removes a nick or address to a list. Always has a
+ *       parameter.
+ *   B = Mode that changes a setting and always has a parameter.
+ *   C = Mode that changes a setting and only has a parameter when set.
+ *   D = Mode that changes a setting and never has a parameter.
+ *
+ * Example:
+ *   CHANMODES=beI,k,l,imnpstaqr  ==>  A = { b, e, I }
+ *                                     B = { k }
+ *                                     C = { l }
+ *                                     D = { i, m, n, p, s, t, a, q, r }
+ *
+ * Note1: modes of type A return the list when there is no parameter present.
+ * Note2: some clients assumes that any mode not listed is of type D.
+ * Note3: modes in PREFIX are not listed but could be considered type B.
+ *
+ * More info: http://www.irc.org/tech_docs/005.html
  */
 
 char
@@ -88,15 +90,16 @@ irc_mode_get_chanmode_type (struct t_irc_server *server, char chanmode)
 }
 
 /*
- * irc_mode_channel_update: update channel modes using the mode and argument
- *                          Example:
- *                            if channel modes are "+tn" and that we have:
- *                              - set_flag      = '+'
- *                              - chanmode      = 'k'
- *                              - chanmode_type = 'B'
- *                              - argument      = 'password'
- *                            then channel modes become:
- *                              "+tnk password"
+ * Updates channel modes using the mode and argument.
+ *
+ * Example:
+ *   if channel modes are "+tn" and that we have:
+ *     - set_flag      = '+'
+ *     - chanmode      = 'k'
+ *     - chanmode_type = 'B'
+ *     - argument      = 'password'
+ *   then channel modes become:
+ *     "+tnk password"
  */
 
 void
@@ -261,8 +264,8 @@ irc_mode_channel_update (struct t_irc_server *server,
 }
 
 /*
- * irc_mode_channel_set: set channel modes using CHANMODES (from message 005)
- *                       and update channel modes if needed
+ * Sets channel modes using CHANMODES (from message 005) and update channel
+ * modes if needed.
  */
 
 void
@@ -411,7 +414,7 @@ irc_mode_channel_set (struct t_irc_server *server,
 }
 
 /*
- * irc_mode_user_add: add a user mode
+ * Adds a user mode.
  */
 
 void
@@ -451,7 +454,7 @@ irc_mode_user_add (struct t_irc_server *server, char mode)
 }
 
 /*
- * irc_mode_user_remove: remove a user mode
+ * Removes a user mode.
  */
 
 void
@@ -476,7 +479,7 @@ irc_mode_user_remove (struct t_irc_server *server, char mode)
 }
 
 /*
- * irc_mode_user_set: set user modes
+ * Sets user modes.
  */
 
 void

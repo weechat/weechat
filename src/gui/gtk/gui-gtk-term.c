@@ -26,7 +26,7 @@
 #endif
 
 /*
- * gui_term_set_eat_newline_glitch: not used in Gtk GUI
+ * Not used in Gtk GUI.
  */
 
 void

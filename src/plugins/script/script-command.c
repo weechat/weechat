@@ -35,7 +35,7 @@
 
 
 /*
- * script_command_action: run action
+ * Runs an action.
  */
 
 void
@@ -119,7 +119,7 @@ script_command_action (struct t_gui_buffer *buffer, const char *action,
 }
 
 /*
- * script_command_script: command to manage scripts
+ * Callback for command "/script": manages scripts.
  */
 
 int
@@ -269,7 +269,7 @@ script_command_script (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * scrit_command_init: init script commands (create hooks)
+ * Hook command.
  */
 
 void

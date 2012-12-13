@@ -29,7 +29,7 @@
 
 
 /*
- * xfer_info_get_infolist_cb: callback called when xfer infolist is asked
+ * Returns infolist with xfer info.
  */
 
 struct t_infolist *
@@ -85,13 +85,12 @@ xfer_info_get_infolist_cb (void *data, const char *infolist_name,
 }
 
 /*
- * xfer_info_init: initialize info and infolist hooks for xfer plugin
+ * Hooks infolist.
  */
 
 void
 xfer_info_init ()
 {
-    /* xfer infolist hooks */
     weechat_hook_infolist ("xfer", N_("list of xfer"),
                            N_("xfer pointer (optional)"),
                            NULL,

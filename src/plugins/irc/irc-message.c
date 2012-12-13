@@ -32,9 +32,14 @@
 
 
 /*
- * irc_message_parse: parse IRC message and return pointer to tags, message
- *                    without tags, host, command, channel, target nick and
- *                    arguments (if any)
+ * Parses an IRC message and returns pointers to:
+ *   - tags
+ *   - message without tags
+ *   - host
+ *   - command
+ *   - channel
+ *   - target nick
+ *   - arguments (if any)
  */
 
 void
@@ -197,10 +202,16 @@ irc_message_parse (struct t_irc_server *server, const char *message,
 }
 
 /*
- * irc_message_parse_to_hashtable: parse IRC message and return hashtable with
- *                                 keys: nick, host, command, channel, arguments
- *                                 Note: hashtable has to be free()
- *                                       after use
+ * Parses an IRC message and returns hashtable with keys:
+ *   - tags
+ *   - message_without_tags
+ *   - nick
+ *   - host
+ *   - command
+ *   - channel
+ *   - arguments
+ *
+ * Note: hashtable must be freed after use.
  */
 
 struct t_hashtable *
@@ -250,7 +261,7 @@ irc_message_parse_to_hashtable (struct t_irc_server *server,
 }
 
 /*
- * irc_message_get_nick_from_host: get nick from host in an IRC message
+ * Gets nick from host in an IRC message.
  */
 
 const char *
@@ -299,7 +310,7 @@ irc_message_get_nick_from_host (const char *host)
 }
 
 /*
- * irc_message_get_address_from_host: get address from host in an IRC message
+ * Gets address from host in an IRC message.
  */
 
 const char *
@@ -339,9 +350,9 @@ irc_message_get_address_from_host (const char *host)
 }
 
 /*
- * irc_message_replace_vars: replace special IRC vars ($nick, $channel,
- *                           $server) in a string
- *                           Note: result has to be free() after use
+ * Replaces special IRC vars ($nick, $channel, $server) in a string.
+ *
+ * Note: result must be freed after use.
  */
 
 char *
@@ -381,7 +392,7 @@ irc_message_replace_vars (struct t_irc_server *server,
 }
 
 /*
- * irc_message_split_add: add a message + arguments in hashtable
+ * Adds a message + arguments in hashtable.
  */
 
 void
@@ -428,11 +439,35 @@ irc_message_split_add (struct t_hashtable *hashtable, int number,
 }
 
 /*
- * irc_message_split_string: split "arguments" using delimiter and max length
- *                           messages added to hashtable are:
- *                             host + command + target + XXX + suffix
- *                           (where XXX is part of "arguments")
- *                           return 1 if split ok, 0 if error
+ * Splits "arguments" using delimiter and max length.
+ *
+ * Examples of arguments for this function:
+ *
+ *   message..: :nick!user@host.com PRIVMSG #channel :Hello world!
+ *   arguments:
+ *     host     : ":nick!user@host.com"
+ *     command  : "PRIVMSG"
+ *     target   : "#channel"
+ *     prefix   : ":"
+ *     arguments: "Hello world!"
+ *     suffix   : ""
+ *
+ *   message..: :nick!user@host.com PRIVMSG #channel :\01ACTION is eating\01
+ *   arguments:
+ *     host     : ":nick!user@host.com"
+ *     command  : "PRIVMSG"
+ *     target   : "#channel"
+ *     prefix   : ":\01ACTION "
+ *     arguments: "is eating"
+ *     suffix   : "\01"
+ *
+ * Messages added to hashtable are:
+ *   host + command + target + prefix + XXX + suffix
+ * (where XXX is part of "arguments")
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -450,28 +485,6 @@ irc_message_split_string (struct t_hashtable *hashtable,
     const char *pos, *pos_max, *pos_next, *pos_last_delim;
     char message[1024], *dup_arguments;
     int max_length, number;
-
-    /*
-     * Examples of arguments for this function:
-     *
-     *   message..: :nick!user@host.com PRIVMSG #channel :Hello world!
-     *   arguments:
-     *     host     : ":nick!user@host.com"
-     *     command  : "PRIVMSG"
-     *     target   : "#channel"
-     *     prefix   : ":"
-     *     arguments: "Hello world!"
-     *     suffix   : ""
-     *
-     *   message..: :nick!user@host.com PRIVMSG #channel :\01ACTION is eating\01
-     *   arguments:
-     *     host     : ":nick!user@host.com"
-     *     command  : "PRIVMSG"
-     *     target   : "#channel"
-     *     prefix   : ":\01ACTION "
-     *     arguments: "is eating"
-     *     suffix   : "\01"
-     */
 
     max_length = 510;
     if (max_length_host >= 0)
@@ -556,9 +569,12 @@ irc_message_split_string (struct t_hashtable *hashtable,
 }
 
 /*
- * irc_message_split_join: split a JOIN message, taking care of keeping
- *                         channel keys with channel names
- *                         return 1 if split ok, 0 if error
+ * Splits a JOIN message, taking care of keeping channel keys with channel
+ * names.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -663,10 +679,12 @@ irc_message_split_join (struct t_hashtable *hashtable,
 }
 
 /*
- * irc_message_split_privmsg_notice: split a PRIVMSG or NOTICE message, taking
- *                                   care of keeping the '\01' char used in
- *                                   CTCP messages
- *                                   return 1 if split ok, 0 if error
+ * Splits a PRIVMSG or NOTICE message, taking care of keeping the '\01' char
+ * used in CTCP messages.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -718,8 +736,11 @@ irc_message_split_privmsg_notice (struct t_hashtable *hashtable,
 }
 
 /*
- * irc_message_split_005: split a 005 message (isupport)
- *                        return 1 if split ok, 0 if error
+ * Splits a 005 message (isupport).
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -751,20 +772,27 @@ irc_message_split_005 (struct t_hashtable *hashtable,
 }
 
 /*
- * irc_message_split: split an IRC message about to be sent to IRC server
- *                    The maximum length of an IRC message is 510 bytes for
- *                    user data + final "\r\n", so full size is 512 bytes
- *                    (the user data does not include the optional tags before
- *                    the host).
- *                    The split takes care about type of message to do a split
- *                    at best place in message.
- *                    The hashtable returned contains keys "msg1", "msg2", ...,
- *                    "msgN" with split of message (these messages do not
- *                    include the final "\r\n").
- *                    Hashtable contains "args1", "args2", ..., "argsN" with
- *                    split of arguments only (no host/command here).
- *                    Each message in hashtable has command and arguments, and
- *                    then is ready to be sent to IRC server.
+ * Splits an IRC message about to be sent to IRC server.
+ *
+ * The maximum length of an IRC message is 510 bytes for user data + final
+ * "\r\n", so full size is 512 bytes (the user data does not include the
+ * optional tags before the host).
+ *
+ * The split takes care about type of message to do a split at best place in
+ * message.
+ *
+ * The hashtable returned contains keys "msg1", "msg2", ..., "msgN" with split
+ * of message (these messages do not include the final "\r\n").
+ *
+ * Hashtable contains "args1", "args2", ..., "argsN" with split of arguments
+ * only (no host/command here).
+ *
+ * Each message ("msgN") in hashtable has command and arguments, and then is
+ * ready to be sent to IRC server.
+ *
+ * Returns hashtable with split message.
+ *
+ * Note: result must be freed after use.
  */
 
 struct t_hashtable *

@@ -57,7 +57,7 @@ const char *charset_internal = NULL;
 
 
 /*
- * charset_config_reaload: reload charset configuration file
+ * Reloads charset configuration file.
  */
 
 int
@@ -74,10 +74,12 @@ charset_config_reload (void *data, struct t_config_file *config_file)
 }
 
 /*
- * charset_decode_is_allowed: check if charset (decode) is allowed (different
- *                            from "UTF-8", which is the internal charset)
- *                            return 1 if charset is allowed, otherwise 0
- *                            (and error is displayed)
+ * Checks if a decoding charset is allowed (different from "UTF-8", which is the
+ * internal charset).
+ *
+ * Returns:
+ *   1: charset is allowed
+ *   0: charset not allowed
  */
 
 int
@@ -99,8 +101,11 @@ charset_decode_is_allowed (const char *charset)
 }
 
 /*
- * charset_check_charset_decode_cb: callback called to check the charset value
- *                                  (for decoding only)
+ * Checks the validity of a decoding charset.
+ *
+ * Returns:
+ *   1: valid
+ *   0: invalid
  */
 
 int
@@ -115,7 +120,7 @@ charset_check_charset_decode_cb (void *data, struct t_config_option *option,
 }
 
 /*
- * charset_config_create_option: set a charset
+ * Sets a charset.
  */
 
 int
@@ -179,8 +184,11 @@ charset_config_create_option (void *data, struct t_config_file *config_file,
 }
 
 /*
- * charset_config_init: init charset configuration file
- *                      return: 1 if ok, 0 if error
+ * Initializes charset configuration file.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -257,7 +265,7 @@ charset_config_init ()
 }
 
 /*
- * charset_config_read: read charset configuration file
+ * Reads charset configuration file.
  */
 
 int
@@ -267,7 +275,7 @@ charset_config_read ()
 }
 
 /*
- * charset_config_write: write charset configuration file
+ * Writes charset configuration file.
  */
 
 int
@@ -277,8 +285,11 @@ charset_config_write ()
 }
 
 /*
- * charset_check: check if a charset is valid
- *                return 1 if charset is valid, 0 if not valid
+ * Checks if a charset is valid.
+ *
+ * Returns:
+ *   1: charset is valid
+ *   0: charset is not valid
  */
 
 int
@@ -298,9 +309,10 @@ charset_check (const char *charset)
 }
 
 /*
- * charset_get: read a charset in config file
- *              we first try with all arguments, then remove one by one
- *              to find charset (from specific to general charset)
+ * Reads a charset in configuration file.
+ *
+ * First tries with all arguments, then removes one by one to find charset (from
+ * specific to general charset).
  */
 
 const char *
@@ -352,7 +364,7 @@ charset_get (struct t_config_section *section, const char *name,
 }
 
 /*
- * charset_decode_cb: decode a string with a charset to internal charset
+ * Decodes a string with a charset to internal charset (UTF-8).
  */
 
 char *
@@ -381,7 +393,7 @@ charset_decode_cb (void *data, const char *modifier, const char *modifier_data,
 }
 
 /*
- * charset_encode_cb: encode a string from internal charset to another one
+ * Encodes a string from internal charset (UTF-8) to another charset.
  */
 
 char *
@@ -410,7 +422,7 @@ charset_encode_cb (void *data, const char *modifier, const char *modifier_data,
 }
 
 /*
- * charset_set: set a charset
+ * Sets a charset.
  */
 
 void
@@ -433,7 +445,7 @@ charset_set (struct t_config_section *section, const char *type,
 }
 
 /*
- * charset_display_charsets: display charsets
+ * Displays terminal and internal charsets.
  */
 
 void
@@ -445,7 +457,7 @@ charset_display_charsets ()
 }
 
 /*
- * charset_command_cb: callback for /charset command
+ * Callback for command "/charset".
  */
 
 int
@@ -549,7 +561,7 @@ charset_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * weechat_plugin_init: init charset plugin
+ * Initializes charset plugin.
  */
 
 int
@@ -598,7 +610,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 }
 
 /*
- * weechat_plugin_end: end charset plugin
+ * Ends charset plugin.
  */
 
 int

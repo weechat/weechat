@@ -32,8 +32,7 @@
 
 
 /*
- * script_completion_scripts_cb: callback for completion with scripts in
- *                               repository
+ * Adds scripts to completion list.
  */
 
 int
@@ -60,8 +59,7 @@ script_completion_scripts_cb (void *data, const char *completion_item,
 }
 
 /*
- * script_completion_scripts_installed_cb: callback for completion with scripts
- *                                         installed
+ * Adds installed scripts to completion list.
  */
 
 int
@@ -91,8 +89,7 @@ script_completion_scripts_installed_cb (void *data, const char *completion_item,
 }
 
 /*
- * script_completion_exec_file_cb: callback called for each file in script
- *                                 directories
+ * Adds files in script directories to completion list.
  */
 
 void
@@ -125,8 +122,7 @@ script_completion_exec_file_cb (void *data, const char *filename)
 }
 
 /*
- * script_completion_scripts_files_cb: callback for completion with files in
- *                                     script directories
+ * Adds files in script directories to completion list.
  */
 
 int
@@ -174,8 +170,7 @@ script_completion_scripts_files_cb (void *data, const char *completion_item,
 }
 
 /*
- * script_completion_tags_cb: callback for completion with tags from scripts in
- *                            repository
+ * Adds tags from scripts in repository to completion list.
  */
 
 int
@@ -216,7 +211,7 @@ script_completion_tags_cb (void *data, const char *completion_item,
 }
 
 /*
- * script_completion_init: init completion for script plugin
+ * Hooks completions.
  */
 
 void

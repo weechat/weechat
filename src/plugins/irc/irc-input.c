@@ -38,7 +38,7 @@
 
 
 /*
- * irc_input_user_message_display: display user message
+ * Displays user message.
  */
 
 void
@@ -84,10 +84,9 @@ irc_input_user_message_display (struct t_gui_buffer *buffer, const char *text)
 }
 
 /*
- * irc_input_send_user_message: send a PRIVMSG message, and split it if message
- *                              size is > 512 bytes
- *                              Warning: this function makes temporarirly
- *                                       changes in "message"
+ * Sends a PRIVMSG message, and split it if message size is > 512 bytes.
+ *
+ * Warning: this function makes temporary changes in "message".
  */
 
 void
@@ -132,7 +131,7 @@ irc_input_send_user_message (struct t_gui_buffer *buffer, int flags,
 }
 
 /*
- * irc_input_data: input data in a buffer
+ * Input data in a buffer.
  */
 
 int
@@ -195,7 +194,7 @@ irc_input_data (struct t_gui_buffer *buffer, const char *input_data, int flags)
 }
 
 /*
- * irc_input_data_cb: callback for input data in a buffer
+ * Callback for input data in a buffer.
  */
 
 int
@@ -209,17 +208,17 @@ irc_input_data_cb (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
- * irc_input_send_cb: callback for "irc_input_send" signal
- *                    This signal can be used by other plugins/scripts, it
- *                    simulates input or command from user on an IRC buffer
- *                    (it is used for example by Relay plugin)
- *                    Format of signal_data (string) is:
- *                      "server;channel;flags;tags;text"
- *                      - server: server name (required)
- *                      - channel: channel name (optional)
- *                      - flags: flags for irc_server_sendf() (optional)
- *                      - tags: tags for irc_server_sendf() (optional)
- *                      - text: text or command (required)
+ * Callback for signal "irc_input_send" signal.
+ *
+ * This signal can be used by other plugins/scripts, it simulates input or
+ * command from user on an IRC buffer (it is used for example by Relay plugin).
+ *
+ * Format of signal_data (string) is "server;channel;flags;tags;text"
+ *   server: server name (required)
+ *   channel: channel name (optional)
+ *   flags: flags for irc_server_sendf() (optional)
+ *   tags: tags for irc_server_sendf() (optional)
+ *   text: text or command (required).
  */
 
 int

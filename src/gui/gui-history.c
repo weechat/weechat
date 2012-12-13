@@ -50,7 +50,7 @@ int num_gui_history = 0;
 
 
 /*
- * gui_history_buffer_add: add a text/command to buffer's history
+ * Adds a text/command to buffer's history.
  */
 
 void
@@ -97,7 +97,7 @@ gui_history_buffer_add (struct t_gui_buffer *buffer, const char *string)
 }
 
 /*
- * history_global_add: add a text/command to global history
+ * Adds a text/command to global history.
  */
 
 void
@@ -144,7 +144,7 @@ gui_history_global_add (const char *string)
 }
 
 /*
- * gui_history_add: add a text/command to buffer's history + global history
+ * Adds a text/command to buffer's history + global history.
  */
 
 void
@@ -171,7 +171,7 @@ gui_history_add (struct t_gui_buffer *buffer, const char *string)
 }
 
 /*
- * gui_history_global_free: free global history
+ * Frees global history.
  */
 
 void
@@ -195,7 +195,7 @@ gui_history_global_free ()
 
 
 /*
- * gui_history_buffer_free: free history for a buffer
+ * Frees history for a buffer.
  */
 
 void
@@ -218,7 +218,7 @@ gui_history_buffer_free (struct t_gui_buffer *buffer)
 }
 
 /*
- * gui_history_hdata_history_update_cb: callback for updating history
+ * Callback for updating history.
  */
 
 int
@@ -275,7 +275,7 @@ gui_history_hdata_history_update_cb (void *data,
 }
 
 /*
- * gui_history_hdata_history_cb: return hdata for history
+ * Returns hdata for history.
  */
 
 struct t_hdata *
@@ -300,9 +300,11 @@ gui_history_hdata_history_cb (void *data, const char *hdata_name)
 }
 
 /*
- * gui_history_add_to_infolist: add history of commands in an infolist
- *                              if buffer is NULL, global history is returned
- *                              return 1 if ok, 0 if error
+ * Adds history in an infolist.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int

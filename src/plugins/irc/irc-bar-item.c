@@ -36,7 +36,7 @@
 
 
 /*
- * irc_bar_item_away: bar item with away indicator
+ * Returns content of bar item "away": bar item with away indicator.
  */
 
 char *
@@ -93,7 +93,7 @@ irc_bar_item_away (void *data, struct t_gui_bar_item *item,
 }
 
 /*
- * irc_bar_item_buffer_title: bar item with buffer title
+ * Returns content of bar item "buffer_title": bar item with buffer title.
  */
 
 char *
@@ -130,7 +130,7 @@ irc_bar_item_buffer_title (void *data, struct t_gui_bar_item *item,
 }
 
 /*
- * irc_bar_item_buffer_plugin: bar item with buffer plugin
+ * Returns content of bar item "buffer_plugin": bar item with buffer plugin.
  */
 
 char *
@@ -185,7 +185,7 @@ irc_bar_item_buffer_plugin (void *data, struct t_gui_bar_item *item,
 }
 
 /*
- * irc_bar_item_buffer_name: bar item with buffer name
+ * Returns content of bar item "buffer_name": bar item with buffer name.
  */
 
 char *
@@ -266,7 +266,7 @@ irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
 }
 
 /*
- * irc_bar_item_buffer_modes: bar item with buffer modes
+ * Returns content of bar item "buffer_modes": bar item with buffer modes.
  */
 
 char *
@@ -330,7 +330,8 @@ irc_bar_item_buffer_modes (void *data, struct t_gui_bar_item *item,
 }
 
 /*
- * irc_bar_item_channel: bar item with channel name (without modes)
+ * Returns content of bar item "irc_channel": bar item with channel name
+ * (without modes).
  */
 
 char *
@@ -411,7 +412,7 @@ irc_bar_item_channel (void *data, struct t_gui_bar_item *item,
 }
 
 /*
- * irc_bar_item_lag: bar item with lag value
+ * Returns content of bar item "lag": bar item with lag value.
  */
 
 char *
@@ -453,7 +454,7 @@ irc_bar_item_lag (void *data, struct t_gui_bar_item *item,
 }
 
 /*
- * irc_bar_item_input_prompt: bar item with input prompt
+ * Returns content of bar item "input_prompt": bar item with input prompt.
  */
 
 char *
@@ -535,7 +536,7 @@ irc_bar_item_input_prompt (void *data, struct t_gui_bar_item *item,
 }
 
 /*
- * irc_bar_item_focus_buffer_nicklist: focus on nicklist
+ * Focus on nicklist.
  */
 
 struct t_hashtable *
@@ -581,8 +582,7 @@ irc_bar_item_focus_buffer_nicklist (void *data,
 }
 
 /*
- * irc_bar_item_buffer_switch: called on "buffer_switch" signal: refresh irc
- *                             bar items (for root bars)
+ * Callback for signal "buffer_switch": refreshes irc bar items (for root bars).
  */
 
 int
@@ -607,7 +607,7 @@ irc_bar_item_buffer_switch (void *data, const char *signal,
 }
 
 /*
- * irc_bar_item_init: initialize IRC bar items
+ * Initializes IRC bar items.
  */
 
 void

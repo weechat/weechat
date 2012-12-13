@@ -53,8 +53,9 @@ struct t_irc_ctcp_reply irc_ctcp_default_reply[] =
 
 
 /*
- * irc_ctcp_get_default_reply: get default reply for a CTCP query
- *                             return NULL if CTCP is unknown
+ * Gets default reply for a CTCP query.
+ *
+ * Returns NULL if CTCP is unknown.
  */
 
 const char *
@@ -73,7 +74,7 @@ irc_ctcp_get_default_reply (const char *ctcp)
 }
 
 /*
- * irc_ctcp_get_reply: get reply for a CTCP query
+ * Gets reply for a CTCP query.
  */
 
 const char *
@@ -84,14 +85,14 @@ irc_ctcp_get_reply (struct t_irc_server *server, const char *ctcp)
 
     snprintf (option_name, sizeof (option_name), "%s.%s", server->name, ctcp);
 
-    /* search for CTCP in config file, for server */
+    /* search for CTCP in configuration file, for server */
     ptr_option = weechat_config_search_option (irc_config_file,
                                                irc_config_section_ctcp,
                                                option_name);
     if (ptr_option)
         return weechat_config_string (ptr_option);
 
-    /* search for CTCP in config file */
+    /* search for CTCP in configuration file */
     ptr_option = weechat_config_search_option (irc_config_file,
                                                irc_config_section_ctcp,
                                                ctcp);
@@ -106,7 +107,7 @@ irc_ctcp_get_reply (struct t_irc_server *server, const char *ctcp)
 }
 
 /*
- * irc_ctcp_display_request: display CTCP requested by a nick
+ * Displays CTCP requested by a nick.
  */
 
 void
@@ -142,7 +143,7 @@ irc_ctcp_display_request (struct t_irc_server *server,
 }
 
 /*
- * irc_ctcp_display_reply_from_nick: display reply from a nick to a CTCP query
+ * Displays reply from a nick to a CTCP query.
  */
 
 void
@@ -265,7 +266,7 @@ irc_ctcp_display_reply_from_nick (struct t_irc_server *server, time_t date,
 }
 
 /*
- * irc_ctcp_reply_to_nick: display CTCP replied to a nick
+ * Displays CTCP replied to a nick.
  */
 
 void
@@ -327,7 +328,7 @@ irc_ctcp_reply_to_nick (struct t_irc_server *server,
 }
 
 /*
- * irc_ctcp_replace_variables: replace variables in CTCP format
+ * Replaces variables in CTCP format.
  */
 
 char *
@@ -430,8 +431,7 @@ irc_ctcp_replace_variables (struct t_irc_server *server, const char *format)
 }
 
 /*
- * irc_ctcp_dcc_filename_without_quotes: return filename for DCC, without
- *                                       double quotes
+ * Returns filename for DCC, without double quotes.
  */
 
 char *
@@ -449,7 +449,7 @@ irc_ctcp_dcc_filename_without_quotes (const char *filename)
 }
 
 /*
- * irc_ctcp_recv_dcc: parse CTCP DCC
+ * Parses CTCP DCC.
  */
 
 void
@@ -896,7 +896,7 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
 }
 
 /*
- * irc_ctcp_recv: receive a CTCP and if needed reply to query
+ * Receives a CTCP and if needed replies to query.
  */
 
 void

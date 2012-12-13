@@ -107,7 +107,7 @@ struct t_rlimit_resource rlimit_resource[] =
 
 
 /*
- * util_setrlimit_resource: set resource limit
+ * Sets resource limit.
  */
 
 #ifdef HAVE_SYS_RESOURCE_H
@@ -175,8 +175,7 @@ util_setrlimit_resource (const char *resource_name, long limit)
 #endif
 
 /*
- * util_setrlimit: set resource limits using value of option
- *                 "weechat.startup.sys_rlimit"
+ * Sets resource limits using value of option "weechat.startup.sys_rlimit".
  */
 
 void
@@ -219,10 +218,12 @@ util_setrlimit ()
 }
 
 /*
- * util_timeval_cmp: compare two timeval structures
- *                   return: -1 if tv1 < tv2
- *                            0 if tv1 == tv2
- *                            1 if tv1 > tv2
+ * Compares two timeval structures.
+ *
+ * Returns:
+ *   -1: tv1 < tv2
+ *    0: tv1 == tv2
+ *    1: tv1 > tv2
  */
 
 int
@@ -240,8 +241,9 @@ util_timeval_cmp (struct timeval *tv1, struct timeval *tv2)
 }
 
 /*
- * util_timeval_diff: calculates difference between two times (return in
- *                    milliseconds)
+ * Calculates difference between two timeval structures.
+ *
+ * Returns difference in milliseconds.
  */
 
 long
@@ -261,7 +263,7 @@ util_timeval_diff (struct timeval *tv1, struct timeval *tv2)
 }
 
 /*
- * util_timeval_add: add interval (in milliseconds) to a timeval struct
+ * Adds interval (in milliseconds) to a timeval structure.
  */
 
 void
@@ -281,8 +283,8 @@ util_timeval_add (struct timeval *tv, long interval)
 }
 
 /*
- * util_get_time_string: converts date to a string, using format of option
- *                       weechat.look.time_format (can be localized)
+ * Converts date to a string, using format of option "weechat.look.time_format"
+ * (can be localized).
  */
 
 char *
@@ -303,7 +305,7 @@ util_get_time_string (const time_t *date)
 }
 
 /*
- * util_catch_signal: catch a signal
+ * Catches a system signal.
  */
 
 void
@@ -318,8 +320,11 @@ util_catch_signal (int signum, void (*handler)(int))
 }
 
 /*
- * util_mkdir_home: create a directory in WeeChat home
- *                  return 1 if ok, 0 if error
+ * Creates a directory in WeeChat home.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -353,8 +358,11 @@ util_mkdir_home (const char *directory, int mode)
 }
 
 /*
- * util_mkdir: create a directory
- *             return 1 if ok, 0 if error
+ * Creates a directory.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -373,8 +381,11 @@ util_mkdir (const char *directory, int mode)
 }
 
 /*
- * util_mkdir_parents: create a directory and make parent directories as needed
- *                     return 1 if ok, 0 if error
+ * Creates a directory and makes parent directories as needed.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -429,8 +440,7 @@ util_mkdir_parents (const char *directory, int mode)
 }
 
 /*
- * util_exec_on_files: find files in a directory and execute a
- *                     function on each file
+ * Finds files in a directory and executes a function on each file.
  */
 
 void
@@ -466,14 +476,12 @@ util_exec_on_files (const char *directory, int hidden_files, void *data,
 }
 
 /*
- *  util_search_full_lib_name: search the full name of a WeeChat library
- *                             file with name and extension
- *                            - look in WeeChat user's dir, then WeeChat
- *                              global lib dir
- *                            - sys_directory is the system directory under
- *                              WeeChat lib prefix, for example "plugins"
- *                            - result has to be free() after use (if not NULL)
- *                            - NULL is returned if lib is not found
+ * Searches for the full name of a WeeChat library with name and extension
+ * (searches first in WeeChat user's dir, then WeeChat global lib directory).
+ *
+ * Returns name of library found, NULL if not found.
+ *
+ * Note: result must be freed after use (if not NULL).
  */
 
 char *
@@ -545,14 +553,11 @@ util_search_full_lib_name_ext (const char *filename, const char *extension,
 }
 
 /*
- * util_search_full_lib_name: search the full name of a WeeChat library
- *                            file with a part of name
- *                            - look in WeeChat user's dir, then WeeChat
- *                              global lib dir
- *                            - plugins_dir is the directory under WeeChat lib
- *                              prefix (for system dir) or under WeeChat home,
- *                              for example "plugins"
- *                            - result has to be free() after use (if not NULL)
+ * Searches for the full name of a WeeChat library with name.
+ *
+ * All extensions listed in option "weechat.plugin.extension" are tested.
+ *
+ * Note: result must be freed after use (if not NULL).
  */
 
 char *
@@ -600,10 +605,11 @@ util_search_full_lib_name (const char *filename, const char *plugins_dir)
 }
 
 /*
- * util_file_get_content: read the content of a file
- *                        return an allocated buffer with the file content
- *                        else NULL if an error occurred
- *                        (the buffer must be freed by the caller)
+ * Reads content of a file.
+ *
+ * Returns an allocated buffer with the content of file, NULL if error.
+ *
+ * Note: result must be freed after use.
  */
 
 char *
@@ -653,15 +659,17 @@ util_file_get_content (const char *filename)
 }
 
 /*
- * util_version_number: get version number (integer) with version as string
- *                      (non-digit chars like "-dev" are ignored)
- *                      for example:
- *                        "0.3.2-dev" ==> 197120 (== 0x00030200)
- *                        "0.3.2-rc1" ==> 197120 (== 0x00030200)
- *                        "0.3.2"     ==> 197120 (== 0x00030200)
- *                        "0.3.1.1"   ==> 196865 (== 0x00030101)
- *                        "0.3.1"     ==> 196864 (== 0x00030100)
- *                        "0.3.0"     ==> 196608 (== 0x00030000)
+ * Gets version number (integer) with a version as string.
+ *
+ * Non-digit chars like "-dev" are ignored.
+ *
+ * Examples:
+ *   "0.3.2-dev" ==> 197120 (== 0x00030200)
+ *   "0.3.2-rc1" ==> 197120 (== 0x00030200)
+ *   "0.3.2"     ==> 197120 (== 0x00030200)
+ *   "0.3.1.1"   ==> 196865 (== 0x00030101)
+ *   "0.3.1"     ==> 196864 (== 0x00030100)
+ *   "0.3.0"     ==> 196608 (== 0x00030000)
  */
 
 int

@@ -30,7 +30,7 @@
 
 
 /*
- * logger_info_get_infolist_cb: callback called when logger infolist is asked
+ * Returns infolist with logger info.
  */
 
 struct t_infolist *
@@ -87,13 +87,12 @@ logger_info_get_infolist_cb (void *data, const char *infolist_name,
 }
 
 /*
- * logger_info_init: initialize info and infolist hooks for logger plugin
+ * Hooks infolist for logger plugin.
  */
 
 void
 logger_info_init ()
 {
-    /* logger infolist hooks */
     weechat_hook_infolist ("logger_buffer", N_("list of logger buffers"),
                            N_("logger pointer (optional)"),
                            NULL,

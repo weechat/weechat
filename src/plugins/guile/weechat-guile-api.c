@@ -83,7 +83,7 @@
 
 
 /*
- * weechat_guile_api_register: startup function for all WeeChat Guile scripts
+ * Registers a guile script.
  */
 
 SCM
@@ -156,8 +156,10 @@ weechat_guile_api_register (SCM name, SCM author, SCM version, SCM license,
 }
 
 /*
- * weechat_guile_api_plugin_get_name: get name of plugin (return "core" for
- *                                    WeeChat core)
+ * Wrappers for functions in scripting API.
+ *
+ * For more info about these functions, look at their implementation in WeeChat
+ * core.
  */
 
 SCM
@@ -174,10 +176,6 @@ weechat_guile_api_plugin_get_name (SCM plugin)
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat_guile_api_charset_set: set script charset
- */
-
 SCM
 weechat_guile_api_charset_set (SCM charset)
 {
@@ -189,10 +187,6 @@ weechat_guile_api_charset_set (SCM charset)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_guile_api_iconv_to_internal: convert string to internal WeeChat charset
- */
 
 SCM
 weechat_guile_api_iconv_to_internal (SCM charset, SCM string)
@@ -210,11 +204,6 @@ weechat_guile_api_iconv_to_internal (SCM charset, SCM string)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_guile_api_iconv_from_internal: convert string from WeeChat internal
- *                                        charset to another one
- */
-
 SCM
 weechat_guile_api_iconv_from_internal (SCM charset, SCM string)
 {
@@ -231,10 +220,6 @@ weechat_guile_api_iconv_from_internal (SCM charset, SCM string)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_guile_api_gettext: get translated string
- */
-
 SCM
 weechat_guile_api_gettext (SCM string)
 {
@@ -248,10 +233,6 @@ weechat_guile_api_gettext (SCM string)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat_guile_api_ngettext: get translated string with plural form
- */
 
 SCM
 weechat_guile_api_ngettext (SCM single, SCM plural, SCM count)
@@ -270,12 +251,6 @@ weechat_guile_api_ngettext (SCM single, SCM plural, SCM count)
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat_guile_api_string_match: return 1 if string matches a mask
- *                                 mask can begin or end with "*", no other "*"
- *                                 are allowed inside mask
- */
-
 SCM
 weechat_guile_api_string_match (SCM string, SCM mask, SCM case_sensitive)
 {
@@ -293,14 +268,6 @@ weechat_guile_api_string_match (SCM string, SCM mask, SCM case_sensitive)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat_guile_api_string_has_highlight: return 1 if string contains a
- *                                         highlight (using list of words to
- *                                         highlight)
- *                                         return 0 if no highlight is found in
- *                                         string
- */
-
 SCM
 weechat_guile_api_string_has_highlight (SCM string, SCM highlight_words)
 {
@@ -315,14 +282,6 @@ weechat_guile_api_string_has_highlight (SCM string, SCM highlight_words)
 
     API_RETURN_INT(value);
 }
-
-/*
- * weechat_guile_api_string_has_highlight_regex: return 1 if string contains a
- *                                               highlight (using regular
- *                                               expression)
- *                                               return 0 if no highlight is
- *                                               found in string
- */
 
 SCM
 weechat_guile_api_string_has_highlight_regex (SCM string, SCM regex)
@@ -339,13 +298,6 @@ weechat_guile_api_string_has_highlight_regex (SCM string, SCM regex)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat_guile_api_string_mask_to_regex: convert a mask (string with only
- *                                         "*" as wildcard) to a regex, paying
- *                                         attention to special chars in a
- *                                         regex
- */
-
 SCM
 weechat_guile_api_string_mask_to_regex (SCM mask)
 {
@@ -360,10 +312,6 @@ weechat_guile_api_string_mask_to_regex (SCM mask)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_guile_api_string_remove_color: remove WeeChat color codes from string
- */
 
 SCM
 weechat_guile_api_string_remove_color (SCM string, SCM replacement)
@@ -381,11 +329,6 @@ weechat_guile_api_string_remove_color (SCM string, SCM replacement)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_guile_api_string_is_command_char: check if first char of string is a
- *                                           command char
- */
-
 SCM
 weechat_guile_api_string_is_command_char (SCM string)
 {
@@ -400,12 +343,6 @@ weechat_guile_api_string_is_command_char (SCM string)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat_guile_api_string_input_for_buffer: return string with input text
- *                                           for buffer or empty string if
- *                                           it's a command
- */
-
 SCM
 weechat_guile_api_string_input_for_buffer (SCM string)
 {
@@ -419,11 +356,6 @@ weechat_guile_api_string_input_for_buffer (SCM string)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat_guile_api_string_eval_expression: evaluate an expression and return
- *                                           result
- */
 
 SCM
 weechat_guile_api_string_eval_expression (SCM expr, SCM pointers,
@@ -458,10 +390,6 @@ weechat_guile_api_string_eval_expression (SCM expr, SCM pointers,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_guile_api_mkdir_home: create a directory in WeeChat home
- */
-
 SCM
 weechat_guile_api_mkdir_home (SCM directory, SCM mode)
 {
@@ -474,10 +402,6 @@ weechat_guile_api_mkdir_home (SCM directory, SCM mode)
 
     API_RETURN_ERROR;
 }
-
-/*
- * weechat_guile_api_mkdir: create a directory
- */
 
 SCM
 weechat_guile_api_mkdir (SCM directory, SCM mode)
@@ -492,11 +416,6 @@ weechat_guile_api_mkdir (SCM directory, SCM mode)
     API_RETURN_ERROR;
 }
 
-/*
- * weechat_guile_api_mkdir_parents: create a directory and make parent
- *                                  directories as needed
- */
-
 SCM
 weechat_guile_api_mkdir_parents (SCM directory, SCM mode)
 {
@@ -510,10 +429,6 @@ weechat_guile_api_mkdir_parents (SCM directory, SCM mode)
     API_RETURN_ERROR;
 }
 
-/*
- * weechat_guile_api_list_new: create a new list
- */
-
 SCM
 weechat_guile_api_list_new ()
 {
@@ -525,10 +440,6 @@ weechat_guile_api_list_new ()
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat_guile_api_list_add: add a string to list
- */
 
 SCM
 weechat_guile_api_list_add (SCM weelist, SCM data, SCM where, SCM user_data)
@@ -548,10 +459,6 @@ weechat_guile_api_list_add (SCM weelist, SCM data, SCM where, SCM user_data)
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat_guile_api_list_search: search a string in list
- */
-
 SCM
 weechat_guile_api_list_search (SCM weelist, SCM data)
 {
@@ -566,10 +473,6 @@ weechat_guile_api_list_search (SCM weelist, SCM data)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat_guile_api_list_search_pos: search position of a string in list
- */
 
 SCM
 weechat_guile_api_list_search_pos (SCM weelist, SCM data)
@@ -586,10 +489,6 @@ weechat_guile_api_list_search_pos (SCM weelist, SCM data)
     API_RETURN_INT(pos);
 }
 
-/*
- * weechat_guile_api_list_casesearch: search a string in list (ignore case)
- */
-
 SCM
 weechat_guile_api_list_casesearch (SCM weelist, SCM data)
 {
@@ -604,11 +503,6 @@ weechat_guile_api_list_casesearch (SCM weelist, SCM data)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat_guile_api_list_casesearch_pos: search position of a string in list
- *                                        (ignore case)
- */
 
 SCM
 weechat_guile_api_list_casesearch_pos (SCM weelist, SCM data)
@@ -625,10 +519,6 @@ weechat_guile_api_list_casesearch_pos (SCM weelist, SCM data)
     API_RETURN_INT(pos);
 }
 
-/*
- * weechat_guile_api_list_get: get item by position
- */
-
 SCM
 weechat_guile_api_list_get (SCM weelist, SCM position)
 {
@@ -644,10 +534,6 @@ weechat_guile_api_list_get (SCM weelist, SCM position)
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat_guile_api_list_set: set new value for item
- */
-
 SCM
 weechat_guile_api_list_set (SCM item, SCM new_value)
 {
@@ -660,10 +546,6 @@ weechat_guile_api_list_set (SCM item, SCM new_value)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_guile_api_list_next: get next item
- */
 
 SCM
 weechat_guile_api_list_next (SCM item)
@@ -679,10 +561,6 @@ weechat_guile_api_list_next (SCM item)
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat_guile_api_list_prev: get previous item
- */
-
 SCM
 weechat_guile_api_list_prev (SCM item)
 {
@@ -696,10 +574,6 @@ weechat_guile_api_list_prev (SCM item)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat_guile_api_list_string: get string value of item
- */
 
 SCM
 weechat_guile_api_list_string (SCM item)
@@ -715,10 +589,6 @@ weechat_guile_api_list_string (SCM item)
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat_guile_api_list_size: get number of elements in list
- */
-
 SCM
 weechat_guile_api_list_size (SCM weelist)
 {
@@ -733,10 +603,6 @@ weechat_guile_api_list_size (SCM weelist)
     API_RETURN_INT(size);
 }
 
-/*
- * weechat_guile_api_list_remove: remove item from list
- */
-
 SCM
 weechat_guile_api_list_remove (SCM weelist, SCM item)
 {
@@ -750,10 +616,6 @@ weechat_guile_api_list_remove (SCM weelist, SCM item)
     API_RETURN_OK;
 }
 
-/*
- * weechat_guile_api_list_remove_all: remove all items from list
- */
-
 SCM
 weechat_guile_api_list_remove_all (SCM weelist)
 {
@@ -766,10 +628,6 @@ weechat_guile_api_list_remove_all (SCM weelist)
     API_RETURN_OK;
 }
 
-/*
- * weechat_guile_api_list_free: free list
- */
-
 SCM
 weechat_guile_api_list_free (SCM weelist)
 {
@@ -781,10 +639,6 @@ weechat_guile_api_list_free (SCM weelist)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_guile_api_config_reload_cb: callback for config reload
- */
 
 int
 weechat_guile_api_config_reload_cb (void *data,
@@ -823,10 +677,6 @@ weechat_guile_api_config_reload_cb (void *data,
     return WEECHAT_CONFIG_READ_FILE_NOT_FOUND;
 }
 
-/*
- * weechat_guile_api_config_new: create a new configuration file
- */
-
 SCM
 weechat_guile_api_config_new (SCM name, SCM function, SCM data)
 {
@@ -847,10 +697,6 @@ weechat_guile_api_config_new (SCM name, SCM function, SCM data)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_guile_api_config_read_cb: callback for reading option in section
- */
 
 int
 weechat_guile_api_config_read_cb (void *data,
@@ -896,10 +742,6 @@ weechat_guile_api_config_read_cb (void *data,
     return WEECHAT_CONFIG_OPTION_SET_ERROR;
 }
 
-/*
- * weechat_guile_api_config_section_write_cb: callback for writing section
- */
-
 int
 weechat_guile_api_config_section_write_cb (void *data,
                                            struct t_config_file *config_file,
@@ -939,11 +781,6 @@ weechat_guile_api_config_section_write_cb (void *data,
     return WEECHAT_CONFIG_WRITE_ERROR;
 }
 
-/*
- * weechat_guile_api_config_section_write_default_cb: callback for writing
- *                                                    default values for section
- */
-
 int
 weechat_guile_api_config_section_write_default_cb (void *data,
                                                    struct t_config_file *config_file,
@@ -982,11 +819,6 @@ weechat_guile_api_config_section_write_default_cb (void *data,
 
     return WEECHAT_CONFIG_WRITE_ERROR;
 }
-
-/*
- * weechat_guile_api_config_section_create_option_cb: callback to create an
- *                                                    option
- */
 
 int
 weechat_guile_api_config_section_create_option_cb (void *data,
@@ -1033,11 +865,6 @@ weechat_guile_api_config_section_create_option_cb (void *data,
     return WEECHAT_CONFIG_OPTION_SET_ERROR;
 }
 
-/*
- * weechat_guile_api_config_section_delete_option_cb: callback to delete an
- *                                                    option
- */
-
 int
 weechat_guile_api_config_section_delete_option_cb (void *data,
                                                    struct t_config_file *config_file,
@@ -1082,10 +909,6 @@ weechat_guile_api_config_section_delete_option_cb (void *data,
 
     return WEECHAT_CONFIG_OPTION_UNSET_ERROR;
 }
-
-/*
- * weechat_guile_api_config_new_section: create a new section in configuration file
- */
 
 SCM
 weechat_guile_api_config_new_section (SCM args)
@@ -1150,10 +973,6 @@ weechat_guile_api_config_new_section (SCM args)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_guile_api_config_search_section: search section in configuration file
- */
-
 SCM
 weechat_guile_api_config_search_section (SCM config_file, SCM section_name)
 {
@@ -1169,11 +988,6 @@ weechat_guile_api_config_search_section (SCM config_file, SCM section_name)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_guile_api_config_option_check_value_cb: callback for checking new
- *                                                 value for option
- */
 
 int
 weechat_guile_api_config_option_check_value_cb (void *data,
@@ -1214,10 +1028,6 @@ weechat_guile_api_config_option_check_value_cb (void *data,
     return 0;
 }
 
-/*
- * weechat_guile_api_config_option_change_cb: callback for option changed
- */
-
 void
 weechat_guile_api_config_option_change_cb (void *data,
                                            struct t_config_option *option)
@@ -1247,10 +1057,6 @@ weechat_guile_api_config_option_change_cb (void *data,
     }
 }
 
-/*
- * weechat_guile_api_config_option_delete_cb: callback when option is deleted
- */
-
 void
 weechat_guile_api_config_option_delete_cb (void *data,
                                            struct t_config_option *option)
@@ -1279,10 +1085,6 @@ weechat_guile_api_config_option_delete_cb (void *data,
             free (rc);
     }
 }
-
-/*
- * weechat_guile_api_config_new_option: create a new option in section
- */
 
 SCM
 weechat_guile_api_config_new_option (SCM args)
@@ -1354,11 +1156,6 @@ weechat_guile_api_config_new_option (SCM args)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_guile_api_config_search_option: search option in configuration file
- *                                         or section
- */
-
 SCM
 weechat_guile_api_config_search_option (SCM config_file, SCM section,
                                         SCM option_name)
@@ -1378,10 +1175,6 @@ weechat_guile_api_config_search_option (SCM config_file, SCM section,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_guile_api_config_string_to_boolean: return boolean value of a string
- */
-
 SCM
 weechat_guile_api_config_string_to_boolean (SCM text)
 {
@@ -1395,10 +1188,6 @@ weechat_guile_api_config_string_to_boolean (SCM text)
 
     API_RETURN_INT(value);
 }
-
-/*
- * weechat_guile_api_config_option_reset: reset option with default value
- */
 
 SCM
 weechat_guile_api_config_option_reset (SCM option, SCM run_callback)
@@ -1414,10 +1203,6 @@ weechat_guile_api_config_option_reset (SCM option, SCM run_callback)
 
     API_RETURN_INT(rc);
 }
-
-/*
- * weechat_guile_api_config_option_set: set new value for option
- */
 
 SCM
 weechat_guile_api_config_option_set (SCM option, SCM new_value,
@@ -1437,11 +1222,6 @@ weechat_guile_api_config_option_set (SCM option, SCM new_value,
     API_RETURN_INT(rc);
 }
 
-/*
- * weechat_guile_api_config_option_set_null: set null (undefined) value for
- *                                           option
- */
-
 SCM
 weechat_guile_api_config_option_set_null (SCM option, SCM run_callback)
 {
@@ -1457,10 +1237,6 @@ weechat_guile_api_config_option_set_null (SCM option, SCM run_callback)
     API_RETURN_INT(rc);
 }
 
-/*
- * weechat_guile_api_config_option_unset: unset an option
- */
-
 SCM
 weechat_guile_api_config_option_unset (SCM option)
 {
@@ -1475,10 +1251,6 @@ weechat_guile_api_config_option_unset (SCM option)
     API_RETURN_INT(rc);
 }
 
-/*
- * weechat_guile_api_config_option_rename: rename an option
- */
-
 SCM
 weechat_guile_api_config_option_rename (SCM option, SCM new_name)
 {
@@ -1491,10 +1263,6 @@ weechat_guile_api_config_option_rename (SCM option, SCM new_name)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_guile_api_config_option_is_null: return 1 if value of option is null
- */
 
 SCM
 weechat_guile_api_config_option_is_null (SCM option)
@@ -1510,11 +1278,6 @@ weechat_guile_api_config_option_is_null (SCM option)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat_guile_api_config_option_default_is_null: return 1 if value of option
- *                                                  is null
- */
-
 SCM
 weechat_guile_api_config_option_default_is_null (SCM option)
 {
@@ -1528,10 +1291,6 @@ weechat_guile_api_config_option_default_is_null (SCM option)
 
     API_RETURN_INT(value);
 }
-
-/*
- * weechat_guile_api_config_boolean: return boolean value of option
- */
 
 SCM
 weechat_guile_api_config_boolean (SCM option)
@@ -1547,10 +1306,6 @@ weechat_guile_api_config_boolean (SCM option)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat_guile_api_config_boolean_default: return default boolean value of option
- */
-
 SCM
 weechat_guile_api_config_boolean_default (SCM option)
 {
@@ -1564,10 +1319,6 @@ weechat_guile_api_config_boolean_default (SCM option)
 
     API_RETURN_INT(value);
 }
-
-/*
- * weechat_guile_api_config_integer: return integer value of option
- */
 
 SCM
 weechat_guile_api_config_integer (SCM option)
@@ -1583,10 +1334,6 @@ weechat_guile_api_config_integer (SCM option)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat_guile_api_config_integer_default: return default integer value of option
- */
-
 SCM
 weechat_guile_api_config_integer_default (SCM option)
 {
@@ -1600,10 +1347,6 @@ weechat_guile_api_config_integer_default (SCM option)
 
     API_RETURN_INT(value);
 }
-
-/*
- * weechat_guile_api_config_string: return string value of option
- */
 
 SCM
 weechat_guile_api_config_string (SCM option)
@@ -1619,10 +1362,6 @@ weechat_guile_api_config_string (SCM option)
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat_guile_api_config_string_default: return default string value of option
- */
-
 SCM
 weechat_guile_api_config_string_default (SCM option)
 {
@@ -1636,10 +1375,6 @@ weechat_guile_api_config_string_default (SCM option)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat_guile_api_config_color: return color value of option
- */
 
 SCM
 weechat_guile_api_config_color (SCM option)
@@ -1655,10 +1390,6 @@ weechat_guile_api_config_color (SCM option)
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat_guile_api_config_color_default: return default color value of option
- */
-
 SCM
 weechat_guile_api_config_color_default (SCM option)
 {
@@ -1673,10 +1404,6 @@ weechat_guile_api_config_color_default (SCM option)
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat_guile_api_config_write_option: write an option in configuration file
- */
-
 SCM
 weechat_guile_api_config_write_option (SCM config_file, SCM option)
 {
@@ -1689,10 +1416,6 @@ weechat_guile_api_config_write_option (SCM config_file, SCM option)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_guile_api_config_write_line: write a line in configuration file
- */
 
 SCM
 weechat_guile_api_config_write_line (SCM config_file,
@@ -1710,10 +1433,6 @@ weechat_guile_api_config_write_line (SCM config_file,
     API_RETURN_OK;
 }
 
-/*
- * weechat_guile_api_config_write: write configuration file
- */
-
 SCM
 weechat_guile_api_config_write (SCM config_file)
 {
@@ -1727,10 +1446,6 @@ weechat_guile_api_config_write (SCM config_file)
 
     API_RETURN_INT(rc);
 }
-
-/*
- * weechat_guile_api_config_read: read configuration file
- */
 
 SCM
 weechat_guile_api_config_read (SCM config_file)
@@ -1746,10 +1461,6 @@ weechat_guile_api_config_read (SCM config_file)
     API_RETURN_INT(rc);
 }
 
-/*
- * weechat_guile_api_config_reload: reload configuration file
- */
-
 SCM
 weechat_guile_api_config_reload (SCM config_file)
 {
@@ -1763,10 +1474,6 @@ weechat_guile_api_config_reload (SCM config_file)
 
     API_RETURN_INT(rc);
 }
-
-/*
- * weechat_guile_api_config_option_free: free an option in configuration file
- */
 
 SCM
 weechat_guile_api_config_option_free (SCM option)
@@ -1782,11 +1489,6 @@ weechat_guile_api_config_option_free (SCM option)
     API_RETURN_OK;
 }
 
-/*
- * weechat_guile_api_config_section_free_options: free all options of a section
- *                                               in configuration file
- */
-
 SCM
 weechat_guile_api_config_section_free_options (SCM section)
 {
@@ -1800,10 +1502,6 @@ weechat_guile_api_config_section_free_options (SCM section)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_guile_api_config_section_free: free section in configuration file
- */
 
 SCM
 weechat_guile_api_config_section_free (SCM section)
@@ -1819,10 +1517,6 @@ weechat_guile_api_config_section_free (SCM section)
     API_RETURN_OK;
 }
 
-/*
- * weechat_guile_api_config_free: free configuration file
- */
-
 SCM
 weechat_guile_api_config_free (SCM config_file)
 {
@@ -1836,10 +1530,6 @@ weechat_guile_api_config_free (SCM config_file)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_guile_api_config_get: get config option
- */
 
 SCM
 weechat_guile_api_config_get (SCM option)
@@ -1855,10 +1545,6 @@ weechat_guile_api_config_get (SCM option)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_guile_api_config_get_plugin: get value of a plugin option
- */
 
 SCM
 weechat_guile_api_config_get_plugin (SCM option)
@@ -1876,10 +1562,6 @@ weechat_guile_api_config_get_plugin (SCM option)
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat_guile_api_config_is_set_plugin: check if a plugin option is set
- */
-
 SCM
 weechat_guile_api_config_is_set_plugin (SCM option)
 {
@@ -1895,10 +1577,6 @@ weechat_guile_api_config_is_set_plugin (SCM option)
 
     API_RETURN_INT(rc);
 }
-
-/*
- * weechat_guile_api_config_set_plugin: set value of a plugin option
- */
 
 SCM
 weechat_guile_api_config_set_plugin (SCM option, SCM value)
@@ -1917,10 +1595,6 @@ weechat_guile_api_config_set_plugin (SCM option, SCM value)
     API_RETURN_INT(rc);
 }
 
-/*
- * weechat_guile_api_config_set_desc_plugin: set description of a plugin option
- */
-
 SCM
 weechat_guile_api_config_set_desc_plugin (SCM option, SCM description)
 {
@@ -1935,10 +1609,6 @@ weechat_guile_api_config_set_desc_plugin (SCM option, SCM description)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_guile_api_config_unset_plugin: unset plugin option
- */
 
 SCM
 weechat_guile_api_config_unset_plugin (SCM option)
@@ -1955,10 +1625,6 @@ weechat_guile_api_config_unset_plugin (SCM option)
 
     API_RETURN_INT(rc);
 }
-
-/*
- * weechat_guile_api_key_bind: bind key(s)
- */
 
 SCM
 weechat_guile_api_key_bind (SCM context, SCM keys)
@@ -1983,10 +1649,6 @@ weechat_guile_api_key_bind (SCM context, SCM keys)
     API_RETURN_INT(num_keys);
 }
 
-/*
- * weechat_guile_api_key_unbind: unbind key(s)
- */
-
 SCM
 weechat_guile_api_key_unbind (SCM context, SCM key)
 {
@@ -2002,10 +1664,6 @@ weechat_guile_api_key_unbind (SCM context, SCM key)
     API_RETURN_INT(num_keys);
 }
 
-/*
- * weechat_guile_api_prefix: get a prefix, used for display
- */
-
 SCM
 weechat_guile_api_prefix (SCM prefix)
 {
@@ -2019,10 +1677,6 @@ weechat_guile_api_prefix (SCM prefix)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat_guile_api_color: get a color code, used for display
- */
 
 SCM
 weechat_guile_api_color (SCM color)
@@ -2038,10 +1692,6 @@ weechat_guile_api_color (SCM color)
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat_guile_api_print: print message in a buffer
- */
-
 SCM
 weechat_guile_api_print (SCM buffer, SCM message)
 {
@@ -2056,11 +1706,6 @@ weechat_guile_api_print (SCM buffer, SCM message)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_guile_api_print_date_tags: print message in a buffer with optional
- *                                   date and tags
- */
 
 SCM
 weechat_guile_api_print_date_tags (SCM buffer, SCM date, SCM tags, SCM message)
@@ -2080,10 +1725,6 @@ weechat_guile_api_print_date_tags (SCM buffer, SCM date, SCM tags, SCM message)
     API_RETURN_OK;
 }
 
-/*
- * weechat_guile_api_print_y: print message in a buffer with free content
- */
-
 SCM
 weechat_guile_api_print_y (SCM buffer, SCM y, SCM message)
 {
@@ -2101,10 +1742,6 @@ weechat_guile_api_print_y (SCM buffer, SCM y, SCM message)
     API_RETURN_OK;
 }
 
-/*
- * weechat_guile_api_log_print: print message in WeeChat log file
- */
-
 SCM
 weechat_guile_api_log_print (SCM message)
 {
@@ -2118,10 +1755,6 @@ weechat_guile_api_log_print (SCM message)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_guile_api_hook_command_cb: callback for command hooked
- */
 
 int
 weechat_guile_api_hook_command_cb (void *data, struct t_gui_buffer *buffer,
@@ -2164,10 +1797,6 @@ weechat_guile_api_hook_command_cb (void *data, struct t_gui_buffer *buffer,
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat_guile_api_hook_command: hook a command
- */
-
 SCM
 weechat_guile_api_hook_command (SCM command, SCM description, SCM args,
                                 SCM args_description, SCM completion,
@@ -2196,10 +1825,6 @@ weechat_guile_api_hook_command (SCM command, SCM description, SCM args,
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_guile_api_hook_command_run_cb: callback for command_run hooked
- */
 
 int
 weechat_guile_api_hook_command_run_cb (void *data, struct t_gui_buffer *buffer,
@@ -2239,10 +1864,6 @@ weechat_guile_api_hook_command_run_cb (void *data, struct t_gui_buffer *buffer,
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat_guile_api_hook_command_run: hook a command_run
- */
-
 SCM
 weechat_guile_api_hook_command_run (SCM command, SCM function, SCM data)
 {
@@ -2263,10 +1884,6 @@ weechat_guile_api_hook_command_run (SCM command, SCM function, SCM data)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_guile_api_hook_timer_cb: callback for timer hooked
- */
 
 int
 weechat_guile_api_hook_timer_cb (void *data, int remaining_calls)
@@ -2305,10 +1922,6 @@ weechat_guile_api_hook_timer_cb (void *data, int remaining_calls)
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat_guile_api_hook_timer: hook a timer
- */
-
 SCM
 weechat_guile_api_hook_timer (SCM interval, SCM align_second, SCM max_calls,
                               SCM function, SCM data)
@@ -2333,10 +1946,6 @@ weechat_guile_api_hook_timer (SCM interval, SCM align_second, SCM max_calls,
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_guile_api_hook_fd_cb: callback for fd hooked
- */
 
 int
 weechat_guile_api_hook_fd_cb (void *data, int fd)
@@ -2374,10 +1983,6 @@ weechat_guile_api_hook_fd_cb (void *data, int fd)
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat_guile_api_hook_fd: hook a fd
- */
-
 SCM
 weechat_guile_api_hook_fd (SCM fd, SCM read, SCM write, SCM exception,
                            SCM function, SCM data)
@@ -2403,10 +2008,6 @@ weechat_guile_api_hook_fd (SCM fd, SCM read, SCM write, SCM exception,
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_guile_api_hook_process_cb: callback for process hooked
- */
 
 int
 weechat_guile_api_hook_process_cb (void *data,
@@ -2447,10 +2048,6 @@ weechat_guile_api_hook_process_cb (void *data,
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat_guile_api_hook_process: hook a process
- */
-
 SCM
 weechat_guile_api_hook_process (SCM command, SCM timeout, SCM function,
                                 SCM data)
@@ -2473,11 +2070,6 @@ weechat_guile_api_hook_process (SCM command, SCM timeout, SCM function,
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_guile_api_hook_process_hashtable: hook a process with options in a
- *                                           hashtable
- */
 
 SCM
 weechat_guile_api_hook_process_hashtable (SCM command, SCM options, SCM timeout,
@@ -2512,10 +2104,6 @@ weechat_guile_api_hook_process_hashtable (SCM command, SCM options, SCM timeout,
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_guile_api_hook_connect_cb: callback for connect hooked
- */
 
 int
 weechat_guile_api_hook_connect_cb (void *data, int status, int gnutls_rc,
@@ -2562,10 +2150,6 @@ weechat_guile_api_hook_connect_cb (void *data, int status, int gnutls_rc,
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat_guile_api_hook_connect: hook a connection
- */
-
 SCM
 weechat_guile_api_hook_connect (SCM proxy, SCM address, SCM port, SCM ipv6,
                                 SCM retry, SCM local_hostname, SCM function,
@@ -2599,10 +2183,6 @@ weechat_guile_api_hook_connect (SCM proxy, SCM address, SCM port, SCM ipv6,
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_guile_api_hook_print_cb: callback for print hooked
- */
 
 int
 weechat_guile_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
@@ -2664,10 +2244,6 @@ weechat_guile_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat_guile_api_hook_print: hook a print
- */
-
 SCM
 weechat_guile_api_hook_print (SCM buffer, SCM tags, SCM message,
                               SCM strip_colors, SCM function, SCM data)
@@ -2693,10 +2269,6 @@ weechat_guile_api_hook_print (SCM buffer, SCM tags, SCM message,
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_guile_api_hook_signal_cb: callback for signal hooked
- */
 
 int
 weechat_guile_api_hook_signal_cb (void *data, const char *signal,
@@ -2754,10 +2326,6 @@ weechat_guile_api_hook_signal_cb (void *data, const char *signal,
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat_guile_api_hook_signal: hook a signal
- */
-
 SCM
 weechat_guile_api_hook_signal (SCM signal, SCM function, SCM data)
 {
@@ -2777,10 +2345,6 @@ weechat_guile_api_hook_signal (SCM signal, SCM function, SCM data)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_guile_api_hook_signal_send: send a signal
- */
 
 SCM
 weechat_guile_api_hook_signal_send (SCM signal, SCM type_data,
@@ -2824,10 +2388,6 @@ weechat_guile_api_hook_signal_send (SCM signal, SCM type_data,
     API_RETURN_ERROR;
 }
 
-/*
- * weechat_guile_api_hook_hsignal_cb: callback for hsignal hooked
- */
-
 int
 weechat_guile_api_hook_hsignal_cb (void *data, const char *signal,
                                    struct t_hashtable *hashtable)
@@ -2864,10 +2424,6 @@ weechat_guile_api_hook_hsignal_cb (void *data, const char *signal,
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat_guile_api_hook_hsignal: hook a hsignal
- */
-
 SCM
 weechat_guile_api_hook_hsignal (SCM signal, SCM function, SCM data)
 {
@@ -2888,10 +2444,6 @@ weechat_guile_api_hook_hsignal (SCM signal, SCM function, SCM data)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_guile_api_hook_hsignal_send: send a hsignal
- */
 
 SCM
 weechat_guile_api_hook_hsignal_send (SCM signal, SCM hashtable)
@@ -2914,10 +2466,6 @@ weechat_guile_api_hook_hsignal_send (SCM signal, SCM hashtable)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_guile_api_hook_config_cb: callback for config option hooked
- */
 
 int
 weechat_guile_api_hook_config_cb (void *data, const char *option, const char *value)
@@ -2954,10 +2502,6 @@ weechat_guile_api_hook_config_cb (void *data, const char *option, const char *va
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat_guile_api_hook_config: hook a config option
- */
-
 SCM
 weechat_guile_api_hook_config (SCM option, SCM function, SCM data)
 {
@@ -2978,10 +2522,6 @@ weechat_guile_api_hook_config (SCM option, SCM function, SCM data)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_guile_api_hook_completion_cb: callback for completion hooked
- */
 
 int
 weechat_guile_api_hook_completion_cb (void *data, const char *completion_item,
@@ -3025,10 +2565,6 @@ weechat_guile_api_hook_completion_cb (void *data, const char *completion_item,
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat_guile_api_hook_completion: hook a completion
- */
-
 SCM
 weechat_guile_api_hook_completion (SCM completion, SCM description,
                                    SCM function, SCM data)
@@ -3052,10 +2588,6 @@ weechat_guile_api_hook_completion (SCM completion, SCM description,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_guile_api_hook_completion_list_add: add a word to list for a completion
- */
-
 SCM
 weechat_guile_api_hook_completion_list_add (SCM completion, SCM word,
                                             SCM nick_completion, SCM where)
@@ -3072,10 +2604,6 @@ weechat_guile_api_hook_completion_list_add (SCM completion, SCM word,
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_guile_api_hook_modifier_cb: callback for modifier hooked
- */
 
 char *
 weechat_guile_api_hook_modifier_cb (void *data, const char *modifier,
@@ -3103,10 +2631,6 @@ weechat_guile_api_hook_modifier_cb (void *data, const char *modifier,
     return NULL;
 }
 
-/*
- * weechat_guile_api_hook_modifier: hook a modifier
- */
-
 SCM
 weechat_guile_api_hook_modifier (SCM modifier, SCM function, SCM data)
 {
@@ -3128,10 +2652,6 @@ weechat_guile_api_hook_modifier (SCM modifier, SCM function, SCM data)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_guile_api_hook_modifier_exec: execute a modifier hook
- */
-
 SCM
 weechat_guile_api_hook_modifier_exec (SCM modifier, SCM modifier_data,
                                       SCM string)
@@ -3150,10 +2670,6 @@ weechat_guile_api_hook_modifier_exec (SCM modifier, SCM modifier_data,
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_guile_api_hook_info_cb: callback for info hooked
- */
 
 const char *
 weechat_guile_api_hook_info_cb (void *data, const char *info_name,
@@ -3180,10 +2696,6 @@ weechat_guile_api_hook_info_cb (void *data, const char *info_name,
     return NULL;
 }
 
-/*
- * weechat_guile_api_hook_info: hook an info
- */
-
 SCM
 weechat_guile_api_hook_info (SCM info_name, SCM description,
                              SCM args_description, SCM function, SCM data)
@@ -3209,10 +2721,6 @@ weechat_guile_api_hook_info (SCM info_name, SCM description,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_guile_api_hook_info_hashtable_cb: callback for info_hashtable hooked
- */
-
 struct t_hashtable *
 weechat_guile_api_hook_info_hashtable_cb (void *data, const char *info_name,
                                           struct t_hashtable *hashtable)
@@ -3237,10 +2745,6 @@ weechat_guile_api_hook_info_hashtable_cb (void *data, const char *info_name,
 
     return NULL;
 }
-
-/*
- * weechat_guile_api_hook_info_hashtable: hook an info_hashtable
- */
 
 SCM
 weechat_guile_api_hook_info_hashtable (SCM info_name, SCM description,
@@ -3269,10 +2773,6 @@ weechat_guile_api_hook_info_hashtable (SCM info_name, SCM description,
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_guile_api_hook_infolist_cb: callback for infolist hooked
- */
 
 struct t_infolist *
 weechat_guile_api_hook_infolist_cb (void *data, const char *infolist_name,
@@ -3306,10 +2806,6 @@ weechat_guile_api_hook_infolist_cb (void *data, const char *infolist_name,
     return NULL;
 }
 
-/*
- * weechat_guile_api_hook_infolist: hook an infolist
- */
-
 SCM
 weechat_guile_api_hook_infolist (SCM infolist_name, SCM description,
                                  SCM pointer_description, SCM args_description,
@@ -3337,10 +2833,6 @@ weechat_guile_api_hook_infolist (SCM infolist_name, SCM description,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_guile_api_hook_focus_cb: callback for focus hooked
- */
-
 struct t_hashtable *
 weechat_guile_api_hook_focus_cb (void *data, struct t_hashtable *info)
 {
@@ -3364,10 +2856,6 @@ weechat_guile_api_hook_focus_cb (void *data, struct t_hashtable *info)
     return NULL;
 }
 
-/*
- * weechat_guile_api_hook_focus: hook a focus
- */
-
 SCM
 weechat_guile_api_hook_focus (SCM area, SCM function, SCM data)
 {
@@ -3389,10 +2877,6 @@ weechat_guile_api_hook_focus (SCM area, SCM function, SCM data)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_guile_api_unhook: unhook something
- */
-
 SCM
 weechat_guile_api_unhook (SCM hook)
 {
@@ -3407,10 +2891,6 @@ weechat_guile_api_unhook (SCM hook)
     API_RETURN_OK;
 }
 
-/*
- * weechat_guile_api_unhook_all: unhook all for script
- */
-
 SCM
 weechat_guile_api_unhook_all ()
 {
@@ -3420,10 +2900,6 @@ weechat_guile_api_unhook_all ()
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_guile_api_buffer_input_data_cb: callback for input data in a buffer
- */
 
 int
 weechat_guile_api_buffer_input_data_cb (void *data, struct t_gui_buffer *buffer,
@@ -3463,10 +2939,6 @@ weechat_guile_api_buffer_input_data_cb (void *data, struct t_gui_buffer *buffer,
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat_guile_api_buffer_close_cb: callback for closed buffer
- */
-
 int
 weechat_guile_api_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
 {
@@ -3503,10 +2975,6 @@ weechat_guile_api_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat_guile_api_buffer_new: create a new buffer
- */
-
 SCM
 weechat_guile_api_buffer_new (SCM name, SCM function_input, SCM data_input,
                               SCM function_close, SCM data_close)
@@ -3533,10 +3001,6 @@ weechat_guile_api_buffer_new (SCM name, SCM function_input, SCM data_input,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_guile_api_buffer_search: search a buffer
- */
-
 SCM
 weechat_guile_api_buffer_search (SCM plugin, SCM name)
 {
@@ -3553,10 +3017,6 @@ weechat_guile_api_buffer_search (SCM plugin, SCM name)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_guile_api_buffer_search_main: search main buffer (WeeChat core buffer)
- */
-
 SCM
 weechat_guile_api_buffer_search_main ()
 {
@@ -3569,10 +3029,6 @@ weechat_guile_api_buffer_search_main ()
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_guile_api_current_buffer: get current buffer
- */
 
 SCM
 weechat_guile_api_current_buffer ()
@@ -3587,10 +3043,6 @@ weechat_guile_api_current_buffer ()
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_guile_api_buffer_clear: clear a buffer
- */
-
 SCM
 weechat_guile_api_buffer_clear (SCM buffer)
 {
@@ -3602,10 +3054,6 @@ weechat_guile_api_buffer_clear (SCM buffer)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_guile_api_buffer_close: close a buffer
- */
 
 SCM
 weechat_guile_api_buffer_close (SCM buffer)
@@ -3621,10 +3069,6 @@ weechat_guile_api_buffer_close (SCM buffer)
     API_RETURN_OK;
 }
 
-/*
- * weechat_guile_api_buffer_merge: merge a buffer to another buffer
- */
-
 SCM
 weechat_guile_api_buffer_merge (SCM buffer, SCM target_buffer)
 {
@@ -3638,11 +3082,6 @@ weechat_guile_api_buffer_merge (SCM buffer, SCM target_buffer)
     API_RETURN_OK;
 }
 
-/*
- * weechat_guile_api_buffer_unmerge: unmerge a buffer from a group of merged
- *                                  buffers
- */
-
 SCM
 weechat_guile_api_buffer_unmerge (SCM buffer, SCM number)
 {
@@ -3655,10 +3094,6 @@ weechat_guile_api_buffer_unmerge (SCM buffer, SCM number)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_guile_api_buffer_get_integer: get a buffer property as integer
- */
 
 SCM
 weechat_guile_api_buffer_get_integer (SCM buffer, SCM property)
@@ -3675,10 +3110,6 @@ weechat_guile_api_buffer_get_integer (SCM buffer, SCM property)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat_guile_api_buffer_get_string: get a buffer property as string
- */
-
 SCM
 weechat_guile_api_buffer_get_string (SCM buffer, SCM property)
 {
@@ -3693,10 +3124,6 @@ weechat_guile_api_buffer_get_string (SCM buffer, SCM property)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat_guile_api_buffer_get_pointer: get a buffer property as pointer
- */
 
 SCM
 weechat_guile_api_buffer_get_pointer (SCM buffer, SCM property)
@@ -3714,10 +3141,6 @@ weechat_guile_api_buffer_get_pointer (SCM buffer, SCM property)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_guile_api_buffer_set: set a buffer property
- */
-
 SCM
 weechat_guile_api_buffer_set (SCM buffer, SCM property, SCM value)
 {
@@ -3732,12 +3155,6 @@ weechat_guile_api_buffer_set (SCM buffer, SCM property, SCM value)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_guile_api_buffer_string_replace_local_var: replace local variables
- *                                                    ($var) in a string, using
- *                                                    value of local variables
- */
 
 SCM
 weechat_guile_api_buffer_string_replace_local_var (SCM buffer, SCM string)
@@ -3755,10 +3172,6 @@ weechat_guile_api_buffer_string_replace_local_var (SCM buffer, SCM string)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_guile_api_buffer_match_list: return 1 if buffer matches list of buffers
- */
-
 SCM
 weechat_guile_api_buffer_match_list (SCM buffer, SCM string)
 {
@@ -3774,10 +3187,6 @@ weechat_guile_api_buffer_match_list (SCM buffer, SCM string)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat_guile_api_current_window: get current window
- */
-
 SCM
 weechat_guile_api_current_window ()
 {
@@ -3790,11 +3199,6 @@ weechat_guile_api_current_window ()
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_guile_api_window_search_with_buffer: search a window with buffer
- *                                             pointer
- */
 
 SCM
 weechat_guile_api_window_search_with_buffer (SCM buffer)
@@ -3811,10 +3215,6 @@ weechat_guile_api_window_search_with_buffer (SCM buffer)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_guile_api_window_get_integer: get a window property as integer
- */
-
 SCM
 weechat_guile_api_window_get_integer (SCM window, SCM property)
 {
@@ -3830,10 +3230,6 @@ weechat_guile_api_window_get_integer (SCM window, SCM property)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat_guile_api_window_get_string: get a window property as string
- */
-
 SCM
 weechat_guile_api_window_get_string (SCM window, SCM property)
 {
@@ -3848,10 +3244,6 @@ weechat_guile_api_window_get_string (SCM window, SCM property)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat_guile_api_window_get_pointer: get a window property as pointer
- */
 
 SCM
 weechat_guile_api_window_get_pointer (SCM window, SCM property)
@@ -3869,10 +3261,6 @@ weechat_guile_api_window_get_pointer (SCM window, SCM property)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_guile_api_window_set_title: set window title
- */
-
 SCM
 weechat_guile_api_window_set_title (SCM title)
 {
@@ -3884,10 +3272,6 @@ weechat_guile_api_window_set_title (SCM title)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_guile_api_nicklist_add_group: add a group in nicklist
- */
 
 SCM
 weechat_guile_api_nicklist_add_group (SCM buffer, SCM parent_group, SCM name,
@@ -3911,10 +3295,6 @@ weechat_guile_api_nicklist_add_group (SCM buffer, SCM parent_group, SCM name,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_guile_api_nicklist_search_group: search a group in nicklist
- */
-
 SCM
 weechat_guile_api_nicklist_search_group (SCM buffer, SCM from_group, SCM name)
 {
@@ -3932,10 +3312,6 @@ weechat_guile_api_nicklist_search_group (SCM buffer, SCM from_group, SCM name)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_guile_api_nicklist_add_nick: add a nick in nicklist
- */
 
 SCM
 weechat_guile_api_nicklist_add_nick (SCM buffer, SCM group, SCM name,
@@ -3963,10 +3339,6 @@ weechat_guile_api_nicklist_add_nick (SCM buffer, SCM group, SCM name,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_guile_api_nicklist_search_nick: search a nick in nicklist
- */
-
 SCM
 weechat_guile_api_nicklist_search_nick (SCM buffer, SCM from_group, SCM name)
 {
@@ -3985,10 +3357,6 @@ weechat_guile_api_nicklist_search_nick (SCM buffer, SCM from_group, SCM name)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_guile_api_nicklist_remove_group: remove a group from nicklist
- */
-
 SCM
 weechat_guile_api_nicklist_remove_group (SCM buffer, SCM group)
 {
@@ -4001,10 +3369,6 @@ weechat_guile_api_nicklist_remove_group (SCM buffer, SCM group)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_guile_api_nicklist_remove_nick: remove a nick from nicklist
- */
 
 SCM
 weechat_guile_api_nicklist_remove_nick (SCM buffer, SCM nick)
@@ -4019,10 +3383,6 @@ weechat_guile_api_nicklist_remove_nick (SCM buffer, SCM nick)
     API_RETURN_OK;
 }
 
-/*
- * weechat_guile_api_nicklist_remove_all: remove all groups/nicks from nicklist
- */
-
 SCM
 weechat_guile_api_nicklist_remove_all (SCM buffer)
 {
@@ -4034,10 +3394,6 @@ weechat_guile_api_nicklist_remove_all (SCM buffer)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_guile_api_nicklist_group_get_integer: get a group property as integer
- */
 
 SCM
 weechat_guile_api_nicklist_group_get_integer (SCM buffer, SCM group,
@@ -4057,10 +3413,6 @@ weechat_guile_api_nicklist_group_get_integer (SCM buffer, SCM group,
     API_RETURN_INT(value);
 }
 
-/*
- * weechat_guile_api_nicklist_group_get_string: get a group property as string
- */
-
 SCM
 weechat_guile_api_nicklist_group_get_string (SCM buffer, SCM group,
                                              SCM property)
@@ -4078,10 +3430,6 @@ weechat_guile_api_nicklist_group_get_string (SCM buffer, SCM group,
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat_guile_api_nicklist_group_get_pointer: get a group property as pointer
- */
 
 SCM
 weechat_guile_api_nicklist_group_get_pointer (SCM buffer, SCM group,
@@ -4102,10 +3450,6 @@ weechat_guile_api_nicklist_group_get_pointer (SCM buffer, SCM group,
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_guile_api_nicklist_group_set: set a group property
- */
-
 SCM
 weechat_guile_api_nicklist_group_set (SCM buffer, SCM group, SCM property,
                                       SCM value)
@@ -4121,10 +3465,6 @@ weechat_guile_api_nicklist_group_set (SCM buffer, SCM group, SCM property,
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_guile_api_nicklist_nick_get_integer: get a nick property as integer
- */
 
 SCM
 weechat_guile_api_nicklist_nick_get_integer (SCM buffer, SCM nick, SCM property)
@@ -4143,10 +3483,6 @@ weechat_guile_api_nicklist_nick_get_integer (SCM buffer, SCM nick, SCM property)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat_guile_api_nicklist_nick_get_string: get a nick property as string
- */
-
 SCM
 weechat_guile_api_nicklist_nick_get_string (SCM buffer, SCM nick, SCM property)
 {
@@ -4163,10 +3499,6 @@ weechat_guile_api_nicklist_nick_get_string (SCM buffer, SCM nick, SCM property)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat_guile_api_nicklist_nick_get_pointer: get a nick property as pointer
- */
 
 SCM
 weechat_guile_api_nicklist_nick_get_pointer (SCM buffer, SCM nick, SCM property)
@@ -4186,10 +3518,6 @@ weechat_guile_api_nicklist_nick_get_pointer (SCM buffer, SCM nick, SCM property)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_guile_api_nicklist_nick_set: set a nick property
- */
-
 SCM
 weechat_guile_api_nicklist_nick_set (SCM buffer, SCM nick, SCM property,
                                      SCM value)
@@ -4207,10 +3535,6 @@ weechat_guile_api_nicklist_nick_set (SCM buffer, SCM nick, SCM property,
     API_RETURN_OK;
 }
 
-/*
- * weechat_guile_api_bar_item_search: search a bar item
- */
-
 SCM
 weechat_guile_api_bar_item_search (SCM name)
 {
@@ -4225,10 +3549,6 @@ weechat_guile_api_bar_item_search (SCM name)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_guile_api_bar_item_build_cb: callback for building bar item
- */
 
 char *
 weechat_guile_api_bar_item_build_cb (void *data, struct t_gui_bar_item *item,
@@ -4262,10 +3582,6 @@ weechat_guile_api_bar_item_build_cb (void *data, struct t_gui_bar_item *item,
     return NULL;
 }
 
-/*
- * weechat_guile_api_bar_item_new: add a new bar item
- */
-
 SCM
 weechat_guile_api_bar_item_new (SCM name, SCM function, SCM data)
 {
@@ -4287,10 +3603,6 @@ weechat_guile_api_bar_item_new (SCM name, SCM function, SCM data)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_guile_api_bar_item_update: update a bar item on screen
- */
-
 SCM
 weechat_guile_api_bar_item_update (SCM name)
 {
@@ -4302,10 +3614,6 @@ weechat_guile_api_bar_item_update (SCM name)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_guile_api_bar_item_remove: remove a bar item
- */
 
 SCM
 weechat_guile_api_bar_item_remove (SCM item)
@@ -4321,10 +3629,6 @@ weechat_guile_api_bar_item_remove (SCM item)
     API_RETURN_OK;
 }
 
-/*
- * weechat_guile_api_bar_search: search a bar
- */
-
 SCM
 weechat_guile_api_bar_search (SCM name)
 {
@@ -4339,10 +3643,6 @@ weechat_guile_api_bar_search (SCM name)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_guile_api_bar_new: add a new bar
- */
 
 SCM
 weechat_guile_api_bar_new (SCM args)
@@ -4402,10 +3702,6 @@ weechat_guile_api_bar_new (SCM args)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_guile_api_bar_set: set a bar property
- */
-
 SCM
 weechat_guile_api_bar_set (SCM bar, SCM property, SCM value)
 {
@@ -4421,10 +3717,6 @@ weechat_guile_api_bar_set (SCM bar, SCM property, SCM value)
     API_RETURN_OK;
 }
 
-/*
- * weechat_guile_api_bar_update: update a bar on screen
- */
-
 SCM
 weechat_guile_api_bar_update (SCM name)
 {
@@ -4437,10 +3729,6 @@ weechat_guile_api_bar_update (SCM name)
     API_RETURN_OK;
 }
 
-/*
- * weechat_guile_api_bar_remove: remove a bar
- */
-
 SCM
 weechat_guile_api_bar_remove (SCM bar)
 {
@@ -4452,10 +3740,6 @@ weechat_guile_api_bar_remove (SCM bar)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_guile_api_command: send command to server
- */
 
 SCM
 weechat_guile_api_command (SCM buffer, SCM command)
@@ -4472,10 +3756,6 @@ weechat_guile_api_command (SCM buffer, SCM command)
     API_RETURN_OK;
 }
 
-/*
- * weechat_guile_api_info_get: get info (as string)
- */
-
 SCM
 weechat_guile_api_info_get (SCM info_name, SCM arguments)
 {
@@ -4490,10 +3770,6 @@ weechat_guile_api_info_get (SCM info_name, SCM arguments)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat_guile_api_info_get_hashtable: get info (as hashtable)
- */
 
 SCM
 weechat_guile_api_info_get_hashtable (SCM info_name, SCM hash)
@@ -4522,10 +3798,6 @@ weechat_guile_api_info_get_hashtable (SCM info_name, SCM hash)
     return result_alist;
 }
 
-/*
- * weechat_guile_api_infolist_new: create new infolist
- */
-
 SCM
 weechat_guile_api_infolist_new ()
 {
@@ -4538,10 +3810,6 @@ weechat_guile_api_infolist_new ()
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_guile_api_infolist_new_item: create new item in infolist
- */
 
 SCM
 weechat_guile_api_infolist_new_item (SCM infolist)
@@ -4557,11 +3825,6 @@ weechat_guile_api_infolist_new_item (SCM infolist)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_guile_api_infolist_new_var_integer: create new integer variable in
- *                                             infolist
- */
 
 SCM
 weechat_guile_api_infolist_new_var_integer (SCM infolist, SCM name, SCM value)
@@ -4581,11 +3844,6 @@ weechat_guile_api_infolist_new_var_integer (SCM infolist, SCM name, SCM value)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_guile_api_infolist_new_var_string: create new string variable in
- *                                            infolist
- */
-
 SCM
 weechat_guile_api_infolist_new_var_string (SCM infolist, SCM name, SCM value)
 {
@@ -4603,11 +3861,6 @@ weechat_guile_api_infolist_new_var_string (SCM infolist, SCM name, SCM value)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_guile_api_infolist_new_var_pointer: create new pointer variable in
- *                                             infolist
- */
 
 SCM
 weechat_guile_api_infolist_new_var_pointer (SCM infolist, SCM name, SCM value)
@@ -4627,10 +3880,6 @@ weechat_guile_api_infolist_new_var_pointer (SCM infolist, SCM name, SCM value)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_guile_api_infolist_new_var_time: create new time variable in infolist
- */
-
 SCM
 weechat_guile_api_infolist_new_var_time (SCM infolist, SCM name, SCM value)
 {
@@ -4648,10 +3897,6 @@ weechat_guile_api_infolist_new_var_time (SCM infolist, SCM name, SCM value)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_guile_api_infolist_get: get list with infos
- */
 
 SCM
 weechat_guile_api_infolist_get (SCM name, SCM pointer, SCM arguments)
@@ -4671,10 +3916,6 @@ weechat_guile_api_infolist_get (SCM name, SCM pointer, SCM arguments)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_guile_api_infolist_next: move item pointer to next item in infolist
- */
-
 SCM
 weechat_guile_api_infolist_next (SCM infolist)
 {
@@ -4688,11 +3929,6 @@ weechat_guile_api_infolist_next (SCM infolist)
 
     API_RETURN_INT(value);
 }
-
-/*
- * weechat_guile_api_infolist_prev: move item pointer to previous item in
- *                                  infolist
- */
 
 SCM
 weechat_guile_api_infolist_prev (SCM infolist)
@@ -4708,11 +3944,6 @@ weechat_guile_api_infolist_prev (SCM infolist)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat_guile_api_infolist_reset_item_cursor: reset pointer to current item
- *                                               in infolist
- */
-
 SCM
 weechat_guile_api_infolist_reset_item_cursor (SCM infolist)
 {
@@ -4724,10 +3955,6 @@ weechat_guile_api_infolist_reset_item_cursor (SCM infolist)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_guile_api_infolist_fields: get list of fields for current item of infolist
- */
 
 SCM
 weechat_guile_api_infolist_fields (SCM infolist)
@@ -4742,11 +3969,6 @@ weechat_guile_api_infolist_fields (SCM infolist)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat_guile_api_infolist_integer: get integer value of a variable in
- *                                     infolist
- */
 
 SCM
 weechat_guile_api_infolist_integer (SCM infolist, SCM variable)
@@ -4763,10 +3985,6 @@ weechat_guile_api_infolist_integer (SCM infolist, SCM variable)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat_guile_api_infolist_string: get string value of a variable in infolist
- */
-
 SCM
 weechat_guile_api_infolist_string (SCM infolist, SCM variable)
 {
@@ -4781,11 +3999,6 @@ weechat_guile_api_infolist_string (SCM infolist, SCM variable)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat_guile_api_infolist_pointer: get pointer value of a variable in
- *                                     infolist
- */
 
 SCM
 weechat_guile_api_infolist_pointer (SCM infolist, SCM variable)
@@ -4802,10 +4015,6 @@ weechat_guile_api_infolist_pointer (SCM infolist, SCM variable)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_guile_api_infolist_time: get time value of a variable in infolist
- */
 
 SCM
 weechat_guile_api_infolist_time (SCM infolist, SCM variable)
@@ -4830,10 +4039,6 @@ weechat_guile_api_infolist_time (SCM infolist, SCM variable)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_guile_api_infolist_free: free infolist
- */
-
 SCM
 weechat_guile_api_infolist_free (SCM infolist)
 {
@@ -4845,10 +4050,6 @@ weechat_guile_api_infolist_free (SCM infolist)
 
     API_RETURN_OK;
 }
-
-/*
- * weechat_guile_api_hdata_get: get hdata
- */
 
 SCM
 weechat_guile_api_hdata_get (SCM name)
@@ -4865,10 +4066,6 @@ weechat_guile_api_hdata_get (SCM name)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_guile_api_hdata_get_var_offset: get offset of variable in hdata
- */
-
 SCM
 weechat_guile_api_hdata_get_var_offset (SCM hdata, SCM name)
 {
@@ -4884,11 +4081,6 @@ weechat_guile_api_hdata_get_var_offset (SCM hdata, SCM name)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat_guile_api_hdata_get_var_type_string: get type of variable as string
- *                                              in hdata
- */
-
 SCM
 weechat_guile_api_hdata_get_var_type_string (SCM hdata, SCM name)
 {
@@ -4903,11 +4095,6 @@ weechat_guile_api_hdata_get_var_type_string (SCM hdata, SCM name)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat_guile_api_hdata_get_var_array_size: get array size for variable in
- *                                             hdata
- */
 
 SCM
 weechat_guile_api_hdata_get_var_array_size (SCM hdata, SCM pointer, SCM name)
@@ -4925,11 +4112,6 @@ weechat_guile_api_hdata_get_var_array_size (SCM hdata, SCM pointer, SCM name)
 
     API_RETURN_INT(value);
 }
-
-/*
- * weechat_guile_api_hdata_get_var_array_size_string: get array size for variable
- *                                                    in hdata (as string)
- */
 
 SCM
 weechat_guile_api_hdata_get_var_array_size_string (SCM hdata, SCM pointer,
@@ -4949,10 +4131,6 @@ weechat_guile_api_hdata_get_var_array_size_string (SCM hdata, SCM pointer,
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat_guile_api_hdata_get_var_hdata: get hdata for variable in hdata
- */
-
 SCM
 weechat_guile_api_hdata_get_var_hdata (SCM hdata, SCM name)
 {
@@ -4967,10 +4145,6 @@ weechat_guile_api_hdata_get_var_hdata (SCM hdata, SCM name)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat_guile_api_hdata_get_list: get list pointer in hdata
- */
 
 SCM
 weechat_guile_api_hdata_get_list (SCM hdata, SCM name)
@@ -4988,10 +4162,6 @@ weechat_guile_api_hdata_get_list (SCM hdata, SCM name)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_guile_api_hdata_check_pointer: check pointer with hdata/list
- */
-
 SCM
 weechat_guile_api_hdata_check_pointer (SCM hdata, SCM list, SCM pointer)
 {
@@ -5008,10 +4178,6 @@ weechat_guile_api_hdata_check_pointer (SCM hdata, SCM list, SCM pointer)
 
     API_RETURN_INT(value);
 }
-
-/*
- * weechat_guile_api_hdata_move: move pointer to another element in list
- */
 
 SCM
 weechat_guile_api_hdata_move (SCM hdata, SCM pointer, SCM count)
@@ -5031,11 +4197,6 @@ weechat_guile_api_hdata_move (SCM hdata, SCM pointer, SCM count)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_guile_api_hdata_char: get char value of a variable in structure
- *                               using hdata
- */
-
 SCM
 weechat_guile_api_hdata_char (SCM hdata, SCM pointer, SCM name)
 {
@@ -5052,11 +4213,6 @@ weechat_guile_api_hdata_char (SCM hdata, SCM pointer, SCM name)
 
     API_RETURN_INT(value);
 }
-
-/*
- * weechat_guile_api_hdata_integer: get integer value of a variable in structure
- *                                  using hdata
- */
 
 SCM
 weechat_guile_api_hdata_integer (SCM hdata, SCM pointer, SCM name)
@@ -5075,11 +4231,6 @@ weechat_guile_api_hdata_integer (SCM hdata, SCM pointer, SCM name)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat_guile_api_hdata_long: get long value of a variable in structure using
- *                               hdata
- */
-
 SCM
 weechat_guile_api_hdata_long (SCM hdata, SCM pointer, SCM name)
 {
@@ -5096,11 +4247,6 @@ weechat_guile_api_hdata_long (SCM hdata, SCM pointer, SCM name)
 
     API_RETURN_LONG(value);
 }
-
-/*
- * weechat_guile_api_hdata_string: get string value of a variable in structure
- *                                 using hdata
- */
 
 SCM
 weechat_guile_api_hdata_string (SCM hdata, SCM pointer, SCM name)
@@ -5119,11 +4265,6 @@ weechat_guile_api_hdata_string (SCM hdata, SCM pointer, SCM name)
     API_RETURN_STRING(result);
 }
 
-/*
- * weechat_guile_api_hdata_pointer: get pointer value of a variable in structure
- *                                  using hdata
- */
-
 SCM
 weechat_guile_api_hdata_pointer (SCM hdata, SCM pointer, SCM name)
 {
@@ -5141,11 +4282,6 @@ weechat_guile_api_hdata_pointer (SCM hdata, SCM pointer, SCM name)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_guile_api_hdata_time: get time value of a variable in structure using
- *                               hdata
- */
 
 SCM
 weechat_guile_api_hdata_time (SCM hdata, SCM pointer, SCM name)
@@ -5168,11 +4304,6 @@ weechat_guile_api_hdata_time (SCM hdata, SCM pointer, SCM name)
     API_RETURN_STRING_FREE(result);
 }
 
-/*
- * weechat_guile_api_hdata_hashtable: get hashtable value of a variable in
- *                                    structure using hdata
- */
-
 SCM
 weechat_guile_api_hdata_hashtable (SCM hdata, SCM pointer, SCM name)
 {
@@ -5190,10 +4321,6 @@ weechat_guile_api_hdata_hashtable (SCM hdata, SCM pointer, SCM name)
 
     return result_alist;
 }
-
-/*
- * weechat_guile_api_hdata_update: update data in a hdata
- */
 
 SCM
 weechat_guile_api_hdata_update (SCM hdata, SCM pointer, SCM hashtable)
@@ -5220,10 +4347,6 @@ weechat_guile_api_hdata_update (SCM hdata, SCM pointer, SCM hashtable)
     API_RETURN_INT(value);
 }
 
-/*
- * weechat_guile_api_hdata_get_string: get hdata property as string
- */
-
 SCM
 weechat_guile_api_hdata_get_string (SCM hdata, SCM property)
 {
@@ -5238,10 +4361,6 @@ weechat_guile_api_hdata_get_string (SCM hdata, SCM property)
 
     API_RETURN_STRING(result);
 }
-
-/*
- * weechat_guile_api_upgrade_new: create an upgrade file
- */
 
 SCM
 weechat_guile_api_upgrade_new (SCM filename, SCM write)
@@ -5258,10 +4377,6 @@ weechat_guile_api_upgrade_new (SCM filename, SCM write)
 
     API_RETURN_STRING_FREE(result);
 }
-
-/*
- * weechat_guile_api_upgrade_write_object: write object in upgrade file
- */
 
 SCM
 weechat_guile_api_upgrade_write_object (SCM upgrade_file, SCM object_id,
@@ -5280,11 +4395,6 @@ weechat_guile_api_upgrade_write_object (SCM upgrade_file, SCM object_id,
 
     API_RETURN_INT(rc);
 }
-
-/*
- * weechat_guile_api_upgrade_read_cb: callback for reading object in upgrade
- *                                    file
- */
 
 int
 weechat_guile_api_upgrade_read_cb (void *data,
@@ -5331,10 +4441,6 @@ weechat_guile_api_upgrade_read_cb (void *data,
     return WEECHAT_RC_ERROR;
 }
 
-/*
- * weechat_guile_api_upgrade_read: read upgrade file
- */
-
 SCM
 weechat_guile_api_upgrade_read (SCM upgrade_file, SCM function, SCM data)
 {
@@ -5355,10 +4461,6 @@ weechat_guile_api_upgrade_read (SCM upgrade_file, SCM function, SCM data)
     API_RETURN_INT(rc);
 }
 
-/*
- * weechat_guile_api_upgrade_close: close upgrade file
- */
-
 SCM
 weechat_guile_api_upgrade_close (SCM upgrade_file)
 {
@@ -5372,7 +4474,7 @@ weechat_guile_api_upgrade_close (SCM upgrade_file)
 }
 
 /*
- * weechat_guile_api_module_init: init main module with API
+ * Initializes guile functions and constants.
  */
 
 void

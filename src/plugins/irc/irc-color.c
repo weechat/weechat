@@ -53,10 +53,12 @@ char *irc_color_to_weechat[IRC_NUM_COLORS] =
 
 
 /*
- * irc_color_decode: replace IRC colors by WeeChat colors
- *                   if keep_colors == 0: remove any color/style in message
- *                   otherwise: keep colors
- *                   Note: after use, string returned has to be free()
+ * Replaces IRC colors by WeeChat colors.
+ *
+ * If keep_colors == 0: removes any color/style in message otherwise keeps
+ * colors.
+ *
+ * Note: result must be freed after use.
  */
 
 char *
@@ -261,9 +263,9 @@ irc_color_decode (const char *string, int keep_colors)
 }
 
 /*
- * irc_color_decode_for_user_entry: parses a message (coming from IRC server),
- *                                  and replaces colors/bold/.. by ^C, ^B, ..
- *                                  Note: after use, string returned has to be free()
+ * Replaces IRC color codes by codes for command line.
+ *
+ * Note: result must be freed after use.
  */
 
 char *
@@ -327,11 +329,12 @@ irc_color_decode_for_user_entry (const char *string)
 }
 
 /*
- * irc_color_encode: parses a message (entered by user), and
- *                   encode special chars (^Cb, ^Cc, ..) in IRC colors
- *                   if keep_colors == 0: remove any color/style in message
- *                   otherwise: keep colors
- *                   Note: after use, string returned has to be free()
+ * Replaces color codes in command line by IRC color codes.
+ *
+ * If keep_colors == 0, remove any color/style in message, otherwise keeps
+ * colors.
+ *
+ * Note: result must be freed after use.
  */
 
 char *
@@ -422,10 +425,10 @@ irc_color_encode (const char *string, int keep_colors)
 }
 
 /*
- * irc_color_modifier_cb: callback for modifiers "irc_color_decode" and
- *                        "irc_color_encode"
- *                        This modifier can be used by other plugins to
- *                        decode/encode IRC colors in messages
+ * Callback for modifiers "irc_color_decode" and "irc_color_encode".
+ *
+ * This modifier can be used by other plugins to decode/encode IRC colors in
+ * messages.
  */
 
 char *
@@ -450,8 +453,9 @@ irc_color_modifier_cb (void *data, const char *modifier,
 }
 
 /*
- * irc_color_for_tags: return color name for tags (replace "," by ":")
- *                     Note: result must be freed after use
+ * Returns color name for tags (replace "," by ":").
+ *
+ * Note: result must be freed after use.
  */
 
 char *
