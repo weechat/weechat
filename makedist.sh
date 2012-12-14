@@ -34,10 +34,7 @@ if [ $# -eq 0 ]; then
 fi
 
 VERSION=$1
-TREEISH="HEAD"
-if [ $# -gt 1 ]; then
-    TREEISH=$2
-fi
+TREEISH=${2:-HEAD}
 
 PREFIX="weechat-${VERSION}/"
 FILE="weechat-${VERSION}.tar"
