@@ -64,7 +64,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(-,root,root,0755)
-%doc AUTHORS ChangeLog COPYING INSTALL NEWS README UPGRADE_0.3
+%doc AUTHORS ChangeLog COPYING INSTALL NEWS README
 %doc %{_docdir}/%{name}/*.html
 %{_mandir}/man1/%{name}-curses.1*
 %{_bindir}/%{name}-curses

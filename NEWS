@@ -212,9 +212,24 @@ Version 0.3.0 (2009-09-06)
 --------------------------
 
 This version brings major changes, especially for configuration files and plugin
-API.
+API and it not compatible with previous versions.
 
-For more information about this version, please read file 'UPGRADE_0.3'.
+Major differences:
+
+* it is *NOT POSSIBLE* to use command `/upgrade` from a version 0.2.x to 0.3.x;
+  you have to quit your old WeeChat, then run new version.
+* new configuration files (`*.conf`) are not compatible with old files (`*.rc`).
+* name of options is similar to old versions, but there is now one configuration
+  file by plugin, and one file for WeeChat core; there is
+  *no automatic conversion* for your old options to new configuration files,
+  so you'll have to setup again your IRC servers and all other options.
+* plugin API has been rewritten and is not compatible with previous versions;
+  accordingly, scripts and plugins must have been designed for version 0.3.x to
+  be loaded into WeeChat.
+
+More information about new API is available on wiki:
+http://wiki.flashtux.org/wiki/WeeChat_0.3.0
+and http://wiki.flashtux.org/wiki/WeeChat_0.3.0_API
 
 Version 0.2.6.3 (2009-06-13)
 ----------------------------
