@@ -1,18 +1,39 @@
 WeeChat Installation instructions
 =================================
 
-You can build WeeChat with cmake (recommended way) or autotools.
+WeeChat can be built with cmake (recommended) or autotools.
+
+[NOTE]
+Only cmake is officially supported to build WeeChat. You should use autotools
+only if you are not able to use cmake. +
+Build with autotools requires more dependencies and is slower than with cmake.
 
 
 Dependencies
 ------------
 
-List of dependencies can be found in user's guide, see page with WeeChat docs:
-http://www.weechat.org/doc
+Following packages are *required*:
+
+* cmake
+* ncurses
+* curl
+* zlib
+* gcrypt
+
+Following packages are all optional:
+
+* for i18n: gettext
+* for SSL: gnutls, ca-certificates
+* for spell checking: aspell
+* for scripting: python, perl, ruby, lua, tcl, guile
+* for building doc: asciidoc, source-highlight
+
+For a complete list of dependencies and versions recommended, please look at
+'User's guide'.
 
 
-With cmake
-----------
+Installation With cmake
+-----------------------
 
 ------------------------------------------------------------------
 mkdir build
@@ -22,22 +43,5 @@ make
 make install     (as root for installation in system directories)
 ------------------------------------------------------------------
 
-
-With autotools
---------------
-
-----------------------------------------------------------------------
-./autogen.sh     (for cloned git repository only, not .tar.XX package)
-./configure --prefix=/where/you/want/install
-make
-make install     (as root for installation in system directories)
-----------------------------------------------------------------------
-
-
-If you want to report bugs/crashes to developers, please:
-
-- compile with debug info (type "Debug" for cmake build, default for autotools),
-- enable core files (for bash shell, add "ulimit -c unlimited" to your ~/.bashrc).
-
-
-See AUTHORS for support, feel free to contact us for any problem.
+For more information or installation with autotools, please look at
+'User's guide': http://www.weechat.org/doc
