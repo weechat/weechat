@@ -18,35 +18,32 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-VERSION=@VERSION@
-SRCROOT=@CMAKE_SOURCE_DIR@
-BUILDDIR=@CMAKE_BINARY_DIR@
-PROJECT=@PROJECT_NAME@
-TAG=release-$(echo $VERSION | sed -e 's/\./-/g')
+#
+# Build tarballs (.tar.gz and .tar.bz2) for WeeChat using git-archive.
+#
+# Syntax:
+#    makedist.sh <version> <tree-ish>
+#
+#       version : WeeChat version, for example 0.3.9 or 0.4.0-dev
+#       tree-ish: git tree-ish (optional, defaults to HEAD), example: v0.3.9
+#
 
-EXCLUDE="@DIST_EXCLUDE@"
-EXPORT_DIR="${PROJECT}-${VERSION}"
-
-if [ -z  $CVSROOT ]; then
-    echo "The CVSROOT variable must be set"
+if [ $# -eq 0 ]; then
+    echo "Syntax: $0 <version> <tree-ish>"
     exit 1
 fi
 
-echo "Exporting source tree"
-if [ $(echo $VERSION | grep cvs) ]; then
-    cvs export -r HEAD -d $PROJECT-$VERSION $PROJECT
-else
-    cvs export -r $TAG -d $PROJECT-$VERSION $PROJECT
+VERSION=$1
+TREEISH="HEAD"
+if [ $# -gt 1 ]; then
+    TREEISH=$2
 fi
 
-echo "Removing not needed stuff"
-for i in $EXCLUDE ; do
-    echo "  $i"
-    rm -rf $EXPORT_DIR/$i
-done
+PREFIX="weechat-${VERSION}/"
+FILE="weechat-${VERSION}.tar"
 
-echo "Generating archive"
-tar cjf ${BUILDDIR}/${PROJECT}-${VERSION}.tar.bz2 ${EXPORT_DIR}
+echo "Building file ${FILE}.bz2"
+git archive --prefix=${PREFIX} ${TREEISH} | bzip2 -c >${FILE}.bz2
 
-echo "Cleaning up"
-rm -rf ${EXPORT_DIR}
+echo "Building file ${FILE}.gz"
+git archive --prefix=${PREFIX} ${TREEISH} | gzip -c >${FILE}.gz

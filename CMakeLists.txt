@@ -107,11 +107,6 @@ ADD_SUBDIRECTORY( doc )
 CONFIGURE_FILE(config.h.cmake config.h @ONLY)
 
 CONFIGURE_FILE(
-  "${CMAKE_CURRENT_SOURCE_DIR}/cmake/makedist.sh.in"
-  "${CMAKE_CURRENT_BINARY_DIR}/makedist.sh" IMMEDIATE
-  @ONLY)
-
-CONFIGURE_FILE(
   "${CMAKE_CURRENT_SOURCE_DIR}/cmake/cmake_uninstall.cmake.in"
   "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
   IMMEDIATE @ONLY)
@@ -120,9 +115,8 @@ ADD_CUSTOM_TARGET(uninstall
   "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
 
 ADD_CUSTOM_TARGET(dist
-  "${CMAKE_BINARY_DIR}/makedist.sh"
-  DEPENDS doc
-  WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+  "${CMAKE_CURRENT_SOURCE_DIR}/makedist.sh" "${VERSION}" "HEAD"
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
 # pkgconfig file
 SET(PACKAGE "${PROJECT_NAME}")
