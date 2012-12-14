@@ -144,9 +144,17 @@ $ make install
 Compilation avec autotools
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+[WARNING]
+Seulement cmake est officiellement supporté pour construire WeeChat. Vous ne
+devriez utiliser les autotools que si vous n'avez pas la possibilité d'utiliser
+cmake. +
+La compilation avec les autotools requiert plus de dépendances et est plus lente
+qu'avec cmake.
+
 * Installation dans les répertoires systèmes (nécessite les droits 'root') :
 
 ----------------------------------------
+$ ./autogen.sh
 $ ./configure
 $ make
 % make install    (en root)
@@ -155,6 +163,7 @@ $ make
 * Installation dans un répertoire spécifique :
 
 ----------------------------------------
+$ ./autogen.sh
 $ ./configure --prefix=/chemin/vers/repertoire
 $ make
 $ make install
@@ -164,19 +173,13 @@ $ make install
 Sources Git
 ~~~~~~~~~~~
 
-Attention : les sources GIT sont réservés aux utilisateurs avancés : il se peut
+Attention : les sources git sont réservés aux utilisateurs avancés : il se peut
 que WeeChat ne compile pas et qu'il soit très instable. Vous êtes prévenus !
 
-Pour récupérer les sources GIT, tapez cette commande :
+Pour récupérer les sources git, tapez cette commande :
 
 ----------------------------------------
 $ git clone git://git.sv.gnu.org/weechat.git
-----------------------------------------
-
-Si vous utilisez les autotools (et non cmake), exécutez ce script :
-
-----------------------------------------
-$ ./autogen.sh
 ----------------------------------------
 
 Suivez alors les instructions du paquet source (voir
