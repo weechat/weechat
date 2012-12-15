@@ -1,4 +1,6 @@
 /*
+ * irc-redirect.c - redirection of IRC command output
+ *
  * Copyright (C) 2010-2012 Sebastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
@@ -15,10 +17,6 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-/*
- * irc-redirect.c: redirection of IRC command output
  */
 
 #include <stdlib.h>

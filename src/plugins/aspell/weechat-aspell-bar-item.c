@@ -1,4 +1,6 @@
 /*
+ * weechat-aspell-bar-item.c - bar items for aspell plugin
+ *
  * Copyright (C) 2012 Nils Görs <weechatter@arcor.de>
  * Copyright (C) 2012 Sebastien Helleu <flashcode@flashtux.org>
  *
@@ -16,10 +18,6 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-/*
- * weechat-aspell-bar-item.c: bar items for aspell plugin
  */
 
 #include <stdio.h>

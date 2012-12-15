@@ -1,4 +1,6 @@
 /*
+ * script-api.c - script API functions, used by script plugins
+ *
  * Copyright (C) 2003-2012 Sebastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2012 Simon Arlott
  *
@@ -16,10 +18,6 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-/*
- * script-api.c: script API functions, used by script plugins (perl/python/..)
  */
 
 #include <stdlib.h>

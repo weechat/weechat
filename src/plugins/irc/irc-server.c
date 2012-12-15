@@ -1,4 +1,6 @@
 /*
+ * irc-server.c - I/O communication with IRC servers
+ *
  * Copyright (C) 2003-2012 Sebastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2005-2010 Emmanuel Bouthenot <kolter@openics.org>
  * Copyright (C) 2012 Simon Arlott
@@ -17,10 +19,6 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-/*
- * irc-server.c: I/O communication with IRC servers
  */
 
 #include <stdlib.h>

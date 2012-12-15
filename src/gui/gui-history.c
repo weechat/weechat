@@ -1,4 +1,6 @@
 /*
+ * gui-history.c - memorize commands or text for buffers (used by all GUI)
+ *
  * Copyright (C) 2003-2012 Sebastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2005 Emmanuel Bouthenot <kolter@openics.org>
  *
@@ -16,10 +18,6 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-/*
- * gui-history.c: memorize commands or text for buffers (used by all GUI)
  */
 
 #ifdef HAVE_CONFIG_H

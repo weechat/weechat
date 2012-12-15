@@ -1,4 +1,6 @@
 /*
+ * gui-mouse.c - functions for mouse (used by all GUI)
+ *
  * Copyright (C) 2011-2012 Sebastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
@@ -15,10 +17,6 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-/*
- * gui-mouse.c: functions for mouse (used by all GUI)
  */
 
 #ifdef HAVE_CONFIG_H

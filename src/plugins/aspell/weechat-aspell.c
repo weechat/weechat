@@ -1,4 +1,6 @@
 /*
+ * weechat-aspell.c - aspell plugin for WeeChat: color for misspelled words
+ *
  * Copyright (C) 2006 Emmanuel Bouthenot <kolter@openics.org>
  * Copyright (C) 2006-2012 Sebastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2012 Nils Görs <weechatter@arcor.de>
@@ -17,11 +19,6 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-/*
- * weechat-aspell.c: aspell plugin for WeeChat: use color to show misspelled
- *                   words in input line
  */
 
 #include <stdio.h>

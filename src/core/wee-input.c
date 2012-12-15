@@ -1,4 +1,6 @@
 /*
+ * wee-input.c - default input callback for buffers
+ *
  * Copyright (C) 2003-2012 Sebastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
@@ -15,10 +17,6 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-/*
- * wee-input.c: default callback function to read user input
  */
 
 #ifdef HAVE_CONFIG_H

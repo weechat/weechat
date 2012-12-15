@@ -1,4 +1,6 @@
 /*
+ * wee-hook.c - WeeChat hooks management
+ *
  * Copyright (C) 2003-2012 Sebastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2012 Simon Arlott
  *
@@ -16,10 +18,6 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-/*
- * wee-hook.c: WeeChat hooks management
  */
 
 #ifdef HAVE_CONFIG_H

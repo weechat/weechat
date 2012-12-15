@@ -1,4 +1,6 @@
 /*
+ * weechat-plugin.h - header to compile WeeChat plugins
+ *
  * Copyright (C) 2003-2012 Sebastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
@@ -15,11 +17,6 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-/*
- * weechat-plugin.h: this header is designed to be distributed with
- *                   WeeChat plugins, in order to compile them
  */
 
 #ifndef __WEECHAT_WEECHAT_PLUGIN_H

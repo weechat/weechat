@@ -1,4 +1,6 @@
 /*
+ * relay-irc.c - IRC protocol for relay to client: IRC proxy/bouncer
+ *
  * Copyright (C) 2003-2012 Sebastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
@@ -15,11 +17,6 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-/*
- * relay-irc.c: IRC protocol for relay to client
- *              (relay acting as an IRC proxy/bouncer)
  */
 
 #include <stdlib.h>

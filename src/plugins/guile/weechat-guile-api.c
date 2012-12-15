@@ -1,4 +1,6 @@
 /*
+ * weechat-guile-api.c - guile API functions
+ *
  * Copyright (C) 2011-2012 Sebastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2012 Simon Arlott
  *
@@ -16,10 +18,6 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-/*
- * weechat-guile-api.c: guile API functions
  */
 
 #undef _

@@ -1,4 +1,6 @@
 /*
+ * irc-protocol.c - implementation of IRC protocol (RFC 1459/2810/2811/2812)
+ *
  * Copyright (C) 2003-2012 Sebastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2006 Emmanuel Bouthenot <kolter@openics.org>
  *
@@ -16,11 +18,6 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-/*
- * irc-protocol.c: implementation of IRC protocol,
- *                 according to RFC 1459, 2810, 2811 and 2812
  */
 
 /* this define is needed for strptime() (not on OpenBSD) */

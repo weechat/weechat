@@ -1,4 +1,6 @@
 /*
+ * weechat-tcl.c - tcl plugin for WeeChat
+ *
  * Copyright (C) 2008-2010 Dmitry Kobylin <fnfal@academ.tsc.ru>
  * Copyright (C) 2008-2012 Sebastien Helleu <flashcode@flashtux.org>
  *
@@ -16,10 +18,6 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-/*
- * weechat-tcl.c: tcl plugin for WeeChat
  */
 
 #undef _

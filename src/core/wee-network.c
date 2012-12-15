@@ -1,4 +1,6 @@
 /*
+ * wee-network.c - network functions
+ *
  * Copyright (C) 2003-2012 Sebastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2005-2010 Emmanuel Bouthenot <kolter@openics.org>
  * Copyright (C) 2010 Gu1ll4um3r0m41n <aeroxteam@gmail.com>
@@ -18,10 +20,6 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-/*
- * wee-network.c: network functions for WeeChat
  */
 
 #ifdef HAVE_CONFIG_H

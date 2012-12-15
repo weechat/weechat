@@ -1,4 +1,6 @@
 /*
+ * rmodifier.c - alter modifier strings with regular expressions
+ *
  * Copyright (C) 2010-2012 Sebastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
@@ -15,11 +17,6 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-/*
- * rmodifier.c: alter modifier strings with regular expressions
- *              (useful for hiding passwords in input or command history)
  */
 
 #include <stdlib.h>

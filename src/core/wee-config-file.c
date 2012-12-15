@@ -1,4 +1,6 @@
 /*
+ * wee-config-file.c - configuration files/sections/options management
+ *
  * Copyright (C) 2003-2012 Sebastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2005-2006 Emmanuel Bouthenot <kolter@openics.org>
  *
@@ -16,10 +18,6 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-/*
- * wee-config-file.c: configuration files/sections/options management
  */
 
 #ifdef HAVE_CONFIG_H
