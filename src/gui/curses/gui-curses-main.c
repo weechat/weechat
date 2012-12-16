@@ -38,6 +38,7 @@
 #include "../../core/wee-string.h"
 #include "../../core/wee-utf8.h"
 #include "../../core/wee-util.h"
+#include "../../core/wee-version.h"
 #include "../../plugins/plugin.h"
 #include "../gui-main.h"
 #include "../gui-bar.h"
@@ -90,6 +91,7 @@ gui_main_init ()
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_bar *ptr_bar;
     struct t_gui_bar_window *ptr_bar_win;
+    char title[256];
 
     initscr ();
 
@@ -138,9 +140,11 @@ gui_main_init ()
             ptr_buffer->short_name = strdup (GUI_BUFFER_MAIN);
 
         /* set title for core buffer */
-        gui_buffer_set_title (ptr_buffer,
-                              "WeeChat " PACKAGE_VERSION " "
-                              WEECHAT_COPYRIGHT_DATE " - " WEECHAT_WEBSITE);
+        snprintf (title, sizeof (title), "WeeChat %s %s - %s",
+                  version_get_version (),
+                  WEECHAT_COPYRIGHT_DATE,
+                  WEECHAT_WEBSITE);
+        gui_buffer_set_title (ptr_buffer, title);
 
         /* create main window (using full space) */
         if (gui_window_new (NULL, ptr_buffer, 0, 0,
@@ -149,7 +153,7 @@ gui_main_init ()
             gui_current_window = gui_windows;
 
             if (CONFIG_BOOLEAN(config_look_set_title))
-                gui_window_set_title (PACKAGE_NAME " " PACKAGE_VERSION);
+                gui_window_set_title (version_get_name_version ());
         }
 
         /*

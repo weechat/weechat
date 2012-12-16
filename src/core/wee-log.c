@@ -41,6 +41,7 @@
 #include "wee-log.h"
 #include "wee-debug.h"
 #include "wee-string.h"
+#include "wee-version.h"
 #include "../plugins/plugin.h"
 
 
@@ -118,7 +119,10 @@ log_init ()
         exit (1);
     }
     log_printf ("%s (%s %s %s)",
-                PACKAGE_STRING, _("compiled on"), __DATE__, __TIME__);
+                version_get_name_version (),
+                _("compiled on"),
+                version_get_compilation_date (),
+                version_get_compilation_time ());
 }
 
 /*

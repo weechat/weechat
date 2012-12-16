@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-12-13 18:51+0100\n"
-"PO-Revision-Date: 2012-12-13 09:11+0100\n"
+"POT-Creation-Date: 2012-12-16 19:14+0100\n"
+"PO-Revision-Date: 2012-12-16 17:18+0100\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -34,10 +34,10 @@ msgstr ""
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
 msgid ""
-"WeeChat %s Copyright %s, compiled on %s %s\n"
+"WeeChat %s%s%s%s Copyright %s, compiled on %s %s\n"
 "Developed by Sebastien Helleu <flashcode@flashtux.org> - %s"
 msgstr ""
-"WeeChat %s Copyright %s, compilé le %s %s\n"
+"WeeChat %s%s%s%s Copyright %s, compilé le %s %s\n"
 "Développé par Sebastien Helleu <flashcode@flashtux.org> - %s"
 
 #, c-format
@@ -7720,6 +7720,13 @@ msgstr "version de WeeChat"
 
 msgid "WeeChat version (as number)"
 msgstr "version de WeeChat (sous forme de nombre)"
+
+msgid ""
+"WeeChat git version (output of command \"git describe\" for a development "
+"version only, empty for a stable release)"
+msgstr ""
+"version git de WeeChat (sortie de la commande \"git describe\" pour une "
+"version de développement seulement, vide pour une version stable)"
 
 msgid "WeeChat compilation date"
 msgstr "date de compilation de WeeChat"

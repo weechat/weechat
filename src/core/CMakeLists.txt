@@ -42,7 +42,8 @@ wee-upgrade.c wee-upgrade.h
 wee-upgrade-file.c wee-upgrade-file.h
 wee-url.c wee-url.h
 wee-utf8.c wee-utf8.h
-wee-util.c wee-util.h)
+wee-util.c wee-util.h
+wee-version.c wee-version.h)
 
 # Check for flock support
 INCLUDE(CheckSymbolExists)

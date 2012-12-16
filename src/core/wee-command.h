@@ -65,6 +65,7 @@ extern void command_init ();
 extern void command_startup (int plugins_loaded);
 extern void command_version_display (struct t_gui_buffer *buffer,
                                      int send_to_buffer_as_input,
-                                     int translated_string);
+                                     int translated_string,
+                                     int display_git_version);
 
 #endif /* __WEECHAT_COMMAND_H */

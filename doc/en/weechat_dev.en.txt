@@ -115,6 +115,7 @@ WeeChat "core" reside in following directories:
 |    wee-url.c                  | URL transfer (using libcurl)
 |    wee-utf8.c                 | UTF-8 functions
 |    wee-util.c                 | Some other functions
+|    wee-version.c              | Functions for WeeChat version
 | gui/                          | Functions for buffers, windows, ... (used by all interfaces)
 |    gui-bar-item.c             | Bar items
 |    gui-bar-window.c           | Bar windows

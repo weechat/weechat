@@ -39,6 +39,7 @@
 #include "wee-infolist.h"
 #include "wee-log.h"
 #include "wee-string.h"
+#include "wee-version.h"
 #include "../gui/gui-color.h"
 #include "../gui/gui-chat.h"
 #include "../plugins/plugin.h"
@@ -2042,7 +2043,9 @@ config_file_write_internal (struct t_config_file *config_file,
         goto error;
     if (!string_iconv_fprintf (config_file->file,
                                "# %s -- %s v%s\n#\n",
-                               config_file->filename, PACKAGE_NAME, PACKAGE_VERSION))
+                               config_file->filename,
+                               version_get_name (),
+                               version_get_version ()))
         goto error;
 
     /* write all sections */

@@ -106,6 +106,11 @@ ADD_SUBDIRECTORY( doc )
 
 CONFIGURE_FILE(config.h.cmake config.h @ONLY)
 
+# set the git version in "config-git.h"
+ADD_CUSTOM_TARGET(version_git ALL
+  COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/git-version.sh" "${CMAKE_CURRENT_SOURCE_DIR}" "${VERSION}" "config-git.h"
+  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}")
+
 CONFIGURE_FILE(
   "${CMAKE_CURRENT_SOURCE_DIR}/cmake/cmake_uninstall.cmake.in"
   "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"

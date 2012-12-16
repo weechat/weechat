@@ -45,6 +45,7 @@
 #include "wee-list.h"
 #include "wee-proxy.h"
 #include "wee-string.h"
+#include "wee-version.h"
 #include "../gui/gui-bar.h"
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-chat.h"
@@ -304,7 +305,7 @@ config_change_title (void *data, struct t_config_option *option)
     (void) option;
 
     if (CONFIG_BOOLEAN(config_look_set_title))
-        gui_window_set_title (PACKAGE_NAME " " PACKAGE_VERSION);
+        gui_window_set_title (version_get_name_version ());
 }
 
 /*

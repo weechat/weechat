@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.0-dev, 2012-12-08
+v0.4.0-dev, 2012-12-16
 
 
 Version 0.4.0 (under dev!)
 --------------------------
 
+* core: add git version in build, display it in "weechat-curses --help" and
+  /version
 * core: fix scroll of one page down when weechat.look.scroll_page_percent is
   less than 100 (bug #37875)
 * core: disable paste detection and confirmation if bar item "input_paste" is

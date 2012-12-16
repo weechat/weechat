@@ -42,6 +42,7 @@
 #include "wee-backtrace.h"
 #include "wee-log.h"
 #include "wee-string.h"
+#include "wee-version.h"
 #include "../plugins/plugin.h"
 
 
@@ -157,7 +158,9 @@ weechat_backtrace ()
 
     weechat_backtrace_printf ("======= WeeChat backtrace =======");
     weechat_backtrace_printf ("(written by %s, compiled on %s %s)",
-                              PACKAGE_STRING, __DATE__, __TIME__);
+                              version_get_name_version (),
+                              version_get_compilation_date (),
+                              version_get_compilation_time ());
 
 #ifdef HAVE_BACKTRACE
     trace_size = backtrace (trace, BACKTRACE_MAX);

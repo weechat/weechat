@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.3.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-12-13 18:51+0100\n"
+"POT-Creation-Date: 2012-12-16 19:14+0100\n"
 "PO-Revision-Date: 2012-11-04 15:41+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -39,9 +39,9 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"WeeChat %s Copyright %s, compiled on %s %s\n"
+"WeeChat %s%s%s%s Copyright %s, compiled on %s %s\n"
 "Developed by Sebastien Helleu <flashcode@flashtux.org> - %s"
 msgstr ""
 "WeeChat %s Copyright %s, kompiliert am %s %s\n"
@@ -7938,6 +7938,11 @@ msgstr "WeeChat Version"
 
 msgid "WeeChat version (as number)"
 msgstr "WeeChat Version (als Nummer)"
+
+msgid ""
+"WeeChat git version (output of command \"git describe\" for a development "
+"version only, empty for a stable release)"
+msgstr ""
 
 msgid "WeeChat compilation date"
 msgstr "Datum der WeeChat Kompilierung"

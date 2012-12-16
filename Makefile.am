@@ -19,6 +19,12 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+# This target will update file config-git.h with output of command "git describe"
+# (if needed, and only for a devel/rc version).
+BUILT_SOURCES = build-config-git.h
+build-config-git.h:
+	-$(abs_top_srcdir)/git-version.sh "$(abs_top_srcdir)" "$(VERSION)" config-git.h
+
 if DOC
 doc_dir = doc
 endif
@@ -28,6 +34,8 @@ SUBDIRS = po $(doc_dir) intl src
 EXTRA_DIST = CMakeLists.txt \
              config.rpath \
              config.h.cmake \
+             git-version.sh \
+             makedist.sh \
              cmake/CMakeParseArguments.cmake \
              cmake/FindAsciidoc.cmake \
              cmake/FindAspell.cmake \
@@ -47,7 +55,6 @@ EXTRA_DIST = CMakeLists.txt \
              cmake/FindTCL.cmake \
              cmake/FindZLIB.cmake \
              cmake/cmake_uninstall.cmake.in \
-             cmake/makedist.sh.in \
              po/CMakeLists.txt \
              po/srcfiles.cmake \
              weechat.spec \

@@ -65,6 +65,7 @@
 #include "wee-upgrade.h"
 #include "wee-utf8.h"
 #include "wee-util.h"
+#include "wee-version.h"
 #include "../gui/gui-chat.h"
 #include "../gui/gui-color.h"
 #include "../gui/gui-completion.h"
@@ -103,14 +104,23 @@ char *weechat_startup_commands = NULL; /* startup commands (-r flag)        */
 void
 weechat_display_copyright ()
 {
+    const char *git_version;
+
+    git_version = version_get_git ();
     string_iconv_fprintf (stdout, "\n");
     string_iconv_fprintf (stdout,
                           /* TRANSLATORS: "%s %s" after "compiled on" is date and time */
-                          _("WeeChat %s Copyright %s, compiled on %s %s\n"
+                          _("WeeChat %s%s%s%s Copyright %s, compiled on %s %s\n"
                             "Developed by Sebastien Helleu <flashcode@flashtux.org> "
                             "- %s"),
-                          PACKAGE_VERSION, WEECHAT_COPYRIGHT_DATE,
-                          __DATE__, __TIME__, WEECHAT_WEBSITE);
+                          version_get_version (),
+                          (git_version && git_version[0]) ? " (git: " : "",
+                          (git_version && git_version[0]) ? git_version : "",
+                          (git_version && git_version[0]) ? ")" : "",
+                          WEECHAT_COPYRIGHT_DATE,
+                          version_get_compilation_date (),
+                          version_get_compilation_time (),
+                          WEECHAT_WEBSITE);
     string_iconv_fprintf (stdout, "\n");
 }
 
@@ -168,7 +178,7 @@ weechat_display_keys ()
                               _("%s default keys (context: \"%s\"):\n"),
                               (gui_key_context_string[i] && gui_key_context_string[i][0]) ?
                               _(gui_key_context_string[i]) : "",
-                              PACKAGE_NAME);
+                              version_get_name ());
         string_iconv_fprintf (stdout, "\n");
         for (ptr_key = gui_keys[i]; ptr_key; ptr_key = ptr_key->next_key)
         {
@@ -299,7 +309,8 @@ weechat_parse_args (int argc, char *argv[])
         else if ((strcmp (argv[i], "-v") == 0)
                  || (strcmp (argv[i], "--version") == 0))
         {
-            string_iconv_fprintf (stdout, PACKAGE_VERSION "\n");
+            string_iconv_fprintf (stdout, version_get_version ());
+            fprintf (stdout, "\n");
             weechat_shutdown (EXIT_SUCCESS, 0);
         }
     }
@@ -412,7 +423,7 @@ weechat_welcome_message ()
     }
     if (CONFIG_BOOLEAN(config_startup_display_version))
     {
-        command_version_display (NULL, 0, 0);
+        command_version_display (NULL, 0, 0, 0);
     }
     if (CONFIG_BOOLEAN(config_startup_display_logo) ||
         CONFIG_BOOLEAN(config_startup_display_version))

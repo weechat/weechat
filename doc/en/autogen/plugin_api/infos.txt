@@ -42,6 +42,8 @@
 
 | weechat | version | WeeChat version | -
 
+| weechat | version_git | WeeChat git version (output of command "git describe" for a development version only, empty for a stable release) | -
+
 | weechat | version_number | WeeChat version (as number) | -
 
 | weechat | weechat_dir | WeeChat directory | -
