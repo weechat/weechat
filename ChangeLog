@@ -50,6 +50,8 @@ Version 0.4.0 (under dev!)
   aspell.check.suggestions (task #12061)
 * aspell: fix creation of spellers when number of dictionaries is different
   between two buffers
+* irc: return git version in CTCP VERSION and FINGER by default, add "$git"
+  and "$versiongit" in format of CTCP replies
 * irc: read local variable "autorejoin" in buffer to override server option
   "autorejoin" (task #12256)
 * irc: add option "-auto" for command /connect (task #9340)

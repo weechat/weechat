@@ -2025,27 +2025,34 @@ automatiquement remplacées par WeeChat lors de la réponse au CTCP :
 |========================================
 | Code         | Description                       | Valeur / exemple
 | $clientinfo  | liste des CTCP supportés          | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
-| $version     | version de WeeChat                | 0.3.0
-| $compilation | date de compilation WeeChat       | Sep 13 2009
-| $osinfo      | information sur l'OS              | Linux 2.6.31 / i686
-| $site        | site WeeChat                      | http://www.weechat.org
+| $version     | version de WeeChat                | 0.4.0-dev
+| $versiongit  | version de WeeChat + version git  | 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)
+| $git         | version git                       | v0.3.9-104-g7eb5cc4
+| $compilation | date de compilation WeeChat       | Dec 16 2012
+| $osinfo      | information sur l'OS              | Linux 2.6.32-5-amd64 / x86_64
+| $site        | site WeeChat                      | http://www.weechat.org/
 | $download    | site WeeChat, page téléchargement | http://www.weechat.org/download
-| $time        | date/heure courante               | Sun, 13 Sep 2009 15:48:31 +0200
-| $username    | nom d'utilisateur sur le serveur  | pseudo
-| $realname    | nom réel sur le serveur           | Mon nom
+| $time        | date/heure courante               | Sun, 16 Dec 2012 10:40:48 +0100
+| $username    | nom d'utilisateur sur le serveur  | nom
+| $realname    | nom réel sur le serveur           | John Doe
 |========================================
+
+[NOTE]
+La version git est la sortie de la commande `git describe`. Elle est connue
+seulement si WeeChat a été compilé dans le repository git et si git était
+installé.
 
 Si les options CTCP ne sont pas définies (par défaut), les réponses CTCP sont :
 
 [width="100%",cols="^2,4l,8l",options="header"]
 |========================================
-| CTCP       | Format de réponse               | Exemple
-| CLIENTINFO | $clientinfo                     | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
-| FINGER     | WeeChat $version                | WeeChat 0.3.0
-| SOURCE     | $download                       | http://www.weechat.org/download
-| TIME       | $time                           | Sun Sep 13 15:48:31 2009
-| USERINFO   | $username ($realname)           | pseudo (Mon nom)
-| VERSION    | WeeChat $version ($compilation) | WeeChat 0.3.0 (Sep 13 2009)
+| CTCP       | Format de réponse                  | Exemple
+| CLIENTINFO | $clientinfo                        | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
+| FINGER     | WeeChat $versiongit                | WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)
+| SOURCE     | $download                          | http://www.weechat.org/download
+| TIME       | $time                              | Sun, 16 Dec 2012 10:40:48 +0100
+| USERINFO   | $username ($realname)              | nom (John Doe)
+| VERSION    | WeeChat $versiongit ($compilation) | WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4) (Dec 16 2012)
 |========================================
 
 [[irc_target_buffer]]

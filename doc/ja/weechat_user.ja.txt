@@ -1894,31 +1894,40 @@ CTCP "BLABLA" 要求に対する応答を以下のように設定できます:
 以下のコードを設定値に含めることが可能です。これらのコードは
 CTCP 応答時に自動的に WeeChat によって展開されます:
 
+// TRANSLATION MISSING ($versiongit + $git + $username (name))
 [width="100%",cols="^2l,4,8l",options="header"]
 |========================================
 | コード       | 説明                                     | 値/例
 | $clientinfo  | サポートしている CTCP オプションのリスト | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
-| $version     | WeeChat バージョン                       | 0.3.0
-| $compilation | WeeChat コンパイル日時                   | Sep 13 2009
-| $osinfo      | info about OS に関する情報               | Linux 2.6.31 / i686
-| $site        | WeeChat ウェブサイト                     | http://www.weechat.org
+| $version     | WeeChat バージョン                       | 0.4.0-dev
+| $versiongit  | WeeChat version + git version            | 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)
+| $git         | git version                              | v0.3.9-104-g7eb5cc4
+| $compilation | WeeChat コンパイル日時                   | Dec 16 2012
+| $osinfo      | info about OS に関する情報               | Linux 2.6.32-5-amd64 / x86_64
+| $site        | WeeChat ウェブサイト                     | http://www.weechat.org/
 | $download    | WeeChat ウェブサイトのダウンロードページ | http://www.weechat.org/download
-| $time        | 現在の日時                               | Sun Sep 13 15:48:31 2009
-| $username    | IRC サーバのユーザネーム                 | nick
-| $realname    | IRC サーバのリアルネーム                 | My name
+| $time        | 現在の日時                               | Sun, 16 Dec 2012 10:40:48 +0100
+| $username    | IRC サーバのユーザネーム                 | name
+| $realname    | IRC サーバのリアルネーム                 | John Doe
 |========================================
+
+// TRANSLATION MISSING
+[NOTE]
+The git version is the output of command `git describe`. It is known only if
+WeeChat has been compiled inside the git repository and if git was installed.
 
 CTCP オプションが設定されていない (デフォルトの) 場合、CTCP 応答は以下のようになります:
 
+// TRANSLATION MISSING ($username (name))
 [width="100%",cols="^2,4l,8l",options="header"]
 |========================================
-| CTCP       | 応答フォーマット                | 例
-| CLIENTINFO | $clientinfo                     | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
-| FINGER     | WeeChat $version                | WeeChat 0.3.0
-| SOURCE     | $download                       | http://www.weechat.org/download
-| TIME       | $time                           | Sun Sep 13 15:48:31 2009
-| USERINFO   | $username ($realname)           | nick (My name)
-| VERSION    | WeeChat $version ($compilation) | WeeChat 0.3.0 (Sep 13 2009)
+| CTCP       | 応答フォーマット                   | 例
+| CLIENTINFO | $clientinfo                        | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
+| FINGER     | WeeChat $versiongit                | WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)
+| SOURCE     | $download                          | http://www.weechat.org/download
+| TIME       | $time                              | Sun, 16 Dec 2012 10:40:48 +0100
+| USERINFO   | $username ($realname)              | name (My name)
+| VERSION    | WeeChat $versiongit ($compilation) | WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4) (Dec 16 2012)
 |========================================
 
 [[irc_target_buffer]]

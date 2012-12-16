@@ -1993,31 +1993,40 @@ dann müssen Sie lediglich die Option löschen:
 Folgende Platzhalter können in den CTCP-Antworten genutzt werden. Diese werden dann
 mit dem entsprechenden Wert ersetzt:
 
+// TRANSLATION MISSING ($versiongit + $git + $username (name))
 [width="100%",cols="^2l,4,8l",options="header"]
 |========================================
-| Platzhalter  | Beschreibung              | Wert/Beispiel
-| $clientinfo  | Liste der CTCP Antworten  | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
-| $version     | WeeChat Version           | 0.3.0
-| $compilation | Datum der Kompilierung    | Sep 13 2009
-| $osinfo      | Info über das genutzte OS | Linux 2.6.31 / i686
-| $site        | WeeChat Seite             | http://www.weechat.org
-| $download    | WeeChat, download Seite   | http://www.weechat.org/download
-| $time        | aktuelle Uhrzeit/Datum    | Sun, 13 Sep 2009 15:48:31 +0200
-| $username    | Username beim IRC Server  | Nick
-| $realname    | Realname beim IRC Server  | mein Name
+| Platzhalter  | Beschreibung                  | Wert/Beispiel
+| $clientinfo  | Liste der CTCP Antworten      | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
+| $version     | WeeChat Version               | 0.4.0-dev
+| $versiongit  | WeeChat version + git version | 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)
+| $git         | git version                   | v0.3.9-104-g7eb5cc4
+| $compilation | Datum der Kompilierung        | Dec 16 2012
+| $osinfo      | Info über das genutzte OS     | Linux 2.6.32-5-amd64 / x86_64
+| $site        | WeeChat Seite                 | http://www.weechat.org/
+| $download    | WeeChat, download Seite       | http://www.weechat.org/download
+| $time        | aktuelle Uhrzeit/Datum        | Sun, 16 Dec 2012 10:40:48 +0100
+| $username    | Username beim IRC Server      | name
+| $realname    | Realname beim IRC Server      | John Doe
 |========================================
+
+// TRANSLATION MISSING
+[NOTE]
+The git version is the output of command `git describe`. It is known only if
+WeeChat has been compiled inside the git repository and if git was installed.
 
 Falls CTCP Optionen nicht festgelegt sind, lauten die CTCP Antworten:
 
+// TRANSLATION MISSING ($username (name))
 [width="100%",cols="^2,4l,8l",options="header"]
 |========================================
-| CTCP       | Antwortformat                   | Beispiel
-| CLIENTINFO | $clientinfo                     | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
-| FINGER     | WeeChat $version                | WeeChat 0.3.0
-| SOURCE     | $download                       | http://www.weechat.org/download
-| TIME       | $time                           | Sun Sep 13 15:48:31 2009
-| USERINFO   | $username ($realname)           | Nick (mein Name)
-| VERSION    | WeeChat $version ($compilation) | WeeChat 0.3.0 (Sep 13 2009)
+| CTCP       | Antwortformat                      | Beispiel
+| CLIENTINFO | $clientinfo                        | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
+| FINGER     | WeeChat $versiongit                | WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)
+| SOURCE     | $download                          | http://www.weechat.org/download
+| TIME       | $time                              | Sun, 16 Dec 2012 10:40:48 +0100
+| USERINFO   | $username ($realname)              | name (John Doe)
+| VERSION    | WeeChat $versiongit ($compilation) | WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4) (Dec 16 2012)
 |========================================
 
 [[irc_target_buffer]]

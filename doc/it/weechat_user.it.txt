@@ -2004,32 +2004,41 @@ l'opzione:
 I codici seguenti possono essere utilizzati nelle stringhe e vengono estese
 automaticamente da WeeChat quando si risponde alle CTCP
 
+// TRANSLATION MISSING ($versiongit + $git + $username (name))
 [width="100%",cols="^2l,4,8l",options="header"]
 |=======================================
 | Codice       | Descrizione                         | Valore/esempio
 | $clientinfo  | elenco di CTCP supportate           | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
-| $version     | versione di WeeChat                 | 0.3.0
-| $compilation | data di compilazione di WeeChat     | Sep 13 2009
-| $osinfo      | informazioni sull'OS                | Linux 2.6.31 / i686
-| $site        | sito di WeeChat                     | http://www.weechat.org
+| $version     | versione di WeeChat                 | 0.4.0-dev
+| $versiongit  | versione di WeeChat + git version   | 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)
+| $git         | git version                         | v0.3.9-104-g7eb5cc4
+| $compilation | data di compilazione di WeeChat     | Dec 16 2012
+| $osinfo      | informazioni sull'OS                | Linux 2.6.32-5-amd64 / x86_64
+| $site        | sito di WeeChat                     | http://www.weechat.org/
 | $download    | sito di WeeChat, pagina di download | http://www.weechat.org/download
-| $time        | data/ora correnti                   | Sun, 13 Sep 2009 15:48:31 +0200
-| $username    | nome utente sul server IRC          | nick
-| $realname    | nome reale sul server IRC           | Mio nome
+| $time        | data/ora correnti                   | Sun, 16 Dec 2012 10:40:48 +0100
+| $username    | nome utente sul server IRC          | name
+| $realname    | nome reale sul server IRC           | John Doe
 |=======================================
+
+// TRANSLATION MISSING
+[NOTE]
+The git version is the output of command `git describe`. It is known only if
+WeeChat has been compiled inside the git repository and if git was installed.
 
 Se le opzioni CTCP non sono definite (comportamento predefinito),
 le risposte CTCP sono:
 
+// TRANSLATION MISSING ($username (name))
 [width="100%",cols="^2,4l,8l",options="header"]
 |=======================================
-| CTCP       | Formato risposta                | Esempio
-| CLIENTINFO | $clientinfo                     | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
-| FINGER     | WeeChat $version                | WeeChat 0.3.0
-| SOURCE     | $download                       | http://www.weechat.org/download
-| TIME       | $time                           | Sun Sep 13 15:48:31 2009
-| USERINFO   | $username ($realname)           | nick (Mio nome)
-| VERSION    | WeeChat $version ($compilation) | WeeChat 0.3.0 (Sep 13 2009)
+| CTCP       | Formato risposta                   | Esempio
+| CLIENTINFO | $clientinfo                        | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
+| FINGER     | WeeChat $versiongit                | WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)
+| SOURCE     | $download                          | http://www.weechat.org/download
+| TIME       | $time                              | Sun, 16 Dec 2012 10:40:48 +0100
+| USERINFO   | $username ($realname)              | name (John Doe)
+| VERSION    | WeeChat $versiongit ($compilation) | WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4) (Dec 16 2012)
 |=======================================
 
 [[irc_target_buffer]]
