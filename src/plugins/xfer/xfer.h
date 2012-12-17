@@ -126,8 +126,8 @@ struct t_xfer
     /* internal data */
     enum t_xfer_status status;         /* xfer status (waiting, sending,..) */
     struct t_gui_buffer *buffer;       /* buffer (for chat only)            */
-    char *remote_nick_color;           /* color for remote nick (given by   */
-                                       /* IRC plugin)                       */
+    char *remote_nick_color;           /* color name for remote nick        */
+                                       /* (returned by IRC plugin)          */
     int fast_send;                     /* fast send file: does not wait ACK */
     int blocksize;                     /* block size for sending file       */
     time_t start_time;                 /* time when xfer started            */

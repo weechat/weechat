@@ -556,7 +556,7 @@ xfer_new (const char *plugin_name, const char *plugin_id,
     new_xfer->type = type;
     new_xfer->protocol = protocol;
     new_xfer->remote_nick = strdup (remote_nick);
-    ptr_color = weechat_info_get ("irc_nick_color", remote_nick);
+    ptr_color = weechat_info_get ("irc_nick_color_name", remote_nick);
     new_xfer->remote_nick_color = (ptr_color) ? strdup (ptr_color) : NULL;
     new_xfer->local_nick = (local_nick) ? strdup (local_nick) : NULL;
     new_xfer->charset_modifier = (charset_modifier) ? strdup (charset_modifier) : NULL;
