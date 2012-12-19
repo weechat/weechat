@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.0-dev, 2012-12-17
+v0.4.0-dev, 2012-12-19
 
 
 Version 0.4.0 (under dev!)
 --------------------------
 
+* core: fix default mouse buttons actions for script buffer (focus the window
+  before executing action)
 * core: add git version in build, display it in "weechat-curses --help" and
   /version
 * core: fix scroll of one page down when weechat.look.scroll_page_percent is
