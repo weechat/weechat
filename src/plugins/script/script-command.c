@@ -209,8 +209,6 @@ script_command_script (void *data, struct t_gui_buffer *buffer, int argc,
 
     if (script_buffer)
     {
-        weechat_buffer_set (script_buffer, "display", "1");
-
         if (argc > 1)
         {
             if (!script_buffer_detail_script

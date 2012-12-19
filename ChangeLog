@@ -79,6 +79,8 @@ Version 0.4.0 (under dev!)
 * relay: add support of IPv6, new option relay.network.ipv6, add support of
   "ipv4." and/or "ipv6." before protocol name, to force IPv4/IPv6 (task #12270)
 * relay: add missing "ssl." in output of /relay listrelay
+* script: fix scroll with mouse when window with script buffer is not the
+  current window (do not force a switch to script buffer in current window)
 * script: fix compilation on OS X
 * xfer: add missing tags in DCC chat messages: nick_xxx, prefix_nick_ccc, logN
 * xfer: display remote IP address for DCC chat/file (task #12289)
