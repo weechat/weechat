@@ -323,6 +323,13 @@ gui_mouse_event_code2key (const char *code)
         }
     }
 
+    /* nothing found, reset now or mouse will be stuck */
+    if (!key[0])
+    {
+        gui_mouse_event_reset ();
+        return NULL;
+    }
+
     if (!MOUSE_CODE_END(code[0]))
     {
         strcat (key, "-event-");
