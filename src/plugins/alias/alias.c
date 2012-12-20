@@ -892,7 +892,8 @@ alias_value_completion_cb (void *data, const char *completion_item,
                            struct t_gui_completion *completion)
 {
     const char *args;
-    char *pos, *alias_name;
+    char **argv, *alias_name;
+    int argc;
     struct t_alias *ptr_alias;
 
     /* make C compiler happy */
@@ -903,23 +904,27 @@ alias_value_completion_cb (void *data, const char *completion_item,
     args = weechat_hook_completion_get_string (completion, "args");
     if (args)
     {
-        pos = strchr (args, ' ');
-        if (pos)
-            alias_name = weechat_strndup (args, pos - args);
-        else
-            alias_name = strdup (args);
-
-        if (alias_name)
+        argv = weechat_string_split (args, " ", 0, 0, &argc);
+        if (argv)
         {
-            ptr_alias = alias_search (alias_name);
-            if (ptr_alias)
+            if (argc > 0)
+                alias_name = strdup (argv[argc - 1]);
+            else
+                alias_name = strdup (args);
+
+            if (alias_name)
             {
-                weechat_hook_completion_list_add (completion,
-                                                  ptr_alias->command,
-                                                  0,
-                                                  WEECHAT_LIST_POS_BEGINNING);
+                ptr_alias = alias_search (alias_name);
+                if (ptr_alias)
+                {
+                    weechat_hook_completion_list_add (completion,
+                                                      ptr_alias->command,
+                                                      0,
+                                                      WEECHAT_LIST_POS_BEGINNING);
+                }
+                free (alias_name);
             }
-            free (alias_name);
+            weechat_string_free_split (argv);
         }
     }
 
@@ -1019,7 +1024,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                              "  alias /forcejoin to send IRC command "
                              "\"forcejoin\" with completion of /sajoin:\n"
                              "    /alias -completion %%sajoin forcejoin /quote forcejoin"),
-                          "%(alias)|-completion %(commands)|%(alias_value)",
+                          "-completion %- %(alias) %(commands)|%(alias_value)"
+                          " || %(alias) %(commands)|%(alias_value)",
                           &alias_command_cb, NULL);
 
     weechat_hook_command ("unalias", N_("remove aliases"),
