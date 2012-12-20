@@ -6327,9 +6327,7 @@ command_init ()
                      "    /mouse enable\n"
                      "  toggle mouse for 5 seconds:\n"
                      "    /mouse toggle 5"),
-                  "enable"
-                  " || disable"
-                  " || toggle",
+                  "enable|disable|toggle",
                   &command_mouse, NULL);
     hook_command (NULL, "mute",
                   N_("execute a command silently"),
