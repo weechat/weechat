@@ -6119,8 +6119,9 @@ command_init ()
                      "   plugin: list commands for this plugin\n"
                      "  command: a command name\n"
                      "   option: an option name (use /set to see list)"),
-                  "-list|-listfull|%(commands)|%(config_options) "
-                  "%(plugins_names)|" PLUGIN_CORE "|%*",
+                  "-list %(plugins_names)|" PLUGIN_CORE "|%*"
+                  " || -listfull %(plugins_names)|" PLUGIN_CORE "|%*"
+                  " || %(commands)|%(config_options)",
                   &command_help, NULL);
     hook_command (NULL, "history",
                   N_("show buffer command history"),
@@ -6349,7 +6350,10 @@ command_init ()
                      "    /mute -current msg * hi!\n"
                      "  message to #weechat channel:\n"
                      "    /mute -buffer irc.freenode.#weechat msg #weechat hi!"),
-                  "-current|-buffer|-all|%(commands) %(commands)|%*",
+                  "-current %(commands)|%*"
+                  " || -buffer %(buffers_plugins_names) %(commands)|%*"
+                  " || -all %(commands)|%*"
+                  " || %(commands)|%*",
                   &command_mute, NULL);
     hook_command (NULL, "plugin",
                   N_("list/load/unload plugins"),
@@ -6479,7 +6483,8 @@ command_init ()
                      "    /set diff\n"
                      "  display changed options in irc plugin:\n"
                      "    /set diff irc.*"),
-                  "%(config_options) %(config_option_values)",
+                  "%(config_options) %(config_option_values)"
+                  " || diff %(config_options)|%*",
                   &command_set, NULL);
     hook_command (NULL, "unset",
                   N_("unset/reset config options"),
