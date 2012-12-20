@@ -605,15 +605,17 @@ Without argument, all files (WeeChat and plugins) are saved.
 [command]*`set`* set config options::
 ........................................
 /set  [<option> [<value>]]
+      diff [<option> [<option>...]]
 
 option: name of an option (can start or end with '*' to list many options)
  value: new value for option
+  diff: display only changed options
 
 New value can be, according to variable type:
   boolean: on, off or toggle
   integer: number, ++number or --number
-  string : any string ("" for empty string)
-  color  : color name, ++number or --number
+   string: any string ("" for empty string)
+    color: color name, ++number or --number
 
 For all types, you can use null to remove option value (undefined value). This works only for some special plugin variables.
 
@@ -622,6 +624,10 @@ Examples:
     /set *highlight*
   add a word to highlight:
     /set weechat.look.highlight "word"
+  display changed options:
+    /set diff
+  display changed options in irc plugin:
+    /set diff irc.*
 ........................................
 
 [[command_weechat_unset]]

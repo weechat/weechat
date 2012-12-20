@@ -1,12 +1,13 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.0-dev, 2012-12-19
+v0.4.0-dev, 2012-12-20
 
 
 Version 0.4.0 (under dev!)
 --------------------------
 
+* core: add option "diff" for command /set (list options with changed value)
 * core: fix refresh of windows after split (fix bug with horizontal separator
   between windows) (bug #37874)
 * core: fix stuck mouse (bug #36533)

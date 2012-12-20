@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-12-16 19:14+0100\n"
-"PO-Revision-Date: 2012-09-29 11:42+0200\n"
+"POT-Creation-Date: 2012-12-20 17:20+0100\n"
+"PO-Revision-Date: 2012-12-20 18:04+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Polish\n"
@@ -705,20 +705,36 @@ msgstr ""
 "%sNie znaleziono opcji \"%s\" (porada: możesz użyć \"*\" na początku i/lub "
 "końcu opcji, aby uzyskać listę)"
 
-msgid "No configuration option found"
-msgstr "Nie znaleziono żadnej opcji konfiguracyjnej"
+#, fuzzy
+msgid "No option found"
+msgstr "Nie znaleziono wtyczki"
 
-#, c-format
-msgid "%s%d%s configuration option found matching with \"%s\""
-msgid_plural "%s%d%s configuration options found matching with \"%s\""
+#, fuzzy, c-format
+msgid "%s%d%s option with value changed (matching with \"%s\")"
+msgid_plural "%s%d%s options with value changed (matching with \"%s\")"
 msgstr[0] "Znaleziono %s%d%s opcję konfiguracyjną pasującą do wyrażenia \"%s\""
 msgstr[1] "Znaleziono %s%d%s opcje konfiguracyjne pasujące do wyrażenia \"%s\""
 msgstr[2] ""
 "Znaleziono %s%d%s opcji konfiguracyjnych pasujących do wyrażenia \"%s\""
 
-#, c-format
-msgid "%s%d%s configuration option found"
-msgid_plural "%s%d%s configuration options found"
+#, fuzzy, c-format
+msgid "%s%d%s option (matching with \"%s\")"
+msgid_plural "%s%d%s options (matching with \"%s\")"
+msgstr[0] "Znaleziono %s%d%s opcję konfiguracyjną pasującą do wyrażenia \"%s\""
+msgstr[1] "Znaleziono %s%d%s opcje konfiguracyjne pasujące do wyrażenia \"%s\""
+msgstr[2] ""
+"Znaleziono %s%d%s opcji konfiguracyjnych pasujących do wyrażenia \"%s\""
+
+#, fuzzy, c-format
+msgid "%s%d%s option"
+msgid_plural "%s%d%s options"
+msgstr[0] "Znaleziono %s%d%s opcję konfiguracyjną"
+msgstr[1] "Znaleziono %s%d%s opcje konfiguracyjne"
+msgstr[2] "Znaleziono %s%d%s opcji konfiguracyjnych"
+
+#, fuzzy, c-format
+msgid "%s%d%s option with value changed"
+msgid_plural "%s%d%s options with value changed"
 msgstr[0] "Znaleziono %s%d%s opcję konfiguracyjną"
 msgstr[1] "Znaleziono %s%d%s opcje konfiguracyjne"
 msgstr[2] "Znaleziono %s%d%s opcji konfiguracyjnych"
@@ -727,9 +743,9 @@ msgstr[2] "Znaleziono %s%d%s opcji konfiguracyjnych"
 msgid "%sError: failed to set option \"%s\""
 msgstr "%sBłąd: nie udało się ustawić opcji \"%s\""
 
-#, c-format
-msgid "%sError: configuration option \"%s\" not found"
-msgstr "%sBłąd: nie znaleziono opcji konfiguracyjnej \"%s\""
+#, fuzzy, c-format
+msgid "%sError: option \"%s\" not found"
+msgstr "%sBłąd: nie znaleziono wtyczki \"%s\""
 
 msgid "Option changed: "
 msgstr "Opcja zmieniona: "
@@ -1979,18 +1995,21 @@ msgstr ""
 msgid "set config options"
 msgstr "ustawia opcje konfiguracyjne"
 
-msgid "[<option> [<value>]]"
+#, fuzzy
+msgid "[<option> [<value>]] || diff [<option> [<option>...]]"
 msgstr "[<opcja> [<wartość>]]"
 
+#, fuzzy
 msgid ""
 "option: name of an option (can start or end with '*' to list many options)\n"
 " value: new value for option\n"
+"  diff: display only changed options\n"
 "\n"
 "New value can be, according to variable type:\n"
 "  boolean: on, off or toggle\n"
 "  integer: number, ++number or --number\n"
-"  string : any string (\"\" for empty string)\n"
-"  color  : color name, ++number or --number\n"
+"   string: any string (\"\" for empty string)\n"
+"    color: color name, ++number or --number\n"
 "\n"
 "For all types, you can use null to remove option value (undefined value). "
 "This works only for some special plugin variables.\n"
@@ -1999,7 +2018,11 @@ msgid ""
 "  display options about highlight:\n"
 "    /set *highlight*\n"
 "  add a word to highlight:\n"
-"    /set weechat.look.highlight \"word\""
+"    /set weechat.look.highlight \"word\"\n"
+"  display changed options:\n"
+"    /set diff\n"
+"  display changed options in irc plugin:\n"
+"    /set diff irc.*"
 msgstr ""
 "opcja: nazwa opcji (może zaczynać lub kończyć się \"*\" do wyświetlania "
 "wielu opcji)\n"
@@ -9461,52 +9484,3 @@ msgstr "Typ"
 
 msgid "Constants"
 msgstr "Stałe"
-
-#~ msgid "automatically rejoin channels after kick"
-#~ msgstr "automatycznie wejdź na kanał po wykopaniu"
-
-#~ msgid "prefix for error messages"
-#~ msgstr "przedrostek informacji o błędzie"
-
-#~ msgid "prefix for network messages"
-#~ msgstr "przedrostek informacji sieciowych"
-
-#~ msgid "prefix for action messages"
-#~ msgstr "przedrostek informacji o akcjach"
-
-#~ msgid "prefix for join messages"
-#~ msgstr "przedrostek informacji o wejściu na kanał"
-
-#~ msgid "prefix for quit messages"
-#~ msgstr "przedrostek informacji o wyjściu"
-
-#~ msgid ""
-#~ "condition(s) for displaying bar (for bars of type \"window\"): \"active\" "
-#~ "= window must be active, \"inactive\" = window must be inactive, "
-#~ "\"nicklist\" = buffer must have a nicklist"
-#~ msgstr ""
-#~ "warunek(-ki) wyświetlania paska (dla pasków typu \"window\"): \"active\" "
-#~ "= okno musi być aktywne, \"inactive\" = okno musi być nieaktywne, "
-#~ "\"nicklist\" = bufor musi posiadać listę nicków"
-
-#~ msgid ""
-#~ "server: server name\n"
-#~ "  nick: nick (may be a mask)"
-#~ msgstr ""
-#~ "serwer: nazwa serwera\n"
-#~ "  nick: nick (może być maska)"
-
-#~ msgid "use IPv6 protocol for server communication"
-#~ msgstr "użyj protokołu IPv6 do komunikacji z serwerem"
-
-#~ msgid "global decoding charset"
-#~ msgstr "globalne dekodowane kodowanie"
-
-#~ msgid "global encoding charset"
-#~ msgstr "globalnie kodowanie"
-
-#~ msgid "%s: connecting to server %s/%d%s%s..."
-#~ msgstr "%s: łączę z serwerem %s/%d%s%s..."
-
-#~ msgid "%s: disconnected from server"
-#~ msgstr "%s: rozłączono z serwerem"

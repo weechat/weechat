@@ -605,23 +605,29 @@ Wird keine Datei angegeben dann werden alle Konfigurationen (WeeChat und Erweite
 [command]*`set`* Konfigurationsparameter setzen::
 ........................................
 /set  [<option> [<value>]]
+      diff [<option> [<option>...]]
 
-option: Name der zu ändernden Option (darf mit einem Joker '*' beginnen oder enden um mehrere Optionen anzuzeigen)
- value: neuer Wert, den die Option erhalten soll
+option: name of an option (can start or end with '*' to list many options)
+ value: new value for option
+  diff: display only changed options
 
-Abhängig von der ausgewählten Option, kann die Variable folgenden Inhalt haben:
-  boolean: on, off oder toggle
-  integer: Anzahl, ++Anzahl oder --Anzahl
-  string : jede Zeichenkette ("" für eine leere Zeichenkette)
-  color  : Name einer Farbe, ++Anzahl oder --Anzahl
+New value can be, according to variable type:
+  boolean: on, off or toggle
+  integer: number, ++number or --number
+   string: any string ("" for empty string)
+    color: color name, ++number or --number
 
-Für alle Typen von Variablen kann die Zeichenkette "null" (ohne "")  genutzt werden um den Wert der Option zu löschen (undefinierter Wert). Dies  kann nur bei einigen Erweiterungen genutzt werden.
+For all types, you can use null to remove option value (undefined value). This works only for some special plugin variables.
 
-Beispiele:
-  Zeigt alle Optionen an die etwas mit highlight zu tun haben:
+Examples:
+  display options about highlight:
     /set *highlight*
-  Fügt ein highlight-Wort hinzu:
+  add a word to highlight:
     /set weechat.look.highlight "word"
+  display changed options:
+    /set diff
+  display changed options in irc plugin:
+    /set diff irc.*
 ........................................
 
 [[command_weechat_unset]]

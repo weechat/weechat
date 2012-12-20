@@ -604,24 +604,30 @@ Senza argomento, vengono salvati tutti i file (WeeChat e plugin).
 [[command_weechat_set]]
 [command]*`set`* imposta le opzioni di configurazione::
 ........................................
-/set  [<opzione> [<valore>]]
+/set  [<option> [<value>]]
+      diff [<option> [<option>...]]
 
-opzione: nome di un'opzione (può iniziare o terminare con '*' per elencare più opzioni)
- valore: nuovo valore per l'opzione
+option: name of an option (can start or end with '*' to list many options)
+ value: new value for option
+  diff: display only changed options
 
-Il nuovo valore può essere, a seconda del tipo di variabile:
-  booleano: on, off o toggle
-  intero  : numero, ++numero o --numero
-  stringa : qualsiasi stringa ("" per una stringa vuota)
-  colore  : nome colore, ++numeero o --numero
+New value can be, according to variable type:
+  boolean: on, off or toggle
+  integer: number, ++number or --number
+   string: any string ("" for empty string)
+    color: color name, ++number or --number
 
-Per tutti i tipi, è possibile usare null per rimuovere il valore dell'opzione (valore non definito). Ciò funziona solo per alcune variabili speciali dei plugin.
+For all types, you can use null to remove option value (undefined value). This works only for some special plugin variables.
 
-Esempi:
-  mostra le opzioni relative alle notifiche:
+Examples:
+  display options about highlight:
     /set *highlight*
-  aggiunge una parola alle notifiche:
+  add a word to highlight:
     /set weechat.look.highlight "word"
+  display changed options:
+    /set diff
+  display changed options in irc plugin:
+    /set diff irc.*
 ........................................
 
 [[command_weechat_unset]]

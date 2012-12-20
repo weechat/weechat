@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-12-16 19:14+0100\n"
-"PO-Revision-Date: 2012-09-29 11:42+0200\n"
+"POT-Creation-Date: 2012-12-20 17:20+0100\n"
+"PO-Revision-Date: 2012-12-20 18:04+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Czech\n"
@@ -699,19 +699,34 @@ msgstr ""
 "%sVolba \"%s\" nenalezena (tip: můžete použít  \"*\" na začátku a/nebo konci "
 "volby pro zobrazení podlistu)"
 
-msgid "No configuration option found"
-msgstr "Nebyla nalezena žádná volba nastavení"
+#, fuzzy
+msgid "No option found"
+msgstr "Nebyl nalezen žádný plugin"
 
-#, c-format
-msgid "%s%d%s configuration option found matching with \"%s\""
-msgid_plural "%s%d%s configuration options found matching with \"%s\""
+#, fuzzy, c-format
+msgid "%s%d%s option with value changed (matching with \"%s\")"
+msgid_plural "%s%d%s options with value changed (matching with \"%s\")"
 msgstr[0] "%s%d%s volba nastavení nalezena s \"%s\""
 msgstr[1] "%s%d%s volby nastavení nalezeny s \"%s\""
 msgstr[2] "%s%d%s voleb nastavení nalezeno s \"%s\""
 
-#, c-format
-msgid "%s%d%s configuration option found"
-msgid_plural "%s%d%s configuration options found"
+#, fuzzy, c-format
+msgid "%s%d%s option (matching with \"%s\")"
+msgid_plural "%s%d%s options (matching with \"%s\")"
+msgstr[0] "%s%d%s volba nastavení nalezena s \"%s\""
+msgstr[1] "%s%d%s volby nastavení nalezeny s \"%s\""
+msgstr[2] "%s%d%s voleb nastavení nalezeno s \"%s\""
+
+#, fuzzy, c-format
+msgid "%s%d%s option"
+msgid_plural "%s%d%s options"
+msgstr[0] "%s%d%s volba nastavení nalezena"
+msgstr[1] "%s%d%s volby nastavení nalezeny"
+msgstr[2] "%s%d%s voleb nastavení nalezeno"
+
+#, fuzzy, c-format
+msgid "%s%d%s option with value changed"
+msgid_plural "%s%d%s options with value changed"
 msgstr[0] "%s%d%s volba nastavení nalezena"
 msgstr[1] "%s%d%s volby nastavení nalezeny"
 msgstr[2] "%s%d%s voleb nastavení nalezeno"
@@ -720,9 +735,9 @@ msgstr[2] "%s%d%s voleb nastavení nalezeno"
 msgid "%sError: failed to set option \"%s\""
 msgstr "%sChyba: selhalo nastavení volby \"%s\""
 
-#, c-format
-msgid "%sError: configuration option \"%s\" not found"
-msgstr "%sChyba: volba nastavení \"%s\" nenalezena"
+#, fuzzy, c-format
+msgid "%sError: option \"%s\" not found"
+msgstr "%sChyba: plugin \"%s\" nenalezen"
 
 msgid "Option changed: "
 msgstr "Volba změněna: "
@@ -1878,18 +1893,21 @@ msgstr ""
 msgid "set config options"
 msgstr "nastaví konfigurační možnosti"
 
-msgid "[<option> [<value>]]"
+#, fuzzy
+msgid "[<option> [<value>]] || diff [<option> [<option>...]]"
 msgstr "[<možnost> [<hodnota>]]"
 
+#, fuzzy
 msgid ""
 "option: name of an option (can start or end with '*' to list many options)\n"
 " value: new value for option\n"
+"  diff: display only changed options\n"
 "\n"
 "New value can be, according to variable type:\n"
 "  boolean: on, off or toggle\n"
 "  integer: number, ++number or --number\n"
-"  string : any string (\"\" for empty string)\n"
-"  color  : color name, ++number or --number\n"
+"   string: any string (\"\" for empty string)\n"
+"    color: color name, ++number or --number\n"
 "\n"
 "For all types, you can use null to remove option value (undefined value). "
 "This works only for some special plugin variables.\n"
@@ -1898,7 +1916,11 @@ msgid ""
 "  display options about highlight:\n"
 "    /set *highlight*\n"
 "  add a word to highlight:\n"
-"    /set weechat.look.highlight \"word\""
+"    /set weechat.look.highlight \"word\"\n"
+"  display changed options:\n"
+"    /set diff\n"
+"  display changed options in irc plugin:\n"
+"    /set diff irc.*"
 msgstr ""
 "možnost: jméno nastavení (může začínat nebo končit '*' pro výpis více "
 "nastavení)\n"
@@ -9262,43 +9284,3 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
-
-#~ msgid "automatically rejoin channels after kick"
-#~ msgstr "automaticky znovu přijít na kanály po vykopnutí"
-
-#~ msgid "prefix for error messages"
-#~ msgstr "prefix pro chybové zprávy"
-
-#~ msgid "prefix for network messages"
-#~ msgstr "prefix pro zprávy sítě"
-
-#~ msgid "prefix for action messages"
-#~ msgstr "prefix pro zprávy akcí"
-
-#~ msgid "prefix for join messages"
-#~ msgstr "prefix pro zprávy připojení"
-
-#~ msgid "prefix for quit messages"
-#~ msgstr "prefix pro zprávy ukončení"
-
-#~ msgid ""
-#~ "server: server name\n"
-#~ "  nick: nick (may be a mask)"
-#~ msgstr ""
-#~ "   server: jméno serveru\n"
-#~ "přezdívka: přezdívka (může být maska)"
-
-#~ msgid "use IPv6 protocol for server communication"
-#~ msgstr "použít protokol IPv6 pro komunikaci se serverem"
-
-#~ msgid "global decoding charset"
-#~ msgstr "globální znaková sada pro dekódování"
-
-#~ msgid "global encoding charset"
-#~ msgstr "globální znaková sada pro kódování"
-
-#~ msgid "%s: connecting to server %s/%d%s%s..."
-#~ msgstr "%s: připojuji se k serveru %s/%d%s%s..."
-
-#~ msgid "%s: disconnected from server"
-#~ msgstr "%s: odpojen od serveru"

@@ -605,14 +605,16 @@ Sans paramètre, tous les fichiers (WeeChat et extensions) sont sauvegardés.
 [command]*`set`* modifier des options de configuration::
 ........................................
 /set  [<option> [<valeur>]]
+      diff [<option> [<option>...]]
 
 option: nom d'une option (peut démarrer ou se terminer par '*' pour lister plusieurs options)
 valeur: nouvelle valeur pour l'option
+  diff: afficher seulement les options modifiées
 
 La nouvelle valeur peut être, selon le type de l'option:
   booléen: on, off ou toggle
-  entier : nombre, ++nombre ou --nombre
-  chaîne : toute chaîne ("" pour une chaîne vide)
+   entier: nombre, ++nombre ou --nombre
+   chaîne: toute chaîne ("" pour une chaîne vide)
   couleur: nom de couleur, ++nombre ou --nombre
 
 Pour tous les types, vous pouvez utiliser null pour supprimer la valeur de l'option (valeur non définie). Cela ne fonctionne qu'avec certaines options spéciales des extensions.
@@ -622,6 +624,10 @@ Exemples:
     /set *highlight*
   ajouter un mot pour le highlight:
     /set weechat.look.highlight "mot"
+  afficher les options modifiées:
+    /set diff
+  afficher les options modifiées dans l'extension irc:
+    /set diff irc.*
 ........................................
 
 [[command_weechat_unset]]

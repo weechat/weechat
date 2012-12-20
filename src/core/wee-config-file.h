@@ -226,6 +226,7 @@ extern void *config_file_option_get_pointer (struct t_config_option *option,
                                              const char *property);
 extern int config_file_option_is_null (struct t_config_option *option);
 extern int config_file_option_default_is_null (struct t_config_option *option);
+extern int config_file_option_has_changed (struct t_config_option *option);
 extern int config_file_option_set_with_string (const char *option_name, const char *value);
 extern int config_file_option_boolean (struct t_config_option *option);
 extern int config_file_option_boolean_default (struct t_config_option *option);

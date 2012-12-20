@@ -4531,7 +4531,8 @@ command_set_display_option (struct t_config_option *option,
  */
 
 int
-command_set_display_option_list (const char *message, const char *search)
+command_set_display_option_list (const char *message, const char *search,
+                                 int display_only_changed)
 {
     int number_found, section_displayed, length;
     struct t_config_file *ptr_config;
@@ -4544,6 +4545,12 @@ command_set_display_option_list (const char *message, const char *search)
     for (ptr_config = config_files; ptr_config;
          ptr_config = ptr_config->next_config)
     {
+        /*
+         * if we are displaying only changed options, skip options plugins.*
+         * because they are all "changed" (default value is always empty string)
+         */
+        if (display_only_changed && strcmp(ptr_config->name, "plugins") == 0)
+            continue;
         for (ptr_section = ptr_config->sections; ptr_section;
              ptr_section = ptr_section->next_section)
         {
@@ -4552,6 +4559,14 @@ command_set_display_option_list (const char *message, const char *search)
             for (ptr_option = ptr_section->options; ptr_option;
                  ptr_option = ptr_option->next_option)
             {
+                /*
+                 * if we are displaying only changed options, skip the option if
+                 * value has not changed (if it is the same as default value)
+                 */
+                if (display_only_changed &&
+                    !config_file_option_has_changed (ptr_option))
+                    continue;
+
                 length = strlen (ptr_config->name) + 1
                     + strlen (ptr_section->name) + 1
                     + strlen (ptr_option->name) + 1;
@@ -4584,72 +4599,159 @@ command_set_display_option_list (const char *message, const char *search)
 }
 
 /*
- * Callback for command "/set": sets configuration options.
+ * Displays multiple lists of options.
+ *
+ * If display_only_changed == 1, then it will display only options with value
+ * changed (different from default value).
+ *
+ * Returns the total number of options displayed.
  */
 
-COMMAND_CALLBACK(set)
+int
+command_set_display_option_lists (char **argv, int arg_start, int arg_end,
+                                  int display_only_changed)
 {
-    char *value;
-    int number_found, rc;
-    struct t_config_option *ptr_option, *ptr_option_before;
+    int i, total_number_found, number_found;
 
-    /* make C compiler happy */
-    (void) data;
-    (void) buffer;
+    total_number_found = 0;
 
-    /* display list of options */
-    if (argc < 3)
+    for (i = arg_start; i <= arg_end; i++)
     {
-        number_found = 0;
+        number_found = command_set_display_option_list (NULL, argv[i],
+                                                        display_only_changed);
 
-        number_found += command_set_display_option_list (NULL,
-                                                         (argc == 2) ?
-                                                         argv[1] : NULL);
+        total_number_found += number_found;
+
+        if (display_only_changed && (arg_start == arg_end))
+            break;
 
         if (number_found == 0)
         {
-            if (argc == 2)
+            if (argv[i])
             {
                 gui_chat_printf (NULL,
                                  _("%sOption \"%s\" not found (tip: you can use "
                                    "\"*\" at beginning and/or end of option to "
                                    "see a sublist)"),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 argv[1]);
+                                 argv[i]);
             }
             else
             {
                 gui_chat_printf (NULL,
-                                 _("No configuration option found"));
+                                 _("No option found"));
             }
         }
         else
         {
             gui_chat_printf (NULL, "");
-            if (argc == 2)
+            if (argv[i])
             {
-                gui_chat_printf (NULL,
-                                 NG_("%s%d%s configuration option found "
-                                     "matching with \"%s\"",
-                                     "%s%d%s configuration options found "
-                                     "matching with \"%s\"",
-                                     number_found),
-                                 GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                                 number_found,
-                                 GUI_COLOR(GUI_COLOR_CHAT),
-                                 argv[1]);
+                if (display_only_changed)
+                {
+                    gui_chat_printf (NULL,
+                                     NG_("%s%d%s option with value changed "
+                                         "(matching with \"%s\")",
+                                         "%s%d%s options with value changed "
+                                         "(matching with \"%s\")",
+                                         number_found),
+                                     GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+                                     number_found,
+                                     GUI_COLOR(GUI_COLOR_CHAT),
+                                     argv[i]);
+                }
+                else
+                {
+                    gui_chat_printf (NULL,
+                                     NG_("%s%d%s option (matching with \"%s\")",
+                                         "%s%d%s options (matching with \"%s\")",
+                                         number_found),
+                                     GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+                                     number_found,
+                                     GUI_COLOR(GUI_COLOR_CHAT),
+                                     argv[i]);
+                }
             }
             else
             {
                 gui_chat_printf (NULL,
-                                 NG_("%s%d%s configuration option found",
-                                     "%s%d%s configuration options found",
+                                 NG_("%s%d%s option",
+                                     "%s%d%s options",
                                      number_found),
                                  GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                                  number_found,
                                  GUI_COLOR(GUI_COLOR_CHAT));
             }
         }
+    }
+
+    return total_number_found;
+}
+
+/*
+ * Callback for command "/set": displays or sets configuration options.
+ */
+
+COMMAND_CALLBACK(set)
+{
+    char *value;
+    int number_found, rc, display_only_changed, arg_option_start, arg_option_end;
+    struct t_config_option *ptr_option, *ptr_option_before;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) buffer;
+
+    display_only_changed = 0;
+    arg_option_start = 1;
+    arg_option_end = argc - 1;
+
+    /* if "diff" is specified as first argument, display only changed values */
+    if ((argc >= 2) && (string_strcasecmp (argv[1], "diff") == 0))
+    {
+        display_only_changed = 1;
+        arg_option_start = 2;
+    }
+
+    if (arg_option_end < arg_option_start)
+        arg_option_end = arg_option_start;
+
+    /* display list of options */
+    if ((argc < 3) || display_only_changed)
+    {
+        number_found = command_set_display_option_lists (argv,
+                                                         arg_option_start,
+                                                         arg_option_end,
+                                                         display_only_changed);
+
+        if (display_only_changed)
+        {
+            gui_chat_printf (NULL, "");
+            if (arg_option_start == argc - 1)
+            {
+                gui_chat_printf (NULL,
+                                 NG_("%s%d%s option with value changed "
+                                     "(matching with \"%s\")",
+                                     "%s%d%s options with value changed "
+                                     "(matching with \"%s\")",
+                                     number_found),
+                                 GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+                                 number_found,
+                                 GUI_COLOR(GUI_COLOR_CHAT),
+                                 argv[arg_option_start]);
+            }
+            else
+            {
+                gui_chat_printf (NULL,
+                                 NG_("%s%d%s option with value changed",
+                                     "%s%d%s options with value changed",
+                                     number_found),
+                                 GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+                                 number_found,
+                                 GUI_COLOR(GUI_COLOR_CHAT));
+            }
+        }
+
         return WEECHAT_RC_OK;
     }
 
@@ -4671,8 +4773,7 @@ COMMAND_CALLBACK(set)
             return WEECHAT_RC_OK;
         case WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND:
             gui_chat_printf (NULL,
-                             _("%sError: configuration option \"%s\" not "
-                               "found"),
+                             _("%sError: option \"%s\" not found"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[1]);
             return WEECHAT_RC_OK;
@@ -4693,7 +4794,6 @@ COMMAND_CALLBACK(set)
 
     return WEECHAT_RC_OK;
 }
-
 /*
  * Callback for command "/unset": unsets/resets configuration options.
  */
@@ -6359,15 +6459,16 @@ command_init ()
                   &command_save, NULL);
     hook_command (NULL, "set",
                   N_("set config options"),
-                  N_("[<option> [<value>]]"),
+                  N_("[<option> [<value>]] || diff [<option> [<option>...]]"),
                   N_("option: name of an option (can start or end with '*' "
                      "to list many options)\n"
-                     " value: new value for option\n\n"
+                     " value: new value for option\n"
+                     "  diff: display only changed options\n\n"
                      "New value can be, according to variable type:\n"
                      "  boolean: on, off or toggle\n"
                      "  integer: number, ++number or --number\n"
-                     "  string : any string (\"\" for empty string)\n"
-                     "  color  : color name, ++number or --number\n\n"
+                     "   string: any string (\"\" for empty string)\n"
+                     "    color: color name, ++number or --number\n\n"
                      "For all types, you can use null to remove "
                      "option value (undefined value). This works only "
                      "for some special plugin variables.\n\n"
@@ -6375,7 +6476,11 @@ command_init ()
                      "  display options about highlight:\n"
                      "    /set *highlight*\n"
                      "  add a word to highlight:\n"
-                     "    /set weechat.look.highlight \"word\""),
+                     "    /set weechat.look.highlight \"word\"\n"
+                     "  display changed options:\n"
+                     "    /set diff\n"
+                     "  display changed options in irc plugin:\n"
+                     "    /set diff irc.*"),
                   "%(config_options) %(config_option_values)",
                   &command_set, NULL);
     hook_command (NULL, "unset",

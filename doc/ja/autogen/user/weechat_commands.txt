@@ -605,23 +605,29 @@ file: 保存する設定ファイル (拡張子 ".conf" は不要)
 [command]*`set`* オプションの設定::
 ........................................
 /set  [<option> [<value>]]
+      diff [<option> [<option>...]]
 
-option: オプションの名前 (多くのオプションをリストアップするには、'*' で始めるか終わるかしてください)
- value: オプションに対する新しい値
+option: name of an option (can start or end with '*' to list many options)
+ value: new value for option
+  diff: display only changed options
 
-新しいオプションは以下の変数型に従います:
-  boolean: on、off、toggle
-  integer: 番号、++番号、--番号
-  string : 任意の文字列 (空文字列は "")
-  color  : 色の名前、++色番号、--色番号
+New value can be, according to variable type:
+  boolean: on, off or toggle
+  integer: number, ++number or --number
+   string: any string ("" for empty string)
+    color: color name, ++number or --number
 
-どんな型であっても、オプションの値を削除する (未定義値にする) には null が使えます。これはいくつかの特別なプラグイン変数でのみ有効です。
+For all types, you can use null to remove option value (undefined value). This works only for some special plugin variables.
 
-例:
-  ハイライトに関するオプションを表示:
+Examples:
+  display options about highlight:
     /set *highlight*
-  highlight に単語を追加:
+  add a word to highlight:
     /set weechat.look.highlight "word"
+  display changed options:
+    /set diff
+  display changed options in irc plugin:
+    /set diff irc.*
 ........................................
 
 [[command_weechat_unset]]

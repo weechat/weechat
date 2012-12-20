@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-12-16 19:14+0100\n"
-"PO-Revision-Date: 2012-09-29 11:43+0200\n"
+"POT-Creation-Date: 2012-12-20 17:20+0100\n"
+"PO-Revision-Date: 2012-12-20 18:05+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Russian\n"
@@ -751,19 +751,33 @@ msgstr ""
 "и/или конце названия опции чтобы увидеть список похожих)"
 
 #, fuzzy
-msgid "No configuration option found"
-msgstr "Не найден параметр\n"
+msgid "No option found"
+msgstr "Plugin не найден\n"
 
 #, fuzzy, c-format
-msgid "%s%d%s configuration option found matching with \"%s\""
-msgid_plural "%s%d%s configuration options found matching with \"%s\""
+msgid "%s%d%s option with value changed (matching with \"%s\")"
+msgid_plural "%s%d%s options with value changed (matching with \"%s\")"
 msgstr[0] "параметров с \"%s\" найдено\n"
 msgstr[1] "параметров с \"%s\" найдено\n"
 msgstr[2] "параметров с \"%s\" найдено\n"
 
 #, fuzzy, c-format
-msgid "%s%d%s configuration option found"
-msgid_plural "%s%d%s configuration options found"
+msgid "%s%d%s option (matching with \"%s\")"
+msgid_plural "%s%d%s options (matching with \"%s\")"
+msgstr[0] "параметров с \"%s\" найдено\n"
+msgstr[1] "параметров с \"%s\" найдено\n"
+msgstr[2] "параметров с \"%s\" найдено\n"
+
+#, fuzzy, c-format
+msgid "%s%d%s option"
+msgid_plural "%s%d%s options"
+msgstr[0] "параметров найдено\n"
+msgstr[1] "параметров найдено\n"
+msgstr[2] "параметров найдено\n"
+
+#, fuzzy, c-format
+msgid "%s%d%s option with value changed"
+msgid_plural "%s%d%s options with value changed"
 msgstr[0] "параметров найдено\n"
 msgstr[1] "параметров найдено\n"
 msgstr[2] "параметров найдено\n"
@@ -773,8 +787,8 @@ msgid "%sError: failed to set option \"%s\""
 msgstr "%s не могу сохранить конфигурационный файл pluginов\n"
 
 #, fuzzy, c-format
-msgid "%sError: configuration option \"%s\" not found"
-msgstr "%s параметр конфигурации \"%s\" не найден\n"
+msgid "%sError: option \"%s\" not found"
+msgstr "%s plugin \"%s\" не найден\n"
 
 #, fuzzy
 msgid "Option changed: "
@@ -1656,18 +1670,19 @@ msgid "set config options"
 msgstr "настроить параметры конфигурации"
 
 #, fuzzy
-msgid "[<option> [<value>]]"
+msgid "[<option> [<value>]] || diff [<option> [<option>...]]"
 msgstr "[параметр [ = значение]]"
 
 msgid ""
 "option: name of an option (can start or end with '*' to list many options)\n"
 " value: new value for option\n"
+"  diff: display only changed options\n"
 "\n"
 "New value can be, according to variable type:\n"
 "  boolean: on, off or toggle\n"
 "  integer: number, ++number or --number\n"
-"  string : any string (\"\" for empty string)\n"
-"  color  : color name, ++number or --number\n"
+"   string: any string (\"\" for empty string)\n"
+"    color: color name, ++number or --number\n"
 "\n"
 "For all types, you can use null to remove option value (undefined value). "
 "This works only for some special plugin variables.\n"
@@ -1676,7 +1691,11 @@ msgid ""
 "  display options about highlight:\n"
 "    /set *highlight*\n"
 "  add a word to highlight:\n"
-"    /set weechat.look.highlight \"word\""
+"    /set weechat.look.highlight \"word\"\n"
+"  display changed options:\n"
+"    /set diff\n"
+"  display changed options in irc plugin:\n"
+"    /set diff irc.*"
 msgstr ""
 
 #, fuzzy
@@ -8763,42 +8782,3 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
-
-#, fuzzy
-#~ msgid "automatically rejoin channels after kick"
-#~ msgstr "автоматически перезаходить на каналы после кика"
-
-#, fuzzy
-#~ msgid "prefix for error messages"
-#~ msgstr "выводить отладочные сообщения"
-
-#, fuzzy
-#~ msgid "prefix for action messages"
-#~ msgstr "ответить на ping"
-
-#, fuzzy
-#~ msgid "prefix for join messages"
-#~ msgstr "цвет  текущего окна с сообщениями"
-
-#, fuzzy
-#~ msgid "prefix for quit messages"
-#~ msgstr "сообщение о выходе по-умолчанию"
-
-#, fuzzy
-#~ msgid ""
-#~ "server: server name\n"
-#~ "  nick: nick (may be a mask)"
-#~ msgstr ""
-#~ "сервер: название сервера\n"
-#~ "   ник: ник (может быть маской)"
-
-#~ msgid "use IPv6 protocol for server communication"
-#~ msgstr "использовать IPv6 при связи с сервером"
-
-#, fuzzy
-#~ msgid "%s: connecting to server %s/%d%s%s..."
-#~ msgstr "%s: поключаюсь к серверу %s:%d%s%s...\n"
-
-#, fuzzy
-#~ msgid "%s: disconnected from server"
-#~ msgstr "Отключен от сервера!\n"

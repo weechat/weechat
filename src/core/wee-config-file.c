@@ -1606,6 +1606,47 @@ config_file_option_default_is_null (struct t_config_option *option)
 }
 
 /*
+ * Checks if an option has changed (current value different from default value).
+ *
+ * Returns:
+ *   1: option has changed
+ *   0: option has default value
+ */
+
+int config_file_option_has_changed (struct t_config_option *option)
+{
+    /* both default and current value are null => not changed */
+    if (!option->default_value && !option->value)
+        return 0;
+
+    /* default is null and current value is not null => changed! */
+    if (!option->default_value && option->value)
+        return 1;
+
+    /* default is not null and current value is null => changed! */
+    if (option->default_value && !option->value)
+        return 1;
+
+    /* both default and current value are not null, compare their values */
+    switch (option->type)
+    {
+        case CONFIG_OPTION_TYPE_BOOLEAN:
+            return CONFIG_BOOLEAN(option) != CONFIG_BOOLEAN_DEFAULT(option);
+        case CONFIG_OPTION_TYPE_INTEGER:
+            return CONFIG_INTEGER(option) != CONFIG_INTEGER_DEFAULT(option);
+        case CONFIG_OPTION_TYPE_STRING:
+            return strcmp(CONFIG_STRING(option), CONFIG_STRING_DEFAULT(option)) != 0;
+        case CONFIG_OPTION_TYPE_COLOR:
+            return CONFIG_COLOR(option) != CONFIG_COLOR_DEFAULT(option);
+        case CONFIG_NUM_OPTION_TYPES:
+            /* make C compiler happy */
+            break;
+    }
+
+    return 0;
+}
+
+/*
  * Sets the value for an option using a full name of option (format:
  * "file.section.option").
  *
