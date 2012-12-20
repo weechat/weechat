@@ -6668,7 +6668,8 @@ command_init ()
                   " || scroll_unread  -window %(windows_numbers)"
                   " || swap up|down|left|right|-window %(windows_numbers)"
                   " || zoom -window %(windows_numbers)"
-                  " || merge all|-window %(windows_numbers)",
+                  " || merge all|-window %(windows_numbers)"
+                  " || %(windows_numbers)",
                   &command_window, NULL);
 }
 
