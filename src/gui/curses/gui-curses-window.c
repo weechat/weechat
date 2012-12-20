@@ -983,7 +983,7 @@ gui_window_draw_separators (struct t_gui_window *window)
     /* create/draw horizontal separator */
     if (CONFIG_BOOLEAN(config_look_window_separator_horizontal)
         && (window->win_y + window->win_height <
-            gui_window_get_height () - gui_bar_root_get_size (NULL, GUI_BAR_POSITION_BOTTOM)))
+            gui_window_get_height () - gui_bar_root_get_size (NULL, GUI_BAR_POSITION_BOTTOM) - 1))
     {
         GUI_WINDOW_OBJECTS(window)->win_separator_horiz = newwin (1,
                                                                   window->win_width,
