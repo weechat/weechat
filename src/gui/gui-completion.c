@@ -472,11 +472,13 @@ int
 gui_completion_get_matching_template (struct t_gui_completion *completion,
                                       struct t_hook *hook_command)
 {
-    int i, length;
+    int i, length, fallback;
 
     /* without at least one argument, we can't find matching template! */
     if (completion->base_command_arg_index <= 1)
         return -1;
+
+    fallback = -1;
 
     for (i = 0; i < HOOK_COMMAND(hook_command, cplt_num_templates); i++)
     {
@@ -487,9 +489,23 @@ gui_completion_get_matching_template (struct t_gui_completion *completion,
         {
             return i;
         }
+        /*
+         * try to find a fallback template if we don't find any matching
+         * template, for example with these templates (command /set):
+         *   %(config_options) %(config_option_values)
+         *   diff %(config_options)|%*
+         * if first argument is "diff", the match is ok (second template)
+         * if first argument is not "diff", we will fallback on the first
+         * template containing "%" (here first template)
+         */
+        if ((fallback < 0)
+            && (strstr (HOOK_COMMAND(hook_command, cplt_templates_static)[i], "%")))
+        {
+            fallback = i;
+        }
     }
 
-    return -1;
+    return fallback;
 }
 
 /*
