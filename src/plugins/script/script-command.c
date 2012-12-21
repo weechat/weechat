@@ -204,62 +204,51 @@ script_command_script (void *data, struct t_gui_buffer *buffer, int argc,
         return WEECHAT_RC_OK;
     }
 
-    if (!script_buffer)
-        script_buffer_open ();
-
-    if (script_buffer)
+    if ((argc > 1) && script_buffer && !script_buffer_detail_script
+        && (script_buffer_selected_line >= 0)
+        && (script_repo_count_displayed > 0))
     {
-        if (argc > 1)
+        if (weechat_strcasecmp (argv[1], "up") == 0)
         {
-            if (!script_buffer_detail_script
-                && (script_buffer_selected_line >= 0)
-                && (script_repo_count_displayed > 0))
+            value = 1;
+            if (argc > 2)
             {
-                if (strcmp (argv[1], "up") == 0)
-                {
+                error = NULL;
+                value = strtol (argv[2], &error, 10);
+                if (!error || error[0])
                     value = 1;
-                    if (argc > 2)
-                    {
-                        error = NULL;
-                        value = strtol (argv[2], &error, 10);
-                        if (!error || error[0])
-                            value = 1;
-                    }
-                    line = script_buffer_selected_line - value;
-                    if (line < 0)
-                        line = 0;
-                    if (line != script_buffer_selected_line)
-                    {
-                        script_buffer_set_current_line (line);
-                        script_buffer_check_line_outside_window ();
-                    }
-                    return WEECHAT_RC_OK;
-                }
-                else if (strcmp (argv[1], "down") == 0)
-                {
-                    value = 1;
-                    if (argc > 2)
-                    {
-                        error = NULL;
-                        value = strtol (argv[2], &error, 10);
-                        if (!error || error[0])
-                            value = 1;
-                    }
-                    line = script_buffer_selected_line + value;
-                    if (line >= script_repo_count_displayed)
-                        line = script_repo_count_displayed - 1;
-                    if (line != script_buffer_selected_line)
-                    {
-                        script_buffer_set_current_line (line);
-                        script_buffer_check_line_outside_window ();
-                    }
-                    return WEECHAT_RC_OK;
-                }
             }
+            line = script_buffer_selected_line - value;
+            if (line < 0)
+                line = 0;
+            if (line != script_buffer_selected_line)
+            {
+                script_buffer_set_current_line (line);
+                script_buffer_check_line_outside_window ();
+            }
+            return WEECHAT_RC_OK;
+        }
+        else if (weechat_strcasecmp (argv[1], "down") == 0)
+        {
+            value = 1;
+            if (argc > 2)
+            {
+                error = NULL;
+                value = strtol (argv[2], &error, 10);
+                if (!error || error[0])
+                    value = 1;
+            }
+            line = script_buffer_selected_line + value;
+            if (line >= script_repo_count_displayed)
+                line = script_repo_count_displayed - 1;
+            if (line != script_buffer_selected_line)
+            {
+                script_buffer_set_current_line (line);
+                script_buffer_check_line_outside_window ();
+            }
+            return WEECHAT_RC_OK;
         }
     }
-
-    script_buffer_refresh (0);
 
     return WEECHAT_RC_OK;
 }
