@@ -786,6 +786,11 @@ relay_client_new_with_infolist (struct t_infolist *infolist)
         new_client->id = weechat_infolist_integer (infolist, "id");
         new_client->desc = NULL;
         new_client->sock = weechat_infolist_integer (infolist, "sock");
+        new_client->ssl = weechat_infolist_integer (infolist, "ssl");
+#ifdef HAVE_GNUTLS
+        new_client->gnutls_sess = NULL;
+        new_client->hook_timer_handshake = NULL;
+#endif
         new_client->address = strdup (weechat_infolist_string (infolist, "address"));
         new_client->status = weechat_infolist_integer (infolist, "status");
         new_client->protocol = weechat_infolist_integer (infolist, "protocol");

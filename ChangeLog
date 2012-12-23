@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.0-dev, 2012-12-20
+v0.4.0-dev, 2012-12-23
 
 
 Version 0.4.0 (under dev!)
@@ -82,6 +82,7 @@ Version 0.4.0 (under dev!)
 * irc: fix crash when message 352 has too few arguments (bug #37513)
 * irc: remove unneeded server disconnect when server buffer is closed and server
   is already disconnected
+* relay: fix crash after /upgrade when a client is connected
 * relay: add support of IPv6, new option relay.network.ipv6, add support of
   "ipv4." and/or "ipv6." before protocol name, to force IPv4/IPv6 (task #12270)
 * relay: add missing "ssl." in output of /relay listrelay
