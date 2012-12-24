@@ -944,14 +944,14 @@ irc_message_split (struct t_irc_server *server, const char *message)
     }
 
 end:
-    if (tags)
-        free (tags);
     if (!split_ok
         || (weechat_hashtable_get_integer (hashtable, "items_count") == 0))
     {
         irc_message_split_add (hashtable, 1, tags, message, arguments);
     }
 
+    if (tags)
+        free (tags);
     if (argv)
         weechat_string_free_split (argv);
     if (argv_eol)
