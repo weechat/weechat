@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.0-dev, 2012-12-23
+v0.4.0-dev, 2012-12-24
 
 
 Version 0.4.0 (under dev!)
@@ -58,6 +58,8 @@ Version 0.4.0 (under dev!)
   aspell.check.suggestions (task #12061)
 * aspell: fix creation of spellers when number of dictionaries is different
   between two buffers
+* irc: add tags "irc_nick1_xxx" and "irc_nick2_yyy" in message displayed for
+  command "NICK"
 * irc: return git version in CTCP VERSION and FINGER by default, add "$git"
   and "$versiongit" in format of CTCP replies
 * irc: read local variable "autorejoin" in buffer to override server option

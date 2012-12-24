@@ -884,8 +884,8 @@ IRC_PROTOCOL_CALLBACK(nick)
 {
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick, *ptr_nick_found;
-    char *new_nick, *old_color, *buffer_name;
-    int local_nick;
+    char *new_nick, *old_color, *buffer_name, str_tags[512];
+    int local_nick, smart_filter;
     struct t_irc_channel_speaking *ptr_nick_speaking;
 
     IRC_PROTOCOL_MIN_ARGS(3);
@@ -944,9 +944,15 @@ IRC_PROTOCOL_CALLBACK(nick)
                     irc_nick_change (server, ptr_channel, ptr_nick, new_nick);
                     if (local_nick)
                     {
+                        snprintf (str_tags, sizeof (str_tags),
+                                  "irc_nick1_%s,irc_nick2_%s",
+                                  nick,
+                                  new_nick);
                         weechat_printf_date_tags (ptr_channel->buffer,
                                                   date,
-                                                  irc_protocol_tags (command, NULL, NULL),
+                                                  irc_protocol_tags (command,
+                                                                     str_tags,
+                                                                     NULL),
                                                   _("%sYou are now known as "
                                                     "%s%s%s"),
                                                   weechat_prefix ("network"),
@@ -962,13 +968,18 @@ IRC_PROTOCOL_CALLBACK(nick)
                             ptr_nick_speaking = ((weechat_config_boolean (irc_config_look_smart_filter))
                                                  && (weechat_config_boolean (irc_config_look_smart_filter_nick))) ?
                                 irc_channel_nick_speaking_time_search (server, ptr_channel, nick, 1) : NULL;
+                            smart_filter = (weechat_config_boolean (irc_config_look_smart_filter)
+                                            && weechat_config_boolean (irc_config_look_smart_filter_nick)
+                                            && !ptr_nick_speaking);
+                            snprintf (str_tags, sizeof (str_tags),
+                                      "%sirc_nick1_%s,irc_nick2_%s",
+                                      (smart_filter) ? "irc_smart_filter," : "",
+                                      nick,
+                                      new_nick);
                             weechat_printf_date_tags (ptr_channel->buffer,
                                                       date,
                                                       irc_protocol_tags (command,
-                                                                         (!weechat_config_boolean (irc_config_look_smart_filter)
-                                                                          || !weechat_config_boolean (irc_config_look_smart_filter_nick)
-                                                                          || ptr_nick_speaking) ?
-                                                                         NULL : "irc_smart_filter",
+                                                                         str_tags,
                                                                          NULL),
                                                       _("%s%s%s%s is now known as "
                                                         "%s%s%s"),
