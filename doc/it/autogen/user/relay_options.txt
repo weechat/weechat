@@ -43,6 +43,31 @@
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `white`)
 
+* [[option_relay.irc.backlog_max_minutes]] *relay.irc.backlog_max_minutes*
+** descrizione: `maximum number of minutes in backlog per IRC channel (0 = unlimited, examples: 1440 = one day, 10080 = one week, 43200 = one month, 525600 = one year)`
+** tipo: intero
+** valori: 0 .. 2147483647 (valore predefinito: `1440`)
+
+* [[option_relay.irc.backlog_max_number]] *relay.irc.backlog_max_number*
+** descrizione: `maximum number of lines in backlog per IRC channel (0 = unlimited)`
+** tipo: intero
+** valori: 0 .. 2147483647 (valore predefinito: `256`)
+
+* [[option_relay.irc.backlog_since_last_disconnect]] *relay.irc.backlog_since_last_disconnect*
+** descrizione: `display backlog starting from last client disconnect`
+** tipo: bool
+** valori: on, off (valore predefinito: `on`)
+
+* [[option_relay.irc.backlog_tags]] *relay.irc.backlog_tags*
+** descrizione: `tags of messages which are displayed in backlog per IRC channel (supported tags: "irc_join", "irc_part", "irc_quit", "irc_nick", "irc_privmsg"), "*" = all supported tags`
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: `"irc_privmsg"`)
+
+* [[option_relay.irc.backlog_time_format]] *relay.irc.backlog_time_format*
+** descrizione: `format for time in backlog messages (see man strftime for format) (not used if server capability "server-time" was enabled by client, because time is sent as irc tag); empty string = disable time in backlog messages`
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: `"[%H:%M] "`)
+
 * [[option_relay.look.auto_open_buffer]] *relay.look.auto_open_buffer*
 ** descrizione: `apre automaticamente il buffer relay alla connessione di un nuovo client`
 ** tipo: bool

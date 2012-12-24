@@ -37,6 +37,7 @@ struct t_relay_server
     int sock;                          /* socket for connection             */
     struct t_hook *hook_fd;            /* hook for socket                   */
     time_t start_time;                 /* start time                        */
+    time_t last_client_disconnect;     /* last time a client disconnected   */
     struct t_relay_server *prev_server;/* link to previous server           */
     struct t_relay_server *next_server;/* link to next server               */
 };
@@ -61,6 +62,8 @@ extern struct t_relay_server *relay_server_new (const char *protocol_string,
 extern void relay_server_update_port (struct t_relay_server *server, int port);
 extern void relay_server_free (struct t_relay_server *server);
 extern void relay_server_free_all ();
+extern int relay_server_add_to_infolist (struct t_infolist *infolist,
+                                         struct t_relay_server *server);
 extern void relay_server_print_log ();
 
 #endif /* __WEECHAT_RELAY_SERVER_H */

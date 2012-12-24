@@ -43,6 +43,31 @@
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `white`)
 
+* [[option_relay.irc.backlog_max_minutes]] *relay.irc.backlog_max_minutes*
+** 説明: `maximum number of minutes in backlog per IRC channel (0 = unlimited, examples: 1440 = one day, 10080 = one week, 43200 = one month, 525600 = one year)`
+** タイプ: 整数
+** 値: 0 .. 2147483647 (デフォルト値: `1440`)
+
+* [[option_relay.irc.backlog_max_number]] *relay.irc.backlog_max_number*
+** 説明: `maximum number of lines in backlog per IRC channel (0 = unlimited)`
+** タイプ: 整数
+** 値: 0 .. 2147483647 (デフォルト値: `256`)
+
+* [[option_relay.irc.backlog_since_last_disconnect]] *relay.irc.backlog_since_last_disconnect*
+** 説明: `display backlog starting from last client disconnect`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_relay.irc.backlog_tags]] *relay.irc.backlog_tags*
+** 説明: `tags of messages which are displayed in backlog per IRC channel (supported tags: "irc_join", "irc_part", "irc_quit", "irc_nick", "irc_privmsg"), "*" = all supported tags`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"irc_privmsg"`)
+
+* [[option_relay.irc.backlog_time_format]] *relay.irc.backlog_time_format*
+** 説明: `format for time in backlog messages (see man strftime for format) (not used if server capability "server-time" was enabled by client, because time is sent as irc tag); empty string = disable time in backlog messages`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"[%H:%M] "`)
+
 * [[option_relay.look.auto_open_buffer]] *relay.look.auto_open_buffer*
 ** 説明: `新しいクライアントが接続したらリレーバッファを自動的に開く`
 ** タイプ: ブール

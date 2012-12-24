@@ -43,6 +43,31 @@
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `white`)
 
+* [[option_relay.irc.backlog_max_minutes]] *relay.irc.backlog_max_minutes*
+** description: `nombre maximum de minutes dans l'historique par canal IRC (0 = sans limite, exemples: 1440 = une journée, 10080 = une semaine, 43200 = un mois, 525600 = une année)`
+** type: entier
+** valeurs: 0 .. 2147483647 (valeur par défaut: `1440`)
+
+* [[option_relay.irc.backlog_max_number]] *relay.irc.backlog_max_number*
+** description: `nombre maximum de lignes dans l'historique par canal IRC (0 = sans limite)`
+** type: entier
+** valeurs: 0 .. 2147483647 (valeur par défaut: `256`)
+
+* [[option_relay.irc.backlog_since_last_disconnect]] *relay.irc.backlog_since_last_disconnect*
+** description: `afficher l'historique en démarrant à la dernière déconnexion du client`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `on`)
+
+* [[option_relay.irc.backlog_tags]] *relay.irc.backlog_tags*
+** description: `étiquettes ("tags") des messages qui sont affichés dans l'historique par canal IRC (étiquettes supportées: "irc_join", "irc_part", "irc_quit", "irc_nick", "irc_privmsg"), "*" = toutes les étiquettes supportées`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `"irc_privmsg"`)
+
+* [[option_relay.irc.backlog_time_format]] *relay.irc.backlog_time_format*
+** description: `format pour l'heure dans les messages d'historique (voir man strftime pour le format) (non utilisé si la capacité de serveur "server-time" a été activée par le client, car l'heure est envoyée sous forme d'étiquette irc); chaîne vide = désactiver l'heure dans les messages d'historique`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `"[%H:%M] "`)
+
 * [[option_relay.look.auto_open_buffer]] *relay.look.auto_open_buffer*
 ** description: `ouvrir automatiquement le tampon des clients pour le relai lorsqu'un nouveau client est ajouté à la liste`
 ** type: booléen

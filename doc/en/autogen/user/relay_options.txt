@@ -43,6 +43,31 @@
 ** type: color
 ** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `white`)
 
+* [[option_relay.irc.backlog_max_minutes]] *relay.irc.backlog_max_minutes*
+** description: `maximum number of minutes in backlog per IRC channel (0 = unlimited, examples: 1440 = one day, 10080 = one week, 43200 = one month, 525600 = one year)`
+** type: integer
+** values: 0 .. 2147483647 (default value: `1440`)
+
+* [[option_relay.irc.backlog_max_number]] *relay.irc.backlog_max_number*
+** description: `maximum number of lines in backlog per IRC channel (0 = unlimited)`
+** type: integer
+** values: 0 .. 2147483647 (default value: `256`)
+
+* [[option_relay.irc.backlog_since_last_disconnect]] *relay.irc.backlog_since_last_disconnect*
+** description: `display backlog starting from last client disconnect`
+** type: boolean
+** values: on, off (default value: `on`)
+
+* [[option_relay.irc.backlog_tags]] *relay.irc.backlog_tags*
+** description: `tags of messages which are displayed in backlog per IRC channel (supported tags: "irc_join", "irc_part", "irc_quit", "irc_nick", "irc_privmsg"), "*" = all supported tags`
+** type: string
+** values: any string (default value: `"irc_privmsg"`)
+
+* [[option_relay.irc.backlog_time_format]] *relay.irc.backlog_time_format*
+** description: `format for time in backlog messages (see man strftime for format) (not used if server capability "server-time" was enabled by client, because time is sent as irc tag); empty string = disable time in backlog messages`
+** type: string
+** values: any string (default value: `"[%H:%M] "`)
+
 * [[option_relay.look.auto_open_buffer]] *relay.look.auto_open_buffer*
 ** description: `auto open relay buffer when a new client is connecting`
 ** type: boolean

@@ -34,10 +34,32 @@ struct t_relay_irc_data
     int user_received;                 /* command "USER" received           */
     int connected;                     /* 1 if client is connected as IRC   */
                                        /* client                            */
+    int server_capabilities;           /* server capabilities enabled (one  */
+                                       /* bit per capability)               */
+    struct t_hook *hook_timer_signals_joins;/* timer to hooks signals and   */
+                                            /* send joins to client         */
     struct t_hook *hook_signal_irc_in2;     /* signal "irc_in2"             */
     struct t_hook *hook_signal_irc_outtags; /* signal "irc_outtags"         */
     struct t_hook *hook_signal_irc_disc;    /* signal "irc_disconnected"    */
     struct t_hook *hook_hsignal_irc_redir;  /* hsignal "irc_redirection_..."*/
+};
+
+enum t_relay_irc_command
+{
+    RELAY_IRC_CMD_JOIN = 0,
+    RELAY_IRC_CMD_PART,
+    RELAY_IRC_CMD_QUIT,
+    RELAY_IRC_CMD_NICK,
+    RELAY_IRC_CMD_PRIVMSG,
+    /* number of relay irc commands */
+    RELAY_IRC_NUM_CMD,
+};
+
+enum t_relay_irc_server_capab
+{
+    RELAY_IRC_CAPAB_SERVER_TIME = 0,
+    /* number of server capabilities */
+    RELAY_IRC_NUM_CAPAB,
 };
 
 extern void relay_irc_recv (struct t_relay_client *client,

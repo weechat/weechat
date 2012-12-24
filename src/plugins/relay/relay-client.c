@@ -647,6 +647,7 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
         new_client->address = strdup ((address) ? address : "?");
         new_client->status = RELAY_STATUS_CONNECTED;
         new_client->protocol = server->protocol;
+        new_client->protocol_string = (server->protocol_string) ? strdup (server->protocol_string) : NULL;
         new_client->protocol_args = (server->protocol_args) ? strdup (server->protocol_args) : NULL;
         new_client->listen_start_time = server->start_time;
         new_client->start_time = time (NULL);
@@ -794,6 +795,8 @@ relay_client_new_with_infolist (struct t_infolist *infolist)
         new_client->address = strdup (weechat_infolist_string (infolist, "address"));
         new_client->status = weechat_infolist_integer (infolist, "status");
         new_client->protocol = weechat_infolist_integer (infolist, "protocol");
+        str = weechat_infolist_string (infolist, "protocol_string");
+        new_client->protocol_string = (str) ? strdup (str) : NULL;
         str = weechat_infolist_string (infolist, "protocol_args");
         new_client->protocol_args = (str) ? strdup (str) : NULL;
         new_client->listen_start_time = weechat_infolist_time (infolist, "listen_start_time");
@@ -859,11 +862,17 @@ void
 relay_client_set_status (struct t_relay_client *client,
                          enum t_relay_status status)
 {
+    struct t_relay_server *ptr_server;
+
     client->status = status;
 
     if (RELAY_CLIENT_HAS_ENDED(client))
     {
         client->end_time = time (NULL);
+
+        ptr_server = relay_server_search (client->protocol_string);
+        if (ptr_server)
+            ptr_server->last_client_disconnect = client->end_time;
 
         relay_client_outqueue_free_all (client);
 
@@ -951,8 +960,12 @@ relay_client_free (struct t_relay_client *client)
         (client->next_client)->prev_client = client->prev_client;
 
     /* free data */
+    if (client->desc)
+        free (client->desc);
     if (client->address)
         free (client->address);
+    if (client->protocol_string)
+        free (client->protocol_string);
     if (client->protocol_args)
         free (client->protocol_args);
 #ifdef HAVE_GNUTLS
@@ -1075,6 +1088,8 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "protocol_string", relay_protocol_string[client->protocol]))
         return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "protocol_string", client->protocol_string))
+        return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "protocol_args", client->protocol_args))
         return 0;
     if (!weechat_infolist_new_var_time (ptr_item, "listen_start_time", client->listen_start_time))
@@ -1138,6 +1153,7 @@ relay_client_print_log ()
         weechat_log_printf ("  protocol. . . . . . . : %d (%s)",
                             ptr_client->protocol,
                             relay_protocol_string[ptr_client->protocol]);
+        weechat_log_printf ("  protocol_string . . . : '%s'",  ptr_client->protocol_string);
         weechat_log_printf ("  protocol_args . . . . : '%s'",  ptr_client->protocol_args);
         weechat_log_printf ("  listen_start_time . . : %ld",   ptr_client->listen_start_time);
         weechat_log_printf ("  start_time. . . . . . : %ld",   ptr_client->start_time);

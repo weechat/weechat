@@ -28,6 +28,7 @@ enum t_relay_upgrade_type
 {
     RELAY_UPGRADE_TYPE_CLIENT = 0,
     RELAY_UPGRADE_TYPE_RAW_MESSAGE,
+    RELAY_UPGRADE_TYPE_SERVER,
 };
 
 extern int relay_upgrade_save ();

@@ -29,6 +29,7 @@
 #include "relay-buffer.h"
 #include "relay-client.h"
 #include "relay-raw.h"
+#include "relay-server.h"
 
 
 /*
@@ -43,9 +44,30 @@ int
 relay_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
 {
     struct t_infolist *infolist;
+    struct t_relay_server *ptr_server;
     struct t_relay_client *ptr_client;
     struct t_relay_raw_message *ptr_raw_message;
     int rc;
+
+    /* save servers */
+    for (ptr_server = relay_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        infolist = weechat_infolist_new ();
+        if (!infolist)
+            return 0;
+        if (!relay_server_add_to_infolist (infolist, ptr_server))
+        {
+            weechat_infolist_free (infolist);
+            return 0;
+        }
+        rc = weechat_upgrade_write_object (upgrade_file,
+                                           RELAY_UPGRADE_TYPE_SERVER,
+                                           infolist);
+        weechat_infolist_free (infolist);
+        if (!rc)
+            return 0;
+    }
 
     /* save clients */
     for (ptr_client = last_relay_client; ptr_client;
@@ -162,6 +184,9 @@ relay_upgrade_read_cb (void *data,
                        int object_id,
                        struct t_infolist *infolist)
 {
+    const char *str;
+    struct t_relay_server *ptr_server;
+
     /* make C compiler happy */
     (void) data;
     (void) upgrade_file;
@@ -171,6 +196,19 @@ relay_upgrade_read_cb (void *data,
     {
         switch (object_id)
         {
+            case RELAY_UPGRADE_TYPE_SERVER:
+                str = weechat_infolist_string (infolist, "protocol_string");
+                if (str)
+                {
+                    ptr_server = relay_server_search (str);
+                    if (ptr_server)
+                    {
+                        ptr_server->last_client_disconnect =
+                            weechat_infolist_time (infolist,
+                                                   "last_client_disconnect");
+                    }
+                }
+                break;
             case RELAY_UPGRADE_TYPE_CLIENT:
                 relay_client_new_with_infolist (infolist);
                 break;

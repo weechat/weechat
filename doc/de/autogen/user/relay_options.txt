@@ -43,6 +43,31 @@
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `white`)
 
+* [[option_relay.irc.backlog_max_minutes]] *relay.irc.backlog_max_minutes*
+** Beschreibung: `maximum number of minutes in backlog per IRC channel (0 = unlimited, examples: 1440 = one day, 10080 = one week, 43200 = one month, 525600 = one year)`
+** Typ: integer
+** Werte: 0 .. 2147483647 (Standardwert: `1440`)
+
+* [[option_relay.irc.backlog_max_number]] *relay.irc.backlog_max_number*
+** Beschreibung: `maximum number of lines in backlog per IRC channel (0 = unlimited)`
+** Typ: integer
+** Werte: 0 .. 2147483647 (Standardwert: `256`)
+
+* [[option_relay.irc.backlog_since_last_disconnect]] *relay.irc.backlog_since_last_disconnect*
+** Beschreibung: `display backlog starting from last client disconnect`
+** Typ: boolesch
+** Werte: on, off (Standardwert: `on`)
+
+* [[option_relay.irc.backlog_tags]] *relay.irc.backlog_tags*
+** Beschreibung: `tags of messages which are displayed in backlog per IRC channel (supported tags: "irc_join", "irc_part", "irc_quit", "irc_nick", "irc_privmsg"), "*" = all supported tags`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `"irc_privmsg"`)
+
+* [[option_relay.irc.backlog_time_format]] *relay.irc.backlog_time_format*
+** Beschreibung: `format for time in backlog messages (see man strftime for format) (not used if server capability "server-time" was enabled by client, because time is sent as irc tag); empty string = disable time in backlog messages`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `"[%H:%M] "`)
+
 * [[option_relay.look.auto_open_buffer]] *relay.look.auto_open_buffer*
 ** Beschreibung: `öffnet automatisch einen Relay-Buffer, falls eine Verbindung zu einem neuen Client hergestellt wird`
 ** Typ: boolesch

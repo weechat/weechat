@@ -501,6 +501,7 @@ relay_server_new (const char *protocol_string, enum t_relay_protocol protocol,
         new_server->sock = -1;
         new_server->hook_fd = NULL;
         new_server->start_time = 0;
+        new_server->last_client_disconnect = 0;
 
         if (!relay_server_create_socket (new_server))
         {
@@ -596,6 +597,53 @@ relay_server_free_all ()
 }
 
 /*
+ * Adds a server in an infolist.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+relay_server_add_to_infolist (struct t_infolist *infolist,
+                              struct t_relay_server *server)
+{
+    struct t_infolist_item *ptr_item;
+
+    if (!infolist || !server)
+        return 0;
+
+    ptr_item = weechat_infolist_new_item (infolist);
+    if (!ptr_item)
+        return 0;
+
+    if (!weechat_infolist_new_var_string (ptr_item, "protocol_string", server->protocol_string))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "protocol", server->protocol))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "protocol_args", server->protocol_args))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "port", server->port))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "ipv4", server->ipv4))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "ipv6", server->ipv6))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "ssl", server->ssl))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "sock", server->sock))
+        return 0;
+    if (!weechat_infolist_new_var_pointer (ptr_item, "hook_fd", server->hook_fd))
+        return 0;
+    if (!weechat_infolist_new_var_time (ptr_item, "start_time", server->start_time))
+        return 0;
+    if (!weechat_infolist_new_var_time (ptr_item, "last_client_disconnect", server->last_client_disconnect))
+        return 0;
+
+    return 1;
+}
+
+/*
  * Prints servers in WeeChat log file (usually for crash dump).
  */
 
@@ -609,19 +657,20 @@ relay_server_print_log ()
     {
         weechat_log_printf ("");
         weechat_log_printf ("[relay server (addr:0x%lx)]", ptr_server);
-        weechat_log_printf ("  protocol_string . . : '%s'",  ptr_server->protocol_string);
-        weechat_log_printf ("  protocol. . . . . . : %d (%s)",
+        weechat_log_printf ("  protocol_string . . . : '%s'",  ptr_server->protocol_string);
+        weechat_log_printf ("  protocol. . . . . . . : %d (%s)",
                             ptr_server->protocol,
                             relay_protocol_string[ptr_server->protocol]);
-        weechat_log_printf ("  protocol_args . . . : '%s'",  ptr_server->protocol_args);
-        weechat_log_printf ("  port. . . . . . . . : %d",    ptr_server->port);
-        weechat_log_printf ("  ipv4. . . . . . . . : %d",    ptr_server->ipv4);
-        weechat_log_printf ("  ipv6. . . . . . . . : %d",    ptr_server->ipv6);
-        weechat_log_printf ("  ssl . . . . . . . . : %d",    ptr_server->ssl);
-        weechat_log_printf ("  sock. . . . . . . . : %d",    ptr_server->sock);
-        weechat_log_printf ("  hook_fd . . . . . . : 0x%lx", ptr_server->hook_fd);
-        weechat_log_printf ("  start_time. . . . . : %ld",   ptr_server->start_time);
-        weechat_log_printf ("  prev_server . . . . : 0x%lx", ptr_server->prev_server);
-        weechat_log_printf ("  next_server . . . . : 0x%lx", ptr_server->next_server);
+        weechat_log_printf ("  protocol_args . . . . : '%s'",  ptr_server->protocol_args);
+        weechat_log_printf ("  port. . . . . . . . . : %d",    ptr_server->port);
+        weechat_log_printf ("  ipv4. . . . . . . . . : %d",    ptr_server->ipv4);
+        weechat_log_printf ("  ipv6. . . . . . . . . : %d",    ptr_server->ipv6);
+        weechat_log_printf ("  ssl . . . . . . . . . : %d",    ptr_server->ssl);
+        weechat_log_printf ("  sock. . . . . . . . . : %d",    ptr_server->sock);
+        weechat_log_printf ("  hook_fd . . . . . . . : 0x%lx", ptr_server->hook_fd);
+        weechat_log_printf ("  start_time. . . . . . : %ld",   ptr_server->start_time);
+        weechat_log_printf ("  last_client_disconnect: %ld", ptr_server->last_client_disconnect);
+        weechat_log_printf ("  prev_server . . . . . : 0x%lx", ptr_server->prev_server);
+        weechat_log_printf ("  next_server . . . . . : 0x%lx", ptr_server->next_server);
     }
 }

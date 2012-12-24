@@ -260,5 +260,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 
     relay_network_end ();
 
+    relay_config_free ();
+
     return WEECHAT_RC_OK;
 }

@@ -58,9 +58,18 @@ struct t_config_option *relay_config_network_max_clients;
 struct t_config_option *relay_config_network_password;
 struct t_config_option *relay_config_network_ssl_cert_key;
 
+/* relay config, irc section */
+
+struct t_config_option *relay_config_irc_backlog_max_number;
+struct t_config_option *relay_config_irc_backlog_max_minutes;
+struct t_config_option *relay_config_irc_backlog_since_last_disconnect;
+struct t_config_option *relay_config_irc_backlog_tags;
+struct t_config_option *relay_config_irc_backlog_time_format;
+
 /* other */
 
 regex_t *relay_config_regex_allowed_ips = NULL;
+struct t_hashtable *relay_config_hashtable_irc_backlog_tags = NULL;
 
 
 /*
@@ -176,6 +185,46 @@ relay_config_change_network_ssl_cert_key (void *data,
 
     if (relay_network_init_ok)
         relay_network_set_ssl_cert_key (1);
+}
+
+/*
+ * Callback for changes on option "relay.irc.backlog_tags".
+ */
+
+void
+relay_config_change_irc_backlog_tags (void *data,
+                                      struct t_config_option *option)
+{
+    char **items;
+    int num_items, i;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+    if (!relay_config_hashtable_irc_backlog_tags)
+    {
+        relay_config_hashtable_irc_backlog_tags = weechat_hashtable_new (8,
+                                                                         WEECHAT_HASHTABLE_STRING,
+                                                                         WEECHAT_HASHTABLE_STRING,
+                                                                         NULL,
+                                                                         NULL);
+    }
+    else
+        weechat_hashtable_remove_all (relay_config_hashtable_irc_backlog_tags);
+
+    items = weechat_string_split (weechat_config_string (relay_config_irc_backlog_tags),
+                                  ";", 0, 0, &num_items);
+    if (items)
+    {
+        for (i = 0; i < num_items; i++)
+        {
+            weechat_hashtable_set (relay_config_hashtable_irc_backlog_tags,
+                                   items[i],
+                                   NULL);
+        }
+        weechat_string_free_split (items);
+    }
 }
 
 /*
@@ -401,6 +450,7 @@ relay_config_init ()
     if (!relay_config_file)
         return 0;
 
+    /* section look */
     ptr_section = weechat_config_new_section (relay_config_file, "look",
                                               0, 0,
                                               NULL, NULL, NULL, NULL,
@@ -424,6 +474,7 @@ relay_config_init ()
            "closed (messages will be displayed when opening raw data buffer)"),
         NULL, 0, 65535, "256", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
 
+    /* section color */
     ptr_section = weechat_config_new_section (relay_config_file, "color",
                                               0, 0,
                                               NULL, NULL, NULL, NULL,
@@ -490,6 +541,7 @@ relay_config_init ()
         NULL, 0, 0, "lightred", NULL, 0,
         NULL, NULL, &relay_config_refresh_cb, NULL, NULL, NULL);
 
+    /* section network */
     ptr_section = weechat_config_new_section (relay_config_file, "network",
                                               0, 0,
                                               NULL, NULL, NULL, NULL,
@@ -555,6 +607,56 @@ relay_config_init ()
         NULL, 0, 0, "%h/ssl/relay.pem", NULL, 0, NULL, NULL,
         &relay_config_change_network_ssl_cert_key, NULL, NULL, NULL);
 
+    /* section irc */
+    ptr_section = weechat_config_new_section (relay_config_file, "irc",
+                                              0, 0,
+                                              NULL, NULL, NULL, NULL,
+                                              NULL, NULL, NULL, NULL,
+                                              NULL, NULL);
+    if (!ptr_section)
+    {
+        weechat_config_free (relay_config_file);
+        return 0;
+    }
+
+    relay_config_irc_backlog_max_number = weechat_config_new_option (
+        relay_config_file, ptr_section,
+        "backlog_max_number", "integer",
+        N_("maximum number of lines in backlog per IRC channel "
+           "(0 = unlimited)"),
+        NULL, 0, INT_MAX, "256", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL);
+    relay_config_irc_backlog_max_minutes = weechat_config_new_option (
+        relay_config_file, ptr_section,
+        "backlog_max_minutes", "integer",
+        N_("maximum number of minutes in backlog per IRC channel "
+           "(0 = unlimited, examples: 1440 = one day, 10080 = one week, "
+           "43200 = one month, 525600 = one year)"),
+        NULL, 0, INT_MAX, "1440", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL);
+    relay_config_irc_backlog_since_last_disconnect = weechat_config_new_option (
+        relay_config_file, ptr_section,
+        "backlog_since_last_disconnect", "boolean",
+        N_("display backlog starting from last client disconnect"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    relay_config_irc_backlog_tags = weechat_config_new_option (
+        relay_config_file, ptr_section,
+        "backlog_tags", "string",
+        N_("tags of messages which are displayed in backlog per IRC channel "
+           "(supported tags: \"irc_join\", \"irc_part\", \"irc_quit\", "
+           "\"irc_nick\", \"irc_privmsg\"), \"*\" = all supported tags"),
+        NULL, 0, 0, "irc_privmsg", NULL, 0, NULL, NULL,
+        &relay_config_change_irc_backlog_tags, NULL, NULL, NULL);
+    relay_config_irc_backlog_time_format = weechat_config_new_option (
+        relay_config_file, ptr_section,
+        "backlog_time_format", "string",
+        N_("format for time in backlog messages (see man strftime for format) "
+           "(not used if server capability \"server-time\" was enabled by "
+           "client, because time is sent as irc tag); empty string = disable "
+           "time in backlog messages"),
+        NULL, 0, 0, "[%H:%M] ", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+
+    /* section port */
     ptr_section = weechat_config_new_section (relay_config_file, "port",
                                               1, 1,
                                               NULL, NULL,
@@ -580,7 +682,15 @@ relay_config_init ()
 int
 relay_config_read ()
 {
-    return weechat_config_read (relay_config_file);
+    int rc;
+
+    rc = weechat_config_read (relay_config_file);
+    if (rc == WEECHAT_CONFIG_READ_OK)
+    {
+        relay_config_change_network_allowed_ips (NULL, NULL);
+        relay_config_change_irc_backlog_tags (NULL, NULL);
+    }
+    return rc;
 }
 
 /*
@@ -591,4 +701,27 @@ int
 relay_config_write ()
 {
     return weechat_config_write (relay_config_file);
+}
+
+/*
+ * Frees relay configuration.
+ */
+
+void
+relay_config_free ()
+{
+    weechat_config_free (relay_config_file);
+
+    if (relay_config_regex_allowed_ips)
+    {
+        regfree (relay_config_regex_allowed_ips);
+        free (relay_config_regex_allowed_ips);
+        relay_config_regex_allowed_ips = NULL;
+    }
+
+    if (relay_config_hashtable_irc_backlog_tags)
+    {
+        weechat_hashtable_free (relay_config_hashtable_irc_backlog_tags);
+        relay_config_hashtable_irc_backlog_tags = NULL;
+    }
 }

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-12-20 17:20+0100\n"
+"POT-Creation-Date: 2012-12-24 16:46+0100\n"
 "PO-Revision-Date: 2012-12-20 18:04+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8121,6 +8121,34 @@ msgstr ""
 
 msgid ""
 "file with SSL certificate and private key (for serving clients with SSL)"
+msgstr ""
+
+#, fuzzy
+msgid "maximum number of lines in backlog per IRC channel (0 = unlimited)"
+msgstr "maksymalna ilość linii w historii każdego bufora (0 = bez ograniczeń)"
+
+#, fuzzy
+msgid ""
+"maximum number of minutes in backlog per IRC channel (0 = unlimited, "
+"examples: 1440 = one day, 10080 = one week, 43200 = one month, 525600 = one "
+"year)"
+msgstr ""
+"maksymalna ilość minut w historii każdego bufora (0 = bez ograniczeń, "
+"przykłady: 1440 = dzień, 10080 = tydzień, 43200 = miesiąc, 525600 = rok)"
+
+msgid "display backlog starting from last client disconnect"
+msgstr ""
+
+msgid ""
+"tags of messages which are displayed in backlog per IRC channel (supported "
+"tags: \"irc_join\", \"irc_part\", \"irc_quit\", \"irc_nick\", \"irc_privmsg"
+"\"), \"*\" = all supported tags"
+msgstr ""
+
+msgid ""
+"format for time in backlog messages (see man strftime for format) (not used "
+"if server capability \"server-time\" was enabled by client, because time is "
+"sent as irc tag); empty string = disable time in backlog messages"
 msgstr ""
 
 msgid "list of relay clients"
