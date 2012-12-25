@@ -762,6 +762,7 @@ script_repo_md5sum_file (const char *filename)
     if ((int)fread (data, 1, st.st_size, file) < st.st_size)
     {
         free (data);
+        fclose (file);
         return NULL;
     }
     fclose (file);
