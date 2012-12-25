@@ -936,7 +936,7 @@ IRC_PROTOCOL_CALLBACK(nick)
                     weechat_buffer_set (NULL, "hotlist", "-");
 
                     /* set host for nick if needed */
-                    if (ptr_nick && !ptr_nick->host)
+                    if (!ptr_nick->host)
                         ptr_nick->host = strdup (address);
 
                     /* change nick and display message on all channels */
