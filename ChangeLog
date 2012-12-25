@@ -89,6 +89,7 @@ Version 0.4.0 (under dev!)
 * irc: fix crash when message 352 has too few arguments (bug #37513)
 * irc: remove unneeded server disconnect when server buffer is closed and server
   is already disconnected
+* relay: fix memory leak when adding hdata to a message (weechat protocol)
 * relay: add backlog and server capability "server-time" for irc protocol, add
   new options relay.irc.backlog_max_minutes, relay.irc.backlog_max_number,
   relay.irc.backlog_since_last_disconnect, relay.irc.backlog_tags,
