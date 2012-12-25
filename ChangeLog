@@ -101,6 +101,7 @@ Version 0.4.0 (under dev!)
 * script: fix scroll with mouse when window with script buffer is not the
   current window (do not force a switch to script buffer in current window)
 * script: fix compilation on OS X
+* xfer: fix memory leak when refreshing xfer buffer
 * xfer: add missing tags in DCC chat messages: nick_xxx, prefix_nick_ccc, logN
 * xfer: display remote IP address for DCC chat/file (task #12289)
 * xfer: limit bytes received to file size (for DCC file received), fix crash
