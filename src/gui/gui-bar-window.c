@@ -852,6 +852,7 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
                 {
                     if (content)
                         free (content);
+                    free (split_items);
                     return NULL;
                 }
                 content = content2;
