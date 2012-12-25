@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.0-dev, 2012-12-24
+v0.4.0-dev, 2012-12-25
 
 
 Version 0.4.0 (under dev!)
 --------------------------
 
+* core: fix detection of command in input: a single command char is considered
+  as a command (API function "string_input_for_bufer")
 * core: search for a fallback template when a no template is matching command
   arguments
 * core: add option "diff" for command /set (list options with changed value)

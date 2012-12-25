@@ -1989,7 +1989,7 @@ string_input_for_buffer (const char *string)
         pos_space = strchr (string + 1, ' ');
 
         /*
-         * if there's no other '/' of if '/' is after first space,
+         * if there's no other '/' or if '/' is after first space,
          * then it is a command, and return NULL
          */
         if (!pos_slash || (pos_space && pos_slash > pos_space))
@@ -2002,10 +2002,13 @@ string_input_for_buffer (const char *string)
     if (!string_is_command_char (string))
         return string;
 
-    /* check if first char is doubled: if yes, then it's not a command */
     next_char = utf8_next_char (string);
+
+    /* there's no next char, then it's a command */
     if (!next_char || !next_char[0])
-        return string;
+        return NULL;
+
+    /* check if first char is doubled: if yes, then it's not a command */
     if (utf8_charcmp (string, next_char) == 0)
         return next_char;
 
