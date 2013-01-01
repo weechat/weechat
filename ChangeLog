@@ -7,6 +7,8 @@ v0.4.0-rc1, 2013-01-01
 Version 0.4.0 (under dev!)
 --------------------------
 
+* core: fix scroll to bottom of window (default key: alt+end) when line
+  displayed is bigger than chat area
 * core: fix scroll in buffer after enabling/disabling some filters (if scroll
   is on a hidden line) (bug #37885)
 * core: fix memory leak in case of error when building content of bar item for
