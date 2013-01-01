@@ -24,7 +24,7 @@
 ** 値: on, off (デフォルト値: `off`)
 
 * [[option_aspell.check.suggestions]] *aspell.check.suggestions*
-** 説明: `number of suggestions to display in bar item "aspell_suggest" for each dictionary set in buffer (-1 = disable suggestions, 0 = display all possible suggestions in all languages)`
+** 説明: `バッファ内の各辞書セットに対してバーアイテム "aspell_suggest" に表示する提案の数 (-1 = サジェスト機能を無効、0 = 全ての言語を使って全てのサジェスト結果を表示)`
 ** タイプ: 整数
 ** 値: -1 .. 2147483647 (デフォルト値: `-1`)
 

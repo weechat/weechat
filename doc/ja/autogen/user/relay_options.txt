@@ -44,27 +44,27 @@
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `white`)
 
 * [[option_relay.irc.backlog_max_minutes]] *relay.irc.backlog_max_minutes*
-** 説明: `maximum number of minutes in backlog per IRC channel (0 = unlimited, examples: 1440 = one day, 10080 = one week, 43200 = one month, 525600 = one year)`
+** 説明: `IRC チャンネルごとのバックログの最大時間 (分) (0 = 制限無し、例: 1440 = 1 日、10080 = 1 週間、43200 = 1 ヶ月、525600 = 1 年間)`
 ** タイプ: 整数
 ** 値: 0 .. 2147483647 (デフォルト値: `1440`)
 
 * [[option_relay.irc.backlog_max_number]] *relay.irc.backlog_max_number*
-** 説明: `maximum number of lines in backlog per IRC channel (0 = unlimited)`
+** 説明: `IRC チャンネルごとのバックログの最大行数 (0 = 制限無し)`
 ** タイプ: 整数
 ** 値: 0 .. 2147483647 (デフォルト値: `256`)
 
 * [[option_relay.irc.backlog_since_last_disconnect]] *relay.irc.backlog_since_last_disconnect*
-** 説明: `display backlog starting from last client disconnect`
+** 説明: `最後にクライアントを切断した以降のバックログを表示`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_relay.irc.backlog_tags]] *relay.irc.backlog_tags*
-** 説明: `tags of messages which are displayed in backlog per IRC channel (supported tags: "irc_join", "irc_part", "irc_quit", "irc_nick", "irc_privmsg"), "*" = all supported tags`
+** 説明: `IRC チャンネルごとのバックログに表示するメッセージのタグ (利用可能なタグ: "irc_join"、"irc_part"、"irc_quit"、"irc_nick"、"irc_privmsg")、"*" = 利用可能な全てのタグ`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"irc_privmsg"`)
 
 * [[option_relay.irc.backlog_time_format]] *relay.irc.backlog_time_format*
-** 説明: `format for time in backlog messages (see man strftime for format) (not used if server capability "server-time" was enabled by client, because time is sent as irc tag); empty string = disable time in backlog messages`
+** 説明: `バックログメッセージの時間フォーマット (フォーマットは man strftime を参照) (メッセージの irc タグ内に時間の情報が含まれるため、クライアントがサーバの "server-time" 機能を利用可能にした場合、これは利用されません。); 空文字列 = バックログメッセージで時間を表示しない`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"[%H:%M] "`)
 
@@ -79,7 +79,7 @@
 ** 値: 0 .. 65535 (デフォルト値: `256`)
 
 * [[option_relay.network.allowed_ips]] *relay.network.allowed_ips*
-** 説明: `regular expression with IPs allowed to use relay (case insensitive, use "(?-i)" at beginning to make it case sensitive); if IPv6 is enabled and that connection is made using IPv4, it will be IPv4-mapped IPv6 address (like: "::ffff:127.0.0.1"), example: "^((::ffff:)?123.45.67.89|192.160.*)$"`
+** 説明: `リレーの利用をを許可する IP アドレスの正規表現 (大文字小文字の区別無し、最初に "(?-i)" をつければ区別有り); IPv6 が有効で IPv4 を使って接続している場合、IPv6 アドレスを IPv4 にマッピングしたもの (例: "::ffff:127.0.0.1") が使われます。例: "^((::ffff:)?123.45.67.89|192.160.*)$"`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
@@ -94,7 +94,7 @@
 ** 値: 0 .. 9 (デフォルト値: `6`)
 
 * [[option_relay.network.ipv6]] *relay.network.ipv6*
-** 説明: `listen on IPv6 socket by default (in addition to IPv4 which is default); protocols IPv4 and IPv6 can be forced (individually or together) in the protocol name (see /help relay)`
+** 説明: `デフォルトで IPv6 ソケットをリッスン (デフォルトの IPv4 に加えて); 特定のプロトコル (/help relay を参照) でプロトコルに IPv4 と IPv6 (個別または両方) を強制`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 

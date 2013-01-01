@@ -319,7 +319,7 @@
 ** 値: on, off (デフォルト値: `off`)
 
 * [[option_irc.network.alternate_nick]] *irc.network.alternate_nick*
-** 説明: `get an alternate nick when the nick is already used on server: add some "_" until the nick has a length of 9, and then replace last char (or the two last chars) by a number from 1 to 99, until we find a nick not used on server`
+** 説明: `サーバでニックネームが既に利用されている場合、他のニックネームを生成します: 利用されていないニックネームが見つかるまで、ニックネームの長さが 9 以下なら数個の "_" を追加、その後最後の 1 文字 (または最後の 2 文字) を 1 から 99 で置き換えます。`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
@@ -379,7 +379,7 @@
 ** 値: on, off (デフォルト値: `off`)
 
 * [[option_irc.network.whois_double_nick]] *irc.network.whois_double_nick*
-** 説明: `double the nick in /whois command (if only one nick is given), to get idle time in answer; for example: "/whois nick" will send "whois nick nick"`
+** 説明: `/whois コマンドの引数に 2 重のニックネームを付ける (ニックネームが 1 つだけ指定された場合)。これによりアイドル時間が返されます; 例: "/whois nick" で "whois nick nick" が送信されます。`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
@@ -419,7 +419,7 @@
 ** 値: 1 .. 65535 (デフォルト値: `10`)
 
 * [[option_irc.server_default.autorejoin]] *irc.server_default.autorejoin*
-** 説明: `automatically rejoin channels after kick; you can define a buffer local variable on a channel to override this value (name of variable: "autorejoin", value: "on" or "off")`
+** 説明: `キックされた後のチャンネルへの最参加を自動的に行う; あるチャンネルに対して設定を上書きするにはバッファローカル変数を定義してください (変数の名前: "autorejoin"、値: "on" 又は "off")`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `off`)
 
@@ -439,7 +439,7 @@
 ** 値: 0 .. 1000000 (デフォルト値: `25`)
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** 説明: `サーバで利用可能ならば有効化する、クライアント能力のコンマ区切りリスト (例: "multi-prefix,extended-join")`
+** 説明: `サーバで利用可能ならば有効化する、クライアントの機能のコンマ区切りリスト (例: "multi-prefix,extended-join")`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
@@ -469,7 +469,7 @@
 ** 値: 未制約文字列 (デフォルト値: `"WeeChat %v"`)
 
 * [[option_irc.server_default.ipv6]] *irc.server_default.ipv6*
-** 説明: `use IPv6 protocol for server communication (try IPv6 then fallback to IPv4); if disabled, only IPv4 is used`
+** 説明: `サーバ接続に IPv6 プロトコルを利用 (IPv6 の利用に失敗したら IPv4 を利用); 無効の場合には IPv4 を利用`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 

@@ -2,7 +2,7 @@
 |========================================
 | プラグイン | 名前 | 説明 | ハッシュテーブル (入力) | ハッシュテーブル (出力)
 
-| irc | irc_message_parse | IRC メッセージを解析 | "message": IRC メッセージ、"server": サーバ名 (オプション) | "tags": tags, "message_without_tags": message without the tags, "nick": nick, "host": host, "command": command, "channel": channel, "arguments": arguments (includes channel)
+| irc | irc_message_parse | IRC メッセージを解析 | "message": IRC メッセージ、"server": サーバ名 (オプション) | "tags": タグ、"message_without_tags": タグを含まないメッセージ、"nick": ニックネーム、"host": ホスト名、"command": コマンド、"channel": チャンネル、"arguments": 引数 (チャンネルを含む)
 
 | irc | irc_message_split | IRC メッセージを分割 (512バイトに収める) | "message": IRC メッセージ、"server": サーバ名 (オプション) | "msg1" ... "msgN": 送信メッセージ (最後の "\r\n" は無し), "args1" ... "argsN": メッセージの引数、"count": メッセージの数
 

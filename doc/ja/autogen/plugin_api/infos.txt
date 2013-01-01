@@ -42,7 +42,7 @@
 
 | weechat | version | WeeChat のバージョン | -
 
-| weechat | version_git | WeeChat git version (output of command "git describe" for a development version only, empty for a stable release) | -
+| weechat | version_git | WeeChat の git バージョン (開発バージョンではコマンド "git describe" の出力。安定版リリースでは空文字が出力されます。) | -
 
 | weechat | version_number | WeeChat のバージョン (数字) | -
 

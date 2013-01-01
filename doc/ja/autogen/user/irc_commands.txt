@@ -58,19 +58,19 @@ channel: バン対象チャンネル
 /connect  <server> [<server>...] [-<option>[=<value>]] [-no<option>] [-nojoin] [-switch]
           -all|-auto|-open [-nojoin] [-switch]
 
-    server: server name, which can be:
-            - internal server name (created by /server add, recommended usage)
-            - hostname/port or IP/port (this will create a TEMPORARY server), port is 6667 by default
-            - URL with format: irc[6][s]://[nickname[:password]@]irc.example.org[:port][/#channel1][,#channel2[...]]
-    option: set option for server (for boolean option, value can be omitted)
-  nooption: set boolean option to 'off' (for example: -nossl)
-      -all: connect to all servers defined in configuration
-     -auto: connect to servers with autoconnect enabled
-     -open: connect to all opened servers that are not currently connected
-   -nojoin: do not join any channel (even if autojoin is enabled on server)
-   -switch: switch to next server address
+    server: サーバ名、これは:
+            - 内部サーバ名 (/server add で作成されたもの、利用推奨)
+            - ホスト名/ポート番号、又は IP アドレス/ポート番号 (これは一時的サーバを作る)、デフォルトのポート番号は 6667
+            - 次のフォーマットに従う URL: irc[6][s]://[nickname[:password]@]irc.example.org[:port][/#channel1][,#channel2[...]]
+    option: サーバに関するオプション (ブール型オプションでは、value は無視される)
+  nooption: ブール型オプションを 'off' にする (例: -nossl)
+      -all: 設定された全てのサーバに接続
+     -auto: 自動接続を有効化してサーバに接続
+     -open: 現在接続されていないがオープンされているサーバに接続
+   -nojoin: チャンネルに入らない (autojoin が有効化されていても)
+   -switch: 次のサーバアドレスに移動
 
-Examples:
+例:
   /connect freenode
   /connect irc.oftc.net/6667
   /connect irc6.oftc.net/6667 -ipv6
@@ -215,12 +215,12 @@ nick: nick
 ........................................
 /join  [-noswitch] [-server <server>] [<channel1>[,<channel2>...]] [<key1>[,<key2>...]]
 
--noswitch: do not switch to new buffer
-   server: send to this server (internal name)
-  channel: channel name to join
-      key: key to join the channel (channels with a key must be the first in list)
+-noswitch: 新しいバッファに移動しない
+   server: 送信先サーバ (内部サーバ名)
+  channel: 参加するチャンネルの名前
+      key: チャンネルに参加するためのキー (キーが必要なチャンネルは最初に置くこと)
 
-Examples:
+例:
   /join #weechat
   /join #protectedchan,#weechat key
   /join -server freenode #weechat
@@ -469,14 +469,14 @@ server: 送信先サーバ (内部サーバ名)
 ........................................
 
 [[command_irc_quiet]]
-[command]*`quiet`* quiet nicks or hosts::
+[command]*`quiet`* ニックネームかホストを発言禁止に::
 ........................................
 /quiet  [<channel>] [<nick> [<nick>...]]
 
-channel: channel for quiet
-   nick: user or host to quiet
+channel: 発言禁止にするチャンネル
+   nick: 発言禁止にするユーザ名かホスト名
 
-Without argument, this command display quiet list for current channel.
+引数無しの場合は、現在のチャンネルの発言禁止リストを表示。
 ........................................
 
 [[command_irc_quote]]
@@ -750,12 +750,12 @@ mask: マスクにマッチする情報
 ........................................
 /whois  [<server>] [<nick>[,<nick>...]]
 
-server: server name
-  nick: nick (may be a mask)
+server: サーバ名
+  nick: ニックネーム (マスクも可)
 
-Without argument, this command will do a whois on:
-- your own nick if buffer is a server/channel
-- remote nick if buffer is a private.
+引数が無い場合、このコマンドは以下のユーザに対する whois を行います:
+- バッファがサーバ/チャンネルの場合、自分自身のニックネーム
+- バッファがプライベートの場合、相手のニックネーム
 ........................................
 
 [[command_irc_whowas]]

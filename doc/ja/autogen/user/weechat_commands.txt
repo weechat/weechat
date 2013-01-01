@@ -18,43 +18,43 @@ message: 離席メッセージ (メッセージが無い場合は、離席状態
       hide|show|toggle <name>
       scroll <name> <window> <scroll_value>
 
-         list: list all bars
-     listfull: list all bars (verbose)
-    listitems: list all bar items
-          add: add a new bar
-         name: name of bar (must be unique)
-         type:   root: outside windows,
-               window: inside windows, with optional conditions (see below)
-    condition: condition(s) for displaying bar (only for type "window"):
-                 active: on active window
-               inactive: on inactive windows
-               nicklist: on windows with nicklist
-               other condition: see /help weechat.bar.xxx.conditions and /help eval
-               without condition, the bar is always displayed
-     position: bottom, top, left or right
-         size: size of bar (in chars)
-    separator: 1 for using separator (line), 0 or nothing means no separator
-    item1,...: items for this bar (items can be separated by comma (space between items) or "+" (glued items))
-      default: create a default bar (all default bars if no bar name is given)
-          del: delete a bar (or all bars with -all)
-          set: set a value for a bar property
-       option: option to change (for options list, look at /set weechat.bar.<barname>.*)
-        value: new value for option
-         hide: hide a bar
-         show: show an hidden bar
-       toggle: hide/show a bar
-       scroll: scroll bar
-       window: window number (use '*' for current window or for root bars)
- scroll_value: value for scroll: 'x' or 'y' (optional), followed by '+', '-', 'b' (beginning) or 'e' (end), value (for +/-), and optional % (to scroll by % of width/height, otherwise value is number of chars)
+         list: 全てのバーをリストアップ
+     listfull: 全てのバーをリストアップ (詳細)
+    listitems: 全てのバーアイテムをリストアップ
+          add: 新しいバーを追加
+         name: バーの名称 (ユニークな)
+         type:   root: 外側のウィンドウ、
+               window: 内側のウィンドウ、任意の状態を取れる (以下を参照)
+    condition: バーの表示状態 (タイプが "window" のバー以外は無効):
+                 active: アクティブウィンドウに表示
+               inactive: 非アクティブウィンドウに表示
+               nicklist: ニックネームリストを持つウィンドウに表示
+               その他の状態: /help weechat.bar.xxx.conditions と /help eval を参照してください
+               表示状態の指定が無ければ、バーは常に表示されます。
+     position: bottom、top、left、right
+         size: バーのサイズ (文字数で指定)
+    separator: 1 はセパレータ (線) を使用、0 または指定無しはセパレータ無し
+    item1,...: バーのアイテム (アイテムはコンマ (アイテム間にスペース) または "+" (アイテム間にスペース無し) で区切ります)
+      default: デフォルトバーを作成 (バーの名前が無ければ全てのデフォルトバーが作成されます)
+          del: バーを削除 (-all を付ければ全てのバーを削除)
+          set: バー属性に値を設定
+       option: 変更するオプション (オプション一覧は /set weechat.bar.<barname>.* を参照)
+        value: オプションの新しい値
+         hide: バーを隠す
+         show: 隠されたバーを表示
+       toggle: バーの非表示/表示を切り替え
+       scroll: バーをスクロール
+       window: ウィンドウ番号 (現在のウィンドウかルートバーを指定するには '*' を使う)
+ scroll_value: スクロールする量: 'x' または 'y' (任意)の後に、'+' か '-' か 'b' (最初) か 'e' (最後)の後に、値 (+/- を付けて)、任意で % (スクロールする幅/高さの割合、% が無ければ値は文字数と解釈されます)
 
-Examples:
-  create a bar with time, buffer number + name, and completion:
+例:
+  時間、バー番号 + 名前、補完候補からなるバーを作成:
     /bar add mybar root bottom 1 0 [time],buffer_number+:+buffer_name,completion
-  hide a bar:
+  バーを隠す:
     /bar hide mybar
-  scroll nicklist 10 lines down on current buffer:
+  現在のバッファに対応したニックネームリストを10行分、下方向にスクロール:
     /bar scroll nicklist * y+10
-  scroll to end of nicklist on current buffer:
+  現在のバッファに対応したニックネームリストを最後までスクロール:
     /bar scroll nicklist * ye
 ........................................
 
@@ -201,45 +201,45 @@ infolists: infolist に関する情報を表示
 ........................................
 
 [[command_weechat_eval]]
-[command]*`eval`* evaluate expression and send result to buffer::
+[command]*`eval`* 式を評価して結果をバッファに送信::
 ........................................
 /eval  [-n] <expression>
        [-n] <expression1> <operator> <expression2>
 
-        -n: display result without sending it to buffer (debug mode)
-expression: expression to evaluate, variables with format ${variable} are replaced (see below)
-  operator: a logical or comparison operator:
-            - logical operators:
-                &&  boolean "and"
-                ||  boolean "or"
-            - comparison operators:
-                ==  equal
-                !=  not equal
-                <=  less or equal
-                <   less
-                >=  greater or equal
-                >   greater
-                =~  is matching regex
-                !~  is NOT matching regex
+        -n: 結果をバッファに送信せずに表示 (デバッグモード)
+expression: 評価する式、フォーマット、${variable} 型のフォーマットの変数は置換されます (以下を参照)
+  operator: 論理演算子や比較演算子:
+            - 論理演算子:
+                &&  ブール演算の "and"
+                ||  ブール演算の "or"
+            - 比較演算子:
+                ==  等しい
+                !=  等しくない
+                <=  以下
+                <   より少ない
+                >=  以上
+                >   より大きい
+                =~  正規表現にマッチ
+                !~  正規表現にマッチしない
 
-An expression is considered as "true" if it is not NULL, not empty, and different from "0".
-The comparison is made using integers if the two expressions are valid integers.
-To force a string comparison, add double quotes around each expression, for example:
+式が NULL でない場合、空でない場合、"0" でない場合、式は "真" と評価されます。
+両方の式が有効な整数である場合、比較は整数を使って行われます。
+文字列比較を強制するには、それぞれの式をダブルクォートで囲みます、例えば:
   50 > 100      ==> 0
   "50" > "100"  ==> 1
 
-Some variables are replaced in expression, using the format ${variable}, variable can be, by order of prioity :
-  1. the name of an option (file.section.option)
-  2. the name of a local variable in buffer
-  3. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
-Format for hdata can be one of following:
-  hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
-  hdata(list).var1.var2...: start with a hdata using a list, for example:
-    ${buffer[gui_buffers].full_name}: full name of first buffer in linked list of buffers
-    ${plugin[weechat_plugins].name}: name of first plugin in linked list of plugins
-For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
+式中の ${variable} 型のフォーマットの変数は置換さます。変数は以下の優先順位に従います。
+  1. オプションの名前 (file.section.option)
+  2. バッファのローカル変数の名前
+  3. hdata の名前/変数 (値は自動的に文字列に変換されます)、デフォルトでは "window" と "buffer" は現在のウィンドウ/バッファを指します。
+hdata のフォーマットは以下の 1 つです:
+  hdata.var1.var2...: hdata (ポインタは既知) で始まり、1 個ずつ変数を続ける (他の hdata を続けることも可能)
+  hdata(list).var1.var2...: リストを使って hdata を始める、例:
+    ${buffer[gui_buffers].full_name}: バッファリストにリンクされた最初のバッファのフルネーム
+    ${plugin[weechat_plugins].name}: プラグインリストにリンクされた最初のプラグインの名前
+hdata と変数の名前については、"プラグイン API リファレンス" の "weechat_hdata_get" 関数を参照してください。
 
-Examples:
+例:
   /eval -n ${weechat.look.scroll_amount}  ==> 3
   /eval -n ${window}                      ==> 0x2549aa0
   /eval -n ${window.buffer}               ==> 0x2549320
@@ -607,26 +607,26 @@ file: 保存する設定ファイル (拡張子 ".conf" は不要)
 /set  [<option> [<value>]]
       diff [<option> [<option>...]]
 
-option: name of an option (can start or end with '*' to list many options)
- value: new value for option
-  diff: display only changed options
+option: オプションの名前 (多くのオプションをリストアップするには、'*' で始めるか終わるかしてください)
+ value: オプションに対する新しい値
+  diff: 変更されたオプションのみを表示
 
-New value can be, according to variable type:
-  boolean: on, off or toggle
-  integer: number, ++number or --number
-   string: any string ("" for empty string)
-    color: color name, ++number or --number
+新しいオプションは以下の変数型に従います:
+  boolean: on、off、toggle
+  integer: 番号、++番号、--番号
+   string: 任意の文字列 (空文字列は "")
+    color: 色の名前、++色番号、--色番号
 
-For all types, you can use null to remove option value (undefined value). This works only for some special plugin variables.
+どんな型であっても、オプションの値を削除する (未定義値にする) には null が使えます。これはいくつかの特別なプラグイン変数でのみ有効です。
 
-Examples:
-  display options about highlight:
+例:
+  ハイライトに関するオプションを表示:
     /set *highlight*
-  add a word to highlight:
+  highlight に単語を追加:
     /set weechat.look.highlight "word"
-  display changed options:
+  変更されたオプションを表示:
     /set diff
-  display changed options in irc plugin:
+  irc プラグインのオプションの内、変更されたオプションを表示
     /set diff irc.*
 ........................................
 
@@ -651,28 +651,28 @@ option: オプションの名前 ("*" で始めるか終わるかすれば大量
 ........................................
 /upgrade  [<path_to_binary>|-quit]
 
-path_to_binary: path to WeeChat binary (default is current binary)
-         -quit: close *ALL* connections, save session and quit WeeChat, which makes possible a delayed restoration (see below)
+path_to_binary: WeeChat バイナリへのパス (デフォルトは現在のバイナリ)
+         -quit: *すべての*接続を閉じ、セッションを保存して WeeChat を終了。遅延復帰 (詳しくは後述) が可能になります。
 
-This command upgrades and reloads a running WeeChat session. The new WeeChat binary must have been compiled or installed with a package manager before running this command.
+このコマンドは起動中の WeeChat セッションのアップグレードと再読み込みを行います。このコマンドを実行する前に、新しい WeeChat バイナリをコンパイルするか、パッケージマネージャでインストールしなければいけません。
 
-Note: SSL connections are lost during upgrade, because reload of SSL sessions is currently not possible with GnuTLS. There is automatic reconnection after upgrade.
+注意: SSL 接続はアップグレード中に破棄されます、これは今のところ GnuTLS では SSL セッションのリロードができないからです。アップグレードの後に自動的に再接続されます。
 
-Upgrade process has 4 steps:
-  1. save session into files for core and plugins (buffers, history, ..)
-  2. unload all plugins (configuration files (*.conf) are written on disk)
-  3. save WeeChat configuration (weechat.conf)
-  4. execute new WeeChat binary and reload session.
+アップグレードは 4 つの手順を踏みます:
+  1. コアとプラグイン (バッファ、履歴、...) のセッションをファイルに保存
+  2. 全てのプラグインをアンロード (設定ファイル (*.conf) はディスクに書き込まれます)
+  3. WeeChat 設定を保存 (weechat.conf)
+  4. 新しい WeeChat バイナリを実行してセッションをリロード。<
 
-With option "-quit", the process is slightly different:
-  1. close *ALL* connections (irc, xfer, relay, ...)
-  2. save session into files (*.upgrade)
-  3. unload all plugins
-  4. save WeeChat configuration
-  5. quit WeeChat
-Then later you can restore session with command: weechat-curses --upgrade
-IMPORTANT: you must restore the session with exactly same configuration (files *.conf).
-It is possible to restore WeeChat session on another machine if you copy the content of directory "~/.weechat"
+オプション "-quit" を使うと、上の挙動が少し変わります:
+  1. *すべての*接続を閉じる (irc、xfer、relay、...)
+  2. すべてのセッションをファイルに保存 (*.upgrade)
+  3. すべてのプラグインをアンロード
+  4. WeeChat 設定を保存
+  5. WeeChat を終了
+この後、セッションを回復させるには weechat-curses --upgrade を使ってください。
+重要: 完全に同一の設定で (*.conf ファイルで) セッションを回復させてください。
+"~/.weechat" ディレクトリの内容をコピーすれば異なるマシンで WeeChat のセッションを回復することも可能です。
 ........................................
 
 [[command_weechat_uptime]]
