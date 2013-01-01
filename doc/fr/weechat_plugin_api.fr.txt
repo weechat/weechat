@@ -7626,6 +7626,11 @@ Paramètres :
 |========================================
 | Extension | Signal | Paramètres | Description
 
+| aspell | aspell_suggest +
+  (_nouveau dans la version 0.4.0_) |
+  pointeur : tampon |
+  nouvelles suggestions pour un mot mal orthographié
+
 | guile | guile_script_loaded +
   (_nouveau dans la version 0.3.9_) |
   chaîne: chemin vers le script |

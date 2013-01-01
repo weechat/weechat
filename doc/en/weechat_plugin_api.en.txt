@@ -7513,6 +7513,11 @@ Arguments:
 |========================================
 | Plugin | Signal | Arguments | Description
 
+| aspell | aspell_suggest +
+  (_new in version 0.4.0_) |
+  pointer: buffer |
+  new suggestions for a misspelled word
+
 | guile | guile_script_loaded +
   (_new in version 0.3.9_) |
   string: path to script |

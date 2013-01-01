@@ -7555,6 +7555,12 @@ Argomenti:
 | Plugin | Segnale | Argomenti | Descrizione
 
 // TRANSLATION MISSING
+| aspell | aspell_suggest +
+  (_novità nella versione 0.4.0_) |
+  pointer: buffer |
+  new suggestions for a misspelled word
+
+// TRANSLATION MISSING
 | guile | guile_script_loaded +
   (_novità nella versione 0.3.9_) |
   string: path to script |

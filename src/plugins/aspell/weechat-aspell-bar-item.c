@@ -68,7 +68,7 @@ weechat_aspell_bar_item_suggest (void *data, struct t_gui_bar_item *item,
 {
     struct t_gui_buffer *buffer;
     const char *suggestions;
-    char str_delim[128], *suggestions2;
+    char str_delim[128], *pos, *suggestions2;
 
     /* make C compiler happy */
     (void) data;
@@ -87,14 +87,19 @@ weechat_aspell_bar_item_suggest (void *data, struct t_gui_bar_item *item,
                                                  "localvar_aspell_suggest");
         if (suggestions)
         {
+            pos = strchr (suggestions, ':');
+            if (pos)
+                pos++;
+            else
+                pos = suggestions;
             snprintf (str_delim, sizeof (str_delim),
                       "%s/%s",
                       weechat_color ("bar_delim"),
                       weechat_color ("bar_fg"));
-            suggestions2 = weechat_string_replace (suggestions, "/", str_delim);
+            suggestions2 = weechat_string_replace (pos, "/", str_delim);
             if (suggestions2)
                 return suggestions2;
-            return strdup (suggestions);
+            return strdup (pos);
         }
     }
 

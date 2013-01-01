@@ -61,6 +61,7 @@ Version 0.4.0 (under dev!)
   hook_connect (task #11205)
 * alias: give higher priority to aliases (2000) so that they take precedence
   over an existing command
+* aspell: add signal "aspell_suggest" (sent when new suggestions are displayed)
 * aspell: add bar items "aspell_dict" (dictionary used on current buffer) and
   "aspell_suggest" (suggestions for misspelled word at cursor), add option
   aspell.check.suggestions (task #12061)

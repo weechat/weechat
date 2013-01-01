@@ -747,6 +747,7 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
     struct t_gui_buffer *buffer;
     char *result, *ptr_string, *pos_space, *ptr_end, save_end;
     char *word_for_suggestions, *old_suggestions, *suggestions;
+    char *word_and_suggestions;
     const char *color_normal, *color_error, *ptr_suggestions;
     int buffer_has_changed, utf8_char_int, char_size;
     int length, index_result, length_word, word_ok;
@@ -987,8 +988,21 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
         suggestions = weechat_aspell_get_suggestions (word_for_suggestions);
         if (suggestions)
         {
-            weechat_buffer_set (buffer, "localvar_set_aspell_suggest",
-                                suggestions);
+            length = strlen (word_for_suggestions) + 1 /* ":" */
+                + strlen (suggestions) + 1;
+            word_and_suggestions = malloc (length);
+            if (word_and_suggestions)
+            {
+                snprintf (word_and_suggestions, length, "%s:%s",
+                          word_for_suggestions, suggestions);
+                weechat_buffer_set (buffer, "localvar_set_aspell_suggest",
+                                    word_and_suggestions);
+                free (word_and_suggestions);
+            }
+            else
+            {
+                weechat_buffer_set (buffer, "localvar_del_aspell_suggest", "");
+            }
             free (suggestions);
         }
         else
@@ -1002,7 +1016,10 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
         weechat_buffer_set (buffer, "localvar_del_aspell_suggest", "");
     }
 
-    /* if suggestions have changed, update the bar item */
+    /*
+     * if suggestions have changed, update the bar item
+     * and send signal "aspell_suggest"
+     */
     ptr_suggestions = weechat_buffer_get_string (buffer,
                                                  "localvar_aspell_suggest");
     if ((old_suggestions && !ptr_suggestions)
@@ -1011,6 +1028,8 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
             && (strcmp (old_suggestions, ptr_suggestions) != 0)))
     {
         weechat_bar_item_update ("aspell_suggest");
+        weechat_hook_signal_send ("aspell_suggest",
+                                  WEECHAT_HOOK_SIGNAL_POINTER, buffer);
     }
     if (old_suggestions)
         free (old_suggestions);
