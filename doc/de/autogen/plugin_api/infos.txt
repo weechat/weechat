@@ -42,7 +42,7 @@
 
 | weechat | version | WeeChat Version | -
 
-| weechat | version_git | WeeChat git version (output of command "git describe" for a development version only, empty for a stable release) | -
+| weechat | version_git | WeeChat Git Version (Ausgabe des Befehls "git describe", ausschließlich für eine Entwicklerversion. Eine stabile Version gibt keine Information zurück) | -
 
 | weechat | version_number | WeeChat Version (als Nummer) | -
 

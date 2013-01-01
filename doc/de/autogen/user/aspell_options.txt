@@ -24,7 +24,7 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_aspell.check.suggestions]] *aspell.check.suggestions*
-** Beschreibung: `bestimmt die Anzahl an Vorschlägen, für die Rechtschreibkorrektur bei einem falsch geschriebenes Wort. Die Vorschläge werden in der Bar-Item "aspell_suggest", für die jeweilige(n) Sprache(n), im Buffer, angezeigt (-1 = deaktiviert die Funktion, 0 = zeigt alle verfügbaren Vorschläge an, für alle eingestellten Sprachen)`
+** Beschreibung: `legt die Anzahl an Vorschlägen fest, für ein falsch geschriebenes Wort. Die Vorschläge werden in der Bar-Item "aspell_suggest", für die jeweilige(n) Sprache(n), im Buffer, angezeigt (-1 = deaktiviert die Funktion, 0 = zeigt alle verfügbaren Vorschläge an, für alle betreffenden Sprachen)`
 ** Typ: integer
 ** Werte: -1 .. 2147483647 (Standardwert: `-1`)
 

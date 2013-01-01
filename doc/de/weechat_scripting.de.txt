@@ -99,10 +99,9 @@ Argumente:
 * 'version': Version des Skripts (String)
 * 'license': Lizenz für das Skripts (String)
 * 'description': kurze Beschreibung des Skripts (String)
-// TRANSLATION MISSING
 * 'shutdown_function': Name der Funktion die beim Beenden des Skripts aufgerufen werden soll
-  (String, can be empty string)
-* 'charset': Skript Zeichensatz (liegt das Skript im UTF-8 Format vor kann dieser Wert
+  (String, kann auch eine leere Zeichenkette sein)
+* 'charset': Skript Zeichensatz (optional, liegt das Skript im UTF-8 Format vor kann dieser Wert
   leer bleiben. UTF-8 ist der Standardzeichensatz) (String)
 
 Beispielskripten, für jede Sprache:

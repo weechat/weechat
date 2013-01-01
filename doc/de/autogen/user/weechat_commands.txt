@@ -300,7 +300,7 @@ Beispiele:
     /filter add irc_smart *,!*#weechat* irc_smart_filter *
   filtert alle IRC join/part/quit Nachrichten:
     /filter add joinquit * irc_join,irc_part,irc_quit *
-  filtert Nicks wenn diese den Channel betreten oder durch den Befehl "/names:" angezeigt werden:
+  filtert Nicks wenn diese den Channel betreten oder durch den Befehl "/names" angezeigt werden:
     /filter add nicks * irc_366 *
   filtert Nick "toto" im IRC Channel #weechat:
     /filter add toto irc.freenode.#weechat nick_toto *
@@ -439,7 +439,7 @@ Beispiele:
     /key reset meta-r
   "Tab"-Taste nutzen um im Kontext "search" die Suche innerhalb eines Buffers zu beenden:
     /key bindctxt search ctrl-I /input search_stop
-  Auswahl eines Nicknamens mittels mittlerem Mausknopf zeigt zusätzliche Informationen zu dem Nick an:
+  Auswahl eines Nicknamens mittels mittlerer Maustaste zeigt zusätzliche Informationen zu dem Nick an:
     /key bindctxt mouse @item(buffer_nicklist):button3 /msg nickserv info ${nick}
 ........................................
 
@@ -607,26 +607,26 @@ Wird keine Datei angegeben dann werden alle Konfigurationen (WeeChat und Erweite
 /set  [<option> [<value>]]
       diff [<option> [<option>...]]
 
-option: name of an option (can start or end with '*' to list many options)
- value: new value for option
-  diff: display only changed options
+option: Name der zu ändernden Option (um mehrere Optionen anzuzeigen, darf der Name mit einem Joker '*' beginnen oder enden)
+ value: neuer Wert, den die Option erhalten soll
+  diff: es werden nur Optionen angezeigt, die geändert wurden
 
-New value can be, according to variable type:
-  boolean: on, off or toggle
-  integer: number, ++number or --number
-   string: any string ("" for empty string)
-    color: color name, ++number or --number
+Abhängig von der ausgewählten Option, kann die Variable folgenden Inhalt haben:
+  boolean: on, off oder toggle
+  integer: Anzahl, ++Anzahl oder --Anzahl
+  string : jede Zeichenkette ("" für eine leere Zeichenkette)
+  color  : Name einer Farbe, ++Anzahl oder --Anzahl
 
-For all types, you can use null to remove option value (undefined value). This works only for some special plugin variables.
+Für alle Typen von Variablen kann die Zeichenkette "null" (ohne "")  genutzt werden, um den Wert der Option zu löschen (undefinierter Wert). Dies kann nur auf einige besondere Variablen (Erweiterungen) angewendet werden.
 
-Examples:
-  display options about highlight:
+Beispiele:
+  Zeigt alle Optionen an, die etwas mit highlight zu tun haben:
     /set *highlight*
-  add a word to highlight:
+  Fügt ein highlight-Wort hinzu:
     /set weechat.look.highlight "word"
-  display changed options:
+  zeigt geänderte Optionen an:
     /set diff
-  display changed options in irc plugin:
+  zeigt geänderte Optionen, der IRC Erweiterung, an:
     /set diff irc.*
 ........................................
 

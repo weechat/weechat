@@ -142,11 +142,11 @@ $ make install
 Kompilieren mit autotools
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-// TRANSLATION MISSING
 [WARNING]
-Only cmake is officially supported to build WeeChat. You should use autotools
-only if you are not able to use cmake. +
-Build with autotools requires more dependencies and is slower than with cmake.
+Ausschließlich das Kompilieren mittels cmake wird offiziell unterstützt. Autotools
+sollte nur verwendet werden, falls man keine Möglichkeit hat, cmake zu nutzen. +
+Das Erstellen mittels autotools benötigt zusätzliche Pakete und es ist langsamer
+als cmake.
 
 * Installation in das Systemverzeichnis (benötigt 'root' Privilegien):
 
@@ -170,10 +170,10 @@ $ make install
 Git Quellen
 ~~~~~~~~~~~
 
-Warnung: git Quellen sollten nur von erfahrenen Nutzern verwendet werden. Eventuell lassen
+Warnung: Git Quellen sollten nur von erfahrenen Nutzern verwendet werden. Eventuell lassen
 sich die Quellen nicht kompilieren oder der Code ist nicht stabil. Sie sind gewarnt!
 
-Um die git Quellen zu beziehen nutzen Sie folgende Befehle:
+Um die Git Quellen zu beziehen nutzen Sie folgende Befehle:
 
 ----------------------------------------
 $ git clone git://git.sv.gnu.org/weechat.git
@@ -1993,31 +1993,29 @@ dann müssen Sie lediglich die Option löschen:
 Folgende Platzhalter können in den CTCP-Antworten genutzt werden. Diese werden dann
 mit dem entsprechenden Wert ersetzt:
 
-// TRANSLATION MISSING ($versiongit + $git + $username (name))
 [width="100%",cols="^2l,4,8l",options="header"]
 |========================================
 | Platzhalter  | Beschreibung                  | Wert/Beispiel
 | $clientinfo  | Liste der CTCP Antworten      | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
 | $version     | WeeChat Version               | 0.4.0-dev
-| $versiongit  | WeeChat version + git version | 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)
-| $git         | git version                   | v0.3.9-104-g7eb5cc4
+| $versiongit  | WeeChat Version + Git version | 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)
+| $git         | Git Version                   | v0.3.9-104-g7eb5cc4
 | $compilation | Datum der Kompilierung        | Dec 16 2012
 | $osinfo      | Info über das genutzte OS     | Linux 2.6.32-5-amd64 / x86_64
 | $site        | WeeChat Seite                 | http://www.weechat.org/
-| $download    | WeeChat, download Seite       | http://www.weechat.org/download
+| $download    | WeeChat, Download Seite       | http://www.weechat.org/download
 | $time        | aktuelle Uhrzeit/Datum        | Sun, 16 Dec 2012 10:40:48 +0100
-| $username    | Username beim IRC Server      | name
+| $username    | Username beim IRC Server      | Name
 | $realname    | Realname beim IRC Server      | John Doe
 |========================================
 
-// TRANSLATION MISSING
 [NOTE]
-The git version is the output of command `git describe`. It is known only if
-WeeChat has been compiled inside the git repository and if git was installed.
+Die Git Version wird durch die Ausgabe des Befehls `git describe` ermittelt.
+Dies erfordert, dass WeeChat aus dem Git Repository heraus kompiliert wurde
+und das Git überhaupt installiert ist.
 
 Falls CTCP Optionen nicht festgelegt sind, lauten die CTCP Antworten:
 
-// TRANSLATION MISSING ($username (name))
 [width="100%",cols="^2,4l,8l",options="header"]
 |========================================
 | CTCP       | Antwortformat                      | Beispiel
@@ -2025,7 +2023,7 @@ Falls CTCP Optionen nicht festgelegt sind, lauten die CTCP Antworten:
 | FINGER     | WeeChat $versiongit                | WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)
 | SOURCE     | $download                          | http://www.weechat.org/download
 | TIME       | $time                              | Sun, 16 Dec 2012 10:40:48 +0100
-| USERINFO   | $username ($realname)              | name (John Doe)
+| USERINFO   | $username ($realname)              | Name (John Doe)
 | VERSION    | WeeChat $versiongit ($compilation) | WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4) (Dec 16 2012)
 |========================================
 
@@ -2567,6 +2565,6 @@ Wie erhalte ich Unterstützung:
 * IRC: Server 'irc.freenode.net', Channels '#weechat' (englisch) und
   '#weechat-fr' (französisch)
 * Mailing Liste:
-** eintragen: http://mail.nongnu.org/mailman/listinfo/weechat-support
+** Bestellen: http://mail.nongnu.org/mailman/listinfo/weechat-support
 ** sende email an: weechat-support@nongnu.org
 ** Archiv: http://mail.nongnu.org/archive/html/weechat-support

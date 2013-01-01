@@ -58,19 +58,19 @@ Ohne Angabe von Argumenten wird die Ban-Liste für den aktuellen Channel angezei
 /connect  <server> [<server>...] [-<option>[=<value>]] [-no<option>] [-nojoin] [-switch]
           -all|-auto|-open [-nojoin] [-switch]
 
-    server: server name, which can be:
-            - internal server name (created by /server add, recommended usage)
-            - hostname/port or IP/port (this will create a TEMPORARY server), port is 6667 by default
-            - URL with format: irc[6][s]://[nickname[:password]@]irc.example.org[:port][/#channel1][,#channel2[...]]
-    option: set option for server (for boolean option, value can be omitted)
-  nooption: set boolean option to 'off' (for example: -nossl)
-      -all: connect to all servers defined in configuration
-     -auto: connect to servers with autoconnect enabled
-     -open: connect to all opened servers that are not currently connected
-   -nojoin: do not join any channel (even if autojoin is enabled on server)
-   -switch: switch to next server address
+    server: Name des Servers (folgende Möglichkeiten bestehen):
+            - intern genutzter Servername, zu dem eine Verbindung aufgebaut werden soll (Der Server sollte zuerst mittels "/server add" angelegt werden)
+            - Hostname/Port oder IP/Port (damit wird lediglich ein TEMPORÄRER Server erstellt), Port 6667 wird standardmäßig verwendet
+            - URL mit folgendem Format: irc[6][s]://[nickname[:password]@]irc.example.org[:port][/#channel1][,#channel2[...]]
+    option: legt Option für den Server fest (die Boolean-Optionen können weggelassen werden)
+  nooption: deaktiviert eine Boolean Option (Beispiel: -nossl)
+      -all: Verbindung wird zu den Servern hergestellt, für die eine Konfiguration vorhanden ist
+     -auto: Verbindung zu den Servern herstellen, für die die Option "autoconnect" aktiviert ist
+     -open: stellt eine Verbindung zu allen geöffneten Servern her, zu denen aktuell aber keine Verbindung besteht
+   -nojoin: Channel(s) werden nicht betreten (auch falls die Funktion "autojoin" aktiviert sein sollte)
+   -switch: wechselt zur nächsten Server-Adresse
 
-Examples:
+Beispiele:
   /connect freenode
   /connect irc.oftc.net/6667
   /connect irc6.oftc.net/6667 -ipv6
@@ -469,11 +469,11 @@ server: an diesen Server senden (interner Name)
 ........................................
 
 [[command_irc_quiet]]
-[command]*`quiet`* Nicks oder Hosts das Wort entziehen (User können nicht in den Channel schreiben, solange sich nicht +v oder höher haben)::
+[command]*`quiet`* Nicks oder Hosts das Wort entziehen (User können im Channel erst schreiben, wenn sie "+v" oder höher besitzen)::
 ........................................
 /quiet  [<channel>] [<nick> [<nick>...]]
 
-channel: Channel in dem der Quiet-Bann ausgeführt werden soll
+channel: Channel in dem jemanden das Wort entzogen werden soll
    nick: User oder Host dem das Wort entzogen werden soll
 
 Ohne Angabe von Argumenten wird, für den aktuellen Channel, eine Liste ausgegeben mit den User/Hosts denen das Wort entzogen worden ist.

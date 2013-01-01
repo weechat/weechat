@@ -57,8 +57,8 @@ Befehle die in der Eingabezeile des Skript-Buffers eingegeben werden können:
 
 Mausbefehle innerhalb des Skripten-Buffer:
   Mausrad            in der Liste scrollen
-  linker Mausknopf   Skript anwählen
-  rechter Mausknopf  Skript installieren/entfernen
+  linke Maustaste    Skript anwählen
+  rechte Maustaste   Skript installieren/entfernen
 
 Beispiele:
   /script search url

@@ -1,10 +1,10 @@
 * [[option_logger.color.backlog_end]] *logger.color.backlog_end*
-** Beschreibung: `Farbe für die letzte Zeile der Rückverfolgung`
+** Beschreibung: `Farbe für die letzte Zeile im Verlaufsspeicher`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `darkgray`)
 
 * [[option_logger.color.backlog_line]] *logger.color.backlog_line*
-** Beschreibung: `Farbe in der der Text der Rückverfolgung dargestellt werden soll`
+** Beschreibung: `Textfarbe in der der Verlaufsspeicher dargestellt werden soll`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `darkgray`)
 
