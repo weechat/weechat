@@ -39,6 +39,7 @@
 #include "gui-filter.h"
 #include "gui-buffer.h"
 #include "gui-line.h"
+#include "gui-window.h"
 
 
 struct t_gui_filter *gui_filters = NULL;           /* first filter          */
@@ -137,8 +138,10 @@ void
 gui_filter_buffer (struct t_gui_buffer *buffer)
 {
     struct t_gui_line *ptr_line;
-    int line_displayed, lines_hidden;
+    struct t_gui_window *ptr_window;
+    int lines_changed, line_displayed, lines_hidden;
 
+    lines_changed = 0;
     lines_hidden = 0;
 
     buffer->lines->prefix_max_length = CONFIG_INTEGER(config_look_prefix_align_min);
@@ -156,7 +159,10 @@ gui_filter_buffer (struct t_gui_buffer *buffer)
 
         /* force chat refresh if at least one line changed */
         if (ptr_line->data->displayed != line_displayed)
+        {
             gui_buffer_ask_chat_refresh (buffer, 2);
+            lines_changed = 1;
+        }
 
         ptr_line->data->displayed = line_displayed;
 
@@ -169,6 +175,27 @@ gui_filter_buffer (struct t_gui_buffer *buffer)
         buffer->lines->lines_hidden = lines_hidden;
         hook_signal_send ("buffer_lines_hidden",
                           WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+    }
+
+    /*
+     * if status of at least one line has changed, check that a scroll in a
+     * window displaying this buffer is not on a hidden line (if this happens,
+     * use the previous displayed line as scroll)
+     */
+    if (lines_changed)
+    {
+        for (ptr_window = gui_windows; ptr_window;
+             ptr_window = ptr_window->next_window)
+        {
+            if ((ptr_window->buffer == buffer)
+                && ptr_window->scroll->start_line
+                && !ptr_window->scroll->start_line->data->displayed)
+            {
+                ptr_window->scroll->start_line =
+                    gui_line_get_prev_displayed (ptr_window->scroll->start_line);
+                ptr_window->scroll->start_line_pos = 0;
+            }
+        }
     }
 }
 
