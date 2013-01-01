@@ -1,7 +1,7 @@
 #
 # Copyright (C) 2005 Rudolf Polzer <weechat-te@durchnull.de>
 # Copyright (C) 2006-2007 Thomas Schuetz <i18n@internet-villa.de>
-# Copyright (C) 2009-2011 Nils G <weechatter@arcor.de>
+# Copyright (C) 2009-2013 Nils Görs <weechatter@arcor.de>
 #
 # This file is part of WeeChat, the extensible chat client.
 #
@@ -18,12 +18,11 @@
 # You should have received a copy of the GNU General Public License
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
-# nils, 2012.
 msgid ""
 msgstr ""
-"Project-Id-Version: WeeChat 0.3.7-dev\n"
+"Project-Id-Version: WeeChat 0.4.0-rc1\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2012-12-24 16:46+0100\n"
+"POT-Creation-Date: 2013-01-01 12:48+0100\n"
 "PO-Revision-Date: 2012-12-20 18:04+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"

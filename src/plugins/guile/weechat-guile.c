@@ -1,7 +1,7 @@
 /*
  * weechat-guile.c - guile (scheme) plugin for WeeChat
  *
- * Copyright (C) 2011-2012 Sebastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2011-2013 Sebastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

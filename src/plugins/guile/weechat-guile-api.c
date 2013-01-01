@@ -1,7 +1,7 @@
 /*
  * weechat-guile-api.c - guile API functions
  *
- * Copyright (C) 2011-2012 Sebastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2011-2013 Sebastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2012 Simon Arlott
  *
  * This file is part of WeeChat, the extensible chat client.

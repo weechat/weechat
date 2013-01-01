@@ -1,7 +1,7 @@
 /*
  * gui-focus.c - functions about focus (cursor mode and mouse) (used by all GUI)
  *
- * Copyright (C) 2011-2012 Sebastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2011-2013 Sebastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

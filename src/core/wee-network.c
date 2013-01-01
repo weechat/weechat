@@ -1,7 +1,7 @@
 /*
  * wee-network.c - network functions
  *
- * Copyright (C) 2003-2012 Sebastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2013 Sebastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2005-2010 Emmanuel Bouthenot <kolter@openics.org>
  * Copyright (C) 2010 Gu1ll4um3r0m41n <aeroxteam@gmail.com>
  * Copyright (C) 2012 Simon Arlott

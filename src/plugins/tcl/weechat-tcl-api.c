@@ -3,7 +3,7 @@
  *
  * Copyright (C) 2008-2010 Dmitry Kobylin <fnfal@academ.tsc.ru>
  * Copyright (C) 2008 Julien Louis <ptitlouis@sysif.net>
- * Copyright (C) 2008-2012 Sebastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2008-2013 Sebastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2012 Simon Arlott
  *
  * This file is part of WeeChat, the extensible chat client.

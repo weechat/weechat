@@ -339,7 +339,7 @@ General rules
 [source,C]
 ----------------------------------------
 /*
- * Copyright (C) 2012 Your Name <your@email.com>
+ * Copyright (C) 2013 Your Name <your@email.com>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
