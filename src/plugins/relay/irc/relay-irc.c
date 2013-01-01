@@ -598,7 +598,6 @@ relay_irc_get_line_info (struct t_relay_client *client,
         *message = NULL;
 
     msg_date = weechat_hdata_time (hdata_line_data, line_data, "date");
-    tm = localtime (&msg_date);
     num_tags = weechat_hdata_get_var_array_size (hdata_line_data, line_data,
                                                  "tags_array");
     ptr_message = weechat_hdata_pointer (hdata_line_data, line_data, "message");
@@ -694,6 +693,7 @@ relay_irc_get_line_info (struct t_relay_client *client,
         if (!(RELAY_IRC_DATA(client, server_capabilities) & (1 << RELAY_IRC_CAPAB_SERVER_TIME))
             && time_format && time_format[0])
         {
+            tm = localtime (&msg_date);
             strftime (str_time, sizeof (str_time), time_format, tm);
             length = strlen (str_time) + strlen (pos) + 1;
             *message = malloc (length);
@@ -726,6 +726,7 @@ relay_irc_get_line_info (struct t_relay_client *client,
     if (tags
         && (RELAY_IRC_DATA(client, server_capabilities) & (1 << RELAY_IRC_CAPAB_SERVER_TIME)))
     {
+        tm = gmtime (&msg_date);
         strftime (str_time, sizeof (str_time), "%Y-%m-%dT%H:%M:%S", tm);
         snprintf (str_tag, sizeof (str_tag), "@time=%s.000Z ", str_time);
         *tags = strdup (str_tag);
