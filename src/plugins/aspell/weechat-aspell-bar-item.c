@@ -67,8 +67,8 @@ weechat_aspell_bar_item_suggest (void *data, struct t_gui_bar_item *item,
                                  struct t_gui_window *window)
 {
     struct t_gui_buffer *buffer;
-    const char *suggestions;
-    char str_delim[128], *pos, *suggestions2;
+    const char *suggestions, *pos;
+    char str_delim[128], *suggestions2;
 
     /* make C compiler happy */
     (void) data;
