@@ -497,13 +497,11 @@ gnutls ハンドシェイクに関するエラーの場合、Diffie-Hellman キ�
 /connect freenode
 ----------------------------------------
 
-// TRANSLATION MISSING
 [[irc_sasl]]
-How can I be identified before joining channels?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== どうすればチャンネル参加前にニックネーム認証を行うことができますか。 ===
 
-If server supports SASL, you should use that instead of sending command for
-nickserv authentication, for example:
+サーバで SASL を利用可能なら、nickserv 認証のコマンドを送信するよりも
+SASL を利用する方が良いです。例えば:
 
 ----------------------------------------
 /set irc.server_default.sasl_mechanism dh-blowfish
@@ -687,11 +685,10 @@ OpenBSD では、プラグインファイル名の末尾が ".so.0.0" です (Li
 * 最新の安定版を使う
   (古いバージョンよりもメモリリークの可能性が減ると思われます)
 * 使わないプラグインのロードを禁止する、例えば: aspell、fifo、
-  logger、perl、python、ruby、lua、tcl、guile, xfer (DCC で使用)
+  logger、perl、python、ruby、lua、tcl、guile、xfer (DCC で使用)
 * 本当に必要なスクリプトだけをロード
-// TRANSLATION MISSING
-* do not load certificates if SSL is *NOT* used: set empty string in option
-  'weechat.network.gnutls_ca_file'
+* SSL を*使わない*なら、証明書を読み込まないでください: オプション
+  'weechat.network.gnutls_ca_file' に空文字列を設定してください。
 * 'weechat.history.max_buffer_lines_number' オプションの値を減らすか、
   'weechat.history.max_buffer_lines_minutes' オプションに値を設定してください。
 * 'weechat.history.max_commands' オプションの値を減らしてください。

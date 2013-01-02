@@ -88,11 +88,11 @@ weechat.register(name, author, version, license, description, shutdown_function,
 * 'version': 文字列型、スクリプトのバージョン
 * 'license': 文字列型、スクリプトのライセンス
 * 'description': 文字列型、スクリプトの短い説明
-// TRANSLATION MISSING
-* 'shutdown_function': 文字列型、スクリプトがアンロードされた際に呼び出される関数の名前 (can be empty string)
-// TRANSLATION MISSING
-* 'charset': 文字列型、スクリプトの文字コード (if your script is UTF-8, you can use blank
-  value here, because UTF-8 is default charset)
+* 'shutdown_function': 文字列型、スクリプトがアンロードされた際に呼び出される関数の名前
+  (空文字列でも可)
+* 'charset': 文字列型、スクリプトの文字コード
+  (UTF-8 はデフォルトの文字コードなので、スクリプトが UTF-8
+  で書かれている場合、空文字列を指定してください)
 
 各言語で書かれたスクリプトの例:
 

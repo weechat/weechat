@@ -95,17 +95,15 @@ IRC 等全てのネットワークプロトコルはそれぞれ異なるプラ�
 
   /set irc.server.oftc.autoconnect on
 
-// TRANSLATION MISSING
-If SASL is available on server, you can use it for authentication (you will be
-identified before you join channels):
+サーバで SASL を利用可能な場合、SASL を利用してニックネーム認証することができます
+(チャンネル参加前にニックネーム認証が行われるでしょう):
 
   /set irc.server_default.sasl_mechanism dh-blowfish
   /set irc.server.oftc.sasl_username "mynick"
   /set irc.server.oftc.sasl_password "xxxxxxx"
 
-// TRANSLATION MISSING
-To run a command after connection to server, for example to authenticate
-with nickserv (only if you don't use SASL for authentication):
+例えば nickserv との認証などを行うためにサーバ接続後にコマンドを実行するには
+(SASL を利用して認証を行わない場合):
 
   /set irc.server.oftc.command "/msg nickserv identify xxxxxxx"
 

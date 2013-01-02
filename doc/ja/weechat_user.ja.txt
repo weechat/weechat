@@ -100,9 +100,9 @@ WeeChat は cmake または autotools を使ってコンパイルできます (c
 
 [NOTE]
 ^(1)^ Debian GNU/Linux ディストリビューションにおけるパッケージ名です。
-他のディストリビューションではバージョンとパッケージ名が異なるかもしれません。+
+他のディストリビューションではバージョンとパッケージ名が異なるかもしれません。 +
 ^(2)^ WeeChat は libncurses5-dev でもコンパイル可能ですが、これは推奨*されません*
-(ワイドキャラクタの表示にバグを生じるでしょう)。+
+(ワイドキャラクタの表示にバグを生じるでしょう)。 +
 ^(3)^ Python はバージョン 2.7 をお勧めします (全てのスクリプトはバージョン 2.7
 で正しく動きますが、バージョン 2.6 以下または 3.0 以上では正しく動きません)。
 
@@ -132,11 +132,10 @@ $ make install
 [[compile_with_autotools]]
 ==== autotools によるコンパイル ====
 
-// TRANSLATION MISSING
 [WARNING]
-Only cmake is officially supported to build WeeChat. You should use autotools
-only if you are not able to use cmake. +
-Build with autotools requires more dependencies and is slower than with cmake.
+cmake 以外を用いた WeeChat のビルドは公式にサポートされません。cmake
+を利用できない場合のみ autotools を使ってください。 +
+autotools を用いてビルドする場合、cmake よりも多くの依存パッケージとより長い時間が必要です。
 
 * システムディレクトリにインストールする場合 ('root' 特権が必要です):
 
@@ -534,95 +533,92 @@ WeeChat を起動したターミナルの例:
                   (バッファ #3)
 ........................................
 
-// TRANSLATION MISSING
 [[bars]]
-Bars
-~~~~
+=== バー ===
 
-A 'bar' is an area beside the chat that can contain any type of text.
+'バー' とは任意のテキストを含めることができるチャットエリア以外の場所です。
 
-The bar options can be set with options `weechat.bar.name.option` where `name`
-is the name of the bar and `option` the option for this bar.
+バーオプションは `weechat.bar.name.option` オプションで設定します。ここで
+`name` はバーの名前、`option` はこのバーのオプション名です。
 
-List of bar options:
+バーオプションのリスト:
 
 [width="100%",cols="2m,2,10",options="header"]
 |========================================
-| Option | Values | Description
+| オプション名 | 値 | 説明
 
-| type | `root`, `window` |
-  A bar with type `root` is displayed exactly one time on screen, outside all
-  windows. There is no root bar by default, but an example is the bar 'buffers'
-  created by script 'buffers.pl' (sidebar with list of buffers). +
-  A bar with type `window` is displayed in each window, for example if you
-  split one time the screen (with `/window splith` or `/window splitv`), you
-  will have one bar in each window. The four default bars ('title', 'status',
-  'input', 'nicklist') have type `window`.
+| type | `root`、`window` |
+  `root` 型のバーは画面に (全てのウィンドウの外に) 1 回だけ表示されます。デフォルトでは
+  root バーはありませんが、'buffers.pl' スクリプトが作成する 'buffers' バー
+  (バッファのリストを含むサイドバー) が例の 1 つです。 +
+  `window` 型のバーは各ウィンドウに対して表示されます。例えば (`/window splith`
+  や `/window splitv` で) 画面を 1 回分割する場合、それぞれのウィンドウにバーが
+  1 つ表示されます。4 つのデフォルトバー ('title'、'status'、'input'、'nicklist')
+  は `window` 型のバーです。
 
-| position | `top`, `bottom`, `left`, `right` |
-  Position of the bar: above/below chat, on the left/right.
+| position | `top`、`bottom`、`left`、`right` |
+  バーの位置: チャットエリアの上、下、左、右。
 
-| priority | integer ≥ 0 |
-  Priority for display of bar: this is used for ordering the bars on screen when
-  many bars have same type and position. +
-  The bars are displayed from the edge of the screen to the center. A higher
-  priority will display bar at the beginning, so closer to the edge. +
-  Example: 'input' bar has priority 1000, so it is displayed before the 'status'
-  bar, which has priority 500.
+| priority | 0 以上の整数 |
+  バーの表示優先度:
+  型と位置が同じ複数のバーを画面に表示する順番に利用される。 +
+  バーは画面の端から中心に向かって表示される。高い優先度を持つバーが先に
+  (画面の端に近い側に) 表示される。 +
+  例: 優先度 1000 の 'input' バーは優先度 500 の 'status'
+  バーよりも先に表示される。
 
-| size | integer ≥ 0 |
-  The size of the bar: number of columns for position left/right, number
-  of lines for position top/tobbom. A size of `0` means automatic, so the size
-  will be computed according to content displayed in bar.
+| size | 0 以上の整数 |
+  バーのサイズ:
+  位置が右/左の場合は列数、位置が上/下の場合は行数。値が `0`
+  の場合は自動 (バーのサイズはバーの内容を基に計算される)。
 
-| size_max | integer ≥ 0 |
-  The maximum size for a bar, `0` = no limit (this option is used only if
-  `size` = `0`).
+| size_max | 0 以上の整数 |
+  バーの最大サイズ、`0` = 制限無し (このオプションは
+  `size` = `0` の場合のみ使われる)。
 
-| color_bg | color |
-  The default background color for the bar.
+| color_bg | 色 |
+  バーのデフォルトの背景色
 
-| color_fg | color |
-  The default text color for the bar.
+| color_fg | 色 |
+  バーのデフォルトのテキスト色
 
-| color_delim | color |
-  The color for delimiters in bar.
+| color_delim | 色 |
+  バーの区切り文字の色
 
-| hidden | `on`, `off` |
-  When option is `on`, the bar is hidden. +
-  Note: instead of changing this option, the command `/bar` is preferred, for
-  example: `/bar toggle nicklist` (see command <<command_weechat_bar,/bar>>).
+| hidden | `on`、`off` |
+  このオプションが `on` の場合、バーは表示されません。 +
+  注意: このオプションを変更する代わりに、`/bar` コマンドを使うと便利です。例:
+  `/bar toggle nicklist` (<<command_weechat_bar,/bar>> コマンドを参照)。
 
-| separator | `on`, `off` |
-  When option is `on`, a separator (line) is displayed between this bar and
-  other bars (or chat).
+| separator | `on`、`off` |
+  このオプションが `on` の場合、セパレータ (区切り線)
+  がバー同士またはバーとチャットエリアの間に表示されます。
 
-| items | string |
-  A list of 'items' (see <<bar_items,items>> for more info).
+| items | 文字列 |
+  'items' のリスト (詳細は<<bar_items,アイテム>>を参照)。
 
-| filling_left_right | `horizontal`, `vertical`, `columns_horizontal`, `columns_vertical` |
-  Type of filling for a bar which has position `left` or `right` (see
-  <<bar_filling,filling>> for more info).
+| filling_left_right | `horizontal`、`vertical`、`columns_horizontal`、`columns_vertical` |
+  位置が `left` または `right` のバーに対するフィリングタイプ
+  (詳細は<<bar_filling,フィリング>>を参照)。
 
-| filling_top_bottom | `horizontal`, `vertical`, `columns_horizontal`, `columns_vertical` |
-  Type of filling for a bar which has position `top` or `bottom` (see
-  <<bar_filling,filling>> for more info).
+| filling_top_bottom | `horizontal`、`vertical`、`columns_horizontal`、`columns_vertical` |
+  位置が `top` または `bottom` のバーに対するフィリングタイプ
+  (詳細は<<bar_filling,フィリング>>を参照)。
 
-| conditions | string |
-  The conditions to display the bar (see <<bar_conditions,conditions>> for more
-  info).
+| conditions | 文字列 |
+  バーを表示する状態
+ (詳細は<<bar_conditions,状態>>を参照)。
 |========================================
 
 [[bar_items]]
-Items
-^^^^^
+==== アイテム ====
 
-The option 'items' is a string with a list of bar items, separated by a comma
-(space between items on screen) or "+" (glued items).
+'items' オプションはバーアイテムをコンマ (画面上のアイテム同士に間隔を空ける)
+または "+" (間隔を空けない) で区切った文字列。
 
-The list of bar items is displayed with command `/bar listitems`.
+バーアイテムのリストは `/bar listitems` コマンドで表示されます。
 
-Example of bar with items "[time],buffer_number+:+buffer_plugin+.+buffer_name":
+アイテムを含むバーの例 "[time],buffer_number+:+buffer_plugin+.+buffer_name":
 
 ........................................
 ┌─────────────────────────────────────────────────────────────────────────────────────────┐
@@ -631,25 +627,24 @@ Example of bar with items "[time],buffer_number+:+buffer_plugin+.+buffer_name":
 ........................................
 
 [[bar_filling]]
-Filling
-^^^^^^^
+==== フィリング ====
 
-There are four types of filling:
+フィリングタイプには 4 つの種類があります:
 
-* `horizontal`: the items are displayed horizontally, from left to right. If
-  there are new lines in items, a space is used to separate lines.
-* `vertical`: the items are displayed from top to bottom. If there are new
-  lines in items, a new line is used to separate lines.
-* `columns_horizontal`: items are displayed using columns, where text is
-  aligned on the left. The first item is on top left, the second is on same
-  line, on the right.
-* `columns_vertical`: items are displayed using columns, where text is aligned
-  on the left. The first item is on top left, the second is one line below.
+* `horizontal`:
+  左から右に向かってアイテムを水平に表示。アイテム内に改行がある場合、空白を行区切りに利用します。
+* `vertical`:
+  上から下に向かってアイテムを表示。アイテム内に改行がある場合、改行を行区切りに利用します。
+* `columns_horizontal`:
+  テキストを左寄せして、列形式でアイテムを表示。最初のアイテムは左上、2
+  番目は同じ行の 1 列右側。
+* `columns_vertical`: テキストを左寄せして、列形式でアイテムを表示。最初のアイテムは左上、2
+  番目は同じ列の 1 行下側。
 
-Default bars 'title', 'status' and 'input' have 'horizontal' filling, and
-default bar 'nicklist' has 'vertical' filling.
+デフォルトバーである 'title'、'status'、'input' は
+'horizontal' フィリング、'nicklist' は 'vertical' フィリング。
 
-Some examples of filling for bar 'nicklist':
+'nicklist' バーに対するフィリングの例:
 
 ........................................
 ┌──────────────────────────────────────────────────┐
@@ -708,40 +703,39 @@ Some examples of filling for bar 'nicklist':
 ........................................
 
 [[bar_conditions]]
-Conditions
-^^^^^^^^^^
+==== 状態 ====
 
-The option 'conditions' is a string evaluated to know if the bar is displayed
-or not in the window (it is used only for bars with type 'window').
+'conditions' オプションはバーをウィンドウ内に表示するか否かを評価する文字列です
+(このオプションは 'window' 型のバーだけに有効です)。
 
-The string can be:
+文字列は以下のいずれか:
 
-* 'active': the window must be active
-* 'inactive': the window must be inactive
-* 'nicklist': the buffer displayed in window must have a nicklist
-* an expression: it is evaluated as boolean (see command
-  <<command_weechat_eval,/eval>>)
+* 'active': 非アクティブ状態のウィンドウ
+* 'inactive': 非アクティブ状態のウィンドウ
+* 'nicklist': ニックネームリストが含まれるバッファのウィンドウ
+* 式: ブール値として評価
+  (<<command_weechat_eval,/eval>> コマンドを参照)
 
-For the expression, following variables are available:
+式に使える変数は以下:
 
-* `${active}`: true if window is active
-* `${inactive}`: true if window is inactive
-* `$[nicklist}`: true if buffer displayed in window has a nicklist
+* `${active}`: ウィンドウがアクティブ状態の時に真
+* `${inactive}`: ウィンドウが非アクティブ状態の時に真
+* `$[nicklist}`: ウィンドウに表示されるバッファがニックネームリストの場合に真。
 
-Following pointers are available:
+式に使えるポインタは以下:
 
-* `${window}`: the window where condition is evaluated
-* `${buffer}`: the buffer of window where condition is evaluated
+* `${window}`: 状態が評価されたウィンドウ
+* `${buffer}`: 状態が評価されたウィンドウのバッファ
 
-Example to display nicklist bar in all buffers with a nicklist, and only if
-width of window is > 100 :
+ニックネームリストを持ち、ウィンドウ幅が 100
+より大きい全てのバッファにニックネームリストバーを表示する例:
 
 ----------------------------------------
 /set weechat.bar.nicklist.conditions "${nicklist} && ${window.win_width} > 100"
 ----------------------------------------
 
-Same condition, but always display nicklist on buffer '&bitlbee' (even if window
-is small):
+上と同じだが、'&bitlbee' バッファでは常にニックネームリストを表示
+(ウィンドウ幅が狭くても):
 
 ----------------------------------------
 /set weechat.bar.nicklist.conditions "${nicklist} && (${window.win_width} > 100 || ${buffer.full_name} == irc.bitlbee.&bitlbee)"
@@ -1074,14 +1068,13 @@ WeeChat はデフォルトマウスイベントの多くを定義しています
 | gesture-right-long | ≥ 40
 |========================================
 
-// TRANSLATION MISSING
-List of incomplete events (only for buttons, useful for plugins/scripts):
+未完了イベントのリスト (ボタンのみ、プラグイン/スクリプトで便利):
 
 [width="50%",cols="3m,4",options="header"]
 |========================================
-| Event      | Description
-| event-down | button was pressed but not released yet
-| event-drag | mouse was moved with button pressed down
+| イベント   | 説明
+| event-down | マウスボタンが押され、離されていない状態
+| event-drag | マウスボタンが押された状態でマウスが動かされた
 |========================================
 
 イベントの表記例:
@@ -1455,18 +1448,16 @@ $ aspell config
 /set aspell.option.ignore-case "true"
 ----------------------------------------
 
-// TRANSLATION MISSING
 [[aspell_suggestions]]
-Suggestions
-^^^^^^^^^^^
+==== 修正候補 ====
 
-Suggestions are displayed in a bar item called "aspell_suggest". The number of
-suggestions is set in option 'aspell.check.suggestions'.
+"aspell_suggest" バーアイテム内に修正候補が表示されます。修正候補の数は
+'aspell.check.suggestions' オプションで設定します。
 
-To enable suggestions you must set option 'aspell.check.suggestions' to an
-integer ≥ 0 and add the bar item "aspell_suggest" to a bar, like 'status'.
+修正候補を利用するには、'aspell.check.suggestions' オプションをゼロ以上の整数に設定し、'status'
+バーなどに "aspell_suggest" バーアイテムを追加してください。
 
-Example of suggestions with english dictionary (`en`):
+英語辞書 (`en`) を用いた修正候補の例:
 
 ........................................
 │[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune]                    │
@@ -1474,7 +1465,7 @@ Example of suggestions with english dictionary (`en`):
 └─────────────────────────────────────────────────────────────────────────────────┘
 ........................................
 
-Example of suggestions with english and french dictionaries (`en,fr`):
+英語とフランス語辞書 (`en,fr`) を用いた修正候補の例:
 
 ........................................
 │[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune/prime,primer,primé] │
@@ -1894,31 +1885,28 @@ CTCP "BLABLA" 要求に対する応答を以下のように設定できます:
 以下のコードを設定値に含めることが可能です。これらのコードは
 CTCP 応答時に自動的に WeeChat によって展開されます:
 
-// TRANSLATION MISSING ($versiongit + $git + $username (name))
 [width="100%",cols="^2l,4,8l",options="header"]
 |========================================
 | コード       | 説明                                     | 値/例
 | $clientinfo  | サポートしている CTCP オプションのリスト | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
 | $version     | WeeChat バージョン                       | 0.4.0-dev
-| $versiongit  | WeeChat version + git version            | 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)
-| $git         | git version                              | v0.3.9-104-g7eb5cc4
+| $versiongit  | WeeChat バージョン + git バージョン      | 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)
+| $git         | git バージョン                           | v0.3.9-104-g7eb5cc4
 | $compilation | WeeChat コンパイル日時                   | Dec 16 2012
-| $osinfo      | info about OS に関する情報               | Linux 2.6.32-5-amd64 / x86_64
+| $osinfo      | OS に関する情報                          | Linux 2.6.32-5-amd64 / x86_64
 | $site        | WeeChat ウェブサイト                     | http://www.weechat.org/
 | $download    | WeeChat ウェブサイトのダウンロードページ | http://www.weechat.org/download
 | $time        | 現在の日時                               | Sun, 16 Dec 2012 10:40:48 +0100
-| $username    | IRC サーバのユーザネーム                 | name
+| $username    | IRC サーバのユーザネーム                 | ログイン名
 | $realname    | IRC サーバのリアルネーム                 | John Doe
 |========================================
 
-// TRANSLATION MISSING
 [NOTE]
-The git version is the output of command `git describe`. It is known only if
-WeeChat has been compiled inside the git repository and if git was installed.
+git バージョンとは `git describe` コマンドの出力です。git リポジトリで
+WeeChat をコンパイルし、git がインストールされている場合のみ値が設定されます。
 
 CTCP オプションが設定されていない (デフォルトの) 場合、CTCP 応答は以下のようになります:
 
-// TRANSLATION MISSING ($username (name))
 [width="100%",cols="^2,4l,8l",options="header"]
 |========================================
 | CTCP       | 応答フォーマット                   | 例
@@ -1926,7 +1914,7 @@ CTCP オプションが設定されていない (デフォルトの) 場合、CT
 | FINGER     | WeeChat $versiongit                | WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)
 | SOURCE     | $download                          | http://www.weechat.org/download
 | TIME       | $time                              | Sun, 16 Dec 2012 10:40:48 +0100
-| USERINFO   | $username ($realname)              | name (My name)
+| USERINFO   | $username ($realname)              | ログイン名 (John Doe)
 | VERSION    | WeeChat $versiongit ($compilation) | WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4) (Dec 16 2012)
 |========================================
 
@@ -2022,10 +2010,8 @@ weechat::
 | 433     |               | ニックネームが使用されています
 | 438     |               | ニックネームを変更する権限がありません
 | 671     | whois         | whois (セキュアな接続)
-// TRANSLATION MISSING
-| 728     | quietlist     | quiet list
-// TRANSLATION MISSING
-| 729     | quietlist     | end of quiet list
+| 728     | quietlist     | 発言禁止リスト
+| 729     | quietlist     | 発言禁止リストの終了
 | 901     |               | ログインに成功
 |========================================
 
