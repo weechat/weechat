@@ -980,19 +980,12 @@ $ msginit -i weechat.pot -l nl_NL -o nl.po
 Base language for WeeChat is english, so you must of course understand english
 in order to translate to your language.
 
-When done, you *have* to check your file with two commands:
+When done, you *have* to check your file with script 'msgcheck.py'
+(https://github.com/flashcode/msgcheck):
 
 ----------------------------------------
-$ msgfmt -o /dev/null -c xx.po
-$ msg_check_lines.py xx.po
+$ msgcheck.py xx.po
 ----------------------------------------
-
-The `msgfmt` will perform checks on message catalog and display errors, like bad
-use of format specifiers in strings.
-
-The script msg_check_lines.py (http://www.weechat.org/files/temp/po/msg_check_lines.py)
-will check number of lines in translated strings (which must be the same as
-string in english).
 
 [[build_autogen_files]]
 Build auto-generated files
