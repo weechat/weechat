@@ -6303,6 +6303,10 @@ If your message has some tabs and if you don't want prefix, then use a space,
 a tab, then message (see example below): this will disable prefix (the space
 before tab will not be displayed).
 
+[NOTE]
+With two tabs ("\t") at beginning of message, time will not be displayed and
+message will have no alignment at all (like the message "Day changed to").
+
 C example:
 
 [source,C]
@@ -6311,6 +6315,8 @@ weechat_printf (NULL, "Hello on WeeChat buffer");
 weechat_printf (buffer, "Hello on this buffer");
 weechat_printf (buffer, "%sThis is an error!", weechat_prefix ("error"));
 weechat_printf (buffer, " \tMessage without prefix but with \t some \t tabs");
+weechat_printf (buffer, "\t\tMessage without time/alignment");
+weechat_printf (buffer, "\t\t"); /* empty line (without time) */
 ----------------------------------------
 
 Script (Python):
@@ -6325,6 +6331,8 @@ weechat.prnt("", "Hello on WeeChat buffer")
 weechat.prnt(buffer, "Hello on this buffer")
 weechat.prnt(buffer, "%sThis is an error!" % weechat.prefix("error"))
 weechat.prnt(buffer, " \tMessage without prefix but with \t some \t tabs")
+weechat.prnt(buffer, "\t\tMessage without time/alignment")
+weechat.prnt(buffer, "\t\t") # empty line (without time)
 ----------------------------------------
 
 [NOTE]

@@ -6320,18 +6320,27 @@ bisogna utilizzare uno spazio, una tabulazione, poi il messaggio (consultare
 l'esempio successivo): ciò disabilita il prefisso (lo spazio prima della
 tabulazione non verrà mostrato).
 
+// TRANSLATION MISSING
+[NOTE]
+With two tabs ("\t") at beginning of message, time will not be displayed and
+message will have no alignment at all (like the message "Day changed to").
+
 Esempio in C:
 
+// TRANSLATION MISSING
 [source,C]
 ----------------------------------------
 weechat_printf (NULL, "Benvenuto sul buffer di WeeChat");
 weechat_printf (buffer, "Benvenuto su questo buffer");
 weechat_printf (buffer, "%sQuesto è un errore!", weechat_prefix ("error"));
 weechat_printf (buffer, " \tMessaggio senza prefisso ma con \t alcune \t tabulazioni");
+weechat_printf (buffer, "\t\tMessage without time/alignment");
+weechat_printf (buffer, "\t\t"); /* empty line (without time) */
 ----------------------------------------
 
 Script (Python):
 
+// TRANSLATION MISSING
 [source,python]
 ----------------------------------------
 # prototipo
@@ -6342,6 +6351,8 @@ weechat.prnt("", "Benvenuto sul buffer di WeeChat")
 weechat.prnt(buffer, "Benvenuto su questo buffer")
 weechat.prnt(buffer, "%sQuesto è un errore!" % weechat.prefix("error"))
 weechat.prnt(buffer, " \tMessaggio senza prefisso ma con \t alcune \t tabulazioni")
+weechat.prnt(buffer, "\t\tMessage without time/alignment")
+weechat.prnt(buffer, "\t\t") # empty line (without time)
 ----------------------------------------
 
 [NOTE]

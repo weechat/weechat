@@ -6380,6 +6380,10 @@ Si votre message contient des tabulations et si vous ne voulez pas de préfixe,
 utilisez un espace, une tabulation, puis le message : cela désactivera le
 préfixe (l'espace avant la tabulation ne sera pas affiché).
 
+[NOTE]
+Avec deux tabulations ("\t") au début du message, l'heure ne sera pas affichée
+et le message n'aura pas d'alignement (comme le message "Jour changé").
+
 Exemple en C :
 
 [source,C]
@@ -6388,6 +6392,8 @@ weechat_printf (NULL, "Bonjour sur le tampon WeeChat");
 weechat_printf (buffer, "Bonjour sur ce tampon");
 weechat_printf (buffer, "%sCeci est une erreur !", weechat_prefix ("error"));
 weechat_printf (buffer, " \tMessage sans préfixe mais avec \t quelques \t tabulations");
+weechat_printf (buffer, "\t\tMessage sans heure/alignement");
+weechat_printf (buffer, "\t\t"); /* ligne vide (sans heure) */
 ----------------------------------------
 
 Script (Python) :
@@ -6402,6 +6408,8 @@ weechat.prnt("", "Bonjour sur le tampon WeeChat")
 weechat.prnt(buffer, "Bonjour sur ce tampon")
 weechat.prnt(buffer, "%sCeci est une erreur !" % weechat.prefix("error"))
 weechat.prnt(buffer, " \tMessage sans préfixe mais avec \t quelques \t tabulations")
+weechat.prnt(buffer, "\t\tMessage sans heure/alignement")
+weechat.prnt(buffer, "\t\t") # ligne vide (sans heure)
 ----------------------------------------
 
 [NOTE]
