@@ -204,7 +204,7 @@
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `blue`)
 
 * [[option_weechat.color.separator]] *weechat.color.separator*
-** 説明: `ウィンドウセパレータの背景色 (分割時)`
+** 説明: `color for window separators (when split) and separators beside bars (like nicklist)`
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `blue`)
 

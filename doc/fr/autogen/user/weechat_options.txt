@@ -204,7 +204,7 @@
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `blue`)
 
 * [[option_weechat.color.separator]] *weechat.color.separator*
-** description: `couleur du fond pour les séparateurs de fenêtres (quand divisé)`
+** description: `couleur pour les séparateurs de fenêtres (quand divisé) et les séparateurs à côté des barres (comme la liste de pseudos)`
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `blue`)
 

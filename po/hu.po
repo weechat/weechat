@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-rc1\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-01-01 12:48+0100\n"
+"POT-Creation-Date: 2013-01-04 17:43+0100\n"
 "PO-Revision-Date: 2013-01-01 12:58+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2425,7 +2425,9 @@ msgid "display a vertical separator between windows"
 msgstr ""
 
 #, fuzzy
-msgid "background color for window separators (when split)"
+msgid ""
+"color for window separators (when split) and separators beside bars (like "
+"nicklist)"
 msgstr "ablakelválasztó színe (ha meg van osztva)"
 
 #, fuzzy
