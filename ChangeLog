@@ -7,6 +7,8 @@ v0.4.0-rc1, 2013-01-04
 Version 0.4.0 (under dev!)
 --------------------------
 
+* core: add buffer pointer in arguments for signals "input_search",
+  "input_text_changed" and "input_text_cursor_moved"
 * core: fix scroll to bottom of window (default key: alt+end) when line
   displayed is bigger than chat area
 * core: fix scroll in buffer after enabling/disabling some filters (if scroll

@@ -162,7 +162,7 @@ gui_input_text_changed_modifier_and_signal (struct t_gui_buffer *buffer,
     }
 
     /* send signal */
-    hook_signal_send ("input_text_changed", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+    hook_signal_send ("input_text_changed", WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }
 
 /*
@@ -170,9 +170,10 @@ gui_input_text_changed_modifier_and_signal (struct t_gui_buffer *buffer,
  */
 
 void
-gui_input_text_cursor_moved_signal ()
+gui_input_text_cursor_moved_signal (struct t_gui_buffer *buffer)
 {
-    hook_signal_send ("input_text_cursor_moved", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+    hook_signal_send ("input_text_cursor_moved", WEECHAT_HOOK_SIGNAL_POINTER,
+                      buffer);
 }
 
 /*
@@ -180,9 +181,9 @@ gui_input_text_cursor_moved_signal ()
  */
 
 void
-gui_input_search_signal ()
+gui_input_search_signal (struct t_gui_buffer *buffer)
 {
-    hook_signal_send ("input_search", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+    hook_signal_send ("input_search", WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }
 
 /*
@@ -197,7 +198,7 @@ gui_input_set_pos (struct t_gui_buffer *buffer, int pos)
         buffer->input_buffer_pos = pos;
         if (buffer->input_buffer_pos > buffer->input_buffer_length)
             buffer->input_buffer_pos = buffer->input_buffer_length;
-        gui_input_text_cursor_moved_signal ();
+        gui_input_text_cursor_moved_signal (buffer);
     }
 }
 
@@ -539,7 +540,7 @@ gui_input_search_text (struct t_gui_buffer *buffer)
         && (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
     {
         gui_window_search_start (window);
-        gui_input_search_signal ();
+        gui_input_search_signal (buffer);
     }
 }
 
@@ -594,7 +595,7 @@ gui_input_search_switch_case (struct t_gui_buffer *buffer)
     {
         window->buffer->text_search_exact ^= 1;
         gui_window_search_restart (window);
-        gui_input_search_signal ();
+        gui_input_search_signal (buffer);
     }
 }
 
@@ -612,7 +613,7 @@ gui_input_search_stop (struct t_gui_buffer *buffer)
         && (window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED))
     {
         gui_window_search_stop (window);
-        gui_input_search_signal ();
+        gui_input_search_signal (buffer);
     }
 }
 
@@ -895,7 +896,7 @@ gui_input_move_beginning_of_line (struct t_gui_buffer *buffer)
     if (buffer->input && (buffer->input_buffer_pos > 0))
     {
         buffer->input_buffer_pos = 0;
-        gui_input_text_cursor_moved_signal ();
+        gui_input_text_cursor_moved_signal (buffer);
     }
 }
 
@@ -910,7 +911,7 @@ gui_input_move_end_of_line (struct t_gui_buffer *buffer)
         && (buffer->input_buffer_pos < buffer->input_buffer_length))
     {
         buffer->input_buffer_pos = buffer->input_buffer_length;
-        gui_input_text_cursor_moved_signal ();
+        gui_input_text_cursor_moved_signal (buffer);
     }
 }
 
@@ -924,7 +925,7 @@ gui_input_move_previous_char (struct t_gui_buffer *buffer)
     if (buffer->input && (buffer->input_buffer_pos > 0))
     {
         buffer->input_buffer_pos--;
-        gui_input_text_cursor_moved_signal ();
+        gui_input_text_cursor_moved_signal (buffer);
     }
 }
 
@@ -939,7 +940,7 @@ gui_input_move_next_char (struct t_gui_buffer *buffer)
         && (buffer->input_buffer_pos < buffer->input_buffer_length))
     {
         buffer->input_buffer_pos++;
-        gui_input_text_cursor_moved_signal ();
+        gui_input_text_cursor_moved_signal (buffer);
     }
 }
 
@@ -978,7 +979,7 @@ gui_input_move_previous_word (struct t_gui_buffer *buffer)
         else
             buffer->input_buffer_pos = 0;
 
-        gui_input_text_cursor_moved_signal ();
+        gui_input_text_cursor_moved_signal (buffer);
     }
 }
 
@@ -1023,7 +1024,7 @@ gui_input_move_next_word (struct t_gui_buffer *buffer)
                           utf8_prev_char (buffer->input_buffer, pos) - buffer->input_buffer);
         }
 
-        gui_input_text_cursor_moved_signal ();
+        gui_input_text_cursor_moved_signal (buffer);
     }
 }
 
