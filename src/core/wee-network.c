@@ -38,6 +38,9 @@
 #include <errno.h>
 #include <gcrypt.h>
 #include <sys/time.h>
+#if defined(__OpenBSD__)
+#include <sys/uio.h>
+#endif
 
 #ifdef HAVE_GNUTLS
 #include <gnutls/gnutls.h>
