@@ -630,41 +630,48 @@ weechat_aspell_string_is_simili_number (const char *word)
 int
 weechat_aspell_check_word (struct t_gui_buffer *buffer, const char *word)
 {
+    const char *buffer_type, *buffer_nick, *buffer_channel;
     struct t_aspell_speller *ptr_speller;
-    int rc;
-    rc = 0;
 
     /* word too small? then do not check word */
     if ((weechat_config_integer (weechat_aspell_config_check_word_min_length) > 0)
         && ((int)strlen (word) < weechat_config_integer (weechat_aspell_config_check_word_min_length)))
-        rc = 1;
-    else
+        return 1;
+
+    /* word is a number? then do not check word */
+    if (weechat_aspell_string_is_simili_number (word))
+        return 1;
+
+    /* word is a nick of nicklist on this buffer? then do not check word */
+    if (weechat_nicklist_search_nick (buffer, NULL, word))
+        return 1;
+
+    /* for "private" buffers, ignore self and remote nicks */
+    buffer_type = weechat_buffer_get_string (buffer, "localvar_type");
+    if (buffer_type && (strcmp (buffer_type, "private") == 0))
     {
-        /* word is a number? then do not check word */
-        if (weechat_aspell_string_is_simili_number (word))
-            rc = 1;
-        else
+        /* check seld nick */
+        buffer_nick = weechat_buffer_get_string (buffer, "localvar_nick");
+        if (buffer_nick && (weechat_strcasecmp (buffer_nick, word) == 0))
+            return 1;
+        /* check remote nick */
+        buffer_channel = weechat_buffer_get_string (buffer, "localvar_channel");
+        if (buffer_channel && (weechat_strcasecmp (buffer_channel, word) == 0))
+            return 1;
+    }
+
+    /* check word with all spellers for this buffer (order is important) */
+    for (ptr_speller = weechat_aspell_spellers; ptr_speller;
+         ptr_speller = ptr_speller->next_speller)
+    {
+        if (aspell_speller_check (ptr_speller->speller, word, -1) == 1)
         {
-            /* word is a nick of nicklist on this buffer? then do not check word */
-            if (weechat_nicklist_search_nick (buffer, NULL, word))
-                rc = 1;
-            else
-            {
-                /* check word with all spellers for this buffer (order is important) */
-                for (ptr_speller = weechat_aspell_spellers; ptr_speller;
-                     ptr_speller = ptr_speller->next_speller)
-                {
-                    if (aspell_speller_check (ptr_speller->speller, word, -1) == 1)
-                    {
-                        rc = 1;
-                        break;
-                    }
-                }
-            }
+            return 1;
         }
     }
 
-    return rc;
+    /* misspelled word! */
+    return 0;
 }
 
 /*

@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.0-rc1, 2013-01-01
+v0.4.0-rc1, 2013-01-04
 
 
 Version 0.4.0 (under dev!)
@@ -61,6 +61,7 @@ Version 0.4.0 (under dev!)
   hook_connect (task #11205)
 * alias: give higher priority to aliases (2000) so that they take precedence
   over an existing command
+* aspell: ignore self and remote nicks in private buffers
 * aspell: add signal "aspell_suggest" (sent when new suggestions are displayed)
 * aspell: add bar items "aspell_dict" (dictionary used on current buffer) and
   "aspell_suggest" (suggestions for misspelled word at cursor), add option
