@@ -7968,15 +7968,15 @@ Paramètres :
   coller de lignes en cours
 
 | weechat | input_search |
-  - |
+  pointeur : tampon |
   recherche de texte dans le tampon
 
 | weechat | input_text_changed |
-  - |
+  pointeur : tampon |
   texte modifié dans la barre "input"
 
 | weechat | input_text_cursor_moved |
-  - |
+  pointeur : tampon |
   curseur déplacé dans la barre "input"
 
 | weechat | key_pressed |

@@ -7928,15 +7928,15 @@ Argomenti:
   incolla testo in attesa
 
 | weechat | input_search |
-  - |
+  puntatore: buffer |
   ricerca testo nel buffer
 
 | weechat | input_text_changed |
-  - |
+  puntatore: buffer |
   testo in input modificato
 
 | weechat | input_text_cursor_moved |
-  - |
+  puntatore: buffer |
   cursore del testo di input spostato
 
 | weechat | key_pressed |

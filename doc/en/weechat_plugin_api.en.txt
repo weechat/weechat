@@ -7855,15 +7855,15 @@ Arguments:
   paste pending
 
 | weechat | input_search |
-  - |
+  pointer: buffer |
   text search in buffer
 
 | weechat | input_text_changed |
-  - |
+  pointer: buffer |
   input text changed
 
 | weechat | input_text_cursor_moved |
-  - |
+  pointer: buffer |
   input text cursor moved
 
 | weechat | key_pressed |
