@@ -1139,7 +1139,7 @@ gui_bar_window_get_max_size_in_window (struct t_gui_bar_window *bar_window,
         }
     }
 
-    return max_size;
+    return (max_size >= 1) ? max_size : -1;
 }
 
 /*
@@ -1166,7 +1166,7 @@ gui_bar_window_get_max_size (struct t_gui_bar_window *bar_window,
         {
             max_size = gui_bar_window_get_max_size_in_window (bar_window,
                                                               ptr_window);
-            if (max_size < max_size_found)
+            if ((max_size >= 0) && (max_size < max_size_found))
                 max_size_found = max_size;
         }
         if (max_size_found == INT_MAX)
@@ -1203,7 +1203,7 @@ gui_bar_window_set_current_size (struct t_gui_bar_window *bar_window,
     if (bar_window->current_size != new_size)
     {
         max_size = gui_bar_window_get_max_size (bar_window, window);
-        new_size = (max_size < new_size) ? max_size : new_size;
+        new_size = ((max_size >= 0) && (max_size < new_size)) ? max_size : new_size;
         if (bar_window->current_size != new_size)
         {
             bar_window->current_size = new_size;

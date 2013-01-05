@@ -270,6 +270,13 @@ gui_main_refreshs ()
         }
     }
 
+    /* refresh window if needed (if asked during refresh of bars) */
+    if (gui_window_refresh_needed)
+    {
+        gui_window_refresh_screen ((gui_window_refresh_needed > 1) ? 1 : 0);
+        gui_window_refresh_needed = 0;
+    }
+
     /* refresh windows if needed */
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
