@@ -33,10 +33,17 @@ IF(PYTHON_FOUND)
    SET(PYTHON_FIND_QUIETLY TRUE)
 ENDIF(PYTHON_FOUND)
 
-FIND_PROGRAM(PYTHON_EXECUTABLE
-  NAMES python2.7 python2.6 python2.5 python
-  PATHS /usr/bin /usr/local/bin /usr/pkg/bin
-  )
+IF(ENABLE_PYTHON3)
+  FIND_PROGRAM(PYTHON_EXECUTABLE
+    NAMES python3.4 python3.3 python3.2 python3.1 python3.0 python3 python2.7 python2.6 python2.5 python
+    PATHS /usr/bin /usr/local/bin /usr/pkg/bin
+    )
+ELSE(ENABLE_PYTHON3)
+  FIND_PROGRAM(PYTHON_EXECUTABLE
+    NAMES python2.7 python2.6 python2.5 python
+    PATHS /usr/bin /usr/local/bin /usr/pkg/bin
+    )
+ENDIF(ENABLE_PYTHON3)
 
 IF(PYTHON_EXECUTABLE)
   EXECUTE_PROCESS(
@@ -58,11 +65,17 @@ IF(PYTHON_EXECUTABLE)
     NAMES Python.h
     PATHS ${PYTHON_INC_DIR}
     )
-
-  FIND_LIBRARY(PYTHON_LIBRARY
-    NAMES python2.7 python2.6 python2.5 python
-    PATHS ${PYTHON_POSSIBLE_LIB_PATH}
-    )
+  IF(ENABLE_PYTHON3)
+    FIND_LIBRARY(PYTHON_LIBRARY
+      NAMES python3.4 python3.3 python3.2 python3.1 python3.0 python3 python2.7 python2.6 python2.5 python
+      PATHS ${PYTHON_POSSIBLE_LIB_PATH}
+      )
+  ELSE(ENABLE_PYTHON3)
+    FIND_LIBRARY(PYTHON_LIBRARY
+      NAMES python2.7 python2.6 python2.5 python
+      PATHS ${PYTHON_POSSIBLE_LIB_PATH}
+      )
+  ENDIF(ENABLE_PYTHON3)
 
   IF(PYTHON_LIBRARY AND PYTHON_INCLUDE_PATH)
     EXECUTE_PROCESS(

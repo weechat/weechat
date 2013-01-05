@@ -140,6 +140,7 @@ AC_ARG_ENABLE(script,       [  --disable-script        turn off Script plugin (d
 AC_ARG_ENABLE(scripts,      [  --disable-scripts       turn off script plugins (perl, python, ...) (default=compiled if found)],enable_scripts=$enableval,enable_scripts=yes)
 AC_ARG_ENABLE(perl,         [  --disable-perl          turn off Perl script plugin (default=compiled if found)],enable_perl=$enableval,enable_perl=yes)
 AC_ARG_ENABLE(python,       [  --disable-python        turn off Python script plugin (default=compiled if found)],enable_python=$enableval,enable_python=yes)
+AC_ARG_ENABLE(python3,      [  --enable-python3        use Python 3.x if found (NOT recommended) (default=off)],enable_python3=$enableval,enable_python3=no)
 AC_ARG_ENABLE(ruby,         [  --disable-ruby          turn off Ruby script plugin (default=compiled if found)],enable_ruby=$enableval,enable_ruby=yes)
 AC_ARG_ENABLE(lua,          [  --disable-lua           turn off Lua script plugin (default=compiled if found)],enable_lua=$enableval,enable_lua=yes)
 AC_ARG_ENABLE(tcl,          [  --disable-tcl           turn off Tcl script plugin (default=compiled if found)],enable_tcl=$enableval,enable_tcl=yes)
@@ -465,7 +466,11 @@ fi
 PYTHON_VERSION=
 
 if test "x$enable_python" = "xyes" ; then
-    AC_PATH_PROGS(PYTHON, python2.7 python2.6 python2.5 python2 python)
+    if test "x$enable_python3" = "xyes" ; then
+        AC_PATH_PROGS(PYTHON, python3.4 python3.3 python3.2 python3.1 python3.0 python3 python2.7 python2.6 python2.5 python2 python)
+    else
+        AC_PATH_PROGS(PYTHON, python2.7 python2.6 python2.5 python2 python)
+    fi
     if test -z $PYTHON ; then
         AC_MSG_WARN([
 *** Python must be installed on your system but python interpreter couldn't be found in path.
@@ -489,8 +494,8 @@ if test "x$enable_python" = "xyes" ; then
             if test -r "$PYTHON_INCLUDE/Python.h"; then
                 PYTHON_CFLAGS="-I$PYTHON_INCLUDE"
                 AC_MSG_RESULT(found)
-                PYTHON_LIB=`$PYTHON -c "import distutils.sysconfig; print distutils.sysconfig.get_config_var('LIBPL')"`
-                PYTHON_LFLAGS="-lpython$PYTHON_VERSION "`$PYTHON -c "import distutils.sysconfig; print distutils.sysconfig.get_config_var('LIBS')+' '+distutils.sysconfig.get_config_var('SYSLIBS')+' '+distutils.sysconfig.get_config_var('LINKFORSHARED')"`
+                PYTHON_LIB=`$PYTHON -c "import sys, distutils.sysconfig; sys.stdout.write(distutils.sysconfig.get_config_var('LIBPL'))"`
+                PYTHON_LFLAGS="-lpython$PYTHON_VERSION "`$PYTHON -c "import sys, distutils.sysconfig; sys.stdout.write(distutils.sysconfig.get_config_var('LIBS')+' '+distutils.sysconfig.get_config_var('SYSLIBS')+' '+distutils.sysconfig.get_config_var('LINKFORSHARED'))"`
                 AC_MSG_CHECKING(for Python library)
                 if test -r "$PYTHON_LIB/libpython$PYTHON_VERSION.so"; then
                    PYTHON_LFLAGS="-L$PYTHON_LIB $PYTHON_LFLAGS"
