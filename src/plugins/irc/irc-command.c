@@ -2684,7 +2684,7 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
                 }
                 string = irc_color_decode (argv_eol[arg_text],
                                            weechat_config_boolean (irc_config_network_colors_receive));
-                irc_input_user_message_display (ptr_channel->buffer,
+                irc_input_user_message_display (ptr_channel->buffer, 0,
                                                 (string) ? string : argv_eol[arg_text]);
                 if (string)
                     free (string);
@@ -2739,6 +2739,7 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
                         {
                             /* standard message (to "#channel") */
                             irc_input_user_message_display (ptr_channel->buffer,
+                                                            0,
                                                             (string) ? string : argv_eol[arg_text]);
                         }
                         if (string)
@@ -2788,6 +2789,7 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
                         if (ptr_channel)
                         {
                             irc_input_user_message_display (ptr_channel->buffer,
+                                                            0,
                                                             (string) ? string : argv_eol[arg_text]);
                         }
                         else
@@ -3474,7 +3476,7 @@ irc_command_query (void *data, struct t_gui_buffer *buffer, int argc,
         {
             string = irc_color_decode (argv_eol[arg_text],
                                        weechat_config_boolean (irc_config_network_colors_receive));
-            irc_input_user_message_display (ptr_channel->buffer,
+            irc_input_user_message_display (ptr_channel->buffer, 0,
                                             (string) ? string : argv_eol[arg_text]);
             if (string)
                 free (string);
