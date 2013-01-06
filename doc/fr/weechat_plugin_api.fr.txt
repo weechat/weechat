@@ -8107,6 +8107,8 @@ Paramètres :
 ** 'void *signal_data' : données envoyées avec le signal
 ** valeur de retour :
 *** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_OK_EAT' (arrêter l'envoi du signal immédiatement)
+    (_nouveau dans la version 0.4.0_)
 *** 'WEECHAT_RC_ERROR'
 * 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
   WeeChat
@@ -8384,6 +8386,8 @@ modèle de redirection ("pattern").
 ** 'struct t_hashtable *hashtable' : hashtable
 ** valeur de retour :
 *** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_OK_EAT' (arrêter l'envoi du signal immédiatement)
+    (_nouveau dans la version 0.4.0_)
 *** 'WEECHAT_RC_ERROR'
 * 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
   WeeChat

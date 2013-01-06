@@ -8072,6 +8072,9 @@ Argomenti:
 ** 'void *signal_data': dati inviati con il segnale
 ** valore restituito:
 *** 'WEECHAT_RC_OK'
+// TRANSLATION MISSING
+*** 'WEECHAT_RC_OK_EAT' (stop sending the signal immediately)
+    (_novità nella versione 0.4.0_)
 *** 'WEECHAT_RC_ERROR'
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
 
@@ -8348,6 +8351,9 @@ di redirezione.
 ** 'struct t_hashtable *hashtable': tabella hash
 ** valore restituito:
 *** 'WEECHAT_RC_OK'
+// TRANSLATION MISSING
+*** 'WEECHAT_RC_OK_EAT' (stop sending the signal immediately)
+    (_novità nella versione 0.4.0_)
 *** 'WEECHAT_RC_ERROR'
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
 

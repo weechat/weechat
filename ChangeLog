@@ -51,6 +51,8 @@ Version 0.4.0 (under dev!)
   (problem with nick displayed in first line of screen) (bug #37556)
 * core: fix wrapping of words with wide chars (the break was made before the
   correct position)
+* api: allow return code WEECHAT_RC_OK_EAT in callbacks of hook_signal and
+  hook_hsignal (stop sending the signal immediately)
 * api: allow creation of structure with hdata_update (allowed for hdata
   "history")
 * api: use hashtable "options" for command arguments in function

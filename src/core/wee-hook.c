@@ -2175,6 +2175,7 @@ void
 hook_signal_send (const char *signal, const char *type_data, void *signal_data)
 {
     struct t_hook *ptr_hook, *next_hook;
+    int rc;
 
     hook_exec_start ();
 
@@ -2188,9 +2189,12 @@ hook_signal_send (const char *signal, const char *type_data, void *signal_data)
             && (string_match (signal, HOOK_SIGNAL(ptr_hook, signal), 0)))
         {
             ptr_hook->running = 1;
-            (void) (HOOK_SIGNAL(ptr_hook, callback))
+            rc = (HOOK_SIGNAL(ptr_hook, callback))
                 (ptr_hook->callback_data, signal, type_data, signal_data);
             ptr_hook->running = 0;
+
+            if (rc == WEECHAT_RC_OK_EAT)
+                break;
         }
 
         ptr_hook = next_hook;
@@ -2248,6 +2252,7 @@ void
 hook_hsignal_send (const char *signal, struct t_hashtable *hashtable)
 {
     struct t_hook *ptr_hook, *next_hook;
+    int rc;
 
     hook_exec_start ();
 
@@ -2261,9 +2266,12 @@ hook_hsignal_send (const char *signal, struct t_hashtable *hashtable)
             && (string_match (signal, HOOK_HSIGNAL(ptr_hook, signal), 0)))
         {
             ptr_hook->running = 1;
-            (void) (HOOK_HSIGNAL(ptr_hook, callback))
+            rc = (HOOK_HSIGNAL(ptr_hook, callback))
                 (ptr_hook->callback_data, signal, hashtable);
             ptr_hook->running = 0;
+
+            if (rc == WEECHAT_RC_OK_EAT)
+                break;
         }
 
         ptr_hook = next_hook;

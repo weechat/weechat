@@ -7994,6 +7994,8 @@ Arguments:
 ** 'void *signal_data': data sent with signal
 ** return value:
 *** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_OK_EAT' (stop sending the signal immediately)
+    (_new in version 0.4.0_)
 *** 'WEECHAT_RC_ERROR'
 * 'callback_data': pointer given to callback when it is called by WeeChat
 
@@ -8262,6 +8264,8 @@ pattern.
 ** 'struct t_hashtable *hashtable': hashtable
 ** return value:
 *** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_OK_EAT' (stop sending the signal immediately)
+    (_new in version 0.4.0_)
 *** 'WEECHAT_RC_ERROR'
 * 'callback_data': pointer given to callback when it is called by WeeChat
 
