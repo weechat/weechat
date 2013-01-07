@@ -569,6 +569,8 @@ eval_expression_internal (const char *expr, struct t_hashtable *pointers,
             tmp_value = eval_expression_internal (sub_expr, pointers, extra_vars, 0);
             free (sub_expr);
             rc = eval_is_true (tmp_value);
+            if (tmp_value)
+                free (tmp_value);
             /*
              * if rc == 0 with "&&" or rc == 1 with "||", no need to evaluate
              * second sub-expression, just return the rc
@@ -576,8 +578,6 @@ eval_expression_internal (const char *expr, struct t_hashtable *pointers,
             if ((!rc && (logic == EVAL_LOGICAL_OP_AND))
                 || (rc && (logic == EVAL_LOGICAL_OP_OR)))
             {
-                if (tmp_value)
-                    free (tmp_value);
                 value = strdup ((rc) ? EVAL_STR_TRUE : EVAL_STR_FALSE);
                 goto end;
             }
