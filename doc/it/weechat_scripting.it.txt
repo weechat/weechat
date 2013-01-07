@@ -703,7 +703,7 @@ script_options = {
     "option2" : "value2",
     "option3" : "value3",
 }
-for option, default_value in script_options.iteritems():
+for option, default_value in script_options.items():
     if not weechat.config_is_set_plugin(option):
         weechat.config_set_plugin(option, default_value)
 ----------------------------------------
