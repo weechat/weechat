@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-01-04 17:43+0100\n"
+"POT-Creation-Date: 2013-01-07 21:32+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -6584,7 +6584,7 @@ msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
 msgstr ""
 
 #, c-format
-msgid "%s%s: cannot create socket"
+msgid "%s%s: cannot create socket: error %d %s"
 msgstr ""
 
 #, c-format

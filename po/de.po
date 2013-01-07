@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-rc1\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-01-04 17:43+0100\n"
+"POT-Creation-Date: 2013-01-07 21:32+0100\n"
 "PO-Revision-Date: 2012-12-25 11:59+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -8710,9 +8710,9 @@ msgstr "%s%s: IP Adresse \"%s\" für Relay nicht gültig"
 msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
 msgstr "%s%s Fehler beim Erstellen der Socket-Option \"SO_REUSEADDR\""
 
-#, c-format
-msgid "%s%s: cannot create socket"
-msgstr "%s%s: Socket konnte nicht angelegt werden"
+#, fuzzy, c-format
+msgid "%s%s: cannot create socket: error %d %s"
+msgstr "%s%s: Für den Transfer konnte kein Socket angelegt werden"
 
 #, c-format
 msgid "%s%s: cannot set socket option \"IPV6_V6ONLY\" to value %d"
@@ -10165,6 +10165,9 @@ msgstr "Type"
 
 msgid "Constants"
 msgstr "Konstanten"
+
+#~ msgid "%s%s: cannot create socket"
+#~ msgstr "%s%s: Socket konnte nicht angelegt werden"
 
 #~ msgid "No configuration option found"
 #~ msgstr "Konfigurationsoption nicht gefunden"

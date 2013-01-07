@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-rc1\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-01-04 17:43+0100\n"
+"POT-Creation-Date: 2013-01-07 21:32+0100\n"
 "PO-Revision-Date: 2013-01-01 12:57+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7984,9 +7984,9 @@ msgstr "%s%s: adresa \"%s\" nenalezena"
 msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
 msgstr "%s%s: nemohu nastavit nastavení sketu \"SO_REUSEADDR\""
 
-#, c-format
-msgid "%s%s: cannot create socket"
-msgstr "%s%s nemohu vytvořit soket"
+#, fuzzy, c-format
+msgid "%s%s: cannot create socket: error %d %s"
+msgstr "%s%s: nemohu vytvořit soket pro xfer"
 
 #, fuzzy, c-format
 msgid "%s%s: cannot set socket option \"IPV6_V6ONLY\" to value %d"
@@ -9313,3 +9313,6 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#~ msgid "%s%s: cannot create socket"
+#~ msgstr "%s%s nemohu vytvořit soket"
