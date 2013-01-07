@@ -319,7 +319,7 @@ Translations for WeeChat and plugins are done with gettext, files are in 'po/' d
 |========================================
 | Path/file      | Description
 | po/            | Translation files (gettext)
-|    XX.po       | Translations for language XX (fr, de, it, ...), base language is english
+|    XX.po       | Translations for language XX (fr, de, it, ...), base language is English
 |    weechat.pot | Template for translations (auto-built)
 |========================================
 
@@ -405,7 +405,7 @@ foo ()
 ----------------------------------------
 
 * Use explicit variable names, for example "nicks_count" instead of "n" or "nc".
-  Exception: in `for` loops, where variables like "i" or "n" are ok.
+  Exception: in `for` loops, where variables like "i" or "n" are OK.
 * Initialize local variables after declaration, in body of function, example:
 
 [source,C]
@@ -421,7 +421,7 @@ foo ()
 }
 ----------------------------------------
 
-* Use parentheses to explicitely show how expression is evaluated, even if
+* Use parentheses to explicitly show how expression is evaluated, even if
   they are not required, for example: write `x + (y * z)` instead of `x + y * z`
 * Place curly brackets `{ }` alone on lines, and indent them with number of
   spaces used for line above opening curly bracket (the `if` in example):
@@ -945,7 +945,7 @@ Where 'component' is one of following:
 
 Some rules to follow:
 
-* use only english
+* use only English
 * use infinitive form of verb
 * if commit is related to something in tracker (bug, task, patch), write it
   in parenthesis after the message (format: bug #12345, task #12345, patch #12345)
@@ -957,7 +957,7 @@ core: add callback "nickcmp" for nick comparison in buffers
 irc: fix freeze when reading on socket with SSL enabled (bug #35097)
 ruby: add detection of ruby version 1.9.3 in cmake
 python: fix crash when unloading a script without pointer to interpreter
-core: update japanese translations (patch #7783)
+core: update Japanese translations (patch #7783)
 ----------------------------------------
 
 [[translations]]
@@ -977,7 +977,7 @@ $ cd po
 $ msginit -i weechat.pot -l nl_NL -o nl.po
 ----------------------------------------
 
-Base language for WeeChat is english, so you must of course understand english
+Base language for WeeChat is English, so you must of course understand English
 in order to translate to your language.
 
 When done, you *have* to check your file with script 'msgcheck.py'
@@ -1019,7 +1019,7 @@ Asciidoc
 
 Asciidoc files are in directory 'doc/XX/' where 'XX' is language (en, fr, de, it, ...)
 
-First make a copy of an english asciidoc file (in directory 'doc/en/'), then work on it.
+First make a copy of an English asciidoc file (in directory 'doc/en/'), then work on it.
 
 The translations missing in files are indicated by this string:
 

@@ -416,7 +416,7 @@ There are two different identifiers ('id'):
 
 * 'id' sent by 'client': 'relay' will answer with same 'id' in its answer
 * 'id' of an event: on some events, 'relay' will send message to 'client' using
-  a speficic 'id', beginning with underscore (see table below)
+  a specific 'id', beginning with underscore (see table below)
 
 WeeChat reserved identifiers:
 
@@ -466,7 +466,7 @@ WeeChat reserved identifiers:
 
 | _buffer_localvar_changed | Local variable changed  | buffer |
   'number' (integer), 'full_name' (string), 'local_variables' (hashtable) |
-  Change local variable inbuffer
+  Change local variable in buffer
 
 | _buffer_localvar_removed | Local variable removed  | buffer |
   'number' (integer), 'full_name' (string), 'local_variables' (hashtable) |
@@ -782,7 +782,7 @@ A 'info' contains a name and a value (both are strings).
 * 'name' (string): name of info
 * 'value' (string): value
 
-Exemple of info 'version':
+Example of info 'version':
 
 .......................................
 ┌─────────┬───────────────────┐

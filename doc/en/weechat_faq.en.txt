@@ -142,7 +142,7 @@ This may be caused by bad value of the TERM variable in your shell (look at
 output of `echo $TERM` in your terminal, *outside screen/tmux*).
 
 For example, 'xterm-color' may display such weird chars, you can use 'xterm'
-which is ok (like many other values).
+which is OK (like many other values).
 
 If needed, fix your TERM variable: `export TERM="xxx"`.
 
@@ -263,7 +263,7 @@ How can I click on long URLs (more than one line)?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 By default, WeeChat displays time and prefix for each line and optional bars
-around chat area. To make easier url click, you can move nicklist to top and
+around chat area. To make easier URL click, you can move nicklist to top and
 remove alignment on nick:
 
 ----------------------------------------
@@ -274,7 +274,7 @@ remove alignment on nick:
 
 With WeeChat ≥ 0.3.6, you can enable option "eat_newline_glitch", so that
 new line char is not added at the end of each line displayed (it will not break
-url selection):
+URL selection):
 
 ----------------------------------------
 /set weechat.look.eat_newline_glitch on
@@ -314,7 +314,7 @@ and issue these commands when script is loaded:
 /upgrade
 ----------------------------------------
 
-To have english messages with UTF-8 encoding for terminal, for ISO users, you
+To have English messages with UTF-8 encoding for terminal, for ISO users, you
 can issue: `/shell setenv LANG=en_US`.
 
 [[256_colors]]

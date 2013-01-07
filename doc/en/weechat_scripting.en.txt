@@ -791,7 +791,7 @@ message received, so that you can modify it.
 ----------------------------------------
 def modifier_cb(data, modifier, modifier_data, string):
     # add server name to all messages received
-    # (ok that's not very useful, but that's just an example!)
+    # (OK that's not very useful, but that's just an example!)
     return "%s %s" % (string, modifier_data)
 
 weechat.hook_modifier("irc_in_privmsg", "modifier_cb", "")

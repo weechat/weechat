@@ -606,7 +606,7 @@ List of bar options:
 
 | size | integer ≥ 0 |
   The size of the bar: number of columns for position left/right, number
-  of lines for position top/tobbom. A size of `0` means automatic, so the size
+  of lines for position top/bottom. A size of `0` means automatic, so the size
   will be computed according to content displayed in bar.
 
 | size_max | integer ≥ 0 |
@@ -1544,7 +1544,7 @@ suggestions is set in option 'aspell.check.suggestions'.
 To enable suggestions you must set option 'aspell.check.suggestions' to an
 integer ≥ 0 and add the bar item "aspell_suggest" to a bar, like 'status'.
 
-Example of suggestions with english dictionary (`en`):
+Example of suggestions with English dictionary (`en`):
 
 ........................................
 │[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune]                    │
@@ -1552,7 +1552,7 @@ Example of suggestions with english dictionary (`en`):
 └─────────────────────────────────────────────────────────────────────────────────┘
 ........................................
 
-Example of suggestions with english and french dictionaries (`en,fr`):
+Example of suggestions with English and French dictionaries (`en,fr`):
 
 ........................................
 │[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune/prime,primer,primé] │

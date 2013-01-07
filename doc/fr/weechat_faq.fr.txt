@@ -197,7 +197,7 @@ Pour déplacer la barre en bas :
 Comment puis-je réduire la longueur des pseudos ou supprimer l'alignement des pseudos dans la zone de discussion ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Pour réduire la longueur maxi des pseudos dans la zone de discussion :
+Pour réduire la longueur maximum des pseudos dans la zone de discussion :
 
 ----------------------------------------
 /set weechat.look.prefix_align_max 15
@@ -215,7 +215,7 @@ Comment utiliser une ligne de commande sur plusieurs lignes ?
 
 L'option 'size' dans la barre input peut être définie à une valeur supérieure
 à 1 (pour une taille fixe, la taille par défaut est 1) ou 0 pour une taille
-dynamique, et alors l'option 'size_max' définira la taille maxi (0 = pas de
+dynamique, et alors l'option 'size_max' définira la taille maximum (0 = pas de
 limite).
 
 Exemple avec une taille dynamique :
@@ -224,7 +224,7 @@ Exemple avec une taille dynamique :
 /set weechat.bar.input.size 0
 ----------------------------------------
 
-Taille maxi de 2 :
+Taille maximum de 2 :
 
 ----------------------------------------
 /set weechat.bar.input.size_max 2
@@ -562,7 +562,7 @@ Comment puis-je être identifié avant de rejoindre les canaux ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Si le serveur supporte SASL, vous devriez l'utiliser au lieu d'envoyer une
-command pour l'authentification avec nickserv, par exemple :
+commande pour l'authentification avec nickserv, par exemple :
 
 ----------------------------------------
 /set irc.server_default.sasl_mechanism dh-blowfish
@@ -597,8 +597,8 @@ de les voir en désactivant les filtres (par défaut, la touche @k(A-)@k(=)
 active/désactive les filtres).
 
 [[filter_irc_join_part_quit]]
-Comment puis-je filter les messages join/part/quit sur les canaux IRC ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Comment puis-je filtrer les messages join/part/quit sur les canaux IRC ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Avec le filtre intelligent (pour garder les join/part/quit des utilisateurs qui
 ont parlé récemment) :

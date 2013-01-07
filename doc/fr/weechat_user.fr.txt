@@ -103,7 +103,7 @@ compiler WeeChat.
 | ruby1.9.1-dev          | ≥ 1.8       |        | extension ruby
 | liblua5.1-0-dev        |             |        | extension lua
 | tcl-dev                | ≥ 8.5       |        | extension tcl
-| guile-1.8-dev          |             |        | extention guile (scheme)
+| guile-1.8-dev          |             |        | extension guile (scheme)
 | asciidoc               | ≥ 8.5.0     |        | construction de la documentation (fichiers HTML)
 | source-highlight       |             |        | coloration des sources dans la documentation HTML
 |========================================
@@ -434,7 +434,7 @@ La barre 'status' contient les objets (items) suivants par défaut :
 | buffer_nicklist_count | {4}                   | nombre de pseudos dans la liste des pseudos
 | buffer_filter         | *                     | indicateur de filtrage : `*` signifie que des lignes sont filtrées (cachées), une valeur vide signifie que toutes les lignes sont affichées
 | lag                   | [Lag: 2.5]            | indicateur de "lag" (ralentissements réseau), en secondes (caché si le lag est faible)
-| hotlist               | [Act: 4:#abc(2,5), 6] | liste des tampons où il y a de l'activité (messages non lus) (dans cet exemple, 2 highlights et 5 messages non lus sur '#abc', un message non lu sur le buffer numéro 6)
+| hotlist               | [Act: 4:#abc(2,5), 6] | liste des tampons où il y a de l'activité (messages non lus) (dans cet exemple, 2 highlights et 5 messages non lus sur '#abc', un message non lu sur le tampon numéro 6)
 | completion            | abc(2) def(5)         | liste des mots pour la complétion, avec le nombre de complétions possibles pour chaque mot
 | scroll                | -PLUS(50)-            | indicateur de scroll, avec le nombre de lignes sous la dernière ligne affichée
 |========================================
@@ -751,7 +751,7 @@ Quelques exemples de remplissage pour la barre 'nicklist' :
 Conditions
 ^^^^^^^^^^
 
-L'option 'conditions' est uen chaîne évaluée pour savoir si la barre doit être
+L'option 'conditions' est une chaîne évaluée pour savoir si la barre doit être
 affichée ou non dans la fenêtre (elle est utilisée seulement pour les barres
 avec type 'window').
 
@@ -782,7 +782,7 @@ liste de pseudos, et seulement si la largeur de fenêtre est supérieurs à 100 
 /set weechat.bar.nicklist.conditions "${nicklist} && ${window.win_width} > 100"
 ----------------------------------------
 
-Même condition, mais affichier toujours la liste de pseudos sur le tampon
+Même condition, mais afficher toujours la liste de pseudos sur le tampon
 '&bitlbee' (même si la fenêtre est petite) :
 
 ----------------------------------------
@@ -865,7 +865,7 @@ Touches pour la ligne de commande
 | @k(C-)@k(c) , @k(b) | Insérer le code pour mettre le texte en gras | /input insert \x02
 | @k(C-)@k(c) , @k(c) | Insérer le code pour écrire en couleur | /input insert \x03
 | @k(C-)@k(c) , @k(i) | Insérer le code pour mettre le texte en italique | /input insert \x1D
-| @k(C-)@k(c) , @k(o) | Insérer le code pour réinitaliser la couleur | /input insert \x0F
+| @k(C-)@k(c) , @k(o) | Insérer le code pour réinitialiser la couleur | /input insert \x0F
 | @k(C-)@k(c) , @k(r) | Insérer le code pour écrire en couleur inversée | /input insert \x12
 | @k(C-)@k(c) , @k(u) | Insérer le code pour écrire en souligné | /input insert \x15
 | @k(Del)          .2+| Effacer le caractère suivant sur la ligne de commande .2+| /input delete_next_char
@@ -996,7 +996,7 @@ Ces touches sont utilisées dans le contexte "cursor" (mouvement libre du curseu
 | @k(K)        | liste des pseudos | Retirer par la force et bannir le pseudo | /window ${_window_number};/kickban ${nick}
 | @k(q)        | liste des pseudos | Ouvrir une discussion avec le pseudo | /window ${_window_number};/query ${nick};/cursor stop
 | @k(w)        | liste des pseudos | Effectuer un whois sur le pseudo | /window ${_window_number};/whois ${nick}
-| @k(Enter) .3+| -              .3+| Stop cursor mode .3+| /cursor stop
+| @k(Enter) .3+| -              .3+| Arrêter le mode curseur ("cursor") .3+| /cursor stop
 | @k(C-)@k(j)
 | @k(C-)@k(m)
 |========================================
@@ -1022,8 +1022,8 @@ Ces touches sont utilisées dans le contexte "mouse", c'est-à-dire lorsqu'un
 | ⇓       | -            | chat                 | Descendre de quelques lignes dans l'historique du tampon | /window scroll_down -window ${_window_number}
 | ⇑       | -            | chat (tampon script) | Monter de 5 lignes dans le tampon script | /script up 5
 | ⇓       | -            | chat (tampon script) | Descendre de 5 lignes dans le tampon script | /script down 5
-| @k(C-)⇑ | -            | chat                 | Faire défiler horizontallement vers la gauche | /window scroll_horiz -window ${_window_number} -10%
-| @k(C-)⇓ | -            | chat                 | Faire défiler horizontallement vers la droite | /window scroll_horiz -window ${_window_number} +10%
+| @k(C-)⇑ | -            | chat                 | Faire défiler horizontalement vers la gauche | /window scroll_horiz -window ${_window_number} -10%
+| @k(C-)⇓ | -            | chat                 | Faire défiler horizontalement vers la droite | /window scroll_horiz -window ${_window_number} +10%
 | ◾◽◽     | up           | liste des pseudos    | Monter d'une page dans la liste des pseudos | /bar scroll nicklist ${_window_number} -100%
 | ◾◽◽     | down         | liste des pseudos    | Descendre d'une page dans la liste des pseudos | /bar scroll nicklist ${_window_number} +100%
 | ◾◽◽     | up (long)    | liste des pseudos    | Aller au début de la liste des pseudos | /bar scroll nicklist ${_window_number} b
@@ -1164,7 +1164,7 @@ avec le bouton gauche.
 
 [TIP]
 Vous pouvez trouver le nom de l'évènement avec la commande `/input grab_mouse`
-puis en faisant l'action avec la souris. Cela insèrera le nom de l'évènement
+puis en faisant l'action avec la souris. Cela insérera le nom de l'évènement
 sur la ligne de commande.
 
 [[command_line]]

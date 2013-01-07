@@ -147,7 +147,7 @@ Se connecter au serveur IRC et rejoindre les canaux
 
 [NOTE]
 Cette commande peut aussi être utilisée pour créer et se connecter au serveur
-sans utiliser la commande `/server` (devrais-je répéter que vous pouvez voir
+sans utiliser la commande `/server` (dois-je répéter que vous pouvez voir
 l'aide pour cette commande avec `/help connect` ?).
 
 Par défaut, les tampons des serveurs sont mélangés avec le tampon 'core'
@@ -247,7 +247,7 @@ De nombreux scripts externes (de contributeurs) sont disponibles pour WeeChat :
 http://www.weechat.org/scripts
 
 Vous pouvez gérer les scripts dans WeeChat avec la commande `/script` (voir
-`/help script` pour plus d'info).
+`/help script` pour plus d'infos).
 
 
 [[more_doc]]

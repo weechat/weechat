@@ -93,7 +93,7 @@ compile WeeChat.
 | zlib1g-dev             |             | *yes*    | compression of packets in relay plugin (weechat protocol), script plugin
 | libgcrypt11-dev        |             | *yes*    | SASL authentication with IRC server using DH-BLOWFISH mechanism, script plugin
 | libgnutls-dev          | ≥ 2.2.0     |          | SSL connection to IRC server, support of SSL in relay plugin
-| gettext                |             |          | internationalization (translation of messages; base language is english)
+| gettext                |             |          | internationalization (translation of messages; base language is English)
 | ca-certificates        |             |          | certificates for SSL connections
 | libaspell-dev          |             |          | aspell plugin
 | python-dev             | ≥ 2.5 ^(3)^ |          | python plugin
@@ -590,7 +590,7 @@ List of bar options:
 
 | size | integer ≥ 0 |
   The size of the bar: number of columns for position left/right, number
-  of lines for position top/tobbom. A size of `0` means automatic, so the size
+  of lines for position top/bottom. A size of `0` means automatic, so the size
   will be computed according to content displayed in bar.
 
 | size_max | integer ≥ 0 |
@@ -1510,7 +1510,7 @@ suggestions is set in option 'aspell.check.suggestions'.
 To enable suggestions you must set option 'aspell.check.suggestions' to an
 integer ≥ 0 and add the bar item "aspell_suggest" to a bar, like 'status'.
 
-Example of suggestions with english dictionary (`en`):
+Example of suggestions with English dictionary (`en`):
 
 ........................................
 │[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune]                    │
@@ -1518,7 +1518,7 @@ Example of suggestions with english dictionary (`en`):
 └─────────────────────────────────────────────────────────────────────────────────┘
 ........................................
 
-Example of suggestions with english and french dictionaries (`en,fr`):
+Example of suggestions with English and French dictionaries (`en,fr`):
 
 ........................................
 │[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune/prime,primer,primé] │
@@ -1753,7 +1753,7 @@ irc.server.xxx.ssl_verify::
 
 [NOTE]
 Option "ssl_verify" is on by default, so verification is strict and may fail,
-even if it was ok with versions prior to 0.3.1.
+even if it was OK with versions prior to 0.3.1.
 
 [[irc_connect_oftc_with_certificate]]
 First example: connect to oftc and check certificate
@@ -1801,8 +1801,8 @@ SASL authentication
 ^^^^^^^^^^^^^^^^^^^
 
 WeeChat supports SASL authentication, using three mechanisms: "plain" (plain
-text password), "dh-blowfish" (crypted password) or "external" (client side SSL
-cert).
+text password), "dh-blowfish" (encrypted password) or "external" (client side
+SSL cert).
 
 Options in servers are:
 
@@ -1833,7 +1833,7 @@ First, make sure to have WeeChat compiled with <<dependencies,libgcrypt11-dev>>
 (if built from sources); it's not mandatory, but "dh-blowfish" ensures stronger
 security compared to "plain" authentication system with SASL.
 
-In first place, install TOR. For Debian (and derivated):
+In first place, install TOR. For Debian (and derived):
 
 ----------------------------------------
 $ sudo apt-get install tor
@@ -2509,8 +2509,8 @@ until this sentence, you can start again!).
 
 Ways to get support:
 
-* IRC: server 'irc.freenode.net', channels '#weechat' (english) and
-  '#weechat-fr' (french)
+* IRC: server 'irc.freenode.net', channels '#weechat' (English) and
+  '#weechat-fr' (French)
 * Mailing list:
 ** subscribe: http://mail.nongnu.org/mailman/listinfo/weechat-support
 ** send mail to weechat-support@nongnu.org

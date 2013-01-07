@@ -733,7 +733,7 @@ def config_cb(data, option, value):
 # ...
 
 weechat.hook_config("plugins.var.python." + SCRIPT_NAME + ".*", "config_cb", "")
-# pour les autres languages, remplacez "python" par le language ("perl", "ruby", "lua" ou "tcl")
+# pour les autres langages, remplacez "python" par le langage ("perl", "ruby", "lua" ou "tcl")
 ----------------------------------------
 
 [[config_options_weechat]]
