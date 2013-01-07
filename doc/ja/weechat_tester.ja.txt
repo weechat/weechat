@@ -89,7 +89,7 @@ $ make install
 cmake が無い場合は autotools を使うことも可能です:
 
 ----------------------------------------------------------
-$ ./autogen.sh       # (git リポジトリから clone した場合のみ)
+$ ./autogen.sh
 $ ./configure --prefix=$HOME/weechat-git
 $ make
 $ make install

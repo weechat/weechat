@@ -94,7 +94,7 @@ $ make install
 Jeśli nie posiadasz cmake, nadal jest możliwe użycie autotools:
 
 ----------------------------------------------------------
-$ ./autogen.sh       # (only if you cloned git repository)
+$ ./autogen.sh
 $ ./configure --prefix=$HOME/weechat-git
 $ make
 $ make install
