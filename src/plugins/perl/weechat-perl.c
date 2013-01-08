@@ -90,7 +90,7 @@ char *perl_weechat_code =
     "    open FILE, $filename or return \"__WEECHAT_PERL_ERROR__\";"
     "    $_ = <FILE>;"
     "    close FILE;"
-    "    return $_;"
+    "    return qq{\n#line 1 \"$filename\"\n$_};"
     "}"
     "sub weechat_perl_load_eval_file"
     "{"
