@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-rc1\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-01-07 21:32+0100\n"
-"PO-Revision-Date: 2013-01-07 21:32+0100\n"
+"POT-Creation-Date: 2013-01-08 08:06+0100\n"
+"PO-Revision-Date: 2013-01-08 08:07+0100\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -8477,6 +8477,10 @@ msgstr "%s%s: impossible d'activer l'option socket \"SO_REUSEADDR\""
 #, c-format
 msgid "%s%s: cannot create socket: error %d %s"
 msgstr "%s%s: impossible de créer la socket: erreur %d %s"
+
+#, c-format
+msgid "%s%s: try /set relay.network.ipv6 off"
+msgstr "%s%s: essayez /set relay.network.ipv6 off"
 
 #, c-format
 msgid "%s%s: cannot set socket option \"IPV6_V6ONLY\" to value %d"

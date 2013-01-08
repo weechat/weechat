@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-rc1\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-01-07 21:32+0100\n"
+"POT-Creation-Date: 2013-01-08 08:06+0100\n"
 "PO-Revision-Date: 2013-01-02 03:32+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -8184,6 +8184,10 @@ msgstr "%s%s: ソケットオプション \"SO_REUSEADDR\" の設定に失敗"
 #, fuzzy, c-format
 msgid "%s%s: cannot create socket: error %d %s"
 msgstr "%s%s: xfer 用のソケットの作成に失敗"
+
+#, c-format
+msgid "%s%s: try /set relay.network.ipv6 off"
+msgstr ""
 
 #, c-format
 msgid "%s%s: cannot set socket option \"IPV6_V6ONLY\" to value %d"
