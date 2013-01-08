@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.0-rc2, 2013-01-06
+v0.4.0-rc2, 2013-01-08
 
 
 Version 0.4.0 (under dev!)
@@ -102,6 +102,8 @@ Version 0.4.0 (under dev!)
 * irc: fix crash when message 352 has too few arguments (bug #37513)
 * irc: remove unneeded server disconnect when server buffer is closed and server
   is already disconnected
+* perl: fix calls to callbacks during load of script when multiplicity is
+  disabled (bug #38044)
 * relay: fix memory leak when adding hdata to a message (weechat protocol)
 * relay: add backlog and server capability "server-time" for irc protocol, add
   new options relay.irc.backlog_max_minutes, relay.irc.backlog_max_number,
@@ -872,7 +874,7 @@ Version 0.3.2 (2010-04-18)
 * alias: add custom completion for aliases (task #9479)
 * scripts: allow script commands to reload only one script
 * scripts: fix bug with callbacks when loading a script already loaded
-* perl: fix crash when MULTIPLICITY is disabled
+* perl: fix crash when multiplicity is disabled
 * perl: fix crash when callbacks are called during script initialization
   (bug #29018)
 * perl: fix crash on /quit or unload of plugin under FreeBSD and Cygwin

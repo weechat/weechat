@@ -91,6 +91,9 @@
 #define API_DEF_FUNC(__name)                                           \
     newXS ("weechat::" #__name, XS_weechat_api_##__name, "weechat");
 
+#ifdef NO_PERL_MULTIPLICITY
+#undef MULTIPLICITY
+#endif
 
 extern void boot_DynaLoader (pTHX_ CV* cv);
 
@@ -153,6 +156,9 @@ XS (XS_weechat_api_register)
                                              description, shutdown_func, charset);
     if (perl_current_script)
     {
+#ifndef MULTIPLICITY
+        perl_current_script->interpreter = SvPV_nolen (eval_pv ("__PACKAGE__", TRUE));
+#endif
         perl_registered_script = perl_current_script;
         if ((weechat_perl_plugin->debug >= 2) || !perl_quiet)
         {
