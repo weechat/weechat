@@ -83,34 +83,18 @@ char *perl_weechat_code =
     "package WeechatPerlScriptLoader;"
 #endif
     "$weechat_perl_load_eval_file_error = \"\";"
-    "sub weechat_perl_load_file"
-    "{"
-    "    my $filename = shift;"
-    "    local $/ = undef;"
-    "    open FILE, $filename or return \"__WEECHAT_PERL_ERROR__\";"
-    "    $_ = <FILE>;"
-    "    close FILE;"
-    "    return qq{\n#line 1 \"$filename\"\n$_};"
-    "}"
     "sub weechat_perl_load_eval_file"
     "{"
-#ifdef MULTIPLICITY
-    "    my $filename = shift;"
-#else
     "    my ($filename, $package) = @_;"
-#endif
-    "    my $content = weechat_perl_load_file ($filename);"
-    "    if ($content eq \"__WEECHAT_PERL_ERROR__\")"
-    "    {"
-    "        return 1;"
-    "    }"
 #ifdef MULTIPLICITY
-    "    my $eval = $content;"
+    "    do $filename;"
 #else
-    "    my $eval = qq{package $package; $content;};"
+    "    eval \"package $package; \".'do $filename;';"
 #endif
+    "    if ($!)"
     "    {"
-    "      eval $eval;"
+    "        $weechat_perl_load_eval_file_error = $!;"
+    "        return 1;"
     "    }"
     "    if ($@)"
     "    {"
