@@ -11893,7 +11893,7 @@ void weechat_command (struct t_gui_buffer *buffer, const char *command);
 Arguments:
 
 * 'buffer': buffer pointer (command is executed on this buffer, use NULL for
-  WeeChat core buffer)
+  current buffer)
 * 'command': command to execute (if beginning with a "/"), or text to send to
   buffer
 

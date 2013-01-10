@@ -12096,7 +12096,7 @@ void weechat_command (struct t_gui_buffer *buffer, const char *command);
 Paramètres :
 
 * 'buffer' : pointeur vers le tampon (la commande est exécutée sur ce tampon,
-  NULL pour le tampon "core")
+  NULL pour le tampon courant)
 * 'command' : commande à exécuter (si elle commence par "/"), ou texte à
   envoyer au tampon
 

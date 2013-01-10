@@ -12035,7 +12035,7 @@ void weechat_command (struct t_gui_buffer *buffer, const char *command);
 Argomenti:
 
 * 'buffer': puntatore al buffer (il comando viene eseguito su questo buffer,
-  utilizzare NULL per il buffer core di WeeChat)
+  utilizzare NULL per il buffer corrente)
 * 'command': comando da eseguire (se preceduto da "/"), oppure il testo
   viene inviato sul buffer
 
