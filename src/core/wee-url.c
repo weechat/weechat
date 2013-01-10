@@ -1,7 +1,7 @@
 /*
  * wee-url.c - URL transfer
  *
- * Copyright (C) 2013 Sebastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2012-2013 Sebastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
