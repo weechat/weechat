@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.0-rc2, 2013-01-08
+v0.4.0-rc2, 2013-01-10
 
 
 Version 0.4.0 (under dev!)
@@ -220,7 +220,7 @@ Version 0.3.9 (2012-09-29)
 * irc: add bar item "buffer_modes", remove option irc.look.item_channel_modes
   (task #12022)
 * irc: fix parsing of user modes (ignore everything after first space)
-  (bug #36756)
+  (bug #36756, bug #31572)
 * irc: add option irc.look.ctcp_time_format to customize reply to CTCP TIME
   (task #12150)
 * irc: fix freeze when reading on socket with SSL enabled (use non-blocking
