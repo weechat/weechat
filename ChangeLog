@@ -102,7 +102,6 @@ Version 0.4.0 (under dev!)
 * irc: fix crash when message 352 has too few arguments (bug #37513)
 * irc: remove unneeded server disconnect when server buffer is closed and server
   is already disconnected
-* perl: simplify code to load scripts
 * perl: display script filename in error messages
 * perl: fix calls to callbacks during load of script when multiplicity is
   disabled (bug #38044)
