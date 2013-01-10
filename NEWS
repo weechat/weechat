@@ -1,7 +1,7 @@
 WeeChat Release Notes
 =====================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.0-rc2, 2013-01-05
+v0.4.0-rc2, 2013-01-10
 
 
 Version 0.4.0 (under dev!)
@@ -132,11 +132,11 @@ Important release notes:
   'irc.color.nick_prefix_op', 'irc.color.nick_prefix_halfop',
   'irc.color.nick_prefix_voice', 'irc.color.nick_prefix_user'
 * count of messages have been added to hotlist by default, if you want to come
-  back to old behaviour, do that:
+  back to old behavior, do that:
 ** `/set weechat.look.hotlist_count_max 0`
 ** `/set weechat.look.hotlist_buffer_separator ","`
 * when you are away, all buffers are now added to hotlist by default (even if
-  they are displayed in a window), if you want to come back to old behaviour, do
+  they are displayed in a window), if you want to come back to old behavior, do
   that:
 ** `/set weechat.look.hotlist_add_buffer_if_away off`
 * new keys were added, use command `/key missing` to add them or `/key listdiff`

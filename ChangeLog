@@ -172,7 +172,7 @@ Version 0.3.9 (2012-09-29)
 * core: add function "hook_set" in plugin API, add "subplugin" in hooks (set by
   script plugins), display subplugin in /help on commands (task #12049)
 * core: add option weechat.look.jump_smart_back_to_buffer (jump back to initial
-  buffer after reaching end of hotlist, on by default, which is old behaviour)
+  buffer after reaching end of hotlist, on by default, which is old behavior)
 * core: add default key alt+"s" (toggle aspell)
 * core: add cmake option "MANDIR" (bug #36776)
 * core: add callback "nickcmp" in buffers
@@ -365,7 +365,7 @@ Version 0.3.7 (2012-02-26)
   gnome-terminal
 * core: add option "hooks" for command /debug
 * core: add option "weechat.look.scroll_bottom_after_switch" (if enabled,
-  restore old behaviour before fix of bug #25555 in version 0.3.5)
+  restore old behavior before fix of bug #25555 in version 0.3.5)
 * core: apply filters after full reload of configuration files (with /reload)
   (bug #31182)
 * core: allow list for option weechat.plugin.extension (makes weechat.conf
@@ -708,7 +708,7 @@ Version 0.3.4 (2011-01-16)
   when chars are added to a text not found (bug #31167)
 * core: fix memory leaks when removing item in hashtable and when setting
   highlight words in buffer
-* core: use similar behaviour for keys bound to local or global history
+* core: use similar behavior for keys bound to local or global history
   (bug #30759)
 * api: add priority for hooks (task #10550)
 * api: add new functions: list_search_pos, list_casesearch_pos,
@@ -1420,7 +1420,7 @@ Version 0.1.8 (2006-03-18)
 * add new plugins functions: add_timer_handler, remove_timer_handler,
   remove_infobar
 * plugin messages handlers now called when message is ignored (by /ignore)
-* new behaviour for messages ignored by a message handler: now WeeChat
+* new behavior for messages ignored by a message handler: now WeeChat
   executes standard handler, treating message as "ignored"
 * many commands allowed for aliases
 * many commands allowed when connecting to server

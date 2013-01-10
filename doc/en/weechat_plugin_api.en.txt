@@ -10169,7 +10169,7 @@ Arguments:
   set cursor position in buffer input
 
 | input_get_unknown_commands | "0" or "1" |
-  "0" to disable unknown commands on this buffer (default behaviour), "1" to
+  "0" to disable unknown commands on this buffer (default behavior), "1" to
   get unknown commands, for example if user type "/unknowncmd", buffer will
   receive it (no error about unknown command)
 
