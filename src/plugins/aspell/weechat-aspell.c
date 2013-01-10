@@ -362,7 +362,10 @@ weechat_aspell_create_spellers (struct t_gui_buffer *buffer)
                 }
                 weechat_string_free_split (argv);
             }
+            weechat_buffer_set (buffer, "localvar_set_aspell_dict", dict_list);
         }
+        else
+            weechat_buffer_set (buffer, "localvar_del_aspell_dict", "");
         weechat_bar_item_update ("aspell_dict");
     }
 }
