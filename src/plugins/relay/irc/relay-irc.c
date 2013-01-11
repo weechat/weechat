@@ -361,7 +361,7 @@ relay_irc_tag_relay_client_id (const char *tags)
 }
 
 /*
- * Callback for signal "irc_out".
+ * Callback for signal "irc_outtags".
  *
  * This is called when a message is sent to IRC server (by irc plugin or any
  * other plugin/script).
@@ -398,7 +398,7 @@ relay_irc_signal_irc_outtags_cb (void *data, const char *signal,
 
     if (weechat_relay_plugin->debug >= 2)
     {
-        weechat_printf (NULL, "%s: irc_out: client: %s%s%s, message: %s",
+        weechat_printf (NULL, "%s: irc_outtags: client: %s%s%s, message: %s",
                         RELAY_PLUGIN_NAME,
                         RELAY_COLOR_CHAT_CLIENT,
                         client->desc,
