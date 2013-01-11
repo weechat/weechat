@@ -1670,7 +1670,7 @@ relay_irc_recv_one_msg (struct t_relay_client *client, char *data)
                     weechat_hashtable_set (hash_redirect, "pattern", "userhost");
                 }
                 /*
-                 * if redirection has been enabled, send the hsignel for
+                 * if redirection has been enabled, send the hsignal for
                  * redirection of IRC message
                  */
                 if (redirect_msg)
