@@ -50,8 +50,7 @@ weechat_aspell_bar_item_dict (void *data, struct t_gui_bar_item *item,
     buffer = weechat_window_get_pointer (window, "buffer");
     if (buffer)
     {
-        dict_list = weechat_buffer_get_string (buffer,
-                                               "localvar_aspell_dict");
+        dict_list = weechat_aspell_get_dict (buffer);
         if (dict_list)
             return strdup (dict_list);
     }
