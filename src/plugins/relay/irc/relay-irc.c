@@ -495,6 +495,12 @@ relay_irc_signal_irc_disc_cb (void *data, const char *signal,
 
     client = (struct t_relay_client *)data;
 
+    if (weechat_relay_plugin->debug >= 2)
+    {
+        weechat_printf (NULL, "%s: irc_disconnected: data: %s",
+                        RELAY_PLUGIN_NAME, (char *)signal_data);
+    }
+
     if (strcmp ((char *)signal_data, client->protocol_args) == 0)
     {
         relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
