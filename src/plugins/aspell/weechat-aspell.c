@@ -325,7 +325,7 @@ weechat_aspell_spellers_already_ok (const char *dict_list)
             }
             ptr_speller = ptr_speller->next_speller;
         }
-        if (ptr_speller && ptr_speller->next_speller)
+        if (ptr_speller)
             rc = 0;
         weechat_string_free_split (argv);
     }
