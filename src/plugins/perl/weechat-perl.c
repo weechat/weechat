@@ -398,7 +398,7 @@ weechat_perl_load (const char *filename)
 #else
     snprintf (pkgname, sizeof (pkgname), "%s%d", PKG_NAME_PREFIX, perl_num);
     perl_num++;
-    length = strlen (perl_weechat_code) - 4 + strlen (pkgname) strlen (filename) + 1;
+    length = strlen (perl_weechat_code) - 4 + strlen (pkgname) + strlen (filename) + 1;
     perl_code = malloc (length);
     if (!perl_code)
         return 0;
