@@ -99,7 +99,7 @@
 ** Werte: 1024 .. 102400 (Standardwert: `65536`)
 
 * [[option_xfer.network.fast_send]] *xfer.network.fast_send*
-** Beschreibung: `wartet beim Versenden von Dateien nicht auf ein Bestätigungssignal (ACK)`
+** Beschreibung: `beim Versenden von Daten wird nicht auf ein Bestätigungssignal (ACK) gewartet`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -109,7 +109,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_xfer.network.port_range]] *xfer.network.port_range*
-** Beschreibung: `schränkt den ausgehenden Datenversand bzw. die Chats auf die ausschließliche Nutzung von Ports in einem vorgegebenen Bereich ein (hilfreich bei NAT) (Syntax: ein einzelner Port, z.B. 5000 oder ein Port-Bereich, z.B. 5000-5015. Es wird empfohlen Ports zu nutzen welche Größer als 1024 sind. Denn nur der User "root" kann auf den Port-Bereich <1024 zugreifen)`
+** Beschreibung: `schränkt den ausgehenden Datenversand/Chats auf die ausschließliche Nutzung von Ports in einem vorgegebenen Bereich ein (hilfreich bei NAT) (Syntax: ein einzelner Port, z.B. 5000 oder ein Port-Bereich, z.B. 5000-5015. Es wird empfohlen nur Ports zu nutzen die über 1024 liegen. Denn nur der User "root" kann auf den Port-Bereich unter 1024 zugreifen)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
