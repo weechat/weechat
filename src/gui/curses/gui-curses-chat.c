@@ -1516,7 +1516,8 @@ gui_chat_draw (struct t_gui_buffer *buffer, int clear_chat)
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
         if ((ptr_win->buffer->number == buffer->number)
-            && (ptr_win->win_chat_x >= 0) && (ptr_win->win_chat_y >= 0))
+            && (ptr_win->win_chat_x >= 0) && (ptr_win->win_chat_y >= 0)
+            && (GUI_WINDOW_OBJECTS(ptr_win)->win_chat))
         {
             gui_window_coords_alloc (ptr_win);
 
