@@ -176,7 +176,7 @@ gui_bar_window_search_by_xy (struct t_gui_window *window, int x, int y,
                 /*
                  * when the bar is on left/right, the last space (after last
                  * column) is not displayed, so we add 1 to width for finding
-                 * number of columns)
+                 * number of columns
                  */
                 num_cols = ((*bar_window)->width + 1) / (*bar_window)->screen_col_size;
             }
