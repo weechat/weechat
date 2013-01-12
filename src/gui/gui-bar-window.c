@@ -121,8 +121,8 @@ gui_bar_window_search_by_xy (struct t_gui_window *window, int x, int y,
 {
     struct t_gui_bar *ptr_bar;
     struct t_gui_bar_window *ptr_bar_window;
-    int filling, num_cols, column, lines, lines_old, i, j, coord_x, coord_y;
-    int item, subitem;
+    int filling, position, num_cols, column, lines, lines_old, i, j;
+    int coord_x, coord_y, item, subitem;
 
     *bar_window = NULL;
     *bar_item = NULL;
@@ -162,6 +162,7 @@ gui_bar_window_search_by_xy (struct t_gui_window *window, int x, int y,
     if (*bar_window)
     {
         filling = gui_bar_get_filling ((*bar_window)->bar);
+        position = CONFIG_INTEGER((*bar_window)->bar->options[GUI_BAR_OPTION_POSITION]);
 
         *bar_item_line = y - (*bar_window)->y + (*bar_window)->scroll_y;
         *bar_item_col = x - (*bar_window)->x + (*bar_window)->scroll_x;
@@ -169,7 +170,20 @@ gui_bar_window_search_by_xy (struct t_gui_window *window, int x, int y,
         if ((filling == GUI_BAR_FILLING_COLUMNS_HORIZONTAL)
             && ((*bar_window)->screen_col_size > 0))
         {
-            num_cols = (*bar_window)->width / (*bar_window)->screen_col_size;
+            if ((position == GUI_BAR_POSITION_LEFT)
+                || (position == GUI_BAR_POSITION_RIGHT))
+            {
+                /*
+                 * when the bar is on left/right, the last space (after last
+                 * column) is not displayed, so we add 1 to width for finding
+                 * number of columns)
+                 */
+                num_cols = ((*bar_window)->width + 1) / (*bar_window)->screen_col_size;
+            }
+            else
+            {
+                num_cols = (*bar_window)->width / (*bar_window)->screen_col_size;
+            }
             column = *bar_item_col / (*bar_window)->screen_col_size;
             *bar_item_line = (*bar_item_line * num_cols) + column;
             *bar_item_col = *bar_item_col - (column * ((*bar_window)->screen_col_size));
@@ -179,7 +193,7 @@ gui_bar_window_search_by_xy (struct t_gui_window *window, int x, int y,
             && ((*bar_window)->screen_col_size > 0))
         {
             column = *bar_item_col / (*bar_window)->screen_col_size;
-            *bar_item_line = (column * ((*bar_window)->height)) + *bar_item_line;
+            *bar_item_line = (column * ((*bar_window)->screen_lines)) + *bar_item_line;
             *bar_item_col = *bar_item_col % ((*bar_window)->screen_col_size);
         }
 
@@ -412,6 +426,7 @@ gui_bar_window_content_alloc (struct t_gui_bar_window *bar_window)
     bar_window->items_num_lines = NULL;
     bar_window->items_refresh_needed = NULL;
     bar_window->screen_col_size = 0;
+    bar_window->screen_lines = 0;
     bar_window->items_subcount = malloc (bar_window->items_count *
                                          sizeof (*bar_window->items_subcount));
     if (!bar_window->items_subcount)
@@ -819,6 +834,7 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
                 lines = bar_window->height;
             }
             bar_window->screen_col_size = max_length_screen + 1;
+            bar_window->screen_lines = lines;
 
             /* build array with pointers to split items */
 
@@ -1084,6 +1100,7 @@ gui_bar_window_new (struct t_gui_bar *bar, struct t_gui_window *window)
         new_bar_window->items_num_lines = NULL;
         new_bar_window->items_refresh_needed = NULL;
         new_bar_window->screen_col_size = 0;
+        new_bar_window->screen_lines = 0;
         new_bar_window->coords_count = 0;
         new_bar_window->coords = NULL;
         gui_bar_window_objects_init (new_bar_window);
@@ -1424,6 +1441,7 @@ gui_bar_window_hdata_bar_window_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_gui_bar_window, items_num_lines, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_bar_window, items_refresh_needed, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_bar_window, screen_col_size, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_bar_window, screen_lines, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_bar_window, coords_count, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_bar_window, coords, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_bar_window, gui_objects, POINTER, 0, NULL, NULL);
@@ -1496,6 +1514,8 @@ gui_bar_window_add_to_infolist (struct t_infolist *infolist,
     }
     if (!infolist_new_var_integer (ptr_item, "screen_col_size", bar_window->screen_col_size))
         return 0;
+    if (!infolist_new_var_integer (ptr_item, "screen_lines", bar_window->screen_lines))
+        return 0;
     if (!infolist_new_var_pointer (ptr_item, "gui_objects", bar_window->gui_objects))
         return 0;
 
@@ -1550,8 +1570,9 @@ gui_bar_window_print_log (struct t_gui_bar_window *bar_window)
             log_printf ("    items_content. . . . . . : 0x%lx", bar_window->items_content);
         }
     }
-    log_printf ("    screen_col_size. . . . : %d",    bar_window->screen_col_size);
-    log_printf ("    coords_count . . . . . : %d",    bar_window->coords_count);
+    log_printf ("    screen_col_size. . . . : %d", bar_window->screen_col_size);
+    log_printf ("    screen_lines . . . . . : %d", bar_window->screen_lines);
+    log_printf ("    coords_count . . . . . : %d", bar_window->coords_count);
     for (i = 0; i < bar_window->coords_count; i++)
     {
         log_printf ("    coords[%03d]. . . . . . : item=%d, subitem=%d, "

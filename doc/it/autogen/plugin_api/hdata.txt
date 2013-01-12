@@ -367,6 +367,7 @@
   'items_num_lines' (pointer) +
   'items_refresh_needed' (pointer) +
   'screen_col_size' (integer) +
+  'screen_lines' (integer) +
   'coords_count' (integer) +
   'coords' (pointer) +
   'gui_objects' (pointer) +

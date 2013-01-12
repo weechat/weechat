@@ -49,6 +49,8 @@ struct t_gui_bar_window
     int **items_refresh_needed;     /* refresh needed for (sub)item?        */
     int screen_col_size;            /* size of columns on screen            */
                                     /* (for filling with columns)           */
+    int screen_lines;               /* number of lines on screen            */
+                                    /* (for filling with columns)           */
     int coords_count;               /* number of coords saved               */
     struct t_gui_bar_window_coords **coords; /* coords for filling horiz.   */
                                     /* (size is 5 * coords_count)           */
