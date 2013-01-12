@@ -101,17 +101,15 @@ Aby włączyć automatyczne łączenie się z serwerem przy starcie:
 
   /set irc.server.oftc.autoconnect on
 
-// TRANSLATION MISSING
-If SASL is available on server, you can use it for authentication (you will be
-identified before you join channels):
+Jeśli SASL jest dostępny na serwerze, można użyć go do uwierzytelnienia (zostaniesz
+zidentyfikowany przed wejściem na kanał):
 
   /set irc.server_default.sasl_mechanism dh-blowfish
   /set irc.server.oftc.sasl_username "mójnick"
   /set irc.server.oftc.sasl_password "xxxxxxx"
 
-// TRANSLATION MISSING
-To run a command after connection to server, for example to authenticate
-with nickserv (only if you don't use SASL for authentication):
+Żeby wykonać komendę po połączeniu z serwerem, na przykład uwierzytelnienie
+przez nickserv (tylko jeśli nie uwierzytelniasz się przez SASL):
 
   /set irc.server.oftc.command "/msg nickserv identify xxxxxxx"
 
@@ -235,9 +233,8 @@ skrypty).
 Wiele zewnętrznych skryptów (od społeczności) jest dostępnych dla WeeChat:
 http://www.weechat.org/scripts
 
-// TRANSLATION MISSING
-You can manage scripts in WeeChat with command `/script` (see `/help script`
-for more info).
+Możesz zarządzac skryptami w WeeChat dzięki komendzie `/script` (zobacz `/help script`
+po więcej informacji).
 
 
 [[more_doc]]

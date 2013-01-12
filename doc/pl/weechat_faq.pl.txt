@@ -3,10 +3,9 @@ WeeChat FAQ (Często zadawane pytania)
 Sébastien Helleu <flashcode@flashtux.org>
 
 
-// TRANSLATION MISSING
 [NOTE]
-This document is written for WeeChat versions ≥ 0.3.0 but should preferably be
-used with latest stable version of WeeChat.
+Ten dokument jest napisany dla WeeChat w wersji ≥ 0.3.0, ale powinien być używany
+dla najnowszej stabilnej wersji.
 
 
 [[general]]
@@ -205,22 +204,21 @@ W celu ograniczenia długości nicków w oknie rozmowy:
 /set weechat.look.prefix_align none
 ----------------------------------------
 
-// TRANSLATION MISSING
 [[input_bar_size]]
-How to use command line with more than one line?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Jak używać linii poleceń z więcej niż jednym wierszem?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The option 'size' in input bar can be set to a value higher than 1 (for fixed
-size, default size is 1) or 0 for dynamic size, and then option 'size_max' will
-set the max size (0 = no limit).
+Opcja 'size' paska wprowadzania może zostać ustawiona na wartość wyższą niż 1
+(dla ustalonej wartości, domyślny rozmiar to 1) lub 0 dla dynamicznego rozmiaru,
+następnie opcja 'size_max' ustali maksymalny rozmiar (0 = brak limitu).
 
-Example with dynamic size:
+Przykład dynamicznego rozmiaru:
 
 ----------------------------------------
 /set weechat.bar.input.size 0
 ----------------------------------------
 
-Max size of 2:
+Maksymalny rozmiar równy 2:
 
 ----------------------------------------
 /set weechat.bar.input.size_max 2
@@ -475,14 +473,13 @@ działa to dla X/Y większych dla 94.
 Powinieneś użyć terminala wspierającego położenia UTF-8 dla myszy, jak
 rxvt-unicode.
 
-// TRANSLATION MISSING
 [[mouse_select_paste]]
-How can I select or paste text in terminal when mouse is enabled in WeeChat?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Jak mogę zaznaczyć lub wkleić tekst w terminalu z włączoną obsługa myszy w WeeChat?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When mouse is enabled in WeeChat, you can use @k(-S-) modifier to select or
-click in terminal, as if the mouse was disabled (on some terminals like iTerm,
-you have to use @k(-A-) instead of @k(-S-)).
+Kiedy obsługa myszy jest włączona w WeeChat, można użyć modyfikatora @k(-S-) do zaznaczania
+lub kliknać w terminalu, tak jak w przypadku wyłączonej obsługi myszy (w niektórych
+terminalach jak iTerm należy użyć @k(-A-) zamiast @k(-S-)).
 
 [[irc]]
 IRC
@@ -539,22 +536,21 @@ Ustaw port serwera, SSL, dhkey_size, następnie się połącz:
 /connect freenode
 ----------------------------------------
 
-// TRANSLATION MISSING
 [[irc_sasl]]
-How can I be identified before joining channels?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Jak mogę się zidentyfikować przed wejściem na kanały?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If server supports SASL, you should use that instead of sending command for
-nickserv authentication, for example:
+Jeśli serwer wspiera SASL, możesz użyć tego zamiast wysyłać komendę do nickserva,
+na przykład:
 
 ----------------------------------------
 /set irc.server_default.sasl_mechanism dh-blowfish
-/set irc.server.freenode.sasl_username "mynick"
+/set irc.server.freenode.sasl_username "nick"
 /set irc.server.freenode.sasl_password "xxxxxxx"
 ----------------------------------------
 
-If server does not support SASL, you can add a delay (between command and join
-of channels):
+Jeśli serwer nie wspiera SASL, możesz dodać odstęp pomiędzy komendą a wejściem
+na kanały):
 
 ----------------------------------------
 /set irc.server.freenode.command_delay 5
@@ -741,15 +737,13 @@ W celu zmniejszenia używanej pamięci możesz zastosować się do poniższych r
 
 * używać najnowsze stabilnej wersji (powinna mieć mniej wycieków pamięci
   niż starsze wersje)
-* nie ładować nieużywanych pluginów, np: aspell, fifo, logger, perl, python,
+* nie ładuj nieużywanych pluginów, np: aspell, fifo, logger, perl, python,
   ruby, lua, tcl, guile, xfer (używana do DCC)
 * ładować tylko naprawdę używane skrypty
-// TRANSLATION MISSING
-* do not load certificates if SSL is *NOT* used: set empty string in option
+* nie ładuj certyfikatów jeśli SSL *NIE* jest używany: ustaw pusty ciąg w opcji
   'weechat.network.gnutls_ca_file'
-// TRANSLATION MISSING
-* reduce value of option 'weechat.history.max_buffer_lines_number' or set value
-  of option 'weechat.history.max_buffer_lines_minutes'
+* zmniejsz wartość dla opcji 'weechat.history.max_buffer_lines_number' lub ustaw
+  wartość opcji 'weechat.history.max_buffer_lines_minutes'
 * zmniejszyć wartość opcji 'weechat.history.max_commands'
 
 [[development]]
