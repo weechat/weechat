@@ -204,6 +204,7 @@ weechat_guile_alist_to_hashtable (SCM alist, int size, const char *type_keys,
     struct t_hashtable *hashtable;
     int length, i;
     SCM pair;
+    char *str, *str2;
 
     hashtable = weechat_hashtable_new (size,
                                        type_keys,
@@ -219,21 +220,25 @@ weechat_guile_alist_to_hashtable (SCM alist, int size, const char *type_keys,
         pair = scm_list_ref (alist, scm_from_int (i));
         if (strcmp (type_values, WEECHAT_HASHTABLE_STRING) == 0)
         {
-            weechat_hashtable_set (hashtable,
-                                   scm_i_string_chars (scm_list_ref (pair,
-                                                                     scm_from_int (0))),
-                                   scm_i_string_chars (scm_list_ref (pair,
-                                                                     scm_from_int (1))));
+            str = scm_to_locale_string (scm_list_ref (pair, scm_from_int (0)));
+            str2 = scm_to_locale_string (scm_list_ref (pair, scm_from_int (1)));
+            weechat_hashtable_set (hashtable, str, str2);
+            if (str)
+                free (str);
+            if (str2)
+                free (str2);
         }
         else if (strcmp (type_values, WEECHAT_HASHTABLE_POINTER) == 0)
         {
-            weechat_hashtable_set (hashtable,
-                                   scm_i_string_chars (scm_list_ref (pair,
-                                                                     scm_from_int (0))),
+            str = scm_to_locale_string (scm_list_ref (pair, scm_from_int (0)));
+            str2 = scm_to_locale_string (scm_list_ref (pair, scm_from_int (1)));
+            weechat_hashtable_set (hashtable, str,
                                    plugin_script_str2ptr (weechat_guile_plugin,
-                                                          NULL, NULL,
-                                                          scm_i_string_chars (scm_list_ref (pair,
-                                                                                            scm_from_int (1)))));
+                                                          NULL, NULL, str2));
+            if (str)
+                free (str);
+            if (str2)
+                free (str2);
         }
     }
 

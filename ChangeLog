@@ -75,6 +75,8 @@ Version 0.4.0 (under dev!)
   aspell.check.suggestions (task #12061)
 * aspell: fix creation of spellers when number of dictionaries is different
   between two buffers
+* guile: fix bad conversion of shared strings (replace calls to
+  scm_i_string_chars by scm_to_locale_string) (bug #38067)
 * irc: fix display of actions (/me) when they are received from a relay client
   (in channel and private buffers) (bug #38027)
 * irc: fix memory leak when updating modes of channel
