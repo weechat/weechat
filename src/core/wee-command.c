@@ -5376,7 +5376,7 @@ COMMAND_CALLBACK(window)
         return WEECHAT_RC_OK;
     }
 
-    /* silently ignore argument "*" (can heppen when clicking in a root bar) */
+    /* silently ignore argument "*" (can happen when clicking in a root bar) */
     if (strcmp (argv_eol[1], "*") == 0)
         return WEECHAT_RC_OK;
 
