@@ -20,10 +20,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: WeeChat 0.4.0-rc2\n"
+"Project-Id-Version: WeeChat 0.4.0-rc3\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-01-12 19:51+0100\n"
-"PO-Revision-Date: 2013-01-12 20:22+0100\n"
+"POT-Creation-Date: 2013-01-14 12:18+0100\n"
+"PO-Revision-Date: 2013-01-14 12:17+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
 "Language: \n"
