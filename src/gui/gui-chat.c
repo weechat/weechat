@@ -144,6 +144,20 @@ gui_chat_utf_char_valid (const char *utf_char)
 }
 
 /*
+ * Returns number of char needed on screen to display a char.
+ */
+
+int
+gui_chat_char_size_screen (const char *utf_char)
+{
+    /* if char is invalid, it will be displayed as one space on screen */
+    if (!gui_chat_utf_char_valid (utf_char))
+        return 1;
+
+    return utf8_char_size_screen (utf_char);
+}
+
+/*
  * Returns number of char needed on screen to display a word (special chars like
  * colors/attributes are ignored).
  */
@@ -160,7 +174,7 @@ gui_chat_strlen_screen (const char *string)
                                             (unsigned char *)string, 0, 0, 0);
         if (string)
         {
-            size_on_screen = (gui_chat_utf_char_valid (string)) ? utf8_char_size_screen (string) : 1;
+            size_on_screen = gui_chat_char_size_screen (string);
             if (size_on_screen > 0)
                 length += size_on_screen;
             string = utf8_next_char (string);
@@ -208,7 +222,7 @@ gui_chat_string_add_offset_screen (const char *string, int offset_screen)
                                             0, 0, 0);
         if (string)
         {
-            size_on_screen = (gui_chat_utf_char_valid (string)) ? utf8_char_size_screen (string) : 1;
+            size_on_screen = gui_chat_char_size_screen (string);
             offset_screen -= size_on_screen;
             string = utf8_next_char (string);
         }
@@ -240,7 +254,7 @@ gui_chat_string_real_pos (const char *string, int pos)
                                                 0, 0, 0);
         if (ptr_string)
         {
-            size_on_screen = (((unsigned char)ptr_string[0]) < 32) ? 1 : utf8_char_size_screen (ptr_string);
+            size_on_screen = gui_chat_char_size_screen (ptr_string);
             if (size_on_screen > 0)
                 pos -= size_on_screen;
             ptr_string = utf8_next_char (ptr_string);
@@ -293,7 +307,7 @@ gui_chat_get_word_info (struct t_gui_window *window,
                         *word_start_offset = next_char - start_data;
                     leading_spaces = 0;
                     *word_end_offset = next_char2 - start_data - 1;
-                    char_size_screen = utf8_char_size_screen (next_char);
+                    char_size_screen = gui_chat_char_size_screen (next_char);
                     (*word_length_with_spaces) += char_size_screen;
                     (*word_length) += char_size_screen;
                 }
