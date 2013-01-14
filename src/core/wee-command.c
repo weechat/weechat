@@ -5376,6 +5376,10 @@ COMMAND_CALLBACK(window)
         return WEECHAT_RC_OK;
     }
 
+    /* silently ignore argument "*" (can heppen when clicking in a root bar) */
+    if (strcmp (argv_eol[1], "*") == 0)
+        return WEECHAT_RC_OK;
+
     /* refresh screen */
     if (string_strcasecmp (argv[1], "refresh") == 0)
     {

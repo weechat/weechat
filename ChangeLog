@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.0-rc2, 2013-01-12
+v0.4.0-rc2, 2013-01-14
 
 
 Version 0.4.0 (under dev!)
 --------------------------
 
+* core: fix click in item "buffer_nicklist" when nicklist is a root bar
+  (bug #38080)
 * core: fix line returned when clicking on a bar (according to position and
   filling) (bug #38069)
 * core: fix refresh of bars when applying layout (bug #37944, bug #37952)

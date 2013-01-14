@@ -1539,18 +1539,23 @@ gui_bar_item_focus_buffer_nicklist (void *data,
     /* make C compiler happy */
     (void) data;
 
-    str_window = hashtable_get (info, "_window");
     str_bar_item_line = hashtable_get (info, "_bar_item_line");
-
-    if (!str_window || !str_window[0]
-        || !str_bar_item_line || !str_bar_item_line[0])
+    if (!str_bar_item_line || !str_bar_item_line[0])
         return NULL;
 
-    rc = sscanf (str_window, "%lx", &value);
-    if ((rc == EOF) || (rc == 0))
-        return NULL;
-
-    window = (struct t_gui_window *)value;
+    str_window = hashtable_get (info, "_window");
+    if (str_window && str_window[0])
+    {
+        rc = sscanf (str_window, "%lx", &value);
+        if ((rc == EOF) || (rc == 0))
+            return NULL;
+        window = (struct t_gui_window *)value;
+    }
+    else
+    {
+        /* no window, is it a root bar? then use current window */
+        window = gui_current_window;
+    }
     if (!window)
         return NULL;
 
