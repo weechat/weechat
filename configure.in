@@ -762,10 +762,10 @@ if test "x$enable_guile" = "xyes" ; then
         GUILE_CFLAGS=`$GUILECONFIG compile`
         GUILE_LFLAGS=`$GUILECONFIG link`
         GUILE_VERSION=`$GUILECONFIG info guileversion`
-        tcl_found="yes"
+        guile_found="yes"
     fi
 
-    if test "x$tcl_found" = "xno" ; then
+    if test "x$guile_found" = "xno" ; then
         AC_MSG_WARN([
 *** Script guile-config couldn't be found on your system.
 *** WeeChat will be built without Guile (scheme) support.])
