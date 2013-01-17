@@ -5104,21 +5104,14 @@ command_version_display (struct t_gui_buffer *buffer,
                          int display_git_version)
 {
     char string[512];
-    const char *git_version;
-
-    /* get git version */
-    git_version = (display_git_version) ? version_get_git () : NULL;
 
     if (send_to_buffer_as_input)
     {
         if (translated_string)
         {
             snprintf (string, sizeof (string),
-                      "WeeChat %s%s%s%s [%s %s %s]",
-                      version_get_version (),
-                      (git_version && git_version[0]) ? " (git: " : "",
-                      (git_version && git_version[0]) ? git_version : "",
-                      (git_version && git_version[0]) ? ")" : "",
+                      "WeeChat %s [%s %s %s]",
+                      (display_git_version) ? version_get_version_with_git () : version_get_version (),
                       _("compiled on"),
                       version_get_compilation_date (),
                       version_get_compilation_time ());
@@ -5137,11 +5130,8 @@ command_version_display (struct t_gui_buffer *buffer,
         else
         {
             snprintf (string, sizeof (string),
-                      "WeeChat %s%s%s%s [%s %s %s]",
-                      version_get_version (),
-                      (git_version && git_version[0]) ? " (git: " : "",
-                      (git_version && git_version[0]) ? git_version : "",
-                      (git_version && git_version[0]) ? ")" : "",
+                      "WeeChat %s [%s %s %s]",
+                      (display_git_version) ? version_get_version_with_git () : version_get_version (),
                       "compiled on",
                       version_get_compilation_date (),
                       version_get_compilation_time ());
@@ -5160,12 +5150,9 @@ command_version_display (struct t_gui_buffer *buffer,
     }
     else
     {
-        gui_chat_printf (NULL, "%sWeeChat %s%s%s%s %s[%s%s %s %s%s]",
+        gui_chat_printf (NULL, "%sWeeChat %s %s[%s%s %s %s%s]",
                          GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                         version_get_version (),
-                         (git_version && git_version[0]) ? " (git: " : "",
-                         (git_version && git_version[0]) ? git_version : "",
-                         (git_version && git_version[0]) ? ")" : "",
+                         (display_git_version) ? version_get_version_with_git () : version_get_version (),
                          GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                          GUI_COLOR(GUI_COLOR_CHAT_VALUE),
                          _("compiled on"),

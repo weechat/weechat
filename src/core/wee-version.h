@@ -24,6 +24,7 @@ extern const char *version_get_name ();
 extern const char *version_get_version ();
 extern const char *version_get_name_version ();
 extern const char *version_get_git ();
+extern const char *version_get_version_with_git ();
 extern const char *version_get_compilation_date ();
 extern const char *version_get_compilation_time ();
 

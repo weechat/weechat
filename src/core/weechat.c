@@ -104,19 +104,13 @@ char *weechat_startup_commands = NULL; /* startup commands (-r flag)        */
 void
 weechat_display_copyright ()
 {
-    const char *git_version;
-
-    git_version = version_get_git ();
     string_iconv_fprintf (stdout, "\n");
     string_iconv_fprintf (stdout,
                           /* TRANSLATORS: "%s %s" after "compiled on" is date and time */
-                          _("WeeChat %s%s%s%s Copyright %s, compiled on %s %s\n"
+                          _("WeeChat %s Copyright %s, compiled on %s %s\n"
                             "Developed by Sebastien Helleu <flashcode@flashtux.org> "
                             "- %s"),
-                          version_get_version (),
-                          (git_version && git_version[0]) ? " (git: " : "",
-                          (git_version && git_version[0]) ? git_version : "",
-                          (git_version && git_version[0]) ? ")" : "",
+                          version_get_version_with_git (),
                           WEECHAT_COPYRIGHT_DATE,
                           version_get_compilation_date (),
                           version_get_compilation_time (),

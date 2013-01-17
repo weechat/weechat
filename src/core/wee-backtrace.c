@@ -157,8 +157,8 @@ weechat_backtrace ()
 #endif
 
     weechat_backtrace_printf ("======= WeeChat backtrace =======");
-    weechat_backtrace_printf ("(written by %s, compiled on %s %s)",
-                              version_get_name_version (),
+    weechat_backtrace_printf ("(written by WeeChat %s, compiled on %s %s)",
+                              version_get_version_with_git (),
                               version_get_compilation_date (),
                               version_get_compilation_time ());
 

@@ -118,8 +118,8 @@ log_init ()
                                 "with another home using \"--dir\" command line option.\n"));
         exit (1);
     }
-    log_printf ("%s (%s %s %s)",
-                version_get_name_version (),
+    log_printf ("WeeChat %s (%s %s %s)",
+                version_get_version_with_git (),
                 _("compiled on"),
                 version_get_compilation_date (),
                 version_get_compilation_time ());

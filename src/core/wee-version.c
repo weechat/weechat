@@ -24,6 +24,8 @@
 #endif
 #include "config-git.h"
 
+#include <stdio.h>
+
 
 /*
  * Returns package name ("weechat").
@@ -77,6 +79,34 @@ const char *
 version_get_git ()
 {
     return PACKAGE_VERSION_GIT;
+}
+
+/*
+ * Returns the WeeCht version + the git version (between brackets, and only if
+ * it is not empty).
+ *
+ * Examples:
+ *   0.3.9-dev (git: v0.3.9-104-g7eb5cc)
+ *   0.3.9-dev
+ *   0.3.9-rc1 (git: v0.3.9-rc1)
+ *   0.3.9
+ */
+
+const char *
+version_get_version_with_git ()
+{
+    const char *git_version;
+    static char version[256];
+
+    git_version = version_get_git ();
+
+    snprintf (version, sizeof (version), "%s%s%s%s",
+              version_get_version (),
+              (git_version && git_version[0]) ? " (git: " : "",
+              (git_version && git_version[0]) ? git_version : "",
+              (git_version && git_version[0]) ? ")" : "");
+
+    return version;
 }
 
 /*
