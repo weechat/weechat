@@ -990,7 +990,13 @@ string_has_highlight_regex_compiled (const char *string, regex_t *regex)
     while (string && string[0])
     {
         rc = regexec (regex, string,  1, &regex_match, 0);
-        if ((rc != 0) || (regex_match.rm_so < 0) || (regex_match.rm_eo < 0))
+
+        /*
+         * no match found: exit the loop (if rm_eo == 0, it is an empty match
+         * at beginning of string: we consider there is no match, to prevent an
+         * infinite loop)
+         */
+        if ((rc != 0) || (regex_match.rm_so < 0) || (regex_match.rm_eo <= 0))
             break;
 
         startswith = (regex_match.rm_so == 0);
