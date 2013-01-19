@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-rc3\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2013-01-19 09:22+0100\n"
-"PO-Revision-Date: 2013-01-19 11:05+0100\n"
+"PO-Revision-Date: 2013-01-20 01:55+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
 "Language: ja\n"
@@ -2983,11 +2983,11 @@ msgstr "ウィンドウ間に水平セパレータを表示"
 msgid "display a vertical separator between windows"
 msgstr "ウィンドウ間に垂直セパレータを表示"
 
-#, fuzzy
 msgid ""
 "color for window separators (when split) and separators beside bars (like "
 "nicklist)"
-msgstr "ウィンドウセパレータの背景色 (分割時)"
+msgstr ""
+"ウィンドウセパレータ (分割時) とバーセパレータ (ニックネームリスト等) の色"
 
 msgid "text color for '+' when scrolling bars"
 msgstr "バーをスクロールする際の '+' のテキスト色"
@@ -8181,13 +8181,13 @@ msgstr "%s%s: IP アドレス \"%s\" はリレーの許可がありません"
 msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
 msgstr "%s%s: ソケットオプション \"SO_REUSEADDR\" の設定に失敗"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot create socket: error %d %s"
-msgstr "%s%s: xfer 用のソケットの作成に失敗"
+msgstr "%s%s: ソケットの作成に失敗: エラー %d %s"
 
 #, c-format
 msgid "%s%s: try /set relay.network.ipv6 off"
-msgstr ""
+msgstr "%s%s: /set relay.network.ipv6 off を試してください"
 
 #, c-format
 msgid "%s%s: cannot set socket option \"IPV6_V6ONLY\" to value %d"
