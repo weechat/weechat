@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.0-rc3\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-01-14 12:18+0100\n"
-"PO-Revision-Date: 2013-01-14 12:17+0100\n"
+"POT-Creation-Date: 2013-01-19 09:22+0100\n"
+"PO-Revision-Date: 2013-01-19 11:05+0100\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -34,10 +34,10 @@ msgstr ""
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
 msgid ""
-"WeeChat %s%s%s%s Copyright %s, compiled on %s %s\n"
+"WeeChat %s Copyright %s, compiled on %s %s\n"
 "Developed by Sebastien Helleu <flashcode@flashtux.org> - %s"
 msgstr ""
-"WeeChat %s%s%s%s Copyright %s, compilé le %s %s\n"
+"WeeChat %s Copyright %s, compilé le %s %s\n"
 "Développé par Sebastien Helleu <flashcode@flashtux.org> - %s"
 
 #, c-format
