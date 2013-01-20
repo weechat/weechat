@@ -80,49 +80,12 @@ int perl_args_count = 4;
 char *perl_weechat_code =
 {
 #ifndef MULTIPLICITY
-    "package WeechatPerlScriptLoader;"
+    "package %s;"
 #endif
-    "$weechat_perl_load_eval_file_error = \"\";"
-    "sub weechat_perl_load_file"
-    "{"
-    "    my $filename = shift;"
-    "    local $/ = undef;"
-    "    open FILE, $filename or return \"__WEECHAT_PERL_ERROR__\";"
-    "    $_ = <FILE>;"
-    "    close FILE;"
-    "    return qq{\n#line 1 \"$filename\"\n$_};"
-    "}"
-    "sub weechat_perl_load_eval_file"
-    "{"
-#ifdef MULTIPLICITY
-    "    my $filename = shift;"
-#else
-    "    my ($filename, $package) = @_;"
-#endif
-    "    my $content = weechat_perl_load_file ($filename);"
-    "    if ($content eq \"__WEECHAT_PERL_ERROR__\")"
-    "    {"
-    "        return 1;"
-    "    }"
-#ifdef MULTIPLICITY
-    "    my $eval = $content;"
-#else
-    "    my $eval = qq{package $package; $content;};"
-#endif
-    "    {"
-    "      eval $eval;"
-    "    }"
-    "    if ($@)"
-    "    {"
-    "        $weechat_perl_load_eval_file_error = $@;"
-    "        return 2;"
-    "    }"
-    "    return 0;"
-    "}"
-    "$SIG{__WARN__} = sub { weechat::print(\"\", \"\tperl error: $_[0]\"); };"
-    "$SIG{__DIE__} = sub { weechat::print(\"\", \"\tperl error: $_[0]\"); };"
+    "$SIG{__WARN__} = sub { weechat::print('', 'perl\twarning: '.$_[0]) };"
+    "$SIG{__DIE__} = sub { weechat::print('', 'perl\terror: '.$_[0]) };"
+    "do '%s';"
 };
-
 
 /*
  * Callback called for each key/value in a hashtable.
@@ -275,7 +238,7 @@ weechat_perl_exec (struct t_plugin_script *script,
         }
     }
     PUTBACK;
-    count = perl_call_pv (func, G_EVAL | G_SCALAR);
+    count = call_pv (func, G_EVAL | G_SCALAR);
 
     ret_value = NULL;
     mem_err = 1;
@@ -370,11 +333,10 @@ weechat_perl_exec (struct t_plugin_script *script,
 int
 weechat_perl_load (const char *filename)
 {
-    STRLEN len;
     struct t_plugin_script temp_script;
-    int *eval;
     struct stat buf;
-    void *perl_argv[2];
+    char *perl_code;
+    int length;
 
 #ifdef MULTIPLICITY
     PerlInterpreter *perl_current_interpreter;
@@ -428,72 +390,34 @@ weechat_perl_load (const char *filename)
     temp_script.interpreter = (PerlInterpreter *) perl_current_interpreter;
     perl_parse (perl_current_interpreter, weechat_perl_api_init,
                 perl_args_count, perl_args, NULL);
-
-    eval_pv (perl_weechat_code, TRUE);
-    perl_argv[0] = (void *)filename;
-    eval = weechat_perl_exec (&temp_script,
-                              WEECHAT_SCRIPT_EXEC_INT,
-                              "weechat_perl_load_eval_file",
-                              "s", perl_argv);
+    length = strlen (perl_weechat_code) - 2 + strlen (filename) + 1;
+    perl_code = malloc (length);
+    if (!perl_code)
+        return 0;
+    snprintf (perl_code, length, perl_weechat_code, filename);
 #else
-    snprintf (pkgname, sizeof(pkgname), "%s%d", PKG_NAME_PREFIX, perl_num);
+    snprintf (pkgname, sizeof (pkgname), "%s%d", PKG_NAME_PREFIX, perl_num);
     perl_num++;
-    temp_script.interpreter = "WeechatPerlScriptLoader";
-    perl_argv[0] = (void *)filename;
-    perl_argv[1] = pkgname;
-    eval = weechat_perl_exec (&temp_script,
-                              WEECHAT_SCRIPT_EXEC_INT,
-                              "weechat_perl_load_eval_file",
-                              "ss", perl_argv);
+    length = strlen (perl_weechat_code) - 4 + strlen (pkgname) + strlen (filename) + 1;
+    perl_code = malloc (length);
+    if (!perl_code)
+        return 0;
+    snprintf (perl_code, length, perl_weechat_code, pkgname, filename);
 #endif
-    if (!eval)
+    eval_pv (perl_code, TRUE);
+    free (perl_code);
+
+    if (SvTRUE (ERRSV))
     {
         weechat_printf (NULL,
-                        weechat_gettext ("%s%s: not enough memory to parse "
-                                         "file \"%s\""),
-                        weechat_prefix ("error"), PERL_PLUGIN_NAME, filename);
-        return 0;
-    }
-
-    if (*eval != 0)
-    {
-        if (*eval == 2)
-        {
-            weechat_printf (NULL,
-                            weechat_gettext ("%s%s: unable to parse file "
-                                             "\"%s\""),
-                            weechat_prefix ("error"), PERL_PLUGIN_NAME,
-                            filename);
-#ifdef MULTIPLICITY
-            weechat_printf (NULL,
-                            weechat_gettext ("%s%s: error: %s"),
-                            weechat_prefix ("error"), PERL_PLUGIN_NAME,
-                            SvPV(perl_get_sv("weechat_perl_load_eval_file_error",
-                                             FALSE), len));
-#else
-            weechat_printf (NULL,
-                            weechat_gettext ("%s%s: error: %s"),
-                            weechat_prefix ("error"), PERL_PLUGIN_NAME,
-                            SvPV(perl_get_sv("WeechatPerlScriptLoader::"
-                                             "weechat_perl_load_eval_file_error",
-                                             FALSE), len));
-#endif
-        }
-        else if (*eval == 1)
-        {
-            weechat_printf (NULL,
-                            weechat_gettext ("%s%s: unable to run file \"%s\""),
-                            weechat_prefix ("error"), PERL_PLUGIN_NAME,
-                            filename);
-        }
-        else
-        {
-            weechat_printf (NULL,
-                            weechat_gettext ("%s%s: unknown error while "
-                                             "loading file \"%s\""),
-                            weechat_prefix ("error"), PERL_PLUGIN_NAME,
-                            filename);
-        }
+                        weechat_gettext ("%s%s: unable to parse file "
+                                         "\"%s\""),
+                        weechat_prefix ("error"), PERL_PLUGIN_NAME,
+                        filename);
+        weechat_printf (NULL,
+                        weechat_gettext ("%s%s: error: %s"),
+                        weechat_prefix ("error"), PERL_PLUGIN_NAME,
+                        SvPV_nolen(ERRSV));
 #ifdef MULTIPLICITY
         perl_destruct (perl_current_interpreter);
         perl_free (perl_current_interpreter);
@@ -505,11 +429,8 @@ weechat_perl_load (const char *filename)
                                   perl_current_script);
         }
 
-        free (eval);
         return 0;
     }
-
-    free (eval);
 
     if (!perl_registered_script)
     {
@@ -580,8 +501,6 @@ weechat_perl_unload (struct t_plugin_script *script)
 
 #ifdef MULTIPLICITY
     PERL_SET_CONTEXT (script->interpreter);
-#else
-    eval_pv (script->interpreter, TRUE);
 #endif
 
     if (script->shutdown_func && script->shutdown_func[0])
@@ -1028,7 +947,6 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     perl_construct (perl_main);
     perl_parse (perl_main, weechat_perl_api_init, perl_args_count,
                 perl_args, NULL);
-    eval_pv (perl_weechat_code, TRUE);
 #endif
 
     init.callback_command = &weechat_perl_command_cb;
