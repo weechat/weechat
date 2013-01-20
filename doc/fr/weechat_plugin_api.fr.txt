@@ -7429,8 +7429,8 @@ Exemple en C :
 [source,C]
 ----------------------------------------
 int
-my_connect_cb (void *data, int status, int gnutls_rc, const char *error,
-               const char *ip_address)
+my_connect_cb (void *data, int status, int gnutls_rc, int sock,
+               const char *error, const char *ip_address)
 {
     switch (status)
     {
@@ -7473,7 +7473,7 @@ my_connect_cb (void *data, int status, int gnutls_rc, const char *error,
 
 struct t_hook *my_connect_hook = weechat_hook_connect (NULL,
                                                        "my.server.org", 1234,
-                                                       sock, 0,
+                                                       1, 0,
                                                        NULL, NULL, 0, /* GnuTLS */
                                                        NULL,
                                                        &my_connect_cb, NULL);
@@ -7484,11 +7484,11 @@ Script (Python) :
 [source,python]
 ----------------------------------------
 # prototype
-hook = weechat.hook_connect(proxy, address, port, sock, ipv6, local_hostname,
+hook = weechat.hook_connect(proxy, address, port, ipv6, retry, local_hostname,
     callback, callback_data)
 
 # exemple
-def my_connect_cb(data, status, gnutls_rc, error, ip_address):
+def my_connect_cb(data, status, gnutls_rc, sock, error, ip_address):
     if status == WEECHAT_HOOK_CONNECT_OK:
         # ...
     elif status == WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND:
@@ -7513,7 +7513,7 @@ def my_connect_cb(data, status, gnutls_rc, error, ip_address):
         # ...
     return weechat.WEECHAT_RC_OK
 
-hook = weechat.hook_connect("", "my.server.org", 1234, sock, 0, "",
+hook = weechat.hook_connect("", "my.server.org", 1234, 1, 0, "",
                             "my_connect_cb", "")
 ----------------------------------------
 
