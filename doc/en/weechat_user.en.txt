@@ -101,7 +101,7 @@ compile WeeChat.
 | ruby1.9.1-dev          | ≥ 1.8       |          | ruby plugin
 | liblua5.1-0-dev        |             |          | lua plugin
 | tcl-dev                | ≥ 8.5       |          | tcl plugin
-| guile-1.8-dev          |             |          | guile (scheme) plugin
+| guile-1.8-dev          | ≥ 1.8       |          | guile (scheme) plugin
 | asciidoc               | ≥ 8.5.0     |          | build documentation (HTML files)
 | source-highlight       |             |          | syntax highlight for sources in HTML documentation
 |========================================

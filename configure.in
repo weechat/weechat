@@ -754,20 +754,26 @@ if test "x$enable_guile" = "xyes" ; then
     enable_plugins="yes"
 
     guile_found="no"
-    GUILECONFIG=""
-    AC_CHECK_PROGS(GUILECONFIG, guile-config)
-    if test "x$GUILECONFIG" != "x" ; then
-        AC_MSG_CHECKING(for Guile headers and librairies with guile-config)
+    PKGCONFIG=""
+    AC_CHECK_PROGS(PKGCONFIG, pkg-config)
+    if test "x$PKGCONFIG" != "x"; then
+        AC_MSG_CHECKING(for Guile headers and librairies)
         echo
-        GUILE_CFLAGS=`$GUILECONFIG compile`
-        GUILE_LFLAGS=`$GUILECONFIG link`
-        GUILE_VERSION=`$GUILECONFIG info guileversion`
-        guile_found="yes"
+        for v in "2.0" "1.8" ; do
+            pkgconfig_guile_found=`$PKGCONFIG --exists guile-$v 2>/dev/null`
+            if test "x$?" = "x0" ; then
+                GUILE_VERSION=`$PKGCONFIG --modversion guile-$v`
+                GUILE_CFLAGS=`$PKGCONFIG --cflags guile-$v`
+                GUILE_LFLAGS=`$PKGCONFIG --libs guile-$v`
+                guile_found="yes"
+                break
+            fi
+        done
     fi
 
     if test "x$guile_found" = "xno" ; then
         AC_MSG_WARN([
-*** Script guile-config couldn't be found on your system.
+*** Guile couldn't be found on your system.
 *** WeeChat will be built without Guile (scheme) support.])
         enable_guile="no"
         not_found="$not_found guile"

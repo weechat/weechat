@@ -103,7 +103,7 @@ compiler WeeChat.
 | ruby1.9.1-dev          | ≥ 1.8       |        | extension ruby
 | liblua5.1-0-dev        |             |        | extension lua
 | tcl-dev                | ≥ 8.5       |        | extension tcl
-| guile-1.8-dev          |             |        | extension guile (scheme)
+| guile-1.8-dev          | ≥ 1.8       |        | extension guile (scheme)
 | asciidoc               | ≥ 8.5.0     |        | construction de la documentation (fichiers HTML)
 | source-highlight       |             |        | coloration des sources dans la documentation HTML
 |========================================
