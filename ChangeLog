@@ -7,6 +7,9 @@ v0.4.1-dev, 2013-01-20
 Version 0.4.1 (under dev!)
 --------------------------
 
+guile: fix compilation with guile 2.0
+perl: simplify code to load scripts
+
 Version 0.4.0 (2013-01-20)
 --------------------------
 
