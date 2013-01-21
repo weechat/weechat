@@ -68,7 +68,7 @@ AC_CHECK_LIB(ncursesw, initscr, LIBNCURSESW_FOUND=1, LIBNCURSESW_FOUND=0)
 
 # Checks for header files
 AC_HEADER_STDC
-AC_CHECK_HEADERS([arpa/inet.h libintl.h limits.h locale.h netdb.h netinet/in.h stdlib.h string.h sys/socket.h sys/time.h sys/types.h unistd.h pwd.h errno.h regex.h wchar.h sys/file.h sys/resource.h])
+AC_CHECK_HEADERS([libintl.h sys/resource.h])
 
 # Checks for typedefs, structures, and compiler characteristics
 AC_HEADER_TIME
@@ -91,7 +91,7 @@ AC_MSG_RESULT($ac_cv_type_socklen_t)
 # Checks for library functions.
 AC_FUNC_SELECT_ARGTYPES
 AC_TYPE_SIGNAL
-AC_CHECK_FUNCS([gethostbyname gethostname getsockname gettimeofday inet_ntoa memset mkdir select setlocale socket strcasecmp strchr strdup strndup strncasecmp strpbrk strrchr strstr regexec mallinfo])
+AC_CHECK_FUNCS([mallinfo])
 
 # Variables in config.h
 
