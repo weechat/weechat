@@ -9,7 +9,7 @@ Version 0.4.1 (under dev!)
 
 * guile: fix compilation with guile 2.0
 * perl: simplify code to load scripts
-* scripts: do now allow empty script name in function "register"
+* scripts: do not allow empty script name in function "register"
 
 Version 0.4.0 (2013-01-20)
 --------------------------
