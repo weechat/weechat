@@ -550,11 +550,11 @@ plugin_script_add (struct t_weechat_plugin *weechat_plugin,
 {
     struct t_plugin_script *new_script;
 
-    if (strchr (name, ' '))
+    if (!name[0] || strchr (name, ' '))
     {
         weechat_printf (NULL,
-                        _("%s: error loading script \"%s\" (bad name, spaces "
-                          "are forbidden)"),
+                        _("%s: error loading script \"%s\" (spaces or empty name "
+                          "not allowed)"),
                         weechat_plugin->name, name);
         return NULL;
     }

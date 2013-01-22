@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-01-20 12:08+0100\n"
+"POT-Creation-Date: 2013-01-22 09:21+0100\n"
 "PO-Revision-Date: 2013-01-20 12:07+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8509,20 +8509,8 @@ msgid "%s%s: not enough memory in function \"%s\""
 msgstr "%s%s: no hay memoria suficiente en la función \"%s\""
 
 #, c-format
-msgid "%s%s: not enough memory to parse file \"%s\""
-msgstr "%s%s: no hay suficiente memoria para analizar el archivo \"%s\""
-
-#, c-format
 msgid "%s%s: unable to parse file \"%s\""
 msgstr "%s%s: no es posible analizar el archivo \"%s\""
-
-#, c-format
-msgid "%s%s: unable to run file \"%s\""
-msgstr "%s%s: no es posible ejecutar el archivo \"%s\""
-
-#, c-format
-msgid "%s%s: unknown error while loading file \"%s\""
-msgstr "%s%s: error desconocido mientras se cargaba el archivo \"%s\""
 
 #, c-format
 msgid "%s%s: unable to initialize %s"
@@ -8583,11 +8571,9 @@ msgid ""
 msgstr ""
 "%s%s: atención, puntero inválido (\"%s\") para la función \"%s\" (script: %s)"
 
-#, c-format
-msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
-msgstr ""
-"%s: error al cargar el script \"%s\" (nombre erróneo, los espacios no son "
-"permitidos)"
+#, fuzzy, c-format
+msgid "%s: error loading script \"%s\" (spaces or empty name not allowed)"
+msgstr "%s: error al cargar el script \"%s\" (no hay suficiente memoria)"
 
 #, c-format
 msgid ""
@@ -9562,6 +9548,20 @@ msgstr "Tipo"
 
 msgid "Constants"
 msgstr "Constantes"
+
+#~ msgid "%s%s: not enough memory to parse file \"%s\""
+#~ msgstr "%s%s: no hay suficiente memoria para analizar el archivo \"%s\""
+
+#~ msgid "%s%s: unable to run file \"%s\""
+#~ msgstr "%s%s: no es posible ejecutar el archivo \"%s\""
+
+#~ msgid "%s%s: unknown error while loading file \"%s\""
+#~ msgstr "%s%s: error desconocido mientras se cargaba el archivo \"%s\""
+
+#~ msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
+#~ msgstr ""
+#~ "%s: error al cargar el script \"%s\" (nombre erróneo, los espacios no son "
+#~ "permitidos)"
 
 #~ msgid "background color for window separators (when split)"
 #~ msgstr "color de fondo para los separadores de ventana (cuando se dividen)"

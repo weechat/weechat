@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-01-20 12:08+0100\n"
+"POT-Creation-Date: 2013-01-22 09:21+0100\n"
 "PO-Revision-Date: 2013-01-20 12:07+0100\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8513,20 +8513,8 @@ msgid "%s%s: not enough memory in function \"%s\""
 msgstr "%s%s: memoria non sufficiente nella funzione \"%s\""
 
 #, c-format
-msgid "%s%s: not enough memory to parse file \"%s\""
-msgstr "%s%s: memoria non sufficiente per analizzare il file \"%s\""
-
-#, c-format
 msgid "%s%s: unable to parse file \"%s\""
 msgstr "%s%s: impossibile analizzare il file \"%s\""
-
-#, c-format
-msgid "%s%s: unable to run file \"%s\""
-msgstr "%s%s: impossibile eseguire il file \"%s\""
-
-#, c-format
-msgid "%s%s: unknown error while loading file \"%s\""
-msgstr "%s%s: errore sconosciuto durante la lettura del file \"%s\""
 
 #, c-format
 msgid "%s%s: unable to initialize %s"
@@ -8590,11 +8578,10 @@ msgstr ""
 "%s%s: attenzione, puntatore (\"%s\") non valido per la funzione \"%s"
 "\" (script: %s)"
 
-#, c-format
-msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
+#, fuzzy, c-format
+msgid "%s: error loading script \"%s\" (spaces or empty name not allowed)"
 msgstr ""
-"%s: errore durante il caricamento dello script \"%s\" (nome errato, spazi "
-"non ammessi)"
+"%s: errore durante il caricamento dello script \"%s\" (memoria insufficiente)"
 
 #, c-format
 msgid ""
@@ -9589,6 +9576,20 @@ msgstr "Tipo"
 
 msgid "Constants"
 msgstr "Costanti"
+
+#~ msgid "%s%s: not enough memory to parse file \"%s\""
+#~ msgstr "%s%s: memoria non sufficiente per analizzare il file \"%s\""
+
+#~ msgid "%s%s: unable to run file \"%s\""
+#~ msgstr "%s%s: impossibile eseguire il file \"%s\""
+
+#~ msgid "%s%s: unknown error while loading file \"%s\""
+#~ msgstr "%s%s: errore sconosciuto durante la lettura del file \"%s\""
+
+#~ msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
+#~ msgstr ""
+#~ "%s: errore durante il caricamento dello script \"%s\" (nome errato, spazi "
+#~ "non ammessi)"
 
 #~ msgid "%s%s: cannot create socket"
 #~ msgstr "%s%s: impossibile creare il socket"

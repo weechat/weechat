@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-01-20 12:08+0100\n"
+"POT-Creation-Date: 2013-01-22 09:21+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -6813,19 +6813,7 @@ msgid "%s%s: not enough memory in function \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%s%s: not enough memory to parse file \"%s\""
-msgstr ""
-
-#, c-format
 msgid "%s%s: unable to parse file \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%s%s: unable to run file \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%s%s: unknown error while loading file \"%s\""
 msgstr ""
 
 #, c-format
@@ -6870,7 +6858,7 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
+msgid "%s: error loading script \"%s\" (spaces or empty name not allowed)"
 msgstr ""
 
 #, c-format

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-01-20 12:08+0100\n"
+"POT-Creation-Date: 2013-01-22 09:21+0100\n"
 "PO-Revision-Date: 2013-01-20 12:08+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8593,20 +8593,8 @@ msgid "%s%s: not enough memory in function \"%s\""
 msgstr "%s%s: za mało pamięci wewnątrz funkcji \"%s\""
 
 #, c-format
-msgid "%s%s: not enough memory to parse file \"%s\""
-msgstr "%s%s: za mało pamięci do przetworzenia pliku \"%s\""
-
-#, c-format
 msgid "%s%s: unable to parse file \"%s\""
 msgstr "%s%s: nie można przetworzyć pliku \"%s\""
-
-#, c-format
-msgid "%s%s: unable to run file \"%s\""
-msgstr "%s%s: nie można wykonać pliku \"%s\""
-
-#, c-format
-msgid "%s%s: unknown error while loading file \"%s\""
-msgstr "%s%s: nieznany błąd podczas ładowania pliku \"%s\""
 
 #, c-format
 msgid "%s%s: unable to initialize %s"
@@ -8666,11 +8654,9 @@ msgstr ""
 "%s%s: ostrzeżenie, niewłaściwy wskaźnik (\"%s\") dla funkcji \"%s\" (skrypt: "
 "%s)"
 
-#, c-format
-msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
-msgstr ""
-"%s: błąd podczas ładowania skryptu \"%s\" (niewłaściwa nazwa, spacje są "
-"zakazane)"
+#, fuzzy, c-format
+msgid "%s: error loading script \"%s\" (spaces or empty name not allowed)"
+msgstr "%s: błąd podczas ładowania skryptu \"%s\" (za mało pamięci)"
 
 #, c-format
 msgid ""
@@ -9728,6 +9714,20 @@ msgstr "Typ"
 
 msgid "Constants"
 msgstr "Stałe"
+
+#~ msgid "%s%s: not enough memory to parse file \"%s\""
+#~ msgstr "%s%s: za mało pamięci do przetworzenia pliku \"%s\""
+
+#~ msgid "%s%s: unable to run file \"%s\""
+#~ msgstr "%s%s: nie można wykonać pliku \"%s\""
+
+#~ msgid "%s%s: unknown error while loading file \"%s\""
+#~ msgstr "%s%s: nieznany błąd podczas ładowania pliku \"%s\""
+
+#~ msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
+#~ msgstr ""
+#~ "%s: błąd podczas ładowania skryptu \"%s\" (niewłaściwa nazwa, spacje są "
+#~ "zakazane)"
 
 #~ msgid "%s%s: cannot create socket"
 #~ msgstr "%s%s: nie można utworzyć gniazda"

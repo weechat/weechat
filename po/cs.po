@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-01-20 12:08+0100\n"
+"POT-Creation-Date: 2013-01-22 09:21+0100\n"
 "PO-Revision-Date: 2013-01-20 12:07+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8248,20 +8248,8 @@ msgid "%s%s: not enough memory in function \"%s\""
 msgstr "%s%s: nedostatek paměti ve funkci \"%s\""
 
 #, c-format
-msgid "%s%s: not enough memory to parse file \"%s\""
-msgstr "%s%s: nedostatek paměti pro parsování souboru \"%s\""
-
-#, c-format
 msgid "%s%s: unable to parse file \"%s\""
 msgstr "%s%s: nemůžu parsovat soubor \"%s\""
-
-#, c-format
-msgid "%s%s: unable to run file \"%s\""
-msgstr "%s%s: nemůžu spustit soubor \"%s\""
-
-#, c-format
-msgid "%s%s: unknown error while loading file \"%s\""
-msgstr "%s%s: neznámá chyba při načítání souboru \"%s\""
 
 #, c-format
 msgid "%s%s: unable to initialize %s"
@@ -8322,9 +8310,9 @@ msgid ""
 "%s%s: warning, invalid pointer (\"%s\") for function \"%s\" (script: %s)"
 msgstr "%s%s: špatné parametry pro funkci \"%s\" (skript: %s)"
 
-#, c-format
-msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
-msgstr "%s: chyba načítání skriptu \"%s\" (špatné jméno, mezery jsou zakázány)"
+#, fuzzy, c-format
+msgid "%s: error loading script \"%s\" (spaces or empty name not allowed)"
+msgstr "%s: chyba načítání skriptu \"%s\" (nedostatek paměti)"
 
 #, c-format
 msgid ""
@@ -9317,6 +9305,19 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#~ msgid "%s%s: not enough memory to parse file \"%s\""
+#~ msgstr "%s%s: nedostatek paměti pro parsování souboru \"%s\""
+
+#~ msgid "%s%s: unable to run file \"%s\""
+#~ msgstr "%s%s: nemůžu spustit soubor \"%s\""
+
+#~ msgid "%s%s: unknown error while loading file \"%s\""
+#~ msgstr "%s%s: neznámá chyba při načítání souboru \"%s\""
+
+#~ msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
+#~ msgstr ""
+#~ "%s: chyba načítání skriptu \"%s\" (špatné jméno, mezery jsou zakázány)"
 
 #~ msgid "%s%s: cannot create socket"
 #~ msgstr "%s%s nemohu vytvořit soket"

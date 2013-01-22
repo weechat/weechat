@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-01-20 12:08+0100\n"
+"POT-Creation-Date: 2013-01-22 09:21+0100\n"
 "PO-Revision-Date: 2013-01-20 12:07+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -8444,20 +8444,8 @@ msgid "%s%s: not enough memory in function \"%s\""
 msgstr "%s%s: 関数 \"%s\" 内に十分なメモリがありません"
 
 #, c-format
-msgid "%s%s: not enough memory to parse file \"%s\""
-msgstr "%s%s: ファイル \"%s\" を解析する十分なメモリがありません"
-
-#, c-format
 msgid "%s%s: unable to parse file \"%s\""
 msgstr "%s%s: ファイル \"%s\" を解析できません"
-
-#, c-format
-msgid "%s%s: unable to run file \"%s\""
-msgstr "%s%s: ファイル \"%s\" を実行できません"
-
-#, c-format
-msgid "%s%s: unknown error while loading file \"%s\""
-msgstr "%s%s: ファイル \"%s\" のロード中の未定義のエラー"
 
 #, c-format
 msgid "%s%s: unable to initialize %s"
@@ -8518,9 +8506,9 @@ msgstr ""
 "%1$s%2$s: 警告、関数 \"%4$s\" の不正な引ポインタ (\"%3$s\") (スクリプト: "
 "%5$s)"
 
-#, c-format
-msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
-msgstr "%s: スクリプト \"%s\" のロード中にエラー (無効な名前、スペースは禁止)"
+#, fuzzy, c-format
+msgid "%s: error loading script \"%s\" (spaces or empty name not allowed)"
+msgstr "%s: スクリプト \"%s\" のロード中にエラー (メモリ不足)"
 
 #, c-format
 msgid ""
@@ -9572,6 +9560,19 @@ msgstr "タイプ"
 
 msgid "Constants"
 msgstr "定数"
+
+#~ msgid "%s%s: not enough memory to parse file \"%s\""
+#~ msgstr "%s%s: ファイル \"%s\" を解析する十分なメモリがありません"
+
+#~ msgid "%s%s: unable to run file \"%s\""
+#~ msgstr "%s%s: ファイル \"%s\" を実行できません"
+
+#~ msgid "%s%s: unknown error while loading file \"%s\""
+#~ msgstr "%s%s: ファイル \"%s\" のロード中の未定義のエラー"
+
+#~ msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
+#~ msgstr ""
+#~ "%s: スクリプト \"%s\" のロード中にエラー (無効な名前、スペースは禁止)"
 
 #~ msgid "%s%s: cannot create socket"
 #~ msgstr "%s%s: ソケットの作成に失敗"
