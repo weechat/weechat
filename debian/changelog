@@ -1,3 +1,19 @@
+weechat (0.4.0-1) unstable; urgency=low
+
+  * New upstream release.
+  * Bump Standards-Version to 3.9.4
+  * Remove UPGRADE_0.3 from doc (no more included in upstream sources).
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Wed, 23 Jan 2013 18:44:36 +0000
+
+weechat (0.3.9.2-1) unstable; urgency=low
+
+  * New upstream release
+    - do not call shell to execute command in hook_process (fix security
+    problem when a plugin/script gives untrusted command)
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Sun, 18 Nov 2012 13:35:21 +0000
+
 weechat (0.3.9.1-1) unstable; urgency=low
 
   * New upstream release
