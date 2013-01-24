@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-01-22 09:21+0100\n"
+"POT-Creation-Date: 2013-01-24 08:46+0100\n"
 "PO-Revision-Date: 2013-01-20 12:07+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -4270,8 +4270,8 @@ msgstr "%s: パイプを開けました"
 msgid "%s%s: unable to open pipe (%s) for reading"
 msgstr "%s%s: 読み取りパイプ (%s) を開けません"
 
-#, c-format
-msgid "%s%s: unable to create pipe for remote control (%s)"
+#, fuzzy, c-format
+msgid "%s%s: unable to create pipe for remote control (%s): error %d %s"
 msgstr "%s%s: リモート操作用のパイプを作成できません (%s)"
 
 #, c-format
@@ -8169,17 +8169,17 @@ msgstr "Relay 生メッセージ"
 msgid "%s: socket closed for %s (port %d)"
 msgstr "%s: %s (ポート %d) のソケットが閉じられました"
 
-#, c-format
-msgid "%s%s: cannot accept client on port %d (%s)"
+#, fuzzy, c-format
+msgid "%s%s: cannot accept client on port %d (%s): error %d %s"
 msgstr "%s%s: ポート %d (%s) はクライアントを受け付けません"
 
 #, c-format
 msgid "%s%s: IP address \"%s\" not allowed for relay"
 msgstr "%s%s: IP アドレス \"%s\" はリレーの許可がありません"
 
-#, c-format
-msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
-msgstr "%s%s: ソケットオプション \"SO_REUSEADDR\" の設定に失敗"
+#, fuzzy, c-format
+msgid "%s%s: cannot set socket option \"%s\" to %d: error %d %s"
+msgstr "%s%s: ソケットの作成に失敗: エラー %d %s"
 
 #, c-format
 msgid "%s%s: cannot create socket: error %d %s"
@@ -8189,18 +8189,13 @@ msgstr "%s%s: ソケットの作成に失敗: エラー %d %s"
 msgid "%s%s: try /set relay.network.ipv6 off"
 msgstr "%s%s: /set relay.network.ipv6 off を試してください"
 
-#, c-format
-msgid "%s%s: cannot set socket option \"IPV6_V6ONLY\" to value %d"
-msgstr ""
-"%s%s: ソケットオプション \"IPV6_V6ONLY\" の値を %d に設定することはできません"
-
-#, c-format
-msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
-msgstr "%s%s: ソケットオプション \"SO_KEEPALIVE\" の設定に失敗"
-
-#, c-format
-msgid "%s%s: error with \"bind\" on port %d (%s)"
+#, fuzzy, c-format
+msgid "%s%s: cannot \"bind\" on port %d (%s): error %d %s"
 msgstr "%s%s: ポート %d (%s) での \"bind\" にエラー"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot \"listen\" on port %d (%s): error %d %s"
+msgstr "%s%s: ポート %d (%s) はクライアントを受け付けません"
 
 #, c-format
 msgid "%s: listening on port %d (relay: %s, %s, max %d clients)"
@@ -9266,9 +9261,9 @@ msgstr ""
 "%s%s: \"%s\" のアドレスが見つかりません、ローカル IP アドレスに切り替えていま"
 "す"
 
-#, c-format
-msgid "%s%s: cannot create socket for xfer"
-msgstr "%s%s: xfer 用のソケットの作成に失敗"
+#, fuzzy, c-format
+msgid "%s%s: cannot create socket for xfer: error %d %s"
+msgstr "%s%s: ソケットの作成に失敗: エラー %d %s"
 
 #, c-format
 msgid "%s%s: cannot find available port for xfer"
@@ -9473,8 +9468,8 @@ msgstr "xfer のリスト"
 msgid "xfer pointer (optional)"
 msgstr "xfer ポインタ (オプション)"
 
-#, c-format
-msgid "%s%s: unable to create pipe"
+#, fuzzy, c-format
+msgid "%s%s: unable to create pipe: error %d %s"
 msgstr "%s%s: パイプを作成できません"
 
 #, c-format
@@ -9513,12 +9508,12 @@ msgstr ""
 "%s: %s (%ld.%ld.%ld.%ld、%s.%s) へファイルを送信、名前: %s (ローカルファイル"
 "名: %s)、%llu バイト (プロトコル: %s)"
 
-#, c-format
-msgid "%s%s: unable to create socket for sending file"
+#, fuzzy, c-format
+msgid "%s%s: unable to create socket for sending file: error %d %s"
 msgstr "%s%s: ファイル送信用にソケットを作れません"
 
-#, c-format
-msgid "%s%s: unable to set option \"nonblock\" for socket"
+#, fuzzy, c-format
+msgid "%s%s: unable to set option \"nonblock\" for socket: error %d %s"
 msgstr "%s%s: ソケットにオプション \"nonblock\" を設定できません"
 
 #, c-format
@@ -9560,6 +9555,20 @@ msgstr "タイプ"
 
 msgid "Constants"
 msgstr "定数"
+
+#~ msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
+#~ msgstr "%s%s: ソケットオプション \"SO_REUSEADDR\" の設定に失敗"
+
+#~ msgid "%s%s: cannot set socket option \"IPV6_V6ONLY\" to value %d"
+#~ msgstr ""
+#~ "%s%s: ソケットオプション \"IPV6_V6ONLY\" の値を %d に設定することはできま"
+#~ "せん"
+
+#~ msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
+#~ msgstr "%s%s: ソケットオプション \"SO_KEEPALIVE\" の設定に失敗"
+
+#~ msgid "%s%s: cannot create socket for xfer"
+#~ msgstr "%s%s: xfer 用のソケットの作成に失敗"
 
 #~ msgid "%s%s: not enough memory to parse file \"%s\""
 #~ msgstr "%s%s: ファイル \"%s\" を解析する十分なメモリがありません"

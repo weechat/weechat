@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-01-22 09:21+0100\n"
+"POT-Creation-Date: 2013-01-24 08:46+0100\n"
 "PO-Revision-Date: 2013-01-20 12:07+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3702,7 +3702,7 @@ msgid "%s%s: unable to open pipe (%s) for reading"
 msgstr "%s nem sikerült a FIFO csövet (%s) olvasásra megnyitni\n"
 
 #, fuzzy, c-format
-msgid "%s%s: unable to create pipe for remote control (%s)"
+msgid "%s%s: unable to create pipe for remote control (%s): error %d %s"
 msgstr "%s nem sikerült a FIFO csövet létrehozni a távoli felügyelethez (%s)\n"
 
 #, fuzzy, c-format
@@ -7458,7 +7458,7 @@ msgid "%s: socket closed for %s (port %d)"
 msgstr "FIFO cső bezárva\n"
 
 #, fuzzy, c-format
-msgid "%s%s: cannot accept client on port %d (%s)"
+msgid "%s%s: cannot accept client on port %d (%s): error %d %s"
 msgstr "%s nem sikerült a csatornát létrehozni\n"
 
 #, fuzzy, c-format
@@ -7466,8 +7466,8 @@ msgid "%s%s: IP address \"%s\" not allowed for relay"
 msgstr "%s cím \"%s\" nem található\n"
 
 #, fuzzy, c-format
-msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
-msgstr "%s nem sikerült a \"SO_REUSEADDR\" csatornaopciót beállítani\n"
+msgid "%s%s: cannot set socket option \"%s\" to %d: error %d %s"
+msgstr "%s nem sikerült a csatornát létrehozni\n"
 
 #, fuzzy, c-format
 msgid "%s%s: cannot create socket: error %d %s"
@@ -7478,15 +7478,11 @@ msgid "%s%s: try /set relay.network.ipv6 off"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%s%s: cannot set socket option \"IPV6_V6ONLY\" to value %d"
-msgstr "%s nem sikerült a \"SO_KEEPALIVE\" csatornaopciót beállítani\n"
+msgid "%s%s: cannot \"bind\" on port %d (%s): error %d %s"
+msgstr "%s nem sikerült a csatornát létrehozni\n"
 
 #, fuzzy, c-format
-msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
-msgstr "%s nem sikerült a \"SO_KEEPALIVE\" csatornaopciót beállítani\n"
-
-#, fuzzy, c-format
-msgid "%s%s: error with \"bind\" on port %d (%s)"
+msgid "%s%s: cannot \"listen\" on port %d (%s): error %d %s"
 msgstr "%s nem sikerült a csatornát létrehozni\n"
 
 #, fuzzy, c-format
@@ -8476,7 +8472,7 @@ msgstr ""
 "%s nem sikerült a(z) '%s' címét meghatározni. Helyi IP-cím használata.\n"
 
 #, fuzzy, c-format
-msgid "%s%s: cannot create socket for xfer"
+msgid "%s%s: cannot create socket for xfer: error %d %s"
 msgstr "%s nem sikerült a csatornát létrehozni\n"
 
 #, fuzzy, c-format
@@ -8695,7 +8691,7 @@ msgid "xfer pointer (optional)"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%s%s: unable to create pipe"
+msgid "%s%s: unable to create pipe: error %d %s"
 msgstr "%s DCC: nem sikerült a csövet létrehozni\n"
 
 #, fuzzy, c-format
@@ -8735,11 +8731,11 @@ msgstr ""
 "%lu%s bájt\n"
 
 #, fuzzy, c-format
-msgid "%s%s: unable to create socket for sending file"
+msgid "%s%s: unable to create socket for sending file: error %d %s"
 msgstr "%s DCC: nem sikerült csatornát nyitni a fájlküldéshez\n"
 
 #, fuzzy, c-format
-msgid "%s%s: unable to set option \"nonblock\" for socket"
+msgid "%s%s: unable to set option \"nonblock\" for socket: error %d %s"
 msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 
 #, fuzzy, c-format
@@ -8785,6 +8781,22 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#, fuzzy
+#~ msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
+#~ msgstr "%s nem sikerült a \"SO_REUSEADDR\" csatornaopciót beállítani\n"
+
+#, fuzzy
+#~ msgid "%s%s: cannot set socket option \"IPV6_V6ONLY\" to value %d"
+#~ msgstr "%s nem sikerült a \"SO_KEEPALIVE\" csatornaopciót beállítani\n"
+
+#, fuzzy
+#~ msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
+#~ msgstr "%s nem sikerült a \"SO_KEEPALIVE\" csatornaopciót beállítani\n"
+
+#, fuzzy
+#~ msgid "%s%s: cannot create socket for xfer"
+#~ msgstr "%s nem sikerült a csatornát létrehozni\n"
 
 #, fuzzy
 #~ msgid "%s%s: not enough memory to parse file \"%s\""

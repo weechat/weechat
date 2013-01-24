@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-01-22 09:21+0100\n"
+"POT-Creation-Date: 2013-01-24 08:46+0100\n"
 "PO-Revision-Date: 2013-01-20 12:07+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4087,8 +4087,8 @@ msgstr "%s:roura otevřena"
 msgid "%s%s: unable to open pipe (%s) for reading"
 msgstr "%s%s: nemohu otevřít rouru (%s) pro čtení"
 
-#, c-format
-msgid "%s%s: unable to create pipe for remote control (%s)"
+#, fuzzy, c-format
+msgid "%s%s: unable to create pipe for remote control (%s): error %d %s"
 msgstr "%s%s: nemohu vytvořit rouru pro vzdálené ovládání (%s)"
 
 #, c-format
@@ -7973,16 +7973,16 @@ msgid "%s: socket closed for %s (port %d)"
 msgstr "%s: soket pro %s.%s (port %d) uzavřen"
 
 #, fuzzy, c-format
-msgid "%s%s: cannot accept client on port %d (%s)"
+msgid "%s%s: cannot accept client on port %d (%s): error %d %s"
 msgstr "%s%s: nemohu akceptovat klienta na portu %d (%s.%s)"
 
 #, fuzzy, c-format
 msgid "%s%s: IP address \"%s\" not allowed for relay"
 msgstr "%s%s: adresa \"%s\" nenalezena"
 
-#, c-format
-msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
-msgstr "%s%s: nemohu nastavit nastavení sketu \"SO_REUSEADDR\""
+#, fuzzy, c-format
+msgid "%s%s: cannot set socket option \"%s\" to %d: error %d %s"
+msgstr "%s%s: nemohu vytvořit soket pro xfer"
 
 #, fuzzy, c-format
 msgid "%s%s: cannot create socket: error %d %s"
@@ -7993,16 +7993,12 @@ msgid "%s%s: try /set relay.network.ipv6 off"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%s%s: cannot set socket option \"IPV6_V6ONLY\" to value %d"
-msgstr "%s%s: nemohu nastavit nastavení soketu \"SO_KEEPALIVE\""
-
-#, c-format
-msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
-msgstr "%s%s: nemohu nastavit nastavení soketu \"SO_KEEPALIVE\""
+msgid "%s%s: cannot \"bind\" on port %d (%s): error %d %s"
+msgstr "%s%s: chyba s \"bind\" na portu %d (%s.%s)"
 
 #, fuzzy, c-format
-msgid "%s%s: error with \"bind\" on port %d (%s)"
-msgstr "%s%s: chyba s \"bind\" na portu %d (%s.%s)"
+msgid "%s%s: cannot \"listen\" on port %d (%s): error %d %s"
+msgstr "%s%s: nemohu akceptovat klienta na portu %d (%s.%s)"
 
 #, fuzzy, c-format
 msgid "%s: listening on port %d (relay: %s, %s, max %d clients)"
@@ -9002,8 +8998,8 @@ msgstr "%s%s: nemohu přistupovat k souboru \"%s\""
 msgid "%s%s: could not find address for \"%s\", falling back to local IP"
 msgstr "%s%s: nemůžu najít adresu pro \"%s\", navracím se k lokální IP"
 
-#, c-format
-msgid "%s%s: cannot create socket for xfer"
+#, fuzzy, c-format
+msgid "%s%s: cannot create socket for xfer: error %d %s"
 msgstr "%s%s: nemohu vytvořit soket pro xfer"
 
 #, c-format
@@ -9217,8 +9213,8 @@ msgstr "seznam xfer"
 msgid "xfer pointer (optional)"
 msgstr "ukazatel xfer (volitelné)"
 
-#, c-format
-msgid "%s%s: unable to create pipe"
+#, fuzzy, c-format
+msgid "%s%s: unable to create pipe: error %d %s"
 msgstr "%s%s: nemohu vytvořit rouru"
 
 #, c-format
@@ -9257,12 +9253,12 @@ msgstr ""
 "%s: posílám soubor k %s: %s (lokální jméno souboru: %s), %llu bytů "
 "(protokol: %s)"
 
-#, c-format
-msgid "%s%s: unable to create socket for sending file"
+#, fuzzy, c-format
+msgid "%s%s: unable to create socket for sending file: error %d %s"
 msgstr "%s%s: nemohu vytvořit soket pro odesílání souboru"
 
-#, c-format
-msgid "%s%s: unable to set option \"nonblock\" for socket"
+#, fuzzy, c-format
+msgid "%s%s: unable to set option \"nonblock\" for socket: error %d %s"
 msgstr "%s%s: nemohu nastavit \"neblokovaci\" volbu na soket"
 
 #, c-format
@@ -9305,6 +9301,19 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#~ msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
+#~ msgstr "%s%s: nemohu nastavit nastavení sketu \"SO_REUSEADDR\""
+
+#, fuzzy
+#~ msgid "%s%s: cannot set socket option \"IPV6_V6ONLY\" to value %d"
+#~ msgstr "%s%s: nemohu nastavit nastavení soketu \"SO_KEEPALIVE\""
+
+#~ msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
+#~ msgstr "%s%s: nemohu nastavit nastavení soketu \"SO_KEEPALIVE\""
+
+#~ msgid "%s%s: cannot create socket for xfer"
+#~ msgstr "%s%s: nemohu vytvořit soket pro xfer"
 
 #~ msgid "%s%s: not enough memory to parse file \"%s\""
 #~ msgstr "%s%s: nedostatek paměti pro parsování souboru \"%s\""

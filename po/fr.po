@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-01-22 09:21+0100\n"
-"PO-Revision-Date: 2013-01-22 09:22+0100\n"
+"POT-Creation-Date: 2013-01-24 08:46+0100\n"
+"PO-Revision-Date: 2013-01-23 14:54+0100\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -4440,8 +4440,10 @@ msgid "%s%s: unable to open pipe (%s) for reading"
 msgstr "%s%s: impossible d'ouvrir le tube (%s) en lecture"
 
 #, c-format
-msgid "%s%s: unable to create pipe for remote control (%s)"
-msgstr "%s%s: impossible de créer le tube pour le contrôle à distance (%s)"
+msgid "%s%s: unable to create pipe for remote control (%s): error %d %s"
+msgstr ""
+"%s%s: impossible de créer le tube pour le contrôle à distance (%s): erreur "
+"%d %s"
 
 #, c-format
 msgid "%s: pipe closed"
@@ -8463,16 +8465,17 @@ msgid "%s: socket closed for %s (port %d)"
 msgstr "%s: socket fermée pour %s (port %d)"
 
 #, c-format
-msgid "%s%s: cannot accept client on port %d (%s)"
-msgstr "%s%s: impossible d'accepter le client sur le port %d (%s)"
+msgid "%s%s: cannot accept client on port %d (%s): error %d %s"
+msgstr ""
+"%s%s: impossible d'accepter le client sur le port %d (%s): erreur %d %s"
 
 #, c-format
 msgid "%s%s: IP address \"%s\" not allowed for relay"
 msgstr "%s%s: adresse IP \"%s\" non autorisée pour le relai"
 
 #, c-format
-msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
-msgstr "%s%s: impossible d'activer l'option socket \"SO_REUSEADDR\""
+msgid "%s%s: cannot set socket option \"%s\" to %d: error %d %s"
+msgstr "%s%s: impossible d'activer l'option socket \"%s\" à %d: erreur %d %s"
 
 #, c-format
 msgid "%s%s: cannot create socket: error %d %s"
@@ -8483,17 +8486,12 @@ msgid "%s%s: try /set relay.network.ipv6 off"
 msgstr "%s%s: essayez /set relay.network.ipv6 off"
 
 #, c-format
-msgid "%s%s: cannot set socket option \"IPV6_V6ONLY\" to value %d"
-msgstr ""
-"%s%s: impossible d'activer l'option socket \"IPV6_V6ONLY\" à la valeur %d"
+msgid "%s%s: cannot \"bind\" on port %d (%s): error %d %s"
+msgstr "%s%s: \"bind\" impossible sur le port %d (%s): erreur %d %s"
 
 #, c-format
-msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
-msgstr "%s%s: impossible d'activer l'option socket \"SO_KEEPALIVE\""
-
-#, c-format
-msgid "%s%s: error with \"bind\" on port %d (%s)"
-msgstr "%s%s: erreur avec le \"bind\" sur le port %d (%s)"
+msgid "%s%s: cannot \"listen\" on port %d (%s): error %d %s"
+msgstr "%s%s: \"listen\" impossible sur le port %d (%s): erreur %d %s"
 
 #, c-format
 msgid "%s: listening on port %d (relay: %s, %s, max %d clients)"
@@ -9586,8 +9584,8 @@ msgstr ""
 "IP locale"
 
 #, c-format
-msgid "%s%s: cannot create socket for xfer"
-msgstr "%s%s: impossible de créer la socket pour le xfer"
+msgid "%s%s: cannot create socket for xfer: error %d %s"
+msgstr "%s%s: impossible de créer la socket pour le xfer: erreur %d %s"
 
 #, c-format
 msgid "%s%s: cannot find available port for xfer"
@@ -9806,8 +9804,8 @@ msgid "xfer pointer (optional)"
 msgstr "pointeur vers le xfer (optionnel)"
 
 #, c-format
-msgid "%s%s: unable to create pipe"
-msgstr "%s%s: impossible de créer le tuyau"
+msgid "%s%s: unable to create pipe: error %d %s"
+msgstr "%s%s: impossible de créer le tuyau: erreur %d %s"
 
 #, c-format
 msgid "%s%s: unable to read local file"
@@ -9846,12 +9844,15 @@ msgstr ""
 "%llu octets (protocole: %s)"
 
 #, c-format
-msgid "%s%s: unable to create socket for sending file"
-msgstr "%s%s: impossible de créer la socket pour l'envoi du fichier"
+msgid "%s%s: unable to create socket for sending file: error %d %s"
+msgstr ""
+"%s%s: impossible de créer la socket pour l'envoi du fichier: erreur %d %s"
 
 #, c-format
-msgid "%s%s: unable to set option \"nonblock\" for socket"
-msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
+msgid "%s%s: unable to set option \"nonblock\" for socket: error %d %s"
+msgstr ""
+"%s%s: impossible de positionner l'option \"nonblock\" pour la socket: erreur "
+"%d %s"
 
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
@@ -9892,6 +9893,19 @@ msgstr "Type"
 
 msgid "Constants"
 msgstr "Constantes"
+
+#~ msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
+#~ msgstr "%s%s: impossible d'activer l'option socket \"SO_REUSEADDR\""
+
+#~ msgid "%s%s: cannot set socket option \"IPV6_V6ONLY\" to value %d"
+#~ msgstr ""
+#~ "%s%s: impossible d'activer l'option socket \"IPV6_V6ONLY\" à la valeur %d"
+
+#~ msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
+#~ msgstr "%s%s: impossible d'activer l'option socket \"SO_KEEPALIVE\""
+
+#~ msgid "%s%s: cannot create socket for xfer"
+#~ msgstr "%s%s: impossible de créer la socket pour le xfer"
 
 #~ msgid "%s%s: not enough memory to parse file \"%s\""
 #~ msgstr "%s%s: mémoire insuffisante pour lire le fichier \"%s\""

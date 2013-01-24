@@ -21,7 +21,9 @@
 
 #include <stdlib.h>
 #include <unistd.h>
+#include <errno.h>
 #include <stdio.h>
+#include <string.h>
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -56,8 +58,9 @@ xfer_network_create_pipe (struct t_xfer *xfer)
     if (pipe (child_pipe) < 0)
     {
         weechat_printf (NULL,
-                        _("%s%s: unable to create pipe"),
-                        weechat_prefix ("error"), XFER_PLUGIN_NAME);
+                        _("%s%s: unable to create pipe: error %d %s"),
+                        weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                        errno, strerror (errno));
         xfer_close (xfer, XFER_STATUS_FAILED);
         xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
         return 0;
@@ -336,7 +339,7 @@ int
 xfer_network_fd_cb (void *arg_xfer, int fd)
 {
     struct t_xfer *xfer;
-    int sock, flags;
+    int sock, flags, error;
     struct sockaddr_in addr;
     socklen_t length;
 
@@ -353,6 +356,7 @@ xfer_network_fd_cb (void *arg_xfer, int fd)
             length = sizeof (addr);
             sock = accept (xfer->sock,
                            (struct sockaddr *) &addr, &length);
+            error = errno;
             weechat_unhook (xfer->hook_fd);
             xfer->hook_fd = NULL;
             close (xfer->sock);
@@ -361,8 +365,9 @@ xfer_network_fd_cb (void *arg_xfer, int fd)
             {
                 weechat_printf (NULL,
                                 _("%s%s: unable to create socket for sending "
-                                  "file"),
-                                weechat_prefix ("error"), XFER_PLUGIN_NAME);
+                                  "file: error %d %s"),
+                                weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                                error, strerror (error));
                 xfer_close (xfer, XFER_STATUS_FAILED);
                 xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
                 return WEECHAT_RC_OK;
@@ -375,8 +380,9 @@ xfer_network_fd_cb (void *arg_xfer, int fd)
             {
                 weechat_printf (NULL,
                                 _("%s%s: unable to set option \"nonblock\" "
-                                  "for socket"),
-                                weechat_prefix ("error"), XFER_PLUGIN_NAME);
+                                  "for socket: error %d %s"),
+                                weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                                errno, strerror (errno));
                 xfer_close (xfer, XFER_STATUS_FAILED);
                 xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
                 return WEECHAT_RC_OK;
@@ -395,6 +401,7 @@ xfer_network_fd_cb (void *arg_xfer, int fd)
         {
             length = sizeof (addr);
             sock = accept (xfer->sock, (struct sockaddr *) &addr, &length);
+            error = errno;
             weechat_unhook (xfer->hook_fd);
             xfer->hook_fd = NULL;
             close (xfer->sock);
@@ -403,8 +410,9 @@ xfer_network_fd_cb (void *arg_xfer, int fd)
             {
                 weechat_printf (NULL,
                                 _("%s%s: unable to create socket for sending "
-                                  "file"),
-                                weechat_prefix ("error"), XFER_PLUGIN_NAME);
+                                  "file: error %d %s"),
+                                weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                                error, strerror (error));
                 xfer_close (xfer, XFER_STATUS_FAILED);
                 xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
                 return WEECHAT_RC_OK;
@@ -417,8 +425,9 @@ xfer_network_fd_cb (void *arg_xfer, int fd)
             {
                 weechat_printf (NULL,
                                 _("%s%s: unable to set option \"nonblock\" "
-                                  "for socket"),
-                                weechat_prefix ("error"), XFER_PLUGIN_NAME);
+                                  "for socket: error %d %s"),
+                                weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                                errno, strerror (errno));
                 xfer_close (xfer, XFER_STATUS_FAILED);
                 xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
                 return WEECHAT_RC_OK;

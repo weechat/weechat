@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-01-22 09:21+0100\n"
+"POT-Creation-Date: 2013-01-24 08:46+0100\n"
 "PO-Revision-Date: 2013-01-20 12:08+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3734,7 +3734,7 @@ msgid "%s%s: unable to open pipe (%s) for reading"
 msgstr "%s не могу открыть FIFO pipe (%s) для чтения\n"
 
 #, fuzzy, c-format
-msgid "%s%s: unable to create pipe for remote control (%s)"
+msgid "%s%s: unable to create pipe for remote control (%s): error %d %s"
 msgstr "%s не могу создать FIFO pipe для удалённого управления (%s)\n"
 
 #, fuzzy, c-format
@@ -7482,7 +7482,7 @@ msgid "%s: socket closed for %s (port %d)"
 msgstr "FIFO pipe закрыт\n"
 
 #, fuzzy, c-format
-msgid "%s%s: cannot accept client on port %d (%s)"
+msgid "%s%s: cannot accept client on port %d (%s): error %d %s"
 msgstr "%s невозможно создать сокет\n"
 
 #, fuzzy, c-format
@@ -7490,8 +7490,8 @@ msgid "%s%s: IP address \"%s\" not allowed for relay"
 msgstr "%s адрес \"%s\" не найден\n"
 
 #, fuzzy, c-format
-msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
-msgstr "%s не могу установить настройку сокета \"SO_REUSEADDR\"\n"
+msgid "%s%s: cannot set socket option \"%s\" to %d: error %d %s"
+msgstr "%s невозможно создать сокет\n"
 
 #, fuzzy, c-format
 msgid "%s%s: cannot create socket: error %d %s"
@@ -7502,15 +7502,11 @@ msgid "%s%s: try /set relay.network.ipv6 off"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%s%s: cannot set socket option \"IPV6_V6ONLY\" to value %d"
-msgstr "%s не могу установить настройку сокета \"SO_KEEPALIVE\"\n"
+msgid "%s%s: cannot \"bind\" on port %d (%s): error %d %s"
+msgstr "%s невозможно создать сокет\n"
 
 #, fuzzy, c-format
-msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
-msgstr "%s не могу установить настройку сокета \"SO_KEEPALIVE\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: error with \"bind\" on port %d (%s)"
+msgid "%s%s: cannot \"listen\" on port %d (%s): error %d %s"
 msgstr "%s невозможно создать сокет\n"
 
 #, fuzzy, c-format
@@ -8494,7 +8490,7 @@ msgid "%s%s: could not find address for \"%s\", falling back to local IP"
 msgstr "%s не могу найти адрес для '%s'. Откатываюсь на локальный IP.\n"
 
 #, fuzzy, c-format
-msgid "%s%s: cannot create socket for xfer"
+msgid "%s%s: cannot create socket for xfer: error %d %s"
 msgstr "%s невозможно создать сокет\n"
 
 #, fuzzy, c-format
@@ -8714,7 +8710,7 @@ msgid "xfer pointer (optional)"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%s%s: unable to create pipe"
+msgid "%s%s: unable to create pipe: error %d %s"
 msgstr "%s DCC: не могу создать pipe\n"
 
 #, fuzzy, c-format
@@ -8752,11 +8748,11 @@ msgid ""
 msgstr "Отправляю файл %s%s%s: %s%s%s (файл: %s%s%s), %s%lu%s байт\n"
 
 #, fuzzy, c-format
-msgid "%s%s: unable to create socket for sending file"
+msgid "%s%s: unable to create socket for sending file: error %d %s"
 msgstr "%s DCC: не могу создать сокет для отправки файла\n"
 
 #, fuzzy, c-format
-msgid "%s%s: unable to set option \"nonblock\" for socket"
+msgid "%s%s: unable to set option \"nonblock\" for socket: error %d %s"
 msgstr "%s DCC: не могу установить неблокирующий режим для сокета\n"
 
 #, fuzzy, c-format
@@ -8802,6 +8798,22 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#, fuzzy
+#~ msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
+#~ msgstr "%s не могу установить настройку сокета \"SO_REUSEADDR\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: cannot set socket option \"IPV6_V6ONLY\" to value %d"
+#~ msgstr "%s не могу установить настройку сокета \"SO_KEEPALIVE\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
+#~ msgstr "%s не могу установить настройку сокета \"SO_KEEPALIVE\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: cannot create socket for xfer"
+#~ msgstr "%s невозможно создать сокет\n"
 
 #, fuzzy
 #~ msgid "%s%s: not enough memory to parse file \"%s\""

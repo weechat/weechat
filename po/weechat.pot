@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-01-22 09:21+0100\n"
+"POT-Creation-Date: 2013-01-24 08:46+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3291,7 +3291,7 @@ msgid "%s%s: unable to open pipe (%s) for reading"
 msgstr ""
 
 #, c-format
-msgid "%s%s: unable to create pipe for remote control (%s)"
+msgid "%s%s: unable to create pipe for remote control (%s): error %d %s"
 msgstr ""
 
 #, c-format
@@ -6572,7 +6572,7 @@ msgid "%s: socket closed for %s (port %d)"
 msgstr ""
 
 #, c-format
-msgid "%s%s: cannot accept client on port %d (%s)"
+msgid "%s%s: cannot accept client on port %d (%s): error %d %s"
 msgstr ""
 
 #, c-format
@@ -6580,7 +6580,7 @@ msgid "%s%s: IP address \"%s\" not allowed for relay"
 msgstr ""
 
 #, c-format
-msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
+msgid "%s%s: cannot set socket option \"%s\" to %d: error %d %s"
 msgstr ""
 
 #, c-format
@@ -6592,15 +6592,11 @@ msgid "%s%s: try /set relay.network.ipv6 off"
 msgstr ""
 
 #, c-format
-msgid "%s%s: cannot set socket option \"IPV6_V6ONLY\" to value %d"
+msgid "%s%s: cannot \"bind\" on port %d (%s): error %d %s"
 msgstr ""
 
 #, c-format
-msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
-msgstr ""
-
-#, c-format
-msgid "%s%s: error with \"bind\" on port %d (%s)"
+msgid "%s%s: cannot \"listen\" on port %d (%s): error %d %s"
 msgstr ""
 
 #, c-format
@@ -7503,7 +7499,7 @@ msgid "%s%s: could not find address for \"%s\", falling back to local IP"
 msgstr ""
 
 #, c-format
-msgid "%s%s: cannot create socket for xfer"
+msgid "%s%s: cannot create socket for xfer: error %d %s"
 msgstr ""
 
 #, c-format
@@ -7682,7 +7678,7 @@ msgid "xfer pointer (optional)"
 msgstr ""
 
 #, c-format
-msgid "%s%s: unable to create pipe"
+msgid "%s%s: unable to create pipe: error %d %s"
 msgstr ""
 
 #, c-format
@@ -7720,11 +7716,11 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid "%s%s: unable to create socket for sending file"
+msgid "%s%s: unable to create socket for sending file: error %d %s"
 msgstr ""
 
 #, c-format
-msgid "%s%s: unable to set option \"nonblock\" for socket"
+msgid "%s%s: unable to set option \"nonblock\" for socket: error %d %s"
 msgstr ""
 
 #, c-format

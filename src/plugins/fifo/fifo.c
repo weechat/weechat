@@ -175,11 +175,13 @@ fifo_create ()
                                     fifo_filename);
             }
             else
+            {
                 weechat_printf (NULL,
                                 _("%s%s: unable to create pipe for remote "
-                                  "control (%s)"),
+                                  "control (%s): error %d %s"),
                                 weechat_prefix ("error"), FIFO_PLUGIN_NAME,
-                                fifo_filename);
+                                fifo_filename, errno, strerror (errno));
+            }
         }
     }
 }

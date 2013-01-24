@@ -253,9 +253,10 @@ relay_server_sock_cb (void *data, int fd)
     if (client_fd < 0)
     {
         weechat_printf (NULL,
-                        _("%s%s: cannot accept client on port %d (%s)"),
+                        _("%s%s: cannot accept client on port %d (%s): error %d %s"),
                         weechat_prefix ("error"), RELAY_PLUGIN_NAME,
-                        server->port, server->protocol_string);
+                        server->port, server->protocol_string,
+                        errno, strerror (errno));
         return WEECHAT_RC_OK;
     }
 
@@ -309,9 +310,10 @@ relay_server_sock_cb (void *data, int fd)
                     (void *) &set, sizeof (set)) < 0)
     {
         weechat_printf (NULL,
-                        _("%s%s: cannot set socket option "
-                          "\"SO_REUSEADDR\""),
-                        weechat_prefix ("error"), RELAY_PLUGIN_NAME);
+                        _("%s%s: cannot set socket option \"%s\" to %d: "
+                          "error %d %s"),
+                        weechat_prefix ("error"), RELAY_PLUGIN_NAME,
+                        "SO_REUSEADDR", set, errno, strerror (errno));
         close (client_fd);
         return WEECHAT_RC_OK;
     }
@@ -400,10 +402,10 @@ relay_server_create_socket (struct t_relay_server *server)
                         (void *) &set, sizeof (set)) < 0)
         {
             weechat_printf (NULL,
-                            _("%s%s: cannot set socket option \"IPV6_V6ONLY\" "
-                              "to value %d"),
+                            _("%s%s: cannot set socket option \"%s\" "
+                              "to %d: error %d %s"),
                             weechat_prefix ("error"), RELAY_PLUGIN_NAME,
-                            set);
+                            "IPV6_V6ONLY", set, errno, strerror (errno));
             close (server->sock);
             server->sock = -1;
             return 0;
@@ -417,8 +419,10 @@ relay_server_create_socket (struct t_relay_server *server)
                     (void *) &set, sizeof (set)) < 0)
     {
         weechat_printf (NULL,
-                        _("%s%s: cannot set socket option \"SO_REUSEADDR\""),
-                        weechat_prefix ("error"), RELAY_PLUGIN_NAME);
+                        _("%s%s: cannot set socket option \"%s\" to %d: "
+                          "error %d %s"),
+                        weechat_prefix ("error"), RELAY_PLUGIN_NAME,
+                        "SO_REUSEADDR", set, errno, strerror (errno));
         close (server->sock);
         server->sock = -1;
         return 0;
@@ -430,8 +434,10 @@ relay_server_create_socket (struct t_relay_server *server)
                     (void *) &set, sizeof (set)) < 0)
     {
         weechat_printf (NULL,
-                        _("%s%s: cannot set socket option \"SO_KEEPALIVE\""),
-                        weechat_prefix ("error"), RELAY_PLUGIN_NAME);
+                        _("%s%s: cannot set socket option \"%s\" to %d: "
+                          "error %d %s"),
+                        weechat_prefix ("error"), RELAY_PLUGIN_NAME,
+                        "SO_KEEPALIVE", set, errno, strerror (errno));
         close (server->sock);
         server->sock = -1;
         return 0;
@@ -441,9 +447,10 @@ relay_server_create_socket (struct t_relay_server *server)
     if (bind (server->sock, (struct sockaddr *)ptr_addr, addr_size) < 0)
     {
         weechat_printf (NULL,
-                        _("%s%s: error with \"bind\" on port %d (%s)"),
+                        _("%s%s: cannot \"bind\" on port %d (%s): error %d %s"),
                         weechat_prefix ("error"), RELAY_PLUGIN_NAME,
-                        server->port, server->protocol_string);
+                        server->port, server->protocol_string,
+                        errno, strerror (errno));
         close (server->sock);
         server->sock = -1;
         return 0;
@@ -451,7 +458,17 @@ relay_server_create_socket (struct t_relay_server *server)
 
     max_clients = weechat_config_integer (relay_config_network_max_clients);
 
-    listen (server->sock, max_clients);
+    if (listen (server->sock, max_clients) != 0)
+    {
+        weechat_printf (NULL,
+                        _("%s%s: cannot \"listen\" on port %d (%s): error %d %s"),
+                        weechat_prefix ("error"), RELAY_PLUGIN_NAME,
+                        server->port, server->protocol_string,
+                        errno, strerror (errno));
+        close (server->sock);
+        server->sock = -1;
+        return 0;
+    }
 
     weechat_printf (NULL,
                     _("%s: listening on port %d (relay: %s, %s, max %d clients)"),

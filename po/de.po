@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-01-22 09:21+0100\n"
+"POT-Creation-Date: 2013-01-24 08:46+0100\n"
 "PO-Revision-Date: 2013-01-20 12:07+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -4571,8 +4571,8 @@ msgstr "%s: Pipe ist geöffnet"
 msgid "%s%s: unable to open pipe (%s) for reading"
 msgstr "%s%s: Pipe (%s) kann nicht zum Lesen geöffnet werden"
 
-#, c-format
-msgid "%s%s: unable to create pipe for remote control (%s)"
+#, fuzzy, c-format
+msgid "%s%s: unable to create pipe for remote control (%s): error %d %s"
 msgstr "%s%s: Pipe kann nicht zur Fernsteuerung (%s) angelegt werden"
 
 #, c-format
@@ -8697,17 +8697,17 @@ msgstr "Relay RAW Nachrichten"
 msgid "%s: socket closed for %s (port %d)"
 msgstr "%s: Socket wurde für %s (Port %d) geschlossen"
 
-#, c-format
-msgid "%s%s: cannot accept client on port %d (%s)"
+#, fuzzy, c-format
+msgid "%s%s: cannot accept client on port %d (%s): error %d %s"
 msgstr "%s%s: Der Client wird an dem Port %d (%s) nicht akzeptiert"
 
 #, c-format
 msgid "%s%s: IP address \"%s\" not allowed for relay"
 msgstr "%s%s: IP Adresse \"%s\" für Relay nicht gültig"
 
-#, c-format
-msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
-msgstr "%s%s Fehler beim Erstellen der Socket-Option \"SO_REUSEADDR\""
+#, fuzzy, c-format
+msgid "%s%s: cannot set socket option \"%s\" to %d: error %d %s"
+msgstr "%s%s: Socket kann nicht erstellt werden: Fehler %d %s"
 
 #, c-format
 msgid "%s%s: cannot create socket: error %d %s"
@@ -8717,19 +8717,13 @@ msgstr "%s%s: Socket kann nicht erstellt werden: Fehler %d %s"
 msgid "%s%s: try /set relay.network.ipv6 off"
 msgstr "%s%s: versuche /set relay.network.ipv6 off"
 
-#, c-format
-msgid "%s%s: cannot set socket option \"IPV6_V6ONLY\" to value %d"
-msgstr ""
-"%s%s der Wert %d kann nicht für die Socket-Option, \"IPV6_V6ONLY\", gesetzt "
-"werden"
-
-#, c-format
-msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
-msgstr "%s%s Fehler beim Erstellen der Socket-Option \"SO_KEEPALIVE\""
-
-#, c-format
-msgid "%s%s: error with \"bind\" on port %d (%s)"
+#, fuzzy, c-format
+msgid "%s%s: cannot \"bind\" on port %d (%s): error %d %s"
 msgstr "%s%s: Fehler mit \"bind\" am Port %d (%s)"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot \"listen\" on port %d (%s): error %d %s"
+msgstr "%s%s: Der Client wird an dem Port %d (%s) nicht akzeptiert"
 
 #, c-format
 msgid "%s: listening on port %d (relay: %s, %s, max %d clients)"
@@ -9845,9 +9839,9 @@ msgstr ""
 "%s%s: Adresse für \"%s\" wurde nicht gefunden. Es wird auf die lokale IP "
 "zurückgegriffen."
 
-#, c-format
-msgid "%s%s: cannot create socket for xfer"
-msgstr "%s%s: Für den Transfer konnte kein Socket angelegt werden"
+#, fuzzy, c-format
+msgid "%s%s: cannot create socket for xfer: error %d %s"
+msgstr "%s%s: Socket kann nicht erstellt werden: Fehler %d %s"
 
 #, c-format
 msgid "%s%s: cannot find available port for xfer"
@@ -10066,8 +10060,8 @@ msgstr "Transferliste"
 msgid "xfer pointer (optional)"
 msgstr "Transferpointer (optional)"
 
-#, c-format
-msgid "%s%s: unable to create pipe"
+#, fuzzy, c-format
+msgid "%s%s: unable to create pipe: error %d %s"
 msgstr "%s%s: Pipe kann nicht erstellt werden"
 
 #, c-format
@@ -10106,12 +10100,12 @@ msgstr ""
 "%s: sende Datei an %s (%ld.%ld.%ld.%ld, %s.%s), Name: %s (lokaler Dateiname: "
 "%s), %llu Bytes (Protokoll: %s)"
 
-#, c-format
-msgid "%s%s: unable to create socket for sending file"
+#, fuzzy, c-format
+msgid "%s%s: unable to create socket for sending file: error %d %s"
 msgstr "%s%s: für den Dateiversand kann kein Socket erstellt werden"
 
-#, c-format
-msgid "%s%s: unable to set option \"nonblock\" for socket"
+#, fuzzy, c-format
+msgid "%s%s: unable to set option \"nonblock\" for socket: error %d %s"
 msgstr ""
 "%s%s: Die \"nonblock\"-Option für den Socket kann nicht festlegt werden"
 
@@ -10154,6 +10148,20 @@ msgstr "Type"
 
 msgid "Constants"
 msgstr "Konstanten"
+
+#~ msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
+#~ msgstr "%s%s Fehler beim Erstellen der Socket-Option \"SO_REUSEADDR\""
+
+#~ msgid "%s%s: cannot set socket option \"IPV6_V6ONLY\" to value %d"
+#~ msgstr ""
+#~ "%s%s der Wert %d kann nicht für die Socket-Option, \"IPV6_V6ONLY\", "
+#~ "gesetzt werden"
+
+#~ msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
+#~ msgstr "%s%s Fehler beim Erstellen der Socket-Option \"SO_KEEPALIVE\""
+
+#~ msgid "%s%s: cannot create socket for xfer"
+#~ msgstr "%s%s: Für den Transfer konnte kein Socket angelegt werden"
 
 #~ msgid "%s%s: not enough memory to parse file \"%s\""
 #~ msgstr "%s%s: Nicht genug Speicher um Datei \"%s\" zu analysieren"

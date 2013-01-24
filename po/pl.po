@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-01-22 09:21+0100\n"
+"POT-Creation-Date: 2013-01-24 08:46+0100\n"
 "PO-Revision-Date: 2013-01-20 12:08+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4366,8 +4366,8 @@ msgstr "%s: otwarto strumień"
 msgid "%s%s: unable to open pipe (%s) for reading"
 msgstr "%s%s: nie można otworzyć do odczytu strumienia (%s)"
 
-#, c-format
-msgid "%s%s: unable to create pipe for remote control (%s)"
+#, fuzzy, c-format
+msgid "%s%s: unable to create pipe for remote control (%s): error %d %s"
 msgstr "%s%s: nie można utworzyć strumienia do zdalnego sterowania (%s)"
 
 #, c-format
@@ -8321,17 +8321,17 @@ msgstr "Nieprzetworzone wiadomości relay"
 msgid "%s: socket closed for %s (port %d)"
 msgstr "%s: gniazdo zamknięte dla %s (port %d)"
 
-#, c-format
-msgid "%s%s: cannot accept client on port %d (%s)"
+#, fuzzy, c-format
+msgid "%s%s: cannot accept client on port %d (%s): error %d %s"
 msgstr "%s%s: nie można zaakceptować klienta na porcie %d (%s)"
 
 #, c-format
 msgid "%s%s: IP address \"%s\" not allowed for relay"
 msgstr "%s%s: adres IP \"%s\" nie posiada zezwolenia na połączenie"
 
-#, c-format
-msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
-msgstr "%s%s: nie można ustawić opcji gniazda \"SO_REUSEADDR\""
+#, fuzzy, c-format
+msgid "%s%s: cannot set socket option \"%s\" to %d: error %d %s"
+msgstr "%s%s: nie można utworzyć gniazda: błąd %d %s"
 
 #, c-format
 msgid "%s%s: cannot create socket: error %d %s"
@@ -8341,17 +8341,13 @@ msgstr "%s%s: nie można utworzyć gniazda: błąd %d %s"
 msgid "%s%s: try /set relay.network.ipv6 off"
 msgstr "%s%s: spróbuj /set relay.network.ipv6 off"
 
-#, c-format
-msgid "%s%s: cannot set socket option \"IPV6_V6ONLY\" to value %d"
-msgstr "%s%s: nie można ustawić opcji gniazda \"IPV6_V6ONLY\" na wartość %d"
-
-#, c-format
-msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
-msgstr "%s%s: nie można ustawić opcji gniazda \"SO_KEEPALIVE\""
-
-#, c-format
-msgid "%s%s: error with \"bind\" on port %d (%s)"
+#, fuzzy, c-format
+msgid "%s%s: cannot \"bind\" on port %d (%s): error %d %s"
 msgstr "%s%s: błąd podczas \"bind\" na porcie %d (%s)"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot \"listen\" on port %d (%s): error %d %s"
+msgstr "%s%s: nie można zaakceptować klienta na porcie %d (%s)"
 
 #, c-format
 msgid "%s: listening on port %d (relay: %s, %s, max %d clients)"
@@ -9418,9 +9414,9 @@ msgstr "%s%s: nie można uzyskać dostępu do pliku \"%s\""
 msgid "%s%s: could not find address for \"%s\", falling back to local IP"
 msgstr "%s%s: nie można znaleźć adresu dla \"%s\", powracam do lokalnego IP"
 
-#, c-format
-msgid "%s%s: cannot create socket for xfer"
-msgstr "%s%s: nie można utworzyć gniazda dla xfer"
+#, fuzzy, c-format
+msgid "%s%s: cannot create socket for xfer: error %d %s"
+msgstr "%s%s: nie można utworzyć gniazda: błąd %d %s"
 
 #, c-format
 msgid "%s%s: cannot find available port for xfer"
@@ -9627,8 +9623,8 @@ msgstr "lista xfer"
 msgid "xfer pointer (optional)"
 msgstr "wskaźnik xfer (opcjonalny)"
 
-#, c-format
-msgid "%s%s: unable to create pipe"
+#, fuzzy, c-format
+msgid "%s%s: unable to create pipe: error %d %s"
 msgstr "%s%s: nie można utworzyć strumienia"
 
 #, c-format
@@ -9667,12 +9663,12 @@ msgstr ""
 "%s: wysyłanie pliku do %s (%ld.%ld.%ld.%ld, %s.%s), nazwa: %s (lokalna "
 "nazwa: %s), %llu bajtów (protokół: %s)"
 
-#, c-format
-msgid "%s%s: unable to create socket for sending file"
+#, fuzzy, c-format
+msgid "%s%s: unable to create socket for sending file: error %d %s"
 msgstr "%s%s: nie można otworzyć gniazda do wysłania pliku"
 
-#, c-format
-msgid "%s%s: unable to set option \"nonblock\" for socket"
+#, fuzzy, c-format
+msgid "%s%s: unable to set option \"nonblock\" for socket: error %d %s"
 msgstr "%s%s: nie można ustawić opcji \"nonblock\" dla gniazda"
 
 #, c-format
@@ -9714,6 +9710,18 @@ msgstr "Typ"
 
 msgid "Constants"
 msgstr "Stałe"
+
+#~ msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
+#~ msgstr "%s%s: nie można ustawić opcji gniazda \"SO_REUSEADDR\""
+
+#~ msgid "%s%s: cannot set socket option \"IPV6_V6ONLY\" to value %d"
+#~ msgstr "%s%s: nie można ustawić opcji gniazda \"IPV6_V6ONLY\" na wartość %d"
+
+#~ msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
+#~ msgstr "%s%s: nie można ustawić opcji gniazda \"SO_KEEPALIVE\""
+
+#~ msgid "%s%s: cannot create socket for xfer"
+#~ msgstr "%s%s: nie można utworzyć gniazda dla xfer"
 
 #~ msgid "%s%s: not enough memory to parse file \"%s\""
 #~ msgstr "%s%s: za mało pamięci do przetworzenia pliku \"%s\""
