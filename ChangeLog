@@ -1,13 +1,15 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.1-dev, 2013-01-22
+v0.4.1-dev, 2013-01-25
 
 
 Version 0.4.1 (under dev!)
 --------------------------
 
 * guile: fix compilation with guile 2.0
+* irc: add color in output of /names when result is on server buffer (channel
+  not joined) (bug #38070)
 * perl: simplify code to load scripts
 * scripts: do not allow empty script name in function "register"
 

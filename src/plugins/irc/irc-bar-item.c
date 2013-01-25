@@ -493,7 +493,7 @@ irc_bar_item_input_prompt (void *data, struct t_gui_bar_item *item,
                 if (ptr_nick->prefix[0] != ' ')
                 {
                     snprintf (str_prefix, sizeof (str_prefix), "%s%s",
-                              weechat_color (irc_nick_get_prefix_color_name (server, ptr_nick)),
+                              weechat_color (irc_nick_get_prefix_color_name (server, ptr_nick->prefix[0])),
                               ptr_nick->prefix);
                 }
             }

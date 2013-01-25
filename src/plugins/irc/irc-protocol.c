@@ -3732,8 +3732,8 @@ IRC_PROTOCOL_CALLBACK(352)
 IRC_PROTOCOL_CALLBACK(353)
 {
     char *pos_channel, *pos_nick, *pos_nick_orig, *pos_host, *nickname;
-    char *prefixes;
-    int args, i, away;
+    char *prefixes, *str_nicks;
+    int args, i, away, length;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
 
@@ -3753,35 +3753,52 @@ IRC_PROTOCOL_CALLBACK(353)
     IRC_PROTOCOL_MIN_ARGS(args + 1);
 
     ptr_channel = irc_channel_search (server, pos_channel);
+    str_nicks = NULL;
 
-    if (ptr_channel && ptr_channel->nicks)
+    /*
+     * for a channel without buffer, prepare a string that will be built
+     * with nicks and colors (argc-args is the number of nicks)
+     */
+    if (!ptr_channel)
     {
-        for (i = args; i < argc; i++)
+        /*
+         * prefix color (16) + nick color (16) + reset color (16) = 48 bytes
+         * added for each nick
+         */
+        length = strlen (argv_eol[args]) + ((argc - args) * (16 + 16 + 16)) + 1;
+        str_nicks = malloc (length);
+        if (str_nicks)
+            str_nicks[0] = '\0';
+    }
+
+    for (i = args; i < argc; i++)
+    {
+        pos_nick = (argv[i][0] == ':') ? argv[i] + 1 : argv[i];
+        pos_nick_orig = pos_nick;
+
+        /* skip and save prefix(es) */
+        while (pos_nick[0]
+               && (irc_server_get_prefix_char_index (server, pos_nick[0]) >= 0))
         {
-            pos_nick = (argv[i][0] == ':') ? argv[i] + 1 : argv[i];
-            pos_nick_orig = pos_nick;
+            pos_nick++;
+        }
+        prefixes = (pos_nick > pos_nick_orig) ?
+            weechat_strndup (pos_nick_orig, pos_nick - pos_nick_orig) : NULL;
 
-            /* skip prefix(es) */
-            while (pos_nick[0]
-                   && (irc_server_get_prefix_char_index (server, pos_nick[0]) >= 0))
-            {
-                pos_nick++;
-            }
+        /* extract nick from host */
+        pos_host = strchr (pos_nick, '!');
+        if (pos_host)
+            nickname = weechat_strndup (pos_nick, pos_host - pos_nick);
+        else
+            nickname = strdup (pos_nick);
 
-            /* extract nick from host */
-            pos_host = strchr (pos_nick, '!');
-            if (pos_host)
-                nickname = weechat_strndup (pos_nick, pos_host - pos_nick);
-            else
-                nickname = strdup (pos_nick);
-
-            /* add or update nick on channel */
-            if (nickname)
+        /* add or update nick on channel */
+        if (nickname)
+        {
+            if (ptr_channel && ptr_channel->nicks)
             {
                 ptr_nick = irc_nick_search (server, ptr_channel, nickname);
                 away = (ptr_nick && ptr_nick->away) ? 1 : 0;
-                prefixes = (pos_nick > pos_nick_orig) ?
-                    weechat_strndup (pos_nick_orig, pos_nick - pos_nick_orig) : NULL;
                 if (!irc_nick_new (server, ptr_channel, nickname, prefixes,
                                    away))
                 {
@@ -3791,11 +3808,36 @@ IRC_PROTOCOL_CALLBACK(353)
                                     weechat_prefix ("error"),
                                     IRC_PLUGIN_NAME, nickname, ptr_channel->name);
                 }
-                free (nickname);
-                if (prefixes)
-                    free (prefixes);
             }
+            else if (!ptr_channel && str_nicks)
+            {
+                if (str_nicks[0])
+                {
+                    strcat (str_nicks, IRC_COLOR_RESET);
+                    strcat (str_nicks, " ");
+                }
+                if (prefixes)
+                {
+                    strcat (str_nicks,
+                            weechat_color (irc_nick_get_prefix_color_name (server,
+                                                                           prefixes[0])));
+                    strcat (str_nicks, prefixes);
+                }
+                if (weechat_config_boolean (irc_config_look_color_nicks_in_names))
+                {
+                    if (irc_server_strcasecmp (server, nickname, server->nick) == 0)
+                        strcat (str_nicks, IRC_COLOR_CHAT_NICK_SELF);
+                    else
+                        strcat (str_nicks, irc_nick_find_color (nickname));
+                }
+                else
+                    strcat (str_nicks, IRC_COLOR_RESET);
+                strcat (str_nicks, nickname);
+            }
+            free (nickname);
         }
+        if (prefixes)
+            free (prefixes);
     }
 
     if (!ptr_channel)
@@ -3812,10 +3854,12 @@ IRC_PROTOCOL_CALLBACK(353)
                                   IRC_COLOR_RESET,
                                   IRC_COLOR_CHAT_DELIMITERS,
                                   IRC_COLOR_RESET,
-                                  (argv_eol[args][0] == ':') ?
-                                  argv_eol[args] + 1 : argv_eol[args],
+                                  (str_nicks) ? str_nicks : "",
                                   IRC_COLOR_CHAT_DELIMITERS);
     }
+
+    if (str_nicks)
+        free (str_nicks);
 
     return WEECHAT_RC_OK;
 }

@@ -425,8 +425,7 @@ irc_nick_get_nicklist_group (struct t_irc_server *server,
  */
 
 const char *
-irc_nick_get_prefix_color_name (struct t_irc_server *server,
-                                struct t_irc_nick *nick)
+irc_nick_get_prefix_color_name (struct t_irc_server *server, char prefix)
 {
     static char *default_color = "";
     const char *prefix_modes, *color;
@@ -435,7 +434,7 @@ irc_nick_get_prefix_color_name (struct t_irc_server *server,
 
     if (irc_config_hashtable_nick_prefixes)
     {
-        index = irc_server_get_prefix_char_index (server, nick->prefix[0]);
+        index = irc_server_get_prefix_char_index (server, prefix);
         if (index >= 0)
         {
             mode[0] = ' ';
@@ -507,7 +506,7 @@ irc_nick_nicklist_add (struct t_irc_server *server,
                                nick->name,
                                irc_nick_get_color_for_nicklist (server, nick),
                                nick->prefix,
-                               irc_nick_get_prefix_color_name (server, nick),
+                               irc_nick_get_prefix_color_name (server, nick->prefix[0]),
                                1);
 }
 
@@ -569,7 +568,7 @@ irc_nick_nicklist_set_prefix_color_all ()
             {
                 irc_nick_nicklist_set (ptr_channel, ptr_nick, "prefix_color",
                                        irc_nick_get_prefix_color_name (ptr_server,
-                                                                       ptr_nick));
+                                                                       ptr_nick->prefix[0]));
             }
         }
     }
@@ -922,7 +921,8 @@ irc_nick_mode_for_display (struct t_irc_server *server, struct t_irc_nick *nick,
             {
                 str_prefix[0] = '\0';
             }
-            str_prefix_color = weechat_color (irc_nick_get_prefix_color_name (server, nick));
+            str_prefix_color = weechat_color (irc_nick_get_prefix_color_name (server,
+                                                                              nick->prefix[0]));
         }
         else
         {
