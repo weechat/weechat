@@ -215,18 +215,22 @@ a 'script' is a text file loaded with a plugin like 'python' with command
 When your script 'test.py' calls a WeeChat API function, path is like that:
 
 ........................................
-       (script API)                           (C API)
-            \/                                   \/
-test.py  ------->  python plugin (python.so)  ------->  WeeChat core
+               ┌──────────────────────┐        ╔══════════════════╗
+               │     python plugin    │        ║  WeeChat "core"  ║
+               ├────────────┬─────────┤        ╟─────────┐        ║
+test.py ─────► │ script API │  C API  │ ─────► ║  C API  │        ║
+               └────────────┴─────────┘        ╚═════════╧════════╝
 ........................................
 
 When WeeChat calls a callback in your script 'test.py', it's reverse of
 previous path:
 
 ........................................
-              (C API)                            (script API)
-                 \/                                   \/
-WeeChat core  ------->  python plugin (python.so)  ------->  test.py
+╔══════════════════╗        ┌──────────────────────┐
+║  WeeChat "core"  ║        │     python plugin    │
+║        ┌─────────╢        ├─────────┬────────────┤
+║        │  C API  ║ ─────► │  C API  │ script API │ ─────► test.py
+╚════════╧═════════╝        └─────────┴────────────┘
 ........................................
 
 [[pointers]]

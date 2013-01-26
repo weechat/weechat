@@ -219,18 +219,22 @@ Quand votre script 'test.py' appelle une fonction de l'API WeeChat, le chemin
 est le suivant :
 
 ........................................
-       (API script)                              (API C)
-            \/                                      \/
-test.py  ------->  extension python (python.so)  ------->  WeeChat core
+               ┌──────────────────────┐        ╔══════════════════╗
+               │   extension python   │        ║  WeeChat "core"  ║
+               ├────────────┬─────────┤        ╟─────────┐        ║
+test.py ─────► │ API script │  API C  │ ─────► ║  API C  │        ║
+               └────────────┴─────────┘        ╚═════════╧════════╝
 ........................................
 
 Quand WeeChat appelle un "callback" dans votre script 'test.py', le chemin
 est inversé :
 
 ........................................
-              (API C)                               (API script)
-                 \/                                      \/
-WeeChat core  ------->  extension plugin (python.so)  ------->  test.py
+╔══════════════════╗        ┌──────────────────────┐
+║  WeeChat "core"  ║        │   extension python   │
+║        ┌─────────╢        ├─────────┬────────────┤
+║        │  API C  ║ ─────► │  API C  │ API script │ ─────► test.py
+╚════════╧═════════╝        └─────────┴────────────┘
 ........................................
 
 [[pointers]]

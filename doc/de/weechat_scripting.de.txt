@@ -219,18 +219,22 @@ Falls Ihr Skript 'test.py' eine WeeChat API Funktion aufruft wird der Aufruf
 wie folgt abgearbeitet:
 
 ........................................
-       (Skript API)                                (C API)
-            \/                                        \/
-test.py  ------->  python Erweiterung (python.so)  ------->  WeeChat core
+               ┌──────────────────────┐        ╔══════════════════╗
+               │  python Erweiterung  │        ║  WeeChat "core"  ║
+               ├────────────┬─────────┤        ╟─────────┐        ║
+test.py ─────► │ Skript API │  C API  │ ─────► ║  C API  │        ║
+               └────────────┴─────────┘        ╚═════════╧════════╝
 ........................................
 
 Gibt WeeChat einen Rückgabewert an Ihr Skript 'test.py' zurück wird der
 Aufruf in umgekehrter Reihenfolge abgearbeitet:
 
 ........................................
-              (C API)                                 (Skript API)
-                 \/                                        \/
-WeeChat core  ------->  python Erweiterung (python.so)  ------->  test.py
+╔══════════════════╗        ┌──────────────────────┐
+║  WeeChat "core"  ║        │  python Erweiterung  │
+║        ┌─────────╢        ├─────────┬────────────┤
+║        │  C API  ║ ─────► │  C API  │ Skript API │ ─────► test.py
+╚════════╧═════════╝        └─────────┴────────────┘
 ........................................
 
 [[pointers]]

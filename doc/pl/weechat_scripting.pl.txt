@@ -218,17 +218,21 @@ plikiem tekstowym załadowanym przez wtyczkę jak 'python' za pomocą komendy
 W momencie, kiedy Twój skrypt 'test.py' wywołuje funkcję z API Weechat, wygląda to tak:
 
 ........................................
-       (API skryptów)                          (C API)
-            \/                                    \/
-test.py  ------->  wtyczka python (python.so)  ------->  rdzeń WeeChat
+               ┌────────────────────────┐        ╔══════════════════╗
+               │     wtyczka python     │        ║  WeeChat "core"  ║
+               ├──────────────┬─────────┤        ╟─────────┐        ║
+test.py ─────► │ API skryptów │  C API  │ ─────► ║  C API  │        ║
+               └──────────────┴─────────┘        ╚═════════╧════════╝
 ........................................
 
 Kiedy WeeChat odwołuje się do Twojego skryptu 'test.py' wygląda to tak:
 
 ........................................
-              (C API)                             (API skryptów)
-                 \/                                     \/
-rdzeń WeeChat  ------->  wtyczka python (python.so)  ------->  test.py
+╔══════════════════╗        ┌────────────────────────┐
+║  WeeChat "core"  ║        │     wtyczka python     │
+║        ┌─────────╢        ├─────────┬──────────────┤
+║        │  C API  ║ ─────► │  C API  │ API skryptów │ ─────► test.py
+╚════════╧═════════╝        └─────────┴──────────────┘
 ........................................
 
 [[pointers]]
