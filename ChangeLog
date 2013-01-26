@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.1-dev, 2013-01-25
+v0.4.1-dev, 2013-01-26
 
 
 Version 0.4.1 (under dev!)
 --------------------------
 
+* core: use default hash/comparison callback for keys of type
+  integer/pointer/time in hashtable
 * guile: fix compilation with guile 2.0
 * irc: add color in output of /names when result is on server buffer (channel
   not joined) (bug #38070)

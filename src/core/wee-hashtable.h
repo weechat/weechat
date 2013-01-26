@@ -57,13 +57,13 @@ typedef void (t_hashtable_map_string)(void *data,
  * +-----+
  * |   3 | --> "fast" --> "light"
  * +-----+
- * |   4 | --> "weechat"
+ * |   4 |
  * +-----+
  * |   5 | --> "chat"
  * +-----+
  * |   6 | --> "client"
  * +-----+
- * |   7 |
+ * |   7 | --> "weechat"
  * +-----+
  */
 

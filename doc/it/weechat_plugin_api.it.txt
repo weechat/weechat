@@ -3246,16 +3246,17 @@ Argomenti:
 ** 'WEECHAT_HASHTABLE_POINTER'
 ** 'WEECHAT_HASHTABLE_BUFFER'
 ** 'WEECHAT_HASHTABLE_TIME'
-* 'callback_hash_key': callback utilizzata per effettuare un "hash" di una
-  chiave (chiave come valore intero), può essere NULL se il tipo della chiave è
-  "string" (viene usata una funzione predefinita per le stringhe, e solo per le
-  stringhe), argomenti e valore restituito:
+// TRANSLATION MISSING
+* 'callback_hash_key': callback used to "hash" a key (key as integer value), can
+  be NULL if key type is not "buffer" (a default hash function is used),
+  arguments and return value:
 ** 'struct t_hashtable *hashtable': puntatore alla tabella hash
 ** 'const void *key': chiave
 ** return value: hash della chiave
-* 'callback_keycmp': callback utilizzata per comparare due chiavi, può essere
-  NULL se il tipo di valore è "string" (una funzione di confronto predefinita è
-  usata per le stringhe e solo per le stringhe), argomenti e valore restituito:
+// TRANSLATION MISSING
+* 'callback_keycmp': callback used to compare two keys, can be NULL if key type
+  is not "buffer" (a default comparison function is used), arguments and return
+  value:
 ** 'struct t_hashtable *hashtable': puntatore alla tabella hash
 ** 'const void *key1': prima chiave
 ** 'const void *key2': seconda chiave

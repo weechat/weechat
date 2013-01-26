@@ -3248,14 +3248,14 @@ Arguments:
 ** 'WEECHAT_HASHTABLE_BUFFER'
 ** 'WEECHAT_HASHTABLE_TIME'
 * 'callback_hash_key': callback used to "hash" a key (key as integer value), can
-  be NULL if key type is "string" (a default function is used for strings, and
-  only for strings), arguments and return value:
+  be NULL if key type is not "buffer" (a default hash function is used),
+  arguments and return value:
 ** 'struct t_hashtable *hashtable': hashtable pointer
 ** 'const void *key': key
 ** return value: hash of the key
-* 'callback_keycmp': callback used to compare two keys, can be NULL if value
-  type is "string" (a default comparison function is used for strings, and only
-  for strings), arguments and return value:
+* 'callback_keycmp': callback used to compare two keys, can be NULL if key type
+  is not "buffer" (a default comparison function is used), arguments and return
+  value:
 ** 'struct t_hashtable *hashtable': hashtable pointer
 ** 'const void *key1': first key
 ** 'const void *key2': second key

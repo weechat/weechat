@@ -3287,15 +3287,15 @@ Paramètres :
 ** 'WEECHAT_HASHTABLE_BUFFER'
 ** 'WEECHAT_HASHTABLE_TIME'
 * 'callback_hash_key' : fonction appelée pour rendre le "hash" d'une clé (la clé
-  sous forme de nombre entier), peut être NULL si le type de clé est "string"
-  (une fonction par défaut est utilisée pour les chaînes, et seulement pour les
-  chaînes). Paramètres et valeur de retour :
+  sous forme de nombre entier), peut être NULL si le type de clé n'est pas
+  "buffer" (une fonction de hash par défaut est utilisée), paramètres et valeur
+  de retour :
 ** 'struct t_hashtable *hashtable' : pointeur vers la hashtable
 ** 'const void *key' : clé
 ** valeur de retour : "hash" de la clé
 * 'callback_keycmp' : fonction appelée pour comparer deux clés, peut être NULL
-  si le type de valeur est "string" (une fonction par défaut est utilisée pour
-  les chaînes, et seulement pour les chaînes). Paramètres et valeur de retour :
+  si le type de clé n'est pas "buffer" (une fonction de comparaison par défaut
+  est utilisée), paramètres et valeur de retour :
 ** 'struct t_hashtable *hashtable' : pointeur vers la hashtable
 ** 'const void *key1' : première clé
 ** 'const void *key2' : seconde clé

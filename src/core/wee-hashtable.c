@@ -67,43 +67,97 @@ hashtable_get_type (const char *type)
 }
 
 /*
- * Hashes a string key (default callback).
+ * Hashes a key (default callback).
  *
  * Returns an unsigned integer between 0 and size-1.
  */
 
 unsigned int
-hashtable_hash_key_string_cb (struct t_hashtable *hashtable, const void *key)
+hashtable_hash_key_default_cb (struct t_hashtable *hashtable, const void *key)
 {
-    const char *ptr_key;
     unsigned long hash;
+    const char *ptr_key;
 
-    /* variant of djb2 hash */
-    hash = 5381;
-    for (ptr_key = (const char *)key; ptr_key[0]; ptr_key++)
+    hash = 0;
+
+    switch (hashtable->type_keys)
     {
-        hash ^= (hash << 5) + (hash >> 2) + (int)(ptr_key[0]);
+        case HASHTABLE_INTEGER:
+            hash = (unsigned long)(*((int *)key));
+            break;
+        case HASHTABLE_STRING:
+            /* variant of djb2 hash */
+            hash = 5381;
+            for (ptr_key = (const char *)key; ptr_key[0]; ptr_key++)
+            {
+                hash ^= (hash << 5) + (hash >> 2) + (int)(ptr_key[0]);
+            }
+            break;
+        case HASHTABLE_POINTER:
+            hash = (unsigned long)((void *)key);
+            break;
+        case HASHTABLE_BUFFER:
+            break;
+        case HASHTABLE_TIME:
+            hash = (unsigned long)(*((time_t *)key));
+            break;
+        case HASHTABLE_NUM_TYPES:
+            break;
     }
+
     return hash % hashtable->size;
 }
 
 /*
- * Compares two string keys (default callback).
+ * Compares two keys (default callback).
  *
  * Returns:
- *   -1: key1 < key2
- *    0: key1 == key2
- *    1: key1 > key2
+ *   < 0: key1 < key2
+ *     0: key1 == key2
+ *   > 0: key1 > key2
  */
 
 int
-hashtable_keycmp_string_cb (struct t_hashtable *hashtable,
-                            const void *key1, const void *key2)
+hashtable_keycmp_default_cb (struct t_hashtable *hashtable,
+                             const void *key1, const void *key2)
 {
+    int rc;
+
     /* make C compiler happy */
     (void) hashtable;
 
-    return strcmp ((const char *)key1, (const char *)key2);
+    rc = 0;
+
+    switch (hashtable->type_keys)
+    {
+        case HASHTABLE_INTEGER:
+            if (*((int *)key1) < *((int *)key2))
+                rc = -1;
+            else if (*((int *)key1) > *((int *)key2))
+                rc = 1;
+            break;
+        case HASHTABLE_STRING:
+            rc = strcmp ((const char *)key1, (const char *)key2);
+            break;
+        case HASHTABLE_POINTER:
+            if (key1 < key2)
+                rc = -1;
+            else if (key1 > key2)
+                rc = 1;
+            break;
+        case HASHTABLE_BUFFER:
+            break;
+        case HASHTABLE_TIME:
+            if (*((time_t *)key1) < *((time_t *)key2))
+                rc = -1;
+            else if (*((time_t *)key1) > *((time_t *)key2))
+                rc = 1;
+            break;
+        case HASHTABLE_NUM_TYPES:
+            break;
+    }
+
+    return rc;
 }
 
 /*
@@ -126,6 +180,9 @@ hashtable_new (int size,
     struct t_hashtable *new_hashtable;
     int i, type_keys_int, type_values_int;
 
+    if (size <= 0)
+        return NULL;
+
     type_keys_int = hashtable_get_type (type_keys);
     if (type_keys_int < 0)
         return NULL;
@@ -133,7 +190,8 @@ hashtable_new (int size,
     if (type_values_int < 0)
         return NULL;
 
-    if ((type_keys_int != HASHTABLE_STRING) && (!callback_hash_key || !callback_keycmp))
+    /* the two callbacks are mandatory if type of keys is "buffer" */
+    if ((type_keys_int == HASHTABLE_BUFFER) && (!callback_hash_key || !callback_keycmp))
         return NULL;
 
     new_hashtable = malloc (sizeof (*new_hashtable));
@@ -155,15 +213,10 @@ hashtable_new (int size,
         }
         new_hashtable->items_count = 0;
 
-        if ((type_keys_int == HASHTABLE_STRING) && !callback_hash_key)
-            new_hashtable->callback_hash_key = &hashtable_hash_key_string_cb;
-        else
-            new_hashtable->callback_hash_key = callback_hash_key;
-
-        if ((type_keys_int == HASHTABLE_STRING) && !callback_keycmp)
-            new_hashtable->callback_keycmp = &hashtable_keycmp_string_cb;
-        else
-            new_hashtable->callback_keycmp = callback_keycmp;
+        new_hashtable->callback_hash_key = (callback_hash_key) ?
+            callback_hash_key : &hashtable_hash_key_default_cb;
+        new_hashtable->callback_keycmp = (callback_keycmp) ?
+            callback_keycmp : &hashtable_keycmp_default_cb;
 
         new_hashtable->callback_free_value = NULL;
     }
