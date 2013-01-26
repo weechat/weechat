@@ -165,7 +165,20 @@ weechat::print "" "Hello, from tcl script!"
 Caricare uno script
 ~~~~~~~~~~~~~~~~~~~
 
-Il comando da utilizzare, in base al linguaggio:
+// TRANSLATION MISSING
+It is recommended to use the "script" plugin to load scripts, for example:
+
+----------------------------------------
+/script load script.py
+/script load script.pl
+/script load script.rb
+/script load script.lua
+/script load script.tcl
+/script load script.scm
+----------------------------------------
+
+// TRANSLATION MISSING
+Each language has also its own command:
 
 ----------------------------------------
 /python load python/script.py
@@ -185,6 +198,11 @@ Ad esempio con Python:
 $ cd ~/.weechat/python/autoload
 $ ln -s ../script.py
 ----------------------------------------
+
+// TRANSLATION MISSING
+[NOTE]
+When installing a script with command `/script install` the link in 'autoload'
+directory is automatically created.
 
 [[differences_with_c_api]]
 Differenze con le API in C

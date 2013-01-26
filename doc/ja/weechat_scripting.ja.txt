@@ -152,7 +152,20 @@ weechat::print "" "Hello, from tcl script!"
 [[load_script]]
 === スクリプトのロード ===
 
-スクリプト言語毎に異なる別のコマンドを使ってください:
+// TRANSLATION MISSING
+It is recommended to use the "script" plugin to load scripts, for example:
+
+----------------------------------------
+/script load script.py
+/script load script.pl
+/script load script.rb
+/script load script.lua
+/script load script.tcl
+/script load script.scm
+----------------------------------------
+
+// TRANSLATION MISSING
+Each language has also its own command:
 
 ----------------------------------------
 /python load python/script.py
@@ -172,6 +185,11 @@ WeeChat の開始時にスクリプトを自動ロードするには
 $ cd ~/.weechat/python/autoload
 $ ln -s ../script.py
 ----------------------------------------
+
+// TRANSLATION MISSING
+[NOTE]
+When installing a script with command `/script install` the link in 'autoload'
+directory is automatically created.
 
 [[differences_with_c_api]]
 == C API との違い ==
