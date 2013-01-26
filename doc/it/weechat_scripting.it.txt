@@ -277,16 +277,79 @@ Le callback in C utilizzano un argomento "data", che è un puntatore.
 Nelle API per gli script, questo "data" è una stringa con un qualsiasi
 valore (non è un puntatore).
 
-Ad esempio:
+// TRANSLATION MISSING
+Example of callback, for each language:
+
+* python:
 
 [source,python]
 ----------------------------------------
-weechat.hook_timer(1000, 0, 1, "my_timer_cb", "my data")
-
-def my_timer_cb(data, remaining_calls):
-    # this will display: "my data"
-    weechat.prnt("", data)
+def timer_cb(data, remaining_calls):
+    weechat.prnt("", "timer! data=%s" % data)
     return weechat.WEECHAT_RC_OK
+
+weechat.hook_timer(1000, 0, 1, "timer_cb", "test")
+----------------------------------------
+
+* perl:
+
+[source,perl]
+----------------------------------------
+sub timer_cb {
+    my ($data, $remaining_calls) = @_;
+    weechat::print("", "timer! data=$data");
+    return weechat::WEECHAT_RC_OK;
+}
+
+weechat::hook_timer(1000, 0, 1, "timer_cb", "test");
+----------------------------------------
+
+* ruby:
+
+[source,ruby]
+----------------------------------------
+def timer_cb(data, remaining_calls)
+  Weechat.print("", "timer! data=#{data}");
+  return Weechat::WEECHAT_RC_OK
+end
+
+Weechat.hook_timer(1000, 0, 1, "timer_cb", "test");
+----------------------------------------
+
+* lua:
+
+[source,lua]
+----------------------------------------
+function timer_cb(data, remaining_calls)
+    weechat.print("", "timer! data="..data)
+    return weechat.WEECHAT_RC_OK
+end
+
+weechat.hook_timer(1000, 0, 1, "timer_cb", "test")
+----------------------------------------
+
+* tcl:
+
+[source,tcl]
+----------------------------------------
+proc timer_cb { data remaining_calls } {
+    weechat::print {} "timer! data=$data"
+    return $::weechat::WEECHAT_RC_OK
+}
+
+weechat::hook_timer 1000 0 1 timer_cb test
+----------------------------------------
+
+* guile (scheme):
+
+[source,lisp]
+----------------------------------------
+(define (timer_cb args)
+  (weechat:print "" (string-append "timer! data=" (list-ref args 0)))
+  weechat:WEECHAT_RC_OK
+)
+
+(weechat:hook_timer 1000 0 1 "timer_cb" "test")
 ----------------------------------------
 
 [[script_api]]

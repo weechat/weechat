@@ -165,7 +165,7 @@ weechat::print "" "Bonjour, du script tcl !"
 Chargement du script
 ~~~~~~~~~~~~~~~~~~~~
 
-Il est recommandé d'utiliser le plugin "script" pour charger les scripts,
+Il est recommandé d'utiliser l'extension "script" pour charger les scripts,
 par exemple :
 
 ----------------------------------------
@@ -275,16 +275,78 @@ Les "callbacks" C utilisent un paramètre "data", qui est un pointeur. Dans
 l'API script, ce "data" est une chaîne de caractères avec n'importe quelle
 valeur (ce n'est pas un pointeur).
 
-Par exemple :
+Exemple de callback, pour chaque langage :
+
+* python:
 
 [source,python]
 ----------------------------------------
-weechat.hook_timer(1000, 0, 1, "mon_timer_cb", "mes données")
-
-def mon_timer_cb(data, remaining_calls):
-    # cela affichera : "mes données"
-    weechat.prnt("", data)
+def timer_cb(data, remaining_calls):
+    weechat.prnt("", "timer! data=%s" % data)
     return weechat.WEECHAT_RC_OK
+
+weechat.hook_timer(1000, 0, 1, "timer_cb", "test")
+----------------------------------------
+
+* perl:
+
+[source,perl]
+----------------------------------------
+sub timer_cb {
+    my ($data, $remaining_calls) = @_;
+    weechat::print("", "timer! data=$data");
+    return weechat::WEECHAT_RC_OK;
+}
+
+weechat::hook_timer(1000, 0, 1, "timer_cb", "test");
+----------------------------------------
+
+* ruby:
+
+[source,ruby]
+----------------------------------------
+def timer_cb(data, remaining_calls)
+  Weechat.print("", "timer! data=#{data}");
+  return Weechat::WEECHAT_RC_OK
+end
+
+Weechat.hook_timer(1000, 0, 1, "timer_cb", "test");
+----------------------------------------
+
+* lua:
+
+[source,lua]
+----------------------------------------
+function timer_cb(data, remaining_calls)
+    weechat.print("", "timer! data="..data)
+    return weechat.WEECHAT_RC_OK
+end
+
+weechat.hook_timer(1000, 0, 1, "timer_cb", "test")
+----------------------------------------
+
+* tcl:
+
+[source,tcl]
+----------------------------------------
+proc timer_cb { data remaining_calls } {
+    weechat::print {} "timer! data=$data"
+    return $::weechat::WEECHAT_RC_OK
+}
+
+weechat::hook_timer 1000 0 1 timer_cb test
+----------------------------------------
+
+* guile (scheme):
+
+[source,lisp]
+----------------------------------------
+(define (timer_cb args)
+  (weechat:print "" (string-append "timer! data=" (list-ref args 0)))
+  weechat:WEECHAT_RC_OK
+)
+
+(weechat:hook_timer 1000 0 1 "timer_cb" "test")
 ----------------------------------------
 
 [[script_api]]
