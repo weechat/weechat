@@ -546,7 +546,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         new_buffer->highlight_tags_array = NULL;
 
         /* hotlist */
-        new_buffer->hotlist_max_level_nicks = hashtable_new (8,
+        new_buffer->hotlist_max_level_nicks = hashtable_new (32,
                                                              WEECHAT_HASHTABLE_STRING,
                                                              WEECHAT_HASHTABLE_INTEGER,
                                                              NULL,
@@ -558,7 +558,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         new_buffer->keys_count = 0;
 
         /* local variables */
-        new_buffer->local_variables = hashtable_new (8,
+        new_buffer->local_variables = hashtable_new (32,
                                                      WEECHAT_HASHTABLE_STRING,
                                                      WEECHAT_HASHTABLE_STRING,
                                                      NULL,

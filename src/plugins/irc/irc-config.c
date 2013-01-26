@@ -428,7 +428,7 @@ irc_config_change_look_nick_color_force (void *data,
 
     if (!irc_config_hashtable_nick_color_force)
     {
-        irc_config_hashtable_nick_color_force = weechat_hashtable_new (8,
+        irc_config_hashtable_nick_color_force = weechat_hashtable_new (32,
                                                                        WEECHAT_HASHTABLE_STRING,
                                                                        WEECHAT_HASHTABLE_STRING,
                                                                        NULL,
@@ -581,7 +581,7 @@ irc_config_change_color_mirc_remap (void *data, struct t_config_option *option)
 
     if (!irc_config_hashtable_color_mirc_remap)
     {
-        irc_config_hashtable_color_mirc_remap = weechat_hashtable_new (8,
+        irc_config_hashtable_color_mirc_remap = weechat_hashtable_new (32,
                                                                        WEECHAT_HASHTABLE_STRING,
                                                                        WEECHAT_HASHTABLE_STRING,
                                                                        NULL,
@@ -626,7 +626,7 @@ irc_config_change_color_nick_prefixes (void *data,
 
     if (!irc_config_hashtable_nick_prefixes)
     {
-        irc_config_hashtable_nick_prefixes = weechat_hashtable_new (8,
+        irc_config_hashtable_nick_prefixes = weechat_hashtable_new (32,
                                                                     WEECHAT_HASHTABLE_STRING,
                                                                     WEECHAT_HASHTABLE_STRING,
                                                                     NULL,
@@ -1954,17 +1954,17 @@ irc_config_init ()
 {
     struct t_config_section *ptr_section;
 
-    irc_config_hashtable_color_mirc_remap = weechat_hashtable_new (8,
+    irc_config_hashtable_color_mirc_remap = weechat_hashtable_new (32,
                                                                    WEECHAT_HASHTABLE_STRING,
                                                                    WEECHAT_HASHTABLE_STRING,
                                                                    NULL,
                                                                    NULL);
-    irc_config_hashtable_nick_color_force = weechat_hashtable_new (8,
+    irc_config_hashtable_nick_color_force = weechat_hashtable_new (32,
                                                                    WEECHAT_HASHTABLE_STRING,
                                                                    WEECHAT_HASHTABLE_STRING,
                                                                    NULL,
                                                                    NULL);
-    irc_config_hashtable_nick_prefixes = weechat_hashtable_new (8,
+    irc_config_hashtable_nick_prefixes = weechat_hashtable_new (32,
                                                                 WEECHAT_HASHTABLE_STRING,
                                                                 WEECHAT_HASHTABLE_STRING,
                                                                 NULL,

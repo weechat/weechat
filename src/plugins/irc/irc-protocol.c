@@ -4561,7 +4561,7 @@ irc_protocol_get_message_tags (const char *tags)
     if (!tags || !tags[0])
         return NULL;
 
-    hashtable = weechat_hashtable_new (8,
+    hashtable = weechat_hashtable_new (32,
                                        WEECHAT_HASHTABLE_STRING,
                                        WEECHAT_HASHTABLE_STRING,
                                        NULL,

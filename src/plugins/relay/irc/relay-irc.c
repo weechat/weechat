@@ -155,7 +155,7 @@ relay_irc_message_parse (const char *message)
     hash_msg = NULL;
     hash_parsed = NULL;
 
-    hash_msg = weechat_hashtable_new (8,
+    hash_msg = weechat_hashtable_new (32,
                                       WEECHAT_HASHTABLE_STRING,
                                       WEECHAT_HASHTABLE_STRING,
                                       NULL,
@@ -211,7 +211,7 @@ relay_irc_sendf (struct t_relay_client *client, const char *format, ...)
     if (pos)
         pos[0] = '\0';
 
-    hashtable_in = weechat_hashtable_new (8,
+    hashtable_in = weechat_hashtable_new (32,
                                           WEECHAT_HASHTABLE_STRING,
                                           WEECHAT_HASHTABLE_STRING,
                                           NULL,
@@ -1574,7 +1574,7 @@ relay_irc_recv_one_msg (struct t_relay_client *client, char *data)
         }
         else if (!relay_irc_command_ignored (irc_command))
         {
-            hash_redirect = weechat_hashtable_new (8,
+            hash_redirect = weechat_hashtable_new (32,
                                                    WEECHAT_HASHTABLE_STRING,
                                                    WEECHAT_HASHTABLE_STRING,
                                                    NULL,

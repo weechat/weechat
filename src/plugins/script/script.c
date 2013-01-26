@@ -128,7 +128,7 @@ script_get_loaded_plugins_and_scripts ()
     /* get loaded scripts */
     if (!script_loaded)
     {
-        script_loaded = weechat_hashtable_new (16,
+        script_loaded = weechat_hashtable_new (32,
                                                WEECHAT_HASHTABLE_STRING,
                                                WEECHAT_HASHTABLE_STRING,
                                                NULL,

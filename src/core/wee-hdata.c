@@ -93,7 +93,7 @@ hdata_new (struct t_weechat_plugin *plugin, const char *hdata_name,
         new_hdata->plugin = plugin;
         new_hdata->var_prev = (var_prev) ? strdup (var_prev) : NULL;
         new_hdata->var_next = (var_next) ? strdup (var_next) : NULL;
-        new_hdata->hash_var = hashtable_new (16,
+        new_hdata->hash_var = hashtable_new (32,
                                              WEECHAT_HASHTABLE_STRING,
                                              WEECHAT_HASHTABLE_POINTER,
                                              NULL,
@@ -101,7 +101,7 @@ hdata_new (struct t_weechat_plugin *plugin, const char *hdata_name,
         hashtable_set_pointer (new_hdata->hash_var,
                                "callback_free_value",
                                &hdata_free_var);
-        new_hdata->hash_list = hashtable_new (16,
+        new_hdata->hash_list = hashtable_new (32,
                                               WEECHAT_HASHTABLE_STRING,
                                               WEECHAT_HASHTABLE_POINTER,
                                               NULL,
@@ -1039,7 +1039,7 @@ hdata_print_log ()
 void
 hdata_init ()
 {
-    weechat_hdata = hashtable_new (16,
+    weechat_hdata = hashtable_new (32,
                                    WEECHAT_HASHTABLE_STRING,
                                    WEECHAT_HASHTABLE_POINTER,
                                    NULL,

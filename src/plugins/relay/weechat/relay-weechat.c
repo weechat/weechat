@@ -204,7 +204,7 @@ relay_weechat_alloc (struct t_relay_client *client)
         RELAY_WEECHAT_DATA(client, password_ok) = (password && password[0]) ? 0 : 1;
         RELAY_WEECHAT_DATA(client, compression) = 1;
         RELAY_WEECHAT_DATA(client, buffers_sync) =
-            weechat_hashtable_new (16,
+            weechat_hashtable_new (32,
                                    WEECHAT_HASHTABLE_STRING,
                                    WEECHAT_HASHTABLE_INTEGER,
                                    NULL,
@@ -213,7 +213,7 @@ relay_weechat_alloc (struct t_relay_client *client)
         RELAY_WEECHAT_DATA(client, hook_signal_nicklist) = NULL;
         RELAY_WEECHAT_DATA(client, hook_signal_upgrade) = NULL;
         RELAY_WEECHAT_DATA(client, buffers_nicklist) =
-            weechat_hashtable_new (16,
+            weechat_hashtable_new (32,
                                    WEECHAT_HASHTABLE_STRING,
                                    WEECHAT_HASHTABLE_STRING,
                                    NULL,
@@ -245,7 +245,7 @@ relay_weechat_alloc_with_infolist (struct t_relay_client *client,
         RELAY_WEECHAT_DATA(client, compression) = weechat_infolist_integer (infolist, "compression");
 
         /* sync of buffers */
-        RELAY_WEECHAT_DATA(client, buffers_sync) = weechat_hashtable_new (16,
+        RELAY_WEECHAT_DATA(client, buffers_sync) = weechat_hashtable_new (32,
                                                                           WEECHAT_HASHTABLE_STRING,
                                                                           WEECHAT_HASHTABLE_INTEGER,
                                                                           NULL,
@@ -268,7 +268,7 @@ relay_weechat_alloc_with_infolist (struct t_relay_client *client,
         RELAY_WEECHAT_DATA(client, hook_signal_nicklist) = NULL;
         RELAY_WEECHAT_DATA(client, hook_signal_upgrade) = NULL;
         RELAY_WEECHAT_DATA(client, buffers_nicklist) =
-            weechat_hashtable_new (16,
+            weechat_hashtable_new (32,
                                    WEECHAT_HASHTABLE_STRING,
                                    WEECHAT_HASHTABLE_STRING,
                                    NULL,

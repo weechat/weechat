@@ -958,17 +958,17 @@ irc_server_alloc (const char *name)
     new_server->last_redirect = NULL;
     new_server->notify_list = NULL;
     new_server->last_notify = NULL;
-    new_server->join_manual = weechat_hashtable_new (4,
+    new_server->join_manual = weechat_hashtable_new (32,
                                                      WEECHAT_HASHTABLE_STRING,
                                                      WEECHAT_HASHTABLE_INTEGER,
                                                      NULL,
                                                      NULL);
-    new_server->join_channel_key = weechat_hashtable_new (4,
+    new_server->join_channel_key = weechat_hashtable_new (32,
                                                           WEECHAT_HASHTABLE_STRING,
                                                           WEECHAT_HASHTABLE_STRING,
                                                           NULL,
                                                           NULL);
-    new_server->join_noswitch = weechat_hashtable_new (4,
+    new_server->join_noswitch = weechat_hashtable_new (32,
                                                        WEECHAT_HASHTABLE_STRING,
                                                        WEECHAT_HASHTABLE_STRING,
                                                        NULL,
@@ -2093,7 +2093,7 @@ irc_server_sendf (struct t_irc_server *server, int flags, const char *tags,
     ret_number = 1;
     if (flags & IRC_SERVER_SEND_RETURN_HASHTABLE)
     {
-        ret_hashtable = weechat_hashtable_new (8,
+        ret_hashtable = weechat_hashtable_new (32,
                                                WEECHAT_HASHTABLE_STRING,
                                                WEECHAT_HASHTABLE_STRING,
                                                NULL,

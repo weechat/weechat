@@ -706,7 +706,7 @@ gui_color_palette_alloc_structs ()
 {
     if (!gui_color_hash_palette_color)
     {
-        gui_color_hash_palette_color = hashtable_new (16,
+        gui_color_hash_palette_color = hashtable_new (32,
                                                       WEECHAT_HASHTABLE_STRING,
                                                       WEECHAT_HASHTABLE_POINTER,
                                                       NULL,
@@ -717,7 +717,7 @@ gui_color_palette_alloc_structs ()
     }
     if (!gui_color_hash_palette_alias)
     {
-        gui_color_hash_palette_alias = hashtable_new (16,
+        gui_color_hash_palette_alias = hashtable_new (32,
                                                       WEECHAT_HASHTABLE_STRING,
                                                       WEECHAT_HASHTABLE_INTEGER,
                                                       NULL,

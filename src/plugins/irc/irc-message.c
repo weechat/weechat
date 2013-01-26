@@ -224,7 +224,7 @@ irc_message_parse_to_hashtable (struct t_irc_server *server,
     irc_message_parse (server, message, &tags, &message_without_tags, &nick,
                        &host, &command, &channel, &arguments);
 
-    hashtable = weechat_hashtable_new (8,
+    hashtable = weechat_hashtable_new (32,
                                        WEECHAT_HASHTABLE_STRING,
                                        WEECHAT_HASHTABLE_STRING,
                                        NULL,
@@ -814,7 +814,7 @@ irc_message_split (struct t_irc_server *server, const char *message)
     if (weechat_irc_plugin->debug >= 2)
         weechat_printf (NULL, "irc_message_split: message='%s'", message);
 
-    hashtable = weechat_hashtable_new (8,
+    hashtable = weechat_hashtable_new (32,
                                        WEECHAT_HASHTABLE_STRING,
                                        WEECHAT_HASHTABLE_STRING,
                                        NULL,

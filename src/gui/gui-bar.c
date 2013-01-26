@@ -402,7 +402,7 @@ gui_bar_check_conditions_for_window (struct t_gui_bar *bar,
     }
     else if (conditions[0])
     {
-        pointers = hashtable_new (16,
+        pointers = hashtable_new (32,
                                   WEECHAT_HASHTABLE_STRING,
                                   WEECHAT_HASHTABLE_POINTER,
                                   NULL,
@@ -412,7 +412,7 @@ gui_bar_check_conditions_for_window (struct t_gui_bar *bar,
             hashtable_set (pointers, "window", window);
             hashtable_set (pointers, "buffer", window->buffer);
         }
-        extra_vars = hashtable_new (16,
+        extra_vars = hashtable_new (32,
                                     WEECHAT_HASHTABLE_STRING,
                                     WEECHAT_HASHTABLE_POINTER,
                                     NULL,

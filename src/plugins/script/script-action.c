@@ -556,7 +556,7 @@ script_action_install (int quiet)
                                                            NULL);
     if (filename)
     {
-        options = weechat_hashtable_new (8,
+        options = weechat_hashtable_new (32,
                                          WEECHAT_HASHTABLE_STRING,
                                          WEECHAT_HASHTABLE_STRING,
                                          NULL,
@@ -986,7 +986,7 @@ script_action_show (const char *name, int quiet)
                                                                        ".repository");
                 if (filename)
                 {
-                    options = weechat_hashtable_new (8,
+                    options = weechat_hashtable_new (32,
                                                      WEECHAT_HASHTABLE_STRING,
                                                      WEECHAT_HASHTABLE_STRING,
                                                      NULL,

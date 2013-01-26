@@ -1123,7 +1123,7 @@ script_repo_file_read (int quiet)
 
     if (!script_repo_max_length_field)
     {
-        script_repo_max_length_field = weechat_hashtable_new (16,
+        script_repo_max_length_field = weechat_hashtable_new (32,
                                                               WEECHAT_HASHTABLE_STRING,
                                                               WEECHAT_HASHTABLE_INTEGER,
                                                               NULL,
@@ -1181,7 +1181,7 @@ script_repo_file_read (int quiet)
             locale_language = strdup (locale);
     }
 
-    descriptions = weechat_hashtable_new (8,
+    descriptions = weechat_hashtable_new (32,
                                           WEECHAT_HASHTABLE_STRING,
                                           WEECHAT_HASHTABLE_STRING,
                                           NULL,
@@ -1457,7 +1457,7 @@ script_repo_file_update (int quiet)
     if (!filename)
         return;
 
-    options = weechat_hashtable_new (8,
+    options = weechat_hashtable_new (32,
                                      WEECHAT_HASHTABLE_STRING,
                                      WEECHAT_HASHTABLE_STRING,
                                      NULL,

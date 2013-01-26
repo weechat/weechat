@@ -422,7 +422,7 @@ irc_redirect_new_with_commands (struct t_irc_server *server,
     {
         if (items[i])
         {
-            hash_cmd[i] = weechat_hashtable_new (8,
+            hash_cmd[i] = weechat_hashtable_new (32,
                                                  WEECHAT_HASHTABLE_STRING,
                                                  WEECHAT_HASHTABLE_INTEGER,
                                                  NULL,
@@ -713,7 +713,7 @@ irc_redirect_stop (struct t_irc_redirect *redirect, const char *error)
          * error or max count reached, then we run callback and remove
          * redirect
          */
-        hashtable = weechat_hashtable_new (8,
+        hashtable = weechat_hashtable_new (32,
                                            WEECHAT_HASHTABLE_STRING,
                                            WEECHAT_HASHTABLE_STRING,
                                            NULL,

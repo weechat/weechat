@@ -204,7 +204,7 @@ relay_config_change_irc_backlog_tags (void *data,
 
     if (!relay_config_hashtable_irc_backlog_tags)
     {
-        relay_config_hashtable_irc_backlog_tags = weechat_hashtable_new (8,
+        relay_config_hashtable_irc_backlog_tags = weechat_hashtable_new (32,
                                                                          WEECHAT_HASHTABLE_STRING,
                                                                          WEECHAT_HASHTABLE_STRING,
                                                                          NULL,
