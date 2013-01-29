@@ -717,8 +717,7 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
         if (gui_init_ok)
         {
             ptr_line = gui_line_add (buffer, (display_time) ? date : 0,
-                                     (display_time) ? date_printed : 0,
-                                     tags, pos_prefix, ptr_msg);
+                                     date_printed, tags, pos_prefix, ptr_msg);
             if (ptr_line)
             {
                 if (buffer && buffer->print_hooks_enabled)

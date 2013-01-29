@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.1-dev, 2013-01-26
+v0.4.1-dev, 2013-01-29
 
 
 Version 0.4.1 (under dev!)
 --------------------------
 
+* core: fix hidden lines for messages without date when option
+  weechat.history.max_buffer_lines_minutes is set (bug #38197)
 * core: use default hash/comparison callback for keys of type
   integer/pointer/time in hashtable
 * guile: fix compilation with guile 2.0
