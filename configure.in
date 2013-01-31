@@ -481,7 +481,7 @@ if test "x$enable_python" = "xyes" ; then
     else
         PYTHON_SYSPREFIX=`$PYTHON -c 'import sys; sys.stdout.write("%s" % sys.prefix)'`
         PYTHON_VERSION=`$PYTHON -c 'import sys; sys.stdout.write(sys.version[[:3]])'`
-        PYTHON_INCLUDE=`$PYTHON -c "import sys, distutils.sysconfig, string; sys.stdout.write(distutils.sysconfig.get_config_var('CONFINCLUDEPY'))"`
+        PYTHON_INCLUDE=`$PYTHON -c "import sys, distutils.sysconfig, string; sys.stdout.write(distutils.sysconfig.get_config_var('INCLUDEPY'))"`
         PYTHON_OLD_VERSION=`$PYTHON -c "import sys; sys.stdout.write(str(sys.version_info < (2,5)))"`
         if test "x$PYTHON_OLD_VERSION" = "xTrue" ; then
             AC_MSG_WARN([

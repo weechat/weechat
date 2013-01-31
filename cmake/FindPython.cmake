@@ -47,7 +47,7 @@ ENDIF(ENABLE_PYTHON3)
 
 IF(PYTHON_EXECUTABLE)
   EXECUTE_PROCESS(
-    COMMAND ${PYTHON_EXECUTABLE} -c "import sys; from distutils.sysconfig import *; sys.stdout.write(get_config_var('CONFINCLUDEPY'))"
+    COMMAND ${PYTHON_EXECUTABLE} -c "import sys; from distutils.sysconfig import *; sys.stdout.write(get_config_var('INCLUDEPY'))"
     OUTPUT_VARIABLE PYTHON_INC_DIR
     )
 
