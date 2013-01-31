@@ -26,22 +26,32 @@
 #include "../weechat-plugin.h"
 #include "weechat-aspell.h"
 #include "weechat-aspell-speller.h"
-
-
-struct t_aspell_speller *weechat_aspell_spellers = NULL;
-struct t_aspell_speller *last_weechat_aspell_speller = NULL;
+#include "weechat-aspell-config.h"
 
 
 /*
- * Checks if an aspell dictionary exists for a lang.
+ * spellers: one by dictionary (key is name of dictionary (eg: "fr"), value is
+ * pointer on AspellSpeller)
+ */
+struct t_hashtable *weechat_aspell_spellers = NULL;
+
+/*
+ * spellers by buffer (key is buffer pointer, value is pointer on
+ * struct t_aspell_speller_buffer)
+ */
+struct t_hashtable *weechat_aspell_speller_buffer = NULL;
+
+
+/*
+ * Checks if an aspell dictionary is supported (installed on system).
  *
  * Returns:
- *   1: aspell dict exists for the lang
- *   0: aspell dict does not exist for the lang
+ *   1: aspell dict is supported
+ *   0: aspell dict is NOT supported
  */
 
 int
-weechat_aspell_speller_exists (const char *lang)
+weechat_aspell_speller_dict_supported (const char *lang)
 {
     struct AspellConfig *config;
     AspellDictInfoList *list;
@@ -90,7 +100,7 @@ weechat_aspell_speller_check_dictionaries (const char *dict_list)
         {
             for (i = 0; i < argc; i++)
             {
-                if (!weechat_aspell_speller_exists (argv[i]))
+                if (!weechat_aspell_speller_dict_supported (argv[i]))
                 {
                     weechat_printf (NULL,
                                     _("%s: warning: dictionary \"%s\" is not "
@@ -104,39 +114,17 @@ weechat_aspell_speller_check_dictionaries (const char *dict_list)
 }
 
 /*
- * Searches for a speller by lang.
+ * Creates and adds a new speller instance in the hashtable.
  *
- * Returns pointer to speller found, NULL if not found.
+ * Returns pointer to new aspell speller, NULL if error.
  */
 
-struct t_aspell_speller *
-weechat_aspell_speller_search (const char *lang)
-{
-    struct t_aspell_speller *ptr_speller;
-
-    for (ptr_speller = weechat_aspell_spellers; ptr_speller;
-         ptr_speller = ptr_speller->next_speller)
-    {
-        if (strcmp (ptr_speller->lang, lang) == 0)
-            return ptr_speller;
-    }
-
-    /* no speller found */
-    return NULL;
-}
-
-/*
- * Creates and adds a new speller instance.
- *
- * Returns pointer to new speller, NULL if error.
- */
-
-struct t_aspell_speller *
+AspellSpeller *
 weechat_aspell_speller_new (const char *lang)
 {
-    struct t_aspell_speller *new_speller;
     AspellConfig *config;
     AspellCanHaveError *ret;
+    AspellSpeller *new_speller;
     struct t_infolist *infolist;
 
     if (!lang)
@@ -179,27 +167,8 @@ weechat_aspell_speller_new (const char *lang)
         return NULL;
     }
 
-    /* create and add a new speller cell */
-    new_speller = malloc (sizeof (*new_speller));
-    if (!new_speller)
-    {
-        weechat_printf (NULL,
-                        _("%s%s: not enough memory to create new speller"),
-                        weechat_prefix ("error"), ASPELL_PLUGIN_NAME);
-        return NULL;
-    }
-
-    new_speller->speller = to_aspell_speller (ret);
-    new_speller->lang = strdup (lang);
-
-    /* add speller to list */
-    new_speller->prev_speller = last_weechat_aspell_speller;
-    new_speller->next_speller = NULL;
-    if (weechat_aspell_spellers)
-        last_weechat_aspell_speller->next_speller = new_speller;
-    else
-        weechat_aspell_spellers = new_speller;
-    last_weechat_aspell_speller = new_speller;
+    new_speller = to_aspell_speller (ret);
+    weechat_hashtable_set (weechat_aspell_spellers, lang, new_speller);
 
     /* free configuration */
     delete_aspell_config (config);
@@ -207,54 +176,260 @@ weechat_aspell_speller_new (const char *lang)
     return new_speller;
 }
 
+void
+weechat_aspell_speller_add_dicts_to_hash (struct t_hashtable *hashtable,
+                                          const char *dict)
+{
+    char **dicts;
+    int num_dicts, i;
+
+    if (!dict || !dict[0])
+        return;
+
+    dicts = weechat_string_split (dict, ",", 0, 0, &num_dicts);
+    if (dicts)
+    {
+        for (i = 0; i < num_dicts; i++)
+        {
+            weechat_hashtable_set (hashtable, dicts[i], NULL);
+        }
+        weechat_string_free_split (dicts);
+    }
+}
+
 /*
- * Removes a speller instance.
+ * Removes a speller if it is NOT in hashtable "used_spellers".
  */
 
 void
-weechat_aspell_speller_free (struct t_aspell_speller *speller)
+weechat_aspell_speller_remove_unused_cb (void *data,
+                                         struct t_hashtable *hashtable,
+                                         const void *key, const void *value)
 {
-    if (!speller)
+    struct t_hashtable *used_spellers;
+
+    /* make C compiler happy */
+    (void) value;
+
+    used_spellers = (struct t_hashtable *)data;
+
+    /* if speller is not in "used_spellers", remove it (not used any more) */
+    if (!weechat_hashtable_has_key (used_spellers, key))
+        weechat_hashtable_remove (hashtable, key);
+}
+
+/*
+ * Removes unused spellers from hashtable "weechat_aspell_spellers".
+ */
+
+void
+weechat_aspell_speller_remove_unused ()
+{
+    struct t_hashtable *used_spellers;
+    struct t_infolist *infolist;
+
+    if (weechat_aspell_plugin->debug)
+    {
+        weechat_printf (NULL,
+                        "%s: removing unused spellers",
+                        ASPELL_PLUGIN_NAME);
+    }
+
+    /* create a hashtable that will contain all used spellers */
+    used_spellers = weechat_hashtable_new (32,
+                                           WEECHAT_HASHTABLE_STRING,
+                                           WEECHAT_HASHTABLE_STRING,
+                                           NULL,
+                                           NULL);
+    if (!used_spellers)
         return;
+
+    /* collect used spellers and store them in hashtable "used_spellers" */
+    weechat_aspell_speller_add_dicts_to_hash (used_spellers,
+                                              weechat_config_string (weechat_aspell_config_check_default_dict));
+    infolist = weechat_infolist_get ("option", NULL, "aspell.dict.*");
+    if (infolist)
+    {
+        while (weechat_infolist_next (infolist))
+        {
+            weechat_aspell_speller_add_dicts_to_hash (used_spellers,
+                                                      weechat_infolist_string (infolist, "value"));
+        }
+        weechat_infolist_free (infolist);
+    }
+
+    /*
+     * look at current spellers, and remove spellers that are not in hashtable
+     * "used_spellers"
+     */
+    weechat_hashtable_map (weechat_aspell_spellers,
+                           &weechat_aspell_speller_remove_unused_cb,
+                           used_spellers);
+
+    weechat_hashtable_free (used_spellers);
+}
+
+/*
+ * Callback called when a key is removed in hashtable "weechat_aspell_spellers".
+ */
+
+void
+weechat_aspell_speller_free_value_cb (struct t_hashtable *hashtable,
+                                      const void *key, void *value)
+{
+    AspellSpeller *ptr_speller;
+
+    /* make C compiler happy */
+    (void) hashtable;
 
     if (weechat_aspell_plugin->debug)
     {
         weechat_printf (NULL,
                         "%s: removing speller for lang \"%s\"",
-                        ASPELL_PLUGIN_NAME, speller->lang);
+                        ASPELL_PLUGIN_NAME, (const char *)key);
     }
 
-    /* free data */
-    if (speller->speller)
-    {
-        aspell_speller_save_all_word_lists (speller->speller);
-        delete_aspell_speller (speller->speller);
-    }
-    if (speller->lang)
-        free (speller->lang);
-
-    /* remove speller from list */
-    if (speller->prev_speller)
-        (speller->prev_speller)->next_speller = speller->next_speller;
-    if (speller->next_speller)
-        (speller->next_speller)->prev_speller = speller->prev_speller;
-    if (weechat_aspell_spellers == speller)
-        weechat_aspell_spellers = speller->next_speller;
-    if (last_weechat_aspell_speller == speller)
-        last_weechat_aspell_speller = speller->prev_speller;
-
-    free (speller);
+    /* free aspell data */
+    ptr_speller = (AspellSpeller *)value;
+    aspell_speller_save_all_word_lists (ptr_speller);
+    delete_aspell_speller (ptr_speller);
 }
 
 /*
- * Frees all spellers.
+ * Creates a structure for buffer speller info in hashtable
+ * "weechat_aspell_buffer_spellers".
+ */
+
+struct t_aspell_speller_buffer *
+weechat_aspell_speller_buffer_new (struct t_gui_buffer *buffer)
+{
+    const char *buffer_dicts;
+    char **dicts;
+    int num_dicts, i;
+    struct t_aspell_speller_buffer *new_speller_buffer;
+    AspellSpeller *ptr_speller;
+
+    if (!buffer)
+        return NULL;
+
+    weechat_hashtable_remove (weechat_aspell_speller_buffer, buffer);
+
+    new_speller_buffer = malloc (sizeof (*new_speller_buffer));
+    if (!new_speller_buffer)
+        return NULL;
+
+    new_speller_buffer->spellers = NULL;
+    new_speller_buffer->modifier_string = NULL;
+    new_speller_buffer->input_pos = -1;
+    new_speller_buffer->modifier_result = NULL;
+
+    buffer_dicts = weechat_aspell_get_dict (buffer);
+    if (buffer_dicts)
+    {
+        dicts = weechat_string_split (buffer_dicts, ",", 0, 0, &num_dicts);
+        if (dicts && (num_dicts > 0))
+        {
+            new_speller_buffer->spellers =
+                malloc ((num_dicts + 1) * sizeof (AspellSpeller *));
+            if (new_speller_buffer->spellers)
+            {
+                for (i = 0; i < num_dicts; i++)
+                {
+                    ptr_speller = weechat_hashtable_get (weechat_aspell_spellers,
+                                                         dicts[i]);
+                    if (!ptr_speller)
+                        ptr_speller = weechat_aspell_speller_new (dicts[i]);
+                    new_speller_buffer->spellers[i] = ptr_speller;
+                }
+                new_speller_buffer->spellers[num_dicts] = NULL;
+            }
+        }
+        if (dicts)
+            weechat_string_free_split (dicts);
+    }
+
+    weechat_hashtable_set (weechat_aspell_speller_buffer,
+                           buffer,
+                           new_speller_buffer);
+
+    weechat_bar_item_update ("aspell_dict");
+
+    return new_speller_buffer;
+}
+
+/*
+ * Callback called when a key is removed in hashtable
+ * "weechat_aspell_speller_buffer".
  */
 
 void
-weechat_aspell_speller_free_all ()
+weechat_aspell_speller_buffer_free_value_cb (struct t_hashtable *hashtable,
+                                             const void *key, void *value)
 {
-    while (weechat_aspell_spellers)
+    struct t_aspell_speller_buffer *ptr_speller_buffer;
+
+    /* make C compiler happy */
+    (void) hashtable;
+    (void) key;
+
+    ptr_speller_buffer = (struct t_aspell_speller_buffer *)value;
+
+    if (ptr_speller_buffer->spellers)
+        free (ptr_speller_buffer->spellers);
+    if (ptr_speller_buffer->modifier_string)
+        free (ptr_speller_buffer->modifier_string);
+    if (ptr_speller_buffer->modifier_result)
+        free (ptr_speller_buffer->modifier_result);
+
+    free (ptr_speller_buffer);
+}
+
+/*
+ * Initializes spellers (creates hashtables).
+ *
+ * Returns:
+ *   1: OK (hashtables created)
+ *   0: error (not enough memory)
+ */
+
+int
+weechat_aspell_speller_init ()
+{
+    weechat_aspell_spellers = weechat_hashtable_new (32,
+                                                     WEECHAT_HASHTABLE_STRING,
+                                                     WEECHAT_HASHTABLE_POINTER,
+                                                     NULL,
+                                                     NULL);
+    if (!weechat_aspell_spellers)
+        return 0;
+    weechat_hashtable_set_pointer (weechat_aspell_spellers,
+                                   "callback_free_value",
+                                   &weechat_aspell_speller_free_value_cb);
+
+    weechat_aspell_speller_buffer = weechat_hashtable_new (32,
+                                                           WEECHAT_HASHTABLE_POINTER,
+                                                           WEECHAT_HASHTABLE_POINTER,
+                                                           NULL,
+                                                           NULL);
+    if (!weechat_aspell_speller_buffer)
     {
-        weechat_aspell_speller_free (weechat_aspell_spellers);
+        weechat_hashtable_free (weechat_aspell_spellers);
+        return 0;
     }
+    weechat_hashtable_set_pointer (weechat_aspell_speller_buffer,
+                                   "callback_free_value",
+                                   &weechat_aspell_speller_buffer_free_value_cb);
+
+    return 1;
+}
+
+/*
+ * Ends spellers (removes hashtables).
+ */
+
+void
+weechat_aspell_speller_end ()
+{
+    weechat_hashtable_free (weechat_aspell_spellers);
+    weechat_hashtable_free (weechat_aspell_speller_buffer);
 }

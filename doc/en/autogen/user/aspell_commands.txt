@@ -3,15 +3,15 @@
 ........................................
 /aspell  enable|disable|toggle
          listdict
-         setdict <lang>
+         setdict <dict>[,<dict>...]
          deldict
-         addword [<lang>] <word>
+         addword [<dict>] <word>
 
   enable: enable aspell
  disable: disable aspell
   toggle: toggle aspell
 listdict: show installed dictionaries
- setdict: set dictionary for current buffer
+ setdict: set dictionary for current buffer (multiple dictionaries can be separated by a comma)
  deldict: delete dictionary used on current buffer
  addword: add a word in personal aspell dictionary
 

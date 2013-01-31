@@ -33,6 +33,8 @@
 struct t_config_file *weechat_aspell_config_file = NULL;
 struct t_config_section *weechat_aspell_config_section_dict = NULL;
 
+int weechat_aspell_config_loading = 0;
+
 /* aspell config, look section */
 
 struct t_config_option *weechat_aspell_config_look_color;
@@ -110,7 +112,9 @@ weechat_aspell_config_change_default_dict (void *data,
     (void) data;
     (void) option;
 
-    weechat_aspell_create_spellers (weechat_current_buffer ());
+    weechat_hashtable_remove_all (weechat_aspell_speller_buffer);
+    if (!weechat_aspell_config_loading)
+        weechat_aspell_speller_remove_unused ();
 }
 
 /*
@@ -157,7 +161,9 @@ weechat_aspell_config_dict_change (void *data,
     (void) data;
     (void) option;
 
-    weechat_aspell_create_spellers (weechat_current_buffer ());
+    weechat_hashtable_remove_all (weechat_aspell_speller_buffer);
+    if (!weechat_aspell_config_loading)
+        weechat_aspell_speller_remove_unused ();
 }
 
 /*
@@ -177,7 +183,9 @@ weechat_aspell_config_dict_delete_option (void *data,
 
     weechat_config_option_free (option);
 
-    weechat_aspell_create_spellers (weechat_current_buffer ());
+    weechat_hashtable_remove_all (weechat_aspell_speller_buffer);
+    if (!weechat_aspell_config_loading)
+        weechat_aspell_speller_remove_unused ();
 
     return WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
 }
@@ -211,7 +219,7 @@ weechat_aspell_config_dict_create_option (void *data,
         if (ptr_option)
         {
             if (value && value[0])
-                rc = weechat_config_option_set (ptr_option, value, 1);
+                rc = weechat_config_option_set (ptr_option, value, 0);
             else
             {
                 weechat_config_option_free (ptr_option);
@@ -246,7 +254,11 @@ weechat_aspell_config_dict_create_option (void *data,
                         option_name, value);
     }
     else
-        weechat_aspell_create_spellers (weechat_current_buffer ());
+    {
+        weechat_hashtable_remove_all (weechat_aspell_speller_buffer);
+        if (!weechat_aspell_config_loading)
+            weechat_aspell_speller_remove_unused ();
+    }
 
     return rc;
 }
@@ -263,8 +275,9 @@ weechat_aspell_config_option_change (void *data,
     (void) data;
     (void) option;
 
-    weechat_aspell_speller_free_all ();
-    weechat_aspell_create_spellers (weechat_current_buffer ());
+    weechat_hashtable_remove_all (weechat_aspell_speller_buffer);
+    if (!weechat_aspell_config_loading)
+        weechat_aspell_speller_remove_unused ();
 }
 
 /*
@@ -284,8 +297,9 @@ weechat_aspell_config_option_delete_option (void *data,
 
     weechat_config_option_free (option);
 
-    weechat_aspell_speller_free_all ();
-    weechat_aspell_create_spellers (weechat_current_buffer ());
+    weechat_hashtable_remove_all (weechat_aspell_speller_buffer);
+    if (!weechat_aspell_config_loading)
+        weechat_aspell_speller_remove_unused ();
 
     return WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
 }
@@ -353,8 +367,9 @@ weechat_aspell_config_option_create_option (void *data,
     }
     else
     {
-        weechat_aspell_speller_free_all ();
-        weechat_aspell_create_spellers (weechat_current_buffer ());
+        weechat_hashtable_remove_all (weechat_aspell_speller_buffer);
+        if (!weechat_aspell_config_loading)
+            weechat_aspell_speller_remove_unused ();
     }
 
     return rc;
@@ -525,12 +540,15 @@ weechat_aspell_config_read ()
 {
     int rc;
 
+    weechat_aspell_config_loading = 1;
     rc = weechat_config_read (weechat_aspell_config_file);
+    weechat_aspell_config_loading = 0;
     if (rc == WEECHAT_CONFIG_READ_OK)
     {
         weechat_aspell_config_change_commands (NULL,
                                                weechat_aspell_config_check_commands);
     }
+    weechat_aspell_speller_remove_unused ();
 
     return rc;
 }

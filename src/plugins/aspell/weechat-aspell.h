@@ -34,8 +34,11 @@ struct t_aspell_code
 
 extern struct t_weechat_plugin *weechat_aspell_plugin;
 extern int aspell_enabled;
+extern struct t_aspell_code aspell_langs[];
+extern struct t_aspell_code aspell_countries[];
 
-extern void weechat_aspell_create_spellers (struct t_gui_buffer *buffer);
+extern char *weechat_aspell_build_option_name (struct t_gui_buffer *buffer);
+extern const char *weechat_aspell_get_dict_with_buffer_name (const char *name);
 extern const char *weechat_aspell_get_dict (struct t_gui_buffer *buffer);
 
 #endif /* __WEECHAT_ASPELL_H */

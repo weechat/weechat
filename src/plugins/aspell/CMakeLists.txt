@@ -21,7 +21,10 @@
 ADD_LIBRARY(aspell MODULE
 weechat-aspell.c weechat-aspell.h
 weechat-aspell-bar-item.c weechat-aspell-bar-item.h
+weechat-aspell-command.c weechat-aspell-command.h
+weechat-aspell-completion.c weechat-aspell-completion.h
 weechat-aspell-config.c weechat-aspell-config.h
+weechat-aspell-info.c weechat-aspell-info.h
 weechat-aspell-speller.c weechat-aspell-speller.h)
 SET_TARGET_PROPERTIES(aspell PROPERTIES PREFIX "")
 

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-01-29 20:16+0100\n"
+"POT-Creation-Date: 2013-01-31 19:07+0100\n"
 "PO-Revision-Date: 2013-01-20 12:08+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3426,17 +3426,27 @@ msgstr ""
 msgid "Spell checker for input (with Aspell)"
 msgstr ""
 
-#, fuzzy, c-format
-msgid "%s: \"%s\" removed"
-msgstr "Сокращение \"%s\" удалено\n"
-
 #. TRANSLATORS: "%s" is "aspell"
 #, fuzzy, c-format
 msgid "%s dictionaries list:"
 msgstr "конец списка /who"
 
+#, fuzzy, c-format
+msgid "%s: \"%s\" removed"
+msgstr "Сокращение \"%s\" удалено\n"
+
 #, c-format
 msgid "%s: error: dictionary \"%s\" is not available on your system"
+msgstr ""
+
+#, c-format
+msgid "%s%s: no dictionary on this buffer for adding word"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: many dictionaries are defined for this buffer, please specify "
+"dictionary"
 msgstr ""
 
 #, c-format
@@ -3473,23 +3483,13 @@ msgstr "команда users отключена"
 msgid "Aspell disabled"
 msgstr "Сокращения не заданы.\n"
 
-#, c-format
-msgid "%s%s: no dictionary on this buffer for adding word"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s%s: many dictionaries are defined for this buffer, please specify "
-"dictionary"
-msgstr ""
-
 #, fuzzy
 msgid "aspell plugin configuration"
 msgstr "Сохраняю конфигурацию\n"
 
 msgid ""
-"enable|disable|toggle || listdict || setdict <lang> || deldict || addword "
-"[<lang>] <word>"
+"enable|disable|toggle || listdict || setdict <dict>[,<dict>...] || deldict "
+"|| addword [<dict>] <word>"
 msgstr ""
 
 msgid ""
@@ -3497,7 +3497,8 @@ msgid ""
 " disable: disable aspell\n"
 "  toggle: toggle aspell\n"
 "listdict: show installed dictionaries\n"
-" setdict: set dictionary for current buffer\n"
+" setdict: set dictionary for current buffer (multiple dictionaries can be "
+"separated by a comma)\n"
 " deldict: delete dictionary used on current buffer\n"
 " addword: add a word in personal aspell dictionary\n"
 "\n"
@@ -3512,7 +3513,10 @@ msgid ""
 "Default key to toggle aspell is alt-s."
 msgstr ""
 
-msgid "list of supported langs for aspell"
+msgid "list of all languages supported by aspell"
+msgstr ""
+
+msgid "list of aspell installed dictionaries"
 msgstr ""
 
 msgid "comma separated list of dictionaries to use on this buffer"
@@ -3567,13 +3571,17 @@ msgid ""
 "minimum length for a word to be spell checked (use 0 to check all words)"
 msgstr ""
 
+msgid "comma-separated list of dictionaries used in buffer"
+msgstr ""
+
+msgid ""
+"buffer pointer (\"0x12345678\") or buffer full name (\"irc.freenode.#weechat"
+"\")"
+msgstr ""
+
 #, c-format
 msgid "%s: warning: dictionary \"%s\" is not available on your system"
 msgstr ""
-
-#, fuzzy, c-format
-msgid "%s%s: not enough memory to create new speller"
-msgstr "%s недостаточно памяти для нового DCC\n"
 
 #, fuzzy
 msgid "Charset conversions"
@@ -8798,6 +8806,10 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#, fuzzy
+#~ msgid "%s%s: not enough memory to create new speller"
+#~ msgstr "%s недостаточно памяти для нового DCC\n"
 
 #, fuzzy
 #~ msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""

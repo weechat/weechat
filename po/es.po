@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-01-29 20:16+0100\n"
+"POT-Creation-Date: 2013-01-31 19:07+0100\n"
 "PO-Revision-Date: 2013-01-20 12:07+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3951,18 +3951,30 @@ msgstr ""
 msgid "Spell checker for input (with Aspell)"
 msgstr ""
 
-#, c-format
-msgid "%s: \"%s\" removed"
-msgstr "%s: \"%s\" eliminado"
-
 #. TRANSLATORS: "%s" is "aspell"
 #, c-format
 msgid "%s dictionaries list:"
 msgstr "Lista de diccionarios %s:"
 
 #, c-format
+msgid "%s: \"%s\" removed"
+msgstr "%s: \"%s\" eliminado"
+
+#, c-format
 msgid "%s: error: dictionary \"%s\" is not available on your system"
 msgstr "%s: error: diccionario \"%s\" no está disponible en tu sistema"
+
+#, c-format
+msgid "%s%s: no dictionary on this buffer for adding word"
+msgstr "%s%s: no hay diccionario en este buffer para agregar una palabra"
+
+#, c-format
+msgid ""
+"%s%s: many dictionaries are defined for this buffer, please specify "
+"dictionary"
+msgstr ""
+"%s%s: varios diccionarios definidos para este buffer, por favor especifique "
+"uno"
 
 #, c-format
 msgid "%s: word \"%s\" added to personal dictionary"
@@ -3994,24 +4006,13 @@ msgstr "Aspell activado"
 msgid "Aspell disabled"
 msgstr "Aspell desactivado"
 
-#, c-format
-msgid "%s%s: no dictionary on this buffer for adding word"
-msgstr "%s%s: no hay diccionario en este buffer para agregar una palabra"
-
-#, c-format
-msgid ""
-"%s%s: many dictionaries are defined for this buffer, please specify "
-"dictionary"
-msgstr ""
-"%s%s: varios diccionarios definidos para este buffer, por favor especifique "
-"uno"
-
 msgid "aspell plugin configuration"
 msgstr "configuración del plugin aspell"
 
+#, fuzzy
 msgid ""
-"enable|disable|toggle || listdict || setdict <lang> || deldict || addword "
-"[<lang>] <word>"
+"enable|disable|toggle || listdict || setdict <dict>[,<dict>...] || deldict "
+"|| addword [<dict>] <word>"
 msgstr ""
 "enable|disable|toggle || listdict || setdict <idioma> || deldict || addword "
 "[<idioma>] <palabra>"
@@ -4022,7 +4023,8 @@ msgid ""
 " disable: disable aspell\n"
 "  toggle: toggle aspell\n"
 "listdict: show installed dictionaries\n"
-" setdict: set dictionary for current buffer\n"
+" setdict: set dictionary for current buffer (multiple dictionaries can be "
+"separated by a comma)\n"
 " deldict: delete dictionary used on current buffer\n"
 " addword: add a word in personal aspell dictionary\n"
 "\n"
@@ -4048,8 +4050,13 @@ msgstr ""
 "por ejemplo:\n"
 "  /set aspell.check.default_dict \"es\""
 
-msgid "list of supported langs for aspell"
+#, fuzzy
+msgid "list of all languages supported by aspell"
 msgstr "lista de lenguajes soportados para aspell"
+
+#, fuzzy
+msgid "list of aspell installed dictionaries"
+msgstr "lista de scripts instalados (desde el repositorio)"
 
 msgid "comma separated list of dictionaries to use on this buffer"
 msgstr "lista separada por comas de diccionarios para usar en este buffer"
@@ -4114,13 +4121,18 @@ msgstr ""
 "longitud mínima de una palabra para poder ser verificada ortográficamente "
 "(usar 0 para verificar todas las palabras)"
 
+#, fuzzy
+msgid "comma-separated list of dictionaries used in buffer"
+msgstr "lista separada por comas de diccionarios para usar en este buffer"
+
+msgid ""
+"buffer pointer (\"0x12345678\") or buffer full name (\"irc.freenode.#weechat"
+"\")"
+msgstr ""
+
 #, c-format
 msgid "%s: warning: dictionary \"%s\" is not available on your system"
 msgstr "%s: atención: diccionario \"%s\" no está disponible en su sistema"
-
-#, c-format
-msgid "%s%s: not enough memory to create new speller"
-msgstr "%s%s: no hay suficiente memoria para crear el nuevo deletreador"
 
 msgid "Charset conversions"
 msgstr "Conversiones de mapa de caracteres"
@@ -9541,6 +9553,9 @@ msgstr "Tipo"
 
 msgid "Constants"
 msgstr "Constantes"
+
+#~ msgid "%s%s: not enough memory to create new speller"
+#~ msgstr "%s%s: no hay suficiente memoria para crear el nuevo deletreador"
 
 #~ msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
 #~ msgstr ""

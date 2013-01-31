@@ -6,7 +6,9 @@
 
 | alias | alias_value | valeur de l'alias
 
-| aspell | aspell_langs | liste des langues supportées pour aspell
+| aspell | aspell_dicts | liste des dictionnaires aspell installés
+
+| aspell | aspell_langs | liste de toutes les langues supportées par aspell
 
 | guile | guile_script | liste des scripts
 

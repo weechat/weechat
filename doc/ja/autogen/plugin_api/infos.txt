@@ -2,6 +2,8 @@
 |========================================
 | プラグイン | 名前 | 説明 | 引数
 
+| aspell | aspell_dict | comma-separated list of dictionaries used in buffer | buffer pointer ("0x12345678") or buffer full name ("irc.freenode.#weechat")
+
 | fifo | fifo_filename | FIFO パイプの名前 | -
 
 | irc | irc_buffer | ある IRC サーバ/チャンネル/ニックネームのバッファポインタを取得 | server,channel,nick (channel と nick はオプション)

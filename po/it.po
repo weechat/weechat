@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-01-29 20:16+0100\n"
+"POT-Creation-Date: 2013-01-31 19:07+0100\n"
 "PO-Revision-Date: 2013-01-20 12:07+0100\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3936,18 +3936,30 @@ msgstr ""
 msgid "Spell checker for input (with Aspell)"
 msgstr ""
 
-#, c-format
-msgid "%s: \"%s\" removed"
-msgstr "%s; \"%s\" eliminato"
-
 #. TRANSLATORS: "%s" is "aspell"
 #, c-format
 msgid "%s dictionaries list:"
 msgstr "elenco dizionari %s"
 
 #, c-format
+msgid "%s: \"%s\" removed"
+msgstr "%s; \"%s\" eliminato"
+
+#, c-format
 msgid "%s: error: dictionary \"%s\" is not available on your system"
 msgstr "%s: errore: il dizionario \"%s\" non è disponibile su questo sistema"
+
+#, c-format
+msgid "%s%s: no dictionary on this buffer for adding word"
+msgstr "%s%s: nessun dizionario su questo buffer per aggiungere parole"
+
+#, c-format
+msgid ""
+"%s%s: many dictionaries are defined for this buffer, please specify "
+"dictionary"
+msgstr ""
+"%s%s: più dizionari definiti per questo buffer, è necessario specificare un "
+"dizionario"
 
 #, c-format
 msgid "%s: word \"%s\" added to personal dictionary"
@@ -3979,34 +3991,25 @@ msgstr "Aspell abilitato"
 msgid "Aspell disabled"
 msgstr "Aspell disabilitato"
 
-#, c-format
-msgid "%s%s: no dictionary on this buffer for adding word"
-msgstr "%s%s: nessun dizionario su questo buffer per aggiungere parole"
-
-#, c-format
-msgid ""
-"%s%s: many dictionaries are defined for this buffer, please specify "
-"dictionary"
-msgstr ""
-"%s%s: più dizionari definiti per questo buffer, è necessario specificare un "
-"dizionario"
-
 msgid "aspell plugin configuration"
 msgstr "configurazione del plugin aspell"
 
+#, fuzzy
 msgid ""
-"enable|disable|toggle || listdict || setdict <lang> || deldict || addword "
-"[<lang>] <word>"
+"enable|disable|toggle || listdict || setdict <dict>[,<dict>...] || deldict "
+"|| addword [<dict>] <word>"
 msgstr ""
 "enable|disable|toggle || listdict || setdict <lingua> || deldict || addword "
 "[<lingua>] <word>"
 
+#, fuzzy
 msgid ""
 "  enable: enable aspell\n"
 " disable: disable aspell\n"
 "  toggle: toggle aspell\n"
 "listdict: show installed dictionaries\n"
-" setdict: set dictionary for current buffer\n"
+" setdict: set dictionary for current buffer (multiple dictionaries can be "
+"separated by a comma)\n"
 " deldict: delete dictionary used on current buffer\n"
 " addword: add a word in personal aspell dictionary\n"
 "\n"
@@ -4038,8 +4041,12 @@ msgstr ""
 "\n"
 "Il tasto predefinito per (dis)abilitare aspell è alt-s."
 
-msgid "list of supported langs for aspell"
+#, fuzzy
+msgid "list of all languages supported by aspell"
 msgstr "elenco di lingue supportate per aspell"
+
+msgid "list of aspell installed dictionaries"
+msgstr ""
 
 msgid "comma separated list of dictionaries to use on this buffer"
 msgstr "elenco separato da virgole di dizionari da usare su questo buffer"
@@ -4103,14 +4110,19 @@ msgid ""
 msgstr ""
 "lunghezza minima per una parola da controllare (0 per controllarle tutte)"
 
+#, fuzzy
+msgid "comma-separated list of dictionaries used in buffer"
+msgstr "elenco separato da virgole di dizionari da usare su questo buffer"
+
+msgid ""
+"buffer pointer (\"0x12345678\") or buffer full name (\"irc.freenode.#weechat"
+"\")"
+msgstr ""
+
 #, c-format
 msgid "%s: warning: dictionary \"%s\" is not available on your system"
 msgstr ""
 "%s: attenzione: il dizionario \"%s\" non è disponibile su questo sistema"
-
-#, c-format
-msgid "%s%s: not enough memory to create new speller"
-msgstr "%s%s: memoria non sufficiente per creare un nuovo correttore"
 
 #, fuzzy
 msgid "Charset conversions"
@@ -9573,6 +9585,9 @@ msgstr "Tipo"
 
 msgid "Constants"
 msgstr "Costanti"
+
+#~ msgid "%s%s: not enough memory to create new speller"
+#~ msgstr "%s%s: memoria non sufficiente per creare un nuovo correttore"
 
 #~ msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
 #~ msgstr "%s%s: impossibile impostare l'opzione del socket \"SO_REUSEADDR\""

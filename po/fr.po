@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-01-29 20:16+0100\n"
-"PO-Revision-Date: 2013-01-29 20:16+0100\n"
+"POT-Creation-Date: 2013-01-31 19:07+0100\n"
+"PO-Revision-Date: 2013-01-31 14:11+0100\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -4089,19 +4089,31 @@ msgstr ""
 msgid "Spell checker for input (with Aspell)"
 msgstr "Vérificateur d'orthographe pour la saisie (avec Aspell)"
 
-#, c-format
-msgid "%s: \"%s\" removed"
-msgstr "%s: \"%s\" supprimé"
-
 #. TRANSLATORS: "%s" is "aspell"
 #, c-format
 msgid "%s dictionaries list:"
 msgstr "Liste des dictionnaires %s:"
 
 #, c-format
+msgid "%s: \"%s\" removed"
+msgstr "%s: \"%s\" supprimé"
+
+#, c-format
 msgid "%s: error: dictionary \"%s\" is not available on your system"
 msgstr ""
 "%s: erreur: le dictionnaire \"%s\" n'est pas disponible sur votre système"
+
+#, c-format
+msgid "%s%s: no dictionary on this buffer for adding word"
+msgstr "%s%s: pas de dictionnaire sur ce tampon pour ajouter le mot"
+
+#, c-format
+msgid ""
+"%s%s: many dictionaries are defined for this buffer, please specify "
+"dictionary"
+msgstr ""
+"%s%s: plusieurs dictionnaires sont définis pour ce tampon, merci de préciser "
+"le dictionnaire"
 
 #, c-format
 msgid "%s: word \"%s\" added to personal dictionary"
@@ -4133,34 +4145,23 @@ msgstr "Aspell activé"
 msgid "Aspell disabled"
 msgstr "Aspell désactivé"
 
-#, c-format
-msgid "%s%s: no dictionary on this buffer for adding word"
-msgstr "%s%s: pas de dictionnaire sur ce tampon pour ajouter le mot"
-
-#, c-format
-msgid ""
-"%s%s: many dictionaries are defined for this buffer, please specify "
-"dictionary"
-msgstr ""
-"%s%s: plusieurs dictionnaires sont définis pour ce tampon, merci de préciser "
-"le dictionnaire"
-
 msgid "aspell plugin configuration"
 msgstr "configuration de l'extension aspell"
 
 msgid ""
-"enable|disable|toggle || listdict || setdict <lang> || deldict || addword "
-"[<lang>] <word>"
+"enable|disable|toggle || listdict || setdict <dict>[,<dict>...] || deldict "
+"|| addword [<dict>] <word>"
 msgstr ""
-"enable|disable|toggle || listdict || setdict <langue> || deldict || addword "
-"[<langue>] <mot>"
+"enable|disable|toggle || listdict || setdict <dict>[,<dict>...] || deldict "
+"|| addword [<dict>] <mot>"
 
 msgid ""
 "  enable: enable aspell\n"
 " disable: disable aspell\n"
 "  toggle: toggle aspell\n"
 "listdict: show installed dictionaries\n"
-" setdict: set dictionary for current buffer\n"
+" setdict: set dictionary for current buffer (multiple dictionaries can be "
+"separated by a comma)\n"
 " deldict: delete dictionary used on current buffer\n"
 " addword: add a word in personal aspell dictionary\n"
 "\n"
@@ -4178,7 +4179,8 @@ msgstr ""
 " disable: désactiver aspell\n"
 "  toggle: activer/désactiver aspell\n"
 "listdict: afficher les dictionnaires installés\n"
-" setdict: définir le dictionnaire pour le tampon courant\n"
+" setdict: définir le dictionnaire pour le tampon courant (plusieurs "
+"dictionnaires peuvent être séparés par une virgule)\n"
 " deldict: supprimer le dictionnaire utilisé sur le tampon courant\n"
 " addword: ajouter un mot dans le dictionnaire personnel aspell\n"
 "\n"
@@ -4192,8 +4194,11 @@ msgstr ""
 "\n"
 "La touche par défaut pour activer/désactiver aspell est alt-s."
 
-msgid "list of supported langs for aspell"
-msgstr "liste des langues supportées pour aspell"
+msgid "list of all languages supported by aspell"
+msgstr "liste de toutes les langues supportées par aspell"
+
+msgid "list of aspell installed dictionaries"
+msgstr "liste des dictionnaires aspell installés"
 
 msgid "comma separated list of dictionaries to use on this buffer"
 msgstr ""
@@ -4263,15 +4268,22 @@ msgstr ""
 "longueur minimum d'un mot pour que l'otrhographe soit vérifiée (utilisez 0 "
 "pour vérifier tous les mots)"
 
+msgid "comma-separated list of dictionaries used in buffer"
+msgstr ""
+"liste de dictionnaires (séparés par des virgules) utilisés sur le tampon"
+
+msgid ""
+"buffer pointer (\"0x12345678\") or buffer full name (\"irc.freenode.#weechat"
+"\")"
+msgstr ""
+"pointeur vers un tampon (\"0x12345678\") ou nom complet de tampon (\"irc."
+"freenode.#weechat\")"
+
 #, c-format
 msgid "%s: warning: dictionary \"%s\" is not available on your system"
 msgstr ""
 "%s: attention: le dictionnaire \\\"%s\\\" n'est pas disponible sur votre "
 "système"
-
-#, c-format
-msgid "%s%s: not enough memory to create new speller"
-msgstr "%s%s: pas assez de mémoire pour créer un nouveau speller"
 
 msgid "Charset conversions"
 msgstr "Conversions de charset"
@@ -9894,33 +9906,3 @@ msgstr "Type"
 
 msgid "Constants"
 msgstr "Constantes"
-
-#~ msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
-#~ msgstr "%s%s: impossible d'activer l'option socket \"SO_REUSEADDR\""
-
-#~ msgid "%s%s: cannot set socket option \"IPV6_V6ONLY\" to value %d"
-#~ msgstr ""
-#~ "%s%s: impossible d'activer l'option socket \"IPV6_V6ONLY\" à la valeur %d"
-
-#~ msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
-#~ msgstr "%s%s: impossible d'activer l'option socket \"SO_KEEPALIVE\""
-
-#~ msgid "%s%s: cannot create socket for xfer"
-#~ msgstr "%s%s: impossible de créer la socket pour le xfer"
-
-#~ msgid "%s%s: not enough memory to parse file \"%s\""
-#~ msgstr "%s%s: mémoire insuffisante pour lire le fichier \"%s\""
-
-#~ msgid "%s%s: unable to run file \"%s\""
-#~ msgstr "%s%s: impossible de lancer le fichier \"%s\""
-
-#~ msgid "%s%s: unknown error while loading file \"%s\""
-#~ msgstr "%s%s: erreur inconnue en chargement du fichier \"%s\""
-
-#~ msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
-#~ msgstr ""
-#~ "%s: erreur de chargement du script \"%s\" (mauvais nom, les espaces sont "
-#~ "interdits)"
-
-#~ msgid "%s%s: cannot create socket"
-#~ msgstr "%s%s: impossible de créer la socket"

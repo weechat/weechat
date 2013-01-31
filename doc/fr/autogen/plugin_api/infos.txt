@@ -2,6 +2,8 @@
 |========================================
 | Extension | Nom | Description | Paramètres
 
+| aspell | aspell_dict | liste de dictionnaires (séparés par des virgules) utilisés sur le tampon | pointeur vers un tampon ("0x12345678") ou nom complet de tampon ("irc.freenode.#weechat")
+
 | fifo | fifo_filename | nom du tube FIFO | -
 
 | irc | irc_buffer | retourne le pointeur vers le tampon pour un serveur/canal/pseudo IRC | serveur,canal,pseudo (canal et pseudo sont optionnels)

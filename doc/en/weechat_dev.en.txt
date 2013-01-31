@@ -174,11 +174,14 @@ Plugins
 |    alias/                         | Alias plugin
 |       alias.c                     | Main alias functions
 |       alias-config.c              | Alias config options
-|       alias-info.c                | Info and infolists from alias plugin
+|       alias-info.c                | Alias info/infolists/hdata
 |    aspell/                        | Aspell plugin
 |       weechat-aspell.c            | Main aspell functions
 |       weechat-aspell-bar-item.c   | Aspell bar items
+|       weechat-aspell-command.c    | Aspell commands
+|       weechat-aspell-completion.c | Aspell completions
 |       weechat-aspell-config.c     | Aspell config options
+|       weechat-aspell-info.c       | Aspell info/infolists/hdata
 |       weechat-aspell-speller.c    | Spellers management
 |    charset/                       | Charset plugin
 |       charset.c                   | Charset functions
@@ -186,7 +189,7 @@ Plugins
 |       demo.c                      | Demo functions
 |    fifo/                          | Fifo plugin
 |       fifo.c                      | Main fifo functions
-|       fifo-info.c                 | Info and infolists from fifo plugin
+|       fifo-info.c                 | Fifo info/infolists/hdata
 |    guile/                         | Guile (scheme) plugin
 |       weechat-guile.c             | Main guile functions (load/unload scripts, execute guile code)
 |       weechat-guile-api.c         | Guile scripting API functions
@@ -203,7 +206,7 @@ Plugins
 |       irc-debug.c                 | IRC debug functions
 |       irc-display.c               | IRC display functions
 |       irc-ignore.c                | IRC Ignore
-|       irc-info.c                  | Info and infolists from IRC plugin
+|       irc-info.c                  | IRC info/infolists/hdata
 |       irc-input.c                 | Input of commands/text
 |       irc-message.c               | Functions to manipulate IRC messages
 |       irc-mode.c                  | Functions about channel/nick modes
@@ -220,7 +223,7 @@ Plugins
 |       logger.c                    | Main logger functions
 |       logger-buffer.c             | Logger buffer list management
 |       logger-config.c             | Logger config options
-|       logger-info.c               | Info and infolists from logger plugin
+|       logger-info.c               | Logger info/infolists/hdata
 |       logger-tail.c               | Return last lines of a file
 |    lua/                           | Lua plugin
 |       weechat-lua.c               | Main lua functions (load/unload scripts, execute lua code)
@@ -238,7 +241,7 @@ Plugins
 |       relay-command.c             | Relay commands
 |       relay-completion.c          | Relay completions
 |       relay-config.c              | Relay config options
-|       relay-info.c                | Info and infolists from relay plugin
+|       relay-info.c                | Relay info/infolists/hdata
 |       relay-network.c             | Network functions for relay
 |       relay-raw.c                 | Relay raw buffer
 |       relay-server.c              | Relay server
@@ -255,7 +258,7 @@ Plugins
 |       rmodifier-completion.c      | Rmodifier completions
 |       rmodifier-config.c          | Rmodifier config options
 |       rmodifier-debug.c           | Rmodifier debug functions
-|       rmodifier-info.c            | Info and infolists from rmodifier plugin
+|       rmodifier-info.c            | Rmodifier info/infolists/hdata
 |    ruby/                          | Ruby plugin
 |       weechat-ruby.c              | Main ruby functions (load/unload scripts, execute ruby code)
 |       weechat-ruby-api.c          | Ruby scripting API functions
@@ -266,7 +269,7 @@ Plugins
 |       script-command.c            | Commands for scripts manager
 |       script-completion.c         | Completions for scripts manager
 |       script-config.c             | Config options for scripts manager
-|       script-info.c               | Info and infolists from scripts manager plugin
+|       script-info.c               | Script manager info/infolists/hdata
 |       script-repo.c               | Download and read repository file
 |    tcl/                           | Tcl plugin
 |       weechat-tcl.c               | Main tcl functions (load/unload scripts, execute tcl code)
@@ -280,7 +283,7 @@ Plugins
 |       xfer-config.c               | Xfer config options
 |       xfer-dcc.c                  | Xfer DCC file
 |       xfer-file.c                 | File functions for xfer
-|       xfer-info.c                 | Info and infolists from xfer plugin
+|       xfer-info.c                 | Xfer info/infolists/hdata
 |       xfer-network.c              | Network functions for xfer
 |       xfer-upgrade.c              | Save/restore xfer data when upgrading WeeChat
 |========================================

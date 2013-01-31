@@ -6,7 +6,9 @@
 
 | alias | alias_value | 別名の値
 
-| aspell | aspell_langs | aspell でサポートされる言語のリスト
+| aspell | aspell_dicts | list of aspell installed dictionaries
+
+| aspell | aspell_langs | list of all languages supported by aspell
 
 | guile | guile_script | スクリプトのリスト
 

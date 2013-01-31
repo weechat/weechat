@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-01-29 20:16+0100\n"
+"POT-Creation-Date: 2013-01-31 19:07+0100\n"
 "PO-Revision-Date: 2013-01-20 12:07+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3758,18 +3758,29 @@ msgstr ""
 msgid "Spell checker for input (with Aspell)"
 msgstr ""
 
-#, c-format
-msgid "%s: \"%s\" removed"
-msgstr "%s: \"%s\" odebrán"
-
 #. TRANSLATORS: "%s" is "aspell"
 #, c-format
 msgid "%s dictionaries list:"
 msgstr "seznam slovníku %s:"
 
 #, c-format
+msgid "%s: \"%s\" removed"
+msgstr "%s: \"%s\" odebrán"
+
+#, c-format
 msgid "%s: error: dictionary \"%s\" is not available on your system"
 msgstr "%s: chyba: slovník \"%s\" není ve vašem systému dostupný"
+
+#, c-format
+msgid "%s%s: no dictionary on this buffer for adding word"
+msgstr "%s%s: není žádný slovník pro přidání slova pro tento buffer"
+
+#, c-format
+msgid ""
+"%s%s: many dictionaries are defined for this buffer, please specify "
+"dictionary"
+msgstr ""
+"%s%s: pro tento buffer je definováno mnoho slovníků, prosím uveďte slovník"
 
 #, c-format
 msgid "%s: word \"%s\" added to personal dictionary"
@@ -3805,24 +3816,13 @@ msgstr "1 pokud jsou filtry povoleny"
 msgid "Aspell disabled"
 msgstr "Filtrování zpráv zakázáno"
 
-#, c-format
-msgid "%s%s: no dictionary on this buffer for adding word"
-msgstr "%s%s: není žádný slovník pro přidání slova pro tento buffer"
-
-#, c-format
-msgid ""
-"%s%s: many dictionaries are defined for this buffer, please specify "
-"dictionary"
-msgstr ""
-"%s%s: pro tento buffer je definováno mnoho slovníků, prosím uveďte slovník"
-
 msgid "aspell plugin configuration"
 msgstr "konfigurace pluginu aspell"
 
 #, fuzzy
 msgid ""
-"enable|disable|toggle || listdict || setdict <lang> || deldict || addword "
-"[<lang>] <word>"
+"enable|disable|toggle || listdict || setdict <dict>[,<dict>...] || deldict "
+"|| addword [<dict>] <word>"
 msgstr "dictlist || enable <jazyk> || disable || addword [<jazyk>] <slovo>"
 
 #, fuzzy
@@ -3831,7 +3831,8 @@ msgid ""
 " disable: disable aspell\n"
 "  toggle: toggle aspell\n"
 "listdict: show installed dictionaries\n"
-" setdict: set dictionary for current buffer\n"
+" setdict: set dictionary for current buffer (multiple dictionaries can be "
+"separated by a comma)\n"
 " deldict: delete dictionary used on current buffer\n"
 " addword: add a word in personal aspell dictionary\n"
 "\n"
@@ -3852,8 +3853,12 @@ msgstr ""
 "\n"
 "Vstupní řádka začínající '/' není kontrolována, vyjma některých příkaů."
 
-msgid "list of supported langs for aspell"
+#, fuzzy
+msgid "list of all languages supported by aspell"
 msgstr "seznam podporovaných jazyků v aspell"
+
+msgid "list of aspell installed dictionaries"
+msgstr ""
 
 msgid "comma separated list of dictionaries to use on this buffer"
 msgstr "čárkami oddělený seznam slovníků, které použít pro tento buffer"
@@ -3918,13 +3923,18 @@ msgstr ""
 "mimimální délka slova pro kontrolu pravopisu (použijte 0 pro kontrolu všech "
 "slov)"
 
+#, fuzzy
+msgid "comma-separated list of dictionaries used in buffer"
+msgstr "čárkami oddělený seznam slovníků, které použít pro tento buffer"
+
+msgid ""
+"buffer pointer (\"0x12345678\") or buffer full name (\"irc.freenode.#weechat"
+"\")"
+msgstr ""
+
 #, c-format
 msgid "%s: warning: dictionary \"%s\" is not available on your system"
 msgstr "%s: upozornění: slovník \"%s\" není dostupný ve vašem systému"
-
-#, c-format
-msgid "%s%s: not enough memory to create new speller"
-msgstr "%s%s: nedostatek paměti pro vytvoření kontroly pravopisu"
 
 #, fuzzy
 msgid "Charset conversions"
@@ -9301,6 +9311,9 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#~ msgid "%s%s: not enough memory to create new speller"
+#~ msgstr "%s%s: nedostatek paměti pro vytvoření kontroly pravopisu"
 
 #~ msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
 #~ msgstr "%s%s: nemohu nastavit nastavení sketu \"SO_REUSEADDR\""

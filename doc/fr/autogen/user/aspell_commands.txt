@@ -3,15 +3,15 @@
 ........................................
 /aspell  enable|disable|toggle
          listdict
-         setdict <langue>
+         setdict <dict>[,<dict>...]
          deldict
-         addword [<langue>] <mot>
+         addword [<dict>] <mot>
 
   enable: activer aspell
  disable: désactiver aspell
   toggle: activer/désactiver aspell
 listdict: afficher les dictionnaires installés
- setdict: définir le dictionnaire pour le tampon courant
+ setdict: définir le dictionnaire pour le tampon courant (plusieurs dictionnaires peuvent être séparés par une virgule)
  deldict: supprimer le dictionnaire utilisé sur le tampon courant
  addword: ajouter un mot dans le dictionnaire personnel aspell
 

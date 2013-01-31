@@ -2,6 +2,8 @@
 |========================================
 | Plugin | Name | Description | Arguments
 
+| aspell | aspell_dict | comma-separated list of dictionaries used in buffer | buffer pointer ("0x12345678") or buffer full name ("irc.freenode.#weechat")
+
 | fifo | fifo_filename | name of FIFO pipe | -
 
 | irc | irc_buffer | get buffer pointer for an IRC server/channel/nick | server,channel,nick (channel and nicks are optional)

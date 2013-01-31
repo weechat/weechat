@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-01-29 20:16+0100\n"
+"POT-Creation-Date: 2013-01-31 19:07+0100\n"
 "PO-Revision-Date: 2013-01-20 12:07+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -3930,18 +3930,29 @@ msgstr ""
 msgid "Spell checker for input (with Aspell)"
 msgstr "入力に対するスペルチェッカ (Aspell を利用)"
 
-#, c-format
-msgid "%s: \"%s\" removed"
-msgstr "%s: \"%s\" 削除しました"
-
 #. TRANSLATORS: "%s" is "aspell"
 #, c-format
 msgid "%s dictionaries list:"
 msgstr "%s ディレクトリリスト:"
 
 #, c-format
+msgid "%s: \"%s\" removed"
+msgstr "%s: \"%s\" 削除しました"
+
+#, c-format
 msgid "%s: error: dictionary \"%s\" is not available on your system"
 msgstr "%s: エラー: ディレクトリ \"%s\" がシステム上に見つかりません"
+
+#, c-format
+msgid "%s%s: no dictionary on this buffer for adding word"
+msgstr "%s%s: このバッファ上には単語を追加する辞書がありません"
+
+#, c-format
+msgid ""
+"%s%s: many dictionaries are defined for this buffer, please specify "
+"dictionary"
+msgstr ""
+"%s%s: このバッファには複数の辞書が定義されています、辞書を指定してください"
 
 #, c-format
 msgid "%s: word \"%s\" added to personal dictionary"
@@ -3973,33 +3984,25 @@ msgstr "Aspell が有効化されています"
 msgid "Aspell disabled"
 msgstr "Aspell が無効化されています"
 
-#, c-format
-msgid "%s%s: no dictionary on this buffer for adding word"
-msgstr "%s%s: このバッファ上には単語を追加する辞書がありません"
-
-#, c-format
-msgid ""
-"%s%s: many dictionaries are defined for this buffer, please specify "
-"dictionary"
-msgstr ""
-"%s%s: このバッファには複数の辞書が定義されています、辞書を指定してください"
-
 msgid "aspell plugin configuration"
 msgstr "aspell プラグイン設定"
 
+#, fuzzy
 msgid ""
-"enable|disable|toggle || listdict || setdict <lang> || deldict || addword "
-"[<lang>] <word>"
+"enable|disable|toggle || listdict || setdict <dict>[,<dict>...] || deldict "
+"|| addword [<dict>] <word>"
 msgstr ""
 "enable|disable|toggle || listdict || setdict <lang> || deldict || addword "
 "[<lang>] <word>"
 
+#, fuzzy
 msgid ""
 "  enable: enable aspell\n"
 " disable: disable aspell\n"
 "  toggle: toggle aspell\n"
 "listdict: show installed dictionaries\n"
-" setdict: set dictionary for current buffer\n"
+" setdict: set dictionary for current buffer (multiple dictionaries can be "
+"separated by a comma)\n"
 " deldict: delete dictionary used on current buffer\n"
 " addword: add a word in personal aspell dictionary\n"
 "\n"
@@ -4031,8 +4034,13 @@ msgstr ""
 "\n"
 "aspell の有効無効を切り替えるデフォルトのキーは alt-s　です。"
 
-msgid "list of supported langs for aspell"
+#, fuzzy
+msgid "list of all languages supported by aspell"
 msgstr "aspell でサポートされる言語のリスト"
+
+#, fuzzy
+msgid "list of aspell installed dictionaries"
+msgstr "インストール済みスクリプトのリスト (リポジトリから)"
 
 msgid "comma separated list of dictionaries to use on this buffer"
 msgstr "このバッファで使用中の辞書のカンマ区切りリスト"
@@ -4097,13 +4105,18 @@ msgid ""
 "minimum length for a word to be spell checked (use 0 to check all words)"
 msgstr "スペルチェックを行う単語長の最小値 (0 の場合は全ての単語をチェック)"
 
+#, fuzzy
+msgid "comma-separated list of dictionaries used in buffer"
+msgstr "このバッファで使用中の辞書のカンマ区切りリスト"
+
+msgid ""
+"buffer pointer (\"0x12345678\") or buffer full name (\"irc.freenode.#weechat"
+"\")"
+msgstr ""
+
 #, c-format
 msgid "%s: warning: dictionary \"%s\" is not available on your system"
 msgstr "%s: 警告: 辞書 \"%s\" がこのシステム上では利用できません"
-
-#, c-format
-msgid "%s%s: not enough memory to create new speller"
-msgstr "%s%s: 新しい speller を作る十分なメモリがありません"
 
 msgid "Charset conversions"
 msgstr "文字コード変換"
@@ -9556,6 +9569,9 @@ msgstr "タイプ"
 
 msgid "Constants"
 msgstr "定数"
+
+#~ msgid "%s%s: not enough memory to create new speller"
+#~ msgstr "%s%s: 新しい speller を作る十分なメモリがありません"
 
 #~ msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
 #~ msgstr "%s%s: ソケットオプション \"SO_REUSEADDR\" の設定に失敗"

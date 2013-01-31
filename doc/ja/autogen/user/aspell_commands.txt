@@ -3,24 +3,24 @@
 ........................................
 /aspell  enable|disable|toggle
          listdict
-         setdict <lang>
+         setdict <dict>[,<dict>...]
          deldict
-         addword [<lang>] <word>
+         addword [<dict>] <word>
 
-  enable: aspell の有効化
- disable: aspell の無効化
-  toggle: aspell の有効無効を切り替え
-listdict: インストール済み辞書を表示
- setdict: 現在のバッファ用の辞書を設定
- deldict: 現在のバッファ用の辞書を削除
- addword: aspell の個人辞書に単語を追加
+  enable: enable aspell
+ disable: disable aspell
+  toggle: toggle aspell
+listdict: show installed dictionaries
+ setdict: set dictionary for current buffer (multiple dictionaries can be separated by a comma)
+ deldict: delete dictionary used on current buffer
+ addword: add a word in personal aspell dictionary
 
-いくつかのコマンドを除いて '/' で始まる入力行はチェックされません (/set aspell.check.commands を参照)。
+Input line beginning with a '/' is not checked, except for some commands (see /set aspell.check.commands).
 
-全てのバッファで aspell を有効化するには、"default_dict" オプションを設定した後に、aspell を有効化してください。例えば:
+To enable aspell on all buffers, use option "default_dict", then enable aspell, for example:
   /set aspell.check.default_dict "en"
   /aspell enable
 
-aspell の有効無効を切り替えるデフォルトのキーは alt-s　です。
+Default key to toggle aspell is alt-s.
 ........................................
 

@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-01-29 20:16+0100\n"
+"POT-Creation-Date: 2013-01-31 19:07+0100\n"
 "PO-Revision-Date: 2013-01-20 12:07+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -4209,19 +4209,33 @@ msgstr ""
 msgid "Spell checker for input (with Aspell)"
 msgstr "Rechtschreibprüfung für die Eingabezeile (mittels Aspell)"
 
-#, c-format
-msgid "%s: \"%s\" removed"
-msgstr "%s: \"%s\" entfernt"
-
 #. TRANSLATORS: "%s" is "aspell"
 #, c-format
 msgid "%s dictionaries list:"
 msgstr "%s Wörterbücher:"
 
 #, c-format
+msgid "%s: \"%s\" removed"
+msgstr "%s: \"%s\" entfernt"
+
+#, c-format
 msgid "%s: error: dictionary \"%s\" is not available on your system"
 msgstr ""
 "%s: Fehler: das Wörterbuch \"%s\" ist auf diesem Rechner nicht verfügbar."
+
+#, c-format
+msgid "%s%s: no dictionary on this buffer for adding word"
+msgstr ""
+"%s%s: Es ist kein Wörterbuch für diesen Buffer aktiviert, deshalb kann das "
+"Wort nicht hinzugefügt werden."
+
+#, c-format
+msgid ""
+"%s%s: many dictionaries are defined for this buffer, please specify "
+"dictionary"
+msgstr ""
+"%s%s: es sind mehrere Wörterbücher für diesen Buffer definiert. Bitte wählen "
+"Sie ein Wörterbuch davon aus."
 
 #, c-format
 msgid "%s: word \"%s\" added to personal dictionary"
@@ -4254,36 +4268,25 @@ msgstr "Aspell wurde aktiviert"
 msgid "Aspell disabled"
 msgstr "Aspell wurde deaktiviert"
 
-#, c-format
-msgid "%s%s: no dictionary on this buffer for adding word"
-msgstr ""
-"%s%s: Es ist kein Wörterbuch für diesen Buffer aktiviert, deshalb kann das "
-"Wort nicht hinzugefügt werden."
-
-#, c-format
-msgid ""
-"%s%s: many dictionaries are defined for this buffer, please specify "
-"dictionary"
-msgstr ""
-"%s%s: es sind mehrere Wörterbücher für diesen Buffer definiert. Bitte wählen "
-"Sie ein Wörterbuch davon aus."
-
 msgid "aspell plugin configuration"
 msgstr "Konfiguration für Aspell-Erweiterung"
 
+#, fuzzy
 msgid ""
-"enable|disable|toggle || listdict || setdict <lang> || deldict || addword "
-"[<lang>] <word>"
+"enable|disable|toggle || listdict || setdict <dict>[,<dict>...] || deldict "
+"|| addword [<dict>] <word>"
 msgstr ""
 "enable|disable|toggle || listdict || setdict <lang> || deldict || addword "
 "[<lang>] <word>"
 
+#, fuzzy
 msgid ""
 "  enable: enable aspell\n"
 " disable: disable aspell\n"
 "  toggle: toggle aspell\n"
 "listdict: show installed dictionaries\n"
-" setdict: set dictionary for current buffer\n"
+" setdict: set dictionary for current buffer (multiple dictionaries can be "
+"separated by a comma)\n"
 " deldict: delete dictionary used on current buffer\n"
 " addword: add a word in personal aspell dictionary\n"
 "\n"
@@ -4317,8 +4320,13 @@ msgstr ""
 "Die Standardtastaturbelegung zum Umschalten der Aspell Funktionalität lautet "
 "alt-s."
 
-msgid "list of supported langs for aspell"
+#, fuzzy
+msgid "list of all languages supported by aspell"
 msgstr "Liste der zu nutzenden Übersetzungen für Aspell"
+
+#, fuzzy
+msgid "list of aspell installed dictionaries"
+msgstr "Auflistung der installierten Skripten (vom Repositorium)"
 
 msgid "comma separated list of dictionaries to use on this buffer"
 msgstr ""
@@ -4393,13 +4401,20 @@ msgstr ""
 "Mindestlänge für ein Wort, welches auf Rechtschreibung überprüft werden soll "
 "(bei 0 werden alle Wörter überprüft)"
 
+#, fuzzy
+msgid "comma-separated list of dictionaries used in buffer"
+msgstr ""
+"eine durch Kommata getrennte Liste von Wörterbüchern, die in diesem Buffer "
+"genutzt werden sollen"
+
+msgid ""
+"buffer pointer (\"0x12345678\") or buffer full name (\"irc.freenode.#weechat"
+"\")"
+msgstr ""
+
 #, c-format
 msgid "%s: warning: dictionary \"%s\" is not available on your system"
 msgstr "%s: Hinweis: das Wörterbuch \"%s\" ist auf dem Rechner nicht verfügbar"
-
-#, c-format
-msgid "%s%s: not enough memory to create new speller"
-msgstr "%s%s: Nicht genug Speicher um neue Rechtschreibung zu erstellen"
 
 msgid "Charset conversions"
 msgstr "Zeichensatzkonvertierung"
@@ -10149,6 +10164,9 @@ msgstr "Type"
 
 msgid "Constants"
 msgstr "Konstanten"
+
+#~ msgid "%s%s: not enough memory to create new speller"
+#~ msgstr "%s%s: Nicht genug Speicher um neue Rechtschreibung zu erstellen"
 
 #~ msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
 #~ msgstr "%s%s Fehler beim Erstellen der Socket-Option \"SO_REUSEADDR\""
