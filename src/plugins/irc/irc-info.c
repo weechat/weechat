@@ -568,7 +568,7 @@ irc_info_get_infolist_cb (void *data, const char *infolist_name,
 }
 
 /*
- * Hooks info, infolist, hdata IRC plugin.
+ * Hooks info, infolist and hdata for IRC plugin.
  */
 
 void
