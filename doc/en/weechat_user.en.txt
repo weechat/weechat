@@ -1400,7 +1400,7 @@ To learn more about plugin or script development (through API), please read
 Plugins in WeeChat
 ~~~~~~~~~~~~~~~~~~
 
-A plugin is dynamic library, written in C and compiled, which is loaded by
+A plugin is a dynamic library, written in C and compiled, which is loaded by
 WeeChat.
 Under GNU/Linux, the file has ".so" extension, ".dll" under Windows.
 
