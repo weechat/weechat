@@ -89,6 +89,11 @@ relay_weechat_protocol_get_buffer (const char *arg)
 
 /*
  * Callback for command "init" (from client).
+ *
+ * Message looks like:
+ *   init password=mypass
+ *   init password=mypass,compression=gzip
+ *   init password=mypass,compression=off
  */
 
 RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
@@ -132,6 +137,10 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
 
 /*
  * Callback for command "hdata" (from client).
+ *
+ * Message looks like:
+ *   hdata buffer:gui_buffers(*) number,name,type,nicklist,title
+ *   hdata buffer:gui_buffers(*)/own_lines/first_line(*)/data date,displayed,prefix,message
  */
 
 RELAY_WEECHAT_PROTOCOL_CALLBACK(hdata)
@@ -154,6 +163,9 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(hdata)
 
 /*
  * Callback for command "info" (from client).
+ *
+ * Message looks like:
+ *   info version
  */
 
 RELAY_WEECHAT_PROTOCOL_CALLBACK(info)
@@ -180,6 +192,9 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(info)
 
 /*
  * Callback for command "infolist" (from client).
+ *
+ * Message looks like:
+ *   infolist buffer
  */
 
 RELAY_WEECHAT_PROTOCOL_CALLBACK(infolist)
@@ -214,6 +229,10 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(infolist)
 
 /*
  * Callback for command "nicklist" (from client).
+ *
+ * Message looks like:
+ *   nicklist irc.freenode.#weechat
+ *   nicklist 0x12345678
  */
 
 RELAY_WEECHAT_PROTOCOL_CALLBACK(nicklist)
@@ -245,6 +264,11 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(nicklist)
 
 /*
  * Callback for command "input" (from client).
+ *
+ * Message looks like:
+ *   input core.weechat /help filter
+ *   input irc.freenode.#weechat hello guys!
+ *   input 0x12345678 hello guys!
  */
 
 RELAY_WEECHAT_PROTOCOL_CALLBACK(input)
@@ -636,6 +660,11 @@ relay_weechat_protocol_signal_upgrade_cb (void *data, const char *signal,
 
 /*
  * Callback for command "sync" (from client).
+ *
+ * Message looks like:
+ *   sync
+ *   sync * buffer
+ *   sync irc.freenode.#weechat buffer,nicklist
  */
 
 RELAY_WEECHAT_PROTOCOL_CALLBACK(sync)
@@ -710,6 +739,11 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(sync)
 
 /*
  * Callback for command "desync" (from client).
+ *
+ * Message looks like:
+ *   desync
+ *   desync * nicklist
+ *   desync irc.freenode.#weechat buffer,nicklist
  */
 
 RELAY_WEECHAT_PROTOCOL_CALLBACK(desync)
@@ -795,6 +829,9 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(desync)
 
 /*
  * Callback for command "test" (from client).
+ *
+ * Message looks like:
+ *   test
  */
 
 RELAY_WEECHAT_PROTOCOL_CALLBACK(test)
@@ -871,6 +908,9 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(test)
 
 /*
  * Callback for command "quit" (from client).
+ *
+ * Message looks like:
+ *   test
  */
 
 RELAY_WEECHAT_PROTOCOL_CALLBACK(quit)
