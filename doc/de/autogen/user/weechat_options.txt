@@ -284,7 +284,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.completion.default_template]] *weechat.completion.default_template*
-** Beschreibung: `Standardvorlage für die automatische Vervollständigung (in der Dokumentation finden Sie die vorgegebenen Codes und Werte)`
+** Beschreibung: `default completion template (please see documentation for template codes and values: plugin API reference, function "weechat_hook_command")`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%(nicks)|%(irc_channels)"`)
 

@@ -2690,7 +2690,8 @@ config_weechat_init_options ()
         weechat_config_file, ptr_section,
         "default_template", "string",
         N_("default completion template (please see documentation for template "
-           "codes and values)"),
+           "codes and values: plugin API reference, function "
+           "\"weechat_hook_command\")"),
         NULL, 0, 0, "%(nicks)|%(irc_channels)", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL);
     config_completion_nick_add_space = config_file_new_option (

@@ -284,7 +284,7 @@
 ** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_weechat.completion.default_template]] *weechat.completion.default_template*
-** description: `modèle de complétion par défaut (merci de consulter la documentation pour les codes et valeurs du modèle)`
+** description: `modèle de complétion par défaut (merci de consulter la documentation pour les codes et valeurs du modèle: Référence API extension, fonction "weechat_hook_command")`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"%(nicks)|%(irc_channels)"`)
 

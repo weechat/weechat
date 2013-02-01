@@ -284,7 +284,7 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_weechat.completion.default_template]] *weechat.completion.default_template*
-** 説明: `デフォルトの補完テンプレート (テンプレートコードと値のドキュメントを参照)`
+** 説明: `default completion template (please see documentation for template codes and values: plugin API reference, function "weechat_hook_command")`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"%(nicks)|%(irc_channels)"`)
 
