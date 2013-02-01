@@ -877,7 +877,11 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(test)
 
         /* pointer */
         relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_POINTER);
-        relay_weechat_msg_add_pointer (msg, &msg);
+        relay_weechat_msg_add_pointer (msg, (void *)0x1234abcd);
+
+        /* NULL pointer */
+        relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_POINTER);
+        relay_weechat_msg_add_pointer (msg, NULL);
 
         /* time */
         relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_TIME);
