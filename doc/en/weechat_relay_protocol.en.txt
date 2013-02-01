@@ -354,6 +354,46 @@ desync irc.freenode.#weechat nicklist
 desync irc.freenode.#weechat
 ----------------------------------------
 
+[[command_test]]
+test
+~~~~
+
+Test command: WeeChat will reply with various different objects.
+
+This command is useful to test the decoding of objects rerutned by WeeChat.
+
+Syntax:
+
+----------------------------------------
+test
+----------------------------------------
+
+Example:
+
+----------------------------------------
+test
+----------------------------------------
+
+Returned objects (in this order):
+
+[width="60%",cols="^3,3m,7m",options="header"]
+|=====================================================
+| Type              | Type (in message) | Value
+| char              | chr               | 65 ("A")
+| integer           | int               | 123456
+| long              | lon               | 1234567890
+| string            | str               | "a string"
+| string            | str               | ""
+| string            | str               | NULL
+| buffer            | buf               | "buffer"
+| buffer            | buf               | NULL
+| pointer           | ptr               | 0x1234abcd
+| pointer           | ptr               | NULL
+| time              | tim               | 1321993456
+| array of strings  | arr str           | { "abc", "de" }
+| array of integers | arr int           | { 123, 456, 789 }
+|=====================================================
+
 [[command_quit]]
 quit
 ~~~~
@@ -626,7 +666,7 @@ Example:
 length '1'  'a'  '2'  'b'  '3'  'c'  '4'  'd'  '5'
 .......................................
 
-A 'NULL' pointer has value 0:
+A 'NULL' pointer has a length of zero:
 
 .......................................
 ┌────╥────┐
