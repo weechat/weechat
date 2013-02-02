@@ -1,0 +1,5 @@
+# files/directories excluded from tarballs
+
+.git*         export-ignore
+debian        export-ignore
+weechat.spec  export-ignore
