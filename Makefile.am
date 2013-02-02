@@ -57,7 +57,6 @@ EXTRA_DIST = CMakeLists.txt \
              cmake/cmake_uninstall.cmake.in \
              po/CMakeLists.txt \
              po/srcfiles.cmake \
-             weechat.spec \
              weechat_icon_32.png \
              weechat.pc.in
 
