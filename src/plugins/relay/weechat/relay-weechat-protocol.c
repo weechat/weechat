@@ -88,6 +88,46 @@ relay_weechat_protocol_get_buffer (const char *arg)
 }
 
 /*
+ * Checks if buffer is synchronized, according to flags.
+ *
+ * First search buffer with full_name in hashtable "buffers_sync".
+ * If buffer is not found, search "*" (which means "all buffers").
+ *
+ * The "flags" argument can be a combination (logical OR) of:
+ *   RELAY_WEECHAT_PROTOCOL_SYNC_BUFFER
+ *   RELAY_WEECHAT_PROTOCOL_SYNC_NICKLIST
+ *
+ * Returns:
+ *   1: buffer is synchronized for these flags
+ *   0: buffer is NOT synchronized for these flags
+ */
+
+int
+relay_weechat_protocol_buffer_is_sync (struct t_relay_client *ptr_client,
+                                       const char *full_name, int flags)
+{
+    int *ptr_flags;
+
+    /* search buffer using "full_name" */
+    ptr_flags = weechat_hashtable_get (RELAY_WEECHAT_DATA(ptr_client, buffers_sync),
+                                       full_name);
+    if (ptr_flags)
+        return ((*ptr_flags) & flags) ? 1 : 0;
+
+    /* search buffer "*" */
+    ptr_flags = weechat_hashtable_get (RELAY_WEECHAT_DATA(ptr_client, buffers_sync),
+                                       "*");
+    if (ptr_flags)
+        return ((*ptr_flags) & flags) ? 1 : 0;
+
+    /*
+     * buffer not found at all in hashtable (neither name, neitner "*")
+     * => it is NOT synchronized
+     */
+    return 0;
+}
+
+/*
  * Callback for command "init" (from client).
  *
  * Message looks like:
@@ -463,12 +503,11 @@ relay_weechat_protocol_signal_buffer_cb (void *data, const char *signal,
         if (!ptr_buffer || (relay_raw_buffer && (ptr_buffer == relay_raw_buffer)))
             return WEECHAT_RC_OK;
 
-        /* check if buffer is synchronized (== able to receive events) */
-        if (weechat_hashtable_has_key (RELAY_WEECHAT_DATA(ptr_client, buffers_sync),
-                                       "*")
-            || weechat_hashtable_has_key (RELAY_WEECHAT_DATA(ptr_client, buffers_sync),
-                                          weechat_buffer_get_string (ptr_buffer,
-                                                                     "full_name")))
+        /* check if buffer is synchronized with flag "buffer" */
+        if (relay_weechat_protocol_buffer_is_sync (ptr_client,
+                                                   weechat_buffer_get_string (ptr_buffer,
+                                                                              "full_name"),
+                                                   RELAY_WEECHAT_PROTOCOL_SYNC_BUFFER))
         {
             msg = relay_weechat_msg_new (str_signal);
             if (msg)
@@ -591,6 +630,8 @@ relay_weechat_protocol_signal_nicklist_cb (void *data, const char *signal,
 {
     struct t_relay_client *ptr_client;
     char *pos, *str_buffer;
+    int rc;
+    long unsigned int buffer;
 
     /* make C compiler happy */
     (void) signal;
@@ -607,16 +648,28 @@ relay_weechat_protocol_signal_nicklist_cb (void *data, const char *signal,
     str_buffer = weechat_strndup (signal_data, pos - (char *)signal_data);
     if (!str_buffer)
         return WEECHAT_RC_OK;
-    weechat_hashtable_set (RELAY_WEECHAT_DATA(ptr_client, buffers_nicklist),
-                           str_buffer, "1");
-    free (str_buffer);
 
-    if (RELAY_WEECHAT_DATA(ptr_client, hook_timer_nicklist))
+    /* check if buffer is synchronized with flag "nicklist" */
+    rc = sscanf (str_buffer, "%lx", &buffer);
+    if ((rc != EOF) && (rc != 0))
     {
-        weechat_unhook (RELAY_WEECHAT_DATA(ptr_client, hook_timer_nicklist));
-        RELAY_WEECHAT_DATA(ptr_client, hook_timer_nicklist) = NULL;
+        if (relay_weechat_protocol_buffer_is_sync (ptr_client,
+                                                   weechat_buffer_get_string ((void *)buffer,
+                                                                              "full_name"),
+                                                   RELAY_WEECHAT_PROTOCOL_SYNC_NICKLIST))
+        {
+            weechat_hashtable_set (RELAY_WEECHAT_DATA(ptr_client, buffers_nicklist),
+                                   str_buffer, "1");
+            if (RELAY_WEECHAT_DATA(ptr_client, hook_timer_nicklist))
+            {
+                weechat_unhook (RELAY_WEECHAT_DATA(ptr_client, hook_timer_nicklist));
+                RELAY_WEECHAT_DATA(ptr_client, hook_timer_nicklist) = NULL;
+            }
+            relay_weechat_hook_timer_nicklist (ptr_client);
+        }
     }
-    relay_weechat_hook_timer_nicklist (ptr_client);
+
+    free (str_buffer);
 
     return WEECHAT_RC_OK;
 }
@@ -675,7 +728,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(sync)
 
     RELAY_WEECHAT_PROTOCOL_MIN_ARGS(0);
 
-    buffers = weechat_string_split ((argc > 0) ? argv[1] : "*", ",", 0, 0,
+    buffers = weechat_string_split ((argc > 0) ? argv[0] : "*", ",", 0, 0,
                                     &num_buffers);
     if (buffers)
     {
@@ -683,7 +736,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(sync)
             RELAY_WEECHAT_PROTOCOL_SYNC_NICKLIST;
         if (argc > 1)
         {
-            flags = weechat_string_split (argv[2], ",", 0, 0, &num_flags);
+            flags = weechat_string_split (argv[1], ",", 0, 0, &num_flags);
             if (flags)
             {
                 add_flags = 0;
@@ -707,7 +760,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(sync)
             full_name = NULL;
             if (strcmp (buffers[i], "*") == 0)
             {
-                full_name = strdup ("*");
+                full_name = strdup (buffers[i]);
             }
             else
             {
@@ -754,7 +807,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(desync)
 
     RELAY_WEECHAT_PROTOCOL_MIN_ARGS(0);
 
-    buffers = weechat_string_split ((argc > 0) ? argv[1] : "*", ",", 0, 0,
+    buffers = weechat_string_split ((argc > 0) ? argv[0] : "*", ",", 0, 0,
                                     &num_buffers);
     if (buffers)
     {
@@ -762,7 +815,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(desync)
             RELAY_WEECHAT_PROTOCOL_SYNC_NICKLIST;
         if (argc > 1)
         {
-            flags = weechat_string_split (argv[2], ",", 0, 0, &num_flags);
+            flags = weechat_string_split (argv[1], ",", 0, 0, &num_flags);
             if (flags)
             {
                 sub_flags = 0;
@@ -786,14 +839,16 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(desync)
             full_name = NULL;
             if (strcmp (buffers[i], "*") == 0)
             {
-                full_name = strdup ("*");
+                full_name = strdup (buffers[i]);
             }
             else
             {
                 ptr_buffer = relay_weechat_protocol_get_buffer (buffers[i]);
                 if (ptr_buffer)
+                {
                     full_name = strdup (weechat_buffer_get_string (ptr_buffer,
                                                                    "full_name"));
+                }
             }
             if (full_name)
             {
