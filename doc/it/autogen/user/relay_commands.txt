@@ -2,8 +2,8 @@
 [command]*`relay`* controllo relay::
 ........................................
 /relay  list|listfull|listrelay
-        add [ipv4.][ipv6.][ssl.]<protocol.name> <port>
-        del [ipv4.][ipv6.][ssl.]<protocol.name>
+        add [ipv4.][ipv6.][ssl.]<protocollo.nome> <porta>
+        del [ipv4.][ipv6.][ssl.]<protocollo.nome>
         raw
         sslcertkey
 

@@ -55,7 +55,7 @@ Senza argomento, il comando mostra la lista dei ban per il canale corrente.
 [[command_irc_connect]]
 [command]*`connect`* connette ad uno o più server IRC::
 ........................................
-/connect  <server> [<server>...] [-<option>[=<value>]] [-no<option>] [-nojoin] [-switch]
+/connect  <server> [<server>...] [-<opzione>[=<valore>]] [-no<option>] [-nojoin] [-switch]
           -all|-auto|-open [-nojoin] [-switch]
 
     server: server name, which can be:
@@ -213,16 +213,16 @@ nick: nick
 [[command_irc_join]]
 [command]*`join`* entra in un canale::
 ........................................
-/join  [-noswitch] [-server <server>] [<channel1>[,<channel2>...]] [<key1>[,<key2>...]]
+/join  [-noswitch] [-server <server>] [<canale1>[,<canale2>...]] [<chiave1>[,<chiave2>...]]
 
--noswitch: do not switch to new buffer
-   server: send to this server (internal name)
-  channel: channel name to join
-      key: key to join the channel (channels with a key must be the first in list)
+-noswitch: non passare al nuovo buffer
+   server: invia a questo server (nome interno)
+   canale: nome del canale in cui entrare
+   chiave: chiave per entrare nel canale (i canali con una chiave devono essere primi nella lista)
 
-Examples:
+Esempi:
   /join #weechat
-  /join #protectedchan,#weechat key
+  /join #canaleprotetto,#weechat chiave
   /join -server freenode #weechat
   /join -noswitch #weechat
 ........................................

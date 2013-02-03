@@ -1,6 +1,6 @@
 [width="100%",cols="^1,^2,5,5,5,5",options="header"]
 |========================================
-| Plugin | Nome | Descrizione | Variabili | Update allowed | Liste
+| Plugin | Nome | Descrizione | Variabili | Aggiornamento consentito | Liste
 
 | guile | guile_script | elenco degli script |
   'filename' (string) +
@@ -276,7 +276,7 @@
   'last_script' +
   'scripts'
 
-| script | script_script | scripts from repository |
+| script | script_script | script dal repository |
   'name' (string) +
   'name_with_extension' (string) +
   'language' (integer) +

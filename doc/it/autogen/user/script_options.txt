@@ -9,17 +9,17 @@
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `white`)
 
 * [[option_script.color.status_installed]] *script.color.status_installed*
-** descrizione: `color for status "installed" ("i")`
+** descrizione: `colore per lo status "installato" ("i")`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `lightcyan`)
 
 * [[option_script.color.status_obsolete]] *script.color.status_obsolete*
-** descrizione: `color for status "obsolete" ("N")`
+** descrizione: `colore per lo status "obsoleto" ("N")`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `lightmagenta`)
 
 * [[option_script.color.status_popular]] *script.color.status_popular*
-** descrizione: `color for status "popular" ("*")`
+** descrizione: `colore per lo status "popolare" ("*")`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `yellow`)
 
@@ -29,17 +29,17 @@
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `lightgreen`)
 
 * [[option_script.color.status_unknown]] *script.color.status_unknown*
-** descrizione: `color for status "unknown" ("?")`
+** descrizione: `colore per lo status "sconosciuto" ("?")`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `lightred`)
 
 * [[option_script.color.text]] *script.color.text*
-** descrizione: `text color in script buffer`
+** descrizione: `colore del testo nel buffer degli script`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `default`)
 
 * [[option_script.color.text_bg]] *script.color.text_bg*
-** descrizione: `background color in script buffer`
+** descrizione: `colore di sfondo nel buffer degli script`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `default`)
 
@@ -49,7 +49,7 @@
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `red`)
 
 * [[option_script.color.text_date]] *script.color.text_date*
-** descrizione: `text color of dates in script buffer`
+** descrizione: `colore del testo delle date nel buffer degli script`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `default`)
 
@@ -59,12 +59,12 @@
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `white`)
 
 * [[option_script.color.text_delimiters]] *script.color.text_delimiters*
-** descrizione: `text color of delimiters in script buffer`
+** descrizione: `colore del testo dei delimitatori nel buffer degli script`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `darkgray`)
 
 * [[option_script.color.text_description]] *script.color.text_description*
-** descrizione: `text color of description in script buffer`
+** descrizione: `colore del testo della descrizione nel buffer degli script`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `default`)
 
@@ -74,7 +74,7 @@
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `white`)
 
 * [[option_script.color.text_extension]] *script.color.text_extension*
-** descrizione: `text color of extension in script buffer`
+** descrizione: `colore del testo dell'estensione nel buffer degli script`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `default`)
 
@@ -84,7 +84,7 @@
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `white`)
 
 * [[option_script.color.text_name]] *script.color.text_name*
-** descrizione: `text color of script name in script buffer`
+** descrizione: `colore del testo del nome dello script nel buffer degli script`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `cyan`)
 
@@ -94,12 +94,12 @@
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `lightcyan`)
 
 * [[option_script.color.text_selected]] *script.color.text_selected*
-** descrizione: `text color for selected line in script buffer`
+** descrizione: `colore del testo della riga selezionata nel buffer degli script`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `white`)
 
 * [[option_script.color.text_tags]] *script.color.text_tags*
-** descrizione: `text color of tags in script buffer`
+** descrizione: `colore del testo dei tag nel buffer degli script`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `brown`)
 
@@ -109,12 +109,12 @@
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `yellow`)
 
 * [[option_script.color.text_version]] *script.color.text_version*
-** descrizione: `text color of version in script buffer`
+** descrizione: `colore del testo della versione nel buffer degli script`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `magenta`)
 
 * [[option_script.color.text_version_loaded]] *script.color.text_version_loaded*
-** descrizione: `text color of version loaded in script buffer`
+** descrizione: `colore del testo della versione caricata nel buffer degli script`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `default`)
 
@@ -134,17 +134,17 @@
 ** valori: qualsiasi stringa (valore predefinito: `"%s %n %V %v %u | %d | %t"`)
 
 * [[option_script.look.diff_color]] *script.look.diff_color*
-** descrizione: `colorize output of diff`
+** descrizione: `colora l'output di diff`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
 * [[option_script.look.diff_command]] *script.look.diff_command*
-** descrizione: `command used to show differences between script installed and the new version in repository ("auto" = auto detect diff command (git or diff), empty value = disable diff, other string = name of command, for example "diff")`
+** descrizione: `comando usato per mostrare le differenze tra lo script installato e la nuova versione nel repository ("auto" = rileva automaticamente il comando diff (git o diff), valore vuoto = disabilita diff, altra stringa = nome del comando, ad esempio "diff")`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"auto"`)
 
 * [[option_script.look.display_source]] *script.look.display_source*
-** descrizione: `display source code of script on buffer with detail on a script (script is downloaded in a temporary file when detail on script is displayed)`
+** descrizione: `mostra il codice sorgente dello script sul buffer ed i relativi dettagli (lo script viene scaricato in un file temporaneo)`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
@@ -174,7 +174,7 @@
 ** valori: -1 .. 525600 (valore predefinito: `60`)
 
 * [[option_script.scripts.dir]] *script.scripts.dir*
-** descrizione: `local cache directory for scripts`
+** descrizione: `directory locale della cache per gli script`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"%h/script"`)
 
@@ -184,7 +184,7 @@
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
 * [[option_script.scripts.url]] *script.scripts.url*
-** descrizione: `URL for file with list of scripts`
+** descrizione: `URL per il file con l'elenco degli script`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"http://www.weechat.org/files/plugins.xml.gz"`)
 

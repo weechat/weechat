@@ -40,7 +40,7 @@
 
 | weechat | inactivity | inattività della tastiera (secondi) | -
 
-| weechat | locale | locale used for translating messages | -
+| weechat | locale | locale usato per la traduzione dei messaggi | -
 
 | weechat | version | versione di WeeChat | -
 

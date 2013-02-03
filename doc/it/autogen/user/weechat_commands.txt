@@ -11,12 +11,12 @@ messaggio: messaggio di assenza (se non specificato, lo stato di assenza viene r
 [command]*`bar`* gestione delle barre::
 ........................................
 /bar  list|listfull|listitems
-      add <name> <type>[,<condition>] <position> <size> <separator> <item1>[,<item2>...]
+      add <nome> <type>[,<condizione>] <posizione> <dimensione> <separatore> <item1>[,<item2>...]
       default [input|title|status|nicklist]
-      del <name>|-all
-      set <name> <option> <value>
-      hide|show|toggle <name>
-      scroll <name> <window> <scroll_value>
+      del <nome>|-all
+      set <nome> <opzione> <valore>
+      hide|show|toggle <nome>
+      scroll <nome> <finestra> <scroll_value>
 
          list: list all bars
      listfull: list all bars (verbose)
@@ -201,10 +201,10 @@ infolists: mostra informazioni sulle liste info
 ........................................
 
 [[command_weechat_eval]]
-[command]*`eval`* evaluate expression and send result to buffer::
+[command]*`eval`* analizza l'espressione e invia il risultato al buffer::
 ........................................
-/eval  [-n] <expression>
-       [-n] <expression1> <operator> <expression2>
+/eval  [-n] <espressione>
+       [-n] <espressione1> <operatore> <espressione2>
 
         -n: display result without sending it to buffer (debug mode)
 expression: expression to evaluate, variables with format ${variable} are replaced (see below)
@@ -604,29 +604,29 @@ Senza argomento, vengono salvati tutti i file (WeeChat e plugin).
 [[command_weechat_set]]
 [command]*`set`* imposta le opzioni di configurazione::
 ........................................
-/set  [<option> [<value>]]
-      diff [<option> [<option>...]]
+/set  [<opzione> [<valore>]]
+      diff [<opzione> [<opzione>...]]
 
-option: name of an option (can start or end with '*' to list many options)
- value: new value for option
-  diff: display only changed options
+opzione: nome di un'opzione (può iniziare o terminare con '*' per elencare più opzioni)
+ valore: nuovo valore per l'opzione
+   diff: mostra solo le opzioni modificate
 
-New value can be, according to variable type:
-  boolean: on, off or toggle
-  integer: number, ++number or --number
-   string: any string ("" for empty string)
-    color: color name, ++number or --number
+Il nuovo valore può essere, a seconda del tipo di variabile:
+  booleano: on, off o toggle
+  intero  : numero, ++numero o --numero
+  stringa : qualsiasi stringa ("" per una stringa vuota)
+  colore  : nome colore, ++numeero o --numero
 
-For all types, you can use null to remove option value (undefined value). This works only for some special plugin variables.
+Per tutti i tipi, è possibile usare null per rimuovere il valore dell'opzione (valore non definito). Ciò funziona solo per alcune variabili speciali dei plugin.
 
-Examples:
-  display options about highlight:
+Esempi:
+  mostra le opzioni relative alle notifiche:
     /set *highlight*
-  add a word to highlight:
+  aggiunge una parola alle notifiche:
     /set weechat.look.highlight "word"
-  display changed options:
+  mostra le opzioni modificate:
     /set diff
-  display changed options in irc plugin:
+  mostra le opzioni modificate nel plugin irc:
     /set diff irc.*
 ........................................
 
@@ -649,7 +649,7 @@ Esempi:
 [[command_weechat_upgrade]]
 [command]*`upgrade`* aggiorna WeeChat senza disconnettere dai server::
 ........................................
-/upgrade  [<path_to_binary>|-quit]
+/upgrade  [<path_del_binario>|-quit]
 
 path_to_binary: path to WeeChat binary (default is current binary)
          -quit: close *ALL* connections, save session and quit WeeChat, which makes possible a delayed restoration (see below)

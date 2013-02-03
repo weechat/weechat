@@ -1,5 +1,5 @@
 [[command_script_script]]
-[command]*`script`* WeeChat scripts manager::
+[command]*`script`* Gestore script di WeeChat::
 ........................................
 /script  list [-o|-i]
          search <text>
