@@ -290,7 +290,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(input)
 }
 
 /*
- * Callback for signals "buffers_*".
+ * Callback for signals "buffer_*".
  */
 
 int
