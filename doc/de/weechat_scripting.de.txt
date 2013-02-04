@@ -163,8 +163,8 @@ weechat::print "" "Hallo, von einem tcl Skript!"
 Laden von Skripten
 ~~~~~~~~~~~~~~~~~~
 
-// TRANSLATION MISSING
-It is recommended to use the "script" plugin to load scripts, for example:
+Es wird empfohlen die "script" Erweiterung zum Laden von Skripten zu
+nutzen, zum Beispiel:
 
 ----------------------------------------
 /script load script.py
@@ -175,8 +175,8 @@ It is recommended to use the "script" plugin to load scripts, for example:
 /script load script.scm
 ----------------------------------------
 
-// TRANSLATION MISSING
-Each language has also its own command:
+Es besteht natürlich weiterhin die Möglichkeit, individuell für jede
+Skriptsprache, den entsprechenden Befehl zu nutzen:
 
 ----------------------------------------
 /python load python/skript.py
@@ -187,8 +187,8 @@ Each language has also its own command:
 /guile load guile/skript.scm
 ----------------------------------------
 
-Um Skripten automatisch beim Start von WeeChat zu laden kann man einen Link
-in das Verzeichnis 'Skriptsprache/autoload' setzen.
+Um Skripten automatisch beim Start von WeeChat zu laden sollte man einen Link
+anlegen, der in das Verzeichnis 'Skriptsprache/autoload' zeigt.
 
 Ein Beispiel für ein Python-Skript:
 
@@ -197,10 +197,9 @@ $ cd ~/.weechat/python/autoload
 $ ln -s ../script.py
 ----------------------------------------
 
-// TRANSLATION MISSING
 [NOTE]
-When installing a script with command `/script install` the link in 'autoload'
-directory is automatically created.
+Installiert man mittels `/script install` ein Skript, dann wird automatisch
+ein Link in das entsprechende 'autoload' Verzeichnis erzeugt.
 
 [[differences_with_c_api]]
 Unterschiede zur C API
@@ -278,8 +277,7 @@ C Callbacks nutzen ein "Data" Argument welches ein Pointer ist. In der
 Skript API ist "Data" ein String der jeden Wert haben darf (es handelt sich
 nicht um einen Pointer).
 
-// TRANSLATION MISSING
-Example of callback, for each language:
+callback Beispiele, für jede Skriptsprache:
 
 * python:
 

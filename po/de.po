@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-02-01 11:12+0100\n"
+"POT-Creation-Date: 2013-02-04 08:34+0100\n"
 "PO-Revision-Date: 2013-01-20 12:07+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -1404,7 +1404,6 @@ msgstr ""
 "list || enable|disable|toggle [<name>] || add <name> <buffer>[,<buffer>...] "
 "<tags> <regex> || del <name>|-all"
 
-#, fuzzy
 msgid ""
 "   list: list all filters\n"
 " enable: enable filters (filters are enabled by default)\n"
@@ -1498,7 +1497,7 @@ msgstr ""
 "  nick_xxx (xxx ist durch den Nicknamen zu ersetzen), prefix_nick_ccc (ccc "
 "ist die Farbe mit der der Nick dargestellt wird),\n"
 "  irc_xxx (xxx ist durch einen IRC-Befehl/-Nummer zu ersetzen, siehe /server "
-"raw)\n"
+"raw oder /debug tags)\n"
 "  irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, "
 "irc_smart_filter, away_info.\n"
 "Mittels \"/debug tags\" kann man sich die Tags jeder einzelnen Zeile "
@@ -4272,15 +4271,13 @@ msgstr "Aspell wurde deaktiviert"
 msgid "aspell plugin configuration"
 msgstr "Konfiguration für Aspell-Erweiterung"
 
-#, fuzzy
 msgid ""
 "enable|disable|toggle || listdict || setdict <dict>[,<dict>...] || deldict "
 "|| addword [<dict>] <word>"
 msgstr ""
-"enable|disable|toggle || listdict || setdict <lang> || deldict || addword "
-"[<lang>] <word>"
+"enable|disable|toggle || listdict || setdict <dict>[,<dict>...] || deldict "
+"|| addword [<dict>] <word>"
 
-#, fuzzy
 msgid ""
 "  enable: enable aspell\n"
 " disable: disable aspell\n"
@@ -4306,7 +4303,8 @@ msgstr ""
 "  toggle: Aspell Funktionalität umschalten\n"
 "listdict: die, auf dem System, installierten Wörterbücher werden "
 "aufgelistet\n"
-" setdict: Wörterbuch für den aktuellen Buffer einstellen\n"
+" setdict: Wörterbuch für den aktuellen Buffer einstellen (mehrere "
+"Wörterbücher müssen durch Kommata getrennt werden)\n"
 " deldict: Wörterbuch für den aktuellen Buffer entfernen\n"
 " addword: fügt ein Wort in das persönliche Wörterbuch von Aspell hinzu\n"
 "\n"
@@ -4321,13 +4319,11 @@ msgstr ""
 "Die Standardtastaturbelegung zum Umschalten der Aspell Funktionalität lautet "
 "alt-s."
 
-#, fuzzy
 msgid "list of all languages supported by aspell"
-msgstr "Liste der zu nutzenden Übersetzungen für Aspell"
+msgstr "Liste aller Sprachen die durch Aspell unterstützt werden"
 
-#, fuzzy
 msgid "list of aspell installed dictionaries"
-msgstr "Auflistung der installierten Skripten (vom Repositorium)"
+msgstr "Auflistung der installierten Wörterbücher"
 
 msgid "comma separated list of dictionaries to use on this buffer"
 msgstr ""
@@ -4402,16 +4398,17 @@ msgstr ""
 "Mindestlänge für ein Wort, welches auf Rechtschreibung überprüft werden soll "
 "(bei 0 werden alle Wörter überprüft)"
 
-#, fuzzy
 msgid "comma-separated list of dictionaries used in buffer"
 msgstr ""
 "eine durch Kommata getrennte Liste von Wörterbüchern, die in diesem Buffer "
-"genutzt werden sollen"
+"genutzt wird"
 
 msgid ""
 "buffer pointer (\"0x12345678\") or buffer full name (\"irc.freenode.#weechat"
 "\")"
 msgstr ""
+"Buffer-Pointer (\"0x12345678\") oder der vollständige Buffername (\"irc."
+"freenode.#weechat\")"
 
 #, c-format
 msgid "%s: warning: dictionary \"%s\" is not available on your system"
@@ -4588,9 +4585,10 @@ msgstr "%s: Pipe ist geöffnet"
 msgid "%s%s: unable to open pipe (%s) for reading"
 msgstr "%s%s: Pipe (%s) kann nicht zum Lesen geöffnet werden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to create pipe for remote control (%s): error %d %s"
-msgstr "%s%s: Pipe kann nicht zur Fernsteuerung (%s) angelegt werden"
+msgstr ""
+"%s%s: Pipe kann nicht zur Fernsteuerung (%s) angelegt werden: Fehler %d %s"
 
 #, c-format
 msgid "%s: pipe closed"
@@ -8714,17 +8712,19 @@ msgstr "Relay RAW Nachrichten"
 msgid "%s: socket closed for %s (port %d)"
 msgstr "%s: Socket wurde für %s (Port %d) geschlossen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot accept client on port %d (%s): error %d %s"
-msgstr "%s%s: Der Client wird an dem Port %d (%s) nicht akzeptiert"
+msgstr "%s%s: Der Client wird am Port %d (%s) nicht akzeptiert: Fehler %d %s"
 
 #, c-format
 msgid "%s%s: IP address \"%s\" not allowed for relay"
 msgstr "%s%s: IP Adresse \"%s\" für Relay nicht gültig"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot set socket option \"%s\" to %d: error %d %s"
-msgstr "%s%s: Socket kann nicht erstellt werden: Fehler %d %s"
+msgstr ""
+"%s%s: Die Socket-Option \"%s\" kann nicht auf %d geändert werden: Fehler %d "
+"%s"
 
 #, c-format
 msgid "%s%s: cannot create socket: error %d %s"
@@ -8734,13 +8734,13 @@ msgstr "%s%s: Socket kann nicht erstellt werden: Fehler %d %s"
 msgid "%s%s: try /set relay.network.ipv6 off"
 msgstr "%s%s: versuche /set relay.network.ipv6 off"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot \"bind\" on port %d (%s): error %d %s"
-msgstr "%s%s: Fehler mit \"bind\" am Port %d (%s)"
+msgstr "%s%s: \"bind\" am Port %d (%s) nicht möglich: Fehler %d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot \"listen\" on port %d (%s): error %d %s"
-msgstr "%s%s: Der Client wird an dem Port %d (%s) nicht akzeptiert"
+msgstr "%s%s: \"listen\" an Port %d (%s) nicht möglich: Fehler %d %s"
 
 #, c-format
 msgid "%s: listening on port %d (relay: %s, %s, max %d clients)"
@@ -9057,9 +9057,11 @@ msgid ""
 msgstr ""
 "%s%s: Warnung, Pointer (\"%s\") ungültig für Funktion \"%s\" (Skript: %s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: error loading script \"%s\" (spaces or empty name not allowed)"
-msgstr "%s: Skript \"%s\" kann nicht geladen werden (Speichermangel)"
+msgstr ""
+"%s: Fehler beim Laden des Skriptes \"%s\" aufgetreten (Leerzeichen sind im "
+"Namen nicht erlaubt oder es wurde kein Name angegeben)"
 
 #, c-format
 msgid ""
@@ -9856,9 +9858,9 @@ msgstr ""
 "%s%s: Adresse für \"%s\" wurde nicht gefunden. Es wird auf die lokale IP "
 "zurückgegriffen."
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot create socket for xfer: error %d %s"
-msgstr "%s%s: Socket kann nicht erstellt werden: Fehler %d %s"
+msgstr "%s%s: Socket kann für xfer nicht erstellt werden: Fehler %d %s"
 
 #, c-format
 msgid "%s%s: cannot find available port for xfer"
@@ -10077,9 +10079,9 @@ msgstr "Transferliste"
 msgid "xfer pointer (optional)"
 msgstr "Transferpointer (optional)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to create pipe: error %d %s"
-msgstr "%s%s: Pipe kann nicht erstellt werden"
+msgstr "%s%s: Pipe kann nicht erstellt werden: Fehler %d %s"
 
 #, c-format
 msgid "%s%s: unable to read local file"
@@ -10117,14 +10119,16 @@ msgstr ""
 "%s: sende Datei an %s (%ld.%ld.%ld.%ld, %s.%s), Name: %s (lokaler Dateiname: "
 "%s), %llu Bytes (Protokoll: %s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to create socket for sending file: error %d %s"
-msgstr "%s%s: für den Dateiversand kann kein Socket erstellt werden"
+msgstr ""
+"%s%s: für den Dateiversand kann kein Socket erstellt werden. Fehler %d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to set option \"nonblock\" for socket: error %d %s"
 msgstr ""
-"%s%s: Die \"nonblock\"-Option für den Socket kann nicht festlegt werden"
+"%s%s: Die \"nonblock\"-Option für den Socket kann nicht festlegt werden: "
+"Fehler %d %s"
 
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
