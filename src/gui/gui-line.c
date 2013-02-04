@@ -431,13 +431,13 @@ gui_line_search_text (struct t_gui_line *line, const char *text,
  */
 
 int
-gui_line_match_regex (struct t_gui_line *line, regex_t *regex_prefix,
+gui_line_match_regex (struct t_gui_line_data *line_data, regex_t *regex_prefix,
                       regex_t *regex_message)
 {
     char *prefix, *message;
     int match_prefix, match_message;
 
-    if (!line || (!regex_prefix && !regex_message))
+    if (!line_data || (!regex_prefix && !regex_message))
         return 0;
 
     prefix = NULL;
@@ -446,9 +446,9 @@ gui_line_match_regex (struct t_gui_line *line, regex_t *regex_prefix,
     match_prefix = 1;
     match_message = 1;
 
-    if (line->data->prefix)
+    if (line_data->prefix)
     {
-        prefix = gui_color_decode (line->data->prefix, NULL);
+        prefix = gui_color_decode (line_data->prefix, NULL);
         if (!prefix
             || (regex_prefix && (regexec (regex_prefix, prefix, 0, NULL, 0) != 0)))
             match_prefix = 0;
@@ -459,9 +459,9 @@ gui_line_match_regex (struct t_gui_line *line, regex_t *regex_prefix,
             match_prefix = 0;
     }
 
-    if (line->data->message)
+    if (line_data->message)
     {
-        message = gui_color_decode (line->data->message, NULL);
+        message = gui_color_decode (line_data->message, NULL);
         if (!message
             || (regex_message && (regexec (regex_message, message, 0, NULL, 0) != 0)))
             match_message = 0;
@@ -489,23 +489,23 @@ gui_line_match_regex (struct t_gui_line *line, regex_t *regex_prefix,
  */
 
 int
-gui_line_match_tags (struct t_gui_line *line, int tags_count,
-                     char **tags_array)
+gui_line_match_tags (struct t_gui_line_data *line_data,
+                     int tags_count, char **tags_array)
 {
     int i, j;
 
-    if (!line)
+    if (!line_data)
         return 0;
 
-    if (line->data->tags_count == 0)
+    if (line_data->tags_count == 0)
         return 0;
 
     for (i = 0; i < tags_count; i++)
     {
-        for (j = 0; j < line->data->tags_count; j++)
+        for (j = 0; j < line_data->tags_count; j++)
         {
             /* check tag */
-            if (string_match (line->data->tags_array[j],
+            if (string_match (line_data->tags_array[j],
                               tags_array[i],
                               0))
                 return 1;
@@ -606,7 +606,7 @@ gui_line_has_highlight (struct t_gui_line *line)
      */
     if (line->data->buffer->highlight_tags_count > 0)
     {
-        if (!gui_line_match_tags (line,
+        if (!gui_line_match_tags (line->data,
                                   line->data->buffer->highlight_tags_count,
                                   line->data->buffer->highlight_tags_array))
             return 0;
@@ -723,12 +723,16 @@ gui_line_compute_prefix_max_length (struct t_gui_lines *lines)
     int prefix_length;
 
     lines->prefix_max_length = CONFIG_INTEGER(config_look_prefix_align_min);
+
     for (ptr_line = lines->first_line; ptr_line;
          ptr_line = ptr_line->next_line)
     {
-        gui_line_get_prefix_for_display (ptr_line, NULL, &prefix_length, NULL);
-        if (prefix_length > lines->prefix_max_length)
-            lines->prefix_max_length = prefix_length;
+        if (ptr_line->data->displayed)
+        {
+            gui_line_get_prefix_for_display (ptr_line, NULL, &prefix_length, NULL);
+            if (prefix_length > lines->prefix_max_length)
+                lines->prefix_max_length = prefix_length;
+        }
     }
 }
 
@@ -1071,7 +1075,7 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
         new_line->data->highlight = gui_line_has_highlight (new_line);
 
     /* check if line is filtered or not */
-    new_line->data->displayed = gui_filter_check_line (new_line);
+    new_line->data->displayed = gui_filter_check_line (new_line->data);
 
     /* add line to lines list */
     gui_line_add_to_list (buffer->own_lines, new_line);
@@ -1113,14 +1117,11 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
     }
     else
     {
-        if (!buffer->own_lines->lines_hidden)
-        {
-            buffer->own_lines->lines_hidden = 1;
-            if (buffer->mixed_lines)
-                buffer->mixed_lines->lines_hidden = 1;
-            hook_signal_send ("buffer_lines_hidden",
-                              WEECHAT_HOOK_SIGNAL_POINTER, buffer);
-        }
+        buffer->own_lines->lines_hidden++;
+        if (buffer->mixed_lines)
+            buffer->mixed_lines->lines_hidden++;
+        hook_signal_send ("buffer_lines_hidden",
+                          WEECHAT_HOOK_SIGNAL_POINTER, buffer);
     }
 
     /* add mixed line, if buffer is attched to at least one other buffer */
@@ -1238,15 +1239,12 @@ gui_line_add_y (struct t_gui_buffer *buffer, int y, const char *message)
     ptr_line->data->message = (message) ? strdup (message) : strdup ("");
 
     /* check if line is filtered or not */
-    ptr_line->data->displayed = gui_filter_check_line (ptr_line);
+    ptr_line->data->displayed = gui_filter_check_line (ptr_line->data);
     if (!ptr_line->data->displayed)
     {
-        if (!buffer->own_lines->lines_hidden)
-        {
-            buffer->own_lines->lines_hidden = 1;
-            hook_signal_send ("buffer_lines_hidden",
-                              WEECHAT_HOOK_SIGNAL_POINTER, buffer);
-        }
+        buffer->own_lines->lines_hidden++;
+        hook_signal_send ("buffer_lines_hidden",
+                          WEECHAT_HOOK_SIGNAL_POINTER, buffer);
     }
 
     ptr_line->data->refresh_needed = 1;
@@ -1492,7 +1490,11 @@ gui_line_hdata_line_data_update_cb (void *data,
         rc++;
     }
 
-    gui_buffer_ask_chat_refresh (line_data->buffer, 1);
+    if (rc > 0)
+    {
+        gui_filter_buffer (line_data->buffer, line_data);
+        gui_buffer_ask_chat_refresh (line_data->buffer, 1);
+    }
 
     return rc;
 }

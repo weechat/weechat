@@ -80,11 +80,11 @@ extern struct t_gui_line *gui_line_get_prev_displayed (struct t_gui_line *line);
 extern struct t_gui_line *gui_line_get_next_displayed (struct t_gui_line *line);
 extern int gui_line_search_text (struct t_gui_line *line, const char *text,
                                  int case_sensitive);
-extern int gui_line_match_regex (struct t_gui_line *line,
+extern int gui_line_match_regex (struct t_gui_line_data *line_data,
                                  regex_t *regex_prefix,
                                  regex_t *regex_message);
-extern int gui_line_match_tags (struct t_gui_line *line, int tags_count,
-                                char **tags_array);
+extern int gui_line_match_tags (struct t_gui_line_data *line_data,
+                                int tags_count, char **tags_array);
 extern const char *gui_line_search_tag_starting_with (struct t_gui_line *line,
                                                       const char *tag);
 extern const char *gui_line_get_nick_tag (struct t_gui_line *line);

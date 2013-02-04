@@ -1,12 +1,14 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.1-dev, 2013-02-03
+v0.4.1-dev, 2013-02-04
 
 
 Version 0.4.1 (under dev!)
 --------------------------
 
+* core: fix refresh of line after changes with hdata_update (update flag
+  "displayed" according to filters)
 * core: fix detection of python on Ubuntu Raring
 * core: fix hidden lines for messages without date when option
   weechat.history.max_buffer_lines_minutes is set (bug #38197)

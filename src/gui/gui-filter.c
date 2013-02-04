@@ -57,13 +57,13 @@ int gui_filters_enabled = 1;                       /* filters enabled?      */
  */
 
 int
-gui_filter_line_has_tag_no_filter (struct t_gui_line *line)
+gui_filter_line_has_tag_no_filter (struct t_gui_line_data *line_data)
 {
     int i;
 
-    for (i = 0; i < line->data->tags_count; i++)
+    for (i = 0; i < line_data->tags_count; i++)
     {
-        if (strcmp (line->data->tags_array[i], GUI_FILTER_TAG_NO_FILTER) == 0)
+        if (strcmp (line_data->tags_array[i], GUI_FILTER_TAG_NO_FILTER) == 0)
             return 1;
     }
 
@@ -80,7 +80,7 @@ gui_filter_line_has_tag_no_filter (struct t_gui_line *line)
  */
 
 int
-gui_filter_check_line (struct t_gui_line *line)
+gui_filter_check_line (struct t_gui_line_data *line_data)
 {
     struct t_gui_filter *ptr_filter;
     int rc;
@@ -89,7 +89,7 @@ gui_filter_check_line (struct t_gui_line *line)
     if (!gui_filters_enabled)
         return 1;
 
-    if (gui_filter_line_has_tag_no_filter (line))
+    if (gui_filter_line_has_tag_no_filter (line_data))
         return 1;
 
     for (ptr_filter = gui_filters; ptr_filter;
@@ -98,12 +98,12 @@ gui_filter_check_line (struct t_gui_line *line)
         if (ptr_filter->enabled)
         {
             /* check buffer */
-            if (gui_buffer_match_list_split (line->data->buffer,
+            if (gui_buffer_match_list_split (line_data->buffer,
                                              ptr_filter->num_buffers,
                                              ptr_filter->buffers))
             {
                 if ((strcmp (ptr_filter->tags, "*") == 0)
-                    || (gui_line_match_tags (line,
+                    || (gui_line_match_tags (line_data,
                                              ptr_filter->tags_count,
                                              ptr_filter->tags_array)))
                 {
@@ -111,7 +111,7 @@ gui_filter_check_line (struct t_gui_line *line)
                     rc = 1;
                     if (!ptr_filter->regex_prefix && !ptr_filter->regex_message)
                         rc = 0;
-                    if (gui_line_match_regex (line,
+                    if (gui_line_match_regex (line_data,
                                               ptr_filter->regex_prefix,
                                               ptr_filter->regex_message))
                     {
@@ -132,43 +132,55 @@ gui_filter_check_line (struct t_gui_line *line)
 
 /*
  * Filters a buffer, using message filters.
+ *
+ * If line_data is NULL, filters all lines in buffer.
+ * If line_data is not NULL, filters only this line_data.
  */
 
 void
-gui_filter_buffer (struct t_gui_buffer *buffer)
+gui_filter_buffer (struct t_gui_buffer *buffer,
+                   struct t_gui_line_data *line_data)
 {
     struct t_gui_line *ptr_line;
+    struct t_gui_line_data *ptr_line_data;
     struct t_gui_window *ptr_window;
     int lines_changed, line_displayed, lines_hidden;
 
     lines_changed = 0;
-    lines_hidden = 0;
+    lines_hidden = buffer->lines->lines_hidden;
 
-    buffer->lines->prefix_max_length = CONFIG_INTEGER(config_look_prefix_align_min);
+    if (!line_data)
+        buffer->lines->prefix_max_length = CONFIG_INTEGER(config_look_prefix_align_min);
 
-    for (ptr_line = buffer->lines->first_line; ptr_line;
-         ptr_line = ptr_line->next_line)
+    ptr_line = buffer->lines->first_line;
+    while (ptr_line || line_data)
     {
-        line_displayed = gui_filter_check_line (ptr_line);
+        ptr_line_data = (line_data) ? line_data : ptr_line->data;
+
+        line_displayed = gui_filter_check_line (ptr_line_data);
 
         if (line_displayed
-            && (ptr_line->data->prefix_length > buffer->lines->prefix_max_length))
+            && (ptr_line_data->prefix_length > buffer->lines->prefix_max_length))
         {
-            buffer->lines->prefix_max_length = ptr_line->data->prefix_length;
+            buffer->lines->prefix_max_length = ptr_line_data->prefix_length;
         }
 
-        /* force chat refresh if at least one line changed */
-        if (ptr_line->data->displayed != line_displayed)
+        if (ptr_line_data->displayed != line_displayed)
         {
-            gui_buffer_ask_chat_refresh (buffer, 2);
             lines_changed = 1;
+            lines_hidden += (line_displayed) ? -1 : 1;
         }
 
-        ptr_line->data->displayed = line_displayed;
+        ptr_line_data->displayed = line_displayed;
 
-        if (!line_displayed)
-            lines_hidden = 1;
+        if (line_data)
+            break;
+
+        ptr_line = ptr_line->next_line;
     }
+
+    if (line_data)
+        gui_line_compute_prefix_max_length (line_data->buffer->lines);
 
     if (buffer->lines->lines_hidden != lines_hidden)
     {
@@ -177,13 +189,16 @@ gui_filter_buffer (struct t_gui_buffer *buffer)
                           WEECHAT_HOOK_SIGNAL_POINTER, buffer);
     }
 
-    /*
-     * if status of at least one line has changed, check that a scroll in a
-     * window displaying this buffer is not on a hidden line (if this happens,
-     * use the previous displayed line as scroll)
-     */
     if (lines_changed)
     {
+        /* force a full refresh of buffer */
+        gui_buffer_ask_chat_refresh (buffer, 2);
+
+        /*
+         * check that a scroll in a window displaying this buffer is not on a
+         * hidden line (if this happens, use the previous displayed line as
+         * scroll)
+         */
         for (ptr_window = gui_windows; ptr_window;
              ptr_window = ptr_window->next_window)
         {
@@ -211,7 +226,7 @@ gui_filter_all_buffers ()
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
-        gui_filter_buffer (ptr_buffer);
+        gui_filter_buffer (ptr_buffer, NULL);
     }
 }
 

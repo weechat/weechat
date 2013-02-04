@@ -26,7 +26,7 @@
 
 /* filter structures */
 
-struct t_gui_line;
+struct t_gui_line_data;
 
 struct t_gui_filter
 {
@@ -53,7 +53,9 @@ extern int gui_filters_enabled;
 
 /* filter functions */
 
-extern int gui_filter_check_line (struct t_gui_line *line);
+extern int gui_filter_check_line (struct t_gui_line_data *line_data);
+extern void gui_filter_buffer (struct t_gui_buffer *buffer,
+                               struct t_gui_line_data *line_data);
 extern void gui_filter_all_buffers ();
 extern void gui_filter_global_enable ();
 extern void gui_filter_global_disable ();
