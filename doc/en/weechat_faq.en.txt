@@ -284,23 +284,7 @@ URL selection):
 This option may cause display bugs. If you experience such problem, you must
 turn off this option.
 
-Other solution is to use one of following scripts:
-
-urlserver.py::
-    shorten URLs with HTTP server in script
-
-urlbar.py::
-    display URLs in a bar
-
-urlgrab.py::
-    logs URLs and open them in browser
-
-url_shorten.rb::
-tinyurl.py::
-shortenurl.py::
-    shorten long URLs
-
-List of scripts about URLs: http://www.weechat.org/scripts/stable/tag/url
+Other solution is to use a script: http://www.weechat.org/scripts/stable/tag/url
 
 [[change_locale_without_quit]]
 I want to change the language used by WeeChat for messages, but without exiting WeeChat, is it possible?

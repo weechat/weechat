@@ -294,23 +294,7 @@ cela ne cassera pas la sélection d'une URL) :
 Cette option peut causer des problèmes d'affichage. Si vous rencontrez de tels
 problèmes, vous devez désactiver cette option.
 
-Une autre solution est d'utiliser l'un des scripts suivants :
-
-urlserver.py::
-    réduit les URLs avec un serveur HTTP dans le script
-
-urlbar.py::
-    affiche les URLs dans une barre
-
-urlgrab.py::
-    enregistre les URLs et les ouvre dans un navigateur
-
-url_shorten.rb::
-tinyurl.py::
-shortenurl.py::
-    réduit les URLs longs
-
-Liste des scripts manipulant des URLs :
+Une autre solution est d'utiliser un script :
 http://www.weechat.org/scripts/stable/tag/url
 
 [[change_locale_without_quit]]

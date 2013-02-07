@@ -264,23 +264,8 @@ WeeChat ≥ 0.3.6 では、"eat_newline_glitch" オプションを有効化で�
 このオプションには表示上の問題を引き起こす可能性があります。
 表示上の問題が起きた場合はこのオプションを無効化してください。
 
-その他の解決策は以下のスクリプトうちの 1 つを使うことです:
-
-urlserver.py::
-    スクリプトの持つ HTTP サーバ機能で URL を短縮
-
-urlbar.py::
-    URL をバーの中に表示
-
-urlgrab.py::
-    URL を記録してブラウザで表示
-
-url_shorten.rb::
-tinyurl.py::
-shortenurl.py::
-    長い URL を短縮
-
-URL に関するスクリプトのリスト: http://www.weechat.org/scripts/stable/tag/url
+// TRANSLATION MISSING
+Other solution is to use a script: http://www.weechat.org/scripts/stable/tag/url
 
 [[change_locale_without_quit]]
 === WeeChat が出力するメッセージの言語を、再起動せずに変更したいです。このようなことは可能ですか。 ===

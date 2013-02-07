@@ -285,23 +285,8 @@ zaznaczania urli):
 Ta opcja może spowodować pojawienie się błędów. Jeśli doświadczysz takich problemów
 wyłącz tą opcję.
 
-Innym rozwiązaniem będzie użycie któregoś z poniższych skryptów:
-
-urlserver.py::
-    skracanie URLi za pomocą serwera HTTP
-
-urlbar.py::
-    wyświetla adresy URL na pasku
-
-urlgrab.py::
-    zapisuje zapisuje URL i otwiera je w przeglądarce
-
-url_shorten.rb::
-tinyurl.py::
-shortenurl.py::
-    skraca długie adresy URL
-
-Lista skryptów do obsługi adresów URL: http://www.weechat.org/scripts/stable/tag/url
+// TRANSLATION MISSING
+Other solution is to use a script: http://www.weechat.org/scripts/stable/tag/url
 
 [[change_locale_without_quit]]
 Chcę zmienić język komunikatów wyświetlanych przez WeeChat, ale bez jego zamykania, czy jest to możliwe?

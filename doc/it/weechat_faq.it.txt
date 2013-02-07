@@ -292,23 +292,8 @@ visualizzata (non interferisce con la selezione delle url):
 Questa opzione può causare bug di visualizzazione. Se si dovessero verificare
 tali problemi, è necessario disabilitare questa opzione.
 
-Una soluzione alternativa è l'uso di uno dei seguenti script:
-
-urlserver.py::
-    abbrevia gli URL con il server HTTP nello script
-
-urlbar.py::
-    visualizza URL in una barra
-
-urlgrab.py::
-    tiene traccia degli URL e li apre nel browser
-
-url_shorten.rb::
-tinyurl.py::
-shortenurl.py::
-    abbrevia URL lunghi
-
-Elenco di script a proposito di URL: http://www.weechat.org/scripts/stable/tag/url
+// TRANSLATION MISSING
+Other solution is to use a script: http://www.weechat.org/scripts/stable/tag/url
 
 [[change_locale_without_quit]]
 Voglio cambiare la lingua utilizzata da WeeChat per i messaggi, ma senza uscire da WeeChat, è possibile?
