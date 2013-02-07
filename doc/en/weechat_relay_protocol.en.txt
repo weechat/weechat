@@ -282,42 +282,65 @@ input irc.freenode.#weechat hello guys!
 sync
 ~~~~
 
+_Updated in version 0.4.1._
+
 Synchronize one or more buffers, to get updates.
+
+[IMPORTANT]
+It is recommended to send this command immediately after you asked
+data for buffers (lines, ...). It can be send in same message (after a new
+line).
 
 Syntax:
 
 ----------------------------------------
-sync [<buffer>[,<buffer>...] <options>]
+sync [<buffer>[,<buffer>...] <option>[,<option>...]]
 ----------------------------------------
 
 Arguments:
 
 * 'buffer': pointer ('0x12345') or full name of buffer (for example:
-  'core.weechat' or 'irc.freenode.#weechat'); name '*' can be used to
+  'core.weechat' or 'irc.freenode.#weechat'); name "*" can be used to
   specify all buffers
 * 'options': one of following keywords, separated by commas (default is
-  'buffer,nicklist'):
-** 'buffer': receive signals about buffer (new lines, buffer renamed/moved/...)
+  'buffers,upgrade,buffer,nicklist' for "*" and 'buffer,nicklist' for a buffer):
+** 'buffers': receive signals about buffers (opened/closed, moved, renamed,
+   merged/unmerged, renamed); this can be used only with name "*"
+   (_new in version 0.4.1_)
+** 'upgrade': receive signals about WeeChat upgrade (upgrade, upgrade ended);
+   this can be used only with name "*"
+   (_new in version 0.4.1_)
+** 'buffer': receive signals about buffer (new lines, type changed, title
+    changed, local variable added/removed, and same signals as 'buffers' for the
+    buffer) (_updated in version 0.4.1_)
 ** 'nicklist': receive nicklist after changes
 
 Examples:
 
 ----------------------------------------
-# synchronize all buffers with nicklist (the 3 commands are equivalent)
+# synchronize all buffers with nicklist
+# (the 3 commands are equivalent, but the first one is recommended
+# for compatibility with future versions)
 sync
 sync *
-sync * buffer,nicklist
+sync * buffers,upgrade,buffer,nicklist
 
 # synchronize core buffer
 sync core.buffer
 
 # synchronize #weechat channel, without nicklist
 sync irc.freenode.#weechat buffer
+
+# get general signals + all signals for #weechat channel
+sync * buffers,upgrade
+sync irc.freenode.#weechat
 ----------------------------------------
 
 [[command_desync]]
 desync
 ~~~~~~
+
+_Updated in version 0.4.1._
 
 Desynchronize one or more buffers, to stop updates.
 
@@ -328,24 +351,33 @@ buffers, the client will still receive updates for buffers.
 Syntax:
 
 ----------------------------------------
-desync [<buffer>[,<buffer>...] <options>]
+desync [<buffer>[,<buffer>...] <option>[,<option>...]]
 ----------------------------------------
 
 Arguments:
 
 * 'buffer': pointer ('0x12345') or full name of buffer (for example:
-  'core.weechat' or 'irc.freenode.#weechat'); name '*' can be used to
+  'core.weechat' or 'irc.freenode.#weechat'); name "*" can be used to
   specify all buffers
 * 'options': one of following keywords, separated by commas (default is
-  'buffer,nicklist'):
-** 'buffer': receive signals about buffer (new lines, buffer renamed/moved...)
-** 'nicklist': receive nicklist after changes
+  'buffers,upgrade,buffer,nicklist' for "*" and 'buffer,nicklist' for a buffer);
+  see <<command_sync,command sync>> for values.
+
+[NOTE]
+When using buffer "*", the other buffers synchronized (using a name) are kept. +
+So if you send: "sync *", then "sync irc.freenode.#weechat", then "desync *",
+the updates on #weechat channel will still be sent by WeeChat (you must remove
+it explicitly to stop updates).
 
 Examples:
 
 ----------------------------------------
 # desynchronize all buffers
+# (the 3 commands are equivalent, but the first one is recommended
+# for compatibility with future versions)
 desync
+desync *
+desync * buffers,upgrade,buffer,nicklist
 
 # desynchronize nicklist for #weechat channel (keep buffer updates)
 desync irc.freenode.#weechat nicklist
@@ -360,7 +392,12 @@ test
 
 Test command: WeeChat will reply with various different objects.
 
-This command is useful to test the decoding of objects rerutned by WeeChat.
+This command is useful to test the decoding of objects returned by WeeChat.
+
+[IMPORTANT]
+You must not use the pointer values returned by this command, they are not
+valid. This command should only be used to test decoding of a message sent by
+WeeChat.
 
 Syntax:
 
@@ -460,81 +497,81 @@ There are two different identifiers ('id'):
 
 WeeChat reserved identifiers:
 
-[width="100%",cols="5m,5,3,10,8",options="header"]
+[width="100%",cols="5m,5,3,3,10,8",options="header"]
 |=====================================================
-| Identifier               | Description             | Hdata type | Hdata content
+| Identifier | Description | Received with sync | Hdata type | Hdata content
 | Recommended action in client
 
-| _buffer_opened           | Buffer opened           | buffer |
+| _buffer_opened | Buffer opened | buffers / buffer | buffer |
   'number' (integer), 'full_name' (string), 'short_name' (string), +
   'nicklist' (integer), 'title' (string), 'local_variables' (hashtable), +
   'prev_buffer' (pointer), 'next_buffer' (pointer) |
   Open buffer
 
-| _buffer_type_changed     | Type of buffer changed  | buffer |
-  'number' (integer), 'full_name' (string), +
-  'type' (integer) |
-  Change type of buffer
-
-| _buffer_moved            | Buffer moved            | buffer |
+| _buffer_moved | Buffer moved | buffers / buffer | buffer |
   'number' (integer), 'full_name' (string), +
   'prev_buffer' (pointer), 'next_buffer' (pointer) |
   Move buffer
 
-| _buffer_merged           | Buffer merged           | buffer |
+| _buffer_merged | Buffer merged | buffers / buffer | buffer |
   'number' (integer), 'full_name' (string), +
   'prev_buffer' (pointer), 'next_buffer' (pointer) |
   Merge buffer
 
-| _buffer_unmerged         | Buffer unmerged         | buffer |
+| _buffer_unmerged | Buffer unmerged | buffers / buffer | buffer |
   'number' (integer), 'full_name' (string), +
   'prev_buffer' (pointer), 'next_buffer' (pointer) |
   Unmerge buffer
 
-| _buffer_renamed          | Buffer renamed          | buffer |
+| _buffer_renamed | Buffer renamed | buffers / buffer | buffer |
   'number' (integer), 'full_name' (string), 'short_name' (string),
   'local_variables' (hashtable) |
   Rename buffer
 
-| _buffer_title_changed    | Title of buffer changed | buffer |
+| _buffer_title_changed | Title of buffer changed | buffers / buffer | buffer |
   'number' (integer), 'full_name' (string), 'title' (string) |
   Change title of buffer
 
-| _buffer_localvar_added   | Local variable added    | buffer |
+| _buffer_closing | Buffer closing | buffers / buffer | buffer |
+  'number' (integer), 'full_name' (string) |
+  Close buffer
+
+| _buffer_type_changed | Type of buffer changed | buffer | buffer |
+  'number' (integer), 'full_name' (string), +
+  'type' (integer) |
+  Change type of buffer
+
+| _buffer_localvar_added | Local variable added | buffer | buffer |
   'number' (integer), 'full_name' (string), 'local_variables' (hashtable) |
   Add local variable in buffer
 
-| _buffer_localvar_changed | Local variable changed  | buffer |
+| _buffer_localvar_changed | Local variable changed | buffer | buffer |
   'number' (integer), 'full_name' (string), 'local_variables' (hashtable) |
   Change local variable in buffer
 
-| _buffer_localvar_removed | Local variable removed  | buffer |
+| _buffer_localvar_removed | Local variable removed | buffer | buffer |
   'number' (integer), 'full_name' (string), 'local_variables' (hashtable) |
   Remove local variable from buffer
 
-| _buffer_line_added       | Line added in buffer    | line |
+| _buffer_line_added | Line added in buffer | buffer | line |
   'buffer' (pointer), 'date' (time), 'date_printed' (time), 'displayed' (char),
   'highlight' (char), 'tags_array' (array of strings), 'prefix' (string),
   'message' (string) |
   Display line in buffer
 
-| _buffer_closing          | Buffer closing          | buffer |
-  'number' (integer), 'full_name' (string) |
-  Close buffer
-
-| _nicklist                | Nicklist for a buffer   | nicklist_item |
+| _nicklist | Nicklist for a buffer | nicklist | nicklist_item |
   'group' (char), 'visible' (char), 'level' (integer), +
   'name' (string), 'color' (string), +
   'prefix' (string), 'prefix_color' (string) |
   Update nicklist
 
-| _upgrade                 | WeeChat is upgrading +
-  (_new in version 0.3.8_) | (empty) |
+| _upgrade | WeeChat is upgrading +
+  (_new in version 0.3.8_) | upgrade | (empty) |
   (empty) |
   Desync from WeeChat (send command 'desync')
 
-| _upgrade_ended           | Upgrade of WeeChat done +
-  (_new in version 0.3.8_) | (empty) |
+| _upgrade_ended | Upgrade of WeeChat done +
+  (_new in version 0.3.8_) | upgrade | (empty) |
   (empty) |
   Resync with WeeChat (resend all commands sent on startup after the 'init')
 |=====================================================

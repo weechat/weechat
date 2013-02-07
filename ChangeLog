@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.1-dev, 2013-02-04
+v0.4.1-dev, 2013-02-07
 
 
 Version 0.4.1 (under dev!)
@@ -21,6 +21,8 @@ Version 0.4.1 (under dev!)
 * irc: add color in output of /names when result is on server buffer (channel
   not joined) (bug #38070)
 * perl: simplify code to load scripts
+* relay: add options "buffers" and "upgrade" for commands sync/desync in weechat
+  protocol
 * relay: fix commands sync/desync in weechat protocol (bug #38215)
 * scripts: do not allow empty script name in function "register"
 

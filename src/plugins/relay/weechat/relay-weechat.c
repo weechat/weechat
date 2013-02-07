@@ -219,6 +219,8 @@ relay_weechat_alloc (struct t_relay_client *client)
                                    NULL,
                                    NULL);
         RELAY_WEECHAT_DATA(client, hook_timer_nicklist) = NULL;
+
+        relay_weechat_hook_signals (client);
     }
 }
 
@@ -289,12 +291,7 @@ relay_weechat_alloc_with_infolist (struct t_relay_client *client,
         }
         RELAY_WEECHAT_DATA(client, hook_timer_nicklist) = NULL;
 
-        if (weechat_hashtable_get_integer (RELAY_WEECHAT_DATA(client, buffers_sync),
-                                           "items_count") > 0)
-            relay_weechat_hook_signals (client);
-        if (weechat_hashtable_get_integer (RELAY_WEECHAT_DATA(client, buffers_sync),
-                                           "items_count") > 0)
-            relay_weechat_hook_timer_nicklist (client);
+        relay_weechat_hook_signals (client);
     }
 }
 
