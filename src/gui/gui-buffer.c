@@ -2203,6 +2203,18 @@ gui_buffer_close (struct t_gui_buffer *buffer)
         free (buffer->mixed_lines);
 
     /* free some data */
+    gui_buffer_undo_free_all (buffer);
+    gui_history_buffer_free (buffer);
+    if (buffer->completion)
+        gui_completion_free (buffer->completion);
+    gui_nicklist_remove_all (buffer);
+    gui_nicklist_remove_group (buffer, buffer->nicklist_root);
+    if (buffer->hotlist_max_level_nicks)
+        hashtable_free (buffer->hotlist_max_level_nicks);
+    gui_key_free_all (&buffer->keys, &buffer->last_key,
+                      &buffer->keys_count);
+    gui_buffer_local_var_remove_all (buffer);
+    hashtable_free (buffer->local_variables);
     if (buffer->plugin_name_for_upgrade)
         free (buffer->plugin_name_for_upgrade);
     if (buffer->name)
@@ -2215,16 +2227,10 @@ gui_buffer_close (struct t_gui_buffer *buffer)
         free (buffer->title);
     if (buffer->input_buffer)
         free (buffer->input_buffer);
-    gui_buffer_undo_free_all (buffer);
     if (buffer->input_undo_snap)
         free (buffer->input_undo_snap);
-    if (buffer->completion)
-        gui_completion_free (buffer->completion);
-    gui_history_buffer_free (buffer);
     if (buffer->text_search_input)
         free (buffer->text_search_input);
-    gui_nicklist_remove_all (buffer);
-    gui_nicklist_remove_group (buffer, buffer->nicklist_root);
     if (buffer->highlight_words)
         free (buffer->highlight_words);
     if (buffer->highlight_regex)
@@ -2238,12 +2244,6 @@ gui_buffer_close (struct t_gui_buffer *buffer)
         free (buffer->highlight_tags);
     if (buffer->highlight_tags_array)
         string_free_split (buffer->highlight_tags_array);
-    if (buffer->hotlist_max_level_nicks)
-        hashtable_free (buffer->hotlist_max_level_nicks);
-    gui_key_free_all (&buffer->keys, &buffer->last_key,
-                      &buffer->keys_count);
-    gui_buffer_local_var_remove_all (buffer);
-    hashtable_free (buffer->local_variables);
 
     /* remove buffer from buffers list */
     if (buffer->prev_buffer)
