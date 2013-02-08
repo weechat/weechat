@@ -7885,6 +7885,11 @@ Paramètres :
   pointeur : tampon |
   tampon fermé
 
+| weechat | buffer_line_added +
+  (_nouveau dans la version 0.3.7_) |
+  pointeur : ligne |
+  ligne ajoutée dans un tampon
+
 | weechat | buffer_lines_hidden |
   pointeur : tampon |
   lignes cachées dans le tampon
@@ -7900,6 +7905,14 @@ Paramètres :
 | weechat | buffer_localvar_removed |
   pointeur : tampon |
   variable locale supprimée
+
+| weechat | buffer_merged |
+  pointeur : tampon |
+  tampon mélangé
+
+| weechat | buffer_unmerged |
+  pointeur : tampon |
+  le tampon n'est plus mélangé
 
 | weechat | buffer_moved |
   pointeur : tampon |
@@ -7924,11 +7937,6 @@ Paramètres :
 | weechat | buffer_type_changed |
   pointeur : tampon |
   type de tampon changé
-
-| weechat | buffer_line_added +
-  (_nouveau dans la version 0.3.7_) |
-  pointeur : ligne |
-  ligne ajoutée dans un tampon
 
 | weechat | day_changed +
   (_nouveau dans la version 0.3.2_) |
@@ -7978,6 +7986,14 @@ Paramètres :
 | weechat | input_text_cursor_moved |
   pointeur : tampon |
   curseur déplacé dans la barre "input"
+
+| weechat | key_bind |
+  chaîne : touche |
+  touche ajoutée
+
+| weechat | key_unbind |
+  chaîne : touche |
+  touche supprimée
 
 | weechat | key_pressed |
   chaîne : touche appuyée |
@@ -8037,6 +8053,16 @@ Paramètres :
 | weechat | weechat_pv |
   chaîne : message avec le préfixe |
   un message privé a été affiché
+
+| weechat | window_closing +
+  (_nouveau dans la version 0.3.6_) |
+  pointeur : fenêtre |
+  fermeture de la fenêtre en cours
+
+| weechat | window_closed +
+  (_nouveau dans la version 0.3.6_) |
+  pointeur : fenêtre |
+  fenêtre fermée
 
 | weechat | window_scrolled |
   pointeur : fenêtre |

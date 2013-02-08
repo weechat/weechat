@@ -7772,6 +7772,11 @@ Arguments:
   pointer: buffer |
   buffer closed
 
+| weechat | buffer_line_added +
+  (_new in version 0.3.7_) |
+  pointer: line |
+  line added in a buffer
+
 | weechat | buffer_lines_hidden |
   pointer: buffer |
   lines hidden in buffer
@@ -7787,6 +7792,14 @@ Arguments:
 | weechat | buffer_localvar_removed |
   pointer: buffer |
   local variable has been removed
+
+| weechat | buffer_merged |
+  pointer: buffer |
+  buffer merged
+
+| weechat | buffer_unmerged |
+  pointer: buffer |
+  buffer unmerged
 
 | weechat | buffer_moved |
   pointer: buffer |
@@ -7811,11 +7824,6 @@ Arguments:
 | weechat | buffer_type_changed |
   pointer: buffer |
   type of buffer changed
-
-| weechat | buffer_line_added +
-  (_new in version 0.3.7_) |
-  pointer: line |
-  line added in a buffer
 
 | weechat | day_changed +
   (_new in version 0.3.2_) |
@@ -7865,6 +7873,14 @@ Arguments:
 | weechat | input_text_cursor_moved |
   pointer: buffer |
   input text cursor moved
+
+| weechat | key_bind |
+  string: key |
+  key added
+
+| weechat | key_unbind |
+  string: key |
+  key removed
 
 | weechat | key_pressed |
   string: key pressed |
@@ -7924,6 +7940,16 @@ Arguments:
 | weechat | weechat_pv |
   string: message with prefix |
   private message displayed
+
+| weechat | window_closing +
+  (_new in version 0.3.6_) |
+  pointer: window |
+  closing window
+
+| weechat | window_closed +
+  (_new in version 0.3.6_) |
+  pointer: window |
+  window closed
 
 | weechat | window_scrolled |
   pointer: window |

@@ -7846,6 +7846,11 @@ Argomenti:
   puntatore: buffer |
   buffer chiuso
 
+| weechat | buffer_line_added +
+  (_novità nella versione 0.3.7_) |
+  puntatore: riga |
+  riga aggiunta in un buffer
+
 | weechat | buffer_lines_hidden |
   puntatore: buffer |
   righe nascoste nel buffer
@@ -7861,6 +7866,16 @@ Argomenti:
 | weechat | buffer_localvar_removed |
   puntatore: buffer |
   variabili locali rimosse
+
+// TRANSLATION MISSING
+| weechat | buffer_merged |
+  puntatore: buffer |
+  buffer merged
+
+// TRANSLATION MISSING
+| weechat | buffer_unmerged |
+  puntatore: buffer |
+  buffer unmerged
 
 | weechat | buffer_moved |
   puntatore: buffer |
@@ -7885,11 +7900,6 @@ Argomenti:
 | weechat | buffer_type_changed |
   puntatore: buffer |
   tipo di buffer modificato
-
-| weechat | buffer_line_added +
-  (_novità nella versione 0.3.7_) |
-  puntatore: riga |
-  riga aggiunta in un buffer
 
 | weechat | day_changed +
   (_novità nella versione 0.3.2_) |
@@ -7939,6 +7949,16 @@ Argomenti:
 | weechat | input_text_cursor_moved |
   puntatore: buffer |
   cursore del testo di input spostato
+
+// TRANSLATION MISSING
+| weechat | key_bind |
+  string: key |
+  key added
+
+// TRANSLATION MISSING
+| weechat | key_unbind |
+  string: key |
+  key removed
 
 | weechat | key_pressed |
   string: tasto digitato |
@@ -8001,6 +8021,18 @@ Argomenti:
 | weechat | weechat_pv |
   string: messaggio con prefisso |
   messaggio privato visualizzato
+
+// TRANSLATION MISSING
+| weechat | window_closing +
+  (_novità nella versione 0.3.6_) |
+  puntatore: finestra |
+  closing window
+
+// TRANSLATION MISSING
+| weechat | window_closed +
+  (_novità nella versione 0.3.6_) |
+  puntatore: finestra |
+  window closed
 
 | weechat | window_scrolled |
   puntatore: finestra |
