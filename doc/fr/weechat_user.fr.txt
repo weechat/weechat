@@ -298,7 +298,7 @@ Merci pour votre aide !
 Debug de WeeChat qui tourne
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Pour débugger WeeChat qui tourne (par exemple si WeeChat semble bloqué), vous
+Pour déboguer WeeChat qui tourne (par exemple si WeeChat semble bloqué), vous
 pouvez utiliser gdb avec l'identifiant du processus (remplacez '12345' par le
 PID du processus weechat-curses) :
 
@@ -2380,8 +2380,8 @@ Vous pouvez limiter le nombre de clients autorisés :
 ----------------------------------------
 
 [[relay_weechat_protocol]]
-WeeChat protocol
-^^^^^^^^^^^^^^^^
+Protocole WeeChat
+^^^^^^^^^^^^^^^^^
 
 L'extension Relay peut envoyer les données à une interface distante en
 utilisant le protocole WeeChat.

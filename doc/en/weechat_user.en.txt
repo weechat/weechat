@@ -2402,7 +2402,7 @@ Example of default rmodifier for command `/oper`:
 ** `input_text_display`: called when command line has changed
    (applies only on display, not content of command line)
 * regular expression: `^(/oper +\S+ +)(.*)`
-* groupes: `1,2*`
+* groups: `1,2*`
 
 Each time modifiers "history_add" or "input_text_display" are called, regular
 expression is checked. If string matches, then it is replaced by captured groups,
