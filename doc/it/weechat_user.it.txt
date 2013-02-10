@@ -27,11 +27,11 @@ Le principali caratteristiche:
 * connessione a server multipli (con SSL, IPv6, proxy)
 * piccolo, veloce e leggero
 * personalizzabile ed estensibile con plugin e script
-* conforme alle RFC di IRC http://www.ietf.org/rfc/rfc1459.txt[1459],
-  http://www.ietf.org/rfc/rfc2810.txt[2810],
-  http://www.ietf.org/rfc/rfc2811.txt[2811],
-  http://www.ietf.org/rfc/rfc2812.txt[2812] e
-  http://www.ietf.org/rfc/rfc2813.txt[2813]
+* conforme alle RFC di IRC http://tools.ietf.org/html/rfc1459[1459],
+  http://tools.ietf.org/html/rfc2810[2810],
+  http://tools.ietf.org/html/rfc2811[2811],
+  http://tools.ietf.org/html/rfc2812[2812] e
+  http://tools.ietf.org/html/rfc2813[2813]
 * multi-piattaforma (GNU/Linux, *BSD, MacOS X, Windows ed altre)
 * 100% GPL, software libero
 

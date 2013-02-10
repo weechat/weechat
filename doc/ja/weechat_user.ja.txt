@@ -23,11 +23,11 @@ WeeChat (Wee Enhanced Environment for Chat) はフリーのチャットクライ
 * 複数のサーバへの接続 (SSL、IPv6、プロキシをサポート)
 * コンパクト、高速、軽量
 * プラグインとスクリプトでカスタマイズや拡張が可能
-* IRC の RFC に準拠 http://www.ietf.org/rfc/rfc1459.txt[1459]、
-  http://www.ietf.org/rfc/rfc2810.txt[2810]、
-  http://www.ietf.org/rfc/rfc2811.txt[2811]、
-  http://www.ietf.org/rfc/rfc2812.txt[2812]、
-  http://www.ietf.org/rfc/rfc2813.txt[2813]。
+* IRC の RFC に準拠 http://tools.ietf.org/html/rfc1459[1459]、
+  http://tools.ietf.org/html/rfc2810[2810]、
+  http://tools.ietf.org/html/rfc2811[2811]、
+  http://tools.ietf.org/html/rfc2812[2812]、
+  http://tools.ietf.org/html/rfc2813[2813]。
 * マルチプラットフォーム (GNU/Linux、*BSD、MacOS X、Windows 等)
 * 完全な GPL、フリーソフトウェア
 
