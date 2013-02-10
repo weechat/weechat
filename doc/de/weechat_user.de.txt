@@ -2403,6 +2403,29 @@ um dann die Relay-Verbindung, mit SSL Verschlüsselung, anzulegen:
 /relay add ssl.weechat 9001
 ----------------------------------------
 
+// TRANSLATION MISSING
+[[relay_websocket]]
+Websocket
+^^^^^^^^^
+
+WebSocket protocol (http://tools.ietf.org/html/rfc6455[RFC 6455]) is supported
+in Relay plugin for all protocols.
+
+The WebSocket handshake is automatically detected and socket becomes ready for
+WebSocket if required headers are found in handshake and if origin is allowed
+(see option
+<<option_relay.network.websocket_allowed_origins,relay.network.websocket_allowed_origins>>).
+
+A WebSocket can be opened in a HTML5 with a single line of JavaScript:
+
+[source,js]
+----------------------------------------
+websocket = new WebSocket("ws://server.com:5000/weechat");
+----------------------------------------
+
+The port (5000 in example) is the port defined in Relay plugin.
+The URI must always ends with "/weechat" (for both IRC and WeeChat protocols).
+
 [[rmodifier_plugin]]
 Rmodifier Erweiterung
 ~~~~~~~~~~~~~~~~~~~~~

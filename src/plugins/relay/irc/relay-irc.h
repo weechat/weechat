@@ -63,7 +63,7 @@ enum t_relay_irc_server_capab
 };
 
 extern void relay_irc_recv (struct t_relay_client *client,
-                                   const char *data);
+                            const char *data);
 extern void relay_irc_close_connection (struct t_relay_client *client);
 extern void relay_irc_alloc (struct t_relay_client *client);
 extern void relay_irc_alloc_with_infolist (struct t_relay_client *client,

@@ -113,3 +113,8 @@
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%h/ssl/relay.pem"`)
 
+* [[option_relay.network.websocket_allowed_origins]] *relay.network.websocket_allowed_origins*
+** Beschreibung: `regular expression with origins allowed in websockets (case insensitive, use "(?-i)" at beginning to make it case sensitive), example: "^http://(www\.)?example\.(com|org)"`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `""`)
+

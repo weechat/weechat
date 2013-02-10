@@ -217,6 +217,8 @@
 ./src/plugins/relay/relay-server.h
 ./src/plugins/relay/relay-upgrade.c
 ./src/plugins/relay/relay-upgrade.h
+./src/plugins/relay/relay-websocket.c
+./src/plugins/relay/relay-websocket.h
 ./src/plugins/relay/irc/relay-irc.c
 ./src/plugins/relay/irc/relay-irc.h
 ./src/plugins/relay/weechat/relay-weechat.c

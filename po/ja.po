@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-02-01 11:12+0100\n"
+"POT-Creation-Date: 2013-02-10 20:17+0100\n"
 "PO-Revision-Date: 2013-01-20 12:07+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -7860,6 +7860,19 @@ msgstr "%s%s: クライアント %s%s%s との TLS ハンドシェイクが失�
 msgid "%s%s: TLS handshake timeout for client %s%s%s"
 msgstr "%s%s: クライアント %s%s%s との TLS ハンドシェイクがタイムアウト"
 
+#, fuzzy, c-format
+msgid "%s%s: invalid websocket handshake received for client %s%s%s"
+msgstr "%s%s: クライアント %s%s%s との TLS ハンドシェイクがタイムアウト"
+
+#, fuzzy, c-format
+msgid "%s%s: origin \"%s\" not allowed for websocket"
+msgstr "%s%s: IP アドレス \"%s\" はリレーの許可がありません"
+
+#, fuzzy, c-format
+msgid "%s%s: error decoding websocket frame for client %s%s%s"
+msgstr ""
+"%s%s: クライアント %s%s%s のソケットからデータを読み取り中: エラー %d %s"
+
 #, c-format
 msgid "%s%s: reading data on socket for client %s%s%s: error %d %s"
 msgstr ""
@@ -8129,6 +8142,12 @@ msgstr ""
 msgid ""
 "file with SSL certificate and private key (for serving clients with SSL)"
 msgstr "SSL 証明書と秘密鍵のファイル (SSL 接続を利用するクライアント用)"
+
+msgid ""
+"regular expression with origins allowed in websockets (case insensitive, use "
+"\"(?-i)\" at beginning to make it case sensitive), example: \"^http://(www"
+"\\.)?example\\.(com|org)\""
+msgstr ""
 
 msgid "maximum number of lines in backlog per IRC channel (0 = unlimited)"
 msgstr "IRC チャンネルごとのバックログの最大行数 (0 = 制限無し)"

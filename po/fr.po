@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-02-01 11:12+0100\n"
-"PO-Revision-Date: 2013-02-01 11:12+0100\n"
+"POT-Creation-Date: 2013-02-10 20:17+0100\n"
+"PO-Revision-Date: 2013-02-10 08:29+0100\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -8144,6 +8144,19 @@ msgstr ""
 "le client %s%s%s"
 
 #, c-format
+msgid "%s%s: invalid websocket handshake received for client %s%s%s"
+msgstr ""
+"%s%s: poignée de main (handshake) websocket invalide pour le client %s%s%s"
+
+#, c-format
+msgid "%s%s: origin \"%s\" not allowed for websocket"
+msgstr "%s%s: origine \"%s\" non autorisée pour le websocket"
+
+#, c-format
+msgid "%s%s: error decoding websocket frame for client %s%s%s"
+msgstr "%s%s: erreur de décodage d'un message websocket pour le client %s%s%s"
+
+#, c-format
 msgid "%s%s: reading data on socket for client %s%s%s: error %d %s"
 msgstr ""
 "%s%s: lecture de données sur la socket pour le client %s%s%s: erreur %d %s"
@@ -8421,6 +8434,15 @@ msgid ""
 msgstr ""
 "fichier avec le certificat et la clé privée SSL (pour servir les clients "
 "avec SSL)"
+
+msgid ""
+"regular expression with origins allowed in websockets (case insensitive, use "
+"\"(?-i)\" at beginning to make it case sensitive), example: \"^http://(www"
+"\\.)?example\\.(com|org)\""
+msgstr ""
+"expression régulière avec les origines autorisées dans les websockets "
+"(insensible à la casse, utilisez \"(?-i)\" en début de chaîne pour la rendre "
+"insensible à la casse), exemple: \"^http://(www\\.)?example\\.(com|org)\""
 
 msgid "maximum number of lines in backlog per IRC channel (0 = unlimited)"
 msgstr ""

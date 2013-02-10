@@ -26,6 +26,7 @@
 
 #define RELAY_RAW_FLAG_RECV     1
 #define RELAY_RAW_FLAG_SEND     2
+#define RELAY_RAW_FLAG_BINARY   4
 
 struct t_relay_raw_message
 {
@@ -47,7 +48,7 @@ extern struct t_relay_raw_message *relay_raw_message_add_to_list (time_t date,
                                                                   const char *prefix,
                                                                   const char *message);
 extern void relay_raw_print (struct t_relay_client *client, int flags,
-                             const char *format, ...);
+                             const char *data, int data_size);
 extern void relay_raw_message_free_all ();
 extern int relay_raw_add_to_infolist (struct t_infolist *infolist,
                                       struct t_relay_raw_message *raw_message);

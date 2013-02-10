@@ -113,3 +113,8 @@
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"%h/ssl/relay.pem"`)
 
+* [[option_relay.network.websocket_allowed_origins]] *relay.network.websocket_allowed_origins*
+** 説明: `regular expression with origins allowed in websockets (case insensitive, use "(?-i)" at beginning to make it case sensitive), example: "^http://(www\.)?example\.(com|org)"`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
+

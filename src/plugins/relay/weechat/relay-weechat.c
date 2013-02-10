@@ -42,8 +42,6 @@
 char *relay_weechat_compression_string[] = /* strings for compressions      */
 { "off", "gzip" };
 
-char *relay_weechat_partial_message = NULL;
-
 
 /*
  * Searches for a compression.
@@ -132,48 +130,7 @@ relay_weechat_hook_timer_nicklist (struct t_relay_client *client)
 void
 relay_weechat_recv (struct t_relay_client *client, const char *data)
 {
-    char *new_partial, *pos, *tmp, **commands;
-    int num_commands, i;
-
-    if (relay_weechat_partial_message)
-    {
-        new_partial = realloc (relay_weechat_partial_message,
-                               strlen (relay_weechat_partial_message) +
-                               strlen (data) + 1);
-        if (!new_partial)
-            return;
-        relay_weechat_partial_message = new_partial;
-        strcat (relay_weechat_partial_message, data);
-    }
-    else
-        relay_weechat_partial_message = strdup (data);
-
-    pos = strrchr (relay_weechat_partial_message, '\n');
-    if (pos)
-    {
-        pos[0] = '\0';
-        commands = weechat_string_split (relay_weechat_partial_message, "\n",
-                                         0, 0, &num_commands);
-        if (commands)
-        {
-            for (i = 0; i < num_commands; i++)
-            {
-                relay_weechat_protocol_recv (client, commands[i]);
-            }
-            weechat_string_free_split (commands);
-        }
-        if (pos[1])
-        {
-            tmp = strdup (pos + 1);
-            free (relay_weechat_partial_message);
-            relay_weechat_partial_message = tmp;
-        }
-        else
-        {
-            free (relay_weechat_partial_message);
-            relay_weechat_partial_message = NULL;
-        }
-    }
+    relay_weechat_protocol_recv (client, data);
 }
 
 /*

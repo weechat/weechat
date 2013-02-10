@@ -39,6 +39,16 @@ enum t_relay_status
     RELAY_NUM_STATUS,
 };
 
+/* type of data exchanged with client */
+
+enum t_relay_client_data_type
+{
+    RELAY_CLIENT_DATA_TEXT = 0,        /* text messages                     */
+    RELAY_CLIENT_DATA_BINARY,          /* binary messages                   */
+    /* number of data types */
+    RELAY_NUM_CLIENT_DATA_TYPES,
+};
+
 /* macros for status */
 
 #define RELAY_CLIENT_HAS_ENDED(client)                                  \
@@ -51,6 +61,9 @@ struct t_relay_client_outqueue
 {
     char *data;                         /* data to send                     */
     int data_size;                      /* number of bytes                  */
+    int raw_flags[2];                   /* flags for raw messages           */
+    char *raw_message[2];               /* msgs for raw buffer (can be NULL)*/
+    int raw_size[2];                    /* size (in bytes) of raw messages  */
     struct t_relay_client_outqueue *next_outqueue; /* next msg in queue     */
     struct t_relay_client_outqueue *prev_outqueue; /* prev msg in queue     */
 };
@@ -67,6 +80,8 @@ struct t_relay_client
     gnutls_session_t gnutls_sess;      /* gnutls session (only if SSL used) */
     struct t_hook *hook_timer_handshake; /* timer for doing gnutls handshake*/
 #endif
+    int websocket;                     /* 0=not a ws, 1=init ws, 2=ws ready */
+    struct t_hashtable *http_headers;  /* HTTP headers for websocket        */
     char *address;                     /* string with IP address            */
     enum t_relay_status status;        /* status (connecting, active,..)    */
     enum t_relay_protocol protocol;    /* protocol (irc,..)                 */
@@ -80,6 +95,9 @@ struct t_relay_client
     time_t last_activity;              /* time of last byte received/sent   */
     unsigned long bytes_recv;          /* bytes received from client        */
     unsigned long bytes_sent;          /* bytes sent to client              */
+    enum t_relay_client_data_type recv_data_type; /* type recv from client  */
+    enum t_relay_client_data_type send_data_type; /* type sent to client    */
+    char *partial_message;             /* partial text message received     */
     void *protocol_data;               /* data depending on protocol used   */
     struct t_relay_client_outqueue *outqueue; /* queue for outgoing msgs    */
     struct t_relay_client_outqueue *last_outqueue; /* last outgoing msg     */
@@ -97,7 +115,7 @@ extern struct t_relay_client *relay_client_search_by_number (int number);
 extern struct t_relay_client *relay_client_search_by_id (int id);
 extern int relay_client_recv_cb (void *arg_client, int fd);
 extern int relay_client_send (struct t_relay_client *client, const char *data,
-                              int data_size);
+                              int data_size, const char *message_raw_buffer);
 extern int relay_client_timer_cb (void *data, int remaining_calls);
 extern struct t_relay_client *relay_client_new (int sock, const char *address,
                                                 struct t_relay_server *server);

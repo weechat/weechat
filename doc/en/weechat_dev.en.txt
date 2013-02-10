@@ -246,6 +246,7 @@ Plugins
 |       relay-raw.c                 | Relay raw buffer
 |       relay-server.c              | Relay server
 |       relay-upgrade.c             | Save/restore relay data when upgrading WeeChat
+|       relay-websocket.c           | Websocket server functions for relay (RFC 6455)
 |       irc/                        | IRC proxy
 |          relay-irc.c              | Main IRC proxy functions
 |       weechat/                    | Relay for remote interface

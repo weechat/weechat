@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-02-04 08:34+0100\n"
+"POT-Creation-Date: 2013-02-10 20:17+0100\n"
 "PO-Revision-Date: 2013-01-20 12:07+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -8372,6 +8372,18 @@ msgstr "%s%s: TLS Handshake fehlgeschlagen für Client %s%s%s: Fehler %d %s"
 msgid "%s%s: TLS handshake timeout for client %s%s%s"
 msgstr "%s%s: TLS Handshake Zeitüberschreitung für Client %s%s%s"
 
+#, fuzzy, c-format
+msgid "%s%s: invalid websocket handshake received for client %s%s%s"
+msgstr "%s%s: TLS Handshake Zeitüberschreitung für Client %s%s%s"
+
+#, fuzzy, c-format
+msgid "%s%s: origin \"%s\" not allowed for websocket"
+msgstr "%s%s: IP Adresse \"%s\" für Relay nicht gültig"
+
+#, fuzzy, c-format
+msgid "%s%s: error decoding websocket frame for client %s%s%s"
+msgstr "%s%s: Fehler beim Senden von Daten an den Client %d (%s)"
+
 #, c-format
 msgid "%s%s: reading data on socket for client %s%s%s: error %d %s"
 msgstr "%s%s: lese Daten von Socket für Client %s%s%s: Fehler %d %s"
@@ -8652,6 +8664,12 @@ msgid ""
 msgstr ""
 "Datei mit SSL Zertifikat und privatem Schlüssel (zur Nutzung von Clients mit "
 "SSL)"
+
+msgid ""
+"regular expression with origins allowed in websockets (case insensitive, use "
+"\"(?-i)\" at beginning to make it case sensitive), example: \"^http://(www"
+"\\.)?example\\.(com|org)\""
+msgstr ""
 
 msgid "maximum number of lines in backlog per IRC channel (0 = unlimited)"
 msgstr ""
@@ -10315,9 +10333,6 @@ msgstr "Konstanten"
 
 #~ msgid "display message when (un)marking as away"
 #~ msgstr "bei Abwesenheit und Rückkehr eine Nachricht anzeigen"
-
-#~ msgid "%s%s: error sending data to client %d (%s)"
-#~ msgstr "%s%s: Fehler beim Senden von Daten an den Client %d (%s)"
 
 #~ msgid "display channel modes in \"buffer_name\" bar item"
 #~ msgstr "zeigt die Channel-Modi mittels \"buffer_name\" in der Bar-Item an"

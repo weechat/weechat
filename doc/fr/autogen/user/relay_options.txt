@@ -113,3 +113,8 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"%h/ssl/relay.pem"`)
 
+* [[option_relay.network.websocket_allowed_origins]] *relay.network.websocket_allowed_origins*
+** description: `expression régulière avec les origines autorisées dans les websockets (insensible à la casse, utilisez "(?-i)" en début de chaîne pour la rendre insensible à la casse), exemple: "^http://(www\.)?example\.(com|org)"`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `""`)
+

@@ -1053,7 +1053,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(quit)
  */
 
 void
-relay_weechat_protocol_recv (struct t_relay_client *client, char *data)
+relay_weechat_protocol_recv (struct t_relay_client *client, const char *data)
 {
     char *pos, *id, *command, **argv, **argv_eol;
     int i, argc, return_code;
@@ -1074,11 +1074,6 @@ relay_weechat_protocol_recv (struct t_relay_client *client, char *data)
     if (!data || !data[0] || RELAY_CLIENT_HAS_ENDED(client))
         return;
 
-    /* remove \r at the end of message */
-    pos = strchr (data, '\r');
-    if (pos)
-        pos[0] = '\0';
-
     /* display debug message */
     if (weechat_relay_plugin->debug >= 2)
     {
@@ -1089,9 +1084,6 @@ relay_weechat_protocol_recv (struct t_relay_client *client, char *data)
                         RELAY_COLOR_CHAT,
                         data);
     }
-
-    /* display message in raw buffer */
-    relay_raw_print (client, RELAY_RAW_FLAG_RECV, "cmd: %s", data);
 
     /* extract id */
     id = NULL;

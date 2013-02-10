@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-02-03 16:17+0100\n"
+"POT-Creation-Date: 2013-02-10 20:17+0100\n"
 "PO-Revision-Date: 2013-02-03 12:13+0100\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7945,6 +7945,18 @@ msgstr "%s%s: handshake TLS fallito per il client %s%s%s: errore %d %s"
 msgid "%s%s: TLS handshake timeout for client %s%s%s"
 msgstr "%s%s: timeout per l'handshake per il client %s%s%s"
 
+#, fuzzy, c-format
+msgid "%s%s: invalid websocket handshake received for client %s%s%s"
+msgstr "%s%s: timeout per l'handshake per il client %s%s%s"
+
+#, fuzzy, c-format
+msgid "%s%s: origin \"%s\" not allowed for websocket"
+msgstr "%s%s: indirizzo IP \"%s\" non consentito per il relay"
+
+#, fuzzy, c-format
+msgid "%s%s: error decoding websocket frame for client %s%s%s"
+msgstr "%s%s: lettura dei dati sul socket per il client %s%s%s: errore %d %s"
+
 #, c-format
 msgid "%s%s: reading data on socket for client %s%s%s: error %d %s"
 msgstr "%s%s: lettura dei dati sul socket per il client %s%s%s: errore %d %s"
@@ -8222,6 +8234,12 @@ msgid ""
 msgstr ""
 "file con il certificato SSL e la chiave privata (per servire i client con "
 "SSL)"
+
+msgid ""
+"regular expression with origins allowed in websockets (case insensitive, use "
+"\"(?-i)\" at beginning to make it case sensitive), example: \"^http://(www"
+"\\.)?example\\.(com|org)\""
+msgstr ""
 
 msgid "maximum number of lines in backlog per IRC channel (0 = unlimited)"
 msgstr ""

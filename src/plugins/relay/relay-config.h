@@ -51,6 +51,7 @@ extern struct t_config_option *relay_config_irc_backlog_tags;
 extern struct t_config_option *relay_config_irc_backlog_time_format;
 
 extern regex_t *relay_config_regex_allowed_ips;
+extern regex_t *relay_config_regex_websocket_allowed_origins;
 extern struct t_hashtable *relay_config_hashtable_irc_backlog_tags;
 
 extern int relay_config_create_option_port (void *data,

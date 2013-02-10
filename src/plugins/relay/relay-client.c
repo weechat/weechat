@@ -41,13 +41,18 @@
 #include "relay-config.h"
 #include "relay-buffer.h"
 #include "relay-network.h"
+#include "relay-raw.h"
 #include "relay-server.h"
+#include "relay-websocket.h"
 
 
 char *relay_client_status_string[] =   /* strings for status                */
 { N_("connecting"), N_("waiting auth"),
   N_("connected"), N_("auth failed"), N_("disconnected")
 };
+
+char *relay_client_data_type_string[] = /* strings for data types           */
+{ "text", "binary" };
 
 struct t_relay_client *relay_clients = NULL;
 struct t_relay_client *last_relay_client = NULL;
@@ -217,6 +222,168 @@ relay_client_handshake_timer_cb (void *data, int remaining_calls)
 #endif
 
 /*
+ * Reads text data from a client: splits data on '\n' and keep a partial message
+ * if date  does not end with '\n'.
+ */
+
+void
+relay_client_recv_text (struct t_relay_client *client, const char *data)
+{
+    char *new_partial, *raw_msg, **lines, *pos, *tmp, *handshake;
+    int i, num_lines, length, rc;
+
+    if (client->partial_message)
+    {
+        new_partial = realloc (client->partial_message,
+                               strlen (client->partial_message) +
+                               strlen (data) + 1);
+        if (!new_partial)
+            return;
+        client->partial_message = new_partial;
+        strcat (client->partial_message, data);
+    }
+    else
+        client->partial_message = strdup (data);
+
+    pos = strrchr (client->partial_message, '\n');
+    if (pos)
+    {
+        /* print message in raw buffer */
+        raw_msg = weechat_strndup (client->partial_message,
+                                   pos - client->partial_message + 1);
+        if (raw_msg)
+        {
+            relay_raw_print (client, RELAY_RAW_FLAG_RECV,
+                             raw_msg, strlen (raw_msg) + 1);
+            free (raw_msg);
+        }
+
+        pos[0] = '\0';
+
+        lines = weechat_string_split (client->partial_message, "\n",
+                                      0, 0, &num_lines);
+        if (lines)
+        {
+            for (i = 0; i < num_lines; i++)
+            {
+                /* remove final '\r' */
+                length = strlen (lines[i]);
+                if ((length > 0) && (lines[i][length - 1] == '\r'))
+                    lines[i][length - 1] = '\0';
+
+                /* if websocket is initializing */
+                if (client->websocket == 1)
+                {
+                    if (lines[i][0])
+                    {
+                        /* web socket is initializing, read HTTP headers */
+                        relay_websocket_save_header (client, lines[i]);
+                    }
+                    else
+                    {
+                        /*
+                         * empty line means that we have received all HTTP
+                         * headers: then we check the validity of websocket, and
+                         * if it is OK, we'll do the handshake and answer to the
+                         * client
+                         */
+                        rc = relay_websocket_client_handshake_valid (client);
+                        if (rc == 0)
+                        {
+                            /* handshake from client is valid */
+                            handshake  = relay_websocket_build_handshake (client);
+                            if (handshake)
+                            {
+                                relay_client_send (client, handshake,
+                                                   strlen (handshake), NULL);
+                                free (handshake);
+                                client->websocket = 2;
+                            }
+                        }
+                        else
+                        {
+                            switch (rc)
+                            {
+                                case -1:
+                                    relay_websocket_send_http (client,
+                                                               "400 Bad Request");
+                                    if (weechat_relay_plugin->debug >= 1)
+                                    {
+                                        weechat_printf_tags (NULL, "relay_client",
+                                                             _("%s%s: invalid websocket "
+                                                               "handshake received for "
+                                                               "client %s%s%s"),
+                                                             weechat_prefix ("error"),
+                                                             RELAY_PLUGIN_NAME,
+                                                             RELAY_COLOR_CHAT_CLIENT,
+                                                             client->desc,
+                                                             RELAY_COLOR_CHAT);
+                                    }
+                                    break;
+                                case -2:
+                                    relay_websocket_send_http (client,
+                                                               "403 Forbidden");
+                                    if (weechat_relay_plugin->debug >= 1)
+                                    {
+                                        weechat_printf_tags (NULL, "relay_client",
+                                                             _("%s%s: origin \"%s\" "
+                                                               "not allowed for websocket"),
+                                                             weechat_prefix ("error"),
+                                                             RELAY_PLUGIN_NAME,
+                                                             weechat_hashtable_get (client->http_headers,
+                                                                                    "Origin"));
+                                    }
+                                    break;
+                            }
+                            relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
+                        }
+
+                        /* remove HTTP headers */
+                        weechat_hashtable_free (client->http_headers);
+                        client->http_headers = NULL;
+
+                        /*
+                         * discard all received data after the handshake
+                         * received from client, and return immediately
+                         */
+                        free (client->partial_message);
+                        client->partial_message = NULL;
+                        return;
+                    }
+                }
+                else
+                {
+                    /* receive text from client */
+                    switch (client->protocol)
+                    {
+                        case RELAY_PROTOCOL_WEECHAT:
+                            relay_weechat_recv (client, lines[i]);
+                            break;
+                        case RELAY_PROTOCOL_IRC:
+                            relay_irc_recv (client, lines[i]);
+                            break;
+                        case RELAY_NUM_PROTOCOLS:
+                            break;
+                    }
+                }
+            }
+            weechat_string_free_split (lines);
+        }
+        if (pos[1])
+        {
+            tmp = strdup (pos + 1);
+            free (client->partial_message);
+            client->partial_message = tmp;
+        }
+        else
+        {
+            free (client->partial_message);
+            client->partial_message = NULL;
+        }
+    }
+}
+
+/*
  * Reads data from a client.
  */
 
@@ -224,7 +391,8 @@ int
 relay_client_recv_cb (void *arg_client, int fd)
 {
     struct t_relay_client *client;
-    static char buffer[4096 + 2];
+    static char buffer[4096], decoded[4096];
+    const char *ptr_buffer;
     int num_read;
 
     /* make C compiler happy */
@@ -245,18 +413,63 @@ relay_client_recv_cb (void *arg_client, int fd)
 
     if (num_read > 0)
     {
-        client->bytes_recv += num_read;
         buffer[num_read] = '\0';
-        switch (client->protocol)
+        ptr_buffer = buffer;
+
+        /*
+         * if we are receiving the first message from client, check if it looks
+         * like a websocket
+         */
+        if (client->bytes_recv == 0)
         {
-            case RELAY_PROTOCOL_WEECHAT:
-                relay_weechat_recv (client, buffer);
-                break;
-            case RELAY_PROTOCOL_IRC:
-                relay_irc_recv (client, buffer);
-                break;
-            case RELAY_NUM_PROTOCOLS:
-                break;
+            if (relay_websocket_is_http_get_weechat (buffer))
+            {
+                /*
+                 * web socket is just initializing for now, it's not accepted
+                 * (we will check later with "http_headers" if web socket is
+                 * valid or not)
+                 */
+                client->websocket = 1;
+                client->http_headers = weechat_hashtable_new (32,
+                                                              WEECHAT_HASHTABLE_STRING,
+                                                              WEECHAT_HASHTABLE_STRING,
+                                                              NULL,
+                                                              NULL);
+            }
+        }
+
+        client->bytes_recv += num_read;
+
+        if (client->websocket == 2)
+        {
+            /* websocket used, decode message */
+            if (!relay_websocket_decode_frame ((unsigned char *)buffer, num_read,
+                                               (unsigned char *)decoded))
+            {
+                /* error when decoding frame: close connection */
+                weechat_printf_tags (NULL, "relay_client",
+                                     _("%s%s: error decoding websocket frame "
+                                       "for client %s%s%s"),
+                                     weechat_prefix ("error"), RELAY_PLUGIN_NAME,
+                                     RELAY_COLOR_CHAT_CLIENT,
+                                     client->desc,
+                                     RELAY_COLOR_CHAT);
+                relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
+                return WEECHAT_RC_OK;
+            }
+            ptr_buffer = decoded;
+        }
+
+        if ((client->websocket == 1)
+            || (client->recv_data_type == RELAY_CLIENT_DATA_TEXT))
+        {
+            /* websocket initializing or text data for this client */
+            relay_client_recv_text (client, ptr_buffer);
+        }
+        else
+        {
+            /* receive buffer as-is (binary data) */
+            /* currently, all supported protocols receive only text, no binary */
         }
         relay_buffer_refresh (NULL);
     }
@@ -310,10 +523,13 @@ relay_client_recv_cb (void *arg_client, int fd)
  */
 
 void
-relay_client_outqueue_add (struct t_relay_client *client, const char *data,
-                           int data_size)
+relay_client_outqueue_add (struct t_relay_client *client,
+                           const char *data, int data_size,
+                           int raw_flags[2], const char *raw_message[2],
+                           int raw_size[2])
 {
     struct t_relay_client_outqueue *new_outqueue;
+    int i;
 
     if (!client || !data || (data_size <= 0))
         return;
@@ -329,6 +545,23 @@ relay_client_outqueue_add (struct t_relay_client *client, const char *data,
         }
         memcpy (new_outqueue->data, data, data_size);
         new_outqueue->data_size = data_size;
+        for (i = 0; i < 2; i++)
+        {
+            new_outqueue->raw_flags[i] = 0;
+            new_outqueue->raw_message[i] = NULL;
+            new_outqueue->raw_size[i] = 0;
+            if (raw_message && raw_message[i] && (raw_size[i] > 0))
+            {
+                new_outqueue->raw_message[i] = malloc (raw_size[i]);
+                if (new_outqueue->raw_message[i])
+                {
+                    new_outqueue->raw_flags[i] = raw_flags[i];
+                    memcpy (new_outqueue->raw_message[i], raw_message[i],
+                            raw_size[i]);
+                    new_outqueue->raw_size[i] = raw_size[i];
+                }
+            }
+        }
 
         new_outqueue->prev_outqueue = client->last_outqueue;
         new_outqueue->next_outqueue = NULL;
@@ -367,6 +600,10 @@ relay_client_outqueue_free (struct t_relay_client *client,
     /* free data */
     if (outqueue->data)
         free (outqueue->data);
+    if (outqueue->raw_message[0])
+        free (outqueue->raw_message[0]);
+    if (outqueue->raw_message[1])
+        free (outqueue->raw_message[1]);
     free (outqueue);
 
     /* set new head */
@@ -389,17 +626,87 @@ relay_client_outqueue_free_all (struct t_relay_client *client)
 /*
  * Sends data to client (adds in out queue if it's impossible to send now).
  *
+ * If "message_raw_buffer" is not NULL, it is used for display in raw buffer
+ * and replaces display of data, which is default.
+ *
  * Returns number of bytes sent to client, -1 if error.
  */
 
 int
 relay_client_send (struct t_relay_client *client, const char *data,
-                   int data_size)
+                   int data_size, const char *message_raw_buffer)
 {
-    int num_sent;
+    int num_sent, raw_size[2], raw_flags[2], i;
+    char *websocket_frame;
+    unsigned long long length_frame;
+    const char *ptr_data, *raw_msg[2];
 
     if (client->sock < 0)
         return -1;
+
+    ptr_data = data;
+    websocket_frame = NULL;
+
+    /* set raw messages */
+    for (i = 0; i < 2; i++)
+    {
+        raw_flags[i] = RELAY_RAW_FLAG_SEND;
+        raw_msg[i] = NULL;
+        raw_size[i] = 0;
+    }
+    if (message_raw_buffer)
+    {
+        if (weechat_relay_plugin->debug >= 2)
+        {
+            raw_msg[0] = message_raw_buffer;
+            raw_size[0] = strlen (message_raw_buffer) + 1;
+            raw_msg[1] = data;
+            raw_size[1] = data_size;
+            raw_flags[1] |= RELAY_RAW_FLAG_BINARY;
+            if ((client->websocket == 1)
+                || (client->send_data_type == RELAY_CLIENT_DATA_TEXT))
+            {
+                raw_size[1]--;
+            }
+        }
+        else
+        {
+            raw_msg[0] = message_raw_buffer;
+            raw_size[0] = strlen (message_raw_buffer) + 1;
+        }
+    }
+    else
+    {
+        raw_msg[0] = data;
+        raw_size[0] = data_size;
+        if ((client->websocket != 1)
+            && (client->send_data_type == RELAY_CLIENT_DATA_BINARY))
+        {
+            /*
+             * set binary flag if we send binary to client
+             * (except if websocket == 1, which means that websocket is
+             * initializing, and then we are sending HTTP data, as text)
+             */
+            raw_flags[0] |= RELAY_RAW_FLAG_BINARY;
+        }
+        else
+        {
+            /* count the final '\0' in size */
+            raw_size[0]++;
+        }
+    }
+
+    /* if websocket is initialized, encode data in a websocket frame */
+    if (client->websocket == 2)
+    {
+        websocket_frame = relay_websocket_encode_frame (client, data, data_size,
+                                                        &length_frame);
+        if (websocket_frame)
+        {
+            ptr_data = websocket_frame;
+            data_size = length_frame;
+        }
+    }
 
     num_sent = -1;
 
@@ -409,19 +716,28 @@ relay_client_send (struct t_relay_client *client, const char *data,
      */
     if (client->outqueue)
     {
-        relay_client_outqueue_add (client, data, data_size);
+        relay_client_outqueue_add (client, ptr_data, data_size,
+                                   raw_flags, raw_msg, raw_size);
     }
     else
     {
 #ifdef HAVE_GNUTLS
         if (client->ssl)
-            num_sent = gnutls_record_send (client->gnutls_sess, data, data_size);
+            num_sent = gnutls_record_send (client->gnutls_sess, ptr_data, data_size);
         else
 #endif
-            num_sent = send (client->sock, data, data_size, 0);
+            num_sent = send (client->sock, ptr_data, data_size, 0);
 
         if (num_sent >= 0)
         {
+            for (i = 0; i < 2; i++)
+            {
+                if (raw_msg[i])
+                {
+                    relay_raw_print (client,
+                                     raw_flags[i], raw_msg[i], raw_size[i]);
+                }
+            }
             if (num_sent > 0)
             {
                 client->bytes_sent += num_sent;
@@ -430,8 +746,9 @@ relay_client_send (struct t_relay_client *client, const char *data,
             if (num_sent < data_size)
             {
                 /* some data was not sent, add it to outqueue */
-                relay_client_outqueue_add (client, data + num_sent,
-                                           data_size - num_sent);
+                relay_client_outqueue_add (client, ptr_data + num_sent,
+                                           data_size - num_sent,
+                                           NULL, NULL, NULL);
             }
         }
         else if (num_sent < 0)
@@ -443,7 +760,8 @@ relay_client_send (struct t_relay_client *client, const char *data,
                     || (num_sent == GNUTLS_E_INTERRUPTED))
                 {
                     /* add message to queue (will be sent later) */
-                    relay_client_outqueue_add (client, data, data_size);
+                    relay_client_outqueue_add (client, ptr_data, data_size,
+                                               raw_flags, raw_msg, raw_size);
                 }
                 else
                 {
@@ -466,7 +784,8 @@ relay_client_send (struct t_relay_client *client, const char *data,
                 if ((errno == EAGAIN) || (errno == EWOULDBLOCK))
                 {
                     /* add message to queue (will be sent later) */
-                    relay_client_outqueue_add (client, data, data_size);
+                    relay_client_outqueue_add (client, ptr_data, data_size,
+                                               raw_flags, raw_msg, raw_size);
                 }
                 else
                 {
@@ -486,6 +805,9 @@ relay_client_send (struct t_relay_client *client, const char *data,
         }
     }
 
+    if (websocket_frame)
+        free (websocket_frame);
+
     return num_sent;
 }
 
@@ -497,7 +819,7 @@ int
 relay_client_timer_cb (void *data, int remaining_calls)
 {
     struct t_relay_client *ptr_client;
-    int num_sent;
+    int num_sent, i;
     char *buf;
 
     /* make C compiler happy */
@@ -527,6 +849,26 @@ relay_client_timer_cb (void *data, int remaining_calls)
                 }
                 if (num_sent >= 0)
                 {
+                    for (i = 0; i < 2; i++)
+                    {
+                        if (ptr_client->outqueue->raw_message
+                            && ptr_client->outqueue->raw_message[i])
+                        {
+                            /*
+                             * print raw message and remove it from outqueue
+                             * (so that it is displayed only one time, even if
+                             * message is sent in many chunks)
+                             */
+                            relay_raw_print (ptr_client,
+                                             ptr_client->outqueue->raw_flags[i],
+                                             ptr_client->outqueue->raw_message[i],
+                                             ptr_client->outqueue->raw_size[i]);
+                            ptr_client->outqueue->raw_flags[i] = 0;
+                            free (ptr_client->outqueue->raw_message[i]);
+                            ptr_client->outqueue->raw_message[i] = NULL;
+                            ptr_client->outqueue->raw_size[i] = 0;
+                        }
+                    }
                     if (num_sent > 0)
                     {
                         ptr_client->bytes_sent += num_sent;
@@ -644,6 +986,8 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
 #ifdef HAVE_GNUTLS
         new_client->hook_timer_handshake = NULL;
 #endif
+        new_client->websocket = 0;
+        new_client->http_headers = NULL;
         new_client->address = strdup ((address) ? address : "?");
         new_client->status = RELAY_STATUS_CONNECTED;
         new_client->protocol = server->protocol;
@@ -656,6 +1000,22 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
         new_client->last_activity = new_client->start_time;
         new_client->bytes_recv = 0;
         new_client->bytes_sent = 0;
+        switch (new_client->protocol)
+        {
+            case RELAY_PROTOCOL_WEECHAT:
+                new_client->recv_data_type = RELAY_CLIENT_DATA_TEXT;
+                new_client->send_data_type = RELAY_CLIENT_DATA_BINARY;
+                break;
+            case RELAY_PROTOCOL_IRC:
+                new_client->recv_data_type = RELAY_CLIENT_DATA_TEXT;
+                new_client->send_data_type = RELAY_CLIENT_DATA_TEXT;
+                break;
+            default:
+                new_client->recv_data_type = RELAY_CLIENT_DATA_TEXT;
+                new_client->send_data_type = RELAY_CLIENT_DATA_TEXT;
+                break;
+        }
+        new_client->partial_message = NULL;
 
         relay_client_set_desc (new_client);
 
@@ -792,6 +1152,8 @@ relay_client_new_with_infolist (struct t_infolist *infolist)
         new_client->gnutls_sess = NULL;
         new_client->hook_timer_handshake = NULL;
 #endif
+        new_client->websocket = weechat_infolist_integer (infolist, "websocket");
+        new_client->http_headers = NULL;
         new_client->address = strdup (weechat_infolist_string (infolist, "address"));
         new_client->status = weechat_infolist_integer (infolist, "status");
         new_client->protocol = weechat_infolist_integer (infolist, "protocol");
@@ -816,6 +1178,10 @@ relay_client_new_with_infolist (struct t_infolist *infolist)
                 "%lu", &(new_client->bytes_recv));
         sscanf (weechat_infolist_string (infolist, "bytes_sent"),
                 "%lu", &(new_client->bytes_sent));
+        new_client->recv_data_type = weechat_infolist_integer (infolist, "recv_data_type");
+        new_client->send_data_type = weechat_infolist_integer (infolist, "send_data_type");
+        str = weechat_infolist_string (infolist, "partial_message");
+        new_client->partial_message = (str) ? strdup (str) : NULL;
 
         str = weechat_infolist_string (infolist, "desc");
         if (str)
@@ -972,8 +1338,12 @@ relay_client_free (struct t_relay_client *client)
     if (client->hook_timer_handshake)
         weechat_unhook (client->hook_timer_handshake);
 #endif
+    if (client->http_headers)
+        weechat_hashtable_free (client->http_headers);
     if (client->hook_fd)
         weechat_unhook (client->hook_fd);
+    if (client->partial_message)
+        free (client->partial_message);
     if (client->protocol_data)
     {
         switch (client->protocol)
@@ -1078,6 +1448,8 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_pointer (ptr_item, "hook_timer_handshake", client->hook_timer_handshake))
         return 0;
 #endif
+    if (!weechat_infolist_new_var_integer (ptr_item, "websocket", client->websocket))
+        return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "address", client->address))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "status", client->status))
@@ -1107,6 +1479,12 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
         return 0;
     snprintf (value, sizeof (value), "%lu", client->bytes_sent);
     if (!weechat_infolist_new_var_string (ptr_item, "bytes_sent", value))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "recv_data_type", client->recv_data_type))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "send_data_type", client->send_data_type))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "partial_message", client->partial_message))
         return 0;
 
     switch (client->protocol)
@@ -1146,6 +1524,10 @@ relay_client_print_log ()
         weechat_log_printf ("  gnutls_sess . . . . . : 0x%lx", ptr_client->gnutls_sess);
         weechat_log_printf ("  hook_timer_handshake. : 0x%lx", ptr_client->hook_timer_handshake);
 #endif
+        weechat_log_printf ("  websocket . . . . . . : %d",   ptr_client->websocket);
+        weechat_log_printf ("  http_headers. . . . . : 0x%lx (hashtable: '%s')",
+                            ptr_client->http_headers,
+                            weechat_hashtable_get_string (ptr_client->http_headers, "keys_values"));
         weechat_log_printf ("  address . . . . . . . : '%s'", ptr_client->address);
         weechat_log_printf ("  status. . . . . . . . : %d (%s)",
                             ptr_client->status,
@@ -1162,6 +1544,13 @@ relay_client_print_log ()
         weechat_log_printf ("  last_activity . . . . : %ld",   ptr_client->last_activity);
         weechat_log_printf ("  bytes_recv. . . . . . : %lu",   ptr_client->bytes_recv);
         weechat_log_printf ("  bytes_sent. . . . . . : %lu",   ptr_client->bytes_sent);
+        weechat_log_printf ("  recv_data_type. . . . : %d (%s)",
+                            ptr_client->recv_data_type,
+                            relay_client_data_type_string[ptr_client->recv_data_type]);
+        weechat_log_printf ("  send_data_type. . . . : %d (%s)",
+                            ptr_client->send_data_type,
+                            relay_client_data_type_string[ptr_client->send_data_type]);
+        weechat_log_printf ("  partial_message . . . : '%s'",  ptr_client->partial_message);
         weechat_log_printf ("  protocol_data . . . . : 0x%lx", ptr_client->protocol_data);
         switch (ptr_client->protocol)
         {

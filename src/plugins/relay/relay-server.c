@@ -286,7 +286,7 @@ relay_server_sock_cb (void *data, int fd)
     if (relay_config_regex_allowed_ips
         && (regexec (relay_config_regex_allowed_ips, ptr_ip_address, 0, NULL, 0) != 0))
     {
-        if (weechat_relay_plugin->debug >= 2)
+        if (weechat_relay_plugin->debug >= 1)
         {
             weechat_printf (NULL,
                             _("%s%s: IP address \"%s\" not allowed for relay"),

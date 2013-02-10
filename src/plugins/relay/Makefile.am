@@ -52,7 +52,9 @@ relay_la_SOURCES = relay.c \
                    relay-server.c \
                    relay-server.h \
                    relay-upgrade.c \
-                   relay-upgrade.h
+                   relay-upgrade.h \
+                   relay-websocket.c \
+                   relay-websocket.h
 
 relay_la_LDFLAGS = -module
 relay_la_LIBADD  = $(RELAY_LFLAGS) $(ZLIB_LFLAGS) $(GNUTLS_LFLAGS)

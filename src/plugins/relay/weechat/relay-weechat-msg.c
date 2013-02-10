@@ -958,7 +958,7 @@ relay_weechat_msg_send (struct t_relay_client *client,
                         struct t_relay_weechat_msg *msg)
 {
     uint32_t size32;
-    char compression;
+    char compression, raw_message[1024];
     int rc;
     Bytef *dest;
     uLongf dest_size;
@@ -986,16 +986,17 @@ relay_weechat_msg_send (struct t_relay_client *client,
                 dest[4] = 1;
 
                 /* display message in raw buffer */
-                relay_raw_print (client, RELAY_RAW_FLAG_SEND,
-                                 "obj: %d/%d bytes (%d%%, %ldms), id: %s",
-                                 (int)dest_size + 5,
-                                 msg->data_size,
-                                 100 - ((((int)dest_size + 5) * 100) / msg->data_size),
-                                 time_diff,
-                                 msg->id);
+                snprintf (raw_message, sizeof (raw_message),
+                          "obj: %d/%d bytes (%d%%, %ldms), id: %s",
+                          (int)dest_size + 5,
+                          msg->data_size,
+                          100 - ((((int)dest_size + 5) * 100) / msg->data_size),
+                          time_diff,
+                          msg->id);
 
                 /* send compressed data */
-                relay_client_send (client, (const char *)dest, dest_size + 5);
+                relay_client_send (client, (const char *)dest, dest_size + 5,
+                                   raw_message);
 
                 free (dest);
                 return;
@@ -1012,12 +1013,10 @@ relay_weechat_msg_send (struct t_relay_client *client,
     compression = 0;
     relay_weechat_msg_set_bytes (msg, 4, &compression, 1);
 
-    /* display message in raw buffer */
-    relay_raw_print (client, RELAY_RAW_FLAG_SEND,
-                     "obj: %d bytes", msg->data_size);
-
     /* send uncompressed data */
-    relay_client_send (client, msg->data, msg->data_size);
+    snprintf (raw_message, sizeof (raw_message),
+              "obj: %d bytes", msg->data_size);
+    relay_client_send (client, msg->data, msg->data_size, raw_message);
 }
 
 /*

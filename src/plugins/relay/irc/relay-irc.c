@@ -231,13 +231,12 @@ relay_irc_sendf (struct t_relay_client *client, const char *format, ...)
                 str_message = weechat_hashtable_get (hashtable_out, hash_key);
                 if (!str_message)
                     break;
-                relay_raw_print (client, RELAY_RAW_FLAG_SEND, "%s", str_message);
                 length = strlen (str_message) + 16 + 1;
                 message = malloc (length);
                 if (message)
                 {
                     snprintf (message, length, "%s\r\n", str_message);
-                    relay_client_send (client, message, strlen (message));
+                    relay_client_send (client, message, strlen (message), NULL);
                     free (message);
                 }
                 number++;
@@ -1290,9 +1289,9 @@ relay_irc_recv_command_capab (struct t_relay_client *client,
  */
 
 void
-relay_irc_recv_one_msg (struct t_relay_client *client, char *data)
+relay_irc_recv (struct t_relay_client *client, const char *data)
 {
-    char *pos, str_time[128], str_signal[128], str_server_channel[256];
+    char str_time[128], str_signal[128], str_server_channel[256];
     char str_command[128], *target, **irc_argv;
     const char *irc_command, *irc_channel, *irc_args, *irc_args2;
     int irc_argc, redirect_msg;
@@ -1304,11 +1303,6 @@ relay_irc_recv_one_msg (struct t_relay_client *client, char *data)
     irc_argv = NULL;
     irc_argc = 0;
 
-    /* remove \r at the end of message */
-    pos = strchr (data, '\r');
-    if (pos)
-        pos[0] = '\0';
-
     /* display debug message */
     if (weechat_relay_plugin->debug >= 2)
     {
@@ -1319,9 +1313,6 @@ relay_irc_recv_one_msg (struct t_relay_client *client, char *data)
                         RELAY_COLOR_CHAT,
                         data);
     }
-
-    /* display message in raw buffer */
-    relay_raw_print (client, RELAY_RAW_FLAG_RECV, "%s", data);
 
     /* parse IRC message */
     hash_parsed = relay_irc_message_parse (data);
@@ -1705,27 +1696,6 @@ end:
         weechat_hashtable_free (hash_parsed);
     if (irc_argv)
         weechat_string_free_split (irc_argv);
-}
-
-/*
- * Reads data from a client.
- */
-
-void
-relay_irc_recv (struct t_relay_client *client, const char *data)
-{
-    char **items;
-    int items_count, i;
-
-    items = weechat_string_split (data, "\n", 0, 0, &items_count);
-    if (items)
-    {
-        for (i = 0; i < items_count; i++)
-        {
-            relay_irc_recv_one_msg (client, items[i]);
-        }
-        weechat_string_free_split (items);
-    }
 }
 
 /*

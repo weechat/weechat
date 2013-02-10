@@ -2428,6 +2428,30 @@ Et ajoutez le relai avec SSL, par exemple :
 /relay add ssl.weechat 9001
 ----------------------------------------
 
+[[relay_websocket]]
+Websocket
+^^^^^^^^^
+
+Le protocole WebSocket (http://tools.ietf.org/html/rfc6455[RFC 6455]) est
+supporté dans l'extension Relay pour tous les protocoles.
+
+La poignée de main ("handshake") WebSocket est automatiquement détectée et le
+socket devient prêt pour WebSocket si les en-tête requis sont trouvés dans la
+poignée de main et si l'origine est autorisée (voir l'option
+<<option_relay.network.websocket_allowed_origins,relay.network.websocket_allowed_origins>>).
+
+Un WebSocket peut être ouvert dans une page HTML5 avec une seule ligne de
+JavaScript :
+
+[source,js]
+----------------------------------------
+websocket = new WebSocket("ws://server.com:5000/weechat");
+----------------------------------------
+
+Le port (5000 dans l'exemple) est le port défini dans l'extension Relay.
+L'URI doit toujours se terminer par "/weechat" (pour les protocoles IRC et
+WeeChat).
+
 [[rmodifier_plugin]]
 Extension Rmodifier
 ~~~~~~~~~~~~~~~~~~~

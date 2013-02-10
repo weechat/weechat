@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-02-01 11:12+0100\n"
+"POT-Creation-Date: 2013-02-10 20:17+0100\n"
 "PO-Revision-Date: 2013-01-20 12:08+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7210,6 +7210,18 @@ msgid "%s%s: TLS handshake timeout for client %s%s%s"
 msgstr "%s инициализация gnutls не удалось\n"
 
 #, fuzzy, c-format
+msgid "%s%s: invalid websocket handshake received for client %s%s%s"
+msgstr "%s инициализация gnutls не удалось\n"
+
+#, fuzzy, c-format
+msgid "%s%s: origin \"%s\" not allowed for websocket"
+msgstr "%s адрес \"%s\" не найден\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error decoding websocket frame for client %s%s%s"
+msgstr "%s ошибка при отправке данных IRC серверу\n"
+
+#, fuzzy, c-format
 msgid "%s%s: reading data on socket for client %s%s%s: error %d %s"
 msgstr "%s ошибка при отправке данных IRC серверу\n"
 
@@ -7438,6 +7450,12 @@ msgstr ""
 
 msgid ""
 "file with SSL certificate and private key (for serving clients with SSL)"
+msgstr ""
+
+msgid ""
+"regular expression with origins allowed in websockets (case insensitive, use "
+"\"(?-i)\" at beginning to make it case sensitive), example: \"^http://(www"
+"\\.)?example\\.(com|org)\""
 msgstr ""
 
 #, fuzzy

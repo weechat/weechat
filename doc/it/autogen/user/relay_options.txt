@@ -113,3 +113,8 @@
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"%h/ssl/relay.pem"`)
 
+* [[option_relay.network.websocket_allowed_origins]] *relay.network.websocket_allowed_origins*
+** descrizione: `regular expression with origins allowed in websockets (case insensitive, use "(?-i)" at beginning to make it case sensitive), example: "^http://(www\.)?example\.(com|org)"`
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: `""`)
+
