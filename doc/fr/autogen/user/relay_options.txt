@@ -94,7 +94,7 @@
 ** valeurs: 0 .. 9 (valeur par défaut: `6`)
 
 * [[option_relay.network.ipv6]] *relay.network.ipv6*
-** description: `écouter en IPv6 sur la socket par défaut (en plus de l'IPv4 qui est par défaut); les protocoles IPv4 et IPv6 peuvent être forcés (individuellement ou ensemble) dans le nom du protocole (voir /help relay)`
+** description: `écouter en IPv6 sur le socket par défaut (en plus de l'IPv4 qui est par défaut); les protocoles IPv4 et IPv6 peuvent être forcés (individuellement ou ensemble) dans le nom du protocole (voir /help relay)`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 

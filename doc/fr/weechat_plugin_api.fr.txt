@@ -6971,7 +6971,7 @@ Paramètres :
 * 'flag_write' : 1 = intercepter un évènement d'éctiture, 0 = ignorer
 * 'flag_exception' : 1 = intercepter un évènement d'exception, 0 = ignorer
 * 'callback' : fonction appelée lorsqu'un des évènements sélectionnés se
-  produit pour le fichier (ou la socket), paramètres et valeur de retour :
+  produit pour le fichier (ou le socket), paramètres et valeur de retour :
 ** 'void *data' : pointeur
 ** 'int fd' : descripteur de fichier
 ** valeur de retour :
@@ -6996,7 +6996,7 @@ my_fd_cb (void *data, int fd)
 }
 
 int sock = socket (AF_INET, SOCK_STREAM, 0);
-/* définir les options de la socket */
+/* définir les options du socket */
 /* ... */
 struct t_hook *my_fd_hook = weechat_hook_fd (sock, 1, 0, 0, &my_fd_cb, NULL);
 ----------------------------------------
@@ -7411,7 +7411,7 @@ Paramètres :
 *** 'WEECHAT_HOOK_CONNECT_TIMEOUT' : temps maximum dépassé
 *** 'WEECHAT_HOOK_CONNECT_SOCKET_ERROR' : erreur de création socket
 ** 'gnutls_rc' : valeur retour de 'gnutls_handshake()'
-** 'sock' : socket utilisée pour la connexion
+** 'sock' : socket utilisé pour la connexion
 ** 'const char *error' : valeur retour de 'gnutls_strerror(gnutls_rc)'
 ** 'const char *ip_address' : adresse IP trouvée
 ** valeur de retour :

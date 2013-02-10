@@ -22,7 +22,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2013-02-10 20:17+0100\n"
-"PO-Revision-Date: 2013-02-10 08:29+0100\n"
+"PO-Revision-Date: 2013-02-10 22:11+0100\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -7334,7 +7334,7 @@ msgstr "%s%s: mémoire insuffisante pour un message reçu"
 
 #, c-format
 msgid "%s%s: reading data on socket: error %d %s"
-msgstr "%s%s: lecture de données sur la socket: erreur %d %s"
+msgstr "%s%s: lecture de données sur le socket: erreur %d %s"
 
 msgid "(connection closed by peer)"
 msgstr "(connexion fermée par l'hôte distant)"
@@ -7438,7 +7438,7 @@ msgstr "%s%s: délai d'attente dépassé"
 
 #, c-format
 msgid "%s%s: unable to create socket"
-msgstr "%s%s: impossible de créer la socket"
+msgstr "%s%s: impossible de créer le socket"
 
 #, c-format
 msgid "%sgnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
@@ -8159,7 +8159,7 @@ msgstr "%s%s: erreur de décodage d'un message websocket pour le client %s%s%s"
 #, c-format
 msgid "%s%s: reading data on socket for client %s%s%s: error %d %s"
 msgstr ""
-"%s%s: lecture de données sur la socket pour le client %s%s%s: erreur %d %s"
+"%s%s: lecture de données sur le socket pour le client %s%s%s: erreur %d %s"
 
 #, c-format
 msgid "%s%s: sending data to client %s%s%s: error %d %s"
@@ -8415,7 +8415,7 @@ msgid ""
 "protocols IPv4 and IPv6 can be forced (individually or together) in the "
 "protocol name (see /help relay)"
 msgstr ""
-"écouter en IPv6 sur la socket par défaut (en plus de l'IPv4 qui est par "
+"écouter en IPv6 sur le socket par défaut (en plus de l'IPv4 qui est par "
 "défaut); les protocoles IPv4 et IPv6 peuvent être forcés (individuellement "
 "ou ensemble) dans le nom du protocole (voir /help relay)"
 
@@ -8498,7 +8498,7 @@ msgstr "Messages bruts Relay"
 
 #, c-format
 msgid "%s: socket closed for %s (port %d)"
-msgstr "%s: socket fermée pour %s (port %d)"
+msgstr "%s: socket fermé pour %s (port %d)"
 
 #, c-format
 msgid "%s%s: cannot accept client on port %d (%s): error %d %s"
@@ -8515,7 +8515,7 @@ msgstr "%s%s: impossible d'activer l'option socket \"%s\" à %d: erreur %d %s"
 
 #, c-format
 msgid "%s%s: cannot create socket: error %d %s"
-msgstr "%s%s: impossible de créer la socket: erreur %d %s"
+msgstr "%s%s: impossible de créer le socket: erreur %d %s"
 
 #, c-format
 msgid "%s%s: try /set relay.network.ipv6 off"
@@ -9621,7 +9621,7 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: cannot create socket for xfer: error %d %s"
-msgstr "%s%s: impossible de créer la socket pour le xfer: erreur %d %s"
+msgstr "%s%s: impossible de créer le socket pour le xfer: erreur %d %s"
 
 #, c-format
 msgid "%s%s: cannot find available port for xfer"
@@ -9882,12 +9882,12 @@ msgstr ""
 #, c-format
 msgid "%s%s: unable to create socket for sending file: error %d %s"
 msgstr ""
-"%s%s: impossible de créer la socket pour l'envoi du fichier: erreur %d %s"
+"%s%s: impossible de créer le socket pour l'envoi du fichier: erreur %d %s"
 
 #, c-format
 msgid "%s%s: unable to set option \"nonblock\" for socket: error %d %s"
 msgstr ""
-"%s%s: impossible de positionner l'option \"nonblock\" pour la socket: erreur "
+"%s%s: impossible de positionner l'option \"nonblock\" pour le socket: erreur "
 "%d %s"
 
 #, c-format
