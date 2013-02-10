@@ -213,7 +213,7 @@ Plugins
 |       irc-msgbuffer.c             | Target buffer for IRC messages
 |       irc-nick.c                  | IRC nicks
 |       irc-notify.c                | IRC notify lists
-|       irc-protocol.c              | IRC protocol
+|       irc-protocol.c              | IRC protocol (RFCs 1459/2810/2811/2812/2813)
 |       irc-raw.c                   | IRC raw buffer
 |       irc-redirect.c              | Redirection of IRC command output
 |       irc-sasl.c                  | SASL authentication with IRC server
