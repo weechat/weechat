@@ -263,9 +263,12 @@ relay_websocket_send_http (struct t_relay_client *client,
 int
 relay_websocket_decode_frame (const unsigned char *buffer,
                               unsigned long long length,
-                              unsigned char *decoded)
+                              unsigned char *decoded,
+                              unsigned long long *decoded_length)
 {
     unsigned long long i, index, length_frame_size, length_frame;
+
+    *decoded_length = 0;
 
     if (length < 2)
         return 0;
@@ -311,6 +314,8 @@ relay_websocket_decode_frame (const unsigned char *buffer,
         decoded[i] = (int)((unsigned char)buffer[index + i]) ^ masks[i % 4];
     }
     decoded[length_frame] = '\0';
+
+    *decoded_length = length_frame;
 
     return 1;
 }

@@ -28,8 +28,9 @@ extern char *relay_websocket_build_handshake (struct t_relay_client *client);
 extern void relay_websocket_send_http (struct t_relay_client *client,
                                        const char *http);
 extern int relay_websocket_decode_frame (const unsigned char *buffer,
-                                         int length,
-                                         unsigned char *decoded);
+                                         unsigned long long length,
+                                         unsigned char *decoded,
+                                         unsigned long long *decoded_length);
 extern char *relay_websocket_encode_frame (struct t_relay_client *client,
                                            const char *buffer,
                                            unsigned long long length,

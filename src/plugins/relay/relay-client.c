@@ -391,9 +391,10 @@ int
 relay_client_recv_cb (void *arg_client, int fd)
 {
     struct t_relay_client *client;
-    static char buffer[4096], decoded[4096];
+    static char buffer[4096], decoded[4096 + 1];
     const char *ptr_buffer;
-    int num_read;
+    int num_read, rc;
+    unsigned long long decoded_length;
 
     /* make C compiler happy */
     (void) fd;
@@ -443,8 +444,11 @@ relay_client_recv_cb (void *arg_client, int fd)
         if (client->websocket == 2)
         {
             /* websocket used, decode message */
-            if (!relay_websocket_decode_frame ((unsigned char *)buffer, num_read,
-                                               (unsigned char *)decoded))
+            rc = relay_websocket_decode_frame ((unsigned char *)buffer,
+                                               (unsigned long long)num_read,
+                                               (unsigned char *)decoded,
+                                               &decoded_length);
+            if (!rc || (decoded_length == 0))
             {
                 /* error when decoding frame: close connection */
                 weechat_printf_tags (NULL, "relay_client",
@@ -458,6 +462,7 @@ relay_client_recv_cb (void *arg_client, int fd)
                 return WEECHAT_RC_OK;
             }
             ptr_buffer = decoded;
+            num_read = (int)decoded_length;
         }
 
         if ((client->websocket == 1)
