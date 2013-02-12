@@ -8034,6 +8034,12 @@ Argomenti:
   puntatore: finestra |
   window closed
 
+// TRANSLATION MISSING
+| weechat | window_opened +
+  (_novità nella versione 0.4.1_) |
+  puntatore: finestra |
+  window opened
+
 | weechat | window_scrolled |
   puntatore: finestra |
   scroll nella finestra

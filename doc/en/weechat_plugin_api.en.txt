@@ -7951,6 +7951,11 @@ Arguments:
   pointer: window |
   window closed
 
+| weechat | window_opened +
+  (_new in version 0.4.1_) |
+  pointer: window |
+  window opened
+
 | weechat | window_scrolled |
   pointer: window |
   scroll in window

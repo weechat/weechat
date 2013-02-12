@@ -8064,6 +8064,11 @@ Paramètres :
   pointeur : fenêtre |
   fenêtre fermée
 
+| weechat | window_opened +
+  (_nouveau dans la version 0.4.1_) |
+  pointeur : fenêtre |
+  fenêtre ouverte
+
 | weechat | window_scrolled |
   pointeur : fenêtre |
   défilement dans la fenêtre
