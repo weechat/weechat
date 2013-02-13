@@ -5657,7 +5657,7 @@ Prototype:
 
 [source,C]
 ----------------------------------------
-void weechat_config_section_free (struct t_config_option *option);
+void weechat_config_section_free (struct t_config_section *section);
 ----------------------------------------
 
 Arguments:
