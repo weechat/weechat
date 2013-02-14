@@ -7,6 +7,7 @@ v0.4.1-dev, 2013-02-12
 Version 0.4.1 (under dev!)
 --------------------------
 
+* core: fix detection of iconv with cmake on OS X (bug #38321)
 * core: add signal "window_opened" (task #12464)
 * core: fix structures before buffer data when a buffer is closed
 * core: fix refresh of line after changes with hdata_update (update flag
