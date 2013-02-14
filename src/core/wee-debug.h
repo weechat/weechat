@@ -28,6 +28,7 @@ extern void debug_memory ();
 extern void debug_hdata ();
 extern void debug_hooks ();
 extern void debug_infolists ();
+extern void debug_directories ();
 extern void debug_init ();
 
 #endif /* __WEECHAT_DEBUG_H */

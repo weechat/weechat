@@ -1414,6 +1414,10 @@ COMMAND_CALLBACK(debug)
     {
         debug_windows_tree ();
     }
+    else if (string_strcasecmp (argv[1], "dirs") == 0)
+    {
+        debug_directories ();
+    }
     else if (string_strcasecmp (argv[1], "set") == 0)
     {
         COMMAND_MIN_ARGS(4, "debug set");
@@ -5943,6 +5947,7 @@ command_init ()
                      "in log file\n"
                      "    color: display infos about current color pairs\n"
                      "   cursor: toggle debug for cursor mode\n"
+                     "     dirs: display directories\n"
                      "    hdata: display infos about hdata (with free: remove "
                      "all hdata in memory)\n"
                      "    hooks: display infos about hooks\n"
@@ -5958,6 +5963,7 @@ command_init ()
                   " || buffer"
                   " || color"
                   " || cursor verbose"
+                  " || dirs"
                   " || hdata free"
                   " || hooks"
                   " || infolists"

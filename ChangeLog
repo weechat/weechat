@@ -1,12 +1,13 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.1-dev, 2013-02-12
+v0.4.1-dev, 2013-02-14
 
 
 Version 0.4.1 (under dev!)
 --------------------------
 
+* core: add option "dirs" for command /debug
 * core: fix detection of iconv with cmake on OS X (bug #38321)
 * core: add signal "window_opened" (task #12464)
 * core: fix structures before buffer data when a buffer is closed

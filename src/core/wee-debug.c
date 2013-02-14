@@ -540,6 +540,22 @@ debug_infolists ()
 }
 
 /*
+ * Displays WeeChat directories.
+ */
+
+void
+debug_directories ()
+{
+    gui_chat_printf (NULL, "");
+    gui_chat_printf (NULL, _("Directories:"));
+    gui_chat_printf (NULL, "  home  : %s (%s: %s)",
+                     weechat_home, _("default"), WEECHAT_HOME);
+    gui_chat_printf (NULL, "  lib   : %s", WEECHAT_LIBDIR);
+    gui_chat_printf (NULL, "  share : %s", WEECHAT_SHAREDIR);
+    gui_chat_printf (NULL, "  locale: %s", LOCALEDIR);
+}
+
+/*
  * Hooks signals for debug.
  */
 

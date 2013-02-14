@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-02-10 20:17+0100\n"
+"POT-Creation-Date: 2013-02-14 20:40+0100\n"
 "PO-Revision-Date: 2013-02-03 12:13+0100\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1190,6 +1190,7 @@ msgstr ""
 "list || set <plugin> <livello> || dump [<plugin>] || buffer|color|infolists|"
 "memory|tags|term|windows || mouse|cursor [verbose] || hdata [free]"
 
+#, fuzzy
 msgid ""
 "     list: list plugins with debug levels\n"
 "      set: set debug level for plugin\n"
@@ -1200,6 +1201,7 @@ msgid ""
 "   buffer: dump buffer content with hexadecimal values in log file\n"
 "    color: display infos about current color pairs\n"
 "   cursor: toggle debug for cursor mode\n"
+"     dirs: display directories\n"
 "    hdata: display infos about hdata (with free: remove all hdata in "
 "memory)\n"
 "    hooks: display infos about hooks\n"
@@ -3385,6 +3387,13 @@ msgstr "Uso della memoria (consultare \"man mallinfo\" per aiuto):"
 
 msgid "Memory usage not available (function \"mallinfo\" not found)"
 msgstr "Uso della memoria non disponibile (funzione \"mallinfo\" non trovata)"
+
+msgid "Directories:"
+msgstr ""
+
+#, fuzzy
+msgid "default"
+msgstr "predefinito: "
 
 #, c-format
 msgid "%sError: another command \"%s\" already exists for plugin \"%s\""
