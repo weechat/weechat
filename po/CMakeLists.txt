@@ -31,7 +31,8 @@ SET(PO_FILES
   )
 
 SET(BUGS_ADDRESS "flashcode@flashtux.org")
-SET(POT_FILE ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.pot)
+SET(POT_FILE ${PROJECT_NAME}.pot)
+SET(POT_FILE_PATH ${CMAKE_CURRENT_BINARY_DIR}/${POT_FILE})
 
 INCLUDE(srcfiles.cmake)
 
@@ -52,31 +53,48 @@ IF(XGETTEXT_EXECUTABLE AND MSGMERGE_EXECUTABLE AND MSGFMT_EXECUTABLE)
   ENDFOREACH(srcfile ${WEECHAT_SOURCES})
 
   ADD_CUSTOM_COMMAND(
-    OUTPUT ${POT_FILE}
+    OUTPUT ${POT_FILE_PATH}
     COMMAND ${XGETTEXT_EXECUTABLE}
-    ARGS -o ${POT_FILE} --add-comments='TRANSLATORS:' --keyword='_' --keyword='weechat_gettext' --keyword='N_' --keyword='NG_:1,2' --keyword='weechat_ngettext:1,2' --no-location --directory=${CMAKE_SOURCE_DIR} --msgid-bugs-address=${BUGS_ADDRESS} --copyright-holder='' ${SRC_FILES}
+    ARGS -o ${POT_FILE_PATH} --add-comments='TRANSLATORS:' --keyword='_' --keyword='weechat_gettext' --keyword='N_' --keyword='NG_:1,2' --keyword='weechat_ngettext:1,2' --no-location --directory=${CMAKE_SOURCE_DIR} --package-name='WeeChat' --package-version=${VERSION} --msgid-bugs-address=${BUGS_ADDRESS} --copyright-holder='NAME' ${SRC_FILES}
     DEPENDS ${POT_DEPENDS}
-    COMMENT "Generating PO template file"
+    COMMENT "Generating ${POT_FILE}"
     )
 
-  # Update .po files and compile them to binary .gmo files
   SET(GMO_FILES)
   FOREACH(pofile ${PO_FILES})
     GET_FILENAME_COMPONENT(polang ${pofile} NAME_WE)
 
+    # Compile .po files in build directory (to binary .gmo files)
     SET(gmofile ${CMAKE_CURRENT_BINARY_DIR}/${polang}.gmo)
     ADD_CUSTOM_COMMAND(
       OUTPUT ${gmofile}
-      COMMAND ${MSGMERGE_EXECUTABLE} ARGS --quiet -o ${CMAKE_CURRENT_BINARY_DIR}/${pofile} ${CMAKE_CURRENT_SOURCE_DIR}/${pofile} ${POT_FILE}
+      COMMAND ${MSGMERGE_EXECUTABLE} ARGS --quiet -o ${CMAKE_CURRENT_BINARY_DIR}/${pofile} ${CMAKE_CURRENT_SOURCE_DIR}/${pofile} ${POT_FILE_PATH}
       COMMAND ${MSGFMT_EXECUTABLE} ARGS -o ${gmofile} ${CMAKE_CURRENT_BINARY_DIR}/${pofile}
-      COMMAND ${MSGFMT_EXECUTABLE} ARGS -c --statistics --output-file=/dev/null ${CMAKE_CURRENT_BINARY_DIR}/${pofile}
-      DEPENDS ${POT_FILE} ${CMAKE_CURRENT_SOURCE_DIR}/${pofile}
-      COMMENT "Compiling locales (${polang})"
+      COMMAND ${MSGFMT_EXECUTABLE} ARGS -c --statistics --verbose --output-file=/dev/null ${CMAKE_CURRENT_BINARY_DIR}/${pofile}
+      DEPENDS ${POT_FILE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/${pofile}
+      COMMENT "Compiling ${polang}.po"
+      )
+
+    # Update .po files in source directory (if needed)
+    ADD_CUSTOM_TARGET(
+      ${pofile}
+      COMMAND ${MSGMERGE_EXECUTABLE} --quiet --update --backup=none ${CMAKE_CURRENT_SOURCE_DIR}/${pofile} ${POT_FILE_PATH}
+      COMMENT "Updating ${polang}.po"
       )
 
     INSTALL(FILES ${gmofile} DESTINATION ${LOCALEDIR}/${polang}/LC_MESSAGES RENAME ${PROJECT_NAME}.mo)
     SET(GMO_FILES ${GMO_FILES} ${gmofile})
   ENDFOREACH(pofile ${PO_FILES})
+
+  # Update weechat.pot in source directory (if needed)
+  ADD_CUSTOM_TARGET(
+    ${POT_FILE}
+    COMMAND ${MSGMERGE_EXECUTABLE} --quiet --update --backup=none ${CMAKE_CURRENT_SOURCE_DIR}/${POT_FILE} ${POT_FILE_PATH}
+    COMMENT "Updating ${POT_FILE}"
+    )
+
   ADD_CUSTOM_TARGET(translations ALL DEPENDS ${GMO_FILES})
+
+  ADD_CUSTOM_TARGET(update-po DEPENDS ${POT_FILE} ${PO_FILES})
 
 ENDIF(XGETTEXT_EXECUTABLE AND MSGMERGE_EXECUTABLE AND MSGFMT_EXECUTABLE)
