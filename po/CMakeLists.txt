@@ -61,6 +61,7 @@ IF(XGETTEXT_EXECUTABLE AND MSGMERGE_EXECUTABLE AND MSGFMT_EXECUTABLE)
     )
 
   SET(GMO_FILES)
+  SET(UPDATE_PO_TARGETS)
   FOREACH(pofile ${PO_FILES})
     GET_FILENAME_COMPONENT(polang ${pofile} NAME_WE)
 
@@ -77,24 +78,26 @@ IF(XGETTEXT_EXECUTABLE AND MSGMERGE_EXECUTABLE AND MSGFMT_EXECUTABLE)
 
     # Update .po files in source directory (if needed)
     ADD_CUSTOM_TARGET(
-      ${pofile}
+      update-${pofile}
       COMMAND ${MSGMERGE_EXECUTABLE} --quiet --update --backup=none ${CMAKE_CURRENT_SOURCE_DIR}/${pofile} ${POT_FILE_PATH}
       COMMENT "Updating ${polang}.po"
       )
+    SET(UPDATE_PO_TARGETS ${UPDATE_PO_TARGETS} update-${pofile})
 
     INSTALL(FILES ${gmofile} DESTINATION ${LOCALEDIR}/${polang}/LC_MESSAGES RENAME ${PROJECT_NAME}.mo)
     SET(GMO_FILES ${GMO_FILES} ${gmofile})
   ENDFOREACH(pofile ${PO_FILES})
 
+  ADD_CUSTOM_TARGET(translations ALL DEPENDS ${GMO_FILES})
+
   # Update weechat.pot in source directory (if needed)
   ADD_CUSTOM_TARGET(
-    ${POT_FILE}
+    update-${POT_FILE}
     COMMAND ${MSGMERGE_EXECUTABLE} --quiet --update --backup=none ${CMAKE_CURRENT_SOURCE_DIR}/${POT_FILE} ${POT_FILE_PATH}
     COMMENT "Updating ${POT_FILE}"
     )
 
-  ADD_CUSTOM_TARGET(translations ALL DEPENDS ${GMO_FILES})
-
-  ADD_CUSTOM_TARGET(update-po DEPENDS ${POT_FILE} ${PO_FILES})
+  # Update all .po and weechat.pot in source directory (if needed)
+  ADD_CUSTOM_TARGET(update-po DEPENDS update-${POT_FILE} ${UPDATE_PO_TARGETS})
 
 ENDIF(XGETTEXT_EXECUTABLE AND MSGMERGE_EXECUTABLE AND MSGFMT_EXECUTABLE)
