@@ -959,7 +959,7 @@ irc_server_alloc (const char *name)
     new_server->last_notify = NULL;
     new_server->join_manual = weechat_hashtable_new (32,
                                                      WEECHAT_HASHTABLE_STRING,
-                                                     WEECHAT_HASHTABLE_INTEGER,
+                                                     WEECHAT_HASHTABLE_TIME,
                                                      NULL,
                                                      NULL);
     new_server->join_channel_key = weechat_hashtable_new (32,
@@ -969,7 +969,7 @@ irc_server_alloc (const char *name)
                                                           NULL);
     new_server->join_noswitch = weechat_hashtable_new (32,
                                                        WEECHAT_HASHTABLE_STRING,
-                                                       WEECHAT_HASHTABLE_STRING,
+                                                       WEECHAT_HASHTABLE_TIME,
                                                        NULL,
                                                        NULL);
     new_server->buffer = NULL;
@@ -2693,7 +2693,7 @@ irc_server_check_join_manual_cb (void *data, struct t_hashtable *hashtable,
     server = (struct t_irc_server *)data;
     if (server)
     {
-        if (*((int *)value) + (60 * 5) < time (NULL))
+        if (*((time_t *)value) + (60 * 10) < time (NULL))
             weechat_hashtable_remove (hashtable, key);
     }
 }
@@ -2712,7 +2712,7 @@ irc_server_check_join_noswitch_cb (void *data, struct t_hashtable *hashtable,
     server = (struct t_irc_server *)data;
     if (server)
     {
-        if (*((int *)value) + (60 * 5) < time (NULL))
+        if (*((time_t *)value) + (60 * 10) < time (NULL))
             weechat_hashtable_remove (hashtable, key);
     }
 }
