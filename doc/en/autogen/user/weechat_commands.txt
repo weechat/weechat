@@ -190,6 +190,7 @@ Examples:
    buffer: dump buffer content with hexadecimal values in log file
     color: display infos about current color pairs
    cursor: toggle debug for cursor mode
+     dirs: display directories
     hdata: display infos about hdata (with free: remove all hdata in memory)
     hooks: display infos about hooks
 infolists: display infos about infolists

@@ -182,22 +182,23 @@ Beispiele:
         mouse|cursor [verbose]
         hdata [free]
 
-     list: zeigt alle Erweiterungen mit Debuglevel an
-      set: setzt den Level der Protokollierung für eine Erweiterung
-   plugin: Name der Erweiterung ("core" für den WeeChat Kern)
-    level: Debuglevel der Erweiterung (0 = deaktiviert das Debug)
-     dump: Speicherabbild in die WeeChat Protokolldatei schreiben (wie bei einem Programmabsturz)
-   buffer: speichert den Bufferinhalt als hexadezimale Ausgabe in die Protokolldatei
-    color: zeigt Informationen über die aktuellen Farbpaarungen an
-   cursor: schaltet den debug-Modus für den Cursor-Modus ein/aus
-    hdata: zeigt Informationen zu hdata an (mittels free werden alle hdata Informationen aus dem Speicher entfernt)
-    hooks: zeigt die aktiven Hooks an
-infolists: zeigt Information über die Infolists an
-   memory: gibt Informationen über den genutzten Speicher aus
-    mouse: schaltet den debug-Modus für den Maus-Modus ein/aus
-     tags: zeigt für jede einzelne Zeile die dazugehörigen Schlagwörter an
-     term: gibt Informationen über das Terminal und verfügbare Farben aus
-  windows: zeigt die Fensterstruktur an
+     list: list plugins with debug levels
+      set: set debug level for plugin
+   plugin: name of plugin ("core" for WeeChat core)
+    level: debug level for plugin (0 = disable debug)
+     dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
+   buffer: dump buffer content with hexadecimal values in log file
+    color: display infos about current color pairs
+   cursor: toggle debug for cursor mode
+     dirs: display directories
+    hdata: display infos about hdata (with free: remove all hdata in memory)
+    hooks: display infos about hooks
+infolists: display infos about infolists
+   memory: display infos about memory usage
+    mouse: toggle debug for mouse
+     tags: display tags for lines
+     term: display infos about terminal
+  windows: display windows tree
 ........................................
 
 [[command_weechat_eval]]

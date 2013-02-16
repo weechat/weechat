@@ -190,6 +190,7 @@ extension: nom de l'extension ("core" pour le coeur de WeeChat)
    buffer: afficher le contenu du tampon en valeurs hexadécimales dans le fichier log
     color: afficher des infos sur les paires de couleur courantes
    cursor: activer/désactiver le debug pour le mode curseur
+     dirs: afficher les répertoires
     hdata: afficher des infos sur les hdata (avec free: supprimer tous les hdata en mémoire)
     hooks: afficher des infos sur les hooks
 infolists: afficher des infos sur les infolists

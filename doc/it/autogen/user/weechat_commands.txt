@@ -182,22 +182,23 @@ Esempi:
         mouse|cursor [verbose]
         hdata [free]
 
-     list: elenca i plugin con i livelli di debug
-      set: imposta il livello di debug per il plugin
-   plugin: nome del plugin ("core" per il core di WeeChat)
-  livello: livello di debug per il plugin (0 = disattiva debug)
-     dump: salva un dump della memoria nel file di log di WeeChat (lo stesso dump viene salvato in caso di crash di WeeChat)
-   buffer: esegue un dump del contenuto del buffer con valori esadecimali nel file di log
-    color: mostra informazioni sulle coppie di colore correnti
-   cursor: abilita/disabilita debug per la modalità cursore
-    hdata: mostra informazioni su hdata (con free: rimuove tutti gli hdata in memoria)
-    hooks: mostra informazioni sugli hook
-infolists: mostra informazioni sulle liste info
-   memory: mostra informazioni sull'uso della memoria
-    mouse: abilita/disabilita debug per il mouse
-     tags: mostra tag per le righe
-     term: mostra informazioni sul terminale
-  windows: mostra l'albero delle finestre
+     list: list plugins with debug levels
+      set: set debug level for plugin
+   plugin: name of plugin ("core" for WeeChat core)
+    level: debug level for plugin (0 = disable debug)
+     dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
+   buffer: dump buffer content with hexadecimal values in log file
+    color: display infos about current color pairs
+   cursor: toggle debug for cursor mode
+     dirs: display directories
+    hdata: display infos about hdata (with free: remove all hdata in memory)
+    hooks: display infos about hooks
+infolists: display infos about infolists
+   memory: display infos about memory usage
+    mouse: toggle debug for mouse
+     tags: display tags for lines
+     term: display infos about terminal
+  windows: display windows tree
 ........................................
 
 [[command_weechat_eval]]

@@ -182,22 +182,23 @@ stop: カーソルモードを終了
         mouse|cursor [verbose]
         hdata [free]
 
-     list: デバッグレベルの設定されたプラグインをリストアップ
-      set: プラグインのデバッグレベルを設定
-   plugin: プラグインの名前 ("core" は WeeChat コアを意味する)
-    level: プラグインのデバッグレベル (0 はデバッグの無効化)
-     dump: WeeChat ログファイルにメモリダンプを保存 (WeeChat がクラッシュした場合と同じダンプが書き込まれます)
-   buffer: ログファイルに16進値でバッファ内容をダンプ
-    color: 現在の色ペアに関する情報を表示
-   cursor: カーソルモードのデバッグを切り替え
-    hdata: hdata に関する情報を表示 (free を付ければ: メモリから全ての hdata を削除)
-    hooks: フックに関する情報を表示
-infolists: infolist に関する情報を表示
-   memory: メモリ使用量に関する情報を表示
-    mouse: マウスのデバックを切り替え
-     tags: 行のタグを表示
-     term: ターミナルに関する情報を表示
-  windows: ウィンドウツリーの情報を表示
+     list: list plugins with debug levels
+      set: set debug level for plugin
+   plugin: name of plugin ("core" for WeeChat core)
+    level: debug level for plugin (0 = disable debug)
+     dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
+   buffer: dump buffer content with hexadecimal values in log file
+    color: display infos about current color pairs
+   cursor: toggle debug for cursor mode
+     dirs: display directories
+    hdata: display infos about hdata (with free: remove all hdata in memory)
+    hooks: display infos about hooks
+infolists: display infos about infolists
+   memory: display infos about memory usage
+    mouse: toggle debug for mouse
+     tags: display tags for lines
+     term: display infos about terminal
+  windows: display windows tree
 ........................................
 
 [[command_weechat_eval]]
