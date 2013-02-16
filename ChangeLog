@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.1-dev, 2013-02-14
+v0.4.1-dev, 2013-02-16
 
 
 Version 0.4.1 (under dev!)
@@ -22,6 +22,8 @@ Version 0.4.1 (under dev!)
 * aspell: add info "aspell_dict" (dictionaries used on a buffer)
 * aspell: optimization on spellers to improve speed (save state by buffer)
 * guile: fix compilation with guile 2.0
+* irc: fix memory leak in purge of hashtables with joins (it was done only for
+  the first server in the list)
 * irc: add color in output of /names when result is on server buffer (channel
   not joined) (bug #38070)
 * perl: simplify code to load scripts

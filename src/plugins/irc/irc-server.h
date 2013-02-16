@@ -194,6 +194,7 @@ struct t_irc_server
     regex_t *cmd_list_regexp;       /* compiled Regular Expression for /list */
     time_t last_user_message;       /* time of last user message (anti flood)*/
     time_t last_away_check;         /* time of last away check on server     */
+    time_t last_data_purge;         /* time of last purge (some hashtables)  */
     struct t_irc_outqueue *outqueue[2];      /* queue for outgoing messages  */
                                              /* with 2 priorities (high/low) */
     struct t_irc_outqueue *last_outqueue[2]; /* last outgoing message        */

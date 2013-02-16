@@ -418,6 +418,7 @@ irc_upgrade_read_cb (void *data,
                     irc_upgrade_current_server->lag_last_refresh = weechat_infolist_time (infolist, "lag_last_refresh");
                     irc_upgrade_current_server->last_user_message = weechat_infolist_time (infolist, "last_user_message");
                     irc_upgrade_current_server->last_away_check = weechat_infolist_time (infolist, "last_away_check");
+                    irc_upgrade_current_server->last_data_purge = weechat_infolist_time (infolist, "last_data_purge");
                 }
                 break;
             case IRC_UPGRADE_TYPE_CHANNEL:

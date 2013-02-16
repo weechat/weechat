@@ -185,6 +185,7 @@
   'cmd_list_regexp' (pointer) +
   'last_user_message' (time) +
   'last_away_check' (time) +
+  'last_data_purge' (time) +
   'outqueue' (pointer) +
   'last_outqueue' (pointer) +
   'redirects' (pointer, hdata: "irc_redirect") +

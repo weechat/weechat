@@ -105,8 +105,6 @@ char *irc_server_chanmodes_default    = "beI,k,l";
 const char *irc_server_send_default_tags = NULL;  /* default tags when       */
                                                   /* sending a message       */
 
-time_t irc_server_last_check_join_channels = 0;
-
 
 void irc_server_reconnect (struct t_irc_server *server);
 void irc_server_free_data (struct t_irc_server *server);
@@ -949,6 +947,7 @@ irc_server_alloc (const char *name)
     new_server->cmd_list_regexp = NULL;
     new_server->last_user_message = 0;
     new_server->last_away_check = 0;
+    new_server->last_data_purge = 0;
     for (i = 0; i < IRC_SERVER_NUM_OUTQUEUES_PRIO; i++)
     {
         new_server->outqueue[i] = NULL;
@@ -2831,11 +2830,8 @@ irc_server_timer_cb (void *data, int remaining_calls)
                     ptr_redirect = ptr_next_redirect;
                 }
 
-                /*
-                 * remove old channels in "join_manual" and "join_noswitch"
-                 * (every 5 minutes)
-                 */
-                if (current_time > irc_server_last_check_join_channels + (60 * 5))
+                /* purge some data (every 10 minutes) */
+                if (current_time > ptr_server->last_data_purge + (60 * 10))
                 {
                     weechat_hashtable_map (ptr_server->join_manual,
                                            &irc_server_check_join_manual_cb,
@@ -2843,7 +2839,7 @@ irc_server_timer_cb (void *data, int remaining_calls)
                     weechat_hashtable_map (ptr_server->join_noswitch,
                                            &irc_server_check_join_noswitch_cb,
                                            ptr_server);
-                    irc_server_last_check_join_channels = current_time;
+                    ptr_server->last_data_purge = current_time;
                 }
             }
         }
@@ -4525,6 +4521,7 @@ irc_server_hdata_server_cb (void *data, const char *hdata_name)
         WEECHAT_HDATA_VAR(struct t_irc_server, cmd_list_regexp, POINTER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, last_user_message, TIME, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, last_away_check, TIME, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, last_data_purge, TIME, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, outqueue, POINTER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, last_outqueue, POINTER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, redirects, POINTER, 0, NULL, "irc_redirect");
@@ -4744,6 +4741,8 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_time (ptr_item, "last_user_message", server->last_user_message))
         return 0;
     if (!weechat_infolist_new_var_time (ptr_item, "last_away_check", server->last_away_check))
+        return 0;
+    if (!weechat_infolist_new_var_time (ptr_item, "last_data_purge", server->last_data_purge))
         return 0;
 
     return 1;
@@ -5052,6 +5051,7 @@ irc_server_print_log ()
         weechat_log_printf ("  cmd_list_regexp. . . : 0x%lx", ptr_server->cmd_list_regexp);
         weechat_log_printf ("  last_user_message. . : %ld",   ptr_server->last_user_message);
         weechat_log_printf ("  last_away_check. . . : %ld",   ptr_server->last_away_check);
+        weechat_log_printf ("  last_data_purge. . . : %ld",   ptr_server->last_data_purge);
         for (i = 0; i < IRC_SERVER_NUM_OUTQUEUES_PRIO; i++)
         {
             weechat_log_printf ("  outqueue[%02d] . . . . : 0x%lx", i, ptr_server->outqueue[i]);
