@@ -475,7 +475,7 @@ hdata_get_index_and_name (const char *name, int *index, const char **ptr_name)
     long number;
 
     if (index)
-        *index = 0;
+        *index = -1;
     if (ptr_name)
         *ptr_name = name;
 
@@ -520,7 +520,7 @@ hdata_char (struct t_hdata *hdata, void *pointer, const char *name)
     var = hashtable_get (hdata->hash_var, ptr_name);
     if (var && (var->offset >= 0))
     {
-        if (var->array_size)
+        if (var->array_size && (index >= 0))
         {
             if (*((void **)(pointer + var->offset)))
                 return (*((char **)(pointer + var->offset)))[index];
@@ -550,7 +550,7 @@ hdata_integer (struct t_hdata *hdata, void *pointer, const char *name)
     var = hashtable_get (hdata->hash_var, ptr_name);
     if (var && (var->offset >= 0))
     {
-        if (var->array_size)
+        if (var->array_size && (index >= 0))
         {
             if (*((void **)(pointer + var->offset)))
                 return ((int *)(pointer + var->offset))[index];
@@ -580,7 +580,7 @@ hdata_long (struct t_hdata *hdata, void *pointer, const char *name)
     var = hashtable_get (hdata->hash_var, ptr_name);
     if (var && (var->offset >= 0))
     {
-        if (var->array_size)
+        if (var->array_size && (index >= 0))
         {
             if (*((void **)(pointer + var->offset)))
                 return ((long *)(pointer + var->offset))[index];
@@ -610,7 +610,7 @@ hdata_string (struct t_hdata *hdata, void *pointer, const char *name)
     var = hashtable_get (hdata->hash_var, ptr_name);
     if (var && (var->offset >= 0))
     {
-        if (var->array_size)
+        if (var->array_size && (index >= 0))
         {
             if (*((void **)(pointer + var->offset)))
                 return (*((char ***)(pointer + var->offset)))[index];
@@ -640,7 +640,7 @@ hdata_pointer (struct t_hdata *hdata, void *pointer, const char *name)
     var = hashtable_get (hdata->hash_var, ptr_name);
     if (var && (var->offset >= 0))
     {
-        if (var->array_size)
+        if (var->array_size && (index >= 0))
         {
             if (*((void **)(pointer + var->offset)))
                 return (*((void ***)(pointer + var->offset)))[index];
@@ -670,7 +670,7 @@ hdata_time (struct t_hdata *hdata, void *pointer, const char *name)
     var = hashtable_get (hdata->hash_var, ptr_name);
     if (var && (var->offset >= 0))
     {
-        if (var->array_size)
+        if (var->array_size && (index >= 0))
         {
             if (*((void **)(pointer + var->offset)))
                 return ((time_t *)(pointer + var->offset))[index];
@@ -700,7 +700,7 @@ hdata_hashtable (struct t_hdata *hdata, void *pointer, const char *name)
     var = hashtable_get (hdata->hash_var, ptr_name);
     if (var && (var->offset >= 0))
     {
-        if (var->array_size)
+        if (var->array_size && (index >= 0))
         {
             if (*((void **)(pointer + var->offset)))
                 return (*((struct t_hashtable ***)(pointer + var->offset)))[index];

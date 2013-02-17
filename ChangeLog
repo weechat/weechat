@@ -1,12 +1,13 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.1-dev, 2013-02-16
+v0.4.1-dev, 2013-02-17
 
 
 Version 0.4.1 (under dev!)
 --------------------------
 
+* core: allow read of array in hdata without using index
 * core: add option "dirs" for command /debug
 * core: fix detection of iconv with cmake on OS X (bug #38321)
 * core: add signal "window_opened" (task #12464)
