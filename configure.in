@@ -124,7 +124,6 @@ AH_VERBATIM([WEECHAT_HOME],            [#define WEECHAT_HOME "~/.weechat"])
 # Arguments for ./configure
 
 AC_ARG_ENABLE(ncurses,      [  --disable-ncurses       turn off ncurses interface (default=compiled if found)],enable_ncurses=$enableval,enable_ncurses=yes)
-AC_ARG_ENABLE(gtk,          [  --enable-gtk            turn on Gtk interface (default=off)],enable_gtk=$enableval,enable_gtk=no)
 AC_ARG_ENABLE(gnutls,       [  --disable-gnutls        turn off gnutls support (default=compiled if found)],enable_gnutls=$enableval,enable_gnutls=yes)
 AC_ARG_ENABLE(largefile,    [  --disable-largefile     turn off Large File Support (default=on)],enable_largefile=$enableval,enable_largefile=yes)
 AC_ARG_ENABLE(alias,        [  --disable-alias         turn off Alias plugin (default=compiled)],enable_alias=$enableval,enable_alias=yes)
@@ -205,24 +204,6 @@ if test "x$enable_ncurses" = "xyes" ; then
     AC_SUBST(NCURSES_LFLAGS)
 else
     not_asked="$not_asked ncurses"
-fi
-
-if test "x$enable_gtk" = "xyes" ; then
-    AM_PATH_GTK_2_0(2.4.0, LIBGTK_FOUND=1, LIBGTK_FOUND=0)
-    if test "$LIBGTK_FOUND" = "0" ; then
-        AC_MSG_WARN([
-*** Gtk library not found!
-*** WeeChat will be built without Gtk support.])
-        enable_gtk="no"
-        not_found="$not_found gtk"
-    else
-        GTK_CFLAGS=`pkg-config --cflags gtk+-2.0`
-        GTK_LFLAGS=`pkg-config --libs gtk+-2.0`
-        AC_SUBST(GTK_CFLAGS)
-        AC_SUBST(GTK_LFLAGS)
-    fi
-else
-    not_asked="$not_asked gtk"
 fi
 
 # ------------------------------------------------------------------------------
@@ -1072,7 +1053,6 @@ AM_CONDITIONAL(HAVE_GNUTLS,             test "$enable_gnutls" = "yes")
 AM_CONDITIONAL(HAVE_FLOCK,              test "$enable_flock" = "yes")
 AM_CONDITIONAL(HAVE_EAT_NEWLINE_GLITCH, test "$enable_eatnewlineglitch" = "yes")
 AM_CONDITIONAL(GUI_NCURSES,             test "$enable_ncurses" = "yes")
-AM_CONDITIONAL(GUI_GTK,                 test "$enable_gtk" = "yes")
 AM_CONDITIONAL(PLUGIN_ALIAS,            test "$enable_alias" = "yes")
 AM_CONDITIONAL(PLUGIN_ASPELL,           test "$enable_aspell" = "yes")
 AM_CONDITIONAL(PLUGIN_CHARSET,          test "$enable_charset" = "yes")
@@ -1124,7 +1104,6 @@ AC_OUTPUT([Makefile
            src/plugins/xfer/Makefile
            src/gui/Makefile
            src/gui/curses/Makefile
-           src/gui/gtk/Makefile
            intl/Makefile
            po/Makefile.in])
 
@@ -1136,14 +1115,11 @@ listgui=""
 if test "x$enable_ncurses" = "xyes" ; then
     listgui="$listgui ncurses"
 fi
-if test "x$enable_gtk" = "xyes" ; then
-    listgui="$listgui gtk"
-fi
 
 if test "x$listgui" = "x" ; then
     AC_MSG_ERROR([
 *** No interface specified...
-*** Please enable at least ncurses or gtk.])
+*** Please enable at least ncurses.])
 fi
 
 listplugins=""

@@ -50,14 +50,6 @@
 ./src/gui/curses/gui-curses-main.c
 ./src/gui/curses/gui-curses-mouse.c
 ./src/gui/curses/gui-curses-window.c
-./src/gui/gtk/gui-gtk-bar-window.c
-./src/gui/gtk/gui-gtk-chat.c
-./src/gui/gtk/gui-gtk-color.c
-./src/gui/gtk/gui-gtk.h
-./src/gui/gtk/gui-gtk-key.c
-./src/gui/gtk/gui-gtk-main.c
-./src/gui/gtk/gui-gtk-mouse.c
-./src/gui/gtk/gui-gtk-window.c
 ./src/gui/gui-bar.c
 ./src/gui/gui-bar.h
 ./src/gui/gui-bar-item.c

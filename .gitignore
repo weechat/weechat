@@ -47,4 +47,3 @@ weechat.pc
 stamp*
 
 src/gui/curses/weechat-curses
-src/gui/gtk/weechat-gtk

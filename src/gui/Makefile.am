@@ -65,10 +65,6 @@ if GUI_NCURSES
 curses_dir=curses
 endif
 
-if GUI_GTK
-gtk_dir=gtk
-endif
-
-SUBDIRS = . $(curses_dir) $(gtk_dir)
+SUBDIRS = . $(curses_dir)
 
 EXTRA_DIST = CMakeLists.txt

@@ -51,7 +51,6 @@ The main WeeChat directories are:
 |    core/         | Core functions: entry point, internal structures
 |    gui/          | Functions for buffers, windows, ... (used by all interfaces)
 |       curses/    | Curses interface
-|       gtk/       | Gtk interface (not working)
 |    plugins/      | Plugin and scripting API
 |       alias/     | Alias plugin
 |       aspell/    | Aspell plugin
@@ -145,15 +144,6 @@ WeeChat "core" reside in following directories:
 |       gui-curses-mouse.c      | Mouse
 |       gui-curses-term.c       | Functions about terminal
 |       gui-curses-window.c     | Windows
-|    gtk/                       | Gtk interface (not working)
-|       gui-gtk-bar-window.c    | Display in bar windows
-|       gui-gtk-chat.c          | Display in chat area (messages)
-|       gui-gtk-color.c         | Color functions
-|       gui-gtk-key.c           | Keyboard functions
-|       gui-gtk-main.c          | WeeChat main loop (waiting for keyboard/network events)
-|       gui-gtk-mouse.c         | Mouse
-|       gui-gtk-term.c          | Functions about terminal
-|       gui-gtk-window.c        | Windows
 |========================================
 
 [[sources_plugins]]

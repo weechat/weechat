@@ -64,7 +64,6 @@ ELSE(DEFINED INCLUDEDIR)
 ENDIF(DEFINED INCLUDEDIR)
 
 OPTION(ENABLE_NCURSES   "Enable Ncurses interface"                  ON)
-OPTION(ENABLE_GTK       "Enable GTK interface"                      OFF)
 OPTION(ENABLE_NLS       "Enable Native Language Support"            ON)
 OPTION(ENABLE_GNUTLS    "Enable SSLv3/TLS support"                  ON)
 OPTION(ENABLE_LARGEFILE "Enable Large File Support"                 ON)
@@ -157,7 +156,6 @@ SET(CPACK_SOURCE_IGNORE_FILES "/\\\\.git" "/build/" "/m4/"
   "/ltmain\\\\.sh$" "/\\\\.deps/" "/html/" "/html1/" "/Makefile$"
   "/Makefile\\\\.in$" "stamp" "/po/.*\\\\.header$" "\\\\.gmo$" "~$" "\\\\.o$"
   "\\\\.lo$" "\\\\.a$" "\\\\.la$" "\\\\.lai$" "\\\\.Plo$" "/weechat-curses$"
-  "/weechat-gtk$"
 )
 
 INCLUDE(CPack)
