@@ -303,8 +303,13 @@
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
+* [[option_irc.look.smart_filter_join_unmask]] *irc.look.smart_filter_join_unmask*
+** Beschreibung: `delay for unmasking a join message that was filtered with tag "irc_smart_filter" (in minutes): if a nick jas joined max N minutes ago and then says something on channel (message, notice or update on topic), the join is unmasked, as well as nick changes after this join (0 = disable: never unmask a join)`
+** Typ: integer
+** Werte: 0 .. 10080 (Standardwert: `30`)
+
 * [[option_irc.look.smart_filter_nick]] *irc.look.smart_filter_nick*
-** Beschreibung: `aktiviert einen intelligenten Filter für Nachrichten von einem "Nick"`
+** Beschreibung: `enable smart filter for "nick" messages (nick changes)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 

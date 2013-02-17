@@ -23,6 +23,8 @@ Version 0.4.1 (under dev!)
 * aspell: add info "aspell_dict" (dictionaries used on a buffer)
 * aspell: optimization on spellers to improve speed (save state by buffer)
 * guile: fix compilation with guile 2.0
+* irc: unmask smart filtered join if nick speaks in channel some minutes after
+  the join, new option irc.look.smart_filter_join_unmask (task #12405)
 * irc: fix memory leak in purge of hashtables with joins (it was done only for
   the first server in the list)
 * irc: add color in output of /names when result is on server buffer (channel

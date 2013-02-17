@@ -94,6 +94,7 @@ struct t_config_option *irc_config_look_raw_messages;
 struct t_config_option *irc_config_look_smart_filter;
 struct t_config_option *irc_config_look_smart_filter_delay;
 struct t_config_option *irc_config_look_smart_filter_join;
+struct t_config_option *irc_config_look_smart_filter_join_unmask;
 struct t_config_option *irc_config_look_smart_filter_quit;
 struct t_config_option *irc_config_look_smart_filter_nick;
 struct t_config_option *irc_config_look_topic_strip_colors;
@@ -2309,6 +2310,15 @@ irc_config_init ()
         /* TRANSLATORS: please do not translate "join" */
         N_("enable smart filter for \"join\" messages"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_smart_filter_join_unmask = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "smart_filter_join_unmask", "integer",
+        N_("delay for unmasking a join message that was filtered with tag "
+           "\"irc_smart_filter\" (in minutes): if a nick jas joined max N "
+           "minutes ago and then says something on channel (message, notice or "
+           "update on topic), the join is unmasked, as well as nick changes "
+           "after this join (0 = disable: never unmask a join)"),
+        NULL, 0, 60*24*7, "30", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_smart_filter_quit = weechat_config_new_option (
         irc_config_file, ptr_section,
         "smart_filter_quit", "boolean",
@@ -2319,7 +2329,7 @@ irc_config_init ()
         irc_config_file, ptr_section,
         "smart_filter_nick", "boolean",
         /* TRANSLATORS: please do not translate "nick" */
-        N_("enable smart filter for \"nick\" messages"),
+        N_("enable smart filter for \"nick\" messages (nick changes)"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_topic_strip_colors = weechat_config_new_option (
         irc_config_file, ptr_section,

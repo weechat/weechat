@@ -303,8 +303,13 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 
+* [[option_irc.look.smart_filter_join_unmask]] *irc.look.smart_filter_join_unmask*
+** description: `délai pour démasquer un message "join" qui a été filtré avec l'étiquette "irc_smart_filter" (en minutes): si le pseudo a rejoint au maximum il y a N minutes et qu'il a dit quelque chose sur le canal (message, notice ou mise à jour du topic), le "join" est démasqué, tout comme les changements de pseudo après ce "join" (0 = désactiver: ne jamais démasquer un "join")`
+** type: entier
+** valeurs: 0 .. 10080 (valeur par défaut: `30`)
+
 * [[option_irc.look.smart_filter_nick]] *irc.look.smart_filter_nick*
-** description: `activer le filtre intelligent pour les messages "nick"`
+** description: `activer le filtre intelligent pour les messages "nick" (changements de pseudo)`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 

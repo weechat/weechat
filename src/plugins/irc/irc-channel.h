@@ -67,6 +67,7 @@ struct t_irc_channel
     struct t_irc_channel_speaking *nicks_speaking_time; /* for smart filter */
                                        /* of join/part/quit messages        */
     struct t_irc_channel_speaking *last_nick_speaking_time;
+    struct t_hashtable *join_smart_filtered; /* smart filtered joins        */
     struct t_gui_buffer *buffer;       /* buffer allocated for channel      */
     char *buffer_as_string;            /* used to return buffer info        */
     struct t_irc_channel *prev_channel; /* link to previous channel         */
@@ -118,6 +119,16 @@ extern void irc_channel_nick_speaking_time_rename (struct t_irc_server *server,
                                                    struct t_irc_channel *channel,
                                                    const char *old_nick,
                                                    const char *new_nick);
+extern void irc_channel_join_smart_filtered_add (struct t_irc_channel *channel,
+                                                 const char *nick,
+                                                 time_t join_time);
+extern void irc_channel_join_smart_filtered_rename (struct t_irc_channel *channel,
+                                                    const char *old_nick,
+                                                    const char *new_nick);
+extern void irc_channel_join_smart_filtered_remove (struct t_irc_channel *channel,
+                                                    const char *nick);
+extern void irc_channel_join_smart_filtered_unmask (struct t_irc_channel *channel,
+                                                    const char *nick);
 extern void irc_channel_rejoin (struct t_irc_server *server,
                                 struct t_irc_channel *channel);
 extern int irc_channel_autorejoin_cb (void *data, int remaining_calls);

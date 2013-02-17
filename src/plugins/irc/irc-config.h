@@ -129,6 +129,7 @@ extern struct t_config_option *irc_config_look_raw_messages;
 extern struct t_config_option *irc_config_look_smart_filter;
 extern struct t_config_option *irc_config_look_smart_filter_delay;
 extern struct t_config_option *irc_config_look_smart_filter_join;
+extern struct t_config_option *irc_config_look_smart_filter_join_unmask;
 extern struct t_config_option *irc_config_look_smart_filter_quit;
 extern struct t_config_option *irc_config_look_smart_filter_nick;
 extern struct t_config_option *irc_config_look_topic_strip_colors;

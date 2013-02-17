@@ -293,6 +293,7 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
     new_channel->nicks_speaking[1] = NULL;
     new_channel->nicks_speaking_time = NULL;
     new_channel->last_nick_speaking_time = NULL;
+    new_channel->join_smart_filtered = NULL;
     new_channel->buffer = new_buffer;
     new_channel->buffer_as_string = NULL;
 
@@ -721,6 +722,254 @@ irc_channel_nick_speaking_time_rename (struct t_irc_server *server,
 }
 
 /*
+ * Adds a nick in hashtable "join_smart_filtered" (creates the hashtable if
+ * needed).
+ */
+
+void
+irc_channel_join_smart_filtered_add (struct t_irc_channel *channel,
+                                     const char *nick,
+                                     time_t join_time)
+{
+    /* return if unmasking of smart filtered joins is disabled */
+    if (weechat_config_integer (irc_config_look_smart_filter_join_unmask) == 0)
+        return;
+
+    /* create hashtable if needed */
+    if (!channel->join_smart_filtered)
+    {
+        channel->join_smart_filtered = weechat_hashtable_new (64,
+                                                              WEECHAT_HASHTABLE_STRING,
+                                                              WEECHAT_HASHTABLE_TIME,
+                                                              NULL,
+                                                              NULL);
+    }
+    if (!channel->join_smart_filtered)
+        return;
+
+    weechat_hashtable_set (channel->join_smart_filtered, nick, &join_time);
+}
+
+/*
+ * Renames a nick in hashtable "join_smart_filtered".
+ */
+
+void
+irc_channel_join_smart_filtered_rename (struct t_irc_channel *channel,
+                                        const char *old_nick,
+                                        const char *new_nick)
+{
+    time_t *ptr_time, join_time;
+
+    /* return if hashtable does not exist in channel */
+    if (!channel->join_smart_filtered)
+        return;
+
+    /* search old_nick in hashtable */
+    ptr_time = weechat_hashtable_get (channel->join_smart_filtered, old_nick);
+    if (!ptr_time)
+        return;
+
+    /* remove old_nick, add new_nick with time of old_nick */
+    join_time = *ptr_time;
+    weechat_hashtable_remove (channel->join_smart_filtered, old_nick);
+    weechat_hashtable_set (channel->join_smart_filtered, new_nick, &join_time);
+}
+
+/*
+ * Removes a nick in hashtable "join_smart_filtered".
+ */
+
+void
+irc_channel_join_smart_filtered_remove (struct t_irc_channel *channel,
+                                        const char *nick)
+{
+    /* return if hashtable does not exist in channel */
+    if (!channel->join_smart_filtered)
+        return;
+
+    weechat_hashtable_remove (channel->join_smart_filtered, nick);
+}
+
+/*
+ * Unmasks a smart filtered join if nick is in hashtable "join_smart_filtered",
+ * then removes nick from hashtable.
+ */
+
+void
+irc_channel_join_smart_filtered_unmask (struct t_irc_channel *channel,
+                                        const char *nick)
+{
+    int i, unmask_delay, length_tags, nick_found, join, nick_changed;
+    int smart_filtered, remove_smart_filter;
+    time_t *ptr_time, date_min;
+    struct t_hdata *hdata_line, *hdata_line_data;
+    struct t_gui_line *own_lines;
+    struct t_gui_line *line;
+    struct t_gui_line_data *line_data;
+    const char **tags, *irc_nick1, *irc_nick2;
+    char *new_tags, *nick_to_search;
+    struct t_hashtable *hashtable;
+
+    /* return if hashtable does not exist in channel */
+    if (!channel->join_smart_filtered)
+        return;
+
+    /* return if unmasking of smart filtered joins is disabled */
+    unmask_delay = weechat_config_integer (irc_config_look_smart_filter_join_unmask);
+    if (unmask_delay == 0)
+        return;
+
+    /* check if nick is in hashtable "join_smart_filtered" */
+    ptr_time = weechat_hashtable_get (channel->join_smart_filtered, nick);
+    if (!ptr_time)
+        return;
+
+    /*
+     * the min date allowed to unmask a join (a join older than this date will
+     * not be unmasked)
+     */
+    date_min = time (NULL) - (unmask_delay * 60);
+
+    /*
+     * if the join is too old (older than current time - unmask delay), just
+     * remove nick from hashtable and return
+     */
+    if (*ptr_time < date_min)
+    {
+        weechat_hashtable_remove (channel->join_smart_filtered, nick);
+        return;
+    }
+
+    /* get hdata and pointers on last line in buffer */
+    own_lines = weechat_hdata_pointer (weechat_hdata_get ("buffer"),
+                                       channel->buffer, "own_lines");
+    if (!own_lines)
+        return;
+    line = weechat_hdata_pointer (weechat_hdata_get ("lines"),
+                                  own_lines, "last_line");
+    if (!line)
+        return;
+    hdata_line = weechat_hdata_get ("line");
+    hdata_line_data = weechat_hdata_get ("line_data");
+
+    /* the nick to search in messages (track nick changes) */
+    nick_to_search = strdup (nick);
+    if (!nick_to_search)
+        return;
+
+    /* loop on lines until we find the join */
+    while (line)
+    {
+        line_data = weechat_hdata_pointer (hdata_line, line, "data");
+        if (!line_data)
+            break;
+
+        /* exit loop if we reach the unmask delay */
+        if (weechat_hdata_time (hdata_line_data, line_data, "date_printed") < date_min)
+            break;
+
+        /* check tags in line */
+        length_tags = 0;
+        nick_found = 0;
+        join = 0;
+        nick_changed = 0;
+        irc_nick1 = NULL;
+        irc_nick2 = NULL;
+        smart_filtered = 0;
+        tags = weechat_hdata_pointer (hdata_line_data, line_data, "tags_array");
+        for (i = 0; tags[i]; i++)
+        {
+            if (strncmp (tags[i], "nick_", 5) == 0)
+            {
+                if (strcmp (tags[i] + 5, nick_to_search) == 0)
+                    nick_found = 1;
+            }
+            else if (strcmp (tags[i], "irc_join") == 0)
+                join = 1;
+            else if (strcmp (tags[i], "irc_nick") == 0)
+                nick_changed = 1;
+            else if (strncmp (tags[i], "irc_nick1_", 10) == 0)
+                irc_nick1 = tags[i] + 10;
+            else if (strncmp (tags[i], "irc_nick2_", 10) == 0)
+                irc_nick2 = tags[i] + 10;
+            else if (strcmp (tags[i], "irc_smart_filter") == 0)
+                smart_filtered = 1;
+            length_tags += strlen (tags[i]) + 1;
+        }
+
+        /* check if we must remove tag "irc_smart_filter" in line */
+        remove_smart_filter = 0;
+        if (nick_changed && irc_nick1 && irc_nick2
+            && (strcmp (irc_nick2, nick_to_search) == 0))
+        {
+            /* update the nick to search if the line is a message "nick" */
+            free (nick_to_search);
+            nick_to_search = strdup (irc_nick1);
+            if (!nick_to_search)
+                break;
+            remove_smart_filter = 1;
+        }
+        else if (nick_found && join && smart_filtered)
+        {
+            remove_smart_filter = 1;
+        }
+
+        if (remove_smart_filter)
+        {
+            /*
+             * unmask a "nick" or "join" message: remove the tag
+             * "irc_smart_filter"
+             */
+            new_tags = malloc (length_tags);
+            if (new_tags)
+            {
+                /* build a string with all tags, except "irc_smart_filter" */
+                new_tags[0] = '\0';
+                for (i = 0; tags[i]; i++)
+                {
+                    if (strcmp (tags[i], "irc_smart_filter") != 0)
+                    {
+                        if (new_tags[0])
+                            strcat (new_tags, ",");
+                        strcat (new_tags, tags[i]);
+                    }
+                }
+                hashtable = weechat_hashtable_new (4,
+                                                   WEECHAT_HASHTABLE_STRING,
+                                                   WEECHAT_HASHTABLE_STRING,
+                                                   NULL,
+                                                   NULL);
+                if (hashtable)
+                {
+                    /* update tags in line (remove tag "irc_smart_filter") */
+                    weechat_hashtable_set (hashtable, "tags_array", new_tags);
+                    weechat_hdata_update (hdata_line_data, line_data, hashtable);
+                    weechat_hashtable_free (hashtable);
+                }
+                free (new_tags);
+            }
+
+            /*
+             * exit loop if the message was the join (if it's a nick change,
+             * then we loop until we find the join)
+             */
+            if (join)
+                break;
+        }
+
+        /* continue with previous line in buffer */
+        line = weechat_hdata_move (hdata_line, line, -1);
+    }
+
+    if (nick_to_search)
+        free (nick_to_search);
+
+    weechat_hashtable_remove (channel->join_smart_filtered, nick);
+}
+
+
+/*
  * Rejoins a channel (for example after kick).
  */
 
@@ -867,6 +1116,8 @@ irc_channel_free (struct t_irc_server *server, struct t_irc_channel *channel)
     if (channel->nicks_speaking[1])
         weechat_list_free (channel->nicks_speaking[1]);
     irc_channel_nick_speaking_time_free_all (channel);
+    if (channel->join_smart_filtered)
+        weechat_hashtable_free (channel->join_smart_filtered);
     if (channel->buffer_as_string)
         free (channel->buffer_as_string);
 
@@ -925,6 +1176,7 @@ irc_channel_hdata_channel_cb (void *data, const char *hdata_name)
         WEECHAT_HDATA_VAR(struct t_irc_channel, nicks_speaking, POINTER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_channel, nicks_speaking_time, POINTER, 0, NULL, "irc_channel_speaking");
         WEECHAT_HDATA_VAR(struct t_irc_channel, last_nick_speaking_time, POINTER, 0, NULL, "irc_channel_speaking");
+        WEECHAT_HDATA_VAR(struct t_irc_channel, join_smart_filtered, HASHTABLE, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_channel, buffer, POINTER, 0, NULL, "buffer");
         WEECHAT_HDATA_VAR(struct t_irc_channel, buffer_as_string, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_channel, prev_channel, POINTER, 0, NULL, hdata_name);
@@ -1059,6 +1311,10 @@ irc_channel_add_to_infolist (struct t_infolist *infolist,
             i++;
         }
     }
+    if (!weechat_infolist_new_var_string (ptr_item, "join_smart_filtered",
+                                          weechat_hashtable_get_string (channel->join_smart_filtered,
+                                                                        "keys_values")))
+        return 0;
 
     return 1;
 }
@@ -1098,6 +1354,10 @@ irc_channel_print_log (struct t_irc_channel *channel)
     weechat_log_printf ("       nicks_speaking[1]. . . . : 0x%lx", channel->nicks_speaking[1]);
     weechat_log_printf ("       nicks_speaking_time. . . : 0x%lx", channel->nicks_speaking_time);
     weechat_log_printf ("       last_nick_speaking_time. : 0x%lx", channel->last_nick_speaking_time);
+    weechat_log_printf ("       join_smart_filtered. . . : 0x%lx (hashtable: '%s')",
+                        channel->join_smart_filtered,
+                        weechat_hashtable_get_string (channel->join_smart_filtered,
+                                                      "keys_values"));
     weechat_log_printf ("       buffer . . . . . . . . . : 0x%lx", channel->buffer);
     weechat_log_printf ("       buffer_as_string . . . . : '%s'",  channel->buffer_as_string);
     weechat_log_printf ("       prev_channel . . . . . . : 0x%lx", channel->prev_channel);

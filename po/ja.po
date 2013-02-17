@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-02-14 20:40+0100\n"
+"POT-Creation-Date: 2013-02-17 12:17+0100\n"
 "PO-Revision-Date: 2013-01-20 12:07+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -6276,12 +6276,21 @@ msgstr "参加/退出/終了 メッセージのフィルタリングを遅らせ
 msgid "enable smart filter for \"join\" messages"
 msgstr "\"join\" メッセージのスマートフィルタを有効化"
 
+msgid ""
+"delay for unmasking a join message that was filtered with tag "
+"\"irc_smart_filter\" (in minutes): if a nick jas joined max N minutes ago "
+"and then says something on channel (message, notice or update on topic), the "
+"join is unmasked, as well as nick changes after this join (0 = disable: "
+"never unmask a join)"
+msgstr ""
+
 #. TRANSLATORS: please do not translate "part" and "quit"
 msgid "enable smart filter for \"part\" and \"quit\" messages"
 msgstr "\"part\" と \"quit\" メッセージのスマートフィルタを有効化"
 
 #. TRANSLATORS: please do not translate "nick"
-msgid "enable smart filter for \"nick\" messages"
+#, fuzzy
+msgid "enable smart filter for \"nick\" messages (nick changes)"
 msgstr "\"nick\" メッセージのスマートフィルタを有効化"
 
 msgid "strip colors in topic (used only when displaying buffer title)"

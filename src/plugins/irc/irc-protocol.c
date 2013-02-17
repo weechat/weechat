@@ -508,7 +508,7 @@ IRC_PROTOCOL_CALLBACK(join)
     struct t_irc_nick *ptr_nick;
     struct t_irc_channel_speaking *ptr_nick_speaking;
     char *pos_channel;
-    int local_join, display_host;
+    int local_join, display_host, smart_filter;
 
     IRC_PROTOCOL_MIN_ARGS(3);
     IRC_PROTOCOL_CHECK_HOST;
@@ -578,16 +578,23 @@ IRC_PROTOCOL_CALLBACK(join)
         display_host = (local_join) ?
             weechat_config_boolean (irc_config_look_display_host_join_local) :
             weechat_config_boolean (irc_config_look_display_host_join);
+
+        /*
+         * "smart" filter the join message is it's not a join from myself, if
+         * smart filtering is enabled, and if nick was not speaking in channel
+         */
+        smart_filter = (!local_join
+                        && weechat_config_boolean (irc_config_look_smart_filter)
+                        && weechat_config_boolean (irc_config_look_smart_filter_join)
+                        && !ptr_nick_speaking);
+
+        /* display the join */
         weechat_printf_date_tags (irc_msgbuffer_get_target_buffer (server, NULL,
                                                                    command, NULL,
                                                                    ptr_channel->buffer),
                                   date,
                                   irc_protocol_tags (command,
-                                                     (local_join
-                                                      || !weechat_config_boolean (irc_config_look_smart_filter)
-                                                      || !weechat_config_boolean (irc_config_look_smart_filter_join)
-                                                      || ptr_nick_speaking) ?
-                                                     NULL : "irc_smart_filter",
+                                                     smart_filter ? "irc_smart_filter" : NULL,
                                                      nick),
                                   _("%s%s%s%s%s%s%s%s%s%s has joined %s%s%s"),
                                   weechat_prefix ("join"),
@@ -603,6 +610,14 @@ IRC_PROTOCOL_CALLBACK(join)
                                   IRC_COLOR_CHAT_CHANNEL,
                                   pos_channel,
                                   IRC_COLOR_MESSAGE_JOIN);
+
+        /*
+         * if join is smart filtered, save the nick in hashtable, and if nick
+         * is speaking shortly after the join, it will be unmasked
+         * (option irc.look.smart_filter_join_unmask)
+         */
+        if (smart_filter)
+            irc_channel_join_smart_filtered_add (ptr_channel, nick, time (NULL));
 
         /* display message in private if private has flag "has_quit_server" */
         if (!local_join)
@@ -996,6 +1011,8 @@ IRC_PROTOCOL_CALLBACK(nick)
                                                           nick, new_nick);
                         irc_channel_nick_speaking_time_rename (server, ptr_channel,
                                                                nick, new_nick);
+                        irc_channel_join_smart_filtered_rename (ptr_channel,
+                                                                nick, new_nick);
                     }
 
                     if (old_color)
@@ -1078,6 +1095,14 @@ IRC_PROTOCOL_CALLBACK(notice)
         {
             /* notice for channel */
             ptr_channel = irc_channel_search (server, pos_target);
+
+            /*
+             * unmask a smart filtered join if it is in hashtable
+             * "join_smart_filtered" of channel
+             */
+            if (ptr_channel)
+                irc_channel_join_smart_filtered_unmask (ptr_channel, nick);
+
             ptr_nick = irc_nick_search (server, ptr_channel, nick);
             weechat_printf_date_tags ((ptr_channel) ? ptr_channel->buffer : server->buffer,
                                       date,
@@ -1390,7 +1415,12 @@ IRC_PROTOCOL_CALLBACK(part)
                 }
             }
             else
+            {
+                /* part from another user */
+                irc_channel_join_smart_filtered_remove (ptr_channel,
+                                                        ptr_nick->name);
                 irc_nick_free (server, ptr_channel, ptr_nick);
+            }
         }
     }
 
@@ -1506,6 +1536,12 @@ IRC_PROTOCOL_CALLBACK(privmsg)
         ptr_channel = irc_channel_search (server, pos_target);
         if (ptr_channel)
         {
+            /*
+             * unmask a smart filtered join if it is in hashtable
+             * "join_smart_filtered" of channel
+             */
+            irc_channel_join_smart_filtered_unmask (ptr_channel, nick);
+
             /* CTCP to channel */
             if ((pos_args[0] == '\01')
                 && (pos_args[strlen (pos_args) - 1] == '\01'))
@@ -1673,10 +1709,10 @@ IRC_PROTOCOL_CALLBACK(quit)
         if (ptr_nick
             || (irc_server_strcasecmp (server, ptr_channel->name, nick) == 0))
         {
-            /* display quit message */
+            local_quit = (irc_server_strcasecmp (server, nick, server->nick) == 0);
             if (!irc_ignore_check (server, ptr_channel->name, nick, host))
             {
-                local_quit = (irc_server_strcasecmp (server, nick, server->nick) == 0);
+                /* display quit message */
                 ptr_nick_speaking = NULL;
                 if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
                 {
@@ -1748,6 +1784,11 @@ IRC_PROTOCOL_CALLBACK(quit)
                                               (display_host) ? ")" : "",
                                               IRC_COLOR_MESSAGE_QUIT);
                 }
+            }
+            if (!local_quit && ptr_nick)
+            {
+                irc_channel_join_smart_filtered_remove (ptr_channel,
+                                                        ptr_nick->name);
             }
             if (ptr_nick)
                 irc_nick_free (server, ptr_channel, ptr_nick);
@@ -1854,6 +1895,13 @@ IRC_PROTOCOL_CALLBACK(topic)
     ptr_channel = irc_channel_search (server, argv[2]);
     ptr_nick = irc_nick_search (server, ptr_channel, nick);
     ptr_buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
+
+    /*
+     * unmask a smart filtered join if it is in hashtable
+     * "join_smart_filtered" of channel
+     */
+    if (ptr_channel)
+        irc_channel_join_smart_filtered_unmask (ptr_channel, nick);
 
     if (pos_topic && pos_topic[0])
     {

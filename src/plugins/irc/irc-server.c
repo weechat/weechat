@@ -2688,14 +2688,11 @@ void
 irc_server_check_join_manual_cb (void *data, struct t_hashtable *hashtable,
                                  const void *key, const void *value)
 {
-    struct t_irc_server *server;
+    /* make C compiler happy */
+    (void) data;
 
-    server = (struct t_irc_server *)data;
-    if (server)
-    {
-        if (*((time_t *)value) + (60 * 10) < time (NULL))
-            weechat_hashtable_remove (hashtable, key);
-    }
+    if (*((time_t *)value) + (60 * 10) < time (NULL))
+        weechat_hashtable_remove (hashtable, key);
 }
 
 /*
@@ -2707,13 +2704,33 @@ void
 irc_server_check_join_noswitch_cb (void *data, struct t_hashtable *hashtable,
                                    const void *key, const void *value)
 {
-    struct t_irc_server *server;
+    /* make C compiler happy */
+    (void) data;
 
-    server = (struct t_irc_server *)data;
-    if (server)
+    if (*((time_t *)value) + (60 * 10) < time (NULL))
+        weechat_hashtable_remove (hashtable, key);
+}
+
+/*
+ * Callback called for each smart filtered join of a channel: deletes old
+ * entries in the hashtable.
+ */
+
+void
+irc_server_check_join_smart_filtered_cb (void *data,
+                                         struct t_hashtable *hashtable,
+                                         const void *key, const void *value)
+{
+    int unmask_delay;
+
+    /* make C compiler happy */
+    (void) data;
+
+    unmask_delay = weechat_config_integer (irc_config_look_smart_filter_join_unmask);
+    if ((unmask_delay == 0)
+        || (*((time_t *)value) < time (NULL) - (unmask_delay * 60)))
     {
-        if (*((time_t *)value) + (60 * 10) < time (NULL))
-            weechat_hashtable_remove (hashtable, key);
+        weechat_hashtable_remove (hashtable, key);
     }
 }
 
@@ -2725,6 +2742,7 @@ int
 irc_server_timer_cb (void *data, int remaining_calls)
 {
     struct t_irc_server *ptr_server;
+    struct t_irc_channel *ptr_channel;
     struct t_irc_redirect *ptr_redirect, *ptr_next_redirect;
     time_t current_time;
     static struct timeval tv;
@@ -2835,10 +2853,20 @@ irc_server_timer_cb (void *data, int remaining_calls)
                 {
                     weechat_hashtable_map (ptr_server->join_manual,
                                            &irc_server_check_join_manual_cb,
-                                           ptr_server);
+                                           NULL);
                     weechat_hashtable_map (ptr_server->join_noswitch,
                                            &irc_server_check_join_noswitch_cb,
-                                           ptr_server);
+                                           NULL);
+                    for (ptr_channel = ptr_server->channels; ptr_channel;
+                         ptr_channel = ptr_channel->next_channel)
+                    {
+                        if (ptr_channel->join_smart_filtered)
+                        {
+                            weechat_hashtable_map (ptr_channel->join_smart_filtered,
+                                                   &irc_server_check_join_smart_filtered_cb,
+                                                   NULL);
+                        }
+                    }
                     ptr_server->last_data_purge = current_time;
                 }
             }

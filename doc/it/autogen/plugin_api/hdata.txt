@@ -42,6 +42,7 @@
   'nicks_speaking' (pointer) +
   'nicks_speaking_time' (pointer, hdata: "irc_channel_speaking") +
   'last_nick_speaking_time' (pointer, hdata: "irc_channel_speaking") +
+  'join_smart_filtered' (hashtable) +
   'buffer' (pointer, hdata: "buffer") +
   'buffer_as_string' (string) +
   'prev_channel' (pointer, hdata: "irc_channel") +
