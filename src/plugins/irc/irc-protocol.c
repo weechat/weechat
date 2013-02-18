@@ -1084,8 +1084,7 @@ IRC_PROTOCOL_CALLBACK(notice)
         pos_args = (argv_eol[2][0] == ':') ? argv_eol[2] + 1 : argv_eol[2];
     }
 
-    if (nick && (pos_args[0] == '\01')
-        && (pos_args[strlen (pos_args) - 1] == '\01'))
+    if (nick && (pos_args[0] == '\01'))
     {
         irc_ctcp_display_reply_from_nick (server, date, command, nick, pos_args);
     }
@@ -1543,8 +1542,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
             irc_channel_join_smart_filtered_unmask (ptr_channel, nick);
 
             /* CTCP to channel */
-            if ((pos_args[0] == '\01')
-                && (pos_args[strlen (pos_args) - 1] == '\01'))
+            if (pos_args[0] == '\01')
             {
                 irc_ctcp_recv (server, date, command, ptr_channel,
                                address, nick, NULL, pos_args,
@@ -1612,8 +1610,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
         remote_nick = (nick_is_me) ? pos_target : nick;
 
         /* CTCP to user */
-        if ((pos_args[0] == '\01')
-            && (pos_args[strlen (pos_args) - 1] == '\01'))
+        if (pos_args[0] == '\01')
         {
             irc_ctcp_recv (server, date, command, NULL,
                            address, nick, remote_nick, pos_args,

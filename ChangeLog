@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.1-dev, 2013-02-17
+v0.4.1-dev, 2013-02-18
 
 
 Version 0.4.1 (under dev!)
@@ -23,6 +23,7 @@ Version 0.4.1 (under dev!)
 * aspell: add info "aspell_dict" (dictionaries used on a buffer)
 * aspell: optimization on spellers to improve speed (save state by buffer)
 * guile: fix compilation with guile 2.0
+* irc: fix display of malformed CTCP (without closing char) (bug #38347)
 * irc: unmask smart filtered join if nick speaks in channel some minutes after
   the join, new option irc.look.smart_filter_join_unmask (task #12405)
 * irc: fix memory leak in purge of hashtables with joins (it was done only for
