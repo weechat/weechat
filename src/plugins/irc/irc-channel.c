@@ -870,92 +870,97 @@ irc_channel_join_smart_filtered_unmask (struct t_irc_channel *channel,
             break;
 
         /* check tags in line */
-        length_tags = 0;
-        nick_found = 0;
-        join = 0;
-        nick_changed = 0;
-        irc_nick1 = NULL;
-        irc_nick2 = NULL;
-        smart_filtered = 0;
         tags = weechat_hdata_pointer (hdata_line_data, line_data, "tags_array");
-        for (i = 0; tags[i]; i++)
+        if (tags)
         {
-            if (strncmp (tags[i], "nick_", 5) == 0)
+            length_tags = 0;
+            nick_found = 0;
+            join = 0;
+            nick_changed = 0;
+            irc_nick1 = NULL;
+            irc_nick2 = NULL;
+            smart_filtered = 0;
+            for (i = 0; tags[i]; i++)
             {
-                if (strcmp (tags[i] + 5, nick_to_search) == 0)
-                    nick_found = 1;
-            }
-            else if (strcmp (tags[i], "irc_join") == 0)
-                join = 1;
-            else if (strcmp (tags[i], "irc_nick") == 0)
-                nick_changed = 1;
-            else if (strncmp (tags[i], "irc_nick1_", 10) == 0)
-                irc_nick1 = tags[i] + 10;
-            else if (strncmp (tags[i], "irc_nick2_", 10) == 0)
-                irc_nick2 = tags[i] + 10;
-            else if (strcmp (tags[i], "irc_smart_filter") == 0)
-                smart_filtered = 1;
-            length_tags += strlen (tags[i]) + 1;
-        }
-
-        /* check if we must remove tag "irc_smart_filter" in line */
-        remove_smart_filter = 0;
-        if (nick_changed && irc_nick1 && irc_nick2
-            && (strcmp (irc_nick2, nick_to_search) == 0))
-        {
-            /* update the nick to search if the line is a message "nick" */
-            free (nick_to_search);
-            nick_to_search = strdup (irc_nick1);
-            if (!nick_to_search)
-                break;
-            remove_smart_filter = 1;
-        }
-        else if (nick_found && join && smart_filtered)
-        {
-            remove_smart_filter = 1;
-        }
-
-        if (remove_smart_filter)
-        {
-            /*
-             * unmask a "nick" or "join" message: remove the tag
-             * "irc_smart_filter"
-             */
-            new_tags = malloc (length_tags);
-            if (new_tags)
-            {
-                /* build a string with all tags, except "irc_smart_filter" */
-                new_tags[0] = '\0';
-                for (i = 0; tags[i]; i++)
+                if (strncmp (tags[i], "nick_", 5) == 0)
                 {
-                    if (strcmp (tags[i], "irc_smart_filter") != 0)
+                    if (strcmp (tags[i] + 5, nick_to_search) == 0)
+                        nick_found = 1;
+                }
+                else if (strcmp (tags[i], "irc_join") == 0)
+                    join = 1;
+                else if (strcmp (tags[i], "irc_nick") == 0)
+                    nick_changed = 1;
+                else if (strncmp (tags[i], "irc_nick1_", 10) == 0)
+                    irc_nick1 = tags[i] + 10;
+                else if (strncmp (tags[i], "irc_nick2_", 10) == 0)
+                    irc_nick2 = tags[i] + 10;
+                else if (strcmp (tags[i], "irc_smart_filter") == 0)
+                    smart_filtered = 1;
+                length_tags += strlen (tags[i]) + 1;
+            }
+
+            /* check if we must remove tag "irc_smart_filter" in line */
+            remove_smart_filter = 0;
+            if (nick_changed && irc_nick1 && irc_nick2
+                && (strcmp (irc_nick2, nick_to_search) == 0))
+            {
+                /* update the nick to search if the line is a message "nick" */
+                free (nick_to_search);
+                nick_to_search = strdup (irc_nick1);
+                if (!nick_to_search)
+                    break;
+                remove_smart_filter = 1;
+            }
+            else if (nick_found && join && smart_filtered)
+            {
+                remove_smart_filter = 1;
+            }
+
+            if (remove_smart_filter)
+            {
+                /*
+                 * unmask a "nick" or "join" message: remove the tag
+                 * "irc_smart_filter"
+                 */
+                new_tags = malloc (length_tags);
+                if (new_tags)
+                {
+                    /* build a string with all tags, except "irc_smart_filter" */
+                    new_tags[0] = '\0';
+                    for (i = 0; tags[i]; i++)
                     {
-                        if (new_tags[0])
-                            strcat (new_tags, ",");
-                        strcat (new_tags, tags[i]);
+                        if (strcmp (tags[i], "irc_smart_filter") != 0)
+                        {
+                            if (new_tags[0])
+                                strcat (new_tags, ",");
+                            strcat (new_tags, tags[i]);
+                        }
                     }
+                    hashtable = weechat_hashtable_new (4,
+                                                       WEECHAT_HASHTABLE_STRING,
+                                                       WEECHAT_HASHTABLE_STRING,
+                                                       NULL,
+                                                       NULL);
+                    if (hashtable)
+                    {
+                        /* update tags in line (remove tag "irc_smart_filter") */
+                        weechat_hashtable_set (hashtable,
+                                               "tags_array", new_tags);
+                        weechat_hdata_update (hdata_line_data, line_data,
+                                              hashtable);
+                        weechat_hashtable_free (hashtable);
+                    }
+                    free (new_tags);
                 }
-                hashtable = weechat_hashtable_new (4,
-                                                   WEECHAT_HASHTABLE_STRING,
-                                                   WEECHAT_HASHTABLE_STRING,
-                                                   NULL,
-                                                   NULL);
-                if (hashtable)
-                {
-                    /* update tags in line (remove tag "irc_smart_filter") */
-                    weechat_hashtable_set (hashtable, "tags_array", new_tags);
-                    weechat_hdata_update (hdata_line_data, line_data, hashtable);
-                    weechat_hashtable_free (hashtable);
-                }
-                free (new_tags);
-            }
 
-            /*
-             * exit loop if the message was the join (if it's a nick change,
-             * then we loop until we find the join)
-             */
-            if (join)
-                break;
+                /*
+                 * exit loop if the message was the join (if it's a nick change,
+                 * then we loop until we find the join)
+                 */
+                if (join)
+                    break;
+            }
         }
 
         /* continue with previous line in buffer */
