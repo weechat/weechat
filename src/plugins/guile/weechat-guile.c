@@ -255,12 +255,17 @@ weechat_guile_exec (struct t_plugin_script *script,
                     char *format, void **argv)
 {
     struct t_plugin_script *old_guile_current_script;
-    SCM argv_list, rc;
+    SCM argv_list, rc, old_current_module;
     void *argv2[17], *ret_value;
     int i, argc, *ret_int;
 
     old_guile_current_script = guile_current_script;
-    scm_set_current_module ((SCM)(script->interpreter));
+    old_current_module = NULL;
+    if (script->interpreter)
+    {
+        old_current_module = scm_current_module ();
+        scm_set_current_module ((SCM)(script->interpreter));
+    }
     guile_current_script = script;
 
     if (argv && argv[0])
@@ -336,8 +341,8 @@ weechat_guile_exec (struct t_plugin_script *script,
                         weechat_prefix ("error"), GUILE_PLUGIN_NAME, function);
     }
 
-    if (old_guile_current_script)
-        scm_set_current_module ((SCM)(old_guile_current_script->interpreter));
+    if (old_current_module)
+        scm_set_current_module (old_current_module);
 
     guile_current_script = old_guile_current_script;
 
