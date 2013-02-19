@@ -12433,10 +12433,10 @@ C example:
 ----------------------------------------
 char buffer[256];
 /* ... */
-struct t_infolist_var *var = weechat_infolist_new_variable_buffer (item,
-                                                                   "my_buffer",
-                                                                   &buffer,
-                                                                   sizeof (buffer));
+struct t_infolist_var *var = weechat_infolist_new_var_buffer (item,
+                                                              "my_buffer",
+                                                              &buffer,
+                                                              sizeof (buffer));
 ----------------------------------------
 
 [NOTE]
@@ -12470,9 +12470,9 @@ C example:
 
 [source,C]
 ----------------------------------------
-struct t_infolist_var *var = weechat_infolist_new_variable_time (item,
-                                                                 "my_time",
-                                                                 time (NULL));
+struct t_infolist_var *var = weechat_infolist_new_var_time (item,
+                                                            "my_time",
+                                                            time (NULL));
 ----------------------------------------
 
 Script (Python):
