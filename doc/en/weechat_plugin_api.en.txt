@@ -3822,7 +3822,7 @@ Return value:
 
 [NOTE]
 File is NOT created on disk by this function. It will be created by call to
-function <<_weechat_write_config,weechat_write_config>>.
+function <<_weechat_config_write,weechat_config_write>>.
 You should call this function only after adding some sections (with
 <<_weechat_config_new_section,weechat_config_new_section>>) and options (with
 <<_weechat_config_new_option,weechat_config_new_option>>).

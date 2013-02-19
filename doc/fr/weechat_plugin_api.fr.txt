@@ -3868,7 +3868,7 @@ Valeur de retour :
 
 [NOTE]
 Le fichier n'est PAS créé sur le disque par cette fonction. Il sera créé par
-l'appel à la fonction <<_weechat_write_config,weechat_write_config>>.
+l'appel à la fonction <<_weechat_config_write,weechat_config_write>>.
 Vous ne devriez appeler cette fonction qu'après avoir créé les sections (avec
 <<_weechat_config_new_section,weechat_config_new_section>>) et les options (avec
 <<_weechat_config_new_option,weechat_config_new_option>>).
