@@ -101,7 +101,7 @@ welche Pakete optional genutzt werden können.
 | ruby1.9.1-dev          | ≥ 1.8       |          | ruby Erweiterung
 | liblua5.1-0-dev        |             |          | lua Erweiterung
 | tcl-dev                | ≥ 8.5       |          | tcl Erweiterung
-| guile-1.8-dev          | ≥ 1.8       |          | guile (scheme) Erweiterung
+| guile-2.0-dev          | ≥ 2.0       |          | guile (scheme) Erweiterung
 | asciidoc               | ≥ 8.5.0     |          | erstellt Dokumentation (HTML Dateien)
 | source-highlight       |             |          | Syntax Highlight für Quelltext in HTML Dokumentation
 |========================================

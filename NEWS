@@ -1,11 +1,18 @@
 WeeChat Release Notes
 =====================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.1-dev, 2013-01-20
+v0.4.1-dev, 2013-02-19
 
 
 Version 0.4.1 (under dev!)
 --------------------------
+
+Important release notes:
+
+* the way to give arguments for guile callbacks has been fixed: now arguments
+  are sent individually (instead of a list with all arguments inside).
+  Therefore, existing guile scripts must be modified accordingly.
+  Moreover, WeeChat now requires Guile ≥ 2.0 to compile.
 
 Version 0.4.0 (2013-01-20)
 --------------------------

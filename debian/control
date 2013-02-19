@@ -5,7 +5,7 @@ Maintainer: Emmanuel Bouthenot <kolter@debian.org>
 Build-Depends-Indep: asciidoc (>= 8.5), source-highlight
 Build-Depends: debhelper (>= 7.0.50), cmake, libncursesw5-dev,
  ruby1.9.1, ruby1.9.1-dev, libperl-dev, python-dev, libaspell-dev, liblua5.1-0-dev,
- tcl8.5-dev, guile-1.8-dev, libcurl4-gnutls-dev, libgcrypt11-dev, libgnutls-dev,
+ tcl8.5-dev, guile-2.0-dev, libcurl4-gnutls-dev, libgcrypt11-dev, libgnutls-dev,
  zlib1g-dev, dpkg-dev (>= 1.13.19), pkg-config
 Standards-Version: 3.9.4
 Homepage: http://weechat.org/

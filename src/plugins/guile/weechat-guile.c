@@ -53,8 +53,9 @@ char *guile_stdout = NULL;
 
 struct t_guile_function
 {
-    SCM proc;
-    SCM args;
+    SCM proc;                          /* proc to call                      */
+    SCM *argv;                         /* arguments for proc                */
+    size_t nargs;                      /* length of arguments               */
 };
 
 /*
@@ -109,17 +110,18 @@ weechat_guile_catch (void *procedure, void *data)
 }
 
 /*
- * Encapsulates call to scm_call_1 (to give arguments).
+ * Encapsulates call to scm_call_n (to give arguments).
  */
 
 SCM
-weechat_guile_scm_call_1 (void *proc)
+weechat_guile_scm_call_n (void *proc)
 {
     struct t_guile_function *guile_function;
 
     guile_function = (struct t_guile_function *)proc;
 
-    return scm_call_1 (guile_function->proc, guile_function->args);
+    return scm_call_n (guile_function->proc,
+                       guile_function->argv, guile_function->nargs);
 }
 
 /*
@@ -127,7 +129,7 @@ weechat_guile_scm_call_1 (void *proc)
  */
 
 SCM
-weechat_guile_exec_function (const char *function, SCM args)
+weechat_guile_exec_function (const char *function, SCM *argv, size_t nargs)
 {
     SCM func, func2, value;
     struct t_guile_function guile_function;
@@ -135,11 +137,12 @@ weechat_guile_exec_function (const char *function, SCM args)
     func = weechat_guile_catch (scm_c_lookup, (void *)function);
     func2 = weechat_guile_catch (scm_variable_ref, func);
 
-    if (args)
+    if (argv)
     {
         guile_function.proc = func2;
-        guile_function.args = args;
-        value = weechat_guile_catch (weechat_guile_scm_call_1, &guile_function);
+        guile_function.argv = argv;
+        guile_function.nargs = nargs;
+        value = weechat_guile_catch (weechat_guile_scm_call_n, &guile_function);
     }
     else
     {
@@ -255,7 +258,7 @@ weechat_guile_exec (struct t_plugin_script *script,
                     char *format, void **argv)
 {
     struct t_plugin_script *old_guile_current_script;
-    SCM argv_list, rc, old_current_module;
+    SCM rc, old_current_module;
     void *argv2[17], *ret_value;
     int i, argc, *ret_int;
 
@@ -290,20 +293,11 @@ weechat_guile_exec (struct t_plugin_script *script,
         {
             argv2[i] = SCM_UNDEFINED;
         }
-        argv_list = scm_list_n (argv2[0], argv2[1],
-                                argv2[2], argv2[3],
-                                argv2[4], argv2[5],
-                                argv2[6], argv2[7],
-                                argv2[8], argv2[9],
-                                argv2[10], argv2[11],
-                                argv2[12], argv2[13],
-                                argv2[14], argv2[15],
-                                argv2[16]);
-        rc = weechat_guile_exec_function (function, argv_list);
+        rc = weechat_guile_exec_function (function, (SCM *)argv2, argc);
     }
     else
     {
-        rc = weechat_guile_exec_function (function, NULL);
+        rc = weechat_guile_exec_function (function, NULL, 0);
     }
 
     ret_value = NULL;

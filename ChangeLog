@@ -22,6 +22,8 @@ Version 0.4.1 (under dev!)
 * aspell: add completion "aspell_dicts" (list of aspell installed dictionaries)
 * aspell: add info "aspell_dict" (dictionaries used on a buffer)
 * aspell: optimization on spellers to improve speed (save state by buffer)
+* guile: fix arguments given to callbacks (separate arguments instead of one
+  list with arguments inside), guile >= 2.0 is now required (bug #38350)
 * guile: fix crash on calls to callbacks during load of script (bug #38343)
 * guile: fix compilation with guile 2.0
 * irc: fix display of malformed CTCP (without closing char) (bug #38347)

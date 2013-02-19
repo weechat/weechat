@@ -336,8 +336,8 @@ weechat::hook_timer 1000 0 1 timer_cb test
 
 [source,lisp]
 ----------------------------------------
-(define (timer_cb args)
-  (weechat:print "" (string-append "timer! data=" (list-ref args 0)))
+(define (timer_cb data remaining_calls)
+  (weechat:print "" (string-append "timer! data=" data))
   weechat:WEECHAT_RC_OK
 )
 

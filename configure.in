@@ -740,7 +740,7 @@ if test "x$enable_guile" = "xyes" ; then
     if test "x$PKGCONFIG" != "x"; then
         AC_MSG_CHECKING(for Guile headers and librairies)
         echo
-        for v in "2.0" "1.8" ; do
+        for v in "2.0" ; do
             pkgconfig_guile_found=`$PKGCONFIG --exists guile-$v 2>/dev/null`
             if test "x$?" = "x0" ; then
                 GUILE_VERSION=`$PKGCONFIG --modversion guile-$v`
@@ -754,7 +754,7 @@ if test "x$enable_guile" = "xyes" ; then
 
     if test "x$guile_found" = "xno" ; then
         AC_MSG_WARN([
-*** Guile couldn't be found on your system.
+*** Guile >= 2.0 couldn't be found on your system.
 *** WeeChat will be built without Guile (scheme) support.])
         enable_guile="no"
         not_found="$not_found guile"
