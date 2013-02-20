@@ -8663,7 +8663,7 @@ Arguments:
 * 'callback_data': pointer given to callback when it is called by WeeChat
 
 [NOTE]
-Completion names are global (shared accross WeeChat and plugins). So it is
+Completion names are global (shared across WeeChat and plugins). So it is
 recommended to choose a name with a unique prefix, like "plugin_xxx" (where
 "xxx" is your item name).
 
@@ -11532,9 +11532,9 @@ Prototype:
 [source,C]
 ----------------------------------------
 struct t_gui_bar_item *weechat_bar_item_new (const char *name,
-                                             char *(build_callback)(void *data,
-                                                                    struct t_gui_bar_item *item,
-                                                                    struct t_gui_window *window),
+                                             char *(*build_callback)(void *data,
+                                                                     struct t_gui_bar_item *item,
+                                                                     struct t_gui_window *window),
                                              void *build_callback_data);
 ----------------------------------------
 

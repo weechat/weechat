@@ -11724,9 +11724,9 @@ Prototype :
 [source,C]
 ----------------------------------------
 struct t_gui_bar_item *weechat_bar_item_new (const char *name,
-                                             char *(build_callback)(void *data,
-                                                                    struct t_gui_bar_item *item,
-                                                                    struct t_gui_window *window),
+                                             char *(*build_callback)(void *data,
+                                                                     struct t_gui_bar_item *item,
+                                                                     struct t_gui_window *window),
                                              void *build_callback_data);
 ----------------------------------------
 
