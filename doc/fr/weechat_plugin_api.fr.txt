@@ -8989,6 +8989,18 @@ Paramètres :
   toute chaîne |
   chaîne avec des codes couleur IRC, ou sans couleur
 
+| irc | irc_command_auth +
+  (_nouveau dans la version 0.4.1_) |
+  nom du serveur |
+  commande d'authentification (par exemple: `/msg nickserv identify password`) |
+  commande avec le mot de passe caché (par exemple: `/msg nickserv identify ********`)
+
+| irc | irc_message_auth +
+  (_nouveau dans la version 0.4.1_) |
+  nom du serveur |
+  message affiché après `msg` envoyé à nickserv |
+  message avec le mot de passe caché
+
 | irc | irc_in_xxx ^(1)^ |
   nom de serveur |
   contenu du message reçu du serveur IRC (avant décodage du jeu de caractères) |

@@ -158,11 +158,6 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 
-* [[option_irc.look.hide_nickserv_pwd]] *irc.look.hide_nickserv_pwd*
-** description: `masquer le mot de passe affiché par nickserv`
-** type: booléen
-** valeurs: on, off (valeur par défaut: `on`)
-
 * [[option_irc.look.highlight_channel]] *irc.look.highlight_channel*
 ** description: `liste de mots pour le highlight dans les tampons de type "canal", séparés par des virgules (insensible à la casse, utilisez "(?-i)" au début des mots pour les rendre sensibles à la casse; les variables spéciales $nick, $channel et $server sont remplacées par leurs valeurs), ces mots sont ajoutés à la variable locale du tampon "highlight_words" seulement lorsque le tampon est créé (cela n'affecte pas les tampons courants), une chaîne vide désactive le highlight par défaut sur le pseudo, exemples: "$nick", "(?-i)$nick"`
 ** type: chaîne
@@ -257,6 +252,11 @@
 ** description: `texte à afficher après le pseudo dans la fenêtre de discussion`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
+
+* [[option_irc.look.nicks_hide_password]] *irc.look.nicks_hide_password*
+** description: `liste des pseudos (séparés par des virgules) pour lesquels les mots de passe seront masqués quand un message est envoyé, par exemple pour cacher le mot de passe dans le message affiché par "/msg nickserv identify motedepasse", exemple: "nickserv|nickbot"`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `"nickserv"`)
 
 * [[option_irc.look.notice_as_pv]] *irc.look.notice_as_pv*
 ** description: `afficher les notices comme des messages privés (si auto, utilise le tampon privé s'il est trouvé)`

@@ -32,6 +32,10 @@ Version 0.4.1 (under dev!)
   list with arguments inside), guile >= 2.0 is now required (bug #38350)
 * guile: fix crash on calls to callbacks during load of script (bug #38343)
 * guile: fix compilation with guile 2.0
+* irc: hide passwords in commands or messages sent to nickserv (/msg nickserv)
+  with new modifiers "irc_command_auth" and "irc_message_auth", remove option
+  irc.look.hide_nickserv_pwd, add option irc.look.nicks_hide_password
+  (bug #38346)
 * irc: fix display of malformed CTCP (without closing char) (bug #38347)
 * irc: unmask smart filtered join if nick speaks in channel some minutes after
   the join, new option irc.look.smart_filter_join_unmask (task #12405)

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-02-23 08:23+0100\n"
+"POT-Creation-Date: 2013-02-23 12:49+0100\n"
 "PO-Revision-Date: 2013-02-14 18:20+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3554,6 +3554,35 @@ msgstr ""
 msgid "%s%s: cannot create new private buffer \"%s\""
 msgstr ""
 
+#, c-format
+msgid "Server: %s%s %s[%s%s%s]%s%s"
+msgstr ""
+
+msgid "connected"
+msgstr ""
+
+msgid "not connected"
+msgstr ""
+
+msgid " (temporary)"
+msgstr ""
+
+msgid "on"
+msgstr ""
+
+msgid "off"
+msgstr ""
+
+msgid "minute"
+msgid_plural "minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "channel"
+msgid_plural "channels"
+msgstr[0] ""
+msgstr[1] ""
+
 msgid "All servers:"
 msgstr ""
 
@@ -4801,9 +4830,6 @@ msgstr ""
 msgid "display nick prefix in \"input_prompt\" bar item"
 msgstr ""
 
-msgid "hide password displayed by nickserv"
-msgstr ""
-
 msgid ""
 "comma separated list of words to highlight in server buffers (case "
 "insensitive, use \"(?-i)\" at beginning of words to make them case "
@@ -4845,6 +4871,12 @@ msgstr ""
 msgid ""
 "default target buffer for msgbuffer options when target is private and that "
 "private buffer is not found"
+msgstr ""
+
+msgid ""
+"comma separated list of nicks for which passwords will be hidden when a "
+"message is sent, for example to hide password in message displayed by \"/msg "
+"nickserv identify password\", example: \"nickserv,nickbot\""
 msgstr ""
 
 msgid ""
@@ -5049,35 +5081,6 @@ msgstr ""
 #, c-format
 msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
 msgstr ""
-
-#, c-format
-msgid "Server: %s%s %s[%s%s%s]%s%s"
-msgstr ""
-
-msgid "connected"
-msgstr ""
-
-msgid "not connected"
-msgstr ""
-
-msgid " (temporary)"
-msgstr ""
-
-msgid "on"
-msgstr ""
-
-msgid "off"
-msgstr ""
-
-msgid "minute"
-msgid_plural "minutes"
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "channel"
-msgid_plural "channels"
-msgstr[0] ""
-msgstr[1] ""
 
 msgid "1 if string is a valid IRC channel name for server"
 msgstr ""

@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-02-23 08:23+0100\n"
-"PO-Revision-Date: 2013-02-21 17:55+0100\n"
+"POT-Creation-Date: 2013-02-23 12:49+0100\n"
+"PO-Revision-Date: 2013-02-23 11:11+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Polish\n"
@@ -4635,6 +4635,37 @@ msgstr "%s%s: nie znaleziono powiadomienia"
 msgid "%s%s: cannot create new private buffer \"%s\""
 msgstr "%s%s: nie można utworzyć nowego bufora prywatnego \"%s\""
 
+#, c-format
+msgid "Server: %s%s %s[%s%s%s]%s%s"
+msgstr "Serwer: %s%s %s[%s%s%s]%s%s"
+
+msgid "connected"
+msgstr "połączony"
+
+msgid "not connected"
+msgstr "nie połączony"
+
+msgid " (temporary)"
+msgstr " (tymczasowy)"
+
+msgid "on"
+msgstr "włączone"
+
+msgid "off"
+msgstr "wyłączone"
+
+msgid "minute"
+msgid_plural "minutes"
+msgstr[0] "minutę"
+msgstr[1] "minuty"
+msgstr[2] "minut"
+
+msgid "channel"
+msgid_plural "channels"
+msgstr[0] "kanał"
+msgstr[1] "kanały"
+msgstr[2] "kanałów"
+
 msgid "All servers:"
 msgstr "Wszystkie serwery:"
 
@@ -6279,9 +6310,6 @@ msgstr "wyświetl atrybuty nicka w elemencie paska \"input_prompt\""
 msgid "display nick prefix in \"input_prompt\" bar item"
 msgstr "wyświetl przedrostek nicka w elemencie paska \"input_prompt\""
 
-msgid "hide password displayed by nickserv"
-msgstr "ukryj hasło wyświetlane przez nickserv"
-
 msgid ""
 "comma separated list of words to highlight in server buffers (case "
 "insensitive, use \"(?-i)\" at beginning of words to make them case "
@@ -6350,6 +6378,12 @@ msgid ""
 msgstr ""
 "domyślny bufor docelowy dla bufora wiadomości, kiedy cel jest prywatny i nie "
 "odnaleziono tego prywatnego bufora"
+
+msgid ""
+"comma separated list of nicks for which passwords will be hidden when a "
+"message is sent, for example to hide password in message displayed by \"/msg "
+"nickserv identify password\", example: \"nickserv,nickbot\""
+msgstr ""
 
 msgid ""
 "display notices as private messages (if auto, use private buffer if found)"
@@ -6611,37 +6645,6 @@ msgstr "%s%s: nieznany typ DCC CHAT otrzymano od %s%s%s: \"%s\""
 #, c-format
 msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
 msgstr "%sNieznane zażądane CTCP przez %s%s%s: %s%s%s%s%s"
-
-#, c-format
-msgid "Server: %s%s %s[%s%s%s]%s%s"
-msgstr "Serwer: %s%s %s[%s%s%s]%s%s"
-
-msgid "connected"
-msgstr "połączony"
-
-msgid "not connected"
-msgstr "nie połączony"
-
-msgid " (temporary)"
-msgstr " (tymczasowy)"
-
-msgid "on"
-msgstr "włączone"
-
-msgid "off"
-msgstr "wyłączone"
-
-msgid "minute"
-msgid_plural "minutes"
-msgstr[0] "minutę"
-msgstr[1] "minuty"
-msgstr[2] "minut"
-
-msgid "channel"
-msgid_plural "channels"
-msgstr[0] "kanał"
-msgstr[1] "kanały"
-msgstr[2] "kanałów"
 
 msgid "1 if string is a valid IRC channel name for server"
 msgstr "1 jeśli ciąg jest poprawną nazwą kanału IRC dla serwera"

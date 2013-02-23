@@ -158,11 +158,6 @@
 ** type: boolean
 ** values: on, off (default value: `on`)
 
-* [[option_irc.look.hide_nickserv_pwd]] *irc.look.hide_nickserv_pwd*
-** description: `hide password displayed by nickserv`
-** type: boolean
-** values: on, off (default value: `on`)
-
 * [[option_irc.look.highlight_channel]] *irc.look.highlight_channel*
 ** description: `comma separated list of words to highlight in channel buffers (case insensitive, use "(?-i)" at beginning of words to make them case sensitive; special variables $nick, $channel and $server are replaced by their value), these words are added to buffer local variable "highlight_words" only when buffer is created (it does not affect current buffers), an empty string disables default highlight on nick, examples: "$nick", "(?-i)$nick"`
 ** type: string
@@ -257,6 +252,11 @@
 ** description: `text to display after nick in chat window`
 ** type: string
 ** values: any string (default value: `""`)
+
+* [[option_irc.look.nicks_hide_password]] *irc.look.nicks_hide_password*
+** description: `comma separated list of nicks for which passwords will be hidden when a message is sent, for example to hide password in message displayed by "/msg nickserv identify password", example: "nickserv,nickbot"`
+** type: string
+** values: any string (default value: `"nickserv"`)
 
 * [[option_irc.look.notice_as_pv]] *irc.look.notice_as_pv*
 ** description: `display notices as private messages (if auto, use private buffer if found)`

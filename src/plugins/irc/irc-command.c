@@ -37,7 +37,6 @@
 #include "irc-channel.h"
 #include "irc-color.h"
 #include "irc-config.h"
-#include "irc-display.h"
 #include "irc-ignore.h"
 #include "irc-input.h"
 #include "irc-msgbuffer.h"
@@ -45,6 +44,7 @@
 #include "irc-notify.h"
 #include "irc-protocol.h"
 #include "irc-raw.h"
+#include "irc-sasl.h"
 #include "irc-server.h"
 
 
@@ -419,6 +419,35 @@ irc_command_me_all_channels (struct t_irc_server *server, const char *arguments)
 }
 
 /*
+ * Displays away on all channels of all servers.
+ */
+
+void
+irc_command_display_away (struct t_irc_server *server, const char *string1,
+                          const char *string2)
+{
+    struct t_irc_channel *ptr_channel;
+
+    for (ptr_channel = server->channels; ptr_channel;
+         ptr_channel = ptr_channel->next_channel)
+    {
+        if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
+        {
+            weechat_printf_tags (ptr_channel->buffer,
+                                 "away_info",
+                                 "%s[%s%s%s %s: %s%s]",
+                                 IRC_COLOR_CHAT_DELIMITERS,
+                                 IRC_COLOR_CHAT_NICK_SELF,
+                                 server->nick,
+                                 IRC_COLOR_RESET,
+                                 string1,
+                                 string2,
+                                 IRC_COLOR_CHAT_DELIMITERS);
+        }
+    }
+}
+
+/*
  * Toggles away status for one server.
  */
 
@@ -451,8 +480,10 @@ irc_command_away_server (struct t_irc_server *server, const char *arguments,
                 string = irc_color_decode (arguments,
                                            weechat_config_boolean (irc_config_network_colors_receive));
                 if (weechat_config_integer (irc_config_look_display_away) == IRC_CONFIG_DISPLAY_AWAY_LOCAL)
-                    irc_display_away (server, "away",
-                                      (string) ? string : arguments);
+                {
+                    irc_command_display_away (server, "away",
+                                              (string) ? string : arguments);
+                }
                 else
                 {
                     snprintf (buffer, sizeof (buffer), "is away: %s",
@@ -525,7 +556,7 @@ irc_command_away_server (struct t_irc_server *server, const char *arguments,
                                   (long int)(elapsed / 3600),
                                   (long int)((elapsed / 60) % 60),
                                   (long int)(elapsed % 60));
-                        irc_display_away (server, "back", buffer);
+                        irc_command_display_away (server, "back", buffer);
                     }
                     else
                     {
@@ -2634,7 +2665,8 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
                  char **argv, char **argv_eol)
 {
     char **targets;
-    int num_targets, i, arg_target, arg_text, is_channel, msg_op_voice;
+    int num_targets, i, j, arg_target, arg_text, is_channel, msg_op_voice;
+    int hide_password;
     char *msg_pwd_hidden;
     char *string;
 
@@ -2752,13 +2784,26 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
                 }
                 else
                 {
-                    /* message to nickserv with identify ? */
-                    if (weechat_strcasecmp (targets[i], "nickserv") == 0)
+                    /* check if the password must be hidden for this nick */
+                    hide_password = 0;
+                    if (irc_config_nicks_hide_password)
                     {
-                        msg_pwd_hidden = strdup (argv_eol[arg_text]);
-                        if (msg_pwd_hidden
-                            && (weechat_config_boolean (irc_config_look_hide_nickserv_pwd)))
-                            irc_display_hide_password (msg_pwd_hidden, 0);
+                        for (j = 0; j < irc_config_num_nicks_hide_password; j++)
+                        {
+                            if (weechat_strcasecmp (irc_config_nicks_hide_password[j],
+                                                    targets[i]) == 0)
+                            {
+                                hide_password = 1;
+                                break;
+                            }
+                        }
+                    }
+                    if (hide_password)
+                    {
+                        /* hide password in message displayed using modifier */
+                        msg_pwd_hidden = weechat_hook_modifier_exec ("irc_message_auth",
+                                                                     ptr_server->name,
+                                                                     argv_eol[arg_text]);
                         string = irc_color_decode (
                             (msg_pwd_hidden) ? msg_pwd_hidden : argv_eol[arg_text],
                             weechat_config_boolean (irc_config_network_colors_receive));
@@ -3946,6 +3991,358 @@ irc_command_saquit (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
+ * Displays server options.
+ */
+
+void
+irc_command_display_server (struct t_irc_server *server, int with_detail)
+{
+    char *cmd_pwd_hidden;
+    int num_channels, num_pv;
+
+    if (with_detail)
+    {
+        weechat_printf (NULL, "");
+        weechat_printf (NULL, _("Server: %s%s %s[%s%s%s]%s%s"),
+                        IRC_COLOR_CHAT_SERVER,
+                        server->name,
+                        IRC_COLOR_CHAT_DELIMITERS,
+                        IRC_COLOR_RESET,
+                        (server->is_connected) ?
+                        _("connected") : _("not connected"),
+                        IRC_COLOR_CHAT_DELIMITERS,
+                        IRC_COLOR_RESET,
+                        (server->temp_server) ? _(" (temporary)") : "");
+        /* addresses */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_ADDRESSES]))
+            weechat_printf (NULL, "  addresses. . . . . . :   ('%s')",
+                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_ADDRESSES));
+        else
+            weechat_printf (NULL, "  addresses. . . . . . : %s'%s'",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_string (server->options[IRC_SERVER_OPTION_ADDRESSES]));
+        /* proxy */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_PROXY]))
+            weechat_printf (NULL, "  proxy. . . . . . . . :   ('%s')",
+                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_PROXY));
+        else
+            weechat_printf (NULL, "  proxy. . . . . . . . : %s'%s'",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_string (server->options[IRC_SERVER_OPTION_PROXY]));
+        /* ipv6 */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_IPV6]))
+            weechat_printf (NULL, "  ipv6 . . . . . . . . :   (%s)",
+                            (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_IPV6)) ?
+                            _("on") : _("off"));
+        else
+            weechat_printf (NULL, "  ipv6 . . . . . . . . : %s%s",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_boolean (server->options[IRC_SERVER_OPTION_IPV6]) ?
+                            _("on") : _("off"));
+        /* ssl */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_SSL]))
+            weechat_printf (NULL, "  ssl. . . . . . . . . :   (%s)",
+                            (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SSL)) ?
+                            _("on") : _("off"));
+        else
+            weechat_printf (NULL, "  ssl. . . . . . . . . : %s%s",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_boolean (server->options[IRC_SERVER_OPTION_SSL]) ?
+                            _("on") : _("off"));
+        /* ssl_cert */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_SSL_CERT]))
+            weechat_printf (NULL, "  ssl_cert . . . . . . :   ('%s')",
+                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SSL_CERT));
+        else
+            weechat_printf (NULL, "  ssl_cert . . . . . . : %s'%s'",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_string (server->options[IRC_SERVER_OPTION_SSL_CERT]));
+        /* ssl_priorities */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_SSL_PRIORITIES]))
+            weechat_printf (NULL, "  ssl_priorities . . . :   ('%s')",
+                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SSL_PRIORITIES));
+        else
+            weechat_printf (NULL, "  ssl_priorities . . . : %s'%s'",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_string (server->options[IRC_SERVER_OPTION_SSL_PRIORITIES]));
+        /* ssl_dhkey_size */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_SSL_DHKEY_SIZE]))
+            weechat_printf (NULL, "  ssl_dhkey_size . . . :   (%d)",
+                            IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SSL_DHKEY_SIZE));
+        else
+            weechat_printf (NULL, "  ssl_dhkey_size . . . : %s%d",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_integer (server->options[IRC_SERVER_OPTION_SSL_DHKEY_SIZE]));
+        /* ssl_verify */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_SSL_VERIFY]))
+            weechat_printf (NULL, "  ssl_verify . . . . . :   (%s)",
+                            (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SSL_VERIFY)) ?
+                            _("on") : _("off"));
+        else
+            weechat_printf (NULL, "  ssl_verify . . . . . : %s%s",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_boolean (server->options[IRC_SERVER_OPTION_SSL_VERIFY]) ?
+                            _("on") : _("off"));
+        /* password */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_PASSWORD]))
+            weechat_printf (NULL, "  password . . . . . . :   %s",
+                            _("(hidden)"));
+        else
+            weechat_printf (NULL, "  password . . . . . . : %s%s",
+                            IRC_COLOR_CHAT_VALUE,
+                            _("(hidden)"));
+        /* client capabilities */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_CAPABILITIES]))
+            weechat_printf (NULL, "  capabilities . . . . :   ('%s')",
+                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_CAPABILITIES));
+        else
+            weechat_printf (NULL, "  capabilities . . . . : %s'%s'",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_string (server->options[IRC_SERVER_OPTION_CAPABILITIES]));
+        /* sasl_mechanism */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_SASL_MECHANISM]))
+            weechat_printf (NULL, "  sasl_mechanism . . . :   ('%s')",
+                            irc_sasl_mechanism_string[IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SASL_MECHANISM)]);
+        else
+            weechat_printf (NULL, "  sasl_mechanism . . . : %s'%s'",
+                            IRC_COLOR_CHAT_VALUE,
+                            irc_sasl_mechanism_string[weechat_config_integer (server->options[IRC_SERVER_OPTION_SASL_MECHANISM])]);
+        /* sasl_username */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_SASL_USERNAME]))
+            weechat_printf (NULL, "  sasl_username. . . . :   ('%s')",
+                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_USERNAME));
+        else
+            weechat_printf (NULL, "  sasl_username. . . . : %s'%s'",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_string (server->options[IRC_SERVER_OPTION_SASL_USERNAME]));
+        /* sasl_password */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_SASL_PASSWORD]))
+            weechat_printf (NULL, "  sasl_password. . . . :   %s",
+                            _("(hidden)"));
+        else
+            weechat_printf (NULL, "  sasl_password. . . . : %s%s",
+                            IRC_COLOR_CHAT_VALUE,
+                            _("(hidden)"));
+        /* autoconnect */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_AUTOCONNECT]))
+            weechat_printf (NULL, "  autoconnect. . . . . :   (%s)",
+                            (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_AUTOCONNECT)) ?
+                            _("on") : _("off"));
+        else
+            weechat_printf (NULL, "  autoconnect. . . . . : %s%s",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_boolean (server->options[IRC_SERVER_OPTION_AUTOCONNECT]) ?
+                            _("on") : _("off"));
+        /* autoreconnect */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_AUTORECONNECT]))
+            weechat_printf (NULL, "  autoreconnect. . . . :   (%s)",
+                            (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_AUTORECONNECT)) ?
+                            _("on") : _("off"));
+        else
+            weechat_printf (NULL, "  autoreconnect. . . . : %s%s",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_boolean (server->options[IRC_SERVER_OPTION_AUTORECONNECT]) ?
+                            _("on") : _("off"));
+        /* autoreconnect_delay */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_AUTORECONNECT_DELAY]))
+            weechat_printf (NULL, "  autoreconnect_delay. :   (%d %s)",
+                            IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AUTORECONNECT_DELAY),
+                            NG_("second", "seconds", IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AUTORECONNECT_DELAY)));
+        else
+            weechat_printf (NULL, "  autoreconnect_delay. : %s%d %s",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_integer (server->options[IRC_SERVER_OPTION_AUTORECONNECT_DELAY]),
+                            NG_("second", "seconds", weechat_config_integer (server->options[IRC_SERVER_OPTION_AUTORECONNECT_DELAY])));
+        /* nicks */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_NICKS]))
+            weechat_printf (NULL, "  nicks. . . . . . . . :   ('%s')",
+                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_NICKS));
+        else
+            weechat_printf (NULL, "  nicks. . . . . . . . : %s'%s'",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_string (server->options[IRC_SERVER_OPTION_NICKS]));
+        /* username */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_USERNAME]))
+            weechat_printf (NULL, "  username . . . . . . :   ('%s')",
+                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_USERNAME));
+        else
+            weechat_printf (NULL, "  username . . . . . . : %s'%s'",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_string (server->options[IRC_SERVER_OPTION_USERNAME]));
+        /* realname */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_REALNAME]))
+            weechat_printf (NULL, "  realname . . . . . . :   ('%s')",
+                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_REALNAME));
+        else
+            weechat_printf (NULL, "  realname . . . . . . : %s'%s'",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_string (server->options[IRC_SERVER_OPTION_REALNAME]));
+        /* local_hostname */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_LOCAL_HOSTNAME]))
+            weechat_printf (NULL, "  local_hostname . . . :   ('%s')",
+                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_LOCAL_HOSTNAME));
+        else
+            weechat_printf (NULL, "  local_hostname . . . : %s'%s'",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_string (server->options[IRC_SERVER_OPTION_LOCAL_HOSTNAME]));
+        /* command */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_COMMAND]))
+        {
+            cmd_pwd_hidden = weechat_hook_modifier_exec ("irc_command_auth",
+                                                         server->name,
+                                                         IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_COMMAND));
+            weechat_printf (NULL, "  command. . . . . . . :   ('%s')",
+                            (cmd_pwd_hidden) ? cmd_pwd_hidden : IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_COMMAND));
+            if (cmd_pwd_hidden)
+                free (cmd_pwd_hidden);
+        }
+        else
+        {
+            cmd_pwd_hidden = weechat_hook_modifier_exec ("irc_command_auth",
+                                                         server->name,
+                                                         weechat_config_string (server->options[IRC_SERVER_OPTION_COMMAND]));
+            weechat_printf (NULL, "  command. . . . . . . : %s'%s'",
+                            IRC_COLOR_CHAT_VALUE,
+                            (cmd_pwd_hidden) ? cmd_pwd_hidden : weechat_config_string (server->options[IRC_SERVER_OPTION_COMMAND]));
+            if (cmd_pwd_hidden)
+                free (cmd_pwd_hidden);
+        }
+        /* command_delay */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_COMMAND_DELAY]))
+            weechat_printf (NULL, "  command_delay. . . . :   (%d %s)",
+                            IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_COMMAND_DELAY),
+                            NG_("second", "seconds", IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_COMMAND_DELAY)));
+        else
+            weechat_printf (NULL, "  command_delay. . . . : %s%d %s",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_integer (server->options[IRC_SERVER_OPTION_COMMAND_DELAY]),
+                            NG_("second", "seconds", weechat_config_integer (server->options[IRC_SERVER_OPTION_COMMAND_DELAY])));
+        /* autojoin */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_AUTOJOIN]))
+            weechat_printf (NULL, "  autojoin . . . . . . :   ('%s')",
+                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_AUTOJOIN));
+        else
+            weechat_printf (NULL, "  autojoin . . . . . . : %s'%s'",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_string (server->options[IRC_SERVER_OPTION_AUTOJOIN]));
+        /* autorejoin */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_AUTOREJOIN]))
+            weechat_printf (NULL, "  autorejoin . . . . . :   (%s)",
+                            (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_AUTOREJOIN)) ?
+                            _("on") : _("off"));
+        else
+            weechat_printf (NULL, "  autorejoin . . . . . : %s%s",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_boolean (server->options[IRC_SERVER_OPTION_AUTOREJOIN]) ?
+                            _("on") : _("off"));
+        /* autorejoin_delay */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_AUTOREJOIN_DELAY]))
+            weechat_printf (NULL, "  autorejoin_delay . . :   (%d %s)",
+                            IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AUTOREJOIN_DELAY),
+                            NG_("second", "seconds", IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AUTOREJOIN_DELAY)));
+        else
+            weechat_printf (NULL, "  autorejoin_delay . . : %s%d %s",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_integer (server->options[IRC_SERVER_OPTION_AUTOREJOIN_DELAY]),
+                            NG_("second", "seconds", weechat_config_integer (server->options[IRC_SERVER_OPTION_AUTOREJOIN_DELAY])));
+        /* connection_timeout */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_CONNECTION_TIMEOUT]))
+            weechat_printf (NULL, "  connection_timeout . :   (%d %s)",
+                            IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_CONNECTION_TIMEOUT),
+                            NG_("second", "seconds", IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_CONNECTION_TIMEOUT)));
+        else
+            weechat_printf (NULL, "  connection_timeout . : %s%d %s",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_integer (server->options[IRC_SERVER_OPTION_CONNECTION_TIMEOUT]),
+                            NG_("second", "seconds", weechat_config_integer (server->options[IRC_SERVER_OPTION_CONNECTION_TIMEOUT])));
+        /* anti_flood_prio_high */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_HIGH]))
+            weechat_printf (NULL, "  anti_flood_prio_high :   (%d %s)",
+                            IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_HIGH),
+                            NG_("second", "seconds", IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_HIGH)));
+        else
+            weechat_printf (NULL, "  anti_flood_prio_high : %s%d %s",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_integer (server->options[IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_HIGH]),
+                            NG_("second", "seconds", weechat_config_integer (server->options[IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_HIGH])));
+        /* anti_flood_prio_low */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW]))
+            weechat_printf (NULL, "  anti_flood_prio_low. :   (%d %s)",
+                            IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW),
+                            NG_("second", "seconds", IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW)));
+        else
+            weechat_printf (NULL, "  anti_flood_prio_low. : %s%d %s",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_integer (server->options[IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW]),
+                            NG_("second", "seconds", weechat_config_integer (server->options[IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW])));
+        /* away_check */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_AWAY_CHECK]))
+            weechat_printf (NULL, "  away_check . . . . . :   (%d %s)",
+                            IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK),
+                            NG_("minute", "minutes", IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK)));
+        else
+            weechat_printf (NULL, "  away_check . . . . . : %s%d %s",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_integer (server->options[IRC_SERVER_OPTION_AWAY_CHECK]),
+                            NG_("minute", "minutes", weechat_config_integer (server->options[IRC_SERVER_OPTION_AWAY_CHECK])));
+        /* away_check_max_nicks */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS]))
+            weechat_printf (NULL, "  away_check_max_nicks :   (%d)",
+                            IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS));
+        else
+            weechat_printf (NULL, "  away_check_max_nicks : %s%d",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_integer (server->options[IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS]));
+        /* default_msg_part */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_DEFAULT_MSG_PART]))
+            weechat_printf (NULL, "  default_msg_part . . :   ('%s')",
+                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_DEFAULT_MSG_PART));
+        else
+            weechat_printf (NULL, "  default_msg_part . . : %s'%s'",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_string (server->options[IRC_SERVER_OPTION_DEFAULT_MSG_PART]));
+        /* default_msg_quit */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_DEFAULT_MSG_QUIT]))
+            weechat_printf (NULL, "  default_msg_quit . . :   ('%s')",
+                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_DEFAULT_MSG_QUIT));
+        else
+            weechat_printf (NULL, "  default_msg_quit . . : %s'%s'",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_string (server->options[IRC_SERVER_OPTION_DEFAULT_MSG_QUIT]));
+    }
+    else
+    {
+        if (server->is_connected)
+        {
+            num_channels = irc_server_get_channel_count (server);
+            num_pv = irc_server_get_pv_count (server);
+            weechat_printf (NULL, " %s %s%s %s[%s%s%s]%s%s, %d %s, %d pv",
+                            (server->is_connected) ? "*" : " ",
+                            IRC_COLOR_CHAT_SERVER,
+                            server->name,
+                            IRC_COLOR_CHAT_DELIMITERS,
+                            IRC_COLOR_RESET,
+                            (server->is_connected) ?
+                            _("connected") : _("not connected"),
+                            IRC_COLOR_CHAT_DELIMITERS,
+                            IRC_COLOR_RESET,
+                            (server->temp_server) ? _(" (temporary)") : "",
+                            num_channels,
+                            NG_("channel", "channels", num_channels),
+                            num_pv);
+        }
+        else
+        {
+            weechat_printf (NULL, "   %s%s%s%s",
+                            IRC_COLOR_CHAT_SERVER,
+                            server->name,
+                            IRC_COLOR_RESET,
+                            (server->temp_server) ? _(" (temporary)") : "");
+        }
+    }
+}
+
+/*
  * Callback for command "/server": manages IRC servers.
  */
 
@@ -3992,7 +4389,7 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                 for (ptr_server2 = irc_servers; ptr_server2;
                      ptr_server2 = ptr_server2->next_server)
                 {
-                    irc_display_server (ptr_server2, detailed_list);
+                    irc_command_display_server (ptr_server2, detailed_list);
                 }
             }
             else
@@ -4014,7 +4411,7 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                                         server_name);
                     }
                     one_server_found = 1;
-                    irc_display_server (ptr_server2, detailed_list);
+                    irc_command_display_server (ptr_server2, detailed_list);
                 }
             }
             if (!one_server_found)

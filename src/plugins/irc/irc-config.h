@@ -114,13 +114,13 @@ extern struct t_config_option *irc_config_look_item_away_message;
 extern struct t_config_option *irc_config_look_item_channel_modes_hide_key;
 extern struct t_config_option *irc_config_look_item_nick_modes;
 extern struct t_config_option *irc_config_look_item_nick_prefix;
-extern struct t_config_option *irc_config_look_hide_nickserv_pwd;
 extern struct t_config_option *irc_config_look_highlight_server;
 extern struct t_config_option *irc_config_look_highlight_channel;
 extern struct t_config_option *irc_config_look_highlight_pv;
 extern struct t_config_option *irc_config_look_highlight_tags;
 extern struct t_config_option *irc_config_look_item_display_server;
 extern struct t_config_option *irc_config_look_msgbuffer_fallback;
+extern struct t_config_option *irc_config_look_nicks_hide_password;
 extern struct t_config_option *irc_config_look_notice_as_pv;
 extern struct t_config_option *irc_config_look_notify_tags_ison;
 extern struct t_config_option *irc_config_look_notify_tags_whois;
@@ -172,6 +172,8 @@ extern int irc_config_num_nick_colors;
 extern struct t_hashtable *irc_config_hashtable_nick_color_force;
 extern struct t_hashtable *irc_config_hashtable_nick_prefixes;
 extern struct t_hashtable *irc_config_hashtable_color_mirc_remap;
+extern char **irc_config_nicks_hide_password;
+extern int irc_config_num_nicks_hide_password;
 
 extern void irc_config_set_nick_colors ();
 extern int irc_config_server_check_value_cb (void *data,

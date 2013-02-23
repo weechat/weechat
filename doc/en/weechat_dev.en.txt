@@ -194,7 +194,6 @@ Plugins
 |       irc-config.c                | IRC config options
 |       irc-ctcp.c                  | IRC CTCP
 |       irc-debug.c                 | IRC debug functions
-|       irc-display.c               | IRC display functions
 |       irc-ignore.c                | IRC Ignore
 |       irc-info.c                  | IRC info/infolists/hdata
 |       irc-input.c                 | Input of commands/text

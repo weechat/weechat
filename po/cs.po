@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-02-23 08:23+0100\n"
-"PO-Revision-Date: 2013-02-21 17:54+0100\n"
+"POT-Creation-Date: 2013-02-23 12:49+0100\n"
+"PO-Revision-Date: 2013-02-23 11:11+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Czech\n"
@@ -4349,6 +4349,37 @@ msgstr "%s%s: notifikace nenalezena"
 msgid "%s%s: cannot create new private buffer \"%s\""
 msgstr "%s%s: nemohu vytvořít nový soukromý buffer\"%s\""
 
+#, fuzzy, c-format
+msgid "Server: %s%s %s[%s%s%s]%s%s"
+msgstr "%sServer: %s%s %s[%s%s%s]%s%s"
+
+msgid "connected"
+msgstr "připojen"
+
+msgid "not connected"
+msgstr "nepřipojen"
+
+msgid " (temporary)"
+msgstr " (dočasný)"
+
+msgid "on"
+msgstr "na"
+
+msgid "off"
+msgstr "off"
+
+msgid "minute"
+msgid_plural "minutes"
+msgstr[0] "minuta"
+msgstr[1] "minuty"
+msgstr[2] "minut"
+
+msgid "channel"
+msgid_plural "channels"
+msgstr[0] "kanál"
+msgstr[1] "kanály"
+msgstr[2] "kanálů"
+
 msgid "All servers:"
 msgstr "Všechny servery:"
 
@@ -5968,9 +5999,6 @@ msgstr "zobrazovat módy přezdívky v položce pole \"input_prompt\""
 msgid "display nick prefix in \"input_prompt\" bar item"
 msgstr "zobrazovat předponu přezdívky v položce pole \"input_prompt\""
 
-msgid "hide password displayed by nickserv"
-msgstr "schovat heslo zobrazené nickservem"
-
 msgid ""
 "comma separated list of words to highlight in server buffers (case "
 "insensitive, use \"(?-i)\" at beginning of words to make them case "
@@ -6017,6 +6045,12 @@ msgid ""
 msgstr ""
 "výchozí cílový buffer pro volby msgbuffer, když je cíl soukromý a příslušný "
 "soukromý buffer není nalezen"
+
+msgid ""
+"comma separated list of nicks for which passwords will be hidden when a "
+"message is sent, for example to hide password in message displayed by \"/msg "
+"nickserv identify password\", example: \"nickserv,nickbot\""
+msgstr ""
 
 msgid ""
 "display notices as private messages (if auto, use private buffer if found)"
@@ -6256,37 +6290,6 @@ msgstr "%s%s: neznámý DCC CHAT typ obdržen od %s%s%s: \"%s\""
 #, c-format
 msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
 msgstr "%sNeznámý CTCP požadavek od %s%s%s: %s%s%s%s%s"
-
-#, fuzzy, c-format
-msgid "Server: %s%s %s[%s%s%s]%s%s"
-msgstr "%sServer: %s%s %s[%s%s%s]%s%s"
-
-msgid "connected"
-msgstr "připojen"
-
-msgid "not connected"
-msgstr "nepřipojen"
-
-msgid " (temporary)"
-msgstr " (dočasný)"
-
-msgid "on"
-msgstr "na"
-
-msgid "off"
-msgstr "off"
-
-msgid "minute"
-msgid_plural "minutes"
-msgstr[0] "minuta"
-msgstr[1] "minuty"
-msgstr[2] "minut"
-
-msgid "channel"
-msgid_plural "channels"
-msgstr[0] "kanál"
-msgstr[1] "kanály"
-msgstr[2] "kanálů"
 
 #, fuzzy
 msgid "1 if string is a valid IRC channel name for server"

@@ -135,8 +135,6 @@ SET(WEECHAT_SOURCES
 ./src/plugins/irc/irc-ctcp.h
 ./src/plugins/irc/irc-debug.c
 ./src/plugins/irc/irc-debug.h
-./src/plugins/irc/irc-display.c
-./src/plugins/irc/irc-display.h
 ./src/plugins/irc/irc.h
 ./src/plugins/irc/irc-ignore.c
 ./src/plugins/irc/irc-ignore.h

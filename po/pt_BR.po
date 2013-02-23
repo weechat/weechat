@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-02-23 08:23+0100\n"
-"PO-Revision-Date: 2013-02-21 17:55+0100\n"
+"POT-Creation-Date: 2013-02-23 12:49+0100\n"
+"PO-Revision-Date: 2013-02-23 11:12+0100\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Portuguese\n"
@@ -4377,6 +4377,35 @@ msgstr ""
 msgid "%s%s: cannot create new private buffer \"%s\""
 msgstr ""
 
+#, c-format
+msgid "Server: %s%s %s[%s%s%s]%s%s"
+msgstr "Servidor: %s%s %s[%s%s%s]%s%s"
+
+msgid "connected"
+msgstr "conectado"
+
+msgid "not connected"
+msgstr "não conectado"
+
+msgid " (temporary)"
+msgstr " (temporário)"
+
+msgid "on"
+msgstr "ligado"
+
+msgid "off"
+msgstr "desligado"
+
+msgid "minute"
+msgid_plural "minutes"
+msgstr[0] "minuto"
+msgstr[1] "minutos"
+
+msgid "channel"
+msgid_plural "channels"
+msgstr[0] "canal"
+msgstr[1] "canais"
+
 msgid "All servers:"
 msgstr ""
 
@@ -5700,9 +5729,6 @@ msgstr ""
 msgid "display nick prefix in \"input_prompt\" bar item"
 msgstr ""
 
-msgid "hide password displayed by nickserv"
-msgstr "ocultar senha exibida pelo nickserv"
-
 msgid ""
 "comma separated list of words to highlight in server buffers (case "
 "insensitive, use \"(?-i)\" at beginning of words to make them case "
@@ -5744,6 +5770,12 @@ msgstr ""
 msgid ""
 "default target buffer for msgbuffer options when target is private and that "
 "private buffer is not found"
+msgstr ""
+
+msgid ""
+"comma separated list of nicks for which passwords will be hidden when a "
+"message is sent, for example to hide password in message displayed by \"/msg "
+"nickserv identify password\", example: \"nickserv,nickbot\""
 msgstr ""
 
 msgid ""
@@ -5964,35 +5996,6 @@ msgstr ""
 #, c-format
 msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
 msgstr "%sRequisição CTCP desconhecida por %s%s%s: %s%s%s%s%s"
-
-#, c-format
-msgid "Server: %s%s %s[%s%s%s]%s%s"
-msgstr "Servidor: %s%s %s[%s%s%s]%s%s"
-
-msgid "connected"
-msgstr "conectado"
-
-msgid "not connected"
-msgstr "não conectado"
-
-msgid " (temporary)"
-msgstr " (temporário)"
-
-msgid "on"
-msgstr "ligado"
-
-msgid "off"
-msgstr "desligado"
-
-msgid "minute"
-msgid_plural "minutes"
-msgstr[0] "minuto"
-msgstr[1] "minutos"
-
-msgid "channel"
-msgid_plural "channels"
-msgstr[0] "canal"
-msgstr[1] "canais"
 
 msgid "1 if string is a valid IRC channel name for server"
 msgstr "1 se string é um nome de canal IRC válido para o servidor"

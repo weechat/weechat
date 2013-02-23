@@ -158,11 +158,6 @@
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
-* [[option_irc.look.hide_nickserv_pwd]] *irc.look.hide_nickserv_pwd*
-** descrizione: `nascondi password visualizzata da nickserv`
-** tipo: bool
-** valori: on, off (valore predefinito: `on`)
-
 * [[option_irc.look.highlight_channel]] *irc.look.highlight_channel*
 ** descrizione: `elenco separato da virgole di parole da notificare nei buffer dei canali (non sensibili alle maiuscole, usare "(?-i)" all'inizio delle parole per renderle sensibili alle maiuscole; le variabili speciali $nick, $channel e $server sono sostituite dal loro valore), queste parole vengono aggiunte alla variabile locale del buffer "highlight_words" solo quando viene creato il buffer (non interessa gli attuali buffer), una stringa vuota disabilita la notifica predefinita sul nick, esempi: "$nick", "(?-i)$nick"`
 ** tipo: stringa
@@ -257,6 +252,11 @@
 ** descrizione: `testo da visualizzare dopo il nick nella finestra di chat`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
+
+* [[option_irc.look.nicks_hide_password]] *irc.look.nicks_hide_password*
+** descrizione: `comma separated list of nicks for which passwords will be hidden when a message is sent, for example to hide password in message displayed by "/msg nickserv identify password", example: "nickserv,nickbot"`
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: `"nickserv"`)
 
 * [[option_irc.look.notice_as_pv]] *irc.look.notice_as_pv*
 ** descrizione: `visualizza notifiche come messaggi privati (se automatico, usa il buffer privato se viene trovato)`

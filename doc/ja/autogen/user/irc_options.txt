@@ -158,11 +158,6 @@
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
-* [[option_irc.look.hide_nickserv_pwd]] *irc.look.hide_nickserv_pwd*
-** 説明: `nickserv が表示するパスワードを隠す`
-** タイプ: ブール
-** 値: on, off (デフォルト値: `on`)
-
 * [[option_irc.look.highlight_channel]] *irc.look.highlight_channel*
 ** 説明: `現在のバッファでハイライトする単語のコンマ区切りリスト (大文字小文字を区別しない、"(?-i)" を単語の最初につければ大文字小文字を区別する; 特殊変数 $nick、$channel、$server はそれぞれの値に置換される)、これらの単語は、バッファの作成時にバッファのローカル変数 "highlight_words" に追加される (既存のバッファには影響なし)、空文字列はニックネームに関するデフォルトのハイライトを無効にする、例: "$nick", "(?-i)$nick"`
 ** タイプ: 文字列
@@ -257,6 +252,11 @@
 ** 説明: `チャットウィンドウ内でニックネーム後に表示するテキスト`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
+
+* [[option_irc.look.nicks_hide_password]] *irc.look.nicks_hide_password*
+** 説明: `comma separated list of nicks for which passwords will be hidden when a message is sent, for example to hide password in message displayed by "/msg nickserv identify password", example: "nickserv,nickbot"`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"nickserv"`)
 
 * [[option_irc.look.notice_as_pv]] *irc.look.notice_as_pv*
 ** 説明: `notice をプライベートメッセージとして表示 (auto の場合、プライベートバッファが見つかればそれを使用する)`

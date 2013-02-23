@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-02-23 08:23+0100\n"
-"PO-Revision-Date: 2013-02-21 17:55+0100\n"
+"POT-Creation-Date: 2013-02-23 12:49+0100\n"
+"PO-Revision-Date: 2013-02-23 11:11+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
 "Language: ja\n"
@@ -4536,6 +4536,33 @@ msgstr "%s%s: 通知が見つかりません"
 msgid "%s%s: cannot create new private buffer \"%s\""
 msgstr "%s%s: 新しいプライベートバッファ \"%s\" の作成に失敗"
 
+#, c-format
+msgid "Server: %s%s %s[%s%s%s]%s%s"
+msgstr "サーバ: %s%s %s[%s%s%s]%s%s"
+
+msgid "connected"
+msgstr "接続済み"
+
+msgid "not connected"
+msgstr "未接続"
+
+msgid " (temporary)"
+msgstr " (一時的)"
+
+msgid "on"
+msgstr "オン"
+
+msgid "off"
+msgstr "オフ"
+
+msgid "minute"
+msgid_plural "minutes"
+msgstr[0] "分"
+
+msgid "channel"
+msgid_plural "channels"
+msgstr[0] "チャンネル"
+
 msgid "All servers:"
 msgstr "全てのサーバ:"
 
@@ -6159,9 +6186,6 @@ msgstr "\"input_prompt\" バーアイテムではニックネームモードを�
 msgid "display nick prefix in \"input_prompt\" bar item"
 msgstr "\"input_prompt\" バーアイテムではニックネームプレフィックスを表示"
 
-msgid "hide password displayed by nickserv"
-msgstr "nickserv が表示するパスワードを隠す"
-
 msgid ""
 "comma separated list of words to highlight in server buffers (case "
 "insensitive, use \"(?-i)\" at beginning of words to make them case "
@@ -6226,6 +6250,12 @@ msgid ""
 msgstr ""
 "ターゲットがプライベートでプライベートバッファが見つからない場合の msgbuffer "
 "オプション用のデフォルトのターゲットバッファ"
+
+msgid ""
+"comma separated list of nicks for which passwords will be hidden when a "
+"message is sent, for example to hide password in message displayed by \"/msg "
+"nickserv identify password\", example: \"nickserv,nickbot\""
+msgstr ""
 
 msgid ""
 "display notices as private messages (if auto, use private buffer if found)"
@@ -6477,33 +6507,6 @@ msgstr "%s%s: %s%s%s からの未知の DCC CHAT タイプ: \"%s\""
 #, c-format
 msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
 msgstr "%s%s%s%s からの未知の CTCP 要求: %s%s%s%s%s"
-
-#, c-format
-msgid "Server: %s%s %s[%s%s%s]%s%s"
-msgstr "サーバ: %s%s %s[%s%s%s]%s%s"
-
-msgid "connected"
-msgstr "接続済み"
-
-msgid "not connected"
-msgstr "未接続"
-
-msgid " (temporary)"
-msgstr " (一時的)"
-
-msgid "on"
-msgstr "オン"
-
-msgid "off"
-msgstr "オフ"
-
-msgid "minute"
-msgid_plural "minutes"
-msgstr[0] "分"
-
-msgid "channel"
-msgid_plural "channels"
-msgstr[0] "チャンネル"
 
 msgid "1 if string is a valid IRC channel name for server"
 msgstr "文字列がサーバの有効な IRC チャンネル名なら 1"

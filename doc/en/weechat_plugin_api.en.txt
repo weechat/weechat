@@ -8850,6 +8850,18 @@ Arguments:
   any string |
   string with IRC color codes, or without color
 
+| irc | irc_command_auth +
+  (_new in version 0.4.1_) |
+  server name |
+  authentication command (for example: `/msg nickserv identify password`) |
+  command with hidden password (for example: `/msg nickserv identify ********`)
+
+| irc | irc_message_auth +
+  (_new in version 0.4.1_) |
+  server name |
+  message displayed after `/msg` sent to nickserv |
+  message with hidden password
+
 | irc | irc_in_xxx ^(1)^ |
   server name |
   content of message received from IRC server (before charset decoding) |

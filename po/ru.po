@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-02-23 08:23+0100\n"
-"PO-Revision-Date: 2013-02-21 17:55+0100\n"
+"POT-Creation-Date: 2013-02-23 12:49+0100\n"
+"PO-Revision-Date: 2013-02-23 11:12+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Russian\n"
@@ -3985,6 +3985,39 @@ msgstr "подпись не найдена"
 msgid "%s%s: cannot create new private buffer \"%s\""
 msgstr "%s невозможно создать новый буфер привата \"%s\"\n"
 
+#, fuzzy, c-format
+msgid "Server: %s%s %s[%s%s%s]%s%s"
+msgstr "%sСервер: %s%s %s[%s%s%s]\n"
+
+msgid "connected"
+msgstr "подключен"
+
+msgid "not connected"
+msgstr "отключен"
+
+msgid " (temporary)"
+msgstr ""
+
+msgid "on"
+msgstr "вкл."
+
+msgid "off"
+msgstr "выкл."
+
+#, fuzzy
+msgid "minute"
+msgid_plural "minutes"
+msgstr[0] "минута"
+msgstr[1] "минута"
+msgstr[2] "минута"
+
+#, fuzzy
+msgid "channel"
+msgid_plural "channels"
+msgstr[0] "%d канал"
+msgstr[1] "%d каналов"
+msgstr[2] "%d каналов"
+
 #, fuzzy
 msgid "All servers:"
 msgstr "Все серверы:\n"
@@ -5541,9 +5574,6 @@ msgstr ""
 msgid "display nick prefix in \"input_prompt\" bar item"
 msgstr ""
 
-msgid "hide password displayed by nickserv"
-msgstr "скрывать пароль, отображаемый nickserv'ом"
-
 msgid ""
 "comma separated list of words to highlight in server buffers (case "
 "insensitive, use \"(?-i)\" at beginning of words to make them case "
@@ -5585,6 +5615,12 @@ msgstr ""
 msgid ""
 "default target buffer for msgbuffer options when target is private and that "
 "private buffer is not found"
+msgstr ""
+
+msgid ""
+"comma separated list of nicks for which passwords will be hidden when a "
+"message is sent, for example to hide password in message displayed by \"/msg "
+"nickserv identify password\", example: \"nickserv,nickbot\""
 msgstr ""
 
 #, fuzzy
@@ -5814,39 +5850,6 @@ msgstr "%s неизвестный режим DCC CHAT получен от "
 #, fuzzy, c-format
 msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
 msgstr "Получен неизвестный CTCP %s%s%s от %s%s"
-
-#, fuzzy, c-format
-msgid "Server: %s%s %s[%s%s%s]%s%s"
-msgstr "%sСервер: %s%s %s[%s%s%s]\n"
-
-msgid "connected"
-msgstr "подключен"
-
-msgid "not connected"
-msgstr "отключен"
-
-msgid " (temporary)"
-msgstr ""
-
-msgid "on"
-msgstr "вкл."
-
-msgid "off"
-msgstr "выкл."
-
-#, fuzzy
-msgid "minute"
-msgid_plural "minutes"
-msgstr[0] "минута"
-msgstr[1] "минута"
-msgstr[2] "минута"
-
-#, fuzzy
-msgid "channel"
-msgid_plural "channels"
-msgstr[0] "%d канал"
-msgstr[1] "%d каналов"
-msgstr[2] "%d каналов"
 
 #, fuzzy
 msgid "1 if string is a valid IRC channel name for server"

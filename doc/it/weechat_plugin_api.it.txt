@@ -8954,6 +8954,20 @@ Argomenti:
   qualsiasi stringa |
   stringa con i codici colori IRC, o senza colore
 
+// TRANSLATION MISSING
+| irc | irc_command_auth +
+  (_novità nella versione 0.4.1_) |
+  nome server |
+  authentication command (for example: `/msg nickserv identify password`) |
+  command with hidden password (for example: `/msg nickserv identify ********`)
+
+// TRANSLATION MISSING
+| irc | irc_message_auth +
+  (_novità nella versione 0.4.1_) |
+  nome server |
+  message displayed after `/msg` sent to nickserv |
+  message with hidden password
+
 | irc | irc_in_xxx ^(1)^ |
   nome server |
   contenuto del messaggio ricevuto dal server IRC (prima della codifica del set caratteri) |

@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-02-23 08:23+0100\n"
-"PO-Revision-Date: 2013-02-23 08:23+0100\n"
+"POT-Creation-Date: 2013-02-23 12:49+0100\n"
+"PO-Revision-Date: 2013-02-23 12:50+0100\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -4712,6 +4712,35 @@ msgstr "%s%s: notification non trouvée"
 msgid "%s%s: cannot create new private buffer \"%s\""
 msgstr "%s%s: impossible de créer le tampon privé \"%s\""
 
+#, c-format
+msgid "Server: %s%s %s[%s%s%s]%s%s"
+msgstr "Serveur: %s%s %s[%s%s%s]%s%s"
+
+msgid "connected"
+msgstr "connecté"
+
+msgid "not connected"
+msgstr "non connecté"
+
+msgid " (temporary)"
+msgstr " (temporaire)"
+
+msgid "on"
+msgstr "activé"
+
+msgid "off"
+msgstr "désactivé"
+
+msgid "minute"
+msgid_plural "minutes"
+msgstr[0] "minute"
+msgstr[1] "minutes"
+
+msgid "channel"
+msgid_plural "channels"
+msgstr[0] "canal"
+msgstr[1] "canaux"
+
 msgid "All servers:"
 msgstr "Tous les serveurs:"
 
@@ -6378,9 +6407,6 @@ msgstr "affiche les modes du pseudo dans l'objet de barre \"input_prompt\""
 msgid "display nick prefix in \"input_prompt\" bar item"
 msgstr "affiche le préfixe du pseudo dans l'objet de barre \"input_prompt\""
 
-msgid "hide password displayed by nickserv"
-msgstr "masquer le mot de passe affiché par nickserv"
-
 msgid ""
 "comma separated list of words to highlight in server buffers (case "
 "insensitive, use \"(?-i)\" at beginning of words to make them case "
@@ -6454,6 +6480,16 @@ msgid ""
 msgstr ""
 "tampon cible par défaut pour les options msgbuffer quand la cible est "
 "\"private\" et que le tampon privé n'est pas trouvé"
+
+msgid ""
+"comma separated list of nicks for which passwords will be hidden when a "
+"message is sent, for example to hide password in message displayed by \"/msg "
+"nickserv identify password\", example: \"nickserv,nickbot\""
+msgstr ""
+"liste des pseudos (séparés par des virgules) pour lesquels les mots de passe "
+"seront masqués quand un message est envoyé, par exemple pour cacher le mot "
+"de passe dans le message affiché par \"/msg nickserv identify motedepasse\", "
+"exemple: \"nickserv|nickbot\""
 
 msgid ""
 "display notices as private messages (if auto, use private buffer if found)"
@@ -6725,35 +6761,6 @@ msgstr "%s%s: type de DCC CHAT inconnu reçu de %s%s%s: \"%s\""
 #, c-format
 msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
 msgstr "%sCTCP inconnu demandé par %s%s%s: %s%s%s%s%s"
-
-#, c-format
-msgid "Server: %s%s %s[%s%s%s]%s%s"
-msgstr "Serveur: %s%s %s[%s%s%s]%s%s"
-
-msgid "connected"
-msgstr "connecté"
-
-msgid "not connected"
-msgstr "non connecté"
-
-msgid " (temporary)"
-msgstr " (temporaire)"
-
-msgid "on"
-msgstr "activé"
-
-msgid "off"
-msgstr "désactivé"
-
-msgid "minute"
-msgid_plural "minutes"
-msgstr[0] "minute"
-msgstr[1] "minutes"
-
-msgid "channel"
-msgid_plural "channels"
-msgstr[0] "canal"
-msgstr[1] "canaux"
 
 msgid "1 if string is a valid IRC channel name for server"
 msgstr "1 si la chaîne est un nom de canal IRC valide pour le serveur"

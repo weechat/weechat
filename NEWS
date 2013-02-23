@@ -1,7 +1,7 @@
 WeeChat Release Notes
 =====================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.1-dev, 2013-02-20
+v0.4.1-dev, 2013-02-23
 
 
 This document lists important changes for each version, that sometimes require
@@ -13,6 +13,33 @@ For a complete list of changes, please look at file 'ChangeLog'.
 
 Version 0.4.1 (under dev!)
 --------------------------
+
+=== IRC passwords hidden ===
+
+IRC plugin is now using modifiers "irc_command_auth" and "irc_message_auth" to
+hide passwords.
+
+The option 'irc.look.hide_nickserv_pwd' has been removed, and a new option
+'irc.look.nicks_hide_password' has been added (by default passwords are hidden
+only for "nickserv").
+
+A new rmodifier "message_auth" has been added to hide passwords displayed by
+command "/msg nickserv identify|register|ghost|release" and the rmodifier
+"nickserv" has been renamed to "command_auth".
+
+If you never added/changed rmodifiers, you can just reset all rmodifiers:
+
+----------------------------------------
+/rmodifier default -yes
+----------------------------------------
+
+If you added/changed some rmodifiers, do it manually with these commands:
+
+----------------------------------------
+/rmodifier del nickserv
+/rmodifier add command_auth history_add,input_text_display,irc_command_auth 1,4* ^(/(msg|quote) +nickserv +(id|identify|register|ghost \S+|release \S+) +)(.*)
+/rmodifier add message_auth irc_message_auth 1,3* ^(.*(id|identify|register|ghost \S+|release \S+) +)(.*)
+----------------------------------------
 
 === Guile callbacks ===
 
@@ -38,17 +65,17 @@ about bars in the 'WeeChat User's guide').
 ==== IRC ====
 
 IPv6 is now used by default to connect to IRC servers, with fallback to
-IPv4. The option irc.server_default.ipv6 is now "on" by default. If IPv6 is not
-enabled or fails, IPv4 will be used. The "ipv6" option in server is now used to
-disable IPv6 and force IPv4 (if option is turned "off").
+IPv4. The option 'irc.server_default.ipv6' is now "on" by default. If IPv6 is
+not enabled or fails, IPv4 will be used. The "ipv6" option in server is now used
+to disable IPv6 and force IPv4 (if option is turned "off").
 
 ==== Relay ====
 
 Relay plugin is now listening by default on an IPv6 socket (new option
-relay.network.ipv6, on by default), so connections with IPv4 will have
+'relay.network.ipv6', on by default), so connections with IPv4 will have
 IPv4-mapped IPv6 addresses, like: "::ffff:127.0.0.1" (for "127.0.0.1"); check
-that value of option relay.network.allowed_ips supports this mapping, or disable
-IPv6 in relay if you don't plan to use it at all:
+that value of option 'relay.network.allowed_ips' supports this mapping, or
+disable IPv6 in relay if you don't plan to use it at all:
 
 ----------------------------------------
 /set relay.network.ipv6 off
@@ -142,10 +169,15 @@ disable paste detection: if your value was 0, you should set it to -1
 === Rmodifier ===
 
 Rmodifier "nickserv" has a new default regex which includes option "release" for
-command "/msg nickserv". If you never added/changed rmodifiers, you can just
-reset all rmodifiers (command: `/rmodifier default -yes`).
+command "/msg nickserv".
 
-If you added/changed some rmodifiers, do it manually with these two commands:
+If you never added/changed rmodifiers, you can just reset all rmodifiers:
+
+----------------------------------------
+/rmodifier default -yes
+----------------------------------------
+
+If you added/changed some rmodifiers, do it manually with these commands:
 
 ----------------------------------------
 /rmodifier del nickserv
