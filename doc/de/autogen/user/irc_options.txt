@@ -254,7 +254,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_irc.look.nicks_hide_password]] *irc.look.nicks_hide_password*
-** Beschreibung: `comma separated list of nicks for which passwords will be hidden when a message is sent, for example to hide password in message displayed by "/msg nickserv identify password", example: "nickserv,nickbot"`
+** Beschreibung: `durch Kommata getrennte Liste von Nicks bei denen das Passwort in einer Nachricht unterdrückt werden soll. Zum Beispiel bei einer Nachricht die durch "/msg nickserv identify password" generiert wird. Beispiel: "nickserv,nickbot"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"nickserv"`)
 
@@ -304,12 +304,12 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.smart_filter_join_unmask]] *irc.look.smart_filter_join_unmask*
-** Beschreibung: `delay for unmasking a join message that was filtered with tag "irc_smart_filter" (in minutes): if a nick jas joined max N minutes ago and then says something on channel (message, notice or update on topic), the join is unmasked, as well as nick changes after this join (0 = disable: never unmask a join)`
+** Beschreibung: `Verzögerung (in Minuten) um Join Mitteilungen rückwirkend anzuzeigen, falls diese mittels "irc_smart_filter" unterdrückt wurden. Sollte ein Nick während der vorgegeben Zeit etwas im Channel schreiben, dann wird seine Join Mitteilung angezeigt. Dies bezieht sich auf Nachrichten, eine Notice, Änderungen am Topic oder falls er den Nick wechselt (0 = deaktiviert: join-Mitteilungen bleiben verborgen)`
 ** Typ: integer
 ** Werte: 0 .. 10080 (Standardwert: `30`)
 
 * [[option_irc.look.smart_filter_nick]] *irc.look.smart_filter_nick*
-** Beschreibung: `enable smart filter for "nick" messages (nick changes)`
+** Beschreibung: `aktiviert einen intelligenten Filter für "nick" Nachrichten (Änderungen des Nick)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
