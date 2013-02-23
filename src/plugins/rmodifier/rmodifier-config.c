@@ -36,8 +36,11 @@ struct t_config_option *rmodifier_config_look_hide_char;
 
 char *rmodifier_config_default_list[][4] =
 {
-    { "nickserv", "history_add,input_text_display",
-      "^(/(msg|quote) +nickserv +(id|identify|ghost \\S+|release \\S+) +)(.*)", "1,4*"
+    { "command_auth", "history_add,input_text_display,irc_command_auth",
+      "^(/(msg|quote) +nickserv +(id|identify|register|ghost \\S+|release \\S+) +)(.*)", "1,4*"
+    },
+    { "message_auth", "irc_message_auth",
+      "^(.*(id|identify|register|ghost \\S+|release \\S+) +)(.*)", "1,3*"
     },
     { "server", "history_add,input_text_display",
       "^(/(server|connect) .*-(sasl_)?password=)(\\S+)(.*)", "1,4*,5"

@@ -51,6 +51,9 @@ Version 0.4.1 (under dev!)
 * relay: add options "buffers" and "upgrade" for commands sync/desync in weechat
   protocol
 * relay: fix commands sync/desync in weechat protocol (bug #38215)
+* rmodifier: rename default rmodifier "nickserv" to "command_auth" (with new
+  modifier "irc_command_auth"), add default rmodifier "message_auth" (modifier
+  "irc_message_auth")
 * scripts: do not allow empty script name in function "register"
 
 Version 0.4.0 (2013-01-20)
