@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-02-17 12:17+0100\n"
-"PO-Revision-Date: 2013-01-20 12:07+0100\n"
+"POT-Creation-Date: 2013-02-23 08:23+0100\n"
+"PO-Revision-Date: 2013-02-21 17:55+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
 "Language: ja\n"
@@ -3641,10 +3641,6 @@ msgstr "マウスを無効化しました"
 msgid "  TERM='%s', size: %dx%d"
 msgstr "  TERM='%s'、サイズ: %dx%d"
 
-msgid "server"
-msgid_plural "servers"
-msgstr[0] "サーバ"
-
 #, c-format
 msgid ""
 "%sUnable to change bar type: you must delete bar and create another to do "
@@ -4323,6 +4319,10 @@ msgstr "FIFO パイプの名前"
 
 msgid "away"
 msgstr "離席"
+
+msgid "server"
+msgid_plural "servers"
+msgstr[0] "サーバ"
 
 msgid "Lag"
 msgstr "遅延時間"
@@ -7979,6 +7979,7 @@ msgstr ""
 "list|listfull|listrelay || add [ipv4.][ipv6.][ssl.]<protocol.name> <port> || "
 "del [ipv4.][ipv6.][ssl.]<protocol.name> || raw || sslcertkey"
 
+#, fuzzy
 msgid ""
 "         list: list relay clients (only active relays)\n"
 "     listfull: list relay clients (verbose, all relays)\n"
@@ -7989,7 +7990,9 @@ msgid ""
 "         ipv6: force use of IPv6\n"
 "          ssl: enable SSL\n"
 "protocol.name: protocol and name to relay:\n"
-"                 - protocol \"irc\": name is the server to share\n"
+"                 - protocol \"irc\": name is the server to share (optional, "
+"if not given, the server name must be sent by client in command \"PASS\", "
+"with format: \"PASS server:password\")\n"
 "                 - protocol \"weechat\" (name is not used)\n"
 "         port: port used for relay\n"
 "          raw: open buffer with raw Relay data\n"
@@ -8003,6 +8006,8 @@ msgid ""
 "    /relay add irc.freenode 8000\n"
 "  irc proxy, for server \"freenode\", with SSL:\n"
 "    /relay add ssl.irc.freenode 8001\n"
+"  irc proxy, for all servers (client will choose), with SSL:\n"
+"    /relay add ssl.irc 8002\n"
 "  weechat protocol:\n"
 "    /relay add weechat 9000\n"
 "  weechat protocol with SSL:\n"
@@ -8074,10 +8079,6 @@ msgstr "%s%s: エラー: 不明なプロトコル \"%s\""
 #, c-format
 msgid "%s%s: error: name is not allowed for protocol \"%s\""
 msgstr "%s%s: エラー: プロトコル \"%s\" では name を使えません"
-
-#, c-format
-msgid "%s%s: error: name is not required for protocol \"%s\""
-msgstr "%s%s: エラー: プロトコル \"%s\" では name が必要です"
 
 #, c-format
 msgid "%s%s: error: relay for \"%s\" already exists"
@@ -9607,36 +9608,3 @@ msgstr "タイプ"
 
 msgid "Constants"
 msgstr "定数"
-
-#~ msgid "%s%s: not enough memory to create new speller"
-#~ msgstr "%s%s: 新しい speller を作る十分なメモリがありません"
-
-#~ msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
-#~ msgstr "%s%s: ソケットオプション \"SO_REUSEADDR\" の設定に失敗"
-
-#~ msgid "%s%s: cannot set socket option \"IPV6_V6ONLY\" to value %d"
-#~ msgstr ""
-#~ "%s%s: ソケットオプション \"IPV6_V6ONLY\" の値を %d に設定することはできま"
-#~ "せん"
-
-#~ msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
-#~ msgstr "%s%s: ソケットオプション \"SO_KEEPALIVE\" の設定に失敗"
-
-#~ msgid "%s%s: cannot create socket for xfer"
-#~ msgstr "%s%s: xfer 用のソケットの作成に失敗"
-
-#~ msgid "%s%s: not enough memory to parse file \"%s\""
-#~ msgstr "%s%s: ファイル \"%s\" を解析する十分なメモリがありません"
-
-#~ msgid "%s%s: unable to run file \"%s\""
-#~ msgstr "%s%s: ファイル \"%s\" を実行できません"
-
-#~ msgid "%s%s: unknown error while loading file \"%s\""
-#~ msgstr "%s%s: ファイル \"%s\" のロード中の未定義のエラー"
-
-#~ msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
-#~ msgstr ""
-#~ "%s: スクリプト \"%s\" のロード中にエラー (無効な名前、スペースは禁止)"
-
-#~ msgid "%s%s: cannot create socket"
-#~ msgstr "%s%s: ソケットの作成に失敗"

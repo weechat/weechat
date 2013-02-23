@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-02-17 12:17+0100\n"
+"POT-Creation-Date: 2013-02-23 08:23+0100\n"
 "PO-Revision-Date: 2013-02-14 18:20+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2766,11 +2766,6 @@ msgstr ""
 msgid "  TERM='%s', size: %dx%d"
 msgstr ""
 
-msgid "server"
-msgid_plural "servers"
-msgstr[0] ""
-msgstr[1] ""
-
 #, c-format
 msgid ""
 "%sUnable to change bar type: you must delete bar and create another to do "
@@ -3348,6 +3343,11 @@ msgstr ""
 
 msgid "away"
 msgstr ""
+
+msgid "server"
+msgid_plural "servers"
+msgstr[0] ""
+msgstr[1] ""
 
 msgid "Lag"
 msgstr ""
@@ -6451,7 +6451,9 @@ msgid ""
 "         ipv6: force use of IPv6\n"
 "          ssl: enable SSL\n"
 "protocol.name: protocol and name to relay:\n"
-"                 - protocol \"irc\": name is the server to share\n"
+"                 - protocol \"irc\": name is the server to share (optional, "
+"if not given, the server name must be sent by client in command \"PASS\", "
+"with format: \"PASS server:password\")\n"
 "                 - protocol \"weechat\" (name is not used)\n"
 "         port: port used for relay\n"
 "          raw: open buffer with raw Relay data\n"
@@ -6465,6 +6467,8 @@ msgid ""
 "    /relay add irc.freenode 8000\n"
 "  irc proxy, for server \"freenode\", with SSL:\n"
 "    /relay add ssl.irc.freenode 8001\n"
+"  irc proxy, for all servers (client will choose), with SSL:\n"
+"    /relay add ssl.irc 8002\n"
 "  weechat protocol:\n"
 "    /relay add weechat 9000\n"
 "  weechat protocol with SSL:\n"
@@ -6500,10 +6504,6 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: error: name is not allowed for protocol \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%s%s: error: name is not required for protocol \"%s\""
 msgstr ""
 
 #, c-format

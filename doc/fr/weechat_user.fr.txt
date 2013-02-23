@@ -2341,7 +2341,7 @@ utilisant divers protocoles :
 * 'irc' : proxy IRC : utilisé pour partager la connexions aux serveurs IRC avec
   un ou plusieurs autres clients IRC
 * 'weechat' : protocole utilisé par les interfaces distantes (par exemple
-  QWeeChat).
+  QWeeChat ou weechat-android).
 
 [[relay_options]]
 Options (relay.conf)
@@ -2355,50 +2355,22 @@ Commandes
 
 include::autogen/user/relay_commands.txt[]
 
-[[relay_irc_proxy]]
-IRC proxy
-^^^^^^^^^
+[[relay_password]]
+Mot de passe
+^^^^^^^^^^^^
 
-L'extension Relay peut agir comme un proxy IRC : vous pouvez définir un port
-par serveur IRC et utiliser un mot de passe pour les clients.
-
-Par exemple :
+Il est fortement recommandé de définir un mot de passe pour le relai, avec la
+commande :
 
 ----------------------------------------
-/set relay.network.password "mypass"
-/relay add irc.freenode 8000
+/set relay.network.password "motdepasse"
 ----------------------------------------
 
-Maintenant vous pouvez vous connecter sur le port 8000 avec n'importe quel
-client IRC (WeeChat, xchat, irssi, etc...), en utilisant le mot de passe
-"mypass".
-
-Vous pouvez limiter le nombre de clients autorisés :
-
-----------------------------------------
-/set relay.network.max_clients 1
-----------------------------------------
-
-[[relay_weechat_protocol]]
-Protocole WeeChat
-^^^^^^^^^^^^^^^^^
-
-L'extension Relay peut envoyer les données à une interface distante en
-utilisant le protocole WeeChat.
-
-Par exemple :
-
-----------------------------------------
-/set relay.network.password "mypass"
-/relay add weechat 9000
-----------------------------------------
-
-Maintenant vous pouvez vous connecter sur le port 9000 avec une interface
-distante (comme QWeeChat), en utilisant le mot de passe "mypass".
+Ce mot de passe sera utilisé pour les protocoles 'irc' et 'weechat'.
 
 [[relay_ssl]]
-Relai avec SSL
-^^^^^^^^^^^^^^
+SSL
+^^^
 
 Vous pouvez utiliser SSL en créant un certificat et clé privée et en utilisant
 le préfixe "ssl." dans le nom du protocole.
@@ -2421,15 +2393,58 @@ commande :
 /relay sslcertkey
 ----------------------------------------
 
-Et ajoutez le relai avec SSL, par exemple :
+[[relay_irc_proxy]]
+IRC proxy
+^^^^^^^^^
+
+L'extension Relay peut agir comme un proxy IRC : elle simulera un serveur IRC,
+et vous pourrez vous connecter sur WeeChat avec n'importe quel autre client IRC
+(y compris WeeChat lui-même).
+
+Vous pouvez définir un port par serveur IRC, ou bien un port générique pour tous
+les serveurs.
+
+Lors de l'utilisation d'un port pour tous les serveurs, le client doit envoyer
+le nom interne du serveur dans la commande IRC "PASS", avec le format :
 
 ----------------------------------------
-/relay add ssl.irc.freenode 8001
-/relay add ssl.weechat 9001
+PASS serveur:motdepasse
 ----------------------------------------
+
+Exemple : proxy IRC avec SSL pour tout serveur (le client choisira) :
+
+----------------------------------------
+/relay add ssl.irc 8000
+----------------------------------------
+
+Exemple : proxy IRC sans SSL seulement pour le serveur "freenode" :
+
+----------------------------------------
+/relay add irc.freenode 8000
+----------------------------------------
+
+Maintenant vous pouvez vous connecter sur le port 8000 avec n'importe quel
+client IRC en utilisant le mot de passe "motdepasse" (ou "freenode:motdepasse"
+si aucun serveur n'a été spécifié dans le relai).
+
+[[relay_weechat_protocol]]
+Protocole WeeChat
+^^^^^^^^^^^^^^^^^
+
+L'extension Relay peut envoyer les données à une interface distante en
+utilisant le protocole WeeChat.
+
+Par exemple :
+
+----------------------------------------
+/relay add weechat 9000
+----------------------------------------
+
+Maintenant vous pouvez vous connecter sur le port 9000 avec une interface
+distante en utilisant le mot de passe "motdepasse".
 
 [[relay_websocket]]
-Websocket
+WebSocket
 ^^^^^^^^^
 
 Le protocole WebSocket (http://tools.ietf.org/html/rfc6455[RFC 6455]) est
@@ -2445,12 +2460,12 @@ JavaScript :
 
 [source,js]
 ----------------------------------------
-websocket = new WebSocket("ws://server.com:5000/weechat");
+websocket = new WebSocket("ws://server.com:9000/weechat");
 ----------------------------------------
 
-Le port (5000 dans l'exemple) est le port défini dans l'extension Relay.
-L'URI doit toujours se terminer par "/weechat" (pour les protocoles IRC et
-WeeChat).
+Le port (9000 dans l'exemple) est le port défini dans l'extension Relay.
+L'URI doit toujours se terminer par "/weechat" (pour les protocoles 'irc' et
+'weechat').
 
 [[rmodifier_plugin]]
 Extension Rmodifier

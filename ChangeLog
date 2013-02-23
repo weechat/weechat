@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.1-dev, 2013-02-20
+v0.4.1-dev, 2013-02-23
 
 
 This document lists all changes for each version.
@@ -40,6 +40,8 @@ Version 0.4.1 (under dev!)
 * irc: add color in output of /names when result is on server buffer (channel
   not joined) (bug #38070)
 * perl: simplify code to load scripts
+* relay: add support of multiple servers on same port for irc protocol (the
+  client must send the server in the "PASS" command)
 * relay: add websocket server support (RFC 6455) for irc and weechat protocols,
   new option relay.network.websocket_allowed_origins
 * relay: add options "buffers" and "upgrade" for commands sync/desync in weechat

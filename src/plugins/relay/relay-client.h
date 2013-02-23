@@ -113,6 +113,7 @@ extern int relay_client_count;
 extern int relay_client_valid (struct t_relay_client *client);
 extern struct t_relay_client *relay_client_search_by_number (int number);
 extern struct t_relay_client *relay_client_search_by_id (int id);
+extern void relay_client_set_desc (struct t_relay_client *client);
 extern int relay_client_recv_cb (void *arg_client, int fd);
 extern int relay_client_send (struct t_relay_client *client, const char *data,
                               int data_size, const char *message_raw_buffer);

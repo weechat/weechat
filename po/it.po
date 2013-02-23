@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-02-17 12:17+0100\n"
-"PO-Revision-Date: 2013-02-03 12:13+0100\n"
+"POT-Creation-Date: 2013-02-23 08:23+0100\n"
+"PO-Revision-Date: 2013-02-21 17:55+0100\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Italian\n"
@@ -3655,11 +3655,6 @@ msgstr "Mouse disabilitato"
 msgid "  TERM='%s', size: %dx%d"
 msgstr "  TERM='%s', dimensione %dx%d"
 
-msgid "server"
-msgid_plural "servers"
-msgstr[0] "server"
-msgstr[1] "server"
-
 #, c-format
 msgid ""
 "%sUnable to change bar type: you must delete bar and create another to do "
@@ -4343,6 +4338,11 @@ msgstr "nome della pipe FIFO"
 
 msgid "away"
 msgstr "assente"
+
+msgid "server"
+msgid_plural "servers"
+msgstr[0] "server"
+msgstr[1] "server"
 
 msgid "Lag"
 msgstr "Ritardo"
@@ -8074,7 +8074,9 @@ msgid ""
 "         ipv6: force use of IPv6\n"
 "          ssl: enable SSL\n"
 "protocol.name: protocol and name to relay:\n"
-"                 - protocol \"irc\": name is the server to share\n"
+"                 - protocol \"irc\": name is the server to share (optional, "
+"if not given, the server name must be sent by client in command \"PASS\", "
+"with format: \"PASS server:password\")\n"
 "                 - protocol \"weechat\" (name is not used)\n"
 "         port: port used for relay\n"
 "          raw: open buffer with raw Relay data\n"
@@ -8088,6 +8090,8 @@ msgid ""
 "    /relay add irc.freenode 8000\n"
 "  irc proxy, for server \"freenode\", with SSL:\n"
 "    /relay add ssl.irc.freenode 8001\n"
+"  irc proxy, for all servers (client will choose), with SSL:\n"
+"    /relay add ssl.irc 8002\n"
 "  weechat protocol:\n"
 "    /relay add weechat 9000\n"
 "  weechat protocol with SSL:\n"
@@ -8161,10 +8165,6 @@ msgstr "%s%s: errore: protocollo \"%s\" sconosciuto"
 #, c-format
 msgid "%s%s: error: name is not allowed for protocol \"%s\""
 msgstr "%s%s: errore: nome non consentito per il protocollo \"%s\""
-
-#, c-format
-msgid "%s%s: error: name is not required for protocol \"%s\""
-msgstr "%s%s: errore: nome non richiesto per il protocollo \"%s\""
 
 #, c-format
 msgid "%s%s: error: relay for \"%s\" already exists"
@@ -9622,36 +9622,3 @@ msgstr "Tipo"
 
 msgid "Constants"
 msgstr "Costanti"
-
-#~ msgid "%s%s: not enough memory to create new speller"
-#~ msgstr "%s%s: memoria non sufficiente per creare un nuovo correttore"
-
-#~ msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
-#~ msgstr "%s%s: impossibile impostare l'opzione del socket \"SO_REUSEADDR\""
-
-#, fuzzy
-#~ msgid "%s%s: cannot set socket option \"IPV6_V6ONLY\" to value %d"
-#~ msgstr "%s%s: impossibile impostare l'opzione del socket \"SO_KEEPALIVE\""
-
-#~ msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
-#~ msgstr "%s%s: impossibile impostare l'opzione del socket \"SO_KEEPALIVE\""
-
-#~ msgid "%s%s: cannot create socket for xfer"
-#~ msgstr "%s%s: impossibile creare il socker per xfer"
-
-#~ msgid "%s%s: not enough memory to parse file \"%s\""
-#~ msgstr "%s%s: memoria non sufficiente per analizzare il file \"%s\""
-
-#~ msgid "%s%s: unable to run file \"%s\""
-#~ msgstr "%s%s: impossibile eseguire il file \"%s\""
-
-#~ msgid "%s%s: unknown error while loading file \"%s\""
-#~ msgstr "%s%s: errore sconosciuto durante la lettura del file \"%s\""
-
-#~ msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
-#~ msgstr ""
-#~ "%s: errore durante il caricamento dello script \"%s\" (nome errato, spazi "
-#~ "non ammessi)"
-
-#~ msgid "%s%s: cannot create socket"
-#~ msgstr "%s%s: impossibile creare il socket"

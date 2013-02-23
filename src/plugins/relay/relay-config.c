@@ -397,14 +397,6 @@ relay_config_create_option_port (void *data,
                             RELAY_PLUGIN_NAME, protocol);
             rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
         }
-        else if ((protocol_number == RELAY_PROTOCOL_IRC) && !protocol_args)
-        {
-            weechat_printf (NULL, _("%s%s: error: name is not required for "
-                                    "protocol \"%s\""),
-                            weechat_prefix ("error"),
-                            RELAY_PLUGIN_NAME, protocol);
-            rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
-        }
     }
 
     if (rc != WEECHAT_CONFIG_OPTION_SET_ERROR)

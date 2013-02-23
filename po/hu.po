@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-02-17 12:17+0100\n"
-"PO-Revision-Date: 2013-01-20 12:07+0100\n"
+"POT-Creation-Date: 2013-02-23 08:23+0100\n"
+"PO-Revision-Date: 2013-02-21 17:55+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Hungarian\n"
@@ -3114,12 +3114,6 @@ msgstr "Nincs aliasz definiálva.\n"
 msgid "  TERM='%s', size: %dx%d"
 msgstr ""
 
-#, fuzzy
-msgid "server"
-msgid_plural "servers"
-msgstr[0] "szerver"
-msgstr[1] "szerver"
-
 #, c-format
 msgid ""
 "%sUnable to change bar type: you must delete bar and create another to do "
@@ -3746,6 +3740,12 @@ msgstr ""
 
 msgid "away"
 msgstr ""
+
+#, fuzzy
+msgid "server"
+msgid_plural "servers"
+msgstr[0] "szerver"
+msgstr[1] "szerver"
 
 msgid "Lag"
 msgstr ""
@@ -7306,7 +7306,9 @@ msgid ""
 "         ipv6: force use of IPv6\n"
 "          ssl: enable SSL\n"
 "protocol.name: protocol and name to relay:\n"
-"                 - protocol \"irc\": name is the server to share\n"
+"                 - protocol \"irc\": name is the server to share (optional, "
+"if not given, the server name must be sent by client in command \"PASS\", "
+"with format: \"PASS server:password\")\n"
 "                 - protocol \"weechat\" (name is not used)\n"
 "         port: port used for relay\n"
 "          raw: open buffer with raw Relay data\n"
@@ -7320,6 +7322,8 @@ msgid ""
 "    /relay add irc.freenode 8000\n"
 "  irc proxy, for server \"freenode\", with SSL:\n"
 "    /relay add ssl.irc.freenode 8001\n"
+"  irc proxy, for all servers (client will choose), with SSL:\n"
+"    /relay add ssl.irc 8002\n"
 "  weechat protocol:\n"
 "    /relay add weechat 9000\n"
 "  weechat protocol with SSL:\n"
@@ -7358,10 +7362,6 @@ msgstr "%s ismeretlen billentyűparancs \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%s%s: error: name is not allowed for protocol \"%s\""
-msgstr "%s ismeretlen billentyűparancs \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: error: name is not required for protocol \"%s\""
 msgstr "%s ismeretlen billentyűparancs \"%s\"\n"
 
 #, fuzzy, c-format
@@ -8823,39 +8823,3 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
-
-#, fuzzy
-#~ msgid "%s%s: not enough memory to create new speller"
-#~ msgstr "%s nincs elegendő memória új DCC számára\n"
-
-#, fuzzy
-#~ msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
-#~ msgstr "%s nem sikerült a \"SO_REUSEADDR\" csatornaopciót beállítani\n"
-
-#, fuzzy
-#~ msgid "%s%s: cannot set socket option \"IPV6_V6ONLY\" to value %d"
-#~ msgstr "%s nem sikerült a \"SO_KEEPALIVE\" csatornaopciót beállítani\n"
-
-#, fuzzy
-#~ msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
-#~ msgstr "%s nem sikerült a \"SO_KEEPALIVE\" csatornaopciót beállítani\n"
-
-#, fuzzy
-#~ msgid "%s%s: cannot create socket for xfer"
-#~ msgstr "%s nem sikerült a csatornát létrehozni\n"
-
-#, fuzzy
-#~ msgid "%s%s: not enough memory to parse file \"%s\""
-#~ msgstr "%s nincs elegendő memória új DCC számára\n"
-
-#, fuzzy
-#~ msgid "%s%s: unable to run file \"%s\""
-#~ msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
-
-#, fuzzy
-#~ msgid "%s%s: unknown error while loading file \"%s\""
-#~ msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
-
-#, fuzzy
-#~ msgid "%s%s: cannot create socket"
-#~ msgstr "%s nem sikerült a csatornát létrehozni\n"

@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-02-17 12:17+0100\n"
-"PO-Revision-Date: 2013-01-20 12:07+0100\n"
+"POT-Creation-Date: 2013-02-23 08:23+0100\n"
+"PO-Revision-Date: 2013-02-21 17:54+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: Czech\n"
@@ -3464,12 +3464,6 @@ msgstr "Filtrování zpráv zakázáno"
 msgid "  TERM='%s', size: %dx%d"
 msgstr "  TERM='%s', velikost: %dx%d"
 
-msgid "server"
-msgid_plural "servers"
-msgstr[0] "server"
-msgstr[1] "servery"
-msgstr[2] "serverů"
-
 #, c-format
 msgid ""
 "%sUnable to change bar type: you must delete bar and create another to do "
@@ -4135,6 +4129,12 @@ msgstr "jméno FIFO roury"
 
 msgid "away"
 msgstr "pryč"
+
+msgid "server"
+msgid_plural "servers"
+msgstr[0] "server"
+msgstr[1] "servery"
+msgstr[2] "serverů"
 
 msgid "Lag"
 msgstr "Lag"
@@ -7813,7 +7813,9 @@ msgid ""
 "         ipv6: force use of IPv6\n"
 "          ssl: enable SSL\n"
 "protocol.name: protocol and name to relay:\n"
-"                 - protocol \"irc\": name is the server to share\n"
+"                 - protocol \"irc\": name is the server to share (optional, "
+"if not given, the server name must be sent by client in command \"PASS\", "
+"with format: \"PASS server:password\")\n"
 "                 - protocol \"weechat\" (name is not used)\n"
 "         port: port used for relay\n"
 "          raw: open buffer with raw Relay data\n"
@@ -7827,6 +7829,8 @@ msgid ""
 "    /relay add irc.freenode 8000\n"
 "  irc proxy, for server \"freenode\", with SSL:\n"
 "    /relay add ssl.irc.freenode 8001\n"
+"  irc proxy, for all servers (client will choose), with SSL:\n"
+"    /relay add ssl.irc 8002\n"
 "  weechat protocol:\n"
 "    /relay add weechat 9000\n"
 "  weechat protocol with SSL:\n"
@@ -7881,10 +7885,6 @@ msgstr "%s%s: chyba: neznámý protokol \"%s\""
 
 #, fuzzy, c-format
 msgid "%s%s: error: name is not allowed for protocol \"%s\""
-msgstr "%s%s: chyba: neznámý protokol \"%s\""
-
-#, fuzzy, c-format
-msgid "%s%s: error: name is not required for protocol \"%s\""
 msgstr "%s%s: chyba: neznámý protokol \"%s\""
 
 #, c-format
@@ -9347,35 +9347,3 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
-
-#~ msgid "%s%s: not enough memory to create new speller"
-#~ msgstr "%s%s: nedostatek paměti pro vytvoření kontroly pravopisu"
-
-#~ msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
-#~ msgstr "%s%s: nemohu nastavit nastavení sketu \"SO_REUSEADDR\""
-
-#, fuzzy
-#~ msgid "%s%s: cannot set socket option \"IPV6_V6ONLY\" to value %d"
-#~ msgstr "%s%s: nemohu nastavit nastavení soketu \"SO_KEEPALIVE\""
-
-#~ msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
-#~ msgstr "%s%s: nemohu nastavit nastavení soketu \"SO_KEEPALIVE\""
-
-#~ msgid "%s%s: cannot create socket for xfer"
-#~ msgstr "%s%s: nemohu vytvořit soket pro xfer"
-
-#~ msgid "%s%s: not enough memory to parse file \"%s\""
-#~ msgstr "%s%s: nedostatek paměti pro parsování souboru \"%s\""
-
-#~ msgid "%s%s: unable to run file \"%s\""
-#~ msgstr "%s%s: nemůžu spustit soubor \"%s\""
-
-#~ msgid "%s%s: unknown error while loading file \"%s\""
-#~ msgstr "%s%s: neznámá chyba při načítání souboru \"%s\""
-
-#~ msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
-#~ msgstr ""
-#~ "%s: chyba načítání skriptu \"%s\" (špatné jméno, mezery jsou zakázány)"
-
-#~ msgid "%s%s: cannot create socket"
-#~ msgstr "%s%s nemohu vytvořit soket"

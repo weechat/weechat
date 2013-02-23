@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-02-17 12:17+0100\n"
-"PO-Revision-Date: 2013-01-20 12:07+0100\n"
+"POT-Creation-Date: 2013-02-23 08:23+0100\n"
+"PO-Revision-Date: 2013-02-21 17:55+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
 "Language: \n"
@@ -3899,11 +3899,6 @@ msgstr "Maus ist deaktiviert"
 msgid "  TERM='%s', size: %dx%d"
 msgstr "  TERM='%s', Größe: %dx%d"
 
-msgid "server"
-msgid_plural "servers"
-msgstr[0] "Server"
-msgstr[1] "Server"
-
 #, c-format
 msgid ""
 "%sUnable to change bar type: you must delete bar and create another to do "
@@ -4624,6 +4619,11 @@ msgstr "Name der FIFO-Pipe"
 
 msgid "away"
 msgstr "abwesend"
+
+msgid "server"
+msgid_plural "servers"
+msgstr[0] "Server"
+msgstr[1] "Server"
 
 msgid "Lag"
 msgstr "Lag"
@@ -8490,6 +8490,7 @@ msgstr ""
 "list|listfull|listrelay || add [ipv4.][ipv6.][ssl.]<protocol.name> <port> || "
 "del [ipv4.][ipv6.][ssl.]<protocol.name> || raw || sslcertkey"
 
+#, fuzzy
 msgid ""
 "         list: list relay clients (only active relays)\n"
 "     listfull: list relay clients (verbose, all relays)\n"
@@ -8500,7 +8501,9 @@ msgid ""
 "         ipv6: force use of IPv6\n"
 "          ssl: enable SSL\n"
 "protocol.name: protocol and name to relay:\n"
-"                 - protocol \"irc\": name is the server to share\n"
+"                 - protocol \"irc\": name is the server to share (optional, "
+"if not given, the server name must be sent by client in command \"PASS\", "
+"with format: \"PASS server:password\")\n"
 "                 - protocol \"weechat\" (name is not used)\n"
 "         port: port used for relay\n"
 "          raw: open buffer with raw Relay data\n"
@@ -8514,6 +8517,8 @@ msgid ""
 "    /relay add irc.freenode 8000\n"
 "  irc proxy, for server \"freenode\", with SSL:\n"
 "    /relay add ssl.irc.freenode 8001\n"
+"  irc proxy, for all servers (client will choose), with SSL:\n"
+"    /relay add ssl.irc 8002\n"
 "  weechat protocol:\n"
 "    /relay add weechat 9000\n"
 "  weechat protocol with SSL:\n"
@@ -8587,10 +8592,6 @@ msgstr "%s%s: Unbekanntes Protokoll \"%s\""
 #, c-format
 msgid "%s%s: error: name is not allowed for protocol \"%s\""
 msgstr "%s%s: Fehler: dieser Name ist für das Protokoll \"%s\" nicht erlaubt"
-
-#, c-format
-msgid "%s%s: error: name is not required for protocol \"%s\""
-msgstr "%s%s: Fehler: ein Name ist für das Protokoll \"%s\" nicht notwendig"
 
 #, c-format
 msgid "%s%s: error: relay for \"%s\" already exists"
@@ -10205,170 +10206,3 @@ msgstr "Type"
 
 msgid "Constants"
 msgstr "Konstanten"
-
-#~ msgid "%s%s: not enough memory to create new speller"
-#~ msgstr "%s%s: Nicht genug Speicher um neue Rechtschreibung zu erstellen"
-
-#~ msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
-#~ msgstr "%s%s Fehler beim Erstellen der Socket-Option \"SO_REUSEADDR\""
-
-#~ msgid "%s%s: cannot set socket option \"IPV6_V6ONLY\" to value %d"
-#~ msgstr ""
-#~ "%s%s der Wert %d kann nicht für die Socket-Option, \"IPV6_V6ONLY\", "
-#~ "gesetzt werden"
-
-#~ msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
-#~ msgstr "%s%s Fehler beim Erstellen der Socket-Option \"SO_KEEPALIVE\""
-
-#~ msgid "%s%s: cannot create socket for xfer"
-#~ msgstr "%s%s: Für den Transfer konnte kein Socket angelegt werden"
-
-#~ msgid "%s%s: not enough memory to parse file \"%s\""
-#~ msgstr "%s%s: Nicht genug Speicher um Datei \"%s\" zu analysieren"
-
-#~ msgid "%s%s: unable to run file \"%s\""
-#~ msgstr "%s%s: Kann Datei \"%s\" nicht ausführen"
-
-#~ msgid "%s%s: unknown error while loading file \"%s\""
-#~ msgstr "%s%s: unbekannter Fehler beim Laden der Datei \"%s\""
-
-#~ msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
-#~ msgstr ""
-#~ "%s: Fehler beim Laden des Skriptes \"%s\" (fehlerhafter Name: Leerzeichen "
-#~ "sind nicht erlaubt)"
-
-#~ msgid "%s%s: cannot create socket"
-#~ msgstr "%s%s: Socket konnte nicht angelegt werden"
-
-#~ msgid "background color for window separators (when split)"
-#~ msgstr ""
-#~ "Hintergrundfarbe der Fenster-Separatoren im Chatfenster (bei geteiltem "
-#~ "Bildschirm)"
-
-#~ msgid "No configuration option found"
-#~ msgstr "Konfigurationsoption nicht gefunden"
-
-#~ msgid "%s%d%s configuration option found"
-#~ msgid_plural "%s%d%s configuration options found"
-#~ msgstr[0] "%s%d%s Konfigurationsoption gefunden"
-#~ msgstr[1] "%s%d%s Konfigurationsoptionen gefunden"
-
-#~ msgid "%sError: configuration option \"%s\" not found"
-#~ msgstr "%sFehler: Konfigurationsoption \"%s\" nicht gefunden"
-
-#~ msgid "[<option> [<value>]]"
-#~ msgstr "[<option> [<value>]]"
-
-#~ msgid "automatically rejoin channels after kick"
-#~ msgstr "Channels automatisch betreten, falls man rausgeworfen wurde"
-
-#~ msgid "prefix for error messages"
-#~ msgstr "Präfix für Fehlermeldungen"
-
-#~ msgid "prefix for network messages"
-#~ msgstr "Präfix für Netzwerkmeldungen"
-
-#~ msgid "prefix for action messages"
-#~ msgstr "Präfix für Action-Nachrichten"
-
-#~ msgid "prefix for join messages"
-#~ msgstr "Präfix für Join-Nachrichten"
-
-#~ msgid "prefix for quit messages"
-#~ msgstr "Präfix für Quit-Nachrichten"
-
-#~ msgid ""
-#~ "condition(s) for displaying bar (for bars of type \"window\"): \"active\" "
-#~ "= window must be active, \"inactive\" = window must be inactive, "
-#~ "\"nicklist\" = buffer must have a nicklist"
-#~ msgstr ""
-#~ "Bedingung(en) um eine Bar anzuzeigen (gilt für Bars des Typs \"window\"): "
-#~ "\"active\" = window muss aktiv sein \"inactive\" = window muss inaktiv "
-#~ "sein, \"nicklist\" = Buffer muss über eine Nickliste verfügen"
-
-#~ msgid ""
-#~ "server: server name\n"
-#~ "  nick: nick (may be a mask)"
-#~ msgstr ""
-#~ "server: Servername\n"
-#~ "  nick: Nickname (oder eine Maske)"
-
-#~ msgid "use IPv6 protocol for server communication"
-#~ msgstr "Server über IPv6 ansprechen"
-
-#~ msgid "global decoding charset"
-#~ msgstr "globaler Zeichensatz zum dekodieren"
-
-#~ msgid "global encoding charset"
-#~ msgstr "globaler Zeichensatz zum kodieren"
-
-#~ msgid "alt+d=back to list"
-#~ msgstr "alt+d=zurück zur Auswahl"
-
-#~ msgid "%s: connecting to server %s/%d%s%s..."
-#~ msgstr "%s: Verbinden zum Server %s/%d%s%s..."
-
-#~ msgid "%s: disconnected from server"
-#~ msgstr "%s: Vom Server getrennt!"
-
-#~ msgid "display nick mode ((half)op/voice) before each nick"
-#~ msgstr ""
-#~ "vor dem Nicknamen wird der entsprechende Nickmode ((half)op/voice [@%+]) "
-#~ "angezeigt"
-
-#~ msgid "%s: script \"%s\" held"
-#~ msgstr "%s: Skript \"%s\" kann nicht überschrieben werden"
-
-#~ msgid ""
-#~ "%s%s: cannot authenticate with SASL and mechanism DH-BLOWFISH because "
-#~ "WeeChat was not built with libgcrypt support"
-#~ msgstr ""
-#~ "%s%s Authentifizierung mittels SASL und DH-BLOWFISH Mechanismus nicht "
-#~ "möglich, da WeeChat nicht mit libgcrypt Unterstützung erstellt wurde"
-
-#~ msgid "smart completion for nicks (completes first with last speakers)"
-#~ msgstr ""
-#~ "intelligente Vervollständigung von Nicknamen (vervollständigt zuerst den "
-#~ "letzten Nick, mit dem gesprochen wurde)"
-
-#~ msgid "ended on: "
-#~ msgstr "geendet am: "
-
-#~ msgid "%s%-26s id: %d, protocol: %s, received: %s, sent: %s"
-#~ msgstr "%s%-26s Id: %d, Protokoll: %s, empfangen: %s, gesendet: %s"
-
-#~ msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s%s%s)"
-#~ msgstr "%s: neuer Client von %s%s%s an Port %d (id: %d, Relaying: %s%s%s)"
-
-#~ msgid "text color"
-#~ msgstr "Textfarbe"
-
-#~ msgid "background color"
-#~ msgstr "Hintergrundfarbe"
-
-#~ msgid "text color of selected xfer line"
-#~ msgstr "Farbe der ausgewählten Transfer-Zeile"
-
-#~ msgid "display message when (un)marking as away"
-#~ msgstr "bei Abwesenheit und Rückkehr eine Nachricht anzeigen"
-
-#~ msgid "display channel modes in \"buffer_name\" bar item"
-#~ msgstr "zeigt die Channel-Modi mittels \"buffer_name\" in der Bar-Item an"
-
-#~ msgid "%sError: name can not start with \"#\""
-#~ msgstr "%sFehler: Name darf nicht mit \"#\"beginnen"
-
-#~ msgid "%s%s: name can not start with \"#\""
-#~ msgstr "%s%s: Name darf nicht mit \"#\" beginnen"
-
-#~ msgid "string inserted after nick completion"
-#~ msgstr "Nach Nick-Vervollständigung anzufügende Zeichenfolge"
-
-#~ msgid "display '+' if prefix is truncated"
-#~ msgstr "Anzeige eines '+' falls das Präfix abgeschnitten ist"
-
-#~ msgid "<nick> <channel>"
-#~ msgstr "<nick> <channel>"
-
-#~ msgid "mechanism for SASL authentication"
-#~ msgstr "Vorrichtung zur SASL Authentifizierung"

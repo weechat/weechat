@@ -2202,45 +2202,21 @@ include::autogen/user/relay_options.txt[]
 
 include::autogen/user/relay_commands.txt[]
 
-[[relay_irc_proxy]]
-==== IRC プロキシ ====
+// TRANSLATION MISSING
+[[relay_password]]
+Password
+^^^^^^^^
 
-Relay プラグインは IRC プロキシにもなります。IRC サーバ用にポートを設定して、
-クライアントからの接続に必要なパスワードを設定することができます。
-
-例:
-
-----------------------------------------
-/set relay.network.password "mypass"
-/relay add irc.freenode 8000
-----------------------------------------
-
-この後、適当な IRC クライアント (WeeChat、xchat、irssi、..) を使って 8000
-番ポートに対して、サーバパスワード "mypass" で接続することができます。
-
-クライアントの数を制限することも可能です:
-
-----------------------------------------
-/set relay.network.max_clients 1
-----------------------------------------
-
-[[relay_weechat_protocol]]
-==== WeeChat プロトコル ====
-
-Relay プラグインは WeeChat プロトコルを使ってリモートインターフェイスに対してデータを送信できます。
-
-例:
+It is highly recommended to set a password for relay, with command:
 
 ----------------------------------------
 /set relay.network.password "mypass"
-/relay add weechat 9000
 ----------------------------------------
 
-この後、リモートインターフェイス (QWeeChat 等) を使って 9000
-番ポートに対して、パスワード "mypass" で接続することができます。
+This password is used for 'irc' and 'weechat' protocols.
 
 [[relay_ssl]]
-==== SSL 経由のリレー ====
+==== SSL ====
 
 証明書と秘密鍵を作り、プロトコル名の最初に "ssl." を付けることで
 SSL 経由でリレーを利用することができます。
@@ -2263,16 +2239,54 @@ WeeChat が既に起動している場合、
 /relay sslcertkey
 ----------------------------------------
 
-この後に SSL 経由のリレーを追加します、例えば:
+// TRANSLATION MISSING
+[[relay_irc_proxy]]
+==== IRC プロキシ ====
+
+The Relay plugin can act as an IRC proxy: it will simulate an IRC server, and
+you can connect to WeeChat with any other IRC client (including WeeChat itself).
+
+You can define one port by IRC server, or one generic port for all servers.
+
+When using one port for all servers, the client must send the internal name of
+server in the IRC "PASS" command, with this format:
 
 ----------------------------------------
-/relay add ssl.irc.freenode 8001
-/relay add ssl.weechat 9001
+PASS server:mypass
 ----------------------------------------
+
+Example: IRC proxy with SSL for any server (client will choose):
+
+----------------------------------------
+/relay add ssl.irc 8000
+----------------------------------------
+
+Example: IRC proxy without SSL only for server "freenode":
+
+----------------------------------------
+/relay add irc.freenode 8000
+----------------------------------------
+
+Now you can connect on port 8000 with any IRC client using server password
+"mypass" (or "freenode:mypass" if no server was specified in the relay).
+
+[[relay_weechat_protocol]]
+==== WeeChat プロトコル ====
+
+Relay プラグインは WeeChat プロトコルを使ってリモートインターフェイスに対してデータを送信できます。
+
+例:
+
+----------------------------------------
+/relay add weechat 9000
+----------------------------------------
+
+この後、リモートインターフェイスを使って 9000
+番ポートに対して、パスワード "mypass" で接続することができます。
 
 // TRANSLATION MISSING
 [[relay_websocket]]
-Websocket
+WebSocket
 ^^^^^^^^^
 
 WebSocket protocol (http://tools.ietf.org/html/rfc6455[RFC 6455]) is supported
@@ -2287,11 +2301,11 @@ A WebSocket can be opened in a HTML5 with a single line of JavaScript:
 
 [source,js]
 ----------------------------------------
-websocket = new WebSocket("ws://server.com:5000/weechat");
+websocket = new WebSocket("ws://server.com:9000/weechat");
 ----------------------------------------
 
-The port (5000 in example) is the port defined in Relay plugin.
-The URI must always ends with "/weechat" (for both IRC and WeeChat protocols).
+The port (9000 in example) is the port defined in Relay plugin.
+The URI must always end with "/weechat" (for 'irc' and 'weechat' protocols).
 
 [[rmodifier_plugin]]
 === Rmodifier プラグイン ===

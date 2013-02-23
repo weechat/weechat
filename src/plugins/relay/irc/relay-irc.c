@@ -1149,6 +1149,10 @@ relay_irc_hook_signals (struct t_relay_client *client)
 {
     char str_signal_name[128];
 
+    /* do nothing if "protocol_args" (irc server name) is not yet initialized */
+    if (!client->protocol_args)
+        return;
+
     /*
      * hook signal "xxx,irc_in2_*" to catch IRC data received from
      * this server
@@ -1292,10 +1296,10 @@ void
 relay_irc_recv (struct t_relay_client *client, const char *data)
 {
     char str_time[128], str_signal[128], str_server_channel[256];
-    char str_command[128], *target, **irc_argv;
+    char str_command[128], *target, **irc_argv, *pos;
     const char *irc_command, *irc_channel, *irc_args, *irc_args2;
     int irc_argc, redirect_msg;
-    const char *nick, *irc_is_channel, *isupport, *info;
+    const char *nick, *irc_is_channel, *isupport, *info, *pos_password;
     struct t_hashtable *hash_parsed, *hash_redirect;
     struct t_infolist *infolist_server;
 
@@ -1348,11 +1352,23 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
     {
         if (irc_command && (weechat_strcasecmp (irc_command, "pass") == 0))
         {
-            if (!RELAY_IRC_DATA(client, password_ok))
+            if (irc_args && irc_args[0])
             {
-                if (irc_args && irc_args[0]
+                pos_password = (irc_args[0] == ':') ? irc_args + 1 : irc_args;
+                if (!client->protocol_args)
+                {
+                    pos = strchr (pos_password, ':');
+                    if (pos)
+                    {
+                        client->protocol_args = weechat_strndup (pos_password,
+                                                                 pos - pos_password);
+                        relay_client_set_desc (client);
+                        pos_password = pos + 1;
+                    }
+                }
+                if (!RELAY_IRC_DATA(client, password_ok)
                     && (strcmp (weechat_config_string (relay_config_network_password),
-                                (irc_args[0] == ':') ? irc_args + 1 : irc_args) == 0))
+                                pos_password) == 0))
                 {
                     RELAY_IRC_DATA(client, password_ok) = 1;
                 }
@@ -1360,6 +1376,21 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
         }
         if (irc_command && (weechat_strcasecmp (irc_command, "user") == 0))
         {
+            /* check if server is known */
+            if (!client->protocol_args)
+            {
+                relay_irc_sendf (client,
+                                 ":%s ERROR :WeeChat: server not specified, "
+                                 "command \"PASS server:password\" not received",
+                                 RELAY_IRC_DATA(client, address));
+                relay_irc_sendf (client,
+                                 ":%s ERROR :Closing Link",
+                                 RELAY_IRC_DATA(client, address));
+                relay_client_set_status (client,
+                                         RELAY_STATUS_DISCONNECTED);
+                goto end;
+            }
+
             /* check if connection to server is ok */
             infolist_server = weechat_infolist_get ("irc_server", NULL,
                                                     client->protocol_args);
