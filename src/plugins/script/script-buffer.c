@@ -510,9 +510,9 @@ script_buffer_refresh (int clear)
         snprintf (str_title, sizeof (str_title),
                   _("%d/%d scripts (filter: %s) | Sort: %s | "
                     "Alt+key/input: i=install r=remove l=load L=reload "
-                    "u=unload h=(un)hold v=view script | Input: q=close "
-                    "$=refresh s:x,y=sort words=filter *=reset filter | "
-                    "Mouse: left=select right=install/remove"),
+                    "u=unload A=autoload h=(un)hold v=view script | "
+                    "Input: q=close $=refresh s:x,y=sort words=filter "
+                    "*=reset filter | Mouse: left=select right=install/remove"),
                   script_repo_count_displayed,
                   script_repo_count,
                   (script_repo_filter) ? script_repo_filter : "*",
@@ -706,15 +706,16 @@ int
 script_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
                         const char *input_data)
 {
-    char *actions[][2] = { { "l", "load"     },
-                           { "u", "unload"   },
-                           { "L", "reload"   },
-                           { "i", "install"  },
-                           { "r", "remove"   },
-                           { "h", "hold"     },
-                           { "v", "show"     },
-                           { "d", "showdiff" },
-                           { NULL, NULL      } };
+    char *actions[][2] = { { "A", "toggleautoload" },
+                           { "l", "load"           },
+                           { "u", "unload"         },
+                           { "L", "reload"         },
+                           { "i", "install"        },
+                           { "r", "remove"         },
+                           { "h", "hold"           },
+                           { "v", "show"           },
+                           { "d", "showdiff"       },
+                           { NULL, NULL            } };
     char str_command[64];
     int i;
 
@@ -814,15 +815,16 @@ script_buffer_set_callbacks ()
 void
 script_buffer_set_keys ()
 {
-    char *keys[][2] = { { "meta-l",  "load"     },
-                        { "meta-u",  "unload"   },
-                        { "meta-L",  "reload"   },
-                        { "meta-i",  "install"  },
-                        { "meta-r",  "remove"   },
-                        { "meta-h",  "hold"     },
-                        { "meta-v",  "show"     },
-                        { "meta-d",  "showdiff" },
-                        { NULL,     NULL        } };
+    char *keys[][2] = { { "meta-A",  "toggleautoload" },
+                        { "meta-l",  "load"           },
+                        { "meta-u",  "unload"         },
+                        { "meta-L",  "reload"         },
+                        { "meta-i",  "install"        },
+                        { "meta-r",  "remove"         },
+                        { "meta-h",  "hold"           },
+                        { "meta-v",  "show"           },
+                        { "meta-d",  "showdiff"       },
+                        { NULL,     NULL              } };
     char str_key[64], str_command[64];
     int i;
 

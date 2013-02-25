@@ -86,7 +86,7 @@ static struct PyModuleDef moduleDefOutputs = {
 
 /*
  * string used to execute action "install":
- * when signal "python_install_script" is received, name of string
+ * when signal "python_script_install" is received, name of string
  * is added to this string, to be installed later by a timer (when nothing is
  * running in script)
  */
@@ -94,11 +94,19 @@ char *python_action_install_list = NULL;
 
 /*
  * string used to execute action "remove":
- * when signal "python_remove_script" is received, name of string
+ * when signal "python_script_remove" is received, name of string
  * is added to this string, to be removed later by a timer (when nothing is
  * running in script)
  */
 char *python_action_remove_list = NULL;
+
+/*
+ * string used to execute action "autoload":
+ * when signal "python_script_autoload" is received, name of string
+ * is added to this string, to autoload or disable autoload later by a timer
+ * (when nothing is running in script)
+ */
+char *python_action_autoload_list = NULL;
 
 char python_buffer_output[128];
 
@@ -1167,13 +1175,20 @@ weechat_python_timer_action_cb (void *data, int remaining_calls)
                                          &python_quiet,
                                          &python_action_remove_list);
         }
+        else if (data == &python_action_autoload_list)
+        {
+            plugin_script_action_autoload (weechat_python_plugin,
+                                           &python_quiet,
+                                           &python_action_autoload_list);
+        }
     }
 
     return WEECHAT_RC_OK;
 }
 
 /*
- * Callback called when a script action is asked (install/remove a script).
+ * Callback called when a script action is asked (install/remove/autoload a
+ * script).
  */
 
 int
@@ -1201,6 +1216,14 @@ weechat_python_signal_script_action_cb (void *data, const char *signal,
             weechat_hook_timer (1, 0, 1,
                                 &weechat_python_timer_action_cb,
                                 &python_action_remove_list);
+        }
+        else if (strcmp (signal, "python_script_autoload") == 0)
+        {
+            plugin_script_action_add (&python_action_autoload_list,
+                                      (const char *)signal_data);
+            weechat_hook_timer (1, 0, 1,
+                                &weechat_python_timer_action_cb,
+                                &python_action_autoload_list);
         }
     }
 
@@ -1314,6 +1337,8 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
         free (python_action_install_list);
     if (python_action_remove_list)
         free (python_action_remove_list);
+    if (python_action_autoload_list)
+        free (python_action_autoload_list);
 
     return WEECHAT_RC_OK;
 }

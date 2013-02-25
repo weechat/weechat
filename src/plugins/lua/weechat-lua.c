@@ -52,7 +52,7 @@ lua_State *lua_current_interpreter = NULL;
 
 /*
  * string used to execute action "install":
- * when signal "lua_install_script" is received, name of string
+ * when signal "lua_script_install" is received, name of string
  * is added to this string, to be installed later by a timer (when nothing is
  * running in script)
  */
@@ -60,11 +60,19 @@ char *lua_action_install_list = NULL;
 
 /*
  * string used to execute action "remove":
- * when signal "lua_remove_script" is received, name of string
+ * when signal "lua_script_remove" is received, name of string
  * is added to this string, to be removed later by a timer (when nothing is
  * running in script)
  */
 char *lua_action_remove_list = NULL;
+
+/*
+ * string used to execute action "autoload":
+ * when signal "lua_script_autoload" is received, name of string
+ * is added to this string, to autoload or disable autoload later by a timer
+ * (when nothing is running in script)
+ */
+char *lua_action_autoload_list = NULL;
 
 
 /*
@@ -769,6 +777,12 @@ weechat_lua_timer_action_cb (void *data, int remaining_calls)
                                          &lua_quiet,
                                          &lua_action_remove_list);
         }
+        else if (data == &lua_action_autoload_list)
+        {
+            plugin_script_action_autoload (weechat_lua_plugin,
+                                           &lua_quiet,
+                                           &lua_action_autoload_list);
+        }
     }
 
     return WEECHAT_RC_OK;
@@ -803,6 +817,14 @@ weechat_lua_signal_script_action_cb (void *data, const char *signal,
             weechat_hook_timer (1, 0, 1,
                                 &weechat_lua_timer_action_cb,
                                 &lua_action_remove_list);
+        }
+        else if (strcmp (signal, "lua_script_autoload") == 0)
+        {
+            plugin_script_action_add (&lua_action_autoload_list,
+                                      (const char *)signal_data);
+            weechat_hook_timer (1, 0, 1,
+                                &weechat_lua_timer_action_cb,
+                                &lua_action_autoload_list);
         }
     }
 
@@ -851,6 +873,14 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     lua_quiet = 1;
     plugin_script_end (plugin, &lua_scripts, &weechat_lua_unload_all);
     lua_quiet = 0;
+
+    /* free some data */
+    if (lua_action_install_list)
+        free (lua_action_install_list);
+    if (lua_action_remove_list)
+        free (lua_action_remove_list);
+    if (lua_action_autoload_list)
+        free (lua_action_autoload_list);
 
     return WEECHAT_RC_OK;
 }

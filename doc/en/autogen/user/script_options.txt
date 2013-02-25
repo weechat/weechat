@@ -168,6 +168,11 @@
 ** type: boolean
 ** values: on, off (default value: `on`)
 
+* [[option_script.scripts.autoload]] *script.scripts.autoload*
+** description: `autoload scripts installed (make a link in "autoload" directory to script in parent directory`
+** type: boolean
+** values: on, off (default value: `on`)
+
 * [[option_script.scripts.cache_expire]] *script.scripts.cache_expire*
 ** description: `local cache expiration time, in minutes (-1 = never expires, 0 = always expire)`
 ** type: integer

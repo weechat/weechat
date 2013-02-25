@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.1-dev, 2013-02-23
+v0.4.1-dev, 2013-02-25
 
 
 This document lists all changes for each version.
@@ -54,6 +54,9 @@ Version 0.4.1 (under dev!)
 * rmodifier: rename default rmodifier "nickserv" to "command_auth" (with new
   modifier "irc_command_auth"), add default rmodifier "message_auth" (modifier
   "irc_message_auth")
+* script: add option script.scripts.autoload, add options "autoload",
+  "noautoload" and "toggleautoload" for command /script, add action "A" (meta-A)
+  on script buffer (toggle autoload) (task #12393)
 * scripts: do not allow empty script name in function "register"
 
 Version 0.4.0 (2013-01-20)

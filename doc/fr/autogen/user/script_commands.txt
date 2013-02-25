@@ -5,25 +5,29 @@
          search <texte>
          show <script>
          load|unload|reload <script> [<script>...]
+         autoload|noautoload|toggleautoload <script> [<script>...]
          install|remove|installremove|hold [-q] <script> [<script>...]
          upgrade
          update
 
-         list: lister les scripts chargés (tous les langages)
-           -o: envoyer la liste des scripts chargés au tampon
-           -i: copier la liste des scripts chargés dans la ligne de commande (pour envoi au tampon)
-       search: chercher des scripts par étiquettes ou texte et afficher le résultat sur le tampon des scripts
-         show: afficher des infos détaillées sur le script
-         load: charger un ou plusieurs scripts
-       unload: décharger un ou plusieurs scripts
-       reload: recharger un ou plusieurs scripts
-      install: installer/mettre à jour un ou plusieurs scripts
-       remove: supprimer un ou plusieurs scripts
-installremove: installer ou supprimer un ou plusieurs scripts, selon l'état courant
-         hold: figer/défiger un ou plusieurs scripts (un script figé ne sera plus mis à jour et ne peut pas être supprimé)
-           -q: mode silencieux: ne pas afficher de messages
-      upgrade: mettre à jour les scripts obsolètes (avec nouvelle version disponible)
-       update: mettre à jour le cache local des scripts
+          list: lister les scripts chargés (tous les langages)
+            -o: envoyer la liste des scripts chargés au tampon
+            -i: copier la liste des scripts chargés dans la ligne de commande (pour envoi au tampon)
+        search: chercher des scripts par étiquettes ou texte et afficher le résultat sur le tampon des scripts
+          show: afficher des infos détaillées sur le script
+          load: charger un ou plusieurs scripts
+        unload: décharger un ou plusieurs scripts
+        reload: recharger un ou plusieurs scripts
+      autoload: charger automatiquement un ou plusieurs scripts
+    noautoload: ne pas charger automatiquement un ou plusieurs scripts
+toggleautoload: activer/désactiver le chargement automatique
+       install: installer/mettre à jour un ou plusieurs scripts
+        remove: supprimer un ou plusieurs scripts
+ installremove: installer ou supprimer un ou plusieurs scripts, selon l'état courant
+          hold: figer/défiger un ou plusieurs scripts (un script figé ne sera plus mis à jour et ne peut pas être supprimé)
+            -q: mode silencieux: ne pas afficher de messages
+       upgrade: mettre à jour les scripts obsolètes (avec nouvelle version disponible)
+        update: mettre à jour le cache local des scripts
 
 Sans paramètre, cette commande ouvre un tampon avec la liste des scripts.
 

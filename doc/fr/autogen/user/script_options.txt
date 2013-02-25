@@ -168,6 +168,11 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 
+* [[option_script.scripts.autoload]] *script.scripts.autoload*
+** description: `charger automatiquement les scripts installés (faire un lien dans le répertoire "autoload" vers le script dans le répertoire parent)`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `on`)
+
 * [[option_script.scripts.cache_expire]] *script.scripts.cache_expire*
 ** description: `temps d'expiration du cache local, en minutes (-1 = n'expire jamais, 0 = expire toujours)`
 ** type: entier

@@ -52,7 +52,7 @@ const char *tcl_current_script_filename = NULL;
 
 /*
  * string used to execute action "install":
- * when signal "tcl_install_script" is received, name of string
+ * when signal "tcl_script_install" is received, name of string
  * is added to this string, to be installed later by a timer (when nothing is
  * running in script)
  */
@@ -60,11 +60,19 @@ char *tcl_action_install_list = NULL;
 
 /*
  * string used to execute action "remove":
- * when signal "tcl_remove_script" is received, name of string
+ * when signal "tcl_script_remove" is received, name of string
  * is added to this string, to be removed later by a timer (when nothing is
  * running in script)
  */
 char *tcl_action_remove_list = NULL;
+
+/*
+ * string used to execute action "autoload":
+ * when signal "tcl_script_autoload" is received, name of string
+ * is added to this string, to autoload or disable autoload later by a timer
+ * (when nothing is running in script)
+ */
+char *tcl_action_autoload_list = NULL;
 
 Tcl_Interp* cinterp;
 
@@ -728,6 +736,12 @@ weechat_tcl_timer_action_cb (void *data, int remaining_calls)
                                          &tcl_quiet,
                                          &tcl_action_remove_list);
         }
+        else if (data == &tcl_action_autoload_list)
+        {
+            plugin_script_action_autoload (weechat_tcl_plugin,
+                                           &tcl_quiet,
+                                           &tcl_action_autoload_list);
+        }
     }
 
     return WEECHAT_RC_OK;
@@ -762,6 +776,14 @@ weechat_tcl_signal_script_action_cb (void *data, const char *signal,
             weechat_hook_timer (1, 0, 1,
                                 &weechat_tcl_timer_action_cb,
                                 &tcl_action_remove_list);
+        }
+        else if (strcmp (signal, "tcl_script_autoload") == 0)
+        {
+            plugin_script_action_add (&tcl_action_autoload_list,
+                                      (const char *)signal_data);
+            weechat_hook_timer (1, 0, 1,
+                                &weechat_tcl_timer_action_cb,
+                                &tcl_action_autoload_list);
         }
     }
 
@@ -810,6 +832,14 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     tcl_quiet = 1;
     plugin_script_end (plugin, &tcl_scripts, &weechat_tcl_unload_all);
     tcl_quiet = 0;
+
+    /* free some data */
+    if (tcl_action_install_list)
+        free (tcl_action_install_list);
+    if (tcl_action_remove_list)
+        free (tcl_action_remove_list);
+    if (tcl_action_autoload_list)
+        free (tcl_action_autoload_list);
 
     return WEECHAT_RC_OK;
 }

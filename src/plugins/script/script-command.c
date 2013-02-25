@@ -169,7 +169,10 @@ script_command_script (void *data, struct t_gui_buffer *buffer, int argc,
 
     if ((weechat_strcasecmp (argv[1], "load") == 0)
         || (weechat_strcasecmp (argv[1], "unload") == 0)
-        || (weechat_strcasecmp (argv[1], "reload") == 0))
+        || (weechat_strcasecmp (argv[1], "reload") == 0)
+        || (weechat_strcasecmp (argv[1], "autoload") == 0)
+        || (weechat_strcasecmp (argv[1], "noautoload") == 0)
+        || (weechat_strcasecmp (argv[1], "toggleautoload") == 0))
     {
         script_command_action (buffer,
                                argv[1],
@@ -264,29 +267,33 @@ script_command_init ()
                           N_("WeeChat scripts manager"),
                           N_("list [-o|-i] || search <text> || show <script>"
                              " || load|unload|reload <script> [<script>...]"
+                             " || autoload|noautoload|toggleautoload <script> [<script>...]"
                              " || install|remove|installremove|hold [-q] <script> [<script>...]"
                              " || upgrade || update"),
-                          N_("         list: list loaded scripts (all languages)\n"
-                             "           -o: send list of loaded scripts to buffer\n"
-                             "           -i: copy list of loaded scripts in "
+                          N_("          list: list loaded scripts (all languages)\n"
+                             "            -o: send list of loaded scripts to buffer\n"
+                             "            -i: copy list of loaded scripts in "
                              "command line (for sending to buffer)\n"
-                             "       search: search scripts by tags or text and "
+                             "        search: search scripts by tags or text and "
                              "display result on scripts buffer\n"
-                             "         show: show detailed info about a script\n"
-                             "         load: load script(s)\n"
-                             "       unload: unload script(s)\n"
-                             "       reload: reload script(s)\n"
-                             "      install: install/upgrade script(s)\n"
-                             "       remove: remove script(s)\n"
-                             "installremove: install or remove script(s), "
+                             "          show: show detailed info about a script\n"
+                             "          load: load script(s)\n"
+                             "        unload: unload script(s)\n"
+                             "        reload: reload script(s)\n"
+                             "      autoload: autoload the script\n"
+                             "    noautoload: do not autoload the script\n"
+                             "toggleautoload: toggle autoload\n"
+                             "       install: install/upgrade script(s)\n"
+                             "        remove: remove script(s)\n"
+                             " installremove: install or remove script(s), "
                              "depending on current state\n"
-                             "         hold: hold/unhold script(s) (a script held "
+                             "          hold: hold/unhold script(s) (a script held "
                              "will not be upgraded any more and cannot be "
                              "removed)\n"
-                             "           -q: quiet mode: do not display messages\n"
-                             "      upgrade: upgrade all installed scripts which "
+                             "            -q: quiet mode: do not display messages\n"
+                             "       upgrade: upgrade all installed scripts which "
                              "are obsolete (new version available)\n"
-                             "       update: update local scripts cache\n\n"
+                             "        update: update local scripts cache\n\n"
                              "Without argument, this command opens a buffer "
                              "with list of scripts.\n\n"
                              "On script buffer, the possible status for each "
@@ -338,6 +345,9 @@ script_command_init ()
                           " || reload %(python_script)|%(perl_script)|"
                           "%(ruby_script)|%(tcl_script)|%(lua_script)|"
                           "%(guile_script)|%*"
+                          " || autoload %(script_scripts_installed)|%*"
+                          " || noautoload %(script_scripts_installed)|%*"
+                          " || toggleautoload %(script_scripts_installed)|%*"
                           " || install %(script_scripts)|%*"
                           " || remove %(script_scripts_installed)|%*"
                           " || installremove %(script_scripts)|%*"

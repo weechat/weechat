@@ -168,6 +168,11 @@
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
+* [[option_script.scripts.autoload]] *script.scripts.autoload*
+** 説明: `autoload scripts installed (make a link in "autoload" directory to script in parent directory`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
 * [[option_script.scripts.cache_expire]] *script.scripts.cache_expire*
 ** 説明: `ローカルキャッシュが無効になる時間、分単位 (-1 = 再取得しない、0 = 常に再取得)`
 ** タイプ: 整数

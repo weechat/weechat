@@ -60,7 +60,7 @@ struct t_guile_function
 
 /*
  * string used to execute action "install":
- * when signal "guile_install_script" is received, name of string
+ * when signal "guile_script_install" is received, name of string
  * is added to this string, to be installed later by a timer (when nothing is
  * running in script)
  */
@@ -68,11 +68,19 @@ char *guile_action_install_list = NULL;
 
 /*
  * string used to execute action "remove":
- * when signal "guile_remove_script" is received, name of string
+ * when signal "guile_script_remove" is received, name of string
  * is added to this string, to be removed later by a timer (when nothing is
  * running in script)
  */
 char *guile_action_remove_list = NULL;
+
+/*
+ * string used to execute action "autoload":
+ * when signal "guile_script_autoload" is received, name of string
+ * is added to this string, to autoload or disable autoload later by a timer
+ * (when nothing is running in script)
+ */
+char *guile_action_autoload_list = NULL;
 
 
 /*
@@ -815,6 +823,12 @@ weechat_guile_timer_action_cb (void *data, int remaining_calls)
                                          &guile_quiet,
                                          &guile_action_remove_list);
         }
+        else if (data == &guile_action_autoload_list)
+        {
+            plugin_script_action_autoload (weechat_guile_plugin,
+                                           &guile_quiet,
+                                           &guile_action_autoload_list);
+        }
     }
 
     return WEECHAT_RC_OK;
@@ -849,6 +863,14 @@ weechat_guile_signal_script_action_cb (void *data, const char *signal,
             weechat_hook_timer (1, 0, 1,
                                 &weechat_guile_timer_action_cb,
                                 &guile_action_remove_list);
+        }
+        else if (strcmp (signal, "guile_script_autoload") == 0)
+        {
+            plugin_script_action_add (&guile_action_autoload_list,
+                                      (const char *)signal_data);
+            weechat_hook_timer (1, 0, 1,
+                                &weechat_guile_timer_action_cb,
+                                &guile_action_autoload_list);
         }
     }
 
@@ -971,6 +993,8 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
         free (guile_action_install_list);
     if (guile_action_remove_list)
         free (guile_action_remove_list);
+    if (guile_action_autoload_list)
+        free (guile_action_autoload_list);
 
     return WEECHAT_RC_OK;
 }

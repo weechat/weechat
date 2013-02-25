@@ -1,66 +1,70 @@
 [[command_script_script]]
 [command]*`script`* WeeChat スクリプトマネージャ::
 ........................................
-/script  list
+/script  list [-o|-i]
          search <text>
          show <script>
          load|unload|reload <script> [<script>...]
-         install|remove|hold <script> [<script>...]
+         autoload|noautoload|toggleautoload <script> [<script>...]
+         install|remove|installremove|hold [-q] <script> [<script>...]
          upgrade
          update
 
-         list: ロード済みスクリプトの表示 (すべての言語)
-           -o: バッファにロード済みスクリプトのリストを表示
-           -i: コマンドラインにロード済みスクリプトのリストをコピー (バッファ送信用)
-       search: タグまたはテキストでスクリプトを検索し、スクリプトバッファに結果を表示
-         show: スクリプトに関する詳細を表示
-         load: スクリプトのロード (複数可)
-       unload: スクリプトのアンロード (複数可)
-       reload: スクリプトのリロード (複数可)
-      install: スクリプトのインストール/アップグレード (複数可)
-       remove: スクリプトの削除 (複数可)
-installremove: スクリプトのインストール又は削除 (複数可)、スクリプトの状態に依存
-         hold: スクリプトのホールド/アンホールド (複数可) (ホールドされたスクリプトはアップグレードされず、削除もできなくなる)
-           -q: 出力を抑制するモード: メッセージを表示しない
-      upgrade: 全ての古いインストール済みスクリプトをアップグレード (新バージョンが利用可能な場合)
-       update: ローカルスクリプトキャッシュのアップデート
+          list: list loaded scripts (all languages)
+            -o: send list of loaded scripts to buffer
+            -i: copy list of loaded scripts in command line (for sending to buffer)
+        search: search scripts by tags or text and display result on scripts buffer
+          show: show detailed info about a script
+          load: load script(s)
+        unload: unload script(s)
+        reload: reload script(s)
+      autoload: autoload the script
+    noautoload: do not autoload the script
+toggleautoload: toggle autoload
+       install: install/upgrade script(s)
+        remove: remove script(s)
+ installremove: install or remove script(s), depending on current state
+          hold: hold/unhold script(s) (a script held will not be upgraded any more and cannot be removed)
+            -q: quiet mode: do not display messages
+       upgrade: upgrade all installed scripts which are obsolete (new version available)
+        update: update local scripts cache
 
-引数がない場合、スクリプト表示用にバッファを開く
+Without argument, this command opens a buffer with list of scripts.
 
-スクリプトバッファでは、以下の状態識別子が利用できます:
+On script buffer, the possible status for each script are:
   * i a H r N
   | | | | | |
-  | | | | | アップデートが必要 (新バージョンが利用可能)
-  | | | | 起動済み (ロード済み)
-  | | | ホールド状態
-  | | 自動ロード
-  | インストール済み
-  人気のあるスクリプト
+  | | | | | obsolete (new version available)
+  | | | | running (loaded)
+  | | | held
+  | | autoloaded
+  | installed
+  popular script
 
-スクリプトバッファで利用可能なキーの組み合わせ:
-  alt+i  スクリプトのインストール
-  alt+r  スクリプトの削除
-  alt+l  スクリプトのロード
-  alt+L  スクリプトのリロード
-  alt+u  スクリプトのアンロード
-  alt+h  スクリプトの(アン)ホールド
-  alt+v  スクリプトの表示
+Keys on script buffer:
+  alt+i  install script
+  alt+r  remove script
+  alt+l  load script
+  alt+L  reload script
+  alt+u  unload script
+  alt+h  (un)hold script
+  alt+v  view script
 
-スクリプトバッファで利用可能な入力:
-  i/r/l/L/u/h  スクリプトに対するアクション (上記キーと同じ)
-  q            バッファを閉じる
-  $            バッファのリフレッシュ
-  s:x,y        x と y をキーにしてバッファをソート (/help script.look.sort 参照)
-  s:           ソート解除 (デフォルトのソート順)
-  word(s)      スクリプトのフィルタ: スクリプトを単語で検索 (複数可) (説明、タグ、...)
-  *            フィルタの解除
+Input allowed on script buffer:
+  i/r/l/L/u/h  action on script (same as keys above)
+  q            close buffer
+  $            refresh buffer
+  s:x,y        sort buffer using keys x and y (see /help script.look.sort)
+  s:           reset sort (use default sort)
+  word(s)      filter scripts: search word(s) in scripts (description, tags, ...)
+  *            remove filter
 
-スクリプトバッファにおけるマウス操作:
-  ホイール      リストのスクロール
-  左ボタン      スクリプトの選択
-  右ボタン      スクリプトのインストール / 削除
+Mouse actions on script buffer:
+  wheel         scroll list
+  left button   select script
+  right button  install/remove script
 
-例:
+Examples:
   /script search url
   /script install iset.pl buffers.pl
   /script remove iset.pl

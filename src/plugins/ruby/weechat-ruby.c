@@ -71,7 +71,7 @@ const char *ruby_current_script_filename = NULL;
 
 /*
  * string used to execute action "install":
- * when signal "ruby_install_script" is received, name of string
+ * when signal "ruby_script_install" is received, name of string
  * is added to this string, to be installed later by a timer (when nothing is
  * running in script)
  */
@@ -79,11 +79,19 @@ char *ruby_action_install_list = NULL;
 
 /*
  * string used to execute action "remove":
- * when signal "ruby_remove_script" is received, name of string
+ * when signal "ruby_script_remove" is received, name of string
  * is added to this string, to be removed later by a timer (when nothing is
  * running in script)
  */
 char *ruby_action_remove_list = NULL;
+
+/*
+ * string used to execute action "autoload":
+ * when signal "ruby_script_autoload" is received, name of string
+ * is added to this string, to autoload or disable autoload later by a timer
+ * (when nothing is running in script)
+ */
+char *ruby_action_autoload_list = NULL;
 
 VALUE ruby_mWeechat, ruby_mWeechatOutputs;
 
@@ -987,6 +995,12 @@ weechat_ruby_timer_action_cb (void *data, int remaining_calls)
                                          &ruby_quiet,
                                          &ruby_action_remove_list);
         }
+        else if (data == &ruby_action_autoload_list)
+        {
+            plugin_script_action_autoload (weechat_ruby_plugin,
+                                           &ruby_quiet,
+                                           &ruby_action_autoload_list);
+        }
     }
 
     return WEECHAT_RC_OK;
@@ -1021,6 +1035,14 @@ weechat_ruby_signal_script_action_cb (void *data, const char *signal,
             weechat_hook_timer (1, 0, 1,
                                 &weechat_ruby_timer_action_cb,
                                 &ruby_action_remove_list);
+        }
+        else if (strcmp (signal, "ruby_script_autoload") == 0)
+        {
+            plugin_script_action_add (&ruby_action_autoload_list,
+                                      (const char *)signal_data);
+            weechat_hook_timer (1, 0, 1,
+                                &weechat_ruby_timer_action_cb,
+                                &ruby_action_autoload_list);
         }
     }
 
@@ -1174,6 +1196,14 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
      * this problem :(
      */
     /*ruby_cleanup (0);*/
+
+    /* free some data */
+    if (ruby_action_install_list)
+        free (ruby_action_install_list);
+    if (ruby_action_remove_list)
+        free (ruby_action_remove_list);
+    if (ruby_action_autoload_list)
+        free (ruby_action_autoload_list);
 
     return WEECHAT_RC_OK;
 }

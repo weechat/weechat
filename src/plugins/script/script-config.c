@@ -80,6 +80,7 @@ struct t_config_option *script_config_color_text_bg_selected;
 
 /* script config, scripts section */
 
+struct t_config_option *script_config_scripts_autoload;
 struct t_config_option *script_config_scripts_cache_expire;
 struct t_config_option *script_config_scripts_dir;
 struct t_config_option *script_config_scripts_hold;
@@ -670,6 +671,13 @@ script_config_init ()
         return 0;
     }
 
+    script_config_scripts_autoload = weechat_config_new_option (
+        script_config_file, ptr_section,
+        "autoload", "boolean",
+        N_("autoload scripts installed (make a link in \"autoload\" directory "
+           "to script in parent directory"),
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL);
     script_config_scripts_cache_expire = weechat_config_new_option (
         script_config_file, ptr_section,
         "cache_expire", "integer",

@@ -5,62 +5,66 @@
          search <text>
          show <script>
          load|unload|reload <script> [<script>...]
+         autoload|noautoload|toggleautoload <script> [<script>...]
          install|remove|installremove|hold [-q] <script> [<script>...]
          upgrade
          update
 
-    list: gibt alle geladenen Skripten im Buffer aus (unabhängig der Programmiersprache)
-           -o: gibt eine Liste der gestarteten Skripten im Buffer aus
-           -i: eine Liste der gestarteten Skripten wird in die Eingabezeile kopiert (um sie dann manuell in einen Buffer zu senden)
-  search: sucht Skripten nach Schlagwörtern oder beliebigem Text. Das Ergebnis wird im Skripten-Buffer dargestellt
-    show: zeigt detailliert Informationen zu einem Skript an
-    load: startet Skript(en)
-  unload: beendet Skript(en)
-  reload: Skript(en) werden neu geladen
- install: installiert/aktualisiert Skript(en) (physikalisch, auf dem Datenträger)
-  remove: deinstalliert Skript(en) (physikalisch, vom Datenträger)
-installremove: installiert oder deinstalliert Skript(en), abhängig davon welcher Status vorliegt
-    hold: halten/freigeben von Skript(en) (ein Skript welches gehalten wird, kann weder aktualisiert noch entfernt werden)
-           -q: unterdrückter Modus: Es werden keine Nachrichten ausgegeben
- upgrade: aktualisiert alle installierten Skripten, die obsolet sind (wenn eine neue Version verfügbar ist)
-  update: aktualisiert den lokalen Cache für die Skripten
+          list: list loaded scripts (all languages)
+            -o: send list of loaded scripts to buffer
+            -i: copy list of loaded scripts in command line (for sending to buffer)
+        search: search scripts by tags or text and display result on scripts buffer
+          show: show detailed info about a script
+          load: load script(s)
+        unload: unload script(s)
+        reload: reload script(s)
+      autoload: autoload the script
+    noautoload: do not autoload the script
+toggleautoload: toggle autoload
+       install: install/upgrade script(s)
+        remove: remove script(s)
+ installremove: install or remove script(s), depending on current state
+          hold: hold/unhold script(s) (a script held will not be upgraded any more and cannot be removed)
+            -q: quiet mode: do not display messages
+       upgrade: upgrade all installed scripts which are obsolete (new version available)
+        update: update local scripts cache
 
-Ohne Angaben von Argumenten öffnet dieser Befehl einen Buffer in welchem eine Liste der Skripten dargestellt wird.
+Without argument, this command opens a buffer with list of scripts.
 
-Im Skript-Buffer, werden folgende Statusangaben zu einem Skript angezeigt:
+On script buffer, the possible status for each script are:
   * i a H r N
   | | | | | |
-  | | | | | obsolete (neue Version verfügbar)
-  | | | | Skript wird ausgeführt (geladen)
-  | | | gehalten
-  | | Skript wird beim Start, von Weechat, automatisch gestartet
-  | Skript ist installiert (wird aber nicht ausgeführt)
-  es wird empfohlen dieses Skript zu installieren
+  | | | | | obsolete (new version available)
+  | | | | running (loaded)
+  | | | held
+  | | autoloaded
+  | installed
+  popular script
 
-Tastenbefehle die im Skript-Buffer genutzt werden können:
-  alt+i  installiert Skript (physikalisch)
-  alt+r  deinstalliert Skript (physikalisch
-  alt+l  startet ein Skript (Skript wird ausgeführt)
-  alt+L  Skript wird neu gestartet
-  alt+u  beendet ein Skript
-  alt+h  Skript wird gehalten bzw. freigegeben
-  alt+v  Skript anzeigen
+Keys on script buffer:
+  alt+i  install script
+  alt+r  remove script
+  alt+l  load script
+  alt+L  reload script
+  alt+u  unload script
+  alt+h  (un)hold script
+  alt+v  view script
 
-Befehle die in der Eingabezeile des Skript-Buffers eingegeben werden können:
-  i/r/l/L/u/h  Aktionen die für ein Skript ausgeführt werden können (siehe Tastenbefehle, weiter oben)
-  q            schließt den Buffer
-  $            Buffer wird aktualisiert
-  s:x,y        Buffer wird nach den Vorgaben x und y  sortiert (siehe /help script.look.sort)
-  s:           die Sortierung des Buffers wird zurückgesetzt (Standardwerte werden genutzt)
-  word(s)      Skripten werden gefiltert: sucht nach einem oder mehreren Wörtern in den Skripten (der Beschreibung, in den Schlagwörtern, ...)
-  *            Filter wird zurückgesetzt
+Input allowed on script buffer:
+  i/r/l/L/u/h  action on script (same as keys above)
+  q            close buffer
+  $            refresh buffer
+  s:x,y        sort buffer using keys x and y (see /help script.look.sort)
+  s:           reset sort (use default sort)
+  word(s)      filter scripts: search word(s) in scripts (description, tags, ...)
+  *            remove filter
 
-Mausbefehle innerhalb des Skripten-Buffer:
-  Mausrad            in der Liste scrollen
-  linke Maustaste    Skript anwählen
-  rechte Maustaste   Skript installieren/entfernen
+Mouse actions on script buffer:
+  wheel         scroll list
+  left button   select script
+  right button  install/remove script
 
-Beispiele:
+Examples:
   /script search url
   /script install iset.pl buffers.pl
   /script remove iset.pl

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-02-23 12:49+0100\n"
+"POT-Creation-Date: 2013-02-24 22:17+0100\n"
 "PO-Revision-Date: 2013-02-23 11:11+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -8695,6 +8695,18 @@ msgstr "%s: プラグイン \"%s\" はロードされていません"
 msgid "%s: script \"%s\" is not loaded"
 msgstr "%s: スクリプト \"%s\" はロードされていません"
 
+#, fuzzy, c-format
+msgid "%s: autoload enabled for script \"%s\""
+msgstr "%s: スクリプト \"%s\" は利用できない言語で書かれています"
+
+#, fuzzy, c-format
+msgid "%s: autoload disabled for script \"%s\""
+msgstr "%s: スクリプト \"%s\" は利用できない言語で書かれています"
+
+#, c-format
+msgid "%s: script \"%s\" not found"
+msgstr "%s: スクリプト \"%s\" が見つかりません"
+
 #, c-format
 msgid "%s%s: error downloading script \"%s\": %s"
 msgstr "%s%s: スクリプト \"%s\" のダウンロード中にエラーが発生: %s"
@@ -8709,10 +8721,6 @@ msgstr ""
 #, c-format
 msgid "%s: downloading script \"%s\"..."
 msgstr "%s: スクリプト \"%s\" のダウンロード中"
-
-#, c-format
-msgid "%s: script \"%s\" not found"
-msgstr "%s: スクリプト \"%s\" が見つかりません"
 
 #, c-format
 msgid "%s: script \"%s\" is not installed"
@@ -8798,12 +8806,12 @@ msgstr "WeeChat を最大化"
 msgid "Alt+key/input: v=back to list d=jump to diff"
 msgstr "Alt+key/input: v=リストに戻る d=比較する"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "%d/%d scripts (filter: %s) | Sort: %s | Alt+key/input: i=install r=remove "
-"l=load L=reload u=unload h=(un)hold v=view script | Input: q=close $=refresh "
-"s:x,y=sort words=filter *=reset filter | Mouse: left=select right=install/"
-"remove"
+"l=load L=reload u=unload A=autoload h=(un)hold v=view script | Input: "
+"q=close $=refresh s:x,y=sort words=filter *=reset filter | Mouse: "
+"left=select right=install/remove"
 msgstr ""
 "%d/%d 個のスクリプト (フィルタ: %s) | ソート: %s | Alt+key/input: i=インス"
 "トール r=削除 l=ロード L=リロード u=アンロード h=(アン)ホールド v=スクリプト"
@@ -8816,35 +8824,41 @@ msgstr "スクリプト"
 msgid "WeeChat scripts manager"
 msgstr "WeeChat スクリプトマネージャ"
 
+#, fuzzy
 msgid ""
 "list [-o|-i] || search <text> || show <script> || load|unload|reload "
-"<script> [<script>...] || install|remove|installremove|hold [-q] <script> "
+"<script> [<script>...] || autoload|noautoload|toggleautoload <script> "
+"[<script>...] || install|remove|installremove|hold [-q] <script> "
 "[<script>...] || upgrade || update"
 msgstr ""
 "list || search <text> || show <script> || load|unload|reload <script> "
 "[<script>...] || install|remove|hold <script> [<script>...] || upgrade || "
 "update"
 
+#, fuzzy
 msgid ""
-"         list: list loaded scripts (all languages)\n"
-"           -o: send list of loaded scripts to buffer\n"
-"           -i: copy list of loaded scripts in command line (for sending to "
+"          list: list loaded scripts (all languages)\n"
+"            -o: send list of loaded scripts to buffer\n"
+"            -i: copy list of loaded scripts in command line (for sending to "
 "buffer)\n"
-"       search: search scripts by tags or text and display result on scripts "
+"        search: search scripts by tags or text and display result on scripts "
 "buffer\n"
-"         show: show detailed info about a script\n"
-"         load: load script(s)\n"
-"       unload: unload script(s)\n"
-"       reload: reload script(s)\n"
-"      install: install/upgrade script(s)\n"
-"       remove: remove script(s)\n"
-"installremove: install or remove script(s), depending on current state\n"
-"         hold: hold/unhold script(s) (a script held will not be upgraded any "
-"more and cannot be removed)\n"
-"           -q: quiet mode: do not display messages\n"
-"      upgrade: upgrade all installed scripts which are obsolete (new version "
-"available)\n"
-"       update: update local scripts cache\n"
+"          show: show detailed info about a script\n"
+"          load: load script(s)\n"
+"        unload: unload script(s)\n"
+"        reload: reload script(s)\n"
+"      autoload: autoload the script\n"
+"    noautoload: do not autoload the script\n"
+"toggleautoload: toggle autoload\n"
+"       install: install/upgrade script(s)\n"
+"        remove: remove script(s)\n"
+" installremove: install or remove script(s), depending on current state\n"
+"          hold: hold/unhold script(s) (a script held will not be upgraded "
+"any more and cannot be removed)\n"
+"            -q: quiet mode: do not display messages\n"
+"       upgrade: upgrade all installed scripts which are obsolete (new "
+"version available)\n"
+"        update: update local scripts cache\n"
 "\n"
 "Without argument, this command opens a buffer with list of scripts.\n"
 "\n"
@@ -9111,6 +9125,11 @@ msgstr "スクリプトバッファ内のロード済みバージョンが選択
 
 msgid "background color for selected line in script buffer"
 msgstr "スクリプトバッファ内の選択行の背景色"
+
+msgid ""
+"autoload scripts installed (make a link in \"autoload\" directory to script "
+"in parent directory"
+msgstr ""
 
 msgid ""
 "local cache expiration time, in minutes (-1 = never expires, 0 = always "
@@ -9611,3 +9630,7 @@ msgstr "タイプ"
 
 msgid "Constants"
 msgstr "定数"
+
+#, fuzzy
+#~ msgid "%s: script \"%s\" is now autoloaded"
+#~ msgstr "%s: スクリプト \"%s\" はロードされていません"

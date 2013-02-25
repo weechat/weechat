@@ -50,7 +50,7 @@ int perl_quit_or_upgrade = 0;
 
 /*
  * string used to execute action "install":
- * when signal "perl_install_script" is received, name of string
+ * when signal "perl_script_install" is received, name of string
  * is added to this string, to be installed later by a timer (when nothing is
  * running in script)
  */
@@ -58,11 +58,19 @@ char *perl_action_install_list = NULL;
 
 /*
  * string used to execute action "remove":
- * when signal "perl_remove_script" is received, name of string
+ * when signal "perl_script_remove" is received, name of string
  * is added to this string, to be removed later by a timer (when nothing is
  * running in script)
  */
 char *perl_action_remove_list = NULL;
+
+/*
+ * string used to execute action "autoload":
+ * when signal "perl_script_autoload" is received, name of string
+ * is added to this string, to autoload or disable autoload later by a timer
+ * (when nothing is running in script)
+ */
+char *perl_action_autoload_list = NULL;
 
 #ifdef NO_PERL_MULTIPLICITY
 #undef MULTIPLICITY
@@ -850,6 +858,12 @@ weechat_perl_timer_action_cb (void *data, int remaining_calls)
                                          &perl_quiet,
                                          &perl_action_remove_list);
         }
+        else if (data == &perl_action_autoload_list)
+        {
+            plugin_script_action_autoload (weechat_perl_plugin,
+                                           &perl_quiet,
+                                           &perl_action_autoload_list);
+        }
     }
 
     return WEECHAT_RC_OK;
@@ -884,6 +898,14 @@ weechat_perl_signal_script_action_cb (void *data, const char *signal,
             weechat_hook_timer (1, 0, 1,
                                 &weechat_perl_timer_action_cb,
                                 &perl_action_remove_list);
+        }
+        else if (strcmp (signal, "perl_script_autoload") == 0)
+        {
+            plugin_script_action_add (&perl_action_autoload_list,
+                                      (const char *)signal_data);
+            weechat_hook_timer (1, 0, 1,
+                                &weechat_perl_timer_action_cb,
+                                &perl_action_autoload_list);
         }
     }
 
@@ -1002,6 +1024,14 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     if (perl_quit_or_upgrade)
         PERL_SYS_TERM ();
 #endif
+
+    /* free some data */
+    if (perl_action_install_list)
+        free (perl_action_install_list);
+    if (perl_action_remove_list)
+        free (perl_action_remove_list);
+    if (perl_action_autoload_list)
+        free (perl_action_autoload_list);
 
     return WEECHAT_RC_OK;
 }
