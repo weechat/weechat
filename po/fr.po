@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-02-24 22:17+0100\n"
-"PO-Revision-Date: 2013-02-24 22:19+0100\n"
+"POT-Creation-Date: 2013-02-26 21:38+0100\n"
+"PO-Revision-Date: 2013-02-26 21:39+0100\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: French\n"
@@ -9012,16 +9012,20 @@ msgid "%s: script \"%s\" is not loaded"
 msgstr "%s: script \"%s\" non chargé"
 
 #, c-format
+msgid "%s: script \"%s\" not found"
+msgstr "%s: script \"%s\" non trouvé"
+
+#, c-format
+msgid "%s: script \"%s\" is not installed"
+msgstr "%s: le script \"%s\" n'est pas installé"
+
+#, c-format
 msgid "%s: autoload enabled for script \"%s\""
 msgstr "%s: chargement automatique activé pour le script \"%s\""
 
 #, c-format
 msgid "%s: autoload disabled for script \"%s\""
 msgstr "%s: chargement automatique désactivé pour le script \"%s\""
-
-#, c-format
-msgid "%s: script \"%s\" not found"
-msgstr "%s: script \"%s\" non trouvé"
 
 #, c-format
 msgid "%s%s: error downloading script \"%s\": %s"
@@ -9037,10 +9041,6 @@ msgstr ""
 #, c-format
 msgid "%s: downloading script \"%s\"..."
 msgstr "%s: téléchargement du script \"%s\"..."
-
-#, c-format
-msgid "%s: script \"%s\" is not installed"
-msgstr "%s: le script \"%s\" n'est pas installé"
 
 #, c-format
 msgid "%s: script \"%s\" is held"
@@ -9923,6 +9923,10 @@ msgstr "%s%s: impossible de recevoir un bloc de l'envoyeur"
 #, c-format
 msgid "%s%s: unable to write local file"
 msgstr "%s%s: impossible d'écrire dans le fichier local"
+
+#, c-format
+msgid "%s%s: unable to send ACK to sender"
+msgstr "%s%s: impossible d'envoyer l'accusé de réception à l'envoyeur"
 
 #, c-format
 msgid "%s%s: unable to fork"

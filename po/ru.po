@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-02-24 22:17+0100\n"
+"POT-Creation-Date: 2013-02-26 21:38+0100\n"
 "PO-Revision-Date: 2013-02-23 11:12+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7976,16 +7976,20 @@ msgid "%s: script \"%s\" is not loaded"
 msgstr "%s сервер \"%s\" не найден\n"
 
 #, fuzzy, c-format
+msgid "%s: script \"%s\" not found"
+msgstr "%s сервер \"%s\" не найден\n"
+
+#, fuzzy, c-format
+msgid "%s: script \"%s\" is not installed"
+msgstr "%s сервер \"%s\" не найден\n"
+
+#, fuzzy, c-format
 msgid "%s: autoload enabled for script \"%s\""
 msgstr "сессия: загружаю сервер \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%s: autoload disabled for script \"%s\""
 msgstr "сессия: загружаю сервер \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s: script \"%s\" not found"
-msgstr "%s сервер \"%s\" не найден\n"
 
 #, fuzzy, c-format
 msgid "%s%s: error downloading script \"%s\": %s"
@@ -8001,10 +8005,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s: downloading script \"%s\"..."
 msgstr "сессия: загружаю сервер \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s: script \"%s\" is not installed"
-msgstr "%s сервер \"%s\" не найден\n"
 
 #, fuzzy, c-format
 msgid "%s: script \"%s\" is held"
@@ -8798,6 +8798,10 @@ msgstr "%s DCC: не могу получить блок от отправите�
 #, fuzzy, c-format
 msgid "%s%s: unable to write local file"
 msgstr "%s DCC: не могу записать локальный файл\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to send ACK to sender"
+msgstr "%s DCC: не могу соединиться с отправителем\n"
 
 #, fuzzy, c-format
 msgid "%s%s: unable to fork"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-02-24 22:17+0100\n"
+"POT-Creation-Date: 2013-02-26 21:38+0100\n"
 "PO-Revision-Date: 2013-02-23 11:11+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -8695,6 +8695,14 @@ msgstr "%s: プラグイン \"%s\" はロードされていません"
 msgid "%s: script \"%s\" is not loaded"
 msgstr "%s: スクリプト \"%s\" はロードされていません"
 
+#, c-format
+msgid "%s: script \"%s\" not found"
+msgstr "%s: スクリプト \"%s\" が見つかりません"
+
+#, c-format
+msgid "%s: script \"%s\" is not installed"
+msgstr "%s: スクリプト \"%s\" はインストールされていません"
+
 #, fuzzy, c-format
 msgid "%s: autoload enabled for script \"%s\""
 msgstr "%s: スクリプト \"%s\" は利用できない言語で書かれています"
@@ -8702,10 +8710,6 @@ msgstr "%s: スクリプト \"%s\" は利用できない言語で書かれてい
 #, fuzzy, c-format
 msgid "%s: autoload disabled for script \"%s\""
 msgstr "%s: スクリプト \"%s\" は利用できない言語で書かれています"
-
-#, c-format
-msgid "%s: script \"%s\" not found"
-msgstr "%s: スクリプト \"%s\" が見つかりません"
 
 #, c-format
 msgid "%s%s: error downloading script \"%s\": %s"
@@ -8721,10 +8725,6 @@ msgstr ""
 #, c-format
 msgid "%s: downloading script \"%s\"..."
 msgstr "%s: スクリプト \"%s\" のダウンロード中"
-
-#, c-format
-msgid "%s: script \"%s\" is not installed"
-msgstr "%s: スクリプト \"%s\" はインストールされていません"
 
 #, c-format
 msgid "%s: script \"%s\" is held"
@@ -9570,6 +9570,10 @@ msgstr "%s%s: 送信者からブロックを受信できません"
 #, c-format
 msgid "%s%s: unable to write local file"
 msgstr "%s%s: ローカルファイルに書き込めません"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to send ACK to sender"
+msgstr "%s%s: 送信者に接続できません"
 
 #, c-format
 msgid "%s%s: unable to fork"

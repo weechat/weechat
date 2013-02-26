@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-02-24 22:17+0100\n"
+"POT-Creation-Date: 2013-02-26 21:38+0100\n"
 "PO-Revision-Date: 2013-02-23 11:11+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7953,16 +7953,20 @@ msgid "%s: script \"%s\" is not loaded"
 msgstr "%s a \"%s\" szerver nem található\n"
 
 #, fuzzy, c-format
+msgid "%s: script \"%s\" not found"
+msgstr "%s a \"%s\" szerver nem található\n"
+
+#, fuzzy, c-format
+msgid "%s: script \"%s\" is not installed"
+msgstr "%s a \"%s\" szerver nem található\n"
+
+#, fuzzy, c-format
 msgid "%s: autoload enabled for script \"%s\""
 msgstr "folyamat: \"%s\" szerver betöltése\n"
 
 #, fuzzy, c-format
 msgid "%s: autoload disabled for script \"%s\""
 msgstr "folyamat: \"%s\" szerver betöltése\n"
-
-#, fuzzy, c-format
-msgid "%s: script \"%s\" not found"
-msgstr "%s a \"%s\" szerver nem található\n"
 
 #, fuzzy, c-format
 msgid "%s%s: error downloading script \"%s\": %s"
@@ -7978,10 +7982,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s: downloading script \"%s\"..."
 msgstr "folyamat: \"%s\" szerver betöltése\n"
-
-#, fuzzy, c-format
-msgid "%s: script \"%s\" is not installed"
-msgstr "%s a \"%s\" szerver nem található\n"
 
 #, fuzzy, c-format
 msgid "%s: script \"%s\" is held"
@@ -8779,6 +8779,10 @@ msgstr "%s DCC: nem sikerült fogadni a küldő blokkját\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to write local file"
 msgstr "%s DCC: nem sikerült a helyi fájlt írni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to send ACK to sender"
+msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
 
 #, fuzzy, c-format
 msgid "%s%s: unable to fork"

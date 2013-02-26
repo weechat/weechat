@@ -66,12 +66,15 @@ enum t_xfer_status
 enum t_xfer_error
 {
     XFER_NO_ERROR = 0,                 /* no error to report, all ok!       */
+    /* errors for sender: */
     XFER_ERROR_READ_LOCAL,             /* unable to read local file         */
     XFER_ERROR_SEND_BLOCK,             /* unable to send block to receiver  */
     XFER_ERROR_READ_ACK,               /* unable to read ACK from receiver  */
+    /* errors for receiver: */
     XFER_ERROR_CONNECT_SENDER,         /* unable to connect to sender       */
     XFER_ERROR_RECV_BLOCK,             /* unable to recv block from sender  */
     XFER_ERROR_WRITE_LOCAL,            /* unable to write to local file     */
+    XFER_ERROR_SEND_ACK,               /* unable to send ACK to sender      */
     /* number of errors */
     XFER_NUM_ERRORS,
 };

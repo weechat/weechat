@@ -61,6 +61,8 @@ Version 0.4.1 (under dev!)
   "noautoload" and "toggleautoload" for command /script, add action "A" (meta-A)
   on script buffer (toggle autoload) (task #12393)
 * scripts: do not allow empty script name in function "register"
+* xfer: fix freeze of DCC file received: use non-blocking socket after
+  connection to sender and ensure the ACK is properly sent (bug #38340)
 
 Version 0.4.0 (2013-01-20)
 --------------------------

@@ -179,9 +179,10 @@ xfer_dcc_send_file_child (struct t_xfer *xfer)
 void
 xfer_dcc_recv_file_child (struct t_xfer *xfer)
 {
-    int num_read;
+    int flags, num_read, num_sent, total_sent, length;
     static char buffer[XFER_BLOCKSIZE_MAX];
     uint32_t pos;
+    const void *ptr_buf;
     time_t last_sent, new_time;
     unsigned long long bytes_remaining;
 
@@ -197,6 +198,12 @@ xfer_dcc_recv_file_child (struct t_xfer *xfer)
     /* connection is ok, change DCC status (inform parent process) */
     xfer_network_write_pipe (xfer, XFER_STATUS_ACTIVE,
                              XFER_NO_ERROR);
+
+    /* make socket non-blocking */
+    flags = fcntl (xfer->sock, F_GETFL);
+    if (flags == -1)
+        flags = 0;
+    fcntl (xfer->sock, F_SETFL, flags | O_NONBLOCK);
 
     last_sent = time (NULL);
     while (1)
@@ -236,8 +243,28 @@ xfer_dcc_recv_file_child (struct t_xfer *xfer)
             xfer->pos += (unsigned long long) num_read;
             pos = htonl (xfer->pos);
 
-            /* we don't check return code, not a problem if an ACK send failed */
-            send (xfer->sock, (char *) &pos, 4, 0);
+            /* send the ACK (and ensure the 4 bytes are sent) */
+            ptr_buf = &pos;
+            length = 4;
+            total_sent = 0;
+            num_sent = send (xfer->sock, ptr_buf, length, 0);
+            if (num_sent > 0)
+                total_sent += num_sent;
+            while (total_sent < length)
+            {
+                if ((num_sent == -1) && (errno != EAGAIN)
+                    && (errno != EWOULDBLOCK))
+                {
+                    xfer_network_write_pipe (xfer, XFER_STATUS_FAILED,
+                                             XFER_ERROR_SEND_ACK);
+                    return;
+                }
+                usleep (1000);
+                num_sent = send (xfer->sock, ptr_buf + total_sent,
+                                 length - total_sent, 0);
+                if (num_sent > 0)
+                    total_sent += num_sent;
+            }
 
             /* file received ok? */
             if (xfer->pos >= xfer->size)

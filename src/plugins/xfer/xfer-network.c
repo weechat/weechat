@@ -146,6 +146,11 @@ xfer_network_child_read_cb (void *arg_xfer, int fd)
                                 _("%s%s: unable to write local file"),
                                 weechat_prefix ("error"), XFER_PLUGIN_NAME);
                 break;
+            case XFER_ERROR_SEND_ACK:
+                weechat_printf (NULL,
+                                _("%s%s: unable to send ACK to sender"),
+                                weechat_prefix ("error"), XFER_PLUGIN_NAME);
+                break;
         }
 
         /* read new DCC status */
