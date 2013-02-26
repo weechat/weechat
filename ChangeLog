@@ -26,6 +26,8 @@ Version 0.4.1 (under dev!)
   weechat.history.max_buffer_lines_minutes is set (bug #38197)
 * core: use default hash/comparison callback for keys of type
   integer/pointer/time in hashtable
+* api: fix function string_mask_to_regex: escape all special chars used in regex
+  (bug #38398)
 * aspell: add completion "aspell_dicts" (list of aspell installed dictionaries)
 * aspell: add info "aspell_dict" (dictionaries used on a buffer)
 * aspell: optimization on spellers to improve speed (save state by buffer)

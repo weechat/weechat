@@ -730,7 +730,7 @@ string_mask_to_regex (const char *mask)
     char *result;
     const char *ptr_mask;
     int index_result;
-    char *regex_special_char = ".[]{}()?+";
+    char *regex_special_char = ".[]{}()?+|^$\\";
 
     if (!mask)
         return NULL;
