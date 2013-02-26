@@ -126,37 +126,18 @@ irc_ignore_new (const char *mask, const char *server, const char *channel)
 {
     struct t_irc_ignore *new_ignore;
     regex_t *regex;
-    char *complete_mask;
 
     if (!mask || !mask[0])
         return NULL;
 
-    complete_mask = malloc (1 + strlen (mask) + 1 + 1);
-    if (!complete_mask)
-        return NULL;
-
-    if (mask[0] == '^')
-        strcpy (complete_mask, mask);
-    else
-    {
-        strcpy (complete_mask, "^");
-        strcat (complete_mask, mask);
-    }
-    if (complete_mask[strlen (complete_mask) - 1] != '$')
-        strcat (complete_mask, "$");
-
     regex = malloc (sizeof (*regex));
     if (!regex)
-    {
-        free (complete_mask);
         return NULL;
-    }
 
-    if (weechat_string_regcomp (regex, complete_mask,
+    if (weechat_string_regcomp (regex, mask,
                                 REG_EXTENDED | REG_ICASE | REG_NOSUB) != 0)
     {
         free (regex);
-        free (complete_mask);
         return NULL;
     }
 
@@ -164,7 +145,7 @@ irc_ignore_new (const char *mask, const char *server, const char *channel)
     if (new_ignore)
     {
         new_ignore->number = (last_irc_ignore) ? last_irc_ignore->number + 1 : 1;
-        new_ignore->mask = strdup (complete_mask);
+        new_ignore->mask = strdup (mask);
         new_ignore->regex_mask = regex;
         new_ignore->server = (server) ? strdup (server) : strdup ("*");
         new_ignore->channel = (channel) ? strdup (channel) : strdup ("*");
@@ -178,8 +159,6 @@ irc_ignore_new (const char *mask, const char *server, const char *channel)
         last_irc_ignore = new_ignore;
         new_ignore->next_ignore = NULL;
     }
-
-    free (complete_mask);
 
     return new_ignore;
 }

@@ -1640,7 +1640,8 @@ irc_command_ignore (void *data, struct t_gui_buffer *buffer, int argc,
                     char **argv, char **argv_eol)
 {
     struct t_irc_ignore *ptr_ignore;
-    char *mask, *regex, *ptr_regex, *server, *channel, *error;
+    char *mask, *regex, *regex2, *ptr_regex, *server, *channel, *error;
+    int length;
     long number;
 
     /* make C compiler happy */
@@ -1685,19 +1686,35 @@ irc_command_ignore (void *data, struct t_gui_buffer *buffer, int argc,
         server = (argc > 3) ? argv[3] : NULL;
         channel = (argc > 4) ? argv[4] : NULL;
 
+        regex = NULL;
+        regex2 = NULL;
+
         if (strncmp (mask, "re:", 3) == 0)
         {
-            regex = NULL;
             ptr_regex = mask + 3;
         }
         else
         {
+            /* convert mask to regex (escape regex special chars) */
             regex = weechat_string_mask_to_regex (mask);
             ptr_regex = (regex) ? regex : mask;
         }
 
+        /* add "^" and "$" around regex */
+        length = 1 + strlen (ptr_regex) + 1 + 1;
+        regex2 = malloc (length);
+        if (regex2)
+        {
+            snprintf (regex2, length, "^%s$", ptr_regex);
+            ptr_regex = regex2;
+        }
+
         if (irc_ignore_search (ptr_regex, server, channel))
         {
+            if (regex)
+                free (regex);
+            if (regex2)
+                free (regex2);
             weechat_printf (NULL,
                             _("%s%s: ignore already exists"),
                             weechat_prefix ("error"), IRC_PLUGIN_NAME);
@@ -1708,6 +1725,8 @@ irc_command_ignore (void *data, struct t_gui_buffer *buffer, int argc,
 
         if (regex)
             free (regex);
+        if (regex2)
+            free (regex2);
 
         if (ptr_ignore)
         {
