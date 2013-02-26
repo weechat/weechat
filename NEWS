@@ -1,14 +1,16 @@
 WeeChat Release Notes
 =====================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.1-dev, 2013-02-23
+v0.4.1-dev, 2013-02-26
 
 
-This document lists important changes for each version, that sometimes require
-manual actions. It is recommended to read it when upgrading to a new stable
+This document lists important changes for each version, that require manual
+actions. It is recommended to read it when upgrading to a new stable
 version.
 
-For a complete list of changes, please look at file 'ChangeLog'.
+For a complete list of changes, please look at
+http://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
+(file 'ChangeLog' in sources).
 
 
 Version 0.4.1 (under dev!)
