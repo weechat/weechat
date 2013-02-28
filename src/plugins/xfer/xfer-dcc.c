@@ -24,6 +24,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/socket.h>
+#include <sys/select.h>
 #include <netinet/in.h>
 #include <fcntl.h>
 #include <time.h>
@@ -173,18 +174,61 @@ xfer_dcc_send_file_child (struct t_xfer *xfer)
 }
 
 /*
+ * Sends ACK to sender using current position in file received.
+ *
+ * Returns:
+ *   2: ACK sent successfully (the 4 bytes)
+ *   1: ACK not sent, but we consider it's not a problem
+ *   0: ACK not sent with socket error (DCC will be closed)
+ */
+
+int
+xfer_dcc_recv_file_send_ack (struct t_xfer *xfer)
+{
+    int length, num_sent, total_sent;
+    uint32_t pos;
+    const void *ptr_buf;
+
+    pos = htonl (xfer->pos);
+    ptr_buf = &pos;
+    length = 4;
+    total_sent = 0;
+    num_sent = send (xfer->sock, ptr_buf, length, 0);
+    if (num_sent > 0)
+        total_sent += num_sent;
+    while (total_sent < length)
+    {
+        if ((num_sent == -1) && (errno != EAGAIN) && (errno != EWOULDBLOCK))
+            return 0;
+
+        /* if we can't send ACK now, just return with partial failure code */
+        if (total_sent == 0)
+            return 1;
+
+        /* at least one byte has been sent, we must send whole ACK */
+        usleep (1000);
+        num_sent = send (xfer->sock, ptr_buf + total_sent,
+                         length - total_sent, 0);
+        if (num_sent > 0)
+            total_sent += num_sent;
+    }
+
+    /* ACK successfully sent */
+    return 2;
+}
+
+/*
  * Child process for receiving file with DCC protocol.
  */
 
 void
 xfer_dcc_recv_file_child (struct t_xfer *xfer)
 {
-    int flags, num_read, num_sent, total_sent, length;
+    int flags, num_read, ack_enabled, ready;
     static char buffer[XFER_BLOCKSIZE_MAX];
-    uint32_t pos;
-    const void *ptr_buf;
     time_t last_sent, new_time;
-    unsigned long long bytes_remaining;
+    unsigned long long pos_last_ack;
+    fd_set read_fds, write_fds, except_fds;
 
     /* first connect to sender (blocking) */
     if (!weechat_network_connect_to (xfer->proxy, xfer->sock,
@@ -206,80 +250,107 @@ xfer_dcc_recv_file_child (struct t_xfer *xfer)
     fcntl (xfer->sock, F_SETFL, flags | O_NONBLOCK);
 
     last_sent = time (NULL);
+    ack_enabled = 1;
+    pos_last_ack = 0;
+
     while (1)
     {
-        bytes_remaining = xfer->size - xfer->pos;
-        num_read = recv (xfer->sock, buffer,
-                         (bytes_remaining >= sizeof (buffer)) ? sizeof (buffer) : bytes_remaining,
-                         0);
-        if (num_read == -1)
+        /* wait until there is something to read on socket (or error) */
+        FD_ZERO (&read_fds);
+        FD_ZERO (&write_fds);
+        FD_ZERO (&except_fds);
+        FD_SET (xfer->sock, &read_fds);
+        ready = select (xfer->sock + 1, &read_fds, &write_fds, &except_fds, NULL);
+        if (ready == 0)
         {
-            /* socket is temporarily not available (sender is not fast ?!) */
-            if ((errno == EAGAIN) || (errno == EWOULDBLOCK) || (errno == EINTR))
-                usleep (1000);
+            xfer_network_write_pipe (xfer, XFER_STATUS_FAILED,
+                                     XFER_ERROR_RECV_BLOCK);
+            return;
+        }
+
+        /* read maximum data on socket (until nothing is available) */
+        while (1)
+        {
+            num_read = recv (xfer->sock, buffer, sizeof (buffer), 0);
+            if (num_read == -1)
+            {
+                if ((errno != EAGAIN) && (errno != EWOULDBLOCK) && (errno != EINTR))
+                {
+                    xfer_network_write_pipe (xfer, XFER_STATUS_FAILED,
+                                             XFER_ERROR_RECV_BLOCK);
+                    return;
+                }
+                /*
+                 * no more data available on socket: exit look, send ACK, and
+                 * wait for new data on socket
+                 */
+                break;
+            }
             else
             {
-                xfer_network_write_pipe (xfer, XFER_STATUS_FAILED,
-                                         XFER_ERROR_RECV_BLOCK);
-                return;
+                if (num_read == 0)
+                {
+                    xfer_network_write_pipe (xfer, XFER_STATUS_FAILED,
+                                             XFER_ERROR_RECV_BLOCK);
+                    return;
+                }
+
+                if (write (xfer->file, buffer, num_read) == -1)
+                {
+                    xfer_network_write_pipe (xfer, XFER_STATUS_FAILED,
+                                             XFER_ERROR_WRITE_LOCAL);
+                    return;
+                }
+
+                xfer->pos += (unsigned long long) num_read;
+
+                /* file received ok? */
+                if (xfer->pos >= xfer->size)
+                {
+                    /*
+                     * extra delay before sending ACK, otherwise the send of ACK
+                     * may fail
+                     */
+                    usleep (100000);
+
+                    /* send ACK to sender without checking return code (file OK) */
+                    xfer_dcc_recv_file_send_ack (xfer);
+
+                    /* set status done and return */
+                    xfer_network_write_pipe (xfer, XFER_STATUS_DONE,
+                                             XFER_NO_ERROR);
+                    return;
+                }
+
+                /* update status of DCC (parent process) */
+                new_time = time (NULL);
+                if (last_sent != new_time)
+                {
+                    last_sent = new_time;
+                    xfer_network_write_pipe (xfer, XFER_STATUS_ACTIVE,
+                                             XFER_NO_ERROR);
+                }
             }
         }
-        else
+
+        /* send ACK to sender (if needed) */
+        if (ack_enabled && (xfer->pos > pos_last_ack))
         {
-            if (num_read == 0)
+            switch (xfer_dcc_recv_file_send_ack (xfer))
             {
-                xfer_network_write_pipe (xfer, XFER_STATUS_FAILED,
-                                         XFER_ERROR_RECV_BLOCK);
-                return;
-            }
-
-            if (write (xfer->file, buffer, num_read) == -1)
-            {
-                xfer_network_write_pipe (xfer, XFER_STATUS_FAILED,
-                                         XFER_ERROR_WRITE_LOCAL);
-                return;
-            }
-
-            xfer->pos += (unsigned long long) num_read;
-            pos = htonl (xfer->pos);
-
-            /* send the ACK (and ensure the 4 bytes are sent) */
-            ptr_buf = &pos;
-            length = 4;
-            total_sent = 0;
-            num_sent = send (xfer->sock, ptr_buf, length, 0);
-            if (num_sent > 0)
-                total_sent += num_sent;
-            while (total_sent < length)
-            {
-                if ((num_sent == -1) && (errno != EAGAIN)
-                    && (errno != EWOULDBLOCK))
-                {
+                case 0:
+                    /* send error, socket down? */
                     xfer_network_write_pipe (xfer, XFER_STATUS_FAILED,
                                              XFER_ERROR_SEND_ACK);
                     return;
-                }
-                usleep (1000);
-                num_sent = send (xfer->sock, ptr_buf + total_sent,
-                                 length - total_sent, 0);
-                if (num_sent > 0)
-                    total_sent += num_sent;
-            }
-
-            /* file received ok? */
-            if (xfer->pos >= xfer->size)
-            {
-                xfer_network_write_pipe (xfer, XFER_STATUS_DONE,
-                                         XFER_NO_ERROR);
-                return;
-            }
-
-            new_time = time (NULL);
-            if (last_sent != new_time)
-            {
-                last_sent = new_time;
-                xfer_network_write_pipe (xfer, XFER_STATUS_ACTIVE,
-                                         XFER_NO_ERROR);
+                case 1:
+                    /* send error, not fatal (buffer full?): disable ACKs */
+                    ack_enabled = 0;
+                    break;
+                case 2:
+                    /* send OK: save position in file as last ACK sent */
+                    pos_last_ack = xfer->pos;
+                    break;
             }
         }
     }
