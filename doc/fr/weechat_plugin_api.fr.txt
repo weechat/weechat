@@ -8004,6 +8004,11 @@ Paramètres :
   chaîne : pointeur tampon + "," + nom du groupe |
   groupe ajouté dans la liste des pseudos
 
+| weechat | nicklist_group_changed +
+  (_nouveau dans la version 0.3.4_) |
+  chaîne : pointeur tampon + "," + nom du groupe |
+  groupe modifié dans la liste des pseudos
+
 | weechat | nicklist_group_removed +
   (_nouveau dans la version 0.3.2_) |
   chaîne : pointeur tampon + "," + nom du groupe |
@@ -8013,6 +8018,11 @@ Paramètres :
   (_nouveau dans la version 0.3.2_) |
   chaîne : pointeur tampon + "," + pseudo |
   pseudo ajouté dans la liste des pseudos
+
+| weechat | nicklist_nick_changed +
+  (_nouveau dans la version 0.3.4_) |
+  chaîne : pointeur tampon + "," + pseudo |
+  pseudo modifié dans la liste des pseudos
 
 | weechat | nicklist_nick_removed +
   (_nouveau dans la version 0.3.2_) |

@@ -7891,6 +7891,11 @@ Arguments:
   string: buffer pointer + "," + group name |
   group added in nicklist
 
+| weechat | nicklist_group_changed +
+  (_new in version 0.3.4_) |
+  string: buffer pointer + "," + group name |
+  group changed in nicklist
+
 | weechat | nicklist_group_removed +
   (_new in version 0.3.2_) |
   string: buffer pointer + "," + group name |
@@ -7900,6 +7905,11 @@ Arguments:
   (_new in version 0.3.2_) |
   string: buffer pointer + "," + nick name |
   nick added in nicklist
+
+| weechat | nicklist_nick_changed +
+  (_new in version 0.3.4_) |
+  string: buffer pointer + "," + nick name |
+  nick changed in nicklist
 
 | weechat | nicklist_nick_removed +
   (_new in version 0.3.2_) |
