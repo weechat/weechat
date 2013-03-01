@@ -239,7 +239,7 @@ xfer_dcc_recv_file_child (struct t_xfer *xfer)
         return;
     }
 
-    /* connection is ok, change DCC status (inform parent process) */
+    /* connection is OK, change DCC status (inform parent process) */
     xfer_network_write_pipe (xfer, XFER_STATUS_ACTIVE,
                              XFER_NO_ERROR);
 
@@ -281,7 +281,7 @@ xfer_dcc_recv_file_child (struct t_xfer *xfer)
                     return;
                 }
                 /*
-                 * no more data available on socket: exit look, send ACK, and
+                 * no more data available on socket: exit loop, send ACK, and
                  * wait for new data on socket
                  */
                 break;
@@ -304,7 +304,7 @@ xfer_dcc_recv_file_child (struct t_xfer *xfer)
 
                 xfer->pos += (unsigned long long) num_read;
 
-                /* file received ok? */
+                /* file received OK? */
                 if (xfer->pos >= xfer->size)
                 {
                     /*
