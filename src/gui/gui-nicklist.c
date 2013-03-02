@@ -544,13 +544,19 @@ gui_nicklist_remove_group (struct t_gui_buffer *buffer,
 void
 gui_nicklist_remove_all (struct t_gui_buffer *buffer)
 {
-    if (buffer)
+    if (buffer && buffer->nicklist_root)
     {
-        while (buffer->nicklist_root)
+        /* remove children of root group */
+        while (buffer->nicklist_root->children)
         {
-            gui_nicklist_remove_group (buffer, buffer->nicklist_root);
+            gui_nicklist_remove_group (buffer, buffer->nicklist_root->children);
         }
-        gui_nicklist_add_group (buffer, NULL, "root", NULL, 0);
+
+        /* remove nicks of root group */
+        while (buffer->nicklist_root->nicks)
+        {
+            gui_nicklist_remove_nick (buffer, buffer->nicklist_root->nicks);
+        }
     }
 }
 
