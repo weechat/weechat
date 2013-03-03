@@ -9965,6 +9965,9 @@ Arguments:
 ** 'nicklist_case_sensitive': 1 if nicks are case sensitive, otherwise 0
 ** 'nicklist_max_length': max length for a nick
 ** 'nicklist_display_groups': 1 if groups are displayed, otherwise 0
+** 'nicklist_count': number of nicks and groups in nicklist
+** 'nicklist_groups_count': number of groups in nicklist
+** 'nicklist_nicks_count': number of nicks in nicklist
 ** 'nicklist_visible_count': number of nicks/groups displayed
 ** 'input': 1 if input is enabled, otherwise 0
 ** 'input_get_unknown_commands': 1 if unknown commands are sent to input

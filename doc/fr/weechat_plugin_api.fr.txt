@@ -10129,6 +10129,9 @@ Paramètres :
    sinon 0
 ** 'nicklist_max_length' : longueur maxi d'un pseudo
 ** 'nicklist_display_groups' : 1 si les groupes sont affichés, sinon 0
+** 'nicklist_count' : nombre de pseudos et groupes dans la liste de pseudos
+** 'nicklist_groups_count' : nombre de groupes dans la liste de pseudos
+** 'nicklist_nicks_count' : nombre de pseudos dans la liste de pseudos
 ** 'nicklist_visible_count' : nombre de pseudos/groupes affichés
 ** 'input' : 1 si la zone de saisie est activée, sinon 0
 ** 'input_get_unknown_commands' : 1 si les commandes inconnues sont envoyées

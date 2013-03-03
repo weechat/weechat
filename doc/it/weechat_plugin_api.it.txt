@@ -10093,6 +10093,12 @@ Argomenti:
    altrimenti 0
 ** 'nicklist_max_length': lunghezza massima per un nick
 ** 'nicklist_display_groups': 1 se i gruppi vengono visualizzati, altrimenti 0
+// TRANSLATION MISSING
+** 'nicklist_count': number of nicks and groups in nicklist
+// TRANSLATION MISSING
+** 'nicklist_groups_count': number of groups in nicklist
+// TRANSLATION MISSING
+** 'nicklist_nicks_count': number of nicks in nicklist
 ** 'nicklist_visible_count': numero di nick/gruppi visualizzati
 ** 'input': 1 se l'input è abilitato, altrimenti 0
 ** 'input_get_unknown_commands': 1 se i comandi sconosciuti vengono inviati

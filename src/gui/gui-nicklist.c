@@ -247,6 +247,8 @@ gui_nicklist_add_group (struct t_gui_buffer *buffer,
         gui_nicklist_insert_group_sorted (&(new_group->parent->children),
                                           &(new_group->parent->last_child),
                                           new_group);
+        buffer->nicklist_count++;
+        buffer->nicklist_groups_count++;
     }
     else
     {
@@ -409,6 +411,9 @@ gui_nicklist_add_nick (struct t_gui_buffer *buffer,
 
     gui_nicklist_insert_nick_sorted (new_nick->group, new_nick);
 
+    buffer->nicklist_count++;
+    buffer->nicklist_nicks_count++;
+
     if (visible)
         buffer->nicklist_visible_count++;
 
@@ -454,6 +459,9 @@ gui_nicklist_remove_nick (struct t_gui_buffer *buffer,
         free (nick->prefix);
     if (nick->prefix_color)
         free (nick->prefix_color);
+
+    buffer->nicklist_count--;
+    buffer->nicklist_nicks_count--;
 
     if (nick->visible)
     {
@@ -510,6 +518,9 @@ gui_nicklist_remove_group (struct t_gui_buffer *buffer,
             (group->parent)->children = group->next_group;
         if ((group->parent)->last_child == group)
             (group->parent)->last_child = group->prev_group;
+
+        buffer->nicklist_count--;
+        buffer->nicklist_groups_count--;
     }
     else
     {

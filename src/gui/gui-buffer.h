@@ -113,6 +113,9 @@ struct t_gui_buffer
     struct t_gui_nick_group *nicklist_root; /* pointer to groups root       */
     int nicklist_max_length;           /* max length for a nick             */
     int nicklist_display_groups;       /* display groups ?                  */
+    int nicklist_count;                /* number of nicks/groups            */
+    int nicklist_groups_count;         /* number of groups                  */
+    int nicklist_nicks_count;          /* number of nicks                   */
     int nicklist_visible_count;        /* number of nicks/groups to display */
     int (*nickcmp_callback)(void *data, /* called to compare nicks (search  */
                             struct t_gui_buffer *buffer,  /* in nicklist)   */
