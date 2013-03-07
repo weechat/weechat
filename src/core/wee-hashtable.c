@@ -1022,8 +1022,7 @@ hashtable_add_to_infolist (struct t_hashtable *hashtable,
     struct t_hashtable_item *ptr_item;
     char option_name[128];
 
-    if (!hashtable || (hashtable->type_keys != HASHTABLE_STRING)
-        || !infolist_item || !prefix)
+    if (!hashtable || !infolist_item || !prefix)
         return 0;
 
     item_number = 0;
@@ -1035,7 +1034,8 @@ hashtable_add_to_infolist (struct t_hashtable *hashtable,
             snprintf (option_name, sizeof (option_name),
                       "%s_name_%05d", prefix, item_number);
             if (!infolist_new_var_string (infolist_item, option_name,
-                                          (const char *)ptr_item->key))
+                                          hashtable_to_string (hashtable->type_keys,
+                                                               ptr_item->key)))
                 return 0;
             snprintf (option_name, sizeof (option_name),
                       "%s_value_%05d", prefix, item_number);
