@@ -405,6 +405,9 @@
   'nicklist_root' (pointer, hdata: "nick_group") +
   'nicklist_max_length' (integer) +
   'nicklist_display_groups' (integer) +
+  'nicklist_count' (integer) +
+  'nicklist_groups_count' (integer) +
+  'nicklist_nicks_count' (integer) +
   'nicklist_visible_count' (integer) +
   'nickcmp_callback' (pointer) +
   'nickcmp_callback_data' (pointer) +
