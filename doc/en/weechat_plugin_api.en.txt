@@ -7896,6 +7896,11 @@ Arguments:
   string: buffer pointer + "," + group name |
   group changed in nicklist
 
+| weechat | nicklist_group_removing +
+  (_new in version 0.4.1_) |
+  string: buffer pointer + "," + group name |
+  removing group from nicklist
+
 | weechat | nicklist_group_removed +
   (_new in version 0.3.2_) |
   string: buffer pointer + "," + group name |
@@ -7910,6 +7915,11 @@ Arguments:
   (_new in version 0.3.4_) |
   string: buffer pointer + "," + nick name |
   nick changed in nicklist
+
+| weechat | nicklist_nick_removing +
+  (_new in version 0.4.1_) |
+  string: buffer pointer + "," + nick name |
+  removing nick from nicklist
 
 | weechat | nicklist_nick_removed +
   (_new in version 0.3.2_) |
@@ -8286,12 +8296,56 @@ Arguments:
 * 'signal': signal to catch, can begin or end with "*"
   (priority allowed, see note about <<hook_priority,priority>>):
 
-[width="100%",cols="^1,^3,5",options="header"]
+[width="100%",cols="^1,^3,5,5",options="header"]
 |========================================
-| Plugin | Signal | Arguments
+| Plugin | Signal | Arguments | Description
 
-| irc | irc_redirection_xxx_yyy ^(1)^ |
-  redirection output (see <<hsignal_irc_redirect_command>>)
+| irc | irc_redirection_xxx_yyy ^(1)^ +
+  (_new in version 0.3.4_) |
+  see <<hsignal_irc_redirect_command,hsignal_irc_redirect_command>> |
+  redirection output
+
+| weechat | nicklist_group_added +
+  (_new in version 0.4.1_) |
+  'buffer' ('struct t_gui_buffer *'): buffer +
+  'parent_group' ('struct t_gui_nick_group *'): parent group +
+  'group' ('struct t_gui_nick_group *'): group |
+  group added in nicklist
+
+| weechat | nicklist_nick_added +
+  (_new in version 0.4.1_) |
+  'buffer' ('struct t_gui_buffer *'): buffer +
+  'parent_group' ('struct t_gui_nick_group *'): parent group +
+  'nick' ('struct t_gui_nick *'): nick |
+  nick added in nicklist
+
+| weechat | nicklist_group_removing +
+  (_new in version 0.4.1_) |
+  'buffer' ('struct t_gui_buffer *'): buffer +
+  'parent_group' ('struct t_gui_nick_group *'): parent group +
+  'group' ('struct t_gui_nick_group *'): group |
+  removing group from nicklist
+
+| weechat | nicklist_nick_removing +
+  (_new in version 0.4.1_) |
+  'buffer' ('struct t_gui_buffer *'): buffer +
+  'parent_group' ('struct t_gui_nick_group *'): parent group +
+  'nick' ('struct t_gui_nick *'): nick |
+  removing nick from nicklist
+
+| weechat | nicklist_group_changed +
+  (_new in version 0.4.1_) |
+  'buffer' ('struct t_gui_buffer *'): buffer +
+  'parent_group' ('struct t_gui_nick_group *'): parent group +
+  'group' ('struct t_gui_nick_group *'): group |
+  group changed in nicklist
+
+| weechat | nicklist_nick_changed +
+  (_new in version 0.4.1_) |
+  'buffer' ('struct t_gui_buffer *'): buffer +
+  'parent_group' ('struct t_gui_nick_group *'): parent group +
+  'nick' ('struct t_gui_nick *'): nick |
+  nick changed in nicklist
 |========================================
 
 [NOTE]

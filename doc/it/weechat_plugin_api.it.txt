@@ -7977,6 +7977,12 @@ Argomenti:
   group changed in nicklist
 
 // TRANSLATION MISSING
+| weechat | nicklist_group_removing +
+  (_novità nella versione 0.4.1_) |
+  string: buffer pointer + "," + group name |
+  removing group from nicklist
+
+// TRANSLATION MISSING
 | weechat | nicklist_group_removed +
   (_novità nella versione 0.3.2_) |
   string: buffer pointer + "," + group name |
@@ -7993,6 +7999,12 @@ Argomenti:
   (_novità nella versione 0.3.4_) |
   string: buffer pointer + "," + nick name |
   nick changed in nicklist
+
+// TRANSLATION MISSING
+| weechat | nicklist_nick_removing +
+  (_novità nella versione 0.4.1_) |
+  string: buffer pointer + "," + nick name |
+  removing nick from nicklist
 
 // TRANSLATION MISSING
 | weechat | nicklist_nick_removed +
@@ -8387,12 +8399,62 @@ Argomenti:
 * 'signal': segnale da catturare, può iniziare o terminare con "*"
   (priorità consentita, consultare la nota a proposito di <<hook_priority,priority>>):
 
-[width="100%",cols="^1,^3,5",options="header"]
+[width="100%",cols="^1,^3,5,5",options="header"]
 |========================================
-| Plugin | Segnale | Argomenti
+| Plugin | Segnale | Argomenti | Descrizione
 
-| irc | irc_redirection_xxx_yyy ^(1)^ |
-  redirection output (consultare <<hsignal_irc_redirect_command>>)
+| irc | irc_redirection_xxx_yyy ^(1)^ +
+  (_novità nella versione 0.3.4_) |
+  consultare <<hsignal_irc_redirect_command,hsignal_irc_redirect_command>> |
+  redirection output
+
+// TRANSLATION MISSING
+| weechat | nicklist_group_added +
+  (_novità nella versione 0.4.1_) |
+  'buffer' ('struct t_gui_buffer *'): buffer +
+  'parent_group' ('struct t_gui_nick_group *'): parent group +
+  'group' ('struct t_gui_nick_group *'): group |
+  group added in nicklist
+
+// TRANSLATION MISSING
+| weechat | nicklist_nick_added +
+  (_novità nella versione 0.4.1_) |
+  'buffer' ('struct t_gui_buffer *'): buffer +
+  'parent_group' ('struct t_gui_nick_group *'): parent group +
+  'nick' ('struct t_gui_nick *'): nick |
+  nick added in nicklist
+
+// TRANSLATION MISSING
+| weechat | nicklist_group_removing +
+  (_novità nella versione 0.4.1_) |
+  'buffer' ('struct t_gui_buffer *'): buffer +
+  'parent_group' ('struct t_gui_nick_group *'): parent group +
+  'group' ('struct t_gui_nick_group *'): group |
+  removing group from nicklist
+
+// TRANSLATION MISSING
+| weechat | nicklist_nick_removing +
+  (_novità nella versione 0.4.1_) |
+  'buffer' ('struct t_gui_buffer *'): buffer +
+  'parent_group' ('struct t_gui_nick_group *'): parent group +
+  'nick' ('struct t_gui_nick *'): nick |
+  removing nick from nicklist
+
+// TRANSLATION MISSING
+| weechat | nicklist_group_changed +
+  (_novità nella versione 0.4.1_) |
+  'buffer' ('struct t_gui_buffer *'): buffer +
+  'parent_group' ('struct t_gui_nick_group *'): parent group +
+  'group' ('struct t_gui_nick_group *'): group |
+  group changed in nicklist
+
+// TRANSLATION MISSING
+| weechat | nicklist_nick_changed +
+  (_novità nella versione 0.4.1_) |
+  'buffer' ('struct t_gui_buffer *'): buffer +
+  'parent_group' ('struct t_gui_nick_group *'): parent group +
+  'nick' ('struct t_gui_nick *'): nick |
+  nick changed in nicklist
 |========================================
 
 [NOTE]

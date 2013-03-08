@@ -8009,6 +8009,11 @@ Paramètres :
   chaîne : pointeur tampon + "," + nom du groupe |
   groupe modifié dans la liste des pseudos
 
+| weechat | nicklist_group_removing +
+  (_nouveau dans la version 0.4.1_) |
+  chaîne : pointeur tampon + "," + nom du groupe |
+  suppression du groupe de la liste des pseudos
+
 | weechat | nicklist_group_removed +
   (_nouveau dans la version 0.3.2_) |
   chaîne : pointeur tampon + "," + nom du groupe |
@@ -8023,6 +8028,11 @@ Paramètres :
   (_nouveau dans la version 0.3.4_) |
   chaîne : pointeur tampon + "," + pseudo |
   pseudo modifié dans la liste des pseudos
+
+| weechat | nicklist_nick_removing +
+  (_nouveau dans la version 0.4.1_) |
+  chaîne : pointeur tampon + "," + pseudo |
+  suppression du pseudo de la liste des pseudos
 
 | weechat | nicklist_nick_removed +
   (_nouveau dans la version 0.3.2_) |
@@ -8408,12 +8418,55 @@ Paramètres :
 * 'signal' : signal à intercepter, peut commencer ou se terminer par "*"
   (priorité autorisée, voir la note sur la <<hook_priority,priorité>>) :
 
-[width="100%",cols="^1,^3,5",options="header"]
+[width="100%",cols="^1,^3,5,5",options="header"]
 |========================================
-| Extension | Signal | Paramètres
+| Extension | Signal | Paramètres | Description
 
-| irc | irc_redirection_xxx_yyy ^(1)^ |
+| irc | irc_redirection_xxx_yyy ^(1)^ +
+  (_nouveau dans la version 0.3.4_) |
   sortie de la redirection (voir <<hsignal_irc_redirect_command>>)
+
+| weechat | nicklist_group_added +
+  (_nouveau dans la version 0.4.1_) |
+  'buffer' ('struct t_gui_buffer *') : tampon +
+  'parent_group' ('struct t_gui_nick_group *') : groupe parent +
+  'group' ('struct t_gui_nick_group *') : groupe |
+  group added in nicklist
+
+| weechat | nicklist_nick_added +
+  (_nouveau dans la version 0.4.1_) |
+  'buffer' ('struct t_gui_buffer *') : tampon +
+  'parent_group' ('struct t_gui_nick_group *') : groupe parent +
+  'nick' ('struct t_gui_nick *') : pseudo |
+  nick added in nicklist
+
+| weechat | nicklist_group_removing +
+  (_nouveau dans la version 0.4.1_) |
+  'buffer' ('struct t_gui_buffer *') : tampon +
+  'parent_group' ('struct t_gui_nick_group *') : groupe parent +
+  'group' ('struct t_gui_nick_group *') : groupe |
+  removing group from nicklist
+
+| weechat | nicklist_nick_removing +
+  (_nouveau dans la version 0.4.1_) |
+  'buffer' ('struct t_gui_buffer *') : tampon +
+  'parent_group' ('struct t_gui_nick_group *') : groupe parent +
+  'nick' ('struct t_gui_nick *') : pseudo |
+  removing nick from nicklist
+
+| weechat | nicklist_group_changed +
+  (_nouveau dans la version 0.4.1_) |
+  'buffer' ('struct t_gui_buffer *') : tampon +
+  'parent_group' ('struct t_gui_nick_group *') : groupe parent +
+  'group' ('struct t_gui_nick_group *') : groupe |
+  group changed in nicklist
+
+| weechat | nicklist_nick_changed +
+  (_nouveau dans la version 0.4.1_) |
+  'buffer' ('struct t_gui_buffer *') : tampon +
+  'parent_group' ('struct t_gui_nick_group *') : parent +
+  'nick' ('struct t_gui_nick *') : pseudo |
+  nick changed in nicklist
 |========================================
 
 [NOTE]
