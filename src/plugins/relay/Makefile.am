@@ -35,6 +35,8 @@ relay_la_SOURCES = relay.c \
                    weechat/relay-weechat.h \
                    weechat/relay-weechat-msg.c \
                    weechat/relay-weechat-msg.h \
+                   weechat/relay-weechat-nicklist.c \
+                   weechat/relay-weechat-nicklist.h \
                    weechat/relay-weechat-protocol.c \
                    weechat/relay-weechat-protocol.h \
                    relay-command.c \

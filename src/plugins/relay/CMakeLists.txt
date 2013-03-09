@@ -24,6 +24,7 @@ relay-client.c relay-client.h
 irc/relay-irc.c irc/relay-irc.h
 weechat/relay-weechat.c weechat/relay-weechat.h
 weechat/relay-weechat-msg.c weechat/relay-weechat-msg.h
+weechat/relay-weechat-nicklist.c weechat/relay-weechat-nicklist.h
 weechat/relay-weechat-protocol.c weechat/relay-weechat-protocol.h
 relay-command.c relay-command.h
 relay-completion.c relay-completion.h

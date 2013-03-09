@@ -20,6 +20,8 @@
 #ifndef __WEECHAT_RELAY_WEECHAT_MSG_H
 #define __WEECHAT_RELAY_WEECHAT_MSG_H 1
 
+struct t_relay_weechat_nicklist;
+
 #define RELAY_WEECHAT_MSG_INITIAL_ALLOC 4096
 
 /* object ids in binary messages */
@@ -73,7 +75,8 @@ extern void relay_weechat_msg_add_infolist (struct t_relay_weechat_msg *msg,
                                             void *pointer,
                                             const char *arguments);
 extern void relay_weechat_msg_add_nicklist (struct t_relay_weechat_msg *msg,
-                                            struct t_gui_buffer *buffer);
+                                            struct t_gui_buffer *buffer,
+                                            struct t_relay_weechat_nicklist *nicklist);
 extern void relay_weechat_msg_send (struct t_relay_client *client,
                                     struct t_relay_weechat_msg *msg);
 extern void relay_weechat_msg_free (struct t_relay_weechat_msg *msg);

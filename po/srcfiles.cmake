@@ -208,6 +208,8 @@ SET(WEECHAT_SOURCES
 ./src/plugins/relay/weechat/relay-weechat.h
 ./src/plugins/relay/weechat/relay-weechat-msg.c
 ./src/plugins/relay/weechat/relay-weechat-msg.h
+./src/plugins/relay/weechat/relay-weechat-nicklist.c
+./src/plugins/relay/weechat/relay-weechat-nicklist.h
 ./src/plugins/relay/weechat/relay-weechat-protocol.c
 ./src/plugins/relay/weechat/relay-weechat-protocol.h
 ./src/plugins/rmodifier/rmodifier.c

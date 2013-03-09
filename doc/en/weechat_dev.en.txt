@@ -241,6 +241,7 @@ Plugins
 |       weechat/                    | Relay for remote interface
 |          relay-weechat.c          | Relay for remote interface (main functions)
 |          relay-weechat-msg.c      | Send binary messages to clients
+|          relay-weechat-nicklist.c | Nicklist functions
 |          relay-weechat-protocol.c | Read commands from clients
 |    rmodifier/                     | Rmodifier plugin
 |       rmodifier.c                 | Main rmodifier functions
