@@ -497,86 +497,656 @@ There are two different identifiers ('id'):
 
 WeeChat reserved identifiers:
 
-[width="100%",cols="5m,5,3,3,10,8",options="header"]
+[width="100%",cols="5m,5,3,3,8",options="header"]
 |=====================================================
-| Identifier | Description | Received with sync | Hdata type | Hdata content
-| Recommended action in client
-
-| _buffer_opened | Buffer opened | buffers / buffer | buffer |
-  'number' (integer), 'full_name' (string), 'short_name' (string), +
-  'nicklist' (integer), 'title' (string), 'local_variables' (hashtable), +
-  'prev_buffer' (pointer), 'next_buffer' (pointer) |
-  Open buffer
-
-| _buffer_moved | Buffer moved | buffers / buffer | buffer |
-  'number' (integer), 'full_name' (string), +
-  'prev_buffer' (pointer), 'next_buffer' (pointer) |
-  Move buffer
-
-| _buffer_merged | Buffer merged | buffers / buffer | buffer |
-  'number' (integer), 'full_name' (string), +
-  'prev_buffer' (pointer), 'next_buffer' (pointer) |
-  Merge buffer
-
-| _buffer_unmerged | Buffer unmerged | buffers / buffer | buffer |
-  'number' (integer), 'full_name' (string), +
-  'prev_buffer' (pointer), 'next_buffer' (pointer) |
-  Unmerge buffer
-
-| _buffer_renamed | Buffer renamed | buffers / buffer | buffer |
-  'number' (integer), 'full_name' (string), 'short_name' (string),
-  'local_variables' (hashtable) |
-  Rename buffer
-
-| _buffer_title_changed | Title of buffer changed | buffers / buffer | buffer |
-  'number' (integer), 'full_name' (string), 'title' (string) |
-  Change title of buffer
-
-| _buffer_closing | Buffer closing | buffers / buffer | buffer |
-  'number' (integer), 'full_name' (string) |
-  Close buffer
-
-| _buffer_type_changed | Type of buffer changed | buffer | buffer |
-  'number' (integer), 'full_name' (string), +
-  'type' (integer) |
-  Change type of buffer
-
-| _buffer_localvar_added | Local variable added | buffer | buffer |
-  'number' (integer), 'full_name' (string), 'local_variables' (hashtable) |
-  Add local variable in buffer
-
-| _buffer_localvar_changed | Local variable changed | buffer | buffer |
-  'number' (integer), 'full_name' (string), 'local_variables' (hashtable) |
-  Change local variable in buffer
-
-| _buffer_localvar_removed | Local variable removed | buffer | buffer |
-  'number' (integer), 'full_name' (string), 'local_variables' (hashtable) |
-  Remove local variable from buffer
-
-| _buffer_line_added | Line added in buffer | buffer | line |
-  'buffer' (pointer), 'date' (time), 'date_printed' (time), 'displayed' (char),
-  'highlight' (char), 'tags_array' (array of strings), 'prefix' (string),
-  'message' (string) |
-  Display line in buffer
-
-| _nicklist | Nicklist for a buffer | nicklist | nicklist_item |
-  'group' (char), 'visible' (char), 'level' (integer), +
-  'name' (string), 'color' (string), +
-  'prefix' (string), 'prefix_color' (string) |
-  Update nicklist
-
-| _upgrade | WeeChat is upgrading +
-  (_new in version 0.3.8_) | upgrade | (empty) |
-  (empty) |
-  Desync from WeeChat (send command 'desync')
-
-| _upgrade_ended | Upgrade of WeeChat done +
-  (_new in version 0.3.8_) | upgrade | (empty) |
-  (empty) |
-  Resync with WeeChat (resend all commands sent on startup after the 'init')
+| Identifier               | Description                 | Received with sync | Hdata type    | Recommended action in client
+| _buffer_opened           | Buffer opened               | buffers / buffer   | buffer        | Open buffer
+| _buffer_moved            | Buffer moved                | buffers / buffer   | buffer        | Move buffer
+| _buffer_merged           | Buffer merged               | buffers / buffer   | buffer        | Merge buffer
+| _buffer_unmerged         | Buffer unmerged             | buffers / buffer   | buffer        | Unmerge buffer
+| _buffer_renamed          | Buffer renamed              | buffers / buffer   | buffer        | Rename buffer
+| _buffer_title_changed    | Title of buffer changed     | buffers / buffer   | buffer        | Change title of buffer
+| _buffer_type_changed     | Type of buffer changed      | buffer             | buffer        | Change type of buffer
+| _buffer_localvar_added   | Local variable added        | buffer             | buffer        | Add local variable in buffer
+| _buffer_localvar_changed | Local variable changed      | buffer             | buffer        | Change local variable in buffer
+| _buffer_localvar_removed | Local variable removed      | buffer             | buffer        | Remove local variable from buffer
+| _buffer_line_added       | Line added in buffer        | buffer             | line          | Display line in buffer
+| _buffer_closing          | Buffer closing              | buffers / buffer   | buffer        | Close buffer
+| _nicklist                | Nicklist for a buffer       | nicklist           | nicklist_item | Replace nicklist
+| _nicklist_diff           | Nicklist diffs for a buffer | nicklist           | nicklist_item | Update nicklist
+| _upgrade                 | WeeChat is upgrading        | upgrade            | (empty)       | Desync from WeeChat (or disconnect)
+| _upgrade_ended           | Upgrade of WeeChat done     | upgrade            | (empty)       | Sync/resync with WeeChat
 |=====================================================
 
-[[message_objects]]
+[[message_buffer_opened]]
+_buffer_opened
+^^^^^^^^^^^^^^
+
+It is sent to the client when the signal "buffer_opened" is sent by WeeChat.
+
+Data sent in the hdata:
+
+[width="60%",cols="3m,2,7",options="header"]
+|=====================================================
+| Name            | Type      | Description
+| number          | integer   | Buffer number (≥ 1)
+| full_name       | string    | Full name (example: 'irc.freenode.#weechat')
+| short_name      | string    | Short name (example: '#weechat')
+| nicklist        | integer   | 1 if buffer has a nicklist, otherwise 0
+| title           | string    | Buffer title
+| local_variables | hashtable | Local variables
+| prev_buffer     | pointer   | Pointer to previous buffer
+| next_buffer     | pointer   | Pointer to next buffer
+|=====================================================
+
+Example: join of channel '#weechat' on freenode, new buffer
+'irc.freenode.#weechat':
+
+[source,python]
+----------------------------------------
+id: '_buffer_opened'
+hda:
+  keys: {'number': 'int', 'full_name': 'str', 'short_name': 'str', 'nicklist': 'int',
+         'title': 'str', 'local_variables': 'htb', 'prev_buffer': 'ptr', 'next_buffer': 'ptr'}
+  path: ['buffer']
+  item 1:
+    __path: ['0x35a8a60']
+    number: 3
+    full_name: 'irc.freenode.#weechat'
+    short_name: None
+    nicklist: 0
+    title: None
+    local_variables: {'plugin': 'irc', 'name': 'freenode.#weechat'}
+    prev_buffer: '0x34e7400'
+    next_buffer: '0x0'
+----------------------------------------
+
+[[message_buffer_moved]]
+_buffer_moved
+^^^^^^^^^^^^^
+
+It is sent to the client when the signal "buffer_moved" is sent by WeeChat.
+
+Data sent in the hdata:
+
+[width="60%",cols="3m,2,7",options="header"]
+|=====================================================
+| Name            | Type      | Description
+| number          | integer   | Buffer number (≥ 1)
+| full_name       | string    | Full name (example: 'irc.freenode.#weechat')
+| prev_buffer     | pointer   | Pointer to previous buffer
+| next_buffer     | pointer   | Pointer to next buffer
+|=====================================================
+
+Example: buffer 'irc.freenode.#weechat' moved to number 2:
+
+[source,python]
+----------------------------------------
+id: '_buffer_moved'
+hda:
+  keys: {'number': 'int', 'full_name': 'str', 'prev_buffer': 'ptr', 'next_buffer': 'ptr'}
+  path: ['buffer']
+  item 1:
+    __path: ['0x34588c0']
+    number: 2
+    full_name: 'irc.freenode.#weechat'
+    prev_buffer: '0x347b9f0'
+    next_buffer: '0x3471bc0'
+----------------------------------------
+
+[[message_buffer_merged]]
+_buffer_merged
+^^^^^^^^^^^^^^
+
+It is sent to the client when the signal "buffer_merged" is sent by WeeChat.
+
+Data sent in the hdata:
+
+[width="60%",cols="3m,2,7",options="header"]
+|=====================================================
+| Name            | Type      | Description
+| number          | integer   | Buffer number (≥ 1)
+| full_name       | string    | Full name (example: 'irc.freenode.#weechat')
+| prev_buffer     | pointer   | Pointer to previous buffer
+| next_buffer     | pointer   | Pointer to next buffer
+|=====================================================
+
+Example: buffer 'irc.freenode.#weechat' merged with buffer #2:
+
+[source,python]
+----------------------------------------
+id: '_buffer_merged'
+hda:
+  keys: {'number': 'int', 'full_name': 'str', 'prev_buffer': 'ptr', 'next_buffer': 'ptr'}
+  path: ['buffer']
+  item 1:
+    __path: ['0x4db4c00']
+    number: 2
+    full_name: 'irc.freenode.#weechat'
+    prev_buffer: '0x4cef9b0'
+    next_buffer: '0x0'
+----------------------------------------
+
+[[message_buffer_unmerged]]
+_buffer_unmerged
+^^^^^^^^^^^^^^^^
+
+It is sent to the client when the signal "buffer_unmerged" is sent by WeeChat.
+
+Data sent in the hdata:
+
+[width="60%",cols="3m,2,7",options="header"]
+|=====================================================
+| Name            | Type      | Description
+| number          | integer   | Buffer number (≥ 1)
+| full_name       | string    | Full name (example: 'irc.freenode.#weechat')
+| prev_buffer     | pointer   | Pointer to previous buffer
+| next_buffer     | pointer   | Pointer to next buffer
+|=====================================================
+
+Example: buffer 'irc.freenode.#weechat' unmerged:
+
+[source,python]
+----------------------------------------
+id: '_buffer_unmerged'
+hda:
+  keys: {'number': 'int', 'full_name': 'str', 'prev_buffer': 'ptr', 'next_buffer': 'ptr'}
+  path: ['buffer']
+  item 1:
+    __path: ['0x4db4c00']
+    number: 3
+    full_name: 'irc.freenode.#weechat'
+    prev_buffer: '0x4cef9b0'
+    next_buffer: '0x0'
+----------------------------------------
+
+[[message_buffer_renamed]]
+_buffer_renamed
+^^^^^^^^^^^^^^^
+
+It is sent to the client when the signal "buffer_renamed" is sent by WeeChat.
+
+Data sent in the hdata:
+
+[width="60%",cols="3m,2,7",options="header"]
+|=====================================================
+| Name            | Type      | Description
+| number          | integer   | Buffer number (≥ 1)
+| full_name       | string    | Full name (example: 'irc.freenode.#weechat')
+| short_name      | string    | Short name (example: '#weechat')
+| local_variables | hashtable | Local variables
+|=====================================================
+
+Example: private buffer renamed from 'FlashCode' to 'Flash2':
+
+[source,python]
+----------------------------------------
+id: '_buffer_renamed'
+hda:
+  keys: {'number': 'int', 'full_name': 'str', 'short_name': 'str', 'local_variables': 'htb'}
+  path: ['buffer']
+  item 1:
+    __path: ['0x4df7b80']
+    number: 5
+    full_name: 'irc.freenode.Flash2'
+    short_name: 'Flash2'
+    local_variables: {'server': 'freenode', 'plugin': 'irc', 'type': 'private',
+                      'channel': 'FlashCode', 'nick': 'test', 'name': 'local.Flash2'}
+----------------------------------------
+
+[[message_buffer_title_changed]]
+_buffer_title_changed
+^^^^^^^^^^^^^^^^^^^^^
+
+It is sent to the client when the signal "buffer_title_changed" is sent by
+WeeChat.
+
+Data sent in the hdata:
+
+[width="60%",cols="3m,2,7",options="header"]
+|=====================================================
+| Name            | Type      | Description
+| number          | integer   | Buffer number (≥ 1)
+| full_name       | string    | Full name (example: 'irc.freenode.#weechat')
+| title           | string    | Buffer title
+|=====================================================
+
+Example: topic changed on channel '#weechat':
+
+[source,python]
+----------------------------------------
+id: '_buffer_title_changed'
+hda:
+  keys: {'number': 'int', 'full_name': 'str', 'title': 'str'}
+  path: ['buffer']
+  item 1:
+    __path: ['0x4a715d0']
+    number: 3
+    full_name: 'irc.freenode.#weechat'
+    title: 'Welcome on #weechat!  http://weechat.org/'
+----------------------------------------
+
+[[message_buffer_type_changed]]
+_buffer_type_changed
+^^^^^^^^^^^^^^^^^^^^
+
+It is sent to the client when the signal "buffer_type_changed" is sent by WeeChat.
+
+Data sent in the hdata:
+
+[width="60%",cols="3m,2,7",options="header"]
+|=====================================================
+| Name            | Type      | Description
+| number          | integer   | Buffer number (≥ 1)
+| full_name       | string    | Full name (example: 'irc.freenode.#weechat')
+| type            | integer   | Buffer type: 0 = formatted (default), 1 = free content
+|=====================================================
+
+Example: type of buffer 'script.scripts' changed from 'formatted' (0) to free
+content (1):
+
+[source,python]
+----------------------------------------
+id: '_buffer_type_changed'
+hda:
+  keys: {'number': 'int', 'full_name': 'str', 'type': 'int'}
+  path: ['buffer']
+  item 1:
+    __path: ['0x27c9a70']
+    number: 4
+    full_name: 'script.scripts'
+    type: 1
+----------------------------------------
+
+[[message_buffer_localvar_added]]
+_buffer_localvar_added
+^^^^^^^^^^^^^^^^^^^^^^
+
+It is sent to the client when the signal "buffer_localvar_added" is sent by
+WeeChat.
+
+Data sent in the hdata:
+
+[width="60%",cols="3m,2,7",options="header"]
+|=====================================================
+| Name            | Type      | Description
+| number          | integer   | Buffer number (≥ 1)
+| full_name       | string    | Full name (example: 'irc.freenode.#weechat')
+| local_variables | hashtable | Local variables
+|=====================================================
+
+Example: local variable 'test' added in buffer 'irc.freenode.#weechat':
+
+[source,python]
+----------------------------------------
+id='_buffer_localvar_added', objects:
+hda:
+  keys: {'number': 'int', 'full_name': 'str', 'local_variables': 'htb'}
+  path: ['buffer']
+  item 1:
+    __path: ['0x4a73de0']
+    number: 3
+    full_name: 'irc.freenode.#weechat'
+    local_variables: {'server': 'freenode', 'test': 'value', 'plugin': 'irc',
+                      'type': 'channel', 'channel': '#weechat', 'nick': 'test',
+                      'name': 'freenode.#weechat'}
+----------------------------------------
+
+[[message_buffer_localvar_changed]]
+_buffer_localvar_changed
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+It is sent to the client when the signal "buffer_localvar_changed" is sent by
+WeeChat.
+
+Data sent in the hdata:
+
+[width="60%",cols="3m,2,7",options="header"]
+|=====================================================
+| Name            | Type      | Description
+| number          | integer   | Buffer number (≥ 1)
+| full_name       | string    | Full name (example: 'irc.freenode.#weechat')
+| local_variables | hashtable | Local variables
+|=====================================================
+
+Example: local variable 'test' updated in buffer 'irc.freenode.#weechat':
+
+[source,python]
+----------------------------------------
+id='_buffer_localvar_changed', objects:
+hda:
+  keys: {'number': 'int', 'full_name': 'str', 'local_variables': 'htb'}
+  path: ['buffer']
+  item 1:
+    __path: ['0x4a73de0']
+    number: 3
+    full_name: 'irc.freenode.#weechat'
+    local_variables: {'server': 'local', 'test': 'value2', 'plugin': 'irc',
+                      'type': 'channel', 'channel': '#weechat', 'nick': 'test',
+                      'name': 'freenode.#weechat'}
+----------------------------------------
+
+[[message_buffer_localvar_removed]]
+_buffer_localvar_removed
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+It is sent to the client when the signal "buffer_localvar_removed" is sent by
+WeeChat.
+
+Data sent in the hdata:
+
+[width="60%",cols="3m,2,7",options="header"]
+|=====================================================
+| Name            | Type      | Description
+| number          | integer   | Buffer number (≥ 1)
+| full_name       | string    | Full name (example: 'irc.freenode.#weechat')
+| local_variables | hashtable | Local variables
+|=====================================================
+
+Example: local variable 'test' removed from buffer 'irc.freenode.#weechat':
+
+[source,python]
+----------------------------------------
+id: '_buffer_localvar_removed'
+hda:
+  keys: {'number': 'int', 'full_name': 'str', 'local_variables': 'htb'}
+  path: ['buffer']
+  item 1:
+    __path: ['0x4a73de0']
+    number: 3
+    full_name: 'irc.freenode.#prout'
+    local_variables: {'server': 'local', 'plugin': 'irc', 'type': 'channel',
+                      'channel': '#weechat', 'nick': 'test', 'name': 'freenode.#weechat'}
+----------------------------------------
+
+[[message_buffer_line_added]]
+_buffer_line_added
+^^^^^^^^^^^^^^^^^^
+
+It is sent to the client when the signal "buffer_line_added" is sent by WeeChat.
+
+Data sent in the hdata:
+
+[width="60%",cols="3m,2,7",options="header"]
+|=====================================================
+| Name            | Type             | Description
+| buffer          | pointer          | Buffer pointer
+| date            | time             | Date of message
+| date_printed    | time             | Date when WeeChat displayed message
+| displayed       | char             | 1 if message is displayed, 0 if message is filtered (hidden)
+| highlight       | char             | 1 if line has a highlight, othersiwe 0
+| tags_array      | array of strings | List of tags for line
+| prefix          | string           | Prefix
+| message         | string           | Message
+|=====================================================
+
+Example: new message 'hello!' from nick 'FlashCode' in buffer 'irc.freenode.#weechat':
+
+[source,python]
+----------------------------------------
+id: '_buffer_line_added'
+hda:
+  keys: {'buffer': 'ptr', 'date': 'tim', 'date_printed': 'tim', 'displayed': 'chr',
+         'highlight': 'chr', 'tags_array': 'arr', 'prefix': 'str', 'message': 'str'}
+  path: ['line_data']
+  item 1:
+    __path: ['0x4a49600']
+    buffer: '0x4a715d0'
+    date: 1362728993
+    date_printed: 1362728993
+    displayed: 1
+    highlight: 0
+    tags_array: ['irc_privmsg', 'notify_message', 'prefix_nick_142', 'nick_FlashCode', 'log1']
+    prefix: 'F06@F@00142FlashCode'
+    message: 'hello!'
+----------------------------------------
+
+[[message_buffer_closing]]
+_buffer_closing
+^^^^^^^^^^^^^^^
+
+It is sent to the client when the signal "buffer_closing" is sent by WeeChat.
+
+Data sent in the hdata:
+
+[width="60%",cols="3m,2,7",options="header"]
+|=====================================================
+| Name            | Type      | Description
+| number          | integer   | Buffer number (≥ 1)
+| full_name       | string    | Full name (example: 'irc.freenode.#weechat')
+|=====================================================
+
+Example: buffer 'irc.freenode.#weechat' is being closed by WeeChat:
+
+[source,python]
+----------------------------------------
+id: '_buffer_closing'
+hda:
+  keys: {'number': 'int', 'full_name': 'str'}
+  path: ['buffer']
+  item 1:
+    __path: ['0x4a715d0']
+    number: 3
+    full_name: 'irc.freenode.#weechat'
+----------------------------------------
+
+[[message_nicklist]]
+_nicklist
+^^^^^^^^^
+
+It is sent to the client when large updates are made on a nicklist (groups/nicks
+added/removed/changed). The message contains full nicklist.
+
+When small updates are made on a nicklist (for example just add one nick),
+another message with identifier '_nicklist_diff' is sent (see below).
+
+Data sent in the hdata:
+
+[width="60%",cols="3m,2,7",options="header"]
+|=====================================================
+| Name            | Type     | Description
+| group           | char     | 1 for a group, 0 for a nick
+| visible         | char     | 1 if group/nick is displayed, otherwise 0
+| level           | integer  | Level of group (0 for a nick)
+| name            | string   | Name of group/nick
+| color           | string   | Name color
+| prefix          | string   | Prefix (only for a nick)
+| prefix_color    | string   | Prefix color (only for a nick)
+|=====================================================
+
+Example: nicklist for buffer 'irc.freenode.#weechat':
+
+[source,python]
+----------------------------------------
+id: '_nicklist'
+hda:
+  keys: {'group': 'chr', 'visible': 'chr', 'level': 'int', 'name': 'str', 'color': 'str',
+         'prefix': 'str', 'prefix_color': 'str'}
+  path: ['buffer', 'nicklist_item']
+  item 1:
+    __path: ['0x4a75cd0', '0x31e95d0']
+    group: 1
+    visible: 0
+    level: 0
+    name: 'root'
+    color: None
+    prefix: None
+    prefix_color: None
+  item 2:
+    __path: ['0x4a75cd0', '0x41247b0']
+    group: 1
+    visible: 1
+    level: 1
+    name: '000|o'
+    color: 'weechat.color.nicklist_group'
+    prefix: None
+    prefix_color: None
+  item 3:
+    __path: ['0x4a75cd0', '0x4a60d20']
+    group: 0
+    visible: 1
+    level: 0
+    name: 'FlashCode'
+    color: '142'
+    prefix: '@'
+    prefix_color: 'lightgreen'
+  item 4:
+    __path: ['0x4a75cd0', '0x4aafaf0']
+    group: 1
+    visible: 1
+    level: 1
+    name: '001|v'
+    color: 'weechat.color.nicklist_group'
+    prefix: None
+    prefix_color: None
+  item 5:
+    __path: ['0x4a75cd0', '0x4a48d80']
+    group: 1
+    visible: 1
+    level: 1
+    name: '999|...'
+    color: 'weechat.color.nicklist_group'
+    prefix: None
+    prefix_color: None
+  item 6:
+    __path: ['0x4a75cd0', '0x4a5f560']
+    group: 0
+    visible: 1
+    level: 0
+    name: 'test'
+    color: 'weechat.color.chat_nick_self'
+    prefix: ' '
+    prefix_color: ''
+----------------------------------------
+
+[[message_nicklist_diff]]
+_nicklist_diff
+^^^^^^^^^^^^^^
+
+_New in version 0.4.1._
+
+It is sent to the client when small updates are made on a nicklist (groups/nicks
+added/removed/changed). The message contains nicklist differences (between old
+nicklist and current one).
+
+Data sent in the hdata:
+
+[width="60%",cols="3m,2,7",options="header"]
+|=====================================================
+| Name            | Type     | Description
+| _diff           | char     | type of diff (see below)
+| group           | char     | 1 for a group, 0 for a nick
+| visible         | char     | 1 if group/nick is displayed, otherwise 0
+| level           | integer  | Level of group (0 for a nick)
+| name            | string   | Name of group/nick
+| color           | string   | Name color
+| prefix          | string   | Prefix (only for a nick)
+| prefix_color    | string   | Prefix color (only for a nick)
+|=====================================================
+
+The value of 'diff' can be:
+
+* `^`: the parent group: group(s) or nick(s) after this one are related to this
+  group
+* `+`: group/nick added in the parent group
+* `-`: group/nick removed from the parent group
+* `*`: group/nick updated in the parent group
+
+Example: nick 'master' added in group '000|o' (channel ops on an IRC channel),
+nicks 'nick1' and 'nick2' added in group '999|...' (standard users on an IRC
+channel):
+
+[source,python]
+----------------------------------------
+id: '_nicklist_diff'
+hda:
+  keys: {'_diff': 'chr', 'group': 'chr', 'visible': 'chr', 'level': 'int', 'name': 'str',
+         'color': 'str', 'prefix': 'str', 'prefix_color': 'str'}
+  path: ['buffer', 'nicklist_item']
+  item 1:
+    __path: ['0x46f2ee0', '0x343c9b0']
+    _diff: 94 ('^')
+    group: 1
+    visible: 1
+    level: 1
+    name: '000|o'
+    color: 'weechat.color.nicklist_group'
+    prefix: None
+    prefix_color: None
+  item 2:
+    __path: ['0x46f2ee0', '0x47e7f60']
+    _diff: 43 ('+')
+    group: 0
+    visible: 1
+    level: 0
+    name: 'master'
+    color: 'magenta'
+    prefix: '@'
+    prefix_color: 'lightgreen'
+  item 3:
+    __path: ['0x46f2ee0', '0x46b8e70']
+    _diff: 94 ('^')
+    group: 1
+    visible: 1
+    level: 1
+    name: '999|...'
+    color: 'weechat.color.nicklist_group'
+    prefix: None
+    prefix_color: None
+  item 4:
+    __path: ['0x46f2ee0', '0x3dba240']
+    _diff: 43 ('+')
+    group: 0
+    visible: 1
+    level: 0
+    name: 'nick1'
+    color: 'green'
+    prefix: ' '
+    prefix_color: ''
+  item 5:
+    __path: ['0x46f2ee0', '0x3c379d0']
+    _diff: 43 ('+')
+    group: 0
+    visible: 1
+    level: 0
+    name: 'nick2'
+    color: 'lightblue'
+    prefix: ' '
+    prefix_color: ''
+----------------------------------------
+
+[[message_upgrade]]
+_upgrade
+^^^^^^^^
+
+_New in version 0.3.8._
+
+It is sent to the client when WeeChat is starting upgrade process.
+
+There is no data in the hdata.
+
+The recommended action in client is to desynchronize from WeeChat (send command
+'desync'), or to disconnect from WeeChat (because after upgrade, all pointers
+will change).
+
+[NOTE]
+During WeeChat upgrade, the socket remains opened (except if connection was made
+with SSL).
+
+[[message_upgrade_ended]]
+_upgrade_ended
+^^^^^^^^^^^^^^
+
+_New in version 0.3.8._
+
+It is sent to the client when WeeChat has finished the upgrade process.
+
+There is no data in the hdata.
+
+The recommended action in client is to resynchronize with WeeChat: resend all
+commands sent on startup after the 'init'.
+
+[[objects]]
 Objects
 ~~~~~~~
 
