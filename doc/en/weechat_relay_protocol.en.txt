@@ -1044,7 +1044,7 @@ Data sent in the hdata:
 | prefix_color    | string   | Prefix color (only for a nick)
 |=====================================================
 
-The value of 'diff' can be:
+The value of '_diff' can be:
 
 * `^`: the parent group: group(s) or nick(s) after this one are related to this
   group
