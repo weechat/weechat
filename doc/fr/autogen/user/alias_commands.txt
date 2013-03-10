@@ -17,9 +17,8 @@ Note: dans la commande, les variables spéciales sont remplacées:
       $n-m: paramètres de 'n' à 'm'
         $*: tous les paramètres
         $~: le dernier paramètre
-     $nick: pseudo courant
-  $channel: canal courant
-   $server: serveur courant
+      $var: où "var" est une variable locale du tampon (voir /buffer localvar)
+            exemples: $nick, $channel, $server, $plugin, $name
 
 Pour supprimer un alias, utilisez la commande /unalias.
 

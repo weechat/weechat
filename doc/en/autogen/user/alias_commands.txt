@@ -17,9 +17,8 @@ Note: in command, special variables are replaced:
       $n-m: arguments from 'n' to 'm'
         $*: all arguments
         $~: last argument
-     $nick: current nick
-  $channel: current channel
-   $server: current server
+      $var: where "var" is a local variable of buffer (see /buffer localvar)
+            examples: $nick, $channel, $server, $plugin, $name
 
 To remove an alias, use command /unalias.
 
