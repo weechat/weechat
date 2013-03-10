@@ -169,7 +169,7 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_script.scripts.autoload]] *script.scripts.autoload*
-** 説明: `autoload scripts installed (make a link in "autoload" directory to script in parent directory`
+** 説明: `autoload scripts installed (make a link in "autoload" directory to script in parent directory)`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 

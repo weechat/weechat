@@ -675,7 +675,7 @@ script_config_init ()
         script_config_file, ptr_section,
         "autoload", "boolean",
         N_("autoload scripts installed (make a link in \"autoload\" directory "
-           "to script in parent directory"),
+           "to script in parent directory)"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL);
     script_config_scripts_cache_expire = weechat_config_new_option (

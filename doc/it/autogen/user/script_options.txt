@@ -169,7 +169,7 @@
 ** valori: on, off (valore predefinito: `on`)
 
 * [[option_script.scripts.autoload]] *script.scripts.autoload*
-** descrizione: `autoload scripts installed (make a link in "autoload" directory to script in parent directory`
+** descrizione: `autoload scripts installed (make a link in "autoload" directory to script in parent directory)`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
