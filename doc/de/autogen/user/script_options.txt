@@ -169,7 +169,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_script.scripts.autoload]] *script.scripts.autoload*
-** Beschreibung: `autoload scripts installed (make a link in "autoload" directory to script in parent directory)`
+** Beschreibung: `autoload Skripten installiert (erstellt einen Link im "autoload" Verzeichnis zum Skript im übergeordneten Verzeichnis)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 

@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-03-10 08:54+0100\n"
-"PO-Revision-Date: 2013-02-23 18:31+0100\n"
+"POT-Creation-Date: 2013-03-11 11:28+0100\n"
+"PO-Revision-Date: 2013-03-10 09:40+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
 "Language: \n"
@@ -4111,7 +4111,7 @@ msgstr "Einem Befehl wird ein Alias zugewiesen"
 msgid "[-completion <completion>] <alias> [<command> [;<command>...]]"
 msgstr "[-completion <completion>] <alias> [<command> [;<command>...]]"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "completion: completion for alias (optional, by default completion is done "
 "with target command)\n"
@@ -4164,9 +4164,9 @@ msgstr ""
 "      $n-m: Argumente von 'n' bis 'm'\n"
 "        $*: alle Argumente\n"
 "        $~: letztes Argument\n"
-"     $nick: aktueller Nick\n"
-"  $channel: aktueller Channel\n"
-"   $server: aktueller Server\n"
+"      $var: \"var\" ist eine lokale Variable für den jeweiligen Buffer "
+"(siehe /buffer localvar)\n"
+"            Beispiel: $nick, $channel, $server, $plugin, $name\n"
 "\n"
 "Um ein Alias zu löschen wird der Befehl \"/unalias\" genutzt.\n"
 "\n"
@@ -9263,15 +9263,13 @@ msgstr "%s: Skript \"%s\" nicht gefunden"
 msgid "%s: script \"%s\" is not installed"
 msgstr "%s: Skript \"%s\" ist nicht installiert"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: autoload enabled for script \"%s\""
-msgstr ""
-"%s: Skript \"%s\" liegt in einer nicht unterstützen Programmiersprache vor"
+msgstr "%s: autoload-Funktion für Skript \"%s\" aktiviert"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: autoload disabled for script \"%s\""
-msgstr ""
-"%s: Skript \"%s\" liegt in einer nicht unterstützen Programmiersprache vor"
+msgstr "%s: autoload-Funktion für Skript \"%s\" deaktiviert"
 
 #, c-format
 msgid "%s%s: error downloading script \"%s\": %s"
@@ -9370,7 +9368,7 @@ msgstr "Max WeeChat"
 msgid "Alt+key/input: v=back to list d=jump to diff"
 msgstr "Alt+Taste/Eingabezeile: v=zurück zur Liste d=gehe zu Diff"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%d/%d scripts (filter: %s) | Sort: %s | Alt+key/input: i=install r=remove "
 "l=load L=reload u=unload A=autoload h=(un)hold v=view script | Input: "
@@ -9378,10 +9376,10 @@ msgid ""
 "left=select right=install/remove"
 msgstr ""
 "%d/%d Skripten (Filter: %s) | Sortierung: %s | Alt+Taste/Eingabe: "
-"i=installieren r=entfernen l=starten L=erneut starten u=beenden h=halten/"
-"freigeben v=Skript anzeigen | Eingabe: q=beenden $=aktualisieren s:x,y=Art "
-"der Sortierung Text=Filter *=Filter zurücksetzen | Maus: links=Skript "
-"anwählen rechts=installieren/entfernen"
+"i=installieren r=entfernen l=starten L=erneut starten u=beenden A=autoload "
+"h=halten/freigeben v=Skript anzeigen | Eingabe: q=beenden $=aktualisieren s:"
+"x,y=Art der Sortierung Text=Filter *=Filter zurücksetzen | Maus: "
+"links=Skript anwählen rechts=installieren/entfernen"
 
 msgid "Scripts"
 msgstr "Skripten"
@@ -9389,7 +9387,6 @@ msgstr "Skripten"
 msgid "WeeChat scripts manager"
 msgstr "WeeChat Skripten-Manager"
 
-#, fuzzy
 msgid ""
 "list [-o|-i] || search <text> || show <script> || load|unload|reload "
 "<script> [<script>...] || autoload|noautoload|toggleautoload <script> "
@@ -9397,10 +9394,10 @@ msgid ""
 "[<script>...] || upgrade || update"
 msgstr ""
 "list [-o|-i] || search <text> || show <script> || load|unload|reload "
-"<script> [<script>...] || install|remove|installremove|hold [-q] <script> "
+"<script> [<script>...] || autoload|noautoload|toggleautoload <script> "
+"[<script>...] || install|remove|installremove|hold [-q] <script> "
 "[<script>...] || upgrade || update"
 
-#, fuzzy
 msgid ""
 "          list: list loaded scripts (all languages)\n"
 "            -o: send list of loaded scripts to buffer\n"
@@ -9469,33 +9466,36 @@ msgid ""
 "  /script reload urlserver\n"
 "  /script upgrade"
 msgstr ""
-"    list: gibt alle geladenen Skripten im Buffer aus (unabhängig der "
+"          list: gibt alle geladenen Skripten im Buffer aus (unabhängig der "
 "Programmiersprache)\n"
-"           -o: gibt eine Liste der gestarteten Skripten im Buffer aus\n"
-"           -i: eine Liste der gestarteten Skripten wird in die Eingabezeile "
+"            -o: gibt eine Liste der gestarteten Skripten im Buffer aus\n"
+"            -i: eine Liste der gestarteten Skripten wird in die Eingabezeile "
 "kopiert (um sie dann manuell in einen Buffer zu senden)\n"
-"  search: sucht Skripten nach Schlagwörtern oder beliebigem Text. Das "
+"        search: sucht Skripten nach Schlagwörtern oder beliebigem Text. Das "
 "Ergebnis wird im Skripten-Buffer dargestellt\n"
-"    show: zeigt detailliert Informationen zu einem Skript an\n"
-"    load: startet Skript(en)\n"
-"  unload: beendet Skript(en)\n"
-"  reload: Skript(en) werden neu geladen\n"
-" install: installiert/aktualisiert Skript(en) (physikalisch, auf dem "
+"          show: zeigt detailliert Informationen zu einem Skript an\n"
+"          load: startet Skript(en)\n"
+"        unload: beendet Skript(en)\n"
+"        reload: Skript(en) werden neu geladen\n"
+"      autoload: das Skript wird in das autoload-Verzeichnis eingebunden\n"
+"    noautoload: das Skript wird aus dem autoload-Verzeichnis entfernt\n"
+"toggleautoload: autoload für das Skript umschalten\n"
+"       install: installiert/aktualisiert Skript(en) (physikalisch, auf dem "
 "Datenträger)\n"
-"  remove: deinstalliert Skript(en) (physikalisch, vom Datenträger)\n"
-"installremove: installiert oder deinstalliert Skript(en), abhängig davon "
+"        remove: deinstalliert Skript(en) (physikalisch, vom Datenträger)\n"
+" installremove: installiert oder deinstalliert Skript(en), abhängig davon "
 "welcher Status vorliegt\n"
-"    hold: halten/freigeben von Skript(en) (ein Skript welches gehalten wird, "
-"kann weder aktualisiert noch entfernt werden)\n"
-"           -q: unterdrückter Modus: Es werden keine Nachrichten ausgegeben\n"
-" upgrade: aktualisiert alle installierten Skripten, die obsolet sind (wenn "
-"eine neue Version verfügbar ist)\n"
-"  update: aktualisiert den lokalen Cache für die Skripten\n"
+"          hold: halten/freigeben von Skript(en) (ein Skript welches gehalten "
+"wird, kann weder aktualisiert noch entfernt werden)\n"
+"            -q: unterdrückter Modus: Es werden keine Nachrichten ausgegeben\n"
+"       upgrade: aktualisiert alle installierten Skripten, die obsolet sind "
+"(wenn eine neue Version verfügbar ist)\n"
+"        update: aktualisiert den lokalen Cache für die Skripten\n"
 "\n"
-"Ohne Angaben von Argumenten öffnet dieser Befehl einen Buffer in welchem "
+"Ohne Angaben von Argumenten öffnet dieser Befehl einen Buffer, in welchem "
 "eine Liste der Skripten dargestellt wird.\n"
 "\n"
-"Im Skript-Buffer, werden folgende Statusangaben zu einem Skript angezeigt:\n"
+"Im Skript-Buffer, werden folgende Statusangaben für ein Skript angezeigt:\n"
 "  * i a H r N\n"
 "  | | | | | |\n"
 "  | | | | | obsolete (neue Version verfügbar)\n"
@@ -9728,6 +9728,8 @@ msgid ""
 "autoload scripts installed (make a link in \"autoload\" directory to script "
 "in parent directory)"
 msgstr ""
+"autoload Skripten installiert (erstellt einen Link im \"autoload\" "
+"Verzeichnis zum Skript im übergeordneten Verzeichnis)"
 
 msgid ""
 "local cache expiration time, in minutes (-1 = never expires, 0 = always "
@@ -10184,9 +10186,9 @@ msgstr "%s%s: Der Block kann vom Versender nicht empfangen werden"
 msgid "%s%s: unable to write local file"
 msgstr "%s%s: Die lokale Datei kann nicht erstellt werden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to send ACK to sender"
-msgstr "%s%s: Eine Verbindung zum Versender kann nicht herstellt werden"
+msgstr "%s%s: ACK kann nicht an Absender verschickt werden"
 
 #, c-format
 msgid "%s%s: unable to fork"
@@ -10251,6 +10253,175 @@ msgstr "Type"
 msgid "Constants"
 msgstr "Konstanten"
 
-#, fuzzy
-#~ msgid "%s: script \"%s\" is now autoloaded"
-#~ msgstr "%s: Das Skript \"%s\" wurde nicht installiert"
+#~ msgid "hide password displayed by nickserv"
+#~ msgstr "Passwörter verstecken die durch NickServ angezeigt werden"
+
+#~ msgid "%s%s: error: name is not required for protocol \"%s\""
+#~ msgstr "%s%s: Fehler: ein Name ist für das Protokoll \"%s\" nicht notwendig"
+
+#~ msgid "%s%s: not enough memory to create new speller"
+#~ msgstr "%s%s: Nicht genug Speicher um neue Rechtschreibung zu erstellen"
+
+#~ msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
+#~ msgstr "%s%s Fehler beim Erstellen der Socket-Option \"SO_REUSEADDR\""
+
+#~ msgid "%s%s: cannot set socket option \"IPV6_V6ONLY\" to value %d"
+#~ msgstr ""
+#~ "%s%s der Wert %d kann nicht für die Socket-Option, \"IPV6_V6ONLY\", "
+#~ "gesetzt werden"
+
+#~ msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
+#~ msgstr "%s%s Fehler beim Erstellen der Socket-Option \"SO_KEEPALIVE\""
+
+#~ msgid "%s%s: cannot create socket for xfer"
+#~ msgstr "%s%s: Für den Transfer konnte kein Socket angelegt werden"
+
+#~ msgid "%s%s: not enough memory to parse file \"%s\""
+#~ msgstr "%s%s: Nicht genug Speicher um Datei \"%s\" zu analysieren"
+
+#~ msgid "%s%s: unable to run file \"%s\""
+#~ msgstr "%s%s: Kann Datei \"%s\" nicht ausführen"
+
+#~ msgid "%s%s: unknown error while loading file \"%s\""
+#~ msgstr "%s%s: unbekannter Fehler beim Laden der Datei \"%s\""
+
+#~ msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
+#~ msgstr ""
+#~ "%s: Fehler beim Laden des Skriptes \"%s\" (fehlerhafter Name: Leerzeichen "
+#~ "sind nicht erlaubt)"
+
+#~ msgid "%s%s: cannot create socket"
+#~ msgstr "%s%s: Socket konnte nicht angelegt werden"
+
+#~ msgid "background color for window separators (when split)"
+#~ msgstr ""
+#~ "Hintergrundfarbe der Fenster-Separatoren im Chatfenster (bei geteiltem "
+#~ "Bildschirm)"
+
+#~ msgid "No configuration option found"
+#~ msgstr "Konfigurationsoption nicht gefunden"
+
+#~ msgid "%s%d%s configuration option found"
+#~ msgid_plural "%s%d%s configuration options found"
+#~ msgstr[0] "%s%d%s Konfigurationsoption gefunden"
+#~ msgstr[1] "%s%d%s Konfigurationsoptionen gefunden"
+
+#~ msgid "%sError: configuration option \"%s\" not found"
+#~ msgstr "%sFehler: Konfigurationsoption \"%s\" nicht gefunden"
+
+#~ msgid "[<option> [<value>]]"
+#~ msgstr "[<option> [<value>]]"
+
+#~ msgid "automatically rejoin channels after kick"
+#~ msgstr "Channels automatisch betreten, falls man rausgeworfen wurde"
+
+#~ msgid "prefix for error messages"
+#~ msgstr "Präfix für Fehlermeldungen"
+
+#~ msgid "prefix for network messages"
+#~ msgstr "Präfix für Netzwerkmeldungen"
+
+#~ msgid "prefix for action messages"
+#~ msgstr "Präfix für Action-Nachrichten"
+
+#~ msgid "prefix for join messages"
+#~ msgstr "Präfix für Join-Nachrichten"
+
+#~ msgid "prefix for quit messages"
+#~ msgstr "Präfix für Quit-Nachrichten"
+
+#~ msgid ""
+#~ "condition(s) for displaying bar (for bars of type \"window\"): \"active\" "
+#~ "= window must be active, \"inactive\" = window must be inactive, "
+#~ "\"nicklist\" = buffer must have a nicklist"
+#~ msgstr ""
+#~ "Bedingung(en) um eine Bar anzuzeigen (gilt für Bars des Typs \"window\"): "
+#~ "\"active\" = window muss aktiv sein \"inactive\" = window muss inaktiv "
+#~ "sein, \"nicklist\" = Buffer muss über eine Nickliste verfügen"
+
+#~ msgid ""
+#~ "server: server name\n"
+#~ "  nick: nick (may be a mask)"
+#~ msgstr ""
+#~ "server: Servername\n"
+#~ "  nick: Nickname (oder eine Maske)"
+
+#~ msgid "use IPv6 protocol for server communication"
+#~ msgstr "Server über IPv6 ansprechen"
+
+#~ msgid "global decoding charset"
+#~ msgstr "globaler Zeichensatz zum dekodieren"
+
+#~ msgid "global encoding charset"
+#~ msgstr "globaler Zeichensatz zum kodieren"
+
+#~ msgid "alt+d=back to list"
+#~ msgstr "alt+d=zurück zur Auswahl"
+
+#~ msgid "%s: connecting to server %s/%d%s%s..."
+#~ msgstr "%s: Verbinden zum Server %s/%d%s%s..."
+
+#~ msgid "%s: disconnected from server"
+#~ msgstr "%s: Vom Server getrennt!"
+
+#~ msgid "display nick mode ((half)op/voice) before each nick"
+#~ msgstr ""
+#~ "vor dem Nicknamen wird der entsprechende Nickmode ((half)op/voice [@%+]) "
+#~ "angezeigt"
+
+#~ msgid "%s: script \"%s\" held"
+#~ msgstr "%s: Skript \"%s\" kann nicht überschrieben werden"
+
+#~ msgid ""
+#~ "%s%s: cannot authenticate with SASL and mechanism DH-BLOWFISH because "
+#~ "WeeChat was not built with libgcrypt support"
+#~ msgstr ""
+#~ "%s%s Authentifizierung mittels SASL und DH-BLOWFISH Mechanismus nicht "
+#~ "möglich, da WeeChat nicht mit libgcrypt Unterstützung erstellt wurde"
+
+#~ msgid "smart completion for nicks (completes first with last speakers)"
+#~ msgstr ""
+#~ "intelligente Vervollständigung von Nicknamen (vervollständigt zuerst den "
+#~ "letzten Nick, mit dem gesprochen wurde)"
+
+#~ msgid "ended on: "
+#~ msgstr "geendet am: "
+
+#~ msgid "%s%-26s id: %d, protocol: %s, received: %s, sent: %s"
+#~ msgstr "%s%-26s Id: %d, Protokoll: %s, empfangen: %s, gesendet: %s"
+
+#~ msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s%s%s)"
+#~ msgstr "%s: neuer Client von %s%s%s an Port %d (id: %d, Relaying: %s%s%s)"
+
+#~ msgid "text color"
+#~ msgstr "Textfarbe"
+
+#~ msgid "background color"
+#~ msgstr "Hintergrundfarbe"
+
+#~ msgid "text color of selected xfer line"
+#~ msgstr "Farbe der ausgewählten Transfer-Zeile"
+
+#~ msgid "display message when (un)marking as away"
+#~ msgstr "bei Abwesenheit und Rückkehr eine Nachricht anzeigen"
+
+#~ msgid "display channel modes in \"buffer_name\" bar item"
+#~ msgstr "zeigt die Channel-Modi mittels \"buffer_name\" in der Bar-Item an"
+
+#~ msgid "%sError: name can not start with \"#\""
+#~ msgstr "%sFehler: Name darf nicht mit \"#\"beginnen"
+
+#~ msgid "%s%s: name can not start with \"#\""
+#~ msgstr "%s%s: Name darf nicht mit \"#\" beginnen"
+
+#~ msgid "string inserted after nick completion"
+#~ msgstr "Nach Nick-Vervollständigung anzufügende Zeichenfolge"
+
+#~ msgid "display '+' if prefix is truncated"
+#~ msgstr "Anzeige eines '+' falls das Präfix abgeschnitten ist"
+
+#~ msgid "<nick> <channel>"
+#~ msgstr "<nick> <channel>"
+
+#~ msgid "mechanism for SASL authentication"
+#~ msgstr "Vorrichtung zur SASL Authentifizierung"

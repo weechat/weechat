@@ -298,8 +298,7 @@ Zeilen angefügt (dies führt dazu, dass URLs beim Markieren korrekt erkannt wer
 Bei der Nutzung dieser Option kann es zu Darstellungsfehlern kommen. Sollte dies
 auftreten, sollte diese Option wieder deaktiviert werden.
 
-// TRANSLATION MISSING
-Other solution is to use a script: http://www.weechat.org/scripts/stable/tag/url
+Eine weitere Möglichkeit ist, ein Skript zu nutzen: http://www.weechat.org/scripts/stable/tag/url
 
 [[change_locale_without_quit]]
 Ich möchte die Meldungen von Weechat in einer anderen Sprache ausgeben lassen, ohne WeeChat zu beenden. Ist dies möglich?

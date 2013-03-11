@@ -2329,18 +2329,18 @@ Befehle
 
 include::autogen/user/relay_commands.txt[]
 
-// TRANSLATION MISSING
 [[relay_password]]
-Password
+Passwort
 ^^^^^^^^
 
-It is highly recommended to set a password for relay, with command:
+Es wird nachdrücklich Empfohlen ein Passwort für die Relay-Verbindung zu nutzen:
 
 ----------------------------------------
 /set relay.network.password "meinPasswort"
 ----------------------------------------
 
-This password is used for 'irc' and 'weechat' protocols.
+Dieses Passwort wird sowohl für das 'irc' als auch für das 'weechat' Protokoll
+verwendet.
 
 [[relay_ssl]]
 SSL
@@ -2369,38 +2369,38 @@ Schlüssel mittels folgendem Befehl nachträglich geladen werden:
 /relay sslcertkey
 ----------------------------------------
 
-// TRANSLATION MISSING
 [[relay_irc_proxy]]
-IRC proxy
+IRC Proxy
 ^^^^^^^^^
+Die Relay Erweiterung kann wie ein IRC Proxy genutzt werden. Dabei simuliert
+die Erweiterung einen IRC Server und man kann sich mit jedem IRC Client zu WeeChat
+verbinden.
 
-The Relay plugin can act as an IRC proxy: it will simulate an IRC server, and
-you can connect to WeeChat with any other IRC client (including WeeChat itself).
+Es kann für jeden IRC Server ein Port definiert werden, oder aber ein Port für
+alle Server.
 
-You can define one port by IRC server, or one generic port for all servers.
-
-When using one port for all servers, the client must send the internal name of
-server in the IRC "PASS" command, with this format:
+Wird ein Port für alle Server genutzt, dann muss der Client den internen Namen
+des zu nutzenden Servers mit dem IRC Befehl "PASS" anfordern:
 
 ----------------------------------------
 PASS server:meinPasswort
 ----------------------------------------
 
-Example: IRC proxy with SSL for any server (client will choose):
+Beispiel: IRC Proxy mit SSL für einen beliebigen Server (Client wählt aus):
 
 ----------------------------------------
 /relay add ssl.irc 8000
 ----------------------------------------
 
-Example: IRC proxy without SSL only for server "freenode":
+Beispiel: IRC Proxy ohne SSL und nur für "freenode":
 
 ----------------------------------------
 /relay add irc.freenode 8000
 ----------------------------------------
 
-Now you can connect on port 8000 with any IRC client using server password
-"meinPasswort" (or "freenode:meinPasswort" if no server was specified in the
-relay).
+Nun kann man eine Verbindung zum Port 8000 mit jedem beliebigen IRC Client
+herstellen, indem man das Server Passwort "meinPasswort" nutzt (oder
+"freenode:meinPasswort" sofern kein Server angegeben wurde).
 
 [[relay_weechat_protocol]]
 WeeChat Protokoll
@@ -2418,28 +2418,26 @@ Zum Beispiel:
 Nun kann man über den Port 9000 mittels einer Oberfläche und dem Passwort
 "meinPasswort" eine Verbindung zu WeeChat herstellen.
 
-// TRANSLATION MISSING
 [[relay_websocket]]
 WebSocket
 ^^^^^^^^^
 
-WebSocket protocol (http://tools.ietf.org/html/rfc6455[RFC 6455]) is supported
-in Relay plugin for all protocols.
+Das WebSocket Protokoll (http://tools.ietf.org/html/rfc6455[RFC 6455]) wird nun
+in der Relay Erweiterung unterstützt.
 
-The WebSocket handshake is automatically detected and socket becomes ready for
-WebSocket if required headers are found in handshake and if origin is allowed
-(see option
-<<option_relay.network.websocket_allowed_origins,relay.network.websocket_allowed_origins>>).
+Der WebSocket Handshake wird automatisch erkannt und der Socket ist sofort
+funktionsfähig, sofern die benötigten Header gefunden werden und die Herkunft
+bestätigt wurde (siehe Option <<option_relay.network.websocket_allowed_origins,relay.network.websocket_allowed_origins>>).
 
-A WebSocket can be opened in a HTML5 with a single line of JavaScript:
+Ein WebSocket kann in HTML5, mit einer JavaScript Zeile, geöffnet werden:
 
 [source,js]
 ----------------------------------------
 websocket = new WebSocket("ws://server.com:9000/weechat");
 ----------------------------------------
 
-The port (9000 in example) is the port defined in Relay plugin.
-The URI must always end with "/weechat" (for 'irc' and 'weechat' protocols).
+Der Port (im Beispiel: 9000) ist der Port der in der Relay Erweiterung angegeben wurde.
+Die URI muss immer auf "/weechat" enden ('irc' und 'weechat' Protokoll).
 
 [[rmodifier_plugin]]
 Rmodifier Erweiterung

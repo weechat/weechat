@@ -3,31 +3,31 @@
 ........................................
 /alias  [-completion <completion>] <alias> [<command> [;<command>...]]
 
-completion: completion for alias (optional, by default completion is done with target command)
-            note: you can use %%command to use completion of an existing command
-     alias: name of alias (can start or end with "*" for alias listing)
-   command: command name with arguments (many commands can be separated by semicolons)
+completion: optionale Vervollständigung für einen Alias-Befehl (Standardverhalten: Vervollständigung wird auf den Zielbefehl angewendet)
+            Hinweis: Mit der Variablen "%%command" kann eine Vervollständigung eines vorhandenen Befehls durchgeführt werden
+     alias: Name des Alias (kann mit Joker "*" beginnen oder enden um Aliase aufzulisten)
+   command: Name des zuzuordnenden Befehls (WeeChat- oder IRC-Befehl ohne führenden '/', mehrere Befehle müssen durch Semikolon getrennt werden)
 
-Without argument, this command lists all defined alias.
+Ohne Angabe von Argumenten werden alle definierten Aliase angezeigt.
 
-Note: in command, special variables are replaced:
-        $n: argument 'n' (between 1 and 9)
-       $-m: arguments from 1 to 'm'
-       $n-: arguments from 'n' to last
-      $n-m: arguments from 'n' to 'm'
-        $*: all arguments
-        $~: last argument
-      $var: where "var" is a local variable of buffer (see /buffer localvar)
-            examples: $nick, $channel, $server, $plugin, $name
+Anmerkung: Im Befehl können Variablen genutzt werden, die dann durch den entsprechenden Wert ersetzt werden:
+        $n: Argument 'n' (zwischen 1 und 9)
+       $-m: Argumente von 1 bis 'm'
+       $n-: Argumente von 'n' bis zum letzten Argument
+      $n-m: Argumente von 'n' bis 'm'
+        $*: alle Argumente
+        $~: letztes Argument
+      $var: "var" ist eine lokale Variable für den jeweiligen Buffer (siehe /buffer localvar)
+            Beispiel: $nick, $channel, $server, $plugin, $name
 
-To remove an alias, use command /unalias.
+Um ein Alias zu löschen wird der Befehl "/unalias" genutzt.
 
-Examples:
-  alias /split to split window horizontally:
+Beispiele:
+  Alias "/split" wird anlegt um damit ein Fenster horizontal zu teilen:
     /alias split /window splith
-  alias /hello to say "hello" on all channels but not on #weechat:
-    /alias hello /allchan -exclude=#weechat msg * hello
-  alias /forcejoin to send IRC command "forcejoin" with completion of /sajoin:
+  Alias "/hallo" wird angelegt um in allen Channels, außer im #weechat Channel, den Text "Hallo" auszugeben:
+    /alias hallo /allchan -exclude=#weechat msg * Hallo
+  Alias "/forcejoin" wird angelegt um den IRC Befehl "forcejoin" mit einer Vervollständigung von /sajoin auszuführen:
     /alias -completion %%sajoin forcejoin /quote forcejoin
 ........................................
 
