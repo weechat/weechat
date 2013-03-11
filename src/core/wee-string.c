@@ -412,7 +412,7 @@ string_match (const char *string, const char *mask, int case_sensitive)
     if ((mask[0] == '*') && (last == '*'))
     {
         /* not enough chars in string to match */
-        if (len_string < len_mask - 1)
+        if (len_string < len_mask - 2)
             return 0;
         /* keep only relevant chars in mask for searching string */
         mask2 = string_strndup (mask + 1, len_mask - 2);
