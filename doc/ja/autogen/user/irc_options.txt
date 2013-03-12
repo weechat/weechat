@@ -353,15 +353,15 @@
 ** タイプ: 整数
 ** 値: 0 .. 604800 (デフォルト値: `60`)
 
-* [[option_irc.network.lag_disconnect]] *irc.network.lag_disconnect*
-** 説明: `長い遅延の後は再接続 (分単位、0 = 再接続しない)`
-** タイプ: 整数
-** 値: 0 .. 10080 (デフォルト値: `0`)
-
 * [[option_irc.network.lag_min_show]] *irc.network.lag_min_show*
 ** 説明: `表示する最短の遅延 (ミリ秒単位)`
 ** タイプ: 整数
 ** 値: 0 .. 86400000 (デフォルト値: `500`)
+
+* [[option_irc.network.lag_reconnect]] *irc.network.lag_reconnect*
+** 説明: `reconnect to server if lag is greater than this value (in seconds, 0 = never reconnect)`
+** タイプ: 整数
+** 値: 0 .. 604800 (デフォルト値: `0`)
 
 * [[option_irc.network.lag_refresh_interval]] *irc.network.lag_refresh_interval*
 ** 説明: `遅延時間が増加する場合、遅延アイテムの 2 回のリフレッシュの間のインターバル (秒単位)`

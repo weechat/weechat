@@ -1,7 +1,7 @@
 WeeChat Release Notes
 =====================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.1-dev, 2013-02-26
+v0.4.1-dev, 2013-03-12
 
 
 This document lists important changes for each version, that require manual
@@ -15,6 +15,11 @@ http://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 Version 0.4.1 (under dev!)
 --------------------------
+
+=== IRC reconnection on important lag ===
+
+Option 'irc.network.lag_disconnect' has been renamed to
+'irc.network.lag_reconnect' and value is now a number of seconds.
 
 === IRC passwords hidden ===
 

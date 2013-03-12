@@ -47,6 +47,7 @@
 #include "irc-server.h"
 #include "irc-buffer.h"
 #include "irc-channel.h"
+#include "irc-color.h"
 #include "irc-command.h"
 #include "irc-config.h"
 #include "irc-input.h"
@@ -2821,14 +2822,17 @@ irc_server_timer_cb (void *data, int remaining_calls)
                         weechat_bar_item_update ("lag");
                     }
                     /* lag timeout? => disconnect */
-                    if ((weechat_config_integer (irc_config_network_lag_disconnect) > 0)
-                        && (ptr_server->lag / 1000 > weechat_config_integer (irc_config_network_lag_disconnect) * 60))
+                    if ((weechat_config_integer (irc_config_network_lag_reconnect) > 0)
+                        && (ptr_server->lag / 1000 > weechat_config_integer (irc_config_network_lag_reconnect)))
                     {
                         weechat_printf (ptr_server->buffer,
-                                        _("%s%s: lag is high, disconnecting "
-                                          "from server..."),
+                                        _("%s%s: lag is high, reconnecting to "
+                                          "server %s%s%s"),
                                         weechat_prefix ("network"),
-                                        IRC_PLUGIN_NAME);
+                                        IRC_PLUGIN_NAME,
+                                        IRC_COLOR_CHAT_SERVER,
+                                        ptr_server->name,
+                                        IRC_COLOR_RESET);
                         irc_server_disconnect (ptr_server, 0, 1);
                     }
                 }

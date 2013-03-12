@@ -353,15 +353,15 @@
 ** Typ: integer
 ** Werte: 0 .. 604800 (Standardwert: `60`)
 
-* [[option_irc.network.lag_disconnect]] *irc.network.lag_disconnect*
-** Beschreibung: `maximal Verzögerung (Lag) bis zum Trennen der Verbindung (in Minuten - 0 = niemals trennen)`
-** Typ: integer
-** Werte: 0 .. 10080 (Standardwert: `0`)
-
 * [[option_irc.network.lag_min_show]] *irc.network.lag_min_show*
 ** Beschreibung: `geringste Verzögerungszeit (Lag) die angezeigt werden soll (in Millisekunden)`
 ** Typ: integer
 ** Werte: 0 .. 86400000 (Standardwert: `500`)
+
+* [[option_irc.network.lag_reconnect]] *irc.network.lag_reconnect*
+** Beschreibung: `reconnect to server if lag is greater than this value (in seconds, 0 = never reconnect)`
+** Typ: integer
+** Werte: 0 .. 604800 (Standardwert: `0`)
 
 * [[option_irc.network.lag_refresh_interval]] *irc.network.lag_refresh_interval*
 ** Beschreibung: `Intervall zwischen zwei Aktualisierungen der Verzögerungsanzeige (Lag-Item), wenn die Verzögerungszeit sich erhöht (in Sekunden)`

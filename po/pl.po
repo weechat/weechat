@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-03-10 08:54+0100\n"
+"POT-Creation-Date: 2013-03-12 13:52+0100\n"
 "PO-Revision-Date: 2013-02-23 11:11+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6577,7 +6577,10 @@ msgstr ""
 msgid "minimum lag to show (in milliseconds)"
 msgstr "minimalne pokazywane opóźnienie (w milisekundach)"
 
-msgid "disconnect after important lag (in minutes, 0 = never disconnect)"
+#, fuzzy
+msgid ""
+"reconnect to server if lag is greater than this value (in seconds, 0 = never "
+"reconnect)"
 msgstr "rozłącz po dużym opóźnieniu (w minutach, 0 = nie rozłączaj nigdy)"
 
 msgid ""
@@ -7257,8 +7260,8 @@ msgstr "%s%s: przekroczono czas połączenia (nie otrzymano wiadomości 001)"
 msgid "%s%s: sasl authentication timeout"
 msgstr "%s%s: przekroczono czas uwierzytelniania sasl"
 
-#, c-format
-msgid "%s%s: lag is high, disconnecting from server..."
+#, fuzzy, c-format
+msgid "%s%s: lag is high, reconnecting to server %s%s%s"
 msgstr "%s%s: za duże opóźnienie, rozłączam z serwerem..."
 
 #, c-format

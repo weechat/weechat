@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-03-10 08:54+0100\n"
+"POT-Creation-Date: 2013-03-12 13:52+0100\n"
 "PO-Revision-Date: 2013-02-23 11:11+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5760,7 +5760,10 @@ msgstr "két távollétellenőrzés közti idő (percben, 0 = nincs ellenőrzés
 msgid "minimum lag to show (in milliseconds)"
 msgstr "minimális kijelzett késés (másodpercben)"
 
-msgid "disconnect after important lag (in minutes, 0 = never disconnect)"
+#, fuzzy
+msgid ""
+"reconnect to server if lag is greater than this value (in seconds, 0 = never "
+"reconnect)"
 msgstr "lekapcsolódás túl nagy késés esetén (percben, 0 = nincs lecsatlakozás)"
 
 #, fuzzy
@@ -6446,7 +6449,7 @@ msgid "%s%s: sasl authentication timeout"
 msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 #, fuzzy, c-format
-msgid "%s%s: lag is high, disconnecting from server..."
+msgid "%s%s: lag is high, reconnecting to server %s%s%s"
 msgstr "%s túl nagy a késés(lag), lecsatlakozás a szerverről...\n"
 
 #, fuzzy, c-format

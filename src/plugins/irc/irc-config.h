@@ -157,7 +157,7 @@ extern struct t_config_option *irc_config_network_colors_receive;
 extern struct t_config_option *irc_config_network_colors_send;
 extern struct t_config_option *irc_config_network_lag_check;
 extern struct t_config_option *irc_config_network_lag_min_show;
-extern struct t_config_option *irc_config_network_lag_disconnect;
+extern struct t_config_option *irc_config_network_lag_reconnect;
 extern struct t_config_option *irc_config_network_lag_refresh_interval;
 extern struct t_config_option *irc_config_network_notify_check_ison;
 extern struct t_config_option *irc_config_network_notify_check_whois;

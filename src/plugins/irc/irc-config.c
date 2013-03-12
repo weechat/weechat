@@ -126,7 +126,7 @@ struct t_config_option *irc_config_network_colors_receive;
 struct t_config_option *irc_config_network_colors_send;
 struct t_config_option *irc_config_network_lag_check;
 struct t_config_option *irc_config_network_lag_min_show;
-struct t_config_option *irc_config_network_lag_disconnect;
+struct t_config_option *irc_config_network_lag_reconnect;
 struct t_config_option *irc_config_network_lag_refresh_interval;
 struct t_config_option *irc_config_network_notify_check_ison;
 struct t_config_option *irc_config_network_notify_check_whois;
@@ -2552,12 +2552,12 @@ irc_config_init ()
         N_("minimum lag to show (in milliseconds)"),
         NULL, 0, 1000 * 3600 * 24, "500", NULL, 0, NULL, NULL,
         &irc_config_change_network_lag_min_show, NULL, NULL, NULL);
-    irc_config_network_lag_disconnect = weechat_config_new_option (
+    irc_config_network_lag_reconnect = weechat_config_new_option (
         irc_config_file, ptr_section,
-        "lag_disconnect", "integer",
-        N_("disconnect after important lag (in minutes, 0 = never "
-           "disconnect)"),
-        NULL, 0, 60 * 24 * 7, "0", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        "lag_reconnect", "integer",
+        N_("reconnect to server if lag is greater than this value (in seconds, "
+           "0 = never reconnect)"),
+        NULL, 0, 3600 * 24 * 7, "0", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_network_lag_refresh_interval = weechat_config_new_option (
         irc_config_file, ptr_section,
         "lag_refresh_interval", "integer",

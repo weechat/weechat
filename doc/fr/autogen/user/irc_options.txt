@@ -353,15 +353,15 @@
 ** type: entier
 ** valeurs: 0 .. 604800 (valeur par défaut: `60`)
 
-* [[option_irc.network.lag_disconnect]] *irc.network.lag_disconnect*
-** description: `déconnexion après un lag important (en minutes, 0 = ne jamais se déconnecter)`
-** type: entier
-** valeurs: 0 .. 10080 (valeur par défaut: `0`)
-
 * [[option_irc.network.lag_min_show]] *irc.network.lag_min_show*
 ** description: `lag minimum à afficher (en millisecondes)`
 ** type: entier
 ** valeurs: 0 .. 86400000 (valeur par défaut: `500`)
+
+* [[option_irc.network.lag_reconnect]] *irc.network.lag_reconnect*
+** description: `se reconnecter au serveur si le lag est supérieur à cette valeur (en secondes, 0 = ne jamais se reconnecter)`
+** type: entier
+** valeurs: 0 .. 604800 (valeur par défaut: `0`)
 
 * [[option_irc.network.lag_refresh_interval]] *irc.network.lag_refresh_interval*
 ** description: `intervalle entre deux rafraichissements du lag, lorsque le lag augmente (en secondes)`

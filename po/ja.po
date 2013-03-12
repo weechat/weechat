@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-03-10 08:54+0100\n"
+"POT-Creation-Date: 2013-03-12 13:52+0100\n"
 "PO-Revision-Date: 2013-02-23 11:11+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -6441,7 +6441,10 @@ msgstr "遅延の確認間のインターバル (秒単位、0 = 確認しない
 msgid "minimum lag to show (in milliseconds)"
 msgstr "表示する最短の遅延 (ミリ秒単位)"
 
-msgid "disconnect after important lag (in minutes, 0 = never disconnect)"
+#, fuzzy
+msgid ""
+"reconnect to server if lag is greater than this value (in seconds, 0 = never "
+"reconnect)"
 msgstr "長い遅延の後は再接続 (分単位、0 = 再接続しない)"
 
 msgid ""
@@ -7119,8 +7122,8 @@ msgstr "%s%s: 接続タイムアウト (メッセージ 001 が受信されま�
 msgid "%s%s: sasl authentication timeout"
 msgstr "%s%s: sasl 認証タイムアウト"
 
-#, c-format
-msgid "%s%s: lag is high, disconnecting from server..."
+#, fuzzy, c-format
+msgid "%s%s: lag is high, reconnecting to server %s%s%s"
 msgstr "%s%s: ラグが長いです、サーバとの接続を切断中..."
 
 #, c-format
