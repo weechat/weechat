@@ -198,7 +198,34 @@ weechat_lua_exec (struct t_plugin_script *script, int ret_type,
         }
     }
 
-    if (lua_pcall (lua_current_interpreter, argc, 1, 0) != 0)
+    ret_value = NULL;
+
+    if (lua_pcall (lua_current_interpreter, argc, 1, 0) == 0)
+    {
+        if (ret_type == WEECHAT_SCRIPT_EXEC_STRING)
+        {
+            ret_value = strdup ((char *) lua_tostring (lua_current_interpreter, -1));
+        }
+        else if (ret_type == WEECHAT_SCRIPT_EXEC_INT)
+        {
+            ret_i = malloc (sizeof (*ret_i));
+            if (ret_i)
+                *ret_i = lua_tonumber (lua_current_interpreter, -1);
+            ret_value = ret_i;
+        }
+        else if (ret_type == WEECHAT_SCRIPT_EXEC_HASHTABLE)
+        {
+            ret_value = weechat_lua_tohashtable (lua_current_interpreter, -1,
+                                                 WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                 WEECHAT_HASHTABLE_STRING,
+                                                 WEECHAT_HASHTABLE_STRING);
+        }
+        else
+        {
+            WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, function);
+        }
+    }
+    else
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: unable to run function \"%s\""),
@@ -207,34 +234,9 @@ weechat_lua_exec (struct t_plugin_script *script, int ret_type,
                         weechat_gettext ("%s%s: error: %s"),
                         weechat_prefix ("error"), LUA_PLUGIN_NAME,
                         lua_tostring (lua_current_interpreter, -1));
-        lua_current_script = old_lua_current_script;
-        lua_current_interpreter = old_lua_current_interpreter;
-        return NULL;
     }
 
-    if (ret_type == WEECHAT_SCRIPT_EXEC_STRING)
-        ret_value = strdup ((char *) lua_tostring (lua_current_interpreter, -1));
-    else if (ret_type == WEECHAT_SCRIPT_EXEC_INT)
-    {
-        ret_i = malloc (sizeof (*ret_i));
-        if (ret_i)
-            *ret_i = lua_tonumber (lua_current_interpreter, -1);
-        ret_value = ret_i;
-    }
-    else if (ret_type == WEECHAT_SCRIPT_EXEC_HASHTABLE)
-    {
-        ret_value = weechat_lua_tohashtable (lua_current_interpreter, -1,
-                                             WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
-                                             WEECHAT_HASHTABLE_STRING,
-                                             WEECHAT_HASHTABLE_STRING);
-    }
-    else
-    {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGS(LUA_CURRENT_SCRIPT_NAME, function);
-        lua_current_script = old_lua_current_script;
-        lua_current_interpreter = old_lua_current_interpreter;
-        return NULL;
-    }
+    lua_pop (lua_current_interpreter, 1);
 
     lua_current_script = old_lua_current_script;
     lua_current_interpreter = old_lua_current_interpreter;

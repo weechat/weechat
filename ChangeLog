@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.1-dev, 2013-03-12
+v0.4.1-dev, 2013-03-13
 
 
 This document lists all changes for each version.
@@ -54,6 +54,8 @@ Version 0.4.1 (under dev!)
   the first server in the list)
 * irc: add color in output of /names when result is on server buffer (channel
   not joined) (bug #38070)
+* lua: fix crash on stack overflow: call lua_pop() for values returned by lua
+  functions (bug #38510)
 * perl: simplify code to load scripts
 * relay: add message "_nicklist_diff" (differences between old and current
   nicklist)
