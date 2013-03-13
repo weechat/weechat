@@ -1273,7 +1273,7 @@ Example:
 length '1'  'a'  '2'  'b'  '3'  'c'  '4'  'd'  '5'
 .......................................
 
-A 'NULL' pointer has a length of zero:
+A 'NULL' pointer has a length of 1 with value 0:
 
 .......................................
 ┌────╥────┐
