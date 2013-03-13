@@ -1049,7 +1049,7 @@ relay_weechat_msg_send (struct t_relay_client *client,
 
     /* send uncompressed data */
     snprintf (raw_message, sizeof (raw_message),
-              "obj: %d bytes", msg->data_size);
+              "obj: %d bytes, id: %s", msg->data_size, msg->id);
     relay_client_send (client, msg->data, msg->data_size, raw_message);
 }
 
