@@ -1035,9 +1035,17 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(test)
         relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_INT);
         relay_weechat_msg_add_int (msg, 123456);
 
+        /* integer (negative) */
+        relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_INT);
+        relay_weechat_msg_add_int (msg, -123456);
+
         /* long */
         relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_LONG);
         relay_weechat_msg_add_long (msg, 1234567890L);
+
+        /* long (negative) */
+        relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_LONG);
+        relay_weechat_msg_add_long (msg, -1234567890L);
 
         /* string */
         relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_STRING);

@@ -418,7 +418,9 @@ Returned objects (in this order):
 | Type              | Type (in message) | Value
 | char              | chr               | 65 ("A")
 | integer           | int               | 123456
+| integer           | int               | -123456
 | long              | lon               | 1234567890
+| long              | lon               | -1234567890
 | string            | str               | "a string"
 | string            | str               | ""
 | string            | str               | NULL
