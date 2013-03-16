@@ -7022,6 +7022,11 @@ scaricare il contenuto dell'URL (_novità nella versione 0.3.7_). Le opzioni per
 un URL sono disponibili con la funzione
 <<_weechat_hook_process_hashtable,weechat_hook_process_hashtable>>.
 
+// TRANSLATION MISSING
+[TIP]
+If you want to retrieve infos about WeeChat (like current stable version,
+latest git commit, ...), you can use URLs on page http://weechat.org/info
+
 [NOTE]
 La dimensione del buffer per l'invio dei dati alla callback è di 64KB (ci sono
 2 buffer: uno per stdout ed uno per stderr).

@@ -728,22 +728,27 @@ einen URL Transfer, kommt die Funktion `hook_process_hashtable` zum Einsatz.
 Beispiel eines URL Transfers, ohne zusätzliche Optionen: Die HTML Seite wird
 dabei in der Callback-Variable "out" gesichert (Standardausgabe des Prozesses):
 
+// TRANSLATION MISSING
 [source,python]
 ----------------------------------------
-# Zeigt die Versionen der Linux-Kerne.
-kernel_txt = ""
+# Display current stable version of WeeChat.
+weechat_version = ""
 
-def kernel_process_cb(data, command, rc, out, err):
-    global kernel_txt
+def weechat_process_cb(data, command, rc, out, err):
+    global weechat_version
     if out != "":
-        kernel_txt += out
+        weechat_version += out
     if int(rc) >= 0:
-        weechat.prnt("", kernel_txt)
+        weechat.prnt("", "Current WeeChat stable is: %s" % weechat_version)
     return weechat.WEECHAT_RC_OK
 
-weechat.hook_process("url:http://www.kernel.org/kdist/finger_banner",
-                     30 * 1000, "kernel_process_cb", "")
+weechat.hook_process("url:http://weechat.org/info/stable/",
+                     30 * 1000, "weechat_process_cb", "")
 ----------------------------------------
+
+// TRANSLATION MISSING
+[TIP]
+All infos available about WeeChat are on page http://weechat.org/info
 
 Beispiel eines URL Transfers, mit zusätzliche Optionen: Es wird das neuste
 WeeChat Entwicklerpaket in die Datei '/tmp/weechat-devel.tar.gz' gesichert:

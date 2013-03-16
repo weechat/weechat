@@ -6987,6 +6987,10 @@ The command can be an URL with format: "url:http://www.example.com", to download
 content of URL (_new in version 0.3.7_). Options are possible for URL with
 function <<_weechat_hook_process_hashtable,weechat_hook_process_hashtable>>.
 
+[TIP]
+If you want to retrieve infos about WeeChat (like current stable version,
+latest git commit, ...), you can use URLs on page http://weechat.org/info
+
 [NOTE]
 Buffer size for sending data to callback is 64KB (there are 2 buffers: one for
 stdout and one for stderr).

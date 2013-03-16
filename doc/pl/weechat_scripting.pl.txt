@@ -715,22 +715,27 @@ Aby pobrać URL (albo wysłać do URL), należy użyć funkcji `hook_process`, l
 Przykład transferu URL bez opcji: strona HTML jest otrzymywana jako "out"
 (standardowe wyjście procesu):
 
+// TRANSLATION MISSING
 [source,python]
 ----------------------------------------
-# Wyświetla wersje Linuksowych kerneli.
-kernel_txt = ""
+# Display current stable version of WeeChat.
+weechat_version = ""
 
-def kernel_process_cb(data, command, rc, out, err):
-    global kernel_txt
+def weechat_process_cb(data, command, rc, out, err):
+    global weechat_version
     if out != "":
-        kernel_txt += out
+        weechat_version += out
     if int(rc) >= 0:
-        weechat.prnt("", kernel_txt)
+        weechat.prnt("", "Current WeeChat stable is: %s" % weechat_version)
     return weechat.WEECHAT_RC_OK
 
-weechat.hook_process("url:http://www.kernel.org/kdist/finger_banner",
-                     30 * 1000, "kernel_process_cb", "")
+weechat.hook_process("url:http://weechat.org/info/stable/",
+                     30 * 1000, "weechat_process_cb", "")
 ----------------------------------------
+
+// TRANSLATION MISSING
+[TIP]
+All infos available about WeeChat are on page http://weechat.org/info
 
 Przykładowy transfer URL z opcją: pobranie najnowszej wersji rozwojowej WeeChat
 do pliku '/tmp/weechat-devel.tar.gz':

@@ -7088,6 +7088,11 @@ pour télécharger le contenu de l'URL (_nouveau dans la version 0.3.7_).
 Des options pour l'URL sont possibles avec la fonction
 <<_weechat_hook_process_hashtable,weechat_hook_process_hashtable>>.
 
+[TIP]
+Si vous souhaitez récupérer des infos à propos de WeeChat (comme la version
+stable actuelle, le dernier commit git, etc...), vous pouvez utiliser les URLs
+sur la page http://weechat.org/info
+
 [NOTE]
 La taille du tampon pour l'envoi des données au "callback" est de 64 Ko (il y a
 2 tampons : un pour stdout et un pour stderr).
