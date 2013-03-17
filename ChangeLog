@@ -62,7 +62,7 @@ Version 0.4.1 (under dev!)
   nicklist)
 * relay: add support of multiple servers on same port for irc protocol (the
   client must send the server in the "PASS" command)
-* relay: add websocket server support (RFC 6455) for irc and weechat protocols,
+* relay: add WebSocket server support (RFC 6455) for irc and weechat protocols,
   new option relay.network.websocket_allowed_origins
 * relay: add options "buffers" and "upgrade" for commands sync/desync in weechat
   protocol
@@ -264,7 +264,7 @@ Version 0.3.9 (2012-09-29)
 * core: add options weechat.look.color_nick_offline and
   weechat.color.chat_nick_offline{_highlight|_highlight_bg} to use different
   color for offline nicks in prefix (task #11109)
-* core: reallow names beginning with "#" for bars, proxies and filters
+* core: allow again names beginning with "#" for bars, proxies and filters
 * core: escape special chars (`#[\`) in configuration files for name of options
   (bug #36584)
 * doc: add Japanese user's guide (patch #7827), scripting guide and tester's
@@ -308,7 +308,7 @@ Version 0.3.9 (2012-09-29)
   (task #12150)
 * irc: fix freeze when reading on socket with SSL enabled (use non-blocking
   sockets) (bug #35097)
-* irc: reallow names beginning with "#" for servers
+* irc: allow again names beginning with "#" for servers
 * logger: add tags in backlog lines displayed when opening buffer
 * logger: add messages "Day changed to" in backlog (task #12187)
 * lua: support of lua 5.2
@@ -546,7 +546,7 @@ Version 0.3.6 (2011-10-22)
 * core: fix paste detection (problem with end of lines)
 * core: add new option weechat.look.color_basic_force_bold, off by default: bold
   is used only if terminal has less than 16 colors (patch #7621)
-* core: add default key "meta2-[E" (F5) for linux console
+* core: add default key "meta2-[E" (F5) for Linux console
 * core: fix display of paste multi-line prompt with a root input bar
   (bug #34305)
 * core: add "inactive" colors for inactive windows and lines in merged buffers,
@@ -876,7 +876,7 @@ Version 0.3.3 (2010-08-07)
 * irc: fix bug in parser when no argument is received after command, no
   callback was called, and message was silently ignored (bug #30640)
 * irc: add new option irc.look.nick_color_stop_chars
-* irc: fix import of certificates created by openssl >= 1.0.0 (bug #30316)
+* irc: fix import of certificates created by OpenSSL >= 1.0.0 (bug #30316)
 * irc: fix display of local SSL certificate when it is sent to server
   (patch #7218)
 * irc: improve lag indicator: two colors (counting and finished), update item
@@ -1080,7 +1080,7 @@ Version 0.3.0 (2009-09-06)
   disconnecting during connection problem (bug #17584)
 * irc: command /whois is now authorized in private without argument
   (task #7482)
-* irc: fix private buffer name with irssi proxy (bug #26589)
+* irc: fix private buffer name with Irssi proxy (bug #26589)
 * irc: remove kernel info in CTCP VERSION reply (task #7494)
 * irc: add missing commands (328, 369)
 * irc: fix mode parsing when receiving modes with arguments (bug #26793)
@@ -1182,7 +1182,7 @@ Version 0.2.6 (2007-09-06)
 * add paste detection, new options look_paste_max_lines and col_input_actions
   (task #5442)
 * fix bug with highlight and UTF-8 chars around word (bug #20753)
-* add swedish quickstart guide
+* add Swedish quickstart guide
 * add support of channel mode +u (channel user) (bug #20717)
 * improve /connect command to connect to a host by creating a temporary server,
   add option to /server to create temporary server (task #7095)
@@ -1284,7 +1284,7 @@ Version 0.2.4 (2007-03-29)
   text on command line (task #6468)
 * fix permissions on "dcc" and "logs" directories (bug #18978)
 * add event handler to plugin API
-* add scots quickstart guide
+* add Scots quickstart guide
 * add numeric argument for /clear command (buffer number) (patch #5372)
 * fix crash when /away command is issued with no server connection (bug #18839)
 * fix crash when closing a buffer opened on many windows
@@ -1416,7 +1416,7 @@ Version 0.2.0 (2006-08-19)
 * fix crash when setting look_one_server_buffer to ON (bug #16932)
 * add new functions in plugin/script API: get window info, get buffer info, get
   buffer content
-* add polish, russian and czech quickstart guide
+* add polish, Russian and Czech quickstart guide
 * fix display bug with special char (bug #16732)
 * add color encoding for some commands like /me
 * add aspell plugin
@@ -1449,8 +1449,8 @@ Version 0.1.9 (2006-05-25)
 * fix display bug with DCC file size when > 1 GB
 * fix refresh bug (deadlock in curses) when terminal is resized (bug #16542)
 * fix nicklist sort bug
-* add russian translations (thanks to Pavel Shevchuk)
-* add german doc (thanks to Frank Zacharias)
+* add Russian translations (thanks to Pavel Shevchuk)
+* add German doc (thanks to Frank Zacharias)
 * add missing IRC commands (006, 007, 290, 292, 310, 379, 437, 974)
 * fix crash when multiple pv have same name: now it's forbidden and pv buffer
   is not renamed (when a nick changes) if another exists with same name
@@ -1525,14 +1525,14 @@ Version 0.1.8 (2006-03-18)
 * fix bug with buffer detection in plugins/scripts commands
 * fix bug with /history command
 * add option "irc_show_away_once", to show away message only once in pv
-* add partial hungarian translation
+* add partial Hungarian translation
 
 Version 0.1.7 (2006-01-14)
 --------------------------
 
 * fix msg command (now allowed in private buffer with "*" as target)
 * remove "irc_default_msg_away" setting, for RFC 2812 conformity (/away command
-  wihtout argument only removes away status), new values for "irc_display_away"
+  without argument only removes away status), new values for "irc_display_away"
   (off, local, channel)
 * fix refresh bug with Solaris when term size is changed
 * replace Texinfo doc by XML Docbook
@@ -1596,7 +1596,7 @@ Version 0.1.5 (2005-09-24)
 * fix DCC display bug (now decodes string according to charset)
 * add /ignore and /unignore commands
 * fix bug with strings comparison (str[n]casecmp) and some locales (like
-  turkish), now using ASCII comparison (thanks to roktas)
+  Turkish), now using ASCII comparison (thanks to roktas)
 * signal SIGQUIT is now ignored
 * fix refresh bug when one line is bigger than screen size
 * fix look_nicklist_min_size and look_nicklist_max_size options
@@ -1681,7 +1681,7 @@ Version 0.1.1 (2005-03-20)
 * add DCC send and DCC chat
 * add /halfop & /dehalfop commands, fix halfop display bug in nicklist
 * add /ban, /unban and /kickban commands
-* add spanish translation
+* add Spanish translation
 * add --irc-commands and --weechat-commands command line options
 * connection to IRC server is now made by child process (non blocking)
 * add support for UnrealIrcd ("~" for chan owner, "&" for chan admin)
@@ -1815,7 +1815,7 @@ Version 0.0.4 (2004-01-01)
   switch to this window
 * highlight when our nick is written in a channel/private window
 * catch ctrl+"c" (ignored)
-* debug messages can be enabled via ./configure --enbale-debug option
+* debug messages can be enabled via ./configure --enable-debug option
 
 Version 0.0.3 (2003-11-03)
 --------------------------
