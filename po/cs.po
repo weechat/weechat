@@ -20,11 +20,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-03-12 13:52+0100\n"
-"PO-Revision-Date: 2013-02-23 11:11+0100\n"
+"POT-Creation-Date: 2013-03-16 16:35+0100\n"
+"PO-Revision-Date: 2013-03-16 17:49+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
-"Language: Czech\n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -182,7 +182,8 @@ msgstr "Všechny pole byly smazány"
 msgid "%sError: unknown bar \"%s\""
 msgstr "%sChyba: neznámé pole \"%s\""
 
-msgid "Bar deleted"
+#, fuzzy, c-format
+msgid "Bar \"%s\" deleted"
 msgstr "Pole bylo smazáno"
 
 #, c-format
@@ -461,41 +462,53 @@ msgstr[0] "přidána %d nová klávesa"
 msgstr[1] "přidány %d nové klávesy"
 msgstr[2] "přidáno %d nových kláves"
 
-#, c-format
-msgid "leaf: id: %d, parent: %d, plugin: \"%s\", buffer: \"%s\""
-msgstr "list: id: %d, rodič: %d, plugin: \"%s\", buffer: \"%s\""
-
-#, c-format
-msgid "node: id: %d, parent: %d, child1: %d, child2: %d, size: %d%% (%s)"
-msgstr ""
-"uzel: id: %d, rodič: %d, potomek1: %d, potomek2: %d, velikost: %d%% (%s)"
-
-msgid "horizontal split"
-msgstr "horizontální rozdělení"
-
-msgid "vertical split"
-msgstr "vertikální rozdělení"
-
-msgid "Saved layout for buffers:"
+#, fuzzy
+msgid "Saved layouts:"
 msgstr "Uložené rozložení bufferů:"
 
-msgid "Saved layout for windows:"
-msgstr "Uložené rozložení oken:"
+#, fuzzy
+msgid " (current layout)"
+msgstr "aktuální hodnota"
 
 msgid "No layout saved"
 msgstr "Nebylo uloženo žádné rozložení"
 
-msgid "Layout saved for buffers (order of buffers)"
-msgstr "Rozložení bufferů uloženo (pořadí bufferů)"
+#. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows"
+#, c-format
+msgid "Layout of %s%s%s saved in \"%s\" (current layout: %s)"
+msgstr ""
 
-msgid "Layout saved for windows (buffer displayed by each window)"
-msgstr "Rozložení oken uloženo (buffer zobrazený v každém okně)"
+#, fuzzy
+msgid "buffers"
+msgstr "řídit buffery"
 
-msgid "Layout reset for buffers"
-msgstr "Rozložení bufferů resetováno"
+#, fuzzy
+msgid "windows"
+msgstr "spravuje okna"
 
-msgid "Layout reset for windows"
-msgstr "Rozložení oken resetováno"
+msgid "Layout of buffers+windows reset (current layout: -)"
+msgstr ""
+
+#, c-format
+msgid "Layout \"%s\" deleted (current layout: %s)"
+msgstr ""
+
+#. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows"
+#, fuzzy, c-format
+msgid "Layout of %s%s%s reset in \"%s\""
+msgstr "%sTéma pro %s%s%s nastaveno %s"
+
+#, fuzzy, c-format
+msgid "%sError: unknown layout \"%s\""
+msgstr "%sChyba: neznámé pole \"%s\""
+
+#, fuzzy, c-format
+msgid "%sError: layout \"%s\" already exists for \"%s\" command"
+msgstr "%s%s: server \"%s\" pro příkaz \"%s\" již existuje"
+
+#, fuzzy, c-format
+msgid "Layout \"%s\" has been renamed to \"%s\""
+msgstr "Filtr \"%s\" přejmenován na \"%s\""
 
 #, fuzzy
 msgid "Mouse enabled"
@@ -1635,19 +1648,26 @@ msgstr ""
 msgid "save/apply/reset layout for buffers and windows"
 msgstr "uložit/použít/resetovat rozložení bufferů a oken"
 
+#, fuzzy
 msgid ""
-"save [buffers|windows] || apply [buffers|windows] || reset [buffers|windows]"
+"save [<name>] [buffers|windows] || apply [<name>] [buffers|windows] || leave "
+"|| reset [<name>] [buffers|windows] || rename <name> <new_name>"
 msgstr ""
 "save [buffers|windows] || apply [buffers|windows] || reset [buffers|windows]"
 
+#, fuzzy
 msgid ""
 "   save: save current layout\n"
 "  apply: apply saved layout\n"
-"  reset: remove saved layout\n"
+"  leave: leave current layout (does not update any layout)\n"
+"  reset: reset buffers and/or windows in a saved layout\n"
+"         (if both buffers and windows are reset, the layout is removed)\n"
+" rename: rename a layout\n"
+"   name: name for saved layout (default is \"default\")\n"
 "buffers: save/apply only buffers (order of buffers)\n"
 "windows: save/apply only windows (buffer displayed by each window)\n"
 "\n"
-"Without argument, this command displays saved layout."
+"Without argument, this command displays saved layouts."
 msgstr ""
 "   save: uložit aktuální rozložení\n"
 "  apply: aplikovat uložené rozložení\n"
@@ -2299,6 +2319,10 @@ msgstr ""
 
 msgid "areas (\"chat\" or bar name) for free cursor movement"
 msgstr ""
+
+#, fuzzy
+msgid "names of layouts"
+msgstr "jména polí"
 
 msgid ""
 "Warning: you should now issue /save to write \"save_config_on_exit\" option "
@@ -9374,7 +9398,3 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
-
-#, fuzzy
-#~ msgid "%s: script \"%s\" is now autoloaded"
-#~ msgstr "%s%s: skript \"%s\" nenačten"

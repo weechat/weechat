@@ -431,9 +431,8 @@ gui_main_end (int clean_exit)
         if (gui_input_clipboard)
             free (gui_input_clipboard);
 
-        /* delete layout saved */
-        gui_layout_window_remove_all (&gui_layout_windows);
-        gui_layout_buffer_remove_all (&gui_layout_buffers, &last_gui_layout_buffer);
+        /* delete layouts */
+        gui_layout_remove_all ();
 
         /* delete all windows */
         while (gui_windows)

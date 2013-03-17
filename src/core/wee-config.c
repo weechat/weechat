@@ -817,9 +817,10 @@ config_weechat_reload_cb (void *data, struct t_config_file *config_file)
     /* remove all bars */
     gui_bar_free_all ();
 
-    /* remove layout */
-    gui_layout_buffer_reset (&gui_layout_buffers, &last_gui_layout_buffer);
-    gui_layout_window_reset (&gui_layout_windows);
+    /* remove layouts and reset layout stuff in buffers/windows */
+    gui_layout_remove_all ();
+    gui_layout_buffer_reset ();
+    gui_layout_window_reset ();
 
     /* remove all notify levels */
     config_file_section_free_options (weechat_config_section_notify);
@@ -1266,9 +1267,11 @@ config_weechat_layout_read_cb (void *data, struct t_config_file *config_file,
                                struct t_config_section *section,
                                const char *option_name, const char *value)
 {
-    int argc;
-    char **argv, *error1, *error2, *error3, *error4;
+    int argc, force_current_layout;
+    char **argv, *pos, *layout_name, *error1, *error2, *error3, *error4;
+    const char *ptr_option_name;
     long number1, number2, number3, number4;
+    struct t_gui_layout *ptr_layout;
     struct t_gui_layout_window *parent;
 
     /* make C compiler happy */
@@ -1276,75 +1279,121 @@ config_weechat_layout_read_cb (void *data, struct t_config_file *config_file,
     (void) config_file;
     (void) section;
 
-    if (option_name && value && value[0])
+    if (!option_name || !value || !value[0])
+        return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+
+    force_current_layout = 0;
+
+    pos = strrchr (option_name, '.');
+    if (pos)
     {
-        if (string_strcasecmp (option_name, "buffer") == 0)
+        layout_name = string_strndup (option_name, pos - option_name);
+        ptr_option_name = pos + 1;
+    }
+    else
+    {
+        /*
+         * old config file (WeeChat <= 0.4.0): no "." in name, use default
+         * layout name
+         */
+        layout_name = strdup (GUI_LAYOUT_DEFAULT_NAME);
+        ptr_option_name = option_name;
+        force_current_layout = 1;
+    }
+
+    if (!layout_name)
+        return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+
+    ptr_layout = gui_layout_search (layout_name);
+    if (!ptr_layout)
+    {
+        ptr_layout = gui_layout_alloc (layout_name);
+        if (!ptr_layout)
         {
-            argv = string_split (value, ";", 0, 0, &argc);
-            if (argv)
-            {
-                if (argc >= 3)
-                {
-                    error1 = NULL;
-                    number1 = strtol (argv[2], &error1, 10);
-                    if (error1 && !error1[0])
-                    {
-                        gui_layout_buffer_add (&gui_layout_buffers,
-                                               &last_gui_layout_buffer,
-                                               argv[0], argv[1], number1);
-                    }
-                }
-                string_free_split (argv);
-            }
+            free (layout_name);
+            return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
         }
-        else if (string_strcasecmp (option_name, "window") == 0)
+        gui_layout_add (ptr_layout);
+    }
+
+    if (string_strcasecmp (ptr_option_name, "buffer") == 0)
+    {
+        argv = string_split (value, ";", 0, 0, &argc);
+        if (argv)
         {
-            argv = string_split (value, ";", 0, 0, &argc);
-            if (argv)
+            if (argc >= 3)
             {
-                if (argc >= 6)
-                {
-                    error1 = NULL;
-                    number1 = strtol (argv[0], &error1, 10);
-                    error2 = NULL;
-                    number2 = strtol (argv[1], &error2, 10);
-                    error3 = NULL;
-                    number3 = strtol (argv[2], &error3, 10);
-                    error4 = NULL;
-                    number4 = strtol (argv[3], &error4, 10);
-                    if (error1 && !error1[0] && error2 && !error2[0]
-                        && error3 && !error3[0] && error4 && !error4[0])
-                    {
-                        parent = gui_layout_window_search_by_id (gui_layout_windows,
-                                                                 number2);
-                        gui_layout_window_add (&gui_layout_windows,
-                                               number1,
-                                               parent,
-                                               number3,
-                                               number4,
-                                               (strcmp (argv[4], "-") != 0) ?
-                                               argv[4] : NULL,
-                                               (strcmp (argv[4], "-") != 0) ?
-                                               argv[5] : NULL);
-                    }
-                }
-                string_free_split (argv);
+                error1 = NULL;
+                number1 = strtol (argv[2], &error1, 10);
+                if (error1 && !error1[0])
+                    gui_layout_buffer_add (ptr_layout, argv[0], argv[1], number1);
             }
+            string_free_split (argv);
         }
     }
+    else if (string_strcasecmp (ptr_option_name, "window") == 0)
+    {
+        argv = string_split (value, ";", 0, 0, &argc);
+        if (argv)
+        {
+            if (argc >= 6)
+            {
+                error1 = NULL;
+                number1 = strtol (argv[0], &error1, 10);
+                error2 = NULL;
+                number2 = strtol (argv[1], &error2, 10);
+                error3 = NULL;
+                number3 = strtol (argv[2], &error3, 10);
+                error4 = NULL;
+                number4 = strtol (argv[3], &error4, 10);
+                if (error1 && !error1[0] && error2 && !error2[0]
+                    && error3 && !error3[0] && error4 && !error4[0])
+                {
+                    parent = gui_layout_window_search_by_id (ptr_layout->layout_windows,
+                                                             number2);
+                    gui_layout_window_add (&ptr_layout->layout_windows,
+                                           number1,
+                                           parent,
+                                           number3,
+                                           number4,
+                                           (strcmp (argv[4], "-") != 0) ?
+                                           argv[4] : NULL,
+                                           (strcmp (argv[4], "-") != 0) ?
+                                           argv[5] : NULL);
+                }
+            }
+            string_free_split (argv);
+        }
+    }
+    else if (string_strcasecmp (ptr_option_name, "current") == 0)
+    {
+        if (config_file_string_to_boolean (value))
+            gui_layout_current = ptr_layout;
+    }
+
+    if (force_current_layout)
+        gui_layout_current = ptr_layout;
+
+    free (layout_name);
 
     return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
 }
 
 /*
  * Writes layout of windows in WeeChat configuration file.
+ *
+ * Returns:
+ *   1: OK
+ *   0: write error
  */
 
 int
 config_weechat_layout_write_tree (struct t_config_file *config_file,
+                                  const char *option_name,
                                   struct t_gui_layout_window *layout_window)
 {
-    if (!config_file_write_line (config_file, "window", "\"%d;%d;%d;%d;%s;%s\"",
+    if (!config_file_write_line (config_file, option_name,
+                                 "\"%d;%d;%d;%d;%s;%s\"",
                                  layout_window->internal_id,
                                  (layout_window->parent_node) ?
                                  layout_window->parent_node->internal_id : 0,
@@ -1354,23 +1403,23 @@ config_weechat_layout_write_tree (struct t_config_file *config_file,
                                  layout_window->plugin_name : "-",
                                  (layout_window->buffer_name) ?
                                  layout_window->buffer_name : "-"))
-        return WEECHAT_CONFIG_WRITE_ERROR;
+        return 0;
 
     if (layout_window->child1)
     {
-        if (config_weechat_layout_write_tree (config_file,
-                                              layout_window->child1) != WEECHAT_CONFIG_WRITE_OK)
-            return WEECHAT_CONFIG_WRITE_ERROR;
+        if (!config_weechat_layout_write_tree (config_file, option_name,
+                                               layout_window->child1))
+            return 0;
     }
 
     if (layout_window->child2)
     {
-        if (config_weechat_layout_write_tree (config_file,
-                                              layout_window->child2) != WEECHAT_CONFIG_WRITE_OK)
-            return WEECHAT_CONFIG_WRITE_ERROR;
+        if (!config_weechat_layout_write_tree (config_file, option_name,
+                                               layout_window->child2))
+            return 0;
     }
 
-    return WEECHAT_CONFIG_WRITE_OK;
+    return 1;
 }
 
 /*
@@ -1381,7 +1430,9 @@ int
 config_weechat_layout_write_cb (void *data, struct t_config_file *config_file,
                                 const char *section_name)
 {
+    struct t_gui_layout *ptr_layout;
     struct t_gui_layout_buffer *ptr_layout_buffer;
+    char option_name[1024];
 
     /* make C compiler happy */
     (void) data;
@@ -1389,21 +1440,41 @@ config_weechat_layout_write_cb (void *data, struct t_config_file *config_file,
     if (!config_file_write_line (config_file, section_name, NULL))
         return WEECHAT_CONFIG_WRITE_ERROR;
 
-    for (ptr_layout_buffer = gui_layout_buffers; ptr_layout_buffer;
-         ptr_layout_buffer = ptr_layout_buffer->next_layout)
+    for (ptr_layout = gui_layouts; ptr_layout;
+         ptr_layout = ptr_layout->next_layout)
     {
-        if (!config_file_write_line (config_file, "buffer", "\"%s;%s;%d\"",
-                                     ptr_layout_buffer->plugin_name,
-                                     ptr_layout_buffer->buffer_name,
-                                     ptr_layout_buffer->number))
-            return WEECHAT_CONFIG_WRITE_ERROR;
-    }
+        /* write layout for buffers */
+        for (ptr_layout_buffer = ptr_layout->layout_buffers; ptr_layout_buffer;
+             ptr_layout_buffer = ptr_layout_buffer->next_layout)
+        {
+            snprintf (option_name, sizeof (option_name),
+                      "%s.buffer", ptr_layout->name);
+            if (!config_file_write_line (config_file, option_name,
+                                         "\"%s;%s;%d\"",
+                                         ptr_layout_buffer->plugin_name,
+                                         ptr_layout_buffer->buffer_name,
+                                         ptr_layout_buffer->number))
+                return WEECHAT_CONFIG_WRITE_ERROR;
+        }
 
-    if (gui_layout_windows)
-    {
-        if (config_weechat_layout_write_tree (config_file,
-                                              gui_layout_windows) != WEECHAT_CONFIG_WRITE_OK)
-            return WEECHAT_CONFIG_WRITE_ERROR;
+        /* write layout for windows */
+        if (ptr_layout->layout_windows)
+        {
+            snprintf (option_name, sizeof (option_name),
+                      "%s.window", ptr_layout->name);
+            if (!config_weechat_layout_write_tree (config_file, option_name,
+                                                   ptr_layout->layout_windows))
+                return WEECHAT_CONFIG_WRITE_ERROR;
+        }
+
+        /* write "current = on" if it is current layout */
+        if (ptr_layout == gui_layout_current)
+        {
+            snprintf (option_name, sizeof (option_name),
+                      "%s.current", ptr_layout->name);
+            if (!config_file_write_line (config_file, option_name, "on"))
+                return WEECHAT_CONFIG_WRITE_ERROR;
+        }
     }
 
     return WEECHAT_CONFIG_WRITE_OK;

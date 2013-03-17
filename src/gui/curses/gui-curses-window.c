@@ -1580,6 +1580,7 @@ gui_window_refresh_windows ()
     struct t_gui_window *ptr_win, *old_current_window;
     struct t_gui_bar_window *ptr_bar_win;
     struct t_gui_bar *ptr_bar;
+    struct t_gui_layout *ptr_layout;
     int add_bottom, add_top, add_left, add_right;
 
     if (!gui_init_ok)
@@ -1608,11 +1609,11 @@ gui_window_refresh_windows ()
                                 gui_window_get_height () - add_top - add_bottom,
                                 0) < 0)
     {
-        if (gui_window_layout_before_zoom)
+        ptr_layout = gui_layout_search (GUI_LAYOUT_ZOOM);
+        if (ptr_layout)
         {
             /* remove zoom saved, to force a new zoom */
-            gui_layout_window_remove_all (&gui_window_layout_before_zoom);
-            gui_window_layout_id_current_window = -1;
+            gui_layout_remove (ptr_layout);
         }
         gui_window_zoom (gui_current_window);
     }

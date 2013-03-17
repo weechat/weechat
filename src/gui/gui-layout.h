@@ -20,6 +20,12 @@
 #ifndef __WEECHAT_GUI_LAYOUT_H
 #define __WEECHAT_GUI_LAYOUT_H 1
 
+#define GUI_LAYOUT_DEFAULT_NAME "default"
+
+/* layout reserved for internal use */
+#define GUI_LAYOUT_ZOOM    "_zoom"
+#define GUI_LAYOUT_UPGRADE "_upgrade"
+
 /* layout structures */
 
 struct t_gui_layout_buffer
@@ -48,53 +54,70 @@ struct t_gui_layout_window
     char *buffer_name;
 };
 
+struct t_gui_layout
+{
+    char *name;                        /* name of layout                    */
+    struct t_gui_layout_buffer *layout_buffers;     /* layout for buffers   */
+    struct t_gui_layout_buffer *last_layout_buffer; /* last buffer layout   */
+    struct t_gui_layout_window *layout_windows;     /* layout for windows   */
+    int internal_id;                   /* for unique id in each window      */
+    int internal_id_current_window;    /* id of current window              */
+    struct t_gui_layout *prev_layout;  /* pointer to previous layout        */
+    struct t_gui_layout *next_layout;  /* pointer to next layout            */
+};
+
 /* layout variables */
 
-extern struct t_gui_layout_buffer *gui_layout_buffers;
-extern struct t_gui_layout_buffer *last_gui_layout_buffer;
-extern struct t_gui_layout_window *gui_layout_windows;
+extern struct t_gui_layout *gui_layouts;
+extern struct t_gui_layout *last_gui_layout;
+extern struct t_gui_layout *gui_layout_current;
 
 /* layout functions */
 
-extern void gui_layout_buffer_remove_all (struct t_gui_layout_buffer **layout_buffers,
-                                          struct t_gui_layout_buffer **last_layout_buffer);
-extern void gui_layout_buffer_reset (struct t_gui_layout_buffer **layout_buffers,
-                                          struct t_gui_layout_buffer **last_layout_buffer);
-extern struct t_gui_layout_buffer *gui_layout_buffer_add (struct t_gui_layout_buffer **layout_buffers,
-                                                          struct t_gui_layout_buffer **last_layout_buffer,
+extern struct t_gui_layout *gui_layout_search (const char *name);
+extern struct t_gui_layout *gui_layout_alloc (const char *name);
+extern int gui_layout_add (struct t_gui_layout *layout);
+extern void gui_layout_rename (struct t_gui_layout *layout, const char *new_name);
+extern void gui_layout_buffer_remove_all (struct t_gui_layout *layout);
+extern void gui_layout_buffer_reset ();
+extern struct t_gui_layout_buffer *gui_layout_buffer_add (struct t_gui_layout *layout,
                                                           const char *plugin_name,
                                                           const char *buffer_name,
                                                           int number);
-extern void gui_layout_buffer_save (struct t_gui_layout_buffer **layout_buffers,
-                                    struct t_gui_layout_buffer **last_layout_buffer);
-extern void gui_layout_buffer_get_number (struct t_gui_layout_buffer *layout_buffers,
+extern void gui_layout_buffer_get_number (struct t_gui_layout *layout,
                                           const char *plugin_name,
                                           const char *buffer_name,
                                           int *layout_number,
                                           int *layout_number_merge_order);
-extern void gui_layout_buffer_get_number_all (struct t_gui_layout_buffer *layout_buffers);
-extern void gui_layout_buffer_apply (struct t_gui_layout_buffer *layout_buffers);
+extern void gui_layout_buffer_get_number_all (struct t_gui_layout *layout);
+extern void gui_layout_buffer_save (struct t_gui_layout *layout);
+extern void gui_layout_buffer_apply (struct t_gui_layout *layout);
 
-extern void gui_layout_window_remove_all (struct t_gui_layout_window **layout_windows);
-extern void gui_layout_window_reset (struct t_gui_layout_window **layout_windows);
-extern struct t_gui_layout_window *gui_layout_window_search_by_id (struct t_gui_layout_window *layout_windows,
+extern void gui_layout_window_remove_all (struct t_gui_layout *layout);
+extern void gui_layout_window_reset ();
+extern struct t_gui_layout_window *gui_layout_window_search_by_id (struct t_gui_layout_window *layout_window,
                                                                    int id);
-extern struct t_gui_layout_window *gui_layout_window_add (struct t_gui_layout_window **layout_windows,
+extern struct t_gui_layout_window *gui_layout_window_add (struct t_gui_layout_window **layout_window,
                                                           int internal_id,
                                                           struct t_gui_layout_window *parent,
                                                           int split_pct,
                                                           int split_horiz,
                                                           const char *plugin_name,
                                                           const char *buffer_name);
-extern int gui_layout_window_save (struct t_gui_layout_window **layout_windows);
-extern void gui_layout_window_apply (struct t_gui_layout_window *layout_windows,
+extern void gui_layout_window_save (struct t_gui_layout *layout);
+extern void gui_layout_window_assign_buffer (struct t_gui_buffer *buffer);
+extern void gui_layout_window_apply (struct t_gui_layout *layout,
                                      int internal_id_current_window);
-extern void gui_layout_window_check_buffer (struct t_gui_buffer *buffer);
 extern void gui_layout_save_on_exit ();
+extern void gui_layout_free (struct t_gui_layout *layout);
+extern void gui_layout_remove (struct t_gui_layout *layout);
+extern void gui_layout_remove_all ();
 extern int gui_layout_buffer_add_to_infolist (struct t_infolist *infolist,
                                               struct t_gui_layout_buffer *layout_buffer);
 extern int gui_layout_window_add_to_infolist (struct t_infolist *infolist,
                                               struct t_gui_layout_window *layout_window);
 extern void gui_layout_print_log ();
+extern void gui_layout_init ();
+extern void gui_layout_end ();
 
 #endif /* __WEECHAT_GUI_LAYOUT_H */

@@ -447,17 +447,23 @@ listdefault: デフォルトキーをリストアップ
 [[command_weechat_layout]]
 [command]*`layout`* バッファとウィンドウのレイアウトを保存/適用/リセット::
 ........................................
-/layout  save [buffers|windows]
-         apply [buffers|windows]
-         reset [buffers|windows]
+/layout  save [<name>] [buffers|windows]
+         apply [<name>] [buffers|windows]
+         leave
+         reset [<name>] [buffers|windows]
+         rename <name> <new_name>
 
-   save: 現在のレイアウトを保存
-  apply: 保存されたレイアウトを適用
-  reset: 保存されたレイアウトを削除
-buffers: バッファのみに対してレイアウトを保存/適用 (バッファの順番)
-windows: ウィンドウのみに対してレイアウトを保存/適用 (それぞれのウィンドウに表示されるバッファ)
+   save: save current layout
+  apply: apply saved layout
+  leave: leave current layout (does not update any layout)
+  reset: reset buffers and/or windows in a saved layout
+         (if both buffers and windows are reset, the layout is removed)
+ rename: rename a layout
+   name: name for saved layout (default is "default")
+buffers: save/apply only buffers (order of buffers)
+windows: save/apply only windows (buffer displayed by each window)
 
-引数無しでは、保存されたレイアウトを表示します。
+Without argument, this command displays saved layouts.
 ........................................
 
 [[command_weechat_mouse]]

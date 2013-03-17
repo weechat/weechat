@@ -106,6 +106,8 @@
 
 | weechat | keys_contexts | contextes de touches
 
+| weechat | layouts_names | noms des dispositions
+
 | weechat | nicks | pseudos dans la liste des pseudos du tampon courant
 
 | weechat | palette_colors | couleurs de la palette

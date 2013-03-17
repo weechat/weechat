@@ -460,7 +460,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         new_buffer->plugin_name_for_upgrade = NULL;
 
         /* number will be set later (when inserting buffer in list) */
-        gui_layout_buffer_get_number (gui_layout_buffers,
+        gui_layout_buffer_get_number (gui_layout_current,
                                       plugin_get_name (plugin),
                                       name,
                                       &(new_buffer->layout_number),
@@ -578,11 +578,8 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         /* set notify level */
         new_buffer->notify = gui_buffer_notify_get (new_buffer);
 
-        /*
-         * check if this buffer should be assigned to a window,
-         * according to windows layout saved
-         */
-        gui_layout_window_check_buffer (new_buffer);
+        /* assign this buffer to windows of layout */
+        gui_layout_window_assign_buffer (new_buffer);
 
         if (first_buffer_creation)
         {

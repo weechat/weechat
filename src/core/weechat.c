@@ -69,9 +69,9 @@
 #include "../gui/gui-chat.h"
 #include "../gui/gui-color.h"
 #include "../gui/gui-completion.h"
+#include "../gui/gui-key.h"
 #include "../gui/gui-layout.h"
 #include "../gui/gui-main.h"
-#include "../gui/gui-key.h"
 #include "../plugins/plugin.h"
 
 
@@ -507,7 +507,7 @@ main (int argc, char *argv[])
                  argc, argv);
     command_startup (1);                /* commands executed after plugins  */
     if (!weechat_upgrading)
-        gui_layout_window_apply (gui_layout_windows, -1); /* apply win layout */
+        gui_layout_window_apply (gui_layout_current, -1);
     if (weechat_upgrading)
         upgrade_weechat_end ();         /* remove .upgrade files + signal   */
 

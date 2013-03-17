@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-03-12 13:52+0100\n"
-"PO-Revision-Date: 2013-02-23 11:11+0100\n"
+"POT-Creation-Date: 2013-03-16 16:35+0100\n"
+"PO-Revision-Date: 2013-03-17 08:20+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
 "Language: ja\n"
@@ -184,7 +184,8 @@ msgstr "全てのバーを削除しました。"
 msgid "%sError: unknown bar \"%s\""
 msgstr "%sエラー: バー \"%s\" は未定義です。"
 
-msgid "Bar deleted"
+#, fuzzy, c-format
+msgid "Bar \"%s\" deleted"
 msgstr "バーを削除しました"
 
 #, c-format
@@ -464,41 +465,53 @@ msgid "%d new key added"
 msgid_plural "%d new keys added (context: \"%s\")"
 msgstr[0] "%d 個の新しいキーを追加しました (コンテキスト: \"%s\")"
 
-#, c-format
-msgid "leaf: id: %d, parent: %d, plugin: \"%s\", buffer: \"%s\""
-msgstr "葉ノード: id: %d、親: %d、プラグイン: \"%s\"、バッファ: \"%s\""
-
-#, c-format
-msgid "node: id: %d, parent: %d, child1: %d, child2: %d, size: %d%% (%s)"
-msgstr "ノード: id: %d, 親: %d, 子1: %d, 子2: %d, サイズ: %d%% (%s)"
-
-msgid "horizontal split"
-msgstr "水平分割"
-
-msgid "vertical split"
-msgstr "垂直分割"
-
-msgid "Saved layout for buffers:"
+#, fuzzy
+msgid "Saved layouts:"
 msgstr "保存されたバッファのレイアウト:"
 
-msgid "Saved layout for windows:"
-msgstr "保存されたウィンドウのレイアウト:"
+#, fuzzy
+msgid " (current layout)"
+msgstr "現在の値"
 
 msgid "No layout saved"
 msgstr "レイアウトが保存されていません"
 
-msgid "Layout saved for buffers (order of buffers)"
-msgstr "バッファのレイアウト (バッファの順番) を保存しました"
-
-msgid "Layout saved for windows (buffer displayed by each window)"
+#. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows"
+#, c-format
+msgid "Layout of %s%s%s saved in \"%s\" (current layout: %s)"
 msgstr ""
-"ウィンドウのレイアウト (ウィンドウに表示されているバッファ) を保存しました"
 
-msgid "Layout reset for buffers"
-msgstr "バッファのレイアウトをリセットしました"
+#, fuzzy
+msgid "buffers"
+msgstr "バッファ"
 
-msgid "Layout reset for windows"
-msgstr "ウィンドウのレイアウトをリセットしました"
+#, fuzzy
+msgid "windows"
+msgstr "ウィンドウ"
+
+msgid "Layout of buffers+windows reset (current layout: -)"
+msgstr ""
+
+#, c-format
+msgid "Layout \"%s\" deleted (current layout: %s)"
+msgstr ""
+
+#. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows"
+#, fuzzy, c-format
+msgid "Layout of %s%s%s reset in \"%s\""
+msgstr "%s%s%s%s のトピックは %s 設定されました"
+
+#, fuzzy, c-format
+msgid "%sError: unknown layout \"%s\""
+msgstr "%sエラー: バー \"%s\" は未定義です。"
+
+#, fuzzy, c-format
+msgid "%sError: layout \"%s\" already exists for \"%s\" command"
+msgstr "%1$s%2$s: \"%4$s\" コマンドのサーバ \"%3$s\" は既に存在しています"
+
+#, fuzzy, c-format
+msgid "Layout \"%s\" has been renamed to \"%s\""
+msgstr "フィルタ \"%s\" の名前を \"%s\" に変更しました"
 
 msgid "Mouse enabled"
 msgstr "マウスを有効化しました"
@@ -1734,19 +1747,26 @@ msgstr ""
 msgid "save/apply/reset layout for buffers and windows"
 msgstr "バッファとウィンドウのレイアウトを保存/適用/リセット"
 
+#, fuzzy
 msgid ""
-"save [buffers|windows] || apply [buffers|windows] || reset [buffers|windows]"
+"save [<name>] [buffers|windows] || apply [<name>] [buffers|windows] || leave "
+"|| reset [<name>] [buffers|windows] || rename <name> <new_name>"
 msgstr ""
 "save [buffers|windows] || apply [buffers|windows] || reset [buffers|windows]"
 
+#, fuzzy
 msgid ""
 "   save: save current layout\n"
 "  apply: apply saved layout\n"
-"  reset: remove saved layout\n"
+"  leave: leave current layout (does not update any layout)\n"
+"  reset: reset buffers and/or windows in a saved layout\n"
+"         (if both buffers and windows are reset, the layout is removed)\n"
+" rename: rename a layout\n"
+"   name: name for saved layout (default is \"default\")\n"
 "buffers: save/apply only buffers (order of buffers)\n"
 "windows: save/apply only windows (buffer displayed by each window)\n"
 "\n"
-"Without argument, this command displays saved layout."
+"Without argument, this command displays saved layouts."
 msgstr ""
 "   save: 現在のレイアウトを保存\n"
 "  apply: 保存されたレイアウトを適用\n"
@@ -2443,6 +2463,10 @@ msgstr "リセットできるキーコード (追加、再定義、削除され�
 
 msgid "areas (\"chat\" or bar name) for free cursor movement"
 msgstr "カーソルを自由に動かせるエリア (\"chat\" またはバーの名前)"
+
+#, fuzzy
+msgid "names of layouts"
+msgstr "バーの名前"
 
 msgid ""
 "Warning: you should now issue /save to write \"save_config_on_exit\" option "
@@ -9637,7 +9661,3 @@ msgstr "タイプ"
 
 msgid "Constants"
 msgstr "定数"
-
-#, fuzzy
-#~ msgid "%s: script \"%s\" is now autoloaded"
-#~ msgstr "%s: スクリプト \"%s\" はロードされていません"

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-03-12 13:52+0100\n"
+"POT-Creation-Date: 2013-03-16 16:35+0100\n"
 "PO-Revision-Date: 2013-02-14 18:20+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -161,7 +161,8 @@ msgstr ""
 msgid "%sError: unknown bar \"%s\""
 msgstr ""
 
-msgid "Bar deleted"
+#, c-format
+msgid "Bar \"%s\" deleted"
 msgstr ""
 
 #, c-format
@@ -432,39 +433,48 @@ msgid_plural "%d new keys added (context: \"%s\")"
 msgstr[0] ""
 msgstr[1] ""
 
-#, c-format
-msgid "leaf: id: %d, parent: %d, plugin: \"%s\", buffer: \"%s\""
+msgid "Saved layouts:"
 msgstr ""
 
-#, c-format
-msgid "node: id: %d, parent: %d, child1: %d, child2: %d, size: %d%% (%s)"
-msgstr ""
-
-msgid "horizontal split"
-msgstr ""
-
-msgid "vertical split"
-msgstr ""
-
-msgid "Saved layout for buffers:"
-msgstr ""
-
-msgid "Saved layout for windows:"
+msgid " (current layout)"
 msgstr ""
 
 msgid "No layout saved"
 msgstr ""
 
-msgid "Layout saved for buffers (order of buffers)"
+#. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows"
+#, c-format
+msgid "Layout of %s%s%s saved in \"%s\" (current layout: %s)"
 msgstr ""
 
-msgid "Layout saved for windows (buffer displayed by each window)"
+msgid "buffers"
 msgstr ""
 
-msgid "Layout reset for buffers"
+msgid "windows"
 msgstr ""
 
-msgid "Layout reset for windows"
+msgid "Layout of buffers+windows reset (current layout: -)"
+msgstr ""
+
+#, c-format
+msgid "Layout \"%s\" deleted (current layout: %s)"
+msgstr ""
+
+#. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows"
+#, c-format
+msgid "Layout of %s%s%s reset in \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sError: unknown layout \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sError: layout \"%s\" already exists for \"%s\" command"
+msgstr ""
+
+#, c-format
+msgid "Layout \"%s\" has been renamed to \"%s\""
 msgstr ""
 
 msgid "Mouse enabled"
@@ -1307,17 +1317,22 @@ msgid "save/apply/reset layout for buffers and windows"
 msgstr ""
 
 msgid ""
-"save [buffers|windows] || apply [buffers|windows] || reset [buffers|windows]"
+"save [<name>] [buffers|windows] || apply [<name>] [buffers|windows] || leave "
+"|| reset [<name>] [buffers|windows] || rename <name> <new_name>"
 msgstr ""
 
 msgid ""
 "   save: save current layout\n"
 "  apply: apply saved layout\n"
-"  reset: remove saved layout\n"
+"  leave: leave current layout (does not update any layout)\n"
+"  reset: reset buffers and/or windows in a saved layout\n"
+"         (if both buffers and windows are reset, the layout is removed)\n"
+" rename: rename a layout\n"
+"   name: name for saved layout (default is \"default\")\n"
 "buffers: save/apply only buffers (order of buffers)\n"
 "windows: save/apply only windows (buffer displayed by each window)\n"
 "\n"
-"Without argument, this command displays saved layout."
+"Without argument, this command displays saved layouts."
 msgstr ""
 
 msgid "mouse control"
@@ -1767,6 +1782,9 @@ msgid "key codes that can be reset (keys added, redefined or removed)"
 msgstr ""
 
 msgid "areas (\"chat\" or bar name) for free cursor movement"
+msgstr ""
+
+msgid "names of layouts"
 msgstr ""
 
 msgid ""

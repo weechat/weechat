@@ -64,10 +64,6 @@ struct t_gui_window *gui_current_window = NULL; /* current window           */
 
 struct t_gui_window_tree *gui_windows_tree = NULL; /* windows tree          */
 
-struct t_gui_layout_window *gui_window_layout_before_zoom = NULL;
-                                       /* layout before zooming on a window */
-int gui_window_layout_id_current_window = -1;
-                                       /* current window id before zoom     */
 int gui_window_cursor_x = 0;           /* cursor pos on screen              */
 int gui_window_cursor_y = 0;           /* cursor pos on screen              */
 
@@ -1582,31 +1578,37 @@ gui_window_search_stop (struct t_gui_window *window)
 void
 gui_window_zoom (struct t_gui_window *window)
 {
+    struct t_gui_layout *ptr_layout;
+
     if (!gui_init_ok)
         return;
 
-    if (gui_window_layout_before_zoom)
+    ptr_layout = gui_layout_search (GUI_LAYOUT_ZOOM);
+    if (ptr_layout)
     {
         /* restore layout as it was before zooming a window */
         hook_signal_send ("window_unzoom",
                           WEECHAT_HOOK_SIGNAL_POINTER, gui_current_window);
-        gui_layout_window_apply (gui_window_layout_before_zoom,
-                                 gui_window_layout_id_current_window);
-        gui_layout_window_remove_all (&gui_window_layout_before_zoom);
-        gui_window_layout_id_current_window = -1;
+        gui_layout_window_apply (ptr_layout,
+                                 ptr_layout->internal_id_current_window);
+        gui_layout_remove (ptr_layout);
         hook_signal_send ("window_unzoomed",
                           WEECHAT_HOOK_SIGNAL_POINTER, gui_current_window);
     }
     else
     {
         /* save layout and zoom on current window */
-        hook_signal_send ("window_zoom",
-                          WEECHAT_HOOK_SIGNAL_POINTER, gui_current_window);
-        gui_window_layout_id_current_window =
-            gui_layout_window_save (&gui_window_layout_before_zoom);
-        gui_window_merge_all (window);
-        hook_signal_send ("window_zoomed",
-                          WEECHAT_HOOK_SIGNAL_POINTER, gui_current_window);
+        ptr_layout = gui_layout_alloc (GUI_LAYOUT_ZOOM);
+        if (ptr_layout)
+        {
+            gui_layout_add (ptr_layout);
+            hook_signal_send ("window_zoom",
+                              WEECHAT_HOOK_SIGNAL_POINTER, gui_current_window);
+            gui_layout_window_save (ptr_layout);
+            gui_window_merge_all (window);
+            hook_signal_send ("window_zoomed",
+                              WEECHAT_HOOK_SIGNAL_POINTER, gui_current_window);
+        }
     }
 }
 
@@ -1788,7 +1790,6 @@ gui_window_print_log ()
     log_printf ("last_gui_window . . . . . . . : 0x%lx", last_gui_window);
     log_printf ("gui_current window. . . . . . : 0x%lx", gui_current_window);
     log_printf ("gui_windows_tree. . . . . . . : 0x%lx", gui_windows_tree);
-    log_printf ("gui_window_layout_before_zoom : 0x%lx", gui_window_layout_before_zoom);
 
     for (ptr_window = gui_windows; ptr_window; ptr_window = ptr_window->next_window)
     {

@@ -46,6 +46,7 @@
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-color.h"
 #include "../gui/gui-filter.h"
+#include "../gui/gui-layout.h"
 #include "../gui/gui-key.h"
 #include "../gui/gui-nicklist.h"
 #include "../gui/gui-window.h"
@@ -295,7 +296,7 @@ completion_list_map_add_palette_color_cb (void *data,
     (void) value;
 
     gui_completion_list_add ((struct t_gui_completion *)data,
-                             (char *)key,
+                             (const char *)key,
                              0, WEECHAT_LIST_POS_SORT);
 }
 
@@ -1270,6 +1271,33 @@ completion_list_add_cursor_areas_cb (void *data,
 }
 
 /*
+ * Adds layout names to completion list.
+ */
+
+int
+completion_list_add_layouts_names_cb (void *data,
+                                      const char *completion_item,
+                                      struct t_gui_buffer *buffer,
+                                      struct t_gui_completion *completion)
+{
+    struct t_gui_layout *ptr_layout;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+
+    for (ptr_layout = gui_layouts; ptr_layout;
+         ptr_layout = ptr_layout->next_layout)
+    {
+        gui_completion_list_add (completion, ptr_layout->name,
+                                 0, WEECHAT_LIST_POS_SORT);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Adds hooks for completions done by WeeChat core.
  */
 
@@ -1361,4 +1389,7 @@ completion_init ()
     hook_completion (NULL, "cursor_areas",
                      N_("areas (\"chat\" or bar name) for free cursor movement"),
                      &completion_list_add_cursor_areas_cb, NULL);
+    hook_completion (NULL, "layouts_names",
+                     N_("names of layouts"),
+                     &completion_list_add_layouts_names_cb, NULL);
 }

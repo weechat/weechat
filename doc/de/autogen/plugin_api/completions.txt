@@ -106,6 +106,8 @@
 
 | weechat | keys_contexts | Tastaturkontext
 
+| weechat | layouts_names | names of layouts
+
 | weechat | nicks | Nicks in Nickliste für aktuellen Buffer
 
 | weechat | palette_colors | Farbpalette

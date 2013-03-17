@@ -23,13 +23,6 @@
 struct t_infolist;
 struct t_gui_bar_window;
 
-extern int gui_init_ok;
-extern int gui_window_refresh_needed;
-extern int gui_window_cursor_x, gui_window_cursor_y;
-
-extern struct t_gui_layout_window *gui_window_layout_before_zoom;
-extern int gui_window_layout_id_current_window;
-
 /* window structures */
 
 struct t_gui_window_coords
@@ -124,10 +117,14 @@ struct t_gui_window_tree
 
 /* window variables */
 
+extern int gui_init_ok;
+extern int gui_window_refresh_needed;
 extern struct t_gui_window *gui_windows;
 extern struct t_gui_window *last_gui_window;
 extern struct t_gui_window *gui_current_window;
 extern struct t_gui_window_tree *gui_windows_tree;
+extern int gui_window_cursor_x;
+extern int gui_window_cursor_y;
 
 /* window functions */
 

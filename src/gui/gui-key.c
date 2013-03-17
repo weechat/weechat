@@ -1916,8 +1916,8 @@ gui_key_print_log (struct t_gui_buffer *buffer)
     {
         for (i = 0; i < GUI_KEY_NUM_CONTEXTS; i++)
         {
-            log_printf ("[keys for context: %s]", gui_key_context_string[i]);
             log_printf ("");
+            log_printf ("[keys for context: %s]", gui_key_context_string[i]);
             log_printf ("  keys . . . . . . . . : 0x%lx", gui_keys[i]);
             log_printf ("  last_key . . . . . . : 0x%lx", last_gui_key[i]);
             log_printf ("  keys_count . . . . . : %d",    gui_keys_count[i]);

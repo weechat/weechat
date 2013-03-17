@@ -50,9 +50,7 @@ struct t_gui_buffer *upgrade_current_buffer = NULL;
 struct t_gui_buffer *upgrade_set_current_buffer = NULL;
 int upgrade_set_current_window = 0;
 int hotlist_reset = 0;
-struct t_gui_layout_buffer *upgrade_layout_buffers = NULL;
-struct t_gui_layout_buffer *last_upgrade_layout_buffer = NULL;
-struct t_gui_layout_window *upgrade_layout_windows = NULL;
+struct t_gui_layout *upgrade_layout = NULL;
 
 
 /*
@@ -345,17 +343,21 @@ upgrade_weechat_save_layout_window_tree (struct t_upgrade_file *upgrade_file,
 int
 upgrade_weechat_save_layout_window (struct t_upgrade_file *upgrade_file)
 {
-    struct t_gui_layout_window *layout_windows;
+    struct t_gui_layout *ptr_layout;
     int rc;
 
     /* get current layout for windows */
-    layout_windows = NULL;
-    gui_layout_window_save (&layout_windows);
+    ptr_layout = gui_layout_alloc (GUI_LAYOUT_UPGRADE);
 
-    /* save tree with layout of windows */
-    rc = upgrade_weechat_save_layout_window_tree (upgrade_file, layout_windows);
+    if (ptr_layout)
+    {
+        gui_layout_window_save (ptr_layout);
 
-    gui_layout_window_remove_all (&layout_windows);
+        /* save tree with layout of windows */
+        rc = upgrade_weechat_save_layout_window_tree (upgrade_file, ptr_layout->layout_windows);
+
+        gui_layout_free (ptr_layout);
+    }
 
     return rc;
 }
@@ -434,8 +436,7 @@ upgrade_weechat_read_cb (void *data,
             case UPGRADE_WEECHAT_TYPE_BUFFER:
                 plugin_name = infolist_string (infolist, "plugin_name");
                 name = infolist_string (infolist, "name");
-                gui_layout_buffer_add (&upgrade_layout_buffers,
-                                       &last_upgrade_layout_buffer,
+                gui_layout_buffer_add (upgrade_layout,
                                        plugin_name, name,
                                        infolist_integer (infolist, "number"));
                 if (gui_buffer_is_main (plugin_name, name))
@@ -686,9 +687,9 @@ upgrade_weechat_read_cb (void *data,
                 }
                 break;
             case UPGRADE_WEECHAT_TYPE_LAYOUT_WINDOW:
-                gui_layout_window_add (&upgrade_layout_windows,
+                gui_layout_window_add (&upgrade_layout->layout_windows,
                                        infolist_integer (infolist, "internal_id"),
-                                       gui_layout_window_search_by_id (upgrade_layout_windows,
+                                       gui_layout_window_search_by_id (upgrade_layout->layout_windows,
                                                                        infolist_integer (infolist, "parent_id")),
                                        infolist_integer (infolist, "split_pct"),
                                        infolist_integer (infolist, "split_horiz"),
@@ -715,6 +716,8 @@ upgrade_weechat_load ()
     int rc;
     struct t_upgrade_file *upgrade_file;
 
+    upgrade_layout = gui_layout_alloc (GUI_LAYOUT_UPGRADE);
+
     upgrade_file = upgrade_file_new (WEECHAT_UPGRADE_FILENAME, 0);
     rc = upgrade_file_read (upgrade_file, &upgrade_weechat_read_cb, NULL);
 
@@ -724,18 +727,13 @@ upgrade_weechat_load ()
     gui_color_buffer_assign ();
     gui_color_buffer_display ();
 
-    if (upgrade_layout_buffers)
-    {
-        gui_layout_buffer_apply (upgrade_layout_buffers);
-        gui_layout_buffer_remove_all (&upgrade_layout_buffers,
-                                      &last_upgrade_layout_buffer);
-    }
+    if (upgrade_layout->layout_buffers)
+        gui_layout_buffer_apply (upgrade_layout);
+    if (upgrade_layout->layout_windows)
+        gui_layout_window_apply (upgrade_layout, -1);
 
-    if (upgrade_layout_windows)
-    {
-        gui_layout_window_apply (upgrade_layout_windows, -1);
-        gui_layout_window_remove_all (&upgrade_layout_windows);
-    }
+    gui_layout_free (upgrade_layout);
+    upgrade_layout = NULL;
 
     if (upgrade_set_current_window > 0)
         gui_window_switch_by_number (upgrade_set_current_window);
@@ -746,7 +744,7 @@ upgrade_weechat_load ()
                                      upgrade_set_current_buffer, 0);
     }
 
-    gui_layout_buffer_get_number_all (gui_layout_buffers);
+    gui_layout_buffer_get_number_all (gui_layout_current);
 
     return rc;
 }
