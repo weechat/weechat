@@ -71,11 +71,13 @@ Version 0.4.1 (under dev!)
 * rmodifier: rename default rmodifier "nickserv" to "command_auth" (with new
   modifier "irc_command_auth"), add default rmodifier "message_auth" (modifier
   "irc_message_auth")
-* script: create "script" directory on each action (just in case it has been
-  removed) (bug #38472)
+* script: create "script" directory on each action, just in case it has been
+  removed (bug #38472)
 * script: add option script.scripts.autoload, add options "autoload",
   "noautoload" and "toggleautoload" for command /script, add action "A" (meta-A)
   on script buffer (toggle autoload) (task #12393)
+* scripts: create directories (language and language/autoload) on each action
+  (install/remove/autoload), just in case they have been removed (bug #38473)
 * scripts: do not allow empty script name in function "register"
 * xfer: fix freeze of DCC file received: use non-blocking socket after
   connection to sender and ensure the ACK is properly sent (bug #38340)

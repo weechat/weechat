@@ -79,6 +79,29 @@ plugin_script_config_cb (void *data, const char *option, const char *value)
 }
 
 /*
+ * Creates directories for plugin in WeeChat home:
+ * - ~/.weechat/XXX/
+ * - ~/.weechat/XXX/autoload/
+ */
+
+void
+plugin_script_create_dirs (struct t_weechat_plugin *weechat_plugin)
+{
+    char *string;
+    int length;
+
+    weechat_mkdir_home (weechat_plugin->name, 0755);
+    length = strlen (weechat_plugin->name) + strlen ("/autoload") + 1;
+    string = malloc (length);
+    if (string)
+    {
+        snprintf (string, length, "%s/autoload", weechat_plugin->name);
+        weechat_mkdir_home (string, 0755);
+        free (string);
+    }
+}
+
+/*
  * Initializes script plugin:
  *   - reads configuration
  *   - hooks config
@@ -112,15 +135,7 @@ plugin_script_init (struct t_weechat_plugin *weechat_plugin,
     }
 
     /* create directories in WeeChat home */
-    weechat_mkdir_home (weechat_plugin->name, 0755);
-    length = strlen (weechat_plugin->name) + strlen ("/autoload") + 1;
-    string = malloc (length);
-    if (string)
-    {
-        snprintf (string, length, "%s/autoload", weechat_plugin->name);
-        weechat_mkdir_home (string, 0755);
-        free (string);
-    }
+    plugin_script_create_dirs (weechat_plugin);
 
     /* add command */
     completion = NULL;
@@ -952,6 +967,9 @@ plugin_script_action_install (struct t_weechat_plugin *weechat_plugin,
     if (!*list)
         return;
 
+    /* create again directories, just in case they have been removed */
+    plugin_script_create_dirs (weechat_plugin);
+
     ptr_list = *list;
     autoload = 0;
     *quiet = 0;
@@ -1094,6 +1112,9 @@ plugin_script_action_remove (struct t_weechat_plugin *weechat_plugin,
     if (!*list)
         return;
 
+    /* create again directories, just in case they have been removed */
+    plugin_script_create_dirs (weechat_plugin);
+
     ptr_list = *list;
     *quiet = 0;
     if (strncmp (ptr_list, "-q ", 3) == 0)
@@ -1145,6 +1166,9 @@ plugin_script_action_autoload (struct t_weechat_plugin *weechat_plugin,
 
     if (!*list)
         return;
+
+    /* create again directories, just in case they have been removed */
+    plugin_script_create_dirs (weechat_plugin);
 
     ptr_list = *list;
     autoload = 0;
