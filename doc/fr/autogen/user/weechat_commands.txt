@@ -81,11 +81,11 @@ Exemples:
           (par défaut ctrl-x bascule entre les tampons mélangés)
  unmerge: détacher le tampon courant des autres tampons portant le même numéro
    close: fermer le tampon (nombre/intervalle ou nom optionnel)
-  notify: définir le niveau de notification pour le tampon courant: ce niveau détermine si le buffer doit être ajouté à la hotlist ou pas:
+  notify: définir le niveau de notification pour le tampon courant: ce niveau détermine si le tampon doit être ajouté à la hotlist ou pas:
                none: jamais
           highlight: pour les highlights seulement
             message: pour les messages d'utilisateurs + highlights
-                all: pout tous les messages
+                all: pour tous les messages
               reset: réinitialise à valeur par défaut (all)
 localvar: afficher la liste des variables locales pour le tampon courant
      set: modifier une propriété du tampon courant
@@ -338,7 +338,7 @@ valeur: nombre d'entrées dans l'historique à afficher
 ........................................
 /input  <action> [<paramètres>]
 
-list des actions:
+liste des actions:
   return: simuler la touche "entrée"
   complete_next: compléter le mot avec la complétion suivante
   complete_previous: compléter le mot avec la complétion précédente
@@ -354,7 +354,7 @@ list des actions:
   delete_beginning_of_line: effacer du début de la ligne jusqu'au curseur
   delete_end_of_line: effacer du curseur jusqu'à la fin de la ligne
   delete_line: effacer la ligne entière
-  clipboard_paste: coller depuis le presse-papier
+  clipboard_paste: coller depuis le presse-papiers
   transpose_chars: inverser deux caractères
   undo: défaire la dernière action de la ligne de commande
   redo: refaire la dernière action de la ligne de commande
@@ -533,7 +533,7 @@ Sans paramètre, cette commande liste les extensions chargées.
 [command]*`proxy`* gestion des proxies::
 ........................................
 /proxy  list
-        add <nom> <type> <addresse> <port> [<utilisateur> [<mot_de_passe>]]
+        add <nom> <type> <adresse> <port> [<utilisateur> [<mot_de_passe>]]
         del <nom>|-all
         set <nom> <option> <valeur>
 
@@ -541,7 +541,7 @@ Sans paramètre, cette commande liste les extensions chargées.
          add: ajouter un nouveau proxy
          nom: nom du proxy (doit être unique)
         type: http, socks4 ou socks5
-    addresse: IP ou nom de machine
+     adresse: IP ou nom de machine
         port: port
  utilisateur: nom d'utilisateur (optionnel)
 mot_de_passe: mot de passe (optionnel)

@@ -26,7 +26,7 @@
 
 | relay | relay | liste des clients pour le relai | pointeur vers le relay (optionnel) | -
 
-| rmodifier | rmodifier | liste des rmodifiers | pointeur vers le rmodifieur (optionnel) | nom du rmodifier (peut démarrer ou se terminer par "*" comme caractère joker) (optionnel)
+| rmodifier | rmodifier | liste des rmodifiers | pointeur vers le rmodifier (optionnel) | nom du rmodifier (peut démarrer ou se terminer par "*" comme caractère joker) (optionnel)
 
 | ruby | ruby_script | liste des scripts | pointeur vers le script (optionnel) | nom de script (peut démarrer ou se terminer par "*" comme joker) (optionnel)
 

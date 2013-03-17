@@ -139,7 +139,7 @@
 ** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_script.look.diff_command]] *script.look.diff_command*
-** description: `commande utilisée pour montrer les différences entre le script installé et la nouvelle version dans le repository ("auto" = détecter automatiquement la commande de diff (git ou diff), valeur vide = désactiver le diff, autre chaîne = nom de la commande, par exemple "diff")`
+** description: `commande utilisée pour montrer les différences entre le script installé et la nouvelle version dans le dépôt ("auto" = détecter automatiquement la commande de diff (git ou diff), valeur vide = désactiver le diff, autre chaîne = nom de la commande, par exemple "diff")`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"auto"`)
 
@@ -164,7 +164,7 @@
 ** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_script.look.use_keys]] *script.look.use_keys*
-** description: `utiliser les touches alt+X sur le tampon script pour effectuer les actions sur les scripts (alt+i = installed, alt+r = supprimer, ...); si désactivé, seule l'entrée est autorisée: i, r, ...`
+** description: `utiliser les touches alt+X sur le tampon script pour effectuer les actions sur les scripts (alt+i = installer, alt+r = supprimer, ...); si désactivé, seule l'entrée est autorisée: i, r, ...`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 

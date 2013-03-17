@@ -84,7 +84,7 @@
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
 * [[option_relay.network.bind_address]] *relay.network.bind_address*
-** description: `addresse pour le bind (si vide, la connexion est possible sur toutes les interfaces, utiliser "127.0.0.1" pour autoriser les connections depuis la machine locale seulement)`
+** description: `adresse pour le bind (si vide, la connexion est possible sur toutes les interfaces, utiliser "127.0.0.1" pour autoriser les connections depuis la machine locale seulement)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 

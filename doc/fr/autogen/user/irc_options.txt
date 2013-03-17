@@ -269,7 +269,7 @@
 ** valeurs: toute chaîne (valeur par défaut: `"notify_message"`)
 
 * [[option_irc.look.notify_tags_whois]] *irc.look.notify_tags_whois*
-** description: `liste des tags (séparés par des virgules) utilisés dans les messages affichés par notify lorsque le status d'absence d'un pseudo change (résultat de la commande whois), par exemple: "notify_highlight", "notify_message" ou "notify_private"`
+** description: `liste des tags (séparés par des virgules) utilisés dans les messages affichés par notify lorsque le statut d'absence d'un pseudo change (résultat de la commande whois), par exemple: "notify_highlight", "notify_message" ou "notify_private"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"notify_message"`)
 
@@ -324,17 +324,17 @@
 ** valeurs: on, off (valeur par défaut: `off`)
 
 * [[option_irc.network.alternate_nick]] *irc.network.alternate_nick*
-** description: `obtenir un pseudo alternatif lorsque le pseudo est déjà utilisé sur le serveur: ajouter des "_" jusqu'à ce que le pseudo ait une longeur de 9, puis remplacer le dernier caractère (ou les deux derniers) par un nombre de 1 à 99, jusqu'à trouver un pseudo non utilisé sur le serveur`
+** description: `obtenir un pseudo alternatif lorsque le pseudo est déjà utilisé sur le serveur: ajouter des "_" jusqu'à ce que le pseudo ait une longueur de 9, puis remplacer le dernier caractère (ou les deux derniers) par un nombre de 1 à 99, jusqu'à trouver un pseudo non utilisé sur le serveur`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_irc.network.autoreconnect_delay_growing]] *irc.network.autoreconnect_delay_growing*
-** description: `facteur de croissance du délai d'autoreconnection au serveur (1 = toujours le même délai, 2 = délai*2 pour chaque tentative, etc...)`
+** description: `facteur de croissance du délai d'auto-reconnexion au serveur (1 = toujours le même délai, 2 = délai*2 pour chaque tentative, etc...)`
 ** type: entier
 ** valeurs: 1 .. 100 (valeur par défaut: `2`)
 
 * [[option_irc.network.autoreconnect_delay_max]] *irc.network.autoreconnect_delay_max*
-** description: `délai maximum d'autoreconnection au serveur (en secondes, 0 = pas de maximum)`
+** description: `délai maximum d'auto-reconnexion au serveur (en secondes, 0 = pas de maximum)`
 ** type: entier
 ** valeurs: 0 .. 86400 (valeur par défaut: `1800`)
 
@@ -364,7 +364,7 @@
 ** valeurs: 0 .. 604800 (valeur par défaut: `0`)
 
 * [[option_irc.network.lag_refresh_interval]] *irc.network.lag_refresh_interval*
-** description: `intervalle entre deux rafraichissements du lag, lorsque le lag augmente (en secondes)`
+** description: `intervalle entre deux rafraîchissements du lag, lorsque le lag augmente (en secondes)`
 ** type: entier
 ** valeurs: 1 .. 3600 (valeur par défaut: `1`)
 
@@ -474,7 +474,7 @@
 ** valeurs: toute chaîne (valeur par défaut: `"WeeChat %v"`)
 
 * [[option_irc.server_default.ipv6]] *irc.server_default.ipv6*
-** description: `utiliser le protocole IPv6 pour la communication avec le serveur (essayer IPv6 puis repli sur l'IPv4); si désactivé, seulemenent l'IPv4 est utilisé`
+** description: `utiliser le protocole IPv6 pour la communication avec le serveur (essayer IPv6 puis repli sur l'IPv4); si désactivé, seulement l'IPv4 est utilisé`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 
@@ -519,7 +519,7 @@
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
 * [[option_irc.server_default.sasl_timeout]] *irc.server_default.sasl_timeout*
-** description: `délai d'attende maximum (en secondes) avant d'abandonner l'authentification SASL`
+** description: `délai d'attente maximum (en secondes) avant d'abandonner l'authentification SASL`
 ** type: entier
 ** valeurs: 1 .. 3600 (valeur par défaut: `15`)
 

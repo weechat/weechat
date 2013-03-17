@@ -60,11 +60,11 @@
 
 | script | script_files | fichiers dans les répertoires de script
 
-| script | script_scripts | liste des scripts du repository
+| script | script_scripts | liste des scripts du dépôt
 
-| script | script_scripts_installed | liste des scripts installés (du repository)
+| script | script_scripts_installed | liste des scripts installés (du dépôt)
 
-| script | script_tags | étiquettes des scripts dans le repository
+| script | script_tags | étiquettes des scripts dans le dépôt
 
 | tcl | tcl_script | liste des scripts
 

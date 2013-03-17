@@ -278,7 +278,7 @@
   'last_script' +
   'scripts'
 
-| script | script_script | scripts du repository |
+| script | script_script | scripts du dépôt |
   'name' (string) +
   'name_with_extension' (string) +
   'language' (integer) +

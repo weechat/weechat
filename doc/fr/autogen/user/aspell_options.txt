@@ -29,7 +29,7 @@
 ** valeurs: -1 .. 2147483647 (valeur par défaut: `-1`)
 
 * [[option_aspell.check.word_min_length]] *aspell.check.word_min_length*
-** description: `longueur minimum d'un mot pour que l'otrhographe soit vérifiée (utilisez 0 pour vérifier tous les mots)`
+** description: `longueur minimum d'un mot pour que l'orthographe soit vérifiée (utilisez 0 pour vérifier tous les mots)`
 ** type: entier
 ** valeurs: 0 .. 2147483647 (valeur par défaut: `2`)
 

@@ -30,7 +30,7 @@ Exemples:
 ........................................
 /allserv  [-exclude=<serveur>[,<serveur>...]] <commande> [<paramètres>]
 
-  -exclude: exclude certains serveurs ('*' is est autorisé en début ou fin du nom du serveur, pour exclure plusieurs serveurs)
+  -exclude: exclude certains serveurs ('*' est autorisé en début ou fin du nom du serveur, pour exclure plusieurs serveurs)
   commande: commande à exécuter
 paramètres: paramètres pour la commande
 
@@ -60,7 +60,7 @@ Sans paramètre, cette commande affiche la liste des bans pour le canal courant.
 
  serveur: nom du serveur, qui peut être :
           - nom interne de serveur (créé par /server add, usage recommandé)
-          - nom/port ou IP/port (ceci crééra un serveur TEMPORAIRE), le port par défaut est 6667
+          - nom/port ou IP/port (ceci créera un serveur TEMPORAIRE), le port par défaut est 6667
           - URL avec le format: irc[6][s]://[pseudo[:mot_passe]@]irc.example.org[:port][/#canal1][,#canal2[...]]
   option: définir l'option pour le serveur (pour une option booléenne, la valeur peut être omise)
 nooption: définir l'option booléenne à 'off' (par exemple: -nossl)
@@ -146,7 +146,7 @@ cible: nom du serveur
 ........................................
 /disconnect  [<serveur>|-all|-pending [<raison>]]
 
- serveur: nom du serveur pour se déconecter
+ serveur: nom du serveur pour se déconnecter
     -all: se déconnecter de tous les serveurs
 -pending: annuler la reconnexion automatique sur les serveurs en cours de reconnexion
   raison: raison pour le quit
@@ -246,7 +246,7 @@ raison: raison pour l'élimination
 pseudo: pseudo à éliminer et bannir
 raison: raison pour l'élimination
 
-Il est possible d'émiliner/bannir avec un masque, le pseudo sera extrait du masque et remplacé par "*".
+Il est possible d'éliminer/bannir avec un masque, le pseudo sera extrait du masque et remplacé par "*".
 
 Exemple:
   bannir "*!*@host.com" puis éliminer "toto":
@@ -327,7 +327,7 @@ modes de canaux:
   n: aucun message au canal depuis l'extérieur
   m: canal modéré
   l: fixer la limite d'utilisateurs pour le canal
-  b: paramétrer un masque de banissement pour garder des utilisateurs dehors
+  b: paramétrer un masque de bannissement pour garder des utilisateurs dehors
   e: paramétrer un masque d'exception
   v: donner/reprendre la possibilité de parler sur un canal modéré
   k: définir une clé (mot de passe) pour accéder au canal
@@ -574,7 +574,7 @@ raison: raison
 listfull: afficher les serveurs avec de l'info détaillée pour chaque
      add: créer un nouveau serveur
  serveur: nom du serveur, pour usage interne et affichage
-     nom: nom ou adresse IP du serveur avec port en option (defaut: 6667), plusieurs addresses peuvent être séparées par une virgule
+     nom: nom ou adresse IP du serveur avec port en option (défaut: 6667), plusieurs adresses peuvent être séparées par une virgule
     temp: créer un serveur temporaire (non sauvé)
   option: définir l'option pour le serveur (pour une option booléenne, la valeur peut être omise)
 nooption: définir l'option booléenne à 'off' (par exemple: -nossl)
@@ -599,7 +599,7 @@ Exemples:
 ........................................
 
 [[command_irc_service]]
-[command]*`service`* enregister un nouveau service::
+[command]*`service`* enregistrer un nouveau service::
 ........................................
 /service  <pseudo> <réservé> <distribution> <type> <réservé> <info>
 

@@ -309,7 +309,7 @@
 ** valeurs: toute chaîne (valeur par défaut: `"[]`_-^"`)
 
 * [[option_weechat.completion.partial_completion_alert]] *weechat.completion.partial_completion_alert*
-** description: `alterte l'utilisateur lorsqu'une complétion partielle survient`
+** description: `alerte l'utilisateur lorsqu'une complétion partielle survient`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 
@@ -384,7 +384,7 @@
 ** valeurs: toute chaîne (valeur par défaut: `"--"`)
 
 * [[option_weechat.look.buffer_notify_default]] *weechat.look.buffer_notify_default*
-** description: `niveau de notification par défaut pour les tampons (utilisé pour dire à WeeChat si le tampon doit être affiché dans la hotlist ou non, selon l'importance du message): all=tous les messages (par défaut), message=messages+highlights, highlight=highlights seulement, none=ne jemais afficher dans la hotlist`
+** description: `niveau de notification par défaut pour les tampons (utilisé pour dire à WeeChat si le tampon doit être affiché dans la hotlist ou non, selon l'importance du message): all=tous les messages (par défaut), message=messages+highlights, highlight=highlights seulement, none=ne jamais afficher dans la hotlist`
 ** type: entier
 ** valeurs: none, highlight, message, all (valeur par défaut: `all`)
 
@@ -594,7 +594,7 @@
 ** valeurs: 1 .. 10000 (valeur par défaut: `100`)
 
 * [[option_weechat.look.paste_bracketed]] *weechat.look.paste_bracketed*
-** description: `activer le mode du terminal "bracketed paste" (pas supporté par tous les terminaux/multiplexeurs): dans ce mode, le texte collé est entouré avec des séquences de contrôle de sorte que WeeChat puisse différencier le texte collé du texté tapé ("ESC[200~", suivi par le texte collé, suivi par "ESC[201~")`
+** description: `activer le mode du terminal "bracketed paste" (pas supporté par tous les terminaux/multiplexeurs): dans ce mode, le texte collé est entouré avec des séquences de contrôle de sorte que WeeChat puisse différencier le texte collé du texte tapé ("ESC[200~", suivi par le texte collé, suivi par "ESC[201~")`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `off`)
 
@@ -709,7 +709,7 @@
 ** valeurs: 1 .. 2147483647 (valeur par défaut: `3`)
 
 * [[option_weechat.look.scroll_bottom_after_switch]] *weechat.look.scroll_bottom_after_switch*
-** description: `faire défiler en bas de la fenêtre après un basculemment vers un autre tampon (ne pas sauvegarder la position du défilement dans les fenêtres); le défilement n'est fait que pour les tampons avec contenu formaté (pas le contenu libre)`
+** description: `faire défiler en bas de la fenêtre après un basculement vers un autre tampon (ne pas sauvegarder la position du défilement dans les fenêtres); le défilement n'est fait que pour les tampons avec contenu formaté (pas le contenu libre)`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `off`)
 
@@ -719,7 +719,7 @@
 ** valeurs: 1 .. 100 (valeur par défaut: `100`)
 
 * [[option_weechat.look.search_text_not_found_alert]] *weechat.look.search_text_not_found_alert*
-** description: `alterte l'utilisateur lorsque le texte cherché n'est pas trouvé dans le tampon`
+** description: `alerte l'utilisateur lorsque le texte cherché n'est pas trouvé dans le tampon`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 
@@ -814,7 +814,7 @@
 ** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_weechat.startup.sys_rlimit]] *weechat.startup.sys_rlimit*
-** description: `définir les limites de ressource pour le processus WeeChat, le format est: "res1:limite1,res2:limite2"; le nom de ressource est la fin de la constante (RLIMIT_XXX) en minuscules (voir man setrlimit pour les valeurs); une limite de -1 siginifie "illimitée"; exemple: définir une taille illimitée pour le fichier core et max 1 Go de mémoire virtuelle: "core:-1,as:1000000000"`
+** description: `définir les limites de ressource pour le processus WeeChat, le format est: "res1:limite1,res2:limite2"; le nom de ressource est la fin de la constante (RLIMIT_XXX) en minuscules (voir man setrlimit pour les valeurs); une limite de -1 signifie "illimitée"; exemple: définir une taille illimitée pour le fichier core et max 1 Go de mémoire virtuelle: "core:-1,as:1000000000"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
