@@ -1437,6 +1437,9 @@ script_action_schedule (const char *action, int need_repository, int quiet)
 {
     script_action_add (action);
 
+    /* create again "script" directory, just in case it has been removed */
+    weechat_mkdir_home (SCRIPT_PLUGIN_NAME, 0755);
+
     if (need_repository)
     {
         if (script_repo_file_is_uptodate ())
