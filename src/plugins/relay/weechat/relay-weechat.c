@@ -41,7 +41,7 @@
 
 
 char *relay_weechat_compression_string[] = /* strings for compressions      */
-{ "off", "gzip" };
+{ "off", "zlib" };
 
 
 /*
@@ -175,7 +175,7 @@ relay_weechat_alloc (struct t_relay_client *client)
     if (client->protocol_data)
     {
         RELAY_WEECHAT_DATA(client, password_ok) = (password && password[0]) ? 0 : 1;
-        RELAY_WEECHAT_DATA(client, compression) = 1;
+        RELAY_WEECHAT_DATA(client, compression) = RELAY_WEECHAT_COMPRESSION_ZLIB;
         RELAY_WEECHAT_DATA(client, nicklist_diff) = 0;
         RELAY_WEECHAT_DATA(client, buffers_sync) =
             weechat_hashtable_new (32,

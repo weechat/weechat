@@ -58,6 +58,7 @@ Version 0.4.1 (under dev!)
 * lua: fix crash on stack overflow: call lua_pop() for values returned by lua
   functions (bug #38510)
 * perl: simplify code to load scripts
+* relay: rename compression "gzip" to "zlib" (compression is zlib, not gzip)
 * relay: add message "_nicklist_diff" (differences between old and current
   nicklist)
 * relay: add support of multiple servers on same port for irc protocol (the

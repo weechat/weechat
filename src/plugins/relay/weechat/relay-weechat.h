@@ -28,7 +28,7 @@ struct t_relay_client;
 enum t_relay_weechat_compression
 {
     RELAY_WEECHAT_COMPRESSION_OFF = 0, /* no compression of binary objects  */
-    RELAY_WEECHAT_COMPRESSION_GZIP,    /* gzip compression                  */
+    RELAY_WEECHAT_COMPRESSION_ZLIB,    /* zlib compression                  */
     /* number of compressions */
     RELAY_WEECHAT_NUM_COMPRESSIONS,
 };
@@ -36,7 +36,7 @@ enum t_relay_weechat_compression
 struct t_relay_weechat_data
 {
     int password_ok;                   /* password received and OK?         */
-    int compression;                   /* compression type                  */
+    enum t_relay_weechat_compression compression; /* compression type       */
     int nicklist_diff;                 /* (TEMPORARY) nicklist diff enabled?*/
 
     /* sync of buffers */

@@ -999,52 +999,58 @@ relay_weechat_msg_send (struct t_relay_client *client,
     struct timeval tv1, tv2;
     long time_diff;
 
-    if (RELAY_WEECHAT_DATA(client, compression)
-        && (weechat_config_integer (relay_config_network_compression_level) > 0))
+    if (weechat_config_integer (relay_config_network_compression_level) > 0)
     {
-        dest_size = compressBound (msg->data_size - 5);
-        dest = malloc (dest_size + 5);
-        if (dest)
+        switch (RELAY_WEECHAT_DATA(client, compression))
         {
-            gettimeofday (&tv1, NULL);
-            rc = compress2 (dest + 5, &dest_size,
-                            (Bytef *)(msg->data + 5), msg->data_size - 5,
-                            weechat_config_integer (relay_config_network_compression_level));
-            gettimeofday (&tv2, NULL);
-            time_diff = weechat_util_timeval_diff (&tv1, &tv2);
-            if ((rc == Z_OK) && ((int)dest_size + 5 < msg->data_size))
-            {
-                /* set size and compression flag */
-                size32 = htonl ((uint32_t)(dest_size + 5));
-                memcpy (dest, &size32, 4);
-                dest[4] = 1;
+            case RELAY_WEECHAT_COMPRESSION_ZLIB:
+                dest_size = compressBound (msg->data_size - 5);
+                dest = malloc (dest_size + 5);
+                if (dest)
+                {
+                    gettimeofday (&tv1, NULL);
+                    rc = compress2 (dest + 5, &dest_size,
+                                    (Bytef *)(msg->data + 5), msg->data_size - 5,
+                                    weechat_config_integer (relay_config_network_compression_level));
+                    gettimeofday (&tv2, NULL);
+                    time_diff = weechat_util_timeval_diff (&tv1, &tv2);
+                    if ((rc == Z_OK) && ((int)dest_size + 5 < msg->data_size))
+                    {
+                        /* set size and compression flag */
+                        size32 = htonl ((uint32_t)(dest_size + 5));
+                        memcpy (dest, &size32, 4);
+                        dest[4] = RELAY_WEECHAT_COMPRESSION_ZLIB;
 
-                /* display message in raw buffer */
-                snprintf (raw_message, sizeof (raw_message),
-                          "obj: %d/%d bytes (%d%%, %ldms), id: %s",
-                          (int)dest_size + 5,
-                          msg->data_size,
-                          100 - ((((int)dest_size + 5) * 100) / msg->data_size),
-                          time_diff,
-                          msg->id);
+                        /* display message in raw buffer */
+                        snprintf (raw_message, sizeof (raw_message),
+                                  "obj: %d/%d bytes (%d%%, %ldms), id: %s",
+                                  (int)dest_size + 5,
+                                  msg->data_size,
+                                  100 - ((((int)dest_size + 5) * 100) / msg->data_size),
+                                  time_diff,
+                                  msg->id);
 
-                /* send compressed data */
-                relay_client_send (client, (const char *)dest, dest_size + 5,
-                                   raw_message);
+                        /* send compressed data */
+                        relay_client_send (client, (const char *)dest, dest_size + 5,
+                                           raw_message);
 
-                free (dest);
-                return;
-            }
-            free (dest);
+                        free (dest);
+                        return;
+                    }
+                    free (dest);
+                }
+                break;
+            default:
+                break;
         }
     }
 
-    /* compression with zlib failed (or not asked), send uncompressed message */
+    /* compression failed (or not asked), send uncompressed message */
 
     /* set size and compression flag */
     size32 = htonl ((uint32_t)msg->data_size);
     relay_weechat_msg_set_bytes (msg, 0, &size32, 4);
-    compression = 0;
+    compression = RELAY_WEECHAT_COMPRESSION_OFF;
     relay_weechat_msg_set_bytes (msg, 4, &compression, 1);
 
     /* send uncompressed data */

@@ -116,16 +116,20 @@ Arguments:
 ** 'password' (required): password used to authenticate on 'relay' (option
    'relay.network.password' in WeeChat)
 ** 'compression' (optional): compression type:
-*** 'gzip': enable gzip compression for messages sent by 'relay'
+*** 'zlib': enable zlib compression for messages sent by 'relay'
 *** 'off': disable compression
 
 [NOTE]
-Compression 'gzip' is enabled by default if 'relay' supports gzip compression.
+Compression 'zlib' is enabled by default if 'relay' supports zlib compression.
 
-Example:
+Examples:
 
 ----------------------------------------
-init password=mypass,compression=gzip
+# initialize and use zlib compression by default (if WeeChat supports it)
+init password=mypass
+
+# initialize and disable compression
+init password=mypass,compression=off
 ----------------------------------------
 
 [[command_hdata]]
@@ -473,7 +477,7 @@ Messages are sent as binary data, using following format (with size in bytes):
   this length)
 * 'compression' (byte): flag:
 ** '0x00': following data is not compressed
-** '0x01': following data is gzip-compressed
+** '0x01': following data is zlib-compressed
 * 'id' (string): identifier sent by client (before command name); it can be
   empty (string with zero length and no content) if no identifier was given in
   command
@@ -485,7 +489,7 @@ Compression
 ~~~~~~~~~~~
 
 If flag 'compression' is equal to 0x01, then *all* data after is compressed
-with gzip, and therefore must be uncompressed before being processed.
+with zlib, and therefore must be uncompressed before being processed.
 
 [[message_identifier]]
 Identifier
