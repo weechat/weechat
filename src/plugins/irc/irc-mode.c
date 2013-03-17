@@ -163,7 +163,7 @@ irc_mode_channel_update (struct t_irc_server *server,
                 {
                     case 'A': /* always argument */
                     case 'B': /* always argument */
-                    case 'C': /* argumment if set */
+                    case 'C': /* argument if set */
                         ptr_arg = (current_arg < argc) ?
                             argv[current_arg] : NULL;
                         break;
@@ -334,7 +334,7 @@ irc_mode_channel_set (struct t_irc_server *server,
                             ptr_arg = (current_arg < argc) ?
                                 argv[current_arg] : NULL;
                             break;
-                        case 'C': /* argumment if set */
+                        case 'C': /* argument if set */
                             ptr_arg = ((set_flag == '+') && (current_arg < argc)) ?
                                 argv[current_arg] : NULL;
                             break;

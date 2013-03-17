@@ -131,7 +131,7 @@ weechat_guile_api_scm_to_string (SCM str,
 }
 
 /*
- * Frees all alloacated strings in "guile_strings".
+ * Frees all allocated strings in "guile_strings".
  */
 
 void

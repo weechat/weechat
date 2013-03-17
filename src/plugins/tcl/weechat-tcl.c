@@ -339,7 +339,7 @@ weechat_tcl_load (const char *filename)
                                          "parsing file \"%s\": %s"),
                         weechat_prefix ("error"), TCL_PLUGIN_NAME, filename,
                         Tcl_GetStringFromObj (Tcl_GetObjResult (interp), &i));
-        /* this ok, maybe "register" was called, so not return */
+        /* this OK, maybe "register" was called, so not return */
         /* return 0; */
     }
 
@@ -817,7 +817,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     plugin_script_display_short_list (weechat_tcl_plugin,
                                       tcl_scripts);
 
-    /* init ok */
+    /* init OK */
     return WEECHAT_RC_OK;
 }
 

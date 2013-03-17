@@ -42,7 +42,7 @@ struct t_irc_channel_speaking
 struct t_irc_channel
 {
     int type;                          /* channel type                      */
-    char *name;                        /* name of channel (exemple: "#abc") */
+    char *name;                        /* name of channel (example: "#abc") */
     char *topic;                       /* topic of channel (host for pv)    */
     char *modes;                       /* channel modes                     */
     int limit;                         /* user limit (0 is limit not set)   */

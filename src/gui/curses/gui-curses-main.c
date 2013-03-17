@@ -346,7 +346,7 @@ gui_main_loop ()
 
     while (!weechat_quit)
     {
-        /* reload config, if SIGHUP reveived */
+        /* reload config, if SIGHUP received */
         if (gui_reload_config)
         {
             gui_reload_config = 0;

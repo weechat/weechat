@@ -41,7 +41,7 @@ struct t_gui_completion
     char *base_command;           /* cmd with arg to complete (can be NULL)  */
     int base_command_arg_index;   /* # arg to complete (if context=cmd arg)  */
     char *base_word;              /* word to complete (when Tab was pressed) */
-    int base_word_pos;            /* beggining of base word                  */
+    int base_word_pos;            /* beginning of base word                  */
     int position;                 /* position where Tab was pressed          */
     char *args;                   /* command line args (including base word) */
     int direction;                /* +1=search next word, -1=previous word   */

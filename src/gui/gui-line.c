@@ -1124,7 +1124,7 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
                           WEECHAT_HOOK_SIGNAL_POINTER, buffer);
     }
 
-    /* add mixed line, if buffer is attched to at least one other buffer */
+    /* add mixed line, if buffer is attached to at least one other buffer */
     if (buffer->mixed_lines)
     {
         gui_line_mixed_add (buffer->mixed_lines, new_line->data);

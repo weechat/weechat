@@ -324,7 +324,7 @@ xfer_close (struct t_xfer *xfer, enum t_xfer_status status)
         }
     }
 
-    /* remove empty file if received file failed and nothing was transfered */
+    /* remove empty file if received file failed and nothing was transferred */
     if (((xfer->status == XFER_STATUS_FAILED)
          || (xfer->status == XFER_STATUS_ABORTED))
         && XFER_IS_FILE(xfer->type)

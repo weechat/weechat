@@ -46,7 +46,7 @@ struct t_gui_hotlist *gui_hotlist = NULL;
 struct t_gui_hotlist *last_gui_hotlist = NULL;
 struct t_gui_buffer *gui_hotlist_initial_buffer = NULL;
 
-int gui_add_hotlist = 1;                    /* 0 is for temporarly disable  */
+int gui_add_hotlist = 1;                    /* 0 is for temporarily disable */
                                             /* hotlist add for all buffers  */
 
 
@@ -308,7 +308,7 @@ gui_hotlist_add (struct t_gui_buffer *buffer,
     if (priority > GUI_HOTLIST_MAX)
         priority = GUI_HOTLIST_MAX;
 
-    /* check if priority is ok according to buffer notify level value */
+    /* check if priority is OK according to buffer notify level value */
     if (!gui_hotlist_check_buffer_notify (buffer, priority))
         return NULL;
 

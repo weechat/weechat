@@ -82,7 +82,7 @@ version_get_git ()
 }
 
 /*
- * Returns the WeeCht version + the git version (between brackets, and only if
+ * Returns the WeeChat version + the git version (between brackets, and only if
  * it is not empty).
  *
  * Examples:

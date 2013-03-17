@@ -262,7 +262,7 @@ weechat_parse_args (int argc, char *argv[])
         {
             /*
              * Electric-fence is not working fine when gnutls loads
-             * certificates and valgrind reports many memory errors with gnutls.
+             * certificates and Valgrind reports many memory errors with gnutls.
              * This option disables the init/deinit of gnutls,
              * it must NOT be used for other purposes!
              */
@@ -482,7 +482,7 @@ main (int argc, char *argv[])
     hdata_init ();                      /* initialize hdata                 */
     hook_init ();                       /* initialize hooks                 */
     debug_init ();                      /* hook signals for debug           */
-    gui_main_pre_init (&argc, &argv);   /* pre-initiliaze interface         */
+    gui_main_pre_init (&argc, &argv);   /* pre-initialize interface         */
     command_init ();                    /* initialize WeeChat commands      */
     completion_init ();                 /* add core completion hooks        */
     gui_key_init ();                    /* init keys                        */

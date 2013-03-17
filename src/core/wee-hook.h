@@ -157,8 +157,8 @@ struct t_hook_command
     char ***cplt_template_args;         /* arguments for each template      */
 
     /* concatenation of arg N for each template */
-    int cplt_template_num_args_concat; /* number of concatened arguments    */
-    char **cplt_template_args_concat;  /* concatened arguments              */
+    int cplt_template_num_args_concat; /* number of concatenated arguments  */
+    char **cplt_template_args_concat;  /* concatenated arguments            */
 };
 
 /* hook command run */

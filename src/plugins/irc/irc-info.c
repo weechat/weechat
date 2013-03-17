@@ -540,7 +540,7 @@ irc_info_get_infolist_cb (void *data, const char *infolist_name,
             }
             else
             {
-                /* build list with notify list of all servers matchin arguments */
+                /* build list with notify list of all servers matching arguments */
                 for (ptr_server = irc_servers; ptr_server;
                      ptr_server = ptr_server->next_server)
                 {

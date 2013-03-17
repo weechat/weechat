@@ -219,7 +219,7 @@
 ** valori: none, next, near_server (valore predefinito: `none`)
 
 * [[option_irc.look.nick_color_force]] *irc.look.nick_color_force*
-** descrizione: `forza colore per alcuni nick: l'hash calcolato con il nick per trovare il colore non verrà usato per questi nick (il formato è: "nick1:color1;nick2:color2"); la ricerca dei nick è prima sensibile alle maiuscole, poi con le minuscole, per cui è possibile usare solo le minuscole per i nick in questa opzione`
+** descrizione: `force color for some nicks: hash computed with nickname to find color will not be used for these nicks (format is: "nick1:color1;nick2:color2"); look up for nicks is with exact case then lower case, so it's possible to use only lower case for nicks in this option`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
@@ -304,7 +304,7 @@
 ** valori: on, off (valore predefinito: `on`)
 
 * [[option_irc.look.smart_filter_join_unmask]] *irc.look.smart_filter_join_unmask*
-** descrizione: `delay for unmasking a join message that was filtered with tag "irc_smart_filter" (in minutes): if a nick jas joined max N minutes ago and then says something on channel (message, notice or update on topic), the join is unmasked, as well as nick changes after this join (0 = disable: never unmask a join)`
+** descrizione: `delay for unmasking a join message that was filtered with tag "irc_smart_filter" (in minutes): if a nick has joined max N minutes ago and then says something on channel (message, notice or update on topic), the join is unmasked, as well as nick changes after this join (0 = disable: never unmask a join)`
 ** tipo: intero
 ** valori: 0 .. 10080 (valore predefinito: `30`)
 

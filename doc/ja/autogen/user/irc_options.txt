@@ -219,7 +219,7 @@
 ** 値: none, next, near_server (デフォルト値: `none`)
 
 * [[option_irc.look.nick_color_force]] *irc.look.nick_color_force*
-** 説明: `ニックネーム色を強制するニックネーム: ニックネームから計算されるハッシュを元にした色を利用しない (フォーマット: "nick1:color1;nick2:color2"); オプションで指定された通りのニックネーム、これを小文字化したニックネームの順で検索を行う。そのため、このオプションのニックネーム部分には小文字を使うと良い。`
+** 説明: `force color for some nicks: hash computed with nickname to find color will not be used for these nicks (format is: "nick1:color1;nick2:color2"); look up for nicks is with exact case then lower case, so it's possible to use only lower case for nicks in this option`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
@@ -304,7 +304,7 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_irc.look.smart_filter_join_unmask]] *irc.look.smart_filter_join_unmask*
-** 説明: `delay for unmasking a join message that was filtered with tag "irc_smart_filter" (in minutes): if a nick jas joined max N minutes ago and then says something on channel (message, notice or update on topic), the join is unmasked, as well as nick changes after this join (0 = disable: never unmask a join)`
+** 説明: `delay for unmasking a join message that was filtered with tag "irc_smart_filter" (in minutes): if a nick has joined max N minutes ago and then says something on channel (message, notice or update on topic), the join is unmasked, as well as nick changes after this join (0 = disable: never unmask a join)`
 ** タイプ: 整数
 ** 値: 0 .. 10080 (デフォルト値: `30`)
 

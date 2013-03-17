@@ -2061,7 +2061,7 @@ IRC_PROTOCOL_CALLBACK(001)
                              date, nick, address, host, command,
                              ignored, argc, argv, argv_eol);
 
-    /* connection to IRC server is ok! */
+    /* connection to IRC server is OK! */
     server->is_connected = 1;
     server->reconnect_delay = 0;
     if (server->hook_timer_connection)
@@ -3802,7 +3802,7 @@ IRC_PROTOCOL_CALLBACK(353)
 
     /*
      * for a channel without buffer, prepare a string that will be built
-     * with nicks and colors (argc-args is the number of nicks)
+     * with nicks and colors (argc - args is the number of nicks)
      */
     if (!ptr_channel)
     {

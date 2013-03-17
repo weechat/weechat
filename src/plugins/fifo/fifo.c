@@ -154,7 +154,7 @@ fifo_create ()
             /* create FIFO pipe, writable for user only */
             if (mkfifo (fifo_filename, 0600) == 0)
             {
-                /* open FIFO pipe in read-only, non blockingmode */
+                /* open FIFO pipe in read-only, non-blocking mode */
                 if ((fifo_fd = open (fifo_filename,
                                      O_RDONLY | O_NONBLOCK)) != -1)
                 {

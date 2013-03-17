@@ -56,7 +56,7 @@ enum t_xfer_status
     XFER_STATUS_ACTIVE,                /* sending/receiving data            */
     XFER_STATUS_DONE,                  /* transfer done                     */
     XFER_STATUS_FAILED,                /* transfer failed                   */
-    XFER_STATUS_ABORTED,               /* transfer aborded by user          */
+    XFER_STATUS_ABORTED,               /* transfer aborted by user          */
     /* number of xfer status */
     XFER_NUM_STATUS,
 };
@@ -65,7 +65,7 @@ enum t_xfer_status
 
 enum t_xfer_error
 {
-    XFER_NO_ERROR = 0,                 /* no error to report, all ok!       */
+    XFER_NO_ERROR = 0,                 /* no error to report, all OK!       */
     /* errors for sender: */
     XFER_ERROR_READ_LOCAL,             /* unable to read local file         */
     XFER_ERROR_SEND_BLOCK,             /* unable to send block to receiver  */
@@ -79,10 +79,10 @@ enum t_xfer_error
     XFER_NUM_ERRORS,
 };
 
-/* xfer blocksize */
+/* xfer block size */
 
-#define XFER_BLOCKSIZE_MIN    1024     /* min blocksize                     */
-#define XFER_BLOCKSIZE_MAX  102400     /* max blocksize                     */
+#define XFER_BLOCKSIZE_MIN    1024     /* min block size                    */
+#define XFER_BLOCKSIZE_MAX  102400     /* max block size                    */
 
 /* separator in filenames */
 
@@ -140,7 +140,7 @@ struct t_xfer
     int child_read;                    /* to read into child pipe           */
     int child_write;                   /* to write into child pipe          */
     struct t_hook *hook_fd;            /* hook for socket or child pipe     */
-    struct t_hook *hook_timer;         /* timeout for recever accept        */
+    struct t_hook *hook_timer;         /* timeout for receiver accept       */
     char *unterminated_message;        /* beginning of a message            */
     int file;                          /* local file (read or write)        */
     char *local_filename;              /* local filename (with path)        */

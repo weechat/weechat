@@ -64,7 +64,7 @@ int debug_dump_active = 0;
 void
 debug_dump (int crash)
 {
-    /* prevent reentrance */
+    /* prevent reentrancy */
     if (debug_dump_active)
         exit (EXIT_FAILURE);
 
@@ -473,7 +473,7 @@ debug_infolists ()
     gui_chat_printf (NULL, "");
     gui_chat_printf (NULL, "%d infolists in memory (%s)", count,
                      (count == 0) ?
-                     "this is ok!" :
+                     "this is OK!" :
                      "WARNING: this is probably a memory leak in WeeChat or "
                      "plugins/scripts!");
 

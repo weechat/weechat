@@ -671,7 +671,7 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
     /* add nick to buffer nicklist */
     irc_nick_nicklist_add (server, channel, new_nick);
 
-    /* all is ok, return address of new nick */
+    /* all is OK, return address of new nick */
     return new_nick;
 }
 
@@ -801,7 +801,7 @@ irc_nick_free_all (struct t_irc_server *server, struct t_irc_channel *channel)
         irc_nick_free (server, channel, channel->nicks);
     }
 
-    /* sould be zero, but prevent any bug :D */
+    /* should be zero, but prevent any bug :D */
     channel->nicks_count = 0;
 }
 

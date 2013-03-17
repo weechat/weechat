@@ -56,7 +56,7 @@ struct t_irc_redirect
                                     /* redirected                            */
     int assigned_to_command;        /* 1 if assigned to a command            */
     time_t start_time;              /* time when command is sent to server   */
-                                    /* (this is begining of this redirect)   */
+                                    /* (this is beginning of this redirect)  */
     struct t_hashtable *cmd_start;  /* command(s) starting redirection       */
                                     /* (can be NULL or empty)                */
     struct t_hashtable *cmd_stop;   /* command(s) stopping redirection       */

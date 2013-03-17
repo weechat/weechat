@@ -229,7 +229,7 @@ To force a string comparison, add double quotes around each expression, for exam
   50 > 100      ==> 0
   "50" > "100"  ==> 1
 
-Some variables are replaced in expression, using the format ${variable}, variable can be, by order of prioity :
+Some variables are replaced in expression, using the format ${variable}, variable can be, by order of priority :
   1. the name of an option (file.section.option)
   2. the name of a local variable in buffer
   3. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.

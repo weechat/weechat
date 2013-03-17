@@ -1926,7 +1926,7 @@ command_help_list_plugin_commands (struct t_weechat_plugin *plugin,
             snprintf (str_format, sizeof (str_format),
                       " %%-%ds", max_length);
 
-            /* auto compute number of colums, max size is 90% of chat width */
+            /* auto compute number of columns, max size is 90% of chat width */
             cols = ((gui_current_window->win_chat_width * 90) / 100) / (max_length + 1);
             if (cols == 0)
                 cols = 1;
@@ -5118,7 +5118,7 @@ COMMAND_CALLBACK(upgrade)
     exec_args[3] = strdup (weechat_home);
     execvp (exec_args[0], exec_args);
 
-    /* this code should not be reached if execvp is ok */
+    /* this code should not be reached if execvp is OK */
     string_iconv_fprintf (stderr, "\n\n*****\n");
     string_iconv_fprintf (stderr,
                           _("***** Error: exec failed (program: \"%s\"), exiting WeeChat"),
@@ -6113,7 +6113,7 @@ command_init ()
                      "  50 > 100      ==> 0\n"
                      "  \"50\" > \"100\"  ==> 1\n\n"
                      "Some variables are replaced in expression, using the "
-                     "format ${variable}, variable can be, by order of prioity :\n"
+                     "format ${variable}, variable can be, by order of priority :\n"
                      "  1. the name of an option (file.section.option)\n"
                      "  2. the name of a local variable in buffer\n"
                      "  3. a hdata name/variable (the value is automatically "

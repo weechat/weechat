@@ -464,7 +464,7 @@ gui_chat_display_word (struct t_gui_window *window,
         length_align = gui_line_get_align (window->buffer, line, 0, 0);
         if ((window->win_chat_cursor_x == 0)
             && (*lines_displayed > 0)
-            /* FIXME: modify arbitraty value for non aligning messages on time/nick? */
+            /* FIXME: modify arbitrary value for non aligning messages on time/nick? */
             && (length_align < (window->win_chat_width - 5)))
         {
             if (!simulate)
@@ -1108,7 +1108,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
                 if ((window->win_chat_cursor_x + word_length_with_spaces > gui_chat_get_real_width (window))
                     && (word_length <= gui_chat_get_real_width (window) - line_align))
                 {
-                    /* spaces + word too long for current line but ok for next line */
+                    /* spaces + word too long for current line but OK for next line */
                     gui_chat_display_new_line (window, num_lines, count,
                                                &lines_displayed, simulate);
                     /* apply styles before jumping to start of word */

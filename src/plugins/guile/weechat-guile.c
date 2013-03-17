@@ -969,7 +969,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     plugin_script_display_short_list (weechat_guile_plugin,
                                       guile_scripts);
 
-    /* init ok */
+    /* init OK */
     return WEECHAT_RC_OK;
 }
 

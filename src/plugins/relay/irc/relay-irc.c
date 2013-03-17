@@ -1391,7 +1391,7 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
                 goto end;
             }
 
-            /* check if connection to server is ok */
+            /* check if connection to server is OK */
             infolist_server = weechat_infolist_get ("irc_server", NULL,
                                                     client->protocol_args);
             if (infolist_server)

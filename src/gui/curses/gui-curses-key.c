@@ -551,7 +551,7 @@ gui_key_read_cb (void *data, int fd)
     {
         if (accept_paste)
         {
-            /* user is ok for pasting text, let's paste! */
+            /* user is OK for pasting text, let's paste! */
             gui_key_paste_accept ();
         }
         else if (cancel_paste)

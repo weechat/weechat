@@ -494,7 +494,7 @@ gui_completion_get_matching_template (struct t_gui_completion *completion,
          * template, for example with these templates (command /set):
          *   %(config_options) %(config_option_values)
          *   diff %(config_options)|%*
-         * if first argument is "diff", the match is ok (second template)
+         * if first argument is "diff", the match is OK (second template)
          * if first argument is not "diff", we will fallback on the first
          * template containing "%" (here first template)
          */
@@ -1068,7 +1068,7 @@ gui_completion_complete (struct t_gui_completion *completion)
     }
 
     /*
-     * if we was on last completion in list, then recomplete, starting from
+     * if we was on last completion in list, then complete again, starting from
      * first matching item
      */
     if (completion->word_found && (completion->position >= 0))

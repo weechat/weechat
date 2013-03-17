@@ -83,7 +83,7 @@ xfer_dcc_send_file_child (struct t_xfer *xfer)
                     recv (xfer->sock, (char *) &ack, 4, 0);
                     xfer->ack = ntohl (ack);
 
-                    /* DCC send ok? */
+                    /* DCC send OK? */
                     if ((xfer->pos >= xfer->size)
                         && (xfer->ack >= xfer->size))
                     {
@@ -161,8 +161,8 @@ xfer_dcc_send_file_child (struct t_xfer *xfer)
         }
 
         /*
-         * if send if ok since 2 seconds or more, and that no ack was received,
-         * then consider it's ok
+         * if send if OK since 2 seconds or more, and that no ACK was received,
+         * then consider it's OK
          */
         if ((sent_ok != 0) && (new_time > sent_ok + 2))
         {

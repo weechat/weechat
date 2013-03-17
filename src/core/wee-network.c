@@ -236,7 +236,7 @@ network_pass_httpproxy (struct t_proxy *proxy, int sock, const char *address,
     if (CONFIG_STRING(proxy->options[PROXY_OPTION_USERNAME])
         && CONFIG_STRING(proxy->options[PROXY_OPTION_USERNAME])[0])
     {
-        /* authentification */
+        /* authentication */
         snprintf (authbuf, sizeof (authbuf), "%s:%s",
                   CONFIG_STRING(proxy->options[PROXY_OPTION_USERNAME]),
                   (CONFIG_STRING(proxy->options[PROXY_OPTION_PASSWORD])) ?
@@ -249,7 +249,7 @@ network_pass_httpproxy (struct t_proxy *proxy, int sock, const char *address,
     }
     else
     {
-        /* no authentification */
+        /* no authentication */
         length = snprintf (buffer, sizeof (buffer),
                            "CONNECT %s:%d HTTP/1.0\r\n\r\n", address, port);
     }
@@ -264,7 +264,7 @@ network_pass_httpproxy (struct t_proxy *proxy, int sock, const char *address,
     if (memcmp (buffer, "HTTP/", 5) || memcmp (buffer + 9, "200", 3))
         return 0;
 
-    /* connection ok */
+    /* connection OK */
     return 1;
 }
 
@@ -309,7 +309,7 @@ network_resolve (const char *hostname, char *ip, int *version)
 
     freeaddrinfo (res);
 
-    /* resolution ok */
+    /* resolution OK */
     return 1;
 }
 
@@ -350,7 +350,7 @@ network_pass_socks4proxy (struct t_proxy *proxy, int sock, const char *address,
     if (network_recv_with_retry (sock, buffer, sizeof (buffer), 0) < 2)
         return 0;
 
-    /* connection ok */
+    /* connection OK */
     if ((buffer[0] == 0) && (buffer[1] == 90))
         return 1;
 
@@ -511,7 +511,7 @@ network_pass_socks5proxy (struct t_proxy *proxy, int sock, const char *address,
             return 0;
     }
 
-    /* connection ok */
+    /* connection OK */
     return 1;
 }
 
@@ -579,7 +579,7 @@ network_connect (int sock, const struct sockaddr *addr, socklen_t addrlen)
 
     /* for non-blocking sockets, the connect() may fail with EINPROGRESS,
      * if this happens, we wait for writability on socket and check
-     * the option SO_ERROR, which is 0 if connect is ok (see man connect)
+     * the option SO_ERROR, which is 0 if connect is OK (see man connect)
      */
     while (1)
     {
@@ -962,7 +962,7 @@ network_connect_child (struct t_hook *hook_connect)
 
     status_str[0] = '0' + WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND;
 
-    /* try all IP addresses found, stop when connection is ok */
+    /* try all IP addresses found, stop when connection is OK */
     sock = -1;
     for (i = 0; i < num_hosts; i++)
     {
@@ -1327,7 +1327,7 @@ network_connect_child_read_cb (void *arg_hook_connect, int fd)
     {
         if (buffer[0] - '0' == WEECHAT_HOOK_CONNECT_OK)
         {
-            /* connection ok, read IP address */
+            /* connection OK, read IP address */
             buf_size[5] = '\0';
             num_read = read (HOOK_CONNECT(hook_connect, child_read),
                              buf_size, 5);

@@ -518,7 +518,7 @@ eval_expression_internal (const char *expr, struct t_hashtable *pointers,
                 }
                 pos++;
             }
-            /* closing parenthese not found */
+            /* closing parenthesis not found */
             if (pos[0] != ')')
                 goto end;
             sub_expr = string_strndup (expr2 + 1, pos - expr2 - 1);

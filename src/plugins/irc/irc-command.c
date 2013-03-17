@@ -783,7 +783,7 @@ irc_command_connect_one_server (struct t_irc_server *server,
         server->reconnect_join = (server->channels) ? 1 : 0;
     }
 
-    /* connect ok */
+    /* connect OK */
     return 1;
 }
 
@@ -1483,7 +1483,7 @@ irc_command_disconnect_one_server (struct t_irc_server *server,
     /* ask refresh for "away" item */
     weechat_bar_item_update ("away");
 
-    /* disconnect ok */
+    /* disconnect OK */
     return 1;
 }
 
@@ -3719,7 +3719,7 @@ irc_command_reconnect_one_server (struct t_irc_server *server,
         server->reconnect_join = (server->channels) ? 1 : 0;
     }
 
-    /* reconnect ok */
+    /* reconnect OK */
     return 1;
 }
 

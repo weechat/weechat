@@ -29,7 +29,7 @@ struct t_relay_irc_data
 {
     char *address;                     /* client address (used when sending */
                                        /* data to client)                   */
-    int password_ok;                   /* password received and ok?         */
+    int password_ok;                   /* password received and OK?         */
     char *nick;                        /* nick for client                   */
     int user_received;                 /* command "USER" received           */
     int connected;                     /* 1 if client is connected as IRC   */

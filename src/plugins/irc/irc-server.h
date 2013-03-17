@@ -173,7 +173,7 @@ struct t_irc_server
     char *isupport;                 /* copy of message 005 (ISUPPORT)        */
     char *prefix_modes;             /* prefix modes from msg 005 (eg "ohv")  */
     char *prefix_chars;             /* prefix chars from msg 005 (eg "@%+")  */
-    int nick_max_length;            /* max lenth of nick (from msg 005)      */
+    int nick_max_length;            /* max length of nick (from msg 005)     */
     int casemapping;                /* casemapping from msg 005              */
     char *chantypes;                /* chantypes from msg 005 (eg "&#")      */
     char *chanmodes;                /* chanmodes from msg 005                */

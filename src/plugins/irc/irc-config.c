@@ -2120,7 +2120,7 @@ irc_config_init ()
         "nick_color_force", "string",
         N_("force color for some nicks: hash computed with nickname "
            "to find color will not be used for these nicks (format is: "
-           "\"nick1:color1;nick2:color2\"); lookup for nicks is with "
+           "\"nick1:color1;nick2:color2\"); look up for nicks is with "
            "exact case then lower case, so it's possible to use only lower "
            "case for nicks in this option"),
         NULL, 0, 0, "", NULL, 0, NULL, NULL,
@@ -2350,7 +2350,7 @@ irc_config_init ()
         irc_config_file, ptr_section,
         "smart_filter_join_unmask", "integer",
         N_("delay for unmasking a join message that was filtered with tag "
-           "\"irc_smart_filter\" (in minutes): if a nick jas joined max N "
+           "\"irc_smart_filter\" (in minutes): if a nick has joined max N "
            "minutes ago and then says something on channel (message, notice or "
            "update on topic), the join is unmasked, as well as nick changes "
            "after this join (0 = disable: never unmask a join)"),

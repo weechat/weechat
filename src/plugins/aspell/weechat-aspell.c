@@ -395,7 +395,7 @@ weechat_aspell_check_word (struct t_gui_buffer *buffer,
     buffer_type = weechat_buffer_get_string (buffer, "localvar_type");
     if (buffer_type && (strcmp (buffer_type, "private") == 0))
     {
-        /* check seld nick */
+        /* check self nick */
         buffer_nick = weechat_buffer_get_string (buffer, "localvar_nick");
         if (buffer_nick && (weechat_strcasecmp (buffer_nick, word) == 0))
             return 1;
@@ -664,7 +664,7 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
             if (weechat_aspell_string_is_url (ptr_string))
             {
                 /*
-                 * word is an URL, then it is ok, and search for next space
+                 * word is an URL, then it is OK, and search for next space
                  * (will be end of word)
                  */
                 word_ok = 1;

@@ -174,7 +174,7 @@ relay_client_handshake_timer_cb (void *data, int remaining_calls)
 
     if (rc == GNUTLS_E_SUCCESS)
     {
-        /* handshake ok, set status to "connected" */
+        /* handshake OK, set status to "connected" */
         weechat_unhook (client->hook_timer_handshake);
         client->hook_timer_handshake = NULL;
         relay_client_set_status (client, RELAY_STATUS_CONNECTED);

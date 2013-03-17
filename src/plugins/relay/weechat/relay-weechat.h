@@ -35,7 +35,7 @@ enum t_relay_weechat_compression
 
 struct t_relay_weechat_data
 {
-    int password_ok;                   /* password received and ok?         */
+    int password_ok;                   /* password received and OK?         */
     int compression;                   /* compression type                  */
     int nicklist_diff;                 /* (TEMPORARY) nicklist diff enabled?*/
 

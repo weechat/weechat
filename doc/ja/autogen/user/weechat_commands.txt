@@ -207,40 +207,40 @@ infolists: display infos about infolists
 /eval  [-n] <expression>
        [-n] <expression1> <operator> <expression2>
 
-        -n: 結果をバッファに送信せずに表示 (デバッグモード)
-expression: 評価する式、フォーマット、${variable} 型のフォーマットの変数は置換されます (以下を参照)
-  operator: 論理演算子や比較演算子:
-            - 論理演算子:
-                &&  ブール演算の "and"
-                ||  ブール演算の "or"
-            - 比較演算子:
-                ==  等しい
-                !=  等しくない
-                <=  以下
-                <   より少ない
-                >=  以上
-                >   より大きい
-                =~  正規表現にマッチ
-                !~  正規表現にマッチしない
+        -n: display result without sending it to buffer (debug mode)
+expression: expression to evaluate, variables with format ${variable} are replaced (see below)
+  operator: a logical or comparison operator:
+            - logical operators:
+                &&  boolean "and"
+                ||  boolean "or"
+            - comparison operators:
+                ==  equal
+                !=  not equal
+                <=  less or equal
+                <   less
+                >=  greater or equal
+                >   greater
+                =~  is matching regex
+                !~  is NOT matching regex
 
-式が NULL でない場合、空でない場合、"0" でない場合、式は "真" と評価されます。
-両方の式が有効な整数である場合、比較は整数を使って行われます。
-文字列比較を強制するには、それぞれの式をダブルクォートで囲みます、例えば:
+An expression is considered as "true" if it is not NULL, not empty, and different from "0".
+The comparison is made using integers if the two expressions are valid integers.
+To force a string comparison, add double quotes around each expression, for example:
   50 > 100      ==> 0
   "50" > "100"  ==> 1
 
-式中の ${variable} 型のフォーマットの変数は置換さます。変数は以下の優先順位に従います。
-  1. オプションの名前 (file.section.option)
-  2. バッファのローカル変数の名前
-  3. hdata の名前/変数 (値は自動的に文字列に変換されます)、デフォルトでは "window" と "buffer" は現在のウィンドウ/バッファを指します。
-hdata のフォーマットは以下の 1 つです:
-  hdata.var1.var2...: hdata (ポインタは既知) で始まり、1 個ずつ変数を続ける (他の hdata を続けることも可能)
-  hdata(list).var1.var2...: リストを使って hdata を始める、例:
-    ${buffer[gui_buffers].full_name}: バッファリストにリンクされた最初のバッファのフルネーム
-    ${plugin[weechat_plugins].name}: プラグインリストにリンクされた最初のプラグインの名前
-hdata と変数の名前については、"プラグイン API リファレンス" の "weechat_hdata_get" 関数を参照してください。
+Some variables are replaced in expression, using the format ${variable}, variable can be, by order of priority :
+  1. the name of an option (file.section.option)
+  2. the name of a local variable in buffer
+  3. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
+Format for hdata can be one of following:
+  hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
+  hdata(list).var1.var2...: start with a hdata using a list, for example:
+    ${buffer[gui_buffers].full_name}: full name of first buffer in linked list of buffers
+    ${plugin[weechat_plugins].name}: name of first plugin in linked list of plugins
+For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
 
-例:
+Examples:
   /eval -n ${weechat.look.scroll_amount}  ==> 3
   /eval -n ${window}                      ==> 0x2549aa0
   /eval -n ${window.buffer}               ==> 0x2549320

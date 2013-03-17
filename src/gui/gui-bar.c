@@ -245,7 +245,7 @@ gui_bar_get_min_height (struct t_gui_bar *bar)
 }
 
 /*
- * Checks if "add_size" is ok for bar.
+ * Checks if "add_size" is OK for bar.
  *
  * Returns:
  *   1: new size is OK
@@ -287,7 +287,7 @@ gui_bar_check_size_add (struct t_gui_bar *bar, int add_size)
         }
     }
 
-    /* new size ok */
+    /* new size OK */
     return 1;
 }
 

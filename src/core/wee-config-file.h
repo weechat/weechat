@@ -44,7 +44,7 @@ struct t_config_option;
 struct t_config_file
 {
     struct t_weechat_plugin *plugin;       /* plugin which created this cfg */
-    char *name;                            /* name (exemple: "weechat")     */
+    char *name;                            /* name (example: "weechat")     */
     char *filename;                        /* filename (without path)       */
                                            /* (example: "weechat.conf")     */
     FILE *file;                            /* file pointer                  */
@@ -123,7 +123,7 @@ struct t_config_option
     void *value;                           /* value                         */
     int null_value_allowed;                /* null value allowed ?          */
     int (*callback_check_value)            /* called to check value before  */
-    (void *data,                           /* assiging new value            */
+    (void *data,                           /* assigning new value           */
      struct t_config_option *option,
      const char *value);
     void *callback_check_value_data;       /* data sent to check callback   */

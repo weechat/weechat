@@ -1361,7 +1361,7 @@ script_action_run ()
                          ptr_script = ptr_script->next_script)
                     {
                         /*
-                         * if script is intalled, with new version available,
+                         * if script is installed, with new version available,
                          * and not held, then upgrade it
                          */
                         if ((ptr_script->status & SCRIPT_STATUS_INSTALLED)

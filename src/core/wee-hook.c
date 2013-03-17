@@ -522,7 +522,7 @@ hook_command_build_completion (struct t_hook_command *hook_command)
     }
 
     /*
-     * build strings with concatentaion of items from different templates
+     * build strings with concatenation of items from different templates
      * for each argument: these strings will be used when completing argument
      * if we can't find which template to use (for example for first argument)
      */
@@ -546,7 +546,7 @@ hook_command_build_completion (struct t_hook_command *hook_command)
             hook_command->cplt_template_args_concat[i] = malloc (length);
             if (hook_command->cplt_template_args_concat[i])
             {
-                /* concatene items with "|" as separator */
+                /* concatenate items with "|" as separator */
                 weelist_remove_all (list);
                 hook_command->cplt_template_args_concat[i][0] = '\0';
                 for (j = 0; j < hook_command->cplt_num_templates; j++)
@@ -1476,7 +1476,7 @@ hook_process_child (struct t_hook *hook_process)
         if (HOOK_PROCESS(hook_process, options))
         {
             /*
-             * count number of arguments given in the hashable options,
+             * count number of arguments given in the hashtable options,
              * keys are: "arg1", "arg2", ...
              */
             while (1)
@@ -1539,7 +1539,7 @@ hook_process_child (struct t_hook *hook_process)
             execvp (exec_args[0], exec_args);
         }
 
-        /* should not be executed if execvp was ok */
+        /* should not be executed if execvp was OK */
         if (exec_args)
             string_free_split (exec_args);
         fprintf (stderr, "Error with command '%s'\n",

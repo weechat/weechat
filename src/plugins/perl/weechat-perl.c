@@ -990,7 +990,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_hook_signal ("quit", &weechat_perl_signal_quit_upgrade_cb, NULL);
     weechat_hook_signal ("upgrade", &weechat_perl_signal_quit_upgrade_cb, NULL);
 
-    /* init ok */
+    /* init OK */
     return WEECHAT_RC_OK;
 }
 
@@ -1007,7 +1007,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     perl_quiet = 0;
 
 #ifndef MULTIPLICITY
-    /* free perl intepreter */
+    /* free perl interpreter */
     if (perl_main)
     {
         perl_destruct (perl_main);
