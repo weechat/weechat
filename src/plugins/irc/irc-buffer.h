@@ -57,6 +57,7 @@ extern int irc_buffer_nickcmp_cb (void *data,
                                   struct t_gui_buffer *buffer,
                                   const char *nick1,
                                   const char *nick2);
-extern struct t_gui_buffer *irc_buffer_search_first_for_all_servers ();
+extern struct t_gui_buffer *irc_buffer_search_server_lowest_number ();
+extern struct t_gui_buffer *irc_buffer_search_private_lowest_number (struct t_irc_server *server);
 
 #endif /* __WEECHAT_IRC_BUFFER_H */

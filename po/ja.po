@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-03-17 13:00+0100\n"
+"POT-Creation-Date: 2013-03-17 22:01+0100\n"
 "PO-Revision-Date: 2013-03-17 08:20+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -6086,6 +6086,10 @@ msgstr ""
 "は strftime の man を参照)"
 
 msgid "merge server buffers"
+msgstr "サーババッファをマージ"
+
+#, fuzzy
+msgid "merge private buffers"
 msgstr "サーババッファをマージ"
 
 msgid ""

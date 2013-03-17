@@ -151,7 +151,7 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
                  int auto_switch)
 {
     struct t_irc_channel *new_channel;
-    struct t_gui_buffer *new_buffer;
+    struct t_gui_buffer *new_buffer, *ptr_buffer_for_merge;
     int i, buffer_created, current_buffer_number, buffer_position, manual_join;
     int noswitch;
     char *buffer_name, str_number[32], str_group[32], *channel_name_lower;
@@ -174,6 +174,21 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
         weechat_nicklist_remove_all (new_buffer);
     else
     {
+        ptr_buffer_for_merge = NULL;
+        if (channel_type == IRC_CHANNEL_TYPE_PRIVATE)
+        {
+            switch (weechat_config_integer (irc_config_look_pv_buffer))
+            {
+                case IRC_CONFIG_LOOK_PV_BUFFER_MERGE_BY_SERVER:
+                    /* merge private buffers by server */
+                    ptr_buffer_for_merge = irc_buffer_search_private_lowest_number (server);
+                    break;
+                case IRC_CONFIG_LOOK_PV_BUFFER_MERGE_ALL:
+                    /* merge *ALL* private buffers */
+                    ptr_buffer_for_merge = irc_buffer_search_private_lowest_number (NULL);
+                    break;
+            }
+        }
         current_buffer_number = weechat_buffer_get_integer (weechat_current_buffer (),
                                                             "number");
         new_buffer = weechat_buffer_new (buffer_name,
@@ -205,6 +220,8 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
                     irc_channel_move_near_server (server, channel_type, new_buffer);
                     break;
             }
+            if (ptr_buffer_for_merge)
+                weechat_buffer_merge (new_buffer, ptr_buffer_for_merge);
         }
         buffer_created = 1;
     }

@@ -278,6 +278,11 @@
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 
+* [[option_irc.look.pv_buffer]] *irc.look.pv_buffer*
+** descrizione: `merge private buffers`
+** tipo: intero
+** valori: independent, merge_by_server, merge_all (valore predefinito: `independent`)
+
 * [[option_irc.look.raw_messages]] *irc.look.raw_messages*
 ** descrizione: `numero di messaggi raw da salvare in memoria quando il buffer dei dati raw viene chiuso (i messaggi verranno visualizzati all'apertura del buffer dei dati raw)`
 ** tipo: intero

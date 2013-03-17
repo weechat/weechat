@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-03-17 13:00+0100\n"
+"POT-Creation-Date: 2013-03-17 22:01+0100\n"
 "PO-Revision-Date: 2013-03-17 08:20+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6211,6 +6211,10 @@ msgstr ""
 "strftime dla specyfikatorów daty/czasu)"
 
 msgid "merge server buffers"
+msgstr "połącz bufory serwerów"
+
+#, fuzzy
+msgid "merge private buffers"
 msgstr "połącz bufory serwerów"
 
 msgid ""

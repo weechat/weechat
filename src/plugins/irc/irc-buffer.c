@@ -184,14 +184,13 @@ irc_buffer_nickcmp_cb (void *data,
 }
 
 /*
- * Searches for first server buffer that will be used to merge all IRC server
- * buffers.
+ * Searches for the server buffer with the lowest number.
  *
  * Returns pointer to buffer found, NULL if not found.
  */
 
 struct t_gui_buffer *
-irc_buffer_search_first_for_all_servers ()
+irc_buffer_search_server_lowest_number ()
 {
     struct t_gui_buffer *ptr_buffer;
     struct t_irc_server *ptr_server;
@@ -212,6 +211,48 @@ irc_buffer_search_first_for_all_servers ()
                 ptr_buffer = ptr_server->buffer;
             }
         }
+    }
+    return ptr_buffer;
+}
+
+/*
+ * Searches for the private buffer with the lowest number.
+ * If server is not NULL, searches only for this server.
+ *
+ * Returns pointer to buffer found, NULL if not found.
+ */
+
+struct t_gui_buffer *
+irc_buffer_search_private_lowest_number (struct t_irc_server *server)
+{
+    struct t_gui_buffer *ptr_buffer;
+    struct t_irc_server *ptr_server;
+    struct t_irc_channel *ptr_channel;
+    int number, number_found;
+
+    ptr_buffer = NULL;
+    number_found = INT_MAX;
+
+    for (ptr_server = (server) ? server : irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        for (ptr_channel = ptr_server->channels; ptr_channel;
+             ptr_channel = ptr_channel->next_channel)
+        {
+            if ((ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE)
+                && ptr_channel->buffer)
+            {
+                number = weechat_buffer_get_integer (ptr_channel->buffer,
+                                                     "number");
+                if (number < number_found)
+                {
+                    number_found = number;
+                    ptr_buffer = ptr_channel->buffer;
+                }
+            }
+        }
+        if (server)
+            break;
     }
     return ptr_buffer;
 }

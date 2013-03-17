@@ -278,6 +278,11 @@
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
+* [[option_irc.look.pv_buffer]] *irc.look.pv_buffer*
+** Beschreibung: `merge private buffers`
+** Typ: integer
+** Werte: independent, merge_by_server, merge_all (Standardwert: `independent`)
+
 * [[option_irc.look.raw_messages]] *irc.look.raw_messages*
 ** Beschreibung: `Anzahl der IRC-RAW-Nachrichten die im Speicher gehalten werden sollen falls der RAW-Daten-Buffer geschlossen ist (die Nachrichten werden umgehend angezeigt sobald der RAW-Daten-Buffer geöffnet wird)`
 ** Typ: integer

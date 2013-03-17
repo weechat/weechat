@@ -278,13 +278,18 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `off`)
 
+* [[option_irc.look.pv_buffer]] *irc.look.pv_buffer*
+** description: `mélanger les tampons privés`
+** type: entier
+** valeurs: independent, merge_by_server, merge_all (valeur par défaut: `independent`)
+
 * [[option_irc.look.raw_messages]] *irc.look.raw_messages*
 ** description: `nombre de messages bruts à sauvegarder en mémoire lorsque le tampon des données brutes est fermé (ces messages seront affichés lors de l'ouverture du tampon des données brutes)`
 ** type: entier
 ** valeurs: 0 .. 65535 (valeur par défaut: `256`)
 
 * [[option_irc.look.server_buffer]] *irc.look.server_buffer*
-** description: `mélange des tampons de serveur`
+** description: `mélanger les tampons de serveur`
 ** type: entier
 ** valeurs: merge_with_core, merge_without_core, independent (valeur par défaut: `merge_with_core`)
 

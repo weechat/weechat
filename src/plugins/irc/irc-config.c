@@ -56,6 +56,7 @@ struct t_config_option *irc_config_look_color_nicks_in_server_messages;
 struct t_config_option *irc_config_look_color_pv_nick_like_channel;
 struct t_config_option *irc_config_look_ctcp_time_format;
 struct t_config_option *irc_config_look_server_buffer;
+struct t_config_option *irc_config_look_pv_buffer;
 struct t_config_option *irc_config_look_new_channel_position;
 struct t_config_option *irc_config_look_new_pv_position;
 struct t_config_option *irc_config_look_nick_prefix;
@@ -305,7 +306,7 @@ irc_config_change_look_server_buffer (void *data,
         ptr_buffer =
             (weechat_config_integer (irc_config_look_server_buffer) ==
              IRC_CONFIG_LOOK_SERVER_BUFFER_MERGE_WITH_CORE) ?
-            weechat_buffer_search_main () : irc_buffer_search_first_for_all_servers ();
+            weechat_buffer_search_main () : irc_buffer_search_server_lowest_number ();
 
         if (ptr_buffer)
         {
@@ -314,6 +315,70 @@ irc_config_change_look_server_buffer (void *data,
             {
                 if (ptr_server->buffer && (ptr_server->buffer != ptr_buffer))
                     weechat_buffer_merge (ptr_server->buffer, ptr_buffer);
+            }
+        }
+    }
+}
+
+/*
+ * Callback for changes on option "irc.look.pv_buffer".
+ */
+
+void
+irc_config_change_look_pv_buffer (void *data,
+                                  struct t_config_option *option)
+{
+    struct t_irc_server *ptr_server;
+    struct t_irc_channel *ptr_channel;
+    struct t_gui_buffer *ptr_buffer;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+    /* first unmerge all IRC private buffers */
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        for (ptr_channel = ptr_server->channels; ptr_channel;
+             ptr_channel = ptr_channel->next_channel)
+        {
+            if ((ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE)
+                && ptr_channel->buffer)
+            {
+                weechat_buffer_unmerge (ptr_channel->buffer, -1);
+            }
+        }
+    }
+
+    /* merge IRC private buffers */
+    if ((weechat_config_integer (irc_config_look_pv_buffer) == IRC_CONFIG_LOOK_PV_BUFFER_MERGE_BY_SERVER)
+        || (weechat_config_integer (irc_config_look_pv_buffer) == IRC_CONFIG_LOOK_PV_BUFFER_MERGE_ALL))
+    {
+        for (ptr_server = irc_servers; ptr_server;
+             ptr_server = ptr_server->next_server)
+        {
+            for (ptr_channel = ptr_server->channels; ptr_channel;
+                 ptr_channel = ptr_channel->next_channel)
+            {
+                if ((ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE)
+                    && ptr_channel->buffer)
+                {
+                    ptr_buffer = NULL;
+                    switch (weechat_config_integer (irc_config_look_pv_buffer))
+                    {
+                        case IRC_CONFIG_LOOK_PV_BUFFER_MERGE_BY_SERVER:
+                            /* merge private buffers by server */
+                            ptr_buffer = irc_buffer_search_private_lowest_number (ptr_server);
+                            break;
+                        case IRC_CONFIG_LOOK_PV_BUFFER_MERGE_ALL:
+                            /* merge *ALL* private buffers */
+                            ptr_buffer = irc_buffer_search_private_lowest_number (NULL);
+                            break;
+                    }
+                    if (ptr_buffer && (ptr_channel->buffer != ptr_buffer))
+                        weechat_buffer_merge (ptr_channel->buffer, ptr_buffer);
+                }
             }
         }
     }
@@ -2072,6 +2137,13 @@ irc_config_init ()
         "merge_with_core|merge_without_core|independent", 0, 0, "merge_with_core",
         NULL, 0, NULL, NULL,
         &irc_config_change_look_server_buffer, NULL, NULL, NULL);
+    irc_config_look_pv_buffer = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "pv_buffer", "integer",
+        N_("merge private buffers"),
+        "independent|merge_by_server|merge_all", 0, 0, "independent",
+        NULL, 0, NULL, NULL,
+        &irc_config_change_look_pv_buffer, NULL, NULL, NULL);
     irc_config_look_new_channel_position = weechat_config_new_option (
         irc_config_file, ptr_section,
         "new_channel_position", "integer",

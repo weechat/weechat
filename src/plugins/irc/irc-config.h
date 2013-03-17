@@ -29,6 +29,13 @@ enum t_irc_config_look_server_buffer
     IRC_CONFIG_LOOK_SERVER_BUFFER_INDEPENDENT,
 };
 
+enum t_irc_config_look_pv_buffer
+{
+    IRC_CONFIG_LOOK_PV_BUFFER_INDEPENDENT = 0,
+    IRC_CONFIG_LOOK_PV_BUFFER_MERGE_BY_SERVER,
+    IRC_CONFIG_LOOK_PV_BUFFER_MERGE_ALL,
+};
+
 enum t_irc_config_look_buffer_position
 {
     IRC_CONFIG_LOOK_BUFFER_POSITION_NONE = 0,
@@ -91,6 +98,7 @@ extern struct t_config_option *irc_config_look_color_nicks_in_server_messages;
 extern struct t_config_option *irc_config_look_color_pv_nick_like_channel;
 extern struct t_config_option *irc_config_look_ctcp_time_format;
 extern struct t_config_option *irc_config_look_server_buffer;
+extern struct t_config_option *irc_config_look_pv_buffer;
 extern struct t_config_option *irc_config_look_new_channel_position;
 extern struct t_config_option *irc_config_look_new_pv_position;
 extern struct t_config_option *irc_config_look_nick_prefix;

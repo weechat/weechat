@@ -278,6 +278,11 @@
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `off`)
 
+* [[option_irc.look.pv_buffer]] *irc.look.pv_buffer*
+** 説明: `merge private buffers`
+** タイプ: 整数
+** 値: independent, merge_by_server, merge_all (デフォルト値: `independent`)
+
 * [[option_irc.look.raw_messages]] *irc.look.raw_messages*
 ** 説明: `生データバッファが閉じられた時にメモリに保存する生メッセージの数 (生データバッファを開いたときに表示されるメッセージ)`
 ** タイプ: 整数

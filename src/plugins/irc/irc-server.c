@@ -3383,7 +3383,7 @@ irc_server_create_buffer (struct t_irc_server *server)
             break;
         case IRC_CONFIG_LOOK_SERVER_BUFFER_MERGE_WITHOUT_CORE:
             /* find buffer used to merge all IRC server buffers */
-            ptr_buffer_for_merge = irc_buffer_search_first_for_all_servers ();
+            ptr_buffer_for_merge = irc_buffer_search_server_lowest_number ();
             break;
     }
 

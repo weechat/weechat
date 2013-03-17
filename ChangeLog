@@ -44,6 +44,8 @@ Version 0.4.1 (under dev!)
   list with arguments inside), guile >= 2.0 is now required (bug #38350)
 * guile: fix crash on calls to callbacks during load of script (bug #38343)
 * guile: fix compilation with guile 2.0
+* irc: add option irc.look.pv_buffer: automatically merge private buffers
+  (optionally by server) (task #11924)
 * irc: rename option irc.network.lag_disconnect to irc.network.lag_reconnect,
   value is now a number of seconds
 * irc: hide passwords in commands or messages sent to nickserv (/msg nickserv)
