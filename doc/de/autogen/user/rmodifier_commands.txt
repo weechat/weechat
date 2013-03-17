@@ -6,23 +6,23 @@
             del <name>|-all [<name>...]
             default -yes
 
-       list: zeigt alle rmodifier an
-listdefault: zeigt die Standardeinstellung für rmodifier an
-        add: einen rmodifier hinzufügen
-       name: Name des rmodifier
-  modifiers: durch Kommata getrennte Liste der modifier
-     groups: Aktion auf Gruppen anwenden: durch Kommata getrennte Liste der Gruppen (von 1 bis 9). Optional kann nach der Nummer für die Gruppe ein "*" gesetzt werden um diese Gruppe auszublenden
-      regex: regulärer Ausdruck  (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden)
-        del: löscht einen rmodifier Eintrag
-       -all: löscht alle rmodifiers Einträge
-    default: setzt die rmodifier auf seine Standardwerte zurück
+       list: list all rmodifiers
+listdefault: list default rmodifiers
+        add: add a rmodifier
+       name: name of rmodifier
+  modifiers: comma separated list of modifiers
+     groups: action on groups captured in regular expression (inside parentheses): comma separated list of groups (from 1 to 9) with optional "*" after number to hide the group
+      regex: regular expression (case insensitive, can start by "(?-i)" to become case sensitive)
+        del: delete a rmodifier
+       -all: delete all rmodifiers
+    default: restore default rmodifiers
 
-Beispiele:
-  verbirgt die Eingabe nach dem Befehl /passwort:
-    /rmodifier add passwort input_text_display 1,2* ^(/passwort +)(.*)
-  lösche rmodifier "passwort":
-    /rmodifier del passwort
-  lösche alle rmodifiers:
+Examples:
+  hide everything typed after a command /password:
+    /rmodifier add password input_text_display 1,2* ^(/password +)(.*)
+  delete rmodifier "password":
+    /rmodifier del password
+  delete all rmodifiers:
     /rmodifier del -all
 ........................................
 

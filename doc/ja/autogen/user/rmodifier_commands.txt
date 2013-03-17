@@ -6,23 +6,23 @@
             del <name>|-all [<name>...]
             default -yes
 
-       list: 全ての rmodifier をリストアップ
-listdefault: デフォルトの rmodifier をリストアップ
-        add: rmodifier を追加
-       name: rmodifier の名前
-  modifiers: rmodifier のコンマ区切りリスト
-     groups: グループに対するアクション: グループ (1 から 9) のコンマ区切りリスト、グループを隠すにはオプションで番号の後ろに "*" をつける
-      regex: 正規表現 (大文字小文字の区別無し、"(?-i)" で始めれば区別有り)
-        del: rmodifier を削除
-       -all: 全ての rmodifier を削除
-    default: デフォルトの rmodifier に戻す
+       list: list all rmodifiers
+listdefault: list default rmodifiers
+        add: add a rmodifier
+       name: name of rmodifier
+  modifiers: comma separated list of modifiers
+     groups: action on groups captured in regular expression (inside parentheses): comma separated list of groups (from 1 to 9) with optional "*" after number to hide the group
+      regex: regular expression (case insensitive, can start by "(?-i)" to become case sensitive)
+        del: delete a rmodifier
+       -all: delete all rmodifiers
+    default: restore default rmodifiers
 
-例:
-  コマンド /password に続く入力は全て隠す:
+Examples:
+  hide everything typed after a command /password:
     /rmodifier add password input_text_display 1,2* ^(/password +)(.*)
-  rmodifier "password" を削除:
+  delete rmodifier "password":
     /rmodifier del password
-  全ての rmodifiers を削除:
+  delete all rmodifiers:
     /rmodifier del -all
 ........................................
 

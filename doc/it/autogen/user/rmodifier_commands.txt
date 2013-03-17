@@ -6,23 +6,23 @@
             del <nome>|-all [<nome>...]
             default -yes
 
-       list: elenca tutti gli rmodifier
-listdefault: elenca gli rmodifier predefiniti
-        add: aggiunge un rmodifier
-       nome: nome rmodifier
-   modifier: elenco separato da virgole di modificatori
-     gruppi: azione sui gruppi trovati: elenco separato da virgole di gruppi (da 1 a 9) con "*" opzionale dopo il numero per nascondere il gruppo
-      regex: espressione regolare (non sensibile alle maiuscole, può iniziare con "(?-i)" per diventare sensibile alle maiuscole
-        del: elimina rmodifier
-       -all: elimina tutti gli rmodifier
-    default: ripristina gli rmodifier predefiniti
+       list: list all rmodifiers
+listdefault: list default rmodifiers
+        add: add a rmodifier
+       name: name of rmodifier
+  modifiers: comma separated list of modifiers
+     groups: action on groups captured in regular expression (inside parentheses): comma separated list of groups (from 1 to 9) with optional "*" after number to hide the group
+      regex: regular expression (case insensitive, can start by "(?-i)" to become case sensitive)
+        del: delete a rmodifier
+       -all: delete all rmodifiers
+    default: restore default rmodifiers
 
-Esempi:
-  nasconde ciò che viene digitato dopo il comando /password:
+Examples:
+  hide everything typed after a command /password:
     /rmodifier add password input_text_display 1,2* ^(/password +)(.*)
-  elimina rmodifier "password":
+  delete rmodifier "password":
     /rmodifier del password
-  elimina tutti gli rmodifier:
+  delete all rmodifiers:
     /rmodifier del -all
 ........................................
 
