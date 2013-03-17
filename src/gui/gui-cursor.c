@@ -67,7 +67,9 @@ gui_cursor_mode_toggle ()
         /* restore input (and move cursor in input) */
         if (gui_cursor_debug)
             gui_input_delete_line (gui_current_window->buffer);
-        gui_input_text_changed_modifier_and_signal (gui_current_window->buffer, 0);
+        gui_input_text_changed_modifier_and_signal (gui_current_window->buffer,
+                                                    0, /* save undo */
+                                                    1); /* stop completion */
         gui_buffer_ask_chat_refresh (gui_current_window->buffer, 2);
     }
 }

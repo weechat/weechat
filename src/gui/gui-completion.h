@@ -68,8 +68,7 @@ struct t_gui_completion
 extern void gui_completion_buffer_init (struct t_gui_completion *completion,
                                         struct t_gui_buffer *buffer);
 extern void gui_completion_free (struct t_gui_completion *completion);
-extern void gui_completion_stop (struct t_gui_completion *completion,
-                                 int remove_partial_completion_list);
+extern void gui_completion_stop (struct t_gui_completion *completion);
 extern void gui_completion_list_add (struct t_gui_completion *completion,
                                      const char *word,
                                      int nick_completion, const char *where);

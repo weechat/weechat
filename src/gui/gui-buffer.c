@@ -1645,7 +1645,9 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     {
         gui_buffer_undo_snap (buffer);
         gui_input_replace_input (buffer, value);
-        gui_input_text_changed_modifier_and_signal (buffer, 1);
+        gui_input_text_changed_modifier_and_signal (buffer,
+                                                    1, /* save undo */
+                                                    1); /* stop completion */
     }
     else if (string_strcasecmp (property, "input_pos") == 0)
     {

@@ -14,6 +14,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 Version 0.4.1 (under dev!)
 --------------------------
 
+* core: fix refresh of item "completion": clear it after any action that is
+  changing content of command line and after switch of buffer (bug #38214)
 * core: add support of multiple layouts (task #11274)
 * core: add signals nicklist_{group|nick}_removing and hsignals
   nicklist_{group|nick}_{added|removing|changed}

@@ -419,10 +419,9 @@ gui_key_flush (int paste)
                     gui_buffer_undo_snap (gui_current_window->buffer);
                 gui_input_insert_string (gui_current_window->buffer,
                                          key_str, -1);
-                if (gui_current_window->buffer->completion)
-                    gui_completion_stop (gui_current_window->buffer->completion, 0);
                 gui_input_text_changed_modifier_and_signal (gui_current_window->buffer,
-                                                            (!paste || !undo_done) ? 1 : 0);
+                                                            (!paste || !undo_done) ? 1 : 0,
+                                                            1); /* stop completion */
                 undo_done = 1;
             }
 
