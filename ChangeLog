@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.1-dev, 2013-03-17
+v0.4.1-dev, 2013-03-21
 
 
 This document lists all changes for each version.
@@ -44,6 +44,8 @@ Version 0.4.1 (under dev!)
   list with arguments inside), guile >= 2.0 is now required (bug #38350)
 * guile: fix crash on calls to callbacks during load of script (bug #38343)
 * guile: fix compilation with guile 2.0
+* irc: fix prefix color for nick when the prefix is not in
+  irc.color.nick_prefixes: use default color (key "*")
 * irc: add option irc.look.pv_buffer: automatically merge private buffers
   (optionally by server) (task #11924)
 * irc: rename option irc.network.lag_disconnect to irc.network.lag_reconnect,
