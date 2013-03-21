@@ -24,6 +24,11 @@ p.table {
     margin-top: 0;
     margin-bottom: 0;
 }
+div.listingblock > div.content {
+    border: solid 1px #DADADA;
+    border-radius: 4px;
+    background-color: #FAFAFA;
+}
 .key {
     border-top: solid 1px #D5D5E5;
     border-left: solid 1px #D5D5E5;
