@@ -11,20 +11,39 @@ Es recomendable una terminal emulada para X (pero no indispensable)
 rxvt-unicode (tiene un buen soporte para UTF-8, y no da problemas con
 los atajas de teclados predeterminados).
 
-Ejecute "weechat-curses" en la consola.
+// TRANSLATION MISSING
+Run from your shell:
+
+----------------------------------------
+$ weechat-curses
+----------------------------------------
 
 
 [[help_options]]
 Ayuda en linea / Opciones
 -------------------------
 
-WeeChat tiene ayuda para todos los comandos, solo teclee /help Para
-obtener ayuda específicamente de un comando, teclee: `/help comando`
+WeeChat tiene ayuda para todos los comandos, solo teclee:
 
-Para configurar una opción, use `/set config.section.option valor`
-donde `config` es el nombre de la configuración del núcleo o del
+----------------------------------------
+/help
+----------------------------------------
+
+Para obtener ayuda específicamente de un comando, teclee:
+
+----------------------------------------
+/help comando
+----------------------------------------
+
+Para configurar una opción, use:
+
+----------------------------------------
+/set config.section.option valor
+----------------------------------------
+
+(donde `config` es el nombre de la configuración del núcleo o del
 plugin que desea configurar,  `section`, la sección de esa configuración
-y `option` el nombre de la opción.
+y `option` el nombre de la opción).
 
 WeeChat usará inmediatamente el nuevo valor asignado (*no* es necesario
 reiniciar WeeChat después de aplicar cambios a la configuración).
@@ -33,18 +52,30 @@ Usando el comando `/set` con un nombre tecleado parcialmente y el
 comodín "*" al principio o al final del texto; pude mostrar todas las
 opciones que contienen esas letras. Por ejemplo:
 
-`/set`::
-    Mostrará todas las opciones de WeeChat y sus plugins.
+* mostrará todas las opciones de WeeChat y sus plugins:
 
-`/set weechat.*`::
-    Mostrará solo las opciones de WeeChat.
+----------------------------------------
+/set
+----------------------------------------
 
-`/set irc.*`::
-    Mostrará las opciones del plugin IRC
+* mostrará solo las opciones de WeeChat:
+
+----------------------------------------
+/set weechat.*
+----------------------------------------
+
+* mostrará las opciones del plugin IRC:
+
+----------------------------------------
+/set irc.*
+----------------------------------------
 
 Puede mostrar la ayuda de una opción en especifico con  `/help`, por
 ejemplo:
-`/help weechat.look.highlight`.
+
+----------------------------------------
+/help weechat.look.highlight
+----------------------------------------
 
 Todas las opciones se salvarán de manera automática cuando cierre
 WeeChat o usando el comando `/save` para forzar la forzar a WeeChat a
@@ -77,9 +108,15 @@ Crear un servidor IRC
 
 Puede agregar un servidor IRC usando el comando `/server`, por ejemplo:
 
-  /server add oftc irc.oftc.net/6667
+----------------------------------------
+/server add oftc irc.oftc.net/6667
+----------------------------------------
 
-La ayuda está disponible; si te pierdes: `/help server`
+La ayuda está disponible; si te pierdes:
+
+----------------------------------------
+/help server
+----------------------------------------
 
 
 [[irc_server_options]]
@@ -99,55 +136,73 @@ Por ejemplo, tenemos el nick por defecto (que se basa en su login) pero
 usted puedes sobreescribirlo para el servidor identificado como oftc
 de la siguiente manera:
 
-  /set irc.server.oftc.nicks "nick,nick2,nick3,nick4,nick5"
+----------------------------------------
+/set irc.server.oftc.nicks "nick,nick2,nick3,nick4,nick5"
+----------------------------------------
 
 También para configurar el nombre de usuario y el nombre real:
 
-  /set irc.server.oftc.username "Mi nombre de usuario"
-  /set irc.server.oftc.realname "Mi nombre real"
+----------------------------------------
+/set irc.server.oftc.username "Mi nombre de usuario"
+/set irc.server.oftc.realname "Mi nombre real"
+----------------------------------------
 
 Para que el servidor se conecte cuando WeeChat inicie:
 
-  /set irc.server.oftc.autoconnect on
+----------------------------------------
+/set irc.server.oftc.autoconnect on
+----------------------------------------
 
 // TRANSLATION MISSING
 If SASL is available on server, you can use it for authentication (you will be
 identified before you join channels):
 
-  /set irc.server_default.sasl_mechanism dh-blowfish
-  /set irc.server.oftc.sasl_username "nick"
-  /set irc.server.oftc.sasl_password "xxxxxxx"
+----------------------------------------
+/set irc.server_default.sasl_mechanism dh-blowfish
+/set irc.server.oftc.sasl_username "nick"
+/set irc.server.oftc.sasl_password "xxxxxxx"
+----------------------------------------
 
 // TRANSLATION MISSING
 To run a command after connection to server, for example to authenticate
 with nickserv (only if you don't use SASL for authentication):
 
-  /set irc.server.oftc.command "/msg nickserv identify xxxxxxx"
+----------------------------------------
+/set irc.server.oftc.command "/msg nickserv identify xxxxxxx"
+----------------------------------------
 
 [NOTE]
 Varios comandos pueden ser escritos separados por ';' (punto y coma).
 
 Para unirse automáticamente a canales cuando el servidor se conecte:
 
-  /set irc.server.oftc.autojoin "#uncanal,#otrocanal"
+----------------------------------------
+/set irc.server.oftc.autojoin "#uncanal,#otrocanal"
+----------------------------------------
 
 Para eliminar un valor asignado a una opción de servidor y usar los
 valores por defecto en su lugar, por ejemplo, usar el nick por defecto
 (irc.server_default.nicks):
 
-  /set irc.server.oftc.nicks null
+----------------------------------------
+/set irc.server.oftc.nicks null
+----------------------------------------
 
 Otras opciones: pude configurar otras opciones con el siguiente comando,
 donde "xxx" es el nombre de la opción.
 
-  /set irc.server.oftc.xxx valor
+----------------------------------------
+/set irc.server.oftc.xxx valor
+----------------------------------------
 
 
 [[connect_to_irc_server]]
 Conectarse a un servidor IRC
 ----------------------------
 
-  /connect oftc
+----------------------------------------
+/connect oftc
+----------------------------------------
 
 [NOTE]
 Este comando también puede usarse para crear y conectarse a un nuevo
@@ -161,22 +216,33 @@ servidores use ctrl+X.
 Es posible deshabilitar esta manera de tener todos los buffer de
 servidores juntos para tenerlos de manera independiente:
 
-  /set irc.look.server_buffer independent
+----------------------------------------
+/set irc.look.server_buffer independent
+----------------------------------------
 
 
 [[join_part_irc_channels]]
 join/part y canales IRC
 -----------------------
 
-`/join #canal`::
-    Se une a un canal llamado "#canal"
+Se une a un canal llamado "#canal":
 
-`/part [mensaje de partida]`::
-    sale de un canal (mantiene el buffer abierto)
+----------------------------------------
+/join #canal
+----------------------------------------
 
-`/close`::
-    cierra un servidor o el buffer de un canal
-     (`/close` es un alias de `/buffer close`)
+Sale de un canal (mantiene el buffer abierto):
+
+----------------------------------------
+/part [mensaje de partida]
+----------------------------------------
+
+Cierra un servidor o el buffer de un canal (`/close` es un alias de
+`/buffer close`):
+
+----------------------------------------
+/close
+----------------------------------------
 
 
 [[buffer_window]]
@@ -193,8 +259,10 @@ ventanas conteniendo varios buffer al mismo tiempo.
 
 Comandos para manipular buffer y ventana:
 
-  /buffer
-  /window
+----------------------------------------
+/buffer
+/window
+----------------------------------------
 
 (le reitero que puede obtener ayuda de los comandos con /help buffer y
 /help ventana respectivamente)
@@ -202,7 +270,9 @@ Comandos para manipular buffer y ventana:
 Por ejemplo, para dividir la pantalla una pequeña ventana (1/3)
 junto a otras mas grande (2/3) use el comando
 
-  /window splitv 33
+----------------------------------------
+/window splitv 33
+----------------------------------------
 
 
 [[key_bindings]]
@@ -229,15 +299,21 @@ alguna tecla.
 Por ejemplo, para asignar la combinación meta-y (alt-y) al comando
 `/buffer close`:
 
-  /key bind (presionamos meta-k) (presionamos meta-y) /buffer close
+----------------------------------------
+/key bind (presionamos meta-k) (presionamos meta-y) /buffer close
+----------------------------------------
 
 El comando se vera mas o menos así:
 
-  /key bind meta-y /buffer close
+----------------------------------------
+/key bind meta-y /buffer close
+----------------------------------------
 
 Para eliminar una combinación:
 
-  /key unbind meta-y
+----------------------------------------
+/key unbind meta-y
+----------------------------------------
 
 
 [[plugins_scripts]]

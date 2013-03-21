@@ -10,17 +10,35 @@ Start WeeChat
 A recommended terminal emulator for X (but not mandatory) is rxvt-unicode
 (it has good UTF-8 support, and no problem with default keyboard bindings).
 
-Run "weechat-curses" from your shell.
+Run from your shell:
+
+----------------------------------------
+$ weechat-curses
+----------------------------------------
 
 
 [[help_options]]
 Online help / options
 ---------------------
 
-WeeChat has help for all commands, just issue /help
-To get help on a specific command, issue `/help command`
+WeeChat has help for all commands, just issue:
 
-To set options, use `/set config.section.option value`
+----------------------------------------
+/help
+----------------------------------------
+
+To get help on a specific command, issue:
+
+----------------------------------------
+/help command
+----------------------------------------
+
+To set options, issue:
+
+----------------------------------------
+/set config.section.option value
+----------------------------------------
+
 (where `config` is configuration name (`weechat` for core, or a plugin
 name), `section` the section of this configuration and `option` the
 option name).
@@ -32,17 +50,29 @@ You can use `/set` option with partial name and wildcard "*" at the beginning
 or end to display all options containing letters.
 For example:
 
-`/set`::
-    display all options (WeeChat and plugins)
+* display all options (WeeChat and plugins):
 
-`/set weechat.*`::
-    display WeeChat options
+----------------------------------------
+/set
+----------------------------------------
 
-`/set irc.*`::
-    display IRC plugin options
+* display WeeChat options:
+
+----------------------------------------
+/set weechat.*
+----------------------------------------
+
+* display IRC plugin options:
+
+----------------------------------------
+/set irc.*
+----------------------------------------
 
 You can display help for an option with `/help`, for example:
-`/help weechat.look.highlight`.
+
+----------------------------------------
+/help weechat.look.highlight
+----------------------------------------
 
 All settings are saved when WeeChat ends (or with `/save` command to force
 a write of the options).
@@ -71,9 +101,15 @@ Create an IRC server
 
 You can add an IRC server with `/server` command, for example:
 
-  /server add oftc irc.oftc.net/6667
+----------------------------------------
+/server add oftc irc.oftc.net/6667
+----------------------------------------
 
-As usual, help is available if you're lost: `/help server`
+As usual, help is available if you're lost:
+
+----------------------------------------
+/help server
+----------------------------------------
 
 
 [[irc_server_options]]
@@ -90,52 +126,70 @@ For each server option, WeeChat uses its value if it is defined (not
 For example there's default nicks (based on your un*x login), and you can
 override them for oftc server with following command:
 
-  /set irc.server.oftc.nicks "mynick,mynick2,mynick3,mynick4,mynick5"
+----------------------------------------
+/set irc.server.oftc.nicks "mynick,mynick2,mynick3,mynick4,mynick5"
+----------------------------------------
 
 To set username and realname:
 
-  /set irc.server.oftc.username "My user name"
-  /set irc.server.oftc.realname "My real name"
+----------------------------------------
+/set irc.server.oftc.username "My user name"
+/set irc.server.oftc.realname "My real name"
+----------------------------------------
 
 To enable auto-connect to server at startup:
 
-  /set irc.server.oftc.autoconnect on
+----------------------------------------
+/set irc.server.oftc.autoconnect on
+----------------------------------------
 
 If SASL is available on server, you can use it for authentication (you will be
 identified before you join channels):
 
-  /set irc.server_default.sasl_mechanism dh-blowfish
-  /set irc.server.oftc.sasl_username "mynick"
-  /set irc.server.oftc.sasl_password "xxxxxxx"
+----------------------------------------
+/set irc.server_default.sasl_mechanism dh-blowfish
+/set irc.server.oftc.sasl_username "mynick"
+/set irc.server.oftc.sasl_password "xxxxxxx"
+----------------------------------------
 
 To run a command after connection to server, for example to authenticate
 with nickserv (only if you don't use SASL for authentication):
 
-  /set irc.server.oftc.command "/msg nickserv identify xxxxxxx"
+----------------------------------------
+/set irc.server.oftc.command "/msg nickserv identify xxxxxxx"
+----------------------------------------
 
 [NOTE]
 Many commands can be separated by ';' (semi-colon).
 
 To auto-join some channels when connecting to server:
 
-  /set irc.server.oftc.autojoin "#channel1,#channel2"
+----------------------------------------
+/set irc.server.oftc.autojoin "#channel1,#channel2"
+----------------------------------------
 
 To remove a value of a server option, and use the default value instead,
 for example to use default nicks (irc.server_default.nicks):
 
-  /set irc.server.oftc.nicks null
+----------------------------------------
+/set irc.server.oftc.nicks null
+----------------------------------------
 
 Other options: you can setup other options with following command ("xxx" is
 option name):
 
-  /set irc.server.oftc.xxx value
+----------------------------------------
+/set irc.server.oftc.xxx value
+----------------------------------------
 
 
 [[connect_to_irc_server]]
 Connect to IRC server and auto-join channels
 --------------------------------------------
 
-  /connect oftc
+----------------------------------------
+/connect oftc
+----------------------------------------
 
 [NOTE]
 This command can be used to create and connect to a new server without using
@@ -148,21 +202,32 @@ between 'core' buffer and server buffers, you can use ctrl-X.
 It is possible to disable auto merge of server buffers to have independent
 server buffers:
 
-  /set irc.look.server_buffer independent
+----------------------------------------
+/set irc.look.server_buffer independent
+----------------------------------------
 
 
 [[join_part_irc_channels]]
 Join/part IRC channels
 ----------------------
 
-`/join #channel`::
-    join a channel
+Join a channel:
 
-`/part [quit message]`::
-    part a channel (keeping buffer open)
+----------------------------------------
+/join #channel
+----------------------------------------
 
-`/close`::
-    close server or channel buffer (`/close` is an alias for `/buffer close`)
+Part a channel (keeping buffer open):
+
+----------------------------------------
+/part [quit message]
+----------------------------------------
+
+Close server or channel buffer (`/close` is an alias for `/buffer close`):
+
+----------------------------------------
+/close
+----------------------------------------
 
 
 [[buffer_window]]
@@ -178,15 +243,19 @@ with many buffers at same time.
 
 Commands to manage buffers and windows:
 
-  /buffer
-  /window
+----------------------------------------
+/buffer
+/window
+----------------------------------------
 
 (I'll not repeat here that you can get help with /help on these commands)
 
 For example, to vertically split your screen into a small window (1/3 width),
 and a large window (2/3), use command:
 
-  /window splitv 33
+----------------------------------------
+/window splitv 33
+----------------------------------------
 
 
 [[key_bindings]]
@@ -210,15 +279,21 @@ A useful key is meta-k (alt-k) to find key codes.
 
 For example, to bind meta-y (alt-y) to command `/buffer close`:
 
-  /key bind (press meta-k) (press meta-y) /buffer close
+----------------------------------------
+/key bind (press meta-k) (press meta-y) /buffer close
+----------------------------------------
 
 You'll have a command line like:
 
-  /key bind meta-y /buffer close
+----------------------------------------
+/key bind meta-y /buffer close
+----------------------------------------
 
 To remove key:
 
-  /key unbind meta-y
+----------------------------------------
+/key unbind meta-y
+----------------------------------------
 
 
 [[plugins_scripts]]

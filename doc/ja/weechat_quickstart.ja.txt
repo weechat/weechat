@@ -8,19 +8,42 @@ Sébastien Helleu <flashcode@flashtux.org>
 X 用ターミナルエミュレータは rxvt-unicode を推奨します (UTF-8
 がサポートされており、デフォルトのキーバインドで問題が発生しないためです)。
 
-シェルから "weechat-curses" を実行してください。
+// TRANSLATION MISSING
+Run from your shell:
+
+----------------------------------------
+$ weechat-curses
+----------------------------------------
 
 
 [[help_options]]
 == オンラインヘルプ / オプション ==
 
-WeeChat は /help を打つことでヘルプを参照できます。
-特定のコマンドのヘルプは、`/help コマンド名` で参照可能です。
+// TRANSLATION MISSING
+WeeChat has help for all commands, just issue:
 
-オプション設定は、`/set config.section.option value`
-で設定します (`config` は設定名 (主要オプションでは
-`weechat`、それ以外はプラグイン名です)、`section`
-は設定名のセクション、`option` はオプション名です)。
+----------------------------------------
+/help
+----------------------------------------
+
+// TRANSLATION MISSING
+To get help on a specific command, issue:
+
+----------------------------------------
+/help command
+----------------------------------------
+
+// TRANSLATION MISSING
+To set options, issue:
+
+----------------------------------------
+/set config.section.option value
+----------------------------------------
+
+// TRANSLATION MISSING
+(where `config` is configuration name (`weechat` for core, or a plugin
+name), `section` the section of this configuration and `option` the
+option name).
 
 オプション設定はすぐに反映されます (設定変更後に
 WeeChat を再起動する必要は *ありません*)。
@@ -29,17 +52,29 @@ WeeChat を再起動する必要は *ありません*)。
 "*" を指定することができます。
 例:
 
-`/set`::
-    全ての設定名を表示します (WeeChat およびプラグイン)
+* 全ての設定名を表示します (WeeChat およびプラグイン)
 
-`/set weechat.*`::
-    WeeChat のオプションを表示します
+----------------------------------------
+/set
+----------------------------------------
 
-`/set irc.*`::
-    IRC プラグインのオプションを表示します
+* WeeChat のオプションを表示します
+
+----------------------------------------
+/set weechat.*
+----------------------------------------
+
+* IRC プラグインのオプションを表示します
+
+----------------------------------------
+/set irc.*
+----------------------------------------
 
 `/help` とオプション名を指定することでヘルプを表示できます、例:
-`/help weechat.look.highlight`。
+
+----------------------------------------
+/help weechat.look.highlight
+----------------------------------------
 
 すべての設定は WeeChat の終了時 (または強制的に設定保存を行う
 `/save` コマンドを使用した場合) に保存されます。
@@ -66,9 +101,15 @@ IRC 等全てのネットワークプロトコルはそれぞれ異なるプラ�
 
 `/server` コマンドで IRC サーバを追加できます。例:
 
-  /server add oftc irc.oftc.net/6667
+----------------------------------------
+/server add oftc irc.oftc.net/6667
+----------------------------------------
 
-書式が思い出せない場合はヘルプを利用してください: `/help server`
+書式が思い出せない場合はヘルプを利用してください:
+
+----------------------------------------
+/help server
+----------------------------------------
 
 
 [[irc_server_options]]
@@ -84,51 +125,69 @@ IRC 等全てのネットワークプロトコルはそれぞれ異なるプラ�
 例えばデフォルトでは (un*x ログイン名をベースにした)
 ニックネームが設定されますが、以下のコマンドで oftc サーバ用の設定として上書きすることが可能です:
 
-  /set irc.server.oftc.nicks "mynick,mynick2,mynick3,mynick4,mynick5"
+----------------------------------------
+/set irc.server.oftc.nicks "mynick,mynick2,mynick3,mynick4,mynick5"
+----------------------------------------
 
 ユーザ名と実名を設定する場合:
 
-  /set irc.server.oftc.username "My user name"
-  /set irc.server.oftc.realname "My real name"
+----------------------------------------
+/set irc.server.oftc.username "My user name"
+/set irc.server.oftc.realname "My real name"
+----------------------------------------
 
 サーバへの自動接続を設定する場合:
 
-  /set irc.server.oftc.autoconnect on
+----------------------------------------
+/set irc.server.oftc.autoconnect on
+----------------------------------------
 
 サーバで SASL を利用可能な場合、SASL を利用してニックネーム認証することができます
 (チャンネル参加前にニックネーム認証が行われるでしょう):
 
-  /set irc.server_default.sasl_mechanism dh-blowfish
-  /set irc.server.oftc.sasl_username "mynick"
-  /set irc.server.oftc.sasl_password "xxxxxxx"
+----------------------------------------
+/set irc.server_default.sasl_mechanism dh-blowfish
+/set irc.server.oftc.sasl_username "mynick"
+/set irc.server.oftc.sasl_password "xxxxxxx"
+----------------------------------------
 
 例えば nickserv との認証などを行うためにサーバ接続後にコマンドを実行するには
 (SASL を利用して認証を行わない場合):
 
-  /set irc.server.oftc.command "/msg nickserv identify xxxxxxx"
+----------------------------------------
+/set irc.server.oftc.command "/msg nickserv identify xxxxxxx"
+----------------------------------------
 
 [NOTE]
 ';' (セミコロン) で繋ぐことで複数のコマンドを設定することができます
 
 チャンネルへの自動参加を設定する場合:
 
-  /set irc.server.oftc.autojoin "#channel1,#channel2"
+----------------------------------------
+/set irc.server.oftc.autojoin "#channel1,#channel2"
+----------------------------------------
 
 サーバオプションの代わりにデフォルトの値を使用する、例えばデフォルトのニックネーム
 (irc.server_default.nicks) を使用する場合:
 
-  /set irc.server.oftc.nicks null
+----------------------------------------
+/set irc.server.oftc.nicks null
+----------------------------------------
 
 その他設定: その他のオプションも以下のコマンドで設定できます
 ("xxx" は設定名です):
 
-  /set irc.server.oftc.xxx value
+----------------------------------------
+/set irc.server.oftc.xxx value
+----------------------------------------
 
 
 [[connect_to_irc_server]]
 == サーバに接続し、チャンネルに自動接続する ==
 
-  /connect oftc
+----------------------------------------
+/connect oftc
+----------------------------------------
 
 [NOTE]
 このコマンドは、`/server`
@@ -141,20 +200,31 @@ IRC 等全てのネットワークプロトコルはそれぞれ異なるプラ�
 サーババッファへの自動マージを無効にして
 独立したサーババッファにすることができます:
 
-  /set irc.look.server_buffer independent
+----------------------------------------
+/set irc.look.server_buffer independent
+----------------------------------------
 
 
 [[join_part_irc_channels]]
 == チャンネルに接続 / 切断する ==
 
-`/join #channel`::
-    チャンネルに接続する
+チャンネルに接続する
 
-`/part [切断メッセージ]`::
-    チャンネルから切断する (バッファは開いたままにする)
+----------------------------------------
+/join #channel
+----------------------------------------
 
-`/close`::
-    チャンネルから切断し、バッファを閉じる (`/close` は `/buffer close` の別名)
+チャンネルから切断する (バッファは開いたままにする)
+
+----------------------------------------
+/part [切断メッセージ]
+----------------------------------------
+
+チャンネルから切断し、バッファを閉じる (`/close` は `/buffer close` の別名)
+
+----------------------------------------
+/close
+----------------------------------------
 
 
 [[buffer_window]]
@@ -169,15 +239,19 @@ IRC 等全てのネットワークプロトコルはそれぞれ異なるプラ�
 
 バッファ / ウィンドウを管理するためのコマンド:
 
-  /buffer
-  /window
+----------------------------------------
+/buffer
+/window
+----------------------------------------
 
 (言うまでもありませんが /help でこれらのコマンドもヘルプを確認することができます)
 
 例えば、ウィンドウを垂直方向に小さいウィンドウ (1/3 幅) と大きいウィンドウ
 (2/3 幅) に分割する場合は次のコマンドを実行します:
 
-  /window splitv 33
+----------------------------------------
+/window splitv 33
+----------------------------------------
 
 
 [[key_bindings]]
@@ -200,15 +274,21 @@ WeeChat はデフォルトでたくさんのショートカットキーが設定
 
 例えば、meta-y (alt-y) に `/buffer close` を割り当てる場合:
 
-  /key bind (meta-kを押下) (meta-yを押下) /buffer close
+----------------------------------------
+/key bind (meta-kを押下) (meta-yを押下) /buffer close
+----------------------------------------
 
 コマンドラインには以下のように表示されます:
 
-  /key bind meta-y /buffer close
+----------------------------------------
+/key bind meta-y /buffer close
+----------------------------------------
 
 キー割り当てを解除する場合:
 
-  /key unbind meta-y
+----------------------------------------
+/key unbind meta-y
+----------------------------------------
 
 
 [[plugins_scripts]]

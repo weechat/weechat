@@ -11,18 +11,37 @@ Die bevorzugte Terminal-Emulation für X (aber nicht obligatorisch) ist
 rxvt-unicode (es besitzt eine gute Unterstützung für UTF-8 und hat keine
 Probleme mit der Standard Tastaturbelegung).
 
-Starte "weechat-curses" aus Deiner shell.
+Starte aus Deiner shell:
+
+----------------------------------------
+$ weechat-curses
+----------------------------------------
 
 
 [[help_options]]
 Online-Hilfe / Optionen
 -----------------------
 
-WeeChat enthält Hilfetexte für alle Befehle. Diese Hilfstexte sind über den Befehl `/help` zu
-erreichen. Um eine Hilfe zu einen bestimmten Befehl zu erhalten kann man einfach `/help Befehl`
-ausführen.
+// TRANSLATION MISSING
+WeeChat has help for all commands, just issue:
 
-Um Optionen zu setzen benutzt man `/set config.section.option value`.
+----------------------------------------
+/help
+----------------------------------------
+
+// TRANSLATION MISSING
+To get help on a specific command, issue:
+
+----------------------------------------
+/help command
+----------------------------------------
+
+Um Optionen zu setzen benutzt man:
+
+----------------------------------------
+/set config.section.option value
+----------------------------------------
+
 (dabei ist 'config' der Konfigurationsname ('weechat' für den Kern von weechat,
 oder der Name einer Erweiterung), 'section' ein Abschnitt dieser Konfiguration und 'option'
 der Name der betreffenden Option).
@@ -36,17 +55,29 @@ dieser Zeichenkette entsprechen.
 
 Zum Beispiel:
 
-`/set`::
-    zeit alle Optionen an (WeeChat und Erweiterungen)
+Zeit alle Optionen an (WeeChat und Erweiterungen):
 
-`/set weechat.*`::
-    zeit alle WeeChat Optionen an
+----------------------------------------
+/set
+----------------------------------------
 
-`/set irc.*`::
-    zeit alle Optionen der IRC-Erweiterung an
+Zeit alle WeeChat Optionen an:
+
+----------------------------------------
+/set weechat.*
+----------------------------------------
+
+Zeit alle Optionen der IRC-Erweiterung an:
+
+----------------------------------------
+/set irc.*
+----------------------------------------
 
 Du kannst dir mit dem Befehl `/help` eine Hilfe für Optionen anzeigen lassen, z.B.:
-`/help weechat.look.highlight`.
+
+----------------------------------------
+/help weechat.look.highlight
+----------------------------------------
 
 Beim Beenden von WeeChat werden alle Einstellungen gespeichert (mittels `/save`
 kann das Sichern der Optionen erzwungen werden).
@@ -77,10 +108,16 @@ Einen IRC-Server erstellen
 
 Du kannst einen IRC-Server mit dem Befehl `/server` hinzufügen, z.B.:
 
-  /server add oftc irc.oftc.net/6667
+----------------------------------------
+/server add oftc irc.oftc.net/6667
+----------------------------------------
 
-Wie bei jedem Befehl kannst Du Dir, falls Du nicht mehr weiter kommst, mit
-`/help server` einen Hilfstext anzeigen lassen.
+// TRANSLATION MISSING
+As usual, help is available if you're lost:
+
+----------------------------------------
+/help server
+----------------------------------------
 
 
 [[irc_server_options]]
@@ -99,29 +136,39 @@ Als Beispiel erwähnt ist die Vorgabe (default) für Nicks, die auf dem Un*x Log
 basiert. Diese Vorgabe kann nun für den oftc-Server mittels folgendem Befehl
 überschrieben werden:
 
-  /set irc.server.oftc.nicks "mynick,mynick2,mynick3,mynick4,mynick5"
+----------------------------------------
+/set irc.server.oftc.nicks "mynick,mynick2,mynick3,mynick4,mynick5"
+----------------------------------------
 
 Um einen User- und realen Namen zu setzen:
 
-  /set irc.server.oftc.username "Mein User-Name"
-  /set irc.server.oftc.realname "Mein wirklicher Name"
+----------------------------------------
+/set irc.server.oftc.username "Mein User-Name"
+/set irc.server.oftc.realname "Mein wirklicher Name"
+----------------------------------------
 
 Um beim Start von WeeChat automatisch eine Verbindung zu einem Server
 herzustellen:
 
-  /set irc.server.oftc.autoconnect on
+----------------------------------------
+/set irc.server.oftc.autoconnect on
+----------------------------------------
 
 Sollte der Server SASL unterstützen, kann man sich damit Authentifizieren
 (dadurch identifiziert man sich beim Server, bevor man Channels (Chaträume) betritt):
 
-  /set irc.server_default.sasl_mechanism dh-blowfish
-  /set irc.server.oftc.sasl_username "mynick"
-  /set irc.server.oftc.sasl_password "xxxxxxx"
+----------------------------------------
+/set irc.server_default.sasl_mechanism dh-blowfish
+/set irc.server.oftc.sasl_username "mynick"
+/set irc.server.oftc.sasl_password "xxxxxxx"
+----------------------------------------
 
 Unterstützt der Server keine SASL Authentifizierung, muss man sich bei "nickserv"
 identifizieren:
 
-  /set irc.server.oftc.command "/msg nickserv identify xxxxxxx"
+----------------------------------------
+/set irc.server.oftc.command "/msg nickserv identify xxxxxxx"
+----------------------------------------
 
 [NOTE]
 Mehrere Befehle können mittels ';' (Semikolon) getrennt werden.
@@ -129,25 +176,33 @@ Mehrere Befehle können mittels ';' (Semikolon) getrennt werden.
 Um ein auto-join (automatisches 'betreten') von Channels (Räumen) nach der
 Verbindung zum Server zu erreichen:
 
-  /set irc.server.oftc.autojoin "#channel1,#channel2"
+----------------------------------------
+/set irc.server.oftc.autojoin "#channel1,#channel2"
+----------------------------------------
 
 Um einen Wert der Server-Optionen zu entfernen und stattdessen wieder den
 Vorgabewert (default) zu nutzen, z.B. Nutzung der vorgegebenen Nicks
 (irc.server_default.nicks):
 
-  /set irc.server.oftc.nicks null
+----------------------------------------
+/set irc.server.oftc.nicks null
+----------------------------------------
 
 Andere Optionen: Du kannst andere Optionen mit folgendem Befehl festlegen ("xxx"
 ist der Optionsname):
 
-  /set irc.server.oftc.xxx value
+----------------------------------------
+/set irc.server.oftc.xxx value
+----------------------------------------
 
 
 [[connect_to_irc_server]]
 Verbinden mit dem IRC-Server und auto-join der Channel
 ------------------------------------------------------
 
-  /connect oftc
+----------------------------------------
+/connect oftc
+----------------------------------------
 
 [NOTE]
 Dieser Befehl kann dazu benutzt werden um einen neuen Server zu erstellen und
@@ -162,21 +217,32 @@ zu wechseln, kannst Du ctrl-X benutzen.
 Es ist möglich das automatische Zusammenlegen der Server-Buffer zu deaktivieren,
 um eigenständige Server-Buffer zu nutzen:
 
-  /set irc.look.server_buffer independent
+----------------------------------------
+/set irc.look.server_buffer independent
+----------------------------------------
 
 
 [[join_part_irc_channels]]
 Betreten/verlassen der IRC-Channel
 ----------------------------------
 
-`/join #channel`::
-    Einen Channel betreten
+Einen Channel betreten:
 
-`/part [quit message]`::
-    Einen Channel verlassen (der Buffer bleibt geöffnet)
+----------------------------------------
+/join #channel
+----------------------------------------
 
-`/close`::
-    Schließen eines Server- oder Channel-Buffers (`/close` ist ein Alias für `/buffer close`)
+Einen Channel verlassen (der Buffer bleibt geöffnet):
+
+----------------------------------------
+/part [quit message]
+----------------------------------------
+
+Schließen eines Server- oder Channel-Buffers (`/close` ist ein Alias für `/buffer close`):
+
+----------------------------------------
+/close
+----------------------------------------
 
 
 [[buffer_window]]
@@ -193,8 +259,10 @@ mehreren Buffer gleichzeitig sehen.
 
 Befehle, welche Buffer und Fenster verwalten:
 
-  /buffer
-  /window
+----------------------------------------
+/buffer
+/window
+----------------------------------------
 
 (Ich muss jetzt nicht wiederholen dass Du zu diesen Befehlen eine Hilfe mit /help
 zu erhalten ist)
@@ -202,7 +270,9 @@ zu erhalten ist)
 Ein Beispiel: Um Deinen Bildschirm vertikal in ein kleines Fenster (1/3 Höhe)
 und ein großes Fenster (2/3 Höhe) aufzuteilen, benutze diesen Befehl:
 
-  /window splitv 33
+----------------------------------------
+/window splitv 33
+----------------------------------------
 
 
 [[key_bindings]]
@@ -229,15 +299,21 @@ Eine nützliche Tastenkombination um Tastencodes zu ermitteln ist meta-k (alt-k)
 
 Beispiel: Belegung von meta-y (alt-y) mit dem Befehl `/buffer close`:
 
-  /key bind (drücke meta-k) (drücke meta-y) /buffer close
+----------------------------------------
+/key bind (drücke meta-k) (drücke meta-y) /buffer close
+----------------------------------------
 
 Du wirst folgende Befehlszeile erhalten:
 
-  /key bind meta-y /buffer close
+----------------------------------------
+/key bind meta-y /buffer close
+----------------------------------------
 
 Entfernen der Belegung:
 
-  /key unbind meta-y
+----------------------------------------
+/key unbind meta-y
+----------------------------------------
 
 
 [[plugins_scripts]]
