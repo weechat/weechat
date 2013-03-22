@@ -1436,7 +1436,7 @@ Extensions
 ----------
 
 Pour en apprendre plus sur le développement d'extension ou de script (via
-l'API), merci de consulter la 'Référence API Extension WeeChat' ou 'Le Guide
+l'API), merci de consulter la 'Référence API Extension WeeChat' ou le 'Guide
 pour Scripts WeeChat'.
 
 [[plugins_in_weechat]]

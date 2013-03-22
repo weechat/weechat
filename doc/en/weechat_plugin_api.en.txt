@@ -4352,6 +4352,11 @@ option5 = weechat.config_new_option(config_file, section, "option5", "color",
     "", "")
 ----------------------------------------
 
+[NOTE]
+In Ruby, the 3 callbacks + data (6 strings) must be given in an array of 6
+strings (due to a Ruby limitation of 15 arguments by function), see the
+'WeeChat Scripting Guide' for more info (_fixed in version 0.4.1_).
+
 weechat_config_search_option
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

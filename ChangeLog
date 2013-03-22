@@ -79,6 +79,8 @@ Version 0.4.1 (under dev!)
 * rmodifier: rename default rmodifier "nickserv" to "command_auth" (with new
   modifier "irc_command_auth"), add default rmodifier "message_auth" (modifier
   "irc_message_auth")
+* ruby: fix crash with Ruby 2.0: use one array for the last 6 arguments of
+  function config_new_option (bug #31050)
 * script: create "script" directory on each action, just in case it has been
   removed (bug #38472)
 * script: add option script.scripts.autoload, add options "autoload",

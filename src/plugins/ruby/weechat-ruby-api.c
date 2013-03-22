@@ -1333,28 +1333,21 @@ weechat_ruby_api_config_new_option (VALUE class, VALUE config_file,
                                     VALUE description, VALUE string_values,
                                     VALUE min, VALUE max, VALUE default_value,
                                     VALUE value, VALUE null_value_allowed,
-                                    VALUE function_check_value,
-                                    VALUE data_check_value,
-                                    VALUE function_change,
-                                    VALUE data_change,
-                                    VALUE function_delete,
-                                    VALUE data_delete)
+                                    VALUE callbacks)
 {
     char *c_config_file, *c_section, *c_name, *c_type, *c_description;
     char *c_string_values, *c_default_value, *c_value;
     char *c_function_check_value, *c_data_check_value, *c_function_change;
     char *c_data_change, *c_function_delete, *c_data_delete, *result;
     int c_min, c_max, c_null_value_allowed;
-    VALUE return_value;
+    VALUE function_check_value, data_check_value, function_change, data_change;
+    VALUE function_delete, data_delete, return_value;
 
     API_FUNC(1, "config_new_option", API_RETURN_EMPTY);
     if (NIL_P (config_file) || NIL_P (section) || NIL_P (name) || NIL_P (type)
         || NIL_P (description) || NIL_P (string_values) || NIL_P (min)
         || NIL_P (max) || NIL_P (default_value) || NIL_P (value)
-        || NIL_P (null_value_allowed) || NIL_P (function_check_value)
-        || NIL_P (data_check_value) || NIL_P (function_change)
-        || NIL_P (data_change) || NIL_P (function_delete)
-        || NIL_P (data_delete))
+        || NIL_P (null_value_allowed) || NIL_P (callbacks))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     Check_Type (config_file, T_STRING);
@@ -1368,12 +1361,21 @@ weechat_ruby_api_config_new_option (VALUE class, VALUE config_file,
     Check_Type (default_value, T_STRING);
     Check_Type (value, T_STRING);
     Check_Type (null_value_allowed, T_FIXNUM);
-    Check_Type (function_check_value, T_STRING);
-    Check_Type (data_check_value, T_STRING);
-    Check_Type (function_change, T_STRING);
-    Check_Type (data_change, T_STRING);
-    Check_Type (function_delete, T_STRING);
-    Check_Type (data_delete, T_STRING);
+    Check_Type (callbacks, T_ARRAY);
+
+    /*
+     * due to a Ruby limitation (15 arguments max by function), we receive the
+     * the callbacks in an array of 6 strings (3 callbacks + 3 data)
+     */
+    if (RARRAY_LEN(callbacks) != 6)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    function_check_value = rb_ary_entry (callbacks, 0);
+    data_check_value = rb_ary_entry (callbacks, 1);
+    function_change = rb_ary_entry (callbacks, 2);
+    data_change = rb_ary_entry (callbacks, 3);
+    function_delete = rb_ary_entry (callbacks, 4);
+    data_delete = rb_ary_entry (callbacks, 5);
 
     c_config_file = StringValuePtr (config_file);
     c_section = StringValuePtr (section);
@@ -5915,7 +5917,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(config_new, 3);
     API_DEF_FUNC(config_new_section, 14);
     API_DEF_FUNC(config_search_section, 2);
-    API_DEF_FUNC(config_new_option, 17);
+    API_DEF_FUNC(config_new_option, 12);
     API_DEF_FUNC(config_search_option, 3);
     API_DEF_FUNC(config_string_to_boolean, 1);
     API_DEF_FUNC(config_option_reset, 2);

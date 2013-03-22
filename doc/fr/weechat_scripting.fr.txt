@@ -57,6 +57,16 @@ Ruby
 
 * Vous devez définir 'weechat_init' et appeler 'register' dedans
 * Les fonctions sont appelées par `Weechat.xxx(arg1, arg2, ...)`
+* En raison d'une limitation de Ruby (15 paramètres maximum par fonction), la
+  fonction `Weechat.config_new_option` reçoit les "callbacks" dans un tableau de
+  6 chaînes de caractères (3 callbacks + 3 chaînes de données), donc un appel à
+  cette fonction ressemble à ceci :
+
+[source,ruby]
+----------------------------------------
+Weechat.config_new_option(config, section, "name", "string", "description of option", "", 0, 0,
+                          "value", "value", 0, ["check_cb", "", "change_cb", "", "delete_cb", ""])
+----------------------------------------
 
 Lua
 ^^^
