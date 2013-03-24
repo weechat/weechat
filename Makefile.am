@@ -65,5 +65,8 @@ ACLOCAL_AMFLAGS = -I m4
 pkgconfigdir   = $(libdir)/pkgconfig
 pkgconfig_DATA = weechat.pc
 
+icondir   = $(datadir)/icons/hicolor/32x32/apps
+icon_DATA = weechat.png
+
 clean-local:
 	$(RM) config-git.h
