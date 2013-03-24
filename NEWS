@@ -19,7 +19,8 @@ Version 0.4.1 (under dev!)
 === IRC reconnection on important lag ===
 
 Option 'irc.network.lag_disconnect' has been renamed to
-'irc.network.lag_reconnect' and value is now a number of seconds.
+'irc.network.lag_reconnect' and value is now a number of seconds (instead of
+minutes).
 
 === IRC passwords hidden ===
 
