@@ -1365,7 +1365,7 @@ weechat_ruby_api_config_new_option (VALUE class, VALUE config_file,
 
     /*
      * due to a Ruby limitation (15 arguments max by function), we receive the
-     * the callbacks in an array of 6 strings (3 callbacks + 3 data)
+     * callbacks in an array of 6 strings (3 callbacks + 3 data)
      */
     if (RARRAY_LEN(callbacks) != 6)
         API_WRONG_ARGS(API_RETURN_EMPTY);
