@@ -72,6 +72,8 @@ Lua
 ^^^
 
 * Les fonctions sont appelées par `weechat.xxx(arg1, arg2, ...)`
+* Les constantes dans l'API sont en fait des fonctions, la valeur retournée doit
+  être utilisée comme constante (et non la fonction elle-même).
 
 Tcl
 ^^^
@@ -333,7 +335,7 @@ Weechat.hook_timer(1000, 0, 1, "timer_cb", "test");
 ----------------------------------------
 function timer_cb(data, remaining_calls)
     weechat.print("", "timer! data="..data)
-    return weechat.WEECHAT_RC_OK
+    return weechat.WEECHAT_RC_OK()
 end
 
 weechat.hook_timer(1000, 0, 1, "timer_cb", "test")
