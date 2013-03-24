@@ -70,8 +70,6 @@ Lua
 ^^^
 
 * Functions are called with `weechat.xxx(arg1, arg2, ...)`
-* Constants in API are in fact functions, the returned value must be used as
-  constant (not the function itself).
 
 Tcl
 ^^^
@@ -325,7 +323,7 @@ Weechat.hook_timer(1000, 0, 1, "timer_cb", "test");
 ----------------------------------------
 function timer_cb(data, remaining_calls)
     weechat.print("", "timer! data="..data)
-    return weechat.WEECHAT_RC_OK()
+    return weechat.WEECHAT_RC_OK
 end
 
 weechat.hook_timer(1000, 0, 1, "timer_cb", "test")
