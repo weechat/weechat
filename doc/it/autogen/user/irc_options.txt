@@ -143,6 +143,11 @@
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
+* [[option_irc.look.display_join_message]] *irc.look.display_join_message*
+** descrizione: `comma-separated list of messages to display after joining a channel: 329 = channel creation date, 332 = topic, 333 = nick/date for topic, 366 = names on channel`
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: `"329,332,333,366"`)
+
 * [[option_irc.look.display_old_topic]] *irc.look.display_old_topic*
 ** descrizione: `visualizza l'argomento del canale precedente quando viene cambiato`
 ** tipo: bool

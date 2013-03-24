@@ -143,6 +143,11 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 
+* [[option_irc.look.display_join_message]] *irc.look.display_join_message*
+** description: `liste de messages (séparés par des virgules) à afficher après avoir rejoint un canal: 329 = date de création du canal, 332 = titre, 333 = pseudo/date pour le titre, 366 = noms sur le canal`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `"329,332,333,366"`)
+
 * [[option_irc.look.display_old_topic]] *irc.look.display_old_topic*
 ** description: `afficher l'ancien titre lorsque le titre du canal est changé`
 ** type: booléen

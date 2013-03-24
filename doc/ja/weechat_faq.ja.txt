@@ -539,7 +539,22 @@ of channels):
 [[filter_irc_join_channel_messages]]
 === どうすれば IRC チャンネルに参加した際に表示される一部のメッセージをフィルタできますか。 ===
 
-メッセージをフィルタするためにいくつかのタグが使えます:
+// TRANSLATION MISSING
+With WeeChat ≥ 0.4.1, you can disable some messages with option
+'irc.look.display_join_message'.
+
+// TRANSLATION MISSING
+For example, to disable names (which is IRC message '366'):
+
+----------------------------------------
+/set irc.look.display_join_message "329,332,333"
+----------------------------------------
+
+[NOTE]
+For help: `/help irc.look.display_join_message`
+
+// TRANSLATION MISSING
+Another solution is to filter messages on tag:
 
 * 'irc_366': チャンネルにいるユーザの名前
 * 'irc_332,irc_333': チャンネルのトピック/日時

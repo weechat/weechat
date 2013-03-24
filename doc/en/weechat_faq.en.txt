@@ -579,7 +579,19 @@ For help: `/help filter` and `/help irc.look.smart_filter`
 How can I filter some messages displayed when I join an IRC channel?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Some tags you can use to filter messages:
+With WeeChat ≥ 0.4.1, you can disable some messages with option
+'irc.look.display_join_message'.
+
+For example, to disable names (which is IRC message '366'):
+
+----------------------------------------
+/set irc.look.display_join_message "329,332,333"
+----------------------------------------
+
+[NOTE]
+For help: `/help irc.look.display_join_message`
+
+Another solution is to filter messages on tag:
 
 * 'irc_366': names on channel
 * 'irc_332,irc_333': channel topic/date

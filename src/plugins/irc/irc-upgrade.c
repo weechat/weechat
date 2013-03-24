@@ -284,10 +284,11 @@ irc_upgrade_read_cb (void *data,
                      int object_id,
                      struct t_infolist *infolist)
 {
-    int flags, sock, size, i, index, nicks_count;
+    int flags, sock, size, i, index, nicks_count, num_items;
     long number;
     time_t join_time;
     char *buf, option_name[64], **nicks, *nick_join, *pos, *error;
+    char **items;
     const char *buffer_name, *str, *nick;
     struct t_irc_nick *ptr_nick;
     struct t_irc_redirect *ptr_redirect;
@@ -442,7 +443,21 @@ irc_upgrade_read_cb (void *data,
                         str = weechat_infolist_string (infolist, "key");
                         if (str)
                             irc_upgrade_current_channel->key = strdup (str);
-                        irc_upgrade_current_channel->names_received = weechat_infolist_integer (infolist, "names_received");
+                        str = weechat_infolist_string (infolist, "join_msg_received");
+                        if (str)
+                        {
+                            items = weechat_string_split (str, ",", 0, 0,
+                                                          &num_items);
+                            if (items)
+                            {
+                                for (i = 0; i < num_items; i++)
+                                {
+                                    weechat_hashtable_set (irc_upgrade_current_channel->join_msg_received,
+                                                           items[i], "1");
+                                }
+                                weechat_string_free_split (items);
+                            }
+                        }
                         irc_upgrade_current_channel->checking_away = weechat_infolist_integer (infolist, "checking_away");
                         str = weechat_infolist_string (infolist, "away_message");
                         if (str)

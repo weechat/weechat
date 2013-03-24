@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-03-17 22:01+0100\n"
+"POT-Creation-Date: 2013-03-24 12:25+0100\n"
 "PO-Revision-Date: 2013-03-17 08:20+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -6189,6 +6189,12 @@ msgstr "ローカルクライアントからの参加メッセージにホスト
 msgid "display host in part/quit messages"
 msgstr "退出/終了 メッセージにホスト名を表示"
 
+msgid ""
+"comma-separated list of messages to display after joining a channel: 329 = "
+"channel creation date, 332 = topic, 333 = nick/date for topic, 366 = names "
+"on channel"
+msgstr ""
+
 msgid "display old topic when channel topic is changed"
 msgstr "チャンネルトピックが変更された場合に、古いトピックを表示"
 
@@ -9669,3 +9675,7 @@ msgstr "タイプ"
 
 msgid "Constants"
 msgstr "定数"
+
+#, fuzzy
+#~ msgid "display names when joining channel"
+#~ msgstr "日付が変わった際に特殊メッセージを表示"

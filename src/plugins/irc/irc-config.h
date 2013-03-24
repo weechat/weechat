@@ -115,6 +115,7 @@ extern struct t_config_option *irc_config_look_display_ctcp_unknown;
 extern struct t_config_option *irc_config_look_display_host_join;
 extern struct t_config_option *irc_config_look_display_host_join_local;
 extern struct t_config_option *irc_config_look_display_host_quit;
+extern struct t_config_option *irc_config_look_display_join_message;
 extern struct t_config_option *irc_config_look_display_old_topic;
 extern struct t_config_option *irc_config_look_display_pv_away_once;
 extern struct t_config_option *irc_config_look_display_pv_back;
@@ -177,6 +178,7 @@ extern struct t_config_option *irc_config_server_default[];
 extern char **irc_config_nick_colors;
 extern int irc_config_num_nick_colors;
 
+extern struct t_hashtable *irc_config_hashtable_display_join_message;
 extern struct t_hashtable *irc_config_hashtable_nick_color_force;
 extern struct t_hashtable *irc_config_hashtable_nick_prefixes;
 extern struct t_hashtable *irc_config_hashtable_color_mirc_remap;

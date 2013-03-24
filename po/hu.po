@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-03-17 22:01+0100\n"
+"POT-Creation-Date: 2013-03-24 12:25+0100\n"
 "PO-Revision-Date: 2013-03-16 17:50+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5549,6 +5549,12 @@ msgstr "új üzenetet tartalmazó ablak színe"
 msgid "display host in part/quit messages"
 msgstr "alapértelmezett kilépő üzenet"
 
+msgid ""
+"comma-separated list of messages to display after joining a channel: 329 = "
+"channel creation date, 332 = topic, 333 = nick/date for topic, 366 = names "
+"on channel"
+msgstr ""
+
 msgid "display old topic when channel topic is changed"
 msgstr ""
 
@@ -8872,3 +8878,7 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#, fuzzy
+#~ msgid "display names when joining channel"
+#~ msgstr "speciális üzenet az aktuális nap megváltozásakor"

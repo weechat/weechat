@@ -605,7 +605,19 @@ Pour l'aide : `/help filter` et `/help irc.look.smart_filter`
 Comment puis-je filtrer certains messages affichés quand je rejoins un canal IRC ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Quelques étiquettes que vous pouvez utiliser pour filtrer des messages :
+Avec WeeChat ≥ 0.4.1, vous pouvez désactiver des messages avec l'option
+'irc.look.display_join_message'.
+
+Par exemple, pour désactiver les noms (qui est le message IRC '366') :
+
+----------------------------------------
+/set irc.look.display_join_message "329,332,333"
+----------------------------------------
+
+[NOTE]
+Pour l'aide : `/help irc.look.display_join_message`
+
+Une autre solution est de filtrer les messages par l'étiquette :
 
 * 'irc_366' : noms sur le canal
 * 'irc_332,irc_333' : titre/date du canal

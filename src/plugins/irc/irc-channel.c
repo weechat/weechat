@@ -294,7 +294,11 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
     {
         new_channel->key = NULL;
     }
-    new_channel->names_received = 0;
+    new_channel->join_msg_received = weechat_hashtable_new (32,
+                                                            WEECHAT_HASHTABLE_STRING,
+                                                            WEECHAT_HASHTABLE_STRING,
+                                                            NULL,
+                                                            NULL);
     new_channel->checking_away = 0;
     new_channel->away_message = NULL;
     new_channel->has_quit_server = 0;
@@ -1183,7 +1187,7 @@ irc_channel_hdata_channel_cb (void *data, const char *hdata_name)
         WEECHAT_HDATA_VAR(struct t_irc_channel, modes, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_channel, limit, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_channel, key, STRING, 0, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_irc_channel, names_received, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_channel, join_msg_received, HASHTABLE, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_channel, checking_away, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_channel, away_message, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_channel, has_quit_server, INTEGER, 0, NULL, NULL);
@@ -1278,7 +1282,8 @@ irc_channel_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "key", channel->key))
         return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "names_received", channel->names_received))
+    if (!weechat_infolist_new_var_string (ptr_item, "join_msg_received",
+                                          weechat_hashtable_get_string (channel->join_msg_received, "keys")))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "checking_away", channel->checking_away))
         return 0;
@@ -1360,7 +1365,10 @@ irc_channel_print_log (struct t_irc_channel *channel)
     weechat_log_printf ("       modes. . . . . . . . . . : '%s'",  channel->modes);
     weechat_log_printf ("       limit. . . . . . . . . . : %d",    channel->limit);
     weechat_log_printf ("       key. . . . . . . . . . . : '%s'",  channel->key);
-    weechat_log_printf ("       names_received . . . . . : %d",    channel->names_received);
+    weechat_log_printf ("       join_msg_received. . . . : 0x%lx (hashtable: '%s')",
+                        channel->join_msg_received,
+                        weechat_hashtable_get_string (channel->join_msg_received,
+                                                      "keys_values"));
     weechat_log_printf ("       checking_away. . . . . . : %d",    channel->checking_away);
     weechat_log_printf ("       away_message . . . . . . : '%s'",  channel->away_message);
     weechat_log_printf ("       has_quit_server. . . . . : %d",    channel->has_quit_server);

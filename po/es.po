@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-03-17 22:01+0100\n"
+"POT-Creation-Date: 2013-03-24 12:25+0100\n"
 "PO-Revision-Date: 2013-03-17 08:20+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6220,6 +6220,12 @@ msgstr "muestra el host en mensajes de unión desde el cliente local"
 msgid "display host in part/quit messages"
 msgstr "muestra el host en mensajes de salida/abandono"
 
+msgid ""
+"comma-separated list of messages to display after joining a channel: 329 = "
+"channel creation date, 332 = topic, 333 = nick/date for topic, 366 = names "
+"on channel"
+msgstr ""
+
 msgid "display old topic when channel topic is changed"
 msgstr "mostrar el tema anterior cuando se cambia el tema del canal"
 
@@ -9649,3 +9655,7 @@ msgstr "Tipo"
 
 msgid "Constants"
 msgstr "Constantes"
+
+#, fuzzy
+#~ msgid "display names when joining channel"
+#~ msgstr "mostrar un mensaje especial cuando el día cambia"

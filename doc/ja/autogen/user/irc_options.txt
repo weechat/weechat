@@ -143,6 +143,11 @@
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
+* [[option_irc.look.display_join_message]] *irc.look.display_join_message*
+** 説明: `comma-separated list of messages to display after joining a channel: 329 = channel creation date, 332 = topic, 333 = nick/date for topic, 366 = names on channel`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"329,332,333,366"`)
+
 * [[option_irc.look.display_old_topic]] *irc.look.display_old_topic*
 ** 説明: `チャンネルトピックが変更された場合に、古いトピックを表示`
 ** タイプ: ブール

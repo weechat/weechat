@@ -27,7 +27,7 @@
   'modes' (string) +
   'limit' (integer) +
   'key' (string) +
-  'names_received' (integer) +
+  'join_msg_received' (hashtable) +
   'checking_away' (integer) +
   'away_message' (string) +
   'has_quit_server' (integer) +
