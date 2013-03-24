@@ -65,6 +65,7 @@ Version 0.4.1 (under dev!)
   the first server in the list)
 * irc: add color in output of /names when result is on server buffer (channel
   not joined) (bug #38070)
+* lua: remove use of functions for API constants
 * lua: fix crash on stack overflow: call lua_pop() for values returned by lua
   functions (bug #38510)
 * perl: simplify code to load scripts

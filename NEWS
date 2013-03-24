@@ -1,7 +1,7 @@
 WeeChat Release Notes
 =====================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.1-dev, 2013-03-12
+v0.4.1-dev, 2013-03-24
 
 
 This document lists important changes for each version, that require manual
@@ -46,6 +46,28 @@ If you added/changed some rmodifiers, do it manually with these commands:
 /rmodifier del nickserv
 /rmodifier add command_auth history_add,input_text_display,irc_command_auth 1,4* ^(/(msg|quote) +nickserv +(id|identify|register|ghost \S+|release \S+) +)(.*)
 /rmodifier add message_auth irc_message_auth 1,3* ^(.*(id|identify|register|ghost \S+|release \S+) +)(.*)
+----------------------------------------
+
+=== Lua constants ===
+
+For consistency with other supported languages, the API constants in Lua have
+been redefined as constants instead of functions.
+
+Therefore, the use of a constant must be changed: the parentheses must be
+removed.
+
+The old syntax was:
+
+[source,lua]
+----------------------------------------
+return weechat.WEECHAT_RC_OK()
+----------------------------------------
+
+The new syntax is:
+
+[source,lua]
+----------------------------------------
+return weechat.WEECHAT_RC_OK
 ----------------------------------------
 
 === Guile callbacks ===

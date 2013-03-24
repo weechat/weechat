@@ -26,6 +26,13 @@
 
 #define LUA_CURRENT_SCRIPT_NAME ((lua_current_script) ? lua_current_script->name : "-")
 
+struct t_lua_const
+{
+    char *name;
+    int int_value;
+    char *str_value;
+};
+
 extern struct t_weechat_plugin *weechat_lua_plugin;
 
 extern int lua_quiet;
@@ -47,6 +54,7 @@ extern void *weechat_lua_exec (struct t_plugin_script *script, int ret_type,
                                const char *function,
                                const char *format, void **argv);
 extern void weechat_lua_register_lib(lua_State *L, const char *libname,
-                                     const luaL_Reg *l);
+                                     const luaL_Reg *lua_api_funcs,
+                                     struct t_lua_const lua_api_consts[]);
 
 #endif /* __WEECHAT_LUA_H */

@@ -22,6 +22,7 @@
 #define __WEECHAT_LUA_API_H 1
 
 extern struct luaL_Reg weechat_lua_api_funcs[];
+extern struct t_lua_const weechat_lua_api_consts[];
 
 extern int weechat_lua_api_buffer_input_data_cb (void *data,
                                                  struct t_gui_buffer *buffer,
