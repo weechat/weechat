@@ -41,10 +41,6 @@ WEECHAT_PLUGIN_AUTHOR("Sebastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
 
-#ifndef PATH_MAX
-    #define PATH_MAX 4096
-#endif
-
 #define FIFO_FILENAME_PREFIX "weechat_fifo_"
 
 struct t_weechat_plugin *weechat_fifo_plugin = NULL;
