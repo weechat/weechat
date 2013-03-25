@@ -93,6 +93,7 @@ Version 0.4.1 (under dev!)
 * scripts: create directories (language and language/autoload) on each action
   (install/remove/autoload), just in case they have been removed (bug #38473)
 * scripts: do not allow empty script name in function "register"
+* xfer: add option xfer.file.auto_accept_nicks (patch #7962)
 * xfer: fix freeze of DCC file received: use non-blocking socket after
   connection to sender and ensure the ACK is properly sent (bug #38340)
 

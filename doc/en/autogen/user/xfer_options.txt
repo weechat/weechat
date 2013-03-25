@@ -53,6 +53,11 @@
 ** type: boolean
 ** values: on, off (default value: `off`)
 
+* [[option_xfer.file.auto_accept_nicks]] *xfer.file.auto_accept_nicks*
+** description: `comma-separated list of nicks for which the incoming files and chats are automatically accepted; format is "server.nick" (for a specific server) or "nick" (for all servers); example: "freenode.FlashCode,andrew"`
+** type: string
+** values: any string (default value: `""`)
+
 * [[option_xfer.file.auto_rename]] *xfer.file.auto_rename*
 ** description: `rename incoming files if already exists (add ".1", ".2", ...)`
 ** type: boolean

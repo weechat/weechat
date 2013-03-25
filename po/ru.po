@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-03-24 12:25+0100\n"
+"POT-Creation-Date: 2013-03-25 09:00+0100\n"
 "PO-Revision-Date: 2013-03-16 17:50+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8795,6 +8795,12 @@ msgstr "автоматически подтверждать dcc-чат (испо
 #, fuzzy
 msgid "automatically accept chat requests (use carefully!)"
 msgstr "автоматически подтверждать dcc-чат (используйте осторожно!)"
+
+msgid ""
+"comma-separated list of nicks for which the incoming files and chats are "
+"automatically accepted; format is \"server.nick\" (for a specific server) or "
+"\"nick\" (for all servers); example: \"freenode.FlashCode,andrew\""
+msgstr ""
 
 #, fuzzy
 msgid "list of xfer"

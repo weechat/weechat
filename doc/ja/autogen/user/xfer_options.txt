@@ -53,6 +53,11 @@
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `off`)
 
+* [[option_xfer.file.auto_accept_nicks]] *xfer.file.auto_accept_nicks*
+** 説明: `comma-separated list of nicks for which the incoming files and chats are automatically accepted; format is "server.nick" (for a specific server) or "nick" (for all servers); example: "freenode.FlashCode,andrew"`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
+
 * [[option_xfer.file.auto_rename]] *xfer.file.auto_rename*
 ** 説明: `既に存在する場合、受信ファイルをリネームする (".1"、".2"、...を追加)`
 ** タイプ: ブール

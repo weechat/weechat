@@ -520,6 +520,53 @@ xfer_alloc ()
 }
 
 /*
+ * Checks if the given server/nick is auto-accepted.
+ *
+ * Returns:
+ *   1: nick auto-accepted
+ *   0: nick not auto-accepted
+ */
+
+int
+xfer_nick_auto_accepted (const char *server, const char *nick)
+{
+    int rc, num_nicks, i;
+    char **nicks, *pos;
+
+    rc = 0;
+
+    nicks = weechat_string_split (weechat_config_string (xfer_config_file_auto_accept_nicks),
+                                  ",", 0, 0, &num_nicks);
+    if (nicks)
+    {
+        for (i = 0; i < num_nicks; i++)
+        {
+            pos = strchr (nicks[i], '.');
+            if (pos)
+            {
+                if ((weechat_strncasecmp (server, nicks[i], pos - nicks[i]) == 0)
+                    && (weechat_strcasecmp (nick, pos + 1) == 0))
+                {
+                    rc = 1;
+                    break;
+                }
+            }
+            else
+            {
+                if (weechat_strcasecmp (nick, nicks[i]) == 0)
+                {
+                    rc = 1;
+                    break;
+                }
+            }
+        }
+        weechat_string_free_split (nicks);
+    }
+
+    return rc;
+}
+
+/*
  * Adds a xfer to list.
  *
  * Returns pointer to new xfer, NULL if error.
@@ -678,13 +725,22 @@ xfer_new (const char *plugin_name, const char *plugin_id,
         }
     }
 
-    if ( ( (type == XFER_TYPE_FILE_RECV)
-                && (weechat_config_boolean (xfer_config_file_auto_accept_files)) )
-         || ( (type == XFER_TYPE_CHAT_RECV)
-              && (weechat_config_boolean (xfer_config_file_auto_accept_chats)) ) )
+    /*
+     * auto-accept file/chat if nick is auto-accepted, or if file/chat is
+     * auto-accepted
+     */
+    if (xfer_nick_auto_accepted (new_xfer->plugin_id, new_xfer->remote_nick)
+        || ((type == XFER_TYPE_FILE_RECV)
+            && weechat_config_boolean (xfer_config_file_auto_accept_files))
+        || ((type == XFER_TYPE_CHAT_RECV)
+            && weechat_config_boolean (xfer_config_file_auto_accept_chats)))
+    {
         xfer_network_accept (new_xfer);
+    }
     else
+    {
         xfer_buffer_refresh (WEECHAT_HOTLIST_PRIVATE);
+    }
 
     return new_xfer;
 }

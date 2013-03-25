@@ -61,6 +61,7 @@ struct t_config_option *xfer_config_file_auto_rename;
 struct t_config_option *xfer_config_file_auto_resume;
 struct t_config_option *xfer_config_file_auto_accept_files;
 struct t_config_option *xfer_config_file_auto_accept_chats;
+struct t_config_option *xfer_config_file_auto_accept_nicks;
 
 
 
@@ -304,6 +305,14 @@ xfer_config_init ()
         "auto_accept_chats", "boolean",
         N_("automatically accept chat requests (use carefully!)"),
         NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    xfer_config_file_auto_accept_nicks = weechat_config_new_option (
+        xfer_config_file, ptr_section,
+        "auto_accept_nicks", "string",
+        N_("comma-separated list of nicks for which the incoming files and "
+           "chats are automatically accepted; format is \"server.nick\" (for a "
+           "specific server) or \"nick\" (for all servers); example: "
+           "\"freenode.FlashCode,andrew\""),
+        NULL, 0, 0, "", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
 
     return 1;
 }
