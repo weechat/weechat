@@ -56,11 +56,9 @@
 #define WEECHAT_WEBSITE_DOWNLOAD "http://www.weechat.org/download"
 
 /* log file */
-
 #define WEECHAT_LOG_NAME "weechat.log"
 
 /* license */
-
 #define WEECHAT_LICENSE_TEXT \
     "WeeChat is free software; you can redistribute it and/or modify\n" \
     "it under the terms of the GNU General Public License as published by\n" \
@@ -77,7 +75,6 @@
     "along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.\n\n"
 
 /* directory separator, depending on OS */
-
 #ifdef _WIN32
     #define DIR_SEPARATOR       "\\"
     #define DIR_SEPARATOR_CHAR  '\\'
@@ -86,18 +83,15 @@
     #define DIR_SEPARATOR_CHAR  '/'
 #endif
 
-/* some systems (like GNU/Hurd) doesn't define PATH_MAX */
-
+/* some systems like GNU/Hurd do not define PATH_MAX */
 #ifndef PATH_MAX
     #define PATH_MAX 4096
 #endif
 
 /* internal charset */
-
 #define WEECHAT_INTERNAL_CHARSET "UTF-8"
 
 /* global variables and functions */
-
 extern int weechat_debug_core;
 extern char *weechat_argv0;
 extern int weechat_upgrading;

@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.1-dev, 2013-03-24
+v0.4.1-dev, 2013-03-25
 
 
 This document lists all changes for each version.
@@ -84,6 +84,7 @@ Version 0.4.1 (under dev!)
   "irc_message_auth")
 * ruby: fix crash with Ruby 2.0: use one array for the last 6 arguments of
   function config_new_option (bug #31050)
+* script: fix compilation on GNU/Hurd (patch #7977)
 * script: create "script" directory on each action, just in case it has been
   removed (bug #38472)
 * script: add option script.scripts.autoload, add options "autoload",
