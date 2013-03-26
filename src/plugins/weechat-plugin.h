@@ -29,11 +29,6 @@ extern "C" {
 #include <sys/types.h>
 #include <sys/socket.h>
 
-/* some systems like GNU/Hurd do not define PATH_MAX */
-#ifndef PATH_MAX
-    #define PATH_MAX 4096
-#endif
-
 struct t_config_option;
 struct t_gui_window;
 struct t_gui_buffer;

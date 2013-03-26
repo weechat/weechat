@@ -83,11 +83,6 @@
     #define DIR_SEPARATOR_CHAR  '/'
 #endif
 
-/* some systems like GNU/Hurd do not define PATH_MAX */
-#ifndef PATH_MAX
-    #define PATH_MAX 4096
-#endif
-
 /* internal charset */
 #define WEECHAT_INTERNAL_CHARSET "UTF-8"
 
