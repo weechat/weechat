@@ -94,5 +94,6 @@ extern char *string_replace_with_callback (const char *string,
 extern const char *string_shared_get (const char *string);
 extern void string_shared_free (const char *string);
 extern void string_end ();
+WEECHAT_SENTINEL extern char *string_strconcat (const char *string1, ...);
 
 #endif /* __WEECHAT_STRING_H */

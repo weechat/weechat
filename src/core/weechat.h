@@ -91,6 +91,13 @@
 /* internal charset */
 #define WEECHAT_INTERNAL_CHARSET "UTF-8"
 
+/* Provide macros to feature GCC function attribute */
+#if     __GNUC__ >= 4
+#define WEECHAT_SENTINEL __attribute__((__sentinel__))
+#else
+#define WEECHAT_SENTINEL
+#endif
+
 /* global variables and functions */
 extern int weechat_debug_core;
 extern char *weechat_argv0;

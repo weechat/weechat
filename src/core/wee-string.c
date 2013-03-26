@@ -2809,3 +2809,82 @@ string_end ()
         string_hashtable_shared = NULL;
     }
 }
+
+/*
+ * Copies a nul-terminated string into the dest buffer, include the
+ * trailing nul, and return a pointer to the trailing nul byte.
+ *
+ * Return value: a pointer to trailing nul byte.
+ *
+ * Implementation adapted from glib/gstrfuncs.c (LGPLv2+)
+ */
+
+static char *
+string_stpcpy (char *dest, const char *src)
+{
+#if _XOPEN_SOURCE >= 700 || _POSIX_C_SOURCE >= 200809L
+    return stpcpy (dest, src);
+#else
+    register char *d = dest;
+    register const char *s = src;
+
+    if (!dest || !src)
+	    return NULL;
+
+    do
+        *d++ = *s;
+    while (*s++ != '\0');
+
+    return d - 1;
+#endif
+}
+
+/*
+ * Concatenates a NULL-terminated list of strings into a newly
+ * allocated string.
+ *
+ * The returned string should be freed with free() when no longer
+ * needed.
+ *
+ * Implementation adapted from glib/gstrfuncs.c (LGPLv2+)
+ */
+
+char *
+string_strconcat (const char *string1, ...)
+{
+    size_t  l;
+    va_list args;
+    char   *s;
+    char   *concat;
+    char   *ptr;
+
+    if (!string1)
+        return NULL;
+
+    l = 1 + strlen (string1);
+    va_start (args, string1);
+    s = va_arg (args, char*);
+    while (s)
+    {
+        l += strlen (s);
+        s = va_arg (args, char*);
+    }
+    va_end (args);
+
+    concat = malloc(l);
+    if (!concat)
+        return NULL;
+    ptr = concat;
+
+    ptr = string_stpcpy(ptr, string1);
+    va_start (args, string1);
+    s = va_arg (args, char*);
+    while (s)
+    {
+        ptr = string_stpcpy (ptr, s);
+        s = va_arg (args, char*);
+    }
+    va_end (args);
+
+    return concat;
+}

@@ -57,7 +57,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20140304-01"
+#define WEECHAT_PLUGIN_API_VERSION "20140309-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -160,6 +160,13 @@ struct timeval;
 #define WEECHAT_HOOK_SIGNAL_STRING                  "string"
 #define WEECHAT_HOOK_SIGNAL_INT                     "int"
 #define WEECHAT_HOOK_SIGNAL_POINTER                 "pointer"
+
+/* Provide macros to feature GCC function attribute */
+#if     __GNUC__ >= 4
+#define WEECHAT_SENTINEL __attribute__((__sentinel__))
+#else
+#define WEECHAT_SENTINEL
+#endif
 
 /* macro to format string with variable args, using dynamic buffer size */
 #define weechat_va_format(__format)                                     \
@@ -269,6 +276,7 @@ struct t_weechat_plugin
                                      struct t_hashtable *pointers,
                                      struct t_hashtable *extra_vars,
                                      struct t_hashtable *options);
+    WEECHAT_SENTINEL char *(*string_strconcat) (const char *string1, ...);
 
     /* UTF-8 strings */
     int (*utf8_has_8bits) (const char *string);
@@ -1052,6 +1060,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                        __extra_vars, __options)         \
     weechat_plugin->string_eval_expression(__expr, __pointers,          \
                                            __extra_vars, __options)
+#define weechat_string_strconcat(__string1, ...)                        \
+    weechat_plugin->string_strconcat(__string1, __VA_ARGS__)
 
 /* UTF-8 strings */
 #define weechat_utf8_has_8bits(__string)                                \
