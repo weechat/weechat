@@ -24,6 +24,7 @@
 #endif
 
 #include <stdlib.h>
+#include <limits.h>
 #include <errno.h>
 #include <string.h>
 #include <sys/types.h>
@@ -749,4 +750,30 @@ util_version_number (const char *version)
 
     return (version_int[0] << 24) | (version_int[1] << 16)
         | (version_int[2] << 8) | version_int[3];
+}
+
+/*
+ * Return the canonicalized absolute pathname, NULL if error.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+util_realpath (const char *filename)
+{
+#if _POSIX_C_SOURCE >= 200809L || ! defined PATH_MAX
+    return realpath(filename, NULL);
+#else
+    char *resolved_path = malloc(PATH_MAX);
+
+    if( realpath(filename, resolved_path) )
+    {
+        return resolved_path;
+    }
+    else
+    {
+        free(resolved_path);
+        return NULL;
+    }
+#endif
 }

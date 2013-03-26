@@ -311,6 +311,7 @@ struct t_weechat_plugin
     void (*util_timeval_add) (struct timeval *tv, long interval);
     char *(*util_get_time_string) (const time_t *date);
     int (*util_version_number) (const char *version);
+    char *(*util_realpath) (const char *filename);
 
     /* sorted lists */
     struct t_weelist *(*list_new) ();
@@ -1124,6 +1125,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->util_get_time_string(__date)
 #define weechat_util_version_number(__version)                          \
     weechat_plugin->util_version_number(__version)
+#define weechat_util_realpath(__filename)                               \
+    weechat_plugin->util_realpath(__filename)
 
 /* sorted list */
 #define weechat_list_new()                                              \
