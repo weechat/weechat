@@ -107,6 +107,7 @@ extern struct timeval weechat_current_start_timeval;
 extern int weechat_upgrade_count;
 extern int weechat_quit;
 extern char *weechat_home;
+extern char *weechat_dir_absolute_path;
 extern char *weechat_local_charset;
 extern int weechat_plugin_no_dlclose;
 extern int weechat_no_gnutls;
