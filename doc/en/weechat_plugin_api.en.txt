@@ -11102,9 +11102,9 @@ Prototype:
 
 [source,C]
 ----------------------------------------
-void gui_nicklist_get_next_item (struct t_gui_buffer *buffer,
-                                 struct t_gui_nick_group **group,
-                                 struct t_gui_nick **nick);
+void weechat_nicklist_get_next_item (struct t_gui_buffer *buffer,
+                                     struct t_gui_nick_group **group,
+                                     struct t_gui_nick **nick);
 ----------------------------------------
 
 Arguments:
@@ -11122,7 +11122,7 @@ struct t_gui_nick *ptr_nick;
 
 ptr_group = NULL;
 ptr_nick = NULL;
-gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
+weechat_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
 while (ptr_group || ptr_nick)
 {
     if (ptr_nick)
@@ -11135,7 +11135,7 @@ while (ptr_group || ptr_nick)
         /* group */
         /* ... */
     }
-    gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
+    weechat_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
 }
 ----------------------------------------
 
