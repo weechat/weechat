@@ -346,6 +346,8 @@ upgrade_weechat_save_layout_window (struct t_upgrade_file *upgrade_file)
     struct t_gui_layout *ptr_layout;
     int rc;
 
+    rc = 0;
+
     /* get current layout for windows */
     ptr_layout = gui_layout_alloc (GUI_LAYOUT_UPGRADE);
 
