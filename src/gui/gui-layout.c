@@ -790,6 +790,9 @@ gui_layout_save_on_exit ()
         default:
             break;
     }
+
+    /* use layout, so it will be used after restart of WeeChat */
+    gui_layout_current = ptr_layout;
 }
 
 /*
