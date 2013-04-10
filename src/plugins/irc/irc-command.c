@@ -121,8 +121,8 @@ irc_command_exec_all_channels (struct t_irc_server *server,
                                const char *exclude_channels,
                                const char *command)
 {
-    struct t_irc_server *ptr_server;
-    struct t_irc_channel *ptr_channel;
+    struct t_irc_server *ptr_server, *next_server;
+    struct t_irc_channel *ptr_channel, *next_channel;
     char **channels, *str_command;
     int num_channels, length, excluded, i;
 
@@ -144,16 +144,20 @@ irc_command_exec_all_channels (struct t_irc_server *server,
     channels = (exclude_channels && exclude_channels[0]) ?
         weechat_string_split (exclude_channels, ",", 0, 0, &num_channels) : NULL;
 
-    for (ptr_server = irc_servers; ptr_server;
-         ptr_server = ptr_server->next_server)
+    ptr_server = irc_servers;
+    while (ptr_server)
     {
+        next_server = ptr_server->next_server;
+
         if (!server || (ptr_server == server))
         {
             if (ptr_server->is_connected)
             {
-                for (ptr_channel = ptr_server->channels; ptr_channel;
-                     ptr_channel = ptr_channel->next_channel)
+                ptr_channel = ptr_server->channels;
+                while (ptr_channel)
                 {
+                    next_channel = ptr_channel->next_channel;
+
                     if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
                     {
                         excluded = 0;
@@ -174,9 +178,13 @@ irc_command_exec_all_channels (struct t_irc_server *server,
                             weechat_command (ptr_channel->buffer, str_command);
                         }
                     }
+
+                    ptr_channel = next_channel;
                 }
             }
         }
+
+        ptr_server = next_server;
     }
 
     free (str_command);
@@ -241,7 +249,7 @@ irc_command_allchan (void *data, struct t_gui_buffer *buffer, int argc,
 void
 irc_command_exec_all_servers (const char *exclude_servers, const char *command)
 {
-    struct t_irc_server *ptr_server;
+    struct t_irc_server *ptr_server, *next_server;
     char **servers, *str_command;
     int num_servers, length, excluded, i;
 
@@ -263,9 +271,11 @@ irc_command_exec_all_servers (const char *exclude_servers, const char *command)
     servers = (exclude_servers && exclude_servers[0]) ?
         weechat_string_split (exclude_servers, ",", 0, 0, &num_servers) : NULL;
 
-    for (ptr_server = irc_servers; ptr_server;
-         ptr_server = ptr_server->next_server)
+    ptr_server = irc_servers;
+    while (ptr_server)
     {
+        next_server = ptr_server->next_server;
+
         if (ptr_server->is_connected)
         {
             excluded = 0;
@@ -286,6 +296,8 @@ irc_command_exec_all_servers (const char *exclude_servers, const char *command)
                 weechat_command (ptr_server->buffer, str_command);
             }
         }
+
+        ptr_server = next_server;
     }
 
     free (str_command);
