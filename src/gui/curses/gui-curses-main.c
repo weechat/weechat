@@ -326,8 +326,6 @@ gui_main_loop ()
     int max_fd;
     int ready;
 
-    weechat_quit = 0;
-
     /* catch SIGTERM signal: quit program */
     util_catch_signal (SIGTERM, &gui_main_signal_sigterm);
     util_catch_signal (SIGQUIT, &gui_main_signal_sigquit);
