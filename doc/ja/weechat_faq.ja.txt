@@ -281,7 +281,7 @@ Other solution is to use a script: http://www.weechat.org/scripts/stable/tag/url
 UTF-8 エンコードされた英語メッセージが表示されるようになります、
 ISO ユーザは以下のようにして下さい: `/shell setenv LANG=en_US`
 
-[[256_colors]]
+[[use_256_colors]]
 === どうすれば WeeChat で 256 色が使えますか。 ===
 
 256 色は WeeChat ≥ 0.3.4 でサポートされます。

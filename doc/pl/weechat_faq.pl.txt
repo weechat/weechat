@@ -303,7 +303,7 @@ oraz użyć tych komend po załadowaniu skryptu:
 Aby otrzymać polskie komunikaty dla kodowania UTF-8 w terminalu, osoby
 używające ISO, mogą wykonać: `/shell setenv LANG=pl_PL`.
 
-[[256_colors]]
+[[use_256_colors]]
 Jak mogę użyć 256 kolorów w WeeChat?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

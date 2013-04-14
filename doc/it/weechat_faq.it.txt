@@ -310,7 +310,7 @@ e digitare questi comandi quando viene caricato lo script:
 Per avere i messaggi in inglese con la codifica UTF-8 per il terminale, per gli
 utenti ISO, digitare: `/shell setenv LANG=en_US`.
 
-[[256_colors]]
+[[use_256_colors]]
 Come posso usare 256 colori in WeeChat?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

@@ -316,7 +316,7 @@ Hierdurch erhält man für das Terminal deutsche, UTF-8 kodierte Meldungen.
 Benutzer von ISO-Kodierungen können folgendes eingeben:
 `/shell setenv LANG=de_DE`.
 
-[[256_colors]]
+[[use_256_colors]]
 Wie kann ich 256 Farben in WeeChat nutzen?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
