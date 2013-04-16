@@ -144,7 +144,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.display_join_message]] *irc.look.display_join_message*
-** Beschreibung: `comma-separated list of messages to display after joining a channel: 329 = channel creation date, 332 = topic, 333 = nick/date for topic, 366 = names on channel`
+** Beschreibung: `durch Kommata getrennte Liste von Nachrichten die beim betreten eines Channels angezeigt werden sollen: 329 = Erstellungsdatum des Channels, 332 = Topic, 333 = Nick/Datum für Topic, 366 = genutzte Namen im Channel`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"329,332,333,366"`)
 
@@ -164,7 +164,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.highlight_channel]] *irc.look.highlight_channel*
-** Beschreibung: `durch Kommata getrennte Liste von Wörtern die im Channel-Buffer als Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden; des weiteren können folgende Variablen genutzt werden: $nick, $channel und $server). Die angegeben Wörter werden der lokalen Variable "highlight_words" hinzugefügt, sobald der Buffer geöffnet wird. Dies bedeutet, dass diese Option keinen direkten Einfluss auf schon geöffnete Buffer hat. Eine leere Zeichenkette deaktiviert ein Highlight für den Nick. Beispiel: "$nick", "(?-i)$nick"`
+** Beschreibung: `durch Kommata getrennte Liste von Wörtern die in Channel-Buffern als Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden; des weiteren können folgende Variablen genutzt werden: $nick, $channel und $server). Die angegeben Wörter werden der lokalen Variable "highlight_words" hinzugefügt, sobald der Buffer geöffnet wird. Dies bedeutet, dass diese Option keinen direkten Einfluss auf schon geöffnete Buffer hat. Eine leere Zeichenkette deaktiviert ein Highlight für den Nick. Beispiel: "$nick", "(?-i)$nick"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"$nick"`)
 
@@ -174,12 +174,12 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"$nick"`)
 
 * [[option_irc.look.highlight_server]] *irc.look.highlight_server*
-** Beschreibung: `durch Kommata getrennte Liste von Wörtern die im Serverbuffer als Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden; des weiteren können folgende Variablen genutzt werden: $nick, $channel und $server). Die angegeben Wörter werden der lokalen Variable "highlight_words" hinzugefügt, sobald der Buffer geöffnet wird. Dies bedeutet, dass diese Option keinen direkten Einfluss auf schon geöffnete Buffer hat. Eine leere Zeichenkette deaktiviert ein Highlight für den Nick. Beispiel: "$nick", "(?-i)$nick"`
+** Beschreibung: `durch Kommata getrennte Liste von Wörtern die in Server-Buffern als Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden; des weiteren können folgende Variablen genutzt werden: $nick, $channel und $server). Die angegeben Wörter werden der lokalen Variable "highlight_words" hinzugefügt, sobald der Buffer geöffnet wird. Dies bedeutet, dass diese Option keinen direkten Einfluss auf schon geöffnete Buffer hat. Eine leere Zeichenkette deaktiviert ein Highlight für den Nick. Beispiel: "$nick", "(?-i)$nick"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"$nick"`)
 
 * [[option_irc.look.highlight_tags]] *irc.look.highlight_tags*
-** Beschreibung: `eine durch Kommata getrennte Liste von Schlagwörtern welche eine Nachricht hervorheben sollen (Highlight)  (normalerweise trifft dies auf jede Nachricht eines Users zu, ausgenommen Nachrichten vom Server,..)`
+** Beschreibung: `durch Kommata getrennte Liste von Schlagwörtern, welche eine Nachricht hervorheben sollen (Highlight) (normalerweise trifft dies auf jede Nachricht eines Users zu, ausgenommen Nachrichten vom Server,..)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"irc_privmsg,irc_notice"`)
 
@@ -224,7 +224,7 @@
 ** Werte: none, next, near_server (Standardwert: `none`)
 
 * [[option_irc.look.nick_color_force]] *irc.look.nick_color_force*
-** Beschreibung: `force color for some nicks: hash computed with nickname to find color will not be used for these nicks (format is: "nick1:color1;nick2:color2"); look up for nicks is with exact case then lower case, so it's possible to use only lower case for nicks in this option`
+** Beschreibung: `erzwingt für einen Nick eine spezielle Farbe. Die standardmäßig, mittels Streuwertfunktion aus dem Nicknamen, generierte Nickfarbe findet für diese Nicks keine Anwendung (Format:"Nick1:Farbe1;Nick2:Farbe2"). Zuerst wird beim Nicknamen nach Groß- und Kleinschreibung unterschieden. Sollte der Nick nicht gefunden werden, findet keine Unterscheidung mehr statt. Somit ist es möglich die Nicks, in dieser Option, ausschließlich in Kleinschrift zu schreiben.`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -269,12 +269,12 @@
 ** Werte: auto, never, always (Standardwert: `auto`)
 
 * [[option_irc.look.notify_tags_ison]] *irc.look.notify_tags_ison*
-** Beschreibung: `durch Kommata getrennte Liste von Schlagwörtern die in der Nachricht von notify ausgegeben werden sollen falls sich ein Nick beim Server an- oder abmeldet (Rückgabe vom Befehl ison), zum Beispiel: "notify_highlight","notify_message" oder "notify_private"`
+** Beschreibung: `durch Kommata getrennte Liste von Schlagwörtern die in der Nachricht von notify ausgegeben werden sollen, falls sich ein Nick beim Server an- oder abmeldet (Rückgabe durch Befehl ison), zum Beispiel: "notify_highlight","notify_message" oder "notify_private"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"notify_message"`)
 
 * [[option_irc.look.notify_tags_whois]] *irc.look.notify_tags_whois*
-** Beschreibung: `durch Kommata getrennte Liste von Schlagwörtern die in der Nachricht von notify ausgegeben werden sollen falls ein Nick den Befehl away nutzt (Rückgabe vom Befehl whois), zum Beispiel: "notify_highlight", "notify_message" oder "notify_private"`
+** Beschreibung: `durch Kommata getrennte Liste von Schlagwörtern die in der Nachricht von notify ausgegeben werden sollen, falls ein Nick den Befehl away nutzt (Rückgabe durch Befehl whois), zum Beispiel: "notify_highlight", "notify_message" oder "notify_private"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"notify_message"`)
 
@@ -284,7 +284,7 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_irc.look.pv_buffer]] *irc.look.pv_buffer*
-** Beschreibung: `merge private buffers`
+** Beschreibung: `private Buffer zusammenfügen`
 ** Typ: integer
 ** Werte: independent, merge_by_server, merge_all (Standardwert: `independent`)
 
@@ -314,7 +314,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.smart_filter_join_unmask]] *irc.look.smart_filter_join_unmask*
-** Beschreibung: `delay for unmasking a join message that was filtered with tag "irc_smart_filter" (in minutes): if a nick has joined max N minutes ago and then says something on channel (message, notice or update on topic), the join is unmasked, as well as nick changes after this join (0 = disable: never unmask a join)`
+** Beschreibung: `Verzögerung (in Minuten) um Join Mitteilungen rückwirkend anzuzeigen, falls diese mittels "irc_smart_filter" unterdrückt wurden. Sollte ein Nick während der vorgegeben Zeit etwas im Channel schreiben, dann wird seine Join Mitteilung angezeigt. Dies bezieht sich auf Nachrichten, eine Notice, Änderungen am Topic oder falls der Nick gewechselt wird (0 = deaktiviert: join-Mitteilungen bleiben verborgen)`
 ** Typ: integer
 ** Werte: 0 .. 10080 (Standardwert: `30`)
 
@@ -369,7 +369,7 @@
 ** Werte: 0 .. 86400000 (Standardwert: `500`)
 
 * [[option_irc.network.lag_reconnect]] *irc.network.lag_reconnect*
-** Beschreibung: `reconnect to server if lag is greater than this value (in seconds, 0 = never reconnect)`
+** Beschreibung: `erneut mit Server verbinden, falls die maximal Verzögerung (Lag) erreicht wurde (Zeit in Sekunden, 0 = keine automatische Neuverbindung, zum Server)`
 ** Typ: integer
 ** Werte: 0 .. 604800 (Standardwert: `0`)
 
@@ -454,7 +454,7 @@
 ** Werte: 0 .. 1000000 (Standardwert: `25`)
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** Beschreibung: `Durch Kommata getrennte Liste von erweiterten Client Fähigkeiten ("client capabilities"), welche vom Server angeboten und genutzt werden sollen (Beispiel: "multi-prefix,extended-join")`
+** Beschreibung: `durch Kommata getrennte Liste von erweiterten Client Fähigkeiten ("client capabilities"), welche vom Server angeboten und genutzt werden sollen (Beispiel: "multi-prefix,extended-join")`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 

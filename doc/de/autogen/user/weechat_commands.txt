@@ -207,40 +207,40 @@ infolists: zeigt Information über die Infolists an
 /eval  [-n] <expression>
        [-n] <expression1> <operator> <expression2>
 
-        -n: display result without sending it to buffer (debug mode)
-expression: expression to evaluate, variables with format ${variable} are replaced (see below)
-  operator: a logical or comparison operator:
-            - logical operators:
-                &&  boolean "and"
-                ||  boolean "or"
-            - comparison operators:
-                ==  equal
-                !=  not equal
-                <=  less or equal
-                <   less
-                >=  greater or equal
-                >   greater
-                =~  is matching regex
-                !~  is NOT matching regex
+        -n: zeigt das Ergebnis an, ohne dieses in den Buffer zu schreiben (debug Modus)
+expression: Ausdruck welcher verarbeitet werden soll. Variablen im Format ${variable} werden ersetzt (siehe unten)
+  operator: ein logischer oder vergleichender Operand:
+            - logische Operanden:
+                &&  boolean "und"
+                ||  boolean "oder"
+            - vergleichende Operanden:
+                ==  gleich
+                !=  ungleich
+                <=  kleiner oder gleich
+                <   kleiner
+                >=  größer oder gleich
+                >   größer
+                =~  stimmt mit regulärem Ausdruck überein
+                !~  stimmt NICHT mit regulärem Ausdruck überein
 
-An expression is considered as "true" if it is not NULL, not empty, and different from "0".
-The comparison is made using integers if the two expressions are valid integers.
-To force a string comparison, add double quotes around each expression, for example:
+Ein Ausdruck gilt als "wahr", sofern das Ergebnis nicht NULL, nicht leer und von "0" abweichend ist.
+Der Vergleich findet zwischen zwei Integer statt, sofern die beiden Ausdrücke gültige Integer-Werte sind.
+Um einen Vergleich zwischen zwei Zeichenketten zu erzwingen, müssen die Ausdrücke in Anführungszeichen gesetzt werden, zum Beispiel:
   50 > 100      ==> 0
   "50" > "100"  ==> 1
 
-Some variables are replaced in expression, using the format ${variable}, variable can be, by order of priority :
-  1. the name of an option (file.section.option)
-  2. the name of a local variable in buffer
-  3. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
-Format for hdata can be one of following:
-  hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
-  hdata(list).var1.var2...: start with a hdata using a list, for example:
-    ${buffer[gui_buffers].full_name}: full name of first buffer in linked list of buffers
-    ${plugin[weechat_plugins].name}: name of first plugin in linked list of plugins
-For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
+Einige Variablen werden im Ausdruck, mittels der Formatierung ${Variable}, ersetzt. Mögliche Variablen sind, nach Reihenfolge ihrer Priorität:
+  1. der Name einer Option (file.section.option)
+  2. der Name der lokalen Variablen für Buffer
+  3. ein hdata Name/Variable (der Wert wird automatisch als Zeichenkette konvertiert), Standardmäßig wird für "window" und "buffer" das aktuelle Fenster/Buffer verwendet.
+Das Format für hdata:
+  hdata.var1.var2...: startet mit hdata (der Pointer muss bekannt sein) und fragt eine Variable nach der anderen ab (weitere hdata können folgen)
+  hdata(list).var1.var2...: startet hdata mittels einer Liste, zum Beispiel:
+    ${buffer[gui_buffers].full_name}: der vollständige Name des ersten Buffers, in der verknüpften Liste aller Buffer
+    ${plugin[weechat_plugins].name}: Name der ersten Erweiterung, in der verknüpften Liste aller Erweiterungen
+Die vorhandenen Namen für hdata und Variablen sind in der "Anleitung für API Erweiterung", Bereich "weechat_hdata_get". beschrieben
 
-Examples:
+Beispiele:
   /eval -n ${weechat.look.scroll_amount}  ==> 3
   /eval -n ${window}                      ==> 0x2549aa0
   /eval -n ${window.buffer}               ==> 0x2549320
@@ -453,17 +453,17 @@ Beispiele:
          reset [<name>] [buffers|windows]
          rename <name> <new_name>
 
-   save: save current layout
-  apply: apply saved layout
-  leave: leave current layout (does not update any layout)
-  reset: reset buffers and/or windows in a saved layout
-         (if both buffers and windows are reset, the layout is removed)
- rename: rename a layout
-   name: name for saved layout (default is "default")
-buffers: save/apply only buffers (order of buffers)
-windows: save/apply only windows (buffer displayed by each window)
+   save: speichert das aktuelle Layout
+  apply: das gespeicherte Layout anwenden
+  leave: belässt das aktuelle Layout (es wird kein Layout aktualisiert)
+  reset: das gespeicherte Layout, mit Buffern und/oder Fenstern, zurücksetzen
+         (falls Buffer und Fenster zurückgesetzt werden, dann wird das Layout entfernt)
+ rename: ein Layout umbenennen
+   name: Name unter welchem das Layout gesichert werden soll (Standardlayout lautet "default")
+buffers: speichert bzw. verwendet nur Buffer (Reihenfolge der Buffer)
+windows: speichert bzw. verwendet nur Fenster (Buffer welche im jeweiligen Fenster dargestellt werden)
 
-Without argument, this command displays saved layouts.
+Wird der Befehl ohne Argumente aufgerufen wird das gespeicherte Layout dargestellt.
 ........................................
 
 [[command_weechat_mouse]]

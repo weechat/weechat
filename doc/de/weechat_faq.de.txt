@@ -609,28 +609,27 @@ Für weitere Hilfe: `/help filter` und `/help irc.look.smart_filter`
 Wie kann ich Nachrichten filtern wenn ich einen IRC Channel betrete?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-// TRANSLATION MISSING
-With WeeChat ≥ 0.4.1, you can disable some messages with option
+Ab WeeChat ≥ 0.4.1 ist es möglich Nachrichten zu deaktivieren. Dazu
+nutzt man die Option:
 'irc.look.display_join_message'.
 
-// TRANSLATION MISSING
-For example, to disable names (which is IRC message '366'):
+Zum Beispiel: Um die Auflistung aller Namen im Channel zu unterdrücken
+(IRC Nachricht '366'):
 
 ----------------------------------------
 /set irc.look.display_join_message "329,332,333"
 ----------------------------------------
 
 [NOTE]
-For help: `/help irc.look.display_join_message`
+Für Hilfe: `/help irc.look.display_join_message`
 
-// TRANSLATION MISSING
-Another solution is to filter messages on tag:
+Eine andere Möglichkeit ist das Filtern von Nachrichten, nach Tags:
 
 * 'irc_366': Auflistung der Namen die sich im Channel befinden
 * 'irc_332,irc_333': Channel Topic/Datum
 * 'irc_329': Wann der Channel erstellt wurde
 
-Tags von anderen Server-Mitteilungen kann man im IRC Raw-Server finden
+Die Tags von anderen Server-Mitteilungen werden IRC RAW-Buffer ausgegeben
 (`/server raw`).
 
 Beispiele:

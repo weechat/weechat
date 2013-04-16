@@ -106,7 +106,7 @@
 
 | weechat | keys_contexts | Tastaturkontext
 
-| weechat | layouts_names | names of layouts
+| weechat | layouts_names | Namen der Layouts
 
 | weechat | nicks | Nicks in Nickliste für aktuellen Buffer
 

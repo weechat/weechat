@@ -54,7 +54,7 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_xfer.file.auto_accept_nicks]] *xfer.file.auto_accept_nicks*
-** Beschreibung: `comma-separated list of nicks for which the incoming files and chats are automatically accepted; format is "server.nick" (for a specific server) or "nick" (for all servers); example: "freenode.FlashCode,andrew"`
+** Beschreibung: `durch Kommata getrennte Liste von Nicks deren Chat- und Transferanfragen automatisch akzeptiert werden. Format : "server.nick" (für einen speziellen Server) oder "nick" (global, für alle Server); Beispiel: "freenode.FlashCode,andrew"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 

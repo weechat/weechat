@@ -479,7 +479,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_weechat.look.highlight_tags]] *weechat.look.highlight_tags*
-** Beschreibung: `eine durch Kommata getrennte Liste der hervorzuhebenden Wörter (Groß-/Kleinschreibung wird nicht beachtet. Beispiele: "irc_notice" für IRC Nachrichten, "nick_flashcode" für Nachrichten vom Nick "FlashCode")`
+** Beschreibung: `durch Kommata getrennte Liste der hervorzuhebenden Wörter (Groß-/Kleinschreibung wird nicht beachtet. Beispiele: "irc_notice" für IRC Nachrichten, "nick_flashcode" für Nachrichten vom Nick "FlashCode")`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -769,7 +769,7 @@
 ** Werte: 1 .. 2147483647 (Standardwert: `30`)
 
 * [[option_weechat.plugin.autoload]] *weechat.plugin.autoload*
-** Beschreibung: `eine durch Kommata getrennte Liste der Erweiterungen, die beim Programmstart automatisch geladen werden sollen; "*" lädt alle vorhandenen Erweiterungen. Beginnt der Name hingegen mit "!" wird die Erweiterung nicht geladen. Suchmuster können mit einem Joker ("*") beginnen oder enden um mehrere Erweiterungen zu laden (Beispiele: "*" oder "*,!lua,!tcl")`
+** Beschreibung: `durch Kommata getrennte Liste der Erweiterungen, die beim Programmstart automatisch geladen werden sollen; "*" lädt alle vorhandenen Erweiterungen. Beginnt der Name hingegen mit "!" wird die Erweiterung nicht geladen. Suchmuster können mit einem Joker ("*") beginnen oder enden um mehrere Erweiterungen zu laden (Beispiele: "*" oder "*,!lua,!tcl")`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"*"`)
 

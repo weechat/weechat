@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-03-25 09:00+0100\n"
-"PO-Revision-Date: 2013-03-17 08:20+0100\n"
+"POT-Creation-Date: 2013-04-16 19:56+0200\n"
+"PO-Revision-Date: 2013-04-16 20:07+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
 "Language: de\n"
@@ -196,9 +196,9 @@ msgstr "Alle Infobars wurden entfernt"
 msgid "%sError: unknown bar \"%s\""
 msgstr "%sFehler: Infobar \"%s\" ist unbekannt"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Bar \"%s\" deleted"
-msgstr "Infobar entfernt"
+msgstr "Bar \"%s\" gelöscht"
 
 #, c-format
 msgid "%sError: unable to set option \"%s\" for bar \"%s\""
@@ -484,13 +484,11 @@ msgid_plural "%d new keys added (context: \"%s\")"
 msgstr[0] "(%d) neue Taste hinzugefügt"
 msgstr[1] "(%d) neue Tasten hinzugefügt (Kontext: \"%s\")"
 
-#, fuzzy
 msgid "Saved layouts:"
-msgstr "gespeicherte Layouts für Buffer:"
+msgstr "gespeicherte Layouts:"
 
-#, fuzzy
 msgid " (current layout)"
-msgstr "aktueller Wert"
+msgstr " (aktuelles Layout)"
 
 msgid "No layout saved"
 msgstr "Kein Layout gespeichert"
@@ -498,40 +496,37 @@ msgstr "Kein Layout gespeichert"
 #. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows"
 #, c-format
 msgid "Layout of %s%s%s saved in \"%s\" (current layout: %s)"
-msgstr ""
+msgstr "Layout %s%s%s gesichert in \"%s\" (aktuelles Layout: %s)"
 
-#, fuzzy
 msgid "buffers"
 msgstr "Buffer"
 
-#, fuzzy
 msgid "windows"
 msgstr "Fenster"
 
 msgid "Layout of buffers+windows reset (current layout: -)"
-msgstr ""
+msgstr "Buffer+Fenster Layout zurückgesetzt (aktuelles Layout: -)"
 
 #, c-format
 msgid "Layout \"%s\" deleted (current layout: %s)"
-msgstr ""
+msgstr "Layout \"%s\" gelöscht (aktuelles Layout: %s)"
 
-# "%s" nach "on" ist ein Datum
 #. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows"
-#, fuzzy, c-format
+#, c-format
 msgid "Layout of %s%s%s reset in \"%s\""
-msgstr "%sDas Thema von %s%s%s wurde festgelegt am: %s"
+msgstr "Layout von %s%s%s wird für \"%s\" zurückgesetzt"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError: unknown layout \"%s\""
-msgstr "%sFehler: Infobar \"%s\" ist unbekannt"
+msgstr "%sFehler: Layout\"%s\" nicht bekannt"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError: layout \"%s\" already exists for \"%s\" command"
-msgstr "%s%s: Server \"%s\" für den Befehl \"%s\" existiert bereits"
+msgstr "%sFehler: Layout \"%s\" existiert bereits für den Befehl \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Layout \"%s\" has been renamed to \"%s\""
-msgstr "Filter \"%s\" wurde umbenannt. Der neue Name lautet \"%s\""
+msgstr "Layout \"%s\" wurde umbenannt. Der neue Name lautet \"%s\""
 
 msgid "Mouse enabled"
 msgstr "Maus ist aktiviert"
@@ -1287,7 +1282,6 @@ msgstr "wertet einen Ausdruck aus und gibt das Resultat im Buffer aus"
 msgid "[-n] <expression> || [-n] <expression1> <operator> <expression2>"
 msgstr "[-n] <expression> || [-n] <expression1> <operator> <expression2>"
 
-#, fuzzy
 msgid ""
 "        -n: display result without sending it to buffer (debug mode)\n"
 "expression: expression to evaluate, variables with format ${variable} are "
@@ -1356,8 +1350,8 @@ msgstr ""
 "                &&  boolean \"und\"\n"
 "                ||  boolean \"oder\"\n"
 "            - vergleichende Operanden:\n"
-"                ==  gleichl\n"
-"                !=  nicht gleich\n"
+"                ==  gleich\n"
+"                !=  ungleich\n"
 "                <=  kleiner oder gleich\n"
 "                <   kleiner\n"
 "                >=  größer oder gleich\n"
@@ -1843,14 +1837,13 @@ msgstr ""
 msgid "save/apply/reset layout for buffers and windows"
 msgstr "Layout für Buffer und Fenster speichern, anwenden oder zurücksetzen"
 
-#, fuzzy
 msgid ""
 "save [<name>] [buffers|windows] || apply [<name>] [buffers|windows] || leave "
 "|| reset [<name>] [buffers|windows] || rename <name> <new_name>"
 msgstr ""
-"save [buffers|windows] || apply [buffers|windows] || reset [buffers|windows]"
+"save [<name>] [buffers|windows] || apply [<name>] [buffers|windows] || leave "
+"|| reset [<name>] [buffers|windows] || rename <name> <new_name>"
 
-#, fuzzy
 msgid ""
 "   save: save current layout\n"
 "  apply: apply saved layout\n"
@@ -1866,7 +1859,14 @@ msgid ""
 msgstr ""
 "   save: speichert das aktuelle Layout\n"
 "  apply: das gespeicherte Layout anwenden\n"
-"  reset: das gespeicherte Layout entfernen\n"
+"  leave: belässt das aktuelle Layout (es wird kein Layout aktualisiert)\n"
+"  reset: das gespeicherte Layout, mit Buffern und/oder Fenstern, "
+"zurücksetzen\n"
+"         (falls Buffer und Fenster zurückgesetzt werden, dann wird das "
+"Layout entfernt)\n"
+" rename: ein Layout umbenennen\n"
+"   name: Name unter welchem das Layout gesichert werden soll (Standardlayout "
+"lautet \"default\")\n"
 "buffers: speichert bzw. verwendet nur Buffer (Reihenfolge der Buffer)\n"
 "windows: speichert bzw. verwendet nur Fenster (Buffer welche im jeweiligen "
 "Fenster dargestellt werden)\n"
@@ -2596,9 +2596,8 @@ msgstr ""
 "Bereiche in denen der Cursor frei bewegt werden kann (\"chat\" oder Name "
 "einer Bar)"
 
-#, fuzzy
 msgid "names of layouts"
-msgstr "Namen der Infobars"
+msgstr "Namen der Layouts"
 
 msgid ""
 "Warning: you should now issue /save to write \"save_config_on_exit\" option "
@@ -2881,7 +2880,7 @@ msgid ""
 "examples: \"irc_notice\" for IRC notices, \"nick_flashcode\" for messages "
 "from nick \"FlashCode\")"
 msgstr ""
-"eine durch Kommata getrennte Liste der hervorzuhebenden Wörter (Groß-/"
+"durch Kommata getrennte Liste der hervorzuhebenden Wörter (Groß-/"
 "Kleinschreibung wird nicht beachtet. Beispiele: \"irc_notice\" für IRC "
 "Nachrichten, \"nick_flashcode\" für Nachrichten vom Nick \"FlashCode\")"
 
@@ -3558,7 +3557,7 @@ msgid ""
 "prevent a plugin from being loaded, names can start or end with \"*\" to "
 "match several plugins (examples: \"*\" or \"*,!lua,!tcl\")"
 msgstr ""
-"eine durch Kommata getrennte Liste der Erweiterungen, die beim Programmstart "
+"durch Kommata getrennte Liste der Erweiterungen, die beim Programmstart "
 "automatisch geladen werden sollen; \"*\" lädt alle vorhandenen "
 "Erweiterungen. Beginnt der Name hingegen mit \"!\" wird die Erweiterung "
 "nicht geladen. Suchmuster können mit einem Joker (\"*\") beginnen oder enden "
@@ -4356,7 +4355,7 @@ msgstr "Auflistung der installierten Wörterbücher"
 
 msgid "comma separated list of dictionaries to use on this buffer"
 msgstr ""
-"eine durch Kommata getrennte Liste von Wörterbüchern, die in diesem Buffer "
+"durch Kommata getrennte Liste von Wörterbüchern, welche in diesem Buffer "
 "genutzt werden sollen"
 
 #, c-format
@@ -4383,7 +4382,7 @@ msgid ""
 "comma separated list of commands for which spell checking is enabled (spell "
 "checking is disabled for all other commands)"
 msgstr ""
-"Durch Kommata getrennte Liste der Befehle, für die eine Rechtschreibprüfung "
+"durch Kommata getrennte Liste der Befehle, für die eine Rechtschreibprüfung "
 "gelten soll (Rechtschreibprüfung ist für andere Befehle deaktiviert)"
 
 msgid ""
@@ -4429,8 +4428,8 @@ msgstr ""
 
 msgid "comma-separated list of dictionaries used in buffer"
 msgstr ""
-"eine durch Kommata getrennte Liste von Wörterbüchern, die in diesem Buffer "
-"genutzt wird"
+"durch Kommata getrennte Liste von Wörterbüchern, die in diesem Buffer "
+"genutzt werden sollen"
 
 msgid ""
 "buffer pointer (\"0x12345678\") or buffer full name (\"irc.freenode.#weechat"
@@ -6135,7 +6134,7 @@ msgstr "%s%s: zu wenige Argumente für den Befehl \"%s\""
 #, c-format
 msgid "%s%s: command \"%s\" must be executed on irc buffer (server or channel)"
 msgstr ""
-"%s%s: der Befehl \"%s\" kann nur im IRC-Buffer ausgeführt werden (Server "
+"%s%s: Der Befehl \"%s\" kann nur im IRC-Buffer ausgeführt werden (Server "
 "oder Channel)"
 
 msgid "current IRC server"
@@ -6279,7 +6278,7 @@ msgid ""
 "comma-separated list of client capabilities to enable for server if they are "
 "available (example: \"multi-prefix,extended-join\")"
 msgstr ""
-"Durch Kommata getrennte Liste von erweiterten Client Fähigkeiten (\"client "
+"durch Kommata getrennte Liste von erweiterten Client Fähigkeiten (\"client "
 "capabilities\"), welche vom Server angeboten und genutzt werden sollen "
 "(Beispiel: \"multi-prefix,extended-join\")"
 
@@ -6480,9 +6479,8 @@ msgstr ""
 msgid "merge server buffers"
 msgstr "Server-Buffer zusammenfügen"
 
-#, fuzzy
 msgid "merge private buffers"
-msgstr "Server-Buffer zusammenfügen"
+msgstr "private Buffer zusammenfügen"
 
 msgid ""
 "force position of new channel in list of buffers (none = default position "
@@ -6527,18 +6525,19 @@ msgstr ""
 "es wird ein Leerzeichen anstelle eines Nickmodus verwendet, falls kein "
 "Nickmodus ((half)op/voice [@%+]) vorhanden ist"
 
-#, fuzzy
 msgid ""
 "force color for some nicks: hash computed with nickname to find color will "
 "not be used for these nicks (format is: \"nick1:color1;nick2:color2\"); look "
 "up for nicks is with exact case then lower case, so it's possible to use "
 "only lower case for nicks in this option"
 msgstr ""
-"erzwingt für einen Nick eine spezielle Farbe. Die mittels Streuwertfunktion "
-"aus dem Nicknamen generierte Nickfarbe findet für diese Nicks keine "
-"Anwendung (Format:\"Nick1:Farbe1;Nick2:Farbe2\"). Bei der Schreibweise der "
-"Nicks wird sowohl nach Groß- und Kleinschreibung unterschieden und ebenso "
-"kann man die Nicks nur mit Kleinbuchstaben schreiben."
+"erzwingt für einen Nick eine spezielle Farbe. Die standardmäßig, mittels "
+"Streuwertfunktion aus dem Nicknamen, generierte Nickfarbe findet für diese "
+"Nicks keine Anwendung (Format:\"Nick1:Farbe1;Nick2:Farbe2\"). Zuerst wird "
+"beim Nicknamen nach Groß- und Kleinschreibung unterschieden. Sollte der Nick "
+"nicht gefunden werden, findet keine Unterscheidung mehr statt. Somit ist es "
+"möglich die Nicks, in dieser Option, ausschließlich in Kleinschrift zu "
+"schreiben."
 
 msgid ""
 "chars used to stop in nick when computing color with letters of nick (at "
@@ -6595,6 +6594,9 @@ msgid ""
 "channel creation date, 332 = topic, 333 = nick/date for topic, 366 = names "
 "on channel"
 msgstr ""
+"durch Kommata getrennte Liste von Nachrichten die beim betreten eines "
+"Channels angezeigt werden sollen: 329 = Erstellungsdatum des Channels, 332 = "
+"Topic, 333 = Nick/Datum für Topic, 366 = genutzte Namen im Channel"
 
 msgid "display old topic when channel topic is changed"
 msgstr "Zeige das alte Thema an, falls das Thema des Channels geändert wurde"
@@ -6634,8 +6636,8 @@ msgid ""
 "buffers), an empty string disables default highlight on nick, examples: "
 "\"$nick\", \"(?-i)$nick\""
 msgstr ""
-"durch Kommata getrennte Liste von Wörtern die im Serverbuffer als Highlight "
-"erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht "
+"durch Kommata getrennte Liste von Wörtern die in Server-Buffern als "
+"Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht "
 "unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss "
 "zu Beginn \"(?-i)\" genutzt werden; des weiteren können folgende Variablen "
 "genutzt werden: $nick, $channel und $server). Die angegeben Wörter werden "
@@ -6653,7 +6655,7 @@ msgid ""
 "buffers), an empty string disables default highlight on nick, examples: "
 "\"$nick\", \"(?-i)$nick\""
 msgstr ""
-"durch Kommata getrennte Liste von Wörtern die im Channel-Buffer als "
+"durch Kommata getrennte Liste von Wörtern die in Channel-Buffern als "
 "Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht "
 "unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss "
 "zu Beginn \"(?-i)\" genutzt werden; des weiteren können folgende Variablen "
@@ -6686,9 +6688,9 @@ msgid ""
 "comma separated list of tags for messages that may produce highlight "
 "(usually any message from another user, not server messages,..)"
 msgstr ""
-"eine durch Kommata getrennte Liste von Schlagwörtern welche eine Nachricht "
-"hervorheben sollen (Highlight)  (normalerweise trifft dies auf jede "
-"Nachricht eines Users zu, ausgenommen Nachrichten vom Server,..)"
+"durch Kommata getrennte Liste von Schlagwörtern, welche eine Nachricht "
+"hervorheben sollen (Highlight) (normalerweise trifft dies auf jede Nachricht "
+"eines Users zu, ausgenommen Nachrichten vom Server,..)"
 
 msgid "name of bar item where IRC server is displayed (for status bar)"
 msgstr ""
@@ -6723,8 +6725,8 @@ msgid ""
 "\"notify_highlight\", \"notify_message\" or \"notify_private\""
 msgstr ""
 "durch Kommata getrennte Liste von Schlagwörtern die in der Nachricht von "
-"notify ausgegeben werden sollen falls sich ein Nick beim Server an- oder "
-"abmeldet (Rückgabe vom Befehl ison), zum Beispiel: \"notify_highlight\","
+"notify ausgegeben werden sollen, falls sich ein Nick beim Server an- oder "
+"abmeldet (Rückgabe durch Befehl ison), zum Beispiel: \"notify_highlight\","
 "\"notify_message\" oder \"notify_private\""
 
 msgid ""
@@ -6733,8 +6735,8 @@ msgid ""
 "\"notify_highlight\", \"notify_message\" or \"notify_private\""
 msgstr ""
 "durch Kommata getrennte Liste von Schlagwörtern die in der Nachricht von "
-"notify ausgegeben werden sollen falls ein Nick den Befehl away nutzt "
-"(Rückgabe vom Befehl whois), zum Beispiel: \"notify_highlight\", "
+"notify ausgegeben werden sollen, falls ein Nick den Befehl away nutzt "
+"(Rückgabe durch Befehl whois), zum Beispiel: \"notify_highlight\", "
 "\"notify_message\" oder \"notify_private\""
 
 msgid "close buffer when /part is issued on a channel"
@@ -6764,7 +6766,6 @@ msgstr ""
 msgid "enable smart filter for \"join\" messages"
 msgstr "aktiviert einen intelligenten Filter für \"join\" Nachrichten"
 
-#, fuzzy
 msgid ""
 "delay for unmasking a join message that was filtered with tag "
 "\"irc_smart_filter\" (in minutes): if a nick has joined max N minutes ago "
@@ -6776,8 +6777,8 @@ msgstr ""
 "diese mittels \"irc_smart_filter\" unterdrückt wurden. Sollte ein Nick "
 "während der vorgegeben Zeit etwas im Channel schreiben, dann wird seine Join "
 "Mitteilung angezeigt. Dies bezieht sich auf Nachrichten, eine Notice, "
-"Änderungen am Topic oder falls er den Nick wechselt (0 = deaktiviert: join-"
-"Mitteilungen bleiben verborgen)"
+"Änderungen am Topic oder falls der Nick gewechselt wird (0 = deaktiviert: "
+"join-Mitteilungen bleiben verborgen)"
 
 #. TRANSLATORS: please do not translate "part" and "quit"
 msgid "enable smart filter for \"part\" and \"quit\" messages"
@@ -6932,13 +6933,12 @@ msgid "minimum lag to show (in milliseconds)"
 msgstr ""
 "geringste Verzögerungszeit (Lag) die angezeigt werden soll (in Millisekunden)"
 
-#, fuzzy
 msgid ""
 "reconnect to server if lag is greater than this value (in seconds, 0 = never "
 "reconnect)"
 msgstr ""
-"maximal Verzögerung (Lag) bis zum Trennen der Verbindung (in Minuten - 0 = "
-"niemals trennen)"
+"erneut mit Server verbinden, falls die maximal Verzögerung (Lag) erreicht "
+"wurde (Zeit in Sekunden, 0 = keine automatische Neuverbindung, zum Server)"
 
 msgid ""
 "interval between two refreshs of lag item, when lag is increasing (in "
@@ -7640,9 +7640,11 @@ msgstr ""
 msgid "%s%s: sasl authentication timeout"
 msgstr "%s%s: Zeitüberschreitung bei SASL Authentifizierung"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: lag is high, reconnecting to server %s%s%s"
-msgstr "%s%s: Verzögerung ist zu hoch, die Verbindung wird getrennt..."
+msgstr ""
+"%s%s: Verzögerung ist zu hoch. Es wird eine neue Verbindung zum Server %s%s"
+"%s hergestellt"
 
 #, c-format
 msgid "%s%s: reconnecting to server in %d %s, %d %s"
@@ -8923,7 +8925,6 @@ msgstr ""
 "list|listdefault || add <name> <modifiers> <groups> <regex> || del <name>|-"
 "all [<name>...] || default -yes"
 
-#, fuzzy
 msgid ""
 "       list: list all rmodifiers\n"
 "listdefault: list default rmodifiers\n"
@@ -8952,10 +8953,11 @@ msgstr ""
 "        add: einen rmodifier hinzufügen\n"
 "       name: Name des rmodifier\n"
 "  modifiers: durch Kommata getrennte Liste der modifier\n"
-"     groups: Aktion auf Gruppen anwenden: durch Kommata getrennte Liste der "
-"Gruppen (von 1 bis 9). Optional kann nach der Nummer für die Gruppe ein \"*"
-"\" gesetzt werden um diese Gruppe auszublenden\n"
-"      regex: regulärer Ausdruck  (zwischen Groß- und Kleinschreibung wird "
+"     groups: Aktion auf Gruppen (groups) anwenden, die durch reguläre "
+"Ausdrücke abgefragt werden (innerhalb der runden Klammern): durch Kommata "
+"getrennte Liste der Gruppen (von 1 bis 9). Optional kann nach der Nummer für "
+"die Gruppe ein \"*\" gesetzt werden um diese Gruppe auszublenden\n"
+"      regex: regulärer Ausdruck (zwischen Groß- und Kleinschreibung wird "
 "nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden "
 "muss zu Beginn \"(?-i)\" genutzt werden)\n"
 "        del: löscht einen rmodifier Eintrag\n"
@@ -9789,8 +9791,8 @@ msgid ""
 "upgraded and can not be removed, for example: \"buffers.pl,iset.pl\""
 msgstr ""
 "Skripten welche \"gehalten\" werden sollen. Dies ist eine durch Kommata "
-"getrennte Liste von Skripten die nicht aktualisiert werden und nicht "
-"entfernt werden können. Zum Beispiel: \"buffers.pl,iset.pl\""
+"getrennte Liste von Skripten die weder aktualisiert noch entfernt werden "
+"können. Zum Beispiel: \"buffers.pl,iset.pl\""
 
 msgid "URL for file with list of scripts"
 msgstr "URL für Datei mit Inhalt der unterstützten Skripten"
@@ -10200,6 +10202,10 @@ msgid ""
 "automatically accepted; format is \"server.nick\" (for a specific server) or "
 "\"nick\" (for all servers); example: \"freenode.FlashCode,andrew\""
 msgstr ""
+"durch Kommata getrennte Liste von Nicks deren Chat- und Transferanfragen "
+"automatisch akzeptiert werden. Format : \"server.nick\" (für einen "
+"speziellen Server) oder \"nick\" (global, für alle Server); Beispiel: "
+"\"freenode.FlashCode,andrew\""
 
 msgid "list of xfer"
 msgstr "Transferliste"
@@ -10302,6 +10308,204 @@ msgstr "Type"
 msgid "Constants"
 msgstr "Konstanten"
 
-#, fuzzy
-#~ msgid "display names when joining channel"
-#~ msgstr "bei einem Datumswechsel wird eine entsprechende Nachricht angezeigt"
+#~ msgid "leaf: id: %d, parent: %d, plugin: \"%s\", buffer: \"%s\""
+#~ msgstr "Blatt: id: %d, Stamm: %d, Erweiterung: \"%s\", Buffer: \"%s\""
+
+#~ msgid "node: id: %d, parent: %d, child1: %d, child2: %d, size: %d%% (%s)"
+#~ msgstr "Node: id: %d, Stamm: %d, Kind1: %d, Kind2: %d, Größe: %d%% (%s)"
+
+#~ msgid "horizontal split"
+#~ msgstr "horizontale Aufteilung"
+
+#~ msgid "vertical split"
+#~ msgstr "vertikale Aufteilung"
+
+#~ msgid "Saved layout for windows:"
+#~ msgstr "gespeicherte Layouts für Fenster:"
+
+#~ msgid "Layout saved for buffers (order of buffers)"
+#~ msgstr "Layout der Buffer gesichert (Reihenfolge der Buffer)"
+
+#~ msgid "Layout saved for windows (buffer displayed by each window)"
+#~ msgstr ""
+#~ "Layout der Fenster gesichert (Buffer werden durch jedes Fenster "
+#~ "dargestellt)"
+
+#~ msgid "Layout reset for buffers"
+#~ msgstr "Zurücksetzen des Bufferlayouts"
+
+#~ msgid "Layout reset for windows"
+#~ msgstr "Zurücksetzen des Fensterlayouts"
+
+#~ msgid "hide password displayed by nickserv"
+#~ msgstr "Passwörter verstecken die durch NickServ angezeigt werden"
+
+#~ msgid "%s%s: error: name is not required for protocol \"%s\""
+#~ msgstr "%s%s: Fehler: ein Name ist für das Protokoll \"%s\" nicht notwendig"
+
+#~ msgid "%s%s: not enough memory to create new speller"
+#~ msgstr "%s%s: Nicht genug Speicher um neue Rechtschreibung zu erstellen"
+
+#~ msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
+#~ msgstr "%s%s Fehler beim Erstellen der Socket-Option \"SO_REUSEADDR\""
+
+#~ msgid "%s%s: cannot set socket option \"IPV6_V6ONLY\" to value %d"
+#~ msgstr ""
+#~ "%s%s der Wert %d kann nicht für die Socket-Option, \"IPV6_V6ONLY\", "
+#~ "gesetzt werden"
+
+#~ msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
+#~ msgstr "%s%s Fehler beim Erstellen der Socket-Option \"SO_KEEPALIVE\""
+
+#~ msgid "%s%s: cannot create socket for xfer"
+#~ msgstr "%s%s: Für den Transfer konnte kein Socket angelegt werden"
+
+#~ msgid "%s%s: not enough memory to parse file \"%s\""
+#~ msgstr "%s%s: Nicht genug Speicher um Datei \"%s\" zu analysieren"
+
+#~ msgid "%s%s: unable to run file \"%s\""
+#~ msgstr "%s%s: Kann Datei \"%s\" nicht ausführen"
+
+#~ msgid "%s%s: unknown error while loading file \"%s\""
+#~ msgstr "%s%s: unbekannter Fehler beim Laden der Datei \"%s\""
+
+#~ msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
+#~ msgstr ""
+#~ "%s: Fehler beim Laden des Skriptes \"%s\" (fehlerhafter Name: Leerzeichen "
+#~ "sind nicht erlaubt)"
+
+#~ msgid "%s%s: cannot create socket"
+#~ msgstr "%s%s: Socket konnte nicht angelegt werden"
+
+#~ msgid "background color for window separators (when split)"
+#~ msgstr ""
+#~ "Hintergrundfarbe der Fenster-Separatoren im Chatfenster (bei geteiltem "
+#~ "Bildschirm)"
+
+#~ msgid "No configuration option found"
+#~ msgstr "Konfigurationsoption nicht gefunden"
+
+#~ msgid "%s%d%s configuration option found"
+#~ msgid_plural "%s%d%s configuration options found"
+#~ msgstr[0] "%s%d%s Konfigurationsoption gefunden"
+#~ msgstr[1] "%s%d%s Konfigurationsoptionen gefunden"
+
+#~ msgid "%sError: configuration option \"%s\" not found"
+#~ msgstr "%sFehler: Konfigurationsoption \"%s\" nicht gefunden"
+
+#~ msgid "[<option> [<value>]]"
+#~ msgstr "[<option> [<value>]]"
+
+#~ msgid "automatically rejoin channels after kick"
+#~ msgstr "Channels automatisch betreten, falls man rausgeworfen wurde"
+
+#~ msgid "prefix for error messages"
+#~ msgstr "Präfix für Fehlermeldungen"
+
+#~ msgid "prefix for network messages"
+#~ msgstr "Präfix für Netzwerkmeldungen"
+
+#~ msgid "prefix for action messages"
+#~ msgstr "Präfix für Action-Nachrichten"
+
+#~ msgid "prefix for join messages"
+#~ msgstr "Präfix für Join-Nachrichten"
+
+#~ msgid "prefix for quit messages"
+#~ msgstr "Präfix für Quit-Nachrichten"
+
+#~ msgid ""
+#~ "condition(s) for displaying bar (for bars of type \"window\"): \"active\" "
+#~ "= window must be active, \"inactive\" = window must be inactive, "
+#~ "\"nicklist\" = buffer must have a nicklist"
+#~ msgstr ""
+#~ "Bedingung(en) um eine Bar anzuzeigen (gilt für Bars des Typs \"window\"): "
+#~ "\"active\" = window muss aktiv sein \"inactive\" = window muss inaktiv "
+#~ "sein, \"nicklist\" = Buffer muss über eine Nickliste verfügen"
+
+#~ msgid ""
+#~ "server: server name\n"
+#~ "  nick: nick (may be a mask)"
+#~ msgstr ""
+#~ "server: Servername\n"
+#~ "  nick: Nickname (oder eine Maske)"
+
+#~ msgid "use IPv6 protocol for server communication"
+#~ msgstr "Server über IPv6 ansprechen"
+
+#~ msgid "global decoding charset"
+#~ msgstr "globaler Zeichensatz zum dekodieren"
+
+#~ msgid "global encoding charset"
+#~ msgstr "globaler Zeichensatz zum kodieren"
+
+#~ msgid "alt+d=back to list"
+#~ msgstr "alt+d=zurück zur Auswahl"
+
+#~ msgid "%s: connecting to server %s/%d%s%s..."
+#~ msgstr "%s: Verbinden zum Server %s/%d%s%s..."
+
+#~ msgid "%s: disconnected from server"
+#~ msgstr "%s: Vom Server getrennt!"
+
+#~ msgid "display nick mode ((half)op/voice) before each nick"
+#~ msgstr ""
+#~ "vor dem Nicknamen wird der entsprechende Nickmode ((half)op/voice [@%+]) "
+#~ "angezeigt"
+
+#~ msgid "%s: script \"%s\" held"
+#~ msgstr "%s: Skript \"%s\" kann nicht überschrieben werden"
+
+#~ msgid ""
+#~ "%s%s: cannot authenticate with SASL and mechanism DH-BLOWFISH because "
+#~ "WeeChat was not built with libgcrypt support"
+#~ msgstr ""
+#~ "%s%s Authentifizierung mittels SASL und DH-BLOWFISH Mechanismus nicht "
+#~ "möglich, da WeeChat nicht mit libgcrypt Unterstützung erstellt wurde"
+
+#~ msgid "smart completion for nicks (completes first with last speakers)"
+#~ msgstr ""
+#~ "intelligente Vervollständigung von Nicknamen (vervollständigt zuerst den "
+#~ "letzten Nick, mit dem gesprochen wurde)"
+
+#~ msgid "ended on: "
+#~ msgstr "geendet am: "
+
+#~ msgid "%s%-26s id: %d, protocol: %s, received: %s, sent: %s"
+#~ msgstr "%s%-26s Id: %d, Protokoll: %s, empfangen: %s, gesendet: %s"
+
+#~ msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s%s%s)"
+#~ msgstr "%s: neuer Client von %s%s%s an Port %d (id: %d, Relaying: %s%s%s)"
+
+#~ msgid "text color"
+#~ msgstr "Textfarbe"
+
+#~ msgid "background color"
+#~ msgstr "Hintergrundfarbe"
+
+#~ msgid "text color of selected xfer line"
+#~ msgstr "Farbe der ausgewählten Transfer-Zeile"
+
+#~ msgid "display message when (un)marking as away"
+#~ msgstr "bei Abwesenheit und Rückkehr eine Nachricht anzeigen"
+
+#~ msgid "display channel modes in \"buffer_name\" bar item"
+#~ msgstr "zeigt die Channel-Modi mittels \"buffer_name\" in der Bar-Item an"
+
+#~ msgid "%sError: name can not start with \"#\""
+#~ msgstr "%sFehler: Name darf nicht mit \"#\"beginnen"
+
+#~ msgid "%s%s: name can not start with \"#\""
+#~ msgstr "%s%s: Name darf nicht mit \"#\" beginnen"
+
+#~ msgid "string inserted after nick completion"
+#~ msgstr "Nach Nick-Vervollständigung anzufügende Zeichenfolge"
+
+#~ msgid "display '+' if prefix is truncated"
+#~ msgstr "Anzeige eines '+' falls das Präfix abgeschnitten ist"
+
+#~ msgid "<nick> <channel>"
+#~ msgstr "<nick> <channel>"
+
+#~ msgid "mechanism for SASL authentication"
+#~ msgstr "Vorrichtung zur SASL Authentifizierung"

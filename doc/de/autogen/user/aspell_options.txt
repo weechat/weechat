@@ -1,5 +1,5 @@
 * [[option_aspell.check.commands]] *aspell.check.commands*
-** Beschreibung: `Durch Kommata getrennte Liste der Befehle, für die eine Rechtschreibprüfung gelten soll (Rechtschreibprüfung ist für andere Befehle deaktiviert)`
+** Beschreibung: `durch Kommata getrennte Liste der Befehle, für die eine Rechtschreibprüfung gelten soll (Rechtschreibprüfung ist für andere Befehle deaktiviert)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"ame,amsg,away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic"`)
 

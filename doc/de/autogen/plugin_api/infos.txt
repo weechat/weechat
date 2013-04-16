@@ -2,7 +2,7 @@
 |========================================
 | Erweiterung | Name | Beschreibung | Argumente
 
-| aspell | aspell_dict | eine durch Kommata getrennte Liste von Wörterbüchern, die in diesem Buffer genutzt wird | Buffer-Pointer ("0x12345678") oder der vollständige Buffername ("irc.freenode.#weechat")
+| aspell | aspell_dict | durch Kommata getrennte Liste von Wörterbüchern, die in diesem Buffer genutzt werden sollen | Buffer-Pointer ("0x12345678") oder der vollständige Buffername ("irc.freenode.#weechat")
 
 | fifo | fifo_filename | Name der FIFO-Pipe | -
 

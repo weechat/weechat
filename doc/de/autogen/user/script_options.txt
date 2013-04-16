@@ -184,7 +184,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"%h/script"`)
 
 * [[option_script.scripts.hold]] *script.scripts.hold*
-** Beschreibung: `Skripten welche "gehalten" werden sollen. Dies ist eine durch Kommata getrennte Liste von Skripten die nicht aktualisiert werden und nicht entfernt werden können. Zum Beispiel: "buffers.pl,iset.pl"`
+** Beschreibung: `Skripten welche "gehalten" werden sollen. Dies ist eine durch Kommata getrennte Liste von Skripten die weder aktualisiert noch entfernt werden können. Zum Beispiel: "buffers.pl,iset.pl"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 

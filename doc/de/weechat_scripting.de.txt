@@ -56,10 +56,9 @@ Ruby
 
 * Es muss 'weechat_init' definiert und darin die Funktion 'register' ausgeführt werden
 * Funktionen werden im Format `Weechat.xxx(arg1, arg2, ...)` ausgeführt
-// TRANSLATION MISSING
-* Due to a limitation of Ruby (15 arguments max by function), the function
-  `Weechat.config_new_option` receives the callbacks in an array of 6 strings
-  (3 callbacks + 3 data strings), so a call to this function looks like:
+* Aufgrund einer Limitierung, seitens Ruby (maximal 15 Argumente pro Funktion), empfängt
+  die Funktion `Weechat.config_new_option` den Callback in einem Array von 6 Strings
+  (3 Callbacks + 3 Data Strings), somit sieht ein Aufruf der Funktion folgendermaßen aus:
 
 [source,ruby]
 ----------------------------------------
@@ -738,10 +737,9 @@ einen URL Transfer, kommt die Funktion `hook_process_hashtable` zum Einsatz.
 Beispiel eines URL Transfers, ohne zusätzliche Optionen: Die HTML Seite wird
 dabei in der Callback-Variable "out" gesichert (Standardausgabe des Prozesses):
 
-// TRANSLATION MISSING
 [source,python]
 ----------------------------------------
-# Display current stable version of WeeChat.
+# Zeigt die aktuelle stabile Version von WeeChat an.
 weechat_version = ""
 
 def weechat_process_cb(data, command, rc, out, err):
@@ -749,16 +747,15 @@ def weechat_process_cb(data, command, rc, out, err):
     if out != "":
         weechat_version += out
     if int(rc) >= 0:
-        weechat.prnt("", "Current WeeChat stable is: %s" % weechat_version)
+        weechat.prnt("", "aktuelle stabile WeeChat-Version: %s" % weechat_version)
     return weechat.WEECHAT_RC_OK
 
 weechat.hook_process("url:http://weechat.org/info/stable/",
                      30 * 1000, "weechat_process_cb", "")
 ----------------------------------------
 
-// TRANSLATION MISSING
 [TIP]
-All infos available about WeeChat are on page http://weechat.org/info
+Alle Informationen die WeeChat betreffen findet man auf: http://weechat.org/info
 
 Beispiel eines URL Transfers, mit zusätzliche Optionen: Es wird das neuste
 WeeChat Entwicklerpaket in die Datei '/tmp/weechat-devel.tar.gz' gesichert:

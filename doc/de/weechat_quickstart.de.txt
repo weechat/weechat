@@ -22,18 +22,17 @@ $ weechat-curses
 Online-Hilfe / Optionen
 -----------------------
 
-// TRANSLATION MISSING
-WeeChat has help for all commands, just issue:
+WeeChat bietet für jeden Befehl eine Hilfe an:
 
 ----------------------------------------
 /help
 ----------------------------------------
 
-// TRANSLATION MISSING
-To get help on a specific command, issue:
+Um sich die Hilfe für einen bestimmten Befehl anzeigen
+zu lassen:
 
 ----------------------------------------
-/help command
+/help Befehl
 ----------------------------------------
 
 Um Optionen zu setzen benutzt man:
@@ -112,8 +111,7 @@ Du kannst einen IRC-Server mit dem Befehl `/server` hinzufügen, z.B.:
 /server add oftc irc.oftc.net/6667
 ----------------------------------------
 
-// TRANSLATION MISSING
-As usual, help is available if you're lost:
+Falls man nicht mehr weiter weiß, einfach die Hilfe aufrufen:
 
 ----------------------------------------
 /help server
