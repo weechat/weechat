@@ -10202,6 +10202,12 @@ Arguments:
   "-": disable hotlist (global setting, buffer pointer is not used) +
   priority: add buffer to hotlist with this priority
 
+| completion_freeze | "0", "1" |
+  "0": no freeze of completion (default value)
+  (global setting, buffer pointer is not used) +
+  "1": do not stop completion when command line is updated
+  (global setting, buffer pointer is not used)
+
 | unread | - |
   set unread marker after last line of buffer
 

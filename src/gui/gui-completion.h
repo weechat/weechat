@@ -63,6 +63,10 @@ struct t_gui_completion
     struct t_gui_completion_partial *last_partial_completion;
 };
 
+/* completion variables */
+
+extern int gui_completion_freeze;
+
 /* completion functions */
 
 extern void gui_completion_buffer_init (struct t_gui_completion *completion,

@@ -162,7 +162,7 @@ gui_input_text_changed_modifier_and_signal (struct t_gui_buffer *buffer,
         }
     }
 
-    if (stop_completion)
+    if (stop_completion && !gui_completion_freeze)
         gui_completion_stop (buffer->completion);
 
     /* send signal */

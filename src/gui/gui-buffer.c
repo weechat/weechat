@@ -1501,6 +1501,10 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
                 (void) gui_hotlist_add (buffer, number, NULL);
         }
     }
+    else if (string_strcasecmp (property, "completion_freeze") == 0)
+    {
+        gui_completion_freeze = (strcmp (value, "1") == 0) ? 1 : 0;
+    }
 
     if (!buffer)
         return;

@@ -10371,6 +10371,12 @@ Paramètres :
   pas utilisé) +
   priorité : ajouter ce tampon dans la hotlist avec cette priorité
 
+| completion_freeze | "0", "1" |
+  "0" : pas de gel de la complétion (valeur par défaut)
+  (option globale, le pointeur vers le tampon n'est pas utilisé) +
+  "1" : ne pas arrêter la complétion lorsque la ligne de commande est mise à jour
+  (option globale, le pointeur vers le tampon n'est pas utilisé)
+
 | unread | - |
   définit le marqueur de données non lues après la dernière ligne du tampon
 

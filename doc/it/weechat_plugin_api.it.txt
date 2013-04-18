@@ -10345,6 +10345,13 @@ Argomenti:
   utilizzato) +
   priorità: aggiunge il buffer alla hotlist con questa proprietà
 
+// TRANSLATION MISSING
+| completion_freeze | "0", "1" |
+  "0": no freeze of completion (default value)
+  (impostazione globale, il puntatore al buffer non è utilizzato) +
+  "1": do not stop completion when command line is updated
+  (impostazione globale, il puntatore al buffer non è utilizzato)
+
 | unread | - |
   imposta l'evidenziatore di lettura dopo l'ultima riga del buffer
 

@@ -47,6 +47,10 @@
 #include "gui-buffer.h"
 
 
+int gui_completion_freeze = 0;         /* 1 to freeze completions (do not   */
+                                       /* stop partial completion on key)   */
+
+
 /*
  * Initializes completion for a buffer.
  */
