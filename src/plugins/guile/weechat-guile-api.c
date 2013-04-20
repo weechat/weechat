@@ -4256,9 +4256,9 @@ weechat_guile_api_hdata_move (SCM hdata, SCM pointer, SCM count)
         || !scm_is_integer (count))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    result = weechat_hdata_move (API_STR2PTR(API_SCM_TO_STRING(hdata)),
-                                 API_STR2PTR(API_SCM_TO_STRING(pointer)),
-                                 scm_to_int (count));
+    result = API_PTR2STR(weechat_hdata_move (API_STR2PTR(API_SCM_TO_STRING(hdata)),
+                                             API_STR2PTR(API_SCM_TO_STRING(pointer)),
+                                             scm_to_int (count)));
 
     API_RETURN_STRING_FREE(result);
 }
