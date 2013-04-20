@@ -5437,9 +5437,9 @@ weechat_ruby_api_hdata_move (VALUE class, VALUE hdata, VALUE pointer,
     c_pointer = StringValuePtr (pointer);
     c_count = FIX2INT (count);
 
-    result = weechat_hdata_move (API_STR2PTR(c_hdata),
-                                 API_STR2PTR(c_pointer),
-                                 c_count);
+    result = API_PTR2STR(weechat_hdata_move (API_STR2PTR(c_hdata),
+                                             API_STR2PTR(c_pointer),
+                                             c_count));
 
     API_RETURN_STRING_FREE(result);
 }

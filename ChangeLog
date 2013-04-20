@@ -87,6 +87,7 @@ Version 0.4.1 (under dev!)
 * rmodifier: rename default rmodifier "nickserv" to "command_auth" (with new
   modifier "irc_command_auth"), add default rmodifier "message_auth" (modifier
   "irc_message_auth")
+* ruby: fix crash in function hdata_move
 * ruby: fix crash with Ruby 2.0: use one array for the last 6 arguments of
   function config_new_option (bug #31050)
 * script: fix compilation on GNU/Hurd (patch #7977)
