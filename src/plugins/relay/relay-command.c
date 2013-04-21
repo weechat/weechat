@@ -257,7 +257,7 @@ relay_command_relay (void *data, struct t_gui_buffer *buffer, int argc,
                                 _("%s%s: missing arguments for \"%s\" "
                                   "command"),
                                 weechat_prefix ("error"), RELAY_PLUGIN_NAME,
-                                "relay add");
+                                "relay del");
             }
             return WEECHAT_RC_OK;
         }
