@@ -13802,7 +13802,7 @@ Script (Python):
 pointer = weechat.hdata_move(hdata, pointer, count)
 
 # example
-hdata = weechat_hdata_get("buffer")
+hdata = weechat.hdata_get("buffer")
 buffer = weechat.buffer_search_main()
 
 # move to next buffer, 2 times
