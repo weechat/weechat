@@ -50,6 +50,8 @@ Version 0.4.1 (under dev!)
   list with arguments inside), guile >= 2.0 is now required (bug #38350)
 * guile: fix crash on calls to callbacks during load of script (bug #38343)
 * guile: fix compilation with guile 2.0
+* irc: add tag "irc_nick_back" for messages displayed in private buffer when a
+  nick is back on server (task #12576)
 * irc: fix crash on command "/allchan /close"
 * irc: add option irc.look.display_join_message (task #10895)
 * irc: fix default completion (like nicks) in commands /msg, /notice, /query and

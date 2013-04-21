@@ -1075,18 +1075,19 @@ irc_channel_display_nick_back_in_pv (struct t_irc_server *server,
         {
             if (weechat_config_boolean (irc_config_look_display_pv_back))
             {
-                weechat_printf (ptr_channel->buffer,
-                                _("%s%s%s %s(%s%s%s)%s is back on server"),
-                                weechat_prefix ("join"),
-                                irc_nick_color_for_server_message (server,
-                                                                   nick,
-                                                                   nickname),
-                                (nick) ? nick->name : nickname,
-                                IRC_COLOR_CHAT_DELIMITERS,
-                                IRC_COLOR_CHAT_HOST,
-                                (nick && nick->host) ? nick->host : "",
-                                IRC_COLOR_CHAT_DELIMITERS,
-                                IRC_COLOR_MESSAGE_JOIN);
+                weechat_printf_tags (ptr_channel->buffer,
+                                     "irc_nick_back",
+                                     _("%s%s%s %s(%s%s%s)%s is back on server"),
+                                     weechat_prefix ("join"),
+                                     irc_nick_color_for_server_message (server,
+                                                                        nick,
+                                                                        nickname),
+                                     (nick) ? nick->name : nickname,
+                                     IRC_COLOR_CHAT_DELIMITERS,
+                                     IRC_COLOR_CHAT_HOST,
+                                     (nick && nick->host) ? nick->host : "",
+                                     IRC_COLOR_CHAT_DELIMITERS,
+                                     IRC_COLOR_MESSAGE_JOIN);
             }
             ptr_channel->has_quit_server = 0;
         }
