@@ -28,6 +28,7 @@
 
 #include "weechat.h"
 #include "wee-hdata.h"
+#include "wee-eval.h"
 #include "wee-hashtable.h"
 #include "wee-log.h"
 #include "wee-string.h"
@@ -35,6 +36,10 @@
 
 
 struct t_hashtable *weechat_hdata = NULL;
+
+/* hashtables used in hdata_search() for evaluating expression */
+struct t_hashtable *hdata_search_pointers = NULL;
+struct t_hashtable *hdata_search_extra_vars = NULL;
 
 char *hdata_type_string[8] =
 { "other", "char", "integer", "long", "string", "pointer", "time",
@@ -90,6 +95,7 @@ hdata_new (struct t_weechat_plugin *plugin, const char *hdata_name,
     new_hdata = malloc (sizeof (*new_hdata));
     if (new_hdata)
     {
+        new_hdata->name = strdup (hdata_name);
         new_hdata->plugin = plugin;
         new_hdata->var_prev = (var_prev) ? strdup (var_prev) : NULL;
         new_hdata->var_next = (var_next) ? strdup (var_next) : NULL;
@@ -454,6 +460,69 @@ hdata_move (struct t_hdata *hdata, void *pointer, int count)
         pointer = hdata_pointer (hdata, pointer, ptr_var);
         if (pointer)
             return pointer;
+    }
+
+    return NULL;
+}
+
+/*
+ * Searches for an element in list using expression.
+ *
+ * Returns pointer to element found, NULL if not found.
+ */
+
+void *
+hdata_search (struct t_hdata *hdata, void *pointer, const char *search, int move)
+{
+    char *result;
+    int rc;
+
+    if (!hdata || !pointer || !search || !search[0] || (move == 0))
+        return NULL;
+
+    /* clear or create hashtable with pointer for search */
+    if (hdata_search_pointers)
+    {
+        hashtable_remove_all (hdata_search_pointers);
+    }
+    else
+    {
+        hdata_search_pointers = hashtable_new (32,
+                                               WEECHAT_HASHTABLE_STRING,
+                                               WEECHAT_HASHTABLE_POINTER,
+                                               NULL,
+                                               NULL);
+    }
+
+    /*
+     * create hashtable with extra vars (empty hashtable)
+     * (hashtable would be created in eval_expression(), but it's created here
+     * so it will not be created for each call to eval_expression())
+     */
+    if (!hdata_search_extra_vars)
+    {
+        hdata_search_extra_vars = hashtable_new (32,
+                                                 WEECHAT_HASHTABLE_STRING,
+                                                 WEECHAT_HASHTABLE_STRING,
+                                                 NULL,
+                                                 NULL);
+    }
+
+    while (pointer)
+    {
+        /* set pointer in hashtable (used for evaluating expression) */
+        hashtable_set (hdata_search_pointers, hdata->name, pointer);
+
+        /* evaluate expression */
+        result = eval_expression (search, hdata_search_pointers,
+                                  hdata_search_extra_vars);
+        rc = eval_is_true (result);
+        if (result)
+            free (result);
+        if (rc)
+            return pointer;
+
+        pointer = hdata_move (hdata, pointer, move);
     }
 
     return NULL;
@@ -1000,11 +1069,13 @@ hdata_print_log_map_cb (void *data, struct t_hashtable *hashtable,
     /* make C compiler happy */
     (void) data;
     (void) hashtable;
+    (void) key;
 
     ptr_hdata = (struct t_hdata *)value;
 
     log_printf ("");
-    log_printf ("[hdata (addr:0x%lx, name:'%s')]", ptr_hdata, (const char *)key);
+    log_printf ("[hdata (addr:0x%lx)]", ptr_hdata);
+    log_printf ("  name . . . . . . . . . : '%s'",  ptr_hdata->name);
     log_printf ("  plugin . . . . . . . . : 0x%lx", ptr_hdata->plugin);
     log_printf ("  var_prev . . . . . . . : '%s'",  ptr_hdata->var_prev);
     log_printf ("  var_next . . . . . . . : '%s'",  ptr_hdata->var_next);
@@ -1055,4 +1126,16 @@ hdata_end ()
 {
     hdata_free_all ();
     hashtable_free (weechat_hdata);
+    weechat_hdata = NULL;
+
+    if (hdata_search_pointers)
+    {
+        hashtable_free (hdata_search_pointers);
+        hdata_search_pointers = NULL;
+    }
+    if (hdata_search_extra_vars)
+    {
+        hashtable_free (hdata_search_extra_vars);
+        hdata_search_extra_vars = NULL;
+    }
 }

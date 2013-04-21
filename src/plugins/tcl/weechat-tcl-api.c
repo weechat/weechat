@@ -5166,6 +5166,33 @@ weechat_tcl_api_hdata_move (ClientData clientData, Tcl_Interp *interp,
 }
 
 static int
+weechat_tcl_api_hdata_search (ClientData clientData, Tcl_Interp *interp,
+                              int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *hdata, *pointer, *search, *result;
+    int i, move;
+
+    API_FUNC(1, "hdata_search", API_RETURN_EMPTY);
+    if (objc < 5)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    hdata = Tcl_GetStringFromObj (objv[1], &i);
+    pointer = Tcl_GetStringFromObj (objv[2], &i);
+    search = Tcl_GetStringFromObj (objv[3], &i);
+
+    if (Tcl_GetIntFromObj (interp, objv[4], &move) != TCL_OK)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result = API_PTR2STR(weechat_hdata_search (API_STR2PTR(hdata),
+                                               API_STR2PTR(pointer),
+                                               search,
+                                               move));
+
+    API_RETURN_STRING_FREE(result);
+}
+
+static int
 weechat_tcl_api_hdata_char (ClientData clientData, Tcl_Interp *interp,
                             int objc, Tcl_Obj *CONST objv[])
 {
@@ -5802,6 +5829,7 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     API_DEF_FUNC(hdata_get_list);
     API_DEF_FUNC(hdata_check_pointer);
     API_DEF_FUNC(hdata_move);
+    API_DEF_FUNC(hdata_search);
     API_DEF_FUNC(hdata_char);
     API_DEF_FUNC(hdata_integer);
     API_DEF_FUNC(hdata_long);

@@ -4264,6 +4264,25 @@ weechat_guile_api_hdata_move (SCM hdata, SCM pointer, SCM count)
 }
 
 SCM
+weechat_guile_api_hdata_search (SCM hdata, SCM pointer, SCM search, SCM move)
+{
+    char *result;
+    SCM return_value;
+
+    API_FUNC(1, "hdata_search", API_RETURN_EMPTY);
+    if (!scm_is_string (hdata) || !scm_is_string (pointer)
+        || !scm_is_string (search) || !scm_is_integer (move))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result = API_PTR2STR(weechat_hdata_search (API_STR2PTR(API_SCM_TO_STRING(hdata)),
+                                               API_STR2PTR(API_SCM_TO_STRING(pointer)),
+                                               API_SCM_TO_STRING(search),
+                                               scm_to_int (move)));
+
+    API_RETURN_STRING_FREE(result);
+}
+
+SCM
 weechat_guile_api_hdata_char (SCM hdata, SCM pointer, SCM name)
 {
     int value;
@@ -4732,6 +4751,7 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(hdata_get_list, 2);
     API_DEF_FUNC(hdata_check_pointer, 3);
     API_DEF_FUNC(hdata_move, 3);
+    API_DEF_FUNC(hdata_search, 4);
     API_DEF_FUNC(hdata_char, 3);
     API_DEF_FUNC(hdata_integer, 3);
     API_DEF_FUNC(hdata_long, 3);

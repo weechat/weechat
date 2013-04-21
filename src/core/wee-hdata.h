@@ -38,6 +38,7 @@ struct t_hdata_var
 
 struct t_hdata
 {
+    char *name;                        /* name of hdata                     */
     struct t_weechat_plugin *plugin;   /* plugin which created this hdata   */
                                        /* (NULL if created by WeeChat)      */
     char *var_prev;                    /* name of var with pointer to       */
@@ -98,6 +99,8 @@ extern void *hdata_get_list (struct t_hdata *hdata, const char *name);
 extern int hdata_check_pointer (struct t_hdata *hdata, void *list,
                                 void *pointer);
 extern void *hdata_move (struct t_hdata *hdata, void *pointer, int count);
+extern void *hdata_search (struct t_hdata *hdata, void *pointer,
+                           const char *search, int move);
 extern char hdata_char (struct t_hdata *hdata, void *pointer,
                         const char *name);
 extern int hdata_integer (struct t_hdata *hdata, void *pointer,

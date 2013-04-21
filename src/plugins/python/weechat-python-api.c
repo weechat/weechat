@@ -4632,6 +4632,29 @@ weechat_python_api_hdata_move (PyObject *self, PyObject *args)
 }
 
 static PyObject *
+weechat_python_api_hdata_search (PyObject *self, PyObject *args)
+{
+    char *result, *hdata, *pointer, *search;
+    int move;
+    PyObject *return_value;
+
+    API_FUNC(1, "hdata_search", API_RETURN_EMPTY);
+    hdata = NULL;
+    pointer = NULL;
+    search = NULL;
+    move = 0;
+    if (!PyArg_ParseTuple (args, "sssi", &hdata, &pointer, &search, &move))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result = API_PTR2STR(weechat_hdata_search (API_STR2PTR(hdata),
+                                               API_STR2PTR(pointer),
+                                               search,
+                                               move));
+
+    API_RETURN_STRING_FREE(result);
+}
+
+static PyObject *
 weechat_python_api_hdata_char (PyObject *self, PyObject *args)
 {
     char *hdata, *pointer, *name;
@@ -5117,6 +5140,7 @@ PyMethodDef weechat_python_funcs[] =
     API_DEF_FUNC(hdata_get_list),
     API_DEF_FUNC(hdata_check_pointer),
     API_DEF_FUNC(hdata_move),
+    API_DEF_FUNC(hdata_search),
     API_DEF_FUNC(hdata_char),
     API_DEF_FUNC(hdata_integer),
     API_DEF_FUNC(hdata_long),

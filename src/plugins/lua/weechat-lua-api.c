@@ -4712,6 +4712,30 @@ weechat_lua_api_hdata_move (lua_State *L)
 }
 
 static int
+weechat_lua_api_hdata_search (lua_State *L)
+{
+    const char *hdata, *pointer, *search;
+    char *result;
+    int move;
+
+    API_FUNC(1, "hdata_search", API_RETURN_EMPTY);
+    if (lua_gettop (lua_current_interpreter) < 4)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    hdata = lua_tostring (lua_current_interpreter, -4);
+    pointer = lua_tostring (lua_current_interpreter, -3);
+    search = lua_tostring (lua_current_interpreter, -2);
+    move = lua_tonumber (lua_current_interpreter, -1);
+
+    result = API_PTR2STR(weechat_hdata_search (API_STR2PTR(hdata),
+                                               API_STR2PTR(pointer),
+                                               search,
+                                               move));
+
+    API_RETURN_STRING_FREE(result);
+}
+
+static int
 weechat_lua_api_hdata_char (lua_State *L)
 {
     const char *hdata, *pointer, *name;
@@ -5208,6 +5232,7 @@ const struct luaL_Reg weechat_lua_api_funcs[] = {
     API_DEF_FUNC(hdata_get_list),
     API_DEF_FUNC(hdata_check_pointer),
     API_DEF_FUNC(hdata_move),
+    API_DEF_FUNC(hdata_search),
     API_DEF_FUNC(hdata_char),
     API_DEF_FUNC(hdata_integer),
     API_DEF_FUNC(hdata_long),

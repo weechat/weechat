@@ -5445,6 +5445,36 @@ weechat_ruby_api_hdata_move (VALUE class, VALUE hdata, VALUE pointer,
 }
 
 static VALUE
+weechat_ruby_api_hdata_search (VALUE class, VALUE hdata, VALUE pointer,
+                               VALUE search, VALUE move)
+{
+    char *c_hdata, *c_pointer, *c_search, *result;
+    int c_move;
+    VALUE return_value;
+
+    API_FUNC(1, "hdata_search", API_RETURN_EMPTY);
+    if (NIL_P (hdata) || NIL_P (pointer) || NIL_P (search) || NIL_P (move))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    Check_Type (hdata, T_STRING);
+    Check_Type (pointer, T_STRING);
+    Check_Type (search, T_STRING);
+    Check_Type (move, T_FIXNUM);
+
+    c_hdata = StringValuePtr (hdata);
+    c_pointer = StringValuePtr (pointer);
+    c_search = StringValuePtr (search);
+    c_move = FIX2INT (move);
+
+    result = API_PTR2STR(weechat_hdata_search (API_STR2PTR(c_hdata),
+                                               API_STR2PTR(c_pointer),
+                                               c_search,
+                                               c_move));
+
+    API_RETURN_STRING_FREE(result);
+}
+
+static VALUE
 weechat_ruby_api_hdata_char (VALUE class, VALUE hdata, VALUE pointer,
                              VALUE name)
 {
@@ -6053,6 +6083,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(hdata_get_list, 2);
     API_DEF_FUNC(hdata_check_pointer, 3);
     API_DEF_FUNC(hdata_move, 3);
+    API_DEF_FUNC(hdata_search, 4);
     API_DEF_FUNC(hdata_char, 3);
     API_DEF_FUNC(hdata_integer, 3);
     API_DEF_FUNC(hdata_long, 3);

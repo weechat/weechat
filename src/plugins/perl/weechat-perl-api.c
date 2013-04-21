@@ -4462,6 +4462,29 @@ XS (XS_weechat_api_hdata_move)
     API_RETURN_STRING_FREE(result);
 }
 
+XS (XS_weechat_api_hdata_search)
+{
+    char *result, *hdata, *pointer, *search;
+    int move;
+    dXSARGS;
+
+    API_FUNC(1, "hdata_search", API_RETURN_EMPTY);
+    if (items < 4)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    hdata = SvPV_nolen (ST (0));
+    pointer = SvPV_nolen (ST (1));
+    search = SvPV_nolen (ST (2));
+    move = SvIV(ST (3));
+
+    result = API_PTR2STR(weechat_hdata_search (API_STR2PTR(hdata),
+                                               API_STR2PTR(pointer),
+                                               search,
+                                               move));
+
+    API_RETURN_STRING_FREE(result);
+}
+
 XS (XS_weechat_api_hdata_char)
 {
     char *hdata, *pointer, *name;
@@ -4965,6 +4988,7 @@ weechat_perl_api_init (pTHX)
     API_DEF_FUNC(hdata_get_list);
     API_DEF_FUNC(hdata_check_pointer);
     API_DEF_FUNC(hdata_move);
+    API_DEF_FUNC(hdata_search);
     API_DEF_FUNC(hdata_char);
     API_DEF_FUNC(hdata_integer);
     API_DEF_FUNC(hdata_long);

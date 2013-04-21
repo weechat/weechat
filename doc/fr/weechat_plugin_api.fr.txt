@@ -14043,6 +14043,68 @@ if buffer:
     buffer = weechat.hdata_move(hdata, buffer, -1)
 ----------------------------------------
 
+weechat_hdata_search
+^^^^^^^^^^^^^^^^^^^^
+
+_Nouveau dans la version 0.4.1._
+
+Cherche un élément dans la liste: l'expression 'search' est évaluée pour chaque
+élément dans la liste, jusqu'à trouver l'élément (ou la fin de la liste).
+
+Prototype :
+
+[source,C]
+----------------------------------------
+void *weechat_hdata_search (struct t_hdata *hdata, void *pointer, const char *search, int move);
+----------------------------------------
+
+Paramètres :
+
+* 'hdata' : pointeur vers le hdata
+* 'pointer' : pointeur vers un objet WeeChat ou d'une extension
+* 'search' : expression à évaluer, le pointeur par défaut dans l'expression est
+  le nom du hdata (et ce pointeur change pour chaque élément dans la liste);
+  pour l'aide sur l'expression, voir la commande `/eval` dans le
+  'Guide utilisateur WeeChat'
+* 'move' : nombre de saut(s) à exécuter après une recherche infructueuse (entier
+  négatif ou positif, différent de 0)
+
+Valeur de retour :
+
+* pointeur vers l'élément trouvé, ou NULL si non trouvé
+
+Exemple en C :
+
+[source,C]
+----------------------------------------
+struct t_hdata *hdata = weechat_hdata_get ("irc_server");
+void *servers = weechat_hdata_get (hdata, "irc_servers");
+
+/* cherche un serveur irc avec le nom "freenode" */
+void *server = weechat_hdata_search (hdata, servers, "${irc_server.name} == freenode", 1);
+if (server)
+{
+    /* ... */
+}
+----------------------------------------
+
+Script (Python) :
+
+[source,python]
+----------------------------------------
+# prototype
+pointer = weechat.hdata_search(hdata, pointer, search, count)
+
+# exemple
+hdata = weechat.hdata_get("irc_server")
+servers = weechat.hdata_get_list(hdata, "irc_servers")
+
+# cherche un serveur irc avec le nom "freenode"
+server = weechat.hdata_search(hdata, servers, "${irc_server.name} == freenode", 1)
+if server:
+    # ...
+----------------------------------------
+
 weechat_hdata_char
 ^^^^^^^^^^^^^^^^^^
 

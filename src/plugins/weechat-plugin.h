@@ -52,7 +52,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20121208-01"
+#define WEECHAT_PLUGIN_API_VERSION "20130421-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -877,6 +877,8 @@ struct t_weechat_plugin
     int (*hdata_check_pointer) (struct t_hdata *hdata, void *list,
                                 void *pointer);
     void *(*hdata_move) (struct t_hdata *hdata, void *pointer, int count);
+    void *(*hdata_search) (struct t_hdata *hdata, void *pointer,
+                           const char *search, int move);
     char (*hdata_char) (struct t_hdata *hdata, void *pointer,
                         const char *name);
     int (*hdata_integer) (struct t_hdata *hdata, void *pointer,
@@ -1674,6 +1676,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->hdata_check_pointer(__hdata, __list, __pointer)
 #define weechat_hdata_move(__hdata, __pointer, __count)                 \
     weechat_plugin->hdata_move(__hdata, __pointer, __count)
+#define weechat_hdata_search(__hdata, __pointer, __search, __move)      \
+    weechat_plugin->hdata_search(__hdata, __pointer, __search, __move)
 #define weechat_hdata_char(__hdata, __pointer, __name)                  \
     weechat_plugin->hdata_char(__hdata, __pointer, __name)
 #define weechat_hdata_integer(__hdata, __pointer, __name)               \

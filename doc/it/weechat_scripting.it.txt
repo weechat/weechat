@@ -453,8 +453,8 @@ Elenco di funzioni nelle API per gli script:
   hdata_get, hdata_get_var_offset, hdata_get_var_type_string,
   hdata_get_var_array_size, hdata_get_var_array_size_string,
   hdata_get_var_hdata, hdata_get_list, hdata_check_pointer, hdata_move,
-  hdata_char, hdata_integer, hdata_long, hdata_string, hdata_pointer,
-  hdata_time, hdata_hashtable, hdata_get_string
+  hdata_search, hdata_char, hdata_integer, hdata_long, hdata_string,
+  hdata_pointer, hdata_time, hdata_hashtable, hdata_update, hdata_get_string
 | aggiornamento          |
   upgrade_new, upgrade_write_object, upgrade_read, upgrade_close
 |========================================

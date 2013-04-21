@@ -14018,6 +14018,72 @@ if buffer:
     buffer = weechat.hdata_move(hdata, buffer, -1)
 ----------------------------------------
 
+weechat_hdata_search
+^^^^^^^^^^^^^^^^^^^^
+
+_Novità nella versione 0.4.1._
+
+// TRANSLATION MISSING
+Search element in a list: the expression 'search' is evaluated for each element
+in list, until element is found (or end of list).
+
+Prototipo:
+
+[source,C]
+----------------------------------------
+void *weechat_hdata_search (struct t_hdata *hdata, void *pointer, const char *search, int move);
+----------------------------------------
+
+Argomenti:
+
+* 'hdata': puntatore hdata
+* 'pointer': puntatore ad un oggetto di WeeChat/plugin
+// TRANSLATION MISSING
+* 'search': expression to evaluate, default pointer in expression is the name of
+  hdata (and this pointer changes for each element in list); for help on
+  expression, see command `/eval` in 'WeeChat User's guide'
+// TRANSLATION MISSING
+* 'move': number of jump(s) to execute after unsuccessful search (negative or
+  positive integer, different from 0)
+
+Valore restituito:
+
+// TRANSLATION MISSING
+* pointer to element found, NULL if not found
+
+Esempio in C:
+
+[source,C]
+----------------------------------------
+struct t_hdata *hdata = weechat_hdata_get ("irc_server");
+void *servers = weechat_hdata_get (hdata, "irc_servers");
+
+/* search irc server with name "freenode" */
+void *server = weechat_hdata_search (hdata, servers, "${irc_server.name} == freenode", 1);
+if (server)
+{
+    /* ... */
+}
+----------------------------------------
+
+Script (Python):
+
+// TRANSLATION MISSING
+[source,python]
+----------------------------------------
+# prototipo
+pointer = weechat.hdata_search(hdata, pointer, search, count)
+
+# esempio
+hdata = weechat.hdata_get("irc_server")
+servers = weechat.hdata_get_list(hdata, "irc_servers")
+
+# search irc server with name "freenode"
+server = weechat.hdata_search(hdata, servers, "${irc_server.name} == freenode", 1)
+if server:
+    # ...
+----------------------------------------
+
 weechat_hdata_char
 ^^^^^^^^^^^^^^^^^^
 
