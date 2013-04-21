@@ -380,7 +380,7 @@ Lista funkcji w API skryptów:
   charset_set, iconv_to_internal, iconv_from_internal, gettext, ngettext, +
   string_match, string_has_highlight, string_has_highlight_regex,
   string_mask_to_regex, string_remove_color, string_is_command_char,
-  string_input_for_buffer
+  string_input_for_buffer, string_eval_expression
 | katalogi            |
   mkdir_home, mkdir, mkdir_parents
 | przechowywane listy |
@@ -441,6 +441,7 @@ Lista funkcji w API skryptów:
   infolist_time, infolist_free
 | hdata               |
   hdata_get, hdata_get_var_offset, hdata_get_var_type_string,
+  hdata_get_var_array_size, hdata_get_var_array_size_string,
   hdata_get_var_hdata, hdata_get_list, hdata_check_pointer, hdata_move,
   hdata_char, hdata_integer, hdata_long, hdata_string, hdata_pointer,
   hdata_time, hdata_hashtable, hdata_get_string
