@@ -566,9 +566,7 @@ IRC_PROTOCOL_CALLBACK(join)
     }
 
     /* add nick in channel */
-    ptr_nick = irc_nick_new (server, ptr_channel, nick, NULL, 0);
-    if (ptr_nick)
-        ptr_nick->host = strdup (address);
+    ptr_nick = irc_nick_new (server, ptr_channel, nick, address, NULL, 0);
 
     if (!ignored)
     {
@@ -3802,9 +3800,8 @@ IRC_PROTOCOL_CALLBACK(353)
 {
     char *pos_channel, *pos_nick, *pos_nick_orig, *pos_host, *nickname;
     char *prefixes, *str_nicks;
-    int args, i, away, length;
+    int args, i, length;
     struct t_irc_channel *ptr_channel;
-    struct t_irc_nick *ptr_nick;
 
     IRC_PROTOCOL_MIN_ARGS(5);
 
@@ -3857,7 +3854,10 @@ IRC_PROTOCOL_CALLBACK(353)
         /* extract nick from host */
         pos_host = strchr (pos_nick, '!');
         if (pos_host)
+        {
             nickname = weechat_strndup (pos_nick, pos_host - pos_nick);
+            pos_host++;
+        }
         else
             nickname = strdup (pos_nick);
 
@@ -3866,10 +3866,8 @@ IRC_PROTOCOL_CALLBACK(353)
         {
             if (ptr_channel && ptr_channel->nicks)
             {
-                ptr_nick = irc_nick_search (server, ptr_channel, nickname);
-                away = (ptr_nick && ptr_nick->away) ? 1 : 0;
-                if (!irc_nick_new (server, ptr_channel, nickname, prefixes,
-                                   away))
+                if (!irc_nick_new (server, ptr_channel, nickname, pos_host,
+                                   prefixes, 0))
                 {
                     weechat_printf (server->buffer,
                                     _("%s%s: cannot create nick \"%s\" "

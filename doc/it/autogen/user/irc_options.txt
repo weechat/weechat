@@ -454,7 +454,7 @@
 ** valori: 0 .. 1000000 (valore predefinito: `25`)
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** descrizione: `elenco separato da virgole delle capacità del client ("client capabilities") da abilitare per il server se disponibili (esempio: "multi-prefix,extended-join")`
+** descrizione: `comma-separated list of client capabilities to enable for server if they are available; capabilities supported by WeeChat are: multi-prefix, userhost-in-names (example: "multi-prefix,userhost-in-names")`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 

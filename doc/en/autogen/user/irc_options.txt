@@ -454,7 +454,7 @@
 ** values: 0 .. 1000000 (default value: `25`)
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** description: `comma-separated list of client capabilities to enable for server if they are available (example: "multi-prefix,extended-join")`
+** description: `comma-separated list of client capabilities to enable for server if they are available; capabilities supported by WeeChat are: multi-prefix, userhost-in-names (example: "multi-prefix,userhost-in-names")`
 ** type: string
 ** values: any string (default value: `""`)
 

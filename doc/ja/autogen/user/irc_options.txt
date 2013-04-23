@@ -454,7 +454,7 @@
 ** 値: 0 .. 1000000 (デフォルト値: `25`)
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** 説明: `サーバで利用可能ならば有効化する、クライアントの機能のコンマ区切りリスト (例: "multi-prefix,extended-join")`
+** 説明: `comma-separated list of client capabilities to enable for server if they are available; capabilities supported by WeeChat are: multi-prefix, userhost-in-names (example: "multi-prefix,userhost-in-names")`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 

@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.1-dev, 2013-04-21
+v0.4.1-dev, 2013-04-23
 
 
 This document lists all changes for each version.
@@ -50,6 +50,7 @@ Version 0.4.1 (under dev!)
   list with arguments inside), guile >= 2.0 is now required (bug #38350)
 * guile: fix crash on calls to callbacks during load of script (bug #38343)
 * guile: fix compilation with guile 2.0
+* irc: add support of UHNAMES (capability "userhost-in-names") (task #9353)
 * irc: add tag "irc_nick_back" for messages displayed in private buffer when a
   nick is back on server (task #12576)
 * irc: fix crash on command "/allchan /close"

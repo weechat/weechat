@@ -540,14 +540,11 @@ irc_upgrade_read_cb (void *data,
                     ptr_nick = irc_nick_new (irc_upgrade_current_server,
                                              irc_upgrade_current_channel,
                                              weechat_infolist_string (infolist, "name"),
+                                             weechat_infolist_string (infolist, "host"),
                                              weechat_infolist_string (infolist, "prefixes"),
                                              weechat_infolist_integer (infolist, "away"));
                     if (ptr_nick)
                     {
-                        str = weechat_infolist_string (infolist, "host");
-                        if (str)
-                            ptr_nick->host = strdup (str);
-
                         /*
                          * "flags" is not any more in this infolist (since
                          * WeeChat 0.3.4), but we read it to keep compatibility

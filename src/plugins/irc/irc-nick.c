@@ -606,15 +606,22 @@ irc_nick_nicklist_set_color_all ()
 
 struct t_irc_nick *
 irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
-              const char *nickname, const char *prefixes, int away)
+              const char *nickname, const char *host, const char *prefixes,
+              int away)
 {
     struct t_irc_nick *new_nick, *ptr_nick;
     int length;
+
+    if (!nickname || !nickname[0])
+        return NULL;
 
     /* nick already exists on this channel? */
     ptr_nick = irc_nick_search (server, channel, nickname);
     if (ptr_nick)
     {
+        /* save away status from existing nick (before removing it) */
+        away = ptr_nick->away;
+
         /* remove old nick from nicklist */
         irc_nick_nicklist_remove (server, channel, ptr_nick);
 
@@ -634,7 +641,7 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
 
     /* initialize new nick */
     new_nick->name = strdup (nickname);
-    new_nick->host = NULL;
+    new_nick->host = (host) ? strdup (host) : NULL;
     length = strlen (irc_server_get_prefix_chars (server));
     new_nick->prefixes = malloc (length + 1);
     if (new_nick->prefixes)

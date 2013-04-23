@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-03-25 09:00+0100\n"
+"POT-Creation-Date: 2013-04-23 21:20+0200\n"
 "PO-Revision-Date: 2013-03-16 17:50+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5318,7 +5318,8 @@ msgstr "пароль, используемый при подключении к 
 #. TRANSLATORS: please keep words "client capabilities" between brackets if translation is different (see fr.po)
 msgid ""
 "comma-separated list of client capabilities to enable for server if they are "
-"available (example: \"multi-prefix,extended-join\")"
+"available; capabilities supported by WeeChat are: multi-prefix, userhost-in-"
+"names (example: \"multi-prefix,userhost-in-names\")"
 msgstr ""
 
 msgid ""

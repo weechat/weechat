@@ -62,6 +62,7 @@ extern void irc_nick_nicklist_set_color_all ();
 extern struct t_irc_nick *irc_nick_new (struct t_irc_server *server,
                                         struct t_irc_channel *channel,
                                         const char *nickname,
+                                        const char *host,
                                         const char *prefixes,
                                         int away);
 extern void irc_nick_change (struct t_irc_server *server,
