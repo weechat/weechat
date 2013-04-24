@@ -1510,19 +1510,30 @@ gui_input_switch_active_buffer_previous (struct t_gui_buffer *buffer)
 void
 gui_input_zoom_merged_buffer (struct t_gui_buffer *buffer)
 {
-    struct t_gui_window *window;
+    struct t_gui_window *ptr_window;
 
     /* do nothing if current buffer is not merged with another buffer */
     if (gui_buffer_count_merged_buffers (buffer->number) < 2)
         return;
 
+    /* reset scroll in all windows displaying this buffer number */
+    for (ptr_window = gui_windows; ptr_window;
+         ptr_window = ptr_window->next_window)
+    {
+        if ((ptr_window->buffer->number == buffer->number)
+            && ptr_window->scroll && ptr_window->scroll->start_line)
+        {
+            gui_window_scroll_bottom (ptr_window);
+        }
+    }
+
     /* first make buffer active if it is not */
     if (!buffer->active)
     {
         gui_buffer_set_active_buffer (buffer);
-        window = gui_window_search_with_buffer (buffer);
-        if (window)
-            gui_window_switch_to_buffer (window, buffer, 1);
+        ptr_window = gui_window_search_with_buffer (buffer);
+        if (ptr_window)
+            gui_window_switch_to_buffer (ptr_window, buffer, 1);
     }
 
     /*

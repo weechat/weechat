@@ -14,6 +14,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 Version 0.4.1 (under dev!)
 --------------------------
 
+* core: reset scroll in window before zooming on a merged buffer (bug #38207)
 * core: install icon file (patch #7972)
 * core: fix refresh of item "completion": clear it after any action that is
   changing content of command line and after switch of buffer (bug #38214)
