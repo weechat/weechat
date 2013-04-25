@@ -6123,7 +6123,7 @@ command_init ()
                      "  hdata.var1.var2...: start with a hdata (pointer must be "
                      "known), and ask variables one after one (other hdata can "
                      "be followed)\n"
-                     "  hdata(list).var1.var2...: start with a hdata using a "
+                     "  hdata[list].var1.var2...: start with a hdata using a "
                      "list, for example:\n"
                      "    ${buffer[gui_buffers].full_name}: full name of first "
                      "buffer in linked list of buffers\n"

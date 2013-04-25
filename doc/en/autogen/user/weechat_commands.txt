@@ -235,7 +235,7 @@ Some variables are replaced in expression, using the format ${variable}, variabl
   3. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
 Format for hdata can be one of following:
   hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
-  hdata(list).var1.var2...: start with a hdata using a list, for example:
+  hdata[list].var1.var2...: start with a hdata using a list, for example:
     ${buffer[gui_buffers].full_name}: full name of first buffer in linked list of buffers
     ${plugin[weechat_plugins].name}: name of first plugin in linked list of plugins
 For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
