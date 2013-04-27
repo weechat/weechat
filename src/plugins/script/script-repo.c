@@ -952,14 +952,6 @@ script_repo_match_filter (struct t_script_repo *script)
                     && weechat_strcasestr (script->description, words[i]))
                     match = 1;
 
-                if (!match && script->license
-                    && weechat_strcasestr (script->license, words[i]))
-                    match = 1;
-
-                if (!match && script->author
-                    && weechat_strcasestr (script->author, words[i]))
-                    match = 1;
-
                 if (!match)
                 {
                     weechat_string_free_split (words);
