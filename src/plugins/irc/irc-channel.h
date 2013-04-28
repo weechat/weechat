@@ -108,6 +108,9 @@ extern void irc_channel_nick_speaking_add (struct t_irc_channel *channel,
 extern void irc_channel_nick_speaking_rename (struct t_irc_channel *channel,
                                               const char *old_nick,
                                               const char *new_nick);
+extern void irc_channel_nick_speaking_rename_if_present (struct t_irc_server *server,
+                                                         struct t_irc_channel *channel,
+                                                         const char *nick_name);
 extern struct t_irc_channel_speaking *irc_channel_nick_speaking_time_search (struct t_irc_server *server,
                                                                              struct t_irc_channel *channel,
                                                                              const char *nick_name,

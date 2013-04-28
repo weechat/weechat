@@ -592,6 +592,38 @@ irc_channel_nick_speaking_rename (struct t_irc_channel *channel,
 }
 
 /*
+ * Renames a nick speaking on a channel if it is already in list.
+ */
+
+void
+irc_channel_nick_speaking_rename_if_present (struct t_irc_server *server,
+                                             struct t_irc_channel *channel,
+                                             const char *nick_name)
+{
+    struct t_weelist_item *ptr_item;
+    int i, j, list_size;
+
+    for (i = 0; i < 2; i++)
+    {
+        if (channel->nicks_speaking[i])
+        {
+            list_size = weechat_list_size (channel->nicks_speaking[i]);
+            for (j = 0; j < list_size; j++)
+            {
+                ptr_item = weechat_list_get (channel->nicks_speaking[i], j);
+                if (ptr_item
+                    && (irc_server_strcasecmp (server,
+                                               weechat_list_string (ptr_item),
+                                               nick_name) == 0))
+                {
+                    weechat_list_set (ptr_item, nick_name);
+                }
+            }
+        }
+    }
+}
+
+/*
  * Searches for a nick speaking time on a channel.
  *
  * Returns pointer to nick speaking time, NULL if not found.

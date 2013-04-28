@@ -568,6 +568,9 @@ IRC_PROTOCOL_CALLBACK(join)
     /* add nick in channel */
     ptr_nick = irc_nick_new (server, ptr_channel, nick, address, NULL, 0);
 
+    /* rename the nick if it was in list with a different case */
+    irc_channel_nick_speaking_rename_if_present (server, ptr_channel, nick);
+
     if (!ignored)
     {
         ptr_nick_speaking = ((weechat_config_boolean (irc_config_look_smart_filter))
