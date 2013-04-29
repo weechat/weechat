@@ -52,6 +52,8 @@ struct t_config_option *logger_config_file_mask;
 struct t_config_option *logger_config_file_replacement_char;
 struct t_config_option *logger_config_file_info_lines;
 struct t_config_option *logger_config_file_time_format;
+struct t_config_option *logger_config_file_nick_prefix;
+struct t_config_option *logger_config_file_nick_suffix;
 
 
 /*
@@ -474,6 +476,16 @@ logger_config_init ()
         N_("timestamp used in log files (see man strftime for date/time "
            "specifiers)"),
         NULL, 0, 0, "%Y-%m-%d %H:%M:%S", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    logger_config_file_nick_prefix = weechat_config_new_option (
+        logger_config_file, ptr_section,
+        "nick_prefix", "string",
+        N_("text to write before nick in prefix of message, example: \"<\""),
+        NULL, 0, 0, "", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    logger_config_file_nick_suffix = weechat_config_new_option (
+        logger_config_file, ptr_section,
+        "nick_suffix", "string",
+        N_("text to write after nick in prefix of message, example: \">\""),
+        NULL, 0, 0, "", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
 
     /* level */
     ptr_section = weechat_config_new_section (logger_config_file, "level",

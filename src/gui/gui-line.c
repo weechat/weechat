@@ -149,7 +149,7 @@ gui_line_prefix_is_same_nick_as_previous (struct t_gui_line *line)
 void
 gui_line_get_prefix_for_display (struct t_gui_line *line,
                                  char **prefix, int *length,
-                                 char **color)
+                                 char **color, int *prefix_is_nick)
 {
     const char *tag_prefix_nick;
 
@@ -160,6 +160,7 @@ gui_line_get_prefix_for_display (struct t_gui_line *line,
         /* same nick: return empty prefix or value from option */
         if (strcmp (CONFIG_STRING(config_look_prefix_same_nick), " ") == 0)
         {
+            /* return empty prefix */
             if (prefix)
                 *prefix = gui_chat_prefix_empty;
             if (length)
@@ -169,19 +170,20 @@ gui_line_get_prefix_for_display (struct t_gui_line *line,
         }
         else
         {
+            /* return prefix from option "weechat.look.prefix_same_nick" */
             if (prefix)
                 *prefix = CONFIG_STRING(config_look_prefix_same_nick);
             if (length)
                 *length = config_length_prefix_same_nick;
             if (color)
             {
-                *color = NULL;
                 tag_prefix_nick = gui_line_search_tag_starting_with (line,
                                                                      "prefix_nick_");
-                if (tag_prefix_nick)
-                    *color = (char *)(tag_prefix_nick + 12);
+                *color = (tag_prefix_nick) ? (char *)(tag_prefix_nick + 12) : NULL;
             }
         }
+        if (prefix_is_nick)
+            *prefix_is_nick = 0;
     }
     else
     {
@@ -192,6 +194,8 @@ gui_line_get_prefix_for_display (struct t_gui_line *line,
             *length = line->data->prefix_length;
         if (color)
             *color = NULL;
+        if (prefix_is_nick)
+            *prefix_is_nick = gui_line_search_tag_starting_with (line, "prefix_nick_") ? 1 : 0;
     }
 }
 
@@ -203,7 +207,7 @@ int
 gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
                     int with_suffix, int first_line)
 {
-    int length_time, length_buffer, length_suffix, prefix_length;
+    int length_time, length_buffer, length_suffix, prefix_length, prefix_is_nick;
 
     /* return immediately if alignment for end of lines is "time" */
     if (!first_line
@@ -253,7 +257,11 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
         return length_time + length_buffer;
     }
 
-    gui_line_get_prefix_for_display (line, NULL, &prefix_length, NULL);
+    /* length of prefix */
+    gui_line_get_prefix_for_display (line, NULL, &prefix_length, NULL,
+                                     &prefix_is_nick);
+    if (prefix_is_nick)
+        prefix_length += config_length_nick_prefix_suffix;
 
     if (CONFIG_INTEGER(config_look_prefix_align) == CONFIG_LOOK_PREFIX_ALIGN_NONE)
     {
@@ -720,7 +728,7 @@ void
 gui_line_compute_prefix_max_length (struct t_gui_lines *lines)
 {
     struct t_gui_line *ptr_line;
-    int prefix_length;
+    int prefix_length, prefix_is_nick;
 
     lines->prefix_max_length = CONFIG_INTEGER(config_look_prefix_align_min);
 
@@ -729,7 +737,10 @@ gui_line_compute_prefix_max_length (struct t_gui_lines *lines)
     {
         if (ptr_line->data->displayed)
         {
-            gui_line_get_prefix_for_display (ptr_line, NULL, &prefix_length, NULL);
+            gui_line_get_prefix_for_display (ptr_line, NULL, &prefix_length,
+                                             NULL, &prefix_is_nick);
+            if (prefix_is_nick)
+                prefix_length += config_length_nick_prefix_suffix;
             if (prefix_length > lines->prefix_max_length)
                 lines->prefix_max_length = prefix_length;
         }
@@ -744,7 +755,7 @@ void
 gui_line_add_to_list (struct t_gui_lines *lines,
                       struct t_gui_line *line)
 {
-    int prefix_length;
+    int prefix_length, prefix_is_nick;
 
     if (!lines->first_line)
         lines->first_line = line;
@@ -755,7 +766,10 @@ gui_line_add_to_list (struct t_gui_lines *lines,
     lines->last_line = line;
 
     /* adjust "prefix_max_length" if this prefix length is > max */
-    gui_line_get_prefix_for_display (line, NULL, &prefix_length, NULL);
+    gui_line_get_prefix_for_display (line, NULL, &prefix_length, NULL,
+                                     &prefix_is_nick);
+    if (prefix_is_nick)
+        prefix_length += config_length_nick_prefix_suffix;
     if (prefix_length > lines->prefix_max_length)
         lines->prefix_max_length = prefix_length;
 
@@ -774,7 +788,7 @@ gui_line_remove_from_list (struct t_gui_buffer *buffer,
 {
     struct t_gui_window *ptr_win;
     struct t_gui_window_scroll *ptr_scroll;
-    int i, update_prefix_max_length, prefix_length;
+    int i, update_prefix_max_length, prefix_length, prefix_is_nick;
 
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
@@ -800,7 +814,10 @@ gui_line_remove_from_list (struct t_gui_buffer *buffer,
         }
     }
 
-    gui_line_get_prefix_for_display (line, NULL, &prefix_length, NULL);
+    gui_line_get_prefix_for_display (line, NULL, &prefix_length, NULL,
+                                     &prefix_is_nick);
+    if (prefix_is_nick)
+        prefix_length += config_length_nick_prefix_suffix;
     update_prefix_max_length =
         (prefix_length == lines->prefix_max_length);
 

@@ -1,7 +1,7 @@
 WeeChat Release Notes
 =====================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.1-dev, 2013-03-24
+v0.4.1-dev, 2013-04-29
 
 
 This document lists important changes for each version, that require manual
@@ -15,6 +15,32 @@ http://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 Version 0.4.1 (under dev!)
 --------------------------
+
+=== Dynamic nick prefix/suffix ===
+
+The nick prefix/suffix (for example: "<" and ">") are now dynamic and used on
+display (not stored any more in the line).
+
+Options moved from irc plugin (irc.conf) to core (weechat.conf):
+
+* 'irc.look.nick_prefix' moved to 'weechat.look.nick_prefix'
+* 'irc.look.nick_suffix' moved to 'weechat.look.nick_suffix'
+* 'irc.color.nick_prefix' moved to 'weechat.color.chat_nick_prefix'
+* 'irc.color.nick_suffix' moved to 'weechat.color.chat_nick_suffix'
+
+Types and default values for these four options remain unchanged.
+
+After `/upgrade`, if you set new options to non-empty strings, and if old
+options were set to non-empty strings too, you will see double prefix/suffix
+on old messages, this is normal behaviour (lines displayed before `/upgrade`
+have prefix/suffix saved in prefix, but new lines don't have them any more).
+
+New options in logger plugin (logger.conf):
+
+* 'logger.file.nick_prefix': prefix for nicks in log files (default: empty
+  string)
+* 'logger.file.nick_suffix': suffix for nicks in log files (default: empty
+  string)
 
 === IRC reconnection on important lag ===
 
