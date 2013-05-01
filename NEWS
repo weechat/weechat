@@ -16,6 +16,16 @@ http://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 Version 0.4.1 (under dev!)
 --------------------------
 
+=== Nicklist diff in relay ===
+
+A new message with identifier "_nicklist_diff" has been added in relay (WeeChat
+protocol). WeeChat may decide to send full nicklist or this nicklist diff at any
+time (depending on size of message, the smaller is sent).
+
+Clients using nicklist must implement it.
+
+For more info about content of message, see document 'WeeChat Relay Protocol'.
+
 === Dynamic nick prefix/suffix ===
 
 The nick prefix/suffix (for example: "<" and ">") are now dynamic and used on
