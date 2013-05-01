@@ -478,7 +478,9 @@ gui_chat_display_word (struct t_gui_window *window,
             if ((CONFIG_INTEGER(config_look_align_end_of_lines) == CONFIG_LOOK_ALIGN_END_OF_LINES_MESSAGE)
                 && (CONFIG_INTEGER(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)
                 && CONFIG_STRING(config_look_prefix_suffix)
-                && CONFIG_STRING(config_look_prefix_suffix)[0])
+                && CONFIG_STRING(config_look_prefix_suffix)[0]
+                && line->data->str_time
+                && line->data->str_time[0])
             {
                 if (!simulate)
                 {
@@ -619,7 +621,7 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
 
     /* display time */
     if (window->buffer->time_for_each_line
-        && (line->data->str_time && line->data->str_time[0]))
+        && line->data->str_time && line->data->str_time[0])
     {
         if (window->win_chat_cursor_y < window->coords_size)
             window->coords[window->win_chat_cursor_y].time_x1 = window->win_chat_cursor_x;
@@ -1022,8 +1024,8 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
         }
 
         if ((CONFIG_INTEGER(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)
-            && (CONFIG_STRING(config_look_prefix_suffix)
-                && CONFIG_STRING(config_look_prefix_suffix)[0]))
+            && CONFIG_STRING(config_look_prefix_suffix)
+            && CONFIG_STRING(config_look_prefix_suffix)[0])
         {
             if (!simulate)
             {

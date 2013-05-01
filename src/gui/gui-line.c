@@ -209,6 +209,10 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
 {
     int length_time, length_buffer, length_suffix, prefix_length, prefix_is_nick;
 
+    /* return immediately if line has no time (not aligned) */
+    if (!line->data->str_time || !line->data->str_time[0])
+        return 0;
+
     /* return immediately if alignment for end of lines is "time" */
     if (!first_line
         && (CONFIG_INTEGER(config_look_align_end_of_lines) == CONFIG_LOOK_ALIGN_END_OF_LINES_TIME))

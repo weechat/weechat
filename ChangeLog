@@ -14,6 +14,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 Version 0.4.1 (under dev!)
 --------------------------
 
+* core: fix display of long lines without time (message beginning with two tabs)
 * core: make nick prefix/suffix dynamic (not stored in the line): move options
   irc.look.nick_{prefix|suffix} to weechat.look.nick_{prefix|suffix} and options
   irc.color.nick_{prefix|suffix} to weechat.color.chat_nick_{prefix|suffix},
