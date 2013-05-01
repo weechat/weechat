@@ -124,6 +124,8 @@ struct t_config_option *config_look_item_buffer_filter;
 struct t_config_option *config_look_jump_current_to_previous_buffer;
 struct t_config_option *config_look_jump_previous_buffer_when_closing;
 struct t_config_option *config_look_jump_smart_back_to_buffer;
+struct t_config_option *config_look_nick_prefix;
+struct t_config_option *config_look_nick_suffix;
 struct t_config_option *config_look_mouse;
 struct t_config_option *config_look_mouse_timer_delay;
 struct t_config_option *config_look_paste_bracketed;
@@ -175,6 +177,8 @@ struct t_config_option *config_color_chat_server;
 struct t_config_option *config_color_chat_channel;
 struct t_config_option *config_color_chat_nick;
 struct t_config_option *config_color_chat_nick_colors;
+struct t_config_option *config_color_chat_nick_prefix;
+struct t_config_option *config_color_chat_nick_suffix;
 struct t_config_option *config_color_chat_nick_self;
 struct t_config_option *config_color_chat_nick_offline;
 struct t_config_option *config_color_chat_nick_offline_highlight;
@@ -248,6 +252,7 @@ struct t_config_option *config_plugin_save_config_on_unload;
 
 /* other */
 
+int config_length_nick_prefix_suffix = 0;
 int config_length_prefix_same_nick = 0;
 struct t_hook *config_day_change_timer = NULL;
 int config_day_change_old_day = -1;
@@ -405,6 +410,26 @@ config_compute_prefix_max_length_all_buffers ()
         if (ptr_buffer->mixed_lines)
             gui_line_compute_prefix_max_length (ptr_buffer->mixed_lines);
     }
+}
+
+/*
+ * Callback for changes on options "weechat.look.nick_prefix" and
+ * "weechat.look.nick_suffix".
+ */
+
+void
+config_change_nick_prefix_suffix (void *data, struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+    config_length_nick_prefix_suffix =
+        gui_chat_strlen_screen (CONFIG_STRING(config_look_nick_prefix))
+        + gui_chat_strlen_screen (CONFIG_STRING(config_look_nick_suffix));
+
+    config_compute_prefix_max_length_all_buffers ();
+    gui_window_ask_refresh (1);
 }
 
 /*
@@ -2152,6 +2177,18 @@ config_weechat_init_options ()
         "jump_smart_back_to_buffer", "boolean",
         N_("jump back to initial buffer after reaching end of hotlist"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_look_nick_prefix = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "nick_prefix", "string",
+        N_("text to display before nick in prefix of message, example: \"<\""),
+        NULL, 0, 0, "", NULL, 0, NULL, NULL,
+        &config_change_nick_prefix_suffix, NULL, NULL, NULL);
+    config_look_nick_suffix = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "nick_suffix", "string",
+        N_("text to display after nick in prefix of message, example: \">\""),
+        NULL, 0, 0, "", NULL, 0, NULL, NULL,
+        &config_change_nick_prefix_suffix, NULL, NULL, NULL);
     config_look_mouse = config_file_new_option (
         weechat_config_file, ptr_section,
         "mouse", "boolean",
@@ -2529,6 +2566,18 @@ config_weechat_init_options ()
         NULL, 0, 0, "cyan,magenta,green,brown,lightblue,default,lightcyan,"
         "lightmagenta,lightgreen,blue", NULL, 0,
         NULL, NULL, &config_change_nick_colors, NULL, NULL, NULL);
+    config_color_chat_nick_prefix = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "chat_nick_prefix", "color",
+        N_("color for nick prefix (string displayed before nick in prefix)"),
+        NULL, GUI_COLOR_CHAT_NICK_PREFIX, 0, "green", NULL, 0, NULL, NULL,
+        &config_change_color, NULL, NULL, NULL);
+    config_color_chat_nick_suffix = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "chat_nick_suffix", "color",
+        N_("color for nick suffix (string displayed after nick in suffix)"),
+        NULL, GUI_COLOR_CHAT_NICK_SUFFIX, 0, "green", NULL, 0, NULL, NULL,
+        &config_change_color, NULL, NULL, NULL);
     config_color_chat_nick_self = config_file_new_option (
         weechat_config_file, ptr_section,
         "chat_nick_self", "color",

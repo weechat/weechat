@@ -956,22 +956,10 @@ irc_nick_as_prefix (struct t_irc_server *server, struct t_irc_nick *nick,
 {
     static char result[256];
 
-    snprintf (result, sizeof (result), "%s%s%s%s%s%s%s\t",
-              (weechat_config_string (irc_config_look_nick_prefix)
-               && weechat_config_string (irc_config_look_nick_prefix)[0]) ?
-              IRC_COLOR_NICK_PREFIX : "",
-              (weechat_config_string (irc_config_look_nick_prefix)
-               && weechat_config_string (irc_config_look_nick_prefix)[0]) ?
-              weechat_config_string (irc_config_look_nick_prefix) : "",
+    snprintf (result, sizeof (result), "%s%s%s\t",
               irc_nick_mode_for_display (server, nick, 1),
               (force_color) ? force_color : ((nick) ? nick->color : ((nickname) ? irc_nick_find_color (nickname) : IRC_COLOR_CHAT_NICK)),
-              (nick) ? nick->name : nickname,
-              (weechat_config_string (irc_config_look_nick_suffix)
-               && weechat_config_string (irc_config_look_nick_suffix)[0]) ?
-              IRC_COLOR_NICK_SUFFIX : "",
-              (weechat_config_string (irc_config_look_nick_suffix)
-               && weechat_config_string (irc_config_look_nick_suffix)[0]) ?
-              weechat_config_string (irc_config_look_nick_suffix) : "");
+              (nick) ? nick->name : nickname);
 
     return result;
 }

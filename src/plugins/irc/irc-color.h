@@ -73,8 +73,6 @@
 #define IRC_COLOR_NICK_PREFIX_HALFOP weechat_color(weechat_config_string(irc_config_color_nick_prefix_halfop))
 #define IRC_COLOR_NICK_PREFIX_VOICE weechat_color(weechat_config_string(irc_config_color_nick_prefix_voice))
 #define IRC_COLOR_NICK_PREFIX_USER weechat_color(weechat_config_string(irc_config_color_nick_prefix_user))
-#define IRC_COLOR_NICK_PREFIX weechat_color(weechat_config_string(irc_config_color_nick_prefix))
-#define IRC_COLOR_NICK_SUFFIX weechat_color(weechat_config_string(irc_config_color_nick_suffix))
 #define IRC_COLOR_NOTICE weechat_color(weechat_config_string(irc_config_color_notice))
 #define IRC_COLOR_STATUS_NUMBER weechat_color("status_number")
 #define IRC_COLOR_STATUS_NAME weechat_color("status_name")

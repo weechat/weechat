@@ -1172,32 +1172,52 @@ logger_day_changed_signal_cb (void *data, const char *signal,
 }
 
 /*
- * Gets log level for a line (using its tags).
+ * Gets info with tags of line: log level and if prefix is a nick.
  */
 
-int
-logger_line_log_level (int tags_count, const char **tags)
+void
+logger_get_line_tag_info (int tags_count, const char **tags,
+                          int *log_level, int *prefix_is_nick)
 {
-    int i;
+    int i, log_level_set, prefix_is_nick_set;
+
+    if (log_level)
+        *log_level = LOGGER_LEVEL_DEFAULT;
+    if (prefix_is_nick)
+        *prefix_is_nick = 0;
+
+    log_level_set = 0;
+    prefix_is_nick_set = 0;
 
     for (i = 0; i < tags_count; i++)
     {
-        /* log disabled on line? return -1 */
-        if (strcmp (tags[i], "no_log") == 0)
-            return -1;
-
-        /* log level for line? return it */
-        if (strncmp (tags[i], "log", 3) == 0)
+        if (log_level && !log_level_set)
         {
-            if (isdigit ((unsigned char)tags[i][3]))
+            if (strcmp (tags[i], "no_log") == 0)
             {
-                return (tags[i][3] - '0');
+                /* log disabled on line: set level to -1 */
+                *log_level = -1;
+                log_level_set = 1;
+            }
+            else if (strncmp (tags[i], "log", 3) == 0)
+            {
+                /* set log level for line */
+                if (isdigit ((unsigned char)tags[i][3]))
+                {
+                    *log_level = (tags[i][3] - '0');
+                    log_level_set = 1;
+                }
+            }
+        }
+        if (prefix_is_nick && !prefix_is_nick_set)
+        {
+            if (strncmp (tags[i], "prefix_nick", 11) == 0)
+            {
+                *prefix_is_nick = 1;
+                prefix_is_nick_set = 1;
             }
         }
     }
-
-    /* return default log level for line */
-    return LOGGER_LEVEL_DEFAULT;
 }
 
 /*
@@ -1213,14 +1233,15 @@ logger_print_cb (void *data, struct t_gui_buffer *buffer, time_t date,
     struct t_logger_buffer *ptr_logger_buffer;
     struct tm *date_tmp;
     char buf_time[256];
-    int line_log_level;
+    int line_log_level, prefix_is_nick;
 
     /* make C compiler happy */
     (void) data;
     (void) displayed;
     (void) highlight;
 
-    line_log_level = logger_line_log_level (tags_count, tags);
+    logger_get_line_tag_info (tags_count, tags, &line_log_level,
+                              &prefix_is_nick);
     if (line_log_level >= 0)
     {
         ptr_logger_buffer = logger_buffer_search_buffer (buffer);
@@ -1239,9 +1260,11 @@ logger_print_cb (void *data, struct t_gui_buffer *buffer, time_t date,
             }
 
             logger_write_line (ptr_logger_buffer,
-                               "%s\t%s\t%s",
+                               "%s\t%s%s%s\t%s",
                                buf_time,
+                               (prefix && prefix_is_nick) ? weechat_config_string (logger_config_file_nick_prefix) : "",
                                (prefix) ? prefix : "",
+                               (prefix && prefix_is_nick) ? weechat_config_string (logger_config_file_nick_suffix) : "",
                                message);
         }
     }
