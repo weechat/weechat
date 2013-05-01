@@ -37,7 +37,6 @@ struct t_relay_weechat_data
 {
     int password_ok;                   /* password received and OK?         */
     enum t_relay_weechat_compression compression; /* compression type       */
-    int nicklist_diff;                 /* (TEMPORARY) nicklist diff enabled?*/
 
     /* sync of buffers */
     struct t_hashtable *buffers_sync;  /* buffers synchronized (events      */

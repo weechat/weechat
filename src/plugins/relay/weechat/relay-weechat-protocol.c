@@ -194,10 +194,6 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
                     if (compression >= 0)
                         RELAY_WEECHAT_DATA(client, compression) = compression;
                 }
-                else if (strcmp (options[i], "nicklistdiff") == 0)
-                {
-                    RELAY_WEECHAT_DATA(client, nicklist_diff) = 1;
-                }
             }
         }
         weechat_string_free_split (options);
@@ -653,22 +649,14 @@ relay_weechat_protocol_nicklist_map_cb (void *data,
                                          weechat_hdata_get_list (ptr_hdata, "gui_buffers"),
                                          ptr_buffer))
         {
-            if (RELAY_WEECHAT_DATA(ptr_client, nicklist_diff))
+            /*
+             * if no diff at all, or if diffs are bigger than nicklist:
+             * send whole nicklist
+             */
+            if (ptr_nicklist
+                && ((ptr_nicklist->items_count == 0)
+                    || (ptr_nicklist->items_count >= weechat_buffer_get_integer (ptr_buffer, "nicklist_count") + 1)))
             {
-                /*
-                 * if no diff at all, or if diffs are bigger than nicklist:
-                 * send whole nicklist
-                 */
-                if (ptr_nicklist
-                    && ((ptr_nicklist->items_count == 0)
-                        || (ptr_nicklist->items_count >= weechat_buffer_get_integer (ptr_buffer, "nicklist_count") + 1)))
-                {
-                    ptr_nicklist = NULL;
-                }
-            }
-            else
-            {
-                /* it will be removed soon (when clients will handle nicklist diff) */
                 ptr_nicklist = NULL;
             }
 
