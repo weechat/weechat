@@ -83,7 +83,8 @@ WeeChat は cmake または autotools を使ってコンパイルできます (c
 | libncursesw5-dev ^(2)^ |             | *yes*    | ncurses インターフェイス
 | libcurl4-gnutls-dev    |             | *yes*    | URL 転送
 | zlib1g-dev             |             | *yes*    | relay プラグインでパケットを圧縮 (weechat プロトコル)、スクリプトプラグイン
-| libgcrypt11-dev        |             | *yes*    | DH-BLOWFISH メカニズムを用いた IRC サーバ用の SASL 認証、スクリプトプラグイン
+// TRANSLATION MISSING
+| libgcrypt11-dev        |             | *yes*    | IRC SASL authentication (DH-BLOWFISH/DH-AES), script plugin
 | libgnutls-dev          | ≥ 2.2.0     |          | IRC サーバへの SSL 接続
 | gettext                |             |          | 国際化 (メッセージの翻訳; ベース言語は英語です)
 | ca-certificates        |             |          | SSL 接続に必要な証明書、relay プラグインで SSL サポート
@@ -1733,13 +1734,19 @@ $ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick
 [[irc_sasl_authentication]]
 ==== SASL 認証 ====
 
-WeeChat は SASL 認証をサポートしています。認証アルゴリズムは "plain"
-(平文パスワード)、"dh-blowfish" (暗号化パスワード)、"external"
-(クライアント側 SSL 証明書) の 3 つです。
+// TRANSLATION MISSING
+WeeChat supports SASL authentication, using different mechanisms:
+
+// TRANSLATION MISSING
+* 'plain': plain text password
+* 'dh-blowfish': blowfish encrypted password
+* 'dh-aes': AES encrypted password
+* 'external': client side SSL cert
 
 サーバオプション:
 
-* 'sasl_mechanism': 利用する認証メカニズム ("plain"、"dh-blowfish"、"external")
+// TRANSLATION MISSING
+* 'sasl_mechanism': 利用する認証メカニズム (see above)
 * 'sasl_timeout': 認証時のタイムアウト (秒単位)
 * 'sasl_username': ユーザ名 (ニックネーム)
 * 'sasl_password': パスワード

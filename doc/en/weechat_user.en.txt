@@ -91,7 +91,7 @@ compile WeeChat.
 | libncursesw5-dev ^(2)^ |             | *yes*    | ncurses interface
 | libcurl4-gnutls-dev    |             | *yes*    | URL transfer
 | zlib1g-dev             |             | *yes*    | compression of packets in relay plugin (weechat protocol), script plugin
-| libgcrypt11-dev        |             | *yes*    | SASL authentication with IRC server using DH-BLOWFISH mechanism, script plugin
+| libgcrypt11-dev        |             | *yes*    | IRC SASL authentication (DH-BLOWFISH/DH-AES), script plugin
 | libgnutls-dev          | ≥ 2.2.0     |          | SSL connection to IRC server, support of SSL in relay plugin
 | gettext                |             |          | internationalization (translation of messages; base language is English)
 | ca-certificates        |             |          | certificates for SSL connections
@@ -1800,13 +1800,16 @@ For more information, look at http://www.oftc.net/oftc/NickServ/CertFP
 SASL authentication
 ^^^^^^^^^^^^^^^^^^^
 
-WeeChat supports SASL authentication, using three mechanisms: "plain" (plain
-text password), "dh-blowfish" (encrypted password) or "external" (client side
-SSL cert).
+WeeChat supports SASL authentication, using different mechanisms:
+
+* 'plain': plain text password
+* 'dh-blowfish': blowfish encrypted password
+* 'dh-aes': AES encrypted password
+* 'external': client side SSL cert
 
 Options in servers are:
 
-* 'sasl_mechanism': mechanism to use ("plain", "dh-blowfish" or "external")
+* 'sasl_mechanism': mechanism to use (see above)
 * 'sasl_timeout': timeout (in seconds) for authentication
 * 'sasl_username': username (nick)
 * 'sasl_password': password
@@ -1819,7 +1822,7 @@ If you want to use "dh-blowfish" by default for all servers:
 
 [NOTE]
 The "gcrypt" library is required when compiling WeeChat in order to use
-"dh-blowfish" mechanism (see <<dependencies,dependencies>>).
+"dh-blowfish" and "dh-aes" mechanisms (see <<dependencies,dependencies>>).
 
 [[irc_tor_freenode]]
 Connect to Freenode with TOR/SASL

@@ -97,7 +97,7 @@ compilare WeeChat.
 // TRANSLATION MISSING
 | zlib1g-dev             |             | *sì*      | compression of packets in relay plugin (weechat protocol), script plugin
 // TRANSLATION MISSING
-| libgcrypt11-dev        |             | *sì*      | autenticazione SASL per i server IRC che utilizzano il meccanismo DH-BLOWFISH, script plugin
+| libgcrypt11-dev        |             | *sì*      | IRC SASL authentication (DH-BLOWFISH/DH-AES), script plugin
 // TRANSLATION MISSING
 | libgnutls-dev          | ≥ 2.2.0     |           | connessione SSL al server IRC, support of SSL in relay plugin
 | gettext                |             |           | internazionalizzazione (traduzione dei messaggi; la lingua base è l'inglese)
@@ -1843,13 +1843,20 @@ Per maggiori informazioni consultare http://www.oftc.net/oftc/NickServ/CertFP
 Autenticazione SASL
 ^^^^^^^^^^^^^^^^^^^
 
-WeeChat supporta l'autenticazione SASL, usando tre meccanismi: "plain" (password
-in chiaro), "dh-blowfish" (password cifrata)" o "external" (certificato SSL da
-lato client).
+// TRANSLATION MISSING
+WeeChat supports SASL authentication, using different mechanisms:
+
+* 'plain': password in chiaro
+// TRANSLATION MISSING
+* 'dh-blowfish': blowfish encrypted password
+// TRANSLATION MISSING
+* 'dh-aes': AES encrypted password
+* 'external': certificato SSL da lato client
 
 Le opzioni nel server sono:
 
-* 'sasl_mechanism': meccanismo da usare ("plain", "dh-blowfish" o "external")
+// TRANSLATION MISSING
+* 'sasl_mechanism': meccanismo da usare (see above)
 * 'sasl_timeout': timeout (in secondi) per l'autenticazione
 * 'sasl_username': nome utente (nick)
 * 'sasl_password': password

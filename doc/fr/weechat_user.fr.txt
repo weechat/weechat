@@ -93,7 +93,7 @@ compiler WeeChat.
 | libncursesw5-dev ^(2)^ |             | *oui*  | interface ncurses
 | libcurl4-gnutls-dev    |             | *oui*  | transfert d'URL
 | zlib1g-dev             |             | *oui*  | compression des paquets dans l'extension relay (protocole weechat), extension script
-| libgcrypt11-dev        |             | *oui*  | authentification SASL avec le serveur IRC, en utilisant le mécanisme DH-BLOWFISH, extension script
+| libgcrypt11-dev        |             | *oui*  | authentification IRC SASL (DH-BLOWFISH/DH-AES), extension script
 | libgnutls-dev          | ≥ 2.2.0     |        | connexion SSL au serveur IRC, support SSL dans l'extension relay
 | gettext                |             |        | internationalisation (traduction des messages; la langue de base est l'anglais)
 | ca-certificates        |             |        | certificats pour les connexions SSL
@@ -1863,13 +1863,17 @@ Pour plus d'informations, consulter http://www.oftc.net/oftc/NickServ/CertFP
 Authentification avec SASL
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-WeeChat supporte l'authentification avec SASL, en utilisant trois mécanismes :
-"plain" (mot de passe en clair), "dh-blowfish" (mot de passe chiffré) ou
-"external" (certificat SSL côté client).
+WeeChat supporte l'authentification avec SASL, en utilisant différents
+mécanismes :
+
+* 'plain' : mot de passe en clair
+* 'dh-blowfish' : mot de passe chiffré avec blowfish
+* 'dh-aes' : mot de passe chiffré avec AES
+* 'external' : certificat SSL côté client
 
 Les options dans le serveur sont :
 
-* 'sasl_mechanism' : mécanisme à utiliser ("plain", "dh-blowfish" ou "external")
+* 'sasl_mechanism' : mécanisme à utiliser (voir ci-dessus)
 * 'sasl_timeout' : délai d'attente maximum (en secondes) pour l'authentification
 * 'sasl_username' : nom d'utilisateur (pseudo)
 * 'sasl_password' : mot de passe

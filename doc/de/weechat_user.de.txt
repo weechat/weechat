@@ -91,7 +91,8 @@ welche Pakete optional genutzt werden können.
 | libncursesw5-dev ^(2)^ |             | *ja*     | ncurses Oberfläche
 | libcurl4-gnutls-dev    |             | *ja*     | URL Transfer
 | zlib1g-dev             |             | *ja*     | Kompression für Pakete, die mittels Relay- (WeeChat Protokoll), Script-Erweiterung übertragen werden
-| libgcrypt11-dev        |             | *ja*     | SASL Authentifikation am IRC Server mittels DH-BLOWFISH Methode, Script-Erweiterung
+// TRANSLATION MISSING
+| libgcrypt11-dev        |             | *ja*     | IRC SASL authentication (DH-BLOWFISH/DH-AES), Script-Erweiterung
 | libgnutls-dev          | ≥ 2.2.0     |          | SSL Verbindung zu einem IRC Server, Unterstützung von SSL in der Relay-Erweiterung
 | gettext                |             |          | Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch)
 | ca-certificates        |             |          | Zertifikate für SSL Verbindungen
@@ -1834,14 +1835,20 @@ Für weiterreichende Informationen lesen Sie bitte: http://www.oftc.net/oftc/Nic
 SASL Authentifizierung
 ^^^^^^^^^^^^^^^^^^^^^^
 
-WeeChat unterstützt drei mögliche Verfahren bei einer SASL Authentifikation:
-"plain" (Passwort liegt in Klarschrift vor), "dh-blowfish" (Passwort wird verschlüsselt)
-oder "external" (SSL Zertifikat welches auf Client Seite vorliegt)
+// TRANSLATION MISSING
+WeeChat supports SASL authentication, using different mechanisms:
+
+* 'plain': Passwort liegt in Klarschrift vor
+// TRANSLATION MISSING
+* 'dh-blowfish': blowfish encrypted password
+// TRANSLATION MISSING
+* 'dh-aes': AES encrypted password
+* 'external': SSL Zertifikat welches auf Client Seite vorliegt
 
 Optionen für Server sind:
 
-* 'sasl_mechanism': Mechanismus welcher genutzt werden soll ("plain",
-  "dh-blowfish" oder "external")
+// TRANSLATION MISSING
+* 'sasl_mechanism': Mechanismus welcher genutzt werden soll (see above)
 * 'sasl_timeout': Zeitüberschreitung für Authentifizierung (in Sekunden)
 * 'sasl_username': Username (Nickname)
 * 'sasl_password': Passwort
