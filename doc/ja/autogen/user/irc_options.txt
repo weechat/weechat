@@ -519,9 +519,9 @@
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
 * [[option_irc.server_default.sasl_mechanism]] *irc.server_default.sasl_mechanism*
-** 説明: `SASL 認証メカニズム: "plain" は平文パスワード、"dh-blowfish" は暗号パスワード、"external" はクライアントサイド SSL 証明書を利用した認証`
+** 説明: `mechanism for SASL authentication: "plain" for plain text password, "dh-blowfish" for blowfish crypted password, "dh-aes" for AES crypted password, "external" for authentication using client side SSL cert`
 ** タイプ: 整数
-** 値: plain, dh-blowfish, external (デフォルト値: `plain`)
+** 値: plain, dh-blowfish, dh-aes, external (デフォルト値: `plain`)
 
 * [[option_irc.server_default.sasl_password]] *irc.server_default.sasl_password*
 ** 説明: `SASL 認証用パスワード`

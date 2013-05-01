@@ -519,9 +519,9 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_irc.server_default.sasl_mechanism]] *irc.server_default.sasl_mechanism*
-** Beschreibung: `Verfahren welches bei einer SASL Authentifizierung angewandt werden soll: "plain" Passwort liegt in Klartext vor, "dh-blowfish" Passwort wird verschlüsselt, "external" SSL Zertifikat welches auf Client Seite vorliegt`
+** Beschreibung: `mechanism for SASL authentication: "plain" for plain text password, "dh-blowfish" for blowfish crypted password, "dh-aes" for AES crypted password, "external" for authentication using client side SSL cert`
 ** Typ: integer
-** Werte: plain, dh-blowfish, external (Standardwert: `plain`)
+** Werte: plain, dh-blowfish, dh-aes, external (Standardwert: `plain`)
 
 * [[option_irc.server_default.sasl_password]] *irc.server_default.sasl_password*
 ** Beschreibung: `Passwort für SASL Authentifizierung`
