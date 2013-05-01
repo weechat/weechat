@@ -170,6 +170,11 @@ IRC_PROTOCOL_CALLBACK(authenticate)
                                                          sasl_username,
                                                          sasl_password);
                 break;
+            case IRC_SASL_MECHANISM_DH_AES:
+                answer = irc_sasl_mechanism_dh_aes (argv_eol[1],
+                                                    sasl_username,
+                                                    sasl_password);
+                break;
             case IRC_SASL_MECHANISM_EXTERNAL:
                 answer = strdup ("+");
                 break;
@@ -335,6 +340,10 @@ IRC_PROTOCOL_CALLBACK(cap)
                     case IRC_SASL_MECHANISM_DH_BLOWFISH:
                         irc_server_sendf (server, 0, NULL,
                                           "AUTHENTICATE DH-BLOWFISH");
+                        break;
+                    case IRC_SASL_MECHANISM_DH_AES:
+                        irc_server_sendf (server, 0, NULL,
+                                          "AUTHENTICATE DH-AES");
                         break;
                     case IRC_SASL_MECHANISM_EXTERNAL:
                         irc_server_sendf (server, 0, NULL,

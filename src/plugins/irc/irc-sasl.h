@@ -26,6 +26,7 @@ enum t_irc_sasl_mechanism
 {
     IRC_SASL_MECHANISM_PLAIN = 0,
     IRC_SASL_MECHANISM_DH_BLOWFISH,
+    IRC_SASL_MECHANISM_DH_AES,
     IRC_SASL_MECHANISM_EXTERNAL,
     /* number of SASL mechanisms */
     IRC_NUM_SASL_MECHANISMS,
@@ -38,5 +39,8 @@ extern char *irc_sasl_mechanism_plain (const char *sasl_username,
 extern char *irc_sasl_mechanism_dh_blowfish (const char *data_base64,
                                              const char *sasl_username,
                                              const char *sasl_password);
+extern char *irc_sasl_mechanism_dh_aes (const char *data_base64,
+                                        const char *sasl_username,
+                                        const char *sasl_password);
 
 #endif /* __WEECHAT_IRC_SASL_H */

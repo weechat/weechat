@@ -1577,9 +1577,10 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 config_file, section,
                 option_name, "integer",
                 N_("mechanism for SASL authentication: \"plain\" for plain text "
-                   "password, \"dh-blowfish\" for crypted password, \"external\" "
+                   "password, \"dh-blowfish\" for blowfish crypted password, "
+                   "\"dh-aes\" for AES crypted password, \"external\" "
                    "for authentication using client side SSL cert"),
-                "plain|dh-blowfish|external", 0, 0,
+                "plain|dh-blowfish|dh-aes|external", 0, 0,
                 default_value, value,
                 null_value_allowed,
                 callback_check_value, callback_check_value_data,
