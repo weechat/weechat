@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-rc1\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-05-01 09:48+0200\n"
+"POT-Creation-Date: 2013-05-02 19:40+0200\n"
 "PO-Revision-Date: 2013-05-01 10:06+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -3017,6 +3017,14 @@ msgstr ""
 "springt zurück zum Ausgangsbuffer, falls keine weiteren Einträge in der "
 "Hotlist vorhanden sind"
 
+#, fuzzy
+msgid "text to display before nick in prefix of message, example: \"<\""
+msgstr "Text, der im Chatfenster vor dem Nickname erscheinen soll"
+
+#, fuzzy
+msgid "text to display after nick in prefix of message, example: \">\""
+msgstr "Text, der im Chatfenster nach dem Nickname erscheinen soll"
+
 msgid "enable mouse support"
 msgstr "Mausunterstützung einschalten"
 
@@ -3314,6 +3322,18 @@ msgstr ""
 "Textfarbe für Nicks (durch Kommata getrennte Liste von Farben. Eine "
 "Hintergrundfarbe kann durch das folgende Format genutzt werden: \"fg:bg\". "
 "Zum Beispiel: \"lightred:blue\")"
+
+#, fuzzy
+msgid "color for nick prefix (string displayed before nick in prefix)"
+msgstr ""
+"Farbe für den Nick Präfix (Präfix ist die editierbare Zeichenkette die vor "
+"dem Nick steht)"
+
+#, fuzzy
+msgid "color for nick suffix (string displayed after nick in suffix)"
+msgstr ""
+"Farbe für den Nick Suffix (Suffix ist die editierbare Zeichenkette die nach "
+"dem Nick steht)"
 
 msgid "text color for local nick in chat window"
 msgstr "Textfarbe für den eigenen Nicknamen, im lokalen Chat-Fenster."
@@ -6505,12 +6525,6 @@ msgstr ""
 "aktueller Buffer + 1, near_server = nach dem letztem Channel/privaten Buffer "
 "des jeweiligen Servers)"
 
-msgid "text to display before nick in chat window"
-msgstr "Text, der im Chatfenster vor dem Nickname erscheinen soll"
-
-msgid "text to display after nick in chat window"
-msgstr "Text, der im Chatfenster nach dem Nickname erscheinen soll"
-
 msgid ""
 "display nick mode (op, voice, ...) before nick (none = never, prefix = in "
 "prefix only (default), action = in action messages only, both = prefix + "
@@ -6840,16 +6854,6 @@ msgstr ""
 "versucht WeeChat die nächsten Modi die der Server sendet (\"PREFIX\"); ein "
 "spezieller Modus \"*\" kann als Standardfarbe genutzt werden falls kein "
 "Modus in der Liste gefunden wurde)"
-
-msgid "color for nick prefix (prefix is custom string displayed before nick)"
-msgstr ""
-"Farbe für den Nick Präfix (Präfix ist die editierbare Zeichenkette die vor "
-"dem Nick steht)"
-
-msgid "color for nick suffix (suffix is custom string displayed after nick)"
-msgstr ""
-"Farbe für den Nick Suffix (Suffix ist die editierbare Zeichenkette die nach "
-"dem Nick steht)"
 
 msgid "color for text \"Notice\" in notices"
 msgstr "Farbe des \"Notice\"-Textes in Notizen"
@@ -8055,6 +8059,12 @@ msgid "timestamp used in log files (see man strftime for date/time specifiers)"
 msgstr ""
 "Zeitstempel in Protokoll-Datei nutzen (siehe man strftime für Platzhalter "
 "für das Datum und die Uhrzeit)"
+
+msgid "text to write before nick in prefix of message, example: \"<\""
+msgstr ""
+
+msgid "text to write after nick in prefix of message, example: \">\""
+msgstr ""
 
 msgid "list of logger buffers"
 msgstr "Auflistung der protokollierten Buffer"

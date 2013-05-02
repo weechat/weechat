@@ -91,8 +91,7 @@ welche Pakete optional genutzt werden können.
 | libncursesw5-dev ^(2)^ |             | *ja*     | ncurses Oberfläche
 | libcurl4-gnutls-dev    |             | *ja*     | URL Transfer
 | zlib1g-dev             |             | *ja*     | Kompression für Pakete, die mittels Relay- (WeeChat Protokoll), Script-Erweiterung übertragen werden
-// TRANSLATION MISSING
-| libgcrypt11-dev        |             | *ja*     | IRC SASL authentication (DH-BLOWFISH/DH-AES), Script-Erweiterung
+| libgcrypt11-dev        |             | *ja*     | IRC SASL Authentifikation (DH-BLOWFISH/DH-AES), Skript-Erweiterung
 | libgnutls-dev          | ≥ 2.2.0     |          | SSL Verbindung zu einem IRC Server, Unterstützung von SSL in der Relay-Erweiterung
 | gettext                |             |          | Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch)
 | ca-certificates        |             |          | Zertifikate für SSL Verbindungen
@@ -1835,20 +1834,16 @@ Für weiterreichende Informationen lesen Sie bitte: http://www.oftc.net/oftc/Nic
 SASL Authentifizierung
 ^^^^^^^^^^^^^^^^^^^^^^
 
-// TRANSLATION MISSING
-WeeChat supports SASL authentication, using different mechanisms:
+WeeChat unterstützt eine SASL Authentifikation, mittels verschiedener Mechanismen:
 
 * 'plain': Passwort liegt in Klarschrift vor
-// TRANSLATION MISSING
-* 'dh-blowfish': blowfish encrypted password
-// TRANSLATION MISSING
-* 'dh-aes': AES encrypted password
+* 'dh-blowfish': Passwort wird mittels blowfish verschlüsselt
+* 'dh-aes': Passwort wird mittels AES verschlüsselt
 * 'external': SSL Zertifikat welches auf Client Seite vorliegt
 
 Optionen für Server sind:
 
-// TRANSLATION MISSING
-* 'sasl_mechanism': Mechanismus welcher genutzt werden soll (see above)
+* 'sasl_mechanism': Mechanismus welcher genutzt werden soll (siehe oben)
 * 'sasl_timeout': Zeitüberschreitung für Authentifizierung (in Sekunden)
 * 'sasl_username': Username (Nickname)
 * 'sasl_password': Passwort
