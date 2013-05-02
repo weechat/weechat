@@ -83,10 +83,20 @@
 ** type: color
 ** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `cyan`)
 
+* [[option_weechat.color.chat_nick_prefix]] *weechat.color.chat_nick_prefix*
+** description: `color for nick prefix (string displayed before nick in prefix)`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `green`)
+
 * [[option_weechat.color.chat_nick_self]] *weechat.color.chat_nick_self*
 ** description: `text color for local nick in chat window`
 ** type: color
 ** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `white`)
+
+* [[option_weechat.color.chat_nick_suffix]] *weechat.color.chat_nick_suffix*
+** description: `color for nick suffix (string displayed after nick in suffix)`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `green`)
 
 * [[option_weechat.color.chat_prefix_action]] *weechat.color.chat_prefix_action*
 ** description: `text color for action prefix`
@@ -592,6 +602,16 @@
 ** description: `delay (in milliseconds) to grab a mouse event: WeeChat will wait this delay before processing event`
 ** type: integer
 ** values: 1 .. 10000 (default value: `100`)
+
+* [[option_weechat.look.nick_prefix]] *weechat.look.nick_prefix*
+** description: `text to display before nick in prefix of message, example: "<"`
+** type: string
+** values: any string (default value: `""`)
+
+* [[option_weechat.look.nick_suffix]] *weechat.look.nick_suffix*
+** description: `text to display after nick in prefix of message, example: ">"`
+** type: string
+** values: any string (default value: `""`)
 
 * [[option_weechat.look.paste_bracketed]] *weechat.look.paste_bracketed*
 ** description: `enable terminal "bracketed paste mode" (not supported in all terminals/multiplexers): in this mode, pasted text is bracketed with control sequences so that WeeChat can differentiate pasted text from typed-in text ("ESC[200~", followed by the pasted text, followed by "ESC[201~")`

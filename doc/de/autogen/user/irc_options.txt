@@ -38,20 +38,10 @@
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"1,-1:darkgray"`)
 
-* [[option_irc.color.nick_prefix]] *irc.color.nick_prefix*
-** Beschreibung: `Farbe für den Nick Präfix (Präfix ist die editierbare Zeichenkette die vor dem Nick steht)`
-** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `green`)
-
 * [[option_irc.color.nick_prefixes]] *irc.color.nick_prefixes*
 ** Beschreibung: `Farben für Nick Präfix für das Modus-Symbol (o=op, h=halfop, v=voice, ..), Format: "o:color1;h:color2;v:color3" (falls ein Modus nicht gefunden wird versucht WeeChat die nächsten Modi die der Server sendet ("PREFIX"); ein spezieller Modus "*" kann als Standardfarbe genutzt werden falls kein Modus in der Liste gefunden wurde)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"q:lightred;a:lightcyan;o:lightgreen;h:lightmagenta;v:yellow;*:lightblue"`)
-
-* [[option_irc.color.nick_suffix]] *irc.color.nick_suffix*
-** Beschreibung: `Farbe für den Nick Suffix (Suffix ist die editierbare Zeichenkette die nach dem Nick steht)`
-** Typ: Farbe
-** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `green`)
 
 * [[option_irc.color.notice]] *irc.color.notice*
 ** Beschreibung: `Farbe des "Notice"-Textes in Notizen`
@@ -247,16 +237,6 @@
 ** Beschreibung: `es wird ein Leerzeichen anstelle eines Nickmodus verwendet, falls kein Nickmodus ((half)op/voice [@%+]) vorhanden ist`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
-
-* [[option_irc.look.nick_prefix]] *irc.look.nick_prefix*
-** Beschreibung: `Text, der im Chatfenster vor dem Nickname erscheinen soll`
-** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `""`)
-
-* [[option_irc.look.nick_suffix]] *irc.look.nick_suffix*
-** Beschreibung: `Text, der im Chatfenster nach dem Nickname erscheinen soll`
-** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_irc.look.nicks_hide_password]] *irc.look.nicks_hide_password*
 ** Beschreibung: `durch Kommata getrennte Liste von Nicks bei denen das Passwort in einer Nachricht unterdrückt werden soll. Zum Beispiel bei einer Nachricht die durch "/msg nickserv identify password" generiert wird. Beispiel: "nickserv,nickbot"`

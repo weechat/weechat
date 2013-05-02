@@ -83,10 +83,20 @@
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `cyan`)
 
+* [[option_weechat.color.chat_nick_prefix]] *weechat.color.chat_nick_prefix*
+** 説明: `color for nick prefix (string displayed before nick in prefix)`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `green`)
+
 * [[option_weechat.color.chat_nick_self]] *weechat.color.chat_nick_self*
 ** 説明: `チャットウィンドウ内のローカルニックネームのテキスト色`
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `white`)
+
+* [[option_weechat.color.chat_nick_suffix]] *weechat.color.chat_nick_suffix*
+** 説明: `color for nick suffix (string displayed after nick in suffix)`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `green`)
 
 * [[option_weechat.color.chat_prefix_action]] *weechat.color.chat_prefix_action*
 ** 説明: `アクションプレフィックスのテキスト色`
@@ -592,6 +602,16 @@
 ** 説明: `マウスイベントを横取りするための遅延 (ミリ秒): WeeChat はイベント処理前にこの遅延時間だけ待つ`
 ** タイプ: 整数
 ** 値: 1 .. 10000 (デフォルト値: `100`)
+
+* [[option_weechat.look.nick_prefix]] *weechat.look.nick_prefix*
+** 説明: `text to display before nick in prefix of message, example: "<"`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
+
+* [[option_weechat.look.nick_suffix]] *weechat.look.nick_suffix*
+** 説明: `text to display after nick in prefix of message, example: ">"`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
 
 * [[option_weechat.look.paste_bracketed]] *weechat.look.paste_bracketed*
 ** 説明: `端末の「括弧付きペーストモード」を有効化 (一部の端末/マルチプレクサで利用可能): このモードでは、ペーストされたテキストはコントロールシーケンスで括られる。これにより WeeChat はペーストされたテキストとタイプされたテキストを区別する ("ESC[200~" 、ペーストされたテキスト、"ESC[201~")。`

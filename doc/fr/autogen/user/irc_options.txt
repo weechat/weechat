@@ -38,20 +38,10 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"1,-1:darkgray"`)
 
-* [[option_irc.color.nick_prefix]] *irc.color.nick_prefix*
-** description: `couleur pour le préfixe du pseudo (le préfixe est une chaîne personnalisée affichée avant le pseudo)`
-** type: couleur
-** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `green`)
-
 * [[option_irc.color.nick_prefixes]] *irc.color.nick_prefixes*
 ** description: `couleur pour les préfixes du pseudo en utilisant les caractères de mode (o=op, h=halfop, v=voice, ...), le format est: "o:couleur1;h:couleur2;v:couleur3" (si un mode n'est pas trouvé, WeeChat essaiera avec les modes suivants reçus du serveur ("PREFIX"); un mode spécial "*" peut être utilisé comme couleur par défaut si aucun mode n'est trouvé dans la liste)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"q:lightred;a:lightcyan;o:lightgreen;h:lightmagenta;v:yellow;*:lightblue"`)
-
-* [[option_irc.color.nick_suffix]] *irc.color.nick_suffix*
-** description: `couleur pour le suffixe du pseudo (le suffixe est une chaîne personnalisée affichée après le pseudo)`
-** type: couleur
-** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `green`)
 
 * [[option_irc.color.notice]] *irc.color.notice*
 ** description: `couleur pour le texte "Notice" dans les notices`
@@ -247,16 +237,6 @@
 ** description: `afficher un espace si le mode du pseudo est activé mais que le pseudo n'a pas de mode (pas op, voice, ...)`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `off`)
-
-* [[option_irc.look.nick_prefix]] *irc.look.nick_prefix*
-** description: `texte à afficher avant le pseudo dans la fenêtre de discussion`
-** type: chaîne
-** valeurs: toute chaîne (valeur par défaut: `""`)
-
-* [[option_irc.look.nick_suffix]] *irc.look.nick_suffix*
-** description: `texte à afficher après le pseudo dans la fenêtre de discussion`
-** type: chaîne
-** valeurs: toute chaîne (valeur par défaut: `""`)
 
 * [[option_irc.look.nicks_hide_password]] *irc.look.nicks_hide_password*
 ** description: `liste des pseudos (séparés par des virgules) pour lesquels les mots de passe seront masqués quand un message est envoyé, par exemple pour cacher le mot de passe dans le message affiché par "/msg nickserv identify motedepasse", exemple: "nickserv|nickbot"`

@@ -83,10 +83,20 @@
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `cyan`)
 
+* [[option_weechat.color.chat_nick_prefix]] *weechat.color.chat_nick_prefix*
+** Beschreibung: `color for nick prefix (string displayed before nick in prefix)`
+** Typ: Farbe
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `green`)
+
 * [[option_weechat.color.chat_nick_self]] *weechat.color.chat_nick_self*
 ** Beschreibung: `Textfarbe für den eigenen Nicknamen, im lokalen Chat-Fenster.`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `white`)
+
+* [[option_weechat.color.chat_nick_suffix]] *weechat.color.chat_nick_suffix*
+** Beschreibung: `color for nick suffix (string displayed after nick in suffix)`
+** Typ: Farbe
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `green`)
 
 * [[option_weechat.color.chat_prefix_action]] *weechat.color.chat_prefix_action*
 ** Beschreibung: `Textfarbe für Action-Präfix`
@@ -592,6 +602,16 @@
 ** Beschreibung: `Verzögerung (in Millisekunden) um eine Mauseingabe zu fangen: WeeChat wartet zuerst diese Verzögerung ab bevor das Kommando verarbeitet wird`
 ** Typ: integer
 ** Werte: 1 .. 10000 (Standardwert: `100`)
+
+* [[option_weechat.look.nick_prefix]] *weechat.look.nick_prefix*
+** Beschreibung: `text to display before nick in prefix of message, example: "<"`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `""`)
+
+* [[option_weechat.look.nick_suffix]] *weechat.look.nick_suffix*
+** Beschreibung: `text to display after nick in prefix of message, example: ">"`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_weechat.look.paste_bracketed]] *weechat.look.paste_bracketed*
 ** Beschreibung: `aktiviert den "bracketed paste mode" des Terminals (wird nicht durch alle Terminals/Multiplexer unterstützt): Dieser Modus erlaubt das Einfügen von Steuersequenzen die in Klammern gesetzt sind. WeeChat kann dadurch ermitteln ob ein Text eingefügt oder geschrieben wurde ("ESC[200~", gefolgt von dem einzufügenden Text und einem abschließenden "ESC[201~")`

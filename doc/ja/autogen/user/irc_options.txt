@@ -38,20 +38,10 @@
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"1,-1:darkgray"`)
 
-* [[option_irc.color.nick_prefix]] *irc.color.nick_prefix*
-** 説明: `ニックネームプレフィックスの色 (プレフィックスとはニックネームの前に表示されたカスタム文字列)`
-** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `green`)
-
 * [[option_irc.color.nick_prefixes]] *irc.color.nick_prefixes*
 ** 説明: `モード文字を用いたニックネームプレフィックスの色 (o=オペレータ、h=halfop、v=発言、..)、フォーマット: "o:color1;h:color2;v:color3" (モードが見つからない場合、WeeChat はサーバから受け取ったモードの次のものを試す ("PREFIX"); モードが見つからなかった場合は、特殊なモード "*" がデフォルト色として使えます)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"q:lightred;a:lightcyan;o:lightgreen;h:lightmagenta;v:yellow;*:lightblue"`)
-
-* [[option_irc.color.nick_suffix]] *irc.color.nick_suffix*
-** 説明: `ニックネームサフィックスの色 (サフィックスとはニックネームの後に表示されたカスタム文字列)`
-** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `green`)
 
 * [[option_irc.color.notice]] *irc.color.notice*
 ** 説明: `notices に含まれるテキスト "Notice" の色`
@@ -247,16 +237,6 @@
 ** 説明: `ニックネームモードが有効でニックネームモードを持っていない (オペレータでない、voice 権がない) 場合にはこれを空白で表示する`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `off`)
-
-* [[option_irc.look.nick_prefix]] *irc.look.nick_prefix*
-** 説明: `チャットウィンドウ内でニックネーム前に表示するテキスト`
-** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `""`)
-
-* [[option_irc.look.nick_suffix]] *irc.look.nick_suffix*
-** 説明: `チャットウィンドウ内でニックネーム後に表示するテキスト`
-** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `""`)
 
 * [[option_irc.look.nicks_hide_password]] *irc.look.nicks_hide_password*
 ** 説明: `comma separated list of nicks for which passwords will be hidden when a message is sent, for example to hide password in message displayed by "/msg nickserv identify password", example: "nickserv,nickbot"`

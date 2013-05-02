@@ -38,20 +38,10 @@
 ** type: string
 ** values: any string (default value: `"1,-1:darkgray"`)
 
-* [[option_irc.color.nick_prefix]] *irc.color.nick_prefix*
-** description: `color for nick prefix (prefix is custom string displayed before nick)`
-** type: color
-** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `green`)
-
 * [[option_irc.color.nick_prefixes]] *irc.color.nick_prefixes*
 ** description: `color for nick prefixes using mode char (o=op, h=halfop, v=voice, ..), format is: "o:color1;h:color2;v:color3" (if a mode is not found, WeeChat will try with next modes received from server ("PREFIX"); a special mode "*" can be used as default color if no mode has been found in list)`
 ** type: string
 ** values: any string (default value: `"q:lightred;a:lightcyan;o:lightgreen;h:lightmagenta;v:yellow;*:lightblue"`)
-
-* [[option_irc.color.nick_suffix]] *irc.color.nick_suffix*
-** description: `color for nick suffix (suffix is custom string displayed after nick)`
-** type: color
-** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "_" for underline (default value: `green`)
 
 * [[option_irc.color.notice]] *irc.color.notice*
 ** description: `color for text "Notice" in notices`
@@ -247,16 +237,6 @@
 ** description: `display a space if nick mode is enabled but nick has no mode (not op, voice, ...)`
 ** type: boolean
 ** values: on, off (default value: `off`)
-
-* [[option_irc.look.nick_prefix]] *irc.look.nick_prefix*
-** description: `text to display before nick in chat window`
-** type: string
-** values: any string (default value: `""`)
-
-* [[option_irc.look.nick_suffix]] *irc.look.nick_suffix*
-** description: `text to display after nick in chat window`
-** type: string
-** values: any string (default value: `""`)
 
 * [[option_irc.look.nicks_hide_password]] *irc.look.nicks_hide_password*
 ** description: `comma separated list of nicks for which passwords will be hidden when a message is sent, for example to hide password in message displayed by "/msg nickserv identify password", example: "nickserv,nickbot"`

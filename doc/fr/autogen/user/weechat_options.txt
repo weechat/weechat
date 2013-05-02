@@ -83,10 +83,20 @@
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `cyan`)
 
+* [[option_weechat.color.chat_nick_prefix]] *weechat.color.chat_nick_prefix*
+** description: `color for nick prefix (string displayed before nick in prefix)`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `green`)
+
 * [[option_weechat.color.chat_nick_self]] *weechat.color.chat_nick_self*
 ** description: `couleur du texte pour le pseudo local dans la fenêtre de discussion`
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `white`)
+
+* [[option_weechat.color.chat_nick_suffix]] *weechat.color.chat_nick_suffix*
+** description: `color for nick suffix (string displayed after nick in suffix)`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `green`)
 
 * [[option_weechat.color.chat_prefix_action]] *weechat.color.chat_prefix_action*
 ** description: `couleur du texte pour le préfixe d'action`
@@ -592,6 +602,16 @@
 ** description: `délai (en millisecondes) pour capturer un évènement de la souris: WeeChat attendra ce délai avant de traiter l'évènement`
 ** type: entier
 ** valeurs: 1 .. 10000 (valeur par défaut: `100`)
+
+* [[option_weechat.look.nick_prefix]] *weechat.look.nick_prefix*
+** description: `text to display before nick in prefix of message, example: "<"`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `""`)
+
+* [[option_weechat.look.nick_suffix]] *weechat.look.nick_suffix*
+** description: `text to display after nick in prefix of message, example: ">"`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `""`)
 
 * [[option_weechat.look.paste_bracketed]] *weechat.look.paste_bracketed*
 ** description: `activer le mode du terminal "bracketed paste" (pas supporté par tous les terminaux/multiplexeurs): dans ce mode, le texte collé est entouré avec des séquences de contrôle de sorte que WeeChat puisse différencier le texte collé du texte tapé ("ESC[200~", suivi par le texte collé, suivi par "ESC[201~")`

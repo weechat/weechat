@@ -33,6 +33,16 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 
+* [[option_logger.file.nick_prefix]] *logger.file.nick_prefix*
+** description: `text to write before nick in prefix of message, example: "<"`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `""`)
+
+* [[option_logger.file.nick_suffix]] *logger.file.nick_suffix*
+** description: `text to write after nick in prefix of message, example: ">"`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `""`)
+
 * [[option_logger.file.path]] *logger.file.path*
 ** description: `chemin pour les fichiers de log WeeChat; "%h" au début de la chaîne est remplacé par le répertoire de base WeeChat (par défaut: "~/.weechat"); les caractères de formatage de date sont autorisés (voir man strftime)`
 ** type: chaîne

@@ -38,20 +38,10 @@
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"1,-1:darkgray"`)
 
-* [[option_irc.color.nick_prefix]] *irc.color.nick_prefix*
-** descrizione: `colore per il prefisso del nick (il prefisso è la stringa personalizzata visualizzata prima del nick)`
-** tipo: colore
-** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `green`)
-
 * [[option_irc.color.nick_prefixes]] *irc.color.nick_prefixes*
 ** descrizione: `colore per i prefissi dei nick usando il carattere di modalità (o=operatore, h=halfop, v=voice, ..), il formato è: "o:colore1;h:colore2;v:colore3" (se una modalità non viene trovata, WeeChat proverà con le modalità successive ricevute dal server ("PREFIX"); può essere usata una modalità speciale "*" come colore prefefinito se non viene trovata nessuna modalità nella lista)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"q:lightred;a:lightcyan;o:lightgreen;h:lightmagenta;v:yellow;*:lightblue"`)
-
-* [[option_irc.color.nick_suffix]] *irc.color.nick_suffix*
-** descrizione: `colore per il suffisso del nick (il suffisso è la stringa personalizzata visualizzata dopo il nick)`
-** tipo: colore
-** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `green`)
 
 * [[option_irc.color.notice]] *irc.color.notice*
 ** descrizione: `colore per il testo "Notifica" nelle notifiche`
@@ -247,16 +237,6 @@
 ** descrizione: `display a space if nick mode is enabled but nick has no mode (not op, voice, ...)`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
-
-* [[option_irc.look.nick_prefix]] *irc.look.nick_prefix*
-** descrizione: `testo da visualizzare prima del nick nella finestra di chat`
-** tipo: stringa
-** valori: qualsiasi stringa (valore predefinito: `""`)
-
-* [[option_irc.look.nick_suffix]] *irc.look.nick_suffix*
-** descrizione: `testo da visualizzare dopo il nick nella finestra di chat`
-** tipo: stringa
-** valori: qualsiasi stringa (valore predefinito: `""`)
 
 * [[option_irc.look.nicks_hide_password]] *irc.look.nicks_hide_password*
 ** descrizione: `comma separated list of nicks for which passwords will be hidden when a message is sent, for example to hide password in message displayed by "/msg nickserv identify password", example: "nickserv,nickbot"`

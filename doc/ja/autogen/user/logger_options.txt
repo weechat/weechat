@@ -33,6 +33,16 @@
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
+* [[option_logger.file.nick_prefix]] *logger.file.nick_prefix*
+** 説明: `text to write before nick in prefix of message, example: "<"`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
+
+* [[option_logger.file.nick_suffix]] *logger.file.nick_suffix*
+** 説明: `text to write after nick in prefix of message, example: ">"`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
+
 * [[option_logger.file.path]] *logger.file.path*
 ** 説明: `WeeChat ログファイルのパス; 文字列最初の "%h" は WeeChat ホーム (デフォルトでは "~/.weechat") に置換; 日付指定子を使える (strftime の man を参照)`
 ** タイプ: 文字列
