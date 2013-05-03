@@ -136,9 +136,11 @@ struct t_config_option *config_look_prefix_align;
 struct t_config_option *config_look_prefix_align_max;
 struct t_config_option *config_look_prefix_align_min;
 struct t_config_option *config_look_prefix_align_more;
+struct t_config_option *config_look_prefix_align_more_after;
 struct t_config_option *config_look_prefix_buffer_align;
 struct t_config_option *config_look_prefix_buffer_align_max;
 struct t_config_option *config_look_prefix_buffer_align_more;
+struct t_config_option *config_look_prefix_buffer_align_more_after;
 struct t_config_option *config_look_prefix_same_nick;
 struct t_config_option *config_look_prefix_suffix;
 struct t_config_option *config_look_read_marker;
@@ -2274,6 +2276,14 @@ config_weechat_init_options ()
            "on screen)"),
         NULL, 0, 0, "+", NULL, 0,
         &config_check_prefix_align_more, NULL, &config_change_buffers, NULL, NULL, NULL);
+    config_look_prefix_align_more_after = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "prefix_align_more_after", "boolean",
+        N_("display the truncature char (by default \"+\") after the text (by "
+           "replacing the space that should be displayed here); if disabled, "
+           "the truncature char replaces last char of text"),
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
     config_look_prefix_buffer_align = config_file_new_option (
         weechat_config_file, ptr_section,
         "prefix_buffer_align", "integer",
@@ -2293,6 +2303,14 @@ config_weechat_init_options ()
            "merged with same number) (must be exactly one char on screen)"),
         NULL, 0, 0, "+", NULL, 0,
         &config_check_prefix_buffer_align_more, NULL, &config_change_buffers, NULL, NULL, NULL);
+    config_look_prefix_buffer_align_more_after = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "prefix_buffer_align_more_after", "boolean",
+        N_("display the truncature char (by default \"+\") after the text (by "
+           "replacing the space that should be displayed here); if disabled, "
+           "the truncature char replaces last char of text"),
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
     config_look_prefix_same_nick = config_file_new_option (
         weechat_config_file, ptr_section,
         "prefix_same_nick", "string",
@@ -2575,7 +2593,7 @@ config_weechat_init_options ()
     config_color_chat_nick_suffix = config_file_new_option (
         weechat_config_file, ptr_section,
         "chat_nick_suffix", "color",
-        N_("color for nick suffix (string displayed after nick in suffix)"),
+        N_("color for nick suffix (string displayed after nick in prefix)"),
         NULL, GUI_COLOR_CHAT_NICK_SUFFIX, 0, "green", NULL, 0, NULL, NULL,
         &config_change_color, NULL, NULL, NULL);
     config_color_chat_nick_self = config_file_new_option (

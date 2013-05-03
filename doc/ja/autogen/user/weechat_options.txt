@@ -94,7 +94,7 @@
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `white`)
 
 * [[option_weechat.color.chat_nick_suffix]] *weechat.color.chat_nick_suffix*
-** 説明: `color for nick suffix (string displayed after nick in suffix)`
+** 説明: `color for nick suffix (string displayed after nick in prefix)`
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `green`)
 
@@ -653,6 +653,11 @@
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"+"`)
 
+* [[option_weechat.look.prefix_align_more_after]] *weechat.look.prefix_align_more_after*
+** 説明: `display the truncature char (by default "+") after the text (by replacing the space that should be displayed here); if disabled, the truncature char replaces last char of text`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
 * [[option_weechat.look.prefix_buffer_align]] *weechat.look.prefix_buffer_align*
 ** 説明: `多くのバッファが同じ番号を持つようにマージされた場合に、バッファ名のプレフィックスを調節 (none, left, right (デフォルト))`
 ** タイプ: 整数
@@ -667,6 +672,11 @@
 ** 説明: `バッファ名が切り詰められた場合に表示する文字 (多くのバッファが同じ番号を持つようにマージされた場合) (スクリーン上のちょうど1文字)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"+"`)
+
+* [[option_weechat.look.prefix_buffer_align_more_after]] *weechat.look.prefix_buffer_align_more_after*
+** 説明: `display the truncature char (by default "+") after the text (by replacing the space that should be displayed here); if disabled, the truncature char replaces last char of text`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
 
 * [[option_weechat.look.prefix_error]] *weechat.look.prefix_error*
 ** 説明: `エラーメッセージのプレフィックス、フォーマット "${color}" を使えば色を使うことも可能`

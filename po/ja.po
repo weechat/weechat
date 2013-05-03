@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-rc1\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-05-01 09:48+0200\n"
+"POT-Creation-Date: 2013-05-03 18:56+0200\n"
 "PO-Revision-Date: 2013-05-01 10:07+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -2837,6 +2837,14 @@ msgstr ""
 msgid "jump back to initial buffer after reaching end of hotlist"
 msgstr "ホットリストの最後に到達したら最初のバッファに移動する"
 
+#, fuzzy
+msgid "text to display before nick in prefix of message, example: \"<\""
+msgstr "チャットウィンドウ内でニックネーム前に表示するテキスト"
+
+#, fuzzy
+msgid "text to display after nick in prefix of message, example: \">\""
+msgstr "チャットウィンドウ内でニックネーム後に表示するテキスト"
+
 msgid "enable mouse support"
 msgstr "マウスサポートの有効化"
 
@@ -2909,6 +2917,12 @@ msgid ""
 msgstr ""
 "プレフィックスが切り詰められた場合に表示する文字 (スクリーン上のちょうど1文"
 "字)"
+
+msgid ""
+"display the truncature char (by default \"+\") after the text (by replacing "
+"the space that should be displayed here); if disabled, the truncature char "
+"replaces last char of text"
+msgstr ""
 
 msgid ""
 "prefix alignment for buffer name, when many buffers are merged with same "
@@ -3099,6 +3113,18 @@ msgid ""
 msgstr ""
 "ニックネームのテキスト色 (カンマ区切りの色リスト、背景色は以下のフォーマット"
 "で指定: \"fg:bg\"、例: \"lightred:blue\")"
+
+#, fuzzy
+msgid "color for nick prefix (string displayed before nick in prefix)"
+msgstr ""
+"ニックネームプレフィックスの色 (プレフィックスとはニックネームの前に表示され"
+"たカスタム文字列)"
+
+#, fuzzy
+msgid "color for nick suffix (string displayed after nick in prefix)"
+msgstr ""
+"ニックネームサフィックスの色 (サフィックスとはニックネームの後に表示されたカ"
+"スタム文字列)"
 
 msgid "text color for local nick in chat window"
 msgstr "チャットウィンドウ内のローカルニックネームのテキスト色"
@@ -6113,12 +6139,6 @@ msgstr ""
 "位置 (一番後ろのバッファ)、next = 現在のバッファ番号 + 1、near_server = サー"
 "バの一番後ろのチャンネル/プライベートバッファ)"
 
-msgid "text to display before nick in chat window"
-msgstr "チャットウィンドウ内でニックネーム前に表示するテキスト"
-
-msgid "text to display after nick in chat window"
-msgstr "チャットウィンドウ内でニックネーム後に表示するテキスト"
-
 msgid ""
 "display nick mode (op, voice, ...) before nick (none = never, prefix = in "
 "prefix only (default), action = in action messages only, both = prefix + "
@@ -6402,16 +6422,6 @@ msgstr ""
 "発言、..)、フォーマット: \"o:color1;h:color2;v:color3\" (モードが見つからない"
 "場合、WeeChat はサーバから受け取ったモードの次のものを試す (\"PREFIX\"); モー"
 "ドが見つからなかった場合は、特殊なモード \"*\" がデフォルト色として使えます)"
-
-msgid "color for nick prefix (prefix is custom string displayed before nick)"
-msgstr ""
-"ニックネームプレフィックスの色 (プレフィックスとはニックネームの前に表示され"
-"たカスタム文字列)"
-
-msgid "color for nick suffix (suffix is custom string displayed after nick)"
-msgstr ""
-"ニックネームサフィックスの色 (サフィックスとはニックネームの後に表示されたカ"
-"スタム文字列)"
 
 msgid "color for text \"Notice\" in notices"
 msgstr "notices に含まれるテキスト \"Notice\" の色"
@@ -7548,6 +7558,12 @@ msgstr "バッファのログ保存の開始時と終了時にログファイル
 msgid "timestamp used in log files (see man strftime for date/time specifiers)"
 msgstr ""
 "ログファイルで使用するタイムスタンプ (日付/時間指定子は strftime の man 参照)"
+
+msgid "text to write before nick in prefix of message, example: \"<\""
+msgstr ""
+
+msgid "text to write after nick in prefix of message, example: \">\""
+msgstr ""
 
 msgid "list of logger buffers"
 msgstr "logger バッファのリスト"

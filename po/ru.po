@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-rc1\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-05-01 09:48+0200\n"
+"POT-Creation-Date: 2013-05-03 18:56+0200\n"
 "PO-Revision-Date: 2013-05-01 10:07+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -29,7 +29,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Poedit-Bookmarks: -1,-1,608,-1,-1,-1,-1,-1,-1,-1\n"
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
@@ -2327,6 +2328,14 @@ msgstr ""
 msgid "jump back to initial buffer after reaching end of hotlist"
 msgstr ""
 
+#, fuzzy
+msgid "text to display before nick in prefix of message, example: \"<\""
+msgstr "текст, который отображать до ника в окне чата"
+
+#, fuzzy
+msgid "text to display after nick in prefix of message, example: \">\""
+msgstr "текст, который отображать после ника в окне чата"
+
 msgid "enable mouse support"
 msgstr ""
 
@@ -2384,6 +2393,12 @@ msgstr "строка, вставляемая после автодополнен
 
 msgid ""
 "char to display if prefix is truncated (must be exactly one char on screen)"
+msgstr ""
+
+msgid ""
+"display the truncature char (by default \"+\") after the text (by replacing "
+"the space that should be displayed here); if disabled, the truncature char "
+"replaces last char of text"
 msgstr ""
 
 msgid ""
@@ -2567,6 +2582,13 @@ msgid ""
 "text color for nicks (comma separated list of colors, background is allowed "
 "with format: \"fg:bg\", for example: \"lightred:blue\")"
 msgstr "цвет времени в окне чата"
+
+msgid "color for nick prefix (string displayed before nick in prefix)"
+msgstr ""
+
+#, fuzzy
+msgid "color for nick suffix (string displayed after nick in prefix)"
+msgstr "строка, вставляемая после автодополнения ника"
 
 #, fuzzy
 msgid "text color for local nick in chat window"
@@ -5507,12 +5529,6 @@ msgid ""
 "channel/pv of server)"
 msgstr ""
 
-msgid "text to display before nick in chat window"
-msgstr "текст, который отображать до ника в окне чата"
-
-msgid "text to display after nick in chat window"
-msgstr "текст, который отображать после ника в окне чата"
-
 msgid ""
 "display nick mode (op, voice, ...) before nick (none = never, prefix = in "
 "prefix only (default), action = in action messages only, both = prefix + "
@@ -5734,12 +5750,6 @@ msgid ""
 "format is: \"o:color1;h:color2;v:color3\" (if a mode is not found, WeeChat "
 "will try with next modes received from server (\"PREFIX\"); a special mode "
 "\"*\" can be used as default color if no mode has been found in list)"
-msgstr ""
-
-msgid "color for nick prefix (prefix is custom string displayed before nick)"
-msgstr ""
-
-msgid "color for nick suffix (suffix is custom string displayed after nick)"
 msgstr ""
 
 #, fuzzy
@@ -6849,6 +6859,12 @@ msgid "write information line in log file when log starts or ends for a buffer"
 msgstr ""
 
 msgid "timestamp used in log files (see man strftime for date/time specifiers)"
+msgstr ""
+
+msgid "text to write before nick in prefix of message, example: \"<\""
+msgstr ""
+
+msgid "text to write after nick in prefix of message, example: \">\""
 msgstr ""
 
 #, fuzzy

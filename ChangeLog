@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.1-rc1, 2013-05-01
+v0.4.1-rc1, 2013-05-03
 
 
 This document lists all changes for each version.
@@ -18,7 +18,9 @@ Version 0.4.1 (under dev!)
 * core: make nick prefix/suffix dynamic (not stored in the line): move options
   irc.look.nick_{prefix|suffix} to weechat.look.nick_{prefix|suffix} and options
   irc.color.nick_{prefix|suffix} to weechat.color.chat_nick_{prefix|suffix},
-  add new options logger.file.nick_{prefix|suffix} (bug #37531)
+  add new options weechat.look.prefix_align_more_after,
+  weechat.look.prefix_buffer_align_more_after, logger.file.nick_{prefix|suffix}
+  (bug #37531)
 * core: reset scroll in window before zooming on a merged buffer (bug #38207)
 * core: install icon file (patch #7972)
 * core: fix refresh of item "completion": clear it after any action that is

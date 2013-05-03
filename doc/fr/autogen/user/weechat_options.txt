@@ -84,7 +84,7 @@
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `cyan`)
 
 * [[option_weechat.color.chat_nick_prefix]] *weechat.color.chat_nick_prefix*
-** description: `color for nick prefix (string displayed before nick in prefix)`
+** description: `couleur pour le préfixe du pseudo (chaîne affichée avant le pseudo dans le préfixe)`
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `green`)
 
@@ -94,7 +94,7 @@
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `white`)
 
 * [[option_weechat.color.chat_nick_suffix]] *weechat.color.chat_nick_suffix*
-** description: `color for nick suffix (string displayed after nick in suffix)`
+** description: `couleur pour le suffixe du pseudo (chaîne affichée après le pseudo dans le préfixe)`
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `green`)
 
@@ -604,12 +604,12 @@
 ** valeurs: 1 .. 10000 (valeur par défaut: `100`)
 
 * [[option_weechat.look.nick_prefix]] *weechat.look.nick_prefix*
-** description: `text to display before nick in prefix of message, example: "<"`
+** description: `texte à afficher avant le pseudo dans le préfixe, par exemple: "<"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
 * [[option_weechat.look.nick_suffix]] *weechat.look.nick_suffix*
-** description: `text to display after nick in prefix of message, example: ">"`
+** description: `texte à afficher après le pseudo dans le préfixe, par exemple ">"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
@@ -653,6 +653,11 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"+"`)
 
+* [[option_weechat.look.prefix_align_more_after]] *weechat.look.prefix_align_more_after*
+** description: `afficher le caractère de troncature (par défaut "+") après le texte (en remplaçant l'espace qui devrait être affiché ici); si désactivé, le caractère de troncature remplace le dernier caractère du texte`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `on`)
+
 * [[option_weechat.look.prefix_buffer_align]] *weechat.look.prefix_buffer_align*
 ** description: `alignement de préfixe pour le nom du tampon, quand plusieurs tampons sont mélangés avec le même numéro (none, left, right (par défaut))`
 ** type: entier
@@ -667,6 +672,11 @@
 ** description: `caractère à afficher si le nom du tampon est tronqué (lorsque plusieurs tampons sont mélangés avec le même numéro) (doit être exactement un caractère à l'écran)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"+"`)
+
+* [[option_weechat.look.prefix_buffer_align_more_after]] *weechat.look.prefix_buffer_align_more_after*
+** description: `afficher le caractère de troncature (par défaut "+") après le texte (en remplaçant l'espace qui devrait être affiché ici); si désactivé, le caractère de troncature remplace le dernier caractère du texte`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_weechat.look.prefix_error]] *weechat.look.prefix_error*
 ** description: `préfixe pour les messages d'erreur, les couleurs sont autorisées avec le format "${couleur}"`

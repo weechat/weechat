@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-rc1\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-05-01 09:48+0200\n"
+"POT-Creation-Date: 2013-05-03 18:56+0200\n"
 "PO-Revision-Date: 2013-05-01 10:06+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2675,6 +2675,14 @@ msgstr ""
 msgid "jump back to initial buffer after reaching end of hotlist"
 msgstr ""
 
+#, fuzzy
+msgid "text to display before nick in prefix of message, example: \"<\""
+msgstr "text pro zobrazení před přezdívkou v okně rozhovoru"
+
+#, fuzzy
+msgid "text to display after nick in prefix of message, example: \">\""
+msgstr "text pro zobrazení za přezdívkou v okně rozhovoru"
+
 msgid "enable mouse support"
 msgstr ""
 
@@ -2729,6 +2737,12 @@ msgstr "minimální velikost prefixu"
 
 msgid ""
 "char to display if prefix is truncated (must be exactly one char on screen)"
+msgstr ""
+
+msgid ""
+"display the truncature char (by default \"+\") after the text (by replacing "
+"the space that should be displayed here); if disabled, the truncature char "
+"replaces last char of text"
 msgstr ""
 
 msgid ""
@@ -2919,6 +2933,15 @@ msgid ""
 msgstr ""
 "barva textu pro přezdívky (čárkou oddělený seznam barev, pozadí je povoleno "
 "ve formátu: \"fg:bg\", například: \"lightred:blue\")"
+
+#, fuzzy
+msgid "color for nick prefix (string displayed before nick in prefix)"
+msgstr ""
+"barva prefixu přezdívky (prefix je uživatelský řetězec před přezdívkou)"
+
+#, fuzzy
+msgid "color for nick suffix (string displayed after nick in prefix)"
+msgstr "barva přípony přezdívky (přípona je uživatelský řetězec za přezdívkou)"
 
 msgid "text color for local nick in chat window"
 msgstr "barva textu pro lokální přezdívku v okně rozhovoru"
@@ -5930,12 +5953,6 @@ msgstr ""
 "pozice (měl by být poslední buffer), next = aktuální buffer + 1, near_server "
 "= za posledním kanálem/pv serveru)"
 
-msgid "text to display before nick in chat window"
-msgstr "text pro zobrazení před přezdívkou v okně rozhovoru"
-
-msgid "text to display after nick in chat window"
-msgstr "text pro zobrazení za přezdívkou v okně rozhovoru"
-
 msgid ""
 "display nick mode (op, voice, ...) before nick (none = never, prefix = in "
 "prefix only (default), action = in action messages only, both = prefix + "
@@ -6186,13 +6203,6 @@ msgstr ""
 "není mód nalezen, použije WeeChat další mód získaný ze serveru (\"PREFIX\"); "
 "speciální mód \"*\" může být použit jako výchozí barva pokud nebyl v seznamu "
 "nalezen žádný mód)"
-
-msgid "color for nick prefix (prefix is custom string displayed before nick)"
-msgstr ""
-"barva prefixu přezdívky (prefix je uživatelský řetězec před přezdívkou)"
-
-msgid "color for nick suffix (suffix is custom string displayed after nick)"
-msgstr "barva přípony přezdívky (přípona je uživatelský řetězec za přezdívkou)"
 
 msgid "color for text \"Notice\" in notices"
 msgstr "barva textu \"Notice\" v upozorněních"
@@ -7347,6 +7357,12 @@ msgid "timestamp used in log files (see man strftime for date/time specifiers)"
 msgstr ""
 "časová známka použita v logovacích souborech (použijte manuálovou stránku "
 "strftime pro spcifikátory data/času)"
+
+msgid "text to write before nick in prefix of message, example: \"<\""
+msgstr ""
+
+msgid "text to write after nick in prefix of message, example: \">\""
+msgstr ""
 
 msgid "list of logger buffers"
 msgstr "seznam logovacích bufferů"

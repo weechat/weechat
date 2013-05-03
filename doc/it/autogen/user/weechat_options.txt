@@ -94,7 +94,7 @@
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `white`)
 
 * [[option_weechat.color.chat_nick_suffix]] *weechat.color.chat_nick_suffix*
-** descrizione: `color for nick suffix (string displayed after nick in suffix)`
+** descrizione: `color for nick suffix (string displayed after nick in prefix)`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `green`)
 
@@ -653,6 +653,11 @@
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"+"`)
 
+* [[option_weechat.look.prefix_align_more_after]] *weechat.look.prefix_align_more_after*
+** descrizione: `display the truncature char (by default "+") after the text (by replacing the space that should be displayed here); if disabled, the truncature char replaces last char of text`
+** tipo: bool
+** valori: on, off (valore predefinito: `on`)
+
 * [[option_weechat.look.prefix_buffer_align]] *weechat.look.prefix_buffer_align*
 ** descrizione: `prefisso di allineamento per il nome del buffer, quando più buffer vengono uniti con lo stesso numero (none (nessuno), left(sinistra), right(destra - predefinito)`
 ** tipo: intero
@@ -667,6 +672,11 @@
 ** descrizione: `carattere da mostrare se il nome del buffer è troncato (quando più buffer vengono uniti con lo stesso numero) (deve essere esattamente un carattere su schermo)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"+"`)
+
+* [[option_weechat.look.prefix_buffer_align_more_after]] *weechat.look.prefix_buffer_align_more_after*
+** descrizione: `display the truncature char (by default "+") after the text (by replacing the space that should be displayed here); if disabled, the truncature char replaces last char of text`
+** tipo: bool
+** valori: on, off (valore predefinito: `on`)
 
 * [[option_weechat.look.prefix_error]] *weechat.look.prefix_error*
 ** descrizione: `prefisso per i messaggi di errore, colori consentiti con il formato "{color}"`

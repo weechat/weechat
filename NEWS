@@ -1,7 +1,7 @@
 WeeChat Release Notes
 =====================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.1-rc1, 2013-05-01
+v0.4.1-rc1, 2013-05-03
 
 
 This document lists important changes for each version, that require manual
@@ -39,6 +39,41 @@ Options moved from irc plugin (irc.conf) to core (weechat.conf):
 * 'irc.color.nick_suffix' moved to 'weechat.color.chat_nick_suffix'
 
 Types and default values for these four options remain unchanged.
+
+Two new options to customize the truncature char (by default "`+`"):
+
+* 'weechat.look.prefix_align_more_after' (boolean, 'on' by default)
+* 'weechat.look.prefix_buffer_align_more_after' (boolean, 'on' by default)
+
+When these options are enabled (default), the "`+`" is displayed after the
+text, replacing the space that should be displayed there. +
+When turned off, the "`+`" will replace last char of text.
+
+Example for a nicks "FlashCode" and "fc" with different values for options
+'weechat.look.prefix_align_max', 'weechat.look.prefix_align_more_after',
+'weechat.look.nick_prefix' and 'weechat.look.nick_suffix':
+
+----------------------------------------
+                      # align_max, more_after, prefix/suffix
+
+FlashCode │ test      # 0, on
+       fc │ test
+
+FlashCod+│ test       # 8, on
+      fc │ test
+
+FlashCo+ │ test       # 8, off
+      fc │ test
+
+<FlashCode> │ test    # 0, on,  < >
+       <fc> │ test
+
+<FlashC>+│ test       # 8, on,  < >
+    <fc> │ test
+
+<Flash+> │ test       # 8, off, < >
+    <fc> │ test
+----------------------------------------
 
 After `/upgrade`, if you set new options to non-empty strings, and if old
 options were set to non-empty strings too, you will see double prefix/suffix

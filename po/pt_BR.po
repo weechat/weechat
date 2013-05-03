@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-rc1\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-05-01 09:48+0200\n"
+"POT-Creation-Date: 2013-05-03 18:56+0200\n"
 "PO-Revision-Date: 2013-05-01 10:07+0200\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2754,6 +2754,14 @@ msgstr ""
 msgid "jump back to initial buffer after reaching end of hotlist"
 msgstr ""
 
+#, fuzzy
+msgid "text to display before nick in prefix of message, example: \"<\""
+msgstr "texto a ser exibido antes do apelido na janela de chat"
+
+#, fuzzy
+msgid "text to display after nick in prefix of message, example: \">\""
+msgstr "texto a ser exibido depois do apelido na janela de chat"
+
 msgid "enable mouse support"
 msgstr ""
 
@@ -2808,6 +2816,12 @@ msgstr "tamanho mínimo para o prefixo"
 
 msgid ""
 "char to display if prefix is truncated (must be exactly one char on screen)"
+msgstr ""
+
+msgid ""
+"display the truncature char (by default \"+\") after the text (by replacing "
+"the space that should be displayed here); if disabled, the truncature char "
+"replaces last char of text"
 msgstr ""
 
 msgid ""
@@ -3002,6 +3016,18 @@ msgid ""
 msgstr ""
 "cor do texto para apelidos (lista de cores separada por vírgulas, fundo é "
 "permitido com o formato: \"fg:bg\", por exemplo: \"lightred:blue\")"
+
+#, fuzzy
+msgid "color for nick prefix (string displayed before nick in prefix)"
+msgstr ""
+"cor para o prefixo do apelido (o prefixo é uma string customizada exibida "
+"antes de um apelido)"
+
+#, fuzzy
+msgid "color for nick suffix (string displayed after nick in prefix)"
+msgstr ""
+"cor para o sufixo do apelido (o sufixo é uma string customizada exibida "
+"depois de um apelido)"
 
 msgid "text color for local nick in chat window"
 msgstr "cor de texto para apelido local na janela de conversa"
@@ -5667,12 +5693,6 @@ msgid ""
 "channel/pv of server)"
 msgstr ""
 
-msgid "text to display before nick in chat window"
-msgstr "texto a ser exibido antes do apelido na janela de chat"
-
-msgid "text to display after nick in chat window"
-msgstr "texto a ser exibido depois do apelido na janela de chat"
-
 msgid ""
 "display nick mode (op, voice, ...) before nick (none = never, prefix = in "
 "prefix only (default), action = in action messages only, both = prefix + "
@@ -5893,16 +5913,6 @@ msgid ""
 "will try with next modes received from server (\"PREFIX\"); a special mode "
 "\"*\" can be used as default color if no mode has been found in list)"
 msgstr ""
-
-msgid "color for nick prefix (prefix is custom string displayed before nick)"
-msgstr ""
-"cor para o prefixo do apelido (o prefixo é uma string customizada exibida "
-"antes de um apelido)"
-
-msgid "color for nick suffix (suffix is custom string displayed after nick)"
-msgstr ""
-"cor para o sufixo do apelido (o sufixo é uma string customizada exibida "
-"depois de um apelido)"
 
 msgid "color for text \"Notice\" in notices"
 msgstr ""
@@ -7026,6 +7036,12 @@ msgid "timestamp used in log files (see man strftime for date/time specifiers)"
 msgstr ""
 "marca de tempo utilizada nos arquivos de registro (veja \"man strftime\" "
 "para especificadores de data/tempo)"
+
+msgid "text to write before nick in prefix of message, example: \"<\""
+msgstr ""
+
+msgid "text to write after nick in prefix of message, example: \">\""
+msgstr ""
 
 msgid "list of logger buffers"
 msgstr "lista de buffers de registro"

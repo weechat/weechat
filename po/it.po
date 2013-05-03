@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-rc1\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-05-01 09:48+0200\n"
+"POT-Creation-Date: 2013-05-03 18:56+0200\n"
 "PO-Revision-Date: 2013-05-01 10:07+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2814,6 +2814,14 @@ msgstr ""
 msgid "jump back to initial buffer after reaching end of hotlist"
 msgstr "torna al buffer iniziale dopo aver raggiunto la fine della hotlist"
 
+#, fuzzy
+msgid "text to display before nick in prefix of message, example: \"<\""
+msgstr "testo da visualizzare prima del nick nella finestra di chat"
+
+#, fuzzy
+msgid "text to display after nick in prefix of message, example: \">\""
+msgstr "testo da visualizzare dopo il nick nella finestra di chat"
+
 msgid "enable mouse support"
 msgstr "abilita il supporto del mouse"
 
@@ -2889,6 +2897,12 @@ msgid ""
 msgstr ""
 "carattere da mostrare se il prefisso è troncato (deve essere esattamente un "
 "carattere sullo schermo)"
+
+msgid ""
+"display the truncature char (by default \"+\") after the text (by replacing "
+"the space that should be displayed here); if disabled, the truncature char "
+"replaces last char of text"
+msgstr ""
 
 msgid ""
 "prefix alignment for buffer name, when many buffers are merged with same "
@@ -3092,6 +3106,18 @@ msgid ""
 msgstr ""
 "colore del testo per i nick (elenco separato da virgole di colori, quello di "
 "sfondo è consentito con il formato \"fg:bg\", ad esempio: \"lightred:blue\")"
+
+#, fuzzy
+msgid "color for nick prefix (string displayed before nick in prefix)"
+msgstr ""
+"colore per il prefisso del nick (il prefisso è la stringa personalizzata "
+"visualizzata prima del nick)"
+
+#, fuzzy
+msgid "color for nick suffix (string displayed after nick in prefix)"
+msgstr ""
+"colore per il suffisso del nick (il suffisso è la stringa personalizzata "
+"visualizzata dopo il nick)"
 
 msgid "text color for local nick in chat window"
 msgstr "colore del testo per il nick locale nella finestra di chat"
@@ -6155,12 +6181,6 @@ msgstr ""
 "posizione predefinita (dovrebbe essere l'ultimo buffer), next = buffer "
 "corrente + 1, near_server = dopo l'ultimo canale/privato del server)"
 
-msgid "text to display before nick in chat window"
-msgstr "testo da visualizzare prima del nick nella finestra di chat"
-
-msgid "text to display after nick in chat window"
-msgstr "testo da visualizzare dopo il nick nella finestra di chat"
-
 msgid ""
 "display nick mode (op, voice, ...) before nick (none = never, prefix = in "
 "prefix only (default), action = in action messages only, both = prefix + "
@@ -6459,16 +6479,6 @@ msgstr ""
 "una modalità non viene trovata, WeeChat proverà con le modalità successive "
 "ricevute dal server (\"PREFIX\"); può essere usata una modalità speciale \"*"
 "\" come colore prefefinito se non viene trovata nessuna modalità nella lista)"
-
-msgid "color for nick prefix (prefix is custom string displayed before nick)"
-msgstr ""
-"colore per il prefisso del nick (il prefisso è la stringa personalizzata "
-"visualizzata prima del nick)"
-
-msgid "color for nick suffix (suffix is custom string displayed after nick)"
-msgstr ""
-"colore per il suffisso del nick (il suffisso è la stringa personalizzata "
-"visualizzata dopo il nick)"
 
 msgid "color for text \"Notice\" in notices"
 msgstr "colore per il testo \"Notifica\" nelle notifiche"
@@ -7624,6 +7634,12 @@ msgid "timestamp used in log files (see man strftime for date/time specifiers)"
 msgstr ""
 "data e ora usati nei file di log (consultare man strftime per gli "
 "specificatori di data/ora)"
+
+msgid "text to write before nick in prefix of message, example: \"<\""
+msgstr ""
+
+msgid "text to write after nick in prefix of message, example: \">\""
+msgstr ""
 
 msgid "list of logger buffers"
 msgstr "elenco dei buffer logger"
