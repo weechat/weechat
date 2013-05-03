@@ -47,6 +47,7 @@ Keys on script buffer:
   alt+l  load script
   alt+L  reload script
   alt+u  unload script
+  alt+A  autoload script
   alt+h  (un)hold script
   alt+v  view script
 

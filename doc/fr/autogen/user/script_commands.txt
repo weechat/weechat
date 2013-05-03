@@ -47,6 +47,7 @@ Les touches sur le tampon des scripts:
   alt+l  charger le script
   alt+L  recharger le script
   alt+u  décharger le script
+  alt+A  chargement automatique du script
   alt+h  (dé)figer le script
   alt+v  voir le script
 

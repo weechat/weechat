@@ -312,6 +312,7 @@ script_command_init ()
                              "  alt+l  load script\n"
                              "  alt+L  reload script\n"
                              "  alt+u  unload script\n"
+                             "  alt+A  autoload script\n"
                              "  alt+h  (un)hold script\n"
                              "  alt+v  view script\n\n"
                              "Input allowed on script buffer:\n"
