@@ -34,12 +34,12 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_logger.file.nick_prefix]] *logger.file.nick_prefix*
-** Beschreibung: `text to write before nick in prefix of message, example: "<"`
+** Beschreibung: `Text, der vor dem Nick geschrieben werden soll, Beispiel: "<"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_logger.file.nick_suffix]] *logger.file.nick_suffix*
-** Beschreibung: `text to write after nick in prefix of message, example: ">"`
+** Beschreibung: `Text, der nach dem Nick geschrieben werden soll, Beispiel: "<"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 

@@ -84,7 +84,7 @@
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `cyan`)
 
 * [[option_weechat.color.chat_nick_prefix]] *weechat.color.chat_nick_prefix*
-** Beschreibung: `color for nick prefix (string displayed before nick in prefix)`
+** Beschreibung: `Farbe für den Nick-Präfix (Zeichenkette die vor dem Nick steht)`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `green`)
 
@@ -94,7 +94,7 @@
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `white`)
 
 * [[option_weechat.color.chat_nick_suffix]] *weechat.color.chat_nick_suffix*
-** Beschreibung: `color for nick suffix (string displayed after nick in prefix)`
+** Beschreibung: `Farbe für den Nick-Suffix (Zeichenkette die nach dem Nick steht)`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `green`)
 
@@ -604,12 +604,12 @@
 ** Werte: 1 .. 10000 (Standardwert: `100`)
 
 * [[option_weechat.look.nick_prefix]] *weechat.look.nick_prefix*
-** Beschreibung: `text to display before nick in prefix of message, example: "<"`
+** Beschreibung: `Text, der vor dem Nick dargestellt werden soll, Beispiel: "<"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_weechat.look.nick_suffix]] *weechat.look.nick_suffix*
-** Beschreibung: `text to display after nick in prefix of message, example: ">"`
+** Beschreibung: `Text, der nach dem Nick dargestellt werden soll, Beispiel: ">"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -654,7 +654,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"+"`)
 
 * [[option_weechat.look.prefix_align_more_after]] *weechat.look.prefix_align_more_after*
-** Beschreibung: `display the truncature char (by default "+") after the text (by replacing the space that should be displayed here); if disabled, the truncature char replaces last char of text`
+** Beschreibung: `Das Zeichen welches zum Verkürzen angezeigt wird (Standardzeichen: "+"), nach dem Nick-Suffix darstellen (das vorhandene Leerzeichen wird ersetzt); wird diese Funktion deaktiviert, dann wird das Zeichen nach dem Nick dargestellt.`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -674,7 +674,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"+"`)
 
 * [[option_weechat.look.prefix_buffer_align_more_after]] *weechat.look.prefix_buffer_align_more_after*
-** Beschreibung: `display the truncature char (by default "+") after the text (by replacing the space that should be displayed here); if disabled, the truncature char replaces last char of text`
+** Beschreibung: `Das Zeichen welches zum Verkürzen angezeigt wird (Standardzeichen: "+"), nach dem Nick-Suffix darstellen (das vorhandene Leerzeichen wird ersetzt); wird diese Funktion deaktiviert, dann wird das Zeichen nach dem Nick dargestellt.`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 

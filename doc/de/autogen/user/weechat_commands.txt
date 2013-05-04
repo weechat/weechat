@@ -207,7 +207,7 @@ infolists: zeigt Information über die Infolists an
 /eval  [-n] <expression>
        [-n] <expression1> <operator> <expression2>
 
-        -n: zeigt das Ergebnis an, ohne dieses in den Buffer zu schreiben (debug Modus)
+        -n: zeigt das Ergebnis an, ohne das dieses in den Buffer geschrieben wird (debug Modus)
 expression: Ausdruck welcher verarbeitet werden soll. Variablen im Format ${variable} werden ersetzt (siehe unten)
   operator: ein logischer oder vergleichender Operand:
             - logische Operanden:
@@ -224,7 +224,7 @@ expression: Ausdruck welcher verarbeitet werden soll. Variablen im Format ${vari
                 !~  stimmt NICHT mit regulärem Ausdruck überein
 
 Ein Ausdruck gilt als "wahr", sofern das Ergebnis nicht NULL, nicht leer und von "0" abweichend ist.
-Der Vergleich findet zwischen zwei Integer statt, sofern die beiden Ausdrücke gültige Integer-Werte sind.
+Der Vergleich findet zwischen zwei Integer Werten statt, sofern die beiden Ausdrücke gültige Integer-Werte sind.
 Um einen Vergleich zwischen zwei Zeichenketten zu erzwingen, müssen die Ausdrücke in Anführungszeichen gesetzt werden, zum Beispiel:
   50 > 100      ==> 0
   "50" > "100"  ==> 1
@@ -235,7 +235,7 @@ Einige Variablen werden im Ausdruck, mittels der Formatierung ${Variable}, erset
   3. ein hdata Name/Variable (der Wert wird automatisch als Zeichenkette konvertiert), Standardmäßig wird für "window" und "buffer" das aktuelle Fenster/Buffer verwendet.
 Das Format für hdata:
   hdata.var1.var2...: startet mit hdata (der Pointer muss bekannt sein) und fragt eine Variable nach der anderen ab (weitere hdata können folgen)
-  hdata[list].var1.var2...: startet hdata mittels einer Liste, zum Beispiel:
+  hdata(list).var1.var2...: startet hdata mittels einer Liste, zum Beispiel:
     ${buffer[gui_buffers].full_name}: der vollständige Name des ersten Buffers, in der verknüpften Liste aller Buffer
     ${plugin[weechat_plugins].name}: Name der ersten Erweiterung, in der verknüpften Liste aller Erweiterungen
 Die vorhandenen Namen für hdata und Variablen sind in der "Anleitung für API Erweiterung", Bereich "weechat_hdata_get". beschrieben

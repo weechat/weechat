@@ -434,7 +434,7 @@
 ** Werte: 0 .. 1000000 (Standardwert: `25`)
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** Beschreibung: `comma-separated list of client capabilities to enable for server if they are available; capabilities supported by WeeChat are: multi-prefix, userhost-in-names (example: "multi-prefix,userhost-in-names")`
+** Beschreibung: `durch Kommata getrennte Liste von erweiterten Client Fähigkeiten ("client capabilities"), welche vom Server angeboten und genutzt werden sollen. Fähigkeiten die von WeeChat unterstützt werden: multi-prefix, userhost-in-name (Beispiel: "multi-prefix, userhost-in-name")`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -499,7 +499,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_irc.server_default.sasl_mechanism]] *irc.server_default.sasl_mechanism*
-** Beschreibung: `mechanism for SASL authentication: "plain" for plain text password, "dh-blowfish" for blowfish crypted password, "dh-aes" for AES crypted password, "external" for authentication using client side SSL cert`
+** Beschreibung: `Verfahren welches bei einer SASL Authentifizierung angewandt werden soll: "plain" Passwort wird im Klartext gesendet, "dh-blowfish" Passwort wird mittels blowfish verschlüsselt, "dh-aes" Passwort wird mittels AES verschlüsselt, "external" SSL Zertifikat welches auf Client Seite vorliegt, wird verwendet.`
 ** Typ: integer
 ** Werte: plain, dh-blowfish, dh-aes, external (Standardwert: `plain`)
 
