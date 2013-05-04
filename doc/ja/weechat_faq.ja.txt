@@ -264,8 +264,7 @@ WeeChat ≥ 0.3.6 では、"eat_newline_glitch" オプションを有効化で�
 このオプションには表示上の問題を引き起こす可能性があります。
 表示上の問題が起きた場合はこのオプションを無効化してください。
 
-// TRANSLATION MISSING
-Other solution is to use a script: http://www.weechat.org/scripts/stable/tag/url
+別の解決策として、スクリプトを利用することもできます: http://www.weechat.org/scripts/stable/tag/url
 
 [[change_locale_without_quit]]
 === WeeChat が出力するメッセージの言語を、再起動せずに変更したいです。このようなことは可能ですか。 ===
@@ -539,22 +538,19 @@ of channels):
 [[filter_irc_join_channel_messages]]
 === どうすれば IRC チャンネルに参加した際に表示される一部のメッセージをフィルタできますか。 ===
 
-// TRANSLATION MISSING
-With WeeChat ≥ 0.4.1, you can disable some messages with option
-'irc.look.display_join_message'.
+WeeChat ≥ 0.4.1 では、オプション 'irc.look.display_join_message'
+を使って一部のメッセージを隠すことができます。
 
-// TRANSLATION MISSING
-For example, to disable names (which is IRC message '366'):
+例えば、ニックネームリストを隠すには (この IRC メッセージの番号は '366'):
 
 ----------------------------------------
 /set irc.look.display_join_message "329,332,333"
 ----------------------------------------
 
 [NOTE]
-For help: `/help irc.look.display_join_message`
+ヘルプを見るには: `/help irc.look.display_join_message`
 
-// TRANSLATION MISSING
-Another solution is to filter messages on tag:
+他の解決策としてタグでメッセージをフィルタリングすることもできます:
 
 * 'irc_366': チャンネルにいるユーザの名前
 * 'irc_332,irc_333': チャンネルのトピック/日時

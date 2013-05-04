@@ -6,9 +6,9 @@
 
 | alias | alias_value | 別名の値
 
-| aspell | aspell_dicts | list of aspell installed dictionaries
+| aspell | aspell_dicts | aspell のインストール済み辞書のリスト
 
-| aspell | aspell_langs | list of all languages supported by aspell
+| aspell | aspell_langs | aspell でサポートされる全ての言語のリスト
 
 | guile | guile_script | スクリプトのリスト
 
@@ -106,7 +106,7 @@
 
 | weechat | keys_contexts | キーコンテキスト
 
-| weechat | layouts_names | names of layouts
+| weechat | layouts_names | レイアウトの名前
 
 | weechat | nicks | 現在のバッファのニックネームリストに含まれるニックネーム
 

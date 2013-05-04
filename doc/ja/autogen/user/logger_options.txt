@@ -34,12 +34,12 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_logger.file.nick_prefix]] *logger.file.nick_prefix*
-** 説明: `text to write before nick in prefix of message, example: "<"`
+** 説明: `ニックネームの前に書くテキスト (メッセージプレフィックス)、例: "<"`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
 * [[option_logger.file.nick_suffix]] *logger.file.nick_suffix*
-** 説明: `text to write after nick in prefix of message, example: ">"`
+** 説明: `ニックネームの後に書くテキスト (メッセージプレフィックス)、例: ">"`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 

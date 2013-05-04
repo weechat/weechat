@@ -2,7 +2,7 @@
 |========================================
 | プラグイン | 名前 | 説明 | 引数
 
-| aspell | aspell_dict | comma-separated list of dictionaries used in buffer | buffer pointer ("0x12345678") or buffer full name ("irc.freenode.#weechat")
+| aspell | aspell_dict | バッファで使用中の辞書のコンマ区切りリスト | バッファポインタ ("0x12345678") またはバッファのフルネーム ("irc.freenode.#weechat")
 
 | fifo | fifo_filename | FIFO パイプの名前 | -
 
@@ -44,7 +44,7 @@
 
 | weechat | version | WeeChat のバージョン | -
 
-| weechat | version_git | WeeChat の git バージョン (開発バージョンではコマンド "git describe" の出力。安定版リリースでは空文字が出力されます。) | -
+| weechat | version_git | WeeChat の git バージョン (開発バージョンではコマンド "git describe" の出力、安定版リリースでは空文字が出力されます) | -
 
 | weechat | version_number | WeeChat のバージョン (数字) | -
 

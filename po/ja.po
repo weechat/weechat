@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-rc1\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2013-05-03 22:21+0200\n"
-"PO-Revision-Date: 2013-05-01 10:07+0200\n"
+"PO-Revision-Date: 2013-05-04 05:56+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
 "Language: ja\n"
@@ -82,7 +82,7 @@ msgstr ""
 "                     irc[6][s]://[nickname[:password]@]irc.example.org[:port]"
 "[/#channel1][,#channel2[...]]\n"
 "                     (利用可能なオプションに関するより詳しい情報は、\n"
-"                     プラグインドキュメントを読んでください。)\n"
+"                     プラグインドキュメントを読んでください)\n"
 
 #. TRANSLATORS: first "%s" is "weechat"
 #, c-format
@@ -91,26 +91,26 @@ msgstr "%s デフォルトキー (コンテキスト: \"%s\"):\n"
 
 #, c-format
 msgid "Error: missing argument for \"%s\" option\n"
-msgstr "エラー: \"%s\" オプションの引数がありません。\n"
+msgstr "エラー: \"%s\" オプションの引数がありません\n"
 
 msgid "Error: WEECHAT_HOME is undefined, check build options\n"
 msgstr ""
 "エラー: WEECHAT_HOME が定義されていません、ビルドオプションを確認してくださ"
-"い。\n"
+"い\n"
 
 msgid "Error: unable to get HOME directory\n"
-msgstr "エラー: HOME ディレクトリが不明です。\n"
+msgstr "エラー: HOME ディレクトリが不明です\n"
 
 msgid "Error: not enough memory for home directory\n"
-msgstr "エラー: ホームディレクトリ用のメモリが不足しています。\n"
+msgstr "エラー: ホームディレクトリ用のメモリが不足しています\n"
 
 #, c-format
 msgid "Error: home (%s) is not a directory\n"
-msgstr "エラー: ホーム (%s) はディレクトリではありません。\n"
+msgstr "エラー: ホーム (%s) はディレクトリではありません\n"
 
 #, c-format
 msgid "Error: cannot create directory \"%s\"\n"
-msgstr "エラー: ディレクトリ \"%s\" の作成に失敗しました。\n"
+msgstr "エラー: ディレクトリ \"%s\" の作成に失敗しました\n"
 
 msgid "List of bars:"
 msgstr "バーのリスト:"
@@ -159,7 +159,7 @@ msgstr "%sメモリ不足"
 
 #, c-format
 msgid "%sError: wrong type \"%s\" for bar \"%s\""
-msgstr "%1$sエラー: バー \"%3$s\" にタイプ \"%2$s\" は使えません。"
+msgstr "%1$sエラー: バー \"%3$s\" にタイプ \"%2$s\" は使えません"
 
 #, c-format
 msgid "%sError: wrong position \"%s\" for bar \"%s\""
@@ -178,15 +178,15 @@ msgid "%sError: wrong size \"%s\" for bar \"%s\""
 msgstr "%1$sエラー: バー \"%3$s\" にサイズ \"%2$s\" を設定できません"
 
 msgid "All bars have been deleted"
-msgstr "全てのバーを削除しました。"
+msgstr "全てのバーを削除しました"
 
 #, c-format
 msgid "%sError: unknown bar \"%s\""
-msgstr "%sエラー: バー \"%s\" は未定義です。"
+msgstr "%sエラー: バー \"%s\" は未定義です"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Bar \"%s\" deleted"
-msgstr "バーを削除しました"
+msgstr "バー \"%s\" を削除しました"
 
 #, c-format
 msgid "%sError: unable to set option \"%s\" for bar \"%s\""
@@ -221,7 +221,7 @@ msgstr "%sエラー: バッファが見つかりません"
 
 #, c-format
 msgid "%sError: WeeChat main buffer can't be closed"
-msgstr "%sエラー: WeeChat メインバッファを閉じることはできません。"
+msgstr "%sエラー: WeeChat メインバッファを閉じることはできません"
 
 #, c-format
 msgid "Local variables for buffer \"%s\":"
@@ -465,13 +465,11 @@ msgid "%d new key added"
 msgid_plural "%d new keys added (context: \"%s\")"
 msgstr[0] "%d 個の新しいキーを追加しました (コンテキスト: \"%s\")"
 
-#, fuzzy
 msgid "Saved layouts:"
-msgstr "保存されたバッファのレイアウト:"
+msgstr "保存されたレイアウト:"
 
-#, fuzzy
 msgid " (current layout)"
-msgstr "現在の値"
+msgstr " (現在のレイアウト)"
 
 msgid "No layout saved"
 msgstr "レイアウトが保存されていません"
@@ -479,39 +477,38 @@ msgstr "レイアウトが保存されていません"
 #. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows"
 #, c-format
 msgid "Layout of %s%s%s saved in \"%s\" (current layout: %s)"
-msgstr ""
+msgstr "%s%s%s のレイアウトを \"%s\" で保存しました (現在のレイアウト: %s)"
 
-#, fuzzy
 msgid "buffers"
 msgstr "バッファ"
 
-#, fuzzy
 msgid "windows"
 msgstr "ウィンドウ"
 
 msgid "Layout of buffers+windows reset (current layout: -)"
 msgstr ""
+"バッファとウィンドウのレイアウトをリセットしました (現在のレイアウト: -)"
 
 #, c-format
 msgid "Layout \"%s\" deleted (current layout: %s)"
-msgstr ""
+msgstr "レイアウト \"%s\" を削除しました (現在のレイアウト: %s)"
 
 #. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows"
-#, fuzzy, c-format
+#, c-format
 msgid "Layout of %s%s%s reset in \"%s\""
-msgstr "%s%s%s%s のトピックは %s 設定されました"
+msgstr "%s%s%s のレイアウトを \"%s\" でリセットしました"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError: unknown layout \"%s\""
-msgstr "%sエラー: バー \"%s\" は未定義です。"
+msgstr "%sエラー: レイアウト \"%s\" は未定義です"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError: layout \"%s\" already exists for \"%s\" command"
-msgstr "%1$s%2$s: \"%4$s\" コマンドのサーバ \"%3$s\" は既に存在しています"
+msgstr "%sエラー: コマンド \"%s\" 用のレイアウト \"%s\" はすでに存在しています"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Layout \"%s\" has been renamed to \"%s\""
-msgstr "フィルタ \"%s\" の名前を \"%s\" に変更しました"
+msgstr "レイアウト \"%s\" を \"%s\" にリネームしました"
 
 msgid "Mouse enabled"
 msgstr "マウスを有効化しました"
@@ -958,7 +955,7 @@ msgstr ""
 "completion\n"
 "  バーを隠す:\n"
 "    /bar hide mybar\n"
-"  現在のバッファに対応したニックネームリストを10行分、下方向にスクロール:\n"
+"  現在のバッファに対応したニックネームリストを 10 行分、下方向にスクロール:\n"
 "    /bar scroll nicklist * y+10\n"
 "  現在のバッファに対応したニックネームリストを最後までスクロール:\n"
 "    /bar scroll nicklist * ye"
@@ -1034,8 +1031,8 @@ msgstr ""
 "    move: リストにバッファを移動 (相対指定も可能、例えば -1)\n"
 "    swap: 2 つのバッファを入れ替え (現在のバッファと引数で与えた番号/名称で指"
 "定されるバッファを入れ替える)\n"
-"   merge: 現在のバッファを他のバッファにマージ (2つのバッファのチャットエリア"
-"が一緒になります)\n"
+"   merge: 現在のバッファを他のバッファにマージ (2 つのバッファのチャットエリ"
+"アが一緒になります)\n"
 "          (デフォルトでは ctrl-x でマージバッファの切り替え)\n"
 " unmerge: 同じ番号を持つ他のバッファとのマージを解除\n"
 "   close: バッファを閉じる (番号/範囲または名前のオプションを受け付けます)\n"
@@ -1188,7 +1185,6 @@ msgstr ""
 "list || set <plugin> <level> || dump [<plugin>] || buffer|color|infolists|"
 "memory|tags|term|windows || mouse|cursor [verbose] || hdata [free]"
 
-#, fuzzy
 msgid ""
 "     list: list plugins with debug levels\n"
 "      set: set debug level for plugin\n"
@@ -1216,9 +1212,10 @@ msgstr ""
 "    level: プラグインのデバッグレベル (0 はデバッグの無効化)\n"
 "     dump: WeeChat ログファイルにメモリダンプを保存 (WeeChat がクラッシュした"
 "場合と同じダンプが書き込まれます)\n"
-"   buffer: ログファイルに16進値でバッファ内容をダンプ\n"
+"   buffer: ログファイルに 16 進値でバッファ内容をダンプ\n"
 "    color: 現在の色ペアに関する情報を表示\n"
 "   cursor: カーソルモードのデバッグを切り替え\n"
+"     dirs: ディレクトリを表示\n"
 "    hdata: hdata に関する情報を表示 (free を付ければ: メモリから全ての hdata "
 "を削除)\n"
 "    hooks: フックに関する情報を表示\n"
@@ -1235,7 +1232,6 @@ msgstr "式を評価して結果をバッファに送信"
 msgid "[-n] <expression> || [-n] <expression1> <operator> <expression2>"
 msgstr "[-n] <expression> || [-n] <expression1> <operator> <expression2>"
 
-#, fuzzy
 msgid ""
 "        -n: display result without sending it to buffer (debug mode)\n"
 "expression: expression to evaluate, variables with format ${variable} are "
@@ -1362,7 +1358,6 @@ msgstr ""
 "list || enable|disable|toggle [<name>] || add <name> <buffer>[,<buffer>...] "
 "<tags> <regex> || del <name>|-all"
 
-#, fuzzy
 msgid ""
 "   list: list all filters\n"
 " enable: enable filters (filters are enabled by default)\n"
@@ -1450,7 +1445,8 @@ msgstr ""
 "  notify_none, notify_message, notify_private, notify_highlight,\n"
 "  nick_xxx (xxx はメッセージのニックネーム), prefix_nick_ccc (ccc はニック"
 "ネームの色)\n"
-"  irc_xxx (xxx はコマンド名又は番号、/server raw で確認),\n"
+"  irc_xxx (xxx はコマンド名又は番号、/server raw または /debug tags で確"
+"認),\n"
 "  irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, "
 "irc_smart_filter, away_info.\n"
 "バッファ内でタグを見るには: /debug tags\n"
@@ -1748,14 +1744,13 @@ msgstr ""
 msgid "save/apply/reset layout for buffers and windows"
 msgstr "バッファとウィンドウのレイアウトを保存/適用/リセット"
 
-#, fuzzy
 msgid ""
 "save [<name>] [buffers|windows] || apply [<name>] [buffers|windows] || leave "
 "|| reset [<name>] [buffers|windows] || rename <name> <new_name>"
 msgstr ""
-"save [buffers|windows] || apply [buffers|windows] || reset [buffers|windows]"
+"save [<name>] [buffers|windows] || apply [<name>] [buffers|windows] || leave "
+"|| reset [<name>] [buffers|windows] || rename <name> <new_name>"
 
-#, fuzzy
 msgid ""
 "   save: save current layout\n"
 "  apply: apply saved layout\n"
@@ -1771,7 +1766,12 @@ msgid ""
 msgstr ""
 "   save: 現在のレイアウトを保存\n"
 "  apply: 保存されたレイアウトを適用\n"
-"  reset: 保存されたレイアウトを削除\n"
+"  leave: 現在のレイアウトを保持する (レイアウトを更新しない)\n"
+"  reset: 保存されたレイアウトでバッファとウィンドウをリセット\n"
+"         (バッファとウィンドウの両方がリセットされる場合、レイアウトは削除さ"
+"れます)\n"
+" rename: レイアウトのリネーム\n"
+"   name: 保存されたレイアウトの名前 (初期状態は \"default\")\n"
 "buffers: バッファのみに対してレイアウトを保存/適用 (バッファの順番)\n"
 "windows: ウィンドウのみに対してレイアウトを保存/適用 (それぞれのウィンドウに"
 "表示されるバッファ)\n"
@@ -2465,9 +2465,8 @@ msgstr "リセットできるキーコード (追加、再定義、削除され�
 msgid "areas (\"chat\" or bar name) for free cursor movement"
 msgstr "カーソルを自由に動かせるエリア (\"chat\" またはバーの名前)"
 
-#, fuzzy
 msgid "names of layouts"
-msgstr "バーの名前"
+msgstr "レイアウトの名前"
 
 msgid ""
 "Warning: you should now issue /save to write \"save_config_on_exit\" option "
@@ -2798,8 +2797,8 @@ msgstr ""
 
 msgid "if set and input is shared, always overwrite input in target buffer"
 msgstr ""
-"セットされ、入力が共有された場合、ターゲットバッファの入力は常に上書きされ"
-"る。"
+"セットされ、入力が共有された場合、ターゲットバッファの入力は常に上書きされま"
+"す"
 
 msgid "max number of \"undo\" for command line, by buffer (0 = undo disabled)"
 msgstr ""
@@ -2837,13 +2836,13 @@ msgstr ""
 msgid "jump back to initial buffer after reaching end of hotlist"
 msgstr "ホットリストの最後に到達したら最初のバッファに移動する"
 
-#, fuzzy
 msgid "text to display before nick in prefix of message, example: \"<\""
-msgstr "チャットウィンドウ内でニックネーム前に表示するテキスト"
+msgstr ""
+"メッセージプレフィックス中のニックネームの前に表示するテキスト、例: \"<\""
 
-#, fuzzy
 msgid "text to display after nick in prefix of message, example: \">\""
-msgstr "チャットウィンドウ内でニックネーム後に表示するテキスト"
+msgstr ""
+"メッセージプレフィックス中のニックネームの後に表示するテキスト、例: \">\""
 
 msgid "enable mouse support"
 msgstr "マウスサポートの有効化"
@@ -2862,9 +2861,9 @@ msgid ""
 "\", followed by the pasted text, followed by \"ESC[201~\")"
 msgstr ""
 "端末の「括弧付きペーストモード」を有効化 (一部の端末/マルチプレクサで利用可"
-"能): このモードでは、ペーストされたテキストはコントロールシーケンスで括られ"
-"る。これにより WeeChat はペーストされたテキストとタイプされたテキストを区別す"
-"る (\"ESC[200~\" 、ペーストされたテキスト、\"ESC[201~\")。"
+"能): このモードでは、ペーストされたテキストはコントロールシーケンスで括られま"
+"す。これにより WeeChat はペーストされたテキストとタイプされたテキストを区別す"
+"る (\"ESC[200~\" 、ペーストされたテキスト、\"ESC[201~\")"
 
 msgid ""
 "force end of bracketed paste after this delay (in seconds) if the control "
@@ -2915,7 +2914,7 @@ msgstr "プレフィックスサイズの最小値"
 msgid ""
 "char to display if prefix is truncated (must be exactly one char on screen)"
 msgstr ""
-"プレフィックスが切り詰められた場合に表示する文字 (スクリーン上のちょうど1文"
+"プレフィックスが切り詰められた場合に表示する文字 (スクリーン上のちょうど 1 文"
 "字)"
 
 msgid ""
@@ -2923,6 +2922,9 @@ msgid ""
 "the space that should be displayed here); if disabled, the truncature char "
 "replaces last char of text"
 msgstr ""
+"テキストの後ろに切り捨て文字 (デフォルトでは \"+\") を表示 (この場所に表示さ"
+"れるべき空白を置換する); 無効化した場合、テキストの最後の文字が切り捨て文字に"
+"なります。"
 
 msgid ""
 "prefix alignment for buffer name, when many buffers are merged with same "
@@ -3111,20 +3113,18 @@ msgid ""
 "text color for nicks (comma separated list of colors, background is allowed "
 "with format: \"fg:bg\", for example: \"lightred:blue\")"
 msgstr ""
-"ニックネームのテキスト色 (カンマ区切りの色リスト、背景色は以下のフォーマット"
+"ニックネームのテキスト色 (コンマ区切りの色リスト、背景色は以下のフォーマット"
 "で指定: \"fg:bg\"、例: \"lightred:blue\")"
 
-#, fuzzy
 msgid "color for nick prefix (string displayed before nick in prefix)"
 msgstr ""
-"ニックネームプレフィックスの色 (プレフィックスとはニックネームの前に表示され"
-"たカスタム文字列)"
+"ニックネームプレフィックスの色 (プレフィックス中のニックネームの前に表示され"
+"る文字列)"
 
-#, fuzzy
 msgid "color for nick suffix (string displayed after nick in prefix)"
 msgstr ""
-"ニックネームサフィックスの色 (サフィックスとはニックネームの後に表示されたカ"
-"スタム文字列)"
+"ニックネームサフィックスの色 (プレフィックス中のニックネームの後に表示される"
+"文字列)"
 
 msgid "text color for local nick in chat window"
 msgstr "チャットウィンドウ内のローカルニックネームのテキスト色"
@@ -3186,7 +3186,7 @@ msgstr ""
 "ファ名のテキスト色、"
 
 msgid "text color for filter indicator in status bar"
-msgstr "ステータスバーのフィルター表示のテキスト色"
+msgstr "ステータスバーのフィルタ表示のテキスト色"
 
 msgid "text color for buffer with new messages (status bar)"
 msgstr "新しいメッセージを受け取ったバッファのテキスト色 (ステータスバー)"
@@ -3243,12 +3243,12 @@ msgstr ""
 "有効化された場合、補完する元単語はカーソル前の文字で終了; そうでなければ元単"
 "語はカーソル後の最初の文字で終了"
 
-#, fuzzy
 msgid ""
 "default completion template (please see documentation for template codes and "
 "values: plugin API reference, function \"weechat_hook_command\")"
 msgstr ""
-"デフォルトの補完テンプレート (テンプレートコードと値のドキュメントを参照)"
+"デフォルトの補完テンプレート (テンプレートコードと値のドキュメントを参照: プ"
+"ラグイン API リファレンス、\"weechat_hook_command\" 関数)"
 
 msgid ""
 "add space after nick completion (when nick is not first word on command line)"
@@ -3356,8 +3356,8 @@ msgid ""
 "path for searching plugins (\"%h\" will be replaced by WeeChat home, \"~/."
 "weechat\" by default)"
 msgstr ""
-"プラグイン検索パス (\"%h\" はWeeChat ホームに置換される、デフォルトでは \"~/."
-"weechat\")"
+"プラグイン検索パス (\"%h\" は WeeChat ホームに置換される、デフォルトでは "
+"\"~/.weechat\")"
 
 msgid "save configuration files when unloading plugins"
 msgstr "プラグインをアンロードする際に設定ファイルをセーブ"
@@ -3426,11 +3426,10 @@ msgid "Memory usage not available (function \"mallinfo\" not found)"
 msgstr "メモリ使用量は利用できません (\"mallinfo\" 関数が見つかりません)"
 
 msgid "Directories:"
-msgstr ""
+msgstr "ディレクトリ:"
 
-#, fuzzy
 msgid "default"
-msgstr "デフォルト: "
+msgstr "デフォルト"
 
 #, c-format
 msgid "%sError: another command \"%s\" already exists for plugin \"%s\""
@@ -3618,7 +3617,7 @@ msgstr "%sエラー: リソース \"%s\" を %s に制限できません: エラ
 msgid ""
 "%sError: unknown resource limit \"%s\" (see /help weechat.startup.sys_rlimit)"
 msgstr ""
-"%sエラー: リソース \"%s\" は定義されていません。(/help weechat.startup."
+"%sエラー: リソース \"%s\" は定義されていません (/help weechat.startup."
 "sys_rlimit を参照)"
 
 #, c-format
@@ -3719,7 +3718,7 @@ msgstr ""
 "\"、\"nicklist\" (ウィンドウはアクティブ/非アクティブ、バッファにはニックネー"
 "ムリストが含まれる)、状態に関する式 (/help eval を参照)、例えば: "
 "\"${nicklist} && ${window.win_width} > 100\" (式のローカル変数は "
-"${active}、${inactive}、${nicklist}。)"
+"${active}、${inactive}、${nicklist})"
 
 msgid "bar position (bottom, top, left, right)"
 msgstr "バー位置 (下、上、左、右)"
@@ -3891,7 +3890,7 @@ msgstr "コマンドの別名を作成"
 msgid "[-completion <completion>] <alias> [<command> [;<command>...]]"
 msgstr "[-completion <completion>] <alias> [<command> [;<command>...]]"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "completion: completion for alias (optional, by default completion is done "
 "with target command)\n"
@@ -3941,9 +3940,8 @@ msgstr ""
 "      $n-m: 'n' から 'm' 番目の引数\n"
 "        $*: 全ての引数\n"
 "        $~: 最後の引数\n"
-"     $nick: 現在のニックネーム\n"
-"  $channel: 現在のチャンネル\n"
-"   $server: 現在のサーバ\n"
+"      $var: ここで \"var\" とはバッファの局所変数 (/buffer localvar を参照)\n"
+"            例: $nick、$channel、$server、$plugin、$name\n"
 "\n"
 "別名を削除するには /unalias コマンドを使ってください:\n"
 "\n"
@@ -4044,15 +4042,13 @@ msgstr "Aspell が無効化されています"
 msgid "aspell plugin configuration"
 msgstr "aspell プラグイン設定"
 
-#, fuzzy
 msgid ""
 "enable|disable|toggle || listdict || setdict <dict>[,<dict>...] || deldict "
 "|| addword [<dict>] <word>"
 msgstr ""
-"enable|disable|toggle || listdict || setdict <lang> || deldict || addword "
-"[<lang>] <word>"
+"enable|disable|toggle || listdict || setdict <dict>[,<dict>...] || deldict "
+"|| addword [<dict>] <word>"
 
-#, fuzzy
 msgid ""
 "  enable: enable aspell\n"
 " disable: disable aspell\n"
@@ -4077,7 +4073,8 @@ msgstr ""
 " disable: aspell の無効化\n"
 "  toggle: aspell の有効無効を切り替え\n"
 "listdict: インストール済み辞書を表示\n"
-" setdict: 現在のバッファ用の辞書を設定\n"
+" setdict: 現在のバッファ用の辞書を設定 (コンマで区切れば複数の辞書を指定可"
+"能)\n"
 " deldict: 現在のバッファ用の辞書を削除\n"
 " addword: aspell の個人辞書に単語を追加\n"
 "\n"
@@ -4089,18 +4086,16 @@ msgstr ""
 "  /set aspell.check.default_dict \"en\"\n"
 "  /aspell enable\n"
 "\n"
-"aspell の有効無効を切り替えるデフォルトのキーは alt-s　です。"
+"aspell の有効無効を切り替えるデフォルトのキーは alt-s です。"
 
-#, fuzzy
 msgid "list of all languages supported by aspell"
-msgstr "aspell でサポートされる言語のリスト"
+msgstr "aspell でサポートされる全ての言語のリスト"
 
-#, fuzzy
 msgid "list of aspell installed dictionaries"
-msgstr "インストール済みスクリプトのリスト (リポジトリから)"
+msgstr "aspell のインストール済み辞書のリスト"
 
 msgid "comma separated list of dictionaries to use on this buffer"
-msgstr "このバッファで使用中の辞書のカンマ区切りリスト"
+msgstr "このバッファで使用中の辞書のコンマ区切りリスト"
 
 #, c-format
 msgid "%s%s: error creating aspell dictionary \"%s\" => \"%s\""
@@ -4162,14 +4157,15 @@ msgid ""
 "minimum length for a word to be spell checked (use 0 to check all words)"
 msgstr "スペルチェックを行う単語長の最小値 (0 の場合は全ての単語をチェック)"
 
-#, fuzzy
 msgid "comma-separated list of dictionaries used in buffer"
-msgstr "このバッファで使用中の辞書のカンマ区切りリスト"
+msgstr "バッファで使用中の辞書のコンマ区切りリスト"
 
 msgid ""
 "buffer pointer (\"0x12345678\") or buffer full name (\"irc.freenode.#weechat"
 "\")"
 msgstr ""
+"バッファポインタ (\"0x12345678\") またはバッファのフルネーム (\"irc.freenode."
+"#weechat\")"
 
 #, c-format
 msgid "%s: warning: dictionary \"%s\" is not available on your system"
@@ -4186,7 +4182,7 @@ msgid ""
 msgstr ""
 "%s%s: UTF-8 を charset デコードオプションに設定することはできません (UTF-8 は"
 "内部デフォルト文字セットです: その他の文字セットへのデコードを指定したとして"
-"も、UTF-8 のデコードは問題ありません)。"
+"も、UTF-8 のデコードは問題ありません)"
 
 #, c-format
 msgid "%s%s: error creating charset \"%s\" => \"%s\""
@@ -4341,9 +4337,9 @@ msgstr "%s: パイプを開けました"
 msgid "%s%s: unable to open pipe (%s) for reading"
 msgstr "%s%s: 読み取りパイプ (%s) を開けません"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to create pipe for remote control (%s): error %d %s"
-msgstr "%s%s: リモート操作用のパイプを作成できません (%s)"
+msgstr "%s%s: リモート操作用のパイプを作成できません (%s): エラー %d %s"
 
 #, c-format
 msgid "%s: pipe closed"
@@ -4537,7 +4533,7 @@ msgid ""
 "%s%s: you must specify channel for \"%s\" command if you're not in a channel"
 msgstr ""
 "%s%s: チャンネルに居ない状態で \"%s\" コマンドを実行するにはチャンネル名の指"
-"定が必要です。"
+"定が必要です"
 
 #, c-format
 msgid ""
@@ -4557,7 +4553,7 @@ msgstr "%s%s: irc サーバかチャンネルに居ないので、サーバを�
 
 #, c-format
 msgid "%s%s: notify already exists"
-msgstr "%s%s: notify は既に存在しています。"
+msgstr "%s%s: notify は既に存在しています"
 
 #, c-format
 msgid "%s: notification added for %s%s"
@@ -4573,7 +4569,7 @@ msgstr "%s: 全ての通知を削除"
 
 #, c-format
 msgid "%s: no notification in list"
-msgstr "%s: リストに通知がありません。"
+msgstr "%s: リストに通知がありません"
 
 #, c-format
 msgid "%s: notification deleted"
@@ -5864,7 +5860,7 @@ msgid ""
 "%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
 "memory because it's currently used"
 msgstr ""
-"%s%s: 警告: サーバ \"%s\" が設定ファイルに見つかりません。現在使用中のためメ"
+"%s%s: 警告: サーバ \"%s\" が設定ファイルに見つかりません、現在使用中のためメ"
 "モリから削除されません"
 
 msgid "buffer used to display message received from IRC server"
@@ -5934,23 +5930,23 @@ msgid "password for server"
 msgstr "サーバのパスワード"
 
 #. TRANSLATORS: please keep words "client capabilities" between brackets if translation is different (see fr.po)
-#, fuzzy
 msgid ""
 "comma-separated list of client capabilities to enable for server if they are "
 "available; capabilities supported by WeeChat are: multi-prefix, userhost-in-"
 "names (example: \"multi-prefix,userhost-in-names\")"
 msgstr ""
-"サーバで利用可能ならば有効化する、クライアントの機能のコンマ区切りリスト "
-"(例: \"multi-prefix,extended-join\")"
+"サーバで利用可能ならば有効化する \"client capabilities\" のコンマ区切りリス"
+"ト; WeeChat で利用できる機能: multi-prefix、userhost-in-names (例: \"multi-"
+"prefix,userhost-in-names\")"
 
-#, fuzzy
 msgid ""
 "mechanism for SASL authentication: \"plain\" for plain text password, \"dh-"
 "blowfish\" for blowfish crypted password, \"dh-aes\" for AES crypted "
 "password, \"external\" for authentication using client side SSL cert"
 msgstr ""
-"SASL 認証メカニズム: \"plain\" は平文パスワード、\"dh-blowfish\" は暗号パス"
-"ワード、\"external\" はクライアントサイド SSL 証明書を利用した認証"
+"SASL 認証メカニズム: \"plain\" は平文パスワード、\"dh-blowfish\" は blowfish "
+"暗号化パスワード、\"dh-aes\" は AES 暗号化パスワード、\"external\" はクライア"
+"ント側の SSL 証明書を利用した認証"
 
 msgid "username for SASL authentication"
 msgstr "SASL 認証用ユーザ名"
@@ -6117,9 +6113,8 @@ msgstr ""
 msgid "merge server buffers"
 msgstr "サーババッファをマージ"
 
-#, fuzzy
 msgid "merge private buffers"
-msgstr "サーババッファをマージ"
+msgstr "プライベートバッファをマージ"
 
 msgid ""
 "force position of new channel in list of buffers (none = default position "
@@ -6156,17 +6151,17 @@ msgstr ""
 "ニックネームモードが有効でニックネームモードを持っていない (オペレータでな"
 "い、voice 権がない) 場合にはこれを空白で表示する"
 
-#, fuzzy
 msgid ""
 "force color for some nicks: hash computed with nickname to find color will "
 "not be used for these nicks (format is: \"nick1:color1;nick2:color2\"); look "
 "up for nicks is with exact case then lower case, so it's possible to use "
 "only lower case for nicks in this option"
 msgstr ""
-"ニックネーム色を強制するニックネーム: ニックネームから計算されるハッシュを元"
-"にした色を利用しない (フォーマット: \"nick1:color1;nick2:color2\"); オプショ"
-"ンで指定された通りのニックネーム、これを小文字化したニックネームの順で検索を"
-"行う。そのため、このオプションのニックネーム部分には小文字を使うと良い。"
+"一部のニックネームでニックネーム色を強制する: ニックネームから計算されるハッ"
+"シュを元にした色を利用しない (フォーマット: \"nick1:color1;nick2:color2\"); "
+"ニックネームの検索はまず大文字小文字が区別された状態で行われ、そのあとに小文"
+"字で行われます。このため、このオプションのニックネーム部分を小文字だけで書く"
+"事もできます"
 
 msgid ""
 "chars used to stop in nick when computing color with letters of nick (at "
@@ -6217,6 +6212,9 @@ msgid ""
 "channel creation date, 332 = topic, 333 = nick/date for topic, 366 = names "
 "on channel"
 msgstr ""
+"チャンネルに参加した後に表示するメッセージのコンマ区切りリスト: 329 = チャン"
+"ネル作成日、332 = トピック、333 = トピックを作成したニックネームおよび日付、"
+"366 = チャンネル参加者リスト"
 
 msgid "display old topic when channel topic is changed"
 msgstr "チャンネルトピックが変更された場合に、古いトピックを表示"
@@ -6315,6 +6313,9 @@ msgid ""
 "message is sent, for example to hide password in message displayed by \"/msg "
 "nickserv identify password\", example: \"nickserv,nickbot\""
 msgstr ""
+"メッセージを送信する際にパスワードを隠すニックネームのコンマ区切りリスト、例"
+"えば \"/msg nickserv identify password\" で表示されるメッセージに含まれるパス"
+"ワードを隠すために使います、例: \"nickserv,nickbot\""
 
 msgid ""
 "display notices as private messages (if auto, use private buffer if found)"
@@ -6372,15 +6373,20 @@ msgid ""
 "join is unmasked, as well as nick changes after this join (0 = disable: "
 "never unmask a join)"
 msgstr ""
+"\"irc_smart_filter\" タグでフィルタリングされる参加メッセージのマスクを外すま"
+"での遅延時間 (分単位): 最長 N 分前にニックネーム jas があるチャンネルに参加"
+"し、そこで何か喋るか (メッセージ、通知、トピックのアップデートなど) 参加後に"
+"ニックネームを変更したら、参加メッセージのマスクが外れます (0 = 無効: 参加"
+"メッセージは必ずマスクされます)"
 
 #. TRANSLATORS: please do not translate "part" and "quit"
 msgid "enable smart filter for \"part\" and \"quit\" messages"
 msgstr "\"part\" と \"quit\" メッセージのスマートフィルタを有効化"
 
 #. TRANSLATORS: please do not translate "nick"
-#, fuzzy
 msgid "enable smart filter for \"nick\" messages (nick changes)"
-msgstr "\"nick\" メッセージのスマートフィルタを有効化"
+msgstr ""
+"\"nick\" メッセージに対するスマートフィルタを有効化 (ニックネームの変更通知)"
 
 msgid "strip colors in topic (used only when displaying buffer title)"
 msgstr ""
@@ -6462,7 +6468,7 @@ msgstr ""
 "サーバでニックネームが既に利用されている場合、他のニックネームを生成します: "
 "利用されていないニックネームが見つかるまで、ニックネームの長さが 9 以下なら数"
 "個の \"_\" を追加、その後最後の 1 文字 (または最後の 2 文字) を 1 から 99 で"
-"置き換えます。"
+"置き換えます"
 
 msgid ""
 "growing factor for autoreconnect delay to server (1 = always same delay, 2 = "
@@ -6490,11 +6496,10 @@ msgstr "遅延の確認間のインターバル (秒単位、0 = 確認しない
 msgid "minimum lag to show (in milliseconds)"
 msgstr "表示する最短の遅延 (ミリ秒単位)"
 
-#, fuzzy
 msgid ""
 "reconnect to server if lag is greater than this value (in seconds, 0 = never "
 "reconnect)"
-msgstr "長い遅延の後は再接続 (分単位、0 = 再接続しない)"
+msgstr "この値より長く遅延した場合は再接続 (秒単位、0 = 再接続しない)"
 
 msgid ""
 "interval between two refreshs of lag item, when lag is increasing (in "
@@ -6522,8 +6527,8 @@ msgid ""
 "time in answer; for example: \"/whois nick\" will send \"whois nick nick\""
 msgstr ""
 "/whois コマンドの引数に 2 重のニックネームを付ける (ニックネームが 1 つだけ指"
-"定された場合)。これによりアイドル時間が返されます; 例: \"/whois nick\" で "
-"\"whois nick nick\" が送信されます。"
+"定された場合)、これによりアイドル時間が返されます; 例: \"/whois nick\" で "
+"\"whois nick nick\" が送信されます"
 
 #, c-format
 msgid "%sCTCP requested by %s%s%s: %s%s%s%s%s%s"
@@ -6622,7 +6627,7 @@ msgstr ""
 "チャンネル、\"arguments\": 引数 (チャンネルを含む)"
 
 msgid "split an IRC message (to fit in 512 bytes)"
-msgstr "IRC メッセージを分割 (512バイトに収める)"
+msgstr "IRC メッセージを分割 (512 バイトに収める)"
 
 #. TRANSLATORS: please do not translate key names (enclosed by quotes)
 msgid ""
@@ -6781,7 +6786,7 @@ msgstr "%s%s: クライアントの機能、拒否されました: %s"
 
 #, c-format
 msgid "%sYou have been invited to %s%s%s by %s%s%s"
-msgstr "%1$s%5$s%6$s%7$s が %2$s%3$s%4$s に招待しています"
+msgstr "%1$s%5$s%6$s%7$s から %2$s%3$s%4$s に招待されました"
 
 #, c-format
 msgid "%s%s: cannot create new channel \"%s\""
@@ -7077,8 +7082,8 @@ msgid ""
 "%s%s: too few arguments received from IRC server for command \"%s"
 "\" (received: %d arguments, expected: at least %d)"
 msgstr ""
-"%s%s: IRC サーバから受け取ったコマンド \"%s\" の応答に引数が足りません (応答"
-"の引数: %d 個の引数、期待される: 少なくとも %d 個)"
+"%s%s: IRC サーバから受け取ったコマンド \"%s\" に引数が足りません (受け取った"
+"引数の数: %d 個、期待される数: 最低 %d 個)"
 
 #, c-format
 msgid "%s%s: \"%s\" command received without host"
@@ -7093,7 +7098,7 @@ msgstr "%s%s: リダイレクトパターンに引数 \"%s\" が見つかりま�
 
 #, c-format
 msgid "%s%s: redirect pattern \"%s\" already exists"
-msgstr "%s%s: リダイレクトパターン \"%s\" は既に存在しています。"
+msgstr "%s%s: リダイレクトパターン \"%s\" は既に存在しています"
 
 #, c-format
 msgid "%s%s: no connection to server \"%s\" for redirect"
@@ -7101,7 +7106,7 @@ msgstr "%s%s: リダイレクト用のサーバ \"%s\" に接続されていま�
 
 #, c-format
 msgid "%s%s: missing argument \"%s\" for redirect"
-msgstr "%s%s: リダイレクト用の引数 \"%s\" が足りません。"
+msgstr "%s%s: リダイレクト用の引数 \"%s\" が足りません"
 
 #, c-format
 msgid "%s%s: redirect pattern \"%s\" not found"
@@ -7171,17 +7176,17 @@ msgstr "%s%s: 接続タイムアウト (メッセージ 001 が受信されま�
 msgid "%s%s: sasl authentication timeout"
 msgstr "%s%s: sasl 認証タイムアウト"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: lag is high, reconnecting to server %s%s%s"
-msgstr "%s%s: ラグが長いです、サーバとの接続を切断中..."
+msgstr "%s%s: 遅延が長いです、サーバ %s%s%s に再接続します"
 
 #, c-format
 msgid "%s%s: reconnecting to server in %d %s, %d %s"
-msgstr "%s%s: サーバに再接続中 %d %s、%d %s"
+msgstr "%s%s: %d %s 後にサーバに再接続します、%d %s"
 
 #, c-format
 msgid "%s%s: reconnecting to server in %d %s"
-msgstr "%s%s: サーバに再接続中 %d %s"
+msgstr "%s%s: %d %s 後にサーバに再接続します"
 
 #, c-format
 msgid "%s%s: switching address to %s/%d"
@@ -7560,10 +7565,10 @@ msgstr ""
 "ログファイルで使用するタイムスタンプ (日付/時間指定子は strftime の man 参照)"
 
 msgid "text to write before nick in prefix of message, example: \"<\""
-msgstr ""
+msgstr "ニックネームの前に書くテキスト (メッセージプレフィックス)、例: \"<\""
 
 msgid "text to write after nick in prefix of message, example: \">\""
-msgstr ""
+msgstr "ニックネームの後に書くテキスト (メッセージプレフィックス)、例: \">\""
 
 msgid "list of logger buffers"
 msgstr "logger バッファのリスト"
@@ -7582,7 +7587,7 @@ msgid ""
 "version only, empty for a stable release)"
 msgstr ""
 "WeeChat の git バージョン (開発バージョンではコマンド \"git describe\" の出"
-"力。安定版リリースでは空文字が出力されます。)"
+"力、安定版リリースでは空文字が出力されます)"
 
 msgid "WeeChat compilation date"
 msgstr "WeeChat のコンパイル日"
@@ -7939,18 +7944,19 @@ msgstr "%s%s: クライアント %s%s%s との TLS ハンドシェイクが失�
 msgid "%s%s: TLS handshake timeout for client %s%s%s"
 msgstr "%s%s: クライアント %s%s%s との TLS ハンドシェイクがタイムアウト"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid websocket handshake received for client %s%s%s"
-msgstr "%s%s: クライアント %s%s%s との TLS ハンドシェイクがタイムアウト"
+msgstr ""
+"%s%s: クライアント %s%s%s から受け取った不正なウェブソケットハンドシェイク"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: origin \"%s\" not allowed for websocket"
-msgstr "%s%s: IP アドレス \"%s\" はリレーの許可がありません"
+msgstr "%s%s: \"%s\" はウェブソケットの origin に使うことを許可されていません"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error decoding websocket frame for client %s%s%s"
 msgstr ""
-"%s%s: クライアント %s%s%s のソケットからデータを読み取り中: エラー %d %s"
+"%s%s: クライアント %s%s%s 用のウェブソケットフレームのデコード中にエラー"
 
 #, c-format
 msgid "%s%s: reading data on socket for client %s%s%s: error %d %s"
@@ -8040,7 +8046,6 @@ msgstr ""
 "list|listfull|listrelay || add [ipv4.][ipv6.][ssl.]<protocol.name> <port> || "
 "del [ipv4.][ipv6.][ssl.]<protocol.name> || raw || sslcertkey"
 
-#, fuzzy
 msgid ""
 "         list: list relay clients (only active relays)\n"
 "     listfull: list relay clients (verbose, all relays)\n"
@@ -8089,8 +8094,11 @@ msgstr ""
 "         ipv6: IPv6 を強制的に利用\n"
 "          ssl: SSL を有効化\n"
 "protocol.name: リレーするプロトコルと名前:\n"
-"                 - プロトコル \"irc\": 名前は共有するサーバ\n"
-"                 - プロトコル \"weechat\" (名前は使われていない)\n"
+"                 - protocol \"irc\": name は共有するサーバ名 (任意指定、指定"
+"しない場合、サーバ名は \"PASS\" コマンドでクライアントが送信するものと同じで"
+"なければいけません、\"PASS\" コマンドのフォーマットは \"PASS server:password"
+"\")\n"
+"                 - protocol \"weechat\" (name は使われません)\n"
 "         port: リレーに使うポート番号\n"
 "          raw: 生 Relay データバッファを開く\n"
 "   sslcertkey: オプション relay.network.ssl_cert_key のパスを使って SSL 証明"
@@ -8103,6 +8111,9 @@ msgstr ""
 "    /relay add irc.freenode 8000\n"
 "  サーバ \"freenode\" に対する SSL を有効化した irc プロキシを設定:\n"
 "    /relay add ssl.irc.freenode 8001\n"
+"  SSL を有効化してすべてのサーバに対する irc プロキシを設定 (クライアントが"
+"サーバを選ぶ):\n"
+"    /relay add ssl.irc 8002\n"
 "  weechat プロトコル:\n"
 "    /relay add weechat 9000\n"
 "  SSL を有効化した weechat プロトコル:\n"
@@ -8143,7 +8154,7 @@ msgstr "%s%s: エラー: プロトコル \"%s\" では name を使えません"
 
 #, c-format
 msgid "%s%s: error: relay for \"%s\" already exists"
-msgstr "%s%s: エラー: \"%s\" のリレーは既に存在しています。"
+msgstr "%s%s: エラー: \"%s\" のリレーは既に存在しています"
 
 msgid "auto open relay buffer when a new client is connecting"
 msgstr "新しいクライアントが接続したらリレーバッファを自動的に開く"
@@ -8184,7 +8195,7 @@ msgstr ""
 "リレーの利用をを許可する IP アドレスの正規表現 (大文字小文字の区別無し、最初"
 "に \"(?-i)\" をつければ区別有り); IPv6 が有効で IPv4 を使って接続している場"
 "合、IPv6 アドレスを IPv4 にマッピングしたもの (例: \"::ffff:127.0.0.1\") が使"
-"われます。例: \"^((::ffff:)?123.45.67.89|192.160.*)$\""
+"われます、例: \"^((::ffff:)?123.45.67.89|192.160.*)$\""
 
 msgid ""
 "address for bind (if empty, connection is possible on all interfaces, use "
@@ -8228,6 +8239,9 @@ msgid ""
 "\"(?-i)\" at beginning to make it case sensitive), example: \"^http://(www"
 "\\.)?example\\.(com|org)\""
 msgstr ""
+"ウェブソケットに使うことを許可する origin の正規表現 (大文字小文字を区別しな"
+"い、\"(?-i)\" を先頭に置くと大文字小文字を区別する)、例: \"^http://(www\\.)?"
+"example\\.(com|org)\""
 
 msgid "maximum number of lines in backlog per IRC channel (0 = unlimited)"
 msgstr "IRC チャンネルごとのバックログの最大行数 (0 = 制限無し)"
@@ -8259,8 +8273,8 @@ msgid ""
 msgstr ""
 "バックログメッセージの時間フォーマット (フォーマットは man strftime を参照) "
 "(メッセージの irc タグ内に時間の情報が含まれるため、クライアントがサーバの "
-"\"server-time\" 機能を利用可能にした場合、これは利用されません。); 空文字列 "
-"= バックログメッセージで時間を表示しない"
+"\"server-time\" 機能を利用可能にした場合、これは利用されません); 空文字列 = "
+"バックログメッセージで時間を表示しない"
 
 msgid "list of relay clients"
 msgstr "リレークライアントのリスト"
@@ -8283,17 +8297,19 @@ msgstr "Relay 生メッセージ"
 msgid "%s: socket closed for %s (port %d)"
 msgstr "%s: %s (ポート %d) のソケットが閉じられました"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot accept client on port %d (%s): error %d %s"
-msgstr "%s%s: ポート %d (%s) はクライアントを受け付けません"
+msgstr ""
+"%s%s: ポート %d (%s) ではクライアントを受け付けることができません: エラー %d "
+"%s"
 
 #, c-format
 msgid "%s%s: IP address \"%s\" not allowed for relay"
 msgstr "%s%s: IP アドレス \"%s\" はリレーの許可がありません"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot set socket option \"%s\" to %d: error %d %s"
-msgstr "%s%s: ソケットの作成に失敗: エラー %d %s"
+msgstr "%s%s: ソケットオプション \"%s\" を %d に設定できません: エラー %d %s"
 
 #, c-format
 msgid "%s%s: cannot create socket: error %d %s"
@@ -8303,13 +8319,15 @@ msgstr "%s%s: ソケットの作成に失敗: エラー %d %s"
 msgid "%s%s: try /set relay.network.ipv6 off"
 msgstr "%s%s: /set relay.network.ipv6 off を試してください"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot \"bind\" on port %d (%s): error %d %s"
-msgstr "%s%s: ポート %d (%s) での \"bind\" にエラー"
+msgstr "%s%s: ポート %d (%s) に \"bind\" できません: エラー %d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot \"listen\" on port %d (%s): error %d %s"
-msgstr "%s%s: ポート %d (%s) はクライアントを受け付けません"
+msgstr ""
+"%s%s: ポート %d (%s) ではクライアントを受け付けることができません: エラー %d "
+"%s"
 
 #, c-format
 msgid "%s: listening on port %d (relay: %s, %s, max %d clients)"
@@ -8394,7 +8412,6 @@ msgstr ""
 "list|listdefault || add <name> <modifiers> <groups> <regex> || del <name>|-"
 "all [<name>...] || default -yes"
 
-#, fuzzy
 msgid ""
 "       list: list all rmodifiers\n"
 "listdefault: list default rmodifiers\n"
@@ -8423,8 +8440,9 @@ msgstr ""
 "        add: rmodifier を追加\n"
 "       name: rmodifier の名前\n"
 "  modifiers: rmodifier のコンマ区切りリスト\n"
-"     groups: グループに対するアクション: グループ (1 から 9) のコンマ区切りリ"
-"スト、グループを隠すにはオプションで番号の後ろに \"*\" をつける\n"
+"     groups: 正規表現にマッチするグループに対するアクション (括弧内): グルー"
+"プ (1 から 9) のコンマ区切りリスト、グループを隠すにはオプションで番号の後ろ"
+"に \"*\" をつける\n"
 "      regex: 正規表現 (大文字小文字の区別無し、\"(?-i)\" で始めれば区別有"
 "り)\n"
 "        del: rmodifier を削除\n"
@@ -8548,7 +8566,7 @@ msgstr "%s%s: 関数 \"%s\" は値を一つ返さなければいけません (%d
 
 #, c-format
 msgid "%s%s: function \"%s\" is internally misused"
-msgstr "%s%s: 関数 \"%s\" は内部的に誤用されています。"
+msgstr "%s%s: 関数 \"%s\" は内部的に誤用されています"
 
 #, c-format
 msgid "%s%s: not enough memory in function \"%s\""
@@ -8617,9 +8635,10 @@ msgstr ""
 "%1$s%2$s: 警告、関数 \"%4$s\" の不正な引ポインタ (\"%3$s\") (スクリプト: "
 "%5$s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: error loading script \"%s\" (spaces or empty name not allowed)"
-msgstr "%s: スクリプト \"%s\" のロード中にエラー (メモリ不足)"
+msgstr ""
+"%s: スクリプト \"%s\" のロード中にエラー (空白または空の名前は利用できません)"
 
 #, c-format
 msgid ""
@@ -8763,13 +8782,13 @@ msgstr "%s: スクリプト \"%s\" が見つかりません"
 msgid "%s: script \"%s\" is not installed"
 msgstr "%s: スクリプト \"%s\" はインストールされていません"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: autoload enabled for script \"%s\""
-msgstr "%s: スクリプト \"%s\" は利用できない言語で書かれています"
+msgstr "%s: スクリプト \"%s\" の自動ロードが有効化されました"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: autoload disabled for script \"%s\""
-msgstr "%s: スクリプト \"%s\" は利用できない言語で書かれています"
+msgstr "%s: スクリプト \"%s\" の自動ロードが無効化されました"
 
 #, c-format
 msgid "%s%s: error downloading script \"%s\": %s"
@@ -8866,7 +8885,7 @@ msgstr "WeeChat を最大化"
 msgid "Alt+key/input: v=back to list d=jump to diff"
 msgstr "Alt+key/input: v=リストに戻る d=比較する"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%d/%d scripts (filter: %s) | Sort: %s | Alt+key/input: i=install r=remove "
 "l=load L=reload u=unload A=autoload h=(un)hold v=view script | Input: "
@@ -8884,18 +8903,17 @@ msgstr "スクリプト"
 msgid "WeeChat scripts manager"
 msgstr "WeeChat スクリプトマネージャ"
 
-#, fuzzy
 msgid ""
 "list [-o|-i] || search <text> || show <script> || load|unload|reload "
 "<script> [<script>...] || autoload|noautoload|toggleautoload <script> "
 "[<script>...] || install|remove|installremove|hold [-q] <script> "
 "[<script>...] || upgrade || update"
 msgstr ""
-"list || search <text> || show <script> || load|unload|reload <script> "
-"[<script>...] || install|remove|hold <script> [<script>...] || upgrade || "
-"update"
+"list [-o|-i] || search <text> || show <script> || load|unload|reload "
+"<script> [<script>...] || autoload|noautoload|toggleautoload <script> "
+"[<script>...] || install|remove|installremove|hold [-q] <script> "
+"[<script>...] || upgrade || update"
 
-#, fuzzy
 msgid ""
 "          list: list loaded scripts (all languages)\n"
 "            -o: send list of loaded scripts to buffer\n"
@@ -8965,26 +8983,29 @@ msgid ""
 "  /script reload urlserver\n"
 "  /script upgrade"
 msgstr ""
-"         list: ロード済みスクリプトの表示 (すべての言語)\n"
-"           -o: バッファにロード済みスクリプトのリストを表示\n"
-"           -i: コマンドラインにロード済みスクリプトのリストをコピー (バッファ"
-"送信用)\n"
-"       search: タグまたはテキストでスクリプトを検索し、スクリプトバッファに結"
-"果を表示\n"
-"         show: スクリプトに関する詳細を表示\n"
-"         load: スクリプトのロード (複数可)\n"
-"       unload: スクリプトのアンロード (複数可)\n"
-"       reload: スクリプトのリロード (複数可)\n"
-"      install: スクリプトのインストール/アップグレード (複数可)\n"
-"       remove: スクリプトの削除 (複数可)\n"
-"installremove: スクリプトのインストール又は削除 (複数可)、スクリプトの状態に"
+"          list: ロード済みスクリプトの表示 (すべての言語)\n"
+"            -o: バッファにロード済みスクリプトのリストを表示\n"
+"            -i: コマンドラインにロード済みスクリプトのリストをコピー (バッ"
+"ファ送信用)\n"
+"        search: タグまたはテキストでスクリプトを検索し、スクリプトバッファに"
+"結果を表示\n"
+"          show: スクリプトに関する詳細を表示\n"
+"          load: スクリプトのロード (複数可)\n"
+"        unload: スクリプトのアンロード (複数可)\n"
+"        reload: スクリプトのリロード (複数可)\n"
+"      autoload: スクリプトを自動ロード\n"
+"    noautoload: スクリプトを自動ロードしない\n"
+"toggleautoload: 自動ロードの切り替え\n"
+"       install: スクリプトのインストール/アップグレード (複数可)\n"
+"        remove: スクリプトの削除 (複数可)\n"
+" installremove: スクリプトのインストール又は削除 (複数可)、スクリプトの状態に"
 "依存\n"
-"         hold: スクリプトのホールド/アンホールド (複数可) (ホールドされたスク"
-"リプトはアップグレードされず、削除もできなくなる)\n"
-"           -q: 出力を抑制するモード: メッセージを表示しない\n"
-"      upgrade: 全ての古いインストール済みスクリプトをアップグレード (新バー"
+"          hold: スクリプトのホールド/アンホールド (複数可) (ホールドされたス"
+"クリプトはアップグレードされず、削除もできなくなる)\n"
+"            -q: 出力を抑制するモード: メッセージを表示しない\n"
+"       upgrade: 全ての古いインストール済みスクリプトをアップグレード (新バー"
 "ジョンが利用可能な場合)\n"
-"       update: ローカルスクリプトキャッシュのアップデート\n"
+"        update: ローカルスクリプトキャッシュのアップデート\n"
 "\n"
 "引数がない場合、スクリプト表示用にバッファを開く\n"
 "\n"
@@ -9004,6 +9025,7 @@ msgstr ""
 "  alt+l  スクリプトのロード\n"
 "  alt+L  スクリプトのリロード\n"
 "  alt+u  スクリプトのアンロード\n"
+"  alt+A  スクリプトの自動ロード\n"
 "  alt+h  スクリプトの(アン)ホールド\n"
 "  alt+v  スクリプトの表示\n"
 "\n"
@@ -9066,7 +9088,7 @@ msgid ""
 msgstr ""
 "インストール済みのスクリプトとリポジトリにあるものの違いを表示するコマンド "
 "(\"auto\" = 比較コマンドの自動検出 (git または diff)、空文字列 = 比較を無効"
-"化、その他の文字列 = コマンド名、例えば \"diff\")。"
+"化、その他の文字列 = コマンド名、例えば \"diff\")"
 
 msgid ""
 "display source code of script on buffer with detail on a script (script is "
@@ -9090,7 +9112,7 @@ msgid ""
 "be used before identifier to reverse order; example: \"i,u\": installed "
 "scripts first, sorted by update date"
 msgstr ""
-"デフォルトのスクリプト表示ソートキー: 識別子のカンマ区切りリスト: a=作者、A="
+"デフォルトのスクリプト表示ソートキー: 識別子のコンマ区切りリスト: a=作者、A="
 "自動ロード、d=追加日、e=拡張子、i=インストール済み、l=言語、n=名前、o=アップ"
 "デートが必要、p=人気、r=実行中、u=アップデート日; 識別子直前の文字 \"-\" は逆"
 "順でソートを意味; 例: \"i,u\": インストール済みが最初に来て、アップデート日の"
@@ -9191,6 +9213,8 @@ msgid ""
 "autoload scripts installed (make a link in \"autoload\" directory to script "
 "in parent directory)"
 msgstr ""
+"インストール済みの自動ロードスクリプト (\"autoload\" ディレクトリ中に親ディレ"
+"クトリにあるスクリプトのリンクを作成)"
 
 msgid ""
 "local cache expiration time, in minutes (-1 = never expires, 0 = always "
@@ -9206,9 +9230,9 @@ msgid ""
 "scripts to \"hold\": comma-separated list of scripts which will never been "
 "upgraded and can not be removed, for example: \"buffers.pl,iset.pl\""
 msgstr ""
-"\"ホールド\" するスクリプト: カンマ区切りのスクリプトリスト、このリストに含ま"
-"れるスクリプトはアップグレードされないし、削除もされない。例: \"buffers.pl,"
-"iset.pl\""
+"\"ホールド\" するスクリプト: コンマ区切りのスクリプトリスト、このリストに含ま"
+"れるスクリプトはアップグレードされませんし、削除もされません、例: \"buffers."
+"pl,iset.pl\""
 
 msgid "URL for file with list of scripts"
 msgstr "ファイルの URL とスクリプトのリスト"
@@ -9397,9 +9421,9 @@ msgstr ""
 "%s%s: \"%s\" のアドレスが見つかりません、ローカル IP アドレスに切り替えていま"
 "す"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot create socket for xfer: error %d %s"
-msgstr "%s%s: ソケットの作成に失敗: エラー %d %s"
+msgstr "%s%s: xfer 用のソケット作成に失敗: エラー %d %s"
 
 #, c-format
 msgid "%s%s: cannot find available port for xfer"
@@ -9603,6 +9627,9 @@ msgid ""
 "automatically accepted; format is \"server.nick\" (for a specific server) or "
 "\"nick\" (for all servers); example: \"freenode.FlashCode,andrew\""
 msgstr ""
+"ファイルやチャットの受け入れを自動的に許可するニックネームのコンマ区切りリス"
+"ト; フォーマットは \"server.nick\" (サーバを特定する場合) または \"nick\" (す"
+"べてのサーバ); 例: \"freenode.FlashCode,andrew\""
 
 msgid "list of xfer"
 msgstr "xfer のリスト"
@@ -9610,9 +9637,9 @@ msgstr "xfer のリスト"
 msgid "xfer pointer (optional)"
 msgstr "xfer ポインタ (オプション)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to create pipe: error %d %s"
-msgstr "%s%s: パイプを作成できません"
+msgstr "%s%s: パイプを作成できません: エラー %d %s"
 
 #, c-format
 msgid "%s%s: unable to read local file"
@@ -9638,9 +9665,9 @@ msgstr "%s%s: 送信者からブロックを受信できません"
 msgid "%s%s: unable to write local file"
 msgstr "%s%s: ローカルファイルに書き込めません"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to send ACK to sender"
-msgstr "%s%s: 送信者に接続できません"
+msgstr "%s%s: 送信者に ACK を送信できません"
 
 #, c-format
 msgid "%s%s: unable to fork"
@@ -9654,13 +9681,13 @@ msgstr ""
 "%s: %s (%ld.%ld.%ld.%ld、%s.%s) へファイルを送信、名前: %s (ローカルファイル"
 "名: %s)、%llu バイト (プロトコル: %s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to create socket for sending file: error %d %s"
-msgstr "%s%s: ファイル送信用にソケットを作れません"
+msgstr "%s%s: ファイル送信用にソケットを作れません: エラー %d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to set option \"nonblock\" for socket: error %d %s"
-msgstr "%s%s: ソケットにオプション \"nonblock\" を設定できません"
+msgstr "%s%s: ソケットにオプション \"nonblock\" を設定できません: エラー %d %s"
 
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
@@ -9702,6 +9729,5 @@ msgstr "タイプ"
 msgid "Constants"
 msgstr "定数"
 
-#, fuzzy
-#~ msgid "display names when joining channel"
-#~ msgstr "日付が変わった際に特殊メッセージを表示"
+#~ msgid "%s: script \"%s\" is now autoloaded"
+#~ msgstr "%s: スクリプト \"%s\" は現在自動ロードされています"

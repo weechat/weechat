@@ -59,7 +59,7 @@
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `lightcyan`)
 
 * [[option_weechat.color.chat_nick_colors]] *weechat.color.chat_nick_colors*
-** 説明: `ニックネームのテキスト色 (カンマ区切りの色リスト、背景色は以下のフォーマットで指定: "fg:bg"、例: "lightred:blue")`
+** 説明: `ニックネームのテキスト色 (コンマ区切りの色リスト、背景色は以下のフォーマットで指定: "fg:bg"、例: "lightred:blue")`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"cyan,magenta,green,brown,lightblue,default,lightcyan,lightmagenta,lightgreen,blue"`)
 
@@ -84,7 +84,7 @@
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `cyan`)
 
 * [[option_weechat.color.chat_nick_prefix]] *weechat.color.chat_nick_prefix*
-** 説明: `color for nick prefix (string displayed before nick in prefix)`
+** 説明: `ニックネームプレフィックスの色 (プレフィックス中のニックネームの前に表示される文字列)`
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `green`)
 
@@ -94,7 +94,7 @@
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `white`)
 
 * [[option_weechat.color.chat_nick_suffix]] *weechat.color.chat_nick_suffix*
-** 説明: `color for nick suffix (string displayed after nick in prefix)`
+** 説明: `ニックネームサフィックスの色 (プレフィックス中のニックネームの後に表示される文字列)`
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `green`)
 
@@ -259,7 +259,7 @@
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `lightgreen`)
 
 * [[option_weechat.color.status_filter]] *weechat.color.status_filter*
-** 説明: `ステータスバーのフィルター表示のテキスト色`
+** 説明: `ステータスバーのフィルタ表示のテキスト色`
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `green`)
 
@@ -294,7 +294,7 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_weechat.completion.default_template]] *weechat.completion.default_template*
-** 説明: `default completion template (please see documentation for template codes and values: plugin API reference, function "weechat_hook_command")`
+** 説明: `デフォルトの補完テンプレート (テンプレートコードと値のドキュメントを参照: プラグイン API リファレンス、"weechat_hook_command" 関数)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"%(nicks)|%(irc_channels)"`)
 
@@ -559,7 +559,7 @@
 ** 値: none, commands, text, all (デフォルト値: `none`)
 
 * [[option_weechat.look.input_share_overwrite]] *weechat.look.input_share_overwrite*
-** 説明: `セットされ、入力が共有された場合、ターゲットバッファの入力は常に上書きされる。`
+** 説明: `セットされ、入力が共有された場合、ターゲットバッファの入力は常に上書きされます`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `off`)
 
@@ -604,17 +604,17 @@
 ** 値: 1 .. 10000 (デフォルト値: `100`)
 
 * [[option_weechat.look.nick_prefix]] *weechat.look.nick_prefix*
-** 説明: `text to display before nick in prefix of message, example: "<"`
+** 説明: `メッセージプレフィックス中のニックネームの前に表示するテキスト、例: "<"`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
 * [[option_weechat.look.nick_suffix]] *weechat.look.nick_suffix*
-** 説明: `text to display after nick in prefix of message, example: ">"`
+** 説明: `メッセージプレフィックス中のニックネームの後に表示するテキスト、例: ">"`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
 * [[option_weechat.look.paste_bracketed]] *weechat.look.paste_bracketed*
-** 説明: `端末の「括弧付きペーストモード」を有効化 (一部の端末/マルチプレクサで利用可能): このモードでは、ペーストされたテキストはコントロールシーケンスで括られる。これにより WeeChat はペーストされたテキストとタイプされたテキストを区別する ("ESC[200~" 、ペーストされたテキスト、"ESC[201~")。`
+** 説明: `端末の「括弧付きペーストモード」を有効化 (一部の端末/マルチプレクサで利用可能): このモードでは、ペーストされたテキストはコントロールシーケンスで括られます。これにより WeeChat はペーストされたテキストとタイプされたテキストを区別する ("ESC[200~" 、ペーストされたテキスト、"ESC[201~")`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `off`)
 
@@ -649,12 +649,12 @@
 ** 値: 0 .. 128 (デフォルト値: `0`)
 
 * [[option_weechat.look.prefix_align_more]] *weechat.look.prefix_align_more*
-** 説明: `プレフィックスが切り詰められた場合に表示する文字 (スクリーン上のちょうど1文字)`
+** 説明: `プレフィックスが切り詰められた場合に表示する文字 (スクリーン上のちょうど 1 文字)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"+"`)
 
 * [[option_weechat.look.prefix_align_more_after]] *weechat.look.prefix_align_more_after*
-** 説明: `display the truncature char (by default "+") after the text (by replacing the space that should be displayed here); if disabled, the truncature char replaces last char of text`
+** 説明: `テキストの後ろに切り捨て文字 (デフォルトでは "+") を表示 (この場所に表示されるべき空白を置換する); 無効化した場合、テキストの最後の文字が切り捨て文字になります。`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
@@ -674,7 +674,7 @@
 ** 値: 未制約文字列 (デフォルト値: `"+"`)
 
 * [[option_weechat.look.prefix_buffer_align_more_after]] *weechat.look.prefix_buffer_align_more_after*
-** 説明: `display the truncature char (by default "+") after the text (by replacing the space that should be displayed here); if disabled, the truncature char replaces last char of text`
+** 説明: `テキストの後ろに切り捨て文字 (デフォルトでは "+") を表示 (この場所に表示されるべき空白を置換する); 無効化した場合、テキストの最後の文字が切り捨て文字になります。`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
@@ -814,7 +814,7 @@
 ** 値: 未制約文字列 (デフォルト値: `".so,.dll"`)
 
 * [[option_weechat.plugin.path]] *weechat.plugin.path*
-** 説明: `プラグイン検索パス ("%h" はWeeChat ホームに置換される、デフォルトでは "~/.weechat")`
+** 説明: `プラグイン検索パス ("%h" は WeeChat ホームに置換される、デフォルトでは "~/.weechat")`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"%h/plugins"`)
 

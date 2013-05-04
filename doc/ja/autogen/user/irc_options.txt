@@ -134,7 +134,7 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_irc.look.display_join_message]] *irc.look.display_join_message*
-** 説明: `comma-separated list of messages to display after joining a channel: 329 = channel creation date, 332 = topic, 333 = nick/date for topic, 366 = names on channel`
+** 説明: `チャンネルに参加した後に表示するメッセージのコンマ区切りリスト: 329 = チャンネル作成日、332 = トピック、333 = トピックを作成したニックネームおよび日付、366 = チャンネル参加者リスト`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"329,332,333,366"`)
 
@@ -214,7 +214,7 @@
 ** 値: none, next, near_server (デフォルト値: `none`)
 
 * [[option_irc.look.nick_color_force]] *irc.look.nick_color_force*
-** 説明: `force color for some nicks: hash computed with nickname to find color will not be used for these nicks (format is: "nick1:color1;nick2:color2"); look up for nicks is with exact case then lower case, so it's possible to use only lower case for nicks in this option`
+** 説明: `一部のニックネームでニックネーム色を強制する: ニックネームから計算されるハッシュを元にした色を利用しない (フォーマット: "nick1:color1;nick2:color2"); ニックネームの検索はまず大文字小文字が区別された状態で行われ、そのあとに小文字で行われます。このため、このオプションのニックネーム部分を小文字だけで書く事もできます`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
@@ -239,7 +239,7 @@
 ** 値: on, off (デフォルト値: `off`)
 
 * [[option_irc.look.nicks_hide_password]] *irc.look.nicks_hide_password*
-** 説明: `comma separated list of nicks for which passwords will be hidden when a message is sent, for example to hide password in message displayed by "/msg nickserv identify password", example: "nickserv,nickbot"`
+** 説明: `メッセージを送信する際にパスワードを隠すニックネームのコンマ区切りリスト、例えば "/msg nickserv identify password" で表示されるメッセージに含まれるパスワードを隠すために使います、例: "nickserv,nickbot"`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"nickserv"`)
 
@@ -264,7 +264,7 @@
 ** 値: on, off (デフォルト値: `off`)
 
 * [[option_irc.look.pv_buffer]] *irc.look.pv_buffer*
-** 説明: `merge private buffers`
+** 説明: `プライベートバッファをマージ`
 ** タイプ: 整数
 ** 値: independent, merge_by_server, merge_all (デフォルト値: `independent`)
 
@@ -294,12 +294,12 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_irc.look.smart_filter_join_unmask]] *irc.look.smart_filter_join_unmask*
-** 説明: `delay for unmasking a join message that was filtered with tag "irc_smart_filter" (in minutes): if a nick has joined max N minutes ago and then says something on channel (message, notice or update on topic), the join is unmasked, as well as nick changes after this join (0 = disable: never unmask a join)`
+** 説明: `"irc_smart_filter" タグでフィルタリングされる参加メッセージのマスクを外すまでの遅延時間 (分単位): 最長 N 分前にニックネーム jas があるチャンネルに参加し、そこで何か喋るか (メッセージ、通知、トピックのアップデートなど) 参加後にニックネームを変更したら、参加メッセージのマスクが外れます (0 = 無効: 参加メッセージは必ずマスクされます)`
 ** タイプ: 整数
 ** 値: 0 .. 10080 (デフォルト値: `30`)
 
 * [[option_irc.look.smart_filter_nick]] *irc.look.smart_filter_nick*
-** 説明: `enable smart filter for "nick" messages (nick changes)`
+** 説明: `"nick" メッセージに対するスマートフィルタを有効化 (ニックネームの変更通知)`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
@@ -314,7 +314,7 @@
 ** 値: on, off (デフォルト値: `off`)
 
 * [[option_irc.network.alternate_nick]] *irc.network.alternate_nick*
-** 説明: `サーバでニックネームが既に利用されている場合、他のニックネームを生成します: 利用されていないニックネームが見つかるまで、ニックネームの長さが 9 以下なら数個の "_" を追加、その後最後の 1 文字 (または最後の 2 文字) を 1 から 99 で置き換えます。`
+** 説明: `サーバでニックネームが既に利用されている場合、他のニックネームを生成します: 利用されていないニックネームが見つかるまで、ニックネームの長さが 9 以下なら数個の "_" を追加、その後最後の 1 文字 (または最後の 2 文字) を 1 から 99 で置き換えます`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
@@ -349,7 +349,7 @@
 ** 値: 0 .. 86400000 (デフォルト値: `500`)
 
 * [[option_irc.network.lag_reconnect]] *irc.network.lag_reconnect*
-** 説明: `reconnect to server if lag is greater than this value (in seconds, 0 = never reconnect)`
+** 説明: `この値より長く遅延した場合は再接続 (秒単位、0 = 再接続しない)`
 ** タイプ: 整数
 ** 値: 0 .. 604800 (デフォルト値: `0`)
 
@@ -374,7 +374,7 @@
 ** 値: on, off (デフォルト値: `off`)
 
 * [[option_irc.network.whois_double_nick]] *irc.network.whois_double_nick*
-** 説明: `/whois コマンドの引数に 2 重のニックネームを付ける (ニックネームが 1 つだけ指定された場合)。これによりアイドル時間が返されます; 例: "/whois nick" で "whois nick nick" が送信されます。`
+** 説明: `/whois コマンドの引数に 2 重のニックネームを付ける (ニックネームが 1 つだけ指定された場合)、これによりアイドル時間が返されます; 例: "/whois nick" で "whois nick nick" が送信されます`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
@@ -434,7 +434,7 @@
 ** 値: 0 .. 1000000 (デフォルト値: `25`)
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** 説明: `comma-separated list of client capabilities to enable for server if they are available; capabilities supported by WeeChat are: multi-prefix, userhost-in-names (example: "multi-prefix,userhost-in-names")`
+** 説明: `サーバで利用可能ならば有効化する "client capabilities" のコンマ区切りリスト; WeeChat で利用できる機能: multi-prefix、userhost-in-names (例: "multi-prefix,userhost-in-names")`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
@@ -499,7 +499,7 @@
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
 * [[option_irc.server_default.sasl_mechanism]] *irc.server_default.sasl_mechanism*
-** 説明: `mechanism for SASL authentication: "plain" for plain text password, "dh-blowfish" for blowfish crypted password, "dh-aes" for AES crypted password, "external" for authentication using client side SSL cert`
+** 説明: `SASL 認証メカニズム: "plain" は平文パスワード、"dh-blowfish" は blowfish 暗号化パスワード、"dh-aes" は AES 暗号化パスワード、"external" はクライアント側の SSL 証明書を利用した認証`
 ** タイプ: 整数
 ** 値: plain, dh-blowfish, dh-aes, external (デフォルト値: `plain`)
 

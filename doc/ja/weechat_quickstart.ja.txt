@@ -8,8 +8,7 @@ Sébastien Helleu <flashcode@flashtux.org>
 X 用ターミナルエミュレータは rxvt-unicode を推奨します (UTF-8
 がサポートされており、デフォルトのキーバインドで問題が発生しないためです)。
 
-// TRANSLATION MISSING
-Run from your shell:
+シェルから起動するには:
 
 ----------------------------------------
 $ weechat-curses
@@ -19,34 +18,30 @@ $ weechat-curses
 [[help_options]]
 == オンラインヘルプ / オプション ==
 
-// TRANSLATION MISSING
-WeeChat has help for all commands, just issue:
+WeeChat はすべてのコマンドにヘルプがあります。ヘルプを見るには、以下のコマンドを入力してください:
 
 ----------------------------------------
 /help
 ----------------------------------------
 
-// TRANSLATION MISSING
-To get help on a specific command, issue:
+特定のコマンドに対するヘルプを見るには、以下のコマンドを入力してください:
 
 ----------------------------------------
 /help command
 ----------------------------------------
 
-// TRANSLATION MISSING
-To set options, issue:
+オプションを設定するには以下のコマンドを入力してください:
 
 ----------------------------------------
 /set config.section.option value
 ----------------------------------------
 
-// TRANSLATION MISSING
-(where `config` is configuration name (`weechat` for core, or a plugin
-name), `section` the section of this configuration and `option` the
-option name).
+(ここで `config` は設定名 (core の場合は
+`weechat` もしくはプラグイン名)、`section`
+はこの設定のセクション、`option` はオプション名)。
 
 オプション設定はすぐに反映されます (設定変更後に
-WeeChat を再起動する必要は *ありません*)。
+WeeChat を再起動する必要は*ありません*)。
 
 `/set` オプションはすべての指定された文字を含むオプションを表示するために部分一致指定や先頭や最後にワイルドカード
 "*" を指定することができます。
