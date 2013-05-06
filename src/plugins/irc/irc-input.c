@@ -55,7 +55,7 @@ irc_input_user_message_display (struct t_gui_buffer *buffer, int action,
     if (strncmp (text, "\01ACTION ", 8) == 0)
     {
         action = 1;
-        pos = strchr (text + 8, '\01');
+        pos = strrchr (text + 8, '\01');
         if (pos)
             text2 = weechat_strndup (text + 8, pos - text - 8);
         else

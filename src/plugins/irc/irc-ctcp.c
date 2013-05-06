@@ -155,7 +155,7 @@ irc_ctcp_display_reply_from_nick (struct t_irc_server *server, time_t date,
 
     while (arguments && arguments[0])
     {
-        pos_end = strchr (arguments + 1, '\01');
+        pos_end = strrchr (arguments + 1, '\01');
         if (pos_end)
             pos_end[0] = '\0';
 
