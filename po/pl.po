@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-rc1\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-05-03 22:21+0200\n"
-"PO-Revision-Date: 2013-05-01 10:07+0200\n"
+"POT-Creation-Date: 2013-05-06 15:26+0200\n"
+"PO-Revision-Date: 2013-05-05 13:05+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pl\n"
@@ -31,6 +31,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 1.5.5\n"
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
@@ -187,9 +188,9 @@ msgstr "Wszystkie paski zostały usunięte"
 msgid "%sError: unknown bar \"%s\""
 msgstr "%sBłąd: nieznany pasek \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Bar \"%s\" deleted"
-msgstr "Pasek usunięty"
+msgstr "Pasek \"%s\" usunięty"
 
 #, c-format
 msgid "%sError: unable to set option \"%s\" for bar \"%s\""
@@ -470,13 +471,11 @@ msgstr[0] "dodano %d nowy klawisz"
 msgstr[1] "dodano %d nowe klawisze (kontekst: \"%s\")"
 msgstr[2] "dodano %d nowych klawiszy (kontekst: \"%s\")"
 
-#, fuzzy
 msgid "Saved layouts:"
-msgstr "Zapisano układ dla buforów:"
+msgstr "Zapisane układy:"
 
-#, fuzzy
 msgid " (current layout)"
-msgstr "aktualna wartość"
+msgstr " (aktualny układ)"
 
 msgid "No layout saved"
 msgstr "Nie zapisano żadnego układu"
@@ -484,39 +483,37 @@ msgstr "Nie zapisano żadnego układu"
 #. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows"
 #, c-format
 msgid "Layout of %s%s%s saved in \"%s\" (current layout: %s)"
-msgstr ""
+msgstr "Układ dla %s%s%s zapisano w \"%s\" (obecny układ: %s)"
 
-#, fuzzy
 msgid "buffers"
-msgstr "bufor"
+msgstr "bufory"
 
-#, fuzzy
 msgid "windows"
-msgstr "okno"
+msgstr "oknoa"
 
 msgid "Layout of buffers+windows reset (current layout: -)"
-msgstr ""
+msgstr "Układ buforów+okien został zresetowany (obecny układ: -)"
 
 #, c-format
 msgid "Layout \"%s\" deleted (current layout: %s)"
-msgstr ""
+msgstr "Skasowano układ \"%s\" (obecny układ: %s)"
 
 #. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows"
-#, fuzzy, c-format
+#, c-format
 msgid "Layout of %s%s%s reset in \"%s\""
-msgstr "%sTemat kanału %s%s%s to %s"
+msgstr "Układ dla %s%s%s zresetowany w \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError: unknown layout \"%s\""
-msgstr "%sBłąd: nieznany pasek \"%s\""
+msgstr "%sBłąd: nieznany układ \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError: layout \"%s\" already exists for \"%s\" command"
-msgstr "%s%s: serwer \"%s\" już istnieje dla komendy \"%s\""
+msgstr "%sBłąd: układ \"%s\" już istnieje dla komendy \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Layout \"%s\" has been renamed to \"%s\""
-msgstr "Zmieniono nazwę filtru z \"%s\" na \"%s\""
+msgstr "Zmieniono nazwę układu \"%s\" na \"%s\""
 
 msgid "Mouse enabled"
 msgstr "Obsługa myszy włączona"
@@ -1217,7 +1214,6 @@ msgstr ""
 "list || set <wtyczka> <poziom> || dump [<wtyczka>] || buffer|color|infolists|"
 "memory|tags|term|windows || mouse|cursor [verbose] || hdata [free]"
 
-#, fuzzy
 msgid ""
 "     list: list plugins with debug levels\n"
 "      set: set debug level for plugin\n"
@@ -1249,6 +1245,7 @@ msgstr ""
 "logiem\n"
 "    color: wyświetla informacje na temat obecnych par kolorów\n"
 "   cursor: przełącza debugowanie dla trybu kursora\n"
+"     dirs: wyświetla katalogi\n"
 "    hdata: wyświetla informacje o hdata (z free: usuwa wszystkie hdata z "
 "pamięci)\n"
 "    hooks: wyświetla informacje o hooks\n"
@@ -1265,7 +1262,6 @@ msgstr "przetwarza wyrażenie i wysyła wynik do buforu"
 msgid "[-n] <expression> || [-n] <expression1> <operator> <expression2>"
 msgstr "[-n] <wyrażenie> || [-n] <wyrażenie1> <operator> <wyrażenie2>"
 
-#, fuzzy
 msgid ""
 "        -n: display result without sending it to buffer (debug mode)\n"
 "expression: expression to evaluate, variables with format ${variable} are "
@@ -1326,7 +1322,7 @@ msgid ""
 "  /eval -n abcd !~ abc                    ==> 0"
 msgstr ""
 "        -n: wyświetla wynik bez wysyłania go do buforu (tryb debugowania)\n"
-"wyra zenie: wyrażenie do przetworzenia, zmienne o formacie ${zmienna} są "
+"wyrażenie: wyrażenie do przetworzenia, zmienne o formacie ${zmienna} są "
 "zastępowane (zobacz niżej)\n"
 "  operator: operator logiczny lub porównania:\n"
 "            - operatory logiczne:\n"
@@ -1355,7 +1351,7 @@ msgstr ""
 "${zmienna}, według priorytetu zmienną może być:\n"
 "  1. nazwa opcji (plik.sekcja.opcja)\n"
 "  2. nazwa zmiennej lokalnej w buforze\n"
-"  3. nazwa/zmienna hdata (wartość jest automatycznie konwertowana na ciąg "
+"  3. nazwa hdata/zmienna (wartość jest automatycznie konwertowana na ciąg "
 "znaków), domyślnie \"window\" i \"buffer\" wskazują na aktualne okno/bufor.\n"
 "Format dla hdata może być jednym z poniższych:\n"
 "  hdata.zmienna1.zmienna2...: inicjuje hdata (wskaźnik musi być znany), "
@@ -1397,7 +1393,6 @@ msgstr ""
 "list || enable|disable|toggle [<nazwa>] || add <nazwa> <bufor>[,<bufor>...] "
 "<tagi> <regex> || del <nazwa>|-all"
 
-#, fuzzy
 msgid ""
 "   list: list all filters\n"
 " enable: enable filters (filters are enabled by default)\n"
@@ -1483,14 +1478,14 @@ msgstr ""
 "Domyślny skrót klawiszowy alt+'=' włącza/wyłącza filtrowanie.\n"
 "\n"
 "Najczęściej używane tagi:\n"
-"  no_filter, no_highlight, log0..log9 (poziom logowania),\n"
+"  no_filter, no_highlight, no_log, log0..log9 (poziom logowania),\n"
 "  notify_none, notify_message, notify_private, notify_highlight,\n"
 "  nick_xxx (xxx to nick w wiadomości), prefix_nick_ccc (ccc to kolor "
 "nicka),\n"
 "  irc_xxx (xxx to nazwa komendy lub numer, zobacz /server raw),\n"
 "  irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, "
 "irc_smart_filter, away_info.\n"
-"Aby zobaczyć listę tagów w liniach buforów: /debug tags\n"
+"Aby zobaczyć listę tagów w liniach buforów wykonaj: /debug tags\n"
 "\n"
 "Przykłady:\n"
 "  użyj inteligentnego filtru na  IRCu we wszystkich buforach:\n"
@@ -1790,14 +1785,13 @@ msgstr ""
 msgid "save/apply/reset layout for buffers and windows"
 msgstr "zapisz/zatwierdź/zresetuj układ buforów i okien"
 
-#, fuzzy
 msgid ""
 "save [<name>] [buffers|windows] || apply [<name>] [buffers|windows] || leave "
 "|| reset [<name>] [buffers|windows] || rename <name> <new_name>"
 msgstr ""
-"save [buffers|windows] || apply [buffers|windows] || reset [buffers|windows]"
+"save [<nazwa>] [buffers|windows] || apply [<nazwa>] [buffers|windows]|| "
+"leave || reset [<nazwa>] [buffers|windows] || rename <nazwa> <nowa_nazwa>"
 
-#, fuzzy
 msgid ""
 "   save: save current layout\n"
 "  apply: apply saved layout\n"
@@ -1813,11 +1807,16 @@ msgid ""
 msgstr ""
 "   save: zapisuje obecny układ\n"
 "  apply: stosuje zapisany układ\n"
-"  reset: usuwa zapisany układ\n"
+"  leave: opuszcza obecny układ (nie aktualizuje żadnego układu)\n"
+"  reset: resetuje bufory i/lub okna w zapisanym układzie\n"
+"         (jeśli zarówno bufory jak i okna zostaną zresetowane, układ jest "
+"kasowany)\n"
+" rename: zmienia nazwę układu\n"
+"   nazwa: nazwa zapisanego układu (domyślnie \"default\")\n"
 "buffers: zapisuje/stosuje tylko bufory (kolejność buforów)\n"
 "windows: zapisuje/stosuje tylko okna (bufory wyświetlane w każdym oknie)\n"
 "\n"
-"Komenda wywołana bez argumentów wyświetli zapisany układ."
+"Komenda wywołana bez argumentów wyświetli zapisane układy."
 
 msgid "mouse control"
 msgstr "kontrola myszy"
@@ -2515,9 +2514,8 @@ msgid "areas (\"chat\" or bar name) for free cursor movement"
 msgstr ""
 "obszary (\"chat\" albo nazwa paska) dla wolnego przemieszczania się kursora"
 
-#, fuzzy
 msgid "names of layouts"
-msgstr "nazwy pasków"
+msgstr "nazwy układów"
 
 msgid ""
 "Warning: you should now issue /save to write \"save_config_on_exit\" option "
@@ -2902,13 +2900,12 @@ msgstr ""
 msgid "jump back to initial buffer after reaching end of hotlist"
 msgstr "wróć do początkowego buforu po dotarciu na koniec hotlisty"
 
-#, fuzzy
 msgid "text to display before nick in prefix of message, example: \"<\""
-msgstr "teks wyświetlany przed nickiem w oknie rozmowy"
+msgstr "teks wyświetlany przed nickiem w prefiksie wiadomości, przykład: \"<\""
 
-#, fuzzy
 msgid "text to display after nick in prefix of message, example: \">\""
-msgstr "teks wyświetlany za nickiem w oknie rozmowy"
+msgstr ""
+"teks wyświetlany za nickiem w prefiksie wiadomości, przykład: przykład: \">\""
 
 msgid "enable mouse support"
 msgstr "włącza wsparcie dla myszy"
@@ -2991,6 +2988,9 @@ msgid ""
 "the space that should be displayed here); if disabled, the truncature char "
 "replaces last char of text"
 msgstr ""
+"znak wyświetlany jako skrócenie (domyślnie \"+\") po tekście (zamiast "
+"spacji, która powinna zostać wyświetlona); jeśli wyłączone, znak zastępuje "
+"ostatni znak tekstu"
 
 msgid ""
 "prefix alignment for buffer name, when many buffers are merged with same "
@@ -3193,14 +3193,15 @@ msgstr ""
 "kolor tekstu nicków (oddzielona przecinkami lista kolorów, tło jest "
 "dozwolone za pomocą formatu: \"fg:bg\" na przykład: \"lightred:blue\")"
 
-#, fuzzy
 msgid "color for nick prefix (string displayed before nick in prefix)"
 msgstr ""
-"kolor przedrostka nicka (przedrostek to ciąg wyświetlany przed nickiem)"
+"kolor przedrostka nicka (przedrostek to ciąg wyświetlany przed nickiem w "
+"prafiksie)"
 
-#, fuzzy
 msgid "color for nick suffix (string displayed after nick in prefix)"
-msgstr "kolor przyrostka nicka (przyrostek to ciąg wyświetlany za nickiem)"
+msgstr ""
+"kolor przyrostka nicka (przyrostek to ciąg wyświetlany za nickiem w "
+"prefiksie)"
 
 msgid "text color for local nick in chat window"
 msgstr "kolor lokalnego nicka w oknie rozmowy"
@@ -3320,13 +3321,12 @@ msgstr ""
 "kursorem; w innym wypadku słowo bazowe kończy się na pierwszej spacji po "
 "kursorze"
 
-#, fuzzy
 msgid ""
 "default completion template (please see documentation for template codes and "
 "values: plugin API reference, function \"weechat_hook_command\")"
 msgstr ""
 "domyślny szablon dopełnień (zajrzyj do dokumentacji w celu uzyskania kodów i "
-"wartości szablonów)"
+"wartości szablonów: opis API wtyczek, funkcja \"weechat_hook_command\")"
 
 msgid ""
 "add space after nick completion (when nick is not first word on command line)"
@@ -3510,11 +3510,10 @@ msgid "Memory usage not available (function \"mallinfo\" not found)"
 msgstr "Zużycie pamięci niedostępne (nie znaleziono funkcji \"mallinfo\")"
 
 msgid "Directories:"
-msgstr ""
+msgstr "Katalogi:"
 
-#, fuzzy
 msgid "default"
-msgstr "domyślnie: "
+msgstr "domyślny"
 
 #, c-format
 msgid "%sError: another command \"%s\" already exists for plugin \"%s\""
@@ -3978,7 +3977,7 @@ msgstr "tworzy alias do komendy"
 msgid "[-completion <completion>] <alias> [<command> [;<command>...]]"
 msgstr "[-completion <dopełnienie>] <alias> [<komenda> [;<komenda>...]]"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "completion: completion for alias (optional, by default completion is done "
 "with target command)\n"
@@ -4023,20 +4022,21 @@ msgstr ""
 "Bez podania argumentu komenda wyświetla listę wszystkich zdefiniowanych "
 "aliasów.\n"
 "\n"
-"Ważne: dla komend specjalne zmienne zastępowane odpowiednimi wartościami:\n"
+"Ważne: dla komend specjalne zmienne są zastępowane odpowiednimi "
+"wartościami:\n"
 "        $n: argument 'n' (pomiędzy 1 i 9)\n"
 "       $-m: argumenty od 1 do 'm'\n"
 "       $n-: argumenty od 'n' do ostatniego\n"
 "      $n-m: argumenty od 'n' od 'm'\n"
 "        $*: wszystkie argumenty\n"
 "        $~: ostatni argument\n"
-"     $nick: aktualny nick\n"
-"  $channel: aktualny kanał\n"
-"   $server: aktualny serwer\n"
+"      $var: gdzie \"var\" to zmienna lokalna buforu (zobacz /buffer "
+"localvar)\n"
+"            przykłady: $nick, $channel, $server, $plugin, $name\n"
 "\n"
 "Do usunięcia aliasu służy komenda /unalias.\n"
 "\n"
-"Przykłay:\n"
+"Przykłady:\n"
 "  alias /split do poziomego podziału:\n"
 "    /alias split /window splith\n"
 "  alias /hello pisze \"hello\" na wszystkich kanałach poza #weechat:\n"
@@ -4132,15 +4132,13 @@ msgstr "Aspell wyłączony"
 msgid "aspell plugin configuration"
 msgstr "konfiguracja wtyczki aspell"
 
-#, fuzzy
 msgid ""
 "enable|disable|toggle || listdict || setdict <dict>[,<dict>...] || deldict "
 "|| addword [<dict>] <word>"
 msgstr ""
-"enable|disable|toggle || listdict || setdict <język> || deldict || addword "
-"[<język>] <słowo>"
+"enable|disable|toggle || listdict || setdict <język>[,<język>...] || deldict "
+"|| addword [<język>] <słowo>"
 
-#, fuzzy
 msgid ""
 "  enable: enable aspell\n"
 " disable: disable aspell\n"
@@ -4165,7 +4163,8 @@ msgstr ""
 " disable: wyłącza aspell\n"
 "  toggle: przełącza aspell\n"
 "listdict: pokazuje zainstalowane słowniki\n"
-" setdict: ustawia słownik dla obecnego buforu\n"
+" setdict: ustawia słownik dla obecnego buforu (kilka słowników może być "
+"podanych po przecinku)\n"
 " deldict: usuwa słownik używany w obecnym buforze\n"
 " addword: dodaje słowo do osobistego słownika aspell\n"
 "\n"
@@ -4179,13 +4178,11 @@ msgstr ""
 "\n"
 "Domyślny skrót klawiszowy przełączający aspell to alt-s."
 
-#, fuzzy
 msgid "list of all languages supported by aspell"
-msgstr "lista wspieranych przez aspell języków"
+msgstr "lista wszystkich języków wspieranych przez aspell"
 
-#, fuzzy
 msgid "list of aspell installed dictionaries"
-msgstr "lista zainstalowanych skryptów (z repozytorium)"
+msgstr "lista zainstalowanych słowników aspell"
 
 msgid "comma separated list of dictionaries to use on this buffer"
 msgstr "oddzielona przecinkami lista słowników do użycia w tym buforze"
@@ -4251,14 +4248,15 @@ msgid ""
 msgstr ""
 "minimalna długość słowa do sprawdzenia ( 0 - sprawdzaj wszystkie słowa)"
 
-#, fuzzy
 msgid "comma-separated list of dictionaries used in buffer"
-msgstr "oddzielona przecinkami lista słowników do użycia w tym buforze"
+msgstr "oddzielona przecinkami lista słowników używanych w buforze"
 
 msgid ""
 "buffer pointer (\"0x12345678\") or buffer full name (\"irc.freenode.#weechat"
 "\")"
 msgstr ""
+"wskaźnik na bufor (\"0x12345678\") lub jego pełna nazwa (\"irc.freenode."
+"#weechat\")"
 
 #, c-format
 msgid "%s: warning: dictionary \"%s\" is not available on your system"
@@ -4432,9 +4430,10 @@ msgstr "%s: otwarto strumień"
 msgid "%s%s: unable to open pipe (%s) for reading"
 msgstr "%s%s: nie można otworzyć do odczytu strumienia (%s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to create pipe for remote control (%s): error %d %s"
-msgstr "%s%s: nie można utworzyć strumienia do zdalnego sterowania (%s)"
+msgstr ""
+"%s%s: nie można utworzyć strumienia do zdalnego sterowania (%s): błąd %d %s"
 
 #, c-format
 msgid "%s: pipe closed"
@@ -6045,24 +6044,24 @@ msgid "password for server"
 msgstr "hasło dla serwera"
 
 #. TRANSLATORS: please keep words "client capabilities" between brackets if translation is different (see fr.po)
-#, fuzzy
 msgid ""
 "comma-separated list of client capabilities to enable for server if they are "
 "available; capabilities supported by WeeChat are: multi-prefix, userhost-in-"
 "names (example: \"multi-prefix,userhost-in-names\")"
 msgstr ""
-"oddzielona przecinkami lista opcji włączanych dla serwera, jeśli są dostępne "
-"(na przykład \"multi-prefix,extended-join\")"
+"oddzielona przecinkami lista opcji włączanych dla serwera, jeśli są "
+"dostępne; opcje wspierane przez WeeChat: multi-prefix, userhost-in-names "
+"(przykład: \"multi-prefix,userhost-in-names\")"
 
-#, fuzzy
 msgid ""
 "mechanism for SASL authentication: \"plain\" for plain text password, \"dh-"
 "blowfish\" for blowfish crypted password, \"dh-aes\" for AES crypted "
 "password, \"external\" for authentication using client side SSL cert"
 msgstr ""
 "mechanizm autentykacji SASL: \"plain\" dla hasła w czystym tekście, \"dh-"
-"blowfish\" dla szyfrowanego hasła, \"external\" dla uwierzytelnienia za "
-"pomocą certyfikatu SSL po stronie klienta"
+"blowfish\" dla hasła szyfrowanego za pomocą blowfish, \"dh-aes\" dla hasła "
+"szyfrowanego za pomocą AES, \"external\" dla uwierzytelnienia za pomocą "
+"certyfikatu SSL po stronie klienta"
 
 msgid "username for SASL authentication"
 msgstr "nazwa użytkownika dla uwierzytelniania SASL"
@@ -6239,9 +6238,8 @@ msgstr ""
 msgid "merge server buffers"
 msgstr "połącz bufory serwerów"
 
-#, fuzzy
 msgid "merge private buffers"
-msgstr "połącz bufory serwerów"
+msgstr "połącz bufory prywatne"
 
 msgid ""
 "force position of new channel in list of buffers (none = default position "
@@ -6277,7 +6275,6 @@ msgstr ""
 "wyświetl spację jeśli wyświetlanie atrybutów dla nicków jest włączone, ale "
 "nick nie ma atrybutu (brak opa, voice, ...)"
 
-#, fuzzy
 msgid ""
 "force color for some nicks: hash computed with nickname to find color will "
 "not be used for these nicks (format is: \"nick1:color1;nick2:color2\"); look "
@@ -6339,6 +6336,9 @@ msgid ""
 "channel creation date, 332 = topic, 333 = nick/date for topic, 366 = names "
 "on channel"
 msgstr ""
+"oddzielona przecinkami lista wiadomości wyświetlanych po wejściu na kanał: "
+"329 = data utworzenia, 332 = temat, 333 = autor/data tematu, 366 = osoby na "
+"kanale"
 
 msgid "display old topic when channel topic is changed"
 msgstr "wyświetl stary temat, kiedy zmieniany jest temat kanału"
@@ -6440,6 +6440,10 @@ msgid ""
 "message is sent, for example to hide password in message displayed by \"/msg "
 "nickserv identify password\", example: \"nickserv,nickbot\""
 msgstr ""
+"oddzielona przecinkami lista nicków, dla których hasła będą ukrywane podczas "
+"wysyłania wiadomości, na przykład w celu ukrycia hasła w wiadomości "
+"wyświetlanej przez \"/msg nickserv identify hasło\", przykład: \"nickserv,"
+"nickbot\""
 
 msgid ""
 "display notices as private messages (if auto, use private buffer if found)"
@@ -6501,15 +6505,20 @@ msgid ""
 "join is unmasked, as well as nick changes after this join (0 = disable: "
 "never unmask a join)"
 msgstr ""
+"opóźnienie dla odmaskowywania wiadomości o wejściu na kanał odfiltrowanych "
+"przez tag \"irc_smart_filter\" (w minutach): jeśli ktoś wszedł na kanał "
+"maksymalnie N minut temu i powiedział coś na kanale (wiadomość, "
+"powiadomienie lub aktualizacja tematu), jego wejście zostaje odmaskowane, "
+"podobnie jak zmiany nicków po jego wejściu (0 = wyłączone: nigdy nie "
+"odmaskowuj)"
 
 #. TRANSLATORS: please do not translate "part" and "quit"
 msgid "enable smart filter for \"part\" and \"quit\" messages"
 msgstr "włącza inteligentne filtrowanie dla wiadomości \"part\" oraz \"quit\""
 
 #. TRANSLATORS: please do not translate "nick"
-#, fuzzy
 msgid "enable smart filter for \"nick\" messages (nick changes)"
-msgstr "włącza mądre filtrowanie dla wiadomości \"nick\""
+msgstr "włącza mądre filtrowanie dla wiadomości \"nick\" (zmiana nicka)"
 
 msgid "strip colors in topic (used only when displaying buffer title)"
 msgstr "usuń kolory w tematach (używane przy wyświetlaniu tytułu bufora)"
@@ -6626,11 +6635,12 @@ msgstr ""
 msgid "minimum lag to show (in milliseconds)"
 msgstr "minimalne pokazywane opóźnienie (w milisekundach)"
 
-#, fuzzy
 msgid ""
 "reconnect to server if lag is greater than this value (in seconds, 0 = never "
 "reconnect)"
-msgstr "rozłącz po dużym opóźnieniu (w minutach, 0 = nie rozłączaj nigdy)"
+msgstr ""
+"łączy ponownie, jeśli serwer posiada opóźnienie większe niż ta wartość (w "
+"sekundach, 0 = nigdy nie łącz ponownie)"
 
 msgid ""
 "interval between two refreshs of lag item, when lag is increasing (in "
@@ -7309,9 +7319,9 @@ msgstr "%s%s: przekroczono czas połączenia (nie otrzymano wiadomości 001)"
 msgid "%s%s: sasl authentication timeout"
 msgstr "%s%s: przekroczono czas uwierzytelniania sasl"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: lag is high, reconnecting to server %s%s%s"
-msgstr "%s%s: za duże opóźnienie, rozłączam z serwerem..."
+msgstr "%s%s: za duże opóźnienie, łączę ponownie z serwerem %s%s%s"
 
 #, c-format
 msgid "%s%s: reconnecting to server in %d %s, %d %s"
@@ -7704,9 +7714,10 @@ msgstr ""
 
 msgid "text to write before nick in prefix of message, example: \"<\""
 msgstr ""
+"tekst wyświetlany przed nickiem w przedrostku wiadomości, przykład: \"<\""
 
 msgid "text to write after nick in prefix of message, example: \">\""
-msgstr ""
+msgstr "tekst wyświetlany za nickiem w przedrostku wiadomości, przykład: \">\""
 
 msgid "list of logger buffers"
 msgstr "lista logowanych buforów"
@@ -8084,17 +8095,18 @@ msgstr ""
 msgid "%s%s: TLS handshake timeout for client %s%s%s"
 msgstr "%s%s: upłynął czas na nawiązanie połączenia TLS dla klienta %s%s%s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid websocket handshake received for client %s%s%s"
-msgstr "%s%s: upłynął czas na nawiązanie połączenia TLS dla klienta %s%s%s"
+msgstr ""
+"%s%s: otrzymano niepoprawny pakiet dla gniazda webowego od klienta %s%s%s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: origin \"%s\" not allowed for websocket"
-msgstr "%s%s: adres IP \"%s\" nie posiada zezwolenia na połączenie"
+msgstr "%s%s: źródło \"%s\" niedozwolone dla gniazda webowego"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error decoding websocket frame for client %s%s%s"
-msgstr "%s%s: odczyt danych z gniazda dla klienta %s%s%s: błąd %d %s"
+msgstr "%s%s: błąd dekodowania rami gniazda webowego dla klienta %s%s%s"
 
 #, c-format
 msgid "%s%s: reading data on socket for client %s%s%s: error %d %s"
@@ -8184,7 +8196,6 @@ msgstr ""
 "list|listfull|listrelay || add [ipv4.][ipv6.][ssl.]<protokół.nazwa> <port> "
 "|| del [ipv4.][ipv6.][ssl.]<protokół.nazwa> || raw || kluczSSL"
 
-#, fuzzy
 msgid ""
 "         list: list relay clients (only active relays)\n"
 "     listfull: list relay clients (verbose, all relays)\n"
@@ -8233,7 +8244,10 @@ msgstr ""
 "         ipv6: wymusza użycie IPv6\n"
 "          ssl: włącza SSL\n"
 "protokół.nazwa: protokół i nazwa dla relay:\n"
-"                 - protokół \"irc\": nazwą jest dzielony serwer\n"
+"                 - protokół \"irc\": nazwą jest dzielony serwer "
+"(opcjonalnie, jeśli nie zostanie podana, nazwa serwera musi zostać "
+"wysłanaprzez klienta w komendzie\"PASS\", w formacie: \"PASS serwer:hasło"
+"\")\n"
 "                 - protokół \"weechat\" (nazwa nie jest używana)\n"
 "         port: port używany przez relay\n"
 "          raw: otwiera bufor z nieprzetworzonymi danymi Relay\n"
@@ -8247,6 +8261,8 @@ msgstr ""
 "    /relay add irc.freenode 8000\n"
 "  pośrednik irc dla serwera \"freenode\", z SSL:\n"
 "    /relay add ssl.irc.freenode 8001\n"
+"  pośrednik irc dla wszystkich serwerów (klient wybiera) z SSL:\n"
+"    /relay add ssl.irc 8002\n"
 "  protokół weechat:\n"
 "    /relay add weechat 9000\n"
 "  protokół weechat z SSL:\n"
@@ -8376,6 +8392,10 @@ msgid ""
 "\"(?-i)\" at beginning to make it case sensitive), example: \"^http://(www"
 "\\.)?example\\.(com|org)\""
 msgstr ""
+"wyrażenie regularne ze źródłami dozwolonymi dla gniazd webowych (nie "
+"wrażliwe na wielkość znaków, umieszczenie \"(?-i)\" na początku sprawi, że "
+"wielość znaków będzie miała znaczenie), przykład: \"^http://(www\\.)?przykład"
+"\\.(com|org)\""
 
 msgid "maximum number of lines in backlog per IRC channel (0 = unlimited)"
 msgstr ""
@@ -8434,17 +8454,17 @@ msgstr "Nieprzetworzone wiadomości relay"
 msgid "%s: socket closed for %s (port %d)"
 msgstr "%s: gniazdo zamknięte dla %s (port %d)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot accept client on port %d (%s): error %d %s"
-msgstr "%s%s: nie można zaakceptować klienta na porcie %d (%s)"
+msgstr "%s%s: nie można zaakceptować klienta na porcie %d (%s): błąd %d %s"
 
 #, c-format
 msgid "%s%s: IP address \"%s\" not allowed for relay"
 msgstr "%s%s: adres IP \"%s\" nie posiada zezwolenia na połączenie"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot set socket option \"%s\" to %d: error %d %s"
-msgstr "%s%s: nie można utworzyć gniazda: błąd %d %s"
+msgstr "%s%s: nie można ustawić opcji gniazda \"%s\" na %d: błąd %d %s"
 
 #, c-format
 msgid "%s%s: cannot create socket: error %d %s"
@@ -8454,13 +8474,13 @@ msgstr "%s%s: nie można utworzyć gniazda: błąd %d %s"
 msgid "%s%s: try /set relay.network.ipv6 off"
 msgstr "%s%s: spróbuj /set relay.network.ipv6 off"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot \"bind\" on port %d (%s): error %d %s"
-msgstr "%s%s: błąd podczas \"bind\" na porcie %d (%s)"
+msgstr "%s%s: nie można wykonać \"bind\" na porcie %d (%s): błąd %d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot \"listen\" on port %d (%s): error %d %s"
-msgstr "%s%s: nie można zaakceptować klienta na porcie %d (%s)"
+msgstr "%s%s: nie można wykonać \"listen\" na porcie %d (%s): błąd %d %s"
 
 #, c-format
 msgid "%s: listening on port %d (relay: %s, %s, max %d clients)"
@@ -8543,7 +8563,6 @@ msgstr ""
 "list|listdefault || add <nazwa> <modyfikatory> <grupy> <regex> || del "
 "<nazwa>|-all [<nazwa>...] || default -yes"
 
-#, fuzzy
 msgid ""
 "       list: list all rmodifiers\n"
 "listdefault: list default rmodifiers\n"
@@ -8572,8 +8591,9 @@ msgstr ""
 "        add: dodaje rmodifier\n"
 "       nazwa: nazwa rmodifiera\n"
 "  modyfikatory: oddzielona przecinkiem lista modyfikatorów\n"
-"     grupy: akcja na znalezionych grupach: oddzielona przecinkami lista grup "
-"(od 1 do 9) z opcjonalnym znakiem \"*\" po numerze, aby ukryć grupę\n"
+"     grupy: akcja na grupach przechwyconych w wyrażeniu regularnym (wewnątrz "
+"nawiasów): oddzielona przecinkami lista grup (od 1 do 9) z opcjonalnym "
+"znakiem \"*\" po numerze, aby ukryć grupę\n"
 "      regex: wyrażenie regularne (wielkość znaków nie ma znaczenia, jeśli "
 "poprzedzone \"(?-i)\" wielkość znaków ma znaczenie)\n"
 "        del: usuwa rmodifier\n"
@@ -8765,9 +8785,11 @@ msgstr ""
 "%s%s: ostrzeżenie, niewłaściwy wskaźnik (\"%s\") dla funkcji \"%s\" (skrypt: "
 "%s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: error loading script \"%s\" (spaces or empty name not allowed)"
-msgstr "%s: błąd podczas ładowania skryptu \"%s\" (za mało pamięci)"
+msgstr ""
+"%s: błąd podczas ładowania skryptu \"%s\" (spacje lub pusta nazwa nie są "
+"dozwolone)"
 
 #, c-format
 msgid ""
@@ -8910,13 +8932,13 @@ msgstr "%s: nie znaleziono skryptu \"%s\""
 msgid "%s: script \"%s\" is not installed"
 msgstr "%s: skrypt \"%s\" nie zainstalowany"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: autoload enabled for script \"%s\""
-msgstr "%s: nieznany język dla skryptu \"%s\""
+msgstr "%s: automatyczne ładowanie włączone dla skryptu \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: autoload disabled for script \"%s\""
-msgstr "%s: nieznany język dla skryptu \"%s\""
+msgstr "%s: automatyczne ładowanie wyłączone dla skryptu \"%s\""
 
 #, c-format
 msgid "%s%s: error downloading script \"%s\": %s"
@@ -9013,7 +9035,7 @@ msgstr "Max WeeChat"
 msgid "Alt+key/input: v=back to list d=jump to diff"
 msgstr "Alt+klawisz/wejście: v=wróć do listy d=skocz do diff"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%d/%d scripts (filter: %s) | Sort: %s | Alt+key/input: i=install r=remove "
 "l=load L=reload u=unload A=autoload h=(un)hold v=view script | Input: "
@@ -9021,9 +9043,9 @@ msgid ""
 "left=select right=install/remove"
 msgstr ""
 "%d/%d skrypty (filtry: %s) | Sort: %s | Alt+klawisz/wejście: i=instaluj "
-"r=usuń l=załaduj L=przeładuj u=wyładuj h=(un)hold v=pokaż skrypt | Wejście: "
-"q=zamknij $=odśwież s:x,y=sortuj słowa=filtr *=usuń filtr | Mysz: "
-"lewo=zaznacz prawo=instaluj/usuń"
+"r=usuń l=załaduj L=przeładuj u=wyładuj A=ładuj automatycznie h=(un)hold "
+"v=pokaż skrypt | Wejście: q=zamknij $=odśwież s:x,y=sortuj słowa=filtr "
+"*=usuń filtr | Mysz: lpm=zaznacz ppm=instaluj/usuń"
 
 msgid "Scripts"
 msgstr "Skrypty"
@@ -9031,7 +9053,6 @@ msgstr "Skrypty"
 msgid "WeeChat scripts manager"
 msgstr "Manager skryptów  WeeChat"
 
-#, fuzzy
 msgid ""
 "list [-o|-i] || search <text> || show <script> || load|unload|reload "
 "<script> [<script>...] || autoload|noautoload|toggleautoload <script> "
@@ -9039,10 +9060,10 @@ msgid ""
 "[<script>...] || upgrade || update"
 msgstr ""
 "list [-o|-i] || search <tekst> || show <skrypt> || load|unload|reload "
-"<skrypt> [<skrypt>...] || install|remove|installremove|hold [-q] <skrypt> "
+"<skrypt> [<skrypt>...] || autoload|noautoload|toggleautoload <skrypt> "
+"[<skrypt>...] || install|remove|installremove|hold [-q] <skrypt> "
 "[<skrypt>...] || upgrade || update"
 
-#, fuzzy
 msgid ""
 "          list: list loaded scripts (all languages)\n"
 "            -o: send list of loaded scripts to buffer\n"
@@ -9122,6 +9143,9 @@ msgstr ""
 "         load: ładuje skrypt(y)\n"
 "       unload: wyładowuje skrypt(y)\n"
 "       reload: przeładowuje skrypt(y)\n"
+"      autoload: automatyczne ładowanie skryptu\n"
+"    noautoload: nie ładuj automatycznie skryptu\n"
+"toggleautoload: przełącza automatyczne logowanie\n"
 "      install: instaluje/uaktualnia skrypt(y)\n"
 "       remove: usuwa skrypt(y)\n"
 "installremove: instaluje lub usuwa skrypt(y), w zależności od obecnego "
@@ -9151,6 +9175,7 @@ msgstr ""
 "  alt+l  ładuje skrypt\n"
 "  alt+L  przeładowuje skrypt\n"
 "  alt+u  wyładowuje skrypt\n"
+"  alt+A  automatyczne ładowanie skryptu\n"
 "  alt+h  przełącza stan wstrzymania skryptu\n"
 "  alt+v  wyświetla skrypt\n"
 "\n"
@@ -9345,6 +9370,8 @@ msgid ""
 "autoload scripts installed (make a link in \"autoload\" directory to script "
 "in parent directory)"
 msgstr ""
+"automatycznie ładuj zainstalowane skrypty (tworzy link w katalogu \"autoload"
+"\" do skryptu w katalogu nadrzędnym)"
 
 msgid ""
 "local cache expiration time, in minutes (-1 = never expires, 0 = always "
@@ -9549,9 +9576,9 @@ msgstr "%s%s: nie można uzyskać dostępu do pliku \"%s\""
 msgid "%s%s: could not find address for \"%s\", falling back to local IP"
 msgstr "%s%s: nie można znaleźć adresu dla \"%s\", powracam do lokalnego IP"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot create socket for xfer: error %d %s"
-msgstr "%s%s: nie można utworzyć gniazda: błąd %d %s"
+msgstr "%s%s: nie można utworzyć gniazda dla xfer: błąd %d %s"
 
 #, c-format
 msgid "%s%s: cannot find available port for xfer"
@@ -9757,6 +9784,10 @@ msgid ""
 "automatically accepted; format is \"server.nick\" (for a specific server) or "
 "\"nick\" (for all servers); example: \"freenode.FlashCode,andrew\""
 msgstr ""
+"oddzielona przecinkami lista nicków, od których przychodzące pliki i rozmowy "
+"są automatycznie akceptowane; format to \"serwer.nick\" (dla konkretnego "
+"serwera) lub \"nick\" (dla wszystkich serwerów; przykład \"freenode."
+"FlashCode,andrew\""
 
 msgid "list of xfer"
 msgstr "lista xfer"
@@ -9764,9 +9795,9 @@ msgstr "lista xfer"
 msgid "xfer pointer (optional)"
 msgstr "wskaźnik xfer (opcjonalny)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to create pipe: error %d %s"
-msgstr "%s%s: nie można utworzyć strumienia"
+msgstr "%s%s: nie można utworzyć strumienia: błąd %d %s"
 
 #, c-format
 msgid "%s%s: unable to read local file"
@@ -9792,9 +9823,9 @@ msgstr "%s%s: nie można otrzymać bloku od nadawcy"
 msgid "%s%s: unable to write local file"
 msgstr "%s%s: nie można zapisać pliku"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to send ACK to sender"
-msgstr "%s%s: nie można połączyć z nadawcą"
+msgstr "%s%s: nie można wysłać ACK do nadawcy"
 
 #, c-format
 msgid "%s%s: unable to fork"
@@ -9808,13 +9839,13 @@ msgstr ""
 "%s: wysyłanie pliku do %s (%ld.%ld.%ld.%ld, %s.%s), nazwa: %s (lokalna "
 "nazwa: %s), %llu bajtów (protokół: %s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to create socket for sending file: error %d %s"
-msgstr "%s%s: nie można otworzyć gniazda do wysłania pliku"
+msgstr "%s%s: nie można otworzyć gniazda do wysłania pliku: błąd %d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to set option \"nonblock\" for socket: error %d %s"
-msgstr "%s%s: nie można ustawić opcji \"nonblock\" dla gniazda"
+msgstr "%s%s: nie można ustawić opcji \"nonblock\" dla gniazda: błąd %d %s"
 
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"

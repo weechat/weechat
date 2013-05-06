@@ -56,15 +56,14 @@ Ruby
 
 * Trzeba zdefiniować 'weechat_init' i wywołać 'register' wewnątrz
 * Funkcje są wywoływane za pomocą `Weechat.xxx(arg1, arg2, ...)`
-// TRANSLATION MISSING
-* Due to a limitation of Ruby (15 arguments max by function), the function
-  `Weechat.config_new_option` receives the callbacks in an array of 6 strings
-  (3 callbacks + 3 data strings), so a call to this function looks like:
+* W związku z ograniczeniami Ruby (maksymalnie 15 argumentów dla funkcji), funkcja
+  `Weechat.config_new_option` otrzymuje callbacki w postaci tablicy 6 ciągów
+  (3 callbacki + 3 ciągi danych), wywołanie tej funkcji wygląda następująco:
 
 [source,ruby]
 ----------------------------------------
-Weechat.config_new_option(config, section, "name", "string", "description of option", "", 0, 0,
-                          "value", "value", 0, ["check_cb", "", "change_cb", "", "delete_cb", ""])
+Weechat.config_new_option(config, section, "nazwa", "ciąg", "opis opcji", "", 0, 0,
+                          "wartość", "wartość", 0, ["check_cb", "", "change_cb", "", "delete_cb", ""])
 ----------------------------------------
 
 Lua
@@ -173,8 +172,7 @@ weechat::print "" "Witaj ze skryptu tcl!"
 Ładowanie skryptu
 ~~~~~~~~~~~~~~~~~
 
-// TRANSLATION MISSING
-It is recommended to use the "script" plugin to load scripts, for example:
+Zaleca się używanie wtyczki "script" do ładowania skryptów, na przykład:
 
 ----------------------------------------
 /script load script.py
@@ -185,8 +183,7 @@ It is recommended to use the "script" plugin to load scripts, for example:
 /script load script.scm
 ----------------------------------------
 
-// TRANSLATION MISSING
-Each language has also its own command:
+Każdy język posiada również swoją własną komendę:
 
 ----------------------------------------
 /python load python/skrypt.py
@@ -207,10 +204,9 @@ $ cd ~/.weechat/python/autoload
 $ ln -s ../skrypt.py
 ----------------------------------------
 
-// TRANSLATION MISSING
 [NOTE]
-When installing a script with command `/script install` the link in 'autoload'
-directory is automatically created.
+Podczas instalacji skryptu za pomocą `/script install` automatycznie tworzone jest
+dowiązanie w katalogu 'autoload'.
 
 [[differences_with_c_api]]
 Różnice pomiędzy API dla C
@@ -282,8 +278,7 @@ Prawie wszystkie callbacki muszą zwrócić WEECHAT_RC_OK lub WEECHAT_RC_ERROR
 Callbacki C używają argumentu "data", który jest wskaźnikiem. W API skryptów,
 "data" jest ciągiem o dowolnej wartości (nie jest wskaźnikiem).
 
-// TRANSLATION MISSING
-Example of callback, for each language:
+Przykłady callbacków dla każdego języka:
 
 * python:
 
@@ -726,10 +721,9 @@ Aby pobrać URL (albo wysłać do URL), należy użyć funkcji `hook_process`, l
 Przykład transferu URL bez opcji: strona HTML jest otrzymywana jako "out"
 (standardowe wyjście procesu):
 
-// TRANSLATION MISSING
 [source,python]
 ----------------------------------------
-# Display current stable version of WeeChat.
+# Wyświetla aktualną stabilną wersję WeeChat.
 weechat_version = ""
 
 def weechat_process_cb(data, command, rc, out, err):
@@ -737,16 +731,15 @@ def weechat_process_cb(data, command, rc, out, err):
     if out != "":
         weechat_version += out
     if int(rc) >= 0:
-        weechat.prnt("", "Current WeeChat stable is: %s" % weechat_version)
+        weechat.prnt("", "Obecna wersja stabilna WeeChat: %s" % weechat_version)
     return weechat.WEECHAT_RC_OK
 
 weechat.hook_process("url:http://weechat.org/info/stable/",
                      30 * 1000, "weechat_process_cb", "")
 ----------------------------------------
 
-// TRANSLATION MISSING
 [TIP]
-All infos available about WeeChat are on page http://weechat.org/info
+Wszystkie informacje o WeeChat dostępne są na stronie http://weechat.org/info
 
 Przykładowy transfer URL z opcją: pobranie najnowszej wersji rozwojowej WeeChat
 do pliku '/tmp/weechat-devel.tar.gz':

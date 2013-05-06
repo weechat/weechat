@@ -13,7 +13,7 @@ Ogólne
 ------
 
 [[weechat_name]]
-Skąd się wzieła nazwa "WeeChat"?
+Skąd się wzięła nazwa "WeeChat"?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 "Wee" to akronim rekursywny oznaczającym "Wee Enhanced Environment".
@@ -41,13 +41,13 @@ Niektóre cechy (wersja ≥ 0.3.x):
 * natywna lista nicków
 * lista buforów (skrypt buffers.pl)
 * proxy IRC
-* przekierowanie części komęd IRC
+* przekierowanie części komend IRC
 * przyrostowe wyszukiwanie tekstu w buforach, przeskakiwanie do podświetleń
 * strumień FIFO do zdalnej kontroli
 * wsparcie dla aspell
 * podwójny zestaw znaków (kodowanie/dekodowanie)
 * tworzony od podstaw (nie bazuje na żadnym innym kliencie)
-* multi platformowy
+* multiplatformowy
 * 100% GPL i wolny
 
 Więcej informacji na stronie: http://www.weechat.org/features
@@ -115,7 +115,7 @@ Jest to częsty problem, przeczytaj i sprawdź *WSZYSTKIE* poniższe rozwiązani
    ("`defutf8 on`" w ~/.screenrc lub `screen -U` uruchamiając screena)
 
 [NOTE]
-UTF-8 jest zalecany dla WeeChat. Jeśli korzystasz z locali ISO lub innych,
+UTF-8 jest zalecany dla WeeChat. Jeśli korzystasz z lokalizacji ISO lub innych,
 sprawdź czy *wszystkie* twoje ustawienia (terminal, screen, ..) są ISO,
 a *nie* UTF-8.
 
@@ -131,7 +131,7 @@ W zależności, gdzie uruchamiasz WeeChat, powinieneś uzyskać:
 * jeśli WeeChat jest uruchomiony lokalnie lub na zdalnej maszynie bez screena,
   zależy od używanego terminala: 'xterm', 'xterm-256color', 'rxvt-unicode',
   'rxvt-256color', ...
-* jeśli WeeChat działa w screenie, należy uzyć 'screen' lub 'screen-256color'.
+* jeśli WeeChat działa w screenie, należy użyć 'screen' lub 'screen-256color'.
 
 W razie potrzeby, popraw zmienna TERM: `export TERM="xxx"`.
 
@@ -142,7 +142,7 @@ Podczas używania WeeChat pod screenem/tmuxem pojawiają mi się dziwne, losowe 
 Może to być spowodowane przez złą wartość zmiennej TERM w swojej powłoce (spójrz
 na wynik `echo $TERM` w swoim terminalu, *poza screenem/tmuxem*).
 
-Na przykład, 'xterm-color' może wyświetlać takie dziwne znaki, możesz użyc 'xterm',
+Na przykład, 'xterm-color' może wyświetlać takie dziwne znaki, możesz użyć 'xterm',
 który działa dobrze (jak wiele innych wartości).
 
 W razie potrzeby, popraw zmienna TERM: `export TERM="xxx"`.
@@ -274,7 +274,7 @@ na górę oraz usunąć wyrównanie nicków:
 ----------------------------------------
 
 W WeeChat ≥ 0.3.6 można włączyć opcję "eat_newline_glitch", dzięki której znaki
-nowej linii nie są dodawane na końcu każdej wyświetlanej linii (nie zakłuci to
+nowej linii nie są dodawane na końcu każdej wyświetlanej linii (nie zakłóci to
 zaznaczania urli):
 
 ----------------------------------------
@@ -285,8 +285,7 @@ zaznaczania urli):
 Ta opcja może spowodować pojawienie się błędów. Jeśli doświadczysz takich problemów
 wyłącz tą opcję.
 
-// TRANSLATION MISSING
-Other solution is to use a script: http://www.weechat.org/scripts/stable/tag/url
+Innym rozwiązaniem jest użycie skryptu: http://www.weechat.org/scripts/stable/tag/url
 
 [[change_locale_without_quit]]
 Chcę zmienić język komunikatów wyświetlanych przez WeeChat, ale bez jego zamykania, czy jest to możliwe?
@@ -376,7 +375,7 @@ Następnie przeładować zasoby (`xrdb -override ~/.Xresources`) lub zrestartowa
 Jak mogę zmienić przypisania klawiszy?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Przypisania klawiszy mozna dostosować za pomocą komendy `/key`.
+Przypisania klawiszy można dostosować za pomocą komendy `/key`.
 
 Domyślnie @k(A-)@k(k) pozwala pobrać kod klawiszy i umieścić go w wierszu
 poleceń.
@@ -583,22 +582,19 @@ Więcej informacji: `/help filter` i `/help irc.look.smart_filter`
 Jak mogę filtrować wyświetlane wiadomości podczas wejścia na kanał IRC?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-// TRANSLATION MISSING
-With WeeChat ≥ 0.4.1, you can disable some messages with option
+Dla WeeChat ≥ 0.4.1 można wyłączyć część wiadomości za pomocą opcji
 'irc.look.display_join_message'.
 
-// TRANSLATION MISSING
-For example, to disable names (which is IRC message '366'):
+Na przykład, aby wyłączyć nazwy (wiadomość IRC o numerze '366'):
 
 ----------------------------------------
 /set irc.look.display_join_message "329,332,333"
 ----------------------------------------
 
 [NOTE]
-For help: `/help irc.look.display_join_message`
+Więcej można znaleźć wpisując: `/help irc.look.display_join_message`
 
-// TRANSLATION MISSING
-Another solution is to filter messages on tag:
+Innym rozwiązaniem jest filtrowanie wiadomości po tagu:
 
 * 'irc_366': osoby na kanale
 * 'irc_332,irc_333': temat/data kanału
@@ -766,7 +762,7 @@ Są 3 możliwości:
   (możesz się zapisać na listę mailingową "support" i na niej pisać)
 
 [[gdb_error_threads]]
-Kiedy uruchaiam WeeChat pod gdb dostaję komunikat o wątkach, co mogę z tym zrobić?
+Kiedy uruchamiam WeeChat pod gdb dostaję komunikat o wątkach, co mogę z tym zrobić?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Podczas uruchamiania WeeChat pod gdb, można spotkać się z takim błędem:

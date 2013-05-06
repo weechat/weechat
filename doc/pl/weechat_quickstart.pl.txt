@@ -31,7 +31,7 @@ WeeChat posiada pomoc dla wszystkich komend, wystarczy wywołać:
 Aby otrzymać pomoc dla konkretnej komendy wpisz:
 
 ----------------------------------------
-/help command
+/help komenda
 ----------------------------------------
 
 Do ustawiania opcji służy:
@@ -308,7 +308,7 @@ skrypty).
 Wiele zewnętrznych skryptów (od społeczności) jest dostępnych dla WeeChat:
 http://www.weechat.org/scripts
 
-Możesz zarządzac skryptami w WeeChat dzięki komendzie `/script` (zobacz `/help script`
+Możesz zarządzać skryptami w WeeChat dzięki komendzie `/script` (zobacz `/help script`
 po więcej informacji).
 
 
