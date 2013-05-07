@@ -618,7 +618,7 @@ weechat_python_load (const char *filename)
     python_current_interpreter = Py_NewInterpreter ();
 #if PY_MAJOR_VERSION >= 3
     /* python >= 3.x */
-    len = strlen (argv[0]);
+    len = mbstowcs (NULL, argv[0], 0) + 1;
     wargv[0] = malloc ((len + 1) * sizeof (wargv[0][0]));
     if (wargv[0])
     {
