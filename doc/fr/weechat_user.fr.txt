@@ -767,7 +767,7 @@ Pour une expression, les variables suivantes sont disponibles :
 
 * `${active}` : vrai si la fenêtre est active
 * `${inactive}` : vrai si la fenêtre est inactive
-* `$[nicklist}` : vrai si le tampon affiché dans la fenêtre a une liste de
+* `${nicklist}` : vrai si le tampon affiché dans la fenêtre a une liste de
   pseudos
 
 Les pointeurs suivants sont disponibles :

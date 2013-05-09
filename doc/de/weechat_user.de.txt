@@ -752,7 +752,7 @@ Für den Ausdruck sind folgende Variablen verfügbar:
 
 * `${active}`: wahr, wenn Fenster aktiv ist
 * `${inactive}`: wahr, wenn Fenster inaktiv ist
-* `$[nicklist}`: wahr, wenn der Buffer im Fenster eine Nicklist anzeigt.
+* `${nicklist}`: wahr, wenn der Buffer im Fenster eine Nicklist anzeigt.
 
 Folgende Zeiger sind verfügbar:
 

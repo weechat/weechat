@@ -760,7 +760,7 @@ For the expression, following variables are available:
 
 * `${active}`: true if window is active
 * `${inactive}`: true if window is inactive
-* `$[nicklist}`: true if buffer displayed in window has a nicklist
+* `${nicklist}`: true if buffer displayed in window has a nicklist
 
 Following pointers are available:
 
