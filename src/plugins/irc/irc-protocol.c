@@ -1135,11 +1135,19 @@ IRC_PROTOCOL_CALLBACK(notice)
         {
             /* notice for user */
             notify_private = 0;
-            if (nick
+            if (server->is_connected
+                && nick
                 && (weechat_strcasecmp (nick, "nickserv") != 0)
                 && (weechat_strcasecmp (nick, "chanserv") != 0)
                 && (weechat_strcasecmp (nick, "memoserv") != 0))
             {
+                /*
+                 * add tag "notify_private" only if:
+                 *   - server is connected (message 001 already received)
+                 * and:
+                 *   - notice is from a non-empty nick different from
+                 *     nickserv/chanserv/memoserv
+                 */
                 notify_private = 1;
             }
 
