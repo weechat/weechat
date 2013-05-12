@@ -4127,6 +4127,8 @@ IRC_PROTOCOL_CALLBACK(366)
     if (ptr_channel)
         weechat_hashtable_set (ptr_channel->join_msg_received, command, "1");
 
+    weechat_bar_item_update ("input_prompt");
+
     return WEECHAT_RC_OK;
 }
 
