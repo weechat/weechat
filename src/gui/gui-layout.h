@@ -22,7 +22,7 @@
 
 #define GUI_LAYOUT_DEFAULT_NAME "default"
 
-/* layout reserved for internal use */
+/* layouts reserved for internal use */
 #define GUI_LAYOUT_ZOOM    "_zoom"
 #define GUI_LAYOUT_UPGRADE "_upgrade"
 
