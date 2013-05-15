@@ -1050,6 +1050,9 @@ gui_layout_add_to_infolist (struct t_infolist *infolist,
     if (!ptr_item)
         return 0;
 
+    if (!infolist_new_var_integer (ptr_item, "current_layout",
+                                   (gui_layout_current == layout) ? 1 : 0))
+        return 0;
     if (!infolist_new_var_string (ptr_item, "name", layout->name))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "internal_id", layout->internal_id))
