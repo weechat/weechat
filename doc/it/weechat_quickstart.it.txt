@@ -146,9 +146,8 @@ Per impostare la connessione automatica al server all'avvio:
 /set irc.server.oftc.autoconnect on
 ----------------------------------------
 
-// TRANSLATION MISSING
-If SASL is available on server, you can use it for authentication (you will be
-identified before you join channels):
+Se SASL è disponibile sul server, è possibile usarlo per l'autenticazione
+(l'autenticazione avviene prima dell'ingresso nei canali):
 
 ----------------------------------------
 /set irc.server_default.sasl_mechanism dh-blowfish
@@ -156,9 +155,8 @@ identified before you join channels):
 /set irc.server.oftc.sasl_password "xxxxxxx"
 ----------------------------------------
 
-// TRANSLATION MISSING
-To run a command after connection to server, for example to authenticate
-with nickserv (only if you don't use SASL for authentication):
+Per eseguire un comando dopo la connessione al server, ad esempio per
+autenticarsi con nickserv (solo se non viene usato SASL per l'autenticazione):
 
 ----------------------------------------
 /set irc.server.oftc.command "/msg nickserv identify xxxxxxx"
@@ -322,9 +320,8 @@ o script).
 Sono disponibili molti script esterni (dai contributori) per WeeChat:
 http://www.weechat.org/scripts
 
-// TRANSLATION MISSING
-You can manage scripts in WeeChat with command `/script` (see `/help script`
-for more info).
+È possibile gestire gli script in WeeChat con il comando `/script` (consultare
+`/help script` per maggiori informazioni).
 
 
 [[more_doc]]

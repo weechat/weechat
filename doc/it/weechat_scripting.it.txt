@@ -57,10 +57,10 @@ Ruby
 
 * E necessario definire 'weechat_init' e chiamare 'register' all'interno
 * Le funzioni sono chiamate con `Weechat.xxx(arg1, arg2, ...)`
-// TRANSLATION MISSING
-* Due to a limitation of Ruby (15 arguments max by function), the function
-  `Weechat.config_new_option` receives the callbacks in an array of 6 strings
-  (3 callbacks + 3 data strings), so a call to this function looks like:
+* A causa di una limitazione di Ruby (massimo 15 argomenti per funzione), la
+  funzione `WeeChat.config_new_option` riceve le callback in un array di 6
+  stringhe (3 callback + 3 stringhe di dati), così che una chiamata a questa
+  funzione appare come:
 
 [source,ruby]
 ----------------------------------------
@@ -110,9 +110,8 @@ Argomenti:
 * 'version': stringa, versione dello script
 * 'license': stringa, licenza dello script
 * 'description': stringa, breve descrizione dello script
-// TRANSLATION MISSING
 * 'shutdown_function': stringa, nome della funzione chiamata quando lo script
-  viene scaricato (can be empty string)
+  viene scaricato (può essere una stringa vuota)
 * 'charset': stringa, set caratteri dello script (se il proprio script è in UTF-8,
   è possibile utilizzare un valore nullo qui, dato che UTF-8 è il set caratteri predefinito)
 
@@ -175,8 +174,7 @@ weechat::print "" "Hello, from tcl script!"
 Caricare uno script
 ~~~~~~~~~~~~~~~~~~~
 
-// TRANSLATION MISSING
-It is recommended to use the "script" plugin to load scripts, for example:
+Si raccomanda di usare il plugin "script" per caricare gli script, ad esempio:
 
 ----------------------------------------
 /script load script.py
@@ -187,8 +185,7 @@ It is recommended to use the "script" plugin to load scripts, for example:
 /script load script.scm
 ----------------------------------------
 
-// TRANSLATION MISSING
-Each language has also its own command:
+Ogni linguaggio ha anche il suo comando specifico:
 
 ----------------------------------------
 /python load python/script.py
@@ -209,10 +206,9 @@ $ cd ~/.weechat/python/autoload
 $ ln -s ../script.py
 ----------------------------------------
 
-// TRANSLATION MISSING
 [NOTE]
-When installing a script with command `/script install` the link in 'autoload'
-directory is automatically created.
+Quando viene installato un script con il comando `/script install` il link nella
+directory 'autoload' viene creato automaticamente'.
 
 [[differences_with_c_api]]
 Differenze con le API in C
@@ -291,8 +287,7 @@ Le callback in C utilizzano un argomento "data", che è un puntatore.
 Nelle API per gli script, questo "data" è una stringa con un qualsiasi
 valore (non è un puntatore).
 
-// TRANSLATION MISSING
-Example of callback, for each language:
+Esempio di callback, per ogni linguaggio:
 
 * python:
 
@@ -743,10 +738,9 @@ delle opzioni per il trasferimento dell'URL.
 Esempio di trasferimento di un URL senza opzioni: la pagina HTML verrà
 ricevuta come "out" nella callback (output standard di un processo):
 
-// TRANSLATION MISSING
 [source,python]
 ----------------------------------------
-# Display current stable version of WeeChat.
+# Mostra la versione stabile corrente di WeeChat.
 weechat_version = ""
 
 def weechat_process_cb(data, command, rc, out, err):
@@ -761,9 +755,8 @@ weechat.hook_process("url:http://weechat.org/info/stable/",
                      30 * 1000, "weechat_process_cb", "")
 ----------------------------------------
 
-// TRANSLATION MISSING
 [TIP]
-All infos available about WeeChat are on page http://weechat.org/info
+Tutte le informazioni disponibili su Weechat sono sulla pagina http://weechat.org/info
 
 Esempio di trasferimento di un URL con un'opzione: scaricare l'ultimo pacchetto
 di sviluppo di WeeChat nel file '/tmp/weechat-devel.tar.gz':

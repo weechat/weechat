@@ -208,22 +208,22 @@ Per rimuovere l'allineamento dei nick:
 /set weechat.look.prefix_align none
 ----------------------------------------
 
-// TRANSLATION MISSING
 [[input_bar_size]]
-How to use command line with more than one line?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Come posso usare la riga di comando con più di una riga?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The option 'size' in input bar can be set to a value higher than 1 (for fixed
-size, default size is 1) or 0 for dynamic size, and then option 'size_max' will
-set the max size (0 = no limit).
+L'opzione 'size' nella barra di input può essere impostata a un valore maggiore
+di uno (il valore predefinito per la dimensione fissa è 1) oppure 0 per la
+dimensione dinamica, e poi l'opzione 'size_max' imposta la dimensione massima (0
+= nessun limite).
 
-Example with dynamic size:
+Esempio con la dimensione dinamica:
 
 ----------------------------------------
 /set weechat.bar.input.size 0
 ----------------------------------------
 
-Max size of 2:
+Dimensione massima a 2:
 
 ----------------------------------------
 /set weechat.bar.input.size_max 2
@@ -292,8 +292,7 @@ visualizzata (non interferisce con la selezione delle url):
 Questa opzione può causare bug di visualizzazione. Se si dovessero verificare
 tali problemi, è necessario disabilitare questa opzione.
 
-// TRANSLATION MISSING
-Other solution is to use a script: http://www.weechat.org/scripts/stable/tag/url
+Una soluzione alternativa è usare uno script: http://www.weechat.org/scripts/stable/tag/url
 
 [[change_locale_without_quit]]
 Voglio cambiare la lingua utilizzata da WeeChat per i messaggi, ma senza uscire da WeeChat, è possibile?
@@ -536,13 +535,12 @@ Impostare la porta del server, SSL, dhkey_size, poi riconnettersi:
 /connect freenode
 ----------------------------------------
 
-// TRANSLATION MISSING
 [[irc_sasl]]
-How can I be identified before joining channels?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Come posso essere identificato prima di entrare in un canale?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If server supports SASL, you should use that instead of sending command for
-nickserv authentication, for example:
+Se il server supporta SASL, dovrebbe essere utilizzato invece di inviare il
+comando di autenticazione con nickserv, ad esempio:
 
 ----------------------------------------
 /set irc.server_default.sasl_mechanism dh-blowfish
@@ -550,8 +548,8 @@ nickserv authentication, for example:
 /set irc.server.freenode.sasl_password "xxxxxxx"
 ----------------------------------------
 
-If server does not support SASL, you can add a delay (between command and join
-of channels):
+Se il server non supporta SASL, è possibile aggiungere un ritardo (tra il
+comando e l'ingresso nei canali):
 
 ----------------------------------------
 /set irc.server.freenode.command_delay 5
@@ -600,12 +598,10 @@ Per aiuto: `/help filter` e `/help irc.look.smart_filter`
 Come posso filtrare i messaggi visualizzati all'ingresso su un canale IRC?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-// TRANSLATION MISSING
-With WeeChat ≥ 0.4.1, you can disable some messages with option
+Con WeeChat ≥ 0.4.1, è possibile disabilitare alcuni messaggi con l'opzione
 'irc.look.display_join_message'.
 
-// TRANSLATION MISSING
-For example, to disable names (which is IRC message '366'):
+Ad esempio, per disabilitare i nomi (il messaggio IRC '366'):
 
 ----------------------------------------
 /set irc.look.display_join_message "329,332,333"
@@ -614,8 +610,7 @@ For example, to disable names (which is IRC message '366'):
 [NOTE]
 For help: `/help irc.look.display_join_message`
 
-// TRANSLATION MISSING
-Another solution is to filter messages on tag:
+Un'altra soluzione sta nel filtrare i messagge in base ai tag:
 
 * 'irc_366': nomi sui canali
 * 'irc_332,irc_333': topic/data del canale
@@ -759,8 +754,7 @@ Esistono diversi trucchi per ottimizzare l'uso della memoria:
 * non caricare alcuni plugin se non vengono utilizzati, ad esempio: aspell, fifo,
   logger, perl, python, ruby, lua, tcl, guile, xfer (usato per DCC)
 * caricare solo gli script veramente necessari
-// TRANSLATION MISSING
-* do not load certificates if SSL is *NOT* used: set empty string in option
+* non caricare i certificati se SSL *NON* viene usato: usare una stringa vuota nell'opzione
   'weechat.network.gnutls_ca_file'
 * ridurre il valore dell'opzione 'weechat.history.max_buffer_lines_number'  oppure
   impostare il valore dell'opzione 'weechat.history.max_buffer_lines_minutes'
