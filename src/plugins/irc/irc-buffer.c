@@ -99,9 +99,10 @@ irc_buffer_build_name (const char *server, const char *channel)
 
     if (server && channel)
         snprintf (buffer, sizeof (buffer), "%s.%s", server, channel);
+    else if (server)
+        snprintf (buffer, sizeof (buffer), "server.%s", server);
     else
-        snprintf (buffer, sizeof (buffer), "%s",
-                  (server) ? server : channel);
+        snprintf (buffer, sizeof (buffer), "%s", channel);
 
     return buffer;
 }
