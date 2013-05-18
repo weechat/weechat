@@ -205,7 +205,7 @@ irc_input_data (struct t_gui_buffer *buffer, const char *input_data, int flags)
             if (ptr_server)
             {
                 irc_server_sendf (ptr_server, flags, NULL,
-                                  weechat_utf8_next_char (input_data));
+                                  "%s", weechat_utf8_next_char (input_data));
             }
             return WEECHAT_RC_OK;
         }
