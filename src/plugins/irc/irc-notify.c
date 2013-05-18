@@ -889,7 +889,7 @@ irc_notify_timer_ison_cb (void *data, int remaining_calls)
                                           NULL, 0, NULL);
                         irc_server_sendf (ptr_server,
                                           IRC_SERVER_SEND_OUTQ_PRIO_LOW,
-                                          NULL, str_message);
+                                          NULL, "%s", str_message);
                         number++;
                     }
                     weechat_hashtable_free (hashtable);

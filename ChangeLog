@@ -60,6 +60,8 @@ Version 0.4.1 (under dev!)
   list with arguments inside), guile >= 2.0 is now required (bug #38350)
 * guile: fix crash on calls to callbacks during load of script (bug #38343)
 * guile: fix compilation with guile 2.0
+* irc: fix uncontrolled format string when sending ison command (for nicks
+  monitored by /notify)
 * irc: fix refresh of nick in input bar when joining a new channel with op
   status (bug #38969)
 * irc: fix display of CTCP messages that contain bold attribute (bug #38895)
