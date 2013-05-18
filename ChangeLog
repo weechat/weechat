@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.1-rc2, 2013-05-12
+v0.4.1-rc2, 2013-05-18
 
 
 This document lists all changes for each version.
@@ -41,6 +41,8 @@ Version 0.4.1 (under dev!)
   weechat.history.max_buffer_lines_minutes is set (bug #38197)
 * core: use default hash/comparison callback for keys of type
   integer/pointer/time in hashtable
+* api: do not display a warning by default when loading a script with a license
+  different from GPL
 * api: add new function hdata_search
 * api: add property "completion_freeze" for function buffer_set: do not stop
   completion when command line is updated

@@ -53,7 +53,7 @@ plugin_script_config_read (struct t_weechat_plugin *weechat_plugin)
     string = weechat_config_get_plugin (SCRIPT_OPTION_CHECK_LICENSE);
     if (!string)
     {
-        weechat_config_set_plugin (SCRIPT_OPTION_CHECK_LICENSE, "on");
+        weechat_config_set_plugin (SCRIPT_OPTION_CHECK_LICENSE, "off");
         string = weechat_config_get_plugin (SCRIPT_OPTION_CHECK_LICENSE);
     }
     if (string && (weechat_config_string_to_boolean (string) > 0))
