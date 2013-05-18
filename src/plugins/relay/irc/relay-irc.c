@@ -557,7 +557,7 @@ relay_irc_hsignal_irc_redir_cb (void *data, const char *signal,
     {
         for (i = 0; i < num_messages; i++)
         {
-            relay_irc_sendf (client, messages[i]);
+            relay_irc_sendf (client, "%s", messages[i]);
         }
         weechat_string_free_split (messages);
     }

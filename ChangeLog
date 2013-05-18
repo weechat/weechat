@@ -99,6 +99,7 @@ Version 0.4.1 (under dev!)
   functions (bug #38510)
 * perl: simplify code to load scripts
 * python: fix crash when loading scripts with Python 3.x (patch #8044)
+* relay: fix uncontrolled format string in redirection of irc commands
 * relay: rename compression "gzip" to "zlib" (compression is zlib, not gzip)
 * relay: add message "_nicklist_diff" (differences between old and current
   nicklist)
