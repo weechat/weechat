@@ -24,7 +24,7 @@
 ** valori: on, off (valore predefinito: `off`)
 
 * [[option_aspell.check.suggestions]] *aspell.check.suggestions*
-** descrizione: `number of suggestions to display in bar item "aspell_suggest" for each dictionary set in buffer (-1 = disable suggestions, 0 = display all possible suggestions in all languages)`
+** descrizione: `numero di suggerimenti da mostrare nell'elemento barra "aspell_suggest" per ogni dizionario impostato nel buffer (-1 = disattiva suggerimenti, 0 = mostra tutti i possibili suggerimenti in tutte le lingue)`
 ** tipo: intero
 ** valori: -1 .. 2147483647 (valore predefinito: `-1`)
 

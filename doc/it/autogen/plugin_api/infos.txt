@@ -2,7 +2,7 @@
 |========================================
 | Plugin | Nome | Descrizione | Argomenti
 
-| aspell | aspell_dict | comma-separated list of dictionaries used in buffer | buffer pointer ("0x12345678") or buffer full name ("irc.freenode.#weechat")
+| aspell | aspell_dict | elenco separato da virgole di dizionari usati nel buffer | puntatore al buffer ("0x12345678") o buffer con il nome completo ("irc.freenode.weechat")
 
 | fifo | fifo_filename | nome della pipe FIFO | -
 
@@ -44,7 +44,7 @@
 
 | weechat | version | versione di WeeChat | -
 
-| weechat | version_git | WeeChat git version (output of command "git describe" for a development version only, empty for a stable release) | -
+| weechat | version_git | Versione git di weechat (output del comando "git describe" solo per la versione di sviluppo, vuoto per una release stabile) | -
 
 | weechat | version_number | versione di WeeChat (come numero) | -
 

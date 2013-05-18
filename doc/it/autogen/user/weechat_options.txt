@@ -84,7 +84,7 @@
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `cyan`)
 
 * [[option_weechat.color.chat_nick_prefix]] *weechat.color.chat_nick_prefix*
-** descrizione: `color for nick prefix (string displayed before nick in prefix)`
+** descrizione: `colore per il prefisso del nick (stringa visualizzata prima del nick nel prefisso)`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `green`)
 
@@ -94,7 +94,7 @@
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `white`)
 
 * [[option_weechat.color.chat_nick_suffix]] *weechat.color.chat_nick_suffix*
-** descrizione: `color for nick suffix (string displayed after nick in prefix)`
+** descrizione: `colore per il prefisso del nick (stringa visualizzata dopo il nick nel prefisso)`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `green`)
 
@@ -294,7 +294,7 @@
 ** valori: on, off (valore predefinito: `on`)
 
 * [[option_weechat.completion.default_template]] *weechat.completion.default_template*
-** descrizione: `default completion template (please see documentation for template codes and values: plugin API reference, function "weechat_hook_command")`
+** descrizione: `modello di completamento predefinito (per favore, consulta la documentazione per codici e valori del template: Referenze API per Plugin, funzione "weechat_hook_command")`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"%(nicks)|%(irc_channels)"`)
 
@@ -604,12 +604,12 @@
 ** valori: 1 .. 10000 (valore predefinito: `100`)
 
 * [[option_weechat.look.nick_prefix]] *weechat.look.nick_prefix*
-** descrizione: `text to display before nick in prefix of message, example: "<"`
+** descrizione: `testo da visualizzare prima del nick nel prefisso del messaggio, esempio: "<"`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
 * [[option_weechat.look.nick_suffix]] *weechat.look.nick_suffix*
-** descrizione: `text to display after nick in prefix of message, example: ">"`
+** descrizione: `testo da visualizzare dopo il nick nel prefisso del messaggio, esempio: ">"`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
@@ -844,7 +844,7 @@
 ** valori: on, off (valore predefinito: `on`)
 
 * [[option_weechat.startup.sys_rlimit]] *weechat.startup.sys_rlimit*
-** descrizione: `set resource limits for WeeChat process, format is: "res1:limit1,res2:limit2"; resource name is the end of constant (RLIMIT_XXX) in lower case (see man setrlimit for values); limit -1 means "unlimited"; example: set unlimited size for core file and max 1GB of virtual memory: "core:-1,as:1000000000"`
+** descrizione: `imposta limite delle risorse per il processo WeeChat, il formato è: "res1:limit1,res2,limit2"; il nome della risorsa è il componente finale della costante (RLIMIT_XXX) in caratteri minuscoli (consultare man setrlimit per i valori); il limite -1 vuol dire "illimitato"; esempio: imposta dimensione illimitata per il file core e 1GB massimo di memoria virtuale: "core:-1,as:1000000000"`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 

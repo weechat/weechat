@@ -182,23 +182,23 @@ Esempi:
         mouse|cursor [verbose]
         hdata [free]
 
-     list: list plugins with debug levels
-      set: set debug level for plugin
-   plugin: name of plugin ("core" for WeeChat core)
-    level: debug level for plugin (0 = disable debug)
-     dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
-   buffer: dump buffer content with hexadecimal values in log file
-    color: display infos about current color pairs
-   cursor: toggle debug for cursor mode
-     dirs: display directories
-    hdata: display infos about hdata (with free: remove all hdata in memory)
-    hooks: display infos about hooks
-infolists: display infos about infolists
-   memory: display infos about memory usage
-    mouse: toggle debug for mouse
-     tags: display tags for lines
-     term: display infos about terminal
-  windows: display windows tree
+     list: elenca i plugin con i livelli di debug
+      set: imposta il livello di debug per il plugin
+   plugin: nome del plugin ("core" per il core di WeeChat)
+  livello: livello di debug per il plugin (0 = disattiva debug)
+     dump: salva un dump della memoria nel file di log di WeeChat (lo stesso dump viene salvato in caso di crash di WeeChat)
+   buffer: esegue un dump del contenuto del buffer con valori esadecimali nel file di log
+    color: mostra informazioni sulle coppie di colore correnti
+   cursor: abilita/disabilita debug per la modalità cursore
+     dirs: mostra le directory
+    hdata: mostra informazioni su hdata (con free: rimuove tutti gli hdata in memoria)
+    hooks: mostra informazioni sugli hook
+infolists: mostra informazioni sulle liste info
+   memory: mostra informazioni sull'uso della memoria
+    mouse: abilita/disabilita debug per il mouse
+     tags: mostra tag per le righe
+     term: mostra informazioni sul terminale
+  windows: mostra l'albero delle finestre
 ........................................
 
 [[command_weechat_eval]]
@@ -207,40 +207,40 @@ infolists: display infos about infolists
 /eval  [-n] <espressione>
        [-n] <espressione1> <operatore> <espressione2>
 
-        -n: display result without sending it to buffer (debug mode)
-expression: expression to evaluate, variables with format ${variable} are replaced (see below)
-  operator: a logical or comparison operator:
-            - logical operators:
-                &&  boolean "and"
-                ||  boolean "or"
-            - comparison operators:
-                ==  equal
-                !=  not equal
-                <=  less or equal
-                <   less
-                >=  greater or equal
-                >   greater
-                =~  is matching regex
-                !~  is NOT matching regex
+         -n: mostra il risultato senza inviarlo al buffer (modalità debug)
+espressione: espressione da analizzare, le variabili con il formato ${variable} vengono sostituite (vedere sotto)
+ operatore: operatore logico o di confronto:
+            - operatori logici:
+                &&  "and" booleano
+                ||  "or" booleano
+            - operatori di confronto:
+                ==  uguale
+                !=  non uguale
+                <=  minore o uguale
+                <   minore
+                >=  maggiore o uguale
+                >   maggiore
+                =~  corrisponde alla regex
+                !~  NON corrisponde alla regex
 
-An expression is considered as "true" if it is not NULL, not empty, and different from "0".
-The comparison is made using integers if the two expressions are valid integers.
-To force a string comparison, add double quotes around each expression, for example:
+Un'espressione è considerata come "true" se non è NULL, non vuota, e diversa da "0".
+Il confronto viene fatto usando gli interi se le due espressioni sono interi validi.
+Per forzare il confronto stringa, aggiungere un doppio apice all'espressione, ad esempio:
   50 > 100      ==> 0
   "50" > "100"  ==> 1
 
-Some variables are replaced in expression, using the format ${variable}, variable can be, by order of priority :
-  1. the name of an option (file.section.option)
-  2. the name of a local variable in buffer
-  3. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
-Format for hdata can be one of following:
-  hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
-  hdata[list].var1.var2...: start with a hdata using a list, for example:
-    ${buffer[gui_buffers].full_name}: full name of first buffer in linked list of buffers
-    ${plugin[weechat_plugins].name}: name of first plugin in linked list of plugins
-For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
+Alcune variabili vengono sostituite nell'espressione, usando il formato ${variable}, la variabile può essere, in ordine di priorità :
+  1. il nome di un'opzione (file.sezione.opzione)
+  2. il nome di una variabile locale nel buffer
+  3. un nome/variabile hdata (il valore viene automaticamente convertito in stringa, per default "window" e "buffer" puntano alla finestra/buffer correnti.
+Il formato per hdata può essere uno dei seguenti:
+  hdata.var1.var2...: inizia con un hdata (il puntatore deve essere noto), e richiedere le variabili a seguire (possono seguire altri hdata)
+  hdata[list].var1.var2...: inizia con un hdata usando una lista, ad esempio:
+    ${buffer[gui_buffers].full_name}: nome completo del primo buffer nell'elenco collegato dei buffer
+    ${plugin[weechat_plugins].name}: nome del primo plugin nell'elenco collegato dei plugin
+Per il nome degli hdata e delle variabili, per favore consultare "Referenze API per Plugin", funzione "weechat_hdata_get".
 
-Examples:
+Esempi:
   /eval -n ${weechat.look.scroll_amount}  ==> 3
   /eval -n ${window}                      ==> 0x2549aa0
   /eval -n ${window.buffer}               ==> 0x2549320
@@ -447,23 +447,23 @@ Esempi:
 [[command_weechat_layout]]
 [command]*`layout`* salva/applica/ripristina il layout per i buffer e le finestre::
 ........................................
-/layout  save [<name>] [buffers|windows]
+/layout  save [<nome>] [buffers|windows]
          apply [<name>] [buffers|windows]
          leave
-         reset [<name>] [buffers|windows]
-         rename <name> <new_name>
+         reset [<nome>] [buffers|windows]
+         rename <nome> <nuovo_nome>
 
-   save: save current layout
-  apply: apply saved layout
-  leave: leave current layout (does not update any layout)
-  reset: reset buffers and/or windows in a saved layout
-         (if both buffers and windows are reset, the layout is removed)
- rename: rename a layout
-   name: name for saved layout (default is "default")
-buffers: save/apply only buffers (order of buffers)
-windows: save/apply only windows (buffer displayed by each window)
+   save: salva il layout corrente
+  apply: applica il layout salvato
+  leave: lascia il layout corrente (non applica nessun layout
+  reset: ripristina buffer e/o finestre in un layout salvato
+         (se sia i buffer che le finestre vengono ripristinate, il layout viene rimosso)
+ rename: rinomina un layout
+   nome: nome per il layout salvato (per default è "default")
+buffers: salva/applica modifiche solo ai buffer (ordine dei buffer)
+windows: salva/applica modifiche solo alle finestre (buffer visualizzato da ogni finestra)
 
-Without argument, this command displays saved layouts.
+Senza argomenti, il comando mostra i layout salvati.
 ........................................
 
 [[command_weechat_mouse]]

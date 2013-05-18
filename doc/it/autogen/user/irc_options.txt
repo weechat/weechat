@@ -134,7 +134,7 @@
 ** valori: on, off (valore predefinito: `on`)
 
 * [[option_irc.look.display_join_message]] *irc.look.display_join_message*
-** descrizione: `comma-separated list of messages to display after joining a channel: 329 = channel creation date, 332 = topic, 333 = nick/date for topic, 366 = names on channel`
+** descrizione: `elenco separato da virgole di messaggi da mostrare dopo l'ingresso in un canale: 329 = data di creazione del canale, 332 = argomento, 333 = nick/data per l'argomento, 366 = nomi sul canale`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"329,332,333,366"`)
 
@@ -264,7 +264,7 @@
 ** valori: on, off (valore predefinito: `off`)
 
 * [[option_irc.look.pv_buffer]] *irc.look.pv_buffer*
-** descrizione: `merge private buffers`
+** descrizione: `unisci i buffer privati`
 ** tipo: intero
 ** valori: independent, merge_by_server, merge_all (valore predefinito: `independent`)
 
@@ -299,7 +299,7 @@
 ** valori: 0 .. 10080 (valore predefinito: `30`)
 
 * [[option_irc.look.smart_filter_nick]] *irc.look.smart_filter_nick*
-** descrizione: `enable smart filter for "nick" messages (nick changes)`
+** descrizione: `abilita filtro smart per i messaggi "nick" (cambio nick)`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
@@ -349,7 +349,7 @@
 ** valori: 0 .. 86400000 (valore predefinito: `500`)
 
 * [[option_irc.network.lag_reconnect]] *irc.network.lag_reconnect*
-** descrizione: `reconnect to server if lag is greater than this value (in seconds, 0 = never reconnect)`
+** descrizione: `riconnetti al server se il ritardo è maggiore di questo valore (in secondi, 0 = nessuna riconnessione)`
 ** tipo: intero
 ** valori: 0 .. 604800 (valore predefinito: `0`)
 
@@ -464,7 +464,7 @@
 ** valori: qualsiasi stringa (valore predefinito: `"WeeChat %v"`)
 
 * [[option_irc.server_default.ipv6]] *irc.server_default.ipv6*
-** descrizione: `use IPv6 protocol for server communication (try IPv6 then fallback to IPv4); if disabled, only IPv4 is used`
+** descrizione: `usa il protocollo IPv6 per le comunicazioni con il server (prova con IPv6, se non disponibile usa IPv4); se disabilitato, viene usato solo IPv4`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
@@ -499,7 +499,7 @@
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
 * [[option_irc.server_default.sasl_mechanism]] *irc.server_default.sasl_mechanism*
-** descrizione: `mechanism for SASL authentication: "plain" for plain text password, "dh-blowfish" for blowfish crypted password, "dh-aes" for AES crypted password, "external" for authentication using client side SSL cert`
+** descrizione: `meccanismo per l'autenticazione SASL: "plain" per le password in chiaro, "dh-blowfish" per le password cifrate in blowfish, "dh-aes" per le password cifrate in AES  "external" per l'autenticazione con certificati SSL lato client`
 ** tipo: intero
 ** valori: plain, dh-blowfish, dh-aes, external (valore predefinito: `plain`)
 

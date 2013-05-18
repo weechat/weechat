@@ -6,9 +6,9 @@
 
 | alias | alias_value | valore dell'alias
 
-| aspell | aspell_dicts | list of aspell installed dictionaries
+| aspell | aspell_dicts | elenco dei dizionari aspell installati
 
-| aspell | aspell_langs | list of all languages supported by aspell
+| aspell | aspell_langs | elenco di tutte lingue supportate da aspell
 
 | guile | guile_script | elenco degli script
 
@@ -106,7 +106,7 @@
 
 | weechat | keys_contexts | contesti del tasto
 
-| weechat | layouts_names | names of layouts
+| weechat | layouts_names | nomi dei layout
 
 | weechat | nicks | nick nella lista nick del buffer corrente
 

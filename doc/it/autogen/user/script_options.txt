@@ -1,10 +1,10 @@
 * [[option_script.color.status_autoloaded]] *script.color.status_autoloaded*
-** descrizione: `color for status "autoloaded" ("a")`
+** descrizione: `colore per lo status "caricato automaticamente" ("a")`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `cyan`)
 
 * [[option_script.color.status_held]] *script.color.status_held*
-** descrizione: `color for status "held" ("H")`
+** descrizione: `colore per lo status "bloccato" ("H")`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `white`)
 
@@ -24,7 +24,7 @@
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `yellow`)
 
 * [[option_script.color.status_running]] *script.color.status_running*
-** descrizione: `color for status "running" ("r")`
+** descrizione: `colore per lo status "in esecuzione" ("r")`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `lightgreen`)
 
@@ -44,7 +44,7 @@
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `default`)
 
 * [[option_script.color.text_bg_selected]] *script.color.text_bg_selected*
-** descrizione: `background color for selected line in script buffer`
+** descrizione: `colore di sfondo per la riga selezionata nel buffer degli script`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `red`)
 
@@ -54,7 +54,7 @@
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `default`)
 
 * [[option_script.color.text_date_selected]] *script.color.text_date_selected*
-** descrizione: `text color of dates for selected line in script buffer`
+** descrizione: `colore del testo delle date per la riga selezionata nel buffer degli script`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `white`)
 
@@ -69,7 +69,7 @@
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `default`)
 
 * [[option_script.color.text_description_selected]] *script.color.text_description_selected*
-** descrizione: `text color of description for selected line in script buffer`
+** descrizione: `colore del testo della descrizione per la riga selezionata nel buffer degli script`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `white`)
 
@@ -79,7 +79,7 @@
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `default`)
 
 * [[option_script.color.text_extension_selected]] *script.color.text_extension_selected*
-** descrizione: `text color of extension for selected line in script buffer`
+** descrizione: `colore del testo dell'estensione per la riga selezionata nel buffer degli script`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `white`)
 
@@ -89,7 +89,7 @@
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `cyan`)
 
 * [[option_script.color.text_name_selected]] *script.color.text_name_selected*
-** descrizione: `text color of script name for selected line in script buffer`
+** descrizione: `colore del testo del nome dello script per la riga selezionata nel buffer degli script`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `lightcyan`)
 
@@ -104,7 +104,7 @@
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `brown`)
 
 * [[option_script.color.text_tags_selected]] *script.color.text_tags_selected*
-** descrizione: `text color of tags for selected line in script buffer`
+** descrizione: `colore del testo dei tag per la riga selezionata nel buffer degli script`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `yellow`)
 
@@ -119,12 +119,12 @@
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `default`)
 
 * [[option_script.color.text_version_loaded_selected]] *script.color.text_version_loaded_selected*
-** descrizione: `text color of version loaded for selected line in script buffer`
+** descrizione: `colore del testo della versione attiva per la riga selezionata nel buffer degli script`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `white`)
 
 * [[option_script.color.text_version_selected]] *script.color.text_version_selected*
-** descrizione: `text color of version for selected line in script buffer`
+** descrizione: `colore del testo della versione per la riga selezionata nel buffer degli script`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `lightmagenta`)
 

@@ -79,7 +79,7 @@
 ** valori: 0 .. 65535 (valore predefinito: `256`)
 
 * [[option_relay.network.allowed_ips]] *relay.network.allowed_ips*
-** descrizione: `regular expression with IPs allowed to use relay (case insensitive, use "(?-i)" at beginning to make it case sensitive); if IPv6 is enabled and that connection is made using IPv4, it will be IPv4-mapped IPv6 address (like: "::ffff:127.0.0.1"), example: "^((::ffff:)?123.45.67.89|192.160.*)$"`
+** descrizione: `espressione regolare con gli indirizzi IP a cui è consentito usare il relay, (non sensibile alle maiuscole, usare "(?-i)" all'inizio per renderla sensibile alle maiuscole); se IPv6 è abilitato e la connessione viene creata usando IPv4, sarà un indirizzo IPv6 mappato su IPv4 (come: ":ffff:127.0.0.1",come: "::ffff:127.0.0.1"), esempio: "^((::ffff:)?123.45.67.89|192.160.*)$"`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
