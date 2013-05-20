@@ -1,7 +1,7 @@
 WeeChat Release Notes
 =====================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.1-rc2, 2013-05-11
+v0.4.1, 2013-05-20
 
 
 This document lists important changes for each version, that require manual
@@ -13,7 +13,7 @@ http://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file 'ChangeLog' in sources).
 
 
-Version 0.4.1 (under dev!)
+Version 0.4.1 (2013-05-20)
 --------------------------
 
 === Nicklist diff in relay ===
