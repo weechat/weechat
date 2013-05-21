@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.2-dev, 2013-05-20
+v0.4.2-dev, 2013-05-21
 
 
 This document lists all changes for each version.
@@ -10,6 +10,12 @@ For a list of important changes that require manual action, please look at
 http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 (file 'NEWS' in sources).
 
+
+Version 0.4.2 (under dev!)
+--------------------------
+
+* core: fix line alignment when option weechat.look.buffer_time_format is set
+  to empty string
 
 Version 0.4.1 (2013-05-20)
 --------------------------
