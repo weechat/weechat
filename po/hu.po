@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-05-11 18:28+0200\n"
+"POT-Creation-Date: 2013-05-21 22:34+0200\n"
 "PO-Revision-Date: 2013-05-20 16:54+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6995,6 +6995,10 @@ msgid "context (\"default\", \"search\", \"cursor\" or \"mouse\") (optional)"
 msgstr ""
 
 #, fuzzy
+msgid "list of layouts"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy
 msgid "nicks in nicklist for a buffer"
 msgstr "érvénytelen pufferhossz"
 
@@ -7083,6 +7087,18 @@ msgstr "szöveg beillesztése a parancssorba"
 
 msgid "a key (keyboard shortcut)"
 msgstr ""
+
+#, fuzzy
+msgid "layout"
+msgstr "a pufferek időbélyege"
+
+#, fuzzy
+msgid "buffer layout"
+msgstr "szöveg keresése a puffertörténetben"
+
+#, fuzzy
+msgid "window layout"
+msgstr "ablakok kezelése"
 
 msgid "structure with lines"
 msgstr ""

@@ -54,6 +54,8 @@
 
 | weechat | key | elenco di tasti associati | - | contesto ("default", "search", "cursor" o "mouse") (opzionale)
 
+| weechat | layout | list of layouts | - | -
+
 | weechat | nicklist | nick nella lista nick per un buffer | puntatore al buffer | nick_xxx o group_xxx per ottenere solo xxx di nick/group (opzionale)
 
 | weechat | option | elenco delle opzioni | - | nome opzione (può iniziare o terminare con "*" come carattere jolly) (opzionale)

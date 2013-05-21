@@ -54,6 +54,8 @@
 
 | weechat | key | list of key bindings | - | context ("default", "search", "cursor" or "mouse") (optional)
 
+| weechat | layout | list of layouts | - | -
+
 | weechat | nicklist | nicks in nicklist for a buffer | buffer pointer | nick_xxx or group_xxx to get only nick/group xxx (optional)
 
 | weechat | option | list of options | - | option name (can start or end with "*" as wildcard) (optional)

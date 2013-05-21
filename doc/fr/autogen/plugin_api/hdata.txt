@@ -619,6 +619,41 @@
   'last_gui_key_mouse' +
   'last_gui_key_search'
 
+| weechat | layout | disposition |
+  'name' (string) +
+  'layout_buffers' (pointer, hdata: "layout_buffer") +
+  'last_layout_buffer' (pointer, hdata: "layout_buffer") +
+  'layout_windows' (pointer, hdata: "layout_window") +
+  'internal_id' (integer) +
+  'internal_id_current_window' (integer) +
+  'prev_layout' (pointer, hdata: "layout") +
+  'next_layout' (pointer, hdata: "layout") |
+ |
+  'gui_layout_current' +
+  'gui_layouts' +
+  'last_gui_layout'
+
+| weechat | layout_buffer | disposition de tampon |
+  'plugin_name' (string) +
+  'buffer_name' (string) +
+  'number' (integer) +
+  'prev_layout' (pointer, hdata: "layout_buffer") +
+  'next_layout' (pointer, hdata: "layout_buffer") |
+ |
+  -
+
+| weechat | layout_window | disposition de fenêtre |
+  'internal_id' (integer) +
+  'parent_node' (pointer, hdata: "layout_window") +
+  'split_pct' (integer) +
+  'split_horiz' (integer) +
+  'child1' (pointer, hdata: "layout_window") +
+  'child2' (pointer, hdata: "layout_window") +
+  'plugin_name' (string) +
+  'buffer_name' (string) |
+ |
+  -
+
 | weechat | line | structure avec une ligne |
   'data' (pointer, hdata: "line_data") +
   'prev_line' (pointer, hdata: "line") +

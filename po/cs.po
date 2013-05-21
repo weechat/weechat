@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-05-11 18:28+0200\n"
+"POT-Creation-Date: 2013-05-21 22:34+0200\n"
 "PO-Revision-Date: 2013-05-20 16:54+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7507,6 +7507,10 @@ msgstr "seznam napojení kláves"
 msgid "context (\"default\", \"search\", \"cursor\" or \"mouse\") (optional)"
 msgstr ""
 
+#, fuzzy
+msgid "list of layouts"
+msgstr "jména polí"
+
 msgid "nicks in nicklist for a buffer"
 msgstr "přezdívky v seznamu přezdívek bufferu"
 
@@ -7597,6 +7601,18 @@ msgstr "funkce pro příkazovou řádku"
 
 msgid "a key (keyboard shortcut)"
 msgstr ""
+
+#, fuzzy
+msgid "layout"
+msgstr "Uložené rozložení bufferů:"
+
+#, fuzzy
+msgid "buffer layout"
+msgstr "ukazatel bufferu"
+
+#, fuzzy
+msgid "window layout"
+msgstr "spravuje okna"
 
 msgid "structure with lines"
 msgstr ""

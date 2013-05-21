@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-05-11 18:28+0200\n"
-"PO-Revision-Date: 2013-05-20 16:54+0200\n"
+"POT-Creation-Date: 2013-05-21 22:34+0200\n"
+"PO-Revision-Date: 2013-05-21 22:35+0200\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -7984,6 +7984,9 @@ msgid "context (\"default\", \"search\", \"cursor\" or \"mouse\") (optional)"
 msgstr ""
 "contexte (\"default\", \"search\", \"cursor\" ou \"mouse\") (optionnel)"
 
+msgid "list of layouts"
+msgstr "liste des dispositions"
+
 msgid "nicks in nicklist for a buffer"
 msgstr "pseudos dans la liste des pseudos pour un tampon"
 
@@ -8063,6 +8066,15 @@ msgstr "structure avec le \"undo\" pour la ligne de commande"
 
 msgid "a key (keyboard shortcut)"
 msgstr "une touche (un raccourci clavier)"
+
+msgid "layout"
+msgstr "disposition"
+
+msgid "buffer layout"
+msgstr "disposition de tampon"
+
+msgid "window layout"
+msgstr "disposition de fenêtre"
 
 msgid "structure with lines"
 msgstr "structure avec des lignes"

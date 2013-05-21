@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-05-11 18:28+0200\n"
+"POT-Creation-Date: 2013-05-21 22:34+0200\n"
 "PO-Revision-Date: 2013-05-20 16:54+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7772,6 +7772,10 @@ msgstr "lista de atajos de teclas"
 msgid "context (\"default\", \"search\", \"cursor\" or \"mouse\") (optional)"
 msgstr "contexto (\"default\", \"search\", \"cursor\" o \"mouse\") (opcional)"
 
+#, fuzzy
+msgid "list of layouts"
+msgstr "nombres de barras"
+
 msgid "nicks in nicklist for a buffer"
 msgstr "apodos en la lista de apodos de un buffer"
 
@@ -7850,6 +7854,18 @@ msgstr "estructura con deshacer para la línea de entrada"
 
 msgid "a key (keyboard shortcut)"
 msgstr "una tecla (atajo de teclado)"
+
+#, fuzzy
+msgid "layout"
+msgstr "Esquema de buffers guardado:"
+
+#, fuzzy
+msgid "buffer layout"
+msgstr "puntero del buffer"
+
+#, fuzzy
+msgid "window layout"
+msgstr "ventana"
 
 msgid "structure with lines"
 msgstr "estructura con líneas"

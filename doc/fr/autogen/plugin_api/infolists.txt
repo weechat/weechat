@@ -54,6 +54,8 @@
 
 | weechat | key | liste des associations de touches | - | contexte ("default", "search", "cursor" ou "mouse") (optionnel)
 
+| weechat | layout | liste des dispositions | - | -
+
 | weechat | nicklist | pseudos dans la liste des pseudos pour un tampon | pointeur vers le tampon | nick_xxx ou group_xxx pour avoir seulement le pseudo/groupe xxx (optionnel)
 
 | weechat | option | liste des options | - | nom d'option (peut démarrer ou se terminer par "*" comme joker) (optionnel)

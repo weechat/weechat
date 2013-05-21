@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-05-11 18:28+0200\n"
+"POT-Creation-Date: 2013-05-21 22:34+0200\n"
 "PO-Revision-Date: 2013-05-20 16:54+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -7709,6 +7709,10 @@ msgid "context (\"default\", \"search\", \"cursor\" or \"mouse\") (optional)"
 msgstr ""
 "コンテキスト (\"default\"、\"search\"、\"cursor\"、\"mouse\") (オプション)"
 
+#, fuzzy
+msgid "list of layouts"
+msgstr "レイアウトの名前"
+
 msgid "nicks in nicklist for a buffer"
 msgstr "バッファのニックネームリスト内のニックネーム"
 
@@ -7787,6 +7791,18 @@ msgstr "入力行をアンドゥする構造"
 
 msgid "a key (keyboard shortcut)"
 msgstr "キー (キーボードショートカット)"
+
+#, fuzzy
+msgid "layout"
+msgstr "保存されたレイアウト:"
+
+#, fuzzy
+msgid "buffer layout"
+msgstr "バッファポインタ"
+
+#, fuzzy
+msgid "window layout"
+msgstr "ウィンドウ"
 
 msgid "structure with lines"
 msgstr "行を持つ構造"

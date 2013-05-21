@@ -54,6 +54,8 @@
 
 | weechat | key | キー割り当てのリスト | - | コンテキスト ("default"、"search"、"cursor"、"mouse") (オプション)
 
+| weechat | layout | list of layouts | - | -
+
 | weechat | nicklist | バッファのニックネームリスト内のニックネーム | バッファポインタ | ニックネーム/グループ xxx のみについて取得するには nick_xxx または group_xxx を使う (オプション)
 
 | weechat | option | オプションリスト | - | オプション名 (ワイルドカードとして "*" で始めるか終われる) (オプション)
