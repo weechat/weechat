@@ -24,12 +24,14 @@
 #endif
 
 #include <stdlib.h>
+#include <stddef.h>
 #include <string.h>
 
 #include "../core/weechat.h"
-#include "../core/wee-log.h"
 #include "../core/wee-config.h"
+#include "../core/wee-hdata.h"
 #include "../core/wee-infolist.h"
+#include "../core/wee-log.h"
 #include "../core/wee-string.h"
 #include "../plugins/plugin.h"
 #include "gui-layout.h"
@@ -869,6 +871,89 @@ gui_layout_remove_all ()
 }
 
 /*
+ * Returns hdata for buffer layout.
+ */
+
+struct t_hdata *
+gui_layout_hdata_layout_buffer_cb (void *data, const char *hdata_name)
+{
+    struct t_hdata *hdata;
+
+    /* make C compiler happy */
+    (void) data;
+
+    hdata = hdata_new (NULL, hdata_name, "prev_layout", "next_layout",
+                       0, 0, NULL, NULL);
+    if (hdata)
+    {
+        HDATA_VAR(struct t_gui_layout_buffer, plugin_name, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_layout_buffer, buffer_name, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_layout_buffer, number, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_layout_buffer, prev_layout, POINTER, 0, NULL, hdata_name);
+        HDATA_VAR(struct t_gui_layout_buffer, next_layout, POINTER, 0, NULL, hdata_name);
+    }
+    return hdata;
+}
+
+/*
+ * Returns hdata for window layout.
+ */
+
+struct t_hdata *
+gui_layout_hdata_layout_window_cb (void *data, const char *hdata_name)
+{
+    struct t_hdata *hdata;
+
+    /* make C compiler happy */
+    (void) data;
+
+    hdata = hdata_new (NULL, hdata_name, NULL, NULL, 0, 0, NULL, NULL);
+    if (hdata)
+    {
+        HDATA_VAR(struct t_gui_layout_window, internal_id, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_layout_window, parent_node, POINTER, 0, NULL, hdata_name);
+        HDATA_VAR(struct t_gui_layout_window, split_pct, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_layout_window, split_horiz, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_layout_window, child1, POINTER, 0, NULL, hdata_name);
+        HDATA_VAR(struct t_gui_layout_window, child2, POINTER, 0, NULL, hdata_name);
+        HDATA_VAR(struct t_gui_layout_window, plugin_name, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_layout_window, buffer_name, STRING, 0, NULL, NULL);
+    }
+    return hdata;
+}
+
+/*
+ * Returns hdata for layout.
+ */
+
+struct t_hdata *
+gui_layout_hdata_layout_cb (void *data, const char *hdata_name)
+{
+    struct t_hdata *hdata;
+
+    /* make C compiler happy */
+    (void) data;
+
+    hdata = hdata_new (NULL, hdata_name, "prev_layout", "next_layout",
+                       0, 0, NULL, NULL);
+    if (hdata)
+    {
+        HDATA_VAR(struct t_gui_layout, name, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_layout, layout_buffers, POINTER, 0, NULL, "layout_buffer");
+        HDATA_VAR(struct t_gui_layout, last_layout_buffer, POINTER, 0, NULL, "layout_buffer");
+        HDATA_VAR(struct t_gui_layout, layout_windows, POINTER, 0, NULL, "layout_window");
+        HDATA_VAR(struct t_gui_layout, internal_id, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_layout, internal_id_current_window, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_layout, prev_layout, POINTER, 0, NULL, hdata_name);
+        HDATA_VAR(struct t_gui_layout, next_layout, POINTER, 0, NULL, hdata_name);
+        HDATA_LIST(gui_layouts);
+        HDATA_LIST(last_gui_layout);
+        HDATA_LIST(gui_layout_current);
+    }
+    return hdata;
+}
+
+/*
  * Adds a buffer layout in an infolist.
  *
  * Returns:
@@ -939,6 +1024,40 @@ gui_layout_window_add_to_infolist (struct t_infolist *infolist,
     if (!infolist_new_var_string (ptr_item, "plugin_name", layout_window->plugin_name))
         return 0;
     if (!infolist_new_var_string (ptr_item, "buffer_name", layout_window->buffer_name))
+        return 0;
+
+    return 1;
+}
+
+/*
+ * Adds a layout in an infolist.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+gui_layout_add_to_infolist (struct t_infolist *infolist,
+                            struct t_gui_layout *layout)
+{
+    struct t_infolist_item *ptr_item;
+
+    if (!infolist || !layout)
+        return 0;
+
+    ptr_item = infolist_new_item (infolist);
+    if (!ptr_item)
+        return 0;
+
+    if (!infolist_new_var_integer (ptr_item, "current_layout",
+                                   (gui_layout_current == layout) ? 1 : 0))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "name", layout->name))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "internal_id", layout->internal_id))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "internal_id_current_window", layout->internal_id_current_window))
         return 0;
 
     return 1;

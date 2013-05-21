@@ -112,10 +112,18 @@ extern void gui_layout_save_on_exit ();
 extern void gui_layout_free (struct t_gui_layout *layout);
 extern void gui_layout_remove (struct t_gui_layout *layout);
 extern void gui_layout_remove_all ();
+extern struct t_hdata *gui_layout_hdata_layout_buffer_cb (void *data,
+                                                          const char *hdata_name);
+extern struct t_hdata *gui_layout_hdata_layout_window_cb (void *data,
+                                                          const char *hdata_name);
+extern struct t_hdata *gui_layout_hdata_layout_cb (void *data,
+                                                   const char *hdata_name);
 extern int gui_layout_buffer_add_to_infolist (struct t_infolist *infolist,
                                               struct t_gui_layout_buffer *layout_buffer);
 extern int gui_layout_window_add_to_infolist (struct t_infolist *infolist,
                                               struct t_gui_layout_window *layout_window);
+extern int gui_layout_add_to_infolist (struct t_infolist *infolist,
+                                       struct t_gui_layout *layout);
 extern void gui_layout_print_log ();
 extern void gui_layout_init ();
 extern void gui_layout_end ();

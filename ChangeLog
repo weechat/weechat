@@ -14,6 +14,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 Version 0.4.2 (under dev!)
 --------------------------
 
+* core: add infolist "layout" and hdata "layout", "layout_buffer" and
+  "layout_window"
 * core: fix line alignment when option weechat.look.buffer_time_format is set
   to empty string
 
