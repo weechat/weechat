@@ -20,6 +20,8 @@ Description: Fast, light and extensible chat client
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
  for many operating systems. Everything can be done with a keyboard.
  It is customizable and extensible with plugins/scripts, and includes:
+  - support of IRC protocol (native)
+  - support of XMPP/Jabber protocol (with additional script)
   - nicklist
   - smart hotlist
   - horizontal and vertical split
@@ -45,6 +47,8 @@ Description: Fast, light and extensible chat client - console client
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
  for many operating systems. Everything can be done with a keyboard.
  It is customizable and extensible with plugins/scripts, and includes:
+  - support of IRC protocol (native)
+  - support of XMPP/Jabber protocol (with additional script)
   - nicklist
   - smart hotlist
   - horizontal and vertical split

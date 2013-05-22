@@ -1,3 +1,13 @@
+weechat (0.4.1-1) unstable; urgency=low
+
+  * New upstream release
+  * Move guile build dependency to guile-2.0-dev (previous versions are
+    no longer supported).
+  * Add supported protocols in long description. Thanks to Jonas Smedegaard
+    for the suggestion (Closes: #705216)
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Tue, 21 May 2013 19:44:31 +0000
+
 weechat (0.4.0-1) unstable; urgency=low
 
   * New upstream release.
