@@ -190,6 +190,7 @@ void
 xfer_network_send_file_fork (struct t_xfer *xfer)
 {
     pid_t pid;
+    int rc;
 
     if (!xfer_network_create_pipe (xfer))
         return;
@@ -208,7 +209,8 @@ xfer_network_send_file_fork (struct t_xfer *xfer)
             return;
             /* child process */
         case 0:
-            setuid (getuid ());
+            rc = setuid (getuid ());
+            (void) rc;
             close (xfer->child_read);
             switch (xfer->protocol)
             {
@@ -258,6 +260,7 @@ void
 xfer_network_recv_file_fork (struct t_xfer *xfer)
 {
     pid_t pid;
+    int rc;
 
     if (!xfer_network_create_pipe (xfer))
         return;
@@ -282,7 +285,8 @@ xfer_network_recv_file_fork (struct t_xfer *xfer)
             return;
         /* child process */
         case 0:
-            setuid (getuid ());
+            rc = setuid (getuid ());
+            (void) rc;
             close (xfer->child_read);
             switch (xfer->protocol)
             {
