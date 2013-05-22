@@ -1625,7 +1625,8 @@ network_connect_with_fork (struct t_hook *hook_connect)
             return;
         /* child process */
         case 0:
-            setuid (getuid ());
+            rc = setuid (getuid ());
+            (void) rc;
             close (HOOK_CONNECT(hook_connect, child_read));
 #ifndef HOOK_CONNECT_MAX_SOCKETS
             close (HOOK_CONNECT(hook_connect, child_recv));

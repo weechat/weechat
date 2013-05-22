@@ -1716,7 +1716,7 @@ hook_process_timer_cb (void *arg_hook_process, int remaining_calls)
 void
 hook_process_run (struct t_hook *hook_process)
 {
-    int pipe_stdout[2], pipe_stderr[2], timeout, max_calls;
+    int pipe_stdout[2], pipe_stderr[2], timeout, max_calls, rc;
     long interval;
     pid_t pid;
 
@@ -1763,7 +1763,8 @@ hook_process_run (struct t_hook *hook_process)
             return;
         /* child process */
         case 0:
-            setuid (getuid ());
+            rc = setuid (getuid ());
+            (void) rc;
             hook_process_child (hook_process);
             /* never executed */
             _exit (EXIT_SUCCESS);
