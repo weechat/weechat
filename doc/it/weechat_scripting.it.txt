@@ -7,7 +7,7 @@ Questo manuale documenta il client di chat WeeChat, ed è parte
 del programma stesso.
 
 La versione più recente di questo documento si trova qui:
-http://www.weechat.org/doc
+http://weechat.org/doc
 
 
 [[introduction]]
@@ -751,12 +751,13 @@ def weechat_process_cb(data, command, rc, out, err):
         weechat.prnt("", "Current WeeChat stable is: %s" % weechat_version)
     return weechat.WEECHAT_RC_OK
 
-weechat.hook_process("url:http://weechat.org/info/stable/",
+weechat.hook_process("url:http://weechat.org/dev/info/stable/",
                      30 * 1000, "weechat_process_cb", "")
 ----------------------------------------
 
 [TIP]
-Tutte le informazioni disponibili su Weechat sono sulla pagina http://weechat.org/info
+Tutte le informazioni disponibili su Weechat sono sulla pagina
+http://weechat.org/dev/info
 
 Esempio di trasferimento di un URL con un'opzione: scaricare l'ultimo pacchetto
 di sviluppo di WeeChat nel file '/tmp/weechat-devel.tar.gz':

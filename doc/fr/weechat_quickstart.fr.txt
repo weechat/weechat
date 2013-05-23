@@ -319,7 +319,7 @@ Les extensions sont automatiquement chargées lorsqu'elles sont trouvées
 extensions ou des scripts).
 
 De nombreux scripts externes (de contributeurs) sont disponibles pour WeeChat :
-http://www.weechat.org/scripts
+http://weechat.org/scripts
 
 Vous pouvez gérer les scripts dans WeeChat avec la commande `/script` (voir
 `/help script` pour plus d'infos).
@@ -330,6 +330,6 @@ Plus de documentation
 ---------------------
 
 Vous pouvez maintenant utiliser WeeChat et lire la FAQ/documentation pour
-toute autre question : http://www.weechat.org/doc
+toute autre question : http://weechat.org/doc
 
 Bon WeeChat !

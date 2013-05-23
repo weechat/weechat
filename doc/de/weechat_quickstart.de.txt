@@ -324,7 +324,7 @@ Erweiterungen werden -sofern welche gefunden worden sind- automatisch geladen (B
 die Dokumentation zum installieren/entfernen von Erweiterungen und/oder Skripten).
 
 Viele externe Skripten (der Mitarbeitenden) sind für WeeChat verfügbar, siehe:
-http://www.weechat.org/scripts
+http://weechat.org/scripts
 
 Skripten können mit dem Befehl `/script` verwaltet werden (siehe `/help script` für
 weitere Informationen zur Bedienung).
@@ -335,6 +335,6 @@ Weitere Dokumentation
 ---------------------
 
 Nun kannst Du WeeChat nutzen, für weitere Fragen lese die FAQ und/oder Dokumentation:
-http://www.weechat.org/doc
+http://weechat.org/doc
 
 Viel Spass mit WeeChat!

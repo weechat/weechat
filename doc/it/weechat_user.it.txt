@@ -7,7 +7,7 @@ Questo manuale documenta il client di chat WeeChat, ed è parte
 del programma stesso.
 
 È possibile trovare l'ultima versione di questo documento qui:
-http://www.weechat.org/doc
+http://weechat.org/doc
 
 
 [[introduction]]
@@ -35,7 +35,7 @@ Le principali caratteristiche:
 * multi-piattaforma (GNU/Linux, *BSD, MacOS X, Windows ed altre)
 * 100% GPL, software libero
 
-La home page di WeeChat si trova qui: http://www.weechat.org/
+La home page di WeeChat si trova qui: http://weechat.org/
 
 [[pre-requisites]]
 Requisiti
@@ -2535,7 +2535,7 @@ linguaggi.
 // TRANSLATION MISSING
 Another plugin called "script" is a scripts manager and is used to load/unload
 scripts of any language, and install/remove scripts of WeeChat scripts
-repository, which are visible at this URL: http://www.weechat.org/scripts
+repository, which are visible at this URL: http://weechat.org/scripts
 
 Per maggiori informazioni su come scrivere gli script, o le API WeeChat
 per gli script, consultare la 'Guida allo Scripting di WeeChat'.

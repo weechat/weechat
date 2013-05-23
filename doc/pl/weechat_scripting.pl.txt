@@ -6,7 +6,7 @@ Sébastien Helleu <flashcode@flashtux.org>
 Ten dokument opisuje klienta rozmów WeeChat, który jest częścią WeeChat.
 
 Najnowsza wersja tego dokumentu znajduje się na tej stronie:
-http://www.weechat.org/doc
+http://weechat.org/doc
 
 
 [[introduction]]
@@ -734,12 +734,12 @@ def weechat_process_cb(data, command, rc, out, err):
         weechat.prnt("", "Obecna wersja stabilna WeeChat: %s" % weechat_version)
     return weechat.WEECHAT_RC_OK
 
-weechat.hook_process("url:http://weechat.org/info/stable/",
+weechat.hook_process("url:http://weechat.org/dev/info/stable/",
                      30 * 1000, "weechat_process_cb", "")
 ----------------------------------------
 
 [TIP]
-Wszystkie informacje o WeeChat dostępne są na stronie http://weechat.org/info
+Wszystkie informacje o WeeChat dostępne są na stronie http://weechat.org/dev/info
 
 Przykładowy transfer URL z opcją: pobranie najnowszej wersji rozwojowej WeeChat
 do pliku '/tmp/weechat-devel.tar.gz':

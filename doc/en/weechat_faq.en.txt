@@ -50,7 +50,7 @@ Some features (version ≥ 0.3.x):
 * multi-platform
 * 100% GPL and free
 
-More info on this page: http://www.weechat.org/features
+More info on this page: http://weechat.org/about/features
 
 [[compilation_install]]
 Compilation / install
@@ -284,7 +284,7 @@ URL selection):
 This option may cause display bugs. If you experience such problem, you must
 turn off this option.
 
-Other solution is to use a script: http://www.weechat.org/scripts/stable/tag/url
+Other solution is to use a script: http://weechat.org/scripts/stable/tag/url
 
 [[change_locale_without_quit]]
 I want to change the language used by WeeChat for messages, but without exiting WeeChat, is it possible?
@@ -678,7 +678,7 @@ For 'launcher.pl', you have to setup command:
 /set plugins.var.perl.launcher.signal.weechat_highlight "/path/to/command arguments"
 ----------------------------------------
 
-Other scripts on this subject: http://www.weechat.org/scripts/stable/tag/notify/
+Other scripts on this subject: http://weechat.org/scripts/stable/tag/notify/
 
 [[irc_target_buffer]]
 How can I change target buffer for commands on merged buffers (like buffer with servers)?
@@ -755,7 +755,7 @@ There are 3 ways:
   * request a new feature: https://savannah.nongnu.org/task/?group=weechat
   * send a patch: https://savannah.nongnu.org/patch/?group=weechat
 . you can mail developers, look at support page for developer's mails:
-  http://www.weechat.org/about
+  http://weechat.org/dev/support
   (you can subscribe and send to "support" mailing list)
 
 [[gdb_error_threads]]
@@ -783,7 +783,7 @@ $ LD_PRELOAD=/lib/libpthread.so.0 gdb /path/to/weechat-curses
 What is the list of supported platforms for WeeChat? Will it be ported to other operating systems?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The full list is on this page: http://www.weechat.org/download
+The full list is on this page: http://weechat.org/download
 
 We do our best to run on as many platforms as possible. Help is welcome for
 some OS' we don't have, to test WeeChat.
@@ -795,11 +795,11 @@ I want to help WeeChat developers. What can I do?
 There's many tasks to do (testing, code, documentation, ...)
 
 Please contact us via IRC or mail, look at support page:
-http://www.weechat.org/support
+http://weechat.org/dev/support
 
 [[donate]]
 Can I give money or other things to WeeChat developers?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can give us money to help development.
-Details on http://www.weechat.org/donate
+Details on http://weechat.org/about/donate

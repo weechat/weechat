@@ -6,7 +6,7 @@ Sébastien Helleu <flashcode@flashtux.org>
 This manual documents WeeChat chat client, it is part of WeeChat.
 
 Latest version of this document can be found on this page:
-http://www.weechat.org/doc
+http://weechat.org/doc
 
 
 [[introduction]]
@@ -34,7 +34,7 @@ Main features are:
 * multi-platform (GNU/Linux, *BSD, MacOS X, Windows and other)
 * 100% GPL, free software
 
-WeeChat homepage is here: http://www.weechat.org/
+WeeChat homepage is here: http://weechat.org/
 
 [[pre-requisites]]
 Pre-requisites
@@ -2461,7 +2461,7 @@ These plugins can load, execute and unload scripts for these languages.
 
 Another plugin called "script" is a scripts manager and is used to load/unload
 scripts of any language, and install/remove scripts of WeeChat scripts
-repository, which are visible at this URL: http://www.weechat.org/scripts
+repository, which are visible at this URL: http://weechat.org/scripts
 
 For more information about how to write scripts, or WeeChat API for
 scripts, please read 'WeeChat Scripting Guide'.

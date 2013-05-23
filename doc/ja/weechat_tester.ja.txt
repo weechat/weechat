@@ -101,7 +101,7 @@ $ make install
 Linux ディストリビューション別に:
 
 * Debian: http://debian.flashtux.org/
-* Gentoo: http://www.weechat.org/download
+* Gentoo: http://weechat.org/download
 * ArchLinux: http://aur.archlinux.org/ から PKGBUILD
 * その他: 知らないよ!
 

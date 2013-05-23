@@ -6,7 +6,7 @@ Sébastien Helleu <flashcode@flashtux.org>
 Diese Anleitung beschreibt den WeeChat Chat Client und ist Teil von WeeChat.
 
 Die aktuelle Version dieser Anleitung finden Sie auf:
-http://www.weechat.org/doc
+http://weechat.org/doc
 
 
 [[introduction]]
@@ -34,7 +34,7 @@ wesentliche Merkmale:
 * Betriebssystemunabhängig (GNU/Linux, *BSD, MacOS X, Windows und weitere)
 * 100% GPL, freie Software
 
-Die WeeChat Homepage findet man unter: http://www.weechat.org/
+Die WeeChat Homepage findet man unter: http://weechat.org/
 
 [[pre-requisites]]
 Vorbereitung
@@ -2514,7 +2514,7 @@ und entfernt werden.
 Eine weitere Erweiterung ist "script". Dies ist ein Skripten-Manager mit dem es möglich ist,
 unabhängig von der Skript-Sprache, Skripten zu laden und zu entfernen. Des weiteren können
 Skripten, aus dem Skript-Repository, installiert und deinstalliert werden. Das Skript-Repository
-kann unter folgender URL eingesehen werden: http://www.weechat.org/scripts
+kann unter folgender URL eingesehen werden: http://weechat.org/scripts
 
 Sollten wir Ihr Interesse geweckt haben, selber Skripten für WeeChat zu programmieren, dann lesen Sie
 bitte die 'WeeChat Scripting Guide'.

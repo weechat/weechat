@@ -44,4 +44,4 @@ make install     (as root for installation in system directories)
 ------------------------------------------------------------------
 
 For more information or installation with autotools, please look at
-'User's guide': http://www.weechat.org/doc
+'User's guide': http://weechat.org/doc

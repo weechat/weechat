@@ -6,7 +6,7 @@ Sébastien Helleu <flashcode@flashtux.org>
 This manual documents WeeChat chat client, it is part of WeeChat.
 
 Latest version of this document can be found on this page:
-http://www.weechat.org/doc
+http://weechat.org/doc
 
 
 [[introduction]]
@@ -736,12 +736,12 @@ def weechat_process_cb(data, command, rc, out, err):
         weechat.prnt("", "Current WeeChat stable is: %s" % weechat_version)
     return weechat.WEECHAT_RC_OK
 
-weechat.hook_process("url:http://weechat.org/info/stable/",
+weechat.hook_process("url:http://weechat.org/dev/info/stable/",
                      30 * 1000, "weechat_process_cb", "")
 ----------------------------------------
 
 [TIP]
-All infos available about WeeChat are on page http://weechat.org/info
+All infos available about WeeChat are on page http://weechat.org/dev/info
 
 Example of URL transfer with an option: download latest WeeChat development
 package in file '/tmp/weechat-devel.tar.gz':

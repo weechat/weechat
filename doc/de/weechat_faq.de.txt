@@ -51,7 +51,7 @@ Einige Funktionen (Version ≥ 0.3.x):
 * 100% GPL und Frei
 
 Weitere Informationen gibt es auf der folgenden Internetseite:
-http://www.weechat.org/features
+http://weechat.org/about/features
 
 [[compilation_install]]
 Kompilierung / Installation
@@ -298,7 +298,7 @@ Zeilen angefügt (dies führt dazu, dass URLs beim Markieren korrekt erkannt wer
 Bei der Nutzung dieser Option kann es zu Darstellungsfehlern kommen. Sollte dies
 auftreten, sollte diese Option wieder deaktiviert werden.
 
-Eine weitere Möglichkeit ist, ein Skript zu nutzen: http://www.weechat.org/scripts/stable/tag/url
+Eine weitere Möglichkeit ist, ein Skript zu nutzen: http://weechat.org/scripts/stable/tag/url
 
 [[change_locale_without_quit]]
 Ich möchte die Meldungen von Weechat in einer anderen Sprache ausgeben lassen, ohne WeeChat zu beenden. Ist dies möglich?
@@ -716,7 +716,7 @@ Beim Skript 'launcher.pl' müssen noch die Befehle angepasst werden:
 /set plugins.var.perl.launcher.signal.weechat_highlight "/Pfad/zum/Befehl Argumente"
 ----------------------------------------
 
-andere Skripten die auch zu diesem Thema passen: http://www.weechat.org/scripts/stable/tag/notify/
+andere Skripten die auch zu diesem Thema passen: http://weechat.org/scripts/stable/tag/notify/
 
 [[irc_target_buffer]]
 Wie kann ich bei zusammengefügten Buffern den Zielbuffer ändern (z.B. bei einem Server-Buffer)?
@@ -796,7 +796,7 @@ Es gibt drei Möglichkeiten:
   * Einen Verbesserungsvorschlag machen: https://savannah.nongnu.org/task/?group=weechat
   * Einen Patch einsenden: https://savannah.nongnu.org/patch/?group=weechat
 . Du kannst den Entwicklern mailen, entsprechende Mail-Adressen auf der Supportseite:
-  http://www.weechat.org/about
+  http://weechat.org/dev/support
   (Um emails an die "support" Mailing-Liste zu schicken, kannst Du diese abonnieren)
 
 [[gdb_error_threads]]
@@ -824,7 +824,7 @@ $ LD_PRELOAD=/lib/libpthread.so.0 gdb /Pfad/zu/weechat-curses
 Auf welchen Plattformen läuft WeeChat und wird es noch auf andere Betriebssystemen portiert?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Eine vollständige Liste der Portierungen findest Du unter: http://www.weechat.org/download
+Eine vollständige Liste der Portierungen findest Du unter: http://weechat.org/download
 
 Wir geben unser Bestes um WeeChat auf möglichst viele Plattformen zu portieren.
 Aber um WeeChat auf fremden Betriebssystemen zu testen, zu denen wir keinen Zugang haben,
@@ -837,11 +837,11 @@ Ich möchte den Entwicklern von WeeChat helfen. Was kann ich tun?
 Es gibt einiges zu tun z.B. testen, programmieren, Dokumentation, ...
 
 Bitte kontaktiere uns via IRC oder email, schaue auf die Support-Seite:
-http://www.weechat.org/support
+http://weechat.org/dev/support
 
 [[donate]]
 Kann ich Geld oder anderes an die WeeChat Entwickler spenden?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Du kannst uns Geld zur Unterstützung der weiteren Entwicklung spenden.
-Details hierzu gibt es auf: http://www.weechat.org/donate
+Details hierzu gibt es auf: http://weechat.org/about/donate

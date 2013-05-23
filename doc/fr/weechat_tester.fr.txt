@@ -111,7 +111,7 @@ Obtenir un paquet binaire
 Selon votre distribution Linux :
 
 * Debian: http://debian.flashtux.org/
-* Gentoo: http://www.weechat.org/download
+* Gentoo: http://weechat.org/download
 * ArchLinux: PKGBUILD depuis http://aur.archlinux.org/
 * autre: nous ne savons pas ! Eheh.
 

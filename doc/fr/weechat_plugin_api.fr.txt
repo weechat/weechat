@@ -7,7 +7,7 @@ Ce manuel documente le client de messagerie instantanée WeeChat, il fait
 partie de WeeChat.
 
 La dernière version de ce document peut être téléchargée sur cette page :
-http://www.weechat.org/doc
+http://weechat.org/doc
 
 
 [[introduction]]
@@ -7097,7 +7097,7 @@ Des options pour l'URL sont possibles avec la fonction
 [TIP]
 Si vous souhaitez récupérer des infos à propos de WeeChat (comme la version
 stable actuelle, le dernier commit git, etc...), vous pouvez utiliser les URLs
-sur la page http://weechat.org/info
+sur la page http://weechat.org/dev/info
 
 [NOTE]
 La taille du tampon pour l'envoi des données au "callback" est de 64 Ko (il y a

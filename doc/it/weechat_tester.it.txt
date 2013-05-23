@@ -110,7 +110,7 @@ Installazione del pacchetto binario
 A seconda della distribuzione Linux:
 
 * Debian: http://debian.flashtux.org/
-* Gentoo: http://www.weechat.org/download
+* Gentoo: http://weechat.org/download
 * ArchLinux: PKGBUILD da http://aur.archlinux.org/
 * altro: non lo sappiamo! Eheh.
 

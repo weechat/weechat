@@ -107,7 +107,7 @@ Instalowanie pakietów binarnych
 W zależności od dystrybucji Linuksa:
 
 * Debian: http://debian.flashtux.org/
-* Gentoo: http://www.weechat.org/download
+* Gentoo: http://weechat.org/download
 * ArchLinux: PKGBUILD z http://aur.archlinux.org/
 * inne: nie mamy pojęcia! Eheh.
 

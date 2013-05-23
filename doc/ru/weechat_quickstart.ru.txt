@@ -308,7 +308,7 @@ with nickserv (only if you don't use SASL for authentication):
 посмотрите документацию о load/unload плагинов или скиптов)
 
 Много пользовательских плагинов доступно для WeeChat:
-http://www.weechat.org/scripts
+http://weechat.org/scripts
 
 // TRANSLATION MISSING
 You can manage scripts in WeeChat with command `/script` (see `/help script`
@@ -320,6 +320,6 @@ for more info).
 -------------------
 
 Для остальных вопросов вы можете прочитать FAQ или документацию:
-http://www.weechat.org/doc
+http://weechat.org/doc
 
 Приятного использования WeeChat!

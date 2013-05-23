@@ -5,7 +5,7 @@ Sébastien Helleu <flashcode@flashtux.org>
 このマニュアルは WeeChat チャットクライアントについての文書で、これは WeeChat の一部です。
 
 この文書の最新版は以下のページにあります:
-http://www.weechat.org/doc
+http://weechat.org/doc
 
 
 [[introduction]]
@@ -31,7 +31,7 @@ WeeChat (Wee Enhanced Environment for Chat) はフリーのチャットクライ
 * マルチプラットフォーム (GNU/Linux、*BSD、MacOS X、Windows 等)
 * 完全な GPL、フリーソフトウェア
 
-WeeChat のホームページ: http://www.weechat.org/
+WeeChat のホームページ: http://weechat.org/
 
 [[pre-requisites]]
 === 事前に必要なもの ===
@@ -2369,7 +2369,7 @@ WeeChat は 6 種類のスクリプトプラグインを備えています: Pyth
 これらのプラグインでそれぞれの言語で書かれたスクリプトのロード、実行、アンロードができます。
 
 "スクリプト" と呼ばれるほかのプラグインはスクリプトマネージャで、任意の言語で書かれたスクリプトをロード
-/ アンロードしたり、WeeChat スクリプトリポジトリ (http://www.weechat.org/scripts から参照可能)
+/ アンロードしたり、WeeChat スクリプトリポジトリ (http://weechat.org/scripts から参照可能)
 のスクリプトをインストール / 削除するために利用します。
 
 スクリプトの書き方やスクリプト用の WeeChat API についての詳しい情報は、

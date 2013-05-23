@@ -112,7 +112,7 @@ Installieren des Programm-Paketes
 Abhängig Deiner Linux Distribution:
 
 * Debian: http://debian.flashtux.org/
-* Gentoo: http://www.weechat.org/download
+* Gentoo: http://weechat.org/download
 * ArchLinux: PKGBUILD von http://aur.archlinux.org/
 * andere: Wissen wir nicht! Eheh.
 

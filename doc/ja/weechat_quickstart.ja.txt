@@ -295,7 +295,7 @@ Debian のようにいくつかのディストリビューションでは、プ�
 スクリプトの読み込み、有効 / 無効は WeeChat のドキュメントを参照してください)。
 
 WeeChat では多くの外部スクリプト (貢献者の作った) が利用可能です:
-http://www.weechat.org/scripts
+http://weechat.org/scripts
 
 WeeChat ではコマンド `/script` を使うことで、スクリプトの管理ができます
 (より詳しい情報を見るには `/help script` を参照してください)。
@@ -305,6 +305,6 @@ WeeChat ではコマンド `/script` を使うことで、スクリプトの管�
 == 詳しいドキュメント情報 ==
 
 FAQ やその他の質問に関するドキュメントはこちらで参照できます:
-http://www.weechat.org/doc
+http://weechat.org/doc
 
 WeeChat を楽しんでください!

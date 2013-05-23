@@ -7,7 +7,7 @@ Questo manuale documenta il client di chat WeeChat, ed è parte
 del programma stesso.
 
 La versione più recente di questo documento si trova qui:
-http://www.weechat.org/doc
+http://weechat.org/doc
 
 
 [[introduction]]
@@ -7031,7 +7031,7 @@ un URL sono disponibili con la funzione
 // TRANSLATION MISSING
 [TIP]
 If you want to retrieve infos about WeeChat (like current stable version,
-latest git commit, ...), you can use URLs on page http://weechat.org/info
+latest git commit, ...), you can use URLs on page http://weechat.org/dev/info
 
 [NOTE]
 La dimensione del buffer per l'invio dei dati alla callback è di 64KB (ci sono
