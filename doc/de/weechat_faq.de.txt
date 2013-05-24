@@ -26,29 +26,8 @@ Aber dieses trifft nicht auf WeeChat zu!)
 Weshalb sollte man WeeChat nutzen? - X-Chat und Irssi sind doch auch sehr gut...
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Weil WeeChat schlank ist und neue Funktionen besitzt.
-Einige Funktionen (Version ≥ 0.3.x):
-
-* Unterstützung verschiedener Protokolle durch Erweiterungen (IRC, Jabber)
-* mehrere Remote GUIs als Ergänzung zu Curses
-* Unterstützung von 256 Farben
-* in mehreren Sprachen verfügbar
-* den eigenen Bedürfnissen durch Erweiterungen anpassbar (C, Perl, Python, Ruby, Lua, Tcl)
-* Buffer mit unabhängigem Inhalt
-* Filterung der Anzeige mittels Tags und regulären Ausdrücken
-* horizontale und vertikale Einteilung der Fenster
-* anpassbare und erweiterbare Leisten
-* native Nickliste
-* Auflistung von Buffern (mittels dem Skript buffers.pl)
-* IRC Proxy
-* Umleitung von IRC Befehlen
-* inkrementelle Textsuche in Buffern, zu Highlights springen
-* FIFO Pipe für Fernsteuerung
-* Unterstützung von Aspell
-* Doppelter Zeichensatz (Kodierung/Dekodierung)
-* Neuentwicklung (basiert auf keinem anderen Programm)
-* lauffähig auf einer Vielzahl von Plattformen
-* 100% GPL und Frei
+// TRANSLATION MISSING
+Because WeeChat is very light and brings innovating features.
 
 Weitere Informationen gibt es auf der folgenden Internetseite:
 http://weechat.org/about/features

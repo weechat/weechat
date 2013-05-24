@@ -22,29 +22,8 @@ Sébastien Helleu <flashcode@flashtux.org>
 [[why_choose_weechat]]
 === WeeChat を選ぶ理由は何ですか? X-Chat や Irssi は最高なのに... ===
 
-なぜなら WeeChat はとても軽量で新しい機能を持っているからです。
-いくつかの機能 (バージョン ≥ 0.3.x):
-
-* プラグインでマルチプロトコルをサポート (IRC、Jabber)
-* Curses の他に多くのリモート GUI をサポート
-* 256 色サポート
-* 多くの言語で利用可能
-* プラグインによる拡張 (C 言語、Perl、Python、Ruby、Lua、Tcl)
-* 任意の内容を持てるバッファ
-* タグや正規表現を用いた表示制限フィルタ
-* 水平垂直方向のウィンドウ分割
-* カスタマイズと拡張可能なバー
-* 組み込み済みのニックネームリスト
-* バッファリスト (buffers.pl スクリプト)
-* IRC プロキシ
-* IRC コマンドのリダイレクト
-* バッファ内のインクリメンタルテキスト検索、ハイライト部分へのジャンプ
-* リモート操作用の FIFO パイプ
-* aspell サポート
-* 2 つの文字セット (エンコード/デコード)
-* ゼロからの開発 (他のどんなクライアントにも基づかない)
-* マルチプラットフォーム
-* GPL に準拠してフリー
+// TRANSLATION MISSING
+Because WeeChat is very light and brings innovating features.
 
 こののページに関するより詳しい情報: http://weechat.org/about/features
 

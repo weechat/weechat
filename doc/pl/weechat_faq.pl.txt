@@ -26,29 +26,8 @@ pasuje ono do WeeChat!).
 Dlaczego wybrać WeeChat? X-Chat i Irssi są takie dobre...
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Ponieważ WeeChat jest lekki i posiada wiele nowych możliwości.
-Niektóre cechy (wersja ≥ 0.3.x):
-
-* wsparcie dla wielu protokołów dzięki wtyczką (IRC, Jabber)
-* wiele zdalnych GUI w dodatku do Courses
-* wsparcie dla 256 kolorów
-* dostępny w wielu językach
-* rozszerzalny dzięki wtyczką (C, Perl, Python, Ruby, Lua, Tcl)
-* bufory z wolną zawartością
-* filtrowanie po tagach i wyrażeniach regularnych
-* poziome i pionowe dzielenie okien
-* paski które możemy tworzyć i dostosowywać do własnych potrzeb
-* natywna lista nicków
-* lista buforów (skrypt buffers.pl)
-* proxy IRC
-* przekierowanie części komend IRC
-* przyrostowe wyszukiwanie tekstu w buforach, przeskakiwanie do podświetleń
-* strumień FIFO do zdalnej kontroli
-* wsparcie dla aspell
-* podwójny zestaw znaków (kodowanie/dekodowanie)
-* tworzony od podstaw (nie bazuje na żadnym innym kliencie)
-* multiplatformowy
-* 100% GPL i wolny
+// TRANSLATION MISSING
+Because WeeChat is very light and brings innovating features.
 
 Więcej informacji na stronie: http://weechat.org/about/features
 
