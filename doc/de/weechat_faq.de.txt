@@ -30,7 +30,7 @@ Weil WeeChat schlank ist und neue Funktionen besitzt.
 Einige Funktionen (Version ≥ 0.3.x):
 
 * Unterstützung verschiedener Protokolle durch Erweiterungen (IRC, Jabber)
-* mehrere Remote GUIs als Ergänzung zu Curses (in Kürze)
+* mehrere Remote GUIs als Ergänzung zu Curses
 * Unterstützung von 256 Farben
 * in mehreren Sprachen verfügbar
 * den eigenen Bedürfnissen durch Erweiterungen anpassbar (C, Perl, Python, Ruby, Lua, Tcl)
@@ -61,10 +61,13 @@ Kompilierung / Installation
 Ich habe gehört es gibt mehrere GUIs für WeeChat. Wie kann ich diese kompilieren bzw. nutzen?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Zur Zeit ist nur eine GUI, für Curses, verfügbar.
+// TRANSLATION MISSING
+Some remote GUIs are available:
 
-Andere GUIs (zur Zeit in der Entwicklung) werden als Remote Clients verfügbar
-sein.
+* http://weechat.org/download/devel[QWeeChat] (Qt)
+* https://github.com/ubergeek42/weechat-android[weechat-android] (Android)
+* https://github.com/the-kenny/weechat.el[weechat.el] (Emacs)
+* https://github.com/eirikb/weecloud[weecloud] (Web)
 
 [[compile_git]]
 Ich kann WeeChat nach Cloning des git Repository nicht kompilieren - weshalb?

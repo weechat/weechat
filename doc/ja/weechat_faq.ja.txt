@@ -26,7 +26,7 @@ Sébastien Helleu <flashcode@flashtux.org>
 いくつかの機能 (バージョン ≥ 0.3.x):
 
 * プラグインでマルチプロトコルをサポート (IRC、Jabber)
-* Curses の他に多くのリモート GUI をサポート(近日公開)
+* Curses の他に多くのリモート GUI をサポート
 * 256 色サポート
 * 多くの言語で利用可能
 * プラグインによる拡張 (C 言語、Perl、Python、Ruby、Lua、Tcl)
@@ -54,9 +54,13 @@ Sébastien Helleu <flashcode@flashtux.org>
 [[gui]]
 === WeeChat には多くの GUI があると聞きました。コンパイル/利用方法を教えてください。 ===
 
-今のところ利用可能なのは Curses GUI だけです。
+// TRANSLATION MISSING
+Some remote GUIs are available:
 
-その他の GUI はリモートクライアントとして利用可能になる予定です(現在開発中)。
+* http://weechat.org/download/devel[QWeeChat] (Qt)
+* https://github.com/ubergeek42/weechat-android[weechat-android] (Android)
+* https://github.com/the-kenny/weechat.el[weechat.el] (Emacs)
+* https://github.com/eirikb/weecloud[weecloud] (Web)
 
 [[compile_git]]
 === git リポジトリをクローンした後に WeeChat をコンパイルできません。 ===

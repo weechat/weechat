@@ -30,7 +30,7 @@ Ponieważ WeeChat jest lekki i posiada wiele nowych możliwości.
 Niektóre cechy (wersja ≥ 0.3.x):
 
 * wsparcie dla wielu protokołów dzięki wtyczką (IRC, Jabber)
-* wiele zdalnych GUI w dodatku do Courses (już niedługo)
+* wiele zdalnych GUI w dodatku do Courses
 * wsparcie dla 256 kolorów
 * dostępny w wielu językach
 * rozszerzalny dzięki wtyczką (C, Perl, Python, Ruby, Lua, Tcl)
@@ -60,9 +60,13 @@ Kompilacja / instalacja
 Słyszałem o wielu GUI dla WeeChat. Jak mogę je skompilować/użyć?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Obecnie dostępne jest tylko GUI Courses.
+// TRANSLATION MISSING
+Some remote GUIs are available:
 
-Pozostałe będą dostępne jako zdalne klienty (obecnie rozwijane).
+* http://weechat.org/download/devel[QWeeChat] (Qt)
+* https://github.com/ubergeek42/weechat-android[weechat-android] (Android)
+* https://github.com/the-kenny/weechat.el[weechat.el] (Emacs)
+* https://github.com/eirikb/weecloud[weecloud] (Web)
 
 [[compile_git]]
 Nie mogę skompilować WeeChat po sklonowaniu repozytorium git, dlaczego?

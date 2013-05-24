@@ -30,7 +30,7 @@ Because WeeChat is very light and has new features.
 Some features (version ≥ 0.3.x):
 
 * multi-protocol support via plugins (IRC, Jabber)
-* many remote GUI's in addition to Curses (coming soon)
+* many remote GUIs in addition to Curses
 * 256 colors support
 * available in many languages
 * extensible with plugins (C, Perl, Python, Ruby, Lua, Tcl)
@@ -57,12 +57,15 @@ Compilation / install
 ---------------------
 
 [[gui]]
-I heard about many GUI's for WeeChat. How can I compile/use them?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+I heard about many GUIs for WeeChat. How can I compile/use them?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Today only a Curses GUI is available.
+Some remote GUIs are available:
 
-Other GUI's will be available as remote clients (currently under development).
+* http://weechat.org/download/devel[QWeeChat] (Qt)
+* https://github.com/ubergeek42/weechat-android[weechat-android] (Android)
+* https://github.com/the-kenny/weechat.el[weechat.el] (Emacs)
+* https://github.com/eirikb/weecloud[weecloud] (Web)
 
 [[compile_git]]
 I can't compile WeeChat after cloning git repository, why?

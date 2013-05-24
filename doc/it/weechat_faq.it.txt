@@ -30,7 +30,7 @@ Perché WeeChat è molto leggero ed ha nuove funzionalità.
 Alcune caratteristiche (versione ≥ 0.3.x):
 
 * supporto multi-protocollo via plugin (IRC, Jabber)
-* diverse interfacce remote in aggiunta a Curses (presto in arrivo)
+* diverse interfacce remote in aggiunta a Curses
 * supporto ai 256 colori
 * disponibile in molte lingue
 * estensibile con plugin (C, Perl, Python, Ruby, Lua, Tcl)
@@ -59,9 +59,13 @@ Compilazione / installazione
 Ho sentito parlare di molte interfacce per WeeChat. Come si possono compilare/utilizzare?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Ad oggi è disponibile solo l'interfaccia Curses.
+// TRANSLATION MISSING
+Some remote GUIs are available:
 
-Altre interfacce saranno disponibili come client remoti (in fase di sviluppo).
+* http://weechat.org/download/devel[QWeeChat] (Qt)
+* https://github.com/ubergeek42/weechat-android[weechat-android] (Android)
+* https://github.com/the-kenny/weechat.el[weechat.el] (Emacs)
+* https://github.com/eirikb/weecloud[weecloud] (Web)
 
 [[compile_git]]
 Non è possibile compilare WeeChat dopo aver clonato il repository git, perché?
