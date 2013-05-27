@@ -3,7 +3,7 @@ body {
   font-family: verdana, sans-serif;
   font-size: 12px;
 }
-div.sectionbody {
+div.sectionbody, #author, #revnumber, #revdate, #revremark, #toctitle, #footer {
   font-family: verdana, sans-serif;
 }
 a, a:visited, a:hover, a:active {
