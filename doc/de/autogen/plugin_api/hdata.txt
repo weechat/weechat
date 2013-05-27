@@ -1,4 +1,4 @@
-[width="100%",cols="^1,^2,5,5,5,5",options="header"]
+[width="100%",cols="^1,^2,4,8,4,4",options="header"]
 |========================================
 | Erweiterung | Name | Beschreibung | Variablen | Update erlaubt | Listen
 

@@ -493,7 +493,7 @@ def docgen_cmd_cb(data, buffer, args):
         filename = '%s/plugin_api/hdata.txt' % directory
         tmpfilename = '%s.tmp' % filename
         f = open(tmpfilename, 'w')
-        f.write('[width="100%",cols="^1,^2,5,5,5,5",options="header"]\n')
+        f.write('[width="100%",cols="^1,^2,4,8,4,4",options="header"]\n')
         f.write('|========================================\n')
         f.write('| %s | %s | %s | %s | %s | %s\n\n' % (_('Plugin'), _('Name'), _('Description'),
                                                        _('Variables'), _('Update allowed'),
