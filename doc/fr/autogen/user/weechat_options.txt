@@ -411,7 +411,7 @@
 * [[option_weechat.look.color_inactive_buffer]] *weechat.look.color_inactive_buffer*
 ** description: `utiliser une couleur différente pour les lignes dans un tampon inactif (si la ligne est d'un tampon mélangé et le tampon n'est pas sélectionné)`
 ** type: booléen
-** valeurs: on, off (valeur par défaut: `off`)
+** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_weechat.look.color_inactive_message]] *weechat.look.color_inactive_message*
 ** description: `utiliser une couleur différente pour un message inactif (quand la fenêtre n'est pas la fenêtre courante, ou si la ligne est d'un tampon mélangé et le tampon n'est pas sélectionné)`
@@ -436,7 +436,7 @@
 * [[option_weechat.look.color_inactive_window]] *weechat.look.color_inactive_window*
 ** description: `utiliser une couleur différente pour les lignes dans une fenêtre inactive (quand la fenêtre n'est pas la fenêtre courante)`
 ** type: booléen
-** valeurs: on, off (valeur par défaut: `off`)
+** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_weechat.look.color_nick_offline]] *weechat.look.color_nick_offline*
 ** description: `utiliser une couleur différente pour les pseudos déconnectés (qui ne sont plus dans la liste de pseudos)`

@@ -411,7 +411,7 @@
 * [[option_weechat.look.color_inactive_buffer]] *weechat.look.color_inactive_buffer*
 ** 説明: `アクティブでないバッファでは行に異なる色を使用 (行が未選択のマージバッファからの場合)`
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `off`)
+** 値: on, off (デフォルト値: `on`)
 
 * [[option_weechat.look.color_inactive_message]] *weechat.look.color_inactive_message*
 ** 説明: `アクティブでないメッセージに異なる色を使用 (ウィンドウにフォーカスが無いか、行が未選択のマージバッファからの場合)`
@@ -436,7 +436,7 @@
 * [[option_weechat.look.color_inactive_window]] *weechat.look.color_inactive_window*
 ** 説明: `アクティブでないウィンドウでは行に異なる色を使用 (ウィンドウにフォーカスが無い場合)`
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `off`)
+** 値: on, off (デフォルト値: `on`)
 
 * [[option_weechat.look.color_nick_offline]] *weechat.look.color_nick_offline*
 ** 説明: `オフライン状態のニックネームに異なる色を使用 (ニックネームリストにも表示しない)`

@@ -411,7 +411,7 @@
 * [[option_weechat.look.color_inactive_buffer]] *weechat.look.color_inactive_buffer*
 ** Beschreibung: `Textfarbe für Zeilen in einem inaktiven Buffer (betrifft Zeilen in einem zusammengefügt Buffer, welcher nicht aktiv ist)`
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `off`)
+** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.look.color_inactive_message]] *weechat.look.color_inactive_message*
 ** Beschreibung: `nutzt eine andere Farbe um die inaktiven Nachrichten darzustellen (Fenster ist nicht das aktuelle Fenster oder wenn die Zeile des zusammengefügten Buffers nicht die aktiv Zeile ist)`
@@ -436,7 +436,7 @@
 * [[option_weechat.look.color_inactive_window]] *weechat.look.color_inactive_window*
 ** Beschreibung: `Textfarbe für Zeilen in einem inaktiven Fenster (betrifft das Fenster, welches nicht aktiv ist)`
 ** Typ: boolesch
-** Werte: on, off (Standardwert: `off`)
+** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.look.color_nick_offline]] *weechat.look.color_nick_offline*
 ** Beschreibung: `Nicks die Offline sind werden im Buffer in einer anderen Farbe dargestellt (dies betrifft Nicks, die nicht in der Nickliste vorhanden sind!)`

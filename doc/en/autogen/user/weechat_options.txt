@@ -411,7 +411,7 @@
 * [[option_weechat.look.color_inactive_buffer]] *weechat.look.color_inactive_buffer*
 ** description: `use a different color for lines in inactive buffer (when line is from a merged buffer not selected)`
 ** type: boolean
-** values: on, off (default value: `off`)
+** values: on, off (default value: `on`)
 
 * [[option_weechat.look.color_inactive_message]] *weechat.look.color_inactive_message*
 ** description: `use a different color for inactive message (when window is not current window, or if line is from a merged buffer not selected)`
@@ -436,7 +436,7 @@
 * [[option_weechat.look.color_inactive_window]] *weechat.look.color_inactive_window*
 ** description: `use a different color for lines in inactive window (when window is not current window)`
 ** type: boolean
-** values: on, off (default value: `off`)
+** values: on, off (default value: `on`)
 
 * [[option_weechat.look.color_nick_offline]] *weechat.look.color_nick_offline*
 ** description: `use a different color for offline nicks (not in nicklist any more)`

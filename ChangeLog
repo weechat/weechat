@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.2-dev, 2013-05-27
+v0.4.2-dev, 2013-05-28
 
 
 This document lists all changes for each version.
@@ -14,6 +14,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 Version 0.4.2 (under dev!)
 --------------------------
 
+* core: set options weechat.look.color_inactive_{buffer|window} to "on" by
+  default
 * core: add infolist "layout" and hdata "layout", "layout_buffer" and
   "layout_window"
 * core: fix line alignment when option weechat.look.buffer_time_format is set

@@ -411,7 +411,7 @@
 * [[option_weechat.look.color_inactive_buffer]] *weechat.look.color_inactive_buffer*
 ** descrizione: `usa un colore diverso per le righe nel buffer inattivo (quando la riga viene da un buffer unito non selezionato)`
 ** tipo: bool
-** valori: on, off (valore predefinito: `off`)
+** valori: on, off (valore predefinito: `on`)
 
 * [[option_weechat.look.color_inactive_message]] *weechat.look.color_inactive_message*
 ** descrizione: `usa un colore diverso per un messaggio inattivo (quando la finestra non è quella corrente, o se la riga viene da un buffer unito non selezionato)`
@@ -436,7 +436,7 @@
 * [[option_weechat.look.color_inactive_window]] *weechat.look.color_inactive_window*
 ** descrizione: `usa un colore diverso per le righe nella finestra inattiva (quando la finestra non è quella corrente)`
 ** tipo: bool
-** valori: on, off (valore predefinito: `off`)
+** valori: on, off (valore predefinito: `on`)
 
 * [[option_weechat.look.color_nick_offline]] *weechat.look.color_nick_offline*
 ** descrizione: `usa un colore diverso per i nick non in linea (non più in lista nick)`
