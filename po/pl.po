@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-05-21 22:34+0200\n"
+"POT-Creation-Date: 2013-05-29 11:55+0200\n"
 "PO-Revision-Date: 2013-05-20 16:54+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5498,7 +5498,8 @@ msgstr ""
 msgid "send a private message to a nick"
 msgstr "wysyła prywatną wiadomość do użytkownika"
 
-msgid "[-server <server>] <nick> [<text>]"
+#, fuzzy
+msgid "[-server <server>] <nick>[,<nick>...] [<text>]"
 msgstr "[-server <serwer>] <nick> [<tekst>]"
 
 msgid ""

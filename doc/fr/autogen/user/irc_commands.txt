@@ -461,7 +461,7 @@ démon2: faire suivre le message à ce démon
 [[command_irc_query]]
 [command]*`query`* envoyer un message privé à un pseudo::
 ........................................
-/query  [-server <serveur>] <pseudo> [<texte>]
+/query  [-server <serveur>] <pseudo>[,<pseudo>...] [<texte>]
 
 serveur: envoyer à ce serveur (nom interne)
  pseudo: pseudo pour la conversation privée

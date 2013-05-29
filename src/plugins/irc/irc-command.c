@@ -3507,8 +3507,8 @@ int
 irc_command_query (void *data, struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
-    char *string;
-    int arg_nick, arg_text;
+    char *string, **nicks;
+    int i, arg_nick, arg_text, num_nicks;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
@@ -3528,37 +3528,50 @@ irc_command_query (void *data, struct t_gui_buffer *buffer, int argc,
 
         IRC_COMMAND_CHECK_SERVER("query", 1);
 
-        /* create private window if not already opened */
-        ptr_channel = irc_channel_search (ptr_server, argv[arg_nick]);
-        if (!ptr_channel)
+        nicks = weechat_string_split (argv[arg_nick], ",", 0, 0, &num_nicks);
+        if (nicks)
         {
-            ptr_channel = irc_channel_new (ptr_server,
-                                           IRC_CHANNEL_TYPE_PRIVATE,
-                                           argv[arg_nick], 1, 0);
-            if (!ptr_channel)
+            for (i = 0; i < num_nicks; i++)
             {
-                weechat_printf (ptr_server->buffer,
-                                _("%s%s: cannot create new private "
-                                  "buffer \"%s\""),
-                                weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                                argv[arg_nick]);
-                return WEECHAT_RC_OK;
-            }
-        }
-        weechat_buffer_set (ptr_channel->buffer, "display", "1");
+                /* create private window if not already opened */
+                ptr_channel = irc_channel_search (ptr_server, nicks[i]);
+                if (!ptr_channel)
+                {
+                    ptr_channel = irc_channel_new (ptr_server,
+                                                   IRC_CHANNEL_TYPE_PRIVATE,
+                                                   nicks[i], 1, 0);
+                    if (!ptr_channel)
+                    {
+                        weechat_printf (ptr_server->buffer,
+                                        _("%s%s: cannot create new private "
+                                          "buffer \"%s\""),
+                                        weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                                        nicks[i]);
+                    }
+                }
 
-        /* display text if given */
-        if (argv_eol[arg_text])
-        {
-            string = irc_color_decode (argv_eol[arg_text],
-                                       weechat_config_boolean (irc_config_network_colors_receive));
-            irc_input_user_message_display (ptr_channel->buffer, 0,
-                                            (string) ? string : argv_eol[arg_text]);
-            if (string)
-                free (string);
-            irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                              "PRIVMSG %s :%s",
-                              argv[arg_nick], argv_eol[arg_text]);
+                if (ptr_channel)
+                {
+                    /* switch to buffer */
+                    weechat_buffer_set (ptr_channel->buffer, "display", "1");
+
+                    /* display text if given */
+                    if (argv_eol[arg_text])
+                    {
+                        string = irc_color_decode (argv_eol[arg_text],
+                                                   weechat_config_boolean (irc_config_network_colors_receive));
+                        irc_input_user_message_display (ptr_channel->buffer, 0,
+                                                        (string) ? string : argv_eol[arg_text]);
+                        if (string)
+                            free (string);
+                        irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH,
+                                          NULL,
+                                          "PRIVMSG %s :%s",
+                                          nicks[i], argv_eol[arg_text]);
+                    }
+                }
+            }
+            weechat_string_free_split (nicks);
         }
     }
     else
@@ -5948,7 +5961,7 @@ irc_command_init ()
                           NULL, &irc_command_pong, NULL);
     weechat_hook_command ("query",
                           N_("send a private message to a nick"),
-                          N_("[-server <server>] <nick> [<text>]"),
+                          N_("[-server <server>] <nick>[,<nick>...] [<text>]"),
                           N_("server: send to this server (internal name)\n"
                              "  nick: nick for private conversation\n"
                              "  text: text to send"),

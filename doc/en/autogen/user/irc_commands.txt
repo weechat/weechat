@@ -461,7 +461,7 @@ daemon2: forward message to this daemon
 [[command_irc_query]]
 [command]*`query`* send a private message to a nick::
 ........................................
-/query  [-server <server>] <nick> [<text>]
+/query  [-server <server>] <nick>[,<nick>...] [<text>]
 
 server: send to this server (internal name)
   nick: nick for private conversation

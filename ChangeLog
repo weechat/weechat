@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.2-dev, 2013-05-28
+v0.4.2-dev, 2013-05-29
 
 
 This document lists all changes for each version.
@@ -20,6 +20,8 @@ Version 0.4.2 (under dev!)
   "layout_window"
 * core: fix line alignment when option weechat.look.buffer_time_format is set
   to empty string
+* irc: fix multiple nicks in command /query (separated by commas): open one
+  buffer per nick
 * xfer: fix compilation on OpenBSD (bug #39071)
 
 Version 0.4.1 (2013-05-20)

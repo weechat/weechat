@@ -461,7 +461,7 @@ daemon2: メッセージをデーモンに転送
 [[command_irc_query]]
 [command]*`query`* ニックネーム宛にプライベートメッセージを送信::
 ........................................
-/query  [-server <server>] <nick> [<text>]
+/query  [-server <server>] <nick>[,<nick>...] [<text>]
 
 server: 送信先サーバ (内部サーバ名)
   nick: プライベート会話を行うニックネーム
