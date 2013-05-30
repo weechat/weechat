@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-05-29 11:55+0200\n"
+"POT-Creation-Date: 2013-05-30 07:59+0200\n"
 "PO-Revision-Date: 2013-05-20 16:55+0200\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7747,6 +7747,11 @@ msgstr "%s%s: endereço IP \"%s\" não permitido para relay"
 #, fuzzy, c-format
 msgid "%s%s: cannot set socket option \"%s\" to %d: error %d %s"
 msgstr "%s%s: não foi possível criar socket para transferência"
+
+#. TRANSLATORS: second "%s" is "IPv4" or "IPv6"
+#, fuzzy, c-format
+msgid "%s%s: invalid bind address \"%s\" for %s"
+msgstr "%s%s: charset inválido: \"%s\""
 
 #, fuzzy, c-format
 msgid "%s%s: cannot create socket: error %d %s"

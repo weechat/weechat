@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-05-29 11:55+0200\n"
+"POT-Creation-Date: 2013-05-30 07:59+0200\n"
 "PO-Revision-Date: 2013-05-20 16:54+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -8327,6 +8327,11 @@ msgstr "%s%s: IP アドレス \"%s\" はリレーの許可がありません"
 #, c-format
 msgid "%s%s: cannot set socket option \"%s\" to %d: error %d %s"
 msgstr "%s%s: ソケットオプション \"%s\" を %d に設定できません: エラー %d %s"
+
+#. TRANSLATORS: second "%s" is "IPv4" or "IPv6"
+#, fuzzy, c-format
+msgid "%s%s: invalid bind address \"%s\" for %s"
+msgstr "%s%s: 不正な文字集合: \"%s\""
 
 #, c-format
 msgid "%s%s: cannot create socket: error %d %s"

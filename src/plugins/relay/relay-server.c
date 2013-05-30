@@ -338,7 +338,10 @@ relay_server_create_socket (struct t_relay_server *server)
     int domain, set, max_clients, addr_size;
     struct sockaddr_in server_addr;
     struct sockaddr_in6 server_addr6;
+    const char *bind_address;
     void *ptr_addr;
+
+    bind_address = weechat_config_string (relay_config_network_bind_address);
 
     if (server->ipv6)
     {
@@ -347,6 +350,18 @@ relay_server_create_socket (struct t_relay_server *server)
         server_addr6.sin6_family = domain;
         server_addr6.sin6_port = htons (server->port);
         server_addr6.sin6_addr = in6addr_any;
+        if (bind_address && bind_address[0])
+        {
+            if (!inet_pton (domain, bind_address, &server_addr6.sin6_addr))
+            {
+                weechat_printf (NULL,
+                                /* TRANSLATORS: second "%s" is "IPv4" or "IPv6" */
+                                _("%s%s: invalid bind address \"%s\" for %s"),
+                                weechat_prefix ("error"), RELAY_PLUGIN_NAME,
+                                bind_address, "IPv6");
+                return 0;
+            }
+        }
         ptr_addr = &server_addr6;
         addr_size = sizeof (struct sockaddr_in6);
     }
@@ -356,24 +371,21 @@ relay_server_create_socket (struct t_relay_server *server)
         memset (&server_addr, 0, sizeof (struct sockaddr_in));
         server_addr.sin_family = domain;
         server_addr.sin_port = htons (server->port);
-        if (weechat_config_string (relay_config_network_bind_address)
-            && weechat_config_string (relay_config_network_bind_address)[0])
+        server_addr.sin_addr.s_addr = INADDR_ANY;
+        if (bind_address && bind_address[0])
         {
-            server_addr.sin_addr.s_addr = inet_addr (weechat_config_string (relay_config_network_bind_address));
-        }
-        else
-        {
-            server_addr.sin_addr.s_addr = INADDR_ANY;
+            if (!inet_pton (domain, bind_address, &server_addr.sin_addr))
+            {
+                weechat_printf (NULL,
+                                /* TRANSLATORS: second "%s" is "IPv4" or "IPv6" */
+                                _("%s%s: invalid bind address \"%s\" for %s"),
+                                weechat_prefix ("error"), RELAY_PLUGIN_NAME,
+                                bind_address, "IPv4");
+                return 0;
+            }
         }
         ptr_addr = &server_addr;
         addr_size = sizeof (struct sockaddr_in);
-    }
-    if (weechat_config_string (relay_config_network_bind_address)
-        && weechat_config_string (relay_config_network_bind_address)[0])
-    {
-        inet_pton (domain,
-                   weechat_config_string (relay_config_network_bind_address),
-                   ptr_addr);
     }
 
     /* create socket */
