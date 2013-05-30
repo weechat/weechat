@@ -99,6 +99,9 @@ soluzione tra quelle elencate:
 ** se si sta utilizzando screen, verificare che sia in esecuzione in modalità
     UTF-8 ("`defutf8 on` nel file ~/.screenrc` oppure `screen -U` per avviare
     screen)
+// TRANSLATION MISSING
+* check that option 'weechat.look.eat_newline_glitch' is off (this option may
+  cause display bugs)
 
 [NOTE]
 Si raccomanda il locale UTF-8 per WeeChat. Se si utilizza ISO o un altro

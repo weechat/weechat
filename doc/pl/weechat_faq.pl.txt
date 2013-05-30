@@ -96,6 +96,9 @@ Jest to częsty problem, przeczytaj i sprawdź *WSZYSTKIE* poniższe rozwiązani
    dla UTF-8 jest rxvt-unicode)
 ** jeśli korzystasz ze screena, sprawdź czy jest uruchomiony z trybem UTF-8
    ("`defutf8 on`" w ~/.screenrc lub `screen -U` uruchamiając screena)
+// TRANSLATION MISSING
+* check that option 'weechat.look.eat_newline_glitch' is off (this option may
+  cause display bugs)
 
 [NOTE]
 UTF-8 jest zalecany dla WeeChat. Jeśli korzystasz z lokalizacji ISO lub innych,

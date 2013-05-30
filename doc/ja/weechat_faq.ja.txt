@@ -85,6 +85,9 @@ autotools を使って (cmake を使わずに) コンパイルする場合、
    rxvt-unicode を推奨)
 ** screen を使っている場合は、UTF-8 モードで起動されていることを確認
    (~/.screenrc に "`defutf8 on`" の記述があるか又は `screen -U` のようにして起動)。
+// TRANSLATION MISSING
+* check that option 'weechat.look.eat_newline_glitch' is off (this option may
+  cause display bugs)
 
 [NOTE]
 WeeChat は UTF-8 ロケールを推奨します。ISO 又はその他のロケールを使う場合、

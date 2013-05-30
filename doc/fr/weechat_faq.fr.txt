@@ -97,6 +97,8 @@ points ci-dessous :
    (un terminal conseillé pour l'UTF-8 est rxvt-unicode)
 ** si vous utilisez screen, vérifiez qu'il est lancé en mode UTF-8
    ("`defutf8 on`" dans ~/.screenrc ou `screen -U` pour lancer screen)
+* vérifiez que l'option 'weechat.look.eat_newline_glitch' est désactivée (cette
+  option peut causer des problèmes d'affichage)
 
 [NOTE]
 La locale UTF-8 est recommandée pour WeeChat. Si vous utilisez ISO ou une autre

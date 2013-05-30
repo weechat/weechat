@@ -93,6 +93,8 @@ It's common issue, please read carefully and check *ALL* solutions below:
    rxvt-unicode)
 ** if you are using screen, check that it is run with UTF-8 mode
    ("`defutf8 on`" in ~/.screenrc or `screen -U` to run screen)
+* check that option 'weechat.look.eat_newline_glitch' is off (this option may
+  cause display bugs)
 
 [NOTE]
 UTF-8 locale is recommended for WeeChat. If you're using ISO or other

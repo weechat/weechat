@@ -105,6 +105,9 @@ werden:
 ** Solltest Du screen nutzten, prüfe ob dieser im UTF-8 Modus läuft
    ("`defutf8 on`" in der Datei ~/.screenrc oder `screen -U` zum Starten von
    screen)
+// TRANSLATION MISSING
+* check that option 'weechat.look.eat_newline_glitch' is off (this option may
+  cause display bugs)
 
 [NOTE]
 Für Weechat wird die Nutzung von UTF-8 locale empfohlen. Nutzt Du jedoch ISO
