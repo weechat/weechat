@@ -14,6 +14,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 Version 0.4.2 (under dev!)
 --------------------------
 
+* core: fix random crash on mouse actions (bug #39094)
 * core: set options weechat.look.color_inactive_{buffer|window} to "on" by
   default
 * core: add infolist "layout" and hdata "layout", "layout_buffer" and

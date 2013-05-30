@@ -862,6 +862,51 @@ gui_window_coords_init_line (struct t_gui_window *window, int line)
 }
 
 /*
+ * Removes a line from coordinates: each time the line is found in the array
+ * "coords", it is reinitialized.
+ */
+
+void
+gui_window_coords_remove_line (struct t_gui_window *window,
+                               struct t_gui_line *line)
+{
+    int i;
+
+    if (!window->coords)
+        return;
+
+    for (i = 0; i < window->coords_size; i++)
+    {
+        if (window->coords[i].line == line)
+            gui_window_coords_init_line (window, i);
+    }
+}
+
+/*
+ * Removes a line from coordinates: each time a line with data == line_data is
+ * found in the array "coords", it is reinitialized.
+ */
+
+void
+gui_window_coords_remove_line_data (struct t_gui_window *window,
+                                    struct t_gui_line_data *line_data)
+{
+    int i;
+
+    if (!window->coords)
+        return;
+
+    for (i = 0; i < window->coords_size; i++)
+    {
+        if (window->coords[i].line
+            && (window->coords[i].line->data == line_data))
+        {
+            gui_window_coords_init_line (window, i);
+        }
+    }
+}
+
+/*
  * Allocates and initializes coordinates for window.
  */
 

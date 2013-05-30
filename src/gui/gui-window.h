@@ -22,6 +22,7 @@
 
 struct t_infolist;
 struct t_gui_bar_window;
+struct t_gui_line_data;
 
 /* window structures */
 
@@ -164,6 +165,10 @@ extern void gui_window_set_layout_plugin_name (struct t_gui_window *window,
 extern void gui_window_set_layout_buffer_name (struct t_gui_window *window,
                                                const char *buffer_name);
 extern void gui_window_coords_init_line (struct t_gui_window *window, int line);
+extern void gui_window_coords_remove_line (struct t_gui_window *window,
+                                           struct t_gui_line *line);
+extern void gui_window_coords_remove_line_data (struct t_gui_window *window,
+                                                struct t_gui_line_data *line_data);
 extern void gui_window_coords_alloc (struct t_gui_window *window);
 extern void gui_window_free (struct t_gui_window *window);
 extern void gui_window_switch_previous (struct t_gui_window *window);

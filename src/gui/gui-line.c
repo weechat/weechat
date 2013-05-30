@@ -792,7 +792,7 @@ gui_line_remove_from_list (struct t_gui_buffer *buffer,
 {
     struct t_gui_window *ptr_win;
     struct t_gui_window_scroll *ptr_scroll;
-    int i, update_prefix_max_length, prefix_length, prefix_is_nick;
+    int update_prefix_max_length, prefix_length, prefix_is_nick;
 
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
@@ -808,14 +808,7 @@ gui_line_remove_from_list (struct t_gui_buffer *buffer,
             }
         }
         /* remove line from coords */
-        if (ptr_win->coords)
-        {
-            for (i = 0; i < ptr_win->coords_size; i++)
-            {
-                if (ptr_win->coords[i].line == line)
-                    gui_window_coords_init_line (ptr_win, i);
-            }
-        }
+        gui_window_coords_remove_line (ptr_win, line);
     }
 
     gui_line_get_prefix_for_display (line, NULL, &prefix_length, NULL,
@@ -1184,6 +1177,7 @@ gui_line_add_y (struct t_gui_buffer *buffer, int y, const char *message)
 {
     struct t_gui_line *ptr_line, *new_line;
     struct t_gui_line_data *new_line_data;
+    struct t_gui_window *ptr_win;
 
     /* search if line exists for "y" */
     for (ptr_line = buffer->own_lines->first_line; ptr_line;
@@ -1256,7 +1250,16 @@ gui_line_add_y (struct t_gui_buffer *buffer, int y, const char *message)
 
     /* set message for line */
     if (ptr_line->data->message)
+    {
+        /* remove line from coords if the content is changing */
+        for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+        {
+            gui_window_coords_remove_line (ptr_win, ptr_line);
+        }
+
+        /* free message in line */
         free (ptr_line->data->message);
+    }
     ptr_line->data->message = (message) ? strdup (message) : strdup ("");
 
     /* check if line is filtered or not */
@@ -1444,7 +1447,8 @@ gui_line_hdata_line_data_update_cb (void *data,
 {
     const char *value;
     struct t_gui_line_data *line_data;
-    int rc;
+    struct t_gui_window *ptr_win;
+    int rc, update_coords;
 
     /* make C compiler happy */
     (void) data;
@@ -1452,6 +1456,7 @@ gui_line_hdata_line_data_update_cb (void *data,
     line_data = (struct t_gui_line_data *)pointer;
 
     rc = 0;
+    update_coords = 0;
 
     if (hashtable_has_key (hashtable, "date"))
     {
@@ -1463,6 +1468,7 @@ gui_line_hdata_line_data_update_cb (void *data,
                 free (line_data->str_time);
             line_data->str_time = gui_chat_get_time_string (line_data->date);
             rc++;
+            update_coords = 1;
         }
     }
 
@@ -1502,6 +1508,7 @@ gui_line_hdata_line_data_update_cb (void *data,
             gui_chat_strlen_screen (line_data->prefix) : 0;
         gui_line_compute_prefix_max_length (line_data->buffer->lines);
         rc++;
+        update_coords = 1;
     }
 
     if (hashtable_has_key (hashtable, "message"))
@@ -1509,10 +1516,18 @@ gui_line_hdata_line_data_update_cb (void *data,
         value = hashtable_get (hashtable, "message");
         hdata_set (hdata, pointer, "message", value);
         rc++;
+        update_coords = 1;
     }
 
     if (rc > 0)
     {
+        if (update_coords)
+        {
+            for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+            {
+                gui_window_coords_remove_line_data (ptr_win, line_data);
+            }
+        }
         gui_filter_buffer (line_data->buffer, line_data);
         gui_buffer_ask_chat_refresh (line_data->buffer, 1);
     }
