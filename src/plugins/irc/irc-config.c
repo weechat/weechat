@@ -62,6 +62,7 @@ struct t_config_option *irc_config_look_new_pv_position;
 struct t_config_option *irc_config_look_nick_mode;
 struct t_config_option *irc_config_look_nick_mode_empty;
 struct t_config_option *irc_config_look_nick_color_force;
+struct t_config_option *irc_config_look_nick_color_hash;
 struct t_config_option *irc_config_look_nick_color_stop_chars;
 struct t_config_option *irc_config_look_nick_completion_smart;
 struct t_config_option *irc_config_look_display_away;
@@ -564,12 +565,12 @@ irc_config_change_look_nick_color_force (void *data,
 }
 
 /*
- * Callback for changes on option "irc.look.nick_color_stop_chars".
+ * Callback for changes on options that change nick colors.
  */
 
 void
-irc_config_change_look_nick_color_stop_chars (void *data,
-                                              struct t_config_option *option)
+irc_config_change_look_nick_colors (void *data,
+                                    struct t_config_option *option)
 {
     /* make C compiler happy */
     (void) data;
@@ -2231,6 +2232,14 @@ irc_config_init ()
            "case for nicks in this option"),
         NULL, 0, 0, "", NULL, 0, NULL, NULL,
         &irc_config_change_look_nick_color_force, NULL, NULL, NULL);
+    irc_config_look_nick_color_hash = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "nick_color_hash", "integer",
+        N_("hash algorithm used to find the color for a nick: djb2 = variant of "
+           "djb2 (position of letters matters: anagrams of a nick have different "
+           "color), sum = sum of letters"),
+        "djb2|sum", 0, 0, "sum", NULL, 0, NULL, NULL,
+        &irc_config_change_look_nick_colors, NULL, NULL, NULL);
     irc_config_look_nick_color_stop_chars = weechat_config_new_option (
         irc_config_file, ptr_section,
         "nick_color_stop_chars", "string",
@@ -2239,7 +2248,7 @@ irc_config_init ()
            "stopping) (example: nick \"|nick|away\" with \"|\" in chars will "
            "return color of nick \"|nick\")"),
         NULL, 0, 0, "_|[", NULL, 0, NULL, NULL,
-        &irc_config_change_look_nick_color_stop_chars, NULL, NULL, NULL);
+        &irc_config_change_look_nick_colors, NULL, NULL, NULL);
     irc_config_look_nick_completion_smart = weechat_config_new_option (
         irc_config_file, ptr_section,
         "nick_completion_smart", "integer",
