@@ -218,6 +218,11 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
+* [[option_irc.look.nick_color_hash]] *irc.look.nick_color_hash*
+** description: `algorithme de hash utilisé pour trouver la couleur du pseudo: djb2 = variante de djb2 (la position des lettres compte: les anagrammes d'un pseudo ont une couleur différente), sum = somme des lettres`
+** type: entier
+** valeurs: djb2, sum (valeur par défaut: `sum`)
+
 * [[option_irc.look.nick_color_stop_chars]] *irc.look.nick_color_stop_chars*
 ** description: `caractères utilisés pour l'arrêt dans le pseudo lors du calcul de la couleur avec les lettres du pseudo (au moins un caractère en dehors de cette liste doit être dans la chaîne avant de s'arrêter) (exemple: le pseudo "|nick|away" avec "|" dans les caractères retournera la couleur du pseudo "|nick")`
 ** type: chaîne

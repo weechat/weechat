@@ -218,6 +218,11 @@
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
+* [[option_irc.look.nick_color_hash]] *irc.look.nick_color_hash*
+** descrizione: `hash algorithm used to find the color for a nick: djb2 = variant of djb2 (position of letters matters: anagrams of a nick have different color), sum = sum of letters`
+** tipo: intero
+** valori: djb2, sum (valore predefinito: `sum`)
+
 * [[option_irc.look.nick_color_stop_chars]] *irc.look.nick_color_stop_chars*
 ** descrizione: `caratteri usati per interrompere il calcolo del colore con le lettere del nick (almeno un carattere al di fuori di questa lista deve essere nella lista prima di interromperlo) (esempio: nick "|nick|away" con "|" nei caratteri restituisce il colore del nick "|nick")`
 ** tipo: stringa

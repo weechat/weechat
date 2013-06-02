@@ -218,6 +218,11 @@
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
+* [[option_irc.look.nick_color_hash]] *irc.look.nick_color_hash*
+** Beschreibung: `hash algorithm used to find the color for a nick: djb2 = variant of djb2 (position of letters matters: anagrams of a nick have different color), sum = sum of letters`
+** Typ: integer
+** Werte: djb2, sum (Standardwert: `sum`)
+
 * [[option_irc.look.nick_color_stop_chars]] *irc.look.nick_color_stop_chars*
 ** Beschreibung: `Zeichen die genutzt werden sollen damit bei der Generierung der Farbe für einen Nicknamen abgebrochen wird. Es muss mindestens ein Zeichen im Nicknamen enthalten sein der nicht in dieser Liste aufgeführt wird, damit eine Farbe für den Nicknamen erstellt werden kann (Beispiel: Der Nickname lautet "|nick|abwesend" wobei das Zeichen "|" ignoriert werden soll. Die Farbe für den Nicknamen wird nun für "|nick" anstelle von "|nick|abwesend" erstellt).`
 ** Typ: Zeichenkette

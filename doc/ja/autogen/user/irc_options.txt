@@ -218,6 +218,11 @@
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
+* [[option_irc.look.nick_color_hash]] *irc.look.nick_color_hash*
+** 説明: `hash algorithm used to find the color for a nick: djb2 = variant of djb2 (position of letters matters: anagrams of a nick have different color), sum = sum of letters`
+** タイプ: 整数
+** 値: djb2, sum (デフォルト値: `sum`)
+
 * [[option_irc.look.nick_color_stop_chars]] *irc.look.nick_color_stop_chars*
 ** 説明: `ニックネーム内の色計算に使用する部分を制限する文字 (このリストに含まれない文字が、このリストの文字の前に少なくとも一つ以上含まれなければいけない) (例: "|" を設定した場合、"|nick|away" はニックネーム "|nick" と同じ色になる)`
 ** タイプ: 文字列
