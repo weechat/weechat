@@ -39,6 +39,7 @@
 #include "irc-config.h"
 #include "irc-ignore.h"
 #include "irc-input.h"
+#include "irc-message.h"
 #include "irc-msgbuffer.h"
 #include "irc-nick.h"
 #include "irc-notify.h"
@@ -114,6 +115,7 @@ irc_command_admin (void *data, struct t_gui_buffer *buffer, int argc,
  * Executes a command on all channels.
  *
  * If server is NULL, executes command on all channels of all connected servers.
+ * Special variables $server/$channel/$nick are replaced in command.
  */
 
 void
@@ -123,7 +125,7 @@ irc_command_exec_all_channels (struct t_irc_server *server,
 {
     struct t_irc_server *ptr_server, *next_server;
     struct t_irc_channel *ptr_channel, *next_channel;
-    char **channels, *str_command;
+    char **channels, *str_command, *cmd_vars_replaced;
     int num_channels, length, excluded, i;
 
     if (!command || !command[0])
@@ -175,7 +177,13 @@ irc_command_exec_all_channels (struct t_irc_server *server,
                         }
                         if (!excluded)
                         {
-                            weechat_command (ptr_channel->buffer, str_command);
+                            cmd_vars_replaced = irc_message_replace_vars (ptr_server,
+                                                                          ptr_channel,
+                                                                          str_command);
+                            weechat_command (ptr_channel->buffer,
+                                             (cmd_vars_replaced) ? cmd_vars_replaced : str_command);
+                            if (cmd_vars_replaced)
+                                free (cmd_vars_replaced);
                         }
                     }
 
@@ -244,13 +252,15 @@ irc_command_allchan (void *data, struct t_gui_buffer *buffer, int argc,
 
 /*
  * Executes a command on all connected channels.
+ *
+ * Special variables $server/$channel/$nick are replaced in command.
  */
 
 void
 irc_command_exec_all_servers (const char *exclude_servers, const char *command)
 {
     struct t_irc_server *ptr_server, *next_server;
-    char **servers, *str_command;
+    char **servers, *str_command, *cmd_vars_replaced;
     int num_servers, length, excluded, i;
 
     if (!command || !command[0])
@@ -293,7 +303,13 @@ irc_command_exec_all_servers (const char *exclude_servers, const char *command)
             }
             if (!excluded)
             {
-                weechat_command (ptr_server->buffer, str_command);
+                cmd_vars_replaced = irc_message_replace_vars (ptr_server,
+                                                              NULL,
+                                                              str_command);
+                weechat_command (ptr_server->buffer,
+                                 (cmd_vars_replaced) ? cmd_vars_replaced : str_command);
+                if (cmd_vars_replaced)
+                    free (cmd_vars_replaced);
             }
         }
 
@@ -5550,7 +5566,9 @@ irc_command_init ()
                              "allowed at beginning or end of channel name, to "
                              "exclude many channels)\n"
                              "  command: command to execute\n"
-                             "arguments: arguments for command\n\n"
+                             "arguments: arguments for command (special variables "
+                             "$nick, $channel and $server are replaced by their "
+                             "value)\n\n"
                              "Examples:\n"
                              "  execute '/me is testing' on all channels:\n"
                              "    /allchan me is testing\n"
@@ -5568,12 +5586,16 @@ irc_command_init ()
                              "allowed at beginning or end of server name, to "
                              "exclude many servers)\n"
                              "  command: command to execute\n"
-                             "arguments: arguments for command\n\n"
+                             "arguments: arguments for command (special variables "
+                             "$nick, $channel and $server are replaced by their "
+                             "value)\n\n"
                              "Examples:\n"
                              "  change nick on all servers:\n"
                              "    /allserv nick newnick\n"
                              "  set away on all servers:\n"
-                             "    /allserv away I'm away"),
+                             "    /allserv away I'm away\n"
+                             "  do a whois on my nick on all servers:\n"
+                             "    /allserv whois $nick"),
                           NULL, &irc_command_allserv, NULL);
     weechat_hook_command_run ("/away", &irc_command_run_away, NULL);
     weechat_hook_command ("ban",
