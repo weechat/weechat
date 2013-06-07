@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-06-05 10:12+0200\n"
+"POT-Creation-Date: 2013-06-07 20:09+0200\n"
 "PO-Revision-Date: 2013-05-20 16:54+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3465,12 +3465,17 @@ msgstr ""
 msgid "%s%s: failed to add word to personal dictionary"
 msgstr ""
 
+#. TRANSLATORS: second "%s" is "aspell" or "enchant"
+#, fuzzy, c-format
+msgid "%s (using %s)"
+msgstr "  (nem található bővítőmodul)\n"
+
 #, fuzzy
-msgid "Aspell is enabled"
+msgid "Spell checking is enabled"
 msgstr "a felhasználók le lettek tiltva"
 
 #, fuzzy
-msgid "Aspell is disabled"
+msgid "Spell checking is disabled"
 msgstr "Nincs aliasz definiálva.\n"
 
 #, fuzzy, c-format
@@ -3590,6 +3595,10 @@ msgstr ""
 #, c-format
 msgid "%s: warning: dictionary \"%s\" is not available on your system"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: error: unable to create speller for lang \"%s\""
+msgstr "%s nem sikerült a szervert létrehozni\n"
 
 #, fuzzy
 msgid "Charset conversions"

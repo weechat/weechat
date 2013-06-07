@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-06-05 10:12+0200\n"
+"POT-Creation-Date: 2013-06-07 20:09+0200\n"
 "PO-Revision-Date: 2013-02-14 18:20+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3085,10 +3085,15 @@ msgstr ""
 msgid "%s%s: failed to add word to personal dictionary"
 msgstr ""
 
-msgid "Aspell is enabled"
+#. TRANSLATORS: second "%s" is "aspell" or "enchant"
+#, c-format
+msgid "%s (using %s)"
 msgstr ""
 
-msgid "Aspell is disabled"
+msgid "Spell checking is enabled"
+msgstr ""
+
+msgid "Spell checking is disabled"
 msgstr ""
 
 #, c-format
@@ -3203,6 +3208,10 @@ msgstr ""
 
 #, c-format
 msgid "%s: warning: dictionary \"%s\" is not available on your system"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error: unable to create speller for lang \"%s\""
 msgstr ""
 
 msgid "Charset conversions"

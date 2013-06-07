@@ -55,6 +55,28 @@ weechat_aspell_completion_langs_cb (void *data, const char *completion_item,
 }
 
 /*
+ * Adds a dictionary to completion when using enchant.
+ */
+
+#ifdef USE_ENCHANT
+void
+weechat_aspell_completion_enchant_add_dict_cb (const char *lang_tag,
+                                               const char *provider_name,
+                                               const char *provider_desc,
+                                               const char *provider_file,
+                                               void *user_data)
+{
+    /* make C compiler happy */
+    (void) provider_name;
+    (void) provider_desc;
+    (void) provider_file;
+
+    weechat_hook_completion_list_add ((struct t_gui_completion *)user_data,
+                                      lang_tag, 0, WEECHAT_LIST_POS_SORT);
+}
+#endif
+
+/*
  * Adds aspell dictionaries (only installed dictionaries) to completion list.
  */
 
@@ -64,16 +86,23 @@ weechat_aspell_completion_dicts_cb (void *data,
                                     struct t_gui_buffer *buffer,
                                     struct t_gui_completion *completion)
 {
+#ifndef USE_ENCHANT
     struct AspellConfig *config;
     AspellDictInfoList *list;
     AspellDictInfoEnumeration *elements;
     const AspellDictInfo *dict;
+#endif
 
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
     (void) buffer;
 
+#ifdef USE_ENCHANT
+    enchant_broker_list_dicts (broker,
+                               weechat_aspell_completion_enchant_add_dict_cb,
+                               completion);
+#else
     config = new_aspell_config ();
     list = get_aspell_dict_info_list (config);
     elements = aspell_dict_info_list_elements (list);
@@ -86,6 +115,7 @@ weechat_aspell_completion_dicts_cb (void *data,
 
     delete_aspell_dict_info_enumeration (elements);
     delete_aspell_config (config);
+#endif
 
     return WEECHAT_RC_OK;
 }

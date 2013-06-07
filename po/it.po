@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-06-05 10:12+0200\n"
+"POT-Creation-Date: 2013-06-07 20:09+0200\n"
 "PO-Revision-Date: 2013-05-20 16:54+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4099,10 +4099,17 @@ msgstr "%s: la parola \"%s\" è stata aggiunta al dizionario personale"
 msgid "%s%s: failed to add word to personal dictionary"
 msgstr "%s%s: impossibile aggiungere la parola al dizionario personale"
 
-msgid "Aspell is enabled"
+#. TRANSLATORS: second "%s" is "aspell" or "enchant"
+#, fuzzy, c-format
+msgid "%s (using %s)"
+msgstr "  %s (plugin: %s)"
+
+#, fuzzy
+msgid "Spell checking is enabled"
 msgstr "Aspell è abilitato"
 
-msgid "Aspell is disabled"
+#, fuzzy
+msgid "Spell checking is disabled"
 msgstr "Aspell è disabilitato"
 
 #, c-format
@@ -4255,6 +4262,10 @@ msgstr ""
 msgid "%s: warning: dictionary \"%s\" is not available on your system"
 msgstr ""
 "%s: attenzione: il dizionario \"%s\" non è disponibile su questo sistema"
+
+#, fuzzy, c-format
+msgid "%s%s: error: unable to create speller for lang \"%s\""
+msgstr "%s%s: impossibile creare il server \"%s\""
 
 msgid "Charset conversions"
 msgstr "Conversione del set caratteri"

@@ -39,6 +39,7 @@ EXTRA_DIST = CMakeLists.txt \
              cmake/CMakeParseArguments.cmake \
              cmake/FindAsciidoc.cmake \
              cmake/FindAspell.cmake \
+             cmake/FindENCHANT.cmake \
              cmake/FindGCRYPT.cmake \
              cmake/FindGettext.cmake \
              cmake/FindGnuTLS.cmake \

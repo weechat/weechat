@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-06-05 10:12+0200\n"
+"POT-Creation-Date: 2013-06-07 20:09+0200\n"
 "PO-Revision-Date: 2013-05-20 16:54+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -4017,10 +4017,17 @@ msgstr "%s: 単語 \"%s\" を個人辞書に追加"
 msgid "%s%s: failed to add word to personal dictionary"
 msgstr "%s%s: 単語の個人辞書への登録に失敗"
 
-msgid "Aspell is enabled"
+#. TRANSLATORS: second "%s" is "aspell" or "enchant"
+#, fuzzy, c-format
+msgid "%s (using %s)"
+msgstr "  %s (プラグイン: %s)"
+
+#, fuzzy
+msgid "Spell checking is enabled"
 msgstr "Aspell を有効化します"
 
-msgid "Aspell is disabled"
+#, fuzzy
+msgid "Spell checking is disabled"
 msgstr "Aspell を無効化します"
 
 #, c-format
@@ -4170,6 +4177,10 @@ msgstr ""
 #, c-format
 msgid "%s: warning: dictionary \"%s\" is not available on your system"
 msgstr "%s: 警告: 辞書 \"%s\" がこのシステム上では利用できません"
+
+#, fuzzy, c-format
+msgid "%s%s: error: unable to create speller for lang \"%s\""
+msgstr "%s%s: サーバ \"%s\" に接続できません"
 
 msgid "Charset conversions"
 msgstr "文字コード変換"

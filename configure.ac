@@ -128,6 +128,7 @@ AC_ARG_ENABLE(gnutls,       [  --disable-gnutls        turn off gnutls support (
 AC_ARG_ENABLE(largefile,    [  --disable-largefile     turn off Large File Support (default=on)],enable_largefile=$enableval,enable_largefile=yes)
 AC_ARG_ENABLE(alias,        [  --disable-alias         turn off Alias plugin (default=compiled)],enable_alias=$enableval,enable_alias=yes)
 AC_ARG_ENABLE(aspell,       [  --disable-aspell        turn off Aspell plugin (default=compiled)],enable_aspell=$enableval,enable_aspell=yes)
+AC_ARG_ENABLE(enchant,      [  --enable-enchant        turn on Enchant lib for Aspell plugin (default=off)],enable_enchant=$enableval,enable_enchant=no)
 AC_ARG_ENABLE(charset,      [  --disable-charset       turn off Charset plugin (default=compiled if found)],enable_charset=$enableval,enable_charset=yes)
 AC_ARG_ENABLE(demo,         [  --enable-demo           turn on Demo plugin (default=off)],enable_demo=$enableval,enable_demo=no)
 AC_ARG_ENABLE(fifo,         [  --disable-fifo          turn off Fifo plugin (default=compiled)],enable_fifo=$enableval,enable_fifo=yes)
@@ -275,24 +276,35 @@ fi
 # ---------------------------------- aspell ------------------------------------
 
 if test "x$enable_aspell" = "xyes" ; then
-    ASPELL_CFLAGS=""
-    ASPELL_LFLAGS=""
+    ac_found_enchant_lib="no"
+    if test "x$enable_enchant" = "xyes" ; then
+        #PKG_CHECK_MODULES(ENCHANT, [enchant], [CFLAGS="$CFLAGS -DUSE_ENCHANT"],
+        PKG_CHECK_MODULES(ENCHANT, [enchant], ac_found_enchant_lib="yes", ac_found_enchant_lib="no")
+    fi
+    if test "x$ac_found_enchant_lib" = "xyes" ; then
+        CFLAGS="$CFLAGS -DUSE_ENCHANT"
+        ASPELL_LIB_USED="enchant"
+    else
+        ASPELL_CFLAGS=""
+        ASPELL_LFLAGS=""
 
-    AC_CHECK_HEADER(aspell.h,ac_found_aspell_header="yes",ac_found_aspell_header="no")
-    AC_CHECK_LIB(aspell,new_aspell_speller,ac_found_aspell_lib="yes",ac_found_aspell_lib="no")
+        AC_CHECK_HEADER(aspell.h,ac_found_aspell_header="yes",ac_found_aspell_header="no")
+        AC_CHECK_LIB(aspell,new_aspell_speller,ac_found_aspell_lib="yes",ac_found_aspell_lib="no")
 
-    AC_MSG_CHECKING(for aspell headers and librairies)
-    if test "x$ac_found_aspell_header" = "xno" -o "x$ac_found_aspell_lib" = "xno" ; then
-       AC_MSG_RESULT(no)
-       AC_MSG_WARN([
+        AC_MSG_CHECKING(for aspell headers and librairies)
+        if test "x$ac_found_aspell_header" = "xno" -o "x$ac_found_aspell_lib" = "xno" ; then
+            AC_MSG_RESULT(no)
+            AC_MSG_WARN([
 *** Aspell headers and/or libraries couldn't be found on your system.
 *** Try to install them with your software package manager.
 *** WeeChat will be built without Aspell support.])
-       enable_aspell="no"
-       not_found="$not_found aspell"
-    else
-        AC_MSG_RESULT(yes)
-        ASPELL_LFLAGS="$ASPELL_LFLAGS -laspell"
+            enable_aspell="no"
+            not_found="$not_found aspell"
+        else
+            AC_MSG_RESULT(yes)
+            ASPELL_LFLAGS="$ASPELL_LFLAGS -laspell"
+            ASPELL_LIB_USED="aspell"
+        fi
     fi
 else
     not_asked="$not_asked aspell"
@@ -1127,7 +1139,7 @@ if test "x$enable_alias" = "xyes"; then
     listplugins="$listplugins alias"
 fi
 if test "x$enable_aspell" = "xyes"; then
-    listplugins="$listplugins aspell"
+    listplugins="$listplugins aspell($ASPELL_LIB_USED)"
 fi
 if test "x$enable_charset" = "xyes"; then
     listplugins="$listplugins charset"

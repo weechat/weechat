@@ -88,24 +88,24 @@ compiler WeeChat.
 
 [width="100%",cols="5,^3,^3,13",options="header"]
 |========================================
-| Paquet ^(1)^           | Version     | Requis | Fonctionnalité
-| cmake                  |             | *oui*  | construction (autotools toujours possible, mais cmake est recommandé)
-| libncursesw5-dev ^(2)^ |             | *oui*  | interface ncurses
-| libcurl4-gnutls-dev    |             | *oui*  | transfert d'URL
-| zlib1g-dev             |             | *oui*  | compression des paquets dans l'extension relay (protocole weechat), extension script
-| libgcrypt11-dev        |             | *oui*  | authentification IRC SASL (DH-BLOWFISH/DH-AES), extension script
-| libgnutls-dev          | ≥ 2.2.0     |        | connexion SSL au serveur IRC, support SSL dans l'extension relay
-| gettext                |             |        | internationalisation (traduction des messages; la langue de base est l'anglais)
-| ca-certificates        |             |        | certificats pour les connexions SSL
-| libaspell-dev          |             |        | extension aspell
-| python-dev             | ≥ 2.5 ^(3)^ |        | extension python
-| libperl-dev            |             |        | extension perl
-| ruby1.9.1-dev          | ≥ 1.8       |        | extension ruby
-| liblua5.1-0-dev        |             |        | extension lua
-| tcl-dev                | ≥ 8.5       |        | extension tcl
-| guile-2.0-dev          | ≥ 2.0       |        | extension guile (scheme)
-| asciidoc               | ≥ 8.5.0     |        | construction de la documentation (fichiers HTML)
-| source-highlight       |             |        | coloration des sources dans la documentation HTML
+| Paquet ^(1)^                    | Version     | Requis | Fonctionnalité
+| cmake                           |             | *oui*  | construction (autotools toujours possible, mais cmake est recommandé)
+| libncursesw5-dev ^(2)^          |             | *oui*  | interface ncurses
+| libcurl4-gnutls-dev             |             | *oui*  | transfert d'URL
+| zlib1g-dev                      |             | *oui*  | compression des paquets dans l'extension relay (protocole weechat), extension script
+| libgcrypt11-dev                 |             | *oui*  | authentification IRC SASL (DH-BLOWFISH/DH-AES), extension script
+| libgnutls-dev                   | ≥ 2.2.0     |        | connexion SSL au serveur IRC, support SSL dans l'extension relay
+| gettext                         |             |        | internationalisation (traduction des messages; la langue de base est l'anglais)
+| ca-certificates                 |             |        | certificats pour les connexions SSL
+| libaspell-dev ou libenchant-dev |             |        | extension aspell
+| python-dev                      | ≥ 2.5 ^(3)^ |        | extension python
+| libperl-dev                     |             |        | extension perl
+| ruby1.9.1-dev                   | ≥ 1.8       |        | extension ruby
+| liblua5.1-0-dev                 |             |        | extension lua
+| tcl-dev                         | ≥ 8.5       |        | extension tcl
+| guile-2.0-dev                   | ≥ 2.0       |        | extension guile (scheme)
+| asciidoc                        | ≥ 8.5.0     |        | construction de la documentation (fichiers HTML)
+| source-highlight                |             |        | coloration des sources dans la documentation HTML
 |========================================
 
 [NOTE]

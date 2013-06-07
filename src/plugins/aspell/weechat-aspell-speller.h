@@ -23,7 +23,11 @@
 
 struct t_aspell_speller_buffer
 {
-    AspellSpeller **spellers;              /* pointer to spellers for buf.  */
+#ifdef USE_ENCHANT
+    EnchantDict **spellers;                /* enchant spellers for buffer   */
+#else
+    AspellSpeller **spellers;              /* aspell spellers for buffer    */
+#endif
     char *modifier_string;                 /* last modifier string          */
     int input_pos;                         /* position of cursor in input   */
     char *modifier_result;                 /* last modifier result          */
@@ -34,7 +38,11 @@ extern struct t_hashtable *weechat_aspell_speller_buffer;
 
 extern int weechat_aspell_speller_dict_supported (const char *lang);
 extern void weechat_aspell_speller_check_dictionaries (const char *dict_list);
+#ifdef USE_ENCHANT
+extern EnchantDict *weechat_aspell_speller_new (const char *lang);
+#else
 extern AspellSpeller *weechat_aspell_speller_new (const char *lang);
+#endif
 extern void weechat_aspell_speller_remove_unused ();
 extern struct t_aspell_speller_buffer *weechat_aspell_speller_buffer_new (struct t_gui_buffer *buffer);
 extern int weechat_aspell_speller_init ();

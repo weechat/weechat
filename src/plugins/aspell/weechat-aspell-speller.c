@@ -53,6 +53,9 @@ struct t_hashtable *weechat_aspell_speller_buffer = NULL;
 int
 weechat_aspell_speller_dict_supported (const char *lang)
 {
+#ifdef USE_ENCHANT
+    return enchant_broker_dict_exists (broker, lang);
+#else
     struct AspellConfig *config;
     AspellDictInfoList *list;
     AspellDictInfoEnumeration *elements;
@@ -78,6 +81,7 @@ weechat_aspell_speller_dict_supported (const char *lang)
     delete_aspell_config (config);
 
     return rc;
+#endif
 }
 
 /*
@@ -119,12 +123,20 @@ weechat_aspell_speller_check_dictionaries (const char *dict_list)
  * Returns pointer to new aspell speller, NULL if error.
  */
 
+#ifdef USE_ENCHANT
+EnchantDict *
+#else
 AspellSpeller *
+#endif
 weechat_aspell_speller_new (const char *lang)
 {
+#ifdef USE_ENCHANT
+    EnchantDict *new_speller;
+#else
     AspellConfig *config;
     AspellCanHaveError *ret;
     AspellSpeller *new_speller;
+#endif
     struct t_infolist *infolist;
 
     if (!lang)
@@ -137,23 +149,40 @@ weechat_aspell_speller_new (const char *lang)
                         ASPELL_PLUGIN_NAME, lang);
     }
 
+#ifdef USE_ENCHANT
+    new_speller = enchant_broker_request_dict (broker, lang);
+    if (!new_speller)
+    {
+        weechat_printf (NULL,
+                        _("%s%s: error: unable to create speller for lang \"%s\""),
+                        weechat_prefix ("error"), ASPELL_PLUGIN_NAME,
+                        lang);
+        return NULL;
+    }
+#else
     /* create a speller instance for the newly created cell */
     config = new_aspell_config();
     aspell_config_replace (config, "lang", lang);
+#endif
 
-    /* apply all options on speller */
+    /* apply all options */
     infolist = weechat_infolist_get ("option", NULL, "aspell.option.*");
     if (infolist)
     {
         while (weechat_infolist_next (infolist))
         {
+#ifdef USE_ENCHANT
+            /* TODO: set option with enchant */
+#else
             aspell_config_replace (config,
                                    weechat_infolist_string (infolist, "option_name"),
                                    weechat_infolist_string (infolist, "value"));
+#endif
         }
         weechat_infolist_free (infolist);
     }
 
+#ifndef USE_ENCHANT
     ret = new_aspell_speller (config);
 
     if (aspell_error (ret) != 0)
@@ -168,10 +197,14 @@ weechat_aspell_speller_new (const char *lang)
     }
 
     new_speller = to_aspell_speller (ret);
+#endif
+
     weechat_hashtable_set (weechat_aspell_spellers, lang, new_speller);
 
+#ifndef USE_ENCHANT
     /* free configuration */
     delete_aspell_config (config);
+#endif
 
     return new_speller;
 }
@@ -277,7 +310,11 @@ void
 weechat_aspell_speller_free_value_cb (struct t_hashtable *hashtable,
                                       const void *key, void *value)
 {
+#ifdef USE_ENCHANT
+    EnchantDict *ptr_speller;
+#else
     AspellSpeller *ptr_speller;
+#endif
 
     /* make C compiler happy */
     (void) hashtable;
@@ -289,10 +326,15 @@ weechat_aspell_speller_free_value_cb (struct t_hashtable *hashtable,
                         ASPELL_PLUGIN_NAME, (const char *)key);
     }
 
-    /* free aspell data */
+    /* free speller */
+#ifdef USE_ENCHANT
+    ptr_speller = (EnchantDict *)value;
+    enchant_broker_free_dict (broker, ptr_speller);
+#else
     ptr_speller = (AspellSpeller *)value;
     aspell_speller_save_all_word_lists (ptr_speller);
     delete_aspell_speller (ptr_speller);
+#endif
 }
 
 /*
@@ -307,7 +349,11 @@ weechat_aspell_speller_buffer_new (struct t_gui_buffer *buffer)
     char **dicts;
     int num_dicts, i;
     struct t_aspell_speller_buffer *new_speller_buffer;
+#ifdef USE_ENCHANT
+    EnchantDict *ptr_speller;
+#else
     AspellSpeller *ptr_speller;
+#endif
 
     if (!buffer)
         return NULL;
@@ -330,7 +376,11 @@ weechat_aspell_speller_buffer_new (struct t_gui_buffer *buffer)
         if (dicts && (num_dicts > 0))
         {
             new_speller_buffer->spellers =
+#ifdef USE_ENCHANT
+                malloc ((num_dicts + 1) * sizeof (EnchantDict *));
+#else
                 malloc ((num_dicts + 1) * sizeof (AspellSpeller *));
+#endif
             if (new_speller_buffer->spellers)
             {
                 for (i = 0; i < num_dicts; i++)

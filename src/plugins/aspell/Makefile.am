@@ -18,7 +18,7 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\" $(ASPELL_CFLAGS)
+INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\" $(ASPELL_CFLAGS) $(ENCHANT_CFLAGS)
 
 libdir = ${weechat_libdir}/plugins
 
@@ -39,6 +39,6 @@ aspell_la_SOURCES = weechat-aspell.c \
                     weechat-aspell-speller.c \
                     weechat-aspell-speller.h
 aspell_la_LDFLAGS = -module
-aspell_la_LIBADD  = $(ASPELL_LFLAGS)
+aspell_la_LIBADD  = $(ASPELL_LFLAGS) $(ENCHANT_LIBS)
 
 EXTRA_DIST = CMakeLists.txt

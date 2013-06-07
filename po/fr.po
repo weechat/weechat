@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-06-05 10:12+0200\n"
-"PO-Revision-Date: 2013-06-05 10:14+0200\n"
+"POT-Creation-Date: 2013-06-07 20:09+0200\n"
+"PO-Revision-Date: 2013-06-07 20:48+0200\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -4175,11 +4175,16 @@ msgstr "%s: mot \"%s\" ajouté dans le dictionnaire personnel"
 msgid "%s%s: failed to add word to personal dictionary"
 msgstr "%s%s: impossible d'ajouter le mot dans le dictionnaire personnel"
 
-msgid "Aspell is enabled"
-msgstr "Aspell est activé"
+#. TRANSLATORS: second "%s" is "aspell" or "enchant"
+#, c-format
+msgid "%s (using %s)"
+msgstr "%s (en utilisant %s)"
 
-msgid "Aspell is disabled"
-msgstr "Aspell est désactivé"
+msgid "Spell checking is enabled"
+msgstr "La vérification orthographique est activée"
+
+msgid "Spell checking is disabled"
+msgstr "La vérification orthographique est désactivée"
 
 #, c-format
 msgid "Default dictionary: %s"
@@ -4336,6 +4341,11 @@ msgid "%s: warning: dictionary \"%s\" is not available on your system"
 msgstr ""
 "%s: attention: le dictionnaire \\\"%s\\\" n'est pas disponible sur votre "
 "système"
+
+#, c-format
+msgid "%s%s: error: unable to create speller for lang \"%s\""
+msgstr ""
+"%s%s: impossible de créer le correcteur orthographique pour la langue \"%s\""
 
 msgid "Charset conversions"
 msgstr "Conversions de charset"

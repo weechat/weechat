@@ -86,24 +86,24 @@ compile WeeChat.
 
 [width="100%",cols="5,^3,^3,13",options="header"]
 |========================================
-| Package ^(1)^          | Version     | Required | Feature
-| cmake                  |             | *yes*    | build (autotools still possible, but cmake is recommended)
-| libncursesw5-dev ^(2)^ |             | *yes*    | ncurses interface
-| libcurl4-gnutls-dev    |             | *yes*    | URL transfer
-| zlib1g-dev             |             | *yes*    | compression of packets in relay plugin (weechat protocol), script plugin
-| libgcrypt11-dev        |             | *yes*    | IRC SASL authentication (DH-BLOWFISH/DH-AES), script plugin
-| libgnutls-dev          | ≥ 2.2.0     |          | SSL connection to IRC server, support of SSL in relay plugin
-| gettext                |             |          | internationalization (translation of messages; base language is English)
-| ca-certificates        |             |          | certificates for SSL connections
-| libaspell-dev          |             |          | aspell plugin
-| python-dev             | ≥ 2.5 ^(3)^ |          | python plugin
-| libperl-dev            |             |          | perl plugin
-| ruby1.9.1-dev          | ≥ 1.8       |          | ruby plugin
-| liblua5.1-0-dev        |             |          | lua plugin
-| tcl-dev                | ≥ 8.5       |          | tcl plugin
-| guile-2.0-dev          | ≥ 2.0       |          | guile (scheme) plugin
-| asciidoc               | ≥ 8.5.0     |          | build documentation (HTML files)
-| source-highlight       |             |          | syntax highlight for sources in HTML documentation
+| Package ^(1)^                   | Version     | Required | Feature
+| cmake                           |             | *yes*    | build (autotools still possible, but cmake is recommended)
+| libncursesw5-dev ^(2)^          |             | *yes*    | ncurses interface
+| libcurl4-gnutls-dev             |             | *yes*    | URL transfer
+| zlib1g-dev                      |             | *yes*    | compression of packets in relay plugin (weechat protocol), script plugin
+| libgcrypt11-dev                 |             | *yes*    | IRC SASL authentication (DH-BLOWFISH/DH-AES), script plugin
+| libgnutls-dev                   | ≥ 2.2.0     |          | SSL connection to IRC server, support of SSL in relay plugin
+| gettext                         |             |          | internationalization (translation of messages; base language is English)
+| ca-certificates                 |             |          | certificates for SSL connections
+| libaspell-dev or libenchant-dev |             |          | aspell plugin
+| python-dev                      | ≥ 2.5 ^(3)^ |          | python plugin
+| libperl-dev                     |             |          | perl plugin
+| ruby1.9.1-dev                   | ≥ 1.8       |          | ruby plugin
+| liblua5.1-0-dev                 |             |          | lua plugin
+| tcl-dev                         | ≥ 8.5       |          | tcl plugin
+| guile-2.0-dev                   | ≥ 2.0       |          | guile (scheme) plugin
+| asciidoc                        | ≥ 8.5.0     |          | build documentation (HTML files)
+| source-highlight                |             |          | syntax highlight for sources in HTML documentation
 |========================================
 
 [NOTE]

@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.2-dev, 2013-06-05
+v0.4.2-dev, 2013-06-07
 
 
 This document lists all changes for each version.
@@ -21,6 +21,7 @@ Version 0.4.2 (under dev!)
   "layout_window"
 * core: fix line alignment when option weechat.look.buffer_time_format is set
   to empty string
+* aspell: add support of enchant library (patch #6858)
 * irc: add support of special variables $nick/$channel/$server in commands
   /allchan and /allserv
 * irc: add option irc.look.nick_color_hash: hash algorithm to find nick color

@@ -44,11 +44,25 @@ IF(ENABLE_ALIAS)
 ENDIF(ENABLE_ALIAS)
 
 IF(ENABLE_ASPELL)
-  # Check for aspell libraries
-  FIND_PACKAGE(Aspell)
-  IF(ASPELL_FOUND)
-    ADD_SUBDIRECTORY( aspell )
-  ENDIF(ASPELL_FOUND)
+  IF(ENABLE_ENCHANT)
+    # Check for enchant libraries
+    FIND_PACKAGE(ENCHANT)
+    IF(ENCHANT_FOUND)
+      ADD_SUBDIRECTORY( aspell )
+    ELSE(ENCHANT_FOUND)
+      # Check for aspell libraries
+      FIND_PACKAGE(Aspell)
+      IF(ASPELL_FOUND)
+        ADD_SUBDIRECTORY( aspell )
+      ENDIF(ASPELL_FOUND)
+    ENDIF(ENCHANT_FOUND)
+  ELSE(ENABLE_ENCHANT)
+    # Check for aspell libraries
+    FIND_PACKAGE(Aspell)
+    IF(ASPELL_FOUND)
+      ADD_SUBDIRECTORY( aspell )
+    ENDIF(ASPELL_FOUND)
+  ENDIF(ENABLE_ENCHANT)
 ENDIF(ENABLE_ASPELL)
 
 IF(ENABLE_CHARSET)
