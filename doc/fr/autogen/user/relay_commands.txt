@@ -3,7 +3,7 @@
 ........................................
 /relay  list|listfull|listrelay
         add [ipv4.][ipv6.][ssl.]<protocole.nom> <port>
-        [ipv4.][ipv6.][ssl.]del <protocole.nom>
+        del [ipv4.][ipv6.][ssl.]<protocole.nom>
         raw
         sslcertkey
 
