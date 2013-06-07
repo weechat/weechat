@@ -14,7 +14,7 @@ cible: serveur
   -current: exécuter la commande pour les canaux du serveur courant seulement
   -exclude: exclure certains canaux ('*' est autorisé au début ou à la fin du nom du canal, pour exclure plusieurs canaux)
   commande: commande à exécuter
-paramètres: paramètres pour la commande
+paramètres: paramètres pour la commande (les variables spéciales $nick, $channel et $server sont remplacées par leur valeur)
 
 Exemples:
   exécuter '/me teste' sur tous les canaux:
@@ -32,13 +32,15 @@ Exemples:
 
   -exclude: exclude certains serveurs ('*' est autorisé en début ou fin du nom du serveur, pour exclure plusieurs serveurs)
   commande: commande à exécuter
-paramètres: paramètres pour la commande
+paramètres: paramètres pour la commande (les variables spéciales $nick, $channel et $server sont remplacées par leur valeur)
 
 Exemples:
   changer de pseudo sur tous les serveurs:
     /allserv nick newnick
   positionner l'absence sur tous les serveurs:
     /allserv away Je suis absent
+  faire un whois sur mon pseudo sur tous les serveurs:
+    /allserv whois $nick
 ........................................
 
 [[command_irc_ban]]

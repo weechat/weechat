@@ -11,18 +11,18 @@ target: Server
 ........................................
 /allchan  [-current] [-exclude=<channel>[,<channel>...]] <command> [<arguments>]
 
- -current: führt einen Befehl aus der an alle Channels des aktuellen Servers gesendet wird
- -exclude: dient zum Ausschluss ausgewählter Channels ('*' wird zu Beginn oder am Ende des Channel-Namens akzeptiert, um mehrere Channels auszuschließen)
-  command: Befehl der ausgeführt werden soll
-arguments: Argumente des Befehls
+ -current: execute command for channels of current server only
+ -exclude: exclude some channels ('*' is allowed at beginning or end of channel name, to exclude many channels)
+  command: command to execute
+arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
 
-Beispiele:
-  Führe den Befehl '/me Ich teste gerade etwas...' für alle Channels aus:
-    /allchan me Ich teste gerade etwas...
-  Schicke 'Hallo Welt' an jeden Channel, ausgenommen an den #weechat Channel:
-    /allchan -exclude=#weechat msg * Hallo Welt
-  Schicke 'Hallo Welt' an jeden Channel, ausgenommen an den #weechat Channel und Channels die mit #linux beginnen:
-    /allchan -exclude=#weechat,#linux* msg * Hallo Welt
+Examples:
+  execute '/me is testing' on all channels:
+    /allchan me is testing
+  say 'hello' everywhere but not on #weechat:
+    /allchan -exclude=#weechat msg * hello
+  say 'hello' everywhere but not on #weechat and channels beginning with #linux:
+    /allchan -exclude=#weechat,#linux* msg * hello
 ........................................
 
 [[command_irc_allserv]]
@@ -30,15 +30,17 @@ Beispiele:
 ........................................
 /allserv  [-exclude=<server>[,<server>...]] <command> [<arguments>]
 
- -exclude: dient zum Ausschluss ausgewählter Server ('*' wird zu Beginn oder am Ende des Servernamens akzeptiert, um mehrere Server auszuschließen)
-  command: Befehl der ausgeführt werden soll
-arguments: Argumente des Befehls
+ -exclude: exclude some servers ('*' is allowed at beginning or end of server name, to exclude many servers)
+  command: command to execute
+arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
 
-Beispiele:
-  Ändere den Nick auf allen Servern:
+Examples:
+  change nick on all servers:
     /allserv nick newnick
-  Setzt den Status, auf allen Servern,auf abwesend:
+  set away on all servers:
     /allserv away I'm away
+  do a whois on my nick on all servers:
+    /allserv whois $nick
 ........................................
 
 [[command_irc_ban]]

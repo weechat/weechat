@@ -11,17 +11,17 @@ target: server
 ........................................
 /allchan  [-current] [-exclude=<channel>[,<channel>...]] <command> [<arguments>]
 
- -current: 現在のサーバ上のチャンネルに対してコマンドを実行
- -exclude: いくつかのチャンネルを除外 (複数のチャンネルを除外するには '*' をチャンネル名の最初と最後につける)
-  command: 実行するコマンド
-arguments: コマンドの引数
+ -current: execute command for channels of current server only
+ -exclude: exclude some channels ('*' is allowed at beginning or end of channel name, to exclude many channels)
+  command: command to execute
+arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
 
-例:
-  全てのチャンネルに対して '/me is testing' を実行:
+Examples:
+  execute '/me is testing' on all channels:
     /allchan me is testing
-  #weechat 以外の全てのチャンネルで 'hello' と発言:
+  say 'hello' everywhere but not on #weechat:
     /allchan -exclude=#weechat msg * hello
-  #weechat と #linux で始まるチャンネルを除いが全てのチャンネルで 'hello' と発言:
+  say 'hello' everywhere but not on #weechat and channels beginning with #linux:
     /allchan -exclude=#weechat,#linux* msg * hello
 ........................................
 
@@ -30,15 +30,17 @@ arguments: コマンドの引数
 ........................................
 /allserv  [-exclude=<server>[,<server>...]] <command> [<arguments>]
 
- -exclude: いくつかのサーバを除外 (複数のサーバを除外するには '*' をサーバ名の最初と最後につける)
-  command: 実行するコマンド
-arguments: コマンドの引数
+ -exclude: exclude some servers ('*' is allowed at beginning or end of server name, to exclude many servers)
+  command: command to execute
+arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
 
-例:
-  全てのサーバでニックネーム変更:
+Examples:
+  change nick on all servers:
     /allserv nick newnick
-  全てのサーバで離席状態を変更:
+  set away on all servers:
     /allserv away I'm away
+  do a whois on my nick on all servers:
+    /allserv whois $nick
 ........................................
 
 [[command_irc_ban]]

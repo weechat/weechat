@@ -14,7 +14,7 @@ target: server
  -current: execute command for channels of current server only
  -exclude: exclude some channels ('*' is allowed at beginning or end of channel name, to exclude many channels)
   command: command to execute
-arguments: arguments for command
+arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
 
 Examples:
   execute '/me is testing' on all channels:
@@ -32,13 +32,15 @@ Examples:
 
  -exclude: exclude some servers ('*' is allowed at beginning or end of server name, to exclude many servers)
   command: command to execute
-arguments: arguments for command
+arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
 
 Examples:
   change nick on all servers:
     /allserv nick newnick
   set away on all servers:
     /allserv away I'm away
+  do a whois on my nick on all servers:
+    /allserv whois $nick
 ........................................
 
 [[command_irc_ban]]
