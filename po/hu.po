@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-06-08 11:29+0200\n"
-"PO-Revision-Date: 2013-05-20 16:54+0200\n"
+"POT-Creation-Date: 2013-06-08 12:28+0200\n"
+"PO-Revision-Date: 2013-06-08 12:30+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: hu\n"
@@ -5258,6 +5258,12 @@ msgstr "%s nem található ilyen mellőzés\n"
 
 #, c-format
 msgid ""
+"%s%s: warning: proxy \"%s\" does not exist (you can create it with command /"
+"proxy)"
+msgstr ""
+
+#, c-format
+msgid ""
 "%s%s: invalid priorities string, error at this position in string: \"%s\""
 msgstr ""
 
@@ -5290,7 +5296,9 @@ msgstr "%s nincs elég memória az információs pult üzenethez\n"
 msgid "list of hostname/port or IP/port for server (separated by comma)"
 msgstr "felhasználónév az IRC szerveren"
 
-msgid "proxy used for this server (optional)"
+msgid ""
+"name of proxy used for this server (optional, proxy must be defined with "
+"command /proxy)"
 msgstr ""
 
 msgid ""
@@ -8955,7 +8963,3 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
-
-#, fuzzy
-#~ msgid "display names when joining channel"
-#~ msgstr "speciális üzenet az aktuális nap megváltozásakor"

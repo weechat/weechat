@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-06-08 11:29+0200\n"
-"PO-Revision-Date: 2013-05-20 16:55+0200\n"
+"POT-Creation-Date: 2013-06-08 12:28+0200\n"
+"PO-Revision-Date: 2013-06-08 12:30+0200\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pt_BR\n"
@@ -5426,6 +5426,12 @@ msgstr "apelidos na lista de notificação"
 
 #, c-format
 msgid ""
+"%s%s: warning: proxy \"%s\" does not exist (you can create it with command /"
+"proxy)"
+msgstr ""
+
+#, c-format
+msgid ""
 "%s%s: invalid priorities string, error at this position in string: \"%s\""
 msgstr ""
 "%s%s: string de prioridades inválida, erro nesta posição da string: \"%s\""
@@ -5467,8 +5473,10 @@ msgid "list of hostname/port or IP/port for server (separated by comma)"
 msgstr ""
 "lista de hostname/porta ou IP/porta para o servidor (separados por vírgula)"
 
-msgid "proxy used for this server (optional)"
-msgstr "proxy utilizado para este servidor (opcional)"
+msgid ""
+"name of proxy used for this server (optional, proxy must be defined with "
+"command /proxy)"
+msgstr ""
 
 msgid ""
 "use IPv6 protocol for server communication (try IPv6 then fallback to IPv4); "
@@ -9122,7 +9130,3 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
-
-#, fuzzy
-#~ msgid "display names when joining channel"
-#~ msgstr "mostra uma mensagem especial quando o dia muda"

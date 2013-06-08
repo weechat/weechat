@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-06-08 11:29+0200\n"
-"PO-Revision-Date: 2013-05-20 16:55+0200\n"
+"POT-Creation-Date: 2013-06-08 12:28+0200\n"
+"PO-Revision-Date: 2013-06-08 12:30+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: ru\n"
@@ -5282,6 +5282,12 @@ msgstr "%s игнорирования не найдены\n"
 
 #, c-format
 msgid ""
+"%s%s: warning: proxy \"%s\" does not exist (you can create it with command /"
+"proxy)"
+msgstr ""
+
+#, c-format
+msgid ""
 "%s%s: invalid priorities string, error at this position in string: \"%s\""
 msgstr ""
 
@@ -5314,7 +5320,9 @@ msgstr "%s недостаточно памяти для сообщения в с
 msgid "list of hostname/port or IP/port for server (separated by comma)"
 msgstr "ник, используемый на IRC сервере"
 
-msgid "proxy used for this server (optional)"
+msgid ""
+"name of proxy used for this server (optional, proxy must be defined with "
+"command /proxy)"
 msgstr ""
 
 msgid ""
@@ -8973,7 +8981,3 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
-
-#, fuzzy
-#~ msgid "display names when joining channel"
-#~ msgstr "отображать специальное сообщение  при смене дня"

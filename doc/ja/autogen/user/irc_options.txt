@@ -494,7 +494,7 @@
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
 * [[option_irc.server_default.proxy]] *irc.server_default.proxy*
-** 説明: `このサーバに使われるプロキシ (オプション)`
+** 説明: `name of proxy used for this server (optional, proxy must be defined with command /proxy)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 

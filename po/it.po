@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-06-08 11:29+0200\n"
-"PO-Revision-Date: 2013-05-20 16:54+0200\n"
+"POT-Creation-Date: 2013-06-08 12:28+0200\n"
+"PO-Revision-Date: 2013-06-08 12:30+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: it\n"
@@ -5968,6 +5968,12 @@ msgstr "nick nella lista notifiche"
 
 #, c-format
 msgid ""
+"%s%s: warning: proxy \"%s\" does not exist (you can create it with command /"
+"proxy)"
+msgstr ""
+
+#, c-format
+msgid ""
 "%s%s: invalid priorities string, error at this position in string: \"%s\""
 msgstr ""
 "%s%s: stringa delle proprietà non valida, errore in questa posizione: \"%s\""
@@ -6008,8 +6014,10 @@ msgstr "%s%s: errore nella creazione del CTCP \"%s\" => \"%s\""
 msgid "list of hostname/port or IP/port for server (separated by comma)"
 msgstr "elenco di host/porte o IP/porte per il server (separati da virgole)"
 
-msgid "proxy used for this server (optional)"
-msgstr "proxy usato per il server (opzionale)"
+msgid ""
+"name of proxy used for this server (optional, proxy must be defined with "
+"command /proxy)"
+msgstr ""
 
 msgid ""
 "use IPv6 protocol for server communication (try IPv6 then fallback to IPv4); "
@@ -9832,7 +9840,3 @@ msgstr "Tipo"
 
 msgid "Constants"
 msgstr "Costanti"
-
-#, fuzzy
-#~ msgid "display names when joining channel"
-#~ msgstr "mostra un messaggio speciale al cambio di data"

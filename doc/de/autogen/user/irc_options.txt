@@ -494,7 +494,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_irc.server_default.proxy]] *irc.server_default.proxy*
-** Beschreibung: `Proxy, der für diesen Server verwendet wird (optional)`
+** Beschreibung: `name of proxy used for this server (optional, proxy must be defined with command /proxy)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 

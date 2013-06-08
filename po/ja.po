@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-06-08 11:29+0200\n"
-"PO-Revision-Date: 2013-05-20 16:54+0200\n"
+"POT-Creation-Date: 2013-06-08 12:28+0200\n"
+"PO-Revision-Date: 2013-06-08 12:30+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
 "Language: ja\n"
@@ -5870,6 +5870,12 @@ msgstr "通知エントリのニックネーム"
 
 #, c-format
 msgid ""
+"%s%s: warning: proxy \"%s\" does not exist (you can create it with command /"
+"proxy)"
+msgstr ""
+
+#, c-format
+msgid ""
 "%s%s: invalid priorities string, error at this position in string: \"%s\""
 msgstr "%s%s: 不正なプロパティ文字列、文字列のエラーの位置: \"%s\""
 
@@ -5909,8 +5915,10 @@ msgid "list of hostname/port or IP/port for server (separated by comma)"
 msgstr ""
 "サーバのホスト名/ポート番号又は IP アドレス/ポート番号のリスト (コンマ区切り)"
 
-msgid "proxy used for this server (optional)"
-msgstr "このサーバに使われるプロキシ (オプション)"
+msgid ""
+"name of proxy used for this server (optional, proxy must be defined with "
+"command /proxy)"
+msgstr ""
 
 msgid ""
 "use IPv6 protocol for server communication (try IPv6 then fallback to IPv4); "
@@ -9788,6 +9796,3 @@ msgstr "タイプ"
 
 msgid "Constants"
 msgstr "定数"
-
-#~ msgid "%s: script \"%s\" is now autoloaded"
-#~ msgstr "%s: スクリプト \"%s\" は現在自動ロードされています"

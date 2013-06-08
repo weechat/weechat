@@ -997,8 +997,9 @@ irc_config_server_check_value_cb (void *data,
                                   struct t_config_option *option,
                                   const char *value)
 {
-    int index_option;
-    const char *pos_error;
+    int index_option, proxy_found;
+    const char *pos_error, *proxy_name;
+    struct t_infolist *infolist;
 
     /* make C compiler happy */
     (void) option;
@@ -1008,6 +1009,35 @@ irc_config_server_check_value_cb (void *data,
     {
         switch (index_option)
         {
+            case IRC_SERVER_OPTION_PROXY:
+                if (value && value[0])
+                {
+                    proxy_found = 0;
+                    infolist = weechat_infolist_get ("proxy", NULL, value);
+                    if (infolist)
+                    {
+                        while (weechat_infolist_next (infolist))
+                        {
+                            proxy_name = weechat_infolist_string (infolist, "name");
+                            if (proxy_name && (strcmp (value, proxy_name) == 0))
+                            {
+                                proxy_found = 1;
+                                break;
+                            }
+                        }
+                        weechat_infolist_free (infolist);
+                    }
+                    if (!proxy_found)
+                    {
+                        weechat_printf (NULL,
+                                        _("%s%s: warning: proxy \"%s\" does not "
+                                          "exist (you can create it with command "
+                                          "/proxy)"),
+                                        weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                                        value);
+                    }
+                }
+                break;
             case IRC_SERVER_OPTION_SSL_PRIORITIES:
                 pos_error = irc_config_check_gnutls_priorities (value);
                 if (pos_error)
@@ -1455,7 +1485,8 @@ irc_config_server_new_option (struct t_config_file *config_file,
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
-                N_("proxy used for this server (optional)"),
+                N_("name of proxy used for this server (optional, proxy must be "
+                    "defined with command /proxy)"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,

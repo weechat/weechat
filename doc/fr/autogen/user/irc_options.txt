@@ -494,7 +494,7 @@
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
 * [[option_irc.server_default.proxy]] *irc.server_default.proxy*
-** description: `proxy utilisé pour ce serveur (optionnel)`
+** description: `nom du proxy utilisé pour ce serveur (optionnel, le proxy doit être défini avec la commande /proxy)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 

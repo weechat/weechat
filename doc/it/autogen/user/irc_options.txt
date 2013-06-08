@@ -494,7 +494,7 @@
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
 * [[option_irc.server_default.proxy]] *irc.server_default.proxy*
-** descrizione: `proxy usato per il server (opzionale)`
+** descrizione: `name of proxy used for this server (optional, proxy must be defined with command /proxy)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
