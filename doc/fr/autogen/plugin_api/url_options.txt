@@ -48,6 +48,12 @@
 
 | address_scope | long |
 
+| tcp_keepalive | long |
+
+| tcp_keepidle | long |
+
+| tcp_keepintvl | long |
+
 | netrc | long | ignored, optional, required
 
 | netrc_file | string |
@@ -125,6 +131,8 @@
 | http_transfer_decoding | long |
 
 | mail_from | string |
+
+| mail_auth | string |
 
 | tftp_blksize | long |
 
@@ -269,6 +277,8 @@
 | ssl_cipher_list | string |
 
 | ssl_sessionid_cache | long |
+
+| ssl_options | long | allow_beast
 
 | krblevel | string |
 

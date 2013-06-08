@@ -290,6 +290,15 @@ struct t_url_constant url_ssl_version[] =
     { NULL, 0 },
 };
 
+struct t_url_constant url_ssl_options[] =
+{
+#if LIBCURL_VERSION_NUM >= 0x071900
+    /* libcurl >= 7.25.0 */
+    URL_DEF_CONST(SSLOPT, ALLOW_BEAST),
+#endif
+    { NULL, 0 },
+};
+
 struct t_url_constant url_gssapi_delegation[] =
 {
 #if LIBCURL_VERSION_NUM >= 0x071600
@@ -313,6 +322,10 @@ struct t_url_constant url_ssh_auth[] =
     URL_DEF_CONST(SSH_AUTH, DEFAULT),
     URL_DEF_CONST(SSH_AUTH, ANY),
 #endif
+#if LIBCURL_VERSION_NUM >= 0x071C00
+    /* libcurl >= 7.28.0 */
+    URL_DEF_CONST(SSH_AUTH, AGENT),
+#endif
     { NULL, 0 },
 };
 
@@ -335,6 +348,7 @@ struct t_url_option url_options[] =
     /* libcurl >= 7.21 */
     URL_DEF_OPTION(WILDCARDMATCH, LONG, NULL),
 #endif
+
     /*
      * error options
      */
@@ -342,6 +356,7 @@ struct t_url_option url_options[] =
     /* libcurl >= 7.1 */
     URL_DEF_OPTION(FAILONERROR, LONG, NULL),
 #endif
+
     /*
      * network options
      */
@@ -401,6 +416,13 @@ struct t_url_option url_options[] =
     /* libcurl >= 7.19.0 */
     URL_DEF_OPTION(ADDRESS_SCOPE, LONG, NULL),
 #endif
+#if LIBCURL_VERSION_NUM >= 0x071900
+    /* libcurl >= 7.25.0 */
+    URL_DEF_OPTION(TCP_KEEPALIVE, LONG, NULL),
+    URL_DEF_OPTION(TCP_KEEPIDLE, LONG, NULL),
+    URL_DEF_OPTION(TCP_KEEPINTVL, LONG, NULL),
+#endif
+
     /*
      * name and password options (authentication)
      */
@@ -438,6 +460,7 @@ struct t_url_option url_options[] =
     /* libcurl >= 7.10.7 */
     URL_DEF_OPTION(PROXYAUTH, MASK, url_auth),
 #endif
+
     /*
      * HTTP options
      */
@@ -532,6 +555,7 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(HTTP_CONTENT_DECODING, LONG, NULL),
     URL_DEF_OPTION(HTTP_TRANSFER_DECODING, LONG, NULL),
 #endif
+
     /*
      * SMTP options
      */
@@ -540,6 +564,11 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(MAIL_FROM, STRING, NULL),
     /*URL_DEF_OPTION(MAIL_RCPT, LIST, NULL),*/
 #endif
+#if LIBCURL_VERSION_NUM >= 0x071900
+    /* libcurl >= 7.25.0 */
+    URL_DEF_OPTION(MAIL_AUTH, STRING, NULL),
+#endif
+
     /*
      * TFTP options
      */
@@ -547,6 +576,7 @@ struct t_url_option url_options[] =
     /* libcurl >= 7.19.4 */
     URL_DEF_OPTION(TFTP_BLKSIZE, LONG, NULL),
 #endif
+
     /*
      * FTP options
      */
@@ -609,6 +639,7 @@ struct t_url_option url_options[] =
     /* libcurl >= 7.15.1 */
     URL_DEF_OPTION(FTP_FILEMETHOD, LONG, url_ftp_file_method),
 #endif
+
     /*
      * RTSP options
      */
@@ -621,6 +652,7 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(RTSP_CLIENT_CSEQ, LONG, NULL),
     URL_DEF_OPTION(RTSP_SERVER_CSEQ, LONG, NULL),
 #endif
+
     /*
      * protocol options
      */
@@ -676,6 +708,7 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(TIMECONDITION, LONG, url_time_condition),
     URL_DEF_OPTION(TIMEVALUE, LONG, NULL),
 #endif
+
     /*
      * connection options
      */
@@ -732,6 +765,7 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(DNS_SERVERS, STRING, NULL),
     URL_DEF_OPTION(ACCEPTTIMEOUT_MS, LONG, NULL),
 #endif
+
     /*
      * SSL and security options
      */
@@ -796,6 +830,10 @@ struct t_url_option url_options[] =
     /* libcurl >= 7.16.0 */
     URL_DEF_OPTION(SSL_SESSIONID_CACHE, LONG, NULL),
 #endif
+#if LIBCURL_VERSION_NUM >= 0x071900
+    /* libcurl >= 7.25.0 */
+    URL_DEF_OPTION(SSL_OPTIONS, LONG, url_ssl_options),
+#endif
 #if LIBCURL_VERSION_NUM >= 0x071004
     /* libcurl >= 7.16.4 */
     URL_DEF_OPTION(KRBLEVEL, STRING, NULL),
@@ -804,6 +842,7 @@ struct t_url_option url_options[] =
     /* libcurl >= 7.22.0 */
     URL_DEF_OPTION(GSSAPI_DELEGATION, LONG, url_gssapi_delegation),
 #endif
+
     /*
      * SSH options
      */
@@ -824,6 +863,7 @@ struct t_url_option url_options[] =
     /* libcurl >= 7.19.6 */
     URL_DEF_OPTION(SSH_KNOWNHOSTS, STRING, NULL),
 #endif
+
     /*
      * other options
      */
@@ -832,6 +872,7 @@ struct t_url_option url_options[] =
     URL_DEF_OPTION(NEW_FILE_PERMS, LONG, NULL),
     URL_DEF_OPTION(NEW_DIRECTORY_PERMS, LONG, NULL),
 #endif
+
     /*
      * telnet options
      */
