@@ -28,6 +28,7 @@ SET(PO_FILES
   it.po
   ja.po
   pt_BR.po
+  tr.po
   )
 
 SET(BUGS_ADDRESS "flashcode@flashtux.org")

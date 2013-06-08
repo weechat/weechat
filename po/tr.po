@@ -1,0 +1,7978 @@
+#
+# Copyright (C) 2013 Hasan Kiran <sunder67@hotmail.com>
+#
+# This file is part of WeeChat, the extensible chat client.
+#
+# WeeChat is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+#
+# WeeChat is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: WeeChat 0.4.2-dev\n"
+"Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
+"POT-Creation-Date: 2013-06-08 17:43+0200\n"
+"PO-Revision-Date: 2013-06-08 00:06+0300\n"
+"Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
+"Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 1.5\n"
+
+#. TRANSLATORS: "%s %s" after "compiled on" is date and time
+#, c-format
+msgid ""
+"WeeChat %s Copyright %s, compiled on %s %s\n"
+"Developed by Sebastien Helleu <flashcode@flashtux.org> - %s"
+msgstr ""
+
+#, c-format
+msgid "Usage: %s [option...] [plugin:option...]\n"
+msgstr "Kullanım: %s [seçenek...] [eklenti:seçenek...]\n"
+
+msgid ""
+"  -a, --no-connect   disable auto-connect to servers at startup\n"
+"  -c, --colors       display default colors in terminal\n"
+"  -d, --dir <path>   set WeeChat home directory (default: ~/.weechat)\n"
+"  -h, --help         this help\n"
+"  -k, --keys         display WeeChat default keys\n"
+"  -l, --license      display WeeChat license\n"
+"  -p, --no-plugin    don't load any plugin at startup\n"
+"  -r, --run-command  run command(s) after startup\n"
+"                     (many commands can be separated by semicolons)\n"
+"  -s, --no-script    don't load any script at startup\n"
+"  -v, --version      display WeeChat version\n"
+"  plugin:option      option for plugin\n"
+"                     for example, irc plugin can connect\n"
+"                     to server with url like:\n"
+"                     irc[6][s]://[nickname[:password]@]irc.example.org[:port]"
+"[/#channel1][,#channel2[...]]\n"
+"                     (look at plugins documentation for more information\n"
+"                     about possible options)\n"
+msgstr ""
+
+#. TRANSLATORS: first "%s" is "weechat"
+#, c-format
+msgid "%s default keys (context: \"%s\"):\n"
+msgstr ""
+
+#, c-format
+msgid "Error: missing argument for \"%s\" option\n"
+msgstr ""
+
+msgid "Error: WEECHAT_HOME is undefined, check build options\n"
+msgstr ""
+
+msgid "Error: unable to get HOME directory\n"
+msgstr ""
+
+msgid "Error: not enough memory for home directory\n"
+msgstr ""
+
+#, c-format
+msgid "Error: home (%s) is not a directory\n"
+msgstr ""
+
+#, c-format
+msgid "Error: cannot create directory \"%s\"\n"
+msgstr ""
+
+msgid "List of bars:"
+msgstr ""
+
+#, c-format
+msgid ""
+"  %s%s%s: %s%s%s (cond: %s), %s, filling: %s(top/bottom)/%s(left/right), %s: "
+"%s"
+msgstr ""
+
+msgid "(hidden)"
+msgstr ""
+
+msgid "height"
+msgstr ""
+
+msgid "width"
+msgstr ""
+
+msgid "auto"
+msgstr ""
+
+#, c-format
+msgid "    priority: %d, fg: %s, bg: %s, items: %s%s"
+msgstr ""
+
+msgid ", with separator"
+msgstr ""
+
+msgid "No bar defined"
+msgstr ""
+
+msgid "List of bar items:"
+msgstr ""
+
+#, c-format
+msgid "  %s (plugin: %s)"
+msgstr "  %s (eklenti: %s)"
+
+msgid "No bar item defined"
+msgstr ""
+
+#, c-format
+msgid "%sNot enough memory"
+msgstr ""
+
+#, c-format
+msgid "%sError: wrong type \"%s\" for bar \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sError: wrong position \"%s\" for bar \"%s\""
+msgstr ""
+
+#, c-format
+msgid "Bar \"%s\" created"
+msgstr ""
+
+#, c-format
+msgid "%sError: failed to create bar \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sError: wrong size \"%s\" for bar \"%s\""
+msgstr ""
+
+msgid "All bars have been deleted"
+msgstr ""
+
+#, c-format
+msgid "%sError: unknown bar \"%s\""
+msgstr ""
+
+#, c-format
+msgid "Bar \"%s\" deleted"
+msgstr ""
+
+#, c-format
+msgid "%sError: unable to set option \"%s\" for bar \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sError: window not found for \"%s\" command"
+msgstr ""
+
+#, c-format
+msgid "%sError: unable to scroll bar \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sError: unknown option for \"%s\" command"
+msgstr ""
+
+msgid "Buffers list:"
+msgstr ""
+
+#, c-format
+msgid "  %s[%s%d%s]%s (%s) %s%s%s (notify: %s)"
+msgstr ""
+
+#, c-format
+msgid "%sError: incorrect buffer number"
+msgstr ""
+
+#, c-format
+msgid "%sError: buffer not found"
+msgstr ""
+
+#, c-format
+msgid "%sError: WeeChat main buffer can't be closed"
+msgstr ""
+
+#, c-format
+msgid "Local variables for buffer \"%s\":"
+msgstr ""
+
+#, c-format
+msgid "No local variable defined for buffer \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sInvalid color number \"%s\" (must be between %d and %d)"
+msgstr ""
+
+#, c-format
+msgid "%sColor \"%s\" is not defined in palette"
+msgstr ""
+
+#, c-format
+msgid "%sPlugin \"%s\" not found"
+msgstr "%s\"%s\" eklentisi bulunamadı"
+
+msgid "Raw content of buffers has been written in log file"
+msgstr ""
+
+#, c-format
+msgid "Debug disabled for \"%s\""
+msgstr ""
+
+msgid "error"
+msgstr "hata"
+
+#, c-format
+msgid "%sError in expression to evaluate"
+msgstr ""
+
+#, c-format
+msgid "  %s[%s%s%s]%s buffer: %s%s%s / tags: %s / regex: %s %s"
+msgstr ""
+
+msgid "(disabled)"
+msgstr ""
+
+msgid "Message filtering enabled"
+msgstr ""
+
+msgid "Message filtering disabled"
+msgstr ""
+
+msgid "Message filters:"
+msgstr ""
+
+msgid "No message filter defined"
+msgstr ""
+
+#, c-format
+msgid "Filter \"%s\" enabled"
+msgstr ""
+
+#, c-format
+msgid "%sError: filter \"%s\" not found"
+msgstr ""
+
+#, c-format
+msgid "Filter \"%s\" disabled"
+msgstr ""
+
+#, c-format
+msgid "%sError: filter \"%s\" already exists"
+msgstr ""
+
+#, c-format
+msgid "%sError: you must specify at least tag(s) or regex for filter"
+msgstr ""
+
+#, c-format
+msgid "Filter \"%s\" added:"
+msgstr ""
+
+#, c-format
+msgid "%sError adding filter"
+msgstr ""
+
+#, c-format
+msgid "Filter \"%s\" renamed to \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sError: unable to rename filter \"%s\" to \"%s\""
+msgstr ""
+
+msgid "All filters have been deleted"
+msgstr ""
+
+#, c-format
+msgid "Filter \"%s\" deleted"
+msgstr ""
+
+#, c-format
+msgid "Option \"%s%s%s\":"
+msgstr ""
+
+msgid "description"
+msgstr "açıklama"
+
+msgid "type"
+msgstr "tür"
+
+msgid "boolean"
+msgstr ""
+
+msgid "values"
+msgstr "değerler"
+
+msgid "default value"
+msgstr "varsayılan değer"
+
+msgid "(undefined)"
+msgstr ""
+
+msgid "current value"
+msgstr "mevcut değer"
+
+msgid "string"
+msgstr ""
+
+msgid "integer"
+msgstr ""
+
+msgid "any string"
+msgstr ""
+
+msgid "any char"
+msgstr ""
+
+msgid "max chars"
+msgstr ""
+
+msgid "color"
+msgstr "renk"
+
+msgid ""
+"a WeeChat color name (default, black, (dark)gray, white, (light)red, "
+"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
+"terminal color number or an alias; attributes are allowed before color (for "
+"text color only, not background): \"*\" for bold, \"!\" for reverse, \"_\" "
+"for underline"
+msgstr ""
+
+#. TRANSLATORS: please do not translate "(null)"
+msgid "undefined value allowed (null)"
+msgstr ""
+
+#, c-format
+msgid "%sNo help available, \"%s\" is not a command or an option"
+msgstr ""
+
+msgid "Buffer command history:"
+msgstr ""
+
+msgid "default command:"
+msgstr "varsayılan komut:"
+
+#. TRANSLATORS: first "%d" is number of keys
+#, c-format
+msgid "%d key bindings added or redefined for context \"%s\":"
+msgstr ""
+
+#. TRANSLATORS: first "%d" is number of keys
+#, c-format
+msgid "%d key bindings deleted for context \"%s\":"
+msgstr ""
+
+#, c-format
+msgid "No key binding added, redefined or removed for context \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sError: unable to bind key \"%s\""
+msgstr ""
+
+#, c-format
+msgid "Key \"%s\" has already default value"
+msgstr ""
+
+#, c-format
+msgid "%sError: unable to unbind key \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sKey \"%s\" not found"
+msgstr ""
+
+#, c-format
+msgid "No key binding defined for context \"%s\""
+msgstr ""
+
+#. TRANSLATORS: first "%d" is number of keys
+#, c-format
+msgid "%d key bindings for context \"%s\":"
+msgstr ""
+
+#, c-format
+msgid "No default key binding for context \"%s\""
+msgstr ""
+
+#. TRANSLATORS: first "%d" is number of keys
+#, c-format
+msgid "%d default key bindings for context \"%s\":"
+msgstr ""
+
+msgid "Key:"
+msgstr ""
+
+msgid "No key found"
+msgstr ""
+
+#, c-format
+msgid "%sError: context \"%s\" not found"
+msgstr ""
+
+#, c-format
+msgid "Default key bindings restored for context \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sError: \"-yes\" argument is required for keys reset (security reason)"
+msgstr ""
+
+#, c-format
+msgid "%d new key added"
+msgid_plural "%d new keys added (context: \"%s\")"
+msgstr[0] ""
+
+msgid "Saved layouts:"
+msgstr ""
+
+msgid " (current layout)"
+msgstr ""
+
+msgid "No layout saved"
+msgstr ""
+
+#. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows"
+#, c-format
+msgid "Layout of %s%s%s saved in \"%s\" (current layout: %s)"
+msgstr ""
+
+msgid "buffers"
+msgstr ""
+
+msgid "windows"
+msgstr ""
+
+msgid "Layout of buffers+windows reset (current layout: -)"
+msgstr ""
+
+#, c-format
+msgid "Layout \"%s\" deleted (current layout: %s)"
+msgstr ""
+
+#. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows"
+#, c-format
+msgid "Layout of %s%s%s reset in \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sError: unknown layout \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sError: layout \"%s\" already exists for \"%s\" command"
+msgstr ""
+
+#, c-format
+msgid "Layout \"%s\" has been renamed to \"%s\""
+msgstr ""
+
+msgid "Mouse enabled"
+msgstr "Fare etkinleştirildi"
+
+msgid "Mouse disabled"
+msgstr "Fare devredışı"
+
+msgid "Plugins loaded:"
+msgstr "Yüklü eklentiler:"
+
+#, c-format
+msgid "  written by \"%s\", license: %s"
+msgstr ""
+
+msgid "    commands hooked:"
+msgstr ""
+
+msgid "    command_run hooked:"
+msgstr ""
+
+msgid "    timers hooked:"
+msgstr ""
+
+#, c-format
+msgid "      %d %s (%d calls remaining)"
+msgstr ""
+
+msgid "second"
+msgid_plural "seconds"
+msgstr[0] "saniye"
+
+msgid "millisecond"
+msgid_plural "milliseconds"
+msgstr[0] "milisaniye"
+
+#, c-format
+msgid "      %d %s (no call limit)"
+msgstr ""
+
+msgid "    fd hooked:"
+msgstr ""
+
+#, c-format
+msgid "      %d (flags: 0x%x:%s%s%s)"
+msgstr ""
+
+msgid " read"
+msgstr "oku"
+
+msgid " write"
+msgstr "yaz"
+
+msgid " exception"
+msgstr ""
+
+msgid "    process hooked:"
+msgstr ""
+
+#, c-format
+msgid "      command: '%s', child pid: %d"
+msgstr ""
+
+msgid "    connect hooked:"
+msgstr ""
+
+#, c-format
+msgid "      socket: %d, address: %s, port: %d, child pid: %d"
+msgstr ""
+
+msgid "    prints hooked:"
+msgstr ""
+
+#, c-format
+msgid "      buffer: %s, message: \"%s\""
+msgstr ""
+
+msgid "(none)"
+msgstr ""
+
+#, c-format
+msgid "      message: \"%s\""
+msgstr "      ileti: \"%s\""
+
+msgid "    signals hooked:"
+msgstr ""
+
+#, c-format
+msgid "      signal: %s"
+msgstr ""
+
+msgid "(all)"
+msgstr ""
+
+msgid "    configuration options hooked:"
+msgstr ""
+
+msgid "    completions hooked:"
+msgstr ""
+
+msgid "    modifiers hooked:"
+msgstr ""
+
+msgid "No plugin found"
+msgstr "Eklenti bulunamadı"
+
+msgid "  (no plugin)"
+msgstr "  (eklenti yok)"
+
+#, c-format
+msgid "%sError: wrong argument count for \"%s\" command"
+msgstr ""
+
+msgid "List of proxies:"
+msgstr ""
+
+#, c-format
+msgid "  %s%s%s: %s, %s/%d (%s), username: %s, password: %s"
+msgstr "  %s%s%s: %s, %s/%d (%s), kullanıcıadı: %s, parola: %s"
+
+msgid "No proxy defined"
+msgstr ""
+
+#, c-format
+msgid "%sError: wrong type \"%s\" for proxy \"%s\""
+msgstr ""
+
+#, c-format
+msgid "Proxy \"%s\" created"
+msgstr ""
+
+#, c-format
+msgid "%sError: failed to create proxy \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sError: wrong port \"%s\" for proxy \"%s\""
+msgstr ""
+
+msgid "All proxies have been deleted"
+msgstr ""
+
+#, c-format
+msgid "%sError: unknown proxy \"%s\""
+msgstr ""
+
+msgid "Proxy deleted"
+msgstr ""
+
+#, c-format
+msgid "%sError: unable to set option \"%s\" for proxy \"%s\""
+msgstr ""
+
+#, c-format
+msgid ""
+"%sYou must confirm quit command with extra argument \"-yes\" (see /help quit)"
+msgstr ""
+
+#, c-format
+msgid "Options reloaded from %s"
+msgstr ""
+
+#, c-format
+msgid "%sError: failed to reload options from %s"
+msgstr ""
+
+#, c-format
+msgid "Unknown configuration file \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sError: incorrect number"
+msgstr ""
+
+#, c-format
+msgid "Options saved to %s"
+msgstr ""
+
+#, c-format
+msgid "%sError: failed to save options to %s"
+msgstr ""
+
+msgid "default: "
+msgstr "öntanımlı:"
+
+msgid "(unknown)"
+msgstr "(bilinmiyor)"
+
+#, c-format
+msgid ""
+"%sOption \"%s\" not found (tip: you can use \"*\" at beginning and/or end of "
+"option to see a sublist)"
+msgstr ""
+
+msgid "No option found"
+msgstr "seçenek bulunamadı"
+
+#, c-format
+msgid "%s%d%s option with value changed (matching with \"%s\")"
+msgid_plural "%s%d%s options with value changed (matching with \"%s\")"
+msgstr[0] ""
+
+#, c-format
+msgid "%s%d%s option (matching with \"%s\")"
+msgid_plural "%s%d%s options (matching with \"%s\")"
+msgstr[0] ""
+
+#, c-format
+msgid "%s%d%s option"
+msgid_plural "%s%d%s options"
+msgstr[0] "%s%d%s seçenekler"
+
+#, c-format
+msgid "%s%d%s option with value changed"
+msgid_plural "%s%d%s options with value changed"
+msgstr[0] ""
+
+#, c-format
+msgid "%sError: failed to set option \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sError: option \"%s\" not found"
+msgstr "%sHatar: seçenek \"%s\" bulunamadı"
+
+msgid "Option changed: "
+msgstr ""
+
+msgid "Option created: "
+msgstr ""
+
+msgid "Option changed"
+msgstr ""
+
+#, c-format
+msgid "%sReset of all options is not allowed"
+msgstr ""
+
+#, c-format
+msgid "%sFailed to unset option \"%s\""
+msgstr ""
+
+msgid "Option reset: "
+msgstr ""
+
+#, c-format
+msgid "Option removed: %s"
+msgstr "Seçenek kaldırıldı: %s"
+
+#, c-format
+msgid "%d option(s) reset, %d option(s) removed"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sCan't upgrade: there is one or more background process (hook type "
+"'process' or 'connect')"
+msgstr ""
+
+#, c-format
+msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sCan't upgrade: WeeChat binary \"%s\" does not have execute permissions"
+msgstr ""
+
+#, c-format
+msgid "Upgrading WeeChat with binary file: \"%s\"..."
+msgstr ""
+
+#, c-format
+msgid "%sError: unable to save session in file"
+msgstr ""
+
+#, c-format
+msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
+msgstr ""
+
+#. TRANSLATORS: "%s" after "started on" is a date
+#, c-format
+msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
+msgstr ""
+
+msgid "day"
+msgid_plural "days"
+msgstr[0] "gün"
+
+#. TRANSLATORS: "%s%s" after "started on" is a date
+#, c-format
+msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
+msgstr ""
+
+msgid "compiled on"
+msgstr "derlenme"
+
+#, c-format
+msgid "Upgraded %d %s, first start: %s"
+msgstr ""
+
+#. TRANSLATORS: text is: "upgraded xx times"
+msgid "time"
+msgid_plural "times"
+msgstr[0] ""
+
+msgid "Windows list:"
+msgstr ""
+
+#, c-format
+msgid "%sError: incorrect window number"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sError: can not merge windows, there's no other window with same size near "
+"current one"
+msgstr ""
+
+msgid "toggle away status"
+msgstr ""
+
+msgid "[-all] [<message>]"
+msgstr ""
+
+msgid ""
+"   -all: toggle away status on all connected servers\n"
+"message: message for away (if no message is given, away status is removed)"
+msgstr ""
+
+msgid "manage bars"
+msgstr ""
+
+msgid ""
+"list|listfull|listitems || add <name> <type>[,<condition>] <position> <size> "
+"<separator> <item1>[,<item2>...] || default [input|title|status|nicklist] || "
+"del <name>|-all || set <name> <option> <value> || hide|show|toggle <name> || "
+"scroll <name> <window> <scroll_value>"
+msgstr ""
+
+msgid ""
+"         list: list all bars\n"
+"     listfull: list all bars (verbose)\n"
+"    listitems: list all bar items\n"
+"          add: add a new bar\n"
+"         name: name of bar (must be unique)\n"
+"         type:   root: outside windows,\n"
+"               window: inside windows, with optional conditions (see below)\n"
+"    condition: condition(s) for displaying bar (only for type \"window\"):\n"
+"                 active: on active window\n"
+"               inactive: on inactive windows\n"
+"               nicklist: on windows with nicklist\n"
+"               other condition: see /help weechat.bar.xxx.conditions and /"
+"help eval\n"
+"               without condition, the bar is always displayed\n"
+"     position: bottom, top, left or right\n"
+"         size: size of bar (in chars)\n"
+"    separator: 1 for using separator (line), 0 or nothing means no "
+"separator\n"
+"    item1,...: items for this bar (items can be separated by comma (space "
+"between items) or \"+\" (glued items))\n"
+"      default: create a default bar (all default bars if no bar name is "
+"given)\n"
+"          del: delete a bar (or all bars with -all)\n"
+"          set: set a value for a bar property\n"
+"       option: option to change (for options list, look at /set weechat.bar."
+"<barname>.*)\n"
+"        value: new value for option\n"
+"         hide: hide a bar\n"
+"         show: show an hidden bar\n"
+"       toggle: hide/show a bar\n"
+"       scroll: scroll bar\n"
+"       window: window number (use '*' for current window or for root bars)\n"
+" scroll_value: value for scroll: 'x' or 'y' (optional), followed by '+', "
+"'-', 'b' (beginning) or 'e' (end), value (for +/-), and optional % (to "
+"scroll by % of width/height, otherwise value is number of chars)\n"
+"\n"
+"Examples:\n"
+"  create a bar with time, buffer number + name, and completion:\n"
+"    /bar add mybar root bottom 1 0 [time],buffer_number+:+buffer_name,"
+"completion\n"
+"  hide a bar:\n"
+"    /bar hide mybar\n"
+"  scroll nicklist 10 lines down on current buffer:\n"
+"    /bar scroll nicklist * y+10\n"
+"  scroll to end of nicklist on current buffer:\n"
+"    /bar scroll nicklist * ye"
+msgstr ""
+
+msgid "manage buffers"
+msgstr ""
+
+msgid ""
+"list || clear [<number>|<name>|-merged|-all] || move|merge <number> || swap "
+"<number1>|<name1> [<number2>|<name2>] || unmerge [<number>|-all] || close "
+"[<n1>[-<n2>]|<name>] || notify <level> || localvar || set <property> <value> "
+"|| get <property> || <number>|<name>"
+msgstr ""
+
+msgid ""
+"    list: list buffers (without argument, this list is displayed)\n"
+"   clear: clear buffer content (number for a buffer, -merged for merged "
+"buffers, -all for all buffers, or nothing for current buffer)\n"
+"    move: move buffer in the list (may be relative, for example -1)\n"
+"    swap: swap two buffers (swap with current buffer if only one number/name "
+"given)\n"
+"   merge: merge current buffer to another buffer (chat area will be mix of "
+"both buffers)\n"
+"          (by default ctrl-x switches between merged buffers)\n"
+" unmerge: unmerge buffer from other buffers which have same number\n"
+"   close: close buffer (number/range or name is optional)\n"
+"  notify: set notify level for current buffer: this level determines whether "
+"buffer will be added to hotlist or not:\n"
+"               none: never\n"
+"          highlight: for highlights only\n"
+"            message: for messages from users + highlights\n"
+"                all: all messages\n"
+"              reset: reset to default value (all)\n"
+"localvar: display local variables for current buffer\n"
+"     set: set a property for current buffer\n"
+"     get: display a property of current buffer\n"
+"  number: jump to buffer by number, possible prefix:\n"
+"          '+': relative jump, add number to current\n"
+"          '-': relative jump, sub number to current\n"
+"          '*': jump to number, using option \"weechat.look."
+"jump_current_to_previous_buffer\"\n"
+"    name: jump to buffer by (partial) name\n"
+"\n"
+"Examples:\n"
+"  clear current buffer:\n"
+"    /buffer clear\n"
+"  move buffer to number 5:\n"
+"    /buffer move 5\n"
+"  swap buffer 1 with 3:\n"
+"    /buffer swap 1 3\n"
+"  swap buffer #weechat with current buffer:\n"
+"    /buffer swap #weechat\n"
+"  merge with core buffer:\n"
+"    /buffer merge 1\n"
+"  unmerge buffer:\n"
+"    /buffer unmerge\n"
+"  close current buffer:\n"
+"    /buffer close\n"
+"  close buffers 5 to 7:\n"
+"    /buffer close 5-7\n"
+"  jump to #weechat:\n"
+"    /buffer #weechat\n"
+"  jump to next buffer:\n"
+"    /buffer +1"
+msgstr ""
+
+msgid "define color aliases and display palette of colors"
+msgstr ""
+
+msgid "alias <color> <name> || unalias <color> || reset"
+msgstr ""
+
+msgid ""
+"  alias: add an alias for a color\n"
+"unalias: delete an alias\n"
+"  color: color number (greater than or equal to 0, max depends on terminal, "
+"commonly 63 or 255)\n"
+"   name: alias name for color (for example: \"orange\")\n"
+"  reset: reset all color pairs (required when no more color pairs are "
+"available if automatic reset is disabled, see option weechat.look."
+"color_pairs_auto_reset)\n"
+"\n"
+"Without argument, this command displays colors in a new buffer.\n"
+"\n"
+"Examples:\n"
+"  add alias \"orange\" for color 214:\n"
+"    /color alias 214 orange\n"
+"  delete color 214:\n"
+"    /color unalias 214"
+msgstr ""
+
+msgid "launch explicit WeeChat or plugin command"
+msgstr ""
+
+msgid "<plugin> <command>"
+msgstr "<eklenti> <komut>"
+
+msgid ""
+" plugin: plugin name ('weechat' for WeeChat internal command)\n"
+"command: command to execute (a '/' is automatically added if not found at "
+"beginning of command)"
+msgstr ""
+
+msgid ""
+"free movement of cursor on screen to execute actions on specific areas of "
+"screen"
+msgstr ""
+
+msgid ""
+"go chat|<bar>|<x>,<y> || move up|down|left|right|area_up|area_down|area_left|"
+"area_right || stop"
+msgstr ""
+
+msgid ""
+"  go: move cursor to chat area, a bar (using bar name) or coordinates \"x,y"
+"\"\n"
+"move: move cursor with direction\n"
+"stop: stop cursor mode\n"
+"\n"
+"Without argument, this command toggles cursor mode.\n"
+"\n"
+"When mouse is enabled (see /help mouse), by default a middle click will "
+"start cursor mode at this point.\n"
+"\n"
+"Examples:\n"
+"  go to nicklist:\n"
+"    /cursor go nicklist\n"
+"  go to coordinates x=10, y=5:\n"
+"    /cursor go 10,5"
+msgstr ""
+
+msgid "control debug for core/plugins"
+msgstr ""
+
+msgid ""
+"list || set <plugin> <level> || dump [<plugin>] || buffer|color|infolists|"
+"memory|tags|term|windows || mouse|cursor [verbose] || hdata [free]"
+msgstr ""
+
+msgid ""
+"     list: list plugins with debug levels\n"
+"      set: set debug level for plugin\n"
+"   plugin: name of plugin (\"core\" for WeeChat core)\n"
+"    level: debug level for plugin (0 = disable debug)\n"
+"     dump: save memory dump in WeeChat log file (same dump is written when "
+"WeeChat crashes)\n"
+"   buffer: dump buffer content with hexadecimal values in log file\n"
+"    color: display infos about current color pairs\n"
+"   cursor: toggle debug for cursor mode\n"
+"     dirs: display directories\n"
+"    hdata: display infos about hdata (with free: remove all hdata in "
+"memory)\n"
+"    hooks: display infos about hooks\n"
+"infolists: display infos about infolists\n"
+"   memory: display infos about memory usage\n"
+"    mouse: toggle debug for mouse\n"
+"     tags: display tags for lines\n"
+"     term: display infos about terminal\n"
+"  windows: display windows tree"
+msgstr ""
+
+msgid "evaluate expression and send result to buffer"
+msgstr ""
+
+msgid "[-n] <expression> || [-n] <expression1> <operator> <expression2>"
+msgstr ""
+
+msgid ""
+"        -n: display result without sending it to buffer (debug mode)\n"
+"expression: expression to evaluate, variables with format ${variable} are "
+"replaced (see below)\n"
+"  operator: a logical or comparison operator:\n"
+"            - logical operators:\n"
+"                &&  boolean \"and\"\n"
+"                ||  boolean \"or\"\n"
+"            - comparison operators:\n"
+"                ==  equal\n"
+"                !=  not equal\n"
+"                <=  less or equal\n"
+"                <   less\n"
+"                >=  greater or equal\n"
+"                >   greater\n"
+"                =~  is matching regex\n"
+"                !~  is NOT matching regex\n"
+"\n"
+"An expression is considered as \"true\" if it is not NULL, not empty, and "
+"different from \"0\".\n"
+"The comparison is made using integers if the two expressions are valid "
+"integers.\n"
+"To force a string comparison, add double quotes around each expression, for "
+"example:\n"
+"  50 > 100      ==> 0\n"
+"  \"50\" > \"100\"  ==> 1\n"
+"\n"
+"Some variables are replaced in expression, using the format ${variable}, "
+"variable can be, by order of priority :\n"
+"  1. the name of an option (file.section.option)\n"
+"  2. the name of a local variable in buffer\n"
+"  3. a hdata name/variable (the value is automatically converted to string), "
+"by default \"window\" and \"buffer\" point to current window/buffer.\n"
+"Format for hdata can be one of following:\n"
+"  hdata.var1.var2...: start with a hdata (pointer must be known), and ask "
+"variables one after one (other hdata can be followed)\n"
+"  hdata[list].var1.var2...: start with a hdata using a list, for example:\n"
+"    ${buffer[gui_buffers].full_name}: full name of first buffer in linked "
+"list of buffers\n"
+"    ${plugin[weechat_plugins].name}: name of first plugin in linked list of "
+"plugins\n"
+"For name of hdata and variables, please look at \"Plugin API reference\", "
+"function \"weechat_hdata_get\".\n"
+"\n"
+"Examples:\n"
+"  /eval -n ${weechat.look.scroll_amount}  ==> 3\n"
+"  /eval -n ${window}                      ==> 0x2549aa0\n"
+"  /eval -n ${window.buffer}               ==> 0x2549320\n"
+"  /eval -n ${window.buffer.full_name}     ==> core.weechat\n"
+"  /eval -n ${window.buffer.number}        ==> 1\n"
+"  /eval -n ${window.buffer.number} > 2    ==> 0\n"
+"  /eval -n ${window.win_width} > 100      ==> 1\n"
+"  /eval -n (8 > 12) || (5 > 2)            ==> 1\n"
+"  /eval -n (8 > 12) && (5 > 2)            ==> 0\n"
+"  /eval -n abcd =~ ^ABC                   ==> 1\n"
+"  /eval -n abcd =~ (?-i)^ABC              ==> 0\n"
+"  /eval -n abcd =~ (?-i)^abc              ==> 1\n"
+"  /eval -n abcd !~ abc                    ==> 0"
+msgstr ""
+
+msgid ""
+"filter messages in buffers, to hide/show them according to tags or regex"
+msgstr ""
+
+msgid ""
+"list || enable|disable|toggle [<name>] || add <name> <buffer>[,<buffer>...] "
+"<tags> <regex> || del <name>|-all"
+msgstr ""
+
+msgid ""
+"   list: list all filters\n"
+" enable: enable filters (filters are enabled by default)\n"
+"disable: disable filters\n"
+" toggle: toggle filters\n"
+"   name: filter name\n"
+"    add: add a filter\n"
+"    del: delete a filter\n"
+"   -all: delete all filters\n"
+" buffer: comma separated list of buffers where filter is active:\n"
+"         - this is full name including plugin (example: \"irc.freenode."
+"#weechat\")\n"
+"         - \"*\" means all buffers\n"
+"         - a name starting with '!' is excluded\n"
+"         - name can start or end with '*' to match many buffers\n"
+"   tags: comma separated list of tags, for example: \"irc_join,irc_part,"
+"irc_quit\"\n"
+"  regex: regular expression to search in line\n"
+"         - use '\\t' to separate prefix from message, special chars like '|' "
+"must be escaped: '\\|'\n"
+"         - if regex starts with '!', then matching result is reversed (use "
+"'\\!' to start with '!')\n"
+"         - two regular expressions are created: one for prefix and one for "
+"message\n"
+"         - regex are case insensitive, they can start by \"(?-i)\" to become "
+"case sensitive\n"
+"\n"
+"The default key alt+'=' toggles filtering on/off.\n"
+"\n"
+"Tags most commonly used:\n"
+"  no_filter, no_highlight, no_log, log0..log9 (log level),\n"
+"  notify_none, notify_message, notify_private, notify_highlight,\n"
+"  nick_xxx (xxx is nick in message), prefix_nick_ccc (ccc is color of "
+"nick),\n"
+"  irc_xxx (xxx is command name or number, see /server raw or /debug tags),\n"
+"  irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, "
+"irc_smart_filter, away_info.\n"
+"To see tags for lines in buffers: /debug tags\n"
+"\n"
+"Examples:\n"
+"  use IRC smart filter on all buffers:\n"
+"    /filter add irc_smart * irc_smart_filter *\n"
+"  use IRC smart filter on all buffers except those with \"#weechat\" in "
+"name:\n"
+"    /filter add irc_smart *,!*#weechat* irc_smart_filter *\n"
+"  filter all IRC join/part/quit messages:\n"
+"    /filter add joinquit * irc_join,irc_part,irc_quit *\n"
+"  filter nicks displayed when joining channels or with /names:\n"
+"    /filter add nicks * irc_366 *\n"
+"  filter nick \"toto\" on IRC channel #weechat:\n"
+"    /filter add toto irc.freenode.#weechat nick_toto *\n"
+"  filter lines containing \"weechat sucks\" on IRC channel #weechat:\n"
+"    /filter add sucks irc.freenode.#weechat * weechat sucks"
+msgstr ""
+
+msgid "display help about commands and options"
+msgstr ""
+
+msgid "-list|-listfull [<plugin> [<plugin>...]] || <command> || <option>"
+msgstr ""
+
+msgid ""
+"    -list: list commands, by plugin (without argument, this list is "
+"displayed)\n"
+"-listfull: list commands with description, by plugin\n"
+"   plugin: list commands for this plugin\n"
+"  command: a command name\n"
+"   option: an option name (use /set to see list)"
+msgstr ""
+
+msgid "show buffer command history"
+msgstr ""
+
+msgid "clear || <value>"
+msgstr ""
+
+msgid ""
+"clear: clear history\n"
+"value: number of history entries to show"
+msgstr ""
+
+msgid "functions for command line"
+msgstr ""
+
+msgid "<action> [<arguments>]"
+msgstr ""
+
+msgid ""
+"list of actions:\n"
+"  return: simulate key \"enter\"\n"
+"  complete_next: complete word with next completion\n"
+"  complete_previous: complete word with previous completion\n"
+"  search_text: search text in buffer\n"
+"  search_switch_case: switch exact case for search\n"
+"  search_previous: search previous line\n"
+"  search_next: search next line\n"
+"  search_stop: stop search\n"
+"  delete_previous_char: delete previous char\n"
+"  delete_next_char: delete next char\n"
+"  delete_previous_word: delete previous word\n"
+"  delete_next_word: delete next word\n"
+"  delete_beginning_of_line: delete from beginning of line until cursor\n"
+"  delete_end_of_line: delete from cursor until end of line\n"
+"  delete_line: delete entire line\n"
+"  clipboard_paste: paste from clipboard\n"
+"  transpose_chars: transpose two chars\n"
+"  undo: undo last command line action\n"
+"  redo: redo last command line action\n"
+"  move_beginning_of_line: move cursor to beginning of line\n"
+"  move_end_of_line: move cursor to end of line\n"
+"  move_previous_char: move cursor to previous char\n"
+"  move_next_char: move cursor to next char\n"
+"  move_previous_word: move cursor to previous word\n"
+"  move_next_word: move cursor to next word\n"
+"  history_previous: recall previous command in current buffer history\n"
+"  history_next: recall next command in current buffer history\n"
+"  history_global_previous: recall previous command in global history\n"
+"  history_global_next: recall next command in global history\n"
+"  jump_smart: jump to next buffer with activity\n"
+"  jump_last_buffer: jump to last buffer\n"
+"  jump_last_buffer_displayed: jump to last buffer displayed (before last "
+"jump to a buffer)\n"
+"  jump_previously_visited_buffer: jump to previously visited buffer\n"
+"  jump_next_visited_buffer: jump to next visited buffer\n"
+"  hotlist_clear: clear hotlist\n"
+"  grab_key: grab a key (optional argument: delay for end of grab, default is "
+"500 milliseconds)\n"
+"  grab_key_command: grab a key with its associated command (optional "
+"argument: delay for end of grab, default is 500 milliseconds)\n"
+"  grab_mouse: grab mouse event code\n"
+"  grab_mouse_area: grab mouse event code with area\n"
+"  set_unread: set unread marker for all buffers\n"
+"  set_unread_current_buffer: set unread marker for current buffer\n"
+"  switch_active_buffer: switch to next merged buffer\n"
+"  switch_active_buffer_previous: switch to previous merged buffer\n"
+"  zoom_merged_buffer: zoom on merged buffer\n"
+"  insert: insert text in command line\n"
+"  paste_start: start paste (bracketed paste mode)\n"
+"  paste_stop: stop paste (bracketed paste mode)\n"
+"\n"
+"This command is used by key bindings or plugins."
+msgstr ""
+
+msgid "bind/unbind keys"
+msgstr ""
+
+msgid ""
+"list|listdefault|listdiff [<context>] || bind <key> [<command> [<args>]] || "
+"bindctxt <context> <key> [<command> [<args>]] || unbind <key> || unbindctxt "
+"<context> <key> || reset <key> || resetctxt <context> <key> || resetall -yes "
+"[<context>] || missing [<context>]"
+msgstr ""
+
+msgid ""
+"       list: list all current keys (without argument, this list is "
+"displayed)\n"
+"listdefault: list default keys\n"
+"   listdiff: list differences between current and default keys (keys added, "
+"redefined or deleted)\n"
+"    context: name of context (\"default\" or \"search\")\n"
+"       bind: bind a command to a key or display command bound to key (for "
+"context \"default\")\n"
+"   bindctxt: bind a command to a key or display command bound to key, for "
+"given context\n"
+"    command: command (many commands can be separated by semicolons)\n"
+"     unbind: remove a key binding (for context \"default\")\n"
+" unbindctxt: remove a key binding for given context\n"
+"      reset: reset a key to default binding (for context \"default\")\n"
+"  resetctxt: reset a key to default binding, for given context\n"
+"   resetall: restore bindings to the default values and delete ALL personal "
+"bindings (use carefully!)\n"
+"    missing: add missing keys (using default bindings), useful after "
+"installing new WeeChat version\n"
+"\n"
+"When binding a command to a key, it is recommended to use key alt+k (or Esc "
+"then k), and then press the key to bind: this will insert key code in "
+"command line.\n"
+"\n"
+"For context \"mouse\" (possible in context \"cursor\" too), key has format: "
+"\"@area:key\" or \"@area1>area2:key\" where area can be:\n"
+"          *: any area on screen\n"
+"       chat: chat area (any buffer)\n"
+"  chat(xxx): char area for buffer with name \"xxx\" (full name including "
+"plugin)\n"
+"     bar(*): any bar\n"
+"   bar(xxx): bar \"xxx\"\n"
+"    item(*): any bar item\n"
+"  item(xxx): bar item \"xxx\"\n"
+"The key can start or end with '*' to match many mouse events.\n"
+"A special value for command with format \"hsignal:name\" can be used for "
+"context mouse, this will send the hsignal \"name\" with the focus hashtable "
+"as argument.\n"
+"Another special value \"-\" can be used to disable key (it will be ignored "
+"when looking for keys).\n"
+"\n"
+"Examples:\n"
+"  key alt-x to toggle nicklist bar:\n"
+"    /key bind meta-x /bar toggle nicklist\n"
+"  key alt-r to jump to #weechat IRC channel:\n"
+"    /key bind meta-r /buffer #weechat\n"
+"  restore default binding for key alt-r:\n"
+"    /key reset meta-r\n"
+"  key \"tab\" to stop search in buffer:\n"
+"    /key bindctxt search ctrl-I /input search_stop\n"
+"  middle button of mouse on a nick to retrieve info on nick:\n"
+"    /key bindctxt mouse @item(buffer_nicklist):button3 /msg nickserv info "
+"${nick}"
+msgstr ""
+
+msgid "save/apply/reset layout for buffers and windows"
+msgstr ""
+
+msgid ""
+"save [<name>] [buffers|windows] || apply [<name>] [buffers|windows] || leave "
+"|| reset [<name>] [buffers|windows] || rename <name> <new_name>"
+msgstr ""
+"save [<isim>] [buffers|windows] || apply [<isim>] [buffers|windows] || leave "
+"|| reset [<isim>] [buffers|windows] || rename <isim> <yeni_isim>"
+
+msgid ""
+"   save: save current layout\n"
+"  apply: apply saved layout\n"
+"  leave: leave current layout (does not update any layout)\n"
+"  reset: reset buffers and/or windows in a saved layout\n"
+"         (if both buffers and windows are reset, the layout is removed)\n"
+" rename: rename a layout\n"
+"   name: name for saved layout (default is \"default\")\n"
+"buffers: save/apply only buffers (order of buffers)\n"
+"windows: save/apply only windows (buffer displayed by each window)\n"
+"\n"
+"Without argument, this command displays saved layouts."
+msgstr ""
+
+msgid "mouse control"
+msgstr "Fare kontrol"
+
+msgid "enable|disable|toggle [<delay>]"
+msgstr ""
+
+msgid ""
+" enable: enable mouse\n"
+"disable: disable mouse\n"
+" toggle: toggle mouse\n"
+"  delay: delay (in seconds) after which initial mouse state is restored "
+"(useful to temporarily disable mouse)\n"
+"\n"
+"The mouse state is saved in option \"weechat.look.mouse\".\n"
+"\n"
+"Examples:\n"
+"  enable mouse:\n"
+"    /mouse enable\n"
+"  toggle mouse for 5 seconds:\n"
+"    /mouse toggle 5"
+msgstr ""
+
+msgid "execute a command silently"
+msgstr ""
+
+msgid "[-current | -buffer <name> | -all] command"
+msgstr ""
+
+msgid ""
+"-current: no output on current buffer\n"
+" -buffer: no output on specified buffer\n"
+"    name: full buffer name (examples: \"irc.server.freenode\", \"irc."
+"freenode.#weechat\")\n"
+"    -all: no output on ALL buffers\n"
+" command: command to execute silently (a '/' is automatically added if not "
+"found at beginning of command)\n"
+"\n"
+"If no target is specified (-current, -buffer or -all), then default is to "
+"mute WeeChat core buffer only.\n"
+"\n"
+"Examples:\n"
+"  config save:\n"
+"    /mute save\n"
+"  message to current IRC channel:\n"
+"    /mute -current msg * hi!\n"
+"  message to #weechat channel:\n"
+"    /mute -buffer irc.freenode.#weechat msg #weechat hi!"
+msgstr ""
+
+msgid "list/load/unload plugins"
+msgstr ""
+
+msgid ""
+"list|listfull [<name>] || load <filename> [<arguments>] || autoload "
+"[<arguments>] || reload [<name> [<arguments>]] || unload [<name>]"
+msgstr ""
+
+msgid ""
+"     list: list loaded plugins\n"
+" listfull: list loaded plugins (verbose)\n"
+"     load: load a plugin\n"
+" autoload: autoload plugins in system or user directory\n"
+"   reload: reload a plugin (if no name given, unload all plugins, then "
+"autoload plugins)\n"
+"   unload: unload a plugin (if no name given, unload all plugins)\n"
+" filename: plugin (file) to load\n"
+"     name: a plugin name\n"
+"arguments: arguments given to plugin on load\n"
+"\n"
+"Without argument, this command lists loaded plugins."
+msgstr ""
+
+msgid "manage proxies"
+msgstr ""
+
+msgid ""
+"list || add <name> <type> <address> <port> [<username> [<password>]] || del "
+"<name>|-all || set <name> <option> <value>"
+msgstr ""
+
+msgid ""
+"    list: list all proxies\n"
+"     add: add a new proxy\n"
+"    name: name of proxy (must be unique)\n"
+"    type: http, socks4 or socks5\n"
+" address: IP or hostname\n"
+"    port: port\n"
+"username: username (optional)\n"
+"password: password (optional)\n"
+"     del: delete a proxy (or all proxies with -all)\n"
+"     set: set a value for a proxy property\n"
+"  option: option to change (for options list, look at /set weechat.proxy."
+"<proxyname>.*)\n"
+"   value: new value for option\n"
+"\n"
+"Examples:\n"
+"  create a http proxy, running on local host, port 8888:\n"
+"    /proxy add local http 127.0.0.1 8888\n"
+"  create a http proxy using IPv6 protocol:\n"
+"    /proxy add local http ::1 8888\n"
+"    /proxy set local ipv6 on\n"
+"  create a socks5 proxy with username/password:\n"
+"    /proxy add myproxy socks5 sample.host.org 3128 myuser mypass\n"
+"  delete a proxy:\n"
+"    /proxy del myproxy"
+msgstr ""
+
+msgid "quit WeeChat"
+msgstr ""
+
+msgid "[-yes] [<arguments>]"
+msgstr ""
+
+msgid ""
+"     -yes: required if option weechat.look.confirm_quit is enabled\n"
+"arguments: text sent with signal \"quit\"\n"
+"           (for example irc plugin uses this text to send quit message to "
+"server)"
+msgstr ""
+
+msgid "reload configuration files from disk"
+msgstr ""
+
+msgid "[<file> [<file>...]]"
+msgstr "[<dosya> [<dosya>...]]"
+
+msgid ""
+"file: configuration file to reload (without extension \".conf\")\n"
+"\n"
+"Without argument, all files (WeeChat and plugins) are reloaded."
+msgstr ""
+
+msgid "execute a command several times"
+msgstr ""
+
+msgid "[-interval <delay>] <count> <command>"
+msgstr ""
+
+msgid ""
+"  delay: delay between execution of commands (in milliseconds)\n"
+"  count: number of times to execute command\n"
+"command: command to execute (a '/' is automatically added if not found at "
+"beginning of command)\n"
+"\n"
+"All commands are executed on buffer where this command was issued.\n"
+"\n"
+"Example:\n"
+"  scroll 2 pages up:\n"
+"    /repeat 2 /window page_up"
+msgstr ""
+
+msgid "save configuration files to disk"
+msgstr ""
+
+msgid ""
+"file: configuration file to save (without extension \".conf\")\n"
+"\n"
+"Without argument, all files (WeeChat and plugins) are saved."
+msgstr ""
+
+msgid "set config options"
+msgstr ""
+
+msgid "[<option> [<value>]] || diff [<option> [<option>...]]"
+msgstr ""
+
+msgid ""
+"option: name of an option (can start or end with '*' to list many options)\n"
+" value: new value for option\n"
+"  diff: display only changed options\n"
+"\n"
+"New value can be, according to variable type:\n"
+"  boolean: on, off or toggle\n"
+"  integer: number, ++number or --number\n"
+"   string: any string (\"\" for empty string)\n"
+"    color: color name, ++number or --number\n"
+"\n"
+"For all types, you can use null to remove option value (undefined value). "
+"This works only for some special plugin variables.\n"
+"\n"
+"Examples:\n"
+"  display options about highlight:\n"
+"    /set *highlight*\n"
+"  add a word to highlight:\n"
+"    /set weechat.look.highlight \"word\"\n"
+"  display changed options:\n"
+"    /set diff\n"
+"  display changed options in irc plugin:\n"
+"    /set diff irc.*"
+msgstr ""
+
+msgid "unset/reset config options"
+msgstr ""
+
+msgid "<option>"
+msgstr "<seçenek>"
+
+msgid ""
+"option: name of an option (may begin or end with \"*\" to mass-reset "
+"options, use carefully!)\n"
+"\n"
+"According to option, it's reset (for standard options) or removed (for "
+"optional settings, like server values).\n"
+"\n"
+"Examples:\n"
+"  reset one option:\n"
+"    /unset weechat.look.item_time_format\n"
+"  reset all color options:\n"
+"    /unset weechat.color.*"
+msgstr ""
+
+msgid "upgrade WeeChat without disconnecting from servers"
+msgstr ""
+
+msgid "[<path_to_binary>|-quit]"
+msgstr ""
+
+msgid ""
+"path_to_binary: path to WeeChat binary (default is current binary)\n"
+"         -quit: close *ALL* connections, save session and quit WeeChat, "
+"which makes possible a delayed restoration (see below)\n"
+"\n"
+"This command upgrades and reloads a running WeeChat session. The new WeeChat "
+"binary must have been compiled or installed with a package manager before "
+"running this command.\n"
+"\n"
+"Note: SSL connections are lost during upgrade, because reload of SSL "
+"sessions is currently not possible with GnuTLS. There is automatic "
+"reconnection after upgrade.\n"
+"\n"
+"Upgrade process has 4 steps:\n"
+"  1. save session into files for core and plugins (buffers, history, ..)\n"
+"  2. unload all plugins (configuration files (*.conf) are written on disk)\n"
+"  3. save WeeChat configuration (weechat.conf)\n"
+"  4. execute new WeeChat binary and reload session.\n"
+"\n"
+"With option \"-quit\", the process is slightly different:\n"
+"  1. close *ALL* connections (irc, xfer, relay, ...)\n"
+"  2. save session into files (*.upgrade)\n"
+"  3. unload all plugins\n"
+"  4. save WeeChat configuration\n"
+"  5. quit WeeChat\n"
+"Then later you can restore session with command: weechat-curses --upgrade\n"
+"IMPORTANT: you must restore the session with exactly same configuration "
+"(files *.conf).\n"
+"It is possible to restore WeeChat session on another machine if you copy the "
+"content of directory \"~/.weechat\""
+msgstr ""
+
+msgid "show WeeChat uptime"
+msgstr ""
+
+msgid ""
+" -o: send uptime to current buffer as input (english string)\n"
+"-ol: send uptime to current buffer as input (translated string)"
+msgstr ""
+
+msgid "show WeeChat version and compilation date"
+msgstr ""
+
+msgid ""
+" -o: send version to current buffer as input (english string)\n"
+"-ol: send version to current buffer as input (translated string)"
+msgstr ""
+
+msgid "schedule a command execution in future"
+msgstr ""
+
+msgid "<number>[<unit>] <command>"
+msgstr ""
+
+msgid ""
+" number: amount of time to wait (integer number)\n"
+"   unit: optional, values are:\n"
+"           ms: milliseconds\n"
+"            s: seconds (default)\n"
+"            m: minutes\n"
+"            h: hours\n"
+"command: command to execute (or text to send to buffer if command does not "
+"start with '/')\n"
+"\n"
+"Note: command is executed on buffer where /wait was executed (if buffer is "
+"not found (for example if it has been closed before execution of command), "
+"then command is executed on WeeChat core buffer).\n"
+"\n"
+"Examples:\n"
+"  join channel in 10 seconds:\n"
+"    /wait 10 /join #test\n"
+"  set away in 15 minutes:\n"
+"    /wait 15m /away -all I'm away\n"
+"  say 'hello' in 2 minutes:\n"
+"    /wait 2m hello"
+msgstr ""
+
+msgid "manage windows"
+msgstr ""
+
+msgid ""
+"list || -1|+1|b#|up|down|left|right [-window <number>] || <number> || splith|"
+"splitv [-window <number>] [<pct>] || resize [-window <number>] [+/-]<pct> || "
+"balance || merge [-window <number>] [all] || page_up|page_down [-window "
+"<number>] || refresh || scroll [-window <number>] [+/-]<value>[s|m|h|d|M|y] "
+"|| scroll_horiz [-window <number>] [+/-]<value>[%] || scroll_up|scroll_down|"
+"scroll_top|scroll_bottom|scroll_previous_highlight|scroll_next_highlight|"
+"scroll_unread [-window <number>] || swap [-window <number>] [up|down|left|"
+"right] || zoom[-window <number>]"
+msgstr ""
+
+msgid ""
+"         list: list opened windows (without argument, this list is "
+"displayed)\n"
+"           -1: jump to previous window\n"
+"           +1: jump to next window\n"
+"           b#: jump to next window displaying buffer number #\n"
+"           up: switch to window above current one\n"
+"         down: switch to window below current one\n"
+"         left: switch to window on the left\n"
+"        right: switch to window on the right\n"
+"       number: window number (see /window list)\n"
+"       splith: split current window horizontally\n"
+"       splitv: split current window vertically\n"
+"       resize: resize window size, new size is <pct> percentage of parent "
+"window\n"
+"      balance: balance the sizes of all windows\n"
+"        merge: merge window with another (all = keep only one window)\n"
+"      page_up: scroll one page up\n"
+"    page_down: scroll one page down\n"
+"      refresh: refresh screen\n"
+"       scroll: scroll a number of lines (+/-N) or with time: s=seconds, "
+"m=minutes, h=hours, d=days, M=months, y=years\n"
+" scroll_horiz: scroll horizontally a number of columns (+/-N) or percentage "
+"of window size (this scrolling is possible only on buffers with free "
+"content)\n"
+"    scroll_up: scroll a few lines up\n"
+"  scroll_down: scroll a few lines down\n"
+"   scroll_top: scroll to top of buffer\n"
+"scroll_bottom: scroll to bottom of buffer\n"
+"scroll_previous_highlight: scroll to previous highlight\n"
+"scroll_next_highlight: scroll to next highlight\n"
+"scroll_unread: scroll to unread marker\n"
+"         swap: swap buffers of two windows (with optional direction for "
+"target window)\n"
+"         zoom: zoom on window\n"
+"\n"
+"For splith and splitv, pct is a percentage which represents size of new "
+"window, computed with current window as size reference. For example 25 means "
+"create a new window with size = current_size / 4\n"
+"\n"
+"Examples:\n"
+"  jump to window displaying buffer #1:\n"
+"    /window b1\n"
+"  scroll 2 lines up:\n"
+"    /window scroll -2\n"
+"  scroll 2 days up:\n"
+"    /window scroll -2d\n"
+"  scroll to beginning of current day:\n"
+"    /window scroll -d\n"
+"  zoom on window #2:\n"
+"    /window zoom -window 2"
+msgstr ""
+
+#, c-format
+msgid "%sError: missing arguments for \"%s\" command"
+msgstr ""
+
+msgid "names of buffers"
+msgstr ""
+
+msgid "numbers of buffers"
+msgstr ""
+
+msgid "names of buffers (including plugins names)"
+msgstr ""
+
+msgid "properties that can be set on a buffer"
+msgstr ""
+
+msgid "properties that can be read on a buffer"
+msgstr ""
+
+msgid "numbers of windows"
+msgstr ""
+
+msgid "palette colors"
+msgstr ""
+
+msgid "configuration files"
+msgstr "yapılandırma dosyaları"
+
+msgid "filename"
+msgstr "dosyaadı"
+
+msgid "names of filters"
+msgstr "filtrelerin isimleri"
+
+msgid "commands (weechat and plugins)"
+msgstr ""
+
+msgid "names of infos hooked"
+msgstr ""
+
+msgid "names of infolists hooked"
+msgstr ""
+
+msgid "nicks in nicklist of current buffer"
+msgstr ""
+
+msgid "configuration options"
+msgstr "yapılandırma seçenekleri"
+
+msgid "names of plugins"
+msgstr "eklentilerin isimleri"
+
+msgid "commands defined by plugins"
+msgstr ""
+
+msgid "names of bars"
+msgstr "çubukların isimleri"
+
+msgid "values for a configuration option"
+msgstr ""
+
+msgid "weechat commands"
+msgstr "weechat komutları"
+
+msgid "names of proxies"
+msgstr ""
+
+msgid "options for proxies"
+msgstr ""
+
+msgid "options for bars"
+msgstr "çubukların seçenekleri"
+
+#. TRANSLATORS: "key" means "key on the keyboard"
+msgid "key contexts"
+msgstr ""
+
+#. TRANSLATORS: "key" means "key on the keyboard"
+msgid "key codes"
+msgstr ""
+
+#. TRANSLATORS: "key" means "key on the keyboard"
+msgid "key codes that can be reset (keys added, redefined or removed)"
+msgstr ""
+
+msgid "areas (\"chat\" or bar name) for free cursor movement"
+msgstr ""
+
+msgid "names of layouts"
+msgstr ""
+
+msgid ""
+"Warning: you should now issue /save to write \"save_config_on_exit\" option "
+"in configuration file"
+msgstr ""
+
+msgid ""
+"WARNING: this option can cause serious display bugs, if you have such "
+"problems, you must turn off this option."
+msgstr ""
+
+#, c-format
+msgid ""
+"%sWarning: proxy \"%s\" does not exist (you can create it with command /"
+"proxy)"
+msgstr ""
+
+#, c-format
+msgid "\t\tDay changed to %s"
+msgstr "\t\t %s olarak gün değişti"
+
+msgid "debug level for plugin (\"core\" for WeeChat core)"
+msgstr ""
+
+msgid "alias for color"
+msgstr ""
+
+#, c-format
+msgid "%sError: palette option must be numeric"
+msgstr ""
+
+#, c-format
+msgid "%sWarning: unknown option for section \"%s\": %s (value: \"%s\")"
+msgstr ""
+
+msgid "Notify level for buffer"
+msgstr ""
+
+msgid "command executed when WeeChat starts, after loading plugins"
+msgstr ""
+
+msgid "command executed when WeeChat starts, before loading plugins"
+msgstr ""
+
+msgid "display WeeChat logo at startup"
+msgstr ""
+
+msgid "display WeeChat version at startup"
+msgstr ""
+
+msgid ""
+"set resource limits for WeeChat process, format is: \"res1:limit1,res2:"
+"limit2\"; resource name is the end of constant (RLIMIT_XXX) in lower case "
+"(see man setrlimit for values); limit -1 means \"unlimited\"; example: set "
+"unlimited size for core file and max 1GB of virtual memory: \"core:-1,"
+"as:1000000000\""
+msgstr ""
+
+msgid ""
+"alignment for end of lines (all lines after the first): they are starting "
+"under this data (time, buffer, prefix, suffix, message (default))"
+msgstr ""
+
+msgid ""
+"string displayed when bar can be scrolled to the left (for bars with filling "
+"\"horizontal\")"
+msgstr ""
+
+msgid ""
+"string displayed when bar can be scrolled to the right (for bars with "
+"filling \"horizontal\")"
+msgstr ""
+
+msgid ""
+"string displayed when bar can be scrolled up (for bars with filling "
+"different from \"horizontal\")"
+msgstr ""
+
+msgid ""
+"string displayed when bar can be scrolled down (for bars with filling "
+"different from \"horizontal\")"
+msgstr ""
+
+msgid ""
+"default notify level for buffers (used to tell WeeChat if buffer must be "
+"displayed in hotlist or not, according to importance of message): all=all "
+"messages (default), message=messages+highlights, highlight=highlights only, "
+"none=never display in hotlist"
+msgstr ""
+
+msgid ""
+"time format for each line displayed in buffers (see man strftime for date/"
+"time specifiers), colors are allowed with format \"${color}\", for example "
+"french time: \"${lightblue}%H${white}%M${lightred}%S\""
+msgstr ""
+
+msgid ""
+"force \"bold\" attribute for light colors and \"darkgray\" in basic colors "
+"(this option is disabled by default: bold is used only if terminal has less "
+"than 16 colors)"
+msgstr ""
+
+msgid ""
+"use a different color for lines in inactive window (when window is not "
+"current window)"
+msgstr ""
+
+msgid ""
+"use a different color for lines in inactive buffer (when line is from a "
+"merged buffer not selected)"
+msgstr ""
+
+msgid ""
+"use a different color for inactive time (when window is not current window, "
+"or if line is from a merged buffer not selected)"
+msgstr ""
+
+msgid ""
+"use a different color for inactive buffer name in prefix (when window is not "
+"current window, or if line is from a merged buffer not selected)"
+msgstr ""
+
+msgid ""
+"use a different color for inactive prefix (when window is not current "
+"window, or if line is from a merged buffer not selected)"
+msgstr ""
+
+msgid ""
+"use a different color for inactive message (when window is not current "
+"window, or if line is from a merged buffer not selected)"
+msgstr ""
+
+msgid "use a different color for offline nicks (not in nicklist any more)"
+msgstr ""
+
+msgid ""
+"automatically reset table of color pairs when number of available pairs is "
+"lower or equal to this number (-1 = disable automatic reset, and then a "
+"manual \"/color reset\" is needed when table is full)"
+msgstr ""
+
+msgid ""
+"if set, uses real white color, disabled by default for terms with white "
+"background (if you never use white background, you should turn on this "
+"option to see real white instead of default term foreground color)"
+msgstr ""
+
+msgid ""
+"chars used to determine if input string is a command or not: input must "
+"start with one of these chars; the slash (\"/\") is always considered as "
+"command prefix (example: \".$\")"
+msgstr ""
+
+msgid ""
+"if set, /quit command must be confirmed with extra argument \"-yes\" (see /"
+"help quit)"
+msgstr ""
+
+msgid "display special message when day changes"
+msgstr ""
+
+msgid "time format for date displayed when day changed"
+msgstr ""
+
+msgid ""
+"if set, the eat_newline_glitch will be set to 0; this is used to not add new "
+"line char at end of each line, and then not break text when you copy/paste "
+"text from WeeChat to another application (this option is disabled by default "
+"because it can cause serious display bugs)"
+msgstr ""
+
+msgid ""
+"comma separated list of words to highlight; case insensitive comparison (use "
+"\"(?-i)\" at beginning of words to make them case sensitive), words may "
+"begin or end with \"*\" for partial match; example: \"test,(?-i)*toto*,flash*"
+"\""
+msgstr ""
+
+msgid ""
+"regular expression used to check if a message has highlight or not, at least "
+"one match in string must be surrounded by word chars (alphanumeric, \"-\", "
+"\"_\" or \"|\"), regular expression is case insensitive (use \"(?-i)\" at "
+"beginning to make it case sensitive), examples: \"flashcode|flashy\", \"(?-"
+"i)FlashCode|flashy\""
+msgstr ""
+
+msgid ""
+"comma separated list of tags to highlight (case insensitive comparison, "
+"examples: \"irc_notice\" for IRC notices, \"nick_flashcode\" for messages "
+"from nick \"FlashCode\")"
+msgstr ""
+
+msgid ""
+"add any buffer to hotlist (including current or visible buffers) if local "
+"variable \"away\" is set on buffer"
+msgstr ""
+
+msgid "string displayed between buffers in hotlist"
+msgstr ""
+
+msgid ""
+"max number of messages count to display in hotlist for a buffer (0 = never "
+"display messages count)"
+msgstr ""
+
+msgid ""
+"display messages count if number of messages is greater or equal to this "
+"value"
+msgstr ""
+
+msgid ""
+"max number of names in hotlist (0 = no name displayed, only buffer numbers)"
+msgstr ""
+
+msgid "max length of names in hotlist (0 = no limit)"
+msgstr ""
+
+msgid ""
+"level for displaying names in hotlist (combination of: 1=join/part, "
+"2=message, 4=private, 8=highlight, for example: 12=private+highlight)"
+msgstr ""
+
+msgid "if set, force display of names in hotlist for merged buffers"
+msgstr ""
+
+msgid ""
+"if set, uses short names to display buffer names in hotlist (start after "
+"first '.' in name)"
+msgstr ""
+
+msgid ""
+"hotlist sort type (group_time_asc (default), group_time_desc, "
+"group_number_asc, group_number_desc, number_asc, number_desc)"
+msgstr ""
+
+msgid ""
+"keep only unique numbers in hotlist (this applies only on hotlist items "
+"where name is NOT displayed after number)"
+msgstr ""
+
+msgid ""
+"number of chars displayed after end of input line when scrolling to display "
+"end of line"
+msgstr ""
+
+msgid ""
+"share commands, text, or both in input for all buffers (there is still local "
+"history for each buffer)"
+msgstr ""
+
+msgid "if set and input is shared, always overwrite input in target buffer"
+msgstr ""
+
+msgid "max number of \"undo\" for command line, by buffer (0 = undo disabled)"
+msgstr ""
+
+msgid ""
+"time format for \"time\" bar item (see man strftime for date/time specifiers)"
+msgstr ""
+
+msgid ""
+"string used to show that some lines are filtered in current buffer (bar item "
+"\"buffer_filter\")"
+msgstr ""
+
+msgid ""
+"jump to previous buffer displayed when jumping to current buffer number "
+"with /buffer *N (where N is a buffer number), to easily switch to another "
+"buffer, then come back to current buffer"
+msgstr ""
+
+msgid ""
+"jump to previously visited buffer when closing a buffer (if disabled, then "
+"jump to buffer number - 1)"
+msgstr ""
+
+msgid "jump back to initial buffer after reaching end of hotlist"
+msgstr ""
+
+msgid "text to display before nick in prefix of message, example: \"<\""
+msgstr ""
+
+msgid "text to display after nick in prefix of message, example: \">\""
+msgstr ""
+
+msgid "enable mouse support"
+msgstr ""
+
+msgid ""
+"delay (in milliseconds) to grab a mouse event: WeeChat will wait this delay "
+"before processing event"
+msgstr ""
+
+msgid ""
+"enable terminal \"bracketed paste mode\" (not supported in all terminals/"
+"multiplexers): in this mode, pasted text is bracketed with control sequences "
+"so that WeeChat can differentiate pasted text from typed-in text (\"ESC[200~"
+"\", followed by the pasted text, followed by \"ESC[201~\")"
+msgstr ""
+
+msgid ""
+"force end of bracketed paste after this delay (in seconds) if the control "
+"sequence for end of bracketed paste (\"ESC[201~\") was not received in time"
+msgstr ""
+
+msgid ""
+"max number of lines for paste without asking user (-1 = disable this feature)"
+msgstr ""
+
+msgid "prefix for error messages, colors are allowed with format \"${color}\""
+msgstr ""
+
+msgid ""
+"prefix for network messages, colors are allowed with format \"${color}\""
+msgstr ""
+
+msgid "prefix for action messages, colors are allowed with format \"${color}\""
+msgstr ""
+
+msgid "prefix for join messages, colors are allowed with format \"${color}\""
+msgstr ""
+
+msgid "prefix for quit messages, colors are allowed with format \"${color}\""
+msgstr ""
+
+msgid "prefix alignment (none, left, right (default))"
+msgstr ""
+
+msgid "max size for prefix (0 = no max size)"
+msgstr ""
+
+msgid "min size for prefix"
+msgstr ""
+
+msgid ""
+"char to display if prefix is truncated (must be exactly one char on screen)"
+msgstr ""
+
+msgid ""
+"display the truncature char (by default \"+\") after the text (by replacing "
+"the space that should be displayed here); if disabled, the truncature char "
+"replaces last char of text"
+msgstr ""
+
+msgid ""
+"prefix alignment for buffer name, when many buffers are merged with same "
+"number (none, left, right (default))"
+msgstr ""
+
+msgid ""
+"max size for buffer name, when many buffers are merged with same number (0 = "
+"no max size)"
+msgstr ""
+
+msgid ""
+"char to display if buffer name is truncated (when many buffers are merged "
+"with same number) (must be exactly one char on screen)"
+msgstr ""
+
+msgid ""
+"prefix displayed for a message with same nick as previous message: use a "
+"space \" \" to hide prefix, another string to display this string instead of "
+"prefix, or an empty string to disable feature (display prefix)"
+msgstr ""
+
+msgid "string displayed after prefix"
+msgstr ""
+
+msgid "use a marker (line or char) on buffers to show first unread line"
+msgstr ""
+
+msgid "always show read marker, even if it is after last buffer line"
+msgstr ""
+
+msgid ""
+"string used to draw read marker line (string is repeated until end of line)"
+msgstr ""
+
+msgid "save configuration file on exit"
+msgstr ""
+
+msgid "save layout on exit (buffers, windows, or both)"
+msgstr ""
+
+msgid "how many lines to scroll by with scroll_up and scroll_down"
+msgstr ""
+
+msgid ""
+"scroll to bottom of window after switch to another buffer (do not remember "
+"scroll position in windows); the scroll is done only for buffers with "
+"formatted content (not free content)"
+msgstr ""
+
+msgid ""
+"percent of screen to scroll when scrolling one page up or down (for example "
+"100 means one page, 50 half-page)"
+msgstr ""
+
+msgid "alert user when text sought is not found in buffer"
+msgstr ""
+
+msgid ""
+"char used to draw horizontal separators around bars and windows (empty value "
+"will draw a real line with ncurses, but may cause bugs with URL selection "
+"under some terminals), wide chars are NOT allowed here"
+msgstr ""
+
+msgid ""
+"char used to draw vertical separators around bars and windows (empty value "
+"will draw a real line with ncurses), wide chars are NOT allowed here"
+msgstr ""
+
+msgid "set title for window (terminal for Curses GUI) with name and version"
+msgstr ""
+
+msgid "time format for dates converted to strings and displayed in messages"
+msgstr ""
+
+msgid "display an horizontal separator between windows"
+msgstr ""
+
+msgid "display a vertical separator between windows"
+msgstr ""
+
+msgid ""
+"color for window separators (when split) and separators beside bars (like "
+"nicklist)"
+msgstr ""
+
+msgid "text color for '+' when scrolling bars"
+msgstr ""
+
+msgid "text color for chat"
+msgstr "sohbet için metin rengi"
+
+msgid "background color for chat"
+msgstr "sohbet için arkaplan rengi"
+
+msgid ""
+"text color for chat when window is inactive (not current selected window)"
+msgstr ""
+
+msgid ""
+"text color for chat when line is inactive (buffer is merged with other "
+"buffers and is not selected)"
+msgstr ""
+
+msgid "text color for time in chat window"
+msgstr "sohbet penceresindeki zaman için metin rengi"
+
+msgid "text color for time delimiters"
+msgstr ""
+
+msgid ""
+"text color for buffer name (before prefix, when many buffers are merged with "
+"same number)"
+msgstr ""
+
+msgid ""
+"text color for inactive buffer name (before prefix, when many buffers are "
+"merged with same number and if buffer is not selected)"
+msgstr ""
+
+msgid "text color for error prefix"
+msgstr ""
+
+msgid "text color for network prefix"
+msgstr ""
+
+msgid "text color for action prefix"
+msgstr ""
+
+msgid "text color for join prefix"
+msgstr ""
+
+msgid "text color for quit prefix"
+msgstr ""
+
+msgid "text color for '+' when prefix is too long"
+msgstr ""
+
+msgid "text color for suffix (after prefix)"
+msgstr ""
+
+msgid "text color for buffer names"
+msgstr ""
+
+msgid "text color for server names"
+msgstr "sunucu isimleri için metin rengi"
+
+msgid "text color for channel names"
+msgstr "kanal isimleri için metin rengi"
+
+msgid "text color for nicks in chat window"
+msgstr "sohbet penceresindeki rumuzlar için metin rengi"
+
+#. TRANSLATORS: please do not translate "lightred:blue"
+msgid ""
+"text color for nicks (comma separated list of colors, background is allowed "
+"with format: \"fg:bg\", for example: \"lightred:blue\")"
+msgstr ""
+
+msgid "color for nick prefix (string displayed before nick in prefix)"
+msgstr ""
+
+msgid "color for nick suffix (string displayed after nick in prefix)"
+msgstr ""
+
+msgid "text color for local nick in chat window"
+msgstr "sohbet penceresindeki yerel rumuz için metin rengi"
+
+msgid "text color for offline nick (not in nicklist any more)"
+msgstr ""
+
+msgid "text color for offline nick with highlight"
+msgstr ""
+
+msgid "background color for offline nick with highlight"
+msgstr ""
+
+msgid "text color for other nick in private buffer"
+msgstr ""
+
+msgid "text color for hostnames"
+msgstr ""
+
+msgid "text color for delimiters"
+msgstr ""
+
+msgid "text color for highlighted prefix"
+msgstr ""
+
+msgid "background color for highlighted prefix"
+msgstr ""
+
+msgid "text color for unread data marker"
+msgstr ""
+
+msgid "background color for unread data marker"
+msgstr ""
+
+msgid "text color for tags after messages (displayed with command /debug tags)"
+msgstr ""
+
+msgid "text color for marker on lines where text sought is found"
+msgstr ""
+
+msgid "background color for marker on lines where text sought is found"
+msgstr ""
+
+msgid "text color for values"
+msgstr "değerler için metin rengi"
+
+msgid "text color for current buffer number in status bar"
+msgstr ""
+
+msgid "text color for current buffer name in status bar"
+msgstr ""
+
+msgid ""
+"text color for current buffer name in status bar, if data are secured with a "
+"protocol like SSL"
+msgstr ""
+
+msgid "text color for filter indicator in status bar"
+msgstr ""
+
+msgid "text color for buffer with new messages (status bar)"
+msgstr ""
+
+msgid "text color for buffer with private message (status bar)"
+msgstr ""
+
+msgid "text color for buffer with highlight (status bar)"
+msgstr ""
+
+msgid "text color for buffer with new data (not messages) (status bar)"
+msgstr ""
+
+msgid "text color for count of messages in hotlist (status bar)"
+msgstr ""
+
+msgid "text color for count of private messages in hotlist (status bar)"
+msgstr ""
+
+msgid "text color for count of highlight messages in hotlist (status bar)"
+msgstr ""
+
+msgid "text color for count of other messages in hotlist (status bar)"
+msgstr ""
+
+msgid "text color for buffer with new data (status bar)"
+msgstr ""
+
+msgid "text color for time (status bar)"
+msgstr "zaman için metin rengi (durum çubuğu)"
+
+msgid "text color for unsuccessful text search in input line"
+msgstr ""
+
+msgid "text color for actions in input line"
+msgstr ""
+
+msgid "text color for groups in nicklist"
+msgstr ""
+
+msgid "text color for away nicknames"
+msgstr ""
+
+msgid "text color for offline nicknames"
+msgstr ""
+
+msgid ""
+"if enabled, the base word to complete ends at char before cursor; otherwise "
+"the base word ends at first space after cursor"
+msgstr ""
+
+msgid ""
+"default completion template (please see documentation for template codes and "
+"values: plugin API reference, function \"weechat_hook_command\")"
+msgstr ""
+
+msgid ""
+"add space after nick completion (when nick is not first word on command line)"
+msgstr ""
+
+msgid ""
+"string inserted after nick completion (when nick is first word on command "
+"line)"
+msgstr ""
+
+msgid "complete only with first nick found"
+msgstr ""
+
+msgid "chars ignored for nick completion"
+msgstr ""
+
+msgid "alert user when a partial completion occurs"
+msgstr ""
+
+msgid ""
+"partially complete command names (stop when many commands found begin with "
+"same letters)"
+msgstr ""
+
+msgid ""
+"partially complete command arguments (stop when many arguments found begin "
+"with same prefix)"
+msgstr ""
+
+msgid ""
+"partially complete outside commands (stop when many words found begin with "
+"same letters)"
+msgstr ""
+
+msgid "display count for each partial completion in bar item"
+msgstr ""
+
+msgid "maximum number of lines in history per buffer (0 = unlimited)"
+msgstr ""
+
+msgid ""
+"maximum number of minutes in history per buffer (0 = unlimited, examples: "
+"1440 = one day, 10080 = one week, 43200 = one month, 525600 = one year)"
+msgstr ""
+
+msgid "maximum number of user commands in history (0 = unlimited)"
+msgstr ""
+
+msgid "maximum number of visited buffers to keep in memory"
+msgstr ""
+
+msgid ""
+"maximum number of commands to display by default in history listing (0 = "
+"unlimited)"
+msgstr ""
+
+msgid ""
+"timeout (in seconds) for connection to a remote host (made in a child "
+"process)"
+msgstr ""
+
+msgid ""
+"file containing the certificate authorities (\"%h\" will be replaced by "
+"WeeChat home, \"~/.weechat\" by default)"
+msgstr ""
+
+msgid "timeout (in seconds) for gnutls handshake"
+msgstr ""
+
+msgid ""
+"name of proxy used for download of URLs with Curl (used to download list of "
+"scripts and in scripts calling function hook_process); the proxy must be "
+"defined with command /proxy"
+msgstr ""
+
+msgid ""
+"comma separated list of plugins to load automatically at startup, \"*\" "
+"means all plugins found, a name beginning with \"!\" is a negative value to "
+"prevent a plugin from being loaded, names can start or end with \"*\" to "
+"match several plugins (examples: \"*\" or \"*,!lua,!tcl\")"
+msgstr ""
+
+msgid ""
+"enable debug messages by default in all plugins (option disabled by default, "
+"which is highly recommended)"
+msgstr ""
+
+msgid "comma separated list of file name extensions for plugins"
+msgstr ""
+
+msgid ""
+"path for searching plugins (\"%h\" will be replaced by WeeChat home, \"~/."
+"weechat\" by default)"
+msgstr ""
+
+msgid "save configuration files when unloading plugins"
+msgstr ""
+
+msgid "FATAL: error initializing configuration options"
+msgstr ""
+
+#, c-format
+msgid "%sError reading configuration"
+msgstr ""
+
+#, c-format
+msgid "Writing configuration file %s %s"
+msgstr ""
+
+msgid "(default options)"
+msgstr "(varsayılan seçenekler)"
+
+#, c-format
+msgid "%sError: cannot create file \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sError writing configuration file \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sWarning: configuration file \"%s\" not found"
+msgstr ""
+
+#, c-format
+msgid "Reading configuration file %s"
+msgstr "%s yapılandırma dosyası okunuyor"
+
+#, c-format
+msgid "%sWarning: %s, line %d: invalid syntax, missing \"]\""
+msgstr ""
+
+#, c-format
+msgid "%sWarning: %s, line %d: unknown section identifier (\"%s\")"
+msgstr ""
+
+#, c-format
+msgid "%sWarning: %s, line %d: unknown option for section \"%s\": %s"
+msgstr ""
+
+#, c-format
+msgid "%sWarning: %s, line %d: option outside section: %s"
+msgstr ""
+
+#, c-format
+msgid "%sWarning: %s, line %d: invalid value for option: %s"
+msgstr ""
+
+#, c-format
+msgid "Reloading configuration file %s"
+msgstr ""
+
+msgid "Windows tree:"
+msgstr ""
+
+msgid "Memory usage (see \"man mallinfo\" for help):"
+msgstr ""
+
+msgid "Memory usage not available (function \"mallinfo\" not found)"
+msgstr ""
+
+msgid "Directories:"
+msgstr ""
+
+msgid "default"
+msgstr "varsayılan"
+
+#, c-format
+msgid "%sError: another command \"%s\" already exists for plugin \"%s\""
+msgstr ""
+
+#, c-format
+msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
+msgstr ""
+
+#, c-format
+msgid "%sError: bad file descriptor (%d) used in hook_fd"
+msgstr ""
+
+#, c-format
+msgid "End of command '%s', timeout reached (%.1fs)"
+msgstr ""
+
+#, c-format
+msgid "%sYou can not write text in this buffer"
+msgstr ""
+
+#, c-format
+msgid "%sError with command \"%s\" (try /help %s)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sError: ambiguous command \"%s\": it exists in many plugins and not in \"%s"
+"\" plugin"
+msgstr ""
+
+#, c-format
+msgid "%sError: too much calls to command \"%s\" (looping)"
+msgstr ""
+
+#, c-format
+msgid "%sError: unknown command \"%s\" (type /help for help)"
+msgstr ""
+
+msgid ""
+"Error: unable to create/append to log file (weechat.log)\n"
+"If another WeeChat process is using this file, try to run WeeChat\n"
+"with another home using \"--dir\" command line option.\n"
+msgstr ""
+
+msgid "invalid priorities"
+msgstr ""
+
+msgid "proxy type (http (default), socks4, socks5)"
+msgstr ""
+
+msgid "connect to proxy using ipv6"
+msgstr ""
+
+msgid "proxy server address (IP or hostname)"
+msgstr ""
+
+msgid "port for connecting to proxy server"
+msgstr ""
+
+msgid "username for proxy server"
+msgstr "vekil sunucu için kullanıcı adı"
+
+msgid "password for proxy server"
+msgstr "vekil sunucu için parola"
+
+msgid "bytes"
+msgstr "bayt"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "byte"
+msgstr "bayt"
+
+#, c-format
+msgid "debug: removing file: %s"
+msgstr ""
+
+#. TRANSLATORS: "%s" is translation of "second" or "seconds"
+#, c-format
+msgid "Upgrade done (%.02f %s)"
+msgstr ""
+
+#, c-format
+msgid "%sError upgrading WeeChat with file \"%s\":"
+msgstr ""
+
+#, c-format
+msgid "%s    error: %s%s%s%s"
+msgstr "%s    hata: %s%s%s%s"
+
+#, c-format
+msgid "%s    last read: position: %ld, length: %d"
+msgstr ""
+
+#, c-format
+msgid "%s    source: %s, line: %d"
+msgstr "%s    kaynak: %s, satır: %d"
+
+#, c-format
+msgid "%s    *** Please report above info to developers ***"
+msgstr ""
+
+msgid "write - object type"
+msgstr ""
+
+msgid "write - object id"
+msgstr ""
+
+msgid "write - variable name"
+msgstr ""
+
+msgid "write - infolist type"
+msgstr ""
+
+msgid "write - variable"
+msgstr ""
+
+msgid "read - object type"
+msgstr ""
+
+msgid "read - bad object type ('object start' expected)"
+msgstr ""
+
+msgid "read - object id"
+msgstr ""
+
+msgid "read - infolist creation"
+msgstr ""
+
+msgid "read - infolist item creation"
+msgstr ""
+
+msgid "read - variable name"
+msgstr ""
+
+msgid "read - variable type"
+msgstr ""
+
+msgid "read - variable"
+msgstr ""
+
+msgid "read - signature not found"
+msgstr ""
+
+msgid ""
+"read - bad signature (upgrade file format may have changed since last "
+"version)"
+msgstr ""
+
+#, c-format
+msgid "%sError: invalid limit for resource \"%s\": %s (must be >= -1)"
+msgstr ""
+
+#, c-format
+msgid "Limit for resource \"%s\" has been set to %s"
+msgstr ""
+
+#, c-format
+msgid "%sError: unable to set resource limit \"%s\" to %s: error %d %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sError: unknown resource limit \"%s\" (see /help weechat.startup.sys_rlimit)"
+msgstr ""
+
+#, c-format
+msgid ""
+"Warning: the %d color pairs are used, do \"/color reset\" to remove unused "
+"pairs"
+msgstr ""
+
+msgid "Terminal infos:"
+msgstr ""
+
+msgid "No color support in terminal."
+msgstr ""
+
+msgid "Default colors:"
+msgstr ""
+
+msgid "Terminal colors:"
+msgstr ""
+
+msgid ""
+"WeeChat colors | Actions: [e] Display extra infos [r] Refresh [z] Reset "
+"colors [q] Close buffer | Keys: [alt-c] Temporarily switch to terminal colors"
+msgstr ""
+
+#, c-format
+msgid "WeeChat color pairs (in use: %d, left: %d):"
+msgstr ""
+
+#, c-format
+msgid "Last auto reset of pairs: %s"
+msgstr ""
+
+msgid "WeeChat basic colors:"
+msgstr "Weechat temel renkler:"
+
+msgid "Nick colors:"
+msgstr "Rumuz renkleri:"
+
+msgid "Color aliases:"
+msgstr ""
+
+msgid "Content of colors (r/g/b):"
+msgstr ""
+
+#, c-format
+msgid "WeeChat colors (in use: %d, left: %d):"
+msgstr ""
+
+msgid "Terminal lost, exiting WeeChat..."
+msgstr ""
+
+#, c-format
+msgid "Signal %s received, exiting WeeChat..."
+msgstr ""
+
+msgid "Signal SIGHUP received, reloading configuration files"
+msgstr ""
+
+msgid "Mouse is enabled"
+msgstr ""
+
+msgid "Mouse is disabled"
+msgstr ""
+
+#, c-format
+msgid "  TERM='%s', size: %dx%d"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sUnable to change bar type: you must delete bar and create another to do "
+"that"
+msgstr ""
+
+msgid "true if bar is hidden, false if it is displayed"
+msgstr ""
+
+msgid "bar priority (high number means bar displayed first)"
+msgstr ""
+
+msgid "bar type (root, window, window_active, window_inactive)"
+msgstr ""
+
+msgid ""
+"condition(s) for displaying bar (for bars of type \"window\"): a simple "
+"condition: \"active\", \"inactive\", \"nicklist\" (window must be active/"
+"inactive, buffer must have a nicklist), or an expression with condition(s) "
+"(see /help eval), like: \"${nicklist} && ${window.win_width} > 100\" (local "
+"variables for expression are ${active}, ${inactive} and ${nicklist})"
+msgstr ""
+
+msgid "bar position (bottom, top, left, right)"
+msgstr ""
+
+msgid ""
+"bar filling direction (\"horizontal\" (from left to right) or \"vertical"
+"\" (from top to bottom)) when bar position is top or bottom"
+msgstr ""
+
+msgid ""
+"bar filling direction (\"horizontal\" (from left to right) or \"vertical"
+"\" (from top to bottom)) when bar position is left or right"
+msgstr ""
+
+msgid "bar size in chars (0 = auto size)"
+msgstr ""
+
+msgid "max bar size in chars (0 = no limit)"
+msgstr ""
+
+msgid "default text color for bar"
+msgstr "çubuk için varsayılan metin rengi"
+
+msgid "default delimiter color for bar"
+msgstr ""
+
+msgid "default background color for bar"
+msgstr "çubuk için varsayılan arkaplan rengi"
+
+msgid "separator line between bar and other bars/windows"
+msgstr ""
+
+msgid ""
+"items of bar, they can be separated by comma (space between items) or \"+"
+"\" (glued items)"
+msgstr ""
+
+#, c-format
+msgid "Bar \"%s\" updated"
+msgstr ""
+
+#, c-format
+msgid "%sPaste %d line ? [ctrl-Y] Yes [ctrl-N] No"
+msgid_plural "%sPaste %d lines ? [ctrl-Y] Yes [ctrl-N] No"
+msgstr[0] ""
+
+msgid "Text search"
+msgstr "Metin arama"
+
+msgid "Text search (exact)"
+msgstr ""
+
+#, c-format
+msgid "%s-MORE(%d)-"
+msgstr ""
+
+#. TRANSLATORS: if possible use short word or abbreviation here ("Act" is abbreviation of "Activity" in english)
+msgid "Act: "
+msgstr ""
+
+#, c-format
+msgid "Notify changed for \"%s%s%s\": \"%s%s%s\" to \"%s%s%s\""
+msgstr ""
+
+#, c-format
+msgid "%sError: a buffer with same name (%s) already exists"
+msgstr ""
+
+#, c-format
+msgid "%sError: it is only possible to merge buffers with formatted content"
+msgstr ""
+
+#, c-format
+msgid "Debug enabled for cursor mode (%s)"
+msgstr ""
+
+msgid "verbose"
+msgstr ""
+
+msgid "normal"
+msgid_plural "normals"
+msgstr[0] ""
+
+msgid "Debug disabled for cursor mode"
+msgstr ""
+
+msgid "Error: not enough memory to add a buffer to hotlist"
+msgstr ""
+
+#, c-format
+msgid "New key binding (context \"%s\"): %s%s => %s%s"
+msgstr ""
+
+#, c-format
+msgid "Key \"%s\" unbound (context: \"%s\")"
+msgstr ""
+
+msgid "Hashtable focus:"
+msgstr ""
+
+#, c-format
+msgid "Command for key: \"%s\""
+msgstr ""
+
+#, c-format
+msgid "Sending hsignal: \"%s\""
+msgstr ""
+
+#, c-format
+msgid "Executing command: \"%s\""
+msgstr ""
+
+msgid "Not enough memory for new line"
+msgstr ""
+
+#, c-format
+msgid "Debug enabled for mouse (%s)"
+msgstr ""
+
+msgid "Debug disabled for mouse"
+msgstr ""
+
+msgid "Alias commands"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error, circular reference when calling alias \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: error creating alias \"%s\" => \"%s\""
+msgstr ""
+
+#, c-format
+msgid "Alias \"%s\" => \"%s\" created"
+msgstr ""
+
+msgid "List of aliases:"
+msgstr ""
+
+#, c-format
+msgid "No alias found matching \"%s\""
+msgstr ""
+
+msgid "No alias defined"
+msgstr ""
+
+#, c-format
+msgid "%sAlias \"%s\" not found"
+msgstr ""
+
+#, c-format
+msgid "Alias \"%s\" removed"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error creating configuration file"
+msgstr ""
+
+msgid "create an alias for a command"
+msgstr ""
+
+msgid "[-completion <completion>] <alias> [<command> [;<command>...]]"
+msgstr ""
+
+#, c-format
+msgid ""
+"completion: completion for alias (optional, by default completion is done "
+"with target command)\n"
+"            note: you can use %%command to use completion of an existing "
+"command\n"
+"     alias: name of alias (can start or end with \"*\" for alias listing)\n"
+"   command: command name with arguments (many commands can be separated by "
+"semicolons)\n"
+"\n"
+"Without argument, this command lists all defined alias.\n"
+"\n"
+"Note: in command, special variables are replaced:\n"
+"        $n: argument 'n' (between 1 and 9)\n"
+"       $-m: arguments from 1 to 'm'\n"
+"       $n-: arguments from 'n' to last\n"
+"      $n-m: arguments from 'n' to 'm'\n"
+"        $*: all arguments\n"
+"        $~: last argument\n"
+"      $var: where \"var\" is a local variable of buffer (see /buffer "
+"localvar)\n"
+"            examples: $nick, $channel, $server, $plugin, $name\n"
+"\n"
+"To remove an alias, use command /unalias.\n"
+"\n"
+"Examples:\n"
+"  alias /split to split window horizontally:\n"
+"    /alias split /window splith\n"
+"  alias /hello to say \"hello\" on all channels but not on #weechat:\n"
+"    /alias hello /allchan -exclude=#weechat msg * hello\n"
+"  alias /forcejoin to send IRC command \"forcejoin\" with completion of /"
+"sajoin:\n"
+"    /alias -completion %%sajoin forcejoin /quote forcejoin"
+msgstr ""
+
+msgid "remove aliases"
+msgstr ""
+
+msgid "<alias> [<alias>...]"
+msgstr ""
+
+msgid "alias: name of alias to remove"
+msgstr ""
+
+msgid "list of aliases"
+msgstr ""
+
+msgid "value of alias"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error creating completion for alias \"%s\": alias not found"
+msgstr ""
+
+msgid "alias pointer (optional)"
+msgstr ""
+
+msgid "alias name (can start or end with \"*\" as wildcard) (optional)"
+msgstr ""
+
+msgid "Spell checker for input (with Aspell)"
+msgstr ""
+
+#. TRANSLATORS: "%s" is "aspell"
+#, c-format
+msgid "%s dictionaries list:"
+msgstr ""
+
+#, c-format
+msgid "%s: \"%s\" removed"
+msgstr "%s: \"%s\" kaldırıldı"
+
+#, c-format
+msgid "%s: error: dictionary \"%s\" is not available on your system"
+msgstr ""
+
+#, c-format
+msgid "%s%s: no dictionary on this buffer for adding word"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: many dictionaries are defined for this buffer, please specify "
+"dictionary"
+msgstr ""
+
+#, c-format
+msgid "%s: word \"%s\" added to personal dictionary"
+msgstr ""
+
+#, c-format
+msgid "%s%s: failed to add word to personal dictionary"
+msgstr ""
+
+#. TRANSLATORS: second "%s" is "aspell" or "enchant"
+#, fuzzy, c-format
+msgid "%s (using %s)"
+msgstr "  %s (eklenti: %s)"
+
+msgid "Spell checking is enabled"
+msgstr ""
+
+msgid "Spell checking is disabled"
+msgstr ""
+
+#, c-format
+msgid "Default dictionary: %s"
+msgstr ""
+
+msgid "(not set)"
+msgstr ""
+
+msgid "Specific dictionaries on buffers:"
+msgstr ""
+
+msgid "Aspell enabled"
+msgstr ""
+
+msgid "Aspell disabled"
+msgstr ""
+
+msgid "aspell plugin configuration"
+msgstr ""
+
+msgid ""
+"enable|disable|toggle || listdict || setdict <dict>[,<dict>...] || deldict "
+"|| addword [<dict>] <word>"
+msgstr ""
+
+msgid ""
+"  enable: enable aspell\n"
+" disable: disable aspell\n"
+"  toggle: toggle aspell\n"
+"listdict: show installed dictionaries\n"
+" setdict: set dictionary for current buffer (multiple dictionaries can be "
+"separated by a comma)\n"
+" deldict: delete dictionary used on current buffer\n"
+" addword: add a word in personal aspell dictionary\n"
+"\n"
+"Input line beginning with a '/' is not checked, except for some commands "
+"(see /set aspell.check.commands).\n"
+"\n"
+"To enable aspell on all buffers, use option \"default_dict\", then enable "
+"aspell, for example:\n"
+"  /set aspell.check.default_dict \"en\"\n"
+"  /aspell enable\n"
+"\n"
+"Default key to toggle aspell is alt-s."
+msgstr ""
+
+msgid "list of all languages supported by aspell"
+msgstr ""
+
+msgid "list of aspell installed dictionaries"
+msgstr ""
+
+msgid "comma separated list of dictionaries to use on this buffer"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error creating aspell dictionary \"%s\" => \"%s\""
+msgstr ""
+
+msgid ""
+"option for aspell (for list of available options and format, run command "
+"\"aspell config\" in a shell)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error creating aspell option \"%s\" => \"%s\""
+msgstr ""
+
+msgid "color used for misspelled words"
+msgstr ""
+
+msgid ""
+"comma separated list of commands for which spell checking is enabled (spell "
+"checking is disabled for all other commands)"
+msgstr ""
+
+msgid ""
+"default dictionary (or comma separated list of dictionaries) to use when "
+"buffer has no dictionary defined (leave blank to disable aspell on buffers "
+"for which you didn't explicitly enabled it)"
+msgstr ""
+
+msgid "check words during text search in buffer"
+msgstr ""
+
+msgid "enable aspell check for command line"
+msgstr ""
+
+msgid ""
+"real-time spell checking of words (slower, disabled by default: words are "
+"checked only if there's delimiter after)"
+msgstr ""
+
+msgid ""
+"number of suggestions to display in bar item \"aspell_suggest\" for each "
+"dictionary set in buffer (-1 = disable suggestions, 0 = display all possible "
+"suggestions in all languages)"
+msgstr ""
+
+msgid ""
+"minimum length for a word to be spell checked (use 0 to check all words)"
+msgstr ""
+
+msgid "comma-separated list of dictionaries used in buffer"
+msgstr ""
+
+msgid ""
+"buffer pointer (\"0x12345678\") or buffer full name (\"irc.freenode.#weechat"
+"\")"
+msgstr ""
+
+#, c-format
+msgid "%s: warning: dictionary \"%s\" is not available on your system"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error: unable to create speller for lang \"%s\""
+msgstr ""
+
+msgid "Charset conversions"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: UTF-8 is not allowed in charset decoding options (it is internal and "
+"default charset: decode of UTF-8 is OK even if you specify another charset "
+"to decode)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error creating charset \"%s\" => \"%s\""
+msgstr ""
+
+msgid ""
+"global decoding charset: charset used to decode incoming messages (if "
+"decoding fails, fallback is UTF-8 because it is the WeeChat internal charset)"
+msgstr ""
+
+msgid ""
+"global encoding charset: charset used to encode outgoing messages (if empty, "
+"default is UTF-8 because it is the WeeChat internal charset)"
+msgstr ""
+
+#, c-format
+msgid "%s: %s, \"%s\": removed"
+msgstr "%s: %s, \"%s\": kaldırıldı"
+
+#, c-format
+msgid "%s: terminal: %s, internal: %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: wrong charset type (decode or encode expected)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: invalid charset: \"%s\""
+msgstr ""
+
+msgid "change charset for current buffer"
+msgstr ""
+
+msgid "decode|encode <charset> || reset"
+msgstr ""
+
+msgid ""
+" decode: change decoding charset\n"
+" encode: change encoding charset\n"
+"charset: new charset for current buffer\n"
+"  reset: reset charsets for current buffer"
+msgstr ""
+
+msgid "Demo plugin"
+msgstr ""
+
+msgid "demo message without prefix"
+msgstr ""
+
+#, c-format
+msgid "%sdemo message with error prefix"
+msgstr ""
+
+msgid "colors"
+msgstr "renkler"
+
+msgid "Available infos:"
+msgstr ""
+
+msgid "Available infolists:"
+msgstr ""
+
+#, c-format
+msgid "demo_signal: signal: %s, type_data: %s, signal_data: \"%s\""
+msgstr ""
+
+#, c-format
+msgid "demo_signal: signal: %s, type_data: %s, signal_data: %d"
+msgstr ""
+
+#, c-format
+msgid "demo_signal: signal: %s, type_data: %s, signal_data: 0x%lx"
+msgstr ""
+
+#, c-format
+msgid ""
+"demo_signal: signal: %s, type_data: %s, signal_data: 0x%lx (unknown type)"
+msgstr ""
+
+msgid "print some messages on current buffer"
+msgstr ""
+
+msgid "<text>"
+msgstr "<metin>"
+
+msgid "text: write this text"
+msgstr ""
+
+msgid "open a new buffer"
+msgstr ""
+
+msgid "<name>"
+msgstr "<isim>"
+
+msgid "get and display an info"
+msgstr ""
+
+msgid "<info> [<arguments>]"
+msgstr ""
+
+msgid ""
+"     info: info to display\n"
+"arguments: optional arguments for info\n"
+"\n"
+"Without argument, this command displays list of available infos"
+msgstr ""
+
+msgid "get and display an infolist"
+msgstr ""
+
+msgid "<infolist> [<arguments>]"
+msgstr ""
+
+msgid ""
+" infolist: infolist to display\n"
+"arguments: optional arguments for infolist\n"
+"\n"
+"Without argument, this command displays list of available infolists"
+msgstr ""
+
+msgid "FIFO pipe for remote control"
+msgstr ""
+
+#, c-format
+msgid "%s: removing old fifo pipe \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s: pipe opened"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to open pipe (%s) for reading"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to create pipe for remote control (%s): error %d %s"
+msgstr ""
+
+#, c-format
+msgid "%s: pipe closed"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error, invalid text received on pipe"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error, buffer not found for pipe data"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error reading pipe (%d %s), closing it"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error opening file, closing it"
+msgstr ""
+
+msgid "name of FIFO pipe"
+msgstr ""
+
+msgid "away"
+msgstr ""
+
+msgid "server"
+msgid_plural "servers"
+msgstr[0] "sunucu(lar)"
+
+msgid "Lag"
+msgstr ""
+
+msgid "IRC (Internet Relay Chat) protocol"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: disconnecting from server because upgrade can't work for servers "
+"connected via SSL"
+msgstr ""
+
+#. TRANSLATORS: "%s" after "%d" is "server" or "servers"
+#. TRANSLATORS: "%s" after "%d" is "client" or "clients"
+#, c-format
+msgid ""
+"%s%s: disconnected from %d %s (SSL connection not supported with upgrade)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error with server from URL (\"%s\"), ignored"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: WARNING: some network connections may still be opened and not visible, "
+"you should restart WeeChat now (with /quit)."
+msgstr ""
+
+#, c-format
+msgid "%s%s: cannot allocate new channel"
+msgstr ""
+
+#, c-format
+msgid "%s%s%s %s(%s%s%s)%s is back on server"
+msgstr ""
+
+#, c-format
+msgid "%s: future away: %s"
+msgstr ""
+
+#, c-format
+msgid "%s: future away removed"
+msgstr ""
+
+#, c-format
+msgid "%s%s: \"%s\" command can only be executed in a channel buffer"
+msgstr ""
+
+#, c-format
+msgid "%s%s: already connected to server \"%s\"!"
+msgstr ""
+
+#, c-format
+msgid "%s%s: currently connecting to server \"%s\"!"
+msgstr ""
+
+#, c-format
+msgid "%s: server %s%s%s created (temporary server, NOT SAVED!)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to create server \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: \"%s\" command can not be executed on a server buffer"
+msgstr ""
+
+#, c-format
+msgid "%s%s: wrong arguments for \"%s\" command"
+msgstr ""
+
+#, c-format
+msgid "%s%s: not connected to server \"%s\"!"
+msgstr ""
+
+#, c-format
+msgid "%s: auto-reconnection is cancelled"
+msgstr ""
+
+#, c-format
+msgid "%s%s: server \"%s\" not found"
+msgstr "%s%s: sunucu \"%s\" bulunamadı"
+
+#, c-format
+msgid "  %s[%s%d%s]%s mask: %s / server: %s / channel: %s"
+msgstr ""
+
+#, c-format
+msgid "%s: ignore list:"
+msgstr ""
+
+#, c-format
+msgid "%s: no ignore in list"
+msgstr ""
+
+#, c-format
+msgid "%s%s: missing arguments for \"%s\" command"
+msgstr ""
+
+#, c-format
+msgid "%s%s: ignore already exists"
+msgstr ""
+
+#, c-format
+msgid "%s: ignore added:"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error adding ignore"
+msgstr ""
+
+#, c-format
+msgid "%s: all ignores deleted"
+msgstr ""
+
+#, c-format
+msgid "%s: ignore deleted"
+msgstr ""
+
+#, c-format
+msgid "%s%s: ignore not found"
+msgstr ""
+
+#, c-format
+msgid "%s%s: wrong ignore number"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unknown option for \"%s\" command"
+msgstr ""
+
+#, c-format
+msgid "%s%s: command \"%s\" must be executed on connected irc server"
+msgstr ""
+
+#, c-format
+msgid "%s%s: mask must begin with nick"
+msgstr ""
+
+#, c-format
+msgid "%s%s: \"%s\" is not a valid regular expression (%s)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: not enough memory for regular expression"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: you must specify channel for \"%s\" command if you're not in a channel"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: \"%s\" command can only be executed in a channel or private buffer"
+msgstr ""
+
+#. TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word)
+msgid "Notice"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: server must be specified because you are not on an irc server or "
+"channel"
+msgstr ""
+
+#, c-format
+msgid "%s%s: notify already exists"
+msgstr ""
+
+#, c-format
+msgid "%s: notification added for %s%s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error adding notification"
+msgstr ""
+
+#, c-format
+msgid "%s: all notifications deleted"
+msgstr ""
+
+#, c-format
+msgid "%s: no notification in list"
+msgstr ""
+
+#, c-format
+msgid "%s: notification deleted"
+msgstr ""
+
+#, c-format
+msgid "%s%s: notification not found"
+msgstr ""
+
+#, c-format
+msgid "%s%s: cannot create new private buffer \"%s\""
+msgstr ""
+
+#, c-format
+msgid "Server: %s%s %s[%s%s%s]%s%s"
+msgstr "Sunucu: %s%s %s[%s%s%s]%s%s"
+
+msgid "connected"
+msgstr "bağlandı"
+
+msgid "not connected"
+msgstr "bağlanmadı"
+
+msgid " (temporary)"
+msgstr ""
+
+msgid "on"
+msgstr ""
+
+msgid "off"
+msgstr ""
+
+msgid "minute"
+msgid_plural "minutes"
+msgstr[0] "dakika"
+
+msgid "channel"
+msgid_plural "channels"
+msgstr[0] "kanallar"
+
+msgid "All servers:"
+msgstr "Tüm sunucular:"
+
+msgid "No server"
+msgstr ""
+
+#, c-format
+msgid "Servers with \"%s\":"
+msgstr ""
+
+#, c-format
+msgid "No server found with \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: server \"%s\" already exists, can't create it!"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to create server"
+msgstr ""
+
+#, c-format
+msgid "%s: server %s%s%s created"
+msgstr ""
+
+#, c-format
+msgid "%s%s: server \"%s\" not found for \"%s\" command"
+msgstr ""
+
+#, c-format
+msgid "%s%s: server \"%s\" already exists for \"%s\" command"
+msgstr ""
+
+#, c-format
+msgid "%s: server %s%s%s has been copied to %s%s%s"
+msgstr ""
+
+#, c-format
+msgid "%s: server %s%s%s has been renamed to %s%s%s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: server \"%s\" is not a temporary server"
+msgstr ""
+
+#, c-format
+msgid "%s: server %s%s%s is not temporary any more"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: you can not delete server \"%s\" because you are connected to. Try \"/"
+"disconnect %s\" before."
+msgstr ""
+
+#, c-format
+msgid "%s: Server %s%s%s has been deleted"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s: messages outqueue DELETED for all servers. Some messages from you or "
+"WeeChat may have been lost!"
+msgstr ""
+
+#, c-format
+msgid "%s%s: wrong argument count for \"%s\" command"
+msgstr ""
+
+#, c-format
+msgid "%s%s: you are not on channel \"%s\""
+msgstr ""
+
+msgid "find information about the administrator of the server"
+msgstr ""
+
+msgid "[<target>]"
+msgstr "[<hedef>]"
+
+msgid "target: server"
+msgstr "hedef: sunucu"
+
+msgid "execute a command on all channels of all connected servers"
+msgstr ""
+
+msgid "[-current] [-exclude=<channel>[,<channel>...]] <command> [<arguments>]"
+msgstr ""
+
+msgid ""
+" -current: execute command for channels of current server only\n"
+" -exclude: exclude some channels ('*' is allowed at beginning or end of "
+"channel name, to exclude many channels)\n"
+"  command: command to execute\n"
+"arguments: arguments for command (special variables $nick, $channel and "
+"$server are replaced by their value)\n"
+"\n"
+"Examples:\n"
+"  execute '/me is testing' on all channels:\n"
+"    /allchan me is testing\n"
+"  say 'hello' everywhere but not on #weechat:\n"
+"    /allchan -exclude=#weechat msg * hello\n"
+"  say 'hello' everywhere but not on #weechat and channels beginning with "
+"#linux:\n"
+"    /allchan -exclude=#weechat,#linux* msg * hello"
+msgstr ""
+
+msgid "execute a command on all connected servers"
+msgstr ""
+
+msgid "[-exclude=<server>[,<server>...]] <command> [<arguments>]"
+msgstr ""
+
+msgid ""
+" -exclude: exclude some servers ('*' is allowed at beginning or end of "
+"server name, to exclude many servers)\n"
+"  command: command to execute\n"
+"arguments: arguments for command (special variables $nick, $channel and "
+"$server are replaced by their value)\n"
+"\n"
+"Examples:\n"
+"  change nick on all servers:\n"
+"    /allserv nick newnick\n"
+"  set away on all servers:\n"
+"    /allserv away I'm away\n"
+"  do a whois on my nick on all servers:\n"
+"    /allserv whois $nick"
+msgstr ""
+
+msgid "ban nicks or hosts"
+msgstr ""
+
+msgid "[<channel>] [<nick> [<nick>...]]"
+msgstr "[<kanal>] [<rumuz> [<rumuz>...]]"
+
+msgid ""
+"channel: channel for ban\n"
+"   nick: user or host to ban\n"
+"\n"
+"Without argument, this command display ban list for current channel."
+msgstr ""
+
+msgid "connect to IRC server(s)"
+msgstr ""
+
+msgid ""
+"<server> [<server>...] [-<option>[=<value>]] [-no<option>] [-nojoin] [-"
+"switch] || -all|-auto|-open [-nojoin] [-switch]"
+msgstr ""
+
+msgid ""
+"    server: server name, which can be:\n"
+"            - internal server name (created by /server add, recommended "
+"usage)\n"
+"            - hostname/port or IP/port (this will create a TEMPORARY "
+"server), port is 6667 by default\n"
+"            - URL with format: irc[6][s]://[nickname[:password]@]irc.example."
+"org[:port][/#channel1][,#channel2[...]]\n"
+"    option: set option for server (for boolean option, value can be "
+"omitted)\n"
+"  nooption: set boolean option to 'off' (for example: -nossl)\n"
+"      -all: connect to all servers defined in configuration\n"
+"     -auto: connect to servers with autoconnect enabled\n"
+"     -open: connect to all opened servers that are not currently connected\n"
+"   -nojoin: do not join any channel (even if autojoin is enabled on server)\n"
+"   -switch: switch to next server address\n"
+"\n"
+"Examples:\n"
+"  /connect freenode\n"
+"  /connect irc.oftc.net/6667\n"
+"  /connect irc6.oftc.net/6667 -ipv6\n"
+"  /connect irc6.oftc.net/6697 -ipv6 -ssl\n"
+"  /connect my.server.org/6697 -ssl -password=test\n"
+"  /connect irc://nick@irc.oftc.net/#channel\n"
+"  /connect -switch"
+msgstr ""
+
+msgid "send a CTCP message (Client-To-Client Protocol)"
+msgstr ""
+
+msgid "<target> <type> [<arguments>]"
+msgstr ""
+
+msgid ""
+" target: nick or channel to send CTCP to\n"
+"   type: CTCP type (examples: \"version\", \"ping\", ..)\n"
+"arguments: arguments for CTCP"
+msgstr ""
+
+msgid "leave and rejoin a channel"
+msgstr ""
+
+msgid "[<channel>[,<channel>...]] [<message>]"
+msgstr "[<kanal>[,<kanal>...]] [<ileti>]"
+
+msgid ""
+"channel: channel name for cycle\n"
+"message: part message (displayed to other users)"
+msgstr ""
+
+msgid "start a DCC (file transfer or direct chat)"
+msgstr ""
+
+msgid "chat <nick> || send <nick> <file>"
+msgstr ""
+
+msgid ""
+"nick: nick for chat or file\n"
+"file: filename (on local host)\n"
+"\n"
+"Examples:\n"
+"  chat with nick \"toto\":\n"
+"    /dcc chat toto\n"
+"  send file \"/home/foo/bar.txt\" to nick \"toto\":\n"
+"    /dcc send toto /home/foo/bar.txt"
+msgstr ""
+
+msgid "remove channel half-operator status from nick(s)"
+msgstr ""
+
+msgid "<nick> [<nick>...]"
+msgstr "<rumuz> [<rumuz>...]"
+
+msgid "remove channel operator status from nick(s)"
+msgstr ""
+
+msgid "remove voice from nick(s)"
+msgstr ""
+
+msgid "shutdown the server"
+msgstr ""
+
+msgid "target: server name"
+msgstr "hedef: sunucu ismi"
+
+msgid "disconnect from one or all IRC servers"
+msgstr ""
+
+msgid "[<server>|-all|-pending [<reason>]]"
+msgstr ""
+
+msgid ""
+"  server: server name to disconnect\n"
+"    -all: disconnect from all servers\n"
+"-pending: cancel auto-reconnection on servers currently reconnecting\n"
+"  reason: reason for quit"
+msgstr ""
+
+msgid "give channel half-operator status to nick(s)"
+msgstr ""
+
+msgid "ignore nicks/hosts from servers or channels"
+msgstr ""
+
+msgid "list || add [re:]<nick> [<server> [<channel>]] || del <number>|-all"
+msgstr ""
+
+msgid ""
+"     list: list all ignores\n"
+"      add: add an ignore\n"
+"     nick: nick or hostname (can be regular expression if \"re:\" is given "
+"or a mask using \"*\" to replace one or more chars)\n"
+"      del: delete an ignore\n"
+"   number: number of ignore to delete (look at list to find it)\n"
+"     -all: delete all ignores\n"
+"   server: internal server name where ignore is working\n"
+"  channel: channel name where ignore is working\n"
+"\n"
+"Note: the regular expression can start with \"(?-i)\" to become case "
+"sensitive.\n"
+"\n"
+"Examples:\n"
+"  ignore nick \"toto\" everywhere:\n"
+"    /ignore add toto\n"
+"  ignore host \"toto@domain.com\" on freenode server:\n"
+"    /ignore add toto@domain.com freenode\n"
+"  ignore host \"toto*@*.domain.com\" on freenode/#weechat:\n"
+"    /ignore add toto*@*.domain.com freenode #weechat"
+msgstr ""
+
+msgid "get information describing the server"
+msgstr ""
+
+msgid "invite a nick on a channel"
+msgstr ""
+
+msgid "<nick> [<nick>...] [<channel>]"
+msgstr "<rumuz> [<rumuz>...] [<kanal>]"
+
+msgid ""
+"   nick: nick to invite\n"
+"channel: channel to invite"
+msgstr ""
+
+msgid "check if a nick is currently on IRC"
+msgstr ""
+
+msgid "nick: nick"
+msgstr "rumuz: rumuz"
+
+msgid "join a channel"
+msgstr "bir kanala bağlan"
+
+msgid ""
+"[-noswitch] [-server <server>] [<channel1>[,<channel2>...]] [<key1>[,"
+"<key2>...]]"
+msgstr ""
+
+msgid ""
+"-noswitch: do not switch to new buffer\n"
+"   server: send to this server (internal name)\n"
+"  channel: channel name to join\n"
+"      key: key to join the channel (channels with a key must be the first in "
+"list)\n"
+"\n"
+"Examples:\n"
+"  /join #weechat\n"
+"  /join #protectedchan,#weechat key\n"
+"  /join -server freenode #weechat\n"
+"  /join -noswitch #weechat"
+msgstr ""
+
+msgid "forcibly remove a user from a channel"
+msgstr ""
+
+msgid "[<channel>] <nick> [<reason>]"
+msgstr ""
+
+msgid ""
+"channel: channel where user is\n"
+"   nick: nick to kick\n"
+" reason: reason for kick"
+msgstr ""
+
+msgid "kicks and bans a nick from a channel"
+msgstr ""
+
+msgid ""
+"channel: channel where user is\n"
+"   nick: nick to kick and ban\n"
+" reason: reason for kick\n"
+"\n"
+"It is possible to kick/ban with a mask, nick will be extracted from mask and "
+"replaced by \"*\".\n"
+"\n"
+"Example:\n"
+"  ban \"*!*@host.com\" and then kick \"toto\":\n"
+"    /kickban toto!*@host.com"
+msgstr ""
+
+msgid "close client-server connection"
+msgstr ""
+
+msgid "<nick> <reason>"
+msgstr ""
+
+msgid ""
+"  nick: nick to kill\n"
+"reason: reason for kill"
+msgstr ""
+
+msgid "list all servernames which are known by the server answering the query"
+msgstr ""
+
+msgid "[[<server>] <server_mask>]"
+msgstr ""
+
+msgid ""
+"     server: this server should answer the query\n"
+"server_mask: list of servers must match this mask"
+msgstr ""
+
+msgid "list channels and their topic"
+msgstr ""
+
+msgid "[<channel>[,<channel>...]] [<server>] [-re <regex>]"
+msgstr ""
+
+msgid ""
+"channel: channel to list\n"
+" server: server name\n"
+"  regex: regular expression used to filter results (case insensitive, can "
+"start by \"(?-i)\" to become case sensitive)\n"
+"\n"
+"Examples:\n"
+"  list all channels on server (can be very slow on large networks):\n"
+"    /list\n"
+"  list channel #weechat:\n"
+"    /list #weechat\n"
+"  list all channels beginning with \"#weechat\" (can be very slow on large "
+"networks):\n"
+"    /list -re #weechat.*"
+msgstr ""
+
+msgid "get statistics about the size of the IRC network"
+msgstr ""
+
+msgid "[<mask> [<target>]]"
+msgstr ""
+
+msgid ""
+"  mask: servers matching the mask only\n"
+"target: server for forwarding request"
+msgstr ""
+
+msgid "show a graphical map of the IRC network"
+msgstr ""
+
+msgid "send a CTCP action to the current channel"
+msgstr ""
+
+msgid "<message>"
+msgstr "<ileti>"
+
+msgid "message: message to send"
+msgstr ""
+
+msgid "change channel or user mode"
+msgstr ""
+
+msgid ""
+"[<channel>] [+|-]o|p|s|i|t|n|m|l|b|e|v|k [<arguments>] || <nick> [+|-]i|s|w|o"
+msgstr ""
+
+msgid ""
+"channel modes:\n"
+"  channel: channel name to modify (default is current one)\n"
+"  o: give/take channel operator privileges\n"
+"  p: private channel flag\n"
+"  s: secret channel flag\n"
+"  i: invite-only channel flag\n"
+"  t: topic settable by channel operator only flag\n"
+"  n: no messages to channel from clients on the outside\n"
+"  m: moderated channel\n"
+"  l: set the user limit to channel\n"
+"  b: set a ban mask to keep users out\n"
+"  e: set exception mask\n"
+"  v: give/take the ability to speak on a moderated channel\n"
+"  k: set a channel key (password)\n"
+"user modes:\n"
+"  nick: nick to modify\n"
+"  i: mark a user as invisible\n"
+"  s: mark a user for receive server notices\n"
+"  w: user receives wallops\n"
+"  o: operator flag\n"
+"\n"
+"List of modes is not comprehensive, you should read documentation about your "
+"server to see all possible modes.\n"
+"\n"
+"Examples:\n"
+"  protect topic on channel #weechat:\n"
+"    /mode #weechat +t\n"
+"  become invisible on server:\n"
+"    /mode nick +i"
+msgstr ""
+
+msgid "get the \"Message Of The Day\""
+msgstr ""
+
+msgid "send message to a nick or channel"
+msgstr ""
+
+msgid "[-server <server>] <target>[,<target>...] <text>"
+msgstr ""
+
+msgid ""
+"server: send to this server (internal name)\n"
+"target: nick or channel (may be mask, '*' = current channel)\n"
+"  text: text to send"
+msgstr ""
+
+msgid "list nicks on channels"
+msgstr ""
+
+msgid "[<channel>[,<channel>...]]"
+msgstr "[<kanal>[,<kanal>...]]"
+
+msgid "channel: channel name"
+msgstr "kanal: kanal ismi"
+
+msgid "change current nick"
+msgstr "mevcut rumuzu değiştir"
+
+msgid "[-all] <nick>"
+msgstr "[-all] <rumuz>"
+
+msgid ""
+"-all: set new nick for all connected servers\n"
+"nick: new nick"
+msgstr ""
+"-all: tüm bağlı sunucular için yeni bir rumuz ayarla\n"
+"nick: yeni rumuz"
+
+msgid "send notice message to user"
+msgstr ""
+
+msgid "[-server <server>] <target> <text>"
+msgstr ""
+
+msgid ""
+"server: send to this server (internal name)\n"
+"target: nick or channel\n"
+"  text: text to send"
+msgstr ""
+
+msgid "add a notification for presence or away status of nicks on servers"
+msgstr ""
+
+msgid "add <nick> [<server> [-away]] || del <nick>|-all [<server>]"
+msgstr ""
+
+msgid ""
+"   add: add a notification\n"
+"  nick: nick\n"
+"server: internal server name (by default current server)\n"
+" -away: notify when away message is changed (by doing whois on nick)\n"
+"   del: delete a notification\n"
+"  -all: delete all notifications\n"
+"\n"
+"Without argument, this command displays notifications for current server (or "
+"all servers if command is issued on core buffer).\n"
+"\n"
+"Examples:\n"
+"  notify when \"toto\" joins/quits current server:\n"
+"    /notify add toto\n"
+"  notify when \"toto\" joins/quits freenode server:\n"
+"    /notify add toto freenode\n"
+"  notify when \"toto\" is away or back on freenode server:\n"
+"    /notify add toto freenode -away"
+msgstr ""
+
+msgid "give channel operator status to nick(s)"
+msgstr ""
+
+msgid "get operator privileges"
+msgstr ""
+
+msgid "<user> <password>"
+msgstr "<kullanıcı><parola>"
+
+msgid ""
+"    user: user\n"
+"password: password"
+msgstr ""
+
+msgid "leave a channel"
+msgstr ""
+
+msgid ""
+"channel: channel name to leave\n"
+"message: part message (displayed to other users)"
+msgstr ""
+
+msgid "send a ping to server"
+msgstr ""
+
+msgid "<server1> [<server2>]"
+msgstr "<sunucu1> [<sunucu2>]"
+
+msgid ""
+"server1: server\n"
+"server2: forward ping to this server"
+msgstr ""
+
+msgid "answer to a ping message"
+msgstr ""
+
+msgid "<daemon> [<daemon2>]"
+msgstr ""
+
+msgid ""
+" daemon: daemon who has responded to Ping message\n"
+"daemon2: forward message to this daemon"
+msgstr ""
+
+msgid "send a private message to a nick"
+msgstr ""
+
+msgid "[-server <server>] <nick>[,<nick>...] [<text>]"
+msgstr ""
+
+msgid ""
+"server: send to this server (internal name)\n"
+"  nick: nick for private conversation\n"
+"  text: text to send"
+msgstr ""
+
+msgid "quiet nicks or hosts"
+msgstr ""
+
+msgid ""
+"channel: channel for quiet\n"
+"   nick: user or host to quiet\n"
+"\n"
+"Without argument, this command display quiet list for current channel."
+msgstr ""
+
+msgid "send raw data to server without parsing"
+msgstr ""
+
+msgid "[-server <server>] <data>"
+msgstr ""
+
+msgid ""
+"server: send to this server (internal name)\n"
+"  data: raw data to send"
+msgstr ""
+
+msgid "reconnect to server(s)"
+msgstr ""
+
+msgid "<server> [<server>...] [-nojoin] [-switch] || -all [-nojoin] [-switch]"
+msgstr ""
+
+msgid ""
+" server: server name to reconnect\n"
+"   -all: reconnect to all servers\n"
+"-nojoin: do not join any channel (even if autojoin is enabled on server)\n"
+"-switch: switch to next server address"
+msgstr ""
+
+msgid "tell the server to reload its config file"
+msgstr ""
+
+msgid "[<option>]"
+msgstr "[<seçenek>]"
+
+msgid "option: extra option, for some servers"
+msgstr ""
+
+msgid "tell the server to restart itself"
+msgstr ""
+
+msgid "force a user to join channel(s)"
+msgstr ""
+
+msgid "<nick> <channel>[,<channel>...]"
+msgstr "<rumuz> <kanal>[,<kanal>...]"
+
+msgid ""
+"   nick: nick\n"
+"channel: channel name"
+msgstr ""
+
+msgid "change mode on channel, without having operator status"
+msgstr ""
+
+msgid "<channel> <mode>"
+msgstr "<kanal> <kip>"
+
+msgid ""
+"channel: channel name\n"
+"   mode: mode for channel"
+msgstr ""
+
+msgid "force a user to use another nick"
+msgstr ""
+
+msgid "<nick> <new_nick>"
+msgstr "<rumuz> <yeni_rumuz>"
+
+msgid ""
+"    nick: nick\n"
+"new_nick: new nick"
+msgstr ""
+
+msgid "force a user to leave channel(s)"
+msgstr ""
+
+msgid "force a user to quit server with a reason"
+msgstr ""
+
+msgid ""
+"  nick: nick\n"
+"reason: reason"
+msgstr ""
+
+msgid "register a new service"
+msgstr ""
+
+msgid "<nick> <reserved> <distribution> <type> <reserved> <info>"
+msgstr ""
+
+msgid ""
+"distribution: visibility of service\n"
+"        type: reserved for future usage"
+msgstr ""
+
+msgid "list, add or remove IRC servers"
+msgstr "İRC sunucularını listele, ekle veya kaldır"
+
+msgid ""
+"list|listfull [<server>] || add <server> <hostname>[/<port>] [-temp] [-"
+"<option>[=<value>]] [-no<option>] || copy|rename <server> <new_name> || del|"
+"keep <server> || deloutq|jump|raw"
+msgstr ""
+"list|listfull [<sunucu>] || add <sunucu> <hostname>[/<port>] [-temp] [-"
+"<seçenek>[=<değer>]] [-no<seçenek>] || copy|rename <sunucu> <yeni_isim> || "
+"del|keep <sunucu> || deloutq|jump|raw"
+
+msgid ""
+"    list: list servers (without argument, this list is displayed)\n"
+"listfull: list servers with detailed info for each server\n"
+"     add: create a new server\n"
+"  server: server name, for internal and display use\n"
+"hostname: name or IP address of server, with optional port (default: 6667), "
+"many addresses can be separated by a comma\n"
+"    temp: create temporary server (not saved)\n"
+"  option: set option for server (for boolean option, value can be omitted)\n"
+"nooption: set boolean option to 'off' (for example: -nossl)\n"
+"    copy: duplicate a server\n"
+"  rename: rename a server\n"
+"    keep: keep server in config file (for temporary servers only)\n"
+"     del: delete a server\n"
+" deloutq: delete messages out queue for all servers (all messages WeeChat is "
+"currently sending)\n"
+"    jump: jump to server buffer\n"
+"     raw: open buffer with raw IRC data\n"
+"\n"
+"Examples:\n"
+"  /server listfull\n"
+"  /server add oftc irc.oftc.net/6697 -ssl -autoconnect\n"
+"  /server add oftc6 irc6.oftc.net/6697 -ipv6 -ssl\n"
+"  /server add freenode2 chat.eu.freenode.net/6667,chat.us.freenode.net/6667\n"
+"  /server add freenode3 irc.freenode.net -password=mypass\n"
+"  /server copy oftc oftcbis\n"
+"  /server rename oftc newoftc\n"
+"  /server del freenode\n"
+"  /server deloutq"
+msgstr ""
+"    list: sunucuların listesi (argüman olmadan bu liste görüntülenir)\n"
+"listfull: her sunucu için ayrıntılı bilgi ile sunucu listesi\n"
+"     add: yeni bir sunucu oluştur\n"
+"  server: iç ve ekran kullanımı için sunucu ismi\n"
+"hostname: isteğe bağlı noktası, sunucunun İP adresi veya ismi (varsayılan: "
+"6667), fazla adres virgül ile ayrılabilir\n"
+"    temp: geçici bir sunucu oluştur (kaydedilmez)\n"
+"  option: sunucu için seçenekleri ayarla (for boolean option, value can be "
+"omitted)\n"
+"nooption: set boolean option to 'off' (for example: -nossl)\n"
+"    copy: duplicate a server\n"
+"  rename: sunucuyu yeniden adlandır\n"
+"    keep: yapılandırma dosyasında sunucu tut (sadece geçici sunucular için)\n"
+"     del: bir sunucu sil\n"
+" deloutq: delete messages out queue for all servers (all messages WeeChat is "
+"currently sending)\n"
+"    jump: jump to server buffer\n"
+"     raw: open buffer with raw IRC data\n"
+"\n"
+"Örnekler:\n"
+"  /server listfull\n"
+"  /server add oftc irc.oftc.net/6697 -ssl -autoconnect\n"
+"  /server add oftc6 irc6.oftc.net/6697 -ipv6 -ssl\n"
+"  /server add freenode2 chat.eu.freenode.net/6667,chat.us.freenode.net/6667\n"
+"  /server add freenode3 irc.freenode.net -password=mypass\n"
+"  /server copy oftc oftcbis\n"
+"  /server rename oftc newoftc\n"
+"  /server del freenode\n"
+"  /server deloutq"
+
+msgid "list services currently connected to the network"
+msgstr ""
+
+msgid "[<mask> [<type>]]"
+msgstr ""
+
+msgid ""
+"mask: list only services matching this mask\n"
+"type: list only services of this type"
+msgstr ""
+
+msgid "deliver a message to a service"
+msgstr ""
+
+msgid "<service> <text>"
+msgstr ""
+
+msgid ""
+"service: name of service\n"
+"   text: text to send"
+msgstr ""
+
+msgid "disconnect server links"
+msgstr ""
+
+msgid "<server> <comment>"
+msgstr "<sunucu> <açıklama>"
+
+msgid ""
+" server: server name\n"
+"comment: comment for quit"
+msgstr ""
+
+msgid "query statistics about server"
+msgstr ""
+
+msgid "[<query> [<server>]]"
+msgstr ""
+
+msgid ""
+" query: c/h/i/k/l/m/o/y/u (see RFC1459)\n"
+"server: server name"
+msgstr ""
+
+msgid ""
+"give users who are on a host running an IRC server a message asking them to "
+"please join IRC"
+msgstr ""
+
+msgid "<user> [<target> [<channel>]]"
+msgstr "<kullanıcı> [<hedef> [<kanal>]]"
+
+msgid ""
+"   user: username\n"
+" target: server name\n"
+"channel: channel name"
+msgstr ""
+
+msgid "query local time from server"
+msgstr ""
+
+msgid "target: query time from specified server"
+msgstr ""
+
+msgid "get/set channel topic"
+msgstr ""
+
+msgid "[<channel>] [<topic>|-delete]"
+msgstr ""
+
+msgid ""
+"channel: channel name\n"
+"  topic: new topic for channel\n"
+"-delete: delete channel topic"
+msgstr ""
+
+msgid "find the route to specific server"
+msgstr ""
+
+msgid "unban nicks or hosts"
+msgstr ""
+
+msgid "[<channel>] <nick> [<nick>...]"
+msgstr "[<kanal>] <rumuz> [<rumuz>...]"
+
+msgid ""
+"channel: channel for unban\n"
+"   nick: user or host to unban"
+msgstr ""
+
+msgid "return a list of information about nicks"
+msgstr ""
+
+msgid "list of users logged into the server"
+msgstr ""
+
+msgid "give the version info of nick or server (current or specified)"
+msgstr ""
+
+msgid "[<server>|<nick>]"
+msgstr "[<sunucu>|<rumuz>]"
+
+msgid ""
+"server: server name\n"
+"  nick: nick"
+msgstr ""
+
+msgid "give voice to nick(s)"
+msgstr ""
+
+msgid "send a notice to channel ops"
+msgstr ""
+
+msgid "[<channel>] <text>"
+msgstr "[<kanal>] <metin>"
+
+msgid ""
+"channel: channel name\n"
+"   text: text to send"
+msgstr ""
+
+msgid ""
+"send a message to all currently connected users who have set the 'w' user "
+"mode for themselves"
+msgstr ""
+
+msgid "text: text to send"
+msgstr ""
+
+msgid "generate a query which returns a list of information"
+msgstr ""
+
+msgid "[<mask> [o]]"
+msgstr ""
+
+msgid ""
+"mask: only information which match this mask\n"
+"   o: only operators are returned according to the mask supplied"
+msgstr ""
+
+msgid "query information about user(s)"
+msgstr ""
+
+msgid "[<server>] [<nick>[,<nick>...]]"
+msgstr "[<sunucu>] [<rumuz>[,<rumuz>...]]"
+
+msgid ""
+"server: server name\n"
+"  nick: nick (may be a mask)\n"
+"\n"
+"Without argument, this command will do a whois on:\n"
+"- your own nick if buffer is a server/channel\n"
+"- remote nick if buffer is a private."
+msgstr ""
+
+msgid "ask for information about a nick which no longer exists"
+msgstr ""
+
+msgid "<nick>[,<nick>...] [<count> [<target>]]"
+msgstr ""
+
+msgid ""
+"  nick: nick to search\n"
+" count: number of replies to return (full search if negative number)\n"
+"target: reply should match this mask"
+msgstr ""
+
+#, c-format
+msgid "%s%s: too few arguments for \"%s\" command"
+msgstr ""
+
+#, c-format
+msgid "%s%s: command \"%s\" must be executed on irc buffer (server or channel)"
+msgstr ""
+
+msgid "current IRC server"
+msgstr "mevcut İRC sunucusu"
+
+msgid "nick on current IRC server"
+msgstr ""
+
+msgid "channels on current IRC server"
+msgstr ""
+
+msgid "privates on current IRC server"
+msgstr ""
+
+msgid "nicks on all channels of current IRC server"
+msgstr ""
+
+msgid "IRC servers (internal names)"
+msgstr "İRC sunucuları (dahili isimler)"
+
+msgid "current IRC channel"
+msgstr "mevcut İRC kanalı"
+
+msgid "nicks of current IRC channel"
+msgstr ""
+
+msgid "nicks and hostnames of current IRC channel"
+msgstr ""
+
+msgid "topic of current IRC channel"
+msgstr ""
+
+msgid "channels on all IRC servers"
+msgstr ""
+
+msgid "privates on all IRC servers"
+msgstr ""
+
+msgid "default part message for IRC channel"
+msgstr "İRC kanalı için varsayılan ayrılma iletisi"
+
+msgid "numbers for defined ignores"
+msgstr ""
+
+msgid "nicks in notify list"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: warning: proxy \"%s\" does not exist (you can create it with command /"
+"proxy)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: invalid priorities string, error at this position in string: \"%s\""
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
+"memory because it's currently used"
+msgstr ""
+
+msgid "buffer used to display message received from IRC server"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error creating \"%s\" => \"%s\""
+msgstr ""
+
+msgid ""
+"format for CTCP reply or empty string for blocking CTCP (no reply), "
+"following variables are replaced: $version (WeeChat version), $compilation "
+"(compilation date), $osinfo (info about OS), $site (WeeChat site), $download "
+"(WeeChat site, download page), $time (current date and time as text), "
+"$username (username on server), $realname (realname on server)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error creating CTCP \"%s\" => \"%s\""
+msgstr ""
+
+msgid "list of hostname/port or IP/port for server (separated by comma)"
+msgstr ""
+
+msgid ""
+"name of proxy used for this server (optional, proxy must be defined with "
+"command /proxy)"
+msgstr ""
+
+msgid ""
+"use IPv6 protocol for server communication (try IPv6 then fallback to IPv4); "
+"if disabled, only IPv4 is used"
+msgstr ""
+
+msgid "use SSL for server communication"
+msgstr ""
+
+msgid ""
+"SSL certificate file used to automatically identify your nick (\"%h\" will "
+"be replaced by WeeChat home, \"~/.weechat\" by default)"
+msgstr ""
+
+msgid ""
+"string with priorities for gnutls (for syntax, see documentation of function "
+"gnutls_priority_init in gnutls manual, common strings are: \"PERFORMANCE\", "
+"\"NORMAL\", \"SECURE128\", \"SECURE256\", \"EXPORT\", \"NONE\")"
+msgstr ""
+
+msgid "size of the key used during the Diffie-Hellman Key Exchange"
+msgstr ""
+
+msgid "check that the SSL connection is fully trusted"
+msgstr ""
+
+msgid "password for server"
+msgstr "sunucu için parola"
+
+#. TRANSLATORS: please keep words "client capabilities" between brackets if translation is different (see fr.po)
+msgid ""
+"comma-separated list of client capabilities to enable for server if they are "
+"available; capabilities supported by WeeChat are: multi-prefix, userhost-in-"
+"names (example: \"multi-prefix,userhost-in-names\")"
+msgstr ""
+
+msgid ""
+"mechanism for SASL authentication: \"plain\" for plain text password, \"dh-"
+"blowfish\" for blowfish crypted password, \"dh-aes\" for AES crypted "
+"password, \"external\" for authentication using client side SSL cert"
+msgstr ""
+
+msgid "username for SASL authentication"
+msgstr ""
+
+msgid "password for SASL authentication"
+msgstr ""
+
+msgid "timeout (in seconds) before giving up SASL authentication"
+msgstr ""
+
+msgid "automatically connect to server when WeeChat is starting"
+msgstr ""
+
+msgid "automatically reconnect to server when disconnected"
+msgstr ""
+
+msgid "delay (in seconds) before trying again to reconnect to server"
+msgstr ""
+
+msgid "nicknames to use on server (separated by comma)"
+msgstr ""
+
+msgid "user name to use on server"
+msgstr ""
+
+msgid "real name to use on server"
+msgstr ""
+
+msgid ""
+"custom local hostname/IP for server (optional, if empty local hostname is "
+"used)"
+msgstr ""
+
+msgid ""
+"command(s) to run when connected to server (many commands should be "
+"separated by \";\", use \"\\;\" for a semicolon, special variables $nick, "
+"$channel and $server are replaced by their value)"
+msgstr ""
+
+msgid ""
+"delay (in seconds) after command was executed (example: give some time for "
+"authentication)"
+msgstr ""
+
+msgid ""
+"comma separated list of channels to join when connected to server (example: "
+"\"#chan1,#chan2,#chan3 key1,key2\")"
+msgstr ""
+
+msgid ""
+"automatically rejoin channels after kick; you can define a buffer local "
+"variable on a channel to override this value (name of variable: \"autorejoin"
+"\", value: \"on\" or \"off\")"
+msgstr ""
+
+msgid "delay (in seconds) before autorejoin (after kick)"
+msgstr ""
+
+msgid ""
+"timeout (in seconds) between TCP connection to server and message 001 "
+"received, if this timeout is reached before 001 message is received, WeeChat "
+"will disconnect from server"
+msgstr ""
+
+msgid ""
+"anti-flood for high priority queue: number of seconds between two user "
+"messages or commands sent to IRC server (0 = no anti-flood)"
+msgstr ""
+
+msgid ""
+"anti-flood for low priority queue: number of seconds between two messages "
+"sent to IRC server (messages like automatic CTCP replies) (0 = no anti-flood)"
+msgstr ""
+
+msgid "interval between two checks for away (in minutes, 0 = never check)"
+msgstr ""
+
+msgid ""
+"do not check away nicks on channels with high number of nicks (0 = unlimited)"
+msgstr ""
+
+msgid ""
+"default part message (leaving channel) (\"%v\" will be replaced by WeeChat "
+"version in string)"
+msgstr ""
+
+msgid ""
+"default quit message (disconnecting from server) (\"%v\" will be replaced by "
+"WeeChat version in string)"
+msgstr ""
+
+msgid ""
+"notify list for server (you should not change this option but use /notify "
+"command instead)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error creating server \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: error creating server option \"%s\""
+msgstr ""
+
+msgid ""
+"auto switch to channel buffer when it is auto joined (with server option "
+"\"autojoin\")"
+msgstr ""
+
+msgid ""
+"auto switch to channel buffer when it is manually joined (with /join command)"
+msgstr ""
+
+msgid ""
+"use nick color in output of /names (or list of nicks displayed when joining "
+"a channel)"
+msgstr ""
+
+msgid "use nick color in nicklist"
+msgstr ""
+
+msgid "use nick color in messages from server"
+msgstr ""
+
+msgid "use same nick color for channel and private"
+msgstr ""
+
+msgid ""
+"time format used in answer to message CTCP TIME (see man strftime for date/"
+"time specifiers)"
+msgstr ""
+
+msgid "merge server buffers"
+msgstr ""
+
+msgid "merge private buffers"
+msgstr ""
+
+msgid ""
+"force position of new channel in list of buffers (none = default position "
+"(should be last buffer), next = current buffer + 1, near_server = after last "
+"channel/pv of server)"
+msgstr ""
+
+msgid ""
+"force position of new private in list of buffers (none = default position "
+"(should be last buffer), next = current buffer + 1, near_server = after last "
+"channel/pv of server)"
+msgstr ""
+
+msgid ""
+"display nick mode (op, voice, ...) before nick (none = never, prefix = in "
+"prefix only (default), action = in action messages only, both = prefix + "
+"action messages)"
+msgstr ""
+
+msgid ""
+"display a space if nick mode is enabled but nick has no mode (not op, "
+"voice, ...)"
+msgstr ""
+
+msgid ""
+"force color for some nicks: hash computed with nickname to find color will "
+"not be used for these nicks (format is: \"nick1:color1;nick2:color2\"); look "
+"up for nicks is with exact case then lower case, so it's possible to use "
+"only lower case for nicks in this option"
+msgstr ""
+
+msgid ""
+"hash algorithm used to find the color for a nick: djb2 = variant of djb2 "
+"(position of letters matters: anagrams of a nick have different color), sum "
+"= sum of letters"
+msgstr ""
+
+msgid ""
+"chars used to stop in nick when computing color with letters of nick (at "
+"least one char outside this list must be in string before stopping) "
+"(example: nick \"|nick|away\" with \"|\" in chars will return color of nick "
+"\"|nick\")"
+msgstr ""
+
+msgid ""
+"smart completion for nicks (completes first with last speakers): speakers = "
+"all speakers (including highlights), speakers_highlights = only speakers "
+"with highlight"
+msgstr ""
+
+msgid ""
+"display message when (un)marking as away (off: do not display/send anything, "
+"local: display locally, channel: send action to channels)"
+msgstr ""
+
+msgid "display CTCP message even if it is blocked"
+msgstr ""
+
+msgid "display CTCP reply sent by WeeChat"
+msgstr ""
+
+msgid "display CTCP message even if it is unknown CTCP"
+msgstr ""
+
+msgid "display host in join messages"
+msgstr ""
+
+msgid "display host in join messages from local client"
+msgstr ""
+
+msgid "display host in part/quit messages"
+msgstr ""
+
+msgid ""
+"comma-separated list of messages to display after joining a channel: 329 = "
+"channel creation date, 332 = topic, 333 = nick/date for topic, 366 = names "
+"on channel"
+msgstr ""
+
+msgid "display old topic when channel topic is changed"
+msgstr ""
+
+msgid "display remote away message only once in private"
+msgstr ""
+
+msgid "display a message in private when user is back (after quit on server)"
+msgstr ""
+
+msgid "display server away message in away bar item"
+msgstr ""
+
+msgid ""
+"hide channel key in channel modes (this will hide all channel modes "
+"arguments if mode +k is set on channel)"
+msgstr ""
+
+msgid "display nick modes in \"input_prompt\" bar item"
+msgstr ""
+
+msgid "display nick prefix in \"input_prompt\" bar item"
+msgstr ""
+
+msgid ""
+"comma separated list of words to highlight in server buffers (case "
+"insensitive, use \"(?-i)\" at beginning of words to make them case "
+"sensitive; special variables $nick, $channel and $server are replaced by "
+"their value), these words are added to buffer local variable "
+"\"highlight_words\" only when buffer is created (it does not affect current "
+"buffers), an empty string disables default highlight on nick, examples: "
+"\"$nick\", \"(?-i)$nick\""
+msgstr ""
+
+msgid ""
+"comma separated list of words to highlight in channel buffers (case "
+"insensitive, use \"(?-i)\" at beginning of words to make them case "
+"sensitive; special variables $nick, $channel and $server are replaced by "
+"their value), these words are added to buffer local variable "
+"\"highlight_words\" only when buffer is created (it does not affect current "
+"buffers), an empty string disables default highlight on nick, examples: "
+"\"$nick\", \"(?-i)$nick\""
+msgstr ""
+
+msgid ""
+"comma separated list of words to highlight in private buffers (case "
+"insensitive, use \"(?-i)\" at beginning of words to make them case "
+"sensitive; special variables $nick, $channel and $server are replaced by "
+"their value), these words are added to buffer local variable "
+"\"highlight_words\" only when buffer is created (it does not affect current "
+"buffers), an empty string disables default highlight on nick, examples: "
+"\"$nick\", \"(?-i)$nick\""
+msgstr ""
+
+msgid ""
+"comma separated list of tags for messages that may produce highlight "
+"(usually any message from another user, not server messages,..)"
+msgstr ""
+
+msgid "name of bar item where IRC server is displayed (for status bar)"
+msgstr ""
+
+msgid ""
+"default target buffer for msgbuffer options when target is private and that "
+"private buffer is not found"
+msgstr ""
+
+msgid ""
+"comma separated list of nicks for which passwords will be hidden when a "
+"message is sent, for example to hide password in message displayed by \"/msg "
+"nickserv identify password\", example: \"nickserv,nickbot\""
+msgstr ""
+
+msgid ""
+"display notices as private messages (if auto, use private buffer if found)"
+msgstr ""
+
+msgid ""
+"comma separated list of tags used in messages printed by notify when a nick "
+"joins or quits server (result of command ison), for example: "
+"\"notify_highlight\", \"notify_message\" or \"notify_private\""
+msgstr ""
+
+msgid ""
+"comma separated list of tags used in messages printed by notify when a nick "
+"away status changes (result of command whois), for example: "
+"\"notify_highlight\", \"notify_message\" or \"notify_private\""
+msgstr ""
+
+msgid "close buffer when /part is issued on a channel"
+msgstr ""
+
+msgid ""
+"number of raw messages to save in memory when raw data buffer is closed "
+"(messages will be displayed when opening raw data buffer)"
+msgstr ""
+
+msgid ""
+"filter join/part/quit/nick messages for a nick if not speaking for some "
+"minutes on channel (you must create a filter on tag \"irc_smart_filter\")"
+msgstr ""
+
+msgid "delay for filtering join/part/quit messages (in minutes)"
+msgstr ""
+
+#. TRANSLATORS: please do not translate "join"
+msgid "enable smart filter for \"join\" messages"
+msgstr ""
+
+msgid ""
+"delay for unmasking a join message that was filtered with tag "
+"\"irc_smart_filter\" (in minutes): if a nick has joined max N minutes ago "
+"and then says something on channel (message, notice or update on topic), the "
+"join is unmasked, as well as nick changes after this join (0 = disable: "
+"never unmask a join)"
+msgstr ""
+
+#. TRANSLATORS: please do not translate "part" and "quit"
+msgid "enable smart filter for \"part\" and \"quit\" messages"
+msgstr ""
+
+#. TRANSLATORS: please do not translate "nick"
+msgid "enable smart filter for \"nick\" messages (nick changes)"
+msgstr ""
+
+msgid "strip colors in topic (used only when displaying buffer title)"
+msgstr ""
+
+msgid "color for text in join messages"
+msgstr "Bağlanma iletisi metni için renk"
+
+msgid "color for text in part/quit messages"
+msgstr "ayrılma/çıkış iletisindeki metin için renk"
+
+#. TRANSLATORS: please do not translate the list of WeeChat color names at the end of string
+msgid ""
+"remap mirc colors in messages using a hashtable: keys are \"fg,bg\" as "
+"integers between -1 (not specified) and 15, values are WeeChat color names "
+"or numbers (format is: \"1,-1:color1;2,7:color2\"), example: \"1,-1:"
+"darkgray;1,2:white,blue\" to remap black to \"darkgray\" and black on blue "
+"to \"white,blue\"; default WeeChat colors for IRC codes: 0:white, 1:black, 2:"
+"blue, 3:green, 4:lightred, 5:red, 6:magenta, 7:brown, 8:yellow, 9: "
+"lightgreen, 10:cyan, 11:lightcyan, 12:lightblue, 13:lightmagenta, 14:gray, "
+"15:white"
+msgstr ""
+
+msgid ""
+"color for nick prefixes using mode char (o=op, h=halfop, v=voice, ..), "
+"format is: \"o:color1;h:color2;v:color3\" (if a mode is not found, WeeChat "
+"will try with next modes received from server (\"PREFIX\"); a special mode "
+"\"*\" can be used as default color if no mode has been found in list)"
+msgstr ""
+
+msgid "color for text \"Notice\" in notices"
+msgstr ""
+
+msgid "color for nick in input bar"
+msgstr ""
+
+msgid "color for away item"
+msgstr "uzakta öğesi için renk"
+
+msgid "color for channel modes, near channel name"
+msgstr ""
+
+msgid ""
+"color for lag indicator, when counting (pong not received from server, lag "
+"is increasing)"
+msgstr ""
+
+msgid "color for lag indicator, when pong has been received from server"
+msgstr ""
+
+msgid "color for reason in part/quit messages"
+msgstr "ayrılma/çıkış iletisindeki sebep için renk"
+
+msgid "color for old channel topic (when topic is changed)"
+msgstr ""
+
+msgid "color for new channel topic (when topic is changed)"
+msgstr ""
+
+msgid ""
+"get an alternate nick when the nick is already used on server: add some \"_"
+"\" until the nick has a length of 9, and then replace last char (or the two "
+"last chars) by a number from 1 to 99, until we find a nick not used on server"
+msgstr ""
+
+msgid ""
+"growing factor for autoreconnect delay to server (1 = always same delay, 2 = "
+"delay*2 for each retry, ..)"
+msgstr ""
+
+msgid "maximum autoreconnect delay to server (in seconds, 0 = no maximum)"
+msgstr ""
+
+msgid "when off, colors codes are ignored in incoming messages"
+msgstr ""
+
+msgid ""
+"allow user to send colors with special codes (ctrl-c + a code and optional "
+"color: b=bold, cxx=color, cxx,yy=color+background, u=underline, r=reverse)"
+msgstr ""
+
+msgid "interval between two checks for lag (in seconds, 0 = never check)"
+msgstr ""
+
+msgid "minimum lag to show (in milliseconds)"
+msgstr ""
+
+msgid ""
+"reconnect to server if lag is greater than this value (in seconds, 0 = never "
+"reconnect)"
+msgstr ""
+
+msgid ""
+"interval between two refreshs of lag item, when lag is increasing (in "
+"seconds)"
+msgstr ""
+
+msgid ""
+"interval between two checks for notify with IRC command \"ison\" (in minutes)"
+msgstr ""
+
+msgid ""
+"interval between two checks for notify with IRC command \"whois\" (in "
+"minutes)"
+msgstr ""
+
+msgid "send unknown commands to server"
+msgstr ""
+
+msgid ""
+"double the nick in /whois command (if only one nick is given), to get idle "
+"time in answer; for example: \"/whois nick\" will send \"whois nick nick\""
+msgstr ""
+
+#, c-format
+msgid "%sCTCP requested by %s%s%s: %s%s%s%s%s%s"
+msgstr ""
+
+msgid " (blocked)"
+msgstr ""
+
+#, c-format
+msgid "%sCTCP reply from %s%s%s: %s%s%s %ld.%ld %s"
+msgstr ""
+
+#, c-format
+msgid "%sCTCP reply from %s%s%s: %s%s%s%s%s"
+msgstr ""
+
+#, c-format
+msgid "%sCTCP reply to %s%s%s: %s%s%s%s%s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: not enough memory for \"%s\" command"
+msgstr ""
+
+#, c-format
+msgid "%s%s: cannot parse \"%s\" command"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sUnknown CTCP requested by %s%s%s: %s%s%s%s%s"
+msgstr ""
+
+msgid "1 if string is a valid IRC channel name for server"
+msgstr ""
+
+msgid "server,channel (server is optional)"
+msgstr ""
+
+msgid "1 if string is a valid IRC nick name"
+msgstr ""
+
+msgid "nickname"
+msgstr ""
+
+msgid "get current nick on a server"
+msgstr ""
+
+msgid "server name"
+msgstr "sunucu ismi"
+
+msgid "get nick from IRC host"
+msgstr ""
+
+msgid "IRC host (like `:nick!name@server.com`)"
+msgstr ""
+
+msgid "get nick color code"
+msgstr ""
+
+msgid "get nick color name"
+msgstr ""
+
+msgid "get buffer pointer for an IRC server/channel/nick"
+msgstr ""
+
+msgid "server,channel,nick (channel and nicks are optional)"
+msgstr ""
+
+msgid "1 if server supports this feature (from IRC message 005)"
+msgstr ""
+
+msgid "server,feature"
+msgstr ""
+
+msgid "value of feature, if supported by server (from IRC message 005)"
+msgstr ""
+
+msgid "parse an IRC message"
+msgstr ""
+
+msgid "\"message\": IRC message, \"server\": server name (optional)"
+msgstr ""
+
+#. TRANSLATORS: please do not translate key names (enclosed by quotes)
+msgid ""
+"\"tags\": tags, \"message_without_tags\": message without the tags, \"nick"
+"\": nick, \"host\": host, \"command\": command, \"channel\": channel, "
+"\"arguments\": arguments (includes channel)"
+msgstr ""
+
+msgid "split an IRC message (to fit in 512 bytes)"
+msgstr ""
+
+#. TRANSLATORS: please do not translate key names (enclosed by quotes)
+msgid ""
+"\"msg1\" ... \"msgN\": messages to send (without final \"\\r\\n\"), "
+"\"args1\" ... \"argsN\": arguments of messages, \"count\": number of messages"
+msgstr ""
+
+msgid "list of IRC servers"
+msgstr "İRC sunucularının listesi"
+
+msgid "server pointer (optional)"
+msgstr ""
+
+msgid "server name (can start or end with \"*\" as wildcard) (optional)"
+msgstr ""
+
+msgid "list of channels for an IRC server"
+msgstr ""
+
+msgid "channel pointer (optional)"
+msgstr ""
+
+msgid "server,channel (channel is optional)"
+msgstr ""
+
+msgid "list of nicks for an IRC channel"
+msgstr ""
+
+msgid "nick pointer (optional)"
+msgstr ""
+
+msgid "server,channel,nick (channel and nick are optional)"
+msgstr ""
+
+msgid "list of IRC ignores"
+msgstr ""
+
+msgid "ignore pointer (optional)"
+msgstr ""
+
+msgid "list of notify"
+msgstr ""
+
+msgid "notify pointer (optional)"
+msgstr ""
+
+msgid "irc nick"
+msgstr "irc rumuz"
+
+msgid "irc channel"
+msgstr "irc kanal"
+
+msgid "irc channel_speaking"
+msgstr ""
+
+msgid "irc ignore"
+msgstr ""
+
+msgid "irc notify"
+msgstr ""
+
+msgid "pattern for irc redirect"
+msgstr ""
+
+msgid "irc redirect"
+msgstr ""
+
+msgid "irc server"
+msgstr "irc sunucu"
+
+#, c-format
+msgid "%s%s: you are not connected to server"
+msgstr ""
+
+#, c-format
+msgid "%s%s: this buffer is not a channel!"
+msgstr ""
+
+#. TRANSLATORS: "unknown" is the status for /notify when ison answer has not been received (check pending)
+msgid "unknown"
+msgstr "bilinmiyor"
+
+msgid "offline"
+msgstr "çevrimdışı"
+
+msgid "online"
+msgstr "çevrimiçi"
+
+#, c-format
+msgid "Notify list for %s%s%s:"
+msgstr ""
+
+msgid "Notify list is empty on this server"
+msgstr ""
+
+msgid "Notify list for all servers:"
+msgstr ""
+
+msgid "Notify list is empty on all servers"
+msgstr ""
+
+#, c-format
+msgid "%snotify: %s%s%s is connected"
+msgstr ""
+
+#, c-format
+msgid "%snotify: %s%s%s is offline"
+msgstr ""
+
+#, c-format
+msgid "%snotify: %s%s%s has joined"
+msgstr ""
+
+#, c-format
+msgid "%snotify: %s%s%s has quit"
+msgstr ""
+
+#, c-format
+msgid "%snotify: %s%s%s is now away: \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%snotify: %s%s%s is back"
+msgstr ""
+
+#, c-format
+msgid "%snotify: %s%s%s is still away: \"%s\""
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: error building answer for SASL authentication, using mechanism \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: client capability, server supports: %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: client capability, requesting: %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: client capability: sasl not supported"
+msgstr ""
+
+#, c-format
+msgid "%s%s: client capability, enabled: %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: client capability, refused: %s"
+msgstr ""
+
+#, c-format
+msgid "%sYou have been invited to %s%s%s by %s%s%s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: cannot create new channel \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s%s%s%s%s%s%s%s%s has joined %s%s%s"
+msgstr "%s%s%s%s%s%s%s%s%s%s katıldı %s%s%s"
+
+#, c-format
+msgid "%s%s%s%s has kicked %s%s%s %s(%s%s%s)"
+msgstr ""
+
+#, c-format
+msgid "%s%s%s%s has kicked %s%s%s"
+msgstr ""
+
+#, c-format
+msgid "%s%sYou were killed by %s%s%s %s(%s%s%s)"
+msgstr ""
+
+#, c-format
+msgid "%s%sYou were killed by %s%s%s"
+msgstr ""
+
+#, c-format
+msgid "%sMode %s%s %s[%s%s%s]%s by %s%s"
+msgstr ""
+
+#, c-format
+msgid "%sUser mode %s[%s%s%s]%s by %s%s"
+msgstr ""
+
+#, c-format
+msgid "%sYou are now known as %s%s%s"
+msgstr "%s Artık  %s%s%s olarak biliniyorsunuz"
+
+#, c-format
+msgid "%s%s%s%s is now known as %s%s%s"
+msgstr "%s%s%s şimdi %s%s%s%s  olarak biliniyormode"
+
+#, c-format
+msgid "%s%s%s%s%s%s%s%s%s%s has left %s%s%s %s(%s%s%s)"
+msgstr "%s%s%s%s%s%s%s%s%s%s terk etti %s%s%s %s(%s%s%s)"
+
+#, c-format
+msgid "%s%s%s%s%s%s%s%s%s%s has left %s%s%s"
+msgstr "%s%s%s%s%s%s%s%s%s%s terk etti %s%s%s"
+
+#, c-format
+msgid "%s%s%s%s%s%s%s%s%s%s has quit %s(%s%s%s)"
+msgstr "%s%s%s%s%s%s%s%s%s%s çıktı %s(%s%s%s)"
+
+#, c-format
+msgid "%s%s%s%s%s%s%s%s%s%s has quit"
+msgstr "%s%s%s%s%s%s%s%s%s%s çıktı"
+
+#, c-format
+msgid "%s%s: \"%s\" command received without channel"
+msgstr ""
+
+#, c-format
+msgid "%s%s%s%s has changed topic for %s%s%s from \"%s%s%s\" to \"%s%s%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s%s%s has changed topic for %s%s%s to \"%s%s%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s%s%s has unset topic for %s%s%s (old topic: \"%s%s%s\")"
+msgstr ""
+
+#, c-format
+msgid "%s%s%s%s has unset topic for %s%s%s"
+msgstr ""
+
+#, c-format
+msgid "%sWallops from %s%s %s(%s%s%s)%s: %s"
+msgstr ""
+
+#, c-format
+msgid "%sUser mode for %s%s%s is %s[%s%s%s]"
+msgstr ""
+
+#, c-format
+msgid "%s%s[%s%s%s]%s is away: %s"
+msgstr ""
+
+#, c-format
+msgid "%sUsers online: %s%s"
+msgstr "%sKullanıcı çevrimiçi: %s%s"
+
+#, c-format
+msgid "%s%s[%s%s%s] (%s%s@%s%s)%s was %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s[%s%s%s]%s idle: %s%d %s%s, %s%02d %s%s %s%02d %s%s %s%02d %s%s, signon "
+"at: %s%s"
+msgstr ""
+
+msgid "hour"
+msgid_plural "hours"
+msgstr[0] "saat"
+
+#, c-format
+msgid ""
+"%s%s[%s%s%s]%s idle: %s%02d %s%s %s%02d %s%s %s%02d %s%s, signon at: %s%s"
+msgstr ""
+
+#, c-format
+msgid "%sMode %s%s %s[%s%s%s]"
+msgstr "%sKip %s%s %s[%s%s%s]"
+
+#, c-format
+msgid "%sURL for %s%s%s: %s"
+msgstr ""
+
+#. TRANSLATORS: "%s" after "created on" is a date
+#, c-format
+msgid "%sChannel created on %s"
+msgstr "%sKanal %s tarihinde oluşturuldu"
+
+#. TRANSLATORS: "%s" after "created on" is a date
+#, c-format
+msgid "%sChannel %s%s%s created on %s"
+msgstr ""
+
+#, c-format
+msgid "%sNo topic set for channel %s%s"
+msgstr "%s %s%s kanalı için ayarlı konu yok"
+
+#, c-format
+msgid "%sTopic for %s%s%s is \"%s%s\""
+msgstr "%s %s%s%s kanalının konusu \"%s%s\""
+
+#. TRANSLATORS: "%s" after "on" is a date
+#, c-format
+msgid "%sTopic set by %s%s%s%s%s%s%s%s%s on %s"
+msgstr "%sKonu %s%s%s%s%s%s%s%s%s tarafından  %s tarihinde ayarlandı"
+
+#. TRANSLATORS: "%s" after "on" is a date
+#, c-format
+msgid "%sTopic set on %s"
+msgstr ""
+
+#. TRANSLATORS: "%s" after "on" is a date
+#, c-format
+msgid "%sTopic for %s%s%s set by %s%s%s%s%s%s%s%s%s on %s"
+msgstr ""
+
+#. TRANSLATORS: "%s" after "on" is a date
+#, c-format
+msgid "%sTopic for %s%s%s set on %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s%s%s has invited %s%s%s to %s%s%s"
+msgstr ""
+
+#, c-format
+msgid "%sChannel reop %s%s%s: %s%s"
+msgstr ""
+
+#. TRANSLATORS: "%s" after "on" is a date
+#, c-format
+msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)%s on %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s[%s%s%s] %s%s%s invited by %s%s %s(%s%s%s)"
+msgstr ""
+
+#, c-format
+msgid "%s%s[%s%s%s] %s%s%s invited"
+msgstr ""
+
+#. TRANSLATORS: "%s" after "on" is a date
+#, c-format
+msgid "%s%s[%s%s%s]%s exception %s%s%s by %s%s %s(%s%s%s)%s on %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s[%s%s%s]%s exception %s%s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: cannot create nick \"%s\" for channel \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sNicks %s%s%s: %s[%s%s%s]"
+msgstr "%sRumuzlar %s%s%s: %s[%s%s%s]"
+
+#, c-format
+msgid "%sNicks %s%s%s: %s[%s%s]"
+msgstr "%sRumuzlar %s%s%s: %s[%s%s]"
+
+#, c-format
+msgid ""
+"%sChannel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)"
+msgstr ""
+"%sKanal %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)"
+
+msgid "nick"
+msgid_plural "nicks"
+msgstr[0] "rumuz"
+
+msgid "op"
+msgid_plural "ops"
+msgstr[0] ""
+
+msgid "halfop"
+msgid_plural "halfops"
+msgstr[0] ""
+
+msgid "voice"
+msgid_plural "voices"
+msgstr[0] ""
+
+#. TRANSLATORS: "%s" after "on" is a date
+#, c-format
+msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)%s on %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: all declared nicknames are already in use or invalid, closing "
+"connection with server"
+msgstr ""
+
+#, c-format
+msgid "%s%s: nickname \"%s\" is invalid, trying nickname \"%s\""
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: all declared nicknames are already in use, closing connection with "
+"server"
+msgstr ""
+
+#, c-format
+msgid "%s%s: nickname \"%s\" is already in use, trying nickname \"%s\""
+msgstr "%s%s: \"%s\" takma adı zaten kullanılıyor,  \"%s\" takma adı deneniyor"
+
+#, c-format
+msgid "%s%s: nickname \"%s\" is unavailable, trying nickname \"%s\""
+msgstr "%s%s: \"%s\" takma adı kullanılamıyor,  \"%s\" takma adı deneniyor"
+
+#. TRANSLATORS: "%s" after "on" is a date
+#, c-format
+msgid "%s%s[%s%s%s] %s%s%s quieted by %s%s %s(%s%s%s)%s on %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s[%s%s%s] %s%s%s quieted by %s%s %s(%s%s%s)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: command \"%s\" not found:"
+msgstr "%s%s: \"%s\" komutu bulunamadı:"
+
+#, c-format
+msgid "%s%s: failed to parse command \"%s\" (please report to developers):"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: too few arguments received from IRC server for command \"%s"
+"\" (received: %d arguments, expected: at least %d)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: \"%s\" command received without host"
+msgstr ""
+
+msgid "IRC raw messages"
+msgstr ""
+
+#, c-format
+msgid "%s%s: missing argument \"%s\" for redirect pattern"
+msgstr ""
+
+#, c-format
+msgid "%s%s: redirect pattern \"%s\" already exists"
+msgstr ""
+
+#, c-format
+msgid "%s%s: no connection to server \"%s\" for redirect"
+msgstr ""
+
+#, c-format
+msgid "%s%s: missing argument \"%s\" for redirect"
+msgstr ""
+
+#, c-format
+msgid "%s%s: redirect pattern \"%s\" not found"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s: starting redirection for command \"%s\" on server \"%s\" (redirect "
+"pattern: \"%s\")"
+msgstr ""
+
+#, c-format
+msgid "%s%s: server \"%s\" not found for redirect"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error when allocating new server"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error creating new server \"%s\""
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: sending data to server: null pointer (please report problem to "
+"developers)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: sending data to server: empty buffer (please report problem to "
+"developers)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: sending data to server: error %d %s"
+msgstr ""
+
+msgid "(message dropped)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: not enough memory for received message"
+msgstr ""
+
+#, c-format
+msgid "%s%s: reading data on socket: error %d %s"
+msgstr ""
+
+msgid "(connection closed by peer)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: disconnecting from server..."
+msgstr ""
+
+#, c-format
+msgid "%s%s: connection timeout (message 001 not received)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: sasl authentication timeout"
+msgstr ""
+
+#, c-format
+msgid "%s%s: lag is high, reconnecting to server %s%s%s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: reconnecting to server in %d %s, %d %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: reconnecting to server in %d %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: switching address to %s/%d"
+msgstr ""
+
+#, c-format
+msgid "%s%s: connected to %s/%d (%s)"
+msgstr "%s%s: %s/%d (%s) bağlanıldı"
+
+#, c-format
+msgid "%s%s: proxy address \"%s\" not found"
+msgstr ""
+
+#, c-format
+msgid "%s%s: address \"%s\" not found"
+msgstr "%s%s:  \"%s\" adresi bulunamadı"
+
+#, c-format
+msgid "%s%s: error: %s"
+msgstr "%s%s: hata: %s"
+
+#, c-format
+msgid "%s%s: proxy IP address not found"
+msgstr ""
+
+#, c-format
+msgid "%s%s: IP address not found"
+msgstr "%s%s: IP adresi bulunamadı"
+
+#, c-format
+msgid "%s%s: proxy connection refused"
+msgstr ""
+
+#, c-format
+msgid "%s%s: connection refused"
+msgstr "%s%s: bağlantı reddedildi"
+
+#, c-format
+msgid ""
+"%s%s: proxy fails to establish connection to server (check username/password "
+"if used and if server address/port is allowed by proxy)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to set local hostname/IP"
+msgstr ""
+
+#, c-format
+msgid "%s%s: TLS init error"
+msgstr ""
+
+#, c-format
+msgid "%s%s: TLS handshake failed"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: you should play with option irc.server.%s.ssl_dhkey_size (current "
+"value is %d)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: not enough memory"
+msgstr ""
+
+#, c-format
+msgid "%s%s: timeout"
+msgstr "%s%s: zaman aşımı"
+
+#, c-format
+msgid "%s%s: unable to create socket"
+msgstr ""
+
+#, c-format
+msgid "%sgnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
+msgstr ""
+
+#, c-format
+msgid "%sgnutls: error while checking peer's certificate"
+msgstr ""
+
+#, c-format
+msgid "%sgnutls: peer's certificate is NOT trusted"
+msgstr ""
+
+#, c-format
+msgid "%sgnutls: peer's certificate is trusted"
+msgstr ""
+
+#, c-format
+msgid "%sgnutls: peer's certificate issuer is unknown"
+msgstr ""
+
+#, c-format
+msgid "%sgnutls: the certificate has been revoked"
+msgstr ""
+
+#, c-format
+msgid "%sgnutls: receiving %d certificate"
+msgid_plural "%sgnutls: receiving %d certificates"
+msgstr[0] ""
+
+#, c-format
+msgid "%s - certificate[%d] info:"
+msgstr ""
+
+#, c-format
+msgid "%sgnutls: certificate has expired"
+msgstr ""
+
+#, c-format
+msgid "%sgnutls: certificate is not yet activated"
+msgstr ""
+
+#, c-format
+msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sgnutls: sending one certificate"
+msgstr ""
+
+#, c-format
+msgid "%sgnutls: invalid certificate \"%s\", error: %s"
+msgstr ""
+
+#, c-format
+msgid "%s - client certificate info (%s):"
+msgstr ""
+
+#, c-format
+msgid "%sgnutls: unable to read certifcate \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: unknown address for server \"%s\", cannot connect"
+msgstr ""
+
+#, c-format
+msgid "%s%s: proxy \"%s\" not found for server \"%s\", cannot connect"
+msgstr ""
+
+#, c-format
+msgid "%s%s: missing proxy settings, check options for proxy \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: nicks not defined for server \"%s\", cannot connect"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: cannot connect with SSL because WeeChat was not built with GnuTLS "
+"support"
+msgstr ""
+
+#, c-format
+msgid "%s%s: connecting to server %s/%d%s via %s proxy %s/%d%s..."
+msgstr ""
+
+#, c-format
+msgid "Connecting to server %s/%d%s via %s proxy %s/%d%s..."
+msgstr ""
+
+#, c-format
+msgid "%s%s: connecting to server %s/%d%s..."
+msgstr "%s%s: %s/%d%s  sunucusuna bağlanıyor..."
+
+#, c-format
+msgid "%s%s: reconnecting to server..."
+msgstr "%s%s: sunucuya yeniden bağlanılıyor..."
+
+#, c-format
+msgid "%s%s: disconnected from server"
+msgstr ""
+
+msgid "Log buffers to files"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: unable to find filename mask for buffer \"%s\", logging is disabled "
+"for this buffer"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: unable to start logging for buffer \"%s\": filename \"%s\" is already "
+"used by another buffer (check your log settings)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to create directory for logs (\"%s\")"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to write log file \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s\t****  Beginning of log  ****"
+msgstr ""
+
+#, c-format
+msgid "%s\t****  End of log  ****"
+msgstr ""
+
+msgid "Logging on buffers:"
+msgstr ""
+
+#, c-format
+msgid "logging (level: %d)"
+msgstr ""
+
+msgid "not logging"
+msgstr ""
+
+msgid "log not started"
+msgstr ""
+
+#, c-format
+msgid "%s: \"%s\" => level %d"
+msgstr "%s: \"%s\" => seviye %d"
+
+#, c-format
+msgid "%s===\t%s========== End of backlog (%d lines) =========="
+msgstr ""
+
+msgid "logger plugin configuration"
+msgstr ""
+
+msgid "list || set <level> || disable"
+msgstr ""
+
+msgid ""
+"   list: show logging status for opened buffers\n"
+"    set: set logging level on current buffer\n"
+"  level: level for messages to be logged (0 = logging disabled, 1 = a few "
+"messages (most important) .. 9 = all messages)\n"
+"disable: disable logging on current buffer (set level to 0)\n"
+"\n"
+"Options \"logger.level.*\" and \"logger.mask.*\" can be used to set level or "
+"mask for a buffer, or buffers beginning with name.\n"
+"\n"
+"Log levels used by IRC plugin:\n"
+"  1: user message, notice, private\n"
+"  2: nick change\n"
+"  3: server message\n"
+"  4: join/part/quit\n"
+"  9: all other messages\n"
+"\n"
+"Examples:\n"
+"  set level to 5 for current buffer:\n"
+"    /logger set 5\n"
+"  disable logging for current buffer:\n"
+"    /logger disable\n"
+"  set level to 3 for all IRC buffers:\n"
+"    /set logger.level.irc 3\n"
+"  disable logging for main WeeChat buffer:\n"
+"    /set logger.level.core.weechat 0\n"
+"  use a directory per IRC server and a file per channel inside:\n"
+"    /set logger.mask.irc \"$server/$channel.weechatlog\""
+msgstr ""
+
+msgid ""
+"logging level for this buffer (0 = logging disabled, 1 = a few messages "
+"(most important) .. 9 = all messages)"
+msgstr ""
+
+msgid "file mask for log file; local buffer variables are permitted"
+msgstr ""
+
+msgid ""
+"maximum number of lines to display from log file when creating new buffer (0 "
+"= no backlog)"
+msgstr ""
+
+msgid "color for backlog lines"
+msgstr ""
+
+msgid "color for line ending the backlog"
+msgstr ""
+
+msgid ""
+"automatically save content of buffers to files (unless a buffer disables log)"
+msgstr ""
+
+msgid ""
+"number of seconds between flush of log files (0 = write in log files "
+"immediately for each line printed)"
+msgstr ""
+
+msgid "use only lower case for log filenames"
+msgstr ""
+
+msgid ""
+"path for WeeChat log files; \"%h\" at beginning of string is replaced by "
+"WeeChat home (\"~/.weechat\" by default); date specifiers are permitted (see "
+"man strftime)"
+msgstr ""
+
+msgid ""
+"default file name mask for log files (format is \"directory/to/file\" or "
+"\"file\", without first \"/\" because \"path\" option is used to build "
+"complete path to file); local buffer variables are permitted; date "
+"specifiers are permitted (see man strftime)"
+msgstr ""
+
+msgid ""
+"replacement char for special chars in filename built with mask (like "
+"directory delimiter)"
+msgstr ""
+
+msgid "write information line in log file when log starts or ends for a buffer"
+msgstr ""
+
+msgid "timestamp used in log files (see man strftime for date/time specifiers)"
+msgstr ""
+
+msgid "text to write before nick in prefix of message, example: \"<\""
+msgstr ""
+
+msgid "text to write after nick in prefix of message, example: \">\""
+msgstr ""
+
+msgid "list of logger buffers"
+msgstr ""
+
+msgid "logger pointer (optional)"
+msgstr ""
+
+msgid "WeeChat version"
+msgstr "WeeChat sürüm"
+
+msgid "WeeChat version (as number)"
+msgstr ""
+
+msgid ""
+"WeeChat git version (output of command \"git describe\" for a development "
+"version only, empty for a stable release)"
+msgstr ""
+
+msgid "WeeChat compilation date"
+msgstr ""
+
+msgid "directory separator"
+msgstr ""
+
+msgid "WeeChat directory"
+msgstr ""
+
+msgid "WeeChat \"lib\" directory"
+msgstr ""
+
+msgid "WeeChat \"share\" directory"
+msgstr ""
+
+msgid "WeeChat \"locale\" directory"
+msgstr ""
+
+msgid "WeeChat site"
+msgstr "WeeChat site"
+
+msgid "WeeChat site, download page"
+msgstr ""
+
+msgid "1 if WeeChat is upgrading (command `/upgrade`)"
+msgstr ""
+
+msgid "terminal charset"
+msgstr ""
+
+msgid "WeeChat internal charset"
+msgstr ""
+
+msgid "locale used for translating messages"
+msgstr ""
+
+msgid "keyboard inactivity (seconds)"
+msgstr ""
+
+msgid "1 if filters are enabled"
+msgstr ""
+
+msgid "1 if cursor mode is enabled"
+msgstr ""
+
+msgid "list of bars"
+msgstr ""
+
+msgid "bar pointer (optional)"
+msgstr ""
+
+msgid "bar name (can start or end with \"*\" as wildcard) (optional)"
+msgstr ""
+
+msgid "list of bar items"
+msgstr ""
+
+msgid "bar item pointer (optional)"
+msgstr ""
+
+msgid "bar item name (can start or end with \"*\" as wildcard) (optional)"
+msgstr ""
+
+msgid "list of bar windows"
+msgstr ""
+
+msgid "bar window pointer (optional)"
+msgstr ""
+
+msgid "list of buffers"
+msgstr ""
+
+msgid "buffer pointer (optional)"
+msgstr ""
+
+msgid "buffer name (can start or end with \"*\" as wildcard) (optional)"
+msgstr ""
+
+msgid "lines of a buffer"
+msgstr ""
+
+msgid "buffer pointer"
+msgstr ""
+
+msgid "list of filters"
+msgstr "filtrelerin listesi"
+
+msgid "filter name (can start or end with \"*\" as wildcard) (optional)"
+msgstr ""
+
+msgid "history of commands"
+msgstr ""
+
+msgid "buffer pointer (if not set, return global history) (optional)"
+msgstr ""
+
+msgid "list of hooks"
+msgstr ""
+
+msgid ""
+"type,arguments (type is command/timer/.., arguments to get only some hooks "
+"(can start or end with \"*\" as wildcard), both are optional)"
+msgstr ""
+
+msgid "list of buffers in hotlist"
+msgstr ""
+
+msgid "list of key bindings"
+msgstr ""
+
+msgid "context (\"default\", \"search\", \"cursor\" or \"mouse\") (optional)"
+msgstr ""
+
+msgid "list of layouts"
+msgstr ""
+
+msgid "nicks in nicklist for a buffer"
+msgstr ""
+
+msgid "nick_xxx or group_xxx to get only nick/group xxx (optional)"
+msgstr ""
+
+msgid "list of options"
+msgstr "seçeneklerin listesi"
+
+msgid "option name (can start or end with \"*\" as wildcard) (optional)"
+msgstr ""
+
+msgid "list of plugins"
+msgstr "eklentilerin listesi"
+
+msgid "plugin pointer (optional)"
+msgstr ""
+
+msgid "plugin name (can start or end with \"*\" as wildcard) (optional)"
+msgstr ""
+
+#, fuzzy
+msgid "list of proxies"
+msgstr "eklentilerin listesi"
+
+msgid "proxy pointer (optional)"
+msgstr ""
+
+msgid "proxy name (can start or end with \"*\" as wildcard) (optional)"
+msgstr ""
+
+msgid "options for URL"
+msgstr ""
+
+msgid "list of windows"
+msgstr ""
+
+msgid "window pointer (optional)"
+msgstr ""
+
+msgid "\"current\" for current window or a window number (optional)"
+msgstr ""
+
+msgid "bar"
+msgstr ""
+
+msgid "bar item"
+msgstr ""
+
+msgid "bar window"
+msgstr ""
+
+msgid "buffer"
+msgstr ""
+
+msgid "structure with completion"
+msgstr ""
+
+msgid "structure with partial completion"
+msgstr ""
+
+msgid "config file"
+msgstr ""
+
+msgid "config section"
+msgstr ""
+
+msgid "config option"
+msgstr ""
+
+msgid "filter"
+msgstr "filtre"
+
+msgid "history of commands in buffer"
+msgstr ""
+
+msgid "hotlist"
+msgstr ""
+
+msgid "structure with undo for input line"
+msgstr ""
+
+msgid "a key (keyboard shortcut)"
+msgstr ""
+
+msgid "layout"
+msgstr ""
+
+msgid "buffer layout"
+msgstr ""
+
+msgid "window layout"
+msgstr ""
+
+msgid "structure with lines"
+msgstr ""
+
+msgid "structure with one line"
+msgstr ""
+
+msgid "structure with one line data"
+msgstr ""
+
+msgid "group in nicklist"
+msgstr ""
+
+msgid "nick in nicklist"
+msgstr ""
+
+msgid "plugin"
+msgstr "eklenti"
+
+msgid "proxy"
+msgstr ""
+
+msgid "window"
+msgstr "pencere"
+
+msgid "scroll info in window"
+msgstr ""
+
+msgid "tree of windows"
+msgstr ""
+
+#, c-format
+msgid "%sError: unable to load plugin \"%s\": %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sIf you're trying to load a script and not a C plugin, try command to load "
+"scripts (/perl, /python, ...)"
+msgstr ""
+
+#, c-format
+msgid "%sError: symbol \"%s\" not found in plugin \"%s\", failed to load"
+msgstr ""
+
+#, c-format
+msgid "%sIf plugin \"%s\" is old/obsolete, you can delete this file."
+msgstr ""
+
+#, c-format
+msgid ""
+"%sError: API mismatch for plugin \"%s\" (current API: \"%s\", plugin API: "
+"\"%s\"), failed to load"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sError: unable to load plugin \"%s\": a plugin with same name already exists"
+msgstr ""
+
+#, c-format
+msgid "%sError: function \"%s\" not found in plugin \"%s\", failed to load"
+msgstr ""
+
+#, c-format
+msgid "%sError: unable to initialize plugin \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sError: unable to load plugin \"%s\" (not enough memory)"
+msgstr ""
+
+#, c-format
+msgid "Plugin \"%s\" loaded"
+msgstr ""
+
+#, c-format
+msgid "Plugin \"%s\" unloaded"
+msgstr ""
+
+#, c-format
+msgid "%sError: plugin \"%s\" not found"
+msgstr "%sHata: \"%s\" eklentisi bulunamadı"
+
+msgid "Plugins unloaded"
+msgstr ""
+
+msgid "description of plugin option"
+msgstr ""
+
+msgid "Actions (letter+enter):"
+msgstr ""
+
+msgid "  [D] Disconnect"
+msgstr ""
+
+msgid "  [R] Remove"
+msgstr "  [R] Kaldır"
+
+msgid "  [P] Purge finished"
+msgstr ""
+
+msgid "  [Q] Close this buffer"
+msgstr ""
+
+#, c-format
+msgid "%s%s[%s%s%s%s] %s, received: %s, sent: %s"
+msgstr ""
+
+#, c-format
+msgid "%s%-26s started on: %s, ended on: %s"
+msgstr ""
+
+msgid "List of clients for relay"
+msgstr ""
+
+msgid "Relay WeeChat data to remote application (irc/weechat protocols)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: disconnecting from client %s%s%s because upgrade can't work for "
+"clients connected via SSL"
+msgstr ""
+
+msgid "client"
+msgid_plural "clients"
+msgstr[0] "istemciler"
+
+msgid "connecting"
+msgstr ""
+
+msgid "waiting auth"
+msgstr ""
+
+msgid "auth failed"
+msgstr ""
+
+msgid "disconnected"
+msgstr ""
+
+#, c-format
+msgid "%s%s: TLS handshake failed for client %s%s%s: error %d %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: TLS handshake timeout for client %s%s%s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: invalid websocket handshake received for client %s%s%s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: origin \"%s\" not allowed for websocket"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error decoding websocket frame for client %s%s%s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: reading data on socket for client %s%s%s: error %d %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: sending data to client %s%s%s: error %d %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: warning: no SSL certificate/key found (option relay.network."
+"ssl_cert_key)"
+msgstr ""
+
+#, c-format
+msgid "%s: new client on port %d: %s%s%s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: not enough memory for new client"
+msgstr ""
+
+#, c-format
+msgid "%s%s: authentication failed with client %s%s%s"
+msgstr ""
+
+#, c-format
+msgid "%s: disconnected from client %s%s%s"
+msgstr ""
+
+msgid "Clients for relay:"
+msgstr ""
+
+msgid "Connected clients for relay:"
+msgstr ""
+
+#, c-format
+msgid ""
+"  %s%s%s (%s%s%s), started on: %s, last activity: %s, bytes: %lu recv, %lu "
+"sent"
+msgstr ""
+
+#, c-format
+msgid "  %s%s%s (%s%s%s), started on: %s"
+msgstr ""
+
+msgid "No client for relay"
+msgstr ""
+
+msgid "No connected client for relay"
+msgstr ""
+
+msgid "Listening on ports:"
+msgstr ""
+
+#, c-format
+msgid "  port %s%d%s, relay: %s%s%s, %s, started on: %s"
+msgstr ""
+
+msgid "No server for relay"
+msgstr ""
+
+#, c-format
+msgid "%s: relay \"%s\" (port %s) added"
+msgstr ""
+
+#, c-format
+msgid "%s: relay \"%s\" (port %d) removed"
+msgstr ""
+
+#, c-format
+msgid "%s%s: relay \"%s\" not found"
+msgstr ""
+
+msgid "relay control"
+msgstr ""
+
+msgid ""
+"list|listfull|listrelay || add [ipv4.][ipv6.][ssl.]<protocol.name> <port> || "
+"del [ipv4.][ipv6.][ssl.]<protocol.name> || raw || sslcertkey"
+msgstr ""
+
+msgid ""
+"         list: list relay clients (only active relays)\n"
+"     listfull: list relay clients (verbose, all relays)\n"
+"    listrelay: list relays (name and port)\n"
+"          add: add relay for a protocol + name\n"
+"          del: remove relay for a protocol + name\n"
+"         ipv4: force use of IPv4\n"
+"         ipv6: force use of IPv6\n"
+"          ssl: enable SSL\n"
+"protocol.name: protocol and name to relay:\n"
+"                 - protocol \"irc\": name is the server to share (optional, "
+"if not given, the server name must be sent by client in command \"PASS\", "
+"with format: \"PASS server:password\")\n"
+"                 - protocol \"weechat\" (name is not used)\n"
+"         port: port used for relay\n"
+"          raw: open buffer with raw Relay data\n"
+"   sslcertkey: set SSL certificate/key using path in option relay.network."
+"ssl_cert_key\n"
+"\n"
+"Without argument, this command opens buffer with list of relay clients.\n"
+"\n"
+"Examples:\n"
+"  irc proxy, for server \"freenode\":\n"
+"    /relay add irc.freenode 8000\n"
+"  irc proxy, for server \"freenode\", with SSL:\n"
+"    /relay add ssl.irc.freenode 8001\n"
+"  irc proxy, for all servers (client will choose), with SSL:\n"
+"    /relay add ssl.irc 8002\n"
+"  weechat protocol:\n"
+"    /relay add weechat 9000\n"
+"  weechat protocol with SSL:\n"
+"    /relay add ssl.weechat 9001\n"
+"  weechat protocol with SSL, using only IPv4:\n"
+"    /relay add ipv4.ssl.weechat 9001\n"
+"  weechat protocol with SSL, using only IPv6:\n"
+"    /relay add ipv6.ssl.weechat 9001\n"
+"  weechat protocol with SSL, using IPv4 + IPv6:\n"
+"    /relay add ipv4.ipv6.ssl.weechat 9001"
+msgstr ""
+
+msgid "all possible protocol.name for relay plugin"
+msgstr ""
+
+msgid "protocol.name of current relays for relay plugin"
+msgstr ""
+
+msgid "first free port for relay plugin"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error: port \"%d\" is already used"
+msgstr ""
+
+#, c-format
+msgid "%s%s: cannot use SSL because WeeChat was not built with GnuTLS support"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error: unknown protocol \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: error: name is not allowed for protocol \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: error: relay for \"%s\" already exists"
+msgstr ""
+
+msgid "auto open relay buffer when a new client is connecting"
+msgstr ""
+
+msgid "text color for client description"
+msgstr "istemci açıklaması için metin rengi"
+
+msgid "text color in relay buffer"
+msgstr ""
+
+msgid "background color in relay buffer"
+msgstr ""
+
+msgid "text color of selected line in relay buffer"
+msgstr ""
+
+msgid "text color for \"connecting\" status"
+msgstr ""
+
+msgid "text color for \"waiting authentication\" status"
+msgstr ""
+
+msgid "text color for \"connected\" status"
+msgstr ""
+
+msgid "text color for \"authentication failed\" status"
+msgstr ""
+
+msgid "text color for \"disconnected\" status"
+msgstr ""
+
+msgid ""
+"regular expression with IPs allowed to use relay (case insensitive, use \"(?-"
+"i)\" at beginning to make it case sensitive); if IPv6 is enabled and that "
+"connection is made using IPv4, it will be IPv4-mapped IPv6 address (like: "
+"\"::ffff:127.0.0.1\"), example: \"^((::ffff:)?123.45.67.89|192.160.*)$\""
+msgstr ""
+
+msgid ""
+"address for bind (if empty, connection is possible on all interfaces, use "
+"\"127.0.0.1\" to allow connections from local machine only)"
+msgstr ""
+
+msgid ""
+"compression level for packets sent to client with WeeChat protocol (0 = "
+"disable compression, 1 = low compression ... 9 = best compression)"
+msgstr ""
+
+msgid ""
+"listen on IPv6 socket by default (in addition to IPv4 which is default); "
+"protocols IPv4 and IPv6 can be forced (individually or together) in the "
+"protocol name (see /help relay)"
+msgstr ""
+
+msgid "maximum number of clients connecting to a port"
+msgstr ""
+
+msgid ""
+"password required by clients to access this relay (empty value means no "
+"password required)"
+msgstr ""
+
+msgid ""
+"file with SSL certificate and private key (for serving clients with SSL)"
+msgstr ""
+
+msgid ""
+"regular expression with origins allowed in websockets (case insensitive, use "
+"\"(?-i)\" at beginning to make it case sensitive), example: \"^http://(www"
+"\\.)?example\\.(com|org)\""
+msgstr ""
+
+msgid "maximum number of lines in backlog per IRC channel (0 = unlimited)"
+msgstr ""
+
+msgid ""
+"maximum number of minutes in backlog per IRC channel (0 = unlimited, "
+"examples: 1440 = one day, 10080 = one week, 43200 = one month, 525600 = one "
+"year)"
+msgstr ""
+
+msgid "display backlog starting from last client disconnect"
+msgstr ""
+
+msgid ""
+"tags of messages which are displayed in backlog per IRC channel (supported "
+"tags: \"irc_join\", \"irc_part\", \"irc_quit\", \"irc_nick\", \"irc_privmsg"
+"\"), \"*\" = all supported tags"
+msgstr ""
+
+msgid ""
+"format for time in backlog messages (see man strftime for format) (not used "
+"if server capability \"server-time\" was enabled by client, because time is "
+"sent as irc tag); empty string = disable time in backlog messages"
+msgstr ""
+
+msgid "list of relay clients"
+msgstr ""
+
+msgid "relay pointer (optional)"
+msgstr ""
+
+#, c-format
+msgid "%s: SSL certificate and key have been set"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to initialize priority for SSL"
+msgstr ""
+
+msgid "Relay raw messages"
+msgstr ""
+
+#, c-format
+msgid "%s: socket closed for %s (port %d)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: cannot accept client on port %d (%s): error %d %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: IP address \"%s\" not allowed for relay"
+msgstr ""
+
+#, c-format
+msgid "%s%s: cannot set socket option \"%s\" to %d: error %d %s"
+msgstr ""
+
+#. TRANSLATORS: second "%s" is "IPv4" or "IPv6"
+#, c-format
+msgid "%s%s: invalid bind address \"%s\" for %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: cannot create socket: error %d %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: try /set relay.network.ipv6 off"
+msgstr ""
+
+#, c-format
+msgid "%s%s: cannot \"bind\" on port %d (%s): error %d %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: cannot \"listen\" on port %d (%s): error %d %s"
+msgstr ""
+
+#, c-format
+msgid "%s: listening on port %d (relay: %s, %s, max %d clients)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: not enough memory for listening on new port"
+msgstr ""
+
+#, c-format
+msgid "%s%s: not enough memory for parsing message"
+msgstr ""
+
+#, c-format
+msgid "%s%s: failed to execute command \"%s\" for client %s%s%s"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: too few arguments received from client %s%s%s for command \"%s"
+"\" (received: %d arguments, expected: at least %d)"
+msgstr ""
+
+msgid "String modifier with regular expressions"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error compiling regular expression \"%s\""
+msgstr ""
+
+msgid "No rmodifier defined"
+msgstr ""
+
+msgid "List of rmodifiers:"
+msgstr ""
+
+msgid "Default rmodifiers:"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error creating rmodifier \"%s\""
+msgstr ""
+
+#, c-format
+msgid "Rmodifier \"%s\" created"
+msgstr ""
+
+#, c-format
+msgid "%d rmodifiers removed"
+msgstr ""
+
+#, c-format
+msgid "Rmodifier \"%s\" removed"
+msgstr ""
+
+#, c-format
+msgid "%sRmodifier \"%s\" not found"
+msgstr ""
+
+msgid "Default rmodifiers restored:"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sError: \"-yes\" argument is required for restoring default rmodifiers "
+"(security reason)"
+msgstr ""
+
+msgid "alter modifier strings with regular expressions"
+msgstr ""
+
+msgid ""
+"list|listdefault || add <name> <modifiers> <groups> <regex> || del <name>|-"
+"all [<name>...] || default -yes"
+msgstr ""
+
+msgid ""
+"       list: list all rmodifiers\n"
+"listdefault: list default rmodifiers\n"
+"        add: add a rmodifier\n"
+"       name: name of rmodifier\n"
+"  modifiers: comma separated list of modifiers\n"
+"     groups: action on groups captured in regular expression (inside "
+"parentheses): comma separated list of groups (from 1 to 9) with optional \"*"
+"\" after number to hide the group\n"
+"      regex: regular expression (case insensitive, can start by \"(?-i)\" to "
+"become case sensitive)\n"
+"        del: delete a rmodifier\n"
+"       -all: delete all rmodifiers\n"
+"    default: restore default rmodifiers\n"
+"\n"
+"Examples:\n"
+"  hide everything typed after a command /password:\n"
+"    /rmodifier add password input_text_display 1,2* ^(/password +)(.*)\n"
+"  delete rmodifier \"password\":\n"
+"    /rmodifier del password\n"
+"  delete all rmodifiers:\n"
+"    /rmodifier del -all"
+msgstr ""
+
+msgid "list of rmodifiers"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error creating rmodifier \"%s\" => \"%s\""
+msgstr ""
+
+msgid "char used to hide part of a string"
+msgstr ""
+
+msgid "rmodifier pointer (optional)"
+msgstr ""
+
+msgid "rmodifier name (can start or end with \"*\" as joker) (optional)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: script \"%s\" already registered (register ignored)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: unable to register script \"%s\" (another script already exists with "
+"this name)"
+msgstr ""
+
+#, c-format
+msgid "%s: registered script \"%s\", version %s (%s)"
+msgstr ""
+
+msgid "Support of scheme scripts (with Guile)"
+msgstr ""
+
+#, c-format
+msgid "%s: stdout/stderr: %s%s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: function \"%s\" must return a valid value"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error in function \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s: loading script \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: function \"register\" not found (or failed) in file \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s: unloading script \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s: script \"%s\" unloaded"
+msgstr ""
+
+#, c-format
+msgid "%s%s: script \"%s\" not loaded"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unknown option for command \"%s\""
+msgstr ""
+
+msgid "Support of lua scripts"
+msgstr "Lua betik desteği"
+
+#, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: script \"%s\" not found"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to redirect stdout and stderr"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to load file \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to execute file \"%s\""
+msgstr ""
+
+msgid "Support of perl scripts"
+msgstr "Perl betik desteği"
+
+#, c-format
+msgid "%s%s: function \"%s\" must return one valid value (%d)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: function \"%s\" is internally misused"
+msgstr ""
+
+#, c-format
+msgid "%s%s: not enough memory in function \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to parse file \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to initialize %s"
+msgstr ""
+
+msgid "list/load/unload scripts"
+msgstr ""
+
+msgid ""
+"list|listfull [<name>] || load [-q] <filename> || autoload || reload|unload "
+"[-q] [<name>]"
+msgstr ""
+
+msgid ""
+"    list: list loaded scripts\n"
+"listfull: list loaded scripts (verbose)\n"
+"    load: load a script\n"
+"autoload: load all scripts in \"autoload\" directory\n"
+"  reload: reload a script (if no name given, unload all scripts, then load "
+"all scripts in \"autoload\" directory)\n"
+"  unload: unload a script (if no name given, unload all scripts)\n"
+"filename: script (file) to load\n"
+"    name: a script name (name used in call to \"register\" function)\n"
+"      -q: quiet mode: do not display messages\n"
+"\n"
+"Without argument, this command lists all loaded scripts."
+msgstr ""
+
+msgid "list of scripts"
+msgstr "betiklerin listesi"
+
+msgid "script pointer (optional)"
+msgstr ""
+
+msgid "script name (can start or end with \"*\" as wildcard) (optional)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: warning, invalid pointer (\"%s\") for function \"%s\" (script: %s)"
+msgstr ""
+
+#, c-format
+msgid "%s: error loading script \"%s\" (spaces or empty name not allowed)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: warning, license \"%s\" for script \"%s\" differs from plugin license "
+"(\"%s\")"
+msgstr ""
+
+#, c-format
+msgid "%s: error loading script \"%s\" (not enough memory)"
+msgstr ""
+
+#, c-format
+msgid "%s: script removed: %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: failed to remove script: %s (%s)"
+msgstr ""
+
+#, c-format
+msgid "%s: script \"%s\" not found, nothing was removed"
+msgstr ""
+
+#, c-format
+msgid "%s%s: failed to move script %s to %s (%s)"
+msgstr ""
+
+#. TRANSLATORS: "%s" is language (for example "perl")
+#, c-format
+msgid "%s scripts loaded:"
+msgstr "%s yüklü betikler:"
+
+#, c-format
+msgid "    file: %s"
+msgstr "    dosya: %s"
+
+#, c-format
+msgid "    written by \"%s\", license: %s"
+msgstr ""
+
+msgid "  (none)"
+msgstr "  (yok)"
+
+#, c-format
+msgid "%s: scripts unloaded"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: unable to call function \"%s\", script is not initialized (script: %s)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
+msgstr ""
+
+msgid "Support of python scripts"
+msgstr "Python betik desteği"
+
+#, c-format
+msgid "%s%s: unable to initialize WeeChat module"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to redirect stdout"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to redirect stderr"
+msgstr ""
+
+msgid "path to python 2.x interpreter"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to launch global interpreter"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to get current interpreter state"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to free interpreter"
+msgstr ""
+
+msgid "Support of ruby scripts"
+msgstr "Ruby betik desteği"
+
+#, c-format
+msgid "%s%s: stdout/stderr: %s%s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to read file \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: error while loading file \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: function \"weechat_init\" is missing in file \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to eval function \"weechat_init\" in file \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to eval WeeChat ruby internal code"
+msgstr ""
+
+msgid "Scripts manager"
+msgstr "Betik yöneticisi"
+
+msgid "Scripts loaded:"
+msgstr "Yüklü betikler:"
+
+#, c-format
+msgid "%s: unknown language for script \"%s\""
+msgstr "%s: \"%s\" betiği için bilinmeyen dil"
+
+#, c-format
+msgid "%s: plugin \"%s\" is not loaded"
+msgstr "%s: \"%s\" eklentisi yüklenmedi"
+
+#, c-format
+msgid "%s: script \"%s\" is not loaded"
+msgstr "%s: \"%s\" betiği yüklenmedi"
+
+#, c-format
+msgid "%s: script \"%s\" not found"
+msgstr "%s: \"%s\" betiği bulunamadı"
+
+#, c-format
+msgid "%s: script \"%s\" is not installed"
+msgstr ""
+
+#, c-format
+msgid "%s: autoload enabled for script \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s: autoload disabled for script \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: error downloading script \"%s\": %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s: script \"%s\" can not be installed because plugin \"%s\" is not loaded"
+msgstr ""
+
+#, c-format
+msgid "%s: downloading script \"%s\"..."
+msgstr ""
+
+#, c-format
+msgid "%s: script \"%s\" is held"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s: script \"%s\" can not be removed because plugin \"%s\" is not loaded"
+msgstr ""
+
+#, c-format
+msgid "%s: script \"%s\" is not held any more"
+msgstr ""
+
+msgid "Error: file not found"
+msgstr "Hata: dosya bulunamadı"
+
+msgid "Source code:"
+msgstr "Kaynak kod:"
+
+msgid "Downloading script..."
+msgstr "Betikler indiriliyor...."
+
+#, c-format
+msgid "%s: script \"%s\" is already installed and up-to-date"
+msgstr ""
+
+#, c-format
+msgid "%s: all scripts are up-to-date"
+msgstr ""
+
+msgid "Script"
+msgstr "Betik"
+
+msgid "Version"
+msgstr "Sürüm"
+
+msgid "Version loaded"
+msgstr "Yüklü sürüm"
+
+msgid "Author"
+msgstr "Yazar"
+
+msgid "License"
+msgstr "Lisans"
+
+msgid "Description"
+msgstr ""
+
+msgid "Tags"
+msgstr "Etiketler"
+
+msgid "Status"
+msgstr "Durum"
+
+msgid "Date added"
+msgstr "Tarih eklendi"
+
+msgid "Date updated"
+msgstr "Tarih güncellendi"
+
+msgid "URL"
+msgstr ""
+
+msgid "MD5"
+msgstr ""
+
+msgid "Requires"
+msgstr ""
+
+msgid "Min WeeChat"
+msgstr ""
+
+msgid "Max WeeChat"
+msgstr ""
+
+msgid "Alt+key/input: v=back to list d=jump to diff"
+msgstr ""
+
+#, c-format
+msgid ""
+"%d/%d scripts (filter: %s) | Sort: %s | Alt+key/input: i=install r=remove "
+"l=load L=reload u=unload A=autoload h=(un)hold v=view script | Input: "
+"q=close $=refresh s:x,y=sort words=filter *=reset filter | Mouse: "
+"left=select right=install/remove"
+msgstr ""
+
+msgid "Scripts"
+msgstr "Betikler"
+
+msgid "WeeChat scripts manager"
+msgstr "WeeChat betik yöneticisi"
+
+msgid ""
+"list [-o|-i] || search <text> || show <script> || load|unload|reload "
+"<script> [<script>...] || autoload|noautoload|toggleautoload <script> "
+"[<script>...] || install|remove|installremove|hold [-q] <script> "
+"[<script>...] || upgrade || update"
+msgstr ""
+
+msgid ""
+"          list: list loaded scripts (all languages)\n"
+"            -o: send list of loaded scripts to buffer\n"
+"            -i: copy list of loaded scripts in command line (for sending to "
+"buffer)\n"
+"        search: search scripts by tags or text and display result on scripts "
+"buffer\n"
+"          show: show detailed info about a script\n"
+"          load: load script(s)\n"
+"        unload: unload script(s)\n"
+"        reload: reload script(s)\n"
+"      autoload: autoload the script\n"
+"    noautoload: do not autoload the script\n"
+"toggleautoload: toggle autoload\n"
+"       install: install/upgrade script(s)\n"
+"        remove: remove script(s)\n"
+" installremove: install or remove script(s), depending on current state\n"
+"          hold: hold/unhold script(s) (a script held will not be upgraded "
+"any more and cannot be removed)\n"
+"            -q: quiet mode: do not display messages\n"
+"       upgrade: upgrade all installed scripts which are obsolete (new "
+"version available)\n"
+"        update: update local scripts cache\n"
+"\n"
+"Without argument, this command opens a buffer with list of scripts.\n"
+"\n"
+"On script buffer, the possible status for each script are:\n"
+"  * i a H r N\n"
+"  | | | | | |\n"
+"  | | | | | obsolete (new version available)\n"
+"  | | | | running (loaded)\n"
+"  | | | held\n"
+"  | | autoloaded\n"
+"  | installed\n"
+"  popular script\n"
+"\n"
+"Keys on script buffer:\n"
+"  alt+i  install script\n"
+"  alt+r  remove script\n"
+"  alt+l  load script\n"
+"  alt+L  reload script\n"
+"  alt+u  unload script\n"
+"  alt+A  autoload script\n"
+"  alt+h  (un)hold script\n"
+"  alt+v  view script\n"
+"\n"
+"Input allowed on script buffer:\n"
+"  i/r/l/L/u/h  action on script (same as keys above)\n"
+"  q            close buffer\n"
+"  $            refresh buffer\n"
+"  s:x,y        sort buffer using keys x and y (see /help script.look.sort)\n"
+"  s:           reset sort (use default sort)\n"
+"  word(s)      filter scripts: search word(s) in scripts (description, "
+"tags, ...)\n"
+"  *            remove filter\n"
+"\n"
+"Mouse actions on script buffer:\n"
+"  wheel         scroll list\n"
+"  left button   select script\n"
+"  right button  install/remove script\n"
+"\n"
+"Examples:\n"
+"  /script search url\n"
+"  /script install iset.pl buffers.pl\n"
+"  /script remove iset.pl\n"
+"  /script hold urlserver.py\n"
+"  /script reload urlserver\n"
+"  /script upgrade"
+msgstr ""
+
+msgid "list of scripts in repository"
+msgstr ""
+
+msgid "list of scripts installed (from repository)"
+msgstr ""
+
+msgid "files in script directories"
+msgstr ""
+
+msgid "tags of scripts in repository"
+msgstr ""
+
+msgid ""
+"format of columns displayed in script buffer: following column identifiers "
+"are replaced by their value: %a=author, %d=description, %D=date added, "
+"%e=extension, %l=language, %L=license, %n=name with extension, %N=name, "
+"%r=requirements, %s=status, %t=tags, %u=date updated, %v=version, %V=version "
+"loaded, %w=min_weechat, %W=max_weechat)"
+msgstr ""
+
+msgid "colorize output of diff"
+msgstr ""
+
+msgid ""
+"command used to show differences between script installed and the new "
+"version in repository (\"auto\" = auto detect diff command (git or diff), "
+"empty value = disable diff, other string = name of command, for example "
+"\"diff\")"
+msgstr ""
+
+msgid ""
+"display source code of script on buffer with detail on a script (script is "
+"downloaded in a temporary file when detail on script is displayed)"
+msgstr ""
+
+msgid ""
+"quiet actions on script buffer: do not display messages on core buffer when "
+"scripts are installed/removed/loaded/unloaded (only errors are displayed)"
+msgstr ""
+
+msgid ""
+"default sort keys for scripts: comma-separated list of identifiers: "
+"a=author, A=autoloaded, d=date added, e=extension, i=installed, l=language, "
+"n=name, o=obsolete, p=popularity, r=running, u=date updated; char \"-\" can "
+"be used before identifier to reverse order; example: \"i,u\": installed "
+"scripts first, sorted by update date"
+msgstr ""
+
+msgid ""
+"translate description of scripts (if translation is available in your "
+"language, otherwise english version is used)"
+msgstr ""
+
+msgid ""
+"use keys alt+X in script buffer to do actions on scripts (alt+i = install, "
+"alt+r = remove, ...); if disabled, only the input is allowed: i, r, ..."
+msgstr ""
+
+msgid "color for status \"popular\" (\"*\")"
+msgstr ""
+
+msgid "color for status \"installed\" (\"i\")"
+msgstr ""
+
+msgid "color for status \"autoloaded\" (\"a\")"
+msgstr ""
+
+msgid "color for status \"held\" (\"H\")"
+msgstr ""
+
+msgid "color for status \"running\" (\"r\")"
+msgstr ""
+
+msgid "color for status \"obsolete\" (\"N\")"
+msgstr ""
+
+msgid "color for status \"unknown\" (\"?\")"
+msgstr ""
+
+msgid "text color in script buffer"
+msgstr ""
+
+msgid "text color of dates in script buffer"
+msgstr ""
+
+msgid "text color of delimiters in script buffer"
+msgstr ""
+
+msgid "text color of description in script buffer"
+msgstr ""
+
+msgid "text color of extension in script buffer"
+msgstr ""
+
+msgid "text color of script name in script buffer"
+msgstr ""
+
+msgid "text color of tags in script buffer"
+msgstr ""
+
+msgid "text color of version in script buffer"
+msgstr ""
+
+msgid "text color of version loaded in script buffer"
+msgstr ""
+
+msgid "background color in script buffer"
+msgstr ""
+
+msgid "text color for selected line in script buffer"
+msgstr ""
+
+msgid "text color of dates for selected line in script buffer"
+msgstr ""
+
+msgid "text color of description for selected line in script buffer"
+msgstr ""
+
+msgid "text color of extension for selected line in script buffer"
+msgstr ""
+
+msgid "text color of script name for selected line in script buffer"
+msgstr ""
+
+msgid "text color of tags for selected line in script buffer"
+msgstr ""
+
+msgid "text color of version for selected line in script buffer"
+msgstr ""
+
+msgid "text color of version loaded for selected line in script buffer"
+msgstr ""
+
+msgid "background color for selected line in script buffer"
+msgstr ""
+
+msgid ""
+"autoload scripts installed (make a link in \"autoload\" directory to script "
+"in parent directory)"
+msgstr ""
+
+msgid ""
+"local cache expiration time, in minutes (-1 = never expires, 0 = always "
+"expire)"
+msgstr ""
+
+msgid "local cache directory for scripts"
+msgstr ""
+
+msgid ""
+"scripts to \"hold\": comma-separated list of scripts which will never been "
+"upgraded and can not be removed, for example: \"buffers.pl,iset.pl\""
+msgstr ""
+
+msgid "URL for file with list of scripts"
+msgstr ""
+
+msgid ""
+"script name with extension (can start or end with \"*\" as wildcard) "
+"(optional)"
+msgstr ""
+
+msgid "scripts from repository"
+msgstr ""
+
+#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
+msgid "popular"
+msgstr ""
+
+#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
+msgid "installed"
+msgstr ""
+
+#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
+msgid "autoloaded"
+msgstr ""
+
+#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
+msgid "held"
+msgstr ""
+
+#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
+msgid "running"
+msgstr ""
+
+#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
+msgid "obsolete"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error reading list of scripts"
+msgstr ""
+
+#, c-format
+msgid "%s: %d scripts for WeeChat %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: list of scripts is empty (repository file is broken, or download has "
+"failed)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error downloading list of scripts: %s"
+msgstr ""
+
+#, c-format
+msgid "%s: downloading list of scripts..."
+msgstr ""
+
+msgid "Support of tcl scripts"
+msgstr "Tcl betik desteği"
+
+#, c-format
+msgid "%s%s: unable to run function \"%s\": %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to create new interpreter"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error occurred while parsing file \"%s\": %s"
+msgstr ""
+
+msgid "  [A] Accept"
+msgstr ""
+
+msgid "  [C] Cancel"
+msgstr "  [C] İptal"
+
+msgid "xfer chat"
+msgstr ""
+
+msgid "ETA"
+msgstr ""
+
+msgid "Xfer list"
+msgstr ""
+
+msgid "DCC file transfer and direct chat"
+msgstr ""
+
+msgid "waiting"
+msgstr "bekleniyor"
+
+msgid "active"
+msgstr ""
+
+msgid "done"
+msgstr "bitti"
+
+msgid "failed"
+msgstr "başarısız"
+
+msgid "aborted"
+msgstr ""
+
+#, c-format
+msgid "%s%s: file %s %s %s (%ld.%ld.%ld.%ld): %s"
+msgstr ""
+
+msgid "sent to"
+msgstr ""
+
+msgid "received from"
+msgstr ""
+
+msgid "OK"
+msgstr "TAMAM"
+
+msgid "FAILED"
+msgstr "BAŞARISIZ"
+
+#, c-format
+msgid "%s: chat closed with %s (%ld.%ld.%ld.%ld)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: aborting active xfer: \"%s\" from %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: not enough memory for new xfer"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s: incoming file from %s (%ld.%ld.%ld.%ld, %s.%s), name: %s, %llu bytes "
+"(protocol: %s)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s: offering file to %s (%s.%s), name: %s (local filename: %s), %llu bytes "
+"(protocol: %s)"
+msgstr ""
+
+#, c-format
+msgid "%s: incoming chat request from %s (%ld.%ld.%ld.%ld, %s.%s)"
+msgstr ""
+
+#, c-format
+msgid "%s: sending chat request to %s (%s.%s)"
+msgstr ""
+
+#, c-format
+msgid "%s: file %s (local filename: %s) will be resumed at position %llu"
+msgstr ""
+
+#, c-format
+msgid "%s%s: missing arguments (%s)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unknown xfer type \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: unknown xfer protocol \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: cannot access file \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: could not find address for \"%s\", falling back to local IP"
+msgstr ""
+
+#, c-format
+msgid "%s%s: cannot create socket for xfer: error %d %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: cannot find available port for xfer"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error creating xfer"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: unable to resume file \"%s\" (port: %d, start position: %llu): xfer "
+"not found or not ready for transfer"
+msgstr ""
+
+#, c-format
+msgid "%s: file %s resumed at position %llu"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: unable to accept resume file \"%s\" (port: %d, start position: %llu): "
+"xfer not found or not ready for transfer"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error sending data to \"%s\" via xfer chat"
+msgstr ""
+
+#, c-format
+msgid "Connected to %s (%ld.%ld.%ld.%ld) via xfer chat"
+msgstr ""
+
+#, c-format
+msgid "%s%s: can't find xfer for buffer \"%s\""
+msgstr ""
+
+msgid "Xfer list:"
+msgstr "Xfer listesi:"
+
+#, c-format
+msgid ""
+"%3d. %s (%s), file: \"%s\" (local: \"%s\"), %s %s, status: %s%s%s (%llu %%)"
+msgstr ""
+
+#. TRANSLATORS: "%s" after "started on" is a date
+#, c-format
+msgid "%3d. %s, chat with %s (local nick: %s), started on %s, status: %s%s"
+msgstr ""
+
+#, c-format
+msgid ""
+"     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %ld."
+"%ld.%ld.%ld (port %d)"
+msgstr ""
+
+#. TRANSLATORS: "%s" after "started on" is a date
+#, c-format
+msgid "     fast_send: %s, blocksize: %d, started on %s"
+msgstr ""
+
+msgid "yes"
+msgstr "evet"
+
+msgid "no"
+msgstr "hayır"
+
+msgid "No xfer"
+msgstr ""
+
+msgid "send a CTCP action to remote host"
+msgstr ""
+
+msgid "xfer control"
+msgstr ""
+
+msgid ""
+"    list: list xfer\n"
+"listfull: list xfer (verbose)\n"
+"\n"
+"Without argument, this command opens buffer with xfer list."
+msgstr ""
+
+msgid "nicks of DCC chat"
+msgstr ""
+
+msgid "auto open xfer buffer when a new xfer is added to list"
+msgstr ""
+
+msgid "size of progress bar, in chars (if 0, progress bar is disabled)"
+msgstr ""
+
+msgid "text color in xfer buffer"
+msgstr ""
+
+msgid "background color in xfer buffer"
+msgstr ""
+
+msgid "text color of selected line in xfer buffer"
+msgstr ""
+
+msgid "text color for \"waiting\" status"
+msgstr ""
+
+msgid "text color for \"active\" status"
+msgstr ""
+
+msgid "text color for \"done\" status"
+msgstr ""
+
+msgid "text color for \"failed\" status"
+msgstr ""
+
+msgid "text color for \"aborted\" status"
+msgstr ""
+
+msgid "timeout for xfer request (in seconds)"
+msgstr ""
+
+msgid "block size for sending packets, in bytes"
+msgstr ""
+
+msgid "does not wait for ACK when sending file"
+msgstr ""
+
+msgid ""
+"restricts outgoing files/chats to use only ports in the given range (useful "
+"for NAT) (syntax: a single port, ie. 5000 or a port range, ie. 5000-5015, "
+"empty value means any port, it's recommended to use ports greater than 1024, "
+"because only root can use ports below 1024)"
+msgstr ""
+
+msgid ""
+"IP or DNS address used for sending files/chats (if empty, local interface IP "
+"is used)"
+msgstr ""
+
+msgid ""
+"speed limit for sending files, in kilo-bytes by second (0 means no limit)"
+msgstr ""
+
+msgid ""
+"path for writing incoming files (\"%h\" will be replaced by WeeChat home, "
+"\"~/.weechat\" by default)"
+msgstr ""
+
+msgid ""
+"path for reading files when sending (when no path is specified by user) (\"%h"
+"\" will be replaced by WeeChat home, \"~/.weechat\" by default)"
+msgstr ""
+
+msgid "use remote nick as prefix in local filename when receiving a file"
+msgstr ""
+
+msgid "convert spaces to underscores when sending files"
+msgstr ""
+
+msgid "rename incoming files if already exists (add \".1\", \".2\", ...)"
+msgstr ""
+
+msgid ""
+"automatically resume file transfer if connection with remote host is lost"
+msgstr ""
+
+msgid "automatically accept incoming files (use carefully!)"
+msgstr ""
+
+msgid "automatically accept chat requests (use carefully!)"
+msgstr ""
+
+msgid ""
+"comma-separated list of nicks for which the incoming files and chats are "
+"automatically accepted; format is \"server.nick\" (for a specific server) or "
+"\"nick\" (for all servers); example: \"freenode.FlashCode,andrew\""
+msgstr ""
+
+msgid "list of xfer"
+msgstr ""
+
+msgid "xfer pointer (optional)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to create pipe: error %d %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to read local file"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to send block to receiver"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to read ACK from receiver"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to connect to sender"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to receive block from sender"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to write local file"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to send ACK to sender"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to fork"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s: sending file to %s (%ld.%ld.%ld.%ld, %s.%s), name: %s (local filename: "
+"%s), %llu bytes (protocol: %s)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to create socket for sending file: error %d %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to set option \"nonblock\" for socket: error %d %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: timeout for \"%s\" with %s"
+msgstr ""
+
+msgid "Plugin"
+msgstr "Eklenti"
+
+msgid "Name"
+msgstr "İsim"
+
+msgid "Arguments"
+msgstr ""
+
+msgid "Hashtable (input)"
+msgstr ""
+
+msgid "Hashtable (output)"
+msgstr ""
+
+msgid "Pointer"
+msgstr ""
+
+msgid "Variables"
+msgstr ""
+
+msgid "Update allowed"
+msgstr ""
+
+msgid "Lists"
+msgstr ""
+
+msgid "Option"
+msgstr "Seçenek"
+
+msgid "Type"
+msgstr "Tür"
+
+msgid "Constants"
+msgstr ""
