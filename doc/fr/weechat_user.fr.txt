@@ -140,6 +140,115 @@ $ make
 $ make install
 ----------------------------------------
 
+Des options peuvent être utilisées pour cmake, avec le format: "-DOPTION=VALUE".
+
+Liste des options couramment utilisées :
+
+[width="100%",cols="2m,2,2m,12",options="header"]
+|========================================
+| Option | Valeurs | Valeur par défaut | Description
+
+| CMAKE_BUILD_TYPE | `Debug`, `Release`, `RelWithDebInfo`, `MinSizeRel` | |
+  Type de construction: `Debug` (ou `RelWithDebInfo`) est recommandé si vous
+  utilisez une version de développement de WeeChat.
+
+| PREFIX | répertoire | /usr/local |
+  Le répertoire dans lequel WeeChat sera installé.
+
+| WEECHAT_HOME | répertoire | ~/.weechat |
+  Le répertoire "maison" par défaut lors du lancement de WeeChat.
+
+| ENABLE_ALIAS | `ON`, `OFF` | ON |
+  Compiler <<alias_plugin,l'extension Alias>>.
+
+| ENABLE_ASPELL | `ON`, `OFF` | ON |
+  Compiler <<aspell_plugin,l'extension Aspell>>.
+
+| ENABLE_CHARSET | `ON`, `OFF` | ON |
+  Compiler <<charset_plugin,l'extension Charset>>.
+
+| ENABLE_DEMO | `ON`, `OFF` | OFF |
+  Compiler l'extension Demo.
+
+| ENABLE_DOC | `ON`, `OFF` | ON |
+  Compiler la documentation (cela prend beaucoup de temps, vous pouvez
+  désactiver pour accélérer la compilation).
+
+| ENABLE_ENCHANT | `ON`, `OFF` | OFF |
+  Compiler <<aspell_plugin,l'extension Aspell>> avec Enchant.
+
+| ENABLE_FIFO | `ON`, `OFF` | ON |
+  Compiler <<fifo_plugin,l'extension Fifo>>.
+
+| ENABLE_GNUTLS | `ON`, `OFF` | ON |
+  Activer Gnutls (pour SSL).
+
+| ENABLE_GUILE | `ON`, `OFF` | ON |
+  Compiler <<scripts_plugins,l'extension Guile>> (Scheme).
+
+| ENABLE_IRC | `ON`, `OFF` | ON |
+  Compiler <<irc_plugin,l'extension IRC>>.
+
+| ENABLE_LARGEFILE | `ON`, `OFF` | ON |
+  Support des gros fichiers.
+
+| ENABLE_LOGGER | `ON`, `OFF` | ON |
+  Compiler <<logger_plugin,l'extension Logger>>.
+
+| ENABLE_LUA | `ON`, `OFF` | ON |
+  Compiler <<scripts_plugins,l'extension Lua>>.
+
+| ENABLE_NCURSES | `ON`, `OFF` | ON |
+  Compiler l'interface Ncurses.
+
+| ENABLE_NLS | `ON`, `OFF` | ON |
+  Activer NLS (traductions).
+
+| ENABLE_PERL | `ON`, `OFF` | ON |
+  Compiler <<scripts_plugins,l'extension Perl>>.
+
+| ENABLE_PYTHON | `ON`, `OFF` | ON |
+  Compiler <<scripts_plugins,l'extension Python>>.
+
+| ENABLE_PYTHON3 | `ON`, `OFF` | OFF |
+  Compiler <<scripts_plugins,l'extension Python>> en utilisant Python 3 (*NON*
+  recommandé car beaucoup de scripts ne sont pas compatibles avec Python 3).
+
+| ENABLE_RELAY | `ON`, `OFF` | ON |
+  Compiler <<relay_plugin,l'extension Relay>>.
+
+| ENABLE_RMODIFIER | `ON`, `OFF` | ON |
+  Compiler <<rmodifier_plugin,l'extension Rmodifier>>.
+
+| ENABLE_RUBY | `ON`, `OFF` | ON |
+  Compiler <<scripts_plugins,l'extension Ruby>>.
+
+| ENABLE_SCRIPT | `ON`, `OFF` | ON |
+  Compiler <<scripts_plugins,l'extension Script>>.
+
+| ENABLE_SCRIPTS | `ON`, `OFF` | ON |
+  Compiler <<scripts_plugins,les extensions de script>> (Python, Perl, Ruby,
+  Lua, Tcl, Guile).
+
+| ENABLE_TCL | `ON`, `OFF` | ON |
+  Compiler <<scripts_plugins,l'extension Tcl>>.
+
+| ENABLE_XFER | `ON`, `OFF` | ON |
+  Compiler <<xfer_plugin,l'extension Xfer>>.
+|========================================
+
+Les autres options peuvent être affichées avec cette commande :
+
+----------------------------------------
+$ cmake -LA
+----------------------------------------
+
+Ou avec l'interface Curses :
+
+----------------------------------------
+$ ccmake ..
+----------------------------------------
+
 [[compile_with_autotools]]
 Compilation avec autotools
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -167,6 +276,13 @@ $ ./autogen.sh
 $ ./configure --prefix=/chemin/vers/repertoire
 $ make
 $ make install
+----------------------------------------
+
+Des options peuvent être utilisées pour le script 'configure', elles peuvent
+être affichées avec cette commande :
+
+----------------------------------------
+$ ./configure --help
 ----------------------------------------
 
 [[git_sources]]

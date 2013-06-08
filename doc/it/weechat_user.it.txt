@@ -145,6 +145,118 @@ $ make
 $ make install
 ----------------------------------------
 
+// TRANSLATION MISSING
+Options can be used for cmake, with format: "-DOPTION=VALUE".
+
+// TRANSLATION MISSING
+List of commonly used options:
+
+// TRANSLATION MISSING
+[width="100%",cols="2m,2,2m,12",options="header"]
+|========================================
+| Option | Values | Default value | Description
+
+| CMAKE_BUILD_TYPE | `Debug`, `Release`, `RelWithDebInfo`, `MinSizeRel` | |
+  The type of build: `Debug` (or `RelWithDebInfo`) is recommended if you are
+  running development version of WeeChat.
+
+| PREFIX | directory | /usr/local |
+  The directory where WeeChat will be installed.
+
+| WEECHAT_HOME | directory | ~/.weechat |
+  The default home directory when running WeeChat.
+
+| ENABLE_ALIAS | `ON`, `OFF` | ON |
+  Compile <<alias_plugin,Alias plugin>>.
+
+| ENABLE_ASPELL | `ON`, `OFF` | ON |
+  Compile <<aspell_plugin,Aspell plugin>>.
+
+| ENABLE_CHARSET | `ON`, `OFF` | ON |
+  Compile <<charset_plugin,Charset plugin>>.
+
+| ENABLE_DEMO | `ON`, `OFF` | OFF |
+  Compile Demo plugin.
+
+| ENABLE_DOC | `ON`, `OFF` | ON |
+  Compile documentation (it takes a long time, you can turn off to speed up
+  the compilation).
+
+| ENABLE_ENCHANT | `ON`, `OFF` | OFF |
+  Compile <<aspell_plugin,Aspell plugin>> with Enchant.
+
+| ENABLE_FIFO | `ON`, `OFF` | ON |
+  Compile <<fifo_plugin,Fifo plugin>>.
+
+| ENABLE_GNUTLS | `ON`, `OFF` | ON |
+  Enable Gnutls (for SSL).
+
+| ENABLE_GUILE | `ON`, `OFF` | ON |
+  Compile <<scripts_plugins,Guile plugin>> (Scheme).
+
+| ENABLE_IRC | `ON`, `OFF` | ON |
+  Compile <<irc_plugin,IRC plugin>>.
+
+| ENABLE_LARGEFILE | `ON`, `OFF` | ON |
+  Support of large files.
+
+| ENABLE_LOGGER | `ON`, `OFF` | ON |
+  Compile <<logger_plugin,Logger plugin>>.
+
+| ENABLE_LUA | `ON`, `OFF` | ON |
+  Compile <<scripts_plugins,Lua plugin>>.
+
+| ENABLE_NCURSES | `ON`, `OFF` | ON |
+  Compile Ncurses interface.
+
+| ENABLE_NLS | `ON`, `OFF` | ON |
+  Enable NLS (translations).
+
+| ENABLE_PERL | `ON`, `OFF` | ON |
+  Compile <<scripts_plugins,Perl plugin>>.
+
+| ENABLE_PYTHON | `ON`, `OFF` | ON |
+  Compile <<scripts_plugins,Python plugin>>.
+
+| ENABLE_PYTHON3 | `ON`, `OFF` | OFF |
+  Compile <<scripts_plugins,Python plugin>> using Python 3 (*NOT* recommended
+  because many scripts are not compatible with Python 3).
+
+| ENABLE_RELAY | `ON`, `OFF` | ON |
+  Compile <<relay_plugin,Relay plugin>>.
+
+| ENABLE_RMODIFIER | `ON`, `OFF` | ON |
+  Compile <<rmodifier_plugin,Rmodifier plugin>>.
+
+| ENABLE_RUBY | `ON`, `OFF` | ON |
+  Compile <<scripts_plugins,Ruby plugin>>.
+
+| ENABLE_SCRIPT | `ON`, `OFF` | ON |
+  Compile <<scripts_plugins,Script plugin>>.
+
+| ENABLE_SCRIPTS | `ON`, `OFF` | ON |
+  Compile <<scripts_plugins,script plugins>> (Python, Perl, Ruby, Lua, Tcl,
+  Guile).
+
+| ENABLE_TCL | `ON`, `OFF` | ON |
+  Compile <<scripts_plugins,Tcl plugin>>.
+
+| ENABLE_XFER | `ON`, `OFF` | ON |
+  Compile <<xfer_plugin,Xfer plugin>>.
+|========================================
+
+The other options can be displayed with this command:
+
+----------------------------------------
+$ cmake -LA
+----------------------------------------
+
+Or with Curses interface:
+
+----------------------------------------
+$ ccmake ..
+----------------------------------------
+
 [[compile_with_autotools]]
 Compilazione con autotools
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -171,6 +283,14 @@ $ ./autogen.sh
 $ ./configure --prefix=/path/to/directory
 $ make
 $ make install
+----------------------------------------
+
+// TRANSLATION MISSING
+Options can be used for 'configure' script, they can be displayed with this
+command:
+
+----------------------------------------
+$ ./configure --help
 ----------------------------------------
 
 [[git_sources]]
