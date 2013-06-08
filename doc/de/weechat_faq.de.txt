@@ -26,8 +26,7 @@ Aber dieses trifft nicht auf WeeChat zu!)
 Weshalb sollte man WeeChat nutzen? - X-Chat und Irssi sind doch auch sehr gut...
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-// TRANSLATION MISSING
-Because WeeChat is very light and brings innovating features.
+WeeChat ist sehr Speicher schonend und besticht durch innovative Funktionen.
 
 Weitere Informationen gibt es auf der folgenden Internetseite:
 http://weechat.org/about/features
@@ -40,8 +39,7 @@ Kompilierung / Installation
 Ich habe gehört es gibt mehrere GUIs für WeeChat. Wie kann ich diese kompilieren bzw. nutzen?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-// TRANSLATION MISSING
-Some remote GUIs are available:
+Folgende GUIs sind verfügbar:
 
 * http://weechat.org/download/devel[QWeeChat] (Qt)
 * https://github.com/ubergeek42/weechat-android[weechat-android] (Android)
@@ -85,8 +83,8 @@ Anzeige
 Teilweise fehlen den Zeichen die Akzente. Wie kann ich das korrigieren?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Dies ist ein bekanntes Problem. Aus diesem Grund sollte der nachfolgende Text
-sorgfältig durchgelesen und *alle* aufgezeigten Lösungsmöglichkeiten durchgeführt
+Dies ist ein bekanntes Problem. Aus diesem Grund sollten die folgenden Punkte
+sorgfältig durchgelesen und *alle* aufgezeigten Lösungsmöglichkeiten überprüft
 werden:
 
 * überprüfe, ob weechat-curses mit libncursesw verlinkt ist (Warnung: Dies ist bei den
@@ -94,20 +92,19 @@ werden:
 * prüfe mit dem Befehl `/plugin`, ob die "Charset" Erweiterung geladen ist (falls
   dies nicht der Fall sein sollte benötigst Du wahrscheinlich noch das Paket "weechat-plugins")
 * überprüfe die Ausgabe des `/charset` Befehls (im Server-Buffer). Du solltest
-  'ISO-XXXXXX' oder 'UTF-8' für den Terminal Zeichensatz als Antwort erhalten. Falls Du
-  'ANSI_X3.4-1968' oder einen anderen Wert angezeigt bekommen solltest, ist Deine Einstellung der
-  locale möglicherweise falsch.
+  'ISO-XXXXXX' oder 'UTF-8' für den Terminal Zeichensatz als Antwort erhalten. Falls
+  'ANSI_X3.4-1968' oder einen anderer Wert angezeigt werden sollte, ist Deine lokale
+  Einstellung möglicherweise falsch.
 * Einstellen des globalen decode Wertes, z.B.:
   `/set charset.default.decode "ISO-8859-15"`
-* Falls Du UTF-8 locale nutzt:
+* Falls Du UTF-8 lokal nutzt:
 ** prüfe, ob Dein Terminal überhaupt UTF-8 fähig ist (der empfohlene Terminal für UTF-8
    ist rxvt-unicode)
-** Solltest Du screen nutzten, prüfe ob dieser im UTF-8 Modus läuft
-   ("`defutf8 on`" in der Datei ~/.screenrc oder `screen -U` zum Starten von
+** Solltest Du screen nutzten, prüfe ob screen im UTF-8 Modus läuft
+   ("`defutf8 on`" in der Datei ~/.screenrc oder `screen -U` zum starten von
    screen)
-// TRANSLATION MISSING
-* check that option 'weechat.look.eat_newline_glitch' is off (this option may
-  cause display bugs)
+* überprüfe die Option 'weechat.look.eat_newline_glitch' (diese Option kann zu
+  Darstellungsfehlern führen, wenn sie aktiviert ist)
 
 [NOTE]
 Für Weechat wird die Nutzung von UTF-8 locale empfohlen. Nutzt Du jedoch ISO

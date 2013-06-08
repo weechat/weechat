@@ -54,7 +54,7 @@
 
 | weechat | key | Auflistung der Tastenzuweisungen | - | Kontext ("default", "search", "cursor" oder "mouse") (optional)
 
-| weechat | layout | list of layouts | - | -
+| weechat | layout | Auflistung der Layouts | - | -
 
 | weechat | nicklist | Nicks in Nickliste für einen Buffer | Buffer Pointer | nick_xxx oder group_xxx um nur den Nick/Group xxx abzufragen (optional)
 

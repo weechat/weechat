@@ -619,7 +619,7 @@
   'last_gui_key_mouse' +
   'last_gui_key_search'
 
-| weechat | layout | layout |
+| weechat | layout | Layout |
   'name' (string) +
   'layout_buffers' (pointer, hdata: "layout_buffer") +
   'last_layout_buffer' (pointer, hdata: "layout_buffer") +
@@ -633,7 +633,7 @@
   'gui_layouts' +
   'last_gui_layout'
 
-| weechat | layout_buffer | buffer layout |
+| weechat | layout_buffer | Buffer-Layout |
   'plugin_name' (string) +
   'buffer_name' (string) +
   'number' (integer) +
@@ -642,7 +642,7 @@
  |
   -
 
-| weechat | layout_window | window layout |
+| weechat | layout_window | Fenster-Layout |
   'internal_id' (integer) +
   'parent_node' (pointer, hdata: "layout_window") +
   'split_pct' (integer) +

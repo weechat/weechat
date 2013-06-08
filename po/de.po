@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2013-06-08 12:28+0200\n"
-"PO-Revision-Date: 2013-06-08 12:30+0200\n"
+"PO-Revision-Date: 2013-06-08 12:35+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
 "Language: de_DE\n"
@@ -33,8 +33,6 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Poedit 1.5.4\n"
 "X-Poedit-Bookmarks: -1,-1,180,-1,-1,-1,-1,-1,-1,-1\n"
-"X-Poedit-Language: German\n"
-"X-Poedit-Country: GERMANY\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
@@ -3466,7 +3464,7 @@ msgid ""
 "the base word ends at first space after cursor"
 msgstr ""
 "ist diese Option aktiviert wird ein zu vervollständigendes Wort in den "
-"fließenden Text, mit einem Leerzeichen, hinzugefügt. Ist diese  Option "
+"fließenden Text, mit einem Leerzeichen, hinzugefügt. Ist diese Option "
 "deaktiviert, muss in den fließenden Text ein Leerzeichen manuell einfügt "
 "werden, um eine Vervollständigung durchführen zu können (Beispiel: In einen "
 "schon geschriebenen Text, einen Nick einzufügen)"
@@ -4297,17 +4295,15 @@ msgstr ""
 "%s%s: Es kann kein Wort zum persönlichen Wörterbuch hinzugefügt werden."
 
 #. TRANSLATORS: second "%s" is "aspell" or "enchant"
-#, fuzzy, c-format
+#, c-format
 msgid "%s (using %s)"
-msgstr "  %s (Erweiterung: %s)"
+msgstr "%s (mittels: %s)"
 
-#, fuzzy
 msgid "Spell checking is enabled"
-msgstr "Aspell ist aktiviert"
+msgstr "Rechtschreibprüfung ist aktiviert"
 
-#, fuzzy
 msgid "Spell checking is disabled"
-msgstr "Aspell ist deaktiviert"
+msgstr "Rechtschreibprüfung ist deaktiviert"
 
 #, c-format
 msgid "Default dictionary: %s"
@@ -4471,9 +4467,11 @@ msgstr ""
 msgid "%s: warning: dictionary \"%s\" is not available on your system"
 msgstr "%s: Hinweis: das Wörterbuch \"%s\" ist auf dem Rechner nicht verfügbar"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error: unable to create speller for lang \"%s\""
-msgstr "%s%s: Der Server \"%s\" kann nicht anlegt werden"
+msgstr ""
+"%s%s: Fehler: Rechtsschreibkorrektur für Sprache \"%s\" kann nicht erstellt "
+"werden"
 
 msgid "Charset conversions"
 msgstr "Zeichensatzkonvertierung"
@@ -5031,7 +5029,6 @@ msgstr ""
 msgid "[-current] [-exclude=<channel>[,<channel>...]] <command> [<arguments>]"
 msgstr "[-current] [-exclude=<channel>[,<channel>...]] <command> [<arguments>]"
 
-#, fuzzy
 msgid ""
 " -current: execute command for channels of current server only\n"
 " -exclude: exclude some channels ('*' is allowed at beginning or end of "
@@ -5055,7 +5052,8 @@ msgstr ""
 "oder am Ende des Channel-Namens akzeptiert, um mehrere Channels "
 "auszuschließen)\n"
 "  command: Befehl der ausgeführt werden soll\n"
-"arguments: Argumente des Befehls\n"
+"arguments: Argumente für Befehl (Variablen die genutzt werden können: $nick, "
+"$channel und $server)\n"
 "\n"
 "Beispiele:\n"
 "  Führe den Befehl '/me Ich teste gerade etwas...' für alle Channels aus:\n"
@@ -5073,7 +5071,6 @@ msgstr "führt einen Befehl aus, der zu allen verbundenen Server gesendet wird"
 msgid "[-exclude=<server>[,<server>...]] <command> [<arguments>]"
 msgstr "[-exclude=<server>[,<server>...]] <command> [<arguments>]"
 
-#, fuzzy
 msgid ""
 " -exclude: exclude some servers ('*' is allowed at beginning or end of "
 "server name, to exclude many servers)\n"
@@ -5092,13 +5089,16 @@ msgstr ""
 " -exclude: dient zum Ausschluss ausgewählter Server ('*' wird zu Beginn oder "
 "am Ende des Servernamens akzeptiert, um mehrere Server auszuschließen)\n"
 "  command: Befehl der ausgeführt werden soll\n"
-"arguments: Argumente des Befehls\n"
+"arguments: Argumente für Befehl (Variablen die genutzt werden können: $nick, "
+"$channel und $server)\n"
 "\n"
 "Beispiele:\n"
-"  Ändere den Nick auf allen Servern:\n"
+"  ändere den Nick auf allen Servern:\n"
 "    /allserv nick newnick\n"
-"  Setzt den Status, auf allen Servern,auf abwesend:\n"
-"    /allserv away I'm away"
+"  setzt den Status, auf allen Servern,auf abwesend:\n"
+"    /allserv away I'm away\n"
+"  führt ein whois mit meinem nick auf alles Servern aus:\n"
+"    /allserv whois $nick"
 
 msgid "ban nicks or hosts"
 msgstr "Nicknamen oder Hosts sperren/verbannen"
@@ -5747,9 +5747,8 @@ msgstr ""
 msgid "send a private message to a nick"
 msgstr "Eine private Nachricht an einen Nick schicken"
 
-#, fuzzy
 msgid "[-server <server>] <nick>[,<nick>...] [<text>]"
-msgstr "[-server <server>] <nick> [<text>]"
+msgstr "[-server <server>] <nick>[,<nick>...] [<text>]"
 
 msgid ""
 "server: send to this server (internal name)\n"
@@ -6590,6 +6589,10 @@ msgid ""
 "(position of letters matters: anagrams of a nick have different color), sum "
 "= sum of letters"
 msgstr ""
+"Gibt an welcher Hash-Algorithmus zur Farbauswahl für Nicks genutzt werden "
+"soll: djb2 = Variante des djb2 (Position der Buchstaben innerhalb des Nicks "
+"werden berücksichtigt: Anagramme eines Nick erhalten eine andere Farbe), sum "
+"= hier ist nur die Anzahl der Buchstaben maßgeblich"
 
 msgid ""
 "chars used to stop in nick when computing color with letters of nick (at "
@@ -8249,9 +8252,8 @@ msgid "context (\"default\", \"search\", \"cursor\" or \"mouse\") (optional)"
 msgstr ""
 "Kontext (\"default\", \"search\", \"cursor\" oder \"mouse\") (optional)"
 
-#, fuzzy
 msgid "list of layouts"
-msgstr "Namen der Layouts"
+msgstr "Auflistung der Layouts"
 
 msgid "nicks in nicklist for a buffer"
 msgstr "Nicks in Nickliste für einen Buffer"
@@ -8348,17 +8350,14 @@ msgstr "Struktur der Rücknahmen für die Befehlszeile"
 msgid "a key (keyboard shortcut)"
 msgstr "Tastenbelegung (Tastaturkurzbefehl)"
 
-#, fuzzy
 msgid "layout"
-msgstr "gespeicherte Layouts:"
+msgstr "Layout"
 
-#, fuzzy
 msgid "buffer layout"
-msgstr "Buffer Pointer"
+msgstr "Buffer-Layout"
 
-#, fuzzy
 msgid "window layout"
-msgstr "Fenster"
+msgstr "Fenster-Layout"
 
 msgid "structure with lines"
 msgstr "Struktur mit Zeilen"
@@ -8907,9 +8906,9 @@ msgstr ""
 "%s"
 
 #. TRANSLATORS: second "%s" is "IPv4" or "IPv6"
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid bind address \"%s\" for %s"
-msgstr "%s%s: Ungültiger Zeichensatz: \"%s\""
+msgstr "%s%s: ungültige Verbindungsadresse \"%s\" für %s"
 
 #, c-format
 msgid "%s%s: cannot create socket: error %d %s"
