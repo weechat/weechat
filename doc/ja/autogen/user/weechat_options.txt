@@ -798,6 +798,11 @@
 ** タイプ: 整数
 ** 値: 1 .. 2147483647 (デフォルト値: `30`)
 
+* [[option_weechat.network.proxy_curl]] *weechat.network.proxy_curl*
+** 説明: `name of proxy used for download of URLs with Curl (used to download list of scripts and in scripts calling function hook_process); the proxy must be defined with command /proxy`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
+
 * [[option_weechat.plugin.autoload]] *weechat.plugin.autoload*
 ** 説明: `スタートアップ時にロードするプラグインのコンマ区切りリスト、"*" は見つかった全てのプラグイン、"!" から始まる名前はロードしないプラグイン、"*" から始まるか終わるかした場合はマッチする複数のプラグイン (例: "*" または "*,!lua,!tcl")`
 ** タイプ: 文字列

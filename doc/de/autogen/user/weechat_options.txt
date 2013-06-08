@@ -798,6 +798,11 @@
 ** Typ: integer
 ** Werte: 1 .. 2147483647 (Standardwert: `30`)
 
+* [[option_weechat.network.proxy_curl]] *weechat.network.proxy_curl*
+** Beschreibung: `name of proxy used for download of URLs with Curl (used to download list of scripts and in scripts calling function hook_process); the proxy must be defined with command /proxy`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `""`)
+
 * [[option_weechat.plugin.autoload]] *weechat.plugin.autoload*
 ** Beschreibung: `durch Kommata getrennte Liste der Erweiterungen, die beim Programmstart automatisch geladen werden sollen; "*" lädt alle vorhandenen Erweiterungen. Beginnt der Name hingegen mit "!" wird die Erweiterung nicht geladen. Suchmuster können mit einem Joker ("*") beginnen oder enden um mehrere Erweiterungen zu laden (Beispiele: "*" oder "*,!lua,!tcl")`
 ** Typ: Zeichenkette

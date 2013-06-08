@@ -14,6 +14,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 Version 0.4.2 (under dev!)
 --------------------------
 
+* core: add option weechat.network.proxy_curl (task #12651)
 * core: add "proxy" infolist and hdata
 * core: fix random crash on mouse actions (bug #39094)
 * core: set options weechat.look.color_inactive_{buffer|window} to "on" by

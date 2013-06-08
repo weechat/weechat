@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-06-08 12:28+0200\n"
+"POT-Creation-Date: 2013-06-08 17:43+0200\n"
 "PO-Revision-Date: 2013-06-08 12:30+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2041,6 +2041,12 @@ msgid ""
 "problems, you must turn off this option."
 msgstr ""
 
+#, c-format
+msgid ""
+"%sWarning: proxy \"%s\" does not exist (you can create it with command /"
+"proxy)"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "\t\tDay changed to %s"
 msgstr "Дата сменилась на %s\n"
@@ -2816,6 +2822,12 @@ msgstr ""
 #, fuzzy
 msgid "timeout (in seconds) for gnutls handshake"
 msgstr "использовать SSL при связи с сервером"
+
+msgid ""
+"name of proxy used for download of URLs with Curl (used to download list of "
+"scripts and in scripts calling function hook_process); the proxy must be "
+"defined with command /proxy"
+msgstr ""
 
 #, fuzzy
 msgid ""

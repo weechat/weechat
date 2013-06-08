@@ -243,6 +243,7 @@ struct t_config_option *config_history_display_default;
 struct t_config_option *config_network_connection_timeout;
 struct t_config_option *config_network_gnutls_ca_file;
 struct t_config_option *config_network_gnutls_handshake_timeout;
+struct t_config_option *config_network_proxy_curl;
 
 /* config, plugin section */
 
@@ -612,7 +613,7 @@ config_change_prefix_align_min (void *data, struct t_config_option *option)
 }
 
 /*
- * Callback for changes on option "weechat.look.prefix_align_more".
+ * Checks option "weechat.look.prefix_align_more".
  */
 
 int
@@ -627,7 +628,7 @@ config_check_prefix_align_more (void *data, struct t_config_option *option,
 }
 
 /*
- * Callback for changes on option "weechat.look.prefix_buffer_align_more".
+ * Checks option "weechat.look.prefix_buffer_align_more".
  */
 
 int
@@ -688,6 +689,29 @@ config_change_network_gnutls_ca_file (void *data,
 
     if (network_init_ok)
         network_set_gnutls_ca_file ();
+}
+
+/*
+ * Checks option "weechat.network.proxy_curl".
+ */
+
+int
+config_check_proxy_curl (void *data, struct t_config_option *option,
+                         const char *value)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+    if (value && value[0] && !proxy_search (value))
+    {
+        gui_chat_printf (NULL,
+                         _("%sWarning: proxy \"%s\" does not exist (you can "
+                           "create it with command /proxy)"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR], value);
+    }
+
+    return 1;
 }
 
 /*
@@ -2968,6 +2992,14 @@ config_weechat_init_options ()
         "gnutls_handshake_timeout", "integer",
         N_("timeout (in seconds) for gnutls handshake"),
         NULL, 1, INT_MAX, "30", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_network_proxy_curl = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "proxy_curl", "string",
+        N_("name of proxy used for download of URLs with Curl (used to download "
+           "list of scripts and in scripts calling function hook_process); the "
+           "proxy must be defined with command /proxy"),
+        NULL, 0, 0, "", NULL, 0,
+        &config_check_proxy_curl, NULL, NULL, NULL, NULL, NULL);
 
     /* plugin */
     ptr_section = config_file_new_section (weechat_config_file, "plugin",

@@ -798,6 +798,11 @@
 ** tipo: intero
 ** valori: 1 .. 2147483647 (valore predefinito: `30`)
 
+* [[option_weechat.network.proxy_curl]] *weechat.network.proxy_curl*
+** descrizione: `name of proxy used for download of URLs with Curl (used to download list of scripts and in scripts calling function hook_process); the proxy must be defined with command /proxy`
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: `""`)
+
 * [[option_weechat.plugin.autoload]] *weechat.plugin.autoload*
 ** descrizione: `elenco separato da virgole di plugin da caricare automaticamente all'avvio, "*" equivale a tutti i plugin trovati. un nome che comincia con "!" è un valore negativo per impedire il caricamento di un plugin, i nomi possono  iniziare o finire con "*" per corrispondere a più plugin (esempi: "*" oppure "*,!lua,!tcl")`
 ** tipo: stringa

@@ -30,8 +30,10 @@
 
 #include "weechat.h"
 #include "wee-url.h"
+#include "wee-config.h"
 #include "wee-hashtable.h"
 #include "wee-infolist.h"
+#include "wee-proxy.h"
 #include "wee-string.h"
 
 
@@ -1075,6 +1077,68 @@ weeurl_option_map_cb (void *data,
 }
 
 /*
+ * Sets proxy in CURL easy handle.
+ */
+
+void
+weeurl_set_proxy (CURL *curl, struct t_proxy *proxy)
+{
+    if (!proxy)
+        return;
+
+    /* set proxy type */
+    switch (CONFIG_INTEGER(proxy->options[PROXY_OPTION_TYPE]))
+    {
+        case PROXY_TYPE_HTTP:
+            curl_easy_setopt (curl, CURLOPT_PROXYTYPE, CURLPROXY_HTTP);
+            break;
+        case PROXY_TYPE_SOCKS4:
+#if LIBCURL_VERSION_NUM >= 0x070A00
+            /* libcurl >= 7.10 */
+            curl_easy_setopt (curl, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS4);
+#else
+            /* proxy socks4 not supported in Curl < 7.10 */
+            return;
+#endif
+            break;
+        case PROXY_TYPE_SOCKS5:
+#if LIBCURL_VERSION_NUM >= 0x070A00
+            /* libcurl >= 7.10 */
+            curl_easy_setopt (curl, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
+#else
+            /* proxy socks4 not supported in Curl < 7.10 */
+            return;
+#endif
+            break;
+    }
+
+    /* set proxy address */
+    curl_easy_setopt (curl, CURLOPT_PROXY,
+                      CONFIG_STRING(proxy->options[PROXY_OPTION_ADDRESS]));
+
+    /* set proxy port */
+    curl_easy_setopt (curl, CURLOPT_PROXYPORT,
+                      CONFIG_INTEGER(proxy->options[PROXY_OPTION_PORT]));
+
+    /* set username/password */
+#if LIBCURL_VERSION_NUM >= 0x071301
+    /* libcurl >= 7.19.1 */
+    if (CONFIG_STRING(proxy->options[PROXY_OPTION_USERNAME])
+        && CONFIG_STRING(proxy->options[PROXY_OPTION_USERNAME])[0])
+    {
+        curl_easy_setopt (curl, CURLOPT_PROXYUSERNAME,
+                          CONFIG_STRING(proxy->options[PROXY_OPTION_USERNAME]));
+    }
+    if (CONFIG_STRING(proxy->options[PROXY_OPTION_PASSWORD])
+        && CONFIG_STRING(proxy->options[PROXY_OPTION_PASSWORD])[0])
+    {
+        curl_easy_setopt (curl, CURLOPT_PROXYPASSWORD,
+                          CONFIG_STRING(proxy->options[PROXY_OPTION_PASSWORD]));
+    }
+#endif
+}
+
+/*
  * Downloads URL using options.
  *
  * Returns:
@@ -1095,6 +1159,7 @@ weeurl_download (const char *url, struct t_hashtable *options)
     CURLoption url_file_opt_func[2] = { CURLOPT_READFUNCTION, CURLOPT_WRITEFUNCTION };
     CURLoption url_file_opt_data[2] = { CURLOPT_READDATA, CURLOPT_WRITEDATA };
     void *url_file_opt_cb[2] = { &weeurl_read, &weeurl_write };
+    struct t_proxy *ptr_proxy;
     int rc, i;
 
     rc = 0;
@@ -1121,6 +1186,15 @@ weeurl_download (const char *url, struct t_hashtable *options)
     /* set default options */
     curl_easy_setopt (curl, CURLOPT_URL, url);
     curl_easy_setopt (curl, CURLOPT_FOLLOWLOCATION, 1L);
+
+    /* set proxy (if option weechat.network.proxy_curl is set) */
+    if (CONFIG_STRING(config_network_proxy_curl)
+        && CONFIG_STRING(config_network_proxy_curl)[0])
+    {
+        ptr_proxy = proxy_search (CONFIG_STRING(config_network_proxy_curl));
+        if (ptr_proxy)
+            weeurl_set_proxy (curl, ptr_proxy);
+    }
 
     /* set file in/out from options in hashtable */
     if (options)

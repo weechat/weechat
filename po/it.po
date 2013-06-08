@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-06-08 12:28+0200\n"
+"POT-Creation-Date: 2013-06-08 17:43+0200\n"
 "PO-Revision-Date: 2013-06-08 12:30+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2506,6 +2506,12 @@ msgstr ""
 "si verificano tali problemi, l'opzione va disabilitata."
 
 #, c-format
+msgid ""
+"%sWarning: proxy \"%s\" does not exist (you can create it with command /"
+"proxy)"
+msgstr ""
+
+#, c-format
 msgid "\t\tDay changed to %s"
 msgstr "\t\tOggi è %s"
 
@@ -3403,6 +3409,12 @@ msgstr ""
 
 msgid "timeout (in seconds) for gnutls handshake"
 msgstr "timeout (in secondi) per l'handshake di gnutls"
+
+msgid ""
+"name of proxy used for download of URLs with Curl (used to download list of "
+"scripts and in scripts calling function hook_process); the proxy must be "
+"defined with command /proxy"
+msgstr ""
 
 msgid ""
 "comma separated list of plugins to load automatically at startup, \"*\" "
