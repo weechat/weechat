@@ -24,13 +24,17 @@
 #endif
 
 #include <stdlib.h>
+#include <stddef.h>
 #include <string.h>
 
 #include "weechat.h"
 #include "wee-proxy.h"
 #include "wee-config.h"
+#include "wee-hdata.h"
+#include "wee-infolist.h"
 #include "wee-log.h"
 #include "wee-string.h"
+#include "../plugins/plugin.h"
 
 
 char *proxy_option_string[PROXY_NUM_OPTIONS] =
@@ -93,6 +97,33 @@ proxy_search_type (const char *type)
 
     /* type not found */
     return -1;
+}
+
+/*
+ * Checks if a proxy pointer is valid.
+ *
+ * Returns:
+ *   1: proxy exists
+ *   0: proxy does not exist
+ */
+
+int
+proxy_valid (struct t_proxy *proxy)
+{
+    struct t_proxy *ptr_proxy;
+
+    if (!proxy)
+        return 0;
+
+    for (ptr_proxy = weechat_proxies; ptr_proxy;
+         ptr_proxy = ptr_proxy->next_proxy)
+    {
+        if (ptr_proxy == proxy)
+            return 1;
+    }
+
+    /* proxy not found */
+    return 0;
 }
 
 /*
@@ -580,6 +611,72 @@ proxy_free_all ()
     {
         proxy_free (weechat_proxies);
     }
+}
+
+/*
+ * Returns hdata for proxy.
+ */
+
+struct t_hdata *
+proxy_hdata_proxy_cb (void *data, const char *hdata_name)
+{
+    struct t_hdata *hdata;
+
+    /* make C compiler happy */
+    (void) data;
+
+    hdata = hdata_new (NULL, hdata_name, "prev_proxy", "next_proxy",
+                       0, 0, NULL, NULL);
+    if (hdata)
+    {
+        HDATA_VAR(struct t_proxy, name, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_proxy, options, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_proxy, prev_proxy, POINTER, 0, NULL, hdata_name);
+        HDATA_VAR(struct t_proxy, next_proxy, POINTER, 0, NULL, hdata_name);
+        HDATA_LIST(weechat_proxies);
+        HDATA_LIST(last_weechat_proxy);
+    }
+    return hdata;
+}
+
+/*
+ * Adds a proxy in an infolist.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+proxy_add_to_infolist (struct t_infolist *infolist, struct t_proxy *proxy)
+{
+    struct t_infolist_item *ptr_item;
+
+    if (!infolist || !proxy)
+        return 0;
+
+    ptr_item = infolist_new_item (infolist);
+    if (!ptr_item)
+        return 0;
+
+    if (!infolist_new_var_string (ptr_item, "name", proxy->name))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "type", CONFIG_INTEGER(proxy->options[PROXY_OPTION_TYPE])))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "type_string", proxy_type_string[CONFIG_INTEGER(proxy->options[PROXY_OPTION_TYPE])]))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "ipv6", CONFIG_INTEGER(proxy->options[PROXY_OPTION_IPV6])))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "address", CONFIG_STRING(proxy->options[PROXY_OPTION_ADDRESS])))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "port", CONFIG_INTEGER(proxy->options[PROXY_OPTION_PORT])))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "username", CONFIG_STRING(proxy->options[PROXY_OPTION_USERNAME])))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "password", CONFIG_STRING(proxy->options[PROXY_OPTION_PASSWORD])))
+        return 0;
+
+    return 1;
 }
 
 /*

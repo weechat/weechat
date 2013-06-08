@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-06-07 20:09+0200\n"
+"POT-Creation-Date: 2013-06-08 11:29+0200\n"
 "PO-Revision-Date: 2013-05-20 16:54+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7891,6 +7891,20 @@ msgstr ""
 "nome plugin (può iniziare o terminare con \"*\" come carattere jolly) "
 "(opzionale)"
 
+#, fuzzy
+msgid "list of proxies"
+msgstr "Elenco di proxy:"
+
+#, fuzzy
+msgid "proxy pointer (optional)"
+msgstr "puntatore al relay (opzionale)"
+
+#, fuzzy
+msgid "proxy name (can start or end with \"*\" as wildcard) (optional)"
+msgstr ""
+"nome barra (può iniziare o terminare con \"*\" come carattere jolly "
+"(opzionale)"
+
 msgid "options for URL"
 msgstr "opzioni per la URL"
 
@@ -7975,6 +7989,9 @@ msgstr "nick nella lista nick"
 
 msgid "plugin"
 msgstr "plugin"
+
+msgid "proxy"
+msgstr ""
 
 msgid "window"
 msgstr "finestra"

@@ -20,6 +20,8 @@
 #ifndef __WEECHAT_PROXY_H
 #define __WEECHAT_PROXY_H 1
 
+struct t_infolist;
+
 enum t_proxy_option
 {
     PROXY_OPTION_TYPE = 0,             /* type: http, socks4, socks5        */
@@ -63,6 +65,7 @@ extern struct t_proxy *last_weechat_temp_proxy;
 
 extern int proxy_search_option (const char *option_name);
 extern int proxy_search_type (const char *type);
+extern int proxy_valid (struct t_proxy *proxy);
 extern struct t_proxy *proxy_search (const char *name);
 extern int proxy_set (struct t_proxy *bar, const char *property,
                       const char *value);
@@ -79,6 +82,9 @@ extern struct t_proxy *proxy_new (const char *name,
 extern void proxy_use_temp_proxies ();
 extern void proxy_free (struct t_proxy *proxy);
 extern void proxy_free_all ();
+extern struct t_hdata *proxy_hdata_proxy_cb (void *data, const char *hdata_name);
+extern int proxy_add_to_infolist (struct t_infolist *infolist,
+                                  struct t_proxy *proxy);
 extern void proxy_print_log ();
 
 #endif /* __WEECHAT_PROXY_H */

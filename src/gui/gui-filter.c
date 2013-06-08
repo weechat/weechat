@@ -527,7 +527,7 @@ gui_filter_hdata_filter_cb (void *data, const char *hdata_name)
 }
 
 /*
- * Add a filter in an infolist.
+ * Adds a filter in an infolist.
  *
  * Returns:
  *   1: OK

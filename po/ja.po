@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-06-07 20:09+0200\n"
+"POT-Creation-Date: 2013-06-08 11:29+0200\n"
 "PO-Revision-Date: 2013-05-20 16:54+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -7762,6 +7762,18 @@ msgid "plugin name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "プラグイン名 (ワイルドカードとして \"*\" で始めるか終われる) (オプション)"
 
+#, fuzzy
+msgid "list of proxies"
+msgstr "プロキシリスト:"
+
+#, fuzzy
+msgid "proxy pointer (optional)"
+msgstr "リレーポインタ (オプション)"
+
+#, fuzzy
+msgid "proxy name (can start or end with \"*\" as wildcard) (optional)"
+msgstr "バー名 (ワイルドカードとして \"*\" で始めるか終われる) (オプション)"
+
 msgid "options for URL"
 msgstr "URL のオプション"
 
@@ -7845,6 +7857,9 @@ msgstr "ニックネームリストにあるニックネーム"
 
 msgid "plugin"
 msgstr "プラグイン"
+
+msgid "proxy"
+msgstr ""
 
 msgid "window"
 msgstr "ウィンドウ"

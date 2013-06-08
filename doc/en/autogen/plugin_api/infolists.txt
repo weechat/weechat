@@ -62,6 +62,8 @@
 
 | weechat | plugin | list of plugins | plugin pointer (optional) | plugin name (can start or end with "*" as wildcard) (optional)
 
+| weechat | proxy | list of proxies | proxy pointer (optional) | proxy name (can start or end with "*" as wildcard) (optional)
+
 | weechat | url_options | options for URL | - | -
 
 | weechat | window | list of windows | window pointer (optional) | "current" for current window or a window number (optional)

@@ -737,6 +737,15 @@
   'last_weechat_plugin' +
   'weechat_plugins'
 
+| weechat | proxy | proxy |
+  'name' (string) +
+  'options' (pointer) +
+  'prev_proxy' (pointer, hdata: "proxy") +
+  'next_proxy' (pointer, hdata: "proxy") |
+ |
+  'last_weechat_proxy' +
+  'weechat_proxies'
+
 | weechat | window | window |
   'number' (integer) +
   'win_x' (integer) +

@@ -62,6 +62,8 @@
 
 | weechat | plugin | プラグインリスト | プラグインポインタ (オプション) | プラグイン名 (ワイルドカードとして "*" で始めるか終われる) (オプション)
 
+| weechat | proxy | list of proxies | proxy pointer (optional) | proxy name (can start or end with "*" as wildcard) (optional)
+
 | weechat | url_options | URL のオプション | - | -
 
 | weechat | window | ウィンドウリスト | ウィンドウポインタ (オプション) | "current" は現在のウィンドウまたはウィンドウ番号 (オプション)

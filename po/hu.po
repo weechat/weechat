@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-06-07 20:09+0200\n"
+"POT-Creation-Date: 2013-06-08 11:29+0200\n"
 "PO-Revision-Date: 2013-05-20 16:54+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7042,6 +7042,17 @@ msgid "plugin name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 
 #, fuzzy
+msgid "list of proxies"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy
+msgid "proxy pointer (optional)"
+msgstr "Beállítások mentése a lemezre\n"
+
+msgid "proxy name (can start or end with \"*\" as wildcard) (optional)"
+msgstr ""
+
+#, fuzzy
 msgid "options for URL"
 msgstr "Aliaszok listája:\n"
 
@@ -7139,6 +7150,9 @@ msgstr "%s nem található ilyen mellőzés\n"
 #, fuzzy
 msgid "plugin"
 msgstr "  (nem található bővítőmodul)\n"
+
+msgid "proxy"
+msgstr ""
 
 #, fuzzy
 msgid "window"

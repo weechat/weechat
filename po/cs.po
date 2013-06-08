@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-06-07 20:09+0200\n"
+"POT-Creation-Date: 2013-06-08 11:29+0200\n"
 "PO-Revision-Date: 2013-05-20 16:54+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7561,6 +7561,19 @@ msgstr ""
 "(volitelné)"
 
 #, fuzzy
+msgid "list of proxies"
+msgstr "Seznam proxy:"
+
+#, fuzzy
+msgid "proxy pointer (optional)"
+msgstr "ukazatel přesměrování (volitelné)"
+
+#, fuzzy
+msgid "proxy name (can start or end with \"*\" as wildcard) (optional)"
+msgstr ""
+"jméno pole (může začínat nebo končit \"*\" jako zástupným znakem) (volitelné)"
+
+#, fuzzy
 msgid "options for URL"
 msgstr "volby pro pole"
 
@@ -7657,6 +7670,9 @@ msgstr "přezdívky v seznamu notifikací"
 #, fuzzy
 msgid "plugin"
 msgstr "Plugin"
+
+msgid "proxy"
+msgstr ""
 
 #, fuzzy
 msgid "window"

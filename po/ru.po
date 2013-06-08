@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-06-07 20:09+0200\n"
+"POT-Creation-Date: 2013-06-08 11:29+0200\n"
 "PO-Revision-Date: 2013-05-20 16:55+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7069,6 +7069,17 @@ msgid "plugin name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 
 #, fuzzy
+msgid "list of proxies"
+msgstr "Список сокращений:\n"
+
+#, fuzzy
+msgid "proxy pointer (optional)"
+msgstr "Сохраняю конфигурацию\n"
+
+msgid "proxy name (can start or end with \"*\" as wildcard) (optional)"
+msgstr ""
+
+#, fuzzy
 msgid "options for URL"
 msgstr "Список сокращений:\n"
 
@@ -7166,6 +7177,9 @@ msgstr "%s игнорирования не найдены\n"
 #, fuzzy
 msgid "plugin"
 msgstr "  (нет pluginа)\n"
+
+msgid "proxy"
+msgstr ""
 
 #, fuzzy
 msgid "window"

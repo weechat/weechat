@@ -62,6 +62,8 @@
 
 | weechat | plugin | liste des extensions | pointeur vers l'extension (optionnel) | nom d'extension (peut démarrer ou se terminer par "*" comme joker) (optionnel)
 
+| weechat | proxy | liste des proxies | pointeur vers le proxy (optionnel) | nom de proxy (peut démarrer ou se terminer par "*" comme joker) (optionnel)
+
 | weechat | url_options | options pour l'URL | - | -
 
 | weechat | window | liste des fenêtres | pointeur vers la fenêtre (optionnel) | "current" pour la fenêtre courante ou un numéro de fenêtre (optionnel)
