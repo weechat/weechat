@@ -1091,6 +1091,34 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(test)
 }
 
 /*
+ * Callback for command "ping" (from client).
+ *
+ * Message looks like:
+ *   ping
+ *   ping 1370802127000
+ */
+
+RELAY_WEECHAT_PROTOCOL_CALLBACK(ping)
+{
+    struct t_relay_weechat_msg *msg;
+
+    RELAY_WEECHAT_PROTOCOL_MIN_ARGS(0);
+
+    msg = relay_weechat_msg_new ("_pong");
+    if (msg)
+    {
+        relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_STRING);
+        relay_weechat_msg_add_string (msg, (argc > 0) ? argv_eol[0] : "");
+
+        /* send message */
+        relay_weechat_msg_send (client, msg);
+        relay_weechat_msg_free (msg);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback for command "quit" (from client).
  *
  * Message looks like:
@@ -1125,6 +1153,7 @@ relay_weechat_protocol_recv (struct t_relay_client *client, const char *data)
           { "sync", &relay_weechat_protocol_cb_sync },
           { "desync", &relay_weechat_protocol_cb_desync },
           { "test", &relay_weechat_protocol_cb_test },
+          { "ping", &relay_weechat_protocol_cb_ping },
           { "quit", &relay_weechat_protocol_cb_quit },
           { NULL, NULL }
         };

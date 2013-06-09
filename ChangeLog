@@ -30,6 +30,7 @@ Version 0.4.2 (under dev!)
   (patch #8062)
 * irc: fix multiple nicks in command /query (separated by commas): open one
   buffer per nick
+* relay: add command "ping" in weechat protocol (task #12689)
 * relay: fix binding to an IP address (bug #39119)
 * xfer: fix compilation on OpenBSD (bug #39071)
 

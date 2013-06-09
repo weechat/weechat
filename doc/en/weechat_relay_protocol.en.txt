@@ -437,6 +437,29 @@ Returned objects (in this order):
 | array of integers | arr int           | { 123, 456, 789 }
 |=====================================================
 
+[[command_ping]]
+ping
+~~~~
+
+_Added in version 0.4.2._
+
+Send a ping to WeeChat which will reply with a message "_pong" and same arguments.
+
+This command is useful to test that connection with WeeChat is still alive and
+measure the network lag.
+
+Syntax:
+
+----------------------------------------
+ping [<arguments>]
+----------------------------------------
+
+Example:
+
+----------------------------------------
+ping 1370802127000
+----------------------------------------
+
 [[command_quit]]
 quit
 ~~~~
@@ -503,25 +526,26 @@ There are two different identifiers ('id'):
 
 WeeChat reserved identifiers:
 
-[width="100%",cols="5m,5,3,3,8",options="header"]
+[width="100%",cols="5m,5,3,4,7",options="header"]
 |=====================================================
-| Identifier               | Description                 | Received with sync | Hdata type    | Recommended action in client
-| _buffer_opened           | Buffer opened               | buffers / buffer   | buffer        | Open buffer
-| _buffer_moved            | Buffer moved                | buffers / buffer   | buffer        | Move buffer
-| _buffer_merged           | Buffer merged               | buffers / buffer   | buffer        | Merge buffer
-| _buffer_unmerged         | Buffer unmerged             | buffers / buffer   | buffer        | Unmerge buffer
-| _buffer_renamed          | Buffer renamed              | buffers / buffer   | buffer        | Rename buffer
-| _buffer_title_changed    | Title of buffer changed     | buffers / buffer   | buffer        | Change title of buffer
-| _buffer_type_changed     | Type of buffer changed      | buffer             | buffer        | Change type of buffer
-| _buffer_localvar_added   | Local variable added        | buffer             | buffer        | Add local variable in buffer
-| _buffer_localvar_changed | Local variable changed      | buffer             | buffer        | Change local variable in buffer
-| _buffer_localvar_removed | Local variable removed      | buffer             | buffer        | Remove local variable from buffer
-| _buffer_line_added       | Line added in buffer        | buffer             | line          | Display line in buffer
-| _buffer_closing          | Buffer closing              | buffers / buffer   | buffer        | Close buffer
-| _nicklist                | Nicklist for a buffer       | nicklist           | nicklist_item | Replace nicklist
-| _nicklist_diff           | Nicklist diffs for a buffer | nicklist           | nicklist_item | Update nicklist
-| _upgrade                 | WeeChat is upgrading        | upgrade            | (empty)       | Desync from WeeChat (or disconnect)
-| _upgrade_ended           | Upgrade of WeeChat done     | upgrade            | (empty)       | Sync/resync with WeeChat
+| Identifier               | Description                 | Received with sync | Data sent              | Recommended action in client
+| _buffer_opened           | Buffer opened               | buffers / buffer   | hdata: buffer          | Open buffer
+| _buffer_moved            | Buffer moved                | buffers / buffer   | hdata: buffer          | Move buffer
+| _buffer_merged           | Buffer merged               | buffers / buffer   | hdata: buffer          | Merge buffer
+| _buffer_unmerged         | Buffer unmerged             | buffers / buffer   | hdata: buffer          | Unmerge buffer
+| _buffer_renamed          | Buffer renamed              | buffers / buffer   | hdata: buffer          | Rename buffer
+| _buffer_title_changed    | Title of buffer changed     | buffers / buffer   | hdata: buffer          | Change title of buffer
+| _buffer_type_changed     | Type of buffer changed      | buffer             | hdata: buffer          | Change type of buffer
+| _buffer_localvar_added   | Local variable added        | buffer             | hdata: buffer          | Add local variable in buffer
+| _buffer_localvar_changed | Local variable changed      | buffer             | hdata: buffer          | Change local variable in buffer
+| _buffer_localvar_removed | Local variable removed      | buffer             | hdata: buffer          | Remove local variable from buffer
+| _buffer_line_added       | Line added in buffer        | buffer             | hdata: line            | Display line in buffer
+| _buffer_closing          | Buffer closing              | buffers / buffer   | hdata: buffer          | Close buffer
+| _nicklist                | Nicklist for a buffer       | nicklist           | hdata: nicklist_item   | Replace nicklist
+| _nicklist_diff           | Nicklist diffs for a buffer | nicklist           | hdata: nicklist_item   | Update nicklist
+| _pong                    | Answer to a "ping"          | (always)           | string: ping arguments | Measure network lag
+| _upgrade                 | WeeChat is upgrading        | upgrade            | (empty)                | Desync from WeeChat (or disconnect)
+| _upgrade_ended           | Upgrade of WeeChat done     | upgrade            | (empty)                | Sync/resync with WeeChat
 |=====================================================
 
 [[message_buffer_opened]]
@@ -530,7 +554,7 @@ _buffer_opened
 
 It is sent to the client when the signal "buffer_opened" is sent by WeeChat.
 
-Data sent in the hdata:
+Data sent as hdata:
 
 [width="60%",cols="3m,2,7",options="header"]
 |=====================================================
@@ -573,7 +597,7 @@ _buffer_moved
 
 It is sent to the client when the signal "buffer_moved" is sent by WeeChat.
 
-Data sent in the hdata:
+Data sent as hdata:
 
 [width="60%",cols="3m,2,7",options="header"]
 |=====================================================
@@ -606,7 +630,7 @@ _buffer_merged
 
 It is sent to the client when the signal "buffer_merged" is sent by WeeChat.
 
-Data sent in the hdata:
+Data sent as hdata:
 
 [width="60%",cols="3m,2,7",options="header"]
 |=====================================================
@@ -639,7 +663,7 @@ _buffer_unmerged
 
 It is sent to the client when the signal "buffer_unmerged" is sent by WeeChat.
 
-Data sent in the hdata:
+Data sent as hdata:
 
 [width="60%",cols="3m,2,7",options="header"]
 |=====================================================
@@ -672,7 +696,7 @@ _buffer_renamed
 
 It is sent to the client when the signal "buffer_renamed" is sent by WeeChat.
 
-Data sent in the hdata:
+Data sent as hdata:
 
 [width="60%",cols="3m,2,7",options="header"]
 |=====================================================
@@ -707,7 +731,7 @@ _buffer_title_changed
 It is sent to the client when the signal "buffer_title_changed" is sent by
 WeeChat.
 
-Data sent in the hdata:
+Data sent as hdata:
 
 [width="60%",cols="3m,2,7",options="header"]
 |=====================================================
@@ -738,7 +762,7 @@ _buffer_type_changed
 
 It is sent to the client when the signal "buffer_type_changed" is sent by WeeChat.
 
-Data sent in the hdata:
+Data sent as hdata:
 
 [width="60%",cols="3m,2,7",options="header"]
 |=====================================================
@@ -771,7 +795,7 @@ _buffer_localvar_added
 It is sent to the client when the signal "buffer_localvar_added" is sent by
 WeeChat.
 
-Data sent in the hdata:
+Data sent as hdata:
 
 [width="60%",cols="3m,2,7",options="header"]
 |=====================================================
@@ -805,7 +829,7 @@ _buffer_localvar_changed
 It is sent to the client when the signal "buffer_localvar_changed" is sent by
 WeeChat.
 
-Data sent in the hdata:
+Data sent as hdata:
 
 [width="60%",cols="3m,2,7",options="header"]
 |=====================================================
@@ -839,7 +863,7 @@ _buffer_localvar_removed
 It is sent to the client when the signal "buffer_localvar_removed" is sent by
 WeeChat.
 
-Data sent in the hdata:
+Data sent as hdata:
 
 [width="60%",cols="3m,2,7",options="header"]
 |=====================================================
@@ -871,7 +895,7 @@ _buffer_line_added
 
 It is sent to the client when the signal "buffer_line_added" is sent by WeeChat.
 
-Data sent in the hdata:
+Data sent as hdata:
 
 [width="60%",cols="3m,2,7",options="header"]
 |=====================================================
@@ -913,7 +937,7 @@ _buffer_closing
 
 It is sent to the client when the signal "buffer_closing" is sent by WeeChat.
 
-Data sent in the hdata:
+Data sent as hdata:
 
 [width="60%",cols="3m,2,7",options="header"]
 |=====================================================
@@ -946,7 +970,7 @@ added/removed/changed). The message contains full nicklist.
 When small updates are made on a nicklist (for example just add one nick),
 another message with identifier '_nicklist_diff' is sent (see below).
 
-Data sent in the hdata:
+Data sent as hdata:
 
 [width="60%",cols="3m,2,7",options="header"]
 |=====================================================
@@ -1035,7 +1059,7 @@ It is sent to the client when small updates are made on a nicklist (groups/nicks
 added/removed/changed). The message contains nicklist differences (between old
 nicklist and current one).
 
-Data sent in the hdata:
+Data sent as hdata:
 
 [width="60%",cols="3m,2,7",options="header"]
 |=====================================================
@@ -1121,6 +1145,19 @@ hda:
     prefix_color: ''
 ----------------------------------------
 
+[[message_pong]]
+_pong
+^^^^^
+
+_New in version 0.4.2._
+
+It is sent to the client when WeeChat receives a "ping" message.
+
+Data sent as string: arguments received in the ping message.
+
+The recommended action in client is to measure network lag and disconnect if
+network lag is high.
+
 [[message_upgrade]]
 _upgrade
 ^^^^^^^^
@@ -1129,7 +1166,7 @@ _New in version 0.3.8._
 
 It is sent to the client when WeeChat is starting upgrade process.
 
-There is no data in the hdata.
+There is no data in the message.
 
 The recommended action in client is to desynchronize from WeeChat (send command
 'desync'), or to disconnect from WeeChat (because after upgrade, all pointers
@@ -1147,7 +1184,7 @@ _New in version 0.3.8._
 
 It is sent to the client when WeeChat has finished the upgrade process.
 
-There is no data in the hdata.
+There is no data in the message.
 
 The recommended action in client is to resynchronize with WeeChat: resend all
 commands sent on startup after the 'init'.
@@ -1569,6 +1606,14 @@ create buffers ║                       msg: hda buffer ║                    
                ║                                       ║ ◄─────────────────────────╢ (hooked by relay)
                ║ ◄─────────────────────────────────────╢                signal XXX ║
 update buffers ║                msg: id: "_buffer_..." ║                           ║
+               ║                                       ║                           ║
+               ║                ........               ║          ........         ║
+               ║                                       ║                           ║
+               ╟─────────────────────────────────────► ║                           ║
+               ║ cmd: ping ...                         ║                           ║
+               ║                                       ║                           ║
+               ║ ◄─────────────────────────────────────╢                           ║
+   measure lag ║                  msg: id: "_pong" ... ║                           ║
                ║                                       ║                           ║
                ║                ........               ║          ........         ║
                ║                                       ║                           ║
