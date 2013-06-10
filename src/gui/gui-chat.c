@@ -108,7 +108,7 @@ gui_chat_prefix_build ()
         pos_color = strstr (ptr_prefix, "${");
 
         snprintf(prefix, sizeof (prefix), "%s%s\t",
-                 (!pos_color || (pos_color > ptr_prefix)) ? GUI_COLOR(prefix_color[i]) : "",
+                 (ptr_prefix[0] && (!pos_color || (pos_color > ptr_prefix))) ? GUI_COLOR(prefix_color[i]) : "",
                  ptr_prefix);
 
         if (pos_color)
