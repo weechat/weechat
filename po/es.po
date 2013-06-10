@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-06-08 17:43+0200\n"
-"PO-Revision-Date: 2013-06-08 12:30+0200\n"
+"POT-Creation-Date: 2013-06-10 09:20+0200\n"
+"PO-Revision-Date: 2013-06-10 09:14+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: es\n"
@@ -3682,10 +3682,10 @@ msgid "Last auto reset of pairs: %s"
 msgstr "Último reinicio automático de colores: %s"
 
 msgid "WeeChat basic colors:"
-msgstr "Colores básicos de WeeChat"
+msgstr "Colores básicos de WeeChat:"
 
 msgid "Nick colors:"
-msgstr "Colores de apodos"
+msgstr "Colores de apodos:"
 
 msgid "Color aliases:"
 msgstr "Alias de colores:"
@@ -8023,7 +8023,7 @@ msgid "description of plugin option"
 msgstr "descripción de la opción del plugin"
 
 msgid "Actions (letter+enter):"
-msgstr "Acciones (letra+enter)"
+msgstr "Acciones (letra+enter):"
 
 msgid "  [D] Disconnect"
 msgstr "  [D] Desconectar"
@@ -8489,7 +8489,7 @@ msgid "List of rmodifiers:"
 msgstr "Lista de modificadores regulares:"
 
 msgid "Default rmodifiers:"
-msgstr "Modificadores regulares predeterminados"
+msgstr "Modificadores regulares predeterminados:"
 
 #, c-format
 msgid "%s%s: error creating rmodifier \"%s\""
@@ -8512,7 +8512,7 @@ msgid "%sRmodifier \"%s\" not found"
 msgstr "%sModificador regular \"%s\" no encontrado"
 
 msgid "Default rmodifiers restored:"
-msgstr "Modificadores regulares predeterminados restaurados"
+msgstr "Modificadores regulares predeterminados restaurados:"
 
 #, c-format
 msgid ""

@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-06-08 17:43+0200\n"
-"PO-Revision-Date: 2013-06-08 12:30+0200\n"
+"POT-Creation-Date: 2013-06-10 09:20+0200\n"
+"PO-Revision-Date: 2013-06-10 09:18+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pl\n"
@@ -4607,7 +4607,7 @@ msgstr "%s%s: już jest ignorowane"
 
 #, c-format
 msgid "%s: ignore added:"
-msgstr "%s: dodano nowy wpis na listę ignorowanych"
+msgstr "%s: dodano nowy wpis na listę ignorowanych:"
 
 #, c-format
 msgid "%s%s: error adding ignore"
@@ -6914,7 +6914,7 @@ msgid "Notify list is empty on this server"
 msgstr "Lista powiadomień jest pusta dla tego serwera"
 
 msgid "Notify list for all servers:"
-msgstr "Lista powiadomień dla wszystkich serwerów"
+msgstr "Lista powiadomień dla wszystkich serwerów:"
 
 msgid "Notify list is empty on all servers"
 msgstr "Lista powiadomień jest pusta na wszystkich serwerach"
@@ -8106,7 +8106,7 @@ msgid "description of plugin option"
 msgstr "opis opcji wtyczki"
 
 msgid "Actions (letter+enter):"
-msgstr "Akcje (litera+enter)"
+msgstr "Akcje (litera+enter):"
 
 msgid "  [D] Disconnect"
 msgstr "  [D] Rozłącz"
@@ -8624,7 +8624,7 @@ msgid "%sRmodifier \"%s\" not found"
 msgstr "%sNie znaleziono rmodifiera \"%s\""
 
 msgid "Default rmodifiers restored:"
-msgstr "Przywrócono domyślne rmofifiery"
+msgstr "Przywrócono domyślne rmofifiery:"
 
 #, c-format
 msgid ""
@@ -9055,7 +9055,7 @@ msgid "Error: file not found"
 msgstr "Błąd: nie odnaleziono pliku"
 
 msgid "Source code:"
-msgstr "Kod źródłowy"
+msgstr "Kod źródłowy:"
 
 msgid "Downloading script..."
 msgstr "Pobieram skrypt..."

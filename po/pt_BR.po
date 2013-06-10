@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-06-08 17:43+0200\n"
-"PO-Revision-Date: 2013-06-08 12:30+0200\n"
+"POT-Creation-Date: 2013-06-10 09:20+0200\n"
+"PO-Revision-Date: 2013-06-10 09:19+0200\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pt_BR\n"
@@ -229,7 +229,7 @@ msgid "%sError: unknown option for \"%s\" command"
 msgstr "%sErro: opção desconhecida para o comando \"%s\""
 
 msgid "Buffers list:"
-msgstr "Lista de buffers"
+msgstr "Lista de buffers:"
 
 #, c-format
 msgid "  %s[%s%d%s]%s (%s) %s%s%s (notify: %s)"
@@ -1871,7 +1871,7 @@ msgstr ""
 "     name: o nome de um plugin\n"
 "arguments: argumentos passados ao plugin no carregamento\n"
 "\n"
-"Sem argumentos, este comando lista plugins carregados"
+"Sem argumentos, este comando lista plugins carregados."
 
 msgid "manage proxies"
 msgstr "gerenciar proxies"
@@ -3882,7 +3882,7 @@ msgstr ""
 #. TRANSLATORS: "%s" is "aspell"
 #, c-format
 msgid "%s dictionaries list:"
-msgstr "lista de dicionários do %s"
+msgstr "lista de dicionários do %s:"
 
 #, c-format
 msgid "%s: \"%s\" removed"

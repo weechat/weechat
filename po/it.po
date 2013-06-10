@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-06-08 17:43+0200\n"
-"PO-Revision-Date: 2013-06-08 12:30+0200\n"
+"POT-Creation-Date: 2013-06-10 09:20+0200\n"
+"PO-Revision-Date: 2013-06-10 09:16+0200\n"
 "Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: it\n"
@@ -437,7 +437,7 @@ msgstr "Nessuna combinazione tasti predefinita per il contesto \"%s\""
 #. TRANSLATORS: first "%d" is number of keys
 #, c-format
 msgid "%d default key bindings for context \"%s\":"
-msgstr "%d combinazione tasti predefinita per il contesto \"%s\""
+msgstr "%d combinazione tasti predefinita per il contesto \"%s\":"
 
 msgid "Key:"
 msgstr "Tasto:"
@@ -3617,7 +3617,7 @@ msgstr "Aggiornamento completato (%.02f %s)"
 
 #, c-format
 msgid "%sError upgrading WeeChat with file \"%s\":"
-msgstr "%sErrore durante l'aggiornamento di WeeChat con il file \"%s\""
+msgstr "%sErrore durante l'aggiornamento di WeeChat con il file \"%s\":"
 
 #, c-format
 msgid "%s    error: %s%s%s%s"
@@ -3744,7 +3744,7 @@ msgid "Last auto reset of pairs: %s"
 msgstr "Ultimo ripristino automatico delle coppie: %s"
 
 msgid "WeeChat basic colors:"
-msgstr "Colori base di WeeChat"
+msgstr "Colori base di WeeChat:"
 
 msgid "Nick colors:"
 msgstr "Colori per nick:"
@@ -4081,7 +4081,7 @@ msgstr "Correttore ortografico per l'input (con Aspell)"
 #. TRANSLATORS: "%s" is "aspell"
 #, c-format
 msgid "%s dictionaries list:"
-msgstr "elenco dizionari %s"
+msgstr "elenco dizionari %s:"
 
 #, c-format
 msgid "%s: \"%s\" removed"
@@ -4580,7 +4580,7 @@ msgstr "  %s[%s%d%s]%s mask: %s / server: %s / canale: %s"
 
 #, c-format
 msgid "%s: ignore list:"
-msgstr "%s: lista ignore"
+msgstr "%s: lista ignore:"
 
 #, c-format
 msgid "%s: no ignore in list"
@@ -6873,7 +6873,7 @@ msgstr "in linea"
 
 #, c-format
 msgid "Notify list for %s%s%s:"
-msgstr "Lista notifiche per %s%s%s"
+msgstr "Lista notifiche per %s%s%s:"
 
 msgid "Notify list is empty on this server"
 msgstr "La lista notifiche su questo server è vuota"
@@ -8093,7 +8093,7 @@ msgid "description of plugin option"
 msgstr "descrizione dell'opzione del plugin"
 
 msgid "Actions (letter+enter):"
-msgstr "Azioni (lettera+invio)"
+msgstr "Azioni (lettera+invio):"
 
 msgid "  [D] Disconnect"
 msgstr "  [D] Disconnetti"
@@ -8596,7 +8596,7 @@ msgid "%sRmodifier \"%s\" not found"
 msgstr "%sRmodifier \"%s\" non trovato"
 
 msgid "Default rmodifiers restored:"
-msgstr "Rmodifier predefiniti ripristinati"
+msgstr "Rmodifier predefiniti ripristinati:"
 
 #, c-format
 msgid ""

@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-06-08 17:43+0200\n"
-"PO-Revision-Date: 2013-06-08 12:30+0200\n"
+"POT-Creation-Date: 2013-06-10 09:20+0200\n"
+"PO-Revision-Date: 2013-06-10 09:13+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: cs\n"
@@ -3366,7 +3366,7 @@ msgstr "Aktualizace dokončena (%.02f %s)"
 
 #, c-format
 msgid "%sError upgrading WeeChat with file \"%s\":"
-msgstr "%sChyba aktualizace WeeChat se souborem \"%s\""
+msgstr "%sChyba aktualizace WeeChat se souborem \"%s\":"
 
 #, c-format
 msgid "%s    error: %s%s%s%s"
@@ -3480,14 +3480,14 @@ msgstr ""
 
 #, c-format
 msgid "WeeChat color pairs (in use: %d, left: %d):"
-msgstr "Barevné páry WeeChat (použito: %d, zbývá: %d)"
+msgstr "Barevné páry WeeChat (použito: %d, zbývá: %d):"
 
 #, c-format
 msgid "Last auto reset of pairs: %s"
 msgstr "Poslední automatická obnova párů: %s"
 
 msgid "WeeChat basic colors:"
-msgstr "Základní barvy WeeChat"
+msgstr "Základní barvy WeeChat:"
 
 msgid "Nick colors:"
 msgstr "Barvy přezdívek:"
@@ -3507,7 +3507,7 @@ msgstr "Terminál ztracen, ukončuji WeeChat..."
 
 #, c-format
 msgid "Signal %s received, exiting WeeChat..."
-msgstr "Obdržen signál %s, ukončuji WeeChat.."
+msgstr "Obdržen signál %s, ukončuji WeeChat..."
 
 msgid "Signal SIGHUP received, reloading configuration files"
 msgstr "Obdržen signál SIGHUP, znovunačítám konfigurační soubory"
@@ -7723,7 +7723,7 @@ msgstr "%sChyba: symbol \"%s\" nebyl v pluginu \"%s\" nalezen, načtení selhalo
 
 #, c-format
 msgid "%sIf plugin \"%s\" is old/obsolete, you can delete this file."
-msgstr "%sMůžete smazat tento soubor, pokud je plugin \"%s\" starý/neplatný"
+msgstr "%sMůžete smazat tento soubor, pokud je plugin \"%s\" starý/neplatný."
 
 #, c-format
 msgid ""
@@ -8219,7 +8219,7 @@ msgid "No rmodifier defined"
 msgstr "Žádné rmodifikátory nejsou definovány"
 
 msgid "List of rmodifiers:"
-msgstr "seznam rmodifikátory"
+msgstr "seznam rmodifikátory:"
 
 msgid "Default rmodifiers:"
 msgstr "Výchozí rmodifikátory:"

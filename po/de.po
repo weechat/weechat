@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-06-08 17:43+0200\n"
-"PO-Revision-Date: 2013-06-08 12:35+0200\n"
+"POT-Creation-Date: 2013-06-10 09:20+0200\n"
+"PO-Revision-Date: 2013-06-10 09:02+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
 "Language: de_DE\n"
@@ -5001,7 +5001,7 @@ msgid ""
 "disconnect %s\" before."
 msgstr ""
 "%s%s: Sie können den Server \"%s\" nicht löschen, da Sie noch mit dem Server "
-"verbunden sind. Probieren Sie vorab: \"/disconnect %s\""
+"verbunden sind. Probieren Sie vorab: \"/disconnect %s\"."
 
 #, c-format
 msgid "%s: Server %s%s%s has been deleted"
@@ -9000,7 +9000,7 @@ msgid "%sRmodifier \"%s\" not found"
 msgstr "%srmodifier \"%s\" nicht gefunden"
 
 msgid "Default rmodifiers restored:"
-msgstr "Standard rmodifier wiederhergestellt"
+msgstr "Standard rmodifier wiederhergestellt:"
 
 #, c-format
 msgid ""
