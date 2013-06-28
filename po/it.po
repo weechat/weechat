@@ -21,8 +21,8 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2013-06-28 19:46+0200\n"
-"PO-Revision-Date: 2013-06-10 09:16+0200\n"
-"Last-Translator: Marco Paolone <marcopaolone@gmail.com>\n"
+"PO-Revision-Date: 2013-06-14 19:39-0300\n"
+"Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
@@ -6982,19 +6982,19 @@ msgstr "%s%s%s%s ora è conosciuto come %s%s%s"
 
 #, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has left %s%s%s %s(%s%s%s)"
-msgstr "%s%s%s %s%s%s%s%s%s%s è uscito da %s%s%s %s(%s%s%s)"
+msgstr "%s%s%s%s%s%s%s%s%s%s è uscito da %s%s%s %s(%s%s%s)"
 
 #, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has left %s%s%s"
-msgstr "%s%s%s %s%s%s%s%s%s%s è uscito da %s%s%s"
+msgstr "%s%s%s%s%s%s%s%s%s%s è uscito da %s%s%s"
 
 #, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has quit %s(%s%s%s)"
-msgstr "%s%s%s %s%s%s%s%s%s%s si è disconnesso %s(%s%s%s)"
+msgstr "%s%s%s%s%s%s%s%s%s%s si è disconnesso %s(%s%s%s)"
 
 #, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s has quit"
-msgstr "%s%s%s %s%s%s%s%s%s%s si è disconnesso"
+msgstr "%s%s%s%s%s%s%s%s%s%s si è disconnesso"
 
 #, c-format
 msgid "%s%s: \"%s\" command received without channel"
