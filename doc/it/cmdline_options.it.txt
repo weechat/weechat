@@ -12,9 +12,6 @@
 *-h*, *--help*::
     Mostra l'aiuto.
 
-*-k*, *--keys*::
-    Mostra i tasti predefiniti di WeeChat.
-
 *-l*, *--license*::
     Mostra la licenza di WeeChat.
 

@@ -12,9 +12,6 @@
 *-h*, *--help*::
     Display help.
 
-*-k*, *--keys*::
-    Display WeeChat default keys.
-
 *-l*, *--license*::
     Display WeeChat license.
 

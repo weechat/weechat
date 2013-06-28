@@ -12,9 +12,6 @@
 *-h*, *--help*::
     ヘルプを表示
 
-*-k*, *--keys*::
-    WeeChat の デフォルトキーを表示
-
 *-l*, *--license*::
     WeeChat ライセンスを表示
 

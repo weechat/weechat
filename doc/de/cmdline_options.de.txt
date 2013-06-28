@@ -12,9 +12,6 @@
 *-h*, *--help*::
     zeigt einen Hilfstext an.
 
-*-k*, *--keys*::
-    zeigt die Standard-Tastaturbelegung an.
-
 *-l*, *--license*::
     zeigt die Lizenz von WeeChat an.
 

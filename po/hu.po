@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-06-28 19:46+0200\n"
+"POT-Creation-Date: 2013-06-28 20:35+0200\n"
 "PO-Revision-Date: 2013-06-08 12:30+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -49,7 +49,6 @@ msgid ""
 "  -c, --colors             display default colors in terminal\n"
 "  -d, --dir <path>         set WeeChat home directory (default: ~/.weechat)\n"
 "  -h, --help               display this help\n"
-"  -k, --keys               display WeeChat default keys\n"
 "  -l, --license            display WeeChat license\n"
 "  -p, --no-plugin          don't load any plugin at startup\n"
 "  -r, --run-command <cmd>  run command(s) after startup\n"
@@ -72,11 +71,6 @@ msgstr ""
 "  -p, --no-plugin         nem tölt be modulokat induláskor\n"
 "  -v, --version           WeeChat verziójának mutatása\n"
 "  -w, --weechat-commands  WeeChat parancsok mutatása\n"
-
-#. TRANSLATORS: first "%s" is "weechat"
-#, fuzzy, c-format
-msgid "%s default keys (context: \"%s\"):\n"
-msgstr "%s alapértelmezett billentyűk:\n"
 
 #, fuzzy, c-format
 msgid "Error: missing argument for \"%s\" option\n"
@@ -8971,3 +8965,7 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#, fuzzy
+#~ msgid "%s default keys (context: \"%s\"):\n"
+#~ msgstr "%s alapértelmezett billentyűk:\n"

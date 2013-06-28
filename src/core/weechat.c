@@ -136,7 +136,6 @@ weechat_display_usage (char *exec_name)
                             "  -c, --colors             display default colors in terminal\n"
                             "  -d, --dir <path>         set WeeChat home directory (default: ~/.weechat)\n"
                             "  -h, --help               display this help\n"
-                            "  -k, --keys               display WeeChat default keys\n"
                             "  -l, --license            display WeeChat license\n"
                             "  -p, --no-plugin          don't load any plugin at startup\n"
                             "  -r, --run-command <cmd>  run command(s) after startup\n"
@@ -146,40 +145,6 @@ weechat_display_usage (char *exec_name)
                             "  -v, --version            display WeeChat version\n"
                             "  plugin:option            option for plugin (see man weechat-curses)\n"));
     string_iconv_fprintf(stdout, "\n");
-}
-
-/*
- * Displays WeeChat default keys on standard output.
- */
-
-void
-weechat_display_keys ()
-{
-    struct t_gui_key *ptr_key;
-    char *expanded_name;
-    int i;
-
-    for (i = 0; i < GUI_KEY_NUM_CONTEXTS; i++)
-    {
-        gui_key_default_bindings (i);
-        string_iconv_fprintf (stdout,
-                              /* TRANSLATORS: first "%s" is "weechat" */
-                              _("%s default keys (context: \"%s\"):\n"),
-                              (gui_key_context_string[i] && gui_key_context_string[i][0]) ?
-                              _(gui_key_context_string[i]) : "",
-                              version_get_name ());
-        string_iconv_fprintf (stdout, "\n");
-        for (ptr_key = gui_keys[i]; ptr_key; ptr_key = ptr_key->next_key)
-        {
-            expanded_name = gui_key_get_expanded_name (ptr_key->key);
-            string_iconv_fprintf (stdout,
-                                  "* %s => %s\n",
-                                  (expanded_name) ? expanded_name : ptr_key->key,
-                                  ptr_key->command);
-            if (expanded_name)
-                free (expanded_name);
-        }
-    }
 }
 
 /*
@@ -226,12 +191,6 @@ weechat_parse_args (int argc, char *argv[])
                 || (strcmp (argv[i], "--help") == 0))
         {
             weechat_display_usage (argv[0]);
-            weechat_shutdown (EXIT_SUCCESS, 0);
-        }
-        else if ((strcmp (argv[i], "-k") == 0)
-            || (strcmp (argv[i], "--keys") == 0))
-        {
-            weechat_display_keys ();
             weechat_shutdown (EXIT_SUCCESS, 0);
         }
         else if ((strcmp (argv[i], "-l") == 0)
