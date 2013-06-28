@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-06-10 09:20+0200\n"
-"PO-Revision-Date: 2013-06-10 09:20+0200\n"
+"POT-Creation-Date: 2013-06-10 11:37+0200\n"
+"PO-Revision-Date: 2013-06-28 13:51+0200\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: tr\n"
@@ -66,7 +66,7 @@ msgstr ""
 #. TRANSLATORS: first "%s" is "weechat"
 #, c-format
 msgid "%s default keys (context: \"%s\"):\n"
-msgstr ""
+msgstr "%s default keys (context: \"%s\"):\n"
 
 #, c-format
 msgid "Error: missing argument for \"%s\" option\n"
@@ -79,7 +79,7 @@ msgid "Error: unable to get HOME directory\n"
 msgstr ""
 
 msgid "Error: not enough memory for home directory\n"
-msgstr ""
+msgstr "Hata: ev dizini için bellek yeterli değil\n"
 
 #, c-format
 msgid "Error: home (%s) is not a directory\n"
@@ -87,7 +87,7 @@ msgstr ""
 
 #, c-format
 msgid "Error: cannot create directory \"%s\"\n"
-msgstr ""
+msgstr "Hata: \"%s\" dizini oluşturulamaz\n"
 
 msgid "List of bars:"
 msgstr ""
@@ -132,7 +132,7 @@ msgstr ""
 
 #, c-format
 msgid "%sNot enough memory"
-msgstr ""
+msgstr "%sYeterli bellek yok"
 
 #, c-format
 msgid "%sError: wrong type \"%s\" for bar \"%s\""
@@ -186,7 +186,7 @@ msgstr ""
 
 #, c-format
 msgid "  %s[%s%d%s]%s (%s) %s%s%s (notify: %s)"
-msgstr ""
+msgstr "  %s[%s%d%s]%s (%s) %s%s%s (notify: %s)"
 
 #, c-format
 msgid "%sError: incorrect buffer number"
@@ -239,31 +239,31 @@ msgid "  %s[%s%s%s]%s buffer: %s%s%s / tags: %s / regex: %s %s"
 msgstr ""
 
 msgid "(disabled)"
-msgstr ""
+msgstr "(devre dışı)"
 
 msgid "Message filtering enabled"
-msgstr ""
+msgstr "İleti filtreleme etkin"
 
 msgid "Message filtering disabled"
-msgstr ""
+msgstr "İleti filtreleme devre dışı"
 
 msgid "Message filters:"
-msgstr ""
+msgstr "İleti filtreleri:"
 
 msgid "No message filter defined"
 msgstr ""
 
 #, c-format
 msgid "Filter \"%s\" enabled"
-msgstr ""
+msgstr "Filtre \"%s\" etkin"
 
 #, c-format
 msgid "%sError: filter \"%s\" not found"
-msgstr ""
+msgstr "%sHata: filtre \"%s\" bulunamadı"
 
 #, c-format
 msgid "Filter \"%s\" disabled"
-msgstr ""
+msgstr "Filtre \"%s\" devre dışı"
 
 #, c-format
 msgid "%sError: filter \"%s\" already exists"
@@ -275,11 +275,11 @@ msgstr ""
 
 #, c-format
 msgid "Filter \"%s\" added:"
-msgstr ""
+msgstr "Filtre \"%s\" eklendi:"
 
 #, c-format
 msgid "%sError adding filter"
-msgstr ""
+msgstr "%sFiltre eklenirken hata"
 
 #, c-format
 msgid "Filter \"%s\" renamed to \"%s\""
@@ -294,11 +294,11 @@ msgstr ""
 
 #, c-format
 msgid "Filter \"%s\" deleted"
-msgstr ""
+msgstr "Filtre \"%s\" silindi"
 
 #, c-format
 msgid "Option \"%s%s%s\":"
-msgstr ""
+msgstr "Seçenek \"%s%s%s\":"
 
 msgid "description"
 msgstr "açıklama"
@@ -389,7 +389,7 @@ msgstr ""
 
 #, c-format
 msgid "%sKey \"%s\" not found"
-msgstr ""
+msgstr "%sTuş \"%s\" bulunamadı"
 
 #, c-format
 msgid "No key binding defined for context \"%s\""
@@ -410,10 +410,10 @@ msgid "%d default key bindings for context \"%s\":"
 msgstr ""
 
 msgid "Key:"
-msgstr ""
+msgstr "Tuş:"
 
 msgid "No key found"
-msgstr ""
+msgstr "Tuş bulunamadı"
 
 #, c-format
 msgid "%sError: context \"%s\" not found"
@@ -477,7 +477,7 @@ msgid "Layout \"%s\" has been renamed to \"%s\""
 msgstr ""
 
 msgid "Mouse enabled"
-msgstr "Fare etkinleştirildi"
+msgstr "Fare etkin"
 
 msgid "Mouse disabled"
 msgstr "Fare devredışı"
@@ -522,10 +522,10 @@ msgid "      %d (flags: 0x%x:%s%s%s)"
 msgstr ""
 
 msgid " read"
-msgstr "oku"
+msgstr " oku"
 
 msgid " write"
-msgstr "yaz"
+msgstr " yaz"
 
 msgid " exception"
 msgstr ""
@@ -552,7 +552,7 @@ msgid "      buffer: %s, message: \"%s\""
 msgstr ""
 
 msgid "(none)"
-msgstr ""
+msgstr "(hiçbiri)"
 
 #, c-format
 msgid "      message: \"%s\""
@@ -566,7 +566,7 @@ msgid "      signal: %s"
 msgstr ""
 
 msgid "(all)"
-msgstr ""
+msgstr "(tümü)"
 
 msgid "    configuration options hooked:"
 msgstr ""
@@ -700,13 +700,13 @@ msgid "%sError: option \"%s\" not found"
 msgstr "%sHatar: seçenek \"%s\" bulunamadı"
 
 msgid "Option changed: "
-msgstr ""
+msgstr "Seçenek değiştirildi: "
 
 msgid "Option created: "
-msgstr ""
+msgstr "Seçenek oluşturuldu: "
 
 msgid "Option changed"
-msgstr ""
+msgstr "Seçenek değiştirildi"
 
 #, c-format
 msgid "%sReset of all options is not allowed"
@@ -797,7 +797,7 @@ msgid "toggle away status"
 msgstr ""
 
 msgid "[-all] [<message>]"
-msgstr ""
+msgstr "[-all] [<ileti>]"
 
 msgid ""
 "   -all: toggle away status on all connected servers\n"
@@ -929,7 +929,7 @@ msgid "define color aliases and display palette of colors"
 msgstr ""
 
 msgid "alias <color> <name> || unalias <color> || reset"
-msgstr ""
+msgstr "alias <renk> <isim> || unalias <renk> || reset"
 
 msgid ""
 "  alias: add an alias for a color\n"
@@ -1151,10 +1151,10 @@ msgid ""
 msgstr ""
 
 msgid "display help about commands and options"
-msgstr ""
+msgstr "komutlar ve seçenekler hakkında yardım göster"
 
 msgid "-list|-listfull [<plugin> [<plugin>...]] || <command> || <option>"
-msgstr ""
+msgstr "-list|-listfull [<eklenti> [<eklenti>...]] || <komut> || <seçenek>"
 
 msgid ""
 "    -list: list commands, by plugin (without argument, this list is "
@@ -1169,7 +1169,7 @@ msgid "show buffer command history"
 msgstr ""
 
 msgid "clear || <value>"
-msgstr ""
+msgstr "clear || <değer>"
 
 msgid ""
 "clear: clear history\n"
@@ -1177,7 +1177,7 @@ msgid ""
 msgstr ""
 
 msgid "functions for command line"
-msgstr ""
+msgstr "komut satırı için fonksiyonlar"
 
 msgid "<action> [<arguments>]"
 msgstr ""
@@ -1480,7 +1480,7 @@ msgid ""
 msgstr ""
 
 msgid "save configuration files to disk"
-msgstr ""
+msgstr "yapılandırma dosyalarını diske kaydet"
 
 msgid ""
 "file: configuration file to save (without extension \".conf\")\n"
@@ -1489,10 +1489,10 @@ msgid ""
 msgstr ""
 
 msgid "set config options"
-msgstr ""
+msgstr "yapılandırma seçenekleri ayarı"
 
 msgid "[<option> [<value>]] || diff [<option> [<option>...]]"
-msgstr ""
+msgstr "[<seçenek> [<değer>]] || diff [<seçenek> [<seçenek>...]]"
 
 msgid ""
 "option: name of an option (can start or end with '*' to list many options)\n"
@@ -1724,7 +1724,7 @@ msgid "names of filters"
 msgstr "filtrelerin isimleri"
 
 msgid "commands (weechat and plugins)"
-msgstr ""
+msgstr "komutlar  (weechat ve eklentiler)"
 
 msgid "names of infos hooked"
 msgstr ""
@@ -2065,7 +2065,7 @@ msgid "text to display after nick in prefix of message, example: \">\""
 msgstr ""
 
 msgid "enable mouse support"
-msgstr ""
+msgstr "fare desteğini etkinleştir"
 
 msgid ""
 "delay (in milliseconds) to grab a mouse event: WeeChat will wait this delay "
@@ -2386,7 +2386,7 @@ msgid "text color for groups in nicklist"
 msgstr ""
 
 msgid "text color for away nicknames"
-msgstr ""
+msgstr "uzaktaki kullanıcı isimleri için metin rengi"
 
 msgid "text color for offline nicknames"
 msgstr ""
@@ -2503,7 +2503,7 @@ msgstr ""
 
 #, c-format
 msgid "%sError reading configuration"
-msgstr ""
+msgstr "%sYapılandırma okunurken hata"
 
 #, c-format
 msgid "Writing configuration file %s %s"
@@ -2514,7 +2514,7 @@ msgstr "(varsayılan seçenekler)"
 
 #, c-format
 msgid "%sError: cannot create file \"%s\""
-msgstr ""
+msgstr "%sHata: dosya \"%s\" oluşturulamaz"
 
 #, c-format
 msgid "%sError writing configuration file \"%s\""
@@ -2753,7 +2753,7 @@ msgid "No color support in terminal."
 msgstr ""
 
 msgid "Default colors:"
-msgstr ""
+msgstr "Varsayılan renkler:"
 
 msgid "Terminal colors:"
 msgstr ""
@@ -3089,9 +3089,9 @@ msgid "%s%s: failed to add word to personal dictionary"
 msgstr ""
 
 #. TRANSLATORS: second "%s" is "aspell" or "enchant"
-#, fuzzy, c-format
+#, c-format
 msgid "%s (using %s)"
-msgstr "  %s (eklenti: %s)"
+msgstr ""
 
 msgid "Spell checking is enabled"
 msgstr ""
@@ -3116,7 +3116,7 @@ msgid "Aspell disabled"
 msgstr ""
 
 msgid "aspell plugin configuration"
-msgstr ""
+msgstr "aspell eklenti yapılandırma"
 
 msgid ""
 "enable|disable|toggle || listdict || setdict <dict>[,<dict>...] || deldict "
@@ -3632,7 +3632,7 @@ msgid "All servers:"
 msgstr "Tüm sunucular:"
 
 msgid "No server"
-msgstr ""
+msgstr "Sunucu yok"
 
 #, c-format
 msgid "Servers with \"%s\":"
@@ -3652,7 +3652,7 @@ msgstr ""
 
 #, c-format
 msgid "%s: server %s%s%s created"
-msgstr ""
+msgstr "%s: sunucu %s%s%s oluşturuldu"
 
 #, c-format
 msgid "%s%s: server \"%s\" not found for \"%s\" command"
@@ -3715,7 +3715,7 @@ msgid "execute a command on all channels of all connected servers"
 msgstr ""
 
 msgid "[-current] [-exclude=<channel>[,<channel>...]] <command> [<arguments>]"
-msgstr ""
+msgstr "[-current] [-exclude=<kanal>[,<kanal>...]] <komut> [<argümanlar>]"
 
 msgid ""
 " -current: execute command for channels of current server only\n"
@@ -3739,7 +3739,7 @@ msgid "execute a command on all connected servers"
 msgstr ""
 
 msgid "[-exclude=<server>[,<server>...]] <command> [<arguments>]"
-msgstr ""
+msgstr "[-exclude=<sunucu>[,<sunucu>...]] <komut> [<argümanlar>]"
 
 msgid ""
 " -exclude: exclude some servers ('*' is allowed at beginning or end of "
@@ -3771,12 +3771,14 @@ msgid ""
 msgstr ""
 
 msgid "connect to IRC server(s)"
-msgstr ""
+msgstr "İRC sunucu(lara) bağlan"
 
 msgid ""
 "<server> [<server>...] [-<option>[=<value>]] [-no<option>] [-nojoin] [-"
 "switch] || -all|-auto|-open [-nojoin] [-switch]"
 msgstr ""
+"<sunucu> [<sunucu>...] [-<seçenek>[=<değer>]] [-no<seçenek>] [-nojoin] [-"
+"switch] || -all|-auto|-open [-nojoin] [-switch]"
 
 msgid ""
 "    server: server name, which can be:\n"
@@ -3832,7 +3834,7 @@ msgid "start a DCC (file transfer or direct chat)"
 msgstr ""
 
 msgid "chat <nick> || send <nick> <file>"
-msgstr ""
+msgstr "chat <rumuz> || send <rumuz> <dosya>"
 
 msgid ""
 "nick: nick for chat or file\n"
@@ -3883,7 +3885,7 @@ msgid "ignore nicks/hosts from servers or channels"
 msgstr ""
 
 msgid "list || add [re:]<nick> [<server> [<channel>]] || del <number>|-all"
-msgstr ""
+msgstr "list || add [re:]<rumuz> [<sunucu> [<kanal>]] || del <sayı>|-all"
 
 msgid ""
 "     list: list all ignores\n"
@@ -3935,6 +3937,7 @@ msgid ""
 "[-noswitch] [-server <server>] [<channel1>[,<channel2>...]] [<key1>[,"
 "<key2>...]]"
 msgstr ""
+"[-noswitch] [-server <sunucu>] [<kanal1>[,<kanal2>...]] [<tuş1>[,<tuş2>...]]"
 
 msgid ""
 "-noswitch: do not switch to new buffer\n"
@@ -4051,6 +4054,7 @@ msgstr ""
 msgid ""
 "[<channel>] [+|-]o|p|s|i|t|n|m|l|b|e|v|k [<arguments>] || <nick> [+|-]i|s|w|o"
 msgstr ""
+"[<kanal>] [+|-]o|p|s|i|t|n|m|l|b|e|v|k [<argümanlar>] || <rumuz> [+|-]i|s|w|o"
 
 msgid ""
 "channel modes:\n"
@@ -4091,7 +4095,7 @@ msgid "send message to a nick or channel"
 msgstr ""
 
 msgid "[-server <server>] <target>[,<target>...] <text>"
-msgstr ""
+msgstr "[-server <sunucu>] <hedef>[,<hedef>...] <metin>"
 
 msgid ""
 "server: send to this server (internal name)\n"
@@ -4125,7 +4129,7 @@ msgid "send notice message to user"
 msgstr ""
 
 msgid "[-server <server>] <target> <text>"
-msgstr ""
+msgstr "[-server <sunucu>] <hedef> <metin>"
 
 msgid ""
 "server: send to this server (internal name)\n"
@@ -4137,7 +4141,7 @@ msgid "add a notification for presence or away status of nicks on servers"
 msgstr ""
 
 msgid "add <nick> [<server> [-away]] || del <nick>|-all [<server>]"
-msgstr ""
+msgstr "add <rumuz> [<sunucu> [-away]] || del <rumuz>|-all [<sunucu>]"
 
 msgid ""
 "   add: add a notification\n"
@@ -4172,6 +4176,8 @@ msgid ""
 "    user: user\n"
 "password: password"
 msgstr ""
+"    user: kullanıcı\n"
+"password: parola"
 
 msgid "leave a channel"
 msgstr ""
@@ -4207,7 +4213,7 @@ msgid "send a private message to a nick"
 msgstr ""
 
 msgid "[-server <server>] <nick>[,<nick>...] [<text>]"
-msgstr ""
+msgstr "[-server <sunucu>] <rumuz>[,<rumuz>...] [<metin>]"
 
 msgid ""
 "server: send to this server (internal name)\n"
@@ -4229,7 +4235,7 @@ msgid "send raw data to server without parsing"
 msgstr ""
 
 msgid "[-server <server>] <data>"
-msgstr ""
+msgstr "[-server <sunucu>] <veri>"
 
 msgid ""
 "server: send to this server (internal name)\n"
@@ -4240,7 +4246,7 @@ msgid "reconnect to server(s)"
 msgstr ""
 
 msgid "<server> [<server>...] [-nojoin] [-switch] || -all [-nojoin] [-switch]"
-msgstr ""
+msgstr "<sunucu> [<sunucu>...] [-nojoin] [-switch] || -all [-nojoin] [-switch]"
 
 msgid ""
 " server: server name to reconnect\n"
@@ -4271,6 +4277,8 @@ msgid ""
 "   nick: nick\n"
 "channel: channel name"
 msgstr ""
+"   nick: rumuz\n"
+"channel: kanal ismi"
 
 msgid "change mode on channel, without having operator status"
 msgstr ""
@@ -4456,13 +4464,16 @@ msgid "get/set channel topic"
 msgstr ""
 
 msgid "[<channel>] [<topic>|-delete]"
-msgstr ""
+msgstr "[<kanal>] [<konu>|-delete]"
 
 msgid ""
 "channel: channel name\n"
 "  topic: new topic for channel\n"
 "-delete: delete channel topic"
 msgstr ""
+"channel: kanal ismi\n"
+"  topic: kanal için yeni konu\n"
+"-delete: kanal konusunu sil"
 
 msgid "find the route to specific server"
 msgstr ""
@@ -4494,6 +4505,8 @@ msgid ""
 "server: server name\n"
 "  nick: nick"
 msgstr ""
+"server: sunucu ismi\n"
+"  nick: rumuz"
 
 msgid "give voice to nick(s)"
 msgstr ""
@@ -4547,7 +4560,7 @@ msgid "ask for information about a nick which no longer exists"
 msgstr ""
 
 msgid "<nick>[,<nick>...] [<count> [<target>]]"
-msgstr ""
+msgstr "<rumuz>[,<rumuz>...] [<count> [<hedef>]]"
 
 msgid ""
 "  nick: nick to search\n"
@@ -4694,10 +4707,10 @@ msgid ""
 msgstr ""
 
 msgid "username for SASL authentication"
-msgstr ""
+msgstr "SASL kimlik doğrulaması için kullanıcı adı"
 
 msgid "password for SASL authentication"
-msgstr ""
+msgstr "SASL kimlik doğrulaması için parola"
 
 msgid "timeout (in seconds) before giving up SASL authentication"
 msgstr ""
@@ -5204,10 +5217,10 @@ msgid "IRC host (like `:nick!name@server.com`)"
 msgstr ""
 
 msgid "get nick color code"
-msgstr ""
+msgstr "rumuz renk kodu al"
 
 msgid "get nick color name"
-msgstr ""
+msgstr "rumuz renk ismi al"
 
 msgid "get buffer pointer for an IRC server/channel/nick"
 msgstr ""
@@ -5483,7 +5496,7 @@ msgstr ""
 
 #, c-format
 msgid "%s%s[%s%s%s]%s is away: %s"
-msgstr ""
+msgstr "%s%s[%s%s%s]%s uzakta: %s"
 
 #, c-format
 msgid "%sUsers online: %s%s"
@@ -6004,7 +6017,7 @@ msgid "logger plugin configuration"
 msgstr ""
 
 msgid "list || set <level> || disable"
-msgstr ""
+msgstr "list || set <seviye> || disable"
 
 msgid ""
 "   list: show logging status for opened buffers\n"
@@ -6121,16 +6134,16 @@ msgid "directory separator"
 msgstr ""
 
 msgid "WeeChat directory"
-msgstr ""
+msgstr "WeeChat dizini"
 
 msgid "WeeChat \"lib\" directory"
-msgstr ""
+msgstr "WeeChat \"lib\" dizini"
 
 msgid "WeeChat \"share\" directory"
-msgstr ""
+msgstr "WeeChat \"share\" dizini"
 
 msgid "WeeChat \"locale\" directory"
-msgstr ""
+msgstr "WeeChat \"locale\" dizini"
 
 msgid "WeeChat site"
 msgstr "WeeChat site"
@@ -6251,9 +6264,8 @@ msgstr ""
 msgid "plugin name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 
-#, fuzzy
 msgid "list of proxies"
-msgstr "eklentilerin listesi"
+msgstr ""
 
 msgid "proxy pointer (optional)"
 msgstr ""
@@ -6453,7 +6465,7 @@ msgid_plural "clients"
 msgstr[0] "istemciler"
 
 msgid "connecting"
-msgstr ""
+msgstr "bağlanıyor"
 
 msgid "waiting auth"
 msgstr ""
@@ -7055,7 +7067,7 @@ msgstr ""
 
 #, c-format
 msgid "%s: script removed: %s"
-msgstr ""
+msgstr "%s: betik kaldırıldı: %s"
 
 #, c-format
 msgid "%s%s: failed to remove script: %s (%s)"
@@ -7080,7 +7092,7 @@ msgstr "    dosya: %s"
 
 #, c-format
 msgid "    written by \"%s\", license: %s"
-msgstr ""
+msgstr "    \"%s\" tarafından yazıldı, lisans: %s"
 
 msgid "  (none)"
 msgstr "  (yok)"
@@ -7230,7 +7242,7 @@ msgstr ""
 
 #, c-format
 msgid "%s: all scripts are up-to-date"
-msgstr ""
+msgstr "%s: tüm betikler güncel"
 
 msgid "Script"
 msgstr "Betik"
@@ -7300,6 +7312,10 @@ msgid ""
 "[<script>...] || install|remove|installremove|hold [-q] <script> "
 "[<script>...] || upgrade || update"
 msgstr ""
+"list [-o|-i] || search <metin> || show <betik> || load|unload|reload <betik> "
+"[<betik>...] || autoload|noautoload|toggleautoload <betik> [<betik>...] || "
+"install|remove|installremove|hold [-q] <betik> [<betik>...] || upgrade || "
+"update"
 
 msgid ""
 "          list: list loaded scripts (all languages)\n"
@@ -7372,10 +7388,10 @@ msgid ""
 msgstr ""
 
 msgid "list of scripts in repository"
-msgstr ""
+msgstr "depodaki betiklerin listesi"
 
 msgid "list of scripts installed (from repository)"
-msgstr ""
+msgstr "yüklü betiklerin listesi (depodan)"
 
 msgid "files in script directories"
 msgstr ""
