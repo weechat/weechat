@@ -106,6 +106,7 @@ compiler WeeChat.
 | guile-2.0-dev                   | ≥ 2.0       |        | extension guile (scheme)
 | asciidoc                        | ≥ 8.5.0     |        | construction de la documentation (fichiers HTML)
 | source-highlight                |             |        | coloration des sources dans la documentation HTML
+| docbook-xml, docbook-xsl        |             |        | construction de la page de manuel
 |========================================
 
 [NOTE]
@@ -438,42 +439,7 @@ Lancer WeeChat
 
 Paramètres de ligne de commande :
 
--a, --no-connect::
-    Supprimer la connexion automatique aux serveurs lors du démarrage.
-
--c, --colors::
-    Afficher les couleurs par défaut du terminal.
-
--d, --dir 'path'::
-    Définir le répertoire comme étant la base de WeeChat
-    (utilisé pour les fichiers de configuration, logs, extensions
-    et scripts de l'utilisateur), la valeur par défaut est '~/.weechat' (note :
-    le répertoire est créé s'il n'est pas trouvé par WeeChat).
-
--h, --help::
-    Afficher l'aide.
-
--k, --keys::
-    Afficher les touches par défaut de WeeChat.
-
--l, --license::
-    Afficher la licence de WeeChat.
-
--p, --no-plugin::
-    Supprimer le chargement automatique des extensions au démarrage.
-
--r, --run-command::
-    Lancer la/les commande(s) après le démarrage (plusieurs commandes peuvent
-    être séparées par des points-virgules).
-
--s, --no-script::
-    Supprimer le chargement automatique des scripts au démarrage.
-
--v, --version::
-    Afficher la version de WeeChat.
-
-plugin:option::
-    Option pour l'extension (voir la documentation de chaque extension).
+include::cmdline_options.fr.txt[]
 
 Pour lancer WeeChat, tapez cette commande :
 

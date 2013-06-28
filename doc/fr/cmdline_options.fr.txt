@@ -1,0 +1,40 @@
+*-a*, *--no-connect*::
+    Supprimer la connexion automatique aux serveurs lors du démarrage.
+
+*-c*, *--colors*::
+    Afficher les couleurs par défaut du terminal.
+
+*-d*, *--dir* '<répertoire>'::
+    Définir le répertoire comme étant la base de WeeChat
+    (utilisé pour les fichiers de configuration, logs, extensions
+    et scripts de l'utilisateur), la valeur par défaut est '~/.weechat' (note :
+    le répertoire est créé s'il n'est pas trouvé par WeeChat).
+
+*-h*, *--help*::
+    Afficher l'aide.
+
+*-k*, *--keys*::
+    Afficher les touches par défaut de WeeChat.
+
+*-l*, *--license*::
+    Afficher la licence de WeeChat.
+
+*-p*, *--no-plugin*::
+    Supprimer le chargement automatique des extensions au démarrage.
+
+*-r*, *--run-command* '<commande>'::
+    Lancer la/les commande(s) après le démarrage (plusieurs commandes peuvent
+    être séparées par des points-virgules).
+
+*-s*, *--no-script*::
+    Supprimer le chargement automatique des scripts au démarrage.
+
+*--upgrade*::
+    Mettre à jour WeeChat en utilisant les fichiers de session générés avec la
+    commande `/upgrade -quit`.
+
+*-v*, *--version*::
+    Afficher la version de WeeChat.
+
+*extension:option*::
+    Option pour une extension.

@@ -1,0 +1,40 @@
+*-a*, *--no-connect*::
+    Disabilita la connessione automatica ai server all'avvio di WeeChat.
+
+*-c*, *--colors*::
+    Mostra i colori prefefiniti nel terminale.
+
+*-d*, *--dir* '<path>'::
+    Imposta una directory come home per WeeChat (utilizzata per i file di
+    configurazione, log, plugin e script dell'utente), il valore predefinito
+    è ~/.weechat (nota: directory viene creata se non trovata da WeeChat).
+
+*-h*, *--help*::
+    Mostra l'aiuto.
+
+*-k*, *--keys*::
+    Mostra i tasti predefiniti di WeeChat.
+
+*-l*, *--license*::
+    Mostra la licenza di WeeChat.
+
+*-p*, *--no-plugin*::
+    Disabilita il caricamento automatico dei plugin.
+
+// TRANSLATION MISSING
+*-r*, *--run-command* '<command>'::
+    Esegue un comando(i) dopo l'avvio (più comandi possono essere separati da
+    punto e virgola).
+
+*-s*, *--no-script*::
+    Disabilita il caricamento automatico dei script.
+
+// TRANSLATION MISSING
+*--upgrade*::
+    Upgrade WeeChat using session files generated with command `/upgrade -quit`.
+
+*-v*, *--version*::
+    Mostra la versione di WeeChat.
+
+*plugin:option*::
+    Opzione per il plugin.

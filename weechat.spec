@@ -67,6 +67,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS ChangeLog COPYING INSTALL NEWS README
 %doc %{_docdir}/%{name}/*.html
 %{_mandir}/man1/%{name}-curses.1*
+%{_mandir}/*/man1/%{name}-curses.1*
 %{_bindir}/%{name}-curses
 %{_libdir}/%{name}/plugins/*
 %{_libdir}/pkgconfig/weechat.pc

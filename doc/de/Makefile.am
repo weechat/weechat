@@ -21,6 +21,8 @@
 docdir = $(datadir)/doc/$(PACKAGE)
 
 EXTRA_DIST = CMakeLists.txt \
+             weechat-curses.1.de.txt \
+             cmdline_options.de.txt \
              weechat_user.de.txt \
              weechat_scripting.de.txt \
              weechat_faq.de.txt \
@@ -28,14 +30,19 @@ EXTRA_DIST = CMakeLists.txt \
              weechat_tester.de.txt \
              $(wildcard autogen/user/*.txt)
 
-all-local: weechat_user.de.html \
+all-local: weechat-curses.1 \
+		weechat_user.de.html \
 		weechat_scripting.de.html \
 		weechat_faq.de.html \
 		weechat_quickstart.de.html \
 		weechat_tester.de.html
 
+# man page
+weechat-curses.1: weechat-curses.1.de.txt cmdline_options.de.txt
+	$(A2X) -a lang=de -a revision="WeeChat $(VERSION)" -d manpage -f manpage -D . $(abs_top_srcdir)/doc/de/weechat-curses.1.de.txt
+
 # user's guide
-weechat_user.de.html: weechat_user.de.txt $(wildcard autogen/user/*.txt)
+weechat_user.de.html: weechat_user.de.txt cmdline_options.de.txt $(wildcard autogen/user/*.txt)
 	$(ASCIIDOC) -a lang=de -a toc -a toclevels=4 -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_user.de.html $(abs_top_srcdir)/doc/de/weechat_user.de.txt
 
 # scripting guide
@@ -57,16 +64,21 @@ weechat_tester.de.html: weechat_tester.de.txt
 # install docs
 
 install-data-hook:
+	$(mkinstalldirs) $(DESTDIR)$(mandir)/de/man1/
+	$(INSTALL_DATA) *.1 $(DESTDIR)$(mandir)/de/man1/
 	$(mkinstalldirs) $(DESTDIR)$(docdir)/
 	$(INSTALL_DATA) *.html $(DESTDIR)$(docdir)/
 
 # uninstall docs
 
 uninstall-hook:
+	$(RM) $(DESTDIR)$(mandir)/de/man1/weechat-curses.1
+	-rmdir $(DESTDIR)$(mandir)/de/man1
 	$(RM) $(DESTDIR)$(docdir)/*.de.html
 	-rmdir $(DESTDIR)$(docdir)
 
 # clean
 
 clean-local:
+	-rm -f weechat-curses.1
 	-rm -f *.html

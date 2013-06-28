@@ -1,0 +1,118 @@
+WEECHAT-CURSES(1)
+=================
+:doctype: manpage
+
+NOM
+---
+
+weechat-curses - le client de discussion extensible (version Curses)
+
+SYNOPSIS
+--------
+
+[verse]
+'weechat-curses' [-a|--no-connect] [-d|--dir <répertoire>] [-p|--no-plugin] [-r|--run-command <commande>] [-s|--no-script] [--upgrade] [extension:option...]
+'weechat-curses' [-c|--colors]
+'weechat-curses' [-h|--help]
+'weechat-curses' [-k|--keys]
+'weechat-curses' [-l|--license]
+'weechat-curses' [-v|--version]
+
+DESCRIPTION
+-----------
+
+WeeChat est un client de discussion rapide, léger et extensible.
+
+Il est modulaire (cœur léger avec des extensions), multi-protocoles (IRC et
+Jabber), extensible avec du C et des scripts écrits en différents langages.
+
+OPTIONS
+-------
+
+include::cmdline_options.fr.txt[]
+
+OPTIONS D'EXTENSION
+-------------------
+
+Pour une documentation complète sur les options des extensions, merci de
+consulter la documentation des extensions dans le
+http://weechat.org/doc[guide utilisateur de WeeChat].
+
+Avec l'extension irc, vous pouvez vous connecter à un serveur de manière
+temporaire avec une URL, comme ceci :
+
+    irc[6][s]://[[pseudo][:motdepasse]@]serveur[:port][/#canal1[,#canal2...]]
+
+Pour rejoindre le canal IRC de support WeeChat avec le pseudo "monpseudo" :
+
+    irc://monpseudo@irc.freenode.net/#weechat
+
+Les adresses IPv6 peuvent être entourées par des crochets pour ajouter un port
+après, par exemple :
+
+    irc://monpseudo@[2001:db8:0:85a3::ac1f:8001]:6668/#test
+
+FICHIERS
+--------
+
+$HOME/.weechat/weechat.conf::
+    fichier de configuration principal de WeeChat
+
+$HOME/.weechat/plugins.conf::
+    fichier de configuration des extensions
+
+$HOME/.weechat/alias.conf::
+    fichier de configuration pour l'extension 'alias'
+
+$HOME/.weechat/aspell.conf::
+    fichier de configuration pour l'extension 'aspell'
+
+$HOME/.weechat/charset.conf::
+    fichier de configuration pour l'extension 'charset'
+
+$HOME/.weechat/irc.conf::
+    fichier de configuration pour l'extension 'irc'
+
+$HOME/.weechat/logger.conf::
+    fichier de configuration pour l'extension 'logger'
+
+$HOME/.weechat/relay.conf::
+    fichier de configuration pour l'extension 'relay'
+
+$HOME/.weechat/rmodifier.conf::
+    fichier de configuration pour l'extension 'rmodifier'
+
+$HOME/.weechat/script.conf::
+    fichier de configuration pour l'extension 'script'
+
+$HOME/.weechat/xfer.conf::
+    fichier de configuration pour l'extension 'xfer'
+
+$HOME/.weechat/weechat.log::
+    fichier de log de WeeChat
+
+AUTEURS
+-------
+
+WeeChat est écrit par Sébastien Helleu et des contributeurs (la liste complète
+est dans le fichier AUTHORS).
+
+Copyright (C) 2003-2013 Sébastien Helleu <flashcode@flashtux.org>
+
+WeeChat est un logiciel libre; vous pouvez le redistribuer et/ou le modifier
+sous les termes de la GNU General Public License telle que publiée par la
+Free Software Foundation; soit la version 3 de la licence, ou (selon votre
+choix) toute version ultérieure.
+
+Merci de consulter le fichier COPYING pour plus d'informations.
+
+Site web : <http://weechat.org/>
+
+SIGNALER DES BUGS
+-----------------
+
+Merci de signaler les bugs ou demandes de nouvelles fonctionnalités sur le site
+Savannah :
+
+* bugs : <http://savannah.nongnu.org/bugs/?group=weechat>
+* demandes de nouvelles fonctionnalités : <http://savannah.nongnu.org/task/?group=weechat>

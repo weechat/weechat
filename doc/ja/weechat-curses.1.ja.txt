@@ -1,0 +1,116 @@
+// TRANSLATION MISSING (WHOLE FILE)
+WEECHAT-CURSES(1)
+=================
+:doctype: manpage
+
+NAME
+----
+
+weechat-curses - the extensible chat client (Curses version)
+
+SYNOPSIS
+--------
+
+[verse]
+'weechat-curses' [-a|--no-connect] [-d|--dir <path>] [-p|--no-plugin] [-r|--run-command <command>] [-s|--no-script] [--upgrade] [plugin:option...]
+'weechat-curses' [-c|--colors]
+'weechat-curses' [-h|--help]
+'weechat-curses' [-k|--keys]
+'weechat-curses' [-l|--license]
+'weechat-curses' [-v|--version]
+
+DESCRIPTION
+-----------
+
+WeeChat is a fast, light and extensible chat client.
+
+It is modular (lightweight core with plugins), multi-protocols (IRC and Jabber),
+extensible with C and scripts written in several languages.
+
+OPTIONS
+-------
+
+include::cmdline_options.ja.txt[]
+
+PLUGIN OPTIONS
+--------------
+
+For complete doc on plugin options, please look at plugins documentation in
+http://weechat.org/doc[WeeChat user's guide].
+
+With irc plugin, you can connect to temporary server with an URL like:
+
+    irc[6][s]://[[nickname][:password]@]server[:port][/#channel1[,#channel2...]]
+
+To join WeeChat IRC channel support with nick "mynick":
+
+    irc://mynick@irc.freenode.net/#weechat
+
+IPv6 address can be enclosed in brackets to add a port after address, for
+example:
+
+    irc://mynick@[2001:db8:0:85a3::ac1f:8001]:6668/#test
+
+FILES
+-----
+
+$HOME/.weechat/weechat.conf::
+    main WeeChat configuration file
+
+$HOME/.weechat/plugins.conf::
+    plugins configuration file
+
+$HOME/.weechat/alias.conf::
+    configuration file for 'alias' plugin
+
+$HOME/.weechat/aspell.conf::
+    configuration file for 'aspell' plugin
+
+$HOME/.weechat/charset.conf::
+    configuration file for 'charset' plugin
+
+$HOME/.weechat/irc.conf::
+    configuration file for 'irc' plugin
+
+$HOME/.weechat/logger.conf::
+    configuration file for 'logger' plugin
+
+$HOME/.weechat/relay.conf::
+    configuration file for 'relay' plugin
+
+$HOME/.weechat/rmodifier.conf::
+    configuration file for 'rmodifier' plugin
+
+$HOME/.weechat/script.conf::
+    configuration file for 'script' plugin
+
+$HOME/.weechat/xfer.conf::
+    configuration file for 'xfer' plugin
+
+$HOME/.weechat/weechat.log::
+    WeeChat log file
+
+AUTHORS
+-------
+
+WeeChat is written by Sébastien Helleu and contributors (complete list is in
+the AUTHORS file).
+
+Copyright (C) 2003-2013 Sébastien Helleu <flashcode@flashtux.org>
+
+WeeChat is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+Please read the COPYING file for more information.
+
+Web: <http://weechat.org/>
+
+REPORTING BUGS
+--------------
+
+Please report bugs or feature requests at Savannah website:
+
+* bugs: <http://savannah.nongnu.org/bugs/?group=weechat>
+* feature requests: <http://savannah.nongnu.org/task/?group=weechat>

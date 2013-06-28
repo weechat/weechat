@@ -953,8 +953,9 @@ msg_doc=""
 if test "x$enable_doc" = "xyes" ; then
     DOC_ASCIIDOC8=""
     AC_CHECK_PROGS(ASCIIDOC, [asciidoc])
+    AC_CHECK_PROGS(A2X, [a2x])
     AC_CHECK_PROGS(SOURCEHIGHLIGHT, [source-highlight])
-    if test -n "$SOURCEHIGHLIGHT" -a -n "$ASCIIDOC"; then
+    if test -n "$SOURCEHIGHLIGHT" -a -n "$A2X" -a -n "$ASCIIDOC"; then
         AC_MSG_CHECKING([for asciidoc version])
         asciidoc_version=`$ASCIIDOC --version 2>/dev/null`
         case "${asciidoc_version}" in
@@ -975,11 +976,15 @@ if test "x$enable_doc" = "xyes" ; then
     if test -z "$ASCIIDOC"; then
         not_found="$not_found asciidoc"
     fi
+    if test -z "$A2X"; then
+        not_found="$not_found a2x(from asciidoc)"
+    fi
     if test -z "$SOURCEHIGHLIGHT"; then
         not_found="$not_found source-highlight(needed by asciidoc)"
     fi
     AC_SUBST(DOC_ASCIIDOC8)
     AC_SUBST(ASCIIDOC)
+    AC_SUBST(A2X)
 else
     not_asked="$not_asked doc"
     msg_doc=""

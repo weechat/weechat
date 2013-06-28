@@ -1,0 +1,39 @@
+*-a*, *--no-connect*::
+    WeeChat の起動時にサーバへの自動接続を行わない
+
+*-c*, *--colors*::
+    ターミナルにデフォルトカラーを表示
+
+*-d*, *--dir* '<path>'::
+    WeeChat のホームディレクトリを path に設定 (設定ファイル、ログ、
+    ユーザプラグイン、スクリプトに利用される)、初期値は '~/.weechat' 。
+    (注意: パスが存在しない場合は WeeChat がディレクトリを作成します)
+
+*-h*, *--help*::
+    ヘルプを表示
+
+*-k*, *--keys*::
+    WeeChat の デフォルトキーを表示
+
+*-l*, *--license*::
+    WeeChat ライセンスを表示
+
+*-p*, *--no-plugin*::
+    プラグインの自動ロードを止める
+
+// TRANSLATION MISSING
+*-r*, *--run-command* '<command>'::
+    起動後にコマンドを実行 (複数のコマンドを指定するにはセミコロンで各コマンドを区切る)
+
+*-s*, *--no-script*::
+    スクリプトの自動ロードを止める
+
+// TRANSLATION MISSING
+*--upgrade*::
+    Upgrade WeeChat using session files generated with command `/upgrade -quit`.
+
+*-v*, *--version*::
+    WeeChat のバージョンを表示
+
+*plugin:option*::
+    プラグインに渡すオプション

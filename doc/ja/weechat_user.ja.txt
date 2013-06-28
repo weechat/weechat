@@ -78,25 +78,27 @@ WeeChat は cmake または autotools を使ってコンパイルできます (c
 
 [width="100%",cols="5,^3,^3,13",options="header"]
 |========================================
-| パッケージ ^(1)^                | バージョン  | 必須     | 機能
-| cmake                           |             | *yes*    | ビルド (autotools でも可能ですが、cmake を推奨します)
-| libncursesw5-dev ^(2)^          |             | *yes*    | ncurses インターフェイス
-| libcurl4-gnutls-dev             |             | *yes*    | URL 転送
-| zlib1g-dev                      |             | *yes*    | relay プラグインでパケットを圧縮 (weechat プロトコル)、スクリプトプラグイン
-| libgcrypt11-dev                 |             | *yes*    | IRC SASL 認証 (DH-BLOWFISH/DH-AES)、スクリプトプラグイン
-| libgnutls-dev                   | ≥ 2.2.0     |          | IRC サーバへの SSL 接続
-| gettext                         |             |          | 国際化 (メッセージの翻訳; ベース言語は英語です)
-| ca-certificates                 |             |          | SSL 接続に必要な証明書、relay プラグインで SSL サポート
+| パッケージ ^(1)^                | バージョン  | 必須  | 機能
+| cmake                           |             | *yes* | ビルド (autotools でも可能ですが、cmake を推奨します)
+| libncursesw5-dev ^(2)^          |             | *yes* | ncurses インターフェイス
+| libcurl4-gnutls-dev             |             | *yes* | URL 転送
+| zlib1g-dev                      |             | *yes* | relay プラグインでパケットを圧縮 (weechat プロトコル)、スクリプトプラグイン
+| libgcrypt11-dev                 |             | *yes* | IRC SASL 認証 (DH-BLOWFISH/DH-AES)、スクリプトプラグイン
+| libgnutls-dev                   | ≥ 2.2.0     |       | IRC サーバへの SSL 接続
+| gettext                         |             |       | 国際化 (メッセージの翻訳; ベース言語は英語です)
+| ca-certificates                 |             |       | SSL 接続に必要な証明書、relay プラグインで SSL サポート
 // TRANSLATION MISSING
-| libaspell-dev or libenchant-dev |             |          | aspell プラグイン
-| python-dev                      | ≥ 2.5 ^(3)^ |          | python プラグイン
-| libperl-dev                     |             |          | perl プラグイン
-| ruby1.9.1-dev                   | ≥ 1.8       |          | ruby プラグイン
-| liblua5.1-0-dev                 |             |          | lua プラグイン
-| tcl-dev                         | ≥ 8.5       |          | tcl プラグイン
-| guile-2.0-dev                   | ≥ 2.0       |          | guile (scheme) プラグイン
-| asciidoc                        | ≥ 8.5.0     |          | 文書の生成 (HTML ファイル)
-| source-highlight                |             |          | HTML 文書に含まれるソースコードのシンタックスハイライト
+| libaspell-dev or libenchant-dev |             |       | aspell プラグイン
+| python-dev                      | ≥ 2.5 ^(3)^ |       | python プラグイン
+| libperl-dev                     |             |       | perl プラグイン
+| ruby1.9.1-dev                   | ≥ 1.8       |       | ruby プラグイン
+| liblua5.1-0-dev                 |             |       | lua プラグイン
+| tcl-dev                         | ≥ 8.5       |       | tcl プラグイン
+| guile-2.0-dev                   | ≥ 2.0       |       | guile (scheme) プラグイン
+| asciidoc                        | ≥ 8.5.0     |       | 文書の生成 (HTML ファイル)
+| source-highlight                |             |       | HTML 文書に含まれるソースコードのシンタックスハイライト
+// TRANSLATION MISSING
+| docbook-xml, docbook-xsl        |             |       | build man page
 |========================================
 
 [NOTE]
@@ -416,40 +418,7 @@ gdb /usr/bin/weechat-curses 12345
 
 コマンドライン引数:
 
--a, --no-connect::
-    WeeChat の起動時にサーバへの自動接続を行わない
-
--c, --colors::
-    ターミナルにデフォルトカラーを表示
-
--d, --dir 'path'::
-    WeeChat のホームディレクトリを path に設定 (設定ファイル、ログ、
-    ユーザプラグイン、スクリプトに利用される)、初期値は '~/.weechat' 。
-    (注意: パスが存在しない場合は WeeChat がディレクトリを作成します)
-
--h, --help::
-    ヘルプを表示
-
--k, --keys::
-    WeeChat の デフォルトキーを表示
-
--l, --license::
-    WeeChat ライセンスを表示
-
--p, --no-plugin::
-    プラグインの自動ロードを止める
-
--r, --run-command::
-    起動後にコマンドを実行 (複数のコマンドを指定するにはセミコロンで各コマンドを区切る)
-
--s, --no-script::
-    スクリプトの自動ロードを止める
-
--v, --version::
-    WeeChat のバージョンを表示
-
-plugin:option::
-    プラグインに渡すオプション (各プラグインのドキュメントを参照)
+include::cmdline_options.ja.txt[]
 
 WeeChat を起動させるには、以下コマンドを実行:
 

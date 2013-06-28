@@ -1,2 +1,4 @@
 usr/bin/weechat-curses
 debian/weechat.xpm usr/share/pixmaps
+usr/share/man/man1/weechat-curses.1
+usr/share/man/*/man1/weechat-curses.1

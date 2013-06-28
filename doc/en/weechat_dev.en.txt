@@ -294,6 +294,7 @@ Documentation files:
 |    docgen.py                        | Python script to build files in "autogen/" directory (see below)
 |    weechat-curses.1                 | Weechat man page
 |    XX/                              | Documentation for language XX (languages: en, fr, de, it, ...)
+|       weechat-curses.1.XX.txt       | Man page
 |       weechat_quickstart.XX.txt     | Quickstart guide
 |       weechat_user.XX.txt           | User's guide
 |       weechat_faq.XX.txt            | FAQ
@@ -301,10 +302,11 @@ Documentation files:
 |       weechat_scripting.XX.txt      | Scripting guide
 |       weechat_tester.XX.txt         | Tester's guide
 |       weechat_dev.XX.txt            | Developer's guide (this document)
-|       weechat_relay_protocol.en.txt | Relay protocol
+|       weechat_relay_protocol.XX.txt | Relay protocol
+|       cmdline_options.XX.txt        | Command-line options (file included in man page and user's guide)
 |       autogen/                      | Files auto-built with script docgen.py (do *NEVER* update manually!)
-|          user/                      | Files auto-built for user's guide
-|          plugin_api/                | Files auto-built for plugin API
+|          user/                      | Files auto-built for user's guide (do *NEVER* update manually!)
+|          plugin_api/                | Files auto-built for plugin API (do *NEVER* update manually!)
 |========================================
 
 Translations for WeeChat and plugins are done with gettext, files are in 'po/' directory:
