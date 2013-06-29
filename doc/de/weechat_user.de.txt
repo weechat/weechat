@@ -104,9 +104,8 @@ welche Pakete optional genutzt werden können.
 | guile-2.0-dev                     | ≥ 2.0       |          | guile (scheme) Erweiterung
 | asciidoc                          | ≥ 8.5.0     |          | erstellt Dokumentation (HTML Dateien)
 | source-highlight                  |             |          | Syntax Highlight für Quelltext in HTML Dokumentation
-// TRANSLATION MISSING
 | xsltproc,
-  docbook-xml, docbook-xsl          |             |          | build man page
+  docbook-xml, docbook-xsl          |             |          | erstellt man page
 |========================================
 
 [NOTE]
@@ -141,114 +140,112 @@ $ make
 $ make install
 ----------------------------------------
 
-// TRANSLATION MISSING
-Options can be used for cmake, with format: "-DOPTION=VALUE".
+Optionen für cmake können mit dem Format, "-DOPTION=VALUE", genutzt werden.
 
-// TRANSLATION MISSING
-List of commonly used options:
+Liste von häufig verwendeten Optionen:
 
-// TRANSLATION MISSING
 [width="100%",cols="2m,2,2m,12",options="header"]
 |========================================
-| Option | Values | Default value | Description
+| Option | Wert | Standardwert | Beschreibung
 
 | CMAKE_BUILD_TYPE | `Debug`, `Release`, `RelWithDebInfo`, `MinSizeRel` | |
-  The type of build: `Debug` (or `RelWithDebInfo`) is recommended if you are
-  running development version of WeeChat.
+  Art des builds: `Debug` (oder `RelWithDebInfo`) sollte verwendet werden, wenn meine eine Entwicklerversion
+  von WeeChat nutzt.
 
 | PREFIX | directory | /usr/local |
-  The directory where WeeChat will be installed.
+  Verzeichnis in welchem WeeChat installiert wird.
 
 | WEECHAT_HOME | directory | ~/.weechat |
-  The default home directory when running WeeChat.
+  Standard-Verzeichnis in welchem die Daten liegen.
 
 | ENABLE_ALIAS | `ON`, `OFF` | ON |
-  Compile <<alias_plugin,Alias plugin>>.
+  kompiliert <<alias_plugin,Alias Erweiterung>>.
 
 | ENABLE_ASPELL | `ON`, `OFF` | ON |
-  Compile <<aspell_plugin,Aspell plugin>>.
+  kompiliert <<aspell_plugin,Aspell Erweiterung>>.
 
 | ENABLE_CHARSET | `ON`, `OFF` | ON |
-  Compile <<charset_plugin,Charset plugin>>.
+  kompiliert <<charset_plugin,Charset Erweiterung>>.
 
 | ENABLE_DEMO | `ON`, `OFF` | OFF |
-  Compile Demo plugin.
+  kompiliert Demo-Erweiterung.
 
+// TRANSLATION MISSING
 | ENABLE_DOC | `ON`, `OFF` | OFF |
-  Compile documentation (it takes a long time, recommended only if you build
+  kompiliert Dokumentation (it takes a long time, recommended only if you build
   a binary package embedding documentation or if you can't browse documentation
   online).
 
 | ENABLE_ENCHANT | `ON`, `OFF` | OFF |
-  Compile <<aspell_plugin,Aspell plugin>> with Enchant.
+  kompiliert <<aspell_plugin,Aspell plugin>> mittels Enchant.
 
 | ENABLE_FIFO | `ON`, `OFF` | ON |
-  Compile <<fifo_plugin,Fifo plugin>>.
+  kompiliert <<fifo_plugin,Fifo Erweiterung>>.
 
 | ENABLE_GNUTLS | `ON`, `OFF` | ON |
-  Enable Gnutls (for SSL).
+  kompiliert Gnutls (für SSL).
 
 | ENABLE_GUILE | `ON`, `OFF` | ON |
-  Compile <<scripts_plugins,Guile plugin>> (Scheme).
+  kompiliert <<scripts_plugins,Guile Erweiterung>> (Scheme).
 
 | ENABLE_IRC | `ON`, `OFF` | ON |
-  Compile <<irc_plugin,IRC plugin>>.
+  kompiliert <<irc_plugin,IRC Erweiterung>>.
 
 | ENABLE_LARGEFILE | `ON`, `OFF` | ON |
-  Support of large files.
+  Unterstützung großer Dateien.
 
 | ENABLE_LOGGER | `ON`, `OFF` | ON |
-  Compile <<logger_plugin,Logger plugin>>.
+  kompiliert <<logger_plugin,Logger Erweiterung>>.
 
 | ENABLE_LUA | `ON`, `OFF` | ON |
-  Compile <<scripts_plugins,Lua plugin>>.
+  kompiliert <<scripts_plugins,Lua Erweiterung>>.
 
 | ENABLE_NCURSES | `ON`, `OFF` | ON |
-  Compile Ncurses interface.
+  kompiliert Ncurses Oberfläche.
 
 | ENABLE_NLS | `ON`, `OFF` | ON |
-  Enable NLS (translations).
+  aktiviert NLS (Übersetzungen).
 
 | ENABLE_PERL | `ON`, `OFF` | ON |
-  Compile <<scripts_plugins,Perl plugin>>.
+  kompiliert <<scripts_plugins,Perl Erweiterung>>.
 
 | ENABLE_PYTHON | `ON`, `OFF` | ON |
-  Compile <<scripts_plugins,Python plugin>>.
+  kompiliert <<scripts_plugins,Python Erweiterung>>.
 
 | ENABLE_PYTHON3 | `ON`, `OFF` | OFF |
-  Compile <<scripts_plugins,Python plugin>> using Python 3 (*NOT* recommended
-  because many scripts are not compatible with Python 3).
+  kompiliert <<scripts_plugins,Python Erweiterung>> mittels Python 3 (dies wird *NICHT* empfohlen,
+  da viele Skripten nicht kompatible mit Python 3 sind).
 
 | ENABLE_RELAY | `ON`, `OFF` | ON |
-  Compile <<relay_plugin,Relay plugin>>.
+  kompiliert <<relay_plugin,Relay Erweiterung>>.
 
 | ENABLE_RMODIFIER | `ON`, `OFF` | ON |
-  Compile <<rmodifier_plugin,Rmodifier plugin>>.
+  kompiliert <<rmodifier_plugin,Rmodifier Erweiterung>>.
 
 | ENABLE_RUBY | `ON`, `OFF` | ON |
-  Compile <<scripts_plugins,Ruby plugin>>.
+  kompiliert <<scripts_plugins,Ruby Erweiterung>>.
 
 | ENABLE_SCRIPT | `ON`, `OFF` | ON |
-  Compile <<scripts_plugins,Script plugin>>.
+  kompiliert <<scripts_plugins,Script Erweiterung>>.
 
 | ENABLE_SCRIPTS | `ON`, `OFF` | ON |
-  Compile <<scripts_plugins,script plugins>> (Python, Perl, Ruby, Lua, Tcl,
+  kompiliert <<scripts_plugins,Skripten-Erweiterungen>> (Python, Perl, Ruby, Lua, Tcl,
   Guile).
 
 | ENABLE_TCL | `ON`, `OFF` | ON |
-  Compile <<scripts_plugins,Tcl plugin>>.
+  kompiliert <<scripts_plugins,Tcl Erweiterung>>.
 
 | ENABLE_XFER | `ON`, `OFF` | ON |
-  Compile <<xfer_plugin,Xfer plugin>>.
+  kompiliert <<xfer_plugin,Xfer Erweiterung>>.
 |========================================
 
-The other options can be displayed with this command:
+Weitere Optionen können mit folgendem Befehl angezeigt werden:
 
 ----------------------------------------
 $ cmake -LA
 ----------------------------------------
 
-Or with Curses interface:
+oder mittels der Curses-Oberfläche:
 
 ----------------------------------------
 $ ccmake ..
@@ -282,9 +279,8 @@ $ make
 $ make install
 ----------------------------------------
 
-// TRANSLATION MISSING
-Options can be used for 'configure' script, they can be displayed with this
-command:
+Die Optionen können auch für das 'configure' Skript verwendet und mittels
+folgendem Befehl angezeigt werden:
 
 ----------------------------------------
 $ ./configure --help

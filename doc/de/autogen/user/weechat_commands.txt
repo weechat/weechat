@@ -530,14 +530,14 @@ Ohne Angabe eines Arguments werden alle installierten Erweiterungen angezeigt.
 ........................................
 
 [[command_weechat_proxy]]
-[command]*`proxy`* Proxies verwalten::
+[command]*`proxy`* Proxys verwalten::
 ........................................
 /proxy  list
         add <name> <type> <address> <port> [<username> [<password>]]
         del <name>|-all
         set <name> <option> <value>
 
-         list: listet alle Proxies auf
+         list: listet alle Proxys auf
           add: fügt neuen Proxy hinzu
     name: Name des neuen Proxy (der Name darf nur einmal genutzt werden)
          type: http, socks4 oder socks5
@@ -545,7 +545,7 @@ Ohne Angabe eines Arguments werden alle installierten Erweiterungen angezeigt.
          port: Port
      username: Username (optional)
      password: Passwort (optional)
-          del: entfernt einen Proxy (-all um alle Proxies zu entfernen)
+          del: entfernt einen Proxy (-all um alle Proxys zu entfernen)
           set: setzt einen Wert für Proxy
        option: Optionen die geändert werden (für eine Liste der möglichen Optionen, bitte folgenden Befehl nutzen: /set weechat.proxy.<proxyname>.*)
         value: neuer Wert für Option

@@ -18,7 +18,6 @@
 *-p*, *--no-plugin*::
     unterbindet das Laden der Erweiterungen beim Programmstart.
 
-// TRANSLATION MISSING
 *-r*, *--run-command* '<command>'::
     startet einen oder mehrere Befehle, nachdem WeeChat gestartet wurde
     (mehrere Befehle müssen durch Kommata voneinander getrennt werden).
@@ -26,9 +25,8 @@
 *-s*, *--no-script*::
     Skripten werden beim Programmstart nicht geladen.
 
-// TRANSLATION MISSING
 *--upgrade*::
-    Upgrade WeeChat using session files generated with command `/upgrade -quit`.
+    führt ein WeeChat Upgrade mittels Sitzungsdateien, die mit dem Befehl `/upgrade -quit` erstellt wurden, durch.
 
 *-v*, *--version*::
     zeigt die Version von WeeChat an.

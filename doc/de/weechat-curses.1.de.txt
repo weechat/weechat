@@ -1,4 +1,3 @@
-// TRANSLATION MISSING (WHOLE FILE)
 WEECHAT-CURSES(1)
 =================
 :doctype: manpage
@@ -6,7 +5,7 @@ WEECHAT-CURSES(1)
 NAME
 ----
 
-weechat-curses - the extensible chat client (Curses version)
+weechat-curses - der erweiterbare Chat Client (Curses Version)
 
 SYNOPSIS
 --------
@@ -19,82 +18,82 @@ SYNOPSIS
 'weechat-curses' [-l|--license]
 'weechat-curses' [-v|--version]
 
-DESCRIPTION
------------
+BESCHREIBUNG
+------------
 
-WeeChat is a fast, light and extensible chat client.
+WeeChat ist ein schneller, leichter und erweiterbarer Chat Client.
 
-It is modular (lightweight core with plugins), multi-protocols (IRC and Jabber),
-extensible with C and scripts written in several languages.
+Der Client ist modular aufgebaut (ein kleiner Kern mit nachladbaren Erweiterungen),
+Multiprotokollfähig (IRC und Jabber),erweiterbar mittels C und durch Skripten, wobei
+verschiedenen Sprachen unterstützt werden.
 
-OPTIONS
--------
+OPTIONEN
+--------
 
 include::cmdline_options.de.txt[]
 
-PLUGIN OPTIONS
---------------
+OPTIONEN von ERWEITERUNGEN
+--------------------------
 
-For complete doc on plugin options, please look at plugins documentation in
+Um eine vollständige Dokumentation der Optionen zu erhalten, siehe
 http://weechat.org/doc[WeeChat user's guide].
 
-With irc plugin, you can connect to temporary server with an URL like:
+Mittels der IRC Erweiterung kann man sich zu einen temporären Server, mittels einer URL,
+verbinden lassen:
 
     irc[6][s]://[[nickname][:password]@]server[:port][/#channel1[,#channel2...]]
 
-To join WeeChat IRC channel support with nick "mynick":
+Um dem WeeChat IRC Support-Channel, mit dem Nick "mynick", beizutreten:
 
     irc://mynick@irc.freenode.net/#weechat
 
-IPv6 address can be enclosed in brackets to add a port after address, for
-example:
+Um eine IPv6 Adresse zu nutzen, muss diese in eckige Klammern gesetzt werden:
 
     irc://mynick@[2001:db8:0:85a3::ac1f:8001]:6668/#test
 
-FILES
------
-
-$HOME/.weechat/weechat.conf::
-    main WeeChat configuration file
-
-$HOME/.weechat/plugins.conf::
-    plugins configuration file
-
-$HOME/.weechat/alias.conf::
-    configuration file for 'alias' plugin
-
-$HOME/.weechat/aspell.conf::
-    configuration file for 'aspell' plugin
-
-$HOME/.weechat/charset.conf::
-    configuration file for 'charset' plugin
-
-$HOME/.weechat/irc.conf::
-    configuration file for 'irc' plugin
-
-$HOME/.weechat/logger.conf::
-    configuration file for 'logger' plugin
-
-$HOME/.weechat/relay.conf::
-    configuration file for 'relay' plugin
-
-$HOME/.weechat/rmodifier.conf::
-    configuration file for 'rmodifier' plugin
-
-$HOME/.weechat/script.conf::
-    configuration file for 'script' plugin
-
-$HOME/.weechat/xfer.conf::
-    configuration file for 'xfer' plugin
-
-$HOME/.weechat/weechat.log::
-    WeeChat log file
-
-AUTHORS
+DATEIEN
 -------
 
-WeeChat is written by Sébastien Helleu and contributors (complete list is in
-the AUTHORS file).
+$HOME/.weechat/weechat.conf::
+    WeeChats Konfigurationsdatei
+
+$HOME/.weechat/plugins.conf::
+    Konfigurationsdatei für Erweiterungen
+
+$HOME/.weechat/alias.conf::
+    Konfigurationsdatei für 'alias' Erweiterung
+
+$HOME/.weechat/aspell.conf::
+    Konfigurationsdatei für 'aspell' Erweiterung
+
+$HOME/.weechat/charset.conf::
+    Konfigurationsdatei für 'charset' Erweiterung
+
+$HOME/.weechat/irc.conf::
+    Konfigurationsdatei für 'irc' Erweiterung
+
+$HOME/.weechat/logger.conf::
+    Konfigurationsdatei für 'logger' Erweiterung
+
+$HOME/.weechat/relay.conf::
+    Konfigurationsdatei für 'relay' Erweiterung
+
+$HOME/.weechat/rmodifier.conf::
+    Konfigurationsdatei für 'rmodifier' Erweiterung
+
+$HOME/.weechat/script.conf::
+    Konfigurationsdatei für 'script' Erweiterung
+
+$HOME/.weechat/xfer.conf::
+    Konfigurationsdatei für 'xfer' Erweiterung
+
+$HOME/.weechat/weechat.log::
+    WeeChat Protokolldatei
+
+AUTOREN
+-------
+WeeChat ist programmiert von Sébastien Helleu und Beitragenden (eine vollständige Auflistung
+findet man in der AUTHORS Datei).
 
 Copyright (C) 2003-2013 Sébastien Helleu <flashcode@flashtux.org>
 
@@ -107,10 +106,11 @@ Please read the COPYING file for more information.
 
 Web: <http://weechat.org/>
 
-REPORTING BUGS
---------------
+FEHLER MELDEN
+-------------
 
-Please report bugs or feature requests at Savannah website:
+Fehlerbeschreibungen oder Vorschläge für neue Funktionen können auf
+der Savannah Webseite hinterlegt werden:
 
-* bugs: <http://savannah.nongnu.org/bugs/?group=weechat>
-* feature requests: <http://savannah.nongnu.org/task/?group=weechat>
+* Fehler: <http://savannah.nongnu.org/bugs/?group=weechat>
+* Feature-Request: <http://savannah.nongnu.org/task/?group=weechat>

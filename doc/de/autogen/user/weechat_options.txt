@@ -799,7 +799,7 @@
 ** Werte: 1 .. 2147483647 (Standardwert: `30`)
 
 * [[option_weechat.network.proxy_curl]] *weechat.network.proxy_curl*
-** Beschreibung: `name of proxy used for download of URLs with Curl (used to download list of scripts and in scripts calling function hook_process); the proxy must be defined with command /proxy`
+** Beschreibung: `Name des Proxy welcher für URL Downloads mittels Curl genutzt werden soll (wird verwendet um das Inhaltsverzeichnis für Script-Erweiterung herunterzuladen oder in Skripten, welche die Funktion hook_process nutzen); der Proxy muss mit dem Befehl /proxy eingerichtet werden`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 

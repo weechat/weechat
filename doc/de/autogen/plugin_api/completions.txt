@@ -116,9 +116,9 @@
 
 | weechat | plugins_names | Liste der Erweiterungen
 
-| weechat | proxies_names | Namen der Proxies
+| weechat | proxies_names | Namen aller Proxys
 
-| weechat | proxies_options | Optionen für Proxies
+| weechat | proxies_options | Optionen für Proxys
 
 | weechat | weechat_commands | WeeChat Befehle
 

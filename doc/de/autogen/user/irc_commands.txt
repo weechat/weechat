@@ -39,7 +39,7 @@ Beispiele:
     /allserv nick newnick
   setzt den Status, auf allen Servern,auf abwesend:
     /allserv away I'm away
-  führt ein whois mit meinem nick auf alles Servern aus:
+  führt ein whois mit meinem nick auf allen Servern aus:
     /allserv whois $nick
 ........................................
 

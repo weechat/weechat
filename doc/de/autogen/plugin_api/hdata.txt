@@ -737,7 +737,7 @@
   'last_weechat_plugin' +
   'weechat_plugins'
 
-| weechat | proxy | proxy |
+| weechat | proxy | Proxy |
   'name' (string) +
   'options' (pointer) +
   'prev_proxy' (pointer, hdata: "proxy") +
