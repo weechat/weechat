@@ -150,19 +150,11 @@ gui_chat_utf_char_valid (const char *utf_char)
 int
 gui_chat_char_size_screen (const char *utf_char)
 {
-    int size_screen;
-
     /* if char is invalid, it will be displayed as one space on screen */
     if (!gui_chat_utf_char_valid (utf_char))
         return 1;
 
-    size_screen = utf8_char_size_screen (utf_char);
-
-    /*
-     * ensure the size is always >= 1, to prevent any display bug
-     * (for example UTF-8 char U+26C4 returns size < 1)
-     */
-    return (size_screen >= 1) ? size_screen : 1;
+    return utf8_char_size_screen (utf_char);
 }
 
 /*

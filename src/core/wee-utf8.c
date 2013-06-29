@@ -424,7 +424,15 @@ utf8_strlen_screen (const char *string)
     }
 
     if (mbstowcs (ptr_wstring, string, num_char) != (size_t)(-1))
+    {
         length = wcswidth (ptr_wstring, num_char);
+        /*
+         * ensure the size is always >= 1, to prevent any display bug
+         * (for example size of UTF-8 char U+26C4 is -1, why? mystery...)
+         */
+        if (length < 1)
+            length = 1;
+    }
     else
         length = utf8_strlen (string);
 
