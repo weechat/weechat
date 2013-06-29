@@ -154,6 +154,7 @@ irc_nick_hash_color (const char *nickname)
         return 0;
 
     ptr_nick = nickname;
+    color = 0;
 
     switch (weechat_config_integer (irc_config_look_nick_color_hash))
     {
