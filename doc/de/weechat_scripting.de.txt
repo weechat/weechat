@@ -555,9 +555,10 @@ mit der [Enter] Taste bestätigen.
 
 Beispiele:
 
+// TRANSLATION MISSING
 [source,python]
 ----------------------------------------
-# führt den Befehl "/help" im Core Buffer aus
+# execute command "/help" on current buffer (result is on core buffer)
 weechat.command("", "/help")
 
 # sendet den Text "Hallo" in den IRC Channel #weechat (die Teilnehmer des Channels sehen diese Nachricht)

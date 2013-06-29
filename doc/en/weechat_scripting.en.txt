@@ -548,7 +548,7 @@ Examples:
 
 [source,python]
 ----------------------------------------
-# execute command "/help" on core buffer
+# execute command "/help" on current buffer (result is on core buffer)
 weechat.command("", "/help")
 
 # send "hello" to #weechat IRC channel (users on channel will see message)

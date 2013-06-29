@@ -560,7 +560,7 @@ Exemples :
 
 [source,python]
 ----------------------------------------
-# exécuter la commande "/help" sur le tampon core
+# exécuter la commande "/help" sur le tampon courant (le résultat est sur le tampon core)
 weechat.command("", "/help")
 
 # envoyer "bonjour" au canal IRC #weechat (les utilisateurs sur le canal verront le message)

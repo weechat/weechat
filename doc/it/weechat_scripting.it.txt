@@ -556,9 +556,10 @@ se si digitasse del testo o un comando, seguiti da [Enter].
 
 Esempi:
 
+// TRANSLATION MISSING
 [source,python]
 ----------------------------------------
-# esegue il comando "/help" sul buffer core
+# execute command "/help" on current buffer (result is on core buffer)
 weechat.command("", "/help")
 
 # invia "hello" sul canale IRC #weechat  (gli utenti sul canale vedranno il messaggio)
