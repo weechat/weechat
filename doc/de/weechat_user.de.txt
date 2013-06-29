@@ -105,7 +105,8 @@ welche Pakete optional genutzt werden können.
 | asciidoc                          | ≥ 8.5.0     |          | erstellt Dokumentation (HTML Dateien)
 | source-highlight                  |             |          | Syntax Highlight für Quelltext in HTML Dokumentation
 // TRANSLATION MISSING
-| docbook-xml, docbook-xsl          |             |          | build man page
+| xsltproc,
+  docbook-xml, docbook-xsl          |             |          | build man page
 |========================================
 
 [NOTE]

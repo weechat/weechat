@@ -112,7 +112,8 @@ compilare WeeChat.
 | asciidoc                       | ≥ 8.5.0     |           | compilazione della documentazione (file HTML)
 | source-highlight               |             |           | evidenziazione della sintassi per i sorgenti nella documentazione HTML
 // TRANSLATION MISSING
-| docbook-xml, docbook-xsl       |             |           | build man page
+| xsltproc,
+  docbook-xml, docbook-xsl       |             |           | build man page
 |========================================
 
 [NOTE]

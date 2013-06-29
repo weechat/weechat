@@ -106,7 +106,8 @@ compiler WeeChat.
 | guile-2.0-dev                   | ≥ 2.0       |        | extension guile (scheme)
 | asciidoc                        | ≥ 8.5.0     |        | construction de la documentation (fichiers HTML)
 | source-highlight                |             |        | coloration des sources dans la documentation HTML
-| docbook-xml, docbook-xsl        |             |        | construction de la page de manuel
+| xsltproc,
+  docbook-xml, docbook-xsl        |             |        | construction de la page de manuel
 |========================================
 
 [NOTE]

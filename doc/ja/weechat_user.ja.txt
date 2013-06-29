@@ -98,7 +98,8 @@ WeeChat は cmake または autotools を使ってコンパイルできます (c
 | asciidoc                        | ≥ 8.5.0     |       | 文書の生成 (HTML ファイル)
 | source-highlight                |             |       | HTML 文書に含まれるソースコードのシンタックスハイライト
 // TRANSLATION MISSING
-| docbook-xml, docbook-xsl        |             |       | build man page
+| xsltproc,
+  docbook-xml, docbook-xsl        |             |       | build man page
 |========================================
 
 [NOTE]
