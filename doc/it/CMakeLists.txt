@@ -20,7 +20,7 @@
 # man page
 ADD_CUSTOM_COMMAND(
   OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat-curses.1
-  COMMAND ${A2X_EXECUTABLE} ARGS -a lang=it -a revision='WeeChat ${VERSION}' -d manpage -f manpage -D ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/weechat-curses.1.it.txt
+  COMMAND ${A2X_EXECUTABLE} ARGS -a lang=it -a revision='WeeChat ${VERSION}' -d manpage -f manpage -L -D ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/weechat-curses.1.it.txt
   DEPENDS
   ${CMAKE_CURRENT_SOURCE_DIR}/weechat-curses.1.it.txt
   ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.it.txt

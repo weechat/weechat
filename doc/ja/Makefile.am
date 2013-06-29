@@ -39,7 +39,7 @@ all-local: weechat-curses.1 \
 
 # man page
 weechat-curses.1: weechat-curses.1.ja.txt cmdline_options.ja.txt
-	$(A2X) -a lang=ja -a revision="WeeChat $(VERSION)" -d manpage -f manpage -D . $(abs_top_srcdir)/doc/ja/weechat-curses.1.ja.txt
+	$(A2X) -a lang=ja -a revision="WeeChat $(VERSION)" -d manpage -f manpage -L -D . $(abs_top_srcdir)/doc/ja/weechat-curses.1.ja.txt
 
 # user's guide
 weechat_user.ja.html: weechat_user.ja.txt cmdline_options.ja.txt $(wildcard autogen/user/*.txt)
