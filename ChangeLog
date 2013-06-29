@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.2-dev, 2013-06-28
+v0.4.2-dev, 2013-06-29
 
 
 This document lists all changes for each version.
@@ -14,6 +14,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 Version 0.4.2 (under dev!)
 --------------------------
 
+* core: fix display bugs with some UTF-8 chars that truncates messages displayed
+  (for example U+26C4)
 * core: update man page and add translations (in french, german, italian, and
   japanese)
 * core: remove extra space after empty prefix (when prefix for action, error,
