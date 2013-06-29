@@ -172,9 +172,10 @@ Liste des options couramment utilisées :
 | ENABLE_DEMO | `ON`, `OFF` | OFF |
   Compiler l'extension Demo.
 
-| ENABLE_DOC | `ON`, `OFF` | ON |
-  Compiler la documentation (cela prend beaucoup de temps, vous pouvez
-  désactiver pour accélérer la compilation).
+| ENABLE_DOC | `ON`, `OFF` | OFF |
+  Compiler la documentation (cela prend beaucoup de temps, recommandé
+  seulement si vous construisez un paquet binaire intégrant la documentation ou
+  si vous ne pouvez pas consulter la documentation en ligne).
 
 | ENABLE_ENCHANT | `ON`, `OFF` | OFF |
   Compiler <<aspell_plugin,l'extension Aspell>> avec Enchant.

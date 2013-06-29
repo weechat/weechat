@@ -49,7 +49,7 @@ rm -rf $RPM_BUILD_ROOT
 %setup
 
 %build
-./configure --prefix=/usr --mandir=/usr/share/man --with-debug=0
+./configure --prefix=/usr --mandir=/usr/share/man --enable-doc --with-debug=0
 make
 
 %install
