@@ -164,6 +164,7 @@ weechat_aspell_command_speller_list_dicts ()
 
     while ((dict = aspell_dict_info_enumeration_next (elements)) != NULL)
     {
+        lang = NULL;
         country = NULL;
         pos = strchr (dict->code, '_');
 
