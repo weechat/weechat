@@ -401,7 +401,7 @@ serveur: envoyer à ce serveur (nom interne)
          del <pseudo>|-all [<serveur>]
 
     add: ajouter une notification
- pasudo: pseudo
+ pseudo: pseudo
 serveur: nom interne du serveur (par défaut le serveur courant)
   -away: notifier quand le message d'absence est changé (en faisant un whois sur le pseudo)
     del: supprimer une notification
