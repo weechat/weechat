@@ -2111,23 +2111,23 @@ automatiquement remplacées par WeeChat lors de la réponse au CTCP :
 
 [width="100%",cols="^2l,4,8l",options="header"]
 |========================================
-| Code         | Description                       | Valeur / exemple
-| $clientinfo  | liste des CTCP supportés          | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
-| $version     | version de WeeChat                | 0.4.0-dev
-| $versiongit  | version de WeeChat + version git  | 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)
-| $git         | version git                       | v0.3.9-104-g7eb5cc4
-| $compilation | date de compilation WeeChat       | Dec 16 2012
-| $osinfo      | information sur l'OS              | Linux 2.6.32-5-amd64 / x86_64
-| $site        | site WeeChat                      | http://www.weechat.org/
-| $download    | site WeeChat, page téléchargement | http://www.weechat.org/download
-| $time        | date/heure courante               | Sun, 16 Dec 2012 10:40:48 +0100
-| $username    | nom d'utilisateur sur le serveur  | nom
-| $realname    | nom réel sur le serveur           | John Doe
+| Code         | Description                            | Valeur / exemple
+| $clientinfo  | liste des CTCP supportés               | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
+| $version     | version de WeeChat                     | 0.4.0-dev
+| $versiongit  | version de WeeChat + version git ^(1)^ | 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)
+| $git         | version git ^(1)^                      | v0.3.9-104-g7eb5cc4
+| $compilation | date de compilation WeeChat            | Dec 16 2012
+| $osinfo      | information sur l'OS                   | Linux 2.6.32-5-amd64 / x86_64
+| $site        | site WeeChat                           | http://www.weechat.org/
+| $download    | site WeeChat, page téléchargement      | http://www.weechat.org/download
+| $time        | date/heure courante                    | Sun, 16 Dec 2012 10:40:48 +0100
+| $username    | nom d'utilisateur sur le serveur       | nom
+| $realname    | nom réel sur le serveur                | John Doe
 |========================================
 
 [NOTE]
-La version git est la sortie de la commande `git describe`. Elle est connue
-seulement si WeeChat a été compilé dans le repository git et si git était
+^(1)^ La version git est la sortie de la commande `git describe`. Elle est
+connue seulement si WeeChat a été compilé dans le repository git et si git était
 installé.
 
 Si les options CTCP ne sont pas définies (par défaut), les réponses CTCP sont :

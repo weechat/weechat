@@ -1982,22 +1982,22 @@ CTCP 応答時に自動的に WeeChat によって展開されます:
 
 [width="100%",cols="^2l,4,8l",options="header"]
 |========================================
-| コード       | 説明                                     | 値/例
-| $clientinfo  | サポートしている CTCP オプションのリスト | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
-| $version     | WeeChat バージョン                       | 0.4.0-dev
-| $versiongit  | WeeChat バージョン + git バージョン      | 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)
-| $git         | git バージョン                           | v0.3.9-104-g7eb5cc4
-| $compilation | WeeChat コンパイル日時                   | Dec 16 2012
-| $osinfo      | OS に関する情報                          | Linux 2.6.32-5-amd64 / x86_64
-| $site        | WeeChat ウェブサイト                     | http://www.weechat.org/
-| $download    | WeeChat ウェブサイトのダウンロードページ | http://www.weechat.org/download
-| $time        | 現在の日時                               | Sun, 16 Dec 2012 10:40:48 +0100
-| $username    | IRC サーバのユーザネーム                 | ログイン名
-| $realname    | IRC サーバのリアルネーム                 | John Doe
+| コード       | 説明                                      | 値/例
+| $clientinfo  | サポートしている CTCP オプションのリスト  | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
+| $version     | WeeChat バージョン                        | 0.4.0-dev
+| $versiongit  | WeeChat バージョン + git バージョン ^(1)^ | 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)
+| $git         | git バージョン ^(1)^                      | v0.3.9-104-g7eb5cc4
+| $compilation | WeeChat コンパイル日時                    | Dec 16 2012
+| $osinfo      | OS に関する情報                           | Linux 2.6.32-5-amd64 / x86_64
+| $site        | WeeChat ウェブサイト                      | http://www.weechat.org/
+| $download    | WeeChat ウェブサイトのダウンロードページ  | http://www.weechat.org/download
+| $time        | 現在の日時                                | Sun, 16 Dec 2012 10:40:48 +0100
+| $username    | IRC サーバのユーザネーム                  | ログイン名
+| $realname    | IRC サーバのリアルネーム                  | John Doe
 |========================================
 
 [NOTE]
-git バージョンとは `git describe` コマンドの出力です。git リポジトリで
+^(1)^ git バージョンとは `git describe` コマンドの出力です。git リポジトリで
 WeeChat をコンパイルし、git がインストールされている場合のみ値が設定されます。
 
 CTCP オプションが設定されていない (デフォルトの) 場合、CTCP 応答は以下のようになります:
