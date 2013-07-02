@@ -1885,6 +1885,16 @@ irc_command_invite (void *data, struct t_gui_buffer *buffer, int argc,
     (void) data;
     (void) argv_eol;
 
+    if (argc < 2)
+    {
+        weechat_printf (NULL,
+                        _("%s%s: missing arguments for \"%s\" "
+                          "command"),
+                        weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                        "invite");
+        return WEECHAT_RC_OK;
+    }
+
     if (argc > 2)
     {
         if (irc_channel_is_channel (ptr_server, argv[argc - 1]))
