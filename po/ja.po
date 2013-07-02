@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2013-07-02 15:35+0200\n"
-"PO-Revision-Date: 2013-07-02 15:37+0200\n"
+"PO-Revision-Date: 2013-07-02 16:02+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
 "Language: ja\n"
@@ -4416,7 +4416,7 @@ msgid ""
 "you should restart WeeChat now (with /quit)."
 msgstr ""
 "%s%s: 警告: いくつかのネットワーク接続はオープンの状態にもかかわらず発見でき"
-"ません、WeeChat を再起動してください (/quit で)"
+"ません、WeeChat を再起動してください (/quit で)。"
 
 #, c-format
 msgid "%s%s: cannot allocate new channel"
@@ -5799,7 +5799,7 @@ msgstr ""
 "\n"
 "引数が無い場合、このコマンドは以下のユーザに対する whois を行います:\n"
 "- バッファがサーバ/チャンネルの場合、自分自身のニックネーム\n"
-"- バッファがプライベートの場合、相手のニックネーム"
+"- バッファがプライベートの場合、相手のニックネーム。"
 
 msgid "ask for information about a nick which no longer exists"
 msgstr "既に存在しないニックネームに関する情報を要求"
@@ -7901,7 +7901,7 @@ msgstr ""
 
 #, c-format
 msgid "%sIf plugin \"%s\" is old/obsolete, you can delete this file."
-msgstr "%sプラグイン \"%s\" が古い/廃止の場合、このファイルを削除できます"
+msgstr "%sプラグイン \"%s\" が古い/廃止の場合、このファイルを削除できます。"
 
 #, c-format
 msgid ""

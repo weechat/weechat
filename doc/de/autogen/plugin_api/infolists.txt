@@ -62,7 +62,7 @@
 
 | weechat | plugin | Auflistung der Erweiterungen | Pointer der Erweiterung (optional) | Name einer Erweiterung (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
 
-| weechat | proxy | Auflistung der Proxys: | Proxy Pointer (optional) | Name des Proxy (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
+| weechat | proxy | Auflistung der Proxys | Proxy Pointer (optional) | Name des Proxy (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
 
 | weechat | url_options | Optionen für URL | - | -
 

@@ -22,7 +22,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2013-07-02 15:35+0200\n"
-"PO-Revision-Date: 2013-06-08 12:30+0200\n"
+"PO-Revision-Date: 2013-07-02 16:02+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: ru\n"
@@ -864,6 +864,7 @@ msgstr[2] ""
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
 msgstr "WeeChat работает: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, запущен %s%s"
 
+#, fuzzy
 msgid "compiled on"
 msgstr "собран:"
 
@@ -4048,9 +4049,11 @@ msgstr "отключен"
 msgid " (temporary)"
 msgstr ""
 
+#, fuzzy
 msgid "on"
 msgstr "вкл."
 
+#, fuzzy
 msgid "off"
 msgstr "выкл."
 
