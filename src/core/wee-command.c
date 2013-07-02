@@ -6654,7 +6654,7 @@ command_init ()
                      "IMPORTANT: you must restore the session with exactly "
                      "same configuration (files *.conf).\n"
                      "It is possible to restore WeeChat session on another "
-                     "machine if you copy the content of directory \"~/.weechat\""),
+                     "machine if you copy the content of directory \"~/.weechat\"."),
                   "%(filename)",
                   &command_upgrade, NULL);
     hook_command (NULL, "uptime",
