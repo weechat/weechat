@@ -89,7 +89,7 @@
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `green`)
 
 * [[option_weechat.color.chat_nick_self]] *weechat.color.chat_nick_self*
-** Beschreibung: `Textfarbe für den eigenen Nicknamen, im lokalen Chat-Fenster.`
+** Beschreibung: `Textfarbe für den eigenen Nicknamen, im lokalen Chat-Fenster`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `white`)
 
@@ -374,27 +374,27 @@
 ** Werte: time, buffer, prefix, suffix, message (Standardwert: `message`)
 
 * [[option_weechat.look.bar_more_down]] *weechat.look.bar_more_down*
-** Beschreibung: `Zeichen welches anzeigt, dass die Bar nach unten gescrollt werden kann (dies trifft nur auf Bars zu bei denen die Option "/set *.filling_*" nicht auf "horizontal" eingestellt ist).`
+** Beschreibung: `Zeichen welches anzeigt, dass die Bar nach unten gescrollt werden kann (dies trifft nur auf Bars zu bei denen die Option "/set *.filling_*" nicht auf "horizontal" eingestellt ist)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"++"`)
 
 * [[option_weechat.look.bar_more_left]] *weechat.look.bar_more_left*
-** Beschreibung: `Zeichen welches anzeigt, dass die Bar nach links gescrollt werden kann (dies trifft nur auf Bars zu bei denen die Option "/set *.filling_*" nicht auf "horizontal" eingestellt ist).`
+** Beschreibung: `Zeichen welches anzeigt, dass die Bar nach links gescrollt werden kann (dies trifft nur auf Bars zu bei denen die Option "/set *.filling_*" nicht auf "horizontal" eingestellt ist)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"<<"`)
 
 * [[option_weechat.look.bar_more_right]] *weechat.look.bar_more_right*
-** Beschreibung: `Zeichen welches anzeigt, dass die Bar nach rechts gescrollt werden kann (dies trifft nur auf Bars zu bei denen die Option "/set *.filling_*" nicht auf "horizontal" eingestellt ist).`
+** Beschreibung: `Zeichen welches anzeigt, dass die Bar nach rechts gescrollt werden kann (dies trifft nur auf Bars zu bei denen die Option "/set *.filling_*" nicht auf "horizontal" eingestellt ist)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `">>"`)
 
 * [[option_weechat.look.bar_more_up]] *weechat.look.bar_more_up*
-** Beschreibung: `Zeichen welches anzeigt, dass die Bar nach oben gescrollt werden kann (dies trifft nur auf Bars zu bei denen die Option "/set *.filling_*" nicht auf "horizontal" eingestellt ist).`
+** Beschreibung: `Zeichen welches anzeigt, dass die Bar nach oben gescrollt werden kann (dies trifft nur auf Bars zu bei denen die Option "/set *.filling_*" nicht auf "horizontal" eingestellt ist)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"--"`)
 
 * [[option_weechat.look.buffer_notify_default]] *weechat.look.buffer_notify_default*
-** Beschreibung: `Standardeinstellung der Benachrichtigungsstufe für Buffer (dies wird genutzt um WeeChat mitzuteilen ob der Buffer in der Hotlist angezeigt werden soll oder nicht, entsprechend der Wichtigkeit der Nachricht): all=alle Nachrichten (Standard), message=Nachrichten+Highlights, highlights=nur Highlights, none=Hotlist wird niemals angezeigt.`
+** Beschreibung: `Standardeinstellung der Benachrichtigungsstufe für Buffer (dies wird genutzt um WeeChat mitzuteilen ob der Buffer in der Hotlist angezeigt werden soll oder nicht, entsprechend der Wichtigkeit der Nachricht): all=alle Nachrichten (Standard), message=Nachrichten+Highlights, highlights=nur Highlights, none=Hotlist wird niemals angezeigt`
 ** Typ: integer
 ** Werte: none, highlight, message, all (Standardwert: `all`)
 
@@ -454,7 +454,7 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_weechat.look.command_chars]] *weechat.look.command_chars*
-** Beschreibung: `Bestimmt ein- oder mehrere Zeichen mit denen man ebenfalls einen Befehl ausführen kann. Zum Beispiel mittels ".$". Der Schrägstrich (slash: "/") ist ein reserviertes Zeichen und kann immer genutzt werden.`
+** Beschreibung: `Bestimmt ein- oder mehrere Zeichen mit denen man ebenfalls einen Befehl ausführen kann. Zum Beispiel mittels ".$". Der Schrägstrich (slash: "/") ist ein reserviertes Zeichen und wird immer genutzt`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -549,7 +549,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.look.input_cursor_scroll]] *weechat.look.input_cursor_scroll*
-** Beschreibung: `Anzahl an Zeichen die nach links verschoben werden sollen, falls das Ende der Eingabezeile erreicht wird.`
+** Beschreibung: `Anzahl an Zeichen die nach links verschoben werden sollen, falls das Ende der Eingabezeile erreicht wird`
 ** Typ: integer
 ** Werte: 0 .. 100 (Standardwert: `20`)
 
@@ -569,7 +569,7 @@
 ** Werte: 0 .. 65535 (Standardwert: `32`)
 
 * [[option_weechat.look.item_buffer_filter]] *weechat.look.item_buffer_filter*
-** Beschreibung: `Zeichen mit welchem in der Bar-Item ("buffer_filter") signalisiert wird ob im aktuellen Buffer die Filterfunktion eingeschaltet ist.`
+** Beschreibung: `Zeichen mit welchem in der Bar-Item ("buffer_filter") signalisiert wird ob im aktuellen Buffer die Filterfunktion eingeschaltet ist`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"*"`)
 
@@ -629,7 +629,7 @@
 ** Werte: -1 .. 2147483647 (Standardwert: `1`)
 
 * [[option_weechat.look.prefix_action]] *weechat.look.prefix_action*
-** Beschreibung: `Präfix, dass bei einer Action-Nachricht angezeigt wird. Durch das Format "${Farbe}" ist es möglich eine Farbauswahl zu treffen.`
+** Beschreibung: `Präfix, dass bei einer Action-Nachricht angezeigt wird. Durch das Format "${Farbe}" ist es möglich eine Farbauswahl zu treffen`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `" *"`)
 
@@ -654,7 +654,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"+"`)
 
 * [[option_weechat.look.prefix_align_more_after]] *weechat.look.prefix_align_more_after*
-** Beschreibung: `Das Zeichen welches zum Verkürzen angezeigt wird (Standardzeichen: "+"), nach dem Nick-Suffix darstellen (das vorhandene Leerzeichen wird ersetzt); wird diese Funktion deaktiviert, dann wird das Zeichen nach dem Nick dargestellt.`
+** Beschreibung: `Das Zeichen welches zum Verkürzen angezeigt wird (Standardzeichen: "+"), nach dem Nick-Suffix darstellen (das vorhandene Leerzeichen wird ersetzt); wird diese Funktion deaktiviert, dann wird das Zeichen nach dem Nick dargestellt`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -674,32 +674,32 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"+"`)
 
 * [[option_weechat.look.prefix_buffer_align_more_after]] *weechat.look.prefix_buffer_align_more_after*
-** Beschreibung: `Das Zeichen welches zum Verkürzen angezeigt wird (Standardzeichen: "+"), nach dem Nick-Suffix darstellen (das vorhandene Leerzeichen wird ersetzt); wird diese Funktion deaktiviert, dann wird das Zeichen nach dem Nick dargestellt.`
+** Beschreibung: `Das Zeichen welches zum Verkürzen angezeigt wird (Standardzeichen: "+"), nach dem Nick-Suffix darstellen (das vorhandene Leerzeichen wird ersetzt); wird diese Funktion deaktiviert, dann wird das Zeichen nach dem Nick dargestellt`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.look.prefix_error]] *weechat.look.prefix_error*
-** Beschreibung: `Präfix, dass bei einer Fehler-Nachricht angezeigt wird. Durch das Format "${Farbe}" ist es möglich eine Farbauswahl zu treffen.`
+** Beschreibung: `Präfix, dass bei einer Fehler-Nachricht angezeigt wird. Durch das Format "${Farbe}" ist es möglich eine Farbauswahl zu treffen`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"=!="`)
 
 * [[option_weechat.look.prefix_join]] *weechat.look.prefix_join*
-** Beschreibung: `Präfix, dass bei einer Join-Nachricht angezeigt wird. Durch das Format "${Farbe}" ist es möglich eine Farbauswahl zu treffen.`
+** Beschreibung: `Präfix, dass bei einer Join-Nachricht angezeigt wird. Durch das Format "${Farbe}" ist es möglich eine Farbauswahl zu treffen`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"-->"`)
 
 * [[option_weechat.look.prefix_network]] *weechat.look.prefix_network*
-** Beschreibung: `Präfix, dass bei einer Netzwerk-Nachricht angezeigt wird. Durch das Format "${Farbe}" ist es möglich eine Farbauswahl zu treffen.`
+** Beschreibung: `Präfix, dass bei einer Netzwerk-Nachricht angezeigt wird. Durch das Format "${Farbe}" ist es möglich eine Farbauswahl zu treffen`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"--"`)
 
 * [[option_weechat.look.prefix_quit]] *weechat.look.prefix_quit*
-** Beschreibung: `Präfix, dass bei einer Quit-Nachricht angezeigt wird. Durch das Format "${Farbe}" ist es möglich eine Farbauswahl zu treffen.`
+** Beschreibung: `Präfix, dass bei einer Quit-Nachricht angezeigt wird. Durch das Format "${Farbe}" ist es möglich eine Farbauswahl zu treffen`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"<--"`)
 
 * [[option_weechat.look.prefix_same_nick]] *weechat.look.prefix_same_nick*
-** Beschreibung: `setzt ein Präfix welches anstelle des Nicks der Nachricht vorangestellt wird, sofern die vorherige Nachricht von dem selben Nick geschrieben wurde. Wird ein Leerzeichen (" ") genutzt, dann wird der Nachricht kein Präfix vorangestellt. Um diese Funktion zu deaktivieren und den Nick als Präfix zu nutzen darf keine Zeichenkette angegeben werden.`
+** Beschreibung: `setzt ein Präfix welches anstelle des Nicks der Nachricht vorangestellt wird, sofern die vorherige Nachricht von dem selben Nick geschrieben wurde. Wird ein Leerzeichen (" ") genutzt, dann wird der Nachricht kein Präfix vorangestellt. Um diese Funktion zu deaktivieren und den Nick als Präfix zu nutzen darf keine Zeichenkette angegeben werden`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -754,12 +754,12 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.look.separator_horizontal]] *weechat.look.separator_horizontal*
-** Beschreibung: `das angegebene Zeichen wird verwendet um die horizontalen Linien zu zeichnen. Wird kein Zeichen angegeben, dann zeichnet ncurses eine durchgängige Linie. Dies kann allerdings bei einigen Terminals zu Problemen führen, falls die URL Auswahl genutzt wird. Wide Chars sind für diese Option NICHT erlaubt.`
+** Beschreibung: `das angegebene Zeichen wird verwendet um die horizontalen Linien zu zeichnen. Wird kein Zeichen angegeben, dann zeichnet ncurses eine durchgängige Linie. Dies kann allerdings bei einigen Terminals zu Problemen führen, falls die URL Auswahl genutzt wird. Wide Chars sind für diese Option NICHT erlaubt`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"-"`)
 
 * [[option_weechat.look.separator_vertical]] *weechat.look.separator_vertical*
-** Beschreibung: `das angegebene Zeichen wird verwendet um die vertikale Linien zu zeichnen. Wird kein Zeichen angegeben, dann zeichnet ncurses eine durchgängige Linie. Wide Chars sind für diese Option NICHT erlaubt.`
+** Beschreibung: `das angegebene Zeichen wird verwendet um die vertikale Linien zu zeichnen. Wird kein Zeichen angegeben, dann zeichnet ncurses eine durchgängige Linie. Wide Chars sind für diese Option NICHT erlaubt`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -769,7 +769,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.look.time_format]] *weechat.look.time_format*
-** Beschreibung: `Zeitstempel für das Datum. Der Zeitstempel wird in eine Zeichenkette umgewandelt und in Nachrichten dargestellt.`
+** Beschreibung: `Zeitstempel für das Datum. Der Zeitstempel wird in eine Zeichenkette umgewandelt und in Nachrichten dargestellt`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%a, %d %b %Y %T"`)
 

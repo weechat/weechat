@@ -214,7 +214,7 @@
 ** Werte: none, next, near_server (Standardwert: `none`)
 
 * [[option_irc.look.nick_color_force]] *irc.look.nick_color_force*
-** Beschreibung: `erzwingt für einen Nick eine spezielle Farbe. Die standardmäßig, mittels Streuwertfunktion aus dem Nicknamen, generierte Nickfarbe findet für diese Nicks keine Anwendung (Format:"Nick1:Farbe1;Nick2:Farbe2"). Zuerst wird beim Nicknamen nach Groß- und Kleinschreibung unterschieden. Sollte der Nick nicht gefunden werden, findet keine Unterscheidung mehr statt. Somit ist es möglich die Nicks, in dieser Option, ausschließlich in Kleinschrift zu schreiben.`
+** Beschreibung: `erzwingt für einen Nick eine spezielle Farbe. Die standardmäßig, mittels Streuwertfunktion aus dem Nicknamen, generierte Nickfarbe findet für diese Nicks keine Anwendung (Format:"Nick1:Farbe1;Nick2:Farbe2"). Zuerst wird beim Nicknamen nach Groß- und Kleinschreibung unterschieden. Sollte der Nick nicht gefunden werden, findet keine Unterscheidung mehr statt. Somit ist es möglich die Nicks, in dieser Option, ausschließlich in Kleinschrift zu schreiben`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -224,7 +224,7 @@
 ** Werte: djb2, sum (Standardwert: `sum`)
 
 * [[option_irc.look.nick_color_stop_chars]] *irc.look.nick_color_stop_chars*
-** Beschreibung: `Zeichen die genutzt werden sollen damit bei der Generierung der Farbe für einen Nicknamen abgebrochen wird. Es muss mindestens ein Zeichen im Nicknamen enthalten sein der nicht in dieser Liste aufgeführt wird, damit eine Farbe für den Nicknamen erstellt werden kann (Beispiel: Der Nickname lautet "|nick|abwesend" wobei das Zeichen "|" ignoriert werden soll. Die Farbe für den Nicknamen wird nun für "|nick" anstelle von "|nick|abwesend" erstellt).`
+** Beschreibung: `Zeichen die genutzt werden sollen damit bei der Generierung der Farbe für einen Nicknamen abgebrochen wird. Es muss mindestens ein Zeichen im Nicknamen enthalten sein der nicht in dieser Liste aufgeführt wird, damit eine Farbe für den Nicknamen erstellt werden kann (Beispiel: Der Nickname lautet "|nick|abwesend" wobei das Zeichen "|" ignoriert werden soll. Die Farbe für den Nicknamen wird nun für "|nick" anstelle von "|nick|abwesend" erstellt)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"_|["`)
 
@@ -284,7 +284,7 @@
 ** Werte: merge_with_core, merge_without_core, independent (Standardwert: `merge_with_core`)
 
 * [[option_irc.look.smart_filter]] *irc.look.smart_filter*
-** Beschreibung: `filtert join/part/quit/nick Nachrichten für einen Nick der einige Minuten im Channel inaktiv gewesen ist. Dazu muss ein Filter mit dem Schlagwort "irc_smart_filter" erstellt werden.`
+** Beschreibung: `filtert join/part/quit/nick Nachrichten für einen Nick der einige Minuten im Channel inaktiv gewesen ist. Dazu muss ein Filter mit dem Schlagwort "irc_smart_filter" erstellt werden`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -334,7 +334,7 @@
 ** Werte: 0 .. 86400 (Standardwert: `1800`)
 
 * [[option_irc.network.colors_receive]] *irc.network.colors_receive*
-** Beschreibung: `wenn deaktiviert, werden Farben-Codes von eingehenden Nachrichten ignoriert.`
+** Beschreibung: `wenn deaktiviert, werden Farben-Codes von eingehenden Nachrichten ignoriert`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -469,7 +469,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"WeeChat %v"`)
 
 * [[option_irc.server_default.ipv6]] *irc.server_default.ipv6*
-** Beschreibung: `bei der Kommunikation mit dem Server wird das IPv6 Protokoll genutzt (sollte IPv6 nicht genutzt werden können, wird automatisch auf IPv4 zurückgegriffen); wird die Funktion deaktiviert, dann wird ausschließlich IPv4 genutzt.`
+** Beschreibung: `bei der Kommunikation mit dem Server wird das IPv6 Protokoll genutzt (sollte IPv6 nicht genutzt werden können, wird automatisch auf IPv4 zurückgegriffen); wird die Funktion deaktiviert, dann wird ausschließlich IPv4 genutzt`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -504,7 +504,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_irc.server_default.sasl_mechanism]] *irc.server_default.sasl_mechanism*
-** Beschreibung: `Verfahren welches bei einer SASL Authentifizierung angewandt werden soll: "plain" Passwort wird im Klartext gesendet, "dh-blowfish" Passwort wird mittels blowfish verschlüsselt, "dh-aes" Passwort wird mittels AES verschlüsselt, "external" SSL Zertifikat welches auf Client Seite vorliegt, wird verwendet.`
+** Beschreibung: `Verfahren welches bei einer SASL Authentifizierung angewandt werden soll: "plain" Passwort wird im Klartext gesendet, "dh-blowfish" Passwort wird mittels blowfish verschlüsselt, "dh-aes" Passwort wird mittels AES verschlüsselt, "external" SSL Zertifikat welches auf Client Seite vorliegt, wird verwendet`
 ** Typ: integer
 ** Werte: plain, dh-blowfish, dh-aes, external (Standardwert: `plain`)
 

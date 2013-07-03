@@ -507,11 +507,11 @@ data: unbearbeitete (RAW) Daten die gesendet werden sollen
 ........................................
 /rehash  [<option>]
 
-option: zusätzliche Option, die von manchen Servern berücksichtigt wird.
+option: zusätzliche Option, die von manchen Servern berücksichtigt wird
 ........................................
 
 [[command_irc_restart]]
-[command]*`restart`* Den Server dazu bringen sich selbst neu zu starten::
+[command]*`restart`* Server dazu bringen sich selbst neu zu starten::
 ........................................
 /restart  [<target>]
 
@@ -519,7 +519,7 @@ target: Servername
 ........................................
 
 [[command_irc_sajoin]]
-[command]*`sajoin`* Zwingt einen User einen oder mehrere Channel zu betreten::
+[command]*`sajoin`* zwingt einen User einen oder mehrere Channel zu betreten::
 ........................................
 /sajoin  <nick> <channel>[,<channel>...]
 
@@ -739,7 +739,7 @@ text: Text der gesendet werden soll
 ........................................
 
 [[command_irc_who]]
-[command]*`who`* Sendet eine Anfrage die eine Anzahl von Informationen zurück gibt.::
+[command]*`who`* sendet eine Anfrage die eine Anzahl von Informationen zurück gibt::
 ........................................
 /who  [<mask> [o]]
 

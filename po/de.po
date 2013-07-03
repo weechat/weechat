@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-02 15:35+0200\n"
-"PO-Revision-Date: 2013-07-02 15:57+0200\n"
+"POT-Creation-Date: 2013-07-03 13:09+0200\n"
+"PO-Revision-Date: 2013-07-02 22:20+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
 "Language: de_DE\n"
@@ -240,7 +240,7 @@ msgstr "%sErweiterung \"%s\" wurde nicht gefunden"
 
 msgid "Raw content of buffers has been written in log file"
 msgstr ""
-"Der Inhalt des Buffers wurde im Rohformat in die Protokolldatei geschrieben."
+"Der Inhalt des Buffers wurde im Rohformat in die Protokolldatei geschrieben"
 
 #, c-format
 msgid "Debug disabled for \"%s\""
@@ -2585,7 +2585,7 @@ msgid ""
 "in configuration file"
 msgstr ""
 "Warnung: Sie sollten jetzt /save ausführen, um die Option "
-"\"save_config_on_exit\" in die Konfigurationsdatei zu übernehmen."
+"\"save_config_on_exit\" in die Konfigurationsdatei zu übernehmen"
 
 msgid ""
 "WARNING: this option can cause serious display bugs, if you have such "
@@ -2670,7 +2670,7 @@ msgid ""
 msgstr ""
 "Zeichen welches anzeigt, dass die Bar nach links gescrollt werden kann (dies "
 "trifft nur auf Bars zu bei denen die Option \"/set *.filling_*\" nicht auf "
-"\"horizontal\" eingestellt ist)."
+"\"horizontal\" eingestellt ist)"
 
 msgid ""
 "string displayed when bar can be scrolled to the right (for bars with "
@@ -2678,7 +2678,7 @@ msgid ""
 msgstr ""
 "Zeichen welches anzeigt, dass die Bar nach rechts gescrollt werden kann "
 "(dies trifft nur auf Bars zu bei denen die Option \"/set *.filling_*\" nicht "
-"auf \"horizontal\" eingestellt ist)."
+"auf \"horizontal\" eingestellt ist)"
 
 msgid ""
 "string displayed when bar can be scrolled up (for bars with filling "
@@ -2686,7 +2686,7 @@ msgid ""
 msgstr ""
 "Zeichen welches anzeigt, dass die Bar nach oben gescrollt werden kann (dies "
 "trifft nur auf Bars zu bei denen die Option \"/set *.filling_*\" nicht auf "
-"\"horizontal\" eingestellt ist)."
+"\"horizontal\" eingestellt ist)"
 
 msgid ""
 "string displayed when bar can be scrolled down (for bars with filling "
@@ -2694,7 +2694,7 @@ msgid ""
 msgstr ""
 "Zeichen welches anzeigt, dass die Bar nach unten gescrollt werden kann (dies "
 "trifft nur auf Bars zu bei denen die Option \"/set *.filling_*\" nicht auf "
-"\"horizontal\" eingestellt ist)."
+"\"horizontal\" eingestellt ist)"
 
 msgid ""
 "default notify level for buffers (used to tell WeeChat if buffer must be "
@@ -2706,7 +2706,7 @@ msgstr ""
 "um WeeChat mitzuteilen ob der Buffer in der Hotlist angezeigt werden soll "
 "oder nicht, entsprechend der Wichtigkeit der Nachricht): all=alle "
 "Nachrichten (Standard), message=Nachrichten+Highlights, highlights=nur "
-"Highlights, none=Hotlist wird niemals angezeigt."
+"Highlights, none=Hotlist wird niemals angezeigt"
 
 msgid ""
 "time format for each line displayed in buffers (see man strftime for date/"
@@ -2808,7 +2808,7 @@ msgid ""
 msgstr ""
 "Bestimmt ein- oder mehrere Zeichen mit denen man ebenfalls einen Befehl "
 "ausführen kann. Zum Beispiel mittels \".$\". Der Schrägstrich (slash: \"/\") "
-"ist ein reserviertes Zeichen und kann immer genutzt werden."
+"ist ein reserviertes Zeichen und wird immer genutzt"
 
 msgid ""
 "if set, /quit command must be confirmed with extra argument \"-yes\" (see /"
@@ -2950,7 +2950,7 @@ msgid ""
 "end of line"
 msgstr ""
 "Anzahl an Zeichen die nach links verschoben werden sollen, falls das Ende "
-"der Eingabezeile erreicht wird."
+"der Eingabezeile erreicht wird"
 
 msgid ""
 "share commands, text, or both in input for all buffers (there is still local "
@@ -2982,7 +2982,7 @@ msgid ""
 "\"buffer_filter\")"
 msgstr ""
 "Zeichen mit welchem in der Bar-Item (\"buffer_filter\") signalisiert wird ob "
-"im aktuellen Buffer die Filterfunktion eingeschaltet ist."
+"im aktuellen Buffer die Filterfunktion eingeschaltet ist"
 
 msgid ""
 "jump to previous buffer displayed when jumping to current buffer number "
@@ -3051,28 +3051,28 @@ msgstr ""
 msgid "prefix for error messages, colors are allowed with format \"${color}\""
 msgstr ""
 "Präfix, dass bei einer Fehler-Nachricht angezeigt wird. Durch das Format "
-"\"${Farbe}\" ist es möglich eine Farbauswahl zu treffen."
+"\"${Farbe}\" ist es möglich eine Farbauswahl zu treffen"
 
 msgid ""
 "prefix for network messages, colors are allowed with format \"${color}\""
 msgstr ""
 "Präfix, dass bei einer Netzwerk-Nachricht angezeigt wird. Durch das Format "
-"\"${Farbe}\" ist es möglich eine Farbauswahl zu treffen."
+"\"${Farbe}\" ist es möglich eine Farbauswahl zu treffen"
 
 msgid "prefix for action messages, colors are allowed with format \"${color}\""
 msgstr ""
 "Präfix, dass bei einer Action-Nachricht angezeigt wird. Durch das Format "
-"\"${Farbe}\" ist es möglich eine Farbauswahl zu treffen."
+"\"${Farbe}\" ist es möglich eine Farbauswahl zu treffen"
 
 msgid "prefix for join messages, colors are allowed with format \"${color}\""
 msgstr ""
 "Präfix, dass bei einer Join-Nachricht angezeigt wird. Durch das Format "
-"\"${Farbe}\" ist es möglich eine Farbauswahl zu treffen."
+"\"${Farbe}\" ist es möglich eine Farbauswahl zu treffen"
 
 msgid "prefix for quit messages, colors are allowed with format \"${color}\""
 msgstr ""
 "Präfix, dass bei einer Quit-Nachricht angezeigt wird. Durch das Format "
-"\"${Farbe}\" ist es möglich eine Farbauswahl zu treffen."
+"\"${Farbe}\" ist es möglich eine Farbauswahl zu treffen"
 
 msgid "prefix alignment (none, left, right (default))"
 msgstr ""
@@ -3099,7 +3099,7 @@ msgstr ""
 "Das Zeichen welches zum Verkürzen angezeigt wird (Standardzeichen: \"+\"), "
 "nach dem Nick-Suffix darstellen (das vorhandene Leerzeichen wird ersetzt); "
 "wird diese Funktion deaktiviert, dann wird das Zeichen nach dem Nick "
-"dargestellt."
+"dargestellt"
 
 msgid ""
 "prefix alignment for buffer name, when many buffers are merged with same "
@@ -3133,7 +3133,7 @@ msgstr ""
 "wird, sofern die vorherige Nachricht von dem selben Nick geschrieben wurde. "
 "Wird ein Leerzeichen (\" \") genutzt, dann wird der Nachricht kein Präfix "
 "vorangestellt. Um diese Funktion zu deaktivieren und den Nick als Präfix zu "
-"nutzen darf keine Zeichenkette angegeben werden."
+"nutzen darf keine Zeichenkette angegeben werden"
 
 msgid "string displayed after prefix"
 msgstr "Nach dem Präfix anzufügende Zeichenfolge"
@@ -3198,7 +3198,7 @@ msgstr ""
 "zeichnen. Wird kein Zeichen angegeben, dann zeichnet ncurses eine "
 "durchgängige Linie. Dies kann allerdings bei einigen Terminals zu Problemen "
 "führen, falls die URL Auswahl genutzt wird. Wide Chars sind für diese Option "
-"NICHT erlaubt."
+"NICHT erlaubt"
 
 msgid ""
 "char used to draw vertical separators around bars and windows (empty value "
@@ -3206,7 +3206,7 @@ msgid ""
 msgstr ""
 "das angegebene Zeichen wird verwendet um die vertikale Linien zu zeichnen. "
 "Wird kein Zeichen angegeben, dann zeichnet ncurses eine durchgängige Linie. "
-"Wide Chars sind für diese Option NICHT erlaubt."
+"Wide Chars sind für diese Option NICHT erlaubt"
 
 msgid "set title for window (terminal for Curses GUI) with name and version"
 msgstr ""
@@ -3216,7 +3216,7 @@ msgstr ""
 msgid "time format for dates converted to strings and displayed in messages"
 msgstr ""
 "Zeitstempel für das Datum. Der Zeitstempel wird in eine Zeichenkette "
-"umgewandelt und in Nachrichten dargestellt."
+"umgewandelt und in Nachrichten dargestellt"
 
 msgid "display an horizontal separator between windows"
 msgstr ""
@@ -3327,7 +3327,7 @@ msgid "color for nick suffix (string displayed after nick in prefix)"
 msgstr "Farbe für den Nick-Suffix (Zeichenkette die nach dem Nick steht)"
 
 msgid "text color for local nick in chat window"
-msgstr "Textfarbe für den eigenen Nicknamen, im lokalen Chat-Fenster."
+msgstr "Textfarbe für den eigenen Nicknamen, im lokalen Chat-Fenster"
 
 msgid "text color for offline nick (not in nicklist any more)"
 msgstr ""
@@ -3955,7 +3955,7 @@ msgstr ""
 msgid "true if bar is hidden, false if it is displayed"
 msgstr ""
 "Einschalten, falls Bar versteckt werden soll. Ausschalten, falls Bar "
-"angezeigt werden soll."
+"angezeigt werden soll"
 
 msgid "bar priority (high number means bar displayed first)"
 msgstr ""
@@ -4270,13 +4270,13 @@ msgstr "%s: \"%s\" entfernt"
 #, c-format
 msgid "%s: error: dictionary \"%s\" is not available on your system"
 msgstr ""
-"%s: Fehler: das Wörterbuch \"%s\" ist auf diesem Rechner nicht verfügbar."
+"%s: Fehler: das Wörterbuch \"%s\" ist auf diesem Rechner nicht verfügbar"
 
 #, c-format
 msgid "%s%s: no dictionary on this buffer for adding word"
 msgstr ""
 "%s%s: Es ist kein Wörterbuch für diesen Buffer aktiviert, deshalb kann das "
-"Wort nicht hinzugefügt werden."
+"Wort nicht hinzugefügt werden"
 
 #, c-format
 msgid ""
@@ -4284,16 +4284,15 @@ msgid ""
 "dictionary"
 msgstr ""
 "%s%s: es sind mehrere Wörterbücher für diesen Buffer definiert. Bitte wählen "
-"Sie ein Wörterbuch davon aus."
+"Sie ein Wörterbuch davon aus"
 
 #, c-format
 msgid "%s: word \"%s\" added to personal dictionary"
-msgstr "%s: Das Wort \"%s\" wurde dem persönlichen Wörterbuch hinzugefügt."
+msgstr "%s: Das Wort \"%s\" wurde dem persönlichen Wörterbuch hinzugefügt"
 
 #, c-format
 msgid "%s%s: failed to add word to personal dictionary"
-msgstr ""
-"%s%s: Es kann kein Wort zum persönlichen Wörterbuch hinzugefügt werden."
+msgstr "%s%s: Es kann kein Wort zum persönlichen Wörterbuch hinzugefügt werden"
 
 #. TRANSLATORS: second "%s" is "aspell" or "enchant"
 #, c-format
@@ -4989,8 +4988,9 @@ msgid ""
 "%s%s: you can not delete server \"%s\" because you are connected to. Try \"/"
 "disconnect %s\" before."
 msgstr ""
-"%s%s: Sie können den Server \"%s\" nicht löschen, da Sie noch mit dem Server "
-"verbunden sind. Probieren Sie vorab: \"/disconnect %s\"."
+"%s%s: der Server \"%s\" kann nicht gelöscht werden, da noch eine offene "
+"Verbindung zum Server besteht. Bitte folgenden Befehl ausführen: \"/"
+"disconnect %s\"."
 
 #, c-format
 msgid "%s: Server %s%s%s has been deleted"
@@ -5816,13 +5816,13 @@ msgstr "[<option>]"
 
 msgid "option: extra option, for some servers"
 msgstr ""
-"option: zusätzliche Option, die von manchen Servern berücksichtigt wird."
+"option: zusätzliche Option, die von manchen Servern berücksichtigt wird"
 
 msgid "tell the server to restart itself"
-msgstr "Den Server dazu bringen sich selbst neu zu starten"
+msgstr "Server dazu bringen sich selbst neu zu starten"
 
 msgid "force a user to join channel(s)"
-msgstr "Zwingt einen User einen oder mehrere Channel zu betreten"
+msgstr "zwingt einen User einen oder mehrere Channel zu betreten"
 
 msgid "<nick> <channel>[,<channel>...]"
 msgstr "<nick> <channel>[,<channel>...]"
@@ -6117,7 +6117,7 @@ msgid "text: text to send"
 msgstr "text: Text der gesendet werden soll"
 
 msgid "generate a query which returns a list of information"
-msgstr "Sendet eine Anfrage die eine Anzahl von Informationen zurück gibt."
+msgstr "sendet eine Anfrage die eine Anzahl von Informationen zurück gibt"
 
 msgid "[<mask> [o]]"
 msgstr "[<mask> [o]]"
@@ -6267,7 +6267,7 @@ msgstr ""
 "(WeeChat Webseite), $download (Download-Seite von WeeChat), $time (aktuelles "
 "Datum und Uhrzeit, als Text), $username (Username auf Server), $realname "
 "(Realname auf Server). Durch die Nutzung einer leeren Zeichenkette wird die "
-"CTCP Antwort blockiert."
+"CTCP Antwort blockiert"
 
 #, c-format
 msgid "%s%s: error creating CTCP \"%s\" => \"%s\""
@@ -6291,7 +6291,7 @@ msgstr ""
 "bei der Kommunikation mit dem Server wird das IPv6 Protokoll genutzt (sollte "
 "IPv6 nicht genutzt werden können, wird automatisch auf IPv4 "
 "zurückgegriffen); wird die Funktion deaktiviert, dann wird ausschließlich "
-"IPv4 genutzt."
+"IPv4 genutzt"
 
 msgid "use SSL for server communication"
 msgstr "Server über SSL ansprechen"
@@ -6345,7 +6345,7 @@ msgstr ""
 "\"plain\" Passwort wird im Klartext gesendet, \"dh-blowfish\" Passwort wird "
 "mittels blowfish verschlüsselt, \"dh-aes\" Passwort wird mittels AES "
 "verschlüsselt, \"external\" SSL Zertifikat welches auf Client Seite "
-"vorliegt, wird verwendet."
+"vorliegt, wird verwendet"
 
 msgid "username for SASL authentication"
 msgstr "Username für SASL Authentifizierung"
@@ -6587,7 +6587,7 @@ msgstr ""
 "beim Nicknamen nach Groß- und Kleinschreibung unterschieden. Sollte der Nick "
 "nicht gefunden werden, findet keine Unterscheidung mehr statt. Somit ist es "
 "möglich die Nicks, in dieser Option, ausschließlich in Kleinschrift zu "
-"schreiben."
+"schreiben"
 
 msgid ""
 "hash algorithm used to find the color for a nick: djb2 = variant of djb2 "
@@ -6611,7 +6611,7 @@ msgstr ""
 "eine Farbe für den Nicknamen erstellt werden kann (Beispiel: Der Nickname "
 "lautet \"|nick|abwesend\" wobei das Zeichen \"|\" ignoriert werden soll. Die "
 "Farbe für den Nicknamen wird nun für \"|nick\" anstelle von \"|nick|abwesend"
-"\" erstellt)."
+"\" erstellt)"
 
 msgid ""
 "smart completion for nicks (completes first with last speakers): speakers = "
@@ -6816,7 +6816,7 @@ msgid ""
 msgstr ""
 "filtert join/part/quit/nick Nachrichten für einen Nick der einige Minuten im "
 "Channel inaktiv gewesen ist. Dazu muss ein Filter mit dem Schlagwort "
-"\"irc_smart_filter\" erstellt werden."
+"\"irc_smart_filter\" erstellt werden"
 
 msgid "delay for filtering join/part/quit messages (in minutes)"
 msgstr ""
@@ -6964,7 +6964,7 @@ msgstr ""
 
 msgid "when off, colors codes are ignored in incoming messages"
 msgstr ""
-"wenn deaktiviert, werden Farben-Codes von eingehenden Nachrichten ignoriert."
+"wenn deaktiviert, werden Farben-Codes von eingehenden Nachrichten ignoriert"
 
 msgid ""
 "allow user to send colors with special codes (ctrl-c + a code and optional "
@@ -7354,11 +7354,11 @@ msgstr "%s%s: Der Befehl \"%s\" wurde ohne Channel empfangen"
 msgid "%s%s%s%s has changed topic for %s%s%s from \"%s%s%s\" to \"%s%s%s\""
 msgstr ""
 "%s%s%s%s hat das Thema für den Channel %s%s%s von \"%s%s%s\" auf \"%s%s%s\" "
-"geändert."
+"geändert"
 
 #, c-format
 msgid "%s%s%s%s has changed topic for %s%s%s to \"%s%s%s\""
-msgstr "%s%s%s%s hat das Thema für den Channel %s%s%s auf \"%s%s%s\" gesetzt."
+msgstr "%s%s%s%s hat das Thema für den Channel %s%s%s auf \"%s%s%s\" gesetzt"
 
 #, c-format
 msgid "%s%s%s%s has unset topic for %s%s%s (old topic: \"%s%s%s\")"
@@ -7668,7 +7668,7 @@ msgstr "(Nachricht verworfen)"
 
 #, c-format
 msgid "%s%s: not enough memory for received message"
-msgstr "%s%s: nicht genügend Speicher vorhanden um Nachricht zu Empfangen."
+msgstr "%s%s: nicht genügend Speicher vorhanden um Nachricht zu Empfangen"
 
 #, c-format
 msgid "%s%s: reading data on socket: error %d %s"
@@ -7890,7 +7890,7 @@ msgstr "%s%s: verbinde zum Server %s/%d%s..."
 
 #, c-format
 msgid "%s%s: reconnecting to server..."
-msgstr "%s%s: Neuverbinden zum Server..."
+msgstr "%s%s: Neu verbinden zum Server..."
 
 #, c-format
 msgid "%s%s: disconnected from server"
@@ -8287,7 +8287,7 @@ msgstr ""
 "enden) (optional)"
 
 msgid "list of proxies"
-msgstr "Auflistung der Proxys"
+msgstr "Liste der Proxys"
 
 msgid "proxy pointer (optional)"
 msgstr "Proxy Pointer (optional)"
@@ -10069,7 +10069,7 @@ msgstr "%s%s: auf die Datei \"%s\" kann nicht zugegriffen werden"
 msgid "%s%s: could not find address for \"%s\", falling back to local IP"
 msgstr ""
 "%s%s: Adresse für \"%s\" wurde nicht gefunden. Es wird auf die lokale IP "
-"zurückgegriffen."
+"zurückgegriffen"
 
 #, c-format
 msgid "%s%s: cannot create socket for xfer: error %d %s"
@@ -10396,3 +10396,211 @@ msgstr "Type"
 
 msgid "Constants"
 msgstr "Konstanten"
+
+#~ msgid "%s default keys (context: \"%s\"):\n"
+#~ msgstr "%s Standardtastenbelegungen (Kontext: \"%s\"):\n"
+
+#~ msgid "proxy used for this server (optional)"
+#~ msgstr "Proxy, der für diesen Server verwendet wird (optional)"
+
+#~ msgid "leaf: id: %d, parent: %d, plugin: \"%s\", buffer: \"%s\""
+#~ msgstr "Blatt: id: %d, Stamm: %d, Erweiterung: \"%s\", Buffer: \"%s\""
+
+#~ msgid "node: id: %d, parent: %d, child1: %d, child2: %d, size: %d%% (%s)"
+#~ msgstr "Node: id: %d, Stamm: %d, Kind1: %d, Kind2: %d, Größe: %d%% (%s)"
+
+#~ msgid "horizontal split"
+#~ msgstr "horizontale Aufteilung"
+
+#~ msgid "vertical split"
+#~ msgstr "vertikale Aufteilung"
+
+#~ msgid "Saved layout for windows:"
+#~ msgstr "gespeicherte Layouts für Fenster:"
+
+#~ msgid "Layout saved for buffers (order of buffers)"
+#~ msgstr "Layout der Buffer gesichert (Reihenfolge der Buffer)"
+
+#~ msgid "Layout saved for windows (buffer displayed by each window)"
+#~ msgstr ""
+#~ "Layout der Fenster gesichert (Buffer werden durch jedes Fenster "
+#~ "dargestellt)"
+
+#~ msgid "Layout reset for buffers"
+#~ msgstr "Zurücksetzen des Bufferlayouts"
+
+#~ msgid "Layout reset for windows"
+#~ msgstr "Zurücksetzen des Fensterlayouts"
+
+#~ msgid "hide password displayed by nickserv"
+#~ msgstr "Passwörter verstecken die durch NickServ angezeigt werden"
+
+#~ msgid "%s%s: error: name is not required for protocol \"%s\""
+#~ msgstr "%s%s: Fehler: ein Name ist für das Protokoll \"%s\" nicht notwendig"
+
+#~ msgid "%s%s: not enough memory to create new speller"
+#~ msgstr "%s%s: Nicht genug Speicher um neue Rechtschreibung zu erstellen"
+
+#~ msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
+#~ msgstr "%s%s Fehler beim Erstellen der Socket-Option \"SO_REUSEADDR\""
+
+#~ msgid "%s%s: cannot set socket option \"IPV6_V6ONLY\" to value %d"
+#~ msgstr ""
+#~ "%s%s der Wert %d kann nicht für die Socket-Option, \"IPV6_V6ONLY\", "
+#~ "gesetzt werden"
+
+#~ msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
+#~ msgstr "%s%s Fehler beim Erstellen der Socket-Option \"SO_KEEPALIVE\""
+
+#~ msgid "%s%s: cannot create socket for xfer"
+#~ msgstr "%s%s: Für den Transfer konnte kein Socket angelegt werden"
+
+#~ msgid "%s%s: not enough memory to parse file \"%s\""
+#~ msgstr "%s%s: Nicht genug Speicher um Datei \"%s\" zu analysieren"
+
+#~ msgid "%s%s: unable to run file \"%s\""
+#~ msgstr "%s%s: Kann Datei \"%s\" nicht ausführen"
+
+#~ msgid "%s%s: unknown error while loading file \"%s\""
+#~ msgstr "%s%s: unbekannter Fehler beim Laden der Datei \"%s\""
+
+#~ msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
+#~ msgstr ""
+#~ "%s: Fehler beim Laden des Skriptes \"%s\" (fehlerhafter Name: Leerzeichen "
+#~ "sind nicht erlaubt)"
+
+#~ msgid "%s%s: cannot create socket"
+#~ msgstr "%s%s: Socket konnte nicht angelegt werden"
+
+#~ msgid "background color for window separators (when split)"
+#~ msgstr ""
+#~ "Hintergrundfarbe der Fenster-Separatoren im Chatfenster (bei geteiltem "
+#~ "Bildschirm)"
+
+#~ msgid "No configuration option found"
+#~ msgstr "Konfigurationsoption nicht gefunden"
+
+#~ msgid "%s%d%s configuration option found"
+#~ msgid_plural "%s%d%s configuration options found"
+#~ msgstr[0] "%s%d%s Konfigurationsoption gefunden"
+#~ msgstr[1] "%s%d%s Konfigurationsoptionen gefunden"
+
+#~ msgid "%sError: configuration option \"%s\" not found"
+#~ msgstr "%sFehler: Konfigurationsoption \"%s\" nicht gefunden"
+
+#~ msgid "[<option> [<value>]]"
+#~ msgstr "[<option> [<value>]]"
+
+#~ msgid "automatically rejoin channels after kick"
+#~ msgstr "Channels automatisch betreten, falls man rausgeworfen wurde"
+
+#~ msgid "prefix for error messages"
+#~ msgstr "Präfix für Fehlermeldungen"
+
+#~ msgid "prefix for network messages"
+#~ msgstr "Präfix für Netzwerkmeldungen"
+
+#~ msgid "prefix for action messages"
+#~ msgstr "Präfix für Action-Nachrichten"
+
+#~ msgid "prefix for join messages"
+#~ msgstr "Präfix für Join-Nachrichten"
+
+#~ msgid "prefix for quit messages"
+#~ msgstr "Präfix für Quit-Nachrichten"
+
+#~ msgid ""
+#~ "condition(s) for displaying bar (for bars of type \"window\"): \"active\" "
+#~ "= window must be active, \"inactive\" = window must be inactive, "
+#~ "\"nicklist\" = buffer must have a nicklist"
+#~ msgstr ""
+#~ "Bedingung(en) um eine Bar anzuzeigen (gilt für Bars des Typs \"window\"): "
+#~ "\"active\" = window muss aktiv sein \"inactive\" = window muss inaktiv "
+#~ "sein, \"nicklist\" = Buffer muss über eine Nickliste verfügen"
+
+#~ msgid ""
+#~ "server: server name\n"
+#~ "  nick: nick (may be a mask)"
+#~ msgstr ""
+#~ "server: Servername\n"
+#~ "  nick: Nickname (oder eine Maske)"
+
+#~ msgid "use IPv6 protocol for server communication"
+#~ msgstr "Server über IPv6 ansprechen"
+
+#~ msgid "global decoding charset"
+#~ msgstr "globaler Zeichensatz zum dekodieren"
+
+#~ msgid "global encoding charset"
+#~ msgstr "globaler Zeichensatz zum kodieren"
+
+#~ msgid "alt+d=back to list"
+#~ msgstr "alt+d=zurück zur Auswahl"
+
+#~ msgid "%s: connecting to server %s/%d%s%s..."
+#~ msgstr "%s: Verbinden zum Server %s/%d%s%s..."
+
+#~ msgid "%s: disconnected from server"
+#~ msgstr "%s: Vom Server getrennt!"
+
+#~ msgid "display nick mode ((half)op/voice) before each nick"
+#~ msgstr ""
+#~ "vor dem Nicknamen wird der entsprechende Nickmode ((half)op/voice [@%+]) "
+#~ "angezeigt"
+
+#~ msgid "%s: script \"%s\" held"
+#~ msgstr "%s: Skript \"%s\" kann nicht überschrieben werden"
+
+#~ msgid ""
+#~ "%s%s: cannot authenticate with SASL and mechanism DH-BLOWFISH because "
+#~ "WeeChat was not built with libgcrypt support"
+#~ msgstr ""
+#~ "%s%s Authentifizierung mittels SASL und DH-BLOWFISH Mechanismus nicht "
+#~ "möglich, da WeeChat nicht mit libgcrypt Unterstützung erstellt wurde"
+
+#~ msgid "smart completion for nicks (completes first with last speakers)"
+#~ msgstr ""
+#~ "intelligente Vervollständigung von Nicknamen (vervollständigt zuerst den "
+#~ "letzten Nick, mit dem gesprochen wurde)"
+
+#~ msgid "ended on: "
+#~ msgstr "geendet am: "
+
+#~ msgid "%s%-26s id: %d, protocol: %s, received: %s, sent: %s"
+#~ msgstr "%s%-26s Id: %d, Protokoll: %s, empfangen: %s, gesendet: %s"
+
+#~ msgid "%s: new client from %s%s%s on port %d (id: %d, relaying: %s%s%s)"
+#~ msgstr "%s: neuer Client von %s%s%s an Port %d (id: %d, Relaying: %s%s%s)"
+
+#~ msgid "text color"
+#~ msgstr "Textfarbe"
+
+#~ msgid "background color"
+#~ msgstr "Hintergrundfarbe"
+
+#~ msgid "text color of selected xfer line"
+#~ msgstr "Farbe der ausgewählten Transfer-Zeile"
+
+#~ msgid "display message when (un)marking as away"
+#~ msgstr "bei Abwesenheit und Rückkehr eine Nachricht anzeigen"
+
+#~ msgid "display channel modes in \"buffer_name\" bar item"
+#~ msgstr "zeigt die Channel-Modi mittels \"buffer_name\" in der Bar-Item an"
+
+#~ msgid "%sError: name can not start with \"#\""
+#~ msgstr "%sFehler: Name darf nicht mit \"#\"beginnen"
+
+#~ msgid "%s%s: name can not start with \"#\""
+#~ msgstr "%s%s: Name darf nicht mit \"#\" beginnen"
+
+#~ msgid "string inserted after nick completion"
+#~ msgstr "Nach Nick-Vervollständigung anzufügende Zeichenfolge"
+
+#~ msgid "display '+' if prefix is truncated"
+#~ msgstr "Anzeige eines '+' falls das Präfix abgeschnitten ist"
+
+#~ msgid "<nick> <channel>"
+#~ msgstr "<nick> <channel>"
+
+#~ msgid "mechanism for SASL authentication"
+#~ msgstr "Vorrichtung zur SASL Authentifizierung"
