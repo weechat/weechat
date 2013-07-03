@@ -6902,7 +6902,7 @@ Paramètres :
   seconde)
 * 'align_second' : alignement sur la seconde. Par exemple, si la date courante
   est 09:00, si l'intervalle est 60000 (60 secondes), et que align_second = 60,
-  alors le timer sera appelé chaque minutes quand la seconde sera 00
+  alors le timer sera appelé chaque minute quand la seconde sera 0
 * 'max_calls' : nombre maximum d'appels au timer (si 0, le timer n'a pas de
   fin)
 * 'callback' : fonction appelée quand le délai est atteint, paramètres et valeur

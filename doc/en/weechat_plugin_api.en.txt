@@ -6810,7 +6810,7 @@ Arguments:
 * 'interval': interval between two calls (milliseconds, so 1000 = 1 second)
 * 'align_second': alignment on a second. For example, if current time is 09:00,
   if interval = 60000 (60 seconds), and align_second = 60, then timer is
-  called each minute when second is 00
+  called each minute when second is 0
 * 'max_calls': number of calls to timer (if 0, then timer has no end)
 * 'callback': function called when time is reached, arguments and return value:
 ** 'void *data': pointer
