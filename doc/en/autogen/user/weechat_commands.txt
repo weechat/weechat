@@ -659,6 +659,7 @@ Examples:
 /upgrade  [<path_to_binary>|-quit]
 
 path_to_binary: path to WeeChat binary (default is current binary)
+        -dummy: do nothing (option used to prevent accidental completion with "-quit")
          -quit: close *ALL* connections, save session and quit WeeChat, which makes possible a delayed restoration (see below)
 
 This command upgrades and reloads a running WeeChat session. The new WeeChat binary must have been compiled or installed with a package manager before running this command.

@@ -5014,6 +5014,9 @@ COMMAND_CALLBACK(upgrade)
     (void) data;
     (void) buffer;
 
+    if ((argc > 1) && (string_strcasecmp (argv[1], "-dummy") == 0))
+        return WEECHAT_RC_OK;
+
     /*
      * it is forbidden to upgrade while there are some background process
      * (hook type "process" or "connect")
@@ -6624,6 +6627,8 @@ command_init ()
                   N_("[<path_to_binary>|-quit]"),
                   N_("path_to_binary: path to WeeChat binary (default is "
                      "current binary)\n"
+                     "        -dummy: do nothing (option used to prevent "
+                     "accidental completion with \"-quit\")\n"
                      "         -quit: close *ALL* connections, save session "
                      "and quit WeeChat, which makes possible a delayed "
                      "restoration (see below)\n\n"
@@ -6655,7 +6660,7 @@ command_init ()
                      "same configuration (files *.conf).\n"
                      "It is possible to restore WeeChat session on another "
                      "machine if you copy the content of directory \"~/.weechat\"."),
-                  "%(filename)",
+                  "%(filename)|-dummy|-quit",
                   &command_upgrade, NULL);
     hook_command (NULL, "uptime",
                   N_("show WeeChat uptime"),

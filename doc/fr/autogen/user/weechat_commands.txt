@@ -659,6 +659,7 @@ Exemples:
 /upgrade  [<chemin_vers_binaire>|-quit]
 
 chemin_vers_binaire: chemin vers le binaire WeeChat (par défaut le binaire courant)
+             -dummy: ne rien faire (option utilisée pour éviter une complétion accidentelle avec "-quit")
               -quit: fermer *TOUTES* les connexions, sauver la session et quitter, ce qui rend possible une restauration différée (voir ci-dessous)
 
 Cette commande met à jour et recharge une session de WeeChat qui tourne. Le nouveau binaire WeeChat doit avoir été compilé ou installé via un gestionnaire de paquet avant de lancer cette commande.
