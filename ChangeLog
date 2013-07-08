@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.2-dev, 2013-07-02
+v0.4.2-dev, 2013-07-08
 
 
 This document lists all changes for each version.
@@ -14,6 +14,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 Version 0.4.2 (under dev!)
 --------------------------
 
+* core: fix crash in evaluation of expression when reading a string in hdata
+  with a NULL value (bug #39419)
 * core: fix display bugs with some UTF-8 chars that truncates messages displayed
   (for example U+26C4)
 * core: update man page and add translations (in french, german, italian, and

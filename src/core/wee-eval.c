@@ -126,7 +126,8 @@ eval_hdata_get_value (struct t_hdata *hdata, void *pointer, const char *path)
             value = strdup (str_value);
             break;
         case WEECHAT_HDATA_STRING:
-            value = strdup (hdata_string (hdata, pointer, var_name));
+            ptr_value = hdata_string (hdata, pointer, var_name);
+            value = (ptr_value) ? strdup (ptr_value) : NULL;
             break;
         case WEECHAT_HDATA_POINTER:
             pointer = hdata_pointer (hdata, pointer, var_name);
