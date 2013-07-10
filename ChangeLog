@@ -18,7 +18,7 @@ Version 0.4.2 (under dev!)
 * core: fix crash in evaluation of expression when reading a string in hdata
   with a NULL value (bug #39419)
 * core: fix display bugs with some UTF-8 chars that truncates messages displayed
-  (for example U+26C4)
+  (for example U+26C4) (bug #39201)
 * core: update man page and add translations (in french, german, italian, and
   japanese)
 * core: remove extra space after empty prefix (when prefix for action, error,
