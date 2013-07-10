@@ -966,7 +966,7 @@ gui_window_calculate_pos_size (struct t_gui_window *window)
 void
 gui_window_draw_separators (struct t_gui_window *window)
 {
-    int separator;
+    int separator_char, separator_horizontal, separator_vertical, x, width;
 
     /* remove separators */
     if (GUI_WINDOW_OBJECTS(window)->win_separator_horiz)
@@ -980,33 +980,39 @@ gui_window_draw_separators (struct t_gui_window *window)
         GUI_WINDOW_OBJECTS(window)->win_separator_vertic = NULL;
     }
 
+    /* check if separators must be displayed */
+    separator_horizontal = (CONFIG_BOOLEAN(config_look_window_separator_horizontal)
+                            && (window->win_y + window->win_height <
+                                gui_window_get_height () - gui_bar_root_get_size (NULL, GUI_BAR_POSITION_BOTTOM) - 1));
+    separator_vertical = (CONFIG_BOOLEAN(config_look_window_separator_vertical)
+                          && (window->win_x > gui_bar_root_get_size (NULL, GUI_BAR_POSITION_LEFT)));
+
     /* create/draw horizontal separator */
-    if (CONFIG_BOOLEAN(config_look_window_separator_horizontal)
-        && (window->win_y + window->win_height <
-            gui_window_get_height () - gui_bar_root_get_size (NULL, GUI_BAR_POSITION_BOTTOM) - 1))
+    if (separator_horizontal)
     {
+        x = (separator_vertical) ? window->win_x - 1 : window->win_x;
+        width = (separator_vertical) ? window->win_width + 1 : window->win_width;
         GUI_WINDOW_OBJECTS(window)->win_separator_horiz = newwin (1,
-                                                                  window->win_width,
+                                                                  width,
                                                                   window->win_y + window->win_height,
-                                                                  window->win_x);
+                                                                  x);
         gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_separator_horiz,
                                       GUI_COLOR_SEPARATOR);
-        separator = ACS_HLINE;
+        separator_char = ACS_HLINE;
         if (CONFIG_STRING(config_look_separator_horizontal)
             && CONFIG_STRING(config_look_separator_horizontal)[0])
         {
-            separator = utf8_char_int (CONFIG_STRING(config_look_separator_horizontal));
-            if (separator > 127)
-                separator = ACS_VLINE;
+            separator_char = utf8_char_int (CONFIG_STRING(config_look_separator_horizontal));
+            if (separator_char > 127)
+                separator_char = ACS_VLINE;
         }
         mvwhline (GUI_WINDOW_OBJECTS(window)->win_separator_horiz, 0, 0,
-                  separator, window->win_width);
+                  separator_char, width);
         wnoutrefresh (GUI_WINDOW_OBJECTS(window)->win_separator_horiz);
     }
 
     /* create/draw vertical separator */
-    if (CONFIG_BOOLEAN(config_look_window_separator_vertical)
-        && (window->win_x > gui_bar_root_get_size (NULL, GUI_BAR_POSITION_LEFT)))
+    if (separator_vertical)
     {
         GUI_WINDOW_OBJECTS(window)->win_separator_vertic = newwin (window->win_height,
                                                                    1,
@@ -1014,16 +1020,16 @@ gui_window_draw_separators (struct t_gui_window *window)
                                                                    window->win_x - 1);
         gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_separator_vertic,
                                       GUI_COLOR_SEPARATOR);
-        separator = ACS_VLINE;
+        separator_char = ACS_VLINE;
         if (CONFIG_STRING(config_look_separator_vertical)
             && CONFIG_STRING(config_look_separator_vertical)[0])
         {
-            separator = utf8_char_int (CONFIG_STRING(config_look_separator_vertical));
-            if (separator > 127)
-                separator = ACS_VLINE;
+            separator_char = utf8_char_int (CONFIG_STRING(config_look_separator_vertical));
+            if (separator_char > 127)
+                separator_char = ACS_VLINE;
         }
         mvwvline (GUI_WINDOW_OBJECTS(window)->win_separator_vertic, 0, 0,
-                  separator, window->win_height);
+                  separator_char, window->win_height);
         wnoutrefresh (GUI_WINDOW_OBJECTS(window)->win_separator_vertic);
     }
 }
@@ -1735,7 +1741,7 @@ gui_window_split_vertical (struct t_gui_window *window, int percentage)
 }
 
 /*
- * Resizes window.
+ * Resizes a window.
  */
 
 void
