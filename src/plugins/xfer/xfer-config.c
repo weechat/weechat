@@ -34,6 +34,7 @@ struct t_config_file *xfer_config_file = NULL;
 
 struct t_config_option *xfer_config_look_auto_open_buffer;
 struct t_config_option *xfer_config_look_progress_bar_size;
+struct t_config_option *xfer_config_look_pv_tags;
 
 /* xfer config, color section */
 
@@ -134,6 +135,13 @@ xfer_config_init ()
         N_("size of progress bar, in chars (if 0, progress bar is disabled)"),
         NULL, 0, XFER_CONFIG_PROGRESS_BAR_MAX_SIZE, "20", NULL, 0,
         NULL, NULL, &xfer_config_refresh_cb, NULL, NULL, NULL);
+    xfer_config_look_pv_tags = weechat_config_new_option (
+        xfer_config_file, ptr_section,
+        "pv_tags", "string",
+        N_("comma separated list of tags used in private messages, for example: "
+           "\"notify_message\", \"notify_private\" or \"notify_highlight\""),
+        NULL, 0, 0, "notify_private", NULL, 0, NULL, NULL,
+        NULL, NULL, NULL, NULL);
 
     ptr_section = weechat_config_new_section (xfer_config_file, "color",
                                               0, 0,

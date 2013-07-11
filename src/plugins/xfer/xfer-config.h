@@ -28,6 +28,7 @@ extern struct t_config_file *xfer_config;
 
 extern struct t_config_option *xfer_config_look_auto_open_buffer;
 extern struct t_config_option *xfer_config_look_progress_bar_size;
+extern struct t_config_option *xfer_config_look_pv_tags;
 
 extern struct t_config_option *xfer_config_color_status[];
 extern struct t_config_option *xfer_config_color_text;

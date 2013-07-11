@@ -43,6 +43,7 @@ Version 0.4.2 (under dev!)
   buffer per nick
 * relay: add command "ping" in weechat protocol (task #12689)
 * relay: fix binding to an IP address (bug #39119)
+* xfer: add option xfer.look.pv_tags
 * xfer: fix compilation on OpenBSD (bug #39071)
 
 Version 0.4.1 (2013-05-20)

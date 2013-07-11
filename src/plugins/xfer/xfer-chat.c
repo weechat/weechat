@@ -30,6 +30,7 @@
 #include "xfer.h"
 #include "xfer-chat.h"
 #include "xfer-buffer.h"
+#include "xfer-config.h"
 
 
 /*
@@ -110,6 +111,7 @@ xfer_chat_recv_cb (void *arg_xfer, int fd)
     char *buf2, *pos, *ptr_buf, *ptr_buf2, *next_ptr_buf;
     char *ptr_buf_decoded, *ptr_buf_without_weechat_colors, *ptr_buf_color;
     char str_tags[256], *str_color;
+    const char *pv_tags;
     int num_read, length, ctcp_action;
 
     /* make C compiler happy */
@@ -183,10 +185,13 @@ xfer_chat_recv_cb (void *arg_xfer, int fd)
                 ptr_buf2 = (ptr_buf_color) ?
                     ptr_buf_color : ((ptr_buf_without_weechat_colors) ?
                                      ptr_buf_without_weechat_colors : ((ptr_buf_decoded) ? ptr_buf_decoded : ptr_buf));
+                pv_tags = weechat_config_string (xfer_config_look_pv_tags);
                 if (ctcp_action)
                 {
                     snprintf (str_tags, sizeof (str_tags),
-                              "irc_privmsg,irc_action,notify_message,nick_%s,log1",
+                              "irc_privmsg,irc_action,%s%snick_%s,log1",
+                              (pv_tags && pv_tags[0]) ? pv_tags : "",
+                              (pv_tags && pv_tags[0]) ? "," : "",
                               xfer->remote_nick);
                     weechat_printf_tags (xfer->buffer,
                                          str_tags,
@@ -205,7 +210,9 @@ xfer_chat_recv_cb (void *arg_xfer, int fd)
                         (xfer->remote_nick_color) ?
                         xfer->remote_nick_color : weechat_config_color (weechat_config_get ("weechat.color.chat_nick_other")));
                     snprintf (str_tags, sizeof (str_tags),
-                              "irc_privmsg,notify_message,prefix_nick_%s,nick_%s,log1",
+                              "irc_privmsg,%s%sprefix_nick_%s,nick_%s,log1",
+                              (pv_tags && pv_tags[0]) ? pv_tags : "",
+                              (pv_tags && pv_tags[0]) ? "," : "",
                               (str_color) ? str_color : "default",
                               xfer->remote_nick);
                     if (str_color)
