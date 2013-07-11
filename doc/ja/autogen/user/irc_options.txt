@@ -254,12 +254,12 @@
 ** 値: auto, never, always (デフォルト値: `auto`)
 
 * [[option_irc.look.notify_tags_ison]] *irc.look.notify_tags_ison*
-** 説明: `ニックネームが参加またはサーバから切断したときの (ison コマンドの結果)、notify によって表示されたメッセージに使われたタグのコンマ区切りリスト、例えば: "notify_highlight"、"notify_message"、"notify_private"`
+** 説明: `comma separated list of tags used in messages displayed by notify when a nick joins or quits server (result of command ison), for example: "notify_message", "notify_private" or "notify_highlight"`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"notify_message"`)
 
 * [[option_irc.look.notify_tags_whois]] *irc.look.notify_tags_whois*
-** 説明: `ニックネームの離席状態に変化があった場合の (whois コマンドの結果)、notify によって表示されたメッセージに使われたタグのコンマ区切りリスト、例えば: "notify_highlight"、"notify_message"、"notify_private"`
+** 説明: `comma separated list of tags used in messages displayed by notify when a nick away status changes (result of command whois), for example: "notify_message", "notify_private" or "notify_highlight"`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"notify_message"`)
 
@@ -272,6 +272,11 @@
 ** 説明: `プライベートバッファをマージ`
 ** タイプ: 整数
 ** 値: independent, merge_by_server, merge_all (デフォルト値: `independent`)
+
+* [[option_irc.look.pv_tags]] *irc.look.pv_tags*
+** 説明: `comma separated list of tags used in private messages, for example: "notify_message", "notify_private" or "notify_highlight"`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"notify_private"`)
 
 * [[option_irc.look.raw_messages]] *irc.look.raw_messages*
 ** 説明: `生データバッファが閉じられた時にメモリに保存する生メッセージの数 (生データバッファを開いたときに表示されるメッセージ)`

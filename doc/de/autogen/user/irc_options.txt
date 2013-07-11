@@ -254,12 +254,12 @@
 ** Werte: auto, never, always (Standardwert: `auto`)
 
 * [[option_irc.look.notify_tags_ison]] *irc.look.notify_tags_ison*
-** Beschreibung: `durch Kommata getrennte Liste von Schlagwörtern die in der Nachricht von notify ausgegeben werden sollen, falls sich ein Nick beim Server an- oder abmeldet (Rückgabe durch Befehl ison), zum Beispiel: "notify_highlight","notify_message" oder "notify_private"`
+** Beschreibung: `comma separated list of tags used in messages displayed by notify when a nick joins or quits server (result of command ison), for example: "notify_message", "notify_private" or "notify_highlight"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"notify_message"`)
 
 * [[option_irc.look.notify_tags_whois]] *irc.look.notify_tags_whois*
-** Beschreibung: `durch Kommata getrennte Liste von Schlagwörtern die in der Nachricht von notify ausgegeben werden sollen, falls ein Nick den Befehl away nutzt (Rückgabe durch Befehl whois), zum Beispiel: "notify_highlight", "notify_message" oder "notify_private"`
+** Beschreibung: `comma separated list of tags used in messages displayed by notify when a nick away status changes (result of command whois), for example: "notify_message", "notify_private" or "notify_highlight"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"notify_message"`)
 
@@ -272,6 +272,11 @@
 ** Beschreibung: `private Buffer zusammenfügen`
 ** Typ: integer
 ** Werte: independent, merge_by_server, merge_all (Standardwert: `independent`)
+
+* [[option_irc.look.pv_tags]] *irc.look.pv_tags*
+** Beschreibung: `comma separated list of tags used in private messages, for example: "notify_message", "notify_private" or "notify_highlight"`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `"notify_private"`)
 
 * [[option_irc.look.raw_messages]] *irc.look.raw_messages*
 ** Beschreibung: `Anzahl der IRC-RAW-Nachrichten die im Speicher gehalten werden sollen falls der RAW-Daten-Buffer geschlossen ist (die Nachrichten werden umgehend angezeigt sobald der RAW-Daten-Buffer geöffnet wird)`

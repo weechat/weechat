@@ -254,12 +254,12 @@
 ** values: auto, never, always (default value: `auto`)
 
 * [[option_irc.look.notify_tags_ison]] *irc.look.notify_tags_ison*
-** description: `comma separated list of tags used in messages printed by notify when a nick joins or quits server (result of command ison), for example: "notify_highlight", "notify_message" or "notify_private"`
+** description: `comma separated list of tags used in messages displayed by notify when a nick joins or quits server (result of command ison), for example: "notify_message", "notify_private" or "notify_highlight"`
 ** type: string
 ** values: any string (default value: `"notify_message"`)
 
 * [[option_irc.look.notify_tags_whois]] *irc.look.notify_tags_whois*
-** description: `comma separated list of tags used in messages printed by notify when a nick away status changes (result of command whois), for example: "notify_highlight", "notify_message" or "notify_private"`
+** description: `comma separated list of tags used in messages displayed by notify when a nick away status changes (result of command whois), for example: "notify_message", "notify_private" or "notify_highlight"`
 ** type: string
 ** values: any string (default value: `"notify_message"`)
 
@@ -272,6 +272,11 @@
 ** description: `merge private buffers`
 ** type: integer
 ** values: independent, merge_by_server, merge_all (default value: `independent`)
+
+* [[option_irc.look.pv_tags]] *irc.look.pv_tags*
+** description: `comma separated list of tags used in private messages, for example: "notify_message", "notify_private" or "notify_highlight"`
+** type: string
+** values: any string (default value: `"notify_private"`)
 
 * [[option_irc.look.raw_messages]] *irc.look.raw_messages*
 ** description: `number of raw messages to save in memory when raw data buffer is closed (messages will be displayed when opening raw data buffer)`

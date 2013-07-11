@@ -138,6 +138,7 @@ extern struct t_config_option *irc_config_look_notify_tags_ison;
 extern struct t_config_option *irc_config_look_notify_tags_whois;
 extern struct t_config_option *irc_config_look_part_closes_buffer;
 extern struct t_config_option *irc_config_look_pv_buffer;
+extern struct t_config_option *irc_config_look_pv_tags;
 extern struct t_config_option *irc_config_look_raw_messages;
 extern struct t_config_option *irc_config_look_server_buffer;
 extern struct t_config_option *irc_config_look_smart_filter;

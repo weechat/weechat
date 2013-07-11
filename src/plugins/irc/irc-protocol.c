@@ -1510,8 +1510,8 @@ IRC_PROTOCOL_CALLBACK(pong)
 
 IRC_PROTOCOL_CALLBACK(privmsg)
 {
-    char *pos_args, *pos_target, str_tags[256], *str_color;
-    const char *remote_nick;
+    char *pos_args, *pos_target, str_tags[1024], *str_color;
+    const char *remote_nick, *pv_tags;
     int msg_op, msg_voice, is_channel, nick_is_me;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
@@ -1665,11 +1665,21 @@ IRC_PROTOCOL_CALLBACK(privmsg)
             else
                 str_color = irc_color_for_tags (weechat_config_color (weechat_config_get ("weechat.color.chat_nick_other")));
         }
-        snprintf (str_tags, sizeof (str_tags),
-                  (nick_is_me) ?
-                  "notify_none,no_highlight,prefix_nick_%s" :
-                  "notify_private,prefix_nick_%s",
-                  (str_color) ? str_color : "default");
+        if (nick_is_me)
+        {
+            snprintf (str_tags, sizeof (str_tags),
+                      "notify_none,no_highlight,prefix_nick_%s",
+                      (str_color) ? str_color : "default");
+        }
+        else
+        {
+            pv_tags = weechat_config_string (irc_config_look_pv_tags);
+            snprintf (str_tags, sizeof (str_tags),
+                      "%s%sprefix_nick_%s",
+                      (pv_tags && pv_tags[0]) ? pv_tags : "",
+                      (pv_tags && pv_tags[0]) ? "," : "",
+                      (str_color) ? str_color : "default");
+        }
         if (str_color)
             free (str_color);
         weechat_printf_date_tags (ptr_channel->buffer,

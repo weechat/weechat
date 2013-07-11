@@ -90,6 +90,7 @@ struct t_config_option *irc_config_look_notify_tags_ison;
 struct t_config_option *irc_config_look_notify_tags_whois;
 struct t_config_option *irc_config_look_part_closes_buffer;
 struct t_config_option *irc_config_look_pv_buffer;
+struct t_config_option *irc_config_look_pv_tags;
 struct t_config_option *irc_config_look_raw_messages;
 struct t_config_option *irc_config_look_server_buffer;
 struct t_config_option *irc_config_look_smart_filter;
@@ -2442,19 +2443,19 @@ irc_config_init ()
     irc_config_look_notify_tags_ison = weechat_config_new_option (
         irc_config_file, ptr_section,
         "notify_tags_ison", "string",
-        N_("comma separated list of tags used in messages printed by notify "
+        N_("comma separated list of tags used in messages displayed by notify "
            "when a nick joins or quits server (result of command ison), "
-           "for example: \"notify_highlight\", \"notify_message\" or "
-           "\"notify_private\""),
+           "for example: \"notify_message\", \"notify_private\" or "
+           "\"notify_highlight\""),
         NULL, 0, 0, "notify_message", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);
     irc_config_look_notify_tags_whois = weechat_config_new_option (
         irc_config_file, ptr_section,
         "notify_tags_whois", "string",
-        N_("comma separated list of tags used in messages printed by notify "
+        N_("comma separated list of tags used in messages displayed by notify "
            "when a nick away status changes (result of command whois), "
-           "for example: \"notify_highlight\", \"notify_message\" or "
-           "\"notify_private\""),
+           "for example: \"notify_message\", \"notify_private\" or "
+           "\"notify_highlight\""),
         NULL, 0, 0, "notify_message", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);
     irc_config_look_part_closes_buffer = weechat_config_new_option (
@@ -2469,6 +2470,13 @@ irc_config_init ()
         "independent|merge_by_server|merge_all", 0, 0, "independent",
         NULL, 0, NULL, NULL,
         &irc_config_change_look_pv_buffer, NULL, NULL, NULL);
+    irc_config_look_pv_tags = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "pv_tags", "string",
+        N_("comma separated list of tags used in private messages, for example: "
+           "\"notify_message\", \"notify_private\" or \"notify_highlight\""),
+        NULL, 0, 0, "notify_private", NULL, 0, NULL, NULL,
+        NULL, NULL, NULL, NULL);
     irc_config_look_raw_messages = weechat_config_new_option (
         irc_config_file, ptr_section,
         "raw_messages", "integer",
