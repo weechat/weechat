@@ -37,31 +37,31 @@ struct t_config_option *xfer_config_look_progress_bar_size;
 
 /* xfer config, color section */
 
+struct t_config_option *xfer_config_color_status[XFER_NUM_STATUS];
 struct t_config_option *xfer_config_color_text;
 struct t_config_option *xfer_config_color_text_bg;
 struct t_config_option *xfer_config_color_text_selected;
-struct t_config_option *xfer_config_color_status[XFER_NUM_STATUS];
 
 /* xfer config, network section */
 
-struct t_config_option *xfer_config_network_timeout;
 struct t_config_option *xfer_config_network_blocksize;
 struct t_config_option *xfer_config_network_fast_send;
-struct t_config_option *xfer_config_network_port_range;
 struct t_config_option *xfer_config_network_own_ip;
+struct t_config_option *xfer_config_network_port_range;
 struct t_config_option *xfer_config_network_speed_limit;
+struct t_config_option *xfer_config_network_timeout;
 
 /* xfer config, file section */
 
+struct t_config_option *xfer_config_file_auto_accept_chats;
+struct t_config_option *xfer_config_file_auto_accept_files;
+struct t_config_option *xfer_config_file_auto_accept_nicks;
+struct t_config_option *xfer_config_file_auto_rename;
+struct t_config_option *xfer_config_file_auto_resume;
+struct t_config_option *xfer_config_file_convert_spaces;
 struct t_config_option *xfer_config_file_download_path;
 struct t_config_option *xfer_config_file_upload_path;
 struct t_config_option *xfer_config_file_use_nick_in_filename;
-struct t_config_option *xfer_config_file_convert_spaces;
-struct t_config_option *xfer_config_file_auto_rename;
-struct t_config_option *xfer_config_file_auto_resume;
-struct t_config_option *xfer_config_file_auto_accept_files;
-struct t_config_option *xfer_config_file_auto_accept_chats;
-struct t_config_option *xfer_config_file_auto_accept_nicks;
 
 
 
@@ -146,24 +146,6 @@ xfer_config_init ()
         return 0;
     }
 
-    xfer_config_color_text = weechat_config_new_option (
-        xfer_config_file, ptr_section,
-        "text", "color",
-        N_("text color in xfer buffer"),
-        NULL, 0, 0, "default", NULL, 0,
-        NULL, NULL, &xfer_config_refresh_cb, NULL, NULL, NULL);
-    xfer_config_color_text_bg = weechat_config_new_option (
-        xfer_config_file, ptr_section,
-        "text_bg", "color",
-        N_("background color in xfer buffer"),
-        NULL, 0, 0, "default", NULL, 0,
-        NULL, NULL, &xfer_config_refresh_cb, NULL, NULL, NULL);
-    xfer_config_color_text_selected = weechat_config_new_option (
-        xfer_config_file, ptr_section,
-        "text_selected", "color",
-        N_("text color of selected line in xfer buffer"),
-        NULL, 0, 0, "white", NULL, 0,
-        NULL, NULL, &xfer_config_refresh_cb, NULL, NULL, NULL);
     xfer_config_color_status[XFER_STATUS_WAITING] = weechat_config_new_option (
         xfer_config_file, ptr_section,
         "status_waiting", "color",
@@ -200,6 +182,24 @@ xfer_config_init ()
         N_("text color for \"aborted\" status"),
         NULL, 0, 0, "lightred", NULL, 0,
         NULL, NULL, &xfer_config_refresh_cb, NULL, NULL, NULL);
+    xfer_config_color_text = weechat_config_new_option (
+        xfer_config_file, ptr_section,
+        "text", "color",
+        N_("text color in xfer buffer"),
+        NULL, 0, 0, "default", NULL, 0,
+        NULL, NULL, &xfer_config_refresh_cb, NULL, NULL, NULL);
+    xfer_config_color_text_bg = weechat_config_new_option (
+        xfer_config_file, ptr_section,
+        "text_bg", "color",
+        N_("background color in xfer buffer"),
+        NULL, 0, 0, "default", NULL, 0,
+        NULL, NULL, &xfer_config_refresh_cb, NULL, NULL, NULL);
+    xfer_config_color_text_selected = weechat_config_new_option (
+        xfer_config_file, ptr_section,
+        "text_selected", "color",
+        N_("text color of selected line in xfer buffer"),
+        NULL, 0, 0, "white", NULL, 0,
+        NULL, NULL, &xfer_config_refresh_cb, NULL, NULL, NULL);
 
     ptr_section = weechat_config_new_section (xfer_config_file, "network",
                                               0, 0,
@@ -212,11 +212,6 @@ xfer_config_init ()
         return 0;
     }
 
-    xfer_config_network_timeout = weechat_config_new_option (
-        xfer_config_file, ptr_section,
-        "timeout", "integer",
-        N_("timeout for xfer request (in seconds)"),
-        NULL, 5, INT_MAX, "300", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     xfer_config_network_blocksize = weechat_config_new_option (
         xfer_config_file, ptr_section,
         "blocksize", "integer",
@@ -228,6 +223,12 @@ xfer_config_init ()
         "fast_send", "boolean",
         N_("does not wait for ACK when sending file"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    xfer_config_network_own_ip = weechat_config_new_option (
+        xfer_config_file, ptr_section,
+        "own_ip", "string",
+        N_("IP or DNS address used for sending files/chats "
+           "(if empty, local interface IP is used)"),
+        NULL, 0, 0, "", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     xfer_config_network_port_range = weechat_config_new_option (
         xfer_config_file, ptr_section,
         "port_range", "string",
@@ -237,18 +238,17 @@ xfer_config_init ()
            "to use ports greater than 1024, because only root can use ports "
            "below 1024)"),
         NULL, 0, 0, "", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-    xfer_config_network_own_ip = weechat_config_new_option (
-        xfer_config_file, ptr_section,
-        "own_ip", "string",
-        N_("IP or DNS address used for sending files/chats "
-           "(if empty, local interface IP is used)"),
-        NULL, 0, 0, "", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     xfer_config_network_speed_limit = weechat_config_new_option (
         xfer_config_file, ptr_section,
         "speed_limit", "integer",
         N_("speed limit for sending files, in kilo-bytes by second (0 means "
            "no limit)"),
         NULL, 0, INT_MAX, "0", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    xfer_config_network_timeout = weechat_config_new_option (
+        xfer_config_file, ptr_section,
+        "timeout", "integer",
+        N_("timeout for xfer request (in seconds)"),
+        NULL, 5, INT_MAX, "300", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
 
     ptr_section = weechat_config_new_section (xfer_config_file, "file",
                                               0, 0,
@@ -261,6 +261,40 @@ xfer_config_init ()
         return 0;
     }
 
+    xfer_config_file_auto_accept_chats = weechat_config_new_option (
+        xfer_config_file, ptr_section,
+        "auto_accept_chats", "boolean",
+        N_("automatically accept chat requests (use carefully!)"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    xfer_config_file_auto_accept_files = weechat_config_new_option (
+        xfer_config_file, ptr_section,
+        "auto_accept_files", "boolean",
+        N_("automatically accept incoming files (use carefully!)"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    xfer_config_file_auto_accept_nicks = weechat_config_new_option (
+        xfer_config_file, ptr_section,
+        "auto_accept_nicks", "string",
+        N_("comma-separated list of nicks for which the incoming files and "
+           "chats are automatically accepted; format is \"server.nick\" (for a "
+           "specific server) or \"nick\" (for all servers); example: "
+           "\"freenode.FlashCode,andrew\""),
+        NULL, 0, 0, "", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    xfer_config_file_auto_rename = weechat_config_new_option (
+        xfer_config_file, ptr_section,
+        "auto_rename", "boolean",
+        N_("rename incoming files if already exists (add \".1\", \".2\", ...)"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    xfer_config_file_auto_resume = weechat_config_new_option (
+        xfer_config_file, ptr_section,
+        "auto_resume", "boolean",
+        N_("automatically resume file transfer if connection with remote host "
+           "is lost"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    xfer_config_file_convert_spaces = weechat_config_new_option (
+        xfer_config_file, ptr_section,
+        "convert_spaces", "boolean",
+        N_("convert spaces to underscores when sending files"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     xfer_config_file_download_path = weechat_config_new_option (
         xfer_config_file, ptr_section,
         "download_path", "string",
@@ -279,40 +313,6 @@ xfer_config_init ()
         "use_nick_in_filename", "boolean",
         N_("use remote nick as prefix in local filename when receiving a file"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-    xfer_config_file_convert_spaces = weechat_config_new_option (
-        xfer_config_file, ptr_section,
-        "convert_spaces", "boolean",
-        N_("convert spaces to underscores when sending files"),
-        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-    xfer_config_file_auto_rename = weechat_config_new_option (
-        xfer_config_file, ptr_section,
-        "auto_rename", "boolean",
-        N_("rename incoming files if already exists (add \".1\", \".2\", ...)"),
-        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-    xfer_config_file_auto_resume = weechat_config_new_option (
-        xfer_config_file, ptr_section,
-        "auto_resume", "boolean",
-        N_("automatically resume file transfer if connection with remote host "
-           "is lost"),
-        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-    xfer_config_file_auto_accept_files = weechat_config_new_option (
-        xfer_config_file, ptr_section,
-        "auto_accept_files", "boolean",
-        N_("automatically accept incoming files (use carefully!)"),
-        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-    xfer_config_file_auto_accept_chats = weechat_config_new_option (
-        xfer_config_file, ptr_section,
-        "auto_accept_chats", "boolean",
-        N_("automatically accept chat requests (use carefully!)"),
-        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-    xfer_config_file_auto_accept_nicks = weechat_config_new_option (
-        xfer_config_file, ptr_section,
-        "auto_accept_nicks", "string",
-        N_("comma-separated list of nicks for which the incoming files and "
-           "chats are automatically accepted; format is \"server.nick\" (for a "
-           "specific server) or \"nick\" (for all servers); example: "
-           "\"freenode.FlashCode,andrew\""),
-        NULL, 0, 0, "", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
 
     return 1;
 }

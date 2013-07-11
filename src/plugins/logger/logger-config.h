@@ -25,18 +25,19 @@
 
 extern struct t_config_option *logger_config_look_backlog;
 
-extern struct t_config_option *logger_config_color_backlog_line;
 extern struct t_config_option *logger_config_color_backlog_end;
+extern struct t_config_option *logger_config_color_backlog_line;
 
 extern struct t_config_option *logger_config_file_auto_log;
-extern struct t_config_option *logger_config_file_name_lower_case;
-extern struct t_config_option *logger_config_file_path;
-extern struct t_config_option *logger_config_file_mask;
-extern struct t_config_option *logger_config_file_replacement_char;
+extern struct t_config_option *logger_config_file_flush_delay;
 extern struct t_config_option *logger_config_file_info_lines;
-extern struct t_config_option *logger_config_file_time_format;
+extern struct t_config_option *logger_config_file_mask;
+extern struct t_config_option *logger_config_file_name_lower_case;
 extern struct t_config_option *logger_config_file_nick_prefix;
 extern struct t_config_option *logger_config_file_nick_suffix;
+extern struct t_config_option *logger_config_file_path;
+extern struct t_config_option *logger_config_file_replacement_char;
+extern struct t_config_option *logger_config_file_time_format;
 
 extern struct t_config_option *logger_config_get_level (const char *name);
 extern int logger_config_set_level (const char *name, const char *value);

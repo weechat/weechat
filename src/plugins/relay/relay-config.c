@@ -43,10 +43,10 @@ struct t_config_option *relay_config_look_raw_messages;
 /* relay config, color section */
 
 struct t_config_option *relay_config_color_client;
+struct t_config_option *relay_config_color_status[RELAY_NUM_STATUS];
 struct t_config_option *relay_config_color_text;
 struct t_config_option *relay_config_color_text_bg;
 struct t_config_option *relay_config_color_text_selected;
-struct t_config_option *relay_config_color_status[RELAY_NUM_STATUS];
 
 /* relay config, network section */
 
@@ -61,8 +61,8 @@ struct t_config_option *relay_config_network_websocket_allowed_origins;
 
 /* relay config, irc section */
 
-struct t_config_option *relay_config_irc_backlog_max_number;
 struct t_config_option *relay_config_irc_backlog_max_minutes;
+struct t_config_option *relay_config_irc_backlog_max_number;
 struct t_config_option *relay_config_irc_backlog_since_last_disconnect;
 struct t_config_option *relay_config_irc_backlog_tags;
 struct t_config_option *relay_config_irc_backlog_time_format;
@@ -524,24 +524,6 @@ relay_config_init ()
         N_("text color for client description"),
         NULL, 0, 0, "cyan", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL);
-    relay_config_color_text = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "text", "color",
-        N_("text color in relay buffer"),
-        NULL, 0, 0, "default", NULL, 0,
-        NULL, NULL, &relay_config_refresh_cb, NULL, NULL, NULL);
-    relay_config_color_text_bg = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "text_bg", "color",
-        N_("background color in relay buffer"),
-        NULL, 0, 0, "default", NULL, 0,
-        NULL, NULL, &relay_config_refresh_cb, NULL, NULL, NULL);
-    relay_config_color_text_selected = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "text_selected", "color",
-        N_("text color of selected line in relay buffer"),
-        NULL, 0, 0, "white", NULL, 0,
-        NULL, NULL, &relay_config_refresh_cb, NULL, NULL, NULL);
     relay_config_color_status[RELAY_STATUS_CONNECTING] = weechat_config_new_option (
         relay_config_file, ptr_section,
         "status_connecting", "color",
@@ -571,6 +553,24 @@ relay_config_init ()
         "status_disconnected", "color",
         N_("text color for \"disconnected\" status"),
         NULL, 0, 0, "lightred", NULL, 0,
+        NULL, NULL, &relay_config_refresh_cb, NULL, NULL, NULL);
+    relay_config_color_text = weechat_config_new_option (
+        relay_config_file, ptr_section,
+        "text", "color",
+        N_("text color in relay buffer"),
+        NULL, 0, 0, "default", NULL, 0,
+        NULL, NULL, &relay_config_refresh_cb, NULL, NULL, NULL);
+    relay_config_color_text_bg = weechat_config_new_option (
+        relay_config_file, ptr_section,
+        "text_bg", "color",
+        N_("background color in relay buffer"),
+        NULL, 0, 0, "default", NULL, 0,
+        NULL, NULL, &relay_config_refresh_cb, NULL, NULL, NULL);
+    relay_config_color_text_selected = weechat_config_new_option (
+        relay_config_file, ptr_section,
+        "text_selected", "color",
+        N_("text color of selected line in relay buffer"),
+        NULL, 0, 0, "white", NULL, 0,
         NULL, NULL, &relay_config_refresh_cb, NULL, NULL, NULL);
 
     /* section network */
@@ -659,13 +659,6 @@ relay_config_init ()
         return 0;
     }
 
-    relay_config_irc_backlog_max_number = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "backlog_max_number", "integer",
-        N_("maximum number of lines in backlog per IRC channel "
-           "(0 = unlimited)"),
-        NULL, 0, INT_MAX, "256", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL);
     relay_config_irc_backlog_max_minutes = weechat_config_new_option (
         relay_config_file, ptr_section,
         "backlog_max_minutes", "integer",
@@ -673,6 +666,13 @@ relay_config_init ()
            "(0 = unlimited, examples: 1440 = one day, 10080 = one week, "
            "43200 = one month, 525600 = one year)"),
         NULL, 0, INT_MAX, "1440", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL);
+    relay_config_irc_backlog_max_number = weechat_config_new_option (
+        relay_config_file, ptr_section,
+        "backlog_max_number", "integer",
+        N_("maximum number of lines in backlog per IRC channel "
+           "(0 = unlimited)"),
+        NULL, 0, INT_MAX, "256", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL);
     relay_config_irc_backlog_since_last_disconnect = weechat_config_new_option (
         relay_config_file, ptr_section,

@@ -51,32 +51,32 @@ struct t_config_option *script_config_look_use_keys;
 
 /* script config, color section */
 
-struct t_config_option *script_config_color_status_popular;
-struct t_config_option *script_config_color_status_installed;
 struct t_config_option *script_config_color_status_autoloaded;
 struct t_config_option *script_config_color_status_held;
-struct t_config_option *script_config_color_status_running;
+struct t_config_option *script_config_color_status_installed;
 struct t_config_option *script_config_color_status_obsolete;
+struct t_config_option *script_config_color_status_popular;
+struct t_config_option *script_config_color_status_running;
 struct t_config_option *script_config_color_status_unknown;
 struct t_config_option *script_config_color_text;
+struct t_config_option *script_config_color_text_bg;
+struct t_config_option *script_config_color_text_bg_selected;
 struct t_config_option *script_config_color_text_date;
+struct t_config_option *script_config_color_text_date_selected;
 struct t_config_option *script_config_color_text_delimiters;
 struct t_config_option *script_config_color_text_description;
+struct t_config_option *script_config_color_text_description_selected;
 struct t_config_option *script_config_color_text_extension;
+struct t_config_option *script_config_color_text_extension_selected;
 struct t_config_option *script_config_color_text_name;
+struct t_config_option *script_config_color_text_name_selected;
+struct t_config_option *script_config_color_text_selected;
 struct t_config_option *script_config_color_text_tags;
+struct t_config_option *script_config_color_text_tags_selected;
 struct t_config_option *script_config_color_text_version;
 struct t_config_option *script_config_color_text_version_loaded;
-struct t_config_option *script_config_color_text_bg;
-struct t_config_option *script_config_color_text_selected;
-struct t_config_option *script_config_color_text_date_selected;
-struct t_config_option *script_config_color_text_description_selected;
-struct t_config_option *script_config_color_text_extension_selected;
-struct t_config_option *script_config_color_text_name_selected;
-struct t_config_option *script_config_color_text_tags_selected;
-struct t_config_option *script_config_color_text_version_selected;
 struct t_config_option *script_config_color_text_version_loaded_selected;
-struct t_config_option *script_config_color_text_bg_selected;
+struct t_config_option *script_config_color_text_version_selected;
 
 /* script config, scripts section */
 
@@ -502,18 +502,6 @@ script_config_init ()
         return 0;
     }
 
-    script_config_color_status_popular = weechat_config_new_option (
-        script_config_file, ptr_section,
-        "status_popular", "color",
-        N_("color for status \"popular\" (\"*\")"),
-        NULL, 0, 0, "yellow", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
-    script_config_color_status_installed = weechat_config_new_option (
-        script_config_file, ptr_section,
-        "status_installed", "color",
-        N_("color for status \"installed\" (\"i\")"),
-        NULL, 0, 0, "lightcyan", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
     script_config_color_status_autoloaded = weechat_config_new_option (
         script_config_file, ptr_section,
         "status_autoloaded", "color",
@@ -526,17 +514,29 @@ script_config_init ()
         N_("color for status \"held\" (\"H\")"),
         NULL, 0, 0, "white", NULL, 0,
         NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
-    script_config_color_status_running = weechat_config_new_option (
+    script_config_color_status_installed = weechat_config_new_option (
         script_config_file, ptr_section,
-        "status_running", "color",
-        N_("color for status \"running\" (\"r\")"),
-        NULL, 0, 0, "lightgreen", NULL, 0,
+        "status_installed", "color",
+        N_("color for status \"installed\" (\"i\")"),
+        NULL, 0, 0, "lightcyan", NULL, 0,
         NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
     script_config_color_status_obsolete = weechat_config_new_option (
         script_config_file, ptr_section,
         "status_obsolete", "color",
         N_("color for status \"obsolete\" (\"N\")"),
         NULL, 0, 0, "lightmagenta", NULL, 0,
+        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+    script_config_color_status_popular = weechat_config_new_option (
+        script_config_file, ptr_section,
+        "status_popular", "color",
+        N_("color for status \"popular\" (\"*\")"),
+        NULL, 0, 0, "yellow", NULL, 0,
+        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+    script_config_color_status_running = weechat_config_new_option (
+        script_config_file, ptr_section,
+        "status_running", "color",
+        N_("color for status \"running\" (\"r\")"),
+        NULL, 0, 0, "lightgreen", NULL, 0,
         NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
     script_config_color_status_unknown = weechat_config_new_option (
         script_config_file, ptr_section,
@@ -550,11 +550,29 @@ script_config_init ()
         N_("text color in script buffer"),
         NULL, 0, 0, "default", NULL, 0,
         NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+    script_config_color_text_bg = weechat_config_new_option (
+        script_config_file, ptr_section,
+        "text_bg", "color",
+        N_("background color in script buffer"),
+        NULL, 0, 0, "default", NULL, 0,
+        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+    script_config_color_text_bg_selected = weechat_config_new_option (
+        script_config_file, ptr_section,
+        "text_bg_selected", "color",
+        N_("background color for selected line in script buffer"),
+        NULL, 0, 0, "red", NULL, 0,
+        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
     script_config_color_text_date = weechat_config_new_option (
         script_config_file, ptr_section,
         "text_date", "color",
         N_("text color of dates in script buffer"),
         NULL, 0, 0, "default", NULL, 0,
+        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+    script_config_color_text_date_selected = weechat_config_new_option (
+        script_config_file, ptr_section,
+        "text_date_selected", "color",
+        N_("text color of dates for selected line in script buffer"),
+        NULL, 0, 0, "white", NULL, 0,
         NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
     script_config_color_text_delimiters = weechat_config_new_option (
         script_config_file, ptr_section,
@@ -568,11 +586,23 @@ script_config_init ()
         N_("text color of description in script buffer"),
         NULL, 0, 0, "default", NULL, 0,
         NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+    script_config_color_text_description_selected = weechat_config_new_option (
+        script_config_file, ptr_section,
+        "text_description_selected", "color",
+        N_("text color of description for selected line in script buffer"),
+        NULL, 0, 0, "white", NULL, 0,
+        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
     script_config_color_text_extension = weechat_config_new_option (
         script_config_file, ptr_section,
         "text_extension", "color",
         N_("text color of extension in script buffer"),
         NULL, 0, 0, "default", NULL, 0,
+        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+    script_config_color_text_extension_selected = weechat_config_new_option (
+        script_config_file, ptr_section,
+        "text_extension_selected", "color",
+        N_("text color of extension for selected line in script buffer"),
+        NULL, 0, 0, "white", NULL, 0,
         NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
     script_config_color_text_name = weechat_config_new_option (
         script_config_file, ptr_section,
@@ -580,11 +610,29 @@ script_config_init ()
         N_("text color of script name in script buffer"),
         NULL, 0, 0, "cyan", NULL, 0,
         NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+    script_config_color_text_name_selected = weechat_config_new_option (
+        script_config_file, ptr_section,
+        "text_name_selected", "color",
+        N_("text color of script name for selected line in script buffer"),
+        NULL, 0, 0, "lightcyan", NULL, 0,
+        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+    script_config_color_text_selected = weechat_config_new_option (
+        script_config_file, ptr_section,
+        "text_selected", "color",
+        N_("text color for selected line in script buffer"),
+        NULL, 0, 0, "white", NULL, 0,
+        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
     script_config_color_text_tags = weechat_config_new_option (
         script_config_file, ptr_section,
         "text_tags", "color",
         N_("text color of tags in script buffer"),
         NULL, 0, 0, "brown", NULL, 0,
+        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
+    script_config_color_text_tags_selected = weechat_config_new_option (
+        script_config_file, ptr_section,
+        "text_tags_selected", "color",
+        N_("text color of tags for selected line in script buffer"),
+        NULL, 0, 0, "yellow", NULL, 0,
         NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
     script_config_color_text_version = weechat_config_new_option (
         script_config_file, ptr_section,
@@ -598,65 +646,17 @@ script_config_init ()
         N_("text color of version loaded in script buffer"),
         NULL, 0, 0, "default", NULL, 0,
         NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
-    script_config_color_text_bg = weechat_config_new_option (
-        script_config_file, ptr_section,
-        "text_bg", "color",
-        N_("background color in script buffer"),
-        NULL, 0, 0, "default", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
-    script_config_color_text_selected = weechat_config_new_option (
-        script_config_file, ptr_section,
-        "text_selected", "color",
-        N_("text color for selected line in script buffer"),
-        NULL, 0, 0, "white", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
-    script_config_color_text_date_selected = weechat_config_new_option (
-        script_config_file, ptr_section,
-        "text_date_selected", "color",
-        N_("text color of dates for selected line in script buffer"),
-        NULL, 0, 0, "white", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
-    script_config_color_text_description_selected = weechat_config_new_option (
-        script_config_file, ptr_section,
-        "text_description_selected", "color",
-        N_("text color of description for selected line in script buffer"),
-        NULL, 0, 0, "white", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
-    script_config_color_text_extension_selected = weechat_config_new_option (
-        script_config_file, ptr_section,
-        "text_extension_selected", "color",
-        N_("text color of extension for selected line in script buffer"),
-        NULL, 0, 0, "white", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
-    script_config_color_text_name_selected = weechat_config_new_option (
-        script_config_file, ptr_section,
-        "text_name_selected", "color",
-        N_("text color of script name for selected line in script buffer"),
-        NULL, 0, 0, "lightcyan", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
-    script_config_color_text_tags_selected = weechat_config_new_option (
-        script_config_file, ptr_section,
-        "text_tags_selected", "color",
-        N_("text color of tags for selected line in script buffer"),
-        NULL, 0, 0, "yellow", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
-    script_config_color_text_version_selected = weechat_config_new_option (
-        script_config_file, ptr_section,
-        "text_version_selected", "color",
-        N_("text color of version for selected line in script buffer"),
-        NULL, 0, 0, "lightmagenta", NULL, 0,
-        NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
     script_config_color_text_version_loaded_selected = weechat_config_new_option (
         script_config_file, ptr_section,
         "text_version_loaded_selected", "color",
         N_("text color of version loaded for selected line in script buffer"),
         NULL, 0, 0, "white", NULL, 0,
         NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
-    script_config_color_text_bg_selected = weechat_config_new_option (
+    script_config_color_text_version_selected = weechat_config_new_option (
         script_config_file, ptr_section,
-        "text_bg_selected", "color",
-        N_("background color for selected line in script buffer"),
-        NULL, 0, 0, "red", NULL, 0,
+        "text_version_selected", "color",
+        N_("text color of version for selected line in script buffer"),
+        NULL, 0, 0, "lightmagenta", NULL, 0,
         NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
 
     /* scripts */

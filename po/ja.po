@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-05 18:09+0200\n"
+"POT-Creation-Date: 2013-07-11 19:51+0200\n"
 "PO-Revision-Date: 2013-07-02 16:02+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -3027,12 +3027,6 @@ msgstr "ウィンドウ間に水平セパレータを表示"
 msgid "display a vertical separator between windows"
 msgstr "ウィンドウ間に垂直セパレータを表示"
 
-msgid ""
-"color for window separators (when split) and separators beside bars (like "
-"nicklist)"
-msgstr ""
-"ウィンドウセパレータ (分割時) とバーセパレータ (ニックネームリスト等) の色"
-
 msgid "text color for '+' when scrolling bars"
 msgstr "バーをスクロールする際の '+' のテキスト色"
 
@@ -3042,11 +3036,14 @@ msgstr "チャットのテキスト色"
 msgid "background color for chat"
 msgstr "チャットの背景色"
 
-msgid ""
-"text color for chat when window is inactive (not current selected window)"
-msgstr ""
-"ウィンドウへのフォーカスがなくなった場合 (選択されていないウィンドウ) の"
-"チャットのテキスト色"
+msgid "text color for buffer names"
+msgstr "バッファ名のテキスト色"
+
+msgid "text color for channel names"
+msgstr "チャンネル名のテキスト色"
+
+msgid "text color for delimiters"
+msgstr "区切りのテキスト色"
 
 msgid ""
 "text color for chat when line is inactive (buffer is merged with other "
@@ -3055,11 +3052,57 @@ msgstr ""
 "行へのフォーカスがなくなった場合の (バッファが他のバッファとマージされていて"
 "選択されていない場合の) のチャットのテキスト色"
 
-msgid "text color for time in chat window"
-msgstr "チャットウィンドウ内の時間のテキスト色"
+msgid ""
+"text color for chat when window is inactive (not current selected window)"
+msgstr ""
+"ウィンドウへのフォーカスがなくなった場合 (選択されていないウィンドウ) の"
+"チャットのテキスト色"
 
-msgid "text color for time delimiters"
-msgstr "時間区切りのテキスト色"
+msgid "text color for nicks in chat window"
+msgstr "チャットウィンドウ内のニックネームのテキスト色"
+
+#. TRANSLATORS: please do not translate "lightred:blue"
+msgid ""
+"text color for nicks (comma separated list of colors, background is allowed "
+"with format: \"fg:bg\", for example: \"lightred:blue\")"
+msgstr ""
+"ニックネームのテキスト色 (コンマ区切りの色リスト、背景色は以下のフォーマット"
+"で指定: \"fg:bg\"、例: \"lightred:blue\")"
+
+msgid "color for nick prefix (string displayed before nick in prefix)"
+msgstr ""
+"ニックネームプレフィックスの色 (プレフィックス中のニックネームの前に表示され"
+"る文字列)"
+
+msgid "text color for offline nick (not in nicklist any more)"
+msgstr ""
+"オフラインのニックネームのテキスト色 (ニックネームリストにも表示されない)"
+
+msgid "text color for offline nick with highlight"
+msgstr "ハイライトされたオフラインのニックネームのテキスト色"
+
+msgid "background color for offline nick with highlight"
+msgstr "ハイライトされたオフラインのニックネームの背景色"
+
+msgid "text color for other nick in private buffer"
+msgstr "プライベートバッファ内の他のニックネームのテキスト色"
+
+msgid "text color for local nick in chat window"
+msgstr "チャットウィンドウ内のローカルニックネームのテキスト色"
+
+msgid "color for nick suffix (string displayed after nick in prefix)"
+msgstr ""
+"ニックネームサフィックスの色 (プレフィックス中のニックネームの後に表示される"
+"文字列)"
+
+msgid "text color for highlighted prefix"
+msgstr "ハイライトされたプレフィックスのテキスト色"
+
+msgid "background color for highlighted prefix"
+msgstr "ハイライトされたプレフィックスの背景色"
+
+msgid "text color for hostnames"
+msgstr "ホスト名のテキスト色"
 
 msgid ""
 "text color for buffer name (before prefix, when many buffers are merged with "
@@ -3096,69 +3139,14 @@ msgstr "プレフィックスが長すぎる場合の '+' のテキスト色"
 msgid "text color for suffix (after prefix)"
 msgstr "サフィックスのテキスト色 (プレフィックスの後ろ)"
 
-msgid "text color for buffer names"
-msgstr "バッファ名のテキスト色"
-
-msgid "text color for server names"
-msgstr "サーバ名のテキスト色"
-
-msgid "text color for channel names"
-msgstr "チャンネル名のテキスト色"
-
-msgid "text color for nicks in chat window"
-msgstr "チャットウィンドウ内のニックネームのテキスト色"
-
-#. TRANSLATORS: please do not translate "lightred:blue"
-msgid ""
-"text color for nicks (comma separated list of colors, background is allowed "
-"with format: \"fg:bg\", for example: \"lightred:blue\")"
-msgstr ""
-"ニックネームのテキスト色 (コンマ区切りの色リスト、背景色は以下のフォーマット"
-"で指定: \"fg:bg\"、例: \"lightred:blue\")"
-
-msgid "color for nick prefix (string displayed before nick in prefix)"
-msgstr ""
-"ニックネームプレフィックスの色 (プレフィックス中のニックネームの前に表示され"
-"る文字列)"
-
-msgid "color for nick suffix (string displayed after nick in prefix)"
-msgstr ""
-"ニックネームサフィックスの色 (プレフィックス中のニックネームの後に表示される"
-"文字列)"
-
-msgid "text color for local nick in chat window"
-msgstr "チャットウィンドウ内のローカルニックネームのテキスト色"
-
-msgid "text color for offline nick (not in nicklist any more)"
-msgstr ""
-"オフラインのニックネームのテキスト色 (ニックネームリストにも表示されない)"
-
-msgid "text color for offline nick with highlight"
-msgstr "ハイライトされたオフラインのニックネームのテキスト色"
-
-msgid "background color for offline nick with highlight"
-msgstr "ハイライトされたオフラインのニックネームの背景色"
-
-msgid "text color for other nick in private buffer"
-msgstr "プライベートバッファ内の他のニックネームのテキスト色"
-
-msgid "text color for hostnames"
-msgstr "ホスト名のテキスト色"
-
-msgid "text color for delimiters"
-msgstr "区切りのテキスト色"
-
-msgid "text color for highlighted prefix"
-msgstr "ハイライトされたプレフィックスのテキスト色"
-
-msgid "background color for highlighted prefix"
-msgstr "ハイライトされたプレフィックスの背景色"
-
 msgid "text color for unread data marker"
 msgstr "未読データマーカーのテキスト色"
 
 msgid "background color for unread data marker"
 msgstr "未読データマーカーの背景色"
+
+msgid "text color for server names"
+msgstr "サーバ名のテキスト色"
 
 msgid "text color for tags after messages (displayed with command /debug tags)"
 msgstr "メッセージの後ろのタグのテキスト色 (/debug tags コマンドで表示)"
@@ -3169,11 +3157,56 @@ msgstr "テキスト検索にヒットした行のマーカーのテキスト色
 msgid "background color for marker on lines where text sought is found"
 msgstr "テキスト検索にヒットした行のマーカーの背景色"
 
+msgid "text color for time in chat window"
+msgstr "チャットウィンドウ内の時間のテキスト色"
+
+msgid "text color for time delimiters"
+msgstr "時間区切りのテキスト色"
+
 msgid "text color for values"
 msgstr "値のテキスト色"
 
-msgid "text color for current buffer number in status bar"
-msgstr "ステータスバーの現在のバッファ番号のテキスト色"
+msgid "text color for actions in input line"
+msgstr "入力がアクションの場合のテキスト色"
+
+msgid "text color for unsuccessful text search in input line"
+msgstr "入力行のテキスト検索に失敗した場合のテキスト色"
+
+msgid ""
+"color for window separators (when split) and separators beside bars (like "
+"nicklist)"
+msgstr ""
+"ウィンドウセパレータ (分割時) とバーセパレータ (ニックネームリスト等) の色"
+
+msgid "text color for count of highlight messages in hotlist (status bar)"
+msgstr "ホットリスト内のハイライトメッセージ数のテキスト色 (ステータスバー)"
+
+msgid "text color for count of messages in hotlist (status bar)"
+msgstr "ホットリスト内のメッセージ数のテキスト色 (ステータスバー)"
+
+msgid "text color for count of other messages in hotlist (status bar)"
+msgstr "ホットリスト内のその他のメッセージ数のテキスト色 (ステータスバー)"
+
+msgid "text color for count of private messages in hotlist (status bar)"
+msgstr "ホットリスト内のプライベートメッセージ数のテキスト色 (ステータスバー)"
+
+msgid "text color for buffer with highlight (status bar)"
+msgstr "ハイライトメッセージを受け取ったバッファのテキスト色 (ステータスバー)"
+
+msgid "text color for buffer with new messages (status bar)"
+msgstr "新しいメッセージを受け取ったバッファのテキスト色 (ステータスバー)"
+
+msgid "text color for buffer with new data (not messages) (status bar)"
+msgstr ""
+"新しいデータ (メッセージ以外) を受け取ったバッファのテキスト色 (ステータス"
+"バー)"
+
+msgid "text color for buffer with private message (status bar)"
+msgstr ""
+"プライベートメッセージを受けとったバッファのテキスト色 (ステータスバー)"
+
+msgid "text color for filter indicator in status bar"
+msgstr "ステータスバーのフィルタ表示のテキスト色"
 
 msgid "text color for current buffer name in status bar"
 msgstr "ステータスバーの現在のバッファ名のテキスト色"
@@ -3185,35 +3218,8 @@ msgstr ""
 "SSL などでセキュリティプロトコルを使っている場合のステータスバーの現在のバッ"
 "ファ名のテキスト色、"
 
-msgid "text color for filter indicator in status bar"
-msgstr "ステータスバーのフィルタ表示のテキスト色"
-
-msgid "text color for buffer with new messages (status bar)"
-msgstr "新しいメッセージを受け取ったバッファのテキスト色 (ステータスバー)"
-
-msgid "text color for buffer with private message (status bar)"
-msgstr ""
-"プライベートメッセージを受けとったバッファのテキスト色 (ステータスバー)"
-
-msgid "text color for buffer with highlight (status bar)"
-msgstr "ハイライトメッセージを受け取ったバッファのテキスト色 (ステータスバー)"
-
-msgid "text color for buffer with new data (not messages) (status bar)"
-msgstr ""
-"新しいデータ (メッセージ以外) を受け取ったバッファのテキスト色 (ステータス"
-"バー)"
-
-msgid "text color for count of messages in hotlist (status bar)"
-msgstr "ホットリスト内のメッセージ数のテキスト色 (ステータスバー)"
-
-msgid "text color for count of private messages in hotlist (status bar)"
-msgstr "ホットリスト内のプライベートメッセージ数のテキスト色 (ステータスバー)"
-
-msgid "text color for count of highlight messages in hotlist (status bar)"
-msgstr "ホットリスト内のハイライトメッセージ数のテキスト色 (ステータスバー)"
-
-msgid "text color for count of other messages in hotlist (status bar)"
-msgstr "ホットリスト内のその他のメッセージ数のテキスト色 (ステータスバー)"
+msgid "text color for current buffer number in status bar"
+msgstr "ステータスバーの現在のバッファ番号のテキスト色"
 
 msgid "text color for buffer with new data (status bar)"
 msgstr "新しいデータを受け取ったバッファのテキスト色 (ステータスバー)"
@@ -3221,17 +3227,11 @@ msgstr "新しいデータを受け取ったバッファのテキスト色 (ス�
 msgid "text color for time (status bar)"
 msgstr "時間のテキスト色 (ステータスバー)"
 
-msgid "text color for unsuccessful text search in input line"
-msgstr "入力行のテキスト検索に失敗した場合のテキスト色"
-
-msgid "text color for actions in input line"
-msgstr "入力がアクションの場合のテキスト色"
+msgid "text color for away nicknames"
+msgstr "離席状態のニックネームのテキスト色"
 
 msgid "text color for groups in nicklist"
 msgstr "ニックネームリスト内のグループのテキスト色"
-
-msgid "text color for away nicknames"
-msgstr "離席状態のニックネームのテキスト色"
 
 msgid "text color for offline nicknames"
 msgstr "オフラインのニックネームのテキスト色"
@@ -3285,17 +3285,20 @@ msgstr ""
 "コマンド引数での部分補完 (同じプレフィックスを持つ多くの引数が見つかった場合"
 "は止める)"
 
+msgid "display count for each partial completion in bar item"
+msgstr "バーアイテム内の部分補完数を表示"
+
 msgid ""
 "partially complete outside commands (stop when many words found begin with "
 "same letters)"
 msgstr ""
 "コマンド外での部分補完 (同じ文字を含む多くのコマンドが見つかった場合は止め)"
 
-msgid "display count for each partial completion in bar item"
-msgstr "バーアイテム内の部分補完数を表示"
-
-msgid "maximum number of lines in history per buffer (0 = unlimited)"
-msgstr "バッファ毎の履歴行数 (0 = 制限無し)"
+msgid ""
+"maximum number of commands to display by default in history listing (0 = "
+"unlimited)"
+msgstr ""
+"履歴をリストアップする際にデフォルトで表示するコマンドの最大数 (0 = 制限無し)"
 
 msgid ""
 "maximum number of minutes in history per buffer (0 = unlimited, examples: "
@@ -3304,17 +3307,14 @@ msgstr ""
 "バッファ毎の履歴の保存時間 (分) (0 = 制限無し、例: 1440 = 一日、10080 = 一週"
 "間、43200 = 一ヶ月、525600 = 一年間)"
 
+msgid "maximum number of lines in history per buffer (0 = unlimited)"
+msgstr "バッファ毎の履歴行数 (0 = 制限無し)"
+
 msgid "maximum number of user commands in history (0 = unlimited)"
 msgstr "履歴に保存するユーザコマンド数 (0 = 制限無し)"
 
 msgid "maximum number of visited buffers to keep in memory"
 msgstr "メモリに保存する観覧バッファの数"
-
-msgid ""
-"maximum number of commands to display by default in history listing (0 = "
-"unlimited)"
-msgstr ""
-"履歴をリストアップする際にデフォルトで表示するコマンドの最大数 (0 = 制限無し)"
 
 msgid ""
 "timeout (in seconds) for connection to a remote host (made in a child "
@@ -6142,84 +6142,6 @@ msgstr ""
 "CTCP TIME メッセージに対する応答に利用される時間フォーマット (日付/時間指定子"
 "は strftime の man を参照)"
 
-msgid "merge server buffers"
-msgstr "サーババッファをマージ"
-
-msgid "merge private buffers"
-msgstr "プライベートバッファをマージ"
-
-msgid ""
-"force position of new channel in list of buffers (none = default position "
-"(should be last buffer), next = current buffer + 1, near_server = after last "
-"channel/pv of server)"
-msgstr ""
-"バッファリスト内で新しいチャンネルの位置を固定 (none = デフォルトの位置 (一番"
-"後ろのバッファ)、next = 現在のバッファ番号 + 1、near_server = サーバの一番後"
-"ろのチャンネル/プライベートバッファ)"
-
-msgid ""
-"force position of new private in list of buffers (none = default position "
-"(should be last buffer), next = current buffer + 1, near_server = after last "
-"channel/pv of server)"
-msgstr ""
-"バッファリスト内で新しいプライベートバッファの位置を固定 (none = デフォルトの"
-"位置 (一番後ろのバッファ)、next = 現在のバッファ番号 + 1、near_server = サー"
-"バの一番後ろのチャンネル/プライベートバッファ)"
-
-msgid ""
-"display nick mode (op, voice, ...) before nick (none = never, prefix = in "
-"prefix only (default), action = in action messages only, both = prefix + "
-"action messages)"
-msgstr ""
-"ニックネームの前にニックネームモード (オペレータ、voice 権) を表示する (none "
-"= 表示しない、prefix = プレフィックスだけに表示 (デフォルト)、action = アク"
-"ションメッセージだけに表示、both = プレフィックスとアクションメッセージの両方"
-"に表示)"
-
-msgid ""
-"display a space if nick mode is enabled but nick has no mode (not op, "
-"voice, ...)"
-msgstr ""
-"ニックネームモードが有効でニックネームモードを持っていない (オペレータでな"
-"い、voice 権がない) 場合にはこれを空白で表示する"
-
-msgid ""
-"force color for some nicks: hash computed with nickname to find color will "
-"not be used for these nicks (format is: \"nick1:color1;nick2:color2\"); look "
-"up for nicks is with exact case then lower case, so it's possible to use "
-"only lower case for nicks in this option"
-msgstr ""
-"一部のニックネームでニックネーム色を強制する: ニックネームから計算されるハッ"
-"シュを元にした色を利用しない (フォーマット: \"nick1:color1;nick2:color2\"); "
-"ニックネームの検索はまず大文字小文字が区別された状態で行われ、そのあとに小文"
-"字で行われます。このため、このオプションのニックネーム部分を小文字だけで書く"
-"事もできます"
-
-msgid ""
-"hash algorithm used to find the color for a nick: djb2 = variant of djb2 "
-"(position of letters matters: anagrams of a nick have different color), sum "
-"= sum of letters"
-msgstr ""
-
-msgid ""
-"chars used to stop in nick when computing color with letters of nick (at "
-"least one char outside this list must be in string before stopping) "
-"(example: nick \"|nick|away\" with \"|\" in chars will return color of nick "
-"\"|nick\")"
-msgstr ""
-"ニックネーム内の色計算に使用する部分を制限する文字 (このリストに含まれない文"
-"字が、このリストの文字の前に少なくとも一つ以上含まれなければいけない) (例: "
-"\"|\" を設定した場合、\"|nick|away\" はニックネーム \"|nick\" と同じ色になる)"
-
-msgid ""
-"smart completion for nicks (completes first with last speakers): speakers = "
-"all speakers (including highlights), speakers_highlights = only speakers "
-"with highlight"
-msgstr ""
-"ニックネームのスマート補完 (発言日時の新しいものから順にニックネームを補完): "
-"speakers = すべてのニックネーム (ハイライトされたニックネームを含む)、"
-"speakers_highlights = ハイライトされたニックネームのみ"
-
 msgid ""
 "display message when (un)marking as away (off: do not display/send anything, "
 "local: display locally, channel: send action to channels)"
@@ -6264,22 +6186,6 @@ msgid "display a message in private when user is back (after quit on server)"
 msgstr ""
 "ユーザが戻ったら、プライベートウィンドウにメッセージを表示 (サーバとの切断を"
 "挟んで)"
-
-msgid "display server away message in away bar item"
-msgstr "サーバの離席メッセージを離席バーアイテムに表示"
-
-msgid ""
-"hide channel key in channel modes (this will hide all channel modes "
-"arguments if mode +k is set on channel)"
-msgstr ""
-"チャンネルモードに含まれるチャンネルキーを隠す (チャンネルにモード +k が設定"
-"されていた場合、全てのチャンネルモード引数を隠す)"
-
-msgid "display nick modes in \"input_prompt\" bar item"
-msgstr "\"input_prompt\" バーアイテムではニックネームモードを表示"
-
-msgid "display nick prefix in \"input_prompt\" bar item"
-msgstr "\"input_prompt\" バーアイテムではニックネームプレフィックスを表示"
 
 msgid ""
 "comma separated list of words to highlight in server buffers (case "
@@ -6336,8 +6242,24 @@ msgstr ""
 "ハイライトされるメッセージにつけられたタグのコンマ区切りリスト (通例、他の"
 "ユーザからの任意のメッセージ、サーバメッセージをのぞく、...)"
 
+msgid "display server away message in away bar item"
+msgstr "サーバの離席メッセージを離席バーアイテムに表示"
+
+msgid ""
+"hide channel key in channel modes (this will hide all channel modes "
+"arguments if mode +k is set on channel)"
+msgstr ""
+"チャンネルモードに含まれるチャンネルキーを隠す (チャンネルにモード +k が設定"
+"されていた場合、全てのチャンネルモード引数を隠す)"
+
 msgid "name of bar item where IRC server is displayed (for status bar)"
 msgstr "IRC サーバが表示されるバーアイテムの名前 (ステータスバー用)"
+
+msgid "display nick modes in \"input_prompt\" bar item"
+msgstr "\"input_prompt\" バーアイテムではニックネームモードを表示"
+
+msgid "display nick prefix in \"input_prompt\" bar item"
+msgstr "\"input_prompt\" バーアイテムではニックネームプレフィックスを表示"
 
 msgid ""
 "default target buffer for msgbuffer options when target is private and that "
@@ -6347,6 +6269,24 @@ msgstr ""
 "オプション用のデフォルトのターゲットバッファ"
 
 msgid ""
+"force position of new channel in list of buffers (none = default position "
+"(should be last buffer), next = current buffer + 1, near_server = after last "
+"channel/pv of server)"
+msgstr ""
+"バッファリスト内で新しいチャンネルの位置を固定 (none = デフォルトの位置 (一番"
+"後ろのバッファ)、next = 現在のバッファ番号 + 1、near_server = サーバの一番後"
+"ろのチャンネル/プライベートバッファ)"
+
+msgid ""
+"force position of new private in list of buffers (none = default position "
+"(should be last buffer), next = current buffer + 1, near_server = after last "
+"channel/pv of server)"
+msgstr ""
+"バッファリスト内で新しいプライベートバッファの位置を固定 (none = デフォルトの"
+"位置 (一番後ろのバッファ)、next = 現在のバッファ番号 + 1、near_server = サー"
+"バの一番後ろのチャンネル/プライベートバッファ)"
+
+msgid ""
 "comma separated list of nicks for which passwords will be hidden when a "
 "message is sent, for example to hide password in message displayed by \"/msg "
 "nickserv identify password\", example: \"nickserv,nickbot\""
@@ -6354,6 +6294,60 @@ msgstr ""
 "メッセージを送信する際にパスワードを隠すニックネームのコンマ区切りリスト、例"
 "えば \"/msg nickserv identify password\" で表示されるメッセージに含まれるパス"
 "ワードを隠すために使います、例: \"nickserv,nickbot\""
+
+msgid ""
+"force color for some nicks: hash computed with nickname to find color will "
+"not be used for these nicks (format is: \"nick1:color1;nick2:color2\"); look "
+"up for nicks is with exact case then lower case, so it's possible to use "
+"only lower case for nicks in this option"
+msgstr ""
+"一部のニックネームでニックネーム色を強制する: ニックネームから計算されるハッ"
+"シュを元にした色を利用しない (フォーマット: \"nick1:color1;nick2:color2\"); "
+"ニックネームの検索はまず大文字小文字が区別された状態で行われ、そのあとに小文"
+"字で行われます。このため、このオプションのニックネーム部分を小文字だけで書く"
+"事もできます"
+
+msgid ""
+"hash algorithm used to find the color for a nick: djb2 = variant of djb2 "
+"(position of letters matters: anagrams of a nick have different color), sum "
+"= sum of letters"
+msgstr ""
+
+msgid ""
+"chars used to stop in nick when computing color with letters of nick (at "
+"least one char outside this list must be in string before stopping) "
+"(example: nick \"|nick|away\" with \"|\" in chars will return color of nick "
+"\"|nick\")"
+msgstr ""
+"ニックネーム内の色計算に使用する部分を制限する文字 (このリストに含まれない文"
+"字が、このリストの文字の前に少なくとも一つ以上含まれなければいけない) (例: "
+"\"|\" を設定した場合、\"|nick|away\" はニックネーム \"|nick\" と同じ色になる)"
+
+msgid ""
+"smart completion for nicks (completes first with last speakers): speakers = "
+"all speakers (including highlights), speakers_highlights = only speakers "
+"with highlight"
+msgstr ""
+"ニックネームのスマート補完 (発言日時の新しいものから順にニックネームを補完): "
+"speakers = すべてのニックネーム (ハイライトされたニックネームを含む)、"
+"speakers_highlights = ハイライトされたニックネームのみ"
+
+msgid ""
+"display nick mode (op, voice, ...) before nick (none = never, prefix = in "
+"prefix only (default), action = in action messages only, both = prefix + "
+"action messages)"
+msgstr ""
+"ニックネームの前にニックネームモード (オペレータ、voice 権) を表示する (none "
+"= 表示しない、prefix = プレフィックスだけに表示 (デフォルト)、action = アク"
+"ションメッセージだけに表示、both = プレフィックスとアクションメッセージの両方"
+"に表示)"
+
+msgid ""
+"display a space if nick mode is enabled but nick has no mode (not op, "
+"voice, ...)"
+msgstr ""
+"ニックネームモードが有効でニックネームモードを持っていない (オペレータでな"
+"い、voice 権がない) 場合にはこれを空白で表示する"
 
 msgid ""
 "display notices as private messages (if auto, use private buffer if found)"
@@ -6382,12 +6376,18 @@ msgstr ""
 msgid "close buffer when /part is issued on a channel"
 msgstr "/part を実行した場合にバッファを閉じる"
 
+msgid "merge private buffers"
+msgstr "プライベートバッファをマージ"
+
 msgid ""
 "number of raw messages to save in memory when raw data buffer is closed "
 "(messages will be displayed when opening raw data buffer)"
 msgstr ""
 "生データバッファが閉じられた時にメモリに保存する生メッセージの数 (生データ"
 "バッファを開いたときに表示されるメッセージ)"
+
+msgid "merge server buffers"
+msgstr "サーババッファをマージ"
 
 msgid ""
 "filter join/part/quit/nick messages for a nick if not speaking for some "
@@ -6417,18 +6417,37 @@ msgstr ""
 "ニックネームを変更したら、参加メッセージのマスクが外れます (0 = 無効: 参加"
 "メッセージは必ずマスクされます)"
 
-#. TRANSLATORS: please do not translate "part" and "quit"
-msgid "enable smart filter for \"part\" and \"quit\" messages"
-msgstr "\"part\" と \"quit\" メッセージのスマートフィルタを有効化"
-
 #. TRANSLATORS: please do not translate "nick"
 msgid "enable smart filter for \"nick\" messages (nick changes)"
 msgstr ""
 "\"nick\" メッセージに対するスマートフィルタを有効化 (ニックネームの変更通知)"
 
+#. TRANSLATORS: please do not translate "part" and "quit"
+msgid "enable smart filter for \"part\" and \"quit\" messages"
+msgstr "\"part\" と \"quit\" メッセージのスマートフィルタを有効化"
+
 msgid "strip colors in topic (used only when displaying buffer title)"
 msgstr ""
 "トピックにつけられた色を無効化 (バッファタイルに表示される場合のみ利用)"
+
+msgid "color for nick in input bar"
+msgstr "インプットバーのニックネームに使う色"
+
+msgid "color for away item"
+msgstr "離席アイテムに使う色"
+
+msgid "color for channel modes, near channel name"
+msgstr "チャンネル名付近のチャンネルモードに使う色"
+
+msgid ""
+"color for lag indicator, when counting (pong not received from server, lag "
+"is increasing)"
+msgstr ""
+"カウント中の遅延インジケータの色 (pong がサーバから返らない場合、遅延は増加す"
+"る)"
+
+msgid "color for lag indicator, when pong has been received from server"
+msgstr "pong がサーバから返った場合の、遅延インジケータの色"
 
 msgid "color for text in join messages"
 msgstr "参加メッセージの色"
@@ -6470,33 +6489,14 @@ msgstr ""
 msgid "color for text \"Notice\" in notices"
 msgstr "notices に含まれるテキスト \"Notice\" の色"
 
-msgid "color for nick in input bar"
-msgstr "インプットバーのニックネームに使う色"
-
-msgid "color for away item"
-msgstr "離席アイテムに使う色"
-
-msgid "color for channel modes, near channel name"
-msgstr "チャンネル名付近のチャンネルモードに使う色"
-
-msgid ""
-"color for lag indicator, when counting (pong not received from server, lag "
-"is increasing)"
-msgstr ""
-"カウント中の遅延インジケータの色 (pong がサーバから返らない場合、遅延は増加す"
-"る)"
-
-msgid "color for lag indicator, when pong has been received from server"
-msgstr "pong がサーバから返った場合の、遅延インジケータの色"
-
 msgid "color for reason in part/quit messages"
 msgstr "退出/終了メッセージに含まれる理由の色"
 
-msgid "color for old channel topic (when topic is changed)"
-msgstr "古いチャンネルトピックの色 (トピックが変更されたとき)"
-
 msgid "color for new channel topic (when topic is changed)"
 msgstr "新しいチャンネルトピックの色 (トピックが変更されたとき)"
+
+msgid "color for old channel topic (when topic is changed)"
+msgstr "古いチャンネルトピックの色 (トピックが変更されたとき)"
 
 msgid ""
 "get an alternate nick when the nick is already used on server: add some \"_"
@@ -7547,11 +7547,11 @@ msgid ""
 msgstr ""
 "新規バッファの作成時にログファイルから表示する行の最大数 (0 = バックログ無し)"
 
-msgid "color for backlog lines"
-msgstr "バックログ行の色"
-
 msgid "color for line ending the backlog"
 msgstr "バックログの最終行の色"
+
+msgid "color for backlog lines"
+msgstr "バックログ行の色"
 
 msgid ""
 "automatically save content of buffers to files (unless a buffer disables log)"
@@ -7566,16 +7566,8 @@ msgstr ""
 "ログファイルをフラッシュする間隔の秒数 (0 = 行が表示されたらすぐにログファイ"
 "ルに書き込み)"
 
-msgid "use only lower case for log filenames"
-msgstr "ログファイル名に小文字だけを使う"
-
-msgid ""
-"path for WeeChat log files; \"%h\" at beginning of string is replaced by "
-"WeeChat home (\"~/.weechat\" by default); date specifiers are permitted (see "
-"man strftime)"
-msgstr ""
-"WeeChat ログファイルのパス; 文字列最初の \"%h\" は WeeChat ホーム (デフォルト"
-"では \"~/.weechat\") に置換; 日付指定子を使える (strftime の man を参照)"
+msgid "write information line in log file when log starts or ends for a buffer"
+msgstr "バッファのログ保存の開始時と終了時にログファイルへ情報行を書き込む"
 
 msgid ""
 "default file name mask for log files (format is \"directory/to/file\" or "
@@ -7588,6 +7580,23 @@ msgstr ""
 "完全なパスを作るために使われる); ローカルバッファ変数が使える; 日付指定子を使"
 "える (strftime の man を参照)"
 
+msgid "use only lower case for log filenames"
+msgstr "ログファイル名に小文字だけを使う"
+
+msgid "text to write before nick in prefix of message, example: \"<\""
+msgstr "ニックネームの前に書くテキスト (メッセージプレフィックス)、例: \"<\""
+
+msgid "text to write after nick in prefix of message, example: \">\""
+msgstr "ニックネームの後に書くテキスト (メッセージプレフィックス)、例: \">\""
+
+msgid ""
+"path for WeeChat log files; \"%h\" at beginning of string is replaced by "
+"WeeChat home (\"~/.weechat\" by default); date specifiers are permitted (see "
+"man strftime)"
+msgstr ""
+"WeeChat ログファイルのパス; 文字列最初の \"%h\" は WeeChat ホーム (デフォルト"
+"では \"~/.weechat\") に置換; 日付指定子を使える (strftime の man を参照)"
+
 msgid ""
 "replacement char for special chars in filename built with mask (like "
 "directory delimiter)"
@@ -7595,18 +7604,9 @@ msgstr ""
 "マスクと一緒に使われたときのファイル名に含まれる特殊文字に対応する置換文字 "
 "(ディレクトリ区切りのようなもの)"
 
-msgid "write information line in log file when log starts or ends for a buffer"
-msgstr "バッファのログ保存の開始時と終了時にログファイルへ情報行を書き込む"
-
 msgid "timestamp used in log files (see man strftime for date/time specifiers)"
 msgstr ""
 "ログファイルで使用するタイムスタンプ (日付/時間指定子は strftime の man 参照)"
-
-msgid "text to write before nick in prefix of message, example: \"<\""
-msgstr "ニックネームの前に書くテキスト (メッセージプレフィックス)、例: \"<\""
-
-msgid "text to write after nick in prefix of message, example: \">\""
-msgstr "ニックネームの後に書くテキスト (メッセージプレフィックス)、例: \">\""
 
 msgid "list of logger buffers"
 msgstr "logger バッファのリスト"
@@ -8231,15 +8231,6 @@ msgstr "新しいクライアントが接続したらリレーバッファを自
 msgid "text color for client description"
 msgstr "クライアント説明用のテキスト色"
 
-msgid "text color in relay buffer"
-msgstr "リレーバッファ内のテキスト色"
-
-msgid "background color in relay buffer"
-msgstr "リレーバッファ内の背景色"
-
-msgid "text color of selected line in relay buffer"
-msgstr "リレーバッファ内の選択行のテキスト色"
-
 msgid "text color for \"connecting\" status"
 msgstr "\"接続中\" 状態のテキスト色"
 
@@ -8254,6 +8245,15 @@ msgstr "\"認証失敗\" 状態のテキスト色"
 
 msgid "text color for \"disconnected\" status"
 msgstr "\"接続切断\" 状態のテキスト色"
+
+msgid "text color in relay buffer"
+msgstr "リレーバッファ内のテキスト色"
+
+msgid "background color in relay buffer"
+msgstr "リレーバッファ内の背景色"
+
+msgid "text color of selected line in relay buffer"
+msgstr "リレーバッファ内の選択行のテキスト色"
 
 msgid ""
 "regular expression with IPs allowed to use relay (case insensitive, use \"(?-"
@@ -8312,9 +8312,6 @@ msgstr ""
 "い、\"(?-i)\" を先頭に置くと大文字小文字を区別する)、例: \"^http://(www\\.)?"
 "example\\.(com|org)\""
 
-msgid "maximum number of lines in backlog per IRC channel (0 = unlimited)"
-msgstr "IRC チャンネルごとのバックログの最大行数 (0 = 制限無し)"
-
 msgid ""
 "maximum number of minutes in backlog per IRC channel (0 = unlimited, "
 "examples: 1440 = one day, 10080 = one week, 43200 = one month, 525600 = one "
@@ -8322,6 +8319,9 @@ msgid ""
 msgstr ""
 "IRC チャンネルごとのバックログの最大時間 (分) (0 = 制限無し、例: 1440 = 1 "
 "日、10080 = 1 週間、43200 = 1 ヶ月、525600 = 1 年間)"
+
+msgid "maximum number of lines in backlog per IRC channel (0 = unlimited)"
+msgstr "IRC チャンネルごとのバックログの最大行数 (0 = 制限無し)"
 
 msgid "display backlog starting from last client disconnect"
 msgstr "最後にクライアントを切断した以降のバックログを表示"
@@ -9205,23 +9205,23 @@ msgstr ""
 "使ってください (alt+i = インストール、alt+r = 削除、...); これができない場"
 "合、単一のキーを試してください: i、r、..."
 
-msgid "color for status \"popular\" (\"*\")"
-msgstr "\"人気\" 状態 (\"*\") に対応する色"
-
-msgid "color for status \"installed\" (\"i\")"
-msgstr "\"インストール済み\" 状態 (\"i\") に対応する色"
-
 msgid "color for status \"autoloaded\" (\"a\")"
 msgstr "\"自動ロード\" 状態 (\"a\") に対応する色"
 
 msgid "color for status \"held\" (\"H\")"
 msgstr "\"ホールド\" 状態 (\"H\") に対応する色"
 
-msgid "color for status \"running\" (\"r\")"
-msgstr "\"実行中\" 状態 (\"r\") に対応する色"
+msgid "color for status \"installed\" (\"i\")"
+msgstr "\"インストール済み\" 状態 (\"i\") に対応する色"
 
 msgid "color for status \"obsolete\" (\"N\")"
 msgstr "\"アップデートが必要\" 状態 (\"N\") に対応する色"
+
+msgid "color for status \"popular\" (\"*\")"
+msgstr "\"人気\" 状態 (\"*\") に対応する色"
+
+msgid "color for status \"running\" (\"r\")"
+msgstr "\"実行中\" 状態 (\"r\") に対応する色"
 
 msgid "color for status \"unknown\" (\"?\")"
 msgstr "\"未定義\" 状態 (\"?\") に対応する色"
@@ -9229,8 +9229,17 @@ msgstr "\"未定義\" 状態 (\"?\") に対応する色"
 msgid "text color in script buffer"
 msgstr "スクリプトバッファのテキスト色"
 
+msgid "background color in script buffer"
+msgstr "スクリプトバッファ内の背景色"
+
+msgid "background color for selected line in script buffer"
+msgstr "スクリプトバッファ内の選択行の背景色"
+
 msgid "text color of dates in script buffer"
 msgstr "スクリプトバッファ内の日付のテキスト色"
+
+msgid "text color of dates for selected line in script buffer"
+msgstr "スクリプトバッファ内の日付が選択された場合のテキスト色"
 
 msgid "text color of delimiters in script buffer"
 msgstr "スクリプトバッファ内の区切り文字のテキスト色"
@@ -9238,14 +9247,29 @@ msgstr "スクリプトバッファ内の区切り文字のテキスト色"
 msgid "text color of description in script buffer"
 msgstr "スクリプトバッファ内の説明のテキスト色"
 
+msgid "text color of description for selected line in script buffer"
+msgstr "スクリプトバッファ内の説明が選択された場合のテキスト色"
+
 msgid "text color of extension in script buffer"
 msgstr "スクリプトバッファ内の拡張子のテキスト色"
+
+msgid "text color of extension for selected line in script buffer"
+msgstr "スクリプトバッファ内の拡張子が選択された場合のテキスト色"
 
 msgid "text color of script name in script buffer"
 msgstr "スクリプトバッファ内のスクリプト名のテキスト色"
 
+msgid "text color of script name for selected line in script buffer"
+msgstr "スクリプトバッファ内のスクリプト名が選択された場合のテキスト色"
+
+msgid "text color for selected line in script buffer"
+msgstr "スクリプトバッファ内の選択行のテキスト色"
+
 msgid "text color of tags in script buffer"
 msgstr "スクリプトバッファ内のタグのテキスト色"
+
+msgid "text color of tags for selected line in script buffer"
+msgstr "スクリプトバッファ内のタグが選択された場合のテキスト色"
 
 msgid "text color of version in script buffer"
 msgstr "スクリプトバッファ内のバージョンのテキスト色"
@@ -9253,35 +9277,11 @@ msgstr "スクリプトバッファ内のバージョンのテキスト色"
 msgid "text color of version loaded in script buffer"
 msgstr "スクリプトバッファ内のロード済みバージョンのテキスト色"
 
-msgid "background color in script buffer"
-msgstr "スクリプトバッファ内の背景色"
-
-msgid "text color for selected line in script buffer"
-msgstr "スクリプトバッファ内の選択行のテキスト色"
-
-msgid "text color of dates for selected line in script buffer"
-msgstr "スクリプトバッファ内の日付が選択された場合のテキスト色"
-
-msgid "text color of description for selected line in script buffer"
-msgstr "スクリプトバッファ内の説明が選択された場合のテキスト色"
-
-msgid "text color of extension for selected line in script buffer"
-msgstr "スクリプトバッファ内の拡張子が選択された場合のテキスト色"
-
-msgid "text color of script name for selected line in script buffer"
-msgstr "スクリプトバッファ内のスクリプト名が選択された場合のテキスト色"
-
-msgid "text color of tags for selected line in script buffer"
-msgstr "スクリプトバッファ内のタグが選択された場合のテキスト色"
-
-msgid "text color of version for selected line in script buffer"
-msgstr "スクリプトバッファ内のバージョンが選択された場合のテキスト色"
-
 msgid "text color of version loaded for selected line in script buffer"
 msgstr "スクリプトバッファ内のロード済みバージョンが選択された場合のテキスト色"
 
-msgid "background color for selected line in script buffer"
-msgstr "スクリプトバッファ内の選択行の背景色"
+msgid "text color of version for selected line in script buffer"
+msgstr "スクリプトバッファ内のバージョンが選択された場合のテキスト色"
 
 msgid ""
 "autoload scripts installed (make a link in \"autoload\" directory to script "
@@ -9604,15 +9604,6 @@ msgid "size of progress bar, in chars (if 0, progress bar is disabled)"
 msgstr ""
 "プログレスバーのサイズ、文字数単位 (0 の場合、プログレスバーを使わない)"
 
-msgid "text color in xfer buffer"
-msgstr "xfer バッファのテキスト色"
-
-msgid "background color in xfer buffer"
-msgstr "xfer バッファの背景色"
-
-msgid "text color of selected line in xfer buffer"
-msgstr "xfer バッファで選択された行のテキスト色"
-
 msgid "text color for \"waiting\" status"
 msgstr "\"接続待ち\" 状態のテキスト色"
 
@@ -9628,14 +9619,27 @@ msgstr "\"失敗\" 状態のテキスト色"
 msgid "text color for \"aborted\" status"
 msgstr "\"中止\" 状態のテキスト色"
 
-msgid "timeout for xfer request (in seconds)"
-msgstr "xfer 要求のタイムアウト (秒単位)"
+msgid "text color in xfer buffer"
+msgstr "xfer バッファのテキスト色"
+
+msgid "background color in xfer buffer"
+msgstr "xfer バッファの背景色"
+
+msgid "text color of selected line in xfer buffer"
+msgstr "xfer バッファで選択された行のテキスト色"
 
 msgid "block size for sending packets, in bytes"
 msgstr "送信パケットのブロックサイズ、バイト単位"
 
 msgid "does not wait for ACK when sending file"
 msgstr "ファイル送信時に肯定応答を待たない"
+
+msgid ""
+"IP or DNS address used for sending files/chats (if empty, local interface IP "
+"is used)"
+msgstr ""
+"ファイル/チャットの送信に使う IP か DNS アドレス (空の場合、ローカルインター"
+"フェイス IP を使う)"
 
 msgid ""
 "restricts outgoing files/chats to use only ports in the given range (useful "
@@ -9649,15 +9653,38 @@ msgstr ""
 "えないため、1024 以上のポート番号を使うことを推奨)"
 
 msgid ""
-"IP or DNS address used for sending files/chats (if empty, local interface IP "
-"is used)"
-msgstr ""
-"ファイル/チャットの送信に使う IP か DNS アドレス (空の場合、ローカルインター"
-"フェイス IP を使う)"
-
-msgid ""
 "speed limit for sending files, in kilo-bytes by second (0 means no limit)"
 msgstr "ファイル送信の速度制限、1 秒あたりのキロバイトで指定 (0 は制限無し)"
+
+msgid "timeout for xfer request (in seconds)"
+msgstr "xfer 要求のタイムアウト (秒単位)"
+
+msgid "automatically accept chat requests (use carefully!)"
+msgstr "チャット要求を自動的に許可 (注意して使用!)"
+
+msgid "automatically accept incoming files (use carefully!)"
+msgstr "ファイルを自動的に受信 (注意して使用!)"
+
+msgid ""
+"comma-separated list of nicks for which the incoming files and chats are "
+"automatically accepted; format is \"server.nick\" (for a specific server) or "
+"\"nick\" (for all servers); example: \"freenode.FlashCode,andrew\""
+msgstr ""
+"ファイルやチャットの受け入れを自動的に許可するニックネームのコンマ区切りリス"
+"ト; フォーマットは \"server.nick\" (サーバを特定する場合) または \"nick\" (す"
+"べてのサーバ); 例: \"freenode.FlashCode,andrew\""
+
+msgid "rename incoming files if already exists (add \".1\", \".2\", ...)"
+msgstr ""
+"既に存在する場合、受信ファイルをリネームする (\".1\"、\".2\"、...を追加)"
+
+msgid ""
+"automatically resume file transfer if connection with remote host is lost"
+msgstr ""
+"リモートホストとの接続が切れた場合、自動的にファイル転送をリジュームする"
+
+msgid "convert spaces to underscores when sending files"
+msgstr "ファイルの送信時にスペースをアンダースコアに変換"
 
 msgid ""
 "path for writing incoming files (\"%h\" will be replaced by WeeChat home, "
@@ -9677,33 +9704,6 @@ msgid "use remote nick as prefix in local filename when receiving a file"
 msgstr ""
 "ファイルを受信する際にローカルファイル名のプレフィックスとしてリモートニック"
 "ネームを使用"
-
-msgid "convert spaces to underscores when sending files"
-msgstr "ファイルの送信時にスペースをアンダースコアに変換"
-
-msgid "rename incoming files if already exists (add \".1\", \".2\", ...)"
-msgstr ""
-"既に存在する場合、受信ファイルをリネームする (\".1\"、\".2\"、...を追加)"
-
-msgid ""
-"automatically resume file transfer if connection with remote host is lost"
-msgstr ""
-"リモートホストとの接続が切れた場合、自動的にファイル転送をリジュームする"
-
-msgid "automatically accept incoming files (use carefully!)"
-msgstr "ファイルを自動的に受信 (注意して使用!)"
-
-msgid "automatically accept chat requests (use carefully!)"
-msgstr "チャット要求を自動的に許可 (注意して使用!)"
-
-msgid ""
-"comma-separated list of nicks for which the incoming files and chats are "
-"automatically accepted; format is \"server.nick\" (for a specific server) or "
-"\"nick\" (for all servers); example: \"freenode.FlashCode,andrew\""
-msgstr ""
-"ファイルやチャットの受け入れを自動的に許可するニックネームのコンマ区切りリス"
-"ト; フォーマットは \"server.nick\" (サーバを特定する場合) または \"nick\" (す"
-"べてのサーバ); 例: \"freenode.FlashCode,andrew\""
 
 msgid "list of xfer"
 msgstr "xfer のリスト"

@@ -31,10 +31,10 @@ extern struct t_config_option *relay_config_look_auto_open_buffer;
 extern struct t_config_option *relay_config_look_raw_messages;
 
 extern struct t_config_option *relay_config_color_client;
+extern struct t_config_option *relay_config_color_status[];
 extern struct t_config_option *relay_config_color_text;
 extern struct t_config_option *relay_config_color_text_bg;
 extern struct t_config_option *relay_config_color_text_selected;
-extern struct t_config_option *relay_config_color_status[];
 
 extern struct t_config_option *relay_config_network_allowed_ips;
 extern struct t_config_option *relay_config_network_bind_address;
@@ -43,9 +43,10 @@ extern struct t_config_option *relay_config_network_ipv6;
 extern struct t_config_option *relay_config_network_max_clients;
 extern struct t_config_option *relay_config_network_password;
 extern struct t_config_option *relay_config_network_ssl_cert_key;
+extern struct t_config_option *relay_config_network_websocket_allowed_origins;
 
-extern struct t_config_option *relay_config_irc_backlog_max_number;
 extern struct t_config_option *relay_config_irc_backlog_max_minutes;
+extern struct t_config_option *relay_config_irc_backlog_max_number;
 extern struct t_config_option *relay_config_irc_backlog_since_last_disconnect;
 extern struct t_config_option *relay_config_irc_backlog_tags;
 extern struct t_config_option *relay_config_irc_backlog_time_format;

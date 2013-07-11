@@ -39,21 +39,21 @@ struct t_config_option *logger_config_look_backlog;
 
 /* logger config, color section */
 
-struct t_config_option *logger_config_color_backlog_line;
 struct t_config_option *logger_config_color_backlog_end;
+struct t_config_option *logger_config_color_backlog_line;
 
 /* logger config, file section */
 
 struct t_config_option *logger_config_file_auto_log;
 struct t_config_option *logger_config_file_flush_delay;
-struct t_config_option *logger_config_file_name_lower_case;
-struct t_config_option *logger_config_file_path;
-struct t_config_option *logger_config_file_mask;
-struct t_config_option *logger_config_file_replacement_char;
 struct t_config_option *logger_config_file_info_lines;
-struct t_config_option *logger_config_file_time_format;
+struct t_config_option *logger_config_file_mask;
+struct t_config_option *logger_config_file_name_lower_case;
 struct t_config_option *logger_config_file_nick_prefix;
 struct t_config_option *logger_config_file_nick_suffix;
+struct t_config_option *logger_config_file_path;
+struct t_config_option *logger_config_file_replacement_char;
+struct t_config_option *logger_config_file_time_format;
 
 
 /*
@@ -397,15 +397,15 @@ logger_config_init ()
         return 0;
     }
 
-    logger_config_color_backlog_line = weechat_config_new_option (
-        logger_config_file, ptr_section,
-        "backlog_line", "color",
-        N_("color for backlog lines"),
-        NULL, -1, 0, "darkgray", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     logger_config_color_backlog_end = weechat_config_new_option (
         logger_config_file, ptr_section,
         "backlog_end", "color",
         N_("color for line ending the backlog"),
+        NULL, -1, 0, "darkgray", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    logger_config_color_backlog_line = weechat_config_new_option (
+        logger_config_file, ptr_section,
+        "backlog_line", "color",
+        N_("color for backlog lines"),
         NULL, -1, 0, "darkgray", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
 
     /* file */
@@ -433,20 +433,12 @@ logger_config_init ()
            "files immediately for each line printed)"),
         NULL, 0, 3600, "120", NULL, 0, NULL, NULL,
         &logger_config_flush_delay_change, NULL, NULL, NULL);
-    logger_config_file_name_lower_case = weechat_config_new_option (
+    logger_config_file_info_lines = weechat_config_new_option (
         logger_config_file, ptr_section,
-        "name_lower_case", "boolean",
-        N_("use only lower case for log filenames"),
-        NULL, 0, 0, "on", NULL, 0, NULL, NULL,
-        &logger_config_change_file_option_restart_log, NULL, NULL, NULL);
-    logger_config_file_path = weechat_config_new_option (
-        logger_config_file, ptr_section,
-        "path", "string",
-        N_("path for WeeChat log files; \"%h\" at beginning of string is "
-           "replaced by WeeChat home (\"~/.weechat\" by default); date "
-           "specifiers are permitted (see man strftime)"),
-        NULL, 0, 0, "%h/logs/", NULL, 0, NULL, NULL,
-        &logger_config_change_file_option_restart_log, NULL, NULL, NULL);
+        "info_lines", "boolean",
+        N_("write information line in log file when log starts or ends for a "
+           "buffer"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     logger_config_file_mask = weechat_config_new_option (
         logger_config_file, ptr_section,
         "mask", "string",
@@ -457,25 +449,12 @@ logger_config_init ()
            "(see man strftime)"),
         NULL, 0, 0, "$plugin.$name.weechatlog", NULL, 0, NULL, NULL,
         &logger_config_change_file_option_restart_log, NULL, NULL, NULL);
-    logger_config_file_replacement_char = weechat_config_new_option (
+    logger_config_file_name_lower_case = weechat_config_new_option (
         logger_config_file, ptr_section,
-        "replacement_char", "string",
-        N_("replacement char for special chars in filename built with mask "
-           "(like directory delimiter)"),
-        NULL, 0, 0, "_", NULL, 0, NULL, NULL,
+        "name_lower_case", "boolean",
+        N_("use only lower case for log filenames"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL,
         &logger_config_change_file_option_restart_log, NULL, NULL, NULL);
-    logger_config_file_info_lines = weechat_config_new_option (
-        logger_config_file, ptr_section,
-        "info_lines", "boolean",
-        N_("write information line in log file when log starts or ends for a "
-           "buffer"),
-        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-    logger_config_file_time_format = weechat_config_new_option (
-        logger_config_file, ptr_section,
-        "time_format", "string",
-        N_("timestamp used in log files (see man strftime for date/time "
-           "specifiers)"),
-        NULL, 0, 0, "%Y-%m-%d %H:%M:%S", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     logger_config_file_nick_prefix = weechat_config_new_option (
         logger_config_file, ptr_section,
         "nick_prefix", "string",
@@ -486,6 +465,27 @@ logger_config_init ()
         "nick_suffix", "string",
         N_("text to write after nick in prefix of message, example: \">\""),
         NULL, 0, 0, "", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    logger_config_file_path = weechat_config_new_option (
+        logger_config_file, ptr_section,
+        "path", "string",
+        N_("path for WeeChat log files; \"%h\" at beginning of string is "
+           "replaced by WeeChat home (\"~/.weechat\" by default); date "
+           "specifiers are permitted (see man strftime)"),
+        NULL, 0, 0, "%h/logs/", NULL, 0, NULL, NULL,
+        &logger_config_change_file_option_restart_log, NULL, NULL, NULL);
+    logger_config_file_replacement_char = weechat_config_new_option (
+        logger_config_file, ptr_section,
+        "replacement_char", "string",
+        N_("replacement char for special chars in filename built with mask "
+           "(like directory delimiter)"),
+        NULL, 0, 0, "_", NULL, 0, NULL, NULL,
+        &logger_config_change_file_option_restart_log, NULL, NULL, NULL);
+    logger_config_file_time_format = weechat_config_new_option (
+        logger_config_file, ptr_section,
+        "time_format", "string",
+        N_("timestamp used in log files (see man strftime for date/time "
+           "specifiers)"),
+        NULL, 0, 0, "%Y-%m-%d %H:%M:%S", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
 
     /* level */
     ptr_section = weechat_config_new_section (logger_config_file, "level",
