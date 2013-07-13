@@ -838,7 +838,8 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
 
             /* build array with pointers to split items */
 
-            linear_items = malloc (total_items * sizeof (*linear_items));
+            linear_items = (total_items > 0) ?
+                malloc (total_items * sizeof (*linear_items)) : NULL;
             if (linear_items)
             {
                 index = 0;
