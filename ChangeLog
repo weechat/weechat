@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.2-dev, 2013-07-11
+v0.4.2-dev, 2013-07-13
 
 
 This document lists all changes for each version.
@@ -41,6 +41,7 @@ Version 0.4.2 (under dev!)
   (patch #8062)
 * irc: fix multiple nicks in command /query (separated by commas): open one
   buffer per nick
+* lua: fix interpreter used in API functions (bug #39470)
 * relay: add command "ping" in weechat protocol (task #12689)
 * relay: fix binding to an IP address (bug #39119)
 * xfer: add option xfer.look.pv_tags
