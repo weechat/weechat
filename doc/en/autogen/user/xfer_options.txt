@@ -98,6 +98,11 @@
 ** type: integer
 ** values: 0 .. 256 (default value: `20`)
 
+* [[option_xfer.look.pv_tags]] *xfer.look.pv_tags*
+** description: `comma separated list of tags used in private messages, for example: "notify_message", "notify_private" or "notify_highlight"`
+** type: string
+** values: any string (default value: `"notify_private"`)
+
 * [[option_xfer.network.blocksize]] *xfer.network.blocksize*
 ** description: `block size for sending packets, in bytes`
 ** type: integer

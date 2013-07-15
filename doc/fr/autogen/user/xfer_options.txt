@@ -98,6 +98,11 @@
 ** type: entier
 ** valeurs: 0 .. 256 (valeur par défaut: `20`)
 
+* [[option_xfer.look.pv_tags]] *xfer.look.pv_tags*
+** description: `liste des tags (séparés par des virgules) utilisés dans les messages privés, par exemple: "notify_message", "notify_private" ou "notify_highlight"`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `"notify_private"`)
+
 * [[option_xfer.network.blocksize]] *xfer.network.blocksize*
 ** description: `taille de bloc pour les paquets envoyés, en octets`
 ** type: entier

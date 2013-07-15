@@ -98,6 +98,11 @@
 ** tipo: intero
 ** valori: 0 .. 256 (valore predefinito: `20`)
 
+* [[option_xfer.look.pv_tags]] *xfer.look.pv_tags*
+** descrizione: `comma separated list of tags used in private messages, for example: "notify_message", "notify_private" or "notify_highlight"`
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: `"notify_private"`)
+
 * [[option_xfer.network.blocksize]] *xfer.network.blocksize*
 ** descrizione: `dimensione blocco per l'invio dei pacchetti, in byte`
 ** tipo: intero

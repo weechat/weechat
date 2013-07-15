@@ -98,6 +98,11 @@
 ** タイプ: 整数
 ** 値: 0 .. 256 (デフォルト値: `20`)
 
+* [[option_xfer.look.pv_tags]] *xfer.look.pv_tags*
+** 説明: `comma separated list of tags used in private messages, for example: "notify_message", "notify_private" or "notify_highlight"`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"notify_private"`)
+
 * [[option_xfer.network.blocksize]] *xfer.network.blocksize*
 ** 説明: `送信パケットのブロックサイズ、バイト単位`
 ** タイプ: 整数
