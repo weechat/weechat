@@ -2876,6 +2876,19 @@ COMMAND_CALLBACK(key)
         }
 
         /* bind new key */
+        if (CONFIG_BOOLEAN(config_look_key_bind_safe)
+            && !gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, argv[2]))
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: it is not safe to bind key \"%s\" because "
+                               "it does not start with a ctrl or meta code (tip: "
+                               "use alt-k to find key codes); if you want to "
+                               "bind this key anyway, turn off option "
+                               "weechat.look.key_bind_safe"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[2]);
+            return WEECHAT_RC_OK;
+        }
         gui_key_verbose = 1;
         ptr_new_key = gui_key_bind (NULL, GUI_KEY_CONTEXT_DEFAULT,
                                     argv[2], argv_eol[3]);
@@ -2932,6 +2945,19 @@ COMMAND_CALLBACK(key)
         }
 
         /* bind new key */
+        if (CONFIG_BOOLEAN(config_look_key_bind_safe)
+            && !gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, argv[3]))
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: it is not safe to bind key \"%s\" because "
+                               "it does not start with a ctrl or meta code (tip: "
+                               "use alt-k to find key codes); if you want to "
+                               "bind this key anyway, turn off option "
+                               "weechat.look.key_bind_safe"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[3]);
+            return WEECHAT_RC_OK;
+        }
         gui_key_verbose = 1;
         ptr_new_key = gui_key_bind (NULL, context,
                                     argv[3], argv_eol[4]);

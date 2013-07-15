@@ -593,6 +593,11 @@
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
+* [[option_weechat.look.key_bind_safe]] *weechat.look.key_bind_safe*
+** 説明: `allow only binding of "safe" keys (beginning with a ctrl or meta code)`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
 * [[option_weechat.look.mouse]] *weechat.look.mouse*
 ** 説明: `マウスサポートの有効化`
 ** タイプ: ブール

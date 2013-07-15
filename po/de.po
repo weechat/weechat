@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-11 21:45+0200\n"
+"POT-Creation-Date: 2013-07-15 18:33+0200\n"
 "PO-Revision-Date: 2013-07-02 22:20+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -444,6 +444,13 @@ msgstr "Taste:"
 
 msgid "No key found"
 msgstr "Keine Taste gefunden"
+
+#, c-format
+msgid ""
+"%sError: it is not safe to bind key \"%s\" because it does not start with a "
+"ctrl or meta code (tip: use alt-k to find key codes); if you want to bind "
+"this key anyway, turn off option weechat.look.key_bind_safe"
+msgstr ""
 
 #, c-format
 msgid "%sError: context \"%s\" not found"
@@ -3008,6 +3015,10 @@ msgid "jump back to initial buffer after reaching end of hotlist"
 msgstr ""
 "springt zurück zum Ausgangsbuffer, falls keine weiteren Einträge in der "
 "Hotlist vorhanden sind"
+
+msgid ""
+"allow only binding of \"safe\" keys (beginning with a ctrl or meta code)"
+msgstr ""
 
 msgid "text to display before nick in prefix of message, example: \"<\""
 msgstr "Text, der vor dem Nick dargestellt werden soll, Beispiel: \"<\""

@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.2-dev, 2013-07-13
+v0.4.2-dev, 2013-07-15
 
 
 This document lists all changes for each version.
@@ -14,6 +14,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 Version 0.4.2 (under dev!)
 --------------------------
 
+* core: add option weechat.look.key_bind_safe
 * core: fix char displayed at the intersection of three windows (bug #39331)
 * core: fix crash in evaluation of expression when reading a string in hdata
   with a NULL value (bug #39419)

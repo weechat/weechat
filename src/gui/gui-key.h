@@ -90,6 +90,7 @@ extern int gui_key_search_context (const char *context);
 extern void gui_key_grab_init (int grab_command, const char *delay);
 extern char *gui_key_get_internal_code (const char *key);
 extern char *gui_key_get_expanded_name (const char *key);
+extern int gui_key_is_safe (int context, const char *key);
 extern struct t_gui_key *gui_key_new (struct t_gui_buffer *buffer,
                                       int context,
                                       const char *key,

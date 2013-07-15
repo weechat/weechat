@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-11 21:45+0200\n"
+"POT-Creation-Date: 2013-07-15 18:33+0200\n"
 "PO-Revision-Date: 2013-06-10 09:19+0200\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -466,6 +466,13 @@ msgstr "Tecla:"
 
 msgid "No key found"
 msgstr "Nenhuma tecla encontrada"
+
+#, c-format
+msgid ""
+"%sError: it is not safe to bind key \"%s\" because it does not start with a "
+"ctrl or meta code (tip: use alt-k to find key codes); if you want to bind "
+"this key anyway, turn off option weechat.look.key_bind_safe"
+msgstr ""
 
 #, c-format
 msgid "%sError: context \"%s\" not found"
@@ -2750,6 +2757,10 @@ msgstr ""
 "(se desabilitado, então pula para o buffer número -1)"
 
 msgid "jump back to initial buffer after reaching end of hotlist"
+msgstr ""
+
+msgid ""
+"allow only binding of \"safe\" keys (beginning with a ctrl or meta code)"
 msgstr ""
 
 #, fuzzy

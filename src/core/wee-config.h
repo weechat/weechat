@@ -149,6 +149,7 @@ extern struct t_config_option *config_look_item_buffer_filter;
 extern struct t_config_option *config_look_jump_current_to_previous_buffer;
 extern struct t_config_option *config_look_jump_previous_buffer_when_closing;
 extern struct t_config_option *config_look_jump_smart_back_to_buffer;
+extern struct t_config_option *config_look_key_bind_safe;
 extern struct t_config_option *config_look_nick_prefix;
 extern struct t_config_option *config_look_nick_suffix;
 extern struct t_config_option *config_look_mouse;

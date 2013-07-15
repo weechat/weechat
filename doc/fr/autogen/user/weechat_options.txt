@@ -593,6 +593,11 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 
+* [[option_weechat.look.key_bind_safe]] *weechat.look.key_bind_safe*
+** description: `autoriser seulement l'association de touches "sûres" (commençant par un code ctrl ou meta)`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `on`)
+
 * [[option_weechat.look.mouse]] *weechat.look.mouse*
 ** description: `activer le support de la souris`
 ** type: booléen

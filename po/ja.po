@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-11 21:45+0200\n"
+"POT-Creation-Date: 2013-07-15 18:33+0200\n"
 "PO-Revision-Date: 2013-07-02 16:02+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -436,6 +436,13 @@ msgstr "キー:"
 
 msgid "No key found"
 msgstr "キーがありません"
+
+#, c-format
+msgid ""
+"%sError: it is not safe to bind key \"%s\" because it does not start with a "
+"ctrl or meta code (tip: use alt-k to find key codes); if you want to bind "
+"this key anyway, turn off option weechat.look.key_bind_safe"
+msgstr ""
 
 #, c-format
 msgid "%sError: context \"%s\" not found"
@@ -2835,6 +2842,10 @@ msgstr ""
 
 msgid "jump back to initial buffer after reaching end of hotlist"
 msgstr "ホットリストの最後に到達したら最初のバッファに移動する"
+
+msgid ""
+"allow only binding of \"safe\" keys (beginning with a ctrl or meta code)"
+msgstr ""
 
 msgid "text to display before nick in prefix of message, example: \"<\""
 msgstr ""

@@ -593,6 +593,11 @@
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
+* [[option_weechat.look.key_bind_safe]] *weechat.look.key_bind_safe*
+** descrizione: `allow only binding of "safe" keys (beginning with a ctrl or meta code)`
+** tipo: bool
+** valori: on, off (valore predefinito: `on`)
+
 * [[option_weechat.look.mouse]] *weechat.look.mouse*
 ** descrizione: `abilita il supporto del mouse`
 ** tipo: bool

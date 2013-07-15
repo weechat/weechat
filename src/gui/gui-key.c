@@ -581,6 +581,39 @@ gui_key_set_score (struct t_gui_key *key)
 }
 
 /*
+ * Checks if a key is safe or not: a safe key begins always with the "meta" or
+ * "ctrl" code (except "@" allowed in cursor/mouse contexts).
+ *
+ * Returns:
+ *   1: key is safe
+ *   0: key is NOT safe
+ */
+
+int
+gui_key_is_safe (int context, const char *key)
+{
+    char *internal_code;
+    int rc;
+
+    /* "@" is allowed at beginning for cursor/mouse contexts */
+    if ((key[0] == '@')
+        && ((context == GUI_KEY_CONTEXT_CURSOR)
+            || (context == GUI_KEY_CONTEXT_MOUSE)))
+    {
+        return 1;
+    }
+
+    /* check that first char is a ctrl or meta code */
+    internal_code = gui_key_get_internal_code (key);
+    if (!internal_code)
+        return 0;
+    rc = (internal_code[0] == '\x01') ? 1 : 0;
+    free (internal_code);
+
+    return rc;
+}
+
+/*
  * Adds a new key in keys list.
  *
  * If buffer is not null, then key is specific to buffer, otherwise it's general

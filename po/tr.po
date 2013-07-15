@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-11 21:45+0200\n"
+"POT-Creation-Date: 2013-07-15 18:33+0200\n"
 "PO-Revision-Date: 2013-06-28 13:51+0200\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -404,6 +404,13 @@ msgstr "Tuş:"
 
 msgid "No key found"
 msgstr "Tuş bulunamadı"
+
+#, c-format
+msgid ""
+"%sError: it is not safe to bind key \"%s\" because it does not start with a "
+"ctrl or meta code (tip: use alt-k to find key codes); if you want to bind "
+"this key anyway, turn off option weechat.look.key_bind_safe"
+msgstr ""
 
 #, c-format
 msgid "%sError: context \"%s\" not found"
@@ -2048,6 +2055,10 @@ msgid ""
 msgstr ""
 
 msgid "jump back to initial buffer after reaching end of hotlist"
+msgstr ""
+
+msgid ""
+"allow only binding of \"safe\" keys (beginning with a ctrl or meta code)"
 msgstr ""
 
 msgid "text to display before nick in prefix of message, example: \"<\""
