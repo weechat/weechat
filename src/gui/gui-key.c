@@ -731,7 +731,7 @@ gui_key_search_part (struct t_gui_buffer *buffer, int context,
 }
 
 /*
- * Binds a key to a function (command or special function).
+ * Binds a key to a command.
  *
  * If buffer is not null, then key is specific to buffer otherwise it's general
  * key (for most keys).
@@ -1288,7 +1288,7 @@ gui_key_pressed (const char *key_str)
     {
         if (strcmp (ptr_key->key, gui_key_combo_buffer) == 0)
         {
-            /* exact combo found => execute function or command */
+            /* exact combo found => execute command */
             gui_key_combo_buffer[0] = '\0';
             if (ptr_key->command)
             {
