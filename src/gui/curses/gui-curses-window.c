@@ -1498,7 +1498,7 @@ gui_window_scroll_beyond_end (struct t_gui_window *window)
     if (!gui_init_ok)
         return;
 
-    if (window->buffer->lines)
+    if (window->buffer->lines->last_line)
     {
         window->scroll->start_line = window->buffer->lines->last_line;
         window->scroll->start_line_pos = -1;
