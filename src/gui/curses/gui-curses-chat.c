@@ -1390,6 +1390,12 @@ gui_chat_calculate_line_diff (struct t_gui_window *window,
 
     backward = (difference < 0);
 
+    if (*line && (*line_pos < 0))
+    {
+        *line = (*line)->next_line;
+        *line_pos = 0;
+    }
+
     if (!(*line))
     {
         /* if looking backward, start at last line of buffer */
@@ -1480,20 +1486,44 @@ gui_chat_calculate_line_diff (struct t_gui_window *window,
 void
 gui_chat_draw_formatted_buffer (struct t_gui_window *window)
 {
-    struct t_gui_line *ptr_line;
-    int line_pos, count, old_scrolling, old_lines_after;
+    struct t_gui_line *ptr_line, *ptr_line2;
+    int auto_search_first_line, line_pos, line_pos2, count;
+    int old_scrolling, old_lines_after;
 
     /* display at position of scrolling */
+    auto_search_first_line = 1;
+    ptr_line = NULL;
+    line_pos = 0;
     if (window->scroll->start_line)
     {
+        auto_search_first_line = 0;
         ptr_line = window->scroll->start_line;
         line_pos = window->scroll->start_line_pos;
+        if (line_pos < 0)
+        {
+            ptr_line = ptr_line->next_line;
+            line_pos = 0;
+            if (ptr_line)
+            {
+                ptr_line2 = ptr_line;
+                line_pos2 = 0;
+                gui_chat_calculate_line_diff (window, &ptr_line2, &line_pos2,
+                                              window->win_chat_height);
+                if (ptr_line2)
+                {
+                    auto_search_first_line = 1;
+                    window->scroll->start_line = NULL;
+                    window->scroll->start_line_pos = 0;
+                    ptr_line = NULL;
+                    line_pos = 0;
+                }
+            }
+        }
     }
-    else
+
+    if (auto_search_first_line)
     {
         /* look for first line to display, starting from last line */
-        ptr_line = NULL;
-        line_pos = 0;
         gui_chat_calculate_line_diff (window, &ptr_line, &line_pos,
                                       (-1) * (window->win_chat_height - 1));
     }
@@ -1563,21 +1593,12 @@ gui_chat_draw_formatted_buffer (struct t_gui_window *window)
                           WEECHAT_HOOK_SIGNAL_POINTER, window);
     }
 
-    if (!window->scroll->scrolling
-        && window->scroll->reset_allowed)
-    {
-        window->scroll->start_line = NULL;
-        window->scroll->start_line_pos = 0;
-    }
-
     /* cursor is below end line of chat window? */
     if (window->win_chat_cursor_y > window->win_chat_height - 1)
     {
         window->win_chat_cursor_x = 0;
         window->win_chat_cursor_y = window->win_chat_height - 1;
     }
-
-    window->scroll->reset_allowed = 0;
 }
 
 /*
@@ -1590,8 +1611,16 @@ gui_chat_draw_free_buffer (struct t_gui_window *window, int clear_chat)
     struct t_gui_line *ptr_line;
     int y_start, y_end, y;
 
-    ptr_line = (window->scroll->start_line) ?
-        window->scroll->start_line : window->buffer->lines->first_line;
+    ptr_line = NULL;
+    if (window->scroll->start_line)
+    {
+        ptr_line = window->scroll->start_line;
+        if (window->scroll->start_line_pos < 0)
+            ptr_line = ptr_line->next_line;
+    }
+    else
+        ptr_line = window->buffer->lines->first_line;
+
     if (ptr_line)
     {
         if (!ptr_line->data->displayed)

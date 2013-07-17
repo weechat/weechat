@@ -96,8 +96,6 @@ struct t_gui_window_scroll
                                        /* (for horizontal scrolling)        */
     int lines_after;                   /* number of lines after last line   */
                                        /* displayed (with scrolling)        */
-    int reset_allowed;                 /* reset scroll allowed (when using  */
-                                       /* keys like page_up/down, end, ..)  */
     struct t_gui_window_scroll *prev_scroll; /* link to prev. buf. scrolled */
     struct t_gui_window_scroll *next_scroll; /* link to next buf. scrolled  */
 };
@@ -216,6 +214,7 @@ extern void gui_window_scroll_up (struct t_gui_window *window);
 extern void gui_window_scroll_down (struct t_gui_window *window);
 extern void gui_window_scroll_top (struct t_gui_window *window);
 extern void gui_window_scroll_bottom (struct t_gui_window *window);
+extern void gui_window_scroll_beyond_end (struct t_gui_window *window);
 extern struct t_gui_window *gui_window_split_horizontal (struct t_gui_window *window,
                                                          int percentage);
 extern struct t_gui_window *gui_window_split_vertical (struct t_gui_window *window,

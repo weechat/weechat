@@ -380,7 +380,6 @@ gui_window_scroll_init (struct t_gui_window_scroll *window_scroll,
     window_scroll->scrolling = 0;
     window_scroll->start_col = 0;
     window_scroll->lines_after = 0;
-    window_scroll->reset_allowed = 0;
     window_scroll->prev_scroll = NULL;
     window_scroll->next_scroll = NULL;
 }
@@ -440,8 +439,7 @@ gui_window_scroll_remove_not_scrolled (struct t_gui_window *window)
                 && (ptr_scroll->start_line_pos == 0)
                 && (ptr_scroll->scrolling == 0)
                 && (ptr_scroll->start_col == 0)
-                && (ptr_scroll->lines_after == 0)
-                && (ptr_scroll->reset_allowed == 0))
+                && (ptr_scroll->lines_after == 0))
             {
                 gui_window_scroll_free (window, ptr_scroll);
             }
@@ -1729,7 +1727,6 @@ gui_window_hdata_window_scroll_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_gui_window_scroll, scrolling, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_window_scroll, start_col, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_window_scroll, lines_after, INTEGER, 0, NULL, NULL);
-        HDATA_VAR(struct t_gui_window_scroll, reset_allowed, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_window_scroll, prev_scroll, POINTER, 0, NULL, hdata_name);
         HDATA_VAR(struct t_gui_window_scroll, next_scroll, POINTER, 0, NULL, hdata_name);
     }
@@ -1881,7 +1878,6 @@ gui_window_print_log ()
             log_printf ("    scrolling . . . . . : %d",    ptr_scroll->scrolling);
             log_printf ("    start_col . . . . . : %d",    ptr_scroll->start_col);
             log_printf ("    lines_after . . . . : %d",    ptr_scroll->lines_after);
-            log_printf ("    reset_allowed . . . : %d",    ptr_scroll->reset_allowed);
             log_printf ("    prev_scroll . . . . : 0x%lx", ptr_scroll->prev_scroll);
             log_printf ("    next_scroll . . . . : 0x%lx", ptr_scroll->next_scroll);
         }
