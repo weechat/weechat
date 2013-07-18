@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-15 18:33+0200\n"
-"PO-Revision-Date: 2013-06-28 13:51+0200\n"
+"POT-Creation-Date: 2013-07-18 19:50+0200\n"
+"PO-Revision-Date: 2013-07-18 19:52+0200\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: tr\n"
@@ -3437,6 +3437,12 @@ msgid "%s%s%s %s(%s%s%s)%s is back on server"
 msgstr ""
 
 #, c-format
+msgid ""
+"%s%s: \"-yes\" argument is required for nick \"*\" (security reason), see /"
+"help %s"
+msgstr ""
+
+#, c-format
 msgid "%s: future away: %s"
 msgstr ""
 
@@ -3856,10 +3862,31 @@ msgstr ""
 msgid "<nick> [<nick>...]"
 msgstr "<rumuz> [<rumuz>...]"
 
+msgid ""
+"nick: nick or mask (can start or end with \"*\" as wildcard)\n"
+"   *: remove channel half-operator status from everybody on channel except "
+"yourself"
+msgstr ""
+
 msgid "remove channel operator status from nick(s)"
 msgstr ""
 
+#, fuzzy
+msgid "<nick> [<nick>...] || * -yes"
+msgstr "<rumuz> [<rumuz>...]"
+
+msgid ""
+"nick: nick or mask (can start or end with \"*\" as wildcard)\n"
+"   *: remove channel operator status from everybody on channel except "
+"yourself"
+msgstr ""
+
 msgid "remove voice from nick(s)"
+msgstr ""
+
+msgid ""
+"nick: nick or mask (can start or end with \"*\" as wildcard)\n"
+"   *: remove voice from everybody on channel"
 msgstr ""
 
 msgid "shutdown the server"
@@ -3882,6 +3909,11 @@ msgid ""
 msgstr ""
 
 msgid "give channel half-operator status to nick(s)"
+msgstr ""
+
+msgid ""
+"nick: nick or mask (can start or end with \"*\" as wildcard)\n"
+"   *: give channel half-operator status to everybody on channel"
 msgstr ""
 
 msgid "ignore nicks/hosts from servers or channels"
@@ -4167,6 +4199,11 @@ msgid ""
 msgstr ""
 
 msgid "give channel operator status to nick(s)"
+msgstr ""
+
+msgid ""
+"nick: nick or mask (can start or end with \"*\" as wildcard)\n"
+"   *: give channel operator status to everybody on channel"
 msgstr ""
 
 msgid "get operator privileges"
@@ -4512,6 +4549,11 @@ msgstr ""
 "  nick: rumuz"
 
 msgid "give voice to nick(s)"
+msgstr ""
+
+msgid ""
+"nick: nick or mask (can start or end with \"*\" as wildcard)\n"
+"   *: give voice to everybody on channel"
 msgstr ""
 
 msgid "send a notice to channel ops"
@@ -8000,6 +8042,3 @@ msgstr "Tür"
 
 msgid "Constants"
 msgstr ""
-
-#~ msgid "%s default keys (context: \"%s\"):\n"
-#~ msgstr "%s default keys (context: \"%s\"):\n"

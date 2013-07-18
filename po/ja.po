@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-15 18:33+0200\n"
-"PO-Revision-Date: 2013-07-02 16:02+0200\n"
+"POT-Creation-Date: 2013-07-18 19:50+0200\n"
+"PO-Revision-Date: 2013-07-18 19:51+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
 "Language: ja\n"
@@ -4440,6 +4440,14 @@ msgstr "%s%s: 新しいチャンネルの割り当てに失敗"
 msgid "%s%s%s %s(%s%s%s)%s is back on server"
 msgstr "%s%s%s %s(%s%s%s)%s がサーバに戻りました"
 
+#, fuzzy, c-format
+msgid ""
+"%s%s: \"-yes\" argument is required for nick \"*\" (security reason), see /"
+"help %s"
+msgstr ""
+"%sエラー: キーをリセットするには \"-yes\" 引数が必要です (セキュリティ上の理"
+"由で)"
+
 #, c-format
 msgid "%s: future away: %s"
 msgstr "%s: 離席予約: %s"
@@ -4933,11 +4941,35 @@ msgstr "ニックネームから half-operator 権を剥奪"
 msgid "<nick> [<nick>...]"
 msgstr "<nick> [<nick>...]"
 
+msgid ""
+"nick: nick or mask (can start or end with \"*\" as wildcard)\n"
+"   *: remove channel half-operator status from everybody on channel except "
+"yourself"
+msgstr ""
+
 msgid "remove channel operator status from nick(s)"
 msgstr "ニックネームからチャンネルオペレータ権を剥奪"
 
+#, fuzzy
+msgid "<nick> [<nick>...] || * -yes"
+msgstr "<nick> [<nick>...]"
+
+msgid ""
+"nick: nick or mask (can start or end with \"*\" as wildcard)\n"
+"   *: remove channel operator status from everybody on channel except "
+"yourself"
+msgstr ""
+
 msgid "remove voice from nick(s)"
 msgstr "ニックネームから発言権を剥奪"
+
+#, fuzzy
+msgid ""
+"nick: nick or mask (can start or end with \"*\" as wildcard)\n"
+"   *: remove voice from everybody on channel"
+msgstr ""
+"別名の名前 (ワイルドカードとして \"*\" で始めるか終わるかできます) (オプショ"
+"ン)"
 
 msgid "shutdown the server"
 msgstr "サーバのシャットダウン"
@@ -4964,6 +4996,11 @@ msgstr ""
 
 msgid "give channel half-operator status to nick(s)"
 msgstr "指定したニックネームに half-operator 権を付与"
+
+msgid ""
+"nick: nick or mask (can start or end with \"*\" as wildcard)\n"
+"   *: give channel half-operator status to everybody on channel"
+msgstr ""
 
 msgid "ignore nicks/hosts from servers or channels"
 msgstr "あるサーバかチャンネルで、指定したニックネーム/ホスト名を無視"
@@ -5371,6 +5408,11 @@ msgstr ""
 msgid "give channel operator status to nick(s)"
 msgstr "ニックネームにオペレータ権を付与"
 
+msgid ""
+"nick: nick or mask (can start or end with \"*\" as wildcard)\n"
+"   *: give channel operator status to everybody on channel"
+msgstr ""
+
 msgid "get operator privileges"
 msgstr "オペレータ権を入手"
 
@@ -5758,6 +5800,14 @@ msgstr ""
 
 msgid "give voice to nick(s)"
 msgstr "ニックネームに発言権を付与"
+
+#, fuzzy
+msgid ""
+"nick: nick or mask (can start or end with \"*\" as wildcard)\n"
+"   *: give voice to everybody on channel"
+msgstr ""
+"別名の名前 (ワイルドカードとして \"*\" で始めるか終わるかできます) (オプショ"
+"ン)"
 
 msgid "send a notice to channel ops"
 msgstr "チャンネルオペレータに notice を送信"
@@ -9824,6 +9874,3 @@ msgstr "タイプ"
 
 msgid "Constants"
 msgstr "定数"
-
-#~ msgid "%s default keys (context: \"%s\"):\n"
-#~ msgstr "%s デフォルトキー (コンテキスト: \"%s\"):\n"

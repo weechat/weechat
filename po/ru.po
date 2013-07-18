@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-15 18:33+0200\n"
-"PO-Revision-Date: 2013-07-02 16:02+0200\n"
+"POT-Creation-Date: 2013-07-18 19:50+0200\n"
+"PO-Revision-Date: 2013-07-18 19:52+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: ru\n"
@@ -3881,6 +3881,13 @@ msgid "%s%s%s %s(%s%s%s)%s is back on server"
 msgstr "%s%s %s(%s%s%s)%s зашёл на канал %s%s\n"
 
 #, fuzzy, c-format
+msgid ""
+"%s%s: \"-yes\" argument is required for nick \"*\" (security reason), see /"
+"help %s"
+msgstr ""
+"%s аргумент \"-yes\" необходим для сброса ключей (в целях безопасности)\n"
+
+#, fuzzy, c-format
 msgid "%s: future away: %s"
 msgstr "Планирование статуса на %s%s%s: %s\n"
 
@@ -4351,13 +4358,34 @@ msgstr "снимает статус оператора с ника(-ов)"
 msgid "<nick> [<nick>...]"
 msgstr "ник [ник ...]"
 
+msgid ""
+"nick: nick or mask (can start or end with \"*\" as wildcard)\n"
+"   *: remove channel half-operator status from everybody on channel except "
+"yourself"
+msgstr ""
+
 #, fuzzy
 msgid "remove channel operator status from nick(s)"
 msgstr "снимает статус оператора с ника(-ов)"
 
 #, fuzzy
+msgid "<nick> [<nick>...] || * -yes"
+msgstr "ник [ник ...]"
+
+msgid ""
+"nick: nick or mask (can start or end with \"*\" as wildcard)\n"
+"   *: remove channel operator status from everybody on channel except "
+"yourself"
+msgstr ""
+
+#, fuzzy
 msgid "remove voice from nick(s)"
 msgstr "снимает право голоса с ника(-ов)"
+
+msgid ""
+"nick: nick or mask (can start or end with \"*\" as wildcard)\n"
+"   *: remove voice from everybody on channel"
+msgstr ""
 
 msgid "shutdown the server"
 msgstr "выключить сервер"
@@ -4387,6 +4415,11 @@ msgstr ""
 #, fuzzy
 msgid "give channel half-operator status to nick(s)"
 msgstr "даёт статус оператора канала нику(-ам)"
+
+msgid ""
+"nick: nick or mask (can start or end with \"*\" as wildcard)\n"
+"   *: give channel half-operator status to everybody on channel"
+msgstr ""
 
 msgid "ignore nicks/hosts from servers or channels"
 msgstr ""
@@ -4732,6 +4765,11 @@ msgstr ""
 #, fuzzy
 msgid "give channel operator status to nick(s)"
 msgstr "даёт статус оператора канала нику(-ам)"
+
+msgid ""
+"nick: nick or mask (can start or end with \"*\" as wildcard)\n"
+"   *: give channel operator status to everybody on channel"
+msgstr ""
 
 msgid "get operator privileges"
 msgstr "получить привилегии оператора"
@@ -5158,6 +5196,11 @@ msgstr ""
 #, fuzzy
 msgid "give voice to nick(s)"
 msgstr "даёт право голоса нику(-ам)"
+
+msgid ""
+"nick: nick or mask (can start or end with \"*\" as wildcard)\n"
+"   *: give voice to everybody on channel"
+msgstr ""
 
 #, fuzzy
 msgid "send a notice to channel ops"
@@ -9004,7 +9047,3 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
-
-#, fuzzy
-#~ msgid "%s default keys (context: \"%s\"):\n"
-#~ msgstr "%s клавиши по умолчанию:\n"

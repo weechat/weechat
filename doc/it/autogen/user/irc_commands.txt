@@ -121,18 +121,29 @@ Esempi:
 [command]*`dehalfop`* revoca lo stato di half-op del canale da uno o più nick::
 ........................................
 /dehalfop  <nick> [<nick>...]
+
+nick: nick or mask (can start or end with "*" as wildcard)
+   *: remove channel half-operator status from everybody on channel except yourself
 ........................................
 
 [[command_irc_deop]]
 [command]*`deop`* revoca lo stato di operatore del canale da uno o più nick::
 ........................................
 /deop  <nick> [<nick>...]
+       * -yes
+
+nick: nick or mask (can start or end with "*" as wildcard)
+   *: remove channel operator status from everybody on channel except yourself
 ........................................
 
 [[command_irc_devoice]]
 [command]*`devoice`* revoca il voice da uno o più nick::
 ........................................
 /devoice  <nick> [<nick>...]
+          * -yes
+
+nick: nick or mask (can start or end with "*" as wildcard)
+   *: remove voice from everybody on channel
 ........................................
 
 [[command_irc_die]]
@@ -158,6 +169,10 @@ destinazione: nome server
 [command]*`halfop`* concede lo stato di half-op del canale ad uno o più nick::
 ........................................
 /halfop  <nick> [<nick>...]
+         * -yes
+
+nick: nick or mask (can start or end with "*" as wildcard)
+   *: give channel half-operator status to everybody on channel
 ........................................
 
 [[command_irc_ignore]]
@@ -422,6 +437,10 @@ Esempi:
 [command]*`op`* concede lo stato di operatore del canale ad uno o più nick::
 ........................................
 /op  <nick> [<nick>...]
+     * -yes
+
+nick: nick or mask (can start or end with "*" as wildcard)
+   *: give channel operator status to everybody on channel
 ........................................
 
 [[command_irc_oper]]
@@ -719,6 +738,9 @@ server: nome server
 [command]*`voice`* concede il voice ad uno o più utenti::
 ........................................
 /voice  <nick> [<nick>...]
+
+nick: nick or mask (can start or end with "*" as wildcard)
+   *: give voice to everybody on channel
 ........................................
 
 [[command_irc_wallchops]]

@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-15 18:33+0200\n"
-"PO-Revision-Date: 2013-06-14 19:39-0300\n"
+"POT-Creation-Date: 2013-07-18 19:50+0200\n"
+"PO-Revision-Date: 2013-07-18 19:51+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: it\n"
@@ -4525,6 +4525,14 @@ msgstr "%s%s: impossibile allocare un nuovo canale"
 msgid "%s%s%s %s(%s%s%s)%s is back on server"
 msgstr "%s%s%s %s(%s%s%s)%s è tornato sul server"
 
+#, fuzzy, c-format
+msgid ""
+"%s%s: \"-yes\" argument is required for nick \"*\" (security reason), see /"
+"help %s"
+msgstr ""
+"%sErrore: l'argomento \"-yes\" è richiesto per il reset dei tasti (motivi di "
+"sicurezza)"
+
 #, c-format
 msgid "%s: future away: %s"
 msgstr "%s: prossima assenza: %s"
@@ -5026,11 +5034,35 @@ msgstr "revoca lo stato di half-op del canale da uno o più nick"
 msgid "<nick> [<nick>...]"
 msgstr "<nick> [<nick>...]"
 
+msgid ""
+"nick: nick or mask (can start or end with \"*\" as wildcard)\n"
+"   *: remove channel half-operator status from everybody on channel except "
+"yourself"
+msgstr ""
+
 msgid "remove channel operator status from nick(s)"
 msgstr "revoca lo stato di operatore del canale da uno o più nick"
 
+#, fuzzy
+msgid "<nick> [<nick>...] || * -yes"
+msgstr "<nick> [<nick>...]"
+
+msgid ""
+"nick: nick or mask (can start or end with \"*\" as wildcard)\n"
+"   *: remove channel operator status from everybody on channel except "
+"yourself"
+msgstr ""
+
 msgid "remove voice from nick(s)"
 msgstr "revoca il voice da uno o più nick"
+
+#, fuzzy
+msgid ""
+"nick: nick or mask (can start or end with \"*\" as wildcard)\n"
+"   *: remove voice from everybody on channel"
+msgstr ""
+"nome alias (può iniziare o terminare con \"*\" come carattere jolly) "
+"(opzionale)"
 
 msgid "shutdown the server"
 msgstr "arresta il server"
@@ -5058,6 +5090,11 @@ msgstr ""
 
 msgid "give channel half-operator status to nick(s)"
 msgstr "concede lo stato di half-op del canale ad uno o più nick"
+
+msgid ""
+"nick: nick or mask (can start or end with \"*\" as wildcard)\n"
+"   *: give channel half-operator status to everybody on channel"
+msgstr ""
 
 msgid "ignore nicks/hosts from servers or channels"
 msgstr "ignora nick/host dai server o dai canali"
@@ -5468,6 +5505,11 @@ msgstr ""
 msgid "give channel operator status to nick(s)"
 msgstr "concede lo stato di operatore del canale ad uno o più nick"
 
+msgid ""
+"nick: nick or mask (can start or end with \"*\" as wildcard)\n"
+"   *: give channel operator status to everybody on channel"
+msgstr ""
+
 msgid "get operator privileges"
 msgstr "ottiene i privilegi di operatore"
 
@@ -5859,6 +5901,14 @@ msgstr ""
 
 msgid "give voice to nick(s)"
 msgstr "concede il voice ad uno o più utenti"
+
+#, fuzzy
+msgid ""
+"nick: nick or mask (can start or end with \"*\" as wildcard)\n"
+"   *: give voice to everybody on channel"
+msgstr ""
+"nome alias (può iniziare o terminare con \"*\" come carattere jolly) "
+"(opzionale)"
 
 msgid "send a notice to channel ops"
 msgstr "invia una notifica agli operatori del canale"
@@ -9868,6 +9918,3 @@ msgstr "Tipo"
 
 msgid "Constants"
 msgstr "Costanti"
-
-#~ msgid "%s default keys (context: \"%s\"):\n"
-#~ msgstr "%s tasti predefiniti (contesto: \"%s\"):\n"

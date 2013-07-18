@@ -121,18 +121,29 @@ file: ファイルネーム (ローカルホスト上の)
 [command]*`dehalfop`* ニックネームから half-operator 権を剥奪::
 ........................................
 /dehalfop  <nick> [<nick>...]
+
+nick: nick or mask (can start or end with "*" as wildcard)
+   *: remove channel half-operator status from everybody on channel except yourself
 ........................................
 
 [[command_irc_deop]]
 [command]*`deop`* ニックネームからチャンネルオペレータ権を剥奪::
 ........................................
 /deop  <nick> [<nick>...]
+       * -yes
+
+nick: nick or mask (can start or end with "*" as wildcard)
+   *: remove channel operator status from everybody on channel except yourself
 ........................................
 
 [[command_irc_devoice]]
 [command]*`devoice`* ニックネームから発言権を剥奪::
 ........................................
 /devoice  <nick> [<nick>...]
+          * -yes
+
+nick: nick or mask (can start or end with "*" as wildcard)
+   *: remove voice from everybody on channel
 ........................................
 
 [[command_irc_die]]
@@ -158,6 +169,10 @@ target: サーバ名
 [command]*`halfop`* 指定したニックネームに half-operator 権を付与::
 ........................................
 /halfop  <nick> [<nick>...]
+         * -yes
+
+nick: nick or mask (can start or end with "*" as wildcard)
+   *: give channel half-operator status to everybody on channel
 ........................................
 
 [[command_irc_ignore]]
@@ -422,6 +437,10 @@ server: 内部サーバ名 (デフォルトでは現在のサーバ)
 [command]*`op`* ニックネームにオペレータ権を付与::
 ........................................
 /op  <nick> [<nick>...]
+     * -yes
+
+nick: nick or mask (can start or end with "*" as wildcard)
+   *: give channel operator status to everybody on channel
 ........................................
 
 [[command_irc_oper]]
@@ -719,6 +738,9 @@ server: サーバ名
 [command]*`voice`* ニックネームに発言権を付与::
 ........................................
 /voice  <nick> [<nick>...]
+
+nick: nick or mask (can start or end with "*" as wildcard)
+   *: give voice to everybody on channel
 ........................................
 
 [[command_irc_wallchops]]

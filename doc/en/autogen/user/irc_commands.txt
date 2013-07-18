@@ -121,18 +121,29 @@ Examples:
 [command]*`dehalfop`* remove channel half-operator status from nick(s)::
 ........................................
 /dehalfop  <nick> [<nick>...]
+
+nick: nick or mask (can start or end with "*" as wildcard)
+   *: remove channel half-operator status from everybody on channel except yourself
 ........................................
 
 [[command_irc_deop]]
 [command]*`deop`* remove channel operator status from nick(s)::
 ........................................
 /deop  <nick> [<nick>...]
+       * -yes
+
+nick: nick or mask (can start or end with "*" as wildcard)
+   *: remove channel operator status from everybody on channel except yourself
 ........................................
 
 [[command_irc_devoice]]
 [command]*`devoice`* remove voice from nick(s)::
 ........................................
 /devoice  <nick> [<nick>...]
+          * -yes
+
+nick: nick or mask (can start or end with "*" as wildcard)
+   *: remove voice from everybody on channel
 ........................................
 
 [[command_irc_die]]
@@ -158,6 +169,10 @@ target: server name
 [command]*`halfop`* give channel half-operator status to nick(s)::
 ........................................
 /halfop  <nick> [<nick>...]
+         * -yes
+
+nick: nick or mask (can start or end with "*" as wildcard)
+   *: give channel half-operator status to everybody on channel
 ........................................
 
 [[command_irc_ignore]]
@@ -422,6 +437,10 @@ Examples:
 [command]*`op`* give channel operator status to nick(s)::
 ........................................
 /op  <nick> [<nick>...]
+     * -yes
+
+nick: nick or mask (can start or end with "*" as wildcard)
+   *: give channel operator status to everybody on channel
 ........................................
 
 [[command_irc_oper]]
@@ -719,6 +738,9 @@ server: server name
 [command]*`voice`* give voice to nick(s)::
 ........................................
 /voice  <nick> [<nick>...]
+
+nick: nick or mask (can start or end with "*" as wildcard)
+   *: give voice to everybody on channel
 ........................................
 
 [[command_irc_wallchops]]

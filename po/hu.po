@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-15 18:33+0200\n"
-"PO-Revision-Date: 2013-07-02 15:57+0200\n"
+"POT-Creation-Date: 2013-07-18 19:50+0200\n"
+"PO-Revision-Date: 2013-07-18 19:51+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: hu\n"
@@ -3848,6 +3848,14 @@ msgid "%s%s%s %s(%s%s%s)%s is back on server"
 msgstr "%s%s %s(%s%s%s)%s belépett a(z) %s%s szobába\n"
 
 #, fuzzy, c-format
+msgid ""
+"%s%s: \"-yes\" argument is required for nick \"*\" (security reason), see /"
+"help %s"
+msgstr ""
+"%s \"-yes\" paraméter megadása kötelező a billentyűparancsok "
+"visszaállításához (biztonsági okokból)\n"
+
+#, fuzzy, c-format
 msgid "%s: future away: %s"
 msgstr "CTCP %sVERSION%s válasz %s%s%s felhasználótól: %s\n"
 
@@ -4314,13 +4322,34 @@ msgstr "elveszi az operátori jogot a felhasználó(k)tól"
 msgid "<nick> [<nick>...]"
 msgstr "név [név...]"
 
+msgid ""
+"nick: nick or mask (can start or end with \"*\" as wildcard)\n"
+"   *: remove channel half-operator status from everybody on channel except "
+"yourself"
+msgstr ""
+
 #, fuzzy
 msgid "remove channel operator status from nick(s)"
 msgstr "elveszi az operátori jogot a felhasználó(k)tól"
 
 #, fuzzy
+msgid "<nick> [<nick>...] || * -yes"
+msgstr "név [név...]"
+
+msgid ""
+"nick: nick or mask (can start or end with \"*\" as wildcard)\n"
+"   *: remove channel operator status from everybody on channel except "
+"yourself"
+msgstr ""
+
+#, fuzzy
 msgid "remove voice from nick(s)"
 msgstr "elveszi a voice jogot a felhasználó(k)tól"
+
+msgid ""
+"nick: nick or mask (can start or end with \"*\" as wildcard)\n"
+"   *: remove voice from everybody on channel"
+msgstr ""
 
 msgid "shutdown the server"
 msgstr "szerver leállítása"
@@ -4351,6 +4380,11 @@ msgstr ""
 #, fuzzy
 msgid "give channel half-operator status to nick(s)"
 msgstr "operátori jogok biztosítása felhasználó(k)nak"
+
+msgid ""
+"nick: nick or mask (can start or end with \"*\" as wildcard)\n"
+"   *: give channel half-operator status to everybody on channel"
+msgstr ""
 
 msgid "ignore nicks/hosts from servers or channels"
 msgstr ""
@@ -4698,6 +4732,11 @@ msgstr ""
 #, fuzzy
 msgid "give channel operator status to nick(s)"
 msgstr "operátori jogok biztosítása felhasználó(k)nak"
+
+msgid ""
+"nick: nick or mask (can start or end with \"*\" as wildcard)\n"
+"   *: give channel operator status to everybody on channel"
+msgstr ""
 
 msgid "get operator privileges"
 msgstr "operátori jogok megszerzése"
@@ -5129,6 +5168,11 @@ msgstr ""
 #, fuzzy
 msgid "give voice to nick(s)"
 msgstr "voice jog biztosítása a felhasználó(k)nak"
+
+msgid ""
+"nick: nick or mask (can start or end with \"*\" as wildcard)\n"
+"   *: give voice to everybody on channel"
+msgstr ""
 
 #, fuzzy
 msgid "send a notice to channel ops"
@@ -8984,7 +9028,3 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
-
-#, fuzzy
-#~ msgid "%s default keys (context: \"%s\"):\n"
-#~ msgstr "%s alapértelmezett billentyűk:\n"

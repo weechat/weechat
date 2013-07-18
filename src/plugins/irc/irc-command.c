@@ -51,34 +51,190 @@
 
 /*
  * Sends mode change for many nicks on a channel.
+ *
+ * Argument "set" is "+" or "-", mode can be "o", "h", "v", or any other mode
+ * supported by server.
+ *
+ * Many messages can be sent if the number of nicks is greater than the server
+ * limit (number of modes allowed in a single message). In this case, the first
+ * message is sent with high priority, and subsequent messages are sent with low
+ * priority.
  */
 
 void
-irc_command_mode_nicks (struct t_irc_server *server, const char *channel,
-                        const char *set, const char *mode, int argc, char **argv)
+irc_command_mode_nicks (struct t_irc_server *server,
+                        struct t_irc_channel *channel,
+                        const char *command,
+                        const char *set, const char *mode,
+                        int argc, char **argv)
 {
-    int i, length;
-    char *command;
+    int i, arg_yes, max_modes, modes_added, msg_priority, prefix_found;
+    long number;
+    char *error, prefix, modes[128+1], nicks[1024];
+    const char *ptr_modes;
+    struct t_irc_nick *ptr_nick;
+    struct t_hashtable *nicks_sent;
 
-    length = 0;
-    for (i = 1; i < argc; i++)
-        length += strlen (argv[i]) + 1;
-    length += strlen (channel) + (argc * strlen (mode)) + 32;
-    command = malloc (length);
-    if (command)
+    if (argc < 2)
+        return;
+
+    arg_yes = 0;
+    if ((argc > 2) && (strcmp (argv[argc - 1], "-yes") == 0))
     {
-        snprintf (command, length, "MODE %s %s", channel, set);
-        for (i = 1; i < argc; i++)
-            strcat (command, mode);
+        argc--;
+        arg_yes = 1;
+    }
+
+    if (!arg_yes)
+    {
         for (i = 1; i < argc; i++)
         {
-            strcat (command, " ");
-            strcat (command, argv[i]);
+            if (strcmp (argv[i], "*") == 0)
+            {
+                weechat_printf (NULL,
+                                _("%s%s: \"-yes\" argument is required for "
+                                  "nick \"*\" (security reason), see /help %s"),
+                                weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                                command);
+                return;
+            }
         }
-        irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                          "%s", command);
-        free (command);
     }
+
+    /* default is 4 modes max (if server did not send the info) */
+    max_modes = 4;
+
+    /*
+     * look for the max modes supported in one command by the server
+     * (in isupport value, with the format: "MODES=4")
+     */
+    ptr_modes = irc_server_get_isupport_value (server, "MODES");
+    if (ptr_modes)
+    {
+        error = NULL;
+        number = strtol (ptr_modes, &error, 10);
+        if (error && !error[0])
+        {
+            max_modes = number;
+            if (max_modes < 1)
+                max_modes = 1;
+            if (max_modes > 128)
+                max_modes = 128;
+            max_modes = (number >= 1) ? number : 1;
+        }
+    }
+
+    /* get prefix for the mode (example: prefix == '@' for mode 'o') */
+    prefix = irc_server_get_prefix_char_for_mode (server, mode[0]);
+
+    /*
+     * first message has high priority and subsequent messages have low priority
+     * (so for example in case of "/op *" sent as multiple messages, the user
+     * can still send some messages which will have higher priority than the
+     * "MODE" messages we are sending now)
+     */
+    msg_priority = IRC_SERVER_SEND_OUTQ_PRIO_HIGH;
+
+    modes_added = 0;
+    modes[0] = '\0';
+    nicks[0] = '\0';
+
+    nicks_sent = weechat_hashtable_new (128,
+                                        WEECHAT_HASHTABLE_STRING,
+                                        WEECHAT_HASHTABLE_STRING,
+                                        NULL,
+                                        NULL);
+    if (!nicks_sent)
+        return;
+
+    for (ptr_nick = channel->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
+    {
+        /* if nick was already sent, ignore it */
+        if (weechat_hashtable_has_key (nicks_sent, ptr_nick->name))
+            continue;
+
+        for (i = 1; i < argc; i++)
+        {
+            if (weechat_string_match (ptr_nick->name, argv[i], 0))
+            {
+                /*
+                 * self nick is excluded if both conditions are true:
+                 * - set+mode is "-o" or "-h" (commands /deop, /dehalfop)
+                 * - one wildcard is used in argument
+                 *   (for example: "/deop *" or "/deop fl*")
+                 */
+                if (set[0] == '-'
+                    && (mode[0] == 'o' || mode[0] == 'h')
+                    && argv[i][0]
+                    && ((argv[i][0] == '*')
+                        || (argv[i][strlen (argv[i]) - 1] == '*'))
+                    && (strcmp (server->nick, ptr_nick->name) == 0))
+                {
+                    continue;
+                }
+
+                /*
+                 * check if the nick mode is already OK, according to
+                 * set/mode asked: if already OK, then the nick is ignored
+                 */
+                if (prefix != ' ')
+                {
+                    prefix_found = (strchr (ptr_nick->prefixes, prefix) != NULL);
+                    if (((set[0] == '+') && prefix_found)
+                        || ((set[0] == '-') && !prefix_found))
+                    {
+                        /*
+                         * mode +X and nick has already +X or mode -X and nick
+                         * does not have +X
+                         */
+                        continue;
+                    }
+                }
+
+                /*
+                 * if we reached the max number of modes allowed, send the MODE
+                 * command now and flush the modes/nicks strings
+                 */
+                if (modes_added == max_modes)
+                {
+                    irc_server_sendf (server, msg_priority, NULL,
+                                      "MODE %s %s%s %s",
+                                      channel->name, set, modes, nicks);
+                    modes[0] = '\0';
+                    nicks[0] = '\0';
+                    modes_added = 0;
+                    /* subsequent messages will have low priority */
+                    msg_priority = IRC_SERVER_SEND_OUTQ_PRIO_LOW;
+                }
+
+                /* add one mode letter (after +/-) and add the nick in nicks */
+                if (strlen (nicks) + 1 + strlen (ptr_nick->name) + 1 < sizeof (nicks))
+                {
+                    strcat (modes, mode);
+                    if (nicks[0])
+                        strcat (nicks, " ");
+                    strcat (nicks, ptr_nick->name);
+                    modes_added++;
+                    weechat_hashtable_set (nicks_sent, ptr_nick->name, NULL);
+                    /*
+                     * nick just added, ignore other arguments that would add
+                     * the same nick
+                     */
+                    break;
+                }
+            }
+        }
+    }
+
+    /* send a final MODE command if some nicks are remaining */
+    if (modes[0] && nicks[0])
+    {
+        irc_server_sendf (server, msg_priority, NULL,
+                          "MODE %s %s%s %s",
+                          channel->name, set, modes, nicks);
+    }
+
+    weechat_hashtable_free (nicks_sent);
 }
 
 /*
@@ -1314,8 +1470,8 @@ irc_command_dehalfop (void *data, struct t_gui_buffer *buffer, int argc,
         }
         else
         {
-            irc_command_mode_nicks (ptr_server, ptr_channel->name,
-                                    "-", "h", argc, argv);
+            irc_command_mode_nicks (ptr_server, ptr_channel,
+                                    "dehalfop", "-", "h", argc, argv);
         }
     }
     else
@@ -1355,8 +1511,8 @@ irc_command_deop (void *data, struct t_gui_buffer *buffer, int argc,
         }
         else
         {
-            irc_command_mode_nicks (ptr_server, ptr_channel->name,
-                                    "-", "o", argc, argv);
+            irc_command_mode_nicks (ptr_server, ptr_channel,
+                                    "deop", "-", "o", argc, argv);
         }
     }
     else
@@ -1396,8 +1552,8 @@ irc_command_devoice (void *data, struct t_gui_buffer *buffer, int argc,
         }
         else
         {
-            irc_command_mode_nicks (ptr_server, ptr_channel->name,
-                                    "-", "v", argc, argv);
+            irc_command_mode_nicks (ptr_server, ptr_channel,
+                                    "devoice", "-", "v", argc, argv);
         }
     }
     else
@@ -1618,8 +1774,8 @@ irc_command_halfop (void *data, struct t_gui_buffer *buffer, int argc,
         }
         else
         {
-            irc_command_mode_nicks (ptr_server, ptr_channel->name,
-                                    "+", "h", argc, argv);
+            irc_command_mode_nicks (ptr_server, ptr_channel,
+                                    "halfop", "+", "h", argc, argv);
         }
     }
     else
@@ -3328,8 +3484,8 @@ irc_command_op (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
         }
         else
         {
-            irc_command_mode_nicks (ptr_server, ptr_channel->name,
-                                    "+", "o", argc, argv);
+            irc_command_mode_nicks (ptr_server, ptr_channel,
+                                    "op", "+", "o", argc, argv);
         }
     }
     else
@@ -5281,8 +5437,8 @@ irc_command_voice (void *data, struct t_gui_buffer *buffer, int argc,
                               ptr_server->nick);
         }
         else
-            irc_command_mode_nicks (ptr_server, ptr_channel->name,
-                                    "+", "v", argc, argv);
+            irc_command_mode_nicks (ptr_server, ptr_channel,
+                                    "voice", "+", "v", argc, argv);
     }
     else
     {
@@ -5689,18 +5845,26 @@ irc_command_init ()
                           N_("remove channel half-operator status from "
                              "nick(s)"),
                           N_("<nick> [<nick>...]"),
-                          "",
+                          N_("nick: nick or mask (can start or end with \"*\" "
+                             "as wildcard)\n"
+                             "   *: remove channel half-operator status from "
+                             "everybody on channel except yourself"),
                           "%(nicks)", &irc_command_dehalfop, NULL);
     weechat_hook_command ("deop",
                           N_("remove channel operator status from "
                              "nick(s)"),
-                          N_("<nick> [<nick>...]"),
-                          "",
+                          N_("<nick> [<nick>...] || * -yes"),
+                          N_("nick: nick or mask (can start or end with \"*\" "
+                             "as wildcard)\n"
+                             "   *: remove channel operator status from "
+                             "everybody on channel except yourself"),
                           "%(nicks)|%*", &irc_command_deop, NULL);
     weechat_hook_command ("devoice",
                           N_("remove voice from nick(s)"),
-                          N_("<nick> [<nick>...]"),
-                          "",
+                          N_("<nick> [<nick>...] || * -yes"),
+                          N_("nick: nick or mask (can start or end with \"*\" "
+                             "as wildcard)\n"
+                             "   *: remove voice from everybody on channel"),
                           "%(nicks)|%*", &irc_command_devoice, NULL);
     weechat_hook_command ("die",
                           N_("shutdown the server"),
@@ -5720,8 +5884,11 @@ irc_command_init ()
     weechat_hook_command ("halfop",
                           N_("give channel half-operator status to "
                              "nick(s)"),
-                          N_("<nick> [<nick>...]"),
-                          "",
+                          N_("<nick> [<nick>...] || * -yes"),
+                          N_("nick: nick or mask (can start or end with \"*\" "
+                             "as wildcard)\n"
+                             "   *: give channel half-operator status to "
+                             "everybody on channel"),
                           "%(nicks)", &irc_command_halfop, NULL);
     weechat_hook_command ("ignore",
                           N_("ignore nicks/hosts from servers or channels"),
@@ -5962,8 +6129,11 @@ irc_command_init ()
                           &irc_command_notify, NULL);
     weechat_hook_command ("op",
                           N_("give channel operator status to nick(s)"),
-                          N_("<nick> [<nick>...]"),
-                          "",
+                          N_("<nick> [<nick>...] || * -yes"),
+                          N_("nick: nick or mask (can start or end with \"*\" "
+                             "as wildcard)\n"
+                             "   *: give channel operator status to everybody "
+                             "on channel"),
                           "%(nicks)|%*", &irc_command_op, NULL);
     weechat_hook_command ("oper",
                           N_("get operator privileges"),
@@ -6203,7 +6373,9 @@ irc_command_init ()
     weechat_hook_command ("voice",
                           N_("give voice to nick(s)"),
                           N_("<nick> [<nick>...]"),
-                          "",
+                          N_("nick: nick or mask (can start or end with \"*\" "
+                             "as wildcard)\n"
+                             "   *: give voice to everybody on channel"),
                           "%(nicks)|%*", &irc_command_voice, NULL);
     weechat_hook_command ("wallchops",
                           N_("send a notice to channel ops"),
