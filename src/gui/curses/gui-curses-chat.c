@@ -1501,7 +1501,7 @@ gui_chat_draw_formatted_buffer (struct t_gui_window *window)
         line_pos = window->scroll->start_line_pos;
         if (line_pos < 0)
         {
-            ptr_line = ptr_line->next_line;
+            ptr_line = gui_line_get_next_displayed (ptr_line);
             line_pos = 0;
             if (ptr_line)
             {
@@ -1616,7 +1616,7 @@ gui_chat_draw_free_buffer (struct t_gui_window *window, int clear_chat)
     {
         ptr_line = window->scroll->start_line;
         if (window->scroll->start_line_pos < 0)
-            ptr_line = ptr_line->next_line;
+            ptr_line = gui_line_get_next_displayed (ptr_line);
     }
     else
         ptr_line = window->buffer->lines->first_line;
