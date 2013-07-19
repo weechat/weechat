@@ -4870,7 +4870,7 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
         server_name = strdup (server_found->name);
         irc_server_free (server_found);
         weechat_printf (NULL,
-                        _("%s: Server %s%s%s has been deleted"),
+                        _("%s: server %s%s%s has been deleted"),
                         IRC_PLUGIN_NAME,
                         IRC_COLOR_CHAT_SERVER,
                         (server_name) ? server_name : "???",

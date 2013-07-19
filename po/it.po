@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-18 19:50+0200\n"
+"POT-Creation-Date: 2013-07-19 18:12+0200\n"
 "PO-Revision-Date: 2013-07-18 19:51+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4795,8 +4795,8 @@ msgstr ""
 "%s%s: impossibile eliminare il server \"%s\" quando la connessione è attiva. "
 "È necessario effettuare la disconnessione con \"/disconnect %s\"."
 
-#, c-format
-msgid "%s: Server %s%s%s has been deleted"
+#, fuzzy, c-format
+msgid "%s: server %s%s%s has been deleted"
 msgstr "%s: Il server %s%s%s è stato eliminato"
 
 #, c-format

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-18 19:50+0200\n"
+"POT-Creation-Date: 2013-07-19 18:12+0200\n"
 "PO-Revision-Date: 2013-07-18 19:51+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4115,7 +4115,7 @@ msgstr ""
 "a /disconnect %s parancsot előbb.\n"
 
 #, fuzzy, c-format
-msgid "%s: Server %s%s%s has been deleted"
+msgid "%s: server %s%s%s has been deleted"
 msgstr "A %s%s%s szerver törölve\n"
 
 #, fuzzy, c-format
