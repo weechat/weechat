@@ -709,7 +709,7 @@ irc_nick_change (struct t_irc_server *server, struct t_irc_channel *channel,
     irc_nick_nicklist_remove (server, channel, nick);
 
     /* update nicks speaking */
-    nick_is_me = (irc_server_strcasecmp (server, nick->name, server->nick) == 0) ? 1 : 0;
+    nick_is_me = (irc_server_strcasecmp (server, new_nick, server->nick) == 0) ? 1 : 0;
     if (!nick_is_me)
         irc_channel_nick_speaking_rename (channel, nick->name, new_nick);
 

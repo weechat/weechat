@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.2-dev, 2013-07-18
+v0.4.2-dev, 2013-07-19
 
 
 This document lists all changes for each version.
@@ -34,6 +34,8 @@ Version 0.4.2 (under dev!)
 * core: fix line alignment when option weechat.look.buffer_time_format is set
   to empty string
 * aspell: add support of enchant library (patch #6858)
+* irc: fix self nick color in server messages after nick is changed with /nick
+  (bug #39415)
 * irc: add support of wildcards in commands (de)op/halfop/voice (task #9221)
 * irc: add option irc.look.pv_tags
 * irc: fix error message on /invite without arguments (bug #39272)
