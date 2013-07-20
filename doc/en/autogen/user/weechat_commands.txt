@@ -739,7 +739,7 @@ Examples:
          refresh
          scroll [-window <number>] [+/-]<value>[s|m|h|d|M|y]
          scroll_horiz [-window <number>] [+/-]<value>[%]
-         scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_previous_highlight|scroll_next_highlight|scroll_unread [-window <number>]
+         scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_beyond_end|scroll_previous_highlight|scroll_next_highlight|scroll_unread [-window <number>]
          swap [-window <number>] [up|down|left|right]
          zoom[-window <number>]
 
@@ -766,6 +766,7 @@ Examples:
   scroll_down: scroll a few lines down
    scroll_top: scroll to top of buffer
 scroll_bottom: scroll to bottom of buffer
+scroll_beyond_end: scroll beyond the end of buffer
 scroll_previous_highlight: scroll to previous highlight
 scroll_next_highlight: scroll to next highlight
 scroll_unread: scroll to unread marker

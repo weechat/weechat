@@ -739,51 +739,52 @@ command: 実行するコマンド (コマンドが '/' で始まらない場合�
          refresh
          scroll [-window <number>] [+/-]<value>[s|m|h|d|M|y]
          scroll_horiz [-window <number>] [+/-]<value>[%]
-         scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_previous_highlight|scroll_next_highlight|scroll_unread [-window <number>]
+         scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_beyond_end|scroll_previous_highlight|scroll_next_highlight|scroll_unread [-window <number>]
          swap [-window <number>] [up|down|left|right]
          zoom[-window <number>]
 
-         list: 開けられたウィンドウのリストアップ (引数無しの場合、このリストが表示されます)
-           -1: 前のウィンドウに移動
-           +1: 次のウィンドウに移動
-           b#: バッファ番号 # のウィンドウに移動
-           up: 現在のウィンドウの上のウィンドウに移動
-         down: 現在のウィンドウの下のウィンドウに移動
-         left: 左のウィンドウに移動
-        right: 右のウィンドウに移動
-       number: ウィンドウ番号 (/window list を参照)
-       splith: 現在のウィンドウを水平分割
-       splitv: 現在のウィンドウを垂直分割
-       resize: ウィンドウサイズの変更、新しいサイズは親ウィンドウの <pct> パーセントで指定
-      balance: 全てのウィンドウのサイズを均等にする
-        merge: ウィンドウを他のものをマージする (all = 一つのウィンドウにまとめる)
-      page_up: 1 ページ分上方向にスクロール
-    page_down: 1 ページ分下方向にスクロール
-      refresh: スクリーンのリフレッシュ
-       scroll: 指定行数 (+/-N) か指定期間 (s=秒、m=分、h=時間、d=日、M=月、y=年) スクロール
- scroll_horiz: 指定列数 (+/-N) かウィンドウサイズの割合で水平方向にスクロール (フリーコンテンツを含むバッファ以外は無効)
-    scroll_up: 数行分上方向にスクロール
-  scroll_down: 数行分下方向にスクロール
-   scroll_top: バッファの一番上にスクロール
-scroll_bottom: バッファの一番下にスクロール
-scroll_previous_highlight: 一つ前のハイライトにスクロール
-scroll_next_highlight: 次のハイライトにスクロール
-scroll_unread: 未読マーカにスクロール
-         swap: 2 つのウィンドウのバッファを入れ替え (ターゲットウィンドウの方向が引数)
-         zoom: ウィンドウを拡大
+         list: list opened windows (without argument, this list is displayed)
+           -1: jump to previous window
+           +1: jump to next window
+           b#: jump to next window displaying buffer number #
+           up: switch to window above current one
+         down: switch to window below current one
+         left: switch to window on the left
+        right: switch to window on the right
+       number: window number (see /window list)
+       splith: split current window horizontally
+       splitv: split current window vertically
+       resize: resize window size, new size is <pct> percentage of parent window
+      balance: balance the sizes of all windows
+        merge: merge window with another (all = keep only one window)
+      page_up: scroll one page up
+    page_down: scroll one page down
+      refresh: refresh screen
+       scroll: scroll a number of lines (+/-N) or with time: s=seconds, m=minutes, h=hours, d=days, M=months, y=years
+ scroll_horiz: scroll horizontally a number of columns (+/-N) or percentage of window size (this scrolling is possible only on buffers with free content)
+    scroll_up: scroll a few lines up
+  scroll_down: scroll a few lines down
+   scroll_top: scroll to top of buffer
+scroll_bottom: scroll to bottom of buffer
+scroll_beyond_end: scroll beyond the end of buffer
+scroll_previous_highlight: scroll to previous highlight
+scroll_next_highlight: scroll to next highlight
+scroll_unread: scroll to unread marker
+         swap: swap buffers of two windows (with optional direction for target window)
+         zoom: zoom on window
 
-splith と splitv に関しては、pct は新しいウィンドウのパーセンテージで、現在のウィンドウサイズに対する割合で計算されます。例えば、25 は size = current_size / 4 の新しいウィンドウを作成します。
+For splith and splitv, pct is a percentage which represents size of new window, computed with current window as size reference. For example 25 means create a new window with size = current_size / 4
 
-例:
-  バッファ #1 を表示しているウィンドウに移動:
+Examples:
+  jump to window displaying buffer #1:
     /window b1
-  2 行分上方向にスクロール:
+  scroll 2 lines up:
     /window scroll -2
-  2 日分上方向にスクロール:
+  scroll 2 days up:
     /window scroll -2d
-  今日の最初にスクロール:
+  scroll to beginning of current day:
     /window scroll -d
-  ウィンドウ #2 を拡大:
+  zoom on window #2:
     /window zoom -window 2
 ........................................
 
