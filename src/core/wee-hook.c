@@ -1435,11 +1435,8 @@ hook_process_child (struct t_hook *hook_process)
     const char *ptr_url, *ptr_arg;
     int rc, i, num_args;
 
-    /*
-     * close stdin, so that process will fail to read stdin (process reading
-     * stdin should not be run inside WeeChat!)
-     */
-    close (STDIN_FILENO);
+    /* use "/dev/null" for stdin stream */
+    freopen ("/dev/null", "r", stdin);
 
     /* redirect stdout/stderr to pipe (so that father process can read them) */
     close (HOOK_PROCESS(hook_process, child_read[HOOK_PROCESS_STDOUT]));
