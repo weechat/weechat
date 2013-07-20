@@ -144,7 +144,7 @@ Optionen für cmake können mit dem Format, "-DOPTION=VALUE", genutzt werden.
 
 Liste von häufig verwendeten Optionen:
 
-[width="100%",cols="2m,2,2m,12",options="header"]
+[width="100%",cols="2m,2,5m,12",options="header"]
 |========================================
 | Option | Wert | Standardwert | Beschreibung
 
@@ -157,6 +157,12 @@ Liste von häufig verwendeten Optionen:
 
 | WEECHAT_HOME | directory | ~/.weechat |
   Standard-Verzeichnis in welchem die Daten liegen.
+
+// TRANSLATION MISSING
+| CA_FILE | file | /etc/ssl/certs/ca-certificates.crt |
+  File containing the certificate authorities.
+  This is the default value of option
+  <<option_weechat.network.gnutls_ca_file,weechat.network.gnutls_ca_file>>.
 
 | ENABLE_ALIAS | `ON`, `OFF` | ON |
   kompiliert <<alias_plugin,Alias Erweiterung>>.

@@ -14,6 +14,9 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 Version 0.4.2 (under dev!)
 --------------------------
 
+* core: add CA_FILE option in cmake and configure to setup default
+  value of option weechat.network.gnutls_ca_file (default is
+  "/etc/ssl/certs/ca-certificates.crt") (task #12725)
 * core: use "/dev/null" for stdin in hook_process instead of closing stdin
   (bug #39538)
 * core: add option "scroll_beyond_end" for command /window (task #6745)

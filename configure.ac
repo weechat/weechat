@@ -120,6 +120,7 @@ AH_VERBATIM([PLUGIN_GUILE],            [#undef PLUGIN_GUILE])
 AH_VERBATIM([PLUGIN_XFER],             [#undef PLUGIN_XFER])
 AH_VERBATIM([DOC],                     [#undef DOC])
 AH_VERBATIM([WEECHAT_HOME],            [#define WEECHAT_HOME "~/.weechat"])
+AH_VERBATIM([CA_FILE],                 [#define CA_FILE "/etc/ssl/certs/ca-certificates.crt"])
 
 # Arguments for ./configure
 
@@ -154,11 +155,17 @@ AC_ARG_ENABLE(doc,          [  --enable-doc            turn on build of document
 AC_ARG_WITH(debug,          [  --with-debug            debugging: 0=no debug, 1=debug compilation (default=1)],debug=$withval,debug=1)
 
 AC_ARG_VAR(WEECHAT_HOME, [WeeChat home directory for config, logs, scripts.. (default is "~/.weechat")])
+AC_ARG_VAR(CA_FILE, [File containing the certificate authorities (default is "/etc/ssl/certs/ca-certificates.crt"). This is the default value of option "weechat.network.gnutls_ca_file".])
 
 if test "x$WEECHAT_HOME" = "x" ; then
     WEECHAT_HOME="~/.weechat"
 fi
 AC_DEFINE_UNQUOTED(WEECHAT_HOME, "$WEECHAT_HOME")
+
+if test "x$CA_FILE" = "x" ; then
+    CA_FILE="/etc/ssl/certs/ca-certificates.crt"
+fi
+AC_DEFINE_UNQUOTED(CA_FILE, "$CA_FILE")
 
 not_asked=""
 not_found=""
@@ -1219,11 +1226,12 @@ fi
 
 echo ""
 echo "Enabled features:"
-echo "   Interfaces........... :$listgui"
-echo "   Plugins.............. :$listplugins"
-echo "   Optional features.... :$listoptional"
-echo "   Compile with debug... : $msg_debug"
-echo "   Documentation........ : $msg_doc"
+echo "   Interfaces............. :$listgui"
+echo "   Plugins................ :$listplugins"
+echo "   Optional features...... :$listoptional"
+echo "   Compile with debug..... : $msg_debug"
+echo "   Documentation.......... : $msg_doc"
+echo "   Certificate authorities : ${CA_FILE}"
 
 if test "x$not_asked" != "x" || test "x$not_found" != "x"; then
     echo ""
