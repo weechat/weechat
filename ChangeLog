@@ -14,6 +14,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 Version 0.4.2 (under dev!)
 --------------------------
 
+* core: add option "scroll_beyond_end" for command /window (task #6745)
 * core: add options weechat.look.hotlist_prefix and weechat.look.hotlist_suffix
   (task #12730)
 * core: add option weechat.look.key_bind_safe
