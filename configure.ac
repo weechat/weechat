@@ -60,7 +60,7 @@ esac
 # Gettext
 ALL_LINGUAS="fr es cs hu de ru pl it ja pt_BR tr"
 AM_GNU_GETTEXT
-AM_GNU_GETTEXT_VERSION([0.15])
+AM_GNU_GETTEXT_VERSION([0.18])
 
 # Checks for libraries
 AC_CHECK_LIB(ncurses, initscr, LIBNCURSES_FOUND=1, LIBNCURSES_FOUND=0)
