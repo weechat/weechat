@@ -18,7 +18,7 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\"
+AM_CPPFLAGS = -DLOCALEDIR=\"$(datadir)/locale\"
 
 noinst_LIBRARIES = lib_weechat_plugins.a
 
