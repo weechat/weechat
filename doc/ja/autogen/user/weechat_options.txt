@@ -533,6 +533,11 @@
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `off`)
 
+* [[option_weechat.look.hotlist_prefix]] *weechat.look.hotlist_prefix*
+** 説明: `text displayed at the beginning of the hotlist`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"H: "`)
+
 * [[option_weechat.look.hotlist_short_names]] *weechat.look.hotlist_short_names*
 ** 説明: `セットされた場合、ホットリストではバッファ名に短い名前を使う (名前に含まれる最初の '.' 以降)`
 ** タイプ: ブール
@@ -542,6 +547,11 @@
 ** 説明: `ホットリストのソートタイプ (group_time_asc (デフォルト)、group_time_desc、group_number_asc、group_number_desc、number_asc、number_desc)`
 ** タイプ: 整数
 ** 値: group_time_asc, group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc (デフォルト値: `group_time_asc`)
+
+* [[option_weechat.look.hotlist_suffix]] *weechat.look.hotlist_suffix*
+** 説明: `text displayed at the end of the hotlist`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
 
 * [[option_weechat.look.hotlist_unique_numbers]] *weechat.look.hotlist_unique_numbers*
 ** 説明: `ホットリストには一意の番号だけを保持 (これは番号の後ろに名前が表示されていないホットリストアイテムだけに適用されます)`

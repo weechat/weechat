@@ -112,8 +112,10 @@ struct t_config_option *config_look_hotlist_names_count;
 struct t_config_option *config_look_hotlist_names_length;
 struct t_config_option *config_look_hotlist_names_level;
 struct t_config_option *config_look_hotlist_names_merged_buffers;
+struct t_config_option *config_look_hotlist_prefix;
 struct t_config_option *config_look_hotlist_short_names;
 struct t_config_option *config_look_hotlist_sort;
+struct t_config_option *config_look_hotlist_suffix;
 struct t_config_option *config_look_hotlist_unique_numbers;
 struct t_config_option *config_look_input_cursor_scroll;
 struct t_config_option *config_look_input_share;
@@ -2128,6 +2130,11 @@ config_weechat_init_options ()
         "hotlist_names_merged_buffers", "boolean",
         N_("if set, force display of names in hotlist for merged buffers"),
         NULL, 0, 0, "off", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
+    config_look_hotlist_prefix = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "hotlist_prefix", "string",
+        N_("text displayed at the beginning of the hotlist"),
+        NULL, 0, 0, "H: ", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
     config_look_hotlist_short_names = config_file_new_option (
         weechat_config_file, ptr_section,
         "hotlist_short_names", "boolean",
@@ -2143,6 +2150,11 @@ config_weechat_init_options ()
         "group_time_asc|group_time_desc|group_number_asc|"
         "group_number_desc|number_asc|number_desc",
         0, 0, "group_time_asc", NULL, 0, NULL, NULL, &config_change_hotlist_sort, NULL, NULL, NULL);
+    config_look_hotlist_suffix = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "hotlist_suffix", "string",
+        N_("text displayed at the end of the hotlist"),
+        NULL, 0, 0, "", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
     config_look_hotlist_unique_numbers = config_file_new_option (
         weechat_config_file, ptr_section,
         "hotlist_unique_numbers", "boolean",

@@ -533,6 +533,11 @@
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
+* [[option_weechat.look.hotlist_prefix]] *weechat.look.hotlist_prefix*
+** Beschreibung: `text displayed at the beginning of the hotlist`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `"H: "`)
+
 * [[option_weechat.look.hotlist_short_names]] *weechat.look.hotlist_short_names*
 ** Beschreibung: `ist diese Option aktiviert, wird der Kurzname der zusammengefügten Buffer in der Hotlist dargestellt (die Darstellung geschieht nach dem ersten '.' im Namen)`
 ** Typ: boolesch
@@ -542,6 +547,11 @@
 ** Beschreibung: `Sortierung der Hotlist (group_time_asc (Standardwert), group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc)`
 ** Typ: integer
 ** Werte: group_time_asc, group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc (Standardwert: `group_time_asc`)
+
+* [[option_weechat.look.hotlist_suffix]] *weechat.look.hotlist_suffix*
+** Beschreibung: `text displayed at the end of the hotlist`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_weechat.look.hotlist_unique_numbers]] *weechat.look.hotlist_unique_numbers*
 ** Beschreibung: `die Nummer des Buffers wird nur einmal in der Hotlist angezeigt (diese Option kommt nur zum Tragen sofern KEINE Buffernamen angezeigt werden)`

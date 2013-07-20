@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-19 18:12+0200\n"
+"POT-Creation-Date: 2013-07-20 08:40+0200\n"
 "PO-Revision-Date: 2013-07-18 19:51+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -2769,6 +2769,10 @@ msgstr ""
 "セットされた場合、マージバッファに対してホットリストにバッファ名を載せること"
 "を強制"
 
+#, fuzzy
+msgid "text displayed at the beginning of the hotlist"
+msgstr "ホットリストにあるバッファの間に表示される文字列"
+
 msgid ""
 "if set, uses short names to display buffer names in hotlist (start after "
 "first '.' in name)"
@@ -2782,6 +2786,10 @@ msgid ""
 msgstr ""
 "ホットリストのソートタイプ (group_time_asc (デフォルト)、group_time_desc、"
 "group_number_asc、group_number_desc、number_asc、number_desc)"
+
+#, fuzzy
+msgid "text displayed at the end of the hotlist"
+msgstr "ホットリストにあるバッファの間に表示される文字列"
 
 msgid ""
 "keep only unique numbers in hotlist (this applies only on hotlist items "
@@ -3797,10 +3805,6 @@ msgstr "テキスト検索 (完全一致)"
 #, c-format
 msgid "%s-MORE(%d)-"
 msgstr "%s-MORE(%d)-"
-
-#. TRANSLATORS: if possible use short word or abbreviation here ("Act" is abbreviation of "Activity" in english)
-msgid "Act: "
-msgstr "アクティビティ: "
 
 #, c-format
 msgid "Notify changed for \"%s%s%s\": \"%s%s%s\" to \"%s%s%s\""
@@ -9874,3 +9878,6 @@ msgstr "タイプ"
 
 msgid "Constants"
 msgstr "定数"
+
+#~ msgid "Act: "
+#~ msgstr "アクティビティ: "

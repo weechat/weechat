@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-19 18:12+0200\n"
+"POT-Creation-Date: 2013-07-20 08:40+0200\n"
 "PO-Revision-Date: 2013-07-18 19:52+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2274,6 +2274,10 @@ msgstr ""
 msgid "if set, force display of names in hotlist for merged buffers"
 msgstr ""
 
+#, fuzzy
+msgid "text displayed at the beginning of the hotlist"
+msgstr "максимальная длина имён в хотлисте"
+
 msgid ""
 "if set, uses short names to display buffer names in hotlist (start after "
 "first '.' in name)"
@@ -2285,6 +2289,10 @@ msgid ""
 msgstr ""
 "тип сортировки хотлиста (group_time_asc (по-умолчанию), group_time_desc, "
 "group_number_asc, group_number_desc, number_asc, number_desc)"
+
+#, fuzzy
+msgid "text displayed at the end of the hotlist"
+msgstr "максимальная длина имён в хотлисте"
 
 #, fuzzy
 msgid ""
@@ -3284,10 +3292,6 @@ msgstr "Поиск текста (регистрозависимый): "
 #, fuzzy, c-format
 msgid "%s-MORE(%d)-"
 msgstr "-ДАЛЬШЕ-"
-
-#. TRANSLATORS: if possible use short word or abbreviation here ("Act" is abbreviation of "Activity" in english)
-msgid "Act: "
-msgstr ""
 
 #, fuzzy, c-format
 msgid "Notify changed for \"%s%s%s\": \"%s%s%s\" to \"%s%s%s\""

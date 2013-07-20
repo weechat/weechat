@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-19 18:12+0200\n"
+"POT-Creation-Date: 2013-07-20 08:40+0200\n"
 "PO-Revision-Date: 2013-07-18 19:51+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2807,6 +2807,10 @@ msgstr ""
 "se impostato, forza la visualizzazione dei nomi nella hotlist per i buffer "
 "uniti"
 
+#, fuzzy
+msgid "text displayed at the beginning of the hotlist"
+msgstr "stringa mostrata tra i buffer nella hotlist"
+
 msgid ""
 "if set, uses short names to display buffer names in hotlist (start after "
 "first '.' in name)"
@@ -2821,6 +2825,10 @@ msgstr ""
 "tipo di ordinamento della hotlist (group_time_asc (predefinito), "
 "group_time_desc, group_number_asc, group_number_desc, number_asc, "
 "number_desc)"
+
+#, fuzzy
+msgid "text displayed at the end of the hotlist"
+msgstr "stringa mostrata tra i buffer nella hotlist"
 
 msgid ""
 "keep only unique numbers in hotlist (this applies only on hotlist items "
@@ -3872,10 +3880,6 @@ msgstr "Ricerca testo (esatta)"
 #, c-format
 msgid "%s-MORE(%d)-"
 msgstr "%s-ANCORA(%d)-"
-
-#. TRANSLATORS: if possible use short word or abbreviation here ("Act" is abbreviation of "Activity" in english)
-msgid "Act: "
-msgstr "Attività: "
 
 #, c-format
 msgid "Notify changed for \"%s%s%s\": \"%s%s%s\" to \"%s%s%s\""
@@ -9918,3 +9922,6 @@ msgstr "Tipo"
 
 msgid "Constants"
 msgstr "Costanti"
+
+#~ msgid "Act: "
+#~ msgstr "Attività: "

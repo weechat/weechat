@@ -1086,7 +1086,8 @@ char *
 gui_bar_item_default_hotlist (void *data, struct t_gui_bar_item *item,
                               struct t_gui_window *window)
 {
-    char buf[2048], format[32], *buffer_without_name_displayed;
+    char buf[4096], format[32], *buffer_without_name_displayed;
+    const char *hotlist_suffix;
     struct t_gui_hotlist *ptr_hotlist;
     int numbers_count, names_count, display_name, count_max;
     int priority, priority_min, priority_min_displayed, private;
@@ -1101,8 +1102,7 @@ gui_bar_item_default_hotlist (void *data, struct t_gui_bar_item *item,
 
     buf[0] = '\0';
 
-    /* TRANSLATORS: if possible use short word or abbreviation here ("Act" is abbreviation of "Activity" in english) */
-    strcat (buf, _("Act: "));
+    strcat (buf, CONFIG_STRING(config_look_hotlist_prefix));
 
     buffer_without_name_displayed = NULL;
     if (CONFIG_BOOLEAN(config_look_hotlist_unique_numbers) && last_gui_buffer)
@@ -1275,13 +1275,21 @@ gui_bar_item_default_hotlist (void *data, struct t_gui_bar_item *item,
                 }
             }
 
-            if (strlen (buf) > sizeof (buf) - 64)
+            if (strlen (buf) > sizeof (buf) - 256)
                 break;
         }
     }
 
     if (buffer_without_name_displayed)
         free (buffer_without_name_displayed);
+
+    hotlist_suffix = CONFIG_STRING(config_look_hotlist_suffix);
+    if (hotlist_suffix[0]
+        && (strlen (buf) + strlen (CONFIG_STRING(config_look_hotlist_suffix)) + 16 < sizeof (buf)))
+    {
+        strcat (buf, GUI_COLOR_CUSTOM_BAR_FG);
+        strcat (buf, hotlist_suffix);
+    }
 
     return strdup (buf);
 }

@@ -533,6 +533,11 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `off`)
 
+* [[option_weechat.look.hotlist_prefix]] *weechat.look.hotlist_prefix*
+** description: `chaîne affichée au début de la hotlist`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `"H: "`)
+
 * [[option_weechat.look.hotlist_short_names]] *weechat.look.hotlist_short_names*
 ** description: `si défini, utilise des noms courts pour afficher les noms de tampons dans la hotlist (commence après le premier '.' dans le nom)`
 ** type: booléen
@@ -542,6 +547,11 @@
 ** description: `type de tri pour la liste d'activité (group_time_asc (par défaut), group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc)`
 ** type: entier
 ** valeurs: group_time_asc, group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc (valeur par défaut: `group_time_asc`)
+
+* [[option_weechat.look.hotlist_suffix]] *weechat.look.hotlist_suffix*
+** description: `chaîne affichée à la fin de la hotlist`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `""`)
 
 * [[option_weechat.look.hotlist_unique_numbers]] *weechat.look.hotlist_unique_numbers*
 ** description: `garde seulement des numéros uniques dans la hotlist (cela s'applique seulement aux éléments de la hotlist où le nom n'est PAS affiché après le numéro)`

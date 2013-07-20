@@ -533,6 +533,11 @@
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 
+* [[option_weechat.look.hotlist_prefix]] *weechat.look.hotlist_prefix*
+** descrizione: `text displayed at the beginning of the hotlist`
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: `"H: "`)
+
 * [[option_weechat.look.hotlist_short_names]] *weechat.look.hotlist_short_names*
 ** descrizione: `se impostato, usa i nomi brevi per visualizzare i nomi dei buffer nella hotlist (inizia dopo il primo '.' nel nome)`
 ** tipo: bool
@@ -542,6 +547,11 @@
 ** descrizione: `tipo di ordinamento della hotlist (group_time_asc (predefinito), group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc)`
 ** tipo: intero
 ** valori: group_time_asc, group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc (valore predefinito: `group_time_asc`)
+
+* [[option_weechat.look.hotlist_suffix]] *weechat.look.hotlist_suffix*
+** descrizione: `text displayed at the end of the hotlist`
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: `""`)
 
 * [[option_weechat.look.hotlist_unique_numbers]] *weechat.look.hotlist_unique_numbers*
 ** descrizione: `mantiene solo numeri univoci nella hotlist (vale solo per gli elementi della hotlist per cui il nome NON viene visualizzato dopo il numero)`

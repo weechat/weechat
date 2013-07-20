@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-19 18:12+0200\n"
+"POT-Creation-Date: 2013-07-20 08:40+0200\n"
 "PO-Revision-Date: 2013-02-14 18:20+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2010,6 +2010,9 @@ msgstr ""
 msgid "if set, force display of names in hotlist for merged buffers"
 msgstr ""
 
+msgid "text displayed at the beginning of the hotlist"
+msgstr ""
+
 msgid ""
 "if set, uses short names to display buffer names in hotlist (start after "
 "first '.' in name)"
@@ -2018,6 +2021,9 @@ msgstr ""
 msgid ""
 "hotlist sort type (group_time_asc (default), group_time_desc, "
 "group_number_asc, group_number_desc, number_asc, number_desc)"
+msgstr ""
+
+msgid "text displayed at the end of the hotlist"
 msgstr ""
 
 msgid ""
@@ -2894,10 +2900,6 @@ msgstr ""
 
 #, c-format
 msgid "%s-MORE(%d)-"
-msgstr ""
-
-#. TRANSLATORS: if possible use short word or abbreviation here ("Act" is abbreviation of "Activity" in english)
-msgid "Act: "
 msgstr ""
 
 #, c-format

@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.2-dev, 2013-07-19
+v0.4.2-dev, 2013-07-20
 
 
 This document lists all changes for each version.
@@ -14,6 +14,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 Version 0.4.2 (under dev!)
 --------------------------
 
+* core: add options weechat.look.hotlist_prefix and weechat.look.hotlist_suffix
+  (task #12730)
 * core: add option weechat.look.key_bind_safe
 * core: fix char displayed at the intersection of three windows (bug #39331)
 * core: fix crash in evaluation of expression when reading a string in hdata
