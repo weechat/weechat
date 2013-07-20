@@ -5611,6 +5611,13 @@ COMMAND_CALLBACK(window)
         return WEECHAT_RC_OK;
     }
 
+    /* scroll beyond the end of buffer */
+    if (string_strcasecmp (argv[1], "scroll_beyond_end") == 0)
+    {
+        gui_window_scroll_beyond_end (ptr_win);
+        return WEECHAT_RC_OK;
+    }
+
     /* scroll to previous highlight */
     if (string_strcasecmp (argv[1], "scroll_previous_highlight") == 0)
     {
@@ -6744,7 +6751,7 @@ command_init ()
                      " || scroll [-window <number>] [+/-]<value>[s|m|h|d|M|y]"
                      " || scroll_horiz [-window <number>] [+/-]<value>[%]"
                      " || scroll_up|scroll_down|scroll_top|"
-                     "scroll_bottom|scroll_previous_highlight|"
+                     "scroll_bottom|scroll_beyond_end|scroll_previous_highlight|"
                      "scroll_next_highlight|scroll_unread [-window <number>]"
                      " || swap [-window <number>] [up|down|left|right]"
                      " || zoom[-window <number>]"),
@@ -6777,6 +6784,7 @@ command_init ()
                      "  scroll_down: scroll a few lines down\n"
                      "   scroll_top: scroll to top of buffer\n"
                      "scroll_bottom: scroll to bottom of buffer\n"
+                     "scroll_beyond_end: scroll beyond the end of buffer\n"
                      "scroll_previous_highlight: scroll to previous highlight\n"
                      "scroll_next_highlight: scroll to next highlight\n"
                      "scroll_unread: scroll to unread marker\n"
@@ -6818,6 +6826,7 @@ command_init ()
                   " || scroll_down -window %(windows_numbers)"
                   " || scroll_top -window %(windows_numbers)"
                   " || scroll_bottom -window %(windows_numbers)"
+                  " || scroll_beyond_end -window %(windows_numbers)"
                   " || scroll_previous_highlight -window %(windows_numbers)"
                   " || scroll_next_highlight -window %(windows_numbers)"
                   " || scroll_unread  -window %(windows_numbers)"

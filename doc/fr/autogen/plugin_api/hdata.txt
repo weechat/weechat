@@ -784,7 +784,6 @@
   'scrolling' (integer) +
   'start_col' (integer) +
   'lines_after' (integer) +
-  'reset_allowed' (integer) +
   'prev_scroll' (pointer, hdata: "window_scroll") +
   'next_scroll' (pointer, hdata: "window_scroll") |
  |

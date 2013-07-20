@@ -1261,7 +1261,9 @@ void
 gui_input_jump_smart (struct t_gui_buffer *buffer)
 {
     struct t_gui_window *window;
+    int scroll_to_bottom;
 
+    scroll_to_bottom = 0;
     window = gui_window_search_with_buffer (buffer);
     if (window
         && (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
@@ -1272,7 +1274,7 @@ gui_input_jump_smart (struct t_gui_buffer *buffer)
                 gui_hotlist_initial_buffer = window->buffer;
             gui_window_switch_to_buffer (window, gui_hotlist->buffer, 1);
             gui_hotlist_remove_buffer (window->buffer);
-            gui_window_scroll_bottom (window);
+            scroll_to_bottom = 1;
         }
         else
         {
@@ -1282,7 +1284,7 @@ gui_input_jump_smart (struct t_gui_buffer *buffer)
                 {
                     gui_window_switch_to_buffer (window,
                                                  gui_hotlist_initial_buffer, 1);
-                    gui_window_scroll_bottom (window);
+                    scroll_to_bottom = 1;
                 }
                 gui_hotlist_initial_buffer = NULL;
             }
@@ -1290,6 +1292,18 @@ gui_input_jump_smart (struct t_gui_buffer *buffer)
             {
                 gui_hotlist_initial_buffer = NULL;
             }
+        }
+
+        /*
+         * scroll to bottom if window was scrolled (except if scrolled
+         * beyond the end)
+         */
+        if (scroll_to_bottom
+            && window->scroll
+            && window->scroll->start_line
+            && (window->scroll->start_line_pos >= 0))
+        {
+            gui_window_scroll_bottom (window);
         }
     }
 }

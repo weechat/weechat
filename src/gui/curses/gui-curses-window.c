@@ -1095,7 +1095,6 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
             window->scroll->start_line = NULL;
             window->scroll->start_line_pos = 0;
             window->scroll->scrolling = 0;
-            window->scroll->reset_allowed = 1;
         }
         if (!gui_buffers_visited_frozen)
         {
@@ -1252,7 +1251,6 @@ gui_window_page_up (struct t_gui_window *window)
                                               (window->scroll->start_line) ?
                                               (-1) * (num_lines) :
                                               (-1) * (num_lines + window->win_chat_height - 1));
-                window->scroll->reset_allowed = 1;
                 gui_buffer_ask_chat_refresh (window->buffer, 2);
             }
             break;
@@ -1311,7 +1309,6 @@ gui_window_page_down (struct t_gui_window *window)
                     window->scroll->start_line = NULL;
                     window->scroll->start_line_pos = 0;
                 }
-                window->scroll->reset_allowed = 1;
                 gui_buffer_ask_chat_refresh (window->buffer, 2);
             }
             break;
@@ -1350,7 +1347,6 @@ gui_window_scroll_up (struct t_gui_window *window)
                                               (-1) * CONFIG_INTEGER(config_look_scroll_amount) :
                                               (-1) * ( (window->win_chat_height - 1) +
                                                        CONFIG_INTEGER(config_look_scroll_amount)));
-                window->scroll->reset_allowed = 1;
                 gui_buffer_ask_chat_refresh (window->buffer, 2);
             }
             break;
@@ -1403,7 +1399,6 @@ gui_window_scroll_down (struct t_gui_window *window)
                     window->scroll->start_line = NULL;
                     window->scroll->start_line_pos = 0;
                 }
-                window->scroll->reset_allowed = 1;
                 gui_buffer_ask_chat_refresh (window->buffer, 2);
             }
             break;
@@ -1436,7 +1431,6 @@ gui_window_scroll_top (struct t_gui_window *window)
             {
                 window->scroll->start_line = gui_line_get_first_displayed (window->buffer);
                 window->scroll->start_line_pos = 0;
-                window->scroll->reset_allowed = 1;
                 gui_buffer_ask_chat_refresh (window->buffer, 2);
             }
             break;
@@ -1471,7 +1465,6 @@ gui_window_scroll_bottom (struct t_gui_window *window)
         case GUI_BUFFER_TYPE_FORMATTED:
             window->scroll->start_line = NULL;
             window->scroll->start_line_pos = 0;
-            window->scroll->reset_allowed = 1;
             gui_buffer_ask_chat_refresh (window->buffer, 2);
             break;
         case GUI_BUFFER_TYPE_FREE:
@@ -1491,6 +1484,25 @@ gui_window_scroll_bottom (struct t_gui_window *window)
             break;
         case GUI_BUFFER_NUM_TYPES:
             break;
+    }
+}
+
+/*
+ * Scrolls beyond the end of buffer (so that all lines become "hidden" above the
+ * top of window).
+ */
+
+void
+gui_window_scroll_beyond_end (struct t_gui_window *window)
+{
+    if (!gui_init_ok)
+        return;
+
+    if (window->buffer->lines->last_line)
+    {
+        window->scroll->start_line = window->buffer->lines->last_line;
+        window->scroll->start_line_pos = -1;
+        gui_buffer_ask_chat_refresh (window->buffer, 2);
     }
 }
 
