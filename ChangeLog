@@ -41,6 +41,8 @@ Version 0.4.2 (under dev!)
   "layout_window"
 * core: fix line alignment when option weechat.look.buffer_time_format is set
   to empty string
+* aspell: rename option aspell.look.color to aspell.color.misspelled, add option
+  aspell.color.suggestions
 * aspell: add support of enchant library (patch #6858)
 * irc: fix self nick color in server messages after nick is changed with /nick
   (bug #39415)

@@ -26,6 +26,7 @@
 
 #include "../weechat-plugin.h"
 #include "weechat-aspell.h"
+#include "weechat-aspell-config.h"
 
 
 /*
@@ -67,8 +68,9 @@ weechat_aspell_bar_item_suggest (void *data, struct t_gui_bar_item *item,
                                  struct t_gui_window *window)
 {
     struct t_gui_buffer *buffer;
-    const char *suggestions, *pos;
-    char str_delim[128], *suggestions2;
+    const char *ptr_suggestions, *pos;
+    char **suggestions, *suggestions2;
+    int i, num_suggestions, length;
 
     /* make C compiler happy */
     (void) data;
@@ -83,22 +85,45 @@ weechat_aspell_bar_item_suggest (void *data, struct t_gui_bar_item *item,
     buffer = weechat_window_get_pointer (window, "buffer");
     if (buffer)
     {
-        suggestions = weechat_buffer_get_string (buffer,
-                                                 "localvar_aspell_suggest");
-        if (suggestions)
+        ptr_suggestions = weechat_buffer_get_string (buffer,
+                                                     "localvar_aspell_suggest");
+        if (ptr_suggestions)
         {
-            pos = strchr (suggestions, ':');
+            pos = strchr (ptr_suggestions, ':');
             if (pos)
                 pos++;
             else
-                pos = suggestions;
-            snprintf (str_delim, sizeof (str_delim),
-                      "%s/%s",
-                      weechat_color ("bar_delim"),
-                      weechat_color ("bar_fg"));
-            suggestions2 = weechat_string_replace (pos, "/", str_delim);
-            if (suggestions2)
-                return suggestions2;
+                pos = ptr_suggestions;
+            suggestions = weechat_string_split (pos, "/", 0, 0, &num_suggestions);
+            if (suggestions)
+            {
+                length = 64 + 1;
+                for (i = 0; i < num_suggestions; i++)
+                {
+                    length += strlen (suggestions[i]) + 64;
+                }
+                suggestions2 = malloc (length);
+                if (suggestions2)
+                {
+                    suggestions2[0] = '\0';
+                    strcat (suggestions2,
+                            weechat_color (weechat_config_string (weechat_aspell_config_color_suggestions)));
+                    for (i = 0; i < num_suggestions; i++)
+                    {
+                        if (i > 0)
+                        {
+                            strcat (suggestions2, weechat_color ("bar_delim"));
+                            strcat (suggestions2, "/");
+                            strcat (suggestions2,
+                                    weechat_color (weechat_config_string (weechat_aspell_config_color_suggestions)));
+                        }
+                        strcat (suggestions2, suggestions[i]);
+                    }
+                    weechat_string_free_split (suggestions);
+                    return suggestions2;
+                }
+                weechat_string_free_split (suggestions);
+            }
             return strdup (pos);
         }
     }

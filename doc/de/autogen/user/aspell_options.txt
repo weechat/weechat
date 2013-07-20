@@ -33,8 +33,13 @@
 ** Typ: integer
 ** Werte: 0 .. 2147483647 (Standardwert: `2`)
 
-* [[option_aspell.look.color]] *aspell.look.color*
-** Beschreibung: `Farbe in der ein Wort mit einem Rechtschreibfehler hervorgehoben werden soll`
+* [[option_aspell.color.misspelled]] *aspell.color.misspelled*
+** Beschreibung: `text color for misspelled words (input bar)`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `lightred`)
+
+* [[option_aspell.color.suggestions]] *aspell.color.suggestions*
+** Beschreibung: `text color for suggestions on a misspelled word (status bar)`
+** Typ: Farbe
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `default`)
 

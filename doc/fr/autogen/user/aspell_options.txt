@@ -33,8 +33,13 @@
 ** type: entier
 ** valeurs: 0 .. 2147483647 (valeur par défaut: `2`)
 
-* [[option_aspell.look.color]] *aspell.look.color*
-** description: `couleur utilisée pour les mots mal orthographiés`
+* [[option_aspell.color.misspelled]] *aspell.color.misspelled*
+** description: `couleur du texte pour les mots mal orthographiés (barre de saisie)`
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `lightred`)
+
+* [[option_aspell.color.suggestions]] *aspell.color.suggestions*
+** description: `couleur du texte pour les suggestions sur un mot mal orthographié (barre de statut)`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `default`)
 

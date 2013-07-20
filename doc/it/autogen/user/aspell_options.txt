@@ -33,8 +33,13 @@
 ** tipo: intero
 ** valori: 0 .. 2147483647 (valore predefinito: `2`)
 
-* [[option_aspell.look.color]] *aspell.look.color*
-** descrizione: `colore usato per le parole non corrette`
+* [[option_aspell.color.misspelled]] *aspell.color.misspelled*
+** descrizione: `text color for misspelled words (input bar)`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `lightred`)
+
+* [[option_aspell.color.suggestions]] *aspell.color.suggestions*
+** descrizione: `text color for suggestions on a misspelled word (status bar)`
+** tipo: colore
+** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `default`)
 

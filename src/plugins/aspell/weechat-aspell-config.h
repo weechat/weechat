@@ -24,7 +24,8 @@
 #define ASPELL_CONFIG_NAME "aspell"
 
 
-extern struct t_config_option *weechat_aspell_config_look_color;
+extern struct t_config_option *weechat_aspell_config_color_misspelled;
+extern struct t_config_option *weechat_aspell_config_color_suggestions;
 
 extern struct t_config_option *weechat_aspell_config_check_commands;
 extern struct t_config_option *weechat_aspell_config_check_default_dict;

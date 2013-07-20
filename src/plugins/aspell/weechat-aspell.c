@@ -621,7 +621,7 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
 
     color_normal = weechat_color ("bar_fg");
     length_color_normal = strlen (color_normal);
-    color_error = weechat_color (weechat_config_string (weechat_aspell_config_look_color));
+    color_error = weechat_color (weechat_config_string (weechat_aspell_config_color_misspelled));
     length_color_error = strlen (color_error);
 
     length = strlen (string);

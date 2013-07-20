@@ -35,9 +35,10 @@ struct t_config_section *weechat_aspell_config_section_dict = NULL;
 
 int weechat_aspell_config_loading = 0;
 
-/* aspell config, look section */
+/* aspell config, color section */
 
-struct t_config_option *weechat_aspell_config_look_color;
+struct t_config_option *weechat_aspell_config_color_misspelled;
+struct t_config_option *weechat_aspell_config_color_suggestions;
 
 /* aspell config, check section */
 
@@ -419,8 +420,8 @@ weechat_aspell_config_init ()
     if (!weechat_aspell_config_file)
         return 0;
 
-    /* look */
-    ptr_section = weechat_config_new_section (weechat_aspell_config_file, "look",
+    /* color */
+    ptr_section = weechat_config_new_section (weechat_aspell_config_file, "color",
                                               0, 0,
                                               NULL, NULL, NULL, NULL,
                                               NULL, NULL, NULL, NULL,
@@ -431,11 +432,16 @@ weechat_aspell_config_init ()
         return 0;
     }
 
-    weechat_aspell_config_look_color = weechat_config_new_option (
+    weechat_aspell_config_color_misspelled = weechat_config_new_option (
         weechat_aspell_config_file, ptr_section,
-        "color", "color",
-        N_("color used for misspelled words"),
+        "misspelled", "color",
+        N_("text color for misspelled words (input bar)"),
         NULL, 0, 0, "lightred", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    weechat_aspell_config_color_suggestions = weechat_config_new_option (
+        weechat_aspell_config_file, ptr_section,
+        "suggestions", "color",
+        N_("text color for suggestions on a misspelled word (status bar)"),
+        NULL, 0, 0, "default", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
 
     /* check */
     ptr_section = weechat_config_new_section (weechat_aspell_config_file, "check",

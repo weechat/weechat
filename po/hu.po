@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-20 11:55+0200\n"
+"POT-Creation-Date: 2013-07-20 17:56+0200\n"
 "PO-Revision-Date: 2013-07-18 19:51+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3569,8 +3569,13 @@ msgstr ""
 msgid "%s%s: error creating aspell option \"%s\" => \"%s\""
 msgstr "%s nincs elég memória az információs pult üzenethez\n"
 
-msgid "color used for misspelled words"
-msgstr ""
+#, fuzzy
+msgid "text color for misspelled words (input bar)"
+msgstr "státuszsor színe"
+
+#, fuzzy
+msgid "text color for suggestions on a misspelled word (status bar)"
+msgstr "státuszsor színe"
 
 msgid ""
 "comma separated list of commands for which spell checking is enabled (spell "
