@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.2-dev, 2013-07-20
+v0.4.2-dev, 2013-07-22
 
 
 This document lists all changes for each version.
@@ -14,6 +14,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 Version 0.4.2 (under dev!)
 --------------------------
 
+* core: remove gap after read marker line when there is no bar on the right
+  (bug #39548)
 * core: add CA_FILE option in cmake and configure to setup default
   value of option weechat.network.gnutls_ca_file (default is
   "/etc/ssl/certs/ca-certificates.crt") (task #12725)

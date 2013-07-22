@@ -193,7 +193,7 @@ gui_chat_display_horizontal_line (struct t_gui_window *window, int simulate)
                    window->win_chat_cursor_y, window->win_chat_cursor_x);
             wclrtoeol (GUI_WINDOW_OBJECTS(window)->win_chat);
             x = 0;
-            while (x < window->win_chat_width - 1)
+            while (x < gui_chat_get_real_width (window))
             {
                 mvwprintw (GUI_WINDOW_OBJECTS(window)->win_chat,
                            window->win_chat_cursor_y, x,
