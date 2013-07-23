@@ -1702,9 +1702,9 @@ Script (Python):
 str = weechat.string_eval_expression(expr, pointers, extra_vars)
 
 # examples
-str1 = weechat.string_input_for_buffer("${buffer.full_name}", {}, {})       # "core.weechat"
-str2 = weechat.string_input_for_buffer("${window.win_width} > 100", {}, {}) # "1"
-str3 = weechat.string_input_for_buffer("abc =~ def", {}, {})                # "0"
+str1 = weechat.string_eval_expression("${buffer.full_name}", {}, {})       # "core.weechat"
+str2 = weechat.string_eval_expression("${window.win_width} > 100", {}, {}) # "1"
+str3 = weechat.string_eval_expression("abc =~ def", {}, {})                # "0"
 ----------------------------------------
 
 [[utf-8]]
