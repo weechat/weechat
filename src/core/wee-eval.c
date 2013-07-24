@@ -40,7 +40,7 @@
 #include "../plugins/plugin.h"
 
 
-char *logical_ops[EVAL_NUM_LOGICAL_OPS] = { "&&", "||" };
+char *logical_ops[EVAL_NUM_LOGICAL_OPS] = { "||", "&&" };
 char *comparisons[EVAL_NUM_COMPARISONS] = { "==", "!=", "<=", "<", ">=", ">",
                                             "=~", "!~" };
 

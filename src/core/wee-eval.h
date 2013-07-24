@@ -27,8 +27,8 @@ struct t_hashtable;
 
 enum t_eval_logical_op
 {
-    EVAL_LOGICAL_OP_AND = 0,
-    EVAL_LOGICAL_OP_OR,
+    EVAL_LOGICAL_OP_OR = 0,
+    EVAL_LOGICAL_OP_AND,
     /* number of comparison strings */
     EVAL_NUM_LOGICAL_OPS,
 };
