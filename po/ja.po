@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-20 17:56+0200\n"
+"POT-Creation-Date: 2013-07-27 20:24+0200\n"
 "PO-Revision-Date: 2013-07-18 19:51+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -7116,17 +7116,6 @@ msgstr "%sニックネーム %s%s%s: %s[%s%s%s]"
 msgid "%sNicks %s%s%s: %s[%s%s]"
 msgstr "%sニックネーム %s%s%s: %s[%s%s]"
 
-#, c-format
-msgid ""
-"%sChannel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)"
-msgstr ""
-"%sチャンネル %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s"
-"%s)"
-
-msgid "nick"
-msgid_plural "nicks"
-msgstr[0] "ニックネーム"
-
 msgid "op"
 msgid_plural "ops"
 msgstr[0] "オペレータ"
@@ -7138,6 +7127,14 @@ msgstr[0] "halfops"
 msgid "voice"
 msgid_plural "voices"
 msgstr[0] "発言"
+
+#, fuzzy, c-format
+msgid "%sChannel %s%s%s: %s%d%s %s %s(%s%s)"
+msgstr "%sチャンネルは %s%s%s を reop しました: %s%s"
+
+msgid "nick"
+msgid_plural "nicks"
+msgstr[0] "ニックネーム"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
@@ -9886,6 +9883,13 @@ msgstr "タイプ"
 
 msgid "Constants"
 msgstr "定数"
+
+#~ msgid ""
+#~ "%sChannel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s"
+#~ "%s)"
+#~ msgstr ""
+#~ "%sチャンネル %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s "
+#~ "%s%s)"
 
 #~ msgid "Act: "
 #~ msgstr "アクティビティ: "

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-20 17:56+0200\n"
+"POT-Creation-Date: 2013-07-27 20:24+0200\n"
 "PO-Revision-Date: 2013-02-14 18:20+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5630,16 +5630,6 @@ msgstr ""
 msgid "%sNicks %s%s%s: %s[%s%s]"
 msgstr ""
 
-#, c-format
-msgid ""
-"%sChannel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)"
-msgstr ""
-
-msgid "nick"
-msgid_plural "nicks"
-msgstr[0] ""
-msgstr[1] ""
-
 msgid "op"
 msgid_plural "ops"
 msgstr[0] ""
@@ -5652,6 +5642,15 @@ msgstr[1] ""
 
 msgid "voice"
 msgid_plural "voices"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%sChannel %s%s%s: %s%d%s %s %s(%s%s)"
+msgstr ""
+
+msgid "nick"
+msgid_plural "nicks"
 msgstr[0] ""
 msgstr[1] ""
 

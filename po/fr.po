@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-20 17:56+0200\n"
-"PO-Revision-Date: 2013-07-20 17:56+0200\n"
+"POT-Creation-Date: 2013-07-27 20:24+0200\n"
+"PO-Revision-Date: 2013-07-27 20:24+0200\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -7387,17 +7387,6 @@ msgstr "%sPseudos %s%s%s: %s[%s%s%s]"
 msgid "%sNicks %s%s%s: %s[%s%s]"
 msgstr "%sPseudos %s%s%s: %s[%s%s]"
 
-#, c-format
-msgid ""
-"%sChannel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)"
-msgstr ""
-"%sCanal %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)"
-
-msgid "nick"
-msgid_plural "nicks"
-msgstr[0] "pseudo"
-msgstr[1] "pseudos"
-
 msgid "op"
 msgid_plural "ops"
 msgstr[0] "op"
@@ -7412,6 +7401,15 @@ msgid "voice"
 msgid_plural "voices"
 msgstr[0] "voice"
 msgstr[1] "voices"
+
+#, c-format
+msgid "%sChannel %s%s%s: %s%d%s %s %s(%s%s)"
+msgstr "%sCanal %s%s%s: %s%d%s %s %s(%s%s)"
+
+msgid "nick"
+msgid_plural "nicks"
+msgstr[0] "pseudo"
+msgstr[1] "pseudos"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
@@ -10233,6 +10231,12 @@ msgstr "Type"
 
 msgid "Constants"
 msgstr "Constantes"
+
+#~ msgid ""
+#~ "%sChannel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s"
+#~ "%s)"
+#~ msgstr ""
+#~ "%sCanal %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)"
 
 #~ msgid "Act: "
 #~ msgstr "Act: "

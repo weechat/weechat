@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-20 17:56+0200\n"
+"POT-Creation-Date: 2013-07-27 20:24+0200\n"
 "PO-Revision-Date: 2013-07-18 19:51+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -7590,17 +7590,6 @@ msgstr "%sNicks %s%s%s: %s[%s%s%s]"
 msgid "%sNicks %s%s%s: %s[%s%s]"
 msgstr "%sNicks %s%s%s: %s[%s%s]"
 
-#, c-format
-msgid ""
-"%sChannel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)"
-msgstr ""
-"%sChannel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)"
-
-msgid "nick"
-msgid_plural "nicks"
-msgstr[0] "Nick"
-msgstr[1] "Nicks"
-
 msgid "op"
 msgid_plural "ops"
 msgstr[0] "Operator"
@@ -7615,6 +7604,15 @@ msgid "voice"
 msgid_plural "voices"
 msgstr[0] "ge-voice-ter"
 msgstr[1] "ge-voice-te"
+
+#, fuzzy, c-format
+msgid "%sChannel %s%s%s: %s%d%s %s %s(%s%s)"
+msgstr "%sChannel-Reop %s%s%s: %s%s"
+
+msgid "nick"
+msgid_plural "nicks"
+msgstr[0] "Nick"
+msgstr[1] "Nicks"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
@@ -10488,6 +10486,13 @@ msgstr "Type"
 
 msgid "Constants"
 msgstr "Konstanten"
+
+#~ msgid ""
+#~ "%sChannel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s"
+#~ "%s)"
+#~ msgstr ""
+#~ "%sChannel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s"
+#~ "%s)"
 
 #~ msgid "Act: "
 #~ msgstr "Aktiv: "

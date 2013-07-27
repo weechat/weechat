@@ -49,6 +49,8 @@ Version 0.4.2 (under dev!)
 * aspell: rename option aspell.look.color to aspell.color.misspelled, add option
   aspell.color.suggestions
 * aspell: add support of enchant library (patch #6858)
+* irc: display number of ops/halfops/voices on channel join only for supported
+  modes on server (bug #39582)
 * irc: fix self nick color in server messages after nick is changed with /nick
   (bug #39415)
 * irc: add support of wildcards in commands (de)op/halfop/voice (task #9221)

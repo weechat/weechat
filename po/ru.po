@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-20 17:56+0200\n"
+"POT-Creation-Date: 2013-07-27 20:24+0200\n"
 "PO-Revision-Date: 2013-07-18 19:52+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6440,19 +6440,6 @@ msgstr "%sСервер: %s%s %s[%s%s%s]\n"
 msgid "%sNicks %s%s%s: %s[%s%s]"
 msgstr "%sСервер: %s%s %s[%s%s%s]\n"
 
-#, fuzzy, c-format
-msgid ""
-"%sChannel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)"
-msgstr ""
-"Канал %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
-
-#, fuzzy
-msgid "nick"
-msgid_plural "nicks"
-msgstr[0] "ник"
-msgstr[1] "ник"
-msgstr[2] "ник"
-
 #, fuzzy
 msgid "op"
 msgid_plural "ops"
@@ -6473,6 +6460,17 @@ msgid_plural "voices"
 msgstr[0] "войс"
 msgstr[1] "войс"
 msgstr[2] "войс"
+
+#, fuzzy, c-format
+msgid "%sChannel %s%s%s: %s%d%s %s %s(%s%s)"
+msgstr "Реоп канала %s%s%s: %s%s\n"
+
+#, fuzzy
+msgid "nick"
+msgid_plural "nicks"
+msgstr[0] "ник"
+msgstr[1] "ник"
+msgstr[2] "ник"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
@@ -9057,3 +9055,10 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#, fuzzy
+#~ msgid ""
+#~ "%sChannel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s"
+#~ "%s)"
+#~ msgstr ""
+#~ "Канал %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
