@@ -185,6 +185,7 @@ extern int gui_color_get_term_colors ();
 extern const char *gui_color_get_name (int num_color);
 extern void gui_color_init_weechat ();
 extern void gui_color_display_terminal_colors ();
+extern void gui_color_info_term_colors (char *buffer, int size);
 extern void gui_color_buffer_display ();
 extern void gui_color_switch_colors ();
 extern void gui_color_reset_pairs ();

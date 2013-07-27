@@ -1054,6 +1054,14 @@ COMMAND_CALLBACK(color)
         return WEECHAT_RC_OK;
     }
 
+    /* send terminal/colors info to buffer */
+    if (string_strcasecmp (argv[1], "-o") == 0)
+    {
+        gui_color_info_term_colors (str_color, sizeof (str_color));
+        input_data (buffer, str_color);
+        return WEECHAT_RC_OK;
+    }
+
     /* add a color alias */
     if (string_strcasecmp (argv[1], "alias") == 0)
     {
@@ -6026,7 +6034,8 @@ command_init ()
                   N_("define color aliases and display palette of colors"),
                   N_("alias <color> <name>"
                      " || unalias <color>"
-                     " || reset"),
+                     " || reset"
+                     " || -o"),
                   N_("  alias: add an alias for a color\n"
                      "unalias: delete an alias\n"
                      "  color: color number (greater than or equal to 0, max "
@@ -6034,7 +6043,9 @@ command_init ()
                      "   name: alias name for color (for example: \"orange\")\n"
                      "  reset: reset all color pairs (required when no more "
                      "color pairs are available if automatic reset is disabled, "
-                     "see option weechat.look.color_pairs_auto_reset)\n\n"
+                     "see option weechat.look.color_pairs_auto_reset)\n"
+                     "     -o: send terminal/colors info to current buffer as "
+                     "input\n\n"
                      "Without argument, this command displays colors in a new "
                      "buffer.\n\n"
                      "Examples:\n"
@@ -6044,7 +6055,8 @@ command_init ()
                      "    /color unalias 214"),
                   "alias %(palette_colors)"
                   " || unalias %(palette_colors)"
-                  " || reset",
+                  " || reset"
+                  " || -o",
                   &command_color, NULL);
     /*
      * give high priority (50000) so that an alias will not take precedence

@@ -14,6 +14,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 Version 0.4.2 (under dev!)
 --------------------------
 
+* core: add option "-o" for command /color
 * core: fix priority of logical operators in evaluation of expression
   (AND takes precedence over the OR)
 * core: remove gap after read marker line when there is no bar on the right
