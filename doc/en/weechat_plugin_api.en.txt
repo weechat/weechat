@@ -790,6 +790,48 @@ char *pos = weechat_strcasestr ("aBcDeF", "de"); /* result: pointer to "DeF" */
 [NOTE]
 This function is not available in scripting API.
 
+weechat_strlen_screen
+^^^^^^^^^^^^^^^^^^^^^
+
+_New in version 0.4.2._
+
+Return number of chars needed on screen to display UTF-8 string.
+Non-printable chars have a width of 1 (this is the difference with the function
+<<_weechat_utf8_strlen_screen,weechat_utf8_strlen_screen>>).
+
+Prototype:
+
+[source,C]
+----------------------------------------
+int weechat_strlen_screen (const char *string);
+----------------------------------------
+
+Arguments:
+
+* 'string': string
+
+Return value:
+
+* number of chars needed on screen to display UTF-8 string
+
+C example:
+
+[source,C]
+----------------------------------------
+int length_on_screen = weechat_strlen_screen ("é"); /* == 1 */
+----------------------------------------
+
+Script (Python):
+
+[source,python]
+----------------------------------------
+# prototype
+length = weechat.strlen_screen(string)
+
+# example
+length = weechat.strlen_screen("é") # 1
+----------------------------------------
+
 weechat_string_match
 ^^^^^^^^^^^^^^^^^^^^
 

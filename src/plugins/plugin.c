@@ -510,6 +510,7 @@ plugin_load (const char *filename, int argc, char **argv)
         new_plugin->strncasecmp_range = &string_strncasecmp_range;
         new_plugin->strcmp_ignore_chars = &string_strcmp_ignore_chars;
         new_plugin->strcasestr = &string_strcasestr;
+        new_plugin->strlen_screen = &gui_chat_strlen_screen;
         new_plugin->string_match = &string_match;
         new_plugin->string_replace = &string_replace;
         new_plugin->string_expand_home = &string_expand_home;

@@ -278,6 +278,20 @@ XS (XS_weechat_api_ngettext)
     API_RETURN_STRING(result);
 }
 
+XS (XS_weechat_api_strlen_screen)
+{
+    int value;
+    dXSARGS;
+
+    API_FUNC(1, "strlen_screen", API_RETURN_INT(0));
+    if (items < 1)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    value = weechat_strlen_screen (SvPV_nolen (ST (0))); /* string */
+
+    API_RETURN_INT(value);
+}
+
 XS (XS_weechat_api_string_match)
 {
     int value;
@@ -4823,6 +4837,7 @@ weechat_perl_api_init (pTHX)
     API_DEF_FUNC(iconv_from_internal);
     API_DEF_FUNC(gettext);
     API_DEF_FUNC(ngettext);
+    API_DEF_FUNC(strlen_screen);
     API_DEF_FUNC(string_match);
     API_DEF_FUNC(string_has_highlight);
     API_DEF_FUNC(string_has_highlight_regex);

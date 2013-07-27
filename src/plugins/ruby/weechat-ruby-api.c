@@ -296,6 +296,25 @@ weechat_ruby_api_ngettext (VALUE class, VALUE single, VALUE plural,
 }
 
 static VALUE
+weechat_ruby_api_strlen_screen (VALUE class, VALUE string)
+{
+    char *c_string;
+    int value;
+
+    API_FUNC(1, "strlen_screen", API_RETURN_INT(0));
+    if (NIL_P (string))
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    Check_Type (string, T_STRING);
+
+    c_string = StringValuePtr (string);
+
+    value = weechat_strlen_screen (c_string);
+
+    API_RETURN_INT(value);
+}
+
+static VALUE
 weechat_ruby_api_string_match (VALUE class, VALUE string, VALUE mask,
                                VALUE case_sensitive)
 {
@@ -5918,6 +5937,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(iconv_from_internal, 2);
     API_DEF_FUNC(gettext, 1);
     API_DEF_FUNC(ngettext, 3);
+    API_DEF_FUNC(strlen_screen, 1);
     API_DEF_FUNC(string_match, 3);
     API_DEF_FUNC(string_has_highlight, 2);
     API_DEF_FUNC(string_has_highlight_regex, 2);

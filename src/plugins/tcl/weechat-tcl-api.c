@@ -408,6 +408,25 @@ weechat_tcl_api_ngettext (ClientData clientData, Tcl_Interp *interp,
 }
 
 static int
+weechat_tcl_api_strlen_screen (ClientData clientData, Tcl_Interp *interp,
+                               int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *string;
+    int result, i;
+
+    API_FUNC(1, "strlen_screen", API_RETURN_INT(0));
+    if (objc < 2)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    string = Tcl_GetStringFromObj (objv[1], &i);
+
+    result = weechat_strlen_screen (string);
+
+    API_RETURN_INT(result);
+}
+
+static int
 weechat_tcl_api_string_match (ClientData clientData, Tcl_Interp *interp,
                               int objc, Tcl_Obj *CONST objv[])
 {
@@ -5664,6 +5683,7 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     API_DEF_FUNC(iconv_from_internal);
     API_DEF_FUNC(gettext);
     API_DEF_FUNC(ngettext);
+    API_DEF_FUNC(strlen_screen);
     API_DEF_FUNC(string_match);
     API_DEF_FUNC(string_has_highlight);
     API_DEF_FUNC(string_has_highlight_regex);

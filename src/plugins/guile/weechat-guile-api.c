@@ -318,6 +318,20 @@ weechat_guile_api_ngettext (SCM single, SCM plural, SCM count)
 }
 
 SCM
+weechat_guile_api_strlen_screen (SCM string)
+{
+    int value;
+
+    API_FUNC(1, "strlen_screen", API_RETURN_INT(0));
+    if (!scm_is_string (string))
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    value = weechat_strlen_screen (API_SCM_TO_STRING(string));
+
+    API_RETURN_INT(value);
+}
+
+SCM
 weechat_guile_api_string_match (SCM string, SCM mask, SCM case_sensitive)
 {
     int value;
@@ -4586,6 +4600,7 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(iconv_from_internal, 2);
     API_DEF_FUNC(gettext, 1);
     API_DEF_FUNC(ngettext, 3);
+    API_DEF_FUNC(strlen_screen, 1);
     API_DEF_FUNC(string_match, 3);
     API_DEF_FUNC(string_has_highlight, 2);
     API_DEF_FUNC(string_has_highlight_regex, 2);

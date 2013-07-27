@@ -277,6 +277,23 @@ weechat_lua_api_ngettext (lua_State *L)
 }
 
 static int
+weechat_lua_api_strlen_screen (lua_State *L)
+{
+    const char *string;
+    int value;
+
+    API_FUNC(1, "strlen_screen", API_RETURN_INT(0));
+    if (lua_gettop (L) < 1)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    string = lua_tostring (L, -1);
+
+    value = weechat_strlen_screen (string);
+
+    API_RETURN_INT(value);
+}
+
+static int
 weechat_lua_api_string_match (lua_State *L)
 {
     const char *string, *mask;
@@ -5070,6 +5087,7 @@ const struct luaL_Reg weechat_lua_api_funcs[] = {
     API_DEF_FUNC(iconv_from_internal),
     API_DEF_FUNC(gettext),
     API_DEF_FUNC(ngettext),
+    API_DEF_FUNC(strlen_screen),
     API_DEF_FUNC(string_match),
     API_DEF_FUNC(string_has_highlight),
     API_DEF_FUNC(string_has_highlight_regex),

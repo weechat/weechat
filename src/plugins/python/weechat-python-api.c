@@ -261,6 +261,22 @@ weechat_python_api_ngettext (PyObject *self, PyObject *args)
 }
 
 static PyObject *
+weechat_python_api_strlen_screen (PyObject *self, PyObject *args)
+{
+    char *string;
+    int value;
+
+    API_FUNC(1, "strlen_screen", API_RETURN_INT(0));
+    string = NULL;
+    if (!PyArg_ParseTuple (args, "s", &string))
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    value = weechat_strlen_screen (string);
+
+    API_RETURN_INT(value);
+}
+
+static PyObject *
 weechat_python_api_string_match (PyObject *self, PyObject *args)
 {
     char *string, *mask;
@@ -4975,6 +4991,7 @@ PyMethodDef weechat_python_funcs[] =
     API_DEF_FUNC(iconv_from_internal),
     API_DEF_FUNC(gettext),
     API_DEF_FUNC(ngettext),
+    API_DEF_FUNC(strlen_screen),
     API_DEF_FUNC(string_match),
     API_DEF_FUNC(string_has_highlight),
     API_DEF_FUNC(string_has_highlight_regex),
