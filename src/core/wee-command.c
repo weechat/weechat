@@ -1923,14 +1923,22 @@ command_help_list_plugin_commands (struct t_weechat_plugin *plugin,
                              plugin_get_name (plugin),
                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
 
-            snprintf (str_format, sizeof (str_format),
-                      " %%-%ds", max_length);
-
             /* auto compute number of columns, max size is 90% of chat width */
-            cols = ((gui_current_window->win_chat_width * 90) / 100) / (max_length + 1);
+            cols = ((gui_current_window->win_chat_width * 90) / 100) / (max_length + 2);
             if (cols == 0)
                 cols = 1;
             lines = ((list_size - 1) / cols) + 1;
+
+            if (lines == 1)
+            {
+                snprintf (str_format, sizeof (str_format), "  %%s");
+            }
+            else
+            {
+                snprintf (str_format, sizeof (str_format),
+                          "  %%-%ds", max_length);
+            }
+
             for (line = 0; line < lines; line++)
             {
                 str_line[0] = '\0';
@@ -1951,7 +1959,7 @@ command_help_list_plugin_commands (struct t_weechat_plugin *plugin,
                         }
                     }
                 }
-                gui_chat_printf (NULL, " %s", str_line);
+                gui_chat_printf (NULL, "%s", str_line);
             }
         }
 
