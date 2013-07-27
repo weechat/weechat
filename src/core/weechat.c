@@ -61,6 +61,7 @@
 #include "wee-log.h"
 #include "wee-network.h"
 #include "wee-proxy.h"
+#include "wee-secure.h"
 #include "wee-string.h"
 #include "wee-upgrade.h"
 #include "wee-utf8.h"
@@ -440,14 +441,19 @@ main (int argc, char *argv[])
     command_init ();                    /* initialize WeeChat commands      */
     completion_init ();                 /* add core completion hooks        */
     gui_key_init ();                    /* init keys                        */
-    if (!config_weechat_init ())        /* init options with default values */
+    network_init_gcrypt ();             /* init gcrypt                      */
+    if (!secure_init ())                /* init secured data options (sec.*)*/
+        exit (EXIT_FAILURE);
+    if (!config_weechat_init ())        /* init WeeChat options (weechat.*) */
         exit (EXIT_FAILURE);
     weechat_parse_args (argc, argv);    /* parse command line args          */
     weechat_create_home_dir ();         /* create WeeChat home directory    */
     log_init ();                        /* init log file                    */
-    if (config_weechat_read () < 0)     /* read WeeChat configuration       */
+    if (secure_read () < 0)             /* read secured data options        */
         exit (EXIT_FAILURE);
-    network_init ();                    /* init networking                  */
+    if (config_weechat_read () < 0)     /* read WeeChat options             */
+        exit (EXIT_FAILURE);
+    network_init_gnutls ();             /* init GnuTLS                      */
     gui_main_init ();                   /* init WeeChat interface           */
     if (weechat_upgrading)
     {
@@ -470,10 +476,12 @@ main (int argc, char *argv[])
     gui_layout_save_on_exit ();         /* save layout                      */
     plugin_end ();                      /* end plugin interface(s)          */
     if (CONFIG_BOOLEAN(config_look_save_config_on_exit))
-        (void) config_weechat_write (NULL); /* save WeeChat config file     */
+        (void) config_weechat_write (); /* save WeeChat config file         */
+    (void) secure_write ();             /* save secured data                */
     gui_main_end (1);                   /* shut down WeeChat GUI            */
     proxy_free_all ();                  /* free all proxies                 */
-    config_weechat_free ();             /* free weechat.conf and vars       */
+    config_weechat_free ();             /* free WeeChat options             */
+    secure_free ();                     /* free secured data options        */
     config_file_free_all ();            /* free all configuration files     */
     gui_key_end ();                     /* remove all keys                  */
     unhook_all ();                      /* remove all hooks                 */

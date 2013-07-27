@@ -690,7 +690,7 @@ config_change_network_gnutls_ca_file (void *data,
     (void) data;
     (void) option;
 
-    if (network_init_ok)
+    if (network_init_gnutls_ok)
         network_set_gnutls_ca_file ();
 }
 
@@ -1706,7 +1706,7 @@ config_weechat_filter_read_cb (void *data,
 }
 
 /*
- * Writes a filter option in WeeChat configuration file.
+ * Writes section "filter" in WeeChat configuration file.
  */
 
 int

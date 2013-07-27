@@ -55,12 +55,27 @@
 #include "../plugins/plugin.h"
 
 
-int network_init_ok = 0;
+int network_init_gnutls_ok = 0;
 
 #ifdef HAVE_GNUTLS
 gnutls_certificate_credentials_t gnutls_xcred; /* GnuTLS client credentials */
 #endif
 
+
+/*
+ * Initializes gcrypt.
+ */
+
+void
+network_init_gcrypt ()
+{
+    if (!weechat_no_gcrypt)
+    {
+        gcry_check_version (GCRYPT_VERSION);
+        gcry_control (GCRYCTL_DISABLE_SECMEM, 0);
+        gcry_control (GCRYCTL_INITIALIZATION_FINISHED, 0);
+    }
+}
 
 /*
  * Sets trust file with option "gnutls_ca_file".
@@ -91,11 +106,11 @@ network_set_gnutls_ca_file ()
 }
 
 /*
- * Initializes network.
+ * Initializes GnuTLS.
  */
 
 void
-network_init ()
+network_init_gnutls ()
 {
 #ifdef HAVE_GNUTLS
     if (!weechat_no_gnutls)
@@ -121,14 +136,7 @@ network_init ()
     }
 #endif /* HAVE_GNUTLS */
 
-    if (!weechat_no_gcrypt)
-    {
-        gcry_check_version (GCRYPT_VERSION);
-        gcry_control (GCRYCTL_DISABLE_SECMEM, 0);
-        gcry_control (GCRYCTL_INITIALIZATION_FINISHED, 0);
-    }
-
-    network_init_ok = 1;
+    network_init_gnutls_ok = 1;
 }
 
 /*
@@ -138,7 +146,7 @@ network_init ()
 void
 network_end ()
 {
-    if (network_init_ok)
+    if (network_init_gnutls_ok)
     {
 #ifdef HAVE_GNUTLS
         if (!weechat_no_gnutls)
@@ -147,7 +155,7 @@ network_end ()
             gnutls_global_deinit();
         }
 #endif
-        network_init_ok = 0;
+        network_init_gnutls_ok = 0;
     }
 }
 

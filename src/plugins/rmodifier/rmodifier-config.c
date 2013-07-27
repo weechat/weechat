@@ -54,6 +54,9 @@ char *rmodifier_config_default_list[][4] =
     { "set_pass", "history_add",
       "^(/set +\\S*password\\S* +)(.*)", "1,2*"
     },
+    { "secure", "history_add,input_text_display",
+      "^(/secure +(passphrase|set \\S+) +)(.*)", "1,3*"
+    },
     { NULL, NULL, NULL, NULL },
 };
 

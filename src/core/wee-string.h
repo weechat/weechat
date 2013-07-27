@@ -72,11 +72,15 @@ extern char *string_iconv_from_internal (const char *charset,
                                          const char *string);
 extern int string_iconv_fprintf (FILE *file, const char *data, ...);
 extern char *string_format_size (unsigned long long size);
+extern void string_encode_base16 (const char *from, int length, char *to);
+extern int string_decode_base16 (const char *from, char *to);
 extern void string_encode_base64 (const char *from, int length, char *to);
 extern int string_decode_base64 (const char *from, char *to);
 extern int string_is_command_char (const char *string);
 extern const char *string_input_for_buffer (const char *string);
 extern char *string_replace_with_callback (const char *string,
+                                           const char *prefix,
+                                           const char *suffix,
                                            char *(*callback)(void *data, const char *text),
                                            void *callback_data,
                                            int *errors);

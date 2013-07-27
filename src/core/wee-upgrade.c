@@ -32,6 +32,7 @@
 #include "wee-upgrade.h"
 #include "wee-hook.h"
 #include "wee-infolist.h"
+#include "wee-secure.h"
 #include "wee-string.h"
 #include "wee-util.h"
 #include "../gui/gui-buffer.h"
@@ -728,6 +729,9 @@ upgrade_weechat_load ()
 
     gui_color_buffer_assign ();
     gui_color_buffer_display ();
+
+    secure_buffer_assign ();
+    secure_buffer_display ();
 
     if (upgrade_layout->layout_buffers)
         gui_layout_buffer_apply (upgrade_layout);

@@ -29,6 +29,8 @@ SET(WEECHAT_SOURCES
 ./src/core/wee-network.h
 ./src/core/wee-proxy.c
 ./src/core/wee-proxy.h
+./src/core/wee-secure.c
+./src/core/wee-secure.h
 ./src/core/wee-string.c
 ./src/core/wee-string.h
 ./src/core/wee-upgrade.c
