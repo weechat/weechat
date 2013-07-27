@@ -30,6 +30,12 @@ struct t_gui_line;
 
 #define GUI_CHAT_TAG_NO_HIGHLIGHT "no_highlight"
 
+#define GUI_CHAT_PREFIX_ERROR_DEFAULT   "=!="
+#define GUI_CHAT_PREFIX_NETWORK_DEFAULT "--"
+#define GUI_CHAT_PREFIX_ACTION_DEFAULT  " *"
+#define GUI_CHAT_PREFIX_JOIN_DEFAULT    "-->"
+#define GUI_CHAT_PREFIX_QUIT_DEFAULT    "<--"
+
 enum t_gui_chat_prefix
 {
     GUI_CHAT_PREFIX_ERROR = 0,
