@@ -48,6 +48,7 @@ extern struct t_config_section *secure_config_section_pwd;
 
 extern struct t_config_option *secure_config_crypt_cipher;
 extern struct t_config_option *secure_config_crypt_hash_algo;
+extern struct t_config_option *secure_config_crypt_passphrase_file;
 extern struct t_config_option *secure_config_crypt_salt;
 
 extern char *secure_passphrase;

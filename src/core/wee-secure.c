@@ -24,6 +24,7 @@
 #endif
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <gcrypt.h>
 
 #include "weechat.h"
@@ -46,6 +47,7 @@ struct t_config_section *secure_config_section_data = NULL;
 
 struct t_config_option *secure_config_crypt_cipher = NULL;
 struct t_config_option *secure_config_crypt_hash_algo = NULL;
+struct t_config_option *secure_config_crypt_passphrase_file = NULL;
 struct t_config_option *secure_config_crypt_salt = NULL;
 
 char *secure_passphrase = NULL;
@@ -420,34 +422,11 @@ decend:
 }
 
 /*
- * Reloads secured data configuration file.
- *
- * Returns:
- *   WEECHAT_CONFIG_READ_OK: OK
- *   WEECHAT_CONFIG_READ_MEMORY_ERROR: not enough memory
- *   WEECHAT_CONFIG_READ_FILE_NOT_FOUND: file not found
- */
-
-int
-secure_reload_cb (void *data, struct t_config_file *config_file)
-{
-    /* make C compiler happy */
-    (void) data;
-
-    secure_data_encrypted = 0;
-
-    /* remove all secured data */
-    hashtable_remove_all (secure_hashtable_data);
-
-    return config_file_reload (config_file);
-}
-
-/*
- * Gets passphrase from user.
+ * Gets passphrase from user and puts it in variable "secure_passphrase".
  */
 
 void
-secure_get_passphrase (const char *error)
+secure_get_passphrase_from_user (const char *error)
 {
     char passphrase[1024];
 
@@ -482,6 +461,107 @@ secure_get_passphrase (const char *error)
 }
 
 /*
+ * Gets passphrase from a file.
+ *
+ * Returns passphrase read in file (only the first line with max length of
+ * 1024 chars), or NULL if error.
+ */
+
+char *
+secure_get_passphrase_from_file (const char *filename)
+{
+    FILE *file;
+    char *passphrase, *filename2, buffer[1024+1], *pos;
+    size_t num_read;
+
+    passphrase = NULL;
+
+    filename2 = string_expand_home (filename);
+    if (!filename2)
+        return NULL;
+
+    file = fopen (filename2, "r");
+    if (file)
+    {
+        num_read = fread (buffer, 1, sizeof (buffer) - 1, file);
+        if (num_read > 0)
+        {
+            buffer[num_read] = '\0';
+            pos = strchr (buffer, '\r');
+            if (pos)
+                pos[0] = '\0';
+            pos = strchr (buffer, '\n');
+            if (pos)
+                pos[0] = '\0';
+            if (buffer[0])
+                passphrase = strdup (buffer);
+        }
+        fclose (file);
+    }
+
+    free (filename2);
+
+    return passphrase;
+}
+
+/*
+ * Checks option "sec.crypt.passphrase_file".
+ */
+
+int
+secure_check_crypt_passphrase_file (void *data,
+                                    struct t_config_option *option,
+                                    const char *value)
+{
+    char *passphrase;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+    /* empty value is OK in option (no file used for passphrase) */
+    if (!value || !value[0])
+        return 1;
+
+    passphrase = secure_get_passphrase_from_file (value);
+    if (passphrase)
+        free (passphrase);
+    else
+    {
+        gui_chat_printf (NULL,
+                         _("%sWarning: unable to read passphrase from file "
+                           "\"%s\""),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         value);
+    }
+
+    return 1;
+}
+
+/*
+ * Reloads secured data configuration file.
+ *
+ * Returns:
+ *   WEECHAT_CONFIG_READ_OK: OK
+ *   WEECHAT_CONFIG_READ_MEMORY_ERROR: not enough memory
+ *   WEECHAT_CONFIG_READ_FILE_NOT_FOUND: file not found
+ */
+
+int
+secure_reload_cb (void *data, struct t_config_file *config_file)
+{
+    /* make C compiler happy */
+    (void) data;
+
+    secure_data_encrypted = 0;
+
+    /* remove all secured data */
+    hashtable_remove_all (secure_hashtable_data);
+
+    return config_file_reload (config_file);
+}
+
+/*
  * Reads a data option in secured data configuration file.
  */
 
@@ -508,8 +588,13 @@ secure_data_read_cb (void *data,
         secure_data_encrypted = config_file_string_to_boolean (value);
         if (secure_data_encrypted && !secure_passphrase && !gui_init_ok)
         {
-            /* ask passphrase (only on startup) */
-            secure_get_passphrase ("");
+            /* if a passphrase file is set, use it */
+            if (CONFIG_STRING(secure_config_crypt_passphrase_file)[0])
+                secure_passphrase = secure_get_passphrase_from_file (CONFIG_STRING(secure_config_crypt_passphrase_file));
+
+            /* ask passphrase to the user (if no file, or file not found) */
+            if (!secure_passphrase)
+                secure_get_passphrase_from_user ("");
         }
         return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
     }
@@ -574,7 +659,7 @@ secure_data_read_cb (void *data,
             snprintf (str_error, sizeof (str_error),
                       _("*** Wrong passphrase (decrypt error: %s) ***"),
                       secure_decrypt_error[(rc * -1) - 1]);
-            secure_get_passphrase (str_error);
+            secure_get_passphrase_from_user (str_error);
             if (!secure_passphrase)
             {
                 gui_chat_printf (NULL,
@@ -729,6 +814,18 @@ secure_init_options ()
         N_("hash algorithm used to check the decrypted data"),
         "sha224|sha256|sha384|sha512", 0, 0, "sha256", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL);
+    secure_config_crypt_passphrase_file = config_file_new_option (
+        secure_config_file, ptr_section,
+        "passphrase_file", "string",
+        N_("path to a file containing the passphrase to encrypt/decrypt secured "
+           "data (used only when reading file sec.conf); only first line of "
+           "file is used; this file is used only if the environment variable \""
+           SECURE_ENV_PASSPHRASE "\" is not set (the environment variable has "
+           "higher priority); security note: it is recommended to keep this "
+           "file readable only by you and store it outside WeeChat home (for "
+           "example in your home); example: \"~/.weechat-passphrase\""),
+        NULL, 0, 0, "", NULL, 0,
+        &secure_check_crypt_passphrase_file, NULL, NULL, NULL, NULL, NULL);
     secure_config_crypt_salt = config_file_new_option (
         secure_config_file, ptr_section,
         "salt", "boolean",
