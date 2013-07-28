@@ -69,6 +69,7 @@ Version 0.4.2 (under dev!)
 * relay: fix binding to an IP address (bug #39119)
 * script: add info about things defined by script (like commands, options, ...)
   in the detailed view of script (/script show)
+* scripts: add hdata with script callback
 * xfer: add option xfer.look.pv_tags
 * xfer: fix compilation on OpenBSD (bug #39071)
 
