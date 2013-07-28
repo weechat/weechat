@@ -125,19 +125,21 @@ localvar: 現在のバッファのローカル変数を表示
 /color  alias <color> <name>
         unalias <color>
         reset
+        -o
 
-  alias: ある色に別名を追加
-unalias: 別名の削除
-  color: カラー番号 (0 以上、最大値はターミナル依存、多くの場合 63 か 255)
-   name: カラーの別名 (例えば: "orange")
-  reset: 全てのカラーペアをリセット (自動的なリセットが無効化されており、これ以上のカラーペアが利用できない場合に必要、オプション weechat.look.color_pairs_auto_reset を参照)
+  alias: add an alias for a color
+unalias: delete an alias
+  color: color number (greater than or equal to 0, max depends on terminal, commonly 63 or 255)
+   name: alias name for color (for example: "orange")
+  reset: reset all color pairs (required when no more color pairs are available if automatic reset is disabled, see option weechat.look.color_pairs_auto_reset)
+     -o: send terminal/colors info to current buffer as input
 
-引数無しの場合、コマンドは新しいバッファに色を表示します。
+Without argument, this command displays colors in a new buffer.
 
-例:
-  色番号 214 に対応する別名 "orange" を追加:
+Examples:
+  add alias "orange" for color 214:
     /color alias 214 orange
-  色番号 214 を削除:
+  delete color 214:
     /color unalias 214
 ........................................
 

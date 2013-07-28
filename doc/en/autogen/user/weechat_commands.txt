@@ -125,12 +125,14 @@ Examples:
 /color  alias <color> <name>
         unalias <color>
         reset
+        -o
 
   alias: add an alias for a color
 unalias: delete an alias
   color: color number (greater than or equal to 0, max depends on terminal, commonly 63 or 255)
    name: alias name for color (for example: "orange")
   reset: reset all color pairs (required when no more color pairs are available if automatic reset is disabled, see option weechat.look.color_pairs_auto_reset)
+     -o: send terminal/colors info to current buffer as input
 
 Without argument, this command displays colors in a new buffer.
 
