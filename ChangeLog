@@ -46,6 +46,7 @@ Version 0.4.2 (under dev!)
   "layout_window"
 * core: fix line alignment when option weechat.look.buffer_time_format is set
   to empty string
+* api: use pointer for infolist "hook" to return only one hook
 * api: add new function strlen_screen
 * aspell: rename option aspell.look.color to aspell.color.misspelled, add option
   aspell.color.suggestions

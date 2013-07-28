@@ -48,7 +48,7 @@
 
 | weechat | history | コマンドの履歴 | バッファポインタ (ワイルドカードとして "*" で始めるか終われる) (オプション) | -
 
-| weechat | hook | フックリスト | - | type,arguments (type はコマンド/タイマー/..、arguments はいくつかのフックで必要 (ワイルドカードとして "*" で始めるか終われる)、両方ともオプション)
+| weechat | hook | フックリスト | hook pointer (optional) | type,arguments (type はコマンド/タイマー/..、arguments はいくつかのフックで必要 (ワイルドカードとして "*" で始めるか終われる)、両方ともオプション)
 
 | weechat | hotlist | ホットリストに含まれるバッファ | - | -
 

@@ -48,7 +48,7 @@
 
 | weechat | history | history of commands | buffer pointer (if not set, return global history) (optional) | -
 
-| weechat | hook | list of hooks | - | type,arguments (type is command/timer/.., arguments to get only some hooks (can start or end with "*" as wildcard), both are optional)
+| weechat | hook | list of hooks | hook pointer (optional) | type,arguments (type is command/timer/.., arguments to get only some hooks (can start or end with "*" as wildcard), both are optional)
 
 | weechat | hotlist | list of buffers in hotlist | - | -
 

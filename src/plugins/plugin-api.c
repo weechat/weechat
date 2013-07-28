@@ -665,10 +665,14 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
     }
     else if (string_strcasecmp (infolist_name, "hook") == 0)
     {
+        /* invalid hook pointer ? */
+        if (pointer && !hook_valid (pointer))
+            return NULL;
+
         ptr_infolist = infolist_new ();
         if (ptr_infolist)
         {
-            if (!hook_add_to_infolist (ptr_infolist, arguments))
+            if (!hook_add_to_infolist (ptr_infolist, pointer, arguments))
             {
                 infolist_free (ptr_infolist);
                 return NULL;
@@ -1154,7 +1158,7 @@ plugin_api_init ()
                    NULL,
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "hook", N_("list of hooks"),
-                   NULL,
+                   N_("hook pointer (optional)"),
                    N_("type,arguments (type is command/timer/.., arguments to "
                       "get only some hooks (can start or end with \"*\" as "
                       "wildcard), both are optional)"),

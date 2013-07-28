@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-27 23:18+0200\n"
+"POT-Creation-Date: 2013-07-28 12:32+0200\n"
 "PO-Revision-Date: 2013-02-14 18:20+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6249,6 +6249,9 @@ msgid "buffer pointer (if not set, return global history) (optional)"
 msgstr ""
 
 msgid "list of hooks"
+msgstr ""
+
+msgid "hook pointer (optional)"
 msgstr ""
 
 msgid ""

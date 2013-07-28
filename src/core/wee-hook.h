@@ -431,6 +431,7 @@ extern struct t_hook *last_weechat_hook[];
 /* hook functions */
 
 extern void hook_init ();
+extern int hook_valid (struct t_hook *hook);
 extern struct t_hook *hook_command (struct t_weechat_plugin *plugin,
                                     const char *command,
                                     const char *description,
@@ -592,6 +593,7 @@ extern void unhook (struct t_hook *hook);
 extern void unhook_all_plugin (struct t_weechat_plugin *plugin);
 extern void unhook_all ();
 extern int hook_add_to_infolist (struct t_infolist *infolist,
+                                 struct t_hook *hook,
                                  const char *arguments);
 extern void hook_print_log ();
 

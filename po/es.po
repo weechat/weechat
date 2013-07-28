@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-27 23:18+0200\n"
+"POT-Creation-Date: 2013-07-28 12:32+0200\n"
 "PO-Revision-Date: 2013-07-18 19:51+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7874,6 +7874,10 @@ msgstr ""
 
 msgid "list of hooks"
 msgstr "lista de enganches"
+
+#, fuzzy
+msgid "hook pointer (optional)"
+msgstr "puntero del apodo (opcional)"
 
 # translate command,timer?
 msgid ""
