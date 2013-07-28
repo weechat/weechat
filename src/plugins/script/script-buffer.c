@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include <libgen.h>
 
 #include "../weechat-plugin.h"
 #include "script.h"
@@ -354,6 +355,208 @@ script_buffer_detail_label (const char *text, int max_length)
 }
 
 /*
+ * Gets pointer to a script (to the script managed by the appropriate plugin,
+ * for example python).
+ */
+
+struct t_plugin_script *
+script_buffer_get_script_pointer (struct t_script_repo *script,
+                                  struct t_hdata *hdata_script)
+{
+    char *filename, *ptr_base_name;
+    const char *ptr_filename;
+    void *ptr_script;
+
+    ptr_script = weechat_hdata_get_list (hdata_script, "scripts");
+    while (ptr_script)
+    {
+        ptr_filename = weechat_hdata_string (hdata_script,
+                                             ptr_script, "filename");
+        if (ptr_filename)
+        {
+            filename = strdup (ptr_filename);
+            if (filename)
+            {
+                ptr_base_name = basename (filename);
+                if (strcmp (ptr_base_name, script->name_with_extension) == 0)
+                {
+                    free (filename);
+                    return ptr_script;
+                }
+                free (filename);
+            }
+        }
+        ptr_script = weechat_hdata_move (hdata_script, ptr_script, 1);
+    }
+
+    /* script not found */
+    return NULL;
+}
+
+/*
+ * Gets a list with usage of the script (commands, config options...).
+ */
+
+struct t_weelist *
+script_buffer_get_script_usage (struct t_script_repo *script)
+{
+    struct t_weelist *list;
+    char hdata_name[128], str_option[256], str_info[1024];
+    int config_files;
+    const char *ptr_name_hdata_callback, *type;
+    struct t_hdata *ptr_hdata_script, *ptr_hdata_callback;
+    struct t_hdata *ptr_hdata_config_file, *ptr_hdata_bar_item;
+    void *ptr_script, *ptr_callback;
+    struct t_config_file *ptr_config_file;
+    struct t_hook *ptr_hook;
+    struct t_gui_bar_item *ptr_bar_item;
+    struct t_infolist *infolist;
+
+    list = weechat_list_new ();
+
+    config_files = 0;
+
+    snprintf (hdata_name, sizeof (hdata_name),
+              "%s_script", script_language[script->language]);
+    ptr_hdata_script = weechat_hdata_get (hdata_name);
+    if (!ptr_hdata_script)
+        goto end;
+
+    ptr_script = script_buffer_get_script_pointer (script, ptr_hdata_script);
+    if (!ptr_script)
+        goto end;
+
+    ptr_name_hdata_callback = weechat_hdata_get_var_hdata (ptr_hdata_script,
+                                                           "callbacks");
+    if (!ptr_name_hdata_callback)
+        goto end;
+    ptr_hdata_callback = weechat_hdata_get (ptr_name_hdata_callback);
+    if (!ptr_hdata_callback)
+        goto end;
+
+    ptr_hdata_config_file = weechat_hdata_get ("config_file");
+    ptr_hdata_bar_item = weechat_hdata_get ("bar_item");
+
+    ptr_callback = weechat_hdata_pointer (ptr_hdata_script,
+                                          ptr_script,
+                                          "callbacks");
+    while (ptr_callback)
+    {
+        str_info[0] = '\0';
+        ptr_config_file = weechat_hdata_pointer (ptr_hdata_callback,
+                                                 ptr_callback,
+                                                 "config_file");
+        ptr_hook = weechat_hdata_pointer (ptr_hdata_callback,
+                                          ptr_callback,
+                                          "hook");
+        ptr_bar_item = weechat_hdata_pointer (ptr_hdata_callback,
+                                              ptr_callback,
+                                              "bar_item");
+        if (ptr_config_file)
+        {
+            snprintf (str_info, sizeof (str_info),
+                      _("configuration file \"%s\" (options %s.*)"),
+                      weechat_hdata_string (ptr_hdata_config_file,
+                                            ptr_config_file,
+                                            "filename"),
+                      weechat_hdata_string (ptr_hdata_config_file,
+                                            ptr_config_file,
+                                            "name"));
+            config_files++;
+        }
+        else if (ptr_hook)
+        {
+            infolist = weechat_infolist_get ("hook", ptr_hook, NULL);
+            if (infolist)
+            {
+                if (weechat_infolist_next (infolist))
+                {
+                    type = weechat_infolist_string (infolist, "type");
+                    if (type)
+                    {
+                        if (strcmp (type, "command") == 0)
+                        {
+                            snprintf (str_info, sizeof (str_info),
+                                      _("command /%s"),
+                                      weechat_infolist_string (infolist,
+                                                               "command"));
+                        }
+                        else if (strcmp (type, "completion") == 0)
+                        {
+                            snprintf (str_info, sizeof (str_info),
+                                      _("completion %%(%s)"),
+                                      weechat_infolist_string (infolist,
+                                                               "completion_item"));
+                        }
+                        else if (strcmp (type, "info") == 0)
+                        {
+                            snprintf (str_info, sizeof (str_info),
+                                      "info \"%s\"",
+                                      weechat_infolist_string (infolist,
+                                                               "info_name"));
+                        }
+                        else if (strcmp (type, "info_hashtable") == 0)
+                        {
+                            snprintf (str_info, sizeof (str_info),
+                                      "info_hashtable \"%s\"",
+                                      weechat_infolist_string (infolist,
+                                                               "info_name"));
+                        }
+                        else if (strcmp (type, "infolist") == 0)
+                        {
+                            snprintf (str_info, sizeof (str_info),
+                                      "infolist \"%s\"",
+                                      weechat_infolist_string (infolist,
+                                                               "infolist_name"));
+                        }
+                    }
+                }
+                weechat_infolist_free (infolist);
+            }
+        }
+        else if (ptr_bar_item)
+        {
+            snprintf (str_info, sizeof (str_info),
+                      _("bar item \"%s\""),
+                      weechat_hdata_string (ptr_hdata_bar_item,
+                                            ptr_bar_item,
+                                            "name"));
+        }
+        if (str_info[0])
+        {
+            weechat_list_add (list, str_info,
+                              WEECHAT_LIST_POS_END, NULL);
+        }
+        ptr_callback = weechat_hdata_move (ptr_hdata_callback,
+                                           ptr_callback,
+                                           1);
+    }
+
+end:
+    snprintf (str_option, sizeof (str_option),
+              "plugins.var.%s.%s.*",
+              script_language[script->language],
+              weechat_hdata_string (ptr_hdata_script, ptr_script, "name"));
+    infolist = weechat_infolist_get ("option", NULL, str_option);
+    if (infolist)
+    {
+        if (weechat_infolist_next (infolist))
+        {
+            snprintf (str_info, sizeof (str_info),
+                      _("options %s%s%s"),
+                      str_option,
+                      (config_files > 0) ? " " : "",
+                      (config_files > 0) ? _("(old options?)") : "");
+            weechat_list_add (list, str_info,
+                              WEECHAT_LIST_POS_END, NULL);
+        }
+        weechat_infolist_free (infolist);
+    }
+
+    return list;
+}
+
+/*
  * Displays detail on a script.
  */
 
@@ -369,6 +572,8 @@ script_buffer_display_detail_script (struct t_script_repo *script)
                        N_("Min WeeChat"), N_("Max WeeChat"),
                        NULL };
     int i, length, max_length, line;
+    struct t_weelist *list;
+    struct t_weelist_item *ptr_item;
 
     max_length = 0;
     for (i = 0; labels[i]; i++)
@@ -474,6 +679,35 @@ script_buffer_display_detail_script (struct t_script_repo *script)
                       script_buffer_detail_label (_(labels[line]), max_length),
                       (script->max_weechat) ? script->max_weechat : "-");
     line++;
+
+    if (script->status & SCRIPT_STATUS_RUNNING)
+    {
+        list = script_buffer_get_script_usage (script);
+        if (list)
+        {
+            line++;
+            weechat_printf_y (script_buffer, line + 1,
+                              _("Script has defined:"));
+            i = 0;
+            ptr_item = weechat_list_get (list, 0);
+            while (ptr_item)
+            {
+                line++;
+                weechat_printf_y (script_buffer, line + 1,
+                                  "  %s", weechat_list_string (ptr_item));
+                ptr_item = weechat_list_next (ptr_item);
+                i++;
+            }
+            if (i == 0)
+            {
+                line++;
+                weechat_printf_y (script_buffer, line + 1,
+                                  "  %s", _("(nothing)"));
+            }
+            line++;
+            weechat_list_free (list);
+        }
+    }
 
     script_buffer_detail_script_last_line = line + 2;
     script_buffer_detail_script_line_diff = -1;

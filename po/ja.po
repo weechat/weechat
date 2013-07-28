@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-28 12:32+0200\n"
+"POT-Creation-Date: 2013-07-28 16:11+0200\n"
 "PO-Revision-Date: 2013-07-18 19:51+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -8790,6 +8790,10 @@ msgid "script name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 "スクリプト名 (ワイルドカードとして \"*\" で始めるか終われる) (オプション)"
 
+#, fuzzy
+msgid "callback of a script"
+msgstr "スクリプトのリスト"
+
 #, c-format
 msgid ""
 "%s%s: warning, invalid pointer (\"%s\") for function \"%s\" (script: %s)"
@@ -8999,6 +9003,30 @@ msgstr "%s: スクリプト \"%s\" の最新版がインストール済みです
 msgid "%s: all scripts are up-to-date"
 msgstr "%s: すべてのスクリプトは最新の状態になっています"
 
+#, fuzzy, c-format
+msgid "configuration file \"%s\" (options %s.*)"
+msgstr "設定オプション"
+
+#, fuzzy, c-format
+msgid "command /%s"
+msgstr "エイリアスコマンド"
+
+#, fuzzy, c-format
+msgid "completion %%(%s)"
+msgstr "オプション \"%s%s%s\":"
+
+#, fuzzy, c-format
+msgid "bar item \"%s\""
+msgstr "バーアイテム"
+
+#, fuzzy, c-format
+msgid "options %s%s%s"
+msgstr "オプション \"%s%s%s\":"
+
+#, fuzzy
+msgid "(old options?)"
+msgstr "(デフォルトオプション)"
+
 msgid "Script"
 msgstr "スクリプト"
 
@@ -9043,6 +9071,13 @@ msgstr "WeeChat を最小化"
 
 msgid "Max WeeChat"
 msgstr "WeeChat を最大化"
+
+#, fuzzy
+msgid "Script has defined:"
+msgstr "ロード済みスクリプト:"
+
+msgid "(nothing)"
+msgstr ""
 
 msgid "Alt+key/input: v=back to list d=jump to diff"
 msgstr "Alt+key/input: v=リストに戻る d=比較する"

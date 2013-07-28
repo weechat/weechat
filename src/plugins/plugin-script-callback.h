@@ -42,6 +42,8 @@ extern struct t_plugin_script_cb *plugin_script_callback_add (struct t_plugin_sc
 extern void plugin_script_callback_remove (struct t_plugin_script *script,
                                            struct t_plugin_script_cb *script_callback);
 extern void plugin_script_callback_remove_all (struct t_plugin_script *script);
+extern struct t_hdata *plugin_script_callback_hdata_callback_cb (void *data,
+                                                                 const char *hdata_name);
 extern void plugin_script_callback_print_log (struct t_weechat_plugin *weechat_plugin,
                                               struct t_plugin_script_cb *script_callback);
 

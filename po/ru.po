@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-28 12:32+0200\n"
+"POT-Creation-Date: 2013-07-28 16:11+0200\n"
 "PO-Revision-Date: 2013-07-18 19:52+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8021,6 +8021,10 @@ msgstr ""
 msgid "script name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 
+#, fuzzy
+msgid "callback of a script"
+msgstr "Список сокращений:\n"
+
 #, fuzzy, c-format
 msgid ""
 "%s%s: warning, invalid pointer (\"%s\") for function \"%s\" (script: %s)"
@@ -8229,6 +8233,30 @@ msgstr "%s сервер \"%s\" уже существует, не могу соз
 msgid "%s: all scripts are up-to-date"
 msgstr "Plugin \"%s\" выгружен.\n"
 
+#, fuzzy, c-format
+msgid "configuration file \"%s\" (options %s.*)"
+msgstr "Не найден параметр\n"
+
+#, fuzzy, c-format
+msgid "command /%s"
+msgstr "Внутренние команды %s:\n"
+
+#, fuzzy, c-format
+msgid "completion %%(%s)"
+msgstr "Ники %s%s%s: %s["
+
+#, fuzzy, c-format
+msgid "bar item \"%s\""
+msgstr "Список сокращений:\n"
+
+#, fuzzy, c-format
+msgid "options %s%s%s"
+msgstr "Ники %s%s%s: %s["
+
+#, fuzzy
+msgid "(old options?)"
+msgstr "настроить параметры конфигурации"
+
 msgid "Script"
 msgstr ""
 
@@ -8278,6 +8306,13 @@ msgstr "слоган WeeChat"
 #, fuzzy
 msgid "Max WeeChat"
 msgstr "слоган WeeChat"
+
+#, fuzzy
+msgid "Script has defined:"
+msgstr "FIFO pipe закрыт\n"
+
+msgid "(nothing)"
+msgstr ""
 
 msgid "Alt+key/input: v=back to list d=jump to diff"
 msgstr ""

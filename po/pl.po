@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-28 12:32+0200\n"
+"POT-Creation-Date: 2013-07-28 16:11+0200\n"
 "PO-Revision-Date: 2013-07-18 19:51+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8939,6 +8939,10 @@ msgstr "wskaźnik skryptu (opcjonalne)"
 msgid "script name (can start or end with \"*\" as wildcard) (optional)"
 msgstr "nazwa skryptu (może się zaczynać lub kończyć \"*\") (opcjonalne)"
 
+#, fuzzy
+msgid "callback of a script"
+msgstr "lista skryptów"
+
 #, c-format
 msgid ""
 "%s%s: warning, invalid pointer (\"%s\") for function \"%s\" (script: %s)"
@@ -9148,6 +9152,30 @@ msgstr "%s: skrypt \"%s\" jest już zainstalowany i jest aktualny"
 msgid "%s: all scripts are up-to-date"
 msgstr "%s: wszystkie skrypty są aktualne"
 
+#, fuzzy, c-format
+msgid "configuration file \"%s\" (options %s.*)"
+msgstr "opcje konfiguracyjne"
+
+#, fuzzy, c-format
+msgid "command /%s"
+msgstr "Aliasy komend"
+
+#, fuzzy, c-format
+msgid "completion %%(%s)"
+msgstr "Opcja \"%s%s%s\":"
+
+#, fuzzy, c-format
+msgid "bar item \"%s\""
+msgstr "element paska"
+
+#, fuzzy, c-format
+msgid "options %s%s%s"
+msgstr "Opcja \"%s%s%s\":"
+
+#, fuzzy
+msgid "(old options?)"
+msgstr "(domyślne opcje)"
+
 msgid "Script"
 msgstr "Skrypt"
 
@@ -9192,6 +9220,13 @@ msgstr "Min WeeChat"
 
 msgid "Max WeeChat"
 msgstr "Max WeeChat"
+
+#, fuzzy
+msgid "Script has defined:"
+msgstr "Załadowane skrypty:"
+
+msgid "(nothing)"
+msgstr ""
 
 msgid "Alt+key/input: v=back to list d=jump to diff"
 msgstr "Alt+klawisz/wejście: v=wróć do listy d=skocz do diff"

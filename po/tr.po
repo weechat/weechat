@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-28 12:32+0200\n"
+"POT-Creation-Date: 2013-07-28 16:11+0200\n"
 "PO-Revision-Date: 2013-07-18 19:52+0200\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7108,6 +7108,10 @@ msgstr ""
 msgid "script name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 
+#, fuzzy
+msgid "callback of a script"
+msgstr "betiklerin listesi"
+
 #, c-format
 msgid ""
 "%s%s: warning, invalid pointer (\"%s\") for function \"%s\" (script: %s)"
@@ -7306,6 +7310,30 @@ msgstr ""
 msgid "%s: all scripts are up-to-date"
 msgstr "%s: tüm betikler güncel"
 
+#, fuzzy, c-format
+msgid "configuration file \"%s\" (options %s.*)"
+msgstr "yapılandırma seçenekleri"
+
+#, c-format
+msgid "command /%s"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "completion %%(%s)"
+msgstr "Seçenek \"%s%s%s\":"
+
+#, c-format
+msgid "bar item \"%s\""
+msgstr ""
+
+#, fuzzy, c-format
+msgid "options %s%s%s"
+msgstr "Seçenek \"%s%s%s\":"
+
+#, fuzzy
+msgid "(old options?)"
+msgstr "(varsayılan seçenekler)"
+
 msgid "Script"
 msgstr "Betik"
 
@@ -7349,6 +7377,13 @@ msgid "Min WeeChat"
 msgstr ""
 
 msgid "Max WeeChat"
+msgstr ""
+
+#, fuzzy
+msgid "Script has defined:"
+msgstr "Yüklü betikler:"
+
+msgid "(nothing)"
 msgstr ""
 
 msgid "Alt+key/input: v=back to list d=jump to diff"

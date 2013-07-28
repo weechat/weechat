@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-28 12:32+0200\n"
+"POT-Creation-Date: 2013-07-28 16:11+0200\n"
 "PO-Revision-Date: 2013-07-18 19:51+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7996,6 +7996,10 @@ msgstr ""
 msgid "script name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 
+#, fuzzy
+msgid "callback of a script"
+msgstr "Aliaszok listája:\n"
+
 #, fuzzy, c-format
 msgid ""
 "%s%s: warning, invalid pointer (\"%s\") for function \"%s\" (script: %s)"
@@ -8204,6 +8208,30 @@ msgstr "%s a \"%s\" szerver már létezik, nem hozhatja létre!\n"
 msgid "%s: all scripts are up-to-date"
 msgstr "A \"%s\" modul eltávolítva.\n"
 
+#, fuzzy, c-format
+msgid "configuration file \"%s\" (options %s.*)"
+msgstr "Nem található az opció\n"
+
+#, fuzzy, c-format
+msgid "command /%s"
+msgstr "%s belső parancsok:\n"
+
+#, fuzzy, c-format
+msgid "completion %%(%s)"
+msgstr "Felhasználók a %s%s%s szobában: %s["
+
+#, fuzzy, c-format
+msgid "bar item \"%s\""
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy, c-format
+msgid "options %s%s%s"
+msgstr "Felhasználók a %s%s%s szobában: %s["
+
+#, fuzzy
+msgid "(old options?)"
+msgstr "konfigurációs paraméterek beállítása"
+
 msgid "Script"
 msgstr ""
 
@@ -8253,6 +8281,13 @@ msgstr "WeeChat szlogen"
 #, fuzzy
 msgid "Max WeeChat"
 msgstr "WeeChat szlogen"
+
+#, fuzzy
+msgid "Script has defined:"
+msgstr "FIFO cső bezárva\n"
+
+msgid "(nothing)"
+msgstr ""
 
 msgid "Alt+key/input: v=back to list d=jump to diff"
 msgstr ""

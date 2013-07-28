@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-28 12:32+0200\n"
+"POT-Creation-Date: 2013-07-28 16:11+0200\n"
 "PO-Revision-Date: 2013-07-18 19:51+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8561,6 +8561,10 @@ msgstr ""
 "jméno skriptu (může začínat nebo končit \"*\" jako zástupným znakem) "
 "(volitelné)"
 
+#, fuzzy
+msgid "callback of a script"
+msgstr "seznam skriptů"
+
 #, fuzzy, c-format
 msgid ""
 "%s%s: warning, invalid pointer (\"%s\") for function \"%s\" (script: %s)"
@@ -8769,6 +8773,30 @@ msgstr "%s%s: server \"%s\" již existuje, nemohu jej vytvořít!"
 msgid "%s: all scripts are up-to-date"
 msgstr "%s: skripty odebrány"
 
+#, fuzzy, c-format
+msgid "configuration file \"%s\" (options %s.*)"
+msgstr "konfigurační nastavení"
+
+#, fuzzy, c-format
+msgid "command /%s"
+msgstr "příkazy weechat"
+
+#, fuzzy, c-format
+msgid "completion %%(%s)"
+msgstr "Volba \"%s%s%s\":"
+
+#, fuzzy, c-format
+msgid "bar item \"%s\""
+msgstr "seznam položek polí"
+
+#, fuzzy, c-format
+msgid "options %s%s%s"
+msgstr "Volba \"%s%s%s\":"
+
+#, fuzzy
+msgid "(old options?)"
+msgstr "(výchozí volby)"
+
 msgid "Script"
 msgstr ""
 
@@ -8817,6 +8845,13 @@ msgstr "ukončit WeeChat"
 #, fuzzy
 msgid "Max WeeChat"
 msgstr "ukončit WeeChat"
+
+#, fuzzy
+msgid "Script has defined:"
+msgstr "načteny %s skripty:"
+
+msgid "(nothing)"
+msgstr ""
 
 msgid "Alt+key/input: v=back to list d=jump to diff"
 msgstr ""

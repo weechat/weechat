@@ -2,6 +2,22 @@
 |========================================
 | Plugin | Name | Description | Variables | Update allowed | Lists
 
+| guile | guile_callback | callback of a script |
+  'script' (pointer, hdata: "guile_script") +
+  'function' (string) +
+  'data' (string) +
+  'config_file' (pointer, hdata: "config_file") +
+  'config_section' (pointer, hdata: "config_section") +
+  'config_option' (pointer, hdata: "config_option") +
+  'hook' (pointer) +
+  'buffer' (pointer, hdata: "buffer") +
+  'bar_item' (pointer, hdata: "bar_item") +
+  'upgrade_file' (pointer) +
+  'prev_callback' (pointer, hdata: "guile_callback") +
+  'next_callback' (pointer, hdata: "guile_callback") |
+ |
+  -
+
 | guile | guile_script | list of scripts |
   'filename' (string) +
   'interpreter' (pointer) +
@@ -12,7 +28,7 @@
   'description' (string) +
   'shutdown_func' (string) +
   'charset' (string) +
-  'callbacks' (pointer) +
+  'callbacks' (pointer, hdata: "guile_callback") +
   'unloading' (integer) +
   'prev_script' (pointer, hdata: "guile_script") +
   'next_script' (pointer, hdata: "guile_script") |
@@ -206,6 +222,22 @@
   'irc_servers' +
   'last_irc_server'
 
+| lua | lua_callback | callback of a script |
+  'script' (pointer, hdata: "lua_script") +
+  'function' (string) +
+  'data' (string) +
+  'config_file' (pointer, hdata: "config_file") +
+  'config_section' (pointer, hdata: "config_section") +
+  'config_option' (pointer, hdata: "config_option") +
+  'hook' (pointer) +
+  'buffer' (pointer, hdata: "buffer") +
+  'bar_item' (pointer, hdata: "bar_item") +
+  'upgrade_file' (pointer) +
+  'prev_callback' (pointer, hdata: "lua_callback") +
+  'next_callback' (pointer, hdata: "lua_callback") |
+ |
+  -
+
 | lua | lua_script | list of scripts |
   'filename' (string) +
   'interpreter' (pointer) +
@@ -216,13 +248,29 @@
   'description' (string) +
   'shutdown_func' (string) +
   'charset' (string) +
-  'callbacks' (pointer) +
+  'callbacks' (pointer, hdata: "lua_callback") +
   'unloading' (integer) +
   'prev_script' (pointer, hdata: "lua_script") +
   'next_script' (pointer, hdata: "lua_script") |
  |
   'last_script' +
   'scripts'
+
+| perl | perl_callback | callback of a script |
+  'script' (pointer, hdata: "perl_script") +
+  'function' (string) +
+  'data' (string) +
+  'config_file' (pointer, hdata: "config_file") +
+  'config_section' (pointer, hdata: "config_section") +
+  'config_option' (pointer, hdata: "config_option") +
+  'hook' (pointer) +
+  'buffer' (pointer, hdata: "buffer") +
+  'bar_item' (pointer, hdata: "bar_item") +
+  'upgrade_file' (pointer) +
+  'prev_callback' (pointer, hdata: "perl_callback") +
+  'next_callback' (pointer, hdata: "perl_callback") |
+ |
+  -
 
 | perl | perl_script | list of scripts |
   'filename' (string) +
@@ -234,13 +282,29 @@
   'description' (string) +
   'shutdown_func' (string) +
   'charset' (string) +
-  'callbacks' (pointer) +
+  'callbacks' (pointer, hdata: "perl_callback") +
   'unloading' (integer) +
   'prev_script' (pointer, hdata: "perl_script") +
   'next_script' (pointer, hdata: "perl_script") |
  |
   'last_script' +
   'scripts'
+
+| python | python_callback | callback of a script |
+  'script' (pointer, hdata: "python_script") +
+  'function' (string) +
+  'data' (string) +
+  'config_file' (pointer, hdata: "config_file") +
+  'config_section' (pointer, hdata: "config_section") +
+  'config_option' (pointer, hdata: "config_option") +
+  'hook' (pointer) +
+  'buffer' (pointer, hdata: "buffer") +
+  'bar_item' (pointer, hdata: "bar_item") +
+  'upgrade_file' (pointer) +
+  'prev_callback' (pointer, hdata: "python_callback") +
+  'next_callback' (pointer, hdata: "python_callback") |
+ |
+  -
 
 | python | python_script | list of scripts |
   'filename' (string) +
@@ -252,13 +316,29 @@
   'description' (string) +
   'shutdown_func' (string) +
   'charset' (string) +
-  'callbacks' (pointer) +
+  'callbacks' (pointer, hdata: "python_callback") +
   'unloading' (integer) +
   'prev_script' (pointer, hdata: "python_script") +
   'next_script' (pointer, hdata: "python_script") |
  |
   'last_script' +
   'scripts'
+
+| ruby | ruby_callback | callback of a script |
+  'script' (pointer, hdata: "ruby_script") +
+  'function' (string) +
+  'data' (string) +
+  'config_file' (pointer, hdata: "config_file") +
+  'config_section' (pointer, hdata: "config_section") +
+  'config_option' (pointer, hdata: "config_option") +
+  'hook' (pointer) +
+  'buffer' (pointer, hdata: "buffer") +
+  'bar_item' (pointer, hdata: "bar_item") +
+  'upgrade_file' (pointer) +
+  'prev_callback' (pointer, hdata: "ruby_callback") +
+  'next_callback' (pointer, hdata: "ruby_callback") |
+ |
+  -
 
 | ruby | ruby_script | list of scripts |
   'filename' (string) +
@@ -270,7 +350,7 @@
   'description' (string) +
   'shutdown_func' (string) +
   'charset' (string) +
-  'callbacks' (pointer) +
+  'callbacks' (pointer, hdata: "ruby_callback") +
   'unloading' (integer) +
   'prev_script' (pointer, hdata: "ruby_script") +
   'next_script' (pointer, hdata: "ruby_script") |
@@ -306,6 +386,22 @@
   'last_script_repo' +
   'scripts_repo'
 
+| tcl | tcl_callback | callback of a script |
+  'script' (pointer, hdata: "tcl_script") +
+  'function' (string) +
+  'data' (string) +
+  'config_file' (pointer, hdata: "config_file") +
+  'config_section' (pointer, hdata: "config_section") +
+  'config_option' (pointer, hdata: "config_option") +
+  'hook' (pointer) +
+  'buffer' (pointer, hdata: "buffer") +
+  'bar_item' (pointer, hdata: "bar_item") +
+  'upgrade_file' (pointer) +
+  'prev_callback' (pointer, hdata: "tcl_callback") +
+  'next_callback' (pointer, hdata: "tcl_callback") |
+ |
+  -
+
 | tcl | tcl_script | list of scripts |
   'filename' (string) +
   'interpreter' (pointer) +
@@ -316,7 +412,7 @@
   'description' (string) +
   'shutdown_func' (string) +
   'charset' (string) +
-  'callbacks' (pointer) +
+  'callbacks' (pointer, hdata: "tcl_callback") +
   'unloading' (integer) +
   'prev_script' (pointer, hdata: "tcl_script") +
   'next_script' (pointer, hdata: "tcl_script") |

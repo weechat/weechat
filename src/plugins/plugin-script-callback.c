@@ -21,7 +21,9 @@
 
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdio.h>
 #include <string.h>
+#include <stddef.h>
 
 #include "weechat-plugin.h"
 #include "plugin-script.h"
@@ -137,6 +139,42 @@ plugin_script_callback_remove_all (struct t_plugin_script *script)
     {
         plugin_script_callback_remove (script, script->callbacks);
     }
+}
+
+/*
+ * Gets hdata for script callback.
+ */
+
+struct t_hdata *
+plugin_script_callback_hdata_callback_cb (void *data,
+                                          const char *hdata_name)
+{
+    struct t_weechat_plugin *weechat_plugin;
+    struct t_hdata *hdata;
+    char str_hdata_script[128];
+
+    weechat_plugin = (struct t_weechat_plugin *)data;
+
+    hdata = weechat_hdata_new (hdata_name, "prev_callback", "next_callback",
+                               0, 0, NULL, NULL);
+    if (hdata)
+    {
+        snprintf (str_hdata_script, sizeof (str_hdata_script),
+                  "%s_script", weechat_plugin->name);
+        WEECHAT_HDATA_VAR(struct t_plugin_script_cb, script, POINTER, 0, NULL, str_hdata_script);
+        WEECHAT_HDATA_VAR(struct t_plugin_script_cb, function, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_plugin_script_cb, data, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_plugin_script_cb, config_file, POINTER, 0, NULL, "config_file");
+        WEECHAT_HDATA_VAR(struct t_plugin_script_cb, config_section, POINTER, 0, NULL, "config_section");
+        WEECHAT_HDATA_VAR(struct t_plugin_script_cb, config_option, POINTER, 0, NULL, "config_option");
+        WEECHAT_HDATA_VAR(struct t_plugin_script_cb, hook, POINTER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_plugin_script_cb, buffer, POINTER, 0, NULL, "buffer");
+        WEECHAT_HDATA_VAR(struct t_plugin_script_cb, bar_item, POINTER, 0, NULL, "bar_item");
+        WEECHAT_HDATA_VAR(struct t_plugin_script_cb, upgrade_file, POINTER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_plugin_script_cb, prev_callback, POINTER, 0, NULL, hdata_name);
+        WEECHAT_HDATA_VAR(struct t_plugin_script_cb, next_callback, POINTER, 0, NULL, hdata_name);
+    }
+    return hdata;
 }
 
 /*

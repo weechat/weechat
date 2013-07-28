@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-28 12:32+0200\n"
+"POT-Creation-Date: 2013-07-28 16:11+0200\n"
 "PO-Revision-Date: 2013-02-14 18:20+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7075,6 +7075,9 @@ msgstr ""
 msgid "script name (can start or end with \"*\" as wildcard) (optional)"
 msgstr ""
 
+msgid "callback of a script"
+msgstr ""
+
 #, c-format
 msgid ""
 "%s%s: warning, invalid pointer (\"%s\") for function \"%s\" (script: %s)"
@@ -7273,6 +7276,29 @@ msgstr ""
 msgid "%s: all scripts are up-to-date"
 msgstr ""
 
+#, c-format
+msgid "configuration file \"%s\" (options %s.*)"
+msgstr ""
+
+#, c-format
+msgid "command /%s"
+msgstr ""
+
+#, c-format
+msgid "completion %%(%s)"
+msgstr ""
+
+#, c-format
+msgid "bar item \"%s\""
+msgstr ""
+
+#, c-format
+msgid "options %s%s%s"
+msgstr ""
+
+msgid "(old options?)"
+msgstr ""
+
 msgid "Script"
 msgstr ""
 
@@ -7316,6 +7342,12 @@ msgid "Min WeeChat"
 msgstr ""
 
 msgid "Max WeeChat"
+msgstr ""
+
+msgid "Script has defined:"
+msgstr ""
+
+msgid "(nothing)"
 msgstr ""
 
 msgid "Alt+key/input: v=back to list d=jump to diff"
