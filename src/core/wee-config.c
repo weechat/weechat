@@ -1873,12 +1873,14 @@ config_weechat_init_options ()
     config_startup_command_after_plugins = config_file_new_option (
         weechat_config_file, ptr_section,
         "command_after_plugins", "string",
-        N_("command executed when WeeChat starts, after loading plugins"),
+        N_("command executed when WeeChat starts, after loading plugins "
+           "(note: content is evaluated, see /help eval)"),
         NULL, 0, 0, "", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_startup_command_before_plugins = config_file_new_option (
         weechat_config_file, ptr_section,
         "command_before_plugins", "string",
-        N_("command executed when WeeChat starts, before loading plugins"),
+        N_("command executed when WeeChat starts, before loading plugins "
+           "(note: content is evaluated, see /help eval)"),
         NULL, 0, 0, "", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_startup_display_logo = config_file_new_option (
         weechat_config_file, ptr_section,
