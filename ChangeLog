@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.2-dev, 2013-07-28
+v0.4.2-dev, 2013-07-30
 
 
 This document lists all changes for each version.
@@ -51,6 +51,8 @@ Version 0.4.2 (under dev!)
 * aspell: rename option aspell.look.color to aspell.color.misspelled, add option
   aspell.color.suggestions
 * aspell: add support of enchant library (patch #6858)
+* irc: use 6697 as default port for SSL servers created with URL "ircs://"
+  (bug #39621)
 * irc: display number of ops/halfops/voices on channel join only for supported
   modes on server (bug #39582)
 * irc: fix self nick color in server messages after nick is changed with /nick

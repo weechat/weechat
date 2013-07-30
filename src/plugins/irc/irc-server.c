@@ -1022,6 +1022,7 @@ irc_server_alloc_with_url (const char *irc_url)
     char *irc_url2, *pos_server, *pos_nick, *pos_password;
     char *pos_address, *pos_port, *pos_channel, *pos;
     char *server_address, *server_nicks, *server_autojoin;
+    char default_port[16];
     int ipv6, ssl, length;
     struct t_irc_server *ptr_server;
 
@@ -1038,6 +1039,8 @@ irc_server_alloc_with_url (const char *irc_url)
 
     ipv6 = 0;
     ssl = 0;
+    snprintf (default_port, sizeof (default_port),
+              "%d", IRC_SERVER_DEFAULT_PORT);
 
     pos_server = strstr (irc_url2, "://");
     if (!pos_server || !pos_server[3])
@@ -1073,6 +1076,12 @@ irc_server_alloc_with_url (const char *irc_url)
     {
         ipv6 = 1;
         ssl = 1;
+    }
+
+    if (ssl)
+    {
+        snprintf (default_port, sizeof (default_port),
+                  "%d", IRC_SERVER_DEFAULT_PORT_SSL);
     }
 
     /* search for nick, password, address+port */
@@ -1131,15 +1140,14 @@ irc_server_alloc_with_url (const char *irc_url)
         if (pos_address && pos_address[0])
         {
             length = strlen (pos_address) + 1 +
-                ((pos_port) ? strlen (pos_port) : 0) + 1;
+                ((pos_port) ? strlen (pos_port) : 16) + 1;
             server_address = malloc (length);
             if (server_address)
             {
                 snprintf (server_address, length,
-                          "%s%s%s",
+                          "%s/%s",
                           pos_address,
-                          (pos_port && pos_port[0]) ? "/" : "",
-                          (pos_port && pos_port[0]) ? pos_port : "");
+                          (pos_port && pos_port[0]) ? pos_port : default_port);
                 weechat_config_option_set (ptr_server->options[IRC_SERVER_OPTION_ADDRESSES],
                                            server_address,
                                            1);
