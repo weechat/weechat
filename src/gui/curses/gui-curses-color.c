@@ -933,8 +933,7 @@ gui_color_buffer_display ()
         }
 
         /* display palette colors */
-        if (hashtable_get_integer (gui_color_hash_palette_color,
-                                   "items_count") > 0)
+        if (gui_color_hash_palette_color->items_count > 0)
         {
             y++;
             gui_chat_printf_y (gui_color_buffer, y++,

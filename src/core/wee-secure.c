@@ -751,7 +751,7 @@ secure_data_write_cb (void *data, struct t_config_file *config_file,
     if (!config_file_write_line (config_file, section_name, NULL))
         return WEECHAT_CONFIG_WRITE_ERROR;
 
-    if (hashtable_get_integer (secure_hashtable_data, "items_count") > 0)
+    if (secure_hashtable_data->items_count > 0)
     {
         /*
          * write a special line indicating if a passphrase must be used to
@@ -1040,7 +1040,7 @@ secure_buffer_display ()
     }
 
     /* display secured data */
-    if (hashtable_get_integer (secure_hashtable_data, "items_count") > 0)
+    if (secure_hashtable_data->items_count > 0)
     {
         gui_chat_printf_y (secure_buffer, 4, _("Secured data:"));
         line = 6;

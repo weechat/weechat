@@ -4521,7 +4521,7 @@ COMMAND_CALLBACK(secure)
                              _("Passphrase deleted") : _("Passphrase is not set"));
             if (passphrase_was_set)
             {
-                if (hashtable_get_integer (secure_hashtable_data, "items_count") > 0)
+                if (secure_hashtable_data->items_count > 0)
                     command_save_file (secure_config_file);
                 secure_buffer_display ();
             }
@@ -4532,7 +4532,7 @@ COMMAND_CALLBACK(secure)
             gui_chat_printf (NULL,
                              (passphrase_was_set) ?
                              _("Passphrase changed") : _("Passphrase added"));
-            if (hashtable_get_integer (secure_hashtable_data, "items_count") > 0)
+            if (secure_hashtable_data->items_count > 0)
                 command_save_file (secure_config_file);
             secure_buffer_display ();
         }
