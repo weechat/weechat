@@ -4490,7 +4490,7 @@ command_secure_display_data (void *data,
 
 COMMAND_CALLBACK(secure)
 {
-    int passphrase_was_set;
+    int passphrase_was_set, count_encrypted;
 
     /* make C compiler happy */
     (void) data;
@@ -4500,6 +4500,49 @@ COMMAND_CALLBACK(secure)
     if (argc == 1)
     {
         secure_buffer_open ();
+        return WEECHAT_RC_OK;
+    }
+
+    count_encrypted = secure_hashtable_data_encrypted->items_count;
+
+    /* decrypt data still encrypted */
+    if (string_strcasecmp (argv[1], "decrypt") == 0)
+    {
+        COMMAND_MIN_ARGS(3, "secure decrypt");
+        if (count_encrypted == 0)
+        {
+            gui_chat_printf (NULL, _("There is no encrypted data"));
+            return WEECHAT_RC_OK;
+        }
+        if (strcmp (argv[2], "-discard") == 0)
+        {
+            hashtable_remove_all (secure_hashtable_data_encrypted);
+            gui_chat_printf (NULL, _("Encrypted data deleted"));
+            return WEECHAT_RC_OK;
+        }
+        if (secure_decrypt_data_not_decrypted (argv_eol[2]) > 0)
+        {
+            gui_chat_printf (NULL,
+                             _("Encrypted data has been successfully decrypted"));
+            if (secure_passphrase)
+                free (secure_passphrase);
+            secure_passphrase = strdup (argv_eol[2]);
+        }
+        else
+        {
+            gui_chat_printf (NULL,
+                             _("%sFailed to decrypt data (wrong passphrase?)"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+        }
+        return WEECHAT_RC_OK;
+    }
+
+    if (count_encrypted > 0)
+    {
+        gui_chat_printf (NULL,
+                         _("%sYou must decrypt data still encrypted before "
+                           "doing any operation on secured data or passphrase"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
         return WEECHAT_RC_OK;
     }
 
@@ -6747,12 +6790,17 @@ command_init ()
                   N_("manage secured data (passwords or private data encrypted "
                      "in file sec.conf)"),
                   N_("passphrase <passphrase>|-delete"
+                     " || decrypt <passphrase>|-discard"
                      " || set <name> <value>"
                      " || del <name>"),
                   N_("passphrase: set or change the passphrase used for "
                      "encryption (without passphrase, data is stored as "
                      "plain text in file sec.conf)\n"
                      "   -delete: delete passphrase\n"
+                     "   decrypt: decrypt data still encrypted (it happens only "
+                     "if no passphrase was given for encrypted data on startup)\n"
+                     "  -discard: discard all encrypted data (WARNING: this "
+                     "will clear the file sec.conf)\n"
                      "       set: add or change secured data\n"
                      "       del: delete secured data\n\n"
                      "Without argument, this command displays secured data "
@@ -6783,6 +6831,7 @@ command_init ()
                      "    /alias ghost /eval /msg -server freenode nickserv "
                      "ghost mynick ${sec.data.freenode}"),
                   "passphrase -delete"
+                  " || decrypt -discard"
                   " || set %(secured_data)"
                   " || del %(secured_data)",
                   &command_secure, NULL);

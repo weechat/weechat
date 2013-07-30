@@ -50,14 +50,22 @@ struct t_config_option *secure_config_crypt_hash_algo = NULL;
 struct t_config_option *secure_config_crypt_passphrase_file = NULL;
 struct t_config_option *secure_config_crypt_salt = NULL;
 
+/* the passphrase used to encrypt/decrypt data */
 char *secure_passphrase = NULL;
+
+/* decrypted data */
 struct t_hashtable *secure_hashtable_data = NULL;
 
+/* data still encrypted (if passphrase not set) */
+struct t_hashtable *secure_hashtable_data_encrypted = NULL;
+
+/* hash algorithms */
 char *secure_hash_algo_string[] = { "sha224", "sha256", "sha384", "sha512",
                                     NULL };
 int secure_hash_algo[] = { GCRY_MD_SHA224, GCRY_MD_SHA256, GCRY_MD_SHA384,
                            GCRY_MD_SHA512 };
 
+/* ciphers */
 char *secure_cipher_string[] = { "aes128", "aes192", "aes256", NULL };
 int secure_cipher[] = { GCRY_CIPHER_AES128, GCRY_CIPHER_AES192,
                         GCRY_CIPHER_AES256 };
@@ -65,8 +73,10 @@ int secure_cipher[] = { GCRY_CIPHER_AES128, GCRY_CIPHER_AES192,
 char *secure_decrypt_error[] = { "memory", "buffer", "key", "cipher", "setkey",
                                  "decrypt", "hash", "hash mismatch" };
 
+/* used only when reading sec.conf: 1 if flag __passphrase__ is enabled */
 int secure_data_encrypted = 0;
 
+/* secured data buffer */
 struct t_gui_buffer *secure_buffer = NULL;
 int secure_buffer_display_values = 0;
 
@@ -422,6 +432,71 @@ decend:
 }
 
 /*
+ * Decrypts data still encrypted (data that could not be decrypted when reading
+ * secured data configuration file (because no passphrase was given).
+ *
+ * Returns:
+ *   > 0: number of decrypted data
+ *     0: error decrypting data
+ */
+
+int
+secure_decrypt_data_not_decrypted (const char *passphrase)
+{
+    char **keys, *buffer, *decrypted;
+    const char *value;
+    int num_ok, num_keys, i, length_buffer, length_decrypted, rc;
+
+    /* we need a passphrase to decrypt data! */
+    if (!passphrase || !passphrase[0])
+        return 0;
+
+    num_ok = 0;
+
+    keys = string_split (hashtable_get_string (secure_hashtable_data_encrypted,
+                                               "keys"),
+                         ",", 0, 0, &num_keys);
+    if (keys)
+    {
+        for (i = 0; i < num_keys; i++)
+        {
+            value = hashtable_get (secure_hashtable_data_encrypted, keys[i]);
+            if (value && value[0])
+            {
+                buffer = malloc (strlen (value) + 1);
+                if (buffer)
+                {
+                    length_buffer = string_decode_base16 (value, buffer);
+                    decrypted = NULL;
+                    length_decrypted = 0;
+                    rc = secure_decrypt_data (buffer,
+                                              length_buffer,
+                                              secure_hash_algo[CONFIG_INTEGER(secure_config_crypt_hash_algo)],
+                                              secure_cipher[CONFIG_INTEGER(secure_config_crypt_cipher)],
+                                              passphrase,
+                                              &decrypted,
+                                              &length_decrypted);
+                    if ((rc == 0) && decrypted)
+                    {
+                        hashtable_set (secure_hashtable_data, keys[i],
+                                       decrypted);
+                        hashtable_remove (secure_hashtable_data_encrypted,
+                                          keys[i]);
+                        num_ok++;
+                    }
+                    if (decrypted)
+                        free (decrypted);
+                    free (buffer);
+                }
+            }
+        }
+        string_free_split (keys);
+    }
+
+    return num_ok;
+}
+
+/*
  * Gets passphrase from user and puts it in variable "secure_passphrase".
  */
 
@@ -553,6 +628,16 @@ secure_reload_cb (void *data, struct t_config_file *config_file)
     /* make C compiler happy */
     (void) data;
 
+    if (secure_hashtable_data_encrypted->items_count > 0)
+    {
+        gui_chat_printf (NULL,
+                         _("%sError: not possible to reload file sec.conf "
+                           "because there is still encrypted data (use /secure "
+                           "decrypt, see /help secure)"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+        return WEECHAT_CONFIG_READ_FILE_NOT_FOUND;
+    }
+
     secure_data_encrypted = 0;
 
     /* remove all secured data */
@@ -579,8 +664,10 @@ secure_data_read_cb (void *data,
     (void) config_file;
     (void) section;
 
-    if (!option_name || !value || !value[0] || !secure_hashtable_data)
+    if (!option_name || !value || !value[0])
+    {
         return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+    }
 
     /* special line indicating if a passphrase must be used to decrypt data */
     if (strcmp (option_name, SECURE_DATA_PASSPHRASE_FLAG) == 0)
@@ -613,6 +700,7 @@ secure_data_read_cb (void *data,
                          _("%sPassphrase is not set, unable to decrypt data \"%s\""),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          option_name);
+        hashtable_set (secure_hashtable_data_encrypted, option_name, value);
         return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
     }
 
@@ -667,6 +755,8 @@ secure_data_read_cb (void *data,
                                    "data \"%s\""),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                  option_name);
+                hashtable_set (secure_hashtable_data_encrypted, option_name,
+                               value);
                 break;
             }
         }
@@ -677,7 +767,7 @@ secure_data_read_cb (void *data,
 }
 
 /*
- * Writes an encrypted data in secured data configuration file.
+ * Encrypts data and writes it in secured data configuration file.
  */
 
 void
@@ -737,6 +827,26 @@ secure_data_write_map_cb (void *data,
 }
 
 /*
+ * Writes already encrypted data in secured data configuration file.
+ */
+
+void
+secure_data_write_map_encrypted_cb (void *data,
+                                    struct t_hashtable *hashtable,
+                                    const void *key, const void *value)
+{
+    struct t_config_file *config_file;
+
+    /* make C compiler happy */
+    (void) hashtable;
+
+    config_file = (struct t_config_file *)data;
+
+    /* store data as-is (it is already encrypted) */
+    config_file_write_line (config_file, key, "\"%s\"", value);
+}
+
+/*
  * Writes section "data" in secured data configuration file.
  */
 
@@ -763,10 +873,24 @@ secure_data_write_cb (void *data, struct t_config_file *config_file,
         {
             return WEECHAT_CONFIG_WRITE_ERROR;
         }
-
-        /* write secured data */
+        /* encrypt and write secured data */
         hashtable_map (secure_hashtable_data,
                        &secure_data_write_map_cb, config_file);
+    }
+    else if (secure_hashtable_data_encrypted->items_count > 0)
+    {
+        /*
+         * if there is encrypted data, that means passphrase was not set and
+         * we were unable to decrypt => just save the encrypted content
+         * as-is (so that content of sec.conf is not lost)
+         */
+        if (!config_file_write_line (config_file,
+                                     SECURE_DATA_PASSPHRASE_FLAG, "on"))
+        {
+            return WEECHAT_CONFIG_WRITE_ERROR;
+        }
+        hashtable_map (secure_hashtable_data_encrypted,
+                       &secure_data_write_map_encrypted_cb, config_file);
     }
 
     return WEECHAT_CONFIG_WRITE_OK;
@@ -886,6 +1010,17 @@ secure_init ()
     if (!secure_hashtable_data)
         return 0;
 
+    secure_hashtable_data_encrypted = hashtable_new (32,
+                                                     WEECHAT_HASHTABLE_STRING,
+                                                     WEECHAT_HASHTABLE_STRING,
+                                                     NULL,
+                                                     NULL);
+    if (!secure_hashtable_data_encrypted)
+    {
+        hashtable_free (secure_hashtable_data);
+        return 0;
+    }
+
     rc = secure_init_options ();
 
     if (!rc)
@@ -954,6 +1089,11 @@ secure_free ()
         hashtable_free (secure_hashtable_data);
         secure_hashtable_data = NULL;
     }
+    if (secure_hashtable_data_encrypted)
+    {
+        hashtable_free (secure_hashtable_data_encrypted);
+        secure_hashtable_data_encrypted = NULL;
+    }
 }
 
 /*
@@ -968,12 +1108,11 @@ secure_buffer_display_data (void *data,
     int *line;
 
     /* make C compiler happy */
-    (void) hashtable;
     (void) value;
 
     line = (int *)data;
 
-    if (secure_buffer_display_values)
+    if (secure_buffer_display_values && (hashtable == secure_hashtable_data))
     {
         gui_chat_printf_y (secure_buffer, (*line)++,
                            "  %s%s = %s\"%s%s%s\"",
@@ -998,7 +1137,7 @@ secure_buffer_display_data (void *data,
 void
 secure_buffer_display ()
 {
-    int line;
+    int line, count, count_encrypted;
 
     if (!secure_buffer)
         return;
@@ -1010,18 +1149,21 @@ secure_buffer_display ()
                           _("WeeChat secured data (sec.conf) | "
                             "Keys: [alt-v] Toggle values"));
 
-    gui_chat_printf_y (secure_buffer, 0,
+    line = 0;
+
+    gui_chat_printf_y (secure_buffer, line++,
                        "Hash algo: %s  Cipher: %s  Salt: %s",
                        secure_hash_algo_string[CONFIG_INTEGER(secure_config_crypt_hash_algo)],
                        secure_cipher_string[CONFIG_INTEGER(secure_config_crypt_cipher)],
                        (CONFIG_BOOLEAN(secure_config_crypt_salt)) ? _("on") : _("off"));
 
     /* display passphrase */
+    line++;
     if (secure_passphrase)
     {
         if (secure_buffer_display_values)
         {
-            gui_chat_printf_y (secure_buffer, 2,
+            gui_chat_printf_y (secure_buffer, line++,
                                "%s%s = %s\"%s%s%s\"",
                                _("Passphrase"),
                                GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
@@ -1031,24 +1173,41 @@ secure_buffer_display ()
                                GUI_COLOR(GUI_COLOR_CHAT));
         }
         else
-            gui_chat_printf_y (secure_buffer, 2, _("Passphrase is set"));
+            gui_chat_printf_y (secure_buffer, line++, _("Passphrase is set"));
     }
     else
     {
-        gui_chat_printf_y (secure_buffer, 2,
-                           _("Passphrase is not set (data is NOT encypted)"));
+        gui_chat_printf_y (secure_buffer, line++,
+                           _("Passphrase is NOT set"));
     }
 
     /* display secured data */
-    if (secure_hashtable_data->items_count > 0)
+    count = secure_hashtable_data->items_count;
+    count_encrypted = secure_hashtable_data_encrypted->items_count;
+    if (count > 0)
     {
-        gui_chat_printf_y (secure_buffer, 4, _("Secured data:"));
-        line = 6;
+        line++;
+        gui_chat_printf_y (secure_buffer, line++, _("Secured data:"));
+        line++;
         hashtable_map (secure_hashtable_data,
                        &secure_buffer_display_data, &line);
     }
-    else
-        gui_chat_printf_y (secure_buffer, 4, _("No secured data set"));
+    /* display secured data not decrypted */
+    if (count_encrypted > 0)
+    {
+        line++;
+        gui_chat_printf_y (secure_buffer, line++,
+                           _("Secured data STILL ENCRYPTED: (use /secure decrypt, "
+                             "see /help secure)"));
+        line++;
+        hashtable_map (secure_hashtable_data_encrypted,
+                       &secure_buffer_display_data, &line);
+    }
+    if ((count == 0) && (count_encrypted == 0))
+    {
+        line++;
+        gui_chat_printf_y (secure_buffer, line++, _("No secured data set"));
+    }
 }
 
 /*

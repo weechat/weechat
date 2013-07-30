@@ -53,10 +53,12 @@ extern struct t_config_option *secure_config_crypt_salt;
 
 extern char *secure_passphrase;
 extern struct t_hashtable *secure_hashtable_data;
+extern struct t_hashtable *secure_hashtable_data_encrypted;
 
 extern struct t_gui_buffer *secure_buffer;
 extern int secure_buffer_display_values;
 
+extern int secure_decrypt_data_not_decrypted (const char *passphrase);
 extern int secure_init ();
 extern int secure_read ();
 extern int secure_write ();
