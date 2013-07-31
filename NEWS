@@ -1,7 +1,7 @@
 WeeChat Release Notes
 =====================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.2-dev, 2013-07-20
+v0.4.2-dev, 2013-07-31
 
 
 This document lists important changes for each version, that require manual
@@ -15,6 +15,15 @@ http://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 Version 0.4.2 (under dev!)
 --------------------------
+
+=== Man page / documentation ===
+
+Documentation is not built by default any more, you have to use option
+`-DENABLE_DOC=ON` in cmake to enable it.
+
+The man page is now built with asciidoc and translated in several
+languages. A new cmake option `ENABLE_MAN` has been added to compile man page
+(`ON` by default).
 
 === Aspell colors ===
 

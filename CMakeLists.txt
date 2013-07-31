@@ -87,6 +87,7 @@ OPTION(ENABLE_LUA       "Enable Lua scripting language"             ON)
 OPTION(ENABLE_TCL       "Enable Tcl scripting language"             ON)
 OPTION(ENABLE_GUILE     "Enable Scheme (guile) scripting language"  ON)
 OPTION(ENABLE_XFER      "Enable Xfer plugin"                        ON)
+OPTION(ENABLE_MAN       "Enable Man page"                           ON)
 OPTION(ENABLE_DOC       "Enable Documentation"                      OFF)
 
 # option WEECHAT_HOME

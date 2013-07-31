@@ -25,11 +25,7 @@ BUILT_SOURCES = build-config-git.h
 build-config-git.h:
 	-$(abs_top_srcdir)/git-version.sh "$(abs_top_srcdir)" "$(VERSION)" config-git.h
 
-if DOC
-doc_dir = doc
-endif
-
-SUBDIRS = po $(doc_dir) intl src
+SUBDIRS = po doc intl src
 
 EXTRA_DIST = CMakeLists.txt \
              config.rpath \

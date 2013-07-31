@@ -102,8 +102,8 @@ compile WeeChat.
 | liblua5.1-0-dev                 |             |          | lua plugin
 | tcl-dev                         | ≥ 8.5       |          | tcl plugin
 | guile-2.0-dev                   | ≥ 2.0       |          | guile (scheme) plugin
-| asciidoc                        | ≥ 8.5.0     |          | build documentation (HTML files)
-| source-highlight                |             |          | syntax highlight for sources in HTML documentation
+| asciidoc                        | ≥ 8.5.0     |          | build man page and documentation
+| source-highlight                |             |          | syntax highlight for sources in documentation
 | xsltproc,
   docbook-xml, docbook-xsl        |             |          | build man page
 |========================================
@@ -174,6 +174,9 @@ List of commonly used options:
 
 | ENABLE_DEMO | `ON`, `OFF` | OFF |
   Compile Demo plugin.
+
+| ENABLE_MAN | `ON`, `OFF` | ON |
+  Compile man page.
 
 | ENABLE_DOC | `ON`, `OFF` | OFF |
   Compile documentation (it takes a long time, recommended only if you build

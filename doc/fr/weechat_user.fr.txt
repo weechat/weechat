@@ -104,8 +104,8 @@ compiler WeeChat.
 | liblua5.1-0-dev                 |             |        | extension lua
 | tcl-dev                         | ≥ 8.5       |        | extension tcl
 | guile-2.0-dev                   | ≥ 2.0       |        | extension guile (scheme)
-| asciidoc                        | ≥ 8.5.0     |        | construction de la documentation (fichiers HTML)
-| source-highlight                |             |        | coloration des sources dans la documentation HTML
+| asciidoc                        | ≥ 8.5.0     |        | construction de la page man et de la documentation
+| source-highlight                |             |        | coloration des sources dans la documentation
 | xsltproc,
   docbook-xml, docbook-xsl        |             |        | construction de la page de manuel
 |========================================
@@ -176,6 +176,9 @@ Liste des options couramment utilisées :
 
 | ENABLE_DEMO | `ON`, `OFF` | OFF |
   Compiler l'extension Demo.
+
+| ENABLE_MAN | `ON`, `OFF` | ON |
+  Compiler la page man.
 
 | ENABLE_DOC | `ON`, `OFF` | OFF |
   Compiler la documentation (cela prend beaucoup de temps, recommandé

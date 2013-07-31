@@ -22,21 +22,43 @@ docdir = $(datadir)/doc/$(PACKAGE)
 EXTRA_DIST = CMakeLists.txt \
              weechat_quickstart.es.txt
 
-all-local: weechat_quickstart.es.html
+if MAN
+  man_targets =
+  man_install =
+  man_uninstall =
+endif
+if DOC
+  doc_targets = weechat_quickstart.es.html
+  doc_install = install-doc
+  doc_uninstall = uninstall-doc
+endif
+all-local: $(man_targets) $(doc_targets)
 
 # quickstart
 weechat_quickstart.es.html: weechat_quickstart.es.txt
 	$(ASCIIDOC) -a lang=es -a toc -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_quickstart.es.html $(abs_top_srcdir)/doc/es/weechat_quickstart.es.txt
 
-# install docs
+# install man/docs
 
-install-data-hook:
+install-data-hook: $(man_install) $(doc_install)
+
+install-man:
+	$(mkinstalldirs) $(DESTDIR)$(mandir)/es/man1/
+	$(INSTALL_DATA) *.1 $(DESTDIR)$(mandir)/es/man1/
+
+install-doc:
 	$(mkinstalldirs) $(DESTDIR)$(docdir)/
 	$(INSTALL_DATA) *.html $(DESTDIR)$(docdir)/
 
-# uninstall docs
+# uninstall man/docs
 
-uninstall-hook:
+uninstall-hook: $(man_uninstall) $(doc_uninstall)
+
+uninstall-man:
+	$(RM) $(DESTDIR)$(mandir)/es/man1/weechat-curses.1
+	-rmdir $(DESTDIR)$(mandir)/es/man1
+
+uninstall-doc:
 	$(RM) $(DESTDIR)$(docdir)/*.es.html
 	-rmdir $(DESTDIR)$(docdir)
 

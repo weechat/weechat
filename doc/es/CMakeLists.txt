@@ -17,13 +17,17 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-# quickstart
-ADD_CUSTOM_COMMAND(
-  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.es.html
-  COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a lang=es -a toc -a date=`date "+%F"` -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.es.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.es.txt
-  DEPENDS
-  ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.es.txt
-  COMMENT "Building weechat_quickstart.es.html"
-)
-ADD_CUSTOM_TARGET(doc-quickstart-es ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.es.html)
-INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.es.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
+IF(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
+
+  # quickstart
+  ADD_CUSTOM_COMMAND(
+    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.es.html
+    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a lang=es -a toc -a date=`date "+%F"` -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.es.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.es.txt
+    DEPENDS
+    ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.es.txt
+    COMMENT "Building weechat_quickstart.es.html"
+  )
+  ADD_CUSTOM_TARGET(doc-quickstart-es ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.es.html)
+  INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.es.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
+
+ENDIF(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)

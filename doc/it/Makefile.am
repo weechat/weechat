@@ -31,13 +31,22 @@ EXTRA_DIST = CMakeLists.txt \
              $(wildcard autogen/user/*.txt) \
              $(wildcard autogen/plugin_api/*.txt)
 
-all-local: weechat-curses.1 \
-		weechat_user.it.html \
+if MAN
+  man_targets = weechat-curses.1
+  man_install = install-man
+  man_uninstall = uninstall-man
+endif
+if DOC
+  doc_targets = weechat_user.it.html \
 		weechat_plugin_api.it.html \
 		weechat_scripting.it.html \
 		weechat_faq.it.html \
 		weechat_quickstart.it.html \
 		weechat_tester.it.html
+  doc_install = install-doc
+  doc_uninstall = uninstall-doc
+endif
+all-local: $(man_targets) $(doc_targets)
 
 # man page
 weechat-curses.1: weechat-curses.1.it.txt cmdline_options.it.txt
@@ -67,19 +76,27 @@ weechat_quickstart.it.html: weechat_quickstart.it.txt
 weechat_tester.it.html: weechat_tester.it.txt
 	$(ASCIIDOC) -a lang=it -a toc -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_tester.it.html $(abs_top_srcdir)/doc/it/weechat_tester.it.txt
 
-# install docs
+# install man/docs
 
-install-data-hook:
+install-data-hook: $(man_install) $(doc_install)
+
+install-man:
 	$(mkinstalldirs) $(DESTDIR)$(mandir)/it/man1/
 	$(INSTALL_DATA) *.1 $(DESTDIR)$(mandir)/it/man1/
+
+install-doc:
 	$(mkinstalldirs) $(DESTDIR)$(docdir)/
 	$(INSTALL_DATA) *.html $(DESTDIR)$(docdir)/
 
-# uninstall docs
+# uninstall man/docs
 
-uninstall-hook:
+uninstall-hook: $(man_uninstall) $(doc_uninstall)
+
+uninstall-man:
 	$(RM) $(DESTDIR)$(mandir)/it/man1/weechat-curses.1
 	-rmdir $(DESTDIR)$(mandir)/it/man1
+
+uninstall-doc:
 	$(RM) $(DESTDIR)$(docdir)/*.it.html
 	-rmdir $(DESTDIR)$(docdir)
 

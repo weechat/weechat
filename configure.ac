@@ -118,6 +118,7 @@ AH_VERBATIM([PLUGIN_LUA],              [#undef PLUGIN_LUA])
 AH_VERBATIM([PLUGIN_TCL],              [#undef PLUGIN_TCL])
 AH_VERBATIM([PLUGIN_GUILE],            [#undef PLUGIN_GUILE])
 AH_VERBATIM([PLUGIN_XFER],             [#undef PLUGIN_XFER])
+AH_VERBATIM([MAN],                     [#undef MAN])
 AH_VERBATIM([DOC],                     [#undef DOC])
 AH_VERBATIM([WEECHAT_HOME],            [#define WEECHAT_HOME "~/.weechat"])
 AH_VERBATIM([CA_FILE],                 [#define CA_FILE "/etc/ssl/certs/ca-certificates.crt"])
@@ -151,6 +152,7 @@ AC_ARG_WITH(lua-inc,        [  --with-lua-inc=DIR,     lua include files are in 
 AC_ARG_WITH(lua-lib,        [  --with-lua-lib=DIR,     lua library files are in DIR (default=autodetect)],lua_lib=$withval,lua_lib='')
 AC_ARG_WITH(lua-suffix,     [  --with-lua-suffix=ARG   lua is suffixed with ARG (default=autodetect)],lua_suffix=$withval,lua_suffix='')
 AC_ARG_WITH(tclconfig,      [  --with-tclconfig=DIR    directory containing tcl configuration (tclConfig.sh)],tclconfig=$withval,tclconfig='')
+AC_ARG_ENABLE(man,          [  --disable-man           turn off build of man page (default=built if found)],enable_man=$enableval,enable_man=yes)
 AC_ARG_ENABLE(doc,          [  --enable-doc            turn on build of documentation (default=not built)],enable_doc=$enableval,enable_doc=no)
 AC_ARG_WITH(debug,          [  --with-debug            debugging: 0=no debug, 1=debug compilation (default=1)],debug=$withval,debug=1)
 
@@ -952,49 +954,68 @@ AC_SUBST(CURL_CFLAGS)
 AC_SUBST(CURL_LFLAGS)
 
 # ------------------------------------------------------------------------------
-#                               documentation
+#                           man page / documentation
 # ------------------------------------------------------------------------------
 
+msg_man=""
 msg_doc=""
 
-if test "x$enable_doc" = "xyes" ; then
+if test "x$enable_man" = "xno"; then
+    not_asked="$not_asked man"
+fi
+if test "x$enable_doc" = "xno"; then
+    not_asked="$not_asked doc"
+fi
+
+if test "x$enable_man" = "xyes" -o "x$enable_doc" = "xyes"; then
     DOC_ASCIIDOC8=""
     AC_CHECK_PROGS(ASCIIDOC, [asciidoc])
     AC_CHECK_PROGS(A2X, [a2x])
     AC_CHECK_PROGS(SOURCEHIGHLIGHT, [source-highlight])
-    if test -n "$SOURCEHIGHLIGHT" -a -n "$A2X" -a -n "$ASCIIDOC"; then
-        AC_MSG_CHECKING([for asciidoc version])
-        asciidoc_version=`$ASCIIDOC --version 2>/dev/null`
-        case "${asciidoc_version}" in
-        asciidoc' '8*)
-                DOC_ASCIIDOC8="yes"
-                AC_MSG_RESULT([${asciidoc_version}])
-                msg_doc="asciidoc(with source-highlight) $msg_doc"
-                AC_DEFINE(DOC)
-                ;;
-        *)
-                AC_MSG_RESULT([${asciidoc_version} (too old)])
-                not_found="$not_found asciidoc"
-                ;;
-        esac
-    else
-        enable_doc="no"
-    fi
-    if test -z "$ASCIIDOC"; then
-        not_found="$not_found asciidoc"
-    fi
     if test -z "$A2X"; then
         not_found="$not_found a2x(from asciidoc)"
     fi
     if test -z "$SOURCEHIGHLIGHT"; then
         not_found="$not_found source-highlight(needed by asciidoc)"
     fi
-    AC_SUBST(DOC_ASCIIDOC8)
+    if test -n "$ASCIIDOC"; then
+        AC_MSG_CHECKING([for asciidoc version])
+        asciidoc_version=`$ASCIIDOC --version 2>/dev/null`
+        case "${asciidoc_version}" in
+        asciidoc' '8*)
+                DOC_ASCIIDOC8="yes"
+                AC_MSG_RESULT([${asciidoc_version}])
+                if test "x$enable_man" = "xyes"; then
+                    if test -n "$A2X"; then
+                        msg_man="asciidoc(with a2x) $msg_man"
+                        AC_DEFINE(MAN)
+                    else
+                        enable_man="no"
+                    fi
+                fi
+                if test "x$enable_doc" = "xyes"; then
+                    if test -n "$SOURCEHIGHLIGHT"; then
+                        msg_doc="asciidoc(with source-highlight) $msg_doc"
+                        AC_DEFINE(DOC)
+                    else
+                        enable_doc="no"
+                    fi
+                fi
+                ;;
+        *)
+                AC_MSG_RESULT([${asciidoc_version} (too old)])
+                not_found="$not_found asciidoc"
+                enable_man="no"
+                enable_doc="no"
+                ;;
+        esac
+    else
+        not_found="$not_found asciidoc"
+        enable_man="no"
+        enable_doc="no"
+    fi
     AC_SUBST(ASCIIDOC)
     AC_SUBST(A2X)
-else
-    not_asked="$not_asked doc"
-    msg_doc=""
 fi
 
 # ------------------------------------------------------------------------------
@@ -1094,6 +1115,7 @@ AM_CONDITIONAL(PLUGIN_LUA,              test "$enable_lua" = "yes")
 AM_CONDITIONAL(PLUGIN_TCL,              test "$enable_tcl" = "yes")
 AM_CONDITIONAL(PLUGIN_GUILE,            test "$enable_guile" = "yes")
 AM_CONDITIONAL(PLUGIN_XFER,             test "$enable_xfer" = "yes")
+AM_CONDITIONAL(MAN,                     test "$enable_man" = "yes")
 AM_CONDITIONAL(DOC,                     test "$enable_doc" = "yes")
 
 AC_OUTPUT([Makefile
@@ -1218,6 +1240,11 @@ if test "x$debug" != "x0"; then
     msg_debug="yes"
 fi
 
+if test "x$msg_man" = "x"; then
+    msg_man="no"
+else
+    msg_man="yes: $msg_man"
+fi
 if test "x$msg_doc" = "x"; then
     msg_doc="no"
 else
@@ -1230,6 +1257,7 @@ echo "   Interfaces............. :$listgui"
 echo "   Plugins................ :$listplugins"
 echo "   Optional features...... :$listoptional"
 echo "   Compile with debug..... : $msg_debug"
+echo "   Man page............... : $msg_man"
 echo "   Documentation.......... : $msg_doc"
 echo "   Certificate authorities : ${CA_FILE}"
 

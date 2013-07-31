@@ -34,8 +34,13 @@ EXTRA_DIST = CMakeLists.txt \
              $(wildcard autogen/user/*.txt) \
              $(wildcard autogen/plugin_api/*.txt)
 
-all-local: weechat-curses.1 \
-		weechat_user.en.html \
+if MAN
+  man_targets = weechat-curses.1
+  man_install = install-man
+  man_uninstall = uninstall-man
+endif
+if DOC
+  doc_targets = weechat_user.en.html \
 		weechat_plugin_api.en.html \
 		weechat_scripting.en.html \
 		weechat_faq.en.html \
@@ -43,6 +48,10 @@ all-local: weechat-curses.1 \
 		weechat_tester.en.html \
 		weechat_dev.en.html \
 		weechat_relay_protocol.en.html
+  doc_install = install-doc
+  doc_uninstall = uninstall-doc
+endif
+all-local: $(man_targets) $(doc_targets)
 
 # man page
 weechat-curses.1: weechat-curses.1.en.txt cmdline_options.en.txt
@@ -80,19 +89,27 @@ weechat_dev.en.html: weechat_dev.en.txt
 weechat_relay_protocol.en.html: weechat_relay_protocol.en.txt
 	$(ASCIIDOC) -a toc -a toclevels=4 -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_relay_protocol.en.html $(abs_top_srcdir)/doc/en/weechat_relay_protocol.en.txt
 
-# install docs
+# install man/docs
 
-install-data-hook:
+install-data-hook: $(man_install) $(doc_install)
+
+install-man:
 	$(mkinstalldirs) $(DESTDIR)$(mandir)/man1/
 	$(INSTALL_DATA) *.1 $(DESTDIR)$(mandir)/man1/
+
+install-doc:
 	$(mkinstalldirs) $(DESTDIR)$(docdir)/
 	$(INSTALL_DATA) *.html $(DESTDIR)$(docdir)/
 
-# uninstall docs
+# uninstall man/docs
 
-uninstall-hook:
+uninstall-hook: $(man_uninstall) $(doc_uninstall)
+
+uninstall-man:
 	$(RM) $(DESTDIR)$(mandir)/man1/weechat-curses.1
 	-rmdir $(DESTDIR)$(mandir)/man1
+
+uninstall-doc:
 	$(RM) $(DESTDIR)$(docdir)/*.en.html
 	-rmdir $(DESTDIR)$(docdir)
 
