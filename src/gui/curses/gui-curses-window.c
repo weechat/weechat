@@ -1293,7 +1293,8 @@ gui_window_page_down (struct t_gui_window *window)
     switch (window->buffer->type)
     {
         case GUI_BUFFER_TYPE_FORMATTED:
-            if (window->scroll->start_line)
+            if (window->scroll->start_line
+                && (window->scroll->start_line_pos >= 0))
             {
                 gui_chat_calculate_line_diff (window, &window->scroll->start_line,
                                               &window->scroll->start_line_pos,
@@ -1382,7 +1383,8 @@ gui_window_scroll_down (struct t_gui_window *window)
     switch (window->buffer->type)
     {
         case GUI_BUFFER_TYPE_FORMATTED:
-            if (window->scroll->start_line)
+            if (window->scroll->start_line
+                && (window->scroll->start_line_pos >= 0))
             {
                 gui_chat_calculate_line_diff (window, &window->scroll->start_line,
                                               &window->scroll->start_line_pos,
