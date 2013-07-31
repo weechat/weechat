@@ -14,6 +14,7 @@ $(BUILDDIR)/Makefile:
 	mkdir -p $(BUILDDIR)
 	cd $(BUILDDIR) && \
 	cmake .. \
+		-DENABLE_MAN:BOOL=ON \
 		-DENABLE_DOC:BOOL=ON \
 		-DCMAKE_INSTALL_PREFIX:FILEPATH=/usr \
 		-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
