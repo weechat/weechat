@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-28 16:11+0200\n"
-"PO-Revision-Date: 2013-07-18 19:51+0200\n"
+"POT-Creation-Date: 2013-07-31 18:40+0200\n"
+"PO-Revision-Date: 2013-07-31 18:41+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: cs\n"
@@ -4082,93 +4082,6 @@ msgstr ""
 "  reset: resetovat znakové sady aktuálního bufferu"
 
 #, fuzzy
-msgid "Demo plugin"
-msgstr "Plugin"
-
-msgid "demo message without prefix"
-msgstr "demo zpráva bez prefixu"
-
-#, c-format
-msgid "%sdemo message with error prefix"
-msgstr "%sdemo zpráva s chybovým prefixem"
-
-msgid "colors"
-msgstr "barvy"
-
-msgid "Available infos:"
-msgstr "Dostupné informace:"
-
-msgid "Available infolists:"
-msgstr "Dostupné infolisty:"
-
-#, c-format
-msgid "demo_signal: signal: %s, type_data: %s, signal_data: \"%s\""
-msgstr "ukázkový_signál: signál: %s, typ_dat: %s, data_signálu: \"%s\""
-
-#, c-format
-msgid "demo_signal: signal: %s, type_data: %s, signal_data: %d"
-msgstr "ukázkový_signál: signál: %s, typ_dat: %s, data_signalu: %d"
-
-#, c-format
-msgid "demo_signal: signal: %s, type_data: %s, signal_data: 0x%lx"
-msgstr "ukázkový_signál: signál: %s, typ_dat: %s, data_signalu: 0x%lx"
-
-#, c-format
-msgid ""
-"demo_signal: signal: %s, type_data: %s, signal_data: 0x%lx (unknown type)"
-msgstr ""
-"ukázkový_signál: signál: %s, typ_dat: %s, data_signál: 0x%lx (neznámý typ)"
-
-msgid "print some messages on current buffer"
-msgstr "vypsat některé zprávy do aktuálního bufferu"
-
-msgid "<text>"
-msgstr "<text>"
-
-msgid "text: write this text"
-msgstr "text: zapsat tento text"
-
-msgid "open a new buffer"
-msgstr "otevřít nový buffer"
-
-msgid "<name>"
-msgstr "<jméno>"
-
-msgid "get and display an info"
-msgstr "získat a zobrazit informace"
-
-msgid "<info> [<arguments>]"
-msgstr "<info> [<argumenty>]"
-
-msgid ""
-"     info: info to display\n"
-"arguments: optional arguments for info\n"
-"\n"
-"Without argument, this command displays list of available infos"
-msgstr ""
-"     info: infoinformace, kterou zobrazit\n"
-"argumenty: volitelné argumety pro info\n"
-"\n"
-"Spuštění příkazu bez argumetů zobrazí seznam dostupných informací"
-
-msgid "get and display an infolist"
-msgstr "získat a zobrazit infolist"
-
-msgid "<infolist> [<arguments>]"
-msgstr "<infolist> [<argumenty>]"
-
-msgid ""
-" infolist: infolist to display\n"
-"arguments: optional arguments for infolist\n"
-"\n"
-"Without argument, this command displays list of available infolists"
-msgstr ""
-" infolist: infolist, který zobrazit\n"
-"argumenty: volitelné argumenty pro infolist\n"
-"\n"
-"Spuštění příkazu bez argumetů zobrazí seznam dostupných infolistů"
-
-#, fuzzy
 msgid "FIFO pipe for remote control"
 msgstr "%s%s: nemohu vytvořit rouru pro vzdálené ovládání (%s)"
 
@@ -5656,6 +5569,9 @@ msgid ""
 msgstr ""
 "poslat zprávu všem aktuálně připojeným uživatelům, kteří mají u sebe "
 "nastaven uživatelský mód 'w'"
+
+msgid "<text>"
+msgstr "<text>"
 
 msgid "text: text to send"
 msgstr "text: text pro poslání"
@@ -9624,12 +9540,3 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
-
-#~ msgid ""
-#~ "%sChannel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s"
-#~ "%s)"
-#~ msgstr ""
-#~ "%sKanál %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)"
-
-#~ msgid "Act: "
-#~ msgstr "Akt: "

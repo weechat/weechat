@@ -1565,7 +1565,6 @@ I plugin predefiniti sono:
 | alias     | Definisce gli alias per i comandi
 | aspell    | Controllo ortografico per la riga di comando
 | charset   | Set di caratteri per la codifica/decodifica nei buffer
-| demo      | Plugin Demo (non viene compilato per default)
 | fifo      | pipe FIFO utilizzata per inviare comandi da remoto su WeeChat
 | irc       | protocollo chat per IRC
 | logger    | Registra i buffer su file

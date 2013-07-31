@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-28 16:11+0200\n"
-"PO-Revision-Date: 2013-07-18 19:51+0200\n"
+"POT-Creation-Date: 2013-07-31 18:40+0200\n"
+"PO-Revision-Date: 2013-07-31 18:41+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: it\n"
@@ -4359,94 +4359,6 @@ msgstr ""
 "set_caratteri: nuovo set di caratteri per il buffer corrente\n"
 "        reset: resetta il set di caratteri per il buffer corrente"
 
-msgid "Demo plugin"
-msgstr "Plugin demo"
-
-msgid "demo message without prefix"
-msgstr "messaggio dimostrativo senza prefisso"
-
-#, c-format
-msgid "%sdemo message with error prefix"
-msgstr "%smessaggio dimostrativo con il prefisso di errore"
-
-msgid "colors"
-msgstr "colori"
-
-msgid "Available infos:"
-msgstr "Informazioni disponibili:"
-
-msgid "Available infolists:"
-msgstr "Liste info disponibili:"
-
-#, c-format
-msgid "demo_signal: signal: %s, type_data: %s, signal_data: \"%s\""
-msgstr "segnale_demo: segnale: %s, tipo_dati: %s, dati_segnale: \"%s\""
-
-#, c-format
-msgid "demo_signal: signal: %s, type_data: %s, signal_data: %d"
-msgstr "segnale_demo: segnale: %s, tipo_dati: %s, dati_segnale: %d"
-
-#, c-format
-msgid "demo_signal: signal: %s, type_data: %s, signal_data: 0x%lx"
-msgstr "segnale_demo: segnale: %s, tipo_dati: %s, dati_segnale: 0x%lx"
-
-#, c-format
-msgid ""
-"demo_signal: signal: %s, type_data: %s, signal_data: 0x%lx (unknown type)"
-msgstr ""
-"segnale_demo: segnale: %s, tipo_dati: %s, dati_segnale: 0x%lx (tipo "
-"sconosciuto)"
-
-msgid "print some messages on current buffer"
-msgstr "stampa alcuni messaggi sul buffer corrente"
-
-msgid "<text>"
-msgstr "<testo>"
-
-msgid "text: write this text"
-msgstr "testo: scrivi questo testo"
-
-msgid "open a new buffer"
-msgstr "apri un nuovo buffer"
-
-msgid "<name>"
-msgstr "<nome>"
-
-msgid "get and display an info"
-msgstr "ricevi e visualizza un'informazione"
-
-msgid "<info> [<arguments>]"
-msgstr "<info> [<argomenti>]"
-
-msgid ""
-"     info: info to display\n"
-"arguments: optional arguments for info\n"
-"\n"
-"Without argument, this command displays list of available infos"
-msgstr ""
-"     info: informazioni da visualizzare\n"
-"argomenti: argomenti opzionali per le informazioni\n"
-"\n"
-"Senza argomenti, questo comando visualizza un elenco di informazioni "
-"disponibili"
-
-msgid "get and display an infolist"
-msgstr "ricevi e visualizza una lista info"
-
-msgid "<infolist> [<arguments>]"
-msgstr "<infolist> [<argomenti>]"
-
-msgid ""
-" infolist: infolist to display\n"
-"arguments: optional arguments for infolist\n"
-"\n"
-"Without argument, this command displays list of available infolists"
-msgstr ""
-" infolist: lista info da visualizzare\n"
-"argomenti: argomenti opzionali per la lista info\n"
-"\n"
-"Senza argomento, il comando visualizza l'elenco delle liste info disponibili"
-
 msgid "FIFO pipe for remote control"
 msgstr "Pipe FIFO per il controllo remoto"
 
@@ -5944,6 +5856,9 @@ msgid ""
 msgstr ""
 "invia un messaggio a tutti gli utenti attualmente connessi che hanno "
 "impostato la modalità 'w'"
+
+msgid "<text>"
+msgstr "<testo>"
 
 msgid "text: text to send"
 msgstr "testo: testo da inviare"
@@ -9970,13 +9885,3 @@ msgstr "Tipo"
 
 msgid "Constants"
 msgstr "Costanti"
-
-#~ msgid ""
-#~ "%sChannel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s"
-#~ "%s)"
-#~ msgstr ""
-#~ "%sCanale %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s"
-#~ "%s)"
-
-#~ msgid "Act: "
-#~ msgstr "Attività: "

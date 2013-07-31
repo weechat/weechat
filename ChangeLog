@@ -50,6 +50,7 @@ Version 0.4.2 (under dev!)
   to empty string
 * api: use pointer for infolist "hook" to return only one hook
 * api: add new function strlen_screen
+* plugins: remove the demo plugin
 * aspell: rename option aspell.look.color to aspell.color.misspelled, add option
   aspell.color.suggestions
 * aspell: add support of enchant library (patch #6858)

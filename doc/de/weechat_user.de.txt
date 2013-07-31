@@ -1555,7 +1555,6 @@ Standarderweiterungen:
 | alias       | definiert Alias für Befehle
 | aspell      | Rechtschreibprüfung für Befehlszeile
 | charset     | Zeichensatz (de)-kodierung in Buffern
-| demo        | Demo Erweiterung (nicht standardmäßig kompiliert)
 | fifo        | FIFO Pipe die zur Fernsteuerung von WeeChat genutzt werden kann
 | irc         | IRC Chat-Protokoll
 | logger      | erstellt Protokolldateien von Buffern

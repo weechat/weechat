@@ -51,10 +51,6 @@ if PLUGIN_CHARSET
 charset_dir = charset
 endif
 
-if PLUGIN_DEMO
-demo_dir = demo
-endif
-
 if PLUGIN_FIFO
 fifo_dir = fifo
 endif
@@ -107,10 +103,10 @@ if PLUGIN_GUILE
 guile_dir = guile
 endif
 
-SUBDIRS = . $(alias_dir) $(aspell_dir) $(charset_dir) $(demo_dir) $(fifo_dir) \
-            $(irc_dir) $(logger_dir) $(relay_dir) $(rmodifier_dir) $(script_dir) \
-            $(xfer_dir) $(perl_dir) $(python_dir) $(ruby_dir) $(lua_dir) \
-            $(tcl_dir) $(guile_dir)
+SUBDIRS = . $(alias_dir) $(aspell_dir) $(charset_dir) $(fifo_dir) $(irc_dir) \
+            $(logger_dir) $(relay_dir) $(rmodifier_dir) $(script_dir) $(xfer_dir) \
+            $(perl_dir) $(python_dir) $(ruby_dir) $(lua_dir) $(tcl_dir) \
+            $(guile_dir)
 
 EXTRA_DIST = CMakeLists.txt
 

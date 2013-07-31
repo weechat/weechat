@@ -104,7 +104,6 @@ AH_VERBATIM([HAVE_EAT_NEWLINE_GLITCH], [#undef HAVE_EAT_NEWLINE_GLITCH])
 AH_VERBATIM([PLUGIN_ALIAS],            [#undef PLUGIN_ALIAS])
 AH_VERBATIM([PLUGIN_ASPELL],           [#undef PLUGIN_ASPELL])
 AH_VERBATIM([PLUGIN_CHARSET],          [#undef PLUGIN_CHARSET])
-AH_VERBATIM([PLUGIN_DEMO],             [#undef PLUGIN_DEMO])
 AH_VERBATIM([PLUGIN_FIFO],             [#undef PLUGIN_FIFO])
 AH_VERBATIM([PLUGIN_IRC],              [#undef PLUGIN_IRC])
 AH_VERBATIM([PLUGIN_LOGGER],           [#undef PLUGIN_LOGGER])
@@ -132,7 +131,6 @@ AC_ARG_ENABLE(alias,        [  --disable-alias         turn off Alias plugin (de
 AC_ARG_ENABLE(aspell,       [  --disable-aspell        turn off Aspell plugin (default=compiled)],enable_aspell=$enableval,enable_aspell=yes)
 AC_ARG_ENABLE(enchant,      [  --enable-enchant        turn on Enchant lib for Aspell plugin (default=off)],enable_enchant=$enableval,enable_enchant=no)
 AC_ARG_ENABLE(charset,      [  --disable-charset       turn off Charset plugin (default=compiled if found)],enable_charset=$enableval,enable_charset=yes)
-AC_ARG_ENABLE(demo,         [  --enable-demo           turn on Demo plugin (default=off)],enable_demo=$enableval,enable_demo=no)
 AC_ARG_ENABLE(fifo,         [  --disable-fifo          turn off Fifo plugin (default=compiled)],enable_fifo=$enableval,enable_fifo=yes)
 AC_ARG_ENABLE(irc,          [  --disable-irc           turn off IRC plugin (default=compiled)],enable_irc=$enableval,enable_irc=yes)
 AC_ARG_ENABLE(logger,       [  --disable-logger        turn off Logger plugin (default=compiled)],enable_logger=$enableval,enable_logger=yes)
@@ -335,18 +333,6 @@ if test "x$enable_charset" = "xyes" ; then
     AC_DEFINE(PLUGIN_CHARSET)
 else
     not_asked="$not_asked charset"
-fi
-
-# ---------------------------------- demo --------------------------------------
-
-if test "x$enable_demo" = "xyes" ; then
-    DEMO_CFLAGS=""
-    DEMO_LFLAGS=""
-    AC_SUBST(DEMO_CFLAGS)
-    AC_SUBST(DEMO_LFLAGS)
-    AC_DEFINE(PLUGIN_DEMO)
-else
-    not_asked="$not_asked demo"
 fi
 
 # ---------------------------------- fifo --------------------------------------
@@ -1101,7 +1087,6 @@ AM_CONDITIONAL(GUI_NCURSES,             test "$enable_ncurses" = "yes")
 AM_CONDITIONAL(PLUGIN_ALIAS,            test "$enable_alias" = "yes")
 AM_CONDITIONAL(PLUGIN_ASPELL,           test "$enable_aspell" = "yes")
 AM_CONDITIONAL(PLUGIN_CHARSET,          test "$enable_charset" = "yes")
-AM_CONDITIONAL(PLUGIN_DEMO,             test "$enable_demo" = "yes")
 AM_CONDITIONAL(PLUGIN_FIFO,             test "$enable_fifo" = "yes")
 AM_CONDITIONAL(PLUGIN_IRC,              test "$enable_irc" = "yes")
 AM_CONDITIONAL(PLUGIN_LOGGER,           test "$enable_logger" = "yes")
@@ -1134,7 +1119,6 @@ AC_OUTPUT([Makefile
            src/plugins/alias/Makefile
            src/plugins/aspell/Makefile
            src/plugins/charset/Makefile
-           src/plugins/demo/Makefile
            src/plugins/fifo/Makefile
            src/plugins/irc/Makefile
            src/plugins/logger/Makefile
@@ -1177,9 +1161,6 @@ if test "x$enable_aspell" = "xyes"; then
 fi
 if test "x$enable_charset" = "xyes"; then
     listplugins="$listplugins charset"
-fi
-if test "x$enable_demo" = "xyes"; then
-    listplugins="$listplugins demo"
 fi
 if test "x$enable_fifo" = "xyes"; then
     listplugins="$listplugins fifo"

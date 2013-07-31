@@ -1527,7 +1527,6 @@ Default plugins are:
 | alias     | Define alias for commands
 | aspell    | Spell checking for command line
 | charset   | Charset decoding/encoding for buffers
-| demo      | Demo plugin (not compiled by default)
 | fifo      | FIFO pipe used to remotely send commands to WeeChat
 | irc       | IRC chat protocol
 | logger    | Log buffers to files

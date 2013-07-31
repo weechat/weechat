@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-28 16:11+0200\n"
-"PO-Revision-Date: 2013-07-18 19:52+0200\n"
+"POT-Creation-Date: 2013-07-31 18:40+0200\n"
+"PO-Revision-Date: 2013-07-31 18:42+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: ru\n"
@@ -3715,93 +3715,6 @@ msgid ""
 msgstr ""
 
 #, fuzzy
-msgid "Demo plugin"
-msgstr "  (нет pluginа)\n"
-
-msgid "demo message without prefix"
-msgstr ""
-
-#, c-format
-msgid "%sdemo message with error prefix"
-msgstr ""
-
-#, fuzzy
-msgid "colors"
-msgstr "цвет чата"
-
-msgid "Available infos:"
-msgstr ""
-
-msgid "Available infolists:"
-msgstr ""
-
-#, c-format
-msgid "demo_signal: signal: %s, type_data: %s, signal_data: \"%s\""
-msgstr ""
-
-#, c-format
-msgid "demo_signal: signal: %s, type_data: %s, signal_data: %d"
-msgstr ""
-
-#, c-format
-msgid "demo_signal: signal: %s, type_data: %s, signal_data: 0x%lx"
-msgstr ""
-
-#, c-format
-msgid ""
-"demo_signal: signal: %s, type_data: %s, signal_data: 0x%lx (unknown type)"
-msgstr ""
-
-#, fuzzy
-msgid "print some messages on current buffer"
-msgstr "не найдено имя канала для буфера"
-
-#, fuzzy
-msgid "<text>"
-msgstr "текст"
-
-#, fuzzy
-msgid "text: write this text"
-msgstr "время в информационной строке"
-
-#, fuzzy
-msgid "open a new buffer"
-msgstr "невозможно создать новый буфер"
-
-msgid "<name>"
-msgstr ""
-
-#, fuzzy
-msgid "get and display an info"
-msgstr "количество отображаемых команд"
-
-#, fuzzy
-msgid "<info> [<arguments>]"
-msgstr "адресат тип [аргументы]"
-
-msgid ""
-"     info: info to display\n"
-"arguments: optional arguments for info\n"
-"\n"
-"Without argument, this command displays list of available infos"
-msgstr ""
-
-#, fuzzy
-msgid "get and display an infolist"
-msgstr "количество отображаемых команд"
-
-#, fuzzy
-msgid "<infolist> [<arguments>]"
-msgstr "адресат тип [аргументы]"
-
-msgid ""
-" infolist: infolist to display\n"
-"arguments: optional arguments for infolist\n"
-"\n"
-"Without argument, this command displays list of available infolists"
-msgstr ""
-
-#, fuzzy
 msgid "FIFO pipe for remote control"
 msgstr "%s не могу создать FIFO pipe для удалённого управления (%s)\n"
 
@@ -5233,6 +5146,10 @@ msgid ""
 "send a message to all currently connected users who have set the 'w' user "
 "mode for themselves"
 msgstr "отправляет сообщение всем подключенным пользователям с режимом 'w'"
+
+#, fuzzy
+msgid "<text>"
+msgstr "текст"
 
 #, fuzzy
 msgid "text: text to send"
@@ -9095,10 +9012,3 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
-
-#, fuzzy
-#~ msgid ""
-#~ "%sChannel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s"
-#~ "%s)"
-#~ msgstr ""
-#~ "Канал %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"

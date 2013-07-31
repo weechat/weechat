@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-28 16:11+0200\n"
-"PO-Revision-Date: 2013-07-18 19:51+0200\n"
+"POT-Creation-Date: 2013-07-31 18:40+0200\n"
+"PO-Revision-Date: 2013-07-31 18:41+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: hu\n"
@@ -3683,93 +3683,6 @@ msgid ""
 msgstr ""
 
 #, fuzzy
-msgid "Demo plugin"
-msgstr "  (nem található bővítőmodul)\n"
-
-msgid "demo message without prefix"
-msgstr ""
-
-#, c-format
-msgid "%sdemo message with error prefix"
-msgstr ""
-
-#, fuzzy
-msgid "colors"
-msgstr "üzenetek színe"
-
-msgid "Available infos:"
-msgstr ""
-
-msgid "Available infolists:"
-msgstr ""
-
-#, c-format
-msgid "demo_signal: signal: %s, type_data: %s, signal_data: \"%s\""
-msgstr ""
-
-#, c-format
-msgid "demo_signal: signal: %s, type_data: %s, signal_data: %d"
-msgstr ""
-
-#, c-format
-msgid "demo_signal: signal: %s, type_data: %s, signal_data: 0x%lx"
-msgstr ""
-
-#, c-format
-msgid ""
-"demo_signal: signal: %s, type_data: %s, signal_data: 0x%lx (unknown type)"
-msgstr ""
-
-#, fuzzy
-msgid "print some messages on current buffer"
-msgstr "szobanév nem található a pufferhez"
-
-#, fuzzy
-msgid "<text>"
-msgstr "szöveg"
-
-#, fuzzy
-msgid "text: write this text"
-msgstr "időbélyeg a információs pult idejéhez"
-
-#, fuzzy
-msgid "open a new buffer"
-msgstr "nem sikerült új puffert nyitni"
-
-msgid "<name>"
-msgstr ""
-
-#, fuzzy
-msgid "get and display an info"
-msgstr "megjeleníthető parancsok maximális száma"
-
-#, fuzzy
-msgid "<info> [<arguments>]"
-msgstr "fogadó típusa [paraméterek]"
-
-msgid ""
-"     info: info to display\n"
-"arguments: optional arguments for info\n"
-"\n"
-"Without argument, this command displays list of available infos"
-msgstr ""
-
-#, fuzzy
-msgid "get and display an infolist"
-msgstr "megjeleníthető parancsok maximális száma"
-
-#, fuzzy
-msgid "<infolist> [<arguments>]"
-msgstr "fogadó típusa [paraméterek]"
-
-msgid ""
-" infolist: infolist to display\n"
-"arguments: optional arguments for infolist\n"
-"\n"
-"Without argument, this command displays list of available infolists"
-msgstr ""
-
-#, fuzzy
 msgid "FIFO pipe for remote control"
 msgstr "%s nem sikerült a FIFO csövet létrehozni a távoli felügyelethez (%s)\n"
 
@@ -5207,6 +5120,10 @@ msgid ""
 msgstr ""
 "üzenet küldése minden olyan felhasználónak, aki a 'w' felhasználói módot "
 "beállította"
+
+#, fuzzy
+msgid "<text>"
+msgstr "szöveg"
 
 #, fuzzy
 msgid "text: text to send"
@@ -9076,13 +8993,3 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
-
-#, fuzzy
-#~ msgid ""
-#~ "%sChannel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s"
-#~ "%s)"
-#~ msgstr ""
-#~ "%s%s%s szoba: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
-
-#~ msgid "Act: "
-#~ msgstr "Akt: "

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-07-28 16:11+0200\n"
+"POT-Creation-Date: 2013-07-31 18:40+0200\n"
 "PO-Revision-Date: 2013-02-14 18:20+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3289,83 +3289,6 @@ msgid ""
 "  reset: reset charsets for current buffer"
 msgstr ""
 
-msgid "Demo plugin"
-msgstr ""
-
-msgid "demo message without prefix"
-msgstr ""
-
-#, c-format
-msgid "%sdemo message with error prefix"
-msgstr ""
-
-msgid "colors"
-msgstr ""
-
-msgid "Available infos:"
-msgstr ""
-
-msgid "Available infolists:"
-msgstr ""
-
-#, c-format
-msgid "demo_signal: signal: %s, type_data: %s, signal_data: \"%s\""
-msgstr ""
-
-#, c-format
-msgid "demo_signal: signal: %s, type_data: %s, signal_data: %d"
-msgstr ""
-
-#, c-format
-msgid "demo_signal: signal: %s, type_data: %s, signal_data: 0x%lx"
-msgstr ""
-
-#, c-format
-msgid ""
-"demo_signal: signal: %s, type_data: %s, signal_data: 0x%lx (unknown type)"
-msgstr ""
-
-msgid "print some messages on current buffer"
-msgstr ""
-
-msgid "<text>"
-msgstr ""
-
-msgid "text: write this text"
-msgstr ""
-
-msgid "open a new buffer"
-msgstr ""
-
-msgid "<name>"
-msgstr ""
-
-msgid "get and display an info"
-msgstr ""
-
-msgid "<info> [<arguments>]"
-msgstr ""
-
-msgid ""
-"     info: info to display\n"
-"arguments: optional arguments for info\n"
-"\n"
-"Without argument, this command displays list of available infos"
-msgstr ""
-
-msgid "get and display an infolist"
-msgstr ""
-
-msgid "<infolist> [<arguments>]"
-msgstr ""
-
-msgid ""
-" infolist: infolist to display\n"
-"arguments: optional arguments for infolist\n"
-"\n"
-"Without argument, this command displays list of available infolists"
-msgstr ""
-
 msgid "FIFO pipe for remote control"
 msgstr ""
 
@@ -4541,6 +4464,9 @@ msgstr ""
 msgid ""
 "send a message to all currently connected users who have set the 'w' user "
 "mode for themselves"
+msgstr ""
+
+msgid "<text>"
 msgstr ""
 
 msgid "text: text to send"

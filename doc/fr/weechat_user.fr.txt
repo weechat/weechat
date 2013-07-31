@@ -1569,7 +1569,6 @@ Les extensions par défaut sont :
 | alias     | Définir des alias pour les commandes
 | aspell    | Vérification orthographique de la ligne de commande
 | charset   | Encodage/encodage avec jeu de caractère sur les tampons
-| demo      | Extension de démonstration (non compilée par défaut)
 | fifo      | Tube FIFO pour envoyer des commandes à distance vers WeeChat
 | irc       | Discussion avec le protocole IRC
 | logger    | Enregistrement des tampons dans des fichiers
