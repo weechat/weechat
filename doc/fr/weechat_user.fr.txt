@@ -177,7 +177,7 @@ Liste des options couramment utilisées :
 | ENABLE_DEMO | `ON`, `OFF` | OFF |
   Compiler l'extension Demo.
 
-| ENABLE_MAN | `ON`, `OFF` | ON |
+| ENABLE_MAN | `ON`, `OFF` | OFF |
   Compiler la page man.
 
 | ENABLE_DOC | `ON`, `OFF` | OFF |

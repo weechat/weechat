@@ -15,7 +15,7 @@ Version 0.4.2 (under dev!)
 --------------------------
 
 * core: disable build of doc by default, add cmake option ENABLE_MAN to compile
-  man page (on by default)
+  man page (off by default)
 * core: add option "-o" for command /color
 * core: fix priority of logical operators in evaluation of expression
   (AND takes precedence over the OR)

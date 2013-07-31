@@ -187,7 +187,7 @@ List of commonly used options:
 | ENABLE_DEMO | `ON`, `OFF` | OFF |
   Compile Demo plugin.
 
-| ENABLE_MAN | `ON`, `OFF` | ON |
+| ENABLE_MAN | `ON`, `OFF` | OFF |
   Compile man page.
 
 | ENABLE_DOC | `ON`, `OFF` | OFF |

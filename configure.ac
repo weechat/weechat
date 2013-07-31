@@ -152,7 +152,7 @@ AC_ARG_WITH(lua-inc,        [  --with-lua-inc=DIR,     lua include files are in 
 AC_ARG_WITH(lua-lib,        [  --with-lua-lib=DIR,     lua library files are in DIR (default=autodetect)],lua_lib=$withval,lua_lib='')
 AC_ARG_WITH(lua-suffix,     [  --with-lua-suffix=ARG   lua is suffixed with ARG (default=autodetect)],lua_suffix=$withval,lua_suffix='')
 AC_ARG_WITH(tclconfig,      [  --with-tclconfig=DIR    directory containing tcl configuration (tclConfig.sh)],tclconfig=$withval,tclconfig='')
-AC_ARG_ENABLE(man,          [  --disable-man           turn off build of man page (default=built if found)],enable_man=$enableval,enable_man=yes)
+AC_ARG_ENABLE(man,          [  --enable-man            turn on build of man page (default=not built)],enable_man=$enableval,enable_man=no)
 AC_ARG_ENABLE(doc,          [  --enable-doc            turn on build of documentation (default=not built)],enable_doc=$enableval,enable_doc=no)
 AC_ARG_WITH(debug,          [  --with-debug            debugging: 0=no debug, 1=debug compilation (default=1)],debug=$withval,debug=1)
 

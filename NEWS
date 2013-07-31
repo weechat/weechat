@@ -23,7 +23,7 @@ Documentation is not built by default any more, you have to use option
 
 The man page is now built with asciidoc and translated in several
 languages. A new cmake option `ENABLE_MAN` has been added to compile man page
-(`ON` by default).
+(`OFF` by default).
 
 === Aspell colors ===
 
