@@ -1303,7 +1303,7 @@ gui_window_page_down (struct t_gui_window *window)
                 ptr_line = window->scroll->start_line;
                 line_pos = window->scroll->start_line_pos;
                 gui_chat_calculate_line_diff (window, &ptr_line, &line_pos,
-                                              window->win_chat_height - 1);
+                                              window->win_chat_height);
                 if (!ptr_line)
                 {
                     window->scroll->start_line = NULL;
@@ -1392,7 +1392,7 @@ gui_window_scroll_down (struct t_gui_window *window)
                 ptr_line = window->scroll->start_line;
                 line_pos = window->scroll->start_line_pos;
                 gui_chat_calculate_line_diff (window, &ptr_line, &line_pos,
-                                              window->win_chat_height - 1);
+                                              window->win_chat_height);
 
                 if (!ptr_line)
                 {
