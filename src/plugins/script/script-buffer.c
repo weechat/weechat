@@ -412,27 +412,27 @@ script_buffer_get_script_usage (struct t_script_repo *script)
     struct t_gui_bar_item *ptr_bar_item;
     struct t_infolist *infolist;
 
-    list = weechat_list_new ();
-
     config_files = 0;
 
     snprintf (hdata_name, sizeof (hdata_name),
               "%s_script", script_language[script->language]);
     ptr_hdata_script = weechat_hdata_get (hdata_name);
     if (!ptr_hdata_script)
-        goto end;
+        return NULL;
 
     ptr_script = script_buffer_get_script_pointer (script, ptr_hdata_script);
     if (!ptr_script)
-        goto end;
+        return NULL;
 
     ptr_name_hdata_callback = weechat_hdata_get_var_hdata (ptr_hdata_script,
                                                            "callbacks");
     if (!ptr_name_hdata_callback)
-        goto end;
+        return NULL;
     ptr_hdata_callback = weechat_hdata_get (ptr_name_hdata_callback);
     if (!ptr_hdata_callback)
-        goto end;
+        return NULL;
+
+    list = weechat_list_new ();
 
     ptr_hdata_config_file = weechat_hdata_get ("config_file");
     ptr_hdata_bar_item = weechat_hdata_get ("bar_item");
@@ -532,7 +532,6 @@ script_buffer_get_script_usage (struct t_script_repo *script)
                                            1);
     }
 
-end:
     snprintf (str_option, sizeof (str_option),
               "plugins.var.%s.%s.*",
               script_language[script->language],
