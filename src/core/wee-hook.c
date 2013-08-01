@@ -1434,9 +1434,11 @@ hook_process_child (struct t_hook *hook_process)
     char **exec_args, *arg0, str_arg[64];
     const char *ptr_url, *ptr_arg;
     int rc, i, num_args;
+    FILE *f;
 
     /* use "/dev/null" for stdin stream */
-    freopen ("/dev/null", "r", stdin);
+    f = freopen ("/dev/null", "r", stdin);
+    (void) f;
 
     /* redirect stdout/stderr to pipe (so that father process can read them) */
     close (HOOK_PROCESS(hook_process, child_read[HOOK_PROCESS_STDOUT]));
