@@ -83,7 +83,8 @@ WeeChat は cmake または autotools を使ってコンパイルできます (c
 | libncursesw5-dev ^(2)^          |             | *yes* | ncurses インターフェイス
 | libcurl4-gnutls-dev             |             | *yes* | URL 転送
 | zlib1g-dev                      |             | *yes* | relay プラグインでパケットを圧縮 (weechat プロトコル)、スクリプトプラグイン
-| libgcrypt11-dev                 |             | *yes* | IRC SASL 認証 (DH-BLOWFISH/DH-AES)、スクリプトプラグイン
+// TRANSLATION MISSING
+| libgcrypt11-dev                 |             | *yes* | secured data, IRC SASL 認証 (DH-BLOWFISH/DH-AES)、スクリプトプラグイン
 | libgnutls-dev                   | ≥ 2.2.0     |       | IRC サーバへの SSL 接続
 | gettext                         |             |       | 国際化 (メッセージの翻訳; ベース言語は英語です)
 | ca-certificates                 |             |       | SSL 接続に必要な証明書、relay プラグインで SSL サポート

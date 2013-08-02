@@ -93,7 +93,7 @@ compiler WeeChat.
 | libncursesw5-dev ^(2)^          |             | *oui*  | interface ncurses
 | libcurl4-gnutls-dev             |             | *oui*  | transfert d'URL
 | zlib1g-dev                      |             | *oui*  | compression des paquets dans l'extension relay (protocole weechat), extension script
-| libgcrypt11-dev                 |             | *oui*  | authentification IRC SASL (DH-BLOWFISH/DH-AES), extension script
+| libgcrypt11-dev                 |             | *oui*  | données sécurisées, authentification IRC SASL (DH-BLOWFISH/DH-AES), extension script
 | libgnutls-dev                   | ≥ 2.2.0     |        | connexion SSL au serveur IRC, support SSL dans l'extension relay
 | gettext                         |             |        | internationalisation (traduction des messages; la langue de base est l'anglais)
 | ca-certificates                 |             |        | certificats pour les connexions SSL
