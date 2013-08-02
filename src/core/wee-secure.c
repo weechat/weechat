@@ -132,6 +132,59 @@ secure_search_cipher (const char *cipher)
 }
 
 /*
+ * Derives a key from salt + passphrase (using a hash).
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+secure_derive_key (const char *salt, const char *passphrase,
+                   unsigned char *key, int length_key)
+{
+    unsigned char *buffer, *ptr_hash;
+    int length, length_hash;
+    gcry_md_hd_t hd_md;
+
+    memset (key, 0, length_key);
+
+    length = SALT_SIZE + strlen (passphrase);
+    buffer = malloc (length);
+    if (!buffer)
+        return 0;
+
+    /* build a buffer with salt + passphrase */
+    memcpy (buffer, salt, SALT_SIZE);
+    memcpy (buffer + SALT_SIZE, passphrase, strlen (passphrase));
+
+    /* compute hash of buffer */
+    if (gcry_md_open (&hd_md, GCRY_MD_SHA512, 0) != 0)
+    {
+        free (buffer);
+        return 0;
+    }
+    length_hash = gcry_md_get_algo_dlen (GCRY_MD_SHA512);
+    gcry_md_write (hd_md, buffer, length);
+    ptr_hash = gcry_md_read (hd_md, GCRY_MD_SHA512);
+    if (!ptr_hash)
+    {
+        gcry_md_close (hd_md);
+        free (buffer);
+        return 0;
+    }
+
+    /* copy beginning of hash (or full hash) in the key */
+    memcpy (key, ptr_hash,
+            (length_hash > length_key) ? length_key : length_hash);
+
+    gcry_md_close (hd_md);
+    free (buffer);
+
+    return 1;
+}
+
+/*
  * Encrypts data using a hash algorithm + cipher + passphrase.
  *
  * Following actions are performed:
@@ -173,7 +226,8 @@ secure_encrypt_data (const char *data, int length_data,
     int rc, length_salt, length_hash, length_hash_data, length_key;
     gcry_md_hd_t *hd_md;
     gcry_cipher_hd_t *hd_cipher;
-    unsigned char salt[SALT_SIZE], *ptr_hash, *key, *hash_and_data;
+    char salt[SALT_SIZE];
+    unsigned char *ptr_hash, *key, *hash_and_data;
 
     rc = -1;
 
@@ -207,9 +261,7 @@ secure_encrypt_data (const char *data, int length_data,
         memcpy (salt, SECURE_SALT_DEFAULT,
                 (length_salt <= SALT_SIZE) ? length_salt : SALT_SIZE);
     }
-    if (gcry_kdf_derive (passphrase, strlen (passphrase),
-                         GCRY_KDF_ITERSALTED_S2K, GCRY_MD_SHA256,
-                         salt, SALT_SIZE, 65536, length_key, key) != 0)
+    if (!secure_derive_key (salt, passphrase, key, length_key))
     {
         rc = -2;
         goto encend;
@@ -352,9 +404,7 @@ secure_decrypt_data (const char *buffer, int length_buffer,
     key = malloc (length_key);
     if (!key)
         goto decend;
-    if (gcry_kdf_derive (passphrase, strlen (passphrase),
-                         GCRY_KDF_ITERSALTED_S2K, GCRY_MD_SHA256,
-                         buffer, SALT_SIZE, 65536, length_key, key) != 0)
+    if (!secure_derive_key (buffer, passphrase, key, length_key))
     {
         rc = -3;
         goto decend;
