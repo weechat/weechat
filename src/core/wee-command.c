@@ -4533,7 +4533,7 @@ COMMAND_CALLBACK(secure)
         if (strcmp (argv[2], "-discard") == 0)
         {
             hashtable_remove_all (secure_hashtable_data_encrypted);
-            gui_chat_printf (NULL, _("Encrypted data deleted"));
+            gui_chat_printf (NULL, _("All encrypted data has been deleted"));
             return WEECHAT_RC_OK;
         }
         if (secure_decrypt_data_not_decrypted (argv_eol[2]) > 0)
