@@ -15,7 +15,7 @@ los atajas de teclados predeterminados).
 Run from your shell:
 
 ----------------------------------------
-$ weechat-curses
+$ weechat
 ----------------------------------------
 
 

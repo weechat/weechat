@@ -14,7 +14,7 @@ klawiszowymi).
 Wywołaj z terminala:
 
 ----------------------------------------
-$ weechat-curses
+$ weechat
 ----------------------------------------
 
 

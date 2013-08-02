@@ -36,7 +36,9 @@ info, to know exactly where is problem in WeeChat.
 
 If you're using the 'bash' shell, add following line to your `~/.bashrc`:
 
-  ulimit -c unlimited
+----------------------------------------
+ulimit -c unlimited
+----------------------------------------
 
 
 [[download]]
@@ -57,48 +59,48 @@ Get and build sources
 
 First create a directory, for example 'weechat-git':
 
----------------------
+----------------------------------------
 $ mkdir ~/weechat-git
 $ cd ~/weechat-git
----------------------
+----------------------------------------
 
 If you have git installed, you can just clone the git repository (recommended
 way):
 
---------------------------------------------
+----------------------------------------
 $ git clone git://git.sv.gnu.org/weechat.git
 $ cd weechat
---------------------------------------------
+----------------------------------------
 
 NOTE: Later, you can run "`git pull`" in this directory, to get deltas with
 the latest updates.
 
 Otherwise you can download and unpack 'devel' package:
 
------------------------------------------------------------------
+----------------------------------------
 $ wget http://www.weechat.org/files/src/weechat-devel.tar.bz2
 $ tar xvjf weechat-devel.tar.bz2
 $ cd weechat-devel
------------------------------------------------------------------
+----------------------------------------
 
 To build sources, cmake is recommended:
 
---------------------------------------------------------------
+----------------------------------------
 $ mkdir build
 $ cd build
-$ cmake .. -DPREFIX=$HOME/weechat-git -DCMAKE_BUILD_TYPE=Debug
+$ cmake .. -DPREFIX=$HOME/weechat-git -DWEECHAT_HOME=~/.weechat-dev -DCMAKE_BUILD_TYPE=Debug
 $ make
 $ make install
---------------------------------------------------------------
+----------------------------------------
 
 If you don't have cmake, it's still possible to use autotools:
 
-----------------------------------------------------------
+----------------------------------------
 $ ./autogen.sh
-$ ./configure --prefix=$HOME/weechat-git
+$ ./configure --prefix=$HOME/weechat-git WEECHAT_HOME=~/.weechat-dev
 $ make
 $ make install
-----------------------------------------------------------
+----------------------------------------
 
 [[install_binary_package]]
 Install binary package
@@ -121,7 +123,9 @@ version), with option `--dir`.
 
 Command is:
 
-  ~/weechat-git/bin/weechat-curses --dir ~/.weechat-dev
+----------------------------------------
+$ ~/weechat-git/bin/weechat
+----------------------------------------
 
 If you're still awake you should see the familiar interface and brag about
 having the newest possible version of WeeChat. ;)

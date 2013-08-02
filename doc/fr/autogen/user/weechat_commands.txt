@@ -680,7 +680,7 @@ Avec l'option "-quit", le processus est légèrement différent :
   3. décharger les extensions
   4. sauvegarder la configuration WeeChat
   5. quitter WeeChat
-Et plus tard vous pouvez restaurer la session avec la commande: weechat-curses --upgrade
+Et plus tard vous pouvez restaurer la session avec la commande: weechat --upgrade
 IMPORTANT: vous devez restaurer la session avec exactement la même configuration (fichiers *.conf).
 Il est également possible de restaurer la session WeeChat sur une autre machine si vous y copiez le contenu du répertoire "~/.weechat".
 ........................................

@@ -361,16 +361,16 @@ WeeChat がクラッシュすると、'core' または 'core.12345' ファイル
 このファイルは WeeChat を起動したディレクトリに作られます (これは
 WeeChat がインストールされているディレクトリでは*ありません*!)。
 
-例えば、'weechat-curses' が '/usr/bin/' にインストールされ、'core' ファイルが
+例えば、'weechat' が '/usr/bin/' にインストールされ、'core' ファイルが
 '/home/xxx/' にある場合、以下のコマンドで gdb を起動してください:
 
 ----------------------------------------
-gdb /usr/bin/weechat-curses /home/xxx/core
+gdb /usr/bin/weechat /home/xxx/core
 ----------------------------------------
 
 [NOTE]
 バイナリパッケージ 'weechat-dbg' をインストールした場合 (例えば Debian で)、WeeChat
-バイナリへのパスは '/usr/lib/debug/usr/bin/weechat-curses' のようになります。
+バイナリへのパスは '/usr/lib/debug/usr/bin/weechat' のようになります。
 
 gdb の中で `bt full` コマンドを実行するとバックトレースが表示されます。
 以下のような出力が得られるはずです:
@@ -410,10 +410,10 @@ Copying output to /tmp/crash.txt.
 ==== 起動した WeeChat のデバッグ ====
 
 起動している WeeChat をデバッグするには (例えば WeeChat がフリーズしているような場合)、gdb
-の引数にプロセス番号を与えて起動します ('12345' は weechat-curses プロセスの PID に変更してください):
+の引数にプロセス番号を与えて起動します ('12345' は weechat プロセスの PID に変更してください):
 
 ----------------------------------------
-gdb /usr/bin/weechat-curses 12345
+gdb /usr/bin/weechat 12345
 ----------------------------------------
 
 クラッシュが起きた場合と同様に、`bt full` コマンドを使ってください:
@@ -435,7 +435,7 @@ include::cmdline_options.ja.txt[]
 WeeChat を起動させるには、以下コマンドを実行:
 
 ----------------------------------------
-$ weechat-curses
+$ weechat
 ----------------------------------------
 
 初めて WeeChat を起動する場合、デフォルトのオプションで設定ファイルが作成されます。
@@ -1314,7 +1314,7 @@ WeeChat ではバーやチャットエリアにおけるテキスト表示に 25
 ^(1)^ 端末が 256 ペア以上の表示をサポートしていても、WeeChat
 では ncurses の制限により 256 ペア以上の表示は行えません。
 
-`weechat-curses --colors` を実行するか、`/color` コマンドをin WeeChat
+`weechat --colors` を実行するか、`/color` コマンドをin WeeChat
 の中で実行することで、色表示の制限を確認できます。
 
 256 色を利用したい場合に推奨される 'TERM' 環境変数の値は:
@@ -1753,7 +1753,7 @@ irc[6][s]://[nick[:password]@]irc.example.org[:port][/channel][,channel[...]]
 で稼働中の IRC サーバ上の '#weechat' と '#toto' チャンネルに参加する例:
 
 ----------------------------------------
-$ weechat-curses irc://nono@irc.freenode.net/#weechat,#toto
+$ weechat irc://nono@irc.freenode.net/#weechat,#toto
 ----------------------------------------
 
 [[irc_options]]

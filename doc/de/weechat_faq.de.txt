@@ -87,8 +87,8 @@ Dies ist ein bekanntes Problem. Aus diesem Grund sollten die folgenden Punkte
 sorgfältig durchgelesen und *alle* aufgezeigten Lösungsmöglichkeiten überprüft
 werden:
 
-* überprüfe, ob weechat-curses mit libncursesw verlinkt ist (Warnung: Dies ist bei den
-  meisten Distributionen nötig - jedoch nicht bei allen): `ldd /path/to/weechat-curses`
+* überprüfe, ob weechat mit libncursesw verlinkt ist (Warnung: Dies ist bei den
+  meisten Distributionen nötig - jedoch nicht bei allen): `ldd /path/to/weechat`
 * prüfe mit dem Befehl `/plugin`, ob die "Charset" Erweiterung geladen ist (falls
   dies nicht der Fall sein sollte benötigst Du wahrscheinlich noch das Paket "weechat-plugins")
 * überprüfe die Ausgabe des `/charset` Befehls (im Server-Buffer). Du solltest
@@ -788,7 +788,7 @@ Wenn man WeeChat in gdb startet kann ein Thread-Fehler auftreten. Was beudeutet 
 Falls man WeeChat in gdb ausführt kann folgende Fehlermeldung erscheinen:
 
 ----------------------------------------
-$ gdb /Pfad/zu/weechat-curses
+$ gdb /Pfad/zu/weechat
 (gdb) run
 [Thread debugging using libthread_db enabled]
 Cannot find new threads: generic error
@@ -798,7 +798,7 @@ Um diesen Fehler zu beheben sollte man gdb wie folgt aufrufen (der Pfad zu
 libpthread und WeeChat muss natürlich an das eigene System angepasst werden):
 
 ----------------------------------------
-$ LD_PRELOAD=/lib/libpthread.so.0 gdb /Pfad/zu/weechat-curses
+$ LD_PRELOAD=/lib/libpthread.so.0 gdb /Pfad/zu/weechat
 (gdb) run
 ----------------------------------------
 

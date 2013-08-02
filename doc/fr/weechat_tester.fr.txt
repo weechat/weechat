@@ -39,7 +39,9 @@ se situe dans WeeChat).
 
 Si vous utilisez le shell 'bash', ajoutez cette ligne dans votre `~/.bashrc` :
 
-  ulimit -c unlimited
+----------------------------------------
+ulimit -c unlimited
+----------------------------------------
 
 
 [[download]]
@@ -62,47 +64,47 @@ Obtenir et compiler les sources
 
 Créez tout d'abord un répertoire, par exemple 'weechat-git' :
 
----------------------
+----------------------------------------
 $ mkdir ~/weechat-git
 $ cd ~/weechat-git
----------------------
+----------------------------------------
 
 Si vous avez git installé, vous pouvez cloner la base GIT (recommandé) :
 
---------------------------------------------
+----------------------------------------
 $ git clone git://git.sv.gnu.org/weechat.git
 $ cd weechat
---------------------------------------------
+----------------------------------------
 
 NOTE: Plus tard, vous pourrez utiliser la commande "`git pull`" dans ce répertoire
 pour obtenir juste les deltas avec la version d'aujourd'hui.
 
 Sinon vous pouvez installer le paquet 'devel' :
 
------------------------------------------------------------------
+----------------------------------------
 $ wget http://www.weechat.org/files/src/weechat-devel.tar.bz2
 $ tar xvjf weechat-devel.tar.bz2
 $ cd weechat-devel
------------------------------------------------------------------
+----------------------------------------
 
 Pour compiler les sources, cmake est recommandé :
 
---------------------------------------------------------------
+----------------------------------------
 $ mkdir build
 $ cd build
-$ cmake .. -DPREFIX=$HOME/weechat-git -DCMAKE_BUILD_TYPE=Debug
+$ cmake .. -DPREFIX=$HOME/weechat-git -DWEECHAT_HOME=~/.weechat-dev -DCMAKE_BUILD_TYPE=Debug
 $ make
 $ make install
---------------------------------------------------------------
+----------------------------------------
 
 Si vous n'avez pas cmake, il est toujours possible d'utiliser les autotools :
 
------------------------------------------------------------------
+----------------------------------------
 $ ./autogen.sh
-$ ./configure --prefix=$HOME/weechat-git
+$ ./configure --prefix=$HOME/weechat-git WEECHAT_HOME=~/.weechat-dev
 $ make
 $ make install
------------------------------------------------------------------
+----------------------------------------
 
 [[install_binary_package]]
 Obtenir un paquet binaire
@@ -125,7 +127,9 @@ stable, avec l'option `--dir`.
 
 La commande est :
 
-  ~/weechat-git/bin/weechat-curses --dir ~/.weechat-dev
+----------------------------------------
+$ ~/weechat-git/bin/weechat
+----------------------------------------
 
 Si vous êtes encore éveillé, vous devriez voir une interface familière et
 pouvoir vous vanter d'utiliser la version la plus récente possible de WeeChat ;)

@@ -13,7 +13,7 @@ Sébastien Helleu <flashcode@flashtux.org>
 Run from your shell:
 
 ----------------------------------------
-$ weechat-curses
+$ weechat
 ----------------------------------------
 
 

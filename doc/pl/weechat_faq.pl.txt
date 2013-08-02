@@ -81,8 +81,8 @@ Nie widzę niektórych znaków diakrytycznych, co mogę zrobić?
 
 Jest to częsty problem, przeczytaj i sprawdź *WSZYSTKIE* poniższe rozwiązania:
 
-* sprawdź czy weechat-curses jest zlinkowany z libncursesw (uwaga: wymagane na
-  większości dystrybucji ale nie wszystkich): `ldd /ścieżka/do/weechat-curses`
+* sprawdź czy weechat jest zlinkowany z libncursesw (uwaga: wymagane na
+  większości dystrybucji ale nie wszystkich): `ldd /ścieżka/do/weechat`
 * sprawdź czy wtyczka "Charset" jest załadowana za pomocą komendy `/plugin`
   (jeśli nie jest, to najprawdopodobniej potrzebujesz pakietu "weechat-plugins")
 * sprawdź wyjście komendy `/charset` (w głównym buforze). Powinieneś zobaczyć
@@ -754,7 +754,7 @@ Kiedy uruchamiam WeeChat pod gdb dostaję komunikat o wątkach, co mogę z tym z
 Podczas uruchamiania WeeChat pod gdb, można spotkać się z takim błędem:
 
 ----------------------------------------
-$ gdb /scieżka/do/weechat-curses
+$ gdb /scieżka/do/weechat
 (gdb) run
 [Thread debugging using libthread_db enabled]
 Cannot find new threads: generic error
@@ -764,7 +764,7 @@ Cannot find new threads: generic error
 WeeChat na właściwe dla naszego systemu):
 
 ----------------------------------------
-$ LD_PRELOAD=/lib/libpthread.so.0 gdb /ścieżka/do/weechat-curses
+$ LD_PRELOAD=/lib/libpthread.so.0 gdb /ścieżka/do/weechat
 (gdb) run
 ----------------------------------------
 

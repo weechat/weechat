@@ -14,7 +14,7 @@ le scorciatoie da tastiera predefinite).
 Avviare dalla propria shell:
 
 ----------------------------------------
-$ weechat-curses
+$ weechat
 ----------------------------------------
 
 

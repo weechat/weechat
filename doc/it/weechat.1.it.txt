@@ -1,22 +1,23 @@
-WEECHAT-CURSES(1)
-=================
+// TRANSLATION MISSING (WHOLE FILE)
+WEECHAT(1)
+==========
 :doctype: manpage
 
 NAME
 ----
 
-weechat-curses - the extensible chat client (Curses version)
+weechat - the extensible chat client
 
 SYNOPSIS
 --------
 
 [verse]
-'weechat-curses' [-a|--no-connect] [-d|--dir <path>] [-p|--no-plugin] [-r|--run-command <command>] [-s|--no-script] [--upgrade] [plugin:option...]
-'weechat-curses' [-c|--colors]
-'weechat-curses' [-h|--help]
-'weechat-curses' [-k|--keys]
-'weechat-curses' [-l|--license]
-'weechat-curses' [-v|--version]
+'weechat' [-a|--no-connect] [-d|--dir <path>] [-p|--no-plugin] [-r|--run-command <command>] [-s|--no-script] [--upgrade] [plugin:option...]
+'weechat' [-c|--colors]
+'weechat' [-h|--help]
+'weechat' [-k|--keys]
+'weechat' [-l|--license]
+'weechat' [-v|--version]
 
 DESCRIPTION
 -----------
@@ -29,7 +30,7 @@ extensible with C and scripts written in several languages.
 OPTIONS
 -------
 
-include::cmdline_options.en.txt[]
+include::cmdline_options.it.txt[]
 
 PLUGIN OPTIONS
 --------------

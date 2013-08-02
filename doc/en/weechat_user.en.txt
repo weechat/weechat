@@ -368,16 +368,16 @@ When WeeChat crashes, your system will create a file 'core' or 'core.12345'
 This file is created in directory where you have run WeeChat (this is *not*
 directory where WeeChat is installed!).
 
-For example if 'weechat-curses' is installed in '/usr/bin/' and 'core' file is
+For example if 'weechat' is installed in '/usr/bin/' and 'core' file is
 in '/home/xxx/', then run gdb with this command:
 
 ----------------------------------------
-gdb /usr/bin/weechat-curses /home/xxx/core
+gdb /usr/bin/weechat /home/xxx/core
 ----------------------------------------
 
 [NOTE]
 If you installed binary package 'weechat-dbg' (for example under Debian), then
-you can use this path for WeeChat binary: '/usr/lib/debug/usr/bin/weechat-curses'
+you can use this path for WeeChat binary: '/usr/lib/debug/usr/bin/weechat'
 
 Then under gdb, use command `bt full` to display backtrace.
 You will see something like that:
@@ -418,10 +418,10 @@ Debug a running WeeChat
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 To debug a running WeeChat (for example if WeeChat seems blocked), you can use
-gdb with process id (replace '12345' with PID of weechat-curses process):
+gdb with process id (replace '12345' with PID of weechat process):
 
 ----------------------------------------
-gdb /usr/bin/weechat-curses 12345
+gdb /usr/bin/weechat 12345
 ----------------------------------------
 
 Then like for a crash, use command `bt full`:
@@ -445,7 +445,7 @@ include::cmdline_options.en.txt[]
 To start WeeChat, issue this command:
 
 ----------------------------------------
-$ weechat-curses
+$ weechat
 ----------------------------------------
 
 When you run WeeChat for the first time, a default configuration file is
@@ -1344,7 +1344,7 @@ for colors in WeeChat:
 ^(1)^ Even if your terminal supports more than 256 pairs, only 256 pairs can be
 used in WeeChat, because of a ncurses limitation.
 
-You can run `weechat-curses --colors` or use command `/color` in WeeChat to
+You can run `weechat --colors` or use command `/color` in WeeChat to
 display limits for your environment.
 
 Some recommended values for 'TERM' if you want 256 colors:
@@ -1806,7 +1806,7 @@ Example to join '#weechat' and '#toto' on server 'irc.freenode.net' server,
 default port (6667), with nick 'nono':
 
 ----------------------------------------
-$ weechat-curses irc://nono@irc.freenode.net/#weechat,#toto
+$ weechat irc://nono@irc.freenode.net/#weechat,#toto
 ----------------------------------------
 
 [[irc_options]]

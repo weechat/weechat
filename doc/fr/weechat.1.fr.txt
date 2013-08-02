@@ -1,22 +1,22 @@
-WEECHAT-CURSES(1)
-=================
+WEECHAT(1)
+==========
 :doctype: manpage
 
 NOM
 ---
 
-weechat-curses - le client de discussion extensible (version Curses)
+weechat - le client de discussion extensible
 
 SYNOPSIS
 --------
 
 [verse]
-'weechat-curses' [-a|--no-connect] [-d|--dir <répertoire>] [-p|--no-plugin] [-r|--run-command <commande>] [-s|--no-script] [--upgrade] [extension:option...]
-'weechat-curses' [-c|--colors]
-'weechat-curses' [-h|--help]
-'weechat-curses' [-k|--keys]
-'weechat-curses' [-l|--license]
-'weechat-curses' [-v|--version]
+'weechat' [-a|--no-connect] [-d|--dir <répertoire>] [-p|--no-plugin] [-r|--run-command <commande>] [-s|--no-script] [--upgrade] [extension:option...]
+'weechat' [-c|--colors]
+'weechat' [-h|--help]
+'weechat' [-k|--keys]
+'weechat' [-l|--license]
+'weechat' [-v|--version]
 
 DESCRIPTION
 -----------

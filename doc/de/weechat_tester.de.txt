@@ -41,7 +41,9 @@ zu lokalisieren.
 Falls Du die 'bash' als shell benutzt, dann ergänze Deine `~/.bashrc` durch folgende
 Zeile:
 
-  ulimit -c unlimited
+----------------------------------------
+ulimit -c unlimited
+----------------------------------------
 
 
 [[download]]
@@ -64,47 +66,47 @@ Beschaffe und baue die Quellen
 
 Erstelle zuerst einen neuen Ordner, z.B. 'weechat-git':
 
----------------------
+----------------------------------------
 $ mkdir ~/weechat-git
 $ cd ~/weechat-git
----------------------
+----------------------------------------
 
 Falls Du git installiert hast, clone das git Repository (empfohlen):
 
---------------------------------------------
+----------------------------------------
 $ git clone git://git.sv.gnu.org/weechat.git
 $ cd weechat
---------------------------------------------
+----------------------------------------
 
 NOTE: Um auf den aktuellen Stand zu kommen verwendest Du z.B. "`git pull`" in
 diesem Ordner.
 
 Ansonsten kannst Du das 'Entwickler-Paket' herunterladen und entpacken:
 
------------------------------------------------------------------
+----------------------------------------
 $ wget http://www.weechat.org/files/src/weechat-devel.tar.bz2
 $ tar xvjf weechat-devel.tar.bz2
 $ cd weechat-devel
------------------------------------------------------------------
+----------------------------------------
 
 Um die Quellen zu übersetzen, wird cmake empfohlen:
 
---------------------------------------------------------------
+----------------------------------------
 $ mkdir build
 $ cd build
-$ cmake .. -DPREFIX=$HOME/weechat-git -DCMAKE_BUILD_TYPE=Debug
+$ cmake .. -DPREFIX=$HOME/weechat-git -DWEECHAT_HOME=~/.weechat-dev -DCMAKE_BUILD_TYPE=Debug
 $ make
 $ make install
---------------------------------------------------------------
+----------------------------------------
 
 Falls Du cmake nicht hast, ist es auch möglich die autotools zu nutzen:
 
-----------------------------------------------------------
+----------------------------------------
 $ ./autogen.sh
-$ ./configure --prefix=$HOME/weechat-git
+$ ./configure --prefix=$HOME/weechat-git WEECHAT_HOME=~/.weechat-dev
 $ make
 $ make install
-----------------------------------------------------------
+----------------------------------------
 
 [[install_binary_package]]
 Installieren des Programm-Paketes
@@ -126,7 +128,9 @@ starten (nicht mit dem Ordner der stabilen Version).
 
 Die Befehlszeile lautet:
 
-  ~/weechat-git/bin/weechat-curses --dir ~/.weechat-dev
+----------------------------------------
+$ ~/weechat-git/bin/weechat
+----------------------------------------
 
 Immer noch munter? Dann solltest Du jetzt das bekannte Interface sehen und nun
 prahle vor Anderen, dass Du die neueste WeeChat-Version verwendest :)

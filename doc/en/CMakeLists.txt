@@ -20,15 +20,15 @@
 IF(ENABLE_MAN)
   # man page
   ADD_CUSTOM_COMMAND(
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat-curses.1
-    COMMAND ${A2X_EXECUTABLE} ARGS -a revision='WeeChat ${VERSION}' -d manpage -f manpage -L -D ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/weechat-curses.1.en.txt
+    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat.1
+    COMMAND ${A2X_EXECUTABLE} ARGS -a revision='WeeChat ${VERSION}' -d manpage -f manpage -L -D ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.en.txt
     DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/weechat-curses.1.en.txt
+    ${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.en.txt
     ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.en.txt
-    COMMENT "Building weechat-curses.1 (en)"
+    COMMENT "Building weechat.1 (en)"
   )
-  ADD_CUSTOM_TARGET(doc-man-en ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat-curses.1)
-  INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat-curses.1 DESTINATION ${MANDIR}/man1)
+  ADD_CUSTOM_TARGET(doc-man-en ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat.1)
+  INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat.1 DESTINATION ${MANDIR}/man1)
 ENDIF(ENABLE_MAN)
 
 IF(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)

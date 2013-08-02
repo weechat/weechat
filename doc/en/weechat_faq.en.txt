@@ -79,8 +79,8 @@ I don't see some chars with accents, what can I do?
 
 It's common issue, please read carefully and check *ALL* solutions below:
 
-* check that weechat-curses is linked to libncursesw (warning: needed on most
-  distributions but not all): `ldd /path/to/weechat-curses`
+* check that weechat is linked to libncursesw (warning: needed on most
+  distributions but not all): `ldd /path/to/weechat`
 * check that the "Charset" plugin is loaded with `/plugin` command (if it is
   not, then you probably need the "weechat-plugins" package)
 * check the output of command `/charset` (on core buffer). You should see
@@ -748,7 +748,7 @@ When I run WeeChat under gdb, there is error about threads, what can I do?
 When you run WeeChat under gdb, you may have this error:
 
 ----------------------------------------
-$ gdb /path/to/weechat-curses
+$ gdb /path/to/weechat
 (gdb) run
 [Thread debugging using libthread_db enabled]
 Cannot find new threads: generic error
@@ -758,7 +758,7 @@ To fix that, you can run gdb with this command (replace path to libpthread and
 WeeChat with paths on your system):
 
 ----------------------------------------
-$ LD_PRELOAD=/lib/libpthread.so.0 gdb /path/to/weechat-curses
+$ LD_PRELOAD=/lib/libpthread.so.0 gdb /path/to/weechat
 (gdb) run
 ----------------------------------------
 

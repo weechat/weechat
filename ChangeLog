@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.2-dev, 2013-07-31
+v0.4.2-dev, 2013-08-02
 
 
 This document lists all changes for each version.
@@ -14,6 +14,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 Version 0.4.2 (under dev!)
 --------------------------
 
+* core: rename binary and man page from "weechat-curses" to "weechat"
+  (task #11027)
 * core: disable build of doc by default, add cmake option ENABLE_MAN to compile
   man page (off by default)
 * core: add option "-o" for command /color

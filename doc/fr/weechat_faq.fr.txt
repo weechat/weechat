@@ -80,9 +80,9 @@ Je ne vois pas bien certains accents dans WeeChat, que faire ?
 C'est un problème courant, merci de lire attentivement et vérifier *TOUS* les
 points ci-dessous :
 
-* vérifiez que weechat-curses est lié avec libncursesw (attention : nécessaire
+* vérifiez que weechat est lié avec libncursesw (attention : nécessaire
   sur beaucoup de distributions, mais pas toutes) :
-  `ldd /chemin/vers/weechat-curses`
+  `ldd /chemin/vers/weechat`
 * vérifiez que l'extension "Charset" est chargée avec la commande `/plugin`
   (s'il ne l'est pas, vous devez peut-être installer le paquet
   "weechat-plugins")
@@ -777,7 +777,7 @@ Quand je lance WeeChat sous gdb, il y a une erreur à propos des threads, que pu
 Quand vous lancez WeeChat sous gdb, vous pouvez avoir cette erreur :
 
 ----------------------------------------
-$ gdb /path/to/weechat-curses
+$ gdb /path/to/weechat
 (gdb) run
 [Thread debugging using libthread_db enabled]
 Cannot find new threads: generic error
@@ -787,7 +787,7 @@ Pour corriger ça, vous pouvez lancer gdb avec cette commande (remplacez le
 chemin vers libpthread et WeeChat avec les chemins sur votre système) :
 
 ----------------------------------------
-$ LD_PRELOAD=/lib/libpthread.so.0 gdb /path/to/weechat-curses
+$ LD_PRELOAD=/lib/libpthread.so.0 gdb /path/to/weechat
 (gdb) run
 ----------------------------------------
 

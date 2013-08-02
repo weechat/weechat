@@ -13,7 +13,7 @@ A recommended terminal emulator for X (but not mandatory) is rxvt-unicode
 Run from your shell:
 
 ----------------------------------------
-$ weechat-curses
+$ weechat
 ----------------------------------------
 
 

@@ -47,4 +47,4 @@ weechat.pc
 *stamp
 stamp*
 
-src/gui/curses/weechat-curses
+src/gui/curses/weechat

@@ -6708,7 +6708,7 @@ command_init ()
                      "  4. save WeeChat configuration\n"
                      "  5. quit WeeChat\n"
                      "Then later you can restore session with command: "
-                     "weechat-curses --upgrade\n"
+                     "weechat --upgrade\n"
                      "IMPORTANT: you must restore the session with exactly "
                      "same configuration (files *.conf).\n"
                      "It is possible to restore WeeChat session on another "

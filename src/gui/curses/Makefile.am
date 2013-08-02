@@ -19,29 +19,35 @@
 
 AM_CPPFLAGS = -DLOCALEDIR=\"$(datadir)/locale\" $(NCURSES_CFLAGS)
 
-bin_PROGRAMS = weechat-curses
+bin_PROGRAMS = weechat
 
 # Because of a linker bug, we have to link 2 times with lib_weechat_core.a
 # (and it must be 2 different path/names to be kept by linker)
-weechat_curses_LDADD = ./../../core/lib_weechat_core.a \
-                       ../../plugins/lib_weechat_plugins.a \
-                       ../lib_weechat_gui_common.a \
-                       ../../core/lib_weechat_core.a \
-                       $(PLUGINS_LFLAGS) \
-                       $(NCURSES_LFLAGS) \
-                       $(GCRYPT_LFLAGS) \
-                       $(GNUTLS_LFLAGS) \
-                       $(CURL_LFLAGS) \
-                       -lm
+weechat_LDADD = ./../../core/lib_weechat_core.a \
+                ../../plugins/lib_weechat_plugins.a \
+                ../lib_weechat_gui_common.a \
+                ../../core/lib_weechat_core.a \
+                $(PLUGINS_LFLAGS) \
+                $(NCURSES_LFLAGS) \
+                $(GCRYPT_LFLAGS) \
+                $(GNUTLS_LFLAGS) \
+                $(CURL_LFLAGS) \
+                -lm
 
-weechat_curses_SOURCES = gui-curses-bar-window.c \
-                         gui-curses-chat.c \
-                         gui-curses-color.c \
-                         gui-curses-key.c \
-                         gui-curses-main.c \
-                         gui-curses-mouse.c \
-                         gui-curses-term.c \
-                         gui-curses-window.c \
-                         gui-curses.h
+weechat_SOURCES = gui-curses-bar-window.c \
+                  gui-curses-chat.c \
+                  gui-curses-color.c \
+                  gui-curses-key.c \
+                  gui-curses-main.c \
+                  gui-curses-mouse.c \
+                  gui-curses-term.c \
+                  gui-curses-window.c \
+                  gui-curses.h
 
 EXTRA_DIST = CMakeLists.txt
+
+# Create a symbolic link weechat -> weechat-curses
+# This link is created for compatibility with old versions on /upgrade.
+# It may be removed in future.
+install-exec-hook:
+	(cd $(DESTDIR)$(bindir) && rm -f weechat-curses && $(LN_S) weechat weechat-curses)

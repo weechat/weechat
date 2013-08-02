@@ -289,9 +289,8 @@ Documentation files:
 |    asciidoc.conf                    | Asciidoc configuration file (some macros)
 |    asciidoc.css                     | Asciidoc style
 |    docgen.py                        | Python script to build files in "autogen/" directory (see below)
-|    weechat-curses.1                 | Weechat man page
 |    XX/                              | Documentation for language XX (languages: en, fr, de, it, ...)
-|       weechat-curses.1.XX.txt       | Man page
+|       weechat.1.XX.txt              | Man page
 |       weechat_quickstart.XX.txt     | Quickstart guide
 |       weechat_user.XX.txt           | User's guide
 |       weechat_faq.XX.txt            | FAQ

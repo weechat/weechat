@@ -168,7 +168,7 @@ SET(CPACK_SOURCE_IGNORE_FILES "/\\\\.git" "/build/" "/m4/"
   "/install-sh$" "/missing$" "/intl/" "/libtool$" "/\\\\.libs/"
   "/ltmain\\\\.sh$" "/\\\\.deps/" "/html/" "/html1/" "/Makefile$"
   "/Makefile\\\\.in$" "stamp" "/po/.*\\\\.header$" "\\\\.gmo$" "~$" "\\\\.o$"
-  "\\\\.lo$" "\\\\.a$" "\\\\.la$" "\\\\.lai$" "\\\\.Plo$" "/weechat-curses$"
+  "\\\\.lo$" "\\\\.a$" "\\\\.la$" "\\\\.lai$" "\\\\.Plo$" "/weechat$"
 )
 
 INCLUDE(CPack)

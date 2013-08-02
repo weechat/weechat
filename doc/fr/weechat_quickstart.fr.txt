@@ -14,7 +14,7 @@ touches par défaut).
 Lancer depuis votre shell :
 
 ----------------------------------------
-$ weechat-curses
+$ weechat
 ----------------------------------------
 
 

@@ -71,8 +71,8 @@ autotools を使って (cmake を使わずに) コンパイルする場合、
 
 これは良くある問題です。以下の内容をよく読んで、*全ての* 解決策をチェックしてください:
 
-* weechat-curses が libncursesw にリンクされていることの確認 (警告: 全てではありませんが、
-  ほとんどのディストリビューションで必要です): `ldd /path/to/weechat-curses`
+* weechat が libncursesw にリンクされていることの確認 (警告: 全てではありませんが、
+  ほとんどのディストリビューションで必要です): `ldd /path/to/weechat`
 * `/plugin` コマンドで "Charset" プラグインがロード済みであることの確認
   (ロードされていない場合、"weechat-plugins" パッケージが必要かもしれません) 。
 * `/charset` コマンドの出力を確認 (core バッファ上で)。
@@ -698,7 +698,7 @@ OpenBSD では、プラグインファイル名の末尾が ".so.0.0" です (Li
 gdb で WeeChat を実行する場合、以下のエラーが出るかもしれません:
 
 ----------------------------------------
-$ gdb /path/to/weechat-curses
+$ gdb /path/to/weechat
 (gdb) run
 [Thread debugging using libthread_db enabled]
 Cannot find new threads: generic error
@@ -708,7 +708,7 @@ Cannot find new threads: generic error
 (システム上の libpthread と WeeChat へのパスを変更):
 
 ----------------------------------------
-$ LD_PRELOAD=/lib/libpthread.so.0 gdb /path/to/weechat-curses
+$ LD_PRELOAD=/lib/libpthread.so.0 gdb /path/to/weechat
 (gdb) run
 ----------------------------------------
 

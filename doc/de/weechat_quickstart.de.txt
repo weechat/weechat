@@ -14,7 +14,7 @@ Probleme mit der Standard Tastaturbelegung).
 Starte aus Deiner shell:
 
 ----------------------------------------
-$ weechat-curses
+$ weechat
 ----------------------------------------
 
 

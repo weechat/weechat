@@ -30,7 +30,7 @@ gui-curses-mouse.c
 gui-curses-term.c
 gui-curses-window.c)
 
-SET(EXECUTABLE weechat-curses)
+SET(EXECUTABLE weechat)
 
 FIND_PACKAGE(Ncurses)
 IF(NCURSES_FOUND)
@@ -77,3 +77,9 @@ INCLUDE_DIRECTORIES(.. ../../core ../../plugins)
 TARGET_LINK_LIBRARIES(${EXECUTABLE} ${STATIC_LIBS} ${EXTRA_LIBS} ${STATIC_LIBS})
 
 INSTALL(TARGETS ${EXECUTABLE} RUNTIME DESTINATION bin)
+
+# Create a symbolic link weechat -> weechat-curses
+# This link is created for compatibility with old versions on /upgrade.
+# It may be removed in future.
+INSTALL(CODE "EXECUTE_PROCESS(COMMAND ${CMAKE_COMMAND} -E remove -f \"${CMAKE_INSTALL_PREFIX}/bin/weechat-curses\")")
+INSTALL(CODE "EXECUTE_PROCESS(COMMAND ${CMAKE_COMMAND} -E create_symlink weechat \"${CMAKE_INSTALL_PREFIX}/bin/weechat-curses\")")

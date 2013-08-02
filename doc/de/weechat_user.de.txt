@@ -372,16 +372,16 @@ Falls WeeChat abstürzen sollte wird auf Ihrem System eine 'core' bzw. 'core.123
 Diese Datei wird in dem Verzeichnis erzeugt aus welchem Sie WeeChat gestartet haben (dies
 ist *nicht* das Verzeichnis in welchem sich WeeChat befindet!).
 
-Beispiel: 'weechat-curses' ist installiert in '/usr/bin/' und die 'core' Datei befindet sich
+Beispiel: 'weechat' ist installiert in '/usr/bin/' und die 'core' Datei befindet sich
 in '/home/xxx/'. Nun wird gdb mit folgendem Befehl aufgerufen:
 
 ----------------------------------------
-gdb /usr/bin/weechat-curses /home/xxx/core
+gdb /usr/bin/weechat /home/xxx/core
 ----------------------------------------
 
 [NOTE]
 Ist das Binärpaket 'weechat-dbg' (z.B. Debian) installiert dann sollte dieser Pfad zum
-starten von WeeChat genutzt werden: '/usr/lib/debug/usr/bin/weechat-curses'
+starten von WeeChat genutzt werden: '/usr/lib/debug/usr/bin/weechat'
 
 Nun startet man 'gdb' und führt den Befehl `bt full` innerhalb gdb aus um die Fehlermeldung
 auszugeben. Eine Fehlermeldung von gdb sieht z.B. wie folgt aus:
@@ -422,10 +422,10 @@ Eine laufende Session von WeeChat debuggen
 
 Um eine laufende Session von WeeChat zu debuggen (zum Beispiel wenn WeeChat nicht
 mehr reagieren sollte) sollte man gdb mit der Prozess-ID starten ('12345' muss durch
-die PID des laufenden weechat-curses Prozesses ersetzt werden):
+die PID des laufenden weechat Prozesses ersetzt werden):
 
 ----------------------------------------
-gdb /usr/bin/weechat-curses 12345
+gdb /usr/bin/weechat 12345
 ----------------------------------------
 
 Sollte WeeChat abgestürzt sein, muss der Befehl `bt full` genutzt werden:
@@ -449,7 +449,7 @@ include::cmdline_options.de.txt[]
 Um WeeChat zu starten muss folgender Befehl ausgeführt werden:
 
 ----------------------------------------
-$ weechat-curses
+$ weechat
 ----------------------------------------
 
 Wird WeeChat zum ersten mal gestartet wird eine Konfigurationsdatei
@@ -1364,7 +1364,7 @@ was die Farbdarstellung in WeeChat betrifft:
 können lediglich 256 Farbpaare durch WeeChat genutzt werden, dies ist eine Einschränkung
 von ncurses.
 
-Mittels `weechat-curses --colors` oder dem internen WeeChat-Befehl `/color` kann man sich
+Mittels `weechat --colors` oder dem internen WeeChat-Befehl `/color` kann man sich
 die Einschränkungen für die jeweilige Umgebungsvariable anzeigen lassen.
 
 Folgende Werte sind für die 'TERM'-Umgebungsvariable zu empfehlen, sofern man 256 Farben
@@ -1840,7 +1840,7 @@ Beispiel: Anmelden beim Server 'irc.freenode.net' mit dem Nick 'nono' und betret
 der Channels '#weechat' und '#toto' (Standardport (6667) wird genutzt):
 
 ----------------------------------------
-$ weechat-curses irc://nono@irc.freenode.net/#weechat,#toto
+$ weechat irc://nono@irc.freenode.net/#weechat,#toto
 ----------------------------------------
 
 [[irc_options]]

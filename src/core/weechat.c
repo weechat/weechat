@@ -143,7 +143,7 @@ weechat_display_usage (char *exec_name)
                             "  -s, --no-script          don't load any script at startup\n"
                             "      --upgrade            upgrade WeeChat using session files (see /help upgrade in WeeChat)\n"
                             "  -v, --version            display WeeChat version\n"
-                            "  plugin:option            option for plugin (see man weechat-curses)\n"));
+                            "  plugin:option            option for plugin (see man weechat)\n"));
     string_iconv_fprintf(stdout, "\n");
 }
 

@@ -30,7 +30,7 @@
 #
 # It is *STRONGLY RECOMMENDED* to connect this server with a client in a test
 # environment:
-# - for WeeChat, another home with: `weechat-curses --dir /tmp/weechat`
+# - for WeeChat, another home with: `weechat --dir /tmp/weechat`
 # - on a test machine, because CPU will be used a lot by client to display
 #   messages from weercd
 # - if possible locally (ie server and client on same machine), to speed up data
@@ -40,7 +40,7 @@
 #   1. open a terminal and run server:
 #        python weercd.py
 #   2. open another terminal and run WeeChat with home in /tmp:
-#        weechat-curses --dir /tmp/weechat
+#        weechat --dir /tmp/weechat
 #   3. optional: install script(s) in /tmp/weechat/<language>/autoload/
 #   4. add server and connect to it:
 #        /server add weercd 127.0.0.1/7777

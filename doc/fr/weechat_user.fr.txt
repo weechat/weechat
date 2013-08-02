@@ -375,17 +375,17 @@ Lorsque WeeChat se plante, votre système génère un fichier 'core' ou
 Ce fichier est créé dans le répertoire où vous avez lancé WeeChat (ce n'est
 *pas* le répertoire où WeeChat est installé !).
 
-Par exemple si 'weechat-curses' est installé dans '/usr/bin/' et que le fichier
+Par exemple si 'weechat' est installé dans '/usr/bin/' et que le fichier
 'core' est dans '/home/xxx/', alors lancez gdb avec cette commande :
 
 ----------------------------------------
-gdb /usr/bin/weechat-curses /home/xxx/core
+gdb /usr/bin/weechat /home/xxx/core
 ----------------------------------------
 
 [NOTE]
 Si vous avez installé le paquet binaire 'weechat-dbg' (par exemple sous Debian),
 alors vous pouvez utiliser ce chemin pour l'exécutable WeeChat :
-'/usr/lib/debug/usr/bin/weechat-curses'
+'/usr/lib/debug/usr/bin/weechat'
 
 Puis sous gdb, utilisez la commande `bt full` pour afficher la trace.
 Vous verrez quelque chose comme ceci :
@@ -427,10 +427,10 @@ Debug de WeeChat qui tourne
 
 Pour déboguer WeeChat qui tourne (par exemple si WeeChat semble bloqué), vous
 pouvez utiliser gdb avec l'identifiant du processus (remplacez '12345' par le
-PID du processus weechat-curses) :
+PID du processus weechat) :
 
 ----------------------------------------
-gdb /usr/bin/weechat-curses 12345
+gdb /usr/bin/weechat 12345
 ----------------------------------------
 
 Ensuite comme pour un crash, utilisez la commande `bt full` :
@@ -454,7 +454,7 @@ include::cmdline_options.fr.txt[]
 Pour lancer WeeChat, tapez cette commande :
 
 ----------------------------------------
-$ weechat-curses
+$ weechat
 ----------------------------------------
 
 Lorsque vous lancez WeeChat pour la première fois, un fichier de configuration
@@ -1380,7 +1380,7 @@ limites suivantes pour les couleurs dans WeeChat :
 ^(1)^ Même si votre terminal supporte plus de 256 paires, seules 256 paires
 peuvent être utilisées dans WeeChat, en raison d'une limitation de ncurses.
 
-Vous pouvez lancer `weechat-curses --colors` ou utiliser la commande `/color`
+Vous pouvez lancer `weechat --colors` ou utiliser la commande `/color`
 dans WeeChat pour afficher les limites de votre environnement.
 
 Quelques valeurs recommandées pour 'TERM' si vous voulez 256 couleurs :
@@ -1863,7 +1863,7 @@ Exemple pour rejoindre '#weechat' et '#toto' sur le serveur 'irc.freenode.net',
 port par défaut (6667), avec le pseudo 'nono' :
 
 ----------------------------------------
-$ weechat-curses irc://nono@irc.freenode.net/#weechat,#toto
+$ weechat irc://nono@irc.freenode.net/#weechat,#toto
 ----------------------------------------
 
 [[irc_options]]

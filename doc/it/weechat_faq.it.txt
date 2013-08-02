@@ -83,8 +83,8 @@ Non riesco a vedere alcuni caratteri con gli accenti, cosa posso fare?
 È un problema noto, per favore leggere con attenzione e verificare *OGNI*
 soluzione tra quelle elencate:
 
-* verificare che weechat-curses abbia un link con libncursesw (attenzione:
-  necessario su molte distribuzioni ma non tutte): `ldd /path/di/weechat-curses`
+* verificare che weechat abbia un link con libncursesw (attenzione:
+  necessario su molte distribuzioni ma non tutte): `ldd /path/di/weechat`
 * verificare che il plugin "charset" sia caricato con il comando `plugin` (se non
   lo è, probabilmente è necessario il pacchetto "weechat-plugins")
 * verificare l'output del comando `/charset` (sul buffer core). Dovrebbero essere
@@ -774,7 +774,7 @@ Quando viene eseguito WeeChat all'interno di gdb, potrebbe verificarsi
 questo errore:
 
 ----------------------------------------
-$ gdb /path/to/weechat-curses
+$ gdb /path/to/weechat
 (gdb) run
 [Thread debugging using libthread_db enabled]
 Cannot find new threads: generic error
@@ -784,7 +784,7 @@ Per correggerlo, è possibile eseguire gdb con questo comando (sostituire il
 path di libpthread e WeeChat con i path del proprio sistema):
 
 ----------------------------------------
-$ LD_PRELOAD=/lib/libpthread.so.0 gdb /path/to/weechat-curses
+$ LD_PRELOAD=/lib/libpthread.so.0 gdb /path/to/weechat
 (gdb) run
 ----------------------------------------
 

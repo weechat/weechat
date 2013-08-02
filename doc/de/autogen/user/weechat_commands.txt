@@ -680,7 +680,7 @@ With option "-quit", the process is slightly different:
   3. unload all plugins
   4. save WeeChat configuration
   5. quit WeeChat
-Then later you can restore session with command: weechat-curses --upgrade
+Then later you can restore session with command: weechat --upgrade
 IMPORTANT: you must restore the session with exactly same configuration (files *.conf).
 It is possible to restore WeeChat session on another machine if you copy the content of directory "~/.weechat".
 ........................................

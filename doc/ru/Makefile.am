@@ -55,7 +55,7 @@ install-doc:
 uninstall-hook: $(man_uninstall) $(doc_uninstall)
 
 uninstall-man:
-	$(RM) $(DESTDIR)$(mandir)/ru/man1/weechat-curses.1
+	$(RM) $(DESTDIR)$(mandir)/ru/man1/weechat.1
 	-rmdir $(DESTDIR)$(mandir)/ru/man1
 
 uninstall-doc:
