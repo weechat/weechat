@@ -574,9 +574,8 @@ secure_get_passphrase_from_user (const char *error)
             if (strcmp (passphrase, " ") == 0)
             {
                 gui_chat_printf (NULL,
-                                 _("To recover your secured data, you can issue "
-                                   "commands: \"/secure passphrase xxx\" and "
-                                   "\"/reload sec\""));
+                                 _("To recover your secured data, you can "
+                                   "use /secure decrypt (see /help secure)"));
             }
             else
                 secure_passphrase = strdup (passphrase);

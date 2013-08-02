@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-08-02 23:01+0200\n"
+"POT-Creation-Date: 2013-08-02 23:16+0200\n"
 "PO-Revision-Date: 2013-08-02 08:50+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -3648,8 +3648,7 @@ msgid ""
 msgstr ""
 
 msgid ""
-"To recover your secured data, you can issue commands: \"/secure passphrase "
-"xxx\" and \"/reload sec\""
+"To recover your secured data, you can use /secure decrypt (see /help secure)"
 msgstr ""
 
 #, fuzzy, c-format
