@@ -95,7 +95,7 @@ WeeChat "core" reside in following directories:
 |    wee-command.c              | WeeChat core commands
 |    wee-completion.c           | Completion on command line
 |    wee-config-file.c          | Configuration file management
-|    wee-config.c               | Configuration options for WeeChat core (options weechat.*)
+|    wee-config.c               | Configuration options for WeeChat core (file weechat.conf)
 |    wee-debug.c                | Some debug functions
 |    wee-eval.c                 | Evaluate expressions with references to internal vars
 |    wee-hashtable.c            | Hashtables
@@ -107,6 +107,7 @@ WeeChat "core" reside in following directories:
 |    wee-log.c                  | Write to WeeChat log file (weechat.log)
 |    wee-network.c              | Network functions (connection to servers, proxy)
 |    wee-proxy.c                | Proxy management
+|    wee-secure.c               | Secured data options (file sec.conf)
 |    wee-string.c               | Functions on strings
 |    wee-upgrade-file.c         | Internal upgrade system
 |    wee-upgrade.c              | Upgrade for WeeChat core (buffers, lines, history, ...)
@@ -162,14 +163,14 @@ Plugins
 |    weechat-plugin.h               | Header designed to be distributed with WeeChat plugins, in order to compile them
 |    alias/                         | Alias plugin
 |       alias.c                     | Main alias functions
-|       alias-config.c              | Alias config options
+|       alias-config.c              | Alias config options (file alias.conf)
 |       alias-info.c                | Alias info/infolists/hdata
 |    aspell/                        | Aspell plugin
 |       weechat-aspell.c            | Main aspell functions
 |       weechat-aspell-bar-item.c   | Aspell bar items
 |       weechat-aspell-command.c    | Aspell commands
 |       weechat-aspell-completion.c | Aspell completions
-|       weechat-aspell-config.c     | Aspell config options
+|       weechat-aspell-config.c     | Aspell config options (file aspell.conf)
 |       weechat-aspell-info.c       | Aspell info/infolists/hdata
 |       weechat-aspell-speller.c    | Spellers management
 |    charset/                       | Charset plugin
@@ -188,7 +189,7 @@ Plugins
 |       irc-color.c                 | Color functions
 |       irc-command.c               | IRC commands
 |       irc-completion.c            | IRC completions
-|       irc-config.c                | IRC config options
+|       irc-config.c                | IRC config options (file irc.conf)
 |       irc-ctcp.c                  | IRC CTCP
 |       irc-debug.c                 | IRC debug functions
 |       irc-ignore.c                | IRC Ignore
@@ -208,7 +209,7 @@ Plugins
 |    logger/                        | Logger plugin
 |       logger.c                    | Main logger functions
 |       logger-buffer.c             | Logger buffer list management
-|       logger-config.c             | Logger config options
+|       logger-config.c             | Logger config options (file logger.conf)
 |       logger-info.c               | Logger info/infolists/hdata
 |       logger-tail.c               | Return last lines of a file
 |    lua/                           | Lua plugin
@@ -226,7 +227,7 @@ Plugins
 |       relay-client.c              | Clients of relay
 |       relay-command.c             | Relay commands
 |       relay-completion.c          | Relay completions
-|       relay-config.c              | Relay config options
+|       relay-config.c              | Relay config options (file relay.conf)
 |       relay-info.c                | Relay info/infolists/hdata
 |       relay-network.c             | Network functions for relay
 |       relay-raw.c                 | Relay raw buffer
@@ -244,7 +245,7 @@ Plugins
 |       rmodifier.c                 | Main rmodifier functions
 |       rmodifier-command.c         | Rmodifier commands
 |       rmodifier-completion.c      | Rmodifier completions
-|       rmodifier-config.c          | Rmodifier config options
+|       rmodifier-config.c          | Rmodifier config options (file rmodifier.conf)
 |       rmodifier-debug.c           | Rmodifier debug functions
 |       rmodifier-info.c            | Rmodifier info/infolists/hdata
 |    ruby/                          | Ruby plugin
@@ -256,7 +257,7 @@ Plugins
 |       script-buffer.c             | Buffer for scripts manager
 |       script-command.c            | Commands for scripts manager
 |       script-completion.c         | Completions for scripts manager
-|       script-config.c             | Config options for scripts manager
+|       script-config.c             | Config options for scripts manager (file script.conf)
 |       script-info.c               | Script manager info/infolists/hdata
 |       script-repo.c               | Download and read repository file
 |    tcl/                           | Tcl plugin
@@ -268,7 +269,7 @@ Plugins
 |       xfer-chat.c                 | Xfer DCC chat
 |       xfer-command.c              | Xfer commands
 |       xfer-completion.c           | Xfer completions
-|       xfer-config.c               | Xfer config options
+|       xfer-config.c               | Xfer config options (file xfer.conf)
 |       xfer-dcc.c                  | Xfer DCC file
 |       xfer-file.c                 | File functions for xfer
 |       xfer-info.c                 | Xfer info/infolists/hdata

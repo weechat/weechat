@@ -33,6 +33,7 @@
 #include "wee-hashtable.h"
 #include "wee-hdata.h"
 #include "wee-hook.h"
+#include "wee-secure.h"
 #include "wee-string.h"
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-color.h"
@@ -245,25 +246,34 @@ eval_replace_vars_cb (void *data, const char *text)
         return strdup (ptr_value);
 
     /* 2. look for name of option: if found, return this value */
-    config_file_search_with_string (text, NULL, NULL, &ptr_option, NULL);
-    if (ptr_option)
+    if (strncmp (text, "sec.data.", 9) == 0)
     {
-        switch (ptr_option->type)
+        ptr_value = hashtable_get (secure_hashtable_data, text + 9);
+        if (ptr_value)
+            return strdup (ptr_value);
+    }
+    else
+    {
+        config_file_search_with_string (text, NULL, NULL, &ptr_option, NULL);
+        if (ptr_option)
         {
-            case CONFIG_OPTION_TYPE_BOOLEAN:
-                return strdup (CONFIG_BOOLEAN(ptr_option) ? EVAL_STR_TRUE : EVAL_STR_FALSE);
-            case CONFIG_OPTION_TYPE_INTEGER:
-                if (ptr_option->string_values)
-                    return strdup (ptr_option->string_values[CONFIG_INTEGER(ptr_option)]);
-                snprintf (str_value, sizeof (str_value),
-                          "%d", CONFIG_INTEGER(ptr_option));
-                return strdup (str_value);
-            case CONFIG_OPTION_TYPE_STRING:
-                return strdup (CONFIG_STRING(ptr_option));
-            case CONFIG_OPTION_TYPE_COLOR:
-                return strdup (gui_color_get_name (CONFIG_COLOR(ptr_option)));
-            case CONFIG_NUM_OPTION_TYPES:
-                return NULL;
+            switch (ptr_option->type)
+            {
+                case CONFIG_OPTION_TYPE_BOOLEAN:
+                    return strdup (CONFIG_BOOLEAN(ptr_option) ? EVAL_STR_TRUE : EVAL_STR_FALSE);
+                case CONFIG_OPTION_TYPE_INTEGER:
+                    if (ptr_option->string_values)
+                        return strdup (ptr_option->string_values[CONFIG_INTEGER(ptr_option)]);
+                    snprintf (str_value, sizeof (str_value),
+                              "%d", CONFIG_INTEGER(ptr_option));
+                    return strdup (str_value);
+                case CONFIG_OPTION_TYPE_STRING:
+                    return strdup (CONFIG_STRING(ptr_option));
+                case CONFIG_OPTION_TYPE_COLOR:
+                    return strdup (gui_color_get_name (CONFIG_COLOR(ptr_option)));
+                case CONFIG_NUM_OPTION_TYPES:
+                    return NULL;
+            }
         }
     }
 
@@ -345,7 +355,7 @@ eval_replace_vars (const char *expr, struct t_hashtable *pointers,
     ptr[0] = pointers;
     ptr[1] = extra_vars;
 
-    return string_replace_with_callback (expr,
+    return string_replace_with_callback (expr, "${", "}",
                                          &eval_replace_vars_cb,
                                          ptr,
                                          &errors);

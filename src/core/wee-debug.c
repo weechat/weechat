@@ -369,10 +369,8 @@ debug_hdata_map_cb (void *data, struct t_hashtable *hashtable,
     gui_chat_printf (NULL,
                      "  hdata 0x%lx: \"%s\", %d vars, %d lists:",
                      ptr_hdata, (const char *)key,
-                     hashtable_get_integer (ptr_hdata->hash_var,
-                                            "items_count"),
-                     hashtable_get_integer (ptr_hdata->hash_list,
-                                            "items_count"));
+                     ptr_hdata->hash_var->items_count,
+                     ptr_hdata->hash_list->items_count);
 
     /* display lists */
     hashtable_map (ptr_hdata->hash_list,
@@ -412,7 +410,7 @@ debug_hdata ()
 {
     int count;
 
-    count = hashtable_get_integer (weechat_hdata, "items_count");
+    count = weechat_hdata->items_count;
 
     gui_chat_printf (NULL, "");
     gui_chat_printf (NULL, "%d hdata in memory", count);

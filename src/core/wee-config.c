@@ -690,7 +690,7 @@ config_change_network_gnutls_ca_file (void *data,
     (void) data;
     (void) option;
 
-    if (network_init_ok)
+    if (network_init_gnutls_ok)
         network_set_gnutls_ca_file ();
 }
 
@@ -1706,7 +1706,7 @@ config_weechat_filter_read_cb (void *data,
 }
 
 /*
- * Writes a filter option in WeeChat configuration file.
+ * Writes section "filter" in WeeChat configuration file.
  */
 
 int
@@ -1873,12 +1873,14 @@ config_weechat_init_options ()
     config_startup_command_after_plugins = config_file_new_option (
         weechat_config_file, ptr_section,
         "command_after_plugins", "string",
-        N_("command executed when WeeChat starts, after loading plugins"),
+        N_("command executed when WeeChat starts, after loading plugins "
+           "(note: content is evaluated, see /help eval)"),
         NULL, 0, 0, "", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_startup_command_before_plugins = config_file_new_option (
         weechat_config_file, ptr_section,
         "command_before_plugins", "string",
-        N_("command executed when WeeChat starts, before loading plugins"),
+        N_("command executed when WeeChat starts, before loading plugins "
+           "(note: content is evaluated, see /help eval)"),
         NULL, 0, 0, "", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_startup_display_logo = config_file_new_option (
         weechat_config_file, ptr_section,

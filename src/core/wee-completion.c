@@ -39,6 +39,7 @@
 #include "wee-hook.h"
 #include "wee-list.h"
 #include "wee-proxy.h"
+#include "wee-secure.h"
 #include "wee-string.h"
 #include "../gui/gui-completion.h"
 #include "../gui/gui-bar.h"
@@ -1298,6 +1299,46 @@ completion_list_add_layouts_names_cb (void *data,
 }
 
 /*
+ * Adds a secured data to completion list.
+ */
+
+void
+completion_list_map_add_secured_data_cb (void *data,
+                                         struct t_hashtable *hashtable,
+                                         const void *key, const void *value)
+{
+    /* make C compiler happy */
+    (void) hashtable;
+    (void) value;
+
+    gui_completion_list_add ((struct t_gui_completion *)data,
+                             (const char *)key,
+                             0, WEECHAT_LIST_POS_SORT);
+}
+
+/*
+ * Adds secured data to completion list.
+ */
+
+int
+completion_list_add_secured_data_cb (void *data,
+                                     const char *completion_item,
+                                     struct t_gui_buffer *buffer,
+                                     struct t_gui_completion *completion)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+
+    hashtable_map (secure_hashtable_data,
+                   &completion_list_map_add_secured_data_cb,
+                   completion);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Adds hooks for completions done by WeeChat core.
  */
 
@@ -1392,4 +1433,7 @@ completion_init ()
     hook_completion (NULL, "layouts_names",
                      N_("names of layouts"),
                      &completion_list_add_layouts_names_cb, NULL);
+    hook_completion (NULL, "secured_data",
+                     N_("names of secured data (file sec.conf, section data)"),
+                     &completion_list_add_secured_data_cb, NULL);
 }

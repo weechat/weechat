@@ -55,6 +55,8 @@ lib_weechat_core_a_SOURCES = weechat.c \
                              wee-network.h \
                              wee-proxy.c \
                              wee-proxy.h \
+                             wee-secure.c \
+                             wee-secure.h \
                              wee-string.c \
                              wee-string.h \
                              wee-upgrade.c \

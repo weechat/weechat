@@ -1125,6 +1125,7 @@ gui_key_focus_command (const char *key, int context,
                 else
                 {
                     command = string_replace_with_callback (commands[i],
+                                                            "${", "}",
                                                             &gui_key_focus_command_replace_cb,
                                                             hashtable,
                                                             &errors);

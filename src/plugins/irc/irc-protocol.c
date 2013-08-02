@@ -149,8 +149,7 @@ irc_protocol_tags (const char *command, const char *tags, const char *nick)
 IRC_PROTOCOL_CALLBACK(authenticate)
 {
     int sasl_mechanism;
-    const char *sasl_username, *sasl_password;
-    char *answer;
+    char *sasl_username, *sasl_password, *answer;
 
     IRC_PROTOCOL_MIN_ARGS(2);
 
@@ -158,10 +157,12 @@ IRC_PROTOCOL_CALLBACK(authenticate)
     {
         sasl_mechanism = IRC_SERVER_OPTION_INTEGER(server,
                                                    IRC_SERVER_OPTION_SASL_MECHANISM);
-        sasl_username = IRC_SERVER_OPTION_STRING(server,
-                                                 IRC_SERVER_OPTION_SASL_USERNAME);
-        sasl_password = IRC_SERVER_OPTION_STRING(server,
-                                                 IRC_SERVER_OPTION_SASL_PASSWORD);
+        sasl_username = weechat_string_eval_expression (IRC_SERVER_OPTION_STRING(server,
+                                                                                 IRC_SERVER_OPTION_SASL_USERNAME),
+                                                        NULL, NULL);
+        sasl_password = weechat_string_eval_expression (IRC_SERVER_OPTION_STRING(server,
+                                                                                 IRC_SERVER_OPTION_SASL_PASSWORD),
+                                                        NULL, NULL);
         answer = NULL;
         switch (sasl_mechanism)
         {
@@ -198,6 +199,10 @@ IRC_PROTOCOL_CALLBACK(authenticate)
                             irc_sasl_mechanism_string[IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SASL_MECHANISM)]);
             irc_server_sendf (server, 0, NULL, "CAP END");
         }
+        if (sasl_username)
+            free (sasl_username);
+        if (sasl_password)
+            free (sasl_password);
     }
 
     return WEECHAT_RC_OK;
@@ -2076,9 +2081,7 @@ IRC_PROTOCOL_CALLBACK(wallops)
 
 IRC_PROTOCOL_CALLBACK(001)
 {
-    char **commands, **ptr_cmd, *vars_replaced;
-    char *away_msg;
-    const char *ptr_command;
+    char *server_command, **commands, **ptr_command, *vars_replaced, *away_msg;
 
     IRC_PROTOCOL_MIN_ARGS(3);
 
@@ -2117,19 +2120,21 @@ IRC_PROTOCOL_CALLBACK(001)
                               WEECHAT_HOOK_SIGNAL_STRING, server->name);
 
     /* execute command when connected */
-    ptr_command = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_COMMAND);
-    if (ptr_command && ptr_command[0])
+    server_command = weechat_string_eval_expression (IRC_SERVER_OPTION_STRING(server,
+                                                                              IRC_SERVER_OPTION_COMMAND),
+                                                     NULL, NULL);
+    if (server_command && server_command[0])
     {
-        /* splitting command on ';' which can be escaped with '\;' */
-        commands = weechat_string_split_command (ptr_command, ';');
+        /* split command on ';' which can be escaped with '\;' */
+        commands = weechat_string_split_command (server_command, ';');
         if (commands)
         {
-            for (ptr_cmd = commands; *ptr_cmd; ptr_cmd++)
+            for (ptr_command = commands; *ptr_command; ptr_command++)
             {
                 vars_replaced = irc_message_replace_vars (server, NULL,
-                                                          *ptr_cmd);
+                                                          *ptr_command);
                 weechat_command (server->buffer,
-                                 (vars_replaced) ? vars_replaced : *ptr_cmd);
+                                 (vars_replaced) ? vars_replaced : *ptr_command);
                 if (vars_replaced)
                     free (vars_replaced);
             }
@@ -2143,6 +2148,9 @@ IRC_PROTOCOL_CALLBACK(001)
     }
     else
         irc_server_autojoin_channels (server);
+
+    if (server_command)
+        free (server_command);
 
     return WEECHAT_RC_OK;
 }

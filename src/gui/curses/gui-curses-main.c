@@ -64,6 +64,63 @@ int gui_term_lines = 0;
 
 
 /*
+ * Gets a password from user (called on startup, when GUI is not initialized).
+ *
+ * The result is stored in "password" with max "size" bytes (including the
+ * final '\0').
+ */
+
+void
+gui_main_get_password (const char *prompt1, const char *prompt2,
+                       const char *prompt3,
+                       char *password, int size)
+{
+    int i, ch;
+
+    initscr ();
+    cbreak ();
+    noecho ();
+
+    clear();
+
+    mvprintw (0, 0, "%s", prompt1);
+    mvprintw (1, 0, "%s", prompt2);
+    mvprintw (2, 0, "%s", prompt3);
+    mvprintw (3, 0, "=> ");
+    refresh ();
+
+    memset (password, '\0', size);
+    i = 0;
+    while (i < size - 1)
+    {
+        ch = getch ();
+        if (ch == '\n')
+            break;
+        if (ch == 127)
+        {
+            if (i > 0)
+            {
+                i--;
+                password[i] = '\0';
+                mvprintw (3, 3 + i, " ");
+                move (3, 3 + i);
+            }
+        }
+        else
+        {
+            password[i] = ch;
+            mvprintw (3, 3 + i, "*");
+            i++;
+        }
+        refresh ();
+    }
+    password[i] = '\0';
+
+    refresh ();
+    endwin ();
+}
+
+/*
  * Pre-initializes GUI (called before gui_init).
  */
 

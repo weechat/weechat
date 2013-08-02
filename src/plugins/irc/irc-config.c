@@ -1620,7 +1620,8 @@ irc_config_server_new_option (struct t_config_file *config_file,
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
-                N_("username for SASL authentication"),
+                N_("username for SASL authentication "
+                   "(note: content is evaluated, see /help eval)"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
@@ -1632,7 +1633,8 @@ irc_config_server_new_option (struct t_config_file *config_file,
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
-                N_("password for SASL authentication"),
+                N_("password for SASL authentication "
+                   "(note: content is evaluated, see /help eval)"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
@@ -1745,7 +1747,8 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 N_("command(s) to run when connected to server (many commands "
                    "should be separated by \";\", use \"\\;\" for a semicolon, "
                    "special variables $nick, $channel and $server are replaced "
-                   "by their value)"),
+                   "by their value) "
+                   "(note: content is evaluated, see /help eval)"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
@@ -1771,7 +1774,8 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 config_file, section,
                 option_name, "string",
                 N_("comma separated list of channels to join when connected to server "
-                   "(example: \"#chan1,#chan2,#chan3 key1,key2\")"),
+                   "(example: \"#chan1,#chan2,#chan3 key1,key2\") "
+                   "(note: content is evaluated, see /help eval)"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
