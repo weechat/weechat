@@ -50,4 +50,4 @@ EXTRA_DIST = CMakeLists.txt
 # This link is created for compatibility with old versions on /upgrade.
 # It may be removed in future.
 install-exec-hook:
-	(cd $(DESTDIR)$(bindir) && rm -f weechat-curses && $(LN_S) weechat weechat-curses)
+	(cd $(DESTDIR)$(bindir) && rm -f weechat-curses$(EXEEXT) && $(LN_S) weechat weechat-curses$(EXEEXT))
