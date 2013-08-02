@@ -78,7 +78,8 @@ locale_list = ('en_US', 'fr_FR', 'it_IT', 'de_DE', 'ja_JP')
 # if plugin is listed without "c", that means plugin has only one command
 # /name (where "name" is name of plugin)
 # Note: we consider core is a plugin called "weechat"
-plugin_list = { 'weechat'  : 'co',
+plugin_list = { 'sec'      : 'o',
+                'weechat'  : 'co',
                 'alias'    : '',
                 'aspell'   : 'o',
                 'charset'  : 'co',

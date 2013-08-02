@@ -942,12 +942,13 @@ secure_init_options ()
         secure_config_file, ptr_section,
         "passphrase_file", "string",
         N_("path to a file containing the passphrase to encrypt/decrypt secured "
-           "data (used only when reading file sec.conf); only first line of "
-           "file is used; this file is used only if the environment variable \""
-           SECURE_ENV_PASSPHRASE "\" is not set (the environment variable has "
-           "higher priority); security note: it is recommended to keep this "
-           "file readable only by you and store it outside WeeChat home (for "
-           "example in your home); example: \"~/.weechat-passphrase\""),
+           "data; this option is used only when reading file sec.conf; only "
+           "first line of file is used; this file is used only if the "
+           "environment variable \"WEECHAT_PASSPHRASE\" is not set (the "
+           "environment variable has higher priority); security note: it is "
+           "recommended to keep this file readable only by you and store it "
+           "outside WeeChat home (for example in your home); example: "
+           "\"~/.weechat-passphrase\""),
         NULL, 0, 0, "", NULL, 0,
         &secure_check_crypt_passphrase_file, NULL, NULL, NULL, NULL, NULL);
     secure_config_crypt_salt = config_file_new_option (

@@ -409,7 +409,7 @@
 ** valeurs: on, off (valeur par défaut: `off`)
 
 * [[option_irc.server_default.autojoin]] *irc.server_default.autojoin*
-** description: `liste des canaux (séparés par des virgules) à rejoindre lorsque connecté au serveur (exemple: "#chan1,#chan2,#chan3 key1,key2")`
+** description: `liste des canaux (séparés par des virgules) à rejoindre lorsque connecté au serveur (exemple: "#chan1,#chan2,#chan3 key1,key2") (note: le contenu est évalué, voir /help eval)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
@@ -449,7 +449,7 @@
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
 * [[option_irc.server_default.command]] *irc.server_default.command*
-** description: `commande(s) à exécuter lorsque connecté au serveur (plusieurs commandes doivent être séparées par ";", utilisez "\;" pour un point-virgule, les variables spéciales $nick, $channel et $server sont remplacées par leur valeur)`
+** description: `commande(s) à exécuter lorsque connecté au serveur (plusieurs commandes doivent être séparées par ";", utilisez "\;" pour un point-virgule, les variables spéciales $nick, $channel et $server sont remplacées par leur valeur) (note: le contenu est évalué, voir /help eval)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
@@ -514,7 +514,7 @@
 ** valeurs: plain, dh-blowfish, dh-aes, external (valeur par défaut: `plain`)
 
 * [[option_irc.server_default.sasl_password]] *irc.server_default.sasl_password*
-** description: `mot de passe pour l'authentification SASL`
+** description: `mot de passe pour l'authentification SASL (note: le contenu est évalué, voir /help eval)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
@@ -524,7 +524,7 @@
 ** valeurs: 1 .. 3600 (valeur par défaut: `15`)
 
 * [[option_irc.server_default.sasl_username]] *irc.server_default.sasl_username*
-** description: `nom d'utilisateur pour l'authentification SASL`
+** description: `nom d'utilisateur pour l'authentification SASL (note: le contenu est évalué, voir /help eval)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 

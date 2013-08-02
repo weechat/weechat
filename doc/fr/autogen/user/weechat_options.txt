@@ -844,12 +844,12 @@
 ** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_weechat.startup.command_after_plugins]] *weechat.startup.command_after_plugins*
-** description: `commande exécutée quand WeeChat démarre, après le chargement des extensions`
+** description: `commande exécutée quand WeeChat démarre, après le chargement des extensions (note: le contenu est évalué, voir /help eval)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
 * [[option_weechat.startup.command_before_plugins]] *weechat.startup.command_before_plugins*
-** description: `commande exécutée quand WeeChat démarre, avant le chargement des extensions`
+** description: `commande exécutée quand WeeChat démarre, avant le chargement des extensions (note: le contenu est évalué, voir /help eval)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 

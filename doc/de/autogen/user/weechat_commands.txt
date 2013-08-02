@@ -610,6 +610,45 @@ file: Konfigurationsdatei die gesichert werden soll (ohne Dateinamenserweiterung
 Wird keine Datei angegeben dann werden alle Konfigurationen (WeeChat und Erweiterungen) gesichert.
 ........................................
 
+[[command_weechat_secure]]
+[command]*`secure`* manage secured data (passwords or private data encrypted in file sec.conf)::
+........................................
+/secure  passphrase <passphrase>|-delete
+         decrypt <passphrase>|-discard
+         set <name> <value>
+         del <name>
+
+passphrase: change the passphrase (without passphrase, data is stored as plain text in file sec.conf)
+   -delete: delete passphrase
+   decrypt: decrypt data still encrypted (it happens only if passphrase was not given on startup)
+  -discard: discard all data still encrypted data
+       set: add or change secured data
+       del: delete secured data
+
+Without argument, this command displays secured data in a new buffer.
+
+When a passphrase is used (data encrypted), it is asked by WeeChat on startup.
+It is possible to set environment variable "WEECHAT_PASSPHRASE" to prevent the prompt (this same variable is used by WeeChat on /upgrade).
+
+Secured data with format ${sec.data.xxx} can be used in:
+  - command line argument "--run-command"
+  - irc server options: autojoin, command, password, sasl_{username|password}
+  - options weechat.startup.command_{before|after}_plugins
+  - command /eval.
+
+Examples:
+  set a passphrase:
+    /secure passphrase this is my passphrase
+  encrypt freenode SASL password:
+    /secure set freenode mypassword
+    /set irc.server.freenode.sasl_password "${sec.data.freenode}"
+  encrypt oftc password for nickserv:
+    /secure set oftc mypassword
+    /set irc.server.oftc.command "/msg nickserv identify ${sec.data.oftc}"
+  alias to ghost the nick "mynick":
+    /alias ghost /eval /msg -server freenode nickserv ghost mynick ${sec.data.freenode}
+........................................
+
 [[command_weechat_set]]
 [command]*`set`* Konfigurationsparameter setzen::
 ........................................

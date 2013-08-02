@@ -120,6 +120,8 @@
 
 | weechat | proxies_options | プロキシのオプション
 
+| weechat | secured_data | names of secured data (file sec.conf, section data)
+
 | weechat | weechat_commands | weechat コマンド
 
 | weechat | windows_numbers | ウィンドウの数

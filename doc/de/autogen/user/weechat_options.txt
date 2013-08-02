@@ -844,12 +844,12 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.startup.command_after_plugins]] *weechat.startup.command_after_plugins*
-** Beschreibung: `Nach dem Start von WeeChat wird dieser Befehl aufgerufen. Dies geschieht, nachdem die Erweiterungen geladen worden sind (mehrere Befehle sind durch ";" zu trennen)`
+** Beschreibung: `command executed when WeeChat starts, after loading plugins (note: content is evaluated, see /help eval)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_weechat.startup.command_before_plugins]] *weechat.startup.command_before_plugins*
-** Beschreibung: `Nach dem Start von WeeChat wird dieser Befehl aufgerufen. Dies geschieht, bevor die Erweiterungen geladen werden (mehrere Befehle sind durch ";" zu trennen)`
+** Beschreibung: `command executed when WeeChat starts, before loading plugins (note: content is evaluated, see /help eval)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 

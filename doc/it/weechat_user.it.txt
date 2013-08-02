@@ -1508,6 +1508,13 @@ Esempio di grassetto con il colore di primo piano del terminale:
 /set weechat.color.status_time *99999
 ----------------------------------------
 
+// TRANSLATION MISSING
+[[sec_options]]
+Secured data options (sec.conf)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+include::autogen/user/sec_options.txt[]
+
 [[weechat_options]]
 Opzioni di WeeChat (weechat.conf)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

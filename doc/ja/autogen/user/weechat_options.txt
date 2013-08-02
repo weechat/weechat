@@ -844,12 +844,12 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_weechat.startup.command_after_plugins]] *weechat.startup.command_after_plugins*
-** 説明: `WeeChat が実行され、プラグインのロード後に実行されるコマンド`
+** 説明: `command executed when WeeChat starts, after loading plugins (note: content is evaluated, see /help eval)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
 * [[option_weechat.startup.command_before_plugins]] *weechat.startup.command_before_plugins*
-** 説明: `WeeChat が実行され、プラグインのロード前に実行されるコマンド`
+** 説明: `command executed when WeeChat starts, before loading plugins (note: content is evaluated, see /help eval)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 

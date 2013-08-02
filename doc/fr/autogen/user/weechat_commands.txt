@@ -610,6 +610,45 @@ fichier: fichier de configuration à sauvegarder (sans l'extension ".conf")
 Sans paramètre, tous les fichiers (WeeChat et extensions) sont sauvegardés.
 ........................................
 
+[[command_weechat_secure]]
+[command]*`secure`* gestion des données sécurisées (mots de passe ou données privées chiffrés dans le fichier sec.conf)::
+........................................
+/secure  passphrase <phrase de chiffrement>|-delete
+         decrypt <phrase de chiffrement>|-discard
+         set <nom> <valeur>
+         del <nom>
+
+passphrase: modifier la phrase de chiffrement (sans phrase de chiffrement, les données sont stockées en texte brut dans le fichier sec.conf)
+   -delete: supprimer la phrase de chiffrement
+   decrypt: déchiffrer les données toujours chiffrées
+  -discard: jeter toutes les données encore chiffrées
+       set: ajouter ou modifier une donnée sécurisée
+       del: supprimer une donnée sécurisée
+
+Sans paramètre, cette commande affiche les données sécurisées dans un nouveau tampon.
+
+Lorsqu'une phrase de chiffrement est utilisée (données chiffrées), elle est demandée au démarrage de WeeChat.
+Il est possible de définir la variable d'environnement WEECHAT_PASSPHRASE pour éviter la demande (cette même variable est utilisée par WeeChat sur le /upgrade).
+
+Les données sécurisées avec le format ${sec.data.xxx} peuvent être utilisées dans :
+  - le paramètre de ligne de commande "--run-command"
+  - les options de serveur irc: autojoin, command, password, sasl_{username|password}
+  - les options weechat.startup.command_{before|after}_plugins
+  - la commande /eval.
+
+Exemples :
+  définir une phrase de chiffrement :
+    /secure passphrase ceci est ma phrase de chiffrement
+  chiffrer le mot de passe freenode SASL :
+    /secure set freenode motdepasse
+    /set irc.server.freenode.sasl_password "${sec.data.freenode}"
+  chiffrer le mot de passe oftc pour nickserv :
+    /secure set oftc motdepasse
+    /set irc.server.oftc.command "/msg nickserv identify ${sec.data.oftc}"
+  alias pour ghost du pseudo "pseudo" :
+    /alias ghost /eval /msg -server freenode nickserv ghost pseudo ${sec.data.freenode}
+........................................
+
 [[command_weechat_set]]
 [command]*`set`* modifier des options de configuration::
 ........................................

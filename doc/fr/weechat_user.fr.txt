@@ -1511,6 +1511,12 @@ Exemple de gras avec la couleur de texte du terminal :
 /set weechat.color.status_time *99999
 ----------------------------------------
 
+[[sec_options]]
+Options des données sécurisées (sec.conf)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+include::autogen/user/sec_options.txt[]
+
 [[weechat_options]]
 Options WeeChat (weechat.conf)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

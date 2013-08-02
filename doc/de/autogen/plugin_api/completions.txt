@@ -120,6 +120,8 @@
 
 | weechat | proxies_options | Optionen für Proxys
 
+| weechat | secured_data | names of secured data (file sec.conf, section data)
+
 | weechat | weechat_commands | WeeChat Befehle
 
 | weechat | windows_numbers | Nummern der Fenster

@@ -1471,6 +1471,12 @@ Example of bold with terminal foreground color:
 /set weechat.color.status_time *99999
 ----------------------------------------
 
+[[sec_options]]
+Secured data options (sec.conf)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+include::autogen/user/sec_options.txt[]
+
 [[weechat_options]]
 WeeChat options (weechat.conf)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

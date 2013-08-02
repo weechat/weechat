@@ -1,0 +1,20 @@
+* [[option_sec.crypt.cipher]] *sec.crypt.cipher*
+** descrizione: `cipher used to crypt data (the number after algorithm is the size of the key in bits)`
+** tipo: intero
+** valori: aes128, aes192, aes256 (valore predefinito: `aes256`)
+
+* [[option_sec.crypt.hash_algo]] *sec.crypt.hash_algo*
+** descrizione: `hash algorithm used to check the decrypted data`
+** tipo: intero
+** valori: sha224, sha256, sha384, sha512 (valore predefinito: `sha256`)
+
+* [[option_sec.crypt.passphrase_file]] *sec.crypt.passphrase_file*
+** descrizione: `path to a file containing the passphrase to encrypt/decrypt secured data; this option is used only when reading file sec.conf; only first line of file is used; this file is used only if the environment variable "WEECHAT_PASSPHRASE" is not set (the environment variable has higher priority); security note: it is recommended to keep this file readable only by you and store it outside WeeChat home (for example in your home); example: "~/.weechat-passphrase"`
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: `""`)
+
+* [[option_sec.crypt.salt]] *sec.crypt.salt*
+** descrizione: `use salt when generating key used in encryption (recommended for maximum security); when enabled, the content of crypted data in file sec.conf will be different on each write of the file; if you put the file sec.conf in a version control system, then you can turn off this option to have always same content in file`
+** tipo: bool
+** valori: on, off (valore predefinito: `on`)
+

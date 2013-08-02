@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-08-01 17:18+0200\n"
+"POT-Creation-Date: 2013-08-02 20:07+0200\n"
 "PO-Revision-Date: 2013-08-02 08:50+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -690,6 +690,51 @@ msgstr "%s にオプションを保存しました"
 #, c-format
 msgid "%sError: failed to save options to %s"
 msgstr "%sエラー: %s へのオプションの保存に失敗しました"
+
+msgid "There is no encrypted data"
+msgstr ""
+
+msgid "Encrypted data deleted"
+msgstr ""
+
+msgid "Encrypted data has been successfully decrypted"
+msgstr ""
+
+#, c-format
+msgid "%sFailed to decrypt data (wrong passphrase?)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sYou must decrypt data still encrypted before doing any operation on "
+"secured data or passphrase"
+msgstr ""
+
+#, fuzzy
+msgid "Passphrase deleted"
+msgstr "バー \"%s\" を削除しました"
+
+msgid "Passphrase is not set"
+msgstr ""
+
+msgid "Passphrase changed"
+msgstr ""
+
+#, fuzzy
+msgid "Passphrase added"
+msgstr "追加日時"
+
+#, c-format
+msgid "Secured data \"%s\" set"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Secured data \"%s\" deleted"
+msgstr "バー \"%s\" を削除しました"
+
+#, fuzzy, c-format
+msgid "%sSecured data \"%s\" not found"
+msgstr "%s: スクリプト \"%s\" が見つかりません"
 
 msgid "default: "
 msgstr "デフォルト: "
@@ -2030,6 +2075,54 @@ msgstr ""
 "\n"
 "引数無しでは、全てのファイル (WeeChat とプラグイン) が保存されます。"
 
+msgid ""
+"manage secured data (passwords or private data encrypted in file sec.conf)"
+msgstr ""
+
+msgid ""
+"passphrase <passphrase>|-delete || decrypt <passphrase>|-discard || set "
+"<name> <value> || del <name>"
+msgstr ""
+
+msgid ""
+"passphrase: change the passphrase (without passphrase, data is stored as "
+"plain text in file sec.conf)\n"
+"   -delete: delete passphrase\n"
+"   decrypt: decrypt data still encrypted (it happens only if passphrase was "
+"not given on startup)\n"
+"  -discard: discard all data still encrypted data\n"
+"       set: add or change secured data\n"
+"       del: delete secured data\n"
+"\n"
+"Without argument, this command displays secured data in a new buffer.\n"
+"\n"
+"When a passphrase is used (data encrypted), it is asked by WeeChat on "
+"startup.\n"
+"It is possible to set environment variable \"WEECHAT_PASSPHRASE\" to prevent "
+"the prompt (this same variable is used by WeeChat on /upgrade).\n"
+"\n"
+"Secured data with format ${sec.data.xxx} can be used in:\n"
+"  - command line argument \"--run-command\"\n"
+"  - irc server options: autojoin, command, password, sasl_{username|"
+"password}\n"
+"  - options weechat.startup.command_{before|after}_plugins\n"
+"  - command /eval.\n"
+"\n"
+"Examples:\n"
+"  set a passphrase:\n"
+"    /secure passphrase this is my passphrase\n"
+"  encrypt freenode SASL password:\n"
+"    /secure set freenode mypassword\n"
+"    /set irc.server.freenode.sasl_password \"${sec.data.freenode}\"\n"
+"  encrypt oftc password for nickserv:\n"
+"    /secure set oftc mypassword\n"
+"    /set irc.server.oftc.command \"/msg nickserv identify ${sec.data."
+"oftc}\"\n"
+"  alias to ghost the nick \"mynick\":\n"
+"    /alias ghost /eval /msg -server freenode nickserv ghost mynick ${sec."
+"data.freenode}"
+msgstr ""
+
 msgid "set config options"
 msgstr "オプションの設定"
 
@@ -2156,15 +2249,21 @@ msgid ""
 "content of directory \"~/.weechat\"."
 msgstr ""
 "path_to_binary: WeeChat バイナリへのパス (デフォルトは現在のバイナリ)\n"
-"         -quit: *すべての*接続を閉じ、セッションを保存して WeeChat を終了。遅延復帰 (詳しくは後述) が可能になります。\n"
+"         -quit: *すべての*接続を閉じ、セッションを保存して WeeChat を終了。遅"
+"延復帰 (詳しくは後述) が可能になります。\n"
 "\n"
-"このコマンドは起動中の WeeChat セッションのアップグレードと再読み込みを行います。このコマンドを実行する前に、新しい WeeChat バイナリをコンパイルするか、パッケージマネージャでインストールしなければいけません。\n"
+"このコマンドは起動中の WeeChat セッションのアップグレードと再読み込みを行いま"
+"す。このコマンドを実行する前に、新しい WeeChat バイナリをコンパイルするか、"
+"パッケージマネージャでインストールしなければいけません。\n"
 "\n"
-"注意: SSL 接続はアップグレード中に破棄されます、これは今のところ GnuTLS では SSL セッションのリロードができないからです。アップグレードの後に自動的に再接続されます。\n"
+"注意: SSL 接続はアップグレード中に破棄されます、これは今のところ GnuTLS では "
+"SSL セッションのリロードができないからです。アップグレードの後に自動的に再接"
+"続されます。\n"
 "\n"
 "アップグレードは 4 つの手順を踏みます:\n"
 "  1. コアとプラグイン (バッファ、履歴、...) のセッションをファイルに保存\n"
-"  2. 全てのプラグインをアンロード (設定ファイル (*.conf) はディスクに書き込まれます)\n"
+"  2. 全てのプラグインをアンロード (設定ファイル (*.conf) はディスクに書き込ま"
+"れます)\n"
 "  3. WeeChat 設定を保存 (weechat.conf)\n"
 "  4. 新しい WeeChat バイナリを実行してセッションをリロード。<\n"
 "\n"
@@ -2175,8 +2274,10 @@ msgstr ""
 "  4. WeeChat 設定を保存\n"
 "  5. WeeChat を終了\n"
 "この後、セッションを回復させるには weechat --upgrade を使ってください。\n"
-"重要: 完全に同一の設定で (*.conf ファイルで) セッションを回復させてください。\n"
-"\"~/.weechat\" ディレクトリの内容をコピーすれば異なるマシンで WeeChat のセッションを回復することも可能です。"
+"重要: 完全に同一の設定で (*.conf ファイルで) セッションを回復させてくださ"
+"い。\n"
+"\"~/.weechat\" ディレクトリの内容をコピーすれば異なるマシンで WeeChat のセッ"
+"ションを回復することも可能です。"
 
 msgid "show WeeChat uptime"
 msgstr "WeeChat 連続稼働時間の表示"
@@ -2466,6 +2567,9 @@ msgstr "カーソルを自由に動かせるエリア (\"chat\" またはバー�
 msgid "names of layouts"
 msgstr "レイアウトの名前"
 
+msgid "names of secured data (file sec.conf, section data)"
+msgstr ""
+
 msgid ""
 "Warning: you should now issue /save to write \"save_config_on_exit\" option "
 "in configuration file"
@@ -2507,10 +2611,16 @@ msgstr "%s警告: セクション \"%s\" の不明なオプション: %s (値: \
 msgid "Notify level for buffer"
 msgstr "バッファの通知レベル"
 
-msgid "command executed when WeeChat starts, after loading plugins"
+#, fuzzy
+msgid ""
+"command executed when WeeChat starts, after loading plugins (note: content "
+"is evaluated, see /help eval)"
 msgstr "WeeChat が実行され、プラグインのロード後に実行されるコマンド"
 
-msgid "command executed when WeeChat starts, before loading plugins"
+#, fuzzy
+msgid ""
+"command executed when WeeChat starts, before loading plugins (note: content "
+"is evaluated, see /help eval)"
 msgstr "WeeChat が実行され、プラグインのロード前に実行されるコマンド"
 
 msgid "display WeeChat logo at startup"
@@ -3527,6 +3637,98 @@ msgstr "プロキシサーバのユーザ名"
 
 msgid "password for proxy server"
 msgstr "プロキシサーバのパスワード"
+
+msgid "Please enter your passphrase to decrypt the data secured by WeeChat:"
+msgstr ""
+
+msgid ""
+"(enter just one space to skip the passphrase, but this will DISABLE all "
+"secured data!)"
+msgstr ""
+
+msgid ""
+"To recover your secured data, you can issue commands: \"/secure passphrase "
+"xxx\" and \"/reload sec\""
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sWarning: unable to read passphrase from file \"%s\""
+msgstr "%s%s: ファイル \"%s\" を解析できません"
+
+#, c-format
+msgid ""
+"%sError: not possible to reload file sec.conf because there is still "
+"encrypted data (use /secure decrypt, see /help secure)"
+msgstr ""
+
+#, c-format
+msgid "%sPassphrase is not set, unable to decrypt data \"%s\""
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sWrong passphrase, unable to decrypt data \"%s\""
+msgstr "%sエラー: バー \"%s\" をスクロールできません"
+
+#, c-format
+msgid "*** Wrong passphrase (decrypt error: %s) ***"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sError encrypting data \"%s\" (%d)"
+msgstr "%s%s: 別名 \"%s\" => \"%s\" 作成中にエラー"
+
+msgid ""
+"cipher used to crypt data (the number after algorithm is the size of the key "
+"in bits)"
+msgstr ""
+
+msgid "hash algorithm used to check the decrypted data"
+msgstr ""
+
+msgid ""
+"path to a file containing the passphrase to encrypt/decrypt secured data; "
+"this option is used only when reading file sec.conf; only first line of file "
+"is used; this file is used only if the environment variable "
+"\"WEECHAT_PASSPHRASE\" is not set (the environment variable has higher "
+"priority); security note: it is recommended to keep this file readable only "
+"by you and store it outside WeeChat home (for example in your home); "
+"example: \"~/.weechat-passphrase\""
+msgstr ""
+
+msgid ""
+"use salt when generating key used in encryption (recommended for maximum "
+"security); when enabled, the content of crypted data in file sec.conf will "
+"be different on each write of the file; if you put the file sec.conf in a "
+"version control system, then you can turn off this option to have always "
+"same content in file"
+msgstr ""
+
+msgid "WeeChat secured data (sec.conf) | Keys: [alt-v] Toggle values"
+msgstr ""
+
+msgid "on"
+msgstr "オン"
+
+msgid "off"
+msgstr "オフ"
+
+msgid "Passphrase"
+msgstr ""
+
+msgid "Passphrase is set"
+msgstr ""
+
+msgid "Passphrase is NOT set"
+msgstr ""
+
+msgid "Secured data:"
+msgstr ""
+
+msgid "Secured data STILL ENCRYPTED: (use /secure decrypt, see /help secure)"
+msgstr ""
+
+msgid "No secured data set"
+msgstr ""
 
 msgid "bytes"
 msgstr "バイト"
@@ -4551,12 +4753,6 @@ msgstr "未接続"
 
 msgid " (temporary)"
 msgstr " (一時的)"
-
-msgid "on"
-msgstr "オン"
-
-msgid "off"
-msgstr "オフ"
 
 msgid "minute"
 msgid_plural "minutes"
@@ -5964,11 +6160,13 @@ msgstr ""
 "暗号化パスワード、\"dh-aes\" は AES 暗号化パスワード、\"external\" はクライア"
 "ント側の SSL 証明書を利用した認証"
 
-msgid "username for SASL authentication"
-msgstr "SASL 認証用ユーザ名"
+msgid ""
+"username for SASL authentication (note: content is evaluated, see /help eval)"
+msgstr ""
 
-msgid "password for SASL authentication"
-msgstr "SASL 認証用パスワード"
+msgid ""
+"password for SASL authentication (note: content is evaluated, see /help eval)"
+msgstr ""
 
 msgid "timeout (in seconds) before giving up SASL authentication"
 msgstr "SASL 認証を諦める前のタイムアウト (秒単位)"
@@ -5998,10 +6196,12 @@ msgstr ""
 "サーバで使用するカスタムホスト名/IP アドレス (任意、空の場合はローカルホスト"
 "名が使われる)"
 
+#, fuzzy
 msgid ""
 "command(s) to run when connected to server (many commands should be "
 "separated by \";\", use \"\\;\" for a semicolon, special variables $nick, "
-"$channel and $server are replaced by their value)"
+"$channel and $server are replaced by their value) (note: content is "
+"evaluated, see /help eval)"
 msgstr ""
 "サーバに接続した際に実行するコマンド (\";\" で分けて 複数のコマンドを列挙、セ"
 "ミコロンは \"\\;\" とする、特殊変数 $nick、$channel、$server はそれぞれの値に"
@@ -6012,9 +6212,11 @@ msgid ""
 "authentication)"
 msgstr "コマンド実行後の遅延時間 (秒単位) (例: 認証のために少し待つ)"
 
+#, fuzzy
 msgid ""
 "comma separated list of channels to join when connected to server (example: "
-"\"#chan1,#chan2,#chan3 key1,key2\")"
+"\"#chan1,#chan2,#chan3 key1,key2\") (note: content is evaluated, see /help "
+"eval)"
 msgstr ""
 "サーバに接続した際に参加するチャンネルのコンマ区切りリスト(例: \"#chan1,"
 "#chan2,#chan3 key1,key2\")"
@@ -9833,3 +10035,9 @@ msgstr "タイプ"
 
 msgid "Constants"
 msgstr "定数"
+
+#~ msgid "username for SASL authentication"
+#~ msgstr "SASL 認証用ユーザ名"
+
+#~ msgid "password for SASL authentication"
+#~ msgstr "SASL 認証用パスワード"
