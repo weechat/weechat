@@ -11899,7 +11899,7 @@ C example:
 ----------------------------------------
 struct t_gui_bar *my_bar = weechat_bar_new ("mybar",
                                             "off",
-                                            100,
+                                            "100",
                                             "window",
                                             "",
                                             "top",
@@ -11924,7 +11924,7 @@ bar = weechat.bar_new(name, hidden, priority, type, condition, position,
     color_fg, color_delim, color_bg, separator, items)
 
 # example
-bar = weechat.bar_new("mybar", "off", 100, "window", "", "top", "horizontal", "vertical",
+bar = weechat.bar_new("mybar", "off", "100", "window", "", "top", "horizontal", "vertical",
     "0", "5", "default", "cyan", "blue", "off", "time,buffer_number+buffer_name")
 ----------------------------------------
 
