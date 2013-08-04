@@ -1724,7 +1724,7 @@ Arguments:
 * 'extra_vars': extra variables that will be expanded (can be NULL)
 * 'options': a hashtable with some options (keys and values must be string)
   (can be NULL):
-** 'type': default behaviour is just to replace values in expression, other
+** 'type': default behavior is just to replace values in expression, other
    types can be selected:
 *** 'condition': the expression is evaluated as a condition: operators and
     parentheses are used, result is a boolean ("0" or "1")

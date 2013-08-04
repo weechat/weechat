@@ -135,7 +135,7 @@ FlashCo+ │ test       # 8, off
 
 After `/upgrade`, if you set new options to non-empty strings, and if old
 options were set to non-empty strings too, you will see double prefix/suffix
-on old messages, this is normal behaviour (lines displayed before `/upgrade`
+on old messages, this is normal behavior (lines displayed before `/upgrade`
 have prefix/suffix saved in prefix, but new lines don't have them any more).
 
 New options in logger plugin (logger.conf):
