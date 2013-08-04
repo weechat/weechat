@@ -1963,7 +1963,7 @@ config_weechat_init_options ()
            "for date/time specifiers) (note: content is evaluated, so you can "
            "use colors with format \"${color:xxx}\", see /help eval); for "
            "example time using grayscale (requires support of 256 colors): "
-           "\"${color:251}%H${color:243}%M${color:238}%S\""),
+           "\"${color:252}%H${color:245}%M${color:240}%S\""),
         NULL, 0, 0, "%H:%M:%S", NULL, 0, NULL, NULL, &config_change_buffer_time_format, NULL, NULL, NULL);
     config_look_color_basic_force_bold = config_file_new_option (
         weechat_config_file, ptr_section,
