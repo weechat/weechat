@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-08-04 09:08+0200\n"
+"POT-Creation-Date: 2013-08-04 11:51+0200\n"
 "PO-Revision-Date: 2013-08-02 08:50+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -2693,10 +2693,14 @@ msgstr ""
 "のメッセージ (デフォルト)、message=メッセージとハイライト、highlight=ハイライ"
 "トのみ、none=ホットリストに表示されない"
 
+#. TRANSLATORS: string "${color:xxx}" must NOT be translated
+#, fuzzy
 msgid ""
 "time format for each line displayed in buffers (see man strftime for date/"
-"time specifiers), colors are allowed with format \"${color}\", for example "
-"french time: \"${lightblue}%H${white}%M${lightred}%S\""
+"time specifiers) (note: content is evaluated, so you can use colors with "
+"format \"${color:xxx}\", see /help eval); for example time using grayscale "
+"(requires support of 256 colors): \"${color:251}%H${color:243}%M"
+"${color:238}%S\""
 msgstr ""
 "バッファに表示される行に付く時間フォーマット (日付/時間の指定子は strftime "
 "の man を参照)、色は \"${color}\" のフォーマットで指定、例えばフランス時間で"
@@ -3008,28 +3012,47 @@ msgid ""
 "max number of lines for paste without asking user (-1 = disable this feature)"
 msgstr "ユーザへの確認無しにペーストする行数の最大値 (-1 = この機能を無効化)"
 
-msgid "prefix for error messages, colors are allowed with format \"${color}\""
+#. TRANSLATORS: string "${color:xxx}" must NOT be translated
+#, fuzzy
+msgid ""
+"prefix for error messages (note: content is evaluated, so you can use colors "
+"with format \"${color:xxx}\", see /help eval)"
 msgstr ""
 "エラーメッセージのプレフィックス、フォーマット \"${color}\" を使えば色を使う"
 "ことも可能"
 
+#. TRANSLATORS: string "${color:xxx}" must NOT be translated
+#, fuzzy
 msgid ""
-"prefix for network messages, colors are allowed with format \"${color}\""
+"prefix for network messages (note: content is evaluated, so you can use "
+"colors with format \"${color:xxx}\", see /help eval)"
 msgstr ""
 "ネットワークメッセージのプレフィックス、フォーマット \"${color}\" を使えば色"
 "を使うことも可能"
 
-msgid "prefix for action messages, colors are allowed with format \"${color}\""
+#. TRANSLATORS: string "${color:xxx}" must NOT be translated
+#, fuzzy
+msgid ""
+"prefix for action messages (note: content is evaluated, so you can use "
+"colors with format \"${color:xxx}\", see /help eval)"
 msgstr ""
 "アクションメッセージのプレフィックス、フォーマット \"${color}\" を使えば色を"
 "使うことも可能"
 
-msgid "prefix for join messages, colors are allowed with format \"${color}\""
+#. TRANSLATORS: string "${color:xxx}" must NOT be translated
+#, fuzzy
+msgid ""
+"prefix for join messages (note: content is evaluated, so you can use colors "
+"with format \"${color:xxx}\", see /help eval)"
 msgstr ""
 "参加メッセージのプレフィックス、フォーマット \"${color}\" を使えば色を使うこ"
 "とも可能"
 
-msgid "prefix for quit messages, colors are allowed with format \"${color}\""
+#. TRANSLATORS: string "${color:xxx}" must NOT be translated
+#, fuzzy
+msgid ""
+"prefix for quit messages (note: content is evaluated, so you can use colors "
+"with format \"${color:xxx}\", see /help eval)"
 msgstr ""
 "終了メッセージのプレフィックス、フォーマット \"${color}\" を使えば色を使うこ"
 "とも可能"

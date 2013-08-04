@@ -399,7 +399,7 @@
 ** 値: none, highlight, message, all (デフォルト値: `all`)
 
 * [[option_weechat.look.buffer_time_format]] *weechat.look.buffer_time_format*
-** 説明: `バッファに表示される行に付く時間フォーマット (日付/時間の指定子は strftime の man を参照)、色は "${color}" のフォーマットで指定、例えばフランス時間では: "${lightblue}%H${white}%M${lightred}%S"`
+** 説明: `time format for each line displayed in buffers (see man strftime for date/time specifiers) (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval); for example time using grayscale (requires support of 256 colors): "${color:251}%H${color:243}%M${color:238}%S"`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"%H:%M:%S"`)
 
@@ -644,7 +644,7 @@
 ** 値: -1 .. 2147483647 (デフォルト値: `1`)
 
 * [[option_weechat.look.prefix_action]] *weechat.look.prefix_action*
-** 説明: `アクションメッセージのプレフィックス、フォーマット "${color}" を使えば色を使うことも可能`
+** 説明: `prefix for action messages (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `" *"`)
 
@@ -694,22 +694,22 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_weechat.look.prefix_error]] *weechat.look.prefix_error*
-** 説明: `エラーメッセージのプレフィックス、フォーマット "${color}" を使えば色を使うことも可能`
+** 説明: `prefix for error messages (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"=!="`)
 
 * [[option_weechat.look.prefix_join]] *weechat.look.prefix_join*
-** 説明: `参加メッセージのプレフィックス、フォーマット "${color}" を使えば色を使うことも可能`
+** 説明: `prefix for join messages (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"-->"`)
 
 * [[option_weechat.look.prefix_network]] *weechat.look.prefix_network*
-** 説明: `ネットワークメッセージのプレフィックス、フォーマット "${color}" を使えば色を使うことも可能`
+** 説明: `prefix for network messages (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"--"`)
 
 * [[option_weechat.look.prefix_quit]] *weechat.look.prefix_quit*
-** 説明: `終了メッセージのプレフィックス、フォーマット "${color}" を使えば色を使うことも可能`
+** 説明: `prefix for quit messages (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"<--"`)
 

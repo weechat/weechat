@@ -399,7 +399,7 @@
 ** Werte: none, highlight, message, all (Standardwert: `all`)
 
 * [[option_weechat.look.buffer_time_format]] *weechat.look.buffer_time_format*
-** Beschreibung: `Format für die Zeitanzeige welche in jeder Zeile eines Buffers dargestellt wird (siehe man strftime für Platzhalter für das Datum und die Uhrzeit). Durch das Format "${Farbe}" ist es möglich eine Farbauswahl zu treffen, zum Beispiel eine französische Uhr: "${lightblue}%H${white}%M${lightred}%S"`
+** Beschreibung: `time format for each line displayed in buffers (see man strftime for date/time specifiers) (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval); for example time using grayscale (requires support of 256 colors): "${color:251}%H${color:243}%M${color:238}%S"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%H:%M:%S"`)
 
@@ -644,7 +644,7 @@
 ** Werte: -1 .. 2147483647 (Standardwert: `1`)
 
 * [[option_weechat.look.prefix_action]] *weechat.look.prefix_action*
-** Beschreibung: `Präfix, dass bei einer Action-Nachricht angezeigt wird. Durch das Format "${Farbe}" ist es möglich eine Farbauswahl zu treffen`
+** Beschreibung: `prefix for action messages (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `" *"`)
 
@@ -694,22 +694,22 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.look.prefix_error]] *weechat.look.prefix_error*
-** Beschreibung: `Präfix, dass bei einer Fehler-Nachricht angezeigt wird. Durch das Format "${Farbe}" ist es möglich eine Farbauswahl zu treffen`
+** Beschreibung: `prefix for error messages (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"=!="`)
 
 * [[option_weechat.look.prefix_join]] *weechat.look.prefix_join*
-** Beschreibung: `Präfix, dass bei einer Join-Nachricht angezeigt wird. Durch das Format "${Farbe}" ist es möglich eine Farbauswahl zu treffen`
+** Beschreibung: `prefix for join messages (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"-->"`)
 
 * [[option_weechat.look.prefix_network]] *weechat.look.prefix_network*
-** Beschreibung: `Präfix, dass bei einer Netzwerk-Nachricht angezeigt wird. Durch das Format "${Farbe}" ist es möglich eine Farbauswahl zu treffen`
+** Beschreibung: `prefix for network messages (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"--"`)
 
 * [[option_weechat.look.prefix_quit]] *weechat.look.prefix_quit*
-** Beschreibung: `Präfix, dass bei einer Quit-Nachricht angezeigt wird. Durch das Format "${Farbe}" ist es möglich eine Farbauswahl zu treffen`
+** Beschreibung: `prefix for quit messages (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"<--"`)
 

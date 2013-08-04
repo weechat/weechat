@@ -1,7 +1,7 @@
 WeeChat Release Notes
 =====================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.2-dev, 2013-08-02
+v0.4.2-dev, 2013-08-04
 
 
 This document lists important changes for each version, that require manual
@@ -15,6 +15,31 @@ http://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 Version 0.4.2 (under dev!)
 --------------------------
+
+=== Color codes in options ===
+
+The format for color codes in some options has changed. The options are
+evaluated with the function "string_eval_expression", which uses the format
+`${color:xxx}`.
+
+Following options are affected:
+
+* 'weechat.look.buffer_time_format'
+* 'weechat.look.prefix_action'
+* 'weechat.look.prefix_error'
+* 'weechat.look.prefix_join'
+* 'weechat.look.prefix_network'
+* 'weechat.look.prefix_quit'
+
+The options using old format `${xxx}` must be changed with new format
+`${color:xxx}` (where xxx is a color name or number, with optional color
+attributes).
+
+Example:
+
+----------------------------------------
+/set weechat.look.buffer_time_format "${color:251}%H${color:243}%M${color:238}%S"
+----------------------------------------
 
 === Binary and man page ===
 

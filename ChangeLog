@@ -14,6 +14,9 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 Version 0.4.2 (under dev!)
 --------------------------
 
+* core: change color format for options weechat.look.buffer_time_format and
+  weechat.look.prefix_{action|error|join|network|quit} from `${xxx}` to
+  `${color:xxx}`
 * core: add secured data (encryption of passwords or private data): add new
   command /secure and new file sec.conf (task #7395)
 * core: rename binary and man page from "weechat-curses" to "weechat"

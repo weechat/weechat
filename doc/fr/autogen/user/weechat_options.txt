@@ -399,7 +399,7 @@
 ** valeurs: none, highlight, message, all (valeur par défaut: `all`)
 
 * [[option_weechat.look.buffer_time_format]] *weechat.look.buffer_time_format*
-** description: `format de date/heure pour chaque ligne affichée dans les tampons (voir man strftime pour le format de date/heure), les couleurs sont autorisées avec le format "${couleur}", par exemple l'heure française: "${lightblue}%H${white}%M${lightred}%S"`
+** description: `format de date/heure pour chaque ligne affichée dans les tampons (voir man strftime pour le format de date/heure) (note: le contenu est évalué, donc vous pouvez utiliser des couleurs avec le format "${color:xxx}", voir /help eval); par exemple l'heure avec des niveaux de gris (requiert le support de 256 couleurs): "${color:251}%H${color:243}%M${color:238}%S"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"%H:%M:%S"`)
 
@@ -644,7 +644,7 @@
 ** valeurs: -1 .. 2147483647 (valeur par défaut: `1`)
 
 * [[option_weechat.look.prefix_action]] *weechat.look.prefix_action*
-** description: `préfixe pour les messages d'action, les couleurs sont autorisées avec le format "${couleur}"`
+** description: `préfixe pour les messages d'action (note: le contenu est évalué, donc vous pouvez utiliser des couleurs avec le format "${color:xxx}", voir /help eval)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `" *"`)
 
@@ -694,22 +694,22 @@
 ** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_weechat.look.prefix_error]] *weechat.look.prefix_error*
-** description: `préfixe pour les messages d'erreur, les couleurs sont autorisées avec le format "${couleur}"`
+** description: `préfixe pour les messages d'erreur (note: le contenu est évalué, donc vous pouvez utiliser des couleurs avec le format "${color:xxx}", voir /help eval)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"=!="`)
 
 * [[option_weechat.look.prefix_join]] *weechat.look.prefix_join*
-** description: `préfixe pour les messages d'arrivée, les couleurs sont autorisées avec le format "${couleur}"`
+** description: `préfixe pour les messages d'arrivée (note: le contenu est évalué, donc vous pouvez utiliser des couleurs avec le format "${color:xxx}", voir /help eval)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"-->"`)
 
 * [[option_weechat.look.prefix_network]] *weechat.look.prefix_network*
-** description: `préfixe pour les messages réseau, les couleurs sont autorisées avec le format "${couleur}"`
+** description: `préfixe pour les messages réseau (note: le contenu est évalué, donc vous pouvez utiliser des couleurs avec le format "${color:xxx}", voir /help eval)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"--"`)
 
 * [[option_weechat.look.prefix_quit]] *weechat.look.prefix_quit*
-** description: `préfixe pour les messages de départ, les couleurs sont autorisées avec le format "${couleur}"`
+** description: `préfixe pour les messages de départ (note: le contenu est évalué, donc vous pouvez utiliser des couleurs avec le format "${color:xxx}", voir /help eval)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"<--"`)
 

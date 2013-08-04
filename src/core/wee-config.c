@@ -1958,10 +1958,12 @@ config_weechat_init_options ()
     config_look_buffer_time_format = config_file_new_option (
         weechat_config_file, ptr_section,
         "buffer_time_format", "string",
+        /* TRANSLATORS: string "${color:xxx}" must NOT be translated */
         N_("time format for each line displayed in buffers (see man strftime "
-           "for date/time specifiers), colors are allowed with format "
-           "\"${color}\", for example french time: "
-           "\"${lightblue}%H${white}%M${lightred}%S\""),
+           "for date/time specifiers) (note: content is evaluated, so you can "
+           "use colors with format \"${color:xxx}\", see /help eval); for "
+           "example time using grayscale (requires support of 256 colors): "
+           "\"${color:251}%H${color:243}%M${color:238}%S\""),
         NULL, 0, 0, "%H:%M:%S", NULL, 0, NULL, NULL, &config_change_buffer_time_format, NULL, NULL, NULL);
     config_look_color_basic_force_bold = config_file_new_option (
         weechat_config_file, ptr_section,
@@ -2272,36 +2274,41 @@ config_weechat_init_options ()
     config_look_prefix[GUI_CHAT_PREFIX_ERROR] = config_file_new_option (
         weechat_config_file, ptr_section,
         "prefix_error", "string",
-        N_("prefix for error messages, colors are allowed with format "
-           "\"${color}\""),
+        /* TRANSLATORS: string "${color:xxx}" must NOT be translated */
+        N_("prefix for error messages (note: content is evaluated, so you can "
+           "use colors with format \"${color:xxx}\", see /help eval)"),
         NULL, 0, 0, GUI_CHAT_PREFIX_ERROR_DEFAULT,
         NULL, 0, NULL, NULL, &config_change_prefix, NULL, NULL, NULL);
     config_look_prefix[GUI_CHAT_PREFIX_NETWORK] = config_file_new_option (
         weechat_config_file, ptr_section,
         "prefix_network", "string",
-        N_("prefix for network messages, colors are allowed with format "
-           "\"${color}\""),
+        /* TRANSLATORS: string "${color:xxx}" must NOT be translated */
+        N_("prefix for network messages (note: content is evaluated, so you can "
+           "use colors with format \"${color:xxx}\", see /help eval)"),
         NULL, 0, 0, GUI_CHAT_PREFIX_NETWORK_DEFAULT,
         NULL, 0, NULL, NULL, &config_change_prefix, NULL, NULL, NULL);
     config_look_prefix[GUI_CHAT_PREFIX_ACTION] = config_file_new_option (
         weechat_config_file, ptr_section,
         "prefix_action", "string",
-        N_("prefix for action messages, colors are allowed with format "
-           "\"${color}\""),
+        /* TRANSLATORS: string "${color:xxx}" must NOT be translated */
+        N_("prefix for action messages (note: content is evaluated, so you can "
+           "use colors with format \"${color:xxx}\", see /help eval)"),
         NULL, 0, 0, GUI_CHAT_PREFIX_ACTION_DEFAULT,
         NULL, 0, NULL, NULL, &config_change_prefix, NULL, NULL, NULL);
     config_look_prefix[GUI_CHAT_PREFIX_JOIN] = config_file_new_option (
         weechat_config_file, ptr_section,
         "prefix_join", "string",
-        N_("prefix for join messages, colors are allowed with format "
-           "\"${color}\""),
+        /* TRANSLATORS: string "${color:xxx}" must NOT be translated */
+        N_("prefix for join messages (note: content is evaluated, so you can "
+           "use colors with format \"${color:xxx}\", see /help eval)"),
         NULL, 0, 0, GUI_CHAT_PREFIX_JOIN_DEFAULT,
         NULL, 0, NULL, NULL, &config_change_prefix, NULL, NULL, NULL);
     config_look_prefix[GUI_CHAT_PREFIX_QUIT] = config_file_new_option (
         weechat_config_file, ptr_section,
         "prefix_quit", "string",
-        N_("prefix for quit messages, colors are allowed with format "
-           "\"${color}\""),
+        /* TRANSLATORS: string "${color:xxx}" must NOT be translated */
+        N_("prefix for quit messages (note: content is evaluated, so you can "
+           "use colors with format \"${color:xxx}\", see /help eval)"),
         NULL, 0, 0, GUI_CHAT_PREFIX_QUIT_DEFAULT,
         NULL, 0, NULL, NULL, &config_change_prefix, NULL, NULL, NULL);
     config_look_prefix_align = config_file_new_option (

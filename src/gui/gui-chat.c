@@ -32,6 +32,7 @@
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
+#include "../core/wee-eval.h"
 #include "../core/wee-hashtable.h"
 #include "../core/wee-hook.h"
 #include "../core/wee-string.h"
@@ -119,7 +120,7 @@ gui_chat_prefix_build ()
                  ptr_prefix);
 
         if (pos_color)
-            gui_chat_prefix[i] = gui_color_string_replace_colors (prefix);
+            gui_chat_prefix[i] = eval_expression (prefix, NULL, NULL, NULL);
         else
             gui_chat_prefix[i] = strdup (prefix);
     }
@@ -373,7 +374,7 @@ gui_chat_get_time_string (time_t date)
 
     if (strstr (text_time, "${"))
     {
-        text_with_color = gui_color_string_replace_colors (text_time);
+        text_with_color = eval_expression (text_time, NULL, NULL, NULL);
         if (text_with_color)
         {
             if (strcmp (text_time, text_with_color) != 0)

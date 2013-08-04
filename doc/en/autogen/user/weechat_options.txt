@@ -399,7 +399,7 @@
 ** values: none, highlight, message, all (default value: `all`)
 
 * [[option_weechat.look.buffer_time_format]] *weechat.look.buffer_time_format*
-** description: `time format for each line displayed in buffers (see man strftime for date/time specifiers), colors are allowed with format "${color}", for example french time: "${lightblue}%H${white}%M${lightred}%S"`
+** description: `time format for each line displayed in buffers (see man strftime for date/time specifiers) (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval); for example time using grayscale (requires support of 256 colors): "${color:251}%H${color:243}%M${color:238}%S"`
 ** type: string
 ** values: any string (default value: `"%H:%M:%S"`)
 
@@ -644,7 +644,7 @@
 ** values: -1 .. 2147483647 (default value: `1`)
 
 * [[option_weechat.look.prefix_action]] *weechat.look.prefix_action*
-** description: `prefix for action messages, colors are allowed with format "${color}"`
+** description: `prefix for action messages (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)`
 ** type: string
 ** values: any string (default value: `" *"`)
 
@@ -694,22 +694,22 @@
 ** values: on, off (default value: `on`)
 
 * [[option_weechat.look.prefix_error]] *weechat.look.prefix_error*
-** description: `prefix for error messages, colors are allowed with format "${color}"`
+** description: `prefix for error messages (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)`
 ** type: string
 ** values: any string (default value: `"=!="`)
 
 * [[option_weechat.look.prefix_join]] *weechat.look.prefix_join*
-** description: `prefix for join messages, colors are allowed with format "${color}"`
+** description: `prefix for join messages (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)`
 ** type: string
 ** values: any string (default value: `"-->"`)
 
 * [[option_weechat.look.prefix_network]] *weechat.look.prefix_network*
-** description: `prefix for network messages, colors are allowed with format "${color}"`
+** description: `prefix for network messages (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)`
 ** type: string
 ** values: any string (default value: `"--"`)
 
 * [[option_weechat.look.prefix_quit]] *weechat.look.prefix_quit*
-** description: `prefix for quit messages, colors are allowed with format "${color}"`
+** description: `prefix for quit messages (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)`
 ** type: string
 ** values: any string (default value: `"<--"`)
 

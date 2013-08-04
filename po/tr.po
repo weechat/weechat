@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-08-04 09:08+0200\n"
+"POT-Creation-Date: 2013-08-04 11:51+0200\n"
 "PO-Revision-Date: 2013-07-31 18:42+0200\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1974,10 +1974,13 @@ msgid ""
 "none=never display in hotlist"
 msgstr ""
 
+#. TRANSLATORS: string "${color:xxx}" must NOT be translated
 msgid ""
 "time format for each line displayed in buffers (see man strftime for date/"
-"time specifiers), colors are allowed with format \"${color}\", for example "
-"french time: \"${lightblue}%H${white}%M${lightred}%S\""
+"time specifiers) (note: content is evaluated, so you can use colors with "
+"format \"${color:xxx}\", see /help eval); for example time using grayscale "
+"(requires support of 256 colors): \"${color:251}%H${color:243}%M"
+"${color:238}%S\""
 msgstr ""
 
 msgid ""
@@ -2203,20 +2206,34 @@ msgid ""
 "max number of lines for paste without asking user (-1 = disable this feature)"
 msgstr ""
 
-msgid "prefix for error messages, colors are allowed with format \"${color}\""
-msgstr ""
-
+#. TRANSLATORS: string "${color:xxx}" must NOT be translated
 msgid ""
-"prefix for network messages, colors are allowed with format \"${color}\""
+"prefix for error messages (note: content is evaluated, so you can use colors "
+"with format \"${color:xxx}\", see /help eval)"
 msgstr ""
 
-msgid "prefix for action messages, colors are allowed with format \"${color}\""
+#. TRANSLATORS: string "${color:xxx}" must NOT be translated
+msgid ""
+"prefix for network messages (note: content is evaluated, so you can use "
+"colors with format \"${color:xxx}\", see /help eval)"
 msgstr ""
 
-msgid "prefix for join messages, colors are allowed with format \"${color}\""
+#. TRANSLATORS: string "${color:xxx}" must NOT be translated
+msgid ""
+"prefix for action messages (note: content is evaluated, so you can use "
+"colors with format \"${color:xxx}\", see /help eval)"
 msgstr ""
 
-msgid "prefix for quit messages, colors are allowed with format \"${color}\""
+#. TRANSLATORS: string "${color:xxx}" must NOT be translated
+msgid ""
+"prefix for join messages (note: content is evaluated, so you can use colors "
+"with format \"${color:xxx}\", see /help eval)"
+msgstr ""
+
+#. TRANSLATORS: string "${color:xxx}" must NOT be translated
+msgid ""
+"prefix for quit messages (note: content is evaluated, so you can use colors "
+"with format \"${color:xxx}\", see /help eval)"
 msgstr ""
 
 msgid "prefix alignment (none, left, right (default))"
