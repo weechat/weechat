@@ -45,6 +45,8 @@ char *logical_ops[EVAL_NUM_LOGICAL_OPS] = { "||", "&&" };
 char *comparisons[EVAL_NUM_COMPARISONS] = { "==", "!=", "<=", "<", ">=", ">",
                                             "=~", "!~" };
 
+struct t_hashtable *eval_hashtable_pointers = NULL;
+
 
 /*
  * Checks if a value is true: a value is true if string is non-NULL, non-empty
@@ -242,9 +244,12 @@ eval_replace_vars_cb (void *data, const char *text)
     extra_vars = (struct t_hashtable *)(((void **)data)[1]);
 
     /* 1. look for var in hashtable "extra_vars" */
-    ptr_value = hashtable_get (extra_vars, text);
-    if (ptr_value)
-        return strdup (ptr_value);
+    if (extra_vars)
+    {
+        ptr_value = hashtable_get (extra_vars, text);
+        if (ptr_value)
+            return strdup (ptr_value);
+    }
 
     /* 2. look for a color */
     if (strncmp (text, "color:", 6) == 0)
@@ -723,7 +728,7 @@ char *
 eval_expression (const char *expr, struct t_hashtable *pointers,
                  struct t_hashtable *extra_vars, struct t_hashtable *options)
 {
-    int condition, pointers_created, extra_vars_created, rc;
+    int condition, rc;
     char *value;
     const char *prefix, *suffix, *default_prefix = "${", *default_suffix = "}";
     const char *ptr_value;
@@ -732,9 +737,6 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
     if (!expr)
         return NULL;
 
-    pointers_created = 0;
-    extra_vars_created = 0;
-
     condition = 0;
     prefix = default_prefix;
     suffix = default_suffix;
@@ -742,14 +744,19 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
     /* create hashtable pointers if it's NULL */
     if (!pointers)
     {
-        pointers = hashtable_new (32,
-                                  WEECHAT_HASHTABLE_STRING,
-                                  WEECHAT_HASHTABLE_POINTER,
-                                  NULL,
-                                  NULL);
-        if (!pointers)
-            return NULL;
-        pointers_created = 1;
+        if (eval_hashtable_pointers)
+            hashtable_remove_all (eval_hashtable_pointers);
+        else
+        {
+            eval_hashtable_pointers = hashtable_new (32,
+                                                     WEECHAT_HASHTABLE_STRING,
+                                                     WEECHAT_HASHTABLE_POINTER,
+                                                     NULL,
+                                                     NULL);
+            if (!eval_hashtable_pointers)
+                return NULL;
+        }
+        pointers = eval_hashtable_pointers;
     }
 
     /*
@@ -766,19 +773,6 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
             if (window)
                 hashtable_set (pointers, "buffer", window->buffer);
         }
-    }
-
-    /* create hashtable extra_vars if it's NULL */
-    if (!extra_vars)
-    {
-        extra_vars = hashtable_new (32,
-                                    WEECHAT_HASHTABLE_STRING,
-                                    WEECHAT_HASHTABLE_STRING,
-                                    NULL,
-                                    NULL);
-        if (!extra_vars)
-            return NULL;
-        extra_vars_created = 1;
     }
 
     /* read options */
@@ -817,10 +811,19 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
         value = eval_replace_vars (expr, pointers, extra_vars, prefix, suffix);
     }
 
-    if (pointers_created)
-        hashtable_free (pointers);
-    if (extra_vars_created)
-        hashtable_free (extra_vars);
-
     return value;
+}
+
+/*
+ * Frees all allocated data.
+ */
+
+void
+eval_end ()
+{
+    if (eval_hashtable_pointers)
+    {
+        hashtable_free (eval_hashtable_pointers);
+        eval_hashtable_pointers = NULL;
+    }
 }

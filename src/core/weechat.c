@@ -56,6 +56,7 @@
 #include "wee-completion.h"
 #include "wee-config.h"
 #include "wee-debug.h"
+#include "wee-eval.h"
 #include "wee-hdata.h"
 #include "wee-hook.h"
 #include "wee-log.h"
@@ -486,6 +487,7 @@ main (int argc, char *argv[])
     gui_key_end ();                     /* remove all keys                  */
     unhook_all ();                      /* remove all hooks                 */
     hdata_end ();                       /* end hdata                        */
+    eval_end ();                        /* end eval                         */
     weechat_shutdown (EXIT_SUCCESS, 0); /* quit WeeChat (oh no, why?)       */
 
     return EXIT_SUCCESS;                /* make C compiler happy            */

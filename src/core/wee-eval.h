@@ -52,5 +52,6 @@ extern char *eval_expression (const char *expr,
                               struct t_hashtable *pointers,
                               struct t_hashtable *extra_vars,
                               struct t_hashtable *options);
+extern void eval_end ();
 
 #endif /* __WEECHAT_EVAL_H */
