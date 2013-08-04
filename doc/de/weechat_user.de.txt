@@ -175,9 +175,6 @@ Liste von häufig verwendeten Optionen:
 | ENABLE_CHARSET | `ON`, `OFF` | ON |
   kompiliert <<charset_plugin,Charset Erweiterung>>.
 
-| ENABLE_DEMO | `ON`, `OFF` | OFF |
-  kompiliert Demo-Erweiterung.
-
 // TRANSLATION MISSING
 | ENABLE_MAN | `ON`, `OFF` | OFF |
   Compile man page.

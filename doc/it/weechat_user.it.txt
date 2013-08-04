@@ -184,9 +184,6 @@ List of commonly used options:
 | ENABLE_CHARSET | `ON`, `OFF` | ON |
   Compile <<charset_plugin,Charset plugin>>.
 
-| ENABLE_DEMO | `ON`, `OFF` | OFF |
-  Compile Demo plugin.
-
 | ENABLE_MAN | `ON`, `OFF` | OFF |
   Compile man page.
 

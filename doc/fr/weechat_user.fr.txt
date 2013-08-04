@@ -174,9 +174,6 @@ Liste des options couramment utilisées :
 | ENABLE_CHARSET | `ON`, `OFF` | ON |
   Compiler <<charset_plugin,l'extension Charset>>.
 
-| ENABLE_DEMO | `ON`, `OFF` | OFF |
-  Compiler l'extension Demo.
-
 | ENABLE_MAN | `ON`, `OFF` | OFF |
   Compiler la page man.
 
