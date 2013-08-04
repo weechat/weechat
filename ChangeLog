@@ -52,7 +52,7 @@ Version 0.4.2 (under dev!)
   "layout_window"
 * core: fix line alignment when option weechat.look.buffer_time_format is set
   to empty string
-* api: add support of colors with format "${color:xxx}" in function
+* api: add support of colors with format `${color:xxx}` in function
   string_eval_expression and command /eval
 * api: add argument "options" in function string_eval_expression, add option
   "-c" for command /eval (to evaluate a condition)
