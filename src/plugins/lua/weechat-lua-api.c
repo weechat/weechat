@@ -420,29 +420,36 @@ static int
 weechat_lua_api_string_eval_expression (lua_State *L)
 {
     const char *expr;
-    struct t_hashtable *pointers, *extra_vars;
+    struct t_hashtable *pointers, *extra_vars, *options;
     char *result;
 
     API_FUNC(1, "string_eval_expression", API_RETURN_EMPTY);
-    if (lua_gettop (L) < 3)
+    if (lua_gettop (L) < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    expr = lua_tostring (L, -3);
-    pointers = weechat_lua_tohashtable (L, -2,
+    expr = lua_tostring (L, -4);
+    pointers = weechat_lua_tohashtable (L, -3,
                                         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
                                         WEECHAT_HASHTABLE_STRING,
                                         WEECHAT_HASHTABLE_POINTER);
-    extra_vars = weechat_lua_tohashtable (L, -1,
+    extra_vars = weechat_lua_tohashtable (L, -2,
                                           WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
                                           WEECHAT_HASHTABLE_STRING,
                                           WEECHAT_HASHTABLE_STRING);
+    options = weechat_lua_tohashtable (L, -1,
+                                       WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       WEECHAT_HASHTABLE_STRING);
 
-    result = weechat_string_eval_expression (expr, pointers, extra_vars);
+    result = weechat_string_eval_expression (expr, pointers, extra_vars,
+                                             options);
 
     if (pointers)
         weechat_hashtable_free (pointers);
     if (extra_vars)
         weechat_hashtable_free (extra_vars);
+    if (options)
+        weechat_hashtable_free (options);
 
     API_RETURN_STRING_FREE(result);
 }

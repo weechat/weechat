@@ -381,7 +381,7 @@ gui_bar_check_conditions_for_window (struct t_gui_bar *bar,
     int rc;
     char str_modifier[256], str_window[128], *str_displayed, *result;
     const char *conditions;
-    struct t_hashtable *pointers, *extra_vars;
+    struct t_hashtable *pointers, *extra_vars, *options;
 
     /* check bar condition(s) */
     conditions = CONFIG_STRING(bar->options[GUI_BAR_OPTION_CONDITIONS]);
@@ -426,7 +426,16 @@ gui_bar_check_conditions_for_window (struct t_gui_bar *bar,
             hashtable_set (extra_vars, "nicklist",
                            (window->buffer && window->buffer->nicklist) ? "1" : "0");
         }
-        result = eval_expression (conditions, pointers, extra_vars);
+        options = hashtable_new (32,
+                                 WEECHAT_HASHTABLE_STRING,
+                                 WEECHAT_HASHTABLE_POINTER,
+                                 NULL,
+                                 NULL);
+        if (options)
+            hashtable_set (options, "type", "condition");
+
+        result = eval_expression (conditions, pointers, extra_vars, options);
+
         rc = eval_is_true (result);
         if (result)
             free (result);
@@ -434,6 +443,8 @@ gui_bar_check_conditions_for_window (struct t_gui_bar *bar,
             hashtable_free (pointers);
         if (extra_vars)
             hashtable_free (extra_vars);
+        if (options)
+            hashtable_free (options);
         if (!rc)
             return 0;
     }

@@ -206,56 +206,57 @@ infolists: mostra informazioni sulle liste info
 [[command_weechat_eval]]
 [command]*`eval`* analizza l'espressione e invia il risultato al buffer::
 ........................................
-/eval  [-n] <espressione>
-       [-n] <espressione1> <operatore> <espressione2>
+/eval  [-n] <expression>
+       [-n] -c <expression1> <operator> <expression2>
 
-         -n: mostra il risultato senza inviarlo al buffer (modalità debug)
-espressione: espressione da analizzare, le variabili con il formato ${variable} vengono sostituite (vedere sotto)
- operatore: operatore logico o di confronto:
-            - operatori logici:
-                &&  "and" booleano
-                ||  "or" booleano
-            - operatori di confronto:
-                ==  uguale
-                !=  non uguale
-                <=  minore o uguale
-                <   minore
-                >=  maggiore o uguale
-                >   maggiore
-                =~  corrisponde alla regex
-                !~  NON corrisponde alla regex
+        -n: display result without sending it to buffer (debug mode)
+        -c: evaluate as condition: use operators and parentheses, return a boolean value ("0" or "1")
+expression: expression to evaluate, variables with format ${variable} are replaced (see below)
+  operator: a logical or comparison operator:
+            - logical operators:
+                &&  boolean "and"
+                ||  boolean "or"
+            - comparison operators:
+                ==  equal
+                !=  not equal
+                <=  less or equal
+                <   less
+                >=  greater or equal
+                >   greater
+                =~  is matching regex
+                !~  is NOT matching regex
 
-Un'espressione è considerata come "true" se non è NULL, non vuota, e diversa da "0".
-Il confronto viene fatto usando gli interi se le due espressioni sono interi validi.
-Per forzare il confronto stringa, aggiungere un doppio apice all'espressione, ad esempio:
+An expression is considered as "true" if it is not NULL, not empty, and different from "0".
+The comparison is made using integers if the two expressions are valid integers.
+To force a string comparison, add double quotes around each expression, for example:
   50 > 100      ==> 0
   "50" > "100"  ==> 1
 
-Alcune variabili vengono sostituite nell'espressione, usando il formato ${variable}, la variabile può essere, in ordine di priorità :
-  1. il nome di un'opzione (file.sezione.opzione)
-  2. il nome di una variabile locale nel buffer
-  3. un nome/variabile hdata (il valore viene automaticamente convertito in stringa, per default "window" e "buffer" puntano alla finestra/buffer correnti.
-Il formato per hdata può essere uno dei seguenti:
-  hdata.var1.var2...: inizia con un hdata (il puntatore deve essere noto), e richiedere le variabili a seguire (possono seguire altri hdata)
-  hdata[list].var1.var2...: inizia con un hdata usando una lista, ad esempio:
-    ${buffer[gui_buffers].full_name}: nome completo del primo buffer nell'elenco collegato dei buffer
-    ${plugin[weechat_plugins].name}: nome del primo plugin nell'elenco collegato dei plugin
-Per il nome degli hdata e delle variabili, per favore consultare "Referenze API per Plugin", funzione "weechat_hdata_get".
+Some variables are replaced in expression, using the format ${variable}, variable can be, by order of priority :
+  1. the name of an option (file.section.option)
+  2. the name of a local variable in buffer
+  3. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
+Format for hdata can be one of following:
+  hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
+  hdata[list].var1.var2...: start with a hdata using a list, for example:
+    ${buffer[gui_buffers].full_name}: full name of first buffer in linked list of buffers
+    ${plugin[weechat_plugins].name}: name of first plugin in linked list of plugins
+For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
 
-Esempi:
-  /eval -n ${weechat.look.scroll_amount}  ==> 3
-  /eval -n ${window}                      ==> 0x2549aa0
-  /eval -n ${window.buffer}               ==> 0x2549320
-  /eval -n ${window.buffer.full_name}     ==> core.weechat
-  /eval -n ${window.buffer.number}        ==> 1
-  /eval -n ${window.buffer.number} > 2    ==> 0
-  /eval -n ${window.win_width} > 100      ==> 1
-  /eval -n (8 > 12) || (5 > 2)            ==> 1
-  /eval -n (8 > 12) && (5 > 2)            ==> 0
-  /eval -n abcd =~ ^ABC                   ==> 1
-  /eval -n abcd =~ (?-i)^ABC              ==> 0
-  /eval -n abcd =~ (?-i)^abc              ==> 1
-  /eval -n abcd !~ abc                    ==> 0
+Examples:
+  /eval -n ${weechat.look.scroll_amount}   ==> 3
+  /eval -n ${window}                       ==> 0x2549aa0
+  /eval -n ${window.buffer}                ==> 0x2549320
+  /eval -n ${window.buffer.full_name}      ==> core.weechat
+  /eval -n ${window.buffer.number}         ==> 1
+  /eval -n -c ${window.buffer.number} > 2  ==> 0
+  /eval -n -c ${window.win_width} > 100    ==> 1
+  /eval -n -c (8 > 12) || (5 > 2)          ==> 1
+  /eval -n -c (8 > 12) && (5 > 2)          ==> 0
+  /eval -n -c abcd =~ ^ABC                 ==> 1
+  /eval -n -c abcd =~ (?-i)^ABC            ==> 0
+  /eval -n -c abcd =~ (?-i)^abc            ==> 1
+  /eval -n -c abcd !~ abc                  ==> 0
 ........................................
 
 [[command_weechat_filter]]

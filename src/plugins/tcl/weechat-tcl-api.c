@@ -571,11 +571,11 @@ weechat_tcl_api_string_eval_expression (ClientData clientData,
 {
     Tcl_Obj *objp;
     char *expr, *result;
-    struct t_hashtable *pointers, *extra_vars;
+    struct t_hashtable *pointers, *extra_vars, *options;
     int i;
 
     API_FUNC(1, "string_eval_expression", API_RETURN_EMPTY);
-    if (objc < 4)
+    if (objc < 5)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     expr = Tcl_GetStringFromObj (objv[1], &i);
@@ -587,13 +587,20 @@ weechat_tcl_api_string_eval_expression (ClientData clientData,
                                                 WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
                                                 WEECHAT_HASHTABLE_STRING,
                                                 WEECHAT_HASHTABLE_STRING);
+    options = weechat_tcl_dict_to_hashtable (interp, objv[4],
+                                             WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                             WEECHAT_HASHTABLE_STRING,
+                                             WEECHAT_HASHTABLE_STRING);
 
-    result = weechat_string_eval_expression (expr, pointers, extra_vars);
+    result = weechat_string_eval_expression (expr, pointers, extra_vars,
+                                             options);
 
     if (pointers)
         weechat_hashtable_free (pointers);
     if (extra_vars)
         weechat_hashtable_free (extra_vars);
+    if (options)
+        weechat_hashtable_free (options);
 
     API_RETURN_STRING_FREE(result);
 }

@@ -397,14 +397,15 @@ static PyObject *
 weechat_python_api_string_eval_expression (PyObject *self, PyObject *args)
 {
     char *expr, *result;
-    struct t_hashtable *pointers, *extra_vars;
-    PyObject *dict, *dict2, *return_value;
+    struct t_hashtable *pointers, *extra_vars, *options;
+    PyObject *dict, *dict2, *dict3, *return_value;
 
     API_FUNC(1, "string_eval_expression", API_RETURN_EMPTY);
     expr = NULL;
     pointers = NULL;
     extra_vars = NULL;
-    if (!PyArg_ParseTuple (args, "sOO", &expr, &dict, &dict2))
+    options = NULL;
+    if (!PyArg_ParseTuple (args, "sOOO", &expr, &dict, &dict2, &dict3))
         API_WRONG_ARGS(API_RETURN_EMPTY);
     pointers = weechat_python_dict_to_hashtable (dict,
                                                  WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
@@ -414,13 +415,20 @@ weechat_python_api_string_eval_expression (PyObject *self, PyObject *args)
                                                    WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
                                                    WEECHAT_HASHTABLE_STRING,
                                                    WEECHAT_HASHTABLE_STRING);
+    options = weechat_python_dict_to_hashtable (dict3,
+                                                WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                WEECHAT_HASHTABLE_STRING,
+                                                WEECHAT_HASHTABLE_STRING);
 
-    result = weechat_string_eval_expression (expr, pointers, extra_vars);
+    result = weechat_string_eval_expression (expr, pointers, extra_vars,
+                                             options);
 
     if (pointers)
         weechat_hashtable_free (pointers);
     if (extra_vars)
         weechat_hashtable_free (extra_vars);
+    if (options)
+        weechat_hashtable_free (options);
 
     API_RETURN_STRING_FREE(result);
 }

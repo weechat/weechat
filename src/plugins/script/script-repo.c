@@ -735,7 +735,7 @@ script_repo_script_is_held (struct t_script_repo *script)
 /*
  * Computes MD5 checksum for the content of a file.
  *
- * Note: result has to be freed after use.
+ * Note: result must be freed after use.
  */
 
 char *

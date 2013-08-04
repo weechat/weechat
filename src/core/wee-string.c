@@ -1656,7 +1656,7 @@ string_iconv (int from_utf8, const char *from_code, const char *to_code,
 /*
  * Converts a string to WeeChat internal storage charset (UTF-8).
  *
- * Note: result has to be freed after use.
+ * Note: result must be freed after use.
  */
 
 char *
@@ -1696,7 +1696,7 @@ string_iconv_to_internal (const char *charset, const char *string)
 /*
  * Converts internal string to terminal charset, for display.
  *
- * Note: result has to be freed after use.
+ * Note: result must be freed after use.
  */
 
 char *
@@ -1762,7 +1762,7 @@ string_iconv_fprintf (FILE *file, const char *data, ...)
 /*
  * Formats a string with size and unit name (bytes, KB, MB, GB).
  *
- * Note: result has to be freed after use.
+ * Note: result must be freed after use.
  */
 
 char *
@@ -2099,6 +2099,8 @@ string_input_for_buffer (const char *string)
  * must be newly allocated because it will be freed in this function).
  *
  * Argument "errors" is set with number of keys not found by callback.
+ *
+ * Note: result must be freed after use.
  */
 
 char *

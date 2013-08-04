@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.2-dev, 2013-08-02
+v0.4.2-dev, 2013-08-04
 
 
 This document lists all changes for each version.
@@ -52,6 +52,8 @@ Version 0.4.2 (under dev!)
   "layout_window"
 * core: fix line alignment when option weechat.look.buffer_time_format is set
   to empty string
+* api: add argument "options" in function string_eval_expression, add option
+  "-c" for command /eval (to evaluate a condition)
 * api: use pointer for infolist "hook" to return only one hook
 * api: add new function strlen_screen
 * plugins: remove the demo plugin

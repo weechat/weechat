@@ -324,10 +324,10 @@ irc_server_sasl_enabled (struct t_irc_server *server)
                                                IRC_SERVER_OPTION_SASL_MECHANISM);
     sasl_username = weechat_string_eval_expression (IRC_SERVER_OPTION_STRING(server,
                                                                              IRC_SERVER_OPTION_SASL_USERNAME),
-                                                    NULL, NULL);
+                                                    NULL, NULL, NULL);
     sasl_password = weechat_string_eval_expression (IRC_SERVER_OPTION_STRING(server,
                                                                              IRC_SERVER_OPTION_SASL_PASSWORD),
-                                                    NULL, NULL);
+                                                    NULL, NULL, NULL);
 
     /*
      * SASL is enabled if using mechanism "external"
@@ -3055,7 +3055,7 @@ irc_server_login (struct t_irc_server *server)
 
     password = weechat_string_eval_expression (IRC_SERVER_OPTION_STRING(server,
                                                                         IRC_SERVER_OPTION_PASSWORD),
-                                               NULL, NULL);
+                                               NULL, NULL, NULL);
     username = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_USERNAME);
     realname = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_REALNAME);
     capabilities = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_CAPABILITIES);
@@ -4154,7 +4154,7 @@ irc_server_autojoin_channels (struct t_irc_server *server)
         /* auto-join when connecting to server for first time */
         autojoin = weechat_string_eval_expression (IRC_SERVER_OPTION_STRING(server,
                                                                             IRC_SERVER_OPTION_AUTOJOIN),
-                                                   NULL, NULL);
+                                                   NULL, NULL, NULL);
         if (!server->disable_autojoin && autojoin && autojoin[0])
             irc_command_join_server (server, autojoin, 0, 0);
         if (autojoin)

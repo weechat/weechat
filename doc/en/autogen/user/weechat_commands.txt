@@ -207,9 +207,10 @@ infolists: display infos about infolists
 [command]*`eval`* evaluate expression and send result to buffer::
 ........................................
 /eval  [-n] <expression>
-       [-n] <expression1> <operator> <expression2>
+       [-n] -c <expression1> <operator> <expression2>
 
         -n: display result without sending it to buffer (debug mode)
+        -c: evaluate as condition: use operators and parentheses, return a boolean value ("0" or "1")
 expression: expression to evaluate, variables with format ${variable} are replaced (see below)
   operator: a logical or comparison operator:
             - logical operators:
@@ -243,19 +244,19 @@ Format for hdata can be one of following:
 For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
 
 Examples:
-  /eval -n ${weechat.look.scroll_amount}  ==> 3
-  /eval -n ${window}                      ==> 0x2549aa0
-  /eval -n ${window.buffer}               ==> 0x2549320
-  /eval -n ${window.buffer.full_name}     ==> core.weechat
-  /eval -n ${window.buffer.number}        ==> 1
-  /eval -n ${window.buffer.number} > 2    ==> 0
-  /eval -n ${window.win_width} > 100      ==> 1
-  /eval -n (8 > 12) || (5 > 2)            ==> 1
-  /eval -n (8 > 12) && (5 > 2)            ==> 0
-  /eval -n abcd =~ ^ABC                   ==> 1
-  /eval -n abcd =~ (?-i)^ABC              ==> 0
-  /eval -n abcd =~ (?-i)^abc              ==> 1
-  /eval -n abcd !~ abc                    ==> 0
+  /eval -n ${weechat.look.scroll_amount}   ==> 3
+  /eval -n ${window}                       ==> 0x2549aa0
+  /eval -n ${window.buffer}                ==> 0x2549320
+  /eval -n ${window.buffer.full_name}      ==> core.weechat
+  /eval -n ${window.buffer.number}         ==> 1
+  /eval -n -c ${window.buffer.number} > 2  ==> 0
+  /eval -n -c ${window.win_width} > 100    ==> 1
+  /eval -n -c (8 > 12) || (5 > 2)          ==> 1
+  /eval -n -c (8 > 12) && (5 > 2)          ==> 0
+  /eval -n -c abcd =~ ^ABC                 ==> 1
+  /eval -n -c abcd =~ (?-i)^ABC            ==> 0
+  /eval -n -c abcd =~ (?-i)^abc            ==> 1
+  /eval -n -c abcd !~ abc                  ==> 0
 ........................................
 
 [[command_weechat_filter]]

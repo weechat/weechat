@@ -1471,8 +1471,9 @@ COMMAND_CALLBACK(debug)
 
 COMMAND_CALLBACK(eval)
 {
-    int print_only, i;
-    char *result, *ptr_args, **commands;
+    int i, print_only, condition;
+    char *result, *ptr_args, *expr, **commands;
+    struct t_hashtable *options;
 
     /* make C compiler happy */
     (void) buffer;
@@ -1480,42 +1481,74 @@ COMMAND_CALLBACK(eval)
     (void) argv;
 
     print_only = 0;
+    condition = 0;
 
     if (argc < 2)
         return WEECHAT_RC_OK;
 
     ptr_args = argv_eol[1];
-    if (string_strcasecmp (argv[1], "-n") == 0)
+    for (i = 1; i < argc; i++)
     {
-        print_only = 1;
-        ptr_args = argv_eol[2];
+        if (string_strcasecmp (argv[i], "-n") == 0)
+        {
+            print_only = 1;
+            ptr_args = argv_eol[i + 1];
+        }
+        else if (string_strcasecmp (argv[i], "-c") == 0)
+        {
+            condition = 1;
+            ptr_args = argv_eol[i + 1];
+        }
+        else
+        {
+            ptr_args = argv_eol[i];
+            break;
+        }
     }
 
     if (ptr_args)
     {
-        result = eval_expression (ptr_args, NULL, NULL);
+        options = NULL;
+        if (condition)
+        {
+            options = hashtable_new (32,
+                                     WEECHAT_HASHTABLE_STRING,
+                                     WEECHAT_HASHTABLE_POINTER,
+                                     NULL,
+                                     NULL);
+            if (options)
+                hashtable_set (options, "type", "condition");
+        }
+
         if (print_only)
         {
-            gui_chat_printf_date_tags (NULL, 0, "no_log", ">> %s", ptr_args);
-            if (result)
+            expr = string_remove_quotes (ptr_args, "\"");
+            if (expr)
             {
-                gui_chat_printf_date_tags (NULL, 0, "no_log", "== %s[%s%s%s]",
-                                           GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                           GUI_COLOR(GUI_COLOR_CHAT),
-                                           result,
-                                           GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
-            }
-            else
-            {
-                gui_chat_printf_date_tags (NULL, 0, "no_log", "== %s<%s%s%s>",
-                                           GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                           GUI_COLOR(GUI_COLOR_CHAT),
-                                           _("error"),
-                                           GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+                result = eval_expression (expr, NULL, NULL, options);
+                gui_chat_printf_date_tags (NULL, 0, "no_log", ">> %s", ptr_args);
+                if (result)
+                {
+                    gui_chat_printf_date_tags (NULL, 0, "no_log", "== %s[%s%s%s]",
+                                               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                                               GUI_COLOR(GUI_COLOR_CHAT),
+                                               result,
+                                               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+                }
+                else
+                {
+                    gui_chat_printf_date_tags (NULL, 0, "no_log", "== %s<%s%s%s>",
+                                               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                                               GUI_COLOR(GUI_COLOR_CHAT),
+                                               _("error"),
+                                               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+                }
+                free (expr);
             }
         }
         else
         {
+            result = eval_expression (ptr_args, NULL, NULL, options);
             if (result)
             {
                 commands = string_split_command (result, ';');
@@ -1537,6 +1570,8 @@ COMMAND_CALLBACK(eval)
         }
         if (result)
             free (result);
+        if (options)
+            hashtable_free (options);
     }
 
     return WEECHAT_RC_OK;
@@ -6314,9 +6349,11 @@ command_init ()
     hook_command (NULL, "eval",
                   N_("evaluate expression and send result to buffer"),
                   N_("[-n] <expression>"
-                     " || [-n] <expression1> <operator> <expression2>"),
+                     " || [-n] -c <expression1> <operator> <expression2>"),
                   N_("        -n: display result without sending it to buffer "
                      "(debug mode)\n"
+                     "        -c: evaluate as condition: use operators and "
+                     "parentheses, return a boolean value (\"0\" or \"1\")\n"
                      "expression: expression to evaluate, variables with format "
                      "${variable} are replaced (see below)\n"
                      "  operator: a logical or comparison operator:\n"
@@ -6360,20 +6397,20 @@ command_init ()
                      "For name of hdata and variables, please look at \"Plugin "
                      "API reference\", function \"weechat_hdata_get\".\n\n"
                      "Examples:\n"
-                     "  /eval -n ${weechat.look.scroll_amount}  ==> 3\n"
-                     "  /eval -n ${window}                      ==> 0x2549aa0\n"
-                     "  /eval -n ${window.buffer}               ==> 0x2549320\n"
-                     "  /eval -n ${window.buffer.full_name}     ==> core.weechat\n"
-                     "  /eval -n ${window.buffer.number}        ==> 1\n"
-                     "  /eval -n ${window.buffer.number} > 2    ==> 0\n"
-                     "  /eval -n ${window.win_width} > 100      ==> 1\n"
-                     "  /eval -n (8 > 12) || (5 > 2)            ==> 1\n"
-                     "  /eval -n (8 > 12) && (5 > 2)            ==> 0\n"
-                     "  /eval -n abcd =~ ^ABC                   ==> 1\n"
-                     "  /eval -n abcd =~ (?-i)^ABC              ==> 0\n"
-                     "  /eval -n abcd =~ (?-i)^abc              ==> 1\n"
-                     "  /eval -n abcd !~ abc                    ==> 0"),
-                  "-n",
+                     "  /eval -n ${weechat.look.scroll_amount}   ==> 3\n"
+                     "  /eval -n ${window}                       ==> 0x2549aa0\n"
+                     "  /eval -n ${window.buffer}                ==> 0x2549320\n"
+                     "  /eval -n ${window.buffer.full_name}      ==> core.weechat\n"
+                     "  /eval -n ${window.buffer.number}         ==> 1\n"
+                     "  /eval -n -c ${window.buffer.number} > 2  ==> 0\n"
+                     "  /eval -n -c ${window.win_width} > 100    ==> 1\n"
+                     "  /eval -n -c (8 > 12) || (5 > 2)          ==> 1\n"
+                     "  /eval -n -c (8 > 12) && (5 > 2)          ==> 0\n"
+                     "  /eval -n -c abcd =~ ^ABC                 ==> 1\n"
+                     "  /eval -n -c abcd =~ (?-i)^ABC            ==> 0\n"
+                     "  /eval -n -c abcd =~ (?-i)^abc            ==> 1\n"
+                     "  /eval -n -c abcd !~ abc                  ==> 0"),
+                  "-n|-c -n|-c",
                   &command_eval, NULL);
     hook_command (NULL, "filter",
                   N_("filter messages in buffers, to hide/show them according "
@@ -7089,7 +7126,7 @@ command_exec_list (const char *command_list)
     if (!command_list || !command_list[0])
         return;
 
-    command_list2 = eval_expression (command_list, NULL, NULL);
+    command_list2 = eval_expression (command_list, NULL, NULL, NULL);
     if (command_list2 && command_list2[0])
     {
         commands = string_split_command (command_list2, ';');
