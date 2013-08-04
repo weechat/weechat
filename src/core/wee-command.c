@@ -1520,6 +1520,7 @@ COMMAND_CALLBACK(eval)
                 hashtable_set (options, "type", "condition");
         }
 
+        result = NULL;
         if (print_only)
         {
             expr = string_remove_quotes (ptr_args, "\"");
