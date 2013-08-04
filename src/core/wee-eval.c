@@ -215,9 +215,10 @@ end:
 /*
  * Replaces variables, which can be, by order of priority:
  *   1. an extra variable (from hashtable "extra_vars")
- *   2. an name of option (file.section.option)
- *   3. a buffer local variable
- *   4. a hdata name/variable
+ *   2. a color (format: color:xxx)
+ *   3. an option (format: file.section.option)
+ *   4. a buffer local variable
+ *   5. a hdata name/variable
  *
  * Examples:
  *   option: ${weechat.look.scroll_amount}
@@ -245,12 +246,18 @@ eval_replace_vars_cb (void *data, const char *text)
     if (ptr_value)
         return strdup (ptr_value);
 
-    /* 2. look for name of option: if found, return this value */
+    /* 2. look for a color */
+    if (strncmp (text, "color:", 6) == 0)
+    {
+        ptr_value = gui_color_get_custom (text + 6);
+        return strdup ((ptr_value) ? ptr_value : "");
+    }
+
+    /* 3. look for name of option: if found, return this value */
     if (strncmp (text, "sec.data.", 9) == 0)
     {
         ptr_value = hashtable_get (secure_hashtable_data, text + 9);
-        if (ptr_value)
-            return strdup (ptr_value);
+        return strdup ((ptr_value) ? ptr_value : "");
     }
     else
     {
@@ -277,7 +284,7 @@ eval_replace_vars_cb (void *data, const char *text)
         }
     }
 
-    /* 3. look for local variable in buffer */
+    /* 4. look for local variable in buffer */
     ptr_buffer = hashtable_get (pointers, "buffer");
     if (ptr_buffer)
     {
@@ -286,7 +293,7 @@ eval_replace_vars_cb (void *data, const char *text)
             return strdup (ptr_value);
     }
 
-    /* 4. look for hdata */
+    /* 5. look for hdata */
     value = NULL;
     hdata_name = NULL;
     list_name = NULL;
