@@ -4,6 +4,7 @@
 /rmodifier  list|listdefault
             add <nom> <modifiers> <groupes> <regex>
             del <nom>|-all [<nom>...]
+            missing
             default -yes
 
        list: lister les rmodifiers
@@ -15,6 +16,7 @@ listdefault: lister les rmodifiers par défaut
       regex: expression régulière (insensible à la casse, peut commencer par "(?-i)" pour devenir sensible à la casse)
         del: supprimer un rmodifier
        -all: supprimer tous les rmodifiers
+    missing: ajouter les rmodifiers manquants
     default: restaurer les rmodifiers par défaut
 
 Exemples:

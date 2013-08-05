@@ -53,6 +53,7 @@ struct t_rmodifier *rmodifier_new (const char *name,
 extern struct t_rmodifier *rmodifier_new_with_string (const char *name,
                                                       const char *value);
 extern void rmodifier_create_default ();
+extern int rmodifier_add_missing ();
 extern void rmodifier_free (struct t_rmodifier *rmodifier);
 extern void rmodifier_free_all ();
 extern int rmodifier_add_to_infolist (struct t_infolist *infolist,

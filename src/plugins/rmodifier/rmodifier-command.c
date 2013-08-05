@@ -94,17 +94,17 @@ rmodifier_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
     (void) data;
     (void) buffer;
 
+    /* list all rmodifiers */
     if ((argc == 1)
         || ((argc == 2) && (weechat_strcasecmp (argv[1], "list") == 0)))
     {
-        /* list all rmodifiers */
         rmodifier_command_list (_("List of rmodifiers:"));
         return WEECHAT_RC_OK;
     }
 
+    /* list default rmodifiers */
     if (weechat_strcasecmp (argv[1], "listdefault") == 0)
     {
-        /* list default rmodifiers */
         weechat_printf (NULL, "");
         weechat_printf (NULL, _("Default rmodifiers:"));
         for (i = 0; rmodifier_config_default_list[i][0]; i++)
@@ -117,9 +117,9 @@ rmodifier_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
         return WEECHAT_RC_OK;
     }
 
+    /* add a rmodifier */
     if (weechat_strcasecmp (argv[1], "add") == 0)
     {
-        /* add a rmodifier */
         if (argc < 6)
         {
             weechat_printf (NULL,
@@ -154,9 +154,9 @@ rmodifier_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
         return WEECHAT_RC_OK;
     }
 
+    /* delete a rmodifier */
     if (weechat_strcasecmp (argv[1], "del") == 0)
     {
-        /* add a rmodifier */
         if (argc < 3)
         {
             weechat_printf (NULL,
@@ -220,6 +220,16 @@ rmodifier_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
         return WEECHAT_RC_OK;
     }
 
+    /* add missing rmodifiers */
+    if (weechat_strcasecmp (argv[1], "missing") == 0)
+    {
+        count = rmodifier_add_missing ();
+        weechat_printf (NULL,
+                        NG_("%d rmodifier added", "%d rmodifiers added", count),
+                        count);
+        return WEECHAT_RC_OK;
+    }
+
     return WEECHAT_RC_OK;
 }
 
@@ -235,6 +245,7 @@ rmodifier_command_init ()
                           N_("list|listdefault"
                              " || add <name> <modifiers> <groups> <regex>"
                              " || del <name>|-all [<name>...]"
+                             " || missing"
                              " || default -yes"),
                           N_("       list: list all rmodifiers\n"
                              "listdefault: list default rmodifiers\n"
@@ -249,6 +260,7 @@ rmodifier_command_init ()
                              "can start by \"(?-i)\" to become case sensitive)\n"
                              "        del: delete a rmodifier\n"
                              "       -all: delete all rmodifiers\n"
+                             "    missing: add missing rmodifiers\n"
                              "    default: restore default rmodifiers\n\n"
                              "Examples:\n"
                              "  hide everything typed after a command /password:\n"
@@ -261,6 +273,7 @@ rmodifier_command_init ()
                           " || listdefault"
                           " || add %(rmodifier)"
                           " || del %(rmodifier)|-all %(rmodifier)|%*"
+                          " || missing"
                           " || default",
                           &rmodifier_command_cb, NULL);
 }

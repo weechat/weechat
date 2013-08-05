@@ -386,6 +386,40 @@ rmodifier_create_default ()
 }
 
 /*
+ * Adds missing rmodifiers.
+ *
+ * Returns the number of rmodifiers added.
+ */
+
+int
+rmodifier_add_missing ()
+{
+    int i, count;
+
+    count = 0;
+
+    for (i = 0; rmodifier_config_default_list[i][0]; i++)
+    {
+        if (!rmodifier_search (rmodifier_config_default_list[i][0]))
+        {
+            if (rmodifier_new (rmodifier_config_default_list[i][0],
+                               rmodifier_config_default_list[i][1],
+                               rmodifier_config_default_list[i][2],
+                               rmodifier_config_default_list[i][3]))
+            {
+                rmodifier_config_modifier_new_option (rmodifier_config_default_list[i][0],
+                                                      rmodifier_config_default_list[i][1],
+                                                      rmodifier_config_default_list[i][2],
+                                                      rmodifier_config_default_list[i][3]);
+                count++;
+            }
+        }
+    }
+
+    return count;
+}
+
+/*
  * Frees a rmodifier and removes it from list.
  */
 

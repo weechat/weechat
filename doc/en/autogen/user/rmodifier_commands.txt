@@ -4,6 +4,7 @@
 /rmodifier  list|listdefault
             add <name> <modifiers> <groups> <regex>
             del <name>|-all [<name>...]
+            missing
             default -yes
 
        list: list all rmodifiers
@@ -15,6 +16,7 @@ listdefault: list default rmodifiers
       regex: regular expression (case insensitive, can start by "(?-i)" to become case sensitive)
         del: delete a rmodifier
        -all: delete all rmodifiers
+    missing: add missing rmodifiers
     default: restore default rmodifiers
 
 Examples:
