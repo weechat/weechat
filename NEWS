@@ -1,7 +1,7 @@
 WeeChat Release Notes
 =====================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.2-dev, 2013-08-04
+v0.4.2-dev, 2013-08-05
 
 
 This document lists important changes for each version, that require manual
@@ -15,6 +15,11 @@ http://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 Version 0.4.2 (under dev!)
 --------------------------
+
+=== New rmodifier ===
+
+A new rmodifier "secure" has been added to hide passphrase and passwords
+displayed by command "/secure". Use command `/rmodifier missing` to add it.
 
 === Color codes in options ===
 
