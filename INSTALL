@@ -15,10 +15,10 @@ Dependencies
 Following packages are *required*:
 
 * cmake
-* ncurses
-* curl
+* libncurses
+* libcurl
 * zlib
-* gcrypt
+* libgcrypt
 
 Following packages are all optional:
 
@@ -27,6 +27,7 @@ Following packages are all optional:
 * for spell checking: aspell
 * for scripting: python, perl, ruby, lua, tcl, guile
 * for building doc: asciidoc, source-highlight
+  (for man page: xsltproc, docbook-xml, docbook-xsl)
 
 For a complete list of dependencies and versions recommended, please look at
 'User's guide'.
