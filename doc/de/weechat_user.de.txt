@@ -1497,34 +1497,79 @@ Um der Vordergrundfarbe des Terminals das Attribut "fett" zuzuordnen:
 ----------------------------------------
 
 // TRANSLATION MISSING
+[[options_and_commands]]
+Options and commands
+~~~~~~~~~~~~~~~~~~~~
+
+// TRANSLATION MISSING
 [[sec_options]]
 Secured data options (sec.conf)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+// TRANSLATION MISSING
+Sections:
+
+// TRANSLATION MISSING
+[width="100%",cols="3m,6m,16",options="header"]
+|========================================
+| Section | Control command                    | Description
+| crypt   | /set sec.crypt.*                   | Options for encryption
+| data    | <<command_weechat_secure,/secure>> | Secured data
+|========================================
+
+// TRANSLATION MISSING
+Options:
 
 include::autogen/user/sec_options.txt[]
 
 [[weechat_options]]
 WeeChat Optionen (weechat.conf)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+// TRANSLATION MISSING
+Sections:
+
+// TRANSLATION MISSING
+[width="100%",cols="3m,6m,16",options="header"]
+|========================================
+| Section    | Control command                           | Description
+| debug      | <<command_weechat_debug,/debug set>>      +
+               /set weechat.debug.*                      | Debug level, for core and plugins (options can be added/removed in section)
+| startup    | /set weechat.startup.*                    | Startup options
+| look       | /set weechat.look.*                       | Look and feel
+| palette    | <<command_weechat_color,/color alias>>    +
+               /set weechat.palette.*                    | Color aliases (options can be added/removed in section)
+| color      | /set weechat.color.*                      | Colors
+| completion | /set weechat.completion.*                 | Completion options
+| history    | /set weechat.history.*                    | History options (commands and buffers)
+| proxy      | <<command_weechat_proxy,/proxy>>          +
+               /set weechat.proxy.*                      | Proxy options
+| network    | /set weechat.network.*                    | Network/SSL options
+| bar        | <<command_weechat_bar,/bar>>              +
+               /set weechat.bar.*                        | Bar options
+| layout     | <<command_weechat_layout,/layout>>        | Layouts
+| notify     | <<command_weechat_buffer,/buffer notify>> | Notify levels for buffers (options can be added/removed in section)
+| filter     | <<command_weechat_filter,/filter>>        | Filters
+| key        | <<command_weechat_key,/key>>              | Keys in default context
+| key_search | <<command_weechat_key,/key>>              | Keys in search context
+| key_cursor | <<command_weechat_key,/key>>              | Keys in cursor context
+| key_mouse  | <<command_weechat_key,/key>>              | Keys in mouse context
+|========================================
+
+// TRANSLATION MISSING
+Options:
 
 include::autogen/user/weechat_options.txt[]
 
 [[weechat_commands]]
 WeeChat Befehle
-~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^
 
 include::autogen/user/weechat_commands.txt[]
 
 [[plugins]]
 Erweiterungen
 -------------
-
-Um mehr über Erweiterungen- und Skriptenprogrammierung (mittels API) zu erfahren,
-sollten Sie die 'WeeChat Plugin API Reference' oder 'WeeChat Scripting Guide' lesen.
-
-[[plugins_in_weechat]]
-Erweiterungen in WeeChat
-~~~~~~~~~~~~~~~~~~~~~~~~
 
 Eine WeeChat Erweiterung ist eine dynamische Bibliothek (library), die in C geschrieben
 und kompiliert ist. Unter GNU/Linux besitzt eine Erweiterung als Dateiendung ".so", unter
@@ -1563,7 +1608,7 @@ Standarderweiterungen:
 | fifo        | FIFO Pipe die zur Fernsteuerung von WeeChat genutzt werden kann
 | irc         | IRC Chat-Protokoll
 | logger      | erstellt Protokolldateien von Buffern
-| relay       | Daten via Netzwerk übermitteln (IRC Proxy)
+| relay       | Daten via Netzwerk übermitteln
 | rmodifier   | wandelt Schlüsselwörter mit regulären Ausdrücken
 | python      | Python-Skript API
 | perl        | Perl-Skript API
@@ -1573,6 +1618,9 @@ Standarderweiterungen:
 | guile       | Guile(scheme)-Skript API
 | xfer        | Datentransfer und Direktchat
 |========================================
+
+Um mehr über Erweiterungen- und Skriptenprogrammierung (mittels API) zu erfahren,
+sollten Sie die 'WeeChat Plugin API Reference' oder 'WeeChat Scripting Guide' lesen.
 
 [[alias_plugin]]
 Alias Erweiterung
@@ -1596,6 +1644,23 @@ Dabei ist es möglich mehrere Wörterbücher für einen Buffer zu nutzen.
 [[aspell_options]]
 Optionen (aspell.conf)
 ^^^^^^^^^^^^^^^^^^^^^^
+
+// TRANSLATION MISSING
+Sections:
+
+// TRANSLATION MISSING
+[width="100%",cols="3m,6m,16",options="header"]
+|========================================
+| Section    | Control command                           | Description
+| color      | /set aspell.color.*                       | Colors
+| check      | /set aspell.check.*                       | Options to control spell checking
+| dict       | <<command_aspell_aspell,/aspell setdict>> +
+               /set aspell.dict.*                        | Dictionaries used by buffer (options can be added/removed in section)
+| option     | /set aspell.option.*                      | <<aspell_speller_options,Optionen für Rechtschreibprüfung>> (options can be added/removed in section)
+|========================================
+
+// TRANSLATION MISSING
+Options:
 
 include::autogen/user/aspell_options.txt[]
 
@@ -1695,6 +1760,23 @@ charset: terminal: ISO-8859-15, internal: UTF-8
 [[charset_options]]
 Optionen (charset.conf)
 ^^^^^^^^^^^^^^^^^^^^^^^
+
+// TRANSLATION MISSING
+Sections:
+
+// TRANSLATION MISSING
+[width="100%",cols="3m,6m,16",options="header"]
+|========================================
+| Section | Control command                             | Description
+| default | /set charset.default.*                      | Default decoding/encoding charset
+| decode  | <<command_charset_charset,/charset decode>> +
+            /set charset.decode.*                       | Decoding charset by buffer (options can be added/removed in section)
+| encode  | <<command_charset_charset,/charset encode>> +
+            /set charset.encode.*                       | Encoding charset by buffer (options can be added/removed in section)
+|========================================
+
+// TRANSLATION MISSING
+Options:
 
 include::autogen/user/charset_options.txt[]
 
@@ -1851,6 +1933,27 @@ $ weechat irc://nono@irc.freenode.net/#weechat,#toto
 [[irc_options]]
 Optionen (irc.conf)
 ^^^^^^^^^^^^^^^^^^^
+
+// TRANSLATION MISSING
+Sections:
+
+// TRANSLATION MISSING
+[width="100%",cols="3m,6m,16",options="header"]
+|========================================
+| Section        | Control command                | Description
+| look           | /set irc.look.*                | Look and feel
+| color          | /set irc.color.*               | Colors
+| network        | /set irc.network.*             | Network options
+| msgbuffer      | /set irc.msgbuffer.*           | <<irc_target_buffer,Zielbuffer für IRC Nachrichten>> (options can be added/removed in section)
+| ctcp           | /set irc.ctcp.*                | <<irc_ctcp_replies,CTCP Antworten>> (options can be added/removed in section)
+| ignore         | <<command_irc_ignore,/ignore>> | Ignore people
+| server_default | /set irc.server_default.*      | Default values for servers (used when options in server are not defined)
+| server         | <<command_irc_server,/server>> +
+                   /set irc.server.*              | Servers
+|========================================
+
+// TRANSLATION MISSING
+Options:
 
 include::autogen/user/irc_options.txt[]
 
@@ -2271,6 +2374,23 @@ gesichert werden soll.
 Optionen (logger.conf)
 ^^^^^^^^^^^^^^^^^^^^^^
 
+// TRANSLATION MISSING
+Sections:
+
+// TRANSLATION MISSING
+[width="100%",cols="3m,6m,16",options="header"]
+|========================================
+| Section | Control command     | Description
+| look    | /set logger.look.*  | Look and feel
+| color   | /set logger.color.* | Colors
+| file    | /set logger.file.*  | Options for log files
+| level   | /set logger.level.* | Log level by buffer (options can be added/removed in section)
+| mask    | /set logger.mask.*  | Filename mask by buffer (options can be added/removed in section)
+|========================================
+
+// TRANSLATION MISSING
+Options:
+
 include::autogen/user/logger_options.txt[]
 
 [[logger_commands]]
@@ -2424,6 +2544,24 @@ Die Relay-Erweiterung wird genutzt um Daten, mittels unterschiedlicher Protokoll
 Optionen (relay.conf)
 ^^^^^^^^^^^^^^^^^^^^^
 
+// TRANSLATION MISSING
+Sections:
+
+// TRANSLATION MISSING
+[width="100%",cols="3m,6m,16",options="header"]
+|========================================
+| Section | Control command                    | Description
+| look    | /set relay.look.*                  | Look and feel
+| color   | /set relay.color.*                 | Colors
+| network | /set relay.network.*               | Network options
+| irc     | /set relay.irc.*                   | Options specific to irc protocol (irc proxy)
+| port    | <<command_relay_relay,/relay add>> +
+            /set relay.port.*                  | Ports used for relay (irc and weechat protocols) (options can be added/removed in section)
+|========================================
+
+// TRANSLATION MISSING
+Options:
+
 include::autogen/user/relay_options.txt[]
 
 [[relay_commands]]
@@ -2556,6 +2694,21 @@ durch das Zeichen `*` zu ersetzen.
 Optionen (rmodifier.conf)
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
+// TRANSLATION MISSING
+Sections:
+
+// TRANSLATION MISSING
+[width="100%",cols="3m,6m,16",options="header"]
+|========================================
+| Section  | Control command                                | Description
+| look     | /set rmodifier.look.*                          | Look and feel
+| modifier | <<command_rmodifier_rmodifier,/rmodifier add>> +
+             /set rmodifier.modifier.*                      | Rmodifiers
+|========================================
+
+// TRANSLATION MISSING
+Options:
+
 include::autogen/user/rmodifier_options.txt[]
 
 [[rmodifier_commands]]
@@ -2624,6 +2777,21 @@ bitte die 'WeeChat Scripting Guide'.
 Script Optionen (script.conf)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+// TRANSLATION MISSING
+Sections:
+
+// TRANSLATION MISSING
+[width="100%",cols="3m,6m,16",options="header"]
+|========================================
+| Section | Control command       | Description
+| look    | /set script.look.*    | Look and feel
+| color   | /set script.color.*   | Colors
+| scripts | /set script.scripts.* | Options for download of scripts
+|========================================
+
+// TRANSLATION MISSING
+Options:
+
 include::autogen/user/script_options.txt[]
 
 [[script_commands]]
@@ -2681,6 +2849,22 @@ Mit der xfer Erweiterung kann man:
 [[xfer_options]]
 Optionen (xfer.conf)
 ^^^^^^^^^^^^^^^^^^^^
+
+// TRANSLATION MISSING
+Sections:
+
+// TRANSLATION MISSING
+[width="100%",cols="3m,6m,16",options="header"]
+|========================================
+| Section | Control command     | Description
+| look    | /set xfer.look.*    | Look and feel
+| color   | /set xfer.color.*   | Colors
+| network | /set xfer.network.* | Network options
+| file    | /set xfer.file.*    | Options for files sent/received
+|========================================
+
+// TRANSLATION MISSING
+Options:
 
 include::autogen/user/xfer_options.txt[]
 

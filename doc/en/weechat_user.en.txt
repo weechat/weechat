@@ -1468,34 +1468,72 @@ Example of bold with terminal foreground color:
 /set weechat.color.status_time *99999
 ----------------------------------------
 
+[[options_and_commands]]
+Options and commands
+~~~~~~~~~~~~~~~~~~~~
+
 [[sec_options]]
 Secured data options (sec.conf)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Sections:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|========================================
+| Section | Control command                    | Description
+| crypt   | /set sec.crypt.*                   | Options for encryption
+| data    | <<command_weechat_secure,/secure>> | Secured data
+|========================================
+
+Options:
 
 include::autogen/user/sec_options.txt[]
 
 [[weechat_options]]
 WeeChat options (weechat.conf)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Sections:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|========================================
+| Section    | Control command                           | Description
+| debug      | <<command_weechat_debug,/debug set>>      +
+               /set weechat.debug.*                      | Debug level, for core and plugins (options can be added/removed in section)
+| startup    | /set weechat.startup.*                    | Startup options
+| look       | /set weechat.look.*                       | Look and feel
+| palette    | <<command_weechat_color,/color alias>>    +
+               /set weechat.palette.*                    | Color aliases (options can be added/removed in section)
+| color      | /set weechat.color.*                      | Colors
+| completion | /set weechat.completion.*                 | Completion options
+| history    | /set weechat.history.*                    | History options (commands and buffers)
+| proxy      | <<command_weechat_proxy,/proxy>>          +
+               /set weechat.proxy.*                      | Proxy options
+| network    | /set weechat.network.*                    | Network/SSL options
+| bar        | <<command_weechat_bar,/bar>>              +
+               /set weechat.bar.*                        | Bar options
+| layout     | <<command_weechat_layout,/layout>>        | Layouts
+| notify     | <<command_weechat_buffer,/buffer notify>> | Notify levels for buffers (options can be added/removed in section)
+| filter     | <<command_weechat_filter,/filter>>        | Filters
+| key        | <<command_weechat_key,/key>>              | Keys in default context
+| key_search | <<command_weechat_key,/key>>              | Keys in search context
+| key_cursor | <<command_weechat_key,/key>>              | Keys in cursor context
+| key_mouse  | <<command_weechat_key,/key>>              | Keys in mouse context
+|========================================
+
+Options:
 
 include::autogen/user/weechat_options.txt[]
 
 [[weechat_commands]]
 WeeChat commands
-~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^
 
 include::autogen/user/weechat_commands.txt[]
 
 [[plugins]]
 Plugins
 -------
-
-To learn more about plugin or script development (through API), please read
-'WeeChat Plugin API Reference' or 'WeeChat Scripting Guide'.
-
-[[plugins_in_weechat]]
-Plugins in WeeChat
-~~~~~~~~~~~~~~~~~~
 
 A plugin is a dynamic library, written in C and compiled, which is loaded by
 WeeChat.
@@ -1533,7 +1571,7 @@ Default plugins are:
 | fifo      | FIFO pipe used to remotely send commands to WeeChat
 | irc       | IRC chat protocol
 | logger    | Log buffers to files
-| relay     | Relay data via network (IRC proxy)
+| relay     | Relay data via network
 | rmodifier | Alter modifier strings with regular expressions
 | python    | Python scripting API
 | perl      | Perl scripting API
@@ -1543,6 +1581,9 @@ Default plugins are:
 | guile     | Guile (scheme) scripting API
 | xfer      | File transfer and direct chat
 |========================================
+
+To learn more about plugin or script development (through API), please read
+'WeeChat Plugin API Reference' or 'WeeChat Scripting Guide'.
 
 [[alias_plugin]]
 Alias plugin
@@ -1567,6 +1608,20 @@ many languages by buffer.
 [[aspell_options]]
 Options (aspell.conf)
 ^^^^^^^^^^^^^^^^^^^^^
+
+Sections:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|========================================
+| Section    | Control command                           | Description
+| color      | /set aspell.color.*                       | Colors
+| check      | /set aspell.check.*                       | Options to control spell checking
+| dict       | <<command_aspell_aspell,/aspell setdict>> +
+               /set aspell.dict.*                        | Dictionaries used by buffer (options can be added/removed in section)
+| option     | /set aspell.option.*                      | <<aspell_speller_options,Speller options>> (options can be added/removed in section)
+|========================================
+
+Options:
 
 include::autogen/user/aspell_options.txt[]
 
@@ -1662,6 +1717,20 @@ charset: terminal: ISO-8859-15, internal: UTF-8
 [[charset_options]]
 Options (charset.conf)
 ^^^^^^^^^^^^^^^^^^^^^^
+
+Sections:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|========================================
+| Section | Control command                             | Description
+| default | /set charset.default.*                      | Default decoding/encoding charset
+| decode  | <<command_charset_charset,/charset decode>> +
+            /set charset.decode.*                       | Decoding charset by buffer (options can be added/removed in section)
+| encode  | <<command_charset_charset,/charset encode>> +
+            /set charset.encode.*                       | Encoding charset by buffer (options can be added/removed in section)
+|========================================
+
+Options:
 
 include::autogen/user/charset_options.txt[]
 
@@ -1815,6 +1884,24 @@ $ weechat irc://nono@irc.freenode.net/#weechat,#toto
 [[irc_options]]
 Options (irc.conf)
 ^^^^^^^^^^^^^^^^^^
+
+Sections:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|========================================
+| Section        | Control command                | Description
+| look           | /set irc.look.*                | Look and feel
+| color          | /set irc.color.*               | Colors
+| network        | /set irc.network.*             | Network options
+| msgbuffer      | /set irc.msgbuffer.*           | <<irc_target_buffer,Target buffer for IRC messages>> (options can be added/removed in section)
+| ctcp           | /set irc.ctcp.*                | <<irc_ctcp_replies,CTCP replies>> (options can be added/removed in section)
+| ignore         | <<command_irc_ignore,/ignore>> | Ignore people
+| server_default | /set irc.server_default.*      | Default values for servers (used when options in server are not defined)
+| server         | <<command_irc_server,/server>> +
+                   /set irc.server.*              | Servers
+|========================================
+
+Options:
 
 include::autogen/user/irc_options.txt[]
 
@@ -2227,6 +2314,20 @@ about what and how it is saved.
 Options (logger.conf)
 ^^^^^^^^^^^^^^^^^^^^^
 
+Sections:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|========================================
+| Section | Control command     | Description
+| look    | /set logger.look.*  | Look and feel
+| color   | /set logger.color.* | Colors
+| file    | /set logger.file.*  | Options for log files
+| level   | /set logger.level.* | Log level by buffer (options can be added/removed in section)
+| mask    | /set logger.mask.*  | Filename mask by buffer (options can be added/removed in section)
+|========================================
+
+Options:
+
 include::autogen/user/logger_options.txt[]
 
 [[logger_commands]]
@@ -2374,6 +2475,21 @@ The Relay plugin is used to relay data via network, using different protocols:
 Options (relay.conf)
 ^^^^^^^^^^^^^^^^^^^^
 
+Sections:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|========================================
+| Section | Control command                    | Description
+| look    | /set relay.look.*                  | Look and feel
+| color   | /set relay.color.*                 | Colors
+| network | /set relay.network.*               | Network options
+| irc     | /set relay.irc.*                   | Options specific to irc protocol (irc proxy)
+| port    | <<command_relay_relay,/relay add>> +
+            /set relay.port.*                  | Ports used for relay (irc and weechat protocols) (options can be added/removed in section)
+|========================================
+
+Options:
+
 include::autogen/user/relay_options.txt[]
 
 [[relay_commands]]
@@ -2500,6 +2616,18 @@ these passwords by `*`.
 Options (rmodifier.conf)
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
+Sections:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|========================================
+| Section  | Control command                                | Description
+| look     | /set rmodifier.look.*                          | Look and feel
+| modifier | <<command_rmodifier_rmodifier,/rmodifier add>> +
+             /set rmodifier.modifier.*                      | Rmodifiers
+|========================================
+
+Options:
+
 include::autogen/user/rmodifier_options.txt[]
 
 [[rmodifier_commands]]
@@ -2566,6 +2694,18 @@ scripts, please read 'WeeChat Scripting Guide'.
 Script options (script.conf)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Sections:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|========================================
+| Section | Control command       | Description
+| look    | /set script.look.*    | Look and feel
+| color   | /set script.color.*   | Colors
+| scripts | /set script.scripts.* | Options for download of scripts
+|========================================
+
+Options:
+
 include::autogen/user/script_options.txt[]
 
 [[script_commands]]
@@ -2622,7 +2762,20 @@ Xfer plugin brings:
 
 [[xfer_options]]
 Options (xfer.conf)
-^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
+
+Sections:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|========================================
+| Section | Control command     | Description
+| look    | /set xfer.look.*    | Look and feel
+| color   | /set xfer.color.*   | Colors
+| network | /set xfer.network.* | Network options
+| file    | /set xfer.file.*    | Options for files sent/received
+|========================================
+
+Options:
 
 include::autogen/user/xfer_options.txt[]
 
