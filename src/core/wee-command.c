@@ -6857,7 +6857,7 @@ command_init ()
                      "   -delete: delete passphrase\n"
                      "   decrypt: decrypt data still encrypted (it happens only "
                      "if passphrase was not given on startup)\n"
-                     "  -discard: discard all data still encrypted data\n"
+                     "  -discard: discard all data still encrypted\n"
                      "       set: add or change secured data\n"
                      "       del: delete secured data\n\n"
                      "Without argument, this command displays secured data "

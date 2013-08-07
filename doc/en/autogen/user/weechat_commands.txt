@@ -623,7 +623,7 @@ Without argument, all files (WeeChat and plugins) are saved.
 passphrase: change the passphrase (without passphrase, data is stored as plain text in file sec.conf)
    -delete: delete passphrase
    decrypt: decrypt data still encrypted (it happens only if passphrase was not given on startup)
-  -discard: discard all data still encrypted data
+  -discard: discard all data still encrypted
        set: add or change secured data
        del: delete secured data
 
