@@ -26,7 +26,7 @@ $(BUILDDIR)/Makefile:
 override_dh_auto_build: $(BUILDDIR)/Makefile
 	dh_auto_build
 
-# Create a symbolic link weechat -> weechat-curses
+# Create a symbolic link weechat-curses -> weechat
 # This link is created for compatibility with old versions on /upgrade.
 # It may be removed in future.
 override_dh_auto_install:

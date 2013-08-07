@@ -78,7 +78,7 @@ TARGET_LINK_LIBRARIES(${EXECUTABLE} ${STATIC_LIBS} ${EXTRA_LIBS} ${STATIC_LIBS})
 
 INSTALL(TARGETS ${EXECUTABLE} RUNTIME DESTINATION bin)
 
-# Create a symbolic link weechat -> weechat-curses
+# Create a symbolic link weechat-curses -> weechat
 # This link is created for compatibility with old versions on /upgrade.
 # It may be removed in future.
 INSTALL(CODE "EXECUTE_PROCESS(COMMAND ${CMAKE_COMMAND} -E remove -f \"\$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/weechat-curses${CMAKE_EXECUTABLE_SUFFIX}\")")

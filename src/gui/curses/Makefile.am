@@ -46,7 +46,7 @@ weechat_SOURCES = gui-curses-bar-window.c \
 
 EXTRA_DIST = CMakeLists.txt
 
-# Create a symbolic link weechat -> weechat-curses
+# Create a symbolic link weechat-curses -> weechat
 # This link is created for compatibility with old versions on /upgrade.
 # It may be removed in future.
 install-exec-hook:
