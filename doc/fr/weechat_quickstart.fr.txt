@@ -40,7 +40,7 @@ Pour modifier des options, tapez :
 /set config.section.option valeur
 ----------------------------------------
 
-(où `config` est le nom de la configuration (`weechat` pour le coeur, ou
+(où `config` est le nom de la configuration (`weechat` pour le cœur, ou
 un nom d'extension), `section` la section de cette configuration et
 `option` le nom de l'option).
 
@@ -86,12 +86,12 @@ commande `/set`.
 
 
 [[core_vs_plugins]]
-Coeur vs extensions
--------------------
+Cœur vs extensions
+------------------
 
-Le coeur de WeeChat ("core") ne fait qu'afficher les données à l'écran et
-interagir avec l'utilisateur, cela signifie que le coeur sans extension
-n'a pas grand intérêt (utilisateurs fidèles: IRC faisait partie du coeur
+Le cœur de WeeChat ("core") ne fait qu'afficher les données à l'écran et
+interagir avec l'utilisateur, cela signifie que le cœur sans extension
+n'a pas grand intérêt (utilisateurs fidèles: IRC faisait partie du cœur
 dans les versions ≤ 0.2.6).
 
 Tous les protocoles réseau comme IRC sont fournis sous forme d'extensions.

@@ -1539,7 +1539,7 @@ Sections :
 |========================================
 | Section    | Commande de contrôle                      | Description
 | debug      | <<command_weechat_debug,/debug set>>      +
-               /set weechat.debug.*                      | Niveau de debug, pour le Debug level, pour le coeur et les extensions (les options peuvent être ajoutées/supprimées dans la section)
+               /set weechat.debug.*                      | Niveau de debug, pour le Debug level, pour le cœur et les extensions (les options peuvent être ajoutées/supprimées dans la section)
 | startup    | /set weechat.startup.*                    | Options de démarrage
 | look       | /set weechat.look.*                       | Look and feel
 | palette    | <<command_weechat_color,/color alias>>    +

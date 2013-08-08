@@ -175,7 +175,7 @@ Exemples:
 ........................................
 
 [[command_weechat_debug]]
-[command]*`debug`* contrôle du debug pour le coeur/les extensions::
+[command]*`debug`* contrôle du debug pour le cœur/les extensions::
 ........................................
 /debug  list
         set <extension> <niveau>
@@ -186,7 +186,7 @@ Exemples:
 
      list: lister les extensions avec leur niveau de debug
       set: définir le niveau de debug pour l'extension
-extension: nom de l'extension ("core" pour le coeur de WeeChat)
+extension: nom de l'extension ("core" pour le cœur de WeeChat)
    niveau: niveau de debug pour l'extension
      dump: afficher les variables mémoire WeeChat dans le fichier log (les mêmes messages sont affichés lorsque WeeChat plante)
    buffer: afficher le contenu du tampon en valeurs hexadécimales dans le fichier log
@@ -710,7 +710,7 @@ Cette commande met à jour et recharge une session de WeeChat qui tourne. Le nou
 Note: les connexions SSL sont perdues durant la mise à jour, car le rechargement de session SSL n'est pas possible actuellement avec GnuTLS. Il y a une reconnexion automatique après la mise à jour.
 
 Le processus de mise à jour comporte 4 étapes :
-  1. sauvegarder la session pour le coeur et les extensions (tampons, historique, ...)
+  1. sauvegarder la session pour le cœur et les extensions (tampons, historique, ...)
   2. décharger toutes les extensions (les fichiers de configuration (*.conf) sont écrits sur disque)
   3. sauvegarder la configuration WeeChat (weechat.conf)
   4. exécuter le nouveau binaire WeeChat et recharger la session.<

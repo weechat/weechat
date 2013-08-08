@@ -18,7 +18,7 @@ WeeChat (Wee Enhanced Environment for Chat) est un client de discussion libre,
 rapide et léger, conçu pour différents systèmes d'exploitation.
 
 Ce manuel documente l'API WeeChat des extensions, utilisée par les extensions
-en C pour interagir avec le coeur de WeeChat.
+en C pour interagir avec le cœur de WeeChat.
 
 [[plugins_in_weechat]]
 Extensions dans WeeChat
@@ -252,7 +252,7 @@ Paramètres :
 
 Valeur de retour :
 
-* nom de l'extension, "core" pour le coeur de WeeChat (si le pointeur vers
+* nom de l'extension, "core" pour le cœur de WeeChat (si le pointeur vers
   l'extension est NULL)
 
 Exemple en C :
