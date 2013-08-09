@@ -3734,6 +3734,8 @@ Paramètres :
 
 * 'hashtable' : pointeur vers la hashtable
 * 'property' et 'value' : nom de la propriété, avec sa valeur :
+** 'callback_free_key' : définit la fonction "callback" pour libérer les clés de
+   la hashtable (_nouveau dans la version 0.4.2_)
 ** 'callback_free_value' : définit la fonction "callback" pour libérer les
    valeurs de la hashtable
 

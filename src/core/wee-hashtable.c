@@ -218,6 +218,7 @@ hashtable_new (int size,
         new_hashtable->callback_keycmp = (callback_keycmp) ?
             callback_keycmp : &hashtable_keycmp_default_cb;
 
+        new_hashtable->callback_free_key = NULL;
         new_hashtable->callback_free_value = NULL;
     }
     return new_hashtable;
@@ -288,18 +289,28 @@ void
 hashtable_free_key (struct t_hashtable *hashtable,
                     struct t_hashtable_item *item)
 {
-    switch (hashtable->type_keys)
+    if (hashtable->callback_free_key)
     {
-        case HASHTABLE_INTEGER:
-        case HASHTABLE_STRING:
-        case HASHTABLE_BUFFER:
-        case HASHTABLE_TIME:
-            free (item->key);
-            break;
-        case HASHTABLE_POINTER:
-            break;
-        case HASHTABLE_NUM_TYPES:
-            break;
+        (void) (hashtable->callback_free_key) (hashtable,
+                                               item->key,
+                                               item->value);
+    }
+    else
+    {
+        switch (hashtable->type_keys)
+        {
+            case HASHTABLE_INTEGER:
+            case HASHTABLE_STRING:
+            case HASHTABLE_BUFFER:
+            case HASHTABLE_TIME:
+                if (item->key)
+                    free (item->key);
+                break;
+            case HASHTABLE_POINTER:
+                break;
+            case HASHTABLE_NUM_TYPES:
+                break;
+        }
     }
 }
 
@@ -659,6 +670,7 @@ hashtable_dup (struct t_hashtable *hashtable)
                                    hashtable->callback_keycmp);
     if (new_hashtable)
     {
+        new_hashtable->callback_free_key = hashtable->callback_free_key;
         new_hashtable->callback_free_value = hashtable->callback_free_value;
         hashtable_map (hashtable,
                        &hashtable_duplicate_map_cb,
@@ -1000,7 +1012,9 @@ hashtable_set_pointer (struct t_hashtable *hashtable, const char *property,
 {
     if (hashtable && property)
     {
-        if (string_strcasecmp (property, "callback_free_value") == 0)
+        if (string_strcasecmp (property, "callback_free_key") == 0)
+            hashtable->callback_free_key = pointer;
+        else if (string_strcasecmp (property, "callback_free_value") == 0)
             hashtable->callback_free_value = pointer;
     }
 }
@@ -1184,6 +1198,9 @@ hashtable_print_log (struct t_hashtable *hashtable, const char *name)
                 hashtable_type_string[hashtable->type_values]);
     log_printf ("  callback_hash_key. . . : 0x%lx", hashtable->callback_hash_key);
     log_printf ("  callback_keycmp. . . . : 0x%lx", hashtable->callback_keycmp);
+    log_printf ("  callback_free_key. . . : 0x%lx", hashtable->callback_free_key);
+    log_printf ("  callback_free_value. . : 0x%lx", hashtable->callback_free_value);
+    log_printf ("  keys_values. . . . . . : '%s'",  hashtable->keys_values);
 
     for (i = 0; i < hashtable->size; i++)
     {
@@ -1238,5 +1255,4 @@ hashtable_print_log (struct t_hashtable *hashtable, const char *name)
             log_printf ("      next_item. . . . . : 0x%lx", ptr_item->next_item);
         }
     }
-    log_printf ("  keys_values. . . . . . : '%s'", hashtable->keys_values);
 }

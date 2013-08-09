@@ -27,6 +27,8 @@ typedef unsigned int (t_hashtable_hash_key)(struct t_hashtable *hashtable,
                                             const void *key);
 typedef int (t_hashtable_keycmp)(struct t_hashtable *hashtable,
                                  const void *key1, const void *key2);
+typedef void (t_hashtable_free_key)(struct t_hashtable *hashtable,
+                                    void *key, const void *value);
 typedef void (t_hashtable_free_value)(struct t_hashtable *hashtable,
                                       const void *key, void *value);
 typedef void (t_hashtable_map)(void *data,
@@ -102,6 +104,7 @@ struct t_hashtable
     /* callbacks */
     t_hashtable_hash_key *callback_hash_key;     /* hash key to int value   */
     t_hashtable_keycmp *callback_keycmp;         /* compare two keys        */
+    t_hashtable_free_key *callback_free_key;     /* callback to free key    */
     t_hashtable_free_value *callback_free_value; /* callback to free value  */
 
     /* keys/values as string */

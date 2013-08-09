@@ -3694,6 +3694,9 @@ Argomenti:
 
 * 'hashtable': puntatore alla tabella hash
 * 'property' e 'value': nome della proprietà, con il proprio valore:
+// TRANSLATION MISSING
+** 'callback_free_key': set callback function used to free keys in hashtable
+   (_novità nella versione 0.4.2_)
 ** 'callback_free_value': imposta la funzione callback usata per
    liberare i valori nella tabella hash
 

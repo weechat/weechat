@@ -3690,6 +3690,8 @@ Arguments:
 
 * 'hashtable': hashtable pointer
 * 'property' and 'value': property name, with its value:
+** 'callback_free_key': set callback function used to free keys in hashtable
+   (_new in version 0.4.2_)
 ** 'callback_free_value': set callback function used to free values in hashtable
 
 C example:
