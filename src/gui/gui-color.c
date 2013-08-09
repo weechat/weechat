@@ -632,9 +632,7 @@ gui_color_palette_alloc_structs ()
                                                       WEECHAT_HASHTABLE_POINTER,
                                                       NULL,
                                                       NULL);
-        hashtable_set_pointer (gui_color_hash_palette_color,
-                               "callback_free_value",
-                               &gui_color_palette_free_value_cb);
+        gui_color_hash_palette_color->callback_free_value = &gui_color_palette_free_value_cb;
     }
     if (!gui_color_hash_palette_alias)
     {

@@ -105,9 +105,7 @@ hdata_new (struct t_weechat_plugin *plugin, const char *hdata_name,
                                              WEECHAT_HASHTABLE_POINTER,
                                              NULL,
                                              NULL);
-        hashtable_set_pointer (new_hdata->hash_var,
-                               "callback_free_value",
-                               &hdata_free_var);
+        new_hdata->hash_var->callback_free_value = &hdata_free_var;
         new_hdata->hash_list = hashtable_new (32,
                                               WEECHAT_HASHTABLE_STRING,
                                               WEECHAT_HASHTABLE_POINTER,
