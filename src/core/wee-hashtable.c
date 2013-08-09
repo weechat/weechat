@@ -336,7 +336,8 @@ hashtable_free_value (struct t_hashtable *hashtable,
             case HASHTABLE_STRING:
             case HASHTABLE_BUFFER:
             case HASHTABLE_TIME:
-                free (item->value);
+                if (item->value)
+                    free (item->value);
                 break;
             case HASHTABLE_POINTER:
                 break;
