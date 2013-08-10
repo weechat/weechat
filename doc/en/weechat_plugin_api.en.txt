@@ -3281,8 +3281,8 @@ Prototype:
 struct t_hashtable *weechat_hashtable_new (int size,
                                            const char *type_keys,
                                            const char *type_values,
-                                           unsigned int (*callback_hash_key)(struct t_hashtable *hashtable,
-                                                                             const void *key),
+                                           unsigned long (*callback_hash_key)(struct t_hashtable *hashtable,
+                                                                              const void *key),
                                            int (*callback_keycmp)(struct t_hashtable *hashtable,
                                                                   const void *key1,
                                                                   const void *key2));
@@ -3343,7 +3343,7 @@ This function is not available in scripting API.
 weechat_hashtable_set_with_size
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_New in version 0.3.3._
+_New in version 0.3.3, updated in 0.4.2._
 
 Add or update item in a hashtable with size for key and value.
 
@@ -3351,9 +3351,9 @@ Prototype:
 
 [source,C]
 ----------------------------------------
-int weechat_hashtable_set_with_size (struct t_hashtable *hashtable,
-                                     const void *key, int key_size,
-                                     const void *value, int value_size);
+struct t_hashtable_item *weechat_hashtable_set_with_size (struct t_hashtable *hashtable,
+                                                          const void *key, int key_size,
+                                                          const void *value, int value_size);
 ----------------------------------------
 
 Arguments:
@@ -3368,7 +3368,7 @@ Arguments:
 
 Return value:
 
-* 1 if ok, 0 if error
+* pointer to item created/updated, NULL if error
 
 C example:
 
@@ -3384,7 +3384,7 @@ This function is not available in scripting API.
 weechat_hashtable_set
 ^^^^^^^^^^^^^^^^^^^^^
 
-_New in version 0.3.3._
+_New in version 0.3.3, updated in 0.4.2._
 
 Add or update item in a hashtable.
 
@@ -3392,8 +3392,8 @@ Prototype:
 
 [source,C]
 ----------------------------------------
-int weechat_hashtable_set (struct t_hashtable *hashtable,
-                           const void *key, const void *value);
+struct t_hashtable_item *weechat_hashtable_set (struct t_hashtable *hashtable,
+                                                const void *key, const void *value);
 ----------------------------------------
 
 Arguments:
@@ -3404,7 +3404,7 @@ Arguments:
 
 Return value:
 
-* 1 if ok, 0 if error
+* pointer to item created/updated, NULL if error
 
 C example:
 

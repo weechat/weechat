@@ -52,7 +52,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20130804-01"
+#define WEECHAT_PLUGIN_API_VERSION "20130810-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -323,16 +323,19 @@ struct t_weechat_plugin
     struct t_hashtable *(*hashtable_new) (int size,
                                           const char *type_keys,
                                           const char *type_values,
-                                          unsigned int (*callback_hash_key)(struct t_hashtable *hashtable,
-                                                                            const void *key),
+                                          unsigned long (*callback_hash_key)(struct t_hashtable *hashtable,
+                                                                             const void *key),
                                           int (*callback_keycmp)(struct t_hashtable *hashtable,
                                                                  const void *key1,
                                                                  const void *key2));
-    int (*hashtable_set_with_size) (struct t_hashtable *hashtable,
-                                    const void *key, int key_size,
-                                    const void *value, int value_size);
-    int (*hashtable_set) (struct t_hashtable *hashtable, const void *key,
-                          const void *value);
+    struct t_hashtable_item *(*hashtable_set_with_size) (struct t_hashtable *hashtable,
+                                                         const void *key,
+                                                         int key_size,
+                                                         const void *value,
+                                                         int value_size);
+    struct t_hashtable_item *(*hashtable_set) (struct t_hashtable *hashtable,
+                                               const void *key,
+                                               const void *value);
     void *(*hashtable_get) (struct t_hashtable *hashtable, const void *key);
     int (*hashtable_has_key) (struct t_hashtable *hashtable, const void *key);
     void (*hashtable_map) (struct t_hashtable *hashtable,

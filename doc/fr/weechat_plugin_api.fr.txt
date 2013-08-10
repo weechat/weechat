@@ -3320,8 +3320,8 @@ Prototype :
 struct t_hashtable *weechat_hashtable_new (int size,
                                            const char *type_keys,
                                            const char *type_values,
-                                           unsigned int (*callback_hash_key)(struct t_hashtable *hashtable,
-                                                                             const void *key),
+                                           unsigned long (*callback_hash_key)(struct t_hashtable *hashtable,
+                                                                              const void *key),
                                            int (*callback_keycmp)(struct t_hashtable *hashtable,
                                                                   const void *key1,
                                                                   const void *key2));
@@ -3384,7 +3384,7 @@ Cette fonction n'est pas disponible dans l'API script.
 weechat_hashtable_set_with_size
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Nouveau dans la version 0.3.3._
+_Nouveau dans la version 0.3.3, mis à jour dans la 0.4.2._
 
 Ajoute ou met à jour une entrée dans une hashtable avec une taille pour la clé
 et la valeur.
@@ -3393,9 +3393,9 @@ Prototype :
 
 [source,C]
 ----------------------------------------
-int weechat_hashtable_set_with_size (struct t_hashtable *hashtable,
-                                     const void *key, int key_size,
-                                     const void *value, int value_size);
+struct t_hashtable_item *weechat_hashtable_set_with_size (struct t_hashtable *hashtable,
+                                                          const void *key, int key_size,
+                                                          const void *value, int value_size);
 ----------------------------------------
 
 Paramètres :
@@ -3410,7 +3410,7 @@ Paramètres :
 
 Valeur de retour :
 
-* 1 si ok, 0 en cas d'erreur
+* pointeur vers l'item créé/mis à jour, NULL en cas d'erreur
 
 Exemple en C :
 
@@ -3426,7 +3426,7 @@ Cette fonction n'est pas disponible dans l'API script.
 weechat_hashtable_set
 ^^^^^^^^^^^^^^^^^^^^^
 
-_Nouveau dans la version 0.3.3._
+_Nouveau dans la version 0.3.3, mis à jour dans la 0.4.2._
 
 Ajoute ou met à jour une entrée dans la hashtable.
 
@@ -3434,8 +3434,8 @@ Prototype :
 
 [source,C]
 ----------------------------------------
-int weechat_hashtable_set (struct t_hashtable *hashtable,
-                           const void *key, const void *value);
+struct t_hashtable_item *weechat_hashtable_set (struct t_hashtable *hashtable,
+                                                const void *key, const void *value);
 ----------------------------------------
 
 Paramètres :
@@ -3446,7 +3446,7 @@ Paramètres :
 
 Valeur de retour :
 
-* 1 si ok, 0 en cas d'erreur
+* pointeur vers l'item créé/mis à jour, NULL en cas d'erreur
 
 Exemple en C :
 

@@ -3284,8 +3284,8 @@ Prototipo:
 struct t_hashtable *weechat_hashtable_new (int size,
                                            const char *type_keys,
                                            const char *type_values,
-                                           unsigned int (*callback_hash_key)(struct t_hashtable *hashtable,
-                                                                             const void *key),
+                                           unsigned long (*callback_hash_key)(struct t_hashtable *hashtable,
+                                                                              const void *key),
                                            int (*callback_keycmp)(struct t_hashtable *hashtable,
                                                                   const void *key1,
                                                                   const void *key2));
@@ -3348,7 +3348,8 @@ Questa funzione non è disponibile nelle API per lo scripting.
 weechat_hashtable_set_with_size
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.3._
+// TRANSLATION MISSING
+_Novità nella versione 0.3.3, updated in 0.4.2._
 
 Aggiunge o aggiorna un elemento nella tabella hash con la dimensione per la
 chiave ed il valore.
@@ -3357,9 +3358,9 @@ Prototipo:
 
 [source,C]
 ----------------------------------------
-int weechat_hashtable_set_with_size (struct t_hashtable *hashtable,
-                                     const void *key, int key_size,
-                                     const void *value, int value_size);
+struct t_hashtable_item *weechat_hashtable_set_with_size (struct t_hashtable *hashtable,
+                                                          const void *key, int key_size,
+                                                          const void *value, int value_size);
 ----------------------------------------
 
 Argomenti:
@@ -3374,7 +3375,8 @@ Argomenti:
 
 Valore restituito:
 
-* 1 se ok, 0 in caso di errore
+// TRANSLATION MISSING
+* pointer to item created/updated, NULL if error
 
 Esempio in C:
 
@@ -3390,7 +3392,8 @@ Questa funzione non è disponibile nelle API per lo scripting.
 weechat_hashtable_set
 ^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.3._
+// TRANSLATION MISSING
+_Novità nella versione 0.3.3, updated in 0.4.2._
 
 Aggiunge o aggiorna un elemento nella tabella hash.
 
@@ -3398,8 +3401,8 @@ Prototipo:
 
 [source,C]
 ----------------------------------------
-int weechat_hashtable_set (struct t_hashtable *hashtable,
-                           const void *key, const void *value);
+struct t_hashtable_item *weechat_hashtable_set (struct t_hashtable *hashtable,
+                                                const void *key, const void *value);
 ----------------------------------------
 
 Argomenti:
@@ -3410,7 +3413,8 @@ Argomenti:
 
 Valore restituito:
 
-* 1 se ok, 0 in caso di errore
+// TRANSLATION MISSING
+* pointer to item created/updated, NULL if error
 
 Esempio in C:
 
