@@ -1055,6 +1055,9 @@ string_has_highlight_regex (const char *string, const char *regex)
 /*
  * Splits a string according to separators.
  *
+ * This function must not be called directly (call string_split or
+ * string_split_shared instead).
+ *
  * Examples:
  *   string_split ("abc de  fghi", " ", 0, 0, NULL)
  *     ==> array[0] = "abc"
@@ -1069,12 +1072,13 @@ string_has_highlight_regex (const char *string, const char *regex)
  */
 
 char **
-string_split (const char *string, const char *separators, int keep_eol,
-              int num_items_max, int *num_items)
+string_split_internal (const char *string, const char *separators, int keep_eol,
+                       int num_items_max, int *num_items, int shared)
 {
     int i, j, n_items;
     char *string2, **array;
     char *ptr, *ptr1, *ptr2;
+    const char *str_shared;
 
     if (num_items != NULL)
         *num_items = 0;
@@ -1144,13 +1148,18 @@ string_split (const char *string, const char *separators, int keep_eol,
             {
                 if (keep_eol)
                 {
-                    array[i] = strdup (ptr1);
+                    array[i] = (shared) ? (char *)string_shared_get (ptr1) : strdup (ptr1);
                     if (!array[i])
                     {
                         for (j = 0; j < n_items; j++)
                         {
                             if (array[j])
-                                free (array[j]);
+                            {
+                                if (shared)
+                                    string_shared_free (array[j]);
+                                else
+                                    free (array[j]);
+                            }
                         }
                         free (array);
                         free (string2);
@@ -1165,7 +1174,12 @@ string_split (const char *string, const char *separators, int keep_eol,
                         for (j = 0; j < n_items; j++)
                         {
                             if (array[j])
-                                free (array[j]);
+                            {
+                                if (shared)
+                                    string_shared_free (array[j]);
+                                else
+                                    free (array[j]);
+                            }
                         }
                         free (array);
                         free (string2);
@@ -1173,6 +1187,23 @@ string_split (const char *string, const char *separators, int keep_eol,
                     }
                     strncpy (array[i], ptr1, ptr2 - ptr1);
                     array[i][ptr2 - ptr1] = '\0';
+                    if (shared)
+                    {
+                        str_shared = string_shared_get (array[i]);
+                        if (!str_shared)
+                        {
+                            for (j = 0; j < n_items; j++)
+                            {
+                                if (array[j])
+                                    string_shared_free (array[j]);
+                            }
+                            free (array);
+                            free (string2);
+                            return NULL;
+                        }
+                        free (array[i]);
+                        array[i] = (char *)str_shared;
+                    }
                 }
                 ptr1 = ++ptr2;
             }
@@ -1190,6 +1221,35 @@ string_split (const char *string, const char *separators, int keep_eol,
     free (string2);
 
     return array;
+}
+
+/*
+ * Splits a string according to separators.
+ *
+ * For full description, see function string_split_internal.
+ */
+
+char **
+string_split (const char *string, const char *separators, int keep_eol,
+              int num_items_max, int *num_items)
+{
+    return string_split_internal (string, separators, keep_eol,
+                                  num_items_max, num_items, 0);
+}
+
+/*
+ * Splits a string according to separators, and use shared strings for the
+ * strings in the array returned.
+ *
+ * For full description, see function string_split_internal.
+ */
+
+char **
+string_split_shared (const char *string, const char *separators, int keep_eol,
+                     int num_items_max, int *num_items)
+{
+    return string_split_internal (string, separators, keep_eol,
+                                  num_items_max, num_items, 1);
 }
 
 /*
@@ -1397,6 +1457,23 @@ string_free_split (char **split_string)
     {
         for (i = 0; split_string[i]; i++)
             free (split_string[i]);
+        free (split_string);
+    }
+}
+
+/*
+ * Frees a split string (using shared strings).
+ */
+
+void
+string_free_split_shared (char **split_string)
+{
+    int i;
+
+    if (split_string)
+    {
+        for (i = 0; split_string[i]; i++)
+            string_shared_free (split_string[i]);
         free (split_string);
     }
 }
