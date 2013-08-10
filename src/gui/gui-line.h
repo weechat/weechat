@@ -60,7 +60,9 @@ struct t_gui_lines
     int lines_hidden;                  /* 1 if at least one line is hidden  */
     int buffer_max_length;             /* max length for buffer name (for   */
                                        /* mixed lines only)                 */
+    int buffer_max_length_refresh;     /* refresh asked for buffer max len. */
     int prefix_max_length;             /* max length for prefix align       */
+    int prefix_max_length_refresh;     /* refresh asked for prefix max len. */
 };
 
 /* line functions */

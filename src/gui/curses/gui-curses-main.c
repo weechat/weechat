@@ -51,6 +51,7 @@
 #include "../gui-filter.h"
 #include "../gui-input.h"
 #include "../gui-layout.h"
+#include "../gui-line.h"
 #include "../gui-history.h"
 #include "../gui-mouse.h"
 #include "../gui-nicklist.h"
@@ -309,6 +310,35 @@ gui_main_refreshs ()
     {
         gui_color_buffer_display ();
         gui_color_buffer_refresh_needed = 0;
+    }
+
+    /* compute max length for prefix/buffer if needed */
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        /* compute buffer/prefix max length for own_lines */
+        if (ptr_buffer->own_lines)
+        {
+            if (ptr_buffer->own_lines->buffer_max_length_refresh)
+            {
+                gui_line_compute_buffer_max_length (ptr_buffer,
+                                                    ptr_buffer->own_lines);
+            }
+            if (ptr_buffer->own_lines->prefix_max_length_refresh)
+                gui_line_compute_prefix_max_length (ptr_buffer->own_lines);
+        }
+
+        /* compute buffer/prefix max length for mixed_lines */
+        if (ptr_buffer->mixed_lines)
+        {
+            if (ptr_buffer->mixed_lines->buffer_max_length_refresh)
+            {
+                gui_line_compute_buffer_max_length (ptr_buffer,
+                                                    ptr_buffer->mixed_lines);
+            }
+            if (ptr_buffer->mixed_lines->prefix_max_length_refresh)
+                gui_line_compute_prefix_max_length (ptr_buffer->mixed_lines);
+        }
     }
 
     /* refresh window if needed */

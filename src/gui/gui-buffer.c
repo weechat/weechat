@@ -1013,7 +1013,7 @@ gui_buffer_set_short_name (struct t_gui_buffer *buffer, const char *short_name)
         strdup (short_name) : NULL;
 
     if (buffer->mixed_lines)
-        gui_line_compute_buffer_max_length (buffer, buffer->mixed_lines);
+        buffer->mixed_lines->buffer_max_length_refresh = 1;
     gui_buffer_ask_chat_refresh (buffer, 1);
 
     hook_signal_send ("buffer_renamed",
@@ -2741,9 +2741,8 @@ gui_buffer_unmerge (struct t_gui_buffer *buffer, int number)
 
     if (ptr_new_active_buffer)
     {
-        gui_line_compute_prefix_max_length (ptr_new_active_buffer->mixed_lines);
-        gui_line_compute_buffer_max_length (ptr_new_active_buffer,
-                                            ptr_new_active_buffer->mixed_lines);
+        ptr_new_active_buffer->mixed_lines->prefix_max_length_refresh = 1;
+        ptr_new_active_buffer->mixed_lines->buffer_max_length_refresh = 1;
     }
 
     gui_window_ask_refresh (1);

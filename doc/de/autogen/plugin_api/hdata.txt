@@ -786,7 +786,9 @@
   'first_line_not_read' (integer) +
   'lines_hidden' (integer) +
   'buffer_max_length' (integer) +
-  'prefix_max_length' (integer) |
+  'buffer_max_length_refresh' (integer) +
+  'prefix_max_length' (integer) +
+  'prefix_max_length_refresh' (integer) |
  |
   -
 

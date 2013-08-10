@@ -68,7 +68,9 @@ gui_lines_alloc ()
         new_lines->first_line_not_read = 0;
         new_lines->lines_hidden = 0;
         new_lines->buffer_max_length = 0;
+        new_lines->buffer_max_length_refresh = 0;
         new_lines->prefix_max_length = CONFIG_INTEGER(config_look_prefix_align_min);
+        new_lines->prefix_max_length_refresh = 0;
     }
 
     return new_lines;
@@ -711,6 +713,7 @@ gui_line_compute_buffer_max_length (struct t_gui_buffer *buffer,
     const char *short_name;
 
     lines->buffer_max_length = 0;
+
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
@@ -722,6 +725,8 @@ gui_line_compute_buffer_max_length (struct t_gui_buffer *buffer,
                 lines->buffer_max_length = length;
         }
     }
+
+    lines->buffer_max_length_refresh = 0;
 }
 
 /*
@@ -749,6 +754,8 @@ gui_line_compute_prefix_max_length (struct t_gui_lines *lines)
                 lines->prefix_max_length = prefix_length;
         }
     }
+
+    lines->prefix_max_length_refresh = 0;
 }
 
 /*
@@ -792,7 +799,7 @@ gui_line_remove_from_list (struct t_gui_buffer *buffer,
 {
     struct t_gui_window *ptr_win;
     struct t_gui_window_scroll *ptr_scroll;
-    int update_prefix_max_length, prefix_length, prefix_is_nick;
+    int prefix_length, prefix_is_nick;
 
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
@@ -815,8 +822,8 @@ gui_line_remove_from_list (struct t_gui_buffer *buffer,
                                      &prefix_is_nick);
     if (prefix_is_nick)
         prefix_length += config_length_nick_prefix_suffix;
-    update_prefix_max_length =
-        (prefix_length == lines->prefix_max_length);
+    if (prefix_length == lines->prefix_max_length)
+        lines->prefix_max_length_refresh = 1;
 
     /* move read marker if it was on line we are removing */
     if (lines->last_read_line == line)
@@ -853,10 +860,6 @@ gui_line_remove_from_list (struct t_gui_buffer *buffer,
     lines->lines_count--;
 
     free (line);
-
-    /* compute "prefix_max_length" if needed */
-    if (update_prefix_max_length)
-        gui_line_compute_prefix_max_length (lines);
 }
 
 /*
@@ -1360,11 +1363,9 @@ gui_line_mix_buffers (struct t_gui_buffer *buffer)
         }
     }
 
-    /* compute "prefix_max_length" for mixed lines */
-    gui_line_compute_prefix_max_length (new_lines);
-
-    /* compute "buffer_max_length" for mixed lines */
-    gui_line_compute_buffer_max_length (buffer, new_lines);
+    /* ask refresh of prefix/buffer max length for mixed lines */
+    new_lines->prefix_max_length_refresh = 1;
+    new_lines->buffer_max_length_refresh = 1;
 
     /* free old mixed lines */
     if (ptr_buffer_found->mixed_lines)
@@ -1407,7 +1408,9 @@ gui_line_hdata_lines_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_gui_lines, first_line_not_read, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_lines, lines_hidden, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_lines, buffer_max_length, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_lines, buffer_max_length_refresh, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_lines, prefix_max_length, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_lines, prefix_max_length_refresh, INTEGER, 0, NULL, NULL);
     }
     return hdata;
 }
@@ -1506,7 +1509,7 @@ gui_line_hdata_line_data_update_cb (void *data,
         hdata_set (hdata, pointer, "prefix", value);
         line_data->prefix_length = (line_data->prefix) ?
             gui_chat_strlen_screen (line_data->prefix) : 0;
-        gui_line_compute_prefix_max_length (line_data->buffer->lines);
+        line_data->buffer->lines->prefix_max_length_refresh = 1;
         rc++;
         update_coords = 1;
     }
@@ -1654,13 +1657,15 @@ gui_lines_print_log (struct t_gui_lines *lines)
 {
     if (lines)
     {
-        log_printf ("    first_line. . . . . . : 0x%lx", lines->first_line);
-        log_printf ("    last_line . . . . . . : 0x%lx", lines->last_line);
-        log_printf ("    last_read_line. . . . : 0x%lx", lines->last_read_line);
-        log_printf ("    lines_count . . . . . : %d",    lines->lines_count);
-        log_printf ("    first_line_not_read . : %d",    lines->first_line_not_read);
-        log_printf ("    lines_hidden. . . . . : %d",    lines->lines_hidden);
-        log_printf ("    buffer_max_length . . : %d",    lines->buffer_max_length);
-        log_printf ("    prefix_max_length . . : %d",    lines->prefix_max_length);
+        log_printf ("    first_line . . . . . . . : 0x%lx", lines->first_line);
+        log_printf ("    last_line. . . . . . . . : 0x%lx", lines->last_line);
+        log_printf ("    last_read_line . . . . . : 0x%lx", lines->last_read_line);
+        log_printf ("    lines_count. . . . . . . : %d",    lines->lines_count);
+        log_printf ("    first_line_not_read. . . : %d",    lines->first_line_not_read);
+        log_printf ("    lines_hidden . . . . . . : %d",    lines->lines_hidden);
+        log_printf ("    buffer_max_length. . . . : %d",    lines->buffer_max_length);
+        log_printf ("    buffer_max_length_refresh: %d",    lines->buffer_max_length_refresh);
+        log_printf ("    prefix_max_length. . . . : %d",    lines->prefix_max_length);
+        log_printf ("    prefix_max_length_refresh: %d",    lines->prefix_max_length_refresh);
     }
 }

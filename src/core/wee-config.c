@@ -412,9 +412,9 @@ config_compute_prefix_max_length_all_buffers ()
          ptr_buffer = ptr_buffer->next_buffer)
     {
         if (ptr_buffer->own_lines)
-            gui_line_compute_prefix_max_length (ptr_buffer->own_lines);
+            ptr_buffer->own_lines->prefix_max_length_refresh = 1;
         if (ptr_buffer->mixed_lines)
-            gui_line_compute_prefix_max_length (ptr_buffer->mixed_lines);
+            ptr_buffer->mixed_lines->prefix_max_length_refresh = 1;
     }
 }
 
