@@ -14,6 +14,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 Version 0.4.2 (under dev!)
 --------------------------
 
+* core: fix random crash on "/buffer close" with a buffer number (or a range of
+  buffers)
 * core: optimize the removal of lines in buffers (a lot faster to clear/close
   buffers with lot of lines)
 * core: change color format for options weechat.look.buffer_time_format and
