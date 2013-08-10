@@ -523,6 +523,22 @@ Configurez le port du serveur, SSL, dhkey_size, puis connectez-vous :
 /connect freenode
 ----------------------------------------
 
+[[irc_oauth]]
+Comment se connecter à un serveur qui requiert "oauth" ?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Des serveurs tels que 'twitch' requièrent oauth pour se connecter.
+
+L'oauth est simplement un mot de passe avec la valeur "oauth:XXXX".
+
+Vous pouvez créer un tel serveur et vous y connecter avec les commandes
+suivantes (remplacez le nom et l'adresse par les valeurs appropriées) :
+
+----------------------------------------
+/server add nom irc.server.org -password="oauth:XXXX"
+/connect nom
+----------------------------------------
+
 [[irc_sasl]]
 Comment puis-je être identifié avant de rejoindre les canaux ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
