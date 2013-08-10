@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.2-dev, 2013-08-05
+v0.4.2-dev, 2013-08-10
 
 
 This document lists all changes for each version.
@@ -55,6 +55,10 @@ Version 0.4.2 (under dev!)
   "layout_window"
 * core: fix line alignment when option weechat.look.buffer_time_format is set
   to empty string
+* api: return hashtable item pointer in functions hashtable_set and
+  hashtable_set_with_size
+* api: change type of hashtable key hash to unsigned long
+* api: add "callback_free_key" in hashtable
 * api: add support of colors with format `${color:xxx}` in function
   string_eval_expression and command /eval
 * api: add argument "options" in function string_eval_expression, add option
