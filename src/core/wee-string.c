@@ -31,6 +31,7 @@
 #include <wctype.h>
 #include <regex.h>
 #include <wchar.h>
+#include <stdint.h>
 
 #ifdef HAVE_ICONV
 #include <iconv.h>
@@ -47,9 +48,15 @@
 #include "weechat.h"
 #include "wee-string.h"
 #include "wee-config.h"
+#include "wee-hashtable.h"
 #include "wee-utf8.h"
 #include "../gui/gui-color.h"
 #include "../plugins/plugin.h"
+
+
+typedef uint32_t string_shared_count_t;
+
+struct t_hashtable *string_hashtable_shared = NULL;
 
 
 /*
@@ -2188,4 +2195,161 @@ string_replace_with_callback (const char *string,
     }
 
     return result;
+}
+
+/*
+ * Hashes a shared string.
+ * The string starts after the reference count, which is skipped.
+ *
+ * Returns the hash of the shared string (variant of djb2).
+ */
+
+unsigned long
+string_shared_hash_key (struct t_hashtable *hashtable,
+                        const void *key)
+{
+    /* make C compiler happy */
+    (void) hashtable;
+
+    return hashtable_hash_key_djb2 (((const char *)key) + sizeof (string_shared_count_t));
+}
+
+/*
+ * Compares two shared strings.
+ * Each string starts after the reference count, which is skipped.
+ *
+ * Returns:
+ *   < 0: key1 < key2
+ *     0: key1 == key2
+ *   > 0: key1 > key2
+ */
+
+int
+string_shared_keycmp (struct t_hashtable *hashtable,
+                      const void *key1, const void *key2)
+{
+    /* make C compiler happy */
+    (void) hashtable;
+
+    return strcmp (((const char *)key1) + sizeof (string_shared_count_t),
+                   ((const char *)key2) + sizeof (string_shared_count_t));
+}
+
+/*
+ * Frees a shared string.
+ */
+
+void
+string_shared_free_key (struct t_hashtable *hashtable,
+                        void *key, const void *value)
+{
+    /* make C compiler happy */
+    (void) hashtable;
+    (void) value;
+
+    free (key);
+}
+
+/*
+ * Gets a pointer to a shared string.
+ *
+ * A shared string is an entry in the hashtable "string_hashtable_shared", with:
+ * - key: reference count (unsigned integer on 32 bits) + string
+ * - value: NULL pointer (not used)
+ *
+ * The initial reference count is set to 1 and is incremented each time this
+ * function is called for a same string (string content, not the pointer).
+ *
+ * Returns the pointer to the shared string (start of string in key, after the
+ * reference count), NULL if error.
+ * The string returned has exactly same content as string received in argument,
+ * but the pointer to the string is different.
+ */
+
+const char *
+string_shared_get (const char *string)
+{
+    struct t_hashtable_item *ptr_item;
+    char *key;
+    int length;
+
+    if (!string_hashtable_shared)
+    {
+        /*
+         * use large htable inside hashtable to prevent too many collisions,
+         * which would slow down search of a string in the hashtable
+         */
+        string_hashtable_shared = hashtable_new (1024,
+                                                 WEECHAT_HASHTABLE_POINTER,
+                                                 WEECHAT_HASHTABLE_POINTER,
+                                                 &string_shared_hash_key,
+                                                 &string_shared_keycmp);
+        if (!string_hashtable_shared)
+            return NULL;
+
+        string_hashtable_shared->callback_free_key = &string_shared_free_key;
+    }
+
+    length = sizeof (string_shared_count_t) + strlen (string) + 1;
+    key = malloc (length);
+    if (!key)
+        return NULL;
+    *((string_shared_count_t *)key) = 1;
+    strcpy (key + sizeof (string_shared_count_t), string);
+
+    ptr_item = hashtable_get_item (string_hashtable_shared, key, NULL);
+    if (ptr_item)
+    {
+        /*
+         * the string already exists in the hashtable, then just increase the
+         * reference count on the string
+         */
+        (*((string_shared_count_t *)(ptr_item->key)))++;
+        free (key);
+    }
+    else
+    {
+        /* add the shared string in the hashtable */
+        ptr_item = hashtable_set (string_hashtable_shared, key, NULL);
+        if (!ptr_item)
+            free (key);
+    }
+
+    return (ptr_item) ?
+        ((const char *)ptr_item->key) + sizeof (string_shared_count_t) : NULL;
+}
+
+/*
+ * Frees a shared string.
+ *
+ * The reference count of the string is decremented. If it becomes 0, then the
+ * shared string is removed from the hashtable (and then the string is really
+ * destroyed).
+ */
+
+void
+string_shared_free (const char *string)
+{
+    string_shared_count_t *ptr_count;
+
+    ptr_count = (string_shared_count_t *)(string - sizeof (string_shared_count_t));
+
+    (*ptr_count)--;
+
+    if (*ptr_count == 0)
+        hashtable_remove (string_hashtable_shared, ptr_count);
+}
+
+/*
+ * Frees all allocated data.
+ */
+
+void
+string_end ()
+{
+    if (string_hashtable_shared)
+    {
+        hashtable_free (string_hashtable_shared);
+        string_hashtable_shared = NULL;
+    }
 }

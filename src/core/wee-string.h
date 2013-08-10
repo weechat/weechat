@@ -84,5 +84,8 @@ extern char *string_replace_with_callback (const char *string,
                                            char *(*callback)(void *data, const char *text),
                                            void *callback_data,
                                            int *errors);
+extern const char *string_shared_get (const char *string);
+extern void string_shared_free (const char *string);
+extern void string_end ();
 
 #endif /* __WEECHAT_STRING_H */
