@@ -2052,7 +2052,8 @@ config_weechat_init_options ()
     config_look_day_change_time_format = config_file_new_option (
         weechat_config_file, ptr_section,
         "day_change_time_format", "string",
-        N_("time format for date displayed when day changed"),
+        N_("time format for date displayed when day changed (see man strftime "
+           "for date/time specifiers)"),
         NULL, 0, 0, "%a, %d %b %Y", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_eat_newline_glitch = config_file_new_option (
         weechat_config_file, ptr_section,
@@ -2457,7 +2458,7 @@ config_weechat_init_options ()
         weechat_config_file, ptr_section,
         "time_format", "string",
         N_("time format for dates converted to strings and displayed in "
-           "messages"),
+           "messages (see man strftime for date/time specifiers)"),
         NULL, 0, 0, "%a, %d %b %Y %T", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_window_separator_horizontal = config_file_new_option (
         weechat_config_file, ptr_section,

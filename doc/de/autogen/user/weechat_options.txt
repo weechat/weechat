@@ -469,7 +469,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.look.day_change_time_format]] *weechat.look.day_change_time_format*
-** Beschreibung: `Format für die Uhrzeit und das Datum, dass beim Datumswechsel angezeigt werden soll`
+** Beschreibung: `time format for date displayed when day changed (see man strftime for date/time specifiers)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%a, %d %b %Y"`)
 
@@ -784,7 +784,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.look.time_format]] *weechat.look.time_format*
-** Beschreibung: `Zeitstempel für das Datum. Der Zeitstempel wird in eine Zeichenkette umgewandelt und in Nachrichten dargestellt`
+** Beschreibung: `time format for dates converted to strings and displayed in messages (see man strftime for date/time specifiers)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%a, %d %b %Y %T"`)
 

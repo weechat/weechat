@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-08-07 08:25+0200\n"
+"POT-Creation-Date: 2013-08-11 19:52+0200\n"
 "PO-Revision-Date: 2013-07-31 18:41+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2830,8 +2830,13 @@ msgstr ""
 msgid "display special message when day changes"
 msgstr "mostra un messaggio speciale al cambio di data"
 
-msgid "time format for date displayed when day changed"
-msgstr "formato dell'ora visualizzato al cambio di data"
+#, fuzzy
+msgid ""
+"time format for date displayed when day changed (see man strftime for date/"
+"time specifiers)"
+msgstr ""
+"formato dell'ora per l'elemento barra \"time\" (consultare man strftime per "
+"gli specificatori data/ora)"
 
 msgid ""
 "if set, the eat_newline_glitch will be set to 0; this is used to not add new "
@@ -3227,7 +3232,10 @@ msgstr ""
 "imposta titolo per la finestra (terminale per interfacce Curses) con nome e "
 "versione"
 
-msgid "time format for dates converted to strings and displayed in messages"
+#, fuzzy
+msgid ""
+"time format for dates converted to strings and displayed in messages (see "
+"man strftime for date/time specifiers)"
 msgstr ""
 "formato dell'ora per le date convertite a stringhe e mostrate nei messaggi"
 
@@ -10116,6 +10124,9 @@ msgstr "Tipo"
 
 msgid "Constants"
 msgstr "Costanti"
+
+#~ msgid "time format for date displayed when day changed"
+#~ msgstr "formato dell'ora visualizzato al cambio di data"
 
 #~ msgid "username for SASL authentication"
 #~ msgstr "nome utente per l'autenticazione SASL"

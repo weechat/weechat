@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-08-07 08:25+0200\n"
+"POT-Creation-Date: 2013-08-11 19:52+0200\n"
 "PO-Revision-Date: 2013-08-02 08:50+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -2798,8 +2798,13 @@ msgstr ""
 msgid "display special message when day changes"
 msgstr "日付が変わった際に特殊メッセージを表示"
 
-msgid "time format for date displayed when day changed"
-msgstr "日付が変わったときに表示される時間フォーマット"
+#, fuzzy
+msgid ""
+"time format for date displayed when day changed (see man strftime for date/"
+"time specifiers)"
+msgstr ""
+"\"time\" バーアイテムの時間フォーマット (日付/時間指定子は strftime の man を"
+"参照)"
 
 msgid ""
 "if set, the eat_newline_glitch will be set to 0; this is used to not add new "
@@ -3173,7 +3178,10 @@ msgid "set title for window (terminal for Curses GUI) with name and version"
 msgstr ""
 "名前とバージョンを含むウィンドウのタイトルを設定 (Curses GUI 用のターミナル)"
 
-msgid "time format for dates converted to strings and displayed in messages"
+#, fuzzy
+msgid ""
+"time format for dates converted to strings and displayed in messages (see "
+"man strftime for date/time specifiers)"
 msgstr "文字列へ変換されるかメッセージ中に表示される日付の時間フォーマット"
 
 msgid "display an horizontal separator between windows"
@@ -10071,6 +10079,9 @@ msgstr "タイプ"
 
 msgid "Constants"
 msgstr "定数"
+
+#~ msgid "time format for date displayed when day changed"
+#~ msgstr "日付が変わったときに表示される時間フォーマット"
 
 #~ msgid "username for SASL authentication"
 #~ msgstr "SASL 認証用ユーザ名"

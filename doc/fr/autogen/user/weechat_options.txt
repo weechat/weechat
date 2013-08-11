@@ -469,7 +469,7 @@
 ** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_weechat.look.day_change_time_format]] *weechat.look.day_change_time_format*
-** description: `format de date pour la date affichée quand le jour a changé`
+** description: `format de date pour la date affichée quand le jour a changé (voir man strftime pour le format de date/heure)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"%a, %d %b %Y"`)
 
@@ -584,7 +584,7 @@
 ** valeurs: toute chaîne (valeur par défaut: `"*"`)
 
 * [[option_weechat.look.item_time_format]] *weechat.look.item_time_format*
-** description: `format de date/heure pour l'objet de barre \"time\" (voir man strftime pour le format de date/heure)`
+** description: `format de date/heure pour l'objet de barre "time" (voir man strftime pour le format de date/heure)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"%H:%M"`)
 
@@ -784,7 +784,7 @@
 ** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_weechat.look.time_format]] *weechat.look.time_format*
-** description: `format de date/heure pour les dates converties en chaînes et affichées dans les messages`
+** description: `format de date/heure pour les dates converties en chaînes et affichées dans les messages (voir man strftime pour le format de date/heure)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"%a, %d %b %Y %T"`)
 

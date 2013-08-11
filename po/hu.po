@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-08-07 08:25+0200\n"
+"POT-Creation-Date: 2013-08-11 19:52+0200\n"
 "PO-Revision-Date: 2013-07-31 18:41+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2285,7 +2285,9 @@ msgid "display special message when day changes"
 msgstr "speciális üzenet az aktuális nap megváltozásakor"
 
 #, fuzzy
-msgid "time format for date displayed when day changed"
+msgid ""
+"time format for date displayed when day changed (see man strftime for date/"
+"time specifiers)"
 msgstr "új nap kezdetével megjelenő időbélyeg"
 
 msgid ""
@@ -2587,7 +2589,9 @@ msgstr ""
 "és verziójára"
 
 #, fuzzy
-msgid "time format for dates converted to strings and displayed in messages"
+msgid ""
+"time format for dates converted to strings and displayed in messages (see "
+"man strftime for date/time specifiers)"
 msgstr "új nap kezdetével megjelenő időbélyeg"
 
 msgid "display an horizontal separator between windows"

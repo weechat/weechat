@@ -469,7 +469,7 @@
 ** values: on, off (default value: `on`)
 
 * [[option_weechat.look.day_change_time_format]] *weechat.look.day_change_time_format*
-** description: `time format for date displayed when day changed`
+** description: `time format for date displayed when day changed (see man strftime for date/time specifiers)`
 ** type: string
 ** values: any string (default value: `"%a, %d %b %Y"`)
 
@@ -784,7 +784,7 @@
 ** values: on, off (default value: `on`)
 
 * [[option_weechat.look.time_format]] *weechat.look.time_format*
-** description: `time format for dates converted to strings and displayed in messages`
+** description: `time format for dates converted to strings and displayed in messages (see man strftime for date/time specifiers)`
 ** type: string
 ** values: any string (default value: `"%a, %d %b %Y %T"`)
 

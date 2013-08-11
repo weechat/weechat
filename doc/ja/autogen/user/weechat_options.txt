@@ -469,7 +469,7 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_weechat.look.day_change_time_format]] *weechat.look.day_change_time_format*
-** 説明: `日付が変わったときに表示される時間フォーマット`
+** 説明: `time format for date displayed when day changed (see man strftime for date/time specifiers)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"%a, %d %b %Y"`)
 
@@ -784,7 +784,7 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_weechat.look.time_format]] *weechat.look.time_format*
-** 説明: `文字列へ変換されるかメッセージ中に表示される日付の時間フォーマット`
+** 説明: `time format for dates converted to strings and displayed in messages (see man strftime for date/time specifiers)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"%a, %d %b %Y %T"`)
 
