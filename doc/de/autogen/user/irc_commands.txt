@@ -122,8 +122,8 @@ Beispiel:
 ........................................
 /dehalfop  <nick> [<nick>...]
 
-nick: nick or mask (can start or end with "*" as wildcard)
-   *: remove channel half-operator status from everybody on channel except yourself
+nick: Nick oder Maske (darf mit einem "*" als Platzhalter beginnen oder enden)
+   *: entzieht allen Nicks im Channel den half-operator-Status, ausgenommen sich selber
 ........................................
 
 [[command_irc_deop]]
@@ -132,8 +132,8 @@ nick: nick or mask (can start or end with "*" as wildcard)
 /deop  <nick> [<nick>...]
        * -yes
 
-nick: nick or mask (can start or end with "*" as wildcard)
-   *: remove channel operator status from everybody on channel except yourself
+nick: Nick oder Maske (darf mit einem "*" als Platzhalter beginnen oder enden)
+   *: entzieht allen Nicks im Channel den Operator-Status, ausgenommen sich selber
 ........................................
 
 [[command_irc_devoice]]
@@ -142,8 +142,8 @@ nick: nick or mask (can start or end with "*" as wildcard)
 /devoice  <nick> [<nick>...]
           * -yes
 
-nick: nick or mask (can start or end with "*" as wildcard)
-   *: remove voice from everybody on channel
+nick: Nick oder Maske (darf mit einem "*" als Platzhalter beginnen oder enden)
+   *: entzieht allen Nicks im Channel den voice-Status
 ........................................
 
 [[command_irc_die]]
@@ -171,8 +171,8 @@ reason: Begründung der Trennung
 /halfop  <nick> [<nick>...]
          * -yes
 
-nick: nick or mask (can start or end with "*" as wildcard)
-   *: give channel half-operator status to everybody on channel
+nick: Nick oder Maske (darf mit einem "*" als Platzhalter beginnen oder enden)
+   *: vergibt an alle Nicks im Channel den half-operator-Status
 ........................................
 
 [[command_irc_ignore]]
@@ -439,8 +439,8 @@ Beispiele:
 /op  <nick> [<nick>...]
      * -yes
 
-nick: nick or mask (can start or end with "*" as wildcard)
-   *: give channel operator status to everybody on channel
+nick: Nick oder Maske (darf mit einem "*" als Platzhalter beginnen oder enden)
+   *: vergibt an alle Nicks im Channel den Operator-Status
 ........................................
 
 [[command_irc_oper]]
@@ -739,8 +739,8 @@ server: Servername
 ........................................
 /voice  <nick> [<nick>...]
 
-nick: nick or mask (can start or end with "*" as wildcard)
-   *: give voice to everybody on channel
+nick: Nick oder Maske (darf mit einem "*" als Platzhalter beginnen oder enden)
+   *: vergibt an alle Nicks im Channel den voice-Status
 ........................................
 
 [[command_irc_wallchops]]

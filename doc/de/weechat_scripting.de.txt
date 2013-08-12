@@ -549,16 +549,15 @@ Die print Funktion heißt in Perl/Ruby/Lua/Tcl `print`. In Python lautet die Fun
 Text in einen Buffer senden
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Sie können einen Text oder einen Befehl zu einem Buffer senden. Dies entspricht exakt dem
-Verhalten als ob Sie einen Text oder einen Befehl in der Befehlszeile eingeben und diesen
-mit der [Enter] Taste bestätigen.
+Sie können einen Text oder einen Befehl in einen Buffer senden. Dies entspricht exakt dem
+Verhalten als ob Sie einen Text oder einen Befehl in die Befehlszeile eingeben und selbigen
+mit der [Eingabe] Taste bestätigen.
 
 Beispiele:
 
-// TRANSLATION MISSING
 [source,python]
 ----------------------------------------
-# execute command "/help" on current buffer (result is on core buffer)
+# führt den Befehl "/help" im aktuellen Buffer aus (die Ausgabe erfolgt im Core-Buffer)
 weechat.command("", "/help")
 
 # sendet den Text "Hallo" in den IRC Channel #weechat (die Teilnehmer des Channels sehen diese Nachricht)

@@ -99,7 +99,7 @@
 ** Werte: 0 .. 256 (Standardwert: `20`)
 
 * [[option_xfer.look.pv_tags]] *xfer.look.pv_tags*
-** Beschreibung: `comma separated list of tags used in private messages, for example: "notify_message", "notify_private" or "notify_highlight"`
+** Beschreibung: `durch Kommata getrennte Liste von Schlagwörtern die für private Nachrichten genutzt werden sollen. Zum Beispiel: "notify_message", "notify_private" oder "notify_highlight"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"notify_private"`)
 

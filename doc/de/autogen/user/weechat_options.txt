@@ -399,7 +399,7 @@
 ** Werte: none, highlight, message, all (Standardwert: `all`)
 
 * [[option_weechat.look.buffer_time_format]] *weechat.look.buffer_time_format*
-** Beschreibung: `time format for each line displayed in buffers (see man strftime for date/time specifiers) (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval); for example time using grayscale (requires support of 256 colors): "${color:252}%H${color:245}%M${color:240}%S"`
+** Beschreibung: `Format für die Uhrzeit, die in jeder Zeile eines Buffers dargestellt wird (siehe man strftime, für Platzhalter für das Datum und die Uhrzeit) (Hinweis: Inhalt ist evaluiert, somit kann mittels des Formats "${color:xxx} Farben gesetzt werden, siehe /help eval). Beispiel: Uhrzeit in Graustufen (Unterstützung von 256 Farben notwendig): "${color:252}%H${color:245}%M${color:240}%S"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%H:%M:%S"`)
 
@@ -534,7 +534,7 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_weechat.look.hotlist_prefix]] *weechat.look.hotlist_prefix*
-** Beschreibung: `text displayed at the beginning of the hotlist`
+** Beschreibung: `Text der am Ende der Hotlist angezeigt werden soll`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"H: "`)
 
@@ -549,7 +549,7 @@
 ** Werte: group_time_asc, group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc (Standardwert: `group_time_asc`)
 
 * [[option_weechat.look.hotlist_suffix]] *weechat.look.hotlist_suffix*
-** Beschreibung: `text displayed at the end of the hotlist`
+** Beschreibung: `Text der am Ende der Hotlist angezeigt werden soll`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -604,7 +604,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.look.key_bind_safe]] *weechat.look.key_bind_safe*
-** Beschreibung: `allow only binding of "safe" keys (beginning with a ctrl or meta code)`
+** Beschreibung: `Es dürfen nur "geschützte" Tasten zugeordnet werden (Tasten, die mittels ctrl oder meta verwendet werden)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -644,7 +644,7 @@
 ** Werte: -1 .. 2147483647 (Standardwert: `1`)
 
 * [[option_weechat.look.prefix_action]] *weechat.look.prefix_action*
-** Beschreibung: `prefix for action messages (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)`
+** Beschreibung: `Präfix, dass bei einer Action-Nachricht genutzt wird (Hinweis: Inhalt ist evaluiert, somit kann mittels des Formats "${color:xxx} Farben gesetzt werden, siehe /help eval)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `" *"`)
 
@@ -694,22 +694,22 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.look.prefix_error]] *weechat.look.prefix_error*
-** Beschreibung: `prefix for error messages (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)`
+** Beschreibung: `Präfix, dass bei einer Fehlernachricht genutzt wird (Hinweis: Inhalt ist evaluiert, somit kann mittels des Formats "${color:xxx} Farben gesetzt werden, siehe /help eval)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"=!="`)
 
 * [[option_weechat.look.prefix_join]] *weechat.look.prefix_join*
-** Beschreibung: `prefix for join messages (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)`
+** Beschreibung: `Präfix, dass bei einer Join-Nachricht genutzt wird (Hinweis: Inhalt ist evaluiert, somit kann mittels des Formats "${color:xxx} Farben gesetzt werden, siehe /help eval)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"-->"`)
 
 * [[option_weechat.look.prefix_network]] *weechat.look.prefix_network*
-** Beschreibung: `prefix for network messages (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)`
+** Beschreibung: `Präfix, dass bei einer Netzwerknachricht genutzt wird (Hinweis: Inhalt ist evaluiert, somit kann mittels des Formats "${color:xxx} Farben gesetzt werden, siehe /help eval)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"--"`)
 
 * [[option_weechat.look.prefix_quit]] *weechat.look.prefix_quit*
-** Beschreibung: `prefix for quit messages (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)`
+** Beschreibung: `Präfix, dass bei einer Quit-Nachricht genutzt wird (Hinweis: Inhalt ist evaluiert, somit kann mittels des Formats "${color:xxx} Farben gesetzt werden, siehe /help eval)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"<--"`)
 
@@ -844,12 +844,12 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.startup.command_after_plugins]] *weechat.startup.command_after_plugins*
-** Beschreibung: `command executed when WeeChat starts, after loading plugins (note: content is evaluated, see /help eval)`
+** Beschreibung: `Nach dem Start von WeeChat wird dieser Befehl aufgerufen. Dies geschieht nachdem die Erweiterungen geladen worden sind (mehrere Befehle sind durch ";" zu trennen) (Hinweis: Inhalt ist evaluiert, siehe /help eval)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_weechat.startup.command_before_plugins]] *weechat.startup.command_before_plugins*
-** Beschreibung: `command executed when WeeChat starts, before loading plugins (note: content is evaluated, see /help eval)`
+** Beschreibung: `Nach dem Start von WeeChat wird dieser Befehl aufgerufen. Dies geschieht bevor die Erweiterungen geladen werden (mehrere Befehle sind durch ";" zu trennen) (Hinweis: Inhalt ist evaluiert, siehe /help eval)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 

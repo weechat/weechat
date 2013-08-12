@@ -91,8 +91,7 @@ welche Pakete optional genutzt werden können.
 | libncursesw5-dev ^(2)^            |             | *ja*     | ncurses Oberfläche
 | libcurl4-gnutls-dev               |             | *ja*     | URL Transfer
 | zlib1g-dev                        |             | *ja*     | Kompression für Pakete, die mittels Relay- (WeeChat Protokoll), Script-Erweiterung übertragen werden
-// TRANSLATION MISSING
-| libgcrypt11-dev                   |             | *ja*     | secured data, IRC SASL Authentifikation (DH-BLOWFISH/DH-AES), Skript-Erweiterung
+| libgcrypt11-dev                   |             | *ja*     | geschützte Daten, IRC SASL Authentifikation (DH-BLOWFISH/DH-AES), Skript-Erweiterung
 | libgnutls-dev                     | ≥ 2.2.0     |          | SSL Verbindung zu einem IRC Server, Unterstützung von SSL in der Relay-Erweiterung
 | gettext                           |             |          | Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch)
 | ca-certificates                   |             |          | Zertifikate für SSL Verbindungen
@@ -103,8 +102,7 @@ welche Pakete optional genutzt werden können.
 | liblua5.1-0-dev                   |             |          | lua Erweiterung
 | tcl-dev                           | ≥ 8.5       |          | tcl Erweiterung
 | guile-2.0-dev                     | ≥ 2.0       |          | guile (scheme) Erweiterung
-// TRANSLATION MISSING
-| asciidoc                          | ≥ 8.5.0     |          | build man page and documentation
+| asciidoc                          | ≥ 8.5.0     |          | zum Erstellen der man page und der Dokumentation
 | source-highlight                  |             |          | Syntax Highlight für Quelltext in Dokumentation
 | xsltproc,
   docbook-xml, docbook-xsl          |             |          | erstellt man page
@@ -154,15 +152,14 @@ Liste von häufig verwendeten Optionen:
   Art des builds: `Debug` (oder `RelWithDebInfo`) sollte verwendet werden, wenn meine eine Entwicklerversion
   von WeeChat nutzt.
 
-| PREFIX | directory | /usr/local |
+| PREFIX | Verzeichnis | /usr/local |
   Verzeichnis in welchem WeeChat installiert wird.
 
-| WEECHAT_HOME | directory | ~/.weechat |
+| WEECHAT_HOME | Verzeichnis | ~/.weechat |
   Standard-Verzeichnis in welchem die Daten liegen.
 
-// TRANSLATION MISSING
-| CA_FILE | file | /etc/ssl/certs/ca-certificates.crt |
-  File containing the certificate authorities.
+| CA_FILE | Datei | /etc/ssl/certs/ca-certificates.crt |
+  Datei enthält die Zertifizierungen.
   This is the default value of option
   <<option_weechat.network.gnutls_ca_file,weechat.network.gnutls_ca_file>>.
 
@@ -175,15 +172,13 @@ Liste von häufig verwendeten Optionen:
 | ENABLE_CHARSET | `ON`, `OFF` | ON |
   kompiliert <<charset_plugin,Charset Erweiterung>>.
 
-// TRANSLATION MISSING
 | ENABLE_MAN | `ON`, `OFF` | OFF |
-  Compile man page.
+  kompiliert man page.
 
-// TRANSLATION MISSING
 | ENABLE_DOC | `ON`, `OFF` | OFF |
-  kompiliert Dokumentation (it takes a long time, recommended only if you build
-  a binary package embedding documentation or if you can't browse documentation
-  online).
+  kompiliert Dokumentation (dies ist sehr zeitintensiv und wird nur empfohlen falls
+  Binärpakete erstellt werden, die die Dokumentation beinhalten sollen, oder man die
+  Dokumentation nicht auf der Homepage abrufen kann).
 
 | ENABLE_ENCHANT | `ON`, `OFF` | OFF |
   kompiliert <<aspell_plugin,Aspell plugin>> mittels Enchant.
@@ -1496,29 +1491,24 @@ Um der Vordergrundfarbe des Terminals das Attribut "fett" zuzuordnen:
 /set weechat.color.status_time *99999
 ----------------------------------------
 
-// TRANSLATION MISSING
 [[options_and_commands]]
-Options and commands
+Optionen und Befehle
 ~~~~~~~~~~~~~~~~~~~~
 
-// TRANSLATION MISSING
 [[sec_options]]
-Secured data options (sec.conf)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Optionen für schutzwürdige Daten (sec.conf)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-// TRANSLATION MISSING
-Sections:
+Sektionen:
 
-// TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
 |========================================
-| Section | Control command                    | Description
-| crypt   | /set sec.crypt.*                   | Options for encryption
-| data    | <<command_weechat_secure,/secure>> | Secured data
+| section | Control command                    | Beschreibung
+| crypt   | /set sec.crypt.*                   | Optionen für Verschlüsselung
+| data    | <<command_weechat_secure,/secure>> | geschützte Daten
 |========================================
 
-// TRANSLATION MISSING
-Options:
+Optionen:
 
 include::autogen/user/sec_options.txt[]
 
@@ -1526,38 +1516,35 @@ include::autogen/user/sec_options.txt[]
 WeeChat Optionen (weechat.conf)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-// TRANSLATION MISSING
-Sections:
+Sektionen:
 
-// TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
 |========================================
-| Section    | Control command                           | Description
+| Section    | Control command                           | Beschreibung
 | debug      | <<command_weechat_debug,/debug set>>      +
-               /set weechat.debug.*                      | Debug level, for core and plugins (options can be added/removed in section)
+               /set weechat.debug.*                      | Debug level, for core and plugins (Optionen können in Sektion hinzugefügt/entfernt werden)
 | startup    | /set weechat.startup.*                    | Startup options
 | look       | /set weechat.look.*                       | Look and feel
 | palette    | <<command_weechat_color,/color alias>>    +
-               /set weechat.palette.*                    | Color aliases (options can be added/removed in section)
-| color      | /set weechat.color.*                      | Colors
-| completion | /set weechat.completion.*                 | Completion options
-| history    | /set weechat.history.*                    | History options (commands and buffers)
+               /set weechat.palette.*                    | Alternativnamen für Farben (Optionen können in Sektion hinzugefügt/entfernt werden)
+| color      | /set weechat.color.*                      | Farben
+| completion | /set weechat.completion.*                 | Optionen für Vervollständigung
+| history    | /set weechat.history.*                    | Optionen für Befehlsverlauf (Befehle und Buffer)
 | proxy      | <<command_weechat_proxy,/proxy>>          +
-               /set weechat.proxy.*                      | Proxy options
-| network    | /set weechat.network.*                    | Network/SSL options
+               /set weechat.proxy.*                      | Proxy Optionen
+| network    | /set weechat.network.*                    | Netzwerk/SSL Optionen
 | bar        | <<command_weechat_bar,/bar>>              +
-               /set weechat.bar.*                        | Bar options
+               /set weechat.bar.*                        | Optionen für die Bars
 | layout     | <<command_weechat_layout,/layout>>        | Layouts
-| notify     | <<command_weechat_buffer,/buffer notify>> | Notify levels for buffers (options can be added/removed in section)
-| filter     | <<command_weechat_filter,/filter>>        | Filters
-| key        | <<command_weechat_key,/key>>              | Keys in default context
-| key_search | <<command_weechat_key,/key>>              | Keys in search context
-| key_cursor | <<command_weechat_key,/key>>              | Keys in cursor context
-| key_mouse  | <<command_weechat_key,/key>>              | Keys in mouse context
+| notify     | <<command_weechat_buffer,/buffer notify>> | Benachrichtigungsstufe für Buffer (Optionen können in Sektion hinzugefügt/entfernt werden)
+| filter     | <<command_weechat_filter,/filter>>        | Filter
+| key        | <<command_weechat_key,/key>>              | Tastenbefehle in default context
+| key_search | <<command_weechat_key,/key>>              | Tastenbefehle in search context
+| key_cursor | <<command_weechat_key,/key>>              | Tastenbefehle in cursor context
+| key_mouse  | <<command_weechat_key,/key>>              | Tastenbefehle in mouse context
 |========================================
 
-// TRANSLATION MISSING
-Options:
+Optionen:
 
 include::autogen/user/weechat_options.txt[]
 
@@ -1645,22 +1632,19 @@ Dabei ist es möglich mehrere Wörterbücher für einen Buffer zu nutzen.
 Optionen (aspell.conf)
 ^^^^^^^^^^^^^^^^^^^^^^
 
-// TRANSLATION MISSING
-Sections:
+Sektionen:
 
-// TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
 |========================================
-| Section    | Control command                           | Description
-| color      | /set aspell.color.*                       | Colors
-| check      | /set aspell.check.*                       | Options to control spell checking
+| Section    | Control command                           | Beschreibung
+| color      | /set aspell.color.*                       | Farben
+| check      | /set aspell.check.*                       | Optionen um Einstellungen an der Rechtschreibprüfung vorzunehmen
 | dict       | <<command_aspell_aspell,/aspell setdict>> +
-               /set aspell.dict.*                        | Dictionaries used by buffer (options can be added/removed in section)
-| option     | /set aspell.option.*                      | <<aspell_speller_options,Optionen für Rechtschreibprüfung>> (options can be added/removed in section)
+               /set aspell.dict.*                        | Wörterbücher für Buffer (Optionen können in Sektion hinzugefügt/entfernt werden)
+| option     | /set aspell.option.*                      | <<aspell_speller_options,Optionen für Rechtschreibprüfung>> (Optionen können in Sektion hinzugefügt/entfernt werden)
 |========================================
 
-// TRANSLATION MISSING
-Options:
+Optionen:
 
 include::autogen/user/aspell_options.txt[]
 
@@ -1761,22 +1745,19 @@ charset: terminal: ISO-8859-15, internal: UTF-8
 Optionen (charset.conf)
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-// TRANSLATION MISSING
-Sections:
+Sektionen:
 
-// TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
 |========================================
-| Section | Control command                             | Description
-| default | /set charset.default.*                      | Default decoding/encoding charset
+| Section | Control command                             | Beschreibung
+| default | /set charset.default.*                      | Vorgegebener Zeichensatz zum De-/kodieren.
 | decode  | <<command_charset_charset,/charset decode>> +
-            /set charset.decode.*                       | Decoding charset by buffer (options can be added/removed in section)
+            /set charset.decode.*                       | Zeichensatz zum dekodieren (Optionen können in Sektion hinzugefügt/entfernt werden)
 | encode  | <<command_charset_charset,/charset encode>> +
-            /set charset.encode.*                       | Encoding charset by buffer (options can be added/removed in section)
+            /set charset.encode.*                       | Zeichensatz zum kodieren (Optionen können in Sektion hinzugefügt/entfernt werden)
 |========================================
 
-// TRANSLATION MISSING
-Options:
+Optionen:
 
 include::autogen/user/charset_options.txt[]
 
@@ -1934,26 +1915,23 @@ $ weechat irc://nono@irc.freenode.net/#weechat,#toto
 Optionen (irc.conf)
 ^^^^^^^^^^^^^^^^^^^
 
-// TRANSLATION MISSING
-Sections:
+Sektionen:
 
-// TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
 |========================================
-| Section        | Control command                | Description
-| look           | /set irc.look.*                | Look and feel
-| color          | /set irc.color.*               | Colors
-| network        | /set irc.network.*             | Network options
-| msgbuffer      | /set irc.msgbuffer.*           | <<irc_target_buffer,Zielbuffer für IRC Nachrichten>> (options can be added/removed in section)
-| ctcp           | /set irc.ctcp.*                | <<irc_ctcp_replies,CTCP Antworten>> (options can be added/removed in section)
-| ignore         | <<command_irc_ignore,/ignore>> | Ignore people
-| server_default | /set irc.server_default.*      | Default values for servers (used when options in server are not defined)
+| Section        | Control command                | Beschreibung
+| look           | /set irc.look.*                | Erscheinungsbild
+| color          | /set irc.color.*               | Farben
+| network        | /set irc.network.*             | Netzwerkoptionen
+| msgbuffer      | /set irc.msgbuffer.*           | <<irc_target_buffer,Zielbuffer für IRC Nachrichten>> (Optionen können in Sektion hinzugefügt/entfernt werden)
+| ctcp           | /set irc.ctcp.*                | <<irc_ctcp_replies,CTCP Antworten>> (Optionen können in Sektion hinzugefügt/entfernt werden)
+| ignore         | <<command_irc_ignore,/ignore>> | Ignoriert Menschen
+| server_default | /set irc.server_default.*      | Standardwerte für Server (werden genutzt, falls keine Optionen für einen Server gesetzt sind)
 | server         | <<command_irc_server,/server>> +
-                   /set irc.server.*              | Servers
+                   /set irc.server.*              | Server
 |========================================
 
-// TRANSLATION MISSING
-Options:
+Optionen:
 
 include::autogen/user/irc_options.txt[]
 
@@ -2374,22 +2352,19 @@ gesichert werden soll.
 Optionen (logger.conf)
 ^^^^^^^^^^^^^^^^^^^^^^
 
-// TRANSLATION MISSING
-Sections:
+Sektionen:
 
-// TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
 |========================================
-| Section | Control command     | Description
-| look    | /set logger.look.*  | Look and feel
-| color   | /set logger.color.* | Colors
-| file    | /set logger.file.*  | Options for log files
-| level   | /set logger.level.* | Log level by buffer (options can be added/removed in section)
-| mask    | /set logger.mask.*  | Filename mask by buffer (options can be added/removed in section)
+| Section | Control command     | Beschreibung
+| look    | /set logger.look.*  | Erscheinungsbild
+| color   | /set logger.color.* | Farben
+| file    | /set logger.file.*  | Optionen für Protokolldateien
+| level   | /set logger.level.* | Protokollierungslevel pro Buffer (Optionen können in Sektion hinzugefügt/entfernt werden)
+| mask    | /set logger.mask.*  | Dateinamenmaske pro buffer (Optionen können in Sektion hinzugefügt/entfernt werden)
 |========================================
 
-// TRANSLATION MISSING
-Options:
+Optionen:
 
 include::autogen/user/logger_options.txt[]
 
@@ -2544,23 +2519,20 @@ Die Relay-Erweiterung wird genutzt um Daten, mittels unterschiedlicher Protokoll
 Optionen (relay.conf)
 ^^^^^^^^^^^^^^^^^^^^^
 
-// TRANSLATION MISSING
-Sections:
+Sektionen:
 
-// TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
 |========================================
-| Section | Control command                    | Description
-| look    | /set relay.look.*                  | Look and feel
-| color   | /set relay.color.*                 | Colors
-| network | /set relay.network.*               | Network options
-| irc     | /set relay.irc.*                   | Options specific to irc protocol (irc proxy)
+| Section | Control command                    | Beschreibung
+| look    | /set relay.look.*                  | Erscheinungsbild
+| color   | /set relay.color.*                 | Farben
+| network | /set relay.network.*               | Netzwerkoptionen
+| irc     | /set relay.irc.*                   | für das IRC Protokoll spezifische Optionen (IRC Proxy)
 | port    | <<command_relay_relay,/relay add>> +
-            /set relay.port.*                  | Ports used for relay (irc and weechat protocols) (options can be added/removed in section)
+            /set relay.port.*                  | Ports zur Nutzung der Relay-Erweiterung (IRC und weechat Protokolle) (Optionen können in Sektion hinzugefügt/entfernt werden)
 |========================================
 
-// TRANSLATION MISSING
-Options:
+Optionen:
 
 include::autogen/user/relay_options.txt[]
 
@@ -2694,20 +2666,17 @@ durch das Zeichen `*` zu ersetzen.
 Optionen (rmodifier.conf)
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-// TRANSLATION MISSING
-Sections:
+Sektionen:
 
-// TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
 |========================================
-| Section  | Control command                                | Description
-| look     | /set rmodifier.look.*                          | Look and feel
+| Section  | Control command                                | Beschreibung
+| look     | /set rmodifier.look.*                          | Erscheinungsbild
 | modifier | <<command_rmodifier_rmodifier,/rmodifier add>> +
              /set rmodifier.modifier.*                      | Rmodifiers
 |========================================
 
-// TRANSLATION MISSING
-Options:
+Optionen:
 
 include::autogen/user/rmodifier_options.txt[]
 
@@ -2777,25 +2746,22 @@ bitte die 'WeeChat Scripting Guide'.
 Script Optionen (script.conf)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-// TRANSLATION MISSING
-Sections:
+Sektionen:
 
-// TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
 |========================================
-| Section | Control command       | Description
-| look    | /set script.look.*    | Look and feel
-| color   | /set script.color.*   | Colors
-| scripts | /set script.scripts.* | Options for download of scripts
+| Section | Control command       | Beschreibung
+| look    | /set script.look.*    | Erscheinungsbild
+| color   | /set script.color.*   | Farben
+| scripts | /set script.scripts.* | Optionen für den Download von Skripten
 |========================================
 
-// TRANSLATION MISSING
-Options:
+Optionen:
 
 include::autogen/user/script_options.txt[]
 
 [[script_commands]]
-Script Befehle
+Skript Befehle
 ^^^^^^^^^^^^^^
 
 include::autogen/user/script_commands.txt[]
@@ -2850,21 +2816,18 @@ Mit der xfer Erweiterung kann man:
 Optionen (xfer.conf)
 ^^^^^^^^^^^^^^^^^^^^
 
-// TRANSLATION MISSING
-Sections:
+Sektionen:
 
-// TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
 |========================================
-| Section | Control command     | Description
-| look    | /set xfer.look.*    | Look and feel
-| color   | /set xfer.color.*   | Colors
-| network | /set xfer.network.* | Network options
-| file    | /set xfer.file.*    | Options for files sent/received
+| Section | Control command     | Beschreibung
+| look    | /set xfer.look.*    | Erscheinungsbild
+| color   | /set xfer.color.*   | Farben
+| network | /set xfer.network.* | Netzwerkoptionen
+| file    | /set xfer.file.*    | Optionen zum Versenden und Empfangen von Dateien
 |========================================
 
-// TRANSLATION MISSING
-Options:
+Optionen:
 
 include::autogen/user/xfer_options.txt[]
 

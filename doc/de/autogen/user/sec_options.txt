@@ -1,20 +1,20 @@
 * [[option_sec.crypt.cipher]] *sec.crypt.cipher*
-** Beschreibung: `cipher used to crypt data (the number after algorithm is the size of the key in bits)`
+** Beschreibung: `zu nutzendes Chiffre zum Verschlüsseln von Daten (die Zahl hinter dem Algorithmus bestimmt die Größe des Schlüssels, in Bits)`
 ** Typ: integer
 ** Werte: aes128, aes192, aes256 (Standardwert: `aes256`)
 
 * [[option_sec.crypt.hash_algo]] *sec.crypt.hash_algo*
-** Beschreibung: `hash algorithm used to check the decrypted data`
+** Beschreibung: `Hash-Algorithmus zur Überprüfung der verschlüsselten Daten`
 ** Typ: integer
 ** Werte: sha224, sha256, sha384, sha512 (Standardwert: `sha256`)
 
 * [[option_sec.crypt.passphrase_file]] *sec.crypt.passphrase_file*
-** Beschreibung: `path to a file containing the passphrase to encrypt/decrypt secured data; this option is used only when reading file sec.conf; only first line of file is used; this file is used only if the environment variable "WEECHAT_PASSPHRASE" is not set (the environment variable has higher priority); security note: it is recommended to keep this file readable only by you and store it outside WeeChat home (for example in your home); example: "~/.weechat-passphrase"`
+** Beschreibung: `Pfad zu einer Datei die die Passphrase enthält um damit schutzwürdige Daten zu ver- und entschlüsseln. Diese Option findet nur Anwendung, wenn die Datei sec.conf gelesen wird. Es wird auch nur die erste Zeile eingelesen. Diese Datei wird nur verwendet, falls die Umgebungsvariable "WEECHAT_PASSPHRASE" nicht genutzt wird (die Umgebungsvariable besitzt eine höhere Priorität). Sicherheitshinweis: Es ist anzuraten dieser Datei nur für die eigene Person Leserechte zu gewähren und die Datei nicht im Heimatverzeichnis von WeeChat zu sichern (zum Beispiel im /home/ Order); Beispiel: "~/.weechat-passphrase"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_sec.crypt.salt]] *sec.crypt.salt*
-** Beschreibung: `use salt when generating key used in encryption (recommended for maximum security); when enabled, the content of crypted data in file sec.conf will be different on each write of the file; if you put the file sec.conf in a version control system, then you can turn off this option to have always same content in file`
+** Beschreibung: `nutzt salt bei der Schlüsselerstellung für die Verschlüsselung (wird für maximale Sicherheit empfohlen); wenn aktiviert, ist der Inhalt der verschlüsselten Daten bei jeder Sicherung in die Datei sec.conf verschieden. Wird die Datei sec.conf in eine Versionsverwaltung eingepflegt kann die Option deaktiviert werden, um immer den selben Dateiinhalt zu erhalten`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 

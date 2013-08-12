@@ -120,7 +120,7 @@
 
 | weechat | proxies_options | Optionen für Proxys
 
-| weechat | secured_data | names of secured data (file sec.conf, section data)
+| weechat | secured_data | Namen der geschützten Daten (Datei sec.conf, section data)
 
 | weechat | weechat_commands | WeeChat Befehle
 

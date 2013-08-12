@@ -2,7 +2,7 @@
 |========================================
 | Erweiterung | Name | Beschreibung | Variablen | Update erlaubt | Listen
 
-| guile | guile_callback | callback of a script |
+| guile | guile_callback | Callback eines Skripts |
   'script' (pointer, hdata: "guile_script") +
   'function' (string) +
   'data' (string) +
@@ -222,7 +222,7 @@
   'irc_servers' +
   'last_irc_server'
 
-| lua | lua_callback | callback of a script |
+| lua | lua_callback | Callback eines Skripts |
   'script' (pointer, hdata: "lua_script") +
   'function' (string) +
   'data' (string) +
@@ -256,7 +256,7 @@
   'last_script' +
   'scripts'
 
-| perl | perl_callback | callback of a script |
+| perl | perl_callback | Callback eines Skripts |
   'script' (pointer, hdata: "perl_script") +
   'function' (string) +
   'data' (string) +
@@ -290,7 +290,7 @@
   'last_script' +
   'scripts'
 
-| python | python_callback | callback of a script |
+| python | python_callback | Callback eines Skripts |
   'script' (pointer, hdata: "python_script") +
   'function' (string) +
   'data' (string) +
@@ -324,7 +324,7 @@
   'last_script' +
   'scripts'
 
-| ruby | ruby_callback | callback of a script |
+| ruby | ruby_callback | Callback eines Skripts |
   'script' (pointer, hdata: "ruby_script") +
   'function' (string) +
   'data' (string) +
@@ -386,7 +386,7 @@
   'last_script_repo' +
   'scripts_repo'
 
-| tcl | tcl_callback | callback of a script |
+| tcl | tcl_callback | Callback eines Skripts |
   'script' (pointer, hdata: "tcl_script") +
   'function' (string) +
   'data' (string) +
