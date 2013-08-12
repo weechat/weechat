@@ -713,7 +713,7 @@ Le processus de mise à jour comporte 4 étapes :
   1. sauvegarder la session pour le cœur et les extensions (tampons, historique, ...)
   2. décharger toutes les extensions (les fichiers de configuration (*.conf) sont écrits sur disque)
   3. sauvegarder la configuration WeeChat (weechat.conf)
-  4. exécuter le nouveau binaire WeeChat et recharger la session.<
+  4. exécuter le nouveau binaire WeeChat et recharger la session.
 
 Avec l'option "-quit", le processus est légèrement différent :
   1. fermer *TOUTES* les connexions
