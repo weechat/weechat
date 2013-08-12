@@ -845,6 +845,10 @@ string_regex_flags (const char *regex, int default_flags, int *flags)
 /*
  * Compiles a regex using optional flags at beginning of string (for format of
  * flags in regex, see string_regex_flags()).
+ *
+ * Returns:
+ *   0: successful compilation
+ *   other value: compilation failed
  */
 
 int
