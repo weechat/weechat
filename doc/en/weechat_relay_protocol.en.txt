@@ -310,13 +310,13 @@ Arguments:
   'buffers,upgrade,buffer,nicklist' for "*" and 'buffer,nicklist' for a buffer):
 ** 'buffers': receive signals about buffers (opened/closed, moved, renamed,
    merged/unmerged, renamed); this can be used only with name "*"
-   (_new in version 0.4.1_)
+   _(new in version 0.4.1)_
 ** 'upgrade': receive signals about WeeChat upgrade (upgrade, upgrade ended);
    this can be used only with name "*"
-   (_new in version 0.4.1_)
+   _(new in version 0.4.1)_
 ** 'buffer': receive signals about buffer (new lines, type changed, title
     changed, local variable added/removed, and same signals as 'buffers' for the
-    buffer) (_updated in version 0.4.1_)
+    buffer) _(updated in version 0.4.1)_
 ** 'nicklist': receive nicklist after changes
 
 Examples:

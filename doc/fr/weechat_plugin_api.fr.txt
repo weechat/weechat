@@ -1289,7 +1289,7 @@ Paramètres :
 ** 1 : chaque chaîne contiendra toute la chaîne jusqu'à la fin de la ligne (voir
    exemple ci-dessous)
 ** 2 : comme 1, mais ne supprime pas les séparateurs en fin de chaîne avant le
-   découpage (_nouveau dans la version 0.3.6_)
+   découpage _(nouveau dans la version 0.3.6)_
 * 'num_items_max' : nombre maximum de chaînes à créer (0 = pas de limite)
 * 'num_items' : pointeur vers un entier qui contiendra le nombre de chaînes
   créées
@@ -3735,7 +3735,7 @@ Paramètres :
 * 'hashtable' : pointeur vers la hashtable
 * 'property' et 'value' : nom de la propriété, avec sa valeur :
 ** 'callback_free_key' : définit la fonction "callback" pour libérer les clés de
-   la hashtable (_nouveau dans la version 0.4.2_)
+   la hashtable _(nouveau dans la version 0.4.2)_
 ** 'callback_free_value' : définit la fonction "callback" pour libérer les
    valeurs de la hashtable
 
@@ -4470,7 +4470,7 @@ option5 = weechat.config_new_option(config_file, section, "option5", "color",
 En Ruby, les 3 "callbacks" + "data" (6 chaînes) doivent être données dans un
 tableau de 6 chaînes de caractères (en raison d'une limitation de Ruby à 15
 paramètres par fonction), voir le 'Guide pour Scripts WeeChat' pour plus d'infos
-(_corrigé dans la version 0.4.1_).
+_(corrigé dans la version 0.4.1)_.
 
 weechat_config_search_option
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -6376,7 +6376,7 @@ Paramètres :
 ** réinitialisation :
 *** 'reset' : réinitialiser la couleur et les attributs
 *** 'resetcolor' : réinitialiser la couleur (garder les attributs)
-    (_nouveau dans la version 0.3.6_)
+    _(nouveau dans la version 0.3.6)_
 
 Le format de la couleur est : attributs (optionnel) + nom de couleur + ",fond"
 (optionnel). Les attributs possibles sont :
@@ -6385,7 +6385,7 @@ Le format de la couleur est : attributs (optionnel) + nom de couleur + ",fond"
 * `!` : mode vidéo inverse
 * `_` : texte souligné
 * `|` : garder les attributs : ne pas réinitialiser gras/inverse/souligné lors
-  du changement de couleur (_nouveau dans la version 0.3.6_)
+  du changement de couleur _(nouveau dans la version 0.3.6)_
 
 Exemples :
 
@@ -7096,7 +7096,7 @@ paramètres (comme le fait le shell). +
 Si le découpage n'est pas correct (selon les guillemets utilisés dans votre
 commande), ou si vous souhaitez utiliser le shell, vous pouvez utiliser la
 fonction <<_weechat_hook_process_hashtable,weechat_hook_process_hashtable>> avec
-les paramètres dans la hashtable 'options' (_nouveau dans la version 0.4.0_).
+les paramètres dans la hashtable 'options' _(nouveau dans la version 0.4.0)_.
 
 Prototype :
 
@@ -7116,7 +7116,7 @@ struct t_hook *weechat_hook_process (const char *command,
 Paramètres :
 
 * 'command' : commande à lancer dans le processus fils ou URL
-  (_nouveau dans la version 0.3.7_), voir ci-dessous
+  _(nouveau dans la version 0.3.7)_, voir ci-dessous
 * 'timeout' : timeout pour la commande (en millisecondes) : après ce délai, le
   processus fils est tué (0 signifie pas de limite)
 * 'callback' : function appelée quand des données du fils sont disponibles, or
@@ -7151,7 +7151,7 @@ supprimera automatiquement le "hook" (et tuera le processus s'il tourne
 toujours).
 
 La commande peut être une URL avec le format : "url:http://www.example.com",
-pour télécharger le contenu de l'URL (_nouveau dans la version 0.3.7_).
+pour télécharger le contenu de l'URL _(nouveau dans la version 0.3.7)_.
 Des options pour l'URL sont possibles avec la fonction
 <<_weechat_hook_process_hashtable,weechat_hook_process_hashtable>>.
 
@@ -7264,7 +7264,7 @@ supplémentaire :
 Pour une commande standard (ne commençant pas par "url:"), la hashtable
 'options' peut contenir les paramètres pour la commande (et donc 'command' doit
 être seulement la commande sans les paramètres)
-(_nouveau dans la version 0.4.0_). +
+_(nouveau dans la version 0.4.0)_. +
 Les clés dans la hashtable doivent être: 'arg1', 'arg2', ...
 
 Pour la commande "url:...", les options suivantes sont disponibles (voir
@@ -7707,27 +7707,27 @@ Paramètres :
 | Extension | Signal | Paramètres | Description
 
 | aspell | aspell_suggest +
-  (_nouveau dans la version 0.4.0_) |
+  _(nouveau dans la version 0.4.0)_ |
   pointeur : tampon |
   nouvelles suggestions pour un mot mal orthographié
 
 | guile | guile_script_loaded +
-  (_nouveau dans la version 0.3.9_) |
+  _(nouveau dans la version 0.3.9)_ |
   chaîne: chemin vers le script |
   script scheme chargé
 
 | guile | guile_script_unloaded +
-  (_nouveau dans la version 0.3.9_) |
+  _(nouveau dans la version 0.3.9)_ |
   chaîne: chemin vers le script |
   script scheme déchargé
 
 | guile | guile_script_installed +
-  (_nouveau dans la version 0.3.9_) |
+  _(nouveau dans la version 0.3.9)_ |
   chaîne: liste de chemins vers scripts installés (séparés par des virgules) (exemple: "/chemin/vers/script1.scm,/chemin/vers/script2.scm") |
   script(s) scheme installé(s)
 
 | guile | guile_script_removed +
-  (_nouveau dans la version 0.3.9_) |
+  _(nouveau dans la version 0.3.9)_ |
   chaîne: liste de scripts supprimés (séparés par des virgules) (exemple: "script1.scm,script2.scm") |
   script(s) scheme supprimé(s)
 
@@ -7742,19 +7742,19 @@ Paramètres :
   signal envoyé uniquement si le message n'est *pas* ignoré)
 
 | irc | xxx,irc_raw_in_yyy ^(1)^ +
-  (_nouveau dans la version 0.3.2_) |
+  _(nouveau dans la version 0.3.2)_ |
   chaîne : message |
   message irc du serveur (avant utilisation par l'extension irc,
   signal envoyé même si le message est ignoré)
 
 | irc | xxx,irc_raw_in2_yyy ^(1)^ +
-  (_nouveau dans la version 0.3.2_) |
+  _(nouveau dans la version 0.3.2)_ |
   chaîne : message |
   message irc du serveur (après utilisation par l'extension irc,
   signal envoyé même si le message est ignoré)
 
 | irc | xxx,irc_out1_yyy ^(1)^ +
-  (_nouveau dans la version 0.3.7_) |
+  _(nouveau dans la version 0.3.7)_ |
   chaîne : message |
   message irc envoyé au serveur (avant découpage automatique pour tenir dans les 512 octets)
 
@@ -7763,7 +7763,7 @@ Paramètres :
   message irc envoyé au serveur (après découpage automatique pour tenir dans les 512 octets)
 
 | irc | xxx,irc_outtags_yyy ^(1)^ +
-  (_nouveau dans la version 0.3.4_) |
+  _(nouveau dans la version 0.3.4)_ |
   chaîne : étiquettes + ";" + message |
   étiquettes + message irc envoyé au serveur
 
@@ -7788,7 +7788,7 @@ Paramètres :
   discussion privée ouverte
 
 | irc | irc_server_opened +
-  (_nouveau dans la version 0.3.7_) |
+  _(nouveau dans la version 0.3.7)_ |
   pointeur : tampon |
   tampon du serveur ouvert
 
@@ -7813,27 +7813,27 @@ Paramètres :
   ignore supprimé
 
 | irc | irc_notify_join +
-  (_nouveau dans la version 0.3.8_) |
+  _(nouveau dans la version 0.3.8)_ |
   chaîne: nom du serveur + "," + pseudo |
   un pseudo dans la liste de notifications a rejoint le serveur
 
 | irc | irc_notify_quit +
-  (_nouveau dans la version 0.3.8_) |
+  _(nouveau dans la version 0.3.8)_ |
   chaîne: nom du serveur + "," + pseudo |
   un pseudo dans la liste de notifications a quitté le serveur
 
 | irc | irc_notify_away +
-  (_nouveau dans la version 0.3.8_) |
+  _(nouveau dans la version 0.3.8)_ |
   chaîne: nom du serveur + "," + pseudo + "," + message d'absence |
   un pseudo dans la liste de notifications est maintenant absent sur le serveur
 
 | irc | irc_notify_still_away +
-  (_nouveau dans la version 0.3.8_) |
+  _(nouveau dans la version 0.3.8)_ |
   chaîne: nom du serveur + "," + pseudo + "," + message d'absence |
   un pseudo dans la liste de notifications est toujours absent sur le serveur (le message d'absence a changé)
 
 | irc | irc_notify_back +
-  (_nouveau dans la version 0.3.8_) |
+  _(nouveau dans la version 0.3.8)_ |
   chaîne: nom du serveur + "," + pseudo |
   un pseudo dans la liste de notifications est de retour (statut d'absence supprimé)
 
@@ -7850,102 +7850,102 @@ Paramètres :
   affichage du backlog pour le tampon
 
 | lua | lua_script_loaded +
-  (_nouveau dans la version 0.3.9_) |
+  _(nouveau dans la version 0.3.9)_ |
   chaîne: chemin vers le script |
   script lua chargé
 
 | lua | lua_script_unloaded +
-  (_nouveau dans la version 0.3.9_) |
+  _(nouveau dans la version 0.3.9)_ |
   chaîne: chemin vers le script |
   script lua déchargé
 
 | lua | lua_script_installed +
-  (_nouveau dans la version 0.3.9_) |
+  _(nouveau dans la version 0.3.9)_ |
   chaîne: liste de chemins vers scripts installés (séparés par des virgules) (exemple: "/chemin/vers/script1.lua,/chemin/vers/script2.lua") |
   script(s) lua installé(s)
 
 | lua | lua_script_removed +
-  (_nouveau dans la version 0.3.9_) |
+  _(nouveau dans la version 0.3.9)_ |
   chaîne: liste de scripts supprimés (séparés par des virgules) (exemple: "script1.lua,script2.lua") |
   script(s) lua supprimé(s)
 
 | perl | perl_script_loaded +
-  (_nouveau dans la version 0.3.9_) |
+  _(nouveau dans la version 0.3.9)_ |
   chaîne: chemin vers le script |
   script perl chargé
 
 | perl | perl_script_unloaded +
-  (_nouveau dans la version 0.3.9_) |
+  _(nouveau dans la version 0.3.9)_ |
   chaîne: chemin vers le script |
   script perl déchargé
 
 | perl | perl_script_installed +
-  (_nouveau dans la version 0.3.9_) |
+  _(nouveau dans la version 0.3.9)_ |
   chaîne: liste de chemins vers scripts installés (séparés par des virgules) (exemple: "/chemin/vers/script1.pl,/chemin/vers/script2.pl") |
   script(s) perl installé(s)
 
 | perl | perl_script_removed +
-  (_nouveau dans la version 0.3.9_) |
+  _(nouveau dans la version 0.3.9)_ |
   chaîne: liste de scripts supprimés (séparés par des virgules) (exemple: "script1.pl,script2.pl") |
   script(s) perl supprimé(s)
 
 | python | python_script_loaded +
-  (_nouveau dans la version 0.3.9_) |
+  _(nouveau dans la version 0.3.9)_ |
   chaîne: chemin vers le script |
   script python chargé
 
 | python | python_script_unloaded +
-  (_nouveau dans la version 0.3.9_) |
+  _(nouveau dans la version 0.3.9)_ |
   chaîne: chemin vers le script |
   script python déchargé
 
 | python | python_script_installed +
-  (_nouveau dans la version 0.3.9_) |
+  _(nouveau dans la version 0.3.9)_ |
   chaîne: liste de chemins vers scripts installés (séparés par des virgules) (exemple: "/chemin/vers/script1.py,/chemin/vers/script2.py") |
   script(s) python installé(s)
 
 | python | python_script_removed +
-  (_nouveau dans la version 0.3.9_) |
+  _(nouveau dans la version 0.3.9)_ |
   chaîne: liste de scripts supprimés (séparés par des virgules) (exemple: "script1.py,script2.py") |
   script(s) python supprimé(s)
 
 | ruby | ruby_script_loaded +
-  (_nouveau dans la version 0.3.9_) |
+  _(nouveau dans la version 0.3.9)_ |
   chaîne: chemin vers le script |
   script ruby chargé
 
 | ruby | ruby_script_unloaded +
-  (_nouveau dans la version 0.3.9_) |
+  _(nouveau dans la version 0.3.9)_ |
   chaîne: chemin vers le script |
   script ruby déchargé
 
 | ruby | ruby_script_installed +
-  (_nouveau dans la version 0.3.9_) |
+  _(nouveau dans la version 0.3.9)_ |
   chaîne: liste de chemins vers scripts installés (séparés par des virgules) (exemple: "/chemin/vers/script1.rb,/chemin/vers/script2.rb") |
   script(s) ruby installé(s)
 
 | ruby | ruby_script_removed +
-  (_nouveau dans la version 0.3.9_) |
+  _(nouveau dans la version 0.3.9)_ |
   chaîne: liste de scripts supprimés (séparés par des virgules) (exemple: "script1.rb,script2.rb") |
   script(s) ruby supprimé(s)
 
 | tcl | tcl_script_loaded +
-  (_nouveau dans la version 0.3.9_) |
+  _(nouveau dans la version 0.3.9)_ |
   chaîne: chemin vers le script |
   script tcl chargé
 
 | tcl | tcl_script_unloaded +
-  (_nouveau dans la version 0.3.9_) |
+  _(nouveau dans la version 0.3.9)_ |
   chaîne: chemin vers le script |
   script tcl déchargé
 
 | tcl | tcl_script_installed +
-  (_nouveau dans la version 0.3.9_) |
+  _(nouveau dans la version 0.3.9)_ |
   chaîne: liste de chemins vers scripts installés (séparés par des virgules) (exemple: "/chemin/vers/script1.tcl,/chemin/vers/script2.tcl") |
   script(s) tcl installé(s)
 
 | tcl | tcl_script_removed +
-  (_nouveau dans la version 0.3.9_) |
+  _(nouveau dans la version 0.3.9)_ |
   chaîne: liste de scripts supprimés (séparés par des virgules) (exemple: "script1.tcl,script2.tcl") |
   script(s) tcl supprimé(s)
 
@@ -7958,7 +7958,7 @@ Paramètres :
   tampon fermé
 
 | weechat | buffer_line_added +
-  (_nouveau dans la version 0.3.7_) |
+  _(nouveau dans la version 0.3.7)_ |
   pointeur : ligne |
   ligne ajoutée dans un tampon
 
@@ -8011,7 +8011,7 @@ Paramètres :
   type de tampon changé
 
 | weechat | day_changed +
-  (_nouveau dans la version 0.3.2_) |
+  _(nouveau dans la version 0.3.2)_ |
   chaîne : nouvelle date, format : "2010-01-31" |
   le jour de la date système a changé
 
@@ -8072,42 +8072,42 @@ Paramètres :
   touche appuyée
 
 | weechat | nicklist_group_added +
-  (_nouveau dans la version 0.3.2_) |
+  _(nouveau dans la version 0.3.2)_ |
   chaîne : pointeur tampon + "," + nom du groupe |
   groupe ajouté dans la liste des pseudos
 
 | weechat | nicklist_group_changed +
-  (_nouveau dans la version 0.3.4_) |
+  _(nouveau dans la version 0.3.4)_ |
   chaîne : pointeur tampon + "," + nom du groupe |
   groupe modifié dans la liste des pseudos
 
 | weechat | nicklist_group_removing +
-  (_nouveau dans la version 0.4.1_) |
+  _(nouveau dans la version 0.4.1)_ |
   chaîne : pointeur tampon + "," + nom du groupe |
   suppression du groupe de la liste des pseudos
 
 | weechat | nicklist_group_removed +
-  (_nouveau dans la version 0.3.2_) |
+  _(nouveau dans la version 0.3.2)_ |
   chaîne : pointeur tampon + "," + nom du groupe |
   groupe supprimé de la liste des pseudos
 
 | weechat | nicklist_nick_added +
-  (_nouveau dans la version 0.3.2_) |
+  _(nouveau dans la version 0.3.2)_ |
   chaîne : pointeur tampon + "," + pseudo |
   pseudo ajouté dans la liste des pseudos
 
 | weechat | nicklist_nick_changed +
-  (_nouveau dans la version 0.3.4_) |
+  _(nouveau dans la version 0.3.4)_ |
   chaîne : pointeur tampon + "," + pseudo |
   pseudo modifié dans la liste des pseudos
 
 | weechat | nicklist_nick_removing +
-  (_nouveau dans la version 0.4.1_) |
+  _(nouveau dans la version 0.4.1)_ |
   chaîne : pointeur tampon + "," + pseudo |
   suppression du pseudo de la liste des pseudos
 
 | weechat | nicklist_nick_removed +
-  (_nouveau dans la version 0.3.2_) |
+  _(nouveau dans la version 0.3.2)_ |
   chaîne : pointeur tampon + "," + pseudo |
   pseudo supprimé de la liste des pseudos
 
@@ -8116,12 +8116,12 @@ Paramètres :
   une complétion partielle a été faite
 
 | weechat | plugin_loaded +
-  (_nouveau dans la version 0.3.9_) |
+  _(nouveau dans la version 0.3.9)_ |
   chaîne : chemin vers l'extension chargée (exemple: "/usr/lib/weechat/plugins/irc.so") |
   extension chargée
 
 | weechat | plugin_unloaded +
-  (_nouveau dans la version 0.3.9_) |
+  _(nouveau dans la version 0.3.9)_ |
   chaîne : nom de l'extension déchargée (exemple: "irc") |
   extension déchargée
 
@@ -8134,7 +8134,7 @@ Paramètres :
   la commande `/upgrade` a été exécutée par l'utilisateur
 
 | weechat | upgrade_ended +
-  (_nouveau dans la version 0.3.4_) |
+  _(nouveau dans la version 0.3.4)_ |
   - |
   fin du processus de mise à jour (commande `/upgrade`)
 
@@ -8147,17 +8147,17 @@ Paramètres :
   un message privé a été affiché
 
 | weechat | window_closing +
-  (_nouveau dans la version 0.3.6_) |
+  _(nouveau dans la version 0.3.6)_ |
   pointeur : fenêtre |
   fermeture de la fenêtre en cours
 
 | weechat | window_closed +
-  (_nouveau dans la version 0.3.6_) |
+  _(nouveau dans la version 0.3.6)_ |
   pointeur : fenêtre |
   fenêtre fermée
 
 | weechat | window_opened +
-  (_nouveau dans la version 0.4.1_) |
+  _(nouveau dans la version 0.4.1)_ |
   pointeur : fenêtre |
   fenêtre ouverte
 
@@ -8166,7 +8166,7 @@ Paramètres :
   défilement dans la fenêtre
 
 | weechat | window_switch +
-  (_nouveau dans la version 0.3.7_) |
+  _(nouveau dans la version 0.3.7)_ |
   pointeur : fenêtre |
   basculement vers une autre fenêtre
 
@@ -8211,7 +8211,7 @@ Paramètres :
   redémarrage prêt
 
 | xfer | xfer_ended +
-  (_nouveau dans la version 0.3.2_) |
+  _(nouveau dans la version 0.3.2)_ |
   pointer : infolist avec l'info xfer |
   le xfer s'est terminé
 |========================================
@@ -8231,7 +8231,7 @@ Paramètres :
 ** valeur de retour :
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_OK_EAT' (arrêter l'envoi du signal immédiatement)
-    (_nouveau dans la version 0.4.0_)
+    _(nouveau dans la version 0.4.0)_
 *** 'WEECHAT_RC_ERROR'
 * 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
   WeeChat
@@ -8495,46 +8495,46 @@ Paramètres :
 | Extension | Signal | Paramètres | Description
 
 | irc | irc_redirection_xxx_yyy ^(1)^ +
-  (_nouveau dans la version 0.3.4_) |
+  _(nouveau dans la version 0.3.4)_ |
   sortie de la redirection (voir <<hsignal_irc_redirect_command>>)
 
 | weechat | nicklist_group_added +
-  (_nouveau dans la version 0.4.1_) |
+  _(nouveau dans la version 0.4.1)_ |
   'buffer' ('struct t_gui_buffer *') : tampon +
   'parent_group' ('struct t_gui_nick_group *') : groupe parent +
   'group' ('struct t_gui_nick_group *') : groupe |
   group added in nicklist
 
 | weechat | nicklist_nick_added +
-  (_nouveau dans la version 0.4.1_) |
+  _(nouveau dans la version 0.4.1)_ |
   'buffer' ('struct t_gui_buffer *') : tampon +
   'parent_group' ('struct t_gui_nick_group *') : groupe parent +
   'nick' ('struct t_gui_nick *') : pseudo |
   nick added in nicklist
 
 | weechat | nicklist_group_removing +
-  (_nouveau dans la version 0.4.1_) |
+  _(nouveau dans la version 0.4.1)_ |
   'buffer' ('struct t_gui_buffer *') : tampon +
   'parent_group' ('struct t_gui_nick_group *') : groupe parent +
   'group' ('struct t_gui_nick_group *') : groupe |
   removing group from nicklist
 
 | weechat | nicklist_nick_removing +
-  (_nouveau dans la version 0.4.1_) |
+  _(nouveau dans la version 0.4.1)_ |
   'buffer' ('struct t_gui_buffer *') : tampon +
   'parent_group' ('struct t_gui_nick_group *') : groupe parent +
   'nick' ('struct t_gui_nick *') : pseudo |
   removing nick from nicklist
 
 | weechat | nicklist_group_changed +
-  (_nouveau dans la version 0.4.1_) |
+  _(nouveau dans la version 0.4.1)_ |
   'buffer' ('struct t_gui_buffer *') : tampon +
   'parent_group' ('struct t_gui_nick_group *') : groupe parent +
   'group' ('struct t_gui_nick_group *') : groupe |
   group changed in nicklist
 
 | weechat | nicklist_nick_changed +
-  (_nouveau dans la version 0.4.1_) |
+  _(nouveau dans la version 0.4.1)_ |
   'buffer' ('struct t_gui_buffer *') : tampon +
   'parent_group' ('struct t_gui_nick_group *') : parent +
   'nick' ('struct t_gui_nick *') : pseudo |
@@ -8553,7 +8553,7 @@ modèle de redirection ("pattern").
 ** valeur de retour :
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_OK_EAT' (arrêter l'envoi du signal immédiatement)
-    (_nouveau dans la version 0.4.0_)
+    _(nouveau dans la version 0.4.0)_
 *** 'WEECHAT_RC_ERROR'
 * 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
   WeeChat
@@ -9125,13 +9125,13 @@ Paramètres :
   chaîne avec des codes couleur IRC, ou sans couleur
 
 | irc | irc_command_auth +
-  (_nouveau dans la version 0.4.1_) |
+  _(nouveau dans la version 0.4.1)_ |
   nom du serveur |
   commande d'authentification (par exemple: `/msg nickserv identify password`) |
   commande avec le mot de passe caché (par exemple: `/msg nickserv identify ********`)
 
 | irc | irc_message_auth +
-  (_nouveau dans la version 0.4.1_) |
+  _(nouveau dans la version 0.4.1)_ |
   nom du serveur |
   message affiché après `msg` envoyé à nickserv |
   message avec le mot de passe caché
@@ -9142,13 +9142,13 @@ Paramètres :
   nouveau contenu du message
 
 | irc | irc_in2_xxx ^(1)^ +
-  (_nouveau dans la version 0.3.5_) |
+  _(nouveau dans la version 0.3.5)_ |
   nom de serveur |
   contenu du message reçu du serveur IRC (après décodage du jeu de caractères) |
   nouveau contenu du message
 
 | irc | irc_out1_xxx ^(1)^ +
-  (_nouveau dans la version 0.3.7_) |
+  _(nouveau dans la version 0.3.7)_ |
   nom de serveur |
   contenu du message qui va être envoyé au serveur IRC (avant découpage automatique pour tenir dans les 512 octets) |
   nouveau contenu du message
@@ -9164,7 +9164,7 @@ Paramètres :
   "1" pour afficher la barre, "0" pour la cacher
 
 | weechat | history_add +
-  (_nouveau dans la version 0.3.2_) |
+  _(nouveau dans la version 0.3.2)_ |
   chaîne avec un pointeur vers le tampon ("0x123..") |
   contenu de la ligne de commande à ajouter à l'historique des commandes
   (tampon et global) |
@@ -9188,7 +9188,7 @@ Paramètres :
   modifiée)
 
 | weechat | input_text_for_buffer +
-  (_nouveau dans la version 0.3.7_) |
+  _(nouveau dans la version 0.3.7)_ |
   chaîne avec un pointeur vers le tampon ("0x123..") |
   contenu de la ligne de commande envoyée au tampon (texte ou commande) |
   nouveau contenu de la ligne de commande envoyée au tampon
@@ -10316,7 +10316,7 @@ Paramètres :
 ** 'plugin' : nom de l'extension qui a créé ce tampon ("core" pour le tampon
    principal WeeChat)
 ** 'name' : nom du tampon
-** 'full_name' : nom complet du tampon ("extension.nom") (_nouveau dans la version 0.3.7_)
+** 'full_name' : nom complet du tampon ("extension.nom") _(nouveau dans la version 0.3.7)_
 ** 'short_name' : nom court du tampon (note: utilisé pour l'affichage seulement
    et peut être changé par l'utilisateur, il ne doit pas être utilisé pour
    trouver le nom du tampon, utlisez à la place 'name', 'full_name' ou bien la
@@ -10614,9 +10614,9 @@ Paramètres :
    en entrée
 ** 'nickcmp_callback' : définit la fonction "callback" de comparaison de pseudos
    (ce "callback" est appelé lors de la recherche d'un pseudo dans la liste des
-   pseudos) (_nouveau dans la version 0.3.9_)
+   pseudos) _(nouveau dans la version 0.3.9)_
 ** 'nickcmp_callback_data': définit les données pour le "callback" de
-   comparaison de pseudos (_nouveau dans la version 0.3.9_)
+   comparaison de pseudos _(nouveau dans la version 0.3.9)_
 
 Prototypes pour les "callbacks" :
 
@@ -13374,19 +13374,19 @@ Paramètres :
   l'élément suivant dans la liste (peut être NULL si une telle variable
   n'existe pas)
 * 'create_allowed' : 1 si la création de structure est autorisée, sinon 0
-  (_nouveau dans la version 0.4.0_)
+  _(nouveau dans la version 0.4.0)_
 * 'delete_allowed' : 1 si la suppression de structure est autorisée, sinon 0
-  (_nouveau dans la version 0.3.9_)
+  _(nouveau dans la version 0.3.9)_
 * 'callback_update' : fonction appelée pour mettre à jour des données dans le
   hdata, peut être NULL si aucune mise à jour n'est autorisée
-  (_nouveau dans la version 0.3.9_), paramètres et valeur de retour :
+  _(nouveau dans la version 0.3.9)_, paramètres et valeur de retour :
 ** 'void *data' : pointeur
 ** 'struct t_hdata *hdata' : pointeur vers le hdata
 ** 'struct t_hashtable *hashtable' : hashtable avec les variables à mettre à
    jour (voir <<_weechat_hdata_update,weechat_hdata_update>>)
 ** valeur de retour : nombre de variables mises à jour
 * 'callback_update_data' : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat (_nouveau dans la version 0.3.9_)
+  WeeChat _(nouveau dans la version 0.3.9)_
 
 Valeur de retour :
 
@@ -13432,9 +13432,9 @@ Paramètres :
 ** WEECHAT_HDATA_HASHTABLE
 ** WEECHAT_HDATA_OTHER
 * 'update_allowed' : 1 si la mise à jour de la variable est autorisée, sinon 0
-  (_nouveau dans la version 0.3.9_)
+  _(nouveau dans la version 0.3.9)_
 * 'array_size' : non NULL seulement si la variable est un tableau, et peut être :
-  (_nouveau dans la version 0.3.9_)
+  _(nouveau dans la version 0.3.9)_
 ** nom d'une variable du hdata : cette variable sera utilisée comme taille de
    tableau (taille dynamique pour le tableau)
 ** entier (sous forme de chaîne) : taille fixe pour le tableau
@@ -14594,7 +14594,7 @@ Paramètres :
   acceptées :
 ** clé `__create_allowed` (avec n'importe quelle valeur) : retourne 1 si la
    création est autorisée pour la strucrure, sinon 0
-   (_nouveau dans la version 0.4.0_)
+   _(nouveau dans la version 0.4.0)_
 ** clé `__delete_allowed` (avec n'importe quelle valeur) : retourne 1 si la
    suppression est autorisée pour la structure, sinon 0
 ** clé `__update_allowed`, la valeur est le nom d'une variable : retourne 1 si

@@ -1269,7 +1269,7 @@ Arguments:
 ** 0: each string will contain one word
 ** 1: each string will contain all string until end of line (see example below)
 ** 2: same as 1, but do not remove separators at end of string before split
-   (_new in version 0.3.6_)
+   _(new in version 0.3.6)_
 * 'num_items_max': maximum number of items created (0 = no limit)
 * 'num_items': pointer to int which will contain number of items created
 
@@ -3691,7 +3691,7 @@ Arguments:
 * 'hashtable': hashtable pointer
 * 'property' and 'value': property name, with its value:
 ** 'callback_free_key': set callback function used to free keys in hashtable
-   (_new in version 0.4.2_)
+   _(new in version 0.4.2)_
 ** 'callback_free_value': set callback function used to free values in hashtable
 
 C example:
@@ -4415,7 +4415,7 @@ option5 = weechat.config_new_option(config_file, section, "option5", "color",
 [NOTE]
 In Ruby, the 3 callbacks + data (6 strings) must be given in an array of 6
 strings (due to a Ruby limitation of 15 arguments by function), see the
-'WeeChat Scripting Guide' for more info (_fixed in version 0.4.1_).
+'WeeChat Scripting Guide' for more info _(fixed in version 0.4.1)_.
 
 weechat_config_search_option
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -6300,7 +6300,7 @@ Arguments:
 *** 'bar_bg': background color for bar
 ** reset:
 *** 'reset': reset color and attributes
-*** 'resetcolor': reset color (keep attributes) (_new in version 0.3.6_)
+*** 'resetcolor': reset color (keep attributes) _(new in version 0.3.6)_
 
 Format of color is: attributes (optional) + color name + ",background"
 (optional). Possible attributes are:
@@ -6309,7 +6309,7 @@ Format of color is: attributes (optional) + color name + ",background"
 * `!` : reverse video
 * `_` : underlined text
 * `|` : keep attributes: do not reset bold/reverse/underlined when changing
-  color (_new in version 0.3.6_)
+  color _(new in version 0.3.6)_
 
 Examples:
 
@@ -6998,7 +6998,7 @@ shell does). +
 If the split is not correct (according to quotes in your command), or if you
 want to use shell, you can use function
 <<_weechat_hook_process_hashtable,weechat_hook_process_hashtable>> with
-arguments in the hashtable 'options' (_new in version 0.4.0_).
+arguments in the hashtable 'options' _(new in version 0.4.0)_.
 
 Prototype:
 
@@ -7017,7 +7017,7 @@ struct t_hook *weechat_hook_process (const char *command,
 
 Arguments:
 
-* 'command': command to launch in child process or URL (_new in version 0.3.7_),
+* 'command': command to launch in child process or URL _(new in version 0.3.7)_,
   see below
 * 'timeout': timeout for command (in milliseconds): after this timeout, child
   process is killed (0 means no timeout)
@@ -7049,7 +7049,7 @@ When command has ended, or if timeout is reached, WeeChat will automatically
 unhook (and kill process if it is still running).
 
 The command can be an URL with format: "url:http://www.example.com", to download
-content of URL (_new in version 0.3.7_). Options are possible for URL with
+content of URL _(new in version 0.3.7)_. Options are possible for URL with
 function <<_weechat_hook_process_hashtable,weechat_hook_process_hashtable>>.
 
 [TIP]
@@ -7157,7 +7157,7 @@ with an extra argument:
 
 For a standard command (not beginning with "url:"), the hashtable 'options' can
 contain arguments for command (and then 'command' must be only the command
-without arguments) (_new in version 0.4.0_). +
+without arguments) _(new in version 0.4.0)_. +
 The keys in hashtable must be: 'arg1', 'arg2', ...
 
 For command "url:...", following options are available (see
@@ -7591,27 +7591,27 @@ Arguments:
 | Plugin | Signal | Arguments | Description
 
 | aspell | aspell_suggest +
-  (_new in version 0.4.0_) |
+  _(new in version 0.4.0)_ |
   pointer: buffer |
   new suggestions for a misspelled word
 
 | guile | guile_script_loaded +
-  (_new in version 0.3.9_) |
+  _(new in version 0.3.9)_ |
   string: path to script |
   scheme script loaded
 
 | guile | guile_script_unloaded +
-  (_new in version 0.3.9_) |
+  _(new in version 0.3.9)_ |
   string: path to script |
   scheme script unloaded
 
 | guile | guile_script_installed +
-  (_new in version 0.3.9_) |
+  _(new in version 0.3.9)_ |
   string: comma-separated list of paths to scripts installed (example: "/path/to/script1.scm,/path/to/script2.scm") |
   scheme script(s) installed
 
 | guile | guile_script_removed +
-  (_new in version 0.3.9_) |
+  _(new in version 0.3.9)_ |
   string: comma-separated list of scripts removed (example: "script1.scm,script2.scm") |
   scheme script(s) removed
 
@@ -7626,19 +7626,19 @@ Arguments:
   signal sent only if message is *not* ignored)
 
 | irc | xxx,irc_raw_in_yyy ^(1)^ +
-  (_new in version 0.3.2_) |
+  _(new in version 0.3.2)_ |
   string: message |
   irc message from server (before irc plugin uses it,
   signal sent even if message is ignored)
 
 | irc | xxx,irc_raw_in2_yyy ^(1)^ +
-  (_new in version 0.3.2_) |
+  _(new in version 0.3.2)_ |
   string: message |
   irc message from server (after irc plugin uses it,
   signal sent even if message is ignored)
 
 | irc | xxx,irc_out1_yyy ^(1)^ +
-  (_new in version 0.3.7_) |
+  _(new in version 0.3.7)_ |
   string: message |
   irc message sent to server (before automatic split to fit in 512 bytes)
 
@@ -7647,7 +7647,7 @@ Arguments:
   irc message sent to server (after automatic split to fit in 512 bytes)
 
 | irc | xxx,irc_outtags_yyy ^(1)^ +
-  (_new in version 0.3.4_) |
+  _(new in version 0.3.4)_ |
   string: tags + ";" + message |
   tags + irc message sent to server
 
@@ -7672,7 +7672,7 @@ Arguments:
   private opened
 
 | irc | irc_server_opened +
-  (_new in version 0.3.7_) |
+  _(new in version 0.3.7)_ |
   pointer: buffer |
   server buffer opened
 
@@ -7697,27 +7697,27 @@ Arguments:
   ignore removed
 
 | irc | irc_notify_join +
-  (_new in version 0.3.8_) |
+  _(new in version 0.3.8)_ |
   string: server name + "," + nick |
   a nick in notify list has joined server
 
 | irc | irc_notify_quit +
-  (_new in version 0.3.8_) |
+  _(new in version 0.3.8)_ |
   string: server name + "," + nick |
   a nick in notify list has quit server
 
 | irc | irc_notify_away +
-  (_new in version 0.3.8_) |
+  _(new in version 0.3.8)_ |
   string: server name + "," + nick + "," + away message |
   a nick in notify list is now away on server
 
 | irc | irc_notify_still_away +
-  (_new in version 0.3.8_) |
+  _(new in version 0.3.8)_ |
   string: server name + "," + nick + "," + away message |
   a nick in notify list is still away on server (away message has changed)
 
 | irc | irc_notify_back +
-  (_new in version 0.3.8_) |
+  _(new in version 0.3.8)_ |
   string: server name + "," + nick |
   a nick in notify list is back (away status removed)
 
@@ -7734,102 +7734,102 @@ Arguments:
   display backlog for buffer
 
 | lua | lua_script_loaded +
-  (_new in version 0.3.9_) |
+  _(new in version 0.3.9)_ |
   string: path to script |
   lua script loaded
 
 | lua | lua_script_unloaded +
-  (_new in version 0.3.9_) |
+  _(new in version 0.3.9)_ |
   string: path to script |
   lua script unloaded
 
 | lua | lua_script_installed +
-  (_new in version 0.3.9_) |
+  _(new in version 0.3.9)_ |
   string: comma-separated list of paths to scripts installed (example: "/path/to/script1.lua,/path/to/script2.lua") |
   lua script(s) installed
 
 | lua | lua_script_removed +
-  (_new in version 0.3.9_) |
+  _(new in version 0.3.9)_ |
   string: comma-separated list of scripts removed (example: "script1.lua,script2.lua") |
   lua script(s) removed
 
 | perl | perl_script_loaded +
-  (_new in version 0.3.9_) |
+  _(new in version 0.3.9)_ |
   string: path to script |
   perl script loaded
 
 | perl | perl_script_unloaded +
-  (_new in version 0.3.9_) |
+  _(new in version 0.3.9)_ |
   string: path to script |
   perl script unloaded
 
 | perl | perl_script_installed +
-  (_new in version 0.3.9_) |
+  _(new in version 0.3.9)_ |
   string: comma-separated list of paths to scripts installed (example: "/path/to/script1.pl,/path/to/script2.pl") |
   perl script(s) installed
 
 | perl | perl_script_removed +
-  (_new in version 0.3.9_) |
+  _(new in version 0.3.9)_ |
   string: comma-separated list of scripts removed (example: "script1.pl,script2.pl") |
   perl script(s) removed
 
 | python | python_script_loaded +
-  (_new in version 0.3.9_) |
+  _(new in version 0.3.9)_ |
   string: path to script |
   python script loaded
 
 | python | python_script_unloaded +
-  (_new in version 0.3.9_) |
+  _(new in version 0.3.9)_ |
   string: path to script |
   python script unloaded
 
 | python | python_script_installed +
-  (_new in version 0.3.9_) |
+  _(new in version 0.3.9)_ |
   string: comma-separated list of paths to scripts installed (example: "/path/to/script1.py,/path/to/script2.py") |
   python script(s) installed
 
 | python | python_script_removed +
-  (_new in version 0.3.9_) |
+  _(new in version 0.3.9)_ |
   string: comma-separated list of scripts removed (example: "script1.py,script2.py") |
   python script(s) removed
 
 | ruby | ruby_script_loaded +
-  (_new in version 0.3.9_) |
+  _(new in version 0.3.9)_ |
   string: path to script |
   ruby script loaded
 
 | ruby | ruby_script_unloaded +
-  (_new in version 0.3.9_) |
+  _(new in version 0.3.9)_ |
   string: path to script |
   ruby script unloaded
 
 | ruby | ruby_script_installed +
-  (_new in version 0.3.9_) |
+  _(new in version 0.3.9)_ |
   string: comma-separated list of paths to scripts installed (example: "/path/to/script1.rb,/path/to/script2.rb") |
   ruby script(s) installed
 
 | ruby | ruby_script_removed +
-  (_new in version 0.3.9_) |
+  _(new in version 0.3.9)_ |
   string: comma-separated list of scripts removed (example: "script1.rb,script2.rb") |
   ruby script(s) removed
 
 | tcl | tcl_script_loaded +
-  (_new in version 0.3.9_) |
+  _(new in version 0.3.9)_ |
   string: path to script |
   tcl script loaded
 
 | tcl | tcl_script_unloaded +
-  (_new in version 0.3.9_) |
+  _(new in version 0.3.9)_ |
   string: path to script |
   tcl script unloaded
 
 | tcl | tcl_script_installed +
-  (_new in version 0.3.9_) |
+  _(new in version 0.3.9)_ |
   string: comma-separated list of paths to scripts installed (example: "/path/to/script1.tcl,/path/to/script2.tcl") |
   tcl script(s) installed
 
 | tcl | tcl_script_removed +
-  (_new in version 0.3.9_) |
+  _(new in version 0.3.9)_ |
   string: comma-separated list of scripts removed (example: "script1.tcl,script2.tcl") |
   tcl script(s) removed
 
@@ -7842,7 +7842,7 @@ Arguments:
   buffer closed
 
 | weechat | buffer_line_added +
-  (_new in version 0.3.7_) |
+  _(new in version 0.3.7)_ |
   pointer: line |
   line added in a buffer
 
@@ -7895,7 +7895,7 @@ Arguments:
   type of buffer changed
 
 | weechat | day_changed +
-  (_new in version 0.3.2_) |
+  _(new in version 0.3.2)_ |
   string: new date, format: "2010-01-31" |
   day of system date has changed
 
@@ -7956,42 +7956,42 @@ Arguments:
   key pressed
 
 | weechat | nicklist_group_added +
-  (_new in version 0.3.2_) |
+  _(new in version 0.3.2)_ |
   string: buffer pointer + "," + group name |
   group added in nicklist
 
 | weechat | nicklist_group_changed +
-  (_new in version 0.3.4_) |
+  _(new in version 0.3.4)_ |
   string: buffer pointer + "," + group name |
   group changed in nicklist
 
 | weechat | nicklist_group_removing +
-  (_new in version 0.4.1_) |
+  _(new in version 0.4.1)_ |
   string: buffer pointer + "," + group name |
   removing group from nicklist
 
 | weechat | nicklist_group_removed +
-  (_new in version 0.3.2_) |
+  _(new in version 0.3.2)_ |
   string: buffer pointer + "," + group name |
   group removed from nicklist
 
 | weechat | nicklist_nick_added +
-  (_new in version 0.3.2_) |
+  _(new in version 0.3.2)_ |
   string: buffer pointer + "," + nick name |
   nick added in nicklist
 
 | weechat | nicklist_nick_changed +
-  (_new in version 0.3.4_) |
+  _(new in version 0.3.4)_ |
   string: buffer pointer + "," + nick name |
   nick changed in nicklist
 
 | weechat | nicklist_nick_removing +
-  (_new in version 0.4.1_) |
+  _(new in version 0.4.1)_ |
   string: buffer pointer + "," + nick name |
   removing nick from nicklist
 
 | weechat | nicklist_nick_removed +
-  (_new in version 0.3.2_) |
+  _(new in version 0.3.2)_ |
   string: buffer pointer + "," + nick name |
   nick removed from nicklist
 
@@ -8000,12 +8000,12 @@ Arguments:
   partial completion happened
 
 | weechat | plugin_loaded +
-  (_new in version 0.3.9_) |
+  _(new in version 0.3.9)_ |
   string: path to plugin loaded (example: "/usr/lib/weechat/plugins/irc.so") |
   plugin loaded
 
 | weechat | plugin_unloaded +
-  (_new in version 0.3.9_) |
+  _(new in version 0.3.9)_ |
   string: name of plugin unloaded (example: "irc") |
   plugin unloaded
 
@@ -8018,7 +8018,7 @@ Arguments:
   command `/upgrade` issued by user
 
 | weechat | upgrade_ended +
-  (_new in version 0.3.4_) |
+  _(new in version 0.3.4)_ |
   - |
   end of upgrade process (command `/upgrade`)
 
@@ -8031,17 +8031,17 @@ Arguments:
   private message displayed
 
 | weechat | window_closing +
-  (_new in version 0.3.6_) |
+  _(new in version 0.3.6)_ |
   pointer: window |
   closing window
 
 | weechat | window_closed +
-  (_new in version 0.3.6_) |
+  _(new in version 0.3.6)_ |
   pointer: window |
   window closed
 
 | weechat | window_opened +
-  (_new in version 0.4.1_) |
+  _(new in version 0.4.1)_ |
   pointer: window |
   window opened
 
@@ -8050,7 +8050,7 @@ Arguments:
   scroll in window
 
 | weechat | window_switch +
-  (_new in version 0.3.7_) |
+  _(new in version 0.3.7)_ |
   pointer: window |
   switching window
 
@@ -8095,7 +8095,7 @@ Arguments:
   xfer resume ready
 
 | xfer | xfer_ended +
-  (_new in version 0.3.2_) |
+  _(new in version 0.3.2)_ |
   pointer: infolist with xfer info |
   xfer has ended
 |========================================
@@ -8115,7 +8115,7 @@ Arguments:
 ** return value:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_OK_EAT' (stop sending the signal immediately)
-    (_new in version 0.4.0_)
+    _(new in version 0.4.0)_
 *** 'WEECHAT_RC_ERROR'
 * 'callback_data': pointer given to callback when it is called by WeeChat
 
@@ -8370,47 +8370,47 @@ Arguments:
 | Plugin | Signal | Arguments | Description
 
 | irc | irc_redirection_xxx_yyy ^(1)^ +
-  (_new in version 0.3.4_) |
+  _(new in version 0.3.4)_ |
   see <<hsignal_irc_redirect_command,hsignal_irc_redirect_command>> |
   redirection output
 
 | weechat | nicklist_group_added +
-  (_new in version 0.4.1_) |
+  _(new in version 0.4.1)_ |
   'buffer' ('struct t_gui_buffer *'): buffer +
   'parent_group' ('struct t_gui_nick_group *'): parent group +
   'group' ('struct t_gui_nick_group *'): group |
   group added in nicklist
 
 | weechat | nicklist_nick_added +
-  (_new in version 0.4.1_) |
+  _(new in version 0.4.1)_ |
   'buffer' ('struct t_gui_buffer *'): buffer +
   'parent_group' ('struct t_gui_nick_group *'): parent group +
   'nick' ('struct t_gui_nick *'): nick |
   nick added in nicklist
 
 | weechat | nicklist_group_removing +
-  (_new in version 0.4.1_) |
+  _(new in version 0.4.1)_ |
   'buffer' ('struct t_gui_buffer *'): buffer +
   'parent_group' ('struct t_gui_nick_group *'): parent group +
   'group' ('struct t_gui_nick_group *'): group |
   removing group from nicklist
 
 | weechat | nicklist_nick_removing +
-  (_new in version 0.4.1_) |
+  _(new in version 0.4.1)_ |
   'buffer' ('struct t_gui_buffer *'): buffer +
   'parent_group' ('struct t_gui_nick_group *'): parent group +
   'nick' ('struct t_gui_nick *'): nick |
   removing nick from nicklist
 
 | weechat | nicklist_group_changed +
-  (_new in version 0.4.1_) |
+  _(new in version 0.4.1)_ |
   'buffer' ('struct t_gui_buffer *'): buffer +
   'parent_group' ('struct t_gui_nick_group *'): parent group +
   'group' ('struct t_gui_nick_group *'): group |
   group changed in nicklist
 
 | weechat | nicklist_nick_changed +
-  (_new in version 0.4.1_) |
+  _(new in version 0.4.1)_ |
   'buffer' ('struct t_gui_buffer *'): buffer +
   'parent_group' ('struct t_gui_nick_group *'): parent group +
   'nick' ('struct t_gui_nick *'): nick |
@@ -8429,7 +8429,7 @@ pattern.
 ** return value:
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_OK_EAT' (stop sending the signal immediately)
-    (_new in version 0.4.0_)
+    _(new in version 0.4.0)_
 *** 'WEECHAT_RC_ERROR'
 * 'callback_data': pointer given to callback when it is called by WeeChat
 
@@ -8984,13 +8984,13 @@ Arguments:
   string with IRC color codes, or without color
 
 | irc | irc_command_auth +
-  (_new in version 0.4.1_) |
+  _(new in version 0.4.1)_ |
   server name |
   authentication command (for example: `/msg nickserv identify password`) |
   command with hidden password (for example: `/msg nickserv identify ********`)
 
 | irc | irc_message_auth +
-  (_new in version 0.4.1_) |
+  _(new in version 0.4.1)_ |
   server name |
   message displayed after `/msg` sent to nickserv |
   message with hidden password
@@ -9001,13 +9001,13 @@ Arguments:
   new content of message
 
 | irc | irc_in2_xxx ^(1)^ +
-  (_new in version 0.3.5_) |
+  _(new in version 0.3.5)_ |
   server name |
   content of message received from IRC server (after charset decoding) |
   new content of message
 
 | irc | irc_out1_xxx ^(1)^ +
-  (_new in version 0.3.7_) |
+  _(new in version 0.3.7)_ |
   server name |
   content of message about to be sent to IRC server (before automatic split to fit in 512 bytes) |
   new content of message
@@ -9023,7 +9023,7 @@ Arguments:
   "1" to display bar, "0" to hide it
 
 | weechat | history_add +
-  (_new in version 0.3.2_) |
+  _(new in version 0.3.2)_ |
   string with buffer pointer ("0x123..") |
   content of command line to add in command history (buffer and global) |
   string added to command history
@@ -9044,7 +9044,7 @@ Arguments:
   new string, for display only (command line is not changed)
 
 | weechat | input_text_for_buffer +
-  (_new in version 0.3.7_) |
+  _(new in version 0.3.7)_ |
   string with buffer pointer ("0x123..") |
   content of command line sent to buffer (text or command) |
   new content of command line sent to buffer
@@ -10150,7 +10150,7 @@ Arguments:
 ** 'plugin': name of plugin which created this buffer ("core" for WeeChat main
    buffer)
 ** 'name': name of buffer
-** 'full_name': full name of buffer ("plugin.name") (_new in version 0.3.7_)
+** 'full_name': full name of buffer ("plugin.name") _(new in version 0.3.7)_
 ** 'short_name': short name of buffer (note: used for display only and can be
    changed by user, this must not be used to find name of buffer, use instead
    'name', 'full_name' or local variable 'channel')
@@ -10433,9 +10433,9 @@ Arguments:
 ** 'input_callback': set input callback function
 ** 'input_callback_data': set input callback data
 ** 'nickcmp_callback': set nick comparison callback function (this callback is
-   called when searching nick in nicklist) (_new in version 0.3.9_)
+   called when searching nick in nicklist) _(new in version 0.3.9)_
 ** 'nickcmp_callback_data': set nick comparison callback data
-   (_new in version 0.3.9_)
+   _(new in version 0.3.9)_
 
 Prototypes for callbacks:
 
@@ -13150,18 +13150,18 @@ Arguments:
 * 'var_next': name of variable in structure which is a pointer to next
   element in list (may be NULL if no such variable is available)
 * 'create_allowed': 1 if create of structure is allowed, otherwise 0
-  (_new in version 0.4.0_)
+  _(new in version 0.4.0)_
 * 'delete_allowed': 1 if delete of structure is allowed, otherwise 0
-  (_new in version 0.3.9_)
+  _(new in version 0.3.9)_
 * 'callback_update': callback to update data in hdata, can be NULL if no update
-  is allowed (_new in version 0.3.9_), arguments and return value:
+  is allowed _(new in version 0.3.9)_, arguments and return value:
 ** 'void *data': pointer
 ** 'struct t_hdata *hdata': pointer to hdata
 ** 'struct t_hashtable *hashtable': hashtable with variables to update
    (see <<_weechat_hdata_update,weechat_hdata_update>>)
 ** return value: number of variables updated
 * 'callback_update_data': pointer given to update callback when it is called by
-  WeeChat (_new in version 0.3.9_)
+  WeeChat _(new in version 0.3.9)_
 
 Return value:
 
@@ -13207,9 +13207,9 @@ Arguments:
 ** WEECHAT_HDATA_HASHTABLE
 ** WEECHAT_HDATA_OTHER
 * 'update_allowed': 1 if update of variable is allowed, otherwise 0
-  (_new in version 0.3.9_)
+  _(new in version 0.3.9)_
 * 'array_size': not NULL only if a variable is an array, and it can be:
-  (_new in version 0.3.9_)
+  _(new in version 0.3.9)_
 ** name of variable in hdata: this variable will be used as size of array
    (dynamic size for array)
 ** integer (as string): fixed size for array
@@ -14345,7 +14345,7 @@ Arguments:
   values for variables (keys and values are string), some special keys are
   allowed:
 ** key `__create_allowed` (with any value): return 1 if create is allowed for
-   structure, otherwise 0 (_new in version 0.4.0_)
+   structure, otherwise 0 _(new in version 0.4.0)_
 ** key `__delete_allowed` (with any value): return 1 if delete is allowed for
    structure, otherwise 0
 ** key `__update_allowed`, value is name of a variable: return 1 if update is
