@@ -28,14 +28,6 @@ struct t_gui_buffer;
 
 #define WEECHAT_CONFIG_NAME "weechat"
 
-enum t_config_look_nicklist
-{
-    CONFIG_LOOK_NICKLIST_LEFT = 0,
-    CONFIG_LOOK_NICKLIST_RIGHT,
-    CONFIG_LOOK_NICKLIST_TOP,
-    CONFIG_LOOK_NICKLIST_BOTTOM,
-};
-
 enum t_config_look_align_end_of_lines
 {
     CONFIG_LOOK_ALIGN_END_OF_LINES_TIME = 0,
