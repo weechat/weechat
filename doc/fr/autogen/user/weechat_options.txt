@@ -188,6 +188,16 @@
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `cyan`)
 
+* [[option_weechat.color.emphasized]] *weechat.color.emphasized*
+** description: `couleur du texte pour le texte mis en valeur (par exemple lors de la recherche de texte); cette option est utilisée seulement si l'option weechat.look.emphasized_attributes est une chaîne vide (valeur par défaut)`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `yellow`)
+
+* [[option_weechat.color.emphasized_bg]] *weechat.color.emphasized_bg*
+** description: `couleur du fond pour le texte mis en valeur (par exemple lors de la recherche de texte); cette option est utilisée seulement si l'option weechat.look.emphasized_attributes est une chaîne vide (valeur par défaut)`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `magenta`)
+
 * [[option_weechat.color.input_actions]] *weechat.color.input_actions*
 ** description: `couleur du texte pour les actions dans la ligne de saisie`
 ** type: couleur
@@ -477,6 +487,11 @@
 ** description: `si activé, le eat_newline_glitch sera positionné à 0; cela est utilisé pour ne pas ajouter de nouvelle ligne à la fin de chaque ligne, et donc ne pas couper le texte quand vous copiez/collez du texte depuis WeeChat vers une autre application (cette option est désactivée par défaut car elle peut causer de sérieux problèmes d'affichages)`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `off`)
+
+* [[option_weechat.look.emphasized_attributes]] *weechat.look.emphasized_attributes*
+** description: `attributs pour le texte mis en valeur: un ou plusieurs caractères d'attributs ("*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné); si la chaîne est vide, les couleurs weechat.color.emphasized* sont utilisées`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `""`)
 
 * [[option_weechat.look.highlight]] *weechat.look.highlight*
 ** description: `liste des mots pour la notification séparés par des virgules; la comparaison est insensible à la casse (utilisez "(?-i)" au début des mots pour les rendre sensibles à la casse), les mots peuvent commencer ou se terminer par "*" pour une comparaison partielle; exemple: "test,(?-i)*toto*,flash*"`

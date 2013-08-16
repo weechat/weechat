@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.2-dev, 2013-08-10
+v0.4.2-dev, 2013-08-16
 
 
 This document lists all changes for each version.
@@ -14,6 +14,9 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 Version 0.4.2 (under dev!)
 --------------------------
 
+* core: add text emphasis in messages when searching text in buffer, new
+  options: weechat.look.emphasized_attributes, weechat.color.emphasized,
+  weechat.color.emphasized_bg
 * core: fix random crash on "/buffer close" with a buffer number (or a range of
   buffers)
 * core: optimize the removal of lines in buffers (a lot faster to clear/close

@@ -6294,6 +6294,9 @@ Arguments:
 *** '-italic': remove italic
 *** 'underline': set underline
 *** '-underline': remove underline
+*** 'emphasis': toggle the emphasis for text (note: this should be used only in
+    bars, because WeeChat uses text emphasis when searching text in buffer)
+    _(new in version 0.4.2)_
 ** bar color name:
 *** 'bar_fg': foreground color for bar
 *** 'bar_delim': delimiters color for bar

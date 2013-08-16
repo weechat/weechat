@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-08-11 19:52+0200\n"
+"POT-Creation-Date: 2013-08-16 15:18+0200\n"
 "PO-Revision-Date: 2013-07-31 18:42+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2319,6 +2319,12 @@ msgid ""
 "because it can cause serious display bugs)"
 msgstr ""
 
+msgid ""
+"attributes for emphasized text: one or more attribute chars (\"*\" for bold, "
+"\"!\" for reverse, \"_\" for underline); if the string is empty, the colors "
+"weechat.color.emphasized* are used"
+msgstr ""
+
 #, fuzzy
 msgid ""
 "comma separated list of words to highlight; case insensitive comparison (use "
@@ -2787,6 +2793,18 @@ msgstr "цвет разделителей информационной пане�
 #, fuzzy
 msgid "text color for values"
 msgstr "цвет чата"
+
+msgid ""
+"text color for emphasized text (for example when searching text); this "
+"option is used only if option weechat.look.emphasized_attributes is an empty "
+"string (default value)"
+msgstr ""
+
+msgid ""
+"background color for emphasized text (for example when searching text); used "
+"only if option weechat.look.emphasized_attributes is an empty string "
+"(default value)"
+msgstr ""
 
 #, fuzzy
 msgid "text color for actions in input line"

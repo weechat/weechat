@@ -20,6 +20,8 @@
 #ifndef __WEECHAT_GUI_COLOR_H
 #define __WEECHAT_GUI_COLOR_H 1
 
+#include <regex.h>
+
 /*
  * Color from configuration options.
  * When changing some colors below:
@@ -78,6 +80,7 @@ enum t_gui_color_enum
     GUI_COLOR_CHAT_NICK_OFFLINE_HIGHLIGHT,
     GUI_COLOR_CHAT_NICK_PREFIX,
     GUI_COLOR_CHAT_NICK_SUFFIX,
+    GUI_COLOR_EMPHASIS,
 
     /* number of colors */
     GUI_COLOR_NUM_COLORS,
@@ -112,6 +115,7 @@ enum t_gui_color_enum
 #define GUI_COLOR_EXTENDED_ITALIC_CHAR        '/'
 #define GUI_COLOR_EXTENDED_UNDERLINE_CHAR     '_'
 #define GUI_COLOR_EXTENDED_KEEPATTR_CHAR      '|'
+#define GUI_COLOR_EMPHASIS_CHAR               'E'
 
 /* color codes specific to bars */
 #define GUI_COLOR_BAR_CHAR                    'b'
@@ -165,6 +169,8 @@ extern int gui_color_attr_get_flag (char c);
 extern void gui_color_attr_build_string (int color, char *str_attr);
 extern const char *gui_color_get_custom (const char *color_name);
 extern char *gui_color_decode (const char *string, const char *replacement);
+extern char *gui_color_emphasize (const char *string, const char *search,
+                                  int case_sensitive, regex_t *regex);
 extern void gui_color_free (struct t_gui_color *color);
 extern void gui_color_palette_alloc_structs ();
 extern int gui_color_palette_get_alias (const char *alias);

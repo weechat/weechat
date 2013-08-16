@@ -57,11 +57,16 @@
 #include "gui-curses.h"
 
 
+#define GUI_WINDOW_MAX_SAVED_STYLES 32
+
+
 int gui_window_current_style_fg;       /* current foreground color          */
 int gui_window_current_style_bg;       /* current background color          */
-int gui_window_current_style_attr;     /* current attributes (bold, ..)     */
 int gui_window_current_color_attr;     /* attr sum of last color(s) used    */
-int gui_window_saved_style[4];         /* current style saved               */
+int gui_window_current_emphasis;       /* 1 if text emphasis is enabled     */
+struct t_gui_window_saved_style gui_window_saved_style[GUI_WINDOW_MAX_SAVED_STYLES];
+                                       /* circular list of saved styles     */
+int gui_window_saved_style_index = 0;  /* index in list of savec styles     */
 
 
 /*
@@ -218,12 +223,28 @@ gui_window_clrtoeol (WINDOW *window)
  */
 
 void
-gui_window_save_style ()
+gui_window_save_style (WINDOW *window)
 {
-    gui_window_saved_style[0] = gui_window_current_style_fg;
-    gui_window_saved_style[1] = gui_window_current_style_bg;
-    gui_window_saved_style[2] = gui_window_current_style_attr;
-    gui_window_saved_style[3] = gui_window_current_color_attr;
+    struct t_gui_window_saved_style *ptr_saved_style;
+    attr_t *ptr_attrs;
+    short *ptr_pair;
+
+    /* get pointer on saved style */
+    ptr_saved_style = &gui_window_saved_style[gui_window_saved_style_index];
+
+    /* save current style */
+    ptr_saved_style->style_fg = gui_window_current_style_fg;
+    ptr_saved_style->style_bg = gui_window_current_style_bg;
+    ptr_saved_style->color_attr = gui_window_current_color_attr;
+    ptr_saved_style->emphasis = gui_window_current_emphasis;
+    ptr_attrs = &ptr_saved_style->attrs;
+    ptr_pair = &ptr_saved_style->pair;
+    wattr_get (window, ptr_attrs, ptr_pair, NULL);
+
+    /* increment style index (circular list) */
+    gui_window_saved_style_index++;
+    if (gui_window_saved_style_index >= GUI_WINDOW_MAX_SAVED_STYLES)
+        gui_window_saved_style_index = 0;
 }
 
 /*
@@ -231,12 +252,30 @@ gui_window_save_style ()
  */
 
 void
-gui_window_restore_style ()
+gui_window_restore_style (WINDOW *window)
 {
-    gui_window_current_style_fg = gui_window_saved_style[0];
-    gui_window_current_style_bg = gui_window_saved_style[1];
-    gui_window_current_style_attr = gui_window_saved_style[2];
-    gui_window_current_color_attr = gui_window_saved_style[3];
+    struct t_gui_window_saved_style *ptr_saved_style;
+
+    /* decrement style index (circular list) */
+    gui_window_saved_style_index--;
+    if (gui_window_saved_style_index < 0)
+        gui_window_saved_style_index = GUI_WINDOW_MAX_SAVED_STYLES - 1;
+
+    /* get pointer on saved style */
+    ptr_saved_style = &gui_window_saved_style[gui_window_saved_style_index];
+
+    /* restore style */
+    gui_window_current_style_fg = ptr_saved_style->style_fg;
+    gui_window_current_style_bg = ptr_saved_style->style_bg;
+    gui_window_current_color_attr = ptr_saved_style->color_attr;
+    gui_window_current_emphasis = ptr_saved_style->emphasis;
+    wattr_set (window, ptr_saved_style->attrs, ptr_saved_style->pair, NULL);
+    /*
+     * for unknown reason, the wattr_set function sometimes
+     * fails to set the color pair under FreeBSD, so we force
+     * it again with wcolor_set
+     */
+    wcolor_set (window, ptr_saved_style->pair, NULL);
 }
 
 /*
@@ -248,7 +287,6 @@ gui_window_reset_style (WINDOW *window, int weechat_color)
 {
     gui_window_current_style_fg = -1;
     gui_window_current_style_bg = -1;
-    gui_window_current_style_attr = 0;
     gui_window_current_color_attr = 0;
 
     wattroff (window, A_BOLD | A_UNDERLINE | A_REVERSE);
@@ -406,11 +444,10 @@ gui_window_set_custom_color_fg (WINDOW *window, int fg)
 void
 gui_window_set_custom_color_bg (WINDOW *window, int bg)
 {
-    int current_attr, current_fg;
+    int current_fg;
 
     if (bg >= 0)
     {
-        current_attr = gui_window_current_style_attr;
         current_fg = gui_window_current_style_fg;
 
         if ((bg > 0) && (bg & GUI_COLOR_EXTENDED_FLAG))
@@ -422,7 +459,6 @@ gui_window_set_custom_color_bg (WINDOW *window, int bg)
         else if ((bg & GUI_COLOR_EXTENDED_MASK) < GUI_CURSES_NUM_WEECHAT_COLORS)
         {
             bg &= GUI_COLOR_EXTENDED_MASK;
-            gui_window_set_color_style (window, current_attr);
             gui_window_set_color (window, current_fg,
                                   (gui_color_term_colors >= 16) ?
                                   gui_weechat_colors[bg].background : gui_weechat_colors[bg].foreground);
@@ -512,6 +548,56 @@ gui_window_set_custom_color_pair (WINDOW *window, int pair)
                                        A_BOLD | A_REVERSE | A_UNDERLINE);
         wattron (window, COLOR_PAIR(pair));
     }
+}
+
+/*
+ * Toggles text emphasis.
+ */
+
+void
+gui_window_toggle_emphasis ()
+{
+    gui_window_current_emphasis ^= 1;
+}
+
+/*
+ * Emphasizes some chars already displayed in a window, either using a color
+ * (from config options), or by doing an exclusive or (XOR) with attributes
+ * (like reverse video).
+ *
+ * It is used for example when searching a string in buffer.
+ */
+
+void
+gui_window_emphasize (WINDOW *window, int x, int y, int count)
+{
+    attr_t attrs, *ptr_attrs;
+    short pair, *ptr_pair;
+
+    if (config_emphasized_attributes == 0)
+    {
+        /* use color for emphasis (from config) */
+        mvwchgat (window, y, x, count,
+                  gui_color[GUI_COLOR_EMPHASIS]->attributes,
+                  gui_color_weechat_get_pair (GUI_COLOR_EMPHASIS), NULL);
+    }
+    else
+    {
+        /* exclusive or (XOR) with attributes */
+        ptr_attrs = &attrs;
+        ptr_pair = &pair;
+        wattr_get (window, ptr_attrs, ptr_pair, NULL);
+        if (config_emphasized_attributes & GUI_COLOR_EXTENDED_BOLD_FLAG)
+            attrs ^= A_BOLD;
+        if (config_emphasized_attributes & GUI_COLOR_EXTENDED_REVERSE_FLAG)
+            attrs ^= A_REVERSE;
+        if (config_emphasized_attributes & GUI_COLOR_EXTENDED_UNDERLINE_FLAG)
+            attrs ^= A_UNDERLINE;
+        mvwchgat (window, y, x, count, attrs, pair, NULL);
+    }
+
+    /* move the cursor after the text (mvwchgat does not move cursor) */
+    wmove (window, y, x + count);
 }
 
 /*

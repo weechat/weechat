@@ -101,6 +101,7 @@ struct t_config_option *config_look_confirm_quit;
 struct t_config_option *config_look_day_change;
 struct t_config_option *config_look_day_change_time_format;
 struct t_config_option *config_look_eat_newline_glitch;
+struct t_config_option *config_look_emphasized_attributes;
 struct t_config_option *config_look_highlight;
 struct t_config_option *config_look_highlight_regex;
 struct t_config_option *config_look_highlight_tags;
@@ -198,6 +199,8 @@ struct t_config_option *config_color_chat_text_found_bg;
 struct t_config_option *config_color_chat_time;
 struct t_config_option *config_color_chat_time_delimiters;
 struct t_config_option *config_color_chat_value;
+struct t_config_option *config_color_emphasized;
+struct t_config_option *config_color_emphasized_bg;
 struct t_config_option *config_color_input_actions;
 struct t_config_option *config_color_input_text_not_found;
 struct t_config_option *config_color_separator;
@@ -262,6 +265,7 @@ int config_length_nick_prefix_suffix = 0;
 int config_length_prefix_same_nick = 0;
 struct t_hook *config_day_change_timer = NULL;
 int config_day_change_old_day = -1;
+int config_emphasized_attributes = 0;
 regex_t *config_highlight_regex = NULL;
 char **config_highlight_tags = NULL;
 int config_num_highlight_tags = 0;
@@ -480,6 +484,34 @@ config_change_eat_newline_glitch (void *data, struct t_config_option *option)
         else
             gui_term_set_eat_newline_glitch (1);
     }
+}
+
+/*
+ * Callback for changes on option "weechat.look.emphasized_attributes".
+ */
+
+void
+config_change_emphasized_attributes (void *data, struct t_config_option *option)
+{
+    int i;
+    const char *ptr_attr;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+    config_emphasized_attributes = 0;
+
+    ptr_attr = CONFIG_STRING(config_look_emphasized_attributes);
+    if (ptr_attr)
+    {
+        for (i = 0; ptr_attr[i]; i++)
+        {
+            config_emphasized_attributes |= gui_color_attr_get_flag (ptr_attr[i]);
+        }
+    }
+
+    gui_window_ask_refresh (1);
 }
 
 /*
@@ -2065,6 +2097,13 @@ config_weechat_init_options ()
            "display bugs)"),
         NULL, 0, 0, "off", NULL, 0, NULL, NULL,
         &config_change_eat_newline_glitch, NULL, NULL, NULL);
+    config_look_emphasized_attributes = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "emphasized_attributes", "string",
+        N_("attributes for emphasized text: one or more attribute chars ("
+           "\"*\" for bold, \"!\" for reverse, \"_\" for underline); if the "
+           "string is empty, the colors weechat.color.emphasized* are used"),
+        NULL, 0, 0, "", NULL, 0, NULL, NULL, &config_change_emphasized_attributes, NULL, NULL, NULL);
     config_look_highlight = config_file_new_option (
         weechat_config_file, ptr_section,
         "highlight", "string",
@@ -2736,6 +2775,23 @@ config_weechat_init_options ()
         "chat_value", "color",
         N_("text color for values"),
         NULL, GUI_COLOR_CHAT_VALUE, 0, "cyan", NULL, 0,
+        NULL, NULL, &config_change_color, NULL, NULL, NULL);
+    /* emphasis (chat/bars) */
+    config_color_emphasized = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "emphasized", "color",
+        N_("text color for emphasized text (for example when searching text); "
+           "this option is used only if option weechat.look.emphasized_attributes "
+           "is an empty string (default value)"),
+        NULL, GUI_COLOR_EMPHASIS, 0, "yellow", NULL, 0,
+        NULL, NULL, &config_change_color, NULL, NULL, NULL);
+    config_color_emphasized_bg = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "emphasized_bg", "color",
+        N_("background color for emphasized text (for example when searching "
+           "text); used only if option weechat.look.emphasized_attributes is an "
+           "empty string (default value)"),
+        NULL, -1, 0, "magenta", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     /* input bar */
     config_color_input_actions = config_file_new_option (

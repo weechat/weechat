@@ -6369,6 +6369,10 @@ Paramètres :
 *** '-italic' : désactiver l'italique
 *** 'underline' : activer le souligné
 *** '-underline' : désactiver le souligné
+*** 'emphasis' : activer/désactiver la mise en valeur du texte (note: cela ne
+    devrait être utilisé que dans les barres, car WeeChat utilise la mise en
+    valeur du texte lors de la recherche de texte dans le tampon)
+    _(nouveau dans la version 0.4.2)_
 ** nom d'une couleur de barre :
 *** 'bar_fg' : couleur de texte pour la barre
 *** 'bar_delim' : couleur des délimiteurs pour la barre

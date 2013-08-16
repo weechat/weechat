@@ -40,6 +40,7 @@
 #include "../core/wee-utf8.h"
 #include "../plugins/plugin.h"
 #include "gui-color.h"
+#include "gui-chat.h"
 #include "gui-window.h"
 
 
@@ -170,6 +171,13 @@ gui_color_get_custom (const char *color_name)
                   "%c%c",
                   GUI_COLOR_COLOR_CHAR,
                   GUI_COLOR_RESET_CHAR);
+    }
+    else if (string_strcasecmp (color_name, "emphasis") == 0)
+    {
+        snprintf (color[index_color], sizeof (color[index_color]),
+                  "%c%c",
+                  GUI_COLOR_COLOR_CHAR,
+                  GUI_COLOR_EMPHASIS_CHAR);
     }
     else if (string_strcasecmp (color_name, "bold") == 0)
     {
@@ -518,6 +526,9 @@ gui_color_decode (const char *string, const char *replacement)
                             && (isdigit (ptr_string[5])))
                             ptr_string += 6;
                         break;
+                    case GUI_COLOR_EMPHASIS_CHAR:
+                        ptr_string++;
+                        break;
                     case GUI_COLOR_BAR_CHAR:
                         ptr_string++;
                         switch (ptr_string[0])
@@ -580,6 +591,155 @@ gui_color_decode (const char *string, const char *replacement)
     out[out_pos] = '\0';
 
     return (char *)out;
+}
+
+/*
+ * Emphasizes a string or regular expression in a string (which can contain
+ * colors).
+ *
+ * Argument "case_sensitive" is used only for "search", if the "regex" is NULL.
+ *
+ * Returns string with the search string/regex emphasized, NULL if error.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+gui_color_emphasize (const char *string,
+                     const char *search, int case_sensitive,
+                     regex_t *regex)
+{
+    regmatch_t regex_match;
+    char *result, *result2, *string_no_color, *pos;
+    const char *ptr_string, *ptr_no_color, *color_emphasis;
+    int rc, length_search, length_emphasis, length_result;
+    int pos1, pos2, real_pos1, real_pos2, count_emphasis;
+
+    if (!string && !regex)
+        return NULL;
+
+    color_emphasis = gui_color_get_custom ("emphasis");
+    if (!color_emphasis)
+        return NULL;
+    length_emphasis = strlen (color_emphasis);
+
+    /*
+     * allocate space for 8 emphasized strings (8 before + 8 after = 16);
+     * more space will be allocated later (if there are more than 8 emphasized
+     * strings)
+     */
+    length_result = strlen (string) + (length_emphasis * 2 * 8) + 1;
+    result = malloc (length_result);
+    if (!result)
+        return NULL;
+    result[0] = '\0';
+
+    /*
+     * build a string without color codes to search in this one (then with the
+     * position of text found, we will retrieve position in original string,
+     * which can contain color codes)
+     */
+    string_no_color = gui_color_decode (string, NULL);
+    if (!string_no_color)
+    {
+        free (result);
+        return NULL;
+    }
+
+    length_search = (search) ? strlen (search) : 0;
+
+    ptr_string = string;
+    ptr_no_color = string_no_color;
+
+    count_emphasis = 0;
+
+    while (ptr_no_color && ptr_no_color[0])
+    {
+        if (regex)
+        {
+            /* search next match using the regex */
+            rc = regexec (regex, ptr_no_color, 1, &regex_match, 0);
+
+            /*
+             * no match found: exit the loop (if rm_no == 0, it is an empty
+             * match at beginning of string: we consider there is no match, to
+             * prevent an infinite loop)
+             */
+            if ((rc != 0) || (regex_match.rm_so < 0) || (regex_match.rm_eo <= 0))
+            {
+                strcat (result, ptr_string);
+                break;
+            }
+            pos1 = regex_match.rm_so;
+            pos2 = regex_match.rm_eo;
+        }
+        else
+        {
+            /* search next match in the string */
+            if (case_sensitive)
+                pos = strstr (ptr_no_color, search);
+            else
+                pos = string_strcasestr (ptr_no_color, search);
+            if (!pos)
+            {
+                strcat (result, ptr_string);
+                break;
+            }
+            pos1 = pos - ptr_no_color;
+            pos2 = pos1 + length_search;
+            if (pos2 <= 0)
+            {
+                strcat (result, ptr_string);
+                break;
+            }
+        }
+
+        /*
+         * find the position of match in the original string (which can contain
+         * color codes)
+         */
+        real_pos1 = gui_chat_string_real_pos (ptr_string,
+                                              gui_chat_string_pos (ptr_no_color, pos1));
+        real_pos2 = gui_chat_string_real_pos (ptr_string,
+                                              gui_chat_string_pos (ptr_no_color, pos2));
+
+        /*
+         * concatenate following strings to the result:
+         * - beginning of string (before match)
+         * - emphasis color code
+         * - the matching string
+         * - emphasis color code
+         */
+        if (real_pos1 > 0)
+            strncat (result, ptr_string, real_pos1);
+        strcat (result, color_emphasis);
+        strncat (result, ptr_string + real_pos1, real_pos2 - real_pos1);
+        strcat (result, color_emphasis);
+
+        /* restart next loop after the matching string */
+        ptr_string += real_pos2;
+        ptr_no_color += pos2;
+
+        /* check if we should allocate more space for emphasis color codes */
+        count_emphasis++;
+        if (count_emphasis == 8)
+        {
+            /* allocate more space for emphasis color codes */
+            length_result += (length_emphasis * 2 * 8);
+            result2 = realloc (result, length_result);
+            if (!result2)
+            {
+                free (result);
+                return NULL;
+            }
+            result = result2;
+            count_emphasis = 0;
+        }
+    }
+
+    free (string_no_color);
+
+    return result;
 }
 
 /*

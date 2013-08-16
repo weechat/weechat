@@ -45,6 +45,16 @@ struct t_gui_bar_window;
 #define GUI_BAR_WINDOW_OBJECTS(bar_window)                              \
     ((struct t_gui_bar_window_curses_objects *)(bar_window->gui_objects))
 
+struct t_gui_window_saved_style
+{
+    int style_fg;
+    int style_bg;
+    int color_attr;
+    int emphasis;
+    attr_t attrs;
+    short pair;
+};
+
 struct t_gui_window_curses_objects
 {
     WINDOW *win_chat;               /* chat window (example: channel)       */
@@ -66,6 +76,7 @@ extern int gui_color_pairs_auto_reset;
 extern int gui_color_pairs_auto_reset_pending;
 extern time_t gui_color_pairs_auto_reset_last;
 extern int gui_color_buffer_refresh_needed;
+extern int gui_window_current_emphasis;
 
 /* color functions */
 extern int gui_color_get_pair (int fg, int bg);
@@ -88,6 +99,8 @@ extern void gui_window_read_terminal_size ();
 extern void gui_window_redraw_buffer (struct t_gui_buffer *buffer);
 extern void gui_window_clear (WINDOW *window, int fg, int bg);
 extern void gui_window_clrtoeol (WINDOW *window);
+extern void gui_window_save_style (WINDOW *window);
+extern void gui_window_restore_style (WINDOW *window);
 extern void gui_window_reset_style (WINDOW *window, int num_color);
 extern void gui_window_reset_color (WINDOW *window, int num_color);
 extern void gui_window_set_color_style (WINDOW *window, int style);
@@ -98,6 +111,8 @@ extern void gui_window_set_custom_color_fg_bg (WINDOW *window, int fg, int bg);
 extern void gui_window_set_custom_color_pair (WINDOW *window, int pair);
 extern void gui_window_set_custom_color_fg (WINDOW *window, int fg);
 extern void gui_window_set_custom_color_bg (WINDOW *window, int bg);
+extern void gui_window_toggle_emphasis ();
+extern void gui_window_emphasize (WINDOW *window, int x, int y, int count);
 extern void gui_window_string_apply_color_fg (unsigned char **str,
                                               WINDOW *window);
 extern void gui_window_string_apply_color_bg (unsigned char **str,
@@ -112,8 +127,6 @@ extern void gui_window_string_apply_color_set_attr (unsigned char **str,
                                                     WINDOW *window);
 extern void gui_window_string_apply_color_remove_attr (unsigned char **str,
                                                        WINDOW *window);
-extern void gui_window_apply_color (unsigned char **str, WINDOW *window,
-                                    int apply_bar_colors);
 extern void gui_window_set_title (const char *title);
 
 #endif /* __WEECHAT_GUI_CURSES_H */

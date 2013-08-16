@@ -204,6 +204,10 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                         gui_window_string_apply_color_pair ((unsigned char **)&string,
                                                             GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar);
                         break;
+                    case GUI_COLOR_EMPHASIS_CHAR: /* emphasis */
+                        string++;
+                        gui_window_toggle_emphasis ();
+                        break;
                     case GUI_COLOR_BAR_CHAR: /* bar color */
                         switch (string[1])
                         {
@@ -364,6 +368,12 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                         if (output)
                             free (output);
 
+                        if (gui_window_current_emphasis)
+                        {
+                            gui_window_emphasize (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                                                  *x, *y, size_on_screen);
+                        }
+
                         *x += size_on_screen;
                     }
                 }
@@ -436,6 +446,8 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
     index_item = -1;
     index_subitem = -1;
     index_line = 0;
+
+    gui_window_current_emphasis = 0;
 
     filling = gui_bar_get_filling (bar_window->bar);
 

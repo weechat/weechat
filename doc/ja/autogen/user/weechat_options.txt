@@ -188,6 +188,16 @@
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `cyan`)
 
+* [[option_weechat.color.emphasized]] *weechat.color.emphasized*
+** 説明: `text color for emphasized text (for example when searching text); this option is used only if option weechat.look.emphasized_attributes is an empty string (default value)`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `yellow`)
+
+* [[option_weechat.color.emphasized_bg]] *weechat.color.emphasized_bg*
+** 説明: `background color for emphasized text (for example when searching text); used only if option weechat.look.emphasized_attributes is an empty string (default value)`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `magenta`)
+
 * [[option_weechat.color.input_actions]] *weechat.color.input_actions*
 ** 説明: `入力がアクションの場合のテキスト色`
 ** タイプ: 色
@@ -477,6 +487,11 @@
 ** 説明: `セットされた場合、eat_newline_glitch は 0 になる; これは各行の末尾に新しい行を追加しないために使われ、WeeChat から別のアプリケーションにテキストをコピー/ペーストする際にテキストの改行を行わない (致命的な表示上の問題を引き起こすため、このオプションはデフォルトで無効化されている)`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `off`)
+
+* [[option_weechat.look.emphasized_attributes]] *weechat.look.emphasized_attributes*
+** 説明: `attributes for emphasized text: one or more attribute chars ("*" for bold, "!" for reverse, "_" for underline); if the string is empty, the colors weechat.color.emphasized* are used`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
 
 * [[option_weechat.look.highlight]] *weechat.look.highlight*
 ** 説明: `コンマ区切りのハイライトされる単語リスト; 大文字小文字の区別無し (単語の最初に "(?-i)" をつければ区別有り)、部分マッチさせるには単語の最初か最後に "*" をつける; 例: "test,(?-i)*toto*,flash*"`

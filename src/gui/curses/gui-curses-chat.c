@@ -262,6 +262,11 @@ gui_chat_string_next_char (struct t_gui_window *window, struct t_gui_line *line,
                         gui_window_string_apply_color_pair ((unsigned char **)&string,
                                                             (apply_style) ? GUI_WINDOW_OBJECTS(window)->win_chat : NULL);
                         break;
+                    case GUI_COLOR_EMPHASIS_CHAR: /* emphasis */
+                        string++;
+                        if (apply_style)
+                            gui_window_toggle_emphasis ();
+                        break;
                     case GUI_COLOR_BAR_CHAR: /* bar color */
                         string++;
                         switch (string[0])
@@ -402,6 +407,13 @@ gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
                              "%s", (output) ? output : utf_char);
                     if (output)
                         free (output);
+
+                    if (gui_window_current_emphasis)
+                    {
+                        gui_window_emphasize (GUI_WINDOW_OBJECTS(window)->win_chat,
+                                              x, window->win_chat_cursor_y,
+                                              size_on_screen);
+                    }
                 }
                 chars_displayed += size_on_screen;
             }
@@ -432,10 +444,6 @@ gui_chat_display_word (struct t_gui_window *window,
     char *data, *ptr_data, *end_line, saved_char, str_space[] = " ";
     int chars_displayed, pos_saved_char, chars_to_display, num_displayed;
     int length_align;
-    attr_t attrs;
-    attr_t *ptr_attrs;
-    short pair;
-    short *ptr_pair;
 
     chars_displayed = 0;
 
@@ -481,17 +489,12 @@ gui_chat_display_word (struct t_gui_window *window,
                 && CONFIG_STRING(config_look_prefix_suffix)[0]
                 && line->data->date > 0)
             {
-                attrs = 0;
-                pair = 0;
                 if (!simulate)
                 {
-                    ptr_attrs = &attrs;
-                    ptr_pair = &pair;
-                    wattr_get (GUI_WINDOW_OBJECTS(window)->win_chat,
-                               ptr_attrs, ptr_pair, NULL);
-                    gui_window_save_style ();
+                    gui_window_save_style (GUI_WINDOW_OBJECTS(window)->win_chat);
                     gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
                                                   GUI_COLOR_CHAT_PREFIX_SUFFIX);
+                    gui_window_current_emphasis = 0;
                 }
                 chars_displayed += gui_chat_display_word_raw (window, line,
                                                               CONFIG_STRING(config_look_prefix_suffix),
@@ -506,16 +509,7 @@ gui_chat_display_word (struct t_gui_window *window,
                                                               nick_offline);
                 window->win_chat_cursor_x += gui_chat_strlen_screen (str_space);
                 if (!simulate)
-                {
-                    wattr_set (GUI_WINDOW_OBJECTS(window)->win_chat, attrs, pair, NULL);
-                    /*
-                     * for unknown reason, the wattr_set function sometimes
-                     * fails to set the color pair under FreeBSD, so we force
-                     * it again with wcolor_set
-                     */
-                    wcolor_set (GUI_WINDOW_OBJECTS(window)->win_chat, pair, NULL);
-                    gui_window_restore_style ();
-                }
+                    gui_window_restore_style (GUI_WINDOW_OBJECTS(window)->win_chat);
             }
             if (window->win_chat_cursor_y < window->coords_size)
                 window->coords[window->win_chat_cursor_y].data = (char *)word + (ptr_data - data);
@@ -1130,7 +1124,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     int word_start_offset, word_end_offset;
     int word_length_with_spaces, word_length;
     char *ptr_data, *ptr_end_offset, *next_char;
-    char *ptr_style, *message_with_tags;
+    char *ptr_style, *message_with_tags, *message_with_search;
 
     if (!line)
         return 0;
@@ -1152,6 +1146,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
         num_lines = gui_chat_display_line (window, line, 0, 1);
         window->win_chat_cursor_x = x;
         window->win_chat_cursor_y = y;
+        gui_window_current_emphasis = 0;
     }
 
     /* calculate marker position (maybe not used for this line!) */
@@ -1205,6 +1200,16 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
             gui_chat_build_string_message_tags (line) : NULL;
         ptr_data = (message_with_tags) ?
             message_with_tags : line->data->message;
+        message_with_search = NULL;
+        if (window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
+        {
+            message_with_search = gui_color_emphasize (ptr_data,
+                                                       window->buffer->input_buffer,
+                                                       window->buffer->text_search_exact,
+                                                       NULL);
+            if (message_with_search)
+                ptr_data = message_with_search;
+        }
         while (ptr_data && ptr_data[0])
         {
             gui_chat_get_word_info (window,
@@ -1295,6 +1300,8 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
         }
         if (message_with_tags)
             free (message_with_tags);
+        if (message_with_search)
+            free (message_with_search);
     }
 
     if (marker_line)

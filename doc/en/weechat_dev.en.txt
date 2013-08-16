@@ -772,6 +772,7 @@ All combinations are summarized in this table:
 | @h(19) + "b" + "#"                   | @h(19)`b#`             | input bar   | Move cursor char char (used only in item "input_text")
 | @h(19) + "b" + "i"                   | @h(19)`bi`             | bars        | Start item
 | @h(19) + "b" + "l" (lower L)         | @h(19)`bl`             | bars        | Start line item
+| @h(19) + "E"                         | @h(19)`E`              | chat + bars | Emphasize text _(new in version 0.4.2)_
 | @h(19) + @h(1C)                      | @h(19)@h(1C)           | chat + bars | Reset color (keep attributes)
 | @h(1A) + ATTR                        | @h(1A)`*`              | chat + bars | Set attribute
 | @h(1B) + ATTR                        | @h(1B)`*`              | chat + bars | Remove attribute
@@ -823,6 +824,9 @@ Color codes using options (see 't_gui_color_enum', in file 'src/gui/gui-color.h'
 | 37   | weechat.color.chat_prefix_buffer_inactive_buffer _(new in version 0.3.6)_
 | 38   | weechat.color.chat_nick_offline _(new in version 0.3.9)_
 | 39   | weechat.color.chat_nick_offline_highlight _(new in version 0.3.9)_
+| 40   | weechat.color.chat_nick_prefix _(new in version 0.4.1)_
+| 41   | weechat.color.chat_nick_suffix _(new in version 0.4.1)_
+| 42   | weechat.color.emphasis _(new in version 0.4.2)_
 |========================================
 
 WeeChat colors are:

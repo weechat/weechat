@@ -6320,6 +6320,10 @@ Argomenti:
 *** '-italic': rimuove corsivo
 *** 'underline': imposta sottolineato
 *** '-underline': rimuove sottolineato
+// TRANSLATION MISSING
+*** 'emphasis': toggle the emphasis for text (note: this should be used only in
+    bars, because WeeChat uses text emphasis when searching text in buffer)
+    _(new in version 0.4.2)_
 ** nome colore della barra:
 *** 'bar_fg': colore di primo piano della barra
 *** 'bar_delim': colore dei delimitatori della barra

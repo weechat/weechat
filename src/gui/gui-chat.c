@@ -241,6 +241,8 @@ gui_chat_string_add_offset_screen (const char *string, int offset_screen)
 /*
  * Gets real position in string (ignoring formatting chars like
  * colors/attributes).
+ *
+ * Returns real position, in bytes.
  */
 
 int
@@ -273,6 +275,36 @@ gui_chat_string_real_pos (const char *string, int pos)
     if (pos < 0)
         real_pos = real_pos_prev;
     return 0 + (real_pos - string);
+}
+
+/*
+ * Gets real position in string (ignoring formatting chars like
+ * colors/attributes).
+ *
+ * Returns position, in number of UTF-8 chars.
+ */
+
+int
+gui_chat_string_pos (const char *string, int real_pos)
+{
+    const char *ptr_string, *limit;
+    int count;
+
+    count = 0;
+    ptr_string = string;
+    limit = ptr_string + real_pos;
+    while (ptr_string && ptr_string[0] && (ptr_string < limit))
+    {
+        ptr_string = gui_chat_string_next_char (NULL, NULL,
+                                                (unsigned char *)ptr_string,
+                                                0, 0, 0);
+        if (ptr_string)
+        {
+            ptr_string = utf8_next_char (ptr_string);
+            count++;
+        }
+    }
+    return count;
 }
 
 /*
