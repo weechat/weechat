@@ -1064,7 +1064,7 @@ Data sent as hdata:
 [width="60%",cols="3m,2,7",options="header"]
 |=====================================================
 | Name            | Type     | Description
-| _diff           | char     | type of diff (see below)
+| _diff           | char     | Type of diff (see below)
 | group           | char     | 1 for a group, 0 for a nick
 | visible         | char     | 1 if group/nick is displayed, otherwise 0
 | level           | integer  | Level of group (0 for a nick)

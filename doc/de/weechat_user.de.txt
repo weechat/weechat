@@ -87,25 +87,25 @@ welche Pakete optional genutzt werden können.
 [width="100%",cols="5,^3,^3,13",options="header"]
 |========================================
 | Paket ^(1)^                       | Version     | benötigt | Funktion
-| cmake                             |             | *ja*     | zum kompilieren (autotools ist möglich. cmake wird aber empfohlen)
-| libncursesw5-dev ^(2)^            |             | *ja*     | ncurses Oberfläche
+| cmake                             |             | *ja*     | Zum kompilieren (autotools ist möglich. cmake wird aber empfohlen)
+| libncursesw5-dev ^(2)^            |             | *ja*     | Ncurses Oberfläche
 | libcurl4-gnutls-dev               |             | *ja*     | URL Transfer
 | zlib1g-dev                        |             | *ja*     | Kompression für Pakete, die mittels Relay- (WeeChat Protokoll), Script-Erweiterung übertragen werden
-| libgcrypt11-dev                   |             | *ja*     | geschützte Daten, IRC SASL Authentifikation (DH-BLOWFISH/DH-AES), Skript-Erweiterung
+| libgcrypt11-dev                   |             | *ja*     | Geschützte Daten, IRC SASL Authentifikation (DH-BLOWFISH/DH-AES), Skript-Erweiterung
 | libgnutls-dev                     | ≥ 2.2.0     |          | SSL Verbindung zu einem IRC Server, Unterstützung von SSL in der Relay-Erweiterung
 | gettext                           |             |          | Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch)
 | ca-certificates                   |             |          | Zertifikate für SSL Verbindungen
-| libaspell-dev oder libenchant-dev |             |          | aspell Erweiterung
-| python-dev                        | ≥ 2.5 ^(3)^ |          | python Erweiterung
-| libperl-dev                       |             |          | perl Erweiterung
-| ruby1.9.1-dev                     | ≥ 1.8       |          | ruby Erweiterung
-| liblua5.1-0-dev                   |             |          | lua Erweiterung
-| tcl-dev                           | ≥ 8.5       |          | tcl Erweiterung
-| guile-2.0-dev                     | ≥ 2.0       |          | guile (scheme) Erweiterung
-| asciidoc                          | ≥ 8.5.0     |          | zum Erstellen der man page und der Dokumentation
+| libaspell-dev oder libenchant-dev |             |          | Aspell Erweiterung
+| python-dev                        | ≥ 2.5 ^(3)^ |          | Python Erweiterung
+| libperl-dev                       |             |          | Perl Erweiterung
+| ruby1.9.1-dev                     | ≥ 1.8       |          | Ruby Erweiterung
+| liblua5.1-0-dev                   |             |          | Lua Erweiterung
+| tcl-dev                           | ≥ 8.5       |          | Tcl Erweiterung
+| guile-2.0-dev                     | ≥ 2.0       |          | Guile (scheme) Erweiterung
+| asciidoc                          | ≥ 8.5.0     |          | Zum Erstellen der man page und der Dokumentation
 | source-highlight                  |             |          | Syntax Highlight für Quelltext in Dokumentation
 | xsltproc,
-  docbook-xml, docbook-xsl          |             |          | erstellt man page
+  docbook-xml, docbook-xsl          |             |          | Erstellt man page
 |========================================
 
 [NOTE]
@@ -507,7 +507,7 @@ Die 'status'-Bar besitzt als Standardeinträge:
 | time                  | [12:55]               | Uhrzeit
 | buffer_count          | [6]                   | Anzahl der geöffneten Buffer
 | buffer_plugin         | [irc/freenode]        | Erweiterung des aktuellen Buffers (IRC Erweiterung setzt den IRC Servername für den Buffer)
-| buffer_number         | 3                     | aktuelle Nummer des Buffers
+| buffer_number         | 3                     | Aktuelle Nummer des Buffers
 | buffer_name           | #test                 | Name des aktuellen Buffers
 | buffer_modes          | +n                    | IRC Channel-Modi
 | buffer_nicklist_count | {4}                   | Anzahl der Nicks in Nickliste
@@ -524,10 +524,10 @@ In der 'input' Bar lautet die Standardeinstellung:
 |========================================
 | Item         | Beispiel                                    | Beschreibung
 | input_paste  | [Paste 7 lines ? [ctrl-Y] Ja [ctrl-N] Nein] | Nachfrage ob sieben Zeilen eingefügt werden sollen
-| input_prompt | [@Flashy]                                   | input prompt (Nickname für den IRC)
+| input_prompt | [@Flashy]                                   | Input prompt (Nickname für den IRC)
 | away         | (away)                                      | Abwesenheitsanzeige
 // TRANSLATION MISSING
-| input_search | [Search (~ str,msg)]                        | search indicator ("`~`": case insensitive, "`==`": case sensitive, "`str`": search string, "`regex`": search regular expression, "`msg`": search in messages, "`pre`": search in prefixes, "`pre\|msg`": search in prefixes and messages)
+| input_search | [Search (~ str,msg)]                        | Search indicator ("`~`": case insensitive, "`==`": case sensitive, "`str`": search string, "`regex`": search regular expression, "`msg`": search in messages, "`pre`": search in prefixes, "`pre\|msg`": search in prefixes and messages)
 | input_text   | hi peter!                                   | Text der eingegeben wird
 |========================================
 
@@ -1189,10 +1189,10 @@ Liste der Maustasten/Mausrad:
 [width="50%",cols="3m,4",options="header"]
 |========================================
 | Maustaste/-rad      | Beschreibung
-| button1             | linker Mausknopf wird gedrückt
-| button2             | rechter Mausknopf wird gedrückt
-| button3             | mittlerer Mausknopf wird gedrückt (häufig der Druck auf das Mausrad)
-| button4 ... button9 | ein zusätzlicher Mausknopf wird gedrückt
+| button1             | Linker Mausknopf wird gedrückt
+| button2             | Rechter Mausknopf wird gedrückt
+| button3             | Mittlerer Mausknopf wird gedrückt (häufig der Druck auf das Mausrad)
+| button4 ... button9 | Ein zusätzlicher Mausknopf wird gedrückt
 | wheelup             | Mausrad wird nach oben gescrollt
 | wheeldown           | Mausrad wird nach unten gescrollt
 |========================================
@@ -1401,22 +1401,22 @@ Basisfarben in WeeChat sind:
 |========================================
 | Name         | Farbe
 | default      | Standard Terminalfarbe (transparent für Hintergrund)
-| black        | schwarz
-| darkgray     | dunkelgrau
-| red          | dunkelrot
-| lightred     | hellrot
-| green        | dunkelgrün
-| lightgreen   | hellgrün
-| brown        | braun
-| yellow       | gelb
-| blue         | dunkelblau
-| lightblue    | hellblau
-| magenta      | dunkel magenta
-| lightmagenta | hell magenta
-| cyan         | dunkel türkis
-| lightcyan    | hell türkis
-| gray         | grau
-| white        | weiß
+| black        | Schwarz
+| darkgray     | Dunkelgrau
+| red          | Dunkelrot
+| lightred     | Hellrot
+| green        | Dunkelgrün
+| lightgreen   | Hellgrün
+| brown        | Braun
+| yellow       | Gelb
+| blue         | Dunkelblau
+| lightblue    | Hellblau
+| magenta      | Dunkel magenta
+| lightmagenta | Hell magenta
+| cyan         | Dunkel türkis
+| lightcyan    | Hell türkis
+| gray         | Grau
+| white        | Weiß
 |========================================
 
 [[colors_extended]]
@@ -2193,7 +2193,7 @@ mit dem entsprechenden Wert ersetzt:
 | $osinfo      | Info über das genutzte OS           | Linux 2.6.32-5-amd64 / x86_64
 | $site        | WeeChat Seite                       | http://www.weechat.org/
 | $download    | WeeChat, Download Seite             | http://www.weechat.org/download
-| $time        | aktuelle Uhrzeit/Datum              | Sun, 16 Dec 2012 10:40:48 +0100
+| $time        | Aktuelle Uhrzeit/Datum              | Sun, 16 Dec 2012 10:40:48 +0100
 | $username    | Username beim IRC Server            | Name
 | $realname    | Realname beim IRC Server            | John Doe
 |========================================

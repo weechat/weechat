@@ -89,25 +89,25 @@ compiler WeeChat.
 [width="100%",cols="5,^3,^3,13",options="header"]
 |========================================
 | Paquet ^(1)^                    | Version     | Requis | Fonctionnalité
-| cmake                           |             | *oui*  | construction (autotools toujours possible, mais cmake est recommandé)
-| libncursesw5-dev ^(2)^          |             | *oui*  | interface ncurses
-| libcurl4-gnutls-dev             |             | *oui*  | transfert d'URL
-| zlib1g-dev                      |             | *oui*  | compression des paquets dans l'extension relay (protocole weechat), extension script
-| libgcrypt11-dev                 |             | *oui*  | données sécurisées, authentification IRC SASL (DH-BLOWFISH/DH-AES), extension script
-| libgnutls-dev                   | ≥ 2.2.0     |        | connexion SSL au serveur IRC, support SSL dans l'extension relay
-| gettext                         |             |        | internationalisation (traduction des messages; la langue de base est l'anglais)
-| ca-certificates                 |             |        | certificats pour les connexions SSL
-| libaspell-dev ou libenchant-dev |             |        | extension aspell
-| python-dev                      | ≥ 2.5 ^(3)^ |        | extension python
-| libperl-dev                     |             |        | extension perl
-| ruby1.9.1-dev                   | ≥ 1.8       |        | extension ruby
-| liblua5.1-0-dev                 |             |        | extension lua
-| tcl-dev                         | ≥ 8.5       |        | extension tcl
-| guile-2.0-dev                   | ≥ 2.0       |        | extension guile (scheme)
-| asciidoc                        | ≥ 8.5.0     |        | construction de la page man et de la documentation
-| source-highlight                |             |        | coloration des sources dans la documentation
+| cmake                           |             | *oui*  | Construction (autotools toujours possible, mais cmake est recommandé)
+| libncursesw5-dev ^(2)^          |             | *oui*  | Interface ncurses
+| libcurl4-gnutls-dev             |             | *oui*  | Transfert d'URL
+| zlib1g-dev                      |             | *oui*  | Compression des paquets dans l'extension relay (protocole weechat), extension script
+| libgcrypt11-dev                 |             | *oui*  | Données sécurisées, authentification IRC SASL (DH-BLOWFISH/DH-AES), extension script
+| libgnutls-dev                   | ≥ 2.2.0     |        | Connexion SSL au serveur IRC, support SSL dans l'extension relay
+| gettext                         |             |        | Internationalisation (traduction des messages; la langue de base est l'anglais)
+| ca-certificates                 |             |        | Certificats pour les connexions SSL
+| libaspell-dev ou libenchant-dev |             |        | Extension aspell
+| python-dev                      | ≥ 2.5 ^(3)^ |        | Extension python
+| libperl-dev                     |             |        | Extension perl
+| ruby1.9.1-dev                   | ≥ 1.8       |        | Extension ruby
+| liblua5.1-0-dev                 |             |        | Extension lua
+| tcl-dev                         | ≥ 8.5       |        | Extension tcl
+| guile-2.0-dev                   | ≥ 2.0       |        | Extension guile (scheme)
+| asciidoc                        | ≥ 8.5.0     |        | Construction de la page man et de la documentation
+| source-highlight                |             |        | Coloration des sources dans la documentation
 | xsltproc,
-  docbook-xml, docbook-xsl        |             |        | construction de la page de manuel
+  docbook-xml, docbook-xsl        |             |        | Construction de la page de manuel
 |========================================
 
 [NOTE]
@@ -514,18 +514,18 @@ La barre 'status' contient les objets (items) suivants par défaut :
 [width="100%",cols="^3,^3l,10",options="header"]
 |========================================
 | Objet (item)          | Exemple               | Description
-| time                  | [12:55]               | heure
-| buffer_count          | [6]                   | nombre de tampons ouverts
-| buffer_plugin         | [irc/freenode]        | extension du tampon courant (l'extension irc peut afficher le nom du serveur IRC auquel est rattaché ce tampon)
-| buffer_number         | 3                     | numéro du tampon courant
-| buffer_name           | #test                 | nom du tampon courant
-| buffer_modes          | +n                    | modes du canal IRC
-| buffer_nicklist_count | {4}                   | nombre de pseudos dans la liste des pseudos
-| buffer_filter         | *                     | indicateur de filtrage : `*` signifie que des lignes sont filtrées (cachées), une valeur vide signifie que toutes les lignes sont affichées
-| lag                   | [Lag: 2.5]            | indicateur de "lag" (ralentissements réseau), en secondes (caché si le lag est faible)
-| hotlist               | [Act: 4:#abc(2,5), 6] | liste des tampons où il y a de l'activité (messages non lus) (dans cet exemple, 2 highlights et 5 messages non lus sur '#abc', un message non lu sur le tampon numéro 6)
-| completion            | abc(2) def(5)         | liste des mots pour la complétion, avec le nombre de complétions possibles pour chaque mot
-| scroll                | -PLUS(50)-            | indicateur de scroll, avec le nombre de lignes sous la dernière ligne affichée
+| time                  | [12:55]               | Heure
+| buffer_count          | [6]                   | Nombre de tampons ouverts
+| buffer_plugin         | [irc/freenode]        | Extension du tampon courant (l'extension irc peut afficher le nom du serveur IRC auquel est rattaché ce tampon)
+| buffer_number         | 3                     | Numéro du tampon courant
+| buffer_name           | #test                 | Nom du tampon courant
+| buffer_modes          | +n                    | Modes du canal IRC
+| buffer_nicklist_count | {4}                   | Nombre de pseudos dans la liste des pseudos
+| buffer_filter         | *                     | Indicateur de filtrage : `*` signifie que des lignes sont filtrées (cachées), une valeur vide signifie que toutes les lignes sont affichées
+| lag                   | [Lag: 2.5]            | Indicateur de "lag" (ralentissements réseau), en secondes (caché si le lag est faible)
+| hotlist               | [Act: 4:#abc(2,5), 6] | Liste des tampons où il y a de l'activité (messages non lus) (dans cet exemple, 2 highlights et 5 messages non lus sur '#abc', un message non lu sur le tampon numéro 6)
+| completion            | abc(2) def(5)         | Liste des mots pour la complétion, avec le nombre de complétions possibles pour chaque mot
+| scroll                | -PLUS(50)-            | Indicateur de scroll, avec le nombre de lignes sous la dernière ligne affichée
 |========================================
 
 La barre 'input' contient les objets (items) suivants par défaut :
@@ -533,11 +533,11 @@ La barre 'input' contient les objets (items) suivants par défaut :
 [width="100%",cols="^3,^6l,8",options="header"]
 |========================================
 | Objet (item) | Exemple                                       | Description
-| input_paste  | [Coller 7 lignes ? [ctrl-Y] Oui [ctrl-N] Non] | question à l'utilisateur pour coller des lignes
-| input_prompt | [@Flashy]                                     | prompt (pseudo pour l'extension irc)
-| away         | (absent)                                      | indicateur d'absence
-| input_search | [Recherche (~ str,msg)]                       | indicateur de recherche de texte ("`~`" : insensible à la casse, "`==`" : sensible à la casse, "`str`" : recherche de chaîne, "`regex`" : recherche d'expression régulière, "`msg`" : recherche dans les messages, "`pre`" : recherche dans les préfixes, "`pre\|msg`" : recherche dans les préfixes et messages)
-| input_text   | salut peter !                                 | texte entré
+| input_paste  | [Coller 7 lignes ? [ctrl-Y] Oui [ctrl-N] Non] | Question à l'utilisateur pour coller des lignes
+| input_prompt | [@Flashy]                                     | Prompt (pseudo pour l'extension irc)
+| away         | (absent)                                      | Indicateur d'absence
+| input_search | [Recherche (~ str,msg)]                       | Indicateur de recherche de texte ("`~`" : insensible à la casse, "`==`" : sensible à la casse, "`str`" : recherche de chaîne, "`regex`" : recherche d'expression régulière, "`msg`" : recherche dans les messages, "`pre`" : recherche dans les préfixes, "`pre\|msg`" : recherche dans les préfixes et messages)
+| input_text   | salut peter !                                 | Texte entré
 |========================================
 
 [[buffers_and_windows]]
@@ -1192,9 +1192,9 @@ Liste des modifieurs :
 [width="50%",cols="3m,4",options="header"]
 |========================================
 | Modifieur | Description
-| ctrl      | touche @k(-C-)
-| alt       | touche @k(-A-)
-| ctrl-alt  | touches @k(-C-) et @k(-A-)
+| ctrl      | Touche @k(-C-)
+| alt       | Touche @k(-A-)
+| ctrl-alt  | Touches @k(-C-) et @k(-A-)
 |========================================
 
 Liste des boutons/roulette :
@@ -1202,12 +1202,12 @@ Liste des boutons/roulette :
 [width="50%",cols="3m,4",options="header"]
 |========================================
 | Bouton/roulette     | Description
-| button1             | clic sur le bouton gauche
-| button2             | clic sur le bouton droit
-| button3             | clic sur le bouton du milieu (souvent clic sur la roulette)
-| button4 ... button9 | clic sur un bouton additionnel
-| wheelup             | roulette (haut)
-| wheeldown           | roulette (bas)
+| button1             | Clic sur le bouton gauche
+| button2             | Clic sur le bouton droit
+| button3             | Clic sur le bouton du milieu (souvent clic sur la roulette)
+| button4 ... button9 | Clic sur un bouton additionnel
+| wheelup             | Roulette (haut)
+| wheeldown           | Roulette (bas)
 |========================================
 
 Liste des gestes (seulement pour les boutons, pas la roulette) :
@@ -1231,8 +1231,8 @@ extensions/scripts) :
 [width="50%",cols="3m,4",options="header"]
 |========================================
 | Evènement  | Description
-| event-down | le bouton a été pressé mais pas encore relâché
-| event-drag | la souris a bougé avec le bouton pressé
+| event-down | Le bouton a été pressé mais pas encore relâché
+| event-drag | La souris a bougé avec le bouton pressé
 |========================================
 
 Exemples d'évènements :
@@ -1415,23 +1415,23 @@ Les couleurs de base dans WeeChat sont :
 [width="50%",cols="^3m,8",options="header"]
 |========================================
 | Nom          | Couleur
-| default      | couleur par défaut du terminal (transparent pour le fond)
-| black        | noir
-| darkgray     | gris foncé
-| red          | rouge foncé
-| lightred     | rouge clair
-| green        | vert foncé
-| lightgreen   | vert clair
-| brown        | marron
-| yellow       | jaune
-| blue         | bleu foncé
-| lightblue    | bleu clair
-| magenta      | violet foncé
-| lightmagenta | violet clair
-| cyan         | cyan foncé
-| lightcyan    | cyan clair
-| gray         | gray
-| white        | white
+| default      | Couleur par défaut du terminal (transparent pour le fond)
+| black        | Noir
+| darkgray     | Gris foncé
+| red          | Rouge foncé
+| lightred     | Rouge clair
+| green        | Vert foncé
+| lightgreen   | Vert clair
+| brown        | Marron
+| yellow       | Jaune
+| blue         | Bleu foncé
+| lightblue    | Bleu clair
+| magenta      | Violet foncé
+| lightmagenta | Violet clair
+| cyan         | Cyan foncé
+| lightcyan    | Cyan clair
+| gray         | Gris
+| white        | Blanc
 |========================================
 
 [[colors_extended]]
@@ -2211,17 +2211,17 @@ automatiquement remplacées par WeeChat lors de la réponse au CTCP :
 [width="100%",cols="^2l,4,8l",options="header"]
 |========================================
 | Code         | Description                            | Valeur / exemple
-| $clientinfo  | liste des CTCP supportés               | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
-| $version     | version de WeeChat                     | 0.4.0-dev
-| $versiongit  | version de WeeChat + version git ^(1)^ | 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)
-| $git         | version git ^(1)^                      | v0.3.9-104-g7eb5cc4
-| $compilation | date de compilation WeeChat            | Dec 16 2012
-| $osinfo      | information sur l'OS                   | Linux 2.6.32-5-amd64 / x86_64
-| $site        | site WeeChat                           | http://www.weechat.org/
-| $download    | site WeeChat, page téléchargement      | http://www.weechat.org/download
-| $time        | date/heure courante                    | Sun, 16 Dec 2012 10:40:48 +0100
-| $username    | nom d'utilisateur sur le serveur       | nom
-| $realname    | nom réel sur le serveur                | John Doe
+| $clientinfo  | Liste des CTCP supportés               | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
+| $version     | Version de WeeChat                     | 0.4.0-dev
+| $versiongit  | Version de WeeChat + version git ^(1)^ | 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)
+| $git         | Version git ^(1)^                      | v0.3.9-104-g7eb5cc4
+| $compilation | Date de compilation WeeChat            | Dec 16 2012
+| $osinfo      | Information sur l'OS                   | Linux 2.6.32-5-amd64 / x86_64
+| $site        | Site WeeChat                           | http://www.weechat.org/
+| $download    | Site WeeChat, page téléchargement      | http://www.weechat.org/download
+| $time        | Date/heure courante                    | Sun, 16 Dec 2012 10:40:48 +0100
+| $username    | Nom d'utilisateur sur le serveur       | nom
+| $realname    | Nom réel sur le serveur                | John Doe
 |========================================
 
 [NOTE]

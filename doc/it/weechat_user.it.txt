@@ -91,30 +91,30 @@ compilare WeeChat.
 [width="100%",cols="5,^3,^3,13",options="header"]
 |========================================
 | Pacchetto ^(1)^                | Versione    | Richiesto | Caratteristica
-| cmake                          |             | *sì*      | compilazione (ancora possibile con autotools, ma si raccomanda cmake)
-| libncursesw5-dev ^(2)^         |             | *sì*      | interfaccia ncurses
-| libcurl4-gnutls-dev            |             | *sì*      | trasferimento URL
+| cmake                          |             | *sì*      | Compilazione (ancora possibile con autotools, ma si raccomanda cmake)
+| libncursesw5-dev ^(2)^         |             | *sì*      | Interfaccia ncurses
+| libcurl4-gnutls-dev            |             | *sì*      | Trasferimento URL
 // TRANSLATION MISSING
-| zlib1g-dev                     |             | *sì*      | compression of packets in relay plugin (weechat protocol), script plugin
+| zlib1g-dev                     |             | *sì*      | Compression of packets in relay plugin (weechat protocol), script plugin
 // TRANSLATION MISSING
-| libgcrypt11-dev                |             | *sì*      | secured data, IRC SASL authentication (DH-BLOWFISH/DH-AES), script plugin
+| libgcrypt11-dev                |             | *sì*      | Secured data, IRC SASL authentication (DH-BLOWFISH/DH-AES), script plugin
 // TRANSLATION MISSING
-| libgnutls-dev                  | ≥ 2.2.0     |           | connessione SSL al server IRC, support of SSL in relay plugin
-| gettext                        |             |           | internazionalizzazione (traduzione dei messaggi; la lingua base è l'inglese)
-| ca-certificates                |             |           | certificati per le connessioni SSL
-| libaspell-dev o libenchant-dev |             |           | plugin aspell
-| python-dev                     | ≥ 2.5 ^(3)^ |           | plugin python
-| libperl-dev                    |             |           | plugin perl
-| ruby1.9.1-dev                  | ≥ 1.8       |           | plugin ruby
-| liblua5.1-0-dev                |             |           | plugin lua
-| tcl-dev                        | ≥ 8.5       |           | plugin tcl
-| guile-2.0-dev                  | ≥ 2.0       |           | plugin guile (scheme)
+| libgnutls-dev                  | ≥ 2.2.0     |           | Connessione SSL al server IRC, support of SSL in relay plugin
+| gettext                        |             |           | Internazionalizzazione (traduzione dei messaggi; la lingua base è l'inglese)
+| ca-certificates                |             |           | Certificati per le connessioni SSL
+| libaspell-dev o libenchant-dev |             |           | Plugin aspell
+| python-dev                     | ≥ 2.5 ^(3)^ |           | Plugin python
+| libperl-dev                    |             |           | Plugin perl
+| ruby1.9.1-dev                  | ≥ 1.8       |           | Plugin ruby
+| liblua5.1-0-dev                |             |           | Plugin lua
+| tcl-dev                        | ≥ 8.5       |           | Plugin tcl
+| guile-2.0-dev                  | ≥ 2.0       |           | Plugin guile (scheme)
 // TRANSLATION MISSING
-| asciidoc                       | ≥ 8.5.0     |           | build man page and documentation
-| source-highlight               |             |           | evidenziazione della sintassi per i sorgenti nella documentazione
+| asciidoc                       | ≥ 8.5.0     |           | Build man page and documentation
+| source-highlight               |             |           | Evidenziazione della sintassi per i sorgenti nella documentazione
 // TRANSLATION MISSING
 | xsltproc,
-  docbook-xml, docbook-xsl       |             |           | build man page
+  docbook-xml, docbook-xsl       |             |           | Build of man page
 |========================================
 
 [NOTE]
@@ -524,18 +524,18 @@ La barra 'stato' ha i seguenti elementi predefiniti:
 [width="100%",cols="^3,^3l,10",options="header"]
 |========================================
 | Elemento              | Esempio               | Descrizione
-| time                  | [12:55]               | ora
-| buffer_count          | [6]                   | numero di buffer aperti
-| buffer_plugin         | [irc/freenode]        | plugin del buffer attivo (il plugin irc può aggiungere il nome del server irc usato dal buffer)
-| buffer_number         | 3                     | numero del buffer corrente
-| buffer_name           | #test                 | nome del buffer attivo
-| buffer_modes          | +n                    | modalità canale IRC
-| buffer_nicklist_count | {4}                   | numero di nick nella lista nick
-| buffer_filter         | *                     | indicatore filtraggio: `*` significa che alcune righe sono filtrate (nascoste), valori vuoti indicano che tutte le righe sono visualizzate
-| lag                   | [Ritardo: 2.5]        | indicatore ritardo, in secondi (nascosto se il ritardo è basso)
-| hotlist               | [Att: 4:#abc(2,5), 6] | elenco dei buffer con attività (messaggi non letti) (nell'esempio, 2 notifiche e 5 messaggi non letti su #abc, un messaggio non letto sul buffer #6)
-| completion            | abc(2) def(5)         | elenco di parole per il completamento, con il numero di completamenti possibili per ogni parola
-| scroll                | -ANCORA(50)-          | indicatore di scorrimento, con il numero di righe sotto l'ultima riga visualizzata
+| time                  | [12:55]               | Ora
+| buffer_count          | [6]                   | Numero di buffer aperti
+| buffer_plugin         | [irc/freenode]        | Plugin del buffer attivo (il plugin irc può aggiungere il nome del server irc usato dal buffer)
+| buffer_number         | 3                     | Numero del buffer corrente
+| buffer_name           | #test                 | Nome del buffer attivo
+| buffer_modes          | +n                    | Modalità canale IRC
+| buffer_nicklist_count | {4}                   | Numero di nick nella lista nick
+| buffer_filter         | *                     | Indicatore filtraggio: `*` significa che alcune righe sono filtrate (nascoste), valori vuoti indicano che tutte le righe sono visualizzate
+| lag                   | [Ritardo: 2.5]        | Indicatore ritardo, in secondi (nascosto se il ritardo è basso)
+| hotlist               | [Att: 4:#abc(2,5), 6] | Elenco dei buffer con attività (messaggi non letti) (nell'esempio, 2 notifiche e 5 messaggi non letti su #abc, un messaggio non letto sul buffer #6)
+| completion            | abc(2) def(5)         | Elenco di parole per il completamento, con il numero di completamenti possibili per ogni parola
+| scroll                | -ANCORA(50)-          | Indicatore di scorrimento, con il numero di righe sotto l'ultima riga visualizzata
 |========================================
 
 La barra 'input' ha i seguenti elementi predefiniti:
@@ -543,12 +543,12 @@ La barra 'input' ha i seguenti elementi predefiniti:
 [width="100%",cols="^3,^6l,8",options="header"]
 |========================================
 | Elemento     | Esempio                                       | Descrizione
-| input_paste  | [Incollare 7 righe ? [ctrl-Y] Sì [ctrl-N] No] | chiede all'utente se incollare le righe
-| input_prompt | [@Flashy]                                     | prompt per l'input (nick per il plugin irc)
-| away         | (assente)                                     | indicatore di assenza
+| input_paste  | [Incollare 7 righe ? [ctrl-Y] Sì [ctrl-N] No] | Chiede all'utente se incollare le righe
+| input_prompt | [@Flashy]                                     | Prompt per l'input (nick per il plugin irc)
+| away         | (assente)                                     | Indicatore di assenza
 // TRANSLATION MISSING
-| input_search | [Search (~ str,msg)]                          | search indicator ("`~`": case insensitive, "`==`": case sensitive, "`str`": search string, "`regex`": search regular expression, "`msg`": search in messages, "`pre`": search in prefixes, "`pre\|msg`": search in prefixes and messages)
-| input_text   | ciao peter!                                   | testo in input
+| input_search | [Search (~ str,msg)]                          | Search indicator ("`~`": case insensitive, "`==`": case sensitive, "`str`": search string, "`regex`": search regular expression, "`msg`": search in messages, "`pre`": search in prefixes, "`pre\|msg`": search in prefixes and messages)
+| input_text   | ciao peter!                                   | Testo in input
 |========================================
 
 [[buffers_and_windows]]
@@ -1194,9 +1194,9 @@ Elenco di modificatori
 [width="50%",cols="3m,4",options="header"]
 |========================================
 | Modificatore | Descrizione
-| ctrl         | tasto @k(-C-)
-| alt          | tasto @k(-A-)
-| ctrl-alt     | tasto @k(-C-) e @k(-A-)
+| ctrl         | Tasto @k(-C-)
+| alt          | Tasto @k(-A-)
+| ctrl-alt     | Tasto @k(-C-) e @k(-A-)
 |========================================
 
 Elenco di pulsanti/rotellina:
@@ -1204,12 +1204,12 @@ Elenco di pulsanti/rotellina:
 [width="50%",cols="3m,4",options="header"]
 |========================================
 | Pulsante/rotellina  | Descrizione
-| button1             | click sul tasto sinistro
-| button2             | click sul tasto destro
-| button3             | click sul tasto centrale (spesso click sulla rotellina)
-| button4 ... button9 | click sui pulsanti extra
-| wheelup             | rotellina (su)
-| wheeldown           | rotellina (giù)
+| button1             | Click sul tasto sinistro
+| button2             | Click sul tasto destro
+| button3             | Click sul tasto centrale (spesso click sulla rotellina)
+| button4 ... button9 | Click sui pulsanti extra
+| wheelup             | Rotellina (su)
+| wheeldown           | Rotellina (giù)
 |========================================
 
 Elenco di azioni (solo per i pulsanti, non la rotellina):
@@ -1233,8 +1233,8 @@ List of incomplete events (only for buttons, useful for plugins/scripts):
 [width="50%",cols="3m,4",options="header"]
 |========================================
 | Event      | Description
-| event-down | button was pressed but not released yet
-| event-drag | mouse was moved with button pressed down
+| event-down | Button was pressed but not released yet
+| event-drag | Mouse was moved with button pressed down
 |========================================
 
 Esempio di eventi:
@@ -1416,23 +1416,23 @@ I colori base in WeeChat sono:
 [width="50%",cols="^3m,8",options="header"]
 |========================================
 | Nome         | Colore
-| default      | colore predefinito del terminale (trasparente per lo sfondo)
-| black        | nero
-| darkgray     | grigio scuro
-| red          | rosso scuro
-| lightred     | rosso chiaro
-| green        | verde scuro
-| lightgreen   | verde chiaro
-| brown        | marrone
-| yellow       | giallo
-| blue         | blu scuro
-| lightblue    | blu chiaro
-| magenta      | rosa scuro
-| lightmagenta | rosa chiaro
-| cyan         | azzurro scuro
-| lightcyan    | azzurro chiaro
-| gray         | grigio
-| white        | bianco
+| default      | Colore predefinito del terminale (trasparente per lo sfondo)
+| black        | Nero
+| darkgray     | Grigio scuro
+| red          | Rosso scuro
+| lightred     | Rosso chiaro
+| green        | Verde scuro
+| lightgreen   | Verde chiaro
+| brown        | Marrone
+| yellow       | Giallo
+| blue         | Blu scuro
+| lightblue    | Blu chiaro
+| magenta      | Rosa scuro
+| lightmagenta | Rosa chiaro
+| cyan         | Azzurro scuro
+| lightcyan    | Azzurro chiaro
+| gray         | Grigio
+| white        | Bianco
 |========================================
 
 [[colors_extended]]
@@ -2225,17 +2225,17 @@ automaticamente da WeeChat quando si risponde alle CTCP
 [width="100%",cols="^2l,4,8l",options="header"]
 |=======================================
 | Codice       | Descrizione                             | Valore/esempio
-| $clientinfo  | elenco di CTCP supportate               | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
-| $version     | versione di WeeChat                     | 0.4.0-dev
-| $versiongit  | versione di WeeChat + git version ^(1)^ | 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)
-| $git         | git version ^(1)^                       | v0.3.9-104-g7eb5cc4
-| $compilation | data di compilazione di WeeChat         | Dec 16 2012
-| $osinfo      | informazioni sull'OS                    | Linux 2.6.32-5-amd64 / x86_64
-| $site        | sito di WeeChat                         | http://www.weechat.org/
-| $download    | sito di WeeChat, pagina di download     | http://www.weechat.org/download
-| $time        | data/ora correnti                       | Sun, 16 Dec 2012 10:40:48 +0100
-| $username    | nome utente sul server IRC              | name
-| $realname    | nome reale sul server IRC               | John Doe
+| $clientinfo  | Elenco di CTCP supportate               | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
+| $version     | Versione di WeeChat                     | 0.4.0-dev
+| $versiongit  | Versione di WeeChat + git version ^(1)^ | 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)
+| $git         | Git version ^(1)^                       | v0.3.9-104-g7eb5cc4
+| $compilation | Data di compilazione di WeeChat         | Dec 16 2012
+| $osinfo      | Informazioni sull'OS                    | Linux 2.6.32-5-amd64 / x86_64
+| $site        | Sito di WeeChat                         | http://www.weechat.org/
+| $download    | Sito di WeeChat, pagina di download     | http://www.weechat.org/download
+| $time        | Data/ora correnti                       | Sun, 16 Dec 2012 10:40:48 +0100
+| $username    | Nome utente sul server IRC              | name
+| $realname    | Nome reale sul server IRC               | John Doe
 |=======================================
 
 // TRANSLATION MISSING

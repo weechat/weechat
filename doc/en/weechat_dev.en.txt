@@ -834,23 +834,23 @@ WeeChat colors are:
 [width="40%",cols="^1m,6",options="header"]
 |========================================
 | Code | Color
-| 00   | default (terminal foreground/background)
-| 01   | black
-| 02   | dark gray
-| 03   | dark red
-| 04   | light red
-| 05   | dark green
-| 06   | light green
-| 07   | brown
-| 08   | yellow
-| 09   | dark blue
-| 10   | light blue
-| 11   | dark magenta
-| 12   | light magenta
-| 13   | dark cyan
-| 14   | light cyan
-| 15   | gray
-| 16   | white
+| 00   | Default (terminal foreground/background)
+| 01   | Black
+| 02   | Dark gray
+| 03   | Dark red
+| 04   | Light red
+| 05   | Dark green
+| 06   | Light green
+| 07   | Brown
+| 08   | Yellow
+| 09   | Dark blue
+| 10   | Light blue
+| 11   | Dark magenta
+| 12   | Light magenta
+| 13   | Dark cyan
+| 14   | Light cyan
+| 15   | Gray
+| 16   | White
 |========================================
 
 Examples of color codes:
@@ -858,13 +858,13 @@ Examples of color codes:
 [width="50%",cols="1,2",options="header"]
 |========================================
 | Code                     | Description
-| @h(19)`01`               | color of option "01" (chat text)
-| @h(19)`*08,03`           | yellow on red
-| @h(19)`*@00214`          | orange (extended color 214)
-| @h(19)`*@*_00214,@00017` | bold underlined orange (214) on dark blue (17)
-| @h(1A)`_`                | set underline
-| @h(1B)`_`                | remove underline
-| @h(1C)`bD`               | reset attributes and color
+| @h(19)`01`               | Color of option "01" (chat text)
+| @h(19)`*08,03`           | Yellow on red
+| @h(19)`*@00214`          | Orange (extended color 214)
+| @h(19)`*@*_00214,@00017` | Bold underlined orange (214) on dark blue (17)
+| @h(1A)`_`                | Set underline
+| @h(1B)`_`                | Remove underline
+| @h(1C)`bD`               | Reset attributes and color
 |========================================
 
 [[plugin_internals]]
