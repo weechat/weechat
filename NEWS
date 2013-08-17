@@ -1,7 +1,7 @@
 WeeChat Release Notes
 =====================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.2-dev, 2013-08-05
+v0.4.2-dev, 2013-08-17
 
 
 This document lists important changes for each version, that require manual
@@ -15,6 +15,36 @@ http://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 Version 0.4.2 (under dev!)
 --------------------------
+
+=== Regex search in buffer ===
+
+Search with regular expression has been added, and therefore some keys in search
+context have been changed.
+
+The key ctrl+"r" in search context is now used to switch string/regex search
+(instead of searching exact text).
+
+If you never changed keys in search context, you can reset them all with one
+command:
+
+----------------------------------------
+/key resetall -yes search
+----------------------------------------
+
+Or the manual method:
+
+----------------------------------------
+/key missing search
+/key bindctxt search ctrl-R /input search_switch_regex
+----------------------------------------
+
+To view keys in search context:
+
+----------------------------------------
+/key list search
+----------------------------------------
+
+For more information, see the chapter about keys in the 'WeeChat User's guide'.
 
 === New rmodifier ===
 

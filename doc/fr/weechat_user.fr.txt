@@ -536,7 +536,7 @@ La barre 'input' contient les objets (items) suivants par défaut :
 | input_paste  | [Coller 7 lignes ? [ctrl-Y] Oui [ctrl-N] Non] | question à l'utilisateur pour coller des lignes
 | input_prompt | [@Flashy]                                     | prompt (pseudo pour l'extension irc)
 | away         | (absent)                                      | indicateur d'absence
-| input_search | [Recherche texte]                             | indicateur de recherche de texte
+| input_search | [Recherche (~ str,msg)]                       | indicateur de recherche de texte ("`~`" : insensible à la casse, "`==`" : sensible à la casse, "`str`" : recherche de chaîne, "`regex`" : recherche d'expression régulière, "`msg`" : recherche dans les messages, "`pre`" : recherche dans les préfixes, "`pre\|msg`" : recherche dans les préfixes et messages)
 | input_text   | salut peter !                                 | texte entré
 |========================================
 
@@ -1051,7 +1051,9 @@ pressé pour chercher du texte dans le tampon).
 [width="100%",cols="^.^3,.^10,.^5l",options="header"]
 |========================================
 | Touche       | Description | Commande
-| @k(C-)@k(r)  | Basculer la casse exacte pour la recherche | /input search_switch_case
+| @k(C-)@k(r)  | Basculer le type de recherche : chaîne (par défaut), expression régulière | /input search_switch_regex
+| @k(A-)@k(c)  | Basculer la casse exacte pour la recherche | /input search_switch_case
+| @k(Tab)      | Basculer la recherche dans : les messages (par défaut), les préfixes, les préfixes + messages | /input search_switch_where
 | @k(↑)        | Chercher la ligne précédente | /input search_previous
 | @k(↓)        | Chercher la ligne suivante | /input search_next
 | @k(Enter) .3+| Arrêter la recherche .3+| /input search_stop

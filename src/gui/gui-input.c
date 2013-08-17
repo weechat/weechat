@@ -556,6 +556,105 @@ gui_input_search_text (struct t_gui_buffer *buffer)
 }
 
 /*
+ * Compiles regex used to search text in buffer.
+ */
+
+void
+gui_input_search_compile_regex (struct t_gui_buffer *buffer)
+{
+    int flags;
+
+    /* remove the compiled regex */
+    if (buffer->text_search_regex_compiled)
+    {
+        regfree (buffer->text_search_regex_compiled);
+        free (buffer->text_search_regex_compiled);
+        buffer->text_search_regex_compiled = NULL;
+    }
+
+    /* compile regex */
+    if (buffer->text_search_regex)
+    {
+        buffer->text_search_regex_compiled = malloc (sizeof (*buffer->text_search_regex_compiled));
+        if (buffer->text_search_regex_compiled)
+        {
+            flags = REG_EXTENDED;
+            if (!buffer->text_search_exact)
+                flags |= REG_ICASE;
+            if (string_regcomp (buffer->text_search_regex_compiled,
+                                buffer->input_buffer, flags) != 0)
+            {
+                free (buffer->text_search_regex_compiled);
+                buffer->text_search_regex_compiled = NULL;
+            }
+        }
+    }
+}
+
+/*
+ * Switches case for search in buffer (default key: meta-c during search).
+ */
+
+void
+gui_input_search_switch_case (struct t_gui_buffer *buffer)
+{
+    struct t_gui_window *window;
+
+    window = gui_window_search_with_buffer (buffer);
+    if (window && (window->buffer->type == GUI_BUFFER_TYPE_FORMATTED)
+        && (window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED))
+    {
+        window->buffer->text_search_exact ^= 1;
+        gui_window_search_restart (window);
+        gui_input_search_signal (buffer);
+    }
+}
+
+/*
+ * Switches string/regex for search in buffer (default key: ctrl-R during
+ * search).
+ */
+
+void
+gui_input_search_switch_regex (struct t_gui_buffer *buffer)
+{
+    struct t_gui_window *window;
+
+    window = gui_window_search_with_buffer (buffer);
+    if (window && (window->buffer->type == GUI_BUFFER_TYPE_FORMATTED)
+        && (window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED))
+    {
+        window->buffer->text_search_regex ^= 1;
+        gui_window_search_restart (window);
+        gui_input_search_signal (buffer);
+    }
+}
+
+/*
+ * Switches search in messages/prefixes (default key: tab during search).
+ */
+
+void
+gui_input_search_switch_where (struct t_gui_buffer *buffer)
+{
+    struct t_gui_window *window;
+
+    window = gui_window_search_with_buffer (buffer);
+    if (window && (window->buffer->type == GUI_BUFFER_TYPE_FORMATTED)
+        && (window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED))
+    {
+        if (window->buffer->text_search_where == GUI_TEXT_SEARCH_IN_MESSAGE)
+            window->buffer->text_search_where = GUI_TEXT_SEARCH_IN_PREFIX;
+        else if (window->buffer->text_search_where == GUI_TEXT_SEARCH_IN_PREFIX)
+            window->buffer->text_search_where = GUI_TEXT_SEARCH_IN_MESSAGE | GUI_TEXT_SEARCH_IN_PREFIX;
+        else
+            window->buffer->text_search_where = GUI_TEXT_SEARCH_IN_MESSAGE;
+        gui_window_search_restart (window);
+        gui_input_search_signal (buffer);
+    }
+}
+
+/*
  * Searches backward in buffer (default key: up during search).
  */
 
@@ -588,25 +687,6 @@ gui_input_search_next (struct t_gui_buffer *buffer)
     {
         window->buffer->text_search = GUI_TEXT_SEARCH_FORWARD;
         (void) gui_window_search_text (window);
-    }
-}
-
-/*
- * Switches case for search in buffer (default key: ctrl-R during search).
- */
-
-void
-gui_input_search_switch_case (struct t_gui_buffer *buffer)
-{
-    struct t_gui_window *window;
-
-    window = gui_window_search_with_buffer (buffer);
-    if (window && (window->buffer->type == GUI_BUFFER_TYPE_FORMATTED)
-        && (window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED))
-    {
-        window->buffer->text_search_exact ^= 1;
-        gui_window_search_restart (window);
-        gui_input_search_signal (buffer);
     }
 }
 

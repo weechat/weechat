@@ -658,6 +658,7 @@ gui_color_emphasize (const char *string,
         if (regex)
         {
             /* search next match using the regex */
+            regex_match.rm_so = -1;
             rc = regexec (regex, ptr_no_color, 1, &regex_match, 0);
 
             /*

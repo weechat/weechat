@@ -1502,9 +1502,7 @@ gui_window_search_text (struct t_gui_window *window)
                 gui_line_get_last_displayed (window->buffer);
             while (ptr_line)
             {
-                if (gui_line_search_text (ptr_line,
-                                          window->buffer->input_buffer,
-                                          window->buffer->text_search_exact))
+                if (gui_line_search_text (window->buffer, ptr_line))
                 {
                     window->scroll->start_line = ptr_line;
                     window->scroll->start_line_pos = 0;
@@ -1527,9 +1525,7 @@ gui_window_search_text (struct t_gui_window *window)
                 gui_line_get_first_displayed (window->buffer);
             while (ptr_line)
             {
-                if (gui_line_search_text (ptr_line,
-                                          window->buffer->input_buffer,
-                                          window->buffer->text_search_exact))
+                if (gui_line_search_text (window->buffer, ptr_line))
                 {
                     window->scroll->start_line = ptr_line;
                     window->scroll->start_line_pos = 0;
@@ -1553,8 +1549,10 @@ void
 gui_window_search_start (struct t_gui_window *window)
 {
     window->buffer->text_search = GUI_TEXT_SEARCH_BACKWARD;
-    window->buffer->text_search_exact = 0;
+    if (window->buffer->text_search_where == 0)
+        window->buffer->text_search_where = GUI_TEXT_SEARCH_IN_MESSAGE;
     window->buffer->text_search_found = 0;
+    gui_input_search_compile_regex (window->buffer);
     if (window->buffer->text_search_input)
     {
         free (window->buffer->text_search_input);
@@ -1577,6 +1575,7 @@ gui_window_search_restart (struct t_gui_window *window)
     window->scroll->start_line_pos = 0;
     window->buffer->text_search = GUI_TEXT_SEARCH_BACKWARD;
     window->buffer->text_search_found = 0;
+    gui_input_search_compile_regex (window->buffer);
     if (gui_window_search_text (window))
         window->buffer->text_search_found = 1;
     else
@@ -1599,6 +1598,12 @@ gui_window_search_stop (struct t_gui_window *window)
 {
     window->buffer->text_search = GUI_TEXT_SEARCH_DISABLED;
     window->buffer->text_search = 0;
+    if (window->buffer->text_search_regex_compiled)
+    {
+        regfree (window->buffer->text_search_regex_compiled);
+        free (window->buffer->text_search_regex_compiled);
+        window->buffer->text_search_regex_compiled = NULL;
+    }
     gui_input_delete_line (window->buffer);
     if (window->buffer->text_search_input)
     {

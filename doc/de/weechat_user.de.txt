@@ -526,7 +526,8 @@ In der 'input' Bar lautet die Standardeinstellung:
 | input_paste  | [Paste 7 lines ? [ctrl-Y] Ja [ctrl-N] Nein] | Nachfrage ob sieben Zeilen eingefügt werden sollen
 | input_prompt | [@Flashy]                                   | input prompt (Nickname für den IRC)
 | away         | (away)                                      | Abwesenheitsanzeige
-| input_search | [Text search]                               | Textsuche
+// TRANSLATION MISSING
+| input_search | [Search (~ str,msg)]                        | search indicator ("`~`": case insensitive, "`==`": case sensitive, "`str`": search string, "`regex`": search regular expression, "`msg`": search in messages, "`pre`": search in prefixes, "`pre\|msg`": search in prefixes and messages)
 | input_text   | hi peter!                                   | Text der eingegeben wird
 |========================================
 
@@ -1039,7 +1040,11 @@ in einem Buffer nach einem Text zu suchen).
 [width="100%",cols="^.^3,.^10,.^5l",options="header"]
 |========================================
 | Taste        | Beschreibung | Befehl
-| @k(C-)@k(r)  | auf Groß-/Kleinschreibung umschalten | /input search_switch_case
+// TRANSLATION MISSING
+| @k(C-)@k(r)  | Switch search type: string (default), regular expression | /input search_switch_regex
+| @k(A-)@k(c)  | auf Groß-/Kleinschreibung umschalten | /input search_switch_case
+// TRANSLATION MISSING
+| @k(Tab)      | Switch search in: messages (default), prefixes, prefixes + messages | /input search_switch_where
 | @k(↑)        | sucht vorheriger Zeile | /input search_previous
 | @k(↓)        | sucht nächste Zeile  | /input search_next
 | @k(Enter) .3+| Suche abbrechen .3+| /input search_stop

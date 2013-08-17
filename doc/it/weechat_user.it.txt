@@ -546,7 +546,8 @@ La barra 'input' ha i seguenti elementi predefiniti:
 | input_paste  | [Incollare 7 righe ? [ctrl-Y] Sì [ctrl-N] No] | chiede all'utente se incollare le righe
 | input_prompt | [@Flashy]                                     | prompt per l'input (nick per il plugin irc)
 | away         | (assente)                                     | indicatore di assenza
-| input_search | [Ricerca testo]                               | indicatore di ricerca testo
+// TRANSLATION MISSING
+| input_search | [Search (~ str,msg)]                          | search indicator ("`~`": case insensitive, "`==`": case sensitive, "`str`": search string, "`regex`": search regular expression, "`msg`": search in messages, "`pre`": search in prefixes, "`pre\|msg`": search in prefixes and messages)
 | input_text   | ciao peter!                                   | testo in input
 |========================================
 
@@ -1051,7 +1052,11 @@ Questi tasti sono usati nel contesto "search" (quando viene digitato
 [width="100%",cols="^.^3,.^10,.^5l",options="header"]
 |========================================
 | Key          | Descrizione | Comando
-| @k(C-)@k(r)  | Passa alla ricerca esatta | /input search_switch_case
+// TRANSLATION MISSING
+| @k(C-)@k(r)  | Switch search type: string (default), regular expression | /input search_switch_regex
+| @k(A-)@k(c)  | Passa alla ricerca esatta | /input search_switch_case
+// TRANSLATION MISSING
+| @k(Tab)      | Switch search in: messages (default), prefixes, prefixes + messages | /input search_switch_where
 | @k(↑)        | Cerca riga precedente | /input search_previous
 | @k(↓)        | Cerca riga successiva | /input search_next
 | @k(Invio) .3+| Ferma ricerca .3+| /input search_stop

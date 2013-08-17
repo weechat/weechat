@@ -398,37 +398,70 @@ gui_line_get_next_displayed (struct t_gui_line *line)
  */
 
 int
-gui_line_search_text (struct t_gui_line *line, const char *text,
-                      int case_sensitive)
+gui_line_search_text (struct t_gui_buffer *buffer, struct t_gui_line *line)
 {
     char *prefix, *message;
     int rc;
 
-    if (!line || !line->data->message || !text || !text[0])
+    if (!line || !line->data->message
+        || !buffer->input_buffer || !buffer->input_buffer[0])
+    {
         return 0;
+    }
 
     rc = 0;
 
-    if (line->data->prefix)
+    if ((buffer->text_search_where & GUI_TEXT_SEARCH_IN_PREFIX)
+        && line->data->prefix)
     {
         prefix = gui_color_decode (line->data->prefix, NULL);
         if (prefix)
         {
-            if ((case_sensitive && (strstr (prefix, text)))
-                || (!case_sensitive && (string_strcasestr (prefix, text))))
+            if (buffer->text_search_regex)
+            {
+                if (buffer->text_search_regex_compiled)
+                {
+                    if (regexec (buffer->text_search_regex_compiled,
+                                 prefix, 0, NULL, 0) == 0)
+                    {
+                        rc = 1;
+                    }
+                }
+            }
+            else if ((buffer->text_search_exact
+                      && (strstr (prefix, buffer->input_buffer)))
+                     || (!buffer->text_search_exact
+                         && (string_strcasestr (prefix, buffer->input_buffer))))
+            {
                 rc = 1;
+            }
             free (prefix);
         }
     }
 
-    if (!rc)
+    if (!rc && (buffer->text_search_where & GUI_TEXT_SEARCH_IN_MESSAGE))
     {
         message = gui_color_decode (line->data->message, NULL);
         if (message)
         {
-            if ((case_sensitive && (strstr (message, text)))
-                || (!case_sensitive && (string_strcasestr (message, text))))
+            if (buffer->text_search_regex)
+            {
+                if (buffer->text_search_regex_compiled)
+                {
+                    if (regexec (buffer->text_search_regex_compiled,
+                                 message, 0, NULL, 0) == 0)
+                    {
+                        rc = 1;
+                    }
+                }
+            }
+            else if ((buffer->text_search_exact
+                      && (strstr (message, buffer->input_buffer)))
+                     || (!buffer->text_search_exact
+                         && (string_strcasestr (message, buffer->input_buffer))))
+            {
                 rc = 1;
+            }
             free (message);
         }
     }

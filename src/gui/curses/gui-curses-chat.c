@@ -1201,12 +1201,15 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
         ptr_data = (message_with_tags) ?
             message_with_tags : line->data->message;
         message_with_search = NULL;
-        if (window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
+        if ((window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
+            && (window->buffer->text_search_where & GUI_TEXT_SEARCH_IN_MESSAGE)
+            && (!window->buffer->text_search_regex
+                || window->buffer->text_search_regex_compiled))
         {
             message_with_search = gui_color_emphasize (ptr_data,
                                                        window->buffer->input_buffer,
                                                        window->buffer->text_search_exact,
-                                                       NULL);
+                                                       window->buffer->text_search_regex_compiled);
             if (message_with_search)
                 ptr_data = message_with_search;
         }
@@ -1321,8 +1324,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
         /* display marker if line is matching user search */
         if (window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
         {
-            if (gui_line_search_text (line, window->buffer->input_buffer,
-                                      window->buffer->text_search_exact))
+            if (gui_line_search_text (window->buffer, line))
             {
                 gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
                                               GUI_COLOR_CHAT_TEXT_FOUND);

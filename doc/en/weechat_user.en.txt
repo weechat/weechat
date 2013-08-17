@@ -526,7 +526,7 @@ Bar 'input' has following default items:
 | input_paste  | [Paste 7 lines ? [ctrl-Y] Yes [ctrl-N] No] | question to user for pasting lines
 | input_prompt | [@Flashy]                                  | input prompt (nick for irc plugin)
 | away         | (away)                                     | away indicator
-| input_search | [Text search]                              | text search indicator
+| input_search | [Search (~ str,msg)]                       | search indicator ("`~`": case insensitive, "`==`": case sensitive, "`str`": search string, "`regex`": search regular expression, "`msg`": search in messages, "`pre`": search in prefixes, "`pre\|msg`": search in prefixes and messages)
 | input_text   | hi peter!                                  | input text
 |========================================
 
@@ -1027,7 +1027,9 @@ text in buffer).
 [width="100%",cols="^.^3,.^10,.^5l",options="header"]
 |========================================
 | Key          | Description | Command
-| @k(C-)@k(r)  | Switch exact case for search | /input search_switch_case
+| @k(C-)@k(r)  | Switch search type: string (default), regular expression | /input search_switch_regex
+| @k(A-)@k(c)  | Switch exact case for search | /input search_switch_case
+| @k(Tab)      | Switch search in: messages (default), prefixes, prefixes + messages | /input search_switch_where
 | @k(↑)        | Search previous line | /input search_previous
 | @k(↓)        | Search next line | /input search_next
 | @k(Enter) .3+| Stop search .3+| /input search_stop

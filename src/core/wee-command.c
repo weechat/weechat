@@ -2507,6 +2507,10 @@ COMMAND_CALLBACK(input)
             gui_input_search_next (buffer);
         else if (string_strcasecmp (argv[1], "search_switch_case") == 0)
             gui_input_search_switch_case (buffer);
+        else if (string_strcasecmp (argv[1], "search_switch_regex") == 0)
+            gui_input_search_switch_regex (buffer);
+        else if (string_strcasecmp (argv[1], "search_switch_where") == 0)
+            gui_input_search_switch_where (buffer);
         else if (string_strcasecmp (argv[1], "search_stop") == 0)
             gui_input_search_stop (buffer);
         else if (string_strcasecmp (argv[1], "delete_previous_char") == 0)
@@ -6523,6 +6527,8 @@ command_init ()
                      "completion\n"
                      "  search_text: search text in buffer\n"
                      "  search_switch_case: switch exact case for search\n"
+                     "  search_switch_regex: switch search type: string/regular expression\n"
+                     "  search_switch_where: switch search in messages/prefixes\n"
                      "  search_previous: search previous line\n"
                      "  search_next: search next line\n"
                      "  search_stop: stop search\n"

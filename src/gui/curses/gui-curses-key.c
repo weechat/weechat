@@ -223,7 +223,9 @@ gui_key_default_bindings (int context)
     {
         BIND(/* Enter */ "ctrl-M",  "/input search_stop");
         BIND(/* Enter */ "ctrl-J",  "/input search_stop");
-        BIND(/* ^R    */ "ctrl-R",  "/input search_switch_case");
+        BIND(/* m-c   */ "meta-c",  "/input search_switch_case");
+        BIND(/* ^R    */ "ctrl-R",  "/input search_switch_regex");
+        BIND(/* tab   */ "ctrl-I",  "/input search_switch_where");
         BIND(/* up    */ "meta2-A", "/input search_previous");
         BIND(/* down  */ "meta2-B", "/input search_next");
     }
@@ -433,12 +435,16 @@ gui_key_flush (int paste)
                     || (strcmp (input_old, gui_current_window->buffer->input_buffer) != 0)))
             {
                 /*
-                 * if current input is longer than old input, and that
-                 * beginning of current input is exactly equal to old input,
-                 * then do nothing (search will not find any result and can
-                 * take some time on buffer with many lines..)
+                 * if following conditions are all true, then do not search
+                 * again (search will not find any result and can take some time
+                 * on a buffer with many lines):
+                 * - old search was not successful
+                 * - searching a string (not a regex)
+                 * - current input is longer than old input
+                 * - beginning of current input is exactly equal to old input.
                  */
                 if (!gui_current_window->buffer->text_search_found
+                    && !gui_current_window->buffer->text_search_regex
                     && (input_old != NULL)
                     && (input_old[0])
                     && (gui_current_window->buffer->input_buffer != NULL)

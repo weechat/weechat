@@ -700,10 +700,7 @@ char *
 gui_bar_item_default_input_search (void *data, struct t_gui_bar_item *item,
                                    struct t_gui_window *window)
 {
-    char *text_search = N_("Text search");
-    char *text_search_exact = N_("Text search (exact)");
-    char *ptr_message, *buf;
-    int length;
+    char str_search[1024];
 
     /* make C compiler happy */
     (void) data;
@@ -715,22 +712,21 @@ gui_bar_item_default_input_search (void *data, struct t_gui_bar_item *item,
     if (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
         return NULL;
 
-    ptr_message = (window->buffer->text_search_exact) ?
-        _(text_search_exact) : _(text_search);
-    length = 16 + strlen (ptr_message) + 1;
-    buf = malloc (length);
-    if (buf)
-    {
-        snprintf (buf, length, "%s%s",
-                  (window->buffer->text_search_found
-                   || !window->buffer->input_buffer
-                   || !window->buffer->input_buffer[0]) ?
-                  GUI_COLOR_CUSTOM_BAR_FG :
-                  gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_input_text_not_found))),
-                  ptr_message);
-    }
+    snprintf (str_search, sizeof (str_search), "%s%s (%s %s,%s%s%s)",
+              (window->buffer->text_search_found
+               || !window->buffer->input_buffer
+               || !window->buffer->input_buffer[0]) ?
+              GUI_COLOR_CUSTOM_BAR_FG :
+              gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_input_text_not_found))),
+              _("Search"),
+              (window->buffer->text_search_exact) ? "==" : "~",
+              (window->buffer->text_search_regex) ? "regex" : "str",
+              (window->buffer->text_search_where & GUI_TEXT_SEARCH_IN_PREFIX) ? "pre" : "",
+              ((window->buffer->text_search_where & GUI_TEXT_SEARCH_IN_PREFIX)
+               && (window->buffer->text_search_where & GUI_TEXT_SEARCH_IN_MESSAGE)) ? "|" : "",
+              (window->buffer->text_search_where & GUI_TEXT_SEARCH_IN_MESSAGE) ? "msg" : "");
 
-    return buf;
+    return strdup (str_search);
 }
 
 /*

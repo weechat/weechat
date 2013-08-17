@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-08-16 15:18+0200\n"
-"PO-Revision-Date: 2013-07-31 18:41+0200\n"
+"POT-Creation-Date: 2013-08-17 11:49+0200\n"
+"PO-Revision-Date: 2013-08-17 10:37+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: hu\n"
@@ -1376,6 +1376,8 @@ msgid ""
 "  complete_previous: complete word with previous completion\n"
 "  search_text: search text in buffer\n"
 "  search_switch_case: switch exact case for search\n"
+"  search_switch_regex: switch search type: string/regular expression\n"
+"  search_switch_where: switch search in messages/prefixes\n"
 "  search_previous: search previous line\n"
 "  search_next: search next line\n"
 "  search_stop: stop search\n"
@@ -3485,13 +3487,8 @@ msgid_plural "%sPaste %d lines ? [ctrl-Y] Yes [ctrl-N] No"
 msgstr[0] "  Beszúrható %d sor? [ctrl-Y] Igen  [ctrl-N] Nem"
 msgstr[1] "  Beszúrható %d sor? [ctrl-Y] Igen  [ctrl-N] Nem"
 
-#, fuzzy
-msgid "Text search"
-msgstr "Szöveg keresése: "
-
-#, fuzzy
-msgid "Text search (exact)"
-msgstr "Szöveg keresése (pontos): "
+msgid "Search"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%s-MORE(%d)-"
@@ -9230,11 +9227,3 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
-
-#, fuzzy
-#~ msgid "username for SASL authentication"
-#~ msgstr "SSL használata a a kapcsolathoz"
-
-#, fuzzy
-#~ msgid "password for SASL authentication"
-#~ msgstr "SSL használata a a kapcsolathoz"

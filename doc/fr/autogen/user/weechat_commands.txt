@@ -348,6 +348,8 @@ liste des actions:
   complete_previous: compléter le mot avec la complétion précédente
   search_text: chercher du texte dans le tampon
   search_switch_case: basculer la casse exacte pour la recherche
+  search_switch_regex: basculer le type de recherche: chaîne/expression régulière
+  search_switch_where: basculer la recherche dans les messages/préfixes
   search_previous: chercher la ligne précédente
   search_next: chercher la ligne suivante
   search_stop: arrêter la recherche

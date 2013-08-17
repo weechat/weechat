@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-08-16 15:18+0200\n"
-"PO-Revision-Date: 2013-07-31 18:42+0200\n"
+"POT-Creation-Date: 2013-08-17 11:49+0200\n"
+"PO-Revision-Date: 2013-08-17 10:37+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: ru\n"
@@ -1397,6 +1397,8 @@ msgid ""
 "  complete_previous: complete word with previous completion\n"
 "  search_text: search text in buffer\n"
 "  search_switch_case: switch exact case for search\n"
+"  search_switch_regex: switch search type: string/regular expression\n"
+"  search_switch_where: switch search in messages/prefixes\n"
 "  search_previous: search previous line\n"
 "  search_next: search next line\n"
 "  search_stop: stop search\n"
@@ -3518,13 +3520,8 @@ msgstr[0] "  Вставить %d строк ? [ctrl-Y] Да  [ctrl-N] Нет"
 msgstr[1] "  Вставить %d строк ? [ctrl-Y] Да  [ctrl-N] Нет"
 msgstr[2] "  Вставить %d строк ? [ctrl-Y] Да  [ctrl-N] Нет"
 
-#, fuzzy
-msgid "Text search"
-msgstr "Поиск текста: "
-
-#, fuzzy
-msgid "Text search (exact)"
-msgstr "Поиск текста (регистрозависимый): "
+msgid "Search"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%s-MORE(%d)-"
@@ -9250,11 +9247,3 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
-
-#, fuzzy
-#~ msgid "username for SASL authentication"
-#~ msgstr "использовать SSL при связи с сервером"
-
-#, fuzzy
-#~ msgid "password for SASL authentication"
-#~ msgstr "использовать SSL при связи с сервером"

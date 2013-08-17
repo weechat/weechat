@@ -50,6 +50,9 @@ enum t_gui_buffer_notify
 #define GUI_TEXT_SEARCH_BACKWARD 1
 #define GUI_TEXT_SEARCH_FORWARD  2
 
+#define GUI_TEXT_SEARCH_IN_MESSAGE 1
+#define GUI_TEXT_SEARCH_IN_PREFIX  2
+
 #define GUI_BUFFER_INPUT_BLOCK_SIZE 256
 
 /* buffer structures */
@@ -158,6 +161,9 @@ struct t_gui_buffer
     /* text search */
     int text_search;                   /* text search type                  */
     int text_search_exact;             /* exact search (case sensitive) ?   */
+    int text_search_regex;             /* search with a regex               */
+    regex_t *text_search_regex_compiled; /* regex used to search            */
+    int text_search_where;             /* search where? prefix and/or msg   */
     int text_search_found;             /* 1 if text found, otherwise 0      */
     char *text_search_input;           /* input saved before text search    */
 

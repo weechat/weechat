@@ -348,6 +348,8 @@ list of actions:
   complete_previous: complete word with previous completion
   search_text: search text in buffer
   search_switch_case: switch exact case for search
+  search_switch_regex: switch search type: string/regular expression
+  search_switch_where: switch search in messages/prefixes
   search_previous: search previous line
   search_next: search next line
   search_stop: stop search

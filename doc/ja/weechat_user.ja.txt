@@ -516,7 +516,8 @@ WeeChat を起動したターミナルの例:
 | input_paste  | [Paste 7 lines ? [ctrl-Y] Yes [ctrl-N] No] | 行をペーストする場合にユーザへ行われる質問
 | input_prompt | [@Flashy]                                  | 入力プロンプト (irc プラグインの場合はニックネーム)
 | away         | (away)                                     | 離席状態表示
-| input_search | [Text search]                              | テキスト検索表示
+// TRANSLATION MISSING
+| input_search | [Search (~ str,msg)]                       | search indicator ("`~`": case insensitive, "`==`": case sensitive, "`str`": search string, "`regex`": search regular expression, "`msg`": search in messages, "`pre`": search in prefixes, "`pre\|msg`": search in prefixes and messages)
 | input_text   | hi peter!                                  | 入力テキスト
 |========================================
 
@@ -1007,7 +1008,11 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
 [width="100%",cols="^.^3,.^10,.^5l",options="header"]
 |========================================
 | キー         | 説明 | コマンド
-| @k(C-)@k(r)  | 大文字小文字を区別して検索 | /input search_switch_case
+// TRANSLATION MISSING
+| @k(C-)@k(r)  | Switch search type: string (default), regular expression | /input search_switch_regex
+| @k(A-)@k(c)  | 大文字小文字を区別して検索 | /input search_switch_case
+// TRANSLATION MISSING
+| @k(Tab)      | Switch search in: messages (default), prefixes, prefixes + messages | /input search_switch_where
 | @k(↑)        | 前のキーワードで検索 | /input search_previous
 | @k(↓)        | 次のキーワードで検索 | /input search_next
 | @k(Enter) .3+| 検索を終了 .3+| /input search_stop
