@@ -2341,6 +2341,9 @@ string_shared_free_key (struct t_hashtable *hashtable,
  * reference count), NULL if error.
  * The string returned has exactly same content as string received in argument,
  * but the pointer to the string is different.
+ *
+ * IMPORTANT: the returned string must NEVER be changed in any way, because it
+ * is used itself as the key of the hashtable.
  */
 
 const char *
