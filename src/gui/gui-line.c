@@ -874,7 +874,7 @@ gui_line_remove_from_list (struct t_gui_buffer *buffer,
             free (line->data->str_time);
         gui_line_tags_free (line->data);
         if (line->data->prefix)
-            free (line->data->prefix);
+            string_shared_free (line->data->prefix);
         if (line->data->message)
             free (line->data->message);
         free (line->data);
@@ -1093,7 +1093,7 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
     gui_line_tags_alloc (new_line->data, tags);
     new_line->data->refresh_needed = 0;
     new_line->data->prefix = (prefix) ?
-        strdup (prefix) : ((date != 0) ? strdup ("") : NULL);
+        (char *)string_shared_get (prefix) : ((date != 0) ? (char *)string_shared_get ("") : NULL);
     new_line->data->prefix_length = (prefix) ?
         gui_chat_strlen_screen (prefix) : 0;
     new_line->data->message = (message) ? strdup (message) : strdup ("");
@@ -1309,8 +1309,8 @@ void
 gui_line_clear (struct t_gui_line *line)
 {
     if (line->data->prefix)
-        free (line->data->prefix);
-    line->data->prefix = strdup ("");
+        string_shared_free (line->data->prefix);
+    line->data->prefix = (char *)string_shared_get ("");
 
     if (line->data->message)
         free (line->data->message);
