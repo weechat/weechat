@@ -189,12 +189,12 @@
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `cyan`)
 
 * [[option_weechat.color.emphasized]] *weechat.color.emphasized*
-** Beschreibung: `text color for emphasized text (for example when searching text); this option is used only if option weechat.look.emphasized_attributes is an empty string (default value)`
+** Beschreibung: `Textfarbe um Text hervorzuheben (zum Beispiel bei der Textsuche); wird ausschließlich dann genutzt, falls die Option weechat.look.emphasized_attributes keinen Eintrag besitzt (Standardwert)`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `yellow`)
 
 * [[option_weechat.color.emphasized_bg]] *weechat.color.emphasized_bg*
-** Beschreibung: `background color for emphasized text (for example when searching text); used only if option weechat.look.emphasized_attributes is an empty string (default value)`
+** Beschreibung: `Hintergrundfarbe um Textpassagen hervorzuheben (zum Beispiel bei der Textsuche); wird ausschließlich dann genutzt, falls die Option weechat.look.emphasized_attributes keinen Eintrag besitzt (Standardwert)`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "_" für unterstrichen (Standardwert: `magenta`)
 
@@ -479,7 +479,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.look.day_change_time_format]] *weechat.look.day_change_time_format*
-** Beschreibung: `time format for date displayed when day changed (see man strftime for date/time specifiers)`
+** Beschreibung: `Format für die Datumsanzeige, wenn ein neuer Tag anbricht (siehe man strftime für Platzhalter für das Datum und die Uhrzeit)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%a, %d %b %Y"`)
 
@@ -489,7 +489,7 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_weechat.look.emphasized_attributes]] *weechat.look.emphasized_attributes*
-** Beschreibung: `attributes for emphasized text: one or more attribute chars ("*" for bold, "!" for reverse, "_" for underline); if the string is empty, the colors weechat.color.emphasized* are used`
+** Beschreibung: `Attribute um Textpassagen hervorzuheben: Das setzen von ein- oder mehreren Attributen ist möglich ("*" für fett, "!" für invertiert, "_" für unterstrichen); falls die Option weechat.look.emphasized_attributes keinen Eintrag besitzt, werden die Farben genutzt die durch colors weechat.color.emphasized* definiert sind`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -799,7 +799,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.look.time_format]] *weechat.look.time_format*
-** Beschreibung: `time format for dates converted to strings and displayed in messages (see man strftime for date/time specifiers)`
+** Beschreibung: `Format für das Datum, wenn dieses in eine Zeichenkette umgewandelt und in Nachrichten dargestellt wird (siehe man strftime für Platzhalter für das Datum und die Uhrzeit)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%a, %d %b %Y %T"`)
 
