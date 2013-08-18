@@ -80,6 +80,8 @@ Version 0.4.2 (under dev!)
 * aspell: rename option aspell.look.color to aspell.color.misspelled, add option
   aspell.color.suggestions
 * aspell: add support of enchant library (patch #6858)
+* irc: replace default prefix modes "qaohvu" by the standard ones "ov" when
+  PREFIX is not sent by server (bug #39802)
 * irc: use 6697 as default port for SSL servers created with URL "ircs://"
   (bug #39621)
 * irc: display number of ops/halfops/voices on channel join only for supported

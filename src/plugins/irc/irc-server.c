@@ -99,8 +99,8 @@ char *irc_server_option_default[IRC_SERVER_NUM_OPTIONS] =
 char *irc_server_casemapping_string[IRC_SERVER_NUM_CASEMAPPING] =
 { "rfc1459", "strict-rfc1459", "ascii" };
 
-char *irc_server_prefix_modes_default = "qaohvu";
-char *irc_server_prefix_chars_default = "~&@%+-";
+char *irc_server_prefix_modes_default = "ov";
+char *irc_server_prefix_chars_default = "@+";
 char *irc_server_chanmodes_default    = "beI,k,l";
 
 const char *irc_server_send_default_tags = NULL;  /* default tags when       */
