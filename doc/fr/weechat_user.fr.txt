@@ -747,6 +747,11 @@ une virgule (espace entre les objets à l'écran) ou un "+" (objets collés).
 
 La liste des objets de barre est affichée avec la commande `/bar listitems`.
 
+Avant ou après l'objet de barre, vous pouvez utiliser des caractères (qui ne
+sont pas alphanumériques, "-" ou "_"). Ils seront affichés avant/après l'objet
+de barre avec la couleur des délimiteurs définie dans la barre (option
+'color_delim').
+
 Exemple de barre avec les objets
 "[time],buffer_number+:+buffer_plugin+.+buffer_name" :
 
@@ -755,6 +760,21 @@ Exemple de barre avec les objets
 │[12:55] 3:irc/freenode.#weechat                                                          │
 └─────────────────────────────────────────────────────────────────────────────────────────┘
 ........................................
+
+Une syntaxe spéciale peut être utilisée pour forcer le tampon utilisé lors de
+l'affichage de l'objet de barre : "@tampon:objet" (où "tampon" est le nom
+complet du tampon et "objet" est le nom d'un objet de barre).
+
+Ceci peut être pratique dans les barres "root", pour afficher un objet de barre
+pour un tampon qui n'est pas affiché dans la fenêtre courante (ou même pas
+affiché du tout).
+
+Exemple : liste de pseudos de bitlbee dans une barre "root" (si la barre
+s'appelle 'bitlist' et si le serveur bitlbee s'appelle 'bitlbee') :
+
+----------------------------------------
+/set weechat.bar.bitlist.items "@irc.bitlbee.&bitlbee:buffer_nicklist"
+----------------------------------------
 
 [[bar_filling]]
 Remplissage

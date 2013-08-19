@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.2-dev, 2013-08-18
+v0.4.2-dev, 2013-08-19
 
 
 This document lists all changes for each version.
@@ -14,6 +14,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 Version 0.4.2 (under dev!)
 --------------------------
 
+* core: add syntax "@buffer:item" in bar items to force the buffer used when
+  displaying the bar item (task #12717)
 * core: add search of regular expression in buffer, don't reset search type on
   a new search, select where to search (messages/prefixes), add keys in search
   context: alt+"c" (case (in)sensitive search), tab (search in

@@ -87,6 +87,7 @@ struct t_gui_bar
     int items_count;                    /* number of bar items              */
     int *items_subcount;                /* number of sub items              */
     char ***items_array;                /* bar items (after split)          */
+    char ***items_buffer;               /* buffer name for each (sub)item   */
     char ***items_prefix;               /* prefix for each (sub)item        */
     char ***items_name;                 /* name for each (sub)item          */
     char ***items_suffix;               /* suffix for each (sub)item        */

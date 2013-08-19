@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-08-17 11:49+0200\n"
+"POT-Creation-Date: 2013-08-19 21:15+0200\n"
 "PO-Revision-Date: 2013-08-17 10:37+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3506,7 +3506,8 @@ msgstr "разделитель чата и никлиста"
 
 msgid ""
 "items of bar, they can be separated by comma (space between items) or \"+"
-"\" (glued items)"
+"\" (glued items); special syntax \"@buffer:item\" can be used to force "
+"buffer used when displaying the bar item"
 msgstr ""
 
 #, fuzzy, c-format

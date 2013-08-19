@@ -719,6 +719,11 @@ WeeChat を起動したターミナルの例:
 
 バーアイテムのリストは `/bar listitems` コマンドで表示されます。
 
+// TRANSLATION MISSING
+Before or after item name, you can use chars (that are not alphanumeric, "-" or
+"_"). They will be displayed before/after item with the delimiters color
+defined in bar (option 'color_delim').
+
 アイテムを含むバーの例 "[time],buffer_number+:+buffer_plugin+.+buffer_name":
 
 ........................................
@@ -726,6 +731,23 @@ WeeChat を起動したターミナルの例:
 │[12:55] 3:irc/freenode.#weechat                                                          │
 └─────────────────────────────────────────────────────────────────────────────────────────┘
 ........................................
+
+// TRANSLATION MISSING
+A special syntax can be used to force the buffer used when displaying the bar
+item: "@buffer:item" (where "buffer" is the full name of buffer and "item" is
+the name of a bar item).
+
+// TRANSLATION MISSING
+This is useful in root bars, to display item for a specific buffer which is
+not displayed in the current window (or even not displayed at all).
+
+// TRANSLATION MISSING
+Example: nicklist of bitlbee in a root bar (if the bar is called
+'bitlist' and if bitlbee server is called 'bitlbee'):
+
+----------------------------------------
+/set weechat.bar.bitlist.items "@irc.bitlbee.&bitlbee:buffer_nicklist"
+----------------------------------------
 
 [[bar_filling]]
 ==== フィリング ====

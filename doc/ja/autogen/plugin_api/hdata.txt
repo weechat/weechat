@@ -426,6 +426,7 @@
   'items_count' (integer) +
   'items_subcount' (pointer) +
   'items_array' (pointer) +
+  'items_buffer' (pointer) +
   'items_prefix' (pointer) +
   'items_name' (pointer) +
   'items_suffix' (pointer) +

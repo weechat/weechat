@@ -4590,29 +4590,56 @@ weechat_ruby_api_bar_item_search (VALUE class, VALUE name)
 
 char *
 weechat_ruby_api_bar_item_build_cb (void *data, struct t_gui_bar_item *item,
-                                    struct t_gui_window *window)
+                                    struct t_gui_window *window,
+                                    struct t_gui_buffer *buffer,
+                                    struct t_hashtable *extra_info)
 {
     struct t_plugin_script_cb *script_callback;
-    void *func_argv[3];
+    void *func_argv[5];
     char empty_arg[1] = { '\0' }, *ret;
 
     script_callback = (struct t_plugin_script_cb *)data;
 
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
-        func_argv[1] = API_PTR2STR(item);
-        func_argv[2] = API_PTR2STR(window);
+        if (strncmp (script_callback->function, "(extra)", 7) == 0)
+        {
+            /* new callback: data, item, window, buffer, extra_info */
+            func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+            func_argv[1] = API_PTR2STR(item);
+            func_argv[2] = API_PTR2STR(window);
+            func_argv[3] = API_PTR2STR(buffer);
+            func_argv[4] = extra_info;
 
-        ret = (char *)weechat_ruby_exec (script_callback->script,
-                                         WEECHAT_SCRIPT_EXEC_STRING,
-                                         script_callback->function,
-                                         "sss", func_argv);
+            ret = (char *)weechat_ruby_exec (script_callback->script,
+                                             WEECHAT_SCRIPT_EXEC_STRING,
+                                             script_callback->function + 7,
+                                             "ssssh", func_argv);
 
-        if (func_argv[1])
-            free (func_argv[1]);
-        if (func_argv[2])
-            free (func_argv[2]);
+            if (func_argv[1])
+                free (func_argv[1]);
+            if (func_argv[2])
+                free (func_argv[2]);
+            if (func_argv[3])
+                free (func_argv[3]);
+        }
+        else
+        {
+            /* old callback: data, item, window */
+            func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
+            func_argv[1] = API_PTR2STR(item);
+            func_argv[2] = API_PTR2STR(window);
+
+            ret = (char *)weechat_ruby_exec (script_callback->script,
+                                             WEECHAT_SCRIPT_EXEC_STRING,
+                                             script_callback->function,
+                                             "sss", func_argv);
+
+            if (func_argv[1])
+                free (func_argv[1]);
+            if (func_argv[2])
+                free (func_argv[2]);
+        }
 
         return ret;
     }

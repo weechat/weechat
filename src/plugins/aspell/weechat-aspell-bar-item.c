@@ -36,27 +36,24 @@
 
 char *
 weechat_aspell_bar_item_dict (void *data, struct t_gui_bar_item *item,
-                              struct t_gui_window *window)
+                              struct t_gui_window *window,
+                              struct t_gui_buffer *buffer,
+                              struct t_hashtable *extra_info)
 {
-    struct t_gui_buffer *buffer;
     const char *dict_list;
 
     /* make C compiler happy */
     (void) data;
     (void) item;
+    (void) window;
+    (void) extra_info;
 
-    if (!window)
-        window = weechat_current_window ();
+    if (!buffer)
+        return NULL;
 
-    buffer = weechat_window_get_pointer (window, "buffer");
-    if (buffer)
-    {
-        dict_list = weechat_aspell_get_dict (buffer);
-        if (dict_list)
-            return strdup (dict_list);
-    }
+    dict_list = weechat_aspell_get_dict (buffer);
 
-    return NULL;
+    return (dict_list) ? strdup (dict_list) : NULL;
 }
 
 /*
@@ -65,9 +62,10 @@ weechat_aspell_bar_item_dict (void *data, struct t_gui_bar_item *item,
 
 char *
 weechat_aspell_bar_item_suggest (void *data, struct t_gui_bar_item *item,
-                                 struct t_gui_window *window)
+                                 struct t_gui_window *window,
+                                 struct t_gui_buffer *buffer,
+                                 struct t_hashtable *extra_info)
 {
-    struct t_gui_buffer *buffer;
     const char *ptr_suggestions, *pos;
     char **suggestions, *suggestions2;
     int i, num_suggestions, length;
@@ -75,60 +73,56 @@ weechat_aspell_bar_item_suggest (void *data, struct t_gui_bar_item *item,
     /* make C compiler happy */
     (void) data;
     (void) item;
+    (void) window;
+    (void) extra_info;
 
     if (!aspell_enabled)
         return NULL;
 
-    if (!window)
-        window = weechat_current_window ();
+    if (!buffer)
+        return NULL;
 
-    buffer = weechat_window_get_pointer (window, "buffer");
-    if (buffer)
+    ptr_suggestions = weechat_buffer_get_string (buffer,
+                                                 "localvar_aspell_suggest");
+    if (!ptr_suggestions)
+        return NULL;
+
+    pos = strchr (ptr_suggestions, ':');
+    if (pos)
+        pos++;
+    else
+        pos = ptr_suggestions;
+    suggestions = weechat_string_split (pos, "/", 0, 0, &num_suggestions);
+    if (suggestions)
     {
-        ptr_suggestions = weechat_buffer_get_string (buffer,
-                                                     "localvar_aspell_suggest");
-        if (ptr_suggestions)
+        length = 64 + 1;
+        for (i = 0; i < num_suggestions; i++)
         {
-            pos = strchr (ptr_suggestions, ':');
-            if (pos)
-                pos++;
-            else
-                pos = ptr_suggestions;
-            suggestions = weechat_string_split (pos, "/", 0, 0, &num_suggestions);
-            if (suggestions)
+            length += strlen (suggestions[i]) + 64;
+        }
+        suggestions2 = malloc (length);
+        if (suggestions2)
+        {
+            suggestions2[0] = '\0';
+            strcat (suggestions2,
+                    weechat_color (weechat_config_string (weechat_aspell_config_color_suggestions)));
+            for (i = 0; i < num_suggestions; i++)
             {
-                length = 64 + 1;
-                for (i = 0; i < num_suggestions; i++)
+                if (i > 0)
                 {
-                    length += strlen (suggestions[i]) + 64;
-                }
-                suggestions2 = malloc (length);
-                if (suggestions2)
-                {
-                    suggestions2[0] = '\0';
+                    strcat (suggestions2, weechat_color ("bar_delim"));
+                    strcat (suggestions2, "/");
                     strcat (suggestions2,
                             weechat_color (weechat_config_string (weechat_aspell_config_color_suggestions)));
-                    for (i = 0; i < num_suggestions; i++)
-                    {
-                        if (i > 0)
-                        {
-                            strcat (suggestions2, weechat_color ("bar_delim"));
-                            strcat (suggestions2, "/");
-                            strcat (suggestions2,
-                                    weechat_color (weechat_config_string (weechat_aspell_config_color_suggestions)));
-                        }
-                        strcat (suggestions2, suggestions[i]);
-                    }
-                    weechat_string_free_split (suggestions);
-                    return suggestions2;
                 }
-                weechat_string_free_split (suggestions);
+                strcat (suggestions2, suggestions[i]);
             }
-            return strdup (pos);
+            weechat_string_free_split (suggestions);
+            return suggestions2;
         }
+        weechat_string_free_split (suggestions);
     }
-
-    return NULL;
+    return strdup (pos);
 }
 
 /*

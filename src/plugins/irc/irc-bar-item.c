@@ -39,9 +39,9 @@
 
 char *
 irc_bar_item_away (void *data, struct t_gui_bar_item *item,
-                   struct t_gui_window *window)
+                   struct t_gui_window *window, struct t_gui_buffer *buffer,
+                   struct t_hashtable *extra_info)
 {
-    struct t_gui_buffer *buffer;
     struct t_irc_server *server;
     char *buf, *message;
     int length;
@@ -49,41 +49,38 @@ irc_bar_item_away (void *data, struct t_gui_bar_item *item,
     /* make C compiler happy */
     (void) data;
     (void) item;
+    (void) window;
+    (void) extra_info;
+
+    if (!buffer)
+        return NULL;
 
     buf = NULL;
 
-    if (!window)
-        window = weechat_current_window ();
+    irc_buffer_get_server_and_channel (buffer, &server, NULL);
 
-    buffer = weechat_window_get_pointer (window, "buffer");
-
-    if (buffer)
+    if (server && server->is_away)
     {
-        irc_buffer_get_server_and_channel (buffer, &server, NULL);
-
-        if (server && server->is_away)
+        if (weechat_config_boolean (irc_config_look_item_away_message)
+            && server->away_message && server->away_message[0])
         {
-            if (weechat_config_boolean (irc_config_look_item_away_message)
-                && server->away_message && server->away_message[0])
+            message = strdup (server->away_message);
+        }
+        else
+        {
+            message = strdup (_("away"));
+        }
+        if (message)
+        {
+            length = strlen (message) + 64 + 1;
+            buf = malloc (length);
+            if (buf)
             {
-                message = strdup (server->away_message);
+                snprintf (buf, length, "%s%s",
+                          IRC_COLOR_ITEM_AWAY,
+                          message);
             }
-            else
-            {
-                message = strdup (_("away"));
-            }
-            if (message)
-            {
-                length = strlen (message) + 64 + 1;
-                buf = malloc (length);
-                if (buf)
-                {
-                    snprintf (buf, length, "%s%s",
-                              IRC_COLOR_ITEM_AWAY,
-                              message);
-                }
-                free (message);
-            }
+            free (message);
         }
     }
 
@@ -96,35 +93,31 @@ irc_bar_item_away (void *data, struct t_gui_bar_item *item,
 
 char *
 irc_bar_item_buffer_title (void *data, struct t_gui_bar_item *item,
-                           struct t_gui_window *window)
+                           struct t_gui_window *window,
+                           struct t_gui_buffer *buffer,
+                           struct t_hashtable *extra_info)
 {
-    struct t_gui_buffer *buffer;
     const char *title;
     char *title_color;
 
     /* make C compiler happy */
     (void) data;
     (void) item;
+    (void) window;
+    (void) extra_info;
 
-    if (!window)
-        window = weechat_current_window ();
+    if (!buffer)
+        return NULL;
 
-    buffer = weechat_window_get_pointer (window, "buffer");
+    title = weechat_buffer_get_string (buffer, "title");
+    if (!title)
+        return NULL;
 
-    if (buffer)
-    {
-        title = weechat_buffer_get_string (buffer, "title");
-        if (!title)
-            return NULL;
+    title_color = irc_color_decode (title,
+                                    (weechat_config_boolean (irc_config_look_topic_strip_colors)) ?
+                                    0 : 1);
 
-        title_color = irc_color_decode (title,
-                                        (weechat_config_boolean (irc_config_look_topic_strip_colors)) ?
-                                         0 : 1);
-
-        return (title_color) ? title_color : strdup (title);
-    }
-
-    return NULL;
+    return (title_color) ? title_color : strdup (title);
 }
 
 /*
@@ -133,10 +126,11 @@ irc_bar_item_buffer_title (void *data, struct t_gui_bar_item *item,
 
 char *
 irc_bar_item_buffer_plugin (void *data, struct t_gui_bar_item *item,
-                            struct t_gui_window *window)
+                            struct t_gui_window *window,
+                            struct t_gui_buffer *buffer,
+                            struct t_hashtable *extra_info)
 {
     char buf[512];
-    struct t_gui_buffer *buffer;
     struct t_weechat_plugin *ptr_plugin;
     const char *name;
     struct t_irc_server *server;
@@ -145,41 +139,36 @@ irc_bar_item_buffer_plugin (void *data, struct t_gui_bar_item *item,
     /* make C compiler happy */
     (void) data;
     (void) item;
+    (void) window;
+    (void) extra_info;
 
-    if (!window)
-        window = weechat_current_window ();
+    if (!buffer)
+        return NULL;
 
-    buffer = weechat_window_get_pointer (window, "buffer");
-
-    if (buffer)
+    ptr_plugin = weechat_buffer_get_pointer (buffer, "plugin");
+    name = weechat_plugin_get_name (ptr_plugin);
+    if (ptr_plugin == weechat_irc_plugin)
     {
-        ptr_plugin = weechat_buffer_get_pointer (buffer, "plugin");
-        name = weechat_plugin_get_name (ptr_plugin);
-        if (ptr_plugin == weechat_irc_plugin)
+        irc_buffer_get_server_and_channel (buffer, &server, &channel);
+        if (server && channel
+            && (weechat_config_integer (irc_config_look_item_display_server) == IRC_CONFIG_LOOK_ITEM_DISPLAY_SERVER_PLUGIN))
         {
-            irc_buffer_get_server_and_channel (buffer, &server, &channel);
-            if (server && channel
-                && (weechat_config_integer (irc_config_look_item_display_server) == IRC_CONFIG_LOOK_ITEM_DISPLAY_SERVER_PLUGIN))
-            {
-                snprintf (buf, sizeof (buf), "%s%s/%s%s",
-                          name,
-                          IRC_COLOR_BAR_DELIM,
-                          IRC_COLOR_BAR_FG,
-                          server->name);
-            }
-            else
-            {
-                snprintf (buf, sizeof (buf), "%s", name);
-            }
+            snprintf (buf, sizeof (buf), "%s%s/%s%s",
+                      name,
+                      IRC_COLOR_BAR_DELIM,
+                      IRC_COLOR_BAR_FG,
+                      server->name);
         }
         else
         {
             snprintf (buf, sizeof (buf), "%s", name);
         }
-        return strdup (buf);
     }
-
-    return NULL;
+    else
+    {
+        snprintf (buf, sizeof (buf), "%s", name);
+    }
+    return strdup (buf);
 }
 
 /*
@@ -188,79 +177,76 @@ irc_bar_item_buffer_plugin (void *data, struct t_gui_bar_item *item,
 
 char *
 irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
-                          struct t_gui_window *window)
+                          struct t_gui_window *window,
+                          struct t_gui_buffer *buffer,
+                          struct t_hashtable *extra_info)
 {
     char buf[512], buf_name[256], modes[128];
     const char *name;
     int part_from_channel, display_server;
-    struct t_gui_buffer *buffer;
     struct t_irc_server *server;
     struct t_irc_channel *channel;
 
     /* make C compiler happy */
     (void) data;
     (void) item;
+    (void) window;
+    (void) extra_info;
 
-    if (!window)
-        window = weechat_current_window ();
+    if (!buffer)
+        return NULL;
 
     buf_name[0] = '\0';
     modes[0] = '\0';
 
     display_server = (weechat_config_integer (irc_config_look_item_display_server) == IRC_CONFIG_LOOK_ITEM_DISPLAY_SERVER_NAME);
 
-    buffer = weechat_window_get_pointer (window, "buffer");
-
-    if (buffer)
+    irc_buffer_get_server_and_channel (buffer, &server, &channel);
+    if (server || channel)
     {
-        irc_buffer_get_server_and_channel (buffer, &server, &channel);
-        if (server || channel)
+        if (server && !channel)
         {
-            if (server && !channel)
-            {
-                snprintf (buf_name, sizeof (buf_name), "%s%s[%s%s%s]",
-                          _("server"),
-                          IRC_COLOR_BAR_DELIM,
-                          (server && server->ssl_connected) ? IRC_COLOR_STATUS_NAME_SSL : IRC_COLOR_STATUS_NAME,
-                          server->name,
-                          IRC_COLOR_BAR_DELIM);
-            }
-            else
-            {
-                if (channel)
-                {
-                    part_from_channel = ((channel->type == IRC_CHANNEL_TYPE_CHANNEL)
-                                         && !channel->nicks);
-                    snprintf (buf_name, sizeof (buf_name),
-                              "%s%s%s%s%s%s%s%s%s%s",
-                              (part_from_channel) ? IRC_COLOR_BAR_DELIM : "",
-                              (part_from_channel) ? "(" : "",
-                              (server && server->ssl_connected) ? IRC_COLOR_STATUS_NAME_SSL : IRC_COLOR_STATUS_NAME,
-                              (server && display_server) ? server->name : "",
-                              (server && display_server) ? IRC_COLOR_BAR_DELIM : "",
-                              (server && display_server) ? "/" : "",
-                              (server && server->ssl_connected) ? IRC_COLOR_STATUS_NAME_SSL : IRC_COLOR_STATUS_NAME,
-                              channel->name,
-                              (part_from_channel) ? IRC_COLOR_BAR_DELIM : "",
-                              (part_from_channel) ? ")" : "");
-                }
-            }
+            snprintf (buf_name, sizeof (buf_name), "%s%s[%s%s%s]",
+                      _("server"),
+                      IRC_COLOR_BAR_DELIM,
+                      (server && server->ssl_connected) ? IRC_COLOR_STATUS_NAME_SSL : IRC_COLOR_STATUS_NAME,
+                      server->name,
+                      IRC_COLOR_BAR_DELIM);
         }
         else
         {
-            name = weechat_buffer_get_string (buffer, "name");
-            if (name)
-                snprintf (buf_name, sizeof (buf_name), "%s", name);
+            if (channel)
+            {
+                part_from_channel = ((channel->type == IRC_CHANNEL_TYPE_CHANNEL)
+                                     && !channel->nicks);
+                snprintf (buf_name, sizeof (buf_name),
+                          "%s%s%s%s%s%s%s%s%s%s",
+                          (part_from_channel) ? IRC_COLOR_BAR_DELIM : "",
+                          (part_from_channel) ? "(" : "",
+                          (server && server->ssl_connected) ? IRC_COLOR_STATUS_NAME_SSL : IRC_COLOR_STATUS_NAME,
+                          (server && display_server) ? server->name : "",
+                          (server && display_server) ? IRC_COLOR_BAR_DELIM : "",
+                          (server && display_server) ? "/" : "",
+                          (server && server->ssl_connected) ? IRC_COLOR_STATUS_NAME_SSL : IRC_COLOR_STATUS_NAME,
+                          channel->name,
+                          (part_from_channel) ? IRC_COLOR_BAR_DELIM : "",
+                          (part_from_channel) ? ")" : "");
+            }
         }
-
-        snprintf (buf, sizeof (buf), "%s%s%s",
-                  (server && server->ssl_connected) ? IRC_COLOR_STATUS_NAME_SSL : IRC_COLOR_STATUS_NAME,
-                  buf_name,
-                  modes);
-        return strdup (buf);
+    }
+    else
+    {
+        name = weechat_buffer_get_string (buffer, "name");
+        if (name)
+            snprintf (buf_name, sizeof (buf_name), "%s", name);
     }
 
-    return NULL;
+    snprintf (buf, sizeof (buf), "%s%s%s",
+              (server && server->ssl_connected) ? IRC_COLOR_STATUS_NAME_SSL : IRC_COLOR_STATUS_NAME,
+              buf_name,
+              modes);
+
+    return strdup (buf);
 }
 
 /*
@@ -269,27 +255,26 @@ irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
 
 char *
 irc_bar_item_buffer_modes (void *data, struct t_gui_bar_item *item,
-                           struct t_gui_window *window)
+                           struct t_gui_window *window,
+                           struct t_gui_buffer *buffer,
+                           struct t_hashtable *extra_info)
 {
     char modes[128], *modes_without_args;
     const char *pos_space, *pos_key;
     int part_from_channel;
-    struct t_gui_buffer *buffer;
     struct t_irc_server *server;
     struct t_irc_channel *channel;
 
     /* make C compiler happy */
     (void) data;
     (void) item;
+    (void) window;
+    (void) extra_info;
 
-    if (!window)
-        window = weechat_current_window ();
-
-    modes[0] = '\0';
-
-    buffer = weechat_window_get_pointer (window, "buffer");
     if (!buffer)
         return NULL;
+
+    modes[0] = '\0';
 
     irc_buffer_get_server_and_channel (buffer, &server, &channel);
     if (!channel)
@@ -334,79 +319,75 @@ irc_bar_item_buffer_modes (void *data, struct t_gui_bar_item *item,
 
 char *
 irc_bar_item_channel (void *data, struct t_gui_bar_item *item,
-                      struct t_gui_window *window)
+                      struct t_gui_window *window, struct t_gui_buffer *buffer,
+                      struct t_hashtable *extra_info)
 {
     char buf[512], buf_name[256], modes[128];
     const char *name;
     int part_from_channel, display_server;
-    struct t_gui_buffer *buffer;
     struct t_irc_server *server;
     struct t_irc_channel *channel;
 
     /* make C compiler happy */
     (void) data;
     (void) item;
+    (void) window;
+    (void) extra_info;
 
-    if (!window)
-        window = weechat_current_window ();
+    if (!buffer)
+        return NULL;
 
     buf_name[0] = '\0';
     modes[0] = '\0';
 
     display_server = (weechat_config_integer (irc_config_look_item_display_server) == IRC_CONFIG_LOOK_ITEM_DISPLAY_SERVER_NAME);
 
-    buffer = weechat_window_get_pointer (window, "buffer");
-
-    if (buffer)
+    irc_buffer_get_server_and_channel (buffer, &server, &channel);
+    if (server || channel)
     {
-        irc_buffer_get_server_and_channel (buffer, &server, &channel);
-        if (server || channel)
+        if (server && !channel)
         {
-            if (server && !channel)
-            {
-                snprintf (buf_name, sizeof (buf_name), "%s%s[%s%s%s]",
-                          _("server"),
-                          IRC_COLOR_BAR_DELIM,
-                          IRC_COLOR_STATUS_NAME,
-                          server->name,
-                          IRC_COLOR_BAR_DELIM);
-            }
-            else
-            {
-                if (channel)
-                {
-                    part_from_channel = ((channel->type == IRC_CHANNEL_TYPE_CHANNEL)
-                                         && !channel->nicks);
-                    snprintf (buf_name, sizeof (buf_name),
-                              "%s%s%s%s%s%s%s%s%s%s",
-                              (part_from_channel) ? IRC_COLOR_BAR_DELIM : "",
-                              (part_from_channel) ? "(" : "",
-                              IRC_COLOR_STATUS_NAME,
-                              (server && display_server) ? server->name : "",
-                              (server && display_server) ? IRC_COLOR_BAR_DELIM : "",
-                              (server && display_server) ? "/" : "",
-                              IRC_COLOR_STATUS_NAME,
-                              channel->name,
-                              (part_from_channel) ? IRC_COLOR_BAR_DELIM : "",
-                              (part_from_channel) ? ")" : "");
-                }
-            }
+            snprintf (buf_name, sizeof (buf_name), "%s%s[%s%s%s]",
+                      _("server"),
+                      IRC_COLOR_BAR_DELIM,
+                      IRC_COLOR_STATUS_NAME,
+                      server->name,
+                      IRC_COLOR_BAR_DELIM);
         }
         else
         {
-            name = weechat_buffer_get_string (buffer, "name");
-            if (name)
-                snprintf (buf_name, sizeof (buf_name), "%s", name);
+            if (channel)
+            {
+                part_from_channel = ((channel->type == IRC_CHANNEL_TYPE_CHANNEL)
+                                     && !channel->nicks);
+                snprintf (buf_name, sizeof (buf_name),
+                          "%s%s%s%s%s%s%s%s%s%s",
+                          (part_from_channel) ? IRC_COLOR_BAR_DELIM : "",
+                          (part_from_channel) ? "(" : "",
+                          IRC_COLOR_STATUS_NAME,
+                          (server && display_server) ? server->name : "",
+                          (server && display_server) ? IRC_COLOR_BAR_DELIM : "",
+                          (server && display_server) ? "/" : "",
+                          IRC_COLOR_STATUS_NAME,
+                          channel->name,
+                          (part_from_channel) ? IRC_COLOR_BAR_DELIM : "",
+                          (part_from_channel) ? ")" : "");
+            }
         }
-
-        snprintf (buf, sizeof (buf), "%s%s%s",
-                  IRC_COLOR_STATUS_NAME,
-                  buf_name,
-                  modes);
-        return strdup (buf);
+    }
+    else
+    {
+        name = weechat_buffer_get_string (buffer, "name");
+        if (name)
+            snprintf (buf_name, sizeof (buf_name), "%s", name);
     }
 
-    return NULL;
+    snprintf (buf, sizeof (buf), "%s%s%s",
+              IRC_COLOR_STATUS_NAME,
+              buf_name,
+              modes);
+
+    return strdup (buf);
 }
 
 /*
@@ -415,37 +396,34 @@ irc_bar_item_channel (void *data, struct t_gui_bar_item *item,
 
 char *
 irc_bar_item_lag (void *data, struct t_gui_bar_item *item,
-                  struct t_gui_window *window)
+                  struct t_gui_window *window, struct t_gui_buffer *buffer,
+                  struct t_hashtable *extra_info)
 {
     char buf[128];
-    struct t_gui_buffer *buffer;
     struct t_irc_server *server;
 
     /* make C compiler happy */
     (void) data;
     (void) item;
+    (void) window;
+    (void) extra_info;
 
-    if (!window)
-        window = weechat_current_window ();
+    if (!buffer)
+        return NULL;
 
-    buffer = weechat_window_get_pointer (window, "buffer");
+    irc_buffer_get_server_and_channel (buffer, &server, NULL);
 
-    if (buffer)
+    if (server
+        && (server->lag >= weechat_config_integer (irc_config_network_lag_min_show)))
     {
-        irc_buffer_get_server_and_channel (buffer, &server, NULL);
-
-        if (server
-            && (server->lag >= weechat_config_integer (irc_config_network_lag_min_show)))
-        {
-            snprintf (buf, sizeof (buf),
-                      ((server->lag_check_time.tv_sec == 0) || (server->lag < 1000)) ?
-                      "%s: %s%.3f" : "%s: %s%.0f",
-                      _("Lag"),
-                      (server->lag_check_time.tv_sec == 0) ?
-                      IRC_COLOR_ITEM_LAG_FINISHED : IRC_COLOR_ITEM_LAG_COUNTING,
-                      ((float)(server->lag)) / 1000);
-            return strdup (buf);
-        }
+        snprintf (buf, sizeof (buf),
+                  ((server->lag_check_time.tv_sec == 0) || (server->lag < 1000)) ?
+                  "%s: %s%.3f" : "%s: %s%.0f",
+                  _("Lag"),
+                  (server->lag_check_time.tv_sec == 0) ?
+                  IRC_COLOR_ITEM_LAG_FINISHED : IRC_COLOR_ITEM_LAG_COUNTING,
+                  ((float)(server->lag)) / 1000);
+        return strdup (buf);
     }
 
     return NULL;
@@ -457,9 +435,10 @@ irc_bar_item_lag (void *data, struct t_gui_bar_item *item,
 
 char *
 irc_bar_item_input_prompt (void *data, struct t_gui_bar_item *item,
-                           struct t_gui_window *window)
+                           struct t_gui_window *window,
+                           struct t_gui_buffer *buffer,
+                           struct t_hashtable *extra_info)
 {
-    struct t_gui_buffer *buffer;
     struct t_irc_server *server;
     struct t_irc_channel *channel;
     struct t_irc_nick *ptr_nick;
@@ -469,68 +448,63 @@ irc_bar_item_input_prompt (void *data, struct t_gui_bar_item *item,
     /* make C compiler happy */
     (void) data;
     (void) item;
+    (void) window;
+    (void) extra_info;
 
-    if (!window)
-        window = weechat_current_window ();
+    if (!buffer)
+        return NULL;
 
-    buffer = weechat_window_get_pointer (window, "buffer");
+    irc_buffer_get_server_and_channel (buffer, &server, &channel);
+    if (!server || !server->nick)
+        return NULL;
 
-    if (buffer)
+    /* build prefix */
+    str_prefix[0] = '\0';
+    if (weechat_config_boolean (irc_config_look_item_nick_prefix)
+        && channel
+        && (channel->type == IRC_CHANNEL_TYPE_CHANNEL))
     {
-        irc_buffer_get_server_and_channel (buffer, &server, &channel);
-        if (!server || !server->nick)
-            return NULL;
-
-        /* build prefix */
-        str_prefix[0] = '\0';
-        if (weechat_config_boolean (irc_config_look_item_nick_prefix)
-            && channel
-            && (channel->type == IRC_CHANNEL_TYPE_CHANNEL))
+        ptr_nick = irc_nick_search (server, channel, server->nick);
+        if (ptr_nick)
         {
-            ptr_nick = irc_nick_search (server, channel, server->nick);
-            if (ptr_nick)
+            if (ptr_nick->prefix[0] != ' ')
             {
-                if (ptr_nick->prefix[0] != ' ')
-                {
-                    snprintf (str_prefix, sizeof (str_prefix), "%s%s",
-                              weechat_color (irc_nick_get_prefix_color_name (server, ptr_nick->prefix[0])),
-                              ptr_nick->prefix);
-                }
+                snprintf (str_prefix, sizeof (str_prefix), "%s%s",
+                          weechat_color (irc_nick_get_prefix_color_name (server, ptr_nick->prefix[0])),
+                          ptr_nick->prefix);
             }
         }
-
-        /* build bar item */
-        length = 64 + strlen (server->nick) + 64 +
-            ((server->nick_modes) ? strlen (server->nick_modes) : 0) + 64 + 1;
-
-        buf = malloc (length);
-        if (buf)
-        {
-            if (weechat_config_boolean (irc_config_look_item_nick_modes)
-                && server->nick_modes && server->nick_modes[0])
-            {
-                snprintf (buf, length, "%s%s%s%s(%s%s%s)",
-                          str_prefix,
-                          IRC_COLOR_INPUT_NICK,
-                          server->nick,
-                          IRC_COLOR_BAR_DELIM,
-                          IRC_COLOR_BAR_FG,
-                          server->nick_modes,
-                          IRC_COLOR_BAR_DELIM);
-            }
-            else
-            {
-                snprintf (buf, length, "%s%s%s",
-                          str_prefix,
-                          IRC_COLOR_INPUT_NICK,
-                          server->nick);
-            }
-        }
-
-        return buf;
     }
 
-    return NULL;
+    /* build bar item */
+    length = 64 + strlen (server->nick) + 64 +
+        ((server->nick_modes) ? strlen (server->nick_modes) : 0) + 64 + 1;
+
+    buf = malloc (length);
+    if (buf)
+    {
+        if (weechat_config_boolean (irc_config_look_item_nick_modes)
+            && server->nick_modes && server->nick_modes[0])
+        {
+            snprintf (buf, length, "%s%s%s%s(%s%s%s)",
+                      str_prefix,
+                      IRC_COLOR_INPUT_NICK,
+                      server->nick,
+                      IRC_COLOR_BAR_DELIM,
+                      IRC_COLOR_BAR_FG,
+                      server->nick_modes,
+                      IRC_COLOR_BAR_DELIM);
+        }
+        else
+        {
+            snprintf (buf, length, "%s%s%s",
+                      str_prefix,
+                      IRC_COLOR_INPUT_NICK,
+                      server->nick);
+        }
+    }
+
+    return buf;
 }
 
 /*

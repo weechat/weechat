@@ -52,7 +52,9 @@ struct t_gui_bar_item
     char *name;                      /* bar item name                       */
     char *(*build_callback)(void *data,
                             struct t_gui_bar_item *item,
-                            struct t_gui_window *window);
+                            struct t_gui_window *window,
+                            struct t_gui_buffer *buffer,
+                            struct t_hashtable *extra_info);
                                      /* callback called for building item   */
     void *build_callback_data;       /* data for callback                   */
     struct t_gui_bar_item *prev_item; /* link to previous bar item          */
@@ -82,9 +84,9 @@ extern int gui_bar_item_used_in_bar (struct t_gui_bar *bar,
 extern int gui_bar_item_used_in_at_least_one_bar (const char *item_name,
                                                   int partial_name,
                                                   int ignore_hidden_bars);
-extern void gui_bar_item_set_prefix_name_suffix (const char *item_name,
-                                                 char **prefix, char **name,
-                                                 char **suffix);
+extern void gui_bar_item_get_vars (const char *item_name,
+                                   char **buffer, char **prefix, char **name,
+                                   char **suffix);
 extern char *gui_bar_item_get_value (struct t_gui_bar *bar,
                                      struct t_gui_window *window,
                                      int item, int subitem);
@@ -93,7 +95,9 @@ extern struct t_gui_bar_item *gui_bar_item_new (struct t_weechat_plugin *plugin,
                                                 const char *name,
                                                 char *(*build_callback)(void *data,
                                                                         struct t_gui_bar_item *item,
-                                                                        struct t_gui_window *window),
+                                                                        struct t_gui_window *window,
+                                                                        struct t_gui_buffer *buffer,
+                                                                        struct t_hashtable *extra_info),
                                                 void *build_callback_data);
 extern void gui_bar_item_update (const char *name);
 extern void gui_bar_item_free (struct t_gui_bar_item *item);

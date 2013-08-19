@@ -322,7 +322,9 @@ extern struct t_gui_bar_item *plugin_script_api_bar_item_new (struct t_weechat_p
                                                               const char *name,
                                                               char *(*build_callback)(void *data,
                                                                                       struct t_gui_bar_item *item,
-                                                                                      struct t_gui_window *window),
+                                                                                      struct t_gui_window *window,
+                                                                                      struct t_gui_buffer *buffer,
+                                                                                      struct t_hashtable *extra_info),
                                                               const char *function,
                                                               const char *data);
 extern void plugin_script_api_bar_item_remove (struct t_weechat_plugin *weechat_plugin,

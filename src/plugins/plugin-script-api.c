@@ -1258,20 +1258,39 @@ plugin_script_api_bar_item_new (struct t_weechat_plugin *weechat_plugin,
                                 const char *name,
                                 char *(*build_callback)(void *data,
                                                         struct t_gui_bar_item *item,
-                                                        struct t_gui_window *window),
+                                                        struct t_gui_window *window,
+                                                        struct t_gui_buffer *buffer,
+                                                        struct t_hashtable *extra_info),
                                 const char *function,
                                 const char *data)
 {
     struct t_plugin_script_cb *script_cb;
     struct t_gui_bar_item *new_item;
+    char str_function[1024];
+    int new_callback;
 
-    script_cb = plugin_script_callback_add (script, function, data);
+    new_callback = 0;
+    if (strncmp (name, "(extra)", 7) == 0)
+    {
+        name += 7;
+        new_callback = 1;
+    }
+    str_function[0] = '\0';
+    if (function && function[0])
+    {
+        snprintf (str_function, sizeof (str_function),
+                  "%s%s",
+                  (new_callback) ? "(extra)" : "",
+                  function);
+    }
+
+    script_cb = plugin_script_callback_add (script, str_function, data);
     if (!script_cb)
         return NULL;
 
     new_item = weechat_bar_item_new (name,
-                                     (function && function[0]) ? build_callback : NULL,
-                                     (function && function[0]) ? script_cb : NULL);
+                                     (str_function[0]) ? build_callback : NULL,
+                                     (str_function[0]) ? script_cb : NULL);
     if (new_item)
         script_cb->bar_item = new_item;
     else

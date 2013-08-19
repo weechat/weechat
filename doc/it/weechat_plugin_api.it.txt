@@ -11854,6 +11854,9 @@ bar_item = weechat.bar_item_search("myitem")
 weechat_bar_item_new
 ^^^^^^^^^^^^^^^^^^^^
 
+// TRANSLATION MISSING
+_Updated in version 0.4.2._
+
 Crea un nuovo elemento barra.
 
 Prototipo:
@@ -11863,7 +11866,9 @@ Prototipo:
 struct t_gui_bar_item *weechat_bar_item_new (const char *name,
                                              char *(*build_callback)(void *data,
                                                                      struct t_gui_bar_item *item,
-                                                                     struct t_gui_window *window),
+                                                                     struct t_gui_window *window,
+                                                                     struct t_gui_buffer *buffer,
+                                                                     struct t_hashtable *extra_info),
                                              void *build_callback_data);
 ----------------------------------------
 
@@ -11874,7 +11879,16 @@ Argomenti:
   compilato, argomenti e valore restituito:
 ** 'void *data': puntatore
 ** 'struct t_gui_bar_item *item': puntatore all'elemento barra
-** 'struct t_gui_window *window': puntatore alla finestra
+// TRANSLATION MISSING
+** 'struct t_gui_window *window': puntatore alla finestra (NULL when called for
+   a root bar)
+// TRANSLATION MISSING
+** 'struct t_gui_buffer *buffer': buffer displayed in window (if window is NULL,
+   then it is current buffer) or buffer given in bar item with syntax:
+   "@buffer:item" _(novità nella versione 0.4.2)_
+// TRANSLATION MISSING
+** 'struct t_hashtable *extra_info': always NULL (argument is reserved for a
+   future version) _(novità nella versione 0.4.2)_
 ** valore restituito: contenuto dell'elemento barra
 * 'build_callback_data': puntatore fornito alla callback quando
   chiamata da WeeChat
@@ -11890,7 +11904,9 @@ Esempio in C:
 char *
 my_build_callback (void *data,
                    struct t_gui_bar_item *item,
-                   struct t_gui_window *window)
+                   struct t_gui_window *window,
+                   struct t_gui_buffer *buffer,
+                   struct t_hashtable *extra_info)
 {
     return strdup ("my content");
 }
@@ -11902,16 +11918,30 @@ struct t_gui_bar_item *my_item = weechat_bar_item_new ("myitem",
 
 Script (Python):
 
+// TRANSLATION MISSING
+[NOTE]
+For compatibility with versions ≤ 0.4.1, the default callback has only 3
+arguments: 'data', 'item' and 'window' (no 'buffer' and 'extra_info'). +
+To use a callback with all arguments, you must add "(extra)" before the name,
+see example below.
+
+// TRANSLATION MISSING
 [source,python]
 ----------------------------------------
 # prototipo
 bar_item = weechat.bar_item_new(name, build_callback, build_callback_data)
 
-# esempio
+# esempio (callback without "buffer" and "extra_info")
 def my_build_callback(data, item, window):
     return "my content"
 
 bar_item = weechat.bar_item_new("myitem", "my_build_callback", "")
+
+# example (callback with all arguments)
+def my_build_callback2(data, item, window, buffer, extra_info):
+    return "my content"
+
+bar_item2 = weechat.bar_item_new("(extra)myitem2", "my_build_callback2", "")
 ----------------------------------------
 
 weechat_bar_item_update
