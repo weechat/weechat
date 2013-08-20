@@ -1636,8 +1636,9 @@ gui_bar_item_focus_buffer_nicklist (void *data,
     struct t_gui_nick *ptr_nick;
     int i, rc, bar_item_line;
     unsigned long int value;
-    const char *str_window, *str_bar_item_line;
+    const char *str_window, *str_buffer, *str_bar_item_line;
     struct t_gui_window *window;
+    struct t_gui_buffer *buffer;
     char *error;
 
     /* make C compiler happy */
@@ -1647,6 +1648,7 @@ gui_bar_item_focus_buffer_nicklist (void *data,
     if (!str_bar_item_line || !str_bar_item_line[0])
         return NULL;
 
+    /* get window */
     str_window = hashtable_get (info, "_window");
     if (str_window && str_window[0])
     {
@@ -1663,6 +1665,19 @@ gui_bar_item_focus_buffer_nicklist (void *data,
     if (!window)
         return NULL;
 
+    /* get buffer */
+    buffer = window->buffer;
+    str_buffer = hashtable_get (info, "_buffer");
+    if (str_buffer && str_buffer[0])
+    {
+        rc = sscanf (str_buffer, "%lx", &value);
+        if ((rc == EOF) || (rc == 0))
+            return NULL;
+        buffer = (struct t_gui_buffer *)value;
+    }
+    if (!buffer)
+        return NULL;
+
     error = NULL;
     bar_item_line = (int) strtol (str_bar_item_line, &error, 10);
     if (!error || error[0])
@@ -1671,19 +1686,19 @@ gui_bar_item_focus_buffer_nicklist (void *data,
     i = 0;
     ptr_group = NULL;
     ptr_nick = NULL;
-    gui_nicklist_get_next_item (window->buffer, &ptr_group, &ptr_nick);
+    gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
     while (ptr_group || ptr_nick)
     {
         if ((ptr_nick && ptr_nick->visible)
             || (ptr_group && !ptr_nick
-                && window->buffer->nicklist_display_groups
+                && buffer->nicklist_display_groups
                 && ptr_group->visible))
         {
             if (i == bar_item_line)
                 break;
             i++;
         }
-        gui_nicklist_get_next_item (window->buffer, &ptr_group, &ptr_nick);
+        gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
     }
 
     if (i != bar_item_line)

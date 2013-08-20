@@ -21,6 +21,7 @@
 #define __WEECHAT_GUI_BAR_WINDOW_H 1
 
 struct t_infolist;
+struct t_gui_buffer;
 struct t_gui_window;
 enum t_gui_bar_position;
 
@@ -67,9 +68,9 @@ extern int gui_bar_window_valid (struct t_gui_bar_window *bar_window);
 extern void gui_bar_window_search_by_xy (struct t_gui_window *window,
                                          int x, int y,
                                          struct t_gui_bar_window **bar_window,
-                                         char **bar_item,
-                                         int *bar_item_line,
-                                         int *bar_item_col);
+                                         char **bar_item, int *bar_item_line,
+                                         int *bar_item_col,
+                                         struct t_gui_buffer **buffer);
 extern void gui_bar_window_calculate_pos_size (struct t_gui_bar_window *bar_window,
                                                struct t_gui_window *window);
 extern void gui_bar_window_content_build (struct t_gui_bar_window *bar_window,

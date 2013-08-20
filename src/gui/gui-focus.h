@@ -26,6 +26,7 @@ struct t_gui_focus_info
 {
     int x, y;                          /* (x,y) on screen                   */
     struct t_gui_window *window;       /* window found                      */
+    struct t_gui_buffer *buffer;       /* buffer found                      */
     int chat;                          /* 1 for chat area, otherwise 0      */
     struct t_gui_line *chat_line;      /* line in chat area                 */
     int chat_line_x;                   /* x in line                         */

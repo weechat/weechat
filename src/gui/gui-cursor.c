@@ -109,13 +109,14 @@ gui_cursor_display_debug_info ()
     if (focus_info)
     {
         snprintf (str_info, sizeof (str_info),
-                  "%s(%d,%d) window:0x%lx (buffer: %s), "
+                  "%s(%d,%d) window:0x%lx, buffer:0x%lx (%s), "
                   "bar_window:0x%lx (bar: %s, item: %s, line: %d, col: %d), "
                   "chat: %d, word: \"%s\"",
                   gui_color_get_custom ("yellow,red"),
                   focus_info->x, focus_info->y,
                   (long unsigned int)focus_info->window,
-                  (focus_info->window) ? (focus_info->window)->buffer->name : "-",
+                  (long unsigned int)focus_info->buffer,
+                  (focus_info->buffer) ? (focus_info->buffer)->full_name : "-",
                   (long unsigned int)focus_info->bar_window,
                   (focus_info->bar_window) ? ((focus_info->bar_window)->bar)->name : "-",
                   (focus_info->bar_item) ? focus_info->bar_item : "-",

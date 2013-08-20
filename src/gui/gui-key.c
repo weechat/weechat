@@ -1040,11 +1040,14 @@ gui_key_focus_command (const char *key, int context,
                        struct t_hashtable **hashtable_focus)
 {
     struct t_gui_key *ptr_key;
-    int i, errors, matching, debug;
+    int i, errors, matching, debug, rc;
+    long unsigned int value;
     char *command, **commands;
+    const char *str_buffer;
     struct t_hashtable *hashtable;
     struct t_weelist *list_keys;
     struct t_weelist_item *ptr_item;
+    struct t_gui_buffer *ptr_buffer;
 
     debug = 0;
     if (gui_cursor_debug && (context == GUI_KEY_CONTEXT_CURSOR))
@@ -1080,6 +1083,18 @@ gui_key_focus_command (const char *key, int context,
         hashtable = hook_focus_get_data (hashtable_focus[0],
                                          hashtable_focus[1]);
         if (!hashtable)
+            continue;
+
+        /* get buffer */
+        ptr_buffer = gui_current_window->buffer;
+        str_buffer = hashtable_get (hashtable, "_buffer");
+        if (str_buffer && str_buffer[0])
+        {
+            rc = sscanf (str_buffer, "%lx", &value);
+            if ((rc != EOF) && (rc != 0))
+                ptr_buffer = (struct t_gui_buffer *)value;
+        }
+        if (!ptr_buffer)
             continue;
 
         if ((context == GUI_KEY_CONTEXT_CURSOR) && gui_cursor_debug)
@@ -1136,10 +1151,12 @@ gui_key_focus_command (const char *key, int context,
                             if (debug)
                             {
                                 gui_chat_printf (NULL,
-                                                 _("Executing command: \"%s\""),
-                                                 command);
+                                                 _("Executing command: \"%s\" "
+                                                   "on buffer \"%s\""),
+                                                 command,
+                                                 ptr_buffer->full_name);
                             }
-                            input_data (gui_current_window->buffer, command);
+                            input_data (ptr_buffer, command);
                         }
                         free (command);
                     }

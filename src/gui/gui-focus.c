@@ -84,6 +84,7 @@ gui_focus_get_info (int x, int y)
 
     /* search window */
     focus_info->window = gui_window_search_by_xy (x, y);
+    focus_info->buffer = (focus_info->window) ? (focus_info->window)->buffer : NULL;
 
     /* fill info about chat area */
     gui_window_get_context_at_xy (focus_info->window,
@@ -101,7 +102,12 @@ gui_focus_get_info (int x, int y)
                                  &focus_info->bar_window,
                                  &focus_info->bar_item,
                                  &focus_info->bar_item_line,
-                                 &focus_info->bar_item_col);
+                                 &focus_info->bar_item_col,
+                                 &focus_info->buffer);
+
+    /* force current buffer if not buffer at all was found */
+    if (!focus_info->buffer && gui_current_window)
+        focus_info->buffer = gui_current_window->buffer;
 
     return focus_info;
 }
@@ -177,22 +183,30 @@ gui_focus_to_hashtable (struct t_gui_focus_info *focus_info, const char *key)
     FOCUS_INT("_x", focus_info->x);
     FOCUS_INT("_y", focus_info->y);
 
-    /* window/buffer */
+    /* window */
     FOCUS_PTR("_window", focus_info->window);
     if (focus_info->window)
     {
         FOCUS_INT("_window_number", (focus_info->window)->number);
-        FOCUS_PTR("_buffer", focus_info->window->buffer);
-        FOCUS_INT("_buffer_number", ((focus_info->window)->buffer)->number);
-        FOCUS_STR("_buffer_plugin", plugin_get_name (((focus_info->window)->buffer)->plugin));
-        FOCUS_STR("_buffer_name", ((focus_info->window)->buffer)->name);
-        FOCUS_STR("_buffer_full_name", ((focus_info->window)->buffer)->full_name);
-        hashtable_map (focus_info->window->buffer->local_variables,
-                       &gui_focus_buffer_localvar_map_cb, hashtable);
     }
     else
     {
         FOCUS_STR("_window_number", "*");
+    }
+
+    /* buffer */
+    FOCUS_PTR("_buffer", focus_info->buffer);
+    if (focus_info->buffer)
+    {
+        FOCUS_INT("_buffer_number", (focus_info->buffer)->number);
+        FOCUS_STR("_buffer_plugin", plugin_get_name ((focus_info->buffer)->plugin));
+        FOCUS_STR("_buffer_name", (focus_info->buffer)->name);
+        FOCUS_STR("_buffer_full_name", (focus_info->buffer)->full_name);
+        hashtable_map ((focus_info->buffer)->local_variables,
+                       &gui_focus_buffer_localvar_map_cb, hashtable);
+    }
+    else
+    {
         FOCUS_PTR("_buffer", NULL);
         FOCUS_STR("_buffer_number", "-1");
         FOCUS_STR("_buffer_plugin", "");

@@ -38,6 +38,7 @@
 #include "gui-bar-window.h"
 #include "gui-bar.h"
 #include "gui-bar-item.h"
+#include "gui-buffer.h"
 #include "gui-chat.h"
 #include "gui-color.h"
 #include "gui-window.h"
@@ -117,7 +118,8 @@ void
 gui_bar_window_search_by_xy (struct t_gui_window *window, int x, int y,
                              struct t_gui_bar_window **bar_window,
                              char **bar_item,
-                             int *bar_item_line, int *bar_item_col)
+                             int *bar_item_line, int *bar_item_col,
+                             struct t_gui_buffer **buffer)
 {
     struct t_gui_bar *ptr_bar;
     struct t_gui_bar_window *ptr_bar_window;
@@ -231,6 +233,8 @@ gui_bar_window_search_by_xy (struct t_gui_window *window, int x, int y,
                     *bar_item = (*bar_window)->bar->items_name[item][subitem];
                     *bar_item_line = (*bar_window)->coords[i]->line;
                     *bar_item_col = x - (*bar_window)->coords[i]->x;
+                    if ((*bar_window)->bar->items_buffer[item][subitem])
+                        *buffer = gui_buffer_search_by_full_name ((*bar_window)->bar->items_buffer[item][subitem]);
                     break;
                 }
                 i++;
@@ -249,6 +253,8 @@ gui_bar_window_search_by_xy (struct t_gui_window *window, int x, int y,
                 if (*bar_item_line < lines)
                 {
                     *bar_item = (*bar_window)->bar->items_name[i][j];
+                    if ((*bar_window)->bar->items_buffer[i][j])
+                        *buffer = gui_buffer_search_by_full_name ((*bar_window)->bar->items_buffer[i][j]);
                     break;
                 }
                 j++;
