@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-08-19 21:15+0200\n"
+"POT-Creation-Date: 2013-08-20 14:26+0200\n"
 "PO-Revision-Date: 2013-08-17 10:37+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4120,8 +4120,8 @@ msgstr "Comando para el atajo: \"%s\""
 msgid "Sending hsignal: \"%s\""
 msgstr "Enviando señal-h: \"%s\""
 
-#, c-format
-msgid "Executing command: \"%s\""
+#, fuzzy, c-format
+msgid "Executing command: \"%s\" on buffer \"%s\""
 msgstr "Ejecutando el comando: \"%s\""
 
 msgid "Not enough memory for new line"

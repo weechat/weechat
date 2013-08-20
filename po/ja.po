@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-08-19 21:15+0200\n"
+"POT-Creation-Date: 2013-08-20 14:26+0200\n"
 "PO-Revision-Date: 2013-08-17 10:37+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -4109,8 +4109,8 @@ msgstr "キーに対するコマンド: \"%s\""
 msgid "Sending hsignal: \"%s\""
 msgstr "hsignal 送信中: \"%s\""
 
-#, c-format
-msgid "Executing command: \"%s\""
+#, fuzzy, c-format
+msgid "Executing command: \"%s\" on buffer \"%s\""
 msgstr "コマンド実行中: \"%s\""
 
 msgid "Not enough memory for new line"
