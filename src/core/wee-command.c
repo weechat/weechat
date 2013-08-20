@@ -6086,9 +6086,9 @@ void
 command_init ()
 {
     hook_command (NULL, "away",
-                  N_("toggle away status"),
+                  N_("set or remove away status"),
                   N_("[-all] [<message>]"),
-                  N_("   -all: toggle away status on all connected "
+                  N_("   -all: set or remove away status on all connected "
                      "servers\n"
                      "message: message for away (if no message is "
                      "given, away status is removed)"),

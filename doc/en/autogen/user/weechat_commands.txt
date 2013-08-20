@@ -1,9 +1,9 @@
 [[command_weechat_away]]
-[command]*`away`* toggle away status::
+[command]*`away`* set or remove away status::
 ........................................
 /away  [-all] [<message>]
 
-   -all: toggle away status on all connected servers
+   -all: set or remove away status on all connected servers
 message: message for away (if no message is given, away status is removed)
 ........................................
 

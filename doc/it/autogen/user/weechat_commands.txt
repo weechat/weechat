@@ -1,10 +1,10 @@
 [[command_weechat_away]]
-[command]*`away`* attiva/disattiva lo stato di assenza::
+[command]*`away`* set or remove away status::
 ........................................
 /away  [-all] [<messaggio>]
 
-     -all: attiva/disattiva lo stato di assenza su tutti i server connessi
-messaggio: messaggio di assenza (se non specificato, lo stato di assenza viene rimosso)
+   -all: set or remove away status on all connected servers
+message: message for away (if no message is given, away status is removed)
 ........................................
 
 [[command_weechat_bar]]

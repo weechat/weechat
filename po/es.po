@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-08-20 14:26+0200\n"
+"POT-Creation-Date: 2013-08-20 14:27+0200\n"
 "PO-Revision-Date: 2013-08-17 10:37+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -898,14 +898,16 @@ msgstr ""
 "%sError: no puede unir las ventanas, no hay ninguna otra ventana con el "
 "mismo tamaño de la actual."
 
-msgid "toggle away status"
+#, fuzzy
+msgid "set or remove away status"
 msgstr "activa/desactiva el estado ausente"
 
 msgid "[-all] [<message>]"
 msgstr "[-all] [<mensaje>]"
 
+#, fuzzy
 msgid ""
-"   -all: toggle away status on all connected servers\n"
+"   -all: set or remove away status on all connected servers\n"
 "message: message for away (if no message is given, away status is removed)"
 msgstr ""
 "   -all: activa/desactiva el estado ausente en todos los servidores "

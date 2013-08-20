@@ -1,9 +1,9 @@
 [[command_weechat_away]]
-[command]*`away`* basculer le statut absent::
+[command]*`away`* définir ou supprimer le statut d'absence::
 ........................................
 /away  [-all] [<message>]
 
-   -all: basculer le statut absent sur tous les serveurs connectés
+   -all: définir ou supprimer le statut d'absence sur tous les serveurs connectés
 message: message pour l'absence (si pas de message donné, le statut d'absence est supprimé)
 ........................................
 

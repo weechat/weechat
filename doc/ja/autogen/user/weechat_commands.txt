@@ -1,10 +1,10 @@
 [[command_weechat_away]]
-[command]*`away`* 離席、着席の切り替え::
+[command]*`away`* set or remove away status::
 ........................................
 /away  [-all] [<message>]
 
-   -all: 全ての接続済みサーバに対して離席状態を変更
-message: 離席メッセージ (メッセージが無い場合は、離席状態を解除)
+   -all: set or remove away status on all connected servers
+message: message for away (if no message is given, away status is removed)
 ........................................
 
 [[command_weechat_bar]]
