@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-08-20 14:27+0200\n"
+"POT-Creation-Date: 2013-08-21 11:15+0200\n"
 "PO-Revision-Date: 2013-02-14 18:20+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -188,6 +188,10 @@ msgstr ""
 
 #, c-format
 msgid "%sError: WeeChat main buffer can't be closed"
+msgstr ""
+
+#, c-format
+msgid "%sError: unable to set notify level \"%s\""
 msgstr ""
 
 #, c-format

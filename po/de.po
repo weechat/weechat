@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-08-20 14:27+0200\n"
+"POT-Creation-Date: 2013-08-21 11:15+0200\n"
 "PO-Revision-Date: 2013-08-18 19:01+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -219,6 +219,11 @@ msgstr "%sFehler: Buffer nicht gefunden"
 #, c-format
 msgid "%sError: WeeChat main buffer can't be closed"
 msgstr "%sFehler: Der WeeChat-Hauptbuffer kann nicht geschlossen werden"
+
+#, fuzzy, c-format
+msgid "%sError: unable to set notify level \"%s\""
+msgstr ""
+"%sFehler: Die Option \"%s\" kann für Infobar \"%s\" nicht gesetzt werden"
 
 #, c-format
 msgid "Local variables for buffer \"%s\":"

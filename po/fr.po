@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-08-20 14:27+0200\n"
-"PO-Revision-Date: 2013-08-20 14:28+0200\n"
+"POT-Creation-Date: 2013-08-21 11:15+0200\n"
+"PO-Revision-Date: 2013-08-21 11:16+0200\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -210,6 +210,10 @@ msgstr "%sErreur: tampon non trouvé"
 #, c-format
 msgid "%sError: WeeChat main buffer can't be closed"
 msgstr "%sErreur: le tampon principal de WeeChat ne peut pas être fermé"
+
+#, c-format
+msgid "%sError: unable to set notify level \"%s\""
+msgstr "%sErreur: impossible de définir le niveau de notification \"%s\""
 
 #, c-format
 msgid "Local variables for buffer \"%s\":"

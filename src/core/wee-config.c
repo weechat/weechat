@@ -1692,13 +1692,12 @@ config_weechat_notify_set (struct t_gui_buffer *buffer, const char *notify)
         return 0;
 
     /* create/update option */
-    config_weechat_notify_create_option_cb (NULL,
-                                            weechat_config_file,
-                                            weechat_config_section_notify,
-                                            buffer->full_name,
-                                            (value < 0) ?
-                                            NULL : gui_buffer_notify_string[value]);
-    return 1;
+    return (config_weechat_notify_create_option_cb (NULL,
+                                                    weechat_config_file,
+                                                    weechat_config_section_notify,
+                                                    buffer->full_name,
+                                                    (value < 0) ?
+                                                    NULL : gui_buffer_notify_string[value]) != WEECHAT_CONFIG_OPTION_SET_ERROR) ? 1 : 0;
 }
 
 /*

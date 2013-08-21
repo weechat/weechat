@@ -846,7 +846,13 @@ COMMAND_CALLBACK(buffer)
     if (string_strcasecmp (argv[1], "notify") == 0)
     {
         COMMAND_MIN_ARGS(3, "buffer notify");
-        config_weechat_notify_set (buffer, argv_eol[2]);
+        if (!config_weechat_notify_set (buffer, argv_eol[2]))
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: unable to set notify level \"%s\""),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv_eol[2]);
+        }
         return WEECHAT_RC_OK;
     }
 
