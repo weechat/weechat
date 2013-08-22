@@ -924,7 +924,7 @@ gui_chat_print_lines_waiting_buffer ()
         {
             for (i = 0; i < num_lines; i++)
             {
-                gui_chat_printf (NULL, lines[i]);
+                gui_chat_printf (NULL, "%s", lines[i]);
             }
             string_free_split (lines);
         }
