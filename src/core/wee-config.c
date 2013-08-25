@@ -2071,8 +2071,10 @@ config_weechat_init_options ()
     config_look_day_change_message = config_file_new_option (
         weechat_config_file, ptr_section,
         "day_change_message", "string",
+        /* TRANSLATORS: string "${color:xxx}" must NOT be translated */
         N_("message displayed when the day has changed (see man strftime for "
-           "date/time specifiers) (note: content is evaluated, see /help eval)"),
+           "date/time specifiers) (note: content is evaluated, so you can use "
+           "colors with format \"${color:xxx}\", see /help eval)"),
         NULL, 0, 0, "-- %a, %d %b %Y --", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
     config_look_eat_newline_glitch = config_file_new_option (
         weechat_config_file, ptr_section,

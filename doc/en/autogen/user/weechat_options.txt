@@ -484,7 +484,7 @@
 ** values: on, off (default value: `on`)
 
 * [[option_weechat.look.day_change_message]] *weechat.look.day_change_message*
-** description: `message displayed when the day has changed (see man strftime for date/time specifiers) (note: content is evaluated, see /help eval)`
+** description: `message displayed when the day has changed (see man strftime for date/time specifiers) (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)`
 ** type: string
 ** values: any string (default value: `"-- %a, %d %b %Y --"`)
 

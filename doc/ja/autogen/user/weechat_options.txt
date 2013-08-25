@@ -484,7 +484,7 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_weechat.look.day_change_message]] *weechat.look.day_change_message*
-** 説明: `message displayed when the day has changed (see man strftime for date/time specifiers) (note: content is evaluated, see /help eval)`
+** 説明: `message displayed when the day has changed (see man strftime for date/time specifiers) (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"-- %a, %d %b %Y --"`)
 
