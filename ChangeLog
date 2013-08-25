@@ -42,7 +42,8 @@ Version 0.4.2 (under dev!)
   man page (off by default)
 * core: add option "-o" for command /color
 * core: fix priority of logical operators in evaluation of expression
-  (AND takes precedence over the OR)
+  (AND takes precedence over the OR) and first evaluate sub-expressions between
+  parentheses
 * core: remove gap after read marker line when there is no bar on the right
   (bug #39548)
 * core: add CA_FILE option in cmake and configure to setup default

@@ -496,7 +496,7 @@ eval_expression_condition (const char *expr, struct t_hashtable *pointers,
 {
     int logic, comp, length, level, rc;
     const char *pos_end;
-    char *expr2, *sub_expr, *pos, *value, *tmp_value, *tmp_value2;
+    char *expr2, *sub_expr, *pos, *pos2, *value, *tmp_value, *tmp_value2;
 
     value = NULL;
 
@@ -506,9 +506,7 @@ eval_expression_condition (const char *expr, struct t_hashtable *pointers,
     if (!expr[0])
         return strdup (expr);
 
-    /*
-     * skip spaces at beginning of string
-     */
+    /* skip spaces at beginning of string */
     while (expr[0] == ' ')
     {
         expr++;
@@ -527,29 +525,32 @@ eval_expression_condition (const char *expr, struct t_hashtable *pointers,
     if (!expr2)
         return NULL;
 
-    /* evaluate sub-expression in parentheses and replace it with value */
+    /*
+     * evaluate sub-expressions between parentheses and replace them with their
+     * value
+     */
     if (!keep_parentheses)
     {
-        while (expr2[0] == '(')
+        while ((pos = strchr (expr2, '(')) != NULL)
         {
             level = 0;
-            pos = expr2 + 1;
-            while (pos[0])
+            pos2 = pos + 1;
+            while (pos2[0])
             {
-                if (pos[0] == '(')
+                if (pos2[0] == '(')
                     level++;
-                else if (pos[0] == ')')
+                else if (pos2[0] == ')')
                 {
                     if (level == 0)
                         break;
                     level--;
                 }
-                pos++;
+                pos2++;
             }
             /* closing parenthesis not found */
-            if (pos[0] != ')')
+            if (pos2[0] != ')')
                 goto end;
-            sub_expr = string_strndup (expr2 + 1, pos - expr2 - 1);
+            sub_expr = string_strndup (pos + 1, pos2 - pos - 1);
             if (!sub_expr)
                 goto end;
             tmp_value = eval_expression_condition (sub_expr, pointers,
@@ -558,19 +559,34 @@ eval_expression_condition (const char *expr, struct t_hashtable *pointers,
             free (sub_expr);
             if (!pos[1])
             {
-                /* nothing after ')', then return value of sub-expression as-is */
+                /* nothing around parentheses, then return value of sub-expression as-is */
                 value = tmp_value;
                 goto end;
             }
-            length = ((tmp_value) ? strlen (tmp_value) : 0) + 1 + strlen (pos + 1) + 1;
+            /*
+             * build a string with string before '(' +
+             * result of sub-expression + string after ')'
+             */
+            length = (pos - expr2) + 1
+                + ((tmp_value) ? strlen (tmp_value) : 0)
+                + 1 + strlen (pos2 + 1)
+                + 1;
             tmp_value2 = malloc (length);
             if (!tmp_value2)
                 goto end;
             tmp_value2[0] = '\0';
+            if (pos > expr2)
+            {
+                strncat (tmp_value2, expr2, pos - expr2);
+                strcat (tmp_value2, " ");
+            }
             if (tmp_value)
                 strcat (tmp_value2, tmp_value);
-            strcat (tmp_value2, " ");
-            strcat (tmp_value2, pos + 1);
+            if (pos2[1])
+            {
+                strcat (tmp_value2, " ");
+                strcat (tmp_value2, pos2 + 1);
+            }
             free (expr2);
             expr2 = tmp_value2;
         }
