@@ -23,6 +23,11 @@
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `white`)
 
+* [[option_weechat.color.chat_day_change]] *weechat.color.chat_day_change*
+** 説明: `text color for message displayed when the day has changed`
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_"。 (デフォルト値: `cyan`)
+
 * [[option_weechat.color.chat_delimiters]] *weechat.color.chat_delimiters*
 ** 説明: `区切りのテキスト色`
 ** タイプ: 色
@@ -478,10 +483,10 @@
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
-* [[option_weechat.look.day_change_time_format]] *weechat.look.day_change_time_format*
-** 説明: `time format for date displayed when day changed (see man strftime for date/time specifiers)`
+* [[option_weechat.look.day_change_message]] *weechat.look.day_change_message*
+** 説明: `message displayed when the day has changed (see man strftime for date/time specifiers) (note: content is evaluated, see /help eval)`
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `"%a, %d %b %Y"`)
+** 値: 未制約文字列 (デフォルト値: `"-- %a, %d %b %Y --"`)
 
 * [[option_weechat.look.eat_newline_glitch]] *weechat.look.eat_newline_glitch*
 ** 説明: `セットされた場合、eat_newline_glitch は 0 になる; これは各行の末尾に新しい行を追加しないために使われ、WeeChat から別のアプリケーションにテキストをコピー/ペーストする際にテキストの改行を行わない (致命的な表示上の問題を引き起こすため、このオプションはデフォルトで無効化されている)`

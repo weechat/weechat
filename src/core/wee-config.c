@@ -99,7 +99,7 @@ struct t_config_option *config_look_color_real_white;
 struct t_config_option *config_look_command_chars;
 struct t_config_option *config_look_confirm_quit;
 struct t_config_option *config_look_day_change;
-struct t_config_option *config_look_day_change_time_format;
+struct t_config_option *config_look_day_change_message;
 struct t_config_option *config_look_eat_newline_glitch;
 struct t_config_option *config_look_emphasized_attributes;
 struct t_config_option *config_look_highlight;
@@ -170,6 +170,7 @@ struct t_config_option *config_color_chat;
 struct t_config_option *config_color_chat_bg;
 struct t_config_option *config_color_chat_buffer;
 struct t_config_option *config_color_chat_channel;
+struct t_config_option *config_color_chat_day_change;
 struct t_config_option *config_color_chat_delimiters;
 struct t_config_option *config_color_chat_inactive_buffer;
 struct t_config_option *config_color_chat_inactive_window;
@@ -776,7 +777,9 @@ config_change_plugin_extension (void *data, struct t_config_option *option)
 }
 
 /*
- * Displays message "Day changed to xxx".
+ * Timer called each minute: checks if the day has changed, and if yes:
+ * - refreshes screen (if needed)
+ * - sends signal "day_changed"
  */
 
 int
@@ -785,8 +788,7 @@ config_day_change_timer_cb (void *data, int remaining_calls)
     struct timeval tv_time;
     struct tm *local_time;
     int new_mday;
-    char text_time[256], *text_time2;
-    struct t_gui_buffer *ptr_buffer;
+    char str_time[256];
 
     /* make C compiler happy */
     (void) data;
@@ -801,30 +803,16 @@ config_day_change_timer_cb (void *data, int remaining_calls)
     {
         if (CONFIG_BOOLEAN(config_look_day_change))
         {
-            strftime (text_time, sizeof (text_time),
-                      CONFIG_STRING(config_look_day_change_time_format),
-                      local_time);
-            text_time2 = string_iconv_to_internal (NULL, text_time);
-            gui_add_hotlist = 0;
-            for (ptr_buffer = gui_buffers; ptr_buffer;
-                 ptr_buffer = ptr_buffer->next_buffer)
-            {
-                if (ptr_buffer->type == GUI_BUFFER_TYPE_FORMATTED)
-                {
-                    gui_chat_printf (ptr_buffer,
-                                     _("\t\tDay changed to %s"),
-                                     (text_time2) ?
-                                     text_time2 : text_time);
-                }
-            }
-            if (text_time2)
-                free (text_time2);
-            gui_add_hotlist = 1;
+            /*
+             * refresh all windows so that the message with new day will be
+             * displayed
+             */
+            gui_window_ask_refresh (1);
         }
 
         /* send signal "day_changed" */
-        strftime (text_time, sizeof (text_time), "%Y-%m-%d", local_time);
-        hook_signal_send ("day_changed", WEECHAT_HOOK_SIGNAL_STRING, text_time);
+        strftime (str_time, sizeof (str_time), "%Y-%m-%d", local_time);
+        hook_signal_send ("day_changed", WEECHAT_HOOK_SIGNAL_STRING, str_time);
     }
 
     config_day_change_old_day = new_mday;
@@ -2079,13 +2067,13 @@ config_weechat_init_options ()
         weechat_config_file, ptr_section,
         "day_change", "boolean",
         N_("display special message when day changes"),
-        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-    config_look_day_change_time_format = config_file_new_option (
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
+    config_look_day_change_message = config_file_new_option (
         weechat_config_file, ptr_section,
-        "day_change_time_format", "string",
-        N_("time format for date displayed when day changed (see man strftime "
-           "for date/time specifiers)"),
-        NULL, 0, 0, "%a, %d %b %Y", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        "day_change_message", "string",
+        N_("message displayed when the day has changed (see man strftime for "
+           "date/time specifiers) (note: content is evaluated, see /help eval)"),
+        NULL, 0, 0, "-- %a, %d %b %Y --", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
     config_look_eat_newline_glitch = config_file_new_option (
         weechat_config_file, ptr_section,
         "eat_newline_glitch", "boolean",
@@ -2566,6 +2554,12 @@ config_weechat_init_options ()
         "chat_channel", "color",
         N_("text color for channel names"),
         NULL, GUI_COLOR_CHAT_CHANNEL, 0, "white", NULL, 0,
+        NULL, NULL, &config_change_color, NULL, NULL, NULL);
+    config_color_chat_day_change = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "chat_day_change", "color",
+        N_("text color for message displayed when the day has changed"),
+        NULL, GUI_COLOR_CHAT_DAY_CHANGE, 0, "cyan", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_chat_delimiters = config_file_new_option (
         weechat_config_file, ptr_section,

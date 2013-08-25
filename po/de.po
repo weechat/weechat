@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-08-21 11:15+0200\n"
+"POT-Creation-Date: 2013-08-23 16:15+0200\n"
 "PO-Revision-Date: 2013-08-18 19:01+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -2782,10 +2782,6 @@ msgstr ""
 "%sWarnung: Proxy \"%s\" existiert nicht (kann mit dem Befehl /proxy angelegt "
 "werden)"
 
-#, c-format
-msgid "\t\tDay changed to %s"
-msgstr "\t\tEin neuer Tag bricht an. Heute ist %s"
-
 msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgstr "Debug-Level für Erweiterung (\"core\" für den WeeChat Core)"
 
@@ -3009,9 +3005,10 @@ msgstr ""
 msgid "display special message when day changes"
 msgstr "bei einem Datumswechsel wird eine entsprechende Nachricht angezeigt"
 
+#, fuzzy
 msgid ""
-"time format for date displayed when day changed (see man strftime for date/"
-"time specifiers)"
+"message displayed when the day has changed (see man strftime for date/time "
+"specifiers) (note: content is evaluated, see /help eval)"
 msgstr ""
 "Format für die Datumsanzeige, wenn ein neuer Tag anbricht (siehe man "
 "strftime für Platzhalter für das Datum und die Uhrzeit)"
@@ -3478,6 +3475,13 @@ msgstr "Textfarbe für den Namen des Buffers"
 
 msgid "text color for channel names"
 msgstr "Farbe für den Channel-Namen"
+
+#, fuzzy
+msgid "text color for message displayed when the day has changed"
+msgstr ""
+"Textfarbe in der die Schlagwörter, die nach der jeweiligen Nachricht "
+"angezeigt werden, dargestellt werden sollen (wird durch den Befehl \"/debug "
+"tags\" angezeigt)"
 
 msgid "text color for delimiters"
 msgstr "Farbe der Infobar-Trennzeichen"
@@ -10800,3 +10804,6 @@ msgstr "Type"
 
 msgid "Constants"
 msgstr "Konstanten"
+
+#~ msgid "\t\tDay changed to %s"
+#~ msgstr "\t\tEin neuer Tag bricht an. Heute ist %s"

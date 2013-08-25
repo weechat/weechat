@@ -81,6 +81,7 @@ enum t_gui_color_enum
     GUI_COLOR_CHAT_NICK_PREFIX,
     GUI_COLOR_CHAT_NICK_SUFFIX,
     GUI_COLOR_EMPHASIS,
+    GUI_COLOR_CHAT_DAY_CHANGE,
 
     /* number of colors */
     GUI_COLOR_NUM_COLORS,

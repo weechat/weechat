@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-08-21 11:15+0200\n"
-"PO-Revision-Date: 2013-08-21 11:16+0200\n"
+"POT-Creation-Date: 2013-08-23 16:15+0200\n"
+"PO-Revision-Date: 2013-08-23 16:15+0200\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -2708,10 +2708,6 @@ msgstr ""
 "%sAttention: le proxy \"%s\" n'existe pas (vous pouvez le créer avec la "
 "commande /proxy)"
 
-#, c-format
-msgid "\t\tDay changed to %s"
-msgstr "\t\tJour changé: %s"
-
 msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgstr "niveau de debug pour l'extension (\"core\" pour le cœur de WeeChat)"
 
@@ -2926,11 +2922,11 @@ msgid "display special message when day changes"
 msgstr "affiche un message quand le jour change"
 
 msgid ""
-"time format for date displayed when day changed (see man strftime for date/"
-"time specifiers)"
+"message displayed when the day has changed (see man strftime for date/time "
+"specifiers) (note: content is evaluated, see /help eval)"
 msgstr ""
-"format de date pour la date affichée quand le jour a changé (voir man "
-"strftime pour le format de date/heure)"
+"message affiché lorsque le jour a changé (voir man strftime pour le format "
+"de date/heure) (note: le contenu est évalué, voir /help eval)"
 
 msgid ""
 "if set, the eat_newline_glitch will be set to 0; this is used to not add new "
@@ -3368,6 +3364,9 @@ msgstr "couleur du texte pour le nom des tampons"
 
 msgid "text color for channel names"
 msgstr "couleur du texte pour le nom des canaux"
+
+msgid "text color for message displayed when the day has changed"
+msgstr "couleur du texte pour le message affiché lorsque le jour a changé"
 
 msgid "text color for delimiters"
 msgstr "couleur du texte pour les délimiteurs"
@@ -10537,3 +10536,6 @@ msgstr "Type"
 
 msgid "Constants"
 msgstr "Constantes"
+
+#~ msgid "\t\tDay changed to %s"
+#~ msgstr "\t\tJour changé: %s"

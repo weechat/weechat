@@ -6453,7 +6453,8 @@ préfixe (l'espace avant la tabulation ne sera pas affiché).
 
 [NOTE]
 Avec deux tabulations ("\t") au début du message, l'heure ne sera pas affichée
-et le message n'aura pas d'alignement (comme le message "Jour changé").
+et le message n'aura pas d'alignement. De plus, la date dans le message sera
+positionnée à 0.
 
 Exemple en C :
 

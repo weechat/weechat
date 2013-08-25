@@ -25,9 +25,11 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include "../../core/weechat.h"
 #include "../../core/wee-config.h"
+#include "../../core/wee-eval.h"
 #include "../../core/wee-hook.h"
 #include "../../core/wee-string.h"
 #include "../../core/wee-utf8.h"
@@ -178,31 +180,31 @@ gui_chat_display_horizontal_line (struct t_gui_window *window, int simulate)
     int x, size_on_screen;
     char *read_marker_string, *default_string = "- ";
 
-    if (!simulate)
+    if (simulate)
+        return;
+
+    gui_window_coords_init_line (window, window->win_chat_cursor_y);
+    if (CONFIG_INTEGER(config_look_read_marker) == CONFIG_LOOK_READ_MARKER_LINE)
     {
-        gui_window_coords_init_line (window, window->win_chat_cursor_y);
-        if (CONFIG_INTEGER(config_look_read_marker) == CONFIG_LOOK_READ_MARKER_LINE)
+        read_marker_string = CONFIG_STRING(config_look_read_marker_string);
+        if (!read_marker_string || !read_marker_string[0])
+            read_marker_string = default_string;
+        size_on_screen = utf8_strlen_screen (read_marker_string);
+        gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
+                                      GUI_COLOR_CHAT_READ_MARKER);
+        wmove (GUI_WINDOW_OBJECTS(window)->win_chat,
+               window->win_chat_cursor_y, window->win_chat_cursor_x);
+        wclrtoeol (GUI_WINDOW_OBJECTS(window)->win_chat);
+        x = 0;
+        while (x < gui_chat_get_real_width (window))
         {
-            read_marker_string = CONFIG_STRING(config_look_read_marker_string);
-            if (!read_marker_string || !read_marker_string[0])
-                read_marker_string = default_string;
-            size_on_screen = utf8_strlen_screen (read_marker_string);
-            gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                          GUI_COLOR_CHAT_READ_MARKER);
-            wmove (GUI_WINDOW_OBJECTS(window)->win_chat,
-                   window->win_chat_cursor_y, window->win_chat_cursor_x);
-            wclrtoeol (GUI_WINDOW_OBJECTS(window)->win_chat);
-            x = 0;
-            while (x < gui_chat_get_real_width (window))
-            {
-                mvwprintw (GUI_WINDOW_OBJECTS(window)->win_chat,
-                           window->win_chat_cursor_y, x,
-                           "%s", read_marker_string);
-                x += size_on_screen;
-            }
+            mvwprintw (GUI_WINDOW_OBJECTS(window)->win_chat,
+                       window->win_chat_cursor_y, x,
+                       "%s", read_marker_string);
+            x += size_on_screen;
         }
-        window->win_chat_cursor_x = window->win_chat_width;
     }
+    window->win_chat_cursor_x = window->win_chat_width;
 }
 
 /*
@@ -583,6 +585,44 @@ gui_chat_display_word (struct t_gui_window *window,
     free (data);
 
     return chars_displayed;
+}
+
+/*
+ * Displays a message when the day has changed.
+ */
+
+void
+gui_chat_display_day_changed (struct t_gui_window *window,
+                              struct tm *date, int simulate)
+{
+    char message[1024], *message_with_color;
+
+    if (simulate)
+        return;
+
+    message_with_color = NULL;
+
+    /* build the message to display */
+    strftime (message, sizeof (message),
+              CONFIG_STRING(config_look_day_change_message), date);
+
+    if (strstr (message, "${"))
+        message_with_color = eval_expression (message, NULL, NULL, NULL);
+
+    /* display the message */
+    gui_window_coords_init_line (window, window->win_chat_cursor_y);
+    gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
+                                  GUI_COLOR_CHAT_DAY_CHANGE);
+    wmove (GUI_WINDOW_OBJECTS(window)->win_chat,
+           window->win_chat_cursor_y, window->win_chat_cursor_x);
+    wclrtoeol (GUI_WINDOW_OBJECTS(window)->win_chat);
+    gui_chat_display_word_raw (window, NULL,
+                               (message_with_color) ? message_with_color : message,
+                               0, simulate, 0, 0);
+    window->win_chat_cursor_x = window->win_chat_width;
+
+    if (message_with_color)
+        free (message_with_color);
 }
 
 /*
@@ -1120,11 +1160,15 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
                        int count, int simulate)
 {
     int num_lines, x, y, lines_displayed, line_align;
-    int read_marker_x, read_marker_y, marker_line;
+    int read_marker_x, read_marker_y;
     int word_start_offset, word_end_offset;
     int word_length_with_spaces, word_length;
     char *ptr_data, *ptr_end_offset, *next_char;
     char *ptr_style, *message_with_tags, *message_with_search;
+    struct t_gui_line *ptr_prev_line, *ptr_next_line;
+    struct tm local_time, local_time2;
+    struct timeval tv_time;
+    time_t *ptr_time;
 
     if (!line)
         return 0;
@@ -1149,6 +1193,34 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
         gui_window_current_emphasis = 0;
     }
 
+    /* display message before first line of buffer if date is not today */
+    if ((line->data->date != 0) && CONFIG_BOOLEAN(config_look_day_change))
+    {
+        ptr_time = NULL;
+        ptr_prev_line = gui_line_get_prev_displayed (line);
+        if (ptr_prev_line)
+        {
+            while (ptr_prev_line && (ptr_prev_line->data->date == 0))
+            {
+                ptr_prev_line = gui_line_get_prev_displayed (ptr_prev_line);
+            }
+        }
+        if (!ptr_prev_line)
+        {
+            gettimeofday (&tv_time, NULL);
+            localtime_r (&tv_time.tv_sec, &local_time);
+            localtime_r (&line->data->date, &local_time2);
+            if ((local_time.tm_mday != local_time2.tm_mday)
+                || (local_time.tm_mon != local_time2.tm_mon)
+                || (local_time.tm_year != local_time2.tm_year))
+            {
+                gui_chat_display_day_changed (window, &local_time2, simulate);
+                gui_chat_display_new_line (window, num_lines, count,
+                                           &lines_displayed, simulate);
+            }
+        }
+    }
+
     /* calculate marker position (maybe not used for this line!) */
     if (window->buffer->time_for_each_line && line->data->str_time)
         read_marker_x = x + gui_chat_strlen_screen (line->data->str_time);
@@ -1157,8 +1229,6 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     read_marker_y = y;
 
     lines_displayed = 0;
-
-    marker_line = gui_chat_marker_for_line (window->buffer, line);
 
     /* display time and prefix */
     gui_chat_display_time_to_prefix (window, line, num_lines, count,
@@ -1189,12 +1259,8 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
         }
     }
 
-    if (!line->data->message || !line->data->message[0])
-    {
-        gui_chat_display_new_line (window, num_lines, count,
-                                   &lines_displayed, simulate);
-    }
-    else
+    /* display message */
+    if (line->data->message && line->data->message[0])
     {
         message_with_tags = (gui_chat_display_tags) ?
             gui_chat_build_string_message_tags (line) : NULL;
@@ -1306,8 +1372,53 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
         if (message_with_search)
             free (message_with_search);
     }
+    else
+    {
+        /* no message */
+        gui_chat_display_new_line (window, num_lines, count,
+                                   &lines_displayed, simulate);
+    }
 
-    if (marker_line)
+    /* display message if day has changed after this line */
+    if ((line->data->date != 0) && CONFIG_BOOLEAN(config_look_day_change))
+    {
+        ptr_time = NULL;
+        ptr_next_line = gui_line_get_next_displayed (line);
+        if (ptr_next_line)
+        {
+            while (ptr_next_line && (ptr_next_line->data->date == 0))
+            {
+                ptr_next_line = gui_line_get_next_displayed (ptr_next_line);
+            }
+        }
+        if (ptr_next_line)
+        {
+            /* get time of next line */
+            ptr_time = &ptr_next_line->data->date;
+        }
+        else
+        {
+            /* it was the last line => compare with current system time */
+            gettimeofday (&tv_time, NULL);
+            ptr_time = &tv_time.tv_sec;
+        }
+        if (ptr_time && (*ptr_time != 0))
+        {
+            localtime_r (&line->data->date, &local_time);
+            localtime_r (ptr_time, &local_time2);
+            if ((local_time.tm_mday != local_time2.tm_mday)
+                || (local_time.tm_mon != local_time2.tm_mon)
+                || (local_time.tm_year != local_time2.tm_year))
+            {
+                gui_chat_display_day_changed (window, &local_time2, simulate);
+                gui_chat_display_new_line (window, num_lines, count,
+                                           &lines_displayed, simulate);
+            }
+        }
+    }
+
+    /* display read marker (after line) */
+    if (gui_chat_marker_for_line (window->buffer, line))
     {
         gui_chat_display_horizontal_line (window, simulate);
         gui_chat_display_new_line (window, num_lines, count,

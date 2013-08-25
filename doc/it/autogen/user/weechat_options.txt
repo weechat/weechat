@@ -23,6 +23,11 @@
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `white`)
 
+* [[option_weechat.color.chat_day_change]] *weechat.color.chat_day_change*
+** descrizione: `text color for message displayed when the day has changed`
+** tipo: colore
+** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `cyan`)
+
 * [[option_weechat.color.chat_delimiters]] *weechat.color.chat_delimiters*
 ** descrizione: `colore del testo per i delimitatori`
 ** tipo: colore
@@ -478,10 +483,10 @@
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
-* [[option_weechat.look.day_change_time_format]] *weechat.look.day_change_time_format*
-** descrizione: `time format for date displayed when day changed (see man strftime for date/time specifiers)`
+* [[option_weechat.look.day_change_message]] *weechat.look.day_change_message*
+** descrizione: `message displayed when the day has changed (see man strftime for date/time specifiers) (note: content is evaluated, see /help eval)`
 ** tipo: stringa
-** valori: qualsiasi stringa (valore predefinito: `"%a, %d %b %Y"`)
+** valori: qualsiasi stringa (valore predefinito: `"-- %a, %d %b %Y --"`)
 
 * [[option_weechat.look.eat_newline_glitch]] *weechat.look.eat_newline_glitch*
 ** descrizione: `se attivo, eat_newline_glitch verrà impostato a 0; viene usato per non aggiungere il carattere a capo alla fine di ogni riga, al fine di non danneggiare il testo quando viene copiato/incollato da WeeChat in un'altra applicazione (l'opzione è disabilitata per default, dato che può causare seri errori di visualizzazione)`

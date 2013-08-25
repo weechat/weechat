@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-08-21 11:15+0200\n"
+"POT-Creation-Date: 2013-08-23 16:15+0200\n"
 "PO-Revision-Date: 2013-08-17 10:37+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2156,10 +2156,6 @@ msgid ""
 "proxy)"
 msgstr ""
 
-#, fuzzy, c-format
-msgid "\t\tDay changed to %s"
-msgstr "Дата сменилась на %s\n"
-
 msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgstr ""
 
@@ -2316,8 +2312,8 @@ msgstr "отображать специальное сообщение  при �
 
 #, fuzzy
 msgid ""
-"time format for date displayed when day changed (see man strftime for date/"
-"time specifiers)"
+"message displayed when the day has changed (see man strftime for date/time "
+"specifiers) (note: content is evaluated, see /help eval)"
 msgstr "отображение маркера даты при смене дня"
 
 msgid ""
@@ -2664,6 +2660,10 @@ msgstr "цвет названия сервера"
 #, fuzzy
 msgid "text color for channel names"
 msgstr "цвет имён при действиях"
+
+#, fuzzy
+msgid "text color for message displayed when the day has changed"
+msgstr "цвет окна с подсвеченным сообщением (в строке состояния)"
 
 #, fuzzy
 msgid "text color for delimiters"
@@ -9254,3 +9254,7 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#, fuzzy
+#~ msgid "\t\tDay changed to %s"
+#~ msgstr "Дата сменилась на %s\n"

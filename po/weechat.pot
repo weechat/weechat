@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-08-21 11:15+0200\n"
+"POT-Creation-Date: 2013-08-23 16:15+0200\n"
 "PO-Revision-Date: 2013-02-14 18:20+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1907,10 +1907,6 @@ msgid ""
 "proxy)"
 msgstr ""
 
-#, c-format
-msgid "\t\tDay changed to %s"
-msgstr ""
-
 msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgstr ""
 
@@ -2059,8 +2055,8 @@ msgid "display special message when day changes"
 msgstr ""
 
 msgid ""
-"time format for date displayed when day changed (see man strftime for date/"
-"time specifiers)"
+"message displayed when the day has changed (see man strftime for date/time "
+"specifiers) (note: content is evaluated, see /help eval)"
 msgstr ""
 
 msgid ""
@@ -2368,6 +2364,9 @@ msgid "text color for buffer names"
 msgstr ""
 
 msgid "text color for channel names"
+msgstr ""
+
+msgid "text color for message displayed when the day has changed"
 msgstr ""
 
 msgid "text color for delimiters"

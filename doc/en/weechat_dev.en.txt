@@ -827,6 +827,7 @@ Color codes using options (see 't_gui_color_enum', in file 'src/gui/gui-color.h'
 | 40   | weechat.color.chat_nick_prefix _(new in version 0.4.1)_
 | 41   | weechat.color.chat_nick_suffix _(new in version 0.4.1)_
 | 42   | weechat.color.emphasis _(new in version 0.4.2)_
+| 43   | weechat.color.chat_day_change _(new in version 0.4.2)_
 |========================================
 
 WeeChat colors are:

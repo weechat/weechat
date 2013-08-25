@@ -6403,7 +6403,8 @@ tabulazione non verrà mostrato).
 // TRANSLATION MISSING
 [NOTE]
 With two tabs ("\t") at beginning of message, time will not be displayed and
-message will have no alignment at all (like the message "Day changed to").
+message will have no alignment at all. Moreover, the date in message will be
+set to 0.
 
 Esempio in C:
 

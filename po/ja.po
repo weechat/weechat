@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-08-21 11:15+0200\n"
+"POT-Creation-Date: 2013-08-23 16:15+0200\n"
 "PO-Revision-Date: 2013-08-17 10:37+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -2605,10 +2605,6 @@ msgid ""
 "proxy)"
 msgstr ""
 
-#, c-format
-msgid "\t\tDay changed to %s"
-msgstr "\t\t%s に日付変更"
-
 msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgstr "プラグイン (\"core\" は WeeChat コア) のデバッグレベル"
 
@@ -2809,8 +2805,8 @@ msgstr "日付が変わった際に特殊メッセージを表示"
 
 #, fuzzy
 msgid ""
-"time format for date displayed when day changed (see man strftime for date/"
-"time specifiers)"
+"message displayed when the day has changed (see man strftime for date/time "
+"specifiers) (note: content is evaluated, see /help eval)"
 msgstr ""
 "\"time\" バーアイテムの時間フォーマット (日付/時間指定子は strftime の man を"
 "参照)"
@@ -3219,6 +3215,10 @@ msgstr "バッファ名のテキスト色"
 
 msgid "text color for channel names"
 msgstr "チャンネル名のテキスト色"
+
+#, fuzzy
+msgid "text color for message displayed when the day has changed"
+msgstr "メッセージの後ろのタグのテキスト色 (/debug tags コマンドで表示)"
 
 msgid "text color for delimiters"
 msgstr "区切りのテキスト色"
@@ -10105,3 +10105,6 @@ msgstr "タイプ"
 
 msgid "Constants"
 msgstr "定数"
+
+#~ msgid "\t\tDay changed to %s"
+#~ msgstr "\t\t%s に日付変更"

@@ -23,6 +23,11 @@
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `white`)
 
+* [[option_weechat.color.chat_day_change]] *weechat.color.chat_day_change*
+** description: `couleur du texte pour le message affiché lorsque le jour a changé`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour du gras, "!" pour la vidéo inverse, "_" pour du souligné (valeur par défaut: `cyan`)
+
 * [[option_weechat.color.chat_delimiters]] *weechat.color.chat_delimiters*
 ** description: `couleur du texte pour les délimiteurs`
 ** type: couleur
@@ -478,10 +483,10 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 
-* [[option_weechat.look.day_change_time_format]] *weechat.look.day_change_time_format*
-** description: `format de date pour la date affichée quand le jour a changé (voir man strftime pour le format de date/heure)`
+* [[option_weechat.look.day_change_message]] *weechat.look.day_change_message*
+** description: `message affiché lorsque le jour a changé (voir man strftime pour le format de date/heure) (note: le contenu est évalué, voir /help eval)`
 ** type: chaîne
-** valeurs: toute chaîne (valeur par défaut: `"%a, %d %b %Y"`)
+** valeurs: toute chaîne (valeur par défaut: `"-- %a, %d %b %Y --"`)
 
 * [[option_weechat.look.eat_newline_glitch]] *weechat.look.eat_newline_glitch*
 ** description: `si activé, le eat_newline_glitch sera positionné à 0; cela est utilisé pour ne pas ajouter de nouvelle ligne à la fin de chaque ligne, et donc ne pas couper le texte quand vous copiez/collez du texte depuis WeeChat vers une autre application (cette option est désactivée par défaut car elle peut causer de sérieux problèmes d'affichages)`
