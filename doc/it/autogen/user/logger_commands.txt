@@ -2,33 +2,35 @@
 [command]*`logger`* configurazione del plugin logger::
 ........................................
 /logger  list
-         set <livello>
+         set <level>
+         flush
          disable
 
-   list: mostra lo stato del logging per i buffer aperti
-    set: imposta il livello di logging per il buffer corrente
-  level: livello per i messaggi da loggare (0 = disabilitato, 1 = alcuni messaggi (più importanti) .. 9 = tutti i messaggi)
-disable: disabilita il logging sul buffer corrente (imposta livello a 0)
+   list: show logging status for opened buffers
+    set: set logging level on current buffer
+  level: level for messages to be logged (0 = logging disabled, 1 = a few messages (most important) .. 9 = all messages)
+  flush: write all log files now
+disable: disable logging on current buffer (set level to 0)
 
-Le opzioni "logger.level.*" e "logger.mask.*" possono essere usate per impostare un livello o una mask per un buffer, o per i buffer che cominciano per nome.
+Options "logger.level.*" and "logger.mask.*" can be used to set level or mask for a buffer, or buffers beginning with name.
 
-Livelli di log usati dal plugin IRC:
-  1: messaggio utente, notifica, privato
-  2: cambio di nick
-  3: messaggio del server
-  4: entrata/uscita/abbandono
-  9: tutti gli altri messaggi
+Log levels used by IRC plugin:
+  1: user message, notice, private
+  2: nick change
+  3: server message
+  4: join/part/quit
+  9: all other messages
 
-Esempi:
-  imposta il livello 5 per buffer corrente:
+Examples:
+  set level to 5 for current buffer:
     /logger set 5
-  disabilita logging per il buffer corrente:
+  disable logging for current buffer:
     /logger disable
-  imposta il livello 3 per tutti i buffer IRC:
+  set level to 3 for all IRC buffers:
     /set logger.level.irc 3
-  disabilita logging per il buffer principale di WeeChat:
+  disable logging for main WeeChat buffer:
     /set logger.level.core.weechat 0
-  usa una directory per il server IRC e un file per ogni canale al suo interno:
+  use a directory per IRC server and a file per channel inside:
     /set logger.mask.irc "$server/$channel.weechatlog"
 ........................................
 

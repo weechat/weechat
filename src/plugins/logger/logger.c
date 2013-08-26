@@ -828,6 +828,34 @@ logger_set_buffer (struct t_gui_buffer *buffer, const char *value)
 }
 
 /*
+ * Flushes all log files.
+ */
+
+void
+logger_flush ()
+{
+    struct t_logger_buffer *ptr_logger_buffer;
+
+    for (ptr_logger_buffer = logger_buffers; ptr_logger_buffer;
+         ptr_logger_buffer = ptr_logger_buffer->next_buffer)
+    {
+        if (ptr_logger_buffer->log_file && ptr_logger_buffer->flush_needed)
+        {
+            if (weechat_logger_plugin->debug >= 2)
+            {
+                weechat_printf_tags (NULL,
+                                     "no_log",
+                                     "%s: flush file %s",
+                                     LOGGER_PLUGIN_NAME,
+                                     ptr_logger_buffer->log_filename);
+            }
+            fflush (ptr_logger_buffer->log_file);
+            ptr_logger_buffer->flush_needed = 0;
+        }
+    }
+}
+
+/*
  * Callback for command "/logger".
  */
 
@@ -852,6 +880,12 @@ logger_command_cb (void *data, struct t_gui_buffer *buffer,
         {
             if (argc > 2)
                 logger_set_buffer (buffer, argv[2]);
+            return WEECHAT_RC_OK;
+        }
+
+        if (weechat_strcasecmp (argv[1], "flush") == 0)
+        {
+            logger_flush ();
             return WEECHAT_RC_OK;
         }
 
@@ -1252,29 +1286,11 @@ logger_print_cb (void *data, struct t_gui_buffer *buffer, time_t date,
 int
 logger_timer_cb (void *data, int remaining_calls)
 {
-    struct t_logger_buffer *ptr_logger_buffer;
-
     /* make C compiler happy */
     (void) data;
     (void) remaining_calls;
 
-    for (ptr_logger_buffer = logger_buffers; ptr_logger_buffer;
-         ptr_logger_buffer = ptr_logger_buffer->next_buffer)
-    {
-        if (ptr_logger_buffer->log_file && ptr_logger_buffer->flush_needed)
-        {
-            if (weechat_logger_plugin->debug >= 2)
-            {
-                weechat_printf_tags (NULL,
-                                     "no_log",
-                                     "%s: flush file %s",
-                                     LOGGER_PLUGIN_NAME,
-                                     ptr_logger_buffer->log_filename);
-            }
-            fflush (ptr_logger_buffer->log_file);
-            ptr_logger_buffer->flush_needed = 0;
-        }
-    }
+    logger_flush ();
 
     return WEECHAT_RC_OK;
 }
@@ -1303,12 +1319,14 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                           N_("logger plugin configuration"),
                           N_("list"
                              " || set <level>"
+                             " || flush"
                              " || disable"),
                           N_("   list: show logging status for opened buffers\n"
                              "    set: set logging level on current buffer\n"
                              "  level: level for messages to be logged (0 = "
                              "logging disabled, 1 = a few messages (most "
                              "important) .. 9 = all messages)\n"
+                             "  flush: write all log files now\n"
                              "disable: disable logging on current buffer (set "
                              "level to 0)\n\n"
                              "Options \"logger.level.*\" and \"logger.mask.*\" "
@@ -1334,6 +1352,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                              "    /set logger.mask.irc \"$server/$channel.weechatlog\""),
                           "list"
                           " || set 1|2|3|4|5|6|7|8|9"
+                          " || flush"
                           " || disable",
                           &logger_command_cb, NULL);
 

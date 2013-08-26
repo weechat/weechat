@@ -3,11 +3,13 @@
 ........................................
 /logger  list
          set <niveau>
+         flush
          disable
 
    list: afficher le statut d'enregistrement pour les tampons ouverts
     set: définir le niveau d'enregistrement pour le tampon courant
  niveau: niveau pour les messages à enregistrer (0 = pas d'enregistrement, 1 = quelques messages (les plus importants) .. 9 = tous les messages)
+  flush: écrire tous les fichiers de log maintenant
 disable: désactiver l'enregistrement pour le tampon courant (définir le niveau à 0)
 
 Les options "logger.level.*" et "logger.mask.*" peuvent être utilisées pour définir le niveau ou le masque de nom de fichier pour un tampon, ou plusieurs tampons commençant par un nom.

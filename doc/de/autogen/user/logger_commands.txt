@@ -3,32 +3,34 @@
 ........................................
 /logger  list
          set <level>
+         flush
          disable
 
-   list: zeigt, für geöffnete Buffer, den Status der Protokollierung an
-    set: legt den Level fest, nach dem der aktuelle Buffer protokolliert werden soll
-  level: legt fest, welche Nachrichten protokolliert werden sollen (0 = nichts protokollieren, 1 = nur die wichtigsten Nachrichten protokollieren .. 9 = protokolliere alle Nachrichten)
-disable: die Protokollierung wird für den aktuellen Buffer ausgeschaltet (der Level wird auf 0 gestellt)
+   list: show logging status for opened buffers
+    set: set logging level on current buffer
+  level: level for messages to be logged (0 = logging disabled, 1 = a few messages (most important) .. 9 = all messages)
+  flush: write all log files now
+disable: disable logging on current buffer (set level to 0)
 
-Die Optionen "logger.level.*" und "logger.mask.*" können genutzt werden um den Level der Protokollierung festzulegen und um eine Maske für einen oder mehrere Buffer zu definieren.
+Options "logger.level.*" and "logger.mask.*" can be used to set level or mask for a buffer, or buffers beginning with name.
 
-Level der Protokollierung, die die IRC Erweiterung unterstützt:
-  1: Nachrichten von Usern, private Nachrichten und Bemerkungen
-  2: Wechsel von Nicks (/nick)
-  3: Nachrichten vom Server
-  4: join/part/quit Nachrichten
-  9: alle Nachrichten
+Log levels used by IRC plugin:
+  1: user message, notice, private
+  2: nick change
+  3: server message
+  4: join/part/quit
+  9: all other messages
 
-Beispiele:
-  Stellt den Level für den aktuellen Buffer auf 5 ein:
+Examples:
+  set level to 5 for current buffer:
     /logger set 5
-  Die Protokollierung für den aktuellen Buffer wird ausgeschaltet:
+  disable logging for current buffer:
     /logger disable
-  Stellt den Level für alle IRC-Buffer auf 3 ein:
+  set level to 3 for all IRC buffers:
     /set logger.level.irc 3
-  Die Protokollierung, für den WeeChat Haupt-Buffer, wird deaktiviert:
+  disable logging for main WeeChat buffer:
     /set logger.level.core.weechat 0
-  Für jeden IRC-Server wird ein separates Verzeichnis erstellt und darin eine eigene Protokoll-Datei, für jeden Channel:
+  use a directory per IRC server and a file per channel inside:
     /set logger.mask.irc "$server/$channel.weechatlog"
 ........................................
 

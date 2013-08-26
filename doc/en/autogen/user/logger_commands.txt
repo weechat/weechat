@@ -3,11 +3,13 @@
 ........................................
 /logger  list
          set <level>
+         flush
          disable
 
    list: show logging status for opened buffers
     set: set logging level on current buffer
   level: level for messages to be logged (0 = logging disabled, 1 = a few messages (most important) .. 9 = all messages)
+  flush: write all log files now
 disable: disable logging on current buffer (set level to 0)
 
 Options "logger.level.*" and "logger.mask.*" can be used to set level or mask for a buffer, or buffers beginning with name.
