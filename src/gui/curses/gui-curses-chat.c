@@ -439,7 +439,8 @@ gui_chat_display_word (struct t_gui_window *window,
                        struct t_gui_line *line,
                        const char *word, const char *word_end,
                        int prefix, int num_lines, int count,
-                       int *lines_displayed, int simulate,
+                       int pre_lines_displayed, int *lines_displayed,
+                       int simulate,
                        int apply_style_inactive,
                        int nick_offline)
 {
@@ -473,7 +474,7 @@ gui_chat_display_word (struct t_gui_window *window,
         /* insert spaces for aligning text under time/nick */
         length_align = gui_line_get_align (window->buffer, line, 0, 0);
         if ((window->win_chat_cursor_x == 0)
-            && (*lines_displayed > 0)
+            && (*lines_displayed > pre_lines_displayed)
             /* FIXME: modify arbitrary value for non aligning messages on time/nick? */
             && (length_align < (window->win_chat_width - 5)))
         {
@@ -633,6 +634,7 @@ void
 gui_chat_display_time_to_prefix (struct t_gui_window *window,
                                  struct t_gui_line *line,
                                  int num_lines, int count,
+                                 int pre_lines_displayed,
                                  int *lines_displayed,
                                  int simulate)
 {
@@ -662,7 +664,8 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
         if (window->win_chat_cursor_y < window->coords_size)
             window->coords[window->win_chat_cursor_y].time_x1 = window->win_chat_cursor_x;
         gui_chat_display_word (window, line, line->data->str_time,
-                               NULL, 1, num_lines, count, lines_displayed,
+                               NULL, 1, num_lines, count,
+                               pre_lines_displayed, lines_displayed,
                                simulate,
                                CONFIG_BOOLEAN(config_look_color_inactive_time),
                                0);
@@ -677,7 +680,8 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
                                   GUI_COLOR_CHAT);
         }
         gui_chat_display_word (window, line, str_space,
-                               NULL, 1, num_lines, count, lines_displayed,
+                               NULL, 1, num_lines, count,
+                               pre_lines_displayed, lines_displayed,
                                simulate,
                                CONFIG_BOOLEAN(config_look_color_inactive_time),
                                0);
@@ -714,7 +718,8 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
             {
                 gui_chat_display_word (window, line, str_space,
                                        NULL, 1, num_lines, count,
-                                       lines_displayed, simulate,
+                                       pre_lines_displayed, lines_displayed,
+                                       simulate,
                                        CONFIG_BOOLEAN(config_look_color_inactive_prefix_buffer),
                                        0);
             }
@@ -751,7 +756,8 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
                                    short_name +
                                    gui_chat_string_real_pos (short_name,
                                                              chars_to_display),
-                                   1, num_lines, count, lines_displayed,
+                                   1, num_lines, count,
+                                   pre_lines_displayed, lines_displayed,
                                    simulate,
                                    CONFIG_BOOLEAN(config_look_color_inactive_prefix_buffer),
                                    0);
@@ -760,7 +766,8 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
         {
             gui_chat_display_word (window, line,
                                    short_name, NULL, 1, num_lines, count,
-                                   lines_displayed, simulate,
+                                   pre_lines_displayed, lines_displayed,
+                                   simulate,
                                    CONFIG_BOOLEAN(config_look_color_inactive_prefix_buffer),
                                    0);
         }
@@ -778,7 +785,8 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
             }
             gui_chat_display_word (window, line,
                                    CONFIG_STRING(config_look_prefix_buffer_align_more),
-                                   NULL, 1, num_lines, count, lines_displayed,
+                                   NULL, 1, num_lines, count,
+                                   pre_lines_displayed, lines_displayed,
                                    simulate,
                                    CONFIG_BOOLEAN(config_look_color_inactive_prefix_buffer),
                                    0);
@@ -792,7 +800,8 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
                                           GUI_COLOR_CHAT);
                 }
                 gui_chat_display_word (window, line, str_space,
-                                       NULL, 1, num_lines, count, lines_displayed,
+                                       NULL, 1, num_lines, count,
+                                       pre_lines_displayed, lines_displayed,
                                        simulate,
                                        CONFIG_BOOLEAN(config_look_color_inactive_prefix),
                                        0);
@@ -814,7 +823,8 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
                 for (i = 0; i < num_spaces; i++)
                 {
                     gui_chat_display_word (window, line, str_space,
-                                           NULL, 1, num_lines, count, lines_displayed,
+                                           NULL, 1, num_lines, count,
+                                           pre_lines_displayed, lines_displayed,
                                            simulate,
                                            CONFIG_BOOLEAN(config_look_color_inactive_prefix_buffer),
                                            0);
@@ -823,7 +833,8 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
             if (mixed_lines->buffer_max_length > 0)
             {
                 gui_chat_display_word (window, line, str_space,
-                                       NULL, 1, num_lines, count, lines_displayed,
+                                       NULL, 1, num_lines, count,
+                                       pre_lines_displayed, lines_displayed,
                                        simulate,
                                        CONFIG_BOOLEAN(config_look_color_inactive_prefix_buffer),
                                        0);
@@ -910,7 +921,8 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
             {
                 gui_chat_display_word (window, line, str_space,
                                        NULL, 1, num_lines, count,
-                                       lines_displayed, simulate,
+                                       pre_lines_displayed, lines_displayed,
+                                       simulate,
                                        CONFIG_BOOLEAN(config_look_color_inactive_prefix),
                                        0);
             }
@@ -927,7 +939,8 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
             gui_chat_display_word (window, line,
                                    ptr_nick_prefix,
                                    NULL, 1, num_lines, count,
-                                   lines_displayed, simulate, 0, 0);
+                                   pre_lines_displayed, lines_displayed,
+                                   simulate, 0, 0);
         }
 
         nick_offline = CONFIG_BOOLEAN(config_look_color_nick_offline)
@@ -998,7 +1011,9 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
                                                                                                     chars_to_display) :
                                                      ptr_prefix + gui_chat_string_real_pos (ptr_prefix,
                                                                                             chars_to_display),
-                                                     1, num_lines, count, lines_displayed,
+                                                     1, num_lines, count,
+                                                     pre_lines_displayed,
+                                                     lines_displayed,
                                                      simulate,
                                                      CONFIG_BOOLEAN(config_look_color_inactive_prefix),
                                                      nick_offline);
@@ -1008,7 +1023,8 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
         {
             gui_chat_display_word (window, line,
                                    (prefix_highlighted) ? prefix_highlighted : ptr_prefix,
-                                   NULL, 1, num_lines, count, lines_displayed,
+                                   NULL, 1, num_lines, count,
+                                   pre_lines_displayed, lines_displayed,
                                    simulate,
                                    CONFIG_BOOLEAN(config_look_color_inactive_prefix),
                                    nick_offline);
@@ -1031,7 +1047,8 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
         for (i = 0; i < extra_spaces; i++)
         {
             gui_chat_display_word (window, line, str_space,
-                                   NULL, 1, num_lines, count, lines_displayed,
+                                   NULL, 1, num_lines, count,
+                                   pre_lines_displayed, lines_displayed,
                                    simulate,
                                    CONFIG_BOOLEAN(config_look_color_inactive_prefix),
                                    0);
@@ -1048,7 +1065,8 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
             }
             gui_chat_display_word (window, line,
                                    CONFIG_STRING(config_look_prefix_align_more),
-                                   NULL, 1, num_lines, count, lines_displayed,
+                                   NULL, 1, num_lines, count,
+                                   pre_lines_displayed, lines_displayed,
                                    simulate,
                                    CONFIG_BOOLEAN(config_look_color_inactive_prefix),
                                    0);
@@ -1065,7 +1083,8 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
             gui_chat_display_word (window, line,
                                    ptr_nick_suffix,
                                    NULL, 1, num_lines, count,
-                                   lines_displayed, simulate, 0, 0);
+                                   pre_lines_displayed, lines_displayed,
+                                   simulate, 0, 0);
         }
 
         if (CONFIG_INTEGER(config_look_prefix_align) == CONFIG_LOOK_PREFIX_ALIGN_LEFT)
@@ -1080,7 +1099,8 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
             for (i = 0; i < num_spaces; i++)
             {
                 gui_chat_display_word (window, line, str_space,
-                                       NULL, 1, num_lines, count, lines_displayed,
+                                       NULL, 1, num_lines, count,
+                                       pre_lines_displayed, lines_displayed,
                                        simulate,
                                        CONFIG_BOOLEAN(config_look_color_inactive_prefix),
                                        0);
@@ -1098,7 +1118,8 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
             }
             gui_chat_display_word (window, line,
                                    CONFIG_STRING(config_look_prefix_align_more),
-                                   NULL, 1, num_lines, count, lines_displayed,
+                                   NULL, 1, num_lines, count,
+                                   pre_lines_displayed, lines_displayed,
                                    simulate,
                                    CONFIG_BOOLEAN(config_look_color_inactive_prefix),
                                    0);
@@ -1115,7 +1136,8 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
                                           GUI_COLOR_CHAT);
                 }
                 gui_chat_display_word (window, line, str_space,
-                                       NULL, 1, num_lines, count, lines_displayed,
+                                       NULL, 1, num_lines, count,
+                                       pre_lines_displayed, lines_displayed,
                                        simulate,
                                        CONFIG_BOOLEAN(config_look_color_inactive_prefix),
                                        0);
@@ -1134,10 +1156,12 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
             gui_chat_display_word (window, line,
                                    CONFIG_STRING(config_look_prefix_suffix),
                                    NULL, 1, num_lines, count,
-                                   lines_displayed, simulate, 0, 0);
+                                   pre_lines_displayed, lines_displayed,
+                                   simulate, 0, 0);
             gui_chat_display_word (window, line, str_space,
                                    NULL, 1, num_lines, count,
-                                   lines_displayed, simulate, 0, 0);
+                                   pre_lines_displayed, lines_displayed,
+                                   simulate, 0, 0);
         }
     }
     if (ptr_prefix)
@@ -1159,7 +1183,7 @@ int
 gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
                        int count, int simulate)
 {
-    int num_lines, x, y, lines_displayed, line_align;
+    int num_lines, x, y, pre_lines_displayed, lines_displayed, line_align;
     int read_marker_x, read_marker_y;
     int word_start_offset, word_end_offset;
     int word_length_with_spaces, word_length;
@@ -1193,6 +1217,9 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
         gui_window_current_emphasis = 0;
     }
 
+    pre_lines_displayed = 0;
+    lines_displayed = 0;
+
     /* display message before first line of buffer if date is not today */
     if ((line->data->date != 0) && CONFIG_BOOLEAN(config_look_day_change))
     {
@@ -1217,6 +1244,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
                 gui_chat_display_day_changed (window, &local_time2, simulate);
                 gui_chat_display_new_line (window, num_lines, count,
                                            &lines_displayed, simulate);
+                pre_lines_displayed++;
             }
         }
     }
@@ -1228,11 +1256,10 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
         read_marker_x = x;
     read_marker_y = y;
 
-    lines_displayed = 0;
-
     /* display time and prefix */
     gui_chat_display_time_to_prefix (window, line, num_lines, count,
-                                     &lines_displayed, simulate);
+                                     pre_lines_displayed, &lines_displayed,
+                                     simulate);
     if (!simulate && !gui_chat_display_tags)
     {
         if (window->win_chat_cursor_y < window->coords_size)
@@ -1330,7 +1357,8 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
                 /* display word */
                 gui_chat_display_word (window, line, ptr_data,
                                        ptr_end_offset + 1,
-                                       0, num_lines, count, &lines_displayed,
+                                       0, num_lines, count,
+                                       pre_lines_displayed, &lines_displayed,
                                        simulate,
                                        CONFIG_BOOLEAN(config_look_color_inactive_message),
                                        0);
