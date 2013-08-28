@@ -86,6 +86,7 @@ struct t_config_option *irc_config_look_nick_completion_smart;
 struct t_config_option *irc_config_look_nick_mode;
 struct t_config_option *irc_config_look_nick_mode_empty;
 struct t_config_option *irc_config_look_notice_as_pv;
+struct t_config_option *irc_config_look_notice_welcome_redirect;
 struct t_config_option *irc_config_look_notify_tags_ison;
 struct t_config_option *irc_config_look_notify_tags_whois;
 struct t_config_option *irc_config_look_part_closes_buffer;
@@ -2444,6 +2445,14 @@ irc_config_init ()
         N_("display notices as private messages (if auto, use private buffer "
            "if found)"),
         "auto|never|always", 0, 0, "auto", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_notice_welcome_redirect = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "notice_welcome_redirect", "boolean",
+        N_("automatically redirect channel welcome notices to the channel "
+           "buffer; such notices have the nick as target but a channel name in "
+           "beginning of notice message, for example notices sent by freenode "
+           "server which look like: \"[#channel] Welcome to this channel...\""),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_notify_tags_ison = weechat_config_new_option (
         irc_config_file, ptr_section,
         "notify_tags_ison", "string",

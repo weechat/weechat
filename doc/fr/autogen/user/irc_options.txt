@@ -253,6 +253,11 @@
 ** type: entier
 ** valeurs: auto, never, always (valeur par défaut: `auto`)
 
+* [[option_irc.look.notice_welcome_redirect]] *irc.look.notice_welcome_redirect*
+** description: `rediriger automatiquement les notices de bienvenue sur le canal vers le tampon du canal; de telles notices ont le pseudo comme cible mais le nom du canal au début du message de notice, par exemple les notices envoyées par le serveur freenode qui ressemblent à: "[#canal] Bienvenue sur ce canal..."`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `on`)
+
 * [[option_irc.look.notify_tags_ison]] *irc.look.notify_tags_ison*
 ** description: `liste des tags (séparés par des virgules) utilisés dans les messages affichés par notify lorsqu'un pseudo a rejoint ou quitté le serveur (résultat de la commande ison), par exemple: "notify_message", "notify_private" ou "notify_highlight"`
 ** type: chaîne

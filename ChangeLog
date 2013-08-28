@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.2-dev, 2013-08-26
+v0.4.2-dev, 2013-08-28
 
 
 This document lists all changes for each version.
@@ -87,6 +87,8 @@ Version 0.4.2 (under dev!)
 * aspell: rename option aspell.look.color to aspell.color.misspelled, add option
   aspell.color.suggestions
 * aspell: add support of enchant library (patch #6858)
+* irc: add option irc.look.notice_welcome_redirect to automatically redirect
+  channel welcome notices to the channel buffer
 * irc: replace default prefix modes "qaohvu" by the standard ones "ov" when
   PREFIX is not sent by server (bug #39802)
 * irc: use 6697 as default port for SSL servers created with URL "ircs://"

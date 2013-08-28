@@ -253,6 +253,11 @@
 ** tipo: intero
 ** valori: auto, never, always (valore predefinito: `auto`)
 
+* [[option_irc.look.notice_welcome_redirect]] *irc.look.notice_welcome_redirect*
+** descrizione: `automatically redirect channel welcome notices to the channel buffer; such notices have the nick as target but a channel name in beginning of notice message, for example notices sent by freenode server which look like: "[#channel] Welcome to this channel..."`
+** tipo: bool
+** valori: on, off (valore predefinito: `on`)
+
 * [[option_irc.look.notify_tags_ison]] *irc.look.notify_tags_ison*
 ** descrizione: `comma separated list of tags used in messages displayed by notify when a nick joins or quits server (result of command ison), for example: "notify_message", "notify_private" or "notify_highlight"`
 ** tipo: stringa

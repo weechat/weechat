@@ -1057,7 +1057,7 @@ IRC_PROTOCOL_CALLBACK(nick)
 
 IRC_PROTOCOL_CALLBACK(notice)
 {
-    char *pos_target, *pos_args;
+    char *pos_target, *pos_args, *pos, end_char, *channel;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
     int notify_private, is_channel, notice_op, notice_voice;
@@ -1105,10 +1105,56 @@ IRC_PROTOCOL_CALLBACK(notice)
     }
     else
     {
-        if (pos_target && irc_channel_is_channel (server, pos_target))
+        is_channel = 0;
+        channel = NULL;
+        if (pos_target)
+        {
+            is_channel = irc_channel_is_channel (server, pos_target);
+            if (is_channel)
+            {
+                channel = strdup (pos_target);
+            }
+            else if (weechat_config_boolean (irc_config_look_notice_welcome_redirect))
+            {
+                end_char = ' ';
+                switch (pos_args[0])
+                {
+                    case '[':
+                        end_char = ']';
+                        break;
+                    case '(':
+                        end_char = ')';
+                        break;
+                    case '{':
+                        end_char = '}';
+                        break;
+                    case '<':
+                        end_char = '>';
+                        break;
+                }
+                if (end_char != ' ')
+                {
+                    pos = strchr (pos_args, end_char);
+                    if (pos)
+                    {
+                        channel = weechat_strndup (pos_args + 1, pos - pos_args - 1);
+                        if (channel && irc_channel_search (server, channel))
+                        {
+                            is_channel = 1;
+                            pos_args = pos + 1;
+                            while (pos_args[0] == ' ')
+                            {
+                                pos_args++;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (is_channel)
         {
             /* notice for channel */
-            ptr_channel = irc_channel_search (server, pos_target);
+            ptr_channel = irc_channel_search (server, channel);
 
             /*
              * unmask a smart filtered join if it is in hashtable
@@ -1284,6 +1330,8 @@ IRC_PROTOCOL_CALLBACK(notice)
                 }
             }
         }
+        if (channel)
+            free (channel);
     }
 
     return WEECHAT_RC_OK;
