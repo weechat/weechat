@@ -1135,7 +1135,7 @@ IRC_PROTOCOL_CALLBACK(notice)
                 if (end_char != ' ')
                 {
                     pos = strchr (pos_args, end_char);
-                    if (pos)
+                    if (pos && (pos > pos_args + 1))
                     {
                         channel = weechat_strndup (pos_args + 1, pos - pos_args - 1);
                         if (channel && irc_channel_search (server, channel))
