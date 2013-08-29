@@ -2,7 +2,7 @@
 |========================================
 | プラグイン | 名前 | 説明 | 変数 | アップデート可 | リスト
 
-| guile | guile_callback | callback of a script |
+| guile | guile_callback | スクリプトのコールバック |
   'script' (pointer, hdata: "guile_script") +
   'function' (string) +
   'data' (string) +
@@ -222,7 +222,7 @@
   'irc_servers' +
   'last_irc_server'
 
-| lua | lua_callback | callback of a script |
+| lua | lua_callback | スクリプトのコールバック |
   'script' (pointer, hdata: "lua_script") +
   'function' (string) +
   'data' (string) +
@@ -256,7 +256,7 @@
   'last_script' +
   'scripts'
 
-| perl | perl_callback | callback of a script |
+| perl | perl_callback | スクリプトのコールバック |
   'script' (pointer, hdata: "perl_script") +
   'function' (string) +
   'data' (string) +
@@ -290,7 +290,7 @@
   'last_script' +
   'scripts'
 
-| python | python_callback | callback of a script |
+| python | python_callback | スクリプトのコールバック |
   'script' (pointer, hdata: "python_script") +
   'function' (string) +
   'data' (string) +
@@ -324,7 +324,7 @@
   'last_script' +
   'scripts'
 
-| ruby | ruby_callback | callback of a script |
+| ruby | ruby_callback | スクリプトのコールバック |
   'script' (pointer, hdata: "ruby_script") +
   'function' (string) +
   'data' (string) +
@@ -386,7 +386,7 @@
   'last_script_repo' +
   'scripts_repo'
 
-| tcl | tcl_callback | callback of a script |
+| tcl | tcl_callback | スクリプトのコールバック |
   'script' (pointer, hdata: "tcl_script") +
   'function' (string) +
   'data' (string) +
@@ -719,7 +719,7 @@
   'last_gui_key_mouse' +
   'last_gui_key_search'
 
-| weechat | layout | layout |
+| weechat | layout | レイアウト |
   'name' (string) +
   'layout_buffers' (pointer, hdata: "layout_buffer") +
   'last_layout_buffer' (pointer, hdata: "layout_buffer") +
@@ -733,7 +733,7 @@
   'gui_layouts' +
   'last_gui_layout'
 
-| weechat | layout_buffer | buffer layout |
+| weechat | layout_buffer | バッファレイアウト |
   'plugin_name' (string) +
   'buffer_name' (string) +
   'number' (integer) +
@@ -742,7 +742,7 @@
  |
   -
 
-| weechat | layout_window | window layout |
+| weechat | layout_window | ウィンドウレイアウト |
   'internal_id' (integer) +
   'parent_node' (pointer, hdata: "layout_window") +
   'split_pct' (integer) +
@@ -839,7 +839,7 @@
   'last_weechat_plugin' +
   'weechat_plugins'
 
-| weechat | proxy | proxy |
+| weechat | proxy | プロキシ |
   'name' (string) +
   'options' (pointer) +
   'prev_proxy' (pointer, hdata: "proxy") +

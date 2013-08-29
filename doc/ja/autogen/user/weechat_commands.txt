@@ -1,10 +1,10 @@
 [[command_weechat_away]]
-[command]*`away`* set or remove away status::
+[command]*`away`* 離席状態の切り替え::
 ........................................
 /away  [-all] [<message>]
 
-   -all: set or remove away status on all connected servers
-message: message for away (if no message is given, away status is removed)
+   -all: 全ての接続済みサーバに対して離席状態を切り替え
+message: 離席メッセージ (メッセージが無い場合は、離席状態を解除)
 ........................................
 
 [[command_weechat_bar]]
@@ -80,7 +80,7 @@ message: message for away (if no message is given, away status is removed)
    merge: 現在のバッファを他のバッファにマージ (2 つのバッファのチャットエリアが一緒になります)
           (デフォルトでは ctrl-x でマージバッファの切り替え)
  unmerge: 同じ番号を持つ他のバッファとのマージを解除
-   close: バッファを閉じる (番号/範囲または名前のオプションを受け付けます)
+   close: バッファを閉じる (番号/範囲または名前は任意)
   notify: 現在のバッファの通知レベルを設定: このレベルでバッファがホットリストに追加されるかどうかを定義します:
                none: 通知しない
           highlight: ハイライトがあった場合のみ通知
@@ -127,19 +127,19 @@ localvar: 現在のバッファのローカル変数を表示
         reset
         -o
 
-  alias: add an alias for a color
-unalias: delete an alias
-  color: color number (greater than or equal to 0, max depends on terminal, commonly 63 or 255)
-   name: alias name for color (for example: "orange")
-  reset: reset all color pairs (required when no more color pairs are available if automatic reset is disabled, see option weechat.look.color_pairs_auto_reset)
-     -o: send terminal/colors info to current buffer as input
+  alias: ある色に別名を追加
+unalias: 別名の削除
+  color: カラー番号 (0 以上、最大値はターミナル依存、多くの場合 63 か 255)
+   name: カラーの別名 (例えば: "orange")
+  reset: 全てのカラーペアをリセット (自動的なリセットが無効化されており、これ以上のカラーペアが利用できない場合に必要、オプション weechat.look.color_pairs_auto_reset を参照)
+     -o: 端末/色情報を現在の入力としてバッファに送る
 
-Without argument, this command displays colors in a new buffer.
+引数無しの場合、コマンドは新しいバッファに色を表示します。
 
-Examples:
-  add alias "orange" for color 214:
+例:
+  色番号 214 に対応する別名 "orange" を追加:
     /color alias 214 orange
-  delete color 214:
+  色番号 214 を削除:
     /color unalias 214
 ........................................
 
@@ -189,7 +189,7 @@ stop: カーソルモードを終了
    plugin: プラグインの名前 ("core" は WeeChat コアを意味する)
     level: プラグインのデバッグレベル (0 はデバッグの無効化)
      dump: WeeChat ログファイルにメモリダンプを保存 (WeeChat がクラッシュした場合と同じダンプが書き込まれます)
-   buffer: ログファイルに 16 進値でバッファ内容をダンプ
+   buffer: ログファイルに 16 進値でバッファの内容をダンプ
     color: 現在の色ペアに関する情報を表示
    cursor: カーソルモードのデバッグを切り替え
      dirs: ディレクトリを表示
@@ -209,42 +209,42 @@ infolists: infolist に関する情報を表示
 /eval  [-n] <expression>
        [-n] -c <expression1> <operator> <expression2>
 
-        -n: display result without sending it to buffer (debug mode)
-        -c: evaluate as condition: use operators and parentheses, return a boolean value ("0" or "1")
-expression: expression to evaluate, variables with format ${variable} are replaced (see below)
-  operator: a logical or comparison operator:
-            - logical operators:
-                &&  boolean "and"
-                ||  boolean "or"
-            - comparison operators:
-                ==  equal
-                !=  not equal
-                <=  less or equal
-                <   less
-                >=  greater or equal
-                >   greater
-                =~  is matching regex
-                !~  is NOT matching regex
+        -n: 結果をバッファに送信せずに表示 (デバッグモード)
+        -c: 条件として評価: 演算子と括弧をを使い、ブール値 ("0" または "1") を返します
+expression: 評価する式、フォーマット、${variable} 型のフォーマットの変数は置換されます (以下を参照)
+  operator: 論理演算子や比較演算子:
+            - 論理演算子:
+                &&  ブール演算の "and"
+                ||  ブール演算の "or"
+            - 比較演算子:
+                ==  等しい
+                !=  等しくない
+                <=  以下
+                <   より少ない
+                >=  以上
+                >   より大きい
+                =~  正規表現にマッチ
+                !~  正規表現にマッチしない
 
-An expression is considered as "true" if it is not NULL, not empty, and different from "0".
-The comparison is made using integers if the two expressions are valid integers.
-To force a string comparison, add double quotes around each expression, for example:
+式が NULL でない場合、空でない場合、"0" でない場合、式は "真" と評価されます。
+両方の式が有効な整数である場合、比較は整数を使って行われます。
+文字列比較を強制するには、それぞれの式をダブルクォートで囲みます、例えば:
   50 > 100      ==> 0
   "50" > "100"  ==> 1
 
-Some variables are replaced in expression, using the format ${variable}, variable can be, by order of priority :
-  1. a color (format: color:xxx)
-  2. an option (format: file.section.option)
-  3. a local variable in buffer
-  4. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
-Format for hdata can be one of following:
-  hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
-  hdata[list].var1.var2...: start with a hdata using a list, for example:
-    ${buffer[gui_buffers].full_name}: full name of first buffer in linked list of buffers
-    ${plugin[weechat_plugins].name}: name of first plugin in linked list of plugins
-For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
+式中の ${variable} 型のフォーマットの変数は置換さます。変数は以下の優先順位に従います。
+  1. 色の名前 (フォーマット: color:xxx)
+  2. オプションの名前 (file.section.option)
+  3. バッファのローカル変数の名前
+  4. hdata の名前/変数 (値は自動的に文字列に変換されます)、デフォルトでは "window" と "buffer" は現在のウィンドウ/バッファを指します。
+hdata のフォーマットは以下の 1 つです:
+  hdata.var1.var2...: hdata (ポインタは既知) で始まり、1 個ずつ変数を続ける (他の hdata を続けることも可能)
+  hdata(list).var1.var2...: リストを使って hdata を始める、例:
+    ${buffer[gui_buffers].full_name}: バッファリストにリンクされた最初のバッファのフルネーム
+    ${plugin[weechat_plugins].name}: プラグインリストにリンクされた最初のプラグインの名前
+hdata と変数の名前については、"プラグイン API リファレンス" の "weechat_hdata_get" 関数を参照してください。
 
-Examples:
+例:
   /eval -n ${weechat.look.scroll_amount}   ==> 3
   /eval -n ${window}                       ==> 0x2549aa0
   /eval -n ${window.buffer}                ==> 0x2549320
@@ -342,58 +342,58 @@ value: 表示する履歴エントリの数
 ........................................
 /input  <action> [<arguments>]
 
-list of actions:
-  return: simulate key "enter"
-  complete_next: complete word with next completion
-  complete_previous: complete word with previous completion
-  search_text: search text in buffer
-  search_switch_case: switch exact case for search
-  search_switch_regex: switch search type: string/regular expression
-  search_switch_where: switch search in messages/prefixes
-  search_previous: search previous line
-  search_next: search next line
-  search_stop: stop search
-  delete_previous_char: delete previous char
-  delete_next_char: delete next char
-  delete_previous_word: delete previous word
-  delete_next_word: delete next word
-  delete_beginning_of_line: delete from beginning of line until cursor
-  delete_end_of_line: delete from cursor until end of line
-  delete_line: delete entire line
-  clipboard_paste: paste from clipboard
-  transpose_chars: transpose two chars
-  undo: undo last command line action
-  redo: redo last command line action
-  move_beginning_of_line: move cursor to beginning of line
-  move_end_of_line: move cursor to end of line
-  move_previous_char: move cursor to previous char
-  move_next_char: move cursor to next char
-  move_previous_word: move cursor to previous word
-  move_next_word: move cursor to next word
-  history_previous: recall previous command in current buffer history
-  history_next: recall next command in current buffer history
-  history_global_previous: recall previous command in global history
-  history_global_next: recall next command in global history
-  jump_smart: jump to next buffer with activity
-  jump_last_buffer: jump to last buffer
-  jump_last_buffer_displayed: jump to last buffer displayed (before last jump to a buffer)
-  jump_previously_visited_buffer: jump to previously visited buffer
-  jump_next_visited_buffer: jump to next visited buffer
-  hotlist_clear: clear hotlist
-  grab_key: grab a key (optional argument: delay for end of grab, default is 500 milliseconds)
-  grab_key_command: grab a key with its associated command (optional argument: delay for end of grab, default is 500 milliseconds)
-  grab_mouse: grab mouse event code
-  grab_mouse_area: grab mouse event code with area
-  set_unread: set unread marker for all buffers
-  set_unread_current_buffer: set unread marker for current buffer
-  switch_active_buffer: switch to next merged buffer
-  switch_active_buffer_previous: switch to previous merged buffer
-  zoom_merged_buffer: zoom on merged buffer
-  insert: insert text in command line
-  paste_start: start paste (bracketed paste mode)
-  paste_stop: stop paste (bracketed paste mode)
+アクションリスト:
+  return: "enter" キーをシミュレート
+  complete_next: 次の補完候補で単語を補完
+  complete_previous: 一つ前の補完候補で単語を補完
+  search_text: バッファ内のテキストを検索
+  search_switch_case: 完全一致検索に変更
+  search_switch_regex: 検索タイプの切り替え: 文字列/正規表現
+  search_switch_where: 検索範囲の切り替え: メッセージ/プレフィックス
+  search_previous: 一つ前の行を検索
+  search_next: 次の行を検索
+  search_stop: 検索を終了
+  delete_previous_char: 一つ前の文字を削除
+  delete_next_char: 次の文字を削除
+  delete_previous_word: 一つ前の単語を削除
+  delete_next_word: 次の単語を削除
+  delete_beginning_of_line: 行の最初からカーソル位置までを削除
+  delete_end_of_line: カーソルから行の最後までを削除
+  delete_line: 行を削除
+  clipboard_paste: クリップボードから貼り付け
+  transpose_chars: 2 つの文字を入れ替え
+  undo: 最新のコマンドラインアクションまで元に戻す
+  redo: 最新のコマンドラインアクションまでやり直す
+  move_beginning_of_line: カーソルを行頭に移動
+  move_end_of_line: カーソルを行末まで移動
+  move_previous_char: カーソルを一つ前の文字に移動
+  move_next_char: カーソルを次の文字に移動
+  move_previous_word: カーソルを一つ前の単語に移動
+  move_next_word: カーソルを次の単語に移動
+  history_previous: 現在のバッファ履歴のひとつ前のコマンドを再呼び出し
+  history_next: 現在のバッファ履歴の次のコマンドを再呼び出し
+  history_global_previous: グローバル履歴の一つ前のコマンドを再呼び出し
+  history_global_next: グローバル履歴の次のコマンドを再呼び出し
+  jump_smart: 次のアクティブバッファに飛ぶ
+  jump_last_buffer: 最後のバッファに移動
+  jump_last_buffer_displayed: 表示されている最後のバッファに移動 (最新のバッファ移動の一つ前に表示されていたバッファ)
+  jump_previously_visited_buffer: 一つ前に訪れたバッファに移動
+  jump_next_visited_buffer: 次に訪れたバッファに移動
+  hotlist_clear: ホットリストを消去
+  grab_key: キーを横取り (任意引数: 最後の横取りからの遅延時間、デフォルトは 500 ミリ秒)
+  grab_key_command: あるコマンドに関連してキーを横取り (任意引数: 最後の横取りからの遅延時間、デフォルトは 500 ミリ秒)
+  grab_mouse: grab マウスイベントコードを横取り
+  grab_mouse_area: 範囲指定のマウスイベントコードを横取り
+  set_unread: 全てのバッファに対して未読マーカーを設定
+  set_unread_current_buffer: 現在のバッファに対して未読マーカーを設定
+  switch_active_buffer: 次のマージされたバッファに移動
+  switch_active_buffer_previous: 一つ前のマージされたバッファに移動
+  zoom_merged_buffer: マージされたバッファにズーム
+  insert: コマンドラインにテキストを挿入
+  paste_start: ペーストの開始 (括弧付きペーストモード)
+  paste_stop: ペーストの終了 (括弧付きペーストモード)
 
-This command is used by key bindings or plugins.
+これらのコマンドはキーバインドかプラグインで利用できます。
 ........................................
 
 [[command_weechat_key]]
@@ -615,41 +615,41 @@ file: 保存する設定ファイル (拡張子 ".conf" は不要)
 ........................................
 
 [[command_weechat_secure]]
-[command]*`secure`* manage secured data (passwords or private data encrypted in file sec.conf)::
+[command]*`secure`* 保護データを管理します (パスワードやプライベートデータは暗号化されて sec.conf ファイルに保存)::
 ........................................
 /secure  passphrase <passphrase>|-delete
          decrypt <passphrase>|-discard
          set <name> <value>
          del <name>
 
-passphrase: change the passphrase (without passphrase, data is stored as plain text in file sec.conf)
-   -delete: delete passphrase
-   decrypt: decrypt data still encrypted (it happens only if passphrase was not given on startup)
-  -discard: discard all data still encrypted
-       set: add or change secured data
-       del: delete secured data
+passphrase: パスフレーズを変更 (パスフレーズがない場合、sec.conf ファイルに平文でデータを保存します)
+   -delete: パスフレーズを削除
+   decrypt: 暗号化されているデータを復号化 (起動時にパスフレーズが設定されていない場合に起きます)
+  -discard: 全ての暗号化データを破棄
+       set: 保護データを追加または変更
+       del: 保護データを削除
 
-Without argument, this command displays secured data in a new buffer.
+引数がない場合、新しいバッファに保護データを表示します。
 
-When a passphrase is used (data encrypted), it is asked by WeeChat on startup.
-It is possible to set environment variable "WEECHAT_PASSPHRASE" to prevent the prompt (this same variable is used by WeeChat on /upgrade).
+パスフレーズを利用する場合 (データが暗号化されている場合)、WeeChat は起動時にパスフレーズを尋ねます。
+環境変数 "WEECHAT_PASSPHRASE" を利用すれば入力を回避できます (WeeChat は /upgrade の時に同じ変数を利用します)。
 
-Secured data with format ${sec.data.xxx} can be used in:
-  - command line argument "--run-command"
-  - irc server options: autojoin, command, password, sasl_{username|password}
-  - options weechat.startup.command_{before|after}_plugins
-  - command /eval.
+${sec.data.xxx} の形でフォーマットされた保護データは以下の様に利用できます:
+  - コマンドライン引数 "--run-command"
+  - irc サーバオプション: autojoin、command、password、sasl_{username|password}
+  - weechat.startup.command_{before|after}_plugins オプション
+  - /eval コマンド。
 
-Examples:
-  set a passphrase:
+例:
+  パスフレーズを設定:
     /secure passphrase this is my passphrase
-  encrypt freenode SASL password:
+  freenode の SASL パスワードを暗号化:
     /secure set freenode mypassword
     /set irc.server.freenode.sasl_password "${sec.data.freenode}"
-  encrypt oftc password for nickserv:
+  oftc の nickserv 用パスワードを暗号化:
     /secure set oftc mypassword
     /set irc.server.oftc.command "/msg nickserv identify ${sec.data.oftc}"
-  alias to ghost the nick "mynick":
+  ニックネーム "mynick" を取り戻すためのエイリアス ghost を設定
     /alias ghost /eval /msg -server freenode nickserv ghost mynick ${sec.data.freenode}
 ........................................
 
@@ -703,29 +703,29 @@ option: オプションの名前 ("*" で始めるか終わるかすれば大量
 ........................................
 /upgrade  [<path_to_binary>|-quit]
 
-path_to_binary: path to WeeChat binary (default is current binary)
-        -dummy: do nothing (option used to prevent accidental completion with "-quit")
-         -quit: close *ALL* connections, save session and quit WeeChat, which makes possible a delayed restoration (see below)
+path_to_binary: WeeChat バイナリへのパス (デフォルトは現在のバイナリ)
+        -dummy: 何もしない (補完された "-quit" オプションを不用意に使わないためのオプション)
+         -quit: *すべての*接続を閉じ、セッションを保存して WeeChat を終了。遅延復帰 (詳しくは後述) が可能になります。
 
-This command upgrades and reloads a running WeeChat session. The new WeeChat binary must have been compiled or installed with a package manager before running this command.
+このコマンドは起動中の WeeChat セッションのアップグレードと再読み込みを行います。このコマンドを実行する前に、新しい WeeChat バイナリをコンパイルするか、パッケージマネージャでインストールしなければいけません。
 
-Note: SSL connections are lost during upgrade, because reload of SSL sessions is currently not possible with GnuTLS. There is automatic reconnection after upgrade.
+注意: SSL 接続はアップグレード中に破棄されます、これは今のところ GnuTLS では SSL セッションのリロードができないからです。アップグレードの後に自動的に再接続されます。
 
-Upgrade process has 4 steps:
-  1. save session into files for core and plugins (buffers, history, ..)
-  2. unload all plugins (configuration files (*.conf) are written on disk)
-  3. save WeeChat configuration (weechat.conf)
-  4. execute new WeeChat binary and reload session.
+アップグレードは 4 つの手順を踏みます:
+  1. コアとプラグイン (バッファ、履歴、...) のセッションをファイルに保存
+  2. 全てのプラグインをアンロード (設定ファイル (*.conf) はディスクに書き込まれます)
+  3. WeeChat 設定を保存 (weechat.conf)
+  4. 新しい WeeChat バイナリを実行してセッションをリロード。<
 
-With option "-quit", the process is slightly different:
-  1. close *ALL* connections (irc, xfer, relay, ...)
-  2. save session into files (*.upgrade)
-  3. unload all plugins
-  4. save WeeChat configuration
-  5. quit WeeChat
-Then later you can restore session with command: weechat --upgrade
-IMPORTANT: you must restore the session with exactly same configuration (files *.conf).
-It is possible to restore WeeChat session on another machine if you copy the content of directory "~/.weechat".
+オプション "-quit" を使うと、上の挙動が少し変わります:
+  1. *すべての*接続を閉じる (irc、xfer、relay、...)
+  2. すべてのセッションをファイルに保存 (*.upgrade)
+  3. すべてのプラグインをアンロード
+  4. WeeChat 設定を保存
+  5. WeeChat を終了
+この後、セッションを回復させるには weechat --upgrade を使ってください。
+重要: 完全に同一の設定で (*.conf ファイルで) セッションを回復させてください。
+"~/.weechat" ディレクトリの内容をコピーすれば異なるマシンで WeeChat のセッションを回復することも可能です。
 ........................................
 
 [[command_weechat_uptime]]
@@ -752,7 +752,7 @@ It is possible to restore WeeChat session on another machine if you copy the con
 /wait  <number>[<unit>] <command>
 
  number: 遅延時間 (整数)
-   unit: オプション、値は:
+   unit: 任意、値は:
            ms: ミリ秒
             s: 秒 (デフォルト)
             m: 分
@@ -788,48 +788,48 @@ command: 実行するコマンド (コマンドが '/' で始まらない場合�
          swap [-window <number>] [up|down|left|right]
          zoom[-window <number>]
 
-         list: list opened windows (without argument, this list is displayed)
-           -1: jump to previous window
-           +1: jump to next window
-           b#: jump to next window displaying buffer number #
-           up: switch to window above current one
-         down: switch to window below current one
-         left: switch to window on the left
-        right: switch to window on the right
-       number: window number (see /window list)
-       splith: split current window horizontally
-       splitv: split current window vertically
-       resize: resize window size, new size is <pct> percentage of parent window
-      balance: balance the sizes of all windows
-        merge: merge window with another (all = keep only one window)
-      page_up: scroll one page up
-    page_down: scroll one page down
-      refresh: refresh screen
-       scroll: scroll a number of lines (+/-N) or with time: s=seconds, m=minutes, h=hours, d=days, M=months, y=years
- scroll_horiz: scroll horizontally a number of columns (+/-N) or percentage of window size (this scrolling is possible only on buffers with free content)
-    scroll_up: scroll a few lines up
-  scroll_down: scroll a few lines down
-   scroll_top: scroll to top of buffer
-scroll_bottom: scroll to bottom of buffer
-scroll_beyond_end: scroll beyond the end of buffer
-scroll_previous_highlight: scroll to previous highlight
-scroll_next_highlight: scroll to next highlight
-scroll_unread: scroll to unread marker
-         swap: swap buffers of two windows (with optional direction for target window)
-         zoom: zoom on window
+         list: 開けられたウィンドウのリストアップ (引数無しの場合、このリストが表示されます)
+           -1: 前のウィンドウに移動
+           +1: 次のウィンドウに移動
+           b#: バッファ番号 # のウィンドウに移動
+           up: 現在のウィンドウの上のウィンドウに移動
+         down: 現在のウィンドウの下のウィンドウに移動
+         left: 左のウィンドウに移動
+        right: 右のウィンドウに移動
+       number: ウィンドウ番号 (/window list を参照)
+       splith: 現在のウィンドウを水平分割
+       splitv: 現在のウィンドウを垂直分割
+       resize: ウィンドウサイズの変更、新しいサイズは親ウィンドウの <pct> パーセントで指定
+      balance: 全てのウィンドウのサイズを均等にする
+        merge: ウィンドウを他のものをマージする (all = 一つのウィンドウにまとめる)
+      page_up: 1 ページ分上方向にスクロール
+    page_down: 1 ページ分下方向にスクロール
+      refresh: スクリーンのリフレッシュ
+       scroll: 指定行数 (+/-N) か指定期間 (s=秒、m=分、h=時間、d=日、M=月、y=年) スクロール
+ scroll_horiz: 指定列数 (+/-N) かウィンドウサイズの割合で水平方向にスクロール (フリーコンテンツを含むバッファ以外は無効)
+    scroll_up: 数行分上方向にスクロール
+  scroll_down: 数行分下方向にスクロール
+   scroll_top: バッファの一番上にスクロール
+scroll_bottom: バッファの一番下にスクロール
+scroll_beyond_end: バッファの末尾を越えてスクロール
+scroll_previous_highlight: 一つ前のハイライトにスクロール
+scroll_next_highlight: 次のハイライトにスクロール
+scroll_unread: 未読マーカにスクロール
+         swap: 2 つのウィンドウのバッファを入れ替え (ターゲットウィンドウの方向を任意指定)
+         zoom: ウィンドウを拡大
 
-For splith and splitv, pct is a percentage which represents size of new window, computed with current window as size reference. For example 25 means create a new window with size = current_size / 4
+splith と splitv に関しては、pct は新しいウィンドウのパーセンテージで、現在のウィンドウサイズに対する割合で計算されます。例えば、25 は size = current_size / 4 の新しいウィンドウを作成します。
 
-Examples:
-  jump to window displaying buffer #1:
+例:
+  バッファ #1 を表示しているウィンドウに移動:
     /window b1
-  scroll 2 lines up:
+  2 行分上方向にスクロール:
     /window scroll -2
-  scroll 2 days up:
+  2 日分上方向にスクロール:
     /window scroll -2d
-  scroll to beginning of current day:
+  今日の最初にスクロール:
     /window scroll -d
-  zoom on window #2:
+  ウィンドウ #2 を拡大:
     /window zoom -window 2
 ........................................
 

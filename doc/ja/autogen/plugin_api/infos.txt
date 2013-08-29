@@ -6,9 +6,9 @@
 
 | fifo | fifo_filename | FIFO パイプの名前 | -
 
-| irc | irc_buffer | ある IRC サーバ/チャンネル/ニックネームのバッファポインタを取得 | server,channel,nick (channel と nick はオプション)
+| irc | irc_buffer | ある IRC サーバ/チャンネル/ニックネームのバッファポインタを取得 | server,channel,nick (channel と nick は任意)
 
-| irc | irc_is_channel | 文字列がサーバの有効な IRC チャンネル名なら 1 | サーバ、チャンネル (サーバはオプション)
+| irc | irc_is_channel | 文字列がサーバの有効な IRC チャンネル名なら 1 | サーバ、チャンネル (サーバは任意)
 
 | irc | irc_is_nick | 文字列が有効な IRC ニックネームなら 1 | ニックネーム
 

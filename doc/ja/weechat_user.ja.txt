@@ -78,31 +78,26 @@ WeeChat は cmake または autotools を使ってコンパイルできます (c
 
 [width="100%",cols="5,^3,^3,13",options="header"]
 |========================================
-| パッケージ ^(1)^                | バージョン  | 必須  | 機能
-| cmake                           |             | *yes* | ビルド (autotools でも可能ですが、cmake を推奨します)
-| libncursesw5-dev ^(2)^          |             | *yes* | ncurses インターフェイス
-| libcurl4-gnutls-dev             |             | *yes* | URL 転送
-| zlib1g-dev                      |             | *yes* | relay プラグインでパケットを圧縮 (weechat プロトコル)、スクリプトプラグイン
-// TRANSLATION MISSING
-| libgcrypt11-dev                 |             | *yes* | secured data, IRC SASL 認証 (DH-BLOWFISH/DH-AES)、スクリプトプラグイン
-| libgnutls-dev                   | ≥ 2.2.0     |       | IRC サーバへの SSL 接続
-| gettext                         |             |       | 国際化 (メッセージの翻訳; ベース言語は英語です)
-| ca-certificates                 |             |       | SSL 接続に必要な証明書、relay プラグインで SSL サポート
-// TRANSLATION MISSING
-| libaspell-dev or libenchant-dev |             |       | aspell プラグイン
-| python-dev                      | ≥ 2.5 ^(3)^ |       | python プラグイン
-| libperl-dev                     |             |       | perl プラグイン
-| ruby1.9.1-dev                   | ≥ 1.8       |       | ruby プラグイン
-| liblua5.1-0-dev                 |             |       | lua プラグイン
-| tcl-dev                         | ≥ 8.5       |       | tcl プラグイン
-| guile-2.0-dev                   | ≥ 2.0       |       | guile (scheme) プラグイン
-// TRANSLATION MISSING
-| asciidoc                        | ≥ 8.5.0     |       | build man page and documentation
-// TRANSLATION MISSING
-| source-highlight                |             |       | syntax highlight for sources in documentation
-// TRANSLATION MISSING
+| パッケージ ^(1)^                    | バージョン  | 必須  | 機能
+| cmake                               |             | *yes* | ビルド (autotools でも可能ですが、cmake を推奨します)
+| libncursesw5-dev ^(2)^              |             | *yes* | ncurses インターフェイス
+| libcurl4-gnutls-dev                 |             | *yes* | URL 転送
+| zlib1g-dev                          |             | *yes* | relay プラグインでパケットを圧縮 (weechat プロトコル)、スクリプトプラグイン
+| libgcrypt11-dev                     |             | *yes* | 保護データ、IRC SASL 認証 (DH-BLOWFISH/DH-AES)、スクリプトプラグイン
+| libgnutls-dev                       | ≥ 2.2.0     |       | IRC サーバへの SSL 接続
+| gettext                             |             |       | 国際化 (メッセージの翻訳; ベース言語は英語です)
+| ca-certificates                     |             |       | SSL 接続に必要な証明書、relay プラグインで SSL サポート
+| libaspell-dev または libenchant-dev |             |       | aspell プラグイン
+| python-dev                          | ≥ 2.5 ^(3)^ |       | python プラグイン
+| libperl-dev                         |             |       | perl プラグイン
+| ruby1.9.1-dev                       | ≥ 1.8       |       | ruby プラグイン
+| liblua5.1-0-dev                     |             |       | lua プラグイン
+| tcl-dev                             | ≥ 8.5       |       | tcl プラグイン
+| guile-2.0-dev                       | ≥ 2.0       |       | guile (scheme) プラグイン
+| asciidoc                            | ≥ 8.5.0     |       | man ページと文書のビルド
+| source-highlight                    |             |       | 文書中のソースに対するシンタックスハイライト
 | xsltproc,
-  docbook-xml, docbook-xsl        |             |       | build man page
+  docbook-xml, docbook-xsl            |             |       | man ページのビルド
 |========================================
 
 [NOTE]
@@ -136,119 +131,115 @@ $ make
 $ make install
 ----------------------------------------
 
-// TRANSLATION MISSING
-Options can be used for cmake, with format: "-DOPTION=VALUE".
+cmake に対するオプションを指定するには、以下のフォーマットを使ってください: "-DOPTION=VALUE".
 
-// TRANSLATION MISSING
-List of commonly used options:
+よく利用されるオプションのリスト:
 
-// TRANSLATION MISSING
 [width="100%",cols="2m,2,5m,12",options="header"]
 |========================================
-| Option | Values | Default value | Description
+| オプション | 値 | デフォルト値 | 説明
 
 | CMAKE_BUILD_TYPE | `Debug`, `Release`, `RelWithDebInfo`, `MinSizeRel` | |
-  The type of build: `Debug` (or `RelWithDebInfo`) is recommended if you are
-  running development version of WeeChat.
+  ビルド形式: WeeChat の開発版を使っている場合は
+  `Debug` (または `RelWithDebInfo`) を推奨します。
 
 | PREFIX | directory | /usr/local |
-  The directory where WeeChat will be installed.
+  WeeChat をインストールするディレクトリ。
 
 | WEECHAT_HOME | directory | ~/.weechat |
-  The default home directory when running WeeChat.
+  WeeChat 実行時のホームディレクトリ。
 
 | CA_FILE | file | /etc/ssl/certs/ca-certificates.crt |
-  File containing the certificate authorities.
-  This is the default value of option
-  <<option_weechat.network.gnutls_ca_file,weechat.network.gnutls_ca_file>>.
+  認証局を含むファイル。これは
+  <<option_weechat.network.gnutls_ca_file,weechat.network.gnutls_ca_file>>
+  オプションのデフォルト値です。
 
 | ENABLE_ALIAS | `ON`, `OFF` | ON |
-  Compile <<alias_plugin,Alias plugin>>.
+  <<alias_plugin,Alias プラグイン>>のコンパイル。
 
 | ENABLE_ASPELL | `ON`, `OFF` | ON |
-  Compile <<aspell_plugin,Aspell plugin>>.
+  <<aspell_plugin,Aspell プラグイン>>のコンパイル。
 
 | ENABLE_CHARSET | `ON`, `OFF` | ON |
-  Compile <<charset_plugin,Charset plugin>>.
+  <<charset_plugin,Charset プラグイン>>のコンパイル。
 
 | ENABLE_MAN | `ON`, `OFF` | OFF |
-  Compile man page.
+  man ページのコンパイル。
 
 | ENABLE_DOC | `ON`, `OFF` | OFF |
-  Compile documentation (it takes a long time, recommended only if you build
-  a binary package embedding documentation or if you can't browse documentation
-  online).
+  文書のコンパイル
+  (コンパイルには時間がかかります。文書を含めたバイナリパッケージをビルドする場合、オンラインで文書を見ることができない場合だけに推奨します)。
 
 | ENABLE_ENCHANT | `ON`, `OFF` | OFF |
-  Compile <<aspell_plugin,Aspell plugin>> with Enchant.
+  Enchant と含めた <<aspell_plugin,Aspell プラグイン>>のコンパイル。
 
 | ENABLE_FIFO | `ON`, `OFF` | ON |
-  Compile <<fifo_plugin,Fifo plugin>>.
+  <<fifo_plugin,Fifo プラグイン>>のコンパイル。
 
 | ENABLE_GNUTLS | `ON`, `OFF` | ON |
-  Enable Gnutls (for SSL).
+  Gnutls の有効化 (SSL 用)。
 
 | ENABLE_GUILE | `ON`, `OFF` | ON |
-  Compile <<scripts_plugins,Guile plugin>> (Scheme).
+  <<scripts_plugins,Guile プラグイン>> (Scheme) のコンパイル。
 
 | ENABLE_IRC | `ON`, `OFF` | ON |
-  Compile <<irc_plugin,IRC plugin>>.
+  <<irc_plugin,IRC プラグイン>>のコンパイル
 
 | ENABLE_LARGEFILE | `ON`, `OFF` | ON |
-  Support of large files.
+  巨大ファイルのサポート。
 
 | ENABLE_LOGGER | `ON`, `OFF` | ON |
-  Compile <<logger_plugin,Logger plugin>>.
+  <<logger_plugin,Logger プラグイン>>のコンパイル。
 
 | ENABLE_LUA | `ON`, `OFF` | ON |
-  Compile <<scripts_plugins,Lua plugin>>.
+  <<scripts_plugins,Lua プラグイン>>のコンパイル。
 
 | ENABLE_NCURSES | `ON`, `OFF` | ON |
-  Compile Ncurses interface.
+  Ncurses インターフェイスのコンパイル。
 
 | ENABLE_NLS | `ON`, `OFF` | ON |
-  Enable NLS (translations).
+  NLS の有効化 (翻訳).
 
 | ENABLE_PERL | `ON`, `OFF` | ON |
-  Compile <<scripts_plugins,Perl plugin>>.
+  <<scripts_plugins,Perl プラグイン>>のコンパイル。
 
 | ENABLE_PYTHON | `ON`, `OFF` | ON |
-  Compile <<scripts_plugins,Python plugin>>.
+  <<scripts_plugins,Python プラグイン>>のコンパイル。
 
 | ENABLE_PYTHON3 | `ON`, `OFF` | OFF |
-  Compile <<scripts_plugins,Python plugin>> using Python 3 (*NOT* recommended
-  because many scripts are not compatible with Python 3).
+  Python 3 を使った <<scripts_plugins,Python プラグイン>>のコンパイル
+  (多くのスクリプトは Python 3 と互換性がないため*非推奨* です)。
 
 | ENABLE_RELAY | `ON`, `OFF` | ON |
-  Compile <<relay_plugin,Relay plugin>>.
+  <<relay_plugin,リレープラグイン>>のコンパイル
 
 | ENABLE_RMODIFIER | `ON`, `OFF` | ON |
-  Compile <<rmodifier_plugin,Rmodifier plugin>>.
+  <<rmodifier_plugin,Rmodifier プラグイン>>のコンパイル
 
 | ENABLE_RUBY | `ON`, `OFF` | ON |
-  Compile <<scripts_plugins,Ruby plugin>>.
+  <<scripts_plugins,Ruby プラグイン>>のコンパイル
 
 | ENABLE_SCRIPT | `ON`, `OFF` | ON |
-  Compile <<scripts_plugins,Script plugin>>.
+  <<scripts_plugins,スクリプトプラグイン>>のコンパイル
 
 | ENABLE_SCRIPTS | `ON`, `OFF` | ON |
-  Compile <<scripts_plugins,script plugins>> (Python, Perl, Ruby, Lua, Tcl,
-  Guile).
+  すべての<<scripts_plugins,スクリプトプラグイン>>
+  (Python、Perl、Ruby、Lua、Tcl、Guile) のコンパイル
 
 | ENABLE_TCL | `ON`, `OFF` | ON |
-  Compile <<scripts_plugins,Tcl plugin>>.
+  <<scripts_plugins,Tcl プラグイン>>のコンパイル
 
 | ENABLE_XFER | `ON`, `OFF` | ON |
-  Compile <<xfer_plugin,Xfer plugin>>.
+  <<xfer_plugin,Xfer プラグイン>>のコンパイル
 |========================================
 
-The other options can be displayed with this command:
+その他のオプションは以下のコマンドで確認してください:
 
 ----------------------------------------
 $ cmake -LA
 ----------------------------------------
 
-Or with Curses interface:
+Curses インターフェイスを使う場合は以下のコマンドを使ってください:
 
 ----------------------------------------
 $ ccmake ..
@@ -280,9 +271,8 @@ $ make
 $ make install
 ----------------------------------------
 
-// TRANSLATION MISSING
-Options can be used for 'configure' script, they can be displayed with this
-command:
+'configure'
+スクリプトに対してオプションを指定することができます、オプションを表示するには以下のコマンドを使ってください:
 
 ----------------------------------------
 $ ./configure --help
@@ -516,8 +506,7 @@ WeeChat を起動したターミナルの例:
 | input_paste  | [Paste 7 lines ? [ctrl-Y] Yes [ctrl-N] No] | 行をペーストする場合にユーザへ行われる質問
 | input_prompt | [@Flashy]                                  | 入力プロンプト (irc プラグインの場合はニックネーム)
 | away         | (away)                                     | 離席状態表示
-// TRANSLATION MISSING
-| input_search | [Search (~ str,msg)]                       | search indicator ("`~`": case insensitive, "`==`": case sensitive, "`str`": search string, "`regex`": search regular expression, "`msg`": search in messages, "`pre`": search in prefixes, "`pre\|msg`": search in prefixes and messages)
+| input_search | [Search (~ str,msg)]                       | 検索インジケータ ("`~`": 大文字小文字を区別しない、"`==`": 大文字小文字を区別する、"`str`": 検索文字列、"`regex`": 検索正規表現、"`msg`": メッセージ部分から検索、"`pre`": プレフィックス部分から検索、"`pre\|msg`": プレフィックス部分とメッセージ部分から検索)
 | input_text   | hi peter!                                  | 入力テキスト
 |========================================
 
@@ -719,10 +708,9 @@ WeeChat を起動したターミナルの例:
 
 バーアイテムのリストは `/bar listitems` コマンドで表示されます。
 
-// TRANSLATION MISSING
-Before or after item name, you can use chars (that are not alphanumeric, "-" or
-"_"). They will be displayed before/after item with the delimiters color
-defined in bar (option 'color_delim').
+アイテム名の前または後に文字を表示させることができます (英数字以外の文字、"-"
+または "_")。この文字はバー ('color_delim' オプション)
+で定義された区切り文字の色をつけてアイテムの前または後に表示されます。
 
 アイテムを含むバーの例 "[time],buffer_number+:+buffer_plugin+.+buffer_name":
 
@@ -732,18 +720,15 @@ defined in bar (option 'color_delim').
 └─────────────────────────────────────────────────────────────────────────────────────────┘
 ........................................
 
-// TRANSLATION MISSING
-A special syntax can be used to force the buffer used when displaying the bar
-item: "@buffer:item" (where "buffer" is the full name of buffer and "item" is
-the name of a bar item).
+特殊構文を使うことで、バーアイテム: "@buffer:item"
+("buffer" はバッファの完全な名前、"item" はバーアイテムの名前)
+を表示する際に強制的に指定されたバッファを利用することが可能です。
 
-// TRANSLATION MISSING
-This is useful in root bars, to display item for a specific buffer which is
-not displayed in the current window (or even not displayed at all).
+これはルートバーに現在のウィンドウで表示されない (またはどこにも表示されない)
+特定のバッファのアイテムを表示させる際に便利です。
 
-// TRANSLATION MISSING
-Example: nicklist of bitlbee in a root bar (if the bar is called
-'bitlist' and if bitlbee server is called 'bitlbee'):
+例: bitlbee のニックネームリストをルートバーに表示させる
+(バーが 'bitlist' で bitlbee サーバが 'bitlbee' の場合):
 
 ----------------------------------------
 /set weechat.bar.bitlist.items "@irc.bitlbee.&bitlbee:buffer_nicklist"
@@ -1030,11 +1015,9 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
 [width="100%",cols="^.^3,.^10,.^5l",options="header"]
 |========================================
 | キー         | 説明 | コマンド
-// TRANSLATION MISSING
-| @k(C-)@k(r)  | Switch search type: string (default), regular expression | /input search_switch_regex
+| @k(C-)@k(r)  | 検索タイプを切り替え: 文字列 (デフォルト)、正規表現 | /input search_switch_regex
 | @k(A-)@k(c)  | 大文字小文字を区別して検索 | /input search_switch_case
-// TRANSLATION MISSING
-| @k(Tab)      | Switch search in: messages (default), prefixes, prefixes + messages | /input search_switch_where
+| @k(Tab)      | 検索範囲: メッセージ (デフォルト)、プレフィックス、プレフィックスとメッセージ | /input search_switch_where
 | @k(↑)        | 前のキーワードで検索 | /input search_previous
 | @k(↓)        | 次のキーワードで検索 | /input search_next
 | @k(Enter) .3+| 検索を終了 .3+| /input search_stop
@@ -1462,65 +1445,57 @@ WeeChat はスクリーンに色が表示された時点で色ペアを動的に
 /set weechat.color.status_time *99999
 ----------------------------------------
 
-// TRANSLATION MISSING
 [[options_and_commands]]
-=== Options and commands ===
+=== オプションとコマンド ===
 
-// TRANSLATION MISSING
 [[sec_options]]
-==== Secured data options (sec.conf) ====
+==== 保護データのオプション (sec.conf) ====
 
-// TRANSLATION MISSING
-Sections:
+セクション:
 
-// TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
 |========================================
-| Section | Control command                    | Description
-| crypt   | /set sec.crypt.*                   | Options for encryption
-| data    | <<command_weechat_secure,/secure>> | Secured data
+| セクション | 操作コマンド                       | 説明
+| crypt      | /set sec.crypt.*                   | 暗号化に関するオプション
+| data       | <<command_weechat_secure,/secure>> | 保護データ
 |========================================
 
-// TRANSLATION MISSING
-Options:
+オプション:
 
 include::autogen/user/sec_options.txt[]
 
 [[weechat_options]]
 ==== WeeChat オプション (weechat.conf) ====
 
-// TRANSLATION MISSING
-Sections:
+セクション:
 
-// TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
 |========================================
-| Section    | Control command                           | Description
+| セクション | 操作コマンド                              | 説明
 | debug      | <<command_weechat_debug,/debug set>>      +
-               /set weechat.debug.*                      | Debug level, for core and plugins (options can be added/removed in section)
-| startup    | /set weechat.startup.*                    | Startup options
-| look       | /set weechat.look.*                       | Look and feel
+               /set weechat.debug.*                      | core とプラグインのデバッグレベル (オプションをセクションに追加/削除出来ます)
+| startup    | /set weechat.startup.*                    | 起動オプション
+| look       | /set weechat.look.*                       | 外観
 | palette    | <<command_weechat_color,/color alias>>    +
-               /set weechat.palette.*                    | Color aliases (options can be added/removed in section)
-| color      | /set weechat.color.*                      | Colors
-| completion | /set weechat.completion.*                 | Completion options
-| history    | /set weechat.history.*                    | History options (commands and buffers)
+               /set weechat.palette.*                    | 色の別名 (オプションをセクションに追加/削除出来ます)
+| color      | /set weechat.color.*                      | 色
+| completion | /set weechat.completion.*                 | 補完オプション
+| history    | /set weechat.history.*                    | 履歴オプション (コマンドとバッファ)
 | proxy      | <<command_weechat_proxy,/proxy>>          +
-               /set weechat.proxy.*                      | Proxy options
-| network    | /set weechat.network.*                    | Network/SSL options
+               /set weechat.proxy.*                      | プロキシオプション
+| network    | /set weechat.network.*                    | ネットワーク/SSL オプション
 | bar        | <<command_weechat_bar,/bar>>              +
-               /set weechat.bar.*                        | Bar options
-| layout     | <<command_weechat_layout,/layout>>        | Layouts
-| notify     | <<command_weechat_buffer,/buffer notify>> | Notify levels for buffers (options can be added/removed in section)
-| filter     | <<command_weechat_filter,/filter>>        | Filters
-| key        | <<command_weechat_key,/key>>              | Keys in default context
-| key_search | <<command_weechat_key,/key>>              | Keys in search context
-| key_cursor | <<command_weechat_key,/key>>              | Keys in cursor context
-| key_mouse  | <<command_weechat_key,/key>>              | Keys in mouse context
+               /set weechat.bar.*                        | バーオプション
+| layout     | <<command_weechat_layout,/layout>>        | レイアウト
+| notify     | <<command_weechat_buffer,/buffer notify>> | バッファに対する通知レベル (オプションをセクションに追加/削除出来ます)
+| filter     | <<command_weechat_filter,/filter>>        | フィルタ
+| key        | <<command_weechat_key,/key>>              | デフォルトコンテキストのキー
+| key_search | <<command_weechat_key,/key>>              | 検索コンテキストのキー
+| key_cursor | <<command_weechat_key,/key>>              | カーソルコンテキストのキー
+| key_mouse  | <<command_weechat_key,/key>>              | マウスコンテキストのキー
 |========================================
 
-// TRANSLATION MISSING
-Options:
+オプション:
 
 include::autogen/user/weechat_options.txt[]
 
@@ -1602,22 +1577,19 @@ Aspell プラグインを使うことで、コマンドラインに入力した�
 [[aspell_options]]
 ==== オプション (aspell.conf) ====
 
-// TRANSLATION MISSING
-Sections:
+セクション:
 
-// TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
 |========================================
-| Section    | Control command                           | Description
-| color      | /set aspell.color.*                       | Colors
-| check      | /set aspell.check.*                       | Options to control spell checking
+| セクション | 操作コマンド                              | 説明
+| color      | /set aspell.color.*                       | 色
+| check      | /set aspell.check.*                       | スペルチェックの操作コマンド
 | dict       | <<command_aspell_aspell,/aspell setdict>> +
-               /set aspell.dict.*                        | Dictionaries used by buffer (options can be added/removed in section)
-| option     | /set aspell.option.*                      | <<aspell_speller_options,Speller オプション>> (options can be added/removed in section)
+               /set aspell.dict.*                        | バッファが利用するディレクトリ (オプションをセクションに追加/削除出来ます)
+| option     | /set aspell.option.*                      | <<aspell_speller_options,Speller オプション>> (オプションをセクションに追加/削除出来ます)
 |========================================
 
-// TRANSLATION MISSING
-Options:
+オプション:
 
 include::autogen/user/aspell_options.txt[]
 
@@ -1709,22 +1681,19 @@ charset: terminal: ISO-8859-15, internal: UTF-8
 [[charset_options]]
 ==== オプション (charset.conf) ====
 
-// TRANSLATION MISSING
-Sections:
+セクション:
 
-// TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
 |========================================
-| Section | Control command                             | Description
-| default | /set charset.default.*                      | Default decoding/encoding charset
-| decode  | <<command_charset_charset,/charset decode>> +
-            /set charset.decode.*                       | Decoding charset by buffer (options can be added/removed in section)
-| encode  | <<command_charset_charset,/charset encode>> +
-            /set charset.encode.*                       | Encoding charset by buffer (options can be added/removed in section)
+| セクション | 操作コマンド                              | 説明
+| default    | /set charset.default.*                      | デフォルトのデコード/エンコード文字セット
+| decode     | <<command_charset_charset,/charset decode>> +
+               /set charset.decode.*                       | バッファのデコード文字セット (オプションをセクションに追加/削除出来ます)
+| encode     | <<command_charset_charset,/charset encode>> +
+               /set charset.encode.*                       | バッファのエンコード文字セット (オプションをセクションに追加/削除出来ます)
 |========================================
 
-// TRANSLATION MISSING
-Options:
+オプション:
 
 include::autogen/user/charset_options.txt[]
 
@@ -1872,26 +1841,23 @@ $ weechat irc://nono@irc.freenode.net/#weechat,#toto
 [[irc_options]]
 ==== オプション (irc.conf) ====
 
-// TRANSLATION MISSING
-Sections:
+セクション:
 
-// TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
 |========================================
-| Section        | Control command                | Description
-| look           | /set irc.look.*                | Look and feel
-| color          | /set irc.color.*               | Colors
-| network        | /set irc.network.*             | Network options
-| msgbuffer      | /set irc.msgbuffer.*           | <<irc_target_buffer,IRC メッセージのターゲットバッファ>> (options can be added/removed in section)
-| ctcp           | /set irc.ctcp.*                | <<irc_ctcp_replies,CTCP 応答>> (options can be added/removed in section)
-| ignore         | <<command_irc_ignore,/ignore>> | Ignore people
-| server_default | /set irc.server_default.*      | Default values for servers (used when options in server are not defined)
+| セクション     | 操作コマンド                   | 説明
+| look           | /set irc.look.*                | 外観
+| color          | /set irc.color.*               | 色
+| network        | /set irc.network.*             | ネットワークオプション
+| msgbuffer      | /set irc.msgbuffer.*           | <<irc_target_buffer,IRC メッセージのターゲットバッファ>> (オプションをセクションに追加/削除出来ます)
+| ctcp           | /set irc.ctcp.*                | <<irc_ctcp_replies,CTCP 応答>> (オプションをセクションに追加/削除出来ます)
+| ignore         | <<command_irc_ignore,/ignore>> | 無視ユーザ
+| server_default | /set irc.server_default.*      | サーバに対するデフォルト値 (サーバオプションが定義されていない場合に利用されます)
 | server         | <<command_irc_server,/server>> +
-                   /set irc.server.*              | Servers
+                   /set irc.server.*              | サーバ
 |========================================
 
-// TRANSLATION MISSING
-Options:
+オプション:
 
 include::autogen/user/irc_options.txt[]
 
@@ -2293,22 +2259,19 @@ Logger プラグインを使うことで、バッファの内容をファイル�
 [[logger_options]]
 ==== オプション (logger.conf) ====
 
-// TRANSLATION MISSING
-Sections:
+セクション:
 
-// TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
 |========================================
-| Section | Control command     | Description
-| look    | /set logger.look.*  | Look and feel
-| color   | /set logger.color.* | Colors
-| file    | /set logger.file.*  | Options for log files
-| level   | /set logger.level.* | Log level by buffer (options can be added/removed in section)
-| mask    | /set logger.mask.*  | Filename mask by buffer (options can be added/removed in section)
+| セクション | 操作コマンド        | 説明
+| look       | /set logger.look.*  | 外観
+| color      | /set logger.color.* | 色
+| file       | /set logger.file.*  | ログファイルのオプション
+| level      | /set logger.level.* | バッファのログレベル (オプションをセクションに追加/削除出来ます)
+| mask       | /set logger.mask.*  | バッファのファイル名マスク (オプションをセクションに追加/削除出来ます)
 |========================================
 
-// TRANSLATION MISSING
-Options:
+オプション:
 
 include::autogen/user/logger_options.txt[]
 
@@ -2450,23 +2413,20 @@ Relay プラグインはネットワークを介して異なるプロトコル�
 [[relay_options]]
 ==== オプション (relay.conf) ====
 
-// TRANSLATION MISSING
-Sections:
+セクション:
 
-// TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
 |========================================
-| Section | Control command                    | Description
-| look    | /set relay.look.*                  | Look and feel
-| color   | /set relay.color.*                 | Colors
-| network | /set relay.network.*               | Network options
-| irc     | /set relay.irc.*                   | Options specific to irc protocol (irc proxy)
-| port    | <<command_relay_relay,/relay add>> +
-            /set relay.port.*                  | Ports used for relay (irc and weechat protocols) (options can be added/removed in section)
+| セクション | 操作コマンド                       | 説明
+| look       | /set relay.look.*                  | 外観
+| color      | /set relay.color.*                 | 色
+| network    | /set relay.network.*               | ネットワークオプション
+| irc        | /set relay.irc.*                   | 特定の irc プロトコルのオプション (irc プロキシ)
+| port       | <<command_relay_relay,/relay add>> +
+               /set relay.port.*                  | リレーに使うポート(irc や weechat プロトコル) (オプションをセクションに追加/削除出来ます)
 |========================================
 
-// TRANSLATION MISSING
-Options:
+オプション:
 
 include::autogen/user/relay_options.txt[]
 
@@ -2586,20 +2546,17 @@ Rmodifier プラグインは正規表現を使って文字列を置換します�
 [[rmodifier_options]]
 ==== オプション (rmodifier.conf) ====
 
-// TRANSLATION MISSING
-Sections:
+セクション:
 
-// TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
 |========================================
-| Section  | Control command                                | Description
-| look     | /set rmodifier.look.*                          | Look and feel
-| modifier | <<command_rmodifier_rmodifier,/rmodifier add>> +
-             /set rmodifier.modifier.*                      | Rmodifiers
+| セクション | 操作コマンド                                   | 説明
+| look       | /set rmodifier.look.*                          | 外観
+| modifier   | <<command_rmodifier_rmodifier,/rmodifier add>> +
+               /set rmodifier.modifier.*                      | rmodifier
 |========================================
 
-// TRANSLATION MISSING
-Options:
+オプション:
 
 include::autogen/user/rmodifier_options.txt[]
 
@@ -2647,7 +2604,7 @@ API リファレンス' の 'weechat_hook_modifier' 関数を参照してくだ�
 `/oper nick ********` のように表示されます。
 
 [[scripts_plugins]]
-=== Scripts プラグイン ===
+=== スクリプトプラグイン ===
 
 WeeChat は 6 種類のスクリプトプラグインを備えています: Python、Perl、Ruby、Lua、Tcl、Guile
 (scheme)。
@@ -2663,20 +2620,17 @@ WeeChat は 6 種類のスクリプトプラグインを備えています: Pyth
 [[script_options]]
 ==== スクリプトオプション (script.conf) ====
 
-// TRANSLATION MISSING
-Sections:
+セクション:
 
-// TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
 |========================================
-| Section | Control command       | Description
-| look    | /set script.look.*    | Look and feel
-| color   | /set script.color.*   | Colors
-| scripts | /set script.scripts.* | Options for download of scripts
+| セクション | 操作コマンド          | 説明
+| look       | /set script.look.*    | 外観
+| color      | /set script.color.*   | 色
+| scripts    | /set script.scripts.* | スクリプトのダウンロードに関するオプション
 |========================================
 
-// TRANSLATION MISSING
-Options:
+オプション:
 
 include::autogen/user/script_options.txt[]
 
@@ -2727,21 +2681,18 @@ Xfer プラグインの機能:
 [[xfer_options]]
 ==== オプション (xfer.conf) ====
 
-// TRANSLATION MISSING
-Sections:
+セクション:
 
-// TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
 |========================================
-| Section | Control command     | Description
-| look    | /set xfer.look.*    | Look and feel
-| color   | /set xfer.color.*   | Colors
-| network | /set xfer.network.* | Network options
-| file    | /set xfer.file.*    | Options for files sent/received
+| セクション | 操作コマンド        | 説明
+| look       | /set xfer.look.*    | 外観
+| color      | /set xfer.color.*   | 色
+| network    | /set xfer.network.* | ネットワークオプション
+| file       | /set xfer.file.*    | ファイルの送信/受信に関するオプション
 |========================================
 
-// TRANSLATION MISSING
-Options:
+オプション:
 
 include::autogen/user/xfer_options.txt[]
 

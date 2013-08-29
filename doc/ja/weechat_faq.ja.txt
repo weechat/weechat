@@ -22,8 +22,7 @@ Sébastien Helleu <flashcode@flashtux.org>
 [[why_choose_weechat]]
 === WeeChat を選ぶ理由は何ですか? X-Chat や Irssi は最高なのに... ===
 
-// TRANSLATION MISSING
-Because WeeChat is very light and brings innovating features.
+WeeChat は非常に軽く、革新的な機能を備えているからです。
 
 こののページに関するより詳しい情報: http://weechat.org/about/features
 
@@ -33,8 +32,7 @@ Because WeeChat is very light and brings innovating features.
 [[gui]]
 === WeeChat には多くの GUI があると聞きました。コンパイル/利用方法を教えてください。 ===
 
-// TRANSLATION MISSING
-Some remote GUIs are available:
+いくつかのリモート GUI を使うことができます:
 
 * http://weechat.org/download/devel[QWeeChat] (Qt)
 * https://github.com/ubergeek42/weechat-android[weechat-android] (Android)
@@ -85,9 +83,8 @@ autotools を使って (cmake を使わずに) コンパイルする場合、
    rxvt-unicode を推奨)
 ** screen を使っている場合は、UTF-8 モードで起動されていることを確認
    (~/.screenrc に "`defutf8 on`" の記述があるか又は `screen -U` のようにして起動)。
-// TRANSLATION MISSING
-* check that option 'weechat.look.eat_newline_glitch' is off (this option may
-  cause display bugs)
+* 'weechat.look.eat_newline_glitch' オプションが off であることを確認してください
+  (このオプションは表示上のバグを引き起こす可能性があります)
 
 [NOTE]
 WeeChat は UTF-8 ロケールを推奨します。ISO 又はその他のロケールを使う場合、
@@ -467,16 +464,15 @@ gnutls ハンドシェイクに関するエラーの場合、Diffie-Hellman キ�
 /connect freenode
 ----------------------------------------
 
-// TRANSLATION MISSING
 [[irc_oauth]]
-=== How to connect to a server that requires "oauth"? ===
+=== どうすれば "oauth" が必要なサーバに接続出来ますか? ===
 
-Some servers like 'twitch' require oauth to connect.
+'twitch' などの一部のサーバは接続するために oauth が必要です。
 
-The oauth is simply a password with the value "oauth:XXXX".
+oauth を使うにはパスワードを "oauth:XXXX" のように指定してください。
 
-You can create such server and connect with following commands (replace name
-and address by appropriate values):
+以下のコマンドでサーバを作成し、接続することができます
+(名前とアドレスは適当な値に変更してください):
 
 ----------------------------------------
 /server add name irc.server.org -password="oauth:XXXX"

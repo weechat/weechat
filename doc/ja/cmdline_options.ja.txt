@@ -18,16 +18,14 @@
 *-p*, *--no-plugin*::
     プラグインの自動ロードを止める
 
-// TRANSLATION MISSING
 *-r*, *--run-command* '<command>'::
     起動後にコマンドを実行 (複数のコマンドを指定するにはセミコロンで各コマンドを区切る)
 
 *-s*, *--no-script*::
     スクリプトの自動ロードを止める
 
-// TRANSLATION MISSING
 *--upgrade*::
-    Upgrade WeeChat using session files generated with command `/upgrade -quit`.
+    `/upgrade -quit` コマンドで生成されるセッションファイルを使って WeeChat をアップグレード
 
 *-v*, *--version*::
     WeeChat のバージョンを表示

@@ -1,20 +1,20 @@
 * [[option_sec.crypt.cipher]] *sec.crypt.cipher*
-** 説明: `cipher used to crypt data (the number after algorithm is the size of the key in bits)`
+** 説明: `データの暗号化を行う暗号鍵 (アルゴリズムの後ろに書かれた数は鍵のビット数)`
 ** タイプ: 整数
 ** 値: aes128, aes192, aes256 (デフォルト値: `aes256`)
 
 * [[option_sec.crypt.hash_algo]] *sec.crypt.hash_algo*
-** 説明: `hash algorithm used to check the decrypted data`
+** 説明: `復号化データをチェックするハッシュアルゴリズム`
 ** タイプ: 整数
 ** 値: sha224, sha256, sha384, sha512 (デフォルト値: `sha256`)
 
 * [[option_sec.crypt.passphrase_file]] *sec.crypt.passphrase_file*
-** 説明: `path to a file containing the passphrase to encrypt/decrypt secured data; this option is used only when reading file sec.conf; only first line of file is used; this file is used only if the environment variable "WEECHAT_PASSPHRASE" is not set (the environment variable has higher priority); security note: it is recommended to keep this file readable only by you and store it outside WeeChat home (for example in your home); example: "~/.weechat-passphrase"`
+** 説明: `保護データを暗号化/複合化するためのパスフレーズを保存したファイルパス; このオプションは sec.conf ファイルを読むときだけに利用されます; ファイルの 1 行目だけが利用されます; このファイルは環境変数 "WEECHAT_PASSPHRASE" が設定されていないときだけに利用されます (環境変数のほうが優先順位が高いです); セキュリティ上の注意: このファイルを自分だけが読み込める状態にし、WeeChat ホームの外 (例えば自分のホームディレクトリ) に保存しておくことを推奨します; 例: "~/.weechat-passphrase"`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
 * [[option_sec.crypt.salt]] *sec.crypt.salt*
-** 説明: `use salt when generating key used in encryption (recommended for maximum security); when enabled, the content of crypted data in file sec.conf will be different on each write of the file; if you put the file sec.conf in a version control system, then you can turn off this option to have always same content in file`
+** 説明: `暗号化に利用する鍵を生成する場合は salt を利用してください (安全措置を厳重にするため); 有効化した場合、sec.conf ファイルに含まれる暗号化されたデータの内容はファイル書き込みの度に違うものになります; sec.conf ファイルをバージョン管理システムで管理している場合、常に同じ内容が書き込まれるようにこのオプションを無効化してください`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 

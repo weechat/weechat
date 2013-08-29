@@ -1,15 +1,14 @@
-// TRANSLATION MISSING (WHOLE FILE)
 WEECHAT(1)
 ==========
 :doctype: manpage
 
-NAME
+名前
 ----
 
-weechat - the extensible chat client
+weechat - 拡張可能なチャットクライアント
 
-SYNOPSIS
---------
+書式
+----
 
 [verse]
 'weechat' [-a|--no-connect] [-d|--dir <path>] [-p|--no-plugin] [-r|--run-command <command>] [-s|--no-script] [--upgrade] [plugin:option...]
@@ -19,98 +18,97 @@ SYNOPSIS
 'weechat' [-l|--license]
 'weechat' [-v|--version]
 
-DESCRIPTION
------------
+説明
+----
 
-WeeChat is a fast, light and extensible chat client.
+WeeChat は高速、軽量、拡張可能なチャットクライアントです。
 
-It is modular (lightweight core with plugins), multi-protocols (IRC and Jabber),
-extensible with C and scripts written in several languages.
+モジュール式 (プラグインを持つ軽量なコア)、マルチプロトコル (IRC と Jabber)、
+C 言語と様々なプログラミング言語で書かれたスクリプトを使って拡張可能です。
 
-OPTIONS
--------
+オプション
+----------
 
 include::cmdline_options.ja.txt[]
 
-PLUGIN OPTIONS
---------------
+プラグインオプション
+--------------------
 
-For complete doc on plugin options, please look at plugins documentation in
-http://weechat.org/doc[WeeChat user's guide].
+プラグインオプションに関する完全な文書は
+http://weechat.org/doc[WeeChat ユーザーガイド] のプラグインリファレンスを参照してください。
 
-With irc plugin, you can connect to temporary server with an URL like:
+irc プラグインでは以下の様な URL で一時的なサーバに接続することができます:
 
     irc[6][s]://[[nickname][:password]@]server[:port][/#channel1[,#channel2...]]
 
-To join WeeChat IRC channel support with nick "mynick":
+"mynick" というニックネームで WeeChat IRC チャンネルサポートに参加するには:
 
     irc://mynick@irc.freenode.net/#weechat
 
-IPv6 address can be enclosed in brackets to add a port after address, for
-example:
+IPv6 アドレスの後にポートを指定するには IPv6
+アドレスを括弧に入れてください、例えば:
 
     irc://mynick@[2001:db8:0:85a3::ac1f:8001]:6668/#test
 
-FILES
------
+ファイル
+--------
 
 $HOME/.weechat/weechat.conf::
-    main WeeChat configuration file
+    WeeChat の主設定ファイル
 
 $HOME/.weechat/plugins.conf::
-    plugins configuration file
+    プラグイン設定ファイル
 
 $HOME/.weechat/alias.conf::
-    configuration file for 'alias' plugin
+    'alias' プラグイン用の設定ファイル
 
 $HOME/.weechat/aspell.conf::
-    configuration file for 'aspell' plugin
+    'aspell' プラグイン用の設定ファイル
 
 $HOME/.weechat/charset.conf::
-    configuration file for 'charset' plugin
+    'charset' プラグイン用の設定ファイル
 
 $HOME/.weechat/irc.conf::
-    configuration file for 'irc' plugin
+    'irc' プラグイン用の設定ファイル
 
 $HOME/.weechat/logger.conf::
-    configuration file for 'logger' plugin
+    'logger' プラグイン用の設定ファイル
 
 $HOME/.weechat/relay.conf::
-    configuration file for 'relay' plugin
+    'relay' プラグイン用の設定ファイル
 
 $HOME/.weechat/rmodifier.conf::
-    configuration file for 'rmodifier' plugin
+    'rmodifier' プラグイン用の設定ファイル
 
 $HOME/.weechat/script.conf::
-    configuration file for 'script' plugin
+    'script' プラグイン用の設定ファイル
 
 $HOME/.weechat/xfer.conf::
-    configuration file for 'xfer' plugin
+    'xfer' プラグイン用の設定ファイル
 
 $HOME/.weechat/weechat.log::
-    WeeChat log file
+    WeeChat ログファイル
 
-AUTHORS
--------
+著者
+----
 
-WeeChat is written by Sébastien Helleu and contributors (complete list is in
-the AUTHORS file).
+WeeChat は Sébastien Helleu さんと貢献者によって作成されています
+(完全なリストは AUTHORS ファイルを参照してください)。
 
-Copyright (C) 2003-2013 Sébastien Helleu <flashcode@flashtux.org>
+著作権 (C) 2003-2013 Sébastien Helleu <flashcode@flashtux.org>
 
-WeeChat is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 3 of the License, or
-(at your option) any later version.
+WeeChat はフリーソフトウェアです。あなたはこれを、フリーソフトウェア財団によって発行された
+GNU 一般公衆利用許諾契約書 (バージョン2か、希望によってはそれ以降のバージョンのうちどれか)
+の定める条件の下で再頒布または改変することができます。
 
-Please read the COPYING file for more information.
+より詳しい情報は COPYING ファイルを読んでください。
 
 Web: <http://weechat.org/>
 
-REPORTING BUGS
---------------
+バグ報告
+--------
 
-Please report bugs or feature requests at Savannah website:
+バグの報告や機能追加のリクエストは Savannah ウェブサイトで行なってください:
 
-* bugs: <http://savannah.nongnu.org/bugs/?group=weechat>
-* feature requests: <http://savannah.nongnu.org/task/?group=weechat>
+* バグの報告: <http://savannah.nongnu.org/bugs/?group=weechat>
+* 機能追加のリクエスト: <http://savannah.nongnu.org/task/?group=weechat>

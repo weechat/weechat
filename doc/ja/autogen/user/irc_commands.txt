@@ -11,17 +11,17 @@ target: server
 ........................................
 /allchan  [-current] [-exclude=<channel>[,<channel>...]] <command> [<arguments>]
 
- -current: execute command for channels of current server only
- -exclude: exclude some channels ('*' is allowed at beginning or end of channel name, to exclude many channels)
-  command: command to execute
-arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
+ -current: 現在のサーバ上のチャンネルに対してコマンドを実行
+ -exclude: いくつかのチャンネルを除外 (複数のチャンネルを除外するには '*' をチャンネル名の最初と最後につける)
+  command: 実行するコマンド
+arguments: コマンドの引数 (特殊変数 $nick、$channel、$server はそれぞれの値に置き換えられます)
 
-Examples:
-  execute '/me is testing' on all channels:
+例:
+  全てのチャンネルに対して '/me is testing' を実行:
     /allchan me is testing
-  say 'hello' everywhere but not on #weechat:
+  #weechat 以外の全てのチャンネルで 'hello' と発言:
     /allchan -exclude=#weechat msg * hello
-  say 'hello' everywhere but not on #weechat and channels beginning with #linux:
+  #weechat と #linux で始まるチャンネルを除いが全てのチャンネルで 'hello' と発言:
     /allchan -exclude=#weechat,#linux* msg * hello
 ........................................
 
@@ -30,16 +30,16 @@ Examples:
 ........................................
 /allserv  [-exclude=<server>[,<server>...]] <command> [<arguments>]
 
- -exclude: exclude some servers ('*' is allowed at beginning or end of server name, to exclude many servers)
-  command: command to execute
-arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
+ -exclude: いくつかのサーバを除外 (複数のサーバを除外するには '*' をサーバ名の最初と最後につける)
+  command: 実行するコマンド
+arguments: コマンドの引数 (特殊変数 $nick、$channel、$server はそれぞれの値に置き換えられます)
 
-Examples:
-  change nick on all servers:
+例:
+  全てのサーバでニックネーム変更:
     /allserv nick newnick
-  set away on all servers:
+  全てのサーバで離席状態を変更:
     /allserv away I'm away
-  do a whois on my nick on all servers:
+  すべてのサーバで自分のニックネームに対して whois を実行:
     /allserv whois $nick
 ........................................
 
@@ -122,8 +122,8 @@ file: ファイルネーム (ローカルホスト上の)
 ........................................
 /dehalfop  <nick> [<nick>...]
 
-nick: nick or mask (can start or end with "*" as wildcard)
-   *: remove channel half-operator status from everybody on channel except yourself
+nick: ニックネームまたはマスク (ワイルドカード "*" を最初と最後につけることが可能)
+   *: 自分以外のチャンネル参加者からチャンネルの half-operator 権を剥奪
 ........................................
 
 [[command_irc_deop]]
@@ -132,8 +132,8 @@ nick: nick or mask (can start or end with "*" as wildcard)
 /deop  <nick> [<nick>...]
        * -yes
 
-nick: nick or mask (can start or end with "*" as wildcard)
-   *: remove channel operator status from everybody on channel except yourself
+nick: ニックネームまたはマスク (ワイルドカード "*" を最初と最後につけることが可能)
+   *: 自分以外のチャンネル参加者からチャンネルオペレータ権を剥奪
 ........................................
 
 [[command_irc_devoice]]
@@ -142,8 +142,8 @@ nick: nick or mask (can start or end with "*" as wildcard)
 /devoice  <nick> [<nick>...]
           * -yes
 
-nick: nick or mask (can start or end with "*" as wildcard)
-   *: remove voice from everybody on channel
+nick: ニックネームまたはマスク (ワイルドカード "*" を最初と最後につけることが可能)
+   *: チャンネル参加者全員から voice 状態を剥奪
 ........................................
 
 [[command_irc_die]]
@@ -171,8 +171,8 @@ target: サーバ名
 /halfop  <nick> [<nick>...]
          * -yes
 
-nick: nick or mask (can start or end with "*" as wildcard)
-   *: give channel half-operator status to everybody on channel
+nick: ニックネームまたはマスク (ワイルドカード "*" を最初と最後につけることが可能)
+   *: チャンネル参加者全員に half-operator 権を付与
 ........................................
 
 [[command_irc_ignore]]
@@ -439,8 +439,8 @@ server: 内部サーバ名 (デフォルトでは現在のサーバ)
 /op  <nick> [<nick>...]
      * -yes
 
-nick: nick or mask (can start or end with "*" as wildcard)
-   *: give channel operator status to everybody on channel
+nick: ニックネームまたはマスク (ワイルドカード "*" を最初と最後につけることが可能)
+   *: チャンネル参加者全員にチャンネルオペレータ権を付与
 ........................................
 
 [[command_irc_oper]]
@@ -595,7 +595,7 @@ reason: 理由
 listfull: 詳細情報を含めてサーバをリストアップ
      add: 新しいサーバを作成
   server: サーバ名、内部的な利用と表示に利用
-hostname: サーバのホスト名か IP アドレス、ポート番号はオプション (デフォルト: 6667)、複数のアドレスはコンマで区切る
+hostname: サーバのホスト名か IP アドレス、ポート番号は任意 (デフォルト: 6667)、複数のアドレスはコンマで区切る
     temp: 一時的なサーバを作成 (保存されない)
   option: サーバのオプションを設定 (ブールオプションでは値が無視される)
 nooption: ブールオプションを 'off' に設定 (例えば: -nossl)
@@ -739,8 +739,8 @@ server: サーバ名
 ........................................
 /voice  <nick> [<nick>...]
 
-nick: nick or mask (can start or end with "*" as wildcard)
-   *: give voice to everybody on channel
+nick: ニックネームまたはマスク (ワイルドカード "*" を最初と最後につけることが可能)
+   *: チャンネル参加者全員に voice 権を付与
 ........................................
 
 [[command_irc_wallchops]]

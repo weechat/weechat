@@ -6,31 +6,31 @@
          flush
          disable
 
-   list: show logging status for opened buffers
-    set: set logging level on current buffer
-  level: level for messages to be logged (0 = logging disabled, 1 = a few messages (most important) .. 9 = all messages)
-  flush: write all log files now
-disable: disable logging on current buffer (set level to 0)
+   list: オープンされたバッファのログ保存設定を表示
+    set: 現在のバッファのログ保存レベルを設定
+  level: ログ保存されるメッセージのレベル (0 = ログ保存しない、1 = いくつかのメッセージ (最も重要) .. 9 = 全てのメッセージ)
+  flush: 全てのログファイルに今すぐ書き込む
+disable: 現在のバッファのログ保存を無効化 (レベルを 0 に設定)
 
-Options "logger.level.*" and "logger.mask.*" can be used to set level or mask for a buffer, or buffers beginning with name.
+オプション "logger.level.*" と "logger.mask.*" は任意のバッファに対するログレベルとログ保存先の設定を意味します。
 
-Log levels used by IRC plugin:
-  1: user message, notice, private
-  2: nick change
-  3: server message
-  4: join/part/quit
-  9: all other messages
+IRC プラグインで使われるログレベル:
+  1: ユーザメッセージ、通知、プライベート
+  2: ニックネームの変更
+  3: サーバメッセージ
+  4: 参加/退出/終了
+  9: その他の全てのメッセージ
 
-Examples:
-  set level to 5 for current buffer:
+例:
+  現在のバッファのレベルを 5 に設定:
     /logger set 5
-  disable logging for current buffer:
+  現在のバッファのログ保存を無効化:
     /logger disable
-  set level to 3 for all IRC buffers:
+  全ての IRC バッファのレベルを 3 に設定:
     /set logger.level.irc 3
-  disable logging for main WeeChat buffer:
+  メインの WeeChat バッファのログ保存を無効化:
     /set logger.level.core.weechat 0
-  use a directory per IRC server and a file per channel inside:
+  IRC サーバごとのディレクトリ、チャンネルごとのファイルを使う:
     /set logger.mask.irc "$server/$channel.weechatlog"
 ........................................
 

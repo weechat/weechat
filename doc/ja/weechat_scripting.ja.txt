@@ -527,10 +527,9 @@ Print 関数は Perl/Ruby/Lua/Tcl では `print` で、Python では `prnt` で�
 
 例:
 
-// TRANSLATION MISSING
 [source,python]
 ----------------------------------------
-# execute command "/help" on current buffer (result is on core buffer)
+# 現在のバッファでコマンド "/help" を実行 (結果は core バッファに出力されます)
 weechat.command("", "/help")
 
 # テキスト "hello" を #weechat IRC チャンネルに送信 (このチャンネルにいるユーザにはメッセージが見えます。)
