@@ -113,9 +113,9 @@ init [<option>=<value>,[<option>=<value>,...]]
 Arguments:
 
 * 'option': one of following options:
-** 'password' (required): password used to authenticate on 'relay' (option
+** 'password': password used to authenticate on 'relay' (option
    'relay.network.password' in WeeChat)
-** 'compression' (optional): compression type:
+** 'compression': compression type:
 *** 'zlib': enable zlib compression for messages sent by 'relay'
 *** 'off': disable compression
 
