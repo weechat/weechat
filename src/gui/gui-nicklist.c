@@ -268,8 +268,8 @@ gui_nicklist_add_group (struct t_gui_buffer *buffer,
     if (!new_group)
         return NULL;
 
-    new_group->name = strdup (name);
-    new_group->color = (color) ? strdup (color) : NULL;
+    new_group->name = (char *)string_shared_get (name);
+    new_group->color = (color) ? (char *)string_shared_get (color) : NULL;
     new_group->visible = visible;
     new_group->parent = (parent_group) ? parent_group : buffer->nicklist_root;
     new_group->level = (new_group->parent) ? new_group->parent->level + 1 : 0;
@@ -442,10 +442,10 @@ gui_nicklist_add_nick (struct t_gui_buffer *buffer,
         return NULL;
 
     new_nick->group = (group) ? group : buffer->nicklist_root;
-    new_nick->name = strdup (name);
-    new_nick->color = (color) ? strdup (color) : NULL;
-    new_nick->prefix = (prefix) ? strdup (prefix) : NULL;
-    new_nick->prefix_color = (prefix_color) ? strdup (prefix_color) : NULL;
+    new_nick->name = (char *)string_shared_get (name);
+    new_nick->color = (color) ? (char *)string_shared_get (color) : NULL;
+    new_nick->prefix = (prefix) ? (char *)string_shared_get (prefix) : NULL;
+    new_nick->prefix_color = (prefix_color) ? (char *)string_shared_get (prefix_color) : NULL;
     new_nick->visible = visible;
 
     gui_nicklist_insert_nick_sorted (new_nick->group, new_nick);
@@ -495,13 +495,13 @@ gui_nicklist_remove_nick (struct t_gui_buffer *buffer,
 
     /* free data */
     if (nick->name)
-        free (nick->name);
+        string_shared_free (nick->name);
     if (nick->color)
-        free (nick->color);
+        string_shared_free (nick->color);
     if (nick->prefix)
-        free (nick->prefix);
+        string_shared_free (nick->prefix);
     if (nick->prefix_color)
-        free (nick->prefix_color);
+        string_shared_free (nick->prefix_color);
 
     buffer->nicklist_count--;
     buffer->nicklist_nicks_count--;
@@ -575,9 +575,9 @@ gui_nicklist_remove_group (struct t_gui_buffer *buffer,
 
     /* free data */
     if (group->name)
-        free (group->name);
+        string_shared_free (group->name);
     if (group->color)
-        free (group->color);
+        string_shared_free (group->color);
 
     if (group->visible)
     {
@@ -884,8 +884,8 @@ gui_nicklist_group_set (struct t_gui_buffer *buffer,
     if (string_strcasecmp (property, "color") == 0)
     {
         if (group->color)
-            free (group->color);
-        group->color = (value[0]) ? strdup (value) : NULL;
+            string_shared_free (group->color);
+        group->color = (value[0]) ? (char *)string_shared_get (value) : NULL;
         group_changed = 1;
     }
     else if (string_strcasecmp (property, "visible") == 0)
@@ -995,22 +995,22 @@ gui_nicklist_nick_set (struct t_gui_buffer *buffer,
     if (string_strcasecmp (property, "color") == 0)
     {
         if (nick->color)
-            free (nick->color);
-        nick->color = (value[0]) ? strdup (value) : NULL;
+            string_shared_free (nick->color);
+        nick->color = (value[0]) ? (char *)string_shared_get (value) : NULL;
         nick_changed = 1;
     }
     else if (string_strcasecmp (property, "prefix") == 0)
     {
         if (nick->prefix)
-            free (nick->prefix);
-        nick->prefix = (value[0]) ? strdup (value) : NULL;
+            string_shared_free (nick->prefix);
+        nick->prefix = (value[0]) ? (char *)string_shared_get (value) : NULL;
         nick_changed = 1;
     }
     else if (string_strcasecmp (property, "prefix_color") == 0)
     {
         if (nick->prefix_color)
-            free (nick->prefix_color);
-        nick->prefix_color = (value[0]) ? strdup (value) : NULL;
+            string_shared_free (nick->prefix_color);
+        nick->prefix_color = (value[0]) ? (char *)string_shared_get (value) : NULL;
         nick_changed = 1;
     }
     else if (string_strcasecmp (property, "visible") == 0)

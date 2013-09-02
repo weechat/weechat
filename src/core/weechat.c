@@ -488,6 +488,7 @@ main (int argc, char *argv[])
     unhook_all ();                      /* remove all hooks                 */
     hdata_end ();                       /* end hdata                        */
     eval_end ();                        /* end eval                         */
+    string_end ();                      /* end string                       */
     weechat_shutdown (EXIT_SUCCESS, 0); /* quit WeeChat (oh no, why?)       */
 
     return EXIT_SUCCESS;                /* make C compiler happy            */

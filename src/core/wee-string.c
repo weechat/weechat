@@ -31,6 +31,7 @@
 #include <wctype.h>
 #include <regex.h>
 #include <wchar.h>
+#include <stdint.h>
 
 #ifdef HAVE_ICONV
 #include <iconv.h>
@@ -47,9 +48,15 @@
 #include "weechat.h"
 #include "wee-string.h"
 #include "wee-config.h"
+#include "wee-hashtable.h"
 #include "wee-utf8.h"
 #include "../gui/gui-color.h"
 #include "../plugins/plugin.h"
+
+
+typedef uint32_t string_shared_count_t;
+
+struct t_hashtable *string_hashtable_shared = NULL;
 
 
 /*
@@ -1052,6 +1059,9 @@ string_has_highlight_regex (const char *string, const char *regex)
 /*
  * Splits a string according to separators.
  *
+ * This function must not be called directly (call string_split or
+ * string_split_shared instead).
+ *
  * Examples:
  *   string_split ("abc de  fghi", " ", 0, 0, NULL)
  *     ==> array[0] = "abc"
@@ -1066,12 +1076,13 @@ string_has_highlight_regex (const char *string, const char *regex)
  */
 
 char **
-string_split (const char *string, const char *separators, int keep_eol,
-              int num_items_max, int *num_items)
+string_split_internal (const char *string, const char *separators, int keep_eol,
+                       int num_items_max, int *num_items, int shared)
 {
     int i, j, n_items;
     char *string2, **array;
     char *ptr, *ptr1, *ptr2;
+    const char *str_shared;
 
     if (num_items != NULL)
         *num_items = 0;
@@ -1141,13 +1152,18 @@ string_split (const char *string, const char *separators, int keep_eol,
             {
                 if (keep_eol)
                 {
-                    array[i] = strdup (ptr1);
+                    array[i] = (shared) ? (char *)string_shared_get (ptr1) : strdup (ptr1);
                     if (!array[i])
                     {
                         for (j = 0; j < n_items; j++)
                         {
                             if (array[j])
-                                free (array[j]);
+                            {
+                                if (shared)
+                                    string_shared_free (array[j]);
+                                else
+                                    free (array[j]);
+                            }
                         }
                         free (array);
                         free (string2);
@@ -1162,7 +1178,12 @@ string_split (const char *string, const char *separators, int keep_eol,
                         for (j = 0; j < n_items; j++)
                         {
                             if (array[j])
-                                free (array[j]);
+                            {
+                                if (shared)
+                                    string_shared_free (array[j]);
+                                else
+                                    free (array[j]);
+                            }
                         }
                         free (array);
                         free (string2);
@@ -1170,6 +1191,23 @@ string_split (const char *string, const char *separators, int keep_eol,
                     }
                     strncpy (array[i], ptr1, ptr2 - ptr1);
                     array[i][ptr2 - ptr1] = '\0';
+                    if (shared)
+                    {
+                        str_shared = string_shared_get (array[i]);
+                        if (!str_shared)
+                        {
+                            for (j = 0; j < n_items; j++)
+                            {
+                                if (array[j])
+                                    string_shared_free (array[j]);
+                            }
+                            free (array);
+                            free (string2);
+                            return NULL;
+                        }
+                        free (array[i]);
+                        array[i] = (char *)str_shared;
+                    }
                 }
                 ptr1 = ++ptr2;
             }
@@ -1187,6 +1225,35 @@ string_split (const char *string, const char *separators, int keep_eol,
     free (string2);
 
     return array;
+}
+
+/*
+ * Splits a string according to separators.
+ *
+ * For full description, see function string_split_internal.
+ */
+
+char **
+string_split (const char *string, const char *separators, int keep_eol,
+              int num_items_max, int *num_items)
+{
+    return string_split_internal (string, separators, keep_eol,
+                                  num_items_max, num_items, 0);
+}
+
+/*
+ * Splits a string according to separators, and use shared strings for the
+ * strings in the array returned.
+ *
+ * For full description, see function string_split_internal.
+ */
+
+char **
+string_split_shared (const char *string, const char *separators, int keep_eol,
+                     int num_items_max, int *num_items)
+{
+    return string_split_internal (string, separators, keep_eol,
+                                  num_items_max, num_items, 1);
 }
 
 /*
@@ -1394,6 +1461,23 @@ string_free_split (char **split_string)
     {
         for (i = 0; split_string[i]; i++)
             free (split_string[i]);
+        free (split_string);
+    }
+}
+
+/*
+ * Frees a split string (using shared strings).
+ */
+
+void
+string_free_split_shared (char **split_string)
+{
+    int i;
+
+    if (split_string)
+    {
+        for (i = 0; split_string[i]; i++)
+            string_shared_free (split_string[i]);
         free (split_string);
     }
 }
@@ -2192,4 +2276,164 @@ string_replace_with_callback (const char *string,
     }
 
     return result;
+}
+
+/*
+ * Hashes a shared string.
+ * The string starts after the reference count, which is skipped.
+ *
+ * Returns the hash of the shared string (variant of djb2).
+ */
+
+unsigned long
+string_shared_hash_key (struct t_hashtable *hashtable,
+                        const void *key)
+{
+    /* make C compiler happy */
+    (void) hashtable;
+
+    return hashtable_hash_key_djb2 (((const char *)key) + sizeof (string_shared_count_t));
+}
+
+/*
+ * Compares two shared strings.
+ * Each string starts after the reference count, which is skipped.
+ *
+ * Returns:
+ *   < 0: key1 < key2
+ *     0: key1 == key2
+ *   > 0: key1 > key2
+ */
+
+int
+string_shared_keycmp (struct t_hashtable *hashtable,
+                      const void *key1, const void *key2)
+{
+    /* make C compiler happy */
+    (void) hashtable;
+
+    return strcmp (((const char *)key1) + sizeof (string_shared_count_t),
+                   ((const char *)key2) + sizeof (string_shared_count_t));
+}
+
+/*
+ * Frees a shared string.
+ */
+
+void
+string_shared_free_key (struct t_hashtable *hashtable,
+                        void *key, const void *value)
+{
+    /* make C compiler happy */
+    (void) hashtable;
+    (void) value;
+
+    free (key);
+}
+
+/*
+ * Gets a pointer to a shared string.
+ *
+ * A shared string is an entry in the hashtable "string_hashtable_shared", with:
+ * - key: reference count (unsigned integer on 32 bits) + string
+ * - value: NULL pointer (not used)
+ *
+ * The initial reference count is set to 1 and is incremented each time this
+ * function is called for a same string (string content, not the pointer).
+ *
+ * Returns the pointer to the shared string (start of string in key, after the
+ * reference count), NULL if error.
+ * The string returned has exactly same content as string received in argument,
+ * but the pointer to the string is different.
+ *
+ * IMPORTANT: the returned string must NEVER be changed in any way, because it
+ * is used itself as the key of the hashtable.
+ */
+
+const char *
+string_shared_get (const char *string)
+{
+    struct t_hashtable_item *ptr_item;
+    char *key;
+    int length;
+
+    if (!string_hashtable_shared)
+    {
+        /*
+         * use large htable inside hashtable to prevent too many collisions,
+         * which would slow down search of a string in the hashtable
+         */
+        string_hashtable_shared = hashtable_new (1024,
+                                                 WEECHAT_HASHTABLE_POINTER,
+                                                 WEECHAT_HASHTABLE_POINTER,
+                                                 &string_shared_hash_key,
+                                                 &string_shared_keycmp);
+        if (!string_hashtable_shared)
+            return NULL;
+
+        string_hashtable_shared->callback_free_key = &string_shared_free_key;
+    }
+
+    length = sizeof (string_shared_count_t) + strlen (string) + 1;
+    key = malloc (length);
+    if (!key)
+        return NULL;
+    *((string_shared_count_t *)key) = 1;
+    strcpy (key + sizeof (string_shared_count_t), string);
+
+    ptr_item = hashtable_get_item (string_hashtable_shared, key, NULL);
+    if (ptr_item)
+    {
+        /*
+         * the string already exists in the hashtable, then just increase the
+         * reference count on the string
+         */
+        (*((string_shared_count_t *)(ptr_item->key)))++;
+        free (key);
+    }
+    else
+    {
+        /* add the shared string in the hashtable */
+        ptr_item = hashtable_set (string_hashtable_shared, key, NULL);
+        if (!ptr_item)
+            free (key);
+    }
+
+    return (ptr_item) ?
+        ((const char *)ptr_item->key) + sizeof (string_shared_count_t) : NULL;
+}
+
+/*
+ * Frees a shared string.
+ *
+ * The reference count of the string is decremented. If it becomes 0, then the
+ * shared string is removed from the hashtable (and then the string is really
+ * destroyed).
+ */
+
+void
+string_shared_free (const char *string)
+{
+    string_shared_count_t *ptr_count;
+
+    ptr_count = (string_shared_count_t *)(string - sizeof (string_shared_count_t));
+
+    (*ptr_count)--;
+
+    if (*ptr_count == 0)
+        hashtable_remove (string_hashtable_shared, ptr_count);
+}
+
+/*
+ * Frees all allocated data.
+ */
+
+void
+string_end ()
+{
+    if (string_hashtable_shared)
+    {
+        hashtable_free (string_hashtable_shared);
+        string_hashtable_shared = NULL;
+    }
 }

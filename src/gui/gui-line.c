@@ -87,6 +87,40 @@ gui_lines_free (struct t_gui_lines *lines)
 }
 
 /*
+ * Allocates array with tags in a line_data.
+ */
+
+void
+gui_line_tags_alloc (struct t_gui_line_data *line_data, const char *tags)
+{
+    if (tags)
+    {
+        line_data->tags_array = string_split_shared (tags, ",", 0, 0,
+                                                     &line_data->tags_count);
+    }
+    else
+    {
+        line_data->tags_count = 0;
+        line_data->tags_array = NULL;
+    }
+}
+
+/*
+ * Frees array with tags in a line_data.
+ */
+
+void
+gui_line_tags_free (struct t_gui_line_data *line_data)
+{
+    if (line_data->tags_array)
+    {
+        string_free_split_shared (line_data->tags_array);
+        line_data->tags_count = 0;
+        line_data->tags_array = NULL;
+    }
+}
+
+/*
  * Checks if prefix on line is a nick and is the same as nick on previous line.
  *
  * Returns:
@@ -871,10 +905,9 @@ gui_line_remove_from_list (struct t_gui_buffer *buffer,
     {
         if (line->data->str_time)
             free (line->data->str_time);
-        if (line->data->tags_array)
-            string_free_split (line->data->tags_array);
+        gui_line_tags_free (line->data);
         if (line->data->prefix)
-            free (line->data->prefix);
+            string_shared_free (line->data->prefix);
         if (line->data->message)
             free (line->data->message);
         free (line->data);
@@ -1090,19 +1123,10 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
     new_line->data->date = date;
     new_line->data->date_printed = date_printed;
     new_line->data->str_time = gui_chat_get_time_string (date);
-    if (tags)
-    {
-        new_line->data->tags_array = string_split (tags, ",", 0, 0,
-                                                   &new_line->data->tags_count);
-    }
-    else
-    {
-        new_line->data->tags_count = 0;
-        new_line->data->tags_array = NULL;
-    }
+    gui_line_tags_alloc (new_line->data, tags);
     new_line->data->refresh_needed = 0;
     new_line->data->prefix = (prefix) ?
-        strdup (prefix) : ((date != 0) ? strdup ("") : NULL);
+        (char *)string_shared_get (prefix) : ((date != 0) ? (char *)string_shared_get ("") : NULL);
     new_line->data->prefix_length = (prefix) ?
         gui_chat_strlen_screen (prefix) : 0;
     new_line->data->message = (message) ? strdup (message) : strdup ("");
@@ -1318,8 +1342,8 @@ void
 gui_line_clear (struct t_gui_line *line)
 {
     if (line->data->prefix)
-        free (line->data->prefix);
-    line->data->prefix = strdup ("");
+        string_shared_free (line->data->prefix);
+    line->data->prefix = (char *)string_shared_get ("");
 
     if (line->data->message)
         free (line->data->message);
@@ -1521,18 +1545,8 @@ gui_line_hdata_line_data_update_cb (void *data,
     if (hashtable_has_key (hashtable, "tags_array"))
     {
         value = hashtable_get (hashtable, "tags_array");
-        if (line_data->tags_array)
-            string_free_split (line_data->tags_array);
-        if (value)
-        {
-            line_data->tags_array = string_split (value, ",", 0, 0,
-                                                  &line_data->tags_count);
-        }
-        else
-        {
-            line_data->tags_count = 0;
-            line_data->tags_array = NULL;
-        }
+        gui_line_tags_free (line_data);
+        gui_line_tags_alloc (line_data, value);
         rc++;
     }
 
