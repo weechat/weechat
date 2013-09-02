@@ -594,21 +594,29 @@ gui_chat_display_word (struct t_gui_window *window,
 
 void
 gui_chat_display_day_changed (struct t_gui_window *window,
-                              struct tm *date, int simulate)
+                              struct tm *date1, struct tm *date2,
+                              int simulate)
 {
-    char message[1024], *message_with_color;
+    char temp_message[1024], message[1024], *message_with_color;
 
     if (simulate)
         return;
 
-    message_with_color = NULL;
-
     /* build the message to display */
-    strftime (message, sizeof (message),
-              CONFIG_STRING(config_look_day_change_message), date);
+    if (date1)
+    {
+        strftime (temp_message, sizeof (temp_message),
+                  CONFIG_STRING(config_look_day_change_message2), date1);
+        strftime (message, sizeof (message), temp_message, date2);
+    }
+    else
+    {
+        strftime (message, sizeof (message),
+                  CONFIG_STRING(config_look_day_change_message), date2);
+    }
 
-    if (strstr (message, "${"))
-        message_with_color = eval_expression (message, NULL, NULL, NULL);
+    message_with_color = (strstr (message, "${")) ?
+        eval_expression (message, NULL, NULL, NULL) : NULL;
 
     /* display the message */
     gui_window_coords_init_line (window, window->win_chat_cursor_y);
@@ -1241,7 +1249,8 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
                 || (local_time.tm_mon != local_time2.tm_mon)
                 || (local_time.tm_year != local_time2.tm_year))
             {
-                gui_chat_display_day_changed (window, &local_time2, simulate);
+                gui_chat_display_day_changed (window, NULL, &local_time2,
+                                              simulate);
                 gui_chat_display_new_line (window, num_lines, count,
                                            &lines_displayed, simulate);
                 pre_lines_displayed++;
@@ -1438,7 +1447,8 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
                 || (local_time.tm_mon != local_time2.tm_mon)
                 || (local_time.tm_year != local_time2.tm_year))
             {
-                gui_chat_display_day_changed (window, &local_time2, simulate);
+                gui_chat_display_day_changed (window, &local_time, &local_time2,
+                                              simulate);
                 gui_chat_display_new_line (window, num_lines, count,
                                            &lines_displayed, simulate);
             }

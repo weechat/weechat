@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-08-28 21:24+0200\n"
+"POT-Creation-Date: 2013-09-01 15:56+0200\n"
 "PO-Revision-Date: 2013-08-17 10:37+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2313,9 +2313,20 @@ msgstr "отображать специальное сообщение  при �
 #. TRANSLATORS: string "${color:xxx}" must NOT be translated
 #, fuzzy
 msgid ""
-"message displayed when the day has changed (see man strftime for date/time "
-"specifiers) (note: content is evaluated, so you can use colors with format "
-"\"${color:xxx}\", see /help eval)"
+"message displayed when the day has changed, with one date displayed (for "
+"example at beginning of buffer) (see man strftime for date/time specifiers) "
+"(note: content is evaluated, so you can use colors with format \"${color:"
+"xxx}\", see /help eval)"
+msgstr "отображение маркера даты при смене дня"
+
+#. TRANSLATORS: string "${color:xxx}" must NOT be translated
+#, fuzzy
+msgid ""
+"message displayed when the day has changed, with two dates displayed "
+"(between two messages); the second date specifiers must start with two \"%\" "
+"because strftime is called two times on this string (see man strftime for "
+"date/time specifiers) (note: content is evaluated, so you can use colors "
+"with format \"${color:xxx}\", see /help eval)"
 msgstr "отображение маркера даты при смене дня"
 
 msgid ""

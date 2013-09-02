@@ -484,9 +484,14 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.look.day_change_message]] *weechat.look.day_change_message*
-** Beschreibung: `message displayed when the day has changed (see man strftime for date/time specifiers) (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)`
+** Beschreibung: `message displayed when the day has changed, with one date displayed (for example at beginning of buffer) (see man strftime for date/time specifiers) (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"-- %a, %d %b %Y --"`)
+
+* [[option_weechat.look.day_change_message2]] *weechat.look.day_change_message2*
+** Beschreibung: `message displayed when the day has changed, with two dates displayed (between two messages); the second date specifiers must start with two "%" because strftime is called two times on this string (see man strftime for date/time specifiers) (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `"-- %%a, %%d %%b %%Y (%a, %d %b %Y) --"`)
 
 * [[option_weechat.look.eat_newline_glitch]] *weechat.look.eat_newline_glitch*
 ** Beschreibung: `aktiviert man diese Option, dann wird "eat_newline_glitch" auf 0 gesetzt; dies bedeutet, dass am Ende einer Zeile kein Zeilenumbruch an gehangen wird und somit der Text beim kopieren aus WeeChat und beim einfügen in einer anderen Applikation nicht umgebrochen wird (diese Option ist standardmäßig deaktiviert, da es zu schwerwiegenden Grafikfehlern kommen kann)`

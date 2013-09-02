@@ -484,9 +484,14 @@
 ** valori: on, off (valore predefinito: `on`)
 
 * [[option_weechat.look.day_change_message]] *weechat.look.day_change_message*
-** descrizione: `message displayed when the day has changed (see man strftime for date/time specifiers) (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)`
+** descrizione: `message displayed when the day has changed, with one date displayed (for example at beginning of buffer) (see man strftime for date/time specifiers) (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"-- %a, %d %b %Y --"`)
+
+* [[option_weechat.look.day_change_message2]] *weechat.look.day_change_message2*
+** descrizione: `message displayed when the day has changed, with two dates displayed (between two messages); the second date specifiers must start with two "%" because strftime is called two times on this string (see man strftime for date/time specifiers) (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)`
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: `"-- %%a, %%d %%b %%Y (%a, %d %b %Y) --"`)
 
 * [[option_weechat.look.eat_newline_glitch]] *weechat.look.eat_newline_glitch*
 ** descrizione: `se attivo, eat_newline_glitch verrà impostato a 0; viene usato per non aggiungere il carattere a capo alla fine di ogni riga, al fine di non danneggiare il testo quando viene copiato/incollato da WeeChat in un'altra applicazione (l'opzione è disabilitata per default, dato che può causare seri errori di visualizzazione)`

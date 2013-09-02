@@ -100,6 +100,7 @@ struct t_config_option *config_look_command_chars;
 struct t_config_option *config_look_confirm_quit;
 struct t_config_option *config_look_day_change;
 struct t_config_option *config_look_day_change_message;
+struct t_config_option *config_look_day_change_message2;
 struct t_config_option *config_look_eat_newline_glitch;
 struct t_config_option *config_look_emphasized_attributes;
 struct t_config_option *config_look_highlight;
@@ -2072,10 +2073,23 @@ config_weechat_init_options ()
         weechat_config_file, ptr_section,
         "day_change_message", "string",
         /* TRANSLATORS: string "${color:xxx}" must NOT be translated */
-        N_("message displayed when the day has changed (see man strftime for "
+        N_("message displayed when the day has changed, with one date displayed "
+           "(for example at beginning of buffer) (see man strftime for "
            "date/time specifiers) (note: content is evaluated, so you can use "
            "colors with format \"${color:xxx}\", see /help eval)"),
         NULL, 0, 0, "-- %a, %d %b %Y --", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
+    config_look_day_change_message2 = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "day_change_message2", "string",
+        /* TRANSLATORS: string "${color:xxx}" must NOT be translated */
+        N_("message displayed when the day has changed, with two dates displayed "
+           "(between two messages); the second date specifiers must start with "
+           "two \"%\" because strftime is called two times on this string "
+           "(see man strftime for date/time specifiers) (note: content is "
+           "evaluated, so you can use colors with format \"${color:xxx}\", "
+           "see /help eval)"),
+        NULL, 0, 0, "-- %%a, %%d %%b %%Y (%a, %d %b %Y) --", NULL, 0, NULL, NULL,
+        &config_change_buffers, NULL, NULL, NULL);
     config_look_eat_newline_glitch = config_file_new_option (
         weechat_config_file, ptr_section,
         "eat_newline_glitch", "boolean",

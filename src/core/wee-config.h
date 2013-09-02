@@ -117,6 +117,7 @@ extern struct t_config_option *config_look_command_chars;
 extern struct t_config_option *config_look_confirm_quit;
 extern struct t_config_option *config_look_day_change;
 extern struct t_config_option *config_look_day_change_message;
+extern struct t_config_option *config_look_day_change_message2;
 extern struct t_config_option *config_look_eat_newline_glitch;
 extern struct t_config_option *config_look_emphasized_attributes;
 extern struct t_config_option *config_look_highlight;
