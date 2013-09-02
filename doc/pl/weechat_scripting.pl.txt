@@ -544,10 +544,9 @@ w linii poleceń i wcisnąć [Enter].
 
 Przykłady:
 
-// TRANSLATION MISSING
 [source,python]
 ----------------------------------------
-# execute command "/help" on current buffer (result is on core buffer)
+# wykona polecenie "/help" w obecnym buforze (wyświetli się w głównym buforze)
 weechat.command("", "/help")
 
 # wyśle "witaj" na kanał #weechat (użytkownicy na kanale zobaczą wiadomość)

@@ -26,8 +26,7 @@ pasuje ono do WeeChat!).
 Dlaczego wybrać WeeChat? X-Chat i Irssi są takie dobre...
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-// TRANSLATION MISSING
-Because WeeChat is very light and brings innovating features.
+Ponieważ Weechat jest bardzo lekki i posiada innowacyjne funkcje.
 
 Więcej informacji na stronie: http://weechat.org/about/features
 
@@ -39,8 +38,7 @@ Kompilacja / instalacja
 Słyszałem o wielu GUI dla WeeChat. Jak mogę je skompilować/użyć?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-// TRANSLATION MISSING
-Some remote GUIs are available:
+Dostępne jest kilka zdalnych GUI:
 
 * http://weechat.org/download/devel[QWeeChat] (Qt)
 * https://github.com/ubergeek42/weechat-android[weechat-android] (Android)
@@ -96,9 +94,8 @@ Jest to częsty problem, przeczytaj i sprawdź *WSZYSTKIE* poniższe rozwiązani
    dla UTF-8 jest rxvt-unicode)
 ** jeśli korzystasz ze screena, sprawdź czy jest uruchomiony z trybem UTF-8
    ("`defutf8 on`" w ~/.screenrc lub `screen -U` uruchamiając screena)
-// TRANSLATION MISSING
-* check that option 'weechat.look.eat_newline_glitch' is off (this option may
-  cause display bugs)
+* sprawdź czy opcja 'weechat.look.eat_newline_glitch' jest wyłączona (ta opcja
+  może powodować błędy wyświetlania)
 
 [NOTE]
 UTF-8 jest zalecany dla WeeChat. Jeśli korzystasz z lokalizacji ISO lub innych,
@@ -506,21 +503,20 @@ Ustaw port serwera, SSL, dhkey_size, następnie się połącz:
 /connect freenode
 ----------------------------------------
 
-// TRANSLATION MISSING
 [[irc_oauth]]
-How to connect to a server that requires "oauth"?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Jak połączyć się z serwerem wymagającym "oauth"?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Some servers like 'twitch' require oauth to connect.
+Niektóre serwery jak 'twitch' wymagają oauth do połączenia.
 
-The oauth is simply a password with the value "oauth:XXXX".
+Oauth to po prostu hasło w postaci "oauth:hasło".
 
-You can create such server and connect with following commands (replace name
-and address by appropriate values):
+W celu dodania takiego serwera i połączenia się z nim należ wykonać nastepujące
+polecenia (należy zastąpić nazwę i adres odpowiednimi wartościami):
 
 ----------------------------------------
-/server add name irc.server.org -password="oauth:XXXX"
-/connect name
+/server add nazwa irc.server.org -password="oauth:hasło"
+/connect nazwa
 ----------------------------------------
 
 [[irc_sasl]]
