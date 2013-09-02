@@ -1,7 +1,7 @@
 WeeChat Release Notes
 =====================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.2-dev, 2013-08-25
+v0.4.2-dev, 2013-09-02
 
 
 This document lists important changes for each version, that require manual
@@ -25,7 +25,8 @@ Option 'weechat.look.day_change_time_format' has been renamed to
 'weechat.look.day_change_message' (color codes are allowed in this option, see
 `/help eval`).
 
-New color option 'weechat.color.chat_day_change' has been added.
+New options 'weechat.look.day_change_message2' and
+'weechat.color.chat_day_change' have been added.
 
 After `/upgrade` from an old version, you will see two messages for each day
 change. This is a normal behavior and will not happen again with the next day
