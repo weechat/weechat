@@ -54,7 +54,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"_"`)
 
 * [[option_logger.file.time_format]] *logger.file.time_format*
-** Beschreibung: `Zeitstempel in Protokoll-Datei nutzen (siehe man strftime für Platzhalter für das Datum und die Uhrzeit)`
+** Beschreibung: `Zeitstempel in Protokoll-Datei nutzen (siehe man strftime, welche Platzhalter für das Datum und die Uhrzeit verwendet werden)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%Y-%m-%d %H:%M:%S"`)
 

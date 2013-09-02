@@ -110,7 +110,7 @@
  |
   -
 
-| irc | irc_redirect | IRC Umlenkung |
+| irc | irc_redirect | IRC Weiterleitung |
   'server' (pointer, hdata: "irc_server") +
   'pattern' (string) +
   'signal' (string) +
@@ -134,7 +134,7 @@
  |
   -
 
-| irc | irc_redirect_pattern | Muster für IRC Umlenkung |
+| irc | irc_redirect_pattern | Muster für IRC Weiterleitung |
   'name' (string) +
   'temp_pattern' (integer) +
   'timeout' (integer) +

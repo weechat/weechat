@@ -94,7 +94,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.ctcp_time_format]] *irc.look.ctcp_time_format*
-** Beschreibung: `Format für die Zeitanzeige die bei einer CTCP TIME Anfrage zurückgesendet wird (siehe man strftime für Platzhalter für das Datum und die Uhrzeit)`
+** Beschreibung: `Format für die Zeitanzeige die bei einer CTCP TIME Anfrage zurückgesendet wird (siehe man strftime, welche Platzhalter für das Datum und die Uhrzeit verwendet werden)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%a, %d %b %Y %T %z"`)
 
@@ -254,7 +254,7 @@
 ** Werte: auto, never, always (Standardwert: `auto`)
 
 * [[option_irc.look.notice_welcome_redirect]] *irc.look.notice_welcome_redirect*
-** Beschreibung: `automatically redirect channel welcome notices to the channel buffer; such notices have the nick as target but a channel name in beginning of notice message, for example notices sent by freenode server which look like: "[#channel] Welcome to this channel..."`
+** Beschreibung: `automatische Weiterleitung von Willkommen-Nachrichten in den entsprechenden Channel-Buffer. Solche Nachrichten haben den Nick als Empfänger, der Channelnamen wird aber der Nachricht vorangestellt. Eine solche Nachricht sieht auf dem freenode Server wie folgt aus: "[#channel] Herzlich Willkommen zum ..."`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 

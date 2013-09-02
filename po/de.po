@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-09-01 15:56+0200\n"
-"PO-Revision-Date: 2013-08-18 19:01+0200\n"
+"POT-Creation-Date: 2013-09-01 18:16+0200\n"
+"PO-Revision-Date: 2013-09-02 08:53+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
 "Language: de_DE\n"
@@ -220,10 +220,9 @@ msgstr "%sFehler: Buffer nicht gefunden"
 msgid "%sError: WeeChat main buffer can't be closed"
 msgstr "%sFehler: Der WeeChat-Hauptbuffer kann nicht geschlossen werden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError: unable to set notify level \"%s\""
-msgstr ""
-"%sFehler: Die Option \"%s\" kann für Infobar \"%s\" nicht gesetzt werden"
+msgstr "%sFehler: Benachrichtigungsstufe \"%s\" kann nicht gesetzt werden"
 
 #, c-format
 msgid "Local variables for buffer \"%s\":"
@@ -912,21 +911,20 @@ msgstr ""
 "%sFehler: Fenster können nicht nicht zusammenfügt werden. Es existiert kein "
 "Fenster mit der selben Größe neben dem aktuellen Fenster"
 
-#, fuzzy
 msgid "set or remove away status"
-msgstr "Abwesenheitsstatus ein-/ausschalten"
+msgstr "Abwesenheitsstatus setzen oder entfernen"
 
 msgid "[-all] [<message>]"
 msgstr "[-all] [<message>]"
 
-#, fuzzy
 msgid ""
 "   -all: set or remove away status on all connected servers\n"
 "message: message for away (if no message is given, away status is removed)"
 msgstr ""
-"   -all: Abwesenheitszustand auf allen Servern ändern\n"
-"message: Abwesenheitsnachricht (ohne eine Nachricht wird der "
-"Abwesenheitszustand deaktivieren)"
+"   -all: Abwesenheitsstatus auf allen verbundenen Server setzen oder "
+"entfernen\n"
+"message: Abwesenheitsnachricht (ohne Angabe einer Nachricht wird der "
+"Abwesenheitszustand entfernt)"
 
 msgid "manage bars"
 msgstr "Infobars verwalten"
@@ -2897,11 +2895,11 @@ msgid ""
 "${color:240}%S\""
 msgstr ""
 "Format für die Uhrzeit, die in jeder Zeile eines Buffers dargestellt wird "
-"(siehe man strftime, für Platzhalter für das Datum und die Uhrzeit) "
-"(Hinweis: Inhalt ist evaluiert, somit kann mittels des Formats \"${color:"
-"xxx} Farben gesetzt werden, siehe /help eval). Beispiel: Uhrzeit in "
-"Graustufen (Unterstützung von 256 Farben notwendig): \"${color:252}%H"
-"${color:245}%M${color:240}%S\""
+"(siehe man strftime, welche Platzhalter für das Datum und die Uhrzeit "
+"verwendet werden) (Hinweis: Inhalt ist evaluiert, somit kann mittels des "
+"Formats \"${color:xxx} Farben gesetzt werden, siehe /help eval). Beispiel: "
+"Uhrzeit in Graustufen (Unterstützung von 256 Farben notwendig): "
+"\"${color:252}%H${color:245}%M${color:240}%S\""
 
 msgid ""
 "force \"bold\" attribute for light colors and \"darkgray\" in basic colors "
@@ -3013,8 +3011,10 @@ msgid ""
 "(note: content is evaluated, so you can use colors with format \"${color:"
 "xxx}\", see /help eval)"
 msgstr ""
-"Format für die Datumsanzeige, wenn ein neuer Tag anbricht (siehe man "
-"strftime für Platzhalter für das Datum und die Uhrzeit)"
+"Nachricht welche bei einem Datumswechsel angezeigt wird (siehe man strftime, "
+"welche Platzhalter für das Datum und die Uhrzeit verwendet werden) (Hinweis: "
+"Inhalt ist evaluiert, somit kann mittels des Formats \"${color:xxx} Farben "
+"gesetzt werden, siehe /help eval)"
 
 #. TRANSLATORS: string "${color:xxx}" must NOT be translated
 #, fuzzy
@@ -3025,8 +3025,10 @@ msgid ""
 "date/time specifiers) (note: content is evaluated, so you can use colors "
 "with format \"${color:xxx}\", see /help eval)"
 msgstr ""
-"Format für die Datumsanzeige, wenn ein neuer Tag anbricht (siehe man "
-"strftime für Platzhalter für das Datum und die Uhrzeit)"
+"Nachricht welche bei einem Datumswechsel angezeigt wird (siehe man strftime, "
+"welche Platzhalter für das Datum und die Uhrzeit verwendet werden) (Hinweis: "
+"Inhalt ist evaluiert, somit kann mittels des Formats \"${color:xxx} Farben "
+"gesetzt werden, siehe /help eval)"
 
 msgid ""
 "if set, the eat_newline_glitch will be set to 0; this is used to not add new "
@@ -3194,8 +3196,8 @@ msgstr ""
 msgid ""
 "time format for \"time\" bar item (see man strftime for date/time specifiers)"
 msgstr ""
-"Format für die Zeitanzeige des Bar-Items, \"time\" (siehe man strftime für "
-"Platzhalter für das Datum und die Uhrzeit)"
+"Format für die Zeitanzeige des Bar-Items, \"time\" (siehe man strftime, "
+"welche Platzhalter für das Datum und die Uhrzeit verwendet werden)"
 
 msgid ""
 "string used to show that some lines are filtered in current buffer (bar item "
@@ -3463,8 +3465,8 @@ msgid ""
 "man strftime for date/time specifiers)"
 msgstr ""
 "Format für das Datum, wenn dieses in eine Zeichenkette umgewandelt und in "
-"Nachrichten dargestellt wird (siehe man strftime für Platzhalter für das "
-"Datum und die Uhrzeit)"
+"Nachrichten dargestellt wird (siehe man strftime, welche Platzhalter für das "
+"Datum und die Uhrzeit verwendet werden)"
 
 msgid "display an horizontal separator between windows"
 msgstr ""
@@ -3491,12 +3493,8 @@ msgstr "Textfarbe für den Namen des Buffers"
 msgid "text color for channel names"
 msgstr "Farbe für den Channel-Namen"
 
-#, fuzzy
 msgid "text color for message displayed when the day has changed"
-msgstr ""
-"Textfarbe in der die Schlagwörter, die nach der jeweiligen Nachricht "
-"angezeigt werden, dargestellt werden sollen (wird durch den Befehl \"/debug "
-"tags\" angezeigt)"
+msgstr "Textfarbe für die Nachricht die beim Datumswechsel angezeigt wird"
 
 msgid "text color for delimiters"
 msgstr "Farbe der Infobar-Trennzeichen"
@@ -4411,15 +4409,16 @@ msgstr "Standardhintergrundfarbe der Infobar"
 msgid "separator line between bar and other bars/windows"
 msgstr "Trennzeichen zwischen verschieden Infobars und Fenstern"
 
-#, fuzzy
 msgid ""
 "items of bar, they can be separated by comma (space between items) or \"+"
 "\" (glued items); special syntax \"@buffer:item\" can be used to force "
 "buffer used when displaying the bar item"
 msgstr ""
-"Items einer Bar können durch entweder durch Kommata (\",\") voneinander "
-"getrennt (setzt ein Leerzeichen zwischen die Items), oder durch ein \"+\" "
-"Zeichen zusammengefügt werden (Items werden ohne Leerzeichen dargestellt)"
+"Items einer Bar können entweder durch Kommata (\",\") voneinander getrennt "
+"(setzt ein Leerzeichen zwischen die Items), oder durch ein \"+\" Zeichen "
+"zusammengefügt werden (Items werden ohne Leerzeichen dargestellt); folgende "
+"erweiterte Syntax,\"@buffer:item\", kann genutzt werden um den Inhalt eines "
+"Items auf den angegeben Buffer bezogen anzuzeigen"
 
 #, c-format
 msgid "Bar \"%s\" updated"
@@ -4490,9 +4489,9 @@ msgstr "Befehl für Taste: \"%s\""
 msgid "Sending hsignal: \"%s\""
 msgstr "sende hsignal: \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Executing command: \"%s\" on buffer \"%s\""
-msgstr "führe Befehl \"%s\" aus"
+msgstr "auszuführender Befehl: \"%s\" in Buffer \"%s\""
 
 msgid "Not enough memory for new line"
 msgstr "Nicht genügend Speicher für eine neue Zeile"
@@ -6906,7 +6905,8 @@ msgid ""
 "time specifiers)"
 msgstr ""
 "Format für die Zeitanzeige die bei einer CTCP TIME Anfrage zurückgesendet "
-"wird (siehe man strftime für Platzhalter für das Datum und die Uhrzeit)"
+"wird (siehe man strftime, welche Platzhalter für das Datum und die Uhrzeit "
+"verwendet werden)"
 
 msgid ""
 "display message when (un)marking as away (off: do not display/send anything, "
@@ -7155,6 +7155,11 @@ msgid ""
 "message, for example notices sent by freenode server which look like: "
 "\"[#channel] Welcome to this channel...\""
 msgstr ""
+"automatische Weiterleitung von Willkommen-Nachrichten in den entsprechenden "
+"Channel-Buffer. Solche Nachrichten haben den Nick als Empfänger, der "
+"Channelnamen wird aber der Nachricht vorangestellt. Eine solche Nachricht "
+"sieht auf dem freenode Server wie folgt aus: \"[#channel] Herzlich "
+"Willkommen zum ...\""
 
 msgid ""
 "comma separated list of tags used in messages displayed by notify when a "
@@ -7583,10 +7588,10 @@ msgid "irc notify"
 msgstr "IRC-Benachrichtigungen"
 
 msgid "pattern for irc redirect"
-msgstr "Muster für IRC Umlenkung"
+msgstr "Muster für IRC Weiterleitung"
 
 msgid "irc redirect"
-msgstr "IRC Umlenkung"
+msgstr "IRC Weiterleitung"
 
 msgid "irc server"
 msgstr "IRC-Server"
@@ -7993,36 +7998,36 @@ msgstr "IRC Roh-Nachricht"
 
 #, c-format
 msgid "%s%s: missing argument \"%s\" for redirect pattern"
-msgstr "%s%s: fehlendes Argument, \"%s\", für Umlenkungsmuster"
+msgstr "%s%s: fehlendes Argument, \"%s\", für Muster der Weiterleitung"
 
 #, c-format
 msgid "%s%s: redirect pattern \"%s\" already exists"
-msgstr "%s%s: Muster \"%s\" existiert bereits für eine Umlenkung"
+msgstr "%s%s: Muster \"%s\" existiert bereits für eine Weiterleitung"
 
 #, c-format
 msgid "%s%s: no connection to server \"%s\" for redirect"
 msgstr ""
-"%s%s: keine Verbindung zum Server \"%s\" um eine Umlenkung zu erstellen"
+"%s%s: keine Verbindung zum Server \"%s\" um eine Weiterleitung zu erstellen"
 
 #, c-format
 msgid "%s%s: missing argument \"%s\" for redirect"
-msgstr "%s%s: fehlendes Argument, \"%s\", für Umlenkung"
+msgstr "%s%s: fehlendes Argument, \"%s\", für Weiterleitung"
 
 #, c-format
 msgid "%s%s: redirect pattern \"%s\" not found"
-msgstr "%s%s: Muster \"%s\" für eine Umlenkung nicht gefunden"
+msgstr "%s%s: Muster \"%s\" für eine Weiterleitung nicht gefunden"
 
 #, c-format
 msgid ""
 "%s: starting redirection for command \"%s\" on server \"%s\" (redirect "
 "pattern: \"%s\")"
 msgstr ""
-"%s: führe eine Umlenkung für den Befehl \"%s\" auf dem Server \"%s\" aus "
-"(Muster der Umlenkung: \"%s\")"
+"%s: führt eine Weiterleitung für den Befehl \"%s\" auf dem Server \"%s\" aus "
+"(Muster der Weiterleitung: \"%s\")"
 
 #, c-format
 msgid "%s%s: server \"%s\" not found for redirect"
-msgstr "%s%s: Server \"%s\" für eine Umlenkung wurde nicht gefunden"
+msgstr "%s%s: Server \"%s\" für eine Weiterleitung wurde nicht gefunden"
 
 #, c-format
 msgid "%s%s: error when allocating new server"
@@ -8348,11 +8353,9 @@ msgstr ""
 "Konfiguration für \"logger\" Erweiterung (dient zum protokollieren der "
 "Buffer)"
 
-#, fuzzy
 msgid "list || set <level> || flush || disable"
-msgstr "list || set <level> || disable"
+msgstr "list || set <level> || flush || disable"
 
-#, fuzzy
 msgid ""
 "   list: show logging status for opened buffers\n"
 "    set: set logging level on current buffer\n"
@@ -8383,12 +8386,13 @@ msgid ""
 "  use a directory per IRC server and a file per channel inside:\n"
 "    /set logger.mask.irc \"$server/$channel.weechatlog\""
 msgstr ""
-"   list: zeigt, für geöffnete Buffer, den Status der Protokollierung an\n"
+"   list: zeigt den Status der Protokollierung aller geöffneten Buffer an\n"
 "    set: legt den Level fest, nach dem der aktuelle Buffer protokolliert "
 "werden soll\n"
 "  level: legt fest, welche Nachrichten protokolliert werden sollen (0 = "
 "nichts protokollieren, 1 = nur die wichtigsten Nachrichten protokollieren .. "
-"9 = protokolliere alle Nachrichten)\n"
+"9 = alle Nachrichten werden protokolliert)\n"
+"  flush: sichert alle Protokolle umgehend\n"
 "disable: die Protokollierung wird für den aktuellen Buffer ausgeschaltet "
 "(der Level wird auf 0 gestellt)\n"
 "\n"
@@ -8498,8 +8502,8 @@ msgstr ""
 
 msgid "timestamp used in log files (see man strftime for date/time specifiers)"
 msgstr ""
-"Zeitstempel in Protokoll-Datei nutzen (siehe man strftime für Platzhalter "
-"für das Datum und die Uhrzeit)"
+"Zeitstempel in Protokoll-Datei nutzen (siehe man strftime, welche "
+"Platzhalter für das Datum und die Uhrzeit verwendet werden)"
 
 msgid "list of logger buffers"
 msgstr "Auflistung der protokollierten Buffer"
@@ -9555,7 +9559,7 @@ msgstr "%s%s: Kann sub-Interpreter nicht erstellen"
 
 #, c-format
 msgid "%s%s: unable to redirect stdout and stderr"
-msgstr "%s%s: Umlenkung von stdout und stderr nicht möglich"
+msgstr "%s%s: Weiterleitung von stdout und stderr nicht möglich"
 
 #, c-format
 msgid "%s%s: unable to load file \"%s\""
@@ -9723,11 +9727,11 @@ msgstr "%s%s: Initialisierung des WeeChat Moduls nicht möglich"
 
 #, c-format
 msgid "%s%s: unable to redirect stdout"
-msgstr "%s%s: Standardausgabe (stdout) kann nicht umlenkt werden"
+msgstr "%s%s: Standardausgabe (stdout) kann nicht weitergeleitet werden"
 
 #, c-format
 msgid "%s%s: unable to redirect stderr"
-msgstr "%s%s: Standardfehlerausgabe (stderr) kann nicht umlenkt werden"
+msgstr "%s%s: Standardfehlerausgabe (stderr) kann nicht weitergeleitet werden"
 
 msgid "path to python 2.x interpreter"
 msgstr "Pfad für Python 2.x Interpreter"
@@ -10339,7 +10343,7 @@ msgstr "installiert"
 
 #. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
 msgid "autoloaded"
-msgstr "automatisch_geladen"
+msgstr "autom.geladen"
 
 #. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
 msgid "held"
@@ -10390,7 +10394,7 @@ msgstr "%s%s: Neuer Interpreter kann nicht anlegt werden"
 
 #, c-format
 msgid "%s%s: error occurred while parsing file \"%s\": %s"
-msgstr "%s%s: Beim Parsen der Datei \"%s\" ist ein Fehler aufgetreten: %s"
+msgstr "%s%s: Beim parsen der Datei \"%s\" ist ein Fehler aufgetreten: %s"
 
 msgid "  [A] Accept"
 msgstr "  [A] annehmen"
@@ -10829,6 +10833,3 @@ msgstr "Type"
 
 msgid "Constants"
 msgstr "Konstanten"
-
-#~ msgid "\t\tDay changed to %s"
-#~ msgstr "\t\tEin neuer Tag bricht an. Heute ist %s"
