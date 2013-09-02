@@ -63,6 +63,7 @@
 #include "../gui/gui-input.h"
 #include "../gui/gui-key.h"
 #include "../gui/gui-layout.h"
+#include "../gui/gui-line.h"
 #include "../gui/gui-main.h"
 #include "../gui/gui-mouse.h"
 #include "../gui/gui-window.h"
@@ -1903,6 +1904,7 @@ command_help_list_plugin_commands (struct t_weechat_plugin *plugin,
     struct t_hook *ptr_hook;
     struct t_weelist *list;
     struct t_weelist_item *item;
+    struct t_gui_buffer *ptr_buffer;
     int command_found, length, max_length, list_size;
     int cols, lines, col, line, index;
     char str_format[64], str_command[256], str_line[2048];
@@ -1943,6 +1945,10 @@ command_help_list_plugin_commands (struct t_weechat_plugin *plugin,
     }
     else
     {
+        ptr_buffer = gui_buffer_search_main ();
+        if (!ptr_buffer)
+            return;
+
         max_length = -1;
         list = weelist_new ();
 
@@ -1977,12 +1983,22 @@ command_help_list_plugin_commands (struct t_weechat_plugin *plugin,
                              plugin_get_name (plugin),
                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
 
-            /* auto compute number of columns, max size is 90% of chat width */
-            cols = ((gui_current_window->win_chat_width * 90) / 100) / (max_length + 2);
-            if (cols == 0)
-                cols = 1;
+            /* auto compute number of columns according to current chat width */
+            cols = 1;
+            length = gui_current_window->win_chat_width -
+                (gui_chat_time_length + 1 +
+                 ptr_buffer->lines->buffer_max_length + 1 +
+                 ptr_buffer->lines->prefix_max_length + 1 +
+                 gui_chat_strlen_screen (CONFIG_STRING(config_look_prefix_suffix)) + 1);
+            if (length > 0)
+            {
+                cols = length / (max_length + 2);
+                if (cols == 0)
+                    cols = 1;
+            }
             lines = ((list_size - 1) / cols) + 1;
 
+            /* build format according to number of columns */
             if (lines == 1)
             {
                 snprintf (str_format, sizeof (str_format), "  %%s");
@@ -1993,6 +2009,7 @@ command_help_list_plugin_commands (struct t_weechat_plugin *plugin,
                           "  %%-%ds", max_length);
             }
 
+            /* display lines with commands, in columns */
             for (line = 0; line < lines; line++)
             {
                 str_line[0] = '\0';

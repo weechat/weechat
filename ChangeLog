@@ -14,6 +14,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 Version 0.4.2 (under dev!)
 --------------------------
 
+* core: fix computation of columns in output of /help (take care about size of
+  time/buffer/prefix)
 * core: display day change message dynamically (do not store it as a line in
   buffer), rename option weechat.look.day_change_time_format to
   weechat.look.day_change_message, new options weechat.look.day_change_message2
