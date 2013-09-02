@@ -18,10 +18,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: WeeChat 0.4.2-dev\n"
+"Project-Id-Version: WeeChat 0.4.2-rc1\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2013-09-01 15:56+0200\n"
-"PO-Revision-Date: 2013-08-17 10:37+0200\n"
+"PO-Revision-Date: 2013-09-02 21:21+0200\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: tr\n"
@@ -8276,6 +8276,3 @@ msgstr "Tür"
 
 msgid "Constants"
 msgstr ""
-
-#~ msgid "\t\tDay changed to %s"
-#~ msgstr "\t\t %s olarak gün değişti"
