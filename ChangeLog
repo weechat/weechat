@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.2-rc1, 2013-09-02
+v0.4.2-rc1, 2013-09-03
 
 
 This document lists all changes for each version.
@@ -17,9 +17,9 @@ Version 0.4.2 (under dev!)
 * core: fix computation of columns in output of /help (take care about size of
   time/buffer/prefix)
 * core: display day change message dynamically (do not store it as a line in
-  buffer), rename option weechat.look.day_change_time_format to
-  weechat.look.day_change_message, new options weechat.look.day_change_message2
-  and weechat.color.chat_day_change (task #12775)
+  buffer), split option weechat.look.day_change_time_format into two options
+  weechat.look.day_change_message_{1date|2dates}, new option
+  weechat.color.chat_day_change (task #12775)
 * core: add syntax "@buffer:item" in bar items to force the buffer used when
   displaying the bar item (task #12717)
 * core: add search of regular expression in buffer, don't reset search type on

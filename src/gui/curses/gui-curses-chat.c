@@ -606,13 +606,13 @@ gui_chat_display_day_changed (struct t_gui_window *window,
     if (date1)
     {
         strftime (temp_message, sizeof (temp_message),
-                  CONFIG_STRING(config_look_day_change_message2), date1);
+                  CONFIG_STRING(config_look_day_change_message_2dates), date1);
         strftime (message, sizeof (message), temp_message, date2);
     }
     else
     {
         strftime (message, sizeof (message),
-                  CONFIG_STRING(config_look_day_change_message), date2);
+                  CONFIG_STRING(config_look_day_change_message_1date), date2);
     }
 
     message_with_color = (strstr (message, "${")) ?
