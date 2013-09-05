@@ -484,12 +484,12 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.look.day_change_message_1date]] *weechat.look.day_change_message_1date*
-** Beschreibung: `message displayed when the day has changed, with one date displayed (for example at beginning of buffer) (see man strftime for date/time specifiers) (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)`
+** Beschreibung: `Nachricht welche bei einem Datumswechsel angezeigt wird (zum Beispiel als erste Zeile im Buffer) (siehe man strftime, welche Platzhalter für das Datum und die Uhrzeit verwendet werden) (Hinweis: Inhalt ist evaluiert, somit kann mittels des Formats "${color:xxx} Farben gesetzt werden, siehe /help eval)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"-- %a, %d %b %Y --"`)
 
 * [[option_weechat.look.day_change_message_2dates]] *weechat.look.day_change_message_2dates*
-** Beschreibung: `message displayed when the day has changed, with two dates displayed (between two messages); the second date specifiers must start with two "%" because strftime is called two times on this string (see man strftime for date/time specifiers) (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)`
+** Beschreibung: `Nachricht welche bei einem Datumswechsel angezeigt wird, dabei werden zwei Daten angegeben die zwischen zwei Nachrichten liegen; der zweite Platzhalter muss mit zwei "%" angegeben werden, da strftime auch zweimal aufgerufen wird (siehe man strftime, welche Platzhalter für das Datum und die Uhrzeit verwendet werden) (Hinweis: Inhalt ist evaluiert, somit kann mittels des Formats "${color:xxx} Farben gesetzt werden, siehe /help eval)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"-- %%a, %%d %%b %%Y (%a, %d %b %Y) --"`)
 

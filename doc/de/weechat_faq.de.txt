@@ -527,17 +527,16 @@ Connect durchführen:
 /connect freenode
 ----------------------------------------
 
-// TRANSLATION MISSING
 [[irc_oauth]]
-How to connect to a server that requires "oauth"?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Wie stellt man eine Verbindung zu einem Server her, der "oauth" verlangt?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Some servers like 'twitch' require oauth to connect.
+Einige Server, wie z.B. 'twitch', verlangen oauth für eine Verbindung.
 
-The oauth is simply a password with the value "oauth:XXXX".
+Bei oauth handelt es sich lediglich um ein Passwort mit dem Format "oauth:XXXX".
 
-You can create such server and connect with following commands (replace name
-and address by appropriate values):
+Mit folgenden Befehlen kann man einen Server erstellen und sich mit diesem
+verbinden (Name und Adresse muss durch entsprechende Werte ersetzt werden):
 
 ----------------------------------------
 /server add name irc.server.org -password="oauth:XXXX"
