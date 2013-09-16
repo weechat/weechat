@@ -236,7 +236,7 @@ Des variables sont remplacées dans l'expression, en utilisant le format ${varia
   1. une couleur (format: color:xxx)
   2. une option (format: fichier.section.option)
   3. une variable locale du tampon
-  4. un un hdata/variable (la valeur est automatiquement convertie en chaîne), par défaut "window" et "buffer" pointent vers la fenêtre et le tampon courants.
+  4. un hdata/variable (la valeur est automatiquement convertie en chaîne), par défaut "window" et "buffer" pointent vers la fenêtre et le tampon courants.
 Le format du hdata peut être le suivant :
   hdata.var1.var2...: démarrer avec un hdata (le pointeur doit être connu), et demander les variables l'une après l'autre (d'autres hdata peuvent être suivis)
   hdata[list].var1.var2...: démarrer avec un hdata en utilisant une liste, par exemple :
@@ -423,7 +423,7 @@ listdefault: afficher les touches par défaut
    resetall: restaurer les touches aux valeurs par défaut et supprimer TOUTES les touches personnelles (utiliser avec précaution !)
     missing: ajouter les touches manquantes (en utilisant les touches par défaut), pratique après installation d'une nouvelle version de WeeChat
 
-Lors de l'association d'une commande à une touche, il est recommandé d'utiliser la touche alt+k (ou Echap puis k), et puis de presser la touche à associer: cela insère le code de la touche dans la ligne de commande.
+Lors de l'association d'une commande à une touche, il est recommandé d'utiliser la touche alt+k (ou Échap puis k), et puis de presser la touche à associer: cela insère le code de la touche dans la ligne de commande.
 
 Pour le contexte "mouse" (possible aussi pour le contexte "cursor"), la touche a le format: "@zone:touche" ou "@zone1>zone2:touche" où la zone peut être :
           *: n'importe quelle zone à l'écran

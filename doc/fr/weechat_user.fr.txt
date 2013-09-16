@@ -38,8 +38,8 @@ Ses principales fonctionnalités sont les suivantes :
 La page d'accueil de WeeChat est ici : http://weechat.org/
 
 [[pre-requisites]]
-Pré-requis
-~~~~~~~~~~
+Prérequis
+~~~~~~~~~
 
 Pour installer WeeChat, vous devez avoir :
 
@@ -137,7 +137,7 @@ $ make
 ----------------------------------------
 $ mkdir build
 $ cd build
-$ cmake .. -DPREFIX=/chemin/vers/repertoire
+$ cmake .. -DPREFIX=/chemin/vers/répertoire
 $ make
 $ make install
 ----------------------------------------
@@ -281,7 +281,7 @@ $ make
 
 ----------------------------------------
 $ ./autogen.sh
-$ ./configure --prefix=/chemin/vers/repertoire
+$ ./configure --prefix=/chemin/vers/répertoire
 $ make
 $ make install
 ----------------------------------------
@@ -1052,8 +1052,8 @@ Touches pour les tampons / fenêtres
 | @k(A-)@k(w) , @k(A-)@k(↓) | Sauter à la fenêtre en dessous | /window down
 | @k(A-)@k(w) , @k(A-)@k(←) | Sauter à la fenêtre de gauche | /window left
 | @k(A-)@k(w) , @k(A-)@k(→) | Sauter à la fenêtre de droite | /window right
-| @k(A-)@k(w) , @k(A-)@k(b) | Equilibrer la taille de toutes les fenêtres | /window balance
-| @k(A-)@k(w) , @k(A-)@k(s) | Echanger les tampons de deux fenêtres | /window swap
+| @k(A-)@k(w) , @k(A-)@k(b) | Équilibrer la taille de toutes les fenêtres | /window balance
+| @k(A-)@k(w) , @k(A-)@k(s) | Échanger les tampons de deux fenêtres | /window swap
 | @k(A-)@k(z)               | Zoomer sur la fenêtre courante (@k(A-)@k(z) de nouveau : restaurer l'état initial des fenêtres, avant le zoom) | /window zoom
 | @k(A-)@k(<)               | Sauter au tampon précédent dans la liste des tampons visités | /input jump_previously_visited_buffer
 | @k(A-)@k(>)               | Sauter au tampon suivant dans la liste des tampons visités | /input jump_next_visited_buffer
@@ -1250,7 +1250,7 @@ extensions/scripts) :
 
 [width="50%",cols="3m,4",options="header"]
 |========================================
-| Evènement  | Description
+| Évènement  | Description
 | event-down | Le bouton a été pressé mais pas encore relâché
 | event-drag | La souris a bougé avec le bouton pressé
 |========================================
@@ -1574,7 +1574,7 @@ Sections :
 | network    | /set weechat.network.*                    | Options réseau/SSL
 | bar        | <<command_weechat_bar,/bar>>              +
                /set weechat.bar.*                        | Options des barres
-| layout     | <<command_weechat_layout,/layout>>        | Layouts
+| layout     | <<command_weechat_layout,/layout>>        | Dispositions
 | notify     | <<command_weechat_buffer,/buffer notify>> | Niveaux de notification des tampons (les options peuvent être ajoutées/supprimées dans la section)
 | filter     | <<command_weechat_filter,/filter>>        | Filtres
 | key        | <<command_weechat_key,/key>>              | Touches pour le contexte "default"
@@ -2017,7 +2017,7 @@ irc.server.xxx.ssl_verify::
 
 [NOTE]
 L'option "ssl_verify" est activée par défaut, donc la vérification est stricte
-et peut échouer, même si cela pouvait être ok dans les versions inférieures à
+et peut échouer, même si cela pouvait être OK dans les versions inférieures à
 0.3.1.
 
 [[irc_connect_oftc_with_certificate]]
@@ -2246,7 +2246,7 @@ automatiquement remplacées par WeeChat lors de la réponse au CTCP :
 
 [NOTE]
 ^(1)^ La version git est la sortie de la commande `git describe`. Elle est
-connue seulement si WeeChat a été compilé dans le repository git et si git était
+connue seulement si WeeChat a été compilé dans le dépôt git et si git était
 installé.
 
 Si les options CTCP ne sont pas définies (par défaut), les réponses CTCP sont :
@@ -2791,8 +2791,8 @@ langages.
 
 Une autre extension appelée "script" est un gestionnaire de scripts et est
 utilisé pour charger/décharger des scripts pour n'importe quel langage, et
-installer/supprimer des scripts du repository WeeChat, qui sont visibles à cette
-URL: http://weechat.org/scripts
+installer/supprimer des scripts du dépôt WeeChat, qui sont visibles à cette URL:
+http://weechat.org/scripts
 
 Pour plus d'informations sur comment écrire des scripts, ou sur l'API
 WeeChat pour les scripts, merci de lire le 'Le Guide pour Scripts WeeChat'.

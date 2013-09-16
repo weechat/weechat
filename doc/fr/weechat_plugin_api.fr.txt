@@ -1229,7 +1229,7 @@ _Nouveau dans la version 0.3.4._
 Vérifie si une chaîne a un ou plusieurs "highlights", en utilisant une
 expression régulière.
 Pour au moins une correspondance dans la chaîne, elle doit être entourée de
-caractères de mot (caractère alpha-numérique, "-", "_" ou "|").
+caractères de mot (caractère alphanumérique, "-", "_" ou "|").
 
 Prototype :
 
@@ -1401,7 +1401,7 @@ Cette fonction n'est pas disponible dans l'API script.
 weechat_string_split_command
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Eclate une liste de commandes séparées par 'separator' (qui peut être échappé
+Éclate une liste de commandes séparées par 'separator' (qui peut être échappé
 par "\" dans la chaîne).
 
 Prototype :
@@ -1725,7 +1725,7 @@ weechat_string_eval_expression
 
 _Nouveau dans la version 0.4.0, mis à jour dans la 0.4.2._
 
-Evalue l'expression et retourne le résultat sous forme de chaîne.
+Évalue l'expression et retourne le résultat sous forme de chaîne.
 Les variables spéciales avec le format `${variable}` sont étendues (voir la
 commande `/eval` dans le 'Guide utilisateur WeeChat').
 
@@ -5439,7 +5439,7 @@ value = weechat.config_color_default(option)
 weechat_config_write_option
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Ecrit une ligne dans le fichier de configuration avec l'option et sa valeur
+Écrit une ligne dans le fichier de configuration avec l'option et sa valeur
 (cette fonction doit être appelée uniquement dans un "callback" "write" ou
 "write_default" pour une section).
 
@@ -5489,7 +5489,7 @@ def my_section_write_cb(data, config_file, section_name):
 weechat_config_write_line
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Ecrit une ligne dans un fichier de configuration (cette fonction doit être
+Écrit une ligne dans un fichier de configuration (cette fonction doit être
 appelée uniquement dans un "callback" "write" ou "write_default" pour une
 section).
 
@@ -5543,7 +5543,7 @@ def my_section_write_cb(data, config_file, section_name):
 weechat_config_write
 ^^^^^^^^^^^^^^^^^^^^
 
-Ecrit un fichier de configuration sur le disque.
+Écrit un fichier de configuration sur le disque.
 
 Prototype :
 
@@ -6663,7 +6663,7 @@ La fonction s'appelle "print_y" dans les scripts ("prnt_y" en Python).
 weechat_log_printf
 ^^^^^^^^^^^^^^^^^^
 
-Ecrit un message dans le fichier de log WeeChat (weechat.log).
+Écrit un message dans le fichier de log WeeChat (weechat.log).
 
 Prototype :
 
@@ -12346,7 +12346,7 @@ Fonctions pour le réseau.
 weechat_network_pass_proxy
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Etablit une connexion/authentification avec un proxy.
+Établit une connexion/authentification avec un proxy.
 
 [IMPORTANT]
 Cette fonction est bloquante sur l'appel à connect(), donc elle doit être
@@ -12393,7 +12393,7 @@ Cette fonction n'est pas disponible dans l'API script.
 weechat_network_connect_to
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Etablit une connexion à une machine distante.
+Établit une connexion à une machine distante.
 
 [IMPORTANT]
 Cette fonction est bloquante sur l'appel à connect(), donc elle doit être
@@ -14801,7 +14801,7 @@ upgrade_file = weechat.upgrade_new("mon_fichier", 1)
 weechat_upgrade_write_object
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Ecrit un objet dans le fichier de mise à jour.
+Écrit un objet dans le fichier de mise à jour.
 
 Prototype :
 
