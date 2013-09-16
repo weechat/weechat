@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2010-2011 Ivan Sichmann Freitas <ivansichfreitas@gmail.com>
+# Copyright (C) 2010-2013 Ivan Sichmann Freitas <ivansichfreitas@gmail.com>
 # Copyright (C) 2011 Sergio Durigan Junior <sergiosdj@gmail.com>
 #
 # This file is part of WeeChat, the extensible chat client.
@@ -22,7 +22,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-rc1\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2013-09-01 15:56+0200\n"
-"PO-Revision-Date: 2013-09-02 21:21+0200\n"
+"PO-Revision-Date: 2013-09-16 11:21+0200\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pt_BR\n"
@@ -67,7 +67,6 @@ msgstr ""
 msgid "Usage: %s [option...] [plugin:option...]\n"
 msgstr "Uso: %s [opção...] [plugin:opção...]\n"
 
-#, fuzzy
 msgid ""
 "  -a, --no-connect         disable auto-connect to servers at startup\n"
 "  -c, --colors             display default colors in terminal\n"
@@ -83,24 +82,24 @@ msgid ""
 "  -v, --version            display WeeChat version\n"
 "  plugin:option            option for plugin (see man weechat)\n"
 msgstr ""
-"  -a, --no-connect  desabilita a auto-conexão a servidores durante a "
+"  -a, --no-connect         desabilita a auto-conexão a servidores durante a "
 "inicialização\n"
-"  -c, --colors      exibe as cores padrões no terminal\n"
-"  -d, --dir <path>  configura diretório do WeeChat (padrão: ~/.weechat)\n"
-"  -h, --help        esta ajuda\n"
-"  -k, --keys        mostra as teclas de atalho padrão do WeeChat\n"
-"  -l, --license     mostra a licença do WeeChat\n"
-"  -p, --no-plugin   não carrega nenhum plugin durante a inicialização\n"
-"  -s, --no-script   não carrega nenhum script durante a inicialização\n"
-"  -v, --version     mostra a versão do WeeChat\n"
-"  plugin:opção      opção para o plugin\n"
-"                    por exemplo, o plugin irc pode conectar\n"
-"                    a um servidor pela url, dessa forma:\n"
-"                    irc[6][s]://[apelido[:senha]@]irc.exemplo.org[:porta][/"
-"#canal1][,#canal2[...]]\n"
-"                    (veja a documentação sobre plugins para mais "
-"informações\n"
-"                    sobre possíveis opções)\n"
+"  -c, --colors             exibe as cores padrões no terminal\n"
+"  -d, --dir <path>         configura diretório do WeeChat (padrão: ~/."
+"weechat)\n"
+"  -h, --help               mostra esta ajuda\n"
+"  -l, --license            mostra a licença do WeeChat\n"
+"  -p, --no-plugin          não carrega nenhum plugin durante a "
+"inicialização\n"
+"  -r, --run-command <cmd>  executa comandos após a inicialização\n"
+"                           (vários comandos são separados por ponto-e-"
+"vírgula)\n"
+"  -s, --no-script          não carrega nenhum script durante a "
+"inicialização\n"
+"      --upgrade            atualiza o WeeChat através dos arquivos de sessão "
+"(veja /help upgrade no WeeChat)\n"
+"  -v, --version            mostra a versão do WeeChat\n"
+"  plugin:option            opção para o plugin (veja o manual do WeeChat)\n"
 
 #, c-format
 msgid "Error: missing argument for \"%s\" option\n"
@@ -198,9 +197,9 @@ msgstr "Todas as barras foram excluídas"
 msgid "%sError: unknown bar \"%s\""
 msgstr "%sErro: barra desconhecida \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Bar \"%s\" deleted"
-msgstr "Barra excluída"
+msgstr "Barra \"%s\" excluída"
 
 #, c-format
 msgid "%sError: unable to set option \"%s\" for bar \"%s\""
@@ -229,17 +228,17 @@ msgstr "  %s[%s%d%s]%s (%s) %s%s%s (notificar: %s)"
 msgid "%sError: incorrect buffer number"
 msgstr "%sErro: número do buffer incorreto"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError: buffer not found"
-msgstr "%sErro: filtro \"%s\" não encontrado"
+msgstr "%sErro: buffer não encontrado"
 
 #, c-format
 msgid "%sError: WeeChat main buffer can't be closed"
 msgstr "%sErro: o buffer principal do WeeChat não pode ser fechado"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError: unable to set notify level \"%s\""
-msgstr "%sErro: não foi possível configurar a opção \"%s\" para a barra \"%s\""
+msgstr "%sErro: incapaz de configurar o nível de notificação \"%s\""
 
 #, c-format
 msgid "Local variables for buffer \"%s\":"
@@ -498,13 +497,11 @@ msgid_plural "%d new keys added (context: \"%s\")"
 msgstr[0] "%d nova tecla adicionada"
 msgstr[1] "%d novas teclas adicionadas (context: \"%s\")"
 
-#, fuzzy
 msgid "Saved layouts:"
-msgstr "Disposição dos buffers salva:"
+msgstr "Disposição dos buffers salvada:"
 
-#, fuzzy
 msgid " (current layout)"
-msgstr "valor atual"
+msgstr " (disposição atual)"
 
 msgid "No layout saved"
 msgstr "Nenhuma disposição salva"
@@ -514,13 +511,11 @@ msgstr "Nenhuma disposição salva"
 msgid "Layout of %s%s%s saved in \"%s\" (current layout: %s)"
 msgstr ""
 
-#, fuzzy
 msgid "buffers"
-msgstr "buffer"
+msgstr "buffers"
 
-#, fuzzy
 msgid "windows"
-msgstr "janela"
+msgstr "janelas"
 
 msgid "Layout of buffers+windows reset (current layout: -)"
 msgstr ""
@@ -530,21 +525,21 @@ msgid "Layout \"%s\" deleted (current layout: %s)"
 msgstr ""
 
 #. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows"
-#, fuzzy, c-format
+#, c-format
 msgid "Layout of %s%s%s reset in \"%s\""
-msgstr "%sTópico para o canal %s%s%s definido em %s"
+msgstr "Disposição de %s%s%s reconfigurada em \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError: unknown layout \"%s\""
-msgstr "%sErro: barra desconhecida \"%s\""
+msgstr "%sErro: disposição desconhecida \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError: layout \"%s\" already exists for \"%s\" command"
-msgstr "%sErro: outro comando \"%s\" já existe para o plugin \"%s\""
+msgstr "%sErro: disposição \"%s\" já existe para comando \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Layout \"%s\" has been renamed to \"%s\""
-msgstr "Filtro \"%s\" renomeado para \"%s\""
+msgstr "Disposição \"%s\" renomeado para \"%s\""
 
 msgid "Mouse enabled"
 msgstr "Mouse habilitado"
@@ -559,11 +554,9 @@ msgstr "Plugins carregados:"
 msgid "  written by \"%s\", license: %s"
 msgstr "  escrito por \"%s\", licença: %s"
 
-#, fuzzy
 msgid "    commands hooked:"
 msgstr "    comandos relacionados:"
 
-#, fuzzy
 msgid "    command_run hooked:"
 msgstr "    command_run relacionado:"
 
@@ -611,7 +604,6 @@ msgstr "    processos relacionados:"
 msgid "      command: '%s', child pid: %d"
 msgstr "      comando: '%s', pid do filho: %d"
 
-#, fuzzy
 msgid "    connect hooked:"
 msgstr "    conexões relacionadas:"
 
@@ -646,11 +638,9 @@ msgstr "(todos)"
 msgid "    configuration options hooked:"
 msgstr "    opções de configuração relacionadas:"
 
-#, fuzzy
 msgid "    completions hooked:"
 msgstr "    completações relacionadas:"
 
-#, fuzzy
 msgid "    modifiers hooked:"
 msgstr "    modificadores relacionados:"
 
@@ -738,9 +728,8 @@ msgstr "%sErro: falhou ao salvar as opções para %s"
 msgid "There is no encrypted data"
 msgstr ""
 
-#, fuzzy
 msgid "All encrypted data has been deleted"
-msgstr "Todas as barras foram excluídas"
+msgstr "Toda informação criptografada foi deletada"
 
 msgid "Encrypted data has been successfully decrypted"
 msgstr ""
@@ -755,34 +744,32 @@ msgid ""
 "secured data or passphrase"
 msgstr ""
 
-#, fuzzy
 msgid "Passphrase deleted"
-msgstr "Barra excluída"
+msgstr "Password deletado"
 
 msgid "Passphrase is not set"
-msgstr ""
+msgstr "Password não foi definido"
 
 msgid "Passphrase changed"
-msgstr ""
+msgstr "Password alterado"
 
 msgid "Passphrase added"
-msgstr ""
+msgstr "Password adicionado"
 
 #, c-format
 msgid "Secured data \"%s\" set"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Secured data \"%s\" deleted"
-msgstr "Barra excluída"
+msgstr "Dados seguros \"%s\" deletados"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sSecured data \"%s\" not found"
-msgstr "%s%s: script \"%s\" não encontrado"
+msgstr "%sDados seguros \"%s\" não encontrados"
 
-#, fuzzy
 msgid "default: "
-msgstr "valor padrão"
+msgstr "padrão: "
 
 msgid "(unknown)"
 msgstr "(desconhecido)"
@@ -795,41 +782,41 @@ msgstr ""
 "%sOpção \"%s\" não encontrada (dica: você pode usar \"*\" no começo e/ou fim "
 "da opção para ver uma sublista)"
 
-#, fuzzy
 msgid "No option found"
-msgstr "Nenhum plugin encontrado"
+msgstr "Nenhuma opção encontrada"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%d%s option with value changed (matching with \"%s\")"
 msgid_plural "%s%d%s options with value changed (matching with \"%s\")"
-msgstr[0] "%s%d%s opção de configuração encontrada casando com \"%s\""
-msgstr[1] "%s%d%s opções de configuração encontradas casando com \"%s\""
+msgstr[0] "%s%d%s opção de configuração com valor trocado (casando com \"%s\")"
+msgstr[1] ""
+"%s%d%s opções de configuração com valor trocado (casando com \"%s\")"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%d%s option (matching with \"%s\")"
 msgid_plural "%s%d%s options (matching with \"%s\")"
-msgstr[0] "%s%d%s opção de configuração encontrada casando com \"%s\""
-msgstr[1] "%s%d%s opções de configuração encontradas casando com \"%s\""
+msgstr[0] "%s%d%s opção de configuração (casando com \"%s\")"
+msgstr[1] "%s%d%s opções de configuração (casando com \"%s\")"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%d%s option"
 msgid_plural "%s%d%s options"
-msgstr[0] "%s%d%s opção de configuração não encontrada"
-msgstr[1] "%s%d%s opções de configuração não encontradas"
+msgstr[0] "%s%d%s opção de configuração"
+msgstr[1] "%s%d%s opções de configuração"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%d%s option with value changed"
 msgid_plural "%s%d%s options with value changed"
-msgstr[0] "%s%d%s opção de configuração não encontrada"
-msgstr[1] "%s%d%s opções de configuração não encontradas"
+msgstr[0] "%s%d%s opção de configuração com valor trocado"
+msgstr[1] "%s%d%s opções de configuração com valor trocado"
 
 #, c-format
 msgid "%sError: failed to set option \"%s\""
 msgstr "%sErro: falhou ao configurar a opção \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError: option \"%s\" not found"
-msgstr "%sErro: plugin \"%s\" não encontrado"
+msgstr "%sErro: opção \"%s\" não encontrado"
 
 msgid "Option changed: "
 msgstr "Opção mudada: "
@@ -935,26 +922,24 @@ msgstr ""
 "%sErro: impossível mesclar janelas, não já nenhuma outra janela com o mesmo "
 "tamanho perto da atual"
 
-#, fuzzy
 msgid "set or remove away status"
-msgstr "Alternar status de ausente"
+msgstr "ativar ou remover o status de ausente"
 
 msgid "[-all] [<message>]"
 msgstr "[-all] [<mensagem>]"
 
-#, fuzzy
 msgid ""
 "   -all: set or remove away status on all connected servers\n"
 "message: message for away (if no message is given, away status is removed)"
 msgstr ""
-"   -all: alterna o status de ausência em todos os servidores conectados\n"
+"   -all: ativa ou remove o status de ausência em todos os servidores "
+"conectados\n"
 "message: mensagem para ausência (se nenhuma mensagem for fornecida, o status "
 "de ausência é removido)"
 
 msgid "manage bars"
 msgstr "gerenciar barras"
 
-#, fuzzy
 msgid ""
 "list|listfull|listitems || add <name> <type>[,<condition>] <position> <size> "
 "<separator> <item1>[,<item2>...] || default [input|title|status|nicklist] || "
@@ -966,7 +951,7 @@ msgstr ""
 "status|nicklist] || del <nome>|-all || set <nome> <opção> <valor> || hide|"
 "show|toggle <nome> || scroll <nome> <janela> <valor_de_rolagem>"
 
-# in the option "position", the parameters must be passes in english, but the
+# in the option "position", the parameters must be passed in english, but the
 # options were translated (inside parentesis) to become clearer
 #, fuzzy
 msgid ""
@@ -1070,16 +1055,16 @@ msgstr ""
 msgid "manage buffers"
 msgstr "gerenciar buffers"
 
-#, fuzzy
 msgid ""
 "list || clear [<number>|<name>|-merged|-all] || move|merge <number> || swap "
 "<number1>|<name1> [<number2>|<name2>] || unmerge [<number>|-all] || close "
 "[<n1>[-<n2>]|<name>] || notify <level> || localvar || set <property> <value> "
 "|| get <property> || <number>|<name>"
 msgstr ""
-"list || clear [<número>|<nome>|-merged|-all] || move|merge <número> || "
-"unmerge [<número>|-all] || close [<n1>[-<n2>]|<nome>] || notify <nível> || "
-"localvar || set <propriedade> <valor> || get <propriedade> || <número>|<nome>"
+"list || clear [<número>|<nome>|-merged|-all] || move|merge <número> || swap "
+"<número1>|<nome1> [<número2>|<nome2>] || unmerge [<número>|-all] || close "
+"[<n1>[-<n2>]|<nome>] || notify <nível> || localvar || set <propriedade> "
+"<valor> || get <propriedade> || <número>|<nome>"
 
 # must find a better translation to "hotlist"
 #, fuzzy
@@ -1182,9 +1167,8 @@ msgstr ""
 msgid "define color aliases and display palette of colors"
 msgstr "define apelidos para cores e mostra a palheta de cores"
 
-#, fuzzy
 msgid "alias <color> <name> || unalias <color> || reset || -o"
-msgstr "alias <cor> <apelido> || unalias <cor> || reset"
+msgstr "alias <cor> <apelido> || unalias <cor> || reset || -o"
 
 # Translate orange? Is it a internal name?
 # TODO: revisit here when color names were specified as translatable or not
@@ -1782,14 +1766,13 @@ msgstr ""
 msgid "save/apply/reset layout for buffers and windows"
 msgstr "salvar/aplicar/resetar a disposição dos buffers e janelas"
 
-#, fuzzy
 msgid ""
 "save [<name>] [buffers|windows] || apply [<name>] [buffers|windows] || leave "
 "|| reset [<name>] [buffers|windows] || rename <name> <new_name>"
 msgstr ""
-"save [buffers|janelas] || apply [buffers|janelas] || reset [buffers|janelas]"
+"save [<nome>] [buffers|windows] || apply [<nome>] [buffers|windows] || leave "
+"|| reset [<nome>] [buffers|windows] || rename <nome> <novo_nome>"
 
-#, fuzzy
 msgid ""
 "   save: save current layout\n"
 "  apply: apply saved layout\n"
@@ -1805,11 +1788,15 @@ msgid ""
 msgstr ""
 "   save: salvar a disposição atual\n"
 "  apply: aplicar a disposição salva\n"
-"  reset: remover a disposição salva\n"
+"  leave: deixar a disposição atual (não atualiza nenhuma disposição)\n"
+"  reset: reset buffers and/or windows in a saved layout\n"
+"         (if both buffers and windows are reset, the layout is removed)\n"
+" rename: rename a layout\n"
+"   name: name for saved layout (default is \"default\")\n"
 "buffers: salva/aplica apenas os buffers (ordem dos buffers)\n"
 "windows: salva/aplica apenas às janelas (buffer mostrado por cada janela)\n"
 "\n"
-"Sem argumentos, este comando mosta a disposição salva"
+"Sem argumentos, este comando mosta a disposição salva."
 
 msgid "mouse control"
 msgstr "controle do mouse"
@@ -2004,7 +1991,6 @@ msgstr "executa um comando várias vezes"
 msgid "[-interval <delay>] <count> <command>"
 msgstr "[-interval <tempo_de_espera>] <contador> <comandos>"
 
-#, fuzzy
 msgid ""
 "  delay: delay between execution of commands (in milliseconds)\n"
 "  count: number of times to execute command\n"
@@ -2017,9 +2003,16 @@ msgid ""
 "  scroll 2 pages up:\n"
 "    /repeat 2 /window page_up"
 msgstr ""
-" plugin: nome do plugin ('weechat' para comandos internos do weechat)\n"
-"command: comando a ser executado (um '/' é automaticamente adicionado se não "
-"for encontrado no começo de um comando)"
+"  delay: atraso entre execução dos comandos (em milisegundos)\n"
+"  count: número de vezes que o comando deve ser executado\n"
+"command: comando a ser executado (um '/' é automaticamente adicionado se "
+"nenhum for encontrado no começo do comando)\n"
+"\n"
+"Todos os comandos são executados no buffer onde este comando é executado.\n"
+"\n"
+"Exemplo:\n"
+"  Rolar 2 páginas para cima:\n"
+"    /repeat 2 /window page_up"
 
 msgid "save configuration files to disk"
 msgstr "salva configurações dos arquivos no disco"
@@ -2084,11 +2077,9 @@ msgstr ""
 msgid "set config options"
 msgstr "define opções de configuração"
 
-#, fuzzy
 msgid "[<option> [<value>]] || diff [<option> [<option>...]]"
-msgstr "[<opção> [<valor>]]"
+msgstr "[<opção> [<valor>]] || diff [<opção> [<opção>...]]"
 
-#, fuzzy
 msgid ""
 "option: name of an option (can start or end with '*' to list many options)\n"
 " value: new value for option\n"
@@ -2115,12 +2106,13 @@ msgid ""
 msgstr ""
 "opção: nome de uma opção\n"
 "valor: novo valor para a opção\n"
+" diff: mostra apenas opções mudadas\n"
 "\n"
 "O novo valor pode ser, de acordo com o tipo de variável:\n"
 "  boolean: on, off ou toggle\n"
 "  integer: número, ++número ou --número\n"
-"  string : qualquer string (\"\" para uma string vazia)\n"
-"  color  : nome de cor, ++número ou --número\n"
+"   string: qualquer string (\"\" para uma string vazia)\n"
+"    color: nome de cor, ++número ou --número\n"
 "\n"
 "Para todos os tipos, voce pode usar null para remover o valor da opção "
 "(valor indefinido). Isto funciona apenas para algumas variáveis especiais de "
@@ -2130,7 +2122,11 @@ msgstr ""
 "  mostrar opções sobre destaque:\n"
 "    /set *highlight*\n"
 "  adicionar uma palavra ao destaque:\n"
-"    /set weechat.look.highlight \"word\""
+"    /set weechat.look.highlight \"word\"\n"
+"  mostrar opções alteradas:\n"
+"    /set diff\n"
+"  mostrar opções alteradas no plugin irc:\n"
+"    /set diff irc.*"
 
 msgid "unset/reset config options"
 msgstr "indefine/restaura opções de configuração"
@@ -2166,9 +2162,8 @@ msgstr ""
 msgid "upgrade WeeChat without disconnecting from servers"
 msgstr "atualiza o WeeChat sem desconectar dos servidores"
 
-#, fuzzy
 msgid "[<path_to_binary>|-quit]"
-msgstr "[<caminho_para_o_binário>]"
+msgstr "[<caminho_para_o_binário>|-quit]"
 
 #, fuzzy
 msgid ""
@@ -2220,7 +2215,19 @@ msgstr ""
 "  2. descarrega todos os plugins (arquivos de configuração (*.conf) são "
 "escritos no disco)\n"
 "  3. salva o config do WeeChat (weechat.conf)\n"
-"  4. executa o novo binário do WeeChat."
+"  4. executa o novo binário do WeeChat.\n"
+"Com a opção \"-quit\", o processo é ligeiramente diferente:\n"
+"  1. fecha *TODAS* as conexões (irc, xfer, relay, ...)\n"
+"  2. salvar as sessões em arquivos (*.upgrade)\n"
+"  3. descarregar todos os plugins\n"
+"  4. salvar as configurações do WeeChat\n"
+"  5. termina WeeChat\n"
+"Então posteriormente você pode restaurar a sessão com o comando: weechat --"
+"upgrade\n"
+"IMPORTANTE: você deve restaurar a sessão com exatamente com a mesma "
+"configuração (files *.conf).\n"
+"É possível restaurar a sessão do WeeChat em outra máquina se você copiar o "
+"conteúdo do diretório \"~/.weechat\"."
 
 msgid "show WeeChat uptime"
 msgstr "mostra o tempo de execução do WeeChat"
@@ -2296,7 +2303,6 @@ msgstr ""
 msgid "manage windows"
 msgstr "gerencia janelas"
 
-#, fuzzy
 msgid ""
 "list || -1|+1|b#|up|down|left|right [-window <number>] || <number> || splith|"
 "splitv [-window <number>] [<pct>] || resize [-window <number>] [+/-]<pct> || "
@@ -2307,11 +2313,14 @@ msgid ""
 "scroll_next_highlight|scroll_unread [-window <number>] || swap [-window "
 "<number>] [up|down|left|right] || zoom[-window <number>]"
 msgstr ""
-"list || -1|+1|b#|up|down|left|right || splith|splitv [<pct>] || resize "
-"[+/-]<pct> || balance || merge [all] || page_up|page_down || refresh || "
-"scroll [+/-]<valor>[s|m|h|d|M|y] || scroll_horiz [+/-]<valor>[%] || "
-"scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_previous_highlight|"
-"scroll_next_highlight || swap [up|down|left|right] || zoom"
+"list || -1|+1|b#|up|down|left|right [-window <número>] || <número> || splith|"
+"splitv [-window <número>] [<pct>] || resize [-window <número>] [+/-]<pct> || "
+"balance || merge [-window <número>] [all] || page_up|page_down [-window "
+"<número>] || refresh || scroll [-window <número>] [+/-]<valor>[s|m|h|d|M|y] "
+"|| scroll_horiz [-window <número>] [+/-]<valor>[%] || scroll_up|scroll_down|"
+"scroll_top|scroll_bottom|scroll_beyond_end|scroll_previous_highlight|"
+"scroll_next_highlight|scroll_unread [-window <número>] || swap [-window "
+"<number>] [up|down|left|right] || zoom[-window <número>]"
 
 #, fuzzy
 msgid ""
@@ -2445,13 +2454,9 @@ msgstr "nomes dos filtros"
 msgid "commands (weechat and plugins)"
 msgstr "comandos (weechat e plugins)"
 
-# Find a better translation to 'hooked' in this context
-#, fuzzy
 msgid "names of infos hooked"
 msgstr "nomes das informações associadas"
 
-# Find a better translation to 'hooked' in this context
-#, fuzzy
 msgid "names of infolists hooked"
 msgstr "nomes de listas de informação associadas"
 
@@ -2501,10 +2506,10 @@ msgstr ""
 
 msgid "areas (\"chat\" or bar name) for free cursor movement"
 msgstr ""
+"areas (\"chat\" ou nome da barra) para livre movimento do cursor do mouse"
 
-#, fuzzy
 msgid "names of layouts"
-msgstr "nomes das barras"
+msgstr "nomes das disposições"
 
 msgid "names of secured data (file sec.conf, section data)"
 msgstr ""
@@ -2539,26 +2544,26 @@ msgstr "apelido para cor"
 msgid "%sError: palette option must be numeric"
 msgstr "%sErro: opção da palheta deve ser numérica"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sWarning: unknown option for section \"%s\": %s (value: \"%s\")"
-msgstr "%sAviso: %s, linha %d: opção \"%s\" desconhecido para seção \"%s\""
+msgstr "%sAviso: opção desconhecida para seção \"%s\": %s (valor: \"%s\")"
 
 msgid "Notify level for buffer"
 msgstr "Nível de notificação para o buffer"
 
-#, fuzzy
 msgid ""
 "command executed when WeeChat starts, after loading plugins (note: content "
 "is evaluated, see /help eval)"
 msgstr ""
-"comando executado quando o WeeChat inicia, após o carregamento dos plugins"
+"comando executado quando o WeeChat inicia, após o carregamento dos plugins "
+"(nota: o conteúdo é avaliado, veja /help eval)"
 
-#, fuzzy
 msgid ""
 "command executed when WeeChat starts, before loading plugins (note: content "
 "is evaluated, see /help eval)"
 msgstr ""
-"comando executado quando o WeeChat inicia, antes do carregamento dos plugins"
+"comando executado quando o WeeChat inicia, antes do carregamento dos plugins "
+"(nota: conteúdo é avaliado, veja /help eval)"
 
 msgid "display WeeChat logo at startup"
 msgstr "mosta o logo do WeeChat na inicialização"
@@ -2615,7 +2620,6 @@ msgstr ""
 "na lista atual"
 
 #. TRANSLATORS: string "${color:xxx}" must NOT be translated
-#, fuzzy
 msgid ""
 "time format for each line displayed in buffers (see man strftime for date/"
 "time specifiers) (note: content is evaluated, so you can use colors with "
@@ -2624,9 +2628,10 @@ msgid ""
 "${color:240}%S\""
 msgstr ""
 "formato de tempo para cada linha mostrada nos buffers (veja man strftime "
-"para especificadores de data/tempo),, cores são permitidas com o formato "
-"\"${cor}\", por exemplo o tempo francês: \"${lightblue}%H${white}%M"
-"${lightred}%S\""
+"para especificadores de data/tempo) (nota: o conteúdo é avaliado, então voce "
+"pode usar cores com formato \"${color:xxx}\", veja /help eval); para exemplo "
+"de tempo usando escala de cinza (requer suporte à 256 cores): "
+"\"${color:252}%H${color:245}$M${color:240}%S\""
 
 msgid ""
 "force \"bold\" attribute for light colors and \"darkgray\" in basic colors "
@@ -2664,9 +2669,9 @@ msgid ""
 "window, or if line is from a merged buffer not selected)"
 msgstr ""
 
-#, fuzzy
 msgid "use a different color for offline nicks (not in nicklist any more)"
-msgstr "cor de texto para apelidos desconectados"
+msgstr ""
+"cor de texto para apelidos desconectados (não mais na lista de apelidos)"
 
 msgid ""
 "automatically reset table of color pairs when number of available pairs is "
@@ -2845,9 +2850,8 @@ msgstr ""
 "group_time_desc, group_number_asc, group_number_desc, number_asc, "
 "number_desc)"
 
-#, fuzzy
 msgid "text displayed at the end of the hotlist"
-msgstr "string exibida entre buffers na lista de atividade"
+msgstr "texto exibido no final da lista de atividade"
 
 msgid ""
 "keep only unique numbers in hotlist (this applies only on hotlist items "
@@ -2914,16 +2918,16 @@ msgid ""
 "allow only binding of \"safe\" keys (beginning with a ctrl or meta code)"
 msgstr ""
 
-#, fuzzy
 msgid "text to display before nick in prefix of message, example: \"<\""
-msgstr "texto a ser exibido antes do apelido na janela de chat"
+msgstr ""
+"texto a ser exibido antes do apelido no prefixo da mensagem, exemplo: \"<\""
 
-#, fuzzy
 msgid "text to display after nick in prefix of message, example: \">\""
-msgstr "texto a ser exibido depois do apelido na janela de chat"
+msgstr ""
+"texto a ser exibido depois do apelido no prefixo da mensage, examplo: \">\""
 
 msgid "enable mouse support"
-msgstr ""
+msgstr "habilita suporte à mouse"
 
 msgid ""
 "delay (in milliseconds) to grab a mouse event: WeeChat will wait this delay "
@@ -2942,11 +2946,10 @@ msgid ""
 "sequence for end of bracketed paste (\"ESC[201~\") was not received in time"
 msgstr ""
 
-#, fuzzy
 msgid ""
 "max number of lines for paste without asking user (-1 = disable this feature)"
 msgstr ""
-"número máximo de linhas para serem coladas sem perguntar ao usuário (0 = "
+"número máximo de linhas para serem coladas sem perguntar ao usuário (-1 = "
 "desabilita essa característica)"
 
 #. TRANSLATORS: string "${color:xxx}" must NOT be translated
@@ -3012,13 +3015,13 @@ msgstr ""
 "tamanho máximo para o nome do buffer, quando muitos buffers estão mesclados "
 "com o mesmo número (0 = sem tamanho máximo)"
 
-#, fuzzy
 msgid ""
 "char to display if buffer name is truncated (when many buffers are merged "
 "with same number) (must be exactly one char on screen)"
 msgstr ""
-"mostra '+' se o nome do buffer está truncado (quando muitos buffers estão "
-"mesclados com o mesmo número)"
+"caractere a ser exibido se o nome do buffer está truncado (quando muitos "
+"buffers são mesclados com o mesmo número) (precisa ser exatamente um "
+"caractere na tela)"
 
 msgid ""
 "prefix displayed for a message with same nick as previous message: use a "
@@ -3026,10 +3029,8 @@ msgid ""
 "prefix, or an empty string to disable feature (display prefix)"
 msgstr ""
 
-# Find a better translation to "string"
-#, fuzzy
 msgid "string displayed after prefix"
-msgstr "string mostrada após prefixo"
+msgstr "cadeia de caracteres mostrada após prefixo"
 
 msgid "use a marker (line or char) on buffers to show first unread line"
 msgstr ""
@@ -3073,43 +3074,41 @@ msgstr ""
 msgid "alert user when text sought is not found in buffer"
 msgstr "alertar usuário quando o texto solicitado não é encontrado no buffer"
 
-#, fuzzy
 msgid ""
 "char used to draw horizontal separators around bars and windows (empty value "
 "will draw a real line with ncurses, but may cause bugs with URL selection "
 "under some terminals), wide chars are NOT allowed here"
 msgstr ""
-"caractere usado para desenhar separadores horizontais em volta de barras "
-"(valor vazio vai desenhar uma linha real com ncurses, mas pode causar bugs "
-"com seleção de URL em alguns terminais), caracteres extendidos NÃO são "
+"caractere usado para desenhar separadores horizontais em volta de barras e "
+"janelas(valor vazio vai desenhar uma linha real com ncurses, mas pode causar "
+"bugs com seleção de URL em alguns terminais), caracteres extendidos NÃO são "
 "aceitos aqui"
 
-#, fuzzy
 msgid ""
 "char used to draw vertical separators around bars and windows (empty value "
 "will draw a real line with ncurses), wide chars are NOT allowed here"
 msgstr ""
-"caractere usado para desenhar separadores verticais em volta de barras "
-"(valor vazio vai desenhar uam linha real com ncurses), caracteres extendidos "
-"NÃO são aceitos aqui"
+"caractere usado para desenhar separadores verticais em volta de barras e "
+"janelas(valor vazio vai desenhar uam linha real com ncurses), caracteres "
+"extendidos NÃO são aceitos aqui"
 
 msgid "set title for window (terminal for Curses GUI) with name and version"
 msgstr ""
 "define o título para a janela (terminal para a interface Curses) com nome e "
 "versão"
 
-#, fuzzy
 msgid ""
 "time format for dates converted to strings and displayed in messages (see "
 "man strftime for date/time specifiers)"
 msgstr ""
-"formato de tempo para datas convertidas para strings e mostradas em mensagens"
+"formato de tempo para datas convertidas para strings e mostradas em "
+"mensagens (veja man strftime fpara especificadores de data/tempo)"
 
 msgid "display an horizontal separator between windows"
-msgstr ""
+msgstr "exibe um separador horizontal entre janelas"
 
 msgid "display a vertical separator between windows"
-msgstr ""
+msgstr "exibe um separador vertical entre janelas"
 
 msgid "text color for '+' when scrolling bars"
 msgstr "cor de texto para '+' quando estiver rolando barras"
@@ -3126,11 +3125,8 @@ msgstr "cor do texto para nomes de buffer"
 msgid "text color for channel names"
 msgstr "cor do texto para nomes de canal"
 
-#, fuzzy
 msgid "text color for message displayed when the day has changed"
-msgstr ""
-"cor de texto para marcadores de mensagens (mostrados com o comando /debug "
-"tags)"
+msgstr "cor de texto para mensagem exibida quando o dia muda"
 
 msgid "text color for delimiters"
 msgstr "cor de texto para delimitadores"
@@ -3139,10 +3135,14 @@ msgid ""
 "text color for chat when line is inactive (buffer is merged with other "
 "buffers and is not selected)"
 msgstr ""
+"cor do texto para a conversa quando a linha é inativa (buffer foi mesclado "
+"com outros buffers e não está selecionada)"
 
 msgid ""
 "text color for chat when window is inactive (not current selected window)"
 msgstr ""
+"cor do texto para conversa quando a janela está inativa (sem janela "
+"atualmente selecionada)"
 
 msgid "text color for nicks in chat window"
 msgstr "cor do texto para apelidos na janela de conversa"
@@ -3155,23 +3155,19 @@ msgstr ""
 "cor do texto para apelidos (lista de cores separada por vírgulas, fundo é "
 "permitido com o formato: \"fg:bg\", por exemplo: \"lightred:blue\")"
 
-#, fuzzy
 msgid "color for nick prefix (string displayed before nick in prefix)"
 msgstr ""
-"cor para o prefixo do apelido (o prefixo é uma string customizada exibida "
-"antes de um apelido)"
+"cor para o prefixo do apelido (string exibida antes de um apelido no prefixo)"
 
-#, fuzzy
 msgid "text color for offline nick (not in nicklist any more)"
-msgstr "cor de texto para apelidos desconectados"
+msgstr ""
+"cor de texto para apelidos desconectados (não mais na lista de apelidos)"
 
-#, fuzzy
 msgid "text color for offline nick with highlight"
-msgstr "cor de texto para apelidos desconectados"
+msgstr "cor de texto para apelidos desconectados com destaque"
 
-#, fuzzy
 msgid "background color for offline nick with highlight"
-msgstr "cor de fundo para prefixo de destacado"
+msgstr "cor de fundo para apelido desconectado com destaque"
 
 msgid "text color for other nick in private buffer"
 msgstr "cor de texto para outros apelidos em buffers privados"
@@ -3179,11 +3175,9 @@ msgstr "cor de texto para outros apelidos em buffers privados"
 msgid "text color for local nick in chat window"
 msgstr "cor de texto para apelido local na janela de conversa"
 
-#, fuzzy
 msgid "color for nick suffix (string displayed after nick in prefix)"
 msgstr ""
-"cor para o sufixo do apelido (o sufixo é uma string customizada exibida "
-"depois de um apelido)"
+"cor para o sufixo do apelido (string exibida depois do apelido no prefixo)"
 
 msgid "text color for highlighted prefix"
 msgstr "cor de texto para prefixo de destacado"
