@@ -559,7 +559,7 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_weechat.look.hotlist_prefix]] *weechat.look.hotlist_prefix*
-** Beschreibung: `Text der am Ende der Hotlist angezeigt werden soll`
+** Beschreibung: `Text der vor der Hotlist angezeigt werden soll`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"H: "`)
 
