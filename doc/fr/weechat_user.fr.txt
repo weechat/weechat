@@ -2768,7 +2768,7 @@ Exemple du rmodifier par défaut pour la commande `/oper` :
 * expression régulière : `^(/oper +\S+ +)(.*)`
 * groupes : `1,2*`
 
-A chaque fois que les modifiers "history_add" ou "input_text_display" sont
+À chaque fois que les modifiers "history_add" ou "input_text_display" sont
 appelés, l'expression régulière est vérifiée. Si la chaîne correspond, alors
 elle est remplacée par les groupes capturés, tels que définis dans la chaîne
 des groupes.
