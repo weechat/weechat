@@ -104,7 +104,7 @@
 ** 値: 1 .. 1024 (デフォルト値: `5`)
 
 * [[option_relay.network.password]] *relay.network.password*
-** 説明: `このリレーを利用するためにクライアントが必要なパスワード (空の場合パスワードなし)`
+** 説明: `password required by clients to access this relay (empty value means no password required) (note: content is evaluated, see /help eval)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 

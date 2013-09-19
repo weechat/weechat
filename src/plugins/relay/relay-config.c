@@ -629,7 +629,8 @@ relay_config_init ()
         relay_config_file, ptr_section,
         "password", "string",
         N_("password required by clients to access this relay (empty value "
-            "means no password required)"),
+            "means no password required) (note: content is evaluated, see "
+           "/help eval)"),
         NULL, 0, 0, "", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     relay_config_network_ssl_cert_key = weechat_config_new_option (
         relay_config_file, ptr_section,

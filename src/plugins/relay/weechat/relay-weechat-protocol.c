@@ -165,7 +165,7 @@ relay_weechat_protocol_is_sync (struct t_relay_client *ptr_client,
 
 RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
 {
-    char **options, *pos;
+    char **options, *pos, *password;
     int num_options, i, compression;
 
     RELAY_WEECHAT_PROTOCOL_MIN_ARGS(1);
@@ -182,10 +182,13 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
                 pos++;
                 if (strcmp (options[i], "password") == 0)
                 {
-                    if (strcmp (weechat_config_string (relay_config_network_password),
-                                pos) == 0)
+                    password = weechat_string_eval_expression (weechat_config_string (relay_config_network_password),
+                                                               NULL, NULL, NULL);
+                    if (password)
                     {
-                        RELAY_WEECHAT_DATA(client, password_ok) = 1;
+                        if (strcmp (password, pos) == 0)
+                            RELAY_WEECHAT_DATA(client, password_ok) = 1;
+                        free (password);
                     }
                 }
                 else if (strcmp (options[i], "compression") == 0)

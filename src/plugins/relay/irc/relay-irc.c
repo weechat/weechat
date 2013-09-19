@@ -1296,7 +1296,7 @@ void
 relay_irc_recv (struct t_relay_client *client, const char *data)
 {
     char str_time[128], str_signal[128], str_server_channel[256];
-    char str_command[128], *target, **irc_argv, *pos;
+    char str_command[128], *target, **irc_argv, *pos, *password;
     const char *irc_command, *irc_channel, *irc_args, *irc_args2;
     int irc_argc, redirect_msg;
     const char *nick, *irc_is_channel, *isupport, *info, *pos_password;
@@ -1366,11 +1366,16 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
                         pos_password = pos + 1;
                     }
                 }
-                if (!RELAY_IRC_DATA(client, password_ok)
-                    && (strcmp (weechat_config_string (relay_config_network_password),
-                                pos_password) == 0))
+                if (!RELAY_IRC_DATA(client, password_ok))
                 {
-                    RELAY_IRC_DATA(client, password_ok) = 1;
+                    password = weechat_string_eval_expression (weechat_config_string (relay_config_network_password),
+                                                               NULL, NULL, NULL);
+                    if (password)
+                    {
+                        if (strcmp (password, pos_password) == 0)
+                            RELAY_IRC_DATA(client, password_ok) = 1;
+                        free (password);
+                    }
                 }
             }
         }
@@ -1773,9 +1778,10 @@ void
 relay_irc_alloc (struct t_relay_client *client)
 {
     struct t_relay_irc_data *irc_data;
-    const char *password;
+    char *password;
 
-    password = weechat_config_string (relay_config_network_password);
+    password = weechat_string_eval_expression (weechat_config_string (relay_config_network_password),
+                                               NULL, NULL, NULL);
 
     client->protocol_data = malloc (sizeof (*irc_data));
     if (client->protocol_data)
@@ -1792,6 +1798,9 @@ relay_irc_alloc (struct t_relay_client *client)
         RELAY_IRC_DATA(client, hook_signal_irc_disc) = NULL;
         RELAY_IRC_DATA(client, hook_hsignal_irc_redir) = NULL;
     }
+
+    if (password)
+        free (password);
 }
 
 /*

@@ -637,6 +637,7 @@ It is possible to set environment variable "WEECHAT_PASSPHRASE" to prevent the p
 Secured data with format ${sec.data.xxx} can be used in:
   - command line argument "--run-command"
   - irc server options: autojoin, command, password, sasl_{username|password}
+  - option relay.network.password
   - options weechat.startup.command_{before|after}_plugins
   - command /eval.
 

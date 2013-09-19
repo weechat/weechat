@@ -6903,6 +6903,7 @@ command_init ()
                      "  - command line argument \"--run-command\"\n"
                      "  - irc server options: autojoin, command, password, "
                      "sasl_{username|password}\n"
+                     "  - option relay.network.password\n"
                      "  - options weechat.startup.command_{before|after}_plugins\n"
                      "  - command /eval.\n\n"
                      "Examples:\n"

@@ -104,7 +104,7 @@
 ** valori: 1 .. 1024 (valore predefinito: `5`)
 
 * [[option_relay.network.password]] *relay.network.password*
-** descrizione: `password richiesta dai client per accedere a questo relay (un valore nullo corrisponde a nessuna password richiesta)`
+** descrizione: `password required by clients to access this relay (empty value means no password required) (note: content is evaluated, see /help eval)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 

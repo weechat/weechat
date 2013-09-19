@@ -622,34 +622,35 @@ file: 保存する設定ファイル (拡張子 ".conf" は不要)
          set <name> <value>
          del <name>
 
-passphrase: パスフレーズを変更 (パスフレーズがない場合、sec.conf ファイルに平文でデータを保存します)
-   -delete: パスフレーズを削除
-   decrypt: 暗号化されているデータを復号化 (起動時にパスフレーズが設定されていない場合に起きます)
-  -discard: 全ての暗号化データを破棄
-       set: 保護データを追加または変更
-       del: 保護データを削除
+passphrase: change the passphrase (without passphrase, data is stored as plain text in file sec.conf)
+   -delete: delete passphrase
+   decrypt: decrypt data still encrypted (it happens only if passphrase was not given on startup)
+  -discard: discard all data still encrypted
+       set: add or change secured data
+       del: delete secured data
 
-引数がない場合、新しいバッファに保護データを表示します。
+Without argument, this command displays secured data in a new buffer.
 
-パスフレーズを利用する場合 (データが暗号化されている場合)、WeeChat は起動時にパスフレーズを尋ねます。
-環境変数 "WEECHAT_PASSPHRASE" を利用すれば入力を回避できます (WeeChat は /upgrade の時に同じ変数を利用します)。
+When a passphrase is used (data encrypted), it is asked by WeeChat on startup.
+It is possible to set environment variable "WEECHAT_PASSPHRASE" to prevent the prompt (this same variable is used by WeeChat on /upgrade).
 
-${sec.data.xxx} の形でフォーマットされた保護データは以下の様に利用できます:
-  - コマンドライン引数 "--run-command"
-  - irc サーバオプション: autojoin、command、password、sasl_{username|password}
-  - weechat.startup.command_{before|after}_plugins オプション
-  - /eval コマンド。
+Secured data with format ${sec.data.xxx} can be used in:
+  - command line argument "--run-command"
+  - irc server options: autojoin, command, password, sasl_{username|password}
+  - option relay.network.password
+  - options weechat.startup.command_{before|after}_plugins
+  - command /eval.
 
-例:
-  パスフレーズを設定:
+Examples:
+  set a passphrase:
     /secure passphrase this is my passphrase
-  freenode の SASL パスワードを暗号化:
+  encrypt freenode SASL password:
     /secure set freenode mypassword
     /set irc.server.freenode.sasl_password "${sec.data.freenode}"
-  oftc の nickserv 用パスワードを暗号化:
+  encrypt oftc password for nickserv:
     /secure set oftc mypassword
     /set irc.server.oftc.command "/msg nickserv identify ${sec.data.oftc}"
-  ニックネーム "mynick" を取り戻すためのエイリアス ghost を設定
+  alias to ghost the nick "mynick":
     /alias ghost /eval /msg -server freenode nickserv ghost mynick ${sec.data.freenode}
 ........................................
 
