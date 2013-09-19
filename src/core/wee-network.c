@@ -48,6 +48,7 @@
 
 #include "weechat.h"
 #include "wee-network.h"
+#include "wee-eval.h"
 #include "wee-hook.h"
 #include "wee-config.h"
 #include "wee-proxy.h"
@@ -238,17 +239,27 @@ int
 network_pass_httpproxy (struct t_proxy *proxy, int sock, const char *address,
                         int port)
 {
-    char buffer[256], authbuf[128], authbuf_base64[512];
+    char buffer[256], authbuf[128], authbuf_base64[512], *username, *password;
     int length;
 
     if (CONFIG_STRING(proxy->options[PROXY_OPTION_USERNAME])
         && CONFIG_STRING(proxy->options[PROXY_OPTION_USERNAME])[0])
     {
         /* authentication */
-        snprintf (authbuf, sizeof (authbuf), "%s:%s",
-                  CONFIG_STRING(proxy->options[PROXY_OPTION_USERNAME]),
-                  (CONFIG_STRING(proxy->options[PROXY_OPTION_PASSWORD])) ?
-                  CONFIG_STRING(proxy->options[PROXY_OPTION_PASSWORD]) : "");
+        username = eval_expression (CONFIG_STRING(proxy->options[PROXY_OPTION_USERNAME]),
+                                    NULL, NULL, NULL);
+        if (!username)
+            return 0;
+        password = eval_expression (CONFIG_STRING(proxy->options[PROXY_OPTION_PASSWORD]),
+                                    NULL, NULL, NULL);
+        if (!password)
+        {
+            free (username);
+            return 0;
+        }
+        snprintf (authbuf, sizeof (authbuf), "%s:%s", username, password);
+        free (username);
+        free (password);
         string_encode_base64 (authbuf, strlen (authbuf), authbuf_base64);
         length = snprintf (buffer, sizeof (buffer),
                            "CONNECT %s:%d HTTP/1.0\r\nProxy-Authorization: "
@@ -340,16 +351,22 @@ network_pass_socks4proxy (struct t_proxy *proxy, int sock, const char *address,
 {
     struct t_network_socks4 socks4;
     unsigned char buffer[24];
-    char ip_addr[NI_MAXHOST];
+    char ip_addr[NI_MAXHOST], *username;
     int length;
+
+    username = eval_expression (CONFIG_STRING(proxy->options[PROXY_OPTION_USERNAME]),
+                                NULL, NULL, NULL);
+    if (!username)
+        return 0;
 
     socks4.version = 4;
     socks4.method = 1;
     socks4.port = htons (port);
     network_resolve (address, ip_addr, NULL);
     socks4.address = inet_addr (ip_addr);
-    strncpy (socks4.user, CONFIG_STRING(proxy->options[PROXY_OPTION_USERNAME]),
-             sizeof (socks4.user) - 1);
+    strncpy (socks4.user, username, sizeof (socks4.user) - 1);
+
+    free (username);
 
     length = 8 + strlen (socks4.user) + 1;
     if (network_send_with_retry (sock, (char *) &socks4, length, 0) != length)
@@ -388,6 +405,7 @@ network_pass_socks5proxy (struct t_proxy *proxy, int sock, const char *address,
     unsigned char buffer[288];
     int username_len, password_len, addr_len, addr_buffer_len;
     unsigned char *addr_buffer;
+    char *username, *password;
 
     socks5.version = 5;
     socks5.nmethods = 1;
@@ -419,16 +437,29 @@ network_pass_socks5proxy (struct t_proxy *proxy, int sock, const char *address,
             return 0;
 
         /* authentication as in RFC 1929 */
-        username_len = strlen (CONFIG_STRING(proxy->options[PROXY_OPTION_USERNAME]));
-        password_len = strlen (CONFIG_STRING(proxy->options[PROXY_OPTION_PASSWORD]));
+        username = eval_expression (CONFIG_STRING(proxy->options[PROXY_OPTION_USERNAME]),
+                                    NULL, NULL, NULL);
+        if (!username)
+            return 0;
+        password = eval_expression (CONFIG_STRING(proxy->options[PROXY_OPTION_PASSWORD]),
+                                    NULL, NULL, NULL);
+        if (!password)
+        {
+            free (username);
+            return 0;
+        }
+        username_len = strlen (username);
+        password_len = strlen (password);
 
         /* make username/password buffer */
         buffer[0] = 1;
         buffer[1] = (unsigned char) username_len;
-        memcpy(buffer + 2, CONFIG_STRING(proxy->options[PROXY_OPTION_USERNAME]), username_len);
+        memcpy (buffer + 2, username, username_len);
         buffer[2 + username_len] = (unsigned char) password_len;
-        memcpy (buffer + 3 + username_len,
-                CONFIG_STRING(proxy->options[PROXY_OPTION_PASSWORD]), password_len);
+        memcpy (buffer + 3 + username_len, password, password_len);
+
+        free (username);
+        free (password);
 
         if (network_send_with_retry (sock, buffer, 3 + username_len + password_len, 0) < 3 + username_len + password_len)
             return 0;

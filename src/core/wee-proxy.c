@@ -337,7 +337,8 @@ proxy_create_option (const char *proxy_name, int index_option,
                 ptr_option = config_file_new_option (
                     weechat_config_file, weechat_config_section_proxy,
                     option_name, "string",
-                    N_("username for proxy server"),
+                    N_("username for proxy server "
+                       "(note: content is evaluated, see /help eval)"),
                     NULL, 0, 0, value, NULL, 0,
                     NULL, NULL, NULL, NULL, NULL, NULL);
                 break;
@@ -345,7 +346,8 @@ proxy_create_option (const char *proxy_name, int index_option,
                 ptr_option = config_file_new_option (
                     weechat_config_file, weechat_config_section_proxy,
                     option_name, "string",
-                    N_("password for proxy server"),
+                    N_("password for proxy server "
+                       "(note: content is evaluated, see /help eval)"),
                     NULL, 0, 0, value, NULL, 0,
                     NULL, NULL, NULL, NULL, NULL, NULL);
                 break;
