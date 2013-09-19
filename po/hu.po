@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-rc1\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-09-19 13:49+0200\n"
+"POT-Creation-Date: 2013-09-19 13:56+0200\n"
 "PO-Revision-Date: 2013-09-02 21:20+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5562,9 +5562,8 @@ msgstr ""
 msgid "check that the SSL connection is fully trusted"
 msgstr ""
 
-#, fuzzy
-msgid "password for server"
-msgstr "jelszó az IRC szerveren"
+msgid "password for server (note: content is evaluated, see /help eval)"
+msgstr ""
 
 #. TRANSLATORS: please keep words "client capabilities" between brackets if translation is different (see fr.po)
 msgid ""
@@ -9256,3 +9255,7 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#, fuzzy
+#~ msgid "password for server"
+#~ msgstr "jelszó az IRC szerveren"

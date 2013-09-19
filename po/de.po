@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-09-19 13:49+0200\n"
+"POT-Creation-Date: 2013-09-19 13:56+0200\n"
 "PO-Revision-Date: 2013-09-16 22:50+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -6689,8 +6689,11 @@ msgstr ""
 msgid "check that the SSL connection is fully trusted"
 msgstr "Überprüft ob die SSL-Verbindung vertrauenswürdig ist"
 
-msgid "password for server"
-msgstr "Passwort für den Server"
+#, fuzzy
+msgid "password for server (note: content is evaluated, see /help eval)"
+msgstr ""
+"Passwort für SASL Authentifikation (Hinweis: Inhalt ist evaluiert, siehe /"
+"help eval)"
 
 #. TRANSLATORS: please keep words "client capabilities" between brackets if translation is different (see fr.po)
 msgid ""
@@ -10836,3 +10839,6 @@ msgstr "Type"
 
 msgid "Constants"
 msgstr "Konstanten"
+
+#~ msgid "password for server"
+#~ msgstr "Passwort für den Server"

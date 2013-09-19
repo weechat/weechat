@@ -499,7 +499,7 @@
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
 * [[option_irc.server_default.password]] *irc.server_default.password*
-** 説明: `サーバのパスワード`
+** 説明: `password for server (note: content is evaluated, see /help eval)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 

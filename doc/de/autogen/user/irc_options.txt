@@ -499,7 +499,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_irc.server_default.password]] *irc.server_default.password*
-** Beschreibung: `Passwort für den Server`
+** Beschreibung: `password for server (note: content is evaluated, see /help eval)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 

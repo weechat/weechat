@@ -499,7 +499,7 @@
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
 * [[option_irc.server_default.password]] *irc.server_default.password*
-** descrizione: `password per il server`
+** descrizione: `password for server (note: content is evaluated, see /help eval)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 

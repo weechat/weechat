@@ -499,7 +499,7 @@
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
 * [[option_irc.server_default.password]] *irc.server_default.password*
-** description: `mot de passe pour le serveur`
+** description: `mot de passe pour le serveur (note: le contenu est évalué, voir /help eval)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 

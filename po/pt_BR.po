@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-rc1\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-09-19 13:49+0200\n"
+"POT-Creation-Date: 2013-09-19 13:56+0200\n"
 "PO-Revision-Date: 2013-09-16 11:21+0200\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5768,8 +5768,11 @@ msgstr "tamanho da chave utilizada durante a Troca de Chaves Diffie-Hellman"
 msgid "check that the SSL connection is fully trusted"
 msgstr "verificar que a conexão SSL é totalmente confiável"
 
-msgid "password for server"
-msgstr "senha para o servidor"
+#, fuzzy
+msgid "password for server (note: content is evaluated, see /help eval)"
+msgstr ""
+"comando executado quando o WeeChat inicia, antes do carregamento dos plugins "
+"(nota: conteúdo é avaliado, veja /help eval)"
 
 #. TRANSLATORS: please keep words "client capabilities" between brackets if translation is different (see fr.po)
 msgid ""
@@ -9452,3 +9455,6 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#~ msgid "password for server"
+#~ msgstr "senha para o servidor"

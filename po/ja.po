@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-rc1\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-09-19 13:49+0200\n"
+"POT-Creation-Date: 2013-09-19 13:56+0200\n"
 "PO-Revision-Date: 2013-09-02 21:20+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -6296,8 +6296,10 @@ msgstr "Diffie-Hellman 鍵交換で使われる鍵長"
 msgid "check that the SSL connection is fully trusted"
 msgstr "SSL 接続が完全に信頼できることを確認"
 
-msgid "password for server"
-msgstr "サーバのパスワード"
+#, fuzzy
+msgid "password for server (note: content is evaluated, see /help eval)"
+msgstr ""
+"SASL 認証のパスワード (注意: 値は評価されます、/help eval を参照してください)"
 
 #. TRANSLATORS: please keep words "client capabilities" between brackets if translation is different (see fr.po)
 msgid ""
@@ -10191,3 +10193,6 @@ msgstr "タイプ"
 
 msgid "Constants"
 msgstr "定数"
+
+#~ msgid "password for server"
+#~ msgstr "サーバのパスワード"
