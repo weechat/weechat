@@ -104,7 +104,7 @@
 ** Werte: 1 .. 1024 (Standardwert: `5`)
 
 * [[option_relay.network.password]] *relay.network.password*
-** Beschreibung: `password required by clients to access this relay (empty value means no password required) (note: content is evaluated, see /help eval)`
+** Beschreibung: `Passwort wird von Clients benötigt um Zugriff auf dieses Relay zu erhalten (kein Eintrag bedeutet, dass kein Passwort benötigt wird) (Hinweis: Inhalt wird evaluiert, siehe /help eval)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 

@@ -414,7 +414,7 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_irc.server_default.autojoin]] *irc.server_default.autojoin*
-** Beschreibung: `durch Kommata getrennte Liste der Channels, die beim Verbinden zum Server betreten werden sollen (Beispiel: "#chan1,#chan2,#chan3 key1,key2") (Hinweis: Inhalt ist evaluiert, siehe /help eval)`
+** Beschreibung: `durch Kommata getrennte Liste der Channels, die beim Verbinden zum Server betreten werden sollen (Beispiel: "#chan1,#chan2,#chan3 key1,key2") (Hinweis: Inhalt wird evaluiert, siehe /help eval)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -454,7 +454,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_irc.server_default.command]] *irc.server_default.command*
-** Beschreibung: `enthält Befehle die nach der Verbindung zum Server ausgeführt werden sollen. Mehrere Befehle müssen durch ein ";" getrennt werden. Möchte man ein Semikolon nutzen muss man "\;" verwenden. Die speziellen Variablen $nick, $channel und $server werden dabei durch den jeweiligen Wert ersetzt (Hinweis: Inhalt ist evaluiert, siehe /help eval)`
+** Beschreibung: `enthält Befehle die nach der Verbindung zum Server ausgeführt werden sollen. Mehrere Befehle müssen durch ein ";" getrennt werden. Möchte man ein Semikolon nutzen muss man "\;" verwenden. Die speziellen Variablen $nick, $channel und $server werden dabei durch den jeweiligen Wert ersetzt (Hinweis: Inhalt wird evaluiert, siehe /help eval)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -499,7 +499,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_irc.server_default.password]] *irc.server_default.password*
-** Beschreibung: `password for server (note: content is evaluated, see /help eval)`
+** Beschreibung: `Passwort für Server (Hinweis: Inhalt wird evaluiert, siehe /help eval)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -519,7 +519,7 @@
 ** Werte: plain, dh-blowfish, dh-aes, external (Standardwert: `plain`)
 
 * [[option_irc.server_default.sasl_password]] *irc.server_default.sasl_password*
-** Beschreibung: `Passwort für SASL Authentifikation (Hinweis: Inhalt ist evaluiert, siehe /help eval)`
+** Beschreibung: `Passwort für SASL Authentifikation (Hinweis: Inhalt wird evaluiert, siehe /help eval)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -529,7 +529,7 @@
 ** Werte: 1 .. 3600 (Standardwert: `15`)
 
 * [[option_irc.server_default.sasl_username]] *irc.server_default.sasl_username*
-** Beschreibung: `Username für SASL Authentifikation (Hinweis: Inhalt ist evaluiert, siehe /help eval)`
+** Beschreibung: `Username für SASL Authentifikation (Hinweis: Inhalt wird evaluiert, siehe /help eval)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
