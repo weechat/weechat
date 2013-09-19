@@ -3333,6 +3333,8 @@ unhook (struct t_hook *hook)
 #endif
                 break;
             case HOOK_TYPE_PRINT:
+                if (HOOK_PRINT(hook, tags_array))
+                    string_free_split (HOOK_PRINT(hook, tags_array));
                 if (HOOK_PRINT(hook, message))
                     free (HOOK_PRINT(hook, message));
                 break;

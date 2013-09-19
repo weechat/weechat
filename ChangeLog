@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.2-rc1, 2013-09-03
+v0.4.2-rc1, 2013-09-19
 
 
 This document lists all changes for each version.
@@ -14,6 +14,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 Version 0.4.2 (under dev!)
 --------------------------
 
+* core: fix memory leak on unhook of a print hook (if using tags)
 * core: fix computation of columns in output of /help (take care about size of
   time/buffer/prefix)
 * core: display day change message dynamically (do not store it as a line in
