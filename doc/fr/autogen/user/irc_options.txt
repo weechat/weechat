@@ -299,7 +299,7 @@
 ** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_irc.look.smart_filter_delay]] *irc.look.smart_filter_delay*
-** description: `délai pour filtrer les messages join/part/quit (en minutes)`
+** description: `délai pour filtrer les messages join/part/quit (en minutes): si le pseudo n'a pas parlé durant les N dernières minutes, le join/part/quit est filtré`
 ** type: entier
 ** valeurs: 1 .. 10080 (valeur par défaut: `5`)
 

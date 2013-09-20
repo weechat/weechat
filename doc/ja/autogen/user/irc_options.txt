@@ -299,7 +299,7 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_irc.look.smart_filter_delay]] *irc.look.smart_filter_delay*
-** 説明: `参加/退出/終了 メッセージのフィルタリングを遅らせる (秒単位)`
+** 説明: `delay for filtering join/part/quit messages (in minutes): if the nick did not speak during the last N minutes, the join/part/quit is filtered`
 ** タイプ: 整数
 ** 値: 1 .. 10080 (デフォルト値: `5`)
 

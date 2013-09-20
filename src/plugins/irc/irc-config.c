@@ -2514,7 +2514,9 @@ irc_config_init ()
     irc_config_look_smart_filter_delay = weechat_config_new_option (
         irc_config_file, ptr_section,
         "smart_filter_delay", "integer",
-        N_("delay for filtering join/part/quit messages (in minutes)"),
+        N_("delay for filtering join/part/quit messages (in minutes): if the "
+           "nick did not speak during the last N minutes, the join/part/quit is "
+           "filtered"),
         NULL, 1, 60*24*7, "5", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_smart_filter_join = weechat_config_new_option (
         irc_config_file, ptr_section,
