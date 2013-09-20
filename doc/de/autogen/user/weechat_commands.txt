@@ -622,36 +622,37 @@ Wird keine Datei angegeben dann werden alle Konfigurationen (WeeChat und Erweite
          set <name> <value>
          del <name>
 
-passphrase: ändern der Passphrase (ohne Passphrase, werden die Daten in der Datei sec.conf in Klartext gesichert)
-   -delete: löscht Passphrase
-   decrypt: entschlüsselt Daten nachträglich (dies passiert nur falls die Passphrase beim Start nicht angegeben wurde)
-  -discard: verwirft alle verschlüsselten Daten
-       set: fügt eine schutzwürdige Information hinzu oder ändert eine bestehende
-       del: entfernt eine schutzwürdige Information
+passphrase: change the passphrase (without passphrase, data is stored as plain text in file sec.conf)
+   -delete: delete passphrase
+   decrypt: decrypt data still encrypted (it happens only if passphrase was not given on startup)
+  -discard: discard all data still encrypted
+       set: add or change secured data
+       del: delete secured data
 
-Ohne Angabe von Argumenten wird ein neuer Buffer geöffnet und die schutzwürdigen Informationen können dort eingesehen werden.
+Without argument, this command displays secured data in a new buffer.
 
-Wird eine Passphrase verwendet (Daten liegen verschlüsselt vor), fragt WeeChat beim Start die Passphrase ab.
-Es ist möglich eine Umgebungsvariable "WEECHAT_PASSPHRASE" zu setzen um die Eingabeaufforderung beim Programmstart zu vermeiden (diese Variable wird auch von WeeChat beim /upgrade verwendet).
+When a passphrase is used (data encrypted), it is asked by WeeChat on startup.
+It is possible to set environment variable "WEECHAT_PASSPHRASE" to prevent the prompt (this same variable is used by WeeChat on /upgrade).
 
-schutzwürdige Daten mit dem Format ${sec.data.xxx} können wie folgt genutzt werden:
-  - Argument in der Befehlszeile für "--run-command"
-  - IRC Server Optionen: autojoin, command, password, sasl_{username|password}
-  - Option relay.network.password
-  - Option weechat.startup.command_{before|after}_plugins
-  - Befehl /eval.
+Secured data with format ${sec.data.xxx} can be used in:
+  - command line argument "--run-command"
+  - options weechat.startup.command_{before|after}_plugins
+  - proxy options: username, password
+  - irc server options: autojoin, command, password, sasl_{username|password}
+  - option relay.network.password
+  - command /eval.
 
-Beispiele:
-  setzen einer Passphrase:
-    /secure passphrase Dies ist meine Passphrase
-  verschlüsselt freenode SASL Passwort:
-    /secure set freenode meinPasswort
+Examples:
+  set a passphrase:
+    /secure passphrase this is my passphrase
+  encrypt freenode SASL password:
+    /secure set freenode mypassword
     /set irc.server.freenode.sasl_password "${sec.data.freenode}"
-  verschlüsselt oftc Passwort für nickserv:
-    /secure set oftc meinPasswort
+  encrypt oftc password for nickserv:
+    /secure set oftc mypassword
     /set irc.server.oftc.command "/msg nickserv identify ${sec.data.oftc}"
-  alias um den eigenen Nick zu ghosten:
-    /alias ghost /eval /msg -server freenode nickserv ghost meinNick ${sec.data.freenode}
+  alias to ghost the nick "mynick":
+    /alias ghost /eval /msg -server freenode nickserv ghost mynick ${sec.data.freenode}
 ........................................
 
 [[command_weechat_set]]

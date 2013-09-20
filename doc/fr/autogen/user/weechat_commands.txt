@@ -636,9 +636,10 @@ Il est possible de définir la variable d'environnement WEECHAT_PASSPHRASE pour 
 
 Les données sécurisées avec le format ${sec.data.xxx} peuvent être utilisées dans :
   - le paramètre de ligne de commande "--run-command"
+  - les options weechat.startup.command_{before|after}_plugins
+  - les options de proxy: username, password
   - les options de serveur irc: autojoin, command, password, sasl_{username|password}
   - l'option relay.network.password
-  - les options weechat.startup.command_{before|after}_plugins
   - la commande /eval.
 
 Exemples :
