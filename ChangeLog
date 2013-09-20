@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.2-rc1, 2013-09-19
+v0.4.2-rc1, 2013-09-20
 
 
 This document lists all changes for each version.
@@ -87,6 +87,8 @@ Version 0.4.2 (under dev!)
 * api: use pointer for infolist "hook" to return only one hook
 * api: add new function strlen_screen
 * plugins: remove the demo plugin
+* aspell: fix detection of word start/end when there are apostrophes or minus
+  chars before/after word
 * aspell: rename option aspell.look.color to aspell.color.misspelled, add option
   aspell.color.suggestions
 * aspell: add support of enchant library (patch #6858)

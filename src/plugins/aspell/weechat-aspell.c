@@ -545,14 +545,14 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
     long unsigned int value;
     struct t_gui_buffer *buffer;
     struct t_aspell_speller_buffer *ptr_speller_buffer;
-    char *result, *ptr_string, *pos_space, *ptr_end, save_end;
+    char *result, *ptr_string, *pos_space, *ptr_end, *ptr_end_valid, save_end;
     char *word_for_suggestions, *old_suggestions, *suggestions;
     char *word_and_suggestions;
     const char *color_normal, *color_error, *ptr_suggestions;
     int utf8_char_int, char_size;
     int length, index_result, length_word, word_ok;
     int length_color_normal, length_color_error, rc;
-    int input_pos, current_pos, word_start_pos, word_end_pos;
+    int input_pos, current_pos, word_start_pos, word_end_pos, word_end_pos_valid;
 
     /* make C compiler happy */
     (void) data;
@@ -672,11 +672,9 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
         current_pos = 0;
         while (ptr_string[0])
         {
-            /* find start of word */
+            /* find start of word: it must start with an alphanumeric char */
             utf8_char_int = weechat_utf8_char_int (ptr_string);
-            while ((!iswalnum (utf8_char_int) && (utf8_char_int != '\'')
-                    && (utf8_char_int != '-'))
-                   || iswspace (utf8_char_int))
+            while ((!iswalnum (utf8_char_int)) || iswspace (utf8_char_int))
             {
                 char_size = weechat_utf8_char_size (ptr_string);
                 memcpy (result + index_result, ptr_string, char_size);
@@ -692,19 +690,29 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
 
             word_start_pos = current_pos;
             word_end_pos = current_pos;
+            word_end_pos_valid = current_pos;
 
-            /* find end of word */
+            /* find end of word: ' and - allowed in word, but not at the end */
+            ptr_end_valid = ptr_string;
             ptr_end = weechat_utf8_next_char (ptr_string);
             utf8_char_int = weechat_utf8_char_int (ptr_end);
             while (iswalnum (utf8_char_int) || (utf8_char_int == '\'')
                    || (utf8_char_int == '-'))
             {
-                ptr_end = weechat_utf8_next_char (ptr_end);
                 word_end_pos++;
+                if (iswalnum (utf8_char_int))
+                {
+                    /* pointer to last alphanumeric char in the word */
+                    ptr_end_valid = ptr_end;
+                    word_end_pos_valid = word_end_pos;
+                }
+                ptr_end = weechat_utf8_next_char (ptr_end);
                 if (!ptr_end[0])
                     break;
                 utf8_char_int = weechat_utf8_char_int (ptr_end);
             }
+            ptr_end = weechat_utf8_next_char (ptr_end_valid);
+            word_end_pos = word_end_pos_valid;
             word_ok = 0;
             if (weechat_aspell_string_is_url (ptr_string))
             {
