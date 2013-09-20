@@ -1545,6 +1545,7 @@ GNU/Linux の場合、プラグインファイルは ".so" という拡張子を
 | logger    | バッファの内容をファイルに保存
 | relay     | ネットワーク経由でデータを中継
 | rmodifier | 正規表現を用いた文字列の置換
+| script    | スクリプトマネージャ
 | python    | Python スクリプト API
 | perl      | Perl スクリプト API
 | ruby      | Ruby スクリプト API

@@ -1636,6 +1636,7 @@ Les extensions par défaut sont :
 | logger    | Enregistrement des tampons dans des fichiers
 | relay     | Relai de données via le réseau
 | rmodifier | Modification des chaînes de "modifier" avec des expressions régulières
+| script    | Gestionnaire de scripts
 | python    | Interface (API) pour scripts Python
 | perl      | Interface (API) pour scripts Perl
 | ruby      | Interface (API) pour scripts Ruby

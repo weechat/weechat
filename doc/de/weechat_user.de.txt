@@ -1617,6 +1617,7 @@ Standarderweiterungen:
 | logger      | erstellt Protokolldateien von Buffern
 | relay       | Daten via Netzwerk übermitteln
 | rmodifier   | wandelt Schlüsselwörter mit regulären Ausdrücken
+| script      | Skripten-Manager
 | python      | Python-Skript API
 | perl        | Perl-Skript API
 | ruby        | Ruby-Skript API

@@ -1645,6 +1645,7 @@ I plugin predefiniti sono:
 | logger    | Registra i buffer su file
 | relay     | Relay dei dati via rete
 | rmodifier | Cambia le stringhe del modificatore con espressioni regolari
+| script    | Gestore script
 | python    | API per lo scripting in Python
 | perl      | API per lo scripting in Perl
 | ruby      | API per lo scripting in Ruby

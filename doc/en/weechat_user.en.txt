@@ -1593,6 +1593,7 @@ Default plugins are:
 | logger    | Log buffers to files
 | relay     | Relay data via network
 | rmodifier | Alter modifier strings with regular expressions
+| script    | Scripts manager
 | python    | Python scripting API
 | perl      | Perl scripting API
 | ruby      | Ruby scripting API
