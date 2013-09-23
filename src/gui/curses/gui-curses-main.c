@@ -84,10 +84,10 @@ gui_main_get_password (const char *prompt1, const char *prompt2,
 
     clear();
 
-    mvprintw (0, 0, "%s", prompt1);
-    mvprintw (1, 0, "%s", prompt2);
-    mvprintw (2, 0, "%s", prompt3);
-    mvprintw (3, 0, "=> ");
+    mvaddstr (0, 0, prompt1);
+    mvaddstr (1, 0, prompt2);
+    mvaddstr (2, 0, prompt3);
+    mvaddstr (3, 0, "=> ");
     refresh ();
 
     memset (password, '\0', size);
@@ -103,14 +103,14 @@ gui_main_get_password (const char *prompt1, const char *prompt2,
             {
                 i--;
                 password[i] = '\0';
-                mvprintw (3, 3 + i, " ");
+                mvaddstr (3, 3 + i, " ");
                 move (3, 3 + i);
             }
         }
         else
         {
             password[i] = ch;
-            mvprintw (3, 3 + i, "*");
+            mvaddstr (3, 3 + i, "*");
             i++;
         }
         refresh ();

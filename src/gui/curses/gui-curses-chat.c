@@ -198,9 +198,9 @@ gui_chat_display_horizontal_line (struct t_gui_window *window, int simulate)
         x = 0;
         while (x < gui_chat_get_real_width (window))
         {
-            mvwprintw (GUI_WINDOW_OBJECTS(window)->win_chat,
+            mvwaddstr (GUI_WINDOW_OBJECTS(window)->win_chat,
                        window->win_chat_cursor_y, x,
-                       "%s", read_marker_string);
+                       read_marker_string);
             x += size_on_screen;
         }
     }
@@ -405,8 +405,8 @@ gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
                 if (!simulate)
                 {
                     output = string_iconv_from_internal (NULL, utf_char);
-                    wprintw (GUI_WINDOW_OBJECTS(window)->win_chat,
-                             "%s", (output) ? output : utf_char);
+                    waddstr (GUI_WINDOW_OBJECTS(window)->win_chat,
+                             (output) ? output : utf_char);
                     if (output)
                         free (output);
 
@@ -1477,7 +1477,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
             {
                 gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
                                               GUI_COLOR_CHAT_TEXT_FOUND);
-                mvwprintw (GUI_WINDOW_OBJECTS(window)->win_chat,
+                mvwaddstr (GUI_WINDOW_OBJECTS(window)->win_chat,
                            read_marker_y, read_marker_x,
                            "*");
             }
@@ -1491,7 +1491,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
             {
                 gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
                                               GUI_COLOR_CHAT_READ_MARKER);
-                mvwprintw (GUI_WINDOW_OBJECTS(window)->win_chat,
+                mvwaddstr (GUI_WINDOW_OBJECTS(window)->win_chat,
                            read_marker_y, read_marker_x,
                            "*");
             }
@@ -1852,7 +1852,7 @@ gui_chat_draw (struct t_gui_buffer *buffer, int clear_chat)
                 case GUI_BUFFER_TYPE_FORMATTED:
                     /* min 2 lines for chat area */
                     if (ptr_win->win_chat_height < 2)
-                        mvwprintw (GUI_WINDOW_OBJECTS(ptr_win)->win_chat, 0, 0, "...");
+                        mvwaddstr (GUI_WINDOW_OBJECTS(ptr_win)->win_chat, 0, 0, "...");
                     else
                         gui_chat_draw_formatted_buffer (ptr_win);
                     break;

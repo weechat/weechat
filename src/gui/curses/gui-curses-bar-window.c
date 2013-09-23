@@ -361,7 +361,7 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                         output = string_iconv_from_internal (NULL, utf_char);
                         if (low_char)
                             wattron (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar, A_REVERSE);
-                        wprintw (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar, "%s",
+                        waddstr (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                                  (output) ? output : utf_char);
                         if (low_char)
                             wattroff (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar, A_REVERSE);
@@ -683,7 +683,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                     gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                                                        CONFIG_COLOR(config_color_bar_more),
                                                        CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
-                    mvwprintw (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                    mvwaddstr (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                                y, x, ptr_string);
                 }
             }
@@ -702,7 +702,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                     gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                                                        CONFIG_COLOR(config_color_bar_more),
                                                        CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_BG]));
-                    mvwprintw (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
+                    mvwaddstr (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar,
                                y, x, ptr_string);
                 }
             }
