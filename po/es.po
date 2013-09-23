@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.4.2-rc2\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2013-09-20 16:43+0200\n"
-"PO-Revision-Date: 2013-09-20 23:11+0200\n"
+"PO-Revision-Date: 2013-09-23 08:35+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: es\n"
@@ -374,7 +374,7 @@ msgstr ""
 "(light)red, (light)green, brown, yellow, (light)blue, (light)magenta, "
 "(light)cyan), un número de color de la terminal o un alias; atributos "
 "delante del color están permitidos (solamente para color de texto , no de "
-"fondo): \"*\" para negrita, \"!\" para revertir, \"_\" para subrayado."
+"fondo): \"*\" para negrita, \"!\" para revertir, \"_\" para subrayado"
 
 #. TRANSLATORS: please do not translate "(null)"
 msgid "undefined value allowed (null)"
@@ -900,7 +900,7 @@ msgid ""
 "current one"
 msgstr ""
 "%sError: no puede unir las ventanas, no hay ninguna otra ventana con el "
-"mismo tamaño de la actual."
+"mismo tamaño de la actual"
 
 #, fuzzy
 msgid "set or remove away status"
@@ -2757,7 +2757,7 @@ msgstr ""
 "automáticamente reinicia la tabla de pares de colores cuando el número de "
 "pares disponibles es menor o igual a este número (-1 = desactiva el reinicio "
 "automático, en ese caso un reinicio manual \"/color reset\" es necesario "
-"cuando la tabla esté llena)."
+"cuando la tabla esté llena)"
 
 msgid ""
 "if set, uses real white color, disabled by default for terms with white "
@@ -3606,7 +3606,7 @@ msgstr "%sError al escribir el archivo de configuración \"%s\""
 
 #, c-format
 msgid "%sWarning: configuration file \"%s\" not found"
-msgstr "%sAtención: archivo de configuración \"%s\" no encontrado."
+msgstr "%sAtención: archivo de configuración \"%s\" no encontrado"
 
 #, c-format
 msgid "Reading configuration file %s"
@@ -4181,7 +4181,7 @@ msgid "No alias found matching \"%s\""
 msgstr "Ningún alias encontrado con \"%s\""
 
 msgid "No alias defined"
-msgstr "Ningún alias definido."
+msgstr "Ningún alias definido"
 
 #, c-format
 msgid "%sAlias \"%s\" not found"
