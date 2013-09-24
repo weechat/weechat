@@ -942,9 +942,9 @@ hook_timer_init (struct t_hook *hook)
         /*
          * here we should use 0, but with this value timer is sometimes called
          * before second has changed, so for displaying time, it may display
-         * 2 times the same second, that's why we use 1000 micro seconds
+         * 2 times the same second, that's why we use 10000 micro seconds
          */
-        HOOK_TIMER(hook, last_exec).tv_usec = 1000;
+        HOOK_TIMER(hook, last_exec).tv_usec = 10000;
         HOOK_TIMER(hook, last_exec).tv_sec =
             HOOK_TIMER(hook, last_exec).tv_sec -
             ((HOOK_TIMER(hook, last_exec).tv_sec + (diff_hour * 3600)) %
