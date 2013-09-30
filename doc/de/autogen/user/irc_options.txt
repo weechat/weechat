@@ -299,7 +299,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.smart_filter_delay]] *irc.look.smart_filter_delay*
-** Beschreibung: `delay for filtering join/part/quit messages (in minutes): if the nick did not speak during the last N minutes, the join/part/quit is filtered`
+** Beschreibung: `Verzögerung, in Minuten, für eine Filterung von join/part/quit Mitteilungen. Falls ein Nick in der angegebenen Zeit keine Nachricht schreibt, wird seinejoin/part/quit Mitteilung gefiltert`
 ** Typ: integer
 ** Werte: 1 .. 10080 (Standardwert: `5`)
 
