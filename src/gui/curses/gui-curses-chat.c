@@ -180,7 +180,8 @@ gui_chat_display_horizontal_line (struct t_gui_window *window, int simulate)
     int x, size_on_screen;
     char *read_marker_string, *default_string = "- ";
 
-    if (simulate)
+    if (simulate
+        || (!simulate && (window->win_chat_cursor_y >= window->win_chat_height)))
         return;
 
     gui_window_coords_init_line (window, window->win_chat_cursor_y);
@@ -599,7 +600,8 @@ gui_chat_display_day_changed (struct t_gui_window *window,
 {
     char temp_message[1024], message[1024], *message_with_color;
 
-    if (simulate)
+    if (simulate
+        || (!simulate && (window->win_chat_cursor_y >= window->win_chat_height)))
         return;
 
     /* build the message to display */
