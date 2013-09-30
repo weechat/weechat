@@ -48,13 +48,13 @@
 
 | weechat | history | cronologia dei comandi | puntatore al buffer (se non impostato, restituisce la cronologia globale) (opzionale) | -
 
-| weechat | hook | elenco di hook | hook pointer (optional) | tipo,argomenti (il tipo è comando/timer/.., gli argomenti sono necessari solo per ottenere alcuni hook, (possono iniziare o terminare con "*" come carattere jolly, entrambi sono opzionali)
+| weechat | hook | elenco di hook | puntatore all'hook (opzionale) | tipo,argomenti (il tipo è comando/timer/.., gli argomenti sono necessari solo per ottenere alcuni hook, (possono iniziare o terminare con "*" come carattere jolly, entrambi sono opzionali)
 
 | weechat | hotlist | elenco dei buffer nella hotlist | - | -
 
 | weechat | key | elenco di tasti associati | - | contesto ("default", "search", "cursor" o "mouse") (opzionale)
 
-| weechat | layout | list of layouts | - | -
+| weechat | layout | elenco dei layout | - | -
 
 | weechat | nicklist | nick nella lista nick per un buffer | puntatore al buffer | nick_xxx o group_xxx per ottenere solo xxx di nick/group (opzionale)
 
@@ -62,7 +62,7 @@
 
 | weechat | plugin | elenco dei plugin | puntatore al plugin (opzionale) | nome plugin (può iniziare o terminare con "*" come carattere jolly) (opzionale)
 
-| weechat | proxy | list of proxies | proxy pointer (optional) | proxy name (can start or end with "*" as wildcard) (optional)
+| weechat | proxy | elenco dei proxy | puntatore al proxy (opzionale) | nome del proxy (può iniziare o terminare con "*" come carattere jolly) (opzionale)
 
 | weechat | url_options | opzioni per la URL | - | -
 

@@ -24,7 +24,7 @@
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `white`)
 
 * [[option_weechat.color.chat_day_change]] *weechat.color.chat_day_change*
-** descrizione: `text color for message displayed when the day has changed`
+** descrizione: `colore del testo per i messaggi mostrati al cambio di data`
 ** tipo: colore
 ** valori: un nome colore di WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numero colore del terminale o un alias; attributi consentiti prima del colore (solo per il colore del testo, non lo sfondo): "*" per il grassetto, "!" per l'inverso, "_" per la sottolineatura (valore predefinito: `cyan`)
 
@@ -559,7 +559,7 @@
 ** valori: on, off (valore predefinito: `off`)
 
 * [[option_weechat.look.hotlist_prefix]] *weechat.look.hotlist_prefix*
-** descrizione: `text displayed at the beginning of the hotlist`
+** descrizione: `testo mostrato in cima alla hotlist`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"H: "`)
 
@@ -574,7 +574,7 @@
 ** valori: group_time_asc, group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc (valore predefinito: `group_time_asc`)
 
 * [[option_weechat.look.hotlist_suffix]] *weechat.look.hotlist_suffix*
-** descrizione: `text displayed at the end of the hotlist`
+** descrizione: `testo mostrato in fondo alla hotlist`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
@@ -629,7 +629,7 @@
 ** valori: on, off (valore predefinito: `on`)
 
 * [[option_weechat.look.key_bind_safe]] *weechat.look.key_bind_safe*
-** descrizione: `allow only binding of "safe" keys (beginning with a ctrl or meta code)`
+** descrizione: `consente solo l'associazione di tasti "sicuri" (che iniziano con ctrl o alt)`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
@@ -719,7 +719,7 @@
 ** valori: on, off (valore predefinito: `on`)
 
 * [[option_weechat.look.prefix_error]] *weechat.look.prefix_error*
-** descrizione: `prefix for error messages (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)`
+** descrizione: `prefisso per i messaggi di errore (nota: il contenuto viene valutato, per cui è possibile usare colori con il formato "${color:xxx}", consultare /help eval`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"=!="`)
 
@@ -809,7 +809,7 @@
 ** valori: on, off (valore predefinito: `on`)
 
 * [[option_weechat.look.time_format]] *weechat.look.time_format*
-** descrizione: `time format for dates converted to strings and displayed in messages (see man strftime for date/time specifiers)`
+** descrizione: `formato dell'ora per le date convertite in stringhe e mostrate nei messaggi(consultare man strftime per i dettagli su data/ora)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"%a, %d %b %Y %T"`)
 
@@ -869,12 +869,12 @@
 ** valori: on, off (valore predefinito: `on`)
 
 * [[option_weechat.startup.command_after_plugins]] *weechat.startup.command_after_plugins*
-** descrizione: `command executed when WeeChat starts, after loading plugins (note: content is evaluated, see /help eval)`
+** descrizione: `comando eseguito all'avvio di WeeChat, dopo il caricamento dei plugin (nota: il contenuto viene valutato, consultare /help eval)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
 * [[option_weechat.startup.command_before_plugins]] *weechat.startup.command_before_plugins*
-** descrizione: `command executed when WeeChat starts, before loading plugins (note: content is evaluated, see /help eval)`
+** descrizione: `comando eseguito all'avvio di WeeChat, prima del caricamento dei plugin (nota: il contenuto viene valutato, consultare /help eval)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 

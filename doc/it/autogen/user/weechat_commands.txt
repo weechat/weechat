@@ -1,10 +1,10 @@
 [[command_weechat_away]]
-[command]*`away`* set or remove away status::
+[command]*`away`* imposta o elimina lo stato di assenza::
 ........................................
 /away  [-all] [<messaggio>]
 
-   -all: set or remove away status on all connected servers
-message: message for away (if no message is given, away status is removed)
+     -all: imposta o elimina lo stato di assenza su tutti i server connessi
+messaggio: messaggio di assenza (se non specificato, lo stato di assenza viene rimosso)
 ........................................
 
 [[command_weechat_bar]]
@@ -122,24 +122,24 @@ Esempi:
 [[command_weechat_color]]
 [command]*`color`* definisce gli alias dei colori e visualizza la tavolozza dei colori::
 ........................................
-/color  alias <color> <name>
-        unalias <color>
+/color  alias <colore> <nome>
+        unalias <colore>
         reset
         -o
 
-  alias: add an alias for a color
-unalias: delete an alias
-  color: color number (greater than or equal to 0, max depends on terminal, commonly 63 or 255)
-   name: alias name for color (for example: "orange")
-  reset: reset all color pairs (required when no more color pairs are available if automatic reset is disabled, see option weechat.look.color_pairs_auto_reset)
-     -o: send terminal/colors info to current buffer as input
+  alias: aggiunge un alias per un colore
+unalias: elimina un alias
+ colore: numero colore (maggiore o ugale a 0, il massimo dipende dal terminale, di solito 63 o 255)
+   nome: nome alias per il colore (ad esempio: "arancione")
+  reset: ripristina tutte le coppie di colore (richiesto quando non ci sono più coppie disponibili se il ripristino automatico è disabilitato, consultare l'opzione weechat.look.color_pairs_auto_reset)
+     -o: invia le informazioni sul terminale/colori su un nuovo buffer.
 
-Without argument, this command displays colors in a new buffer.
+Senza argomento, il comando mostra i colori in un nuovo buffer.
 
-Examples:
-  add alias "orange" for color 214:
-    /color alias 214 orange
-  delete color 214:
+Esempi:
+  aggiunge alias "arancione" per il colore 214:
+    /color alias 214 arancione
+  elimina il colore 214:
     /color unalias 214
 ........................................
 
@@ -206,8 +206,8 @@ infolists: mostra informazioni sulle liste info
 [[command_weechat_eval]]
 [command]*`eval`* analizza l'espressione e invia il risultato al buffer::
 ........................................
-/eval  [-n] <expression>
-       [-n] -c <expression1> <operator> <expression2>
+/eval  [-n] <espressione>
+       [-n] -c <espressione1> <operatore> <espressione2>
 
         -n: display result without sending it to buffer (debug mode)
         -c: evaluate as condition: use operators and parentheses, return a boolean value ("0" or "1")
@@ -615,44 +615,44 @@ Senza argomento, vengono salvati tutti i file (WeeChat e plugin).
 ........................................
 
 [[command_weechat_secure]]
-[command]*`secure`* manage secured data (passwords or private data encrypted in file sec.conf)::
+[command]*`secure`* gestione dei dati sensibili (password o file privati cifrati nel file sec.conf)::
 ........................................
-/secure  passphrase <passphrase>|-delete
-         decrypt <passphrase>|-discard
-         set <name> <value>
-         del <name>
+/secure  passphrase <chiave di cifratura>|-delete
+         decrypt <chiave di cifratura|-discard
+         set <nome> <valore>
+         del <nome>
 
-passphrase: change the passphrase (without passphrase, data is stored as plain text in file sec.conf)
-   -delete: delete passphrase
-   decrypt: decrypt data still encrypted (it happens only if passphrase was not given on startup)
-  -discard: discard all data still encrypted
-       set: add or change secured data
-       del: delete secured data
+passphrase: cambia la chiave di cifratura (senza la chiave di cifratura, i dati vengono salvati in chiaron nel file sec.conf)
+   -delete: elimina la chiave di cifratura
+   decrypt: decifra tutti i dati ancora cifrati (accade solo se la chiave di cifratura non è stata digitata all'avvio)
+  -discard: scarta tutti i dati ancora cifrati
+       set: aggiunge o modifica dati sicuri
+       del: elimina dati sicuri
 
-Without argument, this command displays secured data in a new buffer.
+Senza argomento, questo comando mostra i dati messi al sicuro in un nuovo buffer.
 
-When a passphrase is used (data encrypted), it is asked by WeeChat on startup.
-It is possible to set environment variable "WEECHAT_PASSPHRASE" to prevent the prompt (this same variable is used by WeeChat on /upgrade).
+Quando viene usata una chiave di cifratura (dati cifrati), questa viene richiesta da WeeChat all'avvio.
+È possibile impostare la variabile d'ambiente "WEECHAT_PASSPHRASE" per prevenire il prompt (questa stessa variabile viene usata da WeeChat con il comando /upgrade).
 
-Secured data with format ${sec.data.xxx} can be used in:
-  - command line argument "--run-command"
-  - options weechat.startup.command_{before|after}_plugins
-  - proxy options: username, password
-  - irc server options: autojoin, command, password, sasl_{username|password}
-  - option relay.network.password
-  - command /eval.
+I dati messi al sicuro con il formato ${sec.data.xxx} possono essere usati in questo modo:
+  - argomento della riga di comando "--run-command"
+  - opzioni weechat.startup.command_{before|after}_plugins
+  - opzioni del proxy: nome utente, password
+  - opzioni del server irc: autojoin, comando, password, sasl_{username|password}
+  - opzione relay.network.password
+  - comando /eval.
 
-Examples:
-  set a passphrase:
-    /secure passphrase this is my passphrase
-  encrypt freenode SASL password:
-    /secure set freenode mypassword
+Esempi:
+  imposta una chiave di cifratura:
+    /secure passphrase questa è la mia chiave di cifratura
+  cifra la password SASL di freenode:
+    /secure set freenode miapassword
     /set irc.server.freenode.sasl_password "${sec.data.freenode}"
-  encrypt oftc password for nickserv:
-    /secure set oftc mypassword
+  cifra la password di oftc per nickserv:
+    /secure set oftc miapassword
     /set irc.server.oftc.command "/msg nickserv identify ${sec.data.oftc}"
-  alias to ghost the nick "mynick":
-    /alias ghost /eval /msg -server freenode nickserv ghost mynick ${sec.data.freenode}
+  alias per il "ghost" del nick "mionick":
+    /alias ghost /eval /msg -server freenode nickserv ghost mionick ${sec.data.freenode}
 ........................................
 
 [[command_weechat_set]]
