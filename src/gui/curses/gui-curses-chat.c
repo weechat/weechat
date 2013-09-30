@@ -146,6 +146,22 @@ gui_chat_reset_style (struct t_gui_window *window, struct t_gui_line *line,
 }
 
 /*
+ * Deletes all chars from the cursor to the end of the current line.
+ */
+
+void
+gui_chat_clrtoeol (struct t_gui_window *window)
+{
+    if (window->win_chat_cursor_y >= window->win_chat_height)
+        return;
+
+    wmove (GUI_WINDOW_OBJECTS(window)->win_chat,
+           window->win_chat_cursor_y,
+           window->win_chat_cursor_x);
+    wclrtoeol (GUI_WINDOW_OBJECTS(window)->win_chat);
+}
+
+/*
  * Displays a new line.
  */
 
@@ -155,19 +171,13 @@ gui_chat_display_new_line (struct t_gui_window *window,
                            int *lines_displayed, int simulate)
 {
     if ((count == 0) || (*lines_displayed >= num_lines - count))
-    {
-        if ((!simulate)
-            && (window->win_chat_cursor_x <= gui_chat_get_real_width (window) - 1))
-        {
-            wmove (GUI_WINDOW_OBJECTS(window)->win_chat,
-                   window->win_chat_cursor_y,
-                   window->win_chat_cursor_x);
-            wclrtoeol (GUI_WINDOW_OBJECTS(window)->win_chat);
-        }
         window->win_chat_cursor_y++;
-    }
+
     window->win_chat_cursor_x = 0;
     (*lines_displayed)++;
+
+    if (!simulate)
+        gui_chat_clrtoeol (window);
 }
 
 /*
@@ -665,6 +675,7 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
                               GUI_COLOR_CHAT_INACTIVE_WINDOW,
                               GUI_COLOR_CHAT_INACTIVE_BUFFER,
                               GUI_COLOR_CHAT);
+        gui_chat_clrtoeol (window);
     }
 
     /* display time */
