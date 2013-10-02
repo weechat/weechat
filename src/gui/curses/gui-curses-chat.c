@@ -203,9 +203,7 @@ gui_chat_display_horizontal_line (struct t_gui_window *window, int simulate)
         size_on_screen = utf8_strlen_screen (read_marker_string);
         gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
                                       GUI_COLOR_CHAT_READ_MARKER);
-        wmove (GUI_WINDOW_OBJECTS(window)->win_chat,
-               window->win_chat_cursor_y, window->win_chat_cursor_x);
-        wclrtoeol (GUI_WINDOW_OBJECTS(window)->win_chat);
+        gui_chat_clrtoeol (window);
         x = 0;
         while (x < gui_chat_get_real_width (window))
         {
@@ -489,13 +487,6 @@ gui_chat_display_word (struct t_gui_window *window,
             /* FIXME: modify arbitrary value for non aligning messages on time/nick? */
             && (length_align < (window->win_chat_width - 5)))
         {
-            if (!simulate)
-            {
-                wmove (GUI_WINDOW_OBJECTS(window)->win_chat,
-                       window->win_chat_cursor_y,
-                       window->win_chat_cursor_x);
-                wclrtoeol (GUI_WINDOW_OBJECTS(window)->win_chat);
-            }
             window->win_chat_cursor_x += length_align;
             if ((CONFIG_INTEGER(config_look_align_end_of_lines) == CONFIG_LOOK_ALIGN_END_OF_LINES_MESSAGE)
                 && (CONFIG_INTEGER(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)
@@ -634,9 +625,7 @@ gui_chat_display_day_changed (struct t_gui_window *window,
     gui_window_coords_init_line (window, window->win_chat_cursor_y);
     gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
                                   GUI_COLOR_CHAT_DAY_CHANGE);
-    wmove (GUI_WINDOW_OBJECTS(window)->win_chat,
-           window->win_chat_cursor_y, window->win_chat_cursor_x);
-    wclrtoeol (GUI_WINDOW_OBJECTS(window)->win_chat);
+    gui_chat_clrtoeol (window);
     gui_chat_display_word_raw (window, NULL,
                                (message_with_color) ? message_with_color : message,
                                0, simulate, 0, 0);
@@ -1531,10 +1520,7 @@ gui_chat_display_line_y (struct t_gui_window *window, struct t_gui_line *line,
     window->win_chat_cursor_x = 0;
     window->win_chat_cursor_y = y;
 
-    wmove (GUI_WINDOW_OBJECTS(window)->win_chat,
-           window->win_chat_cursor_y,
-           window->win_chat_cursor_x);
-    wclrtoeol (GUI_WINDOW_OBJECTS(window)->win_chat);
+    gui_chat_clrtoeol (window);
 
     if (gui_chat_display_word_raw (window, line, line->data->message,
                                    window->win_chat_width, 0,
