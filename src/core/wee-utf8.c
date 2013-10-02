@@ -427,10 +427,11 @@ utf8_strlen_screen (const char *string)
     {
         length = wcswidth (ptr_wstring, num_char);
         /*
-         * ensure the size is always >= 1, to prevent any display bug
-         * (for example size of UTF-8 char U+26C4 is -1, why? mystery...)
+         * if the char is non-printable, wcswidth returns -1
+         * (for example the length of the snowman without snow (U+26C4) == -1)
+         * => in this case, consider the length is 1, to prevent any display bug
          */
-        if (length < 1)
+        if (length < 0)
             length = 1;
     }
     else
