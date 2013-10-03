@@ -4051,8 +4051,7 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
                         IRC_PLUGIN_NAME);
     }
 
-    if (reconnect)
-        server->current_retry++;
+    server->current_retry = 0;
 
     if (switch_address)
         irc_server_switch_address (server, 0);

@@ -95,6 +95,7 @@ Version 0.4.2 (under dev!)
 * aspell: rename option aspell.look.color to aspell.color.misspelled, add option
   aspell.color.suggestions
 * aspell: add support of enchant library (patch #6858)
+* irc: fix reconnection to server using IPv6 (bug #38819, bug #40166)
 * irc: add option irc.look.notice_welcome_redirect to automatically redirect
   channel welcome notices to the channel buffer
 * irc: replace default prefix modes "qaohvu" by the standard ones "ov" when
