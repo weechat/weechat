@@ -1060,7 +1060,7 @@ IRC_PROTOCOL_CALLBACK(notice)
     char *pos_target, *pos_args, *pos, end_char, *channel;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
-    int notify_private, is_channel, notice_op, notice_voice;
+    int notify_private, is_channel, is_channel_orig, notice_op, notice_voice;
     struct t_gui_buffer *ptr_buffer;
 
     IRC_PROTOCOL_MIN_ARGS(3);
@@ -1106,10 +1106,12 @@ IRC_PROTOCOL_CALLBACK(notice)
     else
     {
         is_channel = 0;
+        is_channel_orig = 0;
         channel = NULL;
         if (pos_target)
         {
             is_channel = irc_channel_is_channel (server, pos_target);
+            is_channel_orig = is_channel;
             if (is_channel)
             {
                 channel = strdup (pos_target);
@@ -1169,7 +1171,7 @@ IRC_PROTOCOL_CALLBACK(notice)
                                       irc_protocol_tags (command,
                                                          "notify_message",
                                                          nick),
-                                      "%s%s%s%s%s(%s%s%s)%s: %s",
+                                      "%s%s%s%s%s(%s%s%s)%s -> %s%s%s: %s",
                                       weechat_prefix ("network"),
                                       IRC_COLOR_NOTICE,
                                       /* TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word) */
@@ -1179,6 +1181,9 @@ IRC_PROTOCOL_CALLBACK(notice)
                                       irc_nick_color_for_message (server, ptr_nick, nick),
                                       (nick && nick[0]) ? nick : "?",
                                       IRC_COLOR_CHAT_DELIMITERS,
+                                      IRC_COLOR_RESET,
+                                      (is_channel_orig) ? IRC_COLOR_CHAT_CHANNEL : irc_nick_color_for_message (server, NULL, pos_target),
+                                      pos_target,
                                       IRC_COLOR_RESET,
                                       pos_args);
         }
