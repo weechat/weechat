@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.2-rc2, 2013-09-30
+v0.4.2-rc2, 2013-10-05
 
 
 This document lists all changes for each version.
@@ -119,6 +119,8 @@ Version 0.4.2 (under dev!)
   buffer per nick
 * logger: add option "flush" for command /logger
 * lua: fix interpreter used in API functions (bug #39470)
+* relay: fix decoding of websocket frames when there are multiple frames in a
+  single message received (only the first one was decoded)
 * relay: add command "ping" in weechat protocol (task #12689)
 * relay: fix binding to an IP address (bug #39119)
 * rmodifier: add option "missing" for command /rmodifier
