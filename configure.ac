@@ -169,6 +169,18 @@ not_asked=""
 not_found=""
 
 # ------------------------------------------------------------------------------
+#                                  pkg-config
+# ------------------------------------------------------------------------------
+
+PKGCONFIG=""
+AC_CHECK_PROGS(PKGCONFIG, pkg-config)
+if test "x$PKGCONFIG" = "x"; then
+    AC_MSG_ERROR([
+*** "pkg-config" couldn't be found on your system.
+*** Try to install it with your software package manager.])
+fi
+
+# ------------------------------------------------------------------------------
 #                                dynamic loader
 # ------------------------------------------------------------------------------
 
