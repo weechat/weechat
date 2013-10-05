@@ -58,7 +58,7 @@ relay_la_SOURCES = relay.c \
                    relay-websocket.c \
                    relay-websocket.h
 
-relay_la_LDFLAGS = -module
+relay_la_LDFLAGS = -module -no-undefined
 relay_la_LIBADD  = $(RELAY_LFLAGS) $(ZLIB_LFLAGS) $(GCRYPT_LFLAGS) $(GNUTLS_LFLAGS)
 
 EXTRA_DIST = CMakeLists.txt

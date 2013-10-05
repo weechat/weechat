@@ -38,7 +38,7 @@ aspell_la_SOURCES = weechat-aspell.c \
                     weechat-aspell-info.h \
                     weechat-aspell-speller.c \
                     weechat-aspell-speller.h
-aspell_la_LDFLAGS = -module
+aspell_la_LDFLAGS = -module -no-undefined
 aspell_la_LIBADD  = $(ASPELL_LFLAGS) $(ENCHANT_LIBS)
 
 EXTRA_DIST = CMakeLists.txt

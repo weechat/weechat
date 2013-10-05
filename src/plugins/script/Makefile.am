@@ -40,7 +40,7 @@ script_la_SOURCES = script.c \
                     script-repo.c \
                     script-repo.h
 
-script_la_LDFLAGS = -module
+script_la_LDFLAGS = -module -no-undefined
 script_la_LIBADD  = $(SCRIPT_LFLAGS) $(ZLIB_LFLAGS) $(GCRYPT_LFLAGS)
 
 EXTRA_DIST = CMakeLists.txt

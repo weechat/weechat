@@ -27,7 +27,7 @@ guile_la_SOURCES = weechat-guile.c \
                    weechat-guile.h \
                    weechat-guile-api.c \
                    weechat-guile-api.h
-guile_la_LDFLAGS = -module
+guile_la_LDFLAGS = -module -no-undefined
 guile_la_LIBADD  = ../lib_weechat_plugins_scripts.la $(GUILE_LFLAGS)
 
 EXTRA_DIST = CMakeLists.txt

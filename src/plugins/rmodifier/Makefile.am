@@ -35,7 +35,7 @@ rmodifier_la_SOURCES = rmodifier.c \
                        rmodifier-debug.h \
                        rmodifier-info.c \
                        rmodifier-info.h
-rmodifier_la_LDFLAGS = -module
+rmodifier_la_LDFLAGS = -module -no-undefined
 rmodifier_la_LIBADD  = $(RMODIFIER_LFLAGS)
 
 EXTRA_DIST = CMakeLists.txt

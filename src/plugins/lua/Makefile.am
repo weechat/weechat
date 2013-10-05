@@ -28,7 +28,7 @@ lua_la_SOURCES = weechat-lua.c \
                  weechat-lua.h \
                  weechat-lua-api.c \
                  weechat-lua-api.h
-lua_la_LDFLAGS = -module
+lua_la_LDFLAGS = -module -no-undefined
 lua_la_LIBADD  = ../lib_weechat_plugins_scripts.la $(LUA_LFLAGS)
 
 EXTRA_DIST = CMakeLists.txt

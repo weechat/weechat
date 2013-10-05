@@ -53,9 +53,6 @@ netbsd*)
 solaris*)
         LDFLAGS="$LDFLAGS -lsocket -lxnet"
         ;;
-cygwin*)
-        LDFLAGS="$LDFLAGS -no-undefined"
-        ;;
 esac
 
 # Gettext

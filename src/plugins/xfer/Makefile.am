@@ -46,7 +46,7 @@ xfer_la_SOURCES = xfer.c \
                   xfer-upgrade.c \
                   xfer-upgrade.h
 
-xfer_la_LDFLAGS = -module
+xfer_la_LDFLAGS = -module -no-undefined
 xfer_la_LIBADD  = $(XFER_LFLAGS)
 
 EXTRA_DIST = CMakeLists.txt
