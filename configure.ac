@@ -501,6 +501,9 @@ if test "x$enable_python" = "xyes" ; then
                 elif test -r "$PYTHON_LIB/libpython$PYTHON_VERSION.a"; then
                    PYTHON_LFLAGS="-L$PYTHON_LIB $PYTHON_LFLAGS"
                    AC_MSG_RESULT(found)
+                elif test -r "$PYTHON_LIB/libpython$PYTHON_VERSION.dll.a"; then
+                   PYTHON_LFLAGS="-L$PYTHON_LIB $PYTHON_LFLAGS"
+                   AC_MSG_RESULT(found)
                 elif test -r "$PYTHON_SYSPREFIX/lib/libpython$PYTHON_VERSION.so"; then
                    PYTHON_LFLAGS="-L$PYTHON_SYSPREFIX/lib/ $PYTHON_LFLAGS"
                    AC_MSG_RESULT(found)
