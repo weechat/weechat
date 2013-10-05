@@ -1171,7 +1171,7 @@ IRC_PROTOCOL_CALLBACK(notice)
                                       irc_protocol_tags (command,
                                                          "notify_message",
                                                          nick),
-                                      "%s%s%s%s%s(%s%s%s)%s -> %s%s%s: %s",
+                                      "%s%s%s%s%s(%s%s%s)%s%s%s%s%s: %s",
                                       weechat_prefix ("network"),
                                       IRC_COLOR_NOTICE,
                                       /* TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word) */
@@ -1182,8 +1182,9 @@ IRC_PROTOCOL_CALLBACK(notice)
                                       (nick && nick[0]) ? nick : "?",
                                       IRC_COLOR_CHAT_DELIMITERS,
                                       IRC_COLOR_RESET,
-                                      (is_channel_orig) ? IRC_COLOR_CHAT_CHANNEL : irc_nick_color_for_message (server, NULL, pos_target),
-                                      pos_target,
+                                      (is_channel_orig) ? " -> " : "",
+                                      (is_channel_orig) ? IRC_COLOR_CHAT_CHANNEL : "",
+                                      (is_channel_orig) ? pos_target : "",
                                       IRC_COLOR_RESET,
                                       pos_args);
         }
