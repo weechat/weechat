@@ -1169,7 +1169,7 @@ IRC_PROTOCOL_CALLBACK(notice)
             weechat_printf_date_tags ((ptr_channel) ? ptr_channel->buffer : server->buffer,
                                       date,
                                       irc_protocol_tags (command,
-                                                         "notify_message",
+                                                         (is_channel_orig) ? "notify_message" : "notify_private",
                                                          nick),
                                       "%s%s%s%s%s(%s%s%s)%s%s%s%s%s: %s",
                                       weechat_prefix ("network"),
