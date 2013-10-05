@@ -1194,7 +1194,12 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
                 window->buffer->lines->last_read_line = window->buffer->lines->last_line;
                 window->buffer->lines->first_line_not_read = 0;
             }
-            if (buffer->lines->last_read_line == buffer->lines->last_line)
+            /*
+             * if there is no line displayed after last read line,
+             * then remove the read marker
+             */
+            if (buffer->lines->last_read_line
+                && !gui_line_get_next_displayed (buffer->lines->last_read_line))
             {
                 buffer->lines->last_read_line = NULL;
                 buffer->lines->first_line_not_read = 0;
