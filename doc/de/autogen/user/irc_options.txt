@@ -414,7 +414,7 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_irc.server_default.autojoin]] *irc.server_default.autojoin*
-** Beschreibung: `durch Kommata getrennte Liste der Channels, die beim Verbinden zum Server betreten werden sollen (Beispiel: "#chan1,#chan2,#chan3 key1,key2") (Hinweis: Inhalt wird evaluiert, siehe /help eval)`
+** Beschreibung: `comma separated list of channels to join when connected to server; the channels that require a key must be at beginning of the list, and all the keys must be given after the channels (separated by a space) (example: "#channel1,#channel2,#channel3 key1,key2" where #channel1 and #channel2 are protected by key1 and key2) (note: content is evaluated, see /help eval)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 

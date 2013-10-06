@@ -414,7 +414,7 @@
 ** valeurs: on, off (valeur par défaut: `off`)
 
 * [[option_irc.server_default.autojoin]] *irc.server_default.autojoin*
-** description: `liste des canaux (séparés par des virgules) à rejoindre lorsque connecté au serveur (exemple: "#chan1,#chan2,#chan3 key1,key2") (note: le contenu est évalué, voir /help eval)`
+** description: `liste des canaux (séparés par des virgules) à rejoindre lorsque connecté au serveur; les canaux nécessitant une clé doivent être en début de liste, et toutes les clés doivent être données après les canaux (séparées par un espace) (exemple: "#canal1,#canal2,#canal3 clé1,clé2" où #canal1 et #canal2 sont protégés par clé1 et clé2) (note: le contenu est évalué, voir /help eval)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 

@@ -1775,8 +1775,12 @@ irc_config_server_new_option (struct t_config_file *config_file,
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
-                N_("comma separated list of channels to join when connected to server "
-                   "(example: \"#chan1,#chan2,#chan3 key1,key2\") "
+                N_("comma separated list of channels to join when connected to "
+                   "server; the channels that require a key must be at "
+                   "beginning of the list, and all the keys must be given after "
+                   "the channels (separated by a space) "
+                   "(example: \"#channel1,#channel2,#channel3 key1,key2\" "
+                   "where #channel1 and #channel2 are protected by key1 and key2) "
                    "(note: content is evaluated, see /help eval)"),
                 NULL, 0, 0,
                 default_value, value,
