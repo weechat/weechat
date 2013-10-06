@@ -85,6 +85,10 @@ struct t_config_option *config_look_bar_more_right;
 struct t_config_option *config_look_bar_more_up;
 struct t_config_option *config_look_bar_more_down;
 struct t_config_option *config_look_buffer_notify_default;
+struct t_config_option *config_look_buffer_search_case_sensitive;
+struct t_config_option *config_look_buffer_search_force_default;
+struct t_config_option *config_look_buffer_search_regex;
+struct t_config_option *config_look_buffer_search_where;
 struct t_config_option *config_look_buffer_time_format;
 struct t_config_option *config_look_color_basic_force_bold;
 struct t_config_option *config_look_color_inactive_window;
@@ -1975,6 +1979,29 @@ config_weechat_init_options ()
            "none=never display in hotlist"),
         "none|highlight|message|all", 0, 0, "all", NULL, 0,
         NULL, NULL, &config_change_buffer_notify_default, NULL, NULL, NULL);
+    config_look_buffer_search_case_sensitive = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "buffer_search_case_sensitive", "boolean",
+        N_("default text search in buffer: case sensitive or not"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_look_buffer_search_force_default = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "buffer_search_force_default", "boolean",
+        N_("force default values for text search in buffer (instead of using "
+           "values from last search in buffer)"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_look_buffer_search_regex = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "buffer_search_regex", "boolean",
+        N_("default text search in buffer: if enabled, search regular expression, "
+           "otherwise search simple string"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_look_buffer_search_where = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "buffer_search_where", "integer",
+        N_("default text search in buffer: in message, prefix, prefix and "
+           "message"),
+        "prefix|message|prefix_message", 0, 0, "message", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_buffer_time_format = config_file_new_option (
         weechat_config_file, ptr_section,
         "buffer_time_format", "string",

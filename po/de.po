@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-10-06 11:16+0200\n"
+"POT-Creation-Date: 2013-10-06 11:35+0200\n"
 "PO-Revision-Date: 2013-10-06 10:17+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -2890,6 +2890,22 @@ msgstr ""
 "oder nicht, entsprechend der Wichtigkeit der Nachricht): all=alle "
 "Nachrichten (Standard), message=Nachrichten+Highlights, highlights=nur "
 "Highlights, none=Hotlist wird niemals angezeigt"
+
+msgid "default text search in buffer: case sensitive or not"
+msgstr ""
+
+msgid ""
+"force default values for text search in buffer (instead of using values from "
+"last search in buffer)"
+msgstr ""
+
+msgid ""
+"default text search in buffer: if enabled, search regular expression, "
+"otherwise search simple string"
+msgstr ""
+
+msgid "default text search in buffer: in message, prefix, prefix and message"
+msgstr ""
 
 #. TRANSLATORS: string "${color:xxx}" must NOT be translated
 msgid ""

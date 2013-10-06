@@ -11,6 +11,12 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 (file 'NEWS' in sources).
 
 
+Version 0.4.3 (under dev!)
+--------------------------
+
+* core: add options to customize default text search in buffers:
+  weechat.look.buffer_search_{case_sensitive|force_default|regex|where}
+
 Version 0.4.2 (2013-10-06)
 --------------------------
 

@@ -413,6 +413,26 @@
 ** type: integer
 ** values: none, highlight, message, all (default value: `all`)
 
+* [[option_weechat.look.buffer_search_case_sensitive]] *weechat.look.buffer_search_case_sensitive*
+** description: `default text search in buffer: case sensitive or not`
+** type: boolean
+** values: on, off (default value: `off`)
+
+* [[option_weechat.look.buffer_search_force_default]] *weechat.look.buffer_search_force_default*
+** description: `force default values for text search in buffer (instead of using values from last search in buffer)`
+** type: boolean
+** values: on, off (default value: `off`)
+
+* [[option_weechat.look.buffer_search_regex]] *weechat.look.buffer_search_regex*
+** description: `default text search in buffer: if enabled, search regular expression, otherwise search simple string`
+** type: boolean
+** values: on, off (default value: `off`)
+
+* [[option_weechat.look.buffer_search_where]] *weechat.look.buffer_search_where*
+** description: `default text search in buffer: in message, prefix, prefix and message`
+** type: integer
+** values: prefix, message, prefix_message (default value: `message`)
+
 * [[option_weechat.look.buffer_time_format]] *weechat.look.buffer_time_format*
 ** description: `time format for each line displayed in buffers (see man strftime for date/time specifiers) (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval); for example time using grayscale (requires support of 256 colors): "${color:252}%H${color:245}%M${color:240}%S"`
 ** type: string

@@ -413,6 +413,26 @@
 ** Typ: integer
 ** Werte: none, highlight, message, all (Standardwert: `all`)
 
+* [[option_weechat.look.buffer_search_case_sensitive]] *weechat.look.buffer_search_case_sensitive*
+** Beschreibung: `default text search in buffer: case sensitive or not`
+** Typ: boolesch
+** Werte: on, off (Standardwert: `off`)
+
+* [[option_weechat.look.buffer_search_force_default]] *weechat.look.buffer_search_force_default*
+** Beschreibung: `force default values for text search in buffer (instead of using values from last search in buffer)`
+** Typ: boolesch
+** Werte: on, off (Standardwert: `off`)
+
+* [[option_weechat.look.buffer_search_regex]] *weechat.look.buffer_search_regex*
+** Beschreibung: `default text search in buffer: if enabled, search regular expression, otherwise search simple string`
+** Typ: boolesch
+** Werte: on, off (Standardwert: `off`)
+
+* [[option_weechat.look.buffer_search_where]] *weechat.look.buffer_search_where*
+** Beschreibung: `default text search in buffer: in message, prefix, prefix and message`
+** Typ: integer
+** Werte: prefix, message, prefix_message (Standardwert: `message`)
+
 * [[option_weechat.look.buffer_time_format]] *weechat.look.buffer_time_format*
 ** Beschreibung: `Format für die Uhrzeit, die in jeder Zeile eines Buffers dargestellt wird (siehe man strftime, welche Platzhalter für das Datum und die Uhrzeit verwendet werden) (Hinweis: Inhalt wird evaluiert, somit kann mittels des Formats "${color:xxx} Farben gesetzt werden, siehe /help eval). Beispiel: Uhrzeit in Graustufen (Unterstützung von 256 Farben notwendig): "${color:252}%H${color:245}%M${color:240}%S"`
 ** Typ: Zeichenkette
