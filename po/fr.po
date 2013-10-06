@@ -22,7 +22,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2013-10-06 11:35+0200\n"
-"PO-Revision-Date: 2013-10-06 12:40+0200\n"
+"PO-Revision-Date: 2013-10-06 13:43+0200\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -4763,8 +4763,7 @@ msgstr ""
 #, c-format
 msgid "%s: warning: dictionary \"%s\" is not available on your system"
 msgstr ""
-"%s: attention: le dictionnaire \\\"%s\\\" n'est pas disponible sur votre "
-"système"
+"%s: attention: le dictionnaire \"%s\" n'est pas disponible sur votre système"
 
 #, c-format
 msgid "%s%s: error: unable to create speller for lang \"%s\""
