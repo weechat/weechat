@@ -23,7 +23,7 @@
 #
 
 %define name weechat
-%define version 0.4.1
+%define version 0.4.2
 %define release 1
 
 Name:      %{name}
@@ -49,7 +49,8 @@ rm -rf $RPM_BUILD_ROOT
 %setup
 
 %build
-./configure --prefix=/usr --mandir=/usr/share/man --enable-doc --with-debug=0
+./autogen.sh
+./configure --prefix=/usr --mandir=/usr/share/man --enable-doc --enable-man --with-debug=0
 make
 
 %install
@@ -66,14 +67,18 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root,0755)
 %doc AUTHORS ChangeLog COPYING INSTALL NEWS README
 %doc %{_docdir}/%{name}/*.html
-%{_mandir}/man1/%{name}-curses.1*
-%{_mandir}/*/man1/%{name}-curses.1*
+%{_mandir}/man1/%{name}.1*
+%{_mandir}/*/man1/%{name}.1*
+%{_bindir}/%{name}
 %{_bindir}/%{name}-curses
 %{_libdir}/%{name}/plugins/*
 %{_libdir}/pkgconfig/weechat.pc
 %{_includedir}/%{name}/weechat-plugin.h
+%{_prefix}/share/icons/hicolor/32x32/apps/weechat.png
 
 %changelog
+* Sun Oct 06 2013 Sebastien Helleu <flashcode@flashtux.org> 0.4.2-1
+- Released version 0.4.2
 * Mon May 20 2013 Sebastien Helleu <flashcode@flashtux.org> 0.4.1-1
 - Released version 0.4.1
 * Sun Jan 20 2013 Sebastien Helleu <flashcode@flashtux.org> 0.4.0-1
