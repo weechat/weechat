@@ -740,7 +740,7 @@ config_check_proxy_curl (void *data, struct t_config_option *option,
     (void) data;
     (void) option;
 
-    if (value && value[0] && !proxy_search (value))
+    if (gui_init_ok && value && value[0] && !proxy_search (value))
     {
         gui_chat_printf (NULL,
                          _("%sWarning: proxy \"%s\" does not exist (you can "
