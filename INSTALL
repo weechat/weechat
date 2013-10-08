@@ -26,8 +26,7 @@ Following packages are all optional:
 * for SSL: gnutls, ca-certificates
 * for spell checking: aspell
 * for scripting: python, perl, ruby, lua, tcl, guile
-* for building doc: asciidoc, source-highlight
-  (for man page: xsltproc, docbook-xml, docbook-xsl)
+* for building doc: asciidoc, source-highlight (for man page: xsltproc)
 
 For a complete list of dependencies and versions recommended, please look at
 'User's guide'.

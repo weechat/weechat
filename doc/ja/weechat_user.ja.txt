@@ -96,8 +96,7 @@ WeeChat は cmake または autotools を使ってコンパイルできます (c
 | guile-2.0-dev                       | ≥ 2.0       |       | guile (scheme) プラグイン
 | asciidoc                            | ≥ 8.5.0     |       | man ページと文書のビルド
 | source-highlight                    |             |       | 文書中のソースに対するシンタックスハイライト
-| xsltproc,
-  docbook-xml, docbook-xsl            |             |       | man ページのビルド
+| xsltproc                            |             |       | man ページのビルド
 |========================================
 
 [NOTE]
