@@ -468,6 +468,11 @@
 ** type: integer
 ** values: 1 .. 3600 (default value: `60`)
 
+* [[option_irc.server_default.default_msg_kick]] *irc.server_default.default_msg_kick*
+** description: `default kick message used by commands "/kick" and "/kickban" (special variables $nick, $channel and $server are replaced by their value)`
+** type: string
+** values: any string (default value: `""`)
+
 * [[option_irc.server_default.default_msg_part]] *irc.server_default.default_msg_part*
 ** description: `default part message (leaving channel) ("%v" will be replaced by WeeChat version in string)`
 ** type: string

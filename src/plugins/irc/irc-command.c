@@ -334,7 +334,7 @@ irc_command_exec_all_channels (struct t_irc_server *server,
                         if (!excluded)
                         {
                             cmd_vars_replaced = irc_message_replace_vars (ptr_server,
-                                                                          ptr_channel,
+                                                                          ptr_channel->name,
                                                                           str_command);
                             weechat_command (ptr_channel->buffer,
                                              (cmd_vars_replaced) ? cmd_vars_replaced : str_command);
@@ -2328,6 +2328,41 @@ irc_command_join (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
+ * Sends a kick message to a channel.
+ */
+
+void
+irc_command_kick_channel (struct t_irc_server *server,
+                          const char *channel_name, const char *nick_name,
+                          const char *message)
+{
+    const char *msg_kick;
+    char *msg_vars_replaced;
+
+    msg_kick = (message && message[0]) ?
+        message : IRC_SERVER_OPTION_STRING(server,
+                                           IRC_SERVER_OPTION_DEFAULT_MSG_KICK);
+    if (msg_kick && msg_kick[0])
+    {
+        msg_vars_replaced = irc_message_replace_vars (server,
+                                                      channel_name,
+                                                      msg_kick);
+        irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                          "KICK %s %s :%s",
+                          channel_name, nick_name,
+                          (msg_vars_replaced) ? msg_vars_replaced : msg_kick);
+        if (msg_vars_replaced)
+            free (msg_vars_replaced);
+    }
+    else
+    {
+        irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                          "KICK %s %s",
+                          channel_name, nick_name);
+    }
+}
+
+/*
  * Callback for command "/kick": forcibly removes a user from a channel.
  */
 
@@ -2378,19 +2413,8 @@ irc_command_kick (void *data, struct t_gui_buffer *buffer, int argc,
                 return WEECHAT_RC_OK;
             }
         }
-
-        if (pos_comment)
-        {
-            irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                              "KICK %s %s :%s",
-                              pos_channel, pos_nick, pos_comment);
-        }
-        else
-        {
-            irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                              "KICK %s %s",
-                              pos_channel, pos_nick);
-        }
+        irc_command_kick_channel (ptr_server, pos_channel, pos_nick,
+                                  pos_comment);
     }
     else
     {
@@ -2499,12 +2523,8 @@ irc_command_kickban (void *data, struct t_gui_buffer *buffer, int argc,
             }
 
             /* kick nick */
-            irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                              "KICK %s %s%s%s",
-                              pos_channel,
-                              nick_only,
-                              (pos_comment) ? " :" : "",
-                              (pos_comment) ? pos_comment : "");
+            irc_command_kick_channel (ptr_server, pos_channel, nick_only,
+                                      pos_comment);
             free (nick_only);
         }
     }
@@ -4519,6 +4539,14 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
             weechat_printf (NULL, "  away_check_max_nicks : %s%d",
                             IRC_COLOR_CHAT_VALUE,
                             weechat_config_integer (server->options[IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS]));
+        /* default_msg_kick */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_DEFAULT_MSG_KICK]))
+            weechat_printf (NULL, "  default_msg_kick . . :   ('%s')",
+                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_DEFAULT_MSG_KICK));
+        else
+            weechat_printf (NULL, "  default_msg_kick . . : %s'%s'",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_string (server->options[IRC_SERVER_OPTION_DEFAULT_MSG_KICK]));
         /* default_msg_part */
         if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_DEFAULT_MSG_PART]))
             weechat_printf (NULL, "  default_msg_part . . :   ('%s')",
@@ -5958,21 +5986,26 @@ irc_command_init ()
                           N_("[<channel>] <nick> [<reason>]"),
                           N_("channel: channel where user is\n"
                              "   nick: nick to kick\n"
-                             " reason: reason for kick"),
-                          "%(nicks) %-", &irc_command_kick, NULL);
+                             " reason: reason for kick (special variables "
+                             "$nick, $channel and $server are replaced by their "
+                             "value)"),
+                          "%(nicks) %(irc_msg_kick) %-", &irc_command_kick, NULL);
     weechat_hook_command ("kickban",
                           N_("kicks and bans a nick from a channel"),
                           N_("[<channel>] <nick> [<reason>]"),
                           N_("channel: channel where user is\n"
                              "   nick: nick to kick and ban\n"
-                             " reason: reason for kick\n\n"
+                             " reason: reason for kick (special variables "
+                             "$nick, $channel and $channel are replaced by their "
+                             "value)\n\n"
                              "It is possible to kick/ban with a mask, nick "
                              "will be extracted from mask and replaced by "
                              "\"*\".\n\n"
                              "Example:\n"
                              "  ban \"*!*@host.com\" and then kick \"toto\":\n"
                              "    /kickban toto!*@host.com"),
-                          "%(irc_channel_nicks_hosts) %-", &irc_command_kickban, NULL);
+                          "%(irc_channel_nicks_hosts) %(irc_msg_kick) %-",
+                          &irc_command_kickban, NULL);
     weechat_hook_command ("kill",
                           N_("close client-server connection"),
                           N_("<nick> <reason>"),

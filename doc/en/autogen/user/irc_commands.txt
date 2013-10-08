@@ -251,7 +251,7 @@ Examples:
 
 channel: channel where user is
    nick: nick to kick
- reason: reason for kick
+ reason: reason for kick (special variables $nick, $channel and $server are replaced by their value)
 ........................................
 
 [[command_irc_kickban]]
@@ -261,7 +261,7 @@ channel: channel where user is
 
 channel: channel where user is
    nick: nick to kick and ban
- reason: reason for kick
+ reason: reason for kick (special variables $nick, $channel and $channel are replaced by their value)
 
 It is possible to kick/ban with a mask, nick will be extracted from mask and replaced by "*".
 

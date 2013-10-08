@@ -1885,6 +1885,20 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 callback_change, callback_change_data,
                 NULL, NULL);
             break;
+        case IRC_SERVER_OPTION_DEFAULT_MSG_KICK:
+            new_option = weechat_config_new_option (
+                config_file, section,
+                option_name, "string",
+                N_("default kick message used by commands \"/kick\" and "
+                   "\"/kickban\" (special variables $nick, $channel and $server "
+                   "are replaced by their value)"),
+                NULL, 0, 0,
+                default_value, value,
+                null_value_allowed,
+                callback_check_value, callback_check_value_data,
+                callback_change, callback_change_data,
+                NULL, NULL);
+            break;
         case IRC_SERVER_OPTION_DEFAULT_MSG_PART:
             new_option = weechat_config_new_option (
                 config_file, section,

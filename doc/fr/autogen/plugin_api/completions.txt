@@ -22,6 +22,8 @@
 
 | irc | irc_ignores_numbers | numéros pour les ignores définis
 
+| irc | irc_msg_kick | message d'élimination par défaut
+
 | irc | irc_msg_part | message de fin par défaut pour le canal IRC
 
 | irc | irc_notify_nicks | pseudos dans la liste de notifications

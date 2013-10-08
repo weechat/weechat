@@ -249,9 +249,9 @@ Esempi:
 ........................................
 /kick  [<canale>] <nick> [<motivo>]
 
-canale: canale dove si trova l'utente
-  nick: nick da cacciare
-motivo: motivo per il kick
+channel: channel where user is
+   nick: nick to kick
+ reason: reason for kick (special variables $nick, $channel and $server are replaced by their value)
 ........................................
 
 [[command_irc_kickban]]
@@ -259,15 +259,15 @@ motivo: motivo per il kick
 ........................................
 /kickban  [<canale>] <nick> [<motivo>]
 
-  canale: canale in cui si trova l'utente
-    nick: nick da cacciare e bannare
-commento: motivo per il kick
+channel: channel where user is
+   nick: nick to kick and ban
+ reason: reason for kick (special variables $nick, $channel and $channel are replaced by their value)
 
-È possibile cacciare/bannare con una mask, il nick verrà estratto dalla mask e sostituito da "*".
+It is possible to kick/ban with a mask, nick will be extracted from mask and replaced by "*".
 
-Esempio:
-  banna "*!*@host.com" e poi caccia "tizio":
-    /kickban tizio!*@host.com
+Example:
+  ban "*!*@host.com" and then kick "toto":
+    /kickban toto!*@host.com
 ........................................
 
 [[command_irc_kill]]

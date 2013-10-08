@@ -524,6 +524,37 @@ irc_completion_privates_cb (void *data, const char *completion_item,
 }
 
 /*
+ * Adds default kick message to completion list.
+ */
+
+int
+irc_completion_msg_kick_cb (void *data, const char *completion_item,
+                            struct t_gui_buffer *buffer,
+                            struct t_gui_completion *completion)
+{
+    const char *msg_kick;
+
+    IRC_BUFFER_GET_SERVER(buffer);
+
+    /* make C compiler happy */
+    (void) data;
+    (void) completion_item;
+
+    if (ptr_server)
+    {
+        msg_kick = IRC_SERVER_OPTION_STRING(ptr_server,
+                                            IRC_SERVER_OPTION_DEFAULT_MSG_KICK);
+        if (msg_kick && msg_kick[0])
+        {
+            weechat_hook_completion_list_add (completion, msg_kick,
+                                              0, WEECHAT_LIST_POS_SORT);
+        }
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Adds default part message to completion list.
  */
 
@@ -668,6 +699,9 @@ irc_completion_init ()
     weechat_hook_completion ("irc_privates",
                              N_("privates on all IRC servers"),
                              &irc_completion_privates_cb, NULL);
+    weechat_hook_completion ("irc_msg_kick",
+                             N_("default kick message"),
+                             &irc_completion_msg_kick_cb, NULL);
     weechat_hook_completion ("irc_msg_part",
                              N_("default part message for IRC channel"),
                              &irc_completion_msg_part_cb, NULL);

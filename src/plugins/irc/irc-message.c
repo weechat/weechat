@@ -355,14 +355,14 @@ irc_message_get_address_from_host (const char *host)
 
 char *
 irc_message_replace_vars (struct t_irc_server *server,
-                          struct t_irc_channel *channel, const char *string)
+                          const char *channel_name, const char *string)
 {
-    char *var_nick, *var_channel, *var_server;
+    const char *var_nick, *var_channel, *var_server;
     char empty_string[1] = { '\0' };
     char *res, *temp;
 
     var_nick = (server && server->nick) ? server->nick : empty_string;
-    var_channel = (channel) ? channel->name : empty_string;
+    var_channel = (channel_name) ? channel_name : empty_string;
     var_server = (server) ? server->name : empty_string;
 
     /* replace nick */

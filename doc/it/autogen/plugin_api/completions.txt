@@ -22,6 +22,8 @@
 
 | irc | irc_ignores_numbers | numero di ignore definiti
 
+| irc | irc_msg_kick | default kick message
+
 | irc | irc_msg_part | messaggio di uscita predefinito per il canale IRC
 
 | irc | irc_notify_nicks | nick nella lista notifiche

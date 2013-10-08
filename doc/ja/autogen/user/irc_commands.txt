@@ -249,9 +249,9 @@ nick: nick
 ........................................
 /kick  [<channel>] <nick> [<reason>]
 
-channel: ユーザの居るチャンネル
-   nick: キックするニックネーム
- reason: キック理由
+channel: channel where user is
+   nick: nick to kick
+ reason: reason for kick (special variables $nick, $channel and $server are replaced by their value)
 ........................................
 
 [[command_irc_kickban]]
@@ -259,14 +259,14 @@ channel: ユーザの居るチャンネル
 ........................................
 /kickban  [<channel>] <nick> [<reason>]
 
-channel: ユーザの居るチャンネル
-   nick: キックと参加禁止にするニックネーム
- reason: キック理由
+channel: channel where user is
+   nick: nick to kick and ban
+ reason: reason for kick (special variables $nick, $channel and $channel are replaced by their value)
 
-キックと参加禁止にマスクを使える場合、"*" のマスク展開後にマッチするニックネームがこれらの対象になる。
+It is possible to kick/ban with a mask, nick will be extracted from mask and replaced by "*".
 
-例:
-  "*!*@host.com" を参加禁止して "toto" をキック:
+Example:
+  ban "*!*@host.com" and then kick "toto":
     /kickban toto!*@host.com
 ........................................
 

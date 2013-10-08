@@ -65,6 +65,7 @@ enum t_irc_server_option
     IRC_SERVER_OPTION_ANTI_FLOOD_PRIO_LOW,  /* anti-flood (low priority)     */
     IRC_SERVER_OPTION_AWAY_CHECK,           /* delay between away checks     */
     IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS, /* max nicks for away check      */
+    IRC_SERVER_OPTION_DEFAULT_MSG_KICK,     /* default kick message          */
     IRC_SERVER_OPTION_DEFAULT_MSG_PART,     /* default part message          */
     IRC_SERVER_OPTION_DEFAULT_MSG_QUIT,     /* default quit message          */
     IRC_SERVER_OPTION_NOTIFY,               /* notify list                   */

@@ -22,6 +22,8 @@
 
 | irc | irc_ignores_numbers | 無視エントリの数
 
+| irc | irc_msg_kick | default kick message
+
 | irc | irc_msg_part | IRC チャンネルのデフォルト退出メッセージ
 
 | irc | irc_notify_nicks | 通知エントリのニックネーム

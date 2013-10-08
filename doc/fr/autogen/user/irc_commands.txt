@@ -251,7 +251,7 @@ Exemples:
 
  canal: canal où l'utilisateur se trouve
 pseudo: pseudo à éliminer
-raison: raison pour l'élimination
+raison: raison pour l'élimination (les variables spéciales $nick, $channel et $server sont remplacées par leur valeur)
 ........................................
 
 [[command_irc_kickban]]
@@ -261,7 +261,7 @@ raison: raison pour l'élimination
 
  canal: canal où l'utilisateur se trouve
 pseudo: pseudo à éliminer et bannir
-raison: raison pour l'élimination
+raison: raison pour l'élimination (les variables spéciales $nick, $channel et $server sont remplacées par leur valeur)
 
 Il est possible d'éliminer/bannir avec un masque, le pseudo sera extrait du masque et remplacé par "*".
 

@@ -77,7 +77,7 @@ char *irc_server_option_string[IRC_SERVER_NUM_OPTIONS] =
   "connection_timeout",
   "anti_flood_prio_high", "anti_flood_prio_low",
   "away_check", "away_check_max_nicks",
-  "default_msg_part", "default_msg_quit",
+  "default_msg_kick", "default_msg_part", "default_msg_quit",
   "notify",
 };
 
@@ -92,7 +92,7 @@ char *irc_server_option_default[IRC_SERVER_NUM_OPTIONS] =
   "60",
   "2", "2",
   "0", "25",
-  "WeeChat %v", "WeeChat %v",
+  "","WeeChat %v", "WeeChat %v",
   "",
 };
 
@@ -4725,6 +4725,9 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_integer (ptr_item, "away_check_max_nicks",
                                            IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS)))
         return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "default_msg_kick",
+                                          IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_DEFAULT_MSG_KICK)))
+        return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "default_msg_part",
                                           IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_DEFAULT_MSG_PART)))
         return 0;
@@ -5039,6 +5042,13 @@ irc_server_print_log ()
         else
             weechat_log_printf ("  away_check_max_nicks : %d",
                                 weechat_config_integer (ptr_server->options[IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS]));
+        /* default_msg_kick */
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_DEFAULT_MSG_KICK]))
+            weechat_log_printf ("  default_msg_kick . . : null ('%s')",
+                                IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_DEFAULT_MSG_KICK));
+        else
+            weechat_log_printf ("  default_msg_kick . . : '%s'",
+                                weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_DEFAULT_MSG_KICK]));
         /* default_msg_part */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_DEFAULT_MSG_PART]))
             weechat_log_printf ("  default_msg_part . . : null ('%s')",

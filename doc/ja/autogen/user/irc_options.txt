@@ -468,6 +468,11 @@
 ** タイプ: 整数
 ** 値: 1 .. 3600 (デフォルト値: `60`)
 
+* [[option_irc.server_default.default_msg_kick]] *irc.server_default.default_msg_kick*
+** 説明: `default kick message used by commands "/kick" and "/kickban" (special variables $nick, $channel and $server are replaced by their value)`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
+
 * [[option_irc.server_default.default_msg_part]] *irc.server_default.default_msg_part*
 ** 説明: `デフォルトの退出メッセージ (チャンネルから出る際の) ("%v" は WeeChat バージョンで置換)`
 ** タイプ: 文字列

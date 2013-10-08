@@ -32,7 +32,7 @@ extern struct t_hashtable *irc_message_parse_to_hashtable (struct t_irc_server *
 extern const char *irc_message_get_nick_from_host (const char *host);
 extern const char *irc_message_get_address_from_host (const char *host);
 extern char *irc_message_replace_vars (struct t_irc_server *server,
-                                       struct t_irc_channel *channel,
+                                       const char *channel_name,
                                        const char *string);
 extern struct t_hashtable *irc_message_split (struct t_irc_server *server,
                                               const char *message);
