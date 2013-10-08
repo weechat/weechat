@@ -258,6 +258,11 @@
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
+* [[option_irc.look.notice_welcome_tags]] *irc.look.notice_welcome_tags*
+** 説明: `comma separated list of tags used in a welcome notices redirected to a channel, for example: "notify_private"`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
+
 * [[option_irc.look.notify_tags_ison]] *irc.look.notify_tags_ison*
 ** 説明: `あるニックネームが参加またはサーバから切断したときの (ison コマンドの結果)、notify によって表示されたメッセージに使われたタグのコンマ区切りリスト、例えば: "notify_message"、"notify_highlight"、"notify_private"`
 ** タイプ: 文字列

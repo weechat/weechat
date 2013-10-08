@@ -258,6 +258,11 @@
 ** type: boolean
 ** values: on, off (default value: `on`)
 
+* [[option_irc.look.notice_welcome_tags]] *irc.look.notice_welcome_tags*
+** description: `comma separated list of tags used in a welcome notices redirected to a channel, for example: "notify_private"`
+** type: string
+** values: any string (default value: `""`)
+
 * [[option_irc.look.notify_tags_ison]] *irc.look.notify_tags_ison*
 ** description: `comma separated list of tags used in messages displayed by notify when a nick joins or quits server (result of command ison), for example: "notify_message", "notify_private" or "notify_highlight"`
 ** type: string

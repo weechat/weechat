@@ -258,6 +258,11 @@
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
+* [[option_irc.look.notice_welcome_tags]] *irc.look.notice_welcome_tags*
+** Beschreibung: `comma separated list of tags used in a welcome notices redirected to a channel, for example: "notify_private"`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `""`)
+
 * [[option_irc.look.notify_tags_ison]] *irc.look.notify_tags_ison*
 ** Beschreibung: `durch Kommata getrennte Liste von Schlagwörtern die in notify-Nachrichten genutzt werden sollen, falls ein Nick einen Server betritt oder verlässt (Rückgabe durch Befehl ison), zum Beispiel: "notify_message", "notify_private" oder "notify_highlight"`
 ** Typ: Zeichenkette
