@@ -104,7 +104,8 @@ compile WeeChat.
 | guile-2.0-dev                   | ≥ 2.0       |          | Guile (scheme) plugin
 | asciidoc                        | ≥ 8.5.0     |          | Build man page and documentation
 | source-highlight                |             |          | Syntax highlight for sources in documentation
-| xsltproc                        |             |          | Build of man page
+| xsltproc,
+  docbook-xml, docbook-xsl        |             |          | Build of man page
 |========================================
 
 [NOTE]

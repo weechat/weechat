@@ -113,7 +113,8 @@ compilare WeeChat.
 | asciidoc                       | ≥ 8.5.0     |           | Build man page and documentation
 | source-highlight               |             |           | Evidenziazione della sintassi per i sorgenti nella documentazione
 // TRANSLATION MISSING
-| xsltproc                       |             |           | Build of man page
+| xsltproc,
+  docbook-xml, docbook-xsl       |             |           | Build of man page
 |========================================
 
 [NOTE]

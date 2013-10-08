@@ -104,7 +104,8 @@ welche Pakete optional genutzt werden können.
 | guile-2.0-dev                     | ≥ 2.0       |          | Guile (scheme) Erweiterung
 | asciidoc                          | ≥ 8.5.0     |          | Zum Erstellen der man page und der Dokumentation
 | source-highlight                  |             |          | Syntax Highlight für Quelltext in Dokumentation
-| xsltproc                          |             |          | Erstellt man page
+| xsltproc,
+  docbook-xml, docbook-xsl          |             |          | Erstellt man page
 |========================================
 
 [NOTE]
