@@ -904,7 +904,7 @@ Data sent as hdata:
 | date            | time             | Date of message
 | date_printed    | time             | Date when WeeChat displayed message
 | displayed       | char             | 1 if message is displayed, 0 if message is filtered (hidden)
-| highlight       | char             | 1 if line has a highlight, othersiwe 0
+| highlight       | char             | 1 if line has a highlight, otherwise 0
 | tags_array      | array of strings | List of tags for line
 | prefix          | string           | Prefix
 | message         | string           | Message
