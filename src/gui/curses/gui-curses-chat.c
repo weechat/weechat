@@ -600,10 +600,34 @@ gui_chat_display_day_changed (struct t_gui_window *window,
                               int simulate)
 {
     char temp_message[1024], message[1024], *message_with_color;
+    int year1, year1_last_yday;
 
     if (simulate
         || (!simulate && (window->win_chat_cursor_y >= window->win_chat_height)))
         return;
+
+    /*
+     * if date1 is given, compare date1 and date2; if date2 is date1 + 1 day,
+     * do not display date1 (so wee keep date1 if date2 is > date1 + 1 day)
+     */
+    if (date1)
+    {
+        if (date1->tm_year == date2->tm_year)
+        {
+            if (date1->tm_yday == date2->tm_yday - 1)
+                date1 = NULL;
+        }
+        else if ((date1->tm_year == date2->tm_year - 1) && (date2->tm_yday == 0))
+        {
+            /* date2 is 01/01, then check if date1 is 31/12 */
+            year1 = date1->tm_year + 1900;
+            year1_last_yday = (((year1 % 400) == 0)
+                              || (((year1 % 4) == 0) && ((year1 % 100) != 0))) ?
+                365 : 364;
+            if (date1->tm_yday == year1_last_yday)
+                date1 = NULL;
+        }
+    }
 
     /* build the message to display */
     if (date1)
