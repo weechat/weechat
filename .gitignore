@@ -43,6 +43,7 @@ POTFILES
 remove-potcdate.sed
 Rules-quot
 weechat.pc
+weechat-*.cygport
 
 *stamp
 stamp*

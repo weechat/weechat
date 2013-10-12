@@ -55,7 +55,8 @@ EXTRA_DIST = CMakeLists.txt \
              po/CMakeLists.txt \
              po/srcfiles.cmake \
              weechat.png \
-             weechat.pc.in
+             weechat.pc.in \
+             weechat.cygport.in
 
 ACLOCAL_AMFLAGS = -I m4
 

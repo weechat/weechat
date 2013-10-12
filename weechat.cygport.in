@@ -1,0 +1,160 @@
+#
+# Copyright (C) 2013 Sebastien Helleu <flashcode@flashtux.org>
+#
+# This file is part of WeeChat, the extensible chat client.
+#
+# WeeChat is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+#
+# WeeChat is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+#
+# This file is used to build Cygwin packages using the "cygport" command.
+#
+# It must be used *ONLY* for a stable release (version "X.Y.Z"), not for
+# a development version (version "X.Y.Z-dev" or "X.Y.Z-rcN").
+#
+# Instructions: execute these commands inside your build directory,
+# after running cmake or configure script (replace X.Y.Z by WeeChat version):
+#
+#     $ cygport weechat-X.Y.Z-1.cygport fetch
+#     $ cygport weechat-X.Y.Z-1.cygport almostall
+#
+#     ==> packages are built in directory ./weechat-X.Y.Z-1/dist/weechat/
+#
+
+inherit cmake
+
+NAME="weechat"
+VERSION=@VERSION@
+RELEASE=1
+
+# Default category (some packages have extra category)
+CATEGORY="Net"
+
+HOMEPAGE="http://weechat.org/"
+SRC_URI="http://weechat.org/files/src/weechat-${VERSION}.tar.bz2"
+
+# Build dependencies only
+DEPEND="asciidoc cmake docbook-xml-simple11 docbook-xsl gettext gnutls-devel \
+libaspell-devel libcurl-devel libgcrypt-devel libncursesw-devel lua perl \
+python ruby source-highlight tcl zlib-devel"
+
+#
+# CMake compilation of WeeChat:
+#   1. set prefix to /usr
+#   2. enable build of man pages and documentation
+#   3. disable Guile plugin because WeeChat requires Guile >= 2.0,
+#      which is not yet available in Cygwin
+#
+CYGCMAKE_ARGS="-DPREFIX=/usr -DENABLE_MAN=ON -DENABLE_DOC=ON \
+-DENABLE_GUILE=OFF"
+
+#
+# Build 8 Cygwin packages:
+#   weechat
+#   weechat-python
+#   weechat-perl
+#   weechat-ruby
+#   weechat-lua
+#   weechat-tcl
+#   weechat-devel
+#   weechat-doc
+#
+PKG_NAMES="${PN} ${PN}-python ${PN}-perl ${PN}-ruby ${PN}-lua ${PN}-tcl \
+${PN}-devel ${PN}-doc"
+PKG_HINTS="setup python perl ruby lua tcl devel doc"
+
+#
+# Package "weechat": binary, all plugins except scripting languages,
+# translations, icon, man pages
+#
+weechat_SUMMARY="Fast, light and extensible chat client (IRC/XMPP)"
+weechat_DESCRIPTION="WeeChat (Wee Enhanced Environment for Chat) is a fast, \
+light and extensible chat client (IRC/XMPP). Everything can be done with a \
+keyboard, it is customizable and extensible with scripts."
+weechat_CONTENTS="
+    usr/bin/
+    usr/lib/weechat/plugins/alias.dll
+    usr/lib/weechat/plugins/aspell.dll
+    usr/lib/weechat/plugins/charset.dll
+    usr/lib/weechat/plugins/fifo.dll
+    usr/lib/weechat/plugins/irc.dll
+    usr/lib/weechat/plugins/logger.dll
+    usr/lib/weechat/plugins/relay.dll
+    usr/lib/weechat/plugins/rmodifier.dll
+    usr/lib/weechat/plugins/script.dll
+    usr/lib/weechat/plugins/xfer.dll
+    usr/share/locale/
+    usr/share/icons/
+    usr/share/man/
+    usr/share/doc/weechat/AUTHORS
+    usr/share/doc/weechat/ChangeLog
+    usr/share/doc/weechat/COPYING
+    usr/share/doc/weechat/NEWS
+    usr/share/doc/weechat/README
+"
+weechat_REQUIRES="libaspell15 libcurl4 libgcrypt11 libgnutls28 libncursesw10 zlib0"
+
+#
+# Package "weechat-python": python scripting plugin
+#
+weechat_python_SUMMARY="Python scripting plugin for WeeChat"
+weechat_python_DESCRIPTION="Python scripting plugin for WeeChat"
+weechat_python_CONTENTS="usr/lib/weechat/plugins/python.dll"
+weechat_python_REQUIRES="python weechat"
+
+#
+# Package "weechat-perl": perl scripting plugin
+#
+weechat_perl_SUMMARY="Perl scripting plugin for WeeChat"
+weechat_perl_DESCRIPTION="Perl scripting plugin for WeeChat"
+weechat_perl_CONTENTS="usr/lib/weechat/plugins/perl.dll"
+weechat_perl_REQUIRES="perl weechat"
+
+#
+# Package "weechat-ruby": ruby scripting plugin
+#
+weechat_ruby_SUMMARY="Ruby scripting plugin for WeeChat"
+weechat_ruby_DESCRIPTION="Ruby scripting plugin for WeeChat"
+weechat_ruby_CONTENTS="usr/lib/weechat/plugins/ruby.dll"
+weechat_ruby_REQUIRES="ruby weechat"
+
+#
+# Package "weechat-lua": lua scripting plugin
+#
+weechat_lua_SUMMARY="Lua scripting plugin for WeeChat"
+weechat_lua_DESCRIPTION="Lua scripting plugin for WeeChat"
+weechat_lua_CONTENTS="usr/lib/weechat/plugins/lua.dll"
+weechat_lua_REQUIRES="lua weechat"
+
+#
+# Package "weechat-tcl": tcl scripting plugin
+#
+weechat_tcl_SUMMARY="Tcl scripting plugin for WeeChat"
+weechat_tcl_DESCRIPTION="Tcl scripting plugin for WeeChat"
+weechat_tcl_CONTENTS="usr/lib/weechat/plugins/tcl.dll"
+weechat_tcl_REQUIRES="tcl weechat"
+
+#
+# Package "weechat-devel": header to build plugins
+#
+weechat_devel_CATEGORY="Net Devel"
+weechat_devel_SUMMARY="Development files to build WeeChat plugins"
+weechat_devel_CONTENTS="usr/include/ usr/lib/pkgconfig/"
+
+#
+# Package "weechat-doc": documentation
+#
+weechat_doc_CATEGORY="Net Doc"
+weechat_doc_SUMMARY="Documentation for WeeChat"
+weechat_doc_CONTENTS="usr/share/doc/weechat/*.html"

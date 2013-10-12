@@ -39,6 +39,7 @@ AM_PROG_LIBTOOL
 
 # Files to generate
 AC_CONFIG_FILES([weechat.pc])
+AC_CONFIG_FILES([weechat-${VERSION}-1.cygport:weechat.cygport.in])
 
 # Add some flags for some OS
 case "$host_os" in
