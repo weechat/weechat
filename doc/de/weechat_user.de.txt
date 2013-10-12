@@ -269,7 +269,9 @@ als cmake.
 
 ----------------------------------------
 $ ./autogen.sh
-$ ./configure
+$ mkdir build
+$ cd build
+$ ../configure
 $ make
 % make install    (als root)
 ----------------------------------------
@@ -278,7 +280,9 @@ $ make
 
 ----------------------------------------
 $ ./autogen.sh
-$ ./configure --prefix=/Pfad/zum/Verzeichnis
+$ mkdir build
+$ cd build
+$ ../configure --prefix=/Pfad/zum/Verzeichnis
 $ make
 $ make install
 ----------------------------------------

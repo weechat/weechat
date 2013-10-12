@@ -281,7 +281,9 @@ Build with autotools requires more dependencies and is slower than with cmake.
 
 ----------------------------------------
 $ ./autogen.sh
-$ ./configure
+$ mkdir build
+$ cd build
+$ ../configure
 $ make
 % make install    (come root)
 ----------------------------------------
@@ -290,7 +292,9 @@ $ make
 
 ----------------------------------------
 $ ./autogen.sh
-$ ./configure --prefix=/path/to/directory
+$ mkdir build
+$ cd build
+$ ../configure --prefix=/path/to/directory
 $ make
 $ make install
 ----------------------------------------

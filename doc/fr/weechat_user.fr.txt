@@ -272,7 +272,9 @@ qu'avec cmake.
 
 ----------------------------------------
 $ ./autogen.sh
-$ ./configure
+$ mkdir build
+$ cd build
+$ ../configure
 $ make
 % make install    (en root)
 ----------------------------------------
@@ -281,7 +283,9 @@ $ make
 
 ----------------------------------------
 $ ./autogen.sh
-$ ./configure --prefix=/chemin/vers/répertoire
+$ mkdir build
+$ cd build
+$ ../configure --prefix=/chemin/vers/répertoire
 $ make
 $ make install
 ----------------------------------------

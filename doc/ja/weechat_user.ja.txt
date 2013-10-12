@@ -257,7 +257,9 @@ autotools を用いてビルドする場合、cmake よりも多くの依存パ�
 
 ----------------------------------------
 $ ./autogen.sh
-$ ./configure
+$ mkdir build
+$ cd build
+$ ../configure
 $ make
 % make install    (as root)
 ----------------------------------------
@@ -266,7 +268,9 @@ $ make
 
 ----------------------------------------
 $ ./autogen.sh
-$ ./configure --prefix=/path/to/directory
+$ mkdir build
+$ cd build
+$ ../configure --prefix=/path/to/directory
 $ make
 $ make install
 ----------------------------------------
