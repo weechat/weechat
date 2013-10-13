@@ -487,7 +487,7 @@ Beispiel des WeeChat-Terminals:
 │                                                                                 │       │
 │                                                                                 │       │
 │[12:55] [6] [irc/freenode] 3:#test(+n){4}* [Act: 4:#abc(2,5), 6]                         │ ◀ Bar "status"
-│[@Flashy] hi peter!█                                                                     │ ◀ Bar "input"
+│[@Flashy(i)] hi peter!█                                                                  │ ◀ Bar "input"
 └─────────────────────────────────────────────────────────────────────────────────────────┘
 ........................................
 
@@ -528,7 +528,8 @@ In der 'input' Bar lautet die Standardeinstellung:
 |========================================
 | Item         | Beispiel                                    | Beschreibung
 | input_paste  | [Paste 7 lines ? [ctrl-Y] Ja [ctrl-N] Nein] | Nachfrage ob sieben Zeilen eingefügt werden sollen
-| input_prompt | [@Flashy]                                   | Input prompt (Nickname für den IRC)
+// TRANSLATION MISSING
+| input_prompt | [@Flashy(i)]                                | Input prompt, for irc: nick and modes (mode "+i" means invisible on freenode)
 | away         | (away)                                      | Abwesenheitsanzeige
 | input_search | [Search (~ str,msg)]                        | Suchindikatoren ("`~`": Groß-und Kleinschreibung ignorieren, "`==`": Groß-und Kleinschreibung berücksichtigen, "`str`": einfache Textsuche, "`regex`": suche mit regulären Ausdrücken, "`msg`": Suche in Nachrichten, "`pre`": Suche in Präfix, "`pre\|msg`": Suche in Präfix und Nachrichten)
 | input_text   | hi peter!                                   | Text der eingegeben wird

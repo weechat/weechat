@@ -496,7 +496,7 @@ Exemple de terminal avec WeeChat :
 │                                                                                 │       │
 │                                                                                 │       │
 │[12:55] [6] [irc/freenode] 3:#test(+n){4}* [Act: 4:#abc(2,5), 6]                         │ ◀ barre "status"
-│[@Flashy] salut peter !█                                                                 │ ◀ barre "input"
+│[@Flashy(i)] salut peter !█                                                              │ ◀ barre "input"
 └─────────────────────────────────────────────────────────────────────────────────────────┘
 ........................................
 
@@ -538,7 +538,7 @@ La barre 'input' contient les objets (items) suivants par défaut :
 |========================================
 | Objet (item) | Exemple                                       | Description
 | input_paste  | [Coller 7 lignes ? [ctrl-Y] Oui [ctrl-N] Non] | Question à l'utilisateur pour coller des lignes
-| input_prompt | [@Flashy]                                     | Prompt (pseudo pour l'extension irc)
+| input_prompt | [@Flashy(i)]                                  | Prompt, pour irc: pseudo et modes (le mode "+i" signifie invisible sur freenode)
 | away         | (absent)                                      | Indicateur d'absence
 | input_search | [Recherche (~ str,msg)]                       | Indicateur de recherche de texte ("`~`" : insensible à la casse, "`==`" : sensible à la casse, "`str`" : recherche de chaîne, "`regex`" : recherche d'expression régulière, "`msg`" : recherche dans les messages, "`pre`" : recherche dans les préfixes, "`pre\|msg`" : recherche dans les préfixes et messages)
 | input_text   | salut peter !                                 | Texte entré

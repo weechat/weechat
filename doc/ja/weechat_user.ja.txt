@@ -467,7 +467,7 @@ WeeChat を起動したターミナルの例:
 │                                                                                 │       │
 │                                                                                 │       │
 │[12:55] [6] [irc/freenode] 3:#test(+n){4}* [Act: 4:#abc(2,5), 6]                         │ ◀ 状態 ("status") バー
-│[@Flashy] hi peter!█                                                                     │ ◀ 入力 ("input") バー
+│[@Flashy(i)] hi peter!█                                                                  │ ◀ 入力 ("input") バー
 └─────────────────────────────────────────────────────────────────────────────────────────┘
 ........................................
 
@@ -508,7 +508,8 @@ WeeChat を起動したターミナルの例:
 |========================================
 | アイテム     | 例                                         | 説明
 | input_paste  | [Paste 7 lines ? [ctrl-Y] Yes [ctrl-N] No] | 行をペーストする場合にユーザへ行われる質問
-| input_prompt | [@Flashy]                                  | 入力プロンプト (irc プラグインの場合はニックネーム)
+// TRANSLATION MISSING
+| input_prompt | [@Flashy]                                  | Input prompt, for irc: nick and modes (mode "+i" means invisible on freenode)
 | away         | (away)                                     | 離席状態表示
 | input_search | [Search (~ str,msg)]                       | 検索インジケータ ("`~`": 大文字小文字を区別しない、"`==`": 大文字小文字を区別する、"`str`": 検索文字列、"`regex`": 検索正規表現、"`msg`": メッセージ部分から検索、"`pre`": プレフィックス部分から検索、"`pre\|msg`": プレフィックス部分とメッセージ部分から検索)
 | input_text   | hi peter!                                  | 入力テキスト

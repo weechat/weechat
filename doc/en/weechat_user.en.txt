@@ -487,7 +487,7 @@ Example of terminal with WeeChat:
 │                                                                                 │       │
 │                                                                                 │       │
 │[12:55] [6] [irc/freenode] 3:#test(+n){4}* [Act: 4:#abc(2,5), 6]                         │ ◀ bar "status"
-│[@Flashy] hi peter!█                                                                     │ ◀ bar "input"
+│[@Flashy(i)] hi peter!█                                                                  │ ◀ bar "input"
 └─────────────────────────────────────────────────────────────────────────────────────────┘
 ........................................
 
@@ -528,7 +528,7 @@ Bar 'input' has following default items:
 |========================================
 | Item         | Example                                    | Description
 | input_paste  | [Paste 7 lines ? [ctrl-Y] Yes [ctrl-N] No] | Question to user for pasting lines
-| input_prompt | [@Flashy]                                  | Input prompt (nick for irc plugin)
+| input_prompt | [@Flashy(i)]                               | Input prompt, for irc: nick and modes (mode "+i" means invisible on freenode)
 | away         | (away)                                     | Away indicator
 | input_search | [Search (~ str,msg)]                       | Search indicator ("`~`": case insensitive, "`==`": case sensitive, "`str`": search string, "`regex`": search regular expression, "`msg`": search in messages, "`pre`": search in prefixes, "`pre\|msg`": search in prefixes and messages)
 | input_text   | hi peter!                                  | Input text

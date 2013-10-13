@@ -507,7 +507,7 @@ Esempio di terminale con WeeChat:
 │                                                                                 │       │
 │                                                                                 │       │
 │[12:55] [6] [irc/freenode] 3:#test(+n){4}* [Act: 4:#abc(2,5), 6]                         │ ◀ barra "status"
-│[@Flashy] ciao peter!█                                                                   │ ◀ barra "input"
+│[@Flashy(i)] ciao peter!█                                                                │ ◀ barra "input"
 └─────────────────────────────────────────────────────────────────────────────────────────┘
 ........................................
 
@@ -548,7 +548,8 @@ La barra 'input' ha i seguenti elementi predefiniti:
 |========================================
 | Elemento     | Esempio                                       | Descrizione
 | input_paste  | [Incollare 7 righe ? [ctrl-Y] Sì [ctrl-N] No] | Chiede all'utente se incollare le righe
-| input_prompt | [@Flashy]                                     | Prompt per l'input (nick per il plugin irc)
+// TRANSLATION MISSING
+| input_prompt | [@Flashy(i)]                                  | Prompt per l'input, for irc: nick and modes (mode "+i" means invisible on freenode)
 | away         | (assente)                                     | Indicatore di assenza
 // TRANSLATION MISSING
 | input_search | [Search (~ str,msg)]                          | Search indicator ("`~`": case insensitive, "`==`": case sensitive, "`str`": search string, "`regex`": search regular expression, "`msg`": search in messages, "`pre`": search in prefixes, "`pre\|msg`": search in prefixes and messages)
