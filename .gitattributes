@@ -3,4 +3,3 @@
 .git*               export-ignore
 debian              export-ignore
 weechat.spec        export-ignore
-weechat.cygport.in  export-ignore
