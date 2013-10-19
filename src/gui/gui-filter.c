@@ -149,21 +149,12 @@ gui_filter_buffer (struct t_gui_buffer *buffer,
     lines_changed = 0;
     lines_hidden = buffer->lines->lines_hidden;
 
-    if (!line_data)
-        buffer->lines->prefix_max_length = CONFIG_INTEGER(config_look_prefix_align_min);
-
     ptr_line = buffer->lines->first_line;
     while (ptr_line || line_data)
     {
         ptr_line_data = (line_data) ? line_data : ptr_line->data;
 
         line_displayed = gui_filter_check_line (ptr_line_data);
-
-        if (line_displayed
-            && (ptr_line_data->prefix_length > buffer->lines->prefix_max_length))
-        {
-            buffer->lines->prefix_max_length = ptr_line_data->prefix_length;
-        }
 
         if (ptr_line_data->displayed != line_displayed)
         {
@@ -181,6 +172,8 @@ gui_filter_buffer (struct t_gui_buffer *buffer,
 
     if (line_data)
         line_data->buffer->lines->prefix_max_length_refresh = 1;
+    else
+        buffer->lines->prefix_max_length_refresh = 1;
 
     if (buffer->lines->lines_hidden != lines_hidden)
     {
