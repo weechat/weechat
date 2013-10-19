@@ -11939,12 +11939,13 @@ struct t_gui_bar_item *my_item = weechat_bar_item_new ("myitem",
 
 Script (Python) :
 
-[NOTE]
+[IMPORTANT]
 Pour la compatibilité avec les versions ≤ 0.4.1, le "callback" par défaut a
 seulement 3 paramètres : 'data', 'item' et 'window' (pas de 'buffer' et
 'extra_info'). +
 Pour utiliser le callback avec tous les paramètres, vous devez ajouter "(extra)"
-avant le nom, voir l'exemple ci-dessous.
+avant le nom, voir l'exemple ci-dessous (supporté seulement dans
+WeeChat ≥ 0.4.2).
 
 [source,python]
 ----------------------------------------
@@ -11957,11 +11958,11 @@ def my_build_callback(data, item, window):
 
 bar_item = weechat.bar_item_new("myitem", "my_build_callback", "")
 
-# example (callback avec tous les paramètres)
+# example (callback avec tous les paramètres, pour WeeChat ≥ 0.4.2)
 def my_build_callback2(data, item, window, buffer, extra_info):
     return "mon contenu"
 
-bar_item2 = weechat.bar_item_new("(extra)myitem2", "my_build_callback2", "")
+bar_item2 = weechat.bar_item_new("(extra)myitem2", "my_build_callback2", "")  # WeeChat ≥ 0.4.2
 ----------------------------------------
 
 weechat_bar_item_update
