@@ -48,7 +48,7 @@ all-local: $(man_targets) $(doc_targets)
 
 # man page
 weechat.1: weechat.1.ja.txt cmdline_options.ja.txt
-	$(A2X) -a lang=ja -a revision="WeeChat $(VERSION)" -d manpage -f manpage -L -D . $(abs_top_srcdir)/doc/ja/weechat.1.ja.txt
+	$(A2X) -a lang=ja -a revision="WeeChat $(VERSION)" -a year=`date "+%Y"` -d manpage -f manpage -L -D . $(abs_top_srcdir)/doc/ja/weechat.1.ja.txt
 
 # user's guide
 weechat_user.ja.html: weechat_user.ja.txt cmdline_options.ja.txt $(wildcard autogen/user/*.txt)
