@@ -18,6 +18,7 @@
 ABOUT-NLS
 autom4te*
 build*/*
+compile
 config.guess
 config.h
 config.h.in*
