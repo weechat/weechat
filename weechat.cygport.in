@@ -103,7 +103,6 @@ weechat_CONTENTS="
     usr/share/doc/weechat/NEWS
     usr/share/doc/weechat/README
 "
-weechat_REQUIRES="libaspell15 libcurl4 libgcrypt11 libgnutls28 libncursesw10 zlib0"
 
 #
 # Package "weechat-python": python scripting plugin
@@ -111,7 +110,7 @@ weechat_REQUIRES="libaspell15 libcurl4 libgcrypt11 libgnutls28 libncursesw10 zli
 weechat_python_SUMMARY="Python scripting plugin for WeeChat"
 weechat_python_DESCRIPTION="Python scripting plugin for WeeChat"
 weechat_python_CONTENTS="usr/lib/weechat/plugins/python.dll"
-weechat_python_REQUIRES="python weechat"
+weechat_python_REQUIRES="weechat"
 
 #
 # Package "weechat-perl": perl scripting plugin
@@ -119,7 +118,7 @@ weechat_python_REQUIRES="python weechat"
 weechat_perl_SUMMARY="Perl scripting plugin for WeeChat"
 weechat_perl_DESCRIPTION="Perl scripting plugin for WeeChat"
 weechat_perl_CONTENTS="usr/lib/weechat/plugins/perl.dll"
-weechat_perl_REQUIRES="perl weechat"
+weechat_perl_REQUIRES="weechat"
 
 #
 # Package "weechat-ruby": ruby scripting plugin
@@ -127,7 +126,7 @@ weechat_perl_REQUIRES="perl weechat"
 weechat_ruby_SUMMARY="Ruby scripting plugin for WeeChat"
 weechat_ruby_DESCRIPTION="Ruby scripting plugin for WeeChat"
 weechat_ruby_CONTENTS="usr/lib/weechat/plugins/ruby.dll"
-weechat_ruby_REQUIRES="ruby weechat"
+weechat_ruby_REQUIRES="weechat"
 
 #
 # Package "weechat-lua": lua scripting plugin
@@ -135,7 +134,7 @@ weechat_ruby_REQUIRES="ruby weechat"
 weechat_lua_SUMMARY="Lua scripting plugin for WeeChat"
 weechat_lua_DESCRIPTION="Lua scripting plugin for WeeChat"
 weechat_lua_CONTENTS="usr/lib/weechat/plugins/lua.dll"
-weechat_lua_REQUIRES="lua weechat"
+weechat_lua_REQUIRES="weechat"
 
 #
 # Package "weechat-tcl": tcl scripting plugin
@@ -143,7 +142,7 @@ weechat_lua_REQUIRES="lua weechat"
 weechat_tcl_SUMMARY="Tcl scripting plugin for WeeChat"
 weechat_tcl_DESCRIPTION="Tcl scripting plugin for WeeChat"
 weechat_tcl_CONTENTS="usr/lib/weechat/plugins/tcl.dll"
-weechat_tcl_REQUIRES="tcl weechat"
+weechat_tcl_REQUIRES="weechat"
 
 #
 # Package "weechat-devel": header to build plugins
