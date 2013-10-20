@@ -3055,7 +3055,7 @@ config_weechat_init_options ()
         "max_buffer_lines_minutes", "integer",
         N_("maximum number of minutes in history per buffer "
            "(0 = unlimited); examples: 1440 = one day, 10080 = one week, "
-           "43200 = one month, 525600 = one year); use 0 ONLY if option "
+           "43200 = one month, 525600 = one year; use 0 ONLY if option "
            "weechat.history.max_buffer_lines_number is NOT set to 0"),
         NULL, 0, INT_MAX, "0", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_history_max_buffer_lines_number = config_file_new_option (
