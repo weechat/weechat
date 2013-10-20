@@ -96,6 +96,10 @@ div.listingblock > div.content {
 div.tableblock > table {
   border: 2px solid #888;
 }
+.listingblock pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
 table th {
   background: #fbfbfb;
   color: #000;
@@ -113,6 +117,9 @@ div.admonitionblock .icon {
 dt.hdlist1 {
   margin-bottom: .5em;
   color: #252;
+}
+.ulist {
+  word-wrap: break-word;
 }
 .key {
   padding: 0 .3em;

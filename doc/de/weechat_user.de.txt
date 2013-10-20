@@ -390,17 +390,20 @@ Copying output to /tmp/crash.txt.
 (gdb) bt full
 #0  0x00007f9dfb04a465 in raise () from /lib/libc.so.6
 #1  0x00007f9dfb04b8e6 in abort () from /lib/libc.so.6
-#2  0x0000000000437f66 in weechat_shutdown (return_code=1, crash=1) at /some_path/src/core/weechat.c:351
+#2  0x0000000000437f66 in weechat_shutdown (return_code=1, crash=1)
+    at /some_path/src/core/weechat.c:351
 #3  <signal handler called>
-#4  0x000000000044cb24 in hook_process_timer_cb (arg_hook_process=0x254eb90, remaining_calls=<value optimized out>)
-    at /some_path/src/core/wee-hook.c:1364
+#4  0x000000000044cb24 in hook_process_timer_cb (arg_hook_process=0x254eb90,
+    remaining_calls=<value optimized out>) at /some_path/src/core/wee-hook.c:1364
         hook_process = 0x254eb90
         status = <value optimized out>
-#5  0x000000000044cc7d in hook_timer_exec () at /some_path/src/core/wee-hook.c:1025
+#5  0x000000000044cc7d in hook_timer_exec ()
+    at /some_path/src/core/wee-hook.c:1025
         tv_time = {tv_sec = 1272693881, tv_usec = 212665}
         ptr_hook = 0x2811f40
         next_hook = 0x0
-#6  0x000000000041b5b0 in gui_main_loop () at /some_path/src/gui/curses/gui-curses-main.c:319
+#6  0x000000000041b5b0 in gui_main_loop ()
+    at /some_path/src/gui/curses/gui-curses-main.c:319
         hook_fd_keyboard = 0x173b600
         tv_timeout = {tv_sec = 0, tv_usec = 0}
         read_fds = {fds_bits = {0 <repeats 16 times>}}
@@ -463,32 +466,32 @@ Screen layout
 
 Beispiel des WeeChat-Terminals:
 
+// TRANSLATION MISSING
 ........................................
-┌─────────────────────────────────────────────────────────────────────────────────────────┐
-│Welcome to #test, this is a test channel                                                 │ ◀ Bar "title"
-│12:52:27   --> | Flashy (flashcode@weechat.org) has joined #test                 │@Flashy│
-│12:52:27    -- | Nicks #test: [@Flashy @joe +weebot]                             │@joe   │
-│12:52:27    -- | Channel #test: 4 nicks (2 ops, 0 halfop, 1 voice, 1 normal)     │+weebot│
-│12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009                     │peter  │
-│12:54:15 peter | hey!                                                            │       │
-│12:55:01  @joe | hello                                                           │       │
-│                                                                                 │       │
-│                                                                                 │       │
-│                                                                                 │       │
-│                                                                                 │       │ ◀ Chat + Bar "nicklist"
-│                                                                                 │       │
-│                                                                                 │       │
-│                                                                                 │       │
-│                                                                                 │       │
-│                                                                                 │       │
-│                                                                                 │       │
-│                                                                                 │       │
-│                                                                                 │       │
-│                                                                                 │       │
-│                                                                                 │       │
-│[12:55] [6] [irc/freenode] 3:#test(+n){4}* [Act: 4:#abc(2,5), 6]                         │ ◀ Bar "status"
-│[@Flashy(i)] hi peter!█                                                                  │ ◀ Bar "input"
-└─────────────────────────────────────────────────────────────────────────────────────────┘
+ ▼ bar "title"
+┌───────────────────────────────────────────────────────────────────────────┐
+│Welcome to #test, this is a test channel                                   │
+│12:52:27   --> | Flashy (flashcode@weechat.org) has joined #test   │@Flashy│
+│12:52:27    -- | Nicks #test: [@Flashy @joe +weebot]               │@joe   │
+│12:52:27    -- | Channel #test: 4 nicks (2 ops, 1 voice, 1 normal) │+weebot│
+│12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009       │peter  │
+│12:54:15 peter | hey!                                              │       │
+│12:55:01  @joe | hello                                             │       │
+│                                                                   │       │
+│                                                                   │       │
+│                                                                   │       │
+│                                                                   │       │
+│                                                                   │       │
+│                                                                   │       │
+│                                                                   │       │
+│                                                                   │       │
+│                                                                   │       │
+│                                                                   │       │
+│                                                                   │       │
+│[12:55] [6] [irc/freenode] 3:#test(+n){4}* [Act: 4:#abc(2,5), 6]           │
+│[@Flashy(i)] hi peter!█                                                    │
+└───────────────────────────────────────────────────────────────────────────┘
+ ▲ bars "status" and "input"                               bar "nicklist" ▲
 ........................................
 
 Der Bildschirm setzt sich aus folgenden Bereichen zusammen:
@@ -505,34 +508,34 @@ Der Bildschirm setzt sich aus folgenden Bereichen zusammen:
 
 Die 'status'-Bar besitzt als Standardeinträge:
 
-[width="100%",cols="^3,^3l,10",options="header"]
+[width="100%",cols="^3,^3,10",options="header"]
 |========================================
 | Item                  | Beispiel              | Beschreibung
-| time                  | [12:55]               | Uhrzeit
-| buffer_count          | [6]                   | Anzahl der geöffneten Buffer
-| buffer_plugin         | [irc/freenode]        | Erweiterung des aktuellen Buffers (IRC Erweiterung setzt den IRC Servername für den Buffer)
-| buffer_number         | 3                     | Aktuelle Nummer des Buffers
-| buffer_name           | #test                 | Name des aktuellen Buffers
-| buffer_modes          | +n                    | IRC Channel-Modi
-| buffer_nicklist_count | {4}                   | Anzahl der Nicks in Nickliste
-| buffer_filter         | *                     | Filteranzeige: `*` bedeutet das Zeilen gefiltert (unterdrückt) wurden. Ein leerer Eintrag zeigt an dass alle Zeilen dargestellt werden
-| lag                   | [Lag: 2.5]            | Verzögerungsanzeige, in Sekunden (keine Anzeige falls Verzögerung gering)
-| hotlist               | [Act: 4:#abc(2,5), 6] | Liste der Buffer mit Aktivität (ungelesene Nachrichten) (für das Beispiel: 2 Highlights und 5 ungelesene Nachrichten im Channel '#abc', eine ungelesene Nachricht in Buffer #6)
-| completion            | abc(2) def(5)         | Liste von Wörtern für Vervollständigung, die Zahl zeigt an wie viele Varianten möglich sind
-| scroll                | -MORE(50)-            | Scroll Indikator, zeigt an wie viele Zeilen unterhalb der zur Zeit dargestellten Zeile vorhanden sind
+| time                  | `[12:55]`             | Uhrzeit
+| buffer_count          | `[6]`                 | Anzahl der geöffneten Buffer
+| buffer_plugin         | `[irc/freenode]`      | Erweiterung des aktuellen Buffers (IRC Erweiterung setzt den IRC Servername für den Buffer)
+| buffer_number         | `3`                   | Aktuelle Nummer des Buffers
+| buffer_name           | `#test`               | Name des aktuellen Buffers
+| buffer_modes          | `+n`                  | IRC Channel-Modi
+| buffer_nicklist_count | `{4}`                 | Anzahl der Nicks in Nickliste
+| buffer_filter         | `*`                   | Filteranzeige: `*` bedeutet das Zeilen gefiltert (unterdrückt) wurden. Ein leerer Eintrag zeigt an dass alle Zeilen dargestellt werden
+| lag                   | `[Lag: 2.5]`          | Verzögerungsanzeige, in Sekunden (keine Anzeige falls Verzögerung gering)
+| hotlist               | `[H: 4:#abc(2,5), 6]` | Liste der Buffer mit Aktivität (ungelesene Nachrichten) (für das Beispiel: 2 Highlights und 5 ungelesene Nachrichten im Channel '#abc', eine ungelesene Nachricht in Buffer #6)
+| completion            | `abc(2) def(5)`       | Liste von Wörtern für Vervollständigung, die Zahl zeigt an wie viele Varianten möglich sind
+| scroll                | `-MORE(50)-`          | Scroll Indikator, zeigt an wie viele Zeilen unterhalb der zur Zeit dargestellten Zeile vorhanden sind
 |========================================
 
 In der 'input' Bar lautet die Standardeinstellung:
 
-[width="100%",cols="^3,^6l,8",options="header"]
+[width="100%",cols="^3,^6,8",options="header"]
 |========================================
-| Item         | Beispiel                                    | Beschreibung
-| input_paste  | [Paste 7 lines ? [ctrl-Y] Ja [ctrl-N] Nein] | Nachfrage ob sieben Zeilen eingefügt werden sollen
+| Item         | Beispiel                                      | Beschreibung
+| input_paste  | `[Paste 7 lines ? [ctrl-Y] Ja [ctrl-N] Nein]` | Nachfrage ob sieben Zeilen eingefügt werden sollen
 // TRANSLATION MISSING
-| input_prompt | [@Flashy(i)]                                | Input prompt, for irc: nick and modes (mode "+i" means invisible on freenode)
-| away         | (away)                                      | Abwesenheitsanzeige
-| input_search | [Search (~ str,msg)]                        | Suchindikatoren ("`~`": Groß-und Kleinschreibung ignorieren, "`==`": Groß-und Kleinschreibung berücksichtigen, "`str`": einfache Textsuche, "`regex`": suche mit regulären Ausdrücken, "`msg`": Suche in Nachrichten, "`pre`": Suche in Präfix, "`pre\|msg`": Suche in Präfix und Nachrichten)
-| input_text   | hi peter!                                   | Text der eingegeben wird
+| input_prompt | `[@Flashy(i)]`                                | Input prompt, for irc: nick and modes (mode "+i" means invisible on freenode)
+| away         | `(away)`                                      | Abwesenheitsanzeige
+| input_search | `[Search (~ str,msg)]`                        | Suchindikatoren ("`~`": Groß-und Kleinschreibung ignorieren, "`==`": Groß-und Kleinschreibung berücksichtigen, "`str`": einfache Textsuche, "`regex`": suche mit regulären Ausdrücken, "`msg`": Suche in Nachrichten, "`pre`": Suche in Präfix, "`pre\|msg`": Suche in Präfix und Nachrichten)
+| input_text   | `hi peter!`                                   | Text der eingegeben wird
 |========================================
 
 [[buffers_and_windows]]
@@ -559,95 +562,93 @@ angezeigt.
 Beispiele für eine horizontal Fensteraufteilung (`/window splith`):
 
 ........................................
-┌─────────────────────────────────────────────────────────────────────────────────────────┐
-│Welcome to #abc, channel about nothing!                                                  │
-│12:55:12     Max | hi                                                            │@Flashy│
-│12:55:20 @Flashy | hi Max!                                                       │Max    │
-│12:55:32     Max | how are you?                                                  │       │
-│                                                                                 │       │
-│                                                                                 │       │ ◀ Fenster #2
-│                                                                                 │       │   (Buffer #4)
-│                                                                                 │       │
-│                                                                                 │       │
-│[12:55] [6] [irc/freenode] 4:#abc(+n){2}                                                 │
-│[@Flashy]                                                                                │
-│─────────────────────────────────────────────────────────────────────────────────────────│
-│Welcome to #test, this is a test channel                                                 │
-│12:54:15 peter | hey!                                                            │@Flashy│
-│12:55:01  @joe | hello                                                           │@joe   │
-│                                                                                 │+weebot│
-│                                                                                 │peter  │
-│                                                                                 │       │ ◀ Fenster #1
-│                                                                                 │       │   (Buffer #3)
-│                                                                                 │       │
-│                                                                                 │       │
-│[12:55] [6] [irc/freenode] 3:#test(+n){4}                                                │
-│[@Flashy] hi peter!█                                                                     │
-└─────────────────────────────────────────────────────────────────────────────────────────┘
+                          ▼ Fenster #2 (Buffer #4)
+┌───────────────────────────────────────────────────────────────────────────┐
+│Welcome to #abc                                                            │
+│12:55:12     Max | hi                                              │@Flashy│
+│12:55:20 @Flashy | hi Max!                                         │Max    │
+│12:55:32     Max | how are you?                                    │       │
+│                                                                   │       │
+│                                                                   │       │
+│                                                                   │       │
+│                                                                   │       │
+│                                                                   │       │
+│[12:55] [6] [irc/freenode] 4:#abc(+n){2}                                   │
+│[@Flashy]                                                                  │
+│───────────────────────────────────────────────────────────────────────────│
+│Welcome to #test                                                           │
+│12:54:15 peter | hey!                                              │@Flashy│
+│12:55:01  @joe | hello                                             │@joe   │
+│                                                                   │+weebot│
+│                                                                   │peter  │
+│                                                                   │       │
+│                                                                   │       │
+│                                                                   │       │
+│                                                                   │       │
+│[12:55] [6] [irc/freenode] 3:#test(+n){4}                                  │
+│[@Flashy] hi peter!█                                                       │
+└───────────────────────────────────────────────────────────────────────────┘
+                          ▲ Fenster #1 (Buffer #3)
 ........................................
 
 Beispiele für eine vertikale Fensteraufteilung (`/window splitv`):
 
 ........................................
-┌─────────────────────────────────────────────────────────────────────────────────────────┐
-│Welcome to #test, this is a test channel    │Welcome to #abc, channel about nothing!     │
-│12:54:15 peter | hey!               │@Flashy│12:55:12     Max | hi               │@Flashy│
-│12:55:01  @joe | hello              │@joe   │12:55:20 @Flashy | hi Max!          │Max    │
-│                                    │+weebot│12:55:32     Max | how are you?     │       │
-│                                    │peter  │                                    │       │
-│                                    │       │                                    │       │
-│                                    │       │                                    │       │
-│                                    │       │                                    │       │
-│                                    │       │                                    │       │
-│                                    │       │                                    │       │
-│                                    │       │                                    │       │
-│                                    │       │                                    │       │
-│                                    │       │                                    │       │
-│                                    │       │                                    │       │
-│                                    │       │                                    │       │
-│                                    │       │                                    │       │
-│                                    │       │                                    │       │
-│                                    │       │                                    │       │
-│                                    │       │                                    │       │
-│                                    │       │                                    │       │
-│                                    │       │                                    │       │
-│[12:55] [6] [irc/freenode] 3:#test(+n){4}   │[12:55] [6] [irc/freenode] 4:#abc(+n){2}    │
-│[@Flashy] hi peter!█                        │[@Flashy]                                   │
-└─────────────────────────────────────────────────────────────────────────────────────────┘
-                ▲ Fenster #1                                   ▲ Fenster #2
-                  (Buffer #3)                                   (Buffer #4)
+┌───────────────────────────────────────────────────────────────────────────┐
+│Welcome to #test                     │Welcome to #abc                      │
+│12:54:15 peter | hey!        │@Flashy│12:55:12     Max | hi        │@Flashy│
+│12:55:01  @joe | hello       │@joe   │12:55:20 @Flashy | hi Max!   │Max    │
+│                             │+weebot│                             │       │
+│                             │peter  │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│[12:55] [irc/oftc] 3:#test(+n){4}    │[12:55] [irc/oftc] 4:#abc(+n){2}     │
+│[@Flashy] hi peter!█                 │[@Flashy]                            │
+└───────────────────────────────────────────────────────────────────────────┘
+      ▲ Fenster #1 (Buffer #3)              ▲ Fenster #2 (Buffer #4)
 ........................................
 
 Beispiele für eine vertikale und horizontale Fensteraufteilung:
 
 ........................................
-┌─────────────────────────────────────────────────────────────────────────────────────────┐
-│Welcome to #test, this is a test channel    │Welcome to #def, another channel            │
-│12:54:15 peter | hey!               │@Flashy│12:55:42 @Flashy | hello world      │@Flashy│
-│12:55:01  @joe | hello              │@joe   │12:55:56    alex | hi Flashy        │alex   │
-│                                    │+weebot│                                    │       │
-│                                    │peter  │                                    │       │ ◀ Fenster #3
-│                                    │       │                                    │       │   (Buffer #5)
-│                                    │       │                                    │       │
-│                                    │       │                                    │       │
-│                                    │       │                                    │       │
-│                                    │       │[12:55] [6] [irc/freenode] 5:#def(+n){2}    │
-│                                    │       │[@Flashy]                                   │
-│                                    │       │────────────────────────────────────────────│
-│                                    │       │Welcome to #abc, channel about nothing!     │
-│                                    │       │12:55:12     Max | hi               │@Flashy│
-│                                    │       │12:55:20 @Flashy | hi Max!          │Max    │
-│                                    │       │12:55:32     Max | how are you?     │       │
-│                                    │       │                                    │       │
-│                                    │       │                                    │       │ ◀ Fenster #2
-│                                    │       │                                    │       │   (Buffer #4)
-│                                    │       │                                    │       │
-│                                    │       │                                    │       │
-│[12:55] [6] [irc/freenode] 3:#test(+n){4}   │ [12:55] [6] [irc/freenode] 4:#abc(+n){2}   │
-│[@Flashy] hi peter!█                        │ [@Flashy]                                  │
-└─────────────────────────────────────────────────────────────────────────────────────────┘
-                ▲ Fenster #1
-                  (Buffer #3)
+                                            ▼ Fenster #3 (Buffer #5)
+┌───────────────────────────────────────────────────────────────────────────┐
+│Welcome to #test                     │Welcome to #def                      │
+│12:54:15 peter | hey!        │@Flashy│12:55:42 @Flashy | hi        │@Flashy│
+│12:55:01  @joe | hello       │@joe   │12:55:56    alex | hi Flashy │alex   │
+│                             │+weebot│                             │       │
+│                             │peter  │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│                             │       │[12:55] [irc/oftc] 5:#def(+n){2}     │
+│                             │       │[@Flashy]                            │
+│                             │       │─────────────────────────────────────│
+│                             │       │Welcome to #abc                      │
+│                             │       │12:55:12     Max | hi        │@Flashy│
+│                             │       │12:55:20 @Flashy | hi Max!   │Max    │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│[12:55] [irc/oftc] 3:#test(+n){4}    │[12:55] [irc/oftc] 4:#abc(+n){2}     │
+│[@Flashy] hi peter!█                 │[@Flashy]                            │
+└───────────────────────────────────────────────────────────────────────────┘
+      ▲ Fenster #1 (Buffer #3)              ▲ Fenster #2 (Buffer #4)
 ........................................
 
 [[bars]]
@@ -746,9 +747,9 @@ dargestellt (Option 'color_delim').
 Beispiel einer Bar mit den Items, "[time],buffer_number+:+buffer_plugin+.+buffer_name":
 
 ........................................
-┌─────────────────────────────────────────────────────────────────────────────────────────┐
-│[12:55] 3:irc/freenode.#weechat                                                          │
-└─────────────────────────────────────────────────────────────────────────────────────────┘
+┌───────────────────────────────────────────────────────────────────────────┐
+│[12:55] 3:irc/freenode.#weechat                                            │
+└───────────────────────────────────────────────────────────────────────────┘
 ........................................
 
 Eine Besonderheit stellt die Möglichkeit dar, ein Item eines bestimmten Buffers
@@ -947,109 +948,109 @@ Standard Tastenbelegung
 Tastenbefehle für die Befehlszeile
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-[width="100%",cols="^.^3,.^10,.^5l",options="header"]
+[width="100%",cols="^.^3,.^10,.^5",options="header"]
 |========================================
 | Taste               | Beschreibung | Befehl
-| @k(←)            .2+| setzt den Cursor eine Position nach links .2+| /input move_previous_char
+| @k(←)            .2+| setzt den Cursor eine Position nach links .2+| `/input move_previous_char`
 | @k(C-)@k(b)
-| @k(→)            .2+| setzt den Cursor eine Position nach rechts .2+| /input move_next_char
+| @k(→)            .2+| setzt den Cursor eine Position nach rechts .2+| `/input move_next_char`
 | @k(C-)@k(f)
-| @k(C-)@k(←)      .2+| springt in der Befehlszeile zum Anfang des vorherigen Wortes .2+| /input move_previous_word
+| @k(C-)@k(←)      .2+| springt in der Befehlszeile zum Anfang des vorherigen Wortes .2+| `/input move_previous_word`
 | @k(A-)@k(b)
-| @k(C-)@k(→)      .2+| springt in der Befehlszeile zum Anfang des nächsten Wortes .2+| /input move_next_word
+| @k(C-)@k(→)      .2+| springt in der Befehlszeile zum Anfang des nächsten Wortes .2+| `/input move_next_word`
 | @k(A-)@k(f)
-| @k(Home)         .2+| springt zum Anfang der Befehlszeile .2+| /input move_beginning_of_line
+| @k(Home)         .2+| springt zum Anfang der Befehlszeile .2+| `/input move_beginning_of_line`
 | @k(C-)@k(a)
-| @k(End)          .2+| springt ans Ende der Befehlszeile .2+| /input move_end_of_line
+| @k(End)          .2+| springt ans Ende der Befehlszeile .2+| `/input move_end_of_line`
 | @k(C-)@k(e)
-| @k(C-)@k(c) , @k(b) | fügt Steuerzeichen für fett geschrieben Text ein | /input insert \x02
-| @k(C-)@k(c) , @k(c) | fügt Steuerzeichen für Textfarbe ein | /input insert \x03
-| @k(C-)@k(c) , @k(i) | fügt Steuerzeichen für kursiven Text ein | /input insert \x1D
-| @k(C-)@k(c) , @k(o) | fügt Steuerzeichen für Standardfarbe ein | /input insert \x0F
-| @k(C-)@k(c) , @k(r) | fügt Steuerzeichen für Hintergrundfarbe ein | /input insert \x12
-| @k(C-)@k(c) , @k(u) | fügt Steuerzeichen für unterstrichenen Text ein | /input insert \x15
-| @k(Del)          .2+| entfernt in der Befehlszeile das nächste Zeichen .2+| /input delete_next_char
+| @k(C-)@k(c) , @k(b) | fügt Steuerzeichen für fett geschrieben Text ein | `/input insert \x02`
+| @k(C-)@k(c) , @k(c) | fügt Steuerzeichen für Textfarbe ein | `/input insert \x03`
+| @k(C-)@k(c) , @k(i) | fügt Steuerzeichen für kursiven Text ein | `/input insert \x1D`
+| @k(C-)@k(c) , @k(o) | fügt Steuerzeichen für Standardfarbe ein | `/input insert \x0F`
+| @k(C-)@k(c) , @k(r) | fügt Steuerzeichen für Hintergrundfarbe ein | `/input insert \x12`
+| @k(C-)@k(c) , @k(u) | fügt Steuerzeichen für unterstrichenen Text ein | `/input insert \x15`
+| @k(Del)          .2+| entfernt in der Befehlszeile das nächste Zeichen .2+| `/input delete_next_char`
 | @k(C-)@k(d)
-| @k(Backsp.)      .2+| entfernt in der Befehlszeile das vorherige Zeichen .2+| /input delete_previous_char
+| @k(Backsp.)      .2+| entfernt in der Befehlszeile das vorherige Zeichen .2+| `/input delete_previous_char`
 | @k(C-)@k(h)
-| @k(C-)@k(k)         | entfernt alle Zeichen vom Cursor bis zum Ende der Zeile (Zeichenkette wird in Zwischenablage kopiert) | /input delete_end_of_line
-| @k(C-)@k(r)         | Textsuche im Verlaufsspeicher des Buffers (siehe <<key_bindings_search_context,Tasten für Such-Kontext>>) | /input search_text
-| @k(C-)@k(t)         | Zeichen austauschen | /input transpose_chars
-| @k(C-)@k(u)         | entfernt alle Zeichen vom Cursor bis zum Anfang der Zeile (Zeichenkette wird in Zwischenablage kopiert) | /input delete_beginning_of_line
-| @k(C-)@k(w)         | entfernt das Wort links vom Cursor (entferntes Wort wird in Zwischenablage kopiert) | /input delete_previous_word
-| @k(C-)@k(y)         | fügt Zeichenkette aus Zwischenablage ein | /input clipboard_paste
-| @k(C-)@k(_)         | Rückgängig machen der letzten Aktion, in der Befehlszeile | /input undo
-| @k(A-)@k(_)         | Wiederherstellen der letzten Aktion, in der Befehlszeile | /input redo
-| @k(Tab)             | Vervollständigung von Befehlen oder Nicks (nochmaliges @k(Tab): findet nächste Vervollständigung) | /input complete_next
-| @k(S-)@k(Tab)       | ohne Vervollständigung: führt eine teilweise Vervollständigung durch. Bei unerledigter Vervollständigung : wird die vorherige Vervollständigung genutzt | /input complete_previous
-| @k(Enter)        .3+| führt einen Befehl aus oder sendet den Text  (im Such-Modus: stoppt Suche) .3+| /input return
+| @k(C-)@k(k)         | entfernt alle Zeichen vom Cursor bis zum Ende der Zeile (Zeichenkette wird in Zwischenablage kopiert) | `/input delete_end_of_line`
+| @k(C-)@k(r)         | Textsuche im Verlaufsspeicher des Buffers (siehe <<key_bindings_search_context,Tasten für Such-Kontext>>) | `/input search_text`
+| @k(C-)@k(t)         | Zeichen austauschen | `/input transpose_chars`
+| @k(C-)@k(u)         | entfernt alle Zeichen vom Cursor bis zum Anfang der Zeile (Zeichenkette wird in Zwischenablage kopiert) | `/input delete_beginning_of_line`
+| @k(C-)@k(w)         | entfernt das Wort links vom Cursor (entferntes Wort wird in Zwischenablage kopiert) | `/input delete_previous_word`
+| @k(C-)@k(y)         | fügt Zeichenkette aus Zwischenablage ein | `/input clipboard_paste`
+| @k(C-)@k(_)         | Rückgängig machen der letzten Aktion, in der Befehlszeile | `/input undo`
+| @k(A-)@k(_)         | Wiederherstellen der letzten Aktion, in der Befehlszeile | `/input redo`
+| @k(Tab)             | Vervollständigung von Befehlen oder Nicks (nochmaliges @k(Tab): findet nächste Vervollständigung) | `/input complete_next`
+| @k(S-)@k(Tab)       | ohne Vervollständigung: führt eine teilweise Vervollständigung durch. Bei unerledigter Vervollständigung : wird die vorherige Vervollständigung genutzt | `/input complete_previous`
+| @k(Enter)        .3+| führt einen Befehl aus oder sendet den Text  (im Such-Modus: stoppt Suche) .3+| `/input return`
 | @k(C-)@k(j)
 | @k(C-)@k(m)
-| @k(↑)               | ruft vorherigen Befehl oder Nachricht aus dem Verlaufsspeicher auf (im Such-Modus: rückwärts suchen) | /input history_previous
-| @k(↓)               | ruft nächsten Befehl oder Nachricht aus dem Verlaufsspeicher auf (im Such-Modus: vorwärts suchen) | /input history_next
-| @k(C-)@k(↑)         | ruft vorherigen Befehl/Nachricht aus dem globalen Verlaufsspeicher auf (für alle Buffer) | /input history_global_previous
-| @k(C-)@k(↓)         | ruft nächsten Befehl/Nachricht aus dem globalen Verlaufsspeicher auf (für alle Buffer) | /input history_global_next
-| @k(A-)@k(d)         | löscht das Wort rechts vom Cursor (Zeichenkette wird in Zwischenablage kopiert) | /input delete_next_word
-| @k(A-)@k(k)         | zeigt den Tastencode, einschließlich des eingebundenen Befehls, einer Tastenkombination an und fügt diesen in die Befehlszeile ein | /input grab_key_command
-| @k(A-)@k(r)         | komplette Eingabezeile löschen| /input delete_line
-| @k(A-)@k(s)         | schaltet die Aspell Funktion an/aus | /mute aspell toggle
+| @k(↑)               | ruft vorherigen Befehl oder Nachricht aus dem Verlaufsspeicher auf (im Such-Modus: rückwärts suchen) | `/input history_previous`
+| @k(↓)               | ruft nächsten Befehl oder Nachricht aus dem Verlaufsspeicher auf (im Such-Modus: vorwärts suchen) | `/input history_next`
+| @k(C-)@k(↑)         | ruft vorherigen Befehl/Nachricht aus dem globalen Verlaufsspeicher auf (für alle Buffer) | `/input history_global_previous`
+| @k(C-)@k(↓)         | ruft nächsten Befehl/Nachricht aus dem globalen Verlaufsspeicher auf (für alle Buffer) | `/input history_global_next`
+| @k(A-)@k(d)         | löscht das Wort rechts vom Cursor (Zeichenkette wird in Zwischenablage kopiert) | `/input delete_next_word`
+| @k(A-)@k(k)         | zeigt den Tastencode, einschließlich des eingebundenen Befehls, einer Tastenkombination an und fügt diesen in die Befehlszeile ein | `/input grab_key_command`
+| @k(A-)@k(r)         | komplette Eingabezeile löschen| `/input delete_line`
+| @k(A-)@k(s)         | schaltet die Aspell Funktion an/aus | `/mute aspell toggle`
 |========================================
 
 [[key_bindings_buffers_windows]]
 Tastenbefehle für Buffer / Fenster
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-[width="100%",cols="^.^3,.^10,.^5l",options="header"]
+[width="100%",cols="^.^3,.^10,.^5",options="header"]
 |========================================
 | Taste                     | Beschreibung | Befehl
-| @k(C-)@k(l)               | Fenster wird neu gezeichnet | /window refresh
-| @k(C-)@k(s) , @k(C-)@k(u) | setzt für alle Buffer die Markierung für ungelesene Nachrichten | /input set_unread
-| @k(C-)@k(x)               | sind mehrere Buffer zu einem Buffer zusammen gefügt wechselt man diese durch | /input switch_active_buffer
-| @k(A-)@k(x)               | Zoom eines zusammengefügten Buffers (@k(A-)@k(x) ein zweites mal: alle zusammengefügten Buffer werden angezeigt) | /input zoom_merged_buffer
-| @k(PgUp)                  | eine Seite im Verlaufsspeicher des Buffers nach oben blättern | /window page_up
-| @k(PgDn)                  | eine Seite im Verlaufsspeicher des Buffer nach unten blättern | /window page_down
-| @k(A-)@k(PgUp)            | einige Zeilen im Verlaufsspeicher des Buffer nach oben blättern | /window scroll_up
-| @k(A-)@k(PgDn)            | einige Zeilen im Verlaufsspeicher des Buffer nach unten blättern | /window scroll_down
-| @k(A-)@k(Home)            | springt zur ersten Zeile des Verlaufsspeichers des aktuellen Buffers| /window scroll_top
-| @k(A-)@k(End)             | springt zur letzten Zeile des Verlaufsspeichers des aktuellen Buffers | /window scroll_bottom
-| @k(A-)@k(←)            .4+| zum vorherigen Buffer springen .4+| /buffer -1
+| @k(C-)@k(l)               | Fenster wird neu gezeichnet | `/window refresh`
+| @k(C-)@k(s) , @k(C-)@k(u) | setzt für alle Buffer die Markierung für ungelesene Nachrichten | `/input set_unread`
+| @k(C-)@k(x)               | sind mehrere Buffer zu einem Buffer zusammen gefügt wechselt man diese durch | `/input switch_active_buffer`
+| @k(A-)@k(x)               | Zoom eines zusammengefügten Buffers (@k(A-)@k(x) ein zweites mal: alle zusammengefügten Buffer werden angezeigt) | `/input zoom_merged_buffer`
+| @k(PgUp)                  | eine Seite im Verlaufsspeicher des Buffers nach oben blättern | `/window page_up`
+| @k(PgDn)                  | eine Seite im Verlaufsspeicher des Buffer nach unten blättern | `/window page_down`
+| @k(A-)@k(PgUp)            | einige Zeilen im Verlaufsspeicher des Buffer nach oben blättern | `/window scroll_up`
+| @k(A-)@k(PgDn)            | einige Zeilen im Verlaufsspeicher des Buffer nach unten blättern | `/window scroll_down`
+| @k(A-)@k(Home)            | springt zur ersten Zeile des Verlaufsspeichers des aktuellen Buffers| `/window scroll_top`
+| @k(A-)@k(End)             | springt zur letzten Zeile des Verlaufsspeichers des aktuellen Buffers | `/window scroll_bottom`
+| @k(A-)@k(←)            .4+| zum vorherigen Buffer springen .4+| `/buffer -1`
 | @k(A-)@k(↑)
 | @k(C-)@k(p)
 | @k(F5)
-| @k(A-)@k(→)            .4+| zum nächsten Buffer springen .4+| /buffer +1
+| @k(A-)@k(→)            .4+| zum nächsten Buffer springen .4+| `/buffer +1`
 | @k(A-)@k(↓)
 | @k(C-)@k(n)
 | @k(F6)
-| @k(F7)                    | zum vorherigen Fenster wechseln | /window -1
-| @k(F8)                    | zum nächsten Fenster wechseln | /window +1
-| @k(F9)                    | Titel des Buffers nach links verschieben | /bar scroll title * -30%
-| @k(F10)                   | Titel des Buffers nach rechts verschieben | /bar scroll title * +30%
-| @k(F11)                   | Nickliste um eine Seite nach oben blättern | /bar scroll nicklist * -100%
-| @k(F12)                   | Nickliste um eine Seite nach unten blättern | /bar scroll nicklist * +100%
-| @k(A-)@k(F11)             | springt zum Anfang der Nickliste | /bar scroll nicklist * b
-| @k(A-)@k(F12)             | springt zum Ende der Nickliste | /bar scroll nicklist * e
-| @k(A-)@k(a)               | wechselt zum nächsten Buffer mit Aktivität (nach Priorität: highlight, Nachricht, ...) | /input jump_smart
-| @k(A-)@k(h)               | löscht Hotliste (Aktivitätsanzeige für die Buffer) | /input hotlist_clear
-| @k(A-)@k(j) , @k(A-)@k(l) | wechselt zum letzten Buffer | /input jump_last_buffer
-| @k(A-)@k(j) , @k(A-)@k(r) | wechselt zum IRC RAW Buffer | /server raw
-| @k(A-)@k(j) , @k(A-)@k(s) | wechselt zum IRC Server Buffer | /server jump
-| @k(A-)@k(0...9)           | wechselt zum Buffer mit der Nummer (0 = 10) | /buffer *N
-| @k(A-)@k(j) , @k(01...99) | wechselt zum Buffer mit der angegeben Nummer | /buffer NN
-| @k(A-)@k(m)               | schaltet Mausfunktion ein/aus | /mouse toggle
-| @k(A-)@k(n)               | springt zur nächsten Highlight Nachricht | /window scroll_next_highlight
-| @k(A-)@k(p)               | springt zur vorherigen Highlight Nachricht | /window scroll_previous_highlight
-| @k(A-)@k(u)               | springt zur ersten ungelesenen Zeile im Buffer | /window scroll_unread
-| @k(A-)@k(w) , @k(A-)@k(↑) | wechselt zum oberen Fenster | /window up
-| @k(A-)@k(w) , @k(A-)@k(↓) | wechselt zum unteren Fenster | /window down
-| @k(A-)@k(w) , @k(A-)@k(←) | wechselt zum linken Fenster | /window left
-| @k(A-)@k(w) , @k(A-)@k(→) | wechselt zum rechten Fenster | /window right
-| @k(A-)@k(w) , @k(A-)@k(b) | passt die Größe aller Fenster an | /window balance
-| @k(A-)@k(w) , @k(A-)@k(s) | Wechselt Buffer von zwei Fenstern | /window swap
-| @k(A-)@k(z)               | Zoom für aktuelles Fenster (nochmals @k(A-)@k(z): stellt die vorherigen Einstellungen wieder her) | /window zoom
-| @k(A-)@k(<)               | springt zum letzten besuchten Buffer | /input jump_previously_visited_buffer
-| @k(A-)@k(>)               | springt zum nächsten besuchten Buffer | /input jump_next_visited_buffer
-| @k(A-)@k(/)               | wechselt zum jeweils zuletzt angezeigten Buffern | /input jump_last_buffer_displayed
-| @k(A-)@k(=)               | schaltet Filterfunktion an/aus | /filter toggle
+| @k(F7)                    | zum vorherigen Fenster wechseln | `/window -1`
+| @k(F8)                    | zum nächsten Fenster wechseln | `/window +1`
+| @k(F9)                    | Titel des Buffers nach links verschieben | `/bar scroll title * -30%`
+| @k(F10)                   | Titel des Buffers nach rechts verschieben | `/bar scroll title * +30%`
+| @k(F11)                   | Nickliste um eine Seite nach oben blättern | `/bar scroll nicklist * -100%`
+| @k(F12)                   | Nickliste um eine Seite nach unten blättern | `/bar scroll nicklist * +100%`
+| @k(A-)@k(F11)             | springt zum Anfang der Nickliste | `/bar scroll nicklist * b`
+| @k(A-)@k(F12)             | springt zum Ende der Nickliste | `/bar scroll nicklist * e`
+| @k(A-)@k(a)               | wechselt zum nächsten Buffer mit Aktivität (nach Priorität: highlight, Nachricht, ...) | `/input jump_smart`
+| @k(A-)@k(h)               | löscht Hotliste (Aktivitätsanzeige für die Buffer) | `/input hotlist_clear`
+| @k(A-)@k(j) , @k(A-)@k(l) | wechselt zum letzten Buffer | `/input jump_last_buffer`
+| @k(A-)@k(j) , @k(A-)@k(r) | wechselt zum IRC RAW Buffer | `/server raw`
+| @k(A-)@k(j) , @k(A-)@k(s) | wechselt zum IRC Server Buffer | `/server jump`
+| @k(A-)@k(0...9)           | wechselt zum Buffer mit der Nummer (0 = 10) | `/buffer *N`
+| @k(A-)@k(j) , @k(01...99) | wechselt zum Buffer mit der angegeben Nummer | `/buffer NN`
+| @k(A-)@k(m)               | schaltet Mausfunktion ein/aus | `/mouse toggle`
+| @k(A-)@k(n)               | springt zur nächsten Highlight Nachricht | `/window scroll_next_highlight`
+| @k(A-)@k(p)               | springt zur vorherigen Highlight Nachricht | `/window scroll_previous_highlight`
+| @k(A-)@k(u)               | springt zur ersten ungelesenen Zeile im Buffer | `/window scroll_unread`
+| @k(A-)@k(w) , @k(A-)@k(↑) | wechselt zum oberen Fenster | `/window up`
+| @k(A-)@k(w) , @k(A-)@k(↓) | wechselt zum unteren Fenster | `/window down`
+| @k(A-)@k(w) , @k(A-)@k(←) | wechselt zum linken Fenster | `/window left`
+| @k(A-)@k(w) , @k(A-)@k(→) | wechselt zum rechten Fenster | `/window right`
+| @k(A-)@k(w) , @k(A-)@k(b) | passt die Größe aller Fenster an | `/window balance`
+| @k(A-)@k(w) , @k(A-)@k(s) | Wechselt Buffer von zwei Fenstern | `/window swap`
+| @k(A-)@k(z)               | Zoom für aktuelles Fenster (nochmals @k(A-)@k(z): stellt die vorherigen Einstellungen wieder her) | `/window zoom`
+| @k(A-)@k(<)               | springt zum letzten besuchten Buffer | `/input jump_previously_visited_buffer`
+| @k(A-)@k(>)               | springt zum nächsten besuchten Buffer | `/input jump_next_visited_buffer`
+| @k(A-)@k(/)               | wechselt zum jeweils zuletzt angezeigten Buffern | `/input jump_last_buffer_displayed`
+| @k(A-)@k(=)               | schaltet Filterfunktion an/aus | `/filter toggle`
 |========================================
 
 [[key_bindings_search_context]]
@@ -1059,15 +1060,15 @@ Tasten für "Suchen"-Kontext
 Diese Tasten werden im Kontext "search" verwendet (wenn @k(C-)@k(r) genutzt wird um
 in einem Buffer nach einem Text zu suchen).
 
-[width="100%",cols="^.^3,.^10,.^5l",options="header"]
+[width="100%",cols="^.^3,.^10,.^5",options="header"]
 |========================================
 | Taste        | Beschreibung | Befehl
-| @k(C-)@k(r)  | Wechsel des Suchmodus: einfache Textsuche (Standard), reguläre Ausdrücke | /input search_switch_regex
-| @k(A-)@k(c)  | auf Groß-/Kleinschreibung umschalten | /input search_switch_case
-| @k(Tab)      | wechselt Suche in: Nachricht (Standard), im Präfix, Präfix + Nachricht | /input search_switch_where
-| @k(↑)        | sucht vorheriger Zeile | /input search_previous
-| @k(↓)        | sucht nächste Zeile  | /input search_next
-| @k(Enter) .3+| Suche abbrechen .3+| /input search_stop
+| @k(C-)@k(r)  | Wechsel des Suchmodus: einfache Textsuche (Standard), reguläre Ausdrücke | `/input search_switch_regex`
+| @k(A-)@k(c)  | auf Groß-/Kleinschreibung umschalten | `/input search_switch_case`
+| @k(Tab)      | wechselt Suche in: Nachricht (Standard), im Präfix, Präfix + Nachricht | `/input search_switch_where`
+| @k(↑)        | sucht vorheriger Zeile | `/input search_previous`
+| @k(↓)        | sucht nächste Zeile  | `/input search_next`
+| @k(Enter) .3+| Suche abbrechen .3+| `/input search_stop`
 | @k(C-)@k(j)
 | @k(C-)@k(m)
 |========================================
@@ -1078,26 +1079,26 @@ Tasten für "Cursor"-Kontext
 
 Diese Tasten werden im Kontext "cursor" verwendet (Cursor kann frei auf dem Bildschirm bewegt werden)
 
-[width="100%",cols="^.^3,^.^3,.^10,.^8l",options="header"]
+[width="100%",cols="^.^3,^.^3,.^10,.^8",options="header"]
 |========================================
 | Taste        | Bereich   | Beschreibung | Befehl
-| @k(↑)        | -         | bewegt Cursor eine Zeile nach oben | /cursor move up
-| @k(↓)        | -         | bewegt Cursor eine Zeile nach unten | /cursor move down
-| @k(←)        | -         | bewegt Cursor eine Spalte nach links | /cursor move left
-| @k(→)        | -         | bewegt Cursor eine Spalte nach rechts | /cursor move right
-| @k(A-)@k(↑)  | -         | bewegt Cursor einen Bereich nach oben | /cursor move area_up
-| @k(A-)@k(↓)  | -         | bewegt Cursor einen Bereich nach unten | /cursor move area_down
-| @k(A-)@k(←)  | -         | bewegt Cursor einen Bereich nach links | /cursor move area_left
-| @k(A-)@k(→)  | -         | bewegt Cursor einen Bereich nach rechts | /cursor move area_right
-| @k(m)        | Chat      | quotet Nachricht | hsignal:chat_quote_message;/cursor stop
-| @k(q)        | Chat      | quotet prefix + Nachricht | hsignal:chat_quote_prefix_message;/cursor stop
-| @k(Q)        | Chat      | quotet Uhrzeit + prefix + Nachricht | hsignal:chat_quote_time_prefix_message;/cursor stop
-| @k(b)        | Nickliste | verbannt nick (Ban) | /window ${_window_number};/ban ${nick}
-| @k(k)        | Nickliste | kickt nick | /window ${_window_number};/kick ${nick}
-| @k(K)        | Nickliste | kickt und verbannt nick | /window ${_window_number};/kickban ${nick}
-| @k(q)        | Nickliste | öffnet privaten Chat mit Nick | /window ${_window_number};/query ${nick};/cursor stop
-| @k(w)        | Nickliste | führt einen whois für Nick aus | /window ${_window_number};/whois ${nick}
-| @k(Enter) .3+| -      .3+| beendet den Cursor-Modus .3+| /cursor stop
+| @k(↑)        | -         | bewegt Cursor eine Zeile nach oben | `/cursor move up`
+| @k(↓)        | -         | bewegt Cursor eine Zeile nach unten | `/cursor move down`
+| @k(←)        | -         | bewegt Cursor eine Spalte nach links | `/cursor move left`
+| @k(→)        | -         | bewegt Cursor eine Spalte nach rechts | `/cursor move right`
+| @k(A-)@k(↑)  | -         | bewegt Cursor einen Bereich nach oben | `/cursor move area_up`
+| @k(A-)@k(↓)  | -         | bewegt Cursor einen Bereich nach unten | `/cursor move area_down`
+| @k(A-)@k(←)  | -         | bewegt Cursor einen Bereich nach links | `/cursor move area_left`
+| @k(A-)@k(→)  | -         | bewegt Cursor einen Bereich nach rechts | `/cursor move area_right`
+| @k(m)        | Chat      | quotet Nachricht | `hsignal:chat_quote_message;/cursor stop`
+| @k(q)        | Chat      | quotet prefix + Nachricht | `hsignal:chat_quote_prefix_message;/cursor stop`
+| @k(Q)        | Chat      | quotet Uhrzeit + prefix + Nachricht | `hsignal:chat_quote_time_prefix_message;/cursor stop`
+| @k(b)        | Nickliste | verbannt nick (Ban) | `/window ${_window_number};/ban ${nick}`
+| @k(k)        | Nickliste | kickt nick | `/window ${_window_number};/kick ${nick}`
+| @k(K)        | Nickliste | kickt und verbannt nick | `/window ${_window_number};/kickban ${nick}`
+| @k(q)        | Nickliste | öffnet privaten Chat mit Nick | `/window ${_window_number};/query ${nick};/cursor stop`
+| @k(w)        | Nickliste | führt einen whois für Nick aus | `/window ${_window_number};/whois ${nick}`
+| @k(Enter) .3+| -      .3+| beendet den Cursor-Modus .3+| `/cursor stop`
 | @k(C-)@k(j)
 | @k(C-)@k(m)
 |========================================
@@ -1108,35 +1109,35 @@ Tasten für "mouse"-Kontext
 
 Diese Tasten werden im Kontext "mouse" verwendet, wenn eine Mausfunktion genutzt worden ist.
 
-[width="100%",cols="^.^3,^.^3,^.^3,.^10,.^8l",options="header"]
+[width="100%",cols="^.^3,^.^3,^.^3,.^10,.^8",options="header"]
 |========================================
 | Maustaste ^(1)^ | Mausgeste | Bereich | Beschreibung | Befehl
-| ◾◽◽     | -            | Chat                 | wechselt zum Fenster | /window ${_window_number}
-| ◾◽◽     | links        | Chat                 | zum vorherigen Buffer springen | /window ${_window_number};/buffer +1
-| ◾◽◽     | rechts       | Chat                 | zum nächsten Buffer springen | /window ${_window_number};/buffer +1
-| ◾◽◽     | links(lang)  | Chat                 | wechselt zum ersten Buffer | /window ${_window_number};/buffer 1
-| ◾◽◽     | rechts(lang) | Chat                 | wechselt zum letzten Buffer | /window ${_window_number};/input jump_last_buffer
-| ◾◽◽     | -            | chat (script buffer) | wählt einen Eintrag im Script-Buffer aus | /script go ${_chat_line_y}
-| ◽◽◾     | -            | chat (script buffer) | installiert/entfernt ein Skript | /script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}
-| ⇑       | -            | Chat                 | mehrere Zeilen im Verlaufsspeicher des Buffer nach oben blättern | /window scroll_up -window ${_window_number}
-| ⇓       | -            | Chat                 | mehrere Zeilen im Verlaufsspeicher des Buffer nach unten blättern | /window scroll_down -window ${_window_number}
-| ⇑       | -            | chat (script buffer) | fünf Zeilen nach oben blättern, im Script-Buffer | /script up 5
-| ⇓       | -            | chat (script buffer) | fünf Zeilen nach unten blättern, im Script-Buffer | /script down 5
-| @k(C-)⇑ | -            | chat                 | horizontal, nach links scrollen | /window scroll_horiz -window ${_window_number} -10%
-| @k(C-)⇓ | -            | chat                 | horizontal, nach rechts scrollen | /window scroll_horiz -window ${_window_number} +10%
-| ◾◽◽     | hoch         | Nickliste            | Nickliste um eine Seite nach oben blättern | /bar scroll nicklist ${_window_number} -100%
-| ◾◽◽     | runter       | Nickliste            | Nickliste um eine Seite nach unten blättern | /bar scroll nicklist ${_window_number} +100%
-| ◾◽◽     | hoch(lang)   | Nickliste            | springt zum Anfang der Nickliste | /bar scroll nicklist ${_window_number} b
-| ◾◽◽     | runter(lang) | Nickliste            | springt zum Ende der Nickliste | /bar scroll nicklist ${_window_number} e
-| ◾◽◽     | -            | Nickliste            | öffnet privaten Chat mit Nick | /window ${_window_number};/query ${nick}
-| ◽◽◾     | -            | Nickliste            | führt einen whois für Nick aus | /window ${_window_number};/whois ${nick}
-| ◾◽◽     | links        | Nickliste            | kickt Nick | /window ${_window_number};/kick ${nick}
-| ◾◽◽     | links(lang)  | Nickliste            | kickt und verbannt Nick | /window ${_window_number};/kickban ${nick}
-| ◽◽◾     | links        | Nickliste            | verbannt Nick | /window ${_window_number};/ban ${nick}
-| ◽◽◾     | -            | Input                | fängt ein Mausereignis und fügt dieses in die Befehlszeile ein | /input grab_mouse_area
-| ⇑       | -            | jede Bar             | blättert Bar um 20% nach oben | /bar scroll ${_bar_name} ${_window_number} -20%
-| ⇓       | -            | jede Bar             | blättert Bar um 20% nach unten | /bar scroll ${_bar_name} ${_window_number} +20%
-| ◽◾◽     | -            | überall              | aktiviert den Cursor-Modus an dieser Position | /cursor go ${_x},${_y}
+| ◾◽◽     | -            | Chat                 | wechselt zum Fenster | `/window ${_window_number}`
+| ◾◽◽     | links        | Chat                 | zum vorherigen Buffer springen | `/window ${_window_number};/buffer +1`
+| ◾◽◽     | rechts       | Chat                 | zum nächsten Buffer springen | `/window ${_window_number};/buffer +1`
+| ◾◽◽     | links(lang)  | Chat                 | wechselt zum ersten Buffer | `/window ${_window_number};/buffer 1`
+| ◾◽◽     | rechts(lang) | Chat                 | wechselt zum letzten Buffer | `/window ${_window_number};/input jump_last_buffer`
+| ◾◽◽     | -            | chat (script buffer) | wählt einen Eintrag im Script-Buffer aus | `/script go ${_chat_line_y}`
+| ◽◽◾     | -            | chat (script buffer) | installiert/entfernt ein Skript | `/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}`
+| ⇑       | -            | Chat                 | mehrere Zeilen im Verlaufsspeicher des Buffer nach oben blättern | `/window scroll_up -window ${_window_number}`
+| ⇓       | -            | Chat                 | mehrere Zeilen im Verlaufsspeicher des Buffer nach unten blättern | `/window scroll_down -window ${_window_number}`
+| ⇑       | -            | chat (script buffer) | fünf Zeilen nach oben blättern, im Script-Buffer | `/script up 5`
+| ⇓       | -            | chat (script buffer) | fünf Zeilen nach unten blättern, im Script-Buffer | `/script down 5`
+| @k(C-)⇑ | -            | chat                 | horizontal, nach links scrollen | `/window scroll_horiz -window ${_window_number} -10%`
+| @k(C-)⇓ | -            | chat                 | horizontal, nach rechts scrollen | `/window scroll_horiz -window ${_window_number} +10%`
+| ◾◽◽     | hoch         | Nickliste            | Nickliste um eine Seite nach oben blättern | `/bar scroll nicklist ${_window_number} -100%`
+| ◾◽◽     | runter       | Nickliste            | Nickliste um eine Seite nach unten blättern | `/bar scroll nicklist ${_window_number} +100%`
+| ◾◽◽     | hoch(lang)   | Nickliste            | springt zum Anfang der Nickliste | `/bar scroll nicklist ${_window_number} b`
+| ◾◽◽     | runter(lang) | Nickliste            | springt zum Ende der Nickliste | `/bar scroll nicklist ${_window_number} e`
+| ◾◽◽     | -            | Nickliste            | öffnet privaten Chat mit Nick | `/window ${_window_number};/query ${nick}`
+| ◽◽◾     | -            | Nickliste            | führt einen whois für Nick aus | `/window ${_window_number};/whois ${nick}`
+| ◾◽◽     | links        | Nickliste            | kickt Nick | `/window ${_window_number};/kick ${nick}`
+| ◾◽◽     | links(lang)  | Nickliste            | kickt und verbannt Nick | `/window ${_window_number};/kickban ${nick}`
+| ◽◽◾     | links        | Nickliste            | verbannt Nick | `/window ${_window_number};/ban ${nick}`
+| ◽◽◾     | -            | Input                | fängt ein Mausereignis und fügt dieses in die Befehlszeile ein | `/input grab_mouse_area`
+| ⇑       | -            | jede Bar             | blättert Bar um 20% nach oben | `/bar scroll ${_bar_name} ${_window_number} -20%`
+| ⇓       | -            | jede Bar             | blättert Bar um 20% nach unten | `/bar scroll ${_bar_name} ${_window_number} +20%`
+| ◽◾◽     | -            | überall              | aktiviert den Cursor-Modus an dieser Position | `/cursor go ${_x},${_y}`
 |========================================
 
 [NOTE]
@@ -2203,20 +2204,20 @@ dann müssen Sie lediglich die Option löschen:
 Folgende Platzhalter können in den CTCP-Antworten genutzt werden. Diese werden dann
 mit dem entsprechenden Wert ersetzt:
 
-[width="100%",cols="^2l,4,8l",options="header"]
+[width="100%",cols="^2l,4,8",options="header"]
 |========================================
 | Platzhalter  | Beschreibung                        | Wert/Beispiel
-| $clientinfo  | Liste der CTCP Antworten            | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
-| $version     | WeeChat Version                     | 0.4.0-dev
-| $versiongit  | WeeChat Version + Git version ^(1)^ | 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)
-| $git         | Git Version ^(1)^                   | v0.3.9-104-g7eb5cc4
-| $compilation | Datum der Kompilierung              | Dec 16 2012
-| $osinfo      | Info über das genutzte OS           | Linux 2.6.32-5-amd64 / x86_64
-| $site        | WeeChat Seite                       | http://www.weechat.org/
-| $download    | WeeChat, Download Seite             | http://www.weechat.org/download
-| $time        | Aktuelle Uhrzeit/Datum              | Sun, 16 Dec 2012 10:40:48 +0100
-| $username    | Username beim IRC Server            | Name
-| $realname    | Realname beim IRC Server            | John Doe
+| $clientinfo  | Liste der CTCP Antworten            | `ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION`
+| $version     | WeeChat Version                     | `0.4.0-dev`
+| $versiongit  | WeeChat Version + Git version ^(1)^ | `0.4.0-dev (git: v0.3.9-104-g7eb5cc4)`
+| $git         | Git Version ^(1)^                   | `v0.3.9-104-g7eb5cc4`
+| $compilation | Datum der Kompilierung              | `Dec 16 2012`
+| $osinfo      | Info über das genutzte OS           | `Linux 2.6.32-5-amd64 / x86_64`
+| $site        | WeeChat Seite                       | `http://www.weechat.org/`
+| $download    | WeeChat, Download Seite             | `http://www.weechat.org/download`
+| $time        | Aktuelle Uhrzeit/Datum              | `Sun, 16 Dec 2012 10:40:48 +0100`
+| $username    | Username beim IRC Server            | `Name`
+| $realname    | Realname beim IRC Server            | `John Doe`
 |========================================
 
 [NOTE]
@@ -2226,15 +2227,15 @@ und das Git überhaupt installiert ist.
 
 Falls CTCP Optionen nicht festgelegt sind, lauten die CTCP Antworten:
 
-[width="100%",cols="^2,4l,8l",options="header"]
+[width="100%",cols="^2,4,8",options="header"]
 |========================================
-| CTCP       | Antwortformat                      | Beispiel
-| CLIENTINFO | $clientinfo                        | ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION
-| FINGER     | WeeChat $versiongit                | WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)
-| SOURCE     | $download                          | http://www.weechat.org/download
-| TIME       | $time                              | Sun, 16 Dec 2012 10:40:48 +0100
-| USERINFO   | $username ($realname)              | Name (John Doe)
-| VERSION    | WeeChat $versiongit ($compilation) | WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4) (Dec 16 2012)
+| CTCP       | Antwortformat                        | Beispiel
+| CLIENTINFO | `$clientinfo`                        | `ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION`
+| FINGER     | `WeeChat $versiongit`                | `WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)`
+| SOURCE     | `$download`                          | `http://www.weechat.org/download`
+| TIME       | `$time`                              | `Sun, 16 Dec 2012 10:40:48 +0100`
+| USERINFO   | `$username ($realname)`              | `Name (John Doe)`
+| VERSION    | `WeeChat $versiongit ($compilation)` | `WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4) (Dec 16 2012)`
 |========================================
 
 [[irc_target_buffer]]

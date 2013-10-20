@@ -1,19 +1,21 @@
 [[command_xfer_me]]
 [command]*`me`* sendet CTCP Aktion an entfernten Host::
-........................................
+
+----------------------------------------
 /me  <message>
 
 message: zu sendende Nachricht
-........................................
+----------------------------------------
 
 [[command_xfer_xfer]]
 [command]*`xfer`* Kontrolle der Übertragung(en)::
-........................................
+
+----------------------------------------
 /xfer  [list|listfull]
 
     list: zeigt Liste der Übertragungen
 listfull: zeigt eine ausführliche Liste der Übertragungen
 
 Ohne Angabe von Argumenten wird der Buffer mit der Übertragungsliste geöffnet.
-........................................
+----------------------------------------
 

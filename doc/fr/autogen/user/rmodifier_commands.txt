@@ -1,6 +1,7 @@
 [[command_rmodifier_rmodifier]]
 [command]*`rmodifier`* modifier des chaînes de "modifier" avec des expressions régulières::
-........................................
+
+----------------------------------------
 /rmodifier  list|listdefault
             add <nom> <modifiers> <groupes> <regex>
             del <nom>|-all [<nom>...]
@@ -26,5 +27,5 @@ Exemples:
     /rmodifier del password
   supprimer tous les rmodifiers:
     /rmodifier del -all
-........................................
+----------------------------------------
 

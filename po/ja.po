@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-10-08 21:59+0200\n"
+"POT-Creation-Date: 2013-10-20 09:56+0200\n"
 "PO-Revision-Date: 2013-10-08 11:25+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -10216,13 +10216,16 @@ msgstr "ハッシュテーブル (出力)"
 msgid "Pointer"
 msgstr "ポインタ"
 
-msgid "Variables"
+#, fuzzy
+msgid "variables"
 msgstr "変数"
 
-msgid "Update allowed"
+#, fuzzy
+msgid "update allowed"
 msgstr "アップデート可"
 
-msgid "Lists"
+#, fuzzy
+msgid "lists"
 msgstr "リスト"
 
 msgid "Option"

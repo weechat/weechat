@@ -1,6 +1,7 @@
 [[command_logger_logger]]
 [command]*`logger`* logger プラグイン設定::
-........................................
+
+----------------------------------------
 /logger  list
          set <level>
          flush
@@ -32,5 +33,5 @@ IRC プラグインで使われるログレベル:
     /set logger.level.core.weechat 0
   IRC サーバごとのディレクトリ、チャンネルごとのファイルを使う:
     /set logger.mask.irc "$server/$channel.weechatlog"
-........................................
+----------------------------------------
 

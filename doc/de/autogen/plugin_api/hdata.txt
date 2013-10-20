@@ -1,904 +1,901 @@
-[width="100%",cols="^1,^2,4,8,4,4",options="header"]
-|========================================
-| Erweiterung | Name | Beschreibung | Variablen | Update erlaubt | Listen
-
-| guile | guile_callback | Callback eines Skripts |
-  'script' (pointer, hdata: "guile_script") +
-  'function' (string) +
-  'data' (string) +
-  'config_file' (pointer, hdata: "config_file") +
-  'config_section' (pointer, hdata: "config_section") +
-  'config_option' (pointer, hdata: "config_option") +
-  'hook' (pointer) +
-  'buffer' (pointer, hdata: "buffer") +
-  'bar_item' (pointer, hdata: "bar_item") +
-  'upgrade_file' (pointer) +
-  'prev_callback' (pointer, hdata: "guile_callback") +
-  'next_callback' (pointer, hdata: "guile_callback") |
- |
-  -
-
-| guile | guile_script | Liste der Skripten |
-  'filename' (string) +
-  'interpreter' (pointer) +
-  'name' (string) +
-  'author' (string) +
-  'version' (string) +
-  'license' (string) +
-  'description' (string) +
-  'shutdown_func' (string) +
-  'charset' (string) +
-  'callbacks' (pointer, hdata: "guile_callback") +
-  'unloading' (integer) +
-  'prev_script' (pointer, hdata: "guile_script") +
-  'next_script' (pointer, hdata: "guile_script") |
- |
-  'last_script' +
-  'scripts'
-
-| irc | irc_channel | IRC-Channel |
-  'type' (integer) +
-  'name' (string) +
-  'topic' (string) +
-  'modes' (string) +
-  'limit' (integer) +
-  'key' (string) +
-  'join_msg_received' (hashtable) +
-  'checking_away' (integer) +
-  'away_message' (string) +
-  'has_quit_server' (integer) +
-  'cycle' (integer) +
-  'part' (integer) +
-  'nick_completion_reset' (integer) +
-  'pv_remote_nick_color' (string) +
-  'hook_autorejoin' (pointer) +
-  'nicks_count' (integer) +
-  'nicks' (pointer, hdata: "irc_nick") +
-  'last_nick' (pointer, hdata: "irc_nick") +
-  'nicks_speaking' (pointer) +
-  'nicks_speaking_time' (pointer, hdata: "irc_channel_speaking") +
-  'last_nick_speaking_time' (pointer, hdata: "irc_channel_speaking") +
-  'join_smart_filtered' (hashtable) +
-  'buffer' (pointer, hdata: "buffer") +
-  'buffer_as_string' (string) +
-  'prev_channel' (pointer, hdata: "irc_channel") +
-  'next_channel' (pointer, hdata: "irc_channel") |
- |
-  -
-
-| irc | irc_channel_speaking | IRC channel_speaking |
-  'nick' (string) +
-  'time_last_message' (time) +
-  'prev_nick' (pointer, hdata: "irc_channel_speaking") +
-  'next_nick' (pointer, hdata: "irc_channel_speaking") |
- |
-  -
-
-| irc | irc_ignore | IRC ignorieren |
-  'number' (integer) +
-  'mask' (string) +
-  'regex_mask' (pointer) +
-  'server' (string) +
-  'channel' (string) +
-  'prev_ignore' (pointer, hdata: "irc_ignore") +
-  'next_ignore' (pointer, hdata: "irc_ignore") |
- |
-  'irc_ignore_list' +
-  'last_irc_ignore'
-
-| irc | irc_nick | IRC-Nick |
-  'name' (string) +
-  'host' (string) +
-  'prefixes' (string) +
-  'prefix' (string) +
-  'away' (integer) +
-  'color' (string) +
-  'prev_nick' (pointer, hdata: "irc_nick") +
-  'next_nick' (pointer, hdata: "irc_nick") |
- |
-  -
-
-| irc | irc_notify | IRC-Benachrichtigungen |
-  'server' (pointer, hdata: "irc_server") +
-  'nick' (string) +
-  'check_away' (integer) +
-  'is_on_server' (integer) +
-  'away_message' (string) +
-  'ison_received' (integer) +
-  'prev_notify' (pointer, hdata: "irc_notify") +
-  'next_notify' (pointer, hdata: "irc_notify") |
- |
-  -
-
-| irc | irc_redirect | IRC Weiterleitung |
-  'server' (pointer, hdata: "irc_server") +
-  'pattern' (string) +
-  'signal' (string) +
-  'count' (integer) +
-  'current_count' (integer) +
-  'string' (string) +
-  'timeout' (integer) +
-  'command' (string) +
-  'assigned_to_command' (integer) +
-  'start_time' (time) +
-  'cmd_start' (hashtable) +
-  'cmd_stop' (hashtable) +
-  'cmd_extra' (hashtable) +
-  'cmd_start_received' (integer) +
-  'cmd_stop_received' (integer) +
-  'cmd_filter' (hashtable) +
-  'output' (string) +
-  'output_size' (integer) +
-  'prev_redirect' (pointer, hdata: "irc_redirect") +
-  'next_redirect' (pointer, hdata: "irc_redirect") |
- |
-  -
-
-| irc | irc_redirect_pattern | Muster für IRC Weiterleitung |
-  'name' (string) +
-  'temp_pattern' (integer) +
-  'timeout' (integer) +
-  'cmd_start' (string) +
-  'cmd_stop' (string) +
-  'cmd_extra' (string) +
-  'prev_redirect' (pointer, hdata: "irc_redirect_pattern") +
-  'next_redirect' (pointer, hdata: "irc_redirect_pattern") |
- |
-  'irc_redirect_patterns' +
-  'last_irc_redirect_pattern'
-
-| irc | irc_server | IRC-Server |
-  'name' (string) +
-  'options' (pointer) +
-  'temp_server' (integer) +
-  'reloading_from_config' (integer) +
-  'reloaded_from_config' (integer) +
-  'addresses_count' (integer) +
-  'addresses_array' (string, array_size: "addresses_count") +
-  'ports_array' (integer, array_size: "addresses_count") +
-  'retry_array' (integer, array_size: "addresses_count") +
-  'index_current_address' (integer) +
-  'current_address' (string) +
-  'current_ip' (string) +
-  'current_port' (integer) +
-  'current_retry' (integer) +
-  'sock' (integer) +
-  'hook_connect' (pointer, hdata: "hook") +
-  'hook_fd' (pointer, hdata: "hook") +
-  'hook_timer_connection' (pointer, hdata: "hook") +
-  'hook_timer_sasl' (pointer, hdata: "hook") +
-  'is_connected' (integer) +
-  'ssl_connected' (integer) +
-  'disconnected' (integer) +
-  'gnutls_sess' (other) +
-  'tls_cert' (other) +
-  'tls_cert_key' (other) +
-  'unterminated_message' (string) +
-  'nicks_count' (integer) +
-  'nicks_array' (string, array_size: "nicks_count") +
-  'nick_first_tried' (integer) +
-  'nick_alternate_number' (integer) +
-  'nick' (string) +
-  'nick_modes' (string) +
-  'isupport' (string) +
-  'prefix_modes' (string) +
-  'prefix_chars' (string) +
-  'nick_max_length' (integer) +
-  'casemapping' (integer) +
-  'chantypes' (string) +
-  'chanmodes' (string) +
-  'reconnect_delay' (integer) +
-  'reconnect_start' (time) +
-  'command_time' (time) +
-  'reconnect_join' (integer) +
-  'disable_autojoin' (integer) +
-  'is_away' (integer) +
-  'away_message' (string) +
-  'away_time' (time) +
-  'lag' (integer) +
-  'lag_check_time' (other) +
-  'lag_next_check' (time) +
-  'lag_last_refresh' (time) +
-  'cmd_list_regexp' (pointer) +
-  'last_user_message' (time) +
-  'last_away_check' (time) +
-  'last_data_purge' (time) +
-  'outqueue' (pointer) +
-  'last_outqueue' (pointer) +
-  'redirects' (pointer, hdata: "irc_redirect") +
-  'last_redirect' (pointer, hdata: "irc_redirect") +
-  'notify_list' (pointer, hdata: "irc_notify") +
-  'last_notify' (pointer, hdata: "irc_notify") +
-  'join_manual' (hashtable) +
-  'join_channel_key' (hashtable) +
-  'join_noswitch' (hashtable) +
-  'buffer' (pointer, hdata: "buffer") +
-  'buffer_as_string' (string) +
-  'channels' (pointer, hdata: "irc_channel") +
-  'last_channel' (pointer, hdata: "irc_channel") +
-  'prev_server' (pointer, hdata: "irc_server") +
-  'next_server' (pointer, hdata: "irc_server") |
- |
-  'irc_servers' +
-  'last_irc_server'
-
-| lua | lua_callback | Callback eines Skripts |
-  'script' (pointer, hdata: "lua_script") +
-  'function' (string) +
-  'data' (string) +
-  'config_file' (pointer, hdata: "config_file") +
-  'config_section' (pointer, hdata: "config_section") +
-  'config_option' (pointer, hdata: "config_option") +
-  'hook' (pointer) +
-  'buffer' (pointer, hdata: "buffer") +
-  'bar_item' (pointer, hdata: "bar_item") +
-  'upgrade_file' (pointer) +
-  'prev_callback' (pointer, hdata: "lua_callback") +
-  'next_callback' (pointer, hdata: "lua_callback") |
- |
-  -
-
-| lua | lua_script | Liste der Skripten |
-  'filename' (string) +
-  'interpreter' (pointer) +
-  'name' (string) +
-  'author' (string) +
-  'version' (string) +
-  'license' (string) +
-  'description' (string) +
-  'shutdown_func' (string) +
-  'charset' (string) +
-  'callbacks' (pointer, hdata: "lua_callback") +
-  'unloading' (integer) +
-  'prev_script' (pointer, hdata: "lua_script") +
-  'next_script' (pointer, hdata: "lua_script") |
- |
-  'last_script' +
-  'scripts'
-
-| perl | perl_callback | Callback eines Skripts |
-  'script' (pointer, hdata: "perl_script") +
-  'function' (string) +
-  'data' (string) +
-  'config_file' (pointer, hdata: "config_file") +
-  'config_section' (pointer, hdata: "config_section") +
-  'config_option' (pointer, hdata: "config_option") +
-  'hook' (pointer) +
-  'buffer' (pointer, hdata: "buffer") +
-  'bar_item' (pointer, hdata: "bar_item") +
-  'upgrade_file' (pointer) +
-  'prev_callback' (pointer, hdata: "perl_callback") +
-  'next_callback' (pointer, hdata: "perl_callback") |
- |
-  -
-
-| perl | perl_script | Liste der Skripten |
-  'filename' (string) +
-  'interpreter' (pointer) +
-  'name' (string) +
-  'author' (string) +
-  'version' (string) +
-  'license' (string) +
-  'description' (string) +
-  'shutdown_func' (string) +
-  'charset' (string) +
-  'callbacks' (pointer, hdata: "perl_callback") +
-  'unloading' (integer) +
-  'prev_script' (pointer, hdata: "perl_script") +
-  'next_script' (pointer, hdata: "perl_script") |
- |
-  'last_script' +
-  'scripts'
-
-| python | python_callback | Callback eines Skripts |
-  'script' (pointer, hdata: "python_script") +
-  'function' (string) +
-  'data' (string) +
-  'config_file' (pointer, hdata: "config_file") +
-  'config_section' (pointer, hdata: "config_section") +
-  'config_option' (pointer, hdata: "config_option") +
-  'hook' (pointer) +
-  'buffer' (pointer, hdata: "buffer") +
-  'bar_item' (pointer, hdata: "bar_item") +
-  'upgrade_file' (pointer) +
-  'prev_callback' (pointer, hdata: "python_callback") +
-  'next_callback' (pointer, hdata: "python_callback") |
- |
-  -
-
-| python | python_script | Liste der Skripten |
-  'filename' (string) +
-  'interpreter' (pointer) +
-  'name' (string) +
-  'author' (string) +
-  'version' (string) +
-  'license' (string) +
-  'description' (string) +
-  'shutdown_func' (string) +
-  'charset' (string) +
-  'callbacks' (pointer, hdata: "python_callback") +
-  'unloading' (integer) +
-  'prev_script' (pointer, hdata: "python_script") +
-  'next_script' (pointer, hdata: "python_script") |
- |
-  'last_script' +
-  'scripts'
-
-| ruby | ruby_callback | Callback eines Skripts |
-  'script' (pointer, hdata: "ruby_script") +
-  'function' (string) +
-  'data' (string) +
-  'config_file' (pointer, hdata: "config_file") +
-  'config_section' (pointer, hdata: "config_section") +
-  'config_option' (pointer, hdata: "config_option") +
-  'hook' (pointer) +
-  'buffer' (pointer, hdata: "buffer") +
-  'bar_item' (pointer, hdata: "bar_item") +
-  'upgrade_file' (pointer) +
-  'prev_callback' (pointer, hdata: "ruby_callback") +
-  'next_callback' (pointer, hdata: "ruby_callback") |
- |
-  -
-
-| ruby | ruby_script | Liste der Skripten |
-  'filename' (string) +
-  'interpreter' (pointer) +
-  'name' (string) +
-  'author' (string) +
-  'version' (string) +
-  'license' (string) +
-  'description' (string) +
-  'shutdown_func' (string) +
-  'charset' (string) +
-  'callbacks' (pointer, hdata: "ruby_callback") +
-  'unloading' (integer) +
-  'prev_script' (pointer, hdata: "ruby_script") +
-  'next_script' (pointer, hdata: "ruby_script") |
- |
-  'last_script' +
-  'scripts'
-
-| script | script_script | Skripten aus dem Repositorium |
-  'name' (string) +
-  'name_with_extension' (string) +
-  'language' (integer) +
-  'author' (string) +
-  'mail' (string) +
-  'version' (string) +
-  'license' (string) +
-  'description' (string) +
-  'tags' (string) +
-  'requirements' (string) +
-  'min_weechat' (string) +
-  'max_weechat' (string) +
-  'md5sum' (string) +
-  'url' (string) +
-  'popularity' (integer) +
-  'date_added' (time) +
-  'date_updated' (time) +
-  'status' (integer) +
-  'version_loaded' (string) +
-  'displayed' (integer) +
-  'install_order' (integer) +
-  'prev_script' (pointer, hdata: "script_script") +
-  'next_script' (pointer, hdata: "script_script") |
- |
-  'last_script_repo' +
-  'scripts_repo'
-
-| tcl | tcl_callback | Callback eines Skripts |
-  'script' (pointer, hdata: "tcl_script") +
-  'function' (string) +
-  'data' (string) +
-  'config_file' (pointer, hdata: "config_file") +
-  'config_section' (pointer, hdata: "config_section") +
-  'config_option' (pointer, hdata: "config_option") +
-  'hook' (pointer) +
-  'buffer' (pointer, hdata: "buffer") +
-  'bar_item' (pointer, hdata: "bar_item") +
-  'upgrade_file' (pointer) +
-  'prev_callback' (pointer, hdata: "tcl_callback") +
-  'next_callback' (pointer, hdata: "tcl_callback") |
- |
-  -
-
-| tcl | tcl_script | Liste der Skripten |
-  'filename' (string) +
-  'interpreter' (pointer) +
-  'name' (string) +
-  'author' (string) +
-  'version' (string) +
-  'license' (string) +
-  'description' (string) +
-  'shutdown_func' (string) +
-  'charset' (string) +
-  'callbacks' (pointer, hdata: "tcl_callback") +
-  'unloading' (integer) +
-  'prev_script' (pointer, hdata: "tcl_script") +
-  'next_script' (pointer, hdata: "tcl_script") |
- |
-  'last_script' +
-  'scripts'
-
-| weechat | bar | Bar |
-  'name' (string) +
-  'options' (pointer) +
-  'items_count' (integer) +
-  'items_subcount' (pointer) +
-  'items_array' (pointer) +
-  'items_buffer' (pointer) +
-  'items_prefix' (pointer) +
-  'items_name' (pointer) +
-  'items_suffix' (pointer) +
-  'bar_window' (pointer, hdata: "bar_window") +
-  'bar_refresh_needed' (integer) +
-  'prev_bar' (pointer, hdata: "bar") +
-  'next_bar' (pointer, hdata: "bar") |
- |
-  'gui_bars' +
-  'last_gui_bar'
-
-| weechat | bar_item | Bar-Item |
-  'plugin' (pointer, hdata: "plugin") +
-  'name' (string) +
-  'build_callback' (pointer) +
-  'build_callback_data' (pointer) +
-  'prev_item' (pointer, hdata: "bar_item") +
-  'next_item' (pointer, hdata: "bar_item") |
- |
-  'gui_bar_items' +
-  'last_gui_bar_item'
-
-| weechat | bar_window | Bar-Fenster |
-  'bar' (pointer, hdata: "bar") +
-  'x' (integer) +
-  'y' (integer) +
-  'width' (integer) +
-  'height' (integer) +
-  'scroll_x' (integer) +
-  'scroll_y' (integer) +
-  'cursor_x' (integer) +
-  'cursor_y' (integer) +
-  'current_size' (integer) +
-  'items_count' (integer) +
-  'items_subcount' (pointer) +
-  'items_content' (pointer) +
-  'items_num_lines' (pointer) +
-  'items_refresh_needed' (pointer) +
-  'screen_col_size' (integer) +
-  'screen_lines' (integer) +
-  'coords_count' (integer) +
-  'coords' (pointer) +
-  'gui_objects' (pointer) +
-  'prev_bar_window' (pointer, hdata: "bar_window") +
-  'next_bar_window' (pointer, hdata: "bar_window") |
- |
-  -
-
-| weechat | buffer | Buffer |
-  'plugin' (pointer, hdata: "plugin") +
-  'plugin_name_for_upgrade' (string) +
-  'number' (integer) +
-  'layout_number' (integer) +
-  'layout_number_merge_order' (integer) +
-  'name' (string) +
-  'full_name' (string) +
-  'short_name' (string) +
-  'type' (integer) +
-  'notify' (integer) +
-  'num_displayed' (integer) +
-  'active' (integer) +
-  'print_hooks_enabled' (integer) +
-  'close_callback' (pointer) +
-  'close_callback_data' (pointer) +
-  'title' (string) +
-  'own_lines' (pointer, hdata: "lines") +
-  'mixed_lines' (pointer, hdata: "lines") +
-  'lines' (pointer, hdata: "lines") +
-  'time_for_each_line' (integer) +
-  'chat_refresh_needed' (integer) +
-  'nicklist' (integer) +
-  'nicklist_case_sensitive' (integer) +
-  'nicklist_root' (pointer, hdata: "nick_group") +
-  'nicklist_max_length' (integer) +
-  'nicklist_display_groups' (integer) +
-  'nicklist_count' (integer) +
-  'nicklist_groups_count' (integer) +
-  'nicklist_nicks_count' (integer) +
-  'nicklist_visible_count' (integer) +
-  'nickcmp_callback' (pointer) +
-  'nickcmp_callback_data' (pointer) +
-  'input' (integer) +
-  'input_callback' (pointer) +
-  'input_callback_data' (pointer) +
-  'input_get_unknown_commands' (integer) +
-  'input_buffer' (string) +
-  'input_buffer_alloc' (integer) +
-  'input_buffer_size' (integer) +
-  'input_buffer_length' (integer) +
-  'input_buffer_pos' (integer) +
-  'input_buffer_1st_display' (integer) +
-  'input_undo_snap' (pointer, hdata: "input_undo") +
-  'input_undo' (pointer, hdata: "input_undo") +
-  'last_input_undo' (pointer, hdata: "input_undo") +
-  'ptr_input_undo' (pointer, hdata: "input_undo") +
-  'input_undo_count' (integer) +
-  'completion' (pointer, hdata: "completion") +
-  'history' (pointer, hdata: "history") +
-  'last_history' (pointer, hdata: "history") +
-  'ptr_history' (pointer, hdata: "history") +
-  'num_history' (integer) +
-  'text_search' (integer) +
-  'text_search_exact' (integer) +
-  'text_search_regex' (integer) +
-  'text_search_regex_compiled' (pointer) +
-  'text_search_where' (integer) +
-  'text_search_found' (integer) +
-  'text_search_input' (string) +
-  'highlight_words' (string) +
-  'highlight_regex' (string) +
-  'highlight_regex_compiled' (pointer) +
-  'highlight_tags' (string) +
-  'highlight_tags_count' (integer) +
-  'highlight_tags_array' (string, array_size: "highlight_tags_count") +
-  'hotlist_max_level_nicks' (hashtable) +
-  'keys' (pointer, hdata: "key") +
-  'last_key' (pointer, hdata: "key") +
-  'keys_count' (integer) +
-  'local_variables' (hashtable) +
-  'prev_buffer' (pointer, hdata: "buffer") +
-  'next_buffer' (pointer, hdata: "buffer") |
- |
-  'gui_buffer_last_displayed' +
-  'gui_buffers' +
-  'last_gui_buffer'
-
-| weechat | completion | Struktur mit Vervollständigung |
-  'buffer' (pointer, hdata: "buffer") +
-  'context' (integer) +
-  'base_command' (string) +
-  'base_command_arg_index' (integer) +
-  'base_word' (string) +
-  'base_word_pos' (integer) +
-  'position' (integer) +
-  'args' (string) +
-  'direction' (integer) +
-  'add_space' (integer) +
-  'force_partial_completion' (integer) +
-  'completion_list' (pointer) +
-  'word_found' (string) +
-  'word_found_is_nick' (integer) +
-  'position_replace' (integer) +
-  'diff_size' (integer) +
-  'diff_length' (integer) +
-  'partial_completion_list' (pointer, hdata: "completion_partial") +
-  'last_partial_completion' (pointer, hdata: "completion_partial") |
- |
-  -
-
-| weechat | completion_partial | Struktur mit teilweise Vervollständigung |
-  'word' (string) +
-  'count' (integer) +
-  'prev_item' (pointer, hdata: "completion_partial") +
-  'next_item' (pointer, hdata: "completion_partial") |
- |
-  -
-
-| weechat | config_file | Konfigurationsdatei |
-  'plugin' (pointer, hdata: "plugin") +
-  'name' (string) +
-  'filename' (string) +
-  'file' (pointer) +
-  'callback_reload' (pointer) +
-  'callback_reload_data' (pointer) +
-  'sections' (pointer, hdata: "config_section") +
-  'last_section' (pointer, hdata: "config_section") +
-  'prev_config' (pointer, hdata: "config_file") +
-  'next_config' (pointer, hdata: "config_file") |
- |
-  'config_files' +
-  'last_config_file'
-
-| weechat | config_option | Konfigurationsoptionen |
-  'config_file' (pointer, hdata: "config_file") +
-  'section' (pointer, hdata: "config_section") +
-  'name' (string) +
-  'type' (integer) +
-  'description' (string) +
-  'string_values' (string, array_size: "*") +
-  'min' (integer) +
-  'max' (integer) +
-  'default_value' (pointer) +
-  'value' (pointer) +
-  'null_value_allowed' (integer) +
-  'callback_check_value' (pointer) +
-  'callback_check_value_data' (pointer) +
-  'callback_change' (pointer) +
-  'callback_change_data' (pointer) +
-  'callback_delete' (pointer) +
-  'callback_delete_data' (pointer) +
-  'loaded' (integer) +
-  'prev_option' (pointer, hdata: "config_option") +
-  'next_option' (pointer, hdata: "config_option") |
- |
-  -
-
-| weechat | config_section | Konfigurationssektion |
-  'config_file' (pointer, hdata: "config_file") +
-  'name' (string) +
-  'user_can_add_options' (integer) +
-  'user_can_delete_options' (integer) +
-  'callback_read' (pointer) +
-  'callback_read_data' (pointer) +
-  'callback_write' (pointer) +
-  'callback_write_data' (pointer) +
-  'callback_write_default' (pointer) +
-  'callback_write_default_data' (pointer) +
-  'callback_create_option' (pointer) +
-  'callback_create_option_data' (pointer) +
-  'callback_delete_option' (pointer) +
-  'callback_delete_option_data' (pointer) +
-  'options' (pointer, hdata: "config_option") +
-  'last_option' (pointer, hdata: "config_option") +
-  'prev_section' (pointer, hdata: "config_section") +
-  'next_section' (pointer, hdata: "config_section") |
- |
-  -
-
-| weechat | filter | Filter |
-  'enabled' (integer) +
-  'name' (string) +
-  'buffer_name' (string) +
-  'num_buffers' (integer) +
-  'buffers' (pointer) +
-  'tags' (string) +
-  'tags_count' (integer) +
-  'tags_array' (string, array_size: "tags_count") +
-  'regex' (string) +
-  'regex_prefix' (pointer) +
-  'regex_message' (pointer) +
-  'prev_filter' (pointer, hdata: "filter") +
-  'next_filter' (pointer, hdata: "filter") |
- |
-  'gui_filters' +
-  'last_gui_filter'
-
-| weechat | history | Verlaufspeicher von Befehlen in einem Buffer |
-  'text' (string) +
-  'next_history' (pointer, hdata: "history") +
-  'prev_history' (pointer, hdata: "history") |
-  `__create` +
-  `__delete` |
-  'gui_history' +
-  'last_gui_history'
-
-| weechat | hotlist | Hotliste |
-  'priority' (integer) +
-  'creation_time.tv_sec' (time) +
-  'creation_time.tv_usec' (long) +
-  'buffer' (pointer) +
-  'count' (integer, array_size: "4") +
-  'prev_hotlist' (pointer, hdata: "hotlist") +
-  'next_hotlist' (pointer, hdata: "hotlist") |
- |
-  'gui_hotlist' +
-  'last_gui_hotlist'
-
-| weechat | input_undo | Struktur der Rücknahmen für die Befehlszeile |
-  'data' (string) +
-  'pos' (integer) +
-  'prev_undo' (pointer, hdata: "input_undo") +
-  'next_undo' (pointer, hdata: "input_undo") |
- |
-  -
-
-| weechat | key | Tastenbelegung (Tastaturkurzbefehl) |
-  'key' (string) +
-  'area_type' (pointer) +
-  'area_name' (pointer) +
-  'area_key' (string) +
-  'command' (string) +
-  'score' (integer) +
-  'prev_key' (pointer, hdata: "key") +
-  'next_key' (pointer, hdata: "key") |
- |
-  'gui_default_keys' +
-  'gui_default_keys_cursor' +
-  'gui_default_keys_mouse' +
-  'gui_default_keys_search' +
-  'gui_keys' +
-  'gui_keys_cursor' +
-  'gui_keys_mouse' +
-  'gui_keys_search' +
-  'last_gui_default_key' +
-  'last_gui_default_key_cursor' +
-  'last_gui_default_key_mouse' +
-  'last_gui_default_key_search' +
-  'last_gui_key' +
-  'last_gui_key_cursor' +
-  'last_gui_key_mouse' +
-  'last_gui_key_search'
-
-| weechat | layout | Layout |
-  'name' (string) +
-  'layout_buffers' (pointer, hdata: "layout_buffer") +
-  'last_layout_buffer' (pointer, hdata: "layout_buffer") +
-  'layout_windows' (pointer, hdata: "layout_window") +
-  'internal_id' (integer) +
-  'internal_id_current_window' (integer) +
-  'prev_layout' (pointer, hdata: "layout") +
-  'next_layout' (pointer, hdata: "layout") |
- |
-  'gui_layout_current' +
-  'gui_layouts' +
-  'last_gui_layout'
-
-| weechat | layout_buffer | Buffer-Layout |
-  'plugin_name' (string) +
-  'buffer_name' (string) +
-  'number' (integer) +
-  'prev_layout' (pointer, hdata: "layout_buffer") +
-  'next_layout' (pointer, hdata: "layout_buffer") |
- |
-  -
-
-| weechat | layout_window | Fenster-Layout |
-  'internal_id' (integer) +
-  'parent_node' (pointer, hdata: "layout_window") +
-  'split_pct' (integer) +
-  'split_horiz' (integer) +
-  'child1' (pointer, hdata: "layout_window") +
-  'child2' (pointer, hdata: "layout_window") +
-  'plugin_name' (string) +
-  'buffer_name' (string) |
- |
-  -
-
-| weechat | line | Struktur mit einer Zeile |
-  'data' (pointer, hdata: "line_data") +
-  'prev_line' (pointer, hdata: "line") +
-  'next_line' (pointer, hdata: "line") |
- |
-  -
-
-| weechat | line_data | Struktur mit einzeiligen Daten |
-  'buffer' (pointer, hdata: "buffer") +
-  'y' (integer) +
-  'date' (time) +
-  'date_printed' (time) +
-  'str_time' (string) +
-  'tags_count' (integer) +
-  'tags_array' (string, array_size: "tags_count") +
-  'displayed' (char) +
-  'highlight' (char) +
-  'refresh_needed' (char) +
-  'prefix' (string) +
-  'prefix_length' (integer) +
-  'message' (string) |
-  'date' (time) +
-  'date_printed' (time) +
-  'tags_array' (string) +
-  'prefix' (string) +
-  'message' (string) |
-  -
-
-| weechat | lines | Struktur mit Zeilen |
-  'first_line' (pointer, hdata: "line") +
-  'last_line' (pointer, hdata: "line") +
-  'last_read_line' (pointer, hdata: "line") +
-  'lines_count' (integer) +
-  'first_line_not_read' (integer) +
-  'lines_hidden' (integer) +
-  'buffer_max_length' (integer) +
-  'buffer_max_length_refresh' (integer) +
-  'prefix_max_length' (integer) +
-  'prefix_max_length_refresh' (integer) |
- |
-  -
-
-| weechat | nick | Nick in Nickliste |
-  'group' (pointer, hdata: "nick_group") +
-  'name' (string) +
-  'color' (string) +
-  'prefix' (string) +
-  'prefix_color' (string) +
-  'visible' (integer) +
-  'prev_nick' (pointer, hdata: "nick") +
-  'next_nick' (pointer, hdata: "nick") |
- |
-  -
-
-| weechat | nick_group | Gruppen in Nickliste |
-  'name' (string) +
-  'color' (string) +
-  'visible' (integer) +
-  'level' (integer) +
-  'parent' (pointer, hdata: "nick_group") +
-  'children' (pointer, hdata: "nick_group") +
-  'last_child' (pointer, hdata: "nick_group") +
-  'nicks' (pointer, hdata: "nick") +
-  'last_nick' (pointer, hdata: "nick") +
-  'prev_group' (pointer, hdata: "nick_group") +
-  'next_group' (pointer, hdata: "nick_group") |
- |
-  -
-
-| weechat | plugin | Erweiterung |
-  'filename' (string) +
-  'handle' (pointer) +
-  'name' (string) +
-  'description' (string) +
-  'author' (string) +
-  'version' (string) +
-  'license' (string) +
-  'charset' (string) +
-  'debug' (integer) +
-  'prev_plugin' (pointer, hdata: "plugin") +
-  'next_plugin' (pointer, hdata: "plugin") |
- |
-  'last_weechat_plugin' +
-  'weechat_plugins'
-
-| weechat | proxy | Proxy |
-  'name' (string) +
-  'options' (pointer) +
-  'prev_proxy' (pointer, hdata: "proxy") +
-  'next_proxy' (pointer, hdata: "proxy") |
- |
-  'last_weechat_proxy' +
-  'weechat_proxies'
-
-| weechat | window | Fenster |
-  'number' (integer) +
-  'win_x' (integer) +
-  'win_y' (integer) +
-  'win_width' (integer) +
-  'win_height' (integer) +
-  'win_width_pct' (integer) +
-  'win_height_pct' (integer) +
-  'win_chat_x' (integer) +
-  'win_chat_y' (integer) +
-  'win_chat_width' (integer) +
-  'win_chat_height' (integer) +
-  'win_chat_cursor_x' (integer) +
-  'win_chat_cursor_y' (integer) +
-  'bar_windows' (pointer, hdata: "bar_window") +
-  'last_bar_window' (pointer, hdata: "bar_window") +
-  'refresh_needed' (integer) +
-  'gui_objects' (pointer) +
-  'buffer' (pointer, hdata: "buffer") +
-  'layout_plugin_name' (string) +
-  'layout_buffer_name' (string) +
-  'scroll' (pointer, hdata: "window_scroll") +
-  'ptr_tree' (pointer, hdata: "window_tree") +
-  'prev_window' (pointer, hdata: "window") +
-  'next_window' (pointer, hdata: "window") |
- |
-  'gui_current_window' +
-  'gui_windows' +
-  'last_gui_window'
-
-| weechat | window_scroll | Scroll-Info in Fenstern |
-  'buffer' (pointer, hdata: "buffer") +
-  'first_line_displayed' (integer) +
-  'start_line' (pointer, hdata: "line") +
-  'start_line_pos' (integer) +
-  'scrolling' (integer) +
-  'start_col' (integer) +
-  'lines_after' (integer) +
-  'prev_scroll' (pointer, hdata: "window_scroll") +
-  'next_scroll' (pointer, hdata: "window_scroll") |
- |
-  -
-
-| weechat | window_tree | Baumstruktur der Fenster |
-  'parent_node' (pointer, hdata: "window_tree") +
-  'split_pct' (integer) +
-  'split_horizontal' (integer) +
-  'child1' (pointer, hdata: "window_tree") +
-  'child2' (pointer, hdata: "window_tree") +
-  'window' (pointer, hdata: "window") |
- |
-  'gui_windows_tree'
-
-|========================================
+* 'guile_callback': Callback eines Skripts
+** Erweiterung: guile
+** variables:
+*** 'script' (pointer, hdata: "guile_script")
+*** 'function' (string)
+*** 'data' (string)
+*** 'config_file' (pointer, hdata: "config_file")
+*** 'config_section' (pointer, hdata: "config_section")
+*** 'config_option' (pointer, hdata: "config_option")
+*** 'hook' (pointer)
+*** 'buffer' (pointer, hdata: "buffer")
+*** 'bar_item' (pointer, hdata: "bar_item")
+*** 'upgrade_file' (pointer)
+*** 'prev_callback' (pointer, hdata: "guile_callback")
+*** 'next_callback' (pointer, hdata: "guile_callback")
+* 'guile_script': Liste der Skripten
+** Erweiterung: guile
+** variables:
+*** 'filename' (string)
+*** 'interpreter' (pointer)
+*** 'name' (string)
+*** 'author' (string)
+*** 'version' (string)
+*** 'license' (string)
+*** 'description' (string)
+*** 'shutdown_func' (string)
+*** 'charset' (string)
+*** 'callbacks' (pointer, hdata: "guile_callback")
+*** 'unloading' (integer)
+*** 'prev_script' (pointer, hdata: "guile_script")
+*** 'next_script' (pointer, hdata: "guile_script")
+** lists:
+*** 'last_script'
+*** 'scripts'
+* 'irc_channel': IRC-Channel
+** Erweiterung: irc
+** variables:
+*** 'type' (integer)
+*** 'name' (string)
+*** 'topic' (string)
+*** 'modes' (string)
+*** 'limit' (integer)
+*** 'key' (string)
+*** 'join_msg_received' (hashtable)
+*** 'checking_away' (integer)
+*** 'away_message' (string)
+*** 'has_quit_server' (integer)
+*** 'cycle' (integer)
+*** 'part' (integer)
+*** 'nick_completion_reset' (integer)
+*** 'pv_remote_nick_color' (string)
+*** 'hook_autorejoin' (pointer)
+*** 'nicks_count' (integer)
+*** 'nicks' (pointer, hdata: "irc_nick")
+*** 'last_nick' (pointer, hdata: "irc_nick")
+*** 'nicks_speaking' (pointer)
+*** 'nicks_speaking_time' (pointer, hdata: "irc_channel_speaking")
+*** 'last_nick_speaking_time' (pointer, hdata: "irc_channel_speaking")
+*** 'join_smart_filtered' (hashtable)
+*** 'buffer' (pointer, hdata: "buffer")
+*** 'buffer_as_string' (string)
+*** 'prev_channel' (pointer, hdata: "irc_channel")
+*** 'next_channel' (pointer, hdata: "irc_channel")
+* 'irc_channel_speaking': IRC channel_speaking
+** Erweiterung: irc
+** variables:
+*** 'nick' (string)
+*** 'time_last_message' (time)
+*** 'prev_nick' (pointer, hdata: "irc_channel_speaking")
+*** 'next_nick' (pointer, hdata: "irc_channel_speaking")
+* 'irc_ignore': IRC ignorieren
+** Erweiterung: irc
+** variables:
+*** 'number' (integer)
+*** 'mask' (string)
+*** 'regex_mask' (pointer)
+*** 'server' (string)
+*** 'channel' (string)
+*** 'prev_ignore' (pointer, hdata: "irc_ignore")
+*** 'next_ignore' (pointer, hdata: "irc_ignore")
+** lists:
+*** 'irc_ignore_list'
+*** 'last_irc_ignore'
+* 'irc_nick': IRC-Nick
+** Erweiterung: irc
+** variables:
+*** 'name' (string)
+*** 'host' (string)
+*** 'prefixes' (string)
+*** 'prefix' (string)
+*** 'away' (integer)
+*** 'color' (string)
+*** 'prev_nick' (pointer, hdata: "irc_nick")
+*** 'next_nick' (pointer, hdata: "irc_nick")
+* 'irc_notify': IRC-Benachrichtigungen
+** Erweiterung: irc
+** variables:
+*** 'server' (pointer, hdata: "irc_server")
+*** 'nick' (string)
+*** 'check_away' (integer)
+*** 'is_on_server' (integer)
+*** 'away_message' (string)
+*** 'ison_received' (integer)
+*** 'prev_notify' (pointer, hdata: "irc_notify")
+*** 'next_notify' (pointer, hdata: "irc_notify")
+* 'irc_redirect': IRC Weiterleitung
+** Erweiterung: irc
+** variables:
+*** 'server' (pointer, hdata: "irc_server")
+*** 'pattern' (string)
+*** 'signal' (string)
+*** 'count' (integer)
+*** 'current_count' (integer)
+*** 'string' (string)
+*** 'timeout' (integer)
+*** 'command' (string)
+*** 'assigned_to_command' (integer)
+*** 'start_time' (time)
+*** 'cmd_start' (hashtable)
+*** 'cmd_stop' (hashtable)
+*** 'cmd_extra' (hashtable)
+*** 'cmd_start_received' (integer)
+*** 'cmd_stop_received' (integer)
+*** 'cmd_filter' (hashtable)
+*** 'output' (string)
+*** 'output_size' (integer)
+*** 'prev_redirect' (pointer, hdata: "irc_redirect")
+*** 'next_redirect' (pointer, hdata: "irc_redirect")
+* 'irc_redirect_pattern': Muster für IRC Weiterleitung
+** Erweiterung: irc
+** variables:
+*** 'name' (string)
+*** 'temp_pattern' (integer)
+*** 'timeout' (integer)
+*** 'cmd_start' (string)
+*** 'cmd_stop' (string)
+*** 'cmd_extra' (string)
+*** 'prev_redirect' (pointer, hdata: "irc_redirect_pattern")
+*** 'next_redirect' (pointer, hdata: "irc_redirect_pattern")
+** lists:
+*** 'irc_redirect_patterns'
+*** 'last_irc_redirect_pattern'
+* 'irc_server': IRC-Server
+** Erweiterung: irc
+** variables:
+*** 'name' (string)
+*** 'options' (pointer)
+*** 'temp_server' (integer)
+*** 'reloading_from_config' (integer)
+*** 'reloaded_from_config' (integer)
+*** 'addresses_count' (integer)
+*** 'addresses_array' (string, array_size: "addresses_count")
+*** 'ports_array' (integer, array_size: "addresses_count")
+*** 'retry_array' (integer, array_size: "addresses_count")
+*** 'index_current_address' (integer)
+*** 'current_address' (string)
+*** 'current_ip' (string)
+*** 'current_port' (integer)
+*** 'current_retry' (integer)
+*** 'sock' (integer)
+*** 'hook_connect' (pointer, hdata: "hook")
+*** 'hook_fd' (pointer, hdata: "hook")
+*** 'hook_timer_connection' (pointer, hdata: "hook")
+*** 'hook_timer_sasl' (pointer, hdata: "hook")
+*** 'is_connected' (integer)
+*** 'ssl_connected' (integer)
+*** 'disconnected' (integer)
+*** 'gnutls_sess' (other)
+*** 'tls_cert' (other)
+*** 'tls_cert_key' (other)
+*** 'unterminated_message' (string)
+*** 'nicks_count' (integer)
+*** 'nicks_array' (string, array_size: "nicks_count")
+*** 'nick_first_tried' (integer)
+*** 'nick_alternate_number' (integer)
+*** 'nick' (string)
+*** 'nick_modes' (string)
+*** 'isupport' (string)
+*** 'prefix_modes' (string)
+*** 'prefix_chars' (string)
+*** 'nick_max_length' (integer)
+*** 'casemapping' (integer)
+*** 'chantypes' (string)
+*** 'chanmodes' (string)
+*** 'reconnect_delay' (integer)
+*** 'reconnect_start' (time)
+*** 'command_time' (time)
+*** 'reconnect_join' (integer)
+*** 'disable_autojoin' (integer)
+*** 'is_away' (integer)
+*** 'away_message' (string)
+*** 'away_time' (time)
+*** 'lag' (integer)
+*** 'lag_check_time' (other)
+*** 'lag_next_check' (time)
+*** 'lag_last_refresh' (time)
+*** 'cmd_list_regexp' (pointer)
+*** 'last_user_message' (time)
+*** 'last_away_check' (time)
+*** 'last_data_purge' (time)
+*** 'outqueue' (pointer)
+*** 'last_outqueue' (pointer)
+*** 'redirects' (pointer, hdata: "irc_redirect")
+*** 'last_redirect' (pointer, hdata: "irc_redirect")
+*** 'notify_list' (pointer, hdata: "irc_notify")
+*** 'last_notify' (pointer, hdata: "irc_notify")
+*** 'join_manual' (hashtable)
+*** 'join_channel_key' (hashtable)
+*** 'join_noswitch' (hashtable)
+*** 'buffer' (pointer, hdata: "buffer")
+*** 'buffer_as_string' (string)
+*** 'channels' (pointer, hdata: "irc_channel")
+*** 'last_channel' (pointer, hdata: "irc_channel")
+*** 'prev_server' (pointer, hdata: "irc_server")
+*** 'next_server' (pointer, hdata: "irc_server")
+** lists:
+*** 'irc_servers'
+*** 'last_irc_server'
+* 'lua_callback': Callback eines Skripts
+** Erweiterung: lua
+** variables:
+*** 'script' (pointer, hdata: "lua_script")
+*** 'function' (string)
+*** 'data' (string)
+*** 'config_file' (pointer, hdata: "config_file")
+*** 'config_section' (pointer, hdata: "config_section")
+*** 'config_option' (pointer, hdata: "config_option")
+*** 'hook' (pointer)
+*** 'buffer' (pointer, hdata: "buffer")
+*** 'bar_item' (pointer, hdata: "bar_item")
+*** 'upgrade_file' (pointer)
+*** 'prev_callback' (pointer, hdata: "lua_callback")
+*** 'next_callback' (pointer, hdata: "lua_callback")
+* 'lua_script': Liste der Skripten
+** Erweiterung: lua
+** variables:
+*** 'filename' (string)
+*** 'interpreter' (pointer)
+*** 'name' (string)
+*** 'author' (string)
+*** 'version' (string)
+*** 'license' (string)
+*** 'description' (string)
+*** 'shutdown_func' (string)
+*** 'charset' (string)
+*** 'callbacks' (pointer, hdata: "lua_callback")
+*** 'unloading' (integer)
+*** 'prev_script' (pointer, hdata: "lua_script")
+*** 'next_script' (pointer, hdata: "lua_script")
+** lists:
+*** 'last_script'
+*** 'scripts'
+* 'perl_callback': Callback eines Skripts
+** Erweiterung: perl
+** variables:
+*** 'script' (pointer, hdata: "perl_script")
+*** 'function' (string)
+*** 'data' (string)
+*** 'config_file' (pointer, hdata: "config_file")
+*** 'config_section' (pointer, hdata: "config_section")
+*** 'config_option' (pointer, hdata: "config_option")
+*** 'hook' (pointer)
+*** 'buffer' (pointer, hdata: "buffer")
+*** 'bar_item' (pointer, hdata: "bar_item")
+*** 'upgrade_file' (pointer)
+*** 'prev_callback' (pointer, hdata: "perl_callback")
+*** 'next_callback' (pointer, hdata: "perl_callback")
+* 'perl_script': Liste der Skripten
+** Erweiterung: perl
+** variables:
+*** 'filename' (string)
+*** 'interpreter' (pointer)
+*** 'name' (string)
+*** 'author' (string)
+*** 'version' (string)
+*** 'license' (string)
+*** 'description' (string)
+*** 'shutdown_func' (string)
+*** 'charset' (string)
+*** 'callbacks' (pointer, hdata: "perl_callback")
+*** 'unloading' (integer)
+*** 'prev_script' (pointer, hdata: "perl_script")
+*** 'next_script' (pointer, hdata: "perl_script")
+** lists:
+*** 'last_script'
+*** 'scripts'
+* 'python_callback': Callback eines Skripts
+** Erweiterung: python
+** variables:
+*** 'script' (pointer, hdata: "python_script")
+*** 'function' (string)
+*** 'data' (string)
+*** 'config_file' (pointer, hdata: "config_file")
+*** 'config_section' (pointer, hdata: "config_section")
+*** 'config_option' (pointer, hdata: "config_option")
+*** 'hook' (pointer)
+*** 'buffer' (pointer, hdata: "buffer")
+*** 'bar_item' (pointer, hdata: "bar_item")
+*** 'upgrade_file' (pointer)
+*** 'prev_callback' (pointer, hdata: "python_callback")
+*** 'next_callback' (pointer, hdata: "python_callback")
+* 'python_script': Liste der Skripten
+** Erweiterung: python
+** variables:
+*** 'filename' (string)
+*** 'interpreter' (pointer)
+*** 'name' (string)
+*** 'author' (string)
+*** 'version' (string)
+*** 'license' (string)
+*** 'description' (string)
+*** 'shutdown_func' (string)
+*** 'charset' (string)
+*** 'callbacks' (pointer, hdata: "python_callback")
+*** 'unloading' (integer)
+*** 'prev_script' (pointer, hdata: "python_script")
+*** 'next_script' (pointer, hdata: "python_script")
+** lists:
+*** 'last_script'
+*** 'scripts'
+* 'ruby_callback': Callback eines Skripts
+** Erweiterung: ruby
+** variables:
+*** 'script' (pointer, hdata: "ruby_script")
+*** 'function' (string)
+*** 'data' (string)
+*** 'config_file' (pointer, hdata: "config_file")
+*** 'config_section' (pointer, hdata: "config_section")
+*** 'config_option' (pointer, hdata: "config_option")
+*** 'hook' (pointer)
+*** 'buffer' (pointer, hdata: "buffer")
+*** 'bar_item' (pointer, hdata: "bar_item")
+*** 'upgrade_file' (pointer)
+*** 'prev_callback' (pointer, hdata: "ruby_callback")
+*** 'next_callback' (pointer, hdata: "ruby_callback")
+* 'ruby_script': Liste der Skripten
+** Erweiterung: ruby
+** variables:
+*** 'filename' (string)
+*** 'interpreter' (pointer)
+*** 'name' (string)
+*** 'author' (string)
+*** 'version' (string)
+*** 'license' (string)
+*** 'description' (string)
+*** 'shutdown_func' (string)
+*** 'charset' (string)
+*** 'callbacks' (pointer, hdata: "ruby_callback")
+*** 'unloading' (integer)
+*** 'prev_script' (pointer, hdata: "ruby_script")
+*** 'next_script' (pointer, hdata: "ruby_script")
+** lists:
+*** 'last_script'
+*** 'scripts'
+* 'script_script': Skripten aus dem Repositorium
+** Erweiterung: script
+** variables:
+*** 'name' (string)
+*** 'name_with_extension' (string)
+*** 'language' (integer)
+*** 'author' (string)
+*** 'mail' (string)
+*** 'version' (string)
+*** 'license' (string)
+*** 'description' (string)
+*** 'tags' (string)
+*** 'requirements' (string)
+*** 'min_weechat' (string)
+*** 'max_weechat' (string)
+*** 'md5sum' (string)
+*** 'url' (string)
+*** 'popularity' (integer)
+*** 'date_added' (time)
+*** 'date_updated' (time)
+*** 'status' (integer)
+*** 'version_loaded' (string)
+*** 'displayed' (integer)
+*** 'install_order' (integer)
+*** 'prev_script' (pointer, hdata: "script_script")
+*** 'next_script' (pointer, hdata: "script_script")
+** lists:
+*** 'last_script_repo'
+*** 'scripts_repo'
+* 'tcl_callback': Callback eines Skripts
+** Erweiterung: tcl
+** variables:
+*** 'script' (pointer, hdata: "tcl_script")
+*** 'function' (string)
+*** 'data' (string)
+*** 'config_file' (pointer, hdata: "config_file")
+*** 'config_section' (pointer, hdata: "config_section")
+*** 'config_option' (pointer, hdata: "config_option")
+*** 'hook' (pointer)
+*** 'buffer' (pointer, hdata: "buffer")
+*** 'bar_item' (pointer, hdata: "bar_item")
+*** 'upgrade_file' (pointer)
+*** 'prev_callback' (pointer, hdata: "tcl_callback")
+*** 'next_callback' (pointer, hdata: "tcl_callback")
+* 'tcl_script': Liste der Skripten
+** Erweiterung: tcl
+** variables:
+*** 'filename' (string)
+*** 'interpreter' (pointer)
+*** 'name' (string)
+*** 'author' (string)
+*** 'version' (string)
+*** 'license' (string)
+*** 'description' (string)
+*** 'shutdown_func' (string)
+*** 'charset' (string)
+*** 'callbacks' (pointer, hdata: "tcl_callback")
+*** 'unloading' (integer)
+*** 'prev_script' (pointer, hdata: "tcl_script")
+*** 'next_script' (pointer, hdata: "tcl_script")
+** lists:
+*** 'last_script'
+*** 'scripts'
+* 'bar': Bar
+** Erweiterung: weechat
+** variables:
+*** 'name' (string)
+*** 'options' (pointer)
+*** 'items_count' (integer)
+*** 'items_subcount' (pointer)
+*** 'items_array' (pointer)
+*** 'items_buffer' (pointer)
+*** 'items_prefix' (pointer)
+*** 'items_name' (pointer)
+*** 'items_suffix' (pointer)
+*** 'bar_window' (pointer, hdata: "bar_window")
+*** 'bar_refresh_needed' (integer)
+*** 'prev_bar' (pointer, hdata: "bar")
+*** 'next_bar' (pointer, hdata: "bar")
+** lists:
+*** 'gui_bars'
+*** 'last_gui_bar'
+* 'bar_item': Bar-Item
+** Erweiterung: weechat
+** variables:
+*** 'plugin' (pointer, hdata: "plugin")
+*** 'name' (string)
+*** 'build_callback' (pointer)
+*** 'build_callback_data' (pointer)
+*** 'prev_item' (pointer, hdata: "bar_item")
+*** 'next_item' (pointer, hdata: "bar_item")
+** lists:
+*** 'gui_bar_items'
+*** 'last_gui_bar_item'
+* 'bar_window': Bar-Fenster
+** Erweiterung: weechat
+** variables:
+*** 'bar' (pointer, hdata: "bar")
+*** 'x' (integer)
+*** 'y' (integer)
+*** 'width' (integer)
+*** 'height' (integer)
+*** 'scroll_x' (integer)
+*** 'scroll_y' (integer)
+*** 'cursor_x' (integer)
+*** 'cursor_y' (integer)
+*** 'current_size' (integer)
+*** 'items_count' (integer)
+*** 'items_subcount' (pointer)
+*** 'items_content' (pointer)
+*** 'items_num_lines' (pointer)
+*** 'items_refresh_needed' (pointer)
+*** 'screen_col_size' (integer)
+*** 'screen_lines' (integer)
+*** 'coords_count' (integer)
+*** 'coords' (pointer)
+*** 'gui_objects' (pointer)
+*** 'prev_bar_window' (pointer, hdata: "bar_window")
+*** 'next_bar_window' (pointer, hdata: "bar_window")
+* 'buffer': Buffer
+** Erweiterung: weechat
+** variables:
+*** 'plugin' (pointer, hdata: "plugin")
+*** 'plugin_name_for_upgrade' (string)
+*** 'number' (integer)
+*** 'layout_number' (integer)
+*** 'layout_number_merge_order' (integer)
+*** 'name' (string)
+*** 'full_name' (string)
+*** 'short_name' (string)
+*** 'type' (integer)
+*** 'notify' (integer)
+*** 'num_displayed' (integer)
+*** 'active' (integer)
+*** 'print_hooks_enabled' (integer)
+*** 'close_callback' (pointer)
+*** 'close_callback_data' (pointer)
+*** 'title' (string)
+*** 'own_lines' (pointer, hdata: "lines")
+*** 'mixed_lines' (pointer, hdata: "lines")
+*** 'lines' (pointer, hdata: "lines")
+*** 'time_for_each_line' (integer)
+*** 'chat_refresh_needed' (integer)
+*** 'nicklist' (integer)
+*** 'nicklist_case_sensitive' (integer)
+*** 'nicklist_root' (pointer, hdata: "nick_group")
+*** 'nicklist_max_length' (integer)
+*** 'nicklist_display_groups' (integer)
+*** 'nicklist_count' (integer)
+*** 'nicklist_groups_count' (integer)
+*** 'nicklist_nicks_count' (integer)
+*** 'nicklist_visible_count' (integer)
+*** 'nickcmp_callback' (pointer)
+*** 'nickcmp_callback_data' (pointer)
+*** 'input' (integer)
+*** 'input_callback' (pointer)
+*** 'input_callback_data' (pointer)
+*** 'input_get_unknown_commands' (integer)
+*** 'input_buffer' (string)
+*** 'input_buffer_alloc' (integer)
+*** 'input_buffer_size' (integer)
+*** 'input_buffer_length' (integer)
+*** 'input_buffer_pos' (integer)
+*** 'input_buffer_1st_display' (integer)
+*** 'input_undo_snap' (pointer, hdata: "input_undo")
+*** 'input_undo' (pointer, hdata: "input_undo")
+*** 'last_input_undo' (pointer, hdata: "input_undo")
+*** 'ptr_input_undo' (pointer, hdata: "input_undo")
+*** 'input_undo_count' (integer)
+*** 'completion' (pointer, hdata: "completion")
+*** 'history' (pointer, hdata: "history")
+*** 'last_history' (pointer, hdata: "history")
+*** 'ptr_history' (pointer, hdata: "history")
+*** 'num_history' (integer)
+*** 'text_search' (integer)
+*** 'text_search_exact' (integer)
+*** 'text_search_regex' (integer)
+*** 'text_search_regex_compiled' (pointer)
+*** 'text_search_where' (integer)
+*** 'text_search_found' (integer)
+*** 'text_search_input' (string)
+*** 'highlight_words' (string)
+*** 'highlight_regex' (string)
+*** 'highlight_regex_compiled' (pointer)
+*** 'highlight_tags' (string)
+*** 'highlight_tags_count' (integer)
+*** 'highlight_tags_array' (string, array_size: "highlight_tags_count")
+*** 'hotlist_max_level_nicks' (hashtable)
+*** 'keys' (pointer, hdata: "key")
+*** 'last_key' (pointer, hdata: "key")
+*** 'keys_count' (integer)
+*** 'local_variables' (hashtable)
+*** 'prev_buffer' (pointer, hdata: "buffer")
+*** 'next_buffer' (pointer, hdata: "buffer")
+** lists:
+*** 'gui_buffer_last_displayed'
+*** 'gui_buffers'
+*** 'last_gui_buffer'
+* 'completion': Struktur mit Vervollständigung
+** Erweiterung: weechat
+** variables:
+*** 'buffer' (pointer, hdata: "buffer")
+*** 'context' (integer)
+*** 'base_command' (string)
+*** 'base_command_arg_index' (integer)
+*** 'base_word' (string)
+*** 'base_word_pos' (integer)
+*** 'position' (integer)
+*** 'args' (string)
+*** 'direction' (integer)
+*** 'add_space' (integer)
+*** 'force_partial_completion' (integer)
+*** 'completion_list' (pointer)
+*** 'word_found' (string)
+*** 'word_found_is_nick' (integer)
+*** 'position_replace' (integer)
+*** 'diff_size' (integer)
+*** 'diff_length' (integer)
+*** 'partial_completion_list' (pointer, hdata: "completion_partial")
+*** 'last_partial_completion' (pointer, hdata: "completion_partial")
+* 'completion_partial': Struktur mit teilweise Vervollständigung
+** Erweiterung: weechat
+** variables:
+*** 'word' (string)
+*** 'count' (integer)
+*** 'prev_item' (pointer, hdata: "completion_partial")
+*** 'next_item' (pointer, hdata: "completion_partial")
+* 'config_file': Konfigurationsdatei
+** Erweiterung: weechat
+** variables:
+*** 'plugin' (pointer, hdata: "plugin")
+*** 'name' (string)
+*** 'filename' (string)
+*** 'file' (pointer)
+*** 'callback_reload' (pointer)
+*** 'callback_reload_data' (pointer)
+*** 'sections' (pointer, hdata: "config_section")
+*** 'last_section' (pointer, hdata: "config_section")
+*** 'prev_config' (pointer, hdata: "config_file")
+*** 'next_config' (pointer, hdata: "config_file")
+** lists:
+*** 'config_files'
+*** 'last_config_file'
+* 'config_option': Konfigurationsoptionen
+** Erweiterung: weechat
+** variables:
+*** 'config_file' (pointer, hdata: "config_file")
+*** 'section' (pointer, hdata: "config_section")
+*** 'name' (string)
+*** 'type' (integer)
+*** 'description' (string)
+*** 'string_values' (string, array_size: "*")
+*** 'min' (integer)
+*** 'max' (integer)
+*** 'default_value' (pointer)
+*** 'value' (pointer)
+*** 'null_value_allowed' (integer)
+*** 'callback_check_value' (pointer)
+*** 'callback_check_value_data' (pointer)
+*** 'callback_change' (pointer)
+*** 'callback_change_data' (pointer)
+*** 'callback_delete' (pointer)
+*** 'callback_delete_data' (pointer)
+*** 'loaded' (integer)
+*** 'prev_option' (pointer, hdata: "config_option")
+*** 'next_option' (pointer, hdata: "config_option")
+* 'config_section': Konfigurationssektion
+** Erweiterung: weechat
+** variables:
+*** 'config_file' (pointer, hdata: "config_file")
+*** 'name' (string)
+*** 'user_can_add_options' (integer)
+*** 'user_can_delete_options' (integer)
+*** 'callback_read' (pointer)
+*** 'callback_read_data' (pointer)
+*** 'callback_write' (pointer)
+*** 'callback_write_data' (pointer)
+*** 'callback_write_default' (pointer)
+*** 'callback_write_default_data' (pointer)
+*** 'callback_create_option' (pointer)
+*** 'callback_create_option_data' (pointer)
+*** 'callback_delete_option' (pointer)
+*** 'callback_delete_option_data' (pointer)
+*** 'options' (pointer, hdata: "config_option")
+*** 'last_option' (pointer, hdata: "config_option")
+*** 'prev_section' (pointer, hdata: "config_section")
+*** 'next_section' (pointer, hdata: "config_section")
+* 'filter': Filter
+** Erweiterung: weechat
+** variables:
+*** 'enabled' (integer)
+*** 'name' (string)
+*** 'buffer_name' (string)
+*** 'num_buffers' (integer)
+*** 'buffers' (pointer)
+*** 'tags' (string)
+*** 'tags_count' (integer)
+*** 'tags_array' (string, array_size: "tags_count")
+*** 'regex' (string)
+*** 'regex_prefix' (pointer)
+*** 'regex_message' (pointer)
+*** 'prev_filter' (pointer, hdata: "filter")
+*** 'next_filter' (pointer, hdata: "filter")
+** lists:
+*** 'gui_filters'
+*** 'last_gui_filter'
+* 'history': Verlaufspeicher von Befehlen in einem Buffer
+** Erweiterung: weechat
+** variables:
+*** 'text' (string)
+*** 'next_history' (pointer, hdata: "history")
+*** 'prev_history' (pointer, hdata: "history")
+** update allowed:
+*** '__create'
+*** '__delete'
+** lists:
+*** 'gui_history'
+*** 'last_gui_history'
+* 'hotlist': Hotliste
+** Erweiterung: weechat
+** variables:
+*** 'priority' (integer)
+*** 'creation_time.tv_sec' (time)
+*** 'creation_time.tv_usec' (long)
+*** 'buffer' (pointer)
+*** 'count' (integer, array_size: "4")
+*** 'prev_hotlist' (pointer, hdata: "hotlist")
+*** 'next_hotlist' (pointer, hdata: "hotlist")
+** lists:
+*** 'gui_hotlist'
+*** 'last_gui_hotlist'
+* 'input_undo': Struktur der Rücknahmen für die Befehlszeile
+** Erweiterung: weechat
+** variables:
+*** 'data' (string)
+*** 'pos' (integer)
+*** 'prev_undo' (pointer, hdata: "input_undo")
+*** 'next_undo' (pointer, hdata: "input_undo")
+* 'key': Tastenbelegung (Tastaturkurzbefehl)
+** Erweiterung: weechat
+** variables:
+*** 'key' (string)
+*** 'area_type' (pointer)
+*** 'area_name' (pointer)
+*** 'area_key' (string)
+*** 'command' (string)
+*** 'score' (integer)
+*** 'prev_key' (pointer, hdata: "key")
+*** 'next_key' (pointer, hdata: "key")
+** lists:
+*** 'gui_default_keys'
+*** 'gui_default_keys_cursor'
+*** 'gui_default_keys_mouse'
+*** 'gui_default_keys_search'
+*** 'gui_keys'
+*** 'gui_keys_cursor'
+*** 'gui_keys_mouse'
+*** 'gui_keys_search'
+*** 'last_gui_default_key'
+*** 'last_gui_default_key_cursor'
+*** 'last_gui_default_key_mouse'
+*** 'last_gui_default_key_search'
+*** 'last_gui_key'
+*** 'last_gui_key_cursor'
+*** 'last_gui_key_mouse'
+*** 'last_gui_key_search'
+* 'layout': Layout
+** Erweiterung: weechat
+** variables:
+*** 'name' (string)
+*** 'layout_buffers' (pointer, hdata: "layout_buffer")
+*** 'last_layout_buffer' (pointer, hdata: "layout_buffer")
+*** 'layout_windows' (pointer, hdata: "layout_window")
+*** 'internal_id' (integer)
+*** 'internal_id_current_window' (integer)
+*** 'prev_layout' (pointer, hdata: "layout")
+*** 'next_layout' (pointer, hdata: "layout")
+** lists:
+*** 'gui_layout_current'
+*** 'gui_layouts'
+*** 'last_gui_layout'
+* 'layout_buffer': Buffer-Layout
+** Erweiterung: weechat
+** variables:
+*** 'plugin_name' (string)
+*** 'buffer_name' (string)
+*** 'number' (integer)
+*** 'prev_layout' (pointer, hdata: "layout_buffer")
+*** 'next_layout' (pointer, hdata: "layout_buffer")
+* 'layout_window': Fenster-Layout
+** Erweiterung: weechat
+** variables:
+*** 'internal_id' (integer)
+*** 'parent_node' (pointer, hdata: "layout_window")
+*** 'split_pct' (integer)
+*** 'split_horiz' (integer)
+*** 'child1' (pointer, hdata: "layout_window")
+*** 'child2' (pointer, hdata: "layout_window")
+*** 'plugin_name' (string)
+*** 'buffer_name' (string)
+* 'line': Struktur mit einer Zeile
+** Erweiterung: weechat
+** variables:
+*** 'data' (pointer, hdata: "line_data")
+*** 'prev_line' (pointer, hdata: "line")
+*** 'next_line' (pointer, hdata: "line")
+* 'line_data': Struktur mit einzeiligen Daten
+** Erweiterung: weechat
+** variables:
+*** 'buffer' (pointer, hdata: "buffer")
+*** 'y' (integer)
+*** 'date' (time)
+*** 'date_printed' (time)
+*** 'str_time' (string)
+*** 'tags_count' (integer)
+*** 'tags_array' (string, array_size: "tags_count")
+*** 'displayed' (char)
+*** 'highlight' (char)
+*** 'refresh_needed' (char)
+*** 'prefix' (string)
+*** 'prefix_length' (integer)
+*** 'message' (string)
+** update allowed:
+*** 'date' (time)
+*** 'date_printed' (time)
+*** 'tags_array' (string)
+*** 'prefix' (string)
+*** 'message' (string)
+* 'lines': Struktur mit Zeilen
+** Erweiterung: weechat
+** variables:
+*** 'first_line' (pointer, hdata: "line")
+*** 'last_line' (pointer, hdata: "line")
+*** 'last_read_line' (pointer, hdata: "line")
+*** 'lines_count' (integer)
+*** 'first_line_not_read' (integer)
+*** 'lines_hidden' (integer)
+*** 'buffer_max_length' (integer)
+*** 'buffer_max_length_refresh' (integer)
+*** 'prefix_max_length' (integer)
+*** 'prefix_max_length_refresh' (integer)
+* 'nick': Nick in Nickliste
+** Erweiterung: weechat
+** variables:
+*** 'group' (pointer, hdata: "nick_group")
+*** 'name' (string)
+*** 'color' (string)
+*** 'prefix' (string)
+*** 'prefix_color' (string)
+*** 'visible' (integer)
+*** 'prev_nick' (pointer, hdata: "nick")
+*** 'next_nick' (pointer, hdata: "nick")
+* 'nick_group': Gruppen in Nickliste
+** Erweiterung: weechat
+** variables:
+*** 'name' (string)
+*** 'color' (string)
+*** 'visible' (integer)
+*** 'level' (integer)
+*** 'parent' (pointer, hdata: "nick_group")
+*** 'children' (pointer, hdata: "nick_group")
+*** 'last_child' (pointer, hdata: "nick_group")
+*** 'nicks' (pointer, hdata: "nick")
+*** 'last_nick' (pointer, hdata: "nick")
+*** 'prev_group' (pointer, hdata: "nick_group")
+*** 'next_group' (pointer, hdata: "nick_group")
+* 'plugin': Erweiterung
+** Erweiterung: weechat
+** variables:
+*** 'filename' (string)
+*** 'handle' (pointer)
+*** 'name' (string)
+*** 'description' (string)
+*** 'author' (string)
+*** 'version' (string)
+*** 'license' (string)
+*** 'charset' (string)
+*** 'debug' (integer)
+*** 'prev_plugin' (pointer, hdata: "plugin")
+*** 'next_plugin' (pointer, hdata: "plugin")
+** lists:
+*** 'last_weechat_plugin'
+*** 'weechat_plugins'
+* 'proxy': Proxy
+** Erweiterung: weechat
+** variables:
+*** 'name' (string)
+*** 'options' (pointer)
+*** 'prev_proxy' (pointer, hdata: "proxy")
+*** 'next_proxy' (pointer, hdata: "proxy")
+** lists:
+*** 'last_weechat_proxy'
+*** 'weechat_proxies'
+* 'window': Fenster
+** Erweiterung: weechat
+** variables:
+*** 'number' (integer)
+*** 'win_x' (integer)
+*** 'win_y' (integer)
+*** 'win_width' (integer)
+*** 'win_height' (integer)
+*** 'win_width_pct' (integer)
+*** 'win_height_pct' (integer)
+*** 'win_chat_x' (integer)
+*** 'win_chat_y' (integer)
+*** 'win_chat_width' (integer)
+*** 'win_chat_height' (integer)
+*** 'win_chat_cursor_x' (integer)
+*** 'win_chat_cursor_y' (integer)
+*** 'bar_windows' (pointer, hdata: "bar_window")
+*** 'last_bar_window' (pointer, hdata: "bar_window")
+*** 'refresh_needed' (integer)
+*** 'gui_objects' (pointer)
+*** 'buffer' (pointer, hdata: "buffer")
+*** 'layout_plugin_name' (string)
+*** 'layout_buffer_name' (string)
+*** 'scroll' (pointer, hdata: "window_scroll")
+*** 'ptr_tree' (pointer, hdata: "window_tree")
+*** 'prev_window' (pointer, hdata: "window")
+*** 'next_window' (pointer, hdata: "window")
+** lists:
+*** 'gui_current_window'
+*** 'gui_windows'
+*** 'last_gui_window'
+* 'window_scroll': Scroll-Info in Fenstern
+** Erweiterung: weechat
+** variables:
+*** 'buffer' (pointer, hdata: "buffer")
+*** 'first_line_displayed' (integer)
+*** 'start_line' (pointer, hdata: "line")
+*** 'start_line_pos' (integer)
+*** 'scrolling' (integer)
+*** 'start_col' (integer)
+*** 'lines_after' (integer)
+*** 'prev_scroll' (pointer, hdata: "window_scroll")
+*** 'next_scroll' (pointer, hdata: "window_scroll")
+* 'window_tree': Baumstruktur der Fenster
+** Erweiterung: weechat
+** variables:
+*** 'parent_node' (pointer, hdata: "window_tree")
+*** 'split_pct' (integer)
+*** 'split_horizontal' (integer)
+*** 'child1' (pointer, hdata: "window_tree")
+*** 'child2' (pointer, hdata: "window_tree")
+*** 'window' (pointer, hdata: "window")
+** lists:
+*** 'gui_windows_tree'

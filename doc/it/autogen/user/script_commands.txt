@@ -1,6 +1,7 @@
 [[command_script_script]]
 [command]*`script`* Gestore script di WeeChat::
-........................................
+
+----------------------------------------
 /script  list [-o|-i]
          search <text>
          show <script>
@@ -72,5 +73,5 @@ Examples:
   /script hold urlserver.py
   /script reload urlserver
   /script upgrade
-........................................
+----------------------------------------
 

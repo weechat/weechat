@@ -1,6 +1,7 @@
 [[command_charset_charset]]
 [command]*`charset`* modifica il set di caratteri per il buffer corrente::
-........................................
+
+----------------------------------------
 /charset  decode|encode <set_caratteri>
           reset
 
@@ -8,5 +9,5 @@
        encode: modifica il set di caratteri per la codifica
 set_caratteri: nuovo set di caratteri per il buffer corrente
         reset: resetta il set di caratteri per il buffer corrente
-........................................
+----------------------------------------
 

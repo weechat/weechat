@@ -1,6 +1,7 @@
 [[command_charset_charset]]
 [command]*`charset`* changer le charset pour le tampon courant::
-........................................
+
+----------------------------------------
 /charset  decode|encode <charset>
           reset
 
@@ -8,5 +9,5 @@
  encode: changer le charset d'encodage
 charset: nouveau charset pour le tampon courant
   reset: réinitialiser les charsets pour le tampon courant
-........................................
+----------------------------------------
 

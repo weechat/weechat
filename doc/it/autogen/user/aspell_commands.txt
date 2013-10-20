@@ -1,6 +1,7 @@
 [[command_aspell_aspell]]
 [command]*`aspell`* configurazione del plugin aspell::
-........................................
+
+----------------------------------------
 /aspell  enable|disable|toggle
          listdict
          setdict <dizionario>[,<dizionario>...]
@@ -22,5 +23,5 @@ Per abilitare aspell su tutti i buffer, usare l'opzione "default_dict", poi abil
   /aspell enable
 
 Il tasto predefinito per (dis)abilitare aspell è alt-s.
-........................................
+----------------------------------------
 

@@ -1,6 +1,7 @@
 [[command_relay_relay]]
 [command]*`relay`* リレー管理::
-........................................
+
+----------------------------------------
 /relay  list|listfull|listrelay
         add [ipv4.][ipv6.][ssl.]<protocol.name> <port>
         del [ipv4.][ipv6.][ssl.]<protocol.name>
@@ -41,5 +42,5 @@ protocol.name: リレーするプロトコルと名前:
     /relay add ipv6.ssl.weechat 9001
   SSL を有効にした weechat プロトコル、IPv4 と IPv6 を利用:
     /relay add ipv4.ipv6.ssl.weechat 9001
-........................................
+----------------------------------------
 

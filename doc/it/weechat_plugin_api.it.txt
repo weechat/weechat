@@ -807,7 +807,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 weechat_strlen_screen
 ^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.4.2._
+_WeeChat ≥ 0.4.2._
 
 Restituisce il numero di caratteri necessari per visualizzare la stringa
 UTF-8 su schermo.
@@ -936,7 +936,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 weechat_string_expand_home
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.3._
+_WeeChat ≥ 0.3.3._
 
 Sostituisce la `~` iniziale con la stringa con la cartella home. Se la stringa
 non inizia con `~`, viene restituita la stessa stringa.
@@ -1089,7 +1089,7 @@ regex = weechat.string_mask_to_regex("test*mask") # "test.*mask"
 weechat_string_regex_flags
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.7._
+_WeeChat ≥ 0.3.7._
 
 Restituisce sia il puntatore sulla stringa dopo le flag che la mask con le flag
 per compilare l'espressione regolare.
@@ -1147,7 +1147,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 weechat_string_regcomp
 ^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.7._
+_WeeChat ≥ 0.3.7._
 
 Compila un'espressione regolare usando flag opzionali all'inizio della stringa
 (per il formato delle flag consultare
@@ -1255,7 +1255,7 @@ Argomenti:
 ** 1: ogni stringa conterrà tutte le stringhe fino a fine riga
    (consultare il seguente esempio)
 ** 2: come il punto 1, ma non rimuove i delimitatori alla fine della stringa
-   prima della divisione _(novità nella versione 0.3.6)_
+   prima della divisione _(WeeChat ≥ 0.3.6)_
 * 'num_items_max': numero massimo di elementi creati (0 = nessun limite)
 * 'num_items': puntatore ad int che conterrà il numero di elementi creati
 
@@ -1524,7 +1524,7 @@ str = weechat.string_remove_color(my_string, "?")
 weechat_string_encode_base64
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.2._
+_WeeChat ≥ 0.3.2._
 
 Codifica una stringa in base64.
 
@@ -1557,7 +1557,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 weechat_string_decode_base64
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.2._
+_WeeChat ≥ 0.3.2._
 
 Decodifica una stringa in base64.
 
@@ -1594,7 +1594,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 weechat_string_is_command_char
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.2._
+_WeeChat ≥ 0.3.2._
 
 Verifica che il primo carattere della stringa sia un carattere comando
 (il comando carattere predefinito è '/').
@@ -1638,7 +1638,7 @@ command_char2 = weechat.string_is_command_char("test")  # == 0
 weechat_string_input_for_buffer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.2._
+_WeeChat ≥ 0.3.2._
 
 Restituisce il puntatore al testo in input per il buffer (puntatore all'interno
 dell'argomento "string"), oppure NULL se è un comando.
@@ -1684,7 +1684,7 @@ weechat_string_eval_expression
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 // TRANSLATION MISSING
-_Novità nella versione 0.4.0, updated in 0.4.2._
+_WeeChat ≥ 0.4.0, updated in 0.4.2._
 
 // TRANSLATION MISSING
 Evaluate an expression and return result as a string.
@@ -2480,7 +2480,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 weechat_file_get_content
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.1._
+_WeeChat ≥ 0.3.1._
 
 Ottiene il contenuto del file di testo in una stringa.
 
@@ -2617,7 +2617,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 weechat_util_get_time_string
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.2._
+_WeeChat ≥ 0.3.2._
 
 Riceve data/ora come stringa compilata con "strftime".
 
@@ -2647,7 +2647,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 weechat_util_version_number
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.9._
+_WeeChat ≥ 0.3.9._
 
 // TRANSLATION MISSING
 Convert a string with WeeChat version to a number.
@@ -2808,7 +2808,7 @@ item = weechat.list_search(list, "my data")
 weechat_list_search_pos
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.4._
+_WeeChat ≥ 0.3.4._
 
 Cerca la posizione di un elemento nella lista.
 
@@ -2891,7 +2891,7 @@ item = weechat.list_casesearch(list, "my data")
 weechat_list_casesearch_pos
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.4._
+_WeeChat ≥ 0.3.4._
 
 Cerca la posizione di un elemento in una lista, ricerca normale.
 
@@ -3273,7 +3273,7 @@ Funzioni per le tabelle hash.
 weechat_hashtable_new
 ^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.3._
+_WeeChat ≥ 0.3.3._
 
 Crea una nuova tabella hash.
 
@@ -3349,7 +3349,7 @@ weechat_hashtable_set_with_size
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 // TRANSLATION MISSING
-_Novità nella versione 0.3.3, updated in 0.4.2._
+_WeeChat ≥ 0.3.3, updated in 0.4.2._
 
 Aggiunge o aggiorna un elemento nella tabella hash con la dimensione per la
 chiave ed il valore.
@@ -3393,7 +3393,7 @@ weechat_hashtable_set
 ^^^^^^^^^^^^^^^^^^^^^
 
 // TRANSLATION MISSING
-_Novità nella versione 0.3.3, updated in 0.4.2._
+_WeeChat ≥ 0.3.3, updated in 0.4.2._
 
 Aggiunge o aggiorna un elemento nella tabella hash.
 
@@ -3426,7 +3426,7 @@ weechat_hashtable_set (hashtable, "my_key", "my_value");
 weechat_hashtable_get
 ^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.3._
+_WeeChat ≥ 0.3.3._
 
 Ottiene il valore associato ad una chiave in una tabella hash.
 
@@ -3459,7 +3459,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 weechat_hashtable_has_key
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.4._
+_WeeChat ≥ 0.3.4._
 
 Restituisce 1 se la tabella hash ha una chiave, altrimenti 0.
 
@@ -3496,7 +3496,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 weechat_hashtable_map
 ^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.3._
+_WeeChat ≥ 0.3.3._
 
 Chiama una funzione su tutte le voci della tabella hash.
 
@@ -3541,7 +3541,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 weechat_hashtable_map_string
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.7._
+_WeeChat ≥ 0.3.7._
 
 Chiama una funzione su tutte le voci della tabella hash, inviando chiavi e
 valori come stringhe.
@@ -3590,7 +3590,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 weechat_hashtable_get_integer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.3._
+_WeeChat ≥ 0.3.3._
 
 Restituisce un valore intero per la proprietà di una tabella hash.
 
@@ -3626,7 +3626,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 weechat_hashtable_get_string
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.4._
+_WeeChat ≥ 0.3.4._
 
 Restituisce il valore stringa della proprietà di una tabella hash.
 
@@ -3682,7 +3682,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 weechat_hashtable_set_pointer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.4._
+_WeeChat ≥ 0.3.4._
 
 Imposta il valore puntatore della proprietà di una tabella hash.
 
@@ -3700,7 +3700,7 @@ Argomenti:
 * 'property' e 'value': nome della proprietà, con il proprio valore:
 // TRANSLATION MISSING
 ** 'callback_free_key': set callback function used to free keys in hashtable
-   _(novità nella versione 0.4.2)_
+   _(WeeChat ≥ 0.4.2)_
 ** 'callback_free_value': imposta la funzione callback usata per
    liberare i valori nella tabella hash
 
@@ -3723,7 +3723,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 weechat_hashtable_add_to_infolist
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.3._
+_WeeChat ≥ 0.3.3._
 
 Aggiunge elementi della tabella hash ad un elemento della lista info.
 
@@ -3769,7 +3769,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 weechat_hashtable_remove
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.3._
+_WeeChat ≥ 0.3.3._
 
 Rimuove un elemento in una tabella hash.
 
@@ -3798,7 +3798,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 weechat_hashtable_remove_all
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.3._
+_WeeChat ≥ 0.3.3._
 
 Rimuove tutti gli elementi in una tabella hash.
 
@@ -3826,7 +3826,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 weechat_hashtable_free
 ^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.3._
+_WeeChat ≥ 0.3.3._
 
 Libera una tabella hash.
 
@@ -6001,7 +6001,7 @@ elif rc == weechat.WEECHAT_CONFIG_OPTION_SET_ERROR:
 weechat_config_set_desc_plugin
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.5._
+_WeeChat ≥ 0.3.5._
 
 Imposta la descrizione per l'opzione nel file di configurazione dei plugin
 (plugins.conf).
@@ -6119,7 +6119,7 @@ Funzioni per le combinazioni dei tasti.
 weechat_key_bind
 ^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.6._
+_WeeChat ≥ 0.3.6._
 
 Aggiunge una nuova combinazione tasto.
 
@@ -6184,7 +6184,7 @@ weechat.key_bind("mouse", keys)
 weechat_key_unbind
 ^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.6._
+_WeeChat ≥ 0.3.6._
 
 Rimuove una o più associazioni tasti.
 
@@ -6323,15 +6323,14 @@ Argomenti:
 // TRANSLATION MISSING
 *** 'emphasis': toggle the emphasis for text (note: this should be used only in
     bars, because WeeChat uses text emphasis when searching text in buffer)
-    _(new in version 0.4.2)_
+    _(WeeChat ≥ 0.4.2)_
 ** nome colore della barra:
 *** 'bar_fg': colore di primo piano della barra
 *** 'bar_delim': colore dei delimitatori della barra
 *** 'bar_bg': colore di sfondo della barra
 ** reset:
 *** 'reset': ripristina colore ed attributi
-*** 'resetcolor': ripristina colore (mantiene attributi)
-    _(novità nella versione 0.3.6)_
+*** 'resetcolor': ripristina colore (mantiene attributi) _(WeeChat ≥ 0.3.6)_
 
 Il formato del colore è: attributi (opzionale) + nome colore +",sfondo"
 (opzionale). Gli attributi possibili sono:
@@ -6340,7 +6339,7 @@ Il formato del colore è: attributi (opzionale) + nome colore +",sfondo"
 * `!` : video inverso
 * `_` : testo sottolineato
 * `|` : mantiene attributi: non ripristina grassetto/inverso/sottolineato
-  al cambio di colore _(novità nella versione 0.3.6)_
+  al cambio di colore _(WeeChat ≥ 0.3.6)_
 
 Esempi:
 
@@ -6656,7 +6655,7 @@ Hook
 Priorità degli hook
 ^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.4._
+_WeeChat ≥ 0.3.4._
 
 In alcuni hook è possibile impostare una priorità. Un hook con priorità
 maggiore si trova all'inizio della lista, in modo da poter essere eseguita
@@ -7048,7 +7047,7 @@ WeeChat makes an automatic split of command and arguments (like the shell does).
 If the split is not correct (according to quotes in your command), or if you
 want to use shell, you can use function
 <<_weechat_hook_process_hashtable,weechat_hook_process_hashtable>> with
-arguments in the hashtable 'options' _(new in version 0.4.0)_.
+arguments in the hashtable 'options' _(WeeChat ≥ 0.4.0)_.
 
 Prototipo:
 
@@ -7068,7 +7067,7 @@ struct t_hook *weechat_hook_process (const char *command,
 Argomenti:
 
 * 'command': comando da avviare nel processo figlio o URL
-  _(novità nella versione 0.3.7)_, segue:
+  _(WeeChat ≥ 0.3.7)_, segue:
 * 'timeout': timeout per il comando (in millisecondi): dopo questo timeout,
   il processo figlio viene terminato (0 indica nessun timeout)
 * 'callback': funzione chiamata quando i dati dal processo figlio sono disponibili,
@@ -7101,7 +7100,7 @@ Quando il comando ha terminato, o se viene raggiunto il timeout, WeeChat
 effettua automaticamente l'unhook (e termina il processo se ancora in esecuzione).
 
 Il comando può essere un URL con il formato: "url:http://www.esempio.com", per
-scaricare il contenuto dell'URL _(novità nella versione 0.3.7)_. Le opzioni per
+scaricare il contenuto dell'URL _(WeeChat ≥ 0.3.7)_. Le opzioni per
 un URL sono disponibili con la funzione
 <<_weechat_hook_process_hashtable,weechat_hook_process_hashtable>>.
 
@@ -7184,7 +7183,7 @@ hook = weechat.hook_process("ls", 5000, "my_process_cb", "")
 weechat_hook_process_hashtable
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.7._
+_WeeChat ≥ 0.3.7._
 
 Hook su un processo (avviato con un fork) usando le opzioni nella tabella hash,
 e cattura dell'output.
@@ -7213,7 +7212,7 @@ Gli argomenti sono gli stessi della funzione
 // TRANSLATION MISSING
 For a standard command (not beginning with "url:"), the hashtable 'options' can
 contain arguments for command (and then 'command' must be only the command
-without arguments) _(new in version 0.4.0)_. +
+without arguments) _(WeeChat ≥ 0.4.0)_. +
 The keys in hashtable must be: 'arg1', 'arg2', ...
 
 Per il comando "url:..." sono disponibili le seguenti opzioni (consultare
@@ -7656,32 +7655,32 @@ Argomenti:
 
 // TRANSLATION MISSING
 | aspell | aspell_suggest +
-  _(novità nella versione 0.4.0)_ |
+  _(WeeChat ≥ 0.4.0)_ |
   Pointer: buffer |
   New suggestions for a misspelled word
 
 // TRANSLATION MISSING
 | guile | guile_script_loaded +
-  _(novità nella versione 0.3.9)_ |
+  _(WeeChat ≥ 0.3.9)_ |
   String: path to script |
   Scheme script loaded
 
 // TRANSLATION MISSING
 | guile | guile_script_unloaded +
-  _(novità nella versione 0.3.9)_ |
+  _(WeeChat ≥ 0.3.9)_ |
   String: path to script |
   Scheme script unloaded
 
 // TRANSLATION MISSING
 | guile | guile_script_installed +
-  _(novità nella versione 0.3.9)_ |
-  String: comma-separated list of paths to scripts installed (example: "/path/to/script1.scm,/path/to/script2.scm") |
+  _(WeeChat ≥ 0.3.9)_ |
+  String: comma-separated list of paths to scripts installed |
   Scheme script(s) installed
 
 // TRANSLATION MISSING
 | guile | guile_script_removed +
-  _(novità nella versione 0.3.9)_ |
-  String: comma-separated list of scripts removed (example: "script1.scm,script2.scm") |
+  _(WeeChat ≥ 0.3.9)_ |
+  String: comma-separated list of scripts removed |
   Scheme script(s) removed
 
 | irc | xxx,irc_in_yyy ^(1)^ |
@@ -7697,21 +7696,21 @@ Argomenti:
   solo se il messaggio *non* viene ignorato)
 
 | irc | xxx,irc_raw_in_yyy ^(1)^ +
-  _(novità nella versione 0.3.2)_ |
+  _(WeeChat ≥ 0.3.2)_ |
   String: messaggio |
   Messaggio IRC dal server (prima di essere utilizzato
   dal plugin irc, il segnale viene inviato anche se il
   messaggio è stato ignorato)
 
 | irc | xxx,irc_raw_in2_yyy ^(1)^ +
-  _(novità nella versione 0.3.2)_ |
+  _(WeeChat ≥ 0.3.2)_ |
   String: messaggio |
   Messaggio IRC dal server (dopo essere stato
   utilizzato dal plugin irc, il segnale viene inviato
   anche se il messaggio è stato ignorato)
 
 | irc | xxx,irc_out1_yyy ^(1)^ +
-  _(novità nella versione 0.3.7)_ |
+  _(WeeChat ≥ 0.3.7)_ |
   String: messaggio |
   Messaggio IRC inviato al server (prima della divisione automatica da adattare in 512 byte)
 
@@ -7720,7 +7719,7 @@ Argomenti:
   Messaggio IRC inviato al server (dopo la divisione automatica da adattare in 512 byte)
 
 | irc | xxx,irc_outtags_yyy ^(1)^ +
-  _(novità nella versione 0.3.4)_ |
+  _(WeeChat ≥ 0.3.4)_ |
   Stringa: tag + ";" + messaggio |
   Tag + messaggio IRC inviato al server
 
@@ -7745,7 +7744,7 @@ Argomenti:
   Chat privata aperta
 
 | irc | irc_server_opened +
-  _(novità nella versione 0.3.7)_ |
+  _(WeeChat ≥ 0.3.7)_ |
   Puntatore: buffer |
   Server del buffer aperto
 
@@ -7770,27 +7769,27 @@ Argomenti:
   Ignore rimosso
 
 | irc | irc_notify_join +
-  _(novità nella versione 0.3.8)_ |
+  _(WeeChat ≥ 0.3.8)_ |
   String: nome server + "," + nick |
   Un nick nella lista notifiche è entrato sul server
 
 | irc | irc_notify_quit +
-  _(novità nella versione 0.3.8)_ |
+  _(WeeChat ≥ 0.3.8)_ |
   String: nome server + "," + nick |
   Un nick nella lista notifiche è uscito dal server
 
 | irc | irc_notify_away +
-  _(novità nella versione 0.3.8)_ |
+  _(WeeChat ≥ 0.3.8)_ |
   String: nome server + "," + nick + "," + messaggio di assenza |
   Un nick nella lista notifiche è ora assente sul server
 
 | irc | irc_notify_still_away +
-  _(novità nella versione 0.3.8)_ |
+  _(WeeChat ≥ 0.3.8)_ |
   String: nome server + "," + nick + "," + messaggio di assenza |
   Un nick nella lista notifiche è ancora assente sul server (messaggio di assenza cambiato)
 
 | irc | irc_notify_back +
-  _(novità nella versione 0.3.8)_ |
+  _(WeeChat ≥ 0.3.8)_ |
   String: nome server + "," + nick |
   Un nick nella lista notifiche è tornato (messaggio di assenza rimosso)
 
@@ -7808,122 +7807,122 @@ Argomenti:
 
 // TRANSLATION MISSING
 | lua | lua_script_loaded +
-  _(novità nella versione 0.3.9)_ |
+  _(WeeChat ≥ 0.3.9)_ |
   String: path to script |
   Lua script loaded
 
 // TRANSLATION MISSING
 | lua | lua_script_unloaded +
-  _(novità nella versione 0.3.9)_ |
+  _(WeeChat ≥ 0.3.9)_ |
   String: path to script |
   Lua script unloaded
 
 // TRANSLATION MISSING
 | lua | lua_script_installed +
-  _(novità nella versione 0.3.9)_ |
-  String: comma-separated list of paths to scripts installed (example: "/path/to/script1.lua,/path/to/script2.lua") |
+  _(WeeChat ≥ 0.3.9)_ |
+  String: comma-separated list of paths to scripts installed |
   Lua script(s) installed
 
 // TRANSLATION MISSING
 | lua | lua_script_removed +
-  _(novità nella versione 0.3.9)_ |
-  String: comma-separated list of scripts removed (example: "script1.lua,script2.lua") |
+  _(WeeChat ≥ 0.3.9)_ |
+  String: comma-separated list of scripts removed |
   Lua script(s) removed
 
 // TRANSLATION MISSING
 | perl | perl_script_loaded +
-  _(novità nella versione 0.3.9)_ |
+  _(WeeChat ≥ 0.3.9)_ |
   String: path to script |
   Perl script loaded
 
 // TRANSLATION MISSING
 | perl | perl_script_unloaded +
-  _(novità nella versione 0.3.9)_ |
+  _(WeeChat ≥ 0.3.9)_ |
   String: path to script |
   Perl script unloaded
 
 // TRANSLATION MISSING
 | perl | perl_script_installed +
-  _(novità nella versione 0.3.9)_ |
-  String: comma-separated list of paths to scripts installed (example: "/path/to/script1.pl,/path/to/script2.pl") |
+  _(WeeChat ≥ 0.3.9)_ |
+  String: comma-separated list of paths to scripts installed |
   Perl script(s) installed
 
 // TRANSLATION MISSING
 | perl | perl_script_removed +
-  _(novità nella versione 0.3.9)_ |
-  String: comma-separated list of scripts removed (example: "script1.pl,script2.pl") |
+  _(WeeChat ≥ 0.3.9)_ |
+  String: comma-separated list of scripts removed |
   Perl script(s) removed
 
 // TRANSLATION MISSING
 | python | python_script_loaded +
-  _(novità nella versione 0.3.9)_ |
+  _(WeeChat ≥ 0.3.9)_ |
   String: path to script |
   Python script loaded
 
 // TRANSLATION MISSING
 | python | python_script_unloaded +
-  _(novità nella versione 0.3.9)_ |
+  _(WeeChat ≥ 0.3.9)_ |
   String: path to script |
   Python script unloaded
 
 // TRANSLATION MISSING
 | python | python_script_installed +
-  _(novità nella versione 0.3.9)_ |
-  String: comma-separated list of paths to scripts installed (example: "/path/to/script1.py,/path/to/script2.py") |
+  _(WeeChat ≥ 0.3.9)_ |
+  String: comma-separated list of paths to scripts installed |
   Python script(s) installed
 
 // TRANSLATION MISSING
 | python | python_script_removed +
-  _(novità nella versione 0.3.9)_ |
-  String: comma-separated list of scripts removed (example: "script1.py,script2.py") |
+  _(WeeChat ≥ 0.3.9)_ |
+  String: comma-separated list of scripts removed |
   Python script(s) removed
 
 // TRANSLATION MISSING
 | ruby | ruby_script_loaded +
-  _(novità nella versione 0.3.9)_ |
+  _(WeeChat ≥ 0.3.9)_ |
   String: path to script |
   Ruby script loaded
 
 // TRANSLATION MISSING
 | ruby | ruby_script_unloaded +
-  _(novità nella versione 0.3.9)_ |
+  _(WeeChat ≥ 0.3.9)_ |
   String: path to script |
   Ruby script unloaded
 
 // TRANSLATION MISSING
 | ruby | ruby_script_installed +
-  _(novità nella versione 0.3.9)_ |
-  String: comma-separated list of paths to scripts installed (example: "/path/to/script1.rb,/path/to/script2.rb") |
+  _(WeeChat ≥ 0.3.9)_ |
+  String: comma-separated list of paths to scripts installed |
   Ruby script(s) installed
 
 // TRANSLATION MISSING
 | ruby | ruby_script_removed +
-  _(novità nella versione 0.3.9)_ |
-  String: comma-separated list of scripts removed (example: "script1.rb,script2.rb") |
+  _(WeeChat ≥ 0.3.9)_ |
+  String: comma-separated list of scripts removed |
   Ruby script(s) removed
 
 // TRANSLATION MISSING
 | tcl | tcl_script_loaded +
-  _(novità nella versione 0.3.9)_ |
+  _(WeeChat ≥ 0.3.9)_ |
   String: path to script |
   Tcl script loaded
 
 // TRANSLATION MISSING
 | tcl | tcl_script_unloaded +
-  _(novità nella versione 0.3.9)_ |
+  _(WeeChat ≥ 0.3.9)_ |
   String: path to script |
   Tcl script unloaded
 
 // TRANSLATION MISSING
 | tcl | tcl_script_installed +
-  _(novità nella versione 0.3.9)_ |
-  String: comma-separated list of paths to scripts installed (example: "/path/to/script1.tcl,/path/to/script2.tcl") |
+  _(WeeChat ≥ 0.3.9)_ |
+  String: comma-separated list of paths to scripts installed |
   Tcl script(s) installed
 
 // TRANSLATION MISSING
 | tcl | tcl_script_removed +
-  _(novità nella versione 0.3.9)_ |
-  String: comma-separated list of scripts removed (example: "script1.tcl,script2.tcl") |
+  _(WeeChat ≥ 0.3.9)_ |
+  String: comma-separated list of scripts removed |
   Tcl script(s) removed
 
 | weechat | buffer_closing |
@@ -7935,7 +7934,7 @@ Argomenti:
   Buffer chiuso
 
 | weechat | buffer_line_added +
-  _(novità nella versione 0.3.7)_ |
+  _(WeeChat ≥ 0.3.7)_ |
   Puntatore: riga |
   Riga aggiunta in un buffer
 
@@ -7990,7 +7989,7 @@ Argomenti:
   Tipo di buffer modificato
 
 | weechat | day_changed +
-  _(novità nella versione 0.3.2)_ |
+  _(WeeChat ≥ 0.3.2)_ |
   String: nuova data, formato: "2010-01-31" |
   Data di sistema modificata
 
@@ -8054,49 +8053,49 @@ Argomenti:
 
 // TRANSLATION MISSING
 | weechat | nicklist_group_added +
-  _(novità nella versione 0.3.2)_ |
+  _(WeeChat ≥ 0.3.2)_ |
   String: buffer pointer + "," + group name |
   Group added in nicklist
 
 // TRANSLATION MISSING
 | weechat | nicklist_group_changed +
-  _(novità nella versione 0.3.4)_ |
+  _(WeeChat ≥ 0.3.4)_ |
   String: buffer pointer + "," + group name |
   Group changed in nicklist
 
 // TRANSLATION MISSING
 | weechat | nicklist_group_removing +
-  _(novità nella versione 0.4.1)_ |
+  _(WeeChat ≥ 0.4.1)_ |
   String: buffer pointer + "," + group name |
   Removing group from nicklist
 
 // TRANSLATION MISSING
 | weechat | nicklist_group_removed +
-  _(novità nella versione 0.3.2)_ |
+  _(WeeChat ≥ 0.3.2)_ |
   String: buffer pointer + "," + group name |
   Group removed from nicklist
 
 // TRANSLATION MISSING
 | weechat | nicklist_nick_added +
-  _(novità nella versione 0.3.2)_ |
+  _(WeeChat ≥ 0.3.2)_ |
   String: buffer pointer + "," + nick name |
   Nick added in nicklist
 
 // TRANSLATION MISSING
 | weechat | nicklist_nick_changed +
-  _(novità nella versione 0.3.4)_ |
+  _(WeeChat ≥ 0.3.4)_ |
   String: buffer pointer + "," + nick name |
   Nick changed in nicklist
 
 // TRANSLATION MISSING
 | weechat | nicklist_nick_removing +
-  _(novità nella versione 0.4.1)_ |
+  _(WeeChat ≥ 0.4.1)_ |
   String: buffer pointer + "," + nick name |
   Removing nick from nicklist
 
 // TRANSLATION MISSING
 | weechat | nicklist_nick_removed +
-  _(novità nella versione 0.3.2)_ |
+  _(WeeChat ≥ 0.3.2)_ |
   String: buffer pointer + "," + nick name |
   Nick removed from nicklist
 
@@ -8106,13 +8105,13 @@ Argomenti:
 
 // TRANSLATION MISSING
 | weechat | plugin_loaded +
-  _(new in version 0.3.9)_ |
-  String: path to plugin loaded (example: "/usr/lib/weechat/plugins/irc.so") |
+  _(WeeChat ≥ 0.3.9)_ |
+  String: path to plugin loaded |
   Plugin loaded
 
 // TRANSLATION MISSING
 | weechat | plugin_unloaded +
-  _(new in version 0.3.9)_ |
+  _(WeeChat ≥ 0.3.9)_ |
   String: name of plugin unloaded (example: "irc") |
   Plugin unloaded
 
@@ -8126,7 +8125,7 @@ Argomenti:
   Comando `/upgrade` digitato dall'utente
 
 | weechat | upgrade_ended +
-  _(novità nella versione 0.3.4)_ |
+  _(WeeChat ≥ 0.3.4)_ |
   - |
   Fine del processo di aggiornamento (comando `/upgrade`)
 
@@ -8140,19 +8139,19 @@ Argomenti:
 
 // TRANSLATION MISSING
 | weechat | window_closing +
-  _(novità nella versione 0.3.6)_ |
+  _(WeeChat ≥ 0.3.6)_ |
   Puntatore: finestra |
   Closing window
 
 // TRANSLATION MISSING
 | weechat | window_closed +
-  _(novità nella versione 0.3.6)_ |
+  _(WeeChat ≥ 0.3.6)_ |
   Puntatore: finestra |
   Window closed
 
 // TRANSLATION MISSING
 | weechat | window_opened +
-  _(novità nella versione 0.4.1)_ |
+  _(WeeChat ≥ 0.4.1)_ |
   Puntatore: finestra |
   Window opened
 
@@ -8161,7 +8160,7 @@ Argomenti:
   Scroll nella finestra
 
 | weechat | window_switch +
-  _(novità nella versione 0.3.7)_ |
+  _(WeeChat ≥ 0.3.7)_ |
   Puntatore: finestra |
   Passaggio alla finestra
 
@@ -8206,7 +8205,7 @@ Argomenti:
   Ripresa xfer pronta
 
 | xfer | xfer_ended +
-  _(novità nella versione 0.3.2)_ |
+  _(WeeChat ≥ 0.3.2)_ |
   Puntatore: lista info con info per xfer |
   Xfer terminato
 |========================================
@@ -8227,7 +8226,7 @@ Argomenti:
 *** 'WEECHAT_RC_OK'
 // TRANSLATION MISSING
 *** 'WEECHAT_RC_OK_EAT' (stop sending the signal immediately)
-    _(novità nella versione 0.4.0)_
+    _(WeeChat ≥ 0.4.0)_
 *** 'WEECHAT_RC_ERROR'
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
 
@@ -8415,7 +8414,7 @@ weechat.hook_signal_send("python_script_remove", WEECHAT_HOOK_SIGNAL_STRING,
 Signal irc_input_send
 +++++++++++++++++++++
 
-_Novità nella versione 0.3.4._
+_WeeChat ≥ 0.3.4._
 
 Il segnale "irc_input_send" può essere inviato per simulare input in un buffer
 irc (server, canale o privato).
@@ -8465,7 +8464,7 @@ weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
 weechat_hook_hsignal
 ^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.4._
+_WeeChat ≥ 0.3.4._
 
 Hook su hsignal (segnale con tabella hash).
 
@@ -8490,13 +8489,13 @@ Argomenti:
 | Plugin | Segnale | Argomenti | Descrizione
 
 | irc | irc_redirection_xxx_yyy ^(1)^ +
-  _(novità nella versione 0.3.4)_ |
+  _(WeeChat ≥ 0.3.4)_ |
   Consultare <<hsignal_irc_redirect_command,hsignal_irc_redirect_command>> |
   Redirection output
 
 // TRANSLATION MISSING
 | weechat | nicklist_group_added +
-  _(novità nella versione 0.4.1)_ |
+  _(WeeChat ≥ 0.4.1)_ |
   'buffer' ('struct t_gui_buffer *'): buffer +
   'parent_group' ('struct t_gui_nick_group *'): parent group +
   'group' ('struct t_gui_nick_group *'): group |
@@ -8504,7 +8503,7 @@ Argomenti:
 
 // TRANSLATION MISSING
 | weechat | nicklist_nick_added +
-  _(novità nella versione 0.4.1)_ |
+  _(WeeChat ≥ 0.4.1)_ |
   'buffer' ('struct t_gui_buffer *'): buffer +
   'parent_group' ('struct t_gui_nick_group *'): parent group +
   'nick' ('struct t_gui_nick *'): nick |
@@ -8512,7 +8511,7 @@ Argomenti:
 
 // TRANSLATION MISSING
 | weechat | nicklist_group_removing +
-  _(novità nella versione 0.4.1)_ |
+  _(WeeChat ≥ 0.4.1)_ |
   'buffer' ('struct t_gui_buffer *'): buffer +
   'parent_group' ('struct t_gui_nick_group *'): parent group +
   'group' ('struct t_gui_nick_group *'): group |
@@ -8520,7 +8519,7 @@ Argomenti:
 
 // TRANSLATION MISSING
 | weechat | nicklist_nick_removing +
-  _(novità nella versione 0.4.1)_ |
+  _(WeeChat ≥ 0.4.1)_ |
   'buffer' ('struct t_gui_buffer *'): buffer +
   'parent_group' ('struct t_gui_nick_group *'): parent group +
   'nick' ('struct t_gui_nick *'): nick |
@@ -8528,7 +8527,7 @@ Argomenti:
 
 // TRANSLATION MISSING
 | weechat | nicklist_group_changed +
-  _(novità nella versione 0.4.1)_ |
+  _(WeeChat ≥ 0.4.1)_ |
   'buffer' ('struct t_gui_buffer *'): buffer +
   'parent_group' ('struct t_gui_nick_group *'): parent group +
   'group' ('struct t_gui_nick_group *'): group |
@@ -8536,7 +8535,7 @@ Argomenti:
 
 // TRANSLATION MISSING
 | weechat | nicklist_nick_changed +
-  _(novità nella versione 0.4.1)_ |
+  _(WeeChat ≥ 0.4.1)_ |
   'buffer' ('struct t_gui_buffer *'): buffer +
   'parent_group' ('struct t_gui_nick_group *'): parent group +
   'nick' ('struct t_gui_nick *'): nick |
@@ -8556,7 +8555,7 @@ di redirezione.
 *** 'WEECHAT_RC_OK'
 // TRANSLATION MISSING
 *** 'WEECHAT_RC_OK_EAT' (stop sending the signal immediately)
-    _(novità nella versione 0.4.0)_
+    _(WeeChat ≥ 0.4.0)_
 *** 'WEECHAT_RC_ERROR'
 * 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
 
@@ -8597,7 +8596,7 @@ hook = weechat.hook_hsignal("test", "my_hsignal_cb", "")
 weechat_hook_hsignal_send
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.4._
+_WeeChat ≥ 0.3.4._
 
 Invia un hsignal (segnale con tabella hash).
 
@@ -8645,7 +8644,7 @@ weechat.hook_hsignal_send("my_hsignal", { "key": "value" })
 Hsignal irc_redirect_command
 ++++++++++++++++++++++++++++
 
-_Novità nella versione 0.3.4._
+_WeeChat ≥ 0.3.4._
 
 L'hsignal "irc_redirect_command" può essere inviato per redirigere l'output
 di un comando irc ad una callback.
@@ -8751,7 +8750,7 @@ weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
 Hsignal irc_redirect_pattern
 ++++++++++++++++++++++++++++
 
-_Novità nella versione 0.3.4._
+_WeeChat ≥ 0.3.4._
 
 L'hsignal "irc_redirect_pattern" può essere inviato per creare uno schema
 per la redirezione irc (consultare <<hsignal_irc_redirect_command>>).
@@ -9094,100 +9093,100 @@ Argomenti:
   (priorità consentita, consultare la nota riguardo la
   <<hook_priority,priority>>)
 
-[width="100%",cols="^1,^2,3,4,4",options="header"]
+[width="100%",cols="^2,3,4,4",options="header"]
 |========================================
-| Plugin | Modificatore | Dati modificatore | Stringa | Output
+| Modificatore | Dati modificatore | Stringa | Output
 
-| charset | charset_decode |
+| charset_decode |
   plugin.buffer_name |
   Qualsiasi stringa |
   Stringa codificata dal set caratteri trovato per plugin/buffer in UTF-8
 
-| charset | charset_encode |
+| charset_encode |
   plugin.buffer_name |
   Qualsiasi stringa |
   Stringa codificata da UTF-8 al set caratteri trovato per il plugin/buffer
 
-| irc | irc_color_decode |
+| irc_color_decode |
   "1" per mantenere i colori, "0" per rimuovere i colori |
   Qualsiasi stringa |
   Stringa con i codici colori di Weechat, o senza colore
 
-| irc | irc_color_encode |
+| irc_color_encode |
   "1" per mantenere i colori, "0" per rimuovere i colori |
   Qualsiasi stringa |
   Stringa con i codici colori IRC, o senza colore
 
 // TRANSLATION MISSING
-| irc | irc_command_auth +
-  _(novità nella versione 0.4.1)_ |
+| irc_command_auth +
+  _(WeeChat ≥ 0.4.1)_ |
   Nome server |
   Authentication command (for example: `/msg nickserv identify password`) |
   Command with hidden password (for example: `/msg nickserv identify ********`)
 
 // TRANSLATION MISSING
-| irc | irc_message_auth +
-  _(novità nella versione 0.4.1)_ |
+| irc_message_auth +
+  _(WeeChat ≥ 0.4.1)_ |
   Nome server |
   Message displayed after `/msg` sent to nickserv |
   Message with hidden password
 
-| irc | irc_in_xxx ^(1)^ |
+| irc_in_xxx ^(1)^ |
   Nome server |
   Contenuto del messaggio ricevuto dal server IRC (prima della codifica del set caratteri) |
   Nuovo contenuto del messaggio
 
-| irc | irc_in2_xxx ^(1)^ +
-  _(novità nella versione 0.3.5)_ |
+| irc_in2_xxx ^(1)^ +
+  _(WeeChat ≥ 0.3.5)_ |
   Nome server |
   Contenuto del messaggio ricevuto dal server IRC (dopo la codifica del set caratteri) |
   Nuovo contenuto del messaggio
 
-| irc | irc_out1_xxx ^(1)^ +
-  _(novità nella versione 0.3.7)_ |
+| irc_out1_xxx ^(1)^ +
+  _(WeeChat ≥ 0.3.7)_ |
   Nome server |
   Contenuto del messaggio che sta per essere inviato al server IRC (prima della divisione automatica da adattare in 512 byte) |
   Nuovo contenuto del messaggio
 
-| irc | irc_out_xxx ^(1)^ |
+| irc_out_xxx ^(1)^ |
   Nome server |
   Contenuto del messaggio che sta per essere inviato al server IRC (dopo la divisione automatica da adattare in 512 byte) |
   Nuovo contenuto del messaggio
 
-| weechat | bar_condition_yyy ^(2)^ |
+| bar_condition_yyy ^(2)^ |
   Stringa con puntatore alla finestra ("0x123..") |
   Stringa vuota |
   "1" per visualizzare la barra, "0" per nasconderla
 
-| weechat | history_add +
-  _(novità nella versione 0.3.2)_ |
+| history_add +
+  _(WeeChat ≥ 0.3.2)_ |
   Stringa con puntatore al buffer ("0x123..") |
   Contenuto della riga di comando da aggiungere nella cronologia comandi (buffer e globale |
   Stringa aggiunta alla cronologia comandi
 
-| weechat | input_text_content |
+| input_text_content |
   Stringa con puntatore al buffer ("0x123..") |
   Contenuto della riga di comando |
   Nuovo contenuto della riga di comando
 
-| weechat | input_text_display |
+| input_text_display |
   Stringa con puntatore al buffer ("0x123..") |
   Contenuto della riga di comando, senza tag al cursore |
   Nuova stringa, solo da mostrare (la riga di comando non viene modificata)
 
-| weechat | input_text_display_with_cursor |
+| input_text_display_with_cursor |
   Stringa con puntatore al buffer ("0x123..") |
   Contenuto della riga di comando, con tag al cursore |
   Nuova stringa, solo da mostrare (la riga di comando non viene modificata)
 
-| weechat | input_text_for_buffer +
-  _(novità nella versione 0.3.7)_ |
+| input_text_for_buffer +
+  _(WeeChat ≥ 0.3.7)_ |
   Stringa con puntatore al buffer ("0x123..") |
   Contenuto della riga di comando inviata al buffer (testo o comando) |
   Nuovo contenuto della riga di comando inviata al buffer
 
-| weechat | weechat_print |
-  plugin;buffer_name;tags |
+| weechat_print |
+  plugin + ";" + buffer_name + ";" + tags |
   Messaggio stampato |
   Nuovo messaggio stampato
 |========================================
@@ -9369,7 +9368,7 @@ hook = weechat.hook_info("my_info", "Some info", "Info about arguments",
 weechat_hook_info_hashtable
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.4._
+_WeeChat ≥ 0.3.4._
 
 Hook su una informazione (la callback prende e restituisce una tabella hash).
 
@@ -9630,36 +9629,36 @@ Contenuto della tabella hash inviata alla callback (tasti e valori sono di tipo
 
 [width="100%",cols="5m,5,8,3",options="header"]
 |========================================
-| Key ^(1)^                  | Descrizione                 | Valori di esempio                                | Valore se N/D
+| Key ^(1)^                  | Descrizione                 | Valori di esempio                            | Valore se N/D
 | _x                         | Colonna sullo schermo     2+| "0" ... "n"
 | _y                         | Riga sullo schermo        2+| "0" ... "n"
 | _key                       | Evento tasto o mouse      2+| "button1", "button2-gesture-left", ...
-| _window                    | Puntatore alla finestra     | "0x12345678"                                     | ""
-| _window_number             | Numero della finestra       | "1" ... "n"                                      | "*"
-| _buffer                    | Puntatore al buffer         | "0x12345678"                                     | ""
-| _buffer_number             | Numero del buffer           | "1" ... "n"                                      | "-1"
-| _buffer_plugin             | Nome plugin del buffer      | "core", "irc", ...                               | ""
-| _buffer_name               | Nome del buffer             | "weechat", "freenode.#weechat", ...              | ""
-| _buffer_full_name          | Nome completo del buffer    | "core.weechat", "irc.freenode.#weechat", ...     | ""
-| _buffer_localvar_XXX ^(2)^ | Variabili locali del buffer | qualsiasi valore                                 | non impostato
-| _chat                      | Indicatore area di chat     | "0" o  "1"                                       | "0"
-| _chat_line_x               | Colonna nella riga ^(3)^    | "0" ... "n"                                      | "-1"
-| _chat_line_y               | Numero della riga ^(3)^     | "0" ... "n"                                      | "-1"
-| _chat_line_date            | Riga con data/ora           | "1313237175"                                     | "0"
-| _chat_line_date_printed    | Riga con data/ora ^(4)^     | "1313237175"                                     | "0"
-| _chat_line_time            | Ora visualizzata            | "14:06:15"                                       | ""
-| _chat_line_tags            | Tag della riga              | "irc_privmsg,notify_message,nick_FlashCode,log1" | ""
-| _chat_line_nick            | Nick della riga             | "FlashCode"                                      | ""
-| _chat_line_prefix          | Prefisso della riga         | "@FlashCode"                                     | ""
-| _chat_line_message         | Messaggio della riga        | "Hello world!"                                   | ""
-| _chat_word                 | Parola a (x,y)              | "Hello"                                          | ""
-| _chat_bol                  | Inizio della riga ⇒ (x-1,y) | "He"                                             | ""
-| _chat_eol                  | (x,y) ⇒ fine della riga     | "llo world!"                                     | ""
-| _bar_name                  | Nome della barra            | "title", "nicklist", ...                         | ""
-| _bar_filling               | Riempimento della barra     | "horizontal", "vertical", ...                    | ""
-| _bar_item_name             | Nome dell'elemento barra    | "buffer_nicklist", "hotlist", ...                | ""
-| _bar_item_line             | Riga nell'elemento barra    | "0" ... "n"                                      | "-1"
-| _bar_item_col              | Colonna nell'elemento barra | "0" ... "n"                                      | "-1"
+| _window                    | Puntatore alla finestra     | "0x12345678"                                 | ""
+| _window_number             | Numero della finestra       | "1" ... "n"                                  | "*"
+| _buffer                    | Puntatore al buffer         | "0x12345678"                                 | ""
+| _buffer_number             | Numero del buffer           | "1" ... "n"                                  | "-1"
+| _buffer_plugin             | Nome plugin del buffer      | "core", "irc", ...                           | ""
+| _buffer_name               | Nome del buffer             | "weechat", "freenode.#weechat", ...          | ""
+| _buffer_full_name          | Nome completo del buffer    | "core.weechat", "irc.freenode.#weechat", ... | ""
+| _buffer_localvar_XXX ^(2)^ | Variabili locali del buffer | qualsiasi valore                             | non impostato
+| _chat                      | Indicatore area di chat     | "0" o  "1"                                   | "0"
+| _chat_line_x               | Colonna nella riga ^(3)^    | "0" ... "n"                                  | "-1"
+| _chat_line_y               | Numero della riga ^(3)^     | "0" ... "n"                                  | "-1"
+| _chat_line_date            | Riga con data/ora           | "1313237175"                                 | "0"
+| _chat_line_date_printed    | Riga con data/ora ^(4)^     | "1313237175"                                 | "0"
+| _chat_line_time            | Ora visualizzata            | "14:06:15"                                   | ""
+| _chat_line_tags            | Tag della riga              | "irc_privmsg,nick_flashy,log1"               | ""
+| _chat_line_nick            | Nick della riga             | "FlashCode"                                  | ""
+| _chat_line_prefix          | Prefisso della riga         | "@FlashCode"                                 | ""
+| _chat_line_message         | Messaggio della riga        | "Hello world!"                               | ""
+| _chat_word                 | Parola a (x,y)              | "Hello"                                      | ""
+| _chat_bol                  | Inizio della riga ⇒ (x-1,y) | "He"                                         | ""
+| _chat_eol                  | (x,y) ⇒ fine della riga     | "llo world!"                                 | ""
+| _bar_name                  | Nome della barra            | "title", "nicklist", ...                     | ""
+| _bar_filling               | Riempimento della barra     | "horizontal", "vertical", ...                | ""
+| _bar_item_name             | Nome dell'elemento barra    | "buffer_nicklist", "hotlist", ...            | ""
+| _bar_item_line             | Riga nell'elemento barra    | "0" ... "n"                                  | "-1"
+| _bar_item_col              | Colonna nell'elemento barra | "0" ... "n"                                  | "-1"
 |========================================
 
 [NOTE]
@@ -9728,7 +9727,7 @@ hook = weechat.hook_focus("buffer_nicklist", "my_focus_nicklist_cb", "")
 weechat_hook_set
 ^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.9._
+_WeeChat ≥ 0.3.9._
 
 // TRANSLATION MISSING
 Set string value of a hook property.
@@ -10306,7 +10305,7 @@ Argomenti:
 ** 'plugin': nome del plugin che ha creato questo buffer ("core"
    per il buffer principale di WeeChat)
 ** 'name': nome del buffer
-** 'full_name': nome completo del buffer ("plugin.nome") _(novità nella versione 0.3.7)_
+** 'full_name': nome completo del buffer ("plugin.nome") _(WeeChat ≥ 0.3.7)_
 ** 'short_name': nome breve del buffer (nota: usato solo per il display e può
    essere cambiato dall'utente, questo nome non va usato per trovare il nome del
    buffer, utilizzare invece 'name', 'fullname' o la variabile locale 'channel')
@@ -10601,10 +10600,10 @@ Argomenti:
 ** 'input_callback_data': set input callback data
 // TRANSLATION MISSING
 ** 'nickcmp_callback': set nick comparison callback function (this callback is
-   called when searching nick in nicklist) _(novità nella versione 0.3.9)_
+   called when searching nick in nicklist) _(WeeChat ≥ 0.3.9)_
 // TRANSLATION MISSING
 ** 'nickcmp_callback_data': set nick comparison callback data
-   _(novità nella versione 0.3.9)_
+   _(WeeChat ≥ 0.3.9)_
 
 // TRANSLATION MISSING
 Prototypes for callbacks:
@@ -10685,7 +10684,7 @@ str = weechat.buffer_string_replace_local_var(my_buffer, "test with $toto")
 weechat_buffer_match_list
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.5._
+_WeeChat ≥ 0.3.5._
 
 Verifica se il buffer corrisponde ad una lista di buffer.
 
@@ -10781,7 +10780,7 @@ current_window = weechat.current_window()
 weechat_window_search_with_buffer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.5._
+_WeeChat ≥ 0.3.5._
 
 Restituisce il puntatore alla finestra che mostra il buffer.
 
@@ -11335,7 +11334,7 @@ weechat.nicklist_remove_all(my_buffer)
 weechat_nicklist_get_next_item
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.7._
+_WeeChat ≥ 0.3.7._
 
 Ottiene il prossimo gruppo oppure il nick dalla lista nick (usato principalmente
 per mostrare la lista nick).
@@ -11387,7 +11386,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 weechat_nicklist_group_get_integer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.4._
+_WeeChat ≥ 0.3.4._
 
 Restituisce un valore intero della proprietà di un gruppo.
 
@@ -11433,7 +11432,7 @@ visible = weechat.nicklist_group_get_integer(buffer, group, "visible")
 weechat_nicklist_group_get_string
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.4._
+_WeeChat ≥ 0.3.4._
 
 Restituisce il valore stringa della proprietà di un gruppo.
 
@@ -11479,7 +11478,7 @@ color = weechat.nicklist_group_get_string(buffer, group, "color")
 weechat_nicklist_group_get_pointer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.4._
+_WeeChat ≥ 0.3.4._
 
 Restituisce il valore puntatore della proprietà di un gruppo.
 
@@ -11524,7 +11523,7 @@ parent = weechat.nicklist_group_get_pointer(buffer, group, "parent")
 weechat_nicklist_group_set
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.4._
+_WeeChat ≥ 0.3.4._
 
 Imposta il valore stringa della proprietà di un gruppo.
 
@@ -11592,7 +11591,7 @@ weechat.nicklist_group_set(buffer, group, "visible", "0")
 weechat_nicklist_nick_get_integer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.4._
+_WeeChat ≥ 0.3.4._
 
 Restituisce il valore intero della proprietà di un nick.
 
@@ -11637,7 +11636,7 @@ visible = weechat.nicklist_nick_get_integer(buffer, nick, "visible")
 weechat_nicklist_nick_get_string
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.4._
+_WeeChat ≥ 0.3.4._
 
 Restituisce il valore stringa della proprietà di un nick.
 
@@ -11685,7 +11684,7 @@ color = weechat.nicklist_nick_get_string(buffer, nick, "color")
 weechat_nicklist_nick_get_pointer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.4._
+_WeeChat ≥ 0.3.4._
 
 Restituisce il valore puntatore della proprietà di un nick.
 
@@ -11730,7 +11729,7 @@ group = weechat.nicklist_nick_get_pointer(buffer, nick, "group")
 weechat_nicklist_nick_set
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.4._
+_WeeChat ≥ 0.3.4._
 
 Imposta il valore stringa della proprietà di un nick.
 
@@ -11886,10 +11885,10 @@ Argomenti:
 // TRANSLATION MISSING
 ** 'struct t_gui_buffer *buffer': buffer displayed in window (if window is NULL,
    then it is current buffer) or buffer given in bar item with syntax:
-   "@buffer:item" _(novità nella versione 0.4.2)_
+   "@buffer:item" _(WeeChat ≥ 0.4.2)_
 // TRANSLATION MISSING
 ** 'struct t_hashtable *extra_info': always NULL (argument is reserved for a
-   future version) _(novità nella versione 0.4.2)_
+   future version) _(WeeChat ≥ 0.4.2)_
 ** valore restituito: contenuto dell'elemento barra
 * 'build_callback_data': puntatore fornito alla callback quando
   chiamata da WeeChat
@@ -12488,7 +12487,7 @@ weechat.prnt("", "WeeChat home is: %s" % weechat.info_get("weechat_dir"))
 weechat_info_get_hashtable
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.4._
+_WeeChat ≥ 0.3.4._
 
 Restituisce una info, come tabella hash, da WeeChat o da un plugin.
 
@@ -13352,7 +13351,7 @@ weechat_hdata_new
 ^^^^^^^^^^^^^^^^^
 
 // TRANSLATION MISSING
-_Novità nella versione 0.3.6, updated in 0.3.9 and 0.4.0._
+_WeeChat ≥ 0.3.6, updated in 0.3.9 and 0.4.0._
 
 Crea un nuovo hdata.
 
@@ -13390,13 +13389,13 @@ Argomenti:
   successivo nella lista (può essere NULL se non è disponibile tale variabile)
 // TRANSLATION MISSING
 * 'create_allowed': 1 if create of structure is allowed, otherwise 0
-  _(novità nella versione 0.4.0)_
+  _(WeeChat ≥ 0.4.0)_
 // TRANSLATION MISSING
 * 'delete_allowed': 1 if delete of structure is allowed, otherwise 0
-  _(novità nella versione 0.3.9)_
+  _(WeeChat ≥ 0.3.9)_
 // TRANSLATION MISSING
 * 'callback_update': callback to update data in hdata, can be NULL if no update
-  is allowed _(novità nella versione 0.3.9)_, arguments and return value:
+  is allowed _(WeeChat ≥ 0.3.9)_, arguments and return value:
 ** 'void *data': pointer
 ** 'struct t_hdata *hdata': pointer to hdata
 ** 'struct t_hashtable *hashtable': hashtable with variables to update
@@ -13404,7 +13403,7 @@ Argomenti:
 ** return value: number of variables updated
 // TRANSLATION MISSING
 * 'callback_update_data': pointer given to update callback when it is called by
-  WeeChat _(novità nella versione 0.3.9)_
+  WeeChat _(WeeChat ≥ 0.3.9)_
 
 Valore restituito:
 
@@ -13423,7 +13422,7 @@ weechat_hdata_new_var
 ^^^^^^^^^^^^^^^^^^^^^
 
 // TRANSLATION MISSING
-_Novità nella versione 0.3.6, updated in 0.3.9_
+_WeeChat ≥ 0.3.6, updated in 0.3.9_
 
 Crea una nuova variabile in hdata.
 
@@ -13451,10 +13450,10 @@ Argomenti:
 ** WEECHAT_HDATA_OTHER
 // TRANSLATION MISSING
 * 'update_allowed': 1 if update of variable is allowed, otherwise 0
-  _(novità nella versione 0.3.9)_
+  _(WeeChat ≥ 0.3.9)_
 // TRANSLATION MISSING
 * 'array_size': not NULL only if a variable is an array, and it can be:
-  _(novità nella versione 0.3.9)_
+  _(WeeChat ≥ 0.3.9)_
 ** name of variable in hdata: this variable will be used as size of array
    (dynamic size for array)
 ** integer (as string): fixed size for array
@@ -13508,7 +13507,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 weechat_hdata_new_list
 ^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.6._
+_WeeChat ≥ 0.3.6._
 
 Crea una nuovo puntatore alla lista in hdata.
 
@@ -13569,7 +13568,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 weechat_hdata_get
 ^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.6._
+_WeeChat ≥ 0.3.6._
 
 Restituisce hdata per una struttura di WeeChat o di un plugin.
 
@@ -13587,7 +13586,11 @@ struct t_hdata *weechat_hdata_get (const char *hdata_name);
 
 Argomenti:
 
-* 'hdata_name': nome di un hdata:
+* 'hdata_name': nome di un hdata
+
+// TRANSLATION MISSING
+List of hdata:
+
 include::autogen/plugin_api/hdata.txt[]
 
 Valore restituito:
@@ -13615,7 +13618,7 @@ hdata = weechat.hdata_get("irc_server")
 weechat_hdata_get_var_offset
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.6._
+_WeeChat ≥ 0.3.6._
 
 Restituisce l'offset della variabile in hdata.
 
@@ -13656,7 +13659,7 @@ offset = weechat.hdata_get_var_offset(hdata, "name")
 weechat_hdata_get_var_type
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.6._
+_WeeChat ≥ 0.3.6._
 
 Restituisce il tipo di variabile in hdata (come intero).
 
@@ -13719,7 +13722,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 weechat_hdata_get_var_type_string
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.6._
+_WeeChat ≥ 0.3.6._
 
 Restituisce il tipo di variabile in hdata (come stringa).
 
@@ -13761,7 +13764,7 @@ weechat.prnt("", "type = %s" % weechat.hdata_get_var_type_string(hdata, "name"))
 weechat_hdata_get_var_array_size
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.9._
+_WeeChat ≥ 0.3.9._
 
 // TRANSLATION MISSING
 Return array size for variable in hdata.
@@ -13805,7 +13808,7 @@ array_size = weechat.hdata_get_var_array_size(hdata, pointer, "name")
 weechat_hdata_get_var_array_size_string
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.9._
+_WeeChat ≥ 0.3.9._
 
 // TRANSLATION MISSING
 Return array size for variable in hdata (as string).
@@ -13851,7 +13854,7 @@ array_size = weechat.hdata_get_var_array_size_string(hdata, pointer, "name")
 weechat_hdata_get_var_hdata
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.6._
+_WeeChat ≥ 0.3.6._
 
 Restituisce hdata per la variabile in hdata.
 
@@ -13892,7 +13895,7 @@ weechat.prnt("", "hdata = %s" % weechat.hdata_get_var_hdata(hdata, "name"))
 weechat_hdata_get_var
 ^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.6._
+_WeeChat ≥ 0.3.6._
 
 Restituisce il puntatore al contenuto della variabile in hdata.
 
@@ -13928,7 +13931,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 weechat_hdata_get_var_at_offset
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.6._
+_WeeChat ≥ 0.3.6._
 
 Restituisce il puntatore al contenuto della variabile in hdata, usando un offset.
 
@@ -13965,7 +13968,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 weechat_hdata_get_list
 ^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.6._
+_WeeChat ≥ 0.3.6._
 
 Restituisce il puntatore alla lista da hdata.
 
@@ -14008,7 +14011,7 @@ buffers = weechat.hdata_get_list(hdata, "gui_buffers")
 weechat_hdata_check_pointer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.7._
+_WeeChat ≥ 0.3.7._
 
 Verifica se un puntatore è valido per un hdata e un puntatore della lista.
 
@@ -14067,7 +14070,7 @@ else:
 weechat_hdata_move
 ^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.6._
+_WeeChat ≥ 0.3.6._
 
 Sposta il puntatore ad un altro elemento nella lista.
 
@@ -14126,7 +14129,7 @@ if buffer:
 weechat_hdata_search
 ^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.4.1._
+_WeeChat ≥ 0.4.1._
 
 // TRANSLATION MISSING
 Search element in a list: the expression 'search' is evaluated for each element
@@ -14192,7 +14195,7 @@ if server:
 weechat_hdata_char
 ^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.7._
+_WeeChat ≥ 0.3.7._
 
 Restituisce il valore di una variabile char in una struttura dati usando hdata.
 
@@ -14237,7 +14240,7 @@ weechat.prnt("", "letter = %c" % weechat.hdata_char(hdata, pointer, "letter"))
 weechat_hdata_integer
 ^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.6._
+_WeeChat ≥ 0.3.6._
 
 Restituisce il valore di una variabile integer in una struttura dati usando hdata.
 
@@ -14286,7 +14289,7 @@ weechat.prnt("", "number = %d" % weechat.hdata_integer(hdata, buffer, "number"))
 weechat_hdata_long
 ^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.6._
+_WeeChat ≥ 0.3.6._
 
 Restituisce il valore della variabile long della struttura usando hdata.
 
@@ -14331,7 +14334,7 @@ weechat.prnt("", "longvar = %ld" % weechat.hdata_long(hdata, pointer, "longvar")
 weechat_hdata_string
 ^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.6._
+_WeeChat ≥ 0.3.6._
 
 Restituisce il valore della variabile string nella struttura usando hdata.
 
@@ -14380,7 +14383,7 @@ weechat.prnt("", "name = %s" % weechat.hdata_string(hdata, buffer, "name"))
 weechat_hdata_pointer
 ^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.6._
+_WeeChat ≥ 0.3.6._
 
 Restituisce il valore della variabile puntatore nella struttura usando hdata.
 
@@ -14429,7 +14432,7 @@ weechat.prnt("", "lines = %lx" % weechat.hdata_pointer(hdata, buffer, "lines"))
 weechat_hdata_time
 ^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.6._
+_WeeChat ≥ 0.3.6._
 
 Restituisce il valore della variabile time nella struttura usando hdata.
 
@@ -14500,7 +14503,7 @@ if ptr:
 weechat_hdata_hashtable
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.7._
+_WeeChat ≥ 0.3.7._
 
 Restituisce il valore di una variabile nella tabella hash nella struttura usando
 hdata.
@@ -14556,7 +14559,7 @@ for key in hash:
 weechat_hdata_set
 ^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.9._
+_WeeChat ≥ 0.3.9._
 
 Set new value for variable in a hdata.
 
@@ -14598,7 +14601,7 @@ This function is not available in scripting API.
 weechat_hdata_update
 ^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.9._
+_WeeChat ≥ 0.3.9._
 
 Update data in a hdata.
 
@@ -14618,7 +14621,7 @@ Argomenti:
   allowed:
 // TRANSLATION MISSING
 ** key `__create_allowed` (with any value): return 1 if create is allowed for
-   structure, otherwise 0 _(new in version 0.4.0)_
+   structure, otherwise 0 _(WeeChat ≥ 0.4.0)_
 ** key `__delete_allowed` (with any value): return 1 if delete is allowed for
    structure, otherwise 0
 ** key `__update_allowed`, value is name of a variable: return 1 if update is
@@ -14686,7 +14689,7 @@ if own_lines:
 weechat_hdata_get_string
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-_Novità nella versione 0.3.6._
+_WeeChat ≥ 0.3.6._
 
 Restituisce il valore stringa di una proprietà di hdata.
 

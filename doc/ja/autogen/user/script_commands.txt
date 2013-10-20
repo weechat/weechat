@@ -1,6 +1,7 @@
 [[command_script_script]]
 [command]*`script`* WeeChat スクリプトマネージャ::
-........................................
+
+----------------------------------------
 /script  list [-o|-i]
          search <text>
          show <script>
@@ -72,5 +73,5 @@ toggleautoload: 自動ロードの切り替え
   /script hold urlserver.py
   /script reload urlserver
   /script upgrade
-........................................
+----------------------------------------
 

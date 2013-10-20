@@ -1,6 +1,7 @@
 [[command_rmodifier_rmodifier]]
 [command]*`rmodifier`* alter modifier strings with regular expressions::
-........................................
+
+----------------------------------------
 /rmodifier  list|listdefault
             add <name> <modifiers> <groups> <regex>
             del <name>|-all [<name>...]
@@ -26,5 +27,5 @@ Examples:
     /rmodifier del password
   delete all rmodifiers:
     /rmodifier del -all
-........................................
+----------------------------------------
 

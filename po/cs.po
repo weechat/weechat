@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-10-08 21:59+0200\n"
+"POT-Creation-Date: 2013-10-20 09:56+0200\n"
 "PO-Revision-Date: 2013-10-08 11:24+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9846,13 +9846,14 @@ msgstr "Hash tabulka (výstup)"
 msgid "Pointer"
 msgstr "Ukazatel"
 
-msgid "Variables"
+#, fuzzy
+msgid "variables"
+msgstr "čtení - proměnná"
+
+msgid "update allowed"
 msgstr ""
 
-msgid "Update allowed"
-msgstr ""
-
-msgid "Lists"
+msgid "lists"
 msgstr ""
 
 #, fuzzy

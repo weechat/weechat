@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-10-08 21:59+0200\n"
+"POT-Creation-Date: 2013-10-20 09:56+0200\n"
 "PO-Revision-Date: 2013-10-06 12:40+0200\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9471,13 +9471,15 @@ msgstr "Tabela de Hash (saída)"
 msgid "Pointer"
 msgstr "Ponteiro"
 
-msgid "Variables"
+#, fuzzy
+msgid "variables"
 msgstr "Variáveis"
 
-msgid "Update allowed"
+msgid "update allowed"
 msgstr ""
 
-msgid "Lists"
+#, fuzzy
+msgid "lists"
 msgstr "Listas"
 
 #, fuzzy

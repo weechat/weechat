@@ -1,6 +1,7 @@
 [[command_logger_logger]]
 [command]*`logger`* logger plugin configuration::
-........................................
+
+----------------------------------------
 /logger  list
          set <level>
          flush
@@ -32,5 +33,5 @@ Examples:
     /set logger.level.core.weechat 0
   use a directory per IRC server and a file per channel inside:
     /set logger.mask.irc "$server/$channel.weechatlog"
-........................................
+----------------------------------------
 

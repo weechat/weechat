@@ -28,8 +28,8 @@
 #           /set plugins.var.python.docgen.path "~/src/weechat/doc"
 #     3.  run docgen command:
 #           /docgen
-# (it is recommended to load only this script when building doc)
-# Files should be in ~/src/weechat/doc/xx/autogen/ (where xx is language)
+# Note: it is recommended to load only this script when building doc.
+# Files should be in ~/src/weechat/doc/xx/autogen/ (where xx is language).
 #
 
 SCRIPT_NAME    = 'docgen'
@@ -224,33 +224,20 @@ def get_hdata():
                                    'update': weechat.hdata_update(ptr_hdata, '', { '__update_allowed': key })})
                 hdata2 = sorted(hdata2, key=itemgetter('offset'))
                 for item in hdata2:
-                    if variables:
-                        variables += ' +\n'
-                    variables += '  %s' % item['textlong']
+                    variables += '*** %s\n' % item['textlong']
                     if item['update']:
-                        if variables_update:
-                            variables_update += ' +\n'
-                        variables_update += '  %s' % item['text']
+                        variables_update += '*** %s\n' % item['text']
                 if weechat.hdata_update(ptr_hdata, '', { '__create_allowed' : '' }):
-                    if variables_update:
-                        variables_update += ' +\n'
-                    variables_update += '  `__create`'
+                    variables_update += '*** \'__create\'\n'
                 if weechat.hdata_update(ptr_hdata, '', { '__delete_allowed' : '' }):
-                    if variables_update:
-                        variables_update += ' +\n'
-                    variables_update += '  `__delete`'
-            hdata[plugin][hdata_name]['vars'] = '\n%s' % variables
-            hdata[plugin][hdata_name]['vars_update'] = '\n%s' % variables_update
+                    variables_update += '*** \'__delete\'\n'
+            hdata[plugin][hdata_name]['vars'] = variables
+            hdata[plugin][hdata_name]['vars_update'] = variables_update
 
             string = weechat.hdata_get_string(ptr_hdata, 'list_keys')
             if string:
                 for item in sorted(string.split(',')):
-                    if lists:
-                        lists += ' +\n'
-                    lists += '  \'%s\'' % item
-                lists = '\n%s' % lists
-            else:
-                lists = '\n  -'
+                    lists += '*** \'%s\'\n' % item
             hdata[plugin][hdata_name]['lists'] = lists
     weechat.infolist_free(infolist)
     return hdata
@@ -356,8 +343,8 @@ def docgen_cmd_cb(data, buffer, args):
                 description = translate(commands[plugin][command]['description'])
                 args_description = translate(commands[plugin][command]['args_description'])
                 f.write('[[command_%s_%s]]\n' % (plugin, command))
-                f.write('[command]*`%s`* %s::\n' % (command, description))
-                f.write('........................................\n')
+                f.write('[command]*`%s`* %s::\n\n' % (command, description))
+                f.write('----------------------------------------\n')
                 prefix = '/%s  ' % command
                 if args_formats != ['']:
                     for fmt in args_formats:
@@ -367,7 +354,7 @@ def docgen_cmd_cb(data, buffer, args):
                     f.write('\n')
                     for line in args_description.split('\n'):
                         f.write('%s\n' % line)
-                f.write('........................................\n\n')
+                f.write('----------------------------------------\n\n')
             f.close()
             update_file(filename, tmpfilename, num_files, num_files_updated, 'commands')
 
@@ -493,24 +480,20 @@ def docgen_cmd_cb(data, buffer, args):
         filename = '%s/plugin_api/hdata.txt' % directory
         tmpfilename = '%s.tmp' % filename
         f = open(tmpfilename, 'w')
-        f.write('[width="100%",cols="^1,^2,4,8,4,4",options="header"]\n')
-        f.write('|========================================\n')
-        f.write('| %s | %s | %s | %s | %s | %s\n\n' % (_('Plugin'), _('Name'), _('Description'),
-                                                       _('Variables'), _('Update allowed'),
-                                                       _('Lists')))
         for plugin in sorted(hdata):
             for hdata_name in sorted(hdata[plugin]):
                 description = translate(hdata[plugin][hdata_name]['description'])
                 variables = hdata[plugin][hdata_name]['vars']
                 variables_update = hdata[plugin][hdata_name]['vars_update']
                 lists = hdata[plugin][hdata_name]['lists']
-                f.write('| %s | %s | %s |%s |%s |%s\n\n' % (escape(plugin),
-                                                            escape(hdata_name),
-                                                            escape(description),
-                                                            escape(variables),
-                                                            escape(variables_update),
-                                                            escape(lists)))
-        f.write('|========================================\n')
+                f.write('* \'%s\': %s\n' % (escape(hdata_name),
+                                            escape(description)))
+                f.write('** %s: %s\n' % (_('plugin'), escape(plugin)))
+                f.write('** %s:\n%s' % (_('variables'), escape(variables)))
+                if variables_update:
+                    f.write('** %s:\n%s' % (_('update allowed'), escape(variables_update)))
+                if lists:
+                    f.write('** %s:\n%s' % (_('lists'), escape(lists)))
         f.close()
         update_file(filename, tmpfilename, num_files, num_files_updated, 'hdata')
 

@@ -1,14 +1,16 @@
 [[command_irc_admin]]
 [command]*`admin`* find information about the administrator of the server::
-........................................
+
+----------------------------------------
 /admin  [<target>]
 
 target: server
-........................................
+----------------------------------------
 
 [[command_irc_allchan]]
 [command]*`allchan`* execute a command on all channels of all connected servers::
-........................................
+
+----------------------------------------
 /allchan  [-current] [-exclude=<channel>[,<channel>...]] <command> [<arguments>]
 
  -current: execute command for channels of current server only
@@ -23,11 +25,12 @@ Examples:
     /allchan -exclude=#weechat msg * hello
   say 'hello' everywhere but not on #weechat and channels beginning with #linux:
     /allchan -exclude=#weechat,#linux* msg * hello
-........................................
+----------------------------------------
 
 [[command_irc_allserv]]
 [command]*`allserv`* execute a command on all connected servers::
-........................................
+
+----------------------------------------
 /allserv  [-exclude=<server>[,<server>...]] <command> [<arguments>]
 
  -exclude: exclude some servers ('*' is allowed at beginning or end of server name, to exclude many servers)
@@ -41,22 +44,24 @@ Examples:
     /allserv away I'm away
   do a whois on my nick on all servers:
     /allserv whois $nick
-........................................
+----------------------------------------
 
 [[command_irc_ban]]
 [command]*`ban`* ban nicks or hosts::
-........................................
+
+----------------------------------------
 /ban  [<channel>] [<nick> [<nick>...]]
 
 channel: channel for ban
    nick: user or host to ban
 
 Without argument, this command display ban list for current channel.
-........................................
+----------------------------------------
 
 [[command_irc_connect]]
 [command]*`connect`* connect to IRC server(s)::
-........................................
+
+----------------------------------------
 /connect  <server> [<server>...] [-<option>[=<value>]] [-no<option>] [-nojoin] [-switch]
           -all|-auto|-open [-nojoin] [-switch]
 
@@ -80,30 +85,33 @@ Examples:
   /connect my.server.org/6697 -ssl -password=test
   /connect irc://nick@irc.oftc.net/#channel
   /connect -switch
-........................................
+----------------------------------------
 
 [[command_irc_ctcp]]
 [command]*`ctcp`* send a CTCP message (Client-To-Client Protocol)::
-........................................
+
+----------------------------------------
 /ctcp  <target> <type> [<arguments>]
 
  target: nick or channel to send CTCP to
    type: CTCP type (examples: "version", "ping", ..)
 arguments: arguments for CTCP
-........................................
+----------------------------------------
 
 [[command_irc_cycle]]
 [command]*`cycle`* leave and rejoin a channel::
-........................................
+
+----------------------------------------
 /cycle  [<channel>[,<channel>...]] [<message>]
 
 channel: channel name for cycle
 message: part message (displayed to other users)
-........................................
+----------------------------------------
 
 [[command_irc_dcc]]
 [command]*`dcc`* start a DCC (file transfer or direct chat)::
-........................................
+
+----------------------------------------
 /dcc  chat <nick>
       send <nick> <file>
 
@@ -115,69 +123,76 @@ Examples:
     /dcc chat toto
   send file "/home/foo/bar.txt" to nick "toto":
     /dcc send toto /home/foo/bar.txt
-........................................
+----------------------------------------
 
 [[command_irc_dehalfop]]
 [command]*`dehalfop`* remove channel half-operator status from nick(s)::
-........................................
+
+----------------------------------------
 /dehalfop  <nick> [<nick>...]
 
 nick: nick or mask (can start or end with "*" as wildcard)
    *: remove channel half-operator status from everybody on channel except yourself
-........................................
+----------------------------------------
 
 [[command_irc_deop]]
 [command]*`deop`* remove channel operator status from nick(s)::
-........................................
+
+----------------------------------------
 /deop  <nick> [<nick>...]
        * -yes
 
 nick: nick or mask (can start or end with "*" as wildcard)
    *: remove channel operator status from everybody on channel except yourself
-........................................
+----------------------------------------
 
 [[command_irc_devoice]]
 [command]*`devoice`* remove voice from nick(s)::
-........................................
+
+----------------------------------------
 /devoice  <nick> [<nick>...]
           * -yes
 
 nick: nick or mask (can start or end with "*" as wildcard)
    *: remove voice from everybody on channel
-........................................
+----------------------------------------
 
 [[command_irc_die]]
 [command]*`die`* shutdown the server::
-........................................
+
+----------------------------------------
 /die  [<target>]
 
 target: server name
-........................................
+----------------------------------------
 
 [[command_irc_disconnect]]
 [command]*`disconnect`* disconnect from one or all IRC servers::
-........................................
+
+----------------------------------------
 /disconnect  [<server>|-all|-pending [<reason>]]
 
   server: server name to disconnect
     -all: disconnect from all servers
 -pending: cancel auto-reconnection on servers currently reconnecting
   reason: reason for quit
-........................................
+----------------------------------------
 
 [[command_irc_halfop]]
 [command]*`halfop`* give channel half-operator status to nick(s)::
-........................................
+
+----------------------------------------
 /halfop  <nick> [<nick>...]
          * -yes
 
 nick: nick or mask (can start or end with "*" as wildcard)
    *: give channel half-operator status to everybody on channel
-........................................
+----------------------------------------
 
 [[command_irc_ignore]]
 [command]*`ignore`* ignore nicks/hosts from servers or channels::
-........................................
+
+----------------------------------------
 /ignore  list
          add [re:]<nick> [<server> [<channel>]]
          del <number>|-all
@@ -200,36 +215,40 @@ Examples:
     /ignore add toto@domain.com freenode
   ignore host "toto*@*.domain.com" on freenode/#weechat:
     /ignore add toto*@*.domain.com freenode #weechat
-........................................
+----------------------------------------
 
 [[command_irc_info]]
 [command]*`info`* get information describing the server::
-........................................
+
+----------------------------------------
 /info  [<target>]
 
 target: server name
-........................................
+----------------------------------------
 
 [[command_irc_invite]]
 [command]*`invite`* invite a nick on a channel::
-........................................
+
+----------------------------------------
 /invite  <nick> [<nick>...] [<channel>]
 
    nick: nick to invite
 channel: channel to invite
-........................................
+----------------------------------------
 
 [[command_irc_ison]]
 [command]*`ison`* check if a nick is currently on IRC::
-........................................
+
+----------------------------------------
 /ison  <nick> [<nick>...]
 
 nick: nick
-........................................
+----------------------------------------
 
 [[command_irc_join]]
 [command]*`join`* join a channel::
-........................................
+
+----------------------------------------
 /join  [-noswitch] [-server <server>] [<channel1>[,<channel2>...]] [<key1>[,<key2>...]]
 
 -noswitch: do not switch to new buffer
@@ -242,21 +261,23 @@ Examples:
   /join #protectedchan,#weechat key
   /join -server freenode #weechat
   /join -noswitch #weechat
-........................................
+----------------------------------------
 
 [[command_irc_kick]]
 [command]*`kick`* forcibly remove a user from a channel::
-........................................
+
+----------------------------------------
 /kick  [<channel>] <nick> [<reason>]
 
 channel: channel where user is
    nick: nick to kick
  reason: reason for kick (special variables $nick, $channel and $server are replaced by their value)
-........................................
+----------------------------------------
 
 [[command_irc_kickban]]
 [command]*`kickban`* kicks and bans a nick from a channel::
-........................................
+
+----------------------------------------
 /kickban  [<channel>] <nick> [<reason>]
 
 channel: channel where user is
@@ -268,29 +289,32 @@ It is possible to kick/ban with a mask, nick will be extracted from mask and rep
 Example:
   ban "*!*@host.com" and then kick "toto":
     /kickban toto!*@host.com
-........................................
+----------------------------------------
 
 [[command_irc_kill]]
 [command]*`kill`* close client-server connection::
-........................................
+
+----------------------------------------
 /kill  <nick> <reason>
 
   nick: nick to kill
 reason: reason for kill
-........................................
+----------------------------------------
 
 [[command_irc_links]]
 [command]*`links`* list all servernames which are known by the server answering the query::
-........................................
+
+----------------------------------------
 /links  [[<server>] <server_mask>]
 
      server: this server should answer the query
 server_mask: list of servers must match this mask
-........................................
+----------------------------------------
 
 [[command_irc_list]]
 [command]*`list`* list channels and their topic::
-........................................
+
+----------------------------------------
 /list  [<channel>[,<channel>...]] [<server>] [-re <regex>]
 
 channel: channel to list
@@ -304,33 +328,37 @@ Examples:
     /list #weechat
   list all channels beginning with "#weechat" (can be very slow on large networks):
     /list -re #weechat.*
-........................................
+----------------------------------------
 
 [[command_irc_lusers]]
 [command]*`lusers`* get statistics about the size of the IRC network::
-........................................
+
+----------------------------------------
 /lusers  [<mask> [<target>]]
 
   mask: servers matching the mask only
 target: server for forwarding request
-........................................
+----------------------------------------
 
 [[command_irc_map]]
 [command]*`map`* show a graphical map of the IRC network::
-........................................
-........................................
+
+----------------------------------------
+----------------------------------------
 
 [[command_irc_me]]
 [command]*`me`* send a CTCP action to the current channel::
-........................................
+
+----------------------------------------
 /me  <message>
 
 message: message to send
-........................................
+----------------------------------------
 
 [[command_irc_mode]]
 [command]*`mode`* change channel or user mode::
-........................................
+
+----------------------------------------
 /mode  [<channel>] [+|-]o|p|s|i|t|n|m|l|b|e|v|k [<arguments>]
        <nick> [+|-]i|s|w|o
 
@@ -362,56 +390,62 @@ Examples:
     /mode #weechat +t
   become invisible on server:
     /mode nick +i
-........................................
+----------------------------------------
 
 [[command_irc_motd]]
 [command]*`motd`* get the "Message Of The Day"::
-........................................
+
+----------------------------------------
 /motd  [<target>]
 
 target: server name
-........................................
+----------------------------------------
 
 [[command_irc_msg]]
 [command]*`msg`* send message to a nick or channel::
-........................................
+
+----------------------------------------
 /msg  [-server <server>] <target>[,<target>...] <text>
 
 server: send to this server (internal name)
 target: nick or channel (may be mask, '*' = current channel)
   text: text to send
-........................................
+----------------------------------------
 
 [[command_irc_names]]
 [command]*`names`* list nicks on channels::
-........................................
+
+----------------------------------------
 /names  [<channel>[,<channel>...]]
 
 channel: channel name
-........................................
+----------------------------------------
 
 [[command_irc_nick]]
 [command]*`nick`* change current nick::
-........................................
+
+----------------------------------------
 /nick  [-all] <nick>
 
 -all: set new nick for all connected servers
 nick: new nick
-........................................
+----------------------------------------
 
 [[command_irc_notice]]
 [command]*`notice`* send notice message to user::
-........................................
+
+----------------------------------------
 /notice  [-server <server>] <target> <text>
 
 server: send to this server (internal name)
 target: nick or channel
   text: text to send
-........................................
+----------------------------------------
 
 [[command_irc_notify]]
 [command]*`notify`* add a notification for presence or away status of nicks on servers::
-........................................
+
+----------------------------------------
 /notify  add <nick> [<server> [-away]]
          del <nick>|-all [<server>]
 
@@ -431,87 +465,96 @@ Examples:
     /notify add toto freenode
   notify when "toto" is away or back on freenode server:
     /notify add toto freenode -away
-........................................
+----------------------------------------
 
 [[command_irc_op]]
 [command]*`op`* give channel operator status to nick(s)::
-........................................
+
+----------------------------------------
 /op  <nick> [<nick>...]
      * -yes
 
 nick: nick or mask (can start or end with "*" as wildcard)
    *: give channel operator status to everybody on channel
-........................................
+----------------------------------------
 
 [[command_irc_oper]]
 [command]*`oper`* get operator privileges::
-........................................
+
+----------------------------------------
 /oper  <user> <password>
 
     user: user
 password: password
-........................................
+----------------------------------------
 
 [[command_irc_part]]
 [command]*`part`* leave a channel::
-........................................
+
+----------------------------------------
 /part  [<channel>[,<channel>...]] [<message>]
 
 channel: channel name to leave
 message: part message (displayed to other users)
-........................................
+----------------------------------------
 
 [[command_irc_ping]]
 [command]*`ping`* send a ping to server::
-........................................
+
+----------------------------------------
 /ping  <server1> [<server2>]
 
 server1: server
 server2: forward ping to this server
-........................................
+----------------------------------------
 
 [[command_irc_pong]]
 [command]*`pong`* answer to a ping message::
-........................................
+
+----------------------------------------
 /pong  <daemon> [<daemon2>]
 
  daemon: daemon who has responded to Ping message
 daemon2: forward message to this daemon
-........................................
+----------------------------------------
 
 [[command_irc_query]]
 [command]*`query`* send a private message to a nick::
-........................................
+
+----------------------------------------
 /query  [-server <server>] <nick>[,<nick>...] [<text>]
 
 server: send to this server (internal name)
   nick: nick for private conversation
   text: text to send
-........................................
+----------------------------------------
 
 [[command_irc_quiet]]
 [command]*`quiet`* quiet nicks or hosts::
-........................................
+
+----------------------------------------
 /quiet  [<channel>] [<nick> [<nick>...]]
 
 channel: channel for quiet
    nick: user or host to quiet
 
 Without argument, this command display quiet list for current channel.
-........................................
+----------------------------------------
 
 [[command_irc_quote]]
 [command]*`quote`* send raw data to server without parsing::
-........................................
+
+----------------------------------------
 /quote  [-server <server>] <data>
 
 server: send to this server (internal name)
   data: raw data to send
-........................................
+----------------------------------------
 
 [[command_irc_reconnect]]
 [command]*`reconnect`* reconnect to server(s)::
-........................................
+
+----------------------------------------
 /reconnect  <server> [<server>...] [-nojoin] [-switch]
             -all [-nojoin] [-switch]
 
@@ -519,72 +562,80 @@ server: send to this server (internal name)
    -all: reconnect to all servers
 -nojoin: do not join any channel (even if autojoin is enabled on server)
 -switch: switch to next server address
-........................................
+----------------------------------------
 
 [[command_irc_rehash]]
 [command]*`rehash`* tell the server to reload its config file::
-........................................
+
+----------------------------------------
 /rehash  [<option>]
 
 option: extra option, for some servers
-........................................
+----------------------------------------
 
 [[command_irc_restart]]
 [command]*`restart`* tell the server to restart itself::
-........................................
+
+----------------------------------------
 /restart  [<target>]
 
 target: server name
-........................................
+----------------------------------------
 
 [[command_irc_sajoin]]
 [command]*`sajoin`* force a user to join channel(s)::
-........................................
+
+----------------------------------------
 /sajoin  <nick> <channel>[,<channel>...]
 
    nick: nick
 channel: channel name
-........................................
+----------------------------------------
 
 [[command_irc_samode]]
 [command]*`samode`* change mode on channel, without having operator status::
-........................................
+
+----------------------------------------
 /samode  <channel> <mode>
 
 channel: channel name
    mode: mode for channel
-........................................
+----------------------------------------
 
 [[command_irc_sanick]]
 [command]*`sanick`* force a user to use another nick::
-........................................
+
+----------------------------------------
 /sanick  <nick> <new_nick>
 
     nick: nick
 new_nick: new nick
-........................................
+----------------------------------------
 
 [[command_irc_sapart]]
 [command]*`sapart`* force a user to leave channel(s)::
-........................................
+
+----------------------------------------
 /sapart  <nick> <channel>[,<channel>...]
 
    nick: nick
 channel: channel name
-........................................
+----------------------------------------
 
 [[command_irc_saquit]]
 [command]*`saquit`* force a user to quit server with a reason::
-........................................
+
+----------------------------------------
 /saquit  <nick> <reason>
 
   nick: nick
 reason: reason
-........................................
+----------------------------------------
 
 [[command_irc_server]]
 [command]*`server`* list, add or remove IRC servers::
-........................................
+
+----------------------------------------
 /server  list|listfull [<server>]
          add <server> <hostname>[/<port>] [-temp] [-<option>[=<value>]] [-no<option>]
          copy|rename <server> <new_name>
@@ -617,161 +668,179 @@ Examples:
   /server rename oftc newoftc
   /server del freenode
   /server deloutq
-........................................
+----------------------------------------
 
 [[command_irc_service]]
 [command]*`service`* register a new service::
-........................................
+
+----------------------------------------
 /service  <nick> <reserved> <distribution> <type> <reserved> <info>
 
 distribution: visibility of service
         type: reserved for future usage
-........................................
+----------------------------------------
 
 [[command_irc_servlist]]
 [command]*`servlist`* list services currently connected to the network::
-........................................
+
+----------------------------------------
 /servlist  [<mask> [<type>]]
 
 mask: list only services matching this mask
 type: list only services of this type
-........................................
+----------------------------------------
 
 [[command_irc_squery]]
 [command]*`squery`* deliver a message to a service::
-........................................
+
+----------------------------------------
 /squery  <service> <text>
 
 service: name of service
    text: text to send
-........................................
+----------------------------------------
 
 [[command_irc_squit]]
 [command]*`squit`* disconnect server links::
-........................................
+
+----------------------------------------
 /squit  <server> <comment>
 
  server: server name
 comment: comment for quit
-........................................
+----------------------------------------
 
 [[command_irc_stats]]
 [command]*`stats`* query statistics about server::
-........................................
+
+----------------------------------------
 /stats  [<query> [<server>]]
 
  query: c/h/i/k/l/m/o/y/u (see RFC1459)
 server: server name
-........................................
+----------------------------------------
 
 [[command_irc_summon]]
 [command]*`summon`* give users who are on a host running an IRC server a message asking them to please join IRC::
-........................................
+
+----------------------------------------
 /summon  <user> [<target> [<channel>]]
 
    user: username
  target: server name
 channel: channel name
-........................................
+----------------------------------------
 
 [[command_irc_time]]
 [command]*`time`* query local time from server::
-........................................
+
+----------------------------------------
 /time  [<target>]
 
 target: query time from specified server
-........................................
+----------------------------------------
 
 [[command_irc_topic]]
 [command]*`topic`* get/set channel topic::
-........................................
+
+----------------------------------------
 /topic  [<channel>] [<topic>|-delete]
 
 channel: channel name
   topic: new topic for channel
 -delete: delete channel topic
-........................................
+----------------------------------------
 
 [[command_irc_trace]]
 [command]*`trace`* find the route to specific server::
-........................................
+
+----------------------------------------
 /trace  [<target>]
 
 target: server
-........................................
+----------------------------------------
 
 [[command_irc_unban]]
 [command]*`unban`* unban nicks or hosts::
-........................................
+
+----------------------------------------
 /unban  [<channel>] <nick> [<nick>...]
 
 channel: channel for unban
    nick: user or host to unban
-........................................
+----------------------------------------
 
 [[command_irc_userhost]]
 [command]*`userhost`* return a list of information about nicks::
-........................................
+
+----------------------------------------
 /userhost  <nick> [<nick>...]
 
 nick: nick
-........................................
+----------------------------------------
 
 [[command_irc_users]]
 [command]*`users`* list of users logged into the server::
-........................................
+
+----------------------------------------
 /users  [<target>]
 
 target: server
-........................................
+----------------------------------------
 
 [[command_irc_version]]
 [command]*`version`* give the version info of nick or server (current or specified)::
-........................................
+
+----------------------------------------
 /version  [<server>|<nick>]
 
 server: server name
   nick: nick
-........................................
+----------------------------------------
 
 [[command_irc_voice]]
 [command]*`voice`* give voice to nick(s)::
-........................................
+
+----------------------------------------
 /voice  <nick> [<nick>...]
 
 nick: nick or mask (can start or end with "*" as wildcard)
    *: give voice to everybody on channel
-........................................
+----------------------------------------
 
 [[command_irc_wallchops]]
 [command]*`wallchops`* send a notice to channel ops::
-........................................
+
+----------------------------------------
 /wallchops  [<channel>] <text>
 
 channel: channel name
    text: text to send
-........................................
+----------------------------------------
 
 [[command_irc_wallops]]
 [command]*`wallops`* send a message to all currently connected users who have set the 'w' user mode for themselves::
-........................................
+
+----------------------------------------
 /wallops  <text>
 
 text: text to send
-........................................
+----------------------------------------
 
 [[command_irc_who]]
 [command]*`who`* generate a query which returns a list of information::
-........................................
+
+----------------------------------------
 /who  [<mask> [o]]
 
 mask: only information which match this mask
    o: only operators are returned according to the mask supplied
-........................................
+----------------------------------------
 
 [[command_irc_whois]]
 [command]*`whois`* query information about user(s)::
-........................................
+
+----------------------------------------
 /whois  [<server>] [<nick>[,<nick>...]]
 
 server: server name
@@ -780,15 +849,16 @@ server: server name
 Without argument, this command will do a whois on:
 - your own nick if buffer is a server/channel
 - remote nick if buffer is a private.
-........................................
+----------------------------------------
 
 [[command_irc_whowas]]
 [command]*`whowas`* ask for information about a nick which no longer exists::
-........................................
+
+----------------------------------------
 /whowas  <nick>[,<nick>...] [<count> [<target>]]
 
   nick: nick to search
  count: number of replies to return (full search if negative number)
 target: reply should match this mask
-........................................
+----------------------------------------
 

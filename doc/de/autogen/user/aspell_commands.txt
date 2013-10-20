@@ -1,6 +1,7 @@
 [[command_aspell_aspell]]
 [command]*`aspell`* Konfiguration für Aspell-Erweiterung::
-........................................
+
+----------------------------------------
 /aspell  enable|disable|toggle
          listdict
          setdict <dict>[,<dict>...]
@@ -22,5 +23,5 @@ Um Aspell auf alle Buffer anzuwenden sollte die Option "default_dict" genutzt un
   /aspell enable
 
 Die Standardtastaturbelegung zum Umschalten der Aspell Funktionalität lautet alt-s.
-........................................
+----------------------------------------
 
