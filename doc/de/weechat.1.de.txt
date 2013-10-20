@@ -95,7 +95,7 @@ AUTOREN
 WeeChat ist programmiert von Sébastien Helleu und Beitragenden (eine vollständige Auflistung
 findet man in der AUTHORS Datei).
 
-Copyright (C) 2003-{year} Sébastien Helleu <flashcode@flashtux.org>
+Copyright (C) 2003-{sys:date "+%Y"} Sébastien Helleu <flashcode@flashtux.org>
 
 WeeChat is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

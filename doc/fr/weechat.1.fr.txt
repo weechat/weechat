@@ -97,7 +97,7 @@ AUTEURS
 WeeChat est écrit par Sébastien Helleu et des contributeurs (la liste complète
 est dans le fichier AUTHORS).
 
-Copyright (C) 2003-{year} Sébastien Helleu <flashcode@flashtux.org>
+Copyright (C) 2003-{sys:date "+%Y"} Sébastien Helleu <flashcode@flashtux.org>
 
 WeeChat est un logiciel libre; vous pouvez le redistribuer et/ou le modifier
 sous les termes de la GNU General Public License telle que publiée par la
