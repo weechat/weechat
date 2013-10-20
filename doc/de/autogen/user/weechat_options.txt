@@ -364,17 +364,17 @@
 ** Werte: 0 .. 2147483647 (Standardwert: `5`)
 
 * [[option_weechat.history.max_buffer_lines_minutes]] *weechat.history.max_buffer_lines_minutes*
-** Beschreibung: `Zeitangabe, in Minuten, wie lange die Zeilen im Verlaufsspeicher, pro Buffer, gehalten werden sollen (0 = unbegrenzt, Beispiele: 1440 = einen Tag, 10080 = eine Woche, 43200 = einen Monat, 525600 = ein Jahr)`
+** Beschreibung: `maximum number of minutes in history per buffer (0 = unlimited); examples: 1440 = one day, 10080 = one week, 43200 = one month, 525600 = one year); use 0 ONLY if option weechat.history.max_buffer_lines_number is NOT set to 0`
 ** Typ: integer
 ** Werte: 0 .. 2147483647 (Standardwert: `0`)
 
 * [[option_weechat.history.max_buffer_lines_number]] *weechat.history.max_buffer_lines_number*
-** Beschreibung: `maximale Anzahl an Zeilen im Verlaufsspeicher. Dies gilt pro Buffer (0: keine Zeilenbegrenzung)`
+** Beschreibung: `maximum number of lines in history per buffer (0 = unlimited); use 0 ONLY if option weechat.history.max_buffer_lines_minutes is NOT set to 0)`
 ** Typ: integer
 ** Werte: 0 .. 2147483647 (Standardwert: `4096`)
 
 * [[option_weechat.history.max_commands]] *weechat.history.max_commands*
-** Beschreibung: `maximale Anzahl an Befehlen im Verlaufsspeicher (0: kein Begrenzung)`
+** Beschreibung: `maximum number of user commands in history (0 = unlimited, NOT RECOMMENDED: no limit in memory usage)`
 ** Typ: integer
 ** Werte: 0 .. 2147483647 (Standardwert: `100`)
 

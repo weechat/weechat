@@ -3054,20 +3054,22 @@ config_weechat_init_options ()
         weechat_config_file, ptr_section,
         "max_buffer_lines_minutes", "integer",
         N_("maximum number of minutes in history per buffer "
-           "(0 = unlimited, examples: 1440 = one day, 10080 = one week, "
-           "43200 = one month, 525600 = one year)"),
+           "(0 = unlimited); examples: 1440 = one day, 10080 = one week, "
+           "43200 = one month, 525600 = one year); use 0 ONLY if option "
+           "weechat.history.max_buffer_lines_number is NOT set to 0"),
         NULL, 0, INT_MAX, "0", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_history_max_buffer_lines_number = config_file_new_option (
         weechat_config_file, ptr_section,
         "max_buffer_lines_number", "integer",
         N_("maximum number of lines in history per buffer "
-           "(0 = unlimited)"),
+           "(0 = unlimited); use 0 ONLY if option "
+           "weechat.history.max_buffer_lines_minutes is NOT set to 0)"),
         NULL, 0, INT_MAX, "4096", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_history_max_commands = config_file_new_option (
         weechat_config_file, ptr_section,
         "max_commands", "integer",
         N_("maximum number of user commands in history (0 = "
-           "unlimited)"),
+           "unlimited, NOT RECOMMENDED: no limit in memory usage)"),
         NULL, 0, INT_MAX, "100", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_history_max_visited_buffers = config_file_new_option (
         weechat_config_file, ptr_section,

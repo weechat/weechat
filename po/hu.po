@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-10-20 09:56+0200\n"
+"POT-Creation-Date: 2013-10-20 12:17+0200\n"
 "PO-Revision-Date: 2013-10-08 11:24+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2954,17 +2954,23 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"maximum number of minutes in history per buffer (0 = unlimited, examples: "
-"1440 = one day, 10080 = one week, 43200 = one month, 525600 = one year)"
+"maximum number of minutes in history per buffer (0 = unlimited); examples: "
+"1440 = one day, 10080 = one week, 43200 = one month, 525600 = one year); use "
+"0 ONLY if option weechat.history.max_buffer_lines_number is NOT set to 0"
 msgstr ""
 "felhasználói parancsok maximális száma az előzményekben (0 = korlátlan)"
 
 #, fuzzy
-msgid "maximum number of lines in history per buffer (0 = unlimited)"
+msgid ""
+"maximum number of lines in history per buffer (0 = unlimited); use 0 ONLY if "
+"option weechat.history.max_buffer_lines_minutes is NOT set to 0)"
 msgstr ""
 "felhasználói parancsok maximális száma az előzményekben (0 = korlátlan)"
 
-msgid "maximum number of user commands in history (0 = unlimited)"
+#, fuzzy
+msgid ""
+"maximum number of user commands in history (0 = unlimited, NOT RECOMMENDED: "
+"no limit in memory usage)"
 msgstr ""
 "felhasználói parancsok maximális száma az előzményekben (0 = korlátlan)"
 

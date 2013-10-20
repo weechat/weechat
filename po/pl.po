@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-10-20 09:56+0200\n"
+"POT-Creation-Date: 2013-10-20 12:17+0200\n"
 "PO-Revision-Date: 2013-10-08 11:25+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3655,17 +3655,25 @@ msgstr ""
 "maksymalna ilość komend domyślnie wyświetlanych w listingu historii (0 = bez "
 "ograniczeń)"
 
+#, fuzzy
 msgid ""
-"maximum number of minutes in history per buffer (0 = unlimited, examples: "
-"1440 = one day, 10080 = one week, 43200 = one month, 525600 = one year)"
+"maximum number of minutes in history per buffer (0 = unlimited); examples: "
+"1440 = one day, 10080 = one week, 43200 = one month, 525600 = one year); use "
+"0 ONLY if option weechat.history.max_buffer_lines_number is NOT set to 0"
 msgstr ""
 "maksymalna ilość minut w historii każdego bufora (0 = bez ograniczeń, "
 "przykłady: 1440 = dzień, 10080 = tydzień, 43200 = miesiąc, 525600 = rok)"
 
-msgid "maximum number of lines in history per buffer (0 = unlimited)"
+#, fuzzy
+msgid ""
+"maximum number of lines in history per buffer (0 = unlimited); use 0 ONLY if "
+"option weechat.history.max_buffer_lines_minutes is NOT set to 0)"
 msgstr "maksymalna ilość linii w historii każdego bufora (0 = bez ograniczeń)"
 
-msgid "maximum number of user commands in history (0 = unlimited)"
+#, fuzzy
+msgid ""
+"maximum number of user commands in history (0 = unlimited, NOT RECOMMENDED: "
+"no limit in memory usage)"
 msgstr "maksymalna ilość komend użytkownika w historii (0 = bez ograniczeń)"
 
 msgid "maximum number of visited buffers to keep in memory"
