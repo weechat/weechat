@@ -364,12 +364,12 @@
 ** valori: 0 .. 2147483647 (valore predefinito: `5`)
 
 * [[option_weechat.history.max_buffer_lines_minutes]] *weechat.history.max_buffer_lines_minutes*
-** descrizione: `maximum number of minutes in history per buffer (0 = unlimited); examples: 1440 = one day, 10080 = one week, 43200 = one month, 525600 = one year); use 0 ONLY if option weechat.history.max_buffer_lines_number is NOT set to 0`
+** descrizione: `maximum number of minutes in history per buffer (0 = unlimited); examples: 1440 = one day, 10080 = one week, 43200 = one month, 525600 = one year; use 0 ONLY if option weechat.history.max_buffer_lines_number is NOT set to 0`
 ** tipo: intero
 ** valori: 0 .. 2147483647 (valore predefinito: `0`)
 
 * [[option_weechat.history.max_buffer_lines_number]] *weechat.history.max_buffer_lines_number*
-** descrizione: `maximum number of lines in history per buffer (0 = unlimited); use 0 ONLY if option weechat.history.max_buffer_lines_minutes is NOT set to 0)`
+** descrizione: `maximum number of lines in history per buffer (0 = unlimited); use 0 ONLY if option weechat.history.max_buffer_lines_minutes is NOT set to 0`
 ** tipo: intero
 ** valori: 0 .. 2147483647 (valore predefinito: `4096`)
 

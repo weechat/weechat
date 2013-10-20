@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-10-20 21:41+0200\n"
+"POT-Creation-Date: 2013-10-20 21:46+0200\n"
 "PO-Revision-Date: 2013-10-08 11:25+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -3579,7 +3579,7 @@ msgstr ""
 #, fuzzy
 msgid ""
 "maximum number of lines in history per buffer (0 = unlimited); use 0 ONLY if "
-"option weechat.history.max_buffer_lines_minutes is NOT set to 0)"
+"option weechat.history.max_buffer_lines_minutes is NOT set to 0"
 msgstr "バッファ毎の履歴行数 (0 = 制限無し)"
 
 #, fuzzy

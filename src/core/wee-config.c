@@ -3063,7 +3063,7 @@ config_weechat_init_options ()
         "max_buffer_lines_number", "integer",
         N_("maximum number of lines in history per buffer "
            "(0 = unlimited); use 0 ONLY if option "
-           "weechat.history.max_buffer_lines_minutes is NOT set to 0)"),
+           "weechat.history.max_buffer_lines_minutes is NOT set to 0"),
         NULL, 0, INT_MAX, "4096", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_history_max_commands = config_file_new_option (
         weechat_config_file, ptr_section,

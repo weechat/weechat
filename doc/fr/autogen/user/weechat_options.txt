@@ -364,7 +364,7 @@
 ** valeurs: 0 .. 2147483647 (valeur par défaut: `5`)
 
 * [[option_weechat.history.max_buffer_lines_minutes]] *weechat.history.max_buffer_lines_minutes*
-** description: `nombre maximum de minutes dans l'historique par tampon (0 = sans limite); exemples: 1440 = une journée, 10080 = une semaine, 43200 = un mois, 525600 = une année); utilisez 0 SEULEMENT si l'option weechat.history.max_buffer_lines_number n'est pas égale à 0`
+** description: `nombre maximum de minutes dans l'historique par tampon (0 = sans limite); exemples: 1440 = une journée, 10080 = une semaine, 43200 = un mois, 525600 = une année; utilisez 0 SEULEMENT si l'option weechat.history.max_buffer_lines_number n'est pas égale à 0`
 ** type: entier
 ** valeurs: 0 .. 2147483647 (valeur par défaut: `0`)
 
