@@ -23,7 +23,8 @@ Caratteristiche
 
 Le principali caratteristiche:
 
-* multi-protocollo (IRC, Jabber)
+// TRANSLATION MISSING
+* multi-protocollo: IRC and Jabber (with script jabber.py or bitlbee/minbif)
 * connessione a server multipli (con SSL, IPv6, proxy)
 * piccolo, veloce e leggero
 * personalizzabile ed estensibile con plugin e script

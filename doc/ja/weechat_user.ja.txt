@@ -19,7 +19,8 @@ WeeChat (Wee Enhanced Environment for Chat) はフリーのチャットクライ
 
 主な特徴:
 
-* マルチプロトコル (IRC、Jabber)
+// TRANSLATION MISSING
+* multi-protocols: IRC and Jabber (with script jabber.py or bitlbee/minbif)
 * 複数のサーバへの接続 (SSL、IPv6、プロキシをサポート)
 * コンパクト、高速、軽量
 * プラグインとスクリプトでカスタマイズや拡張が可能

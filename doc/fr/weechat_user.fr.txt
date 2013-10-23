@@ -23,7 +23,7 @@ Fonctionnalités
 
 Ses principales fonctionnalités sont les suivantes :
 
-* multi-protocoles (IRC, Jabber)
+* multi-protocoles : IRC et Jabber (avec le script jabber.py ou bitlbee/minbif)
 * connexion multi-serveurs (avec SSL, IPv6, proxy)
 * petit, rapide et léger
 * paramétrable et extensible avec des extensions et des scripts

@@ -22,7 +22,9 @@ Funktionen
 
 wesentliche Merkmale:
 
-* mehrere Protokolle werden unterstützt (IRC, Jabber)
+// TRANSLATION MISSING
+* mehrere Protokolle werden unterstützt: IRC and Jabber (with script jabber.py
+  or bitlbee/minbif)
 * mehrere Server Verbindungen sind möglich (mittels SSL, IPv6, proxy)
 * klein, schnell und schlank
 * den eigenen persönlichen Bedürfnissen anpassbar und durch Erweiterungen und Skripten in der Funktionalität erweiterbar

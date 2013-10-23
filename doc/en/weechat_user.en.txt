@@ -22,7 +22,7 @@ Features
 
 Main features are:
 
-* multi-protocols (IRC, Jabber)
+* multi-protocols: IRC and Jabber (with script jabber.py or bitlbee/minbif)
 * multi-servers connection (with SSL, IPv6, proxy)
 * small, fast and light
 * customizable and extensible with plugins and scripts
