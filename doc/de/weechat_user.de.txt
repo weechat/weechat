@@ -490,7 +490,7 @@ Beispiel des WeeChat-Terminals:
 │                                                                   │       │
 │                                                                   │       │
 │                                                                   │       │
-│[12:55] [6] [irc/freenode] 3:#test(+n){4}* [Act: 4:#abc(2,5), 6]           │
+│[12:55] [6] [irc/freenode] 3:#test(+n){4}* [H: 4:#abc(2,5), 6]             │
 │[@Flashy(i)] hi peter!█                                                    │
 └───────────────────────────────────────────────────────────────────────────┘
  ▲ bars "status" and "input"                               bar "nicklist" ▲
