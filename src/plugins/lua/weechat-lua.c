@@ -160,9 +160,8 @@ weechat_lua_tohashtable (lua_State *interpreter, int index, int size,
  */
 
 void *
-weechat_lua_exec (struct t_plugin_script *script, lua_State *interpreter,
-                  int ret_type, const char *function, const char *format,
-                  void **argv)
+weechat_lua_exec (struct t_plugin_script *script, int ret_type,
+                  const char *function, const char *format, void **argv)
 {
     void *ret_value;
     int argc, i, *ret_i;
@@ -170,12 +169,10 @@ weechat_lua_exec (struct t_plugin_script *script, lua_State *interpreter,
     struct t_plugin_script *old_lua_current_script;
 
     old_lua_current_interpreter = lua_current_interpreter;
-    lua_current_interpreter = script->interpreter;
+    if (script->interpreter)
+        lua_current_interpreter = script->interpreter;
 
-    if (!interpreter)
-        interpreter = lua_current_interpreter;
-
-    lua_getglobal (interpreter, function);
+    lua_getglobal (lua_current_interpreter, function);
 
     old_lua_current_script = lua_current_script;
     lua_current_script = script;
@@ -189,13 +186,14 @@ weechat_lua_exec (struct t_plugin_script *script, lua_State *interpreter,
             switch (format[i])
             {
                 case 's': /* string */
-                    lua_pushstring (interpreter, (char *)argv[i]);
+                    lua_pushstring (lua_current_interpreter, (char *)argv[i]);
                     break;
                 case 'i': /* integer */
-                    lua_pushnumber (interpreter, *((int *)argv[i]));
+                    lua_pushnumber (lua_current_interpreter, *((int *)argv[i]));
                     break;
                 case 'h': /* hash */
-                    weechat_lua_pushhashtable (interpreter, (struct t_hashtable *)argv[i]);
+                    weechat_lua_pushhashtable (lua_current_interpreter,
+                                               (struct t_hashtable *)argv[i]);
                     break;
             }
         }
@@ -203,22 +201,22 @@ weechat_lua_exec (struct t_plugin_script *script, lua_State *interpreter,
 
     ret_value = NULL;
 
-    if (lua_pcall (interpreter, argc, 1, 0) == 0)
+    if (lua_pcall (lua_current_interpreter, argc, 1, 0) == 0)
     {
         if (ret_type == WEECHAT_SCRIPT_EXEC_STRING)
         {
-            ret_value = strdup ((char *) lua_tostring (interpreter, -1));
+            ret_value = strdup ((char *) lua_tostring (lua_current_interpreter, -1));
         }
         else if (ret_type == WEECHAT_SCRIPT_EXEC_INT)
         {
             ret_i = malloc (sizeof (*ret_i));
             if (ret_i)
-                *ret_i = lua_tonumber (interpreter, -1);
+                *ret_i = lua_tonumber (lua_current_interpreter, -1);
             ret_value = ret_i;
         }
         else if (ret_type == WEECHAT_SCRIPT_EXEC_HASHTABLE)
         {
-            ret_value = weechat_lua_tohashtable (interpreter, -1,
+            ret_value = weechat_lua_tohashtable (lua_current_interpreter, -1,
                                                  WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
                                                  WEECHAT_HASHTABLE_STRING,
                                                  WEECHAT_HASHTABLE_STRING);
@@ -236,10 +234,10 @@ weechat_lua_exec (struct t_plugin_script *script, lua_State *interpreter,
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: error: %s"),
                         weechat_prefix ("error"), LUA_PLUGIN_NAME,
-                        lua_tostring (interpreter, -1));
+                        lua_tostring (lua_current_interpreter, -1));
     }
 
-    lua_pop (interpreter, 1);
+    lua_pop (lua_current_interpreter, 1);
 
     lua_current_script = old_lua_current_script;
     lua_current_interpreter = old_lua_current_interpreter;
@@ -498,7 +496,7 @@ weechat_lua_unload (struct t_plugin_script *script)
 
     if (script->shutdown_func && script->shutdown_func[0])
     {
-        rc = (int *)weechat_lua_exec (script, NULL,
+        rc = (int *)weechat_lua_exec (script,
                                       WEECHAT_SCRIPT_EXEC_INT,
                                       script->shutdown_func,
                                       NULL, NULL);

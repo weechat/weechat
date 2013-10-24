@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.3-dev, 2013-10-19
+v0.4.3-dev, 2013-10-24
 
 
 This document lists all changes for each version.
@@ -20,6 +20,7 @@ Version 0.4.3 (under dev!)
 * irc: add option irc.look.notice_welcome_tags
 * irc: add server option "default_msg_kick" to customize default kick/kickban
   message (task #12777)
+* lua: fix crash on calls to callbacks during load of script
 
 Version 0.4.2 (2013-10-06)
 --------------------------
