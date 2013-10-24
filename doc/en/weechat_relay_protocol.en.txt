@@ -29,21 +29,21 @@ Network diagram
 The 'clients' are connected to 'relay' like shown in this diagram:
 
 .......................................
-                                                      ┌──────────┐
- ┌────────┐                                     ┌─────┤ client 1 │ Workstation (Linux, BSD, Mac OS X, Windows, ...)
- │  irc   │◄───┐   ╔═════════════╤═══════╗      │     └──────────┘
- └────────┘    └───╢             │       ║◄─────┘     ┌──────────┐
-   ......          ║   WeeChat   │ Relay ║◄───────────┤ client 2 │ Mobile device (Android, iPhone, ...)
- ┌────────┐    ┌───╢             │       ║◄─────┐     └──────────┘
- │ jabber │◄───┘   ╚═════════════╧═══════╝      │        ......
- └────────┘                                     │     ┌──────────┐
-   ......                                       └─────┤ client N │ Other devices
-                                                      └──────────┘
+                                              ┌──────────┐ Workstation
+ ┌────────┐                               ┌───┤ client 1 │ (Linux, Windows,
+ │  irc   │◄──┐  ╔═══════════╤═══════╗    │   └──────────┘ BSD, Mac OS X ...)
+ └────────┘   └──╢           │       ║◄───┘   ┌──────────┐
+   ......        ║  WeeChat  │ Relay ║◄───────┤ client 2 │ Mobile device
+ ┌────────┐   ┌──╢           │       ║◄───┐   └──────────┘ (Android, iPhone ...)
+ │ jabber │◄──┘  ╚═══════════╧═══════╝    │      ......
+ └────────┘                               │   ┌──────────┐
+   ......                                 └───┤ client N │ Other devices
+                                              └──────────┘
 
 
-└─────────────┘    └─────────────────────┘╘══════════╛└──────────────────────┘
-network servers       ncurses interface      relay       remote interfaces
-                                            protocol
+└────────────┘   └───────────────────┘╘══════╛└────────────────────────────────┘
+network servers    ncurses interface    relay         remote interfaces
+                                      protocol
 ........................................
 
 [NOTE]
@@ -82,7 +82,7 @@ Fields are:
 
 List of available commands (detail in next chapters):
 
-[width="60%",cols="^3m,14",options="header"]
+[width="80%",cols="^3m,14",options="header"]
 |=====================================================
 | Command  | Description
 | init     | Initialize connection with 'relay'
@@ -417,7 +417,7 @@ test
 
 Returned objects (in this order):
 
-[width="60%",cols="^3,3m,7m",options="header"]
+[width="80%",cols="^3,3m,5m",options="header"]
 |=====================================================
 | Type              | Type (in message) | Value
 | char              | chr               | 65 ("A")
@@ -526,7 +526,7 @@ There are two different identifiers ('id'):
 
 WeeChat reserved identifiers:
 
-[width="100%",cols="5m,5,3,4,7",options="header"]
+[width="100%",cols="5,5,3,4,7",options="header"]
 |=====================================================
 | Identifier               | Description                 | Received with sync | Data sent              | Recommended action in client
 | _buffer_opened           | Buffer opened               | buffers / buffer   | hdata: buffer          | Open buffer
@@ -556,7 +556,7 @@ It is sent to the client when the signal "buffer_opened" is sent by WeeChat.
 
 Data sent as hdata:
 
-[width="60%",cols="3m,2,7",options="header"]
+[width="100%",cols="3m,2,10",options="header"]
 |=====================================================
 | Name            | Type      | Description
 | number          | integer   | Buffer number (≥ 1)
@@ -599,7 +599,7 @@ It is sent to the client when the signal "buffer_moved" is sent by WeeChat.
 
 Data sent as hdata:
 
-[width="60%",cols="3m,2,7",options="header"]
+[width="100%",cols="3m,2,10",options="header"]
 |=====================================================
 | Name            | Type      | Description
 | number          | integer   | Buffer number (≥ 1)
@@ -632,7 +632,7 @@ It is sent to the client when the signal "buffer_merged" is sent by WeeChat.
 
 Data sent as hdata:
 
-[width="60%",cols="3m,2,7",options="header"]
+[width="100%",cols="3m,2,10",options="header"]
 |=====================================================
 | Name            | Type      | Description
 | number          | integer   | Buffer number (≥ 1)
@@ -665,7 +665,7 @@ It is sent to the client when the signal "buffer_unmerged" is sent by WeeChat.
 
 Data sent as hdata:
 
-[width="60%",cols="3m,2,7",options="header"]
+[width="100%",cols="3m,2,10",options="header"]
 |=====================================================
 | Name            | Type      | Description
 | number          | integer   | Buffer number (≥ 1)
@@ -698,7 +698,7 @@ It is sent to the client when the signal "buffer_renamed" is sent by WeeChat.
 
 Data sent as hdata:
 
-[width="60%",cols="3m,2,7",options="header"]
+[width="100%",cols="3m,2,10",options="header"]
 |=====================================================
 | Name            | Type      | Description
 | number          | integer   | Buffer number (≥ 1)
@@ -733,7 +733,7 @@ WeeChat.
 
 Data sent as hdata:
 
-[width="60%",cols="3m,2,7",options="header"]
+[width="100%",cols="3m,2,10",options="header"]
 |=====================================================
 | Name            | Type      | Description
 | number          | integer   | Buffer number (≥ 1)
@@ -764,7 +764,7 @@ It is sent to the client when the signal "buffer_type_changed" is sent by WeeCha
 
 Data sent as hdata:
 
-[width="60%",cols="3m,2,7",options="header"]
+[width="100%",cols="3m,2,10",options="header"]
 |=====================================================
 | Name            | Type      | Description
 | number          | integer   | Buffer number (≥ 1)
@@ -797,7 +797,7 @@ WeeChat.
 
 Data sent as hdata:
 
-[width="60%",cols="3m,2,7",options="header"]
+[width="100%",cols="3m,2,10",options="header"]
 |=====================================================
 | Name            | Type      | Description
 | number          | integer   | Buffer number (≥ 1)
@@ -831,7 +831,7 @@ WeeChat.
 
 Data sent as hdata:
 
-[width="60%",cols="3m,2,7",options="header"]
+[width="100%",cols="3m,2,10",options="header"]
 |=====================================================
 | Name            | Type      | Description
 | number          | integer   | Buffer number (≥ 1)
@@ -865,7 +865,7 @@ WeeChat.
 
 Data sent as hdata:
 
-[width="60%",cols="3m,2,7",options="header"]
+[width="100%",cols="3m,2,10",options="header"]
 |=====================================================
 | Name            | Type      | Description
 | number          | integer   | Buffer number (≥ 1)
@@ -897,7 +897,7 @@ It is sent to the client when the signal "buffer_line_added" is sent by WeeChat.
 
 Data sent as hdata:
 
-[width="60%",cols="3m,2,7",options="header"]
+[width="100%",cols="3m,2,10",options="header"]
 |=====================================================
 | Name            | Type             | Description
 | buffer          | pointer          | Buffer pointer
@@ -939,7 +939,7 @@ It is sent to the client when the signal "buffer_closing" is sent by WeeChat.
 
 Data sent as hdata:
 
-[width="60%",cols="3m,2,7",options="header"]
+[width="100%",cols="3m,2,10",options="header"]
 |=====================================================
 | Name            | Type      | Description
 | number          | integer   | Buffer number (≥ 1)
@@ -972,7 +972,7 @@ another message with identifier '_nicklist_diff' is sent (see below).
 
 Data sent as hdata:
 
-[width="60%",cols="3m,2,7",options="header"]
+[width="100%",cols="3m,2,10",options="header"]
 |=====================================================
 | Name            | Type     | Description
 | group           | char     | 1 for a group, 0 for a nick
@@ -1061,7 +1061,7 @@ nicklist and current one).
 
 Data sent as hdata:
 
-[width="60%",cols="3m,2,7",options="header"]
+[width="100%",cols="3m,2,10",options="header"]
 |=====================================================
 | Name            | Type     | Description
 | _diff           | char     | Type of diff (see below)
@@ -1196,7 +1196,7 @@ Objects
 Objects are identified by 3 letters, called 'type'. Following types are
 available:
 
-[width="60%",cols="^2m,5,7",options="header"]
+[width="100%",cols="^2m,5,10",options="header"]
 |=====================================================
 | Type | Value                | Length
 | chr  | Signed char          | 1 byte
@@ -1373,8 +1373,8 @@ Example:
 
 .......................................
 ┌─────┬─────┬───╥──────┬─────╥──────┬─────┐
-│ str │ str │ 2 ║ key1 │ abc ║ key2 │ def │ ────► { 'key1' => 'abc', 'key2' => 'def' }
-└─────┴─────┴───╨──────┴─────╨──────┴─────┘
+│ str │ str │ 2 ║ key1 │ abc ║ key2 │ def │ ────► { 'key1' => 'abc',
+└─────┴─────┴───╨──────┴─────╨──────┴─────┘         'key2' => 'def' }
  └───┘ └───┘ └─┘ └──────────┘ └──────────┘
  type  type count   item 1       item 2
  keys values
@@ -1388,9 +1388,13 @@ A 'hdata' contains a path with hdata names, list of keys, number of set of
 objects, and then set of objects (path with pointers, then objects).
 
 .......................................
-┌────────┬──────┬───────╥────────┬─────────────────────╥────────┬─────────────────────╥─────┐
-│ h-path │ keys │ count ║ p-path │ value 1 ... value N ║ p-path │ value 1 ... value N ║ ... │
-└────────┴──────┴───────╨────────┴─────────────────────╨────────┴─────────────────────╨─────┘
+┌────────┬──────┬───────╥────────┬─────────────────────╥──
+│ h-path │ keys │ count ║ p-path │ value 1 ... value N ║ ...
+└────────┴──────┴───────╨────────┴─────────────────────╨──
+
+  ──╥────────┬─────────────────────╥─────┐
+... ║ p-path │ value 1 ... value N ║ ... │
+  ──╨────────┴─────────────────────╨─────┘
 .......................................
 
 * 'h-path' (string): path used to reach hdata (example:
@@ -1411,11 +1415,17 @@ Example of hdata with 2 buffers (weechat core and freenode server) and two keys
 hdata buffer:gui_buffers(*) number,full_name
 
 # response
-┌────────┬──────────────────────────┬───╥─────────┬───┬──────────────╥─────────┬───┬────────────────────┐
-│ buffer │ number:int,full_name:str │ 2 ║ 0x12345 │ 1 │ core.weechat ║ 0x6789a │ 2 │irc.server.freenode │
-└────────┴──────────────────────────┴───╨─────────┴───┴──────────────╨─────────┴───┴────────────────────┘
- └──────┘ └────────────────────────┘ └─┘ └──────────────────────────┘ └────────────────────────────────┘
-  h-path          keys              count          buffer 1                        buffer 2
+┌────────┬──────────────────────────┬───╥──
+│ buffer │ number:int,full_name:str │ 2 ║ ...
+└────────┴──────────────────────────┴───╨──
+ └──────┘ └────────────────────────┘ └─┘
+  h-path          keys              count
+
+  ──╥─────────┬───┬──────────────╥─────────┬───┬────────────────────┐
+... ║ 0x12345 │ 1 │ core.weechat ║ 0x6789a │ 2 │irc.server.freenode │
+  ──╨─────────┴───┴──────────────╨─────────┴───┴────────────────────┘
+     └──────────────────────────┘ └────────────────────────────────┘
+              buffer 1                        buffer 2
 .......................................
 
 Example of hdata with lines of core buffer:
@@ -1431,13 +1441,21 @@ hdata buffer:gui_buffers(*)/lines/first_line(*)/data
  └───────────────────────────┘ └───┘ └──┘
       h-path (hdata names)     keys  count
 
-  ──╥───────────┬───────────┬───────────┬───────╥───────────┬───────────┬───────────┬───────╥──────────────┐
-... ║ 0x23cf970 │ 0x23cfb60 │ 0x23d5f40 │ ..... ║ 0x23cf970 │ 0x23cfb60 │ 0x23d6110 │ ..... ║ ............ │
-  ──╨───────────┴───────────┴───────────┴───────╨───────────┴───────────┴───────────┴───────╨──────────────┘
-     └─────────────────────────────────┘ └─────┘ └─────────────────────────────────┘ └─────┘
-              p-path (pointers)          objects          p-path (pointers)          objects
-     └─────────────────────────────────────────┘ └─────────────────────────────────────────┘ └────────────┘
-                        line 1                                      line 2                     lines 3-50
+  ──╥───────────┬───────────┬───────────┬───────╥──
+... ║ 0x23cf970 │ 0x23cfb60 │ 0x23d5f40 │ ..... ║ ...
+  ──╨───────────┴───────────┴───────────┴───────╨──
+     └─────────────────────────────────┘ └─────┘
+              p-path (pointers)          objects
+     └─────────────────────────────────────────┘
+                        line 1
+
+  ──╥───────────┬───────────┬───────────┬───────╥──────────────┐
+... ║ 0x23cf970 │ 0x23cfb60 │ 0x23d6110 │ ..... ║ ............ │
+  ──╨───────────┴───────────┴───────────┴───────╨──────────────┘
+     └─────────────────────────────────┘ └─────┘
+              p-path (pointers)          objects
+     └─────────────────────────────────────────┘ └────────────┘
+                        line 2                     lines 3-50
 .......................................
 
 Example of hdata with nicklist:
@@ -1447,19 +1465,33 @@ Example of hdata with nicklist:
 nicklist
 
 # response
-┌───────────────────┬────────────────────────────────────────────────────────────────────────────────┬────╥──
-│ buffer/nick_group │ group:chr,visible:chr,name:str,color:str,prefix:str,prefix_color:str,level:int │ 12 ║ ...
-└───────────────────┴────────────────────────────────────────────────────────────────────────────────┴────╨──
- └─────────────────┘ └──────────────────────────────────────────────────────────────────────────────┘ └──┘
-        h-path                                            keys                                        count
+┌───────────────────┬──
+│ buffer/nick_group │ ...
+└───────────────────┴──
+ └─────────────────┘
+        h-path
 
-  ──╥─────────┬─────────┬───┬───┬──────┬─┬─┬─┬───╥─────────┬─────────┬───┬───┬───────┬─┬─┬─┬───╥──
-... ║ 0x12345 │ 0x6789a │ 1 │ 0 │ root │ │ │ │ 0 ║ 0x123cf │ 0x678d4 │ 1 │ 0 │ 000|o │ │ │ │ 1 ║ ...
-  ──╨─────────┴─────────┴───┴───┴──────┴─┴─┴─┴───╨─────────┴─────────┴───┴───┴───────┴─┴─┴─┴───╨──
-     └─────────────────┘ └──────────────────────┘ └─────────────────┘ └───────────────────────┘
-            p-path               objects                 p-path                objects
-     └──────────────────────────────────────────┘ └───────────────────────────────────────────┘
-                 group (nicklist root)                          group (channel ops)
+  ──╥───────────────────────────────────────────────────────────┬────╥──
+... ║ group:chr,visible:chr,name:str,color:str,prefix:str,(...) │ 12 ║ ...
+  ──╨───────────────────────────────────────────────────────────┴────╨──
+     └─────────────────────────────────────────────────────────┘ └──┘
+                                keys                             count
+
+  ──╥─────────┬─────────┬───┬───┬──────┬─┬─┬─┬───╥──
+... ║ 0x12345 │ 0x6789a │ 1 │ 0 │ root │ │ │ │ 0 ║ ...
+  ──╨─────────┴─────────┴───┴───┴──────┴─┴─┴─┴───╨──
+     └─────────────────┘ └──────────────────────┘
+            p-path               objects
+     └──────────────────────────────────────────┘
+                 group (nicklist root)
+
+  ──╥─────────┬─────────┬───┬───┬───────┬─┬─┬─┬───╥──
+... ║ 0x123cf │ 0x678d4 │ 1 │ 0 │ 000|o │ │ │ │ 1 ║ ...
+  ──╨─────────┴─────────┴───┴───┴───────┴─┴─┴─┴───╨──
+     └─────────────────┘ └───────────────────────┘
+            p-path                objects
+     └───────────────────────────────────────────┘
+                   group (channel ops)
 
   ──╥─────────┬─────────┬───┬───┬──────────┬──────┬───┬────────────┬───╥──
 ... ║ 0x128a7 │ 0x67ab2 │ 0 │ 1 │ ChanServ │ blue │ @ │ lightgreen │ 0 ║ ...
@@ -1529,11 +1561,17 @@ Example of infolist with 2 buffers (weechat core and freenode server):
 infolist buffer
 
 # response
-┌────────┬───╥────┬─────────┬─────┬─────────┬─────╥────┬─────────┬─────┬─────────┬─────┐
-│ buffer │ 2 ║ 42 │ pointer │ ptr │ 0x12345 │ ... ║ 42 │ pointer │ ptr │ 0x6789a │ ... │
-└────────┴───╨────┴─────────┴─────┴─────────┴─────╨────┴─────────┴─────┴─────────┴─────┘
- └──────┘ └─┘ └──────────────────────────────────┘ └──────────────────────────────────┘
-   name  count              item 1                               item 2
+┌────────┬───╥────┬─────────┬─────┬─────────┬─────╥──
+│ buffer │ 2 ║ 42 │ pointer │ ptr │ 0x12345 │ ... ║ ...
+└────────┴───╨────┴─────────┴─────┴─────────┴─────╨──
+ └──────┘ └─┘ └──────────────────────────────────┘
+   name  count              item 1
+
+  ──╥────┬─────────┬─────┬─────────┬─────┐
+... ║ 42 │ pointer │ ptr │ 0x6789a │ ... │
+  ──╨────┴─────────┴─────┴─────────┴─────┘
+     └──────────────────────────────────┘
+                   item 2
 .......................................
 
 [[object_array]]
@@ -1545,21 +1583,33 @@ An array is a type (3 bytes) + number of items (integer on 4 bytes) + data.
 Example of array with 2 strings:
 
 .......................................
-┌─────╥────┬────┬────┬────╥────┬────┬────┬────╥────┬────┬────╥────┬────┬────┬────╥────┬────┐
-│ str ║ 00 │ 00 │ 00 │ 02 ║ 00 │ 00 │ 00 │ 03 ║ 61 │ 62 │ 63 ║ 00 │ 00 │ 00 │ 02 ║ 64 │ 65 │ ────► { "abc", "de" }
-└─────╨────┴────┴────┴────╨────┴────┴────┴────╨────┴────┴────╨────┴────┴────┴────╨────┴────┘
- └───┘ └─────────────────┘ └─────────────────┘ └────────────┘ └─────────────────┘ └───────┘
- type   number of strings        length         'a'  'b'  'c'       length         'd'  'e'
+┌─────╥────┬────┬────┬────╥────┬────┬────┬────╥──
+│ str ║ 00 │ 00 │ 00 │ 02 ║ 00 │ 00 │ 00 │ 03 ║ ...
+└─────╨────┴────┴────┴────╨────┴────┴────┴────╨──
+ └───┘ └─────────────────┘ └─────────────────┘
+ type   number of strings        length
+
+  ──╥────┬────┬────╥────┬────┬────┬────╥────┬────┐
+... ║ 61 │ 62 │ 63 ║ 00 │ 00 │ 00 │ 02 ║ 64 │ 65 │ ────► { "abc", "de" }
+  ──╨────┴────┴────╨────┴────┴────┴────╨────┴────┘
+     └────────────┘ └─────────────────┘ └───────┘
+      'a'  'b'  'c'       length         'd'  'e'
 .......................................
 
 Example of array with 3 integers:
 
 .......................................
-┌─────╥────┬────┬────┬────╥────┬────┬────┬────╥────┬────┬────┬────╥────┬────┬────┬────┐
-│ int ║ 00 │ 00 │ 00 │ 03 ║ 00 │ 00 │ 00 │ 7B ║ 00 │ 00 │ 01 │ C8 ║ 00 │ 00 │ 03 │ 15 │ ────► { 123, 456, 789 }
-└─────╨────┴────┴────┴────╨────┴────┴────┴────╨────┴────┴────┴────╨────┴────┴────┴────┘
- └───┘ └─────────────────┘ └─────────────────┘ └─────────────────┘ └─────────────────┘
- type   number of integers      123 (0x7B)         456 (0x1C8)         789 (0x315)
+┌─────╥────┬────┬────┬────╥────┬────┬────┬────╥──
+│ int ║ 00 │ 00 │ 00 │ 03 ║ 00 │ 00 │ 00 │ 7B ║ ...
+└─────╨────┴────┴────┴────╨────┴────┴────┴────╨──
+ └───┘ └─────────────────┘ └─────────────────┘
+ type   number of integers      123 (0x7B)
+
+  ──╥────┬────┬────┬────╥────┬────┬────┬────┐
+... ║ 00 │ 00 │ 01 │ C8 ║ 00 │ 00 │ 03 │ 15 │ ────► { 123, 456, 789 }
+  ──╨────┴────┴────┴────╨────┴────┴────┴────┘
+     └─────────────────┘ └─────────────────┘
+         456 (0x1C8)         789 (0x315)
 .......................................
 
 A 'NULL' array:
@@ -1577,47 +1627,47 @@ Typical session
 ---------------
 
 .......................................
-          ┌────────┐                               ┌───────┐                  ┌─────────┐
-          │ Client ├ ─ ─ ─ ─ ─ (network) ─ ─ ─ ─ ─ ┤ Relay ├──────────────────┤ WeeChat │
-          └────────┘                               └───────┘                  └─────────┘
-               ║                                       ║                           ║
-               ╟─────────────────────────────────────► ║                           ║
-               ║ open socket                           ║ add client                ║
-               ║                                       ║                           ║
-               ╟─────────────────────────────────────► ║                           ║
-               ║ cmd: init password=xxx,...            ║ init/allow client         ║
-               ║                                       ║                           ║
-               ╟─────────────────────────────────────► ║                           ║
-               ║ cmd: hdata buffer ...                 ╟─────────────────────────► ║
-               ║      sync ...                         ║ request hdata             ║ read hdata values
-               ║                                       ║                           ║
-               ║                                       ║ ◄─────────────────────────╢
-               ║ ◄─────────────────────────────────────╢                     hdata ║
-create buffers ║                       msg: hda buffer ║                           ║
-               ║                                       ║                           ║
-               ║                ........               ║          ........         ║
-               ║                                       ║                           ║
-               ╟─────────────────────────────────────► ║                           ║
-               ║ cmd: input ...                        ╟─────────────────────────► ║
-               ║                                       ║ send data to buffer       ║ send data to buffer
-               ║                                       ║                           ║
-               ║                ........               ║          ........         ║
-               ║                                       ║                           ║ signal received
-               ║                                       ║ ◄─────────────────────────╢ (hooked by relay)
-               ║ ◄─────────────────────────────────────╢                signal XXX ║
-update buffers ║                msg: id: "_buffer_..." ║                           ║
-               ║                                       ║                           ║
-               ║                ........               ║          ........         ║
-               ║                                       ║                           ║
-               ╟─────────────────────────────────────► ║                           ║
-               ║ cmd: ping ...                         ║                           ║
-               ║                                       ║                           ║
-               ║ ◄─────────────────────────────────────╢                           ║
-   measure lag ║                  msg: id: "_pong" ... ║                           ║
-               ║                                       ║                           ║
-               ║                ........               ║          ........         ║
-               ║                                       ║                           ║
-               ╟─────────────────────────────────────► ║                           ║
-               ║ cmd: quit                             ║ disconnect client         ║
-               ║                                       ║                           ║
+    ┌────────┐                         ┌───────┐                ┌─────────┐
+    │ Client ├ ─ ─ ─ ─(network)─ ─ ─ ─ ┤ Relay ├────────────────┤ WeeChat │
+    └────────┘                         └───────┘                └─────────┘
+         ║                                 ║                         ║
+         ╟───────────────────────────────► ║                         ║
+         ║ open socket                     ║ add client              ║
+         ║                                 ║                         ║
+         ╟───────────────────────────────► ║                         ║
+         ║ cmd: init password=xxx,...      ║ init/allow client       ║
+         ║                                 ║                         ║
+         ╟───────────────────────────────► ║                         ║
+         ║ cmd: hdata buffer ...           ╟───────────────────────► ║
+         ║      sync ...                   ║ request hdata           ║ read hdata
+         ║                                 ║                         ║ values
+         ║                                 ║ ◄───────────────────────╢
+         ║ ◄───────────────────────────────╢                   hdata ║
+  create ║                 msg: hda buffer ║                         ║
+ buffers ║                                 ║                         ║
+         ║            ........             ║         ........        ║
+         ║                                 ║                         ║
+         ╟───────────────────────────────► ║                         ║
+         ║ cmd: input ...                  ╟───────────────────────► ║
+         ║                                 ║ send data to buffer     ║ send data
+         ║                                 ║                         ║ to buffer
+         ║            ........             ║         ........        ║
+         ║                                 ║                         ║ signal
+         ║                                 ║ ◄───────────────────────╢ received
+         ║ ◄───────────────────────────────╢              signal XXX ║ (hooked by
+ update  ║          msg: id: "_buffer_..." ║                         ║ relay)
+ buffers ║                                 ║                         ║
+         ║            ........             ║         ........        ║
+         ║                                 ║                         ║
+         ╟───────────────────────────────► ║                         ║
+         ║ cmd: ping ...                   ║                         ║
+         ║                                 ║                         ║
+         ║ ◄───────────────────────────────╢                         ║
+ measure ║            msg: id: "_pong" ... ║                         ║
+     lag ║                                 ║                         ║
+         ║            ........             ║         ........        ║
+         ║                                 ║                         ║
+         ╟───────────────────────────────► ║                         ║
+         ║ cmd: quit                       ║ disconnect client       ║
+         ║                                 ║                         ║
 .......................................
