@@ -751,32 +751,32 @@ All combinations are summarized in this table:
 
 [width="100%",cols="3,2,1,5",options="header"]
 |========================================
-| Code                                 | Example                | Areas       | Description
-| @h(19) + STD                         | @h(19)`01`             | chat + bars | Set attributes and color using option, see table below
-| @h(19) + EXT                         | @h(19)`@00001`         | chat        | Set color with a ncurses pair (used only on `/color` buffer)
-| @h(19) + "F" + (A)STD                | @h(19)`F*05`           | chat + bars | Set foreground (WeeChat color)
-| @h(19) + "F" + (A)EXT                | @h(19)`F@00214`        | chat + bars | Set foreground (extended color)
-| @h(19) + "B" + STD                   | @h(19)`B05`            | chat + bars | Set background (WeeChat color)
-| @h(19) + "B" + EXT                   | @h(19)`B@00124`        | chat + bars | Set background (extended color)
-| @h(19) + "*" + (A)STD                | @h(19)`*05`            | chat + bars | Set foreground (WeeChat color)
-| @h(19) + "*" + (A)EXT                | @h(19)`*@00214`        | chat + bars | Set foreground (extended color)
-| @h(19) + "*" + (A)STD + "," + (A)STD | @h(19)`*08,05`         | chat + bars | Set foreground/background (WeeChat colors)
-| @h(19) + "*" + (A)STD + "," + (A)EXT | @h(19)`*01,@00214`     | chat + bars | Set foreground (WeeChat color) and background (extended color)
-| @h(19) + "*" + (A)EXT + "," + (A)STD | @h(19)`*@00214,05`     | chat + bars | Set foreground (extended color) and background (WeeChat color)
-| @h(19) + "*" + (A)EXT + "," + (A)EXT | @h(19)`*@00214,@00017` | chat + bars | Set foreground/background (extended colors)
-| @h(19) + "b" + "F"                   | @h(19)`bF`             | bars        | Set bar foreground color
-| @h(19) + "b" + "D"                   | @h(19)`bD`             | bars        | Set bar delimiter color
-| @h(19) + "b" + "B"                   | @h(19)`bB`             | bars        | Set bar background color
-| @h(19) + "b" + "_"                   | @h(19)`b_`             | input bar   | Start input char (used only in item "input_text")
-| @h(19) + "b" + "-"                   | @h(19)`b-`             | input bar   | Start input hidden char (used only in item "input_text")
-| @h(19) + "b" + "#"                   | @h(19)`b#`             | input bar   | Move cursor char char (used only in item "input_text")
-| @h(19) + "b" + "i"                   | @h(19)`bi`             | bars        | Start item
-| @h(19) + "b" + "l" (lower L)         | @h(19)`bl`             | bars        | Start line item
-| @h(19) + "E"                         | @h(19)`E`              | chat + bars | Emphasize text _(new in version 0.4.2)_
-| @h(19) + @h(1C)                      | @h(19)@h(1C)           | chat + bars | Reset color (keep attributes)
-| @h(1A) + ATTR                        | @h(1A)`*`              | chat + bars | Set attribute
-| @h(1B) + ATTR                        | @h(1B)`*`              | chat + bars | Remove attribute
-| @h(1C)                               | @h(1C)                 | chat + bars | Reset attributes and color
+| Code                              | Example                | Areas       | Description
+| @h(19) + STD                      | @h(19)`01`             | chat + bars | Set attributes and color using option, see table below
+| @h(19) + EXT                      | @h(19)`@00001`         | chat        | Set color with a ncurses pair (used only on `/color` buffer)
+| @h(19) + "F" + (A)STD             | @h(19)`F*05`           | chat + bars | Set foreground (WeeChat color)
+| @h(19) + "F" + (A)EXT             | @h(19)`F@00214`        | chat + bars | Set foreground (extended color)
+| @h(19) + "B" + STD                | @h(19)`B05`            | chat + bars | Set background (WeeChat color)
+| @h(19) + "B" + EXT                | @h(19)`B@00124`        | chat + bars | Set background (extended color)
+| @h(19) + "*" + (A)STD             | @h(19)`*05`            | chat + bars | Set foreground (WeeChat color)
+| @h(19) + "*" + (A)EXT             | @h(19)`*@00214`        | chat + bars | Set foreground (extended color)
+| @h(19) + "*" + (A)STD + "," + STD | @h(19)`*08,05`         | chat + bars | Set foreground/background (WeeChat colors)
+| @h(19) + "*" + (A)STD + "," + EXT | @h(19)`*01,@00214`     | chat + bars | Set foreground (WeeChat color) and background (extended color)
+| @h(19) + "*" + (A)EXT + "," + STD | @h(19)`*@00214,05`     | chat + bars | Set foreground (extended color) and background (WeeChat color)
+| @h(19) + "*" + (A)EXT + "," + EXT | @h(19)`*@00214,@00017` | chat + bars | Set foreground/background (extended colors)
+| @h(19) + "b" + "F"                | @h(19)`bF`             | bars        | Set bar foreground color
+| @h(19) + "b" + "D"                | @h(19)`bD`             | bars        | Set bar delimiter color
+| @h(19) + "b" + "B"                | @h(19)`bB`             | bars        | Set bar background color
+| @h(19) + "b" + "_"                | @h(19)`b_`             | input bar   | Start input char (used only in item "input_text")
+| @h(19) + "b" + "-"                | @h(19)`b-`             | input bar   | Start input hidden char (used only in item "input_text")
+| @h(19) + "b" + "#"                | @h(19)`b#`             | input bar   | Move cursor char char (used only in item "input_text")
+| @h(19) + "b" + "i"                | @h(19)`bi`             | bars        | Start item
+| @h(19) + "b" + "l" (lower L)      | @h(19)`bl`             | bars        | Start line item
+| @h(19) + "E"                      | @h(19)`E`              | chat + bars | Emphasize text _(new in version 0.4.2)_
+| @h(19) + @h(1C)                   | @h(19)@h(1C)           | chat + bars | Reset color (keep attributes)
+| @h(1A) + ATTR                     | @h(1A)`*`              | chat + bars | Set attribute
+| @h(1B) + ATTR                     | @h(1B)`*`              | chat + bars | Remove attribute
+| @h(1C)                            | @h(1C)                 | chat + bars | Reset attributes and color
 |========================================
 
 Color codes using options (see 't_gui_color_enum', in file 'src/gui/gui-color.h'):
@@ -865,7 +865,7 @@ Examples of color codes:
 | @h(19)`*@*_00214,@00017` | Bold underlined orange (214) on dark blue (17)
 | @h(1A)`_`                | Set underline
 | @h(1B)`_`                | Remove underline
-| @h(1C)`bD`               | Reset attributes and color
+| @h(1C)                   | Reset attributes and color
 |========================================
 
 [[plugin_internals]]
