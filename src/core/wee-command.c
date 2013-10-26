@@ -3029,7 +3029,7 @@ COMMAND_CALLBACK(key)
 
         /* bind new key */
         if (CONFIG_BOOLEAN(config_look_key_bind_safe)
-            && !gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, argv[3]))
+            && !gui_key_is_safe (context, argv[3]))
         {
             gui_chat_printf (NULL,
                              _("%sError: it is not safe to bind key \"%s\" because "
