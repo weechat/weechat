@@ -2133,6 +2133,7 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
                          int manual_join, int noswitch)
 {
     char *new_args, **channels, **keys, *pos_space, *pos_keys, *pos_channel;
+    char *channel_name;
     int i, num_channels, num_keys, length;
     int time_now;
     struct t_irc_channel *ptr_channel;
@@ -2216,18 +2217,23 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
                 strcat (new_args, channels[i]);
                 if (manual_join || noswitch)
                 {
-                    weechat_string_tolower (channels[i]);
-                    if (manual_join)
+                    channel_name = strdup (pos_channel);
+                    if (channel_name)
                     {
-                        weechat_hashtable_set (server->join_manual,
-                                               channels[i],
-                                               &time_now);
-                    }
-                    if (noswitch)
-                    {
-                        weechat_hashtable_set (server->join_noswitch,
-                                               channels[i],
-                                               &time_now);
+                        weechat_string_tolower (channel_name);
+                        if (manual_join)
+                        {
+                            weechat_hashtable_set (server->join_manual,
+                                                   channel_name,
+                                                   &time_now);
+                        }
+                        if (noswitch)
+                        {
+                            weechat_hashtable_set (server->join_noswitch,
+                                                   channel_name,
+                                                   &time_now);
+                        }
+                        free (channel_name);
                     }
                 }
                 if (keys && (i < num_keys))

@@ -20,6 +20,7 @@ Version 0.4.3 (under dev!)
 * core: fix truncated prefix when filters are toggled (bug #40204)
 * core: add options to customize default text search in buffers:
   weechat.look.buffer_search_{case_sensitive|force_default|regex|where}
+* irc: fix auto-switch to channel buffer when doing /join channel (without "#")
 * irc: add option irc.look.notice_welcome_tags
 * irc: add server option "default_msg_kick" to customize default kick/kickban
   message (task #12777)
