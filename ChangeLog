@@ -1,7 +1,7 @@
 WeeChat ChangeLog
 =================
 Sébastien Helleu <flashcode@flashtux.org>
-v0.4.3-dev, 2013-10-26
+v0.4.3-dev, 2013-10-27
 
 
 This document lists all changes for each version.
@@ -14,6 +14,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 Version 0.4.3 (under dev!)
 --------------------------
 
+* core: fix auto-apply of window layout in current window when option
+  irc.look.buffer_switch_autojoin is on
 * core: fix bind of keys in cursor/mouse context when key starts with "@"
   (remove the warning about unsafe key)
 * core: fix truncated prefix when filters are toggled (bug #40204)

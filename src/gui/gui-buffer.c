@@ -1492,6 +1492,7 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
 {
     long number;
     char *error;
+    int auto_switch;
 
     if (!property || !value)
         return;
@@ -1527,13 +1528,19 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     else if (string_strcasecmp (property, "display") == 0)
     {
         /*
-         * if it is auto-switch to a buffer, then we don't set read marker,
-         * otherwise we reset it (if current buffer is not displayed) after
-         * switch
+         * on "automatic" switch:
+         * - check if the buffer displayed in window is the buffer in layout:
+         *   if yes, do NOT switch to buffer
+         * - do NOT set the read marker
          */
-        gui_window_switch_to_buffer (gui_current_window, buffer,
-                                     (string_strcasecmp (value, "auto") == 0) ?
-                                     0 : 1);
+        auto_switch = (string_strcasecmp (value, "auto") == 0);
+        if (!auto_switch
+            || (gui_layout_window_check_buffer (gui_current_window) != 1))
+        {
+            gui_window_switch_to_buffer (gui_current_window,
+                                         buffer,
+                                         (auto_switch) ? 0 : 1);
+        }
     }
     else if (string_strcasecmp (property, "print_hooks_enabled") == 0)
     {

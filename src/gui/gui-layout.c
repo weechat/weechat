@@ -612,6 +612,34 @@ gui_layout_window_save (struct t_gui_layout *layout)
 }
 
 /*
+ * Checks whether a window has its layout buffer displayed or not.
+ *
+ * Returns:
+ *    1: the window has layout info and the proper buffer displayed
+ *    0: the window has layout info but NOT the proper buffer displayed
+ *   -1: the window has no layout info
+ */
+
+int
+gui_layout_window_check_buffer (struct t_gui_window *window)
+{
+    /* no layout? return -1 */
+    if (!window->layout_plugin_name || !window->layout_buffer_name)
+        return -1;
+
+    /* layout and buffer displayed matches? return 1 */
+    if ((strcmp (window->layout_plugin_name,
+                 gui_buffer_get_plugin_name (window->buffer)) == 0)
+        && (strcmp (window->layout_buffer_name, (window->buffer)->name) == 0))
+    {
+        return 1;
+    }
+
+    /* buffer displayed does not match the layout, return 0 */
+    return 0;
+}
+
+/*
  * Assigns a buffer to windows.
  */
 

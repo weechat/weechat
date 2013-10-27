@@ -105,6 +105,7 @@ extern struct t_gui_layout_window *gui_layout_window_add (struct t_gui_layout_wi
                                                           const char *plugin_name,
                                                           const char *buffer_name);
 extern void gui_layout_window_save (struct t_gui_layout *layout);
+extern int gui_layout_window_check_buffer (struct t_gui_window *window);
 extern void gui_layout_window_assign_buffer (struct t_gui_buffer *buffer);
 extern void gui_layout_window_apply (struct t_gui_layout *layout,
                                      int internal_id_current_window);
