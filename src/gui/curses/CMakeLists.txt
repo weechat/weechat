@@ -71,7 +71,7 @@ LIST(APPEND EXTRA_LIBS ${CURL_LIBRARIES})
 
 ADD_EXECUTABLE(${EXECUTABLE} ${WEECHAT_CURSES_SRC})
 
-INCLUDE_DIRECTORIES(.. ../../core ../../plugins)
+INCLUDE_DIRECTORIES(.. ../../core ../../plugins ${NCURSES_INCLUDE_PATH})
 
 # Because of a linker bug, we have to link 2 times with libweechat_core.a
 TARGET_LINK_LIBRARIES(${EXECUTABLE} ${STATIC_LIBS} ${EXTRA_LIBS} ${STATIC_LIBS})
