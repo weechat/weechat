@@ -34,7 +34,7 @@
 ** Werte: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (Standardwert: `red`)
 
 * [[option_irc.color.mirc_remap]] *irc.color.mirc_remap*
-** Beschreibung: `ersetzt mirc Farben in Nachrichten mittels einer Hashtabelle: Schlüssel sind "fg,bg" als Ganzzahl zwischen -1 (nicht angegeben) und 15. Als Wert ist der Farbname oder die Farbnummer von WeeChat möglich (Format: "1,-1:Farbe1;2,7:Farbe2"), Beispiel: "1,-1:darkgray;1,2:white,blue" ersetzt Schwarz durch "darkgray" und Schwarz auf Blau durch "white,blue"; Tabelle der Stardard-IRC-Farben von WeeChat: 0:weiß, 1:schwarz, 2:blau, 3:grün, 4:hellrot, 5:rot, 6:violett, 7:braun, 8:gelb, 9: hell-grün, 10:türkis, 11:hell-türkis, 12:hellblau, 13:hell-violett, 14:grau, 15:weiß`
+** Beschreibung: `ersetzt mirc Farben in Nachrichten mittels einer Hashtabelle: Schlüssel sind "fg,bg" als Ganzzahl zwischen -1 (nicht angegeben) und 15. Als Wert ist der Farbname oder die Farbnummer von WeeChat möglich (Format: "1,-1:Farbe1;2,7:Farbe2"), Beispiel: "1,-1:darkgray;1,2:white,blue" ersetzt Schwarz durch "darkgray" und Schwarz auf Blau durch "white,blue"; Tabelle der Standard-IRC-Farben von WeeChat: 0:weiß, 1:schwarz, 2:blau, 3:grün, 4:hellrot, 5:rot, 6:violett, 7:braun, 8:gelb, 9: hell-grün, 10:türkis, 11:hell-türkis, 12:hellblau, 13:hell-violett, 14:grau, 15:weiß`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"1,-1:darkgray"`)
 
@@ -74,17 +74,17 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.color_nicks_in_names]] *irc.look.color_nicks_in_names*
-** Beschreibung: `nutzt in der Ausgabe von /names die Nickfarbe des jeweiligen Nicks (oder bei der Auflistung der Nicks wenn man einen Channel betritt)`
+** Beschreibung: `nutzt in der Ausgabe von /names die jeweiligen Farbe des Nick (oder bei der Auflistung der Nicks wenn man einen Channel betritt)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_irc.look.color_nicks_in_nicklist]] *irc.look.color_nicks_in_nicklist*
-** Beschreibung: `Nutzt die Nickfarben in der Nicklist`
+** Beschreibung: `nutzt die Farbe des Nick in der Nicklist`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_irc.look.color_nicks_in_server_messages]] *irc.look.color_nicks_in_server_messages*
-** Beschreibung: `nutzt die Nickfarbe bei Nachrichten vom Server`
+** Beschreibung: `nutzt die Farbe des Nick bei Nachrichten vom Server`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -214,7 +214,7 @@
 ** Werte: none, next, near_server (Standardwert: `none`)
 
 * [[option_irc.look.nick_color_force]] *irc.look.nick_color_force*
-** Beschreibung: `erzwingt für einen Nick eine spezielle Farbe. Die standardmäßig, mittels Streuwertfunktion aus dem Nicknamen, generierte Nickfarbe findet für diese Nicks keine Anwendung (Format:"Nick1:Farbe1;Nick2:Farbe2"). Zuerst wird beim Nicknamen nach Groß- und Kleinschreibung unterschieden. Sollte der Nick nicht gefunden werden, findet keine Unterscheidung mehr statt. Somit ist es möglich die Nicks, in dieser Option, ausschließlich in Kleinschrift zu schreiben`
+** Beschreibung: `erzwingt für einen Nick eine spezielle Farbe. Die standardmäßig, mittels Streuwertfunktion aus dem Nicknamen, generierte Farbe findet für diese Nicks keine Anwendung (Format:"Nick1:Farbe1;Nick2:Farbe2"). Zuerst wird beim Namen des Nick nach Groß- und Kleinschreibung unterschieden. Sollte der Nick nicht gefunden werden, findet keine Unterscheidung mehr statt. Somit ist es möglich die Nicks, für dieser Option, ausschließlich in Kleinschrift aufzuführen`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -259,7 +259,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.notice_welcome_tags]] *irc.look.notice_welcome_tags*
-** Beschreibung: `comma separated list of tags used in a welcome notices redirected to a channel, for example: "notify_private"`
+** Beschreibung: `durch Kommata getrennte Liste von Schlagwörtern für Willkommen-Nachrichten die in einen Channel umgeleitet werden. Zum Beispiel: "notify_private"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -344,7 +344,7 @@
 ** Werte: 1 .. 100 (Standardwert: `2`)
 
 * [[option_irc.network.autoreconnect_delay_max]] *irc.network.autoreconnect_delay_max*
-** Beschreibung: `maximale Verzögerung bei der automatischen wiederverbindung zum Server (in Sekunden, 0 = keine Begrenzung)`
+** Beschreibung: `maximale Verzögerung bei der automatischen Wiederverbindung zum Server (in Sekunden, 0 = keine Begrenzung)`
 ** Typ: integer
 ** Werte: 0 .. 86400 (Standardwert: `1800`)
 
@@ -374,7 +374,7 @@
 ** Werte: 0 .. 604800 (Standardwert: `0`)
 
 * [[option_irc.network.lag_refresh_interval]] *irc.network.lag_refresh_interval*
-** Beschreibung: `Intervall zwischen zwei Aktualisierungen der Verzögerungsanzeige (Lag-Item), wenn die Verzögerungszeit sich erhöht (in Sekunden)`
+** Beschreibung: `Intervall zwischen zwei Aktualisierungen für die Anzeige der Verzögerung (Lag-Item), wenn die Verzögerungszeit sich erhöht (in Sekunden)`
 ** Typ: integer
 ** Werte: 1 .. 3600 (Standardwert: `1`)
 
@@ -419,7 +419,7 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_irc.server_default.autojoin]] *irc.server_default.autojoin*
-** Beschreibung: `comma separated list of channels to join when connected to server; the channels that require a key must be at beginning of the list, and all the keys must be given after the channels (separated by a space) (example: "#channel1,#channel2,#channel3 key1,key2" where #channel1 and #channel2 are protected by key1 and key2) (note: content is evaluated, see /help eval)`
+** Beschreibung: `durch Kommata getrennte Liste von Channels, die beim Verbinden mit dem Server automatisch betreten werden. Channels die einen Schlüssel benötigen müssen in der Auflistung als erstes aufgeführt werden. Die Schlüssel, zu den jeweiligen Channels, werden nach den Channels aufgeführt (eine Trennung von Channels und Schlüssel erfolgt mittels einem Leerzeichen. Schlüssel werden untereinander auch durch Kommata voneinander getrennt) (Beispiel: "#channel1,#channel2,#channnel3 key1,key2", #channel1 und #channel2 sind durch jeweils einen Schlüssel, key1 und key2, geschützt) (Hinweis: Inhalt wird evaluiert, siehe /help eval)"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -474,7 +474,7 @@
 ** Werte: 1 .. 3600 (Standardwert: `60`)
 
 * [[option_irc.server_default.default_msg_kick]] *irc.server_default.default_msg_kick*
-** Beschreibung: `default kick message used by commands "/kick" and "/kickban" (special variables $nick, $channel and $server are replaced by their value)`
+** Beschreibung: `Standardmitteilung einer kick-Nachricht, für die Befehle "/kick" und "/kickban" (Variablen die genutzt werden können: $nick, $channel und $server)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 

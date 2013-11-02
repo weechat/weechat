@@ -80,7 +80,7 @@ Beispiele:
    clear: leert den Inhalt des Buffers (entweder durch Angabe der entsprechenden Nummer des Buffers oder "-merged " für zusammengefügte Buffer oder "-all" für alle Buffer. Ohne Angabe eines Arguments wird der aktuelle Buffer gelöscht)
     move: Buffer in der Liste verschieben (kann auch relativ sein, z.B. -1)
     swap: tauscht zwei Buffer miteinander aus (bei Angabe von nur einem Buffer (Buffernummer/-name), wird der aktuelle Buffer mit dem angegebenen Buffer getauscht)
-   merge: fügt den aktuellen Buffer mit einem anderen Buffer zusammen (bei einem Chat-Buffer entsteht ein Mix aus beiden Buffern
+   merge: fügt den aktuellen Buffer mit einem anderen Buffer zusammen (bei einem Chat-Buffer entsteht eine Zusammenfügung von zwei Buffer
          (Bei der Standardtastenbelegung kann mittels "CTRL-x" zwischen zusammengefügten Buffern umgeschaltet werden)
  unmerge: trennt Buffer wieder voneinander, falls zwei Buffer die selbe Nummer teilen
    close: Buffer schließen (Nummer oder Bereich ist optional)
@@ -269,7 +269,7 @@ Beispiele:
 ----------------------------------------
 
 [[command_weechat_filter]]
-[command]*`filter`* Filterfunktion um Nachrichten in Buffern aus- oder einzublenden, dazu können Schlagwörter oder reguläre Ausdrücke verwendet werden::
+[command]*`filter`* Filterfunktion um Nachrichten in Buffer aus- oder einzublenden, dazu können Schlagwörter oder reguläre Ausdrücke verwendet werden::
 
 ----------------------------------------
 /filter  list
@@ -285,8 +285,8 @@ disable: Filter deaktivieren
     add: Filter hinzufügen
     del: Filter entfernen
    -all: entfernt alle Filter
- buffer: durch Kommata getrennte Liste von Buffern in denen der Filter aktiv sein soll:
-         - ist der vollständige Name eines Buffers inklusive seiner Erweiterung (Beispiel: "irc.freenode.#weechat")
+ buffer: durch Kommata getrennte Liste von Buffer in denen der Filter aktiv sein soll:
+         - ist der vollständige Name eines Buffer inklusive seiner Erweiterung (Beispiel: "irc.freenode.#weechat")
          - "*" anwenden auf alle Buffer
          - beginnt ein Name mit '!' wird für diesen Buffer kein Filter genutzt
          - ein Name darf mit '*' beginnen oder enden um mehrere Buffer auszuwählen
@@ -438,7 +438,7 @@ listdefault: zeigt die Standardeinstellung der Tastenbelegung an
 
 Falls einer Taste ein Befehl zugeordnet werden soll ist es ratsam zuerst mit der Tastenkombination alt+k (oder Esc + k) einen Fangmodus zu aktivieren um damit die neu zu belegende Taste zu greifen. Durch diesen Schritt wird der entsprechende Tasten-Code in die Befehlszeile übernommen.
 
-Für Kontext "mouse" (Kontext "cursor" ist auch möglich), hat der zu verwendende Schlüssel folgendes Format: "@area:Schlüssel" oder "@area1>area2:Schlussel". "area" kann folgende Werte habe:
+Für Kontext "mouse" (Kontext "cursor" ist auch möglich), hat der zu verwendende Schlüssel folgendes Format: "@area:Schlüssel" oder "@area1>area2:Schlüssel". "area" kann folgende Werte habe:
           *: jedweder Bereich des Bildschirms
        chat: Chatbereich (für jeden Buffer)
   chat(xxx): Chatbereich für einen Buffer mit dem Namen "xxx" (vollständiger Name mit Erweiterung. Beispiel: chat(perl.iset):)
@@ -515,7 +515,7 @@ Beispiele:
 -current: Ausgabe im aktuellen Buffer wird unterdrückt
  -buffer: Ausgabe im ausgewählten Buffer wird unterdrückt
     name: vollständiger Buffername (Beispiel: "irc.server.freenode", "irc.freenode.#weechat")
-    -all: Ausgabe wird in ALLEN Buffern unterdrückt
+    -all: Ausgabe wird für ALLE Buffer unterdrückt
  command: Ein Befehl der ohne Textausgabe ausgeführt werden soll (das Präfix, '/', wird automatisch hinzugefügt, falls es dem Befehl nicht vorangestellt wurde)
 
 Wird kein Buffer ausgewählt (-current, -buffer oder -all), dann wird lediglich die Textausgabe im WeeChat Core Buffer unterdrückt.

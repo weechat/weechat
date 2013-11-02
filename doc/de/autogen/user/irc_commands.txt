@@ -105,7 +105,7 @@ arguments: Argumente für CTCP
 /cycle  [<channel>[,<channel>...]] [<message>]
 
 channel: Name des Channels
-message: Nachricht beim Verlassen des Channels (die den anderen Usern im Channel angezeigt wird)
+message: Nachricht beim Verlassen des Channels (wird den anderen Usern im Channel angezeigt)
 ----------------------------------------
 
 [[command_irc_dcc]]
@@ -269,9 +269,9 @@ Beispiele:
 ----------------------------------------
 /kick  [<channel>] <nick> [<reason>]
 
-channel: channel where user is
-   nick: nick to kick
- reason: reason for kick (special variables $nick, $channel and $server are replaced by their value)
+channel: Channel in dem der Benutzers sich befindet
+   nick: Nick der rausgeworfen werden soll
+ reason: Begründung für den Rauswurf (Variablen die genutzt werden können: $nick, $channel und $server)
 ----------------------------------------
 
 [[command_irc_kickban]]
@@ -280,14 +280,14 @@ channel: channel where user is
 ----------------------------------------
 /kickban  [<channel>] <nick> [<reason>]
 
-channel: channel where user is
-   nick: nick to kick and ban
- reason: reason for kick (special variables $nick, $channel and $channel are replaced by their value)
+channel: Channel in dem sich der User befindet
+   nick: Nickname der rausgeworfen und gebannt werden soll
+ reason: Begründung weshalb der User rausgeworfen wurde (Variablen die genutzt werden können: $nick, $channel und $server)
 
-It is possible to kick/ban with a mask, nick will be extracted from mask and replaced by "*".
+Es ist möglich kick/ban mittels einer Maske durchzuführen. Der Nick wird aus der Maske heraus gefiltert und durch Joker ("*") ersetzt.
 
-Example:
-  ban "*!*@host.com" and then kick "toto":
+Beispiel:
+  Sperre "*!*@host.com" und kicke dann "toto":
     /kickban toto!*@host.com
 ----------------------------------------
 

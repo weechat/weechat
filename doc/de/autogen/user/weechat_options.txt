@@ -269,7 +269,7 @@
 ** Werte: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (Standardwert: `default`)
 
 * [[option_weechat.color.status_data_private]] *weechat.color.status_data_private*
-** Beschreibung: `Farbe eines Bufffers mit privater Nachricht (Statusbar)`
+** Beschreibung: `Farbe eines Buffers mit privater Nachricht (Statusbar)`
 ** Typ: Farbe
 ** Werte: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (Standardwert: `lightgreen`)
 
@@ -364,17 +364,17 @@
 ** Werte: 0 .. 2147483647 (Standardwert: `5`)
 
 * [[option_weechat.history.max_buffer_lines_minutes]] *weechat.history.max_buffer_lines_minutes*
-** Beschreibung: `maximum number of minutes in history per buffer (0 = unlimited); examples: 1440 = one day, 10080 = one week, 43200 = one month, 525600 = one year; use 0 ONLY if option weechat.history.max_buffer_lines_number is NOT set to 0`
+** Beschreibung: `Dauer in Minuten, wie lange die Zeilen im Verlaufsspeicher, pro Buffer, gehalten werden sollen (0 = unbegrenzt); Beispiele: 1440 = einen Tag, 10080 = eine Woche, 43200 = einen Monat, 525600 = ein Jahr; 0 sollte nur genutzt werden sofern weechat.history.max_buffer_lines_number nicht ebenfalls 0 ist`
 ** Typ: integer
 ** Werte: 0 .. 2147483647 (Standardwert: `0`)
 
 * [[option_weechat.history.max_buffer_lines_number]] *weechat.history.max_buffer_lines_number*
-** Beschreibung: `maximum number of lines in history per buffer (0 = unlimited); use 0 ONLY if option weechat.history.max_buffer_lines_minutes is NOT set to 0`
+** Beschreibung: `maximale Anzahl an Zeilen im Verlaufsspeicher, dies gilt pro Buffer (0: keine Zeilenbegrenzung); 0 sollte nur genutzt werden sofern weechat.history.max_buffer_lines_minutes nicht ebenfalls 0 ist`
 ** Typ: integer
 ** Werte: 0 .. 2147483647 (Standardwert: `4096`)
 
 * [[option_weechat.history.max_commands]] *weechat.history.max_commands*
-** Beschreibung: `maximum number of user commands in history (0 = unlimited, NOT RECOMMENDED: no limit in memory usage)`
+** Beschreibung: `maximale Anzahl an Befehlen im Verlaufsspeicher (0: kein Begrenzung, NICHT EMPFOHLEN: keine Begrenzung des Speicherverbrauches)`
 ** Typ: integer
 ** Werte: 0 .. 2147483647 (Standardwert: `100`)
 
@@ -414,22 +414,22 @@
 ** Werte: none, highlight, message, all (Standardwert: `all`)
 
 * [[option_weechat.look.buffer_search_case_sensitive]] *weechat.look.buffer_search_case_sensitive*
-** Beschreibung: `default text search in buffer: case sensitive or not`
+** Beschreibung: `standardmäßige Textsuche im Buffer: zwischen Groß-und Kleinschreibung wird unterschieden`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_weechat.look.buffer_search_force_default]] *weechat.look.buffer_search_force_default*
-** Beschreibung: `force default values for text search in buffer (instead of using values from last search in buffer)`
+** Beschreibung: `es werden immer die Standardeinstellungen verwendet (anstelle der zuletzt genutzten Sucheinstellungen)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_weechat.look.buffer_search_regex]] *weechat.look.buffer_search_regex*
-** Beschreibung: `default text search in buffer: if enabled, search regular expression, otherwise search simple string`
+** Beschreibung: `standardmäßige Textsuche im Buffer: falls aktiviert wird mittels regulären Ausdrücken gesucht, andernfalls findet eine genaue Textsuche statt`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_weechat.look.buffer_search_where]] *weechat.look.buffer_search_where*
-** Beschreibung: `default text search in buffer: in message, prefix, prefix and message`
+** Beschreibung: `standardmäßige Textsuche im Buffer: in der Nachricht (message), im Präfix (prefix), Präfix und Nachricht (prefix_message)`
 ** Typ: integer
 ** Werte: prefix, message, prefix_message (Standardwert: `message`)
 
@@ -524,7 +524,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_weechat.look.highlight]] *weechat.look.highlight*
-** Beschreibung: `eine durch Kommata getrennte Liste der hervorzuhebenden Wörter. Groß- und Kleinschreibung wird dabei standardmäßig nicht beachtet (um zwischen Groß-und Kleinschreibung zu unterscheiden muss am Wortanfang "(?-i)" genutzt werden). Schlagwörter können mit "*", als Joker, beginnen oder enden; Beipiel: "test,(?-i)*toto*,flash*"`
+** Beschreibung: `eine durch Kommata getrennte Liste der hervorzuhebenden Wörter. Groß- und Kleinschreibung wird dabei standardmäßig nicht beachtet (um zwischen Groß-und Kleinschreibung zu unterscheiden muss am Wortanfang "(?-i)" genutzt werden). Schlagwörter können mit "*", als Joker, beginnen oder enden; Beispiel: "test,(?-i)*toto*,flash*"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -644,7 +644,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.look.jump_smart_back_to_buffer]] *weechat.look.jump_smart_back_to_buffer*
-** Beschreibung: `springt zurück zum Ausgangsbuffer, falls keine weiteren Einträge in der Hotlist vorhanden sind`
+** Beschreibung: `falls keine weiteren Einträge in der Hotlist vorhanden sind wird zum Ausgangsbuffer zurückgekehrt`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -859,7 +859,7 @@
 ** Werte: 1 .. 2147483647 (Standardwert: `30`)
 
 * [[option_weechat.network.proxy_curl]] *weechat.network.proxy_curl*
-** Beschreibung: `Name des Proxy welcher für URL Downloads mittels Curl genutzt werden soll (wird verwendet um das Inhaltsverzeichnis für Script-Erweiterung herunterzuladen oder in Skripten, welche die Funktion hook_process nutzen); der Proxy muss mit dem Befehl /proxy eingerichtet werden`
+** Beschreibung: `Name des Proxy welcher für URL Downloads mittels Curl genutzt werden soll (wird verwendet um das Inhaltsverzeichnis für Skript-Erweiterung herunterzuladen oder in Skripten, welche die Funktion hook_process nutzen); der Proxy muss mit dem Befehl /proxy eingerichtet werden`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 

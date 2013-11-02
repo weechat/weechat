@@ -22,7 +22,7 @@
 
 | irc | irc_ignores_numbers | Anzahl für festgelegte Ignorierungen
 
-| irc | irc_msg_kick | default kick message
+| irc | irc_msg_kick | Standardmitteilung wenn man jemanden aus einem Channel wirft
 
 | irc | irc_msg_part | Standardnachricht beim Verlassen (/part) eines IRC-Channels
 
