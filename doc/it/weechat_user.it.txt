@@ -1342,6 +1342,10 @@ opzionale):
     colore del testo `xx` e di sfondo `yy` (consultare la lista di colori
     che segue)
 
+// TRANSLATION MISSING
+@k(C-)@k(c) , @k(i)::
+    italic text
+
 @k(C-)@k(c) , @k(o)::
     disabilita colori ed attributi
 
@@ -1515,6 +1519,7 @@ del nome o del numero del colore:
 
 * `*` : testo in grassetto
 * `!` : video inverso
+* `/` : testo in corsivo
 * `_` : testo sottolineato
 * `|` : mantiene attributi: non ripristina grassetto/inverso/sottolineato
   al cambio di colore

@@ -2131,8 +2131,9 @@ config_weechat_init_options ()
         weechat_config_file, ptr_section,
         "emphasized_attributes", "string",
         N_("attributes for emphasized text: one or more attribute chars ("
-           "\"*\" for bold, \"!\" for reverse, \"_\" for underline); if the "
-           "string is empty, the colors weechat.color.emphasized* are used"),
+           "\"*\" for bold, \"!\" for reverse, \"/\" for italic, \"_\" for "
+           "underline); if the string is empty, the colors "
+           "weechat.color.emphasized* are used"),
         NULL, 0, 0, "", NULL, 0, NULL, NULL, &config_change_emphasized_attributes, NULL, NULL, NULL);
     config_look_highlight = config_file_new_option (
         weechat_config_file, ptr_section,

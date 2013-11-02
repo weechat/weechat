@@ -40,6 +40,12 @@ struct t_gui_bar_window;
 
 #define GUI_CURSES_NUM_WEECHAT_COLORS 17
 
+#ifndef A_ITALIC /* A_ITALIC is defined in ncurses >= 5.9 patch 20130831 */
+#define A_ITALIC 0
+#endif
+
+#define A_ALL_ATTR A_BOLD | A_UNDERLINE | A_REVERSE | A_ITALIC
+
 #define GUI_WINDOW_OBJECTS(window)                                      \
     ((struct t_gui_window_curses_objects *)(window->gui_objects))
 #define GUI_BAR_WINDOW_OBJECTS(bar_window)                              \

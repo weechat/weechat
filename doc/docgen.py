@@ -401,7 +401,7 @@ def docgen_cmd_cb(data, buffer, args):
                                    'an alias; attributes are allowed before '
                                    'color (for text color only, not '
                                    'background): \"*\" for bold, \"!\" for '
-                                   'reverse, \"_\" for underline')
+                                   'reverse, \"/\" for italic, \"_\" for underline')
                     f.write('* [[option_%s.%s.%s]] *%s.%s.%s*\n' % (config, section, option, config, section, option))
                     f.write('** %s: `%s`\n' % (_('description'), description))
                     f.write('** %s: %s\n' % (_('type'), type_nls))

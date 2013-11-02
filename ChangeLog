@@ -13,6 +13,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 Version 0.4.3 (under dev!)
 --------------------------
 
+* core: add support of italic text (requires ncurses >= 5.9 patch 20130831)
 * core: fix auto-apply of window layout in current window when option
   irc.look.buffer_switch_autojoin is on
 * core: fix bind of keys in cursor/mouse context when key starts with "@"

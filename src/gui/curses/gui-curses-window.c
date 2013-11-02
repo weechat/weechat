@@ -289,7 +289,7 @@ gui_window_reset_style (WINDOW *window, int weechat_color)
     gui_window_current_style_bg = -1;
     gui_window_current_color_attr = 0;
 
-    wattroff (window, A_BOLD | A_UNDERLINE | A_REVERSE);
+    wattroff (window, A_ALL_ATTR);
     wattron (window, COLOR_PAIR(gui_color_weechat_get_pair (weechat_color)) |
              gui_color[weechat_color]->attributes);
 }
@@ -396,6 +396,10 @@ gui_window_set_custom_color_fg (WINDOW *window, int fg)
                 gui_window_set_color_style (window, A_REVERSE);
             else if (!(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
                 gui_window_remove_color_style (window, A_REVERSE);
+            if (fg & GUI_COLOR_EXTENDED_ITALIC_FLAG)
+                gui_window_set_color_style (window, A_ITALIC);
+            else if (!(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
+                gui_window_remove_color_style (window, A_ITALIC);
             if (fg & GUI_COLOR_EXTENDED_UNDERLINE_FLAG)
                 gui_window_set_color_style (window, A_UNDERLINE);
             else if (!(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
@@ -407,15 +411,14 @@ gui_window_set_custom_color_fg (WINDOW *window, int fg)
         else if ((fg & GUI_COLOR_EXTENDED_MASK) < GUI_CURSES_NUM_WEECHAT_COLORS)
         {
             if (!(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
-            {
-                gui_window_remove_color_style (window,
-                                               A_BOLD | A_REVERSE | A_UNDERLINE);
-            }
+                gui_window_remove_color_style (window, A_ALL_ATTR);
             attributes = 0;
             if (fg & GUI_COLOR_EXTENDED_BOLD_FLAG)
                 attributes |= A_BOLD;
             if (fg & GUI_COLOR_EXTENDED_REVERSE_FLAG)
                 attributes |= A_REVERSE;
+            if (fg & GUI_COLOR_EXTENDED_ITALIC_FLAG)
+                attributes |= A_ITALIC;
             if (fg & GUI_COLOR_EXTENDED_UNDERLINE_FLAG)
                 attributes |= A_UNDERLINE;
             attributes |= gui_weechat_colors[fg & GUI_COLOR_EXTENDED_MASK].attributes;
@@ -487,6 +490,10 @@ gui_window_set_custom_color_fg_bg (WINDOW *window, int fg, int bg)
                 gui_window_set_color_style (window, A_REVERSE);
             else if (!(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
                 gui_window_remove_color_style (window, A_REVERSE);
+            if (fg & GUI_COLOR_EXTENDED_ITALIC_FLAG)
+                gui_window_set_color_style (window, A_ITALIC);
+            else if (!(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
+                gui_window_remove_color_style (window, A_ITALIC);
             if (fg & GUI_COLOR_EXTENDED_UNDERLINE_FLAG)
                 gui_window_set_color_style (window, A_UNDERLINE);
             else if (!(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
@@ -496,15 +503,14 @@ gui_window_set_custom_color_fg_bg (WINDOW *window, int fg, int bg)
         else if ((fg & GUI_COLOR_EXTENDED_MASK) < GUI_CURSES_NUM_WEECHAT_COLORS)
         {
             if (!(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
-            {
-                gui_window_remove_color_style (window,
-                                               A_BOLD | A_REVERSE | A_UNDERLINE);
-            }
+                gui_window_remove_color_style (window, A_ALL_ATTR);
             attributes = 0;
             if (fg & GUI_COLOR_EXTENDED_BOLD_FLAG)
                 attributes |= A_BOLD;
             if (fg & GUI_COLOR_EXTENDED_REVERSE_FLAG)
                 attributes |= A_REVERSE;
+            if (fg & GUI_COLOR_EXTENDED_ITALIC_FLAG)
+                attributes |= A_ITALIC;
             if (fg & GUI_COLOR_EXTENDED_UNDERLINE_FLAG)
                 attributes |= A_UNDERLINE;
             attributes |= gui_weechat_colors[fg & GUI_COLOR_EXTENDED_MASK].attributes;
@@ -544,8 +550,7 @@ gui_window_set_custom_color_pair (WINDOW *window, int pair)
 {
     if ((pair >= 0) && (pair <= gui_color_num_pairs))
     {
-        gui_window_remove_color_style (window,
-                                       A_BOLD | A_REVERSE | A_UNDERLINE);
+        gui_window_remove_color_style (window, A_ALL_ATTR);
         wattron (window, COLOR_PAIR(pair));
     }
 }
@@ -591,6 +596,8 @@ gui_window_emphasize (WINDOW *window, int x, int y, int count)
             attrs ^= A_BOLD;
         if (config_emphasized_attributes & GUI_COLOR_EXTENDED_REVERSE_FLAG)
             attrs ^= A_REVERSE;
+        if (config_emphasized_attributes & GUI_COLOR_EXTENDED_ITALIC_FLAG)
+            attrs ^= A_ITALIC;
         if (config_emphasized_attributes & GUI_COLOR_EXTENDED_UNDERLINE_FLAG)
             attrs ^= A_UNDERLINE;
         mvwchgat (window, y, x, count, attrs, pair, NULL);
@@ -951,8 +958,9 @@ gui_window_string_apply_color_set_attr (unsigned char **string, WINDOW *window)
                 gui_window_set_color_style (window, A_REVERSE);
             break;
         case GUI_COLOR_ATTR_ITALIC_CHAR:
-            /* not available in Curses GUI */
             ptr_string++;
+            if (window)
+                gui_window_set_color_style (window, A_ITALIC);
             break;
         case GUI_COLOR_ATTR_UNDERLINE_CHAR:
             ptr_string++;
@@ -991,8 +999,9 @@ gui_window_string_apply_color_remove_attr (unsigned char **string, WINDOW *windo
                 gui_window_remove_color_style (window, A_REVERSE);
             break;
         case GUI_COLOR_ATTR_ITALIC_CHAR:
-            /* not available in Curses GUI */
             ptr_string++;
+            if (window)
+                gui_window_remove_color_style (window, A_ITALIC);
             break;
         case GUI_COLOR_ATTR_UNDERLINE_CHAR:
             ptr_string++;

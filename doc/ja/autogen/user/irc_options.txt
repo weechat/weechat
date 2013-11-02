@@ -1,37 +1,37 @@
 * [[option_irc.color.input_nick]] *irc.color.input_nick*
 ** 説明: `インプットバーのニックネームに使う色`
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_" (デフォルト値: `lightcyan`)
+** 値: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (デフォルト値: `lightcyan`)
 
 * [[option_irc.color.item_away]] *irc.color.item_away*
 ** 説明: `離席アイテムに使う色`
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_" (デフォルト値: `yellow`)
+** 値: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (デフォルト値: `yellow`)
 
 * [[option_irc.color.item_channel_modes]] *irc.color.item_channel_modes*
 ** 説明: `チャンネル名付近のチャンネルモードに使う色`
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_" (デフォルト値: `default`)
+** 値: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (デフォルト値: `default`)
 
 * [[option_irc.color.item_lag_counting]] *irc.color.item_lag_counting*
 ** 説明: `カウント中の遅延インジケータの色 (pong がサーバから返らない場合、遅延は増加する)`
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_" (デフォルト値: `default`)
+** 値: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (デフォルト値: `default`)
 
 * [[option_irc.color.item_lag_finished]] *irc.color.item_lag_finished*
 ** 説明: `pong がサーバから返った場合の、遅延インジケータの色`
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_" (デフォルト値: `yellow`)
+** 値: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (デフォルト値: `yellow`)
 
 * [[option_irc.color.message_join]] *irc.color.message_join*
 ** 説明: `参加メッセージの色`
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_" (デフォルト値: `green`)
+** 値: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (デフォルト値: `green`)
 
 * [[option_irc.color.message_quit]] *irc.color.message_quit*
 ** 説明: `退出/終了 メッセージの色`
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_" (デフォルト値: `red`)
+** 値: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (デフォルト値: `red`)
 
 * [[option_irc.color.mirc_remap]] *irc.color.mirc_remap*
 ** 説明: `メッセージに含まれる mirc カラーのマッピングをハッシュテーブルで変更: キーは "fg,bg" で -1(指定無し) から 15 までの整数、 値は WeeChat 色名か色番号 (フォーマットは: "1,-1:color1;2,7:color2")、例: "1,-1:darkgray;1,2:white,blue" はテキスト色が黒のものを "darkgray" に、背景色が青でテキスト色が黒のものを "white,blue" に変更; IRC コードに対するデフォルトの WeeChat 色は、0:白、1:黒、2:青、3:緑、4:ライトレッド、5:赤、6:赤紫、7:茶色、8:黄色、9:ライトグリーン、10:シアン、11:ライトシアン、12:ライトブルー、13:ライトマゼンタ、14:灰色、15:白`
@@ -46,22 +46,22 @@
 * [[option_irc.color.notice]] *irc.color.notice*
 ** 説明: `notices に含まれるテキスト "Notice" の色`
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_" (デフォルト値: `green`)
+** 値: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (デフォルト値: `green`)
 
 * [[option_irc.color.reason_quit]] *irc.color.reason_quit*
 ** 説明: `退出/終了メッセージに含まれる理由の色`
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_" (デフォルト値: `default`)
+** 値: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (デフォルト値: `default`)
 
 * [[option_irc.color.topic_new]] *irc.color.topic_new*
 ** 説明: `新しいチャンネルトピックの色 (トピックが変更されたとき)`
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_" (デフォルト値: `white`)
+** 値: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (デフォルト値: `white`)
 
 * [[option_irc.color.topic_old]] *irc.color.topic_old*
 ** 説明: `古いチャンネルトピックの色 (トピックが変更されたとき)`
 ** タイプ: 色
-** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、下線は "_" (デフォルト値: `darkgray`)
+** 値: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (デフォルト値: `darkgray`)
 
 * [[option_irc.look.buffer_switch_autojoin]] *irc.look.buffer_switch_autojoin*
 ** 説明: `自動で参加した場合に、自動的にチャンネルバッファを移動 (サーバオプション "autojoin" と共に使用)`
@@ -354,7 +354,7 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_irc.network.colors_send]] *irc.network.colors_send*
-** 説明: `特別なコードを使ってユーザが色を送信することを許可 (ctrl-c + 色コードと任意の色: b=太字、cxx=テキスト色、cxx,yy=テキスト色+背景色、u=下線、r=反転)`
+** 説明: `allow user to send colors with special codes (ctrl-c + a code and optional color: b=bold, cxx=color, cxx,yy=color+background, i=italic, o=disable color/attributes, r=reverse, u=underline)`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 

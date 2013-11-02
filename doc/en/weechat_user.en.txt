@@ -1295,6 +1295,9 @@ follow (press @k(C-)@k(c) then following letter, with optional value):
 @k(C-)@k(c) , @k(c) , @k(xx,yy)::
     text color `xx` and background `yy` (see list of colors below)
 
+@k(C-)@k(c) , @k(i)::
+    italic text
+
 @k(C-)@k(c) , @k(o)::
     disable color and attributes
 
@@ -1467,9 +1470,10 @@ added before color name or number:
 
 * `*` : bold text
 * `!` : reverse video
+* `/` : italic
 * `_` : underlined text
-* `|` : keep attributes: do not reset bold/reverse/underlined when changing
-  color
+* `|` : keep attributes: do not reset bold/reverse/italic/underlined when
+  changing color
 
 For example if you want self nick as white underlined, do:
 

@@ -6310,9 +6310,10 @@ Format of color is: attributes (optional) + color name + ",background"
 
 * `*` : bold text
 * `!` : reverse video
+* `/` : italic
 * `_` : underlined text
-* `|` : keep attributes: do not reset bold/reverse/underlined when changing
-  color _(WeeChat ≥ 0.3.6)_
+* `|` : keep attributes: do not reset bold/reverse/italic/underlined when
+  changing color _(WeeChat ≥ 0.3.6)_
 
 Examples:
 

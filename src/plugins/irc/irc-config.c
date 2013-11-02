@@ -2727,7 +2727,7 @@ irc_config_init ()
         "colors_send", "boolean",
         N_("allow user to send colors with special codes (ctrl-c + a code and "
            "optional color: b=bold, cxx=color, cxx,yy=color+background, "
-           "u=underline, r=reverse)"),
+           "i=italic, o=disable color/attributes, r=reverse, u=underline)"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_network_lag_check = weechat_config_new_option (
         irc_config_file, ptr_section,

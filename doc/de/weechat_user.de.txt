@@ -1314,6 +1314,10 @@ Zeichen, genutzt werden:
 @k(C-)@k(c) , @k(c) , @k(xx,yy)::
     Textfarbe `xx` und Hintergrundfarbe `yy` (siehe Farbtabelle)
 
+// TRANSLATION MISSING
+@k(C-)@k(c) , @k(i)::
+    italic text
+
 @k(C-)@k(c) , @k(o)::
     deaktiviert Farben und Attribute
 
@@ -1492,6 +1496,7 @@ Farbnamen oder der Farbnummer ein- oder mehrere Attribute vorangestellt.
 
 * `*` : fett
 * `!` : invertierte Darstellung
+* `/` : kursiven
 * `_` : unterstrichen
 * `|` : behält Attribut bei: fett, invertierte Darstellung, Unterstrichen wird beim Farbwechsel nicht zurückgesetzt
 

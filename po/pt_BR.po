@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-10-20 21:46+0200\n"
+"POT-Creation-Date: 2013-11-02 10:22+0100\n"
 "PO-Revision-Date: 2013-10-06 12:40+0200\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -384,12 +384,13 @@ msgstr "cor"
 
 # I am not sure this is the best way to translate the names
 # (put the equivalent in []), but I think it's better than nothing.
+#, fuzzy
 msgid ""
 "a WeeChat color name (default, black, (dark)gray, white, (light)red, "
 "(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
 "terminal color number or an alias; attributes are allowed before color (for "
-"text color only, not background): \"*\" for bold, \"!\" for reverse, \"_\" "
-"for underline"
+"text color only, not background): \"*\" for bold, \"!\" for reverse, \"/\" "
+"for italic, \"_\" for underline"
 msgstr ""
 "um nome de cor do WeeChat (default [padrão], black [preto], (dark)gray "
 "[cinza(escuro)], white [branco], (light)red [vermelho(claro)], (light)green "
@@ -2766,8 +2767,8 @@ msgstr ""
 
 msgid ""
 "attributes for emphasized text: one or more attribute chars (\"*\" for bold, "
-"\"!\" for reverse, \"_\" for underline); if the string is empty, the colors "
-"weechat.color.emphasized* are used"
+"\"!\" for reverse, \"/\" for italic, \"_\" for underline); if the string is "
+"empty, the colors weechat.color.emphasized* are used"
 msgstr ""
 
 #, fuzzy
@@ -6313,9 +6314,11 @@ msgid "when off, colors codes are ignored in incoming messages"
 msgstr ""
 "quando desligado, códigos de cores são ignorados em mensagens recebidas"
 
+#, fuzzy
 msgid ""
 "allow user to send colors with special codes (ctrl-c + a code and optional "
-"color: b=bold, cxx=color, cxx,yy=color+background, u=underline, r=reverse)"
+"color: b=bold, cxx=color, cxx,yy=color+background, i=italic, o=disable color/"
+"attributes, r=reverse, u=underline)"
 msgstr ""
 "permitir ao usuário enviar cores com códigos especiais (ctrl-c + um código e "
 "cor opcional: b=negrito, cxx=cor, cxx,yy=cor+fundo, u=sublinhado, r=reverso)"
@@ -9499,6 +9502,23 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+# I am not sure this is the best way to translate the names
+# (put the equivalent in []), but I think it's better than nothing.
+#~ msgid ""
+#~ "a WeeChat color name (default, black, (dark)gray, white, (light)red, "
+#~ "(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
+#~ "terminal color number or an alias; attributes are allowed before color "
+#~ "(for text color only, not background): \"*\" for bold, \"!\" for reverse, "
+#~ "\"_\" for underline"
+#~ msgstr ""
+#~ "um nome de cor do WeeChat (default [padrão], black [preto], (dark)gray "
+#~ "[cinza(escuro)], white [branco], (light)red [vermelho(claro)], "
+#~ "(light)green [verde(claro)], brown [marrom], yellow [amarelo], "
+#~ "(light)blue [azul(claro)], (light)magenta [magenta(claro)], (light)cyan "
+#~ "[ciano(claro)]), um número de cor do terminal ou um atalho; atributos são "
+#~ "permitidos antes do nome da cor (somente para cor de texto, não cor de "
+#~ "fundo): \"*\" for negrito, \"!\" for reverso, \"_\" for sublinhado"
 
 #, fuzzy
 #~ msgid ""

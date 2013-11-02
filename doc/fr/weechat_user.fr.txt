@@ -1332,6 +1332,9 @@ suit et éventuellement une valeur) :
     couleur du texte `xx` et du fond `yy` (voir la liste des couleurs
     ci-dessous)
 
+@k(C-)@k(c) , @k(i)::
+    texte en italique
+
 @k(C-)@k(c) , @k(o)::
     désactiver la couleur et tous les attributs
 
@@ -1508,6 +1511,7 @@ attributs peuvent être ajoutés avant le nom ou le numéro de la couleur :
 
 * `*` : texte gras
 * `!` : mode vidéo inverse
+* `/` : italique
 * `_` : texte souligné
 * `|` : garder les attributs : ne pas réinitialiser gras/inverse/souligné lors
   du changement de couleur

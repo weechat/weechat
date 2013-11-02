@@ -515,6 +515,8 @@ gui_color_build (int number, int foreground, int background)
         gui_color[number]->attributes |= A_BOLD;
     if (foreground & GUI_COLOR_EXTENDED_REVERSE_FLAG)
         gui_color[number]->attributes |= A_REVERSE;
+    if (foreground & GUI_COLOR_EXTENDED_ITALIC_FLAG)
+        gui_color[number]->attributes |= A_ITALIC;
     if (foreground & GUI_COLOR_EXTENDED_UNDERLINE_FLAG)
         gui_color[number]->attributes |= A_UNDERLINE;
 

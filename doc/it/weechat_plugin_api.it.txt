@@ -6337,9 +6337,10 @@ Il formato del colore è: attributi (opzionale) + nome colore +",sfondo"
 
 * `*` : testo in grassetto
 * `!` : video inverso
+* `/` : corsivo
 * `_` : testo sottolineato
-* `|` : mantiene attributi: non ripristina grassetto/inverso/sottolineato
-  al cambio di colore _(WeeChat ≥ 0.3.6)_
+* `|` : mantiene attributi: non ripristina
+  grassetto/inverso/corsivo/sottolineato al cambio di colore _(WeeChat ≥ 0.3.6)_
 
 Esempi:
 

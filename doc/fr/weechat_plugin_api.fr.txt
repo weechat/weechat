@@ -6387,9 +6387,11 @@ Le format de la couleur est : attributs (optionnel) + nom de couleur + ",fond"
 
 * `*` : texte gras
 * `!` : mode vidéo inverse
+* `/` : italic
 * `_` : texte souligné
-* `|` : garder les attributs : ne pas réinitialiser gras/inverse/souligné lors
-  du changement de couleur _(WeeChat ≥ 0.3.6)_
+* `|` : garder les attributs : ne pas réinitialiser
+  gras/inverse/italique/souligné lors du changement de couleur
+  _(WeeChat ≥ 0.3.6)_
 
 Exemples :
 

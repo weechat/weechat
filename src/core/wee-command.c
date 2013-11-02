@@ -2400,7 +2400,8 @@ COMMAND_CALLBACK(help)
                                    "an alias; attributes are allowed before "
                                    "color (for text color only, not "
                                    "background): \"*\" for bold, \"!\" for "
-                                   "reverse, \"_\" for underline"));
+                                   "reverse, \"/\" for italic, \"_\" for "
+                                   "underline"));
                 if (ptr_option->default_value)
                 {
                     gui_chat_printf (NULL, "  %s: %s",
