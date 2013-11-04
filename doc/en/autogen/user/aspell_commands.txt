@@ -1,7 +1,7 @@
 [[command_aspell_aspell]]
 [command]*`aspell`* aspell plugin configuration::
 
-----------------------------------------
+----
 /aspell  enable|disable|toggle
          listdict
          setdict <dict>[,<dict>...]
@@ -23,5 +23,5 @@ To enable aspell on all buffers, use option "default_dict", then enable aspell, 
   /aspell enable
 
 Default key to toggle aspell is alt-s.
-----------------------------------------
+----
 

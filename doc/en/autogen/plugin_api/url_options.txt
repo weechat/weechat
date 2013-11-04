@@ -1,5 +1,5 @@
 [width="100%",cols="2,^1,7",options="header"]
-|========================================
+|===
 | Option | Type | Constants ^(1)^
 
 | verbose | long |
@@ -298,4 +298,4 @@
 
 | new_directory_perms | long |
 
-|========================================
+|===

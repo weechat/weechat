@@ -1,5 +1,4 @@
-WeeChat Developer's Guide
-=========================
+= WeeChat Developer's Guide
 Sébastien Helleu <flashcode@flashtux.org>
 
 
@@ -10,8 +9,7 @@ http://weechat.org/doc
 
 
 [[introduction]]
-Introduction
-------------
+== Introduction
 
 WeeChat (Wee Enhanced Environment for Chat) is a free chat client, fast and
 light, designed for many operating systems.
@@ -25,8 +23,7 @@ This manual documents WeeChat internals:
 * how to contribute to WeeChat
 
 [[repository]]
-Repository
-----------
+== Repository
 
 WeeChat has two main repositories:
 
@@ -38,13 +35,12 @@ WeeChat has two main repositories:
 This manual documents only core repository.
 
 [[overview]]
-Overview
-~~~~~~~~
+=== Overview
 
 The main WeeChat directories are:
 
 [width="100%",cols="1l,5",options="header"]
-|========================================
+|===
 | Directory        | Description
 | debian/          | Debian packaging
 | src/             | Root of sources
@@ -71,15 +67,13 @@ The main WeeChat directories are:
 | doc/             | Documentation
 | po/              | Translations files (gettext)
 | test/            | Weercd: WeeChat flood irc server, written in Python
-|========================================
+|===
 
 [[sources]]
-Sources
-~~~~~~~
+=== Sources
 
 [[sources_core]]
-Core
-^^^^
+==== Core
 
 WeeChat "core" reside in following directories:
 
@@ -87,7 +81,7 @@ WeeChat "core" reside in following directories:
 * 'src/gui/': functions about interface (buffers, windows, ...)
 
 [width="100%",cols="1l,5",options="header"]
-|========================================
+|===
 | Path/file                     | Description
 | core/                         | Core functions: entry point, internal structures
 |    weechat.c                  | Entry point, command line options, main functions, startup
@@ -144,14 +138,13 @@ WeeChat "core" reside in following directories:
 |       gui-curses-mouse.c      | Mouse
 |       gui-curses-term.c       | Functions about terminal
 |       gui-curses-window.c     | Windows
-|========================================
+|===
 
 [[sources_plugins]]
-Plugins
-^^^^^^^
+==== Plugins
 
 [width="100%",cols="1l,5",options="header"]
-|========================================
+|===
 | Path/file                         | Description
 | plugins/                          | Root of plugins
 |    plugin.c                       | Plugins management (load/unload dynamic C libraries)
@@ -275,16 +268,15 @@ Plugins
 |       xfer-info.c                 | Xfer info/infolists/hdata
 |       xfer-network.c              | Network functions for xfer
 |       xfer-upgrade.c              | Save/restore xfer data when upgrading WeeChat
-|========================================
+|===
 
 [[documentation_translations]]
-Documentation / translations
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Documentation / translations
 
 Documentation files:
 
 [width="100%",cols="1l,5",options="header"]
-|========================================
+|===
 | Path/file                           | Description
 | doc/                                | Documentation
 |    asciidoc.conf                    | Asciidoc configuration file (some macros)
@@ -304,25 +296,23 @@ Documentation files:
 |       autogen/                      | Files auto-built with script docgen.py (do *NEVER* update manually!)
 |          user/                      | Files auto-built for user's guide (do *NEVER* update manually!)
 |          plugin_api/                | Files auto-built for plugin API (do *NEVER* update manually!)
-|========================================
+|===
 
 Translations for WeeChat and plugins are done with gettext, files are in 'po/' directory:
 
 [width="100%",cols="1l,5",options="header"]
-|========================================
+|===
 | Path/file      | Description
 | po/            | Translation files (gettext)
 |    XX.po       | Translations for language XX (fr, de, it, ...), base language is English
 |    weechat.pot | Template for translations (auto-built)
-|========================================
+|===
 
 [[coding_rules]]
-Coding rules
-------------
+== Coding rules
 
 [[coding_general_rules]]
-General rules
-~~~~~~~~~~~~~
+=== General rules
 
 * In source code, your comments, variable names, .. must be written in English
   *only* (no other language is allowed)
@@ -330,7 +320,7 @@ General rules
   license and below that a short description of file. Example in C:
 
 [source,C]
-----------------------------------------
+----
 /*
  * Copyright (C) 2013 Your Name <your@email.com>
  *
@@ -353,11 +343,10 @@ General rules
 /*
  * weechat.c: core functions for WeeChat
  */
-----------------------------------------
+----
 
 [[coding_c_style]]
-C style
-~~~~~~~
+=== C style
 
 Some basic rules you *must* follow when you write C code:
 
@@ -371,7 +360,7 @@ Some basic rules you *must* follow when you write C code:
 Example:
 
 [source,C]
-----------------------------------------
+----
 /*
  * Checks if a string with boolean value is valid.
  *
@@ -395,14 +384,14 @@ foo ()
     i = 2;
     printf ("%d\n", i);
 }
-----------------------------------------
+----
 
 * Use explicit variable names, for example "nicks_count" instead of "n" or "nc".
   Exception: in `for` loops, where variables like "i" or "n" are OK.
 * Initialize local variables after declaration, in body of function, example:
 
 [source,C]
-----------------------------------------
+----
 void
 foo ()
 {
@@ -412,7 +401,7 @@ foo ()
     buffer_count = 1;
     /* ... */
 }
-----------------------------------------
+----
 
 * Use parentheses to explicitly show how expression is evaluated, even if
   they are not required, for example: write `x + (y * z)` instead of `x + y * z`
@@ -420,18 +409,18 @@ foo ()
   spaces used for line above opening curly bracket (the `if` in example):
 
 [source,C]
-----------------------------------------
+----
 if (nicks_count == 1)
 {
     /* something */
 }
-----------------------------------------
+----
 
 * Use empty lines to separate many different blocks inside functions, and if
   possible add a comment for each one, like this:
 
 [source,C]
-----------------------------------------
+----
 /*
  * Sends a message from out queue.
  */
@@ -468,13 +457,13 @@ irc_server_outqueue_send (struct t_irc_server *server)
 
     /* ... */
 }
-----------------------------------------
+----
 
 * Indent the `if` conditions, and use parentheses around conditions with an
   operator (not needed for single booleans), like this:
 
 [source,C]
-----------------------------------------
+----
 if (something)
 {
     /* something */
@@ -493,12 +482,12 @@ else
 {
     /* something else */
 }
-----------------------------------------
+----
 
 * Indent the `switch` statements like this:
 
 [source,C]
-----------------------------------------
+----
 switch (string[0])
 {
     case 'A': /* first case */
@@ -511,12 +500,12 @@ switch (string[0])
         baz ();
         break;
 }
-----------------------------------------
+----
 
 * Use `typedef` for function prototypes, not structures:
 
 [source,C]
-----------------------------------------
+----
 typedef int (t_hook_callback_fd)(void *data, int fd);
 
 struct t_hook_fd
@@ -533,38 +522,34 @@ struct t_hook_fd
 struct t_hook_fd *new_hook_fd;
 
 new_hook_fd = malloc (sizeof (*new_hook_fd));
-----------------------------------------
+----
 
 * This lisp code can be used in your '~/.emacs.el' to indent properly if you are
   using Emacs as text editor:
 
 [source,lisp]
-----------------------------------------
+----
 (add-hook 'c-mode-common-hook '(lambda ()
                                  (c-toggle-hungry-state t)
                                  (c-set-style "k&r")
                                  (setq c-basic-offset 4
                                        c-tab-always-indent t)
                                  (c-set-offset 'case-label '+)))
-----------------------------------------
+----
 
 [[coding_python_style]]
-Python style
-~~~~~~~~~~~~
+=== Python style
 
 See http://www.python.org/dev/peps/pep-0008/
 
 [[core_internals]]
-Core internals
---------------
+== Core internals
 
 [[naming_convention]]
-Naming convention
-~~~~~~~~~~~~~~~~~
+=== Naming convention
 
 [[naming_convention_files]]
-Files
-^^^^^
+==== Files
 
 File names are composed by letters and hyphens, with format: 'xxx-yyyyy.[ch]',
 where 'xxx' is directory/component (can be abbreviation) where the file is, and
@@ -576,7 +561,7 @@ The main file of a directory may have same name as directory, for example
 Examples:
 
 [width="100%",cols="1l,5",options="header"]
-|========================================
+|===
 | Directory           | Files
 | src/core/           | weechat.c, wee-backtrace.c, wee-command.c, ...
 | src/gui/            | gui-bar.c, gui-bar-item.c, gui-bar-window.c, ...
@@ -584,14 +569,13 @@ Examples:
 | src/plugins/        | plugin.c, plugin-api.c, plugin-config.c, plugin-script.c, ...
 | src/plugins/irc/    | irc.c, irc-bar-item.c, irc-buffer.c, ...
 | src/plugins/python/ | weechat-python.c, weechat-python-api.c, ...
-|========================================
+|===
 
 The headers of C files have same name as file, for example 'wee-command.h' for
 file 'wee-command.c'.
 
 [[naming_convention_structures]]
-Structures
-^^^^^^^^^^
+==== Structures
 
 Structures have name 't_X_Y' or 't_X_Y_Z':
 
@@ -602,7 +586,7 @@ Structures have name 't_X_Y' or 't_X_Y_Z':
 Example: an IRC nick (from 'src/plugins/irc/irc-nick.h'):
 
 [source,C]
-----------------------------------------
+----
 struct t_irc_nick
 {
     char *name;                     /* nickname                              */
@@ -615,11 +599,10 @@ struct t_irc_nick
     struct t_irc_nick *prev_nick;   /* link to previous nick on channel      */
     struct t_irc_nick *next_nick;   /* link to next nick on channel          */
 };
-----------------------------------------
+----
 
 [[naming_convention_variables]]
-Variables
-^^^^^^^^^
+==== Variables
 
 Global variables (outside functions) have name 'X_Y_Z':
 
@@ -633,11 +616,11 @@ Exception are variables for "last" node of a list, name is 'last_X' (where
 Example: windows (from 'src/gui/gui-window.c'):
 
 [source,C]
-----------------------------------------
+----
 struct t_gui_window *gui_windows = NULL;        /* first window             */
 struct t_gui_window *last_gui_window = NULL;    /* last window              */
 struct t_gui_window *gui_current_window = NULL; /* current window           */
-----------------------------------------
+----
 
 There is no naming convention for local variables (in functions). The only
 recommendation is that name is explicit (not too short).
@@ -645,8 +628,7 @@ Nevertheless, pointers to structures are often named 'ptr_xxxx', for example a
 pointer on a 'struct t_gui_buffer *' will be: '*ptr_buffer'.
 
 [[naming_convention_functions]]
-Functions
-^^^^^^^^^
+==== Functions
 
 Naming convention for functions is the same as
 <<naming_convention_variables,variables,>>.
@@ -654,7 +636,7 @@ Naming convention for functions is the same as
 Example: creation of a new window (from 'src/gui/gui-window.c'):
 
 [source,C]
-----------------------------------------
+----
 /*
  * Creates a new window.
  *
@@ -670,11 +652,10 @@ gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
 
     return new_window;
 }
-----------------------------------------
+----
 
 [[single_thread]]
-Single thread
-~~~~~~~~~~~~~
+=== Single thread
 
 WeeChat is single threaded. That means every part of code should execute very
 fast, and that calls to functions like `sleep` are *strictly forbidden* (it is
@@ -683,8 +664,7 @@ true for WeeChat core, but also C plugins and scripts).
 If for some reasons you have to sleep a while, use `hook_timer` with a callback.
 
 [[doubly_linked_lists]]
-Doubly linked lists
-~~~~~~~~~~~~~~~~~~~
+=== Doubly linked lists
 
 Most of WeeChat linked lists are doubly linked lists: each node has pointer to
 previous and next node.
@@ -692,7 +672,7 @@ previous and next node.
 Example: list of buffers (from 'src/gui/gui-buffer.h'):
 
 [source,C]
-----------------------------------------
+----
 struct t_gui_buffer
 {
     /* data */
@@ -702,19 +682,18 @@ struct t_gui_buffer
     struct t_gui_buffer *prev_buffer;  /* link to previous buffer           */
     struct t_gui_buffer *next_buffer;  /* link to next buffer               */
 };
-----------------------------------------
+----
 
 Then the two list pointers, to the head and tail of list:
 
 [source,C]
-----------------------------------------
+----
 struct t_gui_buffer *gui_buffers = NULL;           /* first buffer          */
 struct t_gui_buffer *last_gui_buffer = NULL;       /* last buffer           */
-----------------------------------------
+----
 
 [[color_codes_in_strings]]
-Color codes in strings
-~~~~~~~~~~~~~~~~~~~~~~
+=== Color codes in strings
 
 WeeChat uses own color codes in strings to display attributes (bold,
 underline, ...) and colors on screen.
@@ -750,7 +729,7 @@ In following table, these conventions are used:
 All combinations are summarized in this table:
 
 [width="100%",cols="3,2,1,5",options="header"]
-|========================================
+|===
 | Code                              | Example                | Areas       | Description
 | @h(19) + STD                      | @h(19)`01`             | chat + bars | Set attributes and color using option, see table below
 | @h(19) + EXT                      | @h(19)`@00001`         | chat        | Set color with a ncurses pair (used only on `/color` buffer)
@@ -777,12 +756,12 @@ All combinations are summarized in this table:
 | @h(1A) + ATTR                     | @h(1A)`*`              | chat + bars | Set attribute
 | @h(1B) + ATTR                     | @h(1B)`*`              | chat + bars | Remove attribute
 | @h(1C)                            | @h(1C)                 | chat + bars | Reset attributes and color
-|========================================
+|===
 
 Color codes using options (see 't_gui_color_enum', in file 'src/gui/gui-color.h'):
 
 [width="60%",cols="^1m,10",options="header"]
-|========================================
+|===
 | Code | Option
 | 00   | weechat.color.separator
 | 01   | weechat.color.chat
@@ -828,12 +807,12 @@ Color codes using options (see 't_gui_color_enum', in file 'src/gui/gui-color.h'
 | 41   | weechat.color.chat_nick_suffix _(new in version 0.4.1)_
 | 42   | weechat.color.emphasis _(new in version 0.4.2)_
 | 43   | weechat.color.chat_day_change _(new in version 0.4.2)_
-|========================================
+|===
 
 WeeChat colors are:
 
 [width="40%",cols="^1m,6",options="header"]
-|========================================
+|===
 | Code | Color
 | 00   | Default (terminal foreground/background)
 | 01   | Black
@@ -852,12 +831,12 @@ WeeChat colors are:
 | 14   | Light cyan
 | 15   | Gray
 | 16   | White
-|========================================
+|===
 
 Examples of color codes:
 
 [width="50%",cols="1,2",options="header"]
-|========================================
+|===
 | Code                     | Description
 | @h(19)`01`               | Color of option "01" (chat text)
 | @h(19)`*08,03`           | Yellow on red
@@ -866,11 +845,10 @@ Examples of color codes:
 | @h(1A)`_`                | Set underline
 | @h(1B)`_`                | Remove underline
 | @h(1C)                   | Reset attributes and color
-|========================================
+|===
 
 [[plugin_internals]]
-Plugin internals
-----------------
+== Plugin internals
 
 The file 'src/plugins/weechat-plugin.h' defines and exports all functions
 available for API.
@@ -885,7 +863,7 @@ For example, function 'hook_timer' is defined in structure 't_weechat_plugin'
 like this:
 
 [source,C]
-----------------------------------------
+----
 struct t_hook *(*hook_timer) (struct t_weechat_plugin *plugin,
                               long interval,
                               int align_second,
@@ -893,36 +871,34 @@ struct t_hook *(*hook_timer) (struct t_weechat_plugin *plugin,
                               int (*callback)(void *data,
                                               int remaining_calls),
                               void *callback_data);
-----------------------------------------
+----
 
 And the macro used to call this function is:
 
 [source,C]
-----------------------------------------
+----
 #define weechat_hook_timer(__interval, __align_second, __max_calls,     \
                            __callback, __data)                          \
     weechat_plugin->hook_timer(weechat_plugin, __interval,              \
                                __align_second, __max_calls,             \
                                __callback, __data)
-----------------------------------------
+----
 
 So in a plugin, the call to function will be for example:
 
 [source,C]
-----------------------------------------
+----
 server->hook_timer_sasl = weechat_hook_timer (timeout * 1000,
                                               0, 1,
                                               &irc_server_timer_sasl_cb,
                                               server);
-----------------------------------------
+----
 
 [[contribute]]
-Contribute to WeeChat
----------------------
+== Contribute to WeeChat
 
 [[git_repository]]
-Git repository
-~~~~~~~~~~~~~~
+=== Git repository
 
 Git repository is at this URL: http://git.savannah.gnu.org/gitweb/?p=weechat.git
 
@@ -931,9 +907,9 @@ is a patch made with `git diff` or `git format-patch`, sent by e-mail.
 
 Format of commit message is the following:
 
-----------------------------------------
+----
 component: fix a problem (bug #12345)
-----------------------------------------
+----
 
 Where 'component' is one of following:
 
@@ -950,30 +926,28 @@ Some rules to follow:
 
 Examples of commit messages:
 
-----------------------------------------
+----
 core: add callback "nickcmp" for nick comparison in buffers
 irc: fix freeze when reading on socket with SSL enabled (bug #35097)
 ruby: add detection of ruby version 1.9.3 in cmake
 python: fix crash when unloading a script without pointer to interpreter
 core: update Japanese translations (patch #7783)
-----------------------------------------
+----
 
 [[translations]]
-Translations
-~~~~~~~~~~~~
+=== Translations
 
 [[gettext]]
-Gettext
-^^^^^^^
+==== Gettext
 
 Gettext files are in directory 'po/'.
 If you want to initialize a new language, use command `msginit`. For example to
 create a dutch empty file:
 
-----------------------------------------
+----
 $ cd po
 $ msginit -i weechat.pot -l nl_NL -o nl.po
-----------------------------------------
+----
 
 Base language for WeeChat is English, so you must of course understand English
 in order to translate to your language.
@@ -981,29 +955,28 @@ in order to translate to your language.
 When done, you *have* to check your file with script 'msgcheck.py'
 (https://github.com/flashcode/msgcheck):
 
-----------------------------------------
+----
 $ msgcheck.py xx.po
-----------------------------------------
+----
 
 [[build_autogen_files]]
-Build auto-generated files
-++++++++++++++++++++++++++
+===== Build auto-generated files
 
 Files in directory 'doc/XX/autogen/' are auto-generated by script 'doc/docgen.py'.
 
 Copy this python script to your python directory (for example '~/.weechat/python').
 Then you can load this script in your WeeChat, and setup path to your '/doc' directory:
 
-----------------------------------------
+----
 /python load docgen.py
 /set plugins.var.python.docgen.path "~/src/weechat/doc"
-----------------------------------------
+----
 
 Then create this alias to build files:
 
-----------------------------------------
+----
 /alias doc /perl unload; /python unload; /ruby unload; /lua unload; /tcl unload; /guile unload; /python load docgen.py; /wait 1ms /docgen
-----------------------------------------
+----
 
 And use command `/doc` to build all auto-generated files (for all languages).
 
@@ -1012,8 +985,7 @@ When using command `/doc`, be sure all C plugins (irc, charset, ...) are loaded,
 because files are built using options currently in memory.
 
 [[asciidoc]]
-Asciidoc
-^^^^^^^^
+==== Asciidoc
 
 Asciidoc files are in directory 'doc/XX/' where 'XX' is language (en, fr, de, it, ...)
 
@@ -1021,14 +993,14 @@ First make a copy of an English asciidoc file (in directory 'doc/en/'), then wor
 
 The translations missing in files are indicated by this string:
 
-----------------------------------------
+----
 // TRANSLATION MISSING
-----------------------------------------
+----
 
 You must translate whole file except links and special keywords for notes,
 warnings, ... These words must be kept unchanged:
 
-----------------------------------------
+----
 [[link_name]]
 <<link_name>>
 
@@ -1037,24 +1009,10 @@ warnings, ... These words must be kept unchanged:
 [IMPORTANT]
 [WARNING]
 [CAUTION]
-----------------------------------------
+----
 
 When there is a name after `<<link_name>>`, then you must translate it:
 
-----------------------------------------
+----
 <<link_name,this text must be translated>>
-----------------------------------------
-
-Please make sure special chars below titles are exactly same length as title
-(not too short or too long):
-
-----------------------------------------
-This is a correct title
-=======================
-
-This is a wrong title
-============
-
-This is a wrong title
-=============================
-----------------------------------------
+----

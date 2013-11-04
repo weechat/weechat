@@ -1,11 +1,9 @@
-Guide de Démarrage Rapide WeeChat
-=================================
+= Guide de Démarrage Rapide WeeChat
 Sébastien Helleu <flashcode@flashtux.org>
 
 
 [[start]]
-Démarrer WeeChat
-----------------
+== Démarrer WeeChat
 
 Un émulateur de terminal recommandé pour X (mais pas obligatoire) est
 rxvt-unicode (il a un bon support UTF-8, et aucun problème avec les
@@ -13,32 +11,31 @@ touches par défaut).
 
 Lancer depuis votre shell :
 
-----------------------------------------
+----
 $ weechat
-----------------------------------------
+----
 
 
 [[help_options]]
-Aide en ligne / options
------------------------
+== Aide en ligne / options
 
 WeeChat dispose d'aide pour toutes les commandes, tapez simplement :
 
-----------------------------------------
+----
 /help
-----------------------------------------
+----
 
 Pour avoir de l'aide sur une commande, tapez :
 
-----------------------------------------
+----
 /help commande
-----------------------------------------
+----
 
 Pour modifier des options, tapez :
 
-----------------------------------------
+----
 /set config.section.option valeur
-----------------------------------------
+----
 
 (où `config` est le nom de la configuration (`weechat` pour le cœur, ou
 un nom d'extension), `section` la section de cette configuration et
@@ -55,27 +52,27 @@ Par exemple :
 
 * afficher toutes les options (WeeChat et extensions) :
 
-----------------------------------------
+----
 /set
-----------------------------------------
+----
 
 * afficher les options WeeChat :
 
-----------------------------------------
+----
 /set weechat.*
-----------------------------------------
+----
 
 * afficher les options de l'extension IRC :
 
-----------------------------------------
+----
 /set irc.*
-----------------------------------------
+----
 
 Vous pouvez afficher de l'aide sur une option avec `/help`, par exemple :
 
-----------------------------------------
+----
 /help weechat.look.highlight
-----------------------------------------
+----
 
 Toutes les options sont sauvées quand WeeChat quitte (ou avec la commande
 `/save` pour forcer une écriture des options).
@@ -86,8 +83,7 @@ commande `/set`.
 
 
 [[core_vs_plugins]]
-Cœur vs extensions
-------------------
+== Cœur vs extensions
 
 Le cœur de WeeChat ("core") ne fait qu'afficher les données à l'écran et
 interagir avec l'utilisateur, cela signifie que le cœur sans extension
@@ -101,25 +97,23 @@ devriez voir "irc" et d'autres extensions dans cette liste.
 
 
 [[create_irc_server]]
-Créer un serveur IRC
---------------------
+== Créer un serveur IRC
 
 Vous pouvez ajouter un serveur IRC par la commande `/server`, par exemple :
 
-----------------------------------------
+----
 /server add oftc irc.oftc.net/6667
-----------------------------------------
+----
 
 Comme d'habitude, de l'aide est disponible si vous êtes perdus :
 
-----------------------------------------
+----
 /help server
-----------------------------------------
+----
 
 
 [[irc_server_options]]
-Définir les options du serveur IRC
-----------------------------------
+== Définir les options du serveur IRC
 
 WeeChat utilise des valeurs par défaut pour tous les serveurs, si vous ne
 spécifiez pas de valeur spécifique pour une option de serveur.
@@ -132,72 +126,71 @@ définie (non "null"). Sinon WeeChat utilise la valeur par défaut
 Par exemple il y a des pseudos par défaut (basés sur votre login un*x), et
 vous pouvez les écraser pour le serveur oftc avec la commande suivante :
 
-----------------------------------------
+----
 /set irc.server.oftc.nicks "pseudo,pseudo2,pseudo3,pseudo4,pseudo5"
-----------------------------------------
+----
 
 Pour modifier le nom d'utilisateur et nom réel :
 
-----------------------------------------
+----
 /set irc.server.oftc.username "Mon nom d'utilisateur"
 /set irc.server.oftc.realname "Mon nom réel"
-----------------------------------------
+----
 
 Pour activer la connexion automatique au serveur lors du démarrage :
 
-----------------------------------------
+----
 /set irc.server.oftc.autoconnect on
-----------------------------------------
+----
 
 Si SASL est disponible sur le serveur, vous pouvez l'utiliser pour
 l'authentification (vous serez identifié avant de rejoindre les canaux) :
 
-----------------------------------------
+----
 /set irc.server_default.sasl_mechanism dh-blowfish
 /set irc.server.oftc.sasl_username "pseudo"
 /set irc.server.oftc.sasl_password "xxxxxxx"
-----------------------------------------
+----
 
 Pour lancer une commande après connexion au serveur, par exemple pour
 s'authentifier auprès de nickserv (seulement si vous n'utilisez pas SASL pour
 l'authentification) :
 
-----------------------------------------
+----
 /set irc.server.oftc.command "/msg nickserv identify xxxxxxx"
-----------------------------------------
+----
 
 [NOTE]
 Plusieurs commandes peuvent être séparées par ';' (point-virgule).
 
 Pour rejoindre automatiquement des canaux lors de la connexion au serveur :
 
-----------------------------------------
+----
 /set irc.server.oftc.autojoin "#canal1,#canal2"
-----------------------------------------
+----
 
 Pour supprimer la valeur d'une option du serveur et utiliser sa valeur par
 défaut à la place, par exemple pour utiliser les pseudos par défaut
 (irc.server_default.nicks) :
 
-----------------------------------------
+----
 /set irc.server.oftc.nicks null
-----------------------------------------
+----
 
 Autres options : vous pouvez modifier les autres options avec la commande
 suivante ("xxx" est le nom d'une option) :
 
-----------------------------------------
+----
 /set irc.server.oftc.xxx valeur
-----------------------------------------
+----
 
 
 [[connect_to_irc_server]]
-Se connecter au serveur IRC et rejoindre les canaux
----------------------------------------------------
+== Se connecter au serveur IRC et rejoindre les canaux
 
-----------------------------------------
+----
 /connect oftc
-----------------------------------------
+----
 
 [NOTE]
 Cette commande peut aussi être utilisée pour créer et se connecter au serveur
@@ -211,38 +204,36 @@ faut utiliser la touche ctrl-X.
 Il est possible de désactiver le mélange des tampons serveurs pour avoir un
 tampon distinct par serveur :
 
-----------------------------------------
+----
 /set irc.look.server_buffer independent
-----------------------------------------
+----
 
 
 [[join_part_irc_channels]]
-Rejoindre/quitter les canaux IRC
-------------------------------
+== Rejoindre/quitter les canaux IRC
 
 Rejoindre un canal :
 
-----------------------------------------
+----
 /join #channel
-----------------------------------------
+----
 
 Quitter un canal (en laissant le tampon ouvert) :
 
-----------------------------------------
+----
 /part [message de fin]
-----------------------------------------
+----
 
 quitter un canal et fermer le tampon (`/close` est un alias sur
 `/buffer close`) :
 
-----------------------------------------
+----
 /close
-----------------------------------------
+----
 
 
 [[buffer_window]]
-Gérer les tampons/fenêtres
---------------------------
+== Gérer les tampons/fenêtres
 
 Un tampon ("buffer") est un composant lié à une extension, avec une
 catégorie et un nom. Le tampon contient les données affichées à l'écran.
@@ -253,10 +244,10 @@ alors plusieurs fenêtres avec plusieurs tampons en même temps.
 
 Commandes pour gérer les tampons et les fenêtres :
 
-----------------------------------------
+----
 /buffer
 /window
-----------------------------------------
+----
 
 (je ne répéterai pas que vous pouvez avoir de l'aide sur ces commandes
 avec /help)
@@ -264,14 +255,13 @@ avec /help)
 Par exemple, pour découper verticalement l'écran en une petite fenêtre
 (1/3 de la largeur) et une large (2/3), utilisez la commande :
 
-----------------------------------------
+----
 /window splitv 33
-----------------------------------------
+----
 
 
 [[key_bindings]]
-Raccourcis clavier
-------------------
+== Raccourcis clavier
 
 WeeChat utilise un certain nombre de touches par défaut. Toutes ces
 touches sont dans la documentation, mais vous devriez connaître au moins
@@ -291,26 +281,25 @@ Une touche utile est meta-k (alt-k) pour trouver le code des touches.
 
 Par exemple, pour associer meta-y (alt-y) à la commande `/buffer close` :
 
-----------------------------------------
+----
 /key bind (pressez meta-k) (pressez meta-y) /buffer close
-----------------------------------------
+----
 
 Vous aurez une ligne de commande qui ressemble à ceci :
 
-----------------------------------------
+----
 /key bind meta-y /buffer close
-----------------------------------------
+----
 
 Pour enlever la touche :
 
-----------------------------------------
+----
 /key unbind meta-y
-----------------------------------------
+----
 
 
 [[plugins_scripts]]
-Extensions/scripts
-------------------
+== Extensions/scripts
 
 Sur certaines distributions comme Debian, les extensions sont disponibles
 via un paquet séparé (par exemple weechat-plugins).
@@ -326,8 +315,7 @@ Vous pouvez gérer les scripts dans WeeChat avec la commande `/script` (voir
 
 
 [[more_doc]]
-Plus de documentation
----------------------
+== Plus de documentation
 
 Vous pouvez maintenant utiliser WeeChat et lire la FAQ/documentation pour
 toute autre question : http://weechat.org/doc

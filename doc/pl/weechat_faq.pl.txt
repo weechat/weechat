@@ -1,5 +1,4 @@
-WeeChat FAQ (Często zadawane pytania)
-=====================================
+= WeeChat FAQ (Często zadawane pytania)
 Sébastien Helleu <flashcode@flashtux.org>
 
 
@@ -9,12 +8,10 @@ dla najnowszej stabilnej wersji.
 
 
 [[general]]
-Ogólne
-------
+== Ogólne
 
 [[weechat_name]]
-Skąd się wzięła nazwa "WeeChat"?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Skąd się wzięła nazwa "WeeChat"?
 
 "Wee" to akronim rekursywny oznaczającym "Wee Enhanced Environment".
 Stąd kompletna nazwa to "Wee Enhanced Environment for Chat".
@@ -23,20 +20,17 @@ Stąd kompletna nazwa to "Wee Enhanced Environment for Chat".
 pasuje ono do WeeChat!).
 
 [[why_choose_weechat]]
-Dlaczego wybrać WeeChat? X-Chat i Irssi są takie dobre...
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Dlaczego wybrać WeeChat? X-Chat i Irssi są takie dobre...
 
 Ponieważ Weechat jest bardzo lekki i posiada innowacyjne funkcje.
 
 Więcej informacji na stronie: http://weechat.org/about/features
 
 [[compilation_install]]
-Kompilacja / instalacja
------------------------
+== Kompilacja / instalacja
 
 [[gui]]
-Słyszałem o wielu GUI dla WeeChat. Jak mogę je skompilować/użyć?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Słyszałem o wielu GUI dla WeeChat. Jak mogę je skompilować/użyć?
 
 Dostępne jest kilka zdalnych GUI:
 
@@ -46,8 +40,7 @@ Dostępne jest kilka zdalnych GUI:
 * https://github.com/eirikb/weecloud[weecloud] (Web)
 
 [[compile_git]]
-Nie mogę skompilować WeeChat po sklonowaniu repozytorium git, dlaczego?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Nie mogę skompilować WeeChat po sklonowaniu repozytorium git, dlaczego?
 
 Zalecaną metodą kompilacji WeeChat jest użycie cmake.
 
@@ -60,8 +53,7 @@ git. Ten pakiet może odpowiadać dokładnie wersji z gita i jest mniej wygodny
 przy aktualizowaniu jak klonowanie z gita.
 
 [[lost]]
-Uruchomiłem WeeChat, ale czuję się zagubiony, co robić?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Uruchomiłem WeeChat, ale czuję się zagubiony, co robić?
 
 Dla pomocy wpisz `/help`. Aby uzyskać pomoc dla komendy wpisz `/help komenda`.
 Klawisze i komendy są wypisane w dokumentacji.
@@ -70,12 +62,10 @@ Nowym użytkownikom zaleca się przeczytanie quickstart (szybki start)
 (zobacz stronę z dokumentacją na stronie www).
 
 [[display]]
-Wyświetlanie
-------------
+== Wyświetlanie
 
 [[charset]]
-Nie widzę niektórych znaków diakrytycznych, co mogę zrobić?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Nie widzę niektórych znaków diakrytycznych, co mogę zrobić?
 
 Jest to częsty problem, przeczytaj i sprawdź *WSZYSTKIE* poniższe rozwiązania:
 
@@ -103,8 +93,7 @@ sprawdź czy *wszystkie* twoje ustawienia (terminal, screen, ..) są ISO,
 a *nie* UTF-8.
 
 [[bars_background]]
-Paski jak tytuł i status nie są filtrowane, kolor tła zatrzymuje się po tekście, czemu?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Paski jak tytuł i status nie są filtrowane, kolor tła zatrzymuje się po tekście, czemu?
 
 Może to być spowodowane złą wartością zmiennej środowiskowej TERM (spójrz na
 wynik `echo $TERM` w terminalu).
@@ -119,8 +108,7 @@ W zależności, gdzie uruchamiasz WeeChat, powinieneś uzyskać:
 W razie potrzeby, popraw zmienna TERM: `export TERM="xxx"`.
 
 [[screen_weird_chars]]
-Podczas używania WeeChat pod screenem/tmuxem pojawiają mi się dziwne, losowe znaki, jak to naprawić?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Podczas używania WeeChat pod screenem/tmuxem pojawiają mi się dziwne, losowe znaki, jak to naprawić?
 
 Może to być spowodowane przez złą wartość zmiennej TERM w swojej powłoce (spójrz
 na wynik `echo $TERM` w swoim terminalu, *poza screenem/tmuxem*).
@@ -131,8 +119,7 @@ który działa dobrze (jak wiele innych wartości).
 W razie potrzeby, popraw zmienna TERM: `export TERM="xxx"`.
 
 [[osx_display_broken]]
-Skompilowałem WeeChat pod OS X i wszędzie na ekranie widzę "(null)", co jest nie tak?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Skompilowałem WeeChat pod OS X i wszędzie na ekranie widzę "(null)", co jest nie tak?
 
 Jeśli samodzielnie skompilowałeś ncursesw, spróbuj użyć domyślnej wersji (dostarczanej
 z systemem).
@@ -141,8 +128,7 @@ Ponadto, pod OS X, zaleca się instalowanie WeeChat za pomocą managera pakietó
 Homebrew.
 
 [[buffer_vs_window]]
-Słyszałem o "buforach" i "oknach", jaka jest między nimi różnica?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Słyszałem o "buforach" i "oknach", jaka jest między nimi różnica?
 
 'bufor' jest określany przez numer, nazwę, wyświetlane linie (i trochę innych
 danych).
@@ -154,42 +140,39 @@ Każde okno wyświetla jeden bufor. Bufor może być ukryty (nie wyświetlany pr
 okno) lub wyświetlany w jednym lub więcej oknach.
 
 [[buffers_list]]
-Jak wyświetlić listę z buforami po lewej stronie?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Jak wyświetlić listę z buforami po lewej stronie?
 
 Użyj skryptu 'buffers.pl'.
 
 W celu ograniczenia rozmiaru paska:
 
-----------------------------------------
+----
 /set weechat.bar.buffers.size_max 15
-----------------------------------------
+----
 
 Żeby przenieść pasek na dół:
 
-----------------------------------------
+----
 /set weechat.bar.buffers.position bottom
-----------------------------------------
+----
 
 [[customize_prefix]]
-Jak mogę ograniczyć długość wyświetlanych nicków lub usunąć wyrównanie w oknie rozmowy?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Jak mogę ograniczyć długość wyświetlanych nicków lub usunąć wyrównanie w oknie rozmowy?
 
 W celu ograniczenia długości nicków w oknie rozmowy:
 
-----------------------------------------
+----
 /set weechat.look.prefix_align_max 15
-----------------------------------------
+----
 
 Żeby usunąć wyrównanie nicków:
 
-----------------------------------------
+----
 /set weechat.look.prefix_align none
-----------------------------------------
+----
 
 [[input_bar_size]]
-Jak używać linii poleceń z więcej niż jednym wierszem?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Jak używać linii poleceń z więcej niż jednym wierszem?
 
 Opcja 'size' paska wprowadzania może zostać ustawiona na wartość wyższą niż 1
 (dla ustalonej wartości, domyślny rozmiar to 1) lub 0 dla dynamicznego rozmiaru,
@@ -197,72 +180,69 @@ następnie opcja 'size_max' ustali maksymalny rozmiar (0 = brak limitu).
 
 Przykład dynamicznego rozmiaru:
 
-----------------------------------------
+----
 /set weechat.bar.input.size 0
-----------------------------------------
+----
 
 Maksymalny rozmiar równy 2:
 
-----------------------------------------
+----
 /set weechat.bar.input.size_max 2
-----------------------------------------
+----
 
 [[one_input_root_bar]]
-Czy jest możliwe wyświetlanie tylko jednego paska wejściowego dla wszystkich okien (po podzieleniu)?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Czy jest możliwe wyświetlanie tylko jednego paska wejściowego dla wszystkich okien (po podzieleniu)?
 
 Tak, należy stworzyć pasek typu "root" (z elementem mówiącym, w którym oknie
 aktualnie jesteśmy), następnie usunąć obecny pasek wejściowy.
 
 Na przykład:
 
-----------------------------------------
+----
 /bar add rootinput root bottom 1 0 [buffer_name]+[input_prompt]+(away),[input_search],[input_paste],input_text
 /bar del input
-----------------------------------------
+----
 
 Jeśli kiedyś przestanie ci to odpowiadać, po prostu usuń ten pasek, WeeChat
 automatycznie stworzy nowy pasek "input" jeśli element "input_text" nie zostanie
 użyty w żadnym z pasków:
 
-----------------------------------------
+----
 /bar del rootinput
-----------------------------------------
+----
 
 [[terminal_copy_paste]]
-Jak mogę kopiować/wklejać tekst bez wklejania listy nicków?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Jak mogę kopiować/wklejać tekst bez wklejania listy nicków?
 
 Możesz użyć terminala z prostokątnym zaznaczaniem (jak rxvt-unicode,
 konsole, gnome-terminal, ...). Klawisze to zazwyczaj @k(C-)@k(A-) zaznaczenie myszką.
 
 Innym rozwiązaniem jest przesunięcie listy nicków na górę lub dół, na przykład:
 
-----------------------------------------
+----
 /set weechat.bar.nicklist.position top
-----------------------------------------
+----
 
 [[urls]]
-Jak mogę kliknąć na długi URL (dłuższy niż linia)?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Jak mogę kliknąć na długi URL (dłuższy niż linia)?
 
 Domyślnie WeeChat wyświetla czas i przedrostki dla każdej linii i opcjonalne paski
 dookoła obszaru rozmowy. Aby usprawnić klikanie w urle można przesunąć listę nicków
 na górę oraz usunąć wyrównanie nicków:
 
-----------------------------------------
+----
 /set weechat.bar.nicklist.position top
 /set weechat.look.prefix_align none
 /set weechat.look.align_end_of_lines time
-----------------------------------------
+----
 
 W WeeChat ≥ 0.3.6 można włączyć opcję "eat_newline_glitch", dzięki której znaki
 nowej linii nie są dodawane na końcu każdej wyświetlanej linii (nie zakłóci to
 zaznaczania urli):
 
-----------------------------------------
+----
 /set weechat.look.eat_newline_glitch on
-----------------------------------------
+----
 
 [IMPORTANT]
 Ta opcja może spowodować pojawienie się błędów. Jeśli doświadczysz takich problemów
@@ -271,23 +251,21 @@ wyłącz tą opcję.
 Innym rozwiązaniem jest użycie skryptu: http://weechat.org/scripts/stable/tag/url
 
 [[change_locale_without_quit]]
-Chcę zmienić język komunikatów wyświetlanych przez WeeChat, ale bez jego zamykania, czy jest to możliwe?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Chcę zmienić język komunikatów wyświetlanych przez WeeChat, ale bez jego zamykania, czy jest to możliwe?
 
 Tak, musisz użyć pythonowego skryptu 'shell.py' (dostępny na stronie programu),
 oraz użyć tych komend po załadowaniu skryptu:
 
-----------------------------------------
+----
 /shell setenv LANG=pl_PL.UTF-8
 /upgrade
-----------------------------------------
+----
 
 Aby otrzymać polskie komunikaty dla kodowania UTF-8 w terminalu, osoby
 używające ISO, mogą wykonać: `/shell setenv LANG=pl_PL`.
 
 [[use_256_colors]]
-Jak mogę użyć 256 kolorów w WeeChat?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Jak mogę użyć 256 kolorów w WeeChat?
 
 256 kolorów jest wspierane tylko w WeeChat ≥ 0.3.4.
 
@@ -303,17 +281,17 @@ tych wartości w zmiennej 'TERM'.
 
 Jeśli używasz screena, możesz dodać to do swojego '~/.screenrc':
 
-----------------------------------------
+----
 term screen-256color
-----------------------------------------
+----
 
 Jeśli wartość zmiennej 'TERM' jest niepoprawna, oraz WeeChat został już uruchomiony
 nie należy panikować! Można to zmienić bez konieczności restartu, za pomocą skryptu 'shell.py':
 
-----------------------------------------
+----
 /shell setenv TERM=screen-256color
 /upgrade
-----------------------------------------
+----
 
 Dla wersji 0.3.4, musisz użyć komendy `/color` w celu dodania nowych kolorów.
 
@@ -323,8 +301,7 @@ można stworzyć alias dla koloru za pomocą komendy `/color`).
 Więcej informacji na temat zarządzania kolorami można uzyskać w poradniku użytkownika.
 
 [[search_text]]
-Jak mogę wyszukać tekst w buforze (jak za pomocą /lastlog w irssi)?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Jak mogę wyszukać tekst w buforze (jak za pomocą /lastlog w irssi)?
 
 Domyślny skrót klawiszowy to @k(C-)@k(r) (komenda: `/input search_text`).
 
@@ -333,30 +310,27 @@ Poruszanie się między podświetleniami: @k(A-)@k(p)/@k(n).
 Po więcej informacji zajrzyj do poradnika użytkownika (domyślne skróty klawiszowe).
 
 [[key_bindings]]
-Przypisania klawiszy
---------------------
+== Przypisania klawiszy
 
 [[meta_keys]]
-Niektóre skróty klawiszowe (alt + klawisz) nie działają, dlaczego?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Niektóre skróty klawiszowe (alt + klawisz) nie działają, dlaczego?
 
 Jeśli używasz terminali jak xterm lub uxterm, niektóre skróty domyślnie
 nie będą działać. Możesz dodać następujące linie do pliku '~/.Xresources':
 
 * dla xterm:
-----------------------------------------
+----
 XTerm*metaSendsEscape: true
-----------------------------------------
+----
 * dla uxterm:
-----------------------------------------
+----
 UXTerm*metaSendsEscape: true
-----------------------------------------
+----
 
 Następnie przeładować zasoby (`xrdb -override ~/.Xresources`) lub zrestartować X.
 
 [[customize_key_bindings]]
-Jak mogę zmienić przypisania klawiszy?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Jak mogę zmienić przypisania klawiszy?
 
 Przypisania klawiszy można dostosować za pomocą komendy `/key`.
 
@@ -364,53 +338,49 @@ Domyślnie @k(A-)@k(k) pozwala pobrać kod klawiszy i umieścić go w wierszu
 poleceń.
 
 [[jump_to_buffer_11_or_higher]]
-Jakim skrótem można przejść do buforu 11 (lub o większym numerze)?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Jakim skrótem można przejść do buforu 11 (lub o większym numerze)?
 
 Skrót to @k(A-)@k(j) i dwie cyfry, na przykład @k(A-)@k(j) później @k(1), @k(1)
 przejdzie do buforu 11.
 
 Można również samemu stworzyć skrót, na przykład:
 
-----------------------------------------
+----
 /key bind meta-q /buffer *11
-----------------------------------------
+----
 
 Lista domyślnych skrótów znajduje się w poradniku użytkownika.
 
 [[global_history]]
-Jak używać globalnej historii (zamiast historii buforu) za pomocą strzałek góra/dół?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Jak używać globalnej historii (zamiast historii buforu) za pomocą strzałek góra/dół?
 
 Możesz przypisać strzałki w górę i dół do globalnej historii (domyślnie dla
 globalnej historii przypisane są klawisze @k(C-)@k(↑) oraz @k(C-)@k(↓)).
 
 Przykład:
 
-----------------------------------------
+----
 /key bind meta2-A /input history_global_previous
 /key bind meta2-B /input history_global_next
-----------------------------------------
+----
 
 [NOTE]
 Klawisze "meta2-A" i "meta2-B" mogą być inne dla twojego terminala. W celu
 znalezienia ich kodów wciśnij @k(A-)@k(k) następnie przycisk (góra lub dół).
 
 [[mouse]]
-Obsługa myszy
--------------
+== Obsługa myszy
 
 [[mouse_not_working]]
-Obsługa myszy w ogóle nie działa, co mogę zrobić?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Obsługa myszy w ogóle nie działa, co mogę zrobić?
 
 Mysz nie jest obsługiwana w WeeChat ≥ 0.3.6.
 
 Na samym początku należy włączyć obsługę myszy:
 
-----------------------------------------
+----
 /mouse enable
-----------------------------------------
+----
 
 Jeśli to nie pomogło należy sprawdzić wartość zmiennej TERM w swojej powłoce
 (wynik komendy `echo $TERM` w swoim terminalu).
@@ -418,21 +388,20 @@ W zależności od używanego terminfo, mysz może nie być wspierana.
 
 Możesz sprawdzić wsparcie myszy w terminalu:
 
-----------------------------------------
+----
 $ printf '\033[?1002h'
-----------------------------------------
+----
 
 Następnie kliknij pierwszy znak w terminalu (górny lewy róg). Powinieneś zobaczyć " !!#!!".
 
 Aby wyłączyć wsparcie dla myszy w terminalu:
 
-----------------------------------------
+----
 $ printf '\033[?1002l'
-----------------------------------------
+----
 
 [[mouse_coords]]
-Mysz nic nie robi dla X lub Y większych od 94, dlaczego?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Mysz nic nie robi dla X lub Y większych od 94, dlaczego?
 
 Niektóre terminale wysyłają tylko znaki ISO dla położenia myszy, dlatego nie
 działa to dla X/Y większych dla 94.
@@ -441,71 +410,65 @@ Powinieneś użyć terminala wspierającego położenia UTF-8 dla myszy, jak
 rxvt-unicode.
 
 [[mouse_select_paste]]
-Jak mogę zaznaczyć lub wkleić tekst w terminalu z włączoną obsługa myszy w WeeChat?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Jak mogę zaznaczyć lub wkleić tekst w terminalu z włączoną obsługa myszy w WeeChat?
 
 Kiedy obsługa myszy jest włączona w WeeChat, można użyć modyfikatora @k(-S-) do zaznaczania
 lub kliknać w terminalu, tak jak w przypadku wyłączonej obsługi myszy (w niektórych
 terminalach jak iTerm należy użyć @k(-A-) zamiast @k(-S-)).
 
 [[irc]]
-IRC
----
+== IRC
 
 [[irc_ssl_connection]]
-Mam problemy podczas połączenia z serwerem używającym SSL, co mogę zrobić?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Mam problemy podczas połączenia z serwerem używającym SSL, co mogę zrobić?
 
 Jeśli widzisz błędy gnutls, możesz użyć innej wielkości klucza
 Diffie-Hellman (domyślnie 2048):
 
-----------------------------------------
+----
 /set irc.server.freenode.ssl_dhkey_size 1024
-----------------------------------------
+----
 
 Jeśli widzisz błędy związanie z certyfikatami, możesz wyłączyć opcję "ssl_verify"
 (należy jednak uważać, ponieważ połączenie będzie mniej bezpieczne):
 
-----------------------------------------
+----
 /set irc.server.freenode.ssl_verify off
-----------------------------------------
+----
 
 [[irc_ssl_handshake_error]]
-Podczas łączenia się z serwerem poprzez SSL widzę tylko błąd "TLS handshake failed", co mogę zrobić?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Podczas łączenia się z serwerem poprzez SSL widzę tylko błąd "TLS handshake failed", co mogę zrobić?
 
 Możesz spróbować innego ciągu priorytetu (tylko WeeChat ≥ 0.3.5), zamień "xxx"
 nazwą serwera:
 
-----------------------------------------
+----
 /set irc.server.xxx.ssl_priorities "NORMAL:-VERS-TLS-ALL:+VERS-TLS1.0:+VERS-SSL3.0:%COMPAT"
-----------------------------------------
+----
 
 [[irc_ssl_freenode]]
-Jak mogę połączyć się z serwerem freenode używając SSL?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Jak mogę połączyć się z serwerem freenode używając SSL?
 
 Ustaw opcję 'weechat.network.gnutls_ca_file' do pliku z certyfikatami:
 
-----------------------------------------
+----
 /set weechat.network.gnutls_ca_file "/etc/ssl/certs/ca-certificates.crt"
-----------------------------------------
+----
 
 [NOTE]
 Należy sprawdzić czy plik znajduje się w systemie (zazwyczaj dostarczany
 przez pakiet "ca-certificates").
 
 Ustaw port serwera, SSL, dhkey_size, następnie się połącz:
-----------------------------------------
+----
 /set irc.server.freenode.addresses "chat.freenode.net/7000"
 /set irc.server.freenode.ssl on
 /set irc.server.freenode.ssl_dhkey_size 1024
 /connect freenode
-----------------------------------------
+----
 
 [[irc_oauth]]
-Jak połączyć się z serwerem wymagającym "oauth"?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Jak połączyć się z serwerem wymagającym "oauth"?
 
 Niektóre serwery jak 'twitch' wymagają oauth do połączenia.
 
@@ -514,34 +477,32 @@ Oauth to po prostu hasło w postaci "oauth:hasło".
 W celu dodania takiego serwera i połączenia się z nim należ wykonać nastepujące
 polecenia (należy zastąpić nazwę i adres odpowiednimi wartościami):
 
-----------------------------------------
+----
 /server add nazwa irc.server.org -password="oauth:hasło"
 /connect nazwa
-----------------------------------------
+----
 
 [[irc_sasl]]
-Jak mogę się zidentyfikować przed wejściem na kanały?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Jak mogę się zidentyfikować przed wejściem na kanały?
 
 Jeśli serwer wspiera SASL, możesz użyć tego zamiast wysyłać komendę do nickserva,
 na przykład:
 
-----------------------------------------
+----
 /set irc.server_default.sasl_mechanism dh-blowfish
 /set irc.server.freenode.sasl_username "nick"
 /set irc.server.freenode.sasl_password "xxxxxxx"
-----------------------------------------
+----
 
 Jeśli serwer nie wspiera SASL, możesz dodać odstęp pomiędzy komendą a wejściem
 na kanały):
 
-----------------------------------------
+----
 /set irc.server.freenode.command_delay 5
-----------------------------------------
+----
 
 [[ignore_vs_filter]]
-Jaka jest różnica między komendami/ignore i /filter ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Jaka jest różnica między komendami/ignore i /filter ?
 
 Komenda `/ignore` jest komendą IRC, zatem odnosi się tylko do buforów IRC
 (serwery i kanały).
@@ -557,38 +518,36 @@ Filtrowane linie są tylko ukrywane, nie usuwane, można je zobaczyć wyłączaj
 filtry (domyślnie @k(A-)@k(=) zmienia stan filtrów).
 
 [[filter_irc_join_part_quit]]
-Jak mogę filtrować wiadomości o wejściu/opuszczeniu/wyjściu na kanałach IRC?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Jak mogę filtrować wiadomości o wejściu/opuszczeniu/wyjściu na kanałach IRC?
 
 Za pomocą inteligentnych filtrów (zachowuje wejścia/opuszczenia/wyjścia od osób
 piszących niedawno):
 
-----------------------------------------
+----
 /set irc.look.smart_filter on
 /filter add irc_smart * irc_smart_filter *
-----------------------------------------
+----
 
 Za pomocą globalnego filtru (ukrywa *wszystkie* wejścia/opuszczenia/wyjścia):
 
-----------------------------------------
+----
 /filter add joinquit * irc_join,irc_part,irc_quit *
-----------------------------------------
+----
 
 [NOTE]
 Więcej informacji: `/help filter` i `/help irc.look.smart_filter`
 
 [[filter_irc_join_channel_messages]]
-Jak mogę filtrować wyświetlane wiadomości podczas wejścia na kanał IRC?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Jak mogę filtrować wyświetlane wiadomości podczas wejścia na kanał IRC?
 
 Dla WeeChat ≥ 0.4.1 można wyłączyć część wiadomości za pomocą opcji
 'irc.look.display_join_message'.
 
 Na przykład, aby wyłączyć nazwy (wiadomość IRC o numerze '366'):
 
-----------------------------------------
+----
 /set irc.look.display_join_message "329,332,333"
-----------------------------------------
+----
 
 [NOTE]
 Więcej można znaleźć wpisując: `/help irc.look.display_join_message`
@@ -605,17 +564,16 @@ Tagi innych wiadomości można znaleźć analizując nieprzetworzone dane IRC
 Przykłady:
 
 * filtrowanie użytkowników:
-----------------------------------------
+----
 /filter add irc_join_names * irc_366 *
-----------------------------------------
+----
 * filtrowanie tematu (i daty):
-----------------------------------------
+----
 /filter add irc_join_topic_date * irc_332,irc_333 *
-----------------------------------------
+----
 
 [[filter_voice_messages]]
-Jak mogę filtrować informacje o przyznaniu voice (np na serwerze Bitlbee)?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Jak mogę filtrować informacje o przyznaniu voice (np na serwerze Bitlbee)?
 
 Filtrowanie wiadomości o przyznaniu voice nie jest proste, ponieważ może on
 zostać nadany wraz z innymi atrybutami w jednej wiadomości IRC.
@@ -626,15 +584,15 @@ pozwolić WeeChat używać specjalnego koloru dla nieobecnych nicków.
 
 Dla Bitlbee ≥ 3, należy wykonać na kanale '&bitlbee':
 
-----------------------------------------
+----
 channel set show_users online,away
-----------------------------------------
+----
 
 Dla starszych wersji Bitlbee, należy wykonać na kanale '&bitlbee':
 
-----------------------------------------
+----
 set away_devoice false
-----------------------------------------
+----
 
 Aby dowiedzieć się jak sprawdzić nieobecność w WeeChat, spójrz na pytanie o
 <<color_away_nicks,nieobecnych osobach>>.
@@ -642,13 +600,12 @@ Aby dowiedzieć się jak sprawdzić nieobecność w WeeChat, spójrz na pytanie 
 Jeśli napewno chcesz filtrować wiadomości o statusie voice, możesz użyć tej komendy,
 nie jest ona jednak doskonała (działa tylko jeśli pierwszy z modyfikowanych trybów to voice):
 
-----------------------------------------
+----
 /filter add hidevoices * irc_mode (\+|\-)v
-----------------------------------------
+----
 
 [[color_away_nicks]]
-Jak mogę zobaczyć kto jest aktualnie nieobecny ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Jak mogę zobaczyć kto jest aktualnie nieobecny ?
 
 Należy ustawić opcję 'irc.server_default.away_check' na wartość większą od zera
 (minuty pomiędzy sprawdzaniem czy nick jest nieobecny).
@@ -659,55 +616,50 @@ sprawdzania nieobecności dla małych kanałów.
 Na przykład, aby sprawdzać nieobecność nicków co 5, dla kanałów z maksymalnie 25
 osobami:
 
-----------------------------------------
+----
 /set irc.server_default.away_check 5
 /set irc.server_default.away_check_max_nicks 25
-----------------------------------------
+----
 
 [NOTE]
 Dla WeeChat ≤ 0.3.3, opcje te to 'irc.network.away_check' oraz
 'irc.network.away_check_max_nicks'.
 
 [[highlight_notification]]
-Jak mogę zostać powiadomiony, jeśli ktoś będzie chciał przyciągnąć moją uwagę na kanale?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Jak mogę zostać powiadomiony, jeśli ktoś będzie chciał przyciągnąć moją uwagę na kanale?
 
 Możesz użyć skryptu jak 'beep.pl' lub 'launcher.pl'.
 
 Dla 'launcher.pl', należ przeprowadzić konfigurację:
 
-----------------------------------------
+----
 /set plugins.var.perl.launcher.signal.weechat_highlight "/ścieżka/do/komendy argumenty"
-----------------------------------------
+----
 
 Inne podobne skrypty: http://weechat.org/scripts/stable/tag/notify/
 
 [[irc_target_buffer]]
-Jak mogę zmienić docelowy bufor dla komendy w połączonym buforze (jak bufor z serwerami)?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Jak mogę zmienić docelowy bufor dla komendy w połączonym buforze (jak bufor z serwerami)?
 
 Domyślna kombinacja to @k(C-)@k(x) (komenda: `/input switch_active_buffer`).
 
 [[plugins_scripts]]
-Pluginy / skrypty
-------------------
+== Pluginy / skrypty
 
 [[openbsd_plugins]]
-Używam OpenBSD, WeeChat nie ładuje żadnych pluginów, co jest nie tak?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Używam OpenBSD, WeeChat nie ładuje żadnych pluginów, co jest nie tak?
 
 Pod  OpenBSD, nazwy wtyczek kończą się ".so.0.0" (".so" dla Linuksa).
 
 Musisz ustawić:
 
-----------------------------------------
+----
 /set weechat.plugin.extension ".so.0.0"
 /plugin autoload
-----------------------------------------
+----
 
 [[load_scripts]]
-Jak załadować skrypty Perl/Python/Ruby/Lua/Tcl? Czy skrypty są kompatybilne z innymi klientami IRC?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Jak załadować skrypty Perl/Python/Ruby/Lua/Tcl? Czy skrypty są kompatybilne z innymi klientami IRC?
 
 Możesz użyć komend `/perl`, `/python`, `/ruby`, `/lua` oraz `/tcl`, aby załadować
 skrypt (domyślna lokalizacja skryptów to '~/.weechat/<język>/').
@@ -721,12 +673,10 @@ Uwagi:
 * wtyczka 'tcl' jest dostępna dla wersji ≥ 0.3.0.
 
 [[settings]]
-Ustawienia
-----------
+== Ustawienia
 
 [[memory_usage]]
-Jak mogę zmusić WeeChat do zużywania mniejszej ilości pamięci?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Jak mogę zmusić WeeChat do zużywania mniejszej ilości pamięci?
 
 W celu zmniejszenia używanej pamięci możesz zastosować się do poniższych rad:
 
@@ -742,12 +692,10 @@ W celu zmniejszenia używanej pamięci możesz zastosować się do poniższych r
 * zmniejszyć wartość opcji 'weechat.history.max_commands'
 
 [[development]]
-Rozwój
-------
+== Rozwój
 
 [[bug_task_patch]]
-Jak zgłaszać błędy, prosić o nowe możliwości lub wysyłać patche?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Jak zgłaszać błędy, prosić o nowe możliwości lub wysyłać patche?
 
 Są 3 możliwości:
 
@@ -761,29 +709,27 @@ Są 3 możliwości:
   (możesz się zapisać na listę mailingową "support" i na niej pisać)
 
 [[gdb_error_threads]]
-Kiedy uruchamiam WeeChat pod gdb dostaję komunikat o wątkach, co mogę z tym zrobić?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Kiedy uruchamiam WeeChat pod gdb dostaję komunikat o wątkach, co mogę z tym zrobić?
 
 Podczas uruchamiania WeeChat pod gdb, można spotkać się z takim błędem:
 
-----------------------------------------
+----
 $ gdb /scieżka/do/weechat
 (gdb) run
 [Thread debugging using libthread_db enabled]
 Cannot find new threads: generic error
-----------------------------------------
+----
 
 Żeby to naprawić, można użyć takiej komendy(należy zmienić ścieżki do libpthread oraz
 WeeChat na właściwe dla naszego systemu):
 
-----------------------------------------
+----
 $ LD_PRELOAD=/lib/libpthread.so.0 gdb /ścieżka/do/weechat
 (gdb) run
-----------------------------------------
+----
 
 [[supported_os]]
-Jaka jest lista platform wspieranych przez WeeChat? Czy będzie przeportowany na inne systemy operacyjne?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Jaka jest lista platform wspieranych przez WeeChat? Czy będzie przeportowany na inne systemy operacyjne?
 
 Pełną listę można znaleźć na stronie: http://weechat.org/download
 
@@ -791,8 +737,7 @@ Robimy co w naszej mocy, aby WeeChat działał na tylu platformach ile to tylko
 możliwe. Mile widziana jest pomoc w testowaniu dla systemów, których nie mamy.
 
 [[help_developers]]
-Chcę pomóc programistą WeeChat. Co mogę zrobić?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Chcę pomóc programistą WeeChat. Co mogę zrobić?
 
 Jest wiele zadań do zrobienia (testowanie, kod, dokumentacja, ...)
 
@@ -800,8 +745,7 @@ Skontaktuj się z nami na IRC lub mailowo, szczegóły:
 http://weechat.org/dev/support
 
 [[donate]]
-Czy mogę dać pieniądze albo inne rzeczy deweloperom WeeChat?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Czy mogę dać pieniądze albo inne rzeczy deweloperom WeeChat?
 
 Tak możesz dać nam pieniądze, aby wspomóc rozwój.
 Szczegóły na http://weechat.org/about/donate

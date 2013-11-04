@@ -1,5 +1,5 @@
 [width="100%",cols="^1,^2,6,6",options="header"]
-|========================================
+|===
 | Plugin | Nome | Descrizione | Argomenti
 
 | aspell | aspell_dict | elenco separato da virgole di dizionari usati nel buffer | puntatore al buffer ("0x12345678") o buffer con il nome completo ("irc.freenode.weechat")
@@ -62,4 +62,4 @@
 
 | weechat | weechat_upgrading | 1 se si sta aggiornando WeeChat (comando `/upgrade`) | -
 
-|========================================
+|===

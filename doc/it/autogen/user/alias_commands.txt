@@ -1,7 +1,7 @@
 [[command_alias_alias]]
 [command]*`alias`* crea un alias per un comando::
 
-----------------------------------------
+----
 /alias  [-completion <completamento>] <alias> [<comando> [;<comando>...]]
 
 completion: completion for alias (optional, by default completion is done with target command)
@@ -30,5 +30,5 @@ Examples:
     /alias hello /allchan -exclude=#weechat msg * hello
   alias /forcejoin to send IRC command "forcejoin" with completion of /sajoin:
     /alias -completion %%sajoin forcejoin /quote forcejoin
-----------------------------------------
+----
 

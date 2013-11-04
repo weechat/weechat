@@ -1,5 +1,5 @@
 [width="65%",cols="^1,^2,8",options="header"]
-|========================================
+|===
 | Extension | Nom | Description
 
 | alias | alias | liste des alias
@@ -130,4 +130,4 @@
 
 | xfer | nick | pseudos de la discussion DCC
 
-|========================================
+|===

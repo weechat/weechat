@@ -1,7 +1,7 @@
 [[command_relay_relay]]
 [command]*`relay`* relay control::
 
-----------------------------------------
+----
 /relay  list|listfull|listrelay
         add [ipv4.][ipv6.][ssl.]<protocol.name> <port>
         del [ipv4.][ipv6.][ssl.]<protocol.name>
@@ -42,5 +42,5 @@ Examples:
     /relay add ipv6.ssl.weechat 9001
   weechat protocol with SSL, using IPv4 + IPv6:
     /relay add ipv4.ipv6.ssl.weechat 9001
-----------------------------------------
+----
 

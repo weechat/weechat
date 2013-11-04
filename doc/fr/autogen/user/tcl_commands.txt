@@ -1,7 +1,7 @@
 [[command_tcl_tcl]]
 [command]*`tcl`* lister/charger/décharger des scripts::
 
-----------------------------------------
+----
 /tcl  list|listfull [<nom>]
       load [-q] <fichier>
       autoload
@@ -18,5 +18,5 @@ autoload: charger tous les scripts dans le répertoire "autoload"
       -q: mode silencieux: ne pas afficher de messages
 
 Sans paramètre, cette commande liste les scripts chargés.
-----------------------------------------
+----
 

@@ -1,16 +1,16 @@
 [[command_irc_admin]]
 [command]*`admin`* trouver les informations sur l'administrateur du serveur::
 
-----------------------------------------
+----
 /admin  [<cible>]
 
 cible: serveur
-----------------------------------------
+----
 
 [[command_irc_allchan]]
 [command]*`allchan`* exécuter une commande sur tous les canaux de tous les serveurs connectés::
 
-----------------------------------------
+----
 /allchan  [-current] [-exclude=<canal>[,<canal>...]] <commande> [<paramètres>]
 
   -current: exécuter la commande pour les canaux du serveur courant seulement
@@ -25,12 +25,12 @@ Exemples:
     /allchan -exclude=#weechat msg * bonjour
   dire 'bonjour' partout sauf sur #weechat et les canaux commençant par #linux:
     /allchan -exclude=#weechat,#linux* msg * bonjour
-----------------------------------------
+----
 
 [[command_irc_allserv]]
 [command]*`allserv`* exécuter une commande sur tous les serveurs connectés::
 
-----------------------------------------
+----
 /allserv  [-exclude=<serveur>[,<serveur>...]] <commande> [<paramètres>]
 
   -exclude: exclude certains serveurs ('*' est autorisé en début ou fin du nom du serveur, pour exclure plusieurs serveurs)
@@ -44,24 +44,24 @@ Exemples:
     /allserv away Je suis absent
   faire un whois sur mon pseudo sur tous les serveurs:
     /allserv whois $nick
-----------------------------------------
+----
 
 [[command_irc_ban]]
 [command]*`ban`* bannir des pseudos ou hôtes::
 
-----------------------------------------
+----
 /ban  [<canal>] [<pseudo> [<pseudo>...]]
 
  canal: nom du canal pour supprimer le bannissement
 pseudo: pseudo ou hôte pour supprimer le bannissement
 
 Sans paramètre, cette commande affiche la liste des bans pour le canal courant.
-----------------------------------------
+----
 
 [[command_irc_connect]]
 [command]*`connect`* se connecter à un/plusieurs serveur(s) IRC::
 
-----------------------------------------
+----
 /connect  [<serveur> [<serveur>...] [-<option>[=<valeur>]] [-no<option>] [-nojoin] [-switch]
           -all|-auto|-open [-nojoin] [-switch]
 
@@ -85,33 +85,33 @@ Exemples:
   /connect my.server.org/6697 -ssl -password=test
   /connect irc://nick@irc.oftc.net/#channel
   /connect -switch
-----------------------------------------
+----
 
 [[command_irc_ctcp]]
 [command]*`ctcp`* envoyer un message CTCP (Client-To-Client Protocol)::
 
-----------------------------------------
+----
 /ctcp  <cible> <type> [<arguments>]
 
     cible: pseudo ou canal à qui envoyer le CTCP
      type: type de CTCP (exemples: "version", "ping", etc...)
 arguments: paramètres pour le CTCP
-----------------------------------------
+----
 
 [[command_irc_cycle]]
 [command]*`cycle`* quitter et rejoindre un canal::
 
-----------------------------------------
+----
 /cycle  [<canal>[,<canal>...]] [message]
 
   canal: canal à quitter
 message: message de fin (affiché aux autres utilisateurs)
-----------------------------------------
+----
 
 [[command_irc_dcc]]
 [command]*`dcc`* démarrer un DCC (transfert de fichier ou discussion directe)::
 
-----------------------------------------
+----
 /dcc  chat <pseudo>
       send <pseudo> <fichier>
 
@@ -123,76 +123,76 @@ Exemples:
     /dcc chat toto
   envoyer le fichier "/home/foo/bar.txt" au pseudo "toto":
     /dcc send toto /home/foo/bar.txt
-----------------------------------------
+----
 
 [[command_irc_dehalfop]]
 [command]*`dehalfop`* retirer le statut de demi-opérateur du canal à/aux pseudo(s)::
 
-----------------------------------------
+----
 /dehalfop  <pseudo> [<pseudo>...]
 
 pseudo: pseudo ou masque (peut démarrer ou se terminer par "*" comme joker)
      *: retirer le statut de demi-opérateur de tout le monde sur le canal excepté vous-même
-----------------------------------------
+----
 
 [[command_irc_deop]]
 [command]*`deop`* retirer le statut d'opérateur du canal à/aux pseudo(s)::
 
-----------------------------------------
+----
 /deop  <pseudo> [<pseudo>...]
        * -yes
 
 pseudo: pseudo ou masque (peut démarrer ou se terminer par "*" comme joker)
      *: retirer le statut d'opérateur de tout le monde sur le canal excepté vous-même
-----------------------------------------
+----
 
 [[command_irc_devoice]]
 [command]*`devoice`* retirer la voix du/des pseudo(s)::
 
-----------------------------------------
+----
 /devoice  <pseudo> [<pseudo>...]
           * -yes
 
 pseudo: pseudo ou masque (peut démarrer ou se terminer par "*" comme joker)
      *: retirer la voix de tout le monde sur le canal
-----------------------------------------
+----
 
 [[command_irc_die]]
 [command]*`die`* arrêter le serveur::
 
-----------------------------------------
+----
 /die  [<cible>]
 
 cible: nom du serveur
-----------------------------------------
+----
 
 [[command_irc_disconnect]]
 [command]*`disconnect`* se déconnecter d'un ou de tous les serveurs IRC::
 
-----------------------------------------
+----
 /disconnect  [<serveur>|-all|-pending [<raison>]]
 
  serveur: nom du serveur pour se déconnecter
     -all: se déconnecter de tous les serveurs
 -pending: annuler la reconnexion automatique sur les serveurs en cours de reconnexion
   raison: raison pour le quit
-----------------------------------------
+----
 
 [[command_irc_halfop]]
 [command]*`halfop`* donner le statut de demi-opérateur à un/des pseudo(s)::
 
-----------------------------------------
+----
 /halfop  <pseudo> [<pseudo>...]
          * -yes
 
 pseudo: pseudo ou masque (peut démarrer ou se terminer par "*" comme joker)
      *: donner le statut de demi-opérateur à tout le monde sur le canal
-----------------------------------------
+----
 
 [[command_irc_ignore]]
 [command]*`ignore`* ignorer des pseudos/hôtes de serveurs ou canaux::
 
-----------------------------------------
+----
 /ignore  list
          add [re:]<pseudo> [<serveur> [<canal>]]
          del <numéro>|-all
@@ -215,40 +215,40 @@ Exemples:
     /ignore add toto@domain.com freenode
   ignorer le hôte "toto*@*.domain.com" sur freenode/#weechat:
     /ignore add toto*@*.domain.com freenode #weechat
-----------------------------------------
+----
 
 [[command_irc_info]]
 [command]*`info`* voir les informations décrivant le serveur::
 
-----------------------------------------
+----
 /info  [<cible>]
 
 cible: nom du serveur
-----------------------------------------
+----
 
 [[command_irc_invite]]
 [command]*`invite`* inviter un pseudo sur un canal::
 
-----------------------------------------
+----
 /invite  <pseudo> [<pseudo>...] [<canal>]
 
 pseudo: pseudo à inviter
  canal: canal pour l'invitation
-----------------------------------------
+----
 
 [[command_irc_ison]]
 [command]*`ison`* vérifier si un pseudo est actuellement sur IRC::
 
-----------------------------------------
+----
 /ison  <pseudo> [<pseudo>...]
 
 pseudo: pseudo
-----------------------------------------
+----
 
 [[command_irc_join]]
 [command]*`join`* rejoindre un canal::
 
-----------------------------------------
+----
 /join  [-noswitch] [-server <serveur>] [<canal1>[,<canal2>...]] [<clé1>[,<clé2>...]]
 
 -noswitch: ne pas basculer sur le nouveau tampon
@@ -261,23 +261,23 @@ Exemples:
   /join #protectedchan,#weechat key
   /join -server freenode #weechat
   /join -noswitch #weechat
-----------------------------------------
+----
 
 [[command_irc_kick]]
 [command]*`kick`* retirer par la force un utilisateur d'un canal::
 
-----------------------------------------
+----
 /kick  [<canal>] <pseudo> [<raison>]
 
  canal: canal où l'utilisateur se trouve
 pseudo: pseudo à éliminer
 raison: raison pour l'élimination (les variables spéciales $nick, $channel et $server sont remplacées par leur valeur)
-----------------------------------------
+----
 
 [[command_irc_kickban]]
 [command]*`kickban`* retirer par la force un pseudo d'un canal et le bannir::
 
-----------------------------------------
+----
 /kickban  [<canal>] <pseudo> [<raison>]
 
  canal: canal où l'utilisateur se trouve
@@ -289,32 +289,32 @@ Il est possible d'éliminer/bannir avec un masque, le pseudo sera extrait du mas
 Exemple:
   bannir "*!*@host.com" puis éliminer "toto":
     /kickban toto!*@host.com
-----------------------------------------
+----
 
 [[command_irc_kill]]
 [command]*`kill`* fermer la connexion client-serveur::
 
-----------------------------------------
+----
 /kill  <pseudo> <raison>
 
 pseudo: pseudo
 raison: raison
-----------------------------------------
+----
 
 [[command_irc_links]]
 [command]*`links`* lister tous les noms de serveurs connus du serveur qui répondent à la requête::
 
-----------------------------------------
+----
 /links  [[<serveur>] <masque_serveur>]
 
        serveur: ce serveur doit répondre à la requête
 masque_serveur: liste des serveurs correspondant au masque
-----------------------------------------
+----
 
 [[command_irc_list]]
 [command]*`list`* lister les canaux et leur titre::
 
-----------------------------------------
+----
 /list  [<canal>[,<canal>...]] [<serveur>] [-re <regex>]
 
   canal: canal à lister
@@ -328,37 +328,37 @@ Exemples:
     /list #weechat
   lister tous les canaux commençant par "#weechat" (peut être très lent pour les grands réseaux):
     /list -re #weechat.*
-----------------------------------------
+----
 
 [[command_irc_lusers]]
 [command]*`lusers`* obtenir des statistiques sur la taille du réseau IRC::
 
-----------------------------------------
+----
 /lusers  [<masque> [<cible>]]
 
 masque: serveurs qui correspondent au masque seulement
  cible: serveur pour faire suivre la requête
-----------------------------------------
+----
 
 [[command_irc_map]]
 [command]*`map`* afficher une carte graphique du réseau IRC::
 
-----------------------------------------
-----------------------------------------
+----
+----
 
 [[command_irc_me]]
 [command]*`me`* envoyer une action CTCP au canal courant::
 
-----------------------------------------
+----
 /me  <message>
 
 message: message à envoyer
-----------------------------------------
+----
 
 [[command_irc_mode]]
 [command]*`mode`* changer le mode du canal ou de l'utilisateur::
 
-----------------------------------------
+----
 /mode  [<canal>] [+|-]o|p|s|i|t|n|m|l|b|e|v|k [<paramètres>]
        <pseudo> [+|-]i|s|w|o
 
@@ -390,62 +390,62 @@ Exemples:
     /mode #weechat +t
   devenir invisible sur le serveur:
     /mode nick +i
-----------------------------------------
+----
 
 [[command_irc_motd]]
 [command]*`motd`* obtenir le message du jour::
 
-----------------------------------------
+----
 /motd  [<cible>]
 
 cible: nom du serveur
-----------------------------------------
+----
 
 [[command_irc_msg]]
 [command]*`msg`* envoyer un message à un pseudo ou canal::
 
-----------------------------------------
+----
 /msg  [-server <serveur>] <cible>[,<cible>...] <texte>
 
 serveur: envoyer à ce serveur (nom interne)
   cible: pseudo ou canal (peut-être un masque, '*' = canal courant)
   texte: texte à envoyer
-----------------------------------------
+----
 
 [[command_irc_names]]
 [command]*`names`* lister les pseudos sur des canaux::
 
-----------------------------------------
+----
 /names  [<canal>[,<canal>...]]
 
 canal: nom du canal
-----------------------------------------
+----
 
 [[command_irc_nick]]
 [command]*`nick`* changer le pseudo courant::
 
-----------------------------------------
+----
 /nick  [-all] <pseudo>
 
   -all: définir le nouveau pseudo sur tous les serveurs connectés
 pseudo: nouveau pseudo
-----------------------------------------
+----
 
 [[command_irc_notice]]
 [command]*`notice`* envoyer un message notice à un utilisateur::
 
-----------------------------------------
+----
 /notice  [-server <serveur>] <cible> <texte>
 
 serveur: envoyer à ce serveur (nom interne)
   cible: pseudo ou canal
   texte: texte à envoyer
-----------------------------------------
+----
 
 [[command_irc_notify]]
 [command]*`notify`* ajouter une notification de présence ou de statut d'absence pour des pseudos sur les serveurs::
 
-----------------------------------------
+----
 /notify  add <pseudo> [<serveur> [-away]]
          del <pseudo>|-all [<serveur>]
 
@@ -465,96 +465,96 @@ Exemples:
     /notify add toto freenode
   notifier quand "toto" est absent ou de retour sur le serveur freenode:
     /notify add toto freenode -away
-----------------------------------------
+----
 
 [[command_irc_op]]
 [command]*`op`* donner le statut d'opérateur à un/des pseudo(s)::
 
-----------------------------------------
+----
 /op  <pseudo> [<pseudo>...]
      * -yes
 
 pseudo: pseudo ou masque (peut démarrer ou se terminer par "*" comme joker)
      *: donner le statut d'opérateur à tout le monde sur le canal
-----------------------------------------
+----
 
 [[command_irc_oper]]
 [command]*`oper`* obtenir le statut d'opérateur::
 
-----------------------------------------
+----
 /oper  <utilisateur> <mot_de_passe>
 
  utilisateur: utilisateur
 mot_de_passe: mot de passe
-----------------------------------------
+----
 
 [[command_irc_part]]
 [command]*`part`* quitter un canal::
 
-----------------------------------------
+----
 /part  [<canal>[,<canal>...]] [message]
 
   canal: canal à quitter
 message: message de fin (affiché aux autres utilisateurs)
-----------------------------------------
+----
 
 [[command_irc_ping]]
 [command]*`ping`* envoyer un ping au serveur::
 
-----------------------------------------
+----
 /ping  <serveur1> [<serveur2>]
 
 serveur1: serveur
 serveur2: faire suivre le ping à ce serveur
-----------------------------------------
+----
 
 [[command_irc_pong]]
 [command]*`pong`* répondre à un message ping::
 
-----------------------------------------
+----
 /pong  <démon> [<démon2>]
 
  démon: démon qui a répondu au message Ping
 démon2: faire suivre le message à ce démon
-----------------------------------------
+----
 
 [[command_irc_query]]
 [command]*`query`* envoyer un message privé à un pseudo::
 
-----------------------------------------
+----
 /query  [-server <serveur>] <pseudo>[,<pseudo>...] [<texte>]
 
 serveur: envoyer à ce serveur (nom interne)
  pseudo: pseudo pour la conversation privée
   texte: texte à envoyer
-----------------------------------------
+----
 
 [[command_irc_quiet]]
 [command]*`quiet`* faire taire des pseudos ou hôtes::
 
-----------------------------------------
+----
 /quiet  [<canal>] [<pseudo> [<pseudo>...]]
 
  canal: nom du canal pour faire taire
 pseudo: pseudo ou hôte à faire taire
 
 Sans paramètre, cette commande affiche la liste des "quiet" pour le canal courant.
-----------------------------------------
+----
 
 [[command_irc_quote]]
 [command]*`quote`* envoyer des données brutes au serveur sans analyse::
 
-----------------------------------------
+----
 /quote  [-server <serveur>] <données>
 
 serveur: envoyer à ce serveur (nom interne)
 données: données brutes à envoyer
-----------------------------------------
+----
 
 [[command_irc_reconnect]]
 [command]*`reconnect`* se reconnecter à un/plusieurs serveur(s)::
 
-----------------------------------------
+----
 /reconnect  <serveur> [<serveur>...] [-nojoin] [-switch]
             -all [-nojoin] [-switch]
 
@@ -562,80 +562,80 @@ serveur: nom du serveur pour se reconnecter
    -all: se reconnecter à tous les serveurs
 -nojoin: ne rejoindre aucun canal (même si l'autojoin est activé pour le serveur)
 -switch: basculer vers l'adresse suivante du serveur
-----------------------------------------
+----
 
 [[command_irc_rehash]]
 [command]*`rehash`* demander au serveur de recharger son fichier de configuration::
 
-----------------------------------------
+----
 /rehash  [<option>]
 
 option: option supplémentaire, pour certains serveurs
-----------------------------------------
+----
 
 [[command_irc_restart]]
 [command]*`restart`* demander au serveur de redémarrer::
 
-----------------------------------------
+----
 /restart  [<cible>]
 
 cible: nom du serveur
-----------------------------------------
+----
 
 [[command_irc_sajoin]]
 [command]*`sajoin`* forcer un utilisateur à rejoindre un ou plusieurs canaux::
 
-----------------------------------------
+----
 /sajoin  <pseudo> <canal>[,<canal>...]
 
 pseudo: pseudo
  canal: canal
-----------------------------------------
+----
 
 [[command_irc_samode]]
 [command]*`samode`* changer le mode du canal, sans avoir le statut d'opérateur::
 
-----------------------------------------
+----
 /samode  <canal> <mode>
 
 canal: nom du canal
  mode: mode pour le canal
-----------------------------------------
+----
 
 [[command_irc_sanick]]
 [command]*`sanick`* forcer un utilisateur à utiliser un autre pseudo::
 
-----------------------------------------
+----
 /sanick  <pseudo> <nouveau_pseudo>
 
         pseudo: pseudo
 nouveau_pseudo: nouveau pseudo
-----------------------------------------
+----
 
 [[command_irc_sapart]]
 [command]*`sapart`* forcer un utilisateur à quitter un ou plusieurs canaux::
 
-----------------------------------------
+----
 /sapart  <pseudo> <canal>[,<canal>...]
 
 pseudo: pseudo
  canal: canal
-----------------------------------------
+----
 
 [[command_irc_saquit]]
 [command]*`saquit`* forcer un utilisateur à quitter le serveur avec une raison::
 
-----------------------------------------
+----
 /saquit  <pseudo> <raison>
 
 pseudo: pseudo
 raison: raison
-----------------------------------------
+----
 
 [[command_irc_server]]
 [command]*`server`* lister, ajouter ou retirer des serveurs IRC::
 
-----------------------------------------
+----
 /server  list|listfull [<serveur>]
          add <serveur> <nom>[/<port>] [-temp] [-<option>[=<valeur>]] [-no<option>]
          copy|rename <serveur> <nouveau_nom>
@@ -668,179 +668,179 @@ Exemples:
   /server rename oftc newoftc
   /server del freenode
   /server deloutq
-----------------------------------------
+----
 
 [[command_irc_service]]
 [command]*`service`* enregistrer un nouveau service::
 
-----------------------------------------
+----
 /service  <pseudo> <réservé> <distribution> <type> <réservé> <info>
 
 distribution: visibilité du service
         type: réservé pour une utilisation future
-----------------------------------------
+----
 
 [[command_irc_servlist]]
 [command]*`servlist`* lister les services actuellement connectés au réseau::
 
-----------------------------------------
+----
 /servlist  [<masque> [<type>]]
 
 masque: lister seulement les services qui correspondent à ce masque
   type: lister seulement les services de ce type
-----------------------------------------
+----
 
 [[command_irc_squery]]
 [command]*`squery`* envoyer un message à un service::
 
-----------------------------------------
+----
 /squery  <service> <texte>
 
 service: nom du service
   texte: texte à envoyer
-----------------------------------------
+----
 
 [[command_irc_squit]]
 [command]*`squit`* déconnecter les liens vers un serveur::
 
-----------------------------------------
+----
 /squit  <serveur> <commentaire>
 
     serveur: nom du serveur
 commentaire: commentaire pour quitter
-----------------------------------------
+----
 
 [[command_irc_stats]]
 [command]*`stats`* demander des statistiques sur le serveur::
 
-----------------------------------------
+----
 /stats  [<requête> [<serveur>]]
 
 requête: c/h/i/k/l/m/o/y/u (voir la RFC1459)
 serveur: nom du serveur
-----------------------------------------
+----
 
 [[command_irc_summon]]
 [command]*`summon`* envoyer aux utilisateurs d'un serveur IRC un message leur demandant de rejoindre IRC::
 
-----------------------------------------
+----
 /summon  <utilisateur> [<cible> [<canal>]]
 
 utilisateur: nom d'utilisateur
       cible: nom du serveur
       canal: nom du canal
-----------------------------------------
+----
 
 [[command_irc_time]]
 [command]*`time`* demander l'heure locale de serveur::
 
-----------------------------------------
+----
 /time  [<cible>]
 
 cible: demander l'heure de ce serveur
-----------------------------------------
+----
 
 [[command_irc_topic]]
 [command]*`topic`* recevoir/définir le titre du canal::
 
-----------------------------------------
+----
 /topic  [<canal>] [<titre>|-delete]
 
   canal: nom du canal
   titre: nouveau titre pour le canal
 -delete: supprime le titre du canal
-----------------------------------------
+----
 
 [[command_irc_trace]]
 [command]*`trace`* trouver le chemin jusqu'à un serveur spécifique::
 
-----------------------------------------
+----
 /trace  [<cible>]
 
 cible: serveur
-----------------------------------------
+----
 
 [[command_irc_unban]]
 [command]*`unban`* supprimer le bannissement sur des pseudos ou hôtes::
 
-----------------------------------------
+----
 /unban  [<canal>] <pseudo> [<pseudo>...]
 
  canal: nom du canal pour supprimer le bannissement
 pseudo: pseudo ou hôte pour supprimer le bannissement
-----------------------------------------
+----
 
 [[command_irc_userhost]]
 [command]*`userhost`* retourner une liste d'informations sur des pseudos::
 
-----------------------------------------
+----
 /userhost  <pseudo> [<pseudo>...]
 
 pseudo: pseudo
-----------------------------------------
+----
 
 [[command_irc_users]]
 [command]*`users`* liste des utilisateurs connectés au serveur::
 
-----------------------------------------
+----
 /users  [<cible>]
 
 cible: serveur
-----------------------------------------
+----
 
 [[command_irc_version]]
 [command]*`version`* retourner la version du pseudo ou du serveur (courant ou spécifié)::
 
-----------------------------------------
+----
 /version  [<serveur>|<pseudo>]
 
 serveur: nom du serveur
  pseudo: pseudo
-----------------------------------------
+----
 
 [[command_irc_voice]]
 [command]*`voice`* donner la voix à/aux pseudo(s)::
 
-----------------------------------------
+----
 /voice  <pseudo> [<pseudo>...]
 
 pseudo: pseudo ou masque (peut démarrer ou se terminer par "*" comme joker)
      *: donner la voix à tout le monde sur le canal
-----------------------------------------
+----
 
 [[command_irc_wallchops]]
 [command]*`wallchops`* envoyer une notice aux opérateurs du canal::
 
-----------------------------------------
+----
 /wallchops  [<canal>] <texte>
 
 canal: nom du canal
 texte: texte à envoyer
-----------------------------------------
+----
 
 [[command_irc_wallops]]
 [command]*`wallops`* envoyer un message à tous les utilisateurs connectés qui ont activé le mode utilisateur 'w' pour eux-mêmes::
 
-----------------------------------------
+----
 /wallops  <texte>
 
 texte: texte à envoyer
-----------------------------------------
+----
 
 [[command_irc_who]]
 [command]*`who`* générer une requête qui retourne une liste d'information::
 
-----------------------------------------
+----
 /who  [<masque> [o]]
 
 masque: information qui correspond à ce masque uniquement
      o: seul les opérateurs sont retournés correspondant au masque fourni
-----------------------------------------
+----
 
 [[command_irc_whois]]
 [command]*`whois`* demander les informations sur le(s) utilisateur(s)::
 
-----------------------------------------
+----
 /whois  [<serveur>] [<pseudo>[,<pseudo>...]]
 
 serveur: nom de serveur
@@ -849,16 +849,16 @@ serveur: nom de serveur
 Sans paramètre, cette commande effectuera un whois sur :
 - votre propre pseudo si le tampon est un serveur/canal
 - le pseudo distant si le tampon est un privé.
-----------------------------------------
+----
 
 [[command_irc_whowas]]
 [command]*`whowas`* demander de l'information sur un pseudo qui n'existe plus::
 
-----------------------------------------
+----
 /whowas  <pseudo>[,<pseudo>...] [<nombre> [<cible>]]
 
 pseudo: pseudo à chercher
 nombre: nombre de réponses à retourner (recherche complète si nombre négatif)
  cible: la réponse doit correspondre à ce masque
-----------------------------------------
+----
 

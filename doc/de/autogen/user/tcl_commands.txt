@@ -1,7 +1,7 @@
 [[command_tcl_tcl]]
 [command]*`tcl`* auflisten/installieren/deinstallieren von Skripten::
 
-----------------------------------------
+----
 /tcl  list|listfull [<name>]
       load [-q] <filename>
       autoload
@@ -18,5 +18,5 @@ filename: Skript (Datei) welches geladen werden soll
       -q: unterdrückter Modus: Es werden keine Nachrichten ausgegeben
 
 Ohne Angabe eines Argumentes listet dieser Befehl alle geladenen Skripten auf.
-----------------------------------------
+----
 

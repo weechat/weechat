@@ -1,5 +1,5 @@
 [width="100%",cols="^1,^2,5,5,5",options="header"]
-|========================================
+|===
 | Plugin | Nome | Descrizione | Puntatore | Argomenti
 
 | alias | alias | elenco di alias | puntatore all'alias (opzionale) | nome alias (può iniziare o terminare con "*" come carattere jolly) (opzionale)
@@ -70,4 +70,4 @@
 
 | xfer | xfer | elenco di xfer | puntatore a xfer (opzionale) | -
 
-|========================================
+|===

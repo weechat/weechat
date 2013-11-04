@@ -1,14 +1,11 @@
-WEECHAT(1)
-==========
+= WEECHAT(1)
 :doctype: manpage
 
-NAME
-----
+== NAME
 
 weechat - the extensible chat client
 
-SYNOPSIS
---------
+== SYNOPSIS
 
 [verse]
 'weechat' [-a|--no-connect] [-d|--dir <path>] [-p|--no-plugin] [-r|--run-command <command>] [-s|--no-script] [--upgrade] [plugin:option...]
@@ -18,21 +15,18 @@ SYNOPSIS
 'weechat' [-l|--license]
 'weechat' [-v|--version]
 
-DESCRIPTION
------------
+== DESCRIPTION
 
 WeeChat is a fast, light and extensible chat client.
 
 It is modular (lightweight core with plugins), multi-protocols (IRC and Jabber),
 extensible with C and scripts written in several languages.
 
-OPTIONS
--------
+== OPTIONS
 
 include::cmdline_options.en.txt[]
 
-PLUGIN OPTIONS
---------------
+== PLUGIN OPTIONS
 
 For complete doc on plugin options, please look at plugins documentation in
 http://weechat.org/doc[WeeChat user's guide].
@@ -50,8 +44,7 @@ example:
 
     irc://mynick@[2001:db8:0:85a3::ac1f:8001]:6668/#test
 
-FILES
------
+== FILES
 
 $HOME/.weechat/weechat.conf::
     main WeeChat configuration file
@@ -89,8 +82,7 @@ $HOME/.weechat/xfer.conf::
 $HOME/.weechat/weechat.log::
     WeeChat log file
 
-AUTHORS
--------
+== AUTHORS
 
 WeeChat is written by Sébastien Helleu and contributors (complete list is in
 the AUTHORS file).
@@ -106,8 +98,7 @@ Please read the COPYING file for more information.
 
 Web: <http://weechat.org/>
 
-REPORTING BUGS
---------------
+== REPORTING BUGS
 
 Please report bugs or feature requests at Savannah website:
 

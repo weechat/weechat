@@ -1,7 +1,7 @@
 [[command_aspell_aspell]]
 [command]*`aspell`* aspell プラグイン設定::
 
-----------------------------------------
+----
 /aspell  enable|disable|toggle
          listdict
          setdict <dict>[,<dict>...]
@@ -23,5 +23,5 @@ listdict: インストール済み辞書を表示
   /aspell enable
 
 aspell の有効無効を切り替えるデフォルトのキーは alt-s です。
-----------------------------------------
+----
 

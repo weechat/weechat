@@ -1,4 +1,4 @@
-= WeeChat スクリプト製作ガイド =
+= WeeChat スクリプト製作ガイド
 Sébastien Helleu <flashcode@flashtux.org>
 
 
@@ -9,7 +9,7 @@ http://weechat.org/doc
 
 
 [[introduction]]
-== イントロダクション ==
+== イントロダクション
 
 WeeChat (Wee Enhanced Environment for Chat) はフリー、高速、軽量な
 多くのオペレーティングシステムで動くチャットクライアントです。
@@ -29,23 +29,23 @@ WeeChat (Wee Enhanced Environment for Chat) はフリー、高速、軽量な
 で書かれていますが API は他の言語でも共通です。
 
 [[scripts_in_weechat]]
-== WeeChat のスクリプト ==
+== WeeChat のスクリプト
 
 [[languages_specifities]]
-=== 言語仕様 ===
+=== 言語仕様
 
-==== Python ====
+==== Python
 
 * `import weechat` を使うことは必須です。
 * python では `print*` 系の関数は `prnt*` と呼ばれます
   ('print' は予約済みキーワードなので)。
 * 関数は `weechat.xxx(arg1, arg2, ...)` のように呼び出してください。
 
-==== Perl ====
+==== Perl
 
 * 関数は `weechat::xxx(arg1, arg2, ...);` のように呼び出してください。
 
-==== Ruby ====
+==== Ruby
 
 * 'weechat_init' を定義して、内部で 'register' を呼び出してください。
 * 関数は `Weechat.xxx(arg1, arg2, ...)` のように呼び出してください。
@@ -54,20 +54,20 @@ WeeChat (Wee Enhanced Environment for Chat) はフリー、高速、軽量な
   + 3 個のデータ文字列)、したがって `Weechat.config_new_option` 関数を呼び出すには以下のようにしてください:
 
 [source,ruby]
-----------------------------------------
+----
 Weechat.config_new_option(config, section, "name", "string", "description of option", "", 0, 0,
                           "value", "value", 0, ["check_cb", "", "change_cb", "", "delete_cb", ""])
-----------------------------------------
+----
 
-==== Lua ====
+==== Lua
 
 * 関数は `weechat.xxx(arg1, arg2, ...)` のように呼び出してください。
 
-==== Tcl ====
+==== Tcl
 
 * 関数は `weechat::xxx arg1 arg2 ...` のように呼び出してください。
 
-==== Guile (scheme) ====
+==== Guile (scheme)
 
 * 関数は `(weechat:xxx arg1 arg2 ...)` のように呼び出してください。
 * 以下の関数は引数のリストをひとつだけ取ります。
@@ -78,7 +78,7 @@ Weechat.config_new_option(config, section, "name", "string", "description of opt
 ** bar_new
 
 [[register_function]]
-=== 関数の登録 ===
+=== 関数の登録
 
 全ての WeeChat スクリプトは WeeChat に自分自身を "登録"
 し、登録はスクリプトの最初で行われなければいけません。
@@ -86,9 +86,9 @@ Weechat.config_new_option(config, section, "name", "string", "description of opt
 プロトタイプ:
 
 [source,python]
-----------------------------------------
+----
 weechat.register(name, author, version, license, description, shutdown_function, charset)
-----------------------------------------
+----
 
 引数:
 
@@ -108,97 +108,97 @@ weechat.register(name, author, version, license, description, shutdown_function,
 * python:
 
 [source,python]
-----------------------------------------
+----
 import weechat
 
 weechat.register("test_python", "FlashCode", "1.0", "GPL3", "Test script", "", "")
 weechat.prnt("", "Hello, from python script!")
-----------------------------------------
+----
 
 * perl:
 
 [source,perl]
-----------------------------------------
+----
 weechat::register("test_perl", "FlashCode", "1.0", "GPL3", "Test script", "", "");
 weechat::print("", "Hello, from perl script!");
-----------------------------------------
+----
 
 * ruby:
 
 [source,ruby]
-----------------------------------------
+----
 def weechat_init
   Weechat.register("test_ruby", "FlashCode", "1.0", "GPL3", "Test script", "", "")
   Weechat.print("", "Hello, from ruby script!")
   return Weechat::WEECHAT_RC_OK
 end
-----------------------------------------
+----
 
 * lua:
 
 [source,lua]
-----------------------------------------
+----
 weechat.register("test_lua", "FlashCode", "1.0", "GPL3", "Test script", "", "")
 weechat.print("", "Hello, from lua script!")
-----------------------------------------
+----
 
 * tcl:
 
 [source,tcl]
-----------------------------------------
+----
 weechat::register "test_tcl" "FlashCode" "1.0" "GPL3" "Test script" "" ""
 weechat::print "" "Hello, from tcl script!"
-----------------------------------------
+----
 
 * guile (scheme):
 
 [source,lisp]
-----------------------------------------
+----
 (weechat:register "test_scheme" "FlashCode" "1.0" "GPL3" "Test script" "" "")
 (weechat:print "" "Hello, from scheme script!")
-----------------------------------------
+----
 
 [[load_script]]
-=== スクリプトのロード ===
+=== スクリプトのロード
 
 スクリプトをロードするには "script" プラグインを使うことを推奨します。例:
 
-----------------------------------------
+----
 /script load script.py
 /script load script.pl
 /script load script.rb
 /script load script.lua
 /script load script.tcl
 /script load script.scm
-----------------------------------------
+----
 
 プログラミング言語ごとの固有コマンドを利用することもできます:
 
-----------------------------------------
+----
 /python load python/script.py
 /perl load perl/script.pl
 /ruby load ruby/script.rb
 /lua load lua/script.lua
 /tcl load tcl/script.tcl
 /guile load guile/script.scm
-----------------------------------------
+----
 
 WeeChat の開始時にスクリプトを自動ロードするには
 'language/autoload' ディレクトリ内にリンクを作ってください。
 
 例えば Python の場合:
 
-----------------------------------------
+----
 $ cd ~/.weechat/python/autoload
 $ ln -s ../script.py
-----------------------------------------
+----
 
 [NOTE]
 `/script install` コマンドでスクリプトをインストールした場合、'autoload'
 ディレクトリ内にリンクが自動的に作成されます。
 
 [[differences_with_c_api]]
-== C API との違い ==
+== C API との違い
 
 スクリプト API は C プラグイン API とほぼ同じです。API
 に含まれる各関数の詳細については、'WeeChat プラグイン API リファレンス'
@@ -212,28 +212,28 @@ $ ln -s ../script.py
 例えば 'test.py' スクリプトが WeeChat API 関数を呼び出す場合、以下の順に呼び出されます:
 
 // PLEASE DO NOT TRANSLATE
-........................................
+....
                ┌──────────────────────┐        ╔══════════════════╗
                │     python plugin    │        ║  WeeChat "core"  ║
                ├────────────┬─────────┤        ╟─────────┐        ║
 test.py ─────► │ script API │  C API  │ ─────► ║  C API  │        ║
                └────────────┴─────────┘        ╚═════════╧════════╝
-........................................
+....
 
 WeeChat が 'test.py'
 スクリプトで定義されたコールバックを呼び出す場合、順番は逆になります:
 
 // PLEASE DO NOT TRANSLATE
-........................................
+....
 ╔══════════════════╗        ┌──────────────────────┐
 ║  WeeChat "core"  ║        │     python plugin    │
 ║        ┌─────────╢        ├─────────┬────────────┤
 ║        │  C API  ║ ─────► │  C API  │ script API │ ─────► test.py
 ╚════════╧═════════╝        └─────────┴────────────┘
-........................................
+....
 
 [[pointers]]
-=== ポインタ ===
+=== ポインタ
 
 ご存知かもしれませんが、スクリプトには本当の意味での "ポインタ" はありません。このため
 API 関数がポインタを返す場合、スクリプトでは文字列に変換されます。
@@ -249,9 +249,9 @@ API 関数を呼び出す前に C
 と解釈されます。例えば、データをコアバッファ (WeeChat メインバッファ) に表示する場合、以下のようになります:
 
 [source,python]
-----------------------------------------
+----
 weechat.prnt("", "hi!")
-----------------------------------------
+----
 
 [WARNING]
 多くの関数ではスピードの関係で、WeeChat はポインタの値が正当なものか否かの確認を行いません。
@@ -259,7 +259,7 @@ weechat.prnt("", "hi!")
 不正なポインタを利用した場合、細かなクラッシュレポートを目にすることになるでしょう ;)
 
 [[callbacks]]
-=== コールバック ===
+=== コールバック
 
 ほとんど全ての WeeChat コールバックは WEECHAT_RC_OK 又は WEECHAT_RC_ERROR
 を返さなければいけません (modifier コールバックは例外で、これは文字列を返します)。
@@ -272,18 +272,18 @@ C コールバックはポインタ型の "data" 引数を利用します。ス�
 * python:
 
 [source,python]
-----------------------------------------
+----
 def timer_cb(data, remaining_calls):
     weechat.prnt("", "timer! data=%s" % data)
     return weechat.WEECHAT_RC_OK
 
 weechat.hook_timer(1000, 0, 1, "timer_cb", "test")
-----------------------------------------
+----
 
 * perl:
 
 [source,perl]
-----------------------------------------
+----
 sub timer_cb {
     my ($data, $remaining_calls) = @_;
     weechat::print("", "timer! data=$data");
@@ -291,69 +291,69 @@ sub timer_cb {
 }
 
 weechat::hook_timer(1000, 0, 1, "timer_cb", "test");
-----------------------------------------
+----
 
 * ruby:
 
 [source,ruby]
-----------------------------------------
+----
 def timer_cb(data, remaining_calls)
   Weechat.print("", "timer! data=#{data}");
   return Weechat::WEECHAT_RC_OK
 end
 
 Weechat.hook_timer(1000, 0, 1, "timer_cb", "test");
-----------------------------------------
+----
 
 * lua:
 
 [source,lua]
-----------------------------------------
+----
 function timer_cb(data, remaining_calls)
     weechat.print("", "timer! data="..data)
     return weechat.WEECHAT_RC_OK
 end
 
 weechat.hook_timer(1000, 0, 1, "timer_cb", "test")
-----------------------------------------
+----
 
 * tcl:
 
 [source,tcl]
-----------------------------------------
+----
 proc timer_cb { data remaining_calls } {
     weechat::print {} "timer! data=$data"
     return $::weechat::WEECHAT_RC_OK
 }
 
 weechat::hook_timer 1000 0 1 timer_cb test
-----------------------------------------
+----
 
 * guile (scheme):
 
 [source,lisp]
-----------------------------------------
+----
 (define (timer_cb data remaining_calls)
   (weechat:print "" (string-append "timer! data=" data))
   weechat:WEECHAT_RC_OK
 )
 
 (weechat:hook_timer 1000 0 1 "timer_cb" "test")
-----------------------------------------
+----
 
 [[script_api]]
-== スクリプト API ==
+== スクリプト API
 
 API に含まれる関数の詳しい情報は
 'WeeChat プラグイン API リファレンス' をご覧ください。.
 
 [[script_api_functions]]
-=== 関数 ===
+=== 関数
 
 スクリプト API に含まれる関数のリスト:
 
 [width="100%",cols="^1,10",options="header"]
-|========================================
+|===
 | カテゴリ            | 関数
 | 一般                |
   register
@@ -430,15 +430,15 @@ API に含まれる関数の詳しい情報は
   hdata_pointer, hdata_time, hdata_hashtable, hdata_update, hdata_get_string
 | アップグレード      |
   upgrade_new, upgrade_write_object, upgrade_read, upgrade_close
-|========================================
+|===
 
 [[script_api_constants]]
-=== 定数 ===
+=== 定数
 
 スクリプト API に含まれる定数のリスト:
 
 [width="100%",cols="^1,10",options="header"]
-|========================================
+|===
 | カテゴリ            | 定数
 | リターンコード      |
   WEECHAT_RC_OK, WEECHAT_RC_OK_EAT, WEECHAT_RC_ERROR
@@ -466,20 +466,20 @@ API に含まれる関数の詳しい情報は
   WEECHAT_HOOK_CONNECT_SOCKET_ERROR
 | シグナルのフック    |
   WEECHAT_HOOK_SIGNAL_STRING, WEECHAT_HOOK_SIGNAL_INT, WEECHAT_HOOK_SIGNAL_POINTER
-|========================================
+|===
 
 [[common_tasks]]
-== 良くあるタスク ==
+== 良くあるタスク
 
 この章ではいくつかの良くあるタスクを例を交えて紹介します。ここでは
 API の一部の機能を使っています。完全なリファレンスは
 'WeeChat プラグイン API リファレンス' をご覧ください。
 
 [[buffers]]
-=== バッファ ===
+=== バッファ
 
 [[buffers_display_messages]]
-==== メッセージの表示 ====
+==== メッセージの表示
 
 WeeChat コアバッファに対して操作する場合、空文字列を使うことが多いです。他のバッファに対して操作する場合には、ポインタ
 (文字列型、<<pointers,ポインタ>> を参照) を与える必要があります。
@@ -487,7 +487,7 @@ WeeChat コアバッファに対して操作する場合、空文字列を使う
 例:
 
 [source,python]
-----------------------------------------
+----
 # "hello" をコアバッファに表示
 weechat.prnt("", "hello")
 
@@ -514,13 +514,13 @@ weechat.prnt(buffer, "message on #weechat channel")
 # (サーバとチャンネルはコンマで区切ってください。)
 buffer = weechat.info_get("irc_buffer", "freenode,#weechat")
 weechat.prnt(buffer, "message on #weechat channel")
-----------------------------------------
+----
 
 [NOTE]
 Print 関数は Perl/Ruby/Lua/Tcl では `print` で、Python では `prnt` です。
 
 [[buffers_send_text]]
-==== バッファにテキストを送信 ====
+==== バッファにテキストを送信
 
 テキストやコマンドをバッファに送信できます。これはテキストやコマンドをタイプして
 [Enter] を押すことに対応します。
@@ -528,17 +528,17 @@ Print 関数は Perl/Ruby/Lua/Tcl では `print` で、Python では `prnt` で�
 例:
 
 [source,python]
-----------------------------------------
+----
 # 現在のバッファでコマンド "/help" を実行 (結果は core バッファに出力されます)
 weechat.command("", "/help")
 
 # テキスト "hello" を #weechat IRC チャンネルに送信 (このチャンネルにいるユーザにはメッセージが見えます。)
 buffer = weechat.info_get("irc_buffer", "freenode,#weechat")
 weechat.command(buffer, "hello")
-----------------------------------------
+----
 
 [[buffers_new]]
-==== 新規バッファの作成 ====
+==== 新規バッファの作成
 
 スクリプトを使って新しいバッファを作成し、このバッファにメッセージを表示させることができます。
 
@@ -549,7 +549,7 @@ weechat.command(buffer, "hello")
 例:
 
 [source,python]
-----------------------------------------
+----
 # データの入力時に呼び出されるコールバック
 def buffer_input_cb(data, buffer, input_data):
     # ...
@@ -568,28 +568,28 @@ weechat.buffer_set(buffer, "title", "This is title for my buffer.")
 
 # ローカル変数 "no_log" に "1" を設定することでログ保存を無効化
 weechat.buffer_set(buffer, "localvar_set_no_log", "1")
-----------------------------------------
+----
 
 [[buffers_properties]]
-==== バッファプロパティ ====
+==== バッファプロパティ
 
 文字列、整数、ポインタ型のバッファプロパティを読むことができます。
 
 例:
 
 [source,python]
-----------------------------------------
+----
 buffer = weechat.current_buffer()
 
 number     = weechat.buffer_get_integer(buffer, "number")
 name       = weechat.buffer_get_string(buffer, "name")
 short_name = weechat.buffer_get_string(buffer, "short_name")
-----------------------------------------
+----
 
 バッファに対するローカル変数を追加、読み込み、削除することができます:
 
 [source,python]
-----------------------------------------
+----
 # ローカル変数の追加
 weechat.buffer_set(buffer, "localvar_set_myvar", "my_value")
 
@@ -598,19 +598,19 @@ myvar = weechat.buffer_get_string(buffer, "localvar_myvar")
 
 # ローカル変数の削除
 weechat.buffer_set(buffer, "localvar_del_myvar", "")
-----------------------------------------
+----
 
 バッファに対するローカル変数を見るには、WeeChat で以下のコマンドを実行してください:
 
-----------------------------------------
+----
 /buffer localvar
-----------------------------------------
+----
 
 [[hooks]]
-=== フック ===
+=== フック
 
 [[hook_command]]
-==== 新しいコマンドの追加 ====
+==== 新しいコマンドの追加
 
 カスタムコマンドを追加するには `hook_command` を使ってください。
 追加したコマンドに対してカスタム補完テンプレートを定義できます。
@@ -618,7 +618,7 @@ weechat.buffer_set(buffer, "localvar_del_myvar", "")
 例:
 
 [source,python]
-----------------------------------------
+----
 def my_command_cb(data, buffer, args):
     # ...
     return weechat.WEECHAT_RC_OK
@@ -633,35 +633,35 @@ hook = weechat.hook_command("myfilter", "description of myfilter",
     " || add %(filters_names) %(buffers_plugins_names)|*"
     " || del %(filters_names)|-all",
     "my_command_cb", "")
-----------------------------------------
+----
 
 上で定義したコマンドを WeeChat で以下のように使うことができます:
 
-----------------------------------------
+----
 /help myfilter
 
 /myfilter arguments...
-----------------------------------------
+----
 
 [[hook_timer]]
-==== タイマーの追加 ====
+==== タイマーの追加
 
 タイマーを追加するには `hook_timer` を使ってください。
 
 例:
 
 [source,python]
-----------------------------------------
+----
 def timer_cb(data, remaining_calls):
     # ...
     return weechat.WEECHAT_RC_OK
 
 # 1 分毎に (秒が 00 になった時に) 呼び出されるタイマー
 weechat.hook_timer(60 * 1000, 60, 0, "timer_cb", "")
-----------------------------------------
+----
 
 [[hook_process]]
-==== バックグラウンドプロセスの実行 ====
+==== バックグラウンドプロセスの実行
 
 `hook_process` を使ってバックグラウンドプロセスを実行できます。
 コールバックはデータの準備が整った時点で呼び出されます。複数回呼び出されることもあります。
@@ -672,7 +672,7 @@ weechat.hook_timer(60 * 1000, 60, 0, "timer_cb", "")
 例:
 
 [source,python]
-----------------------------------------
+----
 process_output = ""
 
 def my_process_cb(data, command, rc, out, err):
@@ -684,10 +684,10 @@ def my_process_cb(data, command, rc, out, err):
     return weechat.WEECHAT_RC_OK
 
 weechat.hook_process("/bin/ls -l /etc", 10 * 1000, "my_process_cb", "")
-----------------------------------------
+----
 
 [[url_transfer]]
-==== URL 転送 ====
+==== URL 転送
 
 _バージョン 0.3.7 に含まれる新機能_
 
@@ -698,7 +698,7 @@ URL をダウンロードする (又は URL にポストする) には、関数 
 "out" 引数 (プロセスの標準出力) を通して渡されます。
 
 [source,python]
-----------------------------------------
+----
 # 現在の WeeChat 安定版のバージョンを表示。
 weechat_version = ""
 
@@ -712,7 +712,7 @@ def weechat_process_cb(data, command, rc, out, err):
 
 weechat.hook_process("url:http://weechat.org/dev/info/stable/",
                      30 * 1000, "weechat_process_cb", "")
-----------------------------------------
+----
 
 [TIP]
 WeeChat に関して利用できる情報は全て http://weechat.org/dev/info にあります
@@ -721,7 +721,7 @@ WeeChat に関して利用できる情報は全て http://weechat.org/dev/info �
 '/tmp/weechat-devel.tar.gz' にダウンロード:
 
 [source,python]
-----------------------------------------
+----
 def my_process_cb(data, command, rc, out, err):
     if int(rc) >= 0:
         weechat.prnt("", "End of transfer (rc=%s)" % rc)
@@ -730,16 +730,16 @@ def my_process_cb(data, command, rc, out, err):
 weechat.hook_process_hashtable("url:http://weechat.org/files/src/weechat-devel.tar.gz",
                                { "file_out": "/tmp/weechat-devel.tar.gz" },
                                30 * 1000, "my_process_cb", "")
-----------------------------------------
+----
 
 URL 転送に関するより詳しい情報と利用可能なオプションを見るには、
 'WeeChat プラグイン API リファレンス' の `hook_process` と `hook_process_hashtable` をご覧ください。
 
 [[config_options]]
-=== 設定 / オプション ===
+=== 設定 / オプション
 
 [[config_options_set_script]]
-==== スクリプトのオプションを設定 ====
+==== スクリプトのオプションを設定
 
 オプションが設定されているかどうかを確認するには `config_is_set_plugin`
 関数、オプションを設定するには `config_set_plugin` 関数を使います。
@@ -747,7 +747,7 @@ URL 転送に関するより詳しい情報と利用可能なオプションを�
 例:
 
 [source,python]
-----------------------------------------
+----
 script_options = {
     "option1" : "value1",
     "option2" : "value2",
@@ -756,17 +756,17 @@ script_options = {
 for option, default_value in script_options.items():
     if not weechat.config_is_set_plugin(option):
         weechat.config_set_plugin(option, default_value)
-----------------------------------------
+----
 
 [[config_options_detect_changes]]
-==== 変更の検出 ====
+==== 変更の検出
 
 ユーザがスクリプトオプションを変更したことを検出するには `hook_config` を使わなければいけません。
 
 例:
 
 [source,python]
-----------------------------------------
+----
 SCRIPT_NAME = "myscript"
 
 # ...
@@ -781,17 +781,17 @@ def config_cb(data, option, value):
 
 weechat.hook_config("plugins.var.python." + SCRIPT_NAME + ".*", "config_cb", "")
 # 他のスクリプト言語の場合は "python" を適当なもの ("perl"、"ruby"、"lua"、"tcl") に変更してください。
-----------------------------------------
+----
 
 [[config_options_weechat]]
-==== WeeChat オプションの読み込み ====
+==== WeeChat オプションの読み込み
 
 `config_get` 関数はオプションへのポインタを返します。オプションの型に従って
 `config_string` 、`config_boolean` 、`config_integer` 、`config_color`
 を呼び出さなければいけません。
 
 [source,python]
-----------------------------------------
+----
 # 文字列型の場合
 weechat.prnt("", "value of option weechat.look.item_time_format is: %s"
                  % (weechat.config_string(weechat.config_get("weechat.look.item_time_format"))))
@@ -807,13 +807,13 @@ weechat.prnt("", "value of option weechat.look.scroll_page_percent is: %d"
 # 色型の場合
 weechat.prnt("", "value of option weechat.color.chat_delimiters is: %s"
                  % (weechat.config_color(weechat.config_get("weechat.color.chat_delimiters"))))
-----------------------------------------
+----
 
 [[irc]]
-=== IRC ===
+=== IRC
 
 [[irc_catch_messages]]
-==== メッセージのキャッチ ====
+==== メッセージのキャッチ
 
 メッセージを受信すると IRC プラグインは 2 つのシグナルを送信します (`xxx`
 は IRC 内部サーバ名で、`yyy` は JOIN、QUIT、PRIVMSG、301 等の IRC コマンド名です):
@@ -825,7 +825,7 @@ xxx,irc_in2_yyy::
     メッセージの処理が行われた後に送信されるシグナル
 
 [source,python]
-----------------------------------------
+----
 def join_cb(data, signal, signal_data):
     # シグナル、例えば: "freenode,irc_in2_join"
     # signal_data は IRC メッセージ、例えば: ":nick!user@host JOIN :#channel"
@@ -840,49 +840,49 @@ def join_cb(data, signal, signal_data):
 # 全ての IRC サーバに対する JOIN メッセージをキャッチするにはサーバの指定に
 # "*" を使うと便利です。
 weechat.hook_signal("*,irc_in2_join", "join_cb", "")
-----------------------------------------
+----
 
 [[irc_modify_messages]]
-==== メッセージの修正 ====
+==== メッセージの修正
 
 メッセージを受信すると IRC プラグインは "irc_in_xxx" ("xxx" は IRC コマンド)
 と呼ばれる "modifier" を送信します。メッセージを修正するにはこのシグナルを使います。
 
 [source,python]
-----------------------------------------
+----
 def modifier_cb(data, modifier, modifier_data, string):
     # 全てのメッセージにサーバ名を追加する
     # (これは役に立ちませんが、例として!)
     return "%s %s" % (string, modifier_data)
 
 weechat.hook_modifier("irc_in_privmsg", "modifier_cb", "")
-----------------------------------------
+----
 
 [WARNING]
 不正なメッセージは WeeChat をクラッシュさせ、深刻な問題を引き起こします!
 
 [[irc_message_parse]]
-==== メッセージの構文解析 ====
+==== メッセージの構文解析
 
 _バージョン 0.3.4 の新機能_
 
 "irc_message_parse" と呼ばれる info_hashtable を使って IRC メッセージを構文解析できます。
 
 [source,python]
-----------------------------------------
+----
 dict = weechat.info_get_hashtable("irc_message_parse",
                                   { "message": ":nick!user@host PRIVMSG #weechat :message here" })
 weechat.prnt("", "dict: %s" % dict)
 
 # 出力:
 #   dict: {'nick': 'nick', 'host': 'nick!user@host', 'command': 'PRIVMSG', 'arguments': '#weechat :message here', 'channel': '#weechat'}
-----------------------------------------
+----
 
 [[infos]]
-=== 情報 ===
+=== 情報
 
 [[infos_weechat_version]]
-==== WeeChat のバージョン ====
+==== WeeChat のバージョン
 
 バージョンを確認する最良の方法は "version_number"
 を参照し、16 進数のバージョン番号と整数値比較することです。
@@ -890,13 +890,13 @@ weechat.prnt("", "dict: %s" % dict)
 例:
 
 [source,python]
-----------------------------------------
+----
 version = weechat.info_get("version_number", "") or 0
 if int(version) >= 0x00030200:
     weechat.prnt("", "This is WeeChat 0.3.2 or newer")
 else:
     weechat.prnt("", "This is WeeChat 0.3.1 or older")
-----------------------------------------
+----
 
 [NOTE]
 バージョン 0.3.1.1 以下では 'info_get("version_number")'
@@ -905,35 +905,35 @@ else:
 文字列でバージョンを使うには:
 
 [source,python]
-----------------------------------------
+----
 # 例えば "Version 0.3.2" のような出力が得られます。
 weechat.prnt("", "Version %s" % weechat.info_get("version", ""))
-----------------------------------------
+----
 
 [[infos_other]]
-==== その他の情報 ====
+==== その他の情報
 
 [source,python]
-----------------------------------------
+----
 # WeeChat ホームディレクトリ、例えば: "/home/xxxx/.weechat"
 weechat.prnt("", "WeeChat home dir: %s" % weechat.info_get("weechat_dir", ""))
 
 # キーボードの不使用時間
 weechat.prnt("", "Inactivity since %s seconds" % weechat.info_get("inactivity", ""))
-----------------------------------------
+----
 
 [[infolists]]
-=== 情報リスト ===
+=== 情報リスト
 
 [[infolists_read]]
-==== 情報リストの読み込み ====
+==== 情報リストの読み込み
 
 WeeChat や他のプラグインによって作られた情報リストを読み込むことができます。
 
 例:
 
 [source,python]
-----------------------------------------
+----
 # バッファのリストを得るために "buffer" 情報リストを読み込む
 infolist = weechat.infolist_get("buffer", "", "")
 if infolist:
@@ -941,7 +941,7 @@ if infolist:
         name = weechat.infolist_string(infolist, "name")
         weechat.prnt("", "buffer: %s" % name)
     weechat.infolist_free(infolist)
-----------------------------------------
+----
 
 [IMPORTANT]
 WeeChat は自動的にメモリを解放しません、情報リストによって使われたメモリを解放するには、`infolist_free`

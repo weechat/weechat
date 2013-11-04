@@ -1,21 +1,21 @@
 [[command_xfer_me]]
 [command]*`me`* envoyer une action CTCP à l'hôte distant::
 
-----------------------------------------
+----
 /me  <message>
 
 message: message à envoyer
-----------------------------------------
+----
 
 [[command_xfer_xfer]]
 [command]*`xfer`* contrôle xfer::
 
-----------------------------------------
+----
 /xfer  [list|listfull]
 
     list: lister les xfer
 listfull: lister les xfer (verbeux)
 
 Sans paramètre, cette commande ouvre le tampon avec la liste des xfer.
-----------------------------------------
+----
 

@@ -418,7 +418,7 @@ def docgen_cmd_cb(data, buffer, args):
                 args_desc = translate(_cmd['args_description'])
                 f.write('[[command_{0}_{1}]]\n'.format(plugin, command))
                 f.write('[command]*`{0}`* {1}::\n\n'.format(command, desc))
-                f.write('----------------------------------------\n')
+                f.write('----\n')
                 prefix = '/' + command + '  '
                 if args_formats != ['']:
                     for fmt in args_formats:
@@ -428,7 +428,7 @@ def docgen_cmd_cb(data, buffer, args):
                     f.write('\n')
                     for line in args_desc.split('\n'):
                         f.write(line + '\n')
-                f.write('----------------------------------------\n\n')
+                f.write('----\n\n')
             f.close()
             update_file(filename, tmpfilename, num_files, num_files_updated,
                         'commands')
@@ -501,7 +501,7 @@ def docgen_cmd_cb(data, buffer, args):
         tmpfilename = filename + '.tmp'
         f = open(tmpfilename, 'w')
         f.write('[width="100%",cols="^1,^2,6,6",options="header"]\n')
-        f.write('|========================================\n')
+        f.write('|===\n')
         f.write('| {0} | {1} | {2} | {3}\n\n'
                 ''.format(_('Plugin'), _('Name'), _('Description'),
                           _('Arguments')))
@@ -513,7 +513,7 @@ def docgen_cmd_cb(data, buffer, args):
                 f.write('| {0} | {1} | {2} | {3}\n\n'
                         ''.format(escape(plugin), escape(info),
                                   escape(desc), escape(args_desc)))
-        f.write('|========================================\n')
+        f.write('|===\n')
         f.close()
         update_file(filename, tmpfilename, num_files, num_files_updated,
                     'infos')
@@ -523,7 +523,7 @@ def docgen_cmd_cb(data, buffer, args):
         tmpfilename = filename + '.tmp'
         f = open(tmpfilename, 'w')
         f.write('[width="100%",cols="^1,^2,6,6,6",options="header"]\n')
-        f.write('|========================================\n')
+        f.write('|===\n')
         f.write('| {0} | {1} | {2} | {3} | {4}\n\n'
                 ''.format(_('Plugin'), _('Name'), _('Description'),
                           _('Hashtable (input)'), _('Hashtable (output)')))
@@ -537,7 +537,7 @@ def docgen_cmd_cb(data, buffer, args):
                         ''.format(escape(plugin), escape(info),
                                   escape(desc), escape(args_desc),
                                   escape(output_desc)))
-        f.write('|========================================\n')
+        f.write('|===\n')
         f.close()
         update_file(filename, tmpfilename, num_files, num_files_updated,
                     'infos_hashtable')
@@ -547,7 +547,7 @@ def docgen_cmd_cb(data, buffer, args):
         tmpfilename = filename + '.tmp'
         f = open(tmpfilename, 'w')
         f.write('[width="100%",cols="^1,^2,5,5,5",options="header"]\n')
-        f.write('|========================================\n')
+        f.write('|===\n')
         f.write('| {0} | {1} | {2} | {3} | {4}\n\n'
                 ''.format(_('Plugin'), _('Name'), _('Description'),
                           _('Pointer'), _('Arguments')))
@@ -561,7 +561,7 @@ def docgen_cmd_cb(data, buffer, args):
                         ''.format(escape(plugin), escape(infolist),
                                   escape(desc), escape(pointer_desc),
                                   escape(args_desc)))
-        f.write('|========================================\n')
+        f.write('|===\n')
         f.close()
         update_file(filename, tmpfilename, num_files, num_files_updated,
                     'infolists')
@@ -596,7 +596,7 @@ def docgen_cmd_cb(data, buffer, args):
         tmpfilename = filename + '.tmp'
         f = open(tmpfilename, 'w')
         f.write('[width="65%",cols="^1,^2,8",options="header"]\n')
-        f.write('|========================================\n')
+        f.write('|===\n')
         f.write('| {0} | {1} | {2}\n\n'
                 ''.format(_('Plugin'), _('Name'), _('Description')))
         for plugin in sorted(completions):
@@ -606,7 +606,7 @@ def docgen_cmd_cb(data, buffer, args):
                 f.write('| {0} | {1} | {2}\n\n'
                         ''.format(escape(plugin), escape(completion_item),
                                   escape(desc)))
-        f.write('|========================================\n')
+        f.write('|===\n')
         f.close()
         update_file(filename, tmpfilename, num_files, num_files_updated,
                     'completions')
@@ -616,7 +616,7 @@ def docgen_cmd_cb(data, buffer, args):
         tmpfilename = filename + '.tmp'
         f = open(tmpfilename, 'w')
         f.write('[width="100%",cols="2,^1,7",options="header"]\n')
-        f.write('|========================================\n')
+        f.write('|===\n')
         f.write('| {0} | {1} | {2}\n\n'
                 ''.format(_('Option'), _('Type'), _('Constants') + ' ^(1)^'))
         for option in url_options:
@@ -626,7 +626,7 @@ def docgen_cmd_cb(data, buffer, args):
             f.write('| {0} | {1} |{2}\n\n'
                     ''.format(escape(option['name']), escape(option['type']),
                               escape(constants)))
-        f.write('|========================================\n')
+        f.write('|===\n')
         f.close()
         update_file(filename, tmpfilename, num_files, num_files_updated,
                     'url_options')

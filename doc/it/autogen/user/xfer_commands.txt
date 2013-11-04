@@ -1,21 +1,21 @@
 [[command_xfer_me]]
 [command]*`me`* invia un'azione CTCP all'host remoto::
 
-----------------------------------------
+----
 /me  <messaggio>
 
 messaggio: messaggio da inviare
-----------------------------------------
+----
 
 [[command_xfer_xfer]]
 [command]*`xfer`* controllo xfer::
 
-----------------------------------------
+----
 /xfer  [list|listfull]
 
     list: lista xfer
 listfull: lista xfer (dettagliata)
 
 Senza argomenti, il comando apre il buffer con la lista xfer.
-----------------------------------------
+----
 

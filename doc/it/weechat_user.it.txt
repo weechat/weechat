@@ -1,5 +1,4 @@
-Guida per l'Utente di WeeChat
-=============================
+= Guida per l'Utente di WeeChat
 Sébastien Helleu <flashcode@flashtux.org>
 
 
@@ -11,15 +10,13 @@ http://weechat.org/doc
 
 
 [[introduction]]
-Introduzione
-------------
+== Introduzione
 
 WeeChat (Wee Enhanced Environment for Chat) è un client di chat
 libero, veloce e leggero, realizzato per diversi sistemi operativi.
 
 [[features]]
-Caratteristiche
-~~~~~~~~~~~~~~~
+=== Caratteristiche
 
 Le principali caratteristiche:
 
@@ -39,8 +36,7 @@ Le principali caratteristiche:
 La home page di WeeChat si trova qui: http://weechat.org/
 
 [[pre-requisites]]
-Requisiti
-~~~~~~~~~
+=== Requisiti
 
 Per poter installare WeeChat, è necessario:
 
@@ -51,12 +47,10 @@ Per poter installare WeeChat, è necessario:
 * librerie ncurses
 
 [[install]]
-Installazione
--------------
+== Installazione
 
 [[binary_packages]]
-Pacchetti binari
-~~~~~~~~~~~~~~~~
+=== Pacchetti binari
 
 I pacchetti binari sono disponibili per molte distribuzioni, incluse:
 
@@ -76,21 +70,19 @@ Per altre distribuzioni, consultare il manuale per le istruzioni di
 installazione.
 
 [[source_package]]
-Sorgenti
-~~~~~~~~
+=== Sorgenti
 
 WeeChat può essere compilato con cmake oppure autotools
 (tuttavia si raccomanda cmake).
 
 [[dependencies]]
-Dipendenze
-^^^^^^^^^^
+==== Dipendenze
 
 La seguente tabella mostra l'elenco di pacchetti richiesti o opzionali per
 compilare WeeChat.
 
 [width="100%",cols="5,^3,^3,13",options="header"]
-|========================================
+|===
 | Pacchetto ^(1)^                | Versione    | Richiesto | Caratteristica
 | cmake                          |             | *sì*      | Compilazione (ancora possibile con autotools, ma si raccomanda cmake)
 | libncursesw5-dev ^(2)^         |             | *sì*      | Interfaccia ncurses
@@ -116,7 +108,7 @@ compilare WeeChat.
 // TRANSLATION MISSING
 | xsltproc,
   docbook-xml, docbook-xsl       |             |           | Build of man page
-|========================================
+|===
 
 [NOTE]
 ^(1)^ Il nome viene dalla distribuzione Debian GNU/Linux, nomi e versioni dei pacchetti
@@ -127,28 +119,27 @@ potrebbero essere differenti in versioni e distribuzioni differenti. +
 correttamente con la versione 2.7, ma non con le versioni ≤ 2.6 o ≥ 3.0).
 
 [[compile_with_cmake]]
-Compilazione con cmake
-^^^^^^^^^^^^^^^^^^^^^^
+==== Compilazione con cmake
 
 * Installazione nelle directory di sistema (richiede privilegi di 'root'):
 
-----------------------------------------
+----
 $ mkdir build
 $ cd build
 $ cmake ..
 $ make
 % make install    (come root)
-----------------------------------------
+----
 
 * Installazione in una directory personalizzata:
 
-----------------------------------------
+----
 $ mkdir build
 $ cd build
 $ cmake .. -DPREFIX=/path/della/directory
 $ make
 $ make install
-----------------------------------------
+----
 
 // TRANSLATION MISSING
 Options can be used for cmake, with format: "-DOPTION=VALUE".
@@ -158,7 +149,7 @@ List of commonly used options:
 
 // TRANSLATION MISSING
 [width="100%",cols="2m,2,5m,12",options="header"]
-|========================================
+|===
 | Option | Values | Default value | Description
 
 | CMAKE_BUILD_TYPE | `Debug`, `Release`, `RelWithDebInfo`, `MinSizeRel` | |
@@ -254,23 +245,22 @@ List of commonly used options:
 
 | ENABLE_XFER | `ON`, `OFF` | ON |
   Compile <<xfer_plugin,Xfer plugin>>.
-|========================================
+|===
 
 The other options can be displayed with this command:
 
-----------------------------------------
+----
 $ cmake -LA
-----------------------------------------
+----
 
 Or with Curses interface:
 
-----------------------------------------
+----
 $ ccmake ..
-----------------------------------------
+----
 
 [[compile_with_autotools]]
-Compilazione con autotools
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+==== Compilazione con autotools
 
 // TRANSLATION MISSING
 [WARNING]
@@ -280,53 +270,51 @@ Build with autotools requires more dependencies and is slower than with cmake.
 
 * Installazione nelle directory di sistema (richiede privilegi di 'root'):
 
-----------------------------------------
+----
 $ ./autogen.sh
 $ mkdir build
 $ cd build
 $ ../configure
 $ make
 % make install    (come root)
-----------------------------------------
+----
 
 * Installazione in una directory personalizzata:
 
-----------------------------------------
+----
 $ ./autogen.sh
 $ mkdir build
 $ cd build
 $ ../configure --prefix=/path/to/directory
 $ make
 $ make install
-----------------------------------------
+----
 
 // TRANSLATION MISSING
 Options can be used for 'configure' script, they can be displayed with this
 command:
 
-----------------------------------------
+----
 $ ./configure --help
-----------------------------------------
+----
 
 [[git_sources]]
-Sorgenti git
-~~~~~~~~~~~~
+=== Sorgenti git
 
 Attenzione: i sorgenti git sono per gli utenti avanzati: potrebbero non
 compilare o essere instabili. Siete avvisati!
 
 Per ottenere i sorgenti git, dare il comando:
 
-----------------------------------------
+----
 $ git clone git://git.sv.gnu.org/weechat.git
-----------------------------------------
+----
 
 Poi seguire le istruzioni per i sorgenti (consultare
 <<source_package,sorgenti>>).
 
 [[report_crashes]]
-Segnalare gli errori
-~~~~~~~~~~~~~~~~~~~~
+=== Segnalare gli errori
 
 Nel caso in cui si verifichino errori, o si desideri segnalare qualsiasi errore
 futuro di WeeChat, è necessario:
@@ -337,30 +325,28 @@ futuro di WeeChat, è necessario:
 * installare gdb
 
 [[debug_info]]
-Informazioni di debug
-^^^^^^^^^^^^^^^^^^^^^
+==== Informazioni di debug
 
 Se si compila con cmake:
 
-----------------------------------------
+----
 $ cmake .. -DCMAKE_BUILD_TYPE=Debug
-----------------------------------------
+----
 
 Se compilato con gli autotools, il debug è attivato automaticamente (`--with-debug=1`).
 
 Se è stato installato il pacchetto binario, installare il pacchetto 'weechat-gdb'.
 
 [[core_files]]
-File core
-^^^^^^^^^
+==== File core
 
 // TRANSLATION MISSING
 To enable 'core' files, you can use option
 <<option_weechat.startup.sys_rlimit,weechat.startup.sys_rlimit>>:
 
-----------------------------------------
+----
 /set weechat.startup.sys_rlimit "core:-1"
-----------------------------------------
+----
 
 // TRANSLATION MISSING
 For WeeChat ≤ 0.3.8 or if you want to enable core files even before WeeChat
@@ -369,19 +355,18 @@ starts, you can use `ulimit` command.
 Ad esempio su Linux con la shell 'bash', aggiungere questa riga al proprio
 `~/.bashrc`:
 
-----------------------------------------
+----
 ulimit -c unlimited
-----------------------------------------
+----
 
 Oppure impostare una dimensione massima:
 
-----------------------------------------
+----
 ulimit -c 200000
-----------------------------------------
+----
 
 [[gdb_backtrace]]
-Ottenere un backtrace con gdb
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+==== Ottenere un backtrace con gdb
 
 In caso di errore di WeeChat, il sistema creerà un file 'core' oppure 'core.12345'
 ('12345' è l'id del processo).
@@ -391,9 +376,9 @@ Questo file viene creato nella directory in cui è in esecuzione WeeChat (e
 Ad esempio, se 'weechat' è installato in '/usr/bin/' ed il file 'core'
 si trova in '/home/xxx/', allora eseguire gdb con questo comando:
 
-----------------------------------------
+----
 gdb /usr/bin/weechat /home/xxx/core
-----------------------------------------
+----
 
 [NOTE]
 Se è stato installato il pacchetto binario 'weechat-dbg' (ad esempio in Debian), è
@@ -403,7 +388,7 @@ possibile usare questo path per il binario di WeeChat:
 All'interno di gdb, usare il comando `bt full` per visualizzare
 il backtrace. Verrà mostrato qualcosa di simile a questo:
 
-----------------------------------------
+----
 (gdb) set logging file /tmp/crash.txt
 (gdb) set logging on
 Copying output to /tmp/crash.txt.
@@ -430,7 +415,7 @@ Copying output to /tmp/crash.txt.
         write_fds = {fds_bits = {0 <repeats 16 times>}}
         except_fds = {fds_bits = {0 <repeats 16 times>}}
         max_fd = <value optimized out>
-----------------------------------------
+----
 
 Bisogna riportare l'errore agli sviluppatori, e specificare quale azione ha causato
 l'errore.
@@ -438,30 +423,27 @@ l'errore.
 Grazie per il vostro aiuto!
 
 [[debug_running_weechat]]
-Debug di WeeChat durante l'esecuzione
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+==== Debug di WeeChat durante l'esecuzione
 
 Per eseguire il debug di un'istanza di WeeChat in esecuzione (ad esempio se
 WeeChat sembra sia bloccato), è possibile usare gdb con l'id del processo
 (sostituire '12345' con il PID del processo weechat):
 
-----------------------------------------
+----
 gdb /usr/bin/weechat 12345
-----------------------------------------
+----
 
 Poi, come per un crash, usare il comando `bt full`:
 
-----------------------------------------
+----
 (gdb) bt full
-----------------------------------------
+----
 
 [[usage]]
-Utilizzo
---------
+== Utilizzo
 
 [[running_weechat]]
-Esecuzione di WeeChat
-~~~~~~~~~~~~~~~~~~~~~
+=== Esecuzione di WeeChat
 
 Argomenti a riga di comando:
 
@@ -469,9 +451,9 @@ include::cmdline_options.it.txt[]
 
 Per avviare WeeChat, digitare questo comando:
 
-----------------------------------------
+----
 $ weechat
-----------------------------------------
+----
 
 Alla prima esecuzione di WeeChat, viene creato un file di configurazione
 predefinito. Il file di configurazione viene creato nella directory:
@@ -482,13 +464,12 @@ proprie esigenze, oppure impostando i parametri con il comando `/set`
 all'interno di WeeChat (consultare <<weechat_commands,comandi di WeeChat>>).
 
 [[screen_layout]]
-Layout dello schermo
-~~~~~~~~~~~~~~~~~~~~
+=== Layout dello schermo
 
 Esempio di terminale con WeeChat:
 
 // TRANSLATION MISSING
-........................................
+....
  ▼ bar "title"
 ┌───────────────────────────────────────────────────────────────────────────┐
 │Welcome to #test, this is a test channel                                   │
@@ -513,7 +494,7 @@ Esempio di terminale con WeeChat:
 │[@Flashy(i)] hi peter!█                                                    │
 └───────────────────────────────────────────────────────────────────────────┘
  ▲ bars "status" and "input"                               bar "nicklist" ▲
-........................................
+....
 
 Lo schermo è composto dalle seguenti aree:
 
@@ -530,7 +511,7 @@ Lo schermo è composto dalle seguenti aree:
 La barra 'stato' ha i seguenti elementi predefiniti:
 
 [width="100%",cols="^3,^3,10",options="header"]
-|========================================
+|===
 | Elemento              | Esempio               | Descrizione
 | time                  | `[12:55]`             | Ora
 | buffer_count          | `[6]`                 | Numero di buffer aperti
@@ -544,12 +525,12 @@ La barra 'stato' ha i seguenti elementi predefiniti:
 | hotlist               | `[H: 4:#abc(2,5), 6]` | Elenco dei buffer con attività (messaggi non letti) (nell'esempio, 2 notifiche e 5 messaggi non letti su #abc, un messaggio non letto sul buffer #6)
 | completion            | `abc(2) def(5)`       | Elenco di parole per il completamento, con il numero di completamenti possibili per ogni parola
 | scroll                | `-ANCORA(50)-`        | Indicatore di scorrimento, con il numero di righe sotto l'ultima riga visualizzata
-|========================================
+|===
 
 La barra 'input' ha i seguenti elementi predefiniti:
 
 [width="100%",cols="^3,^6,8",options="header"]
-|========================================
+|===
 | Elemento     | Esempio                                         | Descrizione
 | input_paste  | `[Incollare 7 righe ? [ctrl-Y] Sì [ctrl-N] No]` | Chiede all'utente se incollare le righe
 // TRANSLATION MISSING
@@ -558,11 +539,10 @@ La barra 'input' ha i seguenti elementi predefiniti:
 // TRANSLATION MISSING
 | input_search | `[Search (~ str,msg)]`                          | Search indicator ("`~`": case insensitive, "`==`": case sensitive, "`str`": search string, "`regex`": search regular expression, "`msg`": search in messages, "`pre`": search in prefixes, "`pre\|msg`": search in prefixes and messages)
 | input_text   | `ciao peter!`                                   | Testo in input
-|========================================
+|===
 
 [[buffers_and_windows]]
-Buffer e finestre
-~~~~~~~~~~~~~~~~~
+=== Buffer e finestre
 
 Un 'buffer' è composto da un numero, un nome, delle righe visualizzate (e
 altri dati).
@@ -583,7 +563,7 @@ da una finestra) o visualizzato da una o più finestre.
 Esempio di split orizzontale (`/window splith`):
 
 // TRANSLATION MISSING
-........................................
+....
                           ▼ window #2 (buffer #4)
 ┌───────────────────────────────────────────────────────────────────────────┐
 │Welcome to #abc                                                            │
@@ -611,12 +591,12 @@ Esempio di split orizzontale (`/window splith`):
 │[@Flashy] hi peter!█                                                       │
 └───────────────────────────────────────────────────────────────────────────┘
                           ▲ window #1 (buffer #3)
-........................................
+....
 
 Esempio di split verticale (`/window splitv`):
 
 // TRANSLATION MISSING
-........................................
+....
 ┌───────────────────────────────────────────────────────────────────────────┐
 │Welcome to #test                     │Welcome to #abc                      │
 │12:54:15 peter | hey!        │@Flashy│12:55:12     Max | hi        │@Flashy│
@@ -640,12 +620,12 @@ Esempio di split verticale (`/window splitv`):
 │[@Flashy] hi peter!█                 │[@Flashy]                            │
 └───────────────────────────────────────────────────────────────────────────┘
       ▲ window #1 (buffer #3)               ▲ window #2 (buffer #4)
-........................................
+....
 
 Esempio di split orizzontale + verticale:
 
 // TRANSLATION MISSING
-........................................
+....
                                             ▼ window #3 (buffer #5)
 ┌───────────────────────────────────────────────────────────────────────────┐
 │Welcome to #test                     │Welcome to #def                      │
@@ -673,12 +653,11 @@ Esempio di split orizzontale + verticale:
 │[@Flashy] hi peter!█                 │[@Flashy]                            │
 └───────────────────────────────────────────────────────────────────────────┘
       ▲ window #1 (buffer #3)               ▲ window #2 (buffer #4)
-........................................
+....
 
 // TRANSLATION MISSING
 [[bars]]
-Bars
-~~~~
+=== Bars
 
 A 'bar' is an area beside the chat that can contain any type of text.
 
@@ -688,7 +667,7 @@ is the name of the bar and `option` the option for this bar.
 List of bar options:
 
 [width="100%",cols="2m,2,10",options="header"]
-|========================================
+|===
 | Option | Values | Description
 
 | type | `root`, `window` |
@@ -752,11 +731,10 @@ List of bar options:
 | conditions | string |
   The conditions to display the bar (see <<bar_conditions,conditions>> for more
   info).
-|========================================
+|===
 
 [[bar_items]]
-Items
-^^^^^
+==== Items
 
 The option 'items' is a string with a list of bar items, separated by a comma
 (space between items on screen) or "+" (glued items).
@@ -770,11 +748,11 @@ defined in bar (option 'color_delim').
 
 Example of bar with items "[time],buffer_number+:+buffer_plugin+.+buffer_name":
 
-........................................
+....
 ┌───────────────────────────────────────────────────────────────────────────┐
 │[12:55] 3:irc/freenode.#weechat                                            │
 └───────────────────────────────────────────────────────────────────────────┘
-........................................
+....
 
 // TRANSLATION MISSING
 A special syntax can be used to force the buffer used when displaying the bar
@@ -789,13 +767,12 @@ not displayed in the current window (or even not displayed at all).
 Example: nicklist of bitlbee in a root bar (if the bar is called
 'bitlist' and if bitlbee server is called 'bitlbee'):
 
-----------------------------------------
+----
 /set weechat.bar.bitlist.items "@irc.bitlbee.&bitlbee:buffer_nicklist"
-----------------------------------------
+----
 
 [[bar_filling]]
-Filling
-^^^^^^^
+==== Filling
 
 There are four types of filling:
 
@@ -814,7 +791,7 @@ default bar 'nicklist' has 'vertical' filling.
 
 Some examples of filling for bar 'nicklist':
 
-........................................
+....
 ┌──────────────────────────────────────────────────┐
 │Welcome to #test, this is a test channel          │
 │12:54:15 peter | hey!                    │@carl   │
@@ -868,11 +845,10 @@ Some examples of filling for bar 'nicklist':
 │───────────────────────────────────────────────────────────────────────│
 │                                                                       │
       filling_top_bottom = columns_horizontal ▲
-........................................
+....
 
 [[bar_conditions]]
-Conditions
-^^^^^^^^^^
+==== Conditions
 
 The option 'conditions' is a string evaluated to know if the bar is displayed
 or not in the window (it is used only for bars with type 'window').
@@ -899,20 +875,19 @@ Following pointers are available:
 Example to display nicklist bar in all buffers with a nicklist, and only if
 width of window is > 100 :
 
-----------------------------------------
+----
 /set weechat.bar.nicklist.conditions "${nicklist} && ${window.win_width} > 100"
-----------------------------------------
+----
 
 Same condition, but always display nicklist on buffer '&bitlbee' (even if window
 is small):
 
-----------------------------------------
+----
 /set weechat.bar.nicklist.conditions "${nicklist} && (${window.win_width} > 100 || ${buffer.full_name} == irc.bitlbee.&bitlbee)"
-----------------------------------------
+----
 
 [[notify_levels]]
-Livelli di notifica
-~~~~~~~~~~~~~~~~~~~
+=== Livelli di notifica
 
 Sono possibili quattro livelli per i messaggi mostrati nei buffer, dal più basso
 al più alto:
@@ -931,45 +906,43 @@ Il livello predefinito di notifica può essere impostato usando l'opzione
 il valore predefinito è 'all'.
 
 [width="50%",cols="3m,10",options="header"]
-|========================================
+|===
 | Livello di notifica | Livello del messaggio aggiunto alla hotlist
 | none                | (nessuno)
 | highlight           | 'highlight' + 'private'
 | message             | 'highlight' + 'private' + 'message'
 | all                 | 'highlight' + 'private' + 'message' + 'low'
-|========================================
+|===
 
 Il livello di notifica può essere definito per un set di buffer, ad esempio
 tutti i buffer per il server irc "freenode":
 
-----------------------------------------
+----
 /set weechat.notify.irc.freenode message
-----------------------------------------
+----
 
 Imposta il livello di notifica 'highlight' solo sul canale '#weechat':
 
-----------------------------------------
+----
 /set weechat.notify.irc.freenode.#weechat highlight
-----------------------------------------
+----
 
 Il livello di notifica per un buffer può essere impostato con il comando `/buffer`:
 
-----------------------------------------
+----
 /buffer notify highlight
-----------------------------------------
+----
 
 [[key_bindings]]
-Associazione tasti predefinita
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Associazione tasti predefinita
 
 // 'C-' = ctrl, 'A-' = alt, 'S-' = shift
 
 [[key_bindings_command_line]]
-Tasti per la riga di comando
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+==== Tasti per la riga di comando
 
 [width="100%",cols="^.^3,.^10,.^5",options="header"]
-|========================================
+|===
 | Tasti               | Descrizione | Comando
 | @k(←)            .2+| Passa al carattere precedente nella riga di comando .2+| `/input move_previous_char`
 | @k(C-)@k(b)
@@ -1014,14 +987,13 @@ Tasti per la riga di comando
 | @k(A-)@k(k)         | Cattura un tasto ed inserisce il suo codice (e il comando associato se il tasto esiste) nella riga di comando | `/input grab_key_command`
 | @k(A-)@k(r)         | Elimina l'intera riga di comando | `/input delete_line`
 | @k(A-)@k(s)         | Abilita/disabilita aspell | `/mute aspell toggle`
-|========================================
+|===
 
 [[key_bindings_buffers_windows]]
-Tasti per buffer / finestre
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+==== Tasti per buffer / finestre
 
 [width="100%",cols="^.^3,.^10,.^5",options="header"]
-|========================================
+|===
 | Tasti                     | Descrizione | Comando
 | @k(C-)@k(l)               | Ridisegna l'intera finestra | `/window refresh`
 | @k(C-)@k(s) , @k(C-)@k(u) | Imposta l'evidenziatore dei messaggi non letti su tutti i buffer | `/input set_unread`
@@ -1072,17 +1044,16 @@ Tasti per buffer / finestre
 | @k(A-)@k(>)               | Passa al buffer successivo nella lista dei buffer visitati | `/input jump_next_visited_buffer`
 | @k(A-)@k(/)               | Passa all'ultimo buffer mostrato (prima dell'ultimo passaggio ad un buffer) | `/input jump_last_buffer_displayed`
 | @k(A-)@k(=)               | Attiva/disattiva filtri | `/filter toggle`
-|========================================
+|===
 
 [[key_bindings_search_context]]
-Tasti per il contesto "search"
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+==== Tasti per il contesto "search"
 
 Questi tasti sono usati nel contesto "search" (quando viene digitato
 @k(C-)@k(r) per cercare del testo nel buffer).
 
 [width="100%",cols="^.^3,.^10,.^5",options="header"]
-|========================================
+|===
 | Key          | Descrizione | Comando
 // TRANSLATION MISSING
 | @k(C-)@k(r)  | Switch search type: string (default), regular expression | `/input search_switch_regex`
@@ -1094,17 +1065,16 @@ Questi tasti sono usati nel contesto "search" (quando viene digitato
 | @k(Invio) .3+| Ferma ricerca .3+| `/input search_stop`
 | @k(C-)@k(j)
 | @k(C-)@k(m)
-|========================================
+|===
 
 [[key_bindings_cursor_context]]
-Tasti per il contesto "cursor"
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+==== Tasti per il contesto "cursor"
 
 Questi tasti sono usati nel contesto "cursor" (movimento libero del cursore
 sullo schermo.
 
 [width="100%",cols="^.^3,^.^3,.^10,.^8",options="header"]
-|========================================
+|===
 | Tasto        | Zona       | Descrizione | Comando
 | @k(↑)        | -          | Sposta il cursore di una riga in alto | `/cursor move up`
 | @k(↓)        | -          | Sposta il cursore di una riga in basso | `/cursor move down`
@@ -1125,18 +1095,17 @@ sullo schermo.
 | @k(Enter) .3+| -       .3+| Ferma la modalità cursore .3+| `/cursor stop`
 | @k(C-)@k(j)
 | @k(C-)@k(m)
-|========================================
+|===
 
 [[key_bindings_mouse_context]]
-Tasti per il contesto "mouse"
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+==== Tasti per il contesto "mouse"
 
 Questi tasti sono usati nel contesto "mouse", ovvero quando si verifica un
 evento del mouse.
 
 // TRANSLATION MISSING (6)
 [width="100%",cols="^.^3,^.^3,^.^3,.^10,.^8",options="header"]
-|========================================
+|===
 | Tasto ^(1)^ | Azione | Zona | Descrizione | Comando
 | ◾◽◽     | -                | chat                 | Passa alla finestra | `/window ${_window_number}`
 | ◾◽◽     | sinistra         | chat                 | Passa al buffer precedente | `/window ${_window_number};/buffer +1`
@@ -1164,41 +1133,39 @@ evento del mouse.
 | ⇑       | -                | ogni barra           | Scorre la barra del -20% | `/bar scroll ${_bar_name} ${_window_number} -20%`
 | ⇓       | -                | ogni barra           | Scorre la barra del +20% | `/bar scroll ${_bar_name} ${_window_number} +20%`
 | ◽◾◽     | -                | ovunque              | Avvia la modalità cursore in questo punto | `/cursor go ${_x},${_y}`
-|========================================
+|===
 
 // TRANSLATION MISSING
 [NOTE]
 ^(1)^ "⇑" and "⇓" are wheel up and down.
 
 [[mouse]]
-Supporto del mouse
-~~~~~~~~~~~~~~~~~~
+=== Supporto del mouse
 
 WeeChat supporta i click e le azioni del mouse. Funziona con il terminale
 locale, e da remoto via connessione ssh con o senza screen/tmux.
 
 [[mouse_enable]]
-Abilitare il mouse
-^^^^^^^^^^^^^^^^^^
+==== Abilitare il mouse
 
 Per abilitare il mouse all'avvio:
 
-----------------------------------------
+----
 /set weechat.look.mouse on
-----------------------------------------
+----
 
 Per abilitarlo subito, digitare @k(A-)@k(m) oppure eseguire il seguente comando:
 
-----------------------------------------
+----
 /mouse enable
-----------------------------------------
+----
 
 È possibile disabilitarlo temporaneamente, e associare il comando ad un
 tasto. Ad esempio il tasto @k(A-)@k(x) per disabilitare il mouse per 10 secondi:
 
-----------------------------------------
+----
 /key bind meta-x /mouse toggle 10
-----------------------------------------
+----
 
 Quando il mouse è abilitato in WeeChat, è possibile usare il modificatore
 @k(-S-) per selezionare o cliccare nel terminale, come se il mouse fosse
@@ -1209,8 +1176,7 @@ disabilitato (in alcuni terminali come iTerm, bisogna usare @k(-A-) invece di
 Per qualunque problema con il mouse, consultare 'FAQ di WeeChat'.
 
 [[mouse_bind_events]]
-Associare gli eventi del mouse a comandi
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+==== Associare gli eventi del mouse a comandi
 
 Molti eventi del mouse predefiniti sono già definiti da WeeChat (consultare
 <<key_bindings_mouse_context,tasti per il contesto "mouse">>).
@@ -1224,17 +1190,17 @@ pulsante/rotellina e un'azione (opzionale). Elementi diversi sono separati da "-
 Elenco di modificatori
 
 [width="50%",cols="3m,4",options="header"]
-|========================================
+|===
 | Modificatore | Descrizione
 | ctrl         | Tasto @k(-C-)
 | alt          | Tasto @k(-A-)
 | ctrl-alt     | Tasto @k(-C-) e @k(-A-)
-|========================================
+|===
 
 Elenco di pulsanti/rotellina:
 
 [width="50%",cols="3m,4",options="header"]
-|========================================
+|===
 | Pulsante/rotellina  | Descrizione
 | button1             | Click sul tasto sinistro
 | button2             | Click sul tasto destro
@@ -1242,12 +1208,12 @@ Elenco di pulsanti/rotellina:
 | button4 ... button9 | Click sui pulsanti extra
 | wheelup             | Rotellina (su)
 | wheeldown           | Rotellina (giù)
-|========================================
+|===
 
 Elenco di azioni (solo per i pulsanti, non la rotellina):
 
 [width="50%",cols="3m,4",options="header"]
-|========================================
+|===
 | Azione             | Distanza
 | gesture-up         | 3 ... 19
 | gesture-up-long    | ≥ 20
@@ -1257,17 +1223,17 @@ Elenco di azioni (solo per i pulsanti, non la rotellina):
 | gesture-left-long  | ≥ 40
 | gesture-right      | 3 ... 39
 | gesture-right-long | ≥ 40
-|========================================
+|===
 
 // TRANSLATION MISSING
 List of incomplete events (only for buttons, useful for plugins/scripts):
 
 [width="50%",cols="3m,4",options="header"]
-|========================================
+|===
 | Event      | Description
 | event-down | Button was pressed but not released yet
 | event-drag | Mouse was moved with button pressed down
-|========================================
+|===
 
 Esempio di eventi:
 
@@ -1292,41 +1258,38 @@ poi eseguire l'evento col mouse. Il comando inserisce il nome dell'evento
 nella riga di comando.
 
 [[command_line]]
-Riga di comando
-~~~~~~~~~~~~~~~
+=== Riga di comando
 
 La riga di comando di WeeChat (nella parte inferiore della finestra) consente di
 inserire i comandi o di inviare del testo sul buffer.
 
 [[command_line_syntax]]
-Sintassi
-^^^^^^^^
+==== Sintassi
 
 I comandi iniziano con il carattere "/", seguito dal nome del comando. Ad esempio,
 per consultare un elenco di opzioni:
 
-----------------------------------------
+----
 /set
-----------------------------------------
+----
 
 Il testo inviato ad un buffer è qualsiasi testo che non comincia con
 il carattere "/". Per esempio, per inviare il testo 'ciao' sul buffer
 attivo:
 
-----------------------------------------
+----
 ciao
-----------------------------------------
+----
 
 Ad ogni modo, è possibile iniziare con il carattere "/", aggiungendone
 poi un altro. Ad esempio, per inviare il testo '/set' sul buffer attivo:
 
-----------------------------------------
+----
 //set
-----------------------------------------
+----
 
 [[command_line_colors]]
-Codici colore
-^^^^^^^^^^^^^
+==== Codici colore
 
 Per alcuni plugin come IRC, è possibile usare codici colori ed attributi,
 come segue (digitare @k(C-)@k(c) poi la lettera che segue, con il valore
@@ -1362,7 +1325,7 @@ terminare l'attributo.
 I codici colore per @k(C-)@k(c) , @k(c) sono:
 
 [width="50%",cols="^1m,3,3",options="header"]
-|=======================================
+|===
 | Codice | IRC            | WeeChat (curses)
 | 00     | bianco         | white
 | 01     | nero           | black
@@ -1380,22 +1343,21 @@ I codici colore per @k(C-)@k(c) , @k(c) sono:
 | 13     | rosa chiaro    | lightmagenta
 | 14     | grigio         | gray
 | 15     | grigio chiaro  | white
-|=======================================
+|===
 
 Esempio: visualizza "ciao a tutti!" con "ciao" scritto in blu chiaro grassetto
 e "a tutti" in rosso chiaro sottolineato:
 
-----------------------------------------
+----
 ^Cc12^Cbciao ^Cb^Cc04^Cua tutti^Cu^Cc !
-----------------------------------------
+----
 
 [NOTE]
 Nel plugin irc, si possono riorganizzare i colori usando l'opzione
 <<option_irc.color.mirc_remap,irc.color.mirc_remap>>.
 
 [[colors]]
-Colori
-~~~~~~
+=== Colori
 
 WeeChat può usare fino a 256 coppie di colore per visualizzare il testo nelle barre e
 nell'area di chat(il terminale deve supportare 256 colori per essere utilizzati in WeeChat).
@@ -1404,13 +1366,13 @@ In base al valore della variabile di ambiente 'TERM', potrebbero verificarsi i
 seguenti limiti per i colori in WeeChat:
 
 [width="50%",cols="8,>2,>2",options="header"]
-|========================================
+|===
 | $TERM                                 | Colori | Coppie ^(1)^
 | "rxvt-unicode", "xterm",...           |     88 |         256
 | "rxvt-256color", "xterm-256color",... |    256 |       32767
 | "screen"                              |      8 |          64
 | "screen-256color"                     |    256 |       32767
-|========================================
+|===
 
 [NOTE]
 ^(1)^ Anche se il terminale supporta più di 256 coppie, possono essere utilizzate
@@ -1431,26 +1393,25 @@ questi valori nella variabile 'TERM'.
 Se si sta utilizzando screen, è possibile aggiungere questa riga al
 proprio '~/.screenrc':
 
-----------------------------------------
+----
 term screen-256color
-----------------------------------------
+----
 
 Se la variabile 'TERM' contiene un valore errato e WeeChat è già in esecuzione,
 niente panico! È possibile cambiarla senza riavviare, grazie allo script 'shell.py':
 
-----------------------------------------
+----
 /shell setenv TERM=screen-256color
 /upgrade
-----------------------------------------
+----
 
 [[colors_basic]]
-Colori base
-^^^^^^^^^^^
+==== Colori base
 
 I colori base in WeeChat sono:
 
 [width="50%",cols="^3m,8",options="header"]
-|========================================
+|===
 | Nome         | Colore
 | default      | Colore predefinito del terminale (trasparente per lo sfondo)
 | black        | Nero
@@ -1469,11 +1430,10 @@ I colori base in WeeChat sono:
 | lightcyan    | Azzurro chiaro
 | gray         | Grigio
 | white        | Bianco
-|========================================
+|===
 
 [[colors_extended]]
-Colori estesi
-^^^^^^^^^^^^^
+==== Colori estesi
 
 WeeChat alloca dinamicamente le coppie colore quando vengono usati i colori
 sullo schermo (per mostrare buffer e barre).
@@ -1486,33 +1446,31 @@ passare temporaneamente ai colori del terminale per sceglierne uno.
 
 Se ad esempio si desidera visualizzare l'ora in arancione nel buffer:
 
-----------------------------------------
+----
 /set weechat.color.chat_time 214
-----------------------------------------
+----
 
 O se si desidera uno sfondo verde scuro per la barra di stato:
 
-----------------------------------------
+----
 /set weechat.bar.status.color_bg 22
-----------------------------------------
+----
 
 [[colors_aliases]]
-Alias
-^^^^^
+==== Alias
 
 Si possono aggiungere degli alias ai colori con il comando '/color alias' e
 usarli in ogni opzione relativa al colore.
 
 Ad esempio:
 
-----------------------------------------
+----
 /color alias 214 orange
 /set weechat.color.chat_delimiters orange
-----------------------------------------
+----
 
 [[colors_attributes]]
-Attributi
-^^^^^^^^^
+==== Attributi
 
 Esistono alcuni attributi per i colori. Uno o più attributi vanno aggiunti prima
 del nome o del numero del colore:
@@ -1526,16 +1484,16 @@ del nome o del numero del colore:
 
 Ad esempio se si vuole il proprio nick bianco e sottolineato:
 
-----------------------------------------
+----
 /set weechat.color.chat_nick_self _white
-----------------------------------------
+----
 
 O se si desidera l'ora nella barra di stato arancione sottolineata
 e in grassetto:
 
-----------------------------------------
+----
 /set weechat.color.status_time *_214
-----------------------------------------
+----
 
 Per usare un attributo con il colore predefinito del terminale (-1), bisogna
 usare un numero maggiore dell'ultimo colore del terminale, ad esempio il
@@ -1543,30 +1501,28 @@ numero massimo in WeeChat: 99999.
 
 Esempio di grassetto con il colore di primo piano del terminale:
 
-----------------------------------------
+----
 /set weechat.color.status_time *99999
-----------------------------------------
+----
 
 // TRANSLATION MISSING
 [[options_and_commands]]
-Options and commands
-~~~~~~~~~~~~~~~~~~~~
+=== Options and commands
 
 // TRANSLATION MISSING
 [[sec_options]]
-Secured data options (sec.conf)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+==== Secured data options (sec.conf)
 
 // TRANSLATION MISSING
 Sections:
 
 // TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
-|========================================
+|===
 | Section | Control command                    | Description
 | crypt   | /set sec.crypt.*                   | Options for encryption
 | data    | <<command_weechat_secure,/secure>> | Secured data
-|========================================
+|===
 
 // TRANSLATION MISSING
 Options:
@@ -1574,15 +1530,14 @@ Options:
 include::autogen/user/sec_options.txt[]
 
 [[weechat_options]]
-Opzioni di WeeChat (weechat.conf)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+==== Opzioni di WeeChat (weechat.conf)
 
 // TRANSLATION MISSING
 Sections:
 
 // TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
-|========================================
+|===
 | Section    | Control command                           | Description
 | debug      | <<command_weechat_debug,/debug set>>      +
                /set weechat.debug.*                      | Debug level, for core and plugins (options can be added/removed in section)
@@ -1605,7 +1560,7 @@ Sections:
 | key_search | <<command_weechat_key,/key>>              | Keys in search context
 | key_cursor | <<command_weechat_key,/key>>              | Keys in cursor context
 | key_mouse  | <<command_weechat_key,/key>>              | Keys in mouse context
-|========================================
+|===
 
 // TRANSLATION MISSING
 Options:
@@ -1613,14 +1568,12 @@ Options:
 include::autogen/user/weechat_options.txt[]
 
 [[weechat_commands]]
-Comandi di WeeChat
-^^^^^^^^^^^^^^^^^^
+==== Comandi di WeeChat
 
 include::autogen/user/weechat_commands.txt[]
 
 [[plugins]]
-Plugin
-------
+== Plugin
 
 Un plugin è una libreria dinamica, scritta in C e compilata, che viene caricata
 da WeeChat.
@@ -1641,16 +1594,16 @@ sono chiusi automaticamente.
 
 Esempi per caricare, scaricare oppure elencare i plugin:
 
-----------------------------------------
+----
 /plugin load irc
 /plugin unload irc
 /plugin list
-----------------------------------------
+----
 
 I plugin predefiniti sono:
 
 [width="50%",cols="^1,5",options="header"]
-|=======================================
+|===
 | Plugin    | Descrizione
 | alias     | Definisce gli alias per i comandi
 | aspell    | Controllo ortografico per la riga di comando
@@ -1668,49 +1621,45 @@ I plugin predefiniti sono:
 | tcl       | API per lo scripting in TCL
 | guile     | API per lo scripting in Guile (scheme)
 | xfer      | Trasferimento file e chat diretta
-|=======================================
+|===
 
 Per saperne di più riguardo lo sviluppo di plugin o script (tramite le API), per
 favore consultare 'Riferimento API dei Plugin per WeeChat' oppure
 'Guida allo Scripting di WeeChat'.
 
 [[alias_plugin]]
-Plugin Alias
-~~~~~~~~~~~~
+=== Plugin Alias
 
 Il plugin Alias consente di creare alias per i comandi (da WeeChat o altri
 plugin).
 
 [[alias_commands]]
-Comandi
-^^^^^^^
+==== Comandi
 
 include::autogen/user/alias_commands.txt[]
 
 [[aspell_plugin]]
-Plugin Aspell
-~~~~~~~~~~~~~
+=== Plugin Aspell
 
 Il plugin Aspell consente di verificare l'ortografia nella riga di comando.
 È possibile utilizzare più lingue per buffer.
 
 [[aspell_options]]
-Opzioni (aspell.conf)
-^^^^^^^^^^^^^^^^^^^^^
+==== Opzioni (aspell.conf)
 
 // TRANSLATION MISSING
 Sections:
 
 // TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
-|========================================
+|===
 | Section    | Control command                           | Description
 | color      | /set aspell.color.*                       | Colors
 | check      | /set aspell.check.*                       | Options to control spell checking
 | dict       | <<command_aspell_aspell,/aspell setdict>> +
                /set aspell.dict.*                        | Dictionaries used by buffer (options can be added/removed in section)
 | option     | /set aspell.option.*                      | <<aspell_speller_options,Opzioni ortografiche>> (options can be added/removed in section)
-|========================================
+|===
 
 // TRANSLATION MISSING
 Options:
@@ -1718,14 +1667,12 @@ Options:
 include::autogen/user/aspell_options.txt[]
 
 [[aspell_commands]]
-Comandi
-^^^^^^^
+==== Comandi
 
 include::autogen/user/aspell_commands.txt[]
 
 [[aspell_speller_options]]
-Opzioni ortografiche
-^^^^^^^^^^^^^^^^^^^^
+==== Opzioni ortografiche
 
 Le opzioni ortografiche possono essere definite aggiungendo opzioni nella
 sezione "opzioni" della configurazione di aspell.
@@ -1733,20 +1680,19 @@ sezione "opzioni" della configurazione di aspell.
 Il nome dell'opzione è un parametro di configurazione per aspell. L'elenco
 delle opzioni disponibili può essere trovato nel terminale col seguente comando:
 
-----------------------------------------
+----
 $ aspell config
-----------------------------------------
+----
 
 Ad esempio, per abilitare l'opzione "ignore-case":
 
-----------------------------------------
+----
 /set aspell.option.ignore-case "true"
-----------------------------------------
+----
 
 // TRANSLATION MISSING
 [[aspell_suggestions]]
-Suggestions
-^^^^^^^^^^^
+==== Suggestions
 
 Suggestions are displayed in a bar item called "aspell_suggest". The number of
 suggestions is set in option 'aspell.check.suggestions'.
@@ -1756,23 +1702,22 @@ integer ≥ 0 and add the bar item "aspell_suggest" to a bar, like 'status'.
 
 Example of suggestions with English dictionary (`en`):
 
-........................................
+....
 │[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune]                    │
 │[@Flashy] prinr █                                                                │
 └─────────────────────────────────────────────────────────────────────────────────┘
-........................................
+....
 
 Example of suggestions with English and French dictionaries (`en,fr`):
 
-........................................
+....
 │[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune/prime,primer,primé] │
 │[@Flashy] prinr █                                                                │
 └─────────────────────────────────────────────────────────────────────────────────┘
-........................................
+....
 
 [[charset_plugin]]
-Plugin Charset
-~~~~~~~~~~~~~~
+=== Plugin Charset
 
 Il plugin Charset consente di decodificare o codificare dati utilizzando
 i set caratteri.
@@ -1786,15 +1731,15 @@ può leggere/scrivere soltanto dati UTF-8.
 Il plugin Charset dovrebbe essere caricato automaticamente da WeeChat.
 Per essere sicuri che sia caricato, provare con:
 
-----------------------------------------
+----
 /charset
-----------------------------------------
+----
 
 Se non trovato, allora si deve caricare il plugin con il comando:
 
-----------------------------------------
+----
 /plugin load charset
-----------------------------------------
+----
 
 Se il plugin non viene trovato, allora è necessario ricompilare WeeChat
 con il supporto ai plugin e a Charset.
@@ -1805,27 +1750,26 @@ locale, mentre quello interno è UTF-8.
 
 Per esempio:
 
-........................................
+....
 set caratteri: terminale: ISO-8859-15, interno: UTF-8
-........................................
+....
 
 [[charset_options]]
-Opzioni (charset.conf)
-^^^^^^^^^^^^^^^^^^^^^^
+==== Opzioni (charset.conf)
 
 // TRANSLATION MISSING
 Sections:
 
 // TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
-|========================================
+|===
 | Section | Control command                             | Description
 | default | /set charset.default.*                      | Default decoding/encoding charset
 | decode  | <<command_charset_charset,/charset decode>> +
             /set charset.decode.*                       | Decoding charset by buffer (options can be added/removed in section)
 | encode  | <<command_charset_charset,/charset encode>> +
             /set charset.encode.*                       | Encoding charset by buffer (options can be added/removed in section)
-|========================================
+|===
 
 // TRANSLATION MISSING
 Options:
@@ -1833,24 +1777,22 @@ Options:
 include::autogen/user/charset_options.txt[]
 
 [[charset_commands]]
-Comandi
-^^^^^^^
+==== Comandi
 
 include::autogen/user/charset_commands.txt[]
 
 [[charset_set]]
-Impostare il set caratteri
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+==== Impostare il set caratteri
 
 Per impostare il set caratteri globale per la codifica e la decodifica,
 utilizzare il comando `/set`.
 
 Per esempio:
 
-----------------------------------------
+----
 /set charset.default.decode ISO-8859-15
 /set charset.default.encode ISO-8859-15
-----------------------------------------
+----
 
 Se il set caratteri globale per la decodifica non è impostato (ad
 esempio durante il primo caricamento del plugin Charset), verrà
@@ -1866,36 +1808,34 @@ di codifica e decodifica saranno gli stessi.
 
 Ad esempio:
 
-----------------------------------------
+----
 /charset ISO-8859-15
-----------------------------------------
+----
 
 È l'equivalente di:
 
-----------------------------------------
+----
 /charset decode ISO-8859-15
 /charset encode ISO-8859-15
-----------------------------------------
+----
 
 Per impostare il set caratteri per il canale IRC (o il privato), utilizzare gli
 stessi comandi per il server, ma sul buffer del canale (o quello privato).
 
 Per visualizzare tutti i set caratteri utilizzati, utilizzare il comando seguente:
 
-----------------------------------------
+----
 /set charset.*
-----------------------------------------
+----
 
 [[charset_troubleshooting]]
-Risoluzione problemi
-^^^^^^^^^^^^^^^^^^^^
+==== Risoluzione problemi
 
 Per qualunque problema con i set caratteri, per favore consultare
 le 'Domande Frequenti di WeeChat'.
 
 [[fifo_plugin]]
-Plugin Fifo
-~~~~~~~~~~~
+=== Plugin Fifo
 
 È possibile controllare da remoto WeeChat, inviando comandi o del testo ad una
 pipe FIFO (se l'opzione "plugins.var.fifo.fifo" è abilitata, e lo è per default).
@@ -1905,43 +1845,43 @@ La pipe FIFO si trova in '~/.weechat/' ed è chiamata 'weechat_fifo_xxxx'
 
 La sintassi per i comandi/testo della pipe FIFO è una delle seguenti:
 
-........................................
+....
   plugin.buffer *testo o comando qui
   *testo o comando qui
-........................................
+....
 
 Alcuni esempi:
 
 * cambiare il nick sul server IRC freenode in "nuovonick":
 
-----------------------------------------
+----
 $ echo 'irc.server.freenode */nick nuovonick' >~/.weechat/weechat_fifo_12345
-----------------------------------------
+----
 
 * visualizazre del testo sul canale IRC #weechat:
 
-----------------------------------------
+----
 $ echo 'irc.freenode.#weechat *hello!' >~/.weechat/weechat_fifo_12345
-----------------------------------------
+----
 
 * visualizzare del testo sul buffer attivo:
 
-----------------------------------------
+----
 $ echo '*hello!' >~/.weechat/weechat_fifo_12345
-----------------------------------------
+----
 
 * inviare due comandi per scaricare/caricare gli script Python (è necessario
   separarli con "\n"):
 
-----------------------------------------
+----
 $ echo -e '*/python unload\n*/python autoload' >~/.weechat/weechat_fifo_12345
-----------------------------------------
+----
 
 È possibile realizzare uno script per inviare un comando a tutte le istanze di
 WeeChat in esecuzione, per esempio:
 
 [source,shell]
-----------------------------------------
+----
 #!/bin/sh
 if [ $# -eq 1 ]; then
     for fifo in ~/.weechat/weechat_fifo_*
@@ -1949,18 +1889,17 @@ if [ $# -eq 1 ]; then
         echo -e "$1" >$fifo
     done
 fi
-----------------------------------------
+----
 
 Se lo script viene chiamato "auto_weechat_command", può essere
 eseguito con:
 
-----------------------------------------
+----
 $ ./auto_weechat_command 'irc.freenode.#weechat *ciao'
-----------------------------------------
+----
 
 [[irc_plugin]]
-Plugin IRC
-~~~~~~~~~~
+=== Plugin IRC
 
 Il plugin IRC è realizzato per chattare tramite protocollo IRC con altre persone.
 
@@ -1968,32 +1907,30 @@ Il plugin IRC è realizzato per chattare tramite protocollo IRC con altre person
 trasferimento file (tramite plugin xfer, consultare <<xfer_plugin,plugin Xfer>>).
 
 [[irc_command_line_options]]
-Opzioni a riga di comando
-^^^^^^^^^^^^^^^^^^^^^^^^^
+==== Opzioni a riga di comando
 
 È possibile fornire un URL per uno o più server IRC, come segue:
 
-----------------------------------------
+----
 irc[6][s]://[nick[:password]@]irc.esempio.org[:porta][/#canale][,#canale[...]]
-----------------------------------------
+----
 
 Esempio per entrare in '#weechat' e '#tizio' sul server 'irc.freenode.net',
 porta predefinita (6667), con il nick 'caio':
 
-----------------------------------------
+----
 $ weechat irc://caio@irc.freenode.net/#weechat,#tizio
-----------------------------------------
+----
 
 [[irc_options]]
-Opzioni (irc.conf)
-^^^^^^^^^^^^^^^^^^
+==== Opzioni (irc.conf)
 
 // TRANSLATION MISSING
 Sections:
 
 // TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
-|========================================
+|===
 | Section        | Control command                | Description
 | look           | /set irc.look.*                | Look and feel
 | color          | /set irc.color.*               | Colors
@@ -2004,7 +1941,7 @@ Sections:
 | server_default | /set irc.server_default.*      | Default values for servers (used when options in server are not defined)
 | server         | <<command_irc_server,/server>> +
                    /set irc.server.*              | Servers
-|========================================
+|===
 
 // TRANSLATION MISSING
 Options:
@@ -2012,14 +1949,12 @@ Options:
 include::autogen/user/irc_options.txt[]
 
 [[irc_commands]]
-Comandi
-^^^^^^^
+==== Comandi
 
 include::autogen/user/irc_commands.txt[]
 
 [[irc_ssl_certificates]]
-Certificati SSL
-^^^^^^^^^^^^^^^
+==== Certificati SSL
 
 Al momento della connessione al server IRC con SSL, WeeChat verifica in
 maniera predefinita che la connessione sia completamente fidata.
@@ -2047,49 +1982,46 @@ e potrebbe fallire, anche se funziona senza problemi con versioni precedenti
 la 0.3.1.
 
 [[irc_connect_oftc_with_certificate]]
-Primo esempio: connessione a otfc e verifica del certificato
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+===== Primo esempio: connessione a otfc e verifica del certificato
 
 * Importare certificati nella shell:
 
-----------------------------------------
+----
 $ mkdir -p ~/.weechat/ssl
 $ wget -O ~/.weechat/ssl/CAs.pem http://www.spi-inc.org/ca/spi-cacert.crt
-----------------------------------------
+----
 
 Nota: è possibile concatenare più certificati nel file CAs.pem.
 
 * In WeeChat, con il server "otfc" già creato:
 
-----------------------------------------
+----
 /connect oftc
-----------------------------------------
+----
 
 [[irc_connect_oftc_with_certfp]]
-Secondo esempio: connessione a otfc con CertFP
-++++++++++++++++++++++++++++++++++++++++++++++
+===== Secondo esempio: connessione a otfc con CertFP
 
 * Creare un certificato nella shell:
 
-----------------------------------------
+----
 $ mkdir -p ~/.weechat/ssl
 $ cd ~/.weechat/ssl
 $ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick.pem
-----------------------------------------
+----
 
 * In WeeChat, con il server "otfc" già creato:
 
-----------------------------------------
+----
 /set irc.server.oftc.ssl_cert "%h/ssl/nick.pem"
 /connect oftc
 /msg nickserv cert add
-----------------------------------------
+----
 
 Per maggiori informazioni consultare http://www.oftc.net/oftc/NickServ/CertFP
 
 [[irc_sasl_authentication]]
-Autenticazione SASL
-^^^^^^^^^^^^^^^^^^^
+==== Autenticazione SASL
 
 // TRANSLATION MISSING
 WeeChat supports SASL authentication, using different mechanisms:
@@ -2111,17 +2043,16 @@ Le opzioni nel server sono:
 
 Se si desidera usare "dh-blowfish" in tutti i server:
 
-----------------------------------------
+----
 /set irc.server_default.sasl_mechanism dh-blowfish
-----------------------------------------
+----
 
 [NOTE]
 La libreria "gcrypt" è richiesta per compilare WeeChat al fine di usare il
 meccanismo "dh-blowfish" (consultare <<dependencies,dipendenze>>).
 
 [[irc_tor_freenode]]
-Connessione a Freenode con TOR/SASL
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+==== Connessione a Freenode con TOR/SASL
 
 Oltre ad SSL, i server Freenode supportano connessioni con TOR
 (https://www.torproject.org), una rete di tunnel virtuali che consente ad
@@ -2134,49 +2065,48 @@ sistema di autenticazione "plain" (in chiaro) con SASL.
 
 Il primo passo consiste nell'installare TOR. Per Debian (e derivate):
 
-----------------------------------------
+----
 $ sudo apt-get install tor
-----------------------------------------
+----
 
 In WeeChat è necessario creare un proxy socks5 per il servizio TOR (nome
 host/IP e porta dipendono dalla propria configurazione di TOR):
 
-----------------------------------------
+----
 /proxy add tor socks5 127.0.0.1 9050
-----------------------------------------
+----
 
 Ora, bisogna creare un nuovo server, ad esempio:
 
-----------------------------------------
+----
 /server add freenode-tor p4fsi4ockecnea7l.onion
-----------------------------------------
+----
 
 Impostare il proxy per TOR:
 
-----------------------------------------
+----
 /set irc.server.freenode-tor.proxy "tor"
-----------------------------------------
+----
 
 Impostare l'autenticazione SASL:
 
-----------------------------------------
+----
 /set irc.server.freenode-tor.sasl_mechanism dh-blowfish
 /set irc.server.freenode-tor.sasl_username "your_nickname"
 /set irc.server.freenode-tor.sasl_password "your_password"
-----------------------------------------
+----
 
 E alla fine, connettersi al server:
 
-----------------------------------------
+----
 /connect freenode-tor
-----------------------------------------
+----
 
 Per maggiori informazioni su Freenode e TOR:
 http://freenode.net/irc_servers.shtml#tor
 
 [[irc_smart_filter_join_part_quit]]
-Filtro smart per i messaggi di entrata/uscita/disconnessione
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+==== Filtro smart per i messaggi di entrata/uscita/disconnessione
 
 Un filtro smart è disponibile per filtrare i messaggi di
 entrata/uscita/disconnessione quando il nick non ha detto nulla durante
@@ -2185,38 +2115,37 @@ gli ultimi X minuti sul canale
 Il filtro smart è abilitato per default, ma è necessario aggiungere un filtro
 per nascondere le righe sul buffer, per esempio:
 
-----------------------------------------
+----
 /filter add irc_smart * irc_smart_filter *
-----------------------------------------
+----
 
 È possibile creare il filtro solo per un canale o per i canali che iniziano con
 lo stesso nome (consultare `/help filter`):
 
-----------------------------------------
+----
 /filter add irc_smart_weechat irc.freenode.#weechat irc_smart_filter *
 /filter add irc_smart_weechats irc.freenode.#weechat* irc_smart_filter *
-----------------------------------------
+----
 
 È possibile nascondere solo i messaggi di entrata o di
 uscita/disconnessione con le seguenti opzioni:
 
-----------------------------------------
+----
 /set irc.look.smart_filter_join on
 /set irc.look.smart_filter_quit on
-----------------------------------------
+----
 
 È possibile impostare un ritardo (in minuti):
 
-----------------------------------------
+----
 /set irc.look.smart_filter_delay 5
-----------------------------------------
+----
 
 Se un nick non ha parlato durante gli ultimi 5 minuti, i suoi ingressi e/o
 uscite/disconnessioni verranno nascosti sul canale.
 
 [[irc_ctcp_replies]]
-Risposte CTCP
-^^^^^^^^^^^^^
+==== Risposte CTCP
 
 È possibile personalizzare le risposte CTCP, o bloccare alcune richieste CTCP
 (non rispondere).
@@ -2224,44 +2153,44 @@ Risposte CTCP
 Ad esempio, per personalizzare la richiesta CTCP "VERSIONE", utilizzare il
 seguente comando:
 
-----------------------------------------
+----
 /set irc.ctcp.version "Uso WeeChat $version, fico!"
-----------------------------------------
+----
 
 Se si desidera bloccare CTCP "VERSIONE" (non rispondere ad una query),
 allora basta impostare una stringa vuota:
 
-----------------------------------------
+----
 /set irc.ctcp.version ""
-----------------------------------------
+----
 
 Anche un CTCP sconosciuto può essere personalizzato, per esempio si
 può rispondere "BLABLA":
 
-----------------------------------------
+----
 /set irc.ctcp.blabla "Questa è la mia risposta a CTCP BLABLA"
-----------------------------------------
+----
 
 È possibile personalizzare CTCP per un solo server, utilizzando il suo nome
 interno prima del nome CTCP:
 
-----------------------------------------
+----
 /set irc.ctcp.freenode.version "WeeChat $version (per freenode)"
-----------------------------------------
+----
 
 Se si desidera ripristinare la risposta CTCP standard, allora disabilitare
 l'opzione:
 
-----------------------------------------
+----
 /unset irc.ctcp.version
-----------------------------------------
+----
 
 I codici seguenti possono essere utilizzati nelle stringhe e vengono estese
 automaticamente da WeeChat quando si risponde alle CTCP
 
 // TRANSLATION MISSING ($versiongit + $git + $username (name))
 [width="100%",cols="^2l,4,8",options="header"]
-|=======================================
+|===
 | Codice       | Descrizione                             | Valore/esempio
 | $clientinfo  | Elenco di CTCP supportate               | `ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION`
 | $version     | Versione di WeeChat                     | `0.4.0-dev`
@@ -2274,7 +2203,7 @@ automaticamente da WeeChat quando si risponde alle CTCP
 | $time        | Data/ora correnti                       | `Sun, 16 Dec 2012 10:40:48 +0100`
 | $username    | Nome utente sul server IRC              | `name`
 | $realname    | Nome reale sul server IRC               | `John Doe`
-|=======================================
+|===
 
 // TRANSLATION MISSING
 [NOTE]
@@ -2286,7 +2215,7 @@ le risposte CTCP sono:
 
 // TRANSLATION MISSING ($username (name))
 [width="100%",cols="^2,4,8",options="header"]
-|=======================================
+|===
 | CTCP       | Formato risposta                     | Esempio
 | CLIENTINFO | `$clientinfo`                        | `ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION`
 | FINGER     | `WeeChat $versiongit`                | `WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)`
@@ -2294,11 +2223,10 @@ le risposte CTCP sono:
 | TIME       | `$time`                              | `Sun, 16 Dec 2012 10:40:48 +0100`
 | USERINFO   | `$username ($realname)`              | `name (John Doe)`
 | VERSION    | `WeeChat $versiongit ($compilation)` | `WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4) (Dec 16 2012)`
-|=======================================
+|===
 
 [[irc_target_buffer]]
-Buffer di destinazione per i messaggi IRC
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+==== Buffer di destinazione per i messaggi IRC
 
 È possibile personalizzare il buffer di destinazione per i messaggi IRC
 (buffer usato per visualizzare messaggi) con l'opzione `irc.msgbuffer.*`.
@@ -2327,7 +2255,7 @@ Ecco una lista incompleta dei messaggi IRC o degli alias che è possibile
 personalizzare:
 
 [width="60%",cols="^1m,^3m,8",options="header"]
-|========================================
+|===
 | messaggio | alias         | descrizione
 | error     |               | errore
 | invite    |               | invitato su un canale
@@ -2397,7 +2325,7 @@ personalizzare:
 // TRANSLATION MISSING
 | 729       | quietlist     | end of quiet list
 | 901       |               | ora si è loggati
-|========================================
+|===
 
 Anche altri comandi numerici possono essere personalizzati.
 
@@ -2408,52 +2336,50 @@ Alcuni esempi:
 
 * visualizza il risultato di `/whois` su un buffer privato:
 
-----------------------------------------
+----
 /set irc.msgbuffer.whois private
-----------------------------------------
+----
 
 * ripristina il buffer predefinito per il whois (buffer del server):
 
-----------------------------------------
+----
 /unset irc.msgbuffer.whois
-----------------------------------------
+----
 
 * visualizza inviti sul buffer corrente, solo per il server "freenode":
 
-----------------------------------------
+----
 /set irc.msgbuffer.freenode.invite current
-----------------------------------------
+----
 
 * visualizza messaggio "303" (ison) sul buffer "core" di WeeChat:
 
-----------------------------------------
+----
 /set irc.msgbuffer.303 weechat
-----------------------------------------
+----
 
 [[logger_plugin]]
-Plugin Logger
-~~~~~~~~~~~~~
+=== Plugin Logger
 
 Il plugin Logger consente di salvare il contenuto dei buffer su file, con
 opzioni a proposito su cosa e come viene salvato.
 
 [[logger_options]]
-Opzioni (logger.conf)
-^^^^^^^^^^^^^^^^^^^^^
+==== Opzioni (logger.conf)
 
 // TRANSLATION MISSING
 Sections:
 
 // TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
-|========================================
+|===
 | Section | Control command     | Description
 | look    | /set logger.look.*  | Look and feel
 | color   | /set logger.color.* | Colors
 | file    | /set logger.file.*  | Options for log files
 | level   | /set logger.level.* | Log level by buffer (options can be added/removed in section)
 | mask    | /set logger.mask.*  | Filename mask by buffer (options can be added/removed in section)
-|========================================
+|===
 
 // TRANSLATION MISSING
 Options:
@@ -2461,14 +2387,12 @@ Options:
 include::autogen/user/logger_options.txt[]
 
 [[logger_commands]]
-Comandi
-^^^^^^^
+==== Comandi
 
 include::autogen/user/logger_commands.txt[]
 
 [[logger_log_levels]]
-Livelli di log
-^^^^^^^^^^^^^^
+==== Livelli di log
 
 Il logging viene effettuato con un livello per ogni buffer. Il livello
 predefinito è il 9 (registra tutti i messaggi visualizzati sul buffer).
@@ -2492,67 +2416,65 @@ Alcuni esempi:
 
 * imposta il livello 3 per il canale IRC #weechat:
 
-----------------------------------------
+----
 /set logger.level.irc.freenode.#weechat 3
-----------------------------------------
+----
 
 * set level 3 for freenode server buffer:
 
-----------------------------------------
+----
 /set logger.level.irc.server.freenode 3
-----------------------------------------
+----
 
 * imposta il livello 3 per tutti i canali sul server freenode:
 
-----------------------------------------
+----
 /set logger.level.irc.freenode 3
-----------------------------------------
+----
 
 * imposta il livello 2 per tutti i buffer IRC:
 
-----------------------------------------
+----
 /set logger.level.irc 2
-----------------------------------------
+----
 
 [[logger_filenames_masks]]
-Mask per il nome file
-^^^^^^^^^^^^^^^^^^^^^
+==== Mask per il nome file
 
 È possibile definire un mask per il nome del file di ogni buffer, ed utilizzare
 le variabili buffer locali per costruire il nome del file. Per visualizzare le
 variabili locali per il buffer corrente:
 
-----------------------------------------
+----
 /buffer localvar
-----------------------------------------
+----
 
 Ad esempio, sul buffer "irc.freenode.#weechat", WeeChat cercherà un mask con il
 nome dell'opzione, in quest'ordine:
 
-----------------------------------------
+----
 logger.mask.irc.freenode.#weechat
 logger.mask.irc.freenode
 logger.mask.irc
 logger.file.mask
-----------------------------------------
+----
 
 Ciò vuol dire che si hanno dei mask specifici per alcuni server
 IRC ("logger.mask.irc.freenode") o per un plugin ("logger.mask.irc").
 
 [[logger_files_by_date]]
-File di log per data
-++++++++++++++++++++
+===== File di log per data
 
 Per avere file di log per data, è possibile usare specificatori data/ora
 nei mask (consultare `man stfrtime` per i formati), ad esempio:
 
-----------------------------------------
+----
 /set logger.file.mask "%Y/%m/$plugin.$name.weechatlog"
-----------------------------------------
+----
 
 Si avranno i seguenti file:
 
-........................................
+....
 ~/.weechat/
     |--- logs/
         |--- 2010/
@@ -2563,22 +2485,21 @@ Si avranno i seguenti file:
             |--- 12/
             |       irc.server.freenode.weechatlog
             |       irc.freenode.#weechat.weechatlog
-........................................
+....
 
 [[logger_irc_files_by_server_channel]]
-File di log IRC per server e canale
-+++++++++++++++++++++++++++++++++++
+===== File di log IRC per server e canale
 
 Se si desidera avere una directory per il server IRC ed una per il canale
 al suo interno:
 
-----------------------------------------
+----
 /set logger.mask.irc "irc/$server/$channel.weechatlog"
-----------------------------------------
+----
 
 Si avranno i seguenti file:
 
-........................................
+....
 ~/.weechat/
     |--- logs/
         |--- irc/
@@ -2590,11 +2511,10 @@ Si avranno i seguenti file:
             |       oftc.weechatlog
             |       #chan1.weechatlog
             |       #chan2.weechatlog
-........................................
+....
 
 [[relay_plugin]]
-Plugin Relay
-~~~~~~~~~~~~
+=== Plugin Relay
 
 Il plugin Relay viene utilizzato per inoltrare i dati via rete, facendo uso di
 protocolli differenti:
@@ -2605,15 +2525,14 @@ protocolli differenti:
   con WeeChat (ad esempio QWeeChat)
 
 [[relay_options]]
-Opzioni (relay.conf)
-^^^^^^^^^^^^^^^^^^^^
+==== Opzioni (relay.conf)
 
 // TRANSLATION MISSING
 Sections:
 
 // TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
-|========================================
+|===
 | Section | Control command                    | Description
 | look    | /set relay.look.*                  | Look and feel
 | color   | /set relay.color.*                 | Colors
@@ -2621,7 +2540,7 @@ Sections:
 | irc     | /set relay.irc.*                   | Options specific to irc protocol (irc proxy)
 | port    | <<command_relay_relay,/relay add>> +
             /set relay.port.*                  | Ports used for relay (irc and weechat protocols) (options can be added/removed in section)
-|========================================
+|===
 
 // TRANSLATION MISSING
 Options:
@@ -2629,27 +2548,24 @@ Options:
 include::autogen/user/relay_options.txt[]
 
 [[relay_commands]]
-Comandi
-^^^^^^^
+==== Comandi
 
 include::autogen/user/relay_commands.txt[]
 
 // TRANSLATION MISSING
 [[relay_password]]
-Password
-^^^^^^^^
+==== Password
 
 It is highly recommended to set a password for relay, with command:
 
-----------------------------------------
+----
 /set relay.network.password "miapass"
-----------------------------------------
+----
 
 This password is used for 'irc' and 'weechat' protocols.
 
 [[relay_ssl]]
-SSL
-^^^
+==== SSL
 
 È possibile usare SSL creando un certificato e una chiave privata, e usando il
 prefisso "ssl." nel nome del protocollo.
@@ -2659,23 +2575,22 @@ Il file predefinito per il certificato/chiave è '~/.weechat/ssl/relay.pem'
 
 È possibile creare un certificato e una chiave privata con i seguenti comandi:
 
-----------------------------------------
+----
 $ mkdir -p ~/.weechat/ssl
 $ cd ~/.weechat/ssl
 $ openssl req -nodes -newkey rsa:2048 -keyout relay.pem -x509 -days 365 -out relay.pem
-----------------------------------------
+----
 
 Se WeeChat è già in esecuzione, è possibile ricaricare il certificato e la
 chiave privata con il comando:
 
-----------------------------------------
+----
 /relay sslcertkey
-----------------------------------------
+----
 
 // TRANSLATION MISSING
 [[relay_irc_proxy]]
-Proxy IRC
-^^^^^^^^^
+==== Proxy IRC
 
 The Relay plugin can act as an IRC proxy: it will simulate an IRC server, and
 you can connect to WeeChat with any other IRC client (including WeeChat itself).
@@ -2685,45 +2600,43 @@ You can define one port by IRC server, or one generic port for all servers.
 When using one port for all servers, the client must send the internal name of
 server in the IRC "PASS" command, with this format:
 
-----------------------------------------
+----
 PASS server:miapass
-----------------------------------------
+----
 
 Example: IRC proxy with SSL for any server (client will choose):
 
-----------------------------------------
+----
 /relay add ssl.irc 8000
-----------------------------------------
+----
 
 Example: IRC proxy without SSL only for server "freenode":
 
-----------------------------------------
+----
 /relay add irc.freenode 8000
-----------------------------------------
+----
 
 Now you can connect on port 8000 with any IRC client using server password
 "miapass" (or "freenode:miapass" if no server was specified in the relay).
 
 [[relay_weechat_protocol]]
-Protocollo WeeChat
-^^^^^^^^^^^^^^^^^^
+==== Protocollo WeeChat
 
 Il plugin Relay può inviare dati alle interfacce remote usando il protocollo
 WeeChat.
 
 Ad esempio:
 
-----------------------------------------
+----
 /relay add weechat 9000
-----------------------------------------
+----
 
 Ora è possibile connettersi sulla porta 9000 con un'interfaccia remota usando la
 password "miapass".
 
 // TRANSLATION MISSING
 [[relay_websocket]]
-WebSocket
-^^^^^^^^^
+==== WebSocket
 
 WebSocket protocol (http://tools.ietf.org/html/rfc6455[RFC 6455]) is supported
 in Relay plugin for all protocols.
@@ -2736,16 +2649,15 @@ WebSocket if required headers are found in handshake and if origin is allowed
 A WebSocket can be opened in a HTML5 with a single line of JavaScript:
 
 [source,js]
-----------------------------------------
+----
 websocket = new WebSocket("ws://server.com:9000/weechat");
-----------------------------------------
+----
 
 The port (9000 in example) is the port defined in Relay plugin.
 The URI must always end with "/weechat" (for 'irc' and 'weechat' protocols).
 
 [[rmodifier_plugin]]
-Plugin Rmodifier
-~~~~~~~~~~~~~~~~
+=== Plugin Rmodifier
 
 Il plugin Rmodifier consente di cambiare le stringhe del modificatore
 utilizzando le espressioni regolari. Si usa tipicamente per nascondere la
@@ -2754,20 +2666,19 @@ comandi. Ad esempio, è possibile sostituire ogni carattere in questa password
 con `*`.
 
 [[rmodifier_options]]
-Opzioni (rmodifier.conf)
-^^^^^^^^^^^^^^^^^^^^^^^^
+==== Opzioni (rmodifier.conf)
 
 // TRANSLATION MISSING
 Sections:
 
 // TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
-|========================================
+|===
 | Section  | Control command                                | Description
 | look     | /set rmodifier.look.*                          | Look and feel
 | modifier | <<command_rmodifier_rmodifier,/rmodifier add>> +
              /set rmodifier.modifier.*                      | Rmodifiers
-|========================================
+|===
 
 // TRANSLATION MISSING
 Options:
@@ -2775,14 +2686,12 @@ Options:
 include::autogen/user/rmodifier_options.txt[]
 
 [[rmodifier_commands]]
-Comandi
-^^^^^^^
+==== Comandi
 
 include::autogen/user/rmodifier_commands.txt[]
 
 [[rmodifier_creation]]
-Creazione di Rmodifier
-^^^^^^^^^^^^^^^^^^^^^^
+==== Creazione di Rmodifier
 
 Un rmodifier è costituito da tre elementi:
 
@@ -2822,8 +2731,7 @@ Se la riga di comando contiene: `/oper nick password` allora sullo schermo diven
 `/oper nick ********`.
 
 [[scripts_plugins]]
-Plugin per gli script
-~~~~~~~~~~~~~~~~~~~~~
+=== Plugin per gli script
 
 WeeChat fornisce 6 plugin per lo scripting: Python, Perl, Ruby, Lua, Tcl, Guile
 (scheme).
@@ -2840,20 +2748,19 @@ per gli script, consultare la 'Guida allo Scripting di WeeChat'.
 
 // TRANSLATION MISSING
 [[script_options]]
-Script options (script.conf)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+==== Script options (script.conf)
 
 // TRANSLATION MISSING
 Sections:
 
 // TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
-|========================================
+|===
 | Section | Control command       | Description
 | look    | /set script.look.*    | Look and feel
 | color   | /set script.color.*   | Colors
 | scripts | /set script.scripts.* | Options for download of scripts
-|========================================
+|===
 
 // TRANSLATION MISSING
 Options:
@@ -2861,50 +2768,42 @@ Options:
 include::autogen/user/script_options.txt[]
 
 [[script_commands]]
-Comandi Script
-^^^^^^^^^^^^^^
+==== Comandi Script
 
 include::autogen/user/script_commands.txt[]
 
 [[python_commands]]
-Comandi Python
-^^^^^^^^^^^^^^
+==== Comandi Python
 
 include::autogen/user/python_commands.txt[]
 
 [[perl_commands]]
-Comandi Perl
-^^^^^^^^^^^^
+==== Comandi Perl
 
 include::autogen/user/perl_commands.txt[]
 
 [[ruby_commands]]
-Comandi Ruby
-^^^^^^^^^^^^
+==== Comandi Ruby
 
 include::autogen/user/ruby_commands.txt[]
 
 [[lua_commands]]
-Comandi Lua
-^^^^^^^^^^^
+==== Comandi Lua
 
 include::autogen/user/lua_commands.txt[]
 
 [[tcl_commands]]
-Comandi Tcl
-^^^^^^^^^^^
+==== Comandi Tcl
 
 include::autogen/user/tcl_commands.txt[]
 
 [[guile_commands]]
-Comandi Guile
-^^^^^^^^^^^^^
+==== Comandi Guile
 
 include::autogen/user/guile_commands.txt[]
 
 [[xfer_plugin]]
-Plugin Xfer
-~~~~~~~~~~~
+=== Plugin Xfer
 
 Il plugin Xfer fornisce:
 
@@ -2913,21 +2812,20 @@ Il plugin Xfer fornisce:
 * trasferimento file, per esempio "DCC" tramite il plugin IRC
 
 [[xfer_options]]
-Opzioni (xfer.conf)
-^^^^^^^^^^^^^^^^^^^
+==== Opzioni (xfer.conf)
 
 // TRANSLATION MISSING
 Sections:
 
 // TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
-|========================================
+|===
 | Section | Control command     | Description
 | look    | /set xfer.look.*    | Look and feel
 | color   | /set xfer.color.*   | Colors
 | network | /set xfer.network.* | Network options
 | file    | /set xfer.file.*    | Options for files sent/received
-|========================================
+|===
 
 // TRANSLATION MISSING
 Options:
@@ -2935,14 +2833,12 @@ Options:
 include::autogen/user/xfer_options.txt[]
 
 [[xfer_commands]]
-Comandi
-^^^^^^^
+==== Comandi
 
 include::autogen/user/xfer_commands.txt[]
 
 [[support]]
-Supporto
---------
+== Supporto
 
 Prima di chiedere supporto, assicurarsi di aver letto la documentazione e le FAQ
 fornite con WeeChat (la documentazione è questo documento, se non sono state

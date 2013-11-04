@@ -1,5 +1,5 @@
 [width="100%",cols="^1,^2,5,5,5",options="header"]
-|========================================
+|===
 | Plugin | Name | Description | Pointer | Arguments
 
 | alias | alias | list of aliases | alias pointer (optional) | alias name (can start or end with "*" as wildcard) (optional)
@@ -70,4 +70,4 @@
 
 | xfer | xfer | list of xfer | xfer pointer (optional) | -
 
-|========================================
+|===

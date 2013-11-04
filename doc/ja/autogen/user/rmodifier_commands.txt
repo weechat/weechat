@@ -1,7 +1,7 @@
 [[command_rmodifier_rmodifier]]
 [command]*`rmodifier`* 正規表現で modifier 文字列を変更::
 
-----------------------------------------
+----
 /rmodifier  list|listdefault
             add <name> <modifiers> <groups> <regex>
             del <name>|-all [<name>...]
@@ -27,5 +27,5 @@ listdefault: デフォルトの rmodifier をリストアップ
     /rmodifier del password
   全ての rmodifiers を削除:
     /rmodifier del -all
-----------------------------------------
+----
 

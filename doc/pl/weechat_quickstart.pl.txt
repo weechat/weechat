@@ -1,11 +1,9 @@
-WeeChat szybki start
-====================
+= WeeChat szybki start
 Sébastien Helleu <flashcode@flashtux.org>
 
 
 [[start]]
-Uruchamianie WeeChat
---------------------
+== Uruchamianie WeeChat
 
 Zalecanym emulatorem terminala dla X (ale nieobowiązkowym) jest rxvt-unicode
 (posiada dobre wsparcie UTF-8, oraz nie ma problemów z domyślnymi skrótami
@@ -13,32 +11,31 @@ klawiszowymi).
 
 Wywołaj z terminala:
 
-----------------------------------------
+----
 $ weechat
-----------------------------------------
+----
 
 
 [[help_options]]
-Pomoc online / opcje
---------------------
+== Pomoc online / opcje
 
 WeeChat posiada pomoc dla wszystkich komend, wystarczy wywołać:
 
-----------------------------------------
+----
 /help
-----------------------------------------
+----
 
 Aby otrzymać pomoc dla konkretnej komendy wpisz:
 
-----------------------------------------
+----
 /help komenda
-----------------------------------------
+----
 
 Do ustawiania opcji służy:
 
-----------------------------------------
+----
 /set config.sekcja.opcja wartość
-----------------------------------------
+----
 
 (gdzie `config` jest nazwą konfiguracyjną (`weechat` dla rdzenia, lub nazwa
 wtyczki), `sekcja` sekcja pliku konfiguracyjnego, oraz `opcja` nazwa opcji).
@@ -52,27 +49,27 @@ Na przykład:
 
 * wyświetli wszystkie opcje (WeeChat oraz wtyczek):
 
-----------------------------------------
+----
 /set
-----------------------------------------
+----
 
 * wyświetli opcje WeeChat:
 
-----------------------------------------
+----
 /set weechat.*
-----------------------------------------
+----
 
 * wyświetli opcje wtyczki IRC:
 
-----------------------------------------
+----
 /set irc.*
-----------------------------------------
+----
 
 Możesz wyświetlić pomoc dla opcji dzięki `/help`, na przykład:
 
-----------------------------------------
+----
 /help weechat.look.highlight
-----------------------------------------
+----
 
 Wszystkie ustawienia są zapisywane podczas wyjścia z WeeChat (lub za pomocą
 komendy `/save`, która wymusza zapisanie opcji).
@@ -82,8 +79,7 @@ komendy `/reload`, jeśli nie chcesz użyć komendy `/set`.
 
 
 [[core_vs_plugins]]
-Rdzeń vs wtyczki
-----------------
+== Rdzeń vs wtyczki
 
 "Rdzeń" WeeChat jest używany tylko do wyświetlania danych na ekranie oraz
 interakcji z użytkownikiem, oznacza to, że rdzeń weechat bez wtyczek jest
@@ -96,25 +92,23 @@ na liście "irc" oraz inne wtyczki.
 
 
 [[create_irc_server]]
-Tworzenie serwera IRC
----------------------
+== Tworzenie serwera IRC
 
 Możesz dodać serwer IRC za pomocą komendy `/server`, na przykład:
 
-----------------------------------------
+----
 /server add oftc irc.oftc.net/6667
-----------------------------------------
+----
 
 Jak zawsze w razie wątpliwości dostępna jest pomoc:
 
-----------------------------------------
+----
 /help server
-----------------------------------------
+----
 
 
 [[irc_server_options]]
-Ustawianie własnych opcji dla serwerów IRC
-------------------------------------------
+== Ustawianie własnych opcji dla serwerów IRC
 
 WeeChat używa domyślnych wartości dla wszystkich serwerów ("fall backs"), jeśli
 nie określisz konkretnej wartości dla opcji serwera.
@@ -126,70 +120,69 @@ Dla każdej opcji serwera WeeChat używa jej wartości jeśli jest zdefiniowana 
 Na przykład znajdują się tam domyślne nicki (bazujące na Twoim loginie un*x),
 możesz je zmienić dla serwera oftc następującą komendą:
 
-----------------------------------------
+----
 /set irc.server.oftc.nicks "mójnick,mójnick2,mójnick3,mójnick4,mójnick5"
-----------------------------------------
+----
 
 Ustawienie nazwy użytkownika i imienia:
 
-----------------------------------------
+----
 /set irc.server.oftc.username "Moja nazwa użytkownika"
 /set irc.server.oftc.realname "Moje imię"
-----------------------------------------
+----
 
 Aby włączyć automatyczne łączenie się z serwerem przy starcie:
 
-----------------------------------------
+----
 /set irc.server.oftc.autoconnect on
-----------------------------------------
+----
 
 Jeśli SASL jest dostępny na serwerze, można użyć go do uwierzytelnienia (zostaniesz
 zidentyfikowany przed wejściem na kanał):
 
-----------------------------------------
+----
 /set irc.server_default.sasl_mechanism dh-blowfish
 /set irc.server.oftc.sasl_username "mójnick"
 /set irc.server.oftc.sasl_password "xxxxxxx"
-----------------------------------------
+----
 
 Żeby wykonać komendę po połączeniu z serwerem, na przykład uwierzytelnienie
 przez nickserv (tylko jeśli nie uwierzytelniasz się przez SASL):
 
-----------------------------------------
+----
 /set irc.server.oftc.command "/msg nickserv identify xxxxxxx"
-----------------------------------------
+----
 
 [NOTE]
 Wiele komend może być oddzielonych ';' (średnik).
 
 Aby automatycznie wejść na kanały po połączeniu z serwerem:
 
-----------------------------------------
+----
 /set irc.server.oftc.autojoin "#kanał1,#kanał2"
-----------------------------------------
+----
 
 Aby usunąć wartość dla opcji serwera, używając w zamian wartości domyślnej,
 na przykład, aby używać domyślnych nicków (irc.server_default.nicks):
 
-----------------------------------------
+----
 /set irc.server.oftc.nicks null
-----------------------------------------
+----
 
 Inne opcje: możesz ustawić pozostałe opcje za pomocą komendy ("xxx" to
 nazwa opcji):
 
-----------------------------------------
+----
 /set irc.server.oftc.xxx wartość
-----------------------------------------
+----
 
 
 [[connect_to_irc_server]]
-Łączenie się z serwerem IRC i automatyczne wchodzenie na kanały
----------------------------------------------------------------
+== Łączenie się z serwerem IRC i automatyczne wchodzenie na kanały
 
-----------------------------------------
+----
 /connect oftc
-----------------------------------------
+----
 
 [NOTE]
 Ta komenda może być użyta do utworzenia i połączenia sie z nowym serwerem bez
@@ -202,37 +195,35 @@ się pomiędzy biforem 'core' a buforami serwerów możesz użyć ctrl-X.
 Jest możliwe wyłączenie automatycznego łączenia buforów serwerów, aby mieć
 oddzielne bufory dla serwerów:
 
-----------------------------------------
+----
 /set irc.look.server_buffer independent
-----------------------------------------
+----
 
 
 [[join_part_irc_channels]]
-Wchodzenie/wychodzenie z kanałów IRC
-------------------------------------
+== Wchodzenie/wychodzenie z kanałów IRC
 
 Wejście na kanał:
 
-----------------------------------------
+----
 /join #kanał
-----------------------------------------
+----
 
 Wyjście z kanału (zostawiając otwarty bufor):
 
-----------------------------------------
+----
 /part [wiadomość pożegnalna]
-----------------------------------------
+----
 
 Zamknięcie bufora serwera lub kanału (`/close` jest aliasem `/buffer close`):
 
-----------------------------------------
+----
 /close
-----------------------------------------
+----
 
 
 [[buffer_window]]
-Zarządzanie buforami/oknami
----------------------------
+== Zarządzanie buforami/oknami
 
 Bufor jest to element łączący wtyczkę z numerem, kategorią,
 oraz nazwą. Zawiera on dane wyświetlane na ekranie.
@@ -242,24 +233,23 @@ Jeśli podzielisz ekran, ujrzysz wiele okien z wieloma buforami jednocześnie.
 
 Komendy do zarządzania buforami i oknami:
 
-----------------------------------------
+----
 /buffer
 /window
-----------------------------------------
+----
 
 (Nie będę powtarzać, że możesz uzyskać pomoc za pomocą /help na tych komendach)
 
 Na przykład, aby pionowo podzielić ekran na małe okno (1/3 szerokości),
 oraz duże okno (2/3), użyj komendy:
 
-----------------------------------------
+----
 /window splitv 33
-----------------------------------------
+----
 
 
 [[key_bindings]]
-Skróty klawiszowe
------------------
+== Skróty klawiszowe
 
 WeeChat używa domyślnie wiele klawiszy. Wszystkie z nich są w dokumentacji,
 ale powinieneś znać przynajmniej kilka najprzydatniejszych:
@@ -278,26 +268,25 @@ Przydatnym skrótem jest meta-k (alt-k) do odnajdywania kodów klawiszy.
 
 Na przykład, aby przypisać meta-y (alt-y) do komendy `/buffer close`:
 
-----------------------------------------
+----
 /key bind (wciśnij meta-k) (wciśnij meta-y) /buffer close
-----------------------------------------
+----
 
 Otrzymasz w linii poleceń:
 
-----------------------------------------
+----
 /key bind meta-y /buffer close
-----------------------------------------
+----
 
 Aby usunąć klawisz:
 
-----------------------------------------
+----
 /key unbind meta-y
-----------------------------------------
+----
 
 
 [[plugins_scripts]]
-Wtyczki/skrypty
----------------
+== Wtyczki/skrypty
 
 W niektórych dystrybucjach, jak np Debian, wtyczki są dostarczane jako oddzielne
 pakiety (jak weechat-plugins).
@@ -313,8 +302,7 @@ po więcej informacji).
 
 
 [[more_doc]]
-Więcej dokumentacji
--------------------
+== Więcej dokumentacji
 
 Możesz teraz używać WeeChat oraz przeczytać FAQ/dokumentację w razie innych pytań:
 http://weechat.org/doc

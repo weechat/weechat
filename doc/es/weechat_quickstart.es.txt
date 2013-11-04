@@ -1,11 +1,9 @@
-WeeChat Quick Start Guide
-=========================
+= WeeChat Quick Start Guide
 Sébastien Helleu <flashcode@flashtux.org>
 
 
 [[start]]
-Iniciar WeeChat
----------------
+== Iniciar WeeChat
 
 Es recomendable una terminal emulada para X (pero no indispensable)
 rxvt-unicode (tiene un buen soporte para UTF-8, y no da problemas con
@@ -14,32 +12,31 @@ los atajas de teclados predeterminados).
 // TRANSLATION MISSING
 Run from your shell:
 
-----------------------------------------
+----
 $ weechat
-----------------------------------------
+----
 
 
 [[help_options]]
-Ayuda en linea / Opciones
--------------------------
+== Ayuda en linea / Opciones
 
 WeeChat tiene ayuda para todos los comandos, solo teclee:
 
-----------------------------------------
+----
 /help
-----------------------------------------
+----
 
 Para obtener ayuda específicamente de un comando, teclee:
 
-----------------------------------------
+----
 /help comando
-----------------------------------------
+----
 
 Para configurar una opción, use:
 
-----------------------------------------
+----
 /set config.section.option valor
-----------------------------------------
+----
 
 (donde `config` es el nombre de la configuración del núcleo o del
 plugin que desea configurar,  `section`, la sección de esa configuración
@@ -54,28 +51,28 @@ opciones que contienen esas letras. Por ejemplo:
 
 * mostrará todas las opciones de WeeChat y sus plugins:
 
-----------------------------------------
+----
 /set
-----------------------------------------
+----
 
 * mostrará solo las opciones de WeeChat:
 
-----------------------------------------
+----
 /set weechat.*
-----------------------------------------
+----
 
 * mostrará las opciones del plugin IRC:
 
-----------------------------------------
+----
 /set irc.*
-----------------------------------------
+----
 
 Puede mostrar la ayuda de una opción en especifico con  `/help`, por
 ejemplo:
 
-----------------------------------------
+----
 /help weechat.look.highlight
-----------------------------------------
+----
 
 Todas las opciones se salvarán de manera automática cuando cierre
 WeeChat o usando el comando `/save` para forzar la forzar a WeeChat a
@@ -87,8 +84,7 @@ comando `/set`.
 
 
 [[core_vs_plugins]]
-Núcleo vs Plugins
------------------
+== Núcleo vs Plugins
 
 Llamaremos "Núcleo de WeeChat" a la aplicación que solo se usa para
 mostrar información en pantalla e interactuar con el usuario, eso es lo
@@ -103,25 +99,23 @@ seguramente vera irc y otros.
 
 
 [[create_irc_server]]
-Crear un servidor IRC
----------------------
+== Crear un servidor IRC
 
 Puede agregar un servidor IRC usando el comando `/server`, por ejemplo:
 
-----------------------------------------
+----
 /server add oftc irc.oftc.net/6667
-----------------------------------------
+----
 
 La ayuda está disponible; si te pierdes:
 
-----------------------------------------
+----
 /help server
-----------------------------------------
+----
 
 
 [[irc_server_options]]
-Personalizar las opciones de un servidor IRC
---------------------------------------------
+== Personalizar las opciones de un servidor IRC
 
 WeeChat usa las opciones por defecto para todos los servidores
 ("predeterminado") si no le especifica un valor individual a un servidor
@@ -136,73 +130,72 @@ Por ejemplo, tenemos el nick por defecto (que se basa en su login) pero
 usted puedes sobreescribirlo para el servidor identificado como oftc
 de la siguiente manera:
 
-----------------------------------------
+----
 /set irc.server.oftc.nicks "nick,nick2,nick3,nick4,nick5"
-----------------------------------------
+----
 
 También para configurar el nombre de usuario y el nombre real:
 
-----------------------------------------
+----
 /set irc.server.oftc.username "Mi nombre de usuario"
 /set irc.server.oftc.realname "Mi nombre real"
-----------------------------------------
+----
 
 Para que el servidor se conecte cuando WeeChat inicie:
 
-----------------------------------------
+----
 /set irc.server.oftc.autoconnect on
-----------------------------------------
+----
 
 // TRANSLATION MISSING
 If SASL is available on server, you can use it for authentication (you will be
 identified before you join channels):
 
-----------------------------------------
+----
 /set irc.server_default.sasl_mechanism dh-blowfish
 /set irc.server.oftc.sasl_username "nick"
 /set irc.server.oftc.sasl_password "xxxxxxx"
-----------------------------------------
+----
 
 // TRANSLATION MISSING
 To run a command after connection to server, for example to authenticate
 with nickserv (only if you don't use SASL for authentication):
 
-----------------------------------------
+----
 /set irc.server.oftc.command "/msg nickserv identify xxxxxxx"
-----------------------------------------
+----
 
 [NOTE]
 Varios comandos pueden ser escritos separados por ';' (punto y coma).
 
 Para unirse automáticamente a canales cuando el servidor se conecte:
 
-----------------------------------------
+----
 /set irc.server.oftc.autojoin "#uncanal,#otrocanal"
-----------------------------------------
+----
 
 Para eliminar un valor asignado a una opción de servidor y usar los
 valores por defecto en su lugar, por ejemplo, usar el nick por defecto
 (irc.server_default.nicks):
 
-----------------------------------------
+----
 /set irc.server.oftc.nicks null
-----------------------------------------
+----
 
 Otras opciones: pude configurar otras opciones con el siguiente comando,
 donde "xxx" es el nombre de la opción.
 
-----------------------------------------
+----
 /set irc.server.oftc.xxx valor
-----------------------------------------
+----
 
 
 [[connect_to_irc_server]]
-Conectarse a un servidor IRC
-----------------------------
+== Conectarse a un servidor IRC
 
-----------------------------------------
+----
 /connect oftc
-----------------------------------------
+----
 
 [NOTE]
 Este comando también puede usarse para crear y conectarse a un nuevo
@@ -216,38 +209,36 @@ servidores use ctrl+X.
 Es posible deshabilitar esta manera de tener todos los buffer de
 servidores juntos para tenerlos de manera independiente:
 
-----------------------------------------
+----
 /set irc.look.server_buffer independent
-----------------------------------------
+----
 
 
 [[join_part_irc_channels]]
-join/part y canales IRC
------------------------
+== join/part y canales IRC
 
 Se une a un canal llamado "#canal":
 
-----------------------------------------
+----
 /join #canal
-----------------------------------------
+----
 
 Sale de un canal (mantiene el buffer abierto):
 
-----------------------------------------
+----
 /part [mensaje de partida]
-----------------------------------------
+----
 
 Cierra un servidor o el buffer de un canal (`/close` es un alias de
 `/buffer close`):
 
-----------------------------------------
+----
 /close
-----------------------------------------
+----
 
 
 [[buffer_window]]
-Manipulando buffer/ventana
---------------------------
+== Manipulando buffer/ventana
 
 Un buffer, es un componente vinculado a un plugin con un número, una
 categoría y un nombre. El buffer contiene los datos que se muestran en
@@ -259,10 +250,10 @@ ventanas conteniendo varios buffer al mismo tiempo.
 
 Comandos para manipular buffer y ventana:
 
-----------------------------------------
+----
 /buffer
 /window
-----------------------------------------
+----
 
 (le reitero que puede obtener ayuda de los comandos con /help buffer y
 /help ventana respectivamente)
@@ -270,14 +261,13 @@ Comandos para manipular buffer y ventana:
 Por ejemplo, para dividir la pantalla una pequeña ventana (1/3)
 junto a otras mas grande (2/3) use el comando
 
-----------------------------------------
+----
 /window splitv 33
-----------------------------------------
+----
 
 
 [[key_bindings]]
-Atajos de teclado
------------------
+== Atajos de teclado
 
 WeeChat usa muchas teclas por defecto. Las mismas, están bien
 explicadas en la documentación pero debe conocer al menos la mas
@@ -299,26 +289,25 @@ alguna tecla.
 Por ejemplo, para asignar la combinación meta-y (alt-y) al comando
 `/buffer close`:
 
-----------------------------------------
+----
 /key bind (presionamos meta-k) (presionamos meta-y) /buffer close
-----------------------------------------
+----
 
 El comando se vera mas o menos así:
 
-----------------------------------------
+----
 /key bind meta-y /buffer close
-----------------------------------------
+----
 
 Para eliminar una combinación:
 
-----------------------------------------
+----
 /key unbind meta-y
-----------------------------------------
+----
 
 
 [[plugins_scripts]]
-Plugins/scripts
----------------
+== Plugins/scripts
 
 En algunas distribuciones como Debian, los plugins están disponibles en
 un paquete separado (como weechat-plugin).
@@ -335,8 +324,7 @@ for more info).
 
 
 [[more_doc]]
-Más documentación
------------------
+== Más documentación
 
 Ahora puede usar WeeChat y leer las FAQ/documentación para cada pregunta
 en: http://weechat.org/doc

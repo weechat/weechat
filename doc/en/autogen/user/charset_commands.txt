@@ -1,7 +1,7 @@
 [[command_charset_charset]]
 [command]*`charset`* change charset for current buffer::
 
-----------------------------------------
+----
 /charset  decode|encode <charset>
           reset
 
@@ -9,5 +9,5 @@
  encode: change encoding charset
 charset: new charset for current buffer
   reset: reset charsets for current buffer
-----------------------------------------
+----
 

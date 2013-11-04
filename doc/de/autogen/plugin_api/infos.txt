@@ -1,5 +1,5 @@
 [width="100%",cols="^1,^2,6,6",options="header"]
-|========================================
+|===
 | Erweiterung | Name | Beschreibung | Argumente
 
 | aspell | aspell_dict | durch Kommata getrennte Liste von Wörterbüchern, die in diesem Buffer genutzt werden sollen | Buffer-Pointer ("0x12345678") oder der vollständige Buffername ("irc.freenode.#weechat")
@@ -62,4 +62,4 @@
 
 | weechat | weechat_upgrading | 1 falls WeeChat ein Upgrade durchführt (Befehl `/upgrade`) | -
 
-|========================================
+|===

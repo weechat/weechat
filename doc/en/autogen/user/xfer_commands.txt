@@ -1,21 +1,21 @@
 [[command_xfer_me]]
 [command]*`me`* send a CTCP action to remote host::
 
-----------------------------------------
+----
 /me  <message>
 
 message: message to send
-----------------------------------------
+----
 
 [[command_xfer_xfer]]
 [command]*`xfer`* xfer control::
 
-----------------------------------------
+----
 /xfer  [list|listfull]
 
     list: list xfer
 listfull: list xfer (verbose)
 
 Without argument, this command opens buffer with xfer list.
-----------------------------------------
+----
 

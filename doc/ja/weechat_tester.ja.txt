@@ -1,9 +1,9 @@
-= WeeChat テスターガイド =
+= WeeChat テスターガイド
 Sébastien Helleu <flashcode@flashtux.org>
 
 
 [[purpose]]
-== 目的 ==
+== 目的
 
 WeeChat
 開発への協力に興味を持っていただきありがとうございます。開発に協力する最も簡単
@@ -25,7 +25,7 @@ WeeChat
 
 
 [[prepare_system]]
-== システムの準備 ==
+== システムの準備
 
 Linux の 'core' ファイルを有効にすることはとても役に立ちます: WeeChat
 がクラッシュすると、Linux は 'core' と呼ばれるファイルを作ります。このファイルには、WeeChat
@@ -33,13 +33,13 @@ Linux の 'core' ファイルを有効にすることはとても役に立ちま
 
 'bash' シェルを使っている場合、以下の行を `~/.bashrc` に追記してください:
 
-----------------------------------------
+----
 ulimit -c unlimited
-----------------------------------------
+----
 
 
 [[download]]
-== 開発版のダウンロード ==
+== 開発版のダウンロード
 
 最新のコード (最新のバグと最新の機能も含んでいますが) は GIT リポジトリにあります。
 
@@ -50,55 +50,55 @@ ulimit -c unlimited
   安定版を捨てる必要もありません。
 
 [[get_sources]]
-=== ソースの取得とビルド ===
+=== ソースの取得とビルド
 
 最初にディレクトリを作ってください、ここでは 'weechat-git':
 
-----------------------------------------
+----
 $ mkdir ~/weechat-git
 $ cd ~/weechat-git
-----------------------------------------
+----
 
 git がインストール済みの場合、git
 リポジトリを clone してください (推奨):
 
-----------------------------------------
+----
 $ git clone git://git.sv.gnu.org/weechat.git
 $ cd weechat
-----------------------------------------
+----
 
 注意: clone の後、このディレクトリ内で "`git pull`"
 を実行すれば、最新のアップデートとの差分が更新されます。
 
 他の方法として 'devel' パッケージをダウンロードして展開する方法があります:
 
-----------------------------------------
+----
 $ wget http://www.weechat.org/files/src/weechat-devel.tar.bz2
 $ tar xvjf weechat-devel.tar.bz2
 $ cd weechat-devel
-----------------------------------------
+----
 
 ソースをビルドするには cmake を使うことを推奨します:
 
-----------------------------------------
+----
 $ mkdir build
 $ cd build
 $ cmake .. -DPREFIX=$HOME/weechat-git -DWEECHAT_HOME=~/.weechat-dev -DCMAKE_BUILD_TYPE=Debug
 $ make
 $ make install
-----------------------------------------
+----
 
 cmake が無い場合は autotools を使うことも可能です:
 
-----------------------------------------
+----
 $ ./autogen.sh
 $ ./configure --prefix=$HOME/weechat-git WEECHAT_HOME=~/.weechat-dev
 $ make
 $ make install
-----------------------------------------
+----
 
 [[install_binary_package]]
-=== バイナリパッケージのインストール ===
+=== バイナリパッケージのインストール
 
 Linux ディストリビューション別に:
 
@@ -109,16 +109,16 @@ Linux ディストリビューション別に:
 
 
 [[run]]
-== WeeChat の実行 ==
+== WeeChat の実行
 
 `--dir` オプションを使って WeeChat を専用の (安定版とは違う)
 ディレクトリで実行することを推奨します。
 
 コマンド:
 
-----------------------------------------
+----
 $ ~/weechat-git/bin/weechat
-----------------------------------------
+----
 
 より万全を期すなら、上の方法を使って WeeChat
 の最新バージョンを使っていることを確認するべきです ;)
@@ -130,7 +130,7 @@ $ ~/weechat-git/bin/weechat
 
 
 [[links]]
-== 便利なリンク ==
+== 便利なリンク
 
 * GIT リポジトリ: http://git.savannah.gnu.org/gitweb/?p=weechat.git
 * バグトラッカー: https://savannah.nongnu.org/bugs/?group=weechat

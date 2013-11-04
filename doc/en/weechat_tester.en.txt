@@ -1,11 +1,9 @@
-WeeChat Tester's Guide
-======================
+= WeeChat Tester's Guide
 Sébastien Helleu <flashcode@flashtux.org>
 
 
 [[purpose]]
-Purpose
--------
+== Purpose
 
 Many thankful users ask us how can they help developing WeeChat. The
 easiest (and also most tricky) way to help developing WeeChat is
@@ -27,8 +25,7 @@ implementing new stuff (and fixing old bugs) all the time.
 
 
 [[prepare_system]]
-Prepare your system
--------------------
+== Prepare your system
 
 It would help us a lot if you enable Linux 'core' files: if WeeChat crashes,
 Linux will write a file called 'core'. This file contains very useful debug
@@ -36,14 +33,13 @@ info, to know exactly where is problem in WeeChat.
 
 If you're using the 'bash' shell, add following line to your `~/.bashrc`:
 
-----------------------------------------
+----
 ulimit -c unlimited
-----------------------------------------
+----
 
 
 [[download]]
-Download devel version
-----------------------
+== Download devel version
 
 Fresh code (with latest bugs and features) is stored in a GIT repository.
 
@@ -54,57 +50,55 @@ You may decide to build it manually (recommended way):
   version of WeeChat.
 
 [[get_sources]]
-Get and build sources
-~~~~~~~~~~~~~~~~~~~~~
+=== Get and build sources
 
 First create a directory, for example 'weechat-git':
 
-----------------------------------------
+----
 $ mkdir ~/weechat-git
 $ cd ~/weechat-git
-----------------------------------------
+----
 
 If you have git installed, you can just clone the git repository (recommended
 way):
 
-----------------------------------------
+----
 $ git clone git://git.sv.gnu.org/weechat.git
 $ cd weechat
-----------------------------------------
+----
 
 NOTE: Later, you can run "`git pull`" in this directory, to get deltas with
 the latest updates.
 
 Otherwise you can download and unpack 'devel' package:
 
-----------------------------------------
+----
 $ wget http://www.weechat.org/files/src/weechat-devel.tar.bz2
 $ tar xvjf weechat-devel.tar.bz2
 $ cd weechat-devel
-----------------------------------------
+----
 
 To build sources, cmake is recommended:
 
-----------------------------------------
+----
 $ mkdir build
 $ cd build
 $ cmake .. -DPREFIX=$HOME/weechat-git -DWEECHAT_HOME=~/.weechat-dev -DCMAKE_BUILD_TYPE=Debug
 $ make
 $ make install
-----------------------------------------
+----
 
 If you don't have cmake, it's still possible to use autotools:
 
-----------------------------------------
+----
 $ ./autogen.sh
 $ ./configure --prefix=$HOME/weechat-git WEECHAT_HOME=~/.weechat-dev
 $ make
 $ make install
-----------------------------------------
+----
 
 [[install_binary_package]]
-Install binary package
-~~~~~~~~~~~~~~~~~~~~~~
+=== Install binary package
 
 According to your Linux distribution:
 
@@ -115,17 +109,16 @@ According to your Linux distribution:
 
 
 [[run]]
-Run WeeChat
------------
+== Run WeeChat
 
 It's recommended to run WeeChat with another directory (different from stable
 version), with option `--dir`.
 
 Command is:
 
-----------------------------------------
+----
 $ ~/weechat-git/bin/weechat
-----------------------------------------
+----
 
 If you're still awake you should see the familiar interface and brag about
 having the newest possible version of WeeChat. ;)
@@ -137,8 +130,7 @@ If it doesn't crash - tell us too, we need your feedback!
 
 
 [[links]]
-Useful links
-------------
+== Useful links
 
 * GIT repository: http://git.savannah.gnu.org/gitweb/?p=weechat.git
 * Bug tracker: https://savannah.nongnu.org/bugs/?group=weechat

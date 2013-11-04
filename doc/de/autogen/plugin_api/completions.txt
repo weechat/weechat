@@ -1,5 +1,5 @@
 [width="65%",cols="^1,^2,8",options="header"]
-|========================================
+|===
 | Erweiterung | Name | Beschreibung
 
 | alias | alias | Liste der Alias
@@ -130,4 +130,4 @@
 
 | xfer | nick | Nicks vom DCC Chat
 
-|========================================
+|===

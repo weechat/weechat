@@ -1,7 +1,7 @@
 [[command_guile_guile]]
 [command]*`guile`* elenca/carica/scarica script::
 
-----------------------------------------
+----
 /guile  list|listfull [<nome>]
         load [-q] <nomefile>
         autoload
@@ -18,5 +18,5 @@ nome_file: (file) script da caricare
        -q: modalità silenziosa: non mostra messaggi
 
 Senza argomento, questo comando elenca tutti i plugin caricati.
-----------------------------------------
+----
 

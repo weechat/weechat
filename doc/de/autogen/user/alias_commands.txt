@@ -1,7 +1,7 @@
 [[command_alias_alias]]
 [command]*`alias`* Einem Befehl wird ein Alias zugewiesen::
 
-----------------------------------------
+----
 /alias  [-completion <completion>] <alias> [<command> [;<command>...]]
 
 completion: optionale Vervollständigung für einen Alias-Befehl (Standardverhalten: Vervollständigung wird auf den Zielbefehl angewendet)
@@ -30,5 +30,5 @@ Beispiele:
     /alias hallo /allchan -exclude=#weechat msg * Hallo
   Alias "/forcejoin" wird angelegt um den IRC Befehl "forcejoin" mit einer Vervollständigung von /sajoin auszuführen:
     /alias -completion %%sajoin forcejoin /quote forcejoin
-----------------------------------------
+----
 

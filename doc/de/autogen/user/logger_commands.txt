@@ -1,7 +1,7 @@
 [[command_logger_logger]]
 [command]*`logger`* Konfiguration für "logger" Erweiterung (dient zum protokollieren der Buffer)::
 
-----------------------------------------
+----
 /logger  list
          set <level>
          flush
@@ -33,5 +33,5 @@ Beispiele:
     /set logger.level.core.weechat 0
   Für jeden IRC-Server wird ein separates Verzeichnis erstellt und darin eine eigene Protokoll-Datei, für jeden Channel:
     /set logger.mask.irc "$server/$channel.weechatlog"
-----------------------------------------
+----
 

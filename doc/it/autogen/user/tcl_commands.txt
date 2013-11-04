@@ -1,7 +1,7 @@
 [[command_tcl_tcl]]
 [command]*`tcl`* elenca/carica/scarica script::
 
-----------------------------------------
+----
 /tcl  list|listfull [<nome>]
       load [-q] <nomefile>
       autoload
@@ -18,5 +18,5 @@ nome_file: (file) script da caricare
        -q: modalità silenziosa: non mostra messaggi
 
 Senza argomento, questo comando elenca tutti i plugin caricati.
-----------------------------------------
+----
 

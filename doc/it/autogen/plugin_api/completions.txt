@@ -1,5 +1,5 @@
 [width="65%",cols="^1,^2,8",options="header"]
-|========================================
+|===
 | Plugin | Nome | Descrizione
 
 | alias | alias | elenco di alias
@@ -130,4 +130,4 @@
 
 | xfer | nick | nick della chat DCC
 
-|========================================
+|===

@@ -1,5 +1,4 @@
-WeeChat FAQ (Questions Fréquemment Posées)
-==========================================
+= WeeChat FAQ (Questions Fréquemment Posées)
 Sébastien Helleu <flashcode@flashtux.org>
 
 
@@ -8,12 +7,10 @@ Ce document est écrit pour les versions de WeeChat ≥ 0.3.0 mais devrait être
 utilisé de préférence avec la dernière version stable de WeeChat.
 
 
-Général
--------
+== Général
 
 [[weechat_name]]
-D'où vient le nom "WeeChat" ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== D'où vient le nom "WeeChat" ?
 
 "Wee" est un acronyme récursif qui signifie "Wee Enhanced Environment".
 Donc le nom complet est "Wee Enhanced Environment for Chat".
@@ -22,20 +19,17 @@ Donc le nom complet est "Wee Enhanced Environment for Chat".
 mais elle ne s'applique pas à WeeChat !).
 
 [[why_choose_weechat]]
-Pourquoi choisir WeeChat ? X-Chat et Irssi sont si bien...
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Pourquoi choisir WeeChat ? X-Chat et Irssi sont si bien...
 
 Parce que WeeChat est très léger et apporte des fonctionnalités innovantes.
 
 Plus d'infos sur cette page : http://weechat.org/about/features
 
 [[compilation_install]]
-Compilation / installation
---------------------------
+== Compilation / installation
 
 [[gui]]
-J'ai entendu parler de plusieurs interfaces pour WeeChat. Comment puis-je les compiler/utiliser ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== J'ai entendu parler de plusieurs interfaces pour WeeChat. Comment puis-je les compiler/utiliser ?
 
 Des interfaces distantes sont disponibles :
 
@@ -45,8 +39,7 @@ Des interfaces distantes sont disponibles :
 * https://github.com/eirikb/weecloud[weecloud] (Web)
 
 [[compile_git]]
-Je ne peux pas compiler WeeChat après avoir cloné la base git, pourquoi ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Je ne peux pas compiler WeeChat après avoir cloné la base git, pourquoi ?
 
 La méthode recommandée pour compiler WeeChat est d'utiliser cmake.
 
@@ -60,8 +53,7 @@ git et qu'il est moins pratique que de cloner la base git pour installer des
 mises à jour.
 
 [[lost]]
-J'ai lancé WeeChat, mais je suis perdu, que puis-je faire ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== J'ai lancé WeeChat, mais je suis perdu, que puis-je faire ?
 
 Pour obtenir de l'aide tapez `/help`. Pour de l'aide sur une commande, tapez
 `/help commande`. Les touches et commandes sont listées dans la documentation.
@@ -70,12 +62,10 @@ Il est recommandé pour les nouveaux utilisateurs de lire le guide de démarrage
 rapide (voir la page de doc sur le site).
 
 [[display]]
-Affichage
----------
+== Affichage
 
 [[charset]]
-Je ne vois pas bien certains accents dans WeeChat, que faire ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Je ne vois pas bien certains accents dans WeeChat, que faire ?
 
 C'est un problème courant, merci de lire attentivement et vérifier *TOUS* les
 points ci-dessous :
@@ -106,8 +96,7 @@ locale, assurez-vous que *tout* soit configuré en ISO (terminal, screen, ...)
 et *pas* en UTF-8.
 
 [[bars_background]]
-Des barres telles que le titre et le statut ne sont pas remplies, la couleur de fond s'arrête après le texte, pourquoi ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Des barres telles que le titre et le statut ne sont pas remplies, la couleur de fond s'arrête après le texte, pourquoi ?
 
 Cela peut être du à la variable TERM qui n'a pas la bonne valeur (regardez la
 sortie de `echo $TERM` dans votre terminal).
@@ -122,8 +111,7 @@ Selon la façon de lancer WeeChat, vous devriez avoir :
 Si besoin, corrigez la variable TERM : `export TERM="xxx"`.
 
 [[screen_weird_chars]]
-Quand j'utilise weechat sous screen/tmux, j'ai des caractères bizarres et aléatoires, comment corriger ça ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Quand j'utilise weechat sous screen/tmux, j'ai des caractères bizarres et aléatoires, comment corriger ça ?
 
 Cela peut être du à la variable TERM qui n'a pas la bonne valeur (regardez la
 sortie de `echo $TERM` dans votre terminal, *en dehors de screen/tmux*).
@@ -134,8 +122,7 @@ Par exemple 'xterm-color' provoque ce genre de problèmes, utilisez
 Si besoin, corrigez la variable TERM : `export TERM="xxx"`.
 
 [[osx_display_broken]]
-J'ai compilé WeeChat sous OS X, et je vois des "(null)" partout sur l'écran, pourquoi ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== J'ai compilé WeeChat sous OS X, et je vois des "(null)" partout sur l'écran, pourquoi ?
 
 Si vous avez compilé ncursesw vous-même, essayez avec le ncurses standard (celui
 fourni avec le système).
@@ -144,8 +131,7 @@ De plus, sous OS X, il est recommandé d'installer WeeChat avec le gestionnaire
 de paquets Homebrew.
 
 [[buffer_vs_window]]
-J'ai entendu parler de "buffer" et "window", quelle est la différence ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== J'ai entendu parler de "buffer" et "window", quelle est la différence ?
 
 Un tampon ('buffer') est composé d'un numéro, un nom, des lignes affichées
 (ainsi que d'autres données).
@@ -158,42 +144,39 @@ Chaque fenêtre affiche un tampon. Un tampon peut être caché (affiché par
 aucune fenêtre) ou affiché par une ou plusieurs fenêtres.
 
 [[buffers_list]]
-Comment afficher la liste des tampons sur la gauche ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Comment afficher la liste des tampons sur la gauche ?
 
 Utilisez le script 'buffers.pl'.
 
 Pour limiter la taille de la barre :
 
-----------------------------------------
+----
 /set weechat.bar.buffers.size_max 15
-----------------------------------------
+----
 
 Pour déplacer la barre en bas :
 
-----------------------------------------
+----
 /set weechat.bar.buffers.position bottom
-----------------------------------------
+----
 
 [[customize_prefix]]
-Comment puis-je réduire la longueur des pseudos ou supprimer l'alignement des pseudos dans la zone de discussion ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Comment puis-je réduire la longueur des pseudos ou supprimer l'alignement des pseudos dans la zone de discussion ?
 
 Pour réduire la longueur maximum des pseudos dans la zone de discussion :
 
-----------------------------------------
+----
 /set weechat.look.prefix_align_max 15
-----------------------------------------
+----
 
 Pour supprimer l'alignement sur les pseudos :
 
-----------------------------------------
+----
 /set weechat.look.prefix_align none
-----------------------------------------
+----
 
 [[input_bar_size]]
-Comment utiliser une ligne de commande sur plusieurs lignes ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Comment utiliser une ligne de commande sur plusieurs lignes ?
 
 L'option 'size' dans la barre input peut être définie à une valeur supérieure
 à 1 (pour une taille fixe, la taille par défaut est 1) ou 0 pour une taille
@@ -202,41 +185,39 @@ limite).
 
 Exemple avec une taille dynamique :
 
-----------------------------------------
+----
 /set weechat.bar.input.size 0
-----------------------------------------
+----
 
 Taille maximum de 2 :
 
-----------------------------------------
+----
 /set weechat.bar.input.size_max 2
-----------------------------------------
+----
 
 [[one_input_root_bar]]
-Est-il possible d'avoir une seule bar input pour toutes les fenêtres (après un découpage) ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Est-il possible d'avoir une seule bar input pour toutes les fenêtres (après un découpage) ?
 
 Oui, vous devez créer une barre de type "root" (avec un objet pour savoir dans
 quelle fenêtre vous êtes), puis supprimer la barre input courante.
 
 Par exemple :
 
-----------------------------------------
+----
 /bar add rootinput root bottom 1 0 [buffer_name]+[input_prompt]+(away),[input_search],[input_paste],input_text
 /bar del input
-----------------------------------------
+----
 
 Si jamais vous n'étiez pas satisfait avec ça, supprimez simplement la nouvelle
 barre, WeeChat recréera automatiquement la barre par défaut "input" si l'objet
 "input_text" n'est utilisé dans aucune barre :
 
-----------------------------------------
+----
 /bar del rootinput
-----------------------------------------
+----
 
 [[terminal_copy_paste]]
-Comment puis-je copier/coller du texte sans coller la liste des pseudos ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Comment puis-je copier/coller du texte sans coller la liste des pseudos ?
 
 Vous pouvez utiliser un terminal qui propose la sélection rectangulaire (comme
 rxvt-unicode, konsole, gnome-terminal, etc...). La touche est habituellement
@@ -245,32 +226,31 @@ rxvt-unicode, konsole, gnome-terminal, etc...). La touche est habituellement
 Une autre solution est de déplacer la liste des pseudos en haut ou en bas, par
 exemple :
 
-----------------------------------------
+----
 /set weechat.bar.nicklist.position top
-----------------------------------------
+----
 
 [[urls]]
-Comment puis-je cliquer sur les longs URLs (plus d'une ligne) ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Comment puis-je cliquer sur les longs URLs (plus d'une ligne) ?
 
 Par défaut, WeeChat affiche l'heure et un préfixe pour chaque ligne avec des
 barres optionnelles autour de la zone de discussion. Pour rendre la le clic
 d'URL plus facile, vous pouvez déplacer la liste des pseudos en haut et
 supprimer l'alignement sur les pseudos :
 
-----------------------------------------
+----
 /set weechat.bar.nicklist.position top
 /set weechat.look.prefix_align none
 /set weechat.look.align_end_of_lines time
-----------------------------------------
+----
 
 Avec WeeChat ≥ 0.3.6, vous pouvez activer l'option "eat_newline_glitch", pour
 éviter qu'un caractère de nouvelle ligne soit affiché après chaque ligne (donc
 cela ne cassera pas la sélection d'une URL) :
 
-----------------------------------------
+----
 /set weechat.look.eat_newline_glitch on
-----------------------------------------
+----
 
 [IMPORTANT]
 Cette option peut causer des problèmes d'affichage. Si vous rencontrez de tels
@@ -280,23 +260,21 @@ Une autre solution est d'utiliser un script :
 http://weechat.org/scripts/stable/tag/url
 
 [[change_locale_without_quit]]
-Je souhaite changer la langue des messages affichés par WeeChat, mais sans quitter WeeChat, est-ce possible ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Je souhaite changer la langue des messages affichés par WeeChat, mais sans quitter WeeChat, est-ce possible ?
 
 Oui, il faut utiliser le script python 'shell.py' (disponible sur le site de
 WeeChat) et taper ces commandes une fois le script chargé :
 
-----------------------------------------
+----
 /shell setenv LANG=fr_FR.UTF-8
 /upgrade
-----------------------------------------
+----
 
 Pour avoir des messages anglais avec encodage UTF-8 pour le terminal, pour les
 utilisateurs en ISO, vous pouvez taper : `/shell setenv LANG=fr_FR`.
 
 [[use_256_colors]]
-Comment puis-je utiliser 256 couleurs sous WeeChat ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Comment puis-je utiliser 256 couleurs sous WeeChat ?
 
 Les 256 couleurs sont supportées avec WeeChat ≥ 0.3.4.
 
@@ -312,18 +290,18 @@ valeurs dans la variable 'TERM'.
 
 Si vous utilisez screen, vous pouvez ajouter cette ligne dans votre '~/.screenrc':
 
-----------------------------------------
+----
 term screen-256color
-----------------------------------------
+----
 
 Si votre variable 'TERM' a une valeur erronée et que WeeChat est déjà lancé,
 ne paniquez pas ! Vous pouvez la changer sans redémarrer, grâce au script
 'shell.py' :
 
-----------------------------------------
+----
 /shell setenv TERM=screen-256color
 /upgrade
-----------------------------------------
+----
 
 Pour la version 0.3.4, vous devez utiliser la commande `/color` pour ajouter
 des nouvelles couleurs.
@@ -336,8 +314,7 @@ Merci de lire le guide utilisateur pour plus d'information sur la gestion des
 couleurs.
 
 [[search_text]]
-Comment puis-je chercher du texte dans le tampon (comme /lastlog dans irssi) ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Comment puis-je chercher du texte dans le tampon (comme /lastlog dans irssi) ?
 
 La touche par défaut est @k(C-)@k(r) (la commande est : `/input search_text`).
 Et sauter aux highlights : @k(A-)@k(p)/@k(n).
@@ -346,31 +323,28 @@ Voir le guide utilisateur pour plus d'information sur cette fonctionnalité
 (raccourcis clavier par défaut).
 
 [[key_bindings]]
-Raccourcis clavier
-------------------
+== Raccourcis clavier
 
 [[meta_keys]]
-Quelques touches meta (alt + touche) ne fonctionnent pas, pourquoi ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Quelques touches meta (alt + touche) ne fonctionnent pas, pourquoi ?
 
 Si vous utilisez certains terminaux comme xterm ou uxterm, quelques touches
 meta ne fonctionnent pas par défaut. Vous pouvez ajouter cette ligne dans le
 fichier '~/.Xresources':
 
 * pour xterm:
-----------------------------------------
+----
 XTerm*metaSendsEscape: true
-----------------------------------------
+----
 * pour uxterm:
-----------------------------------------
+----
 UXTerm*metaSendsEscape: true
-----------------------------------------
+----
 
 Puis recharger les ressources (`xrdb -override ~/.Xresources`) ou redémarrez X.
 
 [[customize_key_bindings]]
-Comment puis-je configurer les raccourcis clavier ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Comment puis-je configurer les raccourcis clavier ?
 
 Les raccourcis clavier sont modifiables avec la commande `/key`.
 
@@ -378,33 +352,31 @@ La touche par défaut @k(A-)@k(k) permet de capturer le code d'une touche et de
 l'inclure dans la ligne de commande.
 
 [[jump_to_buffer_11_or_higher]]
-Quelle est la touche pour sauter vers le tampon 11 (ou numéro plus élevé) ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Quelle est la touche pour sauter vers le tampon 11 (ou numéro plus élevé) ?
 
 La touche est @k(A-)@k(j) puis 2 chiffres, par exemple @k(A-)@k(j) puis @k(1),
 @k(1) pour sauter au tampon 11.
 
 Vous pouvez définir une touche, par exemple :
 
-----------------------------------------
+----
 /key bind meta-q /buffer *11
-----------------------------------------
+----
 
 La liste des touches par défaut est dans le Guide utilisateur.
 
 [[global_history]]
-Comment utiliser l'historique global (au lieu de l'historique du tampon) avec les touches haut et bas ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Comment utiliser l'historique global (au lieu de l'historique du tampon) avec les touches haut et bas ?
 
 Vous pouvez assigner les touches haut et bas sur l'historique global (les
 touches par défaut pour l'historique global sont @k(C-)@k(↑) et @k(C-)@k(↓)).
 
 Exemple :
 
-----------------------------------------
+----
 /key bind meta2-A /input history_global_previous
 /key bind meta2-B /input history_global_next
-----------------------------------------
+----
 
 [NOTE]
 Les touches "meta2-A" et "meta2-B" peuvent être différentes dans votre terminal.
@@ -412,20 +384,18 @@ Pour trouver le code de la touche appuyez sur @k(A-)@k(k) puis la touche (haut
 ou bas).
 
 [[mouse]]
-Souris
-------
+== Souris
 
 [[mouse_not_working]]
-La souris ne fonctionne pas du tout, que puis-je faire ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== La souris ne fonctionne pas du tout, que puis-je faire ?
 
 La souris est supportée avec WeeChat ≥ 0.3.6.
 
 Premièrement essayez d'activer la souris :
 
-----------------------------------------
+----
 /mouse enable
-----------------------------------------
+----
 
 Si la souris ne fonctionne toujours pas, vérifiez la variable TERM dans votre
 shell (regardez la sortie de `echo $TERM` dans votre terminal).
@@ -433,22 +403,21 @@ Selon le terminfo utilisé, la souris peut ne pas être supportée.
 
 Vous pouvez tester le support de la souris dans le terminal :
 
-----------------------------------------
+----
 $ printf '\033[?1002h'
-----------------------------------------
+----
 
 Et cliquez sur le premier caractère du terminal (en haut à gauche). Vous devriez
 voir " !!#!!".
 
 Pour désactiver la souris dans le terminal :
 
-----------------------------------------
+----
 $ printf '\033[?1002l'
-----------------------------------------
+----
 
 [[mouse_coords]]
-La souris ne fait rien pour un X ou Y supérieur à 94, pourquoi ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== La souris ne fait rien pour un X ou Y supérieur à 94, pourquoi ?
 
 Certains terminaux envoient seulement des caractères ISO pour les coordonnées
 de la souris, donc cela ne fonctionne pas avec un X/Y supérieur à 94.
@@ -457,8 +426,7 @@ Vous devriez utiliser un terminal qui supporte les coordonnées UTF-8 pour la
 souris, comme rxvt-unicode.
 
 [[mouse_select_paste]]
-Comment puis-je sélectionner ou coller du texte quand la souris est activée dans WeeChat ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Comment puis-je sélectionner ou coller du texte quand la souris est activée dans WeeChat ?
 
 Lorsque la souris est activée dans WeeChat, vous pouvez utiliser la touche
 @k(-S-) pour sélectionner ou cliquer dans le terminal, comme si la souris était
@@ -466,49 +434,45 @@ désactivée (sous certains terminaux comme iTerm, vous devez utiliser @k(-A-) a
 lieu de @k(-S-)).
 
 [[irc]]
-IRC
----
+== IRC
 
 [[irc_ssl_connection]]
-J'ai des problèmes pour me connecter au serveur avec SSL, que puis-je faire ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== J'ai des problèmes pour me connecter au serveur avec SSL, que puis-je faire ?
 
 Si vous voyez des erreurs à propos de la poignée de main gnutls ("handshake"),
 vous pouvez utiliser une valeur plus petite pour la clé Diffie-Hellman (par
 défaut 2048) :
 
-----------------------------------------
+----
 /set irc.server.freenode.ssl_dhkey_size 1024
-----------------------------------------
+----
 
 Si vous voyez des erreurs à propos du certificat, vous pouvez désactiver
 "ssl_verify" (attention, la connexion sera moins sûre en faisant cela) :
 
-----------------------------------------
+----
 /set irc.server.freenode.ssl_verify off
-----------------------------------------
+----
 
 [[irc_ssl_handshake_error]]
-Lors de la connexion SSL à un serveur, je vois juste une erreur "TLS handshake failed", que puis-je faire ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Lors de la connexion SSL à un serveur, je vois juste une erreur "TLS handshake failed", que puis-je faire ?
 
 Vous pouvez essayer une chaîne de priorité différente (WeeChat ≥ 0.3.5
 seulement), remplacez "xxx" par le nom de votre serveur :
 
-----------------------------------------
+----
 /set irc.server.xxx.ssl_priorities "NORMAL:-VERS-TLS-ALL:+VERS-TLS1.0:+VERS-SSL3.0:%COMPAT"
-----------------------------------------
+----
 
 [[irc_ssl_freenode]]
-Comment puis-je me connecter à freenode avec SSL ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Comment puis-je me connecter à freenode avec SSL ?
 
 Positionnez l'option 'weechat.network.gnutls_ca_file' avec le fichier des
 certificats :
 
-----------------------------------------
+----
 /set weechat.network.gnutls_ca_file "/etc/ssl/certs/ca-certificates.crt"
-----------------------------------------
+----
 
 [NOTE]
 Vérifiez que vous avez bien ce fichier (fourni généralement par le paquet
@@ -516,16 +480,15 @@ Vérifiez que vous avez bien ce fichier (fourni généralement par le paquet
 
 Configurez le port du serveur, SSL, dhkey_size, puis connectez-vous :
 
-----------------------------------------
+----
 /set irc.server.freenode.addresses "chat.freenode.net/7000"
 /set irc.server.freenode.ssl on
 /set irc.server.freenode.ssl_dhkey_size 1024
 /connect freenode
-----------------------------------------
+----
 
 [[irc_oauth]]
-Comment se connecter à un serveur qui requiert "oauth" ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Comment se connecter à un serveur qui requiert "oauth" ?
 
 Des serveurs tels que 'twitch' requièrent oauth pour se connecter.
 
@@ -534,34 +497,32 @@ L'oauth est simplement un mot de passe avec la valeur "oauth:XXXX".
 Vous pouvez créer un tel serveur et vous y connecter avec les commandes
 suivantes (remplacez le nom et l'adresse par les valeurs appropriées) :
 
-----------------------------------------
+----
 /server add nom irc.server.org -password="oauth:XXXX"
 /connect nom
-----------------------------------------
+----
 
 [[irc_sasl]]
-Comment puis-je être identifié avant de rejoindre les canaux ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Comment puis-je être identifié avant de rejoindre les canaux ?
 
 Si le serveur supporte SASL, vous devriez l'utiliser au lieu d'envoyer une
 commande pour l'authentification avec nickserv, par exemple :
 
-----------------------------------------
+----
 /set irc.server_default.sasl_mechanism dh-blowfish
 /set irc.server.freenode.sasl_username "mynick"
 /set irc.server.freenode.sasl_password "xxxxxxx"
-----------------------------------------
+----
 
 Si le serveur ne supporte pas SASL, vous pouvez ajouter un délai (entre la
 commande et le join des canaux) :
 
-----------------------------------------
+----
 /set irc.server.freenode.command_delay 5
-----------------------------------------
+----
 
 [[ignore_vs_filter]]
-Quelle est la différence entre les commandes /ignore et /filter ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Quelle est la différence entre les commandes /ignore et /filter ?
 
 La commande `/ignore` est une commande IRC, donc elle s'applique uniquement aux
 tampons IRC (serveurs et canaux).
@@ -579,38 +540,36 @@ de les voir en désactivant les filtres (par défaut, la touche @k(A-)@k(=)
 active/désactive les filtres).
 
 [[filter_irc_join_part_quit]]
-Comment puis-je filtrer les messages join/part/quit sur les canaux IRC ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Comment puis-je filtrer les messages join/part/quit sur les canaux IRC ?
 
 Avec le filtre intelligent (pour garder les join/part/quit des utilisateurs qui
 ont parlé récemment) :
 
-----------------------------------------
+----
 /set irc.look.smart_filter on
 /filter add irc_smart * irc_smart_filter *
-----------------------------------------
+----
 
 Avec un filtre global (pour cacher *tous* les join/part/quit) :
 
-----------------------------------------
+----
 /filter add joinquit * irc_join,irc_part,irc_quit *
-----------------------------------------
+----
 
 [NOTE]
 Pour l'aide : `/help filter` et `/help irc.look.smart_filter`
 
 [[filter_irc_join_channel_messages]]
-Comment puis-je filtrer certains messages affichés quand je rejoins un canal IRC ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Comment puis-je filtrer certains messages affichés quand je rejoins un canal IRC ?
 
 Avec WeeChat ≥ 0.4.1, vous pouvez désactiver des messages avec l'option
 'irc.look.display_join_message'.
 
 Par exemple, pour désactiver les noms (qui est le message IRC '366') :
 
-----------------------------------------
+----
 /set irc.look.display_join_message "329,332,333"
-----------------------------------------
+----
 
 [NOTE]
 Pour l'aide : `/help irc.look.display_join_message`
@@ -627,17 +586,16 @@ tampon des données brutes IRC (`/server raw`).
 Exemples :
 
 * filtrer les noms :
-----------------------------------------
+----
 /filter add irc_join_names * irc_366 *
-----------------------------------------
+----
 * filtrer le titre (et la date):
-----------------------------------------
+----
 /filter add irc_join_topic_date * irc_332,irc_333 *
-----------------------------------------
+----
 
 [[filter_voice_messages]]
-Comment puis-je filtrer les messages voice (par exemple sur le serveur Bitlbee) ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Comment puis-je filtrer les messages voice (par exemple sur le serveur Bitlbee) ?
 
 Il n'est pas facile de filtrer les messages voice, car le mode voice peut être
 positionné avec d'autres modes dans le même message IRC.
@@ -649,15 +607,15 @@ couleur spéciale pour les pseudos absents dans la liste des pseudos.
 
 Pour Bitlbee ≥ 3, faites ceci sur le canal '&bitlbee' :
 
-----------------------------------------
+----
 channel set show_users online,away
-----------------------------------------
+----
 
 Pour une version plus ancienne de Bitlbee, faites ceci sur le canal '&bitlbee':
 
-----------------------------------------
+----
 set away_devoice false
-----------------------------------------
+----
 
 Pour vérifier les pseudos absents dans WeeChat, voir la question à propos des
 <<color_away_nicks,pseudos absents>>.
@@ -666,13 +624,12 @@ Si vous voulez vraiment filtrer les messages voice, vous pouvez utiliser cette
 commande, mais elle n'est pas parfaite (elle fonctionne seulement si le
 premier mode changé est voice) :
 
-----------------------------------------
+----
 /filter add hidevoices * irc_mode (\+|\-)v
-----------------------------------------
+----
 
 [[color_away_nicks]]
-Comment puis-je voir les pseudos absents dans la liste des pseudos ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Comment puis-je voir les pseudos absents dans la liste des pseudos ?
 
 Vous devez positionner l'option 'irc.server_default.away_check' avec une valeur
 positive (minutes entre chaque vérification des pseudos absents).
@@ -683,56 +640,51 @@ pour limiter la vérification d'absence sur les petits canaux seulement.
 Par exemple, pour vérifier les pseudos absents toutes les 5 minutes, pour les
 canaux avec maximum 25 pseudos :
 
-----------------------------------------
+----
 /set irc.server_default.away_check 5
 /set irc.server_default.away_check_max_nicks 25
-----------------------------------------
+----
 
 [NOTE]
 Pour WeeChat ≤ 0.3.3, les options sont 'irc.network.away_check' et
 'irc.network.away_check_max_nicks'.
 
 [[highlight_notification]]
-Comment être averti lorsque quelqu'un prononce mon pseudo sur un canal ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Comment être averti lorsque quelqu'un prononce mon pseudo sur un canal ?
 
 Vous pouvez utiliser un script comme 'beep.pl' ou 'launcher.pl'.
 
 Pour 'launcher.pl', vous devez configurer la commande :
 
-----------------------------------------
+----
 /set plugins.var.perl.launcher.signal.weechat_highlight "/chemin/vers/commande paramètres"
-----------------------------------------
+----
 
 Autres scripts sur ce sujet : http://weechat.org/scripts/stable/tag/notify/
 
 [[irc_target_buffer]]
-Comment puis-je changer le serveur cible pour les commandes avec des tampons mélangés (comme le tampon avec les serveurs) ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Comment puis-je changer le serveur cible pour les commandes avec des tampons mélangés (comme le tampon avec les serveurs) ?
 
 La touche par défaut est @k(C-)@k(x) (la commande est : `/input switch_active_buffer`).
 
 [[plugins_scripts]]
-Extensions / scripts
---------------------
+== Extensions / scripts
 
 [[openbsd_plugins]]
-J'utilise OpenBSD et WeeChat ne charge aucune extension, pourquoi ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== J'utilise OpenBSD et WeeChat ne charge aucune extension, pourquoi ?
 
 Sous OpenBSD, le nom des extensions se termine par ".so.0.0" (".so" sous
 Linux).
 
 Vous devez configurer ça :
 
-----------------------------------------
+----
 /set weechat.plugin.extension ".so.0.0"
 /plugin autoload
-----------------------------------------
+----
 
 [[load_scripts]]
-Comment puis-je charger des scripts Perl/Python/Ruby/Lua/Tcl ? Les scripts sont-ils compatibles avec d'autres clients IRC ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Comment puis-je charger des scripts Perl/Python/Ruby/Lua/Tcl ? Les scripts sont-ils compatibles avec d'autres clients IRC ?
 
 Les commandes `/perl`, `/python`, `/ruby`, `/lua` et `/tcl` permettent de
 charger les scripts (le chemin par défaut est '~/.weechat/<langage>/').
@@ -746,12 +698,10 @@ Notes :
 * l'extension 'tcl' est disponible à partir de la version 0.3.0.
 
 [[settings]]
-Réglages
---------
+== Réglages
 
 [[memory_usage]]
-Comment configurer WeeChat pour consommer moins de mémoire ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Comment configurer WeeChat pour consommer moins de mémoire ?
 
 Vous pouvez essayer les astuces suivantes pour consommer moins de mémoire :
 
@@ -768,12 +718,10 @@ Vous pouvez essayer les astuces suivantes pour consommer moins de mémoire :
 * réduire la valeur de l'option 'weechat.history.max_commands'
 
 [[development]]
-Développement
--------------
+== Développement
 
 [[bug_task_patch]]
-Comment puis-je reporter un bug, demander une nouvelle fonctionnalité ou envoyer un patch ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Comment puis-je reporter un bug, demander une nouvelle fonctionnalité ou envoyer un patch ?
 
 Il y a 3 possibilités :
 
@@ -787,29 +735,27 @@ Il y a 3 possibilités :
   (vous pouvez souscrire et envoyer à la liste de diffusion nommée "support")
 
 [[gdb_error_threads]]
-Quand je lance WeeChat sous gdb, il y a une erreur à propos des threads, que puis-je faire ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Quand je lance WeeChat sous gdb, il y a une erreur à propos des threads, que puis-je faire ?
 
 Quand vous lancez WeeChat sous gdb, vous pouvez avoir cette erreur :
 
-----------------------------------------
+----
 $ gdb /path/to/weechat
 (gdb) run
 [Thread debugging using libthread_db enabled]
 Cannot find new threads: generic error
-----------------------------------------
+----
 
 Pour corriger ça, vous pouvez lancer gdb avec cette commande (remplacez le
 chemin vers libpthread et WeeChat avec les chemins sur votre système) :
 
-----------------------------------------
+----
 $ LD_PRELOAD=/lib/libpthread.so.0 gdb /path/to/weechat
 (gdb) run
-----------------------------------------
+----
 
 [[supported_os]]
-Quelle est la liste des plates-formes supportées par WeeChat ? Sera-t-il porté sur d'autres systèmes d'exploitation ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Quelle est la liste des plates-formes supportées par WeeChat ? Sera-t-il porté sur d'autres systèmes d'exploitation ?
 
 La liste complète est sur cette page : http://weechat.org/download
 
@@ -818,8 +764,7 @@ Toute aide est la bienvenue pour les systèmes que nous n'avons pas, pour y
 tester WeeChat.
 
 [[help_developers]]
-Je souhaiterais aider les développeurs WeeChat. Que puis-je faire ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Je souhaiterais aider les développeurs WeeChat. Que puis-je faire ?
 
 Il y a plusieurs choses à faire (test, code, documentation, etc...)
 
@@ -827,8 +772,7 @@ Merci de prendre contact avec nous par IRC ou mail, consultez la page
 support : http://weechat.org/dev/support
 
 [[donate]]
-Puis-je donner de l'argent ou d'autres choses aux développeurs WeeChat ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=== Puis-je donner de l'argent ou d'autres choses aux développeurs WeeChat ?
 
 Vous pouvez donner de l'argent pour aider le développement.
 Plus de détails sur http://weechat.org/about/donate

@@ -1,7 +1,7 @@
 [[command_alias_alias]]
 [command]*`alias`* コマンドの別名を作成::
 
-----------------------------------------
+----
 /alias  [-completion <completion>] <alias> [<command> [;<command>...]]
 
 completion: 別名の補完 (任意、デフォルトではターゲットコマンドを伴って補完される)
@@ -30,5 +30,5 @@ completion: 別名の補完 (任意、デフォルトではターゲットコマ
     /alias hello /allchan -exclude=#weechat msg * hello
   /forcejoin を /sajoin の補完候補を使い IRC コマンド "forcejoin" を送信する別名と定義:
     /alias -completion %%sajoin forcejoin /quote forcejoin
-----------------------------------------
+----
 

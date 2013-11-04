@@ -1,5 +1,4 @@
-WeeChat Relay Protocol
-======================
+= WeeChat Relay Protocol
 Sébastien Helleu <flashcode@flashtux.org>
 
 
@@ -8,12 +7,10 @@ to relay WeeChat data to clients, which are mostly remote interfaces.
 
 
 [[introduction]]
-Introduction
-------------
+== Introduction
 
 [[terminology]]
-Terminology
-~~~~~~~~~~~
+=== Terminology
 
 The following terms are used in this document:
 
@@ -23,12 +20,11 @@ The following terms are used in this document:
   connection; in most cases, this 'client' is a remote interface
 
 [[network_diagram]]
-Network diagram
-~~~~~~~~~~~~~~~
+=== Network diagram
 
 The 'clients' are connected to 'relay' like shown in this diagram:
 
-.......................................
+....
                                               ┌──────────┐ Workstation
  ┌────────┐                               ┌───┤ client 1 │ (Linux, Windows,
  │  irc   │◄──┐  ╔═══════════╤═══════╗    │   └──────────┘ BSD, Mac OS X ...)
@@ -44,7 +40,7 @@ The 'clients' are connected to 'relay' like shown in this diagram:
 └────────────┘   └───────────────────┘╘══════╛└────────────────────────────────┘
 network servers    ncurses interface    relay         remote interfaces
                                       protocol
-........................................
+....
 
 [NOTE]
 All clients here are clients using 'weechat' protocol in 'relay' plugin. The
@@ -52,8 +48,7 @@ All clients here are clients using 'weechat' protocol in 'relay' plugin. The
 'irc proxy' (not described in this document).
 
 [[protocol_generalities]]
-Protocol generalities
----------------------
+== Protocol generalities
 
 * Connections from 'client' to 'relay' are made using TCP sockets on IP/port
   used by 'relay' plugin to listen to new connections
@@ -66,8 +61,7 @@ Protocol generalities
   binary data.
 
 [[commands]]
-Commands (client → relay)
--------------------------
+== Commands (client → relay)
 
 Commands have format: "(id) command arguments\n".
 
@@ -83,7 +77,7 @@ Fields are:
 List of available commands (detail in next chapters):
 
 [width="80%",cols="^3m,14",options="header"]
-|=====================================================
+|===
 | Command  | Description
 | init     | Initialize connection with 'relay'
 | hdata    | Request hdata
@@ -94,11 +88,10 @@ List of available commands (detail in next chapters):
 | sync     | Synchronize buffer(s) (get updates for buffer(s))
 | desync   | Desynchronize buffer(s) (stop updates for buffer(s))
 | quit     | Disconnect from 'relay'
-|=====================================================
+|===
 
 [[command_init]]
-init
-~~~~
+=== init
 
 Initialize connection with 'relay'. This must be first command sent to 'relay'.
 If not sent, 'relay' will close connection on first command received, without
@@ -106,9 +99,9 @@ warning.
 
 Syntax:
 
-----------------------------------------
+----
 init [<option>=<value>,[<option>=<value>,...]]
-----------------------------------------
+----
 
 Arguments:
 
@@ -124,25 +117,24 @@ Compression 'zlib' is enabled by default if 'relay' supports zlib compression.
 
 Examples:
 
-----------------------------------------
+----
 # initialize and use zlib compression by default (if WeeChat supports it)
 init password=mypass
 
 # initialize and disable compression
 init password=mypass,compression=off
-----------------------------------------
+----
 
 [[command_hdata]]
-hdata
-~~~~~
+=== hdata
 
 Request hdata.
 
 Syntax:
 
-----------------------------------------
+----
 (id) hdata <path> [<keys>]
-----------------------------------------
+----
 
 Arguments:
 
@@ -166,7 +158,7 @@ values are:
 
 Examples:
 
-----------------------------------------
+----
 # request all buffers, hdata of type "buffer" is returned
 # keys number and name are returned for each buffer
 hdata buffer:gui_buffers(*) number,name
@@ -177,19 +169,18 @@ hdata buffer:gui_buffers(*)/lines/first_line(*)/data
 
 # request full_name of first buffer
 hdata buffer:gui_buffers full_name
-----------------------------------------
+----
 
 [[command_info]]
-info
-~~~~
+=== info
 
 Request info.
 
 Syntax:
 
-----------------------------------------
+----
 (id) info <name>
-----------------------------------------
+----
 
 Arguments:
 
@@ -197,13 +188,12 @@ Arguments:
 
 Example:
 
-----------------------------------------
+----
 info version
-----------------------------------------
+----
 
 [[command_infolist]]
-infolist
-~~~~~~~~
+=== infolist
 
 Request infolist.
 
@@ -214,9 +204,9 @@ faster, uses less memory and returns smaller objects in message).
 
 Syntax:
 
-----------------------------------------
+----
 (id) infolist <name> <arguments>
-----------------------------------------
+----
 
 Arguments:
 
@@ -225,21 +215,20 @@ Arguments:
 
 Example:
 
-----------------------------------------
+----
 infolist buffer
-----------------------------------------
+----
 
 [[command_nicklist]]
-nicklist
-~~~~~~~~
+=== nicklist
 
 Request nicklist, for one or all buffers.
 
 Syntax:
 
-----------------------------------------
+----
 (id) nicklist [<buffer>]
-----------------------------------------
+----
 
 Arguments:
 
@@ -248,25 +237,24 @@ Arguments:
 
 Examples:
 
-----------------------------------------
+----
 # request nicklist for all buffers
 nicklist
 
 # request nicklist for irc.freenode.#weechat
 nicklist irc.freenode.#weechat
-----------------------------------------
+----
 
 [[command_input]]
-input
-~~~~~
+=== input
 
 Send data to a buffer.
 
 Syntax:
 
-----------------------------------------
+----
 input <buffer> <data>
-----------------------------------------
+----
 
 Arguments:
 
@@ -277,14 +265,13 @@ Arguments:
 
 Examples:
 
-----------------------------------------
+----
 input core.weechat /help filter
 input irc.freenode.#weechat hello guys!
-----------------------------------------
+----
 
 [[command_sync]]
-sync
-~~~~
+=== sync
 
 _Updated in version 0.4.1._
 
@@ -297,9 +284,9 @@ line).
 
 Syntax:
 
-----------------------------------------
+----
 sync [<buffer>[,<buffer>...] <option>[,<option>...]]
-----------------------------------------
+----
 
 Arguments:
 
@@ -321,7 +308,7 @@ Arguments:
 
 Examples:
 
-----------------------------------------
+----
 # synchronize all buffers with nicklist
 # (the 3 commands are equivalent, but the first one is recommended
 # for compatibility with future versions)
@@ -338,11 +325,10 @@ sync irc.freenode.#weechat buffer
 # get general signals + all signals for #weechat channel
 sync * buffers,upgrade
 sync irc.freenode.#weechat
-----------------------------------------
+----
 
 [[command_desync]]
-desync
-~~~~~~
+=== desync
 
 _Updated in version 0.4.1._
 
@@ -354,9 +340,9 @@ buffers, the client will still receive updates for buffers.
 
 Syntax:
 
-----------------------------------------
+----
 desync [<buffer>[,<buffer>...] <option>[,<option>...]]
-----------------------------------------
+----
 
 Arguments:
 
@@ -375,7 +361,7 @@ it explicitly to stop updates).
 
 Examples:
 
-----------------------------------------
+----
 # desynchronize all buffers
 # (the 3 commands are equivalent, but the first one is recommended
 # for compatibility with future versions)
@@ -388,11 +374,10 @@ desync irc.freenode.#weechat nicklist
 
 # desynchronize #weechat channel
 desync irc.freenode.#weechat
-----------------------------------------
+----
 
 [[command_test]]
-test
-~~~~
+=== test
 
 Test command: WeeChat will reply with various different objects.
 
@@ -405,20 +390,20 @@ WeeChat.
 
 Syntax:
 
-----------------------------------------
+----
 test
-----------------------------------------
+----
 
 Example:
 
-----------------------------------------
+----
 test
-----------------------------------------
+----
 
 Returned objects (in this order):
 
 [width="80%",cols="^3,3m,5m",options="header"]
-|=====================================================
+|===
 | Type              | Type (in message) | Value
 | char              | chr               | 65 ("A")
 | integer           | int               | 123456
@@ -435,11 +420,10 @@ Returned objects (in this order):
 | time              | tim               | 1321993456
 | array of strings  | arr str           | { "abc", "de" }
 | array of integers | arr int           | { 123, 456, 789 }
-|=====================================================
+|===
 
 [[command_ping]]
-ping
-~~~~
+=== ping
 
 _Added in version 0.4.2._
 
@@ -450,41 +434,39 @@ measure the network lag.
 
 Syntax:
 
-----------------------------------------
+----
 ping [<arguments>]
-----------------------------------------
+----
 
 Example:
 
-----------------------------------------
+----
 ping 1370802127000
-----------------------------------------
+----
 
 [[command_quit]]
-quit
-~~~~
+=== quit
 
 Disconnect from 'relay'.
 
 Syntax:
 
-----------------------------------------
+----
 quit
-----------------------------------------
+----
 
 Example:
 
-----------------------------------------
+----
 quit
-----------------------------------------
+----
 
 [[messages]]
-Messages (relay → client)
--------------------------
+== Messages (relay → client)
 
 Messages are sent as binary data, using following format (with size in bytes):
 
-.......................................
+....
 ┌────────╥─────────────╥────╥────────┬──────────╥───────╥────────┬──────────┐
 │ length ║ compression ║ id ║ type 1 │ object 1 ║  ...  ║ type N │ object N │
 └────────╨─────────────╨────╨────────┴──────────╨───────╨────────┴──────────┘
@@ -494,7 +476,7 @@ Messages are sent as binary data, using following format (with size in bytes):
        header (5)                        compressed data (??)
  └─────────────────────────────────────────────────────────────────────────┘
                                'length' bytes
-.......................................
+....
 
 * 'length' (unsigned integer): number of bytes of whole message (including
   this length)
@@ -508,15 +490,13 @@ Messages are sent as binary data, using following format (with size in bytes):
 * 'object': an object (see table below)
 
 [[message_compression]]
-Compression
-~~~~~~~~~~~
+=== Compression
 
 If flag 'compression' is equal to 0x01, then *all* data after is compressed
 with zlib, and therefore must be uncompressed before being processed.
 
 [[message_identifier]]
-Identifier
-~~~~~~~~~~
+=== Identifier
 
 There are two different identifiers ('id'):
 
@@ -527,7 +507,7 @@ There are two different identifiers ('id'):
 WeeChat reserved identifiers:
 
 [width="100%",cols="5,5,3,4,7",options="header"]
-|=====================================================
+|===
 | Identifier               | Description                 | Received with sync | Data sent              | Recommended action in client
 | _buffer_opened           | Buffer opened               | buffers / buffer   | hdata: buffer          | Open buffer
 | _buffer_moved            | Buffer moved                | buffers / buffer   | hdata: buffer          | Move buffer
@@ -546,18 +526,17 @@ WeeChat reserved identifiers:
 | _pong                    | Answer to a "ping"          | (always)           | string: ping arguments | Measure network lag
 | _upgrade                 | WeeChat is upgrading        | upgrade            | (empty)                | Desync from WeeChat (or disconnect)
 | _upgrade_ended           | Upgrade of WeeChat done     | upgrade            | (empty)                | Sync/resync with WeeChat
-|=====================================================
+|===
 
 [[message_buffer_opened]]
-_buffer_opened
-^^^^^^^^^^^^^^
+==== _buffer_opened
 
 It is sent to the client when the signal "buffer_opened" is sent by WeeChat.
 
 Data sent as hdata:
 
 [width="100%",cols="3m,2,10",options="header"]
-|=====================================================
+|===
 | Name            | Type      | Description
 | number          | integer   | Buffer number (≥ 1)
 | full_name       | string    | Full name (example: 'irc.freenode.#weechat')
@@ -567,13 +546,13 @@ Data sent as hdata:
 | local_variables | hashtable | Local variables
 | prev_buffer     | pointer   | Pointer to previous buffer
 | next_buffer     | pointer   | Pointer to next buffer
-|=====================================================
+|===
 
 Example: join of channel '#weechat' on freenode, new buffer
 'irc.freenode.#weechat':
 
 [source,python]
-----------------------------------------
+----
 id: '_buffer_opened'
 hda:
   keys: {'number': 'int', 'full_name': 'str', 'short_name': 'str', 'nicklist': 'int',
@@ -589,29 +568,28 @@ hda:
     local_variables: {'plugin': 'irc', 'name': 'freenode.#weechat'}
     prev_buffer: '0x34e7400'
     next_buffer: '0x0'
-----------------------------------------
+----
 
 [[message_buffer_moved]]
-_buffer_moved
-^^^^^^^^^^^^^
+==== _buffer_moved
 
 It is sent to the client when the signal "buffer_moved" is sent by WeeChat.
 
 Data sent as hdata:
 
 [width="100%",cols="3m,2,10",options="header"]
-|=====================================================
+|===
 | Name            | Type      | Description
 | number          | integer   | Buffer number (≥ 1)
 | full_name       | string    | Full name (example: 'irc.freenode.#weechat')
 | prev_buffer     | pointer   | Pointer to previous buffer
 | next_buffer     | pointer   | Pointer to next buffer
-|=====================================================
+|===
 
 Example: buffer 'irc.freenode.#weechat' moved to number 2:
 
 [source,python]
-----------------------------------------
+----
 id: '_buffer_moved'
 hda:
   keys: {'number': 'int', 'full_name': 'str', 'prev_buffer': 'ptr', 'next_buffer': 'ptr'}
@@ -622,29 +600,28 @@ hda:
     full_name: 'irc.freenode.#weechat'
     prev_buffer: '0x347b9f0'
     next_buffer: '0x3471bc0'
-----------------------------------------
+----
 
 [[message_buffer_merged]]
-_buffer_merged
-^^^^^^^^^^^^^^
+==== _buffer_merged
 
 It is sent to the client when the signal "buffer_merged" is sent by WeeChat.
 
 Data sent as hdata:
 
 [width="100%",cols="3m,2,10",options="header"]
-|=====================================================
+|===
 | Name            | Type      | Description
 | number          | integer   | Buffer number (≥ 1)
 | full_name       | string    | Full name (example: 'irc.freenode.#weechat')
 | prev_buffer     | pointer   | Pointer to previous buffer
 | next_buffer     | pointer   | Pointer to next buffer
-|=====================================================
+|===
 
 Example: buffer 'irc.freenode.#weechat' merged with buffer #2:
 
 [source,python]
-----------------------------------------
+----
 id: '_buffer_merged'
 hda:
   keys: {'number': 'int', 'full_name': 'str', 'prev_buffer': 'ptr', 'next_buffer': 'ptr'}
@@ -655,29 +632,28 @@ hda:
     full_name: 'irc.freenode.#weechat'
     prev_buffer: '0x4cef9b0'
     next_buffer: '0x0'
-----------------------------------------
+----
 
 [[message_buffer_unmerged]]
-_buffer_unmerged
-^^^^^^^^^^^^^^^^
+==== _buffer_unmerged
 
 It is sent to the client when the signal "buffer_unmerged" is sent by WeeChat.
 
 Data sent as hdata:
 
 [width="100%",cols="3m,2,10",options="header"]
-|=====================================================
+|===
 | Name            | Type      | Description
 | number          | integer   | Buffer number (≥ 1)
 | full_name       | string    | Full name (example: 'irc.freenode.#weechat')
 | prev_buffer     | pointer   | Pointer to previous buffer
 | next_buffer     | pointer   | Pointer to next buffer
-|=====================================================
+|===
 
 Example: buffer 'irc.freenode.#weechat' unmerged:
 
 [source,python]
-----------------------------------------
+----
 id: '_buffer_unmerged'
 hda:
   keys: {'number': 'int', 'full_name': 'str', 'prev_buffer': 'ptr', 'next_buffer': 'ptr'}
@@ -688,29 +664,28 @@ hda:
     full_name: 'irc.freenode.#weechat'
     prev_buffer: '0x4cef9b0'
     next_buffer: '0x0'
-----------------------------------------
+----
 
 [[message_buffer_renamed]]
-_buffer_renamed
-^^^^^^^^^^^^^^^
+==== _buffer_renamed
 
 It is sent to the client when the signal "buffer_renamed" is sent by WeeChat.
 
 Data sent as hdata:
 
 [width="100%",cols="3m,2,10",options="header"]
-|=====================================================
+|===
 | Name            | Type      | Description
 | number          | integer   | Buffer number (≥ 1)
 | full_name       | string    | Full name (example: 'irc.freenode.#weechat')
 | short_name      | string    | Short name (example: '#weechat')
 | local_variables | hashtable | Local variables
-|=====================================================
+|===
 
 Example: private buffer renamed from 'FlashCode' to 'Flash2':
 
 [source,python]
-----------------------------------------
+----
 id: '_buffer_renamed'
 hda:
   keys: {'number': 'int', 'full_name': 'str', 'short_name': 'str', 'local_variables': 'htb'}
@@ -722,11 +697,10 @@ hda:
     short_name: 'Flash2'
     local_variables: {'server': 'freenode', 'plugin': 'irc', 'type': 'private',
                       'channel': 'FlashCode', 'nick': 'test', 'name': 'local.Flash2'}
-----------------------------------------
+----
 
 [[message_buffer_title_changed]]
-_buffer_title_changed
-^^^^^^^^^^^^^^^^^^^^^
+==== _buffer_title_changed
 
 It is sent to the client when the signal "buffer_title_changed" is sent by
 WeeChat.
@@ -734,17 +708,17 @@ WeeChat.
 Data sent as hdata:
 
 [width="100%",cols="3m,2,10",options="header"]
-|=====================================================
+|===
 | Name            | Type      | Description
 | number          | integer   | Buffer number (≥ 1)
 | full_name       | string    | Full name (example: 'irc.freenode.#weechat')
 | title           | string    | Buffer title
-|=====================================================
+|===
 
 Example: topic changed on channel '#weechat':
 
 [source,python]
-----------------------------------------
+----
 id: '_buffer_title_changed'
 hda:
   keys: {'number': 'int', 'full_name': 'str', 'title': 'str'}
@@ -754,29 +728,28 @@ hda:
     number: 3
     full_name: 'irc.freenode.#weechat'
     title: 'Welcome on #weechat!  http://weechat.org/'
-----------------------------------------
+----
 
 [[message_buffer_type_changed]]
-_buffer_type_changed
-^^^^^^^^^^^^^^^^^^^^
+==== _buffer_type_changed
 
 It is sent to the client when the signal "buffer_type_changed" is sent by WeeChat.
 
 Data sent as hdata:
 
 [width="100%",cols="3m,2,10",options="header"]
-|=====================================================
+|===
 | Name            | Type      | Description
 | number          | integer   | Buffer number (≥ 1)
 | full_name       | string    | Full name (example: 'irc.freenode.#weechat')
 | type            | integer   | Buffer type: 0 = formatted (default), 1 = free content
-|=====================================================
+|===
 
 Example: type of buffer 'script.scripts' changed from 'formatted' (0) to free
 content (1):
 
 [source,python]
-----------------------------------------
+----
 id: '_buffer_type_changed'
 hda:
   keys: {'number': 'int', 'full_name': 'str', 'type': 'int'}
@@ -786,11 +759,10 @@ hda:
     number: 4
     full_name: 'script.scripts'
     type: 1
-----------------------------------------
+----
 
 [[message_buffer_localvar_added]]
-_buffer_localvar_added
-^^^^^^^^^^^^^^^^^^^^^^
+==== _buffer_localvar_added
 
 It is sent to the client when the signal "buffer_localvar_added" is sent by
 WeeChat.
@@ -798,17 +770,17 @@ WeeChat.
 Data sent as hdata:
 
 [width="100%",cols="3m,2,10",options="header"]
-|=====================================================
+|===
 | Name            | Type      | Description
 | number          | integer   | Buffer number (≥ 1)
 | full_name       | string    | Full name (example: 'irc.freenode.#weechat')
 | local_variables | hashtable | Local variables
-|=====================================================
+|===
 
 Example: local variable 'test' added in buffer 'irc.freenode.#weechat':
 
 [source,python]
-----------------------------------------
+----
 id='_buffer_localvar_added', objects:
 hda:
   keys: {'number': 'int', 'full_name': 'str', 'local_variables': 'htb'}
@@ -820,11 +792,10 @@ hda:
     local_variables: {'server': 'freenode', 'test': 'value', 'plugin': 'irc',
                       'type': 'channel', 'channel': '#weechat', 'nick': 'test',
                       'name': 'freenode.#weechat'}
-----------------------------------------
+----
 
 [[message_buffer_localvar_changed]]
-_buffer_localvar_changed
-^^^^^^^^^^^^^^^^^^^^^^^^
+==== _buffer_localvar_changed
 
 It is sent to the client when the signal "buffer_localvar_changed" is sent by
 WeeChat.
@@ -832,17 +803,17 @@ WeeChat.
 Data sent as hdata:
 
 [width="100%",cols="3m,2,10",options="header"]
-|=====================================================
+|===
 | Name            | Type      | Description
 | number          | integer   | Buffer number (≥ 1)
 | full_name       | string    | Full name (example: 'irc.freenode.#weechat')
 | local_variables | hashtable | Local variables
-|=====================================================
+|===
 
 Example: local variable 'test' updated in buffer 'irc.freenode.#weechat':
 
 [source,python]
-----------------------------------------
+----
 id='_buffer_localvar_changed', objects:
 hda:
   keys: {'number': 'int', 'full_name': 'str', 'local_variables': 'htb'}
@@ -854,11 +825,10 @@ hda:
     local_variables: {'server': 'local', 'test': 'value2', 'plugin': 'irc',
                       'type': 'channel', 'channel': '#weechat', 'nick': 'test',
                       'name': 'freenode.#weechat'}
-----------------------------------------
+----
 
 [[message_buffer_localvar_removed]]
-_buffer_localvar_removed
-^^^^^^^^^^^^^^^^^^^^^^^^
+==== _buffer_localvar_removed
 
 It is sent to the client when the signal "buffer_localvar_removed" is sent by
 WeeChat.
@@ -866,17 +836,17 @@ WeeChat.
 Data sent as hdata:
 
 [width="100%",cols="3m,2,10",options="header"]
-|=====================================================
+|===
 | Name            | Type      | Description
 | number          | integer   | Buffer number (≥ 1)
 | full_name       | string    | Full name (example: 'irc.freenode.#weechat')
 | local_variables | hashtable | Local variables
-|=====================================================
+|===
 
 Example: local variable 'test' removed from buffer 'irc.freenode.#weechat':
 
 [source,python]
-----------------------------------------
+----
 id: '_buffer_localvar_removed'
 hda:
   keys: {'number': 'int', 'full_name': 'str', 'local_variables': 'htb'}
@@ -887,18 +857,17 @@ hda:
     full_name: 'irc.freenode.#prout'
     local_variables: {'server': 'local', 'plugin': 'irc', 'type': 'channel',
                       'channel': '#weechat', 'nick': 'test', 'name': 'freenode.#weechat'}
-----------------------------------------
+----
 
 [[message_buffer_line_added]]
-_buffer_line_added
-^^^^^^^^^^^^^^^^^^
+==== _buffer_line_added
 
 It is sent to the client when the signal "buffer_line_added" is sent by WeeChat.
 
 Data sent as hdata:
 
 [width="100%",cols="3m,2,10",options="header"]
-|=====================================================
+|===
 | Name            | Type             | Description
 | buffer          | pointer          | Buffer pointer
 | date            | time             | Date of message
@@ -908,12 +877,12 @@ Data sent as hdata:
 | tags_array      | array of strings | List of tags for line
 | prefix          | string           | Prefix
 | message         | string           | Message
-|=====================================================
+|===
 
 Example: new message 'hello!' from nick 'FlashCode' in buffer 'irc.freenode.#weechat':
 
 [source,python]
-----------------------------------------
+----
 id: '_buffer_line_added'
 hda:
   keys: {'buffer': 'ptr', 'date': 'tim', 'date_printed': 'tim', 'displayed': 'chr',
@@ -929,27 +898,26 @@ hda:
     tags_array: ['irc_privmsg', 'notify_message', 'prefix_nick_142', 'nick_FlashCode', 'log1']
     prefix: 'F06@F@00142FlashCode'
     message: 'hello!'
-----------------------------------------
+----
 
 [[message_buffer_closing]]
-_buffer_closing
-^^^^^^^^^^^^^^^
+==== _buffer_closing
 
 It is sent to the client when the signal "buffer_closing" is sent by WeeChat.
 
 Data sent as hdata:
 
 [width="100%",cols="3m,2,10",options="header"]
-|=====================================================
+|===
 | Name            | Type      | Description
 | number          | integer   | Buffer number (≥ 1)
 | full_name       | string    | Full name (example: 'irc.freenode.#weechat')
-|=====================================================
+|===
 
 Example: buffer 'irc.freenode.#weechat' is being closed by WeeChat:
 
 [source,python]
-----------------------------------------
+----
 id: '_buffer_closing'
 hda:
   keys: {'number': 'int', 'full_name': 'str'}
@@ -958,11 +926,10 @@ hda:
     __path: ['0x4a715d0']
     number: 3
     full_name: 'irc.freenode.#weechat'
-----------------------------------------
+----
 
 [[message_nicklist]]
-_nicklist
-^^^^^^^^^
+==== _nicklist
 
 It is sent to the client when large updates are made on a nicklist (groups/nicks
 added/removed/changed). The message contains full nicklist.
@@ -973,7 +940,7 @@ another message with identifier '_nicklist_diff' is sent (see below).
 Data sent as hdata:
 
 [width="100%",cols="3m,2,10",options="header"]
-|=====================================================
+|===
 | Name            | Type     | Description
 | group           | char     | 1 for a group, 0 for a nick
 | visible         | char     | 1 if group/nick is displayed, otherwise 0
@@ -982,12 +949,12 @@ Data sent as hdata:
 | color           | string   | Name color
 | prefix          | string   | Prefix (only for a nick)
 | prefix_color    | string   | Prefix color (only for a nick)
-|=====================================================
+|===
 
 Example: nicklist for buffer 'irc.freenode.#weechat':
 
 [source,python]
-----------------------------------------
+----
 id: '_nicklist'
 hda:
   keys: {'group': 'chr', 'visible': 'chr', 'level': 'int', 'name': 'str', 'color': 'str',
@@ -1047,11 +1014,10 @@ hda:
     color: 'weechat.color.chat_nick_self'
     prefix: ' '
     prefix_color: ''
-----------------------------------------
+----
 
 [[message_nicklist_diff]]
-_nicklist_diff
-^^^^^^^^^^^^^^
+==== _nicklist_diff
 
 _New in version 0.4.1._
 
@@ -1062,7 +1028,7 @@ nicklist and current one).
 Data sent as hdata:
 
 [width="100%",cols="3m,2,10",options="header"]
-|=====================================================
+|===
 | Name            | Type     | Description
 | _diff           | char     | Type of diff (see below)
 | group           | char     | 1 for a group, 0 for a nick
@@ -1072,7 +1038,7 @@ Data sent as hdata:
 | color           | string   | Name color
 | prefix          | string   | Prefix (only for a nick)
 | prefix_color    | string   | Prefix color (only for a nick)
-|=====================================================
+|===
 
 The value of '_diff' can be:
 
@@ -1087,7 +1053,7 @@ nicks 'nick1' and 'nick2' added in group '999|...' (standard users on an IRC
 channel):
 
 [source,python]
-----------------------------------------
+----
 id: '_nicklist_diff'
 hda:
   keys: {'_diff': 'chr', 'group': 'chr', 'visible': 'chr', 'level': 'int', 'name': 'str',
@@ -1143,11 +1109,10 @@ hda:
     color: 'lightblue'
     prefix: ' '
     prefix_color: ''
-----------------------------------------
+----
 
 [[message_pong]]
-_pong
-^^^^^
+==== _pong
 
 _New in version 0.4.2._
 
@@ -1159,8 +1124,7 @@ The recommended action in client is to measure network lag and disconnect if
 network lag is high.
 
 [[message_upgrade]]
-_upgrade
-^^^^^^^^
+==== _upgrade
 
 _New in version 0.3.8._
 
@@ -1177,8 +1141,7 @@ During WeeChat upgrade, the socket remains opened (except if connection was made
 with SSL).
 
 [[message_upgrade_ended]]
-_upgrade_ended
-^^^^^^^^^^^^^^
+==== _upgrade_ended
 
 _New in version 0.3.8._
 
@@ -1190,14 +1153,13 @@ The recommended action in client is to resynchronize with WeeChat: resend all
 commands sent on startup after the 'init'.
 
 [[objects]]
-Objects
-~~~~~~~
+=== Objects
 
 Objects are identified by 3 letters, called 'type'. Following types are
 available:
 
 [width="100%",cols="^2m,5,10",options="header"]
-|=====================================================
+|===
 | Type | Value                | Length
 | chr  | Signed char          | 1 byte
 | int  | Signed integer       | 4 bytes
@@ -1211,25 +1173,23 @@ available:
 | inf  | Info: name + content | Variable
 | inl  | Infolist content     | Variable
 | arr  | Array of values      | 3 bytes (type) + number of items + data
-|=====================================================
+|===
 
 [[object_char]]
-Char
-^^^^
+==== Char
 
 A signed char is 1 byte.
 
 Example:
 
-.......................................
+....
 ┌────┐
 │ 41 │ ────► 65 (0x41: "A")
 └────┘
-.......................................
+....
 
 [[object_integer]]
-Integer
-^^^^^^^
+==== Integer
 
 A signed integer is 4 bytes, encoded as big-endian format (most significant byte
 first).
@@ -1238,7 +1198,7 @@ Range: -2147483648 to 2147483647.
 
 Examples:
 
-.......................................
+....
 ┌────┬────┬────┬────┐
 │ 00 │ 01 │ E2 │ 40 │ ────► 123456
 └────┴────┴────┴────┘
@@ -1246,11 +1206,10 @@ Examples:
 ┌────┬────┬────┬────┐
 │ FF │ FE │ 1D │ C0 │ ────► -123456
 └────┴────┴────┴────┘
-.......................................
+....
 
 [[object_long_integer]]
-Long integer
-^^^^^^^^^^^^
+==== Long integer
 
 A signed long integer is encoded as a string, with length on one byte.
 
@@ -1258,7 +1217,7 @@ Range: -9223372036854775808 to 9223372036854775807.
 
 Examples:
 
-.......................................
+....
 ┌────╥────┬────┬────┬────┬────┬────┬────┬────┬────┬────┐
 │ 0A ║ 31 │ 32 │ 33 │ 34 │ 35 │ 36 │ 37 │ 38 │ 39 │ 30 │ ────► 1234567890
 └────╨────┴────┴────┴────┴────┴────┴────┴────┴────┴────┘
@@ -1270,132 +1229,126 @@ length '1'  '2'  '3'  '4'  '5'  '6'  '7'  '8'  '9'  '0'
 └────╨────┴────┴────┴────┴────┴────┴────┴────┴────┴────┴────┘
  └──┘ └────────────────────────────────────────────────────┘
 length '-'  '1'  '2'  '3'  '4'  '5'  '6'  '7'  '8'  '9'  '0'
-.......................................
+....
 
 [[object_string]]
-String
-^^^^^^
+==== String
 
 A string is a length (integer on 4 bytes) + content of string (without final '\0').
 
 Example:
 
-.......................................
+....
 ┌────┬────┬────┬────╥────┬────┬────┬────┬────┐
 │ 00 │ 00 │ 00 │ 05 ║ 68 │ 65 │ 6C │ 6C │ 6F │ ────► "hello"
 └────┴────┴────┴────╨────┴────┴────┴────┴────┘
  └─────────────────┘ └──────────────────────┘
        length         'h'  'e'  'l'  'l'  'o'
-.......................................
+....
 
 An empty string has a length of zero:
 
-.......................................
+....
 ┌────┬────┬────┬────┐
 │ 00 │ 00 │ 00 │ 00 │ ────► ""
 └────┴────┴────┴────┘
  └─────────────────┘
        length
-.......................................
+....
 
 A 'NULL' string (NULL pointer in C) has a length of -1:
 
-.......................................
+....
 ┌────┬────┬────┬────┐
 │ FF │ FF │ FF │ FF │ ────► NULL
 └────┴────┴────┴────┘
  └─────────────────┘
        length
-.......................................
+....
 
 [[object_buffer]]
-Buffer
-^^^^^^
+==== Buffer
 
 Same format as <<object_string,string>>; content is just an array of bytes.
 
 [[object_pointer]]
-Pointer
-^^^^^^^
+==== Pointer
 
 A pointer is encoded as string (hex), with length on one byte.
 
 Example:
 
-.......................................
+....
 ┌────╥────┬────┬────┬────┬────┬────┬────┬────┬────┐
 │ 09 ║ 31 │ 61 │ 32 │ 62 │ 33 │ 63 │ 34 │ 64 │ 35 │ ────► 0x1a2b3c4d5
 └────╨────┴────┴────┴────┴────┴────┴────┴────┴────┘
  └──┘ └──────────────────────────────────────────┘
 length '1'  'a'  '2'  'b'  '3'  'c'  '4'  'd'  '5'
-.......................................
+....
 
 A 'NULL' pointer has a length of 1 with value 0:
 
-.......................................
+....
 ┌────╥────┐
 │ 01 ║ 00 │ ────► NULL (0x0)
 └────╨────┘
  └──┘ └──┘
 length  0
-.......................................
+....
 
 [[object_time]]
-Time
-^^^^
+==== Time
 
 A time (number of seconds) is encoded as a string, with length on one byte.
 
 Example:
 
-.......................................
+....
 ┌────╥────┬────┬────┬────┬────┬────┬────┬────┬────┬────┐
 │ 0A ║ 31 │ 33 │ 32 │ 31 │ 39 │ 39 │ 33 │ 34 │ 35 │ 36 │ ────► 1321993456
 └────╨────┴────┴────┴────┴────┴────┴────┴────┴────┴────┘
  └──┘ └───────────────────────────────────────────────┘
 length '1'  '3'  '2'  '1'  '9'  '9'  '3'  '4'  '5'  '6'
-.......................................
+....
 
 [[object_hashtable]]
-Hashtable
-^^^^^^^^^
+==== Hashtable
 
 A hashtable contains type for keys, type for values, number of items in
 hashtable (integer on 4 bytes), and then keys and values of items.
 
-.......................................
+....
 ┌───────────┬─────────────┬───────╥───────┬─────────╥─────╥───────┬─────────┐
 │ type_keys │ type_values │ count ║ key 1 │ value 1 ║ ... ║ key N │ value N │
 └───────────┴─────────────┴───────╨───────┴─────────╨─────╨───────┴─────────┘
-.......................................
+....
 
 Example:
 
-.......................................
+....
 ┌─────┬─────┬───╥──────┬─────╥──────┬─────┐
 │ str │ str │ 2 ║ key1 │ abc ║ key2 │ def │ ────► { 'key1' => 'abc',
 └─────┴─────┴───╨──────┴─────╨──────┴─────┘         'key2' => 'def' }
  └───┘ └───┘ └─┘ └──────────┘ └──────────┘
  type  type count   item 1       item 2
  keys values
-.......................................
+....
 
 [[object_hdata]]
-Hdata
-^^^^^
+==== Hdata
 
 A 'hdata' contains a path with hdata names, list of keys, number of set of
 objects, and then set of objects (path with pointers, then objects).
 
-.......................................
+....
 ┌────────┬──────┬───────╥────────┬─────────────────────╥──
 │ h-path │ keys │ count ║ p-path │ value 1 ... value N ║ ...
 └────────┴──────┴───────╨────────┴─────────────────────╨──
 
-  ──╥────────┬─────────────────────╥─────┐
-... ║ p-path │ value 1 ... value N ║ ... │
-  ──╨────────┴─────────────────────╨─────┘
-.......................................
+   ──╥────────┬─────────────────────╥─────┐
+ ... ║ p-path │ value 1 ... value N ║ ... │
+   ──╨────────┴─────────────────────╨─────┘
+....
 
 * 'h-path' (string): path used to reach hdata (example:
   'buffer/lines/line/line_data'); the last element in path is the hdata returned
@@ -1410,7 +1363,7 @@ objects, and then set of objects (path with pointers, then objects).
 Example of hdata with 2 buffers (weechat core and freenode server) and two keys
 ('number' and 'full_name'):
 
-.......................................
+....
 # command
 hdata buffer:gui_buffers(*) number,full_name
 
@@ -1421,16 +1374,16 @@ hdata buffer:gui_buffers(*) number,full_name
  └──────┘ └────────────────────────┘ └─┘
   h-path          keys              count
 
-  ──╥─────────┬───┬──────────────╥─────────┬───┬────────────────────┐
-... ║ 0x12345 │ 1 │ core.weechat ║ 0x6789a │ 2 │irc.server.freenode │
-  ──╨─────────┴───┴──────────────╨─────────┴───┴────────────────────┘
-     └──────────────────────────┘ └────────────────────────────────┘
-              buffer 1                        buffer 2
-.......................................
+   ──╥─────────┬───┬──────────────╥─────────┬───┬────────────────────┐
+ ... ║ 0x12345 │ 1 │ core.weechat ║ 0x6789a │ 2 │irc.server.freenode │
+   ──╨─────────┴───┴──────────────╨─────────┴───┴────────────────────┘
+      └──────────────────────────┘ └────────────────────────────────┘
+               buffer 1                        buffer 2
+....
 
 Example of hdata with lines of core buffer:
 
-.......................................
+....
 # command
 hdata buffer:gui_buffers(*)/lines/first_line(*)/data
 
@@ -1441,26 +1394,26 @@ hdata buffer:gui_buffers(*)/lines/first_line(*)/data
  └───────────────────────────┘ └───┘ └──┘
       h-path (hdata names)     keys  count
 
-  ──╥───────────┬───────────┬───────────┬───────╥──
-... ║ 0x23cf970 │ 0x23cfb60 │ 0x23d5f40 │ ..... ║ ...
-  ──╨───────────┴───────────┴───────────┴───────╨──
-     └─────────────────────────────────┘ └─────┘
-              p-path (pointers)          objects
-     └─────────────────────────────────────────┘
-                        line 1
+   ──╥───────────┬───────────┬───────────┬───────╥──
+ ... ║ 0x23cf970 │ 0x23cfb60 │ 0x23d5f40 │ ..... ║ ...
+   ──╨───────────┴───────────┴───────────┴───────╨──
+      └─────────────────────────────────┘ └─────┘
+               p-path (pointers)          objects
+      └─────────────────────────────────────────┘
+                         line 1
 
-  ──╥───────────┬───────────┬───────────┬───────╥──────────────┐
-... ║ 0x23cf970 │ 0x23cfb60 │ 0x23d6110 │ ..... ║ ............ │
-  ──╨───────────┴───────────┴───────────┴───────╨──────────────┘
-     └─────────────────────────────────┘ └─────┘
-              p-path (pointers)          objects
-     └─────────────────────────────────────────┘ └────────────┘
-                        line 2                     lines 3-50
-.......................................
+   ──╥───────────┬───────────┬───────────┬───────╥──────────────┐
+ ... ║ 0x23cf970 │ 0x23cfb60 │ 0x23d6110 │ ..... ║ ............ │
+   ──╨───────────┴───────────┴───────────┴───────╨──────────────┘
+      └─────────────────────────────────┘ └─────┘
+               p-path (pointers)          objects
+      └─────────────────────────────────────────┘ └────────────┘
+                         line 2                     lines 3-50
+....
 
 Example of hdata with nicklist:
 
-.......................................
+....
 # command
 nicklist
 
@@ -1471,80 +1424,78 @@ nicklist
  └─────────────────┘
         h-path
 
-  ──╥───────────────────────────────────────────────────────────┬────╥──
-... ║ group:chr,visible:chr,name:str,color:str,prefix:str,(...) │ 12 ║ ...
-  ──╨───────────────────────────────────────────────────────────┴────╨──
-     └─────────────────────────────────────────────────────────┘ └──┘
-                                keys                             count
+   ──╥───────────────────────────────────────────────────────────┬────╥──
+ ... ║ group:chr,visible:chr,name:str,color:str,prefix:str,(...) │ 12 ║ ...
+   ──╨───────────────────────────────────────────────────────────┴────╨──
+      └─────────────────────────────────────────────────────────┘ └──┘
+                                 keys                             count
 
-  ──╥─────────┬─────────┬───┬───┬──────┬─┬─┬─┬───╥──
-... ║ 0x12345 │ 0x6789a │ 1 │ 0 │ root │ │ │ │ 0 ║ ...
-  ──╨─────────┴─────────┴───┴───┴──────┴─┴─┴─┴───╨──
-     └─────────────────┘ └──────────────────────┘
-            p-path               objects
-     └──────────────────────────────────────────┘
-                 group (nicklist root)
+   ──╥─────────┬─────────┬───┬───┬──────┬─┬─┬─┬───╥──
+ ... ║ 0x12345 │ 0x6789a │ 1 │ 0 │ root │ │ │ │ 0 ║ ...
+   ──╨─────────┴─────────┴───┴───┴──────┴─┴─┴─┴───╨──
+      └─────────────────┘ └──────────────────────┘
+             p-path               objects
+      └──────────────────────────────────────────┘
+                  group (nicklist root)
 
-  ──╥─────────┬─────────┬───┬───┬───────┬─┬─┬─┬───╥──
-... ║ 0x123cf │ 0x678d4 │ 1 │ 0 │ 000|o │ │ │ │ 1 ║ ...
-  ──╨─────────┴─────────┴───┴───┴───────┴─┴─┴─┴───╨──
-     └─────────────────┘ └───────────────────────┘
-            p-path                objects
-     └───────────────────────────────────────────┘
-                   group (channel ops)
+   ──╥─────────┬─────────┬───┬───┬───────┬─┬─┬─┬───╥──
+ ... ║ 0x123cf │ 0x678d4 │ 1 │ 0 │ 000|o │ │ │ │ 1 ║ ...
+   ──╨─────────┴─────────┴───┴───┴───────┴─┴─┴─┴───╨──
+      └─────────────────┘ └───────────────────────┘
+             p-path                objects
+      └───────────────────────────────────────────┘
+                    group (channel ops)
 
-  ──╥─────────┬─────────┬───┬───┬──────────┬──────┬───┬────────────┬───╥──
-... ║ 0x128a7 │ 0x67ab2 │ 0 │ 1 │ ChanServ │ blue │ @ │ lightgreen │ 0 ║ ...
-  ──╨─────────┴─────────┴───┴───┴──────────┴──────┴───┴────────────┴───╨──
-     └─────────────────┘ └────────────────────────────────────────────┘
-            p-path                          objects
-     └────────────────────────────────────────────────────────────────┘
-                              nick (@ChanServ)
-.......................................
+   ──╥─────────┬─────────┬───┬───┬──────────┬──────┬───┬────────────┬───╥──
+ ... ║ 0x128a7 │ 0x67ab2 │ 0 │ 1 │ ChanServ │ blue │ @ │ lightgreen │ 0 ║ ...
+   ──╨─────────┴─────────┴───┴───┴──────────┴──────┴───┴────────────┴───╨──
+      └─────────────────┘ └────────────────────────────────────────────┘
+             p-path                          objects
+      └────────────────────────────────────────────────────────────────┘
+                               nick (@ChanServ)
+....
 
 [[object_info]]
-Info
-^^^^
+==== Info
 
 A 'info' contains a name and a value (both are strings).
 
-.......................................
+....
 ┌──────┬───────┐
 │ name │ value │
 └──────┴───────┘
-.......................................
+....
 
 * 'name' (string): name of info
 * 'value' (string): value
 
 Example of info 'version':
 
-.......................................
+....
 ┌─────────┬───────────────────┐
 │ version │ WeeChat 0.3.7-dev │
 └─────────┴───────────────────┘
-.......................................
+....
 
 [[object_infolist]]
-Infolist
-^^^^^^^^
+==== Infolist
 
 A 'infolist' contains a name, number of items, and then items (set of
 variables).
 
-.......................................
+....
 ┌──────┬───────╥────────╥─────╥────────┐
 │ name │ count ║ item 1 ║ ... ║ item N │
 └──────┴───────╨────────╨─────╨────────┘
-.......................................
+....
 
 An item is:
 
-.......................................
+....
 ┌───────╥────────┬────────┬─────────╥─────╥────────┬────────┬─────────┐
 │ count ║ name 1 │ type 1 │ value 1 ║ ... ║ name N │ type N │ value N │
 └───────╨────────┴────────┴─────────╨─────╨────────┴────────┴─────────┘
-.......................................
+....
 
 * 'name' (string): name of infolist ('buffer', 'window', 'bar', ...)
 * 'count' (integer): number of items
@@ -1556,7 +1507,7 @@ An item is:
 
 Example of infolist with 2 buffers (weechat core and freenode server):
 
-.......................................
+....
 # command
 infolist buffer
 
@@ -1567,66 +1518,64 @@ infolist buffer
  └──────┘ └─┘ └──────────────────────────────────┘
    name  count              item 1
 
-  ──╥────┬─────────┬─────┬─────────┬─────┐
-... ║ 42 │ pointer │ ptr │ 0x6789a │ ... │
-  ──╨────┴─────────┴─────┴─────────┴─────┘
-     └──────────────────────────────────┘
-                   item 2
-.......................................
+   ──╥────┬─────────┬─────┬─────────┬─────┐
+ ... ║ 42 │ pointer │ ptr │ 0x6789a │ ... │
+   ──╨────┴─────────┴─────┴─────────┴─────┘
+      └──────────────────────────────────┘
+                    item 2
+....
 
 [[object_array]]
-Array
-^^^^^
+==== Array
 
 An array is a type (3 bytes) + number of items (integer on 4 bytes) + data.
 
 Example of array with 2 strings:
 
-.......................................
+....
 ┌─────╥────┬────┬────┬────╥────┬────┬────┬────╥──
 │ str ║ 00 │ 00 │ 00 │ 02 ║ 00 │ 00 │ 00 │ 03 ║ ...
 └─────╨────┴────┴────┴────╨────┴────┴────┴────╨──
  └───┘ └─────────────────┘ └─────────────────┘
  type   number of strings        length
 
-  ──╥────┬────┬────╥────┬────┬────┬────╥────┬────┐
-... ║ 61 │ 62 │ 63 ║ 00 │ 00 │ 00 │ 02 ║ 64 │ 65 │ ────► { "abc", "de" }
-  ──╨────┴────┴────╨────┴────┴────┴────╨────┴────┘
-     └────────────┘ └─────────────────┘ └───────┘
-      'a'  'b'  'c'       length         'd'  'e'
-.......................................
+   ──╥────┬────┬────╥────┬────┬────┬────╥────┬────┐
+ ... ║ 61 │ 62 │ 63 ║ 00 │ 00 │ 00 │ 02 ║ 64 │ 65 │ ────► { "abc", "de" }
+   ──╨────┴────┴────╨────┴────┴────┴────╨────┴────┘
+      └────────────┘ └─────────────────┘ └───────┘
+       'a'  'b'  'c'       length         'd'  'e'
+....
 
 Example of array with 3 integers:
 
-.......................................
+....
 ┌─────╥────┬────┬────┬────╥────┬────┬────┬────╥──
 │ int ║ 00 │ 00 │ 00 │ 03 ║ 00 │ 00 │ 00 │ 7B ║ ...
 └─────╨────┴────┴────┴────╨────┴────┴────┴────╨──
  └───┘ └─────────────────┘ └─────────────────┘
  type   number of integers      123 (0x7B)
 
-  ──╥────┬────┬────┬────╥────┬────┬────┬────┐
-... ║ 00 │ 00 │ 01 │ C8 ║ 00 │ 00 │ 03 │ 15 │ ────► { 123, 456, 789 }
-  ──╨────┴────┴────┴────╨────┴────┴────┴────┘
-     └─────────────────┘ └─────────────────┘
-         456 (0x1C8)         789 (0x315)
-.......................................
+   ──╥────┬────┬────┬────╥────┬────┬────┬────┐
+ ... ║ 00 │ 00 │ 01 │ C8 ║ 00 │ 00 │ 03 │ 15 │ ────► { 123, 456, 789 }
+   ──╨────┴────┴────┴────╨────┴────┴────┴────┘
+      └─────────────────┘ └─────────────────┘
+          456 (0x1C8)         789 (0x315)
+....
 
 A 'NULL' array:
 
-.......................................
+....
 ┌─────╥────┬────┬────┬────┐
 │ str ║ 00 │ 00 │ 00 │ 00 │ ────► NULL
 └─────╨────┴────┴────┴────┘
  └───┘ └─────────────────┘
  type   number of strings
-.......................................
+....
 
 [[typical_session]]
-Typical session
----------------
+== Typical session
 
-.......................................
+....
     ┌────────┐                         ┌───────┐                ┌─────────┐
     │ Client ├ ─ ─ ─ ─(network)─ ─ ─ ─ ┤ Relay ├────────────────┤ WeeChat │
     └────────┘                         └───────┘                └─────────┘
@@ -1670,4 +1619,4 @@ Typical session
          ╟───────────────────────────────► ║                         ║
          ║ cmd: quit                       ║ disconnect client       ║
          ║                                 ║                         ║
-.......................................
+....

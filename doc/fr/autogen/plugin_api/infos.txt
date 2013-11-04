@@ -1,5 +1,5 @@
 [width="100%",cols="^1,^2,6,6",options="header"]
-|========================================
+|===
 | Extension | Nom | Description | Paramètres
 
 | aspell | aspell_dict | liste de dictionnaires (séparés par des virgules) utilisés sur le tampon | pointeur vers un tampon ("0x12345678") ou nom complet de tampon ("irc.freenode.#weechat")
@@ -62,4 +62,4 @@
 
 | weechat | weechat_upgrading | 1 si WeeChat est en cours de mise à jour (commande `/upgrade`) | -
 
-|========================================
+|===

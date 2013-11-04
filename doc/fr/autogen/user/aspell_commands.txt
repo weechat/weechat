@@ -1,7 +1,7 @@
 [[command_aspell_aspell]]
 [command]*`aspell`* configuration de l'extension aspell::
 
-----------------------------------------
+----
 /aspell  enable|disable|toggle
          listdict
          setdict <dict>[,<dict>...]
@@ -23,5 +23,5 @@ Pour activer aspell sur tous les tampons, utilisez l'option "default_dict", par 
   /aspell enable
 
 La touche par défaut pour activer/désactiver aspell est alt-s.
-----------------------------------------
+----
 

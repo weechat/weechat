@@ -1,5 +1,5 @@
 [width="100%",cols="^1,^2,5,5,5",options="header"]
-|========================================
+|===
 | Extension | Nom | Description | Pointeur | Paramètres
 
 | alias | alias | liste des alias | pointeur vers l'alias (optionnel) | nom d'alias (peut démarrer ou se terminer par "*" comme joker) (optionnel)
@@ -70,4 +70,4 @@
 
 | xfer | xfer | liste des xfer | pointeur vers le xfer (optionnel) | -
 
-|========================================
+|===

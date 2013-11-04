@@ -1,5 +1,5 @@
 [width="100%",cols="^1,^2,5,5,5",options="header"]
-|========================================
+|===
 | Erweiterung | Name | Beschreibung | Pointer | Argumente
 
 | alias | alias | Liste der Alias | Alias Pointer (optional) | Alias Name (darf mit einem "*" als Platzhalter beginnen oder enden) (optional)
@@ -70,4 +70,4 @@
 
 | xfer | xfer | Transferliste | Transferpointer (optional) | -
 
-|========================================
+|===

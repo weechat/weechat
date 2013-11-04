@@ -1,17 +1,17 @@
 [[command_weechat_away]]
 [command]*`away`* set or remove away status::
 
-----------------------------------------
+----
 /away  [-all] [<message>]
 
    -all: set or remove away status on all connected servers
 message: message for away (if no message is given, away status is removed)
-----------------------------------------
+----
 
 [[command_weechat_bar]]
 [command]*`bar`* manage bars::
 
-----------------------------------------
+----
 /bar  list|listfull|listitems
       add <name> <type>[,<condition>] <position> <size> <separator> <item1>[,<item2>...]
       default [input|title|status|nicklist]
@@ -58,12 +58,12 @@ Examples:
     /bar scroll nicklist * y+10
   scroll to end of nicklist on current buffer:
     /bar scroll nicklist * ye
-----------------------------------------
+----
 
 [[command_weechat_buffer]]
 [command]*`buffer`* manage buffers::
 
-----------------------------------------
+----
 /buffer  list
          clear [<number>|<name>|-merged|-all]
          move|merge <number>
@@ -120,12 +120,12 @@ Examples:
     /buffer #weechat
   jump to next buffer:
     /buffer +1
-----------------------------------------
+----
 
 [[command_weechat_color]]
 [command]*`color`* define color aliases and display palette of colors::
 
-----------------------------------------
+----
 /color  alias <color> <name>
         unalias <color>
         reset
@@ -145,22 +145,22 @@ Examples:
     /color alias 214 orange
   delete color 214:
     /color unalias 214
-----------------------------------------
+----
 
 [[command_weechat_command]]
 [command]*`command`* launch explicit WeeChat or plugin command::
 
-----------------------------------------
+----
 /command  <plugin> <command>
 
  plugin: plugin name ('weechat' for WeeChat internal command)
 command: command to execute (a '/' is automatically added if not found at beginning of command)
-----------------------------------------
+----
 
 [[command_weechat_cursor]]
 [command]*`cursor`* free movement of cursor on screen to execute actions on specific areas of screen::
 
-----------------------------------------
+----
 /cursor  go chat|<bar>|<x>,<y>
          move up|down|left|right|area_up|area_down|area_left|area_right
          stop
@@ -178,12 +178,12 @@ Examples:
     /cursor go nicklist
   go to coordinates x=10, y=5:
     /cursor go 10,5
-----------------------------------------
+----
 
 [[command_weechat_debug]]
 [command]*`debug`* control debug for core/plugins::
 
-----------------------------------------
+----
 /debug  list
         set <plugin> <level>
         dump [<plugin>]
@@ -208,12 +208,12 @@ infolists: display infos about infolists
      tags: display tags for lines
      term: display infos about terminal
   windows: display windows tree
-----------------------------------------
+----
 
 [[command_weechat_eval]]
 [command]*`eval`* evaluate expression and send result to buffer::
 
-----------------------------------------
+----
 /eval  [-n] <expression>
        [-n] -c <expression1> <operator> <expression2>
 
@@ -266,12 +266,12 @@ Examples:
   /eval -n -c abcd =~ (?-i)^ABC            ==> 0
   /eval -n -c abcd =~ (?-i)^abc            ==> 1
   /eval -n -c abcd !~ abc                  ==> 0
-----------------------------------------
+----
 
 [[command_weechat_filter]]
 [command]*`filter`* filter messages in buffers, to hide/show them according to tags or regex::
 
-----------------------------------------
+----
 /filter  list
          enable|disable|toggle [<name>]
          add <name> <buffer>[,<buffer>...] <tags> <regex>
@@ -320,12 +320,12 @@ Examples:
     /filter add toto irc.freenode.#weechat nick_toto *
   filter lines containing "weechat sucks" on IRC channel #weechat:
     /filter add sucks irc.freenode.#weechat * weechat sucks
-----------------------------------------
+----
 
 [[command_weechat_help]]
 [command]*`help`* display help about commands and options::
 
-----------------------------------------
+----
 /help  -list|-listfull [<plugin> [<plugin>...]]
        <command>
        <option>
@@ -335,23 +335,23 @@ Examples:
    plugin: list commands for this plugin
   command: a command name
    option: an option name (use /set to see list)
-----------------------------------------
+----
 
 [[command_weechat_history]]
 [command]*`history`* show buffer command history::
 
-----------------------------------------
+----
 /history  clear
           <value>
 
 clear: clear history
 value: number of history entries to show
-----------------------------------------
+----
 
 [[command_weechat_input]]
 [command]*`input`* functions for command line::
 
-----------------------------------------
+----
 /input  <action> [<arguments>]
 
 list of actions:
@@ -406,12 +406,12 @@ list of actions:
   paste_stop: stop paste (bracketed paste mode)
 
 This command is used by key bindings or plugins.
-----------------------------------------
+----
 
 [[command_weechat_key]]
 [command]*`key`* bind/unbind keys::
 
-----------------------------------------
+----
 /key  list|listdefault|listdiff [<context>]
       bind <key> [<command> [<args>]]
       bindctxt <context> <key> [<command> [<args>]]
@@ -461,12 +461,12 @@ Examples:
     /key bindctxt search ctrl-I /input search_stop
   middle button of mouse on a nick to retrieve info on nick:
     /key bindctxt mouse @item(buffer_nicklist):button3 /msg nickserv info ${nick}
-----------------------------------------
+----
 
 [[command_weechat_layout]]
 [command]*`layout`* save/apply/reset layout for buffers and windows::
 
-----------------------------------------
+----
 /layout  save [<name>] [buffers|windows]
          apply [<name>] [buffers|windows]
          leave
@@ -484,12 +484,12 @@ buffers: save/apply only buffers (order of buffers)
 windows: save/apply only windows (buffer displayed by each window)
 
 Without argument, this command displays saved layouts.
-----------------------------------------
+----
 
 [[command_weechat_mouse]]
 [command]*`mouse`* mouse control::
 
-----------------------------------------
+----
 /mouse  enable|disable|toggle [<delay>]
 
  enable: enable mouse
@@ -504,12 +504,12 @@ Examples:
     /mouse enable
   toggle mouse for 5 seconds:
     /mouse toggle 5
-----------------------------------------
+----
 
 [[command_weechat_mute]]
 [command]*`mute`* execute a command silently::
 
-----------------------------------------
+----
 /mute  [-current | -buffer <name> | -all] command
 
 -current: no output on current buffer
@@ -527,12 +527,12 @@ Examples:
     /mute -current msg * hi!
   message to #weechat channel:
     /mute -buffer irc.freenode.#weechat msg #weechat hi!
-----------------------------------------
+----
 
 [[command_weechat_plugin]]
 [command]*`plugin`* list/load/unload plugins::
 
-----------------------------------------
+----
 /plugin  list|listfull [<name>]
          load <filename> [<arguments>]
          autoload [<arguments>]
@@ -550,12 +550,12 @@ Examples:
 arguments: arguments given to plugin on load
 
 Without argument, this command lists loaded plugins.
-----------------------------------------
+----
 
 [[command_weechat_proxy]]
 [command]*`proxy`* manage proxies::
 
-----------------------------------------
+----
 /proxy  list
         add <name> <type> <address> <port> [<username> [<password>]]
         del <name>|-all
@@ -584,34 +584,34 @@ Examples:
     /proxy add myproxy socks5 sample.host.org 3128 myuser mypass
   delete a proxy:
     /proxy del myproxy
-----------------------------------------
+----
 
 [[command_weechat_quit]]
 [command]*`quit`* quit WeeChat::
 
-----------------------------------------
+----
 /quit  [-yes] [<arguments>]
 
      -yes: required if option weechat.look.confirm_quit is enabled
 arguments: text sent with signal "quit"
            (for example irc plugin uses this text to send quit message to server)
-----------------------------------------
+----
 
 [[command_weechat_reload]]
 [command]*`reload`* reload configuration files from disk::
 
-----------------------------------------
+----
 /reload  [<file> [<file>...]]
 
 file: configuration file to reload (without extension ".conf")
 
 Without argument, all files (WeeChat and plugins) are reloaded.
-----------------------------------------
+----
 
 [[command_weechat_repeat]]
 [command]*`repeat`* execute a command several times::
 
-----------------------------------------
+----
 /repeat  [-interval <delay>] <count> <command>
 
   delay: delay between execution of commands (in milliseconds)
@@ -623,23 +623,23 @@ All commands are executed on buffer where this command was issued.
 Example:
   scroll 2 pages up:
     /repeat 2 /window page_up
-----------------------------------------
+----
 
 [[command_weechat_save]]
 [command]*`save`* save configuration files to disk::
 
-----------------------------------------
+----
 /save  [<file> [<file>...]]
 
 file: configuration file to save (without extension ".conf")
 
 Without argument, all files (WeeChat and plugins) are saved.
-----------------------------------------
+----
 
 [[command_weechat_secure]]
 [command]*`secure`* manage secured data (passwords or private data encrypted in file sec.conf)::
 
-----------------------------------------
+----
 /secure  passphrase <passphrase>|-delete
          decrypt <passphrase>|-discard
          set <name> <value>
@@ -676,12 +676,12 @@ Examples:
     /set irc.server.oftc.command "/msg nickserv identify ${sec.data.oftc}"
   alias to ghost the nick "mynick":
     /alias ghost /eval /msg -server freenode nickserv ghost mynick ${sec.data.freenode}
-----------------------------------------
+----
 
 [[command_weechat_set]]
 [command]*`set`* set config options::
 
-----------------------------------------
+----
 /set  [<option> [<value>]]
       diff [<option> [<option>...]]
 
@@ -706,12 +706,12 @@ Examples:
     /set diff
   display changed options in irc plugin:
     /set diff irc.*
-----------------------------------------
+----
 
 [[command_weechat_unset]]
 [command]*`unset`* unset/reset config options::
 
-----------------------------------------
+----
 /unset  <option>
 
 option: name of an option (may begin or end with "*" to mass-reset options, use carefully!)
@@ -723,12 +723,12 @@ Examples:
     /unset weechat.look.item_time_format
   reset all color options:
     /unset weechat.color.*
-----------------------------------------
+----
 
 [[command_weechat_upgrade]]
 [command]*`upgrade`* upgrade WeeChat without disconnecting from servers::
 
-----------------------------------------
+----
 /upgrade  [<path_to_binary>|-quit]
 
 path_to_binary: path to WeeChat binary (default is current binary)
@@ -754,32 +754,32 @@ With option "-quit", the process is slightly different:
 Then later you can restore session with command: weechat --upgrade
 IMPORTANT: you must restore the session with exactly same configuration (files *.conf).
 It is possible to restore WeeChat session on another machine if you copy the content of directory "~/.weechat".
-----------------------------------------
+----
 
 [[command_weechat_uptime]]
 [command]*`uptime`* show WeeChat uptime::
 
-----------------------------------------
+----
 /uptime  [-o | -ol]
 
  -o: send uptime to current buffer as input (english string)
 -ol: send uptime to current buffer as input (translated string)
-----------------------------------------
+----
 
 [[command_weechat_version]]
 [command]*`version`* show WeeChat version and compilation date::
 
-----------------------------------------
+----
 /version  [-o | -ol]
 
  -o: send version to current buffer as input (english string)
 -ol: send version to current buffer as input (translated string)
-----------------------------------------
+----
 
 [[command_weechat_wait]]
 [command]*`wait`* schedule a command execution in future::
 
-----------------------------------------
+----
 /wait  <number>[<unit>] <command>
 
  number: amount of time to wait (integer number)
@@ -799,12 +799,12 @@ Examples:
     /wait 15m /away -all I'm away
   say 'hello' in 2 minutes:
     /wait 2m hello
-----------------------------------------
+----
 
 [[command_weechat_window]]
 [command]*`window`* manage windows::
 
-----------------------------------------
+----
 /window  list
          -1|+1|b#|up|down|left|right [-window <number>]
          <number>
@@ -863,5 +863,5 @@ Examples:
     /window scroll -d
   zoom on window #2:
     /window zoom -window 2
-----------------------------------------
+----
 

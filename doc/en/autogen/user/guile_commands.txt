@@ -1,7 +1,7 @@
 [[command_guile_guile]]
 [command]*`guile`* list/load/unload scripts::
 
-----------------------------------------
+----
 /guile  list|listfull [<name>]
         load [-q] <filename>
         autoload
@@ -18,5 +18,5 @@ filename: script (file) to load
       -q: quiet mode: do not display messages
 
 Without argument, this command lists all loaded scripts.
-----------------------------------------
+----
 

@@ -1,11 +1,11 @@
-= WEECHAT(1) =
+= WEECHAT(1)
 :doctype: manpage
 
-== 名前 ==
+== 名前
 
 weechat - 拡張可能なチャットクライアント
 
-== 書式 ==
+== 書式
 
 [verse]
 'weechat' [-a|--no-connect] [-d|--dir <path>] [-p|--no-plugin] [-r|--run-command <command>] [-s|--no-script] [--upgrade] [plugin:option...]
@@ -15,18 +15,18 @@ weechat - 拡張可能なチャットクライアント
 'weechat' [-l|--license]
 'weechat' [-v|--version]
 
-== 説明 ==
+== 説明
 
 WeeChat は高速、軽量、拡張可能なチャットクライアントです。
 
 モジュール式 (プラグインを持つ軽量なコア)、マルチプロトコル (IRC と Jabber)、
 C 言語と様々なプログラミング言語で書かれたスクリプトを使って拡張可能です。
 
-== オプション ==
+== オプション
 
 include::cmdline_options.ja.txt[]
 
-== プラグインオプション ==
+== プラグインオプション
 
 プラグインオプションに関する完全な文書は
 http://weechat.org/doc[WeeChat ユーザーガイド] のプラグインリファレンスを参照してください。
@@ -44,7 +44,7 @@ IPv6 アドレスの後にポートを指定するには IPv6
 
     irc://mynick@[2001:db8:0:85a3::ac1f:8001]:6668/#test
 
-== ファイル ==
+== ファイル
 
 $HOME/.weechat/weechat.conf::
     WeeChat の主設定ファイル
@@ -82,7 +82,7 @@ $HOME/.weechat/xfer.conf::
 $HOME/.weechat/weechat.log::
     WeeChat ログファイル
 
-== 著者 ==
+== 著者
 
 WeeChat は Sébastien Helleu さんと貢献者によって作成されています
 (完全なリストは AUTHORS ファイルを参照してください)。
@@ -97,7 +97,7 @@ GNU 一般公衆利用許諾契約書 (バージョン2か、希望によって�
 
 Web: <http://weechat.org/>
 
-== バグ報告 ==
+== バグ報告
 
 バグの報告や機能追加のリクエストは Savannah ウェブサイトで行なってください:
 

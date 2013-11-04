@@ -1,14 +1,11 @@
-WEECHAT(1)
-==========
+= WEECHAT(1)
 :doctype: manpage
 
-NAME
-----
+== NAME
 
 weechat - der erweiterbare Chat Client
 
-SYNOPSIS
---------
+== SYNOPSIS
 
 [verse]
 'weechat' [-a|--no-connect] [-d|--dir <path>] [-p|--no-plugin] [-r|--run-command <command>] [-s|--no-script] [--upgrade] [plugin:option...]
@@ -18,8 +15,7 @@ SYNOPSIS
 'weechat' [-l|--license]
 'weechat' [-v|--version]
 
-BESCHREIBUNG
-------------
+== BESCHREIBUNG
 
 WeeChat ist ein schneller, leichter und erweiterbarer Chat Client.
 
@@ -27,13 +23,11 @@ Der Client ist modular aufgebaut (ein kleiner Kern mit nachladbaren Erweiterunge
 Multiprotokollfähig (IRC und Jabber),erweiterbar mittels C und durch Skripten, wobei
 verschiedenen Sprachen unterstützt werden.
 
-OPTIONEN
---------
+== OPTIONEN
 
 include::cmdline_options.de.txt[]
 
-OPTIONEN von ERWEITERUNGEN
---------------------------
+== OPTIONEN von ERWEITERUNGEN
 
 Um eine vollständige Dokumentation der Optionen zu erhalten, siehe
 http://weechat.org/doc[WeeChat user's guide].
@@ -51,8 +45,7 @@ Um eine IPv6 Adresse zu nutzen, muss diese in eckige Klammern gesetzt werden:
 
     irc://mynick@[2001:db8:0:85a3::ac1f:8001]:6668/#test
 
-DATEIEN
--------
+== DATEIEN
 
 $HOME/.weechat/weechat.conf::
     WeeChats Konfigurationsdatei
@@ -90,8 +83,8 @@ $HOME/.weechat/xfer.conf::
 $HOME/.weechat/weechat.log::
     WeeChat Protokolldatei
 
-AUTOREN
--------
+== AUTOREN
+
 WeeChat ist programmiert von Sébastien Helleu und Beitragenden (eine vollständige Auflistung
 findet man in der AUTHORS Datei).
 
@@ -106,8 +99,7 @@ Please read the COPYING file for more information.
 
 Web: <http://weechat.org/>
 
-FEHLER MELDEN
--------------
+== FEHLER MELDEN
 
 Fehlerbeschreibungen oder Vorschläge für neue Funktionen können auf
 der Savannah Webseite hinterlegt werden:
