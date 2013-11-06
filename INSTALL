@@ -1,5 +1,6 @@
-WeeChat Installation instructions
-=================================
+= WeeChat Installation instructions
+Sébastien Helleu <flashcode@flashtux.org>
+
 
 WeeChat can be built with cmake (recommended) or autotools.
 
@@ -8,9 +9,7 @@ Only cmake is officially supported to build WeeChat. You should use autotools
 only if you are not able to use cmake. +
 Build with autotools requires more dependencies and is slower than with cmake.
 
-
-Dependencies
-------------
+== Dependencies
 
 Following packages are *required*:
 
@@ -32,17 +31,15 @@ Following packages are all optional:
 For a complete list of dependencies and versions recommended, please look at
 'User's guide'.
 
+== Installation With cmake
 
-Installation With cmake
------------------------
-
-------------------------------------------------------------------
-mkdir build
-cd build
-cmake .. -DPREFIX=/where/you/want/install -DCMAKE_BUILD_TYPE=Debug
-make
-make install     (as root for installation in system directories)
-------------------------------------------------------------------
+----
+$ mkdir build
+$ cd build
+$ cmake .. -DPREFIX=/path/to/directory
+$ make
+$ make install     (as root for installation in system directories)
+----
 
 For more information or installation with autotools, please look at
 'User's guide': http://weechat.org/doc

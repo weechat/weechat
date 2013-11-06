@@ -1,5 +1,5 @@
-WeeChat Readme
-==============
+= WeeChat Readme
+Sébastien Helleu <flashcode@flashtux.org>
 
 
 WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat
@@ -7,8 +7,7 @@ environment for many operating systems. Everything can be done with a keyboard.
 It is customizable and extensible with scripts.
 
 
-Features
---------
+== Features
 
 * chat client with multi-protocols/servers connection
 * small, fast and very light
@@ -18,9 +17,7 @@ Features
 * multi-platform (GNU/Linux, *BSD, Mac OS X, QNX, Windows & other)
 * free software, released under GPLv3
 
-
-Copyright
----------
+== Copyright
 
 Copyright (C) 2003-2013 Sébastien Helleu <flashcode@flashtux.org>
 
