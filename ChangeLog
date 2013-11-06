@@ -1,5 +1,4 @@
-WeeChat ChangeLog
-=================
+= WeeChat ChangeLog
 Sébastien Helleu <flashcode@flashtux.org>
 
 
@@ -10,11 +9,10 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 (file 'NEWS' in sources).
 
 
-Version 0.4.3 (under dev!)
---------------------------
+== Version 0.4.3 (under dev)
 
-* core: add default keys "meta2-1;3H" / "meta2-1;3F" (alt+home/end) and
-  "meta2-23;3~" / "meta2-24;3~" (alt+F11/F12) for xterm
+* core: add default keys `meta2-1;3H` / `meta2-1;3F` (alt+home/end) and
+  `meta2-23;3~` / `meta2-24;3~` (alt+F11/F12) for xterm
 * core: add support of italic text (requires ncurses >= 5.9 patch 20130831)
 * core: fix auto-apply of window layout in current window when option
   irc.look.buffer_switch_autojoin is on
@@ -30,8 +28,7 @@ Version 0.4.3 (under dev!)
   message (task #12777)
 * lua: fix crash on calls to callbacks during load of script
 
-Version 0.4.2 (2013-10-06)
---------------------------
+== Version 0.4.2 (2013-10-06)
 
 * core: clear whole line before displaying content instead of clearing after
   the end of content (bug #40115)
@@ -149,8 +146,7 @@ Version 0.4.2 (2013-10-06)
 * xfer: add option xfer.look.pv_tags
 * xfer: fix compilation on OpenBSD (bug #39071)
 
-Version 0.4.1 (2013-05-20)
---------------------------
+== Version 0.4.1 (2013-05-20)
 
 * core: fix display of long lines without time (message beginning with two tabs)
 * core: make nick prefix/suffix dynamic (not stored in the line): move options
@@ -269,8 +265,7 @@ Version 0.4.1 (2013-05-20)
 * xfer: fix freeze of DCC file received: use non-blocking socket after
   connection to sender and ensure the ACK is properly sent (bug #38340)
 
-Version 0.4.0 (2013-01-20)
---------------------------
+== Version 0.4.0 (2013-01-20)
 
 * core: fix infinite loop when a regex gives an empty match (bug #38112)
 * core: fix detection of guile in configure
@@ -398,19 +393,16 @@ Version 0.4.0 (2013-01-20)
 * xfer: limit bytes received to file size (for DCC file received), fix crash
   when displaying a xfer file with pos greater than size
 
-Version 0.3.9.2 (2012-11-18)
-----------------------------
+== Version 0.3.9.2 (2012-11-18)
 
 * core: do not call shell to execute command in hook_process (fix security
   problem when a plugin/script gives untrusted command) (bug #37764)
 
-Version 0.3.9.1 (2012-11-09)
-----------------------------
+== Version 0.3.9.1 (2012-11-09)
 
 * irc: fix crash when decoding IRC colors in strings (bug #37704)
 
-Version 0.3.9 (2012-09-29)
---------------------------
+== Version 0.3.9 (2012-09-29)
 
 * core: move the set of cmake policy CMP0003 in directory src (so it applies to
   all plugins) (bug #37311)
@@ -527,8 +519,7 @@ Version 0.3.9 (2012-09-29)
   registered
 * xfer: fix DCC transfer error (bug #37432)
 
-Version 0.3.8 (2012-06-03)
---------------------------
+== Version 0.3.8 (2012-06-03)
 
 * core: support lines of 16 Kb long in configuration files (instead of 1 Kb)
 * core: fix crash in focus hook for nicklist (bug #36271)
@@ -612,8 +603,7 @@ Version 0.3.8 (2012-06-03)
 * tcl: fix pointer sent to function hook_signal_send when type of data is
   a pointer
 
-Version 0.3.7 (2012-02-26)
---------------------------
+== Version 0.3.7 (2012-02-26)
 
 * core: add Japanese translations
 * core: fix expand of path `~` to home of user in function string_expand_home
@@ -636,7 +626,7 @@ Version 0.3.7 (2012-02-26)
   mouse state is changed with command /mouse)
 * core: add type "hashtable" for hdata
 * core: add signals "buffer_line_added" and "window_switch"
-* core: add default keys "meta2-1;5D" and "meta2-1;5C" (ctrl+left/right) for
+* core: add default keys `meta2-1;5D` and `meta2-1;5C` (ctrl+left/right) for
   gnome-terminal
 * core: add option "hooks" for command /debug
 * core: add option "weechat.look.scroll_bottom_after_switch" (if enabled,
@@ -720,8 +710,7 @@ Version 0.3.7 (2012-02-26)
 * ruby: fix crash when reloading ruby plugin (bug #34474)
 * xfer: display origin of xfer in core and xfer buffers (task #10956)
 
-Version 0.3.6 (2011-10-22)
---------------------------
+== Version 0.3.6 (2011-10-22)
 
 * core: fix freeze when calling function util_file_get_content with a directory
   instead of a filename
@@ -738,7 +727,7 @@ Version 0.3.6 (2011-10-22)
 * core: fix paste detection (problem with end of lines)
 * core: add new option weechat.look.color_basic_force_bold, off by default: bold
   is used only if terminal has less than 16 colors (patch #7621)
-* core: add default key "meta2-[E" (F5) for Linux console
+* core: add default key `meta2-[E` (F5) for Linux console
 * core: fix display of paste multi-line prompt with a root input bar
   (bug #34305)
 * core: add "inactive" colors for inactive windows and lines in merged buffers,
@@ -849,8 +838,7 @@ Version 0.3.6 (2011-10-22)
 * logger: add option logger.file.flush_delay (task #11118)
 * perl: replace calls to SvPV by SvPV_nolen (patch #7436)
 
-Version 0.3.5 (2011-05-15)
---------------------------
+== Version 0.3.5 (2011-05-15)
 
 * core: fix scroll in windows with /window scroll (skip lines "Day changed to")
 * core: recalculate buffer_max_length when buffer short name is changed
@@ -947,8 +935,7 @@ Version 0.3.5 (2011-05-15)
 * tcl: fix tcl detection on some 64-bits systems (bug #32915)
 * xfer: do not close chat buffers when removing xfer from list (bug #32271)
 
-Version 0.3.4 (2011-01-16)
---------------------------
+== Version 0.3.4 (2011-01-16)
 
 * core: add 256 colors support, new command /color, new section "palette" in
   weechat.conf (task #6834)
@@ -1044,8 +1031,7 @@ Version 0.3.4 (2011-01-16)
 * xfer: fix bug at end of file sent, sometimes transfer is still active although
   file was successfully sent
 
-Version 0.3.3 (2010-08-07)
---------------------------
+== Version 0.3.3 (2010-08-07)
 
 * core: use "!" to reverse a regex in a filter (to keep lines matching regex
   and hide other lines) (task #10032)
@@ -1099,8 +1085,7 @@ Version 0.3.3 (2010-08-07)
 * logger: use tag "no_log" to prevent a line from being written in log file
 * xfer: fix bug with double quotes in DCC filenames (bug #30471)
 
-Version 0.3.2 (2010-04-18)
---------------------------
+== Version 0.3.2 (2010-04-18)
 
 * core: add new options for command /key: listdefault, listdiff and reset
 * core: add new command /mute
@@ -1188,8 +1173,7 @@ Version 0.3.2 (2010-04-18)
 * xfer: fix crash when purging old xfer chats (bug #28764)
 * xfer: add signal "xfer_ended" (patch #7081)
 
-Version 0.3.1.1 (2010-01-31)
-----------------------------
+== Version 0.3.1.1 (2010-01-31)
 
 * irc: fix crash with SSL connection if option ssl_cert is set (bug #28752)
 * irc: fix bug with SSL connection (fails sometimes when ssl_verify is on)
@@ -1197,8 +1181,7 @@ Version 0.3.1.1 (2010-01-31)
 * irc: fix compilation with old GnuTLS versions (bug #28723)
 * xfer: fix crash when purging old xfer chats (bug #28764)
 
-Version 0.3.1 (2010-01-23)
---------------------------
+== Version 0.3.1 (2010-01-23)
 
 * core: fix bug with script installation on BSD/OSX (patch #6980)
 * core: add option grab_key_command for /input (bound by default to alt+"k")
@@ -1258,8 +1241,7 @@ Version 0.3.1 (2010-01-23)
   history is reached
 * api: fix function weechat_bar_set for python/lua/ruby (patch #6912)
 
-Version 0.3.0 (2009-09-06)
---------------------------
+== Version 0.3.0 (2009-09-06)
 
 * irc: add irc plugin (replaces old IRC code in core) (task #6217)
 * irc: add smart join/part/quit message filter (task #8503)
@@ -1338,24 +1320,20 @@ Version 0.3.0 (2009-09-06)
 * core: add new command /wait (schedule a command execution in future)
 * core: fix nick completion bug (missing space after nick)
 
-Version 0.2.6.3 (2009-06-13)
-----------------------------
+== Version 0.2.6.3 (2009-06-13)
 
 * fix gnutls detection (use pkg-config instead of libgnutls-config)
   (bug #26790)
 
-Version 0.2.6.2 (2009-04-18)
-----------------------------
+== Version 0.2.6.2 (2009-04-18)
 
 * fix bug with charset decoding (for example with iso2022jp) (bug #26228)
 
-Version 0.2.6.1 (2009-03-14)
-----------------------------
+== Version 0.2.6.1 (2009-03-14)
 
 * fix crash with some special chars in IRC messages (bug #25862)
 
-Version 0.2.6 (2007-09-06)
---------------------------
+== Version 0.2.6 (2007-09-06)
 
 * fix bug with log of plugin messages (option log_plugin_msg)
 * add new option "deloutq" to /server command to delete all servers messages
@@ -1408,8 +1386,7 @@ Version 0.2.6 (2007-09-06)
 * fix bug with /topic when channel not open and topic not defined (bug #20141)
 * add hotlist sort with new option "look_hotlist_sort" (task #5870)
 
-Version 0.2.5 (2007-06-07)
---------------------------
+== Version 0.2.5 (2007-06-07)
 
 * fix QUOTE command: now allowed when socket is OK (even if IRC connection to
   server is not OK) (bug #20113)
@@ -1450,8 +1427,7 @@ Version 0.2.5 (2007-06-07)
 * add color for input text not found in buffer history
 * fix USER message when connecting to IRC server (patch #5835)
 
-Version 0.2.4 (2007-03-29)
---------------------------
+== Version 0.2.4 (2007-03-29)
 
 * fix color bug with IRC messages displayed by plugins (bug #19442)
 * fix topic charset, now using channel charset if defined (bug #19386)
@@ -1483,8 +1459,7 @@ Version 0.2.4 (2007-03-29)
 * fix freeze with SSL server when disconnecting after connection loss
   (bug #18735)
 
-Version 0.2.3 (2007-01-10)
---------------------------
+== Version 0.2.3 (2007-01-10)
 
 * fix display bugs with nicklist at top/bottom when look_nicklist_separator is
   OFF (bug #18737)
@@ -1494,8 +1469,7 @@ Version 0.2.3 (2007-01-10)
 * fix bugs with charset: now decodes/encodes nicks and channels in IRC messages
   (bug #18716)
 
-Version 0.2.2 (2007-01-06)
---------------------------
+== Version 0.2.2 (2007-01-06)
 
 * fix bug with status bar (missing refresh) when closing a buffer
 * fix bug with use of first buffer for a channel if not connected to server
@@ -1537,8 +1511,7 @@ Version 0.2.2 (2007-01-06)
   used (bug #17944)
 * fix minor display bug with special chars on some arch like PPC
 
-Version 0.2.1 (2006-10-01)
---------------------------
+== Version 0.2.1 (2006-10-01)
 
 * fix crash for DCC receiver when resuming a file (bug #17885)
 * fix DCC error for sender when receiver cancels DCC (bug #17838)
@@ -1571,8 +1544,7 @@ Version 0.2.1 (2006-10-01)
 * fix nick refresh problem with unrealircd specific modes: chan owner (~) and
   chan admin (&) (bug #17340)
 
-Version 0.2.0 (2006-08-19)
---------------------------
+== Version 0.2.0 (2006-08-19)
 
 * add "C"lear option on IRC raw buffer
 * IRC raw buffer now uses join/part prefix with color to display messages
@@ -1620,8 +1592,7 @@ Version 0.2.0 (2006-08-19)
 * fix crash with "register" function in plugin scripts (bug #16701)
 * fix random crash at exit (/quit or /upgrade) with split windows
 
-Version 0.1.9 (2006-05-25)
---------------------------
+== Version 0.1.9 (2006-05-25)
 
 * fix /squery command (message sent to server, now OK with more than two
   arguments)
@@ -1671,8 +1642,7 @@ Version 0.1.9 (2006-05-25)
 * add /cycle command, /part command does close buffer any more (use
   /buffer close (or alias /close) to part and close buffer
 
-Version 0.1.8 (2006-03-18)
---------------------------
+== Version 0.1.8 (2006-03-18)
 
 * improve Ruby plugin
 * fix /set command when internal server name contains one or many dots
@@ -1719,8 +1689,7 @@ Version 0.1.8 (2006-03-18)
 * add option "irc_show_away_once", to show away message only once in pv
 * add partial Hungarian translation
 
-Version 0.1.7 (2006-01-14)
---------------------------
+== Version 0.1.7 (2006-01-14)
 
 * fix msg command (now allowed in private buffer with "*" as target)
 * remove "irc_default_msg_away" setting, for RFC 2812 conformity (/away command
@@ -1747,8 +1716,7 @@ Version 0.1.7 (2006-01-14)
 * fix infinite loop when resizing term to small size
 * add /history command
 
-Version 0.1.6 (2005-11-11)
---------------------------
+== Version 0.1.6 (2005-11-11)
 
 * new color management system, IRC colors are now correctly displayed and can
   be removed by new options irc_colors_receive and irc_colors_send
@@ -1773,8 +1741,7 @@ Version 0.1.6 (2005-11-11)
 * enhanced "smart" hotlist, with names (new options:
   look_hotlist_names_{count|level|length})
 
-Version 0.1.5 (2005-09-24)
---------------------------
+== Version 0.1.5 (2005-09-24)
 
 * add /ame command (send CTCP action to all channels of all connected servers)
 * add setting "irc_notice_as_pv" to see notices as pv
@@ -1797,8 +1764,7 @@ Version 0.1.5 (2005-09-24)
 * add keys ctrl+{up|down} to call previous/next command in global history
   (common to all buffers)
 
-Version 0.1.4 (2005-07-30)
---------------------------
+== Version 0.1.4 (2005-07-30)
 
 * join and part/quit prefixes (arrows) now displayed with different colors
 * add "irc_highlight" setting, to get highlight with any word
@@ -1822,8 +1788,7 @@ Version 0.1.4 (2005-07-30)
 * add auto-prefix with "#" for channels (if no prefix found), with /join
   command
 
-Version 0.1.3 (2005-07-02)
---------------------------
+== Version 0.1.3 (2005-07-02)
 
 * proxy support (http, socks4, socks5) with authentication (http, socks5)
   and ipv6 support (client to proxy)
@@ -1848,8 +1813,7 @@ Version 0.1.3 (2005-07-02)
 * fix startup crash when config file (~/.weechat/weechat.rc) is not found
 * improve Perl/Python libs detection for ./configure script
 
-Version 0.1.2 (2005-05-21)
---------------------------
+== Version 0.1.2 (2005-05-21)
 
 * add Python plugin support, improve Perl interface (and now Perl/Python
   libraries are checked by configure script)
@@ -1863,8 +1827,7 @@ Version 0.1.2 (2005-05-21)
 * fix crash with 64-bits arch (like AMD64) when converting UTF-8
 * add missing IRC commands (307, 341, 485, 671)
 
-Version 0.1.1 (2005-03-20)
---------------------------
+== Version 0.1.1 (2005-03-20)
 
 * add nicks count for channel buffers
 * add FIFO pipe for remote control
@@ -1886,8 +1849,7 @@ Version 0.1.1 (2005-03-20)
 * fix /buffer close command (now OK when disconnected from server)
 * fix display bugs when many windows are opened
 
-Version 0.1.0 (2005-02-12)
---------------------------
+== Version 0.1.0 (2005-02-12)
 
 * improve /window command: now split and merge are OK
 * away nicks are now displayed with another color (new option:
@@ -1917,8 +1879,7 @@ Version 0.1.0 (2005-02-12)
 * fix /away command (now OK if not away)
 * logs are now disabled by default (server/channel/private)
 
-Version 0.0.9 (2005-01-01)
---------------------------
+== Version 0.0.9 (2005-01-01)
 
 * auto-reconnection to server (new options: server_autoreconnect (on/off),
   server_autoreconnect_delay (in seconds))
@@ -1935,8 +1896,7 @@ Version 0.0.9 (2005-01-01)
 * add new config option: "server_command_delay" (delay in seconds after startup
   command for each server)
 
-Version 0.0.8 (2004-10-30)
---------------------------
+== Version 0.0.8 (2004-10-30)
 
 * fix /kick command: now OK with many words as reason
 * nickserv passwords hidden (new config option: log_hide_nickserv_pwd on/off)
@@ -1953,8 +1913,7 @@ Version 0.0.8 (2004-10-30)
 * add key for redrawing terminal (ctrl+"l")
 * add key for clearing hotlist (alt+"r")
 
-Version 0.0.7 (2004-08-08)
---------------------------
+== Version 0.0.7 (2004-08-08)
 
 * new "col_status_delimiters" config option
 * add command /buffer , buffers ordered by number, auto-jump to active buffers
@@ -1968,8 +1927,7 @@ Version 0.0.7 (2004-08-08)
   integer: 1 = compiler debug flag, 2 = same 1 with verbose debug messages in
   WeeChat (default: 0 = no debug)
 
-Version 0.0.6 (2004-06-05)
---------------------------
+== Version 0.0.6 (2004-06-05)
 
 * improve channel highlight (priority to message vs join/part)
 * fix bug when opened private win and remote user changes his nick
@@ -1980,8 +1938,7 @@ Version 0.0.6 (2004-06-05)
 * CTCP Version reply is now in English only and doesn't show host (security
   reason)
 
-Version 0.0.5 (2004-02-07)
---------------------------
+== Version 0.0.5 (2004-02-07)
 
 * /set command to modify config options when WeeChat is running
 * fix look_nicklist config option, now enables/disables nicklist
@@ -1999,8 +1956,7 @@ Version 0.0.5 (2004-02-07)
 * add -c (or --config) command line parameter to see config file options
 * highlight action messages
 
-Version 0.0.4 (2004-01-01)
---------------------------
+== Version 0.0.4 (2004-01-01)
 
 * Perl plugin, with auto-load
 * when private window is created (another user is talking), WeeChat does not
@@ -2009,8 +1965,7 @@ Version 0.0.4 (2004-01-01)
 * catch ctrl+"c" (ignored)
 * debug messages can be enabled via ./configure --enable-debug option
 
-Version 0.0.3 (2003-11-03)
---------------------------
+== Version 0.0.3 (2003-11-03)
 
 * ./configure script to build WeeChat
 * nicks are now correctly sorted (op, halfop, voice, other)
@@ -2025,8 +1980,7 @@ Version 0.0.3 (2003-11-03)
   /users, /wallops, /userhost, /ison, /ctcp ping
 * code cleanup
 
-Version 0.0.2 (2003-10-05)
---------------------------
+== Version 0.0.2 (2003-10-05)
 
 * add commands /rehash and /restart
 * and command and auto-join channels when connected to server
@@ -2040,8 +1994,7 @@ Version 0.0.2 (2003-10-05)
 * fix crash when sending command which can only be received
 * CTCP version returns more info (about OS)
 
-Version 0.0.1 (2003-09-27)
---------------------------
+== Version 0.0.1 (2003-09-27)
 
 * ncurses GUI with color output
 * multi-servers
