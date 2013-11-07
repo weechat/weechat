@@ -2515,6 +2515,12 @@ Now you can connect on port 8000 with any IRC client using server password
 
 The Relay plugin can send data to remote interface using WeeChat protocol.
 
+You can connect with a remote interface, see the list on download page:
+http://weechat.org/download
+
+[IMPORTANT]
+WeeChat itself can NOT connect to another WeeChat with this protocol.
+
 For example:
 
 ----

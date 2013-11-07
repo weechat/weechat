@@ -2571,6 +2571,14 @@ herstellen, indem man das Server Passwort "meinPasswort" nutzt (oder
 Die Relay-Erweiterung kann Daten, mittels dem WeeChat Protokoll, an eine
 externe Oberfläche senden.
 
+// TRANSLATION MISSING
+You can connect with a remote interface, see the list on download page:
+http://weechat.org/download
+
+[IMPORTANT]
+// TRANSLATION MISSING
+WeeChat itself can NOT connect to another WeeChat with this protocol.
+
 Zum Beispiel:
 
 ----

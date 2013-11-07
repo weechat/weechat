@@ -2593,6 +2593,13 @@ si aucun serveur n'a été spécifié dans le relai).
 L'extension Relay peut envoyer les données à une interface distante en
 utilisant le protocole WeeChat.
 
+Vous pouvez vous connected avec une interface distante, voir la liste sur la
+page de téléchargement : http://weechat.org/download
+
+[IMPORTANT]
+WeeChat lui-même ne peut PAS se connecter sur un autre WeeChat avec ce
+protocole.
+
 Par exemple :
 
 ----

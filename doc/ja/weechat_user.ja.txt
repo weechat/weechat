@@ -2522,6 +2522,14 @@ IRC プロキシを設定した場合には "freenode:mypass") で 8000 番ポ�
 
 Relay プラグインは WeeChat プロトコルを使ってリモートインターフェイスに対してデータを送信できます。
 
+// TRANSLATION MISSING
+You can connect with a remote interface, see the list on download page:
+http://weechat.org/download
+
+[IMPORTANT]
+// TRANSLATION MISSING
+WeeChat itself can NOT connect to another WeeChat with this protocol.
+
 例:
 
 ----
