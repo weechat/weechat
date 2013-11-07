@@ -632,6 +632,9 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
     if (!nickname || !nickname[0])
         return NULL;
 
+    if (!channel->nicks)
+        irc_channel_add_nicklist_groups (server, channel);
+
     /* nick already exists on this channel? */
     ptr_nick = irc_nick_search (server, channel, nickname);
     if (ptr_nick)
@@ -820,6 +823,9 @@ irc_nick_free_all (struct t_irc_server *server, struct t_irc_channel *channel)
     {
         irc_nick_free (server, channel, channel->nicks);
     }
+
+    /* remove all groups in nicklist */
+    weechat_nicklist_remove_all (channel->buffer);
 
     /* should be zero, but prevent any bug :D */
     channel->nicks_count = 0;

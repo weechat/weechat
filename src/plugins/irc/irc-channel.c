@@ -152,10 +152,9 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
 {
     struct t_irc_channel *new_channel;
     struct t_gui_buffer *new_buffer, *ptr_buffer_for_merge;
-    int i, buffer_created, current_buffer_number, buffer_position, manual_join;
+    int buffer_created, current_buffer_number, buffer_position, manual_join;
     int noswitch;
-    char *buffer_name, str_number[32], str_group[32], *channel_name_lower;
-    const char *prefix_modes;
+    char *buffer_name, str_number[32], *channel_name_lower;
 
     /* alloc memory for new channel */
     if ((new_channel = malloc (sizeof (*new_channel))) == NULL)
@@ -262,22 +261,6 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
         }
     }
 
-    if (channel_type == IRC_CHANNEL_TYPE_CHANNEL)
-    {
-        prefix_modes = irc_server_get_prefix_modes (server);
-        for (i = 0; prefix_modes[i]; i++)
-        {
-            snprintf (str_group, sizeof (str_group), "%03d|%c",
-                      i, prefix_modes[i]);
-            weechat_nicklist_add_group (new_buffer, NULL, str_group,
-                                        "weechat.color.nicklist_group", 1);
-        }
-        snprintf (str_group, sizeof (str_group), "%03d|%s",
-                  IRC_NICK_GROUP_OTHER_NUMBER, IRC_NICK_GROUP_OTHER_NAME);
-        weechat_nicklist_add_group (new_buffer, NULL, str_group,
-                                    "weechat.color.nicklist_group", 1);
-    }
-
     /* initialize new channel */
     new_channel->type = channel_type;
     new_channel->name = strdup (channel_name);
@@ -373,6 +356,35 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
 
     /* all is OK, return address of new channel */
     return new_channel;
+}
+
+/*
+ * Add groups in nicklist for a channel.
+ */
+
+void
+irc_channel_add_nicklist_groups (struct t_irc_server *server,
+                                 struct t_irc_channel *channel)
+{
+    const char *prefix_modes;
+    char str_group[32];
+    int i;
+
+    if (channel->type != IRC_CHANNEL_TYPE_CHANNEL)
+        return;
+
+    prefix_modes = irc_server_get_prefix_modes (server);
+    for (i = 0; prefix_modes[i]; i++)
+    {
+        snprintf (str_group, sizeof (str_group), "%03d|%c",
+                  i, prefix_modes[i]);
+        weechat_nicklist_add_group (channel->buffer, NULL, str_group,
+                                    "weechat.color.nicklist_group", 1);
+    }
+    snprintf (str_group, sizeof (str_group), "%03d|%s",
+              IRC_NICK_GROUP_OTHER_NUMBER, IRC_NICK_GROUP_OTHER_NAME);
+    weechat_nicklist_add_group (channel->buffer, NULL, str_group,
+                                "weechat.color.nicklist_group", 1);
 }
 
 /*
