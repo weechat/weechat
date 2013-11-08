@@ -648,8 +648,9 @@ gui_line_get_nick_tag (struct t_gui_line *line)
 int
 gui_line_has_highlight (struct t_gui_line *line)
 {
-    int rc, i, j, no_highlight;
-    char *msg_no_color, *highlight_words;
+    int rc, i, j, no_highlight, action, length;
+    char *msg_no_color, *ptr_msg_no_color, *highlight_words;
+    const char *ptr_nick;
 
     /*
      * highlights are disabled on this buffer? (special value "-" means that
@@ -661,9 +662,13 @@ gui_line_has_highlight (struct t_gui_line *line)
 
     /*
      * check if highlight is forced by a tag (with option highlight_tags) or
-     * disabled for line
+     * disabled for line; also check if the line is an action message (for
+     * example tag "irc_action") and get pointer on the nick (tag "nick_xxx"),
+     * these info will be used later (see below)
      */
     no_highlight = 0;
+    action = 0;
+    ptr_nick = NULL;
     for (i = 0; i < line->data->tags_count; i++)
     {
         if (config_highlight_tags)
@@ -677,6 +682,17 @@ gui_line_has_highlight (struct t_gui_line *line)
         }
         if (strcmp (line->data->tags_array[i], GUI_CHAT_TAG_NO_HIGHLIGHT) == 0)
             no_highlight = 1;
+        else if (strncmp (line->data->tags_array[i], "nick_", 5) == 0)
+            ptr_nick = line->data->tags_array[i] + 5;
+        else
+        {
+            length = strlen (line->data->tags_array[i]);
+            if ((length >= 7)
+                && (strcmp (line->data->tags_array[i] + length - 7, "_action") == 0))
+            {
+                action = 1;
+            }
+        }
     }
     if (no_highlight)
         return 0;
@@ -697,6 +713,19 @@ gui_line_has_highlight (struct t_gui_line *line)
     msg_no_color = gui_color_decode (line->data->message, NULL);
     if (!msg_no_color)
         return 0;
+    ptr_msg_no_color = msg_no_color;
+
+    /*
+     * if the line is an action message and that we know the nick, we skip
+     * the nick if it is at beginning of message (to not highlight an action
+     * from another user if his nick is in our highlight settings)
+     */
+    if (action && ptr_nick)
+    {
+        length = strlen (ptr_nick);
+        if (strncmp (ptr_msg_no_color, ptr_nick, length) == 0)
+            ptr_msg_no_color += length;
+    }
 
     /*
      * there is highlight on line if one of buffer highlight words matches line
@@ -704,7 +733,7 @@ gui_line_has_highlight (struct t_gui_line *line)
      */
     highlight_words = gui_buffer_string_replace_local_var (line->data->buffer,
                                                            line->data->buffer->highlight_words);
-    rc = string_has_highlight (msg_no_color,
+    rc = string_has_highlight (ptr_msg_no_color,
                                (highlight_words) ?
                                highlight_words : line->data->buffer->highlight_words);
     if (highlight_words)
@@ -714,7 +743,7 @@ gui_line_has_highlight (struct t_gui_line *line)
     {
         highlight_words = gui_buffer_string_replace_local_var (line->data->buffer,
                                                                CONFIG_STRING(config_look_highlight));
-        rc = string_has_highlight (msg_no_color,
+        rc = string_has_highlight (ptr_msg_no_color,
                                    (highlight_words) ?
                                    highlight_words : CONFIG_STRING(config_look_highlight));
         if (highlight_words)
@@ -723,13 +752,13 @@ gui_line_has_highlight (struct t_gui_line *line)
 
     if (!rc && config_highlight_regex)
     {
-        rc = string_has_highlight_regex_compiled (msg_no_color,
+        rc = string_has_highlight_regex_compiled (ptr_msg_no_color,
                                                   config_highlight_regex);
     }
 
     if (!rc && line->data->buffer->highlight_regex_compiled)
     {
-        rc = string_has_highlight_regex_compiled (msg_no_color,
+        rc = string_has_highlight_regex_compiled (ptr_msg_no_color,
                                                   line->data->buffer->highlight_regex_compiled);
     }
 

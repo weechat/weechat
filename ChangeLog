@@ -11,6 +11,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 0.4.3 (under dev)
 
+* core: fix highlight on action messages: skip the nick at beginning to prevent
+  highlight on it (bug #40516)
 * core: add default keys `meta2-1;3H` / `meta2-1;3F` (alt+home/end) and
   `meta2-23;3~` / `meta2-24;3~` (alt+F11/F12) for xterm
 * core: add support of italic text (requires ncurses >= 5.9 patch 20130831)
