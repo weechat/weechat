@@ -34,6 +34,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 0.4.2 (2013-10-06)
 
+* core: reduce memory used by using shared strings for nicklist and lines in
+  buffers
 * core: clear whole line before displaying content instead of clearing after
   the end of content (bug #40115)
 * core: fix time displayed in status bar (it was one second late) (bug #40097)
