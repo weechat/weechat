@@ -372,8 +372,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     if (!script_config_init ())
         return WEECHAT_RC_ERROR;
 
-    if (script_config_read () < 0)
-        return WEECHAT_RC_ERROR;
+    script_config_read ();
 
     weechat_mkdir_home (SCRIPT_PLUGIN_NAME, 0755);
 
