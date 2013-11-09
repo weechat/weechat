@@ -27,6 +27,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: fix truncated prefix when filters are toggled (bug #40204)
 * core: add options to customize default text search in buffers:
   weechat.look.buffer_search_{case_sensitive|force_default|regex|where}
+* api: add support for C++ plugins
 * api: fix read of arrays in hdata functions hdata_<type> (bug #40354)
 * irc: fix groups in channel nicklist when reconnecting to a server that
   supports more nick prefixes than the previously connected server

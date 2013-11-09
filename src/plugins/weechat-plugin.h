@@ -22,6 +22,10 @@
 #ifndef __WEECHAT_WEECHAT_PLUGIN_H
 #define __WEECHAT_WEECHAT_PLUGIN_H 1
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <sys/types.h>
 
 /* some systems like GNU/Hurd do not define PATH_MAX */
@@ -1721,5 +1725,9 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                  __callback_read_data)
 #define weechat_upgrade_close(__upgrade_file)                           \
     weechat_plugin->upgrade_close(__upgrade_file)
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __WEECHAT_WEECHAT_PLUGIN_H */
