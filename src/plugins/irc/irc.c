@@ -163,8 +163,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     if (!irc_config_init ())
         return WEECHAT_RC_ERROR;
 
-    if (irc_config_read () < 0)
-        return WEECHAT_RC_ERROR;
+    irc_config_read ();
 
     irc_command_init ();
 
