@@ -7781,6 +7781,10 @@ Paramètres :
   Chaîne: liste de scripts supprimés (séparés par des virgules) |
   Script(s) tcl supprimé(s)
 
+| weechat | buffer_opened |
+  Pointeur : tampon |
+  Tampon ouvert
+
 | weechat | buffer_closing |
   Pointeur : tampon |
   Fermeture du tampon en cours
@@ -7822,10 +7826,6 @@ Paramètres :
   Pointeur : tampon |
   Tampon déplacé
 
-| weechat | buffer_opened |
-  Pointeur : tampon |
-  Tampon ouvert
-
 | weechat | buffer_renamed |
   Pointeur : tampon |
   Tampon renommé
@@ -7841,6 +7841,16 @@ Paramètres :
 | weechat | buffer_type_changed |
   Pointeur : tampon |
   Type de tampon changé
+
+| weechat | buffer_zoomed +
+  _(WeeChat ≥ 0.4.3)_ |
+  Pointeur : tampon |
+  Zoom sur un tampon mélangé
+
+| weechat | buffer_unzoomed +
+  _(WeeChat ≥ 0.4.3)_ |
+  Pointeur : tampon |
+  Fin du zoom sur un tampon mélangé
 
 | weechat | day_changed +
   _(WeeChat ≥ 0.3.2)_ |
@@ -8002,14 +8012,6 @@ Paramètres :
   Pointeur : fenêtre |
   Basculement vers une autre fenêtre
 
-| weechat | window_unzoom |
-  Pointeur : fenêtre courante |
-  Fin du zoom en cours sur la fenêtre
-
-| weechat | window_unzoomed |
-  Pointeur : fenêtre courante |
-  Fin du zoom effectué sur la fenêtre
-
 | weechat | window_zoom |
   Pointeur : fenêtre courante |
   Zoom en cours sur la fenêtre
@@ -8017,6 +8019,14 @@ Paramètres :
 | weechat | window_zoomed |
   Pointeur : fenêtre courante |
   Zomm effectué sur la fenêtre
+
+| weechat | window_unzoom |
+  Pointeur : fenêtre courante |
+  Fin du zoom en cours sur la fenêtre
+
+| weechat | window_unzoomed |
+  Pointeur : fenêtre courante |
+  Fin du zoom effectué sur la fenêtre
 
 | xfer | xfer_add |
   Pointeur : infolist avec l'info xfer |

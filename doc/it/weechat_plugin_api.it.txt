@@ -7752,6 +7752,10 @@ Argomenti:
   String: comma-separated list of scripts removed |
   Tcl script(s) removed
 
+| weechat | buffer_opened |
+  Puntatore: buffer |
+  Buffer aperto
+
 | weechat | buffer_closing |
   Puntatore: buffer |
   Chiusura del buffer
@@ -7795,10 +7799,6 @@ Argomenti:
   Puntatore: buffer |
   Buffer spostato
 
-| weechat | buffer_opened |
-  Puntatore: buffer |
-  Buffer aperto
-
 | weechat | buffer_renamed |
   Puntatore: buffer |
   Buffer rinominato
@@ -7814,6 +7814,18 @@ Argomenti:
 | weechat | buffer_type_changed |
   Puntatore: buffer |
   Tipo di buffer modificato
+
+// TRANSLATION MISSING
+| weechat | buffer_zoomed +
+  _(WeeChat ≥ 0.4.3)_ |
+  Puntatore: buffer |
+  Merged buffer zoomed
+
+// TRANSLATION MISSING
+| weechat | buffer_unzoomed +
+  _(WeeChat ≥ 0.4.3)_ |
+  Puntatore: buffer |
+  Merged buffer unzoomed
 
 | weechat | day_changed +
   _(WeeChat ≥ 0.3.2)_ |
@@ -7991,14 +8003,6 @@ Argomenti:
   Puntatore: finestra |
   Passaggio alla finestra
 
-| weechat | window_unzoom |
-  Puntatore: finestra corrente |
-  Minimizzazione della finestra
-
-| weechat | window_unzoomed |
-  Puntatore: finestra corrente |
-  Finestra minimizzata
-
 | weechat | window_zoom |
   Puntatore: finestra corrente |
   Massimizzazione della finestra
@@ -8006,6 +8010,14 @@ Argomenti:
 | weechat | window_zoomed |
   Puntatore: finestra corrente |
   Finestra massimizzata
+
+| weechat | window_unzoom |
+  Puntatore: finestra corrente |
+  Minimizzazione della finestra
+
+| weechat | window_unzoomed |
+  Puntatore: finestra corrente |
+  Finestra minimizzata
 
 | xfer | xfer_add |
   Puntatore: lista info con info per xfer|

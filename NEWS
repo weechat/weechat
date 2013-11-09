@@ -11,6 +11,17 @@ http://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file 'ChangeLog' in sources).
 
 
+== Version 0.4.3 (under dev)
+
+=== New bar item buffer_zoom
+
+A new bar item has been added: 'buffer_zoom'.
+The default value for status bar items becomes:
+
+----
+/set weechat.bar.status.items "[time],[buffer_count],[buffer_plugin],buffer_number+:+buffer_name+(buffer_modes)+{buffer_nicklist_count}+buffer_zoom+buffer_filter,[lag],[hotlist],completion,scroll"
+----
+
 == Version 0.4.2 (2013-10-06)
 
 === Day change message

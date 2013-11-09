@@ -59,8 +59,9 @@ struct t_gui_bar_item *last_gui_bar_item = NULL; /* last bar item           */
 char *gui_bar_item_names[GUI_BAR_NUM_ITEMS] =
 { "input_paste", "input_prompt", "input_search", "input_text", "time",
   "buffer_count", "buffer_plugin", "buffer_number", "buffer_name",
-  "buffer_modes", "buffer_filter", "buffer_nicklist_count", "scroll",
-  "hotlist", "completion", "buffer_title", "buffer_nicklist", "window_number"
+  "buffer_modes", "buffer_filter", "buffer_zoom", "buffer_nicklist_count",
+  "scroll", "hotlist", "completion", "buffer_title", "buffer_nicklist",
+  "window_number"
 };
 char *gui_bar_items_default_for_bars[][2] =
 { { GUI_BAR_DEFAULT_NAME_INPUT,
@@ -69,8 +70,8 @@ char *gui_bar_items_default_for_bars[][2] =
     "buffer_title" },
   { GUI_BAR_DEFAULT_NAME_STATUS,
     "[time],[buffer_count],[buffer_plugin],buffer_number+:+"
-    "buffer_name+(buffer_modes)+{buffer_nicklist_count}+buffer_filter,[lag],"
-    "[hotlist],completion,scroll" },
+    "buffer_name+(buffer_modes)+{buffer_nicklist_count}+buffer_zoom+"
+    "buffer_filter,[lag],[hotlist],completion,scroll" },
   { GUI_BAR_DEFAULT_NAME_NICKLIST,
     "buffer_nicklist" },
   { NULL,
@@ -1120,6 +1121,38 @@ gui_bar_item_default_buffer_nicklist_count (void *data,
 }
 
 /*
+ * Default item for zoom on merged buffer.
+ */
+
+char *
+gui_bar_item_buffer_zoom (void *data, struct t_gui_bar_item *item,
+                          struct t_gui_window *window,
+                          struct t_gui_buffer *buffer,
+                          struct t_hashtable *extra_info)
+
+{
+    char buf[512];
+
+    /* make C compiler happy */
+    (void) data;
+    (void) item;
+    (void) window;
+    (void) extra_info;
+
+    if (!buffer)
+        return NULL;
+
+    /* don't display item if current buffer is not merged + zoomed */
+    if (buffer->active != 2)
+        return NULL;
+
+    snprintf (buf, sizeof (buf), "%s",
+              CONFIG_STRING(config_look_item_buffer_zoom));
+
+    return strdup (buf);
+}
+
+/*
  * Default item for scrolling indicator.
  */
 
@@ -1920,6 +1953,15 @@ gui_bar_item_init ()
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_FILTER]);
     gui_bar_item_hook_signal ("filters_*",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_FILTER]);
+
+    /* buffer zoom */
+    gui_bar_item_new (NULL,
+                      gui_bar_item_names[GUI_BAR_ITEM_BUFFER_ZOOM],
+                      &gui_bar_item_buffer_zoom, NULL);
+    gui_bar_item_hook_signal ("buffer_zoomed",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_ZOOM]);
+    gui_bar_item_hook_signal ("buffer_unzoomed",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_ZOOM]);
 
     /* buffer nicklist count */
     gui_bar_item_new (NULL,

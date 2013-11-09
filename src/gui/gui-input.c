@@ -1605,10 +1605,13 @@ void
 gui_input_zoom_merged_buffer (struct t_gui_buffer *buffer)
 {
     struct t_gui_window *ptr_window;
+    int buffer_was_zoomed;
 
     /* do nothing if current buffer is not merged with another buffer */
     if (gui_buffer_count_merged_buffers (buffer->number) < 2)
         return;
+
+    buffer_was_zoomed = (buffer->active == 2);
 
     /* reset scroll in all windows displaying this buffer number */
     for (ptr_window = gui_windows; ptr_window;
@@ -1646,6 +1649,9 @@ gui_input_zoom_merged_buffer (struct t_gui_buffer *buffer)
     }
 
     gui_buffer_ask_chat_refresh (buffer, 2);
+
+    hook_signal_send ((buffer_was_zoomed) ? "buffer_unzoomed" : "buffer_zoomed",
+                      WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }
 
 /*

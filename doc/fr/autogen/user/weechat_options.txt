@@ -628,6 +628,11 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"*"`)
 
+* [[option_weechat.look.item_buffer_zoom]] *weechat.look.item_buffer_zoom*
+** description: `chaîne utilisée pour montrer le zoom sur un tampon mélangé (objet de barre "buffer_zoom")`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `"!"`)
+
 * [[option_weechat.look.item_time_format]] *weechat.look.item_time_format*
 ** description: `format de date/heure pour l'objet de barre "time" (voir man strftime pour le format de date/heure)`
 ** type: chaîne

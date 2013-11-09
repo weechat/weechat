@@ -628,6 +628,11 @@
 ** type: string
 ** values: any string (default value: `"*"`)
 
+* [[option_weechat.look.item_buffer_zoom]] *weechat.look.item_buffer_zoom*
+** description: `string used to show zoom on merged buffer (bar item "buffer_zoom")`
+** type: string
+** values: any string (default value: `"!"`)
+
 * [[option_weechat.look.item_time_format]] *weechat.look.item_time_format*
 ** description: `time format for "time" bar item (see man strftime for date/time specifiers)`
 ** type: string

@@ -129,6 +129,7 @@ struct t_config_option *config_look_input_share_overwrite;
 struct t_config_option *config_look_input_undo_max;
 struct t_config_option *config_look_item_time_format;
 struct t_config_option *config_look_item_buffer_filter;
+struct t_config_option *config_look_item_buffer_zoom;
 struct t_config_option *config_look_jump_current_to_previous_buffer;
 struct t_config_option *config_look_jump_previous_buffer_when_closing;
 struct t_config_option *config_look_jump_smart_back_to_buffer;
@@ -2273,6 +2274,12 @@ config_weechat_init_options ()
         N_("string used to show that some lines are filtered in current buffer "
            "(bar item \"buffer_filter\")"),
         NULL, 0, 0, "*", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
+    config_look_item_buffer_zoom = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "item_buffer_zoom", "string",
+        N_("string used to show zoom on merged buffer "
+           "(bar item \"buffer_zoom\")"),
+        NULL, 0, 0, "!", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
     config_look_jump_current_to_previous_buffer = config_file_new_option (
         weechat_config_file, ptr_section,
         "jump_current_to_previous_buffer", "boolean",

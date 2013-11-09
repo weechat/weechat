@@ -628,6 +628,11 @@
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"*"`)
 
+* [[option_weechat.look.item_buffer_zoom]] *weechat.look.item_buffer_zoom*
+** Beschreibung: `string used to show zoom on merged buffer (bar item "buffer_zoom")`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `"!"`)
+
 * [[option_weechat.look.item_time_format]] *weechat.look.item_time_format*
 ** Beschreibung: `Format für die Zeitanzeige des Bar-Items, "time" (siehe man strftime, welche Platzhalter für das Datum und die Uhrzeit verwendet werden)`
 ** Typ: Zeichenkette

@@ -7663,6 +7663,10 @@ Arguments:
   String: comma-separated list of scripts removed |
   Tcl script(s) removed
 
+| weechat | buffer_opened |
+  Pointer: buffer |
+  Buffer opened
+
 | weechat | buffer_closing |
   Pointer: buffer |
   Closing buffer
@@ -7704,10 +7708,6 @@ Arguments:
   Pointer: buffer |
   Buffer moved
 
-| weechat | buffer_opened |
-  Pointer: buffer |
-  Buffer opened
-
 | weechat | buffer_renamed |
   Pointer: buffer |
   Buffer renamed
@@ -7723,6 +7723,16 @@ Arguments:
 | weechat | buffer_type_changed |
   Pointer: buffer |
   Type of buffer changed
+
+| weechat | buffer_zoomed +
+  _(WeeChat ≥ 0.4.3)_ |
+  Pointer: buffer |
+  Merged buffer zoomed
+
+| weechat | buffer_unzoomed +
+  _(WeeChat ≥ 0.4.3)_ |
+  Pointer: buffer |
+  Merged buffer unzoomed
 
 | weechat | day_changed +
   _(WeeChat ≥ 0.3.2)_ |
@@ -7884,14 +7894,6 @@ Arguments:
   Pointer: window |
   Switching window
 
-| weechat | window_unzoom |
-  Pointer: current window |
-  Unzooming window
-
-| weechat | window_unzoomed |
-  Pointer: current window |
-  Window unzoomed
-
 | weechat | window_zoom |
   Pointer: current window |
   Zomming window
@@ -7899,6 +7901,14 @@ Arguments:
 | weechat | window_zoomed |
   Pointer: current window |
   Window zoomed
+
+| weechat | window_unzoom |
+  Pointer: current window |
+  Unzooming window
+
+| weechat | window_unzoomed |
+  Pointer: current window |
+  Window unzoomed
 
 | xfer | xfer_add |
   Pointer: infolist with xfer info |
