@@ -1311,8 +1311,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     if (!logger_config_init ())
         return WEECHAT_RC_ERROR;
 
-    if (logger_config_read () < 0)
-        return WEECHAT_RC_ERROR;
+    logger_config_read ();
 
     /* command /logger */
     weechat_hook_command ("logger",
