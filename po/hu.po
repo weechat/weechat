@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-11-09 10:13+0100\n"
-"PO-Revision-Date: 2013-11-09 10:13+0100\n"
+"POT-Creation-Date: 2013-11-09 10:17+0100\n"
+"PO-Revision-Date: 2013-11-09 10:18+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: hu\n"
@@ -3641,10 +3641,6 @@ msgstr "%s cím \"%s\" nem található\n"
 #, fuzzy, c-format
 msgid "Alias \"%s\" removed"
 msgstr "A \"%s\" aliasz eltávolítva\n"
-
-#, fuzzy, c-format
-msgid "%s%s: error creating configuration file"
-msgstr "szerver konfigurációs fájljának újraolvastatása"
 
 msgid "create an alias for a command"
 msgstr "alias készítése egy parancshoz"

@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-11-09 10:13+0100\n"
-"PO-Revision-Date: 2013-11-09 10:13+0100\n"
+"POT-Creation-Date: 2013-11-09 10:17+0100\n"
+"PO-Revision-Date: 2013-11-09 10:18+0100\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pt_BR\n"
@@ -4101,10 +4101,6 @@ msgstr "%sAtalho \"%s\" não encontrado"
 #, c-format
 msgid "Alias \"%s\" removed"
 msgstr "Atalho \"%s\" removido"
-
-#, c-format
-msgid "%s%s: error creating configuration file"
-msgstr "%s%s: erro ao criar arquivo de configuração"
 
 msgid "create an alias for a command"
 msgstr "cria um atalho para um comando"

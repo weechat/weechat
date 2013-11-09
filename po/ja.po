@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-11-09 10:13+0100\n"
-"PO-Revision-Date: 2013-11-09 10:13+0100\n"
+"POT-Creation-Date: 2013-11-09 10:17+0100\n"
+"PO-Revision-Date: 2013-11-09 10:18+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
 "Language: ja\n"
@@ -4275,10 +4275,6 @@ msgstr "%s別名 \"%s\" が見つかりません"
 #, c-format
 msgid "Alias \"%s\" removed"
 msgstr "別名 \"%s\" が削除されました"
-
-#, c-format
-msgid "%s%s: error creating configuration file"
-msgstr "%s%s: 設定ファイルの作成中にエラー"
 
 msgid "create an alias for a command"
 msgstr "コマンドの別名を作成"

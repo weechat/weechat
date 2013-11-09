@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-11-09 10:13+0100\n"
-"PO-Revision-Date: 2013-11-09 10:13+0100\n"
+"POT-Creation-Date: 2013-11-09 10:17+0100\n"
+"PO-Revision-Date: 2013-11-09 10:18+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: it\n"
@@ -4331,10 +4331,6 @@ msgstr "%sAlias \"%s\" non trovato"
 #, c-format
 msgid "Alias \"%s\" removed"
 msgstr "Alias \"%s\" eliminato"
-
-#, c-format
-msgid "%s%s: error creating configuration file"
-msgstr "%s%s: impossibile creare il file di configurazione"
 
 msgid "create an alias for a command"
 msgstr "crea un alias per un comando"
