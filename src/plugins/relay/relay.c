@@ -193,8 +193,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     if (!relay_config_init ())
         return WEECHAT_RC_ERROR;
 
-    if (relay_config_read () < 0)
-        return WEECHAT_RC_ERROR;
+    relay_config_read ();
 
     relay_network_init ();
 
