@@ -942,8 +942,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     if (!weechat_aspell_config_init ())
         return WEECHAT_RC_ERROR;
 
-    if (weechat_aspell_config_read () < 0)
-        return WEECHAT_RC_ERROR;
+    weechat_aspell_config_read ();
 
     weechat_aspell_command_init ();
 
