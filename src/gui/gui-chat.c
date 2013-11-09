@@ -24,6 +24,7 @@
 #endif
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
 #include <ctype.h>
@@ -907,11 +908,16 @@ gui_chat_printf_y (struct t_gui_buffer *buffer, int y, const char *message, ...)
 }
 
 /*
- * Prints lines that are waiting for buffer.
+ * Displays lines that are waiting for buffer.
+ *
+ * If "f" is not NULL, the lines are written in this file (which is commonly
+ * stdout or stderr).
+ * If "f" is NULL, the lines are displayed in core buffer if the GUI is
+ * initialized (gui_init_ok == 1), otherwise on stdout.
  */
 
 void
-gui_chat_print_lines_waiting_buffer ()
+gui_chat_print_lines_waiting_buffer (FILE *f)
 {
     char **lines;
     int num_lines, i;
@@ -924,7 +930,10 @@ gui_chat_print_lines_waiting_buffer ()
         {
             for (i = 0; i < num_lines; i++)
             {
-                gui_chat_printf (NULL, "%s", lines[i]);
+                if (!f && gui_init_ok)
+                    gui_chat_printf (NULL, "%s", lines[i]);
+                else
+                    string_iconv_fprintf ((f) ? f : stdout, "%s\n", lines[i]);
             }
             string_free_split (lines);
         }

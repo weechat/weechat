@@ -390,6 +390,8 @@ weechat_welcome_message ()
 void
 weechat_shutdown (int return_code, int crash)
 {
+    gui_chat_print_lines_waiting_buffer (stderr);
+
     if (weechat_argv0)
         free (weechat_argv0);
     if (weechat_home)
@@ -444,16 +446,16 @@ main (int argc, char *argv[])
     gui_key_init ();                    /* init keys                        */
     network_init_gcrypt ();             /* init gcrypt                      */
     if (!secure_init ())                /* init secured data options (sec.*)*/
-        exit (EXIT_FAILURE);
+        weechat_shutdown (EXIT_FAILURE, 0);
     if (!config_weechat_init ())        /* init WeeChat options (weechat.*) */
-        exit (EXIT_FAILURE);
+        weechat_shutdown (EXIT_FAILURE, 0);
     weechat_parse_args (argc, argv);    /* parse command line args          */
     weechat_create_home_dir ();         /* create WeeChat home directory    */
     log_init ();                        /* init log file                    */
     if (secure_read () < 0)             /* read secured data options        */
-        exit (EXIT_FAILURE);
+        weechat_shutdown (EXIT_FAILURE, 0);
     if (config_weechat_read () < 0)     /* read WeeChat options             */
-        exit (EXIT_FAILURE);
+        weechat_shutdown (EXIT_FAILURE, 0);
     network_init_gnutls ();             /* init GnuTLS                      */
     gui_main_init ();                   /* init WeeChat interface           */
     if (weechat_upgrading)
@@ -462,7 +464,7 @@ main (int argc, char *argv[])
         weechat_upgrade_count++;        /* increase /upgrade count          */
     }
     weechat_welcome_message ();         /* display WeeChat welcome message  */
-    gui_chat_print_lines_waiting_buffer (); /* print lines waiting for buf. */
+    gui_chat_print_lines_waiting_buffer (NULL); /* display lines waiting    */
     command_startup (0);                /* command executed before plugins  */
     plugin_init (weechat_auto_load_plugins, /* init plugin interface(s)     */
                  argc, argv);
