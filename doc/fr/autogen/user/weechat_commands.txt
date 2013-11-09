@@ -241,10 +241,11 @@ Pour forcer une comparaison de chaînes, ajoutez des guillemets autour de chaque
   "50" > "100"  ==> 1
 
 Des variables sont remplacées dans l'expression, en utilisant le format ${variable}, la variable pouvant être, par ordre de priorité :
-  1. une couleur (format: color:xxx)
-  2. une option (format: fichier.section.option)
-  3. une variable locale du tampon
-  4. un hdata/variable (la valeur est automatiquement convertie en chaîne), par défaut "window" et "buffer" pointent vers la fenêtre et le tampon courants.
+  1. une couleur (format: "color:xxx")
+  2. une info (format: "info:nom,paramètres", les paramètres sont optionnels)
+  3. une option (format: "fichier.section.option")
+  4. une variable locale du tampon
+  5. un hdata/variable (la valeur est automatiquement convertie en chaîne), par défaut "window" et "buffer" pointent vers la fenêtre et le tampon courants.
 Le format du hdata peut être le suivant :
   hdata.var1.var2...: démarrer avec un hdata (le pointeur doit être connu), et demander les variables l'une après l'autre (d'autres hdata peuvent être suivis)
   hdata[list].var1.var2...: démarrer avec un hdata en utilisant une liste, par exemple :
@@ -253,6 +254,7 @@ Le format du hdata peut être le suivant :
 Pour le nom du hdata et des variables, voir la "Référence API extension", fonction "weechat_hdata_get".
 
 Exemples:
+  /eval -n ${info:version}                 ==> 0.4.3
   /eval -n ${weechat.look.scroll_amount}   ==> 3
   /eval -n ${window}                       ==> 0x2549aa0
   /eval -n ${window.buffer}                ==> 0x2549320

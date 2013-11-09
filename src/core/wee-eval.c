@@ -235,8 +235,8 @@ eval_replace_vars_cb (void *data, const char *text)
     struct t_config_option *ptr_option;
     struct t_gui_buffer *ptr_buffer;
     char str_value[64], *value, *pos, *pos1, *pos2, *hdata_name, *list_name;
-    char *tmp;
-    const char *ptr_value;
+    char *tmp, *info_name;
+    const char *ptr_value, *ptr_arguments;
     struct t_hdata *hdata;
     void *pointer;
 
@@ -258,7 +258,27 @@ eval_replace_vars_cb (void *data, const char *text)
         return strdup ((ptr_value) ? ptr_value : "");
     }
 
-    /* 3. look for name of option: if found, return this value */
+    /* 3. look for an info */
+    if (strncmp (text, "info:", 5) == 0)
+    {
+        ptr_value = NULL;
+        ptr_arguments = strchr (text + 5, ',');
+        if (ptr_arguments)
+        {
+            info_name = string_strndup (text + 5, ptr_arguments - text - 5);
+            ptr_arguments++;
+        }
+        else
+            info_name = strdup (text + 5);
+        if (info_name)
+        {
+            ptr_value = hook_info_get (NULL, info_name, ptr_arguments);
+            free (info_name);
+        }
+        return strdup ((ptr_value) ? ptr_value : "");
+    }
+
+    /* 4. look for name of option: if found, return this value */
     if (strncmp (text, "sec.data.", 9) == 0)
     {
         ptr_value = hashtable_get (secure_hashtable_data, text + 9);
@@ -289,7 +309,7 @@ eval_replace_vars_cb (void *data, const char *text)
         }
     }
 
-    /* 4. look for local variable in buffer */
+    /* 5. look for local variable in buffer */
     ptr_buffer = hashtable_get (pointers, "buffer");
     if (ptr_buffer)
     {
@@ -298,7 +318,7 @@ eval_replace_vars_cb (void *data, const char *text)
             return strdup (ptr_value);
     }
 
-    /* 5. look for hdata */
+    /* 6. look for hdata */
     value = NULL;
     hdata_name = NULL;
     list_name = NULL;
