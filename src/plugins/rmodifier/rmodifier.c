@@ -578,12 +578,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     rmodifier_hook_list = weechat_list_new ();
 
     if (!rmodifier_config_init ())
-    {
-        weechat_printf (NULL,
-                        _("%s%s: error creating configuration file"),
-                        weechat_prefix("error"), RMODIFIER_PLUGIN_NAME);
         return WEECHAT_RC_ERROR;
-    }
+
     rmodifier_config_read ();
 
     rmodifier_command_init ();
