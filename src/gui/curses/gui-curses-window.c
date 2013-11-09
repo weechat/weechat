@@ -2386,7 +2386,7 @@ gui_window_set_title (const char *title)
     {
         if (title && title[0])
         {
-            printf ("\033k%s\033\\", title);
+            printf ("\033k%s\033\\", new_title);
         }
         else
         {
