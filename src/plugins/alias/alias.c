@@ -979,12 +979,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_plugin = plugin;
 
     if (!alias_config_init ())
-    {
-        weechat_printf (NULL,
-                        _("%s%s: error creating configuration file"),
-                        weechat_prefix("error"), ALIAS_PLUGIN_NAME);
-        return WEECHAT_RC_OK;
-    }
+        return WEECHAT_RC_ERROR;
+
     alias_config_read ();
 
     weechat_hook_command ("alias",
