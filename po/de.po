@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-11-09 15:21+0100\n"
+"POT-Creation-Date: 2013-11-09 15:46+0100\n"
 "PO-Revision-Date: 2013-11-09 10:18+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -8656,6 +8656,12 @@ msgstr "1, falls Filter aktiviert sind"
 
 msgid "1 if cursor mode is enabled"
 msgstr "1, falls Cursor-Modus aktiviert ist"
+
+msgid "width of terminal"
+msgstr ""
+
+msgid "height of terminal"
+msgstr ""
 
 msgid "list of bars"
 msgstr "Auflistung der Bars"

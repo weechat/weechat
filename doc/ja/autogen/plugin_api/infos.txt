@@ -42,6 +42,10 @@
 
 | weechat | locale | 翻訳メッセージに利用するロケール | -
 
+| weechat | term_height | height of terminal | -
+
+| weechat | term_width | width of terminal | -
+
 | weechat | version | WeeChat のバージョン | -
 
 | weechat | version_git | WeeChat の git バージョン (開発バージョンではコマンド "git describe" の出力、安定版リリースでは空文字が出力されます) | -

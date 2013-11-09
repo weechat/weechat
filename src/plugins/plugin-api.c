@@ -387,6 +387,16 @@ plugin_api_info_get_internal (void *data, const char *info_name,
         snprintf (value, sizeof (value), "%d", gui_cursor_mode);
         return value;
     }
+    else if (string_strcasecmp (info_name, "term_width") == 0)
+    {
+        snprintf (value, sizeof (value), "%d", gui_window_get_width ());
+        return value;
+    }
+    else if (string_strcasecmp (info_name, "term_height") == 0)
+    {
+        snprintf (value, sizeof (value), "%d", gui_window_get_height ());
+        return value;
+    }
 
     /* info not found */
     return NULL;
@@ -1126,6 +1136,10 @@ plugin_api_init ()
     hook_info (NULL, "filters_enabled", N_("1 if filters are enabled"), NULL,
                &plugin_api_info_get_internal, NULL);
     hook_info (NULL, "cursor_mode", N_("1 if cursor mode is enabled"), NULL,
+               &plugin_api_info_get_internal, NULL);
+    hook_info (NULL, "term_width", N_("width of terminal"), NULL,
+               &plugin_api_info_get_internal, NULL);
+    hook_info (NULL, "term_height", N_("height of terminal"), NULL,
                &plugin_api_info_get_internal, NULL);
 
     /* WeeChat core infolist hooks */

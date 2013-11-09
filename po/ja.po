@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-11-09 15:21+0100\n"
+"POT-Creation-Date: 2013-11-09 15:46+0100\n"
 "PO-Revision-Date: 2013-11-09 10:18+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -8092,6 +8092,12 @@ msgstr "フィルタが有効の場合 1"
 
 msgid "1 if cursor mode is enabled"
 msgstr "カーソルモードが有効の場合 1"
+
+msgid "width of terminal"
+msgstr ""
+
+msgid "height of terminal"
+msgstr ""
 
 msgid "list of bars"
 msgstr "バーのリスト"

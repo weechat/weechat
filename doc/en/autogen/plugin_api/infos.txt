@@ -42,6 +42,10 @@
 
 | weechat | locale | locale used for translating messages | -
 
+| weechat | term_height | height of terminal | -
+
+| weechat | term_width | width of terminal | -
+
 | weechat | version | WeeChat version | -
 
 | weechat | version_git | WeeChat git version (output of command "git describe" for a development version only, empty for a stable release) | -

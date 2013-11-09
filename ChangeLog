@@ -11,6 +11,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 0.4.3 (under dev)
 
+* core: add infos "term_width" and "term_height"
 * core: add bar item "buffer_zoom", add signals "buffer_{zoomed|unzoomed}"
   (patch #8204)
 * core: create .conf file with default options only if the file does not exist
