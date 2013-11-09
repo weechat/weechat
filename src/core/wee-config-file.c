@@ -2199,26 +2199,28 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
         return WEECHAT_CONFIG_READ_FILE_NOT_FOUND;
 
     /* build filename */
-    filename_length = strlen (weechat_home) + strlen (config_file->filename) + 2;
+    filename_length = strlen (weechat_home) + strlen (DIR_SEPARATOR) +
+        strlen (config_file->filename) + 1;
     filename = malloc (filename_length);
     if (!filename)
         return WEECHAT_CONFIG_READ_MEMORY_ERROR;
     snprintf (filename, filename_length, "%s%s%s",
               weechat_home, DIR_SEPARATOR, config_file->filename);
+
+    /* create file with default options if it does not exist */
+    if (access (filename, F_OK) != 0)
+        config_file_write_internal (config_file, 1);
+
+    /* read config file */
     config_file->file = fopen (filename, "r");
     if (!config_file->file)
     {
-        config_file_write_internal (config_file, 1);
-        config_file->file = fopen (filename, "r");
-        if (!config_file->file)
-        {
-            gui_chat_printf (NULL,
-                             _("%sWarning: configuration file \"%s\" not found"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             filename);
-            free (filename);
-            return WEECHAT_CONFIG_READ_FILE_NOT_FOUND;
-        }
+        gui_chat_printf (NULL,
+                         _("%sWarning: configuration file \"%s\" not found"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         filename);
+        free (filename);
+        return WEECHAT_CONFIG_READ_FILE_NOT_FOUND;
     }
 
     if (!reload)
