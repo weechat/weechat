@@ -452,10 +452,8 @@ main (int argc, char *argv[])
     weechat_parse_args (argc, argv);    /* parse command line args          */
     weechat_create_home_dir ();         /* create WeeChat home directory    */
     log_init ();                        /* init log file                    */
-    if (secure_read () < 0)             /* read secured data options        */
-        weechat_shutdown (EXIT_FAILURE, 0);
-    if (config_weechat_read () < 0)     /* read WeeChat options             */
-        weechat_shutdown (EXIT_FAILURE, 0);
+    secure_read ();                     /* read secured data options        */
+    config_weechat_read ();             /* read WeeChat options             */
     network_init_gnutls ();             /* init GnuTLS                      */
     gui_main_init ();                   /* init WeeChat interface           */
     if (weechat_upgrading)
