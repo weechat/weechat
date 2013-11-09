@@ -828,11 +828,6 @@
 ** type: string
 ** values: any string (default value: `""`)
 
-* [[option_weechat.look.set_title]] *weechat.look.set_title*
-** description: `set title for window (terminal for Curses GUI) with name and version`
-** type: boolean
-** values: on, off (default value: `on`)
-
 * [[option_weechat.look.time_format]] *weechat.look.time_format*
 ** description: `time format for dates converted to strings and displayed in messages (see man strftime for date/time specifiers)`
 ** type: string
@@ -847,6 +842,11 @@
 ** description: `display a vertical separator between windows`
 ** type: boolean
 ** values: on, off (default value: `on`)
+
+* [[option_weechat.look.window_title]] *weechat.look.window_title*
+** description: `title for window (terminal for Curses GUI), set on startup; an empty string will keep title unchanged (note: content is evaluated, see /help eval)`
+** type: string
+** values: any string (default value: `"WeeChat ${info:version}"`)
 
 * [[option_weechat.network.connection_timeout]] *weechat.network.connection_timeout*
 ** description: `timeout (in seconds) for connection to a remote host (made in a child process)`

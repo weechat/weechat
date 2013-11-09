@@ -13,6 +13,17 @@ http://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 == Version 0.4.3 (under dev)
 
+=== Terminal title
+
+The boolean option 'weechat.look.set_title' has been renamed to
+'weechat.look.window_title' and is now a string.
+
+The content is evaluated and the default value is `WeeChat ${info:version}`.
+
+[NOTE]
+Only static content should be used in this option, because the title is
+refreshed only when the option is changed.
+
 === New bar item buffer_zoom
 
 A new bar item has been added: 'buffer_zoom'.

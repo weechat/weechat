@@ -75,6 +75,7 @@
 #include "../gui/gui-layout.h"
 #include "../gui/gui-main.h"
 #include "../plugins/plugin.h"
+#include "../plugins/plugin-api.h"
 
 
 int weechat_debug_core = 0;            /* debug level for core              */
@@ -452,6 +453,7 @@ main (int argc, char *argv[])
     weechat_parse_args (argc, argv);    /* parse command line args          */
     weechat_create_home_dir ();         /* create WeeChat home directory    */
     log_init ();                        /* init log file                    */
+    plugin_api_init ();                 /* create some hooks (info,hdata,..)*/
     secure_read ();                     /* read secured data options        */
     config_weechat_read ();             /* read WeeChat options             */
     network_init_gnutls ();             /* init GnuTLS                      */

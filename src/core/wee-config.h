@@ -188,10 +188,10 @@ extern struct t_config_option *config_look_scroll_page_percent;
 extern struct t_config_option *config_look_search_text_not_found_alert;
 extern struct t_config_option *config_look_separator_horizontal;
 extern struct t_config_option *config_look_separator_vertical;
-extern struct t_config_option *config_look_set_title;
 extern struct t_config_option *config_look_time_format;
 extern struct t_config_option *config_look_window_separator_horizontal;
 extern struct t_config_option *config_look_window_separator_vertical;
+extern struct t_config_option *config_look_window_title;
 
 extern struct t_config_option *config_color_bar_more;
 extern struct t_config_option *config_color_chat;

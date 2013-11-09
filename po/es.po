@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-11-09 15:46+0100\n"
+"POT-Creation-Date: 2013-11-09 17:01+0100\n"
 "PO-Revision-Date: 2013-11-09 10:18+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3218,11 +3218,6 @@ msgstr ""
 "vacío dibujará una línea verdadera con ncurses), caracteres unicode NO están "
 "permitidos"
 
-msgid "set title for window (terminal for Curses GUI) with name and version"
-msgstr ""
-"define el título de la ventana (el terminal para la interfaz Curses) con el "
-"nombre y la versión"
-
 #, fuzzy
 msgid ""
 "time format for dates converted to strings and displayed in messages (see "
@@ -3234,6 +3229,12 @@ msgstr "muestra un separador horizontal entre ventanas"
 
 msgid "display a vertical separator between windows"
 msgstr "muestra un separador vertical entre ventanas"
+
+#, fuzzy
+msgid ""
+"title for window (terminal for Curses GUI), set on startup; an empty string "
+"will keep title unchanged (note: content is evaluated, see /help eval)"
+msgstr "comando ejecutado cuando WeeChat inicia, antes de cargar los plugins"
 
 msgid "text color for '+' when scrolling bars"
 msgstr "color del '+' cuando se desplaza las barras"
@@ -10146,3 +10147,8 @@ msgstr "Tipo"
 
 msgid "Constants"
 msgstr "Constantes"
+
+#~ msgid "set title for window (terminal for Curses GUI) with name and version"
+#~ msgstr ""
+#~ "define el título de la ventana (el terminal para la interfaz Curses) con "
+#~ "el nombre y la versión"

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-11-09 15:46+0100\n"
+"POT-Creation-Date: 2013-11-09 17:01+0100\n"
 "PO-Revision-Date: 2013-11-09 10:18+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3350,9 +3350,6 @@ msgstr ""
 "(pusta wartość oznacza rysowanie prawdziwych linii za pomocą ncurses), "
 "szerokie znaki NIE są dozwolone"
 
-msgid "set title for window (terminal for Curses GUI) with name and version"
-msgstr "ustaw tytuł okna (terminal dla GUI w Curses) na nazwę i wersję"
-
 msgid ""
 "time format for dates converted to strings and displayed in messages (see "
 "man strftime for date/time specifiers)"
@@ -3365,6 +3362,14 @@ msgstr "wyświetl poziomy separator pomiędzy oknami"
 
 msgid "display a vertical separator between windows"
 msgstr "wyświetl pionowy separator pomiędzy oknami"
+
+#, fuzzy
+msgid ""
+"title for window (terminal for Curses GUI), set on startup; an empty string "
+"will keep title unchanged (note: content is evaluated, see /help eval)"
+msgstr ""
+"hasło dla uwierzytelniania SASL (uwaga: zawartość jest przetwarzana, zobacz /"
+"help eval)"
 
 msgid "text color for '+' when scrolling bars"
 msgstr "kolor '+' przy przewijaniu pasków"
@@ -10442,3 +10447,6 @@ msgstr "Typ"
 
 msgid "Constants"
 msgstr "Stałe"
+
+#~ msgid "set title for window (terminal for Curses GUI) with name and version"
+#~ msgstr "ustaw tytuł okna (terminal dla GUI w Curses) na nazwę i wersję"

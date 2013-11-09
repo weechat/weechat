@@ -828,11 +828,6 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
-* [[option_weechat.look.set_title]] *weechat.look.set_title*
-** description: `définit le titre de la fenêtre (terminal pour l'interface Curses) avec le nom et la version`
-** type: booléen
-** valeurs: on, off (valeur par défaut: `on`)
-
 * [[option_weechat.look.time_format]] *weechat.look.time_format*
 ** description: `format de date/heure pour les dates converties en chaînes et affichées dans les messages (voir man strftime pour le format de date/heure)`
 ** type: chaîne
@@ -847,6 +842,11 @@
 ** description: `afficher un séparateur vertical entre les fenêtres`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
+
+* [[option_weechat.look.window_title]] *weechat.look.window_title*
+** description: `titre pour la fenêtre (le terminal pour l'interface Curses), défini au démarrage; une chaîne vide gardera le titre inchangé (note: le contenu est évalué, voir /help eval)`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `"WeeChat ${info:version}"`)
 
 * [[option_weechat.network.connection_timeout]] *weechat.network.connection_timeout*
 ** description: `délai d'attente maximum (en secondes) pour la connexion à une machine distante (effectuée dans un processus fils)`

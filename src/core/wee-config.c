@@ -164,10 +164,10 @@ struct t_config_option *config_look_scroll_page_percent;
 struct t_config_option *config_look_search_text_not_found_alert;
 struct t_config_option *config_look_separator_horizontal;
 struct t_config_option *config_look_separator_vertical;
-struct t_config_option *config_look_set_title;
 struct t_config_option *config_look_time_format;
 struct t_config_option *config_look_window_separator_horizontal;
 struct t_config_option *config_look_window_separator_vertical;
+struct t_config_option *config_look_window_title;
 
 /* config, colors section */
 
@@ -316,18 +316,17 @@ config_change_save_config_on_exit (void *data, struct t_config_option *option)
 }
 
 /*
- * Callback for changes on option "weechat.look.set_title".
+ * Callback for changes on option "weechat.look.window_title".
  */
 
 void
-config_change_title (void *data, struct t_config_option *option)
+config_change_window_title (void *data, struct t_config_option *option)
 {
     /* make C compiler happy */
     (void) data;
     (void) option;
 
-    if (CONFIG_BOOLEAN(config_look_set_title))
-        gui_window_set_title (version_get_name_version ());
+    gui_window_set_title (CONFIG_STRING(config_look_window_title));
 }
 
 /*
@@ -2525,12 +2524,6 @@ config_weechat_init_options ()
            "(empty value will draw a real line with ncurses), wide chars are "
            "NOT allowed here"),
         NULL, 0, 0, "", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
-    config_look_set_title = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "set_title", "boolean",
-        N_("set title for window (terminal for Curses GUI) with "
-           "name and version"),
-        NULL, 0, 0, "on", NULL, 0, NULL, NULL, &config_change_title, NULL, NULL, NULL);
     config_look_time_format = config_file_new_option (
         weechat_config_file, ptr_section,
         "time_format", "string",
@@ -2547,6 +2540,14 @@ config_weechat_init_options ()
         "window_separator_vertical", "boolean",
         N_("display a vertical separator between windows"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
+    config_look_window_title = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "window_title", "string",
+        N_("title for window (terminal for Curses GUI), set on startup; "
+           "an empty string will keep title unchanged "
+           "(note: content is evaluated, see /help eval)"),
+        NULL, 0, 0, "WeeChat ${info:version}", NULL, 0, NULL, NULL,
+        &config_change_window_title, NULL, NULL, NULL);
 
     /* palette */
     ptr_section = config_file_new_section (weechat_config_file, "palette",

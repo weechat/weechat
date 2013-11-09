@@ -1183,9 +1183,6 @@ plugin_display_short_list ()
 void
 plugin_init (int auto_load, int argc, char *argv[])
 {
-    /* init plugin API (create some hooks) */
-    plugin_api_init ();
-
     /* read plugins options on disk */
     plugin_config_init ();
     plugin_config_read ();

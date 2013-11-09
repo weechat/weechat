@@ -11,6 +11,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 0.4.3 (under dev)
 
+* core: rename option weechat.look.set_title to weechat.look.window_title,
+  value is now a string (evaluated)
 * core: add infos "term_width" and "term_height"
 * core: add bar item "buffer_zoom", add signals "buffer_{zoomed|unzoomed}"
   (patch #8204)

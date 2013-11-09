@@ -35,6 +35,7 @@
 
 #include "../../core/weechat.h"
 #include "../../core/wee-config.h"
+#include "../../core/wee-eval.h"
 #include "../../core/wee-hook.h"
 #include "../../core/wee-log.h"
 #include "../../core/wee-string.h"
@@ -2344,90 +2345,77 @@ gui_window_refresh_screen (int full_refresh)
 
 /*
  * Sets terminal title.
+ *
+ * Note: the content of "title" (if not NULL) is evaluated, so variables like
+ * "${info:version}" can be used inside.
  */
 
 void
 gui_window_set_title (const char *title)
 {
-    char *shell, *shellname;
-    char *envterm = getenv ("TERM");
-    char *envshell = getenv ("SHELL");
+    char *new_title, *envterm, *envshell, *shell, *shellname;
 
-    if (envterm)
+    envterm = getenv ("TERM");
+    if (!envterm)
+        return;
+
+    new_title = (title && title[0]) ?
+        eval_expression (title, NULL, NULL, NULL) : strdup ("Terminal");
+    if (!new_title)
+        return;
+
+    if (strcmp (envterm, "sun-cmd") == 0)
+    {
+        printf ("\033]l%s\033\\", new_title);
+    }
+    else if (strcmp (envterm, "hpterm") == 0)
+    {
+        printf ("\033&f0k%dD%s", (int)(strlen (new_title) + 1), new_title);
+    }
+    /* the following terminals support the xterm escape codes */
+    else if ((strncmp (envterm, "xterm", 5) == 0)
+             || (strncmp (envterm, "rxvt", 4) == 0)
+             || (strcmp (envterm, "Eterm") == 0)
+             || (strcmp (envterm, "aixterm") == 0)
+             || (strcmp (envterm, "iris-ansi") == 0)
+             || (strcmp (envterm, "dtterm") == 0))
+    {
+        printf ("\33]0;%s\7", new_title);
+    }
+    else if (strncmp (envterm, "screen", 6) == 0)
     {
         if (title && title[0])
         {
-            if (strcmp (envterm, "sun-cmd") == 0)
-            {
-                printf ("\033]l%s\033\\", title);
-            }
-            else if (strcmp (envterm, "hpterm") == 0)
-            {
-                printf ("\033&f0k%dD%s", (int)(strlen(title) + 1), title);
-            }
-            /* the following terminals support the xterm escape codes */
-            else if ((strncmp (envterm, "xterm", 5) == 0)
-                     || (strncmp (envterm, "rxvt", 4) == 0)
-                     || (strcmp (envterm, "Eterm") == 0)
-                     || (strcmp (envterm, "aixterm") == 0)
-                     || (strcmp (envterm, "iris-ansi") == 0)
-                     || (strcmp (envterm, "dtterm") == 0))
-            {
-                printf ("\33]0;%s\7", title);
-            }
-            else if (strncmp (envterm, "screen", 6) == 0)
-            {
-                printf ("\033k%s\033\\", title);
-                /* trying to set the title of a backgrounded xterm like terminal */
-                printf ("\33]0;%s\7", title);
-            }
+            printf ("\033k%s\033\\", title);
         }
         else
         {
-            if (strcmp (envterm, "sun-cmd") == 0)
+            envshell = getenv ("SHELL");
+            if (envshell)
             {
-                printf ("\033]l%s\033\\", "Terminal");
-            }
-            else if (strcmp (envterm, "hpterm") == 0)
-            {
-                printf ("\033&f0k%dD%s", (int)strlen("Terminal"), "Terminal");
-            }
-            /* the following terminals support the xterm escape codes */
-            else if ((strncmp (envterm, "xterm", 5) == 0)
-                     || (strncmp (envterm, "rxvt", 4) == 0)
-                     || (strcmp (envterm, "Eterm") == 0)
-                     || (strcmp( envterm, "aixterm") == 0)
-                     || (strcmp( envterm, "iris-ansi") == 0)
-                     || (strcmp( envterm, "dtterm") == 0))
-            {
-                printf ("\33]0;%s\7", "Terminal");
-            }
-            else if (strncmp (envterm, "screen", 6) == 0)
-            {
-                if (envshell)
+                shell  = strdup (envshell);
+                if (shell)
                 {
-                    shell  = strdup (envshell);
-                    if (shell)
-                    {
-                        shellname = basename (shell);
-                        printf ("\033k%s\033\\", (shellname) ? shellname : shell);
-                        free (shell);
-                    }
-                    else
-                    {
-                        printf ("\033k%s\033\\", envterm);
-                    }
+                    shellname = basename (shell);
+                    printf ("\033k%s\033\\", (shellname) ? shellname : shell);
+                    free (shell);
                 }
                 else
                 {
                     printf ("\033k%s\033\\", envterm);
                 }
-                /* tryning to reset the title of a backgrounded xterm like terminal */
-                printf ("\33]0;%s\7", "Terminal");
+            }
+            else
+            {
+                printf ("\033k%s\033\\", envterm);
             }
         }
-        fflush (stdout);
+        /* trying to set the title of a backgrounded xterm like terminal */
+        printf ("\33]0;%s\7", new_title);
     }
+    fflush (stdout);
+
+    free (new_title);
 }
 
 /*

@@ -210,8 +210,11 @@ gui_main_init ()
         {
             gui_current_window = gui_windows;
 
-            if (CONFIG_BOOLEAN(config_look_set_title))
-                gui_window_set_title (version_get_name_version ());
+            if (CONFIG_STRING(config_look_window_title)
+                && CONFIG_STRING(config_look_window_title)[0])
+            {
+                gui_window_set_title (CONFIG_STRING(config_look_window_title));
+            }
         }
 
         /*
@@ -538,8 +541,11 @@ gui_main_end (int clean_exit)
         gui_history_global_free ();
 
         /* reset title */
-        if (CONFIG_BOOLEAN(config_look_set_title))
+        if (CONFIG_STRING(config_look_window_title)
+            && CONFIG_STRING(config_look_window_title)[0])
+        {
             gui_window_set_title (NULL);
+        }
 
         /* end color */
         gui_color_end ();
