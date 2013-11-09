@@ -3316,13 +3316,6 @@ config_weechat_read ()
 
     config_weechat_init_after_read ();
 
-    if (rc != WEECHAT_CONFIG_READ_OK)
-    {
-        gui_chat_printf (NULL,
-                         _("%sError reading configuration"),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-    }
-
     return rc;
 }
 
