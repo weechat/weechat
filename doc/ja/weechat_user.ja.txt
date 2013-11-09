@@ -499,6 +499,8 @@ WeeChat を起動したターミナルの例:
 | buffer_name           | `#test`               | 現在のバッファの名前
 | buffer_modes          | `+n`                  | IRC チャンネルモード
 | buffer_nicklist_count | `{4}`                 | ニックネームリスト中のニックネームの数
+// TRANSLATION MISSING
+| buffer_zoom           | !                     | `!` means the merged buffer is zoomed (only this one is displayed), empty value means all merged buffers are displayed
 | buffer_filter         | `*`                   | フィルタ表示: `*` の場合いくつかの行がフィルタされ (隠され) ます、空の場合すべての行が表示されます。
 | lag                   | `[Lag: 2.5]`          | 遅延秒表示 (遅延が短い場合は非表示)
 | hotlist               | `[H: 4:#abc(2,5), 6]` | 変化のあったバッファのリスト (未読メッセージ) (例では、'#abc' に 2 個のハイライトと 5 個の未読メッセージ、6 番目のバッファに 1 個の未読メッセージがあることを意味します。)

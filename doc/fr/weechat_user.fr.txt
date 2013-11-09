@@ -508,6 +508,7 @@ La barre 'status' contient les objets (items) suivants par défaut :
 | buffer_name           | `#test`               | Nom du tampon courant
 | buffer_modes          | `+n`                  | Modes du canal IRC
 | buffer_nicklist_count | `{4}`                 | Nombre de pseudos dans la liste des pseudos
+| buffer_zoom           | !                     | `!` signifie que le tampon mélangé est zoomé, une valeur vide signifie que tous les tampons mélangés sont affichés
 | buffer_filter         | `*`                   | Indicateur de filtrage : `*` signifie que des lignes sont filtrées (cachées), une valeur vide signifie que toutes les lignes sont affichées
 | lag                   | `[Lag: 2.5]`          | Indicateur de "lag" (ralentissements réseau), en secondes (caché si le lag est faible)
 | hotlist               | `[H: 4:#abc(2,5), 6]` | Liste des tampons où il y a de l'activité (messages non lus) (dans cet exemple, 2 highlights et 5 messages non lus sur '#abc', un message non lu sur le tampon numéro 6)

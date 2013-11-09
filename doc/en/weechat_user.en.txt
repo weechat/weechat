@@ -498,6 +498,7 @@ Bar 'status' has following default items:
 | buffer_name           | `#test`               | Current buffer name
 | buffer_modes          | `+n`                  | IRC channel modes
 | buffer_nicklist_count | `{4}`                 | Number of nicks in nicklist
+| buffer_zoom           | !                     | `!` means the merged buffer is zoomed (only this one is displayed), empty value means all merged buffers are displayed
 | buffer_filter         | `*`                   | Filtering indicator: `*` means some lines are filtered (hidden), empty value means all lines are displayed
 | lag                   | `[Lag: 2.5]`          | Lag indicator, in seconds (hidden if lag is low)
 | hotlist               | `[H: 4:#abc(2,5), 6]` | List of buffers with activity (unread messages) (in example, 2 highlights and 5 unread messages on '#abc', one unread message on buffer #6)
