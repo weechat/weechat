@@ -1100,13 +1100,6 @@ secure_read ()
 
     rc = config_file_read (secure_config_file);
 
-    if (rc != WEECHAT_CONFIG_READ_OK)
-    {
-        gui_chat_printf (NULL,
-                         _("%sError reading configuration"),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-    }
-
     return rc;
 }
 
