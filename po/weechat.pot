@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-11-02 10:22+0100\n"
+"POT-Creation-Date: 2013-11-09 10:13+0100\n"
 "PO-Revision-Date: 2013-02-14 18:20+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2700,10 +2700,6 @@ msgid "FATAL: error initializing configuration options"
 msgstr ""
 
 #, c-format
-msgid "%sError reading configuration"
-msgstr ""
-
-#, c-format
 msgid "Writing configuration file %s %s"
 msgstr ""
 
@@ -2719,7 +2715,13 @@ msgid "%sError writing configuration file \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%sWarning: configuration file \"%s\" not found"
+msgid "%sWARNING: failed to read configuration file \"%s\" (%s)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sWARNING: file \"%s\" will be overwritten on exit with default values (it "
+"is HIGHLY recommended to backup this file now)"
 msgstr ""
 
 #, c-format

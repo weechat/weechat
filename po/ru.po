@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-11-02 10:22+0100\n"
-"PO-Revision-Date: 2013-10-08 11:25+0200\n"
+"POT-Creation-Date: 2013-11-09 10:13+0100\n"
+"PO-Revision-Date: 2013-11-09 10:13+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: ru\n"
@@ -3067,10 +3067,6 @@ msgid "FATAL: error initializing configuration options"
 msgstr "перезагрузить конфигурационный файл сервера"
 
 #, fuzzy, c-format
-msgid "%sError reading configuration"
-msgstr "перезагрузить конфигурационный файл сервера"
-
-#, fuzzy, c-format
 msgid "Writing configuration file %s %s"
 msgstr "сохранять конфигурационный файл при выходе"
 
@@ -3086,8 +3082,14 @@ msgid "%sError writing configuration file \"%s\""
 msgstr "перезагрузить конфигурационный файл сервера"
 
 #, fuzzy, c-format
-msgid "%sWarning: configuration file \"%s\" not found"
-msgstr "%s конфигурационынй файл \"%s\" не найден.\n"
+msgid "%sWARNING: failed to read configuration file \"%s\" (%s)"
+msgstr "сохранять конфигурационный файл при выходе"
+
+#, c-format
+msgid ""
+"%sWARNING: file \"%s\" will be overwritten on exit with default values (it "
+"is HIGHLY recommended to backup this file now)"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "Reading configuration file %s"
@@ -9318,25 +9320,3 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
-
-#~ msgid ""
-#~ "a WeeChat color name (default, black, (dark)gray, white, (light)red, "
-#~ "(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
-#~ "terminal color number or an alias; attributes are allowed before color "
-#~ "(for text color only, not background): \"*\" for bold, \"!\" for reverse, "
-#~ "\"_\" for underline"
-#~ msgstr ""
-#~ "название цвета WeeChat (default, black, (dark)gray, white, (light)red, "
-#~ "(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), "
-#~ "код или алиас цвета терминала; перед цветом допустимы атрибуты (только "
-#~ "для цвета текста, но не фона): \"*\" жирный, \"!\" инверсия, \"_\" "
-#~ "подчёркивание"
-
-#, fuzzy
-#~ msgid ""
-#~ "comma separated list of channels to join when connected to server "
-#~ "(example: \"#chan1,#chan2,#chan3 key1,key2\") (note: content is "
-#~ "evaluated, see /help eval)"
-#~ msgstr ""
-#~ "разделённый запятыми список каналов, на которые заходить при подключении "
-#~ "к серверу (например, \"#chan1,#chan2,#chan3 key1,key2\")"

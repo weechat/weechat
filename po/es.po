@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-11-02 10:22+0100\n"
-"PO-Revision-Date: 2013-10-08 11:24+0200\n"
+"POT-Creation-Date: 2013-11-09 10:13+0100\n"
+"PO-Revision-Date: 2013-11-09 10:13+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: es\n"
@@ -3611,10 +3611,6 @@ msgid "FATAL: error initializing configuration options"
 msgstr "FATAL: error al inicializar las opciones de configuración"
 
 #, c-format
-msgid "%sError reading configuration"
-msgstr "%sError al leer la configuración"
-
-#, c-format
 msgid "Writing configuration file %s %s"
 msgstr "Guardando archivo de configuración %s %s"
 
@@ -3629,9 +3625,15 @@ msgstr "%sError: no es posible crear el archivo \"%s\""
 msgid "%sError writing configuration file \"%s\""
 msgstr "%sError al escribir el archivo de configuración \"%s\""
 
+#, fuzzy, c-format
+msgid "%sWARNING: failed to read configuration file \"%s\" (%s)"
+msgstr "Guardando archivo de configuración %s %s"
+
 #, c-format
-msgid "%sWarning: configuration file \"%s\" not found"
-msgstr "%sAtención: archivo de configuración \"%s\" no encontrado"
+msgid ""
+"%sWARNING: file \"%s\" will be overwritten on exit with default values (it "
+"is HIGHLY recommended to backup this file now)"
+msgstr ""
 
 #, c-format
 msgid "Reading configuration file %s"
@@ -10134,25 +10136,3 @@ msgstr "Tipo"
 
 msgid "Constants"
 msgstr "Constantes"
-
-#~ msgid ""
-#~ "a WeeChat color name (default, black, (dark)gray, white, (light)red, "
-#~ "(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
-#~ "terminal color number or an alias; attributes are allowed before color "
-#~ "(for text color only, not background): \"*\" for bold, \"!\" for reverse, "
-#~ "\"_\" for underline"
-#~ msgstr ""
-#~ "un nombre de color de WeeChat (default, black, (dark)gray, white, "
-#~ "(light)red, (light)green, brown, yellow, (light)blue, (light)magenta, "
-#~ "(light)cyan), un número de color de la terminal o un alias; atributos "
-#~ "delante del color están permitidos (solamente para color de texto , no de "
-#~ "fondo): \"*\" para negrita, \"!\" para revertir, \"_\" para subrayado"
-
-#, fuzzy
-#~ msgid ""
-#~ "comma separated list of channels to join when connected to server "
-#~ "(example: \"#chan1,#chan2,#chan3 key1,key2\") (note: content is "
-#~ "evaluated, see /help eval)"
-#~ msgstr ""
-#~ "lista de canales (separados por comas) a unirse cuando se conecte a un "
-#~ "servidor (ejemplo: \"#canal1,#canal2,#canal3 clave1,clave2\")"

@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-11-02 10:22+0100\n"
-"PO-Revision-Date: 2013-10-08 11:24+0200\n"
+"POT-Creation-Date: 2013-11-09 10:13+0100\n"
+"PO-Revision-Date: 2013-11-09 10:13+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: hu\n"
@@ -3039,10 +3039,6 @@ msgid "FATAL: error initializing configuration options"
 msgstr "szerver konfigurációs fájljának újraolvastatása"
 
 #, fuzzy, c-format
-msgid "%sError reading configuration"
-msgstr "szerver konfigurációs fájljának újraolvastatása"
-
-#, fuzzy, c-format
 msgid "Writing configuration file %s %s"
 msgstr "beállítások mentése kilépéskor"
 
@@ -3058,8 +3054,14 @@ msgid "%sError writing configuration file \"%s\""
 msgstr "szerver konfigurációs fájljának újraolvastatása"
 
 #, fuzzy, c-format
-msgid "%sWarning: configuration file \"%s\" not found"
-msgstr "%s a \"%s\" beállítófájl nem található.\n"
+msgid "%sWARNING: failed to read configuration file \"%s\" (%s)"
+msgstr "beállítások mentése kilépéskor"
+
+#, c-format
+msgid ""
+"%sWARNING: file \"%s\" will be overwritten on exit with default values (it "
+"is HIGHLY recommended to backup this file now)"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "Reading configuration file %s"
@@ -9297,12 +9299,3 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
-
-#, fuzzy
-#~ msgid ""
-#~ "comma separated list of channels to join when connected to server "
-#~ "(example: \"#chan1,#chan2,#chan3 key1,key2\") (note: content is "
-#~ "evaluated, see /help eval)"
-#~ msgstr ""
-#~ "szobák vesszővel elválasztott listája ahová be akarunk lépni csatlakozás "
-#~ "után (például: \"#szoba1,#szoba2,#szoba3 kulcs1,kulcs2\")"

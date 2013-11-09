@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-11-02 10:22+0100\n"
-"PO-Revision-Date: 2013-10-08 11:24+0200\n"
+"POT-Creation-Date: 2013-11-09 10:13+0100\n"
+"PO-Revision-Date: 2013-11-09 10:13+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: cs\n"
@@ -3413,10 +3413,6 @@ msgid "FATAL: error initializing configuration options"
 msgstr "FATÁLNÍ: chyba při inicializaci konfiguračních nastavení"
 
 #, c-format
-msgid "%sError reading configuration"
-msgstr "%sChyba: čtení konfigurace"
-
-#, c-format
 msgid "Writing configuration file %s %s"
 msgstr "Zapisuji soubor s nastavením %s %s"
 
@@ -3431,9 +3427,15 @@ msgstr "%sChyba: nemohu vytvořit soubor \"%s\""
 msgid "%sError writing configuration file \"%s\""
 msgstr "%sChyba při zápisu konfiguračního souboru \"%s\""
 
+#, fuzzy, c-format
+msgid "%sWARNING: failed to read configuration file \"%s\" (%s)"
+msgstr "Zapisuji soubor s nastavením %s %s"
+
 #, c-format
-msgid "%sWarning: configuration file \"%s\" not found"
-msgstr "%sUpozornění: konfigurační soubor \"%s\" nenalezen"
+msgid ""
+"%sWARNING: file \"%s\" will be overwritten on exit with default values (it "
+"is HIGHLY recommended to backup this file now)"
+msgstr ""
 
 #, c-format
 msgid "Reading configuration file %s"
@@ -9875,25 +9877,3 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
-
-#~ msgid ""
-#~ "a WeeChat color name (default, black, (dark)gray, white, (light)red, "
-#~ "(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
-#~ "terminal color number or an alias; attributes are allowed before color "
-#~ "(for text color only, not background): \"*\" for bold, \"!\" for reverse, "
-#~ "\"_\" for underline"
-#~ msgstr ""
-#~ "jméno WeeChat barvy (default, black, (dark)gray, white, (light)red, "
-#~ "(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), "
-#~ "číslo barvy terminálu nebo alias; před barvou jsou povoleny atributy "
-#~ "(pouze pro barvu textu, ne pro barvu pozadí): \"*\" pro tučné, \"!\" pro "
-#~ "obrácené, \"_\" pro podtržené"
-
-#, fuzzy
-#~ msgid ""
-#~ "comma separated list of channels to join when connected to server "
-#~ "(example: \"#chan1,#chan2,#chan3 key1,key2\") (note: content is "
-#~ "evaluated, see /help eval)"
-#~ msgstr ""
-#~ "čárkou rozdělený seznam kanálů na které přistoupit po připojení na server "
-#~ "(příklad: \"#kanál1,#kanál2,#kanál3 klíč1,klíč2\")"

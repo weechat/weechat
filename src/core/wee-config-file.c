@@ -31,6 +31,7 @@
 #include <stdarg.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <errno.h>
 
 #include "weechat.h"
 #include "wee-config-file.h"
@@ -2216,7 +2217,15 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
     if (!config_file->file)
     {
         gui_chat_printf (NULL,
-                         _("%sWarning: configuration file \"%s\" not found"),
+                         _("%sWARNING: failed to read configuration file "
+                           "\"%s\" (%s)"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         filename,
+                         strerror (errno));
+        gui_chat_printf (NULL,
+                         _("%sWARNING: file \"%s\" will be overwritten on exit "
+                           "with default values (it is HIGHLY recommended to "
+                           "backup this file now)"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          filename);
         free (filename);

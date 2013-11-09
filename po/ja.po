@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-11-02 10:22+0100\n"
-"PO-Revision-Date: 2013-10-08 11:25+0200\n"
+"POT-Creation-Date: 2013-11-09 10:13+0100\n"
+"PO-Revision-Date: 2013-11-09 10:13+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
 "Language: ja\n"
@@ -3652,10 +3652,6 @@ msgid "FATAL: error initializing configuration options"
 msgstr "致命的: 設定オプションの初期化中にエラー"
 
 #, c-format
-msgid "%sError reading configuration"
-msgstr "%s設定読み込み中にエラー"
-
-#, c-format
 msgid "Writing configuration file %s %s"
 msgstr "設定ファイル %s %s の書き込み中"
 
@@ -3670,9 +3666,15 @@ msgstr "%sエラー: ファイル \"%s\" の作成に失敗"
 msgid "%sError writing configuration file \"%s\""
 msgstr "%s設定ファイル \"%s\" の書き込み中にエラー"
 
+#, fuzzy, c-format
+msgid "%sWARNING: failed to read configuration file \"%s\" (%s)"
+msgstr "設定ファイル %s %s の書き込み中"
+
 #, c-format
-msgid "%sWarning: configuration file \"%s\" not found"
-msgstr "%s警告: 設定ファイル \"%s\" が見つかりません"
+msgid ""
+"%sWARNING: file \"%s\" will be overwritten on exit with default values (it "
+"is HIGHLY recommended to backup this file now)"
+msgstr ""
 
 #, c-format
 msgid "Reading configuration file %s"
@@ -10248,23 +10250,3 @@ msgstr "タイプ"
 
 msgid "Constants"
 msgstr "定数"
-
-#~ msgid ""
-#~ "a WeeChat color name (default, black, (dark)gray, white, (light)red, "
-#~ "(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
-#~ "terminal color number or an alias; attributes are allowed before color "
-#~ "(for text color only, not background): \"*\" for bold, \"!\" for reverse, "
-#~ "\"_\" for underline"
-#~ msgstr ""
-#~ "WeeChat の色名 (default、black、(dark)gray、white、(light)red、"
-#~ "(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、"
-#~ "ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト"
-#~ "前景色のみ、背景色は出来ません): 太字は \"*\"、反転は \"!\"、下線は \"_\""
-
-#~ msgid ""
-#~ "comma separated list of channels to join when connected to server "
-#~ "(example: \"#chan1,#chan2,#chan3 key1,key2\") (note: content is "
-#~ "evaluated, see /help eval)"
-#~ msgstr ""
-#~ "サーバに接続した際に参加するチャンネルのコンマ区切りリスト(例: \"#chan1,"
-#~ "#chan2,#chan3 key1,key2\") (注意: 値は評価されます、/help eval を参照)"

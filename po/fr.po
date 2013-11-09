@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-11-02 10:22+0100\n"
-"PO-Revision-Date: 2013-11-02 10:23+0100\n"
+"POT-Creation-Date: 2013-11-09 10:13+0100\n"
+"PO-Revision-Date: 2013-11-09 10:13+0100\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -3812,10 +3812,6 @@ msgid "FATAL: error initializing configuration options"
 msgstr "FATAL: erreur d'initialisation des options de configuration"
 
 #, c-format
-msgid "%sError reading configuration"
-msgstr "%sErreur de lecture de la configuration"
-
-#, c-format
 msgid "Writing configuration file %s %s"
 msgstr "Écriture du fichier de configuration %s %s"
 
@@ -3831,8 +3827,17 @@ msgid "%sError writing configuration file \"%s\""
 msgstr "%sErreur d'écriture du fichier de configuration \"%s\""
 
 #, c-format
-msgid "%sWarning: configuration file \"%s\" not found"
-msgstr "%sAttention: fichier de configuration \"%s\" non trouvé"
+msgid "%sWARNING: failed to read configuration file \"%s\" (%s)"
+msgstr "%sATTENTION: échec de lecture du fichier de configuration \"%s\" (%s)"
+
+#, c-format
+msgid ""
+"%sWARNING: file \"%s\" will be overwritten on exit with default values (it "
+"is HIGHLY recommended to backup this file now)"
+msgstr ""
+"%sATTENTION: le fichier \"%s\" sera écrasé à la sortie avec les valeurs par "
+"défaut (il est FORTEMENT recommandé de faire une copie de sauvegarde de ce "
+"fichier maintenant)"
 
 #, c-format
 msgid "Reading configuration file %s"
@@ -10641,17 +10646,3 @@ msgstr "Type"
 
 msgid "Constants"
 msgstr "Constantes"
-
-#~ msgid ""
-#~ "a WeeChat color name (default, black, (dark)gray, white, (light)red, "
-#~ "(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
-#~ "terminal color number or an alias; attributes are allowed before color "
-#~ "(for text color only, not background): \"*\" for bold, \"!\" for reverse, "
-#~ "\"_\" for underline"
-#~ msgstr ""
-#~ "un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, "
-#~ "(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), "
-#~ "un numéro de couleur du terminal ou un alias; des attributs sont "
-#~ "autorisés avant la couleur (seulement pour la couleur du texte, pas le "
-#~ "fond) : \"*\" pour du gras, \"!\" pour la vidéo inverse, \"_\" pour du "
-#~ "souligné"

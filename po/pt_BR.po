@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-11-02 10:22+0100\n"
-"PO-Revision-Date: 2013-10-06 12:40+0200\n"
+"POT-Creation-Date: 2013-11-09 10:13+0100\n"
+"PO-Revision-Date: 2013-11-09 10:13+0100\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pt_BR\n"
@@ -3508,10 +3508,6 @@ msgid "FATAL: error initializing configuration options"
 msgstr "FATAL: erro inicializando opções de configuração"
 
 #, c-format
-msgid "%sError reading configuration"
-msgstr "%sErro lendo configurações"
-
-#, c-format
 msgid "Writing configuration file %s %s"
 msgstr "Escrevendo arquivo de configurações %s %s"
 
@@ -3526,9 +3522,15 @@ msgstr "%sErro: não foi possível criar arquivo \"%s\""
 msgid "%sError writing configuration file \"%s\""
 msgstr "%sErro escrevendo arquivo de configuração \"%s\""
 
+#, fuzzy, c-format
+msgid "%sWARNING: failed to read configuration file \"%s\" (%s)"
+msgstr "Escrevendo arquivo de configurações %s %s"
+
 #, c-format
-msgid "%sWarning: configuration file \"%s\" not found"
-msgstr "%sAviso: arquivo de configuração \"%s\" não encontrado"
+msgid ""
+"%sWARNING: file \"%s\" will be overwritten on exit with default values (it "
+"is HIGHLY recommended to backup this file now)"
+msgstr ""
 
 #, c-format
 msgid "Reading configuration file %s"
@@ -9502,29 +9504,3 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
-
-# I am not sure this is the best way to translate the names
-# (put the equivalent in []), but I think it's better than nothing.
-#~ msgid ""
-#~ "a WeeChat color name (default, black, (dark)gray, white, (light)red, "
-#~ "(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
-#~ "terminal color number or an alias; attributes are allowed before color "
-#~ "(for text color only, not background): \"*\" for bold, \"!\" for reverse, "
-#~ "\"_\" for underline"
-#~ msgstr ""
-#~ "um nome de cor do WeeChat (default [padrão], black [preto], (dark)gray "
-#~ "[cinza(escuro)], white [branco], (light)red [vermelho(claro)], "
-#~ "(light)green [verde(claro)], brown [marrom], yellow [amarelo], "
-#~ "(light)blue [azul(claro)], (light)magenta [magenta(claro)], (light)cyan "
-#~ "[ciano(claro)]), um número de cor do terminal ou um atalho; atributos são "
-#~ "permitidos antes do nome da cor (somente para cor de texto, não cor de "
-#~ "fundo): \"*\" for negrito, \"!\" for reverso, \"_\" for sublinhado"
-
-#, fuzzy
-#~ msgid ""
-#~ "comma separated list of channels to join when connected to server "
-#~ "(example: \"#chan1,#chan2,#chan3 key1,key2\") (note: content is "
-#~ "evaluated, see /help eval)"
-#~ msgstr ""
-#~ "lista de canais (separados por vírgula) para entrar quando conectar ao "
-#~ "servidor (exemplo: \"#chan1,#chan2,#chan3 senha1,senha2\")"
