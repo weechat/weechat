@@ -1560,8 +1560,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     if (!xfer_config_init ())
         return WEECHAT_RC_ERROR;
 
-    if (xfer_config_read () < 0)
-        return WEECHAT_RC_ERROR;
+    xfer_config_read ();
 
     xfer_create_directories ();
 
