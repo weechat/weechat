@@ -579,12 +579,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         charset_display_charsets ();
 
     if (!charset_config_init ())
-    {
-        weechat_printf (NULL,
-                        _("%s%s: error creating configuration file"),
-                        weechat_prefix("error"), CHARSET_PLUGIN_NAME);
-        return WEECHAT_RC_OK;
-    }
+        return WEECHAT_RC_ERROR;
+
     charset_config_read ();
 
     /* /charset command */
