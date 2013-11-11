@@ -39,7 +39,7 @@ This manual documents only core repository.
 
 The main WeeChat directories are:
 
-[width="100%",cols="1l,5",options="header"]
+[width="100%",cols="1v,5",options="header"]
 |===
 | Directory        | Description
 | debian/          | Debian packaging
@@ -80,7 +80,7 @@ WeeChat "core" reside in following directories:
 * 'src/core/': core functions (for data manipulation)
 * 'src/gui/': functions about interface (buffers, windows, ...)
 
-[width="100%",cols="1l,5",options="header"]
+[width="100%",cols="1v,5",options="header"]
 |===
 | Path/file                     | Description
 | core/                         | Core functions: entry point, internal structures
@@ -143,7 +143,7 @@ WeeChat "core" reside in following directories:
 [[sources_plugins]]
 ==== Plugins
 
-[width="100%",cols="1l,5",options="header"]
+[width="100%",cols="1v,5",options="header"]
 |===
 | Path/file                         | Description
 | plugins/                          | Root of plugins
@@ -275,7 +275,7 @@ WeeChat "core" reside in following directories:
 
 Documentation files:
 
-[width="100%",cols="1l,5",options="header"]
+[width="100%",cols="1v,5",options="header"]
 |===
 | Path/file                           | Description
 | doc/                                | Documentation
@@ -300,7 +300,7 @@ Documentation files:
 
 Translations for WeeChat and plugins are done with gettext, files are in 'po/' directory:
 
-[width="100%",cols="1l,5",options="header"]
+[width="100%",cols="1v,5",options="header"]
 |===
 | Path/file      | Description
 | po/            | Translation files (gettext)
