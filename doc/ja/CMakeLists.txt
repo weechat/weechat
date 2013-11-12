@@ -22,6 +22,7 @@ IF (ENABLE_MAN)
   ADD_CUSTOM_COMMAND(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat.1
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.ja.txt ${CMAKE_CURRENT_BINARY_DIR}/
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.ja.txt ${CMAKE_CURRENT_BINARY_DIR}/
     COMMAND ${A2X_EXECUTABLE} ARGS -a lang=ja -a revision='WeeChat ${VERSION}' -d manpage -f manpage -L ${CMAKE_CURRENT_BINARY_DIR}/weechat.1.ja.txt
     DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.ja.txt

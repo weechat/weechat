@@ -56,6 +56,7 @@ all-local: $(man_targets) $(doc_targets)
 # man page
 weechat.1: weechat.1.en.txt cmdline_options.en.txt
 	cp -f $(abs_top_srcdir)/doc/en/weechat.1.en.txt .
+	cp -f $(abs_top_srcdir)/doc/en/cmdline_options.en.txt .
 	$(A2X) -a revision="WeeChat $(VERSION)" -d manpage -f manpage -L weechat.1.en.txt
 
 # user's guide
