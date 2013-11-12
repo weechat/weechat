@@ -535,18 +535,15 @@ gui_key_read_cb (void *data, int fd)
             || ((buffer[i] != '\r') && (buffer[i] != '\n'))
             || ((buffer[i - 1] != '\r') && (buffer[i - 1] != '\n')))
         {
-            if (gui_key_paste_pending)
+            if (gui_key_paste_pending && (buffer[i] == 25))
             {
-                if (buffer[i] == 25)
-                {
-                    /* ctrl-Y: accept paste */
-                    accept_paste = 1;
-                }
-                else if (buffer[i] == 14)
-                {
-                    /* ctrl-N: cancel paste */
-                    cancel_paste = 1;
-                }
+                /* ctrl-Y: accept paste */
+                accept_paste = 1;
+            }
+            else if (gui_key_paste_pending && (buffer[i] == 14))
+            {
+                /* ctrl-N: cancel paste */
+                cancel_paste = 1;
             }
             else
             {
