@@ -11,6 +11,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 0.4.3 (under dev)
 
+* core: set option weechat.look.paste_bracketed to "on" by default
 * core: fix truncated text when pasting several long lines (bug #40210)
 * core: rename option weechat.look.set_title to weechat.look.window_title,
   value is now a string (evaluated)

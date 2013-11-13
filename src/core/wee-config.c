@@ -2334,7 +2334,7 @@ config_weechat_init_options ()
            "with control sequences so that WeeChat can differentiate pasted "
            "text from typed-in text (\"ESC[200~\", followed by the pasted text, "
            "followed by \"ESC[201~\")"),
-        NULL, 0, 0, "off", NULL, 0, NULL, NULL, &config_change_paste_bracketed, NULL, NULL, NULL);
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, &config_change_paste_bracketed, NULL, NULL, NULL);
     config_look_paste_bracketed_timer_delay = config_file_new_option (
         weechat_config_file, ptr_section,
         "paste_bracketed_timer_delay", "integer",
