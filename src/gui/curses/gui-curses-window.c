@@ -176,7 +176,8 @@ gui_window_clear_weechat (WINDOW *window, int weechat_color)
     if (!gui_init_ok)
         return;
 
-    wbkgdset (window, ' ' | COLOR_PAIR (gui_color_weechat_get_pair (weechat_color)));
+    wbkgdset (window, ' ' | COLOR_PAIR (gui_color_weechat_get_pair (weechat_color)) |
+              gui_color[weechat_color]->attributes);
     werase (window);
     wmove (window, 0, 0);
 }
@@ -188,8 +189,12 @@ gui_window_clear_weechat (WINDOW *window, int weechat_color)
 void
 gui_window_clear (WINDOW *window, int fg, int bg)
 {
+    int attrs;
+
     if (!gui_init_ok)
         return;
+
+    attrs = gui_color_get_extended_attrs (fg);
 
     if ((fg > 0) && (fg & GUI_COLOR_EXTENDED_FLAG))
         fg &= GUI_COLOR_EXTENDED_MASK;
@@ -201,7 +206,7 @@ gui_window_clear (WINDOW *window, int fg, int bg)
     else
         bg = gui_weechat_colors[bg & GUI_COLOR_EXTENDED_MASK].background;
 
-    wbkgdset (window, ' ' | COLOR_PAIR (gui_color_get_pair (fg, bg)));
+    wbkgdset (window, ' ' | COLOR_PAIR (gui_color_get_pair (fg, bg)) | attrs);
     werase (window);
     wmove (window, 0, 0);
 }
@@ -413,16 +418,8 @@ gui_window_set_custom_color_fg (WINDOW *window, int fg)
         {
             if (!(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
                 gui_window_remove_color_style (window, A_ALL_ATTR);
-            attributes = 0;
-            if (fg & GUI_COLOR_EXTENDED_BOLD_FLAG)
-                attributes |= A_BOLD;
-            if (fg & GUI_COLOR_EXTENDED_REVERSE_FLAG)
-                attributes |= A_REVERSE;
-            if (fg & GUI_COLOR_EXTENDED_ITALIC_FLAG)
-                attributes |= A_ITALIC;
-            if (fg & GUI_COLOR_EXTENDED_UNDERLINE_FLAG)
-                attributes |= A_UNDERLINE;
-            attributes |= gui_weechat_colors[fg & GUI_COLOR_EXTENDED_MASK].attributes;
+            attributes = gui_color_get_extended_attrs (fg) |
+                gui_weechat_colors[fg & GUI_COLOR_EXTENDED_MASK].attributes;
             gui_window_set_color_style (window, attributes);
             fg = gui_weechat_colors[fg & GUI_COLOR_EXTENDED_MASK].foreground;
 
@@ -505,16 +502,8 @@ gui_window_set_custom_color_fg_bg (WINDOW *window, int fg, int bg)
         {
             if (!(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
                 gui_window_remove_color_style (window, A_ALL_ATTR);
-            attributes = 0;
-            if (fg & GUI_COLOR_EXTENDED_BOLD_FLAG)
-                attributes |= A_BOLD;
-            if (fg & GUI_COLOR_EXTENDED_REVERSE_FLAG)
-                attributes |= A_REVERSE;
-            if (fg & GUI_COLOR_EXTENDED_ITALIC_FLAG)
-                attributes |= A_ITALIC;
-            if (fg & GUI_COLOR_EXTENDED_UNDERLINE_FLAG)
-                attributes |= A_UNDERLINE;
-            attributes |= gui_weechat_colors[fg & GUI_COLOR_EXTENDED_MASK].attributes;
+            attributes = gui_color_get_extended_attrs (fg) |
+                gui_weechat_colors[fg & GUI_COLOR_EXTENDED_MASK].attributes;
             gui_window_set_color_style (window, attributes);
             fg = gui_weechat_colors[fg & GUI_COLOR_EXTENDED_MASK].foreground;
 

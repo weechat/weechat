@@ -134,6 +134,29 @@ gui_color_search (const char *color_name)
 }
 
 /*
+ * Get Curses attributes corresponding to extended attributes flags in a color.
+ */
+
+int
+gui_color_get_extended_attrs (int color)
+{
+    int attributes;
+
+    attributes = 0;
+
+    if (color & GUI_COLOR_EXTENDED_BOLD_FLAG)
+        attributes |= A_BOLD;
+    if (color & GUI_COLOR_EXTENDED_REVERSE_FLAG)
+        attributes |= A_REVERSE;
+    if (color & GUI_COLOR_EXTENDED_ITALIC_FLAG)
+        attributes |= A_ITALIC;
+    if (color & GUI_COLOR_EXTENDED_UNDERLINE_FLAG)
+        attributes |= A_UNDERLINE;
+
+    return attributes;
+}
+
+/*
  * Assigns a WeeChat color (read from configuration).
  *
  * Returns:
@@ -511,14 +534,7 @@ gui_color_build (int number, int foreground, int background)
         gui_color[number]->foreground = gui_weechat_colors[foreground & GUI_COLOR_EXTENDED_MASK].foreground;
         gui_color[number]->attributes = gui_weechat_colors[foreground & GUI_COLOR_EXTENDED_MASK].attributes;
     }
-    if (foreground & GUI_COLOR_EXTENDED_BOLD_FLAG)
-        gui_color[number]->attributes |= A_BOLD;
-    if (foreground & GUI_COLOR_EXTENDED_REVERSE_FLAG)
-        gui_color[number]->attributes |= A_REVERSE;
-    if (foreground & GUI_COLOR_EXTENDED_ITALIC_FLAG)
-        gui_color[number]->attributes |= A_ITALIC;
-    if (foreground & GUI_COLOR_EXTENDED_UNDERLINE_FLAG)
-        gui_color[number]->attributes |= A_UNDERLINE;
+    gui_color[number]->attributes |= gui_color_get_extended_attrs (foreground);
 
     /* set background */
     if (background & GUI_COLOR_EXTENDED_FLAG)

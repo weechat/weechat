@@ -85,6 +85,7 @@ extern int gui_color_buffer_refresh_needed;
 extern int gui_window_current_emphasis;
 
 /* color functions */
+extern int gui_color_get_extended_attrs (int color);
 extern int gui_color_get_pair (int fg, int bg);
 extern int gui_color_weechat_get_pair (int weechat_color);
 extern void gui_color_pre_init ();
