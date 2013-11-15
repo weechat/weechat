@@ -782,7 +782,10 @@ COMMAND_CALLBACK(buffer)
                             error = NULL;
                             number2 = strtol (pos_number2, &error, 10);
                             if (!error || error[0])
+                            {
+                                free (str_number1);
                                 return WEECHAT_RC_ERROR;
+                            }
                         }
                         else
                             number2 = number1;
