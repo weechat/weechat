@@ -801,26 +801,25 @@ COMMAND_CALLBACK(buffer)
                 {
                     error_main_buffer = 0;
                     num_buffers = 0;
-                    for (i = number2; i >= number1; i--)
+                    ptr_buffer = last_gui_buffer;
+                    while (ptr_buffer)
                     {
-                        ptr_buffer = last_gui_buffer;
-                        while (ptr_buffer)
+                        ptr_prev_buffer = ptr_buffer->prev_buffer;
+                        if (ptr_buffer->number < number1)
+                            break;
+                        if (ptr_buffer->number <= number2)
                         {
-                            ptr_prev_buffer = ptr_buffer->prev_buffer;
-                            if (ptr_buffer->number == i)
+                            num_buffers++;
+                            if (ptr_buffer == weechat_buffer)
                             {
-                                num_buffers++;
-                                if (ptr_buffer == weechat_buffer)
-                                {
-                                    error_main_buffer = 1;
-                                }
-                                else
-                                {
-                                    gui_buffer_close (ptr_buffer);
-                                }
+                                error_main_buffer = 1;
                             }
-                            ptr_buffer = ptr_prev_buffer;
+                            else
+                            {
+                                gui_buffer_close (ptr_buffer);
+                            }
                         }
+                        ptr_buffer = ptr_prev_buffer;
                     }
                     /*
                      * display error for main buffer if it was the only
