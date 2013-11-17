@@ -21,6 +21,10 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -917,6 +921,35 @@ weechat_aspell_buffer_closed_cb (void *data, const char *signal,
 }
 
 /*
+ * Display infos about external libraries used.
+ */
+
+int
+weechat_aspell_debug_libs_cb (void *data, const char *signal,
+                              const char *type_data, void *signal_data)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) signal;
+    (void) type_data;
+    (void) signal_data;
+
+#ifdef USE_ENCHANT
+    weechat_printf (NULL, "  %s: enchant v%s",
+                    ASPELL_PLUGIN_NAME, enchant_get_version ());
+#else
+#ifdef HAVE_ASPELL_VERSION_STRING
+    weechat_printf (NULL, "  %s: aspell v%s",
+                    ASPELL_PLUGIN_NAME, aspell_version_string ());
+#else
+    weechat_printf (NULL, "  %s: aspell (?)", ASPELL_PLUGIN_NAME);
+#endif
+#endif /* USE_ENCHANT */
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Initializes aspell plugin.
  */
 
@@ -966,6 +999,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                          &weechat_aspell_window_switch_cb, NULL);
     weechat_hook_signal ("buffer_closed",
                          &weechat_aspell_buffer_closed_cb, NULL);
+    weechat_hook_signal ("debug_libs",
+                         &weechat_aspell_debug_libs_cb, NULL);
 
     return WEECHAT_RC_OK;
 }

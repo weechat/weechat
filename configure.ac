@@ -94,32 +94,33 @@ AC_CHECK_FUNCS([mallinfo])
 
 # Variables in config.h
 
-AH_VERBATIM([PREFIX],                  [#undef PREFIX])
-AH_VERBATIM([WEECHAT_LIBDIR],          [#undef WEECHAT_LIBDIR])
-AH_VERBATIM([WEECHAT_SHAREDIR],        [#undef WEECHAT_SHAREDIR])
-AH_VERBATIM([HAVE_GNUTLS],             [#undef HAVE_GNUTLS])
-AH_VERBATIM([HAVE_FLOCK],              [#undef HAVE_FLOCK])
+AH_VERBATIM([PREFIX], [#undef PREFIX])
+AH_VERBATIM([WEECHAT_LIBDIR], [#undef WEECHAT_LIBDIR])
+AH_VERBATIM([WEECHAT_SHAREDIR], [#undef WEECHAT_SHAREDIR])
+AH_VERBATIM([HAVE_GNUTLS], [#undef HAVE_GNUTLS])
+AH_VERBATIM([HAVE_FLOCK], [#undef HAVE_FLOCK])
 AH_VERBATIM([HAVE_EAT_NEWLINE_GLITCH], [#undef HAVE_EAT_NEWLINE_GLITCH])
-AH_VERBATIM([PLUGIN_ALIAS],            [#undef PLUGIN_ALIAS])
-AH_VERBATIM([PLUGIN_ASPELL],           [#undef PLUGIN_ASPELL])
-AH_VERBATIM([PLUGIN_CHARSET],          [#undef PLUGIN_CHARSET])
-AH_VERBATIM([PLUGIN_FIFO],             [#undef PLUGIN_FIFO])
-AH_VERBATIM([PLUGIN_IRC],              [#undef PLUGIN_IRC])
-AH_VERBATIM([PLUGIN_LOGGER],           [#undef PLUGIN_LOGGER])
-AH_VERBATIM([PLUGIN_RELAY],            [#undef PLUGIN_RELAY])
-AH_VERBATIM([PLUGIN_RMODIFIER],        [#undef PLUGIN_RMODIFIER])
-AH_VERBATIM([PLUGIN_SCRIPT],           [#undef PLUGIN_SCRIPT])
-AH_VERBATIM([PLUGIN_PERL],             [#undef PLUGIN_PERL])
-AH_VERBATIM([PLUGIN_PYTHON],           [#undef PLUGIN_PYTHON])
-AH_VERBATIM([PLUGIN_RUBY],             [#undef PLUGIN_RUBY])
-AH_VERBATIM([PLUGIN_LUA],              [#undef PLUGIN_LUA])
-AH_VERBATIM([PLUGIN_TCL],              [#undef PLUGIN_TCL])
-AH_VERBATIM([PLUGIN_GUILE],            [#undef PLUGIN_GUILE])
-AH_VERBATIM([PLUGIN_XFER],             [#undef PLUGIN_XFER])
-AH_VERBATIM([MAN],                     [#undef MAN])
-AH_VERBATIM([DOC],                     [#undef DOC])
-AH_VERBATIM([WEECHAT_HOME],            [#define WEECHAT_HOME "~/.weechat"])
-AH_VERBATIM([CA_FILE],                 [#define CA_FILE "/etc/ssl/certs/ca-certificates.crt"])
+AH_VERBATIM([HAVE_ASPELL_VERSION_STRING], [#undef HAVE_ASPELL_VERSION_STRING])
+AH_VERBATIM([PLUGIN_ALIAS], [#undef PLUGIN_ALIAS])
+AH_VERBATIM([PLUGIN_ASPELL], [#undef PLUGIN_ASPELL])
+AH_VERBATIM([PLUGIN_CHARSET], [#undef PLUGIN_CHARSET])
+AH_VERBATIM([PLUGIN_FIFO], [#undef PLUGIN_FIFO])
+AH_VERBATIM([PLUGIN_IRC], [#undef PLUGIN_IRC])
+AH_VERBATIM([PLUGIN_LOGGER], [#undef PLUGIN_LOGGER])
+AH_VERBATIM([PLUGIN_RELAY], [#undef PLUGIN_RELAY])
+AH_VERBATIM([PLUGIN_RMODIFIER], [#undef PLUGIN_RMODIFIER])
+AH_VERBATIM([PLUGIN_SCRIPT], [#undef PLUGIN_SCRIPT])
+AH_VERBATIM([PLUGIN_PERL], [#undef PLUGIN_PERL])
+AH_VERBATIM([PLUGIN_PYTHON], [#undef PLUGIN_PYTHON])
+AH_VERBATIM([PLUGIN_RUBY], [#undef PLUGIN_RUBY])
+AH_VERBATIM([PLUGIN_LUA], [#undef PLUGIN_LUA])
+AH_VERBATIM([PLUGIN_TCL], [#undef PLUGIN_TCL])
+AH_VERBATIM([PLUGIN_GUILE], [#undef PLUGIN_GUILE])
+AH_VERBATIM([PLUGIN_XFER], [#undef PLUGIN_XFER])
+AH_VERBATIM([MAN], [#undef MAN])
+AH_VERBATIM([DOC], [#undef DOC])
+AH_VERBATIM([WEECHAT_HOME], [#define WEECHAT_HOME "~/.weechat"])
+AH_VERBATIM([CA_FILE], [#define CA_FILE "/etc/ssl/certs/ca-certificates.crt"])
 
 # Arguments for ./configure
 
@@ -296,7 +297,6 @@ fi
 if test "x$enable_aspell" = "xyes" ; then
     ac_found_enchant_lib="no"
     if test "x$enable_enchant" = "xyes" ; then
-        #PKG_CHECK_MODULES(ENCHANT, [enchant], [CFLAGS="$CFLAGS -DUSE_ENCHANT"],
         PKG_CHECK_MODULES(ENCHANT, [enchant], ac_found_enchant_lib="yes", ac_found_enchant_lib="no")
     fi
     if test "x$ac_found_enchant_lib" = "xyes" ; then
@@ -322,6 +322,18 @@ if test "x$enable_aspell" = "xyes" ; then
             AC_MSG_RESULT(yes)
             ASPELL_LFLAGS="$ASPELL_LFLAGS -laspell"
             ASPELL_LIB_USED="aspell"
+            ac_save_LDFLAGS="$LDFLAGS"
+            LDFLAGS="$LDFLAGS $ASPELL_LFLAGS"
+            AC_CACHE_CHECK([for aspell_version_string() support], ac_cv_have_aspell_version_string, [
+            AC_LINK_IFELSE([AC_LANG_PROGRAM(
+                [[ #include <aspell.h>]],
+                [[ const char *version = aspell_version_string(); ]])],
+                [ ac_have_aspell_version_string="yes" ],
+                [ ac_have_aspell_version_string="no" ])])
+            LDFLAGS="$ac_save_LDFLAGS"
+            if test "x$ac_have_aspell_version_string" = "xyes"; then
+                AC_DEFINE(HAVE_ASPELL_VERSION_STRING)
+            fi
         fi
     fi
 else
