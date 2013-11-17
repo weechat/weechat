@@ -681,7 +681,7 @@
 * [[option_weechat.look.paste_bracketed]] *weechat.look.paste_bracketed*
 ** 説明: `端末の「括弧付きペーストモード」を有効化 (一部の端末/マルチプレクサで利用可能): このモードでは、ペーストされたテキストはコントロールシーケンスで括られます。これにより WeeChat はペーストされたテキストとタイプされたテキストを区別する ("ESC[200~" 、ペーストされたテキスト、"ESC[201~")`
 ** タイプ: ブール
-** 値: on, off (デフォルト値: `off`)
+** 値: on, off (デフォルト値: `on`)
 
 * [[option_weechat.look.paste_bracketed_timer_delay]] *weechat.look.paste_bracketed_timer_delay*
 ** 説明: `括弧付きペーストの終了を示すコントロールシーケンス ("ESC[201~") が入力されなかった場合に、括弧付きペーストを強制終了させるまでの待ち時間 (秒単位)`

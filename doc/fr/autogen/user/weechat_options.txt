@@ -681,7 +681,7 @@
 * [[option_weechat.look.paste_bracketed]] *weechat.look.paste_bracketed*
 ** description: `activer le mode du terminal "bracketed paste" (pas supporté par tous les terminaux/multiplexeurs): dans ce mode, le texte collé est entouré avec des séquences de contrôle de sorte que WeeChat puisse différencier le texte collé du texte tapé ("ESC[200~", suivi par le texte collé, suivi par "ESC[201~")`
 ** type: booléen
-** valeurs: on, off (valeur par défaut: `off`)
+** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_weechat.look.paste_bracketed_timer_delay]] *weechat.look.paste_bracketed_timer_delay*
 ** description: `forcer la fin du "bracketed paste" après ce délai (en secondes) si la séquence de contrôle pour la fin du "bracketed paste" ("ESC[201~") n'a pas été reçue à temps`
