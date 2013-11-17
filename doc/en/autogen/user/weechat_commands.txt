@@ -203,6 +203,7 @@ Examples:
     hdata: display infos about hdata (with free: remove all hdata in memory)
     hooks: display infos about hooks
 infolists: display infos about infolists
+     libs: display infos about external libraries used
    memory: display infos about memory usage
     mouse: toggle debug for mouse
      tags: display tags for lines

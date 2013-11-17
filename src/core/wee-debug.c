@@ -29,6 +29,13 @@
 #endif
 #include <string.h>
 #include <time.h>
+#include <gcrypt.h>
+#include <curl/curl.h>
+#include <zlib.h>
+
+#ifdef HAVE_GNUTLS
+#include <gnutls/gnutls.h>
+#endif
 
 #include "weechat.h"
 #include "wee-backtrace.h"
@@ -497,6 +504,42 @@ debug_infolists ()
 }
 
 /*
+ * Callback for signal "debug_libs": displays infos about external libraries
+ * used (called when command "/debug libs" is issued).
+ *
+ * Note: this function displays libraries for WeeChat core only: plugins can
+ * catch this signal to display their external libraries.
+ */
+
+int
+debug_libs_cb (void *data, const char *signal, const char *type_data,
+               void *signal_data)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) signal;
+    (void) type_data;
+    (void) signal_data;
+
+    gui_chat_printf (NULL, "  core:");
+    gui_main_debug_libs ();
+    gui_chat_printf (NULL, "    gcrypt: v%s%s",
+                     GCRYPT_VERSION,
+                     (weechat_no_gcrypt) ? " (not initialized)" : "");
+#ifdef HAVE_GNUTLS
+    gui_chat_printf (NULL, "    gnutls: v%s%s",
+                     GNUTLS_VERSION,
+                     (weechat_no_gnutls) ? " (not initialized)" : "");
+#else
+    gui_chat_printf (NULL, "    gnutls: (not available)");
+#endif
+    gui_chat_printf (NULL, "    curl: v%s", LIBCURL_VERSION);
+    gui_chat_printf (NULL, "    zlib: v%s", ZLIB_VERSION);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Displays WeeChat directories.
  */
 
@@ -519,5 +562,11 @@ debug_directories ()
 void
 debug_init ()
 {
-    hook_signal (NULL, "debug_dump", &debug_dump_cb, NULL);
+    /*
+     * hook signals with high priority, to be sure they will be used before
+     * plugins (they should anyway because this function is called before load
+     * of plugins)
+     */
+    hook_signal (NULL, "2000|debug_dump", &debug_dump_cb, NULL);
+    hook_signal (NULL, "2000|debug_libs", &debug_libs_cb, NULL);
 }

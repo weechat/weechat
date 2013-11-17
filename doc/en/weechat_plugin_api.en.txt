@@ -7743,6 +7743,10 @@ Arguments:
   String: plugin name |
   Dump request
 
+| weechat | debug_libs |
+  - |
+  Display external libraries used
+
 | weechat | filter_added |
   Pointer: filter |
   Filter added

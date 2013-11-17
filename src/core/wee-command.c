@@ -1410,6 +1410,12 @@ COMMAND_CALLBACK(debug)
     {
         debug_infolists ();
     }
+    else if (string_strcasecmp (argv[1], "libs") == 0)
+    {
+        gui_chat_printf (NULL, "");
+        gui_chat_printf (NULL, "Libs:");
+        hook_signal_send ("debug_libs", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+    }
     else if (string_strcasecmp (argv[1], "memory") == 0)
     {
         debug_memory ();
@@ -6359,6 +6365,7 @@ command_init ()
                      "all hdata in memory)\n"
                      "    hooks: display infos about hooks\n"
                      "infolists: display infos about infolists\n"
+                     "     libs: display infos about external libraries used\n"
                      "   memory: display infos about memory usage\n"
                      "    mouse: toggle debug for mouse\n"
                      "     tags: display tags for lines\n"
@@ -6374,6 +6381,7 @@ command_init ()
                   " || hdata free"
                   " || hooks"
                   " || infolists"
+                  " || libs"
                   " || memory"
                   " || mouse verbose"
                   " || tags"

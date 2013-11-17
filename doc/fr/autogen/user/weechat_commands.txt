@@ -203,6 +203,7 @@ extension: nom de l'extension ("core" pour le cœur de WeeChat)
     hdata: afficher des infos sur les hdata (avec free: supprimer tous les hdata en mémoire)
     hooks: afficher des infos sur les hooks
 infolists: afficher des infos sur les infolists
+     libs: afficher des infos sur les bibliothèques externes utilisées
    memory: afficher des infos sur l'utilisation de la mémoire
     mouse: activer/désactiver le debug pour la souris
      tags: afficher les étiquettes pour les lignes

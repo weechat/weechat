@@ -7861,6 +7861,10 @@ Paramètres :
   Chaîne : nom d'extension |
   Requête de "dump"
 
+| weechat | debug_libs |
+  - |
+  Affichage des bibliothèques externes utilisées
+
 | weechat | filter_added |
   Pointeur : filtre |
   Filtre ajouté

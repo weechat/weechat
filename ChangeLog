@@ -11,6 +11,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 0.4.3 (under dev)
 
+* core: add option "libs" for command /debug
 * core: apply color attributes when clearing a window (patch #8236)
 * core: set option weechat.look.paste_bracketed to "on" by default
 * core: fix truncated text when pasting several long lines (bug #40210)

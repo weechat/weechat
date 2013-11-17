@@ -7836,6 +7836,11 @@ Argomenti:
   Stringa: nome plugin |
   Richiesta di dump
 
+// TRANSLATION MISSING
+| weechat | debug_libs |
+  - |
+  Display external libraries used
+
 | weechat | filter_added |
   Puntatore: filtro |
   Filtro aggiunto

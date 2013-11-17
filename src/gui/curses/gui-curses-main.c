@@ -298,6 +298,17 @@ gui_main_signal_sigwinch ()
 }
 
 /*
+ * Displays infos about ncurses lib.
+ */
+
+void
+gui_main_debug_libs ()
+{
+    gui_chat_printf (NULL, "    ncurses: v%s (patch %d)",
+                     NCURSES_VERSION, NCURSES_VERSION_PATCH);
+}
+
+/*
  * Refreshs for windows, buffers, bars.
  */
 
