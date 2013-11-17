@@ -170,26 +170,6 @@ debug_sigsegv ()
 }
 
 /*
- * Callback for signal "debug_buffer".
- *
- * This function is called when command "/debug buffer" is issued.
- */
-
-int
-debug_buffer_cb (void *data, const char *signal, const char *type_data,
-                 void *signal_data)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) signal;
-    (void) type_data;
-
-    gui_buffer_dump_hexa ((struct t_gui_buffer *)signal_data);
-
-    return WEECHAT_RC_OK;
-}
-
-/*
  * Displays tree of windows (this function must not be called directly).
  */
 
@@ -251,27 +231,6 @@ debug_windows_tree ()
     gui_chat_printf (NULL, "");
     gui_chat_printf (NULL, _("Windows tree:"));
     debug_windows_tree_display (gui_windows_tree, 1);
-}
-
-/*
- * Callback for signal "debug_windows".
- *
- * This function is called when command "/debug windows" is issued.
- */
-
-int
-debug_windows_cb (void *data, const char *signal, const char *type_data,
-                  void *signal_data)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) signal;
-    (void) type_data;
-    (void) signal_data;
-
-    debug_windows_tree ();
-
-    return WEECHAT_RC_OK;
 }
 
 /*
@@ -561,6 +520,4 @@ void
 debug_init ()
 {
     hook_signal (NULL, "debug_dump", &debug_dump_cb, NULL);
-    hook_signal (NULL, "debug_buffer", &debug_buffer_cb, NULL);
-    hook_signal (NULL, "debug_windows", &debug_windows_cb, NULL);
 }
