@@ -207,6 +207,9 @@ plugin_script_init (struct t_weechat_plugin *weechat_plugin,
     /* add signal for "debug_dump" */
     weechat_hook_signal ("debug_dump", init->callback_signal_debug_dump, NULL);
 
+    /* add signal for "debug_libs" */
+    weechat_hook_signal ("debug_libs", init->callback_signal_debug_libs, NULL);
+
     /* add signal for "buffer_closed" */
     weechat_hook_signal ("buffer_closed",
                          init->callback_signal_buffer_closed, NULL);

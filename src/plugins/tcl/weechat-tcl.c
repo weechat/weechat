@@ -689,6 +689,25 @@ weechat_tcl_signal_debug_dump_cb (void *data, const char *signal,
 }
 
 /*
+ * Display infos about external libraries used.
+ */
+
+int
+weechat_tcl_signal_debug_libs_cb (void *data, const char *signal,
+                                  const char *type_data, void *signal_data)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) signal;
+    (void) type_data;
+    (void) signal_data;
+
+    weechat_printf (NULL, "  %s: v%s", TCL_PLUGIN_NAME, TCL_VERSION);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback called when a buffer is closed.
  */
 
@@ -806,6 +825,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     init.callback_hdata = &weechat_tcl_hdata_cb;
     init.callback_infolist = &weechat_tcl_infolist_cb;
     init.callback_signal_debug_dump = &weechat_tcl_signal_debug_dump_cb;
+    init.callback_signal_debug_libs = &weechat_tcl_signal_debug_libs_cb;
     init.callback_signal_buffer_closed = &weechat_tcl_signal_buffer_closed_cb;
     init.callback_signal_script_action = &weechat_tcl_signal_script_action_cb;
     init.callback_load_file = &weechat_tcl_load_cb;

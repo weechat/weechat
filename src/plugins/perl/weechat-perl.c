@@ -811,6 +811,25 @@ weechat_perl_signal_debug_dump_cb (void *data, const char *signal,
 }
 
 /*
+ * Display infos about external libraries used.
+ */
+
+int
+weechat_perl_signal_debug_libs_cb (void *data, const char *signal,
+                                   const char *type_data, void *signal_data)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) signal;
+    (void) type_data;
+    (void) signal_data;
+
+    weechat_printf (NULL, "  %s: v%s", PERL_PLUGIN_NAME, PERL_VERSION_STRING);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback called when a buffer is closed.
  */
 
@@ -976,6 +995,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     init.callback_hdata = &weechat_perl_hdata_cb;
     init.callback_infolist = &weechat_perl_infolist_cb;
     init.callback_signal_debug_dump = &weechat_perl_signal_debug_dump_cb;
+    init.callback_signal_debug_libs = &weechat_perl_signal_debug_libs_cb;
     init.callback_signal_buffer_closed = &weechat_perl_signal_buffer_closed_cb;
     init.callback_signal_script_action = &weechat_perl_signal_script_action_cb;
     init.callback_load_file = &weechat_perl_load_cb;

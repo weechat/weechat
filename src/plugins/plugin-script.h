@@ -83,6 +83,9 @@ struct t_plugin_script_init
     int (*callback_signal_debug_dump)(void *data, const char *signal,
                                       const char *type_data,
                                       void *signal_data);
+    int (*callback_signal_debug_libs)(void *data, const char *signal,
+                                      const char *type_data,
+                                      void *signal_data);
     int (*callback_signal_buffer_closed)(void *data, const char *signal,
                                          const char *type_data,
                                          void *signal_data);

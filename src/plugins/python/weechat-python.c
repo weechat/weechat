@@ -1127,6 +1127,25 @@ weechat_python_signal_debug_dump_cb (void *data, const char *signal,
 }
 
 /*
+ * Display infos about external libraries used.
+ */
+
+int
+weechat_python_signal_debug_libs_cb (void *data, const char *signal,
+                                     const char *type_data, void *signal_data)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) signal;
+    (void) type_data;
+    (void) signal_data;
+
+    weechat_printf (NULL, "  %s: v%s", PYTHON_PLUGIN_NAME, PY_VERSION);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback called when a buffer is closed.
  */
 
@@ -1286,6 +1305,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     init.callback_hdata = &weechat_python_hdata_cb;
     init.callback_infolist = &weechat_python_infolist_cb;
     init.callback_signal_debug_dump = &weechat_python_signal_debug_dump_cb;
+    init.callback_signal_debug_libs = &weechat_python_signal_debug_libs_cb;
     init.callback_signal_buffer_closed = &weechat_python_signal_buffer_closed_cb;
     init.callback_signal_script_action = &weechat_python_signal_script_action_cb;
     init.callback_load_file = &weechat_python_load_cb;

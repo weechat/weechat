@@ -783,6 +783,25 @@ weechat_lua_signal_debug_dump_cb (void *data, const char *signal,
 }
 
 /*
+ * Display infos about external libraries used.
+ */
+
+int
+weechat_lua_signal_debug_libs_cb (void *data, const char *signal,
+                                  const char *type_data, void *signal_data)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) signal;
+    (void) type_data;
+    (void) signal_data;
+
+    weechat_printf (NULL, "  %s: %s", LUA_PLUGIN_NAME, LUA_VERSION);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback called when a buffer is closed.
  */
 
@@ -900,6 +919,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     init.callback_hdata = &weechat_lua_hdata_cb;
     init.callback_infolist = &weechat_lua_infolist_cb;
     init.callback_signal_debug_dump = &weechat_lua_signal_debug_dump_cb;
+    init.callback_signal_debug_libs = &weechat_lua_signal_debug_libs_cb;
     init.callback_signal_buffer_closed = &weechat_lua_signal_buffer_closed_cb;
     init.callback_signal_script_action = &weechat_lua_signal_script_action_cb;
     init.callback_load_file = &weechat_lua_load_cb;
