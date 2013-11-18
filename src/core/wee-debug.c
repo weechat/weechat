@@ -522,19 +522,47 @@ debug_libs_cb (void *data, const char *signal, const char *type_data,
     (void) signal_data;
 
     gui_chat_printf (NULL, "  core:");
+
+    /* display ncurses version */
     gui_main_debug_libs ();
+
+    /* display gcrypt version */
+#ifdef GCRYPT_VERSION
     gui_chat_printf (NULL, "    gcrypt: %s%s",
                      GCRYPT_VERSION,
                      (weechat_no_gcrypt) ? " (not initialized)" : "");
+#else
+    gui_chat_printf (NULL, "    gcrypt: (?)%s",
+                     (weechat_no_gcrypt) ? " (not initialized)" : "");
+#endif
+
+    /* display gnutls version */
 #ifdef HAVE_GNUTLS
+#ifdef GNUTLS_VERSION
     gui_chat_printf (NULL, "    gnutls: %s%s",
                      GNUTLS_VERSION,
                      (weechat_no_gnutls) ? " (not initialized)" : "");
 #else
+    gui_chat_printf (NULL, "    gnutls: (?)%s",
+                     (weechat_no_gnutls) ? " (not initialized)" : "");
+#endif
+#else
     gui_chat_printf (NULL, "    gnutls: (not available)");
 #endif
+
+    /* display curl version */
+#ifdef LIBCURL_VERSION
     gui_chat_printf (NULL, "    curl: %s", LIBCURL_VERSION);
+#else
+    gui_chat_printf (NULL, "    curl: (?)");
+#endif
+
+    /* display zlib version */
+#ifdef ZLIB_VERSION
     gui_chat_printf (NULL, "    zlib: %s", ZLIB_VERSION);
+#else
+    gui_chat_printf (NULL, "    zlib: (?)");
+#endif
 
     return WEECHAT_RC_OK;
 }

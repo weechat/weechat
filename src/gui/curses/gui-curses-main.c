@@ -304,8 +304,12 @@ gui_main_signal_sigwinch ()
 void
 gui_main_debug_libs ()
 {
+#if defined(NCURSES_VERSION) && defined(NCURSES_VERSION_PATCH)
     gui_chat_printf (NULL, "    ncurses: %s (patch %d)",
                      NCURSES_VERSION, NCURSES_VERSION_PATCH);
+#else
+    gui_chat_printf (NULL, "    ncurses: (?)");
+#endif
 }
 
 /*
