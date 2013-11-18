@@ -796,7 +796,11 @@ weechat_lua_signal_debug_libs_cb (void *data, const char *signal,
     (void) type_data;
     (void) signal_data;
 
+#ifdef LUA_VERSION
     weechat_printf (NULL, "  %s: %s", LUA_PLUGIN_NAME, LUA_VERSION);
+#else
+    weechat_printf (NULL, "  %s: (?)", LUA_PLUGIN_NAME);
+#endif
 
     return WEECHAT_RC_OK;
 }

@@ -788,11 +788,15 @@ weechat_guile_signal_debug_libs_cb (void *data, const char *signal,
     (void) type_data;
     (void) signal_data;
 
+#if defined(SCM_MAJOR_VERSION) && defined(SCM_MINOR_VERSION) && defined(SCM_MICRO_VERSION)
     weechat_printf (NULL, "  %s: %d.%d.%d",
                     GUILE_PLUGIN_NAME,
                     SCM_MAJOR_VERSION,
                     SCM_MINOR_VERSION,
                     SCM_MICRO_VERSION);
+#else
+    weechat_printf (NULL, "  %s: (?)", GUILE_PLUGIN_NAME);
+#endif
 
     return WEECHAT_RC_OK;
 }

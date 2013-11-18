@@ -824,7 +824,11 @@ weechat_perl_signal_debug_libs_cb (void *data, const char *signal,
     (void) type_data;
     (void) signal_data;
 
+#ifdef PERL_VERSION_STRING
     weechat_printf (NULL, "  %s: %s", PERL_PLUGIN_NAME, PERL_VERSION_STRING);
+#else
+    weechat_printf (NULL, "  %s: (?)", PERL_PLUGIN_NAME);
+#endif
 
     return WEECHAT_RC_OK;
 }

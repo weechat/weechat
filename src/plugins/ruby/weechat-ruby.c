@@ -23,9 +23,11 @@
 #undef _
 
 #include <ruby.h>
-#include <ruby/version.h>
 #if defined(RUBY_VERSION) && RUBY_VERSION >=19
 #include <ruby/encoding.h>
+#endif
+#ifdef HAVE_RUBY_VERSION_H
+#include <ruby/version.h>
 #endif
 
 #include <stdarg.h>
@@ -962,7 +964,11 @@ weechat_ruby_signal_debug_libs_cb (void *data, const char *signal,
     (void) type_data;
     (void) signal_data;
 
+#ifdef HAVE_RUBY_VERSION_H
     weechat_printf (NULL, "  %s: %s", RUBY_PLUGIN_NAME, ruby_version);
+#else
+    weechat_printf (NULL, "  %s: (?)", RUBY_PLUGIN_NAME);
+#endif
 
     return WEECHAT_RC_OK;
 }
