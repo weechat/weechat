@@ -962,7 +962,7 @@ weechat_ruby_signal_debug_libs_cb (void *data, const char *signal,
     (void) type_data;
     (void) signal_data;
 
-    weechat_printf (NULL, "  %s: v%s", RUBY_PLUGIN_NAME, ruby_version);
+    weechat_printf (NULL, "  %s: %s", RUBY_PLUGIN_NAME, ruby_version);
 
     return WEECHAT_RC_OK;
 }

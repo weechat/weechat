@@ -1140,7 +1140,7 @@ weechat_python_signal_debug_libs_cb (void *data, const char *signal,
     (void) type_data;
     (void) signal_data;
 
-    weechat_printf (NULL, "  %s: v%s", PYTHON_PLUGIN_NAME, PY_VERSION);
+    weechat_printf (NULL, "  %s: %s", PYTHON_PLUGIN_NAME, PY_VERSION);
 
     return WEECHAT_RC_OK;
 }
