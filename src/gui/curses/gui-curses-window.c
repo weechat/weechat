@@ -307,6 +307,9 @@ gui_window_reset_style (WINDOW *window, int weechat_color)
 void
 gui_window_reset_color (WINDOW *window, int weechat_color)
 {
+    gui_window_current_style_fg = gui_color[weechat_color]->foreground;
+    gui_window_current_style_bg = gui_color[weechat_color]->background;
+
     wattron (window, COLOR_PAIR(gui_color_weechat_get_pair (weechat_color)) |
              gui_color[weechat_color]->attributes);
 }
