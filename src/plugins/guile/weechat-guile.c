@@ -972,6 +972,13 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     guile_stdout = NULL;
 
+    /*
+     * prevent guile to use its own gmp allocator, because it can conflict
+     * with other plugins using GnuTLS like relay, which can crash WeeChat
+     * on unload (or exit)
+     */
+    scm_install_gmp_memory_functions = 0;
+
     scm_init_guile ();
 
     guile_module_weechat = scm_c_define_module ("weechat",

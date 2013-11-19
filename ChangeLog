@@ -38,6 +38,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   string_eval_expression and command /eval
 * api: add support for C++ plugins
 * api: fix read of arrays in hdata functions hdata_<type> (bug #40354)
+* guile: disable guile gmp allocator (fix crash on unload of relay plugin)
+  (bug #40628)
 * irc: fix groups in channel nicklist when reconnecting to a server that
   supports more nick prefixes than the previously connected server
 * irc: fix auto-switch to channel buffer when doing /join channel (without "#")
