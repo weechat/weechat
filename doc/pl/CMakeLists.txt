@@ -22,7 +22,7 @@ IF(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
   # scripting guide
   ADD_CUSTOM_COMMAND(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.pl.html
-    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a toc -a toclevels=3 -a toc-title='Spis treści' -a date=`date "+%F"` -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.pl.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_scripting.pl.txt
+    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a toc -a toclevels=3 -a toc-title='Spis treści' -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.pl.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_scripting.pl.txt
     DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat_scripting.pl.txt
     COMMENT "Building weechat_scripting.pl.html"
@@ -33,7 +33,7 @@ IF(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
   # FAQ
   ADD_CUSTOM_COMMAND(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.pl.html
-    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a toc -a toc-title='Spis treści' -a date=`date "+%F"` -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.pl.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_faq.pl.txt
+    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a toc -a toc-title='Spis treści' -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.pl.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_faq.pl.txt
     DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat_faq.pl.txt
     COMMENT "Building weechat_faq.pl.html"
@@ -44,7 +44,7 @@ IF(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
   # quickstart
   ADD_CUSTOM_COMMAND(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.pl.html
-    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a toc -a toc-title='Spis treści' -a date=`date "+%F"` -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.pl.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.pl.txt
+    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a toc -a toc-title='Spis treści' -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.pl.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.pl.txt
     DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.pl.txt
     COMMENT "Building weechat_quickstart.pl.html"
@@ -55,7 +55,7 @@ IF(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
   # tester's guide
   ADD_CUSTOM_COMMAND(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.pl.html
-    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a toc -a toc-title='Spis treści' -a date=`date "+%F"` -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.pl.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_tester.pl.txt
+    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a toc -a toc-title='Spis treści' -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.pl.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_tester.pl.txt
     DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat_tester.pl.txt
     COMMENT "Building weechat_tester.pl.html"

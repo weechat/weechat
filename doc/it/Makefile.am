@@ -56,27 +56,27 @@ weechat.1: weechat.1.it.txt cmdline_options.it.txt
 
 # user's guide
 weechat_user.it.html: weechat_user.it.txt cmdline_options.it.txt $(wildcard autogen/user/*.txt)
-	$(ASCIIDOC) -a lang=it -a toc -a toclevels=4 -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_user.it.html $(abs_top_srcdir)/doc/it/weechat_user.it.txt
+	$(ASCIIDOC) -a lang=it -a toc -a toclevels=4 -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_user.it.html $(abs_top_srcdir)/doc/it/weechat_user.it.txt
 
 # plugin API reference
 weechat_plugin_api.it.html: weechat_plugin_api.it.txt $(wildcard autogen/plugin_api/*.txt)
-	$(ASCIIDOC) -a lang=it -a toc -a toclevels=4 -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_plugin_api.it.html $(abs_top_srcdir)/doc/it/weechat_plugin_api.it.txt
+	$(ASCIIDOC) -a lang=it -a toc -a toclevels=4 -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_plugin_api.it.html $(abs_top_srcdir)/doc/it/weechat_plugin_api.it.txt
 
 # scripting guide
 weechat_scripting.it.html: weechat_scripting.it.txt
-	$(ASCIIDOC) -a lang=it -a toc -a toclevels=3 -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_scripting.it.html $(abs_top_srcdir)/doc/it/weechat_scripting.it.txt
+	$(ASCIIDOC) -a lang=it -a toc -a toclevels=3 -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_scripting.it.html $(abs_top_srcdir)/doc/it/weechat_scripting.it.txt
 
 # FAQ
 weechat_faq.it.html: weechat_faq.it.txt
-	$(ASCIIDOC) -a lang=it -a toc -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_faq.it.html $(abs_top_srcdir)/doc/it/weechat_faq.it.txt
+	$(ASCIIDOC) -a lang=it -a toc -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_faq.it.html $(abs_top_srcdir)/doc/it/weechat_faq.it.txt
 
 # quickstart
 weechat_quickstart.it.html: weechat_quickstart.it.txt
-	$(ASCIIDOC) -a lang=it -a toc -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_quickstart.it.html $(abs_top_srcdir)/doc/it/weechat_quickstart.it.txt
+	$(ASCIIDOC) -a lang=it -a toc -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_quickstart.it.html $(abs_top_srcdir)/doc/it/weechat_quickstart.it.txt
 
 # tester's guide
 weechat_tester.it.html: weechat_tester.it.txt
-	$(ASCIIDOC) -a lang=it -a toc -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_tester.it.html $(abs_top_srcdir)/doc/it/weechat_tester.it.txt
+	$(ASCIIDOC) -a lang=it -a toc -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_tester.it.html $(abs_top_srcdir)/doc/it/weechat_tester.it.txt
 
 # install man/docs
 

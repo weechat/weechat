@@ -43,19 +43,19 @@ all-local: $(man_targets) $(doc_targets)
 
 # scripting guide
 weechat_scripting.pl.html: weechat_scripting.pl.txt
-	$(ASCIIDOC) -a toc -a toclevels=3 -a toc-title='Spis treści' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_scripting.pl.html $(abs_top_srcdir)/doc/pl/weechat_scripting.pl.txt
+	$(ASCIIDOC) -a toc -a toclevels=3 -a toc-title='Spis treści' -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_scripting.pl.html $(abs_top_srcdir)/doc/pl/weechat_scripting.pl.txt
 
 # FAQ
 weechat_faq.pl.html: weechat_faq.pl.txt
-	$(ASCIIDOC) -a toc -a toc-title='Spis treści' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_faq.pl.html $(abs_top_srcdir)/doc/pl/weechat_faq.pl.txt
+	$(ASCIIDOC) -a toc -a toc-title='Spis treści' -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_faq.pl.html $(abs_top_srcdir)/doc/pl/weechat_faq.pl.txt
 
 # quickstart
 weechat_quickstart.pl.html: weechat_quickstart.pl.txt
-	$(ASCIIDOC) -a toc -a toc-title='Spis treści' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_quickstart.pl.html $(abs_top_srcdir)/doc/pl/weechat_quickstart.pl.txt
+	$(ASCIIDOC) -a toc -a toc-title='Spis treści' -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_quickstart.pl.html $(abs_top_srcdir)/doc/pl/weechat_quickstart.pl.txt
 
 # tester's guide
 weechat_tester.pl.html: weechat_tester.pl.txt
-	$(ASCIIDOC) -a toc -a toc-title='Spis treści' -a date=`date "+%F"` -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -n -o weechat_tester.pl.html $(abs_top_srcdir)/doc/pl/weechat_tester.pl.txt
+	$(ASCIIDOC) -a toc -a toc-title='Spis treści' -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_tester.pl.html $(abs_top_srcdir)/doc/pl/weechat_tester.pl.txt
 
 # install man/docs
 
