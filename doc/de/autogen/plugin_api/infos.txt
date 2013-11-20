@@ -42,9 +42,9 @@
 
 | weechat | locale | Lokalisation welche für die übersetzten Nachrichten verwendet werden soll | -
 
-| weechat | term_height | height of terminal | -
+| weechat | term_height | Höhe des Terminals | -
 
-| weechat | term_width | width of terminal | -
+| weechat | term_width | Breite des Terminals | -
 
 | weechat | version | WeeChat Version | -
 

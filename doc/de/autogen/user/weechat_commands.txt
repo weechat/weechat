@@ -191,24 +191,24 @@ Beispiele:
         mouse|cursor [verbose]
         hdata [free]
 
-     list: list plugins with debug levels
-      set: set debug level for plugin
-   plugin: name of plugin ("core" for WeeChat core)
-    level: debug level for plugin (0 = disable debug)
-     dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
-   buffer: dump buffer content with hexadecimal values in log file
-    color: display infos about current color pairs
-   cursor: toggle debug for cursor mode
-     dirs: display directories
-    hdata: display infos about hdata (with free: remove all hdata in memory)
-    hooks: display infos about hooks
-infolists: display infos about infolists
-     libs: display infos about external libraries used
-   memory: display infos about memory usage
-    mouse: toggle debug for mouse
-     tags: display tags for lines
-     term: display infos about terminal
-  windows: display windows tree
+     list: zeigt alle Erweiterungen mit Debuglevel an
+      set: setzt den Level der Protokollierung für eine Erweiterung
+   plugin: Name der Erweiterung ("core" für den WeeChat Kern)
+    level: Debuglevel der Erweiterung (0 = deaktiviert Debug)
+     dump: Speicherabbild in die WeeChat Protokolldatei schreiben (wie bei einem Programmabsturz)
+   buffer: speichert den Bufferinhalt als hexadezimale Ausgabe in die Protokolldatei
+    color: zeigt Informationen über die aktuellen Farbpaarungen an
+   cursor: schaltet den debug-Modus für den Cursor-Modus ein/aus
+     dirs: Verzeichnisse werden angezeigt
+    hdata: zeigt Informationen zu hdata an (mittels free werden alle hdata Informationen aus dem Speicher entfernt)
+    hooks: zeigt die aktiven Hooks an
+infolists: zeigt Information über die Infolists an
+     libs: zeigt an welche externen Bibliotheken verwendet werden
+   memory: gibt Informationen über den genutzten Speicher aus
+    mouse: schaltet den debug-Modus für den Maus-Modus ein/aus
+     tags: zeigt für jede einzelne Zeile die dazugehörigen Schlagwörter an
+     term: gibt Informationen über das Terminal und verfügbare Farben aus
+  windows: zeigt die Fensterstruktur an
 ----
 
 [[command_weechat_eval]]
@@ -218,43 +218,43 @@ infolists: display infos about infolists
 /eval  [-n] <expression>
        [-n] -c <expression1> <operator> <expression2>
 
-        -n: display result without sending it to buffer (debug mode)
-        -c: evaluate as condition: use operators and parentheses, return a boolean value ("0" or "1")
-expression: expression to evaluate, variables with format ${variable} are replaced (see below)
-  operator: a logical or comparison operator:
-            - logical operators:
-                &&  boolean "and"
-                ||  boolean "or"
-            - comparison operators:
-                ==  equal
-                !=  not equal
-                <=  less or equal
-                <   less
-                >=  greater or equal
-                >   greater
-                =~  is matching regex
-                !~  is NOT matching regex
+        -n: zeigt das Ergebnis lokal an, ohne das dieses in den Buffer gesendet wird (debug Modus)
+        -c: Auswertung als Bedingung: nutzt Operatoren und runde Klammern, Rückgabewert als Boolean-Wert ("0" oder "1")
+expression: Ausdruck welcher verarbeitet werden soll. Variablen im Format ${variable} werden ersetzt (siehe unten)
+  operator: ein logischer oder vergleichender Operand:
+            - logische Operanden:
+                &&  boolean "und"
+                ||  boolean "oder"
+            - vergleichende Operanden:
+                ==  gleich
+                !=  ungleich
+                <=  kleiner oder gleich
+                <   kleiner
+                >=  größer oder gleich
+                >   größer
+                =~  stimmt mit regulärem Ausdruck überein
+                !~  stimmt NICHT mit regulärem Ausdruck überein
 
-An expression is considered as "true" if it is not NULL, not empty, and different from "0".
-The comparison is made using integers if the two expressions are valid integers.
-To force a string comparison, add double quotes around each expression, for example:
+Ein Ausdruck gilt als "wahr", sofern das Ergebnis nicht NULL, nicht leer und von "0" abweichend ist.
+Der Vergleich findet zwischen zwei Integer Werten statt, sofern die beiden Ausdrücke gültige Integer-Werte sind.
+Um einen Vergleich zwischen zwei Zeichenketten zu erzwingen, müssen die Ausdrücke in Anführungszeichen gesetzt werden, zum Beispiel:
   50 > 100      ==> 0
   "50" > "100"  ==> 1
 
-Some variables are replaced in expression, using the format ${variable}, variable can be, by order of priority :
-  1. a color (format: "color:xxx")
-  2. an info (format: "info:name,arguments", arguments are optional)
-  3. an option (format: "file.section.option")
-  4. a local variable in buffer
-  5. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
-Format for hdata can be one of following:
-  hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
-  hdata[list].var1.var2...: start with a hdata using a list, for example:
-    ${buffer[gui_buffers].full_name}: full name of first buffer in linked list of buffers
-    ${plugin[weechat_plugins].name}: name of first plugin in linked list of plugins
-For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
+Einige Variablen werden im Ausdruck, mittels der Formatierung ${Variable}, ersetzt. Mögliche Variablen sind, nach Reihenfolge ihrer Priorität:
+  1. eine Farbe (Format: color:xxx)
+  2. eine Info (Format: "info:name,arguments", Argumente sind optional)
+  3. der Name einer Option (Format: file.section.option)
+  4. der Name einer lokalen Variablen eines Buffer
+  5. ein hdata Name/Variable (der Wert wird automatisch als Zeichenkette konvertiert), Standardmäßig wird für "window" und "buffer" das aktuelle Fenster/Buffer verwendet.
+Das Format für hdata kann wie folgt lauten:
+  hdata.var1.var2...: startet mit hdata (der Pointer muss bekannt sein) und fragt eine Variable nach der anderen ab (weitere hdata können folgen)
+  hdata[list].var1.var2...: startet hdata mittels einer Liste, zum Beispiel:
+    ${buffer[gui_buffers].full_name}: der vollständige Name des ersten Buffers, in der verknüpften Liste aller Buffer
+    ${plugin[weechat_plugins].name}: Name der ersten Erweiterung, in der verknüpften Liste aller Erweiterungen
+Die vorhandenen Namen für hdata und Variablen sind in der "Anleitung für API Erweiterung", Bereich "weechat_hdata_get". beschrieben
 
-Examples:
+Beispiele:
   /eval -n ${info:version}                 ==> 0.4.3
   /eval -n ${weechat.look.scroll_amount}   ==> 3
   /eval -n ${window}                       ==> 0x2549aa0
