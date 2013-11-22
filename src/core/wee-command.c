@@ -837,15 +837,18 @@ COMMAND_CALLBACK(buffer)
             else
             {
                 ptr_buffer = gui_buffer_search_by_full_name (argv_eol[2]);
-                if (ptr_buffer == weechat_buffer)
+                if (ptr_buffer)
                 {
-                    gui_chat_printf (NULL,
-                                     _("%sError: WeeChat main buffer can't be "
-                                       "closed"),
-                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                    if (ptr_buffer == weechat_buffer)
+                    {
+                        gui_chat_printf (NULL,
+                                         _("%sError: WeeChat main buffer can't "
+                                           "be closed"),
+                                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                    }
+                    else
+                        gui_buffer_close (ptr_buffer);
                 }
-                else
-                    gui_buffer_close (ptr_buffer);
             }
         }
 
