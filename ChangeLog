@@ -11,6 +11,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 0.4.3 (under dev)
 
+* core: fix crash on /buffer close core.weechat
 * core: add option "libs" for command /debug
 * core: apply color attributes when clearing a window (patch #8236)
 * core: set option weechat.look.paste_bracketed to "on" by default
