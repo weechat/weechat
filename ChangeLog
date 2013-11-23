@@ -41,6 +41,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * api: fix read of arrays in hdata functions hdata_<type> (bug #40354)
 * guile: disable guile gmp allocator (fix crash on unload of relay plugin)
   (bug #40628)
+* irc: fix memory leak when checking the value of ssl_priorities option in
+  servers
 * irc: fix memory leak when a channel is deleted
 * irc: fix groups in channel nicklist when reconnecting to a server that
   supports more nick prefixes than the previously connected server
