@@ -66,5 +66,6 @@ extern void secure_free ();
 extern void secure_buffer_display ();
 extern void secure_buffer_assign ();
 extern void secure_buffer_open ();
+extern void secure_end ();
 
 #endif /* __WEECHAT_SECURE_H */

@@ -1336,3 +1336,27 @@ secure_buffer_open ()
 
     secure_buffer_display ();
 }
+
+/*
+ * Frees all allocated data.
+ */
+
+void
+secure_end ()
+{
+    if (secure_passphrase)
+    {
+        free (secure_passphrase);
+        secure_passphrase = NULL;
+    }
+    if (secure_hashtable_data)
+    {
+        hashtable_free (secure_hashtable_data);
+        secure_hashtable_data = NULL;
+    }
+    if (secure_hashtable_data_encrypted)
+    {
+        hashtable_free (secure_hashtable_data_encrypted);
+        secure_hashtable_data_encrypted = NULL;
+    }
+}
