@@ -1176,6 +1176,8 @@ irc_channel_free (struct t_irc_server *server, struct t_irc_channel *channel)
         free (channel->modes);
     if (channel->key)
         free (channel->key);
+    if (channel->join_msg_received)
+        weechat_hashtable_free (channel->join_msg_received);
     if (channel->away_message)
         free (channel->away_message);
     if (channel->pv_remote_nick_color)
