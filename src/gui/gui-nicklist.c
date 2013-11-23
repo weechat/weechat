@@ -1332,3 +1332,17 @@ gui_nicklist_print_log (struct t_gui_nick_group *group, int indent)
         log_printf (format, " ", ptr_nick->next_nick);
     }
 }
+
+/*
+ * Frees all allocated data.
+ */
+
+void
+gui_nicklist_end ()
+{
+    if (gui_nicklist_hsignal)
+    {
+        hashtable_free (gui_nicklist_hsignal);
+        gui_nicklist_hsignal = NULL;
+    }
+}

@@ -567,6 +567,9 @@ gui_main_end (int clean_exit)
 
         /* free some variables used for chat area */
         gui_chat_end ();
+
+        /* free some variables used for nicklist */
+        gui_nicklist_end ();
     }
 
     /* end of Curses output */
