@@ -10254,8 +10254,9 @@ Paramètres :
 
 | display | "1", "auto" |
   "1" : basculer vers ce tampon dans la fenêtre active +
-  "auto" : basculer vers ce tampon dans la fenêtre active, le marqueur de
-  données non lues n'est pas réinitialisé
+  "auto" : basculer vers ce tampon dans la fenêtre active seulement si le
+  tampon affiché n'est pas celui défini dans le "layout", le marqueur de données
+  non lues n'est pas réinitialisé
 
 | number | numéro |
   Déplace le tampon vers ce numéro

@@ -10237,10 +10237,11 @@ Argomenti:
 | unread | - |
   Imposta l'evidenziatore di lettura dopo l'ultima riga del buffer
 
+// TRANSLATION MISSING
 | display | "1", "auto" |
   "1": passa a questo buffer nella finestra corrente +
-  "auto": passa a questo buffer nella finestra corrente, l'evidenziatore di
-  lettura non viene resettato
+  "auto": switch to this buffer in current window only if the buffer
+  displayed is not the buffer set in the layout, read marker is not reset
 
 | number | numero |
   Sposta buffer a questo numero
