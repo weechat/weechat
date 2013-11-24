@@ -19,9 +19,8 @@ schlanker Chat-Client der für unterschiedliche Betriebssysteme entwickelt wird.
 
 wesentliche Merkmale:
 
-// TRANSLATION MISSING
-* mehrere Protokolle werden unterstützt: IRC and Jabber (with script jabber.py
-  or bitlbee/minbif)
+* Unterstützung verschiedener Protokolle: IRC und Jabber (mittels Skript jabber.py
+  oder bitlbee/minbif)
 * mehrere Server Verbindungen sind möglich (mittels SSL, IPv6, proxy)
 * klein, schnell und schlank
 * den eigenen persönlichen Bedürfnissen anpassbar und durch Erweiterungen und Skripten in der Funktionalität erweiterbar
@@ -449,9 +448,8 @@ Veränderungen an der Konfigurationsdatei mit dem internen Befehl `/set` durchf�
 
 Beispiel des WeeChat-Terminals:
 
-// TRANSLATION MISSING
 ....
- ▼ bar "title"
+ ▼ Bar "title"
 ┌───────────────────────────────────────────────────────────────────────────┐
 │Welcome to #test, this is a test channel                                   │
 │12:52:27   --> | Flashy (flashcode@weechat.org) has joined #test   │@Flashy│
@@ -474,16 +472,16 @@ Beispiel des WeeChat-Terminals:
 │[12:55] [6] [irc/freenode] 3:#test(+n){4}* [H: 4:#abc(2,5), 6]             │
 │[@Flashy(i)] hi peter!█                                                    │
 └───────────────────────────────────────────────────────────────────────────┘
- ▲ bars "status" and "input"                               bar "nicklist" ▲
+ ▲ Bars "status" und "input"                               Bar "nicklist" ▲
 ....
 
 Der Bildschirm setzt sich aus folgenden Bereichen zusammen:
 
-* Chat-Bereich (in der Mitte des Bildschirms) enthält den geschrieben Text und für jede Zeile:
+* Chat-Bereich (in der Mitte des Bildschirms). Dieser enthält den Text und zusätzlich für jede Zeile:
 ** die Uhrzeit
 ** Prefix (links von dem "|")
 ** Nachricht (rechts von dem "|")
-* Bars können um den Chat-Bereich angeordnet werden. Standard-Bars sind:
+* Die Bars können um den Chat-Bereich angeordnet werden. Standard-Bars sind:
 ** 'title' Bar, über dem Chat-Bereich
 ** 'status' Bar, unter dem Chat-Bereich
 ** 'input' Bar, unter der Status-Bar
@@ -501,8 +499,7 @@ Die 'status'-Bar besitzt als Standardeinträge:
 | buffer_name           | `#test`               | Name des aktuellen Buffers
 | buffer_modes          | `+n`                  | IRC Channel-Modi
 | buffer_nicklist_count | `{4}`                 | Anzahl der Nicks in Nickliste
-// TRANSLATION MISSING
-| buffer_zoom           | !                     | `!` means the merged buffer is zoomed (only this one is displayed), empty value means all merged buffers are displayed
+| buffer_zoom           | !                     | `!` bedeutet, dass ein zusammengefügter Buffer gezoomed (nur dieser Buffer wird angezeigt) wird.
 | buffer_filter         | `*`                   | Filteranzeige: `*` bedeutet das Zeilen gefiltert (unterdrückt) wurden. Ein leerer Eintrag zeigt an dass alle Zeilen dargestellt werden
 | lag                   | `[Lag: 2.5]`          | Verzögerungsanzeige, in Sekunden (keine Anzeige falls Verzögerung gering)
 | hotlist               | `[H: 4:#abc(2,5), 6]` | Liste der Buffer mit Aktivität (ungelesene Nachrichten) (für das Beispiel: 2 Highlights und 5 ungelesene Nachrichten im Channel '#abc', eine ungelesene Nachricht in Buffer #6)
@@ -516,8 +513,7 @@ In der 'input' Bar lautet die Standardeinstellung:
 |===
 | Item         | Beispiel                                      | Beschreibung
 | input_paste  | `[Paste 7 lines ? [ctrl-Y] Ja [ctrl-N] Nein]` | Nachfrage ob sieben Zeilen eingefügt werden sollen
-// TRANSLATION MISSING
-| input_prompt | `[@Flashy(i)]`                                | Input prompt, for irc: nick and modes (mode "+i" means invisible on freenode)
+| input_prompt | `[@Flashy(i)]`                                | Input prompt, für irc: Nick und Modi (Modus "+i" bedeutet auf freenode, unsichtbar)
 | away         | `(away)`                                      | Abwesenheitsanzeige
 | input_search | `[Search (~ str,msg)]`                        | Suchindikatoren ("`~`": Groß-und Kleinschreibung ignorieren, "`==`": Groß-und Kleinschreibung berücksichtigen, "`str`": einfache Textsuche, "`regex`": suche mit regulären Ausdrücken, "`msg`": Suche in Nachrichten, "`pre`": Suche in Präfix, "`pre\|msg`": Suche in Präfix und Nachrichten)
 | input_text   | `hi peter!`                                   | Text der eingegeben wird
@@ -1279,9 +1275,8 @@ Zeichen, genutzt werden:
 @k(C-)@k(c) , @k(c) , @k(xx,yy)::
     Textfarbe `xx` und Hintergrundfarbe `yy` (siehe Farbtabelle)
 
-// TRANSLATION MISSING
 @k(C-)@k(c) , @k(i)::
-    italic text
+    Text wird kursiv dargestellt
 
 @k(C-)@k(c) , @k(o)::
     deaktiviert Farben und Attribute
@@ -2573,13 +2568,13 @@ herstellen, indem man das Server Passwort "meinPasswort" nutzt (oder
 Die Relay-Erweiterung kann Daten, mittels dem WeeChat Protokoll, an eine
 externe Oberfläche senden.
 
-// TRANSLATION MISSING
-You can connect with a remote interface, see the list on download page:
+Nun kann man mittels einer remote Oberfläche Kontakt zu WeeChat herstellen.
+Eine Liste der remote Oberflächen findet man auf der Homepage:
 http://weechat.org/download
 
 [IMPORTANT]
-// TRANSLATION MISSING
-WeeChat itself can NOT connect to another WeeChat with this protocol.
+WeeChat selber kann sich NICHT mit einer anderen WeeChat Instanz über
+dieses Protokoll verbinden.
 
 Zum Beispiel:
 
