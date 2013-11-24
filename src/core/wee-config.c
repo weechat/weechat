@@ -326,7 +326,12 @@ config_change_window_title (void *data, struct t_config_option *option)
     (void) data;
     (void) option;
 
-    gui_window_set_title (CONFIG_STRING(config_look_window_title));
+    if (gui_init_ok
+        || (CONFIG_STRING(config_look_window_title)
+            && CONFIG_STRING(config_look_window_title)[0]))
+    {
+        gui_window_set_title (CONFIG_STRING(config_look_window_title));
+    }
 }
 
 /*
