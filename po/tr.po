@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-11-17 13:58+0100\n"
+"POT-Creation-Date: 2013-11-26 16:18+0100\n"
 "PO-Revision-Date: 2013-11-09 10:13+0100\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6131,7 +6131,7 @@ msgstr ""
 #, c-format
 msgid ""
 "%s%s: you should play with option irc.server.%s.ssl_dhkey_size (current "
-"value is %d)"
+"value is %d, try a lower value like %d or %d)"
 msgstr ""
 
 #, c-format

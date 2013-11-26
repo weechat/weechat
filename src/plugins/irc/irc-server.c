@@ -3289,11 +3289,16 @@ irc_server_connect_cb (void *data, int status, int gnutls_rc, int sock,
                 weechat_printf (server->buffer,
                                 _("%s%s: you should play with option "
                                   "irc.server.%s.ssl_dhkey_size (current "
-                                  "value is %d)"),
+                                  "value is %d, try a lower value like %d or "
+                                  "%d)"),
                                 weechat_prefix ("error"), IRC_PLUGIN_NAME,
                                 server->name,
                                 IRC_SERVER_OPTION_INTEGER (server,
-                                                           IRC_SERVER_OPTION_SSL_DHKEY_SIZE));
+                                                           IRC_SERVER_OPTION_SSL_DHKEY_SIZE),
+                                IRC_SERVER_OPTION_INTEGER (server,
+                                                           IRC_SERVER_OPTION_SSL_DHKEY_SIZE) / 2,
+                                IRC_SERVER_OPTION_INTEGER (server,
+                                                           IRC_SERVER_OPTION_SSL_DHKEY_SIZE) / 4);
             }
 #else
             (void) gnutls_rc;
