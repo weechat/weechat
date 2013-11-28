@@ -659,7 +659,13 @@ weechat_python_load (const char *filename)
         if (str_home)
         {
             snprintf (str_home, len, "%s/python", weechat_home);
+#if PY_MAJOR_VERSION >= 3
+            /* python >= 3.x */
+            path = PyUnicode_FromString(str_home);
+#else
+            /* python <= 2.x */
             path = PyBytes_FromString (str_home);
+#endif
             if (path != NULL)
             {
                 PyList_Insert (python_path, 0, path);
@@ -670,10 +676,10 @@ weechat_python_load (const char *filename)
     }
 
 #if PY_MAJOR_VERSION >= 3
-    /* python 3.x (or newer) */
+    /* python >= 3.x */
     weechat_outputs = PyModule_Create (&moduleDefOutputs);
 #else
-    /* python 2.x */
+    /* python <= 2.x */
     weechat_outputs = Py_InitModule("weechatOutputs",
                                     weechat_python_output_funcs);
 #endif
