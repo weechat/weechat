@@ -10081,8 +10081,7 @@ Arguments:
 
 | display | "1", "auto" |
   "1": switch to this buffer in current window +
-  "auto": switch to this buffer in current window only if the buffer
-  displayed is not the buffer set in the layout, read marker is not reset
+  "auto": switch to this buffer in current window, read marker is not reset
 
 | number | number |
   Move buffer to this number
