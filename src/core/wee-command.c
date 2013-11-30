@@ -512,9 +512,9 @@ COMMAND_CALLBACK(buffer)
 {
     struct t_gui_buffer *ptr_buffer, *ptr_buffer2, *ptr_prev_buffer;
     struct t_gui_buffer *weechat_buffer;
-    long number, number1, number2;
+    long number, number1, number2, numbers[3];
     char *error, *value, *pos, *str_number1, *pos_number2;
-    int i, target_buffer, error_main_buffer, num_buffers;
+    int i, error_main_buffer, num_buffers, count, prev_number;
 
     /* make C compiler happy */
     (void) data;
@@ -553,41 +553,23 @@ COMMAND_CALLBACK(buffer)
         {
             if (string_strcasecmp (argv[2], "-all") == 0)
                 gui_buffer_clear_all ();
-            else if (string_strcasecmp (argv[2], "-merged") == 0)
-            {
-                for (ptr_buffer = gui_buffers; ptr_buffer;
-                     ptr_buffer = ptr_buffer->next_buffer)
-                {
-                    if ((ptr_buffer->number == buffer->number)
-                        && (ptr_buffer->type == GUI_BUFFER_TYPE_FORMATTED))
-                    {
-                        gui_buffer_clear (ptr_buffer);
-                    }
-                }
-            }
             else
             {
                 for (i = 2; i < argc; i++)
                 {
-                    error = NULL;
-                    number = strtol (argv[i], &error, 10);
-                    if (error && !error[0])
+                    ptr_buffer = (string_strcasecmp (argv[i], "-merged") == 0) ?
+                                  buffer : gui_buffer_search_by_number_or_name (argv[i]);
+                    if (ptr_buffer)
                     {
-                        for (ptr_buffer = gui_buffers; ptr_buffer;
-                             ptr_buffer = ptr_buffer->next_buffer)
+                        for (ptr_buffer2 = gui_buffers; ptr_buffer2;
+                             ptr_buffer2 = ptr_buffer2->next_buffer)
                         {
-                            if ((ptr_buffer->number == number)
-                                && (ptr_buffer->type == GUI_BUFFER_TYPE_FORMATTED))
+                            if ((ptr_buffer2->number == ptr_buffer->number)
+                                && (ptr_buffer2->type == GUI_BUFFER_TYPE_FORMATTED))
                             {
-                                gui_buffer_clear (ptr_buffer);
+                                gui_buffer_clear (ptr_buffer2);
                             }
                         }
-                    }
-                    else
-                    {
-                        ptr_buffer = gui_buffer_search_by_full_name (argv[i]);
-                        if (ptr_buffer)
-                            gui_buffer_clear (ptr_buffer);
                     }
                 }
             }
@@ -605,28 +587,39 @@ COMMAND_CALLBACK(buffer)
     if (string_strcasecmp (argv[1], "move") == 0)
     {
         COMMAND_MIN_ARGS(3, "buffer move");
-        error = NULL;
-        number = strtol (((argv[2][0] == '+') || (argv[2][0] == '-')) ?
-                         argv[2] + 1 : argv[2],
-                         &error, 10);
-        if (error && !error[0])
+        if (strcmp (argv[2], "-") == 0)
         {
-            if (argv[2][0] == '+')
-                gui_buffer_move_to_number (buffer,
-                                           buffer->number + ((int) number));
-            else if (argv[2][0] == '-')
-                gui_buffer_move_to_number (buffer,
-                                           buffer->number - ((int) number));
-            else
-                gui_buffer_move_to_number (buffer, (int) number);
+            gui_buffer_move_to_number (buffer, 1);
+        }
+        else if (strcmp (argv[2], "+") == 0)
+        {
+            gui_buffer_move_to_number (buffer, last_gui_buffer->number + 1);
         }
         else
         {
-            /* invalid number */
-            gui_chat_printf (NULL,
-                             _("%sError: incorrect buffer number"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-            return WEECHAT_RC_OK;
+            error = NULL;
+            number = strtol (((argv[2][0] == '+') || (argv[2][0] == '-')) ?
+                             argv[2] + 1 : argv[2],
+                             &error, 10);
+            if (error && !error[0])
+            {
+                if (argv[2][0] == '+')
+                    gui_buffer_move_to_number (buffer,
+                                               buffer->number + ((int) number));
+                else if (argv[2][0] == '-')
+                    gui_buffer_move_to_number (buffer,
+                                               buffer->number - ((int) number));
+                else
+                    gui_buffer_move_to_number (buffer, (int) number);
+            }
+            else
+            {
+                /* invalid number */
+                gui_chat_printf (NULL,
+                                 _("%sError: incorrect buffer number"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                return WEECHAT_RC_OK;
+            }
         }
 
         return WEECHAT_RC_OK;
@@ -640,33 +633,10 @@ COMMAND_CALLBACK(buffer)
         ptr_buffer = NULL;
         ptr_buffer2 = NULL;
 
-        /* first buffer for swap */
-        number = strtol (argv[2], &error, 10);
-        if (error && !error[0])
-            ptr_buffer = gui_buffer_search_by_number (number);
-        else
-        {
-            ptr_buffer = gui_buffer_search_by_full_name (argv[2]);
-            if (!ptr_buffer)
-                ptr_buffer = gui_buffer_search_by_partial_name (NULL, argv[2]);
-        }
-
-        /* second buffer for swap */
-        if (argc > 3)
-        {
-            number = strtol (argv[3], &error, 10);
-            if (error && !error[0])
-                ptr_buffer2 = gui_buffer_search_by_number (number);
-            else
-            {
-                ptr_buffer2 = gui_buffer_search_by_full_name (argv[3]);
-                if (!ptr_buffer2)
-                    ptr_buffer2 = gui_buffer_search_by_partial_name (NULL, argv[3]);
-            }
-        }
-        else
-            ptr_buffer2 = buffer;
-
+        /* search buffers to swap */
+        ptr_buffer = gui_buffer_search_by_number_or_name (argv[2]);
+        ptr_buffer2 = (argc > 3) ?
+            gui_buffer_search_by_number_or_name (argv[3]) : buffer;
         if (!ptr_buffer || !ptr_buffer2)
         {
             /* invalid buffer name/number */
@@ -676,7 +646,7 @@ COMMAND_CALLBACK(buffer)
             return WEECHAT_RC_OK;
         }
 
-        gui_buffer_swap (ptr_buffer, ptr_buffer2);
+        gui_buffer_swap (ptr_buffer->number, ptr_buffer2->number);
 
         return WEECHAT_RC_OK;
     }
@@ -730,8 +700,46 @@ COMMAND_CALLBACK(buffer)
                 }
             }
         }
-        gui_buffer_unmerge (buffer, (int) number);
+        gui_buffer_unmerge (buffer, (int)number);
 
+        return WEECHAT_RC_OK;
+    }
+
+    /* renumber buffers */
+    if (string_strcasecmp (argv[1], "renumber") == 0)
+    {
+        if (CONFIG_BOOLEAN(config_look_buffer_auto_renumber))
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: renumbering is allowed only if option "
+                               "weechat.look.buffer_auto_renumber is off"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+            return WEECHAT_RC_OK;
+        }
+        for (i = 0; i < 3; i++)
+        {
+            if (argc >= i + 3)
+            {
+                error = NULL;
+                numbers[i] = strtol (argv[i + 2], &error, 10);
+                if (!error || error[0])
+                {
+                    /* invalid number */
+                    gui_chat_printf (NULL,
+                                     _("%sError: incorrect buffer number"),
+                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                    return WEECHAT_RC_OK;
+                }
+            }
+            else
+                numbers[i] = -1;
+        }
+        /*
+         * renumber the buffers; if we are renumbering all buffers (no numbers
+         * given), start at number 1
+         */
+        gui_buffer_renumber (numbers[0], numbers[1],
+                             (argc == 2) ? 1 : numbers[2]);
         return WEECHAT_RC_OK;
     }
 
@@ -945,12 +953,35 @@ COMMAND_CALLBACK(buffer)
         number = strtol (argv[1] + 1, &error, 10);
         if (error && !error[0])
         {
-            target_buffer = buffer->number - (int) number;
-            if (target_buffer < 1)
-                target_buffer = (last_gui_buffer) ?
-                    last_gui_buffer->number + target_buffer : 1;
-            gui_buffer_switch_by_number (gui_current_window,
-                                         target_buffer);
+            if (number <= 0)
+                return WEECHAT_RC_OK;
+            count = 0;
+            prev_number = gui_current_window->buffer->number;
+            ptr_buffer = gui_current_window->buffer;
+            while (1)
+            {
+                ptr_buffer = ptr_buffer->prev_buffer;
+                if (!ptr_buffer)
+                    ptr_buffer = last_gui_buffer;
+
+                /* if we have looped on all buffers, exit the loop */
+                if (ptr_buffer == gui_current_window->buffer)
+                    break;
+
+                if ((ptr_buffer->number != gui_current_window->buffer->number)
+                    && (ptr_buffer->number != prev_number))
+                {
+                    /* increase count each time we discover a different number */
+                    count++;
+                    if (count == number)
+                    {
+                        gui_buffer_switch_by_number (gui_current_window,
+                                                     ptr_buffer->number);
+                        break;
+                    }
+                }
+                prev_number = ptr_buffer->number;
+            }
         }
         else
         {
@@ -971,11 +1002,35 @@ COMMAND_CALLBACK(buffer)
         number = strtol (argv[1] + 1, &error, 10);
         if (error && !error[0])
         {
-            target_buffer = buffer->number + (int) number;
-            if (last_gui_buffer && target_buffer > last_gui_buffer->number)
-                target_buffer -= last_gui_buffer->number;
-            gui_buffer_switch_by_number (gui_current_window,
-                                         target_buffer);
+            if (number <= 0)
+                return WEECHAT_RC_OK;
+            count = 0;
+            prev_number = gui_current_window->buffer->number;
+            ptr_buffer = gui_current_window->buffer;
+            while (1)
+            {
+                ptr_buffer = ptr_buffer->next_buffer;
+                if (!ptr_buffer)
+                    ptr_buffer = gui_buffers;
+
+                /* if we have looped on all buffers, exit the loop */
+                if (ptr_buffer == gui_current_window->buffer)
+                    break;
+
+                if ((ptr_buffer->number != gui_current_window->buffer->number)
+                    && (ptr_buffer->number != prev_number))
+                {
+                    /* increase count each time we discover a different number */
+                    count++;
+                    if (count == number)
+                    {
+                        gui_buffer_switch_by_number (gui_current_window,
+                                                     ptr_buffer->number);
+                        break;
+                    }
+                }
+                prev_number = ptr_buffer->number;
+            }
         }
         else
         {
@@ -6213,6 +6268,7 @@ command_init ()
                      " || move|merge <number>"
                      " || swap <number1>|<name1> [<number2>|<name2>]"
                      " || unmerge [<number>|-all]"
+                     " || renumber [<number1> [<number2> [<start>]]]"
                      " || close [<n1>[-<n2>]|<name>]"
                      " || notify <level>"
                      " || localvar"
@@ -6234,6 +6290,8 @@ command_init ()
                      "buffers)\n"
                      " unmerge: unmerge buffer from other buffers which have "
                      "same number\n"
+                     "renumber: renumber a range of buffers (works only if "
+                     "option weechat.look.buffer_auto_renumber is off)\n"
                      "   close: close buffer (number/range or name is optional)\n"
                      "  notify: set notify level for current buffer: this "
                      "level determines whether buffer will be added to "
@@ -6273,11 +6331,14 @@ command_init ()
                      "    /buffer #weechat\n"
                      "  jump to next buffer:\n"
                      "    /buffer +1"),
-                  "clear -merged|-all|%(buffers_numbers)|%(buffers_plugins_names)"
+                  "clear -merged|-all|%(buffers_numbers)|"
+                  "%(buffers_plugins_names)"
                   " || move %(buffers_numbers)"
                   " || swap %(buffers_numbers)"
                   " || merge %(buffers_numbers)"
                   " || unmerge %(buffers_numbers)|-all"
+                  " || renumber %(buffers_numbers) %(buffers_numbers) "
+                  "%(buffers_numbers)"
                   " || close %(buffers_plugins_names)"
                   " || list"
                   " || notify reset|none|highlight|message|all"

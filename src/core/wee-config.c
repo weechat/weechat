@@ -84,6 +84,7 @@ struct t_config_option *config_look_bar_more_left;
 struct t_config_option *config_look_bar_more_right;
 struct t_config_option *config_look_bar_more_up;
 struct t_config_option *config_look_bar_more_down;
+struct t_config_option *config_look_buffer_auto_renumber;
 struct t_config_option *config_look_buffer_notify_default;
 struct t_config_option *config_look_buffer_search_case_sensitive;
 struct t_config_option *config_look_buffer_search_force_default;
@@ -381,6 +382,21 @@ config_change_mouse (void *data, struct t_config_option *option)
         else
             gui_mouse_disable ();
     }
+}
+
+/*
+ * Callback for changes on option "weechat.look.buffer_auto_renumber".
+ */
+
+void
+config_change_buffer_auto_renumber (void *data, struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+    if (gui_buffers && CONFIG_BOOLEAN(config_look_buffer_auto_renumber))
+        gui_buffer_renumber (-1, -1, 1);
 }
 
 /*
@@ -1974,6 +1990,14 @@ config_weechat_init_options ()
         N_("string displayed when bar can be scrolled down "
            "(for bars with filling different from \"horizontal\")"),
         NULL, 0, 0, "++", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
+    config_look_buffer_auto_renumber = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "buffer_auto_renumber", "boolean",
+        N_("automatically renumber buffers to have only consecutive numbers "
+           "and start with number 1; if disabled, gaps between buffer numbers "
+           "are allowed and the first buffer can have a number > 1"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL,
+        &config_change_buffer_auto_renumber, NULL, NULL, NULL);
     config_look_buffer_notify_default = config_file_new_option (
         weechat_config_file, ptr_section,
         "buffer_notify_default", "integer",

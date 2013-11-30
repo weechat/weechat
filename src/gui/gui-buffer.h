@@ -275,6 +275,7 @@ extern struct t_gui_buffer *gui_buffer_search_by_full_name (const char *full_nam
 extern struct t_gui_buffer *gui_buffer_search_by_partial_name (const char *plugin,
                                                                const char *name);
 extern struct t_gui_buffer *gui_buffer_search_by_number (int number);
+extern struct t_gui_buffer *gui_buffer_search_by_number_or_name (const char *string);
 extern struct t_gui_buffer *gui_buffer_search_by_layout_number (int layout_number,
                                                                 int layout_number_merge_order);
 extern int gui_buffer_count_merged_buffers (int number);
@@ -287,9 +288,9 @@ extern void gui_buffer_switch_by_number (struct t_gui_window *window,
 extern void gui_buffer_set_active_buffer (struct t_gui_buffer *buffer);
 extern struct t_gui_buffer *gui_buffer_get_next_active_buffer (struct t_gui_buffer *buffer);
 extern struct t_gui_buffer *gui_buffer_get_previous_active_buffer (struct t_gui_buffer *buffer);
+extern void gui_buffer_renumber (int number1, int number2, int start_number);
 extern void gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number);
-extern void gui_buffer_swap (struct t_gui_buffer *buffer1,
-                             struct t_gui_buffer *buffer2);
+extern void gui_buffer_swap (int number1, int number2);
 extern void gui_buffer_merge (struct t_gui_buffer *buffer,
                               struct t_gui_buffer *target_buffer);
 extern void gui_buffer_unmerge (struct t_gui_buffer *buffer, int number);
