@@ -949,8 +949,7 @@ gui_bar_item_default_buffer_count (void *data, struct t_gui_bar_item *item,
     (void) buffer;
     (void) extra_info;
 
-    snprintf (buf, sizeof (buf), "%d",
-              (last_gui_buffer) ? last_gui_buffer->number : 0);
+    snprintf (buf, sizeof (buf), "%d", gui_buffers_count);
 
     return strdup (buf);
 }

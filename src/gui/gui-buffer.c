@@ -61,6 +61,7 @@
 
 struct t_gui_buffer *gui_buffers = NULL;           /* first buffer          */
 struct t_gui_buffer *last_gui_buffer = NULL;       /* last buffer           */
+int gui_buffers_count = 0;                         /* number of buffers     */
 
 /* history of last visited buffers */
 struct t_gui_buffer_visited *gui_buffers_visited = NULL;
@@ -493,149 +494,149 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
 
     /* create new buffer */
     new_buffer = malloc (sizeof (*new_buffer));
-    if (new_buffer)
+    if (!new_buffer)
+        return NULL;
+
+    /* init buffer */
+    new_buffer->plugin = plugin;
+    new_buffer->plugin_name_for_upgrade = NULL;
+
+    /* number will be set later (when inserting buffer in list) */
+    gui_layout_buffer_get_number (gui_layout_current,
+                                  plugin_get_name (plugin),
+                                  name,
+                                  &(new_buffer->layout_number),
+                                  &(new_buffer->layout_number_merge_order));
+    new_buffer->name = strdup (name);
+    new_buffer->full_name = NULL;
+    gui_buffer_build_full_name (new_buffer);
+    new_buffer->short_name = NULL;
+    new_buffer->type = GUI_BUFFER_TYPE_FORMATTED;
+    new_buffer->notify = CONFIG_INTEGER(config_look_buffer_notify_default);
+    new_buffer->num_displayed = 0;
+    new_buffer->active = 1;
+    new_buffer->print_hooks_enabled = 1;
+
+    /* close callback */
+    new_buffer->close_callback = close_callback;
+    new_buffer->close_callback_data = close_callback_data;
+
+    /* title */
+    new_buffer->title = NULL;
+
+    /* chat content */
+    new_buffer->own_lines = gui_lines_alloc ();
+    new_buffer->mixed_lines = NULL;
+    new_buffer->lines = new_buffer->own_lines;
+    new_buffer->time_for_each_line = 1;
+    new_buffer->chat_refresh_needed = 2;
+
+    /* nicklist */
+    new_buffer->nicklist = 0;
+    new_buffer->nicklist_case_sensitive = 0;
+    new_buffer->nicklist_root = NULL;
+    new_buffer->nicklist_max_length = 0;
+    new_buffer->nicklist_display_groups = 1;
+    new_buffer->nicklist_count = 0;
+    new_buffer->nicklist_groups_count = 0;
+    new_buffer->nicklist_nicks_count = 0;
+    new_buffer->nicklist_visible_count = 0;
+    new_buffer->nickcmp_callback = NULL;
+    new_buffer->nickcmp_callback_data = NULL;
+    gui_nicklist_add_group (new_buffer, NULL, "root", NULL, 0);
+
+    /* input */
+    new_buffer->input = 1;
+    new_buffer->input_callback = input_callback;
+    new_buffer->input_callback_data = input_callback_data;
+    new_buffer->input_get_unknown_commands = 0;
+    gui_buffer_input_buffer_init (new_buffer);
+
+    /* undo for input */
+    new_buffer->input_undo_snap = malloc (sizeof (*(new_buffer->input_undo_snap)));
+    (new_buffer->input_undo_snap)->data = NULL;
+    (new_buffer->input_undo_snap)->pos = 0;
+    (new_buffer->input_undo_snap)->prev_undo = NULL; /* not used */
+    (new_buffer->input_undo_snap)->next_undo = NULL; /* not used */
+    new_buffer->input_undo = NULL;
+    new_buffer->last_input_undo = NULL;
+    new_buffer->ptr_input_undo = NULL;
+    new_buffer->input_undo_count = 0;
+
+    /* init completion */
+    new_completion = malloc (sizeof (*new_completion));
+    if (new_completion)
     {
-        /* init buffer */
-        new_buffer->plugin = plugin;
-        new_buffer->plugin_name_for_upgrade = NULL;
+        new_buffer->completion = new_completion;
+        gui_completion_buffer_init (new_completion, new_buffer);
+    }
 
-        /* number will be set later (when inserting buffer in list) */
-        gui_layout_buffer_get_number (gui_layout_current,
-                                      plugin_get_name (plugin),
-                                      name,
-                                      &(new_buffer->layout_number),
-                                      &(new_buffer->layout_number_merge_order));
-        new_buffer->name = strdup (name);
-        new_buffer->full_name = NULL;
-        gui_buffer_build_full_name (new_buffer);
-        new_buffer->short_name = NULL;
-        new_buffer->type = GUI_BUFFER_TYPE_FORMATTED;
-        new_buffer->notify = CONFIG_INTEGER(config_look_buffer_notify_default);
-        new_buffer->num_displayed = 0;
-        new_buffer->active = 1;
-        new_buffer->print_hooks_enabled = 1;
+    /* init history */
+    new_buffer->history = NULL;
+    new_buffer->last_history = NULL;
+    new_buffer->ptr_history = NULL;
+    new_buffer->num_history = 0;
 
-        /* close callback */
-        new_buffer->close_callback = close_callback;
-        new_buffer->close_callback_data = close_callback_data;
+    /* text search */
+    new_buffer->text_search = GUI_TEXT_SEARCH_DISABLED;
+    new_buffer->text_search_exact = 0;
+    new_buffer->text_search_regex = 0;
+    new_buffer->text_search_regex_compiled = NULL;
+    new_buffer->text_search_where = 0;
+    new_buffer->text_search_found = 0;
+    new_buffer->text_search_input = NULL;
 
-        /* title */
-        new_buffer->title = NULL;
+    /* highlight */
+    new_buffer->highlight_words = NULL;
+    new_buffer->highlight_regex = NULL;
+    new_buffer->highlight_regex_compiled = NULL;
+    new_buffer->highlight_tags = NULL;
+    new_buffer->highlight_tags_count = 0;
+    new_buffer->highlight_tags_array = NULL;
 
-        /* chat content */
-        new_buffer->own_lines = gui_lines_alloc ();
-        new_buffer->mixed_lines = NULL;
-        new_buffer->lines = new_buffer->own_lines;
-        new_buffer->time_for_each_line = 1;
-        new_buffer->chat_refresh_needed = 2;
+    /* hotlist */
+    new_buffer->hotlist_max_level_nicks = hashtable_new (32,
+                                                         WEECHAT_HASHTABLE_STRING,
+                                                         WEECHAT_HASHTABLE_INTEGER,
+                                                         NULL,
+                                                         NULL);
 
-        /* nicklist */
-        new_buffer->nicklist = 0;
-        new_buffer->nicklist_case_sensitive = 0;
-        new_buffer->nicklist_root = NULL;
-        new_buffer->nicklist_max_length = 0;
-        new_buffer->nicklist_display_groups = 1;
-        new_buffer->nicklist_count = 0;
-        new_buffer->nicklist_groups_count = 0;
-        new_buffer->nicklist_nicks_count = 0;
-        new_buffer->nicklist_visible_count = 0;
-        new_buffer->nickcmp_callback = NULL;
-        new_buffer->nickcmp_callback_data = NULL;
-        gui_nicklist_add_group (new_buffer, NULL, "root", NULL, 0);
+    /* keys */
+    new_buffer->keys = NULL;
+    new_buffer->last_key = NULL;
+    new_buffer->keys_count = 0;
 
-        /* input */
-        new_buffer->input = 1;
-        new_buffer->input_callback = input_callback;
-        new_buffer->input_callback_data = input_callback_data;
-        new_buffer->input_get_unknown_commands = 0;
-        gui_buffer_input_buffer_init (new_buffer);
+    /* local variables */
+    new_buffer->local_variables = hashtable_new (32,
+                                                 WEECHAT_HASHTABLE_STRING,
+                                                 WEECHAT_HASHTABLE_STRING,
+                                                 NULL,
+                                                 NULL);
+    hashtable_set (new_buffer->local_variables,
+                   "plugin", plugin_get_name (plugin));
+    hashtable_set (new_buffer->local_variables, "name", name);
 
-        /* undo for input */
-        new_buffer->input_undo_snap = malloc (sizeof (*(new_buffer->input_undo_snap)));
-        (new_buffer->input_undo_snap)->data = NULL;
-        (new_buffer->input_undo_snap)->pos = 0;
-        (new_buffer->input_undo_snap)->prev_undo = NULL; /* not used */
-        (new_buffer->input_undo_snap)->next_undo = NULL; /* not used */
-        new_buffer->input_undo = NULL;
-        new_buffer->last_input_undo = NULL;
-        new_buffer->ptr_input_undo = NULL;
-        new_buffer->input_undo_count = 0;
+    /* add buffer to buffers list */
+    first_buffer_creation = (gui_buffers == NULL);
+    gui_buffer_insert (new_buffer);
 
-        /* init completion */
-        new_completion = malloc (sizeof (*new_completion));
-        if (new_completion)
-        {
-            new_buffer->completion = new_completion;
-            gui_completion_buffer_init (new_completion, new_buffer);
-        }
+    gui_buffers_count++;
 
-        /* init history */
-        new_buffer->history = NULL;
-        new_buffer->last_history = NULL;
-        new_buffer->ptr_history = NULL;
-        new_buffer->num_history = 0;
+    /* set notify level */
+    new_buffer->notify = gui_buffer_notify_get (new_buffer);
 
-        /* text search */
-        new_buffer->text_search = GUI_TEXT_SEARCH_DISABLED;
-        new_buffer->text_search_exact = 0;
-        new_buffer->text_search_regex = 0;
-        new_buffer->text_search_regex_compiled = NULL;
-        new_buffer->text_search_where = 0;
-        new_buffer->text_search_found = 0;
-        new_buffer->text_search_input = NULL;
+    /* assign this buffer to windows of layout */
+    gui_layout_window_assign_buffer (new_buffer);
 
-        /* highlight */
-        new_buffer->highlight_words = NULL;
-        new_buffer->highlight_regex = NULL;
-        new_buffer->highlight_regex_compiled = NULL;
-        new_buffer->highlight_tags = NULL;
-        new_buffer->highlight_tags_count = 0;
-        new_buffer->highlight_tags_array = NULL;
-
-        /* hotlist */
-        new_buffer->hotlist_max_level_nicks = hashtable_new (32,
-                                                             WEECHAT_HASHTABLE_STRING,
-                                                             WEECHAT_HASHTABLE_INTEGER,
-                                                             NULL,
-                                                             NULL);
-
-        /* keys */
-        new_buffer->keys = NULL;
-        new_buffer->last_key = NULL;
-        new_buffer->keys_count = 0;
-
-        /* local variables */
-        new_buffer->local_variables = hashtable_new (32,
-                                                     WEECHAT_HASHTABLE_STRING,
-                                                     WEECHAT_HASHTABLE_STRING,
-                                                     NULL,
-                                                     NULL);
-        hashtable_set (new_buffer->local_variables,
-                       "plugin", plugin_get_name (plugin));
-        hashtable_set (new_buffer->local_variables, "name", name);
-
-        /* add buffer to buffers list */
-        first_buffer_creation = (gui_buffers == NULL);
-        gui_buffer_insert (new_buffer);
-
-        /* set notify level */
-        new_buffer->notify = gui_buffer_notify_get (new_buffer);
-
-        /* assign this buffer to windows of layout */
-        gui_layout_window_assign_buffer (new_buffer);
-
-        if (first_buffer_creation)
-        {
-            gui_buffer_visited_add (new_buffer);
-        }
-        else
-        {
-            hook_signal_send ("buffer_opened",
-                              WEECHAT_HOOK_SIGNAL_POINTER, new_buffer);
-        }
+    if (first_buffer_creation)
+    {
+        gui_buffer_visited_add (new_buffer);
     }
     else
-        return NULL;
+    {
+        hook_signal_send ("buffer_opened",
+                          WEECHAT_HOOK_SIGNAL_POINTER, new_buffer);
+    }
 
     return new_buffer;
 }
@@ -2417,6 +2418,9 @@ gui_buffer_close (struct t_gui_buffer *buffer)
     if (gui_buffer_last_displayed == buffer)
         gui_buffer_last_displayed = NULL;
 
+    if (gui_buffers_count > 0)
+        gui_buffers_count--;
+
     hook_signal_send ("buffer_closed",
                       WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 
@@ -3876,6 +3880,7 @@ gui_buffer_print_log ()
     log_printf ("");
     log_printf ("gui_buffers . . . . . . . . . : 0x%lx", gui_buffers);
     log_printf ("last_gui_buffer . . . . . . . : 0x%lx", last_gui_buffer);
+    log_printf ("gui_buffers_count . . . . . . : %d",    gui_buffers_count);
     log_printf ("gui_buffers_visited . . . . . : 0x%lx", gui_buffers_visited);
     log_printf ("last_gui_buffer_visited . . . : 0x%lx", last_gui_buffer_visited);
     log_printf ("gui_buffers_visited_index . . : %d",    gui_buffers_visited_index);

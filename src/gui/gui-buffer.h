@@ -204,6 +204,7 @@ struct t_gui_buffer_visited
 
 extern struct t_gui_buffer *gui_buffers;
 extern struct t_gui_buffer *last_gui_buffer;
+extern int gui_buffers_count;
 extern struct t_gui_buffer_visited *gui_buffers_visited;
 extern struct t_gui_buffer_visited *last_gui_buffer_visited;
 extern int gui_buffers_visited_index;
