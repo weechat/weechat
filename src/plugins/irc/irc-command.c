@@ -531,7 +531,7 @@ irc_command_me_channel_display (struct t_irc_server *server,
 
     string = (arguments && arguments[0]) ?
         irc_color_decode (arguments,
-                          weechat_config_boolean (irc_config_network_colors_receive)) : NULL;
+                          weechat_config_boolean (irc_config_network_colors_send)) : NULL;
     ptr_nick = irc_nick_search (server, channel, server->nick);
     weechat_printf_tags (channel->buffer,
                          irc_protocol_tags ("privmsg",
@@ -662,7 +662,7 @@ irc_command_away_server (struct t_irc_server *server, const char *arguments,
             if (weechat_config_integer (irc_config_look_display_away) != IRC_CONFIG_DISPLAY_AWAY_OFF)
             {
                 string = irc_color_decode (arguments,
-                                           weechat_config_boolean (irc_config_network_colors_receive));
+                                           weechat_config_boolean (irc_config_network_colors_send));
                 if (weechat_config_integer (irc_config_look_display_away) == IRC_CONFIG_DISPLAY_AWAY_LOCAL)
                 {
                     irc_command_display_away (server, "away",
@@ -702,7 +702,7 @@ irc_command_away_server (struct t_irc_server *server, const char *arguments,
              * (when connecting to server)
              */
             string = irc_color_decode (arguments,
-                                       weechat_config_boolean (irc_config_network_colors_receive));
+                                       weechat_config_boolean (irc_config_network_colors_send));
             weechat_printf (server->buffer,
                             _("%s: future away: %s"),
                             IRC_PLUGIN_NAME,
@@ -2954,7 +2954,7 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
                     return WEECHAT_RC_OK;
                 }
                 string = irc_color_decode (argv_eol[arg_text],
-                                           weechat_config_boolean (irc_config_network_colors_receive));
+                                           weechat_config_boolean (irc_config_network_colors_send));
                 irc_input_user_message_display (ptr_channel->buffer, 0,
                                                 (string) ? string : argv_eol[arg_text]);
                 if (string)
@@ -2988,7 +2988,7 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
                     if (ptr_channel)
                     {
                         string = irc_color_decode (argv_eol[arg_text],
-                                                   weechat_config_boolean (irc_config_network_colors_receive));
+                                                   weechat_config_boolean (irc_config_network_colors_send));
                         if (msg_op_voice)
                         {
                             /*
@@ -3045,7 +3045,7 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
                                                                      argv_eol[arg_text]);
                         string = irc_color_decode (
                             (msg_pwd_hidden) ? msg_pwd_hidden : argv_eol[arg_text],
-                            weechat_config_boolean (irc_config_network_colors_receive));
+                            weechat_config_boolean (irc_config_network_colors_send));
                         weechat_printf (ptr_server->buffer,
                                         "%sMSG%s(%s%s%s)%s: %s",
                                         weechat_prefix ("network"),
@@ -3067,7 +3067,7 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
                     else
                     {
                         string = irc_color_decode (argv_eol[arg_text],
-                                                   weechat_config_boolean (irc_config_network_colors_receive));
+                                                   weechat_config_boolean (irc_config_network_colors_send));
                         ptr_channel = irc_channel_search (ptr_server,
                                                           targets[i]);
                         if (ptr_channel)
@@ -3270,7 +3270,7 @@ irc_command_notice (void *data, struct t_gui_buffer *buffer, int argc,
                 if (!str_args)
                     break;
                 string = irc_color_decode (str_args,
-                                           weechat_config_boolean (irc_config_network_colors_receive));
+                                           weechat_config_boolean (irc_config_network_colors_send));
                 weechat_printf_tags (irc_msgbuffer_get_target_buffer (ptr_server,
                                                                       argv[arg_target],
                                                                       "notice",
@@ -3767,7 +3767,7 @@ irc_command_query (void *data, struct t_gui_buffer *buffer, int argc,
                     if (argv_eol[arg_text])
                     {
                         string = irc_color_decode (argv_eol[arg_text],
-                                                   weechat_config_boolean (irc_config_network_colors_receive));
+                                                   weechat_config_boolean (irc_config_network_colors_send));
                         irc_input_user_message_display (ptr_channel->buffer, 0,
                                                         (string) ? string : argv_eol[arg_text]);
                         if (string)
