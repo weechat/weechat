@@ -58,10 +58,10 @@ struct t_gui_bar_item *gui_bar_items = NULL;     /* first bar item          */
 struct t_gui_bar_item *last_gui_bar_item = NULL; /* last bar item           */
 char *gui_bar_item_names[GUI_BAR_NUM_ITEMS] =
 { "input_paste", "input_prompt", "input_search", "input_text", "time",
-  "buffer_count", "buffer_plugin", "buffer_number", "buffer_name",
-  "buffer_modes", "buffer_filter", "buffer_zoom", "buffer_nicklist_count",
-  "scroll", "hotlist", "completion", "buffer_title", "buffer_nicklist",
-  "window_number"
+  "buffer_count", "buffer_last_number", "buffer_plugin", "buffer_number",
+  "buffer_name", "buffer_modes", "buffer_filter", "buffer_zoom",
+  "buffer_nicklist_count", "scroll", "hotlist", "completion", "buffer_title",
+  "buffer_nicklist", "window_number"
 };
 char *gui_bar_items_default_for_bars[][2] =
 { { GUI_BAR_DEFAULT_NAME_INPUT,
@@ -950,6 +950,32 @@ gui_bar_item_default_buffer_count (void *data, struct t_gui_bar_item *item,
     (void) extra_info;
 
     snprintf (buf, sizeof (buf), "%d", gui_buffers_count);
+
+    return strdup (buf);
+}
+
+/*
+ * Default item for last buffer number.
+ */
+
+char *
+gui_bar_item_default_buffer_last_number (void *data,
+                                         struct t_gui_bar_item *item,
+                                         struct t_gui_window *window,
+                                         struct t_gui_buffer *buffer,
+                                         struct t_hashtable *extra_info)
+{
+    char buf[32];
+
+    /* make C compiler happy */
+    (void) data;
+    (void) item;
+    (void) window;
+    (void) buffer;
+    (void) extra_info;
+
+    snprintf (buf, sizeof (buf), "%d",
+              (last_gui_buffer) ? last_gui_buffer->number : 0);
 
     return strdup (buf);
 }
@@ -1889,6 +1915,21 @@ gui_bar_item_init ()
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_COUNT]);
     gui_bar_item_hook_signal ("buffer_closed",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_COUNT]);
+
+    /* last buffer number */
+    gui_bar_item_new (NULL,
+                      gui_bar_item_names[GUI_BAR_ITEM_BUFFER_LAST_NUMBER],
+                      &gui_bar_item_default_buffer_last_number, NULL);
+    gui_bar_item_hook_signal ("buffer_opened",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_LAST_NUMBER]);
+    gui_bar_item_hook_signal ("buffer_closed",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_LAST_NUMBER]);
+    gui_bar_item_hook_signal ("buffer_moved",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_LAST_NUMBER]);
+    gui_bar_item_hook_signal ("buffer_merged",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_LAST_NUMBER]);
+    gui_bar_item_hook_signal ("buffer_unmerged",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_LAST_NUMBER]);
 
     /* buffer plugin */
     gui_bar_item_new (NULL,
