@@ -353,17 +353,45 @@ weechat_aspell_string_is_url (const char *word)
 int
 weechat_aspell_string_is_nick (struct t_gui_buffer *buffer, const char *word)
 {
-    char *pos;
-    int rc;
+    char *pos, *pos_nick_completer, *pos_space, saved_char;
+    const char *nick_completer;
+    int rc, len_completer;
 
-    pos = strchr (word, ' ');
+    nick_completer = weechat_config_string (
+        weechat_config_get ("weechat.completion.nick_completer"));
+    len_completer = (nick_completer) ? strlen (nick_completer) : 0;
+
+    pos_nick_completer = (nick_completer) ?
+        strstr (word, nick_completer) : NULL;
+    pos_space = strchr (word, ' ');
+
+    pos = NULL;
+    if (pos_nick_completer && pos_space)
+    {
+        if ((pos_nick_completer < pos_space)
+            && (pos_nick_completer + len_completer == pos_space))
+        {
+            pos = pos_nick_completer;
+        }
+        else
+            pos = pos_space;
+    }
+    else
+    {
+        pos = (pos_nick_completer && !pos_nick_completer[len_completer]) ?
+            pos_nick_completer : pos_space;
+    }
+
     if (pos)
+    {
+        saved_char = pos[0];
         pos[0] = '\0';
+    }
 
     rc = (weechat_nicklist_search_nick (buffer, NULL, word)) ? 1 : 0;
 
     if (pos)
-        pos[0] = ' ';
+        pos[0] = saved_char;
 
     return rc;
 }
