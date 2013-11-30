@@ -2767,7 +2767,10 @@ gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number)
         }
         ptr_first_buffer->prev_buffer = last_gui_buffer;
         ptr_last_buffer->next_buffer = NULL;
-        last_gui_buffer->next_buffer = ptr_first_buffer;
+        if (!gui_buffers)
+            gui_buffers = ptr_first_buffer;
+        if (last_gui_buffer)
+            last_gui_buffer->next_buffer = ptr_first_buffer;
         last_gui_buffer = ptr_last_buffer;
     }
 
