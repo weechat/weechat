@@ -978,9 +978,11 @@ irc_config_check_gnutls_priorities (const char *priorities)
         return NULL;
 
     rc = gnutls_priority_init (&priority_cache, priorities, &pos_error);
-    gnutls_priority_deinit (priority_cache);
     if (rc == GNUTLS_E_SUCCESS)
+    {
+        gnutls_priority_deinit (priority_cache);
         return NULL;
+    }
     if (pos_error)
         return pos_error;
     return priorities;
