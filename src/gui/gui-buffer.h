@@ -20,6 +20,7 @@
 #ifndef __WEECHAT_GUI_BUFFER_H
 #define __WEECHAT_GUI_BUFFER_H 1
 
+#include <limits.h>
 #include <regex.h>
 
 struct t_hashtable;
@@ -45,6 +46,10 @@ enum t_gui_buffer_notify
 };
 
 #define GUI_BUFFER_MAIN "weechat"
+
+#define GUI_BUFFERS_MAX 10000
+
+#define GUI_BUFFER_NUMBER_MAX (INT_MAX - 10000)
 
 #define GUI_TEXT_SEARCH_DISABLED 0
 #define GUI_TEXT_SEARCH_BACKWARD 1

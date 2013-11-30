@@ -474,6 +474,35 @@ COMMAND_CALLBACK(bar)
 }
 
 /*
+ * Checks if the buffer number is valid (in range 1 to GUI_BUFFER_NUMBER_MAX).
+ *
+ * If the number is not valid, a warning is displayed.
+ *
+ * Returns:
+ *   1: buffer number is valid
+ *   0: buffer number is invalid
+ */
+
+int
+command_buffer_check_number (long number)
+{
+    if ((number < 1) || (number > GUI_BUFFER_NUMBER_MAX))
+    {
+        /* invalid number */
+        gui_chat_printf (NULL,
+                         _("%sError: buffer number %d is out of range "
+                           "(it must be between 1 and %d)"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         number,
+                         GUI_BUFFER_NUMBER_MAX);
+        return 0;
+    }
+
+    /* number is OK */
+    return 1;
+}
+
+/*
  * Displays a local variable for a buffer.
  */
 
@@ -593,7 +622,9 @@ COMMAND_CALLBACK(buffer)
         }
         else if (strcmp (argv[2], "+") == 0)
         {
-            gui_buffer_move_to_number (buffer, last_gui_buffer->number + 1);
+            number = last_gui_buffer->number + 1;
+            if (command_buffer_check_number (number))
+                gui_buffer_move_to_number (buffer, number);
         }
         else
         {
@@ -601,16 +632,16 @@ COMMAND_CALLBACK(buffer)
             number = strtol (((argv[2][0] == '+') || (argv[2][0] == '-')) ?
                              argv[2] + 1 : argv[2],
                              &error, 10);
-            if (error && !error[0])
+            if (error && !error[0]
+                && (number >= INT_MIN) && (number <= INT_MAX))
             {
                 if (argv[2][0] == '+')
-                    gui_buffer_move_to_number (buffer,
-                                               buffer->number + ((int) number));
+                    number = buffer->number + number;
                 else if (argv[2][0] == '-')
-                    gui_buffer_move_to_number (buffer,
-                                               buffer->number - ((int) number));
-                else
-                    gui_buffer_move_to_number (buffer, (int) number);
+                    number = buffer->number - number;
+                number = (int)number;
+                if (command_buffer_check_number (number))
+                    gui_buffer_move_to_number (buffer, number);
             }
             else
             {
@@ -700,7 +731,8 @@ COMMAND_CALLBACK(buffer)
                 }
             }
         }
-        gui_buffer_unmerge (buffer, (int)number);
+        if (command_buffer_check_number ((int)number))
+            gui_buffer_unmerge (buffer, (int)number);
 
         return WEECHAT_RC_OK;
     }
@@ -738,8 +770,11 @@ COMMAND_CALLBACK(buffer)
          * renumber the buffers; if we are renumbering all buffers (no numbers
          * given), start at number 1
          */
-        gui_buffer_renumber (numbers[0], numbers[1],
-                             (argc == 2) ? 1 : numbers[2]);
+        if ((argc == 2) || command_buffer_check_number ((int)numbers[2]))
+        {
+            gui_buffer_renumber ((int)numbers[0], (int)numbers[1],
+                                 (argc == 2) ? 1 : (int)numbers[2]);
+        }
         return WEECHAT_RC_OK;
     }
 

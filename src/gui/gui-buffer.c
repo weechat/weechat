@@ -492,6 +492,16 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         return NULL;
     }
 
+    if (gui_buffers_count >= GUI_BUFFERS_MAX)
+    {
+        gui_chat_printf (NULL,
+                         _("%sError: maximum number of buffers is reached "
+                           "(%d)"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         GUI_BUFFERS_MAX);
+        return NULL;
+    }
+
     /* create new buffer */
     new_buffer = malloc (sizeof (*new_buffer));
     if (!new_buffer)
@@ -2611,6 +2621,8 @@ gui_buffer_renumber (int number1, int number2, int start_number)
 
     if (start_number < 1)
         start_number = ptr_first_buffer->number;
+    else if (start_number > GUI_BUFFER_NUMBER_MAX)
+        start_number = GUI_BUFFER_NUMBER_MAX;
 
     /* the start number must be greater than buffer before first buffer */
     if (ptr_first_buffer->prev_buffer
@@ -2675,6 +2687,9 @@ gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number)
 
     if (number < 1)
         number = 1;
+
+    if (number > GUI_BUFFER_NUMBER_MAX)
+        number = GUI_BUFFER_NUMBER_MAX;
 
     /* buffer number is already OK ? */
     if (number == buffer->number)
@@ -2997,6 +3012,9 @@ gui_buffer_unmerge (struct t_gui_buffer *buffer, int number)
         return;
 
     ptr_new_active_buffer = NULL;
+
+    if (number > GUI_BUFFER_NUMBER_MAX)
+        number = GUI_BUFFER_NUMBER_MAX;
 
     /* by default, we move buffer to buffer->number + 1 */
     if ((number < 1)  || (number == buffer->number))
