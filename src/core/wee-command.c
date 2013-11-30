@@ -763,6 +763,8 @@ COMMAND_CALLBACK(buffer)
                                      gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
                     return WEECHAT_RC_OK;
                 }
+                if ((i == 2) && !command_buffer_check_number ((int)numbers[i]))
+                    return WEECHAT_RC_OK;
             }
             else
                 numbers[i] = -1;
@@ -771,11 +773,8 @@ COMMAND_CALLBACK(buffer)
          * renumber the buffers; if we are renumbering all buffers (no numbers
          * given), start at number 1
          */
-        if ((argc == 2) || command_buffer_check_number ((int)numbers[2]))
-        {
-            gui_buffer_renumber ((int)numbers[0], (int)numbers[1],
-                                 (argc == 2) ? 1 : (int)numbers[2]);
-        }
+        gui_buffer_renumber ((int)numbers[0], (int)numbers[1],
+                             (argc == 2) ? 1 : (int)numbers[2]);
         return WEECHAT_RC_OK;
     }
 
