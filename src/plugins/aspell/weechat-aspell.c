@@ -343,6 +343,32 @@ weechat_aspell_string_is_url (const char *word)
 }
 
 /*
+ * Checks if a word is a nick of nicklist.
+ *
+ * Returns:
+ *   1: word is a nick of nicklist
+ *   0: word is not a nick of nicklist
+ */
+
+int
+weechat_aspell_string_is_nick (struct t_gui_buffer *buffer, const char *word)
+{
+    char *pos;
+    int rc;
+
+    pos = strchr (word, ' ');
+    if (pos)
+        pos[0] = '\0';
+
+    rc = (weechat_nicklist_search_nick (buffer, NULL, word)) ? 1 : 0;
+
+    if (pos)
+        pos[0] = ' ';
+
+    return rc;
+}
+
+/*
  * Checks if a word is made of digits and punctuation.
  *
  * Returns:
@@ -393,10 +419,6 @@ weechat_aspell_check_word (struct t_gui_buffer *buffer,
 
     /* word is a number? then do not check word */
     if (weechat_aspell_string_is_simili_number (word))
-        return 1;
-
-    /* word is a nick of nicklist on this buffer? then do not check word */
-    if (weechat_nicklist_search_nick (buffer, NULL, word))
         return 1;
 
     /* for "private" buffers, ignore self and remote nicks */
@@ -718,11 +740,12 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
             ptr_end = weechat_utf8_next_char (ptr_end_valid);
             word_end_pos = word_end_pos_valid;
             word_ok = 0;
-            if (weechat_aspell_string_is_url (ptr_string))
+            if (weechat_aspell_string_is_url (ptr_string)
+                || weechat_aspell_string_is_nick (buffer, ptr_string))
             {
                 /*
-                 * word is an URL, then it is OK, and search for next space
-                 * (will be end of word)
+                 * word is an URL or a nick, then it is OK: search for next
+                 * space (will be end of word)
                  */
                 word_ok = 1;
                 if (ptr_end[0])

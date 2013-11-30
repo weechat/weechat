@@ -37,6 +37,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   string_eval_expression and command /eval
 * api: add support for C++ plugins
 * api: fix read of arrays in hdata functions hdata_<type> (bug #40354)
+* aspell: fix detection of nicks with non-alphanumeric chars
 * guile: disable guile gmp allocator (fix crash on unload of relay plugin)
   (bug #40628)
 * irc: fix memory leak when checking the value of ssl_priorities option in
