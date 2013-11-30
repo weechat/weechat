@@ -729,10 +729,11 @@ COMMAND_CALLBACK(buffer)
                                      gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
                     return WEECHAT_RC_OK;
                 }
+                if (!command_buffer_check_number ((int)number))
+                    return WEECHAT_RC_ERROR;
             }
         }
-        if (command_buffer_check_number ((int)number))
-            gui_buffer_unmerge (buffer, (int)number);
+        gui_buffer_unmerge (buffer, (int)number);
 
         return WEECHAT_RC_OK;
     }
