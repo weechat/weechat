@@ -354,7 +354,7 @@ int
 weechat_aspell_string_is_nick (struct t_gui_buffer *buffer, const char *word)
 {
     char *pos, *pos_nick_completer, *pos_space, saved_char;
-    const char *nick_completer;
+    const char *nick_completer, *buffer_type, *buffer_nick, *buffer_channel;
     int rc, len_completer;
 
     nick_completer = weechat_config_string (
@@ -389,6 +389,32 @@ weechat_aspell_string_is_nick (struct t_gui_buffer *buffer, const char *word)
     }
 
     rc = (weechat_nicklist_search_nick (buffer, NULL, word)) ? 1 : 0;
+
+    if (!rc)
+    {
+        /* for "private" buffers, check if word is self or remote nick */
+        buffer_type = weechat_buffer_get_string (buffer, "localvar_type");
+        if (buffer_type && (strcmp (buffer_type, "private") == 0))
+        {
+            /* check self nick */
+            buffer_nick = weechat_buffer_get_string (buffer, "localvar_nick");
+            if (buffer_nick && (weechat_strcasecmp (buffer_nick, word) == 0))
+            {
+                rc = 1;
+            }
+            else
+            {
+                /* check remote nick */
+                buffer_channel = weechat_buffer_get_string (buffer,
+                                                            "localvar_channel");
+                if (buffer_channel
+                    && (weechat_strcasecmp (buffer_channel, word) == 0))
+                {
+                    rc = 1;
+                }
+            }
+        }
+    }
 
     if (pos)
         pos[0] = saved_char;
@@ -433,11 +459,9 @@ weechat_aspell_string_is_simili_number (const char *word)
  */
 
 int
-weechat_aspell_check_word (struct t_gui_buffer *buffer,
-                           struct t_aspell_speller_buffer *speller_buffer,
+weechat_aspell_check_word (struct t_aspell_speller_buffer *speller_buffer,
                            const char *word)
 {
-    const char *buffer_type, *buffer_nick, *buffer_channel;
     int i;
 
     /* word too small? then do not check word */
@@ -449,21 +473,7 @@ weechat_aspell_check_word (struct t_gui_buffer *buffer,
     if (weechat_aspell_string_is_simili_number (word))
         return 1;
 
-    /* for "private" buffers, ignore self and remote nicks */
-    buffer_type = weechat_buffer_get_string (buffer, "localvar_type");
-    if (buffer_type && (strcmp (buffer_type, "private") == 0))
-    {
-        /* check self nick */
-        buffer_nick = weechat_buffer_get_string (buffer, "localvar_nick");
-        if (buffer_nick && (weechat_strcasecmp (buffer_nick, word) == 0))
-            return 1;
-        /* check remote nick */
-        buffer_channel = weechat_buffer_get_string (buffer, "localvar_channel");
-        if (buffer_channel && (weechat_strcasecmp (buffer_channel, word) == 0))
-            return 1;
-    }
-
-    /* check word with all spellers for this buffer (order is important) */
+    /* check word with all spellers (order is important) */
     if (speller_buffer->spellers)
     {
         for (i = 0; speller_buffer->spellers[i]; i++)
@@ -599,7 +609,8 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
     long unsigned int value;
     struct t_gui_buffer *buffer;
     struct t_aspell_speller_buffer *ptr_speller_buffer;
-    char *result, *ptr_string, *pos_space, *ptr_end, *ptr_end_valid, save_end;
+    char *result, *ptr_string, *ptr_string_orig, *pos_space;
+    char *ptr_end, *ptr_end_valid, save_end;
     char *word_for_suggestions, *old_suggestions, *suggestions;
     char *word_and_suggestions;
     const char *color_normal, *color_error, *ptr_suggestions;
@@ -726,10 +737,14 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
         current_pos = 0;
         while (ptr_string[0])
         {
+            ptr_string_orig = NULL;
+
             /* find start of word: it must start with an alphanumeric char */
             utf8_char_int = weechat_utf8_char_int (ptr_string);
             while ((!iswalnum (utf8_char_int)) || iswspace (utf8_char_int))
             {
+                if (!ptr_string_orig && !iswspace (utf8_char_int))
+                    ptr_string_orig = ptr_string;
                 char_size = weechat_utf8_char_size (ptr_string);
                 memcpy (result + index_result, ptr_string, char_size);
                 index_result += char_size;
@@ -741,6 +756,8 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
             }
             if (!ptr_string[0])
                 break;
+            if (!ptr_string_orig)
+                ptr_string_orig = ptr_string;
 
             word_start_pos = current_pos;
             word_end_pos = current_pos;
@@ -769,7 +786,7 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
             word_end_pos = word_end_pos_valid;
             word_ok = 0;
             if (weechat_aspell_string_is_url (ptr_string)
-                || weechat_aspell_string_is_nick (buffer, ptr_string))
+                || weechat_aspell_string_is_nick (buffer, ptr_string_orig))
             {
                 /*
                  * word is an URL or a nick, then it is OK: search for next
@@ -797,8 +814,7 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
                 if ((save_end != '\0')
                     || (weechat_config_integer (weechat_aspell_config_check_real_time)))
                 {
-                    word_ok = weechat_aspell_check_word (buffer,
-                                                         ptr_speller_buffer,
+                    word_ok = weechat_aspell_check_word (ptr_speller_buffer,
                                                          ptr_string);
                     if (!word_ok && (input_pos >= word_start_pos))
                     {
