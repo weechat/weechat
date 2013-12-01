@@ -2126,6 +2126,7 @@ gui_buffer_close (struct t_gui_buffer *buffer)
 {
     struct t_gui_window *ptr_window;
     struct t_gui_buffer *ptr_buffer, *ptr_back_to_buffer;
+    struct t_gui_buffer *ptr_buffer_visited_buffer;
     int index;
     struct t_gui_buffer_visited *ptr_buffer_visited;
 
@@ -2152,7 +2153,7 @@ gui_buffer_close (struct t_gui_buffer *buffer)
          * find other buffer to display: previously visited buffer if current
          * window is displaying buffer, or buffer # - 1
          */
-        ptr_buffer_visited = NULL;
+        ptr_buffer_visited_buffer = NULL;
         if (CONFIG_BOOLEAN(config_look_jump_previous_buffer_when_closing)
             && gui_current_window && (gui_current_window->buffer == buffer))
         {
@@ -2160,8 +2161,11 @@ gui_buffer_close (struct t_gui_buffer *buffer)
             if (index >= 0)
             {
                 ptr_buffer_visited = gui_buffer_visited_search_by_number (index);
-                if (ptr_buffer_visited->buffer == buffer)
-                    ptr_buffer_visited = NULL;
+                if (ptr_buffer_visited
+                    && (ptr_buffer_visited->buffer != buffer))
+                {
+                    ptr_buffer_visited_buffer = ptr_buffer_visited->buffer;
+                }
             }
         }
 
@@ -2181,10 +2185,10 @@ gui_buffer_close (struct t_gui_buffer *buffer)
                                                      ptr_back_to_buffer,
                                                      1);
                     }
-                    else if (ptr_buffer_visited)
+                    else if (ptr_buffer_visited_buffer)
                     {
                         gui_window_switch_to_buffer (ptr_window,
-                                                     ptr_buffer_visited->buffer,
+                                                     ptr_buffer_visited_buffer,
                                                      1);
                     }
                     else if (ptr_window->buffer->prev_buffer)
