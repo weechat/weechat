@@ -308,7 +308,7 @@ irc_color_decode_for_user_entry (const char *string)
                 ptr_string++;
                 break;
             case IRC_COLOR_UNDERLINE_CHAR:
-                out[out_pos++] = 0x15;
+                out[out_pos++] = 0x1F;
                 ptr_string++;
                 break;
             case IRC_COLOR_COLOR_CHAR:
@@ -404,14 +404,14 @@ irc_color_encode (const char *string, int keep_colors)
                     out[out_pos++] = IRC_COLOR_RESET_CHAR;
                 ptr_string++;
                 break;
-            case 0x15: /* ^U */
-                if (keep_colors)
-                    out[out_pos++] = IRC_COLOR_UNDERLINE_CHAR;
-                ptr_string++;
-                break;
             case 0x16: /* ^V */
                 if (keep_colors)
                     out[out_pos++] = IRC_COLOR_REVERSE_CHAR;
+                ptr_string++;
+                break;
+            case 0x1F: /* ^_ */
+                if (keep_colors)
+                    out[out_pos++] = IRC_COLOR_UNDERLINE_CHAR;
                 ptr_string++;
                 break;
             default:
