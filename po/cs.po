@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-11-26 16:18+0100\n"
+"POT-Creation-Date: 2013-12-01 08:38+0100\n"
 "PO-Revision-Date: 2013-11-09 10:18+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7949,6 +7949,10 @@ msgstr "spravuje okna"
 #, fuzzy
 msgid "buffer"
 msgstr "řídit buffery"
+
+#, fuzzy
+msgid "visited buffer"
+msgstr "seznam bufferů"
 
 #, fuzzy
 msgid "structure with completion"

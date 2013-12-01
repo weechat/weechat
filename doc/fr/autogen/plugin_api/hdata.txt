@@ -550,6 +550,15 @@
 *** 'gui_buffer_last_displayed'
 *** 'gui_buffers'
 *** 'last_gui_buffer'
+* 'buffer_visited': tampon visité
+** extension: weechat
+** variables:
+*** 'buffer' (pointer, hdata: "buffer")
+*** 'prev_buffer' (pointer, hdata: "buffer_visited")
+*** 'next_buffer' (pointer, hdata: "buffer_visited")
+** listes:
+*** 'gui_buffers_visited'
+*** 'last_gui_buffer_visited'
 * 'completion': structure avec une complétion
 ** extension: weechat
 ** variables:

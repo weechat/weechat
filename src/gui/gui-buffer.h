@@ -311,6 +311,8 @@ extern struct t_hdata *gui_buffer_hdata_buffer_cb (void *data,
                                                    const char *hdata_name);
 extern struct t_hdata *gui_buffer_hdata_input_undo_cb (void *data,
                                                        const char *hdata_name);
+extern struct t_hdata *gui_buffer_hdata_buffer_visited_cb (void *data,
+                                                           const char *hdata_name);
 extern int gui_buffer_add_to_infolist (struct t_infolist *infolist,
                                        struct t_gui_buffer *buffer);
 extern void gui_buffer_dump_hexa (struct t_gui_buffer *buffer);

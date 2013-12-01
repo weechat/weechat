@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-11-26 16:18+0100\n"
+"POT-Creation-Date: 2013-12-01 08:38+0100\n"
 "PO-Revision-Date: 2013-11-09 10:18+0100\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7615,6 +7615,10 @@ msgstr "janela da barra"
 
 msgid "buffer"
 msgstr "buffer"
+
+#, fuzzy
+msgid "visited buffer"
+msgstr "lista de buffers"
 
 msgid "structure with completion"
 msgstr "estrutura com completação"

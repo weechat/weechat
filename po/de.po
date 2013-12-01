@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-11-26 16:18+0100\n"
+"POT-Creation-Date: 2013-12-01 08:38+0100\n"
 "PO-Revision-Date: 2013-11-20 15:12+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -8818,6 +8818,10 @@ msgstr "Bar-Fenster"
 
 msgid "buffer"
 msgstr "Buffer"
+
+#, fuzzy
+msgid "visited buffer"
+msgstr "Auflistung der Buffer"
 
 msgid "structure with completion"
 msgstr "Struktur mit Vervollständigung"

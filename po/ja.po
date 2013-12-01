@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-11-26 16:18+0100\n"
+"POT-Creation-Date: 2013-12-01 08:38+0100\n"
 "PO-Revision-Date: 2013-11-09 10:18+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -8236,6 +8236,10 @@ msgstr "バーウィンドウ"
 
 msgid "buffer"
 msgstr "バッファ"
+
+#, fuzzy
+msgid "visited buffer"
+msgstr "バッファのリスト"
 
 msgid "structure with completion"
 msgstr "補完する構造"

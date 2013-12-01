@@ -1225,6 +1225,8 @@ plugin_api_init ()
                 &gui_bar_window_hdata_bar_window_cb, NULL);
     hook_hdata (NULL, "buffer", N_("buffer"),
                 &gui_buffer_hdata_buffer_cb, NULL);
+    hook_hdata (NULL, "buffer_visited", N_("visited buffer"),
+                &gui_buffer_hdata_buffer_visited_cb, NULL);
     hook_hdata (NULL, "completion", N_("structure with completion"),
                 &gui_completion_hdata_completion_cb, NULL);
     hook_hdata (NULL, "completion_partial", N_("structure with partial completion"),

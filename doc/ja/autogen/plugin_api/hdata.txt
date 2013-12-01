@@ -550,6 +550,15 @@
 *** 'gui_buffer_last_displayed'
 *** 'gui_buffers'
 *** 'last_gui_buffer'
+* 'buffer_visited': visited buffer
+** プラグイン: weechat
+** variables:
+*** 'buffer' (pointer, hdata: "buffer")
+*** 'prev_buffer' (pointer, hdata: "buffer_visited")
+*** 'next_buffer' (pointer, hdata: "buffer_visited")
+** lists:
+*** 'gui_buffers_visited'
+*** 'last_gui_buffer_visited'
 * 'completion': 補完する構造
 ** プラグイン: weechat
 ** variables:
