@@ -68,6 +68,9 @@ irc_color_decode (const char *string, int keep_colors)
     const char *remapped_color;
     int fg, bg, bold, reverse, italic, underline, rc;
 
+    if (!string)
+        return NULL;
+
     /*
      * create output string with size of length*2 (with min 128 bytes),
      * this string will be realloc() later with a larger size if needed
@@ -272,6 +275,9 @@ irc_color_decode_for_user_entry (const char *string)
     unsigned char *out, *ptr_string;
     int out_length, out_pos, length;
 
+    if (!string)
+        return NULL;
+
     out_length = (strlen (string) * 2) + 1;
     out = malloc (out_length);
     if (!out)
@@ -340,6 +346,9 @@ irc_color_encode (const char *string, int keep_colors)
 {
     unsigned char *out, *ptr_string;
     int out_length, out_pos, length;
+
+    if (!string)
+        return NULL;
 
     out_length = (strlen (string) * 2) + 1;
     out = malloc (out_length);
