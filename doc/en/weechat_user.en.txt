@@ -927,8 +927,8 @@ The notify level for a buffer can be set with command `/buffer`:
 | @k(C-)@k(c) , @k(c) | Insert code for colored text | `/input insert \x03`
 | @k(C-)@k(c) , @k(i) | Insert code for italic text | `/input insert \x1D`
 | @k(C-)@k(c) , @k(o) | Insert code for color reset | `/input insert \x0F`
-| @k(C-)@k(c) , @k(u) | Insert code for underlined text | `/input insert \x15`
 | @k(C-)@k(c) , @k(v) | Insert code for reverse color | `/input insert \x16`
+| @k(C-)@k(c) , @k(_) | Insert code for underlined text | `/input insert \x1F`
 | @k(Del)          .2+| Delete next char in command line .2+| `/input delete_next_char`
 | @k(C-)@k(d)
 | @k(Backsp.)      .2+| Delete previous char in command line .2+| `/input delete_previous_char`
@@ -1265,11 +1265,11 @@ follow (press @k(C-)@k(c) then following letter, with optional value):
 @k(C-)@k(c) , @k(o)::
     disable color and attributes
 
-@k(C-)@k(c) , @k(u)::
-    underlined text
-
 @k(C-)@k(c) , @k(v)::
     reverse video (revert text color with background)
+
+@k(C-)@k(c) , @k(_)::
+    underlined text
 
 [NOTE]
 The same code (without number for @k(C-)@k(c) , @k(c)) may be used to stop the

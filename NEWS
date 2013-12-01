@@ -15,18 +15,24 @@ http://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 === Colors in messages
 
-The color code for "reverse video" in IRC has been fixed: now WeeChat uses
-0x16 like other clients (and not 0x12 any more).
-
+The color code for "reverse video" in IRC message has been fixed: now WeeChat
+uses 0x16 like other clients (and not 0x12 any more). +
 The code 0x12 is not decoded any more, so if it is received (for example from
 an old WeeChat version), it is not displayed as reverse video.
 
-The default key ctrl+"c", "r" has been changed to ctrl+"c", "v".
+The color code for "underlined text" in input line has been fixed: now WeeChat
+uses 0x1F, the same code sent to IRC server.
 
-You can remove the old key and add the new one with these commands:
+The default keys for "reverse video" and "underlined text" have changed:
+
+* reverse video: key ctrl+"c", "r" is replaced by ctrl+"c", "v"
+* underlined text: key ctrl+"c", "u" is replaced by ctrl+"c", "_"
+
+You can remove the old keys and add the new ones with these commands:
 
 ----
 /key unbind ctrl-Cr
+/key unbind ctrl-Cu
 /key missing
 ----
 

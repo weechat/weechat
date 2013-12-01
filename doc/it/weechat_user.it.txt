@@ -962,8 +962,8 @@ Il livello di notifica per un buffer può essere impostato con il comando `/buff
 | @k(C-)@k(c) , @k(c) | Inserisce il codice per il testo colorato | `/input insert \x03`
 | @k(C-)@k(c) , @k(i) | Inserisce il codice per il testo in corsivo | `/input insert \x1D`
 | @k(C-)@k(c) , @k(o) | Inserisce il codice per il reset dei colori | `/input insert \x0F`
-| @k(C-)@k(c) , @k(u) | Inserisce il codice per il testo sottolineato | `/input insert \x15`
 | @k(C-)@k(c) , @k(v) | Inserisce il codice per l'inversione dei colori | `/input insert \x16`
+| @k(C-)@k(c) , @k(_) | Inserisce il codice per il testo sottolineato | `/input insert \x1F`
 | @k(Del)          .2+| Elimina il carattere successivo nella riga di comando .2+| `/input delete_next_char`
 | @k(C-)@k(d)
 | @k(Backsp.)      .2+| Elimina il carattere precedente nella riga di comando .2+| `/input delete_previous_char`
@@ -1314,11 +1314,11 @@ opzionale):
 @k(C-)@k(c) , @k(o)::
     disabilita colori ed attributi
 
-@k(C-)@k(c) , @k(u)::
-    testo sottolineato
-
 @k(C-)@k(c) , @k(v)::
     video inverso (inverte il colore del testo con quello di sfondo)
+
+@k(C-)@k(c) , @k(_)::
+    testo sottolineato
 
 [NOTE]
 Lo stesso codice (senza numero per @k(C-)@k(c) , @k(c)) può essere usato per

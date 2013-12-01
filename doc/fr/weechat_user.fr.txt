@@ -953,8 +953,8 @@ commande `/buffer` :
 | @k(C-)@k(c) , @k(c) | Insérer le code pour écrire en couleur | `/input insert \x03`
 | @k(C-)@k(c) , @k(i) | Insérer le code pour mettre le texte en italique | `/input insert \x1D`
 | @k(C-)@k(c) , @k(o) | Insérer le code pour réinitialiser la couleur | `/input insert \x0F`
-| @k(C-)@k(c) , @k(u) | Insérer le code pour écrire en souligné | `/input insert \x15`
 | @k(C-)@k(c) , @k(v) | Insérer le code pour écrire en couleur inversée | `/input insert \x16`
+| @k(C-)@k(c) , @k(_) | Insérer le code pour écrire en souligné | `/input insert \x1F`
 | @k(Del)          .2+| Effacer le caractère suivant sur la ligne de commande .2+| `/input delete_next_char`
 | @k(C-)@k(d)
 | @k(Backsp.)      .2+| Effacer le caractère précédent sur la ligne de commande .2+| `/input delete_previous_char`
@@ -1302,11 +1302,11 @@ suit et éventuellement une valeur) :
 @k(C-)@k(c) , @k(o)::
     désactiver la couleur et tous les attributs
 
-@k(C-)@k(c) , @k(u)::
-    texte souligné
-
 @k(C-)@k(c) , @k(v)::
     vidéo inverse (inversion de la couleur d'écriture et du fond)
+
+@k(C-)@k(c) , @k(_)::
+    texte souligné
 
 [NOTE]
 Le même code (sans le numéro pour @k(C-)@k(c) , @k(c)) peut être utilisé pour
