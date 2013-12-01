@@ -940,8 +940,8 @@ Befehl festgelegt werden:
 | @k(C-)@k(c) , @k(c) | fügt Steuerzeichen für Textfarbe ein | `/input insert \x03`
 | @k(C-)@k(c) , @k(i) | fügt Steuerzeichen für kursiven Text ein | `/input insert \x1D`
 | @k(C-)@k(c) , @k(o) | fügt Steuerzeichen für Standardfarbe ein | `/input insert \x0F`
-| @k(C-)@k(c) , @k(r) | fügt Steuerzeichen für Hintergrundfarbe ein | `/input insert \x12`
 | @k(C-)@k(c) , @k(u) | fügt Steuerzeichen für unterstrichenen Text ein | `/input insert \x15`
+| @k(C-)@k(c) , @k(v) | fügt Steuerzeichen für Hintergrundfarbe ein | `/input insert \x16`
 | @k(Del)          .2+| entfernt in der Befehlszeile das nächste Zeichen .2+| `/input delete_next_char`
 | @k(C-)@k(d)
 | @k(Backsp.)      .2+| entfernt in der Befehlszeile das vorherige Zeichen .2+| `/input delete_previous_char`
@@ -1281,11 +1281,11 @@ Zeichen, genutzt werden:
 @k(C-)@k(c) , @k(o)::
     deaktiviert Farben und Attribute
 
-@k(C-)@k(c) , @k(r)::
-    Farben umkehren (kehrt Textfarbe und Hintergrundfarbe um)
-
 @k(C-)@k(c) , @k(u)::
     Text wird mit Unterstrich dargestellt
+
+@k(C-)@k(c) , @k(v)::
+    Farben umkehren (kehrt Textfarbe und Hintergrundfarbe um)
 
 [NOTE]
 Der selbe Befehl (ohne den Wert für @k(C-)@k(c) , @k(c)) sollte genutzt werden

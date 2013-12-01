@@ -11,6 +11,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 0.4.3 (under dev)
 
+* core: replace default key ctrl+"c", "r" by ctrl+"c", "v" for reverse video in
+  messages
 * core: fix random crash when closing a buffer
 * core: fix crash on /buffer close core.weechat
 * core: add option "libs" for command /debug

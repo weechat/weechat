@@ -144,8 +144,8 @@ gui_key_default_bindings (int context)
         BIND(/* ^Cc         */ "ctrl-Cc",            "/input insert \\x03");
         BIND(/* ^Ci         */ "ctrl-Ci",            "/input insert \\x1D");
         BIND(/* ^Co         */ "ctrl-Co",            "/input insert \\x0F");
-        BIND(/* ^Cr         */ "ctrl-Cr",            "/input insert \\x12");
         BIND(/* ^Cu         */ "ctrl-Cu",            "/input insert \\x15");
+        BIND(/* ^Cv         */ "ctrl-Cv",            "/input insert \\x16");
         BIND(/* m-right     */ "meta-meta2-C",       "/buffer +1");
         BIND(/* m-right     */ "meta2-1;3C",         "/buffer +1");
         BIND(/* m-down      */ "meta-meta2-B",       "/buffer +1");
