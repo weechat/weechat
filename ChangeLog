@@ -42,6 +42,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * aspell: fix detection of nicks with non-alphanumeric chars
 * guile: disable guile gmp allocator (fix crash on unload of relay plugin)
   (bug #40628)
+* irc: use color code 0x16 (ctrl-V) for reverse video in messages
 * irc: use option irc.network.colors_send instead of irc.network.colors_receive
   when displaying messages sent by commands /away, /me, /msg, /notice, /query
 * irc: fix memory leak when checking the value of ssl_priorities option in

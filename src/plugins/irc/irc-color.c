@@ -121,7 +121,6 @@ irc_color_decode (const char *string, int keep_colors)
                 ptr_string++;
                 break;
             case IRC_COLOR_REVERSE_CHAR:
-            case IRC_COLOR_REVERSE2_CHAR:
                 if (keep_colors)
                 {
                     snprintf (str_to_add, sizeof (str_to_add), "%s",
@@ -301,8 +300,7 @@ irc_color_decode_for_user_entry (const char *string)
                 ptr_string++;
                 break;
             case IRC_COLOR_REVERSE_CHAR:
-            case IRC_COLOR_REVERSE2_CHAR:
-                out[out_pos++] = 0x12;
+                out[out_pos++] = 0x16;
                 ptr_string++;
                 break;
             case IRC_COLOR_ITALIC_CHAR:
@@ -406,14 +404,14 @@ irc_color_encode (const char *string, int keep_colors)
                     out[out_pos++] = IRC_COLOR_RESET_CHAR;
                 ptr_string++;
                 break;
-            case 0x12: /* ^R */
-                if (keep_colors)
-                    out[out_pos++] = IRC_COLOR_REVERSE_CHAR;
-                ptr_string++;
-                break;
             case 0x15: /* ^U */
                 if (keep_colors)
                     out[out_pos++] = IRC_COLOR_UNDERLINE_CHAR;
+                ptr_string++;
+                break;
+            case 0x16: /* ^V */
+                if (keep_colors)
+                    out[out_pos++] = IRC_COLOR_REVERSE_CHAR;
                 ptr_string++;
                 break;
             default:

@@ -46,10 +46,8 @@
 #define IRC_COLOR_RESET_STR       "\x0F"
 #define IRC_COLOR_FIXED_CHAR      '\x11'
 #define IRC_COLOR_FIXED_STR       "\x11"
-#define IRC_COLOR_REVERSE_CHAR    '\x12'
-#define IRC_COLOR_REVERSE_STR     "\x12"
-#define IRC_COLOR_REVERSE2_CHAR   '\x16'
-#define IRC_COLOR_REVERSE2_STR    "\x16"
+#define IRC_COLOR_REVERSE_CHAR    '\x16'
+#define IRC_COLOR_REVERSE_STR     "\x16"
 #define IRC_COLOR_ITALIC_CHAR     '\x1D'
 #define IRC_COLOR_ITALIC_STR      "\x1D"
 #define IRC_COLOR_UNDERLINE_CHAR  '\x1F'
