@@ -25,8 +25,8 @@ uses 0x1F, the same code sent to IRC server.
 
 The default keys for "reverse video" and "underlined text" have changed:
 
-* reverse video: key ctrl+"c", "r" is replaced by ctrl+"c", "v"
-* underlined text: key ctrl+"c", "u" is replaced by ctrl+"c", "_"
+* reverse video: key key[ctrl-c,r] is replaced by key[ctrl-c,v]
+* underlined text: key key[ctrl-c,u] is replaced by key[ctrl-c,_]
 
 You can remove the old keys and add the new ones with these commands:
 
@@ -78,7 +78,7 @@ changes.
 Search with regular expression has been added, and therefore some keys in search
 context have been changed.
 
-The key ctrl+"r" in search context is now used to switch string/regex search
+The key key[ctrl-r] in search context is now used to switch string/regex search
 (instead of searching exact text).
 
 If you never changed keys in search context, you can reset them all with one
@@ -367,7 +367,7 @@ New options in command `/aspell`:
 
 * `enable`: enable aspell
 * `disable`: disable aspell
-* `toggle`: toggle aspell (new default key: alt+"s")
+* `toggle`: toggle aspell (new default key: key[alt-s])
 
 Options renamed in command `/aspell`:
 
@@ -434,8 +434,8 @@ If you added/changed some rmodifiers, do it manually with these commands:
 === Options
 
 Option `scroll_unread` has been moved from command `/input` to `/window`,
-therefore default command of key alt+"u" has been updated. To bind key with new
-default value:
+therefore default command of key key[alt-u] has been updated. To bind key with
+new default value:
 
 ----
 /key bind meta-u /window scroll_unread
@@ -520,8 +520,8 @@ If you are using `/upgrade` from a previous release:
 * nick colors are defined with a new option 'weechat.color.chat_nick_colors',
   therefore old options 'weechat.color.chat_nick_color1..10' will be lost when
   upgrading
-* nick colors in messages displayed will be wrong if you changed some nick colors
-  (old default colors will be used)
+* nick colors in messages displayed will be wrong if you changed some nick
+  colors (old default colors will be used)
 
 === Options
 
@@ -675,10 +675,10 @@ For server encode (on server buffer):
 
 === New keys
 
-New keys for topic scroll: F9/F10.
+New keys for topic scroll: key[F9]/key[F10].
 
-Key F10 was used for `infobar_clear` in previous WeeChat versions, you have to
-manually rebind this key (except for new WeeChat users):
+Key key[F10] was used for `infobar_clear` in previous WeeChat versions, you
+have to manually rebind this key (except for new WeeChat users):
 
 ----
 /key <press alt+"k" then F10> scroll_topic_right
@@ -726,7 +726,7 @@ and arguments).
 === After /upgrade
 
 After installing 0.1.8 (or with `/upgrade`), issue both commands (if you didn't
-redefine these keys (alt+{home|end}):
+redefine these keys (key[alt-]key[Home]/key[End]):
 
 ----
 /key unbind meta-meta2-1~
@@ -748,8 +748,8 @@ overridden by new command line argument `--dir`).
 
 === Keys
 
-Keys alt+{home|end} were used for nicklist scroll, they're now replaced by
-alt+{F11|F12}.
+Keys key[alt-]key[Home]/key[End] were used for nicklist scroll, they're now
+replaced by key[alt-]key[F11]/key[F12].
 
 == Version 0.1.7 (2006-01-14)
 
