@@ -203,7 +203,7 @@ kannst?).
 
 Standardmäßig werden die Server-Buffer und der Buffer des Kerns von WeeChat -der
 core-Buffer- zusammengelegt. Um zwischen dem core-Buffer und den Server-Buffern
-zu wechseln, kannst Du ctrl-X benutzen.
+zu wechseln, kannst Du key[ctrl-x] benutzen.
 
 Es ist möglich das automatische Zusammenlegen der Server-Buffer zu deaktivieren,
 um eigenständige Server-Buffer zu nutzen:
@@ -271,24 +271,24 @@ WeeChat verwendet viele Standardtasten. Alle Tastenbelegungen sind in der
 Dokumentation beschrieben. Im folgenden werden die wichtigsten Tastenbelegungen
 kurz erläutert:
 
-- 'alt + linker/rechter Pfeil' (oder 'F5'/'F6'): umschalten zum
+- key[alt-]key[←]/key[→] oder key[F5]/key[F6]: umschalten zum
   vorherigen/nächsten Buffer
-- 'F7'/'F8': umschalten zum vorherigen/nächsten Fenster (falls der Bildschirm
-  aufgeteilt ist)
-- 'F9'/'F10': scrollt die Titleleiste
-- 'F11'/'F12': scrollt die Liste der Nicks
-- 'tab': komplettiert den Text in der Eingabezeile, ähnlich Deiner shell
-- 'Seite rauf/runter': scrollt den Text im aktiven Buffer
-- 'alt + A': springt zum Buffer mit Aktivität (aus der Hotlist)
+- key[F7]/key[F8]: umschalten zum vorherigen/nächsten Fenster (falls der
+  Bildschirm aufgeteilt ist)
+- key[F9]/key[F10]: scrollt die Titleleiste
+- key[F11]/key[F12]: scrollt die Liste der Nicks
+- key[Tab]: komplettiert den Text in der Eingabezeile, ähnlich Deiner shell
+- key[PgUp]/key[PgDn]: scrollt den Text im aktiven Buffer
+- key[alt-a]: springt zum Buffer mit Aktivität (aus der Hotlist)
 
 Gemäß Deiner Tastatur und/oder Deinen Bedürfnissen kann jede Taste mit Hilfe
 des `/key` Befehls durch einen Befehl neu belegt werden.
-Eine nützliche Tastenkombination um Tastencodes zu ermitteln ist meta-k (alt-k).
+Eine nützliche Tastenkombination um Tastencodes zu ermitteln ist key[alt-k].
 
-Beispiel: Belegung von meta-y (alt-y) mit dem Befehl `/buffer close`:
+Beispiel: Belegung von key[alt-y] mit dem Befehl `/buffer close`:
 
 ----
-/key bind (drücke meta-k) (drücke meta-y) /buffer close
+/key bind (drücke alt-k) (drücke alt-y) /buffer close
 ----
 
 Du wirst folgende Befehlszeile erhalten:

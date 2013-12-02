@@ -196,7 +196,7 @@ visualizzare l'aiuto per questo comando con `/help connect`?).
 
 I buffer dei server vengono uniti al buffer 'core' di WeeChat in modo
 predefinito. Per passare tra buffer 'core' e buffer server, si può digitare
-Ctrl-X.
+key[ctrl-x].
 
 È possibile disabilitare l'unione automatica dei server dei buffer per avere i
 buffer dei server indipendenti:
@@ -263,25 +263,25 @@ Per esempio, per dividere verticalmente lo schermo in una finestra piccola
 WeeChat usa molti tasti. Essi sono tutti presenti nella documentazione,
 ma si dovrebbero conoscere almeno quelli vitali:
 
-- 'alt + freccia sinistra/destra' (oppure 'F5/F6'): passa al buffer
-precedente/successivo
-- 'F7/F8': passa alla finestra precedente/successiva (quando lo schermo
-è diviso)
-- 'F9/F10': scorre la barra del titolo
-- 'F11/F12': scorre la lista nick
-- 'tab': completa il testo nella barra di input, proprio come nella shell
-- 'pagina su/giù': scorre testo nel buffer corrente
-- 'alt + A': passa al buffer con attività (nella hotlist)
+- key[alt-]key[←]/key[→] oppure key[F5]/key[F6]: passa al buffer
+  precedente/successivo
+- key[F7]/key[F8]: passa alla finestra precedente/successiva (quando lo schermo
+  è diviso)
+- key[F9]/key[F10]: scorre la barra del titolo
+- key[F11]/key[F12]: scorre la lista nick
+- key[Tab]: completa il testo nella barra di input, proprio come nella shell
+- key[PgUp]/key[PgDn]: scorre testo nel buffer corrente
+- key[alt-a]: passa al buffer con attività (nella hotlist)
 
 A seconda della propria tastiera e/o le proprie necessità, è possibile
 associare nuovamente qualsiasi tasto ad un comando tramite
 `/key`.
-Un tasto utile è meta-k (alt-k) per trovare i codici tasti.
+Un tasto utile è key[alt-k] per trovare i codici tasti.
 
-Ad esempio, per associare meta-y (alt-y) al comando `/buffer close`:
+Ad esempio, per associare key[alt-y] al comando `/buffer close`:
 
 ----
-/key bind (digitare meta-k) (digitare meta-y) /buffer close
+/key bind (digitare alt-k) (digitare alt-y) /buffer close
 ----
 
 Si otterrà una riga di comando simile a:

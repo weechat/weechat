@@ -199,7 +199,7 @@ l'aide pour cette commande avec `/help connect` ?).
 
 Par défaut, les tampons des serveurs sont mélangés avec le tampon 'core'
 WeeChat. Pour basculer entre le tampon 'core' et les tampons des serveurs, il
-faut utiliser la touche ctrl-X.
+faut utiliser la touche key[ctrl-x].
 
 Il est possible de désactiver le mélange des tampons serveurs pour avoir un
 tampon distinct par serveur :
@@ -267,22 +267,22 @@ WeeChat utilise un certain nombre de touches par défaut. Toutes ces
 touches sont dans la documentation, mais vous devriez connaître au moins
 les touches vitales :
 
-- 'alt + flèches gauche/droite' (ou 'F5'/'F6'): aller au tampon précédent/suivant
-- 'F7'/'F8': aller à la fenêtre précédente/suivante (quand l'écran est divisé)
-- 'F9'/'F10': faire défiler la barre de titre
-- 'F11'/'F12': faire défiler la liste des pseudos
-- 'tab': compléter le texte de la barre d'entrée, comme avec votre shell
-- 'page préc/suiv': faire défiler le texte dans le tampon courant
-- 'alt + A': sauter au tampon avec de l'activité (dans la "hotlist")
+- key[alt-]key[←]/key[→] ou key[F5]/key[F6] : aller au tampon précédent/suivant
+- key[F7]/key[F8] : aller à la fenêtre précédente/suivante (quand l'écran est divisé)
+- key[F9]/key[F10] : faire défiler la barre de titre
+- key[F11]/key[F12] : faire défiler la liste des pseudos
+- key[Tab] : compléter le texte de la barre d'entrée, comme avec votre shell
+- key[PgUp]/key[PgDn] : faire défiler le texte dans le tampon courant
+- key[alt-a]: sauter au tampon avec de l'activité (dans la "hotlist")
 
 Selon votre clavier et/ou vos besoins, vous pouvez associer n'importe
 quelle touche à une commande avec la commande `/key`.
-Une touche utile est meta-k (alt-k) pour trouver le code des touches.
+Une touche utile est key[alt-k] pour trouver le code des touches.
 
-Par exemple, pour associer meta-y (alt-y) à la commande `/buffer close` :
+Par exemple, pour associer key[alt-y] à la commande `/buffer close` :
 
 ----
-/key bind (pressez meta-k) (pressez meta-y) /buffer close
+/key bind (pressez alt-k) (pressez alt-y) /buffer close
 ----
 
 Vous aurez une ligne de commande qui ressemble à ceci :

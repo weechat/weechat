@@ -190,7 +190,7 @@ This command can be used to create and connect to a new server without using
 `/help connect` ?).
 
 By default, server buffers are merged with WeeChat 'core' buffer. To switch
-between 'core' buffer and server buffers, you can use ctrl-X.
+between 'core' buffer and server buffers, you can use key[ctrl-x].
 
 It is possible to disable auto merge of server buffers to have independent
 server buffers:
@@ -255,22 +255,22 @@ and a large window (2/3), use command:
 WeeChat uses many keys by default. All these keys are in the documentation,
 but you should know at least some vital keys:
 
-- 'alt + left/right arrows' (or 'F5'/'F6'): switch to previous/next buffer
-- 'F7'/'F8': switch to previous/next window (when screen is split)
-- 'F9'/'F10': scroll title bar
-- 'F11'/'F12': scroll nicklist
-- 'tab': complete text in input bar, like in your shell
-- 'page up/down': scroll text in current buffer
-- 'alt + A': jump to buffer with activity (in hotlist)
+- key[alt-]key[←]/key[→] or key[F5]/key[F6]: switch to previous/next buffer
+- key[F7]/key[F8]: switch to previous/next window (when screen is split)
+- key[F9]/key[F10]: scroll title bar
+- key[F11]/key[F12]: scroll nicklist
+- key[Tab]: complete text in input bar, like in your shell
+- key[PgUp]/key[PgDn]: scroll text in current buffer
+- key[alt-a]: jump to buffer with activity (in hotlist)
 
 According to your keyboard and/or your needs, you can rebind any key
 to a command with `/key` command.
-A useful key is meta-k (alt-k) to find key codes.
+A useful key is key[alt-k] to find key codes.
 
-For example, to bind meta-y (alt-y) to command `/buffer close`:
+For example, to bind key[alt-y] to command `/buffer close`:
 
 ----
-/key bind (press meta-k) (press meta-y) /buffer close
+/key bind (press alt-k) (press alt-y) /buffer close
 ----
 
 You'll have a command line like:

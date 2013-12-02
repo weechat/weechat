@@ -190,7 +190,7 @@ użycia komendy `/server` (czy mam powtarzać, że pomoc dla tej komendy można
 uzyskać dzięki `/help connect` ?).
 
 Domyślnie bufory serwerów są połączone z buforem WeeChat 'core'. Aby przełączać
-się pomiędzy biforem 'core' a buforami serwerów możesz użyć ctrl-X.
+się pomiędzy biforem 'core' a buforami serwerów możesz użyć key[ctrl-x].
 
 Jest możliwe wyłączenie automatycznego łączenia buforów serwerów, aby mieć
 oddzielne bufory dla serwerów:
@@ -254,22 +254,24 @@ oraz duże okno (2/3), użyj komendy:
 WeeChat używa domyślnie wiele klawiszy. Wszystkie z nich są w dokumentacji,
 ale powinieneś znać przynajmniej kilka najprzydatniejszych:
 
-- 'alt + strzałki lewo/prawo' (lub 'F5'/'F6'): przełącza na poprzedni/następny bufor
-- 'F7'/'F8': przełącza na poprzednie/następne okno (jeśli ekran jest podzielony)
-- 'F9'/'F10': przewija pasek z tematem kanału
-- 'F11'/'F12': przewija listę z nickami
-- 'tab': dopełnia tekst w pasku danych wejściowych, dokładnie jak w terminalu
-- 'page up/down': przewija tekst w obecnym buforze
-- 'alt + A': skocz do bufora z aktywnością (w hotliście)
+- key[alt-]key[←]/key[→] lub key[F5]/key[F6]: przełącza na poprzedni/następny
+  bufor
+- key[F7]/key[F8]: przełącza na poprzednie/następne okno (jeśli ekran jest
+  podzielony)
+- key[F9]/key[F10]: przewija pasek z tematem kanału
+- key[F11]/key[F12]: przewija listę z nickami
+- key[Tab]: dopełnia tekst w pasku danych wejściowych, dokładnie jak w terminalu
+- key[PgUp]/key[PgDn]: przewija tekst w obecnym buforze
+- key[alt-a]: skocz do bufora z aktywnością (w hotliście)
 
 Zgodnie z Twoją klawiaturą i/lub potrzebami, możesz zmienić przypisanie
 dowolnego klawisza do komendy używając komendy `/key`.
-Przydatnym skrótem jest meta-k (alt-k) do odnajdywania kodów klawiszy.
+Przydatnym skrótem jest key[alt-k] do odnajdywania kodów klawiszy.
 
-Na przykład, aby przypisać meta-y (alt-y) do komendy `/buffer close`:
+Na przykład, aby przypisać key[alt-y] do komendy `/buffer close`:
 
 ----
-/key bind (wciśnij meta-k) (wciśnij meta-y) /buffer close
+/key bind (wciśnij alt-k) (wciśnij alt-y) /buffer close
 ----
 
 Otrzymasz w linii poleceń:
