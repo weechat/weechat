@@ -215,7 +215,7 @@ użyty w żadnym z pasków:
 === Jak mogę kopiować/wklejać tekst bez wklejania listy nicków?
 
 Możesz użyć terminala z prostokątnym zaznaczaniem (jak rxvt-unicode,
-konsole, gnome-terminal, ...). Klawisze to zazwyczaj @k(C-)@k(A-) zaznaczenie myszką.
+konsole, gnome-terminal, ...). Klawisze to zazwyczaj key[ctrl-]key[alt-] zaznaczenie myszką.
 
 Innym rozwiązaniem jest przesunięcie listy nicków na górę lub dół, na przykład:
 
@@ -303,9 +303,9 @@ Więcej informacji na temat zarządzania kolorami można uzyskać w poradniku u�
 [[search_text]]
 === Jak mogę wyszukać tekst w buforze (jak za pomocą /lastlog w irssi)?
 
-Domyślny skrót klawiszowy to @k(C-)@k(r) (komenda: `/input search_text`).
+Domyślny skrót klawiszowy to key[ctrl-r] (komenda: `/input search_text`).
 
-Poruszanie się między podświetleniami: @k(A-)@k(p)/@k(n).
+Poruszanie się między podświetleniami: key[alt-p] / key[alt-n].
 
 Po więcej informacji zajrzyj do poradnika użytkownika (domyślne skróty klawiszowe).
 
@@ -334,13 +334,13 @@ Następnie przeładować zasoby (`xrdb -override ~/.Xresources`) lub zrestartowa
 
 Przypisania klawiszy można dostosować za pomocą komendy `/key`.
 
-Domyślnie @k(A-)@k(k) pozwala pobrać kod klawiszy i umieścić go w wierszu
+Domyślnie key[alt-k] pozwala pobrać kod klawiszy i umieścić go w wierszu
 poleceń.
 
 [[jump_to_buffer_11_or_higher]]
 === Jakim skrótem można przejść do buforu 11 (lub o większym numerze)?
 
-Skrót to @k(A-)@k(j) i dwie cyfry, na przykład @k(A-)@k(j) później @k(1), @k(1)
+Skrót to key[alt-j] i dwie cyfry, na przykład key[alt-j], key[1], key[1]
 przejdzie do buforu 11.
 
 Można również samemu stworzyć skrót, na przykład:
@@ -355,7 +355,7 @@ Lista domyślnych skrótów znajduje się w poradniku użytkownika.
 === Jak używać globalnej historii (zamiast historii buforu) za pomocą strzałek góra/dół?
 
 Możesz przypisać strzałki w górę i dół do globalnej historii (domyślnie dla
-globalnej historii przypisane są klawisze @k(C-)@k(↑) oraz @k(C-)@k(↓)).
+globalnej historii przypisane są klawisze key[ctrl-↑] oraz key[ctrl-↓]).
 
 Przykład:
 
@@ -366,7 +366,7 @@ Przykład:
 
 [NOTE]
 Klawisze "meta2-A" i "meta2-B" mogą być inne dla twojego terminala. W celu
-znalezienia ich kodów wciśnij @k(A-)@k(k) następnie przycisk (góra lub dół).
+znalezienia ich kodów wciśnij key[alt-k] następnie przycisk (góra lub dół).
 
 [[mouse]]
 == Obsługa myszy
@@ -412,9 +412,10 @@ rxvt-unicode.
 [[mouse_select_paste]]
 === Jak mogę zaznaczyć lub wkleić tekst w terminalu z włączoną obsługa myszy w WeeChat?
 
-Kiedy obsługa myszy jest włączona w WeeChat, można użyć modyfikatora @k(-S-) do zaznaczania
-lub kliknać w terminalu, tak jak w przypadku wyłączonej obsługi myszy (w niektórych
-terminalach jak iTerm należy użyć @k(-A-) zamiast @k(-S-)).
+Kiedy obsługa myszy jest włączona w WeeChat, można użyć modyfikatora key[shift]
+do zaznaczania lub kliknać w terminalu, tak jak w przypadku wyłączonej obsługi
+myszy (w niektórych terminalach jak iTerm należy użyć key[alt] zamiast
+key[shift]).
 
 [[irc]]
 == IRC
@@ -515,7 +516,7 @@ Komenda `/filter` jest komenda rdzenia, zatem odnosi się do dowolnego bufora.
 Pozwala filtrować niektóre linie w buforach za pomocą tagów lub wyrażeń
 regularnych dla przedrostków i zawartości linii.
 Filtrowane linie są tylko ukrywane, nie usuwane, można je zobaczyć wyłączając
-filtry (domyślnie @k(A-)@k(=) zmienia stan filtrów).
+filtry (domyślnie key[alt-=] zmienia stan filtrów).
 
 [[filter_irc_join_part_quit]]
 === Jak mogę filtrować wiadomości o wejściu/opuszczeniu/wyjściu na kanałach IRC?
@@ -641,7 +642,7 @@ Inne podobne skrypty: http://weechat.org/scripts/stable/tag/notify/
 [[irc_target_buffer]]
 === Jak mogę zmienić docelowy bufor dla komendy w połączonym buforze (jak bufor z serwerami)?
 
-Domyślna kombinacja to @k(C-)@k(x) (komenda: `/input switch_active_buffer`).
+Domyślna kombinacja to key[ctrl-x] (komenda: `/input switch_active_buffer`).
 
 [[plugins_scripts]]
 == Pluginy / skrypty

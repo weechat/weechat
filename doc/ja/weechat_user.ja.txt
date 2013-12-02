@@ -909,57 +909,55 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
 [[key_bindings]]
 === デフォルトのキー割り当て
 
-// 'C-' = ctrl, 'A-' = alt, 'S-' = shift
-
 [[key_bindings_command_line]]
 ==== コマンドライン用のキー
 
 [width="100%",cols="^.^3,.^10,.^5",options="header"]
 |===
-| キー                | 説明  | コマンド
-| @k(←)            .2+| コマンドラインで前の文字に移動 .2+| `/input move_previous_char`
-| @k(C-)@k(b)
-| @k(→)            .2+| コマンドラインで次の文字に移動 .2+| `/input move_next_char`
-| @k(C-)@k(f)
-| @k(C-)@k(←)      .2+| コマンドラインで前の単語に移動 .2+| `/input move_previous_word`
-| @k(A-)@k(b)
-| @k(C-)@k(→)      .2+| コマンドラインで次の単語に移動 .2+| `/input move_next_word`
-| @k(A-)@k(f)
-| @k(Home)         .2+| コマンドラインで行頭に移動 .2+| `/input move_beginning_of_line`
-| @k(C-)@k(a)
-| @k(End)          .2+| コマンドラインで行末に移動 .2+| `/input move_end_of_line`
-| @k(C-)@k(e)
-| @k(C-)@k(c) , @k(b) | テキストを太字化するコードの挿入 | `/input insert \x02`
-| @k(C-)@k(c) , @k(c) | テキストに色をつけるコードの挿入 | `/input insert \x03`
-| @k(C-)@k(c) , @k(i) | テキストをイタリック体にするコードの挿入 | `/input insert \x1D`
-| @k(C-)@k(c) , @k(o) | テキスト色のリセットを行うコードの挿入 | `/input insert \x0F`
-| @k(C-)@k(c) , @k(v) | テキスト色の反転を行うコードの挿入 | `/input insert \x16`
-| @k(C-)@k(c) , @k(_) | テキストに下線を引くコードの挿入 | `/input insert \x1F`
-| @k(Del)          .2+| コマンドラインで次の文字を削除 .2+| `/input delete_next_char`
-| @k(C-)@k(d)
-| @k(Backsp.)      .2+| コマンドラインで前の文字を削除 .2+| `/input delete_previous_char`
-| @k(C-)@k(h)
-| @k(C-)@k(k)         | コマンドラインでカーソルより後の文字列を削除 (削除された文字列はクリップボードに保存) | `/input delete_end_of_line`
-| @k(C-)@k(r)         | バッファ中の履歴からテキスト検索 (<<key_bindings_search_context,検索モード用のキー>>を参照) | `/input search_text`
-| @k(C-)@k(t)         | 文字の入れ替え | `/input transpose_chars`
-| @k(C-)@k(u)         | コマンドラインでカーソルより前の文字列を削除 (削除された文字列はクリップボードに保存) | `/input delete_beginning_of_line`
-| @k(C-)@k(w)         | コマンドラインで前の単語を削除 (削除された文字列はクリップボードに保存) | `/input delete_previous_word`
-| @k(C-)@k(y)         | クリップボードの内容を貼り付け | `/input clipboard_paste`
-| @k(C-)@k(_)         | コマンドラインの最後の動作をやり直す | `/input undo`
-| @k(A-)@k(_)         | コマンドラインの最後の動作を取り消す | `/input redo`
-| @k(Tab)             | コマンドやニックネームを補完 (再度 @k(Tab) することで次の補完候補を表示) | `/input complete_next`
-| @k(S-)@k(Tab)       | 補完候補が無い場合: 部分補完を行う、補完候補が有る場合: 前の補完候補を表示 | `/input complete_previous`
-| @k(Enter)        .3+| コマンドを実行するか、メッセージを送信する (検索モードの場合: 検索の終了) .3+| `/input return`
-| @k(C-)@k(j)
-| @k(C-)@k(m)
-| @k(↑)               | 前のコマンド/メッセージを呼び出す (検索モードの場合: 上方向に検索) | `/input history_previous`
-| @k(↓)               | 次のコマンド/メッセージを呼び出す (検索モードの場合: 下方向に検索) | `/input history_next`
-| @k(C-)@k(↑)         | グローバル履歴から前のコマンド/メッセージを呼び出す (すべてのバッファに対して共通の履歴) | `/input history_global_previous`
-| @k(C-)@k(↓)         | グローバル履歴から次のコマンド/メッセージを呼び出す (すべてのバッファに対して共通の履歴) | `/input history_global_next`
-| @k(A-)@k(d)         | コマンドラインで次の単語を削除 (削除された文字列はクリップボードに保存) | `/input delete_next_word`
-| @k(A-)@k(k)         | キー入力を奪って、コマンドラインにコード (キーが割り当てられていればコマンド) を入力 | `/input grab_key_command`
-| @k(A-)@k(r)         | コマンドラインへの入力をすべて削除 | `/input delete_line`
-| @k(A-)@k(s)         | aspell の有効無効を切り替え | `/mute aspell toggle`
+| キー            | 説明 | コマンド
+| key[←]       .2+| コマンドラインで前の文字に移動 .2+| `/input move_previous_char`
+| key[ctrl-b]
+| key[→]       .2+| コマンドラインで次の文字に移動 .2+| `/input move_next_char`
+| key[ctrl-f]
+| key[ctrl-←]  .2+| コマンドラインで前の単語に移動 .2+| `/input move_previous_word`
+| key[alt-b]
+| key[ctrl-→]  .2+| コマンドラインで次の単語に移動 .2+| `/input move_next_word`
+| key[alt-f]
+| key[Home]    .2+| コマンドラインで行頭に移動 .2+| `/input move_beginning_of_line`
+| key[ctrl-a]
+| key[End]     .2+| コマンドラインで行末に移動 .2+| `/input move_end_of_line`
+| key[ctrl-e]
+| key[ctrl-c,b]   | テキストを太字化するコードの挿入 | `/input insert \x02`
+| key[ctrl-c,c]   | テキストに色をつけるコードの挿入 | `/input insert \x03`
+| key[ctrl-c,i]   | テキストをイタリック体にするコードの挿入 | `/input insert \x1D`
+| key[ctrl-c,o]   | テキスト色のリセットを行うコードの挿入 | `/input insert \x0F`
+| key[ctrl-c,v]   | テキスト色の反転を行うコードの挿入 | `/input insert \x16`
+| key[ctrl-c,_]   | テキストに下線を引くコードの挿入 | `/input insert \x1F`
+| key[Del]     .2+| コマンドラインで次の文字を削除 .2+| `/input delete_next_char`
+| key[ctrl-d]
+| key[Backsp.] .2+| コマンドラインで前の文字を削除 .2+| `/input delete_previous_char`
+| key[ctrl-h]
+| key[ctrl-k]     | コマンドラインでカーソルより後の文字列を削除 (削除された文字列はクリップボードに保存) | `/input delete_end_of_line`
+| key[ctrl-r]     | バッファ中の履歴からテキスト検索 (<<key_bindings_search_context,検索モード用のキー>>を参照) | `/input search_text`
+| key[ctrl-t]     | 文字の入れ替え | `/input transpose_chars`
+| key[ctrl-u]     | コマンドラインでカーソルより前の文字列を削除 (削除された文字列はクリップボードに保存) | `/input delete_beginning_of_line`
+| key[ctrl-w]     | コマンドラインで前の単語を削除 (削除された文字列はクリップボードに保存) | `/input delete_previous_word`
+| key[ctrl-y]     | クリップボードの内容を貼り付け | `/input clipboard_paste`
+| key[ctrl-_]     | コマンドラインの最後の動作をやり直す | `/input undo`
+| key[alt-_]      | コマンドラインの最後の動作を取り消す | `/input redo`
+| key[Tab]        | コマンドやニックネームを補完 (再度 key[Tab] することで次の補完候補を表示) | `/input complete_next`
+| key[shift-Tab]  | 補完候補が無い場合: 部分補完を行う、補完候補が有る場合: 前の補完候補を表示 | `/input complete_previous`
+| key[Enter]   .3+| コマンドを実行するか、メッセージを送信する (検索モードの場合: 検索の終了) .3+| `/input return`
+| key[ctrl-j]
+| key[ctrl-m]
+| key[↑]          | 前のコマンド/メッセージを呼び出す (検索モードの場合: 上方向に検索) | `/input history_previous`
+| key[↓]          | 次のコマンド/メッセージを呼び出す (検索モードの場合: 下方向に検索) | `/input history_next`
+| key[ctrl-↑]     | グローバル履歴から前のコマンド/メッセージを呼び出す (すべてのバッファに対して共通の履歴) | `/input history_global_previous`
+| key[ctrl-↓]     | グローバル履歴から次のコマンド/メッセージを呼び出す (すべてのバッファに対して共通の履歴) | `/input history_global_next`
+| key[alt-d]      | コマンドラインで次の単語を削除 (削除された文字列はクリップボードに保存) | `/input delete_next_word`
+| key[alt-k]      | キー入力を奪って、コマンドラインにコード (キーが割り当てられていればコマンド) を入力 | `/input grab_key_command`
+| key[alt-r]      | コマンドラインへの入力をすべて削除 | `/input delete_line`
+| key[alt-s]      | aspell の有効無効を切り替え | `/mute aspell toggle`
 |===
 
 [[key_bindings_buffers_windows]]
@@ -967,74 +965,74 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
 
 [width="100%",cols="^.^3,.^10,.^5",options="header"]
 |===
-| キー                      | 説明 | コマンド
-| @k(C-)@k(l)               | 全ウィンドウを再描画 | `/window refresh`
-| @k(C-)@k(s) , @k(C-)@k(u) | すべてのバッファに未読マークをセット | `/input set_unread`
-| @k(C-)@k(x)               | 同じ番号を持つバッファにアタッチされていた場合、現在のバッファに移動 | `/input switch_active_buffer`
-| @k(A-)@k(x)               | マージされたバッファに再ズーム (@k(A-)@k(x): 全てのマージされたバッファを表示) | `/input zoom_merged_buffer`
-| @k(PgUp)                  | バッファ履歴を 1 ページ分上方向にスクロール | `/window page_up`
-| @k(PgDn)                  | バッファ履歴を 1 ページ分下方向にスクロール | `/window page_down`
-| @k(A-)@k(PgUp)            | バッファ履歴を数行分上方向にスクロール | `/window scroll_up`
-| @k(A-)@k(PgDn)            | バッファ履歴を数行分下方向にスクロール | `/window scroll_down`
-| @k(A-)@k(Home)            | バッファ履歴を最初までスクロール | `/window scroll_top`
-| @k(A-)@k(End)             | バッファ履歴を最後までスクロール | `/window scroll_bottom`
-| @k(A-)@k(←)            .4+| 前のバッファに移動 .4+| `/buffer -1`
-| @k(A-)@k(↑)
-| @k(C-)@k(p)
-| @k(F5)
-| @k(A-)@k(→)            .4+| 後のバッファに移動 .4+| `/buffer +1`
-| @k(A-)@k(↓)
-| @k(C-)@k(n)
-| @k(F6)
-| @k(F7)                    | ウィンドウを前に移動 | `/window -1`
-| @k(F8)                    | ウィンドウを後に移動 | `/window +1`
-| @k(F9)                    | バッファタイトルを左方向にスクロール | `/bar scroll title * -30%`
-| @k(F10)                   | バッファタイトルを右方向にスクロール | `/bar scroll title * +30%`
-| @k(F11)                   | ニックネームリストを上方向にスクロール | `/bar scroll nicklist * -100%`
-| @k(F12)                   | ニックネームリストを下方向にスクロール | `/bar scroll nicklist * +100%`
-| @k(A-)@k(F11)             | ニックネームリストを一番上にスクロール | `/bar scroll nicklist * b`
-| @k(A-)@k(F12)             | ニックネームリストを一番下にスクロール | `/bar scroll nicklist * e`
-| @k(A-)@k(a)               | 変更のあった次のバッファに移動 (優先順位: ハイライト、新規メッセージ、その他) | `/input jump_smart`
-| @k(A-)@k(h)               | ホットリスト (他のバッファにあった変更通知リスト) を消去 | `/input hotlist_clear`
-| @k(A-)@k(j) , @k(A-)@k(l) | 最後のバッファに移動 | `/input jump_last_buffer`
-| @k(A-)@k(j) , @k(A-)@k(r) | IRC 生バッファに移動 | `/server raw`
-| @k(A-)@k(j) , @k(A-)@k(s) | IRC サーババッファに移動 | `/server jump`
-| @k(A-)@k(0...9)           | 番号のバッファに移動 (0 = 10) | `/buffer *N`
-| @k(A-)@k(j) , @k(01...99) | 番号のバッファに移動 | `/buffer NN`
-| @k(A-)@k(m)               | マウスの有効無効を切り替え | `/mouse toggle`
-| @k(A-)@k(n)               | 次のハイライトまでスクロール | `/window scroll_next_highlight`
-| @k(A-)@k(p)               | 前のハイライトまでスクロール | `/window scroll_previous_highlight`
-| @k(A-)@k(u)               | バッファを最初の未読行までスクロール | `/window scroll_unread`
-| @k(A-)@k(w) , @k(A-)@k(↑) | 上のウィンドウに移動 | `/window up`
-| @k(A-)@k(w) , @k(A-)@k(↓) | 下のウィンドウに移動 | `/window down`
-| @k(A-)@k(w) , @k(A-)@k(←) | 左のウィンドウに移動 | `/window left`
-| @k(A-)@k(w) , @k(A-)@k(→) | 右のウィンドウに移動 | `/window right`
-| @k(A-)@k(w) , @k(A-)@k(b) | すべてのウィンドウサイズを均等に | `/window balance`
-| @k(A-)@k(w) , @k(A-)@k(s) | 2 つのウィンドウを入れ替え | `/window swap`
-| @k(A-)@k(z)               | 現在のウィンドウを最大化 (再度 @k(A-)@k(z) することで: 最初のウィンドウ状態に戻す、最大化前の状態) | `/window zoom`
-| @k(A-)@k(<)               | バッファ訪問履歴で前のバッファに移動 | `/input jump_previously_visited_buffer`
-| @k(A-)@k(>)               | バッファ訪問履歴で次のバッファに移動 | `/input jump_next_visited_buffer`
-| @k(A-)@k(/)               | 最後に表示したバッファに移動 (バッファ移動前に表示していたウィンドウ) | `/input jump_last_buffer_displayed`
-| @k(A-)@k(=)               | フィルタの有効無効を切り替え | `/filter toggle`
+| キー               | 説明 | コマンド
+| key[ctrl-l]        | 全ウィンドウを再描画 | `/window refresh`
+| key[ctrl-s,ctrl-u] | すべてのバッファに未読マークをセット | `/input set_unread`
+| key[ctrl-x]        | 同じ番号を持つバッファにアタッチされていた場合、現在のバッファに移動 | `/input switch_active_buffer`
+| key[alt-x]         | マージされたバッファに再ズーム (key[alt-x]: 全てのマージされたバッファを表示) | `/input zoom_merged_buffer`
+| key[PgUp]          | バッファ履歴を 1 ページ分上方向にスクロール | `/window page_up`
+| key[PgDn]          | バッファ履歴を 1 ページ分下方向にスクロール | `/window page_down`
+| key[alt-PgUp]      | バッファ履歴を数行分上方向にスクロール | `/window scroll_up`
+| key[alt-PgDn]      | バッファ履歴を数行分下方向にスクロール | `/window scroll_down`
+| key[alt-Home]      | バッファ履歴を最初までスクロール | `/window scroll_top`
+| key[alt-End]       | バッファ履歴を最後までスクロール | `/window scroll_bottom`
+| key[alt-←]      .4+| 前のバッファに移動 .4+| `/buffer -1`
+| key[alt-↑]
+| key[ctrl-p]
+| key[F5]
+| key[alt-→]      .4+| 後のバッファに移動 .4+| `/buffer +1`
+| key[alt-↓]
+| key[ctrl-n]
+| key[F6]
+| key[F7]            | ウィンドウを前に移動 | `/window -1`
+| key[F8]            | ウィンドウを後に移動 | `/window +1`
+| key[F9]            | バッファタイトルを左方向にスクロール | `/bar scroll title * -30%`
+| key[F10]           | バッファタイトルを右方向にスクロール | `/bar scroll title * +30%`
+| key[F11]           | ニックネームリストを上方向にスクロール | `/bar scroll nicklist * -100%`
+| key[F12]           | ニックネームリストを下方向にスクロール | `/bar scroll nicklist * +100%`
+| key[alt-F11]       | ニックネームリストを一番上にスクロール | `/bar scroll nicklist * b`
+| key[alt-F12]       | ニックネームリストを一番下にスクロール | `/bar scroll nicklist * e`
+| key[alt-a]         | 変更のあった次のバッファに移動 (優先順位: ハイライト、新規メッセージ、その他) | `/input jump_smart`
+| key[alt-h]         | ホットリスト (他のバッファにあった変更通知リスト) を消去 | `/input hotlist_clear`
+| key[alt-j,alt-l]   | 最後のバッファに移動 | `/input jump_last_buffer`
+| key[alt-j,alt-r]   | IRC 生バッファに移動 | `/server raw`
+| key[alt-j,alt-s]   | IRC サーババッファに移動 | `/server jump`
+| key[alt-0...9]     | 番号のバッファに移動 (0 = 10) | `/buffer *N`
+| key[alt-j,01...99] | 番号のバッファに移動 | `/buffer NN`
+| key[alt-m]         | マウスの有効無効を切り替え | `/mouse toggle`
+| key[alt-n]         | 次のハイライトまでスクロール | `/window scroll_next_highlight`
+| key[alt-p]         | 前のハイライトまでスクロール | `/window scroll_previous_highlight`
+| key[alt-u]         | バッファを最初の未読行までスクロール | `/window scroll_unread`
+| key[alt-w,alt-↑]   | 上のウィンドウに移動 | `/window up`
+| key[alt-w,alt-↓]   | 下のウィンドウに移動 | `/window down`
+| key[alt-w,alt-←]   | 左のウィンドウに移動 | `/window left`
+| key[alt-w,alt-→]   | 右のウィンドウに移動 | `/window right`
+| key[alt-w,alt-b]   | すべてのウィンドウサイズを均等に | `/window balance`
+| key[alt-w,alt-s]   | 2 つのウィンドウを入れ替え | `/window swap`
+| key[alt-z]         | 現在のウィンドウを最大化 (再度 key[alt-z] することで: 最初のウィンドウ状態に戻す、最大化前の状態) | `/window zoom`
+| key[alt-]key[<]    | バッファ訪問履歴で前のバッファに移動 | `/input jump_previously_visited_buffer`
+| key[alt-]key[>]    | バッファ訪問履歴で次のバッファに移動 | `/input jump_next_visited_buffer`
+| key[alt-/]         | 最後に表示したバッファに移動 (バッファ移動前に表示していたウィンドウ) | `/input jump_last_buffer_displayed`
+| key[alt-=]         | フィルタの有効無効を切り替え | `/filter toggle`
 |===
 
 [[key_bindings_search_context]]
 ==== "検索" モード用のキー
 
 以下のキーは "検索" モード (バッファ内のテキスト検索用に
-@k(C-)@k(r) が押された状態) でのみ有効です。
+key[ctrl-r] が押された状態) でのみ有効です。
 
 [width="100%",cols="^.^3,.^10,.^5",options="header"]
 |===
-| キー         | 説明 | コマンド
-| @k(C-)@k(r)  | 検索タイプを切り替え: 文字列 (デフォルト)、正規表現 | `/input search_switch_regex`
-| @k(A-)@k(c)  | 大文字小文字を区別して検索 | `/input search_switch_case`
-| @k(Tab)      | 検索範囲: メッセージ (デフォルト)、プレフィックス、プレフィックスとメッセージ | `/input search_switch_where`
-| @k(↑)        | 前のキーワードで検索 | `/input search_previous`
-| @k(↓)        | 次のキーワードで検索 | `/input search_next`
-| @k(Enter) .3+| 検索を終了 .3+| `/input search_stop`
-| @k(C-)@k(j)
-| @k(C-)@k(m)
+| キー          | 説明 | コマンド
+| key[ctrl-r]   | 検索タイプを切り替え: 文字列 (デフォルト)、正規表現 | `/input search_switch_regex`
+| key[alt-c]    | 大文字小文字を区別して検索 | `/input search_switch_case`
+| key[Tab]      | 検索範囲: メッセージ (デフォルト)、プレフィックス、プレフィックスとメッセージ | `/input search_switch_where`
+| key[↑]        | 前のキーワードで検索 | `/input search_previous`
+| key[↓]        | 次のキーワードで検索 | `/input search_next`
+| key[Enter] .3+| 検索を終了 .3+| `/input search_stop`
+| key[ctrl-j]
+| key[ctrl-m]
 |===
 
 [[key_bindings_cursor_context]]
@@ -1044,26 +1042,26 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
 
 [width="100%",cols="^.^3,^.^3,.^10,.^8",options="header"]
 |===
-| キー         | エリア   | 説明 | コマンド
-| @k(↑)        | -        | カーソルを上の行に移動 | `/cursor move up`
-| @k(↓)        | -        | カーソルを下の行に移動 | `/cursor move down`
-| @k(←)        | -        | カーソルを左の列に移動 | `/cursor move left`
-| @k(→)        | -        | カーソルを右の列に移動 | `/cursor move right`
-| @k(A-)@k(↑)  | -        | カーソルを上のエリアに移動 | `/cursor move area_up`
-| @k(A-)@k(↓)  | -        | カーソルを下のエリアに移動 | `/cursor move area_down`
-| @k(A-)@k(←)  | -        | カーソルを左のエリアに移動 | `/cursor move area_left`
-| @k(A-)@k(→)  | -        | カーソルを右のエリアに移動 | `/cursor move area_right`
-| @k(m)        | チャット | メッセージを引用 | `hsignal:chat_quote_message;/cursor stop`
-| @k(q)        | チャット | プレフィックスとメッセージを引用 | `hsignal:chat_quote_prefix_message;/cursor stop`
-| @k(Q)        | チャット | 時間、プレフィックス、メッセージを引用 | `hsignal:chat_quote_time_prefix_message;/cursor stop`
-| @k(b)        | ニックネームリスト | ニックネームをバンする | `/window ${_window_number};/ban ${nick}`
-| @k(k)        | ニックネームリスト | ニックネームをキックする | `/window ${_window_number};/kick ${nick}`
-| @k(K)        | ニックネームリスト | ニックネームをバンとキックする | `/window ${_window_number};/kickban ${nick}`
-| @k(q)        | ニックネームリスト | ニックネームに対するクエリを開く | `/window ${_window_number};/query ${nick};/cursor stop`
-| @k(w)        | ニックネームリスト | ニックネームに対して whois を行う | `/window ${_window_number};/whois ${nick}`
-| @k(Enter) .3+| -     .3+| カーソルモードを終了 .3+| `/cursor stop`
-| @k(C-)@k(j)
-| @k(C-)@k(m)
+| キー          | エリア            | 説明 | コマンド
+| key[↑]        | -                 | カーソルを上の行に移動 | `/cursor move up`
+| key[↓]        | -                 | カーソルを下の行に移動 | `/cursor move down`
+| key[←]        | -                 | カーソルを左の列に移動 | `/cursor move left`
+| key[→]        | -                 | カーソルを右の列に移動 | `/cursor move right`
+| key[alt-↑]    | -                 | カーソルを上のエリアに移動 | `/cursor move area_up`
+| key[alt-↓]    | -                 | カーソルを下のエリアに移動 | `/cursor move area_down`
+| key[alt-←]    | -                 | カーソルを左のエリアに移動 | `/cursor move area_left`
+| key[alt-→]    | -                 | カーソルを右のエリアに移動 | `/cursor move area_right`
+| key[m]        | チャット          | メッセージを引用 | `hsignal:chat_quote_message;/cursor stop`
+| key[q]        | チャット          | プレフィックスとメッセージを引用 | `hsignal:chat_quote_prefix_message;/cursor stop`
+| key[Q]        | チャット          | 時間、プレフィックス、メッセージを引用 | `hsignal:chat_quote_time_prefix_message;/cursor stop`
+| key[b]        | ニックネームリスト| ニックネームをバンする | `/window ${_window_number};/ban ${nick}`
+| key[k]        | ニックネームリスト| ニックネームをキックする | `/window ${_window_number};/kick ${nick}`
+| key[K]        | ニックネームリスト| ニックネームをバンとキックする | `/window ${_window_number};/kickban ${nick}`
+| key[q]        | ニックネームリスト| ニックネームに対するクエリを開く | `/window ${_window_number};/query ${nick};/cursor stop`
+| key[w]        | ニックネームリスト| ニックネームに対して whois を行う | `/window ${_window_number};/whois ${nick}`
+| key[Enter] .3+| -              .3+| カーソルモードを終了 .3+| `/cursor stop`
+| key[ctrl-j]
+| key[ctrl-m]
 |===
 
 [[key_bindings_mouse_context]]
@@ -1074,32 +1072,32 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
 [width="100%",cols="^.^3,^.^3,^.^3,.^10,.^8",options="header"]
 |===
 | ボタン^(1)^ | ジェスチャー| エリア| 説明 | コマンド
-| ◾◽◽     | -            | チャット                      | ウィンドウに移動 | `/window ${_window_number}`
-| ◾◽◽     | 左           | チャット                      | 前のバッファに移動 | `/window ${_window_number};/buffer +1`
-| ◾◽◽     | 右           | チャット                      | 次のバッファに移動 | `/window ${_window_number};/buffer +1`
-| ◾◽◽     | 左 (長く)    | チャット                      | 最初のバッファに移動 | `/window ${_window_number};/buffer 1`
-| ◾◽◽     | 右 (長く)    | チャット                      | 最後のバッファに移動 | `/window ${_window_number};/input jump_last_buffer`
-| ◾◽◽     | -            | チャット (スクリプトバッファ) | スクリプトバッファで行選択 | `/script go ${_chat_line_y}`
-| ◽◽◾     | -            | チャット (スクリプトバッファ) | スクリプトのインストール `/ 削除 | /script go ${_chat_line_y};/script installremove ${script_name_with_extension}`
-| ⇑       | -            | チャット                      | バッファ履歴を上方向にスクロール | `/window scroll_up -window ${_window_number}`
-| ⇓       | -            | チャット                      | バッファ履歴を下方向にスクロール | `/window scroll_down -window ${_window_number}`
-| ⇑       | -            | チャット (スクリプトバッファ) | スクリプトバッファを 5 行上方向にスクロール | `/script up 5`
-| ⇓       | -            | チャット (スクリプトバッファ) | スクリプトバッファで 5 行下方向にスクロール | `/script down 5`
-| @k(C-)⇑ | -            | チャット                      | 水平左方向にスクロール | `/window scroll_horiz -window ${_window_number} -10%`
-| @k(C-)⇓ | -            | チャット                      | 水平右方向にスクロール | `/window scroll_horiz -window ${_window_number} +10%`
-| ◾◽◽     | 上           | ニックネームリスト            | ニックネームリストを 1 ページ分上方向にスクロール | `/bar scroll nicklist ${_window_number} -100%`
-| ◾◽◽     | 下           | ニックネームリスト            | ニックネームリストを 1 ページ分下方向にスクロール | `/bar scroll nicklist ${_window_number} +100%`
-| ◾◽◽     | 上 (長く)    | ニックネームリスト            | ニックネームリストの最初に移動 | `/bar scroll nicklist ${_window_number} b`
-| ◾◽◽     | 下 (長く)    | ニックネームリスト            | ニックネームリストの最後に移動 | `/bar scroll nicklist ${_window_number} e`
-| ◾◽◽     | -            | ニックネームリスト            | ニックネームに対するクエリを開く | `/window ${_window_number};/query ${nick}`
-| ◽◽◾     | -            | ニックネームリスト            | ニックネームに対する whois を行う | `/window ${_window_number};/whois ${nick}`
-| ◾◽◽     | 左           | ニックネームリスト            | ニックネームをキックする | `/window ${_window_number};/kick ${nick}`
-| ◾◽◽     | 左 (長く)    | ニックネームリスト            | ニックネームをキックとバンする | `/window ${_window_number};/kickban ${nick}`
-| ◽◽◾     | 左           | ニックネームリスト            | ニックネームをバンする | `/window ${_window_number};/ban ${nick}`
-| ◽◽◾     | -            | 入力                          | マウスイベントを奪ってコマンドラインにコードを入力 | `/input grab_mouse_area`
-| ⇑       | -            | 任意のバー                    | バーを -20% スクロール | `/bar scroll ${_bar_name} ${_window_number} -20%`
-| ⇓       | -            | 任意のバー                    | バーを +20% スクロール | `/bar scroll ${_bar_name} ${_window_number} +20%`
-| ◽◾◽     | -            | 任意の場所                    | この場所でカーソルモードを開始 | `/cursor go ${_x},${_y}`
+| ◾◽◽         | -            | チャット                      | ウィンドウに移動 | `/window ${_window_number}`
+| ◾◽◽         | 左           | チャット                      | 前のバッファに移動 | `/window ${_window_number};/buffer +1`
+| ◾◽◽         | 右           | チャット                      | 次のバッファに移動 | `/window ${_window_number};/buffer +1`
+| ◾◽◽         | 左 (長く)    | チャット                      | 最初のバッファに移動 | `/window ${_window_number};/buffer 1`
+| ◾◽◽         | 右 (長く)    | チャット                      | 最後のバッファに移動 | `/window ${_window_number};/input jump_last_buffer`
+| ◾◽◽         | -            | チャット (スクリプトバッファ) | スクリプトバッファで行選択 | `/script go ${_chat_line_y}`
+| ◽◽◾         | -            | チャット (スクリプトバッファ) | スクリプトのインストール `/ 削除 | /script go ${_chat_line_y};/script installremove ${script_name_with_extension}`
+| ⇑           | -            | チャット                      | バッファ履歴を上方向にスクロール | `/window scroll_up -window ${_window_number}`
+| ⇓           | -            | チャット                      | バッファ履歴を下方向にスクロール | `/window scroll_down -window ${_window_number}`
+| ⇑           | -            | チャット (スクリプトバッファ) | スクリプトバッファを 5 行上方向にスクロール | `/script up 5`
+| ⇓           | -            | チャット (スクリプトバッファ) | スクリプトバッファで 5 行下方向にスクロール | `/script down 5`
+| key[ctrl-]⇑ | -            | チャット                      | 水平左方向にスクロール | `/window scroll_horiz -window ${_window_number} -10%`
+| key[ctrl-]⇓ | -            | チャット                      | 水平右方向にスクロール | `/window scroll_horiz -window ${_window_number} +10%`
+| ◾◽◽         | 上           | ニックネームリスト            | ニックネームリストを 1 ページ分上方向にスクロール | `/bar scroll nicklist ${_window_number} -100%`
+| ◾◽◽         | 下           | ニックネームリスト            | ニックネームリストを 1 ページ分下方向にスクロール | `/bar scroll nicklist ${_window_number} +100%`
+| ◾◽◽         | 上 (長く)    | ニックネームリスト            | ニックネームリストの最初に移動 | `/bar scroll nicklist ${_window_number} b`
+| ◾◽◽         | 下 (長く)    | ニックネームリスト            | ニックネームリストの最後に移動 | `/bar scroll nicklist ${_window_number} e`
+| ◾◽◽         | -            | ニックネームリスト            | ニックネームに対するクエリを開く | `/window ${_window_number};/query ${nick}`
+| ◽◽◾         | -            | ニックネームリスト            | ニックネームに対する whois を行う | `/window ${_window_number};/whois ${nick}`
+| ◾◽◽         | 左           | ニックネームリスト            | ニックネームをキックする | `/window ${_window_number};/kick ${nick}`
+| ◾◽◽         | 左 (長く)    | ニックネームリスト            | ニックネームをキックとバンする | `/window ${_window_number};/kickban ${nick}`
+| ◽◽◾         | 左           | ニックネームリスト            | ニックネームをバンする | `/window ${_window_number};/ban ${nick}`
+| ◽◽◾         | -            | 入力                          | マウスイベントを奪ってコマンドラインにコードを入力 | `/input grab_mouse_area`
+| ⇑           | -            | 任意のバー                    | バーを -20% スクロール | `/bar scroll ${_bar_name} ${_window_number} -20%`
+| ⇓           | -            | 任意のバー                    | バーを +20% スクロール | `/bar scroll ${_bar_name} ${_window_number} +20%`
+| ◽◾◽         | -            | 任意の場所                    | この場所でカーソルモードを開始 | `/cursor go ${_x},${_y}`
 |===
 
 [NOTE]
@@ -1120,22 +1118,22 @@ WeeChat はマウスクリックとマウスジェスチャーをサポートし
 /set weechat.look.mouse on
 ----
 
-マウスを有効化するには @k(A-)@k(m) を押すか、以下のコマンドを使います:
+マウスを有効化するには key[alt-m] を押すか、以下のコマンドを使います:
 
 ----
 /mouse enable
 ----
 
 キーにマウスの一時的な無効化を割り当てることができます。 例えば、
-@k(A-)@k(x) キーにマウスを 10 秒間無効化する機能を割り当てるには:
+key[alt-x] キーにマウスを 10 秒間無効化する機能を割り当てるには:
 
 ----
 /key bind meta-x /mouse toggle 10
 ----
 
-WeeChat でマウスが有効化されている場合、@k(-S-)
+WeeChat でマウスが有効化されている場合、key[shift]
 修飾キーで選択やクリックができます。これでマウスが無効化されている場合と同じ作業が行えます
-(iTerm 等の端末では @k(-S-) の代わりに @k(-A-) を使ってください)。
+(iTerm 等の端末では key[shift] の代わりに key[alt] を使ってください)。
 
 [NOTE]
 マウスに関するトラブルがあれば 'WeeChat FAQ' を参照してください。
@@ -1157,9 +1155,10 @@ WeeChat はデフォルトマウスイベントの多くを定義しています
 [width="50%",cols="3m,4",options="header"]
 |===
 | 修飾キー | 説明
-| ctrl     | @k(-C-) キー
-| alt      | @k(-A-) キー
-| ctrl-alt | @k(-C-) と @k(-A-) キー
+| ctrl     | key[ctrl] キー
+| alt      | key[alt] キー
+// TRANSLATION MISSING
+| ctrl-alt | Keys key[ctrl-]key[alt]
 |===
 
 ボタン/ホイールのリスト:
@@ -1254,35 +1253,35 @@ hello
 === 色コード
 
 IRC 等のプラグインでは、以下の色コードと属性を利用できます
-(@k(C-)@k(c) の後に、オプションとともに以下のキーを押してください):
+(key[ctrl-c] の後に、オプションとともに以下のキーを押してください):
 
-@k(C-)@k(c) , @k(b)::
+key[ctrl-c,b]::
     テキストを太字に
 
-@k(C-)@k(c) , @k(c) , @k(xx)::
+key[ctrl-c,c], key[xx]::
     テキスト表示色を `xx` に (以下の色リストを参照)
 
-@k(C-)@k(c) , @k(c) , @k(xx,yy)::
+key[ctrl-c,c], key[xx]key[,]key[yy]::
     テキスト表示色を `xx` に、背景色を `yy` に (以下の色リストを参照)
 
 // TRANSLATION MISSING
-@k(C-)@k(c) , @k(i)::
+key[ctrl-c,i]::
     italic text
 
-@k(C-)@k(c) , @k(o)::
+key[ctrl-c,o]::
     テキスト表示色と属性をリセット
 
-@k(C-)@k(c) , @k(v)::
+key[ctrl-c,v]::
     テキストを反転 (テキスト表示色と背景色の入れ替え)
 
-@k(C-)@k(c) , @k(_)::
+key[ctrl-c,_]::
     テキストに下線を引く
 
 [NOTE]
-同じコードで (色コードを入力せずに @k(C-)@k(c) , @k(c)
+同じコードで (色コードを入力せずに key[ctrl-c,c]
 を使うことで) 属性をキャンセルすることができます。
 
-@k(C-)@k(c) , @k(c) 用の色コード:
+key[ctrl-c,c] 用の色コード:
 
 [width="50%",cols="^1m,3,3",options="header"]
 |===
@@ -1400,7 +1399,7 @@ WeeChat はスクリーンに色が表示された時点で色ペアを動的に
 基本色に加えて、1 番
 から端末の対応状況に依存する番号までの色番号を利用できます。
 
-`/color` コマンドで現在の色と色制限を確認できます。@k(A-)@k(c)
+`/color` コマンドで現在の色と色制限を確認できます。key[alt-c]
 をタイプすることで、一時的に端末色を選択された色に変更できます。
 
 例えば、バッファ中のに表示される時刻をオレンジ色にしたい場合、以下のようにしてください:

@@ -929,57 +929,55 @@ commande `/buffer` :
 [[key_bindings]]
 === Raccourcis clavier par défaut
 
-// 'C-' = ctrl, 'A-' = alt, 'S-' = shift
-
 [[key_bindings_command_line]]
 ==== Touches pour la ligne de commande
 
 [width="100%",cols="^.^3,.^10,.^5",options="header"]
 |===
-| Touche              | Description | Commande
-| @k(←)            .2+| Aller au caractère précédent sur la ligne de commande .2+| `/input move_previous_char`
-| @k(C-)@k(b)
-| @k(→)            .2+| Aller au caractère suivant sur la ligne de commande .2+| `/input move_next_char`
-| @k(C-)@k(f)
-| @k(C-)@k(←)      .2+| Aller au mot précédent sur la ligne de commande .2+| `/input move_previous_word`
-| @k(A-)@k(b)
-| @k(C-)@k(→)      .2+| Aller au mot suivant sur la ligne de commande .2+| `/input move_next_word`
-| @k(A-)@k(f)
-| @k(Home)         .2+| Aller au début de la ligne de commande .2+| `/input move_beginning_of_line`
-| @k(C-)@k(a)
-| @k(End)          .2+| Aller à la fin de la ligne de commande .2+| `/input move_end_of_line`
-| @k(C-)@k(e)
-| @k(C-)@k(c) , @k(b) | Insérer le code pour mettre le texte en gras | `/input insert \x02`
-| @k(C-)@k(c) , @k(c) | Insérer le code pour écrire en couleur | `/input insert \x03`
-| @k(C-)@k(c) , @k(i) | Insérer le code pour mettre le texte en italique | `/input insert \x1D`
-| @k(C-)@k(c) , @k(o) | Insérer le code pour réinitialiser la couleur | `/input insert \x0F`
-| @k(C-)@k(c) , @k(v) | Insérer le code pour écrire en couleur inversée | `/input insert \x16`
-| @k(C-)@k(c) , @k(_) | Insérer le code pour écrire en souligné | `/input insert \x1F`
-| @k(Del)          .2+| Effacer le caractère suivant sur la ligne de commande .2+| `/input delete_next_char`
-| @k(C-)@k(d)
-| @k(Backsp.)      .2+| Effacer le caractère précédent sur la ligne de commande .2+| `/input delete_previous_char`
-| @k(C-)@k(h)
-| @k(C-)@k(k)         | Effacer du curseur jusqu'à la fin de la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers) | `/input delete_end_of_line`
-| @k(C-)@k(r)         | Chercher du texte dans l'historique du tampon (voir <<key_bindings_search_context,les touches pour le contexte de recherche>>) | `/input search_text`
-| @k(C-)@k(t)         | Inverser deux caractères | `/input transpose_chars`
-| @k(C-)@k(u)         | Effacer du curseur jusqu'au début de la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers) | `/input delete_beginning_of_line`
-| @k(C-)@k(w)         | Effacer le mot précédent sur la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers) | `/input delete_previous_word`
-| @k(C-)@k(y)         | Coller le contenu du presse-papiers | `/input clipboard_paste`
-| @k(C-)@k(_)         | Défaire la dernière action sur la ligne de commande | `/input undo`
-| @k(A-)@k(_)         | Refaire la dernière action sur la ligne de commande | `/input redo`
-| @k(Tab)             | Compléter la commande ou le pseudo (@k(Tab) de nouveau : trouver la complétion suivante) | `/input complete_next`
-| @k(S-)@k(Tab)       | Sans complétion, effectue une complétion partielle. Avec une complétion en cours, complète avec la complétion précédente | `/input complete_previous`
-| @k(Enter)        .3+| Exécuter la commande ou envoyer le message (en mode recherche : arrêter la recherche) .3+| `/input return`
-| @k(C-)@k(j)
-| @k(C-)@k(m)
-| @k(↑)               | Rappeler la commande précédente (en mode recherche : chercher plus haut) | `/input history_previous`
-| @k(↓)               | Rappeler la commande suivante (en mode recherche : chercher plus bas) | `/input history_next`
-| @k(C-)@k(↑)         | Rappeler la commande précédente dans l'historique global (commun à tous les tampons) | `/input history_global_previous`
-| @k(C-)@k(↓)         | Rappeler la commande suivante dans l'historique global (commun à tous les tampons) | `/input history_global_next`
-| @k(A-)@k(d)         | Effacer le mot suivant (la chaîne supprimée est copiée dans le presse-papiers) | `/input delete_next_word`
-| @k(A-)@k(k)         | Capturer une touche et insérer son code (et la commande associée si la commande existe) sur la ligne de commande | `/input grab_key_command`
-| @k(A-)@k(r)         | Effacer entièrement la ligne de commande | `/input delete_line`
-| @k(A-)@k(s)         | Activer/désactiver aspell | `/mute aspell toggle`
+| Touche          | Description | Commande
+| key[←]       .2+| Aller au caractère précédent sur la ligne de commande .2+| `/input move_previous_char`
+| key[ctrl-b]
+| key[→]       .2+| Aller au caractère suivant sur la ligne de commande .2+| `/input move_next_char`
+| key[ctrl-f]
+| key[ctrl-←]  .2+| Aller au mot précédent sur la ligne de commande .2+| `/input move_previous_word`
+| key[alt-b]
+| key[ctrl-→]  .2+| Aller au mot suivant sur la ligne de commande .2+| `/input move_next_word`
+| key[alt-f]
+| key[Home]    .2+| Aller au début de la ligne de commande .2+| `/input move_beginning_of_line`
+| key[ctrl-a]
+| key[End]     .2+| Aller à la fin de la ligne de commande .2+| `/input move_end_of_line`
+| key[ctrl-e]
+| key[ctrl-c,b]   | Insérer le code pour mettre le texte en gras | `/input insert \x02`
+| key[ctrl-c,c]   | Insérer le code pour écrire en couleur | `/input insert \x03`
+| key[ctrl-c,i]   | Insérer le code pour mettre le texte en italique | `/input insert \x1D`
+| key[ctrl-c,o]   | Insérer le code pour réinitialiser la couleur | `/input insert \x0F`
+| key[ctrl-c,v]   | Insérer le code pour écrire en couleur inversée | `/input insert \x16`
+| key[ctrl-c,_]   | Insérer le code pour écrire en souligné | `/input insert \x1F`
+| key[Del]     .2+| Effacer le caractère suivant sur la ligne de commande .2+| `/input delete_next_char`
+| key[ctrl-d]
+| key[Backsp.] .2+| Effacer le caractère précédent sur la ligne de commande .2+| `/input delete_previous_char`
+| key[ctrl-h]
+| key[ctrl-k]     | Effacer du curseur jusqu'à la fin de la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers) | `/input delete_end_of_line`
+| key[ctrl-r]     | Chercher du texte dans l'historique du tampon (voir <<key_bindings_search_context,les touches pour le contexte de recherche>>) | `/input search_text`
+| key[ctrl-t]     | Inverser deux caractères | `/input transpose_chars`
+| key[ctrl-u]     | Effacer du curseur jusqu'au début de la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers) | `/input delete_beginning_of_line`
+| key[ctrl-w]     | Effacer le mot précédent sur la ligne de commande (la chaîne supprimée est copiée dans le presse-papiers) | `/input delete_previous_word`
+| key[ctrl-y]     | Coller le contenu du presse-papiers | `/input clipboard_paste`
+| key[ctrl-_]     | Défaire la dernière action sur la ligne de commande | `/input undo`
+| key[alt-_]      | Refaire la dernière action sur la ligne de commande | `/input redo`
+| key[Tab]        | Compléter la commande ou le pseudo (key[Tab] de nouveau : trouver la complétion suivante) | `/input complete_next`
+| key[shift-Tab]  | Sans complétion, effectue une complétion partielle. Avec une complétion en cours, complète avec la complétion précédente | `/input complete_previous`
+| key[Enter]   .3+| Exécuter la commande ou envoyer le message (en mode recherche : arrêter la recherche) .3+| `/input return`
+| key[ctrl-j]
+| key[ctrl-m]
+| key[↑]          | Rappeler la commande précédente (en mode recherche : chercher plus haut) | `/input history_previous`
+| key[↓]          | Rappeler la commande suivante (en mode recherche : chercher plus bas) | `/input history_next`
+| key[ctrl-↑]     | Rappeler la commande précédente dans l'historique global (commun à tous les tampons) | `/input history_global_previous`
+| key[ctrl-↓]     | Rappeler la commande suivante dans l'historique global (commun à tous les tampons) | `/input history_global_next`
+| key[alt-d]      | Effacer le mot suivant (la chaîne supprimée est copiée dans le presse-papiers) | `/input delete_next_word`
+| key[alt-k]      | Capturer une touche et insérer son code (et la commande associée si la commande existe) sur la ligne de commande | `/input grab_key_command`
+| key[alt-r]      | Effacer entièrement la ligne de commande | `/input delete_line`
+| key[alt-s]      | Activer/désactiver aspell | `/mute aspell toggle`
 |===
 
 [[key_bindings_buffers_windows]]
@@ -987,74 +985,74 @@ commande `/buffer` :
 
 [width="100%",cols="^.^3,.^10,.^5",options="header"]
 |===
-| Touche                    | Description | Commande
-| @k(C-)@k(l)               | Réafficher toute la fenêtre | `/window refresh`
-| @k(C-)@k(s) , @k(C-)@k(u) | Positionner le marqueur de données non lues sur tous les tampons | `/input set_unread`
-| @k(C-)@k(x)               | Changer de tampon courant si plusieurs tampons sont attachés avec le même numéro | `/input switch_active_buffer`
-| @k(A-)@k(x)               | Zoomer sur le tampon mélangé (@k(A-)@k(x) de nouveau : afficher tous les tampons mélangés) | `/input zoom_merged_buffer`
-| @k(PgUp)                  | Monter d'une page dans l'historique du tampon | `/window page_up`
-| @k(PgDn)                  | Descendre d'une page dans l'historique du tampon | `/window page_down`
-| @k(A-)@k(PgUp)            | Monter de quelques lignes dans l'historique du tampon | `/window scroll_up`
-| @k(A-)@k(PgDn)            | Descendre de quelques lignes dans l'historique du tampon | `/window scroll_down`
-| @k(A-)@k(Home)            | Aller au début du tampon | `/window scroll_top`
-| @k(A-)@k(End)             | Aller à la fin du tampon | `/window scroll_bottom`
-| @k(A-)@k(←)            .4+| Aller au tampon précédent .4+| `/buffer -1`
-| @k(A-)@k(↑)
-| @k(C-)@k(p)
-| @k(F5)
-| @k(A-)@k(→)            .4+| Aller au tampon suivant .4+| `/buffer +1`
-| @k(A-)@k(↓)
-| @k(C-)@k(n)
-| @k(F6)
-| @k(F7)                    | Aller à la fenêtre précédente | `/window -1`
-| @k(F8)                    | Aller à la fenêtre suivante | `/window +1`
-| @k(F9)                    | Faire défiler le titre du tampon vers la gauche | `/bar scroll title * -30%`
-| @k(F10)                   | Faire défiler le titre du tampon vers la droite | `/bar scroll title * +30%`
-| @k(F11)                   | Monter d'une page dans la liste des pseudos | `/bar scroll nicklist * -100%`
-| @k(F12)                   | Descendre d'une page dans la liste des pseudos | `/bar scroll nicklist * +100%`
-| @k(A-)@k(F11)             | Aller au début de la liste des pseudos | `/bar scroll nicklist * b`
-| @k(A-)@k(F12)             | Aller à la fin de la liste des pseudos | `/bar scroll nicklist * e`
-| @k(A-)@k(a)               | Sauter au prochain tampon avec activité (avec priorité : highlight, message, autre) | `/input jump_smart`
-| @k(A-)@k(h)               | Vider la hotlist (notification d'activité sur les autres tampons) | `/input hotlist_clear`
-| @k(A-)@k(j) , @k(A-)@k(l) | Sauter au dernier tampon | `/input jump_last_buffer`
-| @k(A-)@k(j) , @k(A-)@k(r) | Sauter au tampon IRC de données brutes | `/server raw`
-| @k(A-)@k(j) , @k(A-)@k(s) | Sauter au tampon IRC du serveur | `/server jump`
-| @k(A-)@k(0...9)           | Sauter au tampon qui porte ce numéro (0 = 10) | `/buffer *N`
-| @k(A-)@k(j) , @k(01...99) | Sauter au tampon qui porte ce numéro | `/buffer NN`
-| @k(A-)@k(m)               | Activer/désactiver la souris | `/mouse toggle`
-| @k(A-)@k(n)               | Se positionner sur le highlight suivant | `/window scroll_next_highlight`
-| @k(A-)@k(p)               | Se positionner sur le highlight précédent | `/window scroll_previous_highlight`
-| @k(A-)@k(u)               | Se positionner sur la première ligne non lue du tampon | `/window scroll_unread`
-| @k(A-)@k(w) , @k(A-)@k(↑) | Sauter à la fenêtre au dessus | `/window up`
-| @k(A-)@k(w) , @k(A-)@k(↓) | Sauter à la fenêtre en dessous | `/window down`
-| @k(A-)@k(w) , @k(A-)@k(←) | Sauter à la fenêtre de gauche | `/window left`
-| @k(A-)@k(w) , @k(A-)@k(→) | Sauter à la fenêtre de droite | `/window right`
-| @k(A-)@k(w) , @k(A-)@k(b) | Équilibrer la taille de toutes les fenêtres | `/window balance`
-| @k(A-)@k(w) , @k(A-)@k(s) | Échanger les tampons de deux fenêtres | `/window swap`
-| @k(A-)@k(z)               | Zoomer sur la fenêtre courante (@k(A-)@k(z) de nouveau : restaurer l'état initial des fenêtres, avant le zoom) | `/window zoom`
-| @k(A-)@k(<)               | Sauter au tampon précédent dans la liste des tampons visités | `/input jump_previously_visited_buffer`
-| @k(A-)@k(>)               | Sauter au tampon suivant dans la liste des tampons visités | `/input jump_next_visited_buffer`
-| @k(A-)@k(/)               | Sauter au dernier tampon affiché (avant le dernier saut vers un tampon) | `/input jump_last_buffer_displayed`
-| @k(A-)@k(=)               | Activer/désactiver les filtres | `/filter toggle`
+| Touche             | Description | Commande
+| key[ctrl-l]        | Réafficher toute la fenêtre | `/window refresh`
+| key[ctrl-s,ctrl-u] | Positionner le marqueur de données non lues sur tous les tampons | `/input set_unread`
+| key[ctrl-x]        | Changer de tampon courant si plusieurs tampons sont attachés avec le même numéro | `/input switch_active_buffer`
+| key[alt-x]         | Zoomer sur le tampon mélangé (key[alt-x] de nouveau : afficher tous les tampons mélangés) | `/input zoom_merged_buffer`
+| key[PgUp]          | Monter d'une page dans l'historique du tampon | `/window page_up`
+| key[PgDn]          | Descendre d'une page dans l'historique du tampon | `/window page_down`
+| key[alt-PgUp]      | Monter de quelques lignes dans l'historique du tampon | `/window scroll_up`
+| key[alt-PgDn]      | Descendre de quelques lignes dans l'historique du tampon | `/window scroll_down`
+| key[alt-Home]      | Aller au début du tampon | `/window scroll_top`
+| key[alt-End]       | Aller à la fin du tampon | `/window scroll_bottom`
+| key[alt-←]      .4+| Aller au tampon précédent .4+| `/buffer -1`
+| key[alt-↑]
+| key[ctrl-p]
+| key[F5]
+| key[alt-→]      .4+| Aller au tampon suivant .4+| `/buffer +1`
+| key[alt-↓]
+| key[ctrl-n]
+| key[F6]
+| key[F7]            | Aller à la fenêtre précédente | `/window -1`
+| key[F8]            | Aller à la fenêtre suivante | `/window +1`
+| key[F9]            | Faire défiler le titre du tampon vers la gauche | `/bar scroll title * -30%`
+| key[F10]           | Faire défiler le titre du tampon vers la droite | `/bar scroll title * +30%`
+| key[F11]           | Monter d'une page dans la liste des pseudos | `/bar scroll nicklist * -100%`
+| key[F12]           | Descendre d'une page dans la liste des pseudos | `/bar scroll nicklist * +100%`
+| key[alt-F11]       | Aller au début de la liste des pseudos | `/bar scroll nicklist * b`
+| key[alt-F12]       | Aller à la fin de la liste des pseudos | `/bar scroll nicklist * e`
+| key[alt-a]         | Sauter au prochain tampon avec activité (avec priorité : highlight, message, autre) | `/input jump_smart`
+| key[alt-h]         | Vider la hotlist (notification d'activité sur les autres tampons) | `/input hotlist_clear`
+| key[alt-j,alt-l]   | Sauter au dernier tampon | `/input jump_last_buffer`
+| key[alt-j,alt-r]   | Sauter au tampon IRC de données brutes | `/server raw`
+| key[alt-j,alt-s]   | Sauter au tampon IRC du serveur | `/server jump`
+| key[alt-0...9]     | Sauter au tampon qui porte ce numéro (0 = 10) | `/buffer *N`
+| key[alt-j,01...99] | Sauter au tampon qui porte ce numéro | `/buffer NN`
+| key[alt-m]         | Activer/désactiver la souris | `/mouse toggle`
+| key[alt-n]         | Se positionner sur le highlight suivant | `/window scroll_next_highlight`
+| key[alt-p]         | Se positionner sur le highlight précédent | `/window scroll_previous_highlight`
+| key[alt-u]         | Se positionner sur la première ligne non lue du tampon | `/window scroll_unread`
+| key[alt-w,alt-↑]   | Sauter à la fenêtre au dessus | `/window up`
+| key[alt-w,alt-↓]   | Sauter à la fenêtre en dessous | `/window down`
+| key[alt-w,alt-←]   | Sauter à la fenêtre de gauche | `/window left`
+| key[alt-w,alt-→]   | Sauter à la fenêtre de droite | `/window right`
+| key[alt-w,alt-b]   | Équilibrer la taille de toutes les fenêtres | `/window balance`
+| key[alt-w,alt-s]   | Échanger les tampons de deux fenêtres | `/window swap`
+| key[alt-z]         | Zoomer sur la fenêtre courante (key[alt-z] de nouveau : restaurer l'état initial des fenêtres, avant le zoom) | `/window zoom`
+| key[alt-]key[<]    | Sauter au tampon précédent dans la liste des tampons visités | `/input jump_previously_visited_buffer`
+| key[alt-]key[>]    | Sauter au tampon suivant dans la liste des tampons visités | `/input jump_next_visited_buffer`
+| key[alt-/]         | Sauter au dernier tampon affiché (avant le dernier saut vers un tampon) | `/input jump_last_buffer_displayed`
+| key[alt-=]         | Activer/désactiver les filtres | `/filter toggle`
 |===
 
 [[key_bindings_search_context]]
 ==== Touches pour le contexte "search"
 
-Ces touches sont utilisées dans le contexte "search" (lorsque @k(C-)@k(r) est
+Ces touches sont utilisées dans le contexte "search" (lorsque key[ctrl-r] est
 pressé pour chercher du texte dans le tampon).
 
 [width="100%",cols="^.^3,.^10,.^5",options="header"]
 |===
-| Touche       | Description | Commande
-| @k(C-)@k(r)  | Basculer le type de recherche : chaîne (par défaut), expression régulière | `/input search_switch_regex`
-| @k(A-)@k(c)  | Basculer la casse exacte pour la recherche | `/input search_switch_case`
-| @k(Tab)      | Basculer la recherche dans : les messages (par défaut), les préfixes, les préfixes + messages | `/input search_switch_where`
-| @k(↑)        | Chercher la ligne précédente | `/input search_previous`
-| @k(↓)        | Chercher la ligne suivante | `/input search_next`
-| @k(Enter) .3+| Arrêter la recherche .3+| `/input search_stop`
-| @k(C-)@k(j)
-| @k(C-)@k(m)
+| Touche        | Description | Commande
+| key[ctrl-r]   | Basculer le type de recherche : chaîne (par défaut), expression régulière | `/input search_switch_regex`
+| key[alt-c]    | Basculer la casse exacte pour la recherche | `/input search_switch_case`
+| key[Tab]      | Basculer la recherche dans : les messages (par défaut), les préfixes, les préfixes + messages | `/input search_switch_where`
+| key[↑]        | Chercher la ligne précédente | `/input search_previous`
+| key[↓]        | Chercher la ligne suivante | `/input search_next`
+| key[Enter] .3+| Arrêter la recherche .3+| `/input search_stop`
+| key[ctrl-j]
+| key[ctrl-m]
 |===
 
 [[key_bindings_cursor_context]]
@@ -1065,26 +1063,26 @@ Ces touches sont utilisées dans le contexte "cursor" (mouvement libre du curseu
 
 [width="100%",cols="^.^3,^.^3,.^10,.^8",options="header"]
 |===
-| Touche       | Zone              | Description | Commande
-| @k(↑)        | -                 | Déplacer le curseur d'une ligne vers le haut | `/cursor move up`
-| @k(↓)        | -                 | Déplacer le curseur d'une ligne vers le bas | `/cursor move down`
-| @k(←)        | -                 | Déplacer le curseur d'une colonne vers la gauche | `/cursor move left`
-| @k(→)        | -                 | Déplacer le curseur d'une colonne vers la droite | `/cursor move right`
-| @k(A-)@k(↑)  | -                 | Déplacer le curseur vers la zone au dessus | `/cursor move area_up`
-| @k(A-)@k(↓)  | -                 | Déplacer le curseur vers la zone en dessous | `/cursor move area_down`
-| @k(A-)@k(←)  | -                 | Déplacer le curseur vers la zone sur la gauche | `/cursor move area_left`
-| @k(A-)@k(→)  | -                 | Déplacer le curseur vers la zone sur la droite | `/cursor move area_right`
-| @k(m)        | chat              | Citer le message | `hsignal:chat_quote_message;/cursor stop`
-| @k(q)        | chat              | Citer le préfixe + le message | `hsignal:chat_quote_prefix_message;/cursor stop`
-| @k(Q)        | chat              | Citer l'heure + le préfixe + le message | `hsignal:chat_quote_time_prefix_message;/cursor stop`
-| @k(b)        | liste des pseudos | Bannir le pseudo | `/window ${_window_number};/ban ${nick}`
-| @k(k)        | liste des pseudos | Retirer par la force le pseudo | `/window ${_window_number};/kick ${nick}`
-| @k(K)        | liste des pseudos | Retirer par la force et bannir le pseudo | `/window ${_window_number};/kickban ${nick}`
-| @k(q)        | liste des pseudos | Ouvrir une discussion avec le pseudo | `/window ${_window_number};/query ${nick};/cursor stop`
-| @k(w)        | liste des pseudos | Effectuer un whois sur le pseudo | `/window ${_window_number};/whois ${nick}`
-| @k(Enter) .3+| -              .3+| Arrêter le mode curseur ("cursor") .3+| `/cursor stop`
-| @k(C-)@k(j)
-| @k(C-)@k(m)
+| Touche        | Zone              | Description | Commande
+| key[↑]        | -                 | Déplacer le curseur d'une ligne vers le haut | `/cursor move up`
+| key[↓]        | -                 | Déplacer le curseur d'une ligne vers le bas | `/cursor move down`
+| key[←]        | -                 | Déplacer le curseur d'une colonne vers la gauche | `/cursor move left`
+| key[→]        | -                 | Déplacer le curseur d'une colonne vers la droite | `/cursor move right`
+| key[alt-↑]    | -                 | Déplacer le curseur vers la zone au dessus | `/cursor move area_up`
+| key[alt-↓]    | -                 | Déplacer le curseur vers la zone en dessous | `/cursor move area_down`
+| key[alt-←]    | -                 | Déplacer le curseur vers la zone sur la gauche | `/cursor move area_left`
+| key[alt-→]    | -                 | Déplacer le curseur vers la zone sur la droite | `/cursor move area_right`
+| key[m]        | chat              | Citer le message | `hsignal:chat_quote_message;/cursor stop`
+| key[q]        | chat              | Citer le préfixe + le message | `hsignal:chat_quote_prefix_message;/cursor stop`
+| key[Q]        | chat              | Citer l'heure + le préfixe + le message | `hsignal:chat_quote_time_prefix_message;/cursor stop`
+| key[b]        | liste des pseudos | Bannir le pseudo | `/window ${_window_number};/ban ${nick}`
+| key[k]        | liste des pseudos | Retirer par la force le pseudo | `/window ${_window_number};/kick ${nick}`
+| key[K]        | liste des pseudos | Retirer par la force et bannir le pseudo | `/window ${_window_number};/kickban ${nick}`
+| key[q]        | liste des pseudos | Ouvrir une discussion avec le pseudo | `/window ${_window_number};/query ${nick};/cursor stop`
+| key[w]        | liste des pseudos | Effectuer un whois sur le pseudo | `/window ${_window_number};/whois ${nick}`
+| key[Enter] .3+| -              .3+| Arrêter le mode curseur ("cursor") .3+| `/cursor stop`
+| key[ctrl-j]
+| key[ctrl-m]
 |===
 
 [[key_bindings_mouse_context]]
@@ -1096,32 +1094,32 @@ Ces touches sont utilisées dans le contexte "mouse", c'est-à-dire lorsqu'un
 [width="100%",cols="^.^3,^.^3,^.^3,.^10,.^8",options="header"]
 |===
 | Bouton ^(1)^ | Geste | Zone | Description | Commande
-| ◾◽◽     | -            | chat                 | Aller à la fenêtre | `/window ${_window_number}`
-| ◾◽◽     | left         | chat                 | Aller au tampon précédent | `/window ${_window_number};/buffer +1`
-| ◾◽◽     | right        | chat                 | Aller au tampon suivant | `/window ${_window_number};/buffer +1`
-| ◾◽◽     | left (long)  | chat                 | Aller au premier tampon | `/window ${_window_number};/buffer 1`
-| ◾◽◽     | right (long) | chat                 | Aller au dernier tampon | `/window ${_window_number};/input jump_last_buffer`
-| ◾◽◽     | -            | chat (tampon script) | Sélectionner la ligne dans le tampon script | `/script go ${_chat_line_y}`
-| ◽◽◾     | -            | chat (tampon script) | Installer/supprimer un script | `/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}`
-| ⇑       | -            | chat                 | Monter de quelques lignes dans l'historique du tampon | `/window scroll_up -window ${_window_number}`
-| ⇓       | -            | chat                 | Descendre de quelques lignes dans l'historique du tampon | `/window scroll_down -window ${_window_number}`
-| ⇑       | -            | chat (tampon script) | Monter de 5 lignes dans le tampon script | `/script up 5`
-| ⇓       | -            | chat (tampon script) | Descendre de 5 lignes dans le tampon script | `/script down 5`
-| @k(C-)⇑ | -            | chat                 | Faire défiler horizontalement vers la gauche | `/window scroll_horiz -window ${_window_number} -10%`
-| @k(C-)⇓ | -            | chat                 | Faire défiler horizontalement vers la droite | `/window scroll_horiz -window ${_window_number} +10%`
-| ◾◽◽     | up           | liste des pseudos    | Monter d'une page dans la liste des pseudos | `/bar scroll nicklist ${_window_number} -100%`
-| ◾◽◽     | down         | liste des pseudos    | Descendre d'une page dans la liste des pseudos | `/bar scroll nicklist ${_window_number} +100%`
-| ◾◽◽     | up (long)    | liste des pseudos    | Aller au début de la liste des pseudos | `/bar scroll nicklist ${_window_number} b`
-| ◾◽◽     | down (long)  | liste des pseudos    | Aller à la fin de la liste des pseudos | `/bar scroll nicklist ${_window_number} e`
-| ◾◽◽     | -            | liste des pseudos    | Ouvrir une discussion avec le pseudo | `/window ${_window_number};/query ${nick}`
-| ◽◽◾     | -            | liste des pseudos    | Effectuer un whois sur le pseudo | `/window ${_window_number};/whois ${nick}`
-| ◾◽◽     | left         | liste des pseudos    | Retirer par la force le pseudo | `/window ${_window_number};/kick ${nick}`
-| ◾◽◽     | left (long)  | liste des pseudos    | Retirer par la force et bannir le pseudo | `/window ${_window_number};/kickban ${nick}`
-| ◽◽◾     | left         | liste des pseudos    | Bannir le pseudo | `/window ${_window_number};/ban ${nick}`
-| ◽◽◾     | -            | ligne de commande    | Capturer un évènement de la souris et insérer son code sur la ligne de commande | `/input grab_mouse_area`
-| ⇑       | -            | toute barre          | Faire défiler la barre de -20% | `/bar scroll ${_bar_name} ${_window_number} -20%`
-| ⇓       | -            | toute barre          | Faire défiler la barre de +20% | `/bar scroll ${_bar_name} ${_window_number} +20%`
-| ◽◾◽     | -            | n'importe où         | Démarrer le mode curseur ("cursor") à ce point | `/cursor go ${_x},${_y}`
+| ◾◽◽         | -            | chat                 | Aller à la fenêtre | `/window ${_window_number}`
+| ◾◽◽         | left         | chat                 | Aller au tampon précédent | `/window ${_window_number};/buffer +1`
+| ◾◽◽         | right        | chat                 | Aller au tampon suivant | `/window ${_window_number};/buffer +1`
+| ◾◽◽         | left (long)  | chat                 | Aller au premier tampon | `/window ${_window_number};/buffer 1`
+| ◾◽◽         | right (long) | chat                 | Aller au dernier tampon | `/window ${_window_number};/input jump_last_buffer`
+| ◾◽◽         | -            | chat (tampon script) | Sélectionner la ligne dans le tampon script | `/script go ${_chat_line_y}`
+| ◽◽◾         | -            | chat (tampon script) | Installer/supprimer un script | `/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}`
+| ⇑           | -            | chat                 | Monter de quelques lignes dans l'historique du tampon | `/window scroll_up -window ${_window_number}`
+| ⇓           | -            | chat                 | Descendre de quelques lignes dans l'historique du tampon | `/window scroll_down -window ${_window_number}`
+| ⇑           | -            | chat (tampon script) | Monter de 5 lignes dans le tampon script | `/script up 5`
+| ⇓           | -            | chat (tampon script) | Descendre de 5 lignes dans le tampon script | `/script down 5`
+| key[ctrl-]⇑ | -            | chat                 | Faire défiler horizontalement vers la gauche | `/window scroll_horiz -window ${_window_number} -10%`
+| key[ctrl-]⇓ | -            | chat                 | Faire défiler horizontalement vers la droite | `/window scroll_horiz -window ${_window_number} +10%`
+| ◾◽◽         | up           | liste des pseudos    | Monter d'une page dans la liste des pseudos | `/bar scroll nicklist ${_window_number} -100%`
+| ◾◽◽         | down         | liste des pseudos    | Descendre d'une page dans la liste des pseudos | `/bar scroll nicklist ${_window_number} +100%`
+| ◾◽◽         | up (long)    | liste des pseudos    | Aller au début de la liste des pseudos | `/bar scroll nicklist ${_window_number} b`
+| ◾◽◽         | down (long)  | liste des pseudos    | Aller à la fin de la liste des pseudos | `/bar scroll nicklist ${_window_number} e`
+| ◾◽◽         | -            | liste des pseudos    | Ouvrir une discussion avec le pseudo | `/window ${_window_number};/query ${nick}`
+| ◽◽◾         | -            | liste des pseudos    | Effectuer un whois sur le pseudo | `/window ${_window_number};/whois ${nick}`
+| ◾◽◽         | left         | liste des pseudos    | Retirer par la force le pseudo | `/window ${_window_number};/kick ${nick}`
+| ◾◽◽         | left (long)  | liste des pseudos    | Retirer par la force et bannir le pseudo | `/window ${_window_number};/kickban ${nick}`
+| ◽◽◾         | left         | liste des pseudos    | Bannir le pseudo | `/window ${_window_number};/ban ${nick}`
+| ◽◽◾         | -            | ligne de commande    | Capturer un évènement de la souris et insérer son code sur la ligne de commande | `/input grab_mouse_area`
+| ⇑           | -            | toute barre          | Faire défiler la barre de -20% | `/bar scroll ${_bar_name} ${_window_number} -20%`
+| ⇓           | -            | toute barre          | Faire défiler la barre de +20% | `/bar scroll ${_bar_name} ${_window_number} +20%`
+| ◽◾◽         | -            | n'importe où         | Démarrer le mode curseur ("cursor") à ce point | `/cursor go ${_x},${_y}`
 |===
 
 [NOTE]
@@ -1142,7 +1140,7 @@ Pour activer la souris au démarrage :
 /set weechat.look.mouse on
 ----
 
-Pour activer la souris maintenant, appuyez sur @k(A-)@k(m) ou lancez la commande
+Pour activer la souris maintenant, appuyez sur key[alt-m] ou lancez la commande
 suivante :
 
 ----
@@ -1150,7 +1148,7 @@ suivante :
 ----
 
 Il est possible de désactiver temporairement la souris, et associer ça à une
-touche. Par exemple la touche @k(A-)@k(x) pour désactiver la souris pendant 10
+touche. Par exemple la touche key[alt-x] pour désactiver la souris pendant 10
 secondes :
 
 ----
@@ -1158,9 +1156,9 @@ secondes :
 ----
 
 Lorsque la souris est activée dans WeeChat, vous pouvez utiliser la touche
-@k(-S-) pour sélectionner ou cliquer dans le terminal, comme si la souris était
-désactivée (sous certains terminaux comme iTerm, vous devez utiliser @k(-A-) au
-lieu de @k(-S-)).
+key[shift] pour sélectionner ou cliquer dans le terminal, comme si la souris était
+désactivée (sous certains terminaux comme iTerm, vous devez utiliser key[alt] au
+lieu de key[shift]).
 
 [NOTE]
 Pour tout problème avec la souris, merci de consulter la 'FAQ WeeChat'.
@@ -1183,9 +1181,9 @@ Liste des modifieurs :
 [width="50%",cols="3m,4",options="header"]
 |===
 | Modifieur | Description
-| ctrl      | Touche @k(-C-)
-| alt       | Touche @k(-A-)
-| ctrl-alt  | Touches @k(-C-) et @k(-A-)
+| ctrl      | Touche key[ctrl]
+| alt       | Touche key[alt]
+| ctrl-alt  | Touches key[ctrl-]key[alt]
 |===
 
 Liste des boutons/roulette :
@@ -1283,36 +1281,36 @@ doublant. Par exemple pour envoyer le texte '/set' sur le tampon courant :
 ==== Codes couleurs
 
 Pour certaines extensions comme IRC, il est possible d'utiliser des codes
-couleur et attributs comme suit (appuyer sur @k(C-)@k(c) puis sur la lettre qui
+couleur et attributs comme suit (appuyer sur key[ctrl-c] puis sur la lettre qui
 suit et éventuellement une valeur) :
 
-@k(C-)@k(c) , @k(b)::
+key[ctrl-c,b]::
     texte gras
 
-@k(C-)@k(c) , @k(c) , @k(xx)::
+key[ctrl-c,c], key[xx]::
     couleur du texte `xx` (voir la liste des couleurs ci-dessous)
 
-@k(C-)@k(c) , @k(c) , @k(xx,yy)::
+key[ctrl-c,c], key[xx]key[,]key[yy]::
     couleur du texte `xx` et du fond `yy` (voir la liste des couleurs
     ci-dessous)
 
-@k(C-)@k(c) , @k(i)::
+key[ctrl-c,i]::
     texte en italique
 
-@k(C-)@k(c) , @k(o)::
+key[ctrl-c,o]::
     désactiver la couleur et tous les attributs
 
-@k(C-)@k(c) , @k(v)::
+key[ctrl-c,v]::
     vidéo inverse (inversion de la couleur d'écriture et du fond)
 
-@k(C-)@k(c) , @k(_)::
+key[ctrl-c,_]::
     texte souligné
 
 [NOTE]
-Le même code (sans le numéro pour @k(C-)@k(c) , @k(c)) peut être utilisé pour
+Le même code (sans le numéro pour key[ctrl-c,c]) peut être utilisé pour
 stopper l'attribut défini.
 
-Les codes couleur pour @k(C-)@k(c) , @k(c) sont :
+Les codes couleur pour key[ctrl-c,c] sont :
 
 [width="50%",cols="^1m,3,3",options="header"]
 |===
@@ -1433,7 +1431,7 @@ En plus des couleurs de base, vous pouvez utiliser un numéro de couleur entre 1
 et la limite de votre terminal.
 
 Utilisez la commande `/color` pour voir les couleurs et les limites. Avec la
-touche @k(A-)@k(c), vous pouvez basculer temporairement vers les couleurs du
+touche key[alt-c], vous pouvez basculer temporairement vers les couleurs du
 terminal pour choisir une couleur.
 
 Par exemple si vous souhaitez afficher l'heure en orange dans le tampon,

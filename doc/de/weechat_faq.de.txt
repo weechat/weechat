@@ -226,7 +226,7 @@ werden sollte:
 
 Hierzu kannst Du ein Terminal nutzen welches Block-Auswahl erlaubt (wie z.B. rxvt-unicode,
 konsole, gnome-terminal, ...). Im Normalfall erfolgt die Markierung mittels der Tasten
-@k(C-)@k(A-) in Verbindung mit der Auswahl durch die Maus.
+key[ctrl-]key[alt-] in Verbindung mit der Auswahl durch die Maus.
 
 Eine weitere Möglichkeit besteht darin die Nickliste nach oben oder unten zu verschieben:
 
@@ -319,8 +319,8 @@ Weiterführende Informationen zum Farbmanagement erhält man in der Benutzeranle
 [[search_text]]
 === Wie kann ich in einem Buffer nach einem Text suchen (vergleichbar /lastlog in irssi)?
 
-Die Standardtastenbelegung lautet @k(C-)@k(r) (der dazugehörige Befehl: `/input search_text`).
-und um zu Highlight-Nachrichten zu springen: @k(A-)@k(p)/@k(n).
+Die Standardtastenbelegung lautet key[ctrl-r] (der dazugehörige Befehl: `/input search_text`).
+und um zu Highlight-Nachrichten zu springen: key[alt-p] / key[alt-n].
 
 Siehe Benutzeranleitung für weitere Informationen zu dieser Funktion (Standardtastenbelegung).
 
@@ -352,14 +352,14 @@ man startet X neu.
 
 Die Tasten werden mit dem Befehl `/key` belegt.
 
-Mit der voreingestellten Tastenkombination @k(A-)@k(k) kann man sich den
+Mit der voreingestellten Tastenkombination key[alt-k] kann man sich den
 Code der jeweiligen Taste anzeigen lassen und in die Eingabezeile einfügen.
 
 [[jump_to_buffer_11_or_higher]]
 === Mit welcher Tastenkombination kann ich zum Buffer 11 (oder höher) wechseln?
 
-Die Tastenkombination lautet @k(A-)@k(j) gefolgt von den zwei Ziffern des Buffers.
-Zum Beispiel, @k(A-)@k(j), @k(1), @k(1) um zum Buffer 11 zu wechseln.
+Die Tastenkombination lautet key[alt-j] gefolgt von den zwei Ziffern des Buffers.
+Zum Beispiel, key[alt-j], key[1], key[1] um zum Buffer 11 zu wechseln.
 
 Es kann auch eine neue Taste eingebunden werden um zu einem Buffer zu wechseln:
 
@@ -373,7 +373,7 @@ Eine Auflistung der Standardtastenbelegung findet man in der Benutzeranleitung.
 === Wie kann ich den globalen Verlaufsspeicher (anstelle des Buffer eigenen) mit den Up-/Down-Tasten nutzen?
 
 Du kannst die Up-/Down-Tasten für den globalen Verlaufsspeicher belegen (als Standardtasten werden
-genutzt: @k(C-)@k(↑) and @k(C-)@k(↓)).
+genutzt: key[ctrl-↑] und key[ctrl-↓]).
 
 Beispiele:
 
@@ -384,7 +384,7 @@ Beispiele:
 
 [NOTE]
 Die Tasten "meta2-A" und "meta2-B" können nach dem jeweils genutzten Terminal variieren. Um die
-korrekten Tasten zu finden sollte man @k(A-)@k(k) und dann (Up- oder die Down-Taste) drücken.
+korrekten Tasten zu finden sollte man key[alt-k] und dann (Up- oder die Down-Taste) drücken.
 
 [[mouse]]
 == Mausunterstützung
@@ -432,9 +432,9 @@ bietet, zum Beispiel rxvt-unicode.
 [[mouse_select_paste]]
 === Wie kann ich bei aktivierter Mausunterstützung im Terminal einen Text markieren oder einfügen?
 
-Ist die Mausunterstützung aktiviert kann man mittels gedrückter @k(-S-)-Taste (Umschalttaste)
+Ist die Mausunterstützung aktiviert kann man mittels gedrückter key[shift]-Taste (Umschalttaste)
 einen Text im Terminal markieren oder einfügen, als sei die Mausunterstützung deaktiviert.
-(bei einigen Terminals muss die @k(-A-)-Taste anstelle der @k(-S-)-Taste gedrückt werden).
+(bei einigen Terminals muss die key[alt]-Taste anstelle der key[shift]-Taste gedrückt werden).
 
 [[irc]]
 == IRC
@@ -541,7 +541,7 @@ Dieser Befehl eröffnet die Möglichkeit bestimmte Zeilen in Buffern, mittels Ta
 regulären Ausdrücken nach Präfix und Zeileninhalt zu filtern.
 Die Zeilen werden dabei nicht gelöscht, lediglich die Darstellung im Buffer wird unterdrückt.
 Die gefilterten Zeilen können zu jeder Zeit dargestellt werden indem man den Filter deaktiviert
-(Voreinstellung zum aktivieren/deaktivieren der Filter: @k(A-)@k(=)).
+(Voreinstellung zum aktivieren/deaktivieren der Filter: key[alt-=]).
 
 [[filter_irc_join_part_quit]]
 === Wie kann ich join/part/quit Meldungen in den IRC Channels filtern (A.d.ü.: unterdrücken)?
@@ -675,7 +675,7 @@ andere Skripten die auch zu diesem Thema passen: http://weechat.org/scripts/stab
 [[irc_target_buffer]]
 === Wie kann ich bei zusammengefügten Buffern den Zielbuffer ändern (z.B. bei einem Server-Buffer)?
 
-Die Standardtastenkombination lautet @k(C-)@k(x) (der dazugehörige Befehl: `/input switch_active_buffer`).
+Die Standardtastenkombination lautet key[ctrl-x] (der dazugehörige Befehl: `/input switch_active_buffer`).
 
 [[plugins_scripts]]
 == Erweiterungen / Skripten

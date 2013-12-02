@@ -225,7 +225,7 @@ non viene usato da un'altra barra:
 
 È possibile usare un terminale con la selezione rettangolare (come
 rxvt-unicode, konsole, gnome-terminal, ...). La combinazione tasti in
-generale è @k(C-)@k(A-) selezione mouse.
+generale è key[ctrl-]key[alt-] selezione mouse.
 
 Un'altra soluzione è spostare la lista nick in alto o in basso, per esempio:
 
@@ -316,8 +316,8 @@ dei colori.
 [[search_text]]
 === Come posso cercare testo nel buffer (come /lastlog con irssi)?
 
-Il tasto predefinito è @k(C-)@k(r) (il comando è: `/input search-text`).
-E per passare alle notifiche: @k(A-)@k(p)/@k(n).
+Il tasto predefinito è key[ctrl-r] (il comando è: `/input search-text`).
+E per passare alle notifiche: key[alt-p] / key[alt-n].
 
 Consultare la guida per l'utente per maggiori informazioni su questa funzione
 (combinazioni tasti predefiniti).
@@ -347,14 +347,14 @@ Al termine, ricaricare la configurazione (`xrdb -override ~/.Xresources`) o riav
 
 Le associazioni dei tasti sono personalizzabili con il comando `/key`.
 
-Il tasto predefinito @k(A-)@k(k) consente di registrare il codice tasto ed
+Il tasto predefinito key[alt-k] consente di registrare il codice tasto ed
 inserirlo nella riga di comando.
 
 [[jump_to_buffer_11_or_higher]]
 === Qual è il tasto per passare al buffer 11 (o superiore)?
 
-Il tasto è @k(A-)@k(j) seguito da due numeri, ad esempio @k(A-)@k(j) e @k(1),
-@k(1) per passare al buffer 11.
+Il tasto è key[alt-j] seguito da due numeri, ad esempio key[alt-j], key[1],
+key[1] per passare al buffer 11.
 
 È possibile associare un tasto, ad esempio:
 
@@ -369,7 +369,7 @@ L'elenco dei tasti predefiniti è nella Guida dell'utente.
 === Come si può usare la cronologia globale (invece di quella del buffer) con i tasti su e giù?
 
 È possibile associare i tasti su e giù alla cronologia globale (quelli predefiniti
-sono @k(C-)@k(↑) e @k(C-)@k(↓)).
+sono key[ctrl-↑] e key[ctrl-↓]).
 
 Esempio:
 
@@ -379,10 +379,8 @@ Esempio:
 ----
 
 [NOTE]
-Keys "meta2-A" and "meta2-B" may be different in your terminal. To find key
-code press @k(A-)@k(k) then key (up or down).
 I tasti "meta2-A" e "meta2-B" possono essere differenti nel proprio terminale.
-Per trovare il codice tasto digitare @k(A-)@k(k) poi il tast (su o giù).
+Per trovare il codice tasto digitare key[alt-k] poi il tast (su o giù).
 
 [[mouse]]
 == Mouse
@@ -430,9 +428,9 @@ come rxvt-unicode.
 === Come posso selezionare o incollare del testo nel terminale quando il mouse è abilitato in WeeChat?
 
 Quando il mouse è abilitato in WeeChat, è possibile usare il modificatore
-@k(-S-) per selezionare o cliccare nel terminale, come se il mouse fosse
-disabilitato (in alcuni terminali come iTerm, bisogna usare @k(-A-) invece di
-@k(-S-)).
+key[shift] per selezionare o cliccare nel terminale, come se il mouse fosse
+disabilitato (in alcuni terminali come iTerm, bisogna usare key[alt] invece di
+key[shift]).
 
 [[irc]]
 == IRC
@@ -536,7 +534,7 @@ buffer. Esso consente di filtrare alcune righe nei buffer mediante tag
 o espressioni regolari per il prefisso ed il contenuto delle righe.
 Le righe filtrate vengono solo nascoste, non eliminate, ed è possibile
 visualizzarle se i filtri vengono disabilitati (il comando predefinito
-@k(A-)@k(=) abilita/disabilita i filtri).
+key[alt-=] abilita/disabilita i filtri).
 
 [[filter_irc_join_part_quit]]
 === Come posso filtrare i messaggi di entrata/uscita/abbandono sui canali IRC?
@@ -664,7 +662,7 @@ Altri script correlati: http://weechat.org/scripts/stable/tag/notify/
 [[irc_target_buffer]]
 === Come si può modificare il buffer destinazione per i comandi sui buffer uniti (come i buffer con i server)?
 
-Il tasto predefinito è @k(C-)@k(x) (il comando è: `/input switch_active_buffer`).
+Il tasto predefinito è key[ctrl-x] (il comando è: `/input switch_active_buffer`).
 
 [[plugins_scripts]]
 == Plugin / script

@@ -938,57 +938,55 @@ Il livello di notifica per un buffer può essere impostato con il comando `/buff
 [[key_bindings]]
 === Associazione tasti predefinita
 
-// 'C-' = ctrl, 'A-' = alt, 'S-' = shift
-
 [[key_bindings_command_line]]
 ==== Tasti per la riga di comando
 
 [width="100%",cols="^.^3,.^10,.^5",options="header"]
 |===
-| Tasti               | Descrizione | Comando
-| @k(←)            .2+| Passa al carattere precedente nella riga di comando .2+| `/input move_previous_char`
-| @k(C-)@k(b)
-| @k(→)            .2+| Passa al carattere successivo nella riga di comando .2+| `/input move_next_char`
-| @k(C-)@k(f)
-| @k(C-)@k(←)      .2+| Passa alla parola precedente nella riga di comando .2+| `/input move_previous_word`
-| @k(A-)@k(b)
-| @k(C-)@k(→)      .2+| Passa alla parola successiva nella riga di comando .2+| `/input move_next_word`
-| @k(A-)@k(f)
-| @k(Home)         .2+| Si sposta all'inizio della riga di comando .2+| `/input move_beginning_of_line`
-| @k(C-)@k(a)
-| @k(End)          .2+| Si sposta alla fine della riga di comando .2+| `/input move_end_of_line`
-| @k(C-)@k(e)
-| @k(C-)@k(c) , @k(b) | Inserisce il codice per il testo in grassetto | `/input insert \x02`
-| @k(C-)@k(c) , @k(c) | Inserisce il codice per il testo colorato | `/input insert \x03`
-| @k(C-)@k(c) , @k(i) | Inserisce il codice per il testo in corsivo | `/input insert \x1D`
-| @k(C-)@k(c) , @k(o) | Inserisce il codice per il reset dei colori | `/input insert \x0F`
-| @k(C-)@k(c) , @k(v) | Inserisce il codice per l'inversione dei colori | `/input insert \x16`
-| @k(C-)@k(c) , @k(_) | Inserisce il codice per il testo sottolineato | `/input insert \x1F`
-| @k(Del)          .2+| Elimina il carattere successivo nella riga di comando .2+| `/input delete_next_char`
-| @k(C-)@k(d)
-| @k(Backsp.)      .2+| Elimina il carattere precedente nella riga di comando .2+| `/input delete_previous_char`
-| @k(C-)@k(h)
-| @k(C-)@k(k)         | Elimina dal cursore fino alla fine della riga di comando (la stringa eliminata viene copiata negli appunti) | `/input delete_end_of_line`
-| @k(C-)@k(r)         | Cerca del testo nella cronologia del buffer (consultare <<key_bindings_search_context,tasti per il contesto search>>) | `/input search_text`
-| @k(C-)@k(t)         | Inverti caratteri | `/input transpose_chars`
-| @k(C-)@k(u)         | Elimina dal cursore fino all'inizio della riga di comando (la stringa eliminata viene copiata negli appunti) | `/input delete_beginning_of_line`
-| @k(C-)@k(w)         | Elimina la parola precedente nella riga di comando (la stringa eliminata viene copiata negli appunti) | `/input delete_previous_word`
-| @k(C-)@k(y)         | Incolla il contenuto degli appunti | `/input clipboard_paste`
-| @k(C-)@k(_)         | Annulla l'ultima azione sulla riga di comando | `/input undo`
-| @k(A-)@k(_)         | Ripete l'ultima azione sulla riga di comando | `/input redo`
-| @k(Tab)             | Completa comando o nick (@k(Tab) di nuovo: trova prossimo completamento) | `/input complete_next`
-| @k(S-)@k(Tab)       | Senza completamento: effettua un completamento parziale, con completamento in sospeso: completa con il completamento precedente | `/input complete_previous`
-| @k(Invio)        .3+| Esegue comando o invia messaggio (in modalità ricerca: ferma ricerca) .3+| `/input return`
-| @k(C-)@k(j)
-| @k(C-)@k(m)
-| @k(↑)               | Chiama comando/messaggio precedente (in modalità ricerca: cerca in alto) | `/input history_previous`
-| @k(↓)               | Chiama comando/messaggio precedente (in modalità ricerca: cerca in basso) | `/input history_next`
-| @k(C-)@k(↑)         | Chiama il comando/messaggio precedente nella cronologia globale (identico per tutti i buffer) | `/input history_global_previous`
-| @k(C-)@k(↓)         | Chiama il comando/messaggio successivo nella cronologia globale (identico per tutti i buffer) | `/input history_global_next`
-| @k(A-)@k(d)         | Elimina la parola successiva nella riga di comando (la stringa eliminata viene copiata negli appunti) | `/input delete_next_word`
-| @k(A-)@k(k)         | Cattura un tasto ed inserisce il suo codice (e il comando associato se il tasto esiste) nella riga di comando | `/input grab_key_command`
-| @k(A-)@k(r)         | Elimina l'intera riga di comando | `/input delete_line`
-| @k(A-)@k(s)         | Abilita/disabilita aspell | `/mute aspell toggle`
+| Tasti            | Descrizione | Comando
+| key[←]        .2+| Passa al carattere precedente nella riga di comando .2+| `/input move_previous_char`
+| key[ctrl-b]
+| key[→]        .2+| Passa al carattere successivo nella riga di comando .2+| `/input move_next_char`
+| key[ctrl-f]
+| key[ctrl-←]   .2+| Passa alla parola precedente nella riga di comando .2+| `/input move_previous_word`
+| key[alt-b]
+| key[ctrl-→]   .2+| Passa alla parola successiva nella riga di comando .2+| `/input move_next_word`
+| key[alt-f]
+| key[Home]     .2+| Si sposta all'inizio della riga di comando .2+| `/input move_beginning_of_line`
+| key[ctrl-a]
+| key[End]      .2+| Si sposta alla fine della riga di comando .2+| `/input move_end_of_line`
+| key[ctrl-e]
+| key[ctrl-c,b]   | Inserisce il codice per il testo in grassetto | `/input insert \x02`
+| key[ctrl-c,c]   | Inserisce il codice per il testo colorato | `/input insert \x03`
+| key[ctrl-c,i]   | Inserisce il codice per il testo in corsivo | `/input insert \x1D`
+| key[ctrl-c,o]   | Inserisce il codice per il reset dei colori | `/input insert \x0F`
+| key[ctrl-c,v]   | Inserisce il codice per l'inversione dei colori | `/input insert \x16`
+| key[ctrl-c,_]   | Inserisce il codice per il testo sottolineato | `/input insert \x1F`
+| key[Del]     .2+| Elimina il carattere successivo nella riga di comando .2+| `/input delete_next_char`
+| key[ctrl-d]
+| key[Backsp.] .2+| Elimina il carattere precedente nella riga di comando .2+| `/input delete_previous_char`
+| key[ctrl-h]
+| key[ctrl-k]     | Elimina dal cursore fino alla fine della riga di comando (la stringa eliminata viene copiata negli appunti) | `/input delete_end_of_line`
+| key[ctrl-r]     | Cerca del testo nella cronologia del buffer (consultare <<key_bindings_search_context,tasti per il contesto search>>) | `/input search_text`
+| key[ctrl-t]     | Inverti caratteri | `/input transpose_chars`
+| key[ctrl-u]     | Elimina dal cursore fino all'inizio della riga di comando (la stringa eliminata viene copiata negli appunti) | `/input delete_beginning_of_line`
+| key[ctrl-w]     | Elimina la parola precedente nella riga di comando (la stringa eliminata viene copiata negli appunti) | `/input delete_previous_word`
+| key[ctrl-y]     | Incolla il contenuto degli appunti | `/input clipboard_paste`
+| key[ctrl-_]     | Annulla l'ultima azione sulla riga di comando | `/input undo`
+| key[alt-_]      | Ripete l'ultima azione sulla riga di comando | `/input redo`
+| key[Tab]        | Completa comando o nick (key[Tab] di nuovo: trova prossimo completamento) | `/input complete_next`
+| key[shift-Tab]  | Senza completamento: effettua un completamento parziale, con completamento in sospeso: completa con il completamento precedente | `/input complete_previous`
+| key[Invio]   .3+| Esegue comando o invia messaggio (in modalità ricerca: ferma ricerca) .3+| `/input return`
+| key[ctrl-j]
+| key[ctrl-m]
+| key[↑]          | Chiama comando/messaggio precedente (in modalità ricerca: cerca in alto) | `/input history_previous`
+| key[↓]          | Chiama comando/messaggio precedente (in modalità ricerca: cerca in basso) | `/input history_next`
+| key[ctrl-↑]     | Chiama il comando/messaggio precedente nella cronologia globale (identico per tutti i buffer) | `/input history_global_previous`
+| key[ctrl-↓]     | Chiama il comando/messaggio successivo nella cronologia globale (identico per tutti i buffer) | `/input history_global_next`
+| key[alt-d]      | Elimina la parola successiva nella riga di comando (la stringa eliminata viene copiata negli appunti) | `/input delete_next_word`
+| key[alt-k]      | Cattura un tasto ed inserisce il suo codice (e il comando associato se il tasto esiste) nella riga di comando | `/input grab_key_command`
+| key[alt-r]      | Elimina l'intera riga di comando | `/input delete_line`
+| key[alt-s]      | Abilita/disabilita aspell | `/mute aspell toggle`
 |===
 
 [[key_bindings_buffers_windows]]
@@ -996,77 +994,77 @@ Il livello di notifica per un buffer può essere impostato con il comando `/buff
 
 [width="100%",cols="^.^3,.^10,.^5",options="header"]
 |===
-| Tasti                     | Descrizione | Comando
-| @k(C-)@k(l)               | Ridisegna l'intera finestra | `/window refresh`
-| @k(C-)@k(s) , @k(C-)@k(u) | Imposta l'evidenziatore dei messaggi non letti su tutti i buffer | `/input set_unread`
-| @k(C-)@k(x)               | Passa al buffer attivo se i buffer sono collegati con lo stesso numero | `/input switch_active_buffer`
+| Tasti              | Descrizione | Comando
+| key[ctrl-l]        | Ridisegna l'intera finestra | `/window refresh`
+| key[ctrl-s,ctrl-u] | Imposta l'evidenziatore dei messaggi non letti su tutti i buffer | `/input set_unread`
+| key[ctrl-x]        | Passa al buffer attivo se i buffer sono collegati con lo stesso numero | `/input switch_active_buffer`
 // TRANSLATION MISSING
-| @k(A-)@k(x)               | Zoom on merged buffer (@k(A-)@k(x) again: display all merged buffers) | `/input zoom_merged_buffer`
-| @k(PgUp)                  | Scorre in alto di una pagina nella cronologia del buffer | `/window page_up`
-| @k(PgDn)                  | Scorre di una pagina in basso nella cronologia del buffer | `/window page_down`
-| @k(A-)@k(PgUp)            | Scorre di qualche riga in alto nella cronologia del buffer | `/window scroll_up`
-| @k(A-)@k(PgDn)            | Scorre di qualche riga in basso nella cronologia del buffer | `/window scroll_down`
-| @k(A-)@k(Home)            | Scorre in cima al buffer | `/window scroll_top`
-| @k(A-)@k(End)             | Scorre alla fine del del buffer | `/window scroll_bottom`
-| @k(A-)@k(←)            .4+| Passa al buffer precedente .4+| `/buffer -1`
-| @k(A-)@k(↑)
-| @k(C-)@k(p)
-| @k(F5)
-| @k(A-)@k(→)            .4+| Passa al buffer successivo .4+| `/buffer +1`
-| @k(A-)@k(↓)
-| @k(C-)@k(n)
-| @k(F6)
-| @k(F7)                    | Passa alla finestra precedente | `/window -1`
-| @k(F8)                    | Passa alla finestra successiva | `/window +1`
-| @k(F9)                    | Scorre il titolo del buffer sulla sinistra | `/bar scroll title * -30%`
-| @k(F10)                   | Scorre il titolo del buffer sulla destra | `/bar scroll title * +30%`
-| @k(F11)                   | Scorre di una pagina in alto nella lista nick | `/bar scroll nicklist * -100%`
-| @k(F12)                   | Scorre di una pagina in basso nella lista nick | `/bar scroll nicklist * +100%`
-| @k(A-)@k(F11)             | Sposta all'inizio della lista nick | `/bar scroll nicklist * b`
-| @k(A-)@k(F12)             | Sposta alla fine della lista nick | `/bar scroll nicklist * e`
-| @k(A-)@k(a)               | Passa al buffer successivo con attività (con priorità: highligh, messagge, altro) | `/input jump_smart`
-| @k(A-)@k(h)               | Pulisce hotlist (notifica di attività su altri buffer) | `/input hotlist_clear`
-| @k(A-)@k(j) , @k(A-)@k(l) | Passa all'ultimo buffer | `/input jump_last_buffer`
-| @k(A-)@k(j) , @k(A-)@k(r) | Passa al buffer raw IRC | `/server raw`
-| @k(A-)@k(j) , @k(A-)@k(s) | Passa al buffer server IRC | `/server jump`
-| @k(A-)@k(0...9)           | Passa al buffer numero (0 = 10) | `/buffer *N`
-| @k(A-)@k(j) , @k(01...99) | Passa al buffer numero | `/buffer NN`
-| @k(A-)@k(m)               | Abilita/disabilita | `/mouse toggle`
-| @k(A-)@k(n)               | Scorre fino alla notifica successiva | `/window scroll_next_highlight`
-| @k(A-)@k(p)               | Scorre fino alla notifica precedente | `/window scroll_previous_highlight`
-| @k(A-)@k(u)               | Scorre fino alla prima riga non letta nel buffer | `/window scroll_unread`
-| @k(A-)@k(w) , @k(A-)@k(↑) | Passa alla finestra in alto | `/window up`
-| @k(A-)@k(w) , @k(A-)@k(↓) | Passa alla finestra in basso | `/window down`
-| @k(A-)@k(w) , @k(A-)@k(←) | Passa alla finestra sulla sinistra | `/window left`
-| @k(A-)@k(w) , @k(A-)@k(→) | Passa alla finestrs sulla destra | `/window right`
-| @k(A-)@k(w) , @k(A-)@k(b) | Bilancia le dimensioni di tutte le finestre | `/window balance`
-| @k(A-)@k(w) , @k(A-)@k(s) | Scambia i buffer di due finestra | `/window swap`
-| @k(A-)@k(z)               | Ingrandimento sulla finestra attiva (@k(A-)@k(z) di nuovo: ripristina lo stato iniziale della finestra, prima dell'ingrandimento) | `/window zoom`
-| @k(A-)@k(<)               | Passa al buffer precedente nella lista dei buffer visitati | `/input jump_previously_visited_buffer`
-| @k(A-)@k(>)               | Passa al buffer successivo nella lista dei buffer visitati | `/input jump_next_visited_buffer`
-| @k(A-)@k(/)               | Passa all'ultimo buffer mostrato (prima dell'ultimo passaggio ad un buffer) | `/input jump_last_buffer_displayed`
-| @k(A-)@k(=)               | Attiva/disattiva filtri | `/filter toggle`
+| key[alt-x]         | Zoom on merged buffer (key[alt-x] again: display all merged buffers) | `/input zoom_merged_buffer`
+| key[PgUp]          | Scorre in alto di una pagina nella cronologia del buffer | `/window page_up`
+| key[PgDn]          | Scorre di una pagina in basso nella cronologia del buffer | `/window page_down`
+| key[alt-PgUp]      | Scorre di qualche riga in alto nella cronologia del buffer | `/window scroll_up`
+| key[alt-PgDn]      | Scorre di qualche riga in basso nella cronologia del buffer | `/window scroll_down`
+| key[alt-Home]      | Scorre in cima al buffer | `/window scroll_top`
+| key[alt-End]       | Scorre alla fine del del buffer | `/window scroll_bottom`
+| key[alt-←]      .4+| Passa al buffer precedente .4+| `/buffer -1`
+| key[alt-↑]
+| key[ctrl-p]
+| key[F5]
+| key[alt-→]      .4+| Passa al buffer successivo .4+| `/buffer +1`
+| key[alt-↓]
+| key[ctrl-n]
+| key[F6]
+| key[F7]            | Passa alla finestra precedente | `/window -1`
+| key[F8]            | Passa alla finestra successiva | `/window +1`
+| key[F9]            | Scorre il titolo del buffer sulla sinistra | `/bar scroll title * -30%`
+| key[F10]           | Scorre il titolo del buffer sulla destra | `/bar scroll title * +30%`
+| key[F11]           | Scorre di una pagina in alto nella lista nick | `/bar scroll nicklist * -100%`
+| key[F12]           | Scorre di una pagina in basso nella lista nick | `/bar scroll nicklist * +100%`
+| key[alt-F11]       | Sposta all'inizio della lista nick | `/bar scroll nicklist * b`
+| key[alt-F12]       | Sposta alla fine della lista nick | `/bar scroll nicklist * e`
+| key[alt-a]         | Passa al buffer successivo con attività (con priorità: highligh, messagge, altro) | `/input jump_smart`
+| key[alt-h]         | Pulisce hotlist (notifica di attività su altri buffer) | `/input hotlist_clear`
+| key[alt-j,alt-l]   | Passa all'ultimo buffer | `/input jump_last_buffer`
+| key[alt-j,alt-r]   | Passa al buffer raw IRC | `/server raw`
+| key[alt-j,alt-s]   | Passa al buffer server IRC | `/server jump`
+| key[alt-0...9]     | Passa al buffer numero (0 = 10) | `/buffer *N`
+| key[alt-j,01...99] | Passa al buffer numero | `/buffer NN`
+| key[alt-m]         | Abilita/disabilita | `/mouse toggle`
+| key[alt-n]         | Scorre fino alla notifica successiva | `/window scroll_next_highlight`
+| key[alt-p]         | Scorre fino alla notifica precedente | `/window scroll_previous_highlight`
+| key[alt-u]         | Scorre fino alla prima riga non letta nel buffer | `/window scroll_unread`
+| key[alt-w,alt-↑]   | Passa alla finestra in alto | `/window up`
+| key[alt-w,alt-↓]   | Passa alla finestra in basso | `/window down`
+| key[alt-w,alt-←]   | Passa alla finestra sulla sinistra | `/window left`
+| key[alt-w,alt-→]   | Passa alla finestrs sulla destra | `/window right`
+| key[alt-w,alt-b]   | Bilancia le dimensioni di tutte le finestre | `/window balance`
+| key[alt-w,alt-s]   | Scambia i buffer di due finestra | `/window swap`
+| key[alt-z]         | Ingrandimento sulla finestra attiva (key[alt-z] di nuovo: ripristina lo stato iniziale della finestra, prima dell'ingrandimento) | `/window zoom`
+| key[alt-]key[<]    | Passa al buffer precedente nella lista dei buffer visitati | `/input jump_previously_visited_buffer`
+| key[alt-]key[>]    | Passa al buffer successivo nella lista dei buffer visitati | `/input jump_next_visited_buffer`
+| key[alt-/]         | Passa all'ultimo buffer mostrato (prima dell'ultimo passaggio ad un buffer) | `/input jump_last_buffer_displayed`
+| key[alt-=]         | Attiva/disattiva filtri | `/filter toggle`
 |===
 
 [[key_bindings_search_context]]
 ==== Tasti per il contesto "search"
 
 Questi tasti sono usati nel contesto "search" (quando viene digitato
-@k(C-)@k(r) per cercare del testo nel buffer).
+key[ctrl-r] per cercare del testo nel buffer).
 
 [width="100%",cols="^.^3,.^10,.^5",options="header"]
 |===
-| Key          | Descrizione | Comando
+| Key           | Descrizione | Comando
 // TRANSLATION MISSING
-| @k(C-)@k(r)  | Switch search type: string (default), regular expression | `/input search_switch_regex`
-| @k(A-)@k(c)  | Passa alla ricerca esatta | `/input search_switch_case`
+| key[ctrl-r]   | Switch search type: string (default), regular expression | `/input search_switch_regex`
+| key[alt-c]    | Passa alla ricerca esatta | `/input search_switch_case`
 // TRANSLATION MISSING
-| @k(Tab)      | Switch search in: messages (default), prefixes, prefixes + messages | `/input search_switch_where`
-| @k(↑)        | Cerca riga precedente | `/input search_previous`
-| @k(↓)        | Cerca riga successiva | `/input search_next`
-| @k(Invio) .3+| Ferma ricerca .3+| `/input search_stop`
-| @k(C-)@k(j)
-| @k(C-)@k(m)
+| key[Tab]      | Switch search in: messages (default), prefixes, prefixes + messages | `/input search_switch_where`
+| key[↑]        | Cerca riga precedente | `/input search_previous`
+| key[↓]        | Cerca riga successiva | `/input search_next`
+| key[Invio] .3+| Ferma ricerca .3+| `/input search_stop`
+| key[ctrl-j]
+| key[ctrl-m]
 |===
 
 [[key_bindings_cursor_context]]
@@ -1077,26 +1075,26 @@ sullo schermo.
 
 [width="100%",cols="^.^3,^.^3,.^10,.^8",options="header"]
 |===
-| Tasto        | Zona       | Descrizione | Comando
-| @k(↑)        | -          | Sposta il cursore di una riga in alto | `/cursor move up`
-| @k(↓)        | -          | Sposta il cursore di una riga in basso | `/cursor move down`
-| @k(←)        | -          | Sposta il cursore di una colonna a sinistra | `/cursor move left`
-| @k(→)        | -          | Sposta il cursore di una colonna a destra | `/cursor move right`
-| @k(A-)@k(↑)  | -          | Sposta il cursore nell'area in alto | `/cursor move area_up`
-| @k(A-)@k(↓)  | -          | Sposta il cursore nell'area in basso | `/cursor move area_down`
-| @k(A-)@k(←)  | -          | Sposta il cursore nell'area a sinistra | `/cursor move area_left`
-| @k(A-)@k(→)  | -          | Sposta il cursore nell'area a destra | `/cursor move area_right`
-| @k(m)        | chat       | Cita messaggio | `hsignal:chat_quote_message;/cursor stop`
-| @k(q)        | chat       | Cita prefisso + messaggio | `hsignal:chat_quote_prefix_message;/cursor stop`
-| @k(Q)        | chat       | Cita ora + prefisso + messaggio | `hsignal:chat_quote_time_prefix_message;/cursor stop`
-| @k(b)        | lista nick | Ban di un nick | `/window ${_window_number};/ban ${nick}`
-| @k(k)        | lista nick | Kick di un nick | `/window ${_window_number};/kick ${nick}`
-| @k(K)        | lista nick | Kick e ban di un nick | `/window ${_window_number};/kickban ${nick}`
-| @k(q)        | lista nick | Apri query con il nick | `/window ${_window_number};/query ${nick};/cursor stop`
-| @k(w)        | lista nick | Effettua un whois sul nick | `/window ${_window_number};/whois ${nick}`
-| @k(Enter) .3+| -       .3+| Ferma la modalità cursore .3+| `/cursor stop`
-| @k(C-)@k(j)
-| @k(C-)@k(m)
+| Tasto         | Zona       | Descrizione | Comando
+| key[↑]        | -          | Sposta il cursore di una riga in alto | `/cursor move up`
+| key[↓]        | -          | Sposta il cursore di una riga in basso | `/cursor move down`
+| key[←]        | -          | Sposta il cursore di una colonna a sinistra | `/cursor move left`
+| key[→]        | -          | Sposta il cursore di una colonna a destra | `/cursor move right`
+| key[alt-↑]    | -          | Sposta il cursore nell'area in alto | `/cursor move area_up`
+| key[alt-↓]    | -          | Sposta il cursore nell'area in basso | `/cursor move area_down`
+| key[alt-←]    | -          | Sposta il cursore nell'area a sinistra | `/cursor move area_left`
+| key[alt-→]    | -          | Sposta il cursore nell'area a destra | `/cursor move area_right`
+| key[m]        | chat       | Cita messaggio | `hsignal:chat_quote_message;/cursor stop`
+| key[q]        | chat       | Cita prefisso + messaggio | `hsignal:chat_quote_prefix_message;/cursor stop`
+| key[Q]        | chat       | Cita ora + prefisso + messaggio | `hsignal:chat_quote_time_prefix_message;/cursor stop`
+| key[b]        | lista nick | Ban di un nick | `/window ${_window_number};/ban ${nick}`
+| key[k]        | lista nick | Kick di un nick | `/window ${_window_number};/kick ${nick}`
+| key[K]        | lista nick | Kick e ban di un nick | `/window ${_window_number};/kickban ${nick}`
+| key[q]        | lista nick | Apri query con il nick | `/window ${_window_number};/query ${nick};/cursor stop`
+| key[w]        | lista nick | Effettua un whois sul nick | `/window ${_window_number};/whois ${nick}`
+| key[Enter] .3+| -       .3+| Ferma la modalità cursore .3+| `/cursor stop`
+| key[ctrl-j]
+| key[ctrl-m]
 |===
 
 [[key_bindings_mouse_context]]
@@ -1109,32 +1107,32 @@ evento del mouse.
 [width="100%",cols="^.^3,^.^3,^.^3,.^10,.^8",options="header"]
 |===
 | Tasto ^(1)^ | Azione | Zona | Descrizione | Comando
-| ◾◽◽     | -                | chat                 | Passa alla finestra | `/window ${_window_number}`
-| ◾◽◽     | sinistra         | chat                 | Passa al buffer precedente | `/window ${_window_number};/buffer +1`
-| ◾◽◽     | destra           | chat                 | Passa al buffer successivo | `/window ${_window_number};/buffer +1`
-| ◾◽◽     | sinistra (lungo) | chat                 | Switch to first buffer | `/window ${_window_number};/buffer 1`
-| ◾◽◽     | destra (lungo)   | chat                 | Passa all'ultimo buffer | `/window ${_window_number};/input jump_last_buffer`
-| ◾◽◽     | -                | chat (script buffer) | Select line in script buffer | `/script go ${_chat_line_y}`
-| ◽◽◾     | -                | chat (script buffer) | Install/remove script | `/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}`
-| ⇑       | -                | chat                 | Scorre di qualche riga in alto nella cronologia del buffer | `/window scroll_up -window ${_window_number}`
-| ⇓       | -                | chat                 | Scorre di qualche riga in basso nella cronologia del buffer | `/window scroll_down -window ${_window_number}`
-| ⇑       | -                | chat (script buffer) | Move 5 lines up in script buffer | `/script up 5`
-| ⇓       | -                | chat (script buffer) | Move 5 lines down in script buffer | `/script down 5`
-| @k(C-)⇑ | -                | chat                 | Scroll horizontally to the left | `/window scroll_horiz -window ${_window_number} -10%`
-| @k(C-)⇓ | -                | chat                 | Scroll horizontally to the right | `/window scroll_horiz -window ${_window_number} +10%`
-| ◾◽◽     | su               | lista nick           | Scorre di una pagina in alto nella lista nick | `/bar scroll nicklist ${_window_number} -100%`
-| ◾◽◽     | giù              | lista nick           | Scorre di una pagina in basso nella lista nick | `/bar scroll nicklist ${_window_number} +100%`
-| ◾◽◽     | up (lungo)       | lista nick           | Sposta all'inizio della lista nick | `/bar scroll nicklist ${_window_number} b`
-| ◾◽◽     | giù (lungo)      | lista nick           | Sposta alla fine della lista nick | `/bar scroll nicklist ${_window_number} e`
-| ◾◽◽     | -                | lista nick           | Apre una query con un nick | `/window ${_window_number};/query ${nick}`
-| ◽◽◾     | -                | lista nick           | Effettua un whois su un nick | `/window ${_window_number};/whois ${nick}`
-| ◾◽◽     | sinistra         | lista nick           | Kick di un nick | `/window ${_window_number};/kick ${nick}`
-| ◾◽◽     | sinistra (lungo) | lista nick           | Kick e ban di un nick | `/window ${_window_number};/kickban ${nick}`
-| ◽◽◾     | sinistra         | lista nick           | Ban di un nick | `/window ${_window_number};/ban ${nick}`
-| ◽◽◾     | -                | input                | Cattura un evento del mouse e inserisce il codice nella riga di comando | `/input grab_mouse_area`
-| ⇑       | -                | ogni barra           | Scorre la barra del -20% | `/bar scroll ${_bar_name} ${_window_number} -20%`
-| ⇓       | -                | ogni barra           | Scorre la barra del +20% | `/bar scroll ${_bar_name} ${_window_number} +20%`
-| ◽◾◽     | -                | ovunque              | Avvia la modalità cursore in questo punto | `/cursor go ${_x},${_y}`
+| ◾◽◽         | -                | chat                 | Passa alla finestra | `/window ${_window_number}`
+| ◾◽◽         | sinistra         | chat                 | Passa al buffer precedente | `/window ${_window_number};/buffer +1`
+| ◾◽◽         | destra           | chat                 | Passa al buffer successivo | `/window ${_window_number};/buffer +1`
+| ◾◽◽         | sinistra (lungo) | chat                 | Switch to first buffer | `/window ${_window_number};/buffer 1`
+| ◾◽◽         | destra (lungo)   | chat                 | Passa all'ultimo buffer | `/window ${_window_number};/input jump_last_buffer`
+| ◾◽◽         | -                | chat (script buffer) | Select line in script buffer | `/script go ${_chat_line_y}`
+| ◽◽◾         | -                | chat (script buffer) | Install/remove script | `/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}`
+| ⇑           | -                | chat                 | Scorre di qualche riga in alto nella cronologia del buffer | `/window scroll_up -window ${_window_number}`
+| ⇓           | -                | chat                 | Scorre di qualche riga in basso nella cronologia del buffer | `/window scroll_down -window ${_window_number}`
+| ⇑           | -                | chat (script buffer) | Move 5 lines up in script buffer | `/script up 5`
+| ⇓           | -                | chat (script buffer) | Move 5 lines down in script buffer | `/script down 5`
+| key[ctrl-]⇑ | -                | chat                 | Scroll horizontally to the left | `/window scroll_horiz -window ${_window_number} -10%`
+| key[ctrl-]⇓ | -                | chat                 | Scroll horizontally to the right | `/window scroll_horiz -window ${_window_number} +10%`
+| ◾◽◽         | su               | lista nick           | Scorre di una pagina in alto nella lista nick | `/bar scroll nicklist ${_window_number} -100%`
+| ◾◽◽         | giù              | lista nick           | Scorre di una pagina in basso nella lista nick | `/bar scroll nicklist ${_window_number} +100%`
+| ◾◽◽         | up (lungo)       | lista nick           | Sposta all'inizio della lista nick | `/bar scroll nicklist ${_window_number} b`
+| ◾◽◽         | giù (lungo)      | lista nick           | Sposta alla fine della lista nick | `/bar scroll nicklist ${_window_number} e`
+| ◾◽◽         | -                | lista nick           | Apre una query con un nick | `/window ${_window_number};/query ${nick}`
+| ◽◽◾         | -                | lista nick           | Effettua un whois su un nick | `/window ${_window_number};/whois ${nick}`
+| ◾◽◽         | sinistra         | lista nick           | Kick di un nick | `/window ${_window_number};/kick ${nick}`
+| ◾◽◽         | sinistra (lungo) | lista nick           | Kick e ban di un nick | `/window ${_window_number};/kickban ${nick}`
+| ◽◽◾         | sinistra         | lista nick           | Ban di un nick | `/window ${_window_number};/ban ${nick}`
+| ◽◽◾         | -                | input                | Cattura un evento del mouse e inserisce il codice nella riga di comando | `/input grab_mouse_area`
+| ⇑           | -                | ogni barra           | Scorre la barra del -20% | `/bar scroll ${_bar_name} ${_window_number} -20%`
+| ⇓           | -                | ogni barra           | Scorre la barra del +20% | `/bar scroll ${_bar_name} ${_window_number} +20%`
+| ◽◾◽         | -                | ovunque              | Avvia la modalità cursore in questo punto | `/cursor go ${_x},${_y}`
 |===
 
 // TRANSLATION MISSING
@@ -1156,23 +1154,23 @@ Per abilitare il mouse all'avvio:
 /set weechat.look.mouse on
 ----
 
-Per abilitarlo subito, digitare @k(A-)@k(m) oppure eseguire il seguente comando:
+Per abilitarlo subito, digitare key[alt-m] oppure eseguire il seguente comando:
 
 ----
 /mouse enable
 ----
 
 È possibile disabilitarlo temporaneamente, e associare il comando ad un
-tasto. Ad esempio il tasto @k(A-)@k(x) per disabilitare il mouse per 10 secondi:
+tasto. Ad esempio il tasto key[alt-x] per disabilitare il mouse per 10 secondi:
 
 ----
 /key bind meta-x /mouse toggle 10
 ----
 
 Quando il mouse è abilitato in WeeChat, è possibile usare il modificatore
-@k(-S-) per selezionare o cliccare nel terminale, come se il mouse fosse
-disabilitato (in alcuni terminali come iTerm, bisogna usare @k(-A-) invece di
-@k(-S-)).
+key[shift] per selezionare o cliccare nel terminale, come se il mouse fosse
+disabilitato (in alcuni terminali come iTerm, bisogna usare key[alt] invece di
+key[shift]).
 
 [NOTE]
 Per qualunque problema con il mouse, consultare 'FAQ di WeeChat'.
@@ -1194,9 +1192,9 @@ Elenco di modificatori
 [width="50%",cols="3m,4",options="header"]
 |===
 | Modificatore | Descrizione
-| ctrl         | Tasto @k(-C-)
-| alt          | Tasto @k(-A-)
-| ctrl-alt     | Tasto @k(-C-) e @k(-A-)
+| ctrl         | Tasto key[ctrl]
+| alt          | Tasto key[alt]
+| ctrl-alt     | Tasto key[ctrl-]key[alt]
 |===
 
 Elenco di pulsanti/rotellina:
@@ -1294,37 +1292,37 @@ poi un altro. Ad esempio, per inviare il testo '/set' sul buffer attivo:
 ==== Codici colore
 
 Per alcuni plugin come IRC, è possibile usare codici colori ed attributi,
-come segue (digitare @k(C-)@k(c) poi la lettera che segue, con il valore
+come segue (digitare key[ctrl-c] poi la lettera che segue, con il valore
 opzionale):
 
-@k(C-)@k(c) , @k(b)::
+key[ctrl-c,b]::
     testo in grassetto
 
-@k(C-)@k(c) , @k(c) , @k(xx)::
+key[ctrl-c,c], key[xx]::
     colore del testo `xx` (consultare la lista di colori che segue)
 
-@k(C-)@k(c) , @k(c) , @k(xx,yy)::
+key[ctrl-c,c], key[xx]key[,]key[yy]::
     colore del testo `xx` e di sfondo `yy` (consultare la lista di colori
     che segue)
 
 // TRANSLATION MISSING
-@k(C-)@k(c) , @k(i)::
+key[ctrl-c,i]::
     italic text
 
-@k(C-)@k(c) , @k(o)::
+key[ctrl-c,o]::
     disabilita colori ed attributi
 
-@k(C-)@k(c) , @k(v)::
+key[ctrl-c,v]::
     video inverso (inverte il colore del testo con quello di sfondo)
 
-@k(C-)@k(c) , @k(_)::
+key[ctrl-c,_]::
     testo sottolineato
 
 [NOTE]
-Lo stesso codice (senza numero per @k(C-)@k(c) , @k(c)) può essere usato per
+Lo stesso codice (senza numero per key[ctrl-c,c]) può essere usato per
 terminare l'attributo.
 
-I codici colore per @k(C-)@k(c) , @k(c) sono:
+I codici colore per key[ctrl-c,c] sono:
 
 [width="50%",cols="^1m,3,3",options="header"]
 |===
@@ -1443,7 +1441,7 @@ sullo schermo (per mostrare buffer e barre).
 In aggiunta ai colori di base, si può usare un numero per il colore compreso
 tra 1 e il limite del proprio terminale.
 
-Il comando '/color' mostra i colori attivi ed i limiti. Com @k(A-)@k(c) si può
+Il comando '/color' mostra i colori attivi ed i limiti. Com key[alt-c] si può
 passare temporaneamente ai colori del terminale per sceglierne uno.
 
 Se ad esempio si desidera visualizzare l'ora in arancione nel buffer:

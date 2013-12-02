@@ -221,7 +221,7 @@ barre, WeeChat recréera automatiquement la barre par défaut "input" si l'objet
 
 Vous pouvez utiliser un terminal qui propose la sélection rectangulaire (comme
 rxvt-unicode, konsole, gnome-terminal, etc...). La touche est habituellement
-@k(C-)@k(A-) sélection à la souris.
+key[ctrl-]key[alt-] sélection à la souris.
 
 Une autre solution est de déplacer la liste des pseudos en haut ou en bas, par
 exemple :
@@ -316,8 +316,8 @@ couleurs.
 [[search_text]]
 === Comment puis-je chercher du texte dans le tampon (comme /lastlog dans irssi) ?
 
-La touche par défaut est @k(C-)@k(r) (la commande est : `/input search_text`).
-Et sauter aux highlights : @k(A-)@k(p)/@k(n).
+La touche par défaut est key[ctrl-r] (la commande est : `/input search_text`).
+Et sauter aux highlights : key[alt-p] / key[alt-n].
 
 Voir le guide utilisateur pour plus d'information sur cette fonctionnalité
 (raccourcis clavier par défaut).
@@ -348,14 +348,14 @@ Puis recharger les ressources (`xrdb -override ~/.Xresources`) ou redémarrez X.
 
 Les raccourcis clavier sont modifiables avec la commande `/key`.
 
-La touche par défaut @k(A-)@k(k) permet de capturer le code d'une touche et de
+La touche par défaut key[alt-k] permet de capturer le code d'une touche et de
 l'inclure dans la ligne de commande.
 
 [[jump_to_buffer_11_or_higher]]
 === Quelle est la touche pour sauter vers le tampon 11 (ou numéro plus élevé) ?
 
-La touche est @k(A-)@k(j) puis 2 chiffres, par exemple @k(A-)@k(j) puis @k(1),
-@k(1) pour sauter au tampon 11.
+La touche est key[alt-j] puis 2 chiffres, par exemple key[alt-j], key[1],
+key[1] pour sauter au tampon 11.
 
 Vous pouvez définir une touche, par exemple :
 
@@ -369,7 +369,7 @@ La liste des touches par défaut est dans le Guide utilisateur.
 === Comment utiliser l'historique global (au lieu de l'historique du tampon) avec les touches haut et bas ?
 
 Vous pouvez assigner les touches haut et bas sur l'historique global (les
-touches par défaut pour l'historique global sont @k(C-)@k(↑) et @k(C-)@k(↓)).
+touches par défaut pour l'historique global sont key[ctrl-↑] et key[ctrl-↓]).
 
 Exemple :
 
@@ -380,7 +380,7 @@ Exemple :
 
 [NOTE]
 Les touches "meta2-A" et "meta2-B" peuvent être différentes dans votre terminal.
-Pour trouver le code de la touche appuyez sur @k(A-)@k(k) puis la touche (haut
+Pour trouver le code de la touche appuyez sur key[alt-k] puis la touche (haut
 ou bas).
 
 [[mouse]]
@@ -429,9 +429,9 @@ souris, comme rxvt-unicode.
 === Comment puis-je sélectionner ou coller du texte quand la souris est activée dans WeeChat ?
 
 Lorsque la souris est activée dans WeeChat, vous pouvez utiliser la touche
-@k(-S-) pour sélectionner ou cliquer dans le terminal, comme si la souris était
-désactivée (sous certains terminaux comme iTerm, vous devez utiliser @k(-A-) au
-lieu de @k(-S-)).
+key[shift] pour sélectionner ou cliquer dans le terminal, comme si la souris
+était désactivée (sous certains terminaux comme iTerm, vous devez utiliser
+key[alt] au lieu de key[shift]).
 
 [[irc]]
 == IRC
@@ -536,7 +536,7 @@ quel tampon.
 Elle permet de filtrer des lignes dans les tampons à l'aide de tags ou
 d'expression régulière pour le préfixe et contenu de la ligne.
 Les lignes filtrées sont simplement cachées, pas supprimées, et il est possible
-de les voir en désactivant les filtres (par défaut, la touche @k(A-)@k(=)
+de les voir en désactivant les filtres (par défaut, la touche key[alt-=]
 active/désactive les filtres).
 
 [[filter_irc_join_part_quit]]
@@ -665,7 +665,8 @@ Autres scripts sur ce sujet : http://weechat.org/scripts/stable/tag/notify/
 [[irc_target_buffer]]
 === Comment puis-je changer le serveur cible pour les commandes avec des tampons mélangés (comme le tampon avec les serveurs) ?
 
-La touche par défaut est @k(C-)@k(x) (la commande est : `/input switch_active_buffer`).
+La touche par défaut est key[ctrl-x] (la commande est :
+`/input switch_active_buffer`).
 
 [[plugins_scripts]]
 == Extensions / scripts

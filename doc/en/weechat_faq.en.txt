@@ -214,7 +214,8 @@ any bar:
 === How can I copy/paste text without pasting nicklist?
 
 You can use a terminal with rectangular selection (like rxvt-unicode,
-konsole, gnome-terminal, ...). Key is usually @k(C-)@k(A-) mouse selection.
+konsole, gnome-terminal, ...). Key is usually key[ctrl-]key[alt-] mouse
+selection.
 
 Another solution is to move nicklist to top or bottom, for example:
 
@@ -302,8 +303,8 @@ Please read user's guide for more information about colors management.
 [[search_text]]
 === How can I search text in buffer (like /lastlog in irssi)?
 
-The default key is @k(C-)@k(r) (command is: `/input search_text`).
-And jump to highlights: @k(A-)@k(p)/@k(n).
+The default key is key[ctrl-r] (command is: `/input search_text`).
+And jump to highlights: key[alt-p] / key[alt-n].
 
 See user's guide for more info about this feature (default key bindings).
 
@@ -332,13 +333,13 @@ And then reload resources (`xrdb -override ~/.Xresources`) or restart X.
 
 Key bindings are customizable with `/key` command.
 
-Default key @k(A-)@k(k) lets you grab key code and insert it in command line.
+Default key key[alt-k] lets you grab key code and insert it in command line.
 
 [[jump_to_buffer_11_or_higher]]
 === What is the key to jump to buffer 11 (or higher number)?
 
-The key is @k(A-)@k(j) and then 2 digits, for example @k(A-)@k(j) then @k(1),
-@k(1) to jump to buffer 11.
+The key is key[alt-j] and then 2 digits, for example key[alt-j], key[1], key[1]
+to jump to buffer 11.
 
 You can bind a key, for example:
 
@@ -352,7 +353,7 @@ List of default keys is in User's guide.
 === How to use global history (instead of buffer history) with up and down keys?
 
 You can bind the up and down keys on global history (default keys for global
-history are @k(C-)@k(↑) and @k(C-)@k(↓)).
+history are key[ctrl-↑] and key[ctrl-↓]).
 
 Example:
 
@@ -363,7 +364,7 @@ Example:
 
 [NOTE]
 Keys "meta2-A" and "meta2-B" may be different in your terminal. To find key
-code press @k(A-)@k(k) then key (up or down).
+code press key[alt-k] then key (up or down).
 
 [[mouse]]
 == Mouse
@@ -409,9 +410,9 @@ rxvt-unicode.
 [[mouse_select_paste]]
 === How can I select or paste text in terminal when mouse is enabled in WeeChat?
 
-When mouse is enabled in WeeChat, you can use @k(-S-) modifier to select or
+When mouse is enabled in WeeChat, you can use key[shift] modifier to select or
 click in terminal, as if the mouse was disabled (on some terminals like iTerm,
-you have to use @k(-A-) instead of @k(-S-)).
+you have to use key[alt] instead of key[shift]).
 
 [[irc]]
 == IRC
@@ -513,7 +514,7 @@ The `/filter` command is a core command, so it applies to any buffer.
 It lets you filter some lines in buffers with tags or regular expression for
 prefix and content of line.
 Filtered lines are only hidden, not deleted, and you can see them if you
-disable filters (by default, the key @k(A-)@k(=) toggles filters).
+disable filters (by default, the key key[alt-=] toggles filters).
 
 [[filter_irc_join_part_quit]]
 === How can I filter join/part/quit messages on IRC channels?
@@ -638,7 +639,7 @@ Other scripts on this subject: http://weechat.org/scripts/stable/tag/notify/
 [[irc_target_buffer]]
 === How can I change target buffer for commands on merged buffers (like buffer with servers)?
 
-The default key is @k(C-)@k(x) (command is: `/input switch_active_buffer`).
+The default key is key[ctrl-x] (command is: `/input switch_active_buffer`).
 
 [[plugins_scripts]]
 == Plugins / scripts
