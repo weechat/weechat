@@ -409,7 +409,7 @@ irc_completion_channel_topic_cb (void *data, const char *completion_item,
                                  struct t_gui_buffer *buffer,
                                  struct t_gui_completion *completion)
 {
-    char *topic, *topic_color;
+    char *topic;
     int length;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
@@ -442,12 +442,9 @@ irc_completion_channel_topic_cb (void *data, const char *completion_item,
         else
             topic = strdup (ptr_channel->topic);
 
-        topic_color = irc_color_decode_for_user_entry ((topic) ? topic : ptr_channel->topic);
         weechat_hook_completion_list_add (completion,
-                                          (topic_color) ? topic_color : ((topic) ? topic : ptr_channel->topic),
+                                          (topic) ? topic : ptr_channel->topic,
                                           0, WEECHAT_LIST_POS_SORT);
-        if (topic_color)
-            free (topic_color);
         if (topic)
             free (topic);
     }
