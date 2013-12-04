@@ -10102,6 +10102,9 @@ Arguments:
   highlights only, "2" = add for highlights and messages, "3" = add for all
   messages
 
+| print_hooks_enabled | "0" or "1" |
+  "0" to disable print hooks, "1" to enable them (default for a new buffer)
+
 | day_change | "0" or "1" |
   "0" to hide messages for the day change, "1" to see them
   (default for a new buffer)

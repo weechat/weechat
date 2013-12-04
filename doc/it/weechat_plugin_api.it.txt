@@ -10263,6 +10263,10 @@ Argomenti:
   messaggi, "3" = aggiungere per tutti i messaggi
 
 // TRANSLATION MISSING
+| print_hooks_enabled | "0" oppure "1" |
+  "0" to disable print hooks, "1" to enable them (default for a new buffer)
+
+// TRANSLATION MISSING
 | day_change | "0" oppure "1" |
   "0" to hide messages for the day change, "1" to see them
   (default for a new buffer)

@@ -10276,6 +10276,10 @@ Paramètres :
   hotlist, "1" = ajouter pour les highlights seulement, "2" = ajouter pour les
   highlights et les messages, "3" = ajouter pour tous les messages
 
+| print_hooks_enabled | "0" ou "1" |
+  "0" pour désactiver les hooks "print", "1" pour les activer
+  (par défaut pour un nouveau tampon)
+
 | day_change | "0" ou "1" |
   "0" pour cacher les messages de changement de jour, "1" pour les voir
   (par défaut pour un nouveau tampon)
