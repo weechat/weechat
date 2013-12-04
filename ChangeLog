@@ -11,6 +11,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 0.4.3 (under dev)
 
+* core: add buffer property "day_change" to hide messages for the day change in
+  specific buffers
 * core: replace default key key[ctrl-c,r] by key[ctrl-c,v] for reverse video in
   messages
 * core: replace default key key[ctrl-c,u] by key[ctrl-c,_] for underlined text

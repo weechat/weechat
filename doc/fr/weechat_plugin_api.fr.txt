@@ -10058,6 +10058,7 @@ Paramètres :
 ** 'active' : 1 si le tampon est actif, 0 si le tampon est mélangé et n'est pas
    sélectionné
 ** 'print_hooks_enabled' : 1 si les hooks "print" sont activés, sinon 0
+** 'day_change' : 1 si les messages de changement de jour sont affichés, sinon 0
 ** 'lines_hidden' : 1 si au moins une ligne est cachée dans le tampon
    (filtrée), ou 0 si toutes les lignes sont affichées
 ** 'prefix_max_length' : longueur maximale du préfixe dans ce tampon
@@ -10274,6 +10275,10 @@ Paramètres :
   Définit le niveau de notification du tampon : "0" = ne jamais ajouter à la
   hotlist, "1" = ajouter pour les highlights seulement, "2" = ajouter pour les
   highlights et les messages, "3" = ajouter pour tous les messages
+
+| day_change | "0" ou "1" |
+  "0" pour cacher les messages de changement de jour, "1" pour les voir
+  (par défaut pour un nouveau tampon)
 
 | title | toute chaîne |
   Change le titre du tampon

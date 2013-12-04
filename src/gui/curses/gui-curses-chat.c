@@ -30,6 +30,7 @@
 #include "../../core/weechat.h"
 #include "../../core/wee-config.h"
 #include "../../core/wee-eval.h"
+#include "../../core/wee-hashtable.h"
 #include "../../core/wee-hook.h"
 #include "../../core/wee-string.h"
 #include "../../core/wee-utf8.h"
@@ -1255,7 +1256,9 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     lines_displayed = 0;
 
     /* display message before first line of buffer if date is not today */
-    if ((line->data->date != 0) && CONFIG_BOOLEAN(config_look_day_change))
+    if ((line->data->date != 0)
+        && CONFIG_BOOLEAN(config_look_day_change)
+        && window->buffer->day_change)
     {
         ptr_time = NULL;
         ptr_prev_line = gui_line_get_prev_displayed (line);
@@ -1443,7 +1446,9 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     }
 
     /* display message if day has changed after this line */
-    if ((line->data->date != 0) && CONFIG_BOOLEAN(config_look_day_change))
+    if ((line->data->date != 0)
+        && CONFIG_BOOLEAN(config_look_day_change)
+        && window->buffer->day_change)
     {
         ptr_time = NULL;
         ptr_next_line = gui_line_get_next_displayed (line);

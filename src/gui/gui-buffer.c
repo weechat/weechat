@@ -75,8 +75,8 @@ char *gui_buffer_notify_string[GUI_BUFFER_NUM_NOTIFY] =
 
 char *gui_buffer_properties_get_integer[] =
 { "number", "layout_number", "layout_number_merge_order", "type", "notify",
-  "num_displayed", "active", "print_hooks_enabled", "lines_hidden",
-  "prefix_max_length", "time_for_each_line", "nicklist",
+  "num_displayed", "active", "print_hooks_enabled", "day_change",
+  "lines_hidden", "prefix_max_length", "time_for_each_line", "nicklist",
   "nicklist_case_sensitive", "nicklist_max_length", "nicklist_display_groups",
   "nicklist_count", "nicklist_groups_count", "nicklist_nicks_count",
   "nicklist_visible_count", "input", "input_get_unknown_commands",
@@ -96,8 +96,8 @@ char *gui_buffer_properties_get_pointer[] =
   NULL
 };
 char *gui_buffer_properties_set[] =
-{ "unread", "display", "print_hooks_enabled", "number", "name", "short_name",
-  "type", "notify", "title", "time_for_each_line", "nicklist",
+{ "unread", "display", "print_hooks_enabled", "day_change", "number", "name",
+  "short_name", "type", "notify", "title", "time_for_each_line", "nicklist",
   "nicklist_case_sensitive", "nicklist_display_groups", "highlight_words",
   "highlight_words_add", "highlight_words_del", "highlight_regex",
   "highlight_tags", "hotlist_max_level_nicks", "hotlist_max_level_nicks_add",
@@ -475,6 +475,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         new_buffer->num_displayed = 0;
         new_buffer->active = 1;
         new_buffer->print_hooks_enabled = 1;
+        new_buffer->day_change = 1;
 
         /* close callback */
         new_buffer->close_callback = close_callback;
@@ -859,6 +860,8 @@ gui_buffer_get_integer (struct t_gui_buffer *buffer, const char *property)
             return buffer->active;
         else if (string_strcasecmp (property, "print_hooks_enabled") == 0)
             return buffer->print_hooks_enabled;
+        else if (string_strcasecmp (property, "day_change") == 0)
+            return buffer->day_change;
         else if (string_strcasecmp (property, "lines_hidden") == 0)
             return buffer->lines->lines_hidden;
         else if (string_strcasecmp (property, "prefix_max_length") == 0)
@@ -1541,6 +1544,16 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
         number = strtol (value, &error, 10);
         if (error && !error[0])
             buffer->print_hooks_enabled = (number) ? 1 : 0;
+    }
+    else if (string_strcasecmp (property, "day_change") == 0)
+    {
+        error = NULL;
+        number = strtol (value, &error, 10);
+        if (error && !error[0])
+        {
+            buffer->day_change = (number) ? 1 : 0;
+            gui_buffer_ask_chat_refresh (buffer, 2);
+        }
     }
     else if (string_strcasecmp (property, "number") == 0)
     {
@@ -3203,6 +3216,7 @@ gui_buffer_hdata_buffer_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_gui_buffer, num_displayed, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, active, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, print_hooks_enabled, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_buffer, day_change, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, close_callback, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, close_callback_data, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, title, STRING, 0, NULL, NULL);
@@ -3373,6 +3387,8 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
     if (!infolist_new_var_integer (ptr_item, "active", buffer->active))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "print_hooks_enabled", buffer->print_hooks_enabled))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "day_change", buffer->day_change))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "first_line_not_read", buffer->lines->first_line_not_read))
         return 0;
@@ -3576,6 +3592,7 @@ gui_buffer_print_log ()
         log_printf ("  num_displayed . . . . . : %d",    ptr_buffer->num_displayed);
         log_printf ("  active. . . . . . . . . : %d",    ptr_buffer->active);
         log_printf ("  print_hooks_enabled . . : %d",    ptr_buffer->print_hooks_enabled);
+        log_printf ("  day_change. . . . . . . : %d",    ptr_buffer->day_change);
         log_printf ("  close_callback. . . . . : 0x%lx", ptr_buffer->close_callback);
         log_printf ("  close_callback_data . . : 0x%lx", ptr_buffer->close_callback_data);
         log_printf ("  title . . . . . . . . . : '%s'",  ptr_buffer->title);

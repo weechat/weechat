@@ -9890,6 +9890,7 @@ Arguments:
 ** 'num_displayed': number of windows displaying buffer
 ** 'active': 1 if buffer is active, 0 if buffer is merged and not selected
 ** 'print_hooks_enabled': 1 if print hooks are enabled, otherwise 0
+** 'day_change': 1 if messages for the day change are displayed, otherwise 0
 ** 'lines_hidden': 1 if at least one line is hidden on buffer (filtered), or 0
    if all lines are displayed
 ** 'prefix_max_length': max length for prefix in this buffer
@@ -10100,6 +10101,10 @@ Arguments:
   Set notify level for buffer: "0" = never add to hotlist, "1" = add for
   highlights only, "2" = add for highlights and messages, "3" = add for all
   messages
+
+| day_change | "0" or "1" |
+  "0" to hide messages for the day change, "1" to see them
+  (default for a new buffer)
 
 | title | any string |
   Set new title for buffer
