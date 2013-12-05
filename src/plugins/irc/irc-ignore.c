@@ -177,6 +177,7 @@ irc_ignore_check (struct t_irc_server *server, const char *channel,
 {
     struct t_irc_ignore *ptr_ignore;
     int server_match, channel_match;
+    char *pos;
 
     if (!server)
         return 0;
@@ -223,8 +224,20 @@ irc_ignore_check (struct t_irc_server *server, const char *channel,
         {
             if (nick && (regexec (ptr_ignore->regex_mask, nick, 0, NULL, 0) == 0))
                 return 1;
-            if (host && (regexec (ptr_ignore->regex_mask, host, 0, NULL, 0) == 0))
-                return 1;
+            if (host)
+            {
+                if (regexec (ptr_ignore->regex_mask, host, 0, NULL, 0) == 0)
+                    return 1;
+                if (!strchr (ptr_ignore->mask, '!'))
+                {
+                    pos = strchr (host, '!');
+                    if (pos && (regexec (ptr_ignore->regex_mask, pos + 1,
+                                         0, NULL, 0) == 0))
+                    {
+                        return 1;
+                    }
+                }
+            }
         }
     }
 
