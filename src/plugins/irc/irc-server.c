@@ -2842,7 +2842,7 @@ irc_server_timer_cb (void *data, int remaining_calls)
                     }
                     /* lag timeout? => disconnect */
                     if ((weechat_config_integer (irc_config_network_lag_reconnect) > 0)
-                        && (ptr_server->lag / 1000 > weechat_config_integer (irc_config_network_lag_reconnect)))
+                        && (ptr_server->lag >= weechat_config_integer (irc_config_network_lag_reconnect) * 1000))
                     {
                         weechat_printf (ptr_server->buffer,
                                         _("%s%s: lag is high, reconnecting to "
@@ -2853,6 +2853,23 @@ irc_server_timer_cb (void *data, int remaining_calls)
                                         ptr_server->name,
                                         IRC_COLOR_RESET);
                         irc_server_disconnect (ptr_server, 0, 1);
+                    }
+                    else
+                    {
+                        /* stop lag counting if max lag is reached */
+                        if ((weechat_config_integer (irc_config_network_lag_max) > 0)
+                            && (ptr_server->lag >= (weechat_config_integer (irc_config_network_lag_max) * 1000)))
+                        {
+                            /* refresh lag item */
+                            ptr_server->lag_last_refresh = current_time;
+                            weechat_bar_item_update ("lag");
+
+                            /* schedule next lag check in 5 seconds */
+                            ptr_server->lag_check_time.tv_sec = 0;
+                            ptr_server->lag_check_time.tv_usec = 0;
+                            ptr_server->lag_next_check = time (NULL) +
+                                weechat_config_integer (irc_config_network_lag_check);
+                        }
                     }
                 }
 

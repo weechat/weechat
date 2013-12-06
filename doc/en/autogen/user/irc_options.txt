@@ -363,13 +363,18 @@
 ** type: integer
 ** values: 0 .. 604800 (default value: `60`)
 
+* [[option_irc.network.lag_max]] *irc.network.lag_max*
+** description: `maximum lag (in seconds): if this lag is reached, WeeChat will consider that the answer from server (pong) will never be received and will give up counting the lag (0 = never give up)`
+** type: integer
+** values: 0 .. 604800 (default value: `1800`)
+
 * [[option_irc.network.lag_min_show]] *irc.network.lag_min_show*
 ** description: `minimum lag to show (in milliseconds)`
 ** type: integer
 ** values: 0 .. 86400000 (default value: `500`)
 
 * [[option_irc.network.lag_reconnect]] *irc.network.lag_reconnect*
-** description: `reconnect to server if lag is greater than this value (in seconds, 0 = never reconnect)`
+** description: `reconnect to server if lag is greater than or equal to this value (in seconds, 0 = never reconnect); this value must be less than or equal to irc.network.lag_max`
 ** type: integer
 ** values: 0 .. 604800 (default value: `0`)
 

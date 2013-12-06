@@ -363,13 +363,18 @@
 ** タイプ: 整数
 ** 値: 0 .. 604800 (デフォルト値: `60`)
 
+* [[option_irc.network.lag_max]] *irc.network.lag_max*
+** 説明: `maximum lag (in seconds): if this lag is reached, WeeChat will consider that the answer from server (pong) will never be received and will give up counting the lag (0 = never give up)`
+** タイプ: 整数
+** 値: 0 .. 604800 (デフォルト値: `1800`)
+
 * [[option_irc.network.lag_min_show]] *irc.network.lag_min_show*
 ** 説明: `表示する最短の遅延 (ミリ秒単位)`
 ** タイプ: 整数
 ** 値: 0 .. 86400000 (デフォルト値: `500`)
 
 * [[option_irc.network.lag_reconnect]] *irc.network.lag_reconnect*
-** 説明: `この値より長く遅延した場合は再接続 (秒単位、0 = 再接続しない)`
+** 説明: `reconnect to server if lag is greater than or equal to this value (in seconds, 0 = never reconnect); this value must be less than or equal to irc.network.lag_max`
 ** タイプ: 整数
 ** 値: 0 .. 604800 (デフォルト値: `0`)
 

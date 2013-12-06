@@ -127,6 +127,7 @@ struct t_config_option *irc_config_network_autoreconnect_delay_max;
 struct t_config_option *irc_config_network_colors_receive;
 struct t_config_option *irc_config_network_colors_send;
 struct t_config_option *irc_config_network_lag_check;
+struct t_config_option *irc_config_network_lag_max;
 struct t_config_option *irc_config_network_lag_min_show;
 struct t_config_option *irc_config_network_lag_reconnect;
 struct t_config_option *irc_config_network_lag_refresh_interval;
@@ -2739,6 +2740,14 @@ irc_config_init ()
            "check)"),
         NULL, 0, 3600 * 24 * 7, "60", NULL, 0, NULL, NULL,
         &irc_config_change_network_lag_check, NULL, NULL, NULL);
+    irc_config_network_lag_max = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "lag_max", "integer",
+        N_("maximum lag (in seconds): if this lag is reached, WeeChat will "
+           "consider that the answer from server (pong) will never be received "
+           "and will give up counting the lag (0 = never give up)"),
+        NULL, 0, 3600 * 24 * 7, "1800", NULL, 0, NULL, NULL,
+        NULL, NULL, NULL, NULL);
     irc_config_network_lag_min_show = weechat_config_new_option (
         irc_config_file, ptr_section,
         "lag_min_show", "integer",
@@ -2748,9 +2757,11 @@ irc_config_init ()
     irc_config_network_lag_reconnect = weechat_config_new_option (
         irc_config_file, ptr_section,
         "lag_reconnect", "integer",
-        N_("reconnect to server if lag is greater than this value (in seconds, "
-           "0 = never reconnect)"),
-        NULL, 0, 3600 * 24 * 7, "0", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        N_("reconnect to server if lag is greater than or equal to this value "
+           "(in seconds, 0 = never reconnect); this value must be less than or "
+           "equal to irc.network.lag_max"),
+        NULL, 0, 3600 * 24 * 7, "0", NULL, 0, NULL, NULL,
+        NULL, NULL, NULL, NULL);
     irc_config_network_lag_refresh_interval = weechat_config_new_option (
         irc_config_file, ptr_section,
         "lag_refresh_interval", "integer",
