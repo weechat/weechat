@@ -37,6 +37,12 @@ enum t_config_look_align_end_of_lines
     CONFIG_LOOK_ALIGN_END_OF_LINES_MESSAGE,
 };
 
+enum t_config_look_buffer_position
+{
+    CONFIG_LOOK_BUFFER_POSITION_END = 0,
+    CONFIG_LOOK_BUFFER_POSITION_FIRST_GAP,
+};
+
 enum t_config_look_buffer_search_where
 {
     CONFIG_LOOK_BUFFER_SEARCH_PREFIX = 0,
@@ -110,6 +116,7 @@ extern struct t_config_option *config_look_bar_more_up;
 extern struct t_config_option *config_look_bar_more_down;
 extern struct t_config_option *config_look_buffer_auto_renumber;
 extern struct t_config_option *config_look_buffer_notify_default;
+extern struct t_config_option *config_look_buffer_position;
 extern struct t_config_option *config_look_buffer_search_case_sensitive;
 extern struct t_config_option *config_look_buffer_search_force_default;
 extern struct t_config_option *config_look_buffer_search_regex;

@@ -86,6 +86,7 @@ struct t_config_option *config_look_bar_more_up;
 struct t_config_option *config_look_bar_more_down;
 struct t_config_option *config_look_buffer_auto_renumber;
 struct t_config_option *config_look_buffer_notify_default;
+struct t_config_option *config_look_buffer_position;
 struct t_config_option *config_look_buffer_search_case_sensitive;
 struct t_config_option *config_look_buffer_search_force_default;
 struct t_config_option *config_look_buffer_search_regex;
@@ -2008,6 +2009,15 @@ config_weechat_init_options ()
            "none=never display in hotlist"),
         "none|highlight|message|all", 0, 0, "all", NULL, 0,
         NULL, NULL, &config_change_buffer_notify_default, NULL, NULL, NULL);
+    config_look_buffer_position = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "buffer_position", "integer",
+        N_("position of a new buffer: end = after the end of list (number = "
+           "last number + 1) (default), first_gap = at first available "
+           "number in the list (after the end of list if no number is "
+           "available); this option is used only if the buffer has no layout "
+           "number"),
+        "end|first_gap", 0, 0, "end", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_buffer_search_case_sensitive = config_file_new_option (
         weechat_config_file, ptr_section,
         "buffer_search_case_sensitive", "boolean",

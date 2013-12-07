@@ -313,7 +313,11 @@ gui_buffer_notify_set_all ()
 }
 
 /*
- * Searches for position of buffer in list (to keep buffers sorted by number).
+ * Searches for position of buffer in list using its layout number
+ * (to keep buffers sorted by number).
+ *
+ * Returns the pointer to the buffer that will be after the new buffer in list.
+ * Returns NULL if position is undefined.
  */
 
 struct t_gui_buffer *
@@ -321,7 +325,7 @@ gui_buffer_find_pos (struct t_gui_buffer *buffer)
 {
     struct t_gui_buffer *ptr_buffer;
 
-    /* if no number is asked by layout, then add to the end by default */
+    /* if no number is asked by layout, position is undefined */
     if (buffer->layout_number < 1)
         return NULL;
 
@@ -342,7 +346,7 @@ gui_buffer_find_pos (struct t_gui_buffer *buffer)
         }
     }
 
-    /* position not found, add to the end */
+    /* position not found */
     return NULL;
 }
 
@@ -375,17 +379,54 @@ gui_buffer_shift_numbers (struct t_gui_buffer *buffer)
 void
 gui_buffer_insert (struct t_gui_buffer *buffer)
 {
-    struct t_gui_buffer *pos_buffer;
+    struct t_gui_buffer *pos_buffer, *ptr_buffer;
+    int force_number;
+
+    force_number = 0;
 
     pos_buffer = gui_buffer_find_pos (buffer);
+
+    /*
+     * if position was not forced by layout and that buffer position is set
+     * to "first gap", search for the first available number in the list
+     * (if there is not, buffer will be added to the end of list)
+     */
+    if (!pos_buffer
+        && (CONFIG_INTEGER(config_look_buffer_position) == CONFIG_LOOK_BUFFER_POSITION_FIRST_GAP))
+    {
+        for (ptr_buffer = gui_buffers; ptr_buffer;
+             ptr_buffer = ptr_buffer->next_buffer)
+        {
+            if (ptr_buffer->prev_buffer)
+            {
+                if (ptr_buffer->number > ptr_buffer->prev_buffer->number + 1)
+                {
+                    pos_buffer = ptr_buffer;
+                    force_number = ptr_buffer->prev_buffer->number + 1;
+                    break;
+                }
+            }
+            else if (ptr_buffer->number > 1)
+            {
+                pos_buffer = ptr_buffer;
+                force_number = 1;
+                break;
+            }
+        }
+    }
+
     if (pos_buffer)
     {
         /* add buffer into the list (before position found) */
-        if (!CONFIG_BOOLEAN(config_look_buffer_auto_renumber)
-            && (buffer->layout_number > 0)
-            && (buffer->layout_number < pos_buffer->number)
-            && (!pos_buffer->prev_buffer
-                || (buffer->layout_number > pos_buffer->prev_buffer->number)))
+        if (force_number > 0)
+        {
+            buffer->number = force_number;
+        }
+        else if (!CONFIG_BOOLEAN(config_look_buffer_auto_renumber)
+                 && (buffer->layout_number > 0)
+                 && (buffer->layout_number < pos_buffer->number)
+                 && (!pos_buffer->prev_buffer
+                     || (buffer->layout_number > pos_buffer->prev_buffer->number)))
         {
             buffer->number = buffer->layout_number;
         }
