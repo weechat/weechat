@@ -1751,10 +1751,10 @@ irc_config_server_new_option (struct t_config_file *config_file,
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
-                N_("command(s) to run when connected to server (many commands "
-                   "should be separated by \";\", use \"\\;\" for a semicolon, "
-                   "special variables $nick, $channel and $server are replaced "
-                   "by their value) "
+                N_("command(s) to run after connection to server and before "
+                   "auto-join of channels (many commands can be separated by "
+                   "\";\", use \"\\;\" for a semicolon, special variables "
+                   "$nick, $channel and $server are replaced by their value) "
                    "(note: content is evaluated, see /help eval)"),
                 NULL, 0, 0,
                 default_value, value,
@@ -1767,8 +1767,9 @@ irc_config_server_new_option (struct t_config_file *config_file,
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "integer",
-                N_("delay (in seconds) after command was executed (example: give some "
-                   "time for authentication)"),
+                N_("delay (in seconds) after execution of command and before "
+                   "auto-join of channels (example: give some time for "
+                   "authentication before joining channels)"),
                 NULL, 0, 3600,
                 default_value, value,
                 null_value_allowed,
@@ -1780,12 +1781,13 @@ irc_config_server_new_option (struct t_config_file *config_file,
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
-                N_("comma separated list of channels to join when connected to "
-                   "server; the channels that require a key must be at "
-                   "beginning of the list, and all the keys must be given after "
-                   "the channels (separated by a space) "
-                   "(example: \"#channel1,#channel2,#channel3 key1,key2\" "
-                   "where #channel1 and #channel2 are protected by key1 and key2) "
+                N_("comma separated list of channels to join after connection "
+                   "to server (and after executing command + delay if they are "
+                   "set); the channels that require a key must be at beginning "
+                   "of the list, and all the keys must be given after the "
+                   "channels (separated by a space) (example: \"#channel1,"
+                   "#channel2,#channel3 key1,key2\" where #channel1 and "
+                   "#channel2 are protected by key1 and key2) "
                    "(note: content is evaluated, see /help eval)"),
                 NULL, 0, 0,
                 default_value, value,

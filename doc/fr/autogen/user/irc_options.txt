@@ -424,7 +424,7 @@
 ** valeurs: on, off (valeur par défaut: `off`)
 
 * [[option_irc.server_default.autojoin]] *irc.server_default.autojoin*
-** description: `liste des canaux (séparés par des virgules) à rejoindre lorsque connecté au serveur; les canaux nécessitant une clé doivent être en début de liste, et toutes les clés doivent être données après les canaux (séparées par un espace) (exemple: "#canal1,#canal2,#canal3 clé1,clé2" où #canal1 et #canal2 sont protégés par clé1 et clé2) (note: le contenu est évalué, voir /help eval)`
+** description: `liste des canaux (séparés par des virgules) à rejoindre après la connexion au serveur (et après exécution de la commande + délai s'ils sont définis); les canaux nécessitant une clé doivent être en début de liste, et toutes les clés doivent être données après les canaux (séparées par un espace) (exemple: "#canal1,#canal2,#canal3 clé1,clé2" où #canal1 et #canal2 sont protégés par clé1 et clé2) (note: le contenu est évalué, voir /help eval)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
@@ -464,12 +464,12 @@
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
 * [[option_irc.server_default.command]] *irc.server_default.command*
-** description: `commande(s) à exécuter lorsque connecté au serveur (plusieurs commandes doivent être séparées par ";", utilisez "\;" pour un point-virgule, les variables spéciales $nick, $channel et $server sont remplacées par leur valeur) (note: le contenu est évalué, voir /help eval)`
+** description: `commande(s) à exécuter après la connexion au serveur et avant le "join" automatique des canaux (plusieurs commandes peuvent être séparées par ";", utilisez "\;" pour un point-virgule, les variables spéciales $nick, $channel et $server sont remplacées par leur valeur) (note: le contenu est évalué, voir /help eval)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
 * [[option_irc.server_default.command_delay]] *irc.server_default.command_delay*
-** description: `délai (en secondes) après exécution de la commande (exemple: donner du temps pour l'authentification)`
+** description: `délai (en secondes) après exécution de la commande et avant le "join" automatique des canaux (exemple: donner du temps pour l'authentification avant de rejoindre les canaux)`
 ** type: entier
 ** valeurs: 0 .. 3600 (valeur par défaut: `0`)
 
