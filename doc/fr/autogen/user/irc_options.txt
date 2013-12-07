@@ -63,11 +63,6 @@
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `darkgray`)
 
-* [[option_irc.look.ban_mask_default]] *irc.look.ban_mask_default*
-** description: `masque de bannissement par défaut pour les commandes /ban, /unban et /kickban; les variables $nick, $user et $host sont remplacées par leurs valeurs (extraites de "nick!user@host"); ce masque par défaut est utilisé seulement si WeeChat connaît l'hôte pour le pseudo`
-** type: chaîne
-** valeurs: toute chaîne (valeur par défaut: `"*!$user@$host"`)
-
 * [[option_irc.look.buffer_switch_autojoin]] *irc.look.buffer_switch_autojoin*
 ** description: `basculer automatiquement vers le tampon du canal lorsqu'il est automatiquement rejoint (avec l'option du serveur "autojoin")`
 ** type: booléen
@@ -352,6 +347,11 @@
 ** description: `délai maximum d'auto-reconnexion au serveur (en secondes, 0 = pas de maximum)`
 ** type: entier
 ** valeurs: 0 .. 86400 (valeur par défaut: `1800`)
+
+* [[option_irc.network.ban_mask_default]] *irc.network.ban_mask_default*
+** description: `masque de bannissement par défaut pour les commandes /ban, /unban et /kickban; les variables $nick, $user et $host sont remplacées par leurs valeurs (extraites de "nick!user@host"); ce masque par défaut est utilisé seulement si WeeChat connaît l'hôte pour le pseudo`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `"*!$user@$host"`)
 
 * [[option_irc.network.colors_receive]] *irc.network.colors_receive*
 ** description: `si désactivé, les codes couleurs des messages entrants sont ignorés`

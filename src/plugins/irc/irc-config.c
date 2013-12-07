@@ -48,7 +48,6 @@ struct t_config_section *irc_config_section_server = NULL;
 
 /* IRC config, look section */
 
-struct t_config_option *irc_config_look_ban_mask_default;
 struct t_config_option *irc_config_look_buffer_switch_autojoin;
 struct t_config_option *irc_config_look_buffer_switch_join;
 struct t_config_option *irc_config_look_color_nicks_in_names;
@@ -125,6 +124,7 @@ struct t_config_option *irc_config_color_topic_old;
 struct t_config_option *irc_config_network_alternate_nick;
 struct t_config_option *irc_config_network_autoreconnect_delay_growing;
 struct t_config_option *irc_config_network_autoreconnect_delay_max;
+struct t_config_option *irc_config_network_ban_mask_default;
 struct t_config_option *irc_config_network_colors_receive;
 struct t_config_option *irc_config_network_colors_send;
 struct t_config_option *irc_config_network_lag_check;
@@ -2194,15 +2194,6 @@ irc_config_init ()
         return 0;
     }
 
-    irc_config_look_ban_mask_default = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "ban_mask_default", "string",
-        N_("default ban mask for commands /ban, /unban and /kickban; variables "
-           "$nick, $user and $host are replaced by their values (extracted "
-           "from \"nick!user@host\"); this default mask is used only if "
-           "WeeChat knows the host for the nick"),
-        NULL, 0, 0, "*!$user@$host", NULL, 0, NULL, NULL,
-        NULL, NULL, NULL, NULL);
     irc_config_look_buffer_switch_autojoin = weechat_config_new_option (
         irc_config_file, ptr_section,
         "buffer_switch_autojoin", "boolean",
@@ -2732,6 +2723,15 @@ irc_config_init ()
         "autoreconnect_delay_max", "integer",
         N_("maximum autoreconnect delay to server (in seconds, 0 = no maximum)"),
         NULL, 0, 3600 * 24, "1800", NULL, 0, NULL, NULL,
+        NULL, NULL, NULL, NULL);
+    irc_config_network_ban_mask_default = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "ban_mask_default", "string",
+        N_("default ban mask for commands /ban, /unban and /kickban; variables "
+           "$nick, $user and $host are replaced by their values (extracted "
+           "from \"nick!user@host\"); this default mask is used only if "
+           "WeeChat knows the host for the nick"),
+        NULL, 0, 0, "*!$user@$host", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);
     irc_config_network_colors_receive = weechat_config_new_option (
         irc_config_file, ptr_section,

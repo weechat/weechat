@@ -1061,7 +1061,7 @@ irc_nick_default_ban_mask (struct t_irc_nick *nick)
     if (!nick)
         return NULL;
 
-    ptr_ban_mask = weechat_config_string (irc_config_look_ban_mask_default);
+    ptr_ban_mask = weechat_config_string (irc_config_network_ban_mask_default);
 
     pos_hostname = (nick->host) ? strchr (nick->host, '@') : NULL;
 

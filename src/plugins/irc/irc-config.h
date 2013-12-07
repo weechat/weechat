@@ -96,7 +96,6 @@ extern struct t_config_section *irc_config_section_ctcp;
 extern struct t_config_section *irc_config_section_server_default;
 extern struct t_config_section *irc_config_section_server;
 
-extern struct t_config_option *irc_config_look_ban_mask_default;
 extern struct t_config_option *irc_config_look_buffer_switch_autojoin;
 extern struct t_config_option *irc_config_look_buffer_switch_join;
 extern struct t_config_option *irc_config_look_color_nicks_in_names;
@@ -169,6 +168,7 @@ extern struct t_config_option *irc_config_color_topic_old;
 extern struct t_config_option *irc_config_network_alternate_nick;
 extern struct t_config_option *irc_config_network_autoreconnect_delay_growing;
 extern struct t_config_option *irc_config_network_autoreconnect_delay_max;
+extern struct t_config_option *irc_config_network_ban_mask_default;
 extern struct t_config_option *irc_config_network_colors_receive;
 extern struct t_config_option *irc_config_network_colors_send;
 extern struct t_config_option *irc_config_network_lag_check;
