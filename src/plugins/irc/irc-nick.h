@@ -101,6 +101,7 @@ extern const char *irc_nick_color_for_server_message (struct t_irc_server *serve
                                                       const char *nickname);
 extern const char * irc_nick_color_for_pv (struct t_irc_channel *channel,
                                            const char *nickname);
+extern char *irc_nick_default_ban_mask (struct t_irc_nick *nick);
 extern struct t_hdata *irc_nick_hdata_nick_cb (void *data,
                                                const char *hdata_name);
 extern int irc_nick_add_to_infolist (struct t_infolist *infolist,

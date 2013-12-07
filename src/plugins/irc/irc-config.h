@@ -96,6 +96,7 @@ extern struct t_config_section *irc_config_section_ctcp;
 extern struct t_config_section *irc_config_section_server_default;
 extern struct t_config_section *irc_config_section_server;
 
+extern struct t_config_option *irc_config_look_ban_mask_default;
 extern struct t_config_option *irc_config_look_buffer_switch_autojoin;
 extern struct t_config_option *irc_config_look_buffer_switch_join;
 extern struct t_config_option *irc_config_look_color_nicks_in_names;

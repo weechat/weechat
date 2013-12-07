@@ -63,6 +63,11 @@
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `darkgray`)
 
+* [[option_irc.look.ban_mask_default]] *irc.look.ban_mask_default*
+** Beschreibung: `default ban mask for commands /ban, /unban and /kickban; variables $nick, $user and $host are replaced by their values (extracted from "nick!user@host"); this default mask is used only if WeeChat knows the host for the nick`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `"*!$user@$host"`)
+
 * [[option_irc.look.buffer_switch_autojoin]] *irc.look.buffer_switch_autojoin*
 ** Beschreibung: `wechselt automatisch zum Channel-Buffer falls dieser automatisch betreten wurde (mittels der Serveroption "autojoin")`
 ** Typ: boolesch

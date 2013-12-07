@@ -840,6 +840,45 @@ irc_command_run_away (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
+ * Sends a ban/unban command to the server, as "MODE [+/-]b nick".
+ *
+ * Argument "mode" can be "+b" for ban or "-b" for unban.
+ */
+
+void
+irc_command_send_ban (struct t_irc_server *server,
+                      const char *channel_name,
+                      const char *mode,
+                      const char *nick)
+{
+    struct t_irc_channel *ptr_channel;
+    struct t_irc_nick *ptr_nick;
+    char *mask;
+
+    mask = NULL;
+
+    if (!strchr (nick, '!') && !strchr (nick, '@'))
+    {
+        ptr_channel = irc_channel_search (server, channel_name);
+        if (ptr_channel)
+        {
+            ptr_nick = irc_nick_search (server, ptr_channel, nick);
+            if (ptr_nick)
+                mask = irc_nick_default_ban_mask (ptr_nick);
+        }
+    }
+
+    irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                      "MODE %s %s %s",
+                      channel_name,
+                      mode,
+                      (mask) ? mask : nick);
+
+    if (mask)
+        free (mask);
+}
+
+/*
  * Callback for command "/ban": bans nicks or hosts.
  */
 
@@ -891,9 +930,8 @@ irc_command_ban (void *data, struct t_gui_buffer *buffer, int argc,
             /* loop on users */
             while (argv[pos_args])
             {
-                irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                                  "MODE %s +b %s",
-                                  pos_channel, argv[pos_args]);
+                irc_command_send_ban (ptr_server, pos_channel, "+b",
+                                      argv[pos_args]);
                 pos_args++;
             }
         }
@@ -2522,10 +2560,8 @@ irc_command_kickban (void *data, struct t_gui_buffer *buffer, int argc,
             }
             else
             {
-                irc_server_sendf (ptr_server,
-                                  IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                                  "MODE %s +b %s",
-                                  pos_channel, pos_nick);
+                irc_command_send_ban (ptr_server, pos_channel, "+b",
+                                      pos_nick);
             }
 
             /* kick nick */
@@ -5332,9 +5368,8 @@ irc_command_unban (void *data, struct t_gui_buffer *buffer, int argc,
         /* loop on users */
         while (argv[pos_args])
         {
-            irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                              "MODE %s -b %s",
-                              pos_channel, argv[pos_args]);
+            irc_command_send_ban (ptr_server, pos_channel, "-b",
+                                  argv[pos_args]);
             pos_args++;
         }
     }

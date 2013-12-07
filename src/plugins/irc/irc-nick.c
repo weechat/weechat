@@ -1046,6 +1046,62 @@ irc_nick_color_for_pv (struct t_irc_channel *channel, const char *nickname)
 }
 
 /*
+ * Returns default ban mask for the nick.
+ *
+ * Note: result must be freed after use (if not NULL).
+ */
+
+char *
+irc_nick_default_ban_mask (struct t_irc_nick *nick)
+{
+    static char ban_mask[128];
+    const char *ptr_ban_mask;
+    char *pos_hostname, user[64], *res, *temp;
+
+    if (!nick)
+        return NULL;
+
+    ptr_ban_mask = weechat_config_string (irc_config_look_ban_mask_default);
+
+    pos_hostname = (nick->host) ? strchr (nick->host, '@') : NULL;
+
+    if (!nick->host || !pos_hostname || !ptr_ban_mask || !ptr_ban_mask[0])
+    {
+        snprintf (ban_mask, sizeof (ban_mask), "%s!*@*", nick->name);
+        return strdup (ban_mask);
+    }
+
+    if (pos_hostname - nick->host > (int)sizeof (user) - 1)
+        return NULL;
+
+    strncpy (user, nick->host, pos_hostname - nick->host);
+    user[pos_hostname - nick->host] = '\0';
+    pos_hostname++;
+
+    /* replace nick */
+    temp = weechat_string_replace (ptr_ban_mask, "$nick", nick->name);
+    if (!temp)
+        return NULL;
+    res = temp;
+
+    /* replace user */
+    temp = weechat_string_replace (res, "$user", user);
+    free (res);
+    if (!temp)
+        return NULL;
+    res = temp;
+
+    /* replace hostname */
+    temp = weechat_string_replace (res, "$host", pos_hostname);
+    free (res);
+    if (!temp)
+        return NULL;
+    res = temp;
+
+    return res;
+}
+
+/*
  * Returns hdata for nick.
  */
 

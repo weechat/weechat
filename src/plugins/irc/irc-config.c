@@ -48,6 +48,7 @@ struct t_config_section *irc_config_section_server = NULL;
 
 /* IRC config, look section */
 
+struct t_config_option *irc_config_look_ban_mask_default;
 struct t_config_option *irc_config_look_buffer_switch_autojoin;
 struct t_config_option *irc_config_look_buffer_switch_join;
 struct t_config_option *irc_config_look_color_nicks_in_names;
@@ -2193,6 +2194,15 @@ irc_config_init ()
         return 0;
     }
 
+    irc_config_look_ban_mask_default = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "ban_mask_default", "string",
+        N_("default ban mask for commands /ban, /unban and /kickban; variables "
+           "$nick, $user and $host are replaced by their values (extracted "
+           "from \"nick!user@host\"); this default mask is used only if "
+           "WeeChat knows the host for the nick"),
+        NULL, 0, 0, "*!$user@$host", NULL, 0, NULL, NULL,
+        NULL, NULL, NULL, NULL);
     irc_config_look_buffer_switch_autojoin = weechat_config_new_option (
         irc_config_file, ptr_section,
         "buffer_switch_autojoin", "boolean",

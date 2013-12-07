@@ -63,6 +63,11 @@
 ** タイプ: 色
 ** 値: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (デフォルト値: `darkgray`)
 
+* [[option_irc.look.ban_mask_default]] *irc.look.ban_mask_default*
+** 説明: `default ban mask for commands /ban, /unban and /kickban; variables $nick, $user and $host are replaced by their values (extracted from "nick!user@host"); this default mask is used only if WeeChat knows the host for the nick`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"*!$user@$host"`)
+
 * [[option_irc.look.buffer_switch_autojoin]] *irc.look.buffer_switch_autojoin*
 ** 説明: `自動で参加した場合に、自動的にチャンネルバッファを移動 (サーバオプション "autojoin" と共に使用)`
 ** タイプ: ブール
