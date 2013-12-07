@@ -392,6 +392,7 @@ gui_buffer_insert (struct t_gui_buffer *buffer)
      * (if there is not, buffer will be added to the end of list)
      */
     if (!pos_buffer
+        && (buffer->layout_number == 0)
         && (CONFIG_INTEGER(config_look_buffer_position) == CONFIG_LOOK_BUFFER_POSITION_FIRST_GAP))
     {
         for (ptr_buffer = gui_buffers; ptr_buffer;
