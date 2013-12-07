@@ -52,10 +52,10 @@ Exemples:
 ----
 /ban  [<canal>] [<pseudo> [<pseudo>...]]
 
- canal: nom du canal pour supprimer le bannissement
-pseudo: pseudo ou hôte pour supprimer le bannissement
+ canal: nom du canal pour bannissement
+pseudo: pseudo ou hôte à bannir
 
-Sans paramètre, cette commande affiche la liste des bans pour le canal courant.
+Sans paramètre, cette commande affiche la liste des bannissements pour le canal courant.
 ----
 
 [[command_irc_connect]]
