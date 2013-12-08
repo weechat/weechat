@@ -1054,9 +1054,8 @@ irc_nick_color_for_pv (struct t_irc_channel *channel, const char *nickname)
 char *
 irc_nick_default_ban_mask (struct t_irc_nick *nick)
 {
-    static char ban_mask[128];
     const char *ptr_ban_mask;
-    char *pos_hostname, user[64], *res, *temp;
+    char *pos_hostname, user[128], *res, *temp;
 
     if (!nick)
         return NULL;
@@ -1066,10 +1065,7 @@ irc_nick_default_ban_mask (struct t_irc_nick *nick)
     pos_hostname = (nick->host) ? strchr (nick->host, '@') : NULL;
 
     if (!nick->host || !pos_hostname || !ptr_ban_mask || !ptr_ban_mask[0])
-    {
-        snprintf (ban_mask, sizeof (ban_mask), "%s!*@*", nick->name);
-        return strdup (ban_mask);
-    }
+        return NULL;
 
     if (pos_hostname - nick->host > (int)sizeof (user) - 1)
         return NULL;
