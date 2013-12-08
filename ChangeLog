@@ -11,6 +11,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 0.4.3 (under dev)
 
+* core: add signal "buffer_cleared"
 * core: remove option on /unset of plugin description option (plugins.desc.xxx)
   (bug #40768)
 * core: add buffer property "day_change" to hide messages for the day change in

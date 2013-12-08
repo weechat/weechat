@@ -7793,6 +7793,10 @@ Paramètres :
   Pointeur : tampon |
   Tampon fermé
 
+| weechat | buffer_cleared |
+  Pointeur : tampon |
+  Tampon vidé
+
 | weechat | buffer_line_added +
   _(WeeChat ≥ 0.3.7)_ |
   Pointeur : ligne |
