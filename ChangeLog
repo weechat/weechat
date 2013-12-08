@@ -11,6 +11,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 0.4.3 (under dev)
 
+* core: remove option on /unset of plugin description option (plugins.desc.xxx)
+  (bug #40768)
 * core: add buffer property "day_change" to hide messages for the day change in
   specific buffers
 * core: replace default key key[ctrl-c,r] by key[ctrl-c,v] for reverse video in

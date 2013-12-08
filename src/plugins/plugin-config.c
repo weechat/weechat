@@ -319,6 +319,8 @@ plugin_config_delete_desc (void *data, struct t_config_file *config_file,
         }
     }
 
+    config_file_option_free (option);
+
     return WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
 }
 
