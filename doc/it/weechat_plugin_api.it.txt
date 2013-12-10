@@ -8769,6 +8769,16 @@ I nomi del completamento sono globali (condivisi tra WeeChat e plugin). Si
 raccomanda pertanto di scegliere un nome con un prefisso unico, come
 "plugin_xxx" (dove "xxx" è il nome del proprio elemento).
 
+// TRANSLATION MISSING
+[IMPORTANT]
+The callback must only call function
+<<_weechat_hook_completion_list_add,weechat_hook_completion_list_add>>
+and must *NOT* update the command line. +
+To update the command line when key[Tab] is pressed, you can use the function
+<<_weechat_hook_command_run,weechat_hook_command_run>> with command:
+"/input complete_next" (and you must return 'WEECHAT_RC_OK_EAT' if your callback
+has updated the command line, so that WeeChat will not perform the completion).
+
 Valore restituito:
 
 * puntatore al nuovo hook, NULL in caso di errore

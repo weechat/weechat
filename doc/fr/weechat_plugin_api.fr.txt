@@ -8778,6 +8778,16 @@ Les noms de complétion sont globaux (partagés entre WeeChat et les extensions)
 Il est donc recommandé de choisir un nom avec un préfixe unique, comme
 "monextension_xxx" (où "xxx" est le nom de votre complétion).
 
+[IMPORTANT]
+Le "callback" doit seulement appeler la fonction
+<<_weechat_hook_completion_list_add,weechat_hook_completion_list_add>>
+et ne doit *PAS* mettre à jour la ligne de commande. +
+Pour mettre à jour la ligne de commande quand key[Tab] est pressé, vous pouvez
+utiliser la fonction <<_weechat_hook_command_run,weechat_hook_command_run>>
+avec la commande : "/input complete_next" (et vous devez retourner
+'WEECHAT_RC_OK_EAT' si votre "callback" a mis à jour la ligne de commande, de
+sorte que WeeChat n'exécute pas la complétion).
+
 Valeur de retour :
 
 * pointeur vers le nouveau "hook", NULL en cas d'erreur
