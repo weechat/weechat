@@ -47,6 +47,17 @@ The content is evaluated and the default value is `WeeChat ${info:version}`.
 Only static content should be used in this option, because the title is
 refreshed only when the option is changed.
 
+=== New bar item buffer_last_number
+
+The bar item 'buffer_count' now displays the number of opened buffers (each
+merged buffer counts 1).
+
+The new bar item 'buffer_last_number' displays the highest buffer number
+currently used.
+
+If you want to display last number in the status bar, replace 'buffer_count'
+by 'buffer_last_number' in your option 'weechat.bar.status.items'.
+
 === New bar item buffer_zoom
 
 A new bar item has been added: 'buffer_zoom'.
