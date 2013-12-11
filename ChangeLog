@@ -11,6 +11,9 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 0.4.3 (under dev)
 
+* core: add options weechat.look.buffer_auto_renumber and
+  weechat.look.buffer_position, add option "renumber" in command /buffer, add
+  bar item "buffer_last_number" (task #12766)
 * core: fix text emphasis with wide chars on screen like japanese (patch #8253)
 * core: add signal "buffer_cleared"
 * core: remove option on /unset of plugin description option (plugins.desc.xxx)
@@ -23,7 +26,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   in messages
 * core: fix random crash when closing a buffer
 * core: fix crash on /buffer close core.weechat
-* core: add option "libs" for command /debug
+* core: add option "libs" in command /debug
 * core: apply color attributes when clearing a window (patch #8236)
 * core: set option weechat.look.paste_bracketed to "on" by default
 * core: fix truncated text when pasting several long lines (bug #40210)
@@ -109,7 +112,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   (task #11027)
 * core: disable build of doc by default, add cmake option ENABLE_MAN to compile
   man page (off by default)
-* core: add option "-o" for command /color
+* core: add option "-o" in command /color
 * core: fix priority of logical operators in evaluation of expression
   (AND takes precedence over the OR) and first evaluate sub-expressions between
   parentheses
@@ -149,7 +152,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * api: add support of colors with format `${color:xxx}` in function
   string_eval_expression and command /eval
 * api: add argument "options" in function string_eval_expression, add option
-  "-c" for command /eval (to evaluate a condition)
+  "-c" in command /eval (to evaluate a condition)
 * api: use pointer for infolist "hook" to return only one hook
 * api: add new function strlen_screen
 * plugins: remove the demo plugin
@@ -180,13 +183,13 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   (patch #8062)
 * irc: fix multiple nicks in command /query (separated by commas): open one
   buffer per nick
-* logger: add option "flush" for command /logger
+* logger: add option "flush" in command /logger
 * lua: fix interpreter used in API functions (bug #39470)
 * relay: fix decoding of websocket frames when there are multiple frames in a
   single message received (only the first one was decoded)
 * relay: add command "ping" in weechat protocol (task #12689)
 * relay: fix binding to an IP address (bug #39119)
-* rmodifier: add option "missing" for command /rmodifier
+* rmodifier: add option "missing" in command /rmodifier
 * script: add info about things defined by script (like commands, options, ...)
   in the detailed view of script (/script show)
 * scripts: add hdata with script callback
@@ -211,7 +214,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   nicklist_{group|nick}_{added|removing|changed}
 * core: add count for groups, nicks, and total in nicklist
 * core: allow read of array in hdata without using index
-* core: add option "dirs" for command /debug
+* core: add option "dirs" in command /debug
 * core: fix detection of iconv with cmake on OS X (bug #38321)
 * core: add signal "window_opened" (task #12464)
 * core: fix structures before buffer data when a buffer is closed
@@ -290,8 +293,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   client must send the server in the "PASS" command)
 * relay: add WebSocket server support (RFC 6455) for irc and weechat protocols,
   new option relay.network.websocket_allowed_origins
-* relay: add options "buffers" and "upgrade" for commands sync/desync in weechat
-  protocol
+* relay: add options "buffers" and "upgrade" in commands sync/desync (weechat
+  protocol)
 * relay: fix commands sync/desync in weechat protocol (bug #38215)
 * rmodifier: rename default rmodifier "nickserv" to "command_auth" (with new
   modifier "irc_command_auth"), add default rmodifier "message_auth" (modifier
@@ -333,7 +336,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   as a command (API function "string_input_for_buffer")
 * core: search for a fallback template when a no template is matching command
   arguments
-* core: add option "diff" for command /set (list options with changed value)
+* core: add option "diff" in command /set (list options with changed value)
 * core: fix refresh of windows after split (fix bug with horizontal separator
   between windows) (bug #37874)
 * core: fix stuck mouse (bug #36533)
@@ -356,7 +359,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: stop cmake if gcrypt lib is not found (bug #37671)
 * core: add incomplete mouse events "event-down" and "event-drag" (task #11840)
 * core: add command /eval, use expression in conditions for bars
-* core: add option "-quit" for command /upgrade (save session and quit without
+* core: add option "-quit" in command /upgrade (save session and quit without
   restarting WeeChat, for delayed restoration)
 * core: fix display of zoomed/merged buffer (with number >= 2) after switching
   to it (bug #37593)
@@ -397,7 +400,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   and "$versiongit" in format of CTCP replies
 * irc: read local variable "autorejoin" in buffer to override server option
   "autorejoin" (task #12256)
-* irc: add option "-auto" for command /connect (task #9340)
+* irc: add option "-auto" in command /connect (task #9340)
 * irc: add support of "server-time" capability (task #12255)
 * irc: add support of tags in messages
 * irc: fix crash on /upgrade (free channels before server data when a server
@@ -413,7 +416,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   (task #12273)
 * irc: remove local variable "away" in server/channels buffers after server
   disconnection (bug #37582)
-* irc: add option "-noswitch" for command /join (task #12275)
+* irc: add option "-noswitch" in command /join (task #12275)
 * irc: fix crash when message 352 has too few arguments (bug #37513)
 * irc: remove unneeded server disconnect when server buffer is closed and server
   is already disconnected
@@ -472,7 +475,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   child process
 * core: add option weechat.startup.sys_rlimit to set system resource limits for
   WeeChat process
-* core: add option "swap" for command /buffer (task #11373)
+* core: add option "swap" in command /buffer (task #11373)
 * core: fix names of cache variables in configure.in (bug #36971)
 * core: scroll to bottom of window after reaching first or last highlight with
   keys key[alt-p] / key[alt-n]
@@ -598,11 +601,11 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * guile: add missing function "hook_process_hashtable" in API
 * irc: update channel modes by using chanmodes from message 005 (do not send
   extra command "MODE" to server), fix parsing of modes (bug #36215)
-* irc: add option "fakerecv" for command /server to simulate a received IRC
+* irc: add option "fakerecv" in command /server to simulate a received IRC
   message (not documented, for debug only)
 * irc: hide everything after "identify" or "register" in messages to nickserv
   when option irc.look.hide_nickserv_pwd is on (bug #36362)
-* irc: add option "-pending" for command /disconnect (cancel auto-reconnection
+* irc: add option "-pending" in command /disconnect (cancel auto-reconnection
   on servers currently reconnecting) (task #11985)
 * irc: set user modes only if target nick is self nick in message 221
   (patch #7754)
@@ -675,7 +678,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: add signals "buffer_line_added" and "window_switch"
 * core: add default keys key[ctrl-]key[Left]/key[Right] (`meta2-1;5D` /
   `meta2-1;5C`) for gnome-terminal
-* core: add option "hooks" for command /debug
+* core: add option "hooks" in command /debug
 * core: add option "weechat.look.scroll_bottom_after_switch" (if enabled,
   restore old behavior before fix of bug #25555 in version 0.3.5)
 * core: apply filters after full reload of configuration files (with /reload)
@@ -686,7 +689,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   (bug #34727)
 * core: add new option weechat.completion.base_word_until_cursor: allow
   completion in middle of words (enabled by default) (task #9771)
-* core: add option "jump_last_buffer_displayed" for command /input
+* core: add option "jump_last_buffer_displayed" in command /input
   (key: key[alt-/]) (task #11553)
 * core: display error in command /buffer if arguments are wrong (bug #34180)
 * core: add developer's guide (task #5416)
@@ -802,7 +805,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: save and restore layout for buffers and windows on /upgrade
 * core: fix bugs with automatic layout (bug #26110), add support of merged
   buffers in layout (task #10893)
-* core: add option -all for command /buffer unmerge
+* core: add option "-all" in command /buffer unmerge
 * core: fix crash when invalid UTF-8 chars are inserted in command line
   (bug #33471)
 * core: stop horizontal bar scroll at the end of content (for bars with
@@ -893,8 +896,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: add buffer to hotlist if away is set on buffer (even if buffer is
   displayed), new option weechat.look.hotlist_add_buffer_if_away (task #10948)
 * core: do not update hotlist during upgrade
-* core: add option "balance" for command /window (key: key[alt-w,alt-b])
-* core: add option "swap" for command /window (key: key[alt-w,alt-s])
+* core: add option "balance" in command /window (key: key[alt-w,alt-b])
+* core: add option "swap" in command /window (key: key[alt-w,alt-s])
   (task #11001)
 * core: apply new value of option weechat.look.buffer_notify_default to all
   opened buffers
@@ -923,7 +926,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: allow relative size for command /window resize
 * core: add some default keys for gnome-terminal (key[Home]/key[End],
   key[ctrl-]key[Up]/key[Down], key[alt-]key[PgUp]/key[PgDn])
-* core: add option "memory" to command /debug
+* core: add option "memory" in command /debug
 * core: add option weechat.look.read_marker_string
 * core: improve display of commands lists in /help (add arguments -list
   and -listfull) (task #10299)
@@ -1030,10 +1033,10 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * alias: complete with alias value for second argument of command /alias
 * irc: differentiate notices from messages in private buffer (bug #31980)
 * irc: update nick modes with message 221 (bug #32038)
-* irc: add option "-server" to command /join (task #10837)
+* irc: add option "-server" in command /join (task #10837)
 * irc: fix bug with charset decoding on private buffers (decoding was made for
   local nick instead of remote nick) (bug #31890)
-* irc: add option "-switch" to commands /connect and /reconnect
+* irc: add option "-switch" in commands /connect and /reconnect
 * irc: allow command /reconnect on servers that are not currently connected
   (bug #30726)
 * irc: fix topic completion in command /topic when channel topic starts with
@@ -1143,7 +1146,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   (task #6361)
 * core: remove unneeded space after time on each line if option
   weechat.look.buffer_time_format is set to empty value (bug #28751)
-* core: add option "switch_active_buffer_previous" for command /input
+* core: add option "switch_active_buffer_previous" in command /input
   (task #10141)
 * core: add new option weechat.look.time_format to customize default format
   for date/time displayed (localized date by default), add function
@@ -1205,7 +1208,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * irc: bug with prefix "!" for mode "a" (channel admin) (bug #29109)
 * irc: do not send signals "irc_in" and "irc_in2" when messages are ignored,
   add new signals "irc_raw_in" and "irc_raw_in2"
-* irc: add option "-open" for command /connect
+* irc: add option "-open" in command /connect
 * irc: add option irc.network.connection_timeout (timeout between TCP connection
   to server and reception of message 001)
 * irc: add options irc.look.smart_filter_join and irc.look.smart_filter_quit
@@ -1231,7 +1234,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 == Version 0.3.1 (2010-01-23)
 
 * core: fix bug with script installation on BSD/OSX (patch #6980)
-* core: add option grab_key_command for /input (bound by default to key[alt-k])
+* core: add option "grab_key_command" in command /input (bound by default to
+  key[alt-k])
 * core: fix compilation under Cygwin (patch #6916)
 * core: fix cmake directories: let user customize lib, share, locale and include
   directories (patch #6922)
