@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-12-11 19:07+0100\n"
+"POT-Creation-Date: 2013-12-11 21:18+0100\n"
 "PO-Revision-Date: 2013-11-09 10:18+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4175,7 +4175,7 @@ msgid "%s: all ignores deleted"
 msgstr "a felhasználók le lettek tiltva"
 
 #, fuzzy, c-format
-msgid "%s: ignore deleted"
+msgid "%s: ignore \"%s\" deleted"
 msgstr "Nincs mellőzés megadva.\n"
 
 #, fuzzy, c-format

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-12-11 19:07+0100\n"
+"POT-Creation-Date: 2013-12-11 21:18+0100\n"
 "PO-Revision-Date: 2013-11-09 10:18+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4592,8 +4592,8 @@ msgstr "%s%s: chyba při přidávání ignorování"
 msgid "%s: all ignores deleted"
 msgstr "%s: všechny ignorování byly smazány"
 
-#, c-format
-msgid "%s: ignore deleted"
+#, fuzzy, c-format
+msgid "%s: ignore \"%s\" deleted"
 msgstr "%s: ignorování smazáno"
 
 #, c-format

@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-12-11 19:07+0100\n"
-"PO-Revision-Date: 2013-12-11 19:08+0100\n"
+"POT-Creation-Date: 2013-12-11 21:18+0100\n"
+"PO-Revision-Date: 2013-12-11 21:18+0100\n"
 "Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -5096,8 +5096,8 @@ msgid "%s: all ignores deleted"
 msgstr "%s: ignores supprimés"
 
 #, c-format
-msgid "%s: ignore deleted"
-msgstr "%s: ignore supprimé"
+msgid "%s: ignore \"%s\" deleted"
+msgstr "%s: ignore \"%s\" supprimé"
 
 #, c-format
 msgid "%s%s: ignore not found"

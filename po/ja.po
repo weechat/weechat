@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-12-11 19:07+0100\n"
+"POT-Creation-Date: 2013-12-11 21:18+0100\n"
 "PO-Revision-Date: 2013-11-09 10:18+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -4867,8 +4867,8 @@ msgstr "%s%s: 無視エントリの追加中にエラー"
 msgid "%s: all ignores deleted"
 msgstr "%s: 全ての無視エントリを削除"
 
-#, c-format
-msgid "%s: ignore deleted"
+#, fuzzy, c-format
+msgid "%s: ignore \"%s\" deleted"
 msgstr "%s: 無視エントリを削除"
 
 #, c-format

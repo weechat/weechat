@@ -2001,9 +2001,13 @@ irc_command_ignore (void *data, struct t_gui_buffer *buffer, int argc,
                 ptr_ignore = irc_ignore_search_by_number (number);
                 if (ptr_ignore)
                 {
+                    mask = weechat_strndup (ptr_ignore->mask + 1,
+                                            strlen (ptr_ignore->mask) - 2);
                     irc_ignore_free (ptr_ignore);
-                    weechat_printf (NULL, _("%s: ignore deleted"),
-                                    IRC_PLUGIN_NAME);
+                    weechat_printf (NULL, _("%s: ignore \"%s\" deleted"),
+                                    IRC_PLUGIN_NAME, mask);
+                    if (mask)
+                        free (mask);
                 }
                 else
                 {

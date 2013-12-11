@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-12-11 19:07+0100\n"
+"POT-Creation-Date: 2013-12-11 21:18+0100\n"
 "PO-Revision-Date: 2013-11-11 09:07+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4992,8 +4992,8 @@ msgstr "%s%s: błąd podczas dodawania do ignorowanych"
 msgid "%s: all ignores deleted"
 msgstr "%s: lista ignorowanych została usunięta"
 
-#, c-format
-msgid "%s: ignore deleted"
+#, fuzzy, c-format
+msgid "%s: ignore \"%s\" deleted"
 msgstr "%s: usunięto ignorowanie"
 
 #, c-format
