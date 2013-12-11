@@ -1996,7 +1996,7 @@ config_weechat_init_options ()
         "buffer_auto_renumber", "boolean",
         N_("automatically renumber buffers to have only consecutive numbers "
            "and start with number 1; if disabled, gaps between buffer numbers "
-           "are allowed and the first buffer can have a number > 1"),
+           "are allowed and the first buffer can have a number greater than 1"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL,
         &config_change_buffer_auto_renumber, NULL, NULL, NULL);
     config_look_buffer_notify_default = config_file_new_option (

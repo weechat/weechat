@@ -408,10 +408,20 @@
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"--"`)
 
+* [[option_weechat.look.buffer_auto_renumber]] *weechat.look.buffer_auto_renumber*
+** Beschreibung: `automatically renumber buffers to have only consecutive numbers and start with number 1; if disabled, gaps between buffer numbers are allowed and the first buffer can have a number greater than 1`
+** Typ: boolesch
+** Werte: on, off (Standardwert: `on`)
+
 * [[option_weechat.look.buffer_notify_default]] *weechat.look.buffer_notify_default*
 ** Beschreibung: `Standardeinstellung der Benachrichtigungsstufe für Buffer (dies wird genutzt um WeeChat mitzuteilen ob der Buffer in der Hotlist angezeigt werden soll oder nicht, entsprechend der Wichtigkeit der Nachricht): all=alle Nachrichten (Standard), message=Nachrichten+Highlights, highlights=nur Highlights, none=Hotlist wird niemals angezeigt`
 ** Typ: integer
 ** Werte: none, highlight, message, all (Standardwert: `all`)
+
+* [[option_weechat.look.buffer_position]] *weechat.look.buffer_position*
+** Beschreibung: `position of a new buffer: end = after the end of list (number = last number + 1) (default), first_gap = at first available number in the list (after the end of list if no number is available); this option is used only if the buffer has no layout number`
+** Typ: integer
+** Werte: end, first_gap (Standardwert: `end`)
 
 * [[option_weechat.look.buffer_search_case_sensitive]] *weechat.look.buffer_search_case_sensitive*
 ** Beschreibung: `standardmäßige Textsuche im Buffer: zwischen Groß-und Kleinschreibung wird unterschieden`

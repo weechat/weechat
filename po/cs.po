@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-12-11 13:16+0100\n"
+"POT-Creation-Date: 2013-12-11 19:07+0100\n"
 "PO-Revision-Date: 2013-11-09 10:18+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -192,6 +192,10 @@ msgstr "%sChyba: nemohu posunout pole \"%s\""
 msgid "%sError: unknown option for \"%s\" command"
 msgstr "%sChyba: neznámá volba pro příkaz \"%s\""
 
+#, fuzzy, c-format
+msgid "%sError: buffer number %d is out of range (it must be between 1 and %d)"
+msgstr "%sNekorektní číslo barvy \"%s\" (musí být mezi %d a %d)"
+
 msgid "Buffers list:"
 msgstr "Seznam bufferů:"
 
@@ -206,6 +210,12 @@ msgstr "%sChyba: nekorektní číslo bufferu"
 #, fuzzy, c-format
 msgid "%sError: buffer not found"
 msgstr "%sChyba: filtr \"%s\" nenalezen"
+
+#, c-format
+msgid ""
+"%sError: renumbering is allowed only if option weechat.look."
+"buffer_auto_renumber is off"
+msgstr ""
 
 #, c-format
 msgid "%sError: WeeChat main buffer can't be closed"
@@ -1038,9 +1048,10 @@ msgstr "řídit buffery"
 #, fuzzy
 msgid ""
 "list || clear [<number>|<name>|-merged|-all] || move|merge <number> || swap "
-"<number1>|<name1> [<number2>|<name2>] || unmerge [<number>|-all] || close "
-"[<n1>[-<n2>]|<name>] || notify <level> || localvar || set <property> <value> "
-"|| get <property> || <number>|<name>"
+"<number1>|<name1> [<number2>|<name2>] || unmerge [<number>|-all] || renumber "
+"[<number1> [<number2> [<start>]]] || close [<n1>[-<n2>]|<name>] || notify "
+"<level> || localvar || set <property> <value> || get <property> || <number>|"
+"<name>"
 msgstr ""
 "list || clear [<číslo>|-merged|-all] || move|merge <číslo> || unmerge "
 "[<číslo>] || close [<n1>[-<n2>]] || notify <úroveň> || localvar || set "
@@ -1058,6 +1069,8 @@ msgid ""
 "both buffers)\n"
 "          (by default ctrl-x switches between merged buffers)\n"
 " unmerge: unmerge buffer from other buffers which have same number\n"
+"renumber: renumber buffers (works only if option weechat.look."
+"buffer_auto_renumber is off)\n"
 "   close: close buffer (number/range or name is optional)\n"
 "  notify: set notify level for current buffer: this level determines whether "
 "buffer will be added to hotlist or not:\n"
@@ -2530,6 +2543,12 @@ msgid ""
 msgstr ""
 
 msgid ""
+"automatically renumber buffers to have only consecutive numbers and start "
+"with number 1; if disabled, gaps between buffer numbers are allowed and the "
+"first buffer can have a number greater than 1"
+msgstr ""
+
+msgid ""
 "default notify level for buffers (used to tell WeeChat if buffer must be "
 "displayed in hotlist or not, according to importance of message): all=all "
 "messages (default), message=messages+highlights, highlight=highlights only, "
@@ -2539,6 +2558,13 @@ msgstr ""
 "jestli má být buffer zobrazen v hotlistu nebo ne, podle důležitosti zprávy): "
 "all=všechny zprávy (výchozí), message=zprávy+zváraznění, highlight=pouze "
 "zvýraznění, none=nikdy nezobrazovat v hotlistu"
+
+msgid ""
+"position of a new buffer: end = after the end of list (number = last number "
+"+ 1) (default), first_gap = at first available number in the list (after the "
+"end of list if no number is available); this option is used only if the "
+"buffer has no layout number"
+msgstr ""
 
 msgid "default text search in buffer: case sensitive or not"
 msgstr ""
@@ -3932,6 +3958,10 @@ msgstr "Notifikace pro \"%s%s.%s%s\" změněna: \"%s%s%s\" na \"%s%s%s\""
 #, c-format
 msgid "%sError: a buffer with same name (%s) already exists"
 msgstr "%sChyba: buffer se stejným jménem (%s) už existuje"
+
+#, c-format
+msgid "%sError: maximum number of buffers is reached (%d)"
+msgstr ""
 
 #, c-format
 msgid "%sError: it is only possible to merge buffers with formatted content"

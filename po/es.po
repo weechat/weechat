@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-12-11 13:16+0100\n"
+"POT-Creation-Date: 2013-12-11 19:07+0100\n"
 "PO-Revision-Date: 2013-11-09 10:18+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -198,6 +198,10 @@ msgstr "%sError: no se puede desplazar la barra \"%s\""
 msgid "%sError: unknown option for \"%s\" command"
 msgstr "%sError: opción desconocida para el comando \"%s\""
 
+#, fuzzy, c-format
+msgid "%sError: buffer number %d is out of range (it must be between 1 and %d)"
+msgstr "%sNúmero de color \"%s\" inválido (debe ser entre %d y %d)"
+
 msgid "Buffers list:"
 msgstr "Lista de buffers:"
 
@@ -212,6 +216,12 @@ msgstr "%sError: número del buffer incorrecto"
 #, c-format
 msgid "%sError: buffer not found"
 msgstr "%sError: buffer no encontrado"
+
+#, c-format
+msgid ""
+"%sError: renumbering is allowed only if option weechat.look."
+"buffer_auto_renumber is off"
+msgstr ""
 
 #, c-format
 msgid "%sError: WeeChat main buffer can't be closed"
@@ -1039,17 +1049,20 @@ msgstr ""
 msgid "manage buffers"
 msgstr "gestionar los buffers"
 
+#, fuzzy
 msgid ""
 "list || clear [<number>|<name>|-merged|-all] || move|merge <number> || swap "
-"<number1>|<name1> [<number2>|<name2>] || unmerge [<number>|-all] || close "
-"[<n1>[-<n2>]|<name>] || notify <level> || localvar || set <property> <value> "
-"|| get <property> || <number>|<name>"
+"<number1>|<name1> [<number2>|<name2>] || unmerge [<number>|-all] || renumber "
+"[<number1> [<number2> [<start>]]] || close [<n1>[-<n2>]|<name>] || notify "
+"<level> || localvar || set <property> <value> || get <property> || <number>|"
+"<name>"
 msgstr ""
 "list || clear [<número>|<nombre>|-merged|-all] || move|merge <número> ||  "
 "swap<número1>|<nombre1> [<número2>|<nombre2>] || unmerge [<número>|-all] || "
 "close [<n1>[-<n2>]|<nombre>] || notify <nivel> || localvar || set "
 "<propiedad> <valor> || get <propiedad> || <número>|<nombre>"
 
+#, fuzzy
 msgid ""
 "    list: list buffers (without argument, this list is displayed)\n"
 "   clear: clear buffer content (number for a buffer, -merged for merged "
@@ -1061,6 +1074,8 @@ msgid ""
 "both buffers)\n"
 "          (by default ctrl-x switches between merged buffers)\n"
 " unmerge: unmerge buffer from other buffers which have same number\n"
+"renumber: renumber buffers (works only if option weechat.look."
+"buffer_auto_renumber is off)\n"
 "   close: close buffer (number/range or name is optional)\n"
 "  notify: set notify level for current buffer: this level determines whether "
 "buffer will be added to hotlist or not:\n"
@@ -2671,6 +2686,12 @@ msgstr ""
 "barras con un llenado distinto al \"horizontal\")"
 
 msgid ""
+"automatically renumber buffers to have only consecutive numbers and start "
+"with number 1; if disabled, gaps between buffer numbers are allowed and the "
+"first buffer can have a number greater than 1"
+msgstr ""
+
+msgid ""
 "default notify level for buffers (used to tell WeeChat if buffer must be "
 "displayed in hotlist or not, according to importance of message): all=all "
 "messages (default), message=messages+highlights, highlight=highlights only, "
@@ -2681,6 +2702,13 @@ msgstr ""
 "del mensaje): all=todos los mensajes (predeterminado), message=mensajes"
 "+resaltes, highlight=solamente resaltes,none=nunca mostrar en la lista de "
 "actividad"
+
+msgid ""
+"position of a new buffer: end = after the end of list (number = last number "
+"+ 1) (default), first_gap = at first available number in the list (after the "
+"end of list if no number is available); this option is used only if the "
+"buffer has no layout number"
+msgstr ""
 
 msgid "default text search in buffer: case sensitive or not"
 msgstr ""
@@ -4136,6 +4164,10 @@ msgstr "Notificación cambiada para \"%s%s%s\": \"%s%s%s\" a \"%s%s%s\""
 #, c-format
 msgid "%sError: a buffer with same name (%s) already exists"
 msgstr "%sError: un buffer con el mismo nombre (%s) ya existe"
+
+#, c-format
+msgid "%sError: maximum number of buffers is reached (%d)"
+msgstr ""
 
 #, c-format
 msgid "%sError: it is only possible to merge buffers with formatted content"

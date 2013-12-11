@@ -69,6 +69,7 @@ Exemples:
          move|merge <nombre>
          swap <nombre1>|<nom1> [<nombre2>|<nom2>]
          unmerge [<nombre>|-all]
+         renumber <nombre1> [<nombre2> [<départ>]]
          close [<n1>[-<n2>]|<nom>]
          notify <niveau>
          localvar
@@ -83,6 +84,7 @@ Exemples:
    merge: mélanger le tampon courant avec un autre tampon (la zone de discussion sera un mélange des deux tampons)
           (par défaut ctrl-x bascule entre les tampons mélangés)
  unmerge: détacher le tampon courant des autres tampons portant le même numéro
+renumber: renuméroter des tampons (fonctionne seulement si l'option weechat.look.buffer_auto_renumber est désactivée)
    close: fermer le tampon (nombre/intervalle ou nom optionnel)
   notify: définir le niveau de notification pour le tampon courant: ce niveau détermine si le tampon doit être ajouté à la hotlist ou pas:
                none: jamais

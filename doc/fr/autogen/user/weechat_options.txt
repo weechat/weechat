@@ -408,10 +408,20 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"--"`)
 
+* [[option_weechat.look.buffer_auto_renumber]] *weechat.look.buffer_auto_renumber*
+** description: `renuméroter automatiquement les tampons pour qu'ils aient des numéros consécutifs et démarrent au numéro 1; si désactivé, des trous entre les numéros de tampons sont autorisés et le premier tampon peut avoir un numéro supérieur à 1`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `on`)
+
 * [[option_weechat.look.buffer_notify_default]] *weechat.look.buffer_notify_default*
 ** description: `niveau de notification par défaut pour les tampons (utilisé pour dire à WeeChat si le tampon doit être affiché dans la hotlist ou non, selon l'importance du message): all=tous les messages (par défaut), message=messages+highlights, highlight=highlights seulement, none=ne jamais afficher dans la hotlist`
 ** type: entier
 ** valeurs: none, highlight, message, all (valeur par défaut: `all`)
+
+* [[option_weechat.look.buffer_position]] *weechat.look.buffer_position*
+** description: `position d'un nouveau tampon : end = après la fin de la liste (numéro = dernier numéro + 1), first_gap = au premier numéro disponible dans la liste (après la fin de la liste si aucun numéro n'est disponible); cette option est utilisée seulement si le tampon n'a pas de numéro dans le "layout"`
+** type: entier
+** valeurs: end, first_gap (valeur par défaut: `end`)
 
 * [[option_weechat.look.buffer_search_case_sensitive]] *weechat.look.buffer_search_case_sensitive*
 ** description: `recherche par défaut dans le tampon : sensible à la casse ou non`

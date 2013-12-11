@@ -69,6 +69,7 @@ Examples:
          move|merge <number>
          swap <number1>|<name1> [<number2>|<name2>]
          unmerge [<number>|-all]
+         renumber [<number1> [<number2> [<start>]]]
          close [<n1>[-<n2>]|<name>]
          notify <level>
          localvar
@@ -83,6 +84,7 @@ Examples:
    merge: merge current buffer to another buffer (chat area will be mix of both buffers)
           (by default ctrl-x switches between merged buffers)
  unmerge: unmerge buffer from other buffers which have same number
+renumber: renumber buffers (works only if option weechat.look.buffer_auto_renumber is off)
    close: close buffer (number/range or name is optional)
   notify: set notify level for current buffer: this level determines whether buffer will be added to hotlist or not:
                none: never

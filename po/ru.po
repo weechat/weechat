@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-12-11 13:16+0100\n"
+"POT-Creation-Date: 2013-12-11 19:07+0100\n"
 "PO-Revision-Date: 2013-11-09 10:18+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -198,6 +198,10 @@ msgstr "%s не могу сохранить конфигурационный ф�
 msgid "%sError: unknown option for \"%s\" command"
 msgstr "%s неизвестный параметр для команды \"%s\"\n"
 
+#, fuzzy, c-format
+msgid "%sError: buffer number %d is out of range (it must be between 1 and %d)"
+msgstr "%sОшибочный код цвета \"%s\" (должен быть в диапазоне от %d до %d)"
+
 msgid "Buffers list:"
 msgstr "Список буферов:"
 
@@ -212,6 +216,12 @@ msgstr "%s неправильный номер буфера\n"
 #, fuzzy, c-format
 msgid "%sError: buffer not found"
 msgstr "%s plugin \"%s\" не найден\n"
+
+#, c-format
+msgid ""
+"%sError: renumbering is allowed only if option weechat.look."
+"buffer_auto_renumber is off"
+msgstr ""
 
 #, c-format
 msgid "%sError: WeeChat main buffer can't be closed"
@@ -1034,9 +1044,10 @@ msgstr "управление буферами"
 
 msgid ""
 "list || clear [<number>|<name>|-merged|-all] || move|merge <number> || swap "
-"<number1>|<name1> [<number2>|<name2>] || unmerge [<number>|-all] || close "
-"[<n1>[-<n2>]|<name>] || notify <level> || localvar || set <property> <value> "
-"|| get <property> || <number>|<name>"
+"<number1>|<name1> [<number2>|<name2>] || unmerge [<number>|-all] || renumber "
+"[<number1> [<number2> [<start>]]] || close [<n1>[-<n2>]|<name>] || notify "
+"<level> || localvar || set <property> <value> || get <property> || <number>|"
+"<name>"
 msgstr ""
 
 #, fuzzy
@@ -1051,6 +1062,8 @@ msgid ""
 "both buffers)\n"
 "          (by default ctrl-x switches between merged buffers)\n"
 " unmerge: unmerge buffer from other buffers which have same number\n"
+"renumber: renumber buffers (works only if option weechat.look."
+"buffer_auto_renumber is off)\n"
 "   close: close buffer (number/range or name is optional)\n"
 "  notify: set notify level for current buffer: this level determines whether "
 "buffer will be added to hotlist or not:\n"
@@ -2230,10 +2243,23 @@ msgid ""
 msgstr ""
 
 msgid ""
+"automatically renumber buffers to have only consecutive numbers and start "
+"with number 1; if disabled, gaps between buffer numbers are allowed and the "
+"first buffer can have a number greater than 1"
+msgstr ""
+
+msgid ""
 "default notify level for buffers (used to tell WeeChat if buffer must be "
 "displayed in hotlist or not, according to importance of message): all=all "
 "messages (default), message=messages+highlights, highlight=highlights only, "
 "none=never display in hotlist"
+msgstr ""
+
+msgid ""
+"position of a new buffer: end = after the end of list (number = last number "
+"+ 1) (default), first_gap = at first available number in the list (after the "
+"end of list if no number is available); this option is used only if the "
+"buffer has no layout number"
 msgstr ""
 
 msgid "default text search in buffer: case sensitive or not"
@@ -3591,6 +3617,10 @@ msgstr "%s%s%s сменил тему %s%s%s на:"
 msgid "%sError: a buffer with same name (%s) already exists"
 msgstr ""
 "%s не могу загрузить plugin \"%s\": одноимённый plugin уже существует\n"
+
+#, c-format
+msgid "%sError: maximum number of buffers is reached (%d)"
+msgstr ""
 
 #, c-format
 msgid "%sError: it is only possible to merge buffers with formatted content"

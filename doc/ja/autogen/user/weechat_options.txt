@@ -408,10 +408,20 @@
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"--"`)
 
+* [[option_weechat.look.buffer_auto_renumber]] *weechat.look.buffer_auto_renumber*
+** 説明: `automatically renumber buffers to have only consecutive numbers and start with number 1; if disabled, gaps between buffer numbers are allowed and the first buffer can have a number greater than 1`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
 * [[option_weechat.look.buffer_notify_default]] *weechat.look.buffer_notify_default*
 ** 説明: `バッファに対するデフォルトの通知レベル (メッセージの重要度に従い、バッファがホットリストに表示されるかどうかを WeeChat に教えるために使われる): all=全てのメッセージ (デフォルト)、message=メッセージとハイライト、highlight=ハイライトのみ、none=ホットリストに表示されない`
 ** タイプ: 整数
 ** 値: none, highlight, message, all (デフォルト値: `all`)
+
+* [[option_weechat.look.buffer_position]] *weechat.look.buffer_position*
+** 説明: `position of a new buffer: end = after the end of list (number = last number + 1) (default), first_gap = at first available number in the list (after the end of list if no number is available); this option is used only if the buffer has no layout number`
+** タイプ: 整数
+** 値: end, first_gap (デフォルト値: `end`)
 
 * [[option_weechat.look.buffer_search_case_sensitive]] *weechat.look.buffer_search_case_sensitive*
 ** 説明: `default text search in buffer: case sensitive or not`
