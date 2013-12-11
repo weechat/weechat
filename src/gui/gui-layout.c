@@ -342,8 +342,7 @@ gui_layout_buffer_save (struct t_gui_layout *layout)
 void
 gui_layout_buffer_apply (struct t_gui_layout *layout)
 {
-    struct t_gui_buffer *ptr_buffer, *ptr_next_buffer;
-    int number, count_merged;
+    struct t_gui_buffer *ptr_buffer;
 
     if (!layout)
         return;
@@ -357,35 +356,16 @@ gui_layout_buffer_apply (struct t_gui_layout *layout)
     /* sort buffers by layout number (without merge) */
     gui_buffer_sort_by_layout_number ();
 
-    /* merge buffers */
-    ptr_buffer = gui_buffers->next_buffer;
-    while (ptr_buffer)
-    {
-        ptr_next_buffer = ptr_buffer->next_buffer;
-
-        if ((ptr_buffer->layout_number >= 1)
-            && (ptr_buffer->layout_number == (ptr_buffer->prev_buffer)->layout_number))
-        {
-            gui_buffer_merge (ptr_buffer, ptr_buffer->prev_buffer);
-        }
-
-        ptr_buffer = ptr_next_buffer;
-    }
-
     /* set appropriate active buffers */
-    number = 1;
-    while (number <= last_gui_buffer->number)
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
     {
-        count_merged = gui_buffer_count_merged_buffers (number);
-        if (count_merged > 1)
+        if ((gui_buffer_count_merged_buffers (ptr_buffer->number) > 1)
+            && (ptr_buffer->layout_number == ptr_buffer->number)
+            && (ptr_buffer->layout_number_merge_order == 0))
         {
-            ptr_buffer = gui_buffer_search_by_layout_number (number, 0);
-            if (ptr_buffer && !ptr_buffer->active)
-            {
-                gui_buffer_set_active_buffer (ptr_buffer);
-            }
+            gui_buffer_set_active_buffer (ptr_buffer);
         }
-        number++;
     }
 }
 

@@ -20,6 +20,7 @@
 #ifndef __WEECHAT_GUI_BUFFER_H
 #define __WEECHAT_GUI_BUFFER_H 1
 
+#include <limits.h>
 #include <regex.h>
 
 struct t_hashtable;
@@ -45,6 +46,10 @@ enum t_gui_buffer_notify
 };
 
 #define GUI_BUFFER_MAIN "weechat"
+
+#define GUI_BUFFERS_MAX 10000
+
+#define GUI_BUFFER_NUMBER_MAX (INT_MAX - 10000)
 
 #define GUI_TEXT_SEARCH_DISABLED 0
 #define GUI_TEXT_SEARCH_BACKWARD 1
@@ -205,6 +210,7 @@ struct t_gui_buffer_visited
 
 extern struct t_gui_buffer *gui_buffers;
 extern struct t_gui_buffer *last_gui_buffer;
+extern int gui_buffers_count;
 extern struct t_gui_buffer_visited *gui_buffers_visited;
 extern struct t_gui_buffer_visited *last_gui_buffer_visited;
 extern int gui_buffers_visited_index;
@@ -276,6 +282,7 @@ extern struct t_gui_buffer *gui_buffer_search_by_full_name (const char *full_nam
 extern struct t_gui_buffer *gui_buffer_search_by_partial_name (const char *plugin,
                                                                const char *name);
 extern struct t_gui_buffer *gui_buffer_search_by_number (int number);
+extern struct t_gui_buffer *gui_buffer_search_by_number_or_name (const char *string);
 extern struct t_gui_buffer *gui_buffer_search_by_layout_number (int layout_number,
                                                                 int layout_number_merge_order);
 extern int gui_buffer_count_merged_buffers (int number);
@@ -288,9 +295,9 @@ extern void gui_buffer_switch_by_number (struct t_gui_window *window,
 extern void gui_buffer_set_active_buffer (struct t_gui_buffer *buffer);
 extern struct t_gui_buffer *gui_buffer_get_next_active_buffer (struct t_gui_buffer *buffer);
 extern struct t_gui_buffer *gui_buffer_get_previous_active_buffer (struct t_gui_buffer *buffer);
+extern void gui_buffer_renumber (int number1, int number2, int start_number);
 extern void gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number);
-extern void gui_buffer_swap (struct t_gui_buffer *buffer1,
-                             struct t_gui_buffer *buffer2);
+extern void gui_buffer_swap (int number1, int number2);
 extern void gui_buffer_merge (struct t_gui_buffer *buffer,
                               struct t_gui_buffer *target_buffer);
 extern void gui_buffer_unmerge (struct t_gui_buffer *buffer, int number);
