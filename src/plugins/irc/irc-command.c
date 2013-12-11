@@ -5868,6 +5868,8 @@ irc_command_init ()
                              "   -nojoin: do not join any channel (even if "
                              "autojoin is enabled on server)\n"
                              "   -switch: switch to next server address\n\n"
+                             "To disconnect from a server or stop any connection "
+                             "attempt, use command /disconnect.\n\n"
                              "Examples:\n"
                              "  /connect freenode\n"
                              "  /connect irc.oftc.net/6667\n"

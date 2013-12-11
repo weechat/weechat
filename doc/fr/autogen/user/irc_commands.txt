@@ -77,6 +77,8 @@ nooption: définir l'option booléenne à 'off' (par exemple: -nossl)
  -nojoin: ne rejoindre aucun canal (même si l'autojoin est activé pour le serveur)
  -switch: basculer vers l'adresse suivante du serveur
 
+Pour se déconnecter du serveur ou stopper toute tentative de connexion, utilisez la commande /disconnect.
+
 Exemples:
   /connect freenode
   /connect irc.oftc.net/6667

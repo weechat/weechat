@@ -77,6 +77,8 @@ Without argument, this command display ban list for current channel.
    -nojoin: do not join any channel (even if autojoin is enabled on server)
    -switch: switch to next server address
 
+To disconnect from a server or stop any connection attempt, use command /disconnect.
+
 Examples:
   /connect freenode
   /connect irc.oftc.net/6667
