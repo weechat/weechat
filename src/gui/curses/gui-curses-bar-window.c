@@ -582,7 +582,9 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                             }
 
                             /* compute new start for displaying input */
-                            new_start_input = pos_after_start_input + gui_chat_string_real_pos (pos_after_start_input, diff);
+                            new_start_input = pos_after_start_input +
+                                gui_chat_string_real_pos (pos_after_start_input,
+                                                          diff, 1);
                             if (new_start_input > pos_cursor)
                                 new_start_input = pos_cursor;
 

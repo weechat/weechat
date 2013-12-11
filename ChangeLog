@@ -11,6 +11,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 0.4.3 (under dev)
 
+* core: fix text emphasis with wide chars on screen like japanese (patch #8253)
 * core: add signal "buffer_cleared"
 * core: remove option on /unset of plugin description option (plugins.desc.xxx)
   (bug #40768)

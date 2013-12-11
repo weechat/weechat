@@ -700,9 +700,11 @@ gui_color_emphasize (const char *string,
          * color codes)
          */
         real_pos1 = gui_chat_string_real_pos (ptr_string,
-                                              gui_chat_string_pos (ptr_no_color, pos1));
+                                              gui_chat_string_pos (ptr_no_color, pos1),
+                                              0);
         real_pos2 = gui_chat_string_real_pos (ptr_string,
-                                              gui_chat_string_pos (ptr_no_color, pos2));
+                                              gui_chat_string_pos (ptr_no_color, pos2),
+                                              0);
 
         /*
          * concatenate following strings to the result:

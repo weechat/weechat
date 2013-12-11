@@ -527,7 +527,8 @@ gui_chat_display_word (struct t_gui_window *window,
         if (window->win_chat_cursor_x + chars_to_display > gui_chat_get_real_width (window))
         {
             num_displayed = gui_chat_get_real_width (window) - window->win_chat_cursor_x;
-            pos_saved_char = gui_chat_string_real_pos (ptr_data, num_displayed);
+            pos_saved_char = gui_chat_string_real_pos (ptr_data, num_displayed,
+                                                       1);
             saved_char = ptr_data[pos_saved_char];
             ptr_data[pos_saved_char] = '\0';
             if ((count == 0) || (*lines_displayed >= num_lines - count))
@@ -790,7 +791,8 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
                                    short_name,
                                    short_name +
                                    gui_chat_string_real_pos (short_name,
-                                                             chars_to_display),
+                                                             chars_to_display,
+                                                             1),
                                    1, num_lines, count,
                                    pre_lines_displayed, lines_displayed,
                                    simulate,
@@ -1043,9 +1045,9 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
                                                      (prefix_highlighted) ? prefix_highlighted : ptr_prefix,
                                                      (prefix_highlighted) ?
                                                      prefix_highlighted + gui_chat_string_real_pos (prefix_highlighted,
-                                                                                                    chars_to_display) :
+                                                                                                    chars_to_display, 1) :
                                                      ptr_prefix + gui_chat_string_real_pos (ptr_prefix,
-                                                                                            chars_to_display),
+                                                                                            chars_to_display, 1),
                                                      1, num_lines, count,
                                                      pre_lines_displayed,
                                                      lines_displayed,

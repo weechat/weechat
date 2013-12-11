@@ -243,11 +243,16 @@ gui_chat_string_add_offset_screen (const char *string, int offset_screen)
  * Gets real position in string (ignoring formatting chars like
  * colors/attributes).
  *
+ * If argument "use_screen_size" is 0, the "pos" argument is a number of UTF-8
+ * chars.
+ * If argument "use_screen_size" is 1, the "pos" argument is the width of UTF-8
+ * chars on screen.
+ *
  * Returns real position, in bytes.
  */
 
 int
-gui_chat_string_real_pos (const char *string, int pos)
+gui_chat_string_real_pos (const char *string, int pos, int use_screen_size)
 {
     const char *real_pos, *real_pos_prev, *ptr_string;
     int size_on_screen;
@@ -267,7 +272,7 @@ gui_chat_string_real_pos (const char *string, int pos)
         {
             size_on_screen = gui_chat_char_size_screen (ptr_string);
             if (size_on_screen > 0)
-                pos -= size_on_screen;
+                pos -= (use_screen_size) ? size_on_screen : 1;
             ptr_string = utf8_next_char (ptr_string);
             real_pos_prev = real_pos;
             real_pos = ptr_string;
