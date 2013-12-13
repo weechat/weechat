@@ -3350,7 +3350,7 @@ command_layout_display_tree (struct t_gui_layout_window *layout_window,
 }
 
 /*
- * Gets arguments for /layout command (if option is save/apply/reset).
+ * Gets arguments for /layout command (if option is add/apply/del).
  */
 
 void
@@ -3438,8 +3438,8 @@ COMMAND_CALLBACK(layout)
         return WEECHAT_RC_OK;
     }
 
-    /* save layout */
-    if (string_strcasecmp (argv[1], "save") == 0)
+    /* add a layout */
+    if (string_strcasecmp (argv[1], "add") == 0)
     {
         command_layout_get_arguments (argc, argv, &layout_name, &ptr_layout,
                                       &flag_buffers, &flag_windows);
@@ -3498,8 +3498,8 @@ COMMAND_CALLBACK(layout)
         return WEECHAT_RC_OK;
     }
 
-    /* reset layout */
-    if (string_strcasecmp (argv[1], "reset") == 0)
+    /* delete layout */
+    if (string_strcasecmp (argv[1], "del") == 0)
     {
         command_layout_get_arguments (argc, argv, &layout_name, &ptr_layout,
                                       &flag_buffers, &flag_windows);
@@ -6829,28 +6829,28 @@ command_init ()
                   " || missing %(keys_contexts)",
                   &command_key, NULL);
     hook_command (NULL, "layout",
-                  N_("save/apply/reset layout for buffers and windows"),
-                  N_("save [<name>] [buffers|windows]"
+                  N_("manage buffers/windows layouts"),
+                  N_("add [<name>] [buffers|windows]"
                      " || apply [<name>] [buffers|windows]"
                      " || leave"
-                     " || reset [<name>] [buffers|windows]"
+                     " || del [<name>] [buffers|windows]"
                      " || rename <name> <new_name>"),
-                  N_("   save: save current layout\n"
+                  N_("    add: create a layout using the current buffers/windows\n"
                      "  apply: apply saved layout\n"
                      "  leave: leave current layout (does not update any layout)\n"
-                     "  reset: reset buffers and/or windows in a saved layout\n"
-                     "         (if both buffers and windows are reset, the "
-                     "layout is removed)\n"
+                     "    del: delete buffers and/or windows in a saved layout\n"
+                     "         (if neither \"buffers\" nor \"windows\" is given "
+                     "after the name, the layout is deleted)\n"
                      " rename: rename a layout\n"
                      "   name: name for saved layout (default is \"default\")\n"
                      "buffers: save/apply only buffers (order of buffers)\n"
                      "windows: save/apply only windows (buffer displayed by "
                      "each window)\n\n"
                      "Without argument, this command displays saved layouts."),
-                  "save %(layouts_names)|buffers|windows buffers|windows"
+                  "add %(layouts_names)|buffers|windows buffers|windows"
                   " || apply %(layouts_names)|buffers|windows buffers|windows"
                   " || leave"
-                  " || reset %(layouts_names)|buffers|windows buffers|windows"
+                  " || del %(layouts_names)|buffers|windows buffers|windows"
                   " || rename %(layouts_names) %(layouts_names)",
                   &command_layout, NULL);
     hook_command (NULL, "mouse",

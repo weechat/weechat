@@ -11,6 +11,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 0.4.3 (under dev)
 
+* core: rename options save/reset to add/del in command /layout
 * core: add options weechat.look.buffer_auto_renumber and
   weechat.look.buffer_position, add option "renumber" in command /buffer, add
   bar item "buffer_last_number" (task #12766)

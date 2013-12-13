@@ -469,20 +469,20 @@ Exemples:
 ----
 
 [[command_weechat_layout]]
-[command]*`layout`* sauver/appliquer/réinitialiser la disposition des tampons et fenêtres::
+[command]*`layout`* gestion des dispositions de tampons/fenêtres::
 
 ----
-/layout  save [<nom>] [buffers|windows]
+/layout  add [<nom>] [buffers|windows]
          apply [<nom>] [buffers|windows]
          leave
-         reset [<nom>] [buffers|windows]
+         del [<nom>] [buffers|windows]
          rename <nom> <nouveau_nom>
 
-   save: sauver la disposition courante
+    add: créer une disposition avec les tampons/fenêtres courants
   apply: appliquer une disposition sauvegardée
   leave: quitter la disposition courante (ne met à jour aucune disposition)
-  reset: réinitialiser les tampons et/ou fenêtres dans une disposition sauvegardée
-         (si les tampons et fenêtres sont réinitialisées ensemble, la disposition est supprimée)
+    del: supprimer les tampons et/ou fenêtres dans une disposition sauvegardée
+         (si ni "buffers" ni "windows" n'est donné après le nom, la disposition est supprimée)
  rename: renommer une disposition
     nom: nom pour la disposition sauvegardée (par défaut "default")
 buffers: sauver/appliquer seulement pour les tampons (ordre des tampons)

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-12-11 21:18+0100\n"
+"POT-Creation-Date: 2013-12-13 12:43+0100\n"
 "PO-Revision-Date: 2013-11-09 10:18+0100\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1781,22 +1781,26 @@ msgstr ""
 "  restaurar a associação padrão para a tecla alt-r:\n"
 "    /key reset meta-r"
 
-msgid "save/apply/reset layout for buffers and windows"
-msgstr "salvar/aplicar/resetar a disposição dos buffers e janelas"
+#, fuzzy
+msgid "manage buffers/windows layouts"
+msgstr "gerenciar buffers"
 
+#, fuzzy
 msgid ""
-"save [<name>] [buffers|windows] || apply [<name>] [buffers|windows] || leave "
-"|| reset [<name>] [buffers|windows] || rename <name> <new_name>"
+"add [<name>] [buffers|windows] || apply [<name>] [buffers|windows] || leave "
+"|| del [<name>] [buffers|windows] || rename <name> <new_name>"
 msgstr ""
 "save [<nome>] [buffers|windows] || apply [<nome>] [buffers|windows] || leave "
 "|| reset [<nome>] [buffers|windows] || rename <nome> <novo_nome>"
 
+#, fuzzy
 msgid ""
-"   save: save current layout\n"
+"    add: create a layout using the current buffers/windows\n"
 "  apply: apply saved layout\n"
 "  leave: leave current layout (does not update any layout)\n"
-"  reset: reset buffers and/or windows in a saved layout\n"
-"         (if both buffers and windows are reset, the layout is removed)\n"
+"    del: delete buffers and/or windows in a saved layout\n"
+"         (if neither \"buffers\" nor \"windows\" is given after the name, "
+"the layout is deleted)\n"
 " rename: rename a layout\n"
 "   name: name for saved layout (default is \"default\")\n"
 "buffers: save/apply only buffers (order of buffers)\n"
@@ -9568,6 +9572,10 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#, fuzzy
+#~ msgid "manage layouts for buffers and windows"
+#~ msgstr "salvar/aplicar/resetar a disposição dos buffers e janelas"
 
 #~ msgid "set title for window (terminal for Curses GUI) with name and version"
 #~ msgstr ""
