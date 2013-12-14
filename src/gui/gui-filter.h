@@ -37,7 +37,7 @@ struct t_gui_filter
     char **buffers;                    /* list of buffer names              */
     char *tags;                        /* tags                              */
     int tags_count;                    /* number of tags                    */
-    char **tags_array;                 /* array of tags                     */
+    char ***tags_array;                /* array of tags                     */
     char *regex;                       /* regex                             */
     regex_t *regex_prefix;             /* regex for line prefix             */
     regex_t *regex_message;            /* regex for line message            */

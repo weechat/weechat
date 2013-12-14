@@ -544,7 +544,7 @@
 ** values: any string (default value: `""`)
 
 * [[option_weechat.look.highlight_tags]] *weechat.look.highlight_tags*
-** description: `comma separated list of tags to highlight (case insensitive comparison, examples: "irc_notice" for IRC notices, "nick_flashcode" for messages from nick "FlashCode")`
+** description: `comma separated list of tags to highlight; case insensitive comparison; each tag can start or end with "*" to match more than one tag; many tags can be separated by "+" to make a logical "and" between tags; examples: "nick_flashcode" for messages from nick "FlashCode", "irc_notice+nick_toto*" for notices from a nick starting with "toto"`
 ** type: string
 ** values: any string (default value: `""`)
 

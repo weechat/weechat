@@ -276,7 +276,7 @@ struct t_hook *config_day_change_timer = NULL;
 int config_day_change_old_day = -1;
 int config_emphasized_attributes = 0;
 regex_t *config_highlight_regex = NULL;
-char **config_highlight_tags = NULL;
+char ***config_highlight_tags = NULL;
 int config_num_highlight_tags = 0;
 char **config_plugin_extensions = NULL;
 int config_num_plugin_extensions = 0;
@@ -584,13 +584,20 @@ config_change_highlight_regex (void *data, struct t_config_option *option)
 void
 config_change_highlight_tags (void *data, struct t_config_option *option)
 {
+    int i;
+    char **tags_array;
+
     /* make C compiler happy */
     (void) data;
     (void) option;
 
     if (config_highlight_tags)
     {
-        string_free_split (config_highlight_tags);
+        for (i = 0; i < config_num_highlight_tags; i++)
+        {
+            string_free_split (config_highlight_tags[i]);
+        }
+        free (config_highlight_tags);
         config_highlight_tags = NULL;
     }
     config_num_highlight_tags = 0;
@@ -598,8 +605,22 @@ config_change_highlight_tags (void *data, struct t_config_option *option)
     if (CONFIG_STRING(config_look_highlight_tags)
         && CONFIG_STRING(config_look_highlight_tags)[0])
     {
-        config_highlight_tags = string_split (CONFIG_STRING(config_look_highlight_tags),
-                                              ",", 0, 0, &config_num_highlight_tags);
+        tags_array = string_split (CONFIG_STRING(config_look_highlight_tags),
+                                   ",", 0, 0, &config_num_highlight_tags);
+        if (tags_array)
+        {
+            config_highlight_tags = malloc (config_num_highlight_tags *
+                                            sizeof (*config_highlight_tags));
+            if (config_highlight_tags)
+            {
+                for (i = 0; i < config_num_highlight_tags; i++)
+                {
+                    config_highlight_tags[i] = string_split (tags_array[i],
+                                                             "+", 0, 0, NULL);
+                }
+            }
+            string_free_split (tags_array);
+        }
     }
 }
 
@@ -2194,9 +2215,12 @@ config_weechat_init_options ()
     config_look_highlight_tags = config_file_new_option (
         weechat_config_file, ptr_section,
         "highlight_tags", "string",
-        N_("comma separated list of tags to highlight (case insensitive "
-           "comparison, examples: \"irc_notice\" for IRC notices, "
-           "\"nick_flashcode\" for messages from nick \"FlashCode\")"),
+        N_("comma separated list of tags to highlight; case insensitive "
+           "comparison; each tag can start or end with \"*\" to match more "
+           "than one tag; many tags can be separated by \"+\" to make a "
+           "logical \"and\" between tags; examples: \"nick_flashcode\" for "
+           "messages from nick \"FlashCode\", \"irc_notice+nick_toto*\" for "
+           "notices from a nick starting with \"toto\""),
         NULL, 0, 0, "", NULL, 0, NULL, NULL, &config_change_highlight_tags, NULL, NULL, NULL);
     config_look_hotlist_add_buffer_if_away = config_file_new_option (
         weechat_config_file, ptr_section,
@@ -3388,6 +3412,8 @@ config_weechat_write ()
 void
 config_weechat_free ()
 {
+    int i;
+
     config_file_free (weechat_config_file);
 
     if (config_highlight_regex)
@@ -3399,10 +3425,14 @@ config_weechat_free ()
 
     if (config_highlight_tags)
     {
-        string_free_split (config_highlight_tags);
+        for (i = 0; i < config_num_highlight_tags; i++)
+        {
+            string_free_split (config_highlight_tags[i]);
+        }
+        free (config_highlight_tags);
         config_highlight_tags = NULL;
-        config_num_highlight_tags = 0;
     }
+    config_num_highlight_tags = 0;
 
     if (config_plugin_extensions)
     {

@@ -1413,6 +1413,9 @@ void
 gui_buffer_set_highlight_tags (struct t_gui_buffer *buffer,
                                const char *new_highlight_tags)
 {
+    int i;
+    char **tags_array;
+
     if (buffer->highlight_tags)
     {
         free (buffer->highlight_tags);
@@ -1420,20 +1423,38 @@ gui_buffer_set_highlight_tags (struct t_gui_buffer *buffer,
     }
     if (buffer->highlight_tags_array)
     {
-        string_free_split (buffer->highlight_tags_array);
+        for (i = 0; i < buffer->highlight_tags_count; i++)
+        {
+            string_free_split (buffer->highlight_tags_array[i]);
+        }
+        free (buffer->highlight_tags_array);
         buffer->highlight_tags_array = NULL;
     }
     buffer->highlight_tags_count = 0;
 
-    if (new_highlight_tags)
+    if (!new_highlight_tags)
+        return;
+
+    buffer->highlight_tags = strdup (new_highlight_tags);
+    if (!buffer->highlight_tags)
+        return;
+
+    tags_array = string_split (buffer->highlight_tags, ",", 0, 0,
+                               &buffer->highlight_tags_count);
+    if (tags_array)
     {
-        buffer->highlight_tags = strdup (new_highlight_tags);
-        if (buffer->highlight_tags)
+        buffer->highlight_tags_array = malloc (buffer->highlight_tags_count *
+                                               sizeof (*buffer->highlight_tags_array));
+        if (buffer->highlight_tags_array)
         {
-            buffer->highlight_tags_array = string_split (new_highlight_tags,
-                                                         ",", 0, 0,
-                                                         &buffer->highlight_tags_count);
+            for (i = 0; i < buffer->highlight_tags_count; i++)
+            {
+                buffer->highlight_tags_array[i] = string_split (tags_array[i],
+                                                                "+", 0, 0,
+                                                                NULL);
+            }
         }
+        string_free_split (tags_array);
     }
 }
 
@@ -2317,7 +2338,7 @@ gui_buffer_close (struct t_gui_buffer *buffer)
     struct t_gui_window *ptr_window;
     struct t_gui_buffer *ptr_buffer, *ptr_back_to_buffer;
     struct t_gui_buffer *ptr_buffer_visited_buffer;
-    int index;
+    int index, i;
     struct t_gui_buffer_visited *ptr_buffer_visited;
 
     hook_signal_send ("buffer_closing",
@@ -2468,7 +2489,13 @@ gui_buffer_close (struct t_gui_buffer *buffer)
     if (buffer->highlight_tags)
         free (buffer->highlight_tags);
     if (buffer->highlight_tags_array)
-        string_free_split (buffer->highlight_tags_array);
+    {
+        for (i = 0; i < buffer->highlight_tags_count; i++)
+        {
+            string_free_split (buffer->highlight_tags_array[i]);
+        }
+        free (buffer->highlight_tags_array);
+    }
 
     /* remove buffer from buffers list */
     if (buffer->prev_buffer)
@@ -3668,7 +3695,7 @@ gui_buffer_hdata_buffer_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_gui_buffer, highlight_regex_compiled, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, highlight_tags, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, highlight_tags_count, INTEGER, 0, NULL, NULL);
-        HDATA_VAR(struct t_gui_buffer, highlight_tags_array, STRING, 0, "highlight_tags_count", NULL);
+        HDATA_VAR(struct t_gui_buffer, highlight_tags_array, POINTER, 0, "highlight_tags_count", NULL);
         HDATA_VAR(struct t_gui_buffer, hotlist_max_level_nicks, HASHTABLE, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, keys, POINTER, 0, NULL, "key");
         HDATA_VAR(struct t_gui_buffer, last_key, POINTER, 0, NULL, "key");

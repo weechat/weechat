@@ -10322,8 +10322,11 @@ Argomenti:
 | highlight_regex | qualsiasi stringa |
   Espressione regolare per l'evento
 
+// TRANSLATION MISSING
 | highlight_tags | elenco separato da virgole di tag |
   Elenco separato da virgole di tag da evidenziare in questo buffer
+  (_WeeChat ≥ 0.4.3_: it is possible to combine many tags as a logical "and"
+  with separator "+", for example: "nick_toto+irc_action")
 
 | hotlist_max_level_nicks | elenco separado da virgole di "nick:livello" |
   Elenco separato da virgole di nick con il livello massimo per la hotlist

@@ -296,6 +296,7 @@ disable: désactiver les filtres
          - un nom commençant par '!' est exclu
          - le nom peut commencer ou se terminer par '*' pour plusieurs tampons
    tags: liste de tags, séparés par des virgules, par exemple: "irc_join,irc_part,irc_quit"
+         (il est possible de combiner plusieurs tags sous forme d'un "et" logique avec le séparateur "+", par exemple: "nick_toto+irc_action")
   regex: expression régulière à rechercher dans la ligne
          - utiliser '\t' pour séparer le préfixe du message, les caractères spéciaux comme '|' doivent être échappés: '\|'
          - si l'expression régulière commence par '!' alors le résultat est inversé (utiliser '\!' pour démarrer par '!')
@@ -323,6 +324,8 @@ Exemples:
     /filter add nicks * irc_366 *
   filtrer le pseudo "toto" sur le canal IRC #weechat:
     /filter add toto irc.freenode.#weechat nick_toto *
+  filtrer les messages IRC join/action du pseudo "toto":
+    /filter add toto * nick_toto+irc_join,nick_toto+irc_action *
   filtrer les lignes contenant "weechat sucks" sur le canal IRC #weechat:
     /filter add sucks irc.freenode.#weechat * weechat sucks
 ----

@@ -292,7 +292,7 @@ extern int config_length_nick_prefix_suffix;
 extern int config_length_prefix_same_nick;
 extern int config_emphasized_attributes;
 extern regex_t *config_highlight_regex;
-extern char **config_highlight_tags;
+extern char ***config_highlight_tags;
 extern int config_num_highlight_tags;
 extern char **config_plugin_extensions;
 extern int config_num_plugin_extensions;

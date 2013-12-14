@@ -282,48 +282,51 @@ Examples:
          add <name> <buffer>[,<buffer>...] <tags> <regex>
          del <name>|-all
 
-   list: 全てのフィルタをリストアップ
- enable: フィルタを有効化 (フィルタはデフォルトで有効になっています)
-disable: フィルタを無効化
- toggle: フィルタの有効無効を切り替え
-   name: フィルタの名前
-    add: フィルタを追加
-    del: フィルタを削除
-   -all: 全てのフィルタを削除
- buffer: フィルタが有効化されているバッファのコンマ区切りリスト:
-         - これはプラグイン名を含む完全な名前です (例えば: "irc.freenode.#weechat")
-         - "*" は全てのバッファを意味します
-         - 名前が '!' から始まるものは除外されます
-         - 多くのバッファにマッチさせるためには名前を '*' から始めるか終わらせてください
-   tags: タグのコンマ区切りリスト、例えば: "irc_join,irc_part,irc_quit"
-  regex: 行単位検索の正規表現
-         - '\t' を使うと、プレフィックスをメッセージから分離できます。'|' 等の特別な文字は '\|' のようにエスケープしなければいけません
-         - 正規表現の最初に '!' が含まれる場合は、マッチ結果が反転されます (最初の '!' にマッチさせたければ、'\!' を使ってください)
-         - 2 種類の正規表現があります: 一方はプレフィックス用、他方はメッセージ用
-         - 正規表現は大文字小文字を区別しません、"(?-i)" から始まる場合は区別します
+   list: list all filters
+ enable: enable filters (filters are enabled by default)
+disable: disable filters
+ toggle: toggle filters
+   name: filter name
+    add: add a filter
+    del: delete a filter
+   -all: delete all filters
+ buffer: comma separated list of buffers where filter is active:
+         - this is full name including plugin (example: "irc.freenode.#weechat")
+         - "*" means all buffers
+         - a name starting with '!' is excluded
+         - name can start or end with '*' to match many buffers
+   tags: comma separated list of tags, for example "irc_join,irc_part,irc_quit"
+         (it is possible to combine many tags as a logical "and" with separator "+", for example: "nick_toto+irc_action")
+  regex: regular expression to search in line
+         - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
+         - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
+         - two regular expressions are created: one for prefix and one for message
+         - regex are case insensitive, they can start by "(?-i)" to become case sensitive
 
-デフォルトではキー alt+'=' でフィルタリングの on/off を切り替えられます。
+The default key alt+'=' toggles filtering on/off.
 
-よく使われるタグ:
+Tags most commonly used:
   no_filter, no_highlight, no_log, log0..log9 (log level),
   notify_none, notify_message, notify_private, notify_highlight,
-  nick_xxx (xxx はメッセージのニックネーム), prefix_nick_ccc (ccc はニックネームの色)
-  irc_xxx (xxx はコマンド名又は番号、/server raw または /debug tags で確認),
+  nick_xxx (xxx is nick in message), prefix_nick_ccc (ccc is color of nick),
+  irc_xxx (xxx is command name or number, see /server raw or /debug tags),
   irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
-バッファ内でタグを見るには: /debug tags
+To see tags for lines in buffers: /debug tags
 
-例:
-  全てのバッファで IRC スマートフィルタを使用:
+Examples:
+  use IRC smart filter on all buffers:
     /filter add irc_smart * irc_smart_filter *
-  名前に "#weechat" を含むバッファを除いた全てのバッファで IRC スマートフィルタを使用:
+  use IRC smart filter on all buffers except those with "#weechat" in name:
     /filter add irc_smart *,!*#weechat* irc_smart_filter *
-  全ての IRC join/part/quit メッセージをフィルタ:
+  filter all IRC join/part/quit messages:
     /filter add joinquit * irc_join,irc_part,irc_quit *
-  チャンネルに入った時や /names で表示されるニックネームをフィルタ:
+  filter nicks displayed when joining channels or with /names:
     /filter add nicks * irc_366 *
-  IRC チャンネル #weechat で "toto" を含むニックネームをフィルタ:
+  filter nick "toto" on IRC channel #weechat:
     /filter add toto irc.freenode.#weechat nick_toto *
-  IRC チャンネル #weechat で "weechat sucks" を含む行をフィルタ:
+  filter IRC join/action messages from nick "toto":
+    /filter add toto * nick_toto+irc_join,nick_toto+irc_action *
+  filter lines containing "weechat sucks" on IRC channel #weechat:
     /filter add sucks irc.freenode.#weechat * weechat sucks
 ----
 

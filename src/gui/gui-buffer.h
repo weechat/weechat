@@ -180,7 +180,7 @@ struct t_gui_buffer
     char *highlight_tags;              /* tags to highlight                 */
     int highlight_tags_count;          /* number of tags to highlight       */
                                        /* (if 0, any tag is highlighted)    */
-    char **highlight_tags_array;       /* tags to highlight                 */
+    char ***highlight_tags_array;      /* tags to highlight                 */
 
     /* hotlist settings for buffer */
     struct t_hashtable *hotlist_max_level_nicks; /* max hotlist level for   */

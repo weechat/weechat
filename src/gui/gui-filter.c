@@ -48,30 +48,6 @@ int gui_filters_enabled = 1;                       /* filters enabled?      */
 
 
 /*
- * Checks if a line has tag "no_filter" (which means that line should never been
- * filtered: it is always displayed).
- *
- * Returns:
- *   1: line has tag "no_filter"
- *   0: line does not have tag "no_filter"
- */
-
-int
-gui_filter_line_has_tag_no_filter (struct t_gui_line_data *line_data)
-{
-    int i;
-
-    for (i = 0; i < line_data->tags_count; i++)
-    {
-        if (strcmp (line_data->tags_array[i], GUI_FILTER_TAG_NO_FILTER) == 0)
-            return 1;
-    }
-
-    /* tag not found, line may be filtered */
-    return 0;
-}
-
-/*
  * Checks if a line must be displayed or not (filtered).
  *
  * Returns:
@@ -89,7 +65,7 @@ gui_filter_check_line (struct t_gui_line_data *line_data)
     if (!gui_filters_enabled)
         return 1;
 
-    if (gui_filter_line_has_tag_no_filter (line_data))
+    if (gui_line_has_tag_no_filter (line_data))
         return 1;
 
     for (ptr_filter = gui_filters; ptr_filter;
@@ -289,8 +265,9 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
 {
     struct t_gui_filter *new_filter;
     regex_t *regex1, *regex2;
-    char *pos_tab, *regex_prefix;
+    char *pos_tab, *regex_prefix, **tags_array;
     const char *ptr_start_regex, *pos_regex_message;
+    int i;
 
     if (!name || !buffer_name || !tags || !regex)
         return NULL;
@@ -367,17 +344,25 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
         new_filter->buffers = string_split (new_filter->buffer_name,
                                             ",", 0, 0,
                                             &new_filter->num_buffers);
-        if (tags)
+        new_filter->tags = (tags) ? strdup (tags) : NULL;
+        new_filter->tags_count = 0;
+        new_filter->tags_array = NULL;
+        if (new_filter->tags)
         {
-            new_filter->tags = (tags) ? strdup (tags) : NULL;
-            new_filter->tags_array = string_split (tags, ",", 0, 0,
-                                                   &new_filter->tags_count);
-        }
-        else
-        {
-            new_filter->tags = NULL;
-            new_filter->tags_count = 0;
-            new_filter->tags_array = NULL;
+            tags_array = string_split (new_filter->tags, ",", 0, 0,
+                                       &new_filter->tags_count);
+            if (tags_array)
+            {
+                new_filter->tags_array = malloc (new_filter->tags_count *
+                                                 sizeof (*new_filter->tags_array));
+                for (i = 0; i < new_filter->tags_count; i++)
+                {
+                    new_filter->tags_array[i] = string_split (tags_array[i],
+                                                              "+", 0, 0,
+                                                              NULL);
+                }
+                string_free_split (tags_array);
+            }
         }
         new_filter->regex = strdup (regex);
         new_filter->regex_prefix = regex1;
@@ -429,6 +414,8 @@ gui_filter_rename (struct t_gui_filter *filter, const char *new_name)
 void
 gui_filter_free (struct t_gui_filter *filter)
 {
+    int i;
+
     hook_signal_send ("filter_removing",
                       WEECHAT_HOOK_SIGNAL_POINTER, filter);
 
@@ -442,7 +429,13 @@ gui_filter_free (struct t_gui_filter *filter)
     if (filter->tags)
         free (filter->tags);
     if (filter->tags_array)
-        string_free_split (filter->tags_array);
+    {
+        for (i = 0; i < filter->tags_count; i++)
+        {
+            string_free_split (filter->tags_array[i]);
+        }
+        free (filter->tags_array);
+    }
     if (filter->regex)
         free (filter->regex);
     if (filter->regex_prefix)
@@ -507,7 +500,7 @@ gui_filter_hdata_filter_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_gui_filter, buffers, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_filter, tags, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_filter, tags_count, INTEGER, 0, NULL, NULL);
-        HDATA_VAR(struct t_gui_filter, tags_array, STRING, 0, "tags_count", NULL);
+        HDATA_VAR(struct t_gui_filter, tags_array, POINTER, 0, "tags_count", NULL);
         HDATA_VAR(struct t_gui_filter, regex, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_filter, regex_prefix, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_filter, regex_message, POINTER, 0, NULL, NULL);
@@ -532,7 +525,7 @@ gui_filter_add_to_infolist (struct t_infolist *infolist,
                             struct t_gui_filter *filter)
 {
     struct t_infolist_item *ptr_item;
-    char option_name[64];
+    char option_name[64], *tags;
     int i;
 
     if (!infolist || !filter)
@@ -555,9 +548,17 @@ gui_filter_add_to_infolist (struct t_infolist *infolist,
     for (i = 0; i < filter->tags_count; i++)
     {
         snprintf (option_name, sizeof (option_name), "tag_%05d", i + 1);
-        if (!infolist_new_var_string (ptr_item, option_name,
-                                      filter->tags_array[i]))
-            return 0;
+        tags = string_build_with_split_string ((const char **)filter->tags_array[i],
+                                               "+");
+        if (tags)
+        {
+            if (!infolist_new_var_string (ptr_item, option_name, tags))
+            {
+                free (tags);
+                return 0;
+            }
+            free (tags);
+        }
     }
     if (!infolist_new_var_string (ptr_item, "regex", filter->regex))
         return 0;

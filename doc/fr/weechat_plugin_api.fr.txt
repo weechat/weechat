@@ -10335,6 +10335,9 @@ Paramètres :
 
 | highlight_tags | liste d'étiquettes ("tags") séparées par des virgules |
   Liste d'étiquettes ("tags") à mettre en valeur pour ce tampon
+  (_WeeChat ≥ 0.4.3_ : il est possible de combiner plusieurs tags sous forme
+  d'un "et" logique avec le séparateur "+", par exemple :
+  "nick_toto+irc_action")
 
 | hotlist_max_level_nicks | liste de "pseudo:niveau" séparés par des virgules |
   Liste de pseudos avec niveau max pour la hotlist sur ce tampon (le niveau peut

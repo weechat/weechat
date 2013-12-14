@@ -295,7 +295,8 @@ disable: disable filters
          - "*" means all buffers
          - a name starting with '!' is excluded
          - name can start or end with '*' to match many buffers
-   tags: comma separated list of tags, for example: "irc_join,irc_part,irc_quit"
+   tags: comma separated list of tags, for example "irc_join,irc_part,irc_quit"
+         (it is possible to combine many tags as a logical "and" with separator "+", for example: "nick_toto+irc_action")
   regex: regular expression to search in line
          - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
          - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
@@ -323,6 +324,8 @@ Examples:
     /filter add nicks * irc_366 *
   filter nick "toto" on IRC channel #weechat:
     /filter add toto irc.freenode.#weechat nick_toto *
+  filter IRC join/action messages from nick "toto":
+    /filter add toto * nick_toto+irc_join,nick_toto+irc_action *
   filter lines containing "weechat sucks" on IRC channel #weechat:
     /filter add sucks irc.freenode.#weechat * weechat sucks
 ----

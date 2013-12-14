@@ -544,7 +544,7 @@
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
 * [[option_weechat.look.highlight_tags]] *weechat.look.highlight_tags*
-** descrizione: `elenco separato da virgole di tag da notificare (confronto non sensibile alle maiuscole, esempi: "irc_notice" per gli annunci IRC, "nick_flashcode" per i messaggi dal nick "FlashCode")`
+** descrizione: `comma separated list of tags to highlight; case insensitive comparison; each tag can start or end with "*" to match more than one tag; many tags can be separated by "+" to make a logical "and" between tags; examples: "nick_flashcode" for messages from nick "FlashCode", "irc_notice+nick_toto*" for notices from a nick starting with "toto"`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 

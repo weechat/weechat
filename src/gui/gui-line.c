@@ -562,6 +562,30 @@ gui_line_match_regex (struct t_gui_line_data *line_data, regex_t *regex_prefix,
 }
 
 /*
+ * Checks if a line has tag "no_filter" (which means that line should never been
+ * filtered: it is always displayed).
+ *
+ * Returns:
+ *   1: line has tag "no_filter"
+ *   0: line does not have tag "no_filter"
+ */
+
+int
+gui_line_has_tag_no_filter (struct t_gui_line_data *line_data)
+{
+    int i;
+
+    for (i = 0; i < line_data->tags_count; i++)
+    {
+        if (strcmp (line_data->tags_array[i], GUI_FILTER_TAG_NO_FILTER) == 0)
+            return 1;
+    }
+
+    /* tag not found, line may be filtered */
+    return 0;
+}
+
+/*
  * Checks if line matches tags.
  *
  * Returns:
@@ -571,9 +595,9 @@ gui_line_match_regex (struct t_gui_line_data *line_data, regex_t *regex_prefix,
 
 int
 gui_line_match_tags (struct t_gui_line_data *line_data,
-                     int tags_count, char **tags_array)
+                     int tags_count, char ***tags_array)
 {
-    int i, j;
+    int i, j, k, match, tag_found;
 
     if (!line_data)
         return 0;
@@ -583,14 +607,28 @@ gui_line_match_tags (struct t_gui_line_data *line_data,
 
     for (i = 0; i < tags_count; i++)
     {
-        for (j = 0; j < line_data->tags_count; j++)
+        match = 1;
+        for (j = 0; tags_array[i][j]; j++)
         {
-            /* check tag */
-            if (string_match (line_data->tags_array[j],
-                              tags_array[i],
-                              0))
-                return 1;
+            tag_found = 0;
+            for (k = 0; k < line_data->tags_count; k++)
+            {
+                if (string_match (line_data->tags_array[k],
+                                  tags_array[i][j],
+                                  0))
+                {
+                    tag_found = 1;
+                    break;
+                }
+            }
+            if (!tag_found)
+            {
+                match = 0;
+                break;
+            }
         }
+        if (match)
+            return 1;
     }
 
     return 0;
@@ -648,7 +686,7 @@ gui_line_get_nick_tag (struct t_gui_line *line)
 int
 gui_line_has_highlight (struct t_gui_line *line)
 {
-    int rc, i, j, no_highlight, action, length;
+    int rc, i, no_highlight, action, length;
     char *msg_no_color, *ptr_msg_no_color, *highlight_words;
     const char *ptr_nick;
 
@@ -671,14 +709,12 @@ gui_line_has_highlight (struct t_gui_line *line)
     ptr_nick = NULL;
     for (i = 0; i < line->data->tags_count; i++)
     {
-        if (config_highlight_tags)
+        if (config_highlight_tags
+            && gui_line_match_tags (line->data,
+                                    config_num_highlight_tags,
+                                    config_highlight_tags))
         {
-            for (j = 0; j < config_num_highlight_tags; j++)
-            {
-                if (string_strcasecmp (line->data->tags_array[i],
-                                       config_highlight_tags[j]) == 0)
-                    return 1;
-            }
+            return 1;
         }
         if (strcmp (line->data->tags_array[i], GUI_CHAT_TAG_NO_HIGHLIGHT) == 0)
             no_highlight = 1;

@@ -544,7 +544,7 @@
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
 * [[option_weechat.look.highlight_tags]] *weechat.look.highlight_tags*
-** 説明: `ハイライトするタグのコンマ区切りリスト (大文字小文字の区別無し、例: IRC notices には "irc_notice"、ニックネーム "FlashCode" からのメッセージには "nick_flashcode")`
+** 説明: `comma separated list of tags to highlight; case insensitive comparison; each tag can start or end with "*" to match more than one tag; many tags can be separated by "+" to make a logical "and" between tags; examples: "nick_flashcode" for messages from nick "FlashCode", "irc_notice+nick_toto*" for notices from a nick starting with "toto"`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 

@@ -10155,6 +10155,8 @@ Arguments:
 
 | highlight_tags | comma separated list of tags |
   Comma separated list of tags to highlight in this buffer
+  (_WeeChat ≥ 0.4.3_: it is possible to combine many tags as a logical "and"
+  with separator "+", for example: "nick_toto+irc_action")
 
 | hotlist_max_level_nicks | comma separated list of "nick:level" |
   Comma separated list of nicks with max level for hotlist on this buffer

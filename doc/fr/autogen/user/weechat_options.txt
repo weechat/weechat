@@ -544,7 +544,7 @@
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
 * [[option_weechat.look.highlight_tags]] *weechat.look.highlight_tags*
-** description: `liste des tags pour la notification (séparés par des virgules, la comparaison ne tient pas compte de la casse, exemples: "irc_notice" pour les notices IRC, "nick_flashcode" pour les messages du pseudo "FlashCode")`
+** description: `liste des tags pour la notification (séparés par des virgules); la comparaison ne tient pas compte de la casse; chaque tag peut commencer ou se terminer par "*" pour correspondre à plus d'un tag; plusieurs tags peuvent être séparés par "+" pour faire un "et" logique entre les tags; exemples: "nick_flashcode" pour les messages du pseudo "FlashCode", "irc_notice+nick_toto*" pour les notices d'un pseudo commençant par "toto"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
