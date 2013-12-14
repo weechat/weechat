@@ -296,7 +296,8 @@ disable: disable filters
          - a name starting with '!' is excluded
          - name can start or end with '*' to match many buffers
    tags: comma separated list of tags, for example "irc_join,irc_part,irc_quit"
-         (it is possible to combine many tags as a logical "and" with separator "+", for example: "nick_toto+irc_action")
+         - logical "and": use "+" between tags (for example: "nick_toto+irc_action")
+         - tags can start or end with '*'
   regex: regular expression to search in line
          - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
          - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
