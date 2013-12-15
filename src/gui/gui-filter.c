@@ -355,11 +355,14 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
             {
                 new_filter->tags_array = malloc (new_filter->tags_count *
                                                  sizeof (*new_filter->tags_array));
-                for (i = 0; i < new_filter->tags_count; i++)
+                if (new_filter->tags_array)
                 {
-                    new_filter->tags_array[i] = string_split (tags_array[i],
-                                                              "+", 0, 0,
-                                                              NULL);
+                    for (i = 0; i < new_filter->tags_count; i++)
+                    {
+                        new_filter->tags_array[i] = string_split (tags_array[i],
+                                                                  "+", 0, 0,
+                                                                  NULL);
+                    }
                 }
                 string_free_split (tags_array);
             }
