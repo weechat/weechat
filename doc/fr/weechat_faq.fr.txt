@@ -533,7 +533,7 @@ Les messages correspondants sont supprimés par l'extension IRC avant affichage
 
 La commande `/filter` est une commande "core", donc elle s'applique à n"importe
 quel tampon.
-Elle permet de filtrer des lignes dans les tampons à l'aide de tags ou
+Elle permet de filtrer des lignes dans les tampons à l'aide d'étiquettes ou
 d'expression régulière pour le préfixe et contenu de la ligne.
 Les lignes filtrées sont simplement cachées, pas supprimées, et il est possible
 de les voir en désactivant les filtres (par défaut, la touche key[alt-=]

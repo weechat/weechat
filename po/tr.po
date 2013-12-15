@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-12-14 12:31+0100\n"
+"POT-Creation-Date: 2013-12-15 14:20+0100\n"
 "PO-Revision-Date: 2013-11-09 10:13+0100\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -274,7 +274,7 @@ msgid "%sError: filter \"%s\" already exists"
 msgstr ""
 
 #, c-format
-msgid "%sError: you must specify at least tag(s) or regex for filter"
+msgid "%sError: you must specify at least tags or regex for filter"
 msgstr ""
 
 #, c-format

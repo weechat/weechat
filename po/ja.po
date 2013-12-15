@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-12-14 12:31+0100\n"
-"PO-Revision-Date: 2013-11-09 10:18+0100\n"
+"POT-Creation-Date: 2013-12-15 14:20+0100\n"
+"PO-Revision-Date: 2013-12-15 14:39+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
 "Language: ja\n"
@@ -292,8 +292,8 @@ msgstr "フィルタ \"%s\" が無効化されました"
 msgid "%sError: filter \"%s\" already exists"
 msgstr "%sエラー: フィルタ \"%s\" は既に存在します"
 
-#, c-format
-msgid "%sError: you must specify at least tag(s) or regex for filter"
+#, fuzzy, c-format
+msgid "%sError: you must specify at least tags or regex for filter"
 msgstr "%sエラー: フィルタのタグか正規表現のどちらかを指定してください"
 
 #, c-format
@@ -10333,28 +10333,3 @@ msgstr "タイプ"
 
 msgid "Constants"
 msgstr "定数"
-
-#~ msgid ""
-#~ "comma separated list of tags for messages that may produce highlight "
-#~ "(usually any message from another user, not server messages,..)"
-#~ msgstr ""
-#~ "ハイライトされるメッセージにつけられたタグのコンマ区切りリスト (通例、他の"
-#~ "ユーザからの任意のメッセージ、サーバメッセージをのぞく、...)"
-
-#~ msgid ""
-#~ "comma separated list of tags to highlight (case insensitive comparison, "
-#~ "examples: \"irc_notice\" for IRC notices, \"nick_flashcode\" for messages "
-#~ "from nick \"FlashCode\")"
-#~ msgstr ""
-#~ "ハイライトするタグのコンマ区切りリスト (大文字小文字の区別無し、例: IRC "
-#~ "notices には \"irc_notice\"、ニックネーム \"FlashCode\" からのメッセージに"
-#~ "は \"nick_flashcode\")"
-
-#, fuzzy
-#~ msgid "manage layouts for buffers and windows"
-#~ msgstr "バッファとウィンドウのレイアウトを保存/適用/リセット"
-
-#~ msgid "set title for window (terminal for Curses GUI) with name and version"
-#~ msgstr ""
-#~ "名前とバージョンを含むウィンドウのタイトルを設定 (Curses GUI 用のターミナ"
-#~ "ル)"

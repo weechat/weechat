@@ -1889,7 +1889,7 @@ COMMAND_CALLBACK(filter)
         {
             gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
                                        _("%sError: you must specify at least "
-                                         "tag(s) or regex for filter"),
+                                         "tags or regex for filter"),
                                        gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
             return WEECHAT_RC_OK;
         }

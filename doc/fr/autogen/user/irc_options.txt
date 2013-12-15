@@ -169,7 +169,7 @@
 ** valeurs: toute chaîne (valeur par défaut: `"$nick"`)
 
 * [[option_irc.look.highlight_tags_restrict]] *irc.look.highlight_tags_restrict*
-** description: `restreindre les highlights à ces tags sur les tampons irc (pour avoir un highlight seulement sur les messages utilisateur et pas les messages du serveur); les tags doivent être séparés par des virgules et "+" peut être utilisé pour faire un "et" logique entre tags; les tags peuvent commencer ou se terminer par "*" pour correspondre à plus d'un tag; une valeur vide autorise le highlight sur n'importe quel tag`
+** description: `restreindre les highlights à ces étiquettes sur les tampons irc (pour avoir un highlight seulement sur les messages utilisateur et pas les messages du serveur); les étiquettes doivent être séparées par des virgules et "+" peut être utilisé pour faire un "et" logique entre étiquettes; les étiquettes peuvent commencer ou se terminer par "*" pour correspondre à plus d'une étiquette; une valeur vide autorise le highlight sur n'importe quelle étiquette`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"irc_privmsg,irc_notice"`)
 
@@ -259,17 +259,17 @@
 ** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_irc.look.notice_welcome_tags]] *irc.look.notice_welcome_tags*
-** description: `liste des tags (séparés par des virgules) utilisés dans la notice de bienvenue redirigée vers un canal, par exemple: "notify_private"`
+** description: `liste des étiquettes (séparées par des virgules) utilisées dans la notice de bienvenue redirigée vers un canal, par exemple: "notify_private"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
 * [[option_irc.look.notify_tags_ison]] *irc.look.notify_tags_ison*
-** description: `liste des tags (séparés par des virgules) utilisés dans les messages affichés par notify lorsqu'un pseudo a rejoint ou quitté le serveur (résultat de la commande ison), par exemple: "notify_message", "notify_private" ou "notify_highlight"`
+** description: `liste des étiquettes (séparées par des virgules) utilisées dans les messages affichés par notify lorsqu'un pseudo a rejoint ou quitté le serveur (résultat de la commande ison), par exemple: "notify_message", "notify_private" ou "notify_highlight"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"notify_message"`)
 
 * [[option_irc.look.notify_tags_whois]] *irc.look.notify_tags_whois*
-** description: `liste des tags (séparés par des virgules) utilisés dans les messages affichés par notify lorsque le statut d'absence d'un pseudo change (résultat de la commande whois), par exemple: "notify_message", "notify_private" ou "notify_highlight"`
+** description: `liste des étiquettes (séparées par des virgules) utilisées dans les messages affichés par notify lorsque le statut d'absence d'un pseudo change (résultat de la commande whois), par exemple: "notify_message", "notify_private" ou "notify_highlight"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"notify_message"`)
 
@@ -284,7 +284,7 @@
 ** valeurs: independent, merge_by_server, merge_all (valeur par défaut: `independent`)
 
 * [[option_irc.look.pv_tags]] *irc.look.pv_tags*
-** description: `liste des tags (séparés par des virgules) utilisés dans les messages privés, par exemple: "notify_message", "notify_private" ou "notify_highlight"`
+** description: `liste des étiquettes (séparées par des virgules) utilisées dans les messages privés, par exemple: "notify_message", "notify_private" ou "notify_highlight"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"notify_private"`)
 
@@ -299,7 +299,7 @@
 ** valeurs: merge_with_core, merge_without_core, independent (valeur par défaut: `merge_with_core`)
 
 * [[option_irc.look.smart_filter]] *irc.look.smart_filter*
-** description: `filtrer les messages join/part/quit/nick pour un pseudo s'il n'a pas parlé pendant quelques minutes sur le canal (vous devez créer un filtre sur le tag "irc_smart_filter")`
+** description: `filtrer les messages join/part/quit/nick pour un pseudo s'il n'a pas parlé pendant quelques minutes sur le canal (vous devez créer un filtre sur l'étiquette "irc_smart_filter")`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 

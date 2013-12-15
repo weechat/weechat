@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-12-14 12:31+0100\n"
-"PO-Revision-Date: 2013-11-09 10:18+0100\n"
+"POT-Creation-Date: 2013-12-15 14:20+0100\n"
+"PO-Revision-Date: 2013-12-15 14:40+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: ru\n"
@@ -304,8 +304,8 @@ msgstr "команда users отключена"
 msgid "%sError: filter \"%s\" already exists"
 msgstr "%s игнорирование уже существует\n"
 
-#, c-format
-msgid "%sError: you must specify at least tag(s) or regex for filter"
+#, fuzzy, c-format
+msgid "%sError: you must specify at least tags or regex for filter"
 msgstr ""
 "%sОшибка: Вы должны указать как минимум метку(и) или шаблон для фильтра"
 
@@ -9392,12 +9392,3 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
-
-#, fuzzy
-#~ msgid ""
-#~ "comma separated list of tags to highlight (case insensitive comparison, "
-#~ "examples: \"irc_notice\" for IRC notices, \"nick_flashcode\" for messages "
-#~ "from nick \"FlashCode\")"
-#~ msgstr ""
-#~ "разделённый запятыми список подсвечиваемых слов (регистр учитывается, "
-#~ "слова могут начинаться или кончаться \"*\" для неполного соответствия)"

@@ -99,7 +99,7 @@
 ** valeurs: 0 .. 256 (valeur par défaut: `20`)
 
 * [[option_xfer.look.pv_tags]] *xfer.look.pv_tags*
-** description: `liste des tags (séparés par des virgules) utilisés dans les messages privés, par exemple: "notify_message", "notify_private" ou "notify_highlight"`
+** description: `liste des étiquettes (séparées par des virgules) utilisées dans les messages privés, par exemple: "notify_message", "notify_private" ou "notify_highlight"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"notify_private"`)
 

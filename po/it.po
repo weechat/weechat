@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-12-14 12:31+0100\n"
-"PO-Revision-Date: 2013-11-09 10:18+0100\n"
+"POT-Creation-Date: 2013-12-15 14:20+0100\n"
+"PO-Revision-Date: 2013-12-15 14:39+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: it\n"
@@ -291,8 +291,8 @@ msgstr "Filtro \"%s\" disabilitato"
 msgid "%sError: filter \"%s\" already exists"
 msgstr "%sErrore: il filtro \"%s\" esiste già"
 
-#, c-format
-msgid "%sError: you must specify at least tag(s) or regex for filter"
+#, fuzzy, c-format
+msgid "%sError: you must specify at least tags or regex for filter"
 msgstr "%sErrore: specificare almeno un tag o una regex per il filtro"
 
 #, c-format
@@ -10356,29 +10356,3 @@ msgstr "Tipo"
 
 msgid "Constants"
 msgstr "Costanti"
-
-#~ msgid ""
-#~ "comma separated list of tags for messages that may produce highlight "
-#~ "(usually any message from another user, not server messages,..)"
-#~ msgstr ""
-#~ "elenco separato da liste di tag per i messaggi che potrebbero generare "
-#~ "notifiche (di solito qualsiasi messaggio da altri utenti, non quelli dal "
-#~ "server...)"
-
-#~ msgid ""
-#~ "comma separated list of tags to highlight (case insensitive comparison, "
-#~ "examples: \"irc_notice\" for IRC notices, \"nick_flashcode\" for messages "
-#~ "from nick \"FlashCode\")"
-#~ msgstr ""
-#~ "elenco separato da virgole di tag da notificare (confronto non sensibile "
-#~ "alle maiuscole, esempi: \"irc_notice\" per gli annunci IRC, "
-#~ "\"nick_flashcode\" per i messaggi dal nick \"FlashCode\")"
-
-#, fuzzy
-#~ msgid "manage layouts for buffers and windows"
-#~ msgstr "salva/applica/ripristina il layout per i buffer e le finestre"
-
-#~ msgid "set title for window (terminal for Curses GUI) with name and version"
-#~ msgstr ""
-#~ "imposta titolo per la finestra (terminale per interfacce Curses) con nome "
-#~ "e versione"

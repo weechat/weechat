@@ -6361,7 +6361,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_printf_tags
 
-Affiche un message sur un tampon, avec des étiquettes ("tags") personnalisées.
+Affiche un message sur un tampon, avec des étiquettes personnalisées.
 
 Prototype :
 
@@ -6375,7 +6375,7 @@ Paramètres :
 
 * 'buffer' : pointeur vers le tampon, si NULL, le message est affiché sur le
   tampon Weechat
-* 'tags' : liste d'étiquettes ("tags") séparées par des virgules
+* 'tags' : liste d'étiquettes séparées par des virgules
 * 'message' : message à afficher
 
 Exemple en C :
@@ -6392,7 +6392,7 @@ Cette fonction n'est pas disponible dans l'API script.
 ==== weechat_printf_date_tags
 
 Affiche un message sur un tampon, en utilisant une date et des étiquettes
-("tags") personnalisées.
+personnalisées.
 
 Prototype :
 
@@ -6407,7 +6407,7 @@ Paramètres :
 * 'buffer' : pointeur vers le tampon, si NULL, le message est affiché sur le
   tampon Weechat
 * 'date' : date pour le message (0 signifie la date/heure courante)
-* 'tags' : liste d'étiquettes ("tags") séparées par des virgules
+* 'tags' : liste d'étiquettes séparées par des virgules
 * 'message' : message à afficher
 
 Tags couramment utilisés (liste non exhaustive) :
@@ -7451,8 +7451,8 @@ Paramètres :
 
 * 'buffer' : pointeur vers le tampon, si NULL, les messages de tous les tampons
   sont interceptés
-* 'tags' : seulement les messages avec ces étiquettes ("tags") (liste séparée
-  par des virgules) seront interceptés (optionnel)
+* 'tags' : seulement les messages avec ces étiquettes (liste séparée par des
+  virgules) seront interceptés (optionnel)
 * 'message' : seulement les messages contenant cette chaîne seront interceptés
   (optionnel, insensible à la casse)
 * 'strip_colors' : si 1, les couleurs seront supprimées du message affiché,
@@ -7462,8 +7462,8 @@ Paramètres :
 ** 'void *data' : pointeur
 ** 'struct t_gui_buffer *buffer' : pointeur vers le tampon
 ** 'time_t date' : date
-** 'int tags_count' : nombre d'étiquettes ("tags") de la ligne
-** 'const char **tags' : tableau avec les étiquettes ("tags") de la ligne
+** 'int tags_count' : nombre d'étiquettes de la ligne
+** 'const char **tags' : tableau avec les étiquettes de la ligne
 ** 'int displayed' : 1 si la ligne est affichée, 0 si elle est filtrée (cachée)
 ** 'int highlight' : 1 si la ligne contient un highlight, sinon 0
 ** 'const char *prefix' : préfixe
@@ -10335,12 +10335,12 @@ Paramètres :
 | highlight_regex | toute chaîne |
   Expression régulière pour le highlight
 
-| highlight_tags_restrict | liste d'étiquettes ("tags") séparées par des virgules |
+| highlight_tags_restrict | liste d'étiquettes séparées par des virgules |
   Restreindre les highlights aux messages avec ces étiquettes dans ce tampon
   (il est possible de combiner plusieurs étiquettes sous forme d'un "et" logique
   avec le séparateur "+", par exemple : "nick_toto+irc_action")
 
-| highlight_tags | liste d'étiquettes ("tags") séparées par des virgules |
+| highlight_tags | liste d'étiquettes séparées par des virgules |
   Forcer le highlight pour les messages avec ces étiquettes dans ce tampon
   (il est possible de combiner plusieurs étiquettes sous forme d'un "et" logique
   avec le séparateur "+", par exemple : "nick_toto+irc_action")

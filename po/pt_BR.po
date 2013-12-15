@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-12-14 12:31+0100\n"
-"PO-Revision-Date: 2013-11-09 10:18+0100\n"
+"POT-Creation-Date: 2013-12-15 14:20+0100\n"
+"PO-Revision-Date: 2013-12-15 14:40+0100\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pt_BR\n"
@@ -320,8 +320,8 @@ msgstr "Filtro \"%s\" desabilitado"
 msgid "%sError: filter \"%s\" already exists"
 msgstr "%sErro: filtro \"%s\" já existe"
 
-#, c-format
-msgid "%sError: you must specify at least tag(s) or regex for filter"
+#, fuzzy, c-format
+msgid "%sError: you must specify at least tags or regex for filter"
 msgstr ""
 "%sErro: você precisa especificar pelo menos um marcador(es) ou expressão "
 "regular para o filtro"
@@ -9579,21 +9579,3 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
-
-#~ msgid ""
-#~ "comma separated list of tags to highlight (case insensitive comparison, "
-#~ "examples: \"irc_notice\" for IRC notices, \"nick_flashcode\" for messages "
-#~ "from nick \"FlashCode\")"
-#~ msgstr ""
-#~ "lista de marcações separada por vírgulas a serem destacadas (comparação "
-#~ "sem levar em conta maiúscula/minúscula, exemplos: \"irc_notice\" for IRC "
-#~ "notices, \"nick_flashcode\" para mensagens do apelido \"FlashCode\")"
-
-#, fuzzy
-#~ msgid "manage layouts for buffers and windows"
-#~ msgstr "salvar/aplicar/resetar a disposição dos buffers e janelas"
-
-#~ msgid "set title for window (terminal for Curses GUI) with name and version"
-#~ msgstr ""
-#~ "define o título para a janela (terminal para a interface Curses) com nome "
-#~ "e versão"

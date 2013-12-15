@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-12-14 12:31+0100\n"
-"PO-Revision-Date: 2013-11-11 09:07+0100\n"
+"POT-Creation-Date: 2013-12-15 14:20+0100\n"
+"PO-Revision-Date: 2013-12-15 14:40+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pl\n"
@@ -295,8 +295,8 @@ msgstr "Filtr \"%s\" wyłączony"
 msgid "%sError: filter \"%s\" already exists"
 msgstr "%sBłąd: filtr \"%s\" już istnieje"
 
-#, c-format
-msgid "%sError: you must specify at least tag(s) or regex for filter"
+#, fuzzy, c-format
+msgid "%sError: you must specify at least tags or regex for filter"
 msgstr "%sBłąd: musisz podać przynajmniej tag(i) lub wyrażenie dla filtru"
 
 #, c-format
@@ -10532,24 +10532,3 @@ msgstr "Typ"
 
 msgid "Constants"
 msgstr "Stałe"
-
-#~ msgid ""
-#~ "comma separated list of tags for messages that may produce highlight "
-#~ "(usually any message from another user, not server messages,..)"
-#~ msgstr ""
-#~ "oddzielona przecinkami lista tagów dla wiadomości mogących powodować "
-#~ "podświetlenie (zazwyczaj dowolna wiadomość od innego użytkownika,  nie "
-#~ "wiadomość od serwera...)"
-
-#~ msgid ""
-#~ "comma separated list of tags to highlight (case insensitive comparison, "
-#~ "examples: \"irc_notice\" for IRC notices, \"nick_flashcode\" for messages "
-#~ "from nick \"FlashCode\")"
-#~ msgstr ""
-#~ "lista tagów do podświetlania oddzielona przecinkami (porównanie wrażliwe "
-#~ "na wielkość znaków, przykłady: \"irc_notice\" dla powiadomień IRC, "
-#~ "\"nick_flashcode\" dla wiadomości od nicka \"FlashCode\")"
-
-#, fuzzy
-#~ msgid "manage layouts for buffers and windows"
-#~ msgstr "zapisz/zatwierdź/zresetuj układ buforów i okien"
