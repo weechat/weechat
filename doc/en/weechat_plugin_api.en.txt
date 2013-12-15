@@ -9983,7 +9983,8 @@ Arguments:
 ** 'text_search_input': input saved before text search
 ** 'highlight_words': list of words to highlight
 ** 'highlight_regex': regular expression for highlight
-** 'highlight_tags': list of tags to highlight
+** 'highlight_tags_restrict': restrict highlights to messages with these tags
+** 'highlight_tags': force highlight on messages with these tags
 ** 'hotlist_max_level_nicks': max hotlist level for some nicks
 ** 'localvar_xxx': get content of local variable "xxx" (replace "xxx" by the
    name of variable to read)
@@ -10153,10 +10154,15 @@ Arguments:
 | highlight_regex | any string |
   Regular expression for highlight
 
+| highlight_tags_restrict | comma separated list of tags |
+  Restrict highlights to messages with these tags in this buffer
+  (it is possible to combine many tags as a logical "and" with separator "+",
+   for example: "nick_toto+irc_action")
+
 | highlight_tags | comma separated list of tags |
-  Comma separated list of tags to highlight in this buffer
-  (_WeeChat ≥ 0.4.3_: it is possible to combine many tags as a logical "and"
-  with separator "+", for example: "nick_toto+irc_action")
+  Force highlight on messages with these tags in this buffer
+  (it is possible to combine many tags as a logical "and" with separator "+",
+   for example: "nick_toto+irc_action")
 
 | hotlist_max_level_nicks | comma separated list of "nick:level" |
   Comma separated list of nicks with max level for hotlist on this buffer

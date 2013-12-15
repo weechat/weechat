@@ -3460,11 +3460,11 @@ irc_server_create_buffer (struct t_irc_server *server)
     /* set highlights settings on server buffer */
     weechat_buffer_set (server->buffer, "highlight_words_add",
                         weechat_config_string (irc_config_look_highlight_server));
-    if (weechat_config_string (irc_config_look_highlight_tags)
-        && weechat_config_string (irc_config_look_highlight_tags)[0])
+    if (weechat_config_string (irc_config_look_highlight_tags_restrict)
+        && weechat_config_string (irc_config_look_highlight_tags_restrict)[0])
     {
-        weechat_buffer_set (server->buffer, "highlight_tags",
-                            weechat_config_string (irc_config_look_highlight_tags));
+        weechat_buffer_set (server->buffer, "highlight_tags_restrict",
+                            weechat_config_string (irc_config_look_highlight_tags_restrict));
     }
 
     irc_server_set_buffer_title (server);

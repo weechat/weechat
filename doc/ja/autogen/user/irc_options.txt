@@ -168,8 +168,8 @@
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"$nick"`)
 
-* [[option_irc.look.highlight_tags]] *irc.look.highlight_tags*
-** 説明: `ハイライトされるメッセージにつけられたタグのコンマ区切りリスト (通例、他のユーザからの任意のメッセージ、サーバメッセージをのぞく、...)`
+* [[option_irc.look.highlight_tags_restrict]] *irc.look.highlight_tags_restrict*
+** 説明: `restrict highlights to these tags on irc buffers (to have highlight on user messages but not server messages); tags must be separated by a comma and "+" can be used to make a logical "and" between tags; tags can start or end with "*" to match more than one tag; an empty value allows highlight on any tag`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"irc_privmsg,irc_notice"`)
 

@@ -69,7 +69,7 @@ struct t_config_option *irc_config_look_display_pv_back;
 struct t_config_option *irc_config_look_highlight_server;
 struct t_config_option *irc_config_look_highlight_channel;
 struct t_config_option *irc_config_look_highlight_pv;
-struct t_config_option *irc_config_look_highlight_tags;
+struct t_config_option *irc_config_look_highlight_tags_restrict;
 struct t_config_option *irc_config_look_item_away_message;
 struct t_config_option *irc_config_look_item_channel_modes_hide_key;
 struct t_config_option *irc_config_look_item_display_server;
@@ -488,12 +488,12 @@ irc_config_change_look_item_nick_prefix (void *data,
 }
 
 /*
- * Callback for changes on option "irc.look.highlight_tags".
+ * Callback for changes on option "irc.look.highlight_tags_restrict".
  */
 
 void
-irc_config_change_look_highlight_tags (void *data,
-                                       struct t_config_option *option)
+irc_config_change_look_highlight_tags_restrict (void *data,
+                                                struct t_config_option *option)
 {
     struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;
@@ -507,16 +507,16 @@ irc_config_change_look_highlight_tags (void *data,
     {
         if (ptr_server->buffer)
         {
-            weechat_buffer_set (ptr_server->buffer, "highlight_tags",
-                                weechat_config_string (irc_config_look_highlight_tags));
+            weechat_buffer_set (ptr_server->buffer, "highlight_tags_restrict",
+                                weechat_config_string (irc_config_look_highlight_tags_restrict));
         }
         for (ptr_channel = ptr_server->channels; ptr_channel;
              ptr_channel = ptr_channel->next_channel)
         {
             if (ptr_channel->buffer)
             {
-                weechat_buffer_set (ptr_channel->buffer, "highlight_tags",
-                                    weechat_config_string (irc_config_look_highlight_tags));
+                weechat_buffer_set (ptr_channel->buffer, "highlight_tags_restrict",
+                                    weechat_config_string (irc_config_look_highlight_tags_restrict));
             }
         }
     }
@@ -2343,14 +2343,17 @@ irc_config_init ()
            "disables default highlight on nick, examples: \"$nick\", "
            "\"(?-i)$nick\""),
         NULL, 0, 0, "$nick", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-    irc_config_look_highlight_tags = weechat_config_new_option (
+    irc_config_look_highlight_tags_restrict = weechat_config_new_option (
         irc_config_file, ptr_section,
-        "highlight_tags", "string",
-        N_("comma separated list of tags for messages that may produce "
-           "highlight (usually any message from another user, not server "
-           "messages,..)"),
+        "highlight_tags_restrict", "string",
+        N_("restrict highlights to these tags on irc buffers (to have "
+           "highlight on user messages but not server messages); tags "
+           "must be separated by a comma and \"+\" can be used to make a "
+           "logical \"and\" between tags; tags can start or end with \"*\" "
+           "to match more than one tag; an empty value allows highlight on any "
+           "tag"),
         NULL, 0, 0, "irc_privmsg,irc_notice", NULL, 0, NULL, NULL,
-        &irc_config_change_look_highlight_tags, NULL, NULL, NULL);
+        &irc_config_change_look_highlight_tags_restrict, NULL, NULL, NULL);
     irc_config_look_item_away_message = weechat_config_new_option (
         irc_config_file, ptr_section,
         "item_away_message", "boolean",

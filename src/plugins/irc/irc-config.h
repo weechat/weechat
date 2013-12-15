@@ -117,7 +117,7 @@ extern struct t_config_option *irc_config_look_display_pv_back;
 extern struct t_config_option *irc_config_look_highlight_server;
 extern struct t_config_option *irc_config_look_highlight_channel;
 extern struct t_config_option *irc_config_look_highlight_pv;
-extern struct t_config_option *irc_config_look_highlight_tags;
+extern struct t_config_option *irc_config_look_highlight_tags_restrict;
 extern struct t_config_option *irc_config_look_item_away_message;
 extern struct t_config_option *irc_config_look_item_channel_modes_hide_key;
 extern struct t_config_option *irc_config_look_item_display_server;

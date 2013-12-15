@@ -88,8 +88,8 @@ char *gui_buffer_properties_get_integer[] =
 };
 char *gui_buffer_properties_get_string[] =
 { "plugin", "name", "full_name", "short_name", "title", "input",
-  "text_search_input", "highlight_words", "highlight_regex", "highlight_tags",
-  "hotlist_max_level_nicks",
+  "text_search_input", "highlight_words", "highlight_regex",
+  "highlight_tags_restrict", "highlight_tags", "hotlist_max_level_nicks",
   NULL
 };
 char *gui_buffer_properties_get_pointer[] =
@@ -101,9 +101,9 @@ char *gui_buffer_properties_set[] =
   "short_name", "type", "notify", "title", "time_for_each_line", "nicklist",
   "nicklist_case_sensitive", "nicklist_display_groups", "highlight_words",
   "highlight_words_add", "highlight_words_del", "highlight_regex",
-  "highlight_tags", "hotlist_max_level_nicks", "hotlist_max_level_nicks_add",
-  "hotlist_max_level_nicks_del", "input", "input_pos",
-  "input_get_unknown_commands",
+  "highlight_tags_restrict", "highlight_tags", "hotlist_max_level_nicks",
+  "hotlist_max_level_nicks_add", "hotlist_max_level_nicks_del",
+  "input", "input_pos", "input_get_unknown_commands",
   NULL
 };
 
@@ -643,6 +643,9 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
     new_buffer->highlight_words = NULL;
     new_buffer->highlight_regex = NULL;
     new_buffer->highlight_regex_compiled = NULL;
+    new_buffer->highlight_tags_restrict = NULL;
+    new_buffer->highlight_tags_restrict_count = 0;
+    new_buffer->highlight_tags_restrict_array = NULL;
     new_buffer->highlight_tags = NULL;
     new_buffer->highlight_tags_count = 0;
     new_buffer->highlight_tags_array = NULL;
@@ -1034,6 +1037,8 @@ gui_buffer_get_string (struct t_gui_buffer *buffer, const char *property)
             return buffer->highlight_words;
         else if (string_strcasecmp (property, "highlight_regex") == 0)
             return buffer->highlight_regex;
+        else if (string_strcasecmp (property, "highlight_tags_restrict") == 0)
+            return buffer->highlight_tags_restrict;
         else if (string_strcasecmp (property, "highlight_tags") == 0)
             return buffer->highlight_tags;
         else if (string_strcasecmp (property, "hotlist_max_level_nicks") == 0)
@@ -1406,12 +1411,66 @@ gui_buffer_set_highlight_regex (struct t_gui_buffer *buffer,
 }
 
 /*
+ * Sets tags to restrict highlights for a buffer.
+ */
+
+void
+gui_buffer_set_highlight_tags_restrict (struct t_gui_buffer *buffer,
+                                        const char *new_tags)
+{
+    int i;
+    char **tags_array;
+
+    if (buffer->highlight_tags_restrict)
+    {
+        free (buffer->highlight_tags_restrict);
+        buffer->highlight_tags_restrict = NULL;
+    }
+    if (buffer->highlight_tags_restrict_array)
+    {
+        for (i = 0; i < buffer->highlight_tags_restrict_count; i++)
+        {
+            string_free_split (buffer->highlight_tags_restrict_array[i]);
+        }
+        free (buffer->highlight_tags_restrict_array);
+        buffer->highlight_tags_restrict_array = NULL;
+    }
+    buffer->highlight_tags_restrict_count = 0;
+
+    if (!new_tags)
+        return;
+
+    buffer->highlight_tags_restrict = strdup (new_tags);
+    if (!buffer->highlight_tags_restrict)
+        return;
+
+    tags_array = string_split (buffer->highlight_tags_restrict, ",", 0, 0,
+                               &buffer->highlight_tags_restrict_count);
+    if (tags_array)
+    {
+        buffer->highlight_tags_restrict_array =
+            malloc (buffer->highlight_tags_restrict_count *
+                    sizeof (*buffer->highlight_tags_restrict_array));
+        if (buffer->highlight_tags_restrict_array)
+        {
+            for (i = 0; i < buffer->highlight_tags_restrict_count; i++)
+            {
+                buffer->highlight_tags_restrict_array[i] = string_split (tags_array[i],
+                                                                         "+", 0, 0,
+                                                                         NULL);
+            }
+        }
+        string_free_split (tags_array);
+    }
+}
+
+/*
  * Sets highlight tags for a buffer.
  */
 
 void
 gui_buffer_set_highlight_tags (struct t_gui_buffer *buffer,
-                               const char *new_highlight_tags)
+                               const char *new_tags)
 {
     int i;
     char **tags_array;
@@ -1432,10 +1491,10 @@ gui_buffer_set_highlight_tags (struct t_gui_buffer *buffer,
     }
     buffer->highlight_tags_count = 0;
 
-    if (!new_highlight_tags)
+    if (!new_tags)
         return;
 
-    buffer->highlight_tags = strdup (new_highlight_tags);
+    buffer->highlight_tags = strdup (new_tags);
     if (!buffer->highlight_tags)
         return;
 
@@ -1443,8 +1502,9 @@ gui_buffer_set_highlight_tags (struct t_gui_buffer *buffer,
                                &buffer->highlight_tags_count);
     if (tags_array)
     {
-        buffer->highlight_tags_array = malloc (buffer->highlight_tags_count *
-                                               sizeof (*buffer->highlight_tags_array));
+        buffer->highlight_tags_array =
+            malloc (buffer->highlight_tags_count *
+                    sizeof (*buffer->highlight_tags_array));
         if (buffer->highlight_tags_array)
         {
             for (i = 0; i < buffer->highlight_tags_count; i++)
@@ -1750,6 +1810,10 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     else if (string_strcasecmp (property, "highlight_regex") == 0)
     {
         gui_buffer_set_highlight_regex (buffer, value);
+    }
+    else if (string_strcasecmp (property, "highlight_tags_restrict") == 0)
+    {
+        gui_buffer_set_highlight_tags_restrict (buffer, value);
     }
     else if (string_strcasecmp (property, "highlight_tags") == 0)
     {
@@ -2485,6 +2549,16 @@ gui_buffer_close (struct t_gui_buffer *buffer)
     {
         regfree (buffer->highlight_regex_compiled);
         free (buffer->highlight_regex_compiled);
+    }
+    if (buffer->highlight_tags_restrict)
+        free (buffer->highlight_tags_restrict);
+    if (buffer->highlight_tags_restrict_array)
+    {
+        for (i = 0; i < buffer->highlight_tags_restrict_count; i++)
+        {
+            string_free_split (buffer->highlight_tags_restrict_array[i]);
+        }
+        free (buffer->highlight_tags_restrict_array);
     }
     if (buffer->highlight_tags)
         free (buffer->highlight_tags);
@@ -3693,6 +3767,9 @@ gui_buffer_hdata_buffer_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_gui_buffer, highlight_words, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, highlight_regex, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, highlight_regex_compiled, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_buffer, highlight_tags_restrict, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_buffer, highlight_tags_restrict_count, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_buffer, highlight_tags_restrict_array, POINTER, 0, "highlight_tags_restrict_count", NULL);
         HDATA_VAR(struct t_gui_buffer, highlight_tags, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, highlight_tags_count, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, highlight_tags_array, POINTER, 0, "highlight_tags_count", NULL);
@@ -3878,6 +3955,8 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
     if (!infolist_new_var_string (ptr_item, "highlight_regex", buffer->highlight_regex))
         return 0;
     if (!infolist_new_var_pointer (ptr_item, "highlight_regex_compiled", buffer->highlight_regex_compiled))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "highlight_tags_restrict", buffer->highlight_tags_restrict))
         return 0;
     if (!infolist_new_var_string (ptr_item, "highlight_tags", buffer->highlight_tags))
         return 0;
@@ -4081,6 +4160,9 @@ gui_buffer_print_log ()
         log_printf ("  highlight_words . . . . : '%s'",  ptr_buffer->highlight_words);
         log_printf ("  highlight_regex . . . . : '%s'",  ptr_buffer->highlight_regex);
         log_printf ("  highlight_regex_compiled: 0x%lx", ptr_buffer->highlight_regex_compiled);
+        log_printf ("  highlight_tags_restrict. . . : '%s'",  ptr_buffer->highlight_tags_restrict);
+        log_printf ("  highlight_tags_restrict_count: %d",    ptr_buffer->highlight_tags_restrict_count);
+        log_printf ("  highlight_tags_restrict_array: 0x%lx", ptr_buffer->highlight_tags_restrict_array);
         log_printf ("  highlight_tags. . . . . : '%s'",  ptr_buffer->highlight_tags);
         log_printf ("  highlight_tags_count. . : %d",    ptr_buffer->highlight_tags_count);
         log_printf ("  highlight_tags_array. . : 0x%lx", ptr_buffer->highlight_tags_array);

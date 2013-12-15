@@ -11,6 +11,9 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 0.4.3 (under dev)
 
+* core: rename buffer property "highlight_tags" to "highlight_tags_restrict",
+  new behavior for buffer property "highlight_tags" (force highlight on tags),
+  rename option irc.look.highlight_tags to irc.look.highlight_tags_restrict
 * core: use "+" separator to make a logical "and" between tags in command
   /filter, option weechat.look.highlight_tags and buffer property
   "highlight_tags"

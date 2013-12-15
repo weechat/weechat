@@ -549,6 +549,29 @@ infolist_time (struct t_infolist *infolist, const char *var)
 }
 
 /*
+ * Searches for a variable in current infolist item.
+ */
+
+struct t_infolist_var *
+infolist_search_var (struct t_infolist *infolist, const char *var)
+{
+    struct t_infolist_var *ptr_var;
+
+    if (!infolist || !infolist->ptr_item || !var || !var[0])
+        return NULL;
+
+    for (ptr_var = infolist->ptr_item->vars; ptr_var;
+         ptr_var = ptr_var->next_var)
+    {
+        if (string_strcasecmp (ptr_var->name, var) == 0)
+            return ptr_var;
+    }
+
+    /* variable not found */
+    return NULL;
+}
+
+/*
  * Frees a variable in item.
  */
 

@@ -521,8 +521,23 @@ upgrade_weechat_read_cb (void *data,
                                                         infolist_string (infolist, "highlight_words"));
                         gui_buffer_set_highlight_regex (upgrade_current_buffer,
                                                         infolist_string (infolist, "highlight_regex"));
-                        gui_buffer_set_highlight_tags (upgrade_current_buffer,
-                                                       infolist_string (infolist, "highlight_tags"));
+                        if (infolist_search_var (infolist,
+                                                 "highlight_tags_restrict"))
+                        {
+                            /* WeeChat >= 0.4.3 */
+                            gui_buffer_set_highlight_tags_restrict (upgrade_current_buffer,
+                                                                    infolist_string (infolist,
+                                                                                     "highlight_tags_restrict"));
+                            gui_buffer_set_highlight_tags (upgrade_current_buffer,
+                                                           infolist_string (infolist,
+                                                                            "highlight_tags"));
+                        }
+                        else
+                        {
+                            /* WeeChat <= 0.4.2 */
+                            gui_buffer_set_highlight_tags_restrict (upgrade_current_buffer,
+                                                                    infolist_string (infolist, "highlight_tags"));
+                        }
                         gui_buffer_set_hotlist_max_level_nicks (upgrade_current_buffer,
                                                                 infolist_string (infolist, "hotlist_max_level_nicks"));
                         index = 0;

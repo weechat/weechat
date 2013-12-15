@@ -168,8 +168,8 @@
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"$nick"`)
 
-* [[option_irc.look.highlight_tags]] *irc.look.highlight_tags*
-** Beschreibung: `durch Kommata getrennte Liste von Schlagwörtern, welche eine Nachricht hervorheben sollen (Highlight) (normalerweise trifft dies auf jede Nachricht eines Users zu, ausgenommen Nachrichten vom Server,..)`
+* [[option_irc.look.highlight_tags_restrict]] *irc.look.highlight_tags_restrict*
+** Beschreibung: `restrict highlights to these tags on irc buffers (to have highlight on user messages but not server messages); tags must be separated by a comma and "+" can be used to make a logical "and" between tags; tags can start or end with "*" to match more than one tag; an empty value allows highlight on any tag`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"irc_privmsg,irc_notice"`)
 

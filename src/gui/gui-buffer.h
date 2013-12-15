@@ -177,10 +177,12 @@ struct t_gui_buffer
     char *highlight_words;             /* list of words to highlight        */
     char *highlight_regex;             /* regex for highlight               */
     regex_t *highlight_regex_compiled; /* compiled regex                    */
-    char *highlight_tags;              /* tags to highlight                 */
-    int highlight_tags_count;          /* number of tags to highlight       */
-                                       /* (if 0, any tag is highlighted)    */
-    char ***highlight_tags_array;      /* tags to highlight                 */
+    char *highlight_tags_restrict;     /* restrict highlight to these tags  */
+    int highlight_tags_restrict_count; /* number of restricted tags         */
+    char ***highlight_tags_restrict_array; /* array with restricted tags    */
+    char *highlight_tags;              /* force highlight on these tags     */
+    int highlight_tags_count;          /* number of highlight tags          */
+    char ***highlight_tags_array;      /* array with highlight tags         */
 
     /* hotlist settings for buffer */
     struct t_hashtable *hotlist_max_level_nicks; /* max hotlist level for   */
@@ -263,8 +265,10 @@ extern void gui_buffer_set_highlight_words (struct t_gui_buffer *buffer,
                                             const char *new_highlight_words);
 extern void gui_buffer_set_highlight_regex (struct t_gui_buffer *buffer,
                                             const char *new_highlight_regex);
+extern void gui_buffer_set_highlight_tags_restrict (struct t_gui_buffer *buffer,
+                                                    const char *new_tags);
 extern void gui_buffer_set_highlight_tags (struct t_gui_buffer *buffer,
-                                           const char *new_highlight_tags);
+                                           const char *new_tags);
 extern void gui_buffer_set_hotlist_max_level_nicks (struct t_gui_buffer *buffer,
                                                     const char *new_hotlist_max_level_nicks);
 extern void gui_buffer_set_unread (struct t_gui_buffer *buffer);

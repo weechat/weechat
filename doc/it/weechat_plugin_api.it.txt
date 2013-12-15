@@ -10141,7 +10141,10 @@ Argomenti:
 ** 'text_search_input': input salvato prima della ricerca nel testo
 ** 'highlight_words': elenco di parole da evidenziare
 ** 'highlight_regex': espressione regolare per l'evento
-** 'highlight_tags': elenco di tag da evidenziare
+// TRANSLATION MISSING
+** 'highlight_tags_restrict': restrict highlights to messages with these tags
+// TRANSLATION MISSING
+** 'highlight_tags': force highlight on messages with these tags
 ** 'hotlist_max_level_nicks': livello massimo della hotlist per alcuni nick
 ** 'localvar_xxx': ottiene il contenuto della variabile locale "xxx"
    (sostituire "xxx" con il nome della variabile da leggere)
@@ -10315,7 +10318,7 @@ Argomenti:
   queste parole vengono aggiunte alle parole evidenziate esistenti nel
   buffer
 
-| highlight_words_del | elenco di parole separate da virgole|
+| highlight_words_del | elenco di parole separate da virgole |
   Elenco di parole separate da virgole da rimuovere dalle
   parole evidenziate nel buffer
 
@@ -10323,10 +10326,16 @@ Argomenti:
   Espressione regolare per l'evento
 
 // TRANSLATION MISSING
+| highlight_tags_restrict | elenco separato da virgole di tag |
+  Restrict highlights to messages with these tags in this buffer
+  (it is possible to combine many tags as a logical "and" with separator "+",
+  for example: "nick_toto+irc_action")
+
+// TRANSLATION MISSING
 | highlight_tags | elenco separato da virgole di tag |
-  Elenco separato da virgole di tag da evidenziare in questo buffer
-  (_WeeChat ≥ 0.4.3_: it is possible to combine many tags as a logical "and"
-  with separator "+", for example: "nick_toto+irc_action")
+  Force highlight on messages with these tags in this buffer
+  (it is possible to combine many tags as a logical "and" with separator "+",
+  for example: "nick_toto+irc_action")
 
 | hotlist_max_level_nicks | elenco separado da virgole di "nick:livello" |
   Elenco separato da virgole di nick con il livello massimo per la hotlist

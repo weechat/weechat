@@ -168,8 +168,8 @@
 ** type: string
 ** values: any string (default value: `"$nick"`)
 
-* [[option_irc.look.highlight_tags]] *irc.look.highlight_tags*
-** description: `comma separated list of tags for messages that may produce highlight (usually any message from another user, not server messages,..)`
+* [[option_irc.look.highlight_tags_restrict]] *irc.look.highlight_tags_restrict*
+** description: `restrict highlights to these tags on irc buffers (to have highlight on user messages but not server messages); tags must be separated by a comma and "+" can be used to make a logical "and" between tags; tags can start or end with "*" to match more than one tag; an empty value allows highlight on any tag`
 ** type: string
 ** values: any string (default value: `"irc_privmsg,irc_notice"`)
 

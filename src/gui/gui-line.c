@@ -699,23 +699,15 @@ gui_line_has_highlight (struct t_gui_line *line)
         return 0;
 
     /*
-     * check if highlight is forced by a tag (with option highlight_tags) or
-     * disabled for line; also check if the line is an action message (for
-     * example tag "irc_action") and get pointer on the nick (tag "nick_xxx"),
-     * these info will be used later (see below)
+     * check if highlight is disabled for line; also check if the line is an
+     * action message (for example tag "irc_action") and get pointer on the nick
+     * (tag "nick_xxx"), these info will be used later (see below)
      */
     no_highlight = 0;
     action = 0;
     ptr_nick = NULL;
     for (i = 0; i < line->data->tags_count; i++)
     {
-        if (config_highlight_tags
-            && gui_line_match_tags (line->data,
-                                    config_num_highlight_tags,
-                                    config_highlight_tags))
-        {
-            return 1;
-        }
         if (strcmp (line->data->tags_array[i], GUI_CHAT_TAG_NO_HIGHLIGHT) == 0)
             no_highlight = 1;
         else if (strncmp (line->data->tags_array[i], "nick_", 5) == 0)
@@ -734,14 +726,38 @@ gui_line_has_highlight (struct t_gui_line *line)
         return 0;
 
     /*
+     * check if highlight is forced by a tag
+     * (with global option "weechat.look.highlight_tags")
+     */
+    if (config_highlight_tags
+        && gui_line_match_tags (line->data,
+                                config_num_highlight_tags,
+                                config_highlight_tags))
+    {
+        return 1;
+    }
+
+    /*
+     * check if highlight is forced by a tag
+     * (with buffer property "highlight_tags")
+     */
+    if (line->data->buffer->highlight_tags
+        && gui_line_match_tags (line->data,
+                                line->data->buffer->highlight_tags_count,
+                                line->data->buffer->highlight_tags_array))
+    {
+        return 1;
+    }
+
+    /*
      * check that line matches highlight tags, if any (if no tag is specified,
      * then any tag is allowed)
      */
-    if (line->data->buffer->highlight_tags_count > 0)
+    if (line->data->buffer->highlight_tags_restrict_count > 0)
     {
         if (!gui_line_match_tags (line->data,
-                                  line->data->buffer->highlight_tags_count,
-                                  line->data->buffer->highlight_tags_array))
+                                  line->data->buffer->highlight_tags_restrict_count,
+                                  line->data->buffer->highlight_tags_restrict_array))
             return 0;
     }
 

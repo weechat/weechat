@@ -10154,7 +10154,9 @@ Paramètres :
 ** 'text_search_input' : texte saisi sauvegardé avant la recherche de texte
 ** 'highlight_words' : liste des mots pour le highlight
 ** 'highlight_regex' : expression régulière pour le highlight
-** 'highlight_tags' : liste des étiquettes pour le highlight
+** 'highlight_tags_restrict' : restreindre les highlights aux messages
+   comportant ces étiquettes
+** 'highlight_tags' : forcer le highlight pour les messages avec ces étiquettes
 ** 'hotlist_max_level_nicks' : niveau maximum pour la hotlist pour certains
    pseudos
 ** 'localvar_xxx' : contenu de la variable locale "xxx" (remplacer "xxx" par le
@@ -10333,11 +10335,15 @@ Paramètres :
 | highlight_regex | toute chaîne |
   Expression régulière pour le highlight
 
+| highlight_tags_restrict | liste d'étiquettes ("tags") séparées par des virgules |
+  Restreindre les highlights aux messages avec ces étiquettes dans ce tampon
+  (il est possible de combiner plusieurs étiquettes sous forme d'un "et" logique
+  avec le séparateur "+", par exemple : "nick_toto+irc_action")
+
 | highlight_tags | liste d'étiquettes ("tags") séparées par des virgules |
-  Liste d'étiquettes ("tags") à mettre en valeur pour ce tampon
-  (_WeeChat ≥ 0.4.3_ : il est possible de combiner plusieurs tags sous forme
-  d'un "et" logique avec le séparateur "+", par exemple :
-  "nick_toto+irc_action")
+  Forcer le highlight pour les messages avec ces étiquettes dans ce tampon
+  (il est possible de combiner plusieurs étiquettes sous forme d'un "et" logique
+  avec le séparateur "+", par exemple : "nick_toto+irc_action")
 
 | hotlist_max_level_nicks | liste de "pseudo:niveau" séparés par des virgules |
   Liste de pseudos avec niveau max pour la hotlist sur ce tampon (le niveau peut

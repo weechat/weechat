@@ -253,11 +253,11 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
                            (channel_type == IRC_CHANNEL_TYPE_CHANNEL) ?
                            weechat_config_string (irc_config_look_highlight_channel) :
                            weechat_config_string (irc_config_look_highlight_pv));
-        if (weechat_config_string (irc_config_look_highlight_tags)
-            && weechat_config_string (irc_config_look_highlight_tags)[0])
+        if (weechat_config_string (irc_config_look_highlight_tags_restrict)
+            && weechat_config_string (irc_config_look_highlight_tags_restrict)[0])
         {
-            weechat_buffer_set (new_buffer, "highlight_tags",
-                                weechat_config_string (irc_config_look_highlight_tags));
+            weechat_buffer_set (new_buffer, "highlight_tags_restrict",
+                                weechat_config_string (irc_config_look_highlight_tags_restrict));
         }
     }
 

@@ -168,8 +168,8 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"$nick"`)
 
-* [[option_irc.look.highlight_tags]] *irc.look.highlight_tags*
-** description: `liste des tags pour les messages qui peuvent produire un highlight (séparés par des virgules, typiquement tout message venant d'un autre utilisateur, pas les messages du serveur, ...)`
+* [[option_irc.look.highlight_tags_restrict]] *irc.look.highlight_tags_restrict*
+** description: `restreindre les highlights à ces tags sur les tampons irc (pour avoir un highlight seulement sur les messages utilisateur et pas les messages du serveur); les tags doivent être séparés par des virgules et "+" peut être utilisé pour faire un "et" logique entre tags; les tags peuvent commencer ou se terminer par "*" pour correspondre à plus d'un tag; une valeur vide autorise le highlight sur n'importe quel tag`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"irc_privmsg,irc_notice"`)
 
