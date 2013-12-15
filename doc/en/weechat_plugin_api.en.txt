@@ -7334,8 +7334,12 @@ struct t_hook *weechat_hook_print (struct t_gui_buffer *buffer,
 Arguments:
 
 * 'buffer': buffer pointer, if NULL, messages from any buffer are caught
-* 'tags': only messages with these tags (comma separated list) will be caught
-  (optional)
+* 'tags': catch only messages with these tags (optional):
+** with WeeChat ≥ 0.4.3: comma-separated list of tags that must be in message
+   (logical "or"); it is possible to combine many tags as a logical "and" with
+   separator "+"; each tag can start or end with "*" to match many tags
+** with WeeChat ≤ 0.4.2: comma-separated list of tags that must all be in
+   message (logical "and")
 * 'message': only messages with this string will be caught (optional, case
   insensitive)
 * 'strip_colors': if 1, colors will be stripped from message displayed, before

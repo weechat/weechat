@@ -7393,8 +7393,15 @@ Argomenti:
 
 * 'buffer': puntatore al buffer, se NULL, verranno catturati i messaggi da qualsiasi
   buffer
-* 'tags': verranno catturati solo messaggi con queste tag (elenco separato da virgole)
-  (opzionale)
+// TRANSLATION MISSING
+* 'tags': catch only messages with these tags (optional):
+// TRANSLATION MISSING
+** with WeeChat ≥ 0.4.3: comma-separated list of tags that must be in message
+   (logical "or"); it is possible to combine many tags as a logical "and" with
+   separator "+"; each tag can start or end with "*" to match many tags
+// TRANSLATION MISSING
+** with WeeChat ≤ 0.4.2: comma-separated list of tags that must all be in
+   message (logical "and")
 * 'message': verranno catturati solo i messaggi con questa stringa (opzionale,
   non sensibile alle maiuscole)
 * 'strip_colors': se 1, i colori verranno estratti dal messaggio visualizzato, prima

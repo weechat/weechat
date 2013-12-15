@@ -288,7 +288,7 @@ struct t_hook_print
     t_hook_callback_print *callback;   /* print callback                    */
     struct t_gui_buffer *buffer;       /* buffer selected (NULL = all)      */
     int tags_count;                    /* number of tags selected           */
-    char **tags_array;                 /* tags selected (NULL = any)        */
+    char ***tags_array;                /* tags selected (NULL = any)        */
     char *message;                     /* part of message (NULL/empty = all)*/
     int strip_colors;                  /* strip colors in msg for callback? */
 };

@@ -7451,8 +7451,14 @@ Paramètres :
 
 * 'buffer' : pointeur vers le tampon, si NULL, les messages de tous les tampons
   sont interceptés
-* 'tags' : seulement les messages avec ces étiquettes (liste séparée par des
-  virgules) seront interceptés (optionnel)
+* 'tags' : intercepter seulement les messages avec ces étiquettes (optionnel) :
+** avec WeeChat ≥ 0.4.3 : liste d'étiquettes (séparées par des virgules) qui
+   doivent être dans le message ("ou" logique); il est possible de combiner
+   plusieurs étiquettes sous forme d'un "et" logique avec le séparateur "+";
+   chaque étiquette peut commencer ou se terminer par "*" pour correspondre à
+   plusieurs étiquettes
+** avec WeeChat ≤ 0.4.2 : liste d'étiquettes (séparées par des virgules) qui
+   doivent toutes être dans le message ("et" logique)
 * 'message' : seulement les messages contenant cette chaîne seront interceptés
   (optionnel, insensible à la casse)
 * 'strip_colors' : si 1, les couleurs seront supprimées du message affiché,

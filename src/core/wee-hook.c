@@ -1987,6 +1987,8 @@ hook_print (struct t_weechat_plugin *plugin, struct t_gui_buffer *buffer,
 {
     struct t_hook *new_hook;
     struct t_hook_print *new_hook_print;
+    char **tags_array;
+    int i;
 
     if (!callback)
         return NULL;
@@ -2007,15 +2009,27 @@ hook_print (struct t_weechat_plugin *plugin, struct t_gui_buffer *buffer,
     new_hook->hook_data = new_hook_print;
     new_hook_print->callback = callback;
     new_hook_print->buffer = buffer;
+    new_hook_print->tags_count = 0;
+    new_hook_print->tags_array = NULL;
     if (tags)
     {
-        new_hook_print->tags_array = string_split (tags, ",", 0, 0,
-                                                   &new_hook_print->tags_count);
-    }
-    else
-    {
-        new_hook_print->tags_count = 0;
-        new_hook_print->tags_array = NULL;
+        tags_array = string_split (tags, ",", 0, 0,
+                                   &new_hook_print->tags_count);
+        if (tags_array)
+        {
+            new_hook_print->tags_array = malloc (new_hook_print->tags_count *
+                                                 sizeof (*new_hook_print->tags_array));
+            if (new_hook_print->tags_array)
+            {
+                for (i = 0; i < new_hook_print->tags_count; i++)
+                {
+                    new_hook_print->tags_array[i] = string_split (tags_array[i],
+                                                                  "+", 0, 0,
+                                                                  NULL);
+                }
+            }
+            string_free_split (tags_array);
+        }
     }
     new_hook_print->message = (message) ? strdup (message) : NULL;
     new_hook_print->strip_colors = strip_colors;
@@ -2034,7 +2048,6 @@ hook_print_exec (struct t_gui_buffer *buffer, struct t_gui_line *line)
 {
     struct t_hook *ptr_hook, *next_hook;
     char *prefix_no_color, *message_no_color;
-    int tags_match, tag_found, i, j;
 
     if (!line->data->message || !line->data->message[0])
         return;
@@ -2067,42 +2080,12 @@ hook_print_exec (struct t_gui_buffer *buffer, struct t_gui_line *line)
                 || string_strcasestr (message_no_color, HOOK_PRINT(ptr_hook, message))))
         {
             /* check if tags match */
-            if (HOOK_PRINT(ptr_hook, tags_array))
+            if (!HOOK_PRINT(ptr_hook, tags_array)
+                || gui_line_match_tags (line->data,
+                                        HOOK_PRINT(ptr_hook, tags_count),
+                                        HOOK_PRINT(ptr_hook, tags_array)))
             {
-                /* if there are tags in message printed */
-                if (line->data->tags_array)
-                {
-                    tags_match = 1;
-                    for (i = 0; i < HOOK_PRINT(ptr_hook, tags_count); i++)
-                    {
-                        /* search for tag in message */
-                        tag_found = 0;
-                        for (j = 0; j < line->data->tags_count; j++)
-                        {
-                            if (string_strcasecmp (HOOK_PRINT(ptr_hook, tags_array)[i],
-                                                   line->data->tags_array[j]) == 0)
-                            {
-                                tag_found = 1;
-                                break;
-                            }
-                        }
-                        /* tag was asked by hook but not found in message? */
-                        if (!tag_found)
-                        {
-                            tags_match = 0;
-                            break;
-                        }
-                    }
-                }
-                else
-                    tags_match = 0;
-            }
-            else
-                tags_match = 1;
-
-            /* run callback */
-            if (tags_match)
-            {
+                /* run callback */
                 ptr_hook->running = 1;
                 (void) (HOOK_PRINT(ptr_hook, callback))
                     (ptr_hook->callback_data, buffer, line->data->date,
@@ -3334,7 +3317,13 @@ unhook (struct t_hook *hook)
                 break;
             case HOOK_TYPE_PRINT:
                 if (HOOK_PRINT(hook, tags_array))
-                    string_free_split (HOOK_PRINT(hook, tags_array));
+                {
+                    for (i = 0; i < HOOK_PRINT(hook, tags_count); i++)
+                    {
+                        string_free_split (HOOK_PRINT(hook, tags_array)[i]);
+                    }
+                    free (HOOK_PRINT(hook, tags_array));
+                }
                 if (HOOK_PRINT(hook, message))
                     free (HOOK_PRINT(hook, message));
                 break;
