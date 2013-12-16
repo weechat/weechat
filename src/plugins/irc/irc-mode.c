@@ -26,6 +26,7 @@
 #include "../weechat-plugin.h"
 #include "irc.h"
 #include "irc-mode.h"
+#include "irc-config.h"
 #include "irc-server.h"
 #include "irc-channel.h"
 #include "irc-nick.h"
@@ -263,21 +264,64 @@ irc_mode_channel_update (struct t_irc_server *server,
 }
 
 /*
- * Sets channel modes using CHANMODES (from message 005) and update channel
- * modes if needed.
+ * Checks if a mode is smart filtered (according to option
+ * irc.look.smart_filter_mode).
+ *
+ * Returns:
+ *   1: the mode is smart filtered
+ *   0: the mode is NOT smart filtered
  */
 
-void
+int
+irc_mode_smart_filtered (char mode)
+{
+    const char *ptr_modes;
+
+    ptr_modes = weechat_config_string (irc_config_look_smart_filter_mode);
+
+    /* if empty value, there's no smart filtering on mode messages */
+    if (!ptr_modes || !ptr_modes[0])
+        return 0;
+
+    /* if var is "*", ALL modes are smart filtered */
+    if (strcmp (ptr_modes, "*") == 0)
+        return 1;
+
+    /*
+     * if var starts with "-", smart filter all modes except following modes
+     * example: "-kl": smart filter all modes but not k/l
+     */
+    if (ptr_modes[0] == '-')
+        return (strchr (ptr_modes + 1, mode)) ? 0 : 1;
+
+    /*
+     * explicit list of modes to smart filter
+     * example: "ovh": smart filter modes o/v/h
+     */
+    return (strchr (ptr_modes, mode)) ? 1 : 0;
+}
+
+/*
+ * Sets channel modes using CHANMODES (from message 005) and update channel
+ * modes if needed.
+ *
+ * Returns:
+ *   1: the mode message can be "smart filtered"
+ *   0: the mode message must NOT be "smart filtered"
+ */
+
+int
 irc_mode_channel_set (struct t_irc_server *server,
                       struct t_irc_channel *channel,
                       const char *modes)
 {
     char *pos_args, *str_modes, set_flag, **argv, *pos, *ptr_arg, chanmode_type;
     int argc, current_arg, update_channel_modes, channel_modes_updated;
+    int smart_filter;
     struct t_irc_nick *ptr_nick;
 
     if (!server || !channel || !modes)
-        return;
+        return 0;
 
     channel_modes_updated = 0;
     argc = 0;
@@ -287,7 +331,7 @@ irc_mode_channel_set (struct t_irc_server *server,
     {
         str_modes = weechat_strndup (modes, pos_args - modes);
         if (!str_modes)
-            return;
+            return 0;
         pos_args++;
         while (pos_args[0] == ' ')
             pos_args++;
@@ -297,10 +341,14 @@ irc_mode_channel_set (struct t_irc_server *server,
     {
         str_modes = strdup (modes);
         if (!str_modes)
-            return;
+            return 0;
     }
 
     current_arg = 0;
+
+    smart_filter = (weechat_config_boolean (irc_config_look_smart_filter)
+                    && weechat_config_string (irc_config_look_smart_filter_mode)
+                    && weechat_config_string (irc_config_look_smart_filter_mode)[0]) ? 1 : 0;
 
     if (str_modes && str_modes[0])
     {
@@ -343,6 +391,9 @@ irc_mode_channel_set (struct t_irc_server *server,
                     }
                     if (ptr_arg)
                         current_arg++;
+
+                    if (smart_filter && !irc_mode_smart_filtered (pos[0]))
+                        smart_filter = 0;
 
                     if (pos[0] == 'k')
                     {
@@ -388,6 +439,14 @@ irc_mode_channel_set (struct t_irc_server *server,
                             {
                                 irc_nick_set_mode (server, channel, ptr_nick,
                                                    (set_flag == '+'), pos[0]);
+                                if (smart_filter
+                                    && irc_channel_nick_speaking_time_search (server,
+                                                                              channel,
+                                                                              ptr_nick->name,
+                                                                              1))
+                                {
+                                    smart_filter = 0;
+                                }
                             }
                         }
                     }
@@ -410,6 +469,8 @@ irc_mode_channel_set (struct t_irc_server *server,
 
     if (channel_modes_updated)
         weechat_bar_item_update ("buffer_modes");
+
+    return smart_filter;
 }
 
 /*

@@ -99,6 +99,7 @@ struct t_config_option *irc_config_look_smart_filter;
 struct t_config_option *irc_config_look_smart_filter_delay;
 struct t_config_option *irc_config_look_smart_filter_join;
 struct t_config_option *irc_config_look_smart_filter_join_unmask;
+struct t_config_option *irc_config_look_smart_filter_mode;
 struct t_config_option *irc_config_look_smart_filter_nick;
 struct t_config_option *irc_config_look_smart_filter_quit;
 struct t_config_option *irc_config_look_topic_strip_colors;
@@ -2569,6 +2570,15 @@ irc_config_init ()
            "update on topic), the join is unmasked, as well as nick changes "
            "after this join (0 = disable: never unmask a join)"),
         NULL, 0, 60*24*7, "30", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_smart_filter_mode = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "smart_filter_mode", "string",
+        /* TRANSLATORS: please do not translate "mode" */
+        N_("enable smart filter for \"mode\" messages: \"*\" to filter all "
+           "modes, \"xyz\" to filter only modes x/y/z, \"-xyz\" to filter all "
+           "modes but not x/y/z; examples: \"ovh\": filter modes o/v/h, "
+           "\"-bkl\": filter all modes but not b/k/l"),
+        NULL, 0, 0, "ovh", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_smart_filter_nick = weechat_config_new_option (
         irc_config_file, ptr_section,
         "smart_filter_nick", "boolean",

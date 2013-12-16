@@ -318,6 +318,11 @@
 ** type: entier
 ** valeurs: 0 .. 10080 (valeur par défaut: `30`)
 
+* [[option_irc.look.smart_filter_mode]] *irc.look.smart_filter_mode*
+** description: `activer le filtre intelligent pour les messages "mode": "*" pour filtrer tous les modes, "xyz" pour filtrer seulement les modes x/y/z, "-xyz" pour filtrer tous les modes sauf x/y/z; exemples: "ovh": filtrer les modes o/v/h, "-bkl": filtrer tous les modes sauf b/k/l`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `"ovh"`)
+
 * [[option_irc.look.smart_filter_nick]] *irc.look.smart_filter_nick*
 ** description: `activer le filtre intelligent pour les messages "nick" (changements de pseudo)`
 ** type: booléen

@@ -848,6 +848,7 @@ IRC_PROTOCOL_CALLBACK(kill)
 IRC_PROTOCOL_CALLBACK(mode)
 {
     char *pos_modes;
+    int smart_filter, local_mode;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
     struct t_gui_buffer *ptr_buffer;
@@ -859,16 +860,24 @@ IRC_PROTOCOL_CALLBACK(mode)
 
     if (irc_channel_is_channel (server, argv[2]))
     {
+        smart_filter = 0;
         ptr_channel = irc_channel_search (server, argv[2]);
         if (ptr_channel)
-            irc_mode_channel_set (server, ptr_channel, pos_modes);
+        {
+            smart_filter = irc_mode_channel_set (server, ptr_channel,
+                                                 pos_modes);
+        }
+        local_mode = (irc_server_strcasecmp (server, nick, server->nick) == 0);
         ptr_nick = irc_nick_search (server, ptr_channel, nick);
         ptr_buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
         weechat_printf_date_tags (irc_msgbuffer_get_target_buffer (server, NULL,
                                                                    command, NULL,
                                                                    ptr_buffer),
                                   date,
-                                  irc_protocol_tags (command, NULL, NULL),
+                                  irc_protocol_tags (command,
+                                                     (smart_filter && !local_mode) ?
+                                                     "irc_smart_filter" : NULL,
+                                                     NULL),
                                   _("%sMode %s%s %s[%s%s%s]%s by %s%s"),
                                   weechat_prefix ("network"),
                                   IRC_COLOR_CHAT_CHANNEL,
@@ -2923,8 +2932,8 @@ IRC_PROTOCOL_CALLBACK(324)
         irc_channel_set_modes (ptr_channel, ((argc > 4) ? argv_eol[4] : NULL));
         if (argc > 4)
         {
-            irc_mode_channel_set (server, ptr_channel,
-                                  ptr_channel->modes);
+            (void) irc_mode_channel_set (server, ptr_channel,
+                                         ptr_channel->modes);
         }
     }
     weechat_printf_date_tags (irc_msgbuffer_get_target_buffer (server, NULL,
