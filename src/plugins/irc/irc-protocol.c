@@ -1182,9 +1182,10 @@ IRC_PROTOCOL_CALLBACK(notice)
                                                          "notify_message" :
                                                          weechat_config_string (irc_config_look_notice_welcome_tags),
                                                          nick),
-                                      "%s%s%s%s%s(%s%s%s)%s%s%s%s%s: %s",
+                                      "%s%s%s%s%s%s(%s%s%s)%s: %s",
                                       weechat_prefix ("network"),
                                       IRC_COLOR_NOTICE,
+                                      (is_channel_orig) ? "" : "Pv",
                                       /* TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word) */
                                       _("Notice"),
                                       (notice_op) ? "Op" : ((notice_voice) ? "Voice" : ""),
@@ -1192,10 +1193,6 @@ IRC_PROTOCOL_CALLBACK(notice)
                                       irc_nick_color_for_message (server, ptr_nick, nick),
                                       (nick && nick[0]) ? nick : "?",
                                       IRC_COLOR_CHAT_DELIMITERS,
-                                      IRC_COLOR_RESET,
-                                      (is_channel_orig) ? " -> " : "",
-                                      (is_channel_orig) ? IRC_COLOR_CHAT_CHANNEL : "",
-                                      (is_channel_orig) ? pos_target : "",
                                       IRC_COLOR_RESET,
                                       pos_args);
         }

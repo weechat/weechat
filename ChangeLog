@@ -64,6 +64,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * aspell: fix detection of nicks with non-alphanumeric chars
 * guile: disable guile gmp allocator (fix crash on unload of relay plugin)
   (bug #40628)
+* irc: remove display of channel in channel notices, display "PvNotice" for
+  channel welcome notices
 * irc: add option irc.look.smart_filter_mode (task #12499)
 * irc: add option irc.network.ban_mask_default (bug #26571)
 * irc: add option irc.network.lag_max
