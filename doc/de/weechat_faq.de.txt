@@ -421,10 +421,10 @@ $ printf '\033[?1002l'
 ----
 
 [[mouse_coords]]
-=== Mausunterstützung funktioniert nicht falls x/y Koordinaten größer 94 Pixel sind, weshalb?
+=== Mausunterstützung funktioniert nicht falls x/y Koordinaten größer 94 (oder 222) Pixel sind, weshalb?
 
 Einige Terminals senden ausschließlich ISO Zeichen für die Mauskoordinaten. Deshalb ist eine
-Nutzung über 94 Pixel hinausgehend, sowohl in den x- wie auch den y-Koordinaten, nicht gegeben.
+Nutzung über 94 (oder 222) Pixel hinausgehend, sowohl in den x- wie auch den y-Koordinaten, nicht gegeben.
 
 Dann muss man einen Terminl nutzen der eine Unterstützung von UTF-8 Koordinaten für die Maus
 bietet, zum Beispiel rxvt-unicode.

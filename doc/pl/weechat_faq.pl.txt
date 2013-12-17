@@ -400,11 +400,13 @@ Aby wyłączyć wsparcie dla myszy w terminalu:
 $ printf '\033[?1002l'
 ----
 
+// TRANSLATION MISSING
 [[mouse_coords]]
-=== Mysz nic nie robi dla X lub Y większych od 94, dlaczego?
+=== Mysz nic nie robi dla X lub Y większych od 94 (or 222), dlaczego?
 
+// TRANSLATION MISSING
 Niektóre terminale wysyłają tylko znaki ISO dla położenia myszy, dlatego nie
-działa to dla X/Y większych dla 94.
+działa to dla X/Y większych dla 94 (or 222).
 
 Powinieneś użyć terminala wspierającego położenia UTF-8 dla myszy, jak
 rxvt-unicode.

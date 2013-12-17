@@ -399,10 +399,10 @@ $ printf '\033[?1002l'
 ----
 
 [[mouse_coords]]
-=== Mouse does nothing for X or Y greater than 94, why?
+=== Mouse does nothing for X or Y greater than 94 (or 222), why?
 
 Some terminals are sending only ISO chars for mouse coordinates, so it does not
-work for X/Y greater than 94.
+work for X/Y greater than 94 (or 222).
 
 You should use a terminal that supports UTF-8 coordinates for mouse, like
 rxvt-unicode.

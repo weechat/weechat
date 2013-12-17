@@ -417,10 +417,10 @@ $ printf '\033[?1002l'
 ----
 
 [[mouse_coords]]
-=== La souris ne fait rien pour un X ou Y supérieur à 94, pourquoi ?
+=== La souris ne fait rien pour un X ou Y supérieur à 94 (ou 222), pourquoi ?
 
 Certains terminaux envoient seulement des caractères ISO pour les coordonnées
-de la souris, donc cela ne fonctionne pas avec un X/Y supérieur à 94.
+de la souris, donc cela ne fonctionne pas avec un X/Y supérieur à 94 (ou 222).
 
 Vous devriez utiliser un terminal qui supporte les coordonnées UTF-8 pour la
 souris, comme rxvt-unicode.
