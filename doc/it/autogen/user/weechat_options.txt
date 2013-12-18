@@ -829,12 +829,12 @@
 ** valori: on, off (valore predefinito: `on`)
 
 * [[option_weechat.look.separator_horizontal]] *weechat.look.separator_horizontal*
-** descrizione: `carattere usato per disegnare i separatori orizzontali intorno alle barre e alle finestre (un valore vuoto disegnerà una riga reale con ncurses, ma può causare bug con la selezione dell'URL in alcuni terminali), i caratteri wide qui NON sono consentiti`
+** descrizione: `char used to draw horizontal separators around bars and windows (empty value will draw a real line with ncurses, but may cause bugs with URL selection under some terminals); width on screen must be exactly one char`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"-"`)
 
 * [[option_weechat.look.separator_vertical]] *weechat.look.separator_vertical*
-** descrizione: `carattere usato per disegnare i separatori verticali intorno alle barre e alle finestre (un valore vuoto disegnerà una riga reale con ncurses), i caratteri wide qui NON sono consentiti`
+** descrizione: `char used to draw vertical separators around bars and windows (empty value will draw a real line with ncurses); width on screen must be exactly one char`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 

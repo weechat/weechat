@@ -11,6 +11,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 0.4.3 (under dev)
 
+* core: add support of UTF-8 chars in horizontal/vertical separators (options
+  weechat.look.separator_{horizontal|vertical})
 * core: add option weechat.look.window_auto_zoom, disable automatic zoom by
   default when terminal becomes too small for windows
 * core: add support of logical and/or for argument "tags" in function hook_print

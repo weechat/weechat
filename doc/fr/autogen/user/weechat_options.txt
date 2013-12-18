@@ -829,12 +829,12 @@
 ** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_weechat.look.separator_horizontal]] *weechat.look.separator_horizontal*
-** description: `caractère utilisé pour tracer les séparateurs horizontaux autour des barres et fenêtres (une valeur vide tracera une vraie ligne avec ncurses, mais peut causer des problèmes d'affichage avec la sélection d'URL sous certains terminaux), les caractères larges ne sont PAS autorisés ici`
+** description: `caractère utilisé pour tracer les séparateurs horizontaux autour des barres et fenêtres (une valeur vide tracera une vraie ligne avec ncurses, mais peut causer des problèmes d'affichage avec la sélection d'URL sous certains terminaux); la largeur à l'écran doit être exactement d'un caractère`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"-"`)
 
 * [[option_weechat.look.separator_vertical]] *weechat.look.separator_vertical*
-** description: `caractère utilisé pour tracer les séparateurs verticaux autour des barres et fenêtres (une valeur vide tracera une vraie ligne avec ncurses), les caractères larges ne sont PAS autorisés ici`
+** description: `caractère utilisé pour tracer les séparateurs verticaux autour des barres et fenêtres (une valeur vide tracera une vraie ligne avec ncurses); la largeur à l'écran doit être exactement d'un caractère`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 

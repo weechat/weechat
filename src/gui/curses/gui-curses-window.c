@@ -39,7 +39,6 @@
 #include "../../core/wee-hook.h"
 #include "../../core/wee-log.h"
 #include "../../core/wee-string.h"
-#include "../../core/wee-utf8.h"
 #include "../../plugins/plugin.h"
 #include "../gui-window.h"
 #include "../gui-bar.h"
@@ -1048,13 +1047,67 @@ gui_window_calculate_pos_size (struct t_gui_window *window)
 }
 
 /*
+ * Draws a horizontal line (like ncurses function "mvwhline", but UTF-8 chars
+ * are supported).
+ *
+ * If "string" is NULL or empty, the ACS_HLINE char is used (plain line).
+ * If "string" is not NULL and not empty, its width on screen must be exactly
+ * one char.
+ */
+
+void
+gui_window_hline (WINDOW *window, int x, int y, int width, const char *string)
+{
+    int i;
+
+    if (string && string[0])
+    {
+        for (i = 0; i < width; i++)
+        {
+            mvwaddstr (window, y, x + i, string);
+        }
+    }
+    else
+    {
+        mvwhline (window, y, x, ACS_HLINE, width);
+    }
+}
+
+/*
+ * Draws a vertical line (like ncurses function "mvwvline", but UTF-8 chars
+ * are supported).
+ *
+ * If "string" is NULL or empty, the ACS_VLINE char is used (plain line).
+ * If "string" is not NULL and not empty, its width on screen must be exactly
+ * one char.
+ */
+
+void
+gui_window_vline (WINDOW *window, int x, int y, int height, const char *string)
+{
+    int i;
+
+    if (string && string[0])
+    {
+        for (i = 0; i < height; i++)
+        {
+            mvwaddstr (window, y + i, x, string);
+        }
+    }
+    else
+    {
+        mvwvline (window, y, x, ACS_VLINE, height);
+    }
+}
+
+/*
  * Draws window separators.
  */
 
 void
 gui_window_draw_separators (struct t_gui_window *window)
 {
-    int separator_char, separator_horizontal, separator_vertical, x, width;
+    int separator_horizontal, separator_vertical, x, width;
 
     /* remove separators */
     if (GUI_WINDOW_OBJECTS(window)->win_separator_horiz)
@@ -1086,16 +1139,9 @@ gui_window_draw_separators (struct t_gui_window *window)
                                                                   x);
         gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_separator_horiz,
                                       GUI_COLOR_SEPARATOR);
-        separator_char = ACS_HLINE;
-        if (CONFIG_STRING(config_look_separator_horizontal)
-            && CONFIG_STRING(config_look_separator_horizontal)[0])
-        {
-            separator_char = utf8_char_int (CONFIG_STRING(config_look_separator_horizontal));
-            if (separator_char > 127)
-                separator_char = ACS_VLINE;
-        }
-        mvwhline (GUI_WINDOW_OBJECTS(window)->win_separator_horiz, 0, 0,
-                  separator_char, width);
+        gui_window_hline (GUI_WINDOW_OBJECTS(window)->win_separator_horiz,
+                          0, 0, width,
+                          CONFIG_STRING(config_look_separator_horizontal));
         wnoutrefresh (GUI_WINDOW_OBJECTS(window)->win_separator_horiz);
     }
 
@@ -1108,16 +1154,9 @@ gui_window_draw_separators (struct t_gui_window *window)
                                                                    window->win_x - 1);
         gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_separator_vertic,
                                       GUI_COLOR_SEPARATOR);
-        separator_char = ACS_VLINE;
-        if (CONFIG_STRING(config_look_separator_vertical)
-            && CONFIG_STRING(config_look_separator_vertical)[0])
-        {
-            separator_char = utf8_char_int (CONFIG_STRING(config_look_separator_vertical));
-            if (separator_char > 127)
-                separator_char = ACS_VLINE;
-        }
-        mvwvline (GUI_WINDOW_OBJECTS(window)->win_separator_vertic, 0, 0,
-                  separator_char, window->win_height);
+        gui_window_vline (GUI_WINDOW_OBJECTS(window)->win_separator_vertic,
+                          0, 0, window->win_height,
+                          CONFIG_STRING(config_look_separator_vertical));
         wnoutrefresh (GUI_WINDOW_OBJECTS(window)->win_separator_vertic);
     }
 }

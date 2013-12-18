@@ -729,6 +729,21 @@ config_check_prefix_buffer_align_more (void *data,
 }
 
 /*
+ * Checks options "weechat.look.separator_{horizontal|vertical}".
+ */
+
+int
+config_check_separator (void *data, struct t_config_option *option,
+                        const char *value)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+    return (utf8_strlen_screen (value) <= 1) ? 1 : 0;
+}
+
+/*
  * Callback for changes on a color option.
  */
 
@@ -2578,16 +2593,18 @@ config_weechat_init_options ()
         "separator_horizontal", "string",
         N_("char used to draw horizontal separators around bars and windows "
            "(empty value will draw a real line with ncurses, but may cause bugs "
-           "with URL selection under some terminals), wide chars are NOT "
-           "allowed here"),
-        NULL, 0, 0, "-", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
+           "with URL selection under some terminals); "
+           "width on screen must be exactly one char"),
+        NULL, 0, 0, "-", NULL, 0,
+        &config_check_separator, NULL, &config_change_buffers, NULL, NULL, NULL);
     config_look_separator_vertical = config_file_new_option (
         weechat_config_file, ptr_section,
         "separator_vertical", "string",
         N_("char used to draw vertical separators around bars and windows "
-           "(empty value will draw a real line with ncurses), wide chars are "
-           "NOT allowed here"),
-        NULL, 0, 0, "", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
+           "(empty value will draw a real line with ncurses); "
+           "width on screen must be exactly one char"),
+        NULL, 0, 0, "", NULL, 0,
+        &config_check_separator, NULL, &config_change_buffers, NULL, NULL, NULL);
     config_look_time_format = config_file_new_option (
         weechat_config_file, ptr_section,
         "time_format", "string",

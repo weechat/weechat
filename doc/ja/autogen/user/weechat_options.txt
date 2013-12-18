@@ -829,12 +829,12 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_weechat.look.separator_horizontal]] *weechat.look.separator_horizontal*
-** 説明: `バーとウィンドウ周囲の水平セパレータの描画に使われる文字 (空の場合は ncurses の実行が描画されるが、いくつかのターミナルでは URL 選択の際にバグを生ずる可能性がある)、ワイドキャラクタは使えない`
+** 説明: `char used to draw horizontal separators around bars and windows (empty value will draw a real line with ncurses, but may cause bugs with URL selection under some terminals); width on screen must be exactly one char`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"-"`)
 
 * [[option_weechat.look.separator_vertical]] *weechat.look.separator_vertical*
-** 説明: `バーとウィンドウ周囲の垂直セパレータの描画に使われる文字 (空の場合は ncurses の実行が描画されるが、いくつかのターミナルでは URL 選択の際にバグを生ずる可能性がある)、ワイドキャラクタは使えない`
+** 説明: `char used to draw vertical separators around bars and windows (empty value will draw a real line with ncurses); width on screen must be exactly one char`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 

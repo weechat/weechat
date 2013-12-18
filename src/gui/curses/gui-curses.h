@@ -134,6 +134,10 @@ extern void gui_window_string_apply_color_set_attr (unsigned char **str,
                                                     WINDOW *window);
 extern void gui_window_string_apply_color_remove_attr (unsigned char **str,
                                                        WINDOW *window);
+extern void gui_window_hline (WINDOW *window, int x, int y, int width,
+                              const char *string);
+extern void gui_window_vline (WINDOW *window, int x, int y, int height,
+                              const char *string);
 extern void gui_window_set_title (const char *title);
 
 #endif /* __WEECHAT_GUI_CURSES_H */
