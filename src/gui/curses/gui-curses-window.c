@@ -1722,13 +1722,16 @@ gui_window_refresh_windows ()
                                 gui_window_get_height () - add_top - add_bottom,
                                 0) < 0)
     {
-        ptr_layout = gui_layout_search (GUI_LAYOUT_ZOOM);
-        if (ptr_layout)
+        if (CONFIG_BOOLEAN(config_look_window_auto_zoom))
         {
-            /* remove zoom saved, to force a new zoom */
-            gui_layout_remove (ptr_layout);
+            ptr_layout = gui_layout_search (GUI_LAYOUT_ZOOM);
+            if (ptr_layout)
+            {
+                /* remove zoom saved, to force a new zoom */
+                gui_layout_remove (ptr_layout);
+            }
+            gui_window_zoom (gui_current_window);
         }
-        gui_window_zoom (gui_current_window);
     }
 
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)

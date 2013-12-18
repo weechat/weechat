@@ -167,6 +167,7 @@ struct t_config_option *config_look_search_text_not_found_alert;
 struct t_config_option *config_look_separator_horizontal;
 struct t_config_option *config_look_separator_vertical;
 struct t_config_option *config_look_time_format;
+struct t_config_option *config_look_window_auto_zoom;
 struct t_config_option *config_look_window_separator_horizontal;
 struct t_config_option *config_look_window_separator_vertical;
 struct t_config_option *config_look_window_title;
@@ -2593,6 +2594,13 @@ config_weechat_init_options ()
         N_("time format for dates converted to strings and displayed in "
            "messages (see man strftime for date/time specifiers)"),
         NULL, 0, 0, "%a, %d %b %Y %T", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_look_window_auto_zoom = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "window_auto_zoom", "boolean",
+        N_("automatically zoom on current window if the terminal becomes too "
+           "small to display all windows (use alt-z to unzoom windows when the "
+           "terminal is big enough)"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_window_separator_horizontal = config_file_new_option (
         weechat_config_file, ptr_section,
         "window_separator_horizontal", "boolean",

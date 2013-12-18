@@ -843,6 +843,11 @@
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"%a, %d %b %Y %T"`)
 
+* [[option_weechat.look.window_auto_zoom]] *weechat.look.window_auto_zoom*
+** descrizione: `automatically zoom on current window if the terminal becomes too small to display all windows (use alt-z to unzoom windows when the terminal is big enough)`
+** tipo: bool
+** valori: on, off (valore predefinito: `off`)
+
 * [[option_weechat.look.window_separator_horizontal]] *weechat.look.window_separator_horizontal*
 ** descrizione: `mostra un separatore orizzontale tra le finestre`
 ** tipo: bool

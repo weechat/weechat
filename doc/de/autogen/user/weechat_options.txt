@@ -843,6 +843,11 @@
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%a, %d %b %Y %T"`)
 
+* [[option_weechat.look.window_auto_zoom]] *weechat.look.window_auto_zoom*
+** Beschreibung: `automatically zoom on current window if the terminal becomes too small to display all windows (use alt-z to unzoom windows when the terminal is big enough)`
+** Typ: boolesch
+** Werte: on, off (Standardwert: `off`)
+
 * [[option_weechat.look.window_separator_horizontal]] *weechat.look.window_separator_horizontal*
 ** Beschreibung: `ist die Option aktiviert dann wird eine horizontale Trennlinie zwischen Fenstern gezeichnet`
 ** Typ: boolesch

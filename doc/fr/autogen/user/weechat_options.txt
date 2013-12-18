@@ -843,6 +843,11 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"%a, %d %b %Y %T"`)
 
+* [[option_weechat.look.window_auto_zoom]] *weechat.look.window_auto_zoom*
+** description: `zoomer automatiquement la fenêtre courante si le terminal devient trop petit pour afficher les fenêtres (utilisez alt-z pour dézoomer la fenêtre quand le terminal est suffisamment grand)`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `off`)
+
 * [[option_weechat.look.window_separator_horizontal]] *weechat.look.window_separator_horizontal*
 ** description: `afficher un séparateur horizontal entre les fenêtres`
 ** type: booléen
