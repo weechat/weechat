@@ -169,7 +169,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"$nick"`)
 
 * [[option_irc.look.highlight_tags_restrict]] *irc.look.highlight_tags_restrict*
-** Beschreibung: `restrict highlights to these tags on irc buffers (to have highlight on user messages but not server messages); tags must be separated by a comma and "+" can be used to make a logical "and" between tags; tags can start or end with "*" to match more than one tag; an empty value allows highlight on any tag`
+** Beschreibung: `beschränkt Highlights für IRC Buffer auf bestimmte Tags (um Highlights durch User- aber nicht durch Servernachrichten zu erhalten); Tags müssen durch Kommata getrennt werden, um eine logische "und" Verknüpfung zu verwenden, können mehrere Tags durch "+" zusammengefügt werden; Tags können mit "*" beginnen oder enden um mehr als ein Tag zu markieren; wird kein Wert angegeben, erzeugt jedes Tag ein Highlight`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"irc_privmsg,irc_notice"`)
 
@@ -319,7 +319,7 @@
 ** Werte: 0 .. 10080 (Standardwert: `30`)
 
 * [[option_irc.look.smart_filter_mode]] *irc.look.smart_filter_mode*
-** Beschreibung: `enable smart filter for "mode" messages: "*" to filter all modes, "xyz" to filter only modes x/y/z, "-xyz" to filter all modes but not x/y/z; examples: "ovh": filter modes o/v/h, "-bkl": filter all modes but not b/k/l`
+** Beschreibung: `aktiviert einen intelligenten Filter für "mode" Nachrichten: "*" um alle Modi zu filtern,"xyz" um die Modi x/y/z zu filtern, "-xyz" um alle Modi, außer  x/y/z, zu filtern; Beispiele: "ovh": filtert die Modi o/v/h, "-bkl": filtert alle Modi, ausgenommen b/k/l`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"ovh"`)
 
@@ -354,7 +354,7 @@
 ** Werte: 0 .. 86400 (Standardwert: `1800`)
 
 * [[option_irc.network.ban_mask_default]] *irc.network.ban_mask_default*
-** Beschreibung: `default ban mask for commands /ban, /unban and /kickban; variables $nick, $user and $host are replaced by their values (extracted from "nick!user@host"); this default mask is used only if WeeChat knows the host for the nick`
+** Beschreibung: `Vorgabewert für Befehle /ban, /unban und /kickban; Variablen $nick, $user und $host werden durch den jeweiligen Wert ersetzt (extrahiert aus "nick!user@host"); diese Vorgabemaske wird nur angewendet, sofern WeeChat den Host des Nicks ermitteln kann`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"*!$user@$host"`)
 
@@ -374,7 +374,7 @@
 ** Werte: 0 .. 604800 (Standardwert: `60`)
 
 * [[option_irc.network.lag_max]] *irc.network.lag_max*
-** Beschreibung: `maximum lag (in seconds): if this lag is reached, WeeChat will consider that the answer from server (pong) will never be received and will give up counting the lag (0 = never give up)`
+** Beschreibung: `maximale Verzögerung (in Sekunden): sollte die maximale Verzögerung erreicht werden geht WeeChat davon aus, dass die Antwort (pong)  des Servers nicht mehr empfangen wird. Die Verzögerung wird dann nicht weiter gezählt (0 = es wird ewig gewartet)`
 ** Typ: integer
 ** Werte: 0 .. 604800 (Standardwert: `1800`)
 
@@ -384,7 +384,7 @@
 ** Werte: 0 .. 86400000 (Standardwert: `500`)
 
 * [[option_irc.network.lag_reconnect]] *irc.network.lag_reconnect*
-** Beschreibung: `reconnect to server if lag is greater than or equal to this value (in seconds, 0 = never reconnect); this value must be less than or equal to irc.network.lag_max`
+** Beschreibung: `erneut mit Server verbinden, falls die maximal Verzögerung (Lag) erreicht wurde (Zeit in Sekunden, 0 = keine automatische Neuverbindung, zum Server); dieser Wert muss geringer oder gleich dem Wert in irc.network.lag_max sein`
 ** Typ: integer
 ** Werte: 0 .. 604800 (Standardwert: `0`)
 
@@ -434,7 +434,7 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_irc.server_default.autojoin]] *irc.server_default.autojoin*
-** Beschreibung: `comma separated list of channels to join after connection to server (and after executing command + delay if they are set); the channels that require a key must be at beginning of the list, and all the keys must be given after the channels (separated by a space) (example: "#channel1,#channel2,#channel3 key1,key2" where #channel1 and #channel2 are protected by key1 and key2) (note: content is evaluated, see /help eval)`
+** Beschreibung: `durch Kommata getrennte Liste von Channels, die beim Verbinden mit dem Server automatisch betreten werden (nachdem die Optionen command + delay ausgeführt wurden). Channels die einen Schlüssel benötigen müssen in der Auflistung als erstes aufgeführt werden. Die Schlüssel, zu den jeweiligen Channels, werden nach den Channels aufgeführt (eine Trennung von Channels und Schlüssel erfolgt mittels einem Leerzeichen. Schlüssel werden untereinander auch durch Kommata voneinander getrennt) (Beispiel: "#channel1,#channel2,#channnel3 key1,key2", #channel1 und #channel2 sind durch jeweils einen Schlüssel, key1 und key2, geschützt) (Hinweis: Inhalt wird evaluiert, siehe /help eval)"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -474,12 +474,12 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_irc.server_default.command]] *irc.server_default.command*
-** Beschreibung: `command(s) to run after connection to server and before auto-join of channels (many commands can be separated by ";", use "\;" for a semicolon, special variables $nick, $channel and $server are replaced by their value) (note: content is evaluated, see /help eval)`
+** Beschreibung: `enthält Befehle die, nach einer Verbindung zum Server und bevor Channels betreten werden, ausgeführt werden sollen. Mehrere Befehle müssen durch ein ";" getrennt werden. Möchte man ein Semikolon nutzen muss man "\;" verwenden. Die speziellen Variablen $nick, $channel und $server werden dabei durch den jeweiligen Wert ersetzt (Hinweis: Inhalt wird evaluiert, siehe /help eval)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_irc.server_default.command_delay]] *irc.server_default.command_delay*
-** Beschreibung: `delay (in seconds) after execution of command and before auto-join of channels (example: give some time for authentication before joining channels)`
+** Beschreibung: `Wartezeit (in Sekunden) nach Ausführung des Befehls und bevor Channels automatisch betreten werden (Beispiel: es wird eine gewisse Zeit gewartet, um eine Authentifizierung zu ermöglichen)`
 ** Typ: integer
 ** Werte: 0 .. 3600 (Standardwert: `0`)
 

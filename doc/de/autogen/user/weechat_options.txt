@@ -409,7 +409,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"--"`)
 
 * [[option_weechat.look.buffer_auto_renumber]] *weechat.look.buffer_auto_renumber*
-** Beschreibung: `automatically renumber buffers to have only consecutive numbers and start with number 1; if disabled, gaps between buffer numbers are allowed and the first buffer can have a number greater than 1`
+** Beschreibung: `automatisches nummerieren von Buffern um ausschließlich eine aufeinander folgende Durchnummerierung zu besitzen, die bei 1 beginnt; ist diese Option deaktiviert sind Lücken zwischen den Buffern möglich und der erste Buffer muss nicht mit der Zahl 1 beginnen`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -419,7 +419,7 @@
 ** Werte: none, highlight, message, all (Standardwert: `all`)
 
 * [[option_weechat.look.buffer_position]] *weechat.look.buffer_position*
-** Beschreibung: `position of a new buffer: end = after the end of list (number = last number + 1) (default), first_gap = at first available number in the list (after the end of list if no number is available); this option is used only if the buffer has no layout number`
+** Beschreibung: `Position auf der ein neuer Buffer geöffnet werden soll: end = am Ende der Liste (Nummer = letzter Buffer + 1) (Standard), first_gap = erste mögliche Nummer die frei ist (wird das Ende der Liste erreicht, wird der Buffer hinten an gehangen); diese Option wird nur angewendet sofern dem Buffer keine Position, durch Layout, zugeordnet wurde`
 ** Typ: integer
 ** Werte: end, first_gap (Standardwert: `end`)
 
@@ -544,7 +544,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_weechat.look.highlight_tags]] *weechat.look.highlight_tags*
-** Beschreibung: `comma separated list of tags to highlight; case insensitive comparison; each tag can start or end with "*" to match more than one tag; many tags can be separated by "+" to make a logical "and" between tags; examples: "nick_flashcode" for messages from nick "FlashCode", "irc_notice+nick_toto*" for notices from a nick starting with "toto"`
+** Beschreibung: `eine durch Kommata getrennte Liste von Tags, die eine highlight-Nachricht erzeugen; Groß- und Kleinschreibung wird dabei nicht beachtet; Tags können mit "*" beginnen oder enden um mehr als ein Tag zu markieren. Um eine logische "und" Verknüpfung zu verwenden, können mehrere Tags durch "+" zusammengefügt werden. Beispiele: "nick_flashcode" für Nachrichten von "FlashCode", "irc_notice+nick_toto*" für Notice-Nachrichten von Nicks, die mit "toto" beginnen`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -829,12 +829,12 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.look.separator_horizontal]] *weechat.look.separator_horizontal*
-** Beschreibung: `char used to draw horizontal separators around bars and windows (empty value will draw a real line with ncurses, but may cause bugs with URL selection under some terminals); width on screen must be exactly one char`
+** Beschreibung: `das angegebene Zeichen wird verwendet um die horizontalen Linien zu zeichnen. Wird kein Zeichen angegeben, dann zeichnet ncurses eine durchgängige Linie. Dies kann allerdings bei einigen Terminals zu Problemen führen, falls die URL Auswahl genutzt wird. Die Schriftbreite muss exakt ein Zeichen betragen`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"-"`)
 
 * [[option_weechat.look.separator_vertical]] *weechat.look.separator_vertical*
-** Beschreibung: `char used to draw vertical separators around bars and windows (empty value will draw a real line with ncurses); width on screen must be exactly one char`
+** Beschreibung: `das angegebene Zeichen wird verwendet um die vertikale Linien zu zeichnen. Wird kein Zeichen angegeben, dann zeichnet ncurses eine durchgängige Linie. Die Schriftbreite muss exakt ein Zeichen betragen`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -844,7 +844,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"%a, %d %b %Y %T"`)
 
 * [[option_weechat.look.window_auto_zoom]] *weechat.look.window_auto_zoom*
-** Beschreibung: `automatically zoom on current window if the terminal becomes too small to display all windows (use alt-z to unzoom windows when the terminal is big enough)`
+** Beschreibung: `automatischer Zoom für aktuelles Fenster, sobald das Terminalfenster zu klein wird um alle Fenster darstellen zu können (mit der Tastenkombination alt-z kann der Zoom rückgängig gemacht werden, sobald das Terminal wieder groß genug ist)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 

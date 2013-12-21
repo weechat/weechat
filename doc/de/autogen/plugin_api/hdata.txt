@@ -554,7 +554,7 @@
 *** 'gui_buffer_last_displayed'
 *** 'gui_buffers'
 *** 'last_gui_buffer'
-* 'buffer_visited': visited buffer
+* 'buffer_visited': besuchte Buffer
 ** Erweiterung: weechat
 ** Variablen:
 *** 'buffer' (pointer, hdata: "buffer")
