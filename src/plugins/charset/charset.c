@@ -217,8 +217,8 @@ charset_config_init ()
            "internal charset)"),
         NULL, 0, 0,
         (charset_terminal && charset_internal
-         && (strcasecmp (charset_terminal,
-                         charset_internal) != 0)) ?
+         && (weechat_strcasecmp (charset_terminal,
+                                 charset_internal) != 0)) ?
         charset_terminal : "iso-8859-1", NULL, 0,
         &charset_check_charset_decode_cb, NULL, NULL, NULL, NULL, NULL);
     charset_default_encode = weechat_config_new_option (
