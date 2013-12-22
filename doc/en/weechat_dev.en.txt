@@ -322,6 +322,8 @@ Translations for WeeChat and plugins are done with gettext, files are in 'po/' d
 [source,C]
 ----
 /*
+ * weechat.c - core functions for WeeChat
+ *
  * Copyright (C) 2013 Your Name <your@email.com>
  *
  * This file is part of WeeChat, the extensible chat client.
@@ -338,10 +340,6 @@ Translations for WeeChat and plugins are done with gettext, files are in 'po/' d
  *
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-/*
- * weechat.c: core functions for WeeChat
  */
 ----
 
