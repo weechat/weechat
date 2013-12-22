@@ -230,7 +230,7 @@ irc_raw_message_add (struct t_irc_server *server, int flags,
     struct t_irc_raw_message *new_raw_message;
 
     buf = weechat_iconv_to_internal (NULL, message);
-    buf2 = malloc ((strlen (buf) * 3) + 1);
+    buf2 = malloc ((strlen (buf) * 4) + 1);
     if (buf2)
     {
         ptr_buf = (buf) ? (unsigned char *)buf : (unsigned char *)message;
@@ -241,6 +241,7 @@ irc_raw_message_add (struct t_irc_server *server, int flags,
             if (ptr_buf[pos_buf] < 32)
             {
                 buf2[pos_buf2++] = '\\';
+                buf2[pos_buf2++] = 'x';
                 buf2[pos_buf2++] = hexa[ptr_buf[pos_buf] / 16];
                 buf2[pos_buf2++] = hexa[ptr_buf[pos_buf] % 16];
                 pos_buf++;
