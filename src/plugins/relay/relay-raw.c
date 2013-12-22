@@ -282,7 +282,7 @@ relay_raw_message_add (struct t_relay_client *client, int flags,
             buf = buf2;
             buf2 = NULL;
         }
-        buf2 = malloc ((strlen (buf) * 3) + 1);
+        buf2 = malloc ((strlen (buf) * 4) + 1);
         if (buf2)
         {
             ptr_buf = (buf) ? (unsigned char *)buf : (unsigned char *)data;
@@ -293,6 +293,7 @@ relay_raw_message_add (struct t_relay_client *client, int flags,
                 if ((ptr_buf[pos_buf] < 32) && (ptr_buf[pos_buf] != '\n'))
                 {
                     buf2[pos_buf2++] = '\\';
+                    buf2[pos_buf2++] = 'x';
                     buf2[pos_buf2++] = hexa[ptr_buf[pos_buf] / 16];
                     buf2[pos_buf2++] = hexa[ptr_buf[pos_buf] % 16];
                     pos_buf++;
