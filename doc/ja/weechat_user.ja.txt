@@ -1326,11 +1326,11 @@ WeeChat ではバーやチャットエリアにおけるテキスト表示に 25
 
 [width="50%",cols="8,>2,>2",options="header"]
 |===
-| $TERM                                 | 色     | ペア ^(1)^
-| "rxvt-unicode", "xterm",...           |     88 |         256
-| "rxvt-256color", "xterm-256color",... |    256 |       32767
-| "screen"                              |      8 |          64
-| "screen-256color"                     |    256 |       32767
+| $TERM                                  | 色     | ペア ^(1)^
+| "rxvt-unicode", "xterm", ...           |     88 |         256
+| "rxvt-256color", "xterm-256color", ... |    256 |       32767
+| "screen"                               |      8 |          64
+| "screen-256color"                      |    256 |       32767
 |===
 
 [NOTE]

@@ -1327,11 +1327,11 @@ limity dla kolorów w WeeChat:
 
 [width="50%",cols="8,>2,>2",options="header"]
 |===
-| $TERM                                 | Kolory | Pary ^(1)^
-| "rxvt-unicode", "xterm",...           |     88 |        256
-| "rxvt-256color", "xterm-256color",... |    256 |      32767
-| "screen"                              |      8 |         64
-| "screen-256color"                     |    256 |      32767
+| $TERM                                  | Kolory | Pary ^(1)^
+| "rxvt-unicode", "xterm", ...           |     88 |        256
+| "rxvt-256color", "xterm-256color", ... |    256 |      32767
+| "screen"                               |      8 |         64
+| "screen-256color"                      |    256 |      32767
 |===
 
 [NOTE]
@@ -1344,7 +1344,7 @@ wyświetlić limity dla twojego środowiska.
 Niektóre z zalecanych wartości dla 'TERM' jeśli chcesz używać 256 kolorów:
 
 * dla screena: 'screen-256color'
-* bez screena: 'xterm-256color', 'rxvt-256color', 'putty-256color',...
+* bez screena: 'xterm-256color', 'rxvt-256color', 'putty-256color', ...
 
 [NOTE]
 Być może konieczne jest zainstalowanie pakietu "ncurses-term", w celu użycia
