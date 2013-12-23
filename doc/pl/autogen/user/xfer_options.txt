@@ -1,0 +1,135 @@
+* [[option_xfer.color.status_aborted]] *xfer.color.status_aborted*
+** opis: `kolor statusu "aborted"`
+** typ: kolor
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `lightred`)
+
+* [[option_xfer.color.status_active]] *xfer.color.status_active*
+** opis: `kolor statusu "active"`
+** typ: kolor
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `lightblue`)
+
+* [[option_xfer.color.status_connecting]] *xfer.color.status_connecting*
+** opis: `kolor statusu "connecting"`
+** typ: kolor
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `yellow`)
+
+* [[option_xfer.color.status_done]] *xfer.color.status_done*
+** opis: `kolor statusu "done"`
+** typ: kolor
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `lightgreen`)
+
+* [[option_xfer.color.status_failed]] *xfer.color.status_failed*
+** opis: `kolor statusu "failed"`
+** typ: kolor
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `lightred`)
+
+* [[option_xfer.color.status_waiting]] *xfer.color.status_waiting*
+** opis: `kolor statusu "waiting"`
+** typ: kolor
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `lightcyan`)
+
+* [[option_xfer.color.text]] *xfer.color.text*
+** opis: `kolor tekstu w buforze xfer`
+** typ: kolor
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `default`)
+
+* [[option_xfer.color.text_bg]] *xfer.color.text_bg*
+** opis: `kolor tła w buforze xfer`
+** typ: kolor
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `default`)
+
+* [[option_xfer.color.text_selected]] *xfer.color.text_selected*
+** opis: `kolor tekstu zaznaczonej linii w buforze xfer`
+** typ: kolor
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie (domyślna wartość: `white`)
+
+* [[option_xfer.file.auto_accept_chats]] *xfer.file.auto_accept_chats*
+** opis: `automatycznie akceptuj prośby o rozmowę (ostrożnie!)`
+** typ: bool
+** wartości: on, off (domyślna wartość: `off`)
+
+* [[option_xfer.file.auto_accept_files]] *xfer.file.auto_accept_files*
+** opis: `automatycznie akceptuj pliki przychodzące (ostrożnie!)`
+** typ: bool
+** wartości: on, off (domyślna wartość: `off`)
+
+* [[option_xfer.file.auto_accept_nicks]] *xfer.file.auto_accept_nicks*
+** opis: `oddzielona przecinkami lista nicków, od których przychodzące pliki i rozmowy są automatycznie akceptowane; format to "serwer.nick" (dla konkretnego serwera) lub "nick" (dla wszystkich serwerów; przykład "freenode.FlashCode,andrew"`
+** typ: ciąg
+** wartości: dowolny ciąg (domyślna wartość: `""`)
+
+* [[option_xfer.file.auto_rename]] *xfer.file.auto_rename*
+** opis: `zmień nazwę pliku przychodzącego jeśli juz istnieje (dodaj ".1", ".2", ...)`
+** typ: bool
+** wartości: on, off (domyślna wartość: `on`)
+
+* [[option_xfer.file.auto_resume]] *xfer.file.auto_resume*
+** opis: `automatycznie wznów przesył po utracie połączenia`
+** typ: bool
+** wartości: on, off (domyślna wartość: `on`)
+
+* [[option_xfer.file.convert_spaces]] *xfer.file.convert_spaces*
+** opis: `zamień spacje na podkreślenia wysyłając plik`
+** typ: bool
+** wartości: on, off (domyślna wartość: `on`)
+
+* [[option_xfer.file.download_path]] *xfer.file.download_path*
+** opis: `ścieżka do zapisywania pobieranych plików ("%h" zostanie zastąpione katalogiem domowym WeeChat - domyślnie "~/.weechat")`
+** typ: ciąg
+** wartości: dowolny ciąg (domyślna wartość: `"%h/xfer"`)
+
+* [[option_xfer.file.upload_path]] *xfer.file.upload_path*
+** opis: `ścieżka dla odczytu plików podczas wysyłania (jeśli nie zostanie podana przez użytkownika) ("%h" zostanie zastąpione katalogiem domowym WeeChat - domyślnie "~/.weechat")`
+** typ: ciąg
+** wartości: dowolny ciąg (domyślna wartość: `"~"`)
+
+* [[option_xfer.file.use_nick_in_filename]] *xfer.file.use_nick_in_filename*
+** opis: `użyj nicku nadawcy jako przedrostka w nazwie odebranego pliku`
+** typ: bool
+** wartości: on, off (domyślna wartość: `on`)
+
+* [[option_xfer.look.auto_open_buffer]] *xfer.look.auto_open_buffer*
+** opis: `automatycznie otwieraj bufor xfer, kiedy nowy xfer zostanie dodany do listy`
+** typ: bool
+** wartości: on, off (domyślna wartość: `on`)
+
+* [[option_xfer.look.progress_bar_size]] *xfer.look.progress_bar_size*
+** opis: `rozmiar paska postępu, w znakach (jeśli 0 pasek postępu zostanie wyłączony)`
+** typ: liczba
+** wartości: 0 .. 256 (domyślna wartość: `20`)
+
+* [[option_xfer.look.pv_tags]] *xfer.look.pv_tags*
+** opis: `oddzielona przecinkami lista tagów użytych w prywatnych wiadomościach na przykład:  "notify_message", "notify_private" or "notify_highlight"`
+** typ: ciąg
+** wartości: dowolny ciąg (domyślna wartość: `"notify_private"`)
+
+* [[option_xfer.network.blocksize]] *xfer.network.blocksize*
+** opis: `rozmiar bloku dla wysyłanych pakietów, w bajtach`
+** typ: liczba
+** wartości: 1024 .. 102400 (domyślna wartość: `65536`)
+
+* [[option_xfer.network.fast_send]] *xfer.network.fast_send*
+** opis: `nie czeka na potwierdzenie podczas wysyłania pliku`
+** typ: bool
+** wartości: on, off (domyślna wartość: `on`)
+
+* [[option_xfer.network.own_ip]] *xfer.network.own_ip*
+** opis: `adres IP lub DNS użyty do wysłania pliku/rozmowy (jeśli pusty zostanie użyty adres IP lokalnego interfejsu)`
+** typ: ciąg
+** wartości: dowolny ciąg (domyślna wartość: `""`)
+
+* [[option_xfer.network.port_range]] *xfer.network.port_range*
+** opis: `ogranicza wychodzące pliki/rozmowy do używania tylko portów w podanym zakresie (przydatne dla NAT) (składnia: pojedynczy port, np. 5000 lub zakres portów, np. 5000-5015, pusta wartość oznacza dowolny port, zaleca się stosowanie portów powyżej 1024, ponieważ niższe porty mogą być użyte tylko przez roota)`
+** typ: ciąg
+** wartości: dowolny ciąg (domyślna wartość: `""`)
+
+* [[option_xfer.network.speed_limit]] *xfer.network.speed_limit*
+** opis: `limit prędkości wysyłania plików, w kilobajtach na sekundę (0 oznacza brak limitu)`
+** typ: liczba
+** wartości: 0 .. 2147483647 (domyślna wartość: `0`)
+
+* [[option_xfer.network.timeout]] *xfer.network.timeout*
+** opis: `czas oczekiwania na żądanie xfer (w sekundach)`
+** typ: liczba
+** wartości: 5 .. 2147483647 (domyślna wartość: `300`)
+

@@ -1,0 +1,865 @@
+[[command_irc_admin]]
+[command]*`admin`* wyszukuje informacje o administratorze serwera::
+
+----
+/admin  [<cel>]
+
+cel: serwer
+----
+
+[[command_irc_allchan]]
+[command]*`allchan`* wykonuje komendę na wszystkich kanałach na połączonych serwerach::
+
+----
+/allchan  [-current] [-exclude=<kanał>[,<kanał>...]] <komenda> [<argumenty>]
+
+ -current: wykonuje komendę tylko na kanałach obecnego serwera
+ -exclude: wyklucza niektóre kanały ('*' jest dozwolone na początku lub końcu nazwy kanału, aby wykluczyć wiele kanałów)
+  komenda: komenda do wykonania
+argumenty: argumenty dla komendy (specjalne zmienne $nick, $channel i $server są zamieniane na odpowiednie wartości)
+
+Przykłady:
+  wykonuje '/me testuje' na wszystkich kanałach:
+    /allchan me testuje
+  mówi 'witam' wszędzie tylko nie na #weechat:
+    /allchan -exclude=#weechat msg * witam
+  mówi 'witam' wszędzie poza #weechat oraz kanałami zaczynającymi się od #linux:
+    /allchan -exclude=#weechat,#linux* msg * witam
+----
+
+[[command_irc_allserv]]
+[command]*`allserv`* wykonuje komendę na wszystkich połączonych serwerach::
+
+----
+/allserv  [-exclude=<serwer>[,<serwer>...]] <komenda> [<argumenty>]
+
+ -exclude: wyklucza niektóre serwery ('*' jest dozwolone na początku lub końcu nazwy, w celu wykluczenia wielu serwerów)
+  komenda: komenda do wykonania
+argumenty: argumenty dla komendy (specjalne zmienne $nick, $channel i $server są zamieniane na odpowiednie wartości)
+
+Przykłady:
+  zmienia nick na wszystkich serwerach:
+    /allserv nick nowy_nick
+  ustawia stan nieobecności na wszystkich serwerach:
+    /allserv away Jestem nieobecny
+  wykonuje whois na własnym nicku na wszystkich serwerach:
+    /allserv whois $nick
+----
+
+[[command_irc_ban]]
+[command]*`ban`* banuje nick albo host::
+
+----
+/ban  [<kanał>] [<nick> [<nick>...]]
+
+kanał: kanał, na którym dajemy bana
+   nick: użytkownik lub host do zbanowania
+
+Bez podania argumentu komenda wyświetla listę banów na obecnym kanale.
+----
+
+[[command_irc_connect]]
+[command]*`connect`* łączy się z serwerem(ami) IRC::
+
+----
+/connect  [<serwer> [<serwer>...] [-<opcja>[=<wartość>]] [-no<opcja>] [-nojoin] [-switch]
+          -all|-auto|-open [-nojoin] [-switch]
+
+    serwer: nazwa serwera, może nią być:
+            - wewnętrzna nazwa serwera (tworzona przez /server add, zalecane użycie)
+            - nazwa hosta/port lub IP/port (stworzy to TYMCZASOWY serwer), domyślny port to 6667
+            - URL o formacie: irc[6][s]://[nick[:hasło]@]irc.example.org[:port][/#kanał1][,#kanał2[...]]
+    opcja: ustawia opcję dla serwera (dla opcji boolowskich można pominąć wartość)
+  nooption: ustawia opcje boolowskie na 'off' (na przykład: -nossl)
+      -all: łączy się ze wszystkimi serwerami zdefiniowanymi w konfiguracji
+     -auto: łączy się z serwerami z włączonym automatycznym połączeniem
+     -open: łączy się ze wszystkimi otwartymi ale nie połączonymi serwerami
+   -nojoin: nie wchodź na żaden kanał (nawet jeśli autojoin jest włączony dla tego serwera)
+   -switch: przełącza adres serwera na kolejny
+
+W celu rozłączenia z serwerem lub przerwania próby połączenia, użyj komendy /disconnect.
+
+Przykłady:
+  /connect freenode
+  /connect irc.oftc.net/6667
+  /connect irc6.oftc.net/6667 -ipv6
+  /connect irc6.oftc.net/6697 -ipv6 -ssl
+  /connect my.server.org/6697 -ssl -password=test
+  /connect irc://nick@irc.oftc.net/#kanał
+  /connect -switch
+----
+
+[[command_irc_ctcp]]
+[command]*`ctcp`* wyślij wiadomość CTCP (protokół klient-klient)::
+
+----
+/ctcp  <cel> <typ> [<argumenty>]
+
+ cel: nick albo kanał, na który wysłać CTCP
+     typ: typ CTCP (przykłady: "version", "ping", ..)
+argumenty: argumenty dla CTCP
+----
+
+[[command_irc_cycle]]
+[command]*`cycle`* wyjdź i wejdź ponownie na kanał::
+
+----
+/cycle  [<kanał>[,<kanał>...]] [<wiadomość>]
+
+kanał: nazwa kanału
+wiadomość: wiadomość (pokazywana innym użytkownikom)
+----
+
+[[command_irc_dcc]]
+[command]*`dcc`* rozpoczyna DCC (przesył pliku lub rozmowę)::
+
+----
+/dcc  chat <nick>
+      send <nick> <plik>
+
+nick: osoba, do której wysyłamy plik lub chcemy rozpocząć rozmowę
+plik: nazwa pliku (na lokalnym hoście)
+
+Przykłady:
+  rozmowa z użytkownikiem "toto":
+    /dcc chat toto
+  wyśle plik "/home/foo/bar.txt" użytkownikowi "toto":
+    /dcc send toto /home/foo/bar.txt
+----
+
+[[command_irc_dehalfop]]
+[command]*`dehalfop`* usuwa status halfopa kanału::
+
+----
+/dehalfop  <nick> [<nick>...]
+
+nick: nick lub maska (może zaczynać się lub kończyć "*")
+   *: zabiera status pół-operatora kanału wszystkim na kanale poza tobą
+----
+
+[[command_irc_deop]]
+[command]*`deop`* usuwa status operatora kanału::
+
+----
+/deop  <nick> [<nick>...]
+       * -yes
+
+nick: nick lub maska (może zaczynać się lub kończyć "*")
+   *: zabiera status operatora kanału wszystkim na kanale poza tobą
+----
+
+[[command_irc_devoice]]
+[command]*`devoice`* usuwa flagę voice::
+
+----
+/devoice  <nick> [<nick>...]
+          * -yes
+
+nick: nick lub maska (może zaczynać się lub kończyć "*")
+   *: odbiera głos wszystkim na kanale
+----
+
+[[command_irc_die]]
+[command]*`die`* wyłącza serwer::
+
+----
+/die  [<cel>]
+
+cel: nazwa serwera
+----
+
+[[command_irc_disconnect]]
+[command]*`disconnect`* rozłącza się z jednym lub wszystkimi serwerami IRC::
+
+----
+/disconnect  [<serwer>|-all|-pending [<powód>]]
+
+  serwer: nazwa serwera do rozłączenia
+    -all: rozłącza się ze wszystkimi serwerami
+-pending: anuluje automatyczne łączenie dla serwerów ponownie łączących się
+  powód: powód rozłączenia
+----
+
+[[command_irc_halfop]]
+[command]*`halfop`* nadaje status halfopa nickowi(m)::
+
+----
+/halfop  <nick> [<nick>...]
+         * -yes
+
+nick: nick lub maska (może zaczynać się lub kończyć "*")
+   *: nadaje status pół-operatora kanału wszystkim na kanale poza tobą
+----
+
+[[command_irc_ignore]]
+[command]*`ignore`* ignoruje nicki/hosty z serwera lub kanałów::
+
+----
+/ignore  list
+         add [re:]<nick> [<serwer> [<kanał>]]
+         del <numer>|-all
+
+     list: wyświetla wszystkie ignory
+      add: dodaje nową osobę do ignorowania
+     nick: nick lub host (jeśli dodamy "re:" można użyć wyrażenie regularne lub maska używając "*", aby zastąpić jeden lub więcej znaków)
+      del: usuwa wpis o ignorowanej osobie
+   numer: numer wpisu do usunięcia (znajduję się na liście)
+     -all: usuwa wszystkie wpisy z listy ignorowanych
+   serwer: wewnętrzna nazwa serwera, na którym dana osoba ma być ignorowana
+  kanał: nazwa kanału, na którym dana osoba ma być ignorowana
+
+Uwaga: wyrażenie regularne może zaczynać się od "(?-i)" jeśli wielkość znaków ma mieć znaczenie.
+
+Przykłady:
+  ignoruje wszędzie nick "toto":
+    /ignore add toto
+  ignoruje host "toto@domain.com" na serwerze freenode:
+    /ignore add toto@domain.com freenode
+  ignoruje host "toto*@*.domain.com" na freenode/#weechat:
+    /ignore add toto*@*.domain.com freenode #weechat
+----
+
+[[command_irc_info]]
+[command]*`info`* pobiera informacje opisujące serwer::
+
+----
+/info  [<cel>]
+
+cel: nazwa serwera
+----
+
+[[command_irc_invite]]
+[command]*`invite`* zaprasza użytkownika na kanał::
+
+----
+/invite  <nick> [<nick>...] [<kanał>]
+
+   nick: nick do zaproszenia
+kanał: kanał na który zapraszamy
+----
+
+[[command_irc_ison]]
+[command]*`ison`* sprawdza czy użytkownik jest obecnie na IRC::
+
+----
+/ison  <nick> [<nick>...]
+
+nick: nazwa użytkownika
+----
+
+[[command_irc_join]]
+[command]*`join`* wchodzi na kanał::
+
+----
+/join  [-noswitch] [-server <serwer>] [<kanał1>[,<kanał2>...]] [<hasło1>[,<hasło2>...]]
+
+-noswitch: nie przełączaj się na nowy bufor
+   serwer: wyślij to do tego serwera (wewnętrzna nazwa)
+  kanał: nazwa kanału
+      hasło: hasło do wejścia na kanał (kanały z hasłami muszą być na początku listy)
+
+Przykłady:
+  /join #weechat
+  /join #tajnykanał,#weechat klucz
+  /join -server freenode #weechat
+  /join -noswitch #weechat
+----
+
+[[command_irc_kick]]
+[command]*`kick`* siłowo usuwa użytkownika z kanału::
+
+----
+/kick  [<kanał>] <nick> [<powód>]
+
+kanał: kanał, na którym znajduje się użytkownik
+   nick: osoba do wykopania
+ powód: powód wykopania (specjalne zmienne jak $nick, $channel i $server są podmieniane na odpowiednie wartości)
+----
+
+[[command_irc_kickban]]
+[command]*`kickban`* wykopuje i banuje użytkownika na kanale::
+
+----
+/kickban  [<kanał>] <nick> [<powód>]
+
+kanał: kanał, na którym jest użytkownik
+   nick: nick do wykopania i zbanowania
+ powód: powód do wykopania (specjalne zmienne jak $nick, $channel i $server są podmieniane na odpowiednie wartości)
+
+Możliwe jest kopanie/banowanie za pomocą maski, nick zostanie wyciągnięty z maski i zastąpiony "*".
+
+Przykład:
+  zbanuje "*!*@host.com", następnie wykopie "toto":
+    /kickban toto!*@host.com
+----
+
+[[command_irc_kill]]
+[command]*`kill`* zamyka połączenie klient-serwer::
+
+----
+/kill  <nick> <powód>
+
+  nick: nick do zabicia
+powód: powód do zabicia
+----
+
+[[command_irc_links]]
+[command]*`links`* wyświetla wszystkie nazwy serwerów, które są połączone z tym samym serwerem co my::
+
+----
+/links  [[<serwer>] <maska_serwera>]
+
+     serwer: ten serwer powinien odpowiedzieć na zapytanie
+maska: lista serwerów musi pasować do maski
+----
+
+[[command_irc_list]]
+[command]*`list`* wyświetla kanały i ich tematy::
+
+----
+/list  [<kanał>[,<kanał>...]] [<serwer>] [-re <regex>]
+
+kanał: kanał do listowania
+ serwer: nazwa serwera
+  regexp: wyrażenie regularne użyte do filtrowania wyników (wielkość znaków nie ma znaczenia, jeśli poprzedzone "(?-i)" to wielkość znaków ma znaczenie)
+
+Przykłady:
+  wyświetla wszystkie kanały na serwerze (może być bardzo wolny w dużych sieciach):
+    /list
+  wyświetla kanał #weechat:
+    /list #weechat
+  wyświetla wszystkie kanały zaczynające się od "#weechat" (może być bardzo wolny w dużych sieciach):
+    /list -re #weechat.*
+----
+
+[[command_irc_lusers]]
+[command]*`lusers`* pobiera statystyki o wielkości sieci IRC::
+
+----
+/lusers  [<maska> [<cel>]]
+
+  maska: tylko serwery pasujące do maski
+cel: serwer, do którego ma być przesłane żądanie
+----
+
+[[command_irc_map]]
+[command]*`map`* pokazuje graficzną mapę sieci IRC::
+
+----
+----
+
+[[command_irc_me]]
+[command]*`me`* wysyła akcję CTCP na aktualny kanał::
+
+----
+/me  <wiadomość>
+
+wiadomość: wiadomość do wysłania
+----
+
+[[command_irc_mode]]
+[command]*`mode`* zmień ustawienia kanału lub użytkownika::
+
+----
+/mode  [<kanał>] +|-]o|p|s|i|t|n|m|l|b|e|v|k [<argumenty>]
+       <nick> [+|-]i|s|w|o
+
+atrybuty kanału:
+  kanał: nazwa kanału do modyfikacji (domyślnie aktualny kanał)
+  o: daje/zabiera przywileje operatora kanału
+  p: flaga prywatności kanału
+  s: flaga kanału sekretnego
+  i: kanał tylko dla zaproszonych
+  t: temat ustawiany tylko przez operatorów
+  n: żadnych wiadomości z poza kanału
+  m: kanał moderowany
+  l: ustawia limit ilości osób na kanale
+  b: ustawia maskę bana
+  e: ustawia maski wyjątków
+  v: daje/zabiera możliwość rozmowy na kanale moderowanym
+  k: ustawia klucz kanału (hasło)
+atrybuty użytkownika:
+  nick: nazwa użytkownika do modyfikacji
+  i: użytkownik niewidoczny
+  s: użytkownik może otrzymywać informację od serwera
+  w: użytkownik otrzymuje wallopy
+  o: flaga operatora
+
+Lista atrybutów nie jest ogólna, należy zawsze przeczytać dokumentację na temat danego serwera aby poznać dostępne atrybuty.
+
+Przykład:
+  chroni temat kanału #weechat:
+    /mode #weechat +t
+  staje się niewidoczny na serwerze:
+    /mode nick +i
+----
+
+[[command_irc_motd]]
+[command]*`motd`* pobierz "Wiadomość Dnia" (motd)::
+
+----
+/motd  [<cel>]
+
+cel: nazwa serwera
+----
+
+[[command_irc_msg]]
+[command]*`msg`* wysyła wiadomość do użytkownika albo kanału::
+
+----
+/msg  [-server <serwer>] <cel>[,<cel>...] <tekst>
+
+serwer: wyślij do tego serwera (nazwa wewnętrzna)
+cel: nick lub kanał (może być maska, '*' = aktualny kanał)
+  tekst: wiadomość do wysłania
+----
+
+[[command_irc_names]]
+[command]*`names`* wyświetla nazwy użytkowników na kanałach::
+
+----
+/names  [<kanał>[,<kanał>...]]
+
+kanał: nazwa kanału
+----
+
+[[command_irc_nick]]
+[command]*`nick`* zmienia obecną nazwę użytkownika::
+
+----
+/nick  [-all] <nick>
+
+-all: ustaw nową nazwę użytkownika na wszystkich serwerach
+nick: nowy nick
+----
+
+[[command_irc_notice]]
+[command]*`notice`* wysyła powiadomienie do użytkownika::
+
+----
+/notice  [-server <serwer>] <cel> <tekst>
+
+serwer: wyślij do tego serwera (nazwa wewnętrzna)
+cel: nick lub kanał
+  tekst: wiadomość do wysłania
+----
+
+[[command_irc_notify]]
+[command]*`notify`* dodaje powiadomienie o obecności lub statusie nieobecności nicków na serwerze::
+
+----
+/notify  add <nick> [<serwer> [-away]]
+         del <nick>|-all [<serwer>]
+
+   add: dodaje powiadomienie
+  nick: nazwa użytkownika
+serwer: wewnętrzna nazwa serwera (domyślnie obecny serwer)
+ -away: powiadom o zmianie powodu nieobecności (poprzez wykonanie whois na nicku)
+   del: usuwa powiadomienie
+  -all: usuwa wszystkie powiadomienia
+
+Bez argumentu, komenda wyświetla powiadomienia dla obecnego serwera (lub wszystkich serwerów, jeśli komendy użyto w głównym buforze).
+
+Przykłady:
+  powiadom, kiedy "toto" wejdzie/wyjdzie z obecnego serwera:
+    /notify add toto
+  powiadom, kiedy "toto" wejdzie/wyjdzie z serwera freenode:
+    /notify add toto freenode
+  powiadom, kiedy "toto" jest niedostępny lub powróci na serwerze freenode:
+    /notify add toto freenode -away
+----
+
+[[command_irc_op]]
+[command]*`op`* nadaje uprawienia operatora kanału::
+
+----
+/op  <nick> [<nick>...]
+     * -yes
+
+nick: nick lub maska (może zaczynać się lub kończyć "*")
+   *: nadaje status operatora kanału wszystkim na kanale poza tobą
+----
+
+[[command_irc_oper]]
+[command]*`oper`* uzyskaj uprawnienia operatora::
+
+----
+/oper  <użytkownik> <hasło>
+
+    użytkownik: użytkownik
+hasło: hasło
+----
+
+[[command_irc_part]]
+[command]*`part`* opuszcza kanał::
+
+----
+/part  [<kanał>[,<kanał>...]] [<wiadomość>]
+
+kanał: nazwa kanału do opuszczenia
+wiadomość: wiadomość pożegnalna (pokazywana innym użytkownikom)
+----
+
+[[command_irc_ping]]
+[command]*`ping`* wyślij ping do serwera::
+
+----
+/ping  <serwer1> [<serwer2>]
+
+serwer1: serwer
+serwer2: przekieruj ping do tego serwera
+----
+
+[[command_irc_pong]]
+[command]*`pong`* odpowiedz na ping::
+
+----
+/pong  <demon> [<demon2>]
+
+ demon: demon, który odpowiedział na ping
+demon2: prześlij do tego demona
+----
+
+[[command_irc_query]]
+[command]*`query`* wysyła prywatną wiadomość do użytkownika::
+
+----
+/query  [-server <serwer>] <nick>[,<nick>...] [<tekst>]
+
+serwer: wyślij do tego serwera (nazwa wewnętrzna)
+  nick: nazwa użytkownika, z którym chcemy rozpocząć prywatną rozmowę
+  tekst: wiadomość do wysłania
+----
+
+[[command_irc_quiet]]
+[command]*`quiet`* ucisza nicki albo hosty::
+
+----
+/quiet  [<kanał>] [<nick> [<nick>...]]
+
+kanał: kanał, na którym uciszamy
+   nick: nazwa użytkownika lub host do uciszenia
+
+Bez podania argumentu komenda wyświetla listę uciszeń na obecnym kanale.
+----
+
+[[command_irc_quote]]
+[command]*`quote`* wyślij nieprzetworzone dane do serwera bez prasowania::
+
+----
+/quote  [-server <serwer>] <dane>
+
+serwer: wyślij do tego serwera (nazwa wewnętrzna)
+  dane: nieprzetworzone dane do wysłania
+----
+
+[[command_irc_reconnect]]
+[command]*`reconnect`* ponownie połącz się z serwerem(ami)::
+
+----
+/reconnect  <serwer> [<serwer>...] [-nojoin] [-switch]
+            -all [-nojoin] [-switch]
+
+ serwer: nazwa serwera do ponownego połączenia
+   -all: ponownie łączy się ze wszystkimi serwerami
+-nojoin: nie wchodź na żadne kanały (nawet jeśli są zdefiniowane kanały do automatycznego wejścia dla serwera)
+-switch: przełącza na kolejny adres serwera
+----
+
+[[command_irc_rehash]]
+[command]*`rehash`* mówi serwerowi, żeby przeładował pliki konfiguracyjne::
+
+----
+/rehash  [<opcja>]
+
+opcje: dodatkowe opcje, dla niektórych serwerów
+----
+
+[[command_irc_restart]]
+[command]*`restart`* mówi serwerowi, aby się ponownie uruchomił::
+
+----
+/restart  [<cel>]
+
+cel: nazwa serwera
+----
+
+[[command_irc_sajoin]]
+[command]*`sajoin`* zmusza użytkownika do wejścia na kanał(y)::
+
+----
+/sajoin  <nick> <kanał>[,<kanał>...]
+
+   nick: nick
+kanał: nazwa kanału
+----
+
+[[command_irc_samode]]
+[command]*`samode`* zmienia atrybuty kanału, bez posiadania statusu operatora::
+
+----
+/samode  <kanał> <atrybuty>
+
+kanał: nazwa kanału
+   atrybuty: atrybuty kanału
+----
+
+[[command_irc_sanick]]
+[command]*`sanick`* zmusza użytkownika do użycia innego nicku::
+
+----
+/sanick  <nick> <nowy_nick>
+
+    nick: nick
+nowy_nick: nowy nick
+----
+
+[[command_irc_sapart]]
+[command]*`sapart`* zmusza użytkownika do opuszczenia kanału(ów)::
+
+----
+/sapart  <nick> <kanał>[,<kanał>...]
+
+   nick: nick
+kanał: nazwa kanału
+----
+
+[[command_irc_saquit]]
+[command]*`saquit`* zmusza użytkownika do opuszczenia serwera z powodem::
+
+----
+/saquit  <nick> <powód>
+
+  nick: nick
+powód: powód
+----
+
+[[command_irc_server]]
+[command]*`server`* wyświetla, dodaje lub usuwa serwery IRC::
+
+----
+/server  list|listfull [<serwer>]
+         add <serwera> <host>[/<port>] [-temp] [-<opcja>[=<wartość>]] [-no<opcja>]|| copy|rename <serwer> <nowa_nazwa>
+         del|keep <serwer>]
+         deloutq|jump|raw
+
+    list: wyświetla listę serwerów (bez argumentu wyświetlana jest ta lista)
+listfull: wyświetla listę serwerów ze szczegółowymi informacjami dla każdego serwera
+     add: tworzy nowy serwer
+  serwer: nazwa serwera, do użytku wewnętrznego i  wyświetlania
+host: nazwa albo adres IP serwera, z opcjonalnym numerem portu (domyślnie: 6667), wiele adresów należy rozdzielić przecinkiem
+    temp: tworzy serwer tymczasowy (nie zapisany)
+  opcja: ustawia opcję dla serwera (dla opcji boolowskich wartość może zostać pominięta)
+noopcja: ustawia opcje boolowskie na 'off' (na przykład: -nossl)
+    copy: duplikuje serwer
+  rename: zmienia nazwę serwera
+    keep: zachowuje serwer w pliku konfiguracyjnym (tylko dla serwerów tymczasowych)
+     del: usuwa serwer
+ deloutq: usuń wiadomości z kolejki dla wszystkich serwerów (wszystkie wiadomości jakie WeeChat obecnie wysyła)
+    jump: przechodzi do bufora serwera
+     raw: otwiera bufor z nieprzetworzonymi danymi IRC
+
+Przykłady:
+  /server listfull
+  /server add oftc irc.oftc.net/6697 -ssl -autoconnect
+  /server add oftc6 irc6.oftc.net/6697 -ipv6 -ssl
+  /server add freenode2 chat.eu.freenode.net/6667,chat.us.freenode.net/6667
+  /server add freenode3 irc.freenode.net -password=moje_hasło
+  /server copy oftc oftcbis
+  /server rename oftc newoftc
+  /server del freenode
+  /server deloutq
+----
+
+[[command_irc_service]]
+[command]*`service`* rejestruje nową usługę::
+
+----
+/service  <nick> <zarezerwowany> <distribution> <typ> <zarezerwowany> <info>
+
+distribution: widoczność serwisu
+        typ: zarezerwowany do dalszego użycia
+----
+
+[[command_irc_servlist]]
+[command]*`servlist`* wyświetla serwisy obecnie połączone z siecią::
+
+----
+/servlist  [<maska> [<typ>]]
+
+maska: wyświetl tylko serwisy pasujące do maski
+typ: wyświetl tylko serwisy tego typu
+----
+
+[[command_irc_squery]]
+[command]*`squery`* dostarcza wiadomość do usługi::
+
+----
+/squery  <usługa> <tekst>
+
+usługa: nazwa usługi
+   tekst: tekst do wysłania
+----
+
+[[command_irc_squit]]
+[command]*`squit`* rozłącza od podłączonych serwerów::
+
+----
+/squit  <serwer> <komentarz>
+
+ serwer: nazwa serwera
+komentarz: powód rozłączenia
+----
+
+[[command_irc_stats]]
+[command]*`stats`* zapytanie o statystyki serwera::
+
+----
+/stats  [<zapytanie> [<serwer>]]
+
+ zapytanie: c/h/i/k/l/m/o/y/u (zobacz RFC1459)
+serwer: nazwa serwera
+----
+
+[[command_irc_summon]]
+[command]*`summon`* wyślij do użytkowników serwera wiadomość proszącą ich o wejście na IRC::
+
+----
+/summon  <użytkownik> [<cel> [<kanał>]]
+
+   użytkownik: nazwa użytkownika
+ cel: nazwa serwera
+kanał: nazwa kanału
+----
+
+[[command_irc_time]]
+[command]*`time`* uzyskaj lokalny czas serwera::
+
+----
+/time  [<cel>]
+
+cel: pobierz czas podanego serwera
+----
+
+[[command_irc_topic]]
+[command]*`topic`* pobiera/ustawia temat kanału::
+
+----
+/topic  [<kanał>] [<temat>|-delete]
+
+kanał: nazwa kanału
+  temat: nowy temat kanału
+-delete: kasuje temat kanału
+----
+
+[[command_irc_trace]]
+[command]*`trace`* znajduje drogę do konkretnego serwera::
+
+----
+/trace  [<cel>]
+
+cel: serwer
+----
+
+[[command_irc_unban]]
+[command]*`unban`* odbanowuje nicki lub hosty::
+
+----
+/unban  [<kanał>] <nick> [<nick> ...]
+
+kanał: kanał, na którym zdejmujemy bana
+   nick: użytkownik lub host do odbanowania
+----
+
+[[command_irc_userhost]]
+[command]*`userhost`* zwraca listę informacji o użytkownikach::
+
+----
+/userhost  <nick> [<nick>...]
+
+nick: nazwa użytkownika
+----
+
+[[command_irc_users]]
+[command]*`users`* wyświetla użytkowników zalogowanych do serwera::
+
+----
+/users  [<cel>]
+
+cel: serwer
+----
+
+[[command_irc_version]]
+[command]*`version`* podaje informację o wersji nicka lub serwera (obecnego lub określonego)::
+
+----
+/version  [<serwer>|<nick>]
+
+serwer: nazwa serwera
+  nick: nazwa użytkownika
+----
+
+[[command_irc_voice]]
+[command]*`voice`* daje głos (voice) nickowi(-m)::
+
+----
+/voice  <nick> [<nick>...]
+
+nick: nick lub maska (może zaczynać się lub kończyć "*")
+   *: daje głos każdemu na kanale
+----
+
+[[command_irc_wallchops]]
+[command]*`wallchops`* wysyła powiadomienie do operatorów kanału::
+
+----
+/wallchops  [<kanał>] <tekst>
+
+kanał: nazwa kanału
+   tekst:tekst do wysłania
+----
+
+[[command_irc_wallops]]
+[command]*`wallops`* wysyła wiadomość do wszystkich obecnie połączonych użytkowników, którzy ustawili sobie tryb 'w'::
+
+----
+/wallops  <tekst>
+
+tekst: wiadomość do wysłania
+----
+
+[[command_irc_who]]
+[command]*`who`* tworzy zapytanie, które zwraca listę informacji::
+
+----
+/who  [<mask> [o]]
+
+maska: tylko informacje pasujące do maski
+   o: tylko operatorzy są zwracani zgodnie z podaną maską
+----
+
+[[command_irc_whois]]
+[command]*`whois`* zapytanie o informacje o użytkowniku(ach)::
+
+----
+/whois  [<serwer>] [<nick>[,<nick>...]]
+
+serwer: nazwa serwera
+  nick: nick (może być maska)
+
+Bez argumentu, komenda ta wykona whois na:
+- twoim własnym nicki, jeśli bufor to serwer/kanał
+- zdalnym nicku, jeśli bufor to rozmowa prywatna.
+----
+
+[[command_irc_whowas]]
+[command]*`whowas`* pyta o informacje o użytkowniku, który już nie istnieje::
+
+----
+/whowas  <nick>[,<nick>...] [<ilość> [<cel>]]
+
+  nick: nick do wyszukania
+ ilość: ilość zwracanych odpowiedzi (pełne wyszukiwanie dla numerów ujemnych)
+cel: odpowiedź powinna pasować do maski
+----
+

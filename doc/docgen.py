@@ -73,7 +73,7 @@ except ImportError as message:
 DEFAULT_PATH = '~/src/weechat/doc'
 
 # list of locales for which we want to build doc files to include
-locale_list = ('en_US', 'fr_FR', 'it_IT', 'de_DE', 'ja_JP')
+locale_list = ('en_US', 'fr_FR', 'it_IT', 'de_DE', 'ja_JP', 'pl_PL')
 
 # all commands/options/.. of following plugins will produce a file
 # non-listed plugins will be ignored

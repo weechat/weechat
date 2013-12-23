@@ -1,0 +1,22 @@
+[[command_ruby_ruby]]
+[command]*`ruby`* list/load/unload skrypt::
+
+----
+/ruby  list|listfull [<nazwa>]
+       load [-q] <nazwapliku>
+       autoload
+       reload|unload [-q] [<nazwa>]
+
+    list: lista załadowanych wtyczek
+listfull: lista załadowanych wtyczek (szczegółowa)
+    load: ładuje wtyczkę
+autoload: automatycznie ładuje wtyczki w katalogu systemowym lub użytkownika
+  reload: przeładuje pojedynczą wtyczkę (jeśli nie podano nazwy, wyładuje wszystkie wtyczki, następnie automatycznie załaduje wtyczki)
+  unload: wyładowuje jedną albo wszystkie wtyczki
+nazwa_pliku: skrypt (plik) do załadowania
+    nazwa: nazwa skryptu (nazwa użyta do wywołania funkcji "register")
+      -q: tryb cichy: nie wyświetla wiadomości
+
+Bez argumentów ta komenda wyświetli wszystkie załadowane wtyczki.
+----
+

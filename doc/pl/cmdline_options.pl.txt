@@ -1,0 +1,35 @@
+*-a*, *--no-connect*::
+    Wyłącza automatyczne łączenie się z serwerami podczas uruchamiania WeeChat.
+
+*-c*, *--colors*::
+    Wyświetla domślne kolory w terminalu.
+
+*-d*, *--dir* '<ścieżka>'::
+    Ustawia ścieżkę jako katalog domowy WeeChat (używany dla plików
+    konfiguracyjnych, logów, wtyczek użytkownika i skryptów), domyślna wartość
+    to '~/.weechat' (katalog zostanie utworzony jeśli nie istnieje).
+
+*-h*, *--help*::
+    Wyświetla pomoc.
+
+*-l*, *--license*::
+    Wyświetla licencję.
+
+*-p*, *--no-plugin*::
+    Wyłącza automatyczne ładowanie wtyczek.
+
+*-r*, *--run-command* '<komenda>'::
+    Wykonuje komendę(-y) po uruchomieniu (komendy należy oddzielać średnikiem).
+
+*-s*, *--no-script*::
+    Wyłącza automatyczne ładowanie skryptów.
+
+*--upgrade*::
+    Aktualizuje WeeChat z użyciem plików sesji wygenerowanych przez komende
+    `/upgrade -quit`.
+
+*-v*, *--version*::
+    Wyświetla wersję WeeChat.
+
+*wtyczka:opcja*::
+    Opcja dla wtyczki.

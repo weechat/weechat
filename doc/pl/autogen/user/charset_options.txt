@@ -1,0 +1,10 @@
+* [[option_charset.default.decode]] *charset.default.decode*
+** opis: `globalne dekodowanie: kodowanie użyte do dekodowania przychodzących wiadomości (jeśli się nie powiedzie, zostanie przywrócone UTF-8, ponieważ jest to domyślne kodowanie w WeeChat)`
+** typ: ciąg
+** wartości: dowolny ciąg (domyślna wartość: `"iso-8859-1"`)
+
+* [[option_charset.default.encode]] *charset.default.encode*
+** opis: `globalne dekodowanie: kodowanie użyte do dekodowania wychodzących wiadomości (jeśli się nie powiedzie, zostanie przywrócone UTF-8, ponieważ jest to domyślne kodowanie w WeeChat)`
+** typ: ciąg
+** wartości: dowolny ciąg (domyślna wartość: `""`)
+

@@ -1,0 +1,46 @@
+[[command_relay_relay]]
+[command]*`relay`* zarządzanie przesyłaniem::
+
+----
+/relay  list|listfull|listrelay
+        add [ipv4.][ipv6.][ssl.]<protokół.nazwa> <port>
+        del [ipv4.][ipv6.][ssl.]<protokół.nazwa>
+        raw
+        kluczSSL
+
+         list: wyświetla klienty relay (tylko aktywne)
+     listfull: wyświetla klienty relay (wszystkie)
+    listrelay: wyświetla relaye (nazwa i port)
+          add: dodaje relay dla protokołu + nazwa
+          del: usuwa relay dla protokołu + nazwa
+         ipv4: wymusza użycie IPv4
+         ipv6: wymusza użycie IPv6
+          ssl: włącza SSL
+protokół.nazwa: protokół i nazwa dla relay:
+                 - protokół "irc": nazwą jest dzielony serwer (opcjonalnie, jeśli nie zostanie podana, nazwa serwera musi zostać wysłanaprzez klienta w komendzie"PASS", w formacie: "PASS serwer:hasło")
+                 - protokół "weechat" (nazwa nie jest używana)
+         port: port używany przez relay
+          raw: otwiera bufor z nieprzetworzonymi danymi Relay
+   kluczSSL: ustawia certyfikat SSL/hasło używając ścieżki w opcji relay.network.ssl_cert_key
+
+Bez argumentu komenda otwiera bufor z listą klientów relay.
+
+Przykłady:
+  pośrednik irc dla serwera "freenode":
+    /relay add irc.freenode 8000
+  pośrednik irc dla serwera "freenode", z SSL:
+    /relay add ssl.irc.freenode 8001
+  pośrednik irc dla wszystkich serwerów (klient wybiera) z SSL:
+    /relay add ssl.irc 8002
+  protokół weechat:
+    /relay add weechat 9000
+  protokół weechat z SSL:
+    /relay add ssl.weechat 9001
+  protokół weechat z SSL, używający tylko IPv4:
+    /relay add ipv4.ssl.weechat 9001
+  protokół weechat z SSL, używający tylko IPv6:
+    /relay add ipv6.ssl.weechat 9001
+  protokół weechat z SSL, używający IPv4 + IPv6:
+    /relay add ipv4.ipv6.ssl.weechat 9001
+----
+

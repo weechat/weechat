@@ -1,0 +1,107 @@
+= WEECHAT(1)
+:doctype: manpage
+
+== NAZWA
+
+weechat - rozszerzalny klient rozmów
+
+== SKŁADNIA
+
+[verse]
+'weechat' [-a|--no-connect] [-d|--dir <ścieżka>] [-p|--no-plugin] [-r|--run-command <komenda>] [-s|--no-script] [--upgrade] [wtyczka:opcja...]
+'weechat' [-c|--colors]
+'weechat' [-h|--help]
+'weechat' [-k|--keys]
+'weechat' [-l|--license]
+'weechat' [-v|--version]
+
+== OPIS
+
+WeeChat to szybki, lekki i rozszerzalny klient rozmów.
+
+Jest modularny (lekkie jądro z wtyczkami), wielo protokołowy (IRC i Jabber),
+rozszerzalny za pomocą C i skryptów pisanych w kilku językach.
+
+== OPCJE
+
+include::cmdline_options.pl.txt[]
+
+== OPCJE WTYCZEK
+
+Kompletna dokumentacja na temat opcji wtyczek dostępna jest
+w http://weechat.org/doc[WeeChat user's guide].
+
+Dzięki wtyczce irc możliwe jest połączenie z serwerami tymczasowymi za pomocą
+URLi jak:
+
+    irc[6][s]://[[nick][:hasło]@]serwer[:port][/#kanał1[,#kanał2...]]
+
+Aby wejść na kanał IRC poświęcony WeeChat pod nickiem "mójnick":
+
+    irc://mójnick@irc.freenode.net/#weechat
+
+Adresy IPv6 mogą być otoczone nawiasami kwadratowymi, aby możliwe było podanie
+numeru potyu po adresie, na przykład:
+
+    irc://mójnick@[2001:db8:0:85a3::ac1f:8001]:6668/#test
+
+== PLIKI
+
+$HOME/.weechat/weechat.conf::
+    główny plik konfiguracyjny WeeChat
+
+$HOME/.weechat/plugins.conf::
+    plik konfiguracyjny wtyczek
+
+$HOME/.weechat/alias.conf::
+    plik konfiguracyjny wtyczki 'alias'
+
+$HOME/.weechat/aspell.conf::
+    plik konfiguracyjny wtyczki 'aspell'
+
+$HOME/.weechat/charset.conf::
+    plik konfiguracyjny wtyczki 'charset'
+
+$HOME/.weechat/irc.conf::
+    plik konfiguracyjny wtyczki 'irc'
+
+$HOME/.weechat/logger.conf::
+    plik konfiguracyjny wtyczki 'logger'
+
+$HOME/.weechat/relay.conf::
+    plik konfiguracyjny wtyczki 'relay'
+
+$HOME/.weechat/rmodifier.conf::
+    plik konfiguracyjny wtyczki 'rmodifier'
+
+$HOME/.weechat/script.conf::
+    plik konfiguracyjny wtyczki 'script'
+
+$HOME/.weechat/xfer.conf::
+    plik konfiguracyjny wtyczki 'xfer'
+
+$HOME/.weechat/weechat.log::
+    plik z logami WeeChat
+
+== AUTORZY
+
+WeeChat jest tworzony przez Sébastien Helleu i społeczność (pełna lista dostępna
+jest w pliku AUTHORS).
+
+Copyright (C) 2003-{sys:date "+%Y"} Sébastien Helleu <flashcode@flashtux.org>
+
+WeeChat is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+Pełna licencja znajduje się w pliku COPYING.
+
+Strona www: <http://weechat.org/>
+
+== ZGŁASZANIE BŁĘDÓW
+
+Błędy i propozycje nowych funkcji nelezy zglaszać na stronach Savannah:
+
+* błędy: <http://savannah.nongnu.org/bugs/?group=weechat>
+* nowe funkcje: <http://savannah.nongnu.org/task/?group=weechat>

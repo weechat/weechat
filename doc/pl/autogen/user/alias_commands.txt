@@ -1,0 +1,34 @@
+[[command_alias_alias]]
+[command]*`alias`* tworzy alias do komendy::
+
+----
+/alias  [-completion <dopełnienie>] <alias> [<komenda> [;<komenda>...]]
+
+completion: dopełnienie dla aliasu (opcjonalne, domyślnie dopełnienie wykonuje się z docelową komendą)
+            uwaga: można użyć %%komenda w celu użycia dopełnień dla istniejących komend
+     alias: nazwa aliasu (może się zaczynać lub kończyć "*" dla wyświetlenia listy aliasów)
+   komenda: nazwa komendy (wiele komend można oddzielić za pomocą średnika)
+
+Bez podania argumentu komenda wyświetla listę wszystkich zdefiniowanych aliasów.
+
+Ważne: dla komend specjalne zmienne są zastępowane odpowiednimi wartościami:
+        $n: argument 'n' (pomiędzy 1 i 9)
+       $-m: argumenty od 1 do 'm'
+       $n-: argumenty od 'n' do ostatniego
+      $n-m: argumenty od 'n' od 'm'
+        $*: wszystkie argumenty
+        $~: ostatni argument
+      $var: gdzie "var" to zmienna lokalna buforu (zobacz /buffer localvar)
+            przykłady: $nick, $channel, $server, $plugin, $name
+
+Do usunięcia aliasu służy komenda /unalias.
+
+Przykłady:
+  alias /split do poziomego podziału:
+    /alias split /window splith
+  alias /hello pisze "hello" na wszystkich kanałach poza #weechat:
+    /alias hello /allchan -exclude=#weechat msg * hello
+  alias /forcejoin wysyłający komende IRC "forcejoin" z dopełnieniem dla /sajoin:
+    /alias -completion %%sajoin forcejoin /quote forcejoin
+----
+

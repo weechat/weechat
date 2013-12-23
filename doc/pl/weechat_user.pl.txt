@@ -1,0 +1,2755 @@
+= Poradnik użytkownika WeeChat
+Sébastien Helleu <flashcode@flashtux.org>
+
+
+Ten dokument opisuje klienta rozmów WeeChat, będącego częścią WeeChat.
+
+Najnowsza wersja tego dokumentu dostępna jest na stronie:
+http://weechat.org/doc
+
+
+[[introduction]]
+== Wprowadzenie
+
+WeeChat (Wee Enhanced Environment for Chat) to darmowy klient rozmów, szybki
+i lekki, przeznaczony dla wielu systemów operacyjnych.
+
+[[features]]
+=== Cechy
+
+Główne cechy to:
+
+* wsparcie dla wielu protokołów: IRC i Jabber (skrypt jabber.py lub bitlbee/minbif)
+* połączenie z wieloma serwerami (z SSL, IPv6, proxy)
+* mały, szybki i lekki
+* konfigurowalny i rozszerzalny dzięki wtyczką i skryptom
+* zgodny z RFC dla IRC http://tools.ietf.org/html/rfc1459[1459],
+  http://tools.ietf.org/html/rfc2810[2810],
+  http://tools.ietf.org/html/rfc2811[2811],
+  http://tools.ietf.org/html/rfc2812[2812] i
+  http://tools.ietf.org/html/rfc2813[2813]
+* wielo-platformowy (GNU/Linux, *BSD, MacOS X, Windows i inne)
+* 100% GPL, darmowe oprogramowanie
+
+Strona domowa WeeChat: http://weechat.org/
+
+[[pre-requisites]]
+=== Wymagania
+
+Żeby zainstalować WeeChat, potrzebujesz:
+
+* działający system GNU/Linux (z narzędziami kompilatora dla kompilacji ze
+  źródeł), lub kompatybilny system
+* przywileje 'roota' (do instalacji w katalogu systemowym)
+* bibliotekę ncurses
+
+[[install]]
+== Instalacja
+
+[[binary_packages]]
+=== Pakiety binarne
+
+Pakiety binarne dostępne są dla wielu dystrybucji, wliczając:
+
+* Debiana (lub dowolną kompatybilną):
+  `apt-get install weechat-curses`
+* Mandrive/RedHata (lub dowolną kompatybilną):
+  `rpm -i /path/to/weechat-x.y.z-1.i386.rpm`
+* Gentoo: `emerge weechat`
+* Arch Linuxa: `pacman -S weechat`
+* Fedora Core: `yum install weechat`
+* Sourcemage: `cast weechat`
+
+Niektóre dodatkowe pakiety mogą okazać się przydatne, jak weechat-plugins.
+
+Dla innych dystrybucji, poszukaj w dokumentacji instrukcji na temat instalacji
+pakietów.
+
+[[source_package]]
+=== Pakiety źródłowe
+
+WeeChat może być kompilowany za pomocą cmake lub autotools (cmake jest zalecany).
+
+[[dependencies]]
+==== Zależności
+
+Poniższa tabela przedstawia pakiety wymagane i opcjonalne do skompilowania
+WeeChat.
+
+[width="100%",cols="5,^3,^3,13",options="header"]
+|===
+| Pakiet ^(1)^                    | Wersja      | Wymagany | Opis
+| cmake                           |             | *tak*    | Kompilacja (możliwe jest użycie autotools, jednak cmake jest zalecany)
+| libncursesw5-dev ^(2)^          |             | *tak*    | Interfejs ncurses
+| libcurl4-gnutls-dev             |             | *tak*    | Transfer URL
+| zlib1g-dev                      |             | *tak*    | Kompresja pakietów we wtyczce relay (protokół weechat), wtyczka script
+| libgcrypt11-dev                 |             | *tak*    | Zabezpieczone dane, uwierzytelnianie IRC SASL (DH-BLOWFISH/DH-AES), wtyczka script
+| libgnutls-dev                   | ≥ 2.2.0     |          | Połączenia SSL z serwerami IRC, wsparcie dla SSL we wtyczce relay
+| gettext                         |             |          | Internacjonalizacja (tłumaczenie wiadomości; język bazowy to Angielski)
+| ca-certificates                 |             |          | Certyfikaty dla połączeń SSL
+| libaspell-dev or libenchant-dev |             |          | Wtyczka aspell
+| python-dev                      | ≥ 2.5 ^(3)^ |          | Wtyczka python
+| libperl-dev                     |             |          | Wtyczka perl
+| ruby1.9.1-dev                   | ≥ 1.8       |          | Wtyczka ruby
+| liblua5.1-0-dev                 |             |          | Wtyczka lua
+| tcl-dev                         | ≥ 8.5       |          | Wtyczka tcl
+| guile-2.0-dev                   | ≥ 2.0       |          | Wtyczka guile (scheme)
+| asciidoc                        | ≥ 8.5.0     |          | Tworzenie strony man i dokumentacji
+| source-highlight                |             |          | Podświetlanie składni dla kodów źródłowych w dokumentacji
+| xsltproc,
+  docbook-xml, docbook-xsl        |             |          | Tworzenie strony man
+|===
+
+[NOTE]
+^(1)^ Nazwy pochodzą z dystrybucji Debian GNU/Linux, wersje i nazwy pakietów
+mogą być inne w innych dystrybucjach. +
+^(2)^ WeeChat może być skompilowany z libncurses5-dev, ale jest to *NIE*
+zalecane (spowoduje to błędy w wyświetlaniu szerokich znaków). +
+^(3)^ Zalecana wersja Pythona to 2.7 (wszystkie skrypty działają z wersją 2.7,
+ale nie w wersjami ≤ 2.6 lub ≥ 3.0).
+
+[[compile_with_cmake]]
+==== Kompilacja z użyciem cmake
+
+* Instalacja w katalogach systemowych (wymaga uprawnień użytkownika 'root'):
+
+----
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make
+% make install    (jako root)
+----
+
+* Instalacja w wybranym katalogu:
+
+----
+$ mkdir build
+$ cd build
+$ cmake .. -DPREFIX=/ścieżka/do/katalogu
+$ make
+$ make install
+----
+
+Opcje mogą zostać przekazane do cmake, format "-DOPCJA=WARTOŚĆ".
+
+Lista popularnych opcji:
+
+[width="100%",cols="2m,2,5m,12",options="header"]
+|===
+| Opcja  | Wartość | Wartość domyślna | Opis
+
+| CMAKE_BUILD_TYPE | `Debug`, `Release`, `RelWithDebInfo`, `MinSizeRel` | |
+  Typ budowania pakietu: `Debug` (lub `RelWithDebInfo`) jest zalecany dla
+  wersjrozwojowej WeeChat.
+
+| PREFIX | katalog | /usr/local |
+  Katalog, do którego zostanie zainstalowany WeeChat.
+
+| WEECHAT_HOME | katalog | ~/.weechat |
+  Domyślny katalog domowy dla WeeChat.
+
+| CA_FILE | plik | /etc/ssl/certs/ca-certificates.crt |
+  Plik zawierający urzędy certyfikacji.
+  Jest to domyślna wartość opcji
+  <<option_weechat.network.gnutls_ca_file,weechat.network.gnutls_ca_file>>.
+
+| ENABLE_ALIAS | `ON`, `OFF` | ON |
+  Kompilacja <<alias_plugin,wtyczki alias>>.
+
+| ENABLE_ASPELL | `ON`, `OFF` | ON |
+  Kompilacja <<aspell_plugin,wtyczki aspell>>.
+
+| ENABLE_CHARSET | `ON`, `OFF` | ON |
+  Kompilacja <<charset_plugin,wtyczki charset>>.
+
+| ENABLE_MAN | `ON`, `OFF` | OFF |
+  Kompilacja strony man.
+
+| ENABLE_DOC | `ON`, `OFF` | OFF |
+  Kompilacja dokumentacji (trwa to sporo czasu, zalecane tylko podczas tworzenia
+  pakietu binarnego zawierającego dokumentację lub jeśli nie możesz przeglądać
+  dokumentacji online).
+
+| ENABLE_ENCHANT | `ON`, `OFF` | OFF |
+  Kompilacja <<aspell_plugin,wtyczki aspell>> z Enchant.
+
+| ENABLE_FIFO | `ON`, `OFF` | ON |
+  Kompilacja <<fifo_plugin,wtyczki fifo>>.
+
+| ENABLE_GNUTLS | `ON`, `OFF` | ON |
+  Włączenie Gnutls (dla SSL).
+
+| ENABLE_GUILE | `ON`, `OFF` | ON |
+  Kompilacja <<scripts_plugins,wtyczki guile>> (Scheme).
+
+| ENABLE_IRC | `ON`, `OFF` | ON |
+  Kompilacja <<irc_plugin,wtyczki IRC>>.
+
+| ENABLE_LARGEFILE | `ON`, `OFF` | ON |
+  Wsparcie dla dużych plików.
+
+| ENABLE_LOGGER | `ON`, `OFF` | ON |
+  Kompilacja <<logger_plugin,wtyczki logger>>.
+
+| ENABLE_LUA | `ON`, `OFF` | ON |
+  Kompilacja <<scripts_plugins,wtyczki lua>>.
+
+| ENABLE_NCURSES | `ON`, `OFF` | ON |
+  Kompilacja interfejsu Ncurses.
+
+| ENABLE_NLS | `ON`, `OFF` | ON |
+  Włączenie NLS (tłumaczenia).
+
+| ENABLE_PERL | `ON`, `OFF` | ON |
+  Kompilacja <<scripts_plugins,wtyczki perl>>.
+
+| ENABLE_PYTHON | `ON`, `OFF` | ON |
+  Kompilacja <<scripts_plugins,wtyczki python>>.
+
+| ENABLE_PYTHON3 | `ON`, `OFF` | OFF |
+  Kompilacja <<scripts_plugins,wtyczki Python>> używając Pythona 3 (*NIE*
+  zalecane, ponieważ wiele skryptów nie jest kompatybilna z Pythonem 3).
+
+| ENABLE_RELAY | `ON`, `OFF` | ON |
+  Kompilacja <<relay_plugin,wtyczki relay>>.
+
+| ENABLE_RMODIFIER | `ON`, `OFF` | ON |
+  Kompilacja <<rmodifier_plugin,wtyczki rmodifier>>.
+
+| ENABLE_RUBY | `ON`, `OFF` | ON |
+  Kompilacja <<scripts_plugins,wtyczki ruby>>.
+
+| ENABLE_SCRIPT | `ON`, `OFF` | ON |
+  Kompilacja <<scripts_plugins,wtyczki script>>.
+
+| ENABLE_SCRIPTS | `ON`, `OFF` | ON |
+  Kompilacja <<scripts_plugins,wtyczek skryptowych>> (Python, Perl, Ruby, Lua,
+  Tcl, Guile).
+
+| ENABLE_TCL | `ON`, `OFF` | ON |
+  Kompilacja <<scripts_plugins,wtyczki tcl>>.
+
+| ENABLE_XFER | `ON`, `OFF` | ON |
+  Kompilacja <<xfer_plugin,wtyczki xfer>>.
+|===
+
+Pozostałe opcje można wyświetlić poleceniem:
+
+----
+$ cmake -LA
+----
+
+Lub z interfejsem Curses:
+
+----
+$ ccmake ..
+----
+
+[[compile_with_autotools]]
+==== Kompilacja z użyciem autotools
+
+[WARNING]
+Oficjalne wsparcie do budowania WeeChat posiada tylko cmake. Powinieneś używać
+autotools tylko jeśli nie możesz użyć cmake. +
+Budowanie z użyciem autotools wymaga więcej zależności i jest wolniejsze niż
+z cmake.
+
+* Instalacja w katalogach systemowych (wymaga uprawnień użytkownika 'root'):
+
+----
+$ ./autogen.sh
+$ mkdir build
+$ cd build
+$ ../configure
+$ make
+% make install    (jako root)
+----
+
+* Instalacja w wybranym katalogu:
+
+----
+$ ./autogen.sh
+$ mkdir build
+$ cd build
+$ ../configure --prefix=/ścieżka/do/katalogu
+$ make
+$ make install
+----
+
+Opcje mogą zostać przekazane to skryptu 'configure', można je wyświetlić
+za pomocą tej komendy:
+
+----
+$ ./configure --help
+----
+
+[[git_sources]]
+=== Źródła z gita
+
+Uwaga: źródła z gita przeznaczone są tylko dla zaawansowanych użytkowników:
+mogą się nie kompilować lub być niestabilne. Zostałeś ostrzeżony!
+
+W celu pobrania źródeł z gita, wykonaj poniższą komendę:
+
+----
+$ git clone git://git.sv.gnu.org/weechat.git
+----
+
+Następnie postępuj zgodnie z instrukcjami dla pakietów źródłowych (zobacz
+<<source_package,pakiety źródłowe>>).
+
+[[report_crashes]]
+=== Zgłaszanie awarii
+
+Jeśli doświadczyłeś awarii, lub chcesz zgłosić przyszłą awarię WeeChat, należy:
+
+* skompilować WeeChat z informacjami diagnostycznymi (lub zainstalować
+  odpowiedni pakiet)
+* włączyć obsługę plików 'core' w systemie
+* zainstalować gdb
+
+[[debug_info]]
+==== Informacje diagnostyczne
+
+Jeśli kompilujesz z użyciem cmake:
+
+----
+$ cmake .. -DCMAKE_BUILD_TYPE=Debug
+----
+
+Jeśli kompilujesz z użyciem autotools, debugowanie jest domyślnie włączone
+(`--with-debug=1`).
+
+Jeśli zainstalowałeś pakiet binarny, doinstaluj paczkę 'weechat-dbg'.
+
+[[core_files]]
+==== CPliki core
+
+W celu włączenia plików 'core' możesz użyć opcji
+<<option_weechat.startup.sys_rlimit,weechat.startup.sys_rlimit>>:
+
+----
+/set weechat.startup.sys_rlimit "core:-1"
+----
+
+Dla WeeChat w wersji ≤ 0.3.8 albo jeśli chcesz włączyć obsługę plików core przed
+startem  WeeChat, możesz użyć komendy `ulimit`.
+
+Na przykład pod Linuksem używając powłoki 'bash', dodaj to do pliku `~/.bashrc`:
+
+----
+ulimit -c unlimited
+----
+
+Lub z maksymalnym rozmiarem:
+
+----
+ulimit -c 200000
+----
+
+[[gdb_backtrace]]
+==== Pozyskiwanie logów za pomocą gdb
+
+Kiedy WeeChat ulegnie awarii, system stworzy plik 'core' lub 'core.12345'
+('12345' to id procesu).
+Plik ten zostanie utworzony w katalogu, z którego uruchomiono WeeChat (*nie*
+jest to katalog, gdzie zainstalowano WeeChat!).
+
+Na przykład jeśli 'weechat' jest zainstalowany w '/usr/bin/' i plik 'core'
+znajduje się w '/home/xxx/', uruchom gdb za pomocą tej komendy:
+
+----
+gdb /usr/bin/weechat /home/xxx/core
+----
+
+[NOTE]
+Jeśli zainstalowałeś pakiet binarny 'weechat-dbg' (na przykład pod Debianem),
+wtedy możesz użyć tej ścieżki dla pliku binarnego WeeChat:
+'/usr/lib/debug/usr/bin/weechat'
+
+Następnie pod gdb użyj komendy `bt full`, aby wyświetlić log.
+Zobaczysz coś podobnego do tego:
+
+----
+(gdb) set logging file /tmp/crash.txt
+(gdb) set logging on
+Copying output to /tmp/crash.txt.
+(gdb) bt full
+#0  0x00007f9dfb04a465 in raise () from /lib/libc.so.6
+#1  0x00007f9dfb04b8e6 in abort () from /lib/libc.so.6
+#2  0x0000000000437f66 in weechat_shutdown (return_code=1, crash=1)
+    at /some_path/src/core/weechat.c:351
+#3  <signal handler called>
+#4  0x000000000044cb24 in hook_process_timer_cb (arg_hook_process=0x254eb90,
+    remaining_calls=<value optimized out>) at /some_path/src/core/wee-hook.c:1364
+        hook_process = 0x254eb90
+        status = <value optimized out>
+#5  0x000000000044cc7d in hook_timer_exec ()
+    at /some_path/src/core/wee-hook.c:1025
+        tv_time = {tv_sec = 1272693881, tv_usec = 212665}
+        ptr_hook = 0x2811f40
+        next_hook = 0x0
+#6  0x000000000041b5b0 in gui_main_loop ()
+    at /some_path/src/gui/curses/gui-curses-main.c:319
+        hook_fd_keyboard = 0x173b600
+        tv_timeout = {tv_sec = 0, tv_usec = 0}
+        read_fds = {fds_bits = {0 <repeats 16 times>}}
+        write_fds = {fds_bits = {0 <repeats 16 times>}}
+        except_fds = {fds_bits = {0 <repeats 16 times>}}
+        max_fd = <value optimized out>
+----
+
+Musisz przekazać ten log developerom i powiedzieć im co spowodowało awarię.
+
+Dziękujemy za pomoc!
+
+[[debug_running_weechat]]
+==== Debugowanie działającego WeeChat
+
+W celu debugowania działającego WeeChat (na przykład kiedy WeeChat wydaje się
+zawieszony), można użyć gdb podając in procesu (zastąp '12345' numerem PID
+procesu weechat):
+
+----
+gdb /usr/bin/weechat 12345
+----
+
+Następnie jak w przypadku awarii, użyj polecenia `bt full`:
+
+----
+(gdb) bt full
+----
+
+[[usage]]
+== Używanie
+
+[[running_weechat]]
+=== Uruchamianie WeeChat
+
+Parametry z linii poleceń:
+
+include::cmdline_options.pl.txt[]
+
+Żeby uruchomić WeeChat, wykonaj polecenie:
+
+----
+$ weechat
+----
+
+Podczas pierwszego uruchomienia WeeChat tworzona jest domyślna konfiguracja,
+wraz z domyślnymi opcjami. Plik konfiguracyjny to:
+'~/.weechat/weechat.conf'.
+
+Możesz edytować ten plik wedle upodobań, żeby skonfigurować WeeChat, lub możesz
+ustawić parametry za pomocą komendy `/set` z poziomu WeeChat (zobacz
+<<weechat_commands,Komendy WeeChat>>).
+
+[[screen_layout]]
+=== Układ ekranu
+
+Przykład terminala z WeeChat:
+
+....
+ ▼ bar "title"
+┌───────────────────────────────────────────────────────────────────────────┐
+│Welcome to #test, this is a test channel                                   │
+│12:52:27   --> | Flashy (flashcode@weechat.org) has joined #test   │@Flashy│
+│12:52:27    -- | Nicks #test: [@Flashy @joe +weebot]               │@joe   │
+│12:52:27    -- | Channel #test: 4 nicks (2 ops, 1 voice, 1 normal) │+weebot│
+│12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009       │peter  │
+│12:54:15 peter | hey!                                              │       │
+│12:55:01  @joe | hello                                             │       │
+│                                                                   │       │
+│                                                                   │       │
+│                                                                   │       │
+│                                                                   │       │
+│                                                                   │       │
+│                                                                   │       │
+│                                                                   │       │
+│                                                                   │       │
+│                                                                   │       │
+│                                                                   │       │
+│                                                                   │       │
+│[12:55] [6] [irc/freenode] 3:#test(+n){4}* [H: 4:#abc(2,5), 6]             │
+│[@Flashy(i)] hi peter!█                                                    │
+└───────────────────────────────────────────────────────────────────────────┘
+ ▲ bars "status" and "input"                               bar "nicklist" ▲
+....
+
+Ekran składa się z następujących obszarów:
+
+* obszar rozmowy (środek ekranu) z liniami rozmowy, zawierającymi:
+** czas
+** prefiks (przed "|")
+** wiadomość (za "|")
+* paski dookoła obszaru rozmowy, domyślne paski to:
+** pasek 'title', nad obszarem rozmowy
+** pasek 'status', pod obszarem rozmowy
+** pasek 'input', pod paskiem statusu
+** pasek 'nicklist', po prawej
+
+Pasek 'status' posiada następujące domyślne elementy:
+
+[width="100%",cols="^3,^3,10",options="header"]
+|===
+| Element               | Przykład              | Opis
+| time                  | `[12:55]`             | Czas
+| buffer_count          | `[6]`                 | Ilość otwartych buforów
+| buffer_plugin         | `[irc/freenode]`      | Wtyczka dla obecnego bufora (wtyczka irc może dodać nazwę serwera IRC używanego przez bufor)
+| buffer_number         | `3`                   | Numer obecnego buforu
+| buffer_name           | `#test`               | Nazwa obecnego buforu
+| buffer_modes          | `+n`                  | Tryby kanału IRC
+| buffer_nicklist_count | `{4}`                 | Ilość nicków na liście nicków
+| buffer_zoom           | !                     | `!` oznacza, że połączony bufor jest przybliżony (tylko ten jest wyświetlany), pusta wartość oznacza, że wszystkie połączone bufory są wyświetlane
+| buffer_filter         | `*`                   | Wskaźnik filtrowania: `*` oznacza, że niektóre linie zostały odfiltrowywane (ukryte), pusta wartość oznacza, że wszystkie linie są wyświetlane
+| lag                   | `[Lag: 2.5]`          | Wskaźnik opóźnienia, w sekundach (ukryty dla niskich opóźnień)
+| hotlist               | `[H: 4:#abc(2,5), 6]` | Lista buforów z aktywnością (nieprzeczytane wiadomości) (w przykładzie, 2 podświetlenia i 5 nieprzeczytanych wiadomości w '#abc', jedna wiadomość w buforze #6)
+| completion            | `abc(2) def(5)`       | Lista słów do dopełnienia, z ilością możliwych dopełnień dla każdego słowa
+| scroll                | `-Więcej(50)-`        | Wskaźnik przewijania, z numerem linii poniżej ostatniej wyświetlanej
+|===
+
+Pasek 'input' posiada następujące domyślne elementy:
+
+[width="100%",cols="^3,^6,8",options="header"]
+|===
+| Element      | Przykład                                       | Opis
+| input_paste  | `[Wkleić 7 linii ? [ctrl-Y] Tak [ctrl-N] Nie]` | Pyta użytkownika podczas wklejania kilku linii tekstu
+| input_prompt | `[@Flashy(i)]`                                 | Input prompt, dla irc: nick i tryby (tryb "+i" oznacza niewidzialny na freenode)
+| away         | `(away)`                                       | Wskaźnik nieobecności
+| input_search | `[Szukam (~ str,msg)]`                         | Wskaźnik wyszukiwania ("`~`": wielkość liter ma znaczenie, "`==`": wielkość liter nie ma znaczenia, "`str`": wyszukiwanie ciągu, "`regex`": wyszukiwanie wyrażenia regularnego, "`msg`": wyszukiwanie w wiadomościach, "`pre`": wyszukiwanie w prefiksach, "`pre\|msg`": wyszukiwanie w prefiksach i wiadomościach)
+| input_text   | `hi peter!`                                    | Wprowadzony tekst
+|===
+
+[[buffers_and_windows]]
+=== Bufory i okna
+
+'Bufor' posiada numer, nazwę, wyświetlane linie (i trochę innych danych).
+
+Przykłady buforów:
+
+* główny bufor (tworzony po uruchomieniu WeeChat, nie może zostać zamknięty)
+* serwer irc (wyświetla informacje z serwera)
+* kanał irc
+* prywatna rozmowa irc
+
+'Okno' to obszar ekranu, w którym wyświetlane są bufory. Nie jest możliwe
+podzielenie ekranu na kilka okien.
+
+Każde okno wyświetla jeden bufor. Bufor może zostać ukryty (nie wyświetlany w
+oknie) lub wyświetlany w jednym lub więcej oknach.
+
+Przykład podziału poziomego (`/window splith`):
+
+....
+                          ▼ window #2 (buffer #4)
+┌───────────────────────────────────────────────────────────────────────────┐
+│Welcome to #abc                                                            │
+│12:55:12     Max | hi                                              │@Flashy│
+│12:55:20 @Flashy | hi Max!                                         │Max    │
+│12:55:32     Max | how are you?                                    │       │
+│                                                                   │       │
+│                                                                   │       │
+│                                                                   │       │
+│                                                                   │       │
+│                                                                   │       │
+│[12:55] [6] [irc/freenode] 4:#abc(+n){2}                                   │
+│[@Flashy]                                                                  │
+│───────────────────────────────────────────────────────────────────────────│
+│Welcome to #test                                                           │
+│12:54:15 peter | hey!                                              │@Flashy│
+│12:55:01  @joe | hello                                             │@joe   │
+│                                                                   │+weebot│
+│                                                                   │peter  │
+│                                                                   │       │
+│                                                                   │       │
+│                                                                   │       │
+│                                                                   │       │
+│[12:55] [6] [irc/freenode] 3:#test(+n){4}                                  │
+│[@Flashy] hi peter!█                                                       │
+└───────────────────────────────────────────────────────────────────────────┘
+                          ▲ window #1 (buffer #3)
+....
+
+Przykład podziału pionowego (`/window splitv`):
+
+....
+┌───────────────────────────────────────────────────────────────────────────┐
+│Welcome to #test                     │Welcome to #abc                      │
+│12:54:15 peter | hey!        │@Flashy│12:55:12     Max | hi        │@Flashy│
+│12:55:01  @joe | hello       │@joe   │12:55:20 @Flashy | hi Max!   │Max    │
+│                             │+weebot│                             │       │
+│                             │peter  │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│[12:55] [irc/oftc] 3:#test(+n){4}    │[12:55] [irc/oftc] 4:#abc(+n){2}     │
+│[@Flashy] hi peter!█                 │[@Flashy]                            │
+└───────────────────────────────────────────────────────────────────────────┘
+      ▲ window #1 (buffer #3)               ▲ window #2 (buffer #4)
+....
+
+Przykład podziałów pionowego i poziomego:
+
+....
+                                            ▼ window #3 (buffer #5)
+┌───────────────────────────────────────────────────────────────────────────┐
+│Welcome to #test                     │Welcome to #def                      │
+│12:54:15 peter | hey!        │@Flashy│12:55:42 @Flashy | hi        │@Flashy│
+│12:55:01  @joe | hello       │@joe   │12:55:56    alex | hi Flashy │alex   │
+│                             │+weebot│                             │       │
+│                             │peter  │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│                             │       │[12:55] [irc/oftc] 5:#def(+n){2}     │
+│                             │       │[@Flashy]                            │
+│                             │       │─────────────────────────────────────│
+│                             │       │Welcome to #abc                      │
+│                             │       │12:55:12     Max | hi        │@Flashy│
+│                             │       │12:55:20 @Flashy | hi Max!   │Max    │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│                             │       │                             │       │
+│[12:55] [irc/oftc] 3:#test(+n){4}    │[12:55] [irc/oftc] 4:#abc(+n){2}     │
+│[@Flashy] hi peter!█                 │[@Flashy]                            │
+└───────────────────────────────────────────────────────────────────────────┘
+      ▲ window #1 (buffer #3)               ▲ window #2 (buffer #4)
+....
+
+[[bars]]
+=== Paski
+
+'Pasek' to obszar poza rozmową, mogący zawierać dowolny rodzaj tekstu.
+
+Opcje paska mogą być ustawiane za pomocą opcji `weechat.bar.nazwa.opcja`,
+gdzie `nazwa` to nazwa paska i `opcja` to opcja dla tego paska.
+
+Lista opcji dla pasków:
+
+[width="100%",cols="2m,2,10",options="header"]
+|===
+| Opcja | Wartości | Opis
+
+| type | `root`, `window` |
+  Pasek o typie `root` wyświetlany jest dokładnie raz na ekranie, poza wszystkimi
+  oknami. Domyślnie nie ma paska tego typu, jednak przykładowym paskiem tego typu
+  jest pasek 'buffers' tworzony przez skrypt 'buffers.pl' (boczny pasek z listą
+  buforów). +
+  Pasek o typie `window` wyświetlany jest w każdym oknie, na przykład jeśli
+  podzielisz raz okno ekran (za pomocą `/window splith` lub `/window splitv`),
+  uzyskasz po jednym pasku w każdym oknie. Cztery domyślne paski  ('title',
+  'status', 'input', 'nicklist') posiadają typ `window`.
+
+| position | `top`, `bottom`, `left`, `right` |
+  Pozycja paska: powyżej/poniżej ekranu rozmowy, po jego lewej/prawej stronie.
+
+| priority | integer ≥ 0 |
+  Priorytet wyświetlania paska: jest on używany do uporządkowania pasków na
+  ekranie, kiedy więcej niż jeden pasek posiada ten sam typ i położenie. +
+  Paski są wyświetlane od brzegu do środka ekranu. Paski z wyższym priorytetem
+  zostaną wyświetlone na początku, czyli bliżej krawędzi. +
+  Przykład: pasek 'input' ma priorytet 1000, dlatego jest wyświetlany przed
+  paskiem 'status', który ma priorytet 500.
+
+| size | integer ≥ 0 |
+  Rozmiar paska:  ilość kolumn dla pozycji lewo/prawo, numer linii dla pozycji
+  góra/dół. Rozmiar `0` oznacza automatyczny - rozmiar zostanie wyliczony zgodnie
+  z wyświetlaną zawartością.
+
+| size_max | integer ≥ 0 |
+  Maksymalny rozmiar paska, `0` = brak limitu (opcja ta jest używana tylko jeśli
+  `size` = 0).
+
+| color_bg | color |
+  Domyślny kolor tła paska.
+
+| color_fg | color |
+  Domyślny kolor tekstu na pasku.
+
+| color_delim | color |
+  Kolor separatorów na pasku.
+
+| hidden | `on`, `off` |
+  Kiedy ta opcja jest ustawiona na `on`, pasek jest ukrywany. +
+  Uwaga: zamiast zmiany tej opcji zaleca się użycie komendy `/bar`, na przykład:
+  `/bar toggle nicklist` (zobacz komendę <<command_weechat_bar,/bar>> po więcej
+  informacji).
+
+| separator | `on`, `off` |
+  Kiedy ta opcja jest ustawiona na `on`, separator (linia) jest wyświetlany
+  pomiędzy tym paskiem a pozostałymi (lub oknem rozmowy).
+
+| items | string |
+  Lista 'elementów' (zobacz <<bar_items,elementy>> po więcej informacji).
+
+| filling_left_right | `horizontal`, `vertical`, `columns_horizontal`, `columns_vertical` |
+  Typ wypełnienia paska dla pozycji o pozycji `left` lub `right` (zobacz
+  <<bar_filling,wypełnienie>> po więcej informacji).
+
+| filling_top_bottom | `horizontal`, `vertical`, `columns_horizontal`, `columns_vertical` |
+  Typ wypełnienia paska dla pozycji o pozycji `top` lub `bottom` (zobacz
+  <<bar_filling,wypełnienie>> po więcej informacji).
+
+| conditions | string |
+  Warunki wyświetlania paska (zobacz <<bar_conditions,warunki>> po więcej
+  informacji).
+|===
+
+[[bar_items]]
+==== Elementy
+
+Opcja 'items' jest ciągiem z listą elementów paska oddzielonych przecinkiem
+(spacja pomiędzy elementami na ekranie) lub "+" (elementy sklejone).
+
+Lista wszystkich elementów paska jest wyświetlana za pomocą komendy `/bar listitems`.
+
+Przed i za nazwą elementu można używać znaków (nie będących alfanumerycznymi,
+"-" lub "_"). Będą one wyświetlane przed/za elementem z kolorem separatorów
+zdefiniowanych dla paska (opcja 'color_delim').
+
+Przykład paska z elementami "[time],buffer_number+:+buffer_plugin+.+buffer_name":
+
+....
+┌───────────────────────────────────────────────────────────────────────────┐
+│[12:55] 3:irc/freenode.#weechat                                            │
+└───────────────────────────────────────────────────────────────────────────┘
+....
+
+Specjalna składnia może zostać użyta, żeby wymusić bufor używany do wyświetlenia
+elementów paska: "@bufor:element" (gdzie "bufor" to pełna nazwa bufora i "element"
+to nazwa elementu paska).
+
+Jest to przydatne w paskach typu `root` do wyświetlania elementów dla konkretnych
+buforów, które nie są wyświetlane w obecnym oknie (lub nawet nie wyświetlanych
+w ogóle).
+
+Przykład: lista nicków dla bitlbee w pasku `root` (jeśli pasek nazywa się 'bitlist'
+i serwer bitlbee nazywa sie 'bitlbee'):
+
+----
+/set weechat.bar.bitlist.items "@irc.bitlbee.&bitlbee:buffer_nicklist"
+----
+
+[[bar_filling]]
+==== Wypełnienie
+
+Są cztery typy wypełnień:
+
+* `horizontal`: elementy są wyświetlane poziomo, od lewej do prawej. Jeśli
+  w elementach występują nowe linie, odstęp jest używany do ich oddzielenia.
+* `vertical`: elementy są wyświetlane od góry do dołu. Jeśli w elementach
+  występują nowe linie, do ich oddzielenia używana jest nowa linia.
+* `columns_horizontal`: elementy są wyświetlane z użyciem kolumn, gdzie tekst
+  tekst jest wyrównany do lewej. Pierwszy element znajduje się na górze z lewej,
+  kolejny w tej samej linii z prawej.
+* `columns_vertical`: elementy są wyświetlane z użyciem kolumn, gdzie tekst
+  tekst jest wyrównany do lewej. Pierwszy element znajduje się na górze z lewej,
+  kolejny jest linię niżej.
+
+Domyślne paski 'title', 'status' i 'input' mają wypełnienie 'horizontal',
+domyślny pasek 'nicklist' ma wypełnienie 'vertical'.
+
+Przykłady wypełnień paska 'nicklist':
+
+....
+┌──────────────────────────────────────────────────┐
+│Welcome to #test, this is a test channel          │
+│12:54:15 peter | hey!                    │@carl   │
+│12:55:01  +Max | hello                   │@jessika│
+│                                         │@maddy  │
+│                                         │%Diego  │
+│                                         │%Melody │
+│                                         │+Max    │
+│                                         │ celia  │
+│                                         │ Eva    │
+│                                         │ freddy │
+│                                         │ Harold^│
+│                                         │ henry4 │
+│                                         │ jimmy17│
+│                                         │ jodie ▼│
+│[12:55] [6] [irc/freenode] 3:#test(+n){24}        │
+└──────────────────────────────────────────────────┘
+                filling_left_right = vertical ▲
+
+┌──────────────────────────────────────────────────┐
+│Welcome to #test, this is a test channel          │
+│12:54:15 peter | hey!           │@carl     lee    │
+│12:55:01  +Max | hello          │@jessika  louise │
+│                                │@maddy    mario  │
+│                                │%Diego    mark   │
+│                                │%Melody   peter  │
+│                                │+Max      Rachel │
+│                                │ celia    richard│
+│                                │ Eva      sheryl │
+│                                │ freddy   Vince  │
+│                                │ Harold^  warren │
+│                                │ henry4   zack   │
+│                                │ jimmy17         │
+│                                │ jodie           │
+│[12:55] [6] [irc/freenode] 3:#test(+n){24}        │
+└──────────────────────────────────────────────────┘
+        filling_left_right = columns_vertical ▲
+
+┌───────────────────────────────────────────────────────────────────────┐
+│@carl    %Diego    celia    Harold^  jodie    mario    Rachel   Vince  │
+│@jessika %Melody   Eva      henry4   lee      mark     richard  warren │
+│@maddy   +Max      freddy   jimmy17  louise   peter    sheryl   zack   │
+│───────────────────────────────────────────────────────────────────────│
+│                                                                       │
+        filling_top_bottom = columns_vertical ▲
+
+┌───────────────────────────────────────────────────────────────────────┐
+│@carl    @jessika @maddy   %Diego   %Melody  +Max      celia    Eva    │
+│ freddy   Harold^  henry4   jimmy17  jodie    lee      louise   mario  │
+│ mark     peter    Rachel   richard  sheryl   Vince    warren   zack   │
+│───────────────────────────────────────────────────────────────────────│
+│                                                                       │
+      filling_top_bottom = columns_horizontal ▲
+....
+
+[[bar_conditions]]
+==== Warunki
+
+Opcja 'conditions' jest ciągiem przetwarzanym w celu ustalenia czy pasek ma
+zostać wyświetlony w oknie (jest używany tylko dla pasków z typem 'window').
+
+Ciąg może być:
+
+* 'active': okno musi być aktywne
+* 'inactive': okno musi być nieaktywne
+* 'nicklist': bufor wyświetlany w oknie musi mieć listę nicków
+* wyrażenie: jest wykonywane jako logiczne (zobacz komendę
+  <<command_weechat_eval,/eval>>)
+
+Dla wyrażeń dostępne są następujące zmienne:
+
+* `${active}`: prawda, jeśli okno jest aktywne
+* `${inactive}`: prawda, jeśli okno jest nieaktywne
+* `${nicklist}`: prawda, jeśli okno posiada listę nicków
+
+Następujące wskaźniki są dostępne:
+
+* `${window}`: okno, dla którego warunek jest sprawdzany
+* `${buffer}`: bufor okna, dla którego warunek jest sprawdzany
+
+Przykład wyświetlania paska z listą nicków w każdym oknie z taką listą i tylko
+jeśli szerokość okna > 100:
+
+----
+/set weechat.bar.nicklist.conditions "${nicklist} && ${window.win_width} > 100"
+----
+
+Taki sam warunek ale lista nicków będzie wyświetlana zawsze w buforze '&bitlbee'
+(nawet jeśli okno jest małe):
+
+----
+/set weechat.bar.nicklist.conditions "${nicklist} && (${window.win_width} > 100 || ${buffer.full_name} == irc.bitlbee.&bitlbee)"
+----
+
+[[notify_levels]]
+=== Poziomy powiadomień
+
+Dostępne są cztery poziomy dla wiadomości wyświetlanych w buforach, od najniższego
+do najwyższego:
+
+* 'low': wiadomości mało istotne (na przykład dla irc join/part/quit)
+* 'message': wiadomość od użytkownika
+* 'private': wiadomość w buforze prywatnym
+* 'highlight': wiadomość z powiadomieniem
+
+Każdy bufor posiada poziom powiadomień, który decyduje o tym, jakie wiadomości
+zostaną dodane do bufora w hotliście.
+
+Domyślny poziom powiadomień można ustawić za pomocą opcji
+<<option_weechat.look.buffer_notify_default,weechat.look.buffer_notify_default>>,
+domyślna wartość to 'all'.
+
+[width="50%",cols="3m,10",options="header"]
+|===
+| Poziom powiadomień | Poziom wiadomości dodawanej do hotlisty
+| none               | (brak)
+| highlight          | 'highlight' + 'private'
+| message            | 'highlight' + 'private' + 'message'
+| all                | 'highlight' + 'private' + 'message' + 'low'
+|===
+
+Poziom powiadomień może być definiowany dla zestawu buforów, na przykład dla
+wszystkich buforów serwera irc "freenode":
+
+----
+/set weechat.notify.irc.freenode message
+----
+
+Ustawienie poziomu powiadomień na 'highlight' tylko dla kanału "#weechat":
+
+----
+/set weechat.notify.irc.freenode.#weechat highlight
+----
+
+Poziom powiadomień dla bufora może zostać ustawiony za pomocą komendy `/buffer`:
+
+----
+/buffer notify highlight
+----
+
+[[key_bindings]]
+=== Domyślne skróty klawiszowe
+
+[[key_bindings_command_line]]
+==== Skróty dla linii poleceń
+
+[width="100%",cols="^.^3,.^10,.^5",options="header"]
+|===
+| Skrót           | Opis | Komenda
+| key[←]       .2+| Idź do poprzedniego znaku w linii poleceń .2+| `/input move_previous_char`
+| key[ctrl-b]
+| key[→]       .2+| Idź do następnego znaku w linii poleceń .2+| `/input move_next_char`
+| key[ctrl-f]
+| key[ctrl-←]  .2+| Idź do poprzedniego słowa w linii poleceń .2+| `/input move_previous_word`
+| key[alt-b]
+| key[ctrl-→]  .2+| Idź do następnego słowa w linii poleceń .2+| `/input move_next_word`
+| key[alt-f]
+| key[Home]    .2+| Idź na początek linii poleceń .2+| `/input move_beginning_of_line`
+| key[ctrl-a]
+| key[End]     .2+| Idź na koniec linii poleceń .2+| `/input move_end_of_line`
+| key[ctrl-e]
+| key[ctrl-c,b]   | Wstaw kod dla pogrubionego tekstu | `/input insert \x02`
+| key[ctrl-c,c]   | Wstaw kod dla kolorowego tekstu | `/input insert \x03`
+| key[ctrl-c,i]   | Wstaw kod dla pochyłego tekstu | `/input insert \x1D`
+| key[ctrl-c,o]   | Wstaw kod dla zresetowania koloru | `/input insert \x0F`
+| key[ctrl-c,v]   | Wstaw kod dla odwrócenia koloru | `/input insert \x16`
+| key[ctrl-c,_]   | Wstaw kod dla podkreślonego tekstu | `/input insert \x1F`
+| key[Del]     .2+| Usuń następny znak w linii poleceń .2+| `/input delete_next_char`
+| key[ctrl-d]
+| key[Backsp.] .2+| Usuń poprzedni znak w linii poleceń .2+| `/input delete_previous_char`
+| key[ctrl-h]
+| key[ctrl-k]     | Usuń od znacznika kursora do końca linii poleceń (usuwany ciąg jest kopiowany do schowka) | `/input delete_end_of_line`
+| key[ctrl-r]     | Wyszukaj tekst w historii bufora (zobacz <<key_bindings_search_context,skróty dla kontekstu wyszukiwania>>) | `/input search_text`
+| key[ctrl-t]     | Przestaw znaki | `/input transpose_chars`
+| key[ctrl-u]     | Usuń od znaku kursora do początku linii poleceń (usuwany ciąg jest kopiowany do schowka) | `/input delete_beginning_of_line`
+| key[ctrl-w]     | Usuń poprzednie słowo w linii poleceń (usuwany ciąg jest kopiowany do schowka) | `/input delete_previous_word`
+| key[ctrl-y]     | Wklej zawartość schowka | `/input clipboard_paste`
+| key[ctrl-_]     | Cofnij poprzednia akcję w linii poleceń | `/input undo`
+| key[alt-_]      | Powtórz ostatnią akcję w linii poleceń | `/input redo`
+| key[Tab]        | Dopełnij komendę lub nick (ponowne wciśnięcie key[Tab]: znajdź następne dopełnienie) | `/input complete_next`
+| key[shift-Tab]  | Bez dopełnienia: wykonaj częściowe dopełnienie, z oczekującym dopełnieniem: dopełnij z poprzednim dopełnieniem | `/input complete_previous`
+| key[Enter]   .3+| Wykonaj komendę lub wyślij wiadomość (w trybie wyszukiwania: przerwij wyszukiwanie) .3+| `/input return`
+| key[ctrl-j]
+| key[ctrl-m]
+| key[↑]          | Pokaż poprzednią komendę/wiadomość (w trybie wyszukiwania: szukaj w górę) | `/input history_previous`
+| key[↓]          | Pokaż następną komendę/wiadomość (w trybie wyszukiwania: szukaj w dół) | `/input history_next`
+| key[ctrl-↑]     | Pokaż poprzednią komendę/wiadomość w historii globalnej (wspólnej dla wszystkich buforów) | `/input history_global_previous`
+| key[ctrl-↓]     | Pokaż następną komendę/wiadomość w historii globalnej (wspólnej dla wszystkich buforów) | `/input history_global_next`
+| key[alt-d]      | Usuń następne słowo w linii poleceń (usuwany ciąg jest kopiowany do schowka) | `/input delete_next_word`
+| key[alt-k]      | Przechwyć wciśnięte klawisze i zwróć ich kod (i przypisaną komendę, jeśli istnieje) w linii poleceń | `/input grab_key_command`
+| key[alt-r]      | Usuń całą zawartość linii poleceń | `/input delete_line`
+| key[alt-s]      | Przełącz aspell | `/mute aspell toggle`
+|===
+
+[[key_bindings_buffers_windows]]
+==== Skróty dla buforów / okien
+
+[width="100%",cols="^.^3,.^10,.^5",options="header"]
+|===
+| Skrót              | Opis   | Komenda
+| key[ctrl-l]        | Przerysuj całe okno | `/window refresh`
+| key[ctrl-s,ctrl-u] | Ustaw znacznik nieprzeczytania we wszystkich buforach | `/input set_unread`
+| key[ctrl-x]        | Przełącz obecny bufor jeśli bufory są dołączone z tym samym numerem | `/input switch_active_buffer`
+| key[alt-x]         | Pokaż wybrany z połączonych buforów (naciśnij key[alt-x] ponownie: wyświetl wszystkie połączone bufory) | `/input zoom_merged_buffer`
+| key[PgUp]          | Przewiń jedną stronę w górę w historii bufora | `/window page_up`
+| key[PgDn]          | Przewiń jedną stronę w dół w historii bufora | `/window page_down`
+| key[alt-PgUp]      | Przewiń w górę kilka linii w historii bufora | `/window scroll_up`
+| key[alt-PgDn]      | Przewiń w dół kilka linii w historii bufora | `/window scroll_down`
+| key[alt-Home]      | Przewiń na górę bufora | `/window scroll_top`
+| key[alt-End]       | Przewiń na dół bufora | `/window scroll_bottom`
+| key[alt-←]      .4+| Przełącz na poprzedni bufor .4+| `/buffer -1`
+| key[alt-↑]
+| key[ctrl-p]
+| key[F5]
+| key[alt-→]      .4+| Przełącz na następny bufor .4+| `/buffer +1`
+| key[alt-↓]
+| key[ctrl-n]
+| key[F6]
+| key[F7]            | Przełącz na poprzednie okno | `/window -1`
+| key[F8]            | Przełącz na następne okno | `/window +1`
+| key[F9]            | Przewiń tytuł bufora w lewo | `/bar scroll title * -30%`
+| key[F10]           | Przewiń tytuł bufora w prawo | `/bar scroll title * +30%`
+| key[F11]           | Przewiń w górę jedna stronę listy nicków | `/bar scroll nicklist * -100%`
+| key[F12]           | Przewiń w dół jedna stronę listy nicków | `/bar scroll nicklist * +100%`
+| key[alt-F11]       | Idź na początek listy nicków | `/bar scroll nicklist * b`
+| key[alt-F12]       | Idź na koniec listy nicków | `/bar scroll nicklist * e`
+| key[alt-a]         | Przełącz na następny bufor z aktywnością (z priorytetem: powiadomienie, wiadomość, inne) | `/input jump_smart`
+| key[alt-h]         | Wyczyść hotlistę (powiadomienia o aktywności w innych buforach) | `/input hotlist_clear`
+| key[alt-j,alt-l]   | Przełącz na ostatni bufor | `/input jump_last_buffer`
+| key[alt-j,alt-r]   | Przełącz na bufor IRC raw | `/server raw`
+| key[alt-j,alt-s]   | Przełącz na bufor serwera IRC | `/server jump`
+| key[alt-0...9]     | Przełącz na bufor za pomocą liczb (0 = 10) | `/buffer *N`
+| key[alt-j,01...99] | Przełącz na bufor za pomocą liczb | `/buffer NN`
+| key[alt-m]         | Przełącz obsługę myszy | `/mouse toggle`
+| key[alt-n]         | Przewiń do następnego powiadomienia | `/window scroll_next_highlight`
+| key[alt-p]         | Przewiń do poprzedniego powiadomienia | `/window scroll_previous_highlight`
+| key[alt-u]         | Przewiń do pierwszej nieprzeczytanej linii w buforze | `/window scroll_unread`
+| key[alt-w,alt-↑]   | Przełącz na okno wyżej | `/window up`
+| key[alt-w,alt-↓]   | Przełącz na okno niżej | `/window down`
+| key[alt-w,alt-←]   | Przełącz na okno z lewej | `/window left`
+| key[alt-w,alt-→]   | Przełącz na okno z prawej | `/window right`
+| key[alt-w,alt-b]   | Balansuj rozmiar wszystkich okien | `/window balance`
+| key[alt-w,alt-s]   | Zamień bufory między dwoma oknami | `/window swap`
+| key[alt-z]         | Pokaż obecne okno (ponowne wciśnięcie key[alt-z]: przywraca wcześniejszy układ okien) | `/window zoom`
+| key[alt-]key[<]    | Przełącz na poprzedni bufor z listy odwiedzonych buforów | `/input jump_previously_visited_buffer`
+| key[alt-]key[>]    | Przełącz na następny bufor z listy odwiedzonych buforów | `/input jump_next_visited_buffer`
+| key[alt-/]         | Przełącz na ostatnio wyświetlony bufor (przed ostatnią zmianą bufora) | `/input jump_last_buffer_displayed`
+| key[alt-=]         | Włącz/wyłącz filtry | `/filter toggle`
+|===
+
+[[key_bindings_search_context]]
+==== Skróty dla kontekstu wyszukiwania
+
+Te skróty są używane w kontekście wyszukiwania (kiedy kombinacja key[ctrl-r]
+zostanie wciśnięta w buforze tekstowym).
+
+[width="100%",cols="^.^3,.^10,.^5",options="header"]
+|===
+| Skrót         | Opis   | Komenda
+| key[ctrl-r]   | Przełącz rodzaj wyszukiwania: ciąg (domyślne), wyrażenie regularne | `/input search_switch_regex`
+| key[alt-c]    | Przełącz dopasowywanie wielości liter podczas wyszukiwania | `/input search_switch_case`
+| key[Tab]      | Przełącz miejsce wyszukiwania: wiadomości (domyślne), prefiksy, prefiksy + wiadmości | `/input search_switch_where`
+| key[↑]        | Poprzednie wystąpienie | `/input search_previous`
+| key[↓]        | Następne wystąpienie | `/input search_next`
+| key[Enter] .3+| Zakończ wyszukiwanie .3+| `/input search_stop`
+| key[ctrl-j]
+| key[ctrl-m]
+|===
+
+[[key_bindings_cursor_context]]
+==== Skróty dla kontekstu kursora
+
+Te skróty są używane s kontekście kursora (dowolne przemieszczanie kursora na
+ekranie).
+
+// TRANSLATION MISSING
+[width="100%",cols="^.^3,^.^3,.^10,.^8",options="header"]
+|===
+| Skrót         | Obszar   | Opis | Komenda
+| key[↑]        | -        | Move cursor one line up | `/cursor move up`
+| key[↓]        | -        | Move cursor one line down | `/cursor move down`
+| key[←]        | -        | Move cursor one column left | `/cursor move left`
+| key[→]        | -        | Move cursor one column right | `/cursor move right`
+| key[alt-↑]    | -        | Move cursor one area up | `/cursor move area_up`
+| key[alt-↓]    | -        | Move cursor one area down | `/cursor move area_down`
+| key[alt-←]    | -        | Move cursor one area left | `/cursor move area_left`
+| key[alt-→]    | -        | Move cursor one area right | `/cursor move area_right`
+| key[m]        | chat     | Quote message | `hsignal:chat_quote_message;/cursor stop`
+| key[q]        | chat     | Quote prefix + message | `hsignal:chat_quote_prefix_message;/cursor stop`
+| key[Q]        | chat     | Quote time + prefix + message | `hsignal:chat_quote_time_prefix_message;/cursor stop`
+| key[b]        | nicklist | Ban nick | `/window ${_window_number};/ban ${nick}`
+| key[k]        | nicklist | Kick nick | `/window ${_window_number};/kick ${nick}`
+| key[K]        | nicklist | Kick and ban nick | `/window ${_window_number};/kickban ${nick}`
+| key[q]        | nicklist | Open query with nick | `/window ${_window_number};/query ${nick};/cursor stop`
+| key[w]        | nicklist | Do a whois on nick | `/window ${_window_number};/whois ${nick}`
+| key[Enter] .3+| -     .3+| Stop cursor mode .3+| `/cursor stop`
+| key[ctrl-j]
+| key[ctrl-m]
+|===
+
+[[key_bindings_mouse_context]]
+==== Skróty dla kontekstu myszy
+
+Te skróty używane są w kontekście myszy, w momencie wystąpienia zdarzenia myszy.
+
+[width="100%",cols="^.^3,^.^3,^.^3,.^10,.^8",options="header"]
+|===
+| Klawisz ^(1)^ | Gest | Obszar | Opis | Komenda
+| ◾◽◽         | -             | chat                  | Przełącz na okno | `/window ${_window_number}`
+| ◾◽◽         | lewo          | chat                  | Przełącz na poprzedni bufor | `/window ${_window_number};/buffer +1`
+| ◾◽◽         | prawo         | chat                  | Przełącz na następny bufor | `/window ${_window_number};/buffer +1`
+| ◾◽◽         | lewo (długo)  | chat                  | Przełącz na pierwszy bufor | `/window ${_window_number};/buffer 1`
+| ◾◽◽         | prawo (długo) | chat                  | Przełącz na ostatni bufor | `/window ${_window_number};/input jump_last_buffer`
+| ◾◽◽         | -             | chat (bufor skryptów) | Zaznacz linię w buforze skryptów | `/script go ${_chat_line_y}`
+| ◽◽◾         | -             | chat (bufor skryptów) | Zainstaluj/usuń skrypt | `/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}`
+| ⇑           | -             | chat                  | Przewiń w górę kilka linii w historii bufora | `/window scroll_up -window ${_window_number}`
+| ⇓           | -             | chat                  | Przewiń w dół kilka linii w historii bufora | `/window scroll_down -window ${_window_number}`
+| ⇑           | -             | chat (bufor skryptów) | Przejdź 5 linii w górę w buforze skryptów | `/script up 5`
+| ⇓           | -             | chat (bufor skryptów) | Przejdź 5 linii w dół w buforze skryptów | `/script down 5`
+| key[ctrl-]⇑ | -             | chat                  | Przewiń poziomo w lewo | `/window scroll_horiz -window ${_window_number} -10%`
+| key[ctrl-]⇓ | -             | chat                  | Przewiń poziomo w prawo | `/window scroll_horiz -window ${_window_number} +10%`
+| ◾◽◽         | góra          | lista nicków          | Przewiń w górę jedna stronę listy nicków | `/bar scroll nicklist ${_window_number} -100%`
+| ◾◽◽         | dół           | lista nicków          | Przewiń w dół jedna stronę listy nicków | `/bar scroll nicklist ${_window_number} +100%`
+| ◾◽◽         | góra (długo)  | lista nicków          | Idź na początek listy nicków | `/bar scroll nicklist ${_window_number} b`
+| ◾◽◽         | dół (długo)   | lista nicków          | Idź na koniec listy nicków | `/bar scroll nicklist ${_window_number} e`
+| ◾◽◽         | -             | lista nicków          | Otwórz prywatną rozmowę z nick | `/window ${_window_number};/query ${nick}`
+| ◽◽◾         | -             | lista nicków          | Wykonaj whois dla nicka | `/window ${_window_number};/whois ${nick}`
+| ◾◽◽         | lewo          | lista nicków          | Wykop nick | `/window ${_window_number};/kick ${nick}`
+| ◾◽◽         | lewo (długo)  | lista nicków          | Wykop i zbanuj nick | `/window ${_window_number};/kickban ${nick}`
+| ◽◽◾         | lewo          | lista nicków          | Zbanuj nick | `/window ${_window_number};/ban ${nick}`
+| ◽◽◾         | -             | linia poleceń         | Przechwyć zdarzenie myszy i wstaw jego kod w linii poleceń | `/input grab_mouse_area`
+| ⇑           | -             | dowolny pasek         | Przewiń pasek o -20% | `/bar scroll ${_bar_name} ${_window_number} -20%`
+| ⇓           | -             | dowolny pasek         | Przewiń pasek o +20% | `/bar scroll ${_bar_name} ${_window_number} +20%`
+| ◽◾◽         | -             | gdziekolwiek          | Włącz tryb kursora w tym miejscu | `/cursor go ${_x},${_y}`
+|===
+
+[NOTE]
+^(1)^ "⇑" i "⇓" to przewijanie rolką myszy w górę i w dół.
+
+[[mouse]]
+=== Wsparcie myszy
+
+WeeChat obsługuje kliknięcia myszy i gesty. Działa to z lokalnym terminalem,
+jak i zdalnie przez połączenie ssh z lub bez użycia screena/tmuxa.
+
+[[mouse_enable]]
+==== Włączenie obsługi myszy
+
+Żeby włączyć obsługę myszy podczas uruchamiania:
+
+----
+/set weechat.look.mouse on
+----
+
+Żeby włączyć obsługę myszy teraz, wciśnij key[alt-m] lub wykonaj komendę:
+
+----
+/mouse enable
+----
+
+Możliwe jest czasowe wyłączenie obsługi myszy i przypisanie tego do skrótu. Na
+przykład skrót key[alt-x] wyłączający obsługę myszy na 10 sekund:
+
+----
+/key bind meta-x /mouse toggle 10
+----
+
+Kiedy obsługa myszy jest włączona w WeeChat, można użyć modyfikatora key[shift] do
+zaznaczenia lub kliknięcia w terminalu, tak jakby obsługa myszy była wyłączona
+(w niektórych terminalach jak iTerm należy użyć key[alt] zamiast key[shift]).
+
+[NOTE]
+W razie jakichkolwiek problemów z obsługą myszy, zajrzyj do 'WeeChat FAQ'.
+
+[[mouse_bind_events]]
+==== Przypisanie zdarzeń myszy do komend
+
+Wiele domyślnych zdarzeń myszy jest już zdefiniowanych w WeeChat (zobacz
+<<key_bindings_mouse_context,skróty dla kontekstu myszy>>).
+
+Możesz zmienić lub dodać przypisania za pomocą komendy `/key` używając kontekstu
+"mouse" (dla składni zobacz <<command_weechat_key,komenda /key>>).
+
+Nazwa zdarzenia zawiera modyfikator (opcjonalny), nazwę klawisza/rolki i gest
+(opcjonalny). Różne elementy są rozdzielane przez "-".
+
+Lista modyfikatorów:
+
+[width="50%",cols="3m,4",options="header"]
+|===
+| Modyfikator | Opis
+| ctrl        | Klawisz key[ctrl]
+| alt         | Klawisz key[alt]
+| ctrl-alt    | Klawisze key[ctrl-]key[alt]
+|===
+
+Lista klawiszy/rolek:
+
+[width="50%",cols="3m,4",options="header"]
+|===
+| Klawisz/rolka       | Opis
+| button1             | Lewy klawisz myszy
+| button2             | Prawy klawisz myszy
+| button3             | Środkowy klawisz myszy (często naciśnięcie rolki)
+| button4 ... button9 | Dodatkowe klawisze
+| wheelup             | Rolka (w górę)
+| wheeldown           | Rolka (w dół)
+|===
+
+Lista gestów (tylko dla klawiszy, nie rolki):
+
+[width="50%",cols="3m,4",options="header"]
+|===
+| Gest               | Odległość
+| gesture-up         | 3 ... 19
+| gesture-up-long    | ≥ 20
+| gesture-down       | 3 ... 19
+| gesture-down-long  | ≥ 20
+| gesture-left       | 3 ... 39
+| gesture-left-long  | ≥ 40
+| gesture-right      | 3 ... 39
+| gesture-right-long | ≥ 40
+|===
+
+Lista niedkończonych zdarzeń (tylko dla przycisków, użyteczne dla wtyczek/skryptów):
+
+[width="50%",cols="3m,4",options="header"]
+|===
+| Zdarzenie  | Opis
+| event-down | Klawisz został wciśnięty ale jeszcze nie puszczony
+| event-drag | Mysz została przesunięta z wciśniętym klawiszem
+|===
+
+Przykłady zdarzeń:
+
+* `button1`
+* `ctrl-button1`
+* `button1-gesture-right`
+* `button1-event-down`
+* `button1-event-drag`
+* `alt-button2-gesture-down-long`
+* `wheelup`
+* `ctrl-alt-wheeldown`
+* ...
+
+[TIP]
+Podczas przypisywania skrótów w kontekście myszy, możliwe jest dopasowanie wielu
+zdarzeń używając `*` na początku lub końcu nazwy, na przykład `button1-gesture-*`
+będzie pasować do gestów wykonanych z użyciem lewego przycisku myszy.
+
+[TIP]
+Możesz znaleźć nazwę zdarzenia za pomocą komendy `/input grab_mouse` wykonując
+następnie zdarzenie za pomocą myszy. Umieści to zdarzenie w linii poleceń.
+
+[[command_line]]
+=== Linia poleceń
+
+Linia poleceń WeeChat (na dole okna) pozwala na wykonywanie komend lub wysłanie
+tekstu do bufora.
+
+[[command_line_syntax]]
+==== Składnia
+
+Komendy zaczynają się od znaku "/", następnie wpisujemy komendę. Na przykład,
+aby zobaczyć listę wszystkich opcji:
+
+----
+/set
+----
+
+Tekst wysłany do buforu to dowolny tekst, który nie zaczyna się od znaku "/".
+Na przykład, żeby wysłać tekst 'hello' do obecnego buforu wystarczy:
+
+----
+hello
+----
+
+Jednak możliwe jest rozpoczęcie tekstu znakiem "/", wpisując go podwójnie.
+Na przykład, żeby wysłać tekst '/set' do obecnego buforu:
+
+----
+//set
+----
+
+[[command_line_colors]]
+==== Kody kolorów
+
+Dla niektórych wtyczek jak IRC, można użyć kolorów i atrybutów w następujący sposób
+(wciśnij key[ctrl-c] następnie literę z opcjonalną wartością):
+
+key[ctrl-c,b]::
+    pogrubiony tekst
+
+key[ctrl-c,c], key[xx]::
+    kolor tekstu `xx` (zgodnie z poniższą listą kolorów)
+
+key[ctrl-c,c], key[xx]key[,]key[yy]::
+    kolor tekstu `xx` i tła `yy` (zgodnie z poniższą listą kolorów)
+
+key[ctrl-c,i]::
+    pochyły tekst
+
+key[ctrl-c,o]::
+    wyłącza kolory i atrybuty
+
+key[ctrl-c,v]::
+    odwróć video (przywraca kolor tekstu i tła)
+
+key[ctrl-c,_]::
+    podkreślony tekst
+
+[NOTE]
+Ten sam sktót (bez numeru dla key[ctrl-c,c]) może zostać użyty do zatrzymania
+atrybutu.
+
+Kody kolorów dla key[ctrl-c,c]:
+
+[width="50%",cols="^1m,3,3",options="header"]
+|===
+| Kod  | IRC           | WeeChat (curses)
+| 00   | white         | white
+| 01   | black         | black
+| 02   | dark blue     | blue
+| 03   | dark green    | green
+| 04   | light red     | lightred
+| 05   | dark red      | red
+| 06   | magenta       | magenta
+| 07   | orange        | brown
+| 08   | yellow        | yellow
+| 09   | light green   | lightgreen
+| 10   | cyan          | cyan
+| 11   | light cyan    | lightcyan
+| 12   | light blue    | lightblue
+| 13   | light magenta | lightmagenta
+| 14   | gray          | gray
+| 15   | light gray    | white
+|===
+
+Przykład: wyświetlenie "hello everybody!" z pogrubionym jasno niebieskim "hello"
+i podkreślonym jasno czerwonym "everybody":
+
+----
+^Cc12^Cbhello ^Cb^Cc04^Cueverybody^Cu^Cc!
+----
+
+[NOTE]
+We wtyczce irc, można zmienić przypisania tych kolorów za pomocą opcji
+<<option_irc.color.mirc_remap,irc.color.mirc_remap>>.
+
+[[colors]]
+=== Kolory
+
+WeeChat może użyć do 256 par kolorów do wyświetlania tekstu w paskach i obszarze
+rozmów (twój terminal musi wspierać do 256 par kolorów, aby użyć ich w WeeChat).
+
+Zgodnie z wartością zmiennej środowiskowej 'TERM', możesz posiadać następujące
+limity dla kolorów w WeeChat:
+
+[width="50%",cols="8,>2,>2",options="header"]
+|===
+| $TERM                                 | Kolory | Pary ^(1)^
+| "rxvt-unicode", "xterm",...           |     88 |        256
+| "rxvt-256color", "xterm-256color",... |    256 |      32767
+| "screen"                              |      8 |         64
+| "screen-256color"                     |    256 |      32767
+|===
+
+[NOTE]
+^(1)^ Nawet w przypadku, kiedy twój terminal obsługuje więcej niż 256 par, WeeChat
+może użyć ich tylko 256, ze względu na ograniczenia ncurses.
+
+Możesz wykonać `weechat --colors` lub użyć komendy `/color` w WeeChat, aby
+wyświetlić limity dla twojego środowiska.
+
+Niektóre z zalecanych wartości dla 'TERM' jeśli chcesz używać 256 kolorów:
+
+* dla screena: 'screen-256color'
+* bez screena: 'xterm-256color', 'rxvt-256color', 'putty-256color',...
+
+[NOTE]
+Być może konieczne jest zainstalowanie pakietu "ncurses-term", w celu użycia
+tych wartości dla zmiennej 'TERM'.
+
+Jeśli używasz screena, możesz dodać to do swojego '~/.screenrc':
+
+----
+term screen-256color
+----
+
+Jeśli wartość zmiennej 'TERM' jest niewłaściwa, a WeeChat został już uruchomiony,
+nie panikuj! Możesz zmienić ją bez restatowania, za pomocą skryptu 'shell.py':
+
+----
+/shell setenv TERM=screen-256color
+/upgrade
+----
+
+[[colors_basic]]
+==== Podstawowe kolory
+
+Podstawowe kolory w WeeChat to:
+
+[width="50%",cols="^3m,8",options="header"]
+|===
+| Nazwa        | Kolor
+| default      | Domyślny kolor terminala (przezroczysty dla tła)
+| black        | Czarny
+| darkgray     | Ciemny szary
+| red          | Ciemny czerwony
+| lightred     | Jasny czerwony
+| green        | Ciemny zielony
+| lightgreen   | Jasny zielony
+| brown        | Brązowy
+| yellow       | Żółty
+| blue         | Ciemny niebieski
+| lightblue    | Jasny niebieski
+| magenta      | Ciemny karmazynowy
+| lightmagenta | Jasny karmazynowy
+| cyan         | Ciemny błękitny
+| lightcyan    | Jasny błękitny
+| gray         | Szary
+| white        | Biały
+|===
+
+[[colors_extended]]
+==== Rozszerzone kolory
+
+Weechat dynamicznie alokuje pary kolorów, kiedy kolory są używane na ekranie (do
+wyświetlania buforów i pasków).
+
+W dodatku do podstawowych kolorów, możesz użyć numer koloru pomiędzy 1 a limitem
+twojego terminala.
+
+Użyj komendy `/color`, aby zobaczyć obecne kolory i limity. Za pomocą key[alt-c]
+możesz tymczasowo przełączyć się na kolory terminala, żeby wybrać kolor.
+
+Na przykład jeśli chcesz wyświetlać czas na pomarańczowo w buforze:
+
+----
+/set weechat.color.chat_time 214
+----
+
+Lub jeśli chcesz mocno ciemno zielonego tła dla pasku statusu:
+
+----
+/set weechat.bar.status.color_bg 22
+----
+
+[[colors_aliases]]
+==== Aliasy
+
+Możesz dodać aliasy do kolorów za pomocą komendy `/color alias` i używać ich w
+dowolnej opcji jako koloru.
+
+Na przykład:
+
+----
+/color alias 214 orange
+/set weechat.color.chat_delimiters orange
+----
+
+[[colors_attributes]]
+==== Atrybuty
+
+Możliwe jest użycie niektórych atrybutów dla kolorów. Jeden lub więcej z nich
+może zostać użyty przed nazwą lub numerem koloru:
+
+* `*` : pogrubiony tekst
+* `!` : odwrócenie video
+* `/` : pochyły
+* `_` : podkreślony tekst
+* `|` : zachowaj atrybuty: nie resetuj pogrubienia/odwrócenia/pochylenia/podkreślenia,
+  podczas zmiany koloru
+
+Na przykład jeśli chcesz, żeby twój nick byl biały i podkreślony:
+
+----
+/set weechat.color.chat_nick_self _white
+----
+
+Lub jeśli chcesz, żeby czas w pasku statusu był pomarańczowy, podkreślony i
+pogrubiony:
+
+----
+/set weechat.color.status_time *_214
+----
+
+Aby użyć atrybutu z domyślnym kolorem terminala (-1), należy użyć numeru większego
+od ostatniego koloru terminala, na przykład maksymalny kolor w WeeChat: 99999.
+
+Przykład pogrubienia z domyślnym kolorem terminala:
+
+----
+/set weechat.color.status_time *99999
+----
+
+[[options_and_commands]]
+=== Opcje i komendy
+
+[[sec_options]]
+==== Opcje dla bezpiecznych danych (sec.conf)
+
+Sekcje:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sekcja  | Komenda                            | Opis
+| crypt   | /set sec.crypt.*                   | Opcje szyfrowania
+| data    | <<command_weechat_secure,/secure>> | Zabezpieczone dane
+|===
+
+Opcje:
+
+include::autogen/user/sec_options.txt[]
+
+[[weechat_options]]
+==== Opcje WeeChat (weechat.conf)
+
+Sekcje:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sekcja     | Komenda                                   | Opis
+| debug      | <<command_weechat_debug,/debug set>>      +
+               /set weechat.debug.*                      | Poziom debugowania dla rdzenia i wtyczek (opcje mogą być dodawane/usuwane w sekcji)
+| startup    | /set weechat.startup.*                    | Opcje dla startu aplikacji
+| look       | /set weechat.look.*                       | Wygląd
+| palette    | <<command_weechat_color,/color alias>>    +
+               /set weechat.palette.*                    | Aliasy kolorów (opcje mogą być dodawane/usuwane w sekcji)
+| color      | /set weechat.color.*                      | Kolory
+| completion | /set weechat.completion.*                 | Opcje dopełnień
+| history    | /set weechat.history.*                    | Opcje historii (komend i buforów)
+| proxy      | <<command_weechat_proxy,/proxy>>          +
+               /set weechat.proxy.*                      | Opcje proxy
+| network    | /set weechat.network.*                    | Opcje sieci/SSL
+| bar        | <<command_weechat_bar,/bar>>              +
+               /set weechat.bar.*                        | Opcje pasków
+| layout     | <<command_weechat_layout,/layout>>        | Układy
+| notify     | <<command_weechat_buffer,/buffer notify>> | Poziomy powiadomień dla buforów (opcje mogą być dodawane/usuwane w sekcji)
+| filter     | <<command_weechat_filter,/filter>>        | Filtry
+| key        | <<command_weechat_key,/key>>              | Skróty klawiszowe dla domyślnego kontekstu
+| key_search | <<command_weechat_key,/key>>              | Skróty klawiszowe dla kontekstu wyszukiwania
+| key_cursor | <<command_weechat_key,/key>>              | Skróty klawiszowe dla kontekstu kursora
+| key_mouse  | <<command_weechat_key,/key>>              | Skróty klawiszowe dla kontekstu myszy
+|===
+
+Opcje:
+
+include::autogen/user/weechat_options.txt[]
+
+[[weechat_commands]]
+==== Komendy WeeChat
+
+include::autogen/user/weechat_commands.txt[]
+
+[[plugins]]
+== Wtyczki
+
+Wtyczka jest biblioteka dynamiczną, napisaną w C i skompilowaną, która jest
+ładowana przez WeeChat.
+W systemach GNU/Linux plik ma rozszerzenie ".so", w Windowsie ".dll".
+
+Znalezione wtyczki są automatycznie ładowane podczas uruchamiania WeeChat,
+możliwe jest również ładowanie lub wyładowywanie wtyczek podczas pracy WeeChat.
+
+Ważne jest, aby odróżniać 'wtyczkę' od 'skryptu': 'wtyczka' jest to plik binarny
+skompilowany i ładowany za pomocą polecenia `/plugin`, natomiast 'skrypt' to
+plik tekstowy, ładowany za pomocą wtyczki jak na przykład 'python' za pomocą
+polecenia `/python`.
+
+Możesz użyć komendy `/plugin` żeby załadować/wyładować wtyczkę, lub wyświetlić
+wszystkie załadowane wtyczki.
+Podczas wyładowywania wtyczki, wszystkie bufory utworzone przez nią zostaną
+automatycznie zamknięte.
+
+Przykłady ładowania, wyładowywania i wyświetlania załadowanych wtyczek:
+
+----
+/plugin load irc
+/plugin unload irc
+/plugin list
+----
+
+Domyślne wtyczki:
+
+[width="50%",cols="^1,5",options="header"]
+|===
+| Wtyczka   | Opis
+| alias     | Definiuje aliasy dla komend
+| aspell    | Sprawdzanie pisowni w linii poleceń
+| charset   | Ustawianie kodowania dla buforów
+| fifo      | Kolejka FIFO używana do zdalnego wysyłania poleceń dla WeeChat
+| irc       | Protokół IRC
+| logger    | Logowanie zawartości buforów do plików
+| relay     | Przekazuje dane przez sieć
+| rmodifier | Zamienia ciągi pasujące do wyrażeń regularnych
+| script    | Zarządzanie skryptami
+| python    | Wsparcie dla skryptów napisanych w Pythonie
+| perl      | Wsparcie dla skryptów napisanych w Perlu
+| ruby      | Wsparcie dla skryptów napisanych w Ruby
+| lua       | Wsparcie dla skryptów napisanych w Lua
+| tcl       | Wsparcie dla skryptów napisanych w Tcl
+| guile     | Wsparcie dla skryptów napisanych w Guile (scheme)
+| xfer      | Przesyłanie plików i bezpośredni chat
+|===
+
+Więcej informacji o wtyczkach i tworzeniu skryptów (przez API), można znaleźć w
+'Opisie API wtyczek' i 'Poradniku pisania skryptów'.
+
+[[alias_plugin]]
+=== Wtyczka alias
+
+Wtyczka alias pozwala tworzyć aliasy dla komend (z WeeChat lub innych wtyczek).
+
+[[alias_commands]]
+==== Komendy
+
+include::autogen/user/alias_commands.txt[]
+
+[[aspell_plugin]]
+=== Wtyczka aspell
+
+Wtyczka aspell pozwala na sprawdzanie pisowni w linii poleceń. Możliwe jest
+ustawienie wielu języków dla bufora.
+
+[[aspell_options]]
+==== Opcje (aspell.conf)
+
+Sekcje:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sekcja     | Komenda                                   | Opis
+| color      | /set aspell.color.*                       | Kolory
+| check      | /set aspell.check.*                       | Opcje do kontrolowania sprawdzania pisowni
+| dict       | <<command_aspell_aspell,/aspell setdict>> +
+               /set aspell.dict.*                        | Słowniki używane w buforze (opcje w tej sekcji mogą być dodawane/usuwane)
+| option     | /set aspell.option.*                      | <<aspell_speller_options,Opcje słowników>> (opcje w tej sekcji mogą być dodawane/usuwane)
+|===
+
+Opcje:
+
+include::autogen/user/aspell_options.txt[]
+
+[[aspell_commands]]
+==== Komendy
+
+include::autogen/user/aspell_commands.txt[]
+
+[[aspell_speller_options]]
+==== Opcje słowników
+
+Opcje słowników mogą zostać zdefiniowane poprzez dodanie opcji w sekcji "option"
+dla konfiguracji aspell.
+
+Nazwa opcji to nazwa opcji konfiguracyjnej aspell. Listę opcji można uzyskać
+wykonując w powłoce następującą komendę:
+
+----
+$ aspell config
+----
+
+Na przykład, aby włączyć opcję "ignore-case":
+
+----
+/set aspell.option.ignore-case "true"
+----
+
+[[aspell_suggestions]]
+==== Sugestie
+
+Sugestie są wyświetlane w elemencie paska "aspell_suggest". Ilość wyświetlanych
+sugestii można ustawić za pomocą opcji 'aspell.check.suggestions'.
+
+Aby włączyć sugestie trzeba ustawić opcję 'aspell.check.suggestions' na liczbę
+≥ 0 i dodać element "aspell_suggest" do jakiegoś paska, jak 'status'.
+
+Przykład sugestii z angielskim słownikiem (`en`):
+
+....
+│[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune]                    │
+│[@Flashy] prinr █                                                                │
+└─────────────────────────────────────────────────────────────────────────────────┘
+....
+
+Przykład sugestii ze słownikami angielskim i francuskim (`en,fr`):
+
+....
+│[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune/prime,primer,primé] │
+│[@Flashy] prinr █                                                                │
+└─────────────────────────────────────────────────────────────────────────────────┘
+....
+
+[[charset_plugin]]
+=== Wtyczka charset
+
+Wtyczka charset pozwala na zmianę kodowania dla wysyłanych i otrzymywanych danych.
+
+Można zdefiniować domyślne kodowanie, oraz dla poszczególnych buforów (lub grup
+buforów).
+
+Ta wtyczka jest opcjonalna, jednak zalecana: jeśli nie jest załadowana Weechat
+może odczytywać/zapisywać dane tylko w UTF-8.
+
+Ta wtyczka powinna zostać automatycznie załadowana przy uruchomieniu Weechat.
+Aby się upewnić, że została załadowana, spróbuj:
+
+----
+/charset
+----
+
+Jeśli komenda nie zostanie znaleziona, załaduj tą wtyczkę za pomocą:
+
+----
+/plugin load charset
+----
+
+Jeśli wtyczka nie zostanie znaleziona, powinieneś skompilować ponownie WeeChat z
+wtyczkami i wsparciem dla charset.
+
+Kiedy wtyczka charset zostanie uruchomiona wyświetla kodowanie terminala i.
+wewnętrzne.
+Kodowanie terminala zależy od ustawień systemu, a wewnętrzne to UTF-8.
+
+Na przykład:
+
+....
+charset: terminal: ISO-8859-15, internal: UTF-8
+....
+
+[[charset_options]]
+==== Opcje (charset.conf)
+
+Sekcje:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sekcja  | Komenda                                     | Opis
+| default | /set charset.default.*                      | Domyślne kodowanie
+| decode  | <<command_charset_charset,/charset decode>> +
+            /set charset.decode.*                       | Kodowanie dla wiadomości przychodzących w buforach (opcje w tej sekcji mogą być dodawane/usuwane)
+| encode  | <<command_charset_charset,/charset encode>> +
+            /set charset.encode.*                       | Kodowanie dla wiadomości wychodzących w buforach (opcje w tej sekcji mogą być dodawane/usuwane)
+|===
+
+Opcje:
+
+include::autogen/user/charset_options.txt[]
+
+[[charset_commands]]
+==== Komendy
+
+include::autogen/user/charset_commands.txt[]
+
+[[charset_set]]
+==== Ustawianie kodowania
+
+Żeby ustawić globalne kodowanie dla wysyłanych i otrzymywanych danych należy
+użyć komendy `/set`.
+
+Na przykład:
+
+----
+/set charset.default.decode ISO-8859-15
+/set charset.default.encode ISO-8859-15
+----
+
+Jeżeli globalna wartość dla kodowania nie jest ustawiona (na przykład podczas
+pierwszego zaladowania wtyczki), zostanie automatycznie ustawione na kodowanie
+terminala (jeśli jest inne niż UTF-8), lub domyślnie na 'ISO-8859-1'.
+
+Domyślnie kodowanie dla wysyłanych danych nie jest ustawione, dane domyślnie
+wysyłane są w kodowaniu wewnętrznym (UTF-8).
+
+W celu ustawienia kodowania dla serwera IRC, należy wywołać komendę `/charset`
+w buforze serwera.
+Jeśli zostanie podane tylko kodowanie, zostanie ono użyte dla wysyłania i odbioru.
+
+Na przykład:
+
+----
+/charset ISO-8859-15
+----
+
+Jest równoważne z:
+
+----
+/charset decode ISO-8859-15
+/charset encode ISO-8859-15
+----
+
+Aby ustawić kodowanie dla kanału (lub prywatnej rozmowy) należy wykonać to samo,
+co w przypadku serwera, tylko w buforze kanału (lub prywatnej rozmowy).
+
+W celu wyświetlenia wszystkich ustawionych kodowań, wykonaj:
+
+----
+/set charset.*
+----
+
+[[charset_troubleshooting]]
+==== Rozwiązywanie problemów
+
+W razie jakichś problemów z kodowaniem, zajrzyj do 'WeeChat FAQ'.
+
+[[fifo_plugin]]
+=== Wtyczka fifo
+
+Możesz zdalnie kontrolować WeeChat, poprzez wysyłanie komend lub tekstu do
+kolejki FIFO (jeśli opcja "plugins.var.fifo.fifo" jest włączona, domyślnie
+jest włączona).
+
+Kolejka FIFO jest zlokalizowana w '~/.weechat/' i nazywa się 'weechat_fifo_xxxx'
+(gdzie 'xxxx' to ID procesu (PID) uruchomionego WeeChat).
+
+Składnia dla komend/tekstu przekazywanego do kolejki FIFO wygląda następująco:
+
+....
+  wtyczka.bufor *tekst lub komenda
+  *tekst lub komenda
+....
+
+Kilka przykładów:
+
+* zmiana nicka na serwerze IRC freenode na "nowynick":
+
+----
+$ echo 'irc.server.freenode */nick nowynick' >~/.weechat/weechat_fifo_12345
+----
+
+* wyświetlenie tekstu na kanale IRC #weechat:
+
+----
+$ echo 'irc.freenode.#weechat *hello!' >~/.weechat/weechat_fifo_12345
+----
+
+* wyświetlenie tekstu w obecnym buforze:
+
+----
+$ echo '*hello!' >~/.weechat/weechat_fifo_12345
+----
+
+* wysłanie dwóch komend do wyładowania/przeładowania skryptów Python (należy
+  oddzielić je za pomocą "\n"):
+
+----
+$ echo -e '*/python unload\n*/python autoload' >~/.weechat/weechat_fifo_12345
+----
+
+Można napisać skrypt wysyłający komendy do wszystkich uruchomionych kopi WeeChat
+w tym samym czasie, na przykład:
+
+[source,shell]
+----
+#!/bin/sh
+if [ $# -eq 1 ]; then
+    for fifo in ~/.weechat/weechat_fifo_*
+    do
+        echo -e "$1" >$fifo
+    done
+fi
+----
+
+Nazwa skryptu to "auto_weechat_command", można go wykonać na przykład tak:
+
+----
+$ ./auto_weechat_command 'irc.freenode.#weechat *hello'
+----
+
+[[irc_plugin]]
+=== Wtyczka IRC
+
+Wtyczka IRC jest zaprojektowana do prowadzenia rozmów z innymi osobami przez
+protokół IRC.
+
+Jest multi-serwerowa i oferuje wszystkie wspierane komendy IRC włącznie z
+rozmowami DCC i transferami plików (poprzez wtyczkę xfer, zobacz
+<<xfer_plugin,Wtyczka xfer>>).
+
+[[irc_command_line_options]]
+==== Opcje z linii poleceń
+
+Możliwe jest podanie adresu URL do jednego lub wielu serwerów IRC:
+
+----
+irc[6][s]://[nick[:hasło]@]adres.serwera.irc[:port][/kanał][,kanał[...]]
+----
+
+Przykład wejścia na kanały '#weechat' i '#toto' na serwerze 'irc.freenode.net',
+na domyślnym porcie (6667), z nickiem 'nono':
+
+----
+$ weechat irc://nono@irc.freenode.net/#weechat,#toto
+----
+
+[[irc_options]]
+==== Opcje (irc.conf)
+
+Sekcje:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sekcja         | Komenda                        | Opis
+| look           | /set irc.look.*                | Wygląd
+| color          | /set irc.color.*               | Kolory
+| network        | /set irc.network.*             | Opcje sieci
+| msgbuffer      | /set irc.msgbuffer.*           | <<irc_target_buffer,Bufor dla wiadomości IRC>> (opcje w tej sekcji mogą być dodawane/usuwane)
+| ctcp           | /set irc.ctcp.*                | <<irc_ctcp_replies,Odpowiedzi CTCP>> (opcje w tej sekcji mogą być dodawane/usuwane)
+| ignore         | <<command_irc_ignore,/ignore>> | Osoby ignorowane
+| server_default | /set irc.server_default.*      | Domyślne ustawienia dla serwerów (opcje w tej sekcji mogą być dodawane/usuwane)
+| server         | <<command_irc_server,/server>> +
+                   /set irc.server.*              | Serwery
+|===
+
+Opcje:
+
+include::autogen/user/irc_options.txt[]
+
+[[irc_commands]]
+==== Komendy
+
+include::autogen/user/irc_commands.txt[]
+
+[[irc_ssl_certificates]]
+==== Certyfikaty SSL
+
+Podczas łączenia się z serwerem IRC, WeeChat domyślnie sprawdza czy połączenie
+jest w pełni zaufane.
+
+Niektóre opcje są używane do kontroli połączenia SSL:
+
+weechat.network.gnutls_ca_file::
+    ścieżka do pliku z organami certyfikującymi (domyślnie: "%h/ssl/CAs.pem")
+
+irc.server.xxx.ssl_cert::
+    certyfikat SSL używany do automatycznej identyfikacji twojego nicka (na
+    przykład CertFP w sieci oftc, zobacz niżej)
+
+irc.server.xxx.ssl_dhkey_size::
+    rozmiar klucza użytego podczas wymiany kluczy Diffie-Hellman (domyślnie: 2048)
+
+irc.server.xxx.ssl_verify::
+    sprawdź, że połączenie SSL jest w pełni zaufane (domyślnie włączone)
+
+[NOTE]
+Opcja "ssl_verify" jest domyślnie włączona, weryfikacja jest restrykcyjna i może
+się nie powieść, nawet jeśli wszystko było OK w wersjach przed 0.3.1.
+
+[[irc_connect_oftc_with_certificate]]
+===== Pierwszy przykład: połączenie z oftc i sprawdzenie certyfikatu
+
+* Import certyfikatu w kosoli:
+
+----
+$ mkdir -p ~/.weechat/ssl
+$ wget -O ~/.weechat/ssl/CAs.pem http://www.spi-inc.org/ca/spi-cacert.crt
+----
+
+Uwaga: możliwe jest umieszczenie wielu certyfikatów w pliku CAs.pem.
+
+* W WeeChat, z utworzonym wcześniej serwerem "oftc":
+
+----
+/connect oftc
+----
+
+[[irc_connect_oftc_with_certfp]]
+===== Drugi przykład: połączenie z oftc używając CertFP
+
+* Tworzenie certyfikatu w konsoli:
+
+----
+$ mkdir -p ~/.weechat/ssl
+$ cd ~/.weechat/ssl
+$ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick.pem
+----
+
+* W WeeChat, z utworzonym wcześniej serwerem "oftc":
+
+----
+/set irc.server.oftc.ssl_cert "%h/ssl/nick.pem"
+/connect oftc
+/msg nickserv cert add
+----
+
+Więcej informacji można znaleźć pod adresem: http://www.oftc.net/oftc/NickServ/CertFP
+
+[[irc_sasl_authentication]]
+==== Uwierzytelnianie SASL
+
+WeeChat wspiera uwierzytelnianie SASL, używając różnych mechanizmów:
+
+* 'plain': hasło w czystym tekście
+* 'dh-blowfish': hasło zaszyfrowane algorytmem blowfish
+* 'dh-aes': hasło zaszyfrowane algorytmem AES
+* 'external': certyfikat SSL po stronie klienta
+
+Opcje dla serwerów to:
+
+* 'sasl_mechanism': mechanizm do użycia (zobacz wyżej)
+* 'sasl_timeout': limit czasu (w sekundach) na uwierzytelnienie
+* 'sasl_username': nazwa użytkownika (nick)
+* 'sasl_password': hasło
+
+Jeśli chcesz użyć "dh-blowfish" domyślnie dla wszystkich serwerów:
+
+----
+/set irc.server_default.sasl_mechanism dh-blowfish
+----
+
+[NOTE]
+Biblioteka "gcrypt" jest wymagana podczas kompilacji WeeChat w celu dodania
+wsparcia dla mechanizmów "dh-blowfish" i "dh-aes" (zobacz <<dependencies,zależności>>).
+
+[[irc_tor_freenode]]
+==== Połączenie z siecią Freenode za pomocą TOR/SASL
+
+Jako dodatek do SSL, serwery Freenode wspierają połączenia za pomocą sieci TOR
+(https://www.torproject.org/), sieci wirtualnych tuneli umożliwiających ludziom
+oraz grupom polepszyć swoją prywatność i bezpieczeństwo w Internecie.
+
+Najpierw należy się upewnić, że WeeChat został skompilowany z <<dependencies,libgcrypt11-dev>>
+(jeśli budowaliśmy go sami ze źródeł); nie jest to konieczne, ale "dh-blowfish"
+zapewnia większe bezpieczeństwo w porównaniu z uwierzytelnianiem "plain" za
+pomocą SASL.
+
+Pierwszym krokiem jest instalacja TORa. Dla Debiana (i pochodnych):
+
+----
+$ sudo apt-get install tor
+----
+
+W WeeChat należy stworzyć proxy socks5 dla serwisu TOR (nazwa hosta/IP i port
+zależą od twojej konfiguracji TORa):
+
+----
+/proxy add tor socks5 127.0.0.1 9050
+----
+
+Teraz, stwórz nowy serwer, na przykład:
+
+----
+/server add freenode-tor p4fsi4ockecnea7l.onion
+----
+
+Ustaw proxy dla TOR:
+
+----
+/set irc.server.freenode-tor.proxy "tor"
+----
+
+Ustaw uwierzytelnianie SASL:
+
+----
+/set irc.server.freenode-tor.sasl_mechanism dh-blowfish
+/set irc.server.freenode-tor.sasl_username "twój_użytkownik"
+/set irc.server.freenode-tor.sasl_password "twoje_hasło"
+----
+
+Na koniec połącz się z serwerem:
+
+----
+/connect freenode-tor
+----
+
+Więcej informacji o Freenode i TOR: http://freenode.net/irc_servers.shtml#tor
+
+[[irc_smart_filter_join_part_quit]]
+==== Inteligentne filtry dla wiadomości
+
+Inteligentny filtr umożliwia filtrowanie informacji o wejściu/opuszczeniu/wyjściu
+z kanału, kiedy dany nick nie powiedział nic na kanale w ciągu ostatnich X minut.
+
+Jest on domyślnie włączony, ale należy dodać filtr do ukrywania linii w buforach,
+na przykład:
+
+----
+/filter add irc_smart * irc_smart_filter *
+----
+
+Możliwe jest tworzenie filtru tylko dla jednego kanału lub kanałów zaczynających
+się od tej samej nazwy (zobacz `/help filter`):
+
+----
+/filter add irc_smart_weechat irc.freenode.#weechat irc_smart_filter *
+/filter add irc_smart_weechats irc.freenode.#weechat* irc_smart_filter *
+----
+
+Można ukrywac tylko wejściu lub opuszczenia/wyjścia z kanału za pomocą tych opcji:
+
+----
+/set irc.look.smart_filter_join on
+/set irc.look.smart_filter_quit on
+----
+
+Ustawianie opóźnienia (w minutach):
+
+----
+/set irc.look.smart_filter_delay 5
+----
+
+Jeśli osoba nie odzywała się w ciągu ostatnich 5 minut, jej wejście i/lub
+opuszczenie/wyjście zostanie ukryte na kanale.
+
+[[irc_ctcp_replies]]
+==== Odpowiedzi CTCP
+
+Możliwe jest dostosowywanie odpowiedzi CTCP, lub blokowanie niektórych zapytań
+CTCP (brak odpowiedzi).
+
+Na przykład, ustawianie własnej odpowiedzi na CTCP "VERSION", możliwe jest za
+pomocą polecenia:
+
+----
+/set irc.ctcp.version "I'm running WeeChat $version, it rocks!"
+----
+
+Jeśli chcesz zablokować CTCP "VERSION" (nie odpowiadać na zapytanie), ustaw
+pusty ciąg:
+
+----
+/set irc.ctcp.version ""
+----
+
+Nawet odpowiedzi na nieznane zapytania CTCP mogą być dostosowywane, na przykład
+odpowiedź na CTCP "BLABLA":
+
+----
+/set irc.ctcp.blabla "This is my answer to CTCP BLABLA"
+----
+
+Możliwe jest dostosowywanie odpowiedzi na CTCP tylko w obrębie serwera, używając
+jego wewnętrznej nazwy przed nazwą zapytania CTCP:
+
+----
+/set irc.ctcp.freenode.version "WeeChat $version (for freenode)"
+----
+
+Jeśli chcesz przywrócić standardowe odpowiedzi dla CTCP usuń opcję:
+
+----
+/unset irc.ctcp.version
+----
+
+Następujące kody mogą być użyte w ciągach i zostaną automatycznie zamienione
+przez WeeChat podczas odpowiedzi na CTCP:
+
+[width="100%",cols="^2l,4,8",options="header"]
+|===
+| Kod          | Opis                              | Wartość/Przykład
+| $clientinfo  | Lista wspieranych CTCP            | `ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION`
+| $version     | Wersja WeeChat                    | `0.4.0-dev`
+| $versiongit  | Wersja WeeChat + wersja git ^(1)^ | `0.4.0-dev (git: v0.3.9-104-g7eb5cc4)`
+| $git         | Wersja git ^(1)^                  | `v0.3.9-104-g7eb5cc4`
+| $compilation | Data kompilacji WeeChat           | `Dec 16 2012`
+| $osinfo      | Informacje o systemie operacyjnym | `Linux 2.6.32-5-amd64 / x86_64`
+| $site        | Strona WeeChat                    | `http://www.weechat.org/`
+| $download    | Strona WeeChat, pobieranie        | `http://www.weechat.org/download`
+| $time        | Obecna data/czas                  | `Sun, 16 Dec 2012 10:40:48 +0100`
+| $username    | Nazwa użytkownika na serwerze IRC | `name`
+| $realname    | Prawdziwa nazwa na serwerze IRC   | `John Doe`
+|===
+
+[NOTE]
+^(1)^ Wersja git jest wynikiem komendy `git describe`. Jest dostępna tylko jeśli
+WeeChat został skompilowany wewnątrz repozytorium git i git był zainstalowany.
+
+Jeśli opcje CTCP nie są zdefiniowane (domyślne), odpowiedzi CTCP to:
+
+[width="100%",cols="^2,4,8",options="header"]
+|===
+| CTCP       | Format odpowiedzi                    | Przykład
+| CLIENTINFO | `$clientinfo`                        | `ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION`
+| FINGER     | `WeeChat $versiongit`                | `WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)`
+| SOURCE     | `$download`                          | `http://www.weechat.org/download`
+| TIME       | `$time`                              | `Sun, 16 Dec 2012 10:40:48 +0100`
+| USERINFO   | `$username ($realname)`              | `name (John Doe)`
+| VERSION    | `WeeChat $versiongit ($compilation)` | `WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4) (Dec 16 2012)`
+|===
+
+[[irc_target_buffer]]
+==== Bufor dla wiadomości IRC
+
+Jest możliwe dostosowanie buforu docelowego dla wiadomości IRC (bufor użyty do
+wyświetlania wiadomości) za pomocą opcji `irc.msgbuffer.*`.
+
+Dla niektórych wiadomości IRC (Zobacz poniższa listę), można ustawić wartość:
+
+current::
+    obecny bufor (jeśli jest to bufor IRC, lub domyślnie bufor serwera)
+
+private::
+    prywatny bufor dla osoby, lub bufor obecny/serwera jeśli nie zostanie
+    znaleziony (zgodnie z opcją 'irc.look.msgbuffer_fallback')
+
+server::
+    bufor serwera
+
+weechat::
+    Bufor "rdzeń" WeeChat
+
+Kiedy opcja nie jest ustawiona (domyślnie), WeeChat wybiera odpowiedni bufor,
+zazwyczaj bufor serwera albo kanału.
+
+Niepełna lista wiadomości IRC lub aliasów jakie można dostosować:
+
+[width="60%",cols="^1m,^3m,8",options="header"]
+|===
+| wiadomość | alias         | opis
+| error     |               | błąd
+| invite    |               | zaproszono na kanał
+| join      |               | wejście
+| kick      |               | wykopanie
+| kill      |               | zabicie
+| mode      |               | tryb
+| notice    |               | powiadomienie
+| part      |               | opuszczenie
+| quit      |               | wyjście
+| topic     |               | temat
+| wallops   |               | wallops
+|           | ctcp          | ctcp (wysłane lub otrzymane, w wiadomości prywatnej lub powiadomieniu)
+| 221       |               | ciąg trybu użytkownika
+| 275       | whois         | whois (bezpieczne połączenie)
+| 301       | whois         | whois (away)
+| 303       |               | ison
+| 305       | unaway        | unaway
+| 306       | away          | away
+| 307       | whois         | whois (zarejestrowany nick)
+| 310       | whois         | whois (tryb pomocy)
+| 311       | whois         | whois (użytkownik)
+| 312       | whois         | whois (serwer)
+| 313       | whois         | whois (operator)
+| 314       | whowas        | whowas
+| 315       | who           | who (koniec)
+| 317       | whois         | whois (idle)
+| 318       | whois         | whois (koniec)
+| 319       | whois         | whois (kanały)
+| 320       | whois         | whois (zidentyfikowany użytkownik)
+| 321       | list          | list (start)
+| 322       | list          | list (kanał)
+| 323       | list          | list (koniec)
+| 326       | whois         | whois (ma uprawnienia operatora)
+| 327       | whois         | whois (host)
+| 328       |               | URL kanału
+| 329       |               | data utworzenia kanału
+| 330       | whois         | whois (zalogowany jako)
+| 331       |               | brak tematu na kanale
+| 332       |               | temat kanału
+| 333       |               | informacje o temacie
+| 335       | whois         | whois (jest botem na)
+| 338       | whois         | whois (host)
+| 341       |               | zaproszenie
+| 343       | whois         | whois (is opered as)
+| 344       | reop          | reop dla kanału
+| 345       | reop          | reop dla kanału (koniec)
+| 346       | invitelist    | lista zaproszonych
+| 347       | invitelist    | lista zaproszonych (koniec)
+| 348       | exceptionlist | lista wyjątków
+| 349       | exceptionlist | lista wyjątków (koniec)
+| 351       |               | wersja serwera
+| 352       | who           | who
+| 353       | names         | lista osób na kanale
+| 366       | names         | koniec listy osób na kanale
+| 367       | banlist       | lista zbanowanych
+| 368       | banlist       | koniec listy zbanowanych
+| 369       | whowas        | whowas (koniec)
+| 378       | whois         | whois (łączy się z)
+| 379       | whois         | whois (używa trybów)
+| 432       |               | błędna nazwa użytkownika
+| 433       |               | nazwa użytkownika już zajęta
+| 438       |               | brak uprawnień do zmiany nicka
+| 671       | whois         | whois (bezpieczne połączenie)
+| 728       | quietlist     | cicha lista
+| 729       | quietlist     | koniec cichej listy
+| 901       |               | jesteś teraz zalogowany
+|===
+
+Inne numeryczne komendy mogą również zostać spersonalizowane.
+
+Wiadomość może być poprzedzona nazwą serwera, żeby być specyficzna dla danego
+serwera irc (na przykład: `freenode.whois`).
+
+Kilka przykładów:
+
+* wyświetlaj wynik komendy `/whois` w prywatnym buforze:
+
+----
+/set irc.msgbuffer.whois private
+----
+
+* przywróć domyślny bufor dla komendy `/whois` (bufor serwera):
+
+----
+/unset irc.msgbuffer.whois
+----
+
+* wyświetlaj zaproszenia w obecnym buforze, tylko na serwerze "freenode":
+
+----
+/set irc.msgbuffer.freenode.invite current
+----
+
+* wyświetlaj wiadomość "303" (ison) w buforze "core" WeeChat:
+
+----
+/set irc.msgbuffer.303 weechat
+----
+
+[[logger_plugin]]
+=== Wtyczka logger
+
+Wtyczka logger pozwala zapisywać zawartość bufora do pliku, oraz wybrać co i jak
+ma być zapisywane.
+
+[[logger_options]]
+==== Opcje (logger.conf)
+
+Sekcje:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sekcja  | Komenda             | Opis
+| look    | /set logger.look.*  | Wygląd
+| color   | /set logger.color.* | Kolory
+| file    | /set logger.file.*  | Opcje dla plików z logami
+| level   | /set logger.level.* | Poziomy logowania dla buforów (opcje w tej sekcji mogą być dodawane/usuwane)
+| mask    | /set logger.mask.*  | Maski dla nazw plików dla buforów (opcje w tej sekcji mogą być dodawane/usuwane)
+|===
+
+Opcje:
+
+include::autogen/user/logger_options.txt[]
+
+[[logger_commands]]
+==== Komendy
+
+include::autogen/user/logger_commands.txt[]
+
+[[logger_log_levels]]
+==== Poziomy logowania
+
+Logowanie odbywa się dla odpowiedniego poziomu dla każdego bufora. Domyślny
+poziom to 9 (logowane są wszystkie wiadomości wyświetlane w buforze).
+Możesz zmienić poziom dla pojedynczego bufora lub grupy buforów.
+
+Dostępne są poziomy od 0 do 9. Zero oznacza "nic nie loguj", a 9 oznacza "loguj
+wszystko".
+
+Wtyczki wykorzystują różne poziomy dla wyświetlanych wiadomości.
+Wtyczka IRC używa następujących:
+
+* poziom 1: wiadomość od użytkownika (na kanale lub prywatnie)
+* poziom 2: zmiana nicka (twojego lub innego)
+* poziom 3: dowolna wiadomość serwera (poza wejściem/opuszczeniem/wyjściem z kanału)
+* poziom 4: wiadomości serwera o wejściu/opuszczeniu/wyjściu z kanału
+
+Zatem jeśli ustawisz poziom 3 dla kanału IRC, WeeChat będzie logować wszystkie
+wiadomości, poza tymi o wejściu/opuszczeniu/wyjściu z kanału.
+
+Kilka przykładów:
+
+* ustawienie poziomu 3 dla kanału IRC #weechat:
+
+----
+/set logger.level.irc.freenode.#weechat 3
+----
+
+* ustawienie poziomu 3 dla buforu serwera freenode:
+
+----
+/set logger.level.irc.server.freenode 3
+----
+
+* ustawienie poziomu 3 dla wszystkich kanałów na serwerze freenode:
+
+----
+/set logger.level.irc.freenode 3
+----
+
+* ustawienie poziomu 2 dla wszystkich buforów IRC:
+
+----
+/set logger.level.irc 2
+----
+
+[[logger_filenames_masks]]
+==== Maski dla nazw plików
+
+Możliwe jest zdefiniowanie maski dla nazwy pliku z logiem dla każdego bufora i
+użycie do tego zmiennych lokalnych bufora. Żeby zobaczyć zmienne lokalne dla
+obecnego bufora wykonaj:
+
+----
+/buffer localvar
+----
+
+Na przykład, w buforze "irc.freenode.#weechat", WeeChat będzie szukał maski dla
+nazwy w takiej kolejności:
+
+----
+logger.mask.irc.freenode.#weechat
+logger.mask.irc.freenode
+logger.mask.irc
+logger.file.mask
+----
+
+Oznacza to, że można mieć maski specyficzne tylko dla niektórych serwerów IRC
+("logger.mask.irc.freenode") lub dla wtyczek ("logger.mask.irc").
+
+[[logger_files_by_date]]
+===== Pliki z logami uporządkowane według daty
+
+Żeby mieć pliki z logami uporządkowane według daty, możesz użyć specyfikatorów
+daty/czasu w masce (obsługiwane formaty można znaleźć w `man strftime`),
+na przykład:
+
+----
+/set logger.file.mask "%Y/%m/$plugin.$name.weechatlog"
+----
+
+Spowoduje powstanie następującej struktury:
+
+....
+~/.weechat/
+    |--- logs/
+        |--- 2010/
+            |--- 11/
+            |       irc.server.freenode.weechatlog
+            |       irc.freenode.#weechat.weechatlog
+        |--- 2010/
+            |--- 12/
+            |       irc.server.freenode.weechatlog
+            |       irc.freenode.#weechat.weechatlog
+....
+
+[[logger_irc_files_by_server_channel]]
+===== Pliki z logami IRC uporządkowane według serwera i daty
+
+Jeśli chcesz mieć oddzielne katalogi dla serwerów IRC z oddzielnym plikiem dla
+każdego kanału:
+
+----
+/set logger.mask.irc "irc/$server/$channel.weechatlog"
+----
+
+Spowoduje powstanie następującej struktury:
+
+....
+~/.weechat/
+    |--- logs/
+        |--- irc/
+            |--- freenode/
+            |       freenode.weechatlog
+            |       #weechat.weechatlog
+            |       #mychan.weechatlog
+            |--- oftc/
+            |       oftc.weechatlog
+            |       #chan1.weechatlog
+            |       #chan2.weechatlog
+....
+
+[[relay_plugin]]
+=== Wtyczka relay
+
+Wtyczka relay jest używana do przekazywania danych przez sieć, z użyciem różnych
+protokołów:
+
+* 'irc': pośrednik IRC: używany do dzielenia połączeń z serwerami IRC z jednym
+  lub wieloma klientami IRC
+* 'weechat': protokół używany przez zdalne interfejsy do wyświetlania i
+  interakcji z WeeChat (na przykład QWeeChat lub weechat-android)
+
+[[relay_options]]
+==== Opcje (relay.conf)
+
+Sekcje:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sekcja  | Komenda                            | Opis
+| look    | /set relay.look.*                  | Wygląd
+| color   | /set relay.color.*                 | Kolory
+| network | /set relay.network.*               | Opcje sieci
+| irc     | /set relay.irc.*                   | Opcje specyficzne dla protokołu irc (pośrednik irc)
+| port    | <<command_relay_relay,/relay add>> +
+            /set relay.port.*                  | Porty używane do przekazywania (protokoły irc i weechat) (opcje w tej sekcji mogą być dodawane/usuwane)
+|===
+
+Opcje:
+
+include::autogen/user/relay_options.txt[]
+
+[[relay_commands]]
+==== Komendy
+
+include::autogen/user/relay_commands.txt[]
+
+[[relay_password]]
+==== Hasło
+
+Zalecane jest ustawienie hasła dla pośrednika, za pomocą komendy:
+
+----
+/set relay.network.password "moje_hasło"
+----
+
+Hasło to używane jest przez protokoły 'irc' i 'weechat'.
+
+[[relay_ssl]]
+==== SSL
+
+Możesz używać SSL poprzez utworzenie certyfikatu i klucza prywatnego, oraz
+użycie prefiksu "ssl." w nazwie protokołu.
+
+Domyślna lokalizacja pliku z certyfikatem/kluczem to '~/.weechat/ssl/relay.pem'
+(opcja <<option_relay.network.ssl_cert_key,relay.network.ssl_cert_key>>).
+
+Możesz utworzyć certyfikat i klucz prywatny wykonując poniższe komendy:
+
+----
+$ mkdir -p ~/.weechat/ssl
+$ cd ~/.weechat/ssl
+$ openssl req -nodes -newkey rsa:2048 -keyout relay.pem -x509 -days 365 -out relay.pem
+----
+
+Jeśli WeeChat jest już uruchomiony, możesz przładować certyfikat i klucz prywatny
+za pomocą polecenia:
+
+----
+/relay sslcertkey
+----
+
+[[relay_irc_proxy]]
+==== IRC proxy
+
+Wtyczka relay może zachowywać się jak proxy dla IRC: będzie symulować serwer IRC,
+możesz się połączyć do niego za pomocą dowolnego klienta IRC (w tym WeeChat).
+
+Możesz zdefiniować oddzielne porty dla serwerów IRC, lub jeden dla wszystkich.
+
+Jeśli używasz jednego portu dla wszystkich serwerów, klient musi wysłać
+wewnętrzną nazwę serwera w komendzie IRC "PASS", zachowując format:
+
+----
+PASS serwer:hasło
+----
+
+Przykład: proxy IRC z SSL dla dowolnego serwera (klient wybiera):
+
+----
+/relay add ssl.irc 8000
+----
+
+Przykład: proxy IRC bez SSL tylko dla serwera "freenode":
+
+----
+/relay add irc.freenode 8000
+----
+
+Teraz możesz się połączyć na porcie 8000 za pomocą dowolnego klienta IRC
+używając hasła serwera "moje_hasło" (lub "freenode:moje_hasło" jeśli żaden
+serwer nie został podany w przekaźniku).
+
+[[relay_weechat_protocol]]
+==== Protokół WeeChat
+
+Wtyczka relay może wysyłać dane do zdalnego interfejsu korzystając z protokołu
+WeeChat.
+
+Możesz połączyć się za pomocą zdalnego interfejsu, listę znajdziesz na stronie:
+http://weechat.org/download
+
+[IMPORTANT]
+WeeChat NIE MOŻE się połączyć z innym WeeChat za pomocą tego protokołu.
+
+Na przykład:
+
+----
+/relay add weechat 9000
+----
+
+Teraz możesz się połączyć zdalnym interfejsem na porcie 9000 za pomocą hasła
+"moje_hasło".
+
+[[relay_websocket]]
+==== WebSocket
+
+Protokół WebSocket (http://tools.ietf.org/html/rfc6455[RFC 6455]) jest wspierany
+dla wszystkich protokołów.
+
+Żądanie WebSocket jest automatycznie wykrywane i socket staje się gotowy do
+transmisji WebSocket jeśli wymagane nagłówki znajdują się w żądaniu oraz, gdy
+źródło jest dopuszczone (zobacz opcję
+<<option_relay.network.websocket_allowed_origins,relay.network.websocket_allowed_origins>>).
+
+WebSocket może zostać otworzony w HTML5 za pomocą jednej linii w JavaScript:
+
+[source,js]
+----
+websocket = new WebSocket("ws://server.com:9000/weechat");
+----
+
+Port (9000 w przykładzie) to port zdefiniowany we wtyczce relay.
+Adres URL musi się zawsze kończyć "/weechat" (dla protokołów 'irc' i 'weechat').
+
+[[rmodifier_plugin]]
+=== Wtyczka rmodifier
+
+Wtyczka rmodifier pozwala na modyfikowanie ciągów za pomocą wyrażeń regularnych.
+Najczęściej używana się jej do ukrywania haseł podczas wprowadzania lub, kiedy
+WeeChat zapisuje je w historii poleceń. Na przykład możliwe jest zastąpienie
+każdego znaku w haśle przez `*`.
+
+[[rmodifier_options]]
+==== Opcje (rmodifier.conf)
+
+Sekcje:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sekcja   | Komenda                                        | Opis
+| look     | /set rmodifier.look.*                          | Wygląd
+| modifier | <<command_rmodifier_rmodifier,/rmodifier add>> +
+             /set rmodifier.modifier.*                      | Rmodifiers
+|===
+
+Opcje:
+
+include::autogen/user/rmodifier_options.txt[]
+
+[[rmodifier_commands]]
+==== Komendy
+
+include::autogen/user/rmodifier_commands.txt[]
+
+[[rmodifier_creation]]
+==== Tworzenie rmodifier
+
+Rmodifier składa się z trzech elementów:
+
+. jednego lub większej ilości "modfikatorów"
+. wyrażenia regularnego do przechwytywania "grup"
+. ciągu opisującego wyjście używając numeru "grup" przechwyconych przez wyrażenie
+
+Listę modyfikatorów używanych przez WeeChat lub wtyczki można znaleźć w
+'Opisie API wtyczek', funkcja 'weechat_hook_modifier'.
+
+Dla każdej z przechwyconych grup możliwe są następujące akcje:
+
+* nie zmieniaj nic (poprzez podanie numeru grupy)
+* zastąp wszystkie znaki w grupie, żeby ukryć jej zawartość (numer grupy + `*`)
+* usuń grupę (jeśli grupa nie jest użyta w ciągu)
+
+Przykład domyślnego rmodifiera dla komendy `/oper`:
+
+* modyfikatory: `history_add,input_text_display`
+** `history_add`: wywoływane, kiedy WeeChat zachowuje komendy w historii
+** `input_text_display`: wywoływane podczas zmian w linii poleceń
+   (dotyczy tylko wyświetlania, a nie zawartości)
+* wyrażenie regularne: `^(/oper +\S+ +)(.*)`
+* grupy: `1,2*`
+
+Za każdym razem, kiedy modyfikator "history_add" lub "input_text_display" jest
+wywoływany sprawdzane jest wyrażenie regularne. Jeśli ciąg pasuje jest on
+zastępowany przez przechwycone grupy, zgodnie z definicją grup.
+
+W tym przykładzie, grupa numer 1 jest zachowywana bez zmian, a znaki w grupie 2
+zastępowane są przez znak zdefiniowany w konfiguracji (opcja 'rmodifier.look.hide_char').
+
+Jeśli linia komend zawiera: `/oper nick hasło`, to wyświetlone będzie:
+`/oper nick *****`.
+
+[[scripts_plugins]]
+=== Wtyczki skryptowe
+
+WeeChat posiada 6 wtyczek skryptowych: Python, Perl, Ruby, Lua, Tcl i Guile
+(scheme).
+Wtyczki te potrafią ładować, wykonywać i wyładowywać skrypty w tych językach.
+
+Inna wtyczka nazwana "script" jest managerem skryptów i jest używana do
+ładowania/wyładowywania skryptów w dowolnym języku, oraz do instalacji/usuwania
+skryptów z repozytorium skryptów WeeChat, dostępnego pod adresem:
+http://weechat.org/scripts
+
+Więcej informacji o tym jak pisać skrypty lub o API WeeChat dla skryptów można
+znaleźć w 'Poradniku pisania skryptów'.
+
+[[script_options]]
+==== Opcje wtyczki script (script.conf)
+
+Sekcje:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sekcja  | Komenda               | Opis
+| look    | /set script.look.*    | Wygląd
+| color   | /set script.color.*   | Kolory
+| scripts | /set script.scripts.* | Opcja dla pobierania skryptów
+|===
+
+Opcje:
+
+include::autogen/user/script_options.txt[]
+
+[[script_commands]]
+==== Komendy wtyczki script
+
+include::autogen/user/script_commands.txt[]
+
+[[python_commands]]
+==== Komendy wtyczki python
+
+include::autogen/user/python_commands.txt[]
+
+[[perl_commands]]
+==== Komendy wtyczki perl
+
+include::autogen/user/perl_commands.txt[]
+
+[[ruby_commands]]
+==== Komendy wtyczki ruby
+
+include::autogen/user/ruby_commands.txt[]
+
+[[lua_commands]]
+==== Komendy wtyczki lua
+
+include::autogen/user/lua_commands.txt[]
+
+[[tcl_commands]]
+==== Komendy wtyczki tcl
+
+include::autogen/user/tcl_commands.txt[]
+
+[[guile_commands]]
+==== Komendy wtyczki guile
+
+include::autogen/user/guile_commands.txt[]
+
+[[xfer_plugin]]
+=== Wtyczka xfer
+
+Wtyczka xfer zapewnia:
+
+* bezpośrednią rozmowę (pomiędzy dwoma hostami, bez serwera): na przykład
+  "DCC Chat" przez wtyczkę IRC
+* transfer plików, na przykład "DCC" przez wtyczkę IRC
+
+[[xfer_options]]
+==== Opcje (xfer.conf)
+
+Sekcje:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sekcja  | Komenda             | Opis
+| look    | /set xfer.look.*    | Wygląd
+| color   | /set xfer.color.*   | Kolory
+| network | /set xfer.network.* | Opcje sieci
+| file    | /set xfer.file.*    | Opcje dla plików odbieranych/wysyłanych
+|===
+
+Opcje:
+
+include::autogen/user/xfer_options.txt[]
+
+[[xfer_commands]]
+==== Komendy
+
+include::autogen/user/xfer_commands.txt[]
+
+[[support]]
+== Wsparcie
+
+Przed proszeniem o wsparcie, upewnij się, że przeczytałeś dokumentację i FAQ
+dostarczone z WeeChat (dokumentacja to ten dokument, jeśli nie przeczytałeś
+wszystkiego do tego miejsca, możesz zacząć od nowa!).
+
+Sposoby uzyskania wsparcia:
+
+* IRC: serwer 'irc.freenode.net', kanały '#weechat' (Angielski) i
+  '#weechat-fr' (Francuski)
+* Listy mailowe:
+** zapisanie się: http://mail.nongnu.org/mailman/listinfo/weechat-support
+** wiadomości wysyłane są na weechat-support@nongnu.org
+** archiwum: http://mail.nongnu.org/archive/html/weechat-support

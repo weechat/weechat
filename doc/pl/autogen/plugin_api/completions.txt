@@ -1,0 +1,133 @@
+[width="65%",cols="^1,^2,8",options="header"]
+|===
+| Wtyczka | Nazwa | Opis
+
+| alias | alias | lista aliasów
+
+| alias | alias_value | wartość aliasu
+
+| aspell | aspell_dicts | lista zainstalowanych słowników aspell
+
+| aspell | aspell_langs | lista wszystkich języków wspieranych przez aspell
+
+| guile | guile_script | lista skryptów
+
+| irc | irc_channel | obecny kanał IRC
+
+| irc | irc_channel_nicks_hosts | użytkownicy i hosty obecnego kanału IRC
+
+| irc | irc_channel_topic | temat obecnego kanału IRC
+
+| irc | irc_channels | kanały na wszystkich serwerach IRC
+
+| irc | irc_ignores_numbers | numery zdefiniowanych ignorów
+
+| irc | irc_msg_kick | domyślna wiadomość wykopania
+
+| irc | irc_msg_part | domyślna wiadomość opuszczenia kanału IRC
+
+| irc | irc_notify_nicks | nicki na liście powiadomień
+
+| irc | irc_privates | rozmowy prywatne na wszystkich serwerach IRC
+
+| irc | irc_server | obecny serwer IRC
+
+| irc | irc_server_channels | kanały na obecnym serwerze IRC
+
+| irc | irc_server_nick | użytkownicy obecnego serwera IRC
+
+| irc | irc_server_nicks | użytkownicy na wszystkich kanałach obecnego serwera IRC
+
+| irc | irc_server_privates | rozmowy prywatne na obecnym serwerze IRC
+
+| irc | irc_servers | serwery IRC (nazwy wewnętrzne)
+
+| irc | nick | użytkownicy obecnego kanału IRC
+
+| lua | lua_script | lista skryptów
+
+| perl | perl_script | lista skryptów
+
+| python | python_script | lista skryptów
+
+| relay | relay_free_port | pierwszy wolny port dla wtyczki relay
+
+| relay | relay_protocol_name | wszystkie możliwe protokół.nazwa dla wtyczki relay
+
+| relay | relay_relays | protokół.nazwa dla obecnych relayów dla wtyczki relay
+
+| rmodifier | rmodifier | lista rmodifierów
+
+| ruby | ruby_script | lista skryptów
+
+| script | script_files | pliki w katalogach skryptów
+
+| script | script_scripts | lista skryptów w repozytorium
+
+| script | script_scripts_installed | lista zainstalowanych skryptów (z repozytorium)
+
+| script | script_tags | tagi skryptów w repozytorium
+
+| tcl | tcl_script | lista skryptów
+
+| weechat | bars_names | nazwy pasków
+
+| weechat | bars_options | opcje pasków
+
+| weechat | buffer_properties_get | właściwości, jakie mogą być przeczytane w buforze
+
+| weechat | buffer_properties_set | właściwości, jakie mogą być ustawione w buforze
+
+| weechat | buffers_names | nazwy buforów
+
+| weechat | buffers_numbers | numery buforów
+
+| weechat | buffers_plugins_names | nazwy buforów (włącznie z nazwami wtyczek)
+
+| weechat | commands | komendy (weechata i wtyczek)
+
+| weechat | config_files | pliki konfiguracyjne
+
+| weechat | config_option_values | wartości opcji konfiguracyjnych
+
+| weechat | config_options | opcje konfiguracyjne
+
+| weechat | cursor_areas | obszary ("chat" albo nazwa paska) dla wolnego przemieszczania się kursora
+
+| weechat | filename | nazwa pliku
+
+| weechat | filters_names | nazwy filtrów
+
+| weechat | infolists | nazwy powiązanych infolist
+
+| weechat | infos | nazwy powiązanych informacji
+
+| weechat | keys_codes | kody klawiszowe
+
+| weechat | keys_codes_for_reset | kody klawiszy, które mogą być zresetowane (klawisze dodane, przedefiniowane lub usunięte)
+
+| weechat | keys_contexts | konteksty klawiszy
+
+| weechat | layouts_names | nazwy układów
+
+| weechat | nicks | nicki na liście nicków obecnego bufora
+
+| weechat | palette_colors | paleta kolorów
+
+| weechat | plugins_commands | komendy zdefiniowane przez wtyczki
+
+| weechat | plugins_names | nazwy wtyczek
+
+| weechat | proxies_names | nazwy proxy
+
+| weechat | proxies_options | opcje proxy
+
+| weechat | secured_data | nazwy zabezpieczonych danych (plik sec.conf, sekcja data)
+
+| weechat | weechat_commands | komendy WeeChat
+
+| weechat | windows_numbers | liczba okien
+
+| xfer | nick | nicki obecne na rozmowie DCC
+
+|===

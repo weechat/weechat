@@ -1,0 +1,27 @@
+[[command_aspell_aspell]]
+[command]*`aspell`* konfiguracja wtyczki aspell::
+
+----
+/aspell  enable|disable|toggle
+         listdict
+         setdict <język>[,<język>...]
+         deldict
+         addword [<język>] <słowo>
+
+  enable: włącza aspell
+ disable: wyłącza aspell
+  toggle: przełącza aspell
+listdict: pokazuje zainstalowane słowniki
+ setdict: ustawia słownik dla obecnego buforu (kilka słowników może być podanych po przecinku)
+ deldict: usuwa słownik używany w obecnym buforze
+ addword: dodaje słowo do osobistego słownika aspell
+
+Jeśli wprowadzany tekst zaczyna się od '/' nie będzie on sprawdzany, za wyjątkiem kilku komend (zobacz /set aspell.check.commands).
+
+W celu włączenia aspell dla wszystkich buforów, należy użyć opcji "default_dict", następnie włączyć aspell, na przykład:
+  /set aspell.check.default_dict "en"
+  /aspell enable
+
+Domyślny skrót klawiszowy przełączający aspell to alt-s.
+----
+

@@ -17,7 +17,36 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+IF (ENABLE_MAN)
+  # man page
+  ADD_CUSTOM_COMMAND(
+    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat.1
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.pl.txt ${CMAKE_CURRENT_BINARY_DIR}/
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.pl.txt ${CMAKE_CURRENT_BINARY_DIR}/
+    COMMAND ${A2X_EXECUTABLE} ARGS -a lang=pl -a revision='WeeChat ${VERSION}' -d manpage -f manpage -L ${CMAKE_CURRENT_BINARY_DIR}/weechat.1.pl.txt
+    DEPENDS
+    ${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.pl.txt
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.pl.txt
+    COMMENT "Building weechat.1 (pl)"
+  )
+  ADD_CUSTOM_TARGET(doc-man-pl ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat.1)
+  INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat.1 DESTINATION ${MANDIR}/pl/man1)
+ENDIF (ENABLE_MAN)
+
 IF(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
+
+  # user's guide
+  ADD_CUSTOM_COMMAND(
+    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.pl.html
+    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a toc -a toclevels=4 -a toc-title='Spis treści' -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.pl.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_user.pl.txt
+    DEPENDS
+    ${CMAKE_CURRENT_SOURCE_DIR}/weechat_user.pl.txt
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.pl.txt
+    ${CMAKE_CURRENT_SOURCE_DIR}/autogen/user/*.txt
+    COMMENT "Building weechat_user.pl.html"
+  )
+  ADD_CUSTOM_TARGET(doc-user-pl ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.pl.html)
+  INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.pl.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
 
   # scripting guide
   ADD_CUSTOM_COMMAND(

@@ -1,0 +1,37 @@
+[[command_logger_logger]]
+[command]*`logger`* konfiguracja wtyczki logera::
+
+----
+/logger  list
+         set <poziom>
+         flush
+         disable
+
+   list: pokazuje status logów dla otwartych buforów
+    set: ustawia poziom logowania dla obecnego bufora
+  poziom: poziom logowanych wiadomości (0 = wyłączone, 1 = kilka wiadomości (najważniejsze) .. 9 = wszystkie wiadomości)
+  flush: zapisuje natychmiast wszystkie pliki z logami
+disable: wyłącza logowanie dla obecnego bufora (ustawia poziom na 0)
+
+Opcje "logger.level.*" oraz "logger.mask.*" mogą być użyte do ustawienia poziomu lub maski dla bufora lub buforów zaczynających się od nazwy.
+
+Poziomy logowania używane przez wtyczkę IRC:
+  1: wiadomości użytkowników, powiadomienia, wiadomości prywatne
+  2: zmiany nicków
+  3: wiadomości serwera
+  4: wejścia/opuszczenia/wyjścia
+  9: wszystkie pozostałe wiadomości
+
+Przykłady:
+  ustawia poziom na 5 dla obecnego bufora:
+    /logger set 5
+  wyłącza logowanie w obecnym buforze:
+    /logger disable
+  ustawia poziom na 3 dla wszystkich buforów IRC:
+    /set logger.level.irc 3
+  wyłącza logowanie głównego bufora WeeChat:
+    /set logger.level.core.weechat 0
+  użyj oddzielnych katalogów dla serwerów IRC, oraz oddzielnych plików dla kanałów:
+    /set logger.mask.irc "$server/$channel.weechatlog"
+----
+

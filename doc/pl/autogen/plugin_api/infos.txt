@@ -1,0 +1,69 @@
+[width="100%",cols="^1,^2,6,6",options="header"]
+|===
+| Wtyczka | Nazwa | Opis | Argumenty
+
+| aspell | aspell_dict | oddzielona przecinkami lista słowników używanych w buforze | wskaźnik na bufor ("0x12345678") lub jego pełna nazwa ("irc.freenode.#weechat")
+
+| fifo | fifo_filename | nazwa strumienia FIFO | -
+
+| irc | irc_buffer | pobiera wskaźnik dla serwera/kanału/nicku IRC | serwer,kanał,nick (kanał oraz nick są opcjonalne)
+
+| irc | irc_is_channel | 1 jeśli ciąg jest poprawną nazwą kanału IRC dla serwera | serwer,kanał (serWer jest opcjonalny)
+
+| irc | irc_is_nick | 1 jeśli ciąg jest poprawną nazwą użytkownika IRC | nazwa użytkownika
+
+| irc | irc_nick | pobiera aktualny nick z serwera | nazwa serwera
+
+| irc | irc_nick_color | pobiera kod koloru nicka | nazwa użytkownika
+
+| irc | irc_nick_color_name | pobiera nazwę koloru nicka | nazwa użytkownika
+
+| irc | irc_nick_from_host | pobiera nick z hosta IRC | host IRC (jak `:nick!nazwa@serwer.com`)
+
+| irc | irc_server_isupport | 1 jeśli serwer wspiera tę opcję (z wiadomości IRC 005) | serwer,właściwość
+
+| irc | irc_server_isupport_value | wartość opcji, jeśli jest wpierana przez serwer (z wiadomości IRC 005) | serwer,właściwość
+
+| python | python2_bin | ścieżka do interpretera pythona 2.x | -
+
+| weechat | charset_internal | wewnętrzne kodowanie WeeChat | -
+
+| weechat | charset_terminal | kodowanie terminala | -
+
+| weechat | cursor_mode | 1 jeśli tryb kursora jest aktywny | -
+
+| weechat | date | data kompilacji WeeChat | -
+
+| weechat | dir_separator | separator katalogów | -
+
+| weechat | filters_enabled | 1 jeśli filtry są aktywne | -
+
+| weechat | inactivity | brak aktywności klawiatury (sekundy) | -
+
+| weechat | locale | zestaw znaków użyty do tłumaczenia wiadomości | -
+
+| weechat | term_height | wysokość terminala | -
+
+| weechat | term_width | szerokość terminala | -
+
+| weechat | version | wersja WeeChat | -
+
+| weechat | version_git | wersja git WeeChat (wyjście komendy "git describe" dla tylko dla wersji rozwojowej, puste dla wersji stabilnej) | -
+
+| weechat | version_number | wersja WeeChat (jako liczba) | -
+
+| weechat | weechat_dir | katalog Weechat | -
+
+| weechat | weechat_libdir | katalog "lib" WeeChata | -
+
+| weechat | weechat_localedir | katalog "locale" WeeChata | -
+
+| weechat | weechat_sharedir | katalog "share" WeeChata | -
+
+| weechat | weechat_site | Strona WeeChat | -
+
+| weechat | weechat_site_download | Strona pobrań WeeChat | -
+
+| weechat | weechat_upgrading | 1 jeżeli WeeChat jest aktualizowany (komenda `/upgrade`) | -
+
+|===

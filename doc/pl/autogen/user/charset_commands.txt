@@ -1,0 +1,13 @@
+[[command_charset_charset]]
+[command]*`charset`* zmienia kodowanie dla obecnego bufora::
+
+----
+/charset  decode|encode <kodowanie>
+          reset
+
+ decode: zmienia dekodowany zestaw znaków
+ encode: zmienia kodowany zestaw znaków
+kodowanie: nowe kodowanie dla obecnego bufora
+  reset: resetuje kodowanie dla obecnego bufora
+----
+
