@@ -2712,14 +2712,14 @@ config_weechat_init_options ()
         "chat_inactive_buffer", "color",
         N_("text color for chat when line is inactive (buffer is merged with "
            "other buffers and is not selected)"),
-        NULL, GUI_COLOR_CHAT_INACTIVE_BUFFER, 0, "darkgray", NULL, 0,
+        NULL, GUI_COLOR_CHAT_INACTIVE_BUFFER, 0, "default", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_chat_inactive_window = config_file_new_option (
         weechat_config_file, ptr_section,
         "chat_inactive_window", "color",
         N_("text color for chat when window is inactive (not current selected "
            "window)"),
-        NULL, GUI_COLOR_CHAT_INACTIVE_WINDOW, 0, "darkgray", NULL, 0,
+        NULL, GUI_COLOR_CHAT_INACTIVE_WINDOW, 0, "default", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_chat_nick = config_file_new_option (
         weechat_config_file, ptr_section,
@@ -2747,7 +2747,7 @@ config_weechat_init_options ()
         weechat_config_file, ptr_section,
         "chat_nick_offline", "color",
         N_("text color for offline nick (not in nicklist any more)"),
-        NULL, GUI_COLOR_CHAT_NICK_OFFLINE, 0, "darkgray", NULL, 0,
+        NULL, GUI_COLOR_CHAT_NICK_OFFLINE, 0, "default", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_chat_nick_offline_highlight = config_file_new_option (
         weechat_config_file, ptr_section,
@@ -2759,7 +2759,7 @@ config_weechat_init_options ()
         weechat_config_file, ptr_section,
         "chat_nick_offline_highlight_bg", "color",
         N_("background color for offline nick with highlight"),
-        NULL, -1, 0, "darkgray", NULL, 0,
+        NULL, -1, 0, "blue", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_chat_nick_other = config_file_new_option (
         weechat_config_file, ptr_section,
@@ -2810,7 +2810,7 @@ config_weechat_init_options ()
         N_("text color for inactive buffer name (before prefix, when many "
            "buffers are merged with same number and if buffer is not "
             "selected)"),
-        NULL, GUI_COLOR_CHAT_PREFIX_BUFFER_INACTIVE_BUFFER, 0, "darkgray", NULL, 0,
+        NULL, GUI_COLOR_CHAT_PREFIX_BUFFER_INACTIVE_BUFFER, 0, "default", NULL, 0,
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_chat_prefix[GUI_CHAT_PREFIX_ERROR] = config_file_new_option (
         weechat_config_file, ptr_section,

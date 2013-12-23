@@ -578,7 +578,7 @@ script_config_init ()
         script_config_file, ptr_section,
         "text_delimiters", "color",
         N_("text color of delimiters in script buffer"),
-        NULL, 0, 0, "darkgray", NULL, 0,
+        NULL, 0, 0, "default", NULL, 0,
         NULL, NULL, &script_config_refresh_cb, NULL, NULL, NULL);
     script_config_color_text_description = weechat_config_new_option (
         script_config_file, ptr_section,

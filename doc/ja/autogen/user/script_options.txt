@@ -61,7 +61,7 @@
 * [[option_script.color.text_delimiters]] *script.color.text_delimiters*
 ** 説明: `スクリプトバッファ内の区切り文字のテキスト色`
 ** タイプ: 色
-** 値: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (デフォルト値: `darkgray`)
+** 値: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (デフォルト値: `default`)
 
 * [[option_script.color.text_description]] *script.color.text_description*
 ** 説明: `スクリプトバッファ内の説明のテキスト色`

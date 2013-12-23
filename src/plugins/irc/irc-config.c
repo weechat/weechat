@@ -2701,7 +2701,7 @@ irc_config_init ()
         irc_config_file, ptr_section,
         "topic_old", "color",
         N_("color for old channel topic (when topic is changed)"),
-        NULL, -1, 0, "darkgray", NULL, 0, NULL, NULL,
+        NULL, -1, 0, "default", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);
 
     /* network */

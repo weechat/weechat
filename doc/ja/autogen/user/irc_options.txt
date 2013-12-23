@@ -61,7 +61,7 @@
 * [[option_irc.color.topic_old]] *irc.color.topic_old*
 ** 説明: `古いチャンネルトピックの色 (トピックが変更されたとき)`
 ** タイプ: 色
-** 値: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (デフォルト値: `darkgray`)
+** 値: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (デフォルト値: `default`)
 
 * [[option_irc.look.buffer_switch_autojoin]] *irc.look.buffer_switch_autojoin*
 ** 説明: `自動で参加した場合に、自動的にチャンネルバッファを移動 (サーバオプション "autojoin" と共に使用)`

@@ -61,7 +61,7 @@
 * [[option_script.color.text_delimiters]] *script.color.text_delimiters*
 ** descrizione: `colore del testo dei delimitatori nel buffer degli script`
 ** tipo: colore
-** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `darkgray`)
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `default`)
 
 * [[option_script.color.text_description]] *script.color.text_description*
 ** descrizione: `colore del testo della descrizione nel buffer degli script`
