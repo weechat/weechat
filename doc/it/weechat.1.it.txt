@@ -12,7 +12,6 @@ weechat - the extensible chat client
 'weechat' [-a|--no-connect] [-d|--dir <path>] [-p|--no-plugin] [-r|--run-command <command>] [-s|--no-script] [--upgrade] [plugin:option...]
 'weechat' [-c|--colors]
 'weechat' [-h|--help]
-'weechat' [-k|--keys]
 'weechat' [-l|--license]
 'weechat' [-v|--version]
 
