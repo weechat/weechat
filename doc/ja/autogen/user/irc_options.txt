@@ -154,17 +154,17 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_irc.look.highlight_channel]] *irc.look.highlight_channel*
-** 説明: `現在のバッファでハイライトする単語のコンマ区切りリスト (大文字小文字を区別しない、"(?-i)" を単語の最初につければ大文字小文字を区別する; 特殊変数 $nick、$channel、$server はそれぞれの値に置換される)、これらの単語は、バッファの作成時にバッファのローカル変数 "highlight_words" に追加される (既存のバッファには影響なし)、空文字列はニックネームに関するデフォルトのハイライトを無効にする、例: "$nick", "(?-i)$nick"`
+** 説明: `comma separated list of words to highlight in channel buffers (case insensitive, use "(?-i)" at beginning of words to make them case sensitive; special variables $nick, $channel and $server are replaced by their value), these words are added to buffer property "highlight_words" only when buffer is created (it does not affect current buffers), an empty string disables default highlight on nick, examples: "$nick", "(?-i)$nick"`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"$nick"`)
 
 * [[option_irc.look.highlight_pv]] *irc.look.highlight_pv*
-** 説明: `プライベートバッファでハイライトする単語のコンマ区切りリスト (大文字小文字を区別しない、"(?-i)" を単語の最初につければ大文字小文字を区別する; 特殊変数 $nick、$channel、$server はそれぞれの値に置換される)、これらの単語は、バッファの作成時にバッファのローカル変数 "highlight_words" に追加される (既存のバッファには影響なし)、空文字列はニックネームに関するデフォルトのハイライトを無効にする、例: "$nick", "(?-i)$nick"`
+** 説明: `comma separated list of words to highlight in private buffers (case insensitive, use "(?-i)" at beginning of words to make them case sensitive; special variables $nick, $channel and $server are replaced by their value), these words are added to buffer property "highlight_words" only when buffer is created (it does not affect current buffers), an empty string disables default highlight on nick, examples: "$nick", "(?-i)$nick"`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"$nick"`)
 
 * [[option_irc.look.highlight_server]] *irc.look.highlight_server*
-** 説明: `サーババッファでハイライトする単語のコンマ区切りリスト (大文字小文字を区別しない、"(?-i)" を単語の最初につければ大文字小文字を区別する; 特殊変数 $nick、$channel、$server はそれぞれの値に置換される)、これらの単語は、バッファの作成時にバッファのローカル変数 "highlight_words" に追加される (既存のバッファには影響なし)、空文字列はニックネームに関するデフォルトのハイライトを無効にする、例: "$nick", "(?-i)$nick"`
+** 説明: `comma separated list of words to highlight in server buffers (case insensitive, use "(?-i)" at beginning of words to make them case sensitive; special variables $nick, $channel and $server are replaced by their value), these words are added to buffer property "highlight_words" only when buffer is created (it does not affect current buffers), an empty string disables default highlight on nick, examples: "$nick", "(?-i)$nick"`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"$nick"`)
 

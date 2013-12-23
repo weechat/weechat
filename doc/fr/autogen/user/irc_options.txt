@@ -154,17 +154,17 @@
 ** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_irc.look.highlight_channel]] *irc.look.highlight_channel*
-** description: `liste de mots pour le highlight dans les tampons de type "canal", séparés par des virgules (insensible à la casse, utilisez "(?-i)" au début des mots pour les rendre sensibles à la casse; les variables spéciales $nick, $channel et $server sont remplacées par leurs valeurs), ces mots sont ajoutés à la variable locale du tampon "highlight_words" seulement lorsque le tampon est créé (cela n'affecte pas les tampons courants), une chaîne vide désactive le highlight par défaut sur le pseudo, exemples: "$nick", "(?-i)$nick"`
+** description: `liste de mots pour le highlight dans les tampons de type "canal", séparés par des virgules (insensible à la casse, utilisez "(?-i)" au début des mots pour les rendre sensibles à la casse; les variables spéciales $nick, $channel et $server sont remplacées par leurs valeurs), ces mots sont ajoutés à la propriété du tampon "highlight_words" seulement lorsque le tampon est créé (cela n'affecte pas les tampons courants), une chaîne vide désactive le highlight par défaut sur le pseudo, exemples: "$nick", "(?-i)$nick"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"$nick"`)
 
 * [[option_irc.look.highlight_pv]] *irc.look.highlight_pv*
-** description: `liste de mots pour le highlight dans les tampons de type "privé", séparés par des virgules (insensible à la casse, utilisez "(?-i)" au début des mots pour les rendre sensibles à la casse; les variables spéciales $nick, $channel et $server sont remplacées par leurs valeurs), ces mots sont ajoutés à la variable locale du tampon "highlight_words" seulement lorsque le tampon est créé (cela n'affecte pas les tampons courants), une chaîne vide désactive le highlight par défaut sur le pseudo, exemples: "$nick", "(?-i)$nick"`
+** description: `liste de mots pour le highlight dans les tampons de type "privé", séparés par des virgules (insensible à la casse, utilisez "(?-i)" au début des mots pour les rendre sensibles à la casse; les variables spéciales $nick, $channel et $server sont remplacées par leurs valeurs), ces mots sont ajoutés à la propriété du tampon "highlight_words" seulement lorsque le tampon est créé (cela n'affecte pas les tampons courants), une chaîne vide désactive le highlight par défaut sur le pseudo, exemples: "$nick", "(?-i)$nick"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"$nick"`)
 
 * [[option_irc.look.highlight_server]] *irc.look.highlight_server*
-** description: `liste de mots pour le highlight dans les tampons de type "serveur", séparés par des virgules (insensible à la casse, utilisez "(?-i)" au début des mots pour les rendre sensibles à la casse; les variables spéciales $nick, $channel et $server sont remplacées par leurs valeurs), ces mots sont ajoutés à la variable locale du tampon "highlight_words" seulement lorsque le tampon est créé (cela n'affecte pas les tampons courants), une chaîne vide désactive le highlight par défaut sur le pseudo, exemples: "$nick", "(?-i)$nick"`
+** description: `liste de mots pour le highlight dans les tampons de type "serveur", séparés par des virgules (insensible à la casse, utilisez "(?-i)" au début des mots pour les rendre sensibles à la casse; les variables spéciales $nick, $channel et $server sont remplacées par leurs valeurs), ces mots sont ajoutés à la propriété du tampon "highlight_words" seulement lorsque le tampon est créé (cela n'affecte pas les tampons courants), une chaîne vide désactive le highlight par défaut sur le pseudo, exemples: "$nick", "(?-i)$nick"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"$nick"`)
 
