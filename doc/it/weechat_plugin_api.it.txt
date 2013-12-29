@@ -2971,8 +2971,8 @@ Argomenti:
 
 Valore restituito:
 
-* puntatore all'elemento precedente, NULL se il puntatore è
-  l'ultimo elemento nella lista
+// TRANSLATION MISSING
+* pointer to previous item, NULL if pointer was first item in list
 
 Esempio in C:
 

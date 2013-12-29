@@ -2969,7 +2969,7 @@ Arguments:
 
 Return value:
 
-* pointer to previous item, NULL if pointer was last item in list
+* pointer to previous item, NULL if pointer was first item in list
 
 C example:
 
