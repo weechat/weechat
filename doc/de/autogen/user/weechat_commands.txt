@@ -476,23 +476,23 @@ Beispiele:
 [command]*`layout`* Verwaltet Buffer/Fenster Layouts::
 
 ----
-/layout  add [<name>] [buffers|windows]
+/layout  store [<name>] [buffers|windows]
          apply [<name>] [buffers|windows]
          leave
          del [<name>] [buffers|windows]
          rename <name> <new_name>
 
-    add: erstellt ein Layout der zur Zeit verwendeten Buffer/Fenster
-  apply: das gespeicherte Layout anwenden
-  leave: belässt das aktuelle Layout (es wird kein Layout aktualisiert)
-    del: entfernt Buffer und/oder Fenster eines gesicherten Layouts
-         (falls weder "buffers" noch "windows" angegeben wird, dann wird das Layout entfernt)
- rename: ein Layout umbenennen
-   name: Name unter welchem das Layout gesichert werden soll (Standardlayout lautet "default")
-buffers: speichert bzw. verwendet nur Buffer (Reihenfolge der Buffer)
-windows: speichert bzw. verwendet nur Fenster (Buffer welche im jeweiligen Fenster dargestellt werden)
+  store: store current buffers/windows in a layout
+  apply: apply saved layout
+  leave: leave current layout (does not update any layout)
+    del: delete buffers and/or windows in a saved layout
+         (if neither "buffers" nor "windows" is given after the name, the layout is deleted)
+ rename: rename a layout
+   name: name for saved layout (default is "default")
+buffers: save/apply only buffers (order of buffers)
+windows: save/apply only windows (buffer displayed by each window)
 
-Wird der Befehl ohne Argumente aufgerufen wird das gespeicherte Layout dargestellt.
+Without argument, this command displays saved layouts.
 ----
 
 [[command_weechat_mouse]]

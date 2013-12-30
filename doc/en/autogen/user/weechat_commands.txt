@@ -476,13 +476,13 @@ Examples:
 [command]*`layout`* manage buffers/windows layouts::
 
 ----
-/layout  add [<name>] [buffers|windows]
+/layout  store [<name>] [buffers|windows]
          apply [<name>] [buffers|windows]
          leave
          del [<name>] [buffers|windows]
          rename <name> <new_name>
 
-    add: create a layout using the current buffers/windows
+  store: store current buffers/windows in a layout
   apply: apply saved layout
   leave: leave current layout (does not update any layout)
     del: delete buffers and/or windows in a saved layout

@@ -3350,7 +3350,7 @@ command_layout_display_tree (struct t_gui_layout_window *layout_window,
 }
 
 /*
- * Gets arguments for /layout command (if option is add/apply/del).
+ * Gets arguments for /layout command (if option is store/apply/del).
  */
 
 void
@@ -3438,8 +3438,8 @@ COMMAND_CALLBACK(layout)
         return WEECHAT_RC_OK;
     }
 
-    /* add a layout */
-    if (string_strcasecmp (argv[1], "add") == 0)
+    /* store in a layout */
+    if (string_strcasecmp (argv[1], "store") == 0)
     {
         command_layout_get_arguments (argc, argv, &layout_name, &ptr_layout,
                                       &flag_buffers, &flag_windows);
@@ -6835,12 +6835,12 @@ command_init ()
                   &command_key, NULL);
     hook_command (NULL, "layout",
                   N_("manage buffers/windows layouts"),
-                  N_("add [<name>] [buffers|windows]"
+                  N_("store [<name>] [buffers|windows]"
                      " || apply [<name>] [buffers|windows]"
                      " || leave"
                      " || del [<name>] [buffers|windows]"
                      " || rename <name> <new_name>"),
-                  N_("    add: create a layout using the current buffers/windows\n"
+                  N_("  store: store current buffers/windows in a layout\n"
                      "  apply: apply saved layout\n"
                      "  leave: leave current layout (does not update any layout)\n"
                      "    del: delete buffers and/or windows in a saved layout\n"
@@ -6852,7 +6852,7 @@ command_init ()
                      "windows: save/apply only windows (buffer displayed by "
                      "each window)\n\n"
                      "Without argument, this command displays saved layouts."),
-                  "add %(layouts_names)|buffers|windows buffers|windows"
+                  "store %(layouts_names)|buffers|windows buffers|windows"
                   " || apply %(layouts_names)|buffers|windows buffers|windows"
                   " || leave"
                   " || del %(layouts_names)|buffers|windows buffers|windows"

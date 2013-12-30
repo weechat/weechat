@@ -476,13 +476,13 @@ Exemples:
 [command]*`layout`* gestion des dispositions de tampons/fenêtres::
 
 ----
-/layout  add [<nom>] [buffers|windows]
+/layout  store [<nom>] [buffers|windows]
          apply [<nom>] [buffers|windows]
          leave
          del [<nom>] [buffers|windows]
          rename <nom> <nouveau_nom>
 
-    add: créer une disposition avec les tampons/fenêtres courants
+  store: stocker les tampons/fenêtres courants dans une disposition
   apply: appliquer une disposition sauvegardée
   leave: quitter la disposition courante (ne met à jour aucune disposition)
     del: supprimer les tampons et/ou fenêtres dans une disposition sauvegardée

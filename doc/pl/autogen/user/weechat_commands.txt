@@ -476,22 +476,23 @@ Przykłady:
 [command]*`layout`* zarządzaj układami buforów/okien::
 
 ----
-/layout  add [<nazwa>] [buffers|windows]
-         apply [<nazwa>] [buffers|windows]|| leave
-         reset [<nazwa>] [buffers|windows]
-         rename <nazwa> <nowa_nazwa>
+/layout  store [<name>] [buffers|windows]
+         apply [<name>] [buffers|windows]
+         leave
+         del [<name>] [buffers|windows]
+         rename <name> <new_name>
 
-    add: tworzy układ używając obecnych buforów/okien
-  apply: stosuje zapisany układ
-  leave: opuszcza obecny układ (nie aktualizuje żadnego układu)
-  reset: resetuje bufory i/lub okna w zapisanym układzie
-         (jeśli zarówno bufory jak i okna zostaną zresetowane, układ jest kasowany)
- rename: zmienia nazwę układu
-   nazwa: nazwa zapisanego układu (domyślnie "default")
-buffers: zapisuje/stosuje tylko bufory (kolejność buforów)
-windows: zapisuje/stosuje tylko okna (bufory wyświetlane w każdym oknie)
+  store: store current buffers/windows in a layout
+  apply: apply saved layout
+  leave: leave current layout (does not update any layout)
+    del: delete buffers and/or windows in a saved layout
+         (if neither "buffers" nor "windows" is given after the name, the layout is deleted)
+ rename: rename a layout
+   name: name for saved layout (default is "default")
+buffers: save/apply only buffers (order of buffers)
+windows: save/apply only windows (buffer displayed by each window)
 
-Komenda wywołana bez argumentów wyświetli zapisane układy.
+Without argument, this command displays saved layouts.
 ----
 
 [[command_weechat_mouse]]
