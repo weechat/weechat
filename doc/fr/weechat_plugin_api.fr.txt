@@ -3625,11 +3625,12 @@ void weechat_hashtable_set_pointer (struct t_hashtable *hashtable,
 Paramètres :
 
 * 'hashtable' : pointeur vers la hashtable
-* 'property' et 'value' : nom de la propriété, avec sa valeur :
+* 'property' : nom de la propriété :
 ** 'callback_free_key' : définit la fonction "callback" pour libérer les clés de
    la hashtable _(WeeChat ≥ 0.4.2)_
 ** 'callback_free_value' : définit la fonction "callback" pour libérer les
    valeurs de la hashtable
+* 'pointer' : nouvelle valeur de pointeur pour la propriété
 
 Exemple en C :
 
@@ -9605,7 +9606,10 @@ void weechat_hook_set (struct t_hook *hook, const char *property,
 Paramètres :
 
 * 'hook' : quelque chose d'accroché avec "weechat_hook_xxx()"
-* 'property' et 'value' : nom de la propriété, avec sa valeur :
+* 'property' : nom de la propriété (voir le tableau ci-dessous)
+* 'value' : nouvelle valeur pour la propriété
+
+Propriétés :
 
 [width="100%",cols="^2,4,8",options="header"]
 |===
@@ -10252,7 +10256,10 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
 Paramètres :
 
 * 'buffer' : pointeur vers le tampon
-* 'property' et 'value' : nom de la propriété, avec sa valeur :
+* 'property' : nom de la propriété (voir le tableau ci-dessous)
+* 'value' : nouvelle valeur pour la propriété
+
+Propriétés :
 
 [width="100%",cols="^2,4,8",options="header"]
 |===
@@ -10452,7 +10459,7 @@ void weechat_buffer_set_pointer (struct t_gui_buffer *buffer, const char *proper
 Paramètres :
 
 * 'buffer' : pointeur vers le tampon
-* 'property' et 'value' : nom de la propriété, avec sa valeur :
+* 'property' : nom de la propriété :
 ** 'close_callback' : définit la fonction "callback" de fermeture du tampon
 ** 'close_callback_data' : définit les données pour le "callback" de fermeture
    du tampon
@@ -10465,6 +10472,7 @@ Paramètres :
    pseudos) _(WeeChat ≥ 0.3.9)_
 ** 'nickcmp_callback_data': définit les données pour le "callback" de
    comparaison de pseudos _(WeeChat ≥ 0.3.9)_
+* 'pointer' : nouvelle valeur de pointeur pour la propriété
 
 Prototypes pour les "callbacks" :
 
@@ -11386,7 +11394,10 @@ Paramètres :
 
 * 'buffer' : pointeur vers le tampon
 * 'group' : pointeur vers le groupe
-* 'property' et 'value' : nom de la propriété, avec sa valeur :
+* 'property' : nom de la propriété (voir le tableau ci-dessous)
+* 'value' : nouvelle valeur pour la propriété
+
+Propriétés :
 
 [width="100%",cols="^2,4,8",options="header"]
 |===
@@ -11588,7 +11599,10 @@ Paramètres :
 
 * 'buffer' : pointeur vers le tampon
 * 'nick' : pointeur vers le pseudo
-* 'property' et 'value' : nom de la propriété, avec sa valeur :
+* 'property' : nom de la propriété (voir le tableau ci-dessous)
+* 'value' : nouvelle valeur pour la propriété
+
+Propriétés :
 
 [width="100%",cols="^2,4,8",options="header"]
 |===

@@ -3590,12 +3590,14 @@ void weechat_hashtable_set_pointer (struct t_hashtable *hashtable,
 Argomenti:
 
 * 'hashtable': puntatore alla tabella hash
-* 'property' e 'value': nome della proprietà, con il proprio valore:
+* 'property': nome della proprietà:
 // TRANSLATION MISSING
 ** 'callback_free_key': set callback function used to free keys in hashtable
    _(WeeChat ≥ 0.4.2)_
 ** 'callback_free_value': imposta la funzione callback usata per
    liberare i valori nella tabella hash
+// TRANSLATION MISSING
+* 'pointer': new pointer value for property
 
 Esempio in C:
 
@@ -9588,7 +9590,13 @@ void weechat_hook_set (struct t_hook *hook, const char *property,
 Argomenti:
 
 * 'hook': qualcosa su cui è presente un hook con "weechat_hook_xxx()"
-* 'property' e 'value': nome della proprietà, con il proprio valore:
+// TRANSLATION MISSING
+* 'property': nome della proprietà (see table below)
+// TRANSLATION MISSING
+* 'value': new value for property
+
+// TRANSLATION MISSING
+Properties:
 
 [width="100%",cols="^2,4,8",options="header"]
 |===
@@ -10240,7 +10248,13 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
 Argomenti:
 
 * 'buffer': puntatore al buffer
-* 'property' e 'value': nome della proprietà, con il proprio valore:
+// TRANSLATION MISSING
+* 'property': nome della proprietà (see table below)
+// TRANSLATION MISSING
+* 'value': new value for property
+
+// TRANSLATION MISSING
+Properties:
 
 [width="100%",cols="^2,4,8",options="header"]
 |===
@@ -10445,7 +10459,7 @@ void weechat_buffer_set_pointer (struct t_gui_buffer *buffer, const char *proper
 Argomenti:
 
 * 'buffer': puntatore al buffer
-* 'property' e 'value': nome della proprietà, con il proprio valore:
+* 'property': nome della proprietà:
 ** 'close_callback': set close callback function
 ** 'close_callback_data': set close callback data
 ** 'input_callback': set input callback function
@@ -10456,6 +10470,8 @@ Argomenti:
 // TRANSLATION MISSING
 ** 'nickcmp_callback_data': set nick comparison callback data
    _(WeeChat ≥ 0.3.9)_
+// TRANSLATION MISSING
+* 'pointer': new pointer value for property
 
 // TRANSLATION MISSING
 Prototypes for callbacks:
@@ -11371,7 +11387,13 @@ Argomenti:
 
 * 'buffer': puntatore al buffer
 * 'group': puntatore al gruppo
-* 'property' e 'value': nome della proprietà, con il suo valore:
+// TRANSLATION MISSING
+* 'property': nome della proprietà (see table below)
+// TRANSLATION MISSING
+* 'value': new value for property
+
+// TRANSLATION MISSING
+Properties:
 
 [width="100%",cols="^2,4,8",options="header"]
 |===
@@ -11573,7 +11595,13 @@ Argomenti:
 
 * 'buffer': puntatore al buffer
 * 'nick': puntatore al nick
-* 'property' and 'value': nome della proprietà, con il suo valore:
+// TRANSLATION MISSING
+* 'property': nome della proprietà (see table below)
+// TRANSLATION MISSING
+* 'value': new value for property
+
+// TRANSLATION MISSING
+Properties:
 
 [width="100%",cols="^2,4,8",options="header"]
 |===

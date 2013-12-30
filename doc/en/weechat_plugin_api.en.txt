@@ -3581,10 +3581,11 @@ void weechat_hashtable_set_pointer (struct t_hashtable *hashtable,
 Arguments:
 
 * 'hashtable': hashtable pointer
-* 'property' and 'value': property name, with its value:
+* 'property': property name:
 ** 'callback_free_key': set callback function used to free keys in hashtable
    _(WeeChat ≥ 0.4.2)_
 ** 'callback_free_value': set callback function used to free values in hashtable
+* 'pointer': new pointer value for property
 
 C example:
 
@@ -9438,7 +9439,10 @@ void weechat_hook_set (struct t_hook *hook, const char *property,
 Arguments:
 
 * 'hook': something hooked with "weechat_hook_xxx()"
-* 'property' and 'value': property name, with its value:
+* 'property': property name (see table below)
+* 'value': new value for property
+
+Properties:
 
 [width="100%",cols="^2,4,8",options="header"]
 |===
@@ -10077,7 +10081,10 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
 Arguments:
 
 * 'buffer': buffer pointer
-* 'property' and 'value': property name, with its value:
+* 'property': property name (see table below)
+* 'value': new value for property
+
+Properties:
 
 [width="100%",cols="^2,4,8",options="header"]
 |===
@@ -10267,7 +10274,7 @@ void weechat_buffer_set_pointer (struct t_gui_buffer *buffer, const char *proper
 Arguments:
 
 * 'buffer': buffer pointer
-* 'property' and 'value': property name, with its value:
+* 'property': property name:
 ** 'close_callback': set close callback function
 ** 'close_callback_data': set close callback data
 ** 'input_callback': set input callback function
@@ -10276,6 +10283,7 @@ Arguments:
    called when searching nick in nicklist) _(WeeChat ≥ 0.3.9)_
 ** 'nickcmp_callback_data': set nick comparison callback data
    _(WeeChat ≥ 0.3.9)_
+* 'pointer': new pointer value for property
 
 Prototypes for callbacks:
 
@@ -11184,7 +11192,10 @@ Arguments:
 
 * 'buffer': buffer pointer
 * 'group': group pointer
-* 'property' and 'value': property name, with its value:
+* 'property': property name (see table below)
+* 'value': new value for property
+
+Properties:
 
 [width="100%",cols="^2,4,8",options="header"]
 |===
@@ -11386,7 +11397,10 @@ Arguments:
 
 * 'buffer': buffer pointer
 * 'nick': nick pointer
-* 'property' and 'value': property name, with its value:
+* 'property': property name (see table below)
+* 'value': new value for property
+
+Properties:
 
 [width="100%",cols="^2,4,8",options="header"]
 |===
