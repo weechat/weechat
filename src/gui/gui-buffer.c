@@ -379,9 +379,10 @@ gui_buffer_shift_numbers (struct t_gui_buffer *buffer)
 void
 gui_buffer_insert (struct t_gui_buffer *buffer)
 {
-    struct t_gui_buffer *pos_buffer, *ptr_buffer;
+    struct t_gui_buffer *pos_buffer, *ptr_buffer, *merge_buffer;
     int force_number;
 
+    merge_buffer = NULL;
     force_number = 0;
 
     pos_buffer = gui_buffer_find_pos (buffer);
@@ -414,6 +415,23 @@ gui_buffer_insert (struct t_gui_buffer *buffer)
                 break;
             }
         }
+    }
+
+    /*
+     * if position is found in list and that buffer is in layout and must be
+     * merged to another buffer (before/after), then force merge with buffer and
+     * add buffer to the end (to be sure no other buffer number will be shifted
+     * before the merge)
+     */
+    if (pos_buffer
+        && (buffer->layout_number > 0)
+        && ((buffer->layout_number == pos_buffer->layout_number)
+            || (pos_buffer->prev_buffer
+                && (buffer->layout_number == (pos_buffer->prev_buffer)->layout_number))))
+    {
+        merge_buffer = (buffer->layout_number == pos_buffer->layout_number) ?
+            pos_buffer : pos_buffer->prev_buffer;
+        pos_buffer = NULL;
     }
 
     if (pos_buffer)
@@ -468,18 +486,23 @@ gui_buffer_insert (struct t_gui_buffer *buffer)
         last_gui_buffer = buffer;
     }
 
-    /* merge buffer with previous or next, if they have layout number */
-    if (buffer->layout_number > 0)
+    if (merge_buffer)
+        gui_buffer_merge (buffer, merge_buffer);
+    else
     {
-        if (buffer->prev_buffer
-            && (buffer->layout_number == (buffer->prev_buffer)->layout_number))
+        /* merge buffer with previous or next, if they have layout number */
+        if (buffer->layout_number > 0)
         {
-            gui_buffer_merge (buffer, buffer->prev_buffer);
-        }
-        else if ((buffer->next_buffer)
-                 && (buffer->layout_number == (buffer->next_buffer)->layout_number))
-        {
-            gui_buffer_merge (buffer->next_buffer, buffer);
+            if (buffer->prev_buffer
+                && (buffer->layout_number == (buffer->prev_buffer)->layout_number))
+            {
+                gui_buffer_merge (buffer, buffer->prev_buffer);
+            }
+            else if ((buffer->next_buffer)
+                     && (buffer->layout_number == (buffer->next_buffer)->layout_number))
+            {
+                gui_buffer_merge (buffer->next_buffer, buffer);
+            }
         }
     }
 }
