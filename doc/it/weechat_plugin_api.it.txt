@@ -10069,7 +10069,9 @@ Argomenti:
 ** 'type': tipo dibuffer (0: formattato, 1: contenuto libero)
 ** 'notify': livello di notifica per il buffer
 ** 'num_displayed': numero delle finestre che visualizzano il buffer
-** 'active': 1 se il buffer è attivo, 0 se il buffer è unito e non selezionato
+// TRANSLATION MISSING
+** 'active': 2 if buffer is the only active (merged), 1 se il buffer è attivo,
+   0 se il buffer è unito e non selezionato
 ** 'print_hooks_enabled': 1 se gli hook sulla stampa sono abilitati,
    altrimenti 0
 // TRANSLATION MISSING

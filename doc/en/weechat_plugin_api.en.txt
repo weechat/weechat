@@ -9909,7 +9909,8 @@ Arguments:
 ** 'type': buffer type (0: formatted, 1: free content)
 ** 'notify': notify level for buffer
 ** 'num_displayed': number of windows displaying buffer
-** 'active': 1 if buffer is active, 0 if buffer is merged and not selected
+** 'active': 2 if buffer is the only active (merged), 1 if buffer is active,
+   0 if buffer is merged and not selected
 ** 'print_hooks_enabled': 1 if print hooks are enabled, otherwise 0
 ** 'day_change': 1 if messages for the day change are displayed, otherwise 0
 ** 'lines_hidden': 1 if at least one line is hidden on buffer (filtered), or 0

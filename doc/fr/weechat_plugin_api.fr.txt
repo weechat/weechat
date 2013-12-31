@@ -10080,8 +10080,8 @@ Paramètres :
 ** 'type' : type de tampon (0 : formaté, 1 : contenu libre)
 ** 'notify' : niveau de notification du tampon
 ** 'num_displayed' : nombre de fenêtres affichant ce tampon
-** 'active' : 1 si le tampon est actif, 0 si le tampon est mélangé et n'est pas
-   sélectionné
+** 'active' : 2 si le tampon est le seul actif (mélangé), 1 si le tampon est
+   actif, 0 si le tampon est mélangé et n'est pas sélectionné
 ** 'print_hooks_enabled' : 1 si les hooks "print" sont activés, sinon 0
 ** 'day_change' : 1 si les messages de changement de jour sont affichés, sinon 0
 ** 'lines_hidden' : 1 si au moins une ligne est cachée dans le tampon
