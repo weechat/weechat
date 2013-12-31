@@ -3880,7 +3880,7 @@ Arguments:
 *** 'WEECHAT_CONFIG_WRITE_MEMORY_ERROR'
 * callback_write_data: pointer given to callback when it is called by WeeChat
 * callback_write_default: function called when default values for section must
-  be written in file, arguments:
+  be written in file, arguments and return value:
 ** 'void *data': pointer
 ** 'struct t_config_file *config_file': configuration file pointer
 ** 'const char *section_name': name of section
@@ -4396,7 +4396,7 @@ This function is not available in scripting API.
 
 ==== weechat_config_search_with_string
 
-Search an option with full name.
+Get file/section/option info about an option with full name.
 
 Prototype:
 
@@ -6188,7 +6188,7 @@ Script (Python):
 value = weechat.color(color_name)
 
 # example
-weechat.prnt("", "%sColor: %sblue %sdefault color %syellow on red"
+weechat.prnt("", "Color: %sblue %sdefault color %syellow on red"
     % (weechat.color("blue"), weechat.color("chat"), weechat.color("yellow,red")))
 ----
 

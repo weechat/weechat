@@ -4410,7 +4410,8 @@ Questa funzione non è disponibile nelle API per lo scripting.
 
 ==== weechat_config_search_with_string
 
-Cerca un'opzione con il nome completo.
+// TRANSLATION MISSING
+Get file/section/option info about an option with full name.
 
 Prototipo:
 
@@ -6217,7 +6218,7 @@ Script (Python):
 value = weechat.color(color_name)
 
 # esempio
-weechat.prnt("", "%sColor: %sblue %sdefault color %syellow on red"
+weechat.prnt("", "Color: %sblue %sdefault color %syellow on red"
     % (weechat.color("blue"), weechat.color("chat"), weechat.color("yellow,red")))
 ----
 
