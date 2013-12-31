@@ -1,7 +1,7 @@
 /*
  * fifo.c - fifo plugin for WeeChat: remote control with FIFO pipe
  *
- * Copyright (C) 2003-2013 Sebastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2014 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -37,7 +37,7 @@
 
 WEECHAT_PLUGIN_NAME(FIFO_PLUGIN_NAME);
 WEECHAT_PLUGIN_DESCRIPTION(N_("FIFO pipe for remote control"));
-WEECHAT_PLUGIN_AUTHOR("Sebastien Helleu <flashcode@flashtux.org>");
+WEECHAT_PLUGIN_AUTHOR("Sébastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
 

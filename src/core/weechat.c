@@ -8,7 +8,7 @@
  * ##             WeeChat - Wee Enhanced Environment for Chat              ##
  * ##                 Fast, light, extensible chat client                  ##
  * ##                                                                      ##
- * ##             By Sebastien Helleu <flashcode@flashtux.org>             ##
+ * ##             By Sébastien Helleu <flashcode@flashtux.org>             ##
  * ##                                                                      ##
  * ##                      http://www.weechat.org/                         ##
  * ##                                                                      ##
@@ -16,7 +16,7 @@
  *
  * weechat.c - WeeChat main functions
  *
- * Copyright (C) 2003-2013 Sebastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2014 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -111,7 +111,7 @@ weechat_display_copyright ()
     string_iconv_fprintf (stdout,
                           /* TRANSLATORS: "%s %s" after "compiled on" is date and time */
                           _("WeeChat %s Copyright %s, compiled on %s %s\n"
-                            "Developed by Sebastien Helleu <flashcode@flashtux.org> "
+                            "Developed by Sébastien Helleu <flashcode@flashtux.org> "
                             "- %s"),
                           version_get_version_with_git (),
                           WEECHAT_COPYRIGHT_DATE,

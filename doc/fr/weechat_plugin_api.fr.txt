@@ -146,7 +146,7 @@ fois les paramètres sur le tampon courant, ou exécute deux fois une commande
 
 WEECHAT_PLUGIN_NAME("double");
 WEECHAT_PLUGIN_DESCRIPTION("Extension de test pour WeeChat");
-WEECHAT_PLUGIN_AUTHOR("Sebastien Helleu <flashcode@flashtux.org>");
+WEECHAT_PLUGIN_AUTHOR("Sébastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION("0.1");
 WEECHAT_PLUGIN_LICENSE("GPL3");
 

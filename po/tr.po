@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-12-30 14:58+0100\n"
+"POT-Creation-Date: 2013-12-31 09:55+0100\n"
 "PO-Revision-Date: 2013-11-09 10:13+0100\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -35,7 +35,7 @@ msgstr ""
 #, c-format
 msgid ""
 "WeeChat %s Copyright %s, compiled on %s %s\n"
-"Developed by Sebastien Helleu <flashcode@flashtux.org> - %s"
+"Developed by Sébastien Helleu <flashcode@flashtux.org> - %s"
 msgstr ""
 
 #, c-format

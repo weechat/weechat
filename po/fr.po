@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2003-2013 Sebastien Helleu <flashcode@flashtux.org>
+# Copyright (C) 2003-2014 Sébastien Helleu <flashcode@flashtux.org>
 # Copyright (C) 2005-2006 Julien Louis <ptitlouis@sysif.net>
 #
 # This file is part of WeeChat, the extensible chat client.
@@ -21,9 +21,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-12-30 14:58+0100\n"
-"PO-Revision-Date: 2013-12-30 14:59+0100\n"
-"Last-Translator: Sebastien Helleu <flashcode@flashtux.org>\n"
+"POT-Creation-Date: 2013-12-31 09:55+0100\n"
+"PO-Revision-Date: 2014-01-01 00:06+0100\n"
+"Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -35,10 +35,10 @@ msgstr ""
 #, c-format
 msgid ""
 "WeeChat %s Copyright %s, compiled on %s %s\n"
-"Developed by Sebastien Helleu <flashcode@flashtux.org> - %s"
+"Developed by Sébastien Helleu <flashcode@flashtux.org> - %s"
 msgstr ""
 "WeeChat %s Copyright %s, compilé le %s %s\n"
-"Développé par Sebastien Helleu <flashcode@flashtux.org> - %s"
+"Développé par Sébastien Helleu <flashcode@flashtux.org> - %s"
 
 #, c-format
 msgid "Usage: %s [option...] [plugin:option...]\n"

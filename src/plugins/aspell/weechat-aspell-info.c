@@ -1,7 +1,7 @@
 /*
  * weechat-aspell-info.c - info for aspell plugin
  *
- * Copyright (C) 2013 Sebastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2013-2014 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

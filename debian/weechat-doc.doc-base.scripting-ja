@@ -1,6 +1,6 @@
 Document: weechat-scripting-ja
 Title: WeeChat Scripting Guide (Japanese)
-Author: Sebastien Helleu
+Author: Sébastien Helleu
 Abstract: This document describes the API to create scripts
  for WeeChat (Japanese version).
 Section: Network/Communication

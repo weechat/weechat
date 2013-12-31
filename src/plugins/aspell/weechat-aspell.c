@@ -2,7 +2,7 @@
  * weechat-aspell.c - aspell plugin for WeeChat: color for misspelled words
  *
  * Copyright (C) 2006 Emmanuel Bouthenot <kolter@openics.org>
- * Copyright (C) 2006-2013 Sebastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2006-2014 Sébastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2012 Nils Görs <weechatter@arcor.de>
  *
  * This file is part of WeeChat, the extensible chat client.
@@ -43,7 +43,7 @@
 
 WEECHAT_PLUGIN_NAME(ASPELL_PLUGIN_NAME);
 WEECHAT_PLUGIN_DESCRIPTION(N_("Spell checker for input (with Aspell)"));
-WEECHAT_PLUGIN_AUTHOR("Sebastien Helleu <flashcode@flashtux.org>");
+WEECHAT_PLUGIN_AUTHOR("Sébastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
 

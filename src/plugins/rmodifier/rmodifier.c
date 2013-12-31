@@ -1,7 +1,7 @@
 /*
  * rmodifier.c - alter modifier strings with regular expressions
  *
- * Copyright (C) 2010-2013 Sebastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2010-2014 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -35,7 +35,7 @@
 
 WEECHAT_PLUGIN_NAME(RMODIFIER_PLUGIN_NAME);
 WEECHAT_PLUGIN_DESCRIPTION(N_("String modifier with regular expressions"));
-WEECHAT_PLUGIN_AUTHOR("Sebastien Helleu <flashcode@flashtux.org>");
+WEECHAT_PLUGIN_AUTHOR("Sébastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
 

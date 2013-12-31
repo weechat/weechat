@@ -1,6 +1,6 @@
 Document: weechat-scripting-de
 Title: WeeChat Scripting Guide (German)
-Author: Sebastien Helleu
+Author: Sébastien Helleu
 Abstract: This document describes the API to create scripts
  for WeeChat (German version).
 Section: Network/Communication

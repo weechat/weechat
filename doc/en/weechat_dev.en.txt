@@ -324,7 +324,7 @@ Translations for WeeChat and plugins are done with gettext, files are in 'po/' d
 /*
  * weechat.c - core functions for WeeChat
  *
- * Copyright (C) 2013 Your Name <your@email.com>
+ * Copyright (C) 2014 Your Name <your@email.com>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

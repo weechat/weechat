@@ -1,7 +1,7 @@
 /*
  * rmodifier-debug.c - debug functions for rmodifier plugin
  *
- * Copyright (C) 2010-2013 Sebastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2010-2014 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

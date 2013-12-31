@@ -1,6 +1,6 @@
 Document: weechat-relay-protocol-en
 Title: WeeChat Relay Protocol (English)
-Author: Sebastien Helleu
+Author: Sébastien Helleu
 Abstract: This manual describes WeeChat Relay Protocol, used by
  remote GUI to communicate with Relay plugin (English version).
 Section: Network/Communication

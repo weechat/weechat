@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2003-2013 Sebastien Helleu <flashcode@flashtux.org>
+# Copyright (C) 2003-2014 Sébastien Helleu <flashcode@flashtux.org>
 # Copyright (C) 2007-2008 Julien Louis <ptitlouis@sysif.net>
 # Copyright (C) 2008-2009 Emmanuel Bouthenot <kolter@openics.org>
 #
@@ -150,7 +150,7 @@ INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/weechat.png DESTINATION ${SHAREDIR}/ic
 
 # packages
 SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Fast, light and extensible chat client")
-SET(CPACK_PACKAGE_VENDOR "Sebastien Helleu")
+SET(CPACK_PACKAGE_VENDOR "Sébastien Helleu")
 SET(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README")
 SET(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYING")
 SET(CPACK_PACKAGE_VERSION_MAJOR ${VERSION_MAJOR})

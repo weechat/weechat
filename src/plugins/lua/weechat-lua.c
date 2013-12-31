@@ -2,7 +2,7 @@
  * weechat-lua.c - lua plugin for WeeChat
  *
  * Copyright (C) 2006-2007 Emmanuel Bouthenot <kolter@openics.org>
- * Copyright (C) 2006-2013 Sebastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2006-2014 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -36,7 +36,7 @@
 
 WEECHAT_PLUGIN_NAME(LUA_PLUGIN_NAME);
 WEECHAT_PLUGIN_DESCRIPTION(N_("Support of lua scripts"));
-WEECHAT_PLUGIN_AUTHOR("Sebastien Helleu <flashcode@flashtux.org>");
+WEECHAT_PLUGIN_AUTHOR("Sébastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
 

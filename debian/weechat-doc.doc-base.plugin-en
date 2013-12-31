@@ -1,6 +1,6 @@
 Document: weechat-plugin-en
 Title: WeeChat plugins API (English)
-Author: Sebastien Helleu
+Author: Sébastien Helleu
 Abstract: This document describes the API to create plugins
  for WeeChat (English version).
 Section: Network/Communication
