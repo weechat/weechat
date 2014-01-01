@@ -7202,9 +7202,9 @@ Arguments:
 *** 'WEECHAT_HOOK_CONNECT_MEMORY_ERROR': insufficient memory
 *** 'WEECHAT_HOOK_CONNECT_TIMEOUT': timeout
 *** 'WEECHAT_HOOK_CONNECT_SOCKET_ERROR': unable to create socket
-** 'gnutls_rc': result value of 'gnutls_handshake()'
+** 'gnutls_rc': return value of 'gnutls_handshake()'
 ** 'sock': socket used to connect
-** 'const char *error': result value of 'gnutls_strerror(gnutls_rc)'
+** 'const char *error': return value of 'gnutls_strerror(gnutls_rc)'
 ** 'const char *ip_address': IP address found
 ** return value:
 *** 'WEECHAT_RC_OK'
