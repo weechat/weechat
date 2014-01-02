@@ -2943,11 +2943,9 @@ int
 irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
                  char **argv, char **argv_eol)
 {
-    char **targets;
-    int num_targets, i, j, arg_target, arg_text, is_channel, msg_op_voice;
+    char **targets, *msg_pwd_hidden, *string;
+    int num_targets, i, j, arg_target, arg_text, is_channel, status_msg;
     int hide_password;
-    char *msg_pwd_hidden;
-    char *string;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
@@ -3009,13 +3007,14 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
             {
                 is_channel = 0;
                 ptr_channel = NULL;
-                msg_op_voice = 0;
-                if (((targets[i][0] == '@') || (targets[i][0] == '+'))
+                status_msg = 0;
+                if (irc_server_prefix_char_statusmsg (ptr_server,
+                                                      targets[i][0])
                     && irc_channel_is_channel (ptr_server, targets[i] + 1))
                 {
                     ptr_channel = irc_channel_search (ptr_server, targets[i] + 1);
                     is_channel = 1;
-                    msg_op_voice = 1;
+                    status_msg = 1;
                 }
                 else
                 {
@@ -3029,7 +3028,7 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
                     {
                         string = irc_color_decode (argv_eol[arg_text],
                                                    weechat_config_boolean (irc_config_network_colors_send));
-                        if (msg_op_voice)
+                        if (status_msg)
                         {
                             /*
                              * message to channel ops/voiced
@@ -3283,7 +3282,7 @@ irc_command_notice (void *data, struct t_gui_buffer *buffer, int argc,
 
         IRC_COMMAND_CHECK_SERVER("notice", 1);
         is_channel = 0;
-        if (((argv[arg_target][0] == '@') || (argv[arg_target][0] == '+'))
+        if (irc_server_prefix_char_statusmsg (ptr_server, argv[arg_target][0])
             && irc_channel_is_channel (ptr_server, argv[arg_target] + 1))
         {
             ptr_channel = irc_channel_search (ptr_server, argv[arg_target] + 1);

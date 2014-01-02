@@ -876,6 +876,32 @@ irc_server_get_chanmodes (struct t_irc_server *server)
 }
 
 /*
+ * Checks if a prefix char is valid for a status message
+ * (message sent for example to ops/voiced).
+ *
+ * The prefix (for example '@' or '+') must be in STATUSMSG,
+ * or in "prefix_chars" if STATUSMSG is not defined.
+ *
+ * Returns:
+ *   1: prefix is valid for a status message
+ *   0: prefix is NOT valid for a status message
+ */
+
+int
+irc_server_prefix_char_statusmsg (struct t_irc_server *server,
+                                  char prefix_char)
+{
+    const char *support_statusmsg;
+
+    support_statusmsg = irc_server_get_isupport_value (server, "STATUSMSG");
+    if (support_statusmsg)
+        return (strchr (support_statusmsg, prefix_char)) ? 1 : 0;
+
+    return (irc_server_get_prefix_char_index (server, prefix_char) >= 0) ?
+        1 : 0;
+}
+
+/*
  * Allocates a new server and adds it to the servers queue.
  *
  * Returns pointer to new server, NULL if error.
