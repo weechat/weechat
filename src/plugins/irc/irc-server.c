@@ -735,7 +735,7 @@ irc_server_set_prefix_modes_chars (struct t_irc_server *server,
 }
 
 /*
- * Gets prefix_modes for server.
+ * Gets prefix_modes for server (for example: "ohv").
  *
  * Returns default modes if prefix_modes is not set in server.
  */
@@ -748,7 +748,7 @@ irc_server_get_prefix_modes (struct t_irc_server *server)
 }
 
 /*
- * Gets prefix_chars for server.
+ * Gets prefix_chars for server (for example: "@%+").
  *
  * Returns default chars if prefix_chars is not set in server.
  */
@@ -762,6 +762,8 @@ irc_server_get_prefix_chars (struct t_irc_server *server)
 
 /*
  * Gets index of mode in prefix_modes.
+ *
+ * The mode is for example 'o' or 'v'.
  *
  * Returns -1 if mode does not exist in server.
  */
@@ -785,6 +787,8 @@ irc_server_get_prefix_mode_index (struct t_irc_server *server, char mode)
 
 /*
  * Gets index of prefix_char in prefix_chars.
+ *
+ * The prefix char is for example '@' or '+'.
  *
  * Returns -1 if prefix_char does not exist in server.
  */
@@ -810,6 +814,8 @@ irc_server_get_prefix_char_index (struct t_irc_server *server,
 /*
  * Gets mode for prefix char.
  *
+ * For example prefix_char '@' can return 'o'.
+ *
  * Returns ' ' (space) if prefix char is not found.
  */
 
@@ -834,6 +840,8 @@ irc_server_get_prefix_mode_for_char (struct t_irc_server *server,
 /*
  * Gets prefix char for mode.
  *
+ * For example mode 'o' can return '@'.
+ *
  * Returns return ' ' (space) if mode is not found.
  */
 
@@ -855,7 +863,7 @@ irc_server_get_prefix_char_for_mode (struct t_irc_server *server, char mode)
 }
 
 /*
- * Gets chanmodes for server.
+ * Gets chanmodes for server (for example: "eIb,k,l,imnpstS").
  *
  * Returns default chanmodes if chanmodes is not set in server.
  */
