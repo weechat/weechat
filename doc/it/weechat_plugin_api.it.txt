@@ -8047,13 +8047,15 @@ Argomenti:
   Puntatore: lista info xon info per xfer |
   Xfer pronto
 
+// TRANSLATION MISSING
 | xfer | xfer_accept_resume |
   Puntatore: lista info con info per xfer |
-  Xfer accetta la ripresa
+  Accept xfer resume
 
+// TRANSLATION MISSING
 | xfer | xfer_send_accept_resume |
   Puntatore: lista info con info per xfer |
-  Xfer accetta la ripresa (invio)
+  Xfer resumed
 
 | xfer | xfer_start_resume |
   Puntatore: lista info con info per xfer |

@@ -8054,11 +8054,11 @@ Paramètres :
 
 | xfer | xfer_accept_resume |
   Pointeur : infolist avec l'info xfer |
-  Le xfer accepte la reprise (envoi)
+  Accepter la reprise xfer
 
 | xfer | xfer_send_accept_resume |
   Pointeur : infolist avec l'info xfer |
-  Le xfer accepte la reprise (envoi)
+  Reprise xfer accceptée
 
 | xfer | xfer_start_resume |
   Pointeur : infolist avec l'info xfer |

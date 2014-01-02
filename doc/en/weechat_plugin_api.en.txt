@@ -7933,11 +7933,11 @@ Arguments:
 
 | xfer | xfer_accept_resume |
   Pointer: infolist with xfer info |
-  Xfer accepts resume (send)
+  Accept xfer resume
 
 | xfer | xfer_send_accept_resume |
   Pointer: infolist with xfer info |
-  Xfer accepts resume (send)
+  Xfer resumed
 
 | xfer | xfer_start_resume |
   Pointer: infolist with xfer info |
