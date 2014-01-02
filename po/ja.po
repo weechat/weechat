@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-12-31 09:55+0100\n"
+"POT-Creation-Date: 2014-01-02 15:18+0100\n"
 "PO-Revision-Date: 2013-12-31 10:05+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -9980,8 +9980,8 @@ msgstr "OK"
 msgid "FAILED"
 msgstr "失敗"
 
-#, c-format
-msgid "%s: chat closed with %s (%ld.%ld.%ld.%ld)"
+#, fuzzy, c-format
+msgid "%s%s: chat closed with %s (%ld.%ld.%ld.%ld)"
 msgstr "%s: %s (%ld.%ld.%ld.%ld) とのチャットを終了"
 
 #, c-format
@@ -10078,9 +10078,9 @@ msgstr ""
 msgid "%s%s: error sending data to \"%s\" via xfer chat"
 msgstr "%s%s: xfer チャットで \"%s\" にデータ転送中のエラー"
 
-#, c-format
-msgid "Connected to %s (%ld.%ld.%ld.%ld) via xfer chat"
-msgstr "xfer チャットで %s (%ld.%ld.%ld.%ld) に接続"
+#, fuzzy, c-format
+msgid "%s%s: connected to %s (%ld.%ld.%ld.%ld)"
+msgstr "%s: %s (%ld.%ld.%ld.%ld) とのチャットを終了"
 
 #, c-format
 msgid "%s%s: can't find xfer for buffer \"%s\""
@@ -10352,3 +10352,7 @@ msgstr "タイプ"
 
 msgid "Constants"
 msgstr "定数"
+
+#, fuzzy
+#~ msgid "%sConnected to %s (%ld.%ld.%ld.%ld) via xfer chat"
+#~ msgstr "xfer チャットで %s (%ld.%ld.%ld.%ld) に接続"

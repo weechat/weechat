@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-12-31 09:55+0100\n"
+"POT-Creation-Date: 2014-01-02 15:18+0100\n"
 "PO-Revision-Date: 2013-02-14 18:20+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8035,7 +8035,7 @@ msgid "FAILED"
 msgstr ""
 
 #, c-format
-msgid "%s: chat closed with %s (%ld.%ld.%ld.%ld)"
+msgid "%s%s: chat closed with %s (%ld.%ld.%ld.%ld)"
 msgstr ""
 
 #, c-format
@@ -8123,7 +8123,7 @@ msgid "%s%s: error sending data to \"%s\" via xfer chat"
 msgstr ""
 
 #, c-format
-msgid "Connected to %s (%ld.%ld.%ld.%ld) via xfer chat"
+msgid "%s%s: connected to %s (%ld.%ld.%ld.%ld)"
 msgstr ""
 
 #, c-format

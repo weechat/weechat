@@ -313,8 +313,9 @@ xfer_close (struct t_xfer *xfer, enum t_xfer_status status)
         if (XFER_IS_CHAT(xfer->type))
         {
             weechat_printf (xfer->buffer,
-                            _("%s: chat closed with %s "
+                            _("%s%s: chat closed with %s "
                               "(%ld.%ld.%ld.%ld)"),
+                            weechat_prefix ("network"),
                             XFER_PLUGIN_NAME,
                             xfer->remote_nick,
                             xfer->remote_address >> 24,

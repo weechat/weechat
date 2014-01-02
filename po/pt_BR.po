@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2013-12-31 09:55+0100\n"
+"POT-Creation-Date: 2014-01-02 15:18+0100\n"
 "PO-Revision-Date: 2013-12-31 10:06+0100\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9215,7 +9215,7 @@ msgid "FAILED"
 msgstr "FALHOU"
 
 #, fuzzy, c-format
-msgid "%s: chat closed with %s (%ld.%ld.%ld.%ld)"
+msgid "%s%s: chat closed with %s (%ld.%ld.%ld.%ld)"
 msgstr "%s: chat terminado com %s (%d.%d.%d.%d)"
 
 #, c-format
@@ -9316,8 +9316,8 @@ msgid "%s%s: error sending data to \"%s\" via xfer chat"
 msgstr "%s%s: erro ao enviar dados para \"%s\" via chat de transferência"
 
 #, fuzzy, c-format
-msgid "Connected to %s (%ld.%ld.%ld.%ld) via xfer chat"
-msgstr "Conectado a %s (%d.%d.%d.%d) via chat de transferência"
+msgid "%s%s: connected to %s (%ld.%ld.%ld.%ld)"
+msgstr "%s: chat terminado com %s (%d.%d.%d.%d)"
 
 #, c-format
 msgid "%s%s: can't find xfer for buffer \"%s\""
@@ -9595,3 +9595,7 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#, fuzzy
+#~ msgid "%sConnected to %s (%ld.%ld.%ld.%ld) via xfer chat"
+#~ msgstr "Conectado a %s (%d.%d.%d.%d) via chat de transferência"
