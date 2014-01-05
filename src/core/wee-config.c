@@ -851,6 +851,7 @@ config_day_change_timer_cb (void *data, int remaining_calls)
 {
     struct timeval tv_time;
     struct tm *local_time;
+    time_t seconds;
     int new_mday;
     char str_time[256];
 
@@ -859,7 +860,8 @@ config_day_change_timer_cb (void *data, int remaining_calls)
     (void) remaining_calls;
 
     gettimeofday (&tv_time, NULL);
-    local_time = localtime (&tv_time.tv_sec);
+    seconds = tv_time.tv_sec;
+    local_time = localtime (&seconds);
     new_mday = local_time->tm_mday;
 
     if ((config_day_change_old_day >= 0)
@@ -3362,6 +3364,7 @@ config_weechat_init ()
     int rc;
     struct timeval tv_time;
     struct tm *local_time;
+    time_t seconds;
 
     rc = config_weechat_init_options ();
 
@@ -3375,7 +3378,8 @@ config_weechat_init ()
     {
         /* create timer to check if day has changed */
         gettimeofday (&tv_time, NULL);
-        local_time = localtime (&tv_time.tv_sec);
+        seconds = tv_time.tv_sec;
+        local_time = localtime (&seconds);
         config_day_change_old_day = local_time->tm_mday;
         config_day_change_timer = hook_timer (NULL,
                                               60 * 1000, /* each minute */

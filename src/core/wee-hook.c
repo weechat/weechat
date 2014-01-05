@@ -3942,6 +3942,7 @@ hook_print_log ()
     int type, i, j;
     struct t_hook *ptr_hook;
     struct tm *local_time;
+    time_t seconds;
     char text_time[1024];
 
     for (type = 0; type < HOOK_NUM_TYPES; type++)
@@ -4012,7 +4013,8 @@ hook_print_log ()
                         log_printf ("    align_second. . . . . : %d",    HOOK_TIMER(ptr_hook, align_second));
                         log_printf ("    remaining_calls . . . : %d",    HOOK_TIMER(ptr_hook, remaining_calls));
                         text_time[0] = '\0';
-                        local_time = localtime (&HOOK_TIMER(ptr_hook, last_exec).tv_sec);
+                        seconds = HOOK_TIMER(ptr_hook, last_exec).tv_sec;
+                        local_time = localtime (&seconds);
                         if (local_time)
                         {
                             strftime (text_time, sizeof (text_time),
@@ -4023,7 +4025,8 @@ hook_print_log ()
                                     text_time);
                         log_printf ("    last_exec.tv_usec . . : %ld",   HOOK_TIMER(ptr_hook, last_exec.tv_usec));
                         text_time[0] = '\0';
-                        local_time = localtime (&HOOK_TIMER(ptr_hook, next_exec).tv_sec);
+                        seconds = HOOK_TIMER(ptr_hook, next_exec).tv_sec;
+                        local_time = localtime (&seconds);
                         if (local_time)
                         {
                             strftime (text_time, sizeof (text_time),

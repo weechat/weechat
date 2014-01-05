@@ -1229,7 +1229,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     struct t_gui_line *ptr_prev_line, *ptr_next_line;
     struct tm local_time, local_time2;
     struct timeval tv_time;
-    time_t *ptr_time;
+    time_t seconds, *ptr_time;
 
     if (!line)
         return 0;
@@ -1274,7 +1274,8 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
         if (!ptr_prev_line)
         {
             gettimeofday (&tv_time, NULL);
-            localtime_r (&tv_time.tv_sec, &local_time);
+            seconds = tv_time.tv_sec;
+            localtime_r (&seconds, &local_time);
             localtime_r (&line->data->date, &local_time2);
             if ((local_time.tm_mday != local_time2.tm_mday)
                 || (local_time.tm_mon != local_time2.tm_mon)
@@ -1470,7 +1471,8 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
         {
             /* it was the last line => compare with current system time */
             gettimeofday (&tv_time, NULL);
-            ptr_time = &tv_time.tv_sec;
+            seconds = tv_time.tv_sec;
+            ptr_time = &seconds;
         }
         if (ptr_time && (*ptr_time != 0))
         {
