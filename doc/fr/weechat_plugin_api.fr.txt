@@ -13154,7 +13154,9 @@ Fonctions pour les hdata (accès brut aux données de WeeChat ou des extensions)
 [IMPORTANT]
 Le "hdata" fournit seulement un accès en lecture seule aux données. Il est
 *STRICTEMENT INTERDIT* d'écrire quelque chose dans une zone mémoire pointée par
-les variables du hdata.
+les variables du hdata. +
+Le seul moyen pour mettre à jour des données est d'appeler la fonction
+<<_weechat_hdata_update,weechat_hdata_update>>.
 
 ==== weechat_hdata_new
 

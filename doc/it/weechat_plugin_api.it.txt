@@ -13164,9 +13164,12 @@ weechat.infolist_free(infolist)
 
 Funzioni per hdata (accesso raw a WeeChat o ai dati dei plugin).
 
+// TRANSLATION MISSING
 [IMPORTANT]
 Hdata fornisce un accesso in sola lettura ai dati. È *SEVERAMENTE VIETATO*
-scrivere qualcosa in memoria puntato dalle variabili in hdata.
+scrivere qualcosa in memoria puntato dalle variabili in hdata. +
+The only way to update data is to call function
+<<_weechat_hdata_update,weechat_hdata_update>>.
 
 ==== weechat_hdata_new
 

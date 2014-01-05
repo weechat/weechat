@@ -12924,7 +12924,9 @@ Functions for hdata (raw access to WeeChat or plugins data).
 
 [IMPORTANT]
 Hdata provides read-only access to data. It is *STRICTLY FORBIDDEN* to write
-something in memory pointed by hdata variables.
+something in memory pointed by hdata variables. +
+The only way to update data is to call function
+<<_weechat_hdata_update,weechat_hdata_update>>.
 
 ==== weechat_hdata_new
 
