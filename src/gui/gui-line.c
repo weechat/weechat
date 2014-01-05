@@ -1688,11 +1688,11 @@ gui_line_hdata_line_data_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_gui_line_data, date_printed, TIME, 1, NULL, NULL);
         HDATA_VAR(struct t_gui_line_data, str_time, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_line_data, tags_count, INTEGER, 0, NULL, NULL);
-        HDATA_VAR(struct t_gui_line_data, tags_array, STRING, 1, "tags_count", NULL);
+        HDATA_VAR(struct t_gui_line_data, tags_array, SHARED_STRING, 1, "tags_count", NULL);
         HDATA_VAR(struct t_gui_line_data, displayed, CHAR, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_line_data, highlight, CHAR, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_line_data, refresh_needed, CHAR, 0, NULL, NULL);
-        HDATA_VAR(struct t_gui_line_data, prefix, STRING, 1, NULL, NULL);
+        HDATA_VAR(struct t_gui_line_data, prefix, SHARED_STRING, 1, NULL, NULL);
         HDATA_VAR(struct t_gui_line_data, prefix_length, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_line_data, message, STRING, 1, NULL, NULL);
     }

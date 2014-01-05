@@ -13250,6 +13250,7 @@ Paramètres :
 ** WEECHAT_HDATA_INTEGER
 ** WEECHAT_HDATA_LONG
 ** WEECHAT_HDATA_STRING
+** WEECHAT_HDATA_SHARED_STRING
 ** WEECHAT_HDATA_POINTER
 ** WEECHAT_HDATA_TIME
 ** WEECHAT_HDATA_HASHTABLE
@@ -13498,6 +13499,9 @@ switch (type)
         /* ... */
         break;
     case WEECHAT_HDATA_STRING:
+        /* ... */
+        break;
+    case WEECHAT_HDATA_SHARED_STRING:
         /* ... */
         break;
     case WEECHAT_HDATA_POINTER:

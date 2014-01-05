@@ -254,6 +254,7 @@ hdata_get_var_array_size (struct t_hdata *hdata, void *pointer,
          * types: string, pointer, hashtable)
          */
         if ((var->type == WEECHAT_HDATA_STRING)
+            || (var->type == WEECHAT_HDATA_SHARED_STRING)
             || (var->type == WEECHAT_HDATA_POINTER)
             || (var->type == WEECHAT_HDATA_HASHTABLE))
         {
@@ -266,6 +267,7 @@ hdata_get_var_array_size (struct t_hdata *hdata, void *pointer,
                 switch (var->type)
                 {
                     case WEECHAT_HDATA_STRING:
+                    case WEECHAT_HDATA_SHARED_STRING:
                         ptr_value = (*((char ***)(pointer + var->offset)))[i];
                         break;
                     case WEECHAT_HDATA_POINTER:
@@ -834,6 +836,13 @@ hdata_set (struct t_hdata *hdata, void *pointer, const char *name,
             if (*ptr_string)
                 free (*ptr_string);
             *ptr_string = (value) ? strdup (value) : NULL;
+            return 1;
+            break;
+        case WEECHAT_HDATA_SHARED_STRING:
+            ptr_string = (char **)(pointer + var->offset);
+            if (*ptr_string)
+                string_shared_free (*ptr_string);
+            *ptr_string = (value) ? (char *)string_shared_get (value) : NULL;
             return 1;
             break;
         case WEECHAT_HDATA_POINTER:

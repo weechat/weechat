@@ -11,6 +11,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 0.4.3 (under dev)
 
+* core: fix crash with hdata_update on shared strings, add hdata type
+  "shared_string" (bug #41104)
 * core: add support of UTF-8 chars in horizontal/vertical separators (options
   weechat.look.separator_{horizontal|vertical})
 * core: add option weechat.look.window_auto_zoom, disable automatic zoom by

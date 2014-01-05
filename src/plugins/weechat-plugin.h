@@ -56,7 +56,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20130819-01"
+#define WEECHAT_PLUGIN_API_VERSION "20140105-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -122,6 +122,7 @@ struct timeval;
 #define WEECHAT_HDATA_POINTER                       5
 #define WEECHAT_HDATA_TIME                          6
 #define WEECHAT_HDATA_HASHTABLE                     7
+#define WEECHAT_HDATA_SHARED_STRING                 8
 
 /* buffer hotlist */
 #define WEECHAT_HOTLIST_LOW                         "0"
