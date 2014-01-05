@@ -82,6 +82,7 @@ xfer_file_find_filename (struct t_xfer *xfer)
 {
     const char *weechat_home, *dir_separator;
     char *dir1, *dir2, *filename2;
+    int length;
 
     if (!XFER_IS_FILE(xfer->type))
         return;
@@ -140,7 +141,8 @@ xfer_file_find_filename (struct t_xfer *xfer)
             return;
         }
 
-        filename2 = malloc (strlen (xfer->local_filename) + 16);
+        length = strlen (xfer->local_filename) + 16;
+        filename2 = malloc (length);
         if (!filename2)
         {
             xfer_close (xfer, XFER_STATUS_FAILED);
@@ -151,9 +153,9 @@ xfer_file_find_filename (struct t_xfer *xfer)
         do
         {
             xfer->filename_suffix++;
-            sprintf (filename2, "%s.%d",
-                     xfer->local_filename,
-                     xfer->filename_suffix);
+            snprintf (filename2, length, "%s.%d",
+                      xfer->local_filename,
+                      xfer->filename_suffix);
             if (access (filename2, F_OK) == 0)
             {
                 if (xfer_file_resume (xfer, filename2))
