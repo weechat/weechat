@@ -218,8 +218,8 @@ gui_key_default_bindings (int context)
         /* bind meta-j + {01..99} to switch to buffers # > 10 */
         for (i = 1; i < 100; i++)
         {
-            sprintf (key_str, "meta-j%02d", i);
-            sprintf (command, "/buffer %d", i);
+            snprintf (key_str, sizeof (key_str), "meta-j%02d", i);
+            snprintf (command, sizeof (command), "/buffer %d", i);
             BIND(key_str, command);
         }
     }

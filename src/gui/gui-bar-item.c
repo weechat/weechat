@@ -1313,8 +1313,8 @@ gui_bar_item_default_hotlist (void *data, struct t_gui_bar_item *item,
                      */
                     break;
             }
-            sprintf (str_hotlist + strlen (str_hotlist),
-                     "%d", ptr_hotlist->buffer->number);
+            snprintf (str_hotlist + strlen (str_hotlist), 16,
+                      "%d", ptr_hotlist->buffer->number);
             numbers_count++;
 
             if (display_name)
@@ -1325,14 +1325,18 @@ gui_bar_item_default_hotlist (void *data, struct t_gui_bar_item *item,
                 strcat (str_hotlist, ":");
                 strcat (str_hotlist, GUI_COLOR_CUSTOM_BAR_FG);
                 if (CONFIG_INTEGER(config_look_hotlist_names_length) == 0)
+                {
                     snprintf (format, sizeof (format) - 1, "%%s");
+                }
                 else
+                {
                     snprintf (format, sizeof (format) - 1,
                               "%%.%ds",
                               CONFIG_INTEGER(config_look_hotlist_names_length));
-                sprintf (str_hotlist + strlen (str_hotlist), format,
-                         (CONFIG_BOOLEAN(config_look_hotlist_short_names)) ?
-                         gui_buffer_get_short_name (ptr_hotlist->buffer) : ptr_hotlist->buffer->name);
+                }
+                snprintf (str_hotlist + strlen (str_hotlist), 128, format,
+                          (CONFIG_BOOLEAN(config_look_hotlist_short_names)) ?
+                          gui_buffer_get_short_name (ptr_hotlist->buffer) : ptr_hotlist->buffer->name);
             }
             else
             {
@@ -1407,8 +1411,8 @@ gui_bar_item_default_hotlist (void *data, struct t_gui_bar_item *item,
                                  */
                                 break;
                         }
-                        sprintf (str_hotlist + strlen (str_hotlist),
-                                 "%d", ptr_hotlist->count[priority]);
+                        snprintf (str_hotlist + strlen (str_hotlist), 16,
+                                  "%d", ptr_hotlist->count[priority]);
                     }
                     strcat (str_hotlist, GUI_COLOR_CUSTOM_BAR_DELIM);
                     strcat (str_hotlist, ")");

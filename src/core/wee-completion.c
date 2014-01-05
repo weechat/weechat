@@ -360,36 +360,38 @@ completion_list_add_filename_cb (void *data,
                                  struct t_gui_buffer *buffer,
                                  struct t_gui_completion *completion)
 {
-    char *path_d, *path_b, *p, *d_name;
-    char *real_prefix, *prefix;
-    char *buf;
-    int buf_len;
+    char home[3] = { '~', DIR_SEPARATOR_CHAR, '\0' };
+    char *ptr_home, *pos, buf[PATH_MAX], *real_prefix, *prefix, *path_dir;
+    char *path_base, *dir_name;
+    int length_path_base;
     DIR *dp;
     struct dirent *entry;
     struct stat statbuf;
-    char home[3] = { '~', DIR_SEPARATOR_CHAR, '\0' };
 
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
     (void) buffer;
 
-    buf_len = PATH_MAX;
-    buf = malloc (buf_len);
-    if (!buf)
-        return WEECHAT_RC_OK;
-
     completion->add_space = 0;
 
-    if ((strncmp (completion->base_word, home, 2) == 0) && getenv("HOME"))
+    ptr_home = getenv ("HOME");
+
+    real_prefix = NULL;
+    prefix = NULL;
+    path_dir = NULL;
+    path_base = NULL;
+    dir_name = NULL;
+
+    if (ptr_home && (strncmp (completion->base_word, home, 2) == 0))
     {
-        real_prefix = strdup (getenv("HOME"));
+        real_prefix = strdup (ptr_home);
         prefix = strdup (home);
     }
     else
     {
-        if ((strncmp (completion->base_word, DIR_SEPARATOR, 1) != 0)
-            || (strcmp (completion->base_word, "") == 0))
+        if (!completion->base_word[0]
+            || completion->base_word[0] != DIR_SEPARATOR_CHAR)
         {
             real_prefix = strdup (weechat_home);
             prefix = strdup ("");
@@ -400,61 +402,82 @@ completion_list_add_filename_cb (void *data,
             prefix = strdup (DIR_SEPARATOR);
         }
     }
+    if (!real_prefix || !prefix)
+        goto end;
 
-    snprintf (buf, buf_len, "%s", completion->base_word + strlen (prefix));
-    p = strrchr (buf, DIR_SEPARATOR_CHAR);
-    if (p)
+    snprintf (buf, sizeof (buf), "%s", completion->base_word + strlen (prefix));
+    pos = strrchr (buf, DIR_SEPARATOR_CHAR);
+    if (pos)
     {
-        p[0] = '\0';
-        path_d = strdup (buf);
-        p++;
-        path_b = strdup (p);
+        pos[0] = '\0';
+        path_dir = strdup (buf);
+        path_base = strdup (pos + 1);
     }
     else
     {
-        path_d = strdup ("");
-        path_b = strdup (buf);
+        path_dir = strdup ("");
+        path_base = strdup (buf);
     }
+    if (!path_dir || !path_base)
+        goto end;
 
-    sprintf (buf, "%s%s%s", real_prefix, DIR_SEPARATOR, path_d);
-    d_name = strdup (buf);
-    dp = opendir (d_name);
-    if (dp != NULL)
+    snprintf (buf, sizeof (buf),
+              "%s%s%s", real_prefix, DIR_SEPARATOR, path_dir);
+    dir_name = strdup (buf);
+    if (!dir_name)
+        goto end;
+
+    dp = opendir (dir_name);
+    if (!dp)
+        goto end;
+
+    length_path_base = strlen (path_base);
+    while ((entry = readdir (dp)) != NULL)
     {
-        while ((entry = readdir (dp)) != NULL)
+        if (strncmp (entry->d_name, path_base, length_path_base) != 0)
+            continue;
+
+        /* skip "." and ".." */
+        if ((strcmp (entry->d_name, ".") == 0)
+            || (strcmp (entry->d_name, "..") == 0))
         {
-            if (strncmp (entry->d_name, path_b, strlen (path_b)) == 0)
-            {
-                if (strcmp (entry->d_name, ".") == 0 || strcmp (entry->d_name, "..") == 0)
-                    continue;
-
-                snprintf (buf, buf_len, "%s%s%s",
-                          d_name, DIR_SEPARATOR, entry->d_name);
-                if (stat (buf, &statbuf) == -1)
-                    continue;
-
-                snprintf (buf, buf_len, "%s%s%s%s%s%s",
-                          prefix,
-                          ((strcmp(prefix, "") == 0)
-                           || strchr(prefix, DIR_SEPARATOR_CHAR)) ? "" : DIR_SEPARATOR,
-                          path_d,
-                          strcmp(path_d, "") == 0 ? "" : DIR_SEPARATOR,
-                          entry->d_name,
-                          S_ISDIR(statbuf.st_mode) ? DIR_SEPARATOR : "");
-
-                gui_completion_list_add (completion, buf,
-                                         0, WEECHAT_LIST_POS_SORT);
-            }
+            continue;
         }
-        closedir (dp);
-    }
 
-    free (d_name);
-    free (prefix);
-    free (real_prefix);
-    free (path_d);
-    free (path_b);
-    free (buf);
+        /* skip entry if not accessible */
+        snprintf (buf, sizeof (buf), "%s%s%s",
+                  dir_name, DIR_SEPARATOR, entry->d_name);
+        if (stat (buf, &statbuf) == -1)
+            continue;
+
+        /* build full path name */
+        snprintf (buf, sizeof (buf),
+                  "%s%s%s%s%s%s",
+                  prefix,
+                  (prefix[0] && !strchr (prefix, DIR_SEPARATOR_CHAR)) ?
+                  DIR_SEPARATOR : "",
+                  path_dir,
+                  (path_dir[0]) ? DIR_SEPARATOR : "",
+                  entry->d_name,
+                  S_ISDIR(statbuf.st_mode) ? DIR_SEPARATOR : "");
+
+        /* add path to list of completions */
+        gui_completion_list_add (completion, buf,
+                                 0, WEECHAT_LIST_POS_SORT);
+    }
+    closedir (dp);
+
+end:
+    if (real_prefix)
+        free (real_prefix);
+    if (prefix)
+        free (prefix);
+    if (path_dir)
+        free (path_dir);
+    if (path_base)
+        free (path_base);
+    if (dir_name)
+        free (dir_name);
 
     return WEECHAT_RC_OK;
 }
