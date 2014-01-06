@@ -618,8 +618,8 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
             {
                 weechat_infolist_new_var_string (item, "plugin_name", weechat_plugin->name);
                 weechat_infolist_new_var_string (item, "plugin_id", server->name);
-                weechat_infolist_new_var_string (item, "type", "file_recv");
-                weechat_infolist_new_var_string (item, "protocol", "dcc");
+                weechat_infolist_new_var_string (item, "type_string", "file_recv");
+                weechat_infolist_new_var_string (item, "protocol_string", "dcc");
                 weechat_infolist_new_var_string (item, "remote_nick", nick);
                 weechat_infolist_new_var_string (item, "local_nick", server->nick);
                 weechat_infolist_new_var_string (item, "filename",
@@ -721,7 +721,7 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
             {
                 weechat_infolist_new_var_string (item, "plugin_name", weechat_plugin->name);
                 weechat_infolist_new_var_string (item, "plugin_id", server->name);
-                weechat_infolist_new_var_string (item, "type", "file_recv");
+                weechat_infolist_new_var_string (item, "type_string", "file_recv");
                 weechat_infolist_new_var_string (item, "filename",
                                                  (filename) ? filename : pos_file);
                 weechat_infolist_new_var_integer (item, "port", atoi (pos_port));
@@ -818,7 +818,7 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
             {
                 weechat_infolist_new_var_string (item, "plugin_name", weechat_plugin->name);
                 weechat_infolist_new_var_string (item, "plugin_id", server->name);
-                weechat_infolist_new_var_string (item, "type", "file_recv");
+                weechat_infolist_new_var_string (item, "type_string", "file_recv");
                 weechat_infolist_new_var_string (item, "filename",
                                                  (filename) ? filename : pos_file);
                 weechat_infolist_new_var_integer (item, "port", atoi (pos_port));
@@ -925,7 +925,7 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
             {
                 weechat_infolist_new_var_string (item, "plugin_name", weechat_plugin->name);
                 weechat_infolist_new_var_string (item, "plugin_id", server->name);
-                weechat_infolist_new_var_string (item, "type", "chat_recv");
+                weechat_infolist_new_var_string (item, "type_string", "chat_recv");
                 weechat_infolist_new_var_string (item, "remote_nick", nick);
                 weechat_infolist_new_var_string (item, "local_nick", server->nick);
                 snprintf (charset_modifier, sizeof (charset_modifier),

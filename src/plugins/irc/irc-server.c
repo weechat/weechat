@@ -4421,7 +4421,7 @@ irc_server_xfer_send_ready_cb (void *data, const char *signal,
             ptr_server = irc_server_search (plugin_id);
             if (ptr_server)
             {
-                type = weechat_infolist_string (infolist, "type");
+                type = weechat_infolist_string (infolist, "type_string");
                 if (type)
                 {
                     if (strcmp (type, "file_send") == 0)

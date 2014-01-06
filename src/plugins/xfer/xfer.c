@@ -423,33 +423,12 @@ void
 xfer_send_signal (struct t_xfer *xfer, const char *signal)
 {
     struct t_infolist *infolist;
-    struct t_infolist_item *item;
-    char str_long[128];
 
     infolist = weechat_infolist_new ();
     if (infolist)
     {
-        item = weechat_infolist_new_item (infolist);
-        if (item)
+        if (xfer_add_to_infolist (infolist, xfer))
         {
-            weechat_infolist_new_var_string (item, "plugin_name", xfer->plugin_name);
-            weechat_infolist_new_var_string (item, "plugin_id", xfer->plugin_id);
-            weechat_infolist_new_var_string (item, "type", xfer_type_string[xfer->type]);
-            weechat_infolist_new_var_string (item, "protocol", xfer_protocol_string[xfer->protocol]);
-            weechat_infolist_new_var_string (item, "remote_nick", xfer->remote_nick);
-            weechat_infolist_new_var_string (item, "local_nick", xfer->local_nick);
-            weechat_infolist_new_var_string (item, "charset_modifier", xfer->charset_modifier);
-            weechat_infolist_new_var_string (item, "filename", xfer->filename);
-            snprintf (str_long, sizeof (str_long), "%llu", xfer->size);
-            weechat_infolist_new_var_string (item, "size", str_long);
-            snprintf (str_long, sizeof (str_long), "%llu", xfer->start_resume);
-            weechat_infolist_new_var_string (item, "start_resume", str_long);
-            snprintf (str_long, sizeof (str_long), "%lu", xfer->local_address);
-            weechat_infolist_new_var_string (item, "local_address", str_long);
-            snprintf (str_long, sizeof (str_long), "%lu", xfer->remote_address);
-            weechat_infolist_new_var_string (item, "remote_address", str_long);
-            weechat_infolist_new_var_integer (item, "port", xfer->port);
-
             weechat_hook_signal_send (signal, WEECHAT_HOOK_SIGNAL_POINTER,
                                       infolist);
         }
@@ -948,8 +927,8 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
 
     plugin_name = weechat_infolist_string (infolist, "plugin_name");
     plugin_id = weechat_infolist_string (infolist, "plugin_id");
-    str_type = weechat_infolist_string (infolist, "type");
-    str_protocol = weechat_infolist_string (infolist, "protocol");
+    str_type = weechat_infolist_string (infolist, "type_string");
+    str_protocol = weechat_infolist_string (infolist, "protocol_string");
     remote_nick = weechat_infolist_string (infolist, "remote_nick");
     local_nick = weechat_infolist_string (infolist, "local_nick");
     charset_modifier = weechat_infolist_string (infolist, "charset_modifier");
