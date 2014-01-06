@@ -42,9 +42,9 @@ struct t_hashtable *hdata_search_pointers = NULL;
 struct t_hashtable *hdata_search_extra_vars = NULL;
 struct t_hashtable *hdata_search_options = NULL;
 
-char *hdata_type_string[8] =
+char *hdata_type_string[9] =
 { "other", "char", "integer", "long", "string", "pointer", "time",
-  "hashtable" };
+  "hashtable", "shared_string" };
 
 
 /*
