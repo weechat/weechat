@@ -264,7 +264,7 @@ weechat_ruby_print_exception (VALUE err)
 
     if (strcmp (err_class, "SyntaxError") == 0)
     {
-	tmp3 = rb_inspect(err);
+        tmp3 = rb_inspect(err);
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: error: %s"),
                         weechat_prefix ("error"), RUBY_PLUGIN_NAME,
