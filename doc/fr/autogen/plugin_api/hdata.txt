@@ -780,18 +780,18 @@
 *** 'date_printed' (time)
 *** 'str_time' (string)
 *** 'tags_count' (integer)
-*** 'tags_array' (string, array_size: "tags_count")
+*** 'tags_array' (shared_string, array_size: "tags_count")
 *** 'displayed' (char)
 *** 'highlight' (char)
 *** 'refresh_needed' (char)
-*** 'prefix' (string)
+*** 'prefix' (shared_string)
 *** 'prefix_length' (integer)
 *** 'message' (string)
 ** mise à jour autorisée:
 *** 'date' (time)
 *** 'date_printed' (time)
-*** 'tags_array' (string)
-*** 'prefix' (string)
+*** 'tags_array' (shared_string)
+*** 'prefix' (shared_string)
 *** 'message' (string)
 * 'lines': structure avec des lignes
 ** extension: weechat
@@ -810,18 +810,18 @@
 ** extension: weechat
 ** variables:
 *** 'group' (pointer, hdata: "nick_group")
-*** 'name' (string)
-*** 'color' (string)
-*** 'prefix' (string)
-*** 'prefix_color' (string)
+*** 'name' (shared_string)
+*** 'color' (shared_string)
+*** 'prefix' (shared_string)
+*** 'prefix_color' (shared_string)
 *** 'visible' (integer)
 *** 'prev_nick' (pointer, hdata: "nick")
 *** 'next_nick' (pointer, hdata: "nick")
 * 'nick_group': groupe dans la liste de pseudos
 ** extension: weechat
 ** variables:
-*** 'name' (string)
-*** 'color' (string)
+*** 'name' (shared_string)
+*** 'color' (shared_string)
 *** 'visible' (integer)
 *** 'level' (integer)
 *** 'parent' (pointer, hdata: "nick_group")
