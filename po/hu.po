@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-02 15:18+0100\n"
-"PO-Revision-Date: 2013-12-31 10:04+0100\n"
+"POT-Creation-Date: 2014-01-06 11:16+0100\n"
+"PO-Revision-Date: 2014-01-06 10:16+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: hu\n"
@@ -8984,6 +8984,21 @@ msgstr "Sikertelen"
 msgid "aborted"
 msgstr "Megszakítva"
 
+msgid "hashing"
+msgstr ""
+
+msgid "CRC in progress"
+msgstr ""
+
+msgid "CRC OK"
+msgstr ""
+
+msgid "wrong CRC"
+msgstr ""
+
+msgid "CRC error"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%s%s: file %s %s %s (%ld.%ld.%ld.%ld): %s"
 msgstr "DCC: fájl %s%s%s"
@@ -9013,6 +9028,10 @@ msgstr "\"%s\" aktív DCC megszakítása a következővel: %s\n"
 #, fuzzy, c-format
 msgid "%s%s: not enough memory for new xfer"
 msgstr "%s nincs elegendő memória új DCC számára\n"
+
+#, fuzzy, c-format
+msgid "%s%s: hashing error"
+msgstr "%s gnutls inicializációs hiba\n"
 
 #, fuzzy, c-format
 msgid ""
@@ -9246,6 +9265,11 @@ msgid ""
 "\"nick\" (for all servers); example: \"freenode.FlashCode,andrew\""
 msgstr ""
 
+msgid ""
+"automatically check CRC32 file checksum if it is found in the filename (8 "
+"hexadecimal chars)"
+msgstr ""
+
 #, fuzzy
 msgid "rename incoming files if already exists (add \".1\", \".2\", ...)"
 msgstr ""
@@ -9320,6 +9344,14 @@ msgid "%s%s: unable to send ACK to sender"
 msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
 
 #, fuzzy, c-format
+msgid "%s%s: wrong CRC32 for file %s"
+msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
+
+#, fuzzy, c-format
+msgid "%s%s: CRC32 error while resuming"
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, fuzzy, c-format
 msgid "%s%s: unable to fork"
 msgstr "%s DCC: nem sikerült forkolni\n"
 
@@ -9383,9 +9415,3 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
-
-#, fuzzy
-#~ msgid "%sConnected to %s (%ld.%ld.%ld.%ld) via xfer chat"
-#~ msgstr ""
-#~ "Csatlakozás a %s%s %s(%s%d.%d.%d.%d%s)%s partnerhez DCC beszélgetésen "
-#~ "keresztül\n"

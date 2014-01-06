@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-02 15:18+0100\n"
-"PO-Revision-Date: 2013-12-31 10:05+0100\n"
+"POT-Creation-Date: 2014-01-06 11:16+0100\n"
+"PO-Revision-Date: 2014-01-06 10:17+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pl\n"
@@ -10205,6 +10205,22 @@ msgstr "nie powodzenie"
 msgid "aborted"
 msgstr "przerwano"
 
+msgid "hashing"
+msgstr ""
+
+msgid "CRC in progress"
+msgstr ""
+
+msgid "CRC OK"
+msgstr ""
+
+msgid "wrong CRC"
+msgstr ""
+
+#, fuzzy
+msgid "CRC error"
+msgstr "błąd"
+
 #, c-format
 msgid "%s%s: file %s %s %s (%ld.%ld.%ld.%ld): %s"
 msgstr "%s%s: plik %s %s %s (%ld.%ld.%ld.%ld): %s"
@@ -10232,6 +10248,10 @@ msgstr "%s%s: przerywam aktywny xfer: \"%s\" od %s"
 #, c-format
 msgid "%s%s: not enough memory for new xfer"
 msgstr "%s%s: za mało pamięci na nowy xfer"
+
+#, fuzzy, c-format
+msgid "%s%s: hashing error"
+msgstr "%s%s: błąd inicjacji TLS"
 
 #, c-format
 msgid ""
@@ -10464,6 +10484,11 @@ msgstr ""
 "serwera) lub \"nick\" (dla wszystkich serwerów; przykład \"freenode."
 "FlashCode,andrew\""
 
+msgid ""
+"automatically check CRC32 file checksum if it is found in the filename (8 "
+"hexadecimal chars)"
+msgstr ""
+
 msgid "rename incoming files if already exists (add \".1\", \".2\", ...)"
 msgstr ""
 "zmień nazwę pliku przychodzącego jeśli juz istnieje (dodaj \".1\", "
@@ -10532,6 +10557,14 @@ msgstr "%s%s: nie można zapisać pliku"
 msgid "%s%s: unable to send ACK to sender"
 msgstr "%s%s: nie można wysłać ACK do nadawcy"
 
+#, fuzzy, c-format
+msgid "%s%s: wrong CRC32 for file %s"
+msgstr "%s%s: nieprawidłowe argumenty dla funkcji \"%s\" (skrypt: %s)"
+
+#, fuzzy, c-format
+msgid "%s%s: CRC32 error while resuming"
+msgstr "%s%s: błąd podczas ładowania pliku \"%s\""
+
 #, c-format
 msgid "%s%s: unable to fork"
 msgstr "%s%s: nie można uruchomić procesu potomnego"
@@ -10591,7 +10624,3 @@ msgstr "Typ"
 
 msgid "Constants"
 msgstr "Stałe"
-
-#, fuzzy
-#~ msgid "%sConnected to %s (%ld.%ld.%ld.%ld) via xfer chat"
-#~ msgstr "Połączono z %s (%ld.%ld.%ld.%ld) poprzez rozmowę xfer"

@@ -96,6 +96,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * lua: fix crash on calls to callbacks during load of script
 * python: fix load of scripts with python >= 3.3
 * ruby: fix ruby init with ruby >= 2.0 (bug #41115)
+* xfer: add option xfer.file.auto_check_crc32 (patch #7963)
 
 == Version 0.4.2 (2013-10-06)
 

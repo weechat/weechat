@@ -44,7 +44,7 @@ xfer_buffer_refresh (const char *hotlist)
 {
     struct t_xfer *ptr_xfer, *xfer_selected;
     char str_color[256], suffix[32], status[64], date[128], eta[128];
-    char str_ip[32];
+    char str_ip[32], str_hash[128];
     char *progress_bar, *str_pos, *str_total, *str_bytes_per_sec;
     int i, length, line, progress_bar_size, num_bars;
     unsigned long long pos, pct_complete;
@@ -103,9 +103,22 @@ xfer_buffer_refresh (const char *hotlist)
                           ptr_xfer->remote_address & 0xff);
             }
 
+            str_hash[0] = '\0';
+            if (ptr_xfer->hash_target
+                && ptr_xfer->hash_handle
+                && (ptr_xfer->hash_status != XFER_HASH_STATUS_UNKNOWN)
+                && ((ptr_xfer->status == XFER_STATUS_ACTIVE)
+                    || (ptr_xfer->status == XFER_STATUS_DONE)
+                    || (ptr_xfer->status == XFER_STATUS_HASHING)))
+            {
+                snprintf (str_hash, sizeof (str_hash),
+                          " (%s)",
+                          _(xfer_hash_status_string[ptr_xfer->hash_status]));
+            }
+
             /* display first line with remote nick, filename and plugin name/id */
             weechat_printf_y (xfer_buffer, (line * 2) + 2,
-                              "%s%s%-24s %s%s%s%s (%s.%s)%s",
+                              "%s%s%-24s %s%s%s%s (%s.%s)%s%s",
                               weechat_color(str_color),
                               (line == xfer_buffer_selected_line) ?
                               "*** " : "    ",
@@ -117,7 +130,8 @@ xfer_buffer_refresh (const char *hotlist)
                               suffix,
                               ptr_xfer->plugin_name,
                               ptr_xfer->plugin_id,
-                              str_ip);
+                              str_ip,
+                              str_hash);
 
             snprintf (status, sizeof (status),
                       "%s", _(xfer_status_string[ptr_xfer->status]));

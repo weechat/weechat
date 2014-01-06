@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-02 15:18+0100\n"
-"PO-Revision-Date: 2013-12-31 10:05+0100\n"
+"POT-Creation-Date: 2014-01-06 11:16+0100\n"
+"PO-Revision-Date: 2014-01-06 10:16+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
 "Language: ja\n"
@@ -9964,6 +9964,22 @@ msgstr "失敗"
 msgid "aborted"
 msgstr "中止"
 
+msgid "hashing"
+msgstr ""
+
+msgid "CRC in progress"
+msgstr ""
+
+msgid "CRC OK"
+msgstr ""
+
+msgid "wrong CRC"
+msgstr ""
+
+#, fuzzy
+msgid "CRC error"
+msgstr "エラー"
+
 #, c-format
 msgid "%s%s: file %s %s %s (%ld.%ld.%ld.%ld): %s"
 msgstr "%s%s: ファイル %s %s %s (%ld.%ld.%ld.%ld): %s"
@@ -9991,6 +10007,10 @@ msgstr "%s%s: アクティブな xfer を中断しています: \"%s\" %s から
 #, c-format
 msgid "%s%s: not enough memory for new xfer"
 msgstr "%s%s: 新しい xfer 用のメモリ不足"
+
+#, fuzzy, c-format
+msgid "%s%s: hashing error"
+msgstr "%s%s: TLS 初期化エラー"
 
 #, c-format
 msgid ""
@@ -10221,6 +10241,11 @@ msgstr ""
 "ト; フォーマットは \"server.nick\" (サーバを特定する場合) または \"nick\" (す"
 "べてのサーバ); 例: \"freenode.FlashCode,andrew\""
 
+msgid ""
+"automatically check CRC32 file checksum if it is found in the filename (8 "
+"hexadecimal chars)"
+msgstr ""
+
 msgid "rename incoming files if already exists (add \".1\", \".2\", ...)"
 msgstr ""
 "既に存在する場合、受信ファイルをリネームする (\".1\"、\".2\"、...を追加)"
@@ -10290,6 +10315,14 @@ msgstr "%s%s: ローカルファイルに書き込めません"
 msgid "%s%s: unable to send ACK to sender"
 msgstr "%s%s: 送信者に ACK を送信できません"
 
+#, fuzzy, c-format
+msgid "%s%s: wrong CRC32 for file %s"
+msgstr "%s%s: 関数 \"%s\" の不正な引数 (スクリプト: %s)"
+
+#, fuzzy, c-format
+msgid "%s%s: CRC32 error while resuming"
+msgstr "%s%s: ファイル \"%s\" の読み込み中にエラー"
+
 #, c-format
 msgid "%s%s: unable to fork"
 msgstr "%s%s: フォークできません"
@@ -10352,7 +10385,3 @@ msgstr "タイプ"
 
 msgid "Constants"
 msgstr "定数"
-
-#, fuzzy
-#~ msgid "%sConnected to %s (%ld.%ld.%ld.%ld) via xfer chat"
-#~ msgstr "xfer チャットで %s (%ld.%ld.%ld.%ld) に接続"

@@ -58,6 +58,11 @@
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
+* [[option_xfer.file.auto_check_crc32]] *xfer.file.auto_check_crc32*
+** descrizione: `automatically check CRC32 file checksum if it is found in the filename (8 hexadecimal chars)`
+** tipo: bool
+** valori: on, off (valore predefinito: `off`)
+
 * [[option_xfer.file.auto_rename]] *xfer.file.auto_rename*
 ** descrizione: `rinomina i file in ingresso se esistenti (aggiunge ".1", ".2", ...)`
 ** tipo: bool

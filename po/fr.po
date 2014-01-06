@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-02 15:18+0100\n"
-"PO-Revision-Date: 2014-01-02 15:19+0100\n"
+"POT-Creation-Date: 2014-01-06 11:16+0100\n"
+"PO-Revision-Date: 2014-01-06 10:23+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -10384,6 +10384,21 @@ msgstr "échoué"
 msgid "aborted"
 msgstr "interrompu"
 
+msgid "hashing"
+msgstr "hachage"
+
+msgid "CRC in progress"
+msgstr "CRC en cours"
+
+msgid "CRC OK"
+msgstr "CRC OK"
+
+msgid "wrong CRC"
+msgstr "mauvais CRC"
+
+msgid "CRC error"
+msgstr "erreur CRC"
+
 #, c-format
 msgid "%s%s: file %s %s %s (%ld.%ld.%ld.%ld): %s"
 msgstr "%s%s: fichier %s %s %s (%ld.%ld.%ld.%ld): %s"
@@ -10411,6 +10426,10 @@ msgstr "%s%s: abandon du xfer actif: \"%s\" de %s"
 #, c-format
 msgid "%s%s: not enough memory for new xfer"
 msgstr "%s%s: pas assez de mémoire pour un nouveau xfer"
+
+#, c-format
+msgid "%s%s: hashing error"
+msgstr "%s%s: erreur de hash"
 
 #, c-format
 msgid ""
@@ -10653,6 +10672,13 @@ msgstr ""
 "format est \"serveur.pseudo\" (pour un serveur spécifique) ou \"pseudo"
 "\" (pour tous les serveurs); exemple: \"freenode.FlashCode,andrew\""
 
+msgid ""
+"automatically check CRC32 file checksum if it is found in the filename (8 "
+"hexadecimal chars)"
+msgstr ""
+"vérifier automatiquement la somme de contrôle CRC32 du fichier si elle est "
+"trouvée dans le nom de fichier (8 caractères hexadécimaux)"
+
 msgid "rename incoming files if already exists (add \".1\", \".2\", ...)"
 msgstr ""
 "renommer les fichiers reçus s'ils existent déjà (ajoute \".1\", \".2\", ...)"
@@ -10725,6 +10751,14 @@ msgid "%s%s: unable to send ACK to sender"
 msgstr "%s%s: impossible d'envoyer l'accusé de réception à l'envoyeur"
 
 #, c-format
+msgid "%s%s: wrong CRC32 for file %s"
+msgstr "%s%s: mauvais CRC32 pour le fichier %s"
+
+#, c-format
+msgid "%s%s: CRC32 error while resuming"
+msgstr "%s%s: erreur CRC32 durant la reprise"
+
+#, c-format
 msgid "%s%s: unable to fork"
 msgstr "%s%s: impossible de créer un processus"
 
@@ -10786,6 +10820,3 @@ msgstr "Type"
 
 msgid "Constants"
 msgstr "Constantes"
-
-#~ msgid "%sConnected to %s (%ld.%ld.%ld.%ld) via xfer chat"
-#~ msgstr "%sConnecté à %s (%ld.%ld.%ld.%ld) via discussion xfer"

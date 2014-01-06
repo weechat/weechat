@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-02 15:18+0100\n"
-"PO-Revision-Date: 2013-11-09 10:13+0100\n"
+"POT-Creation-Date: 2014-01-06 11:16+0100\n"
+"PO-Revision-Date: 2014-01-06 10:17+0100\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: tr\n"
@@ -8062,6 +8062,22 @@ msgstr "başarısız"
 msgid "aborted"
 msgstr ""
 
+msgid "hashing"
+msgstr ""
+
+msgid "CRC in progress"
+msgstr ""
+
+msgid "CRC OK"
+msgstr ""
+
+msgid "wrong CRC"
+msgstr ""
+
+#, fuzzy
+msgid "CRC error"
+msgstr "hata"
+
 #, c-format
 msgid "%s%s: file %s %s %s (%ld.%ld.%ld.%ld): %s"
 msgstr ""
@@ -8089,6 +8105,10 @@ msgstr ""
 #, c-format
 msgid "%s%s: not enough memory for new xfer"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: hashing error"
+msgstr "%s%s: hata: %s"
 
 #, c-format
 msgid ""
@@ -8290,6 +8310,11 @@ msgid ""
 "\"nick\" (for all servers); example: \"freenode.FlashCode,andrew\""
 msgstr ""
 
+msgid ""
+"automatically check CRC32 file checksum if it is found in the filename (8 "
+"hexadecimal chars)"
+msgstr ""
+
 msgid "rename incoming files if already exists (add \".1\", \".2\", ...)"
 msgstr ""
 
@@ -8349,6 +8374,14 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: unable to send ACK to sender"
+msgstr ""
+
+#, c-format
+msgid "%s%s: wrong CRC32 for file %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: CRC32 error while resuming"
 msgstr ""
 
 #, c-format

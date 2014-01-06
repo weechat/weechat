@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-02 15:18+0100\n"
-"PO-Revision-Date: 2013-12-31 10:03+0100\n"
+"POT-Creation-Date: 2014-01-06 11:16+0100\n"
+"PO-Revision-Date: 2014-01-06 10:16+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
 "Language: de\n"
@@ -10660,6 +10660,22 @@ msgstr "fehlgeschlagen"
 msgid "aborted"
 msgstr "abgebrochen"
 
+msgid "hashing"
+msgstr ""
+
+msgid "CRC in progress"
+msgstr ""
+
+msgid "CRC OK"
+msgstr ""
+
+msgid "wrong CRC"
+msgstr ""
+
+#, fuzzy
+msgid "CRC error"
+msgstr "Fehler"
+
 #, c-format
 msgid "%s%s: file %s %s %s (%ld.%ld.%ld.%ld): %s"
 msgstr "%s%s: Datei %s %s %s (%ld.%ld.%ld.%ld): %s"
@@ -10688,6 +10704,10 @@ msgstr "%s%s: aktiver Transfer (xfer): \"%s\" von %s abgebrochen"
 msgid "%s%s: not enough memory for new xfer"
 msgstr ""
 "%s%s: Für einen neuen Transfer steht nicht ausreichend Speicher zur Verfügung"
+
+#, fuzzy, c-format
+msgid "%s%s: hashing error"
+msgstr "%s%s: TLS Initialisierungsfehler"
 
 #, c-format
 msgid ""
@@ -10928,6 +10948,11 @@ msgstr ""
 "speziellen Server) oder \"nick\" (global, für alle Server); Beispiel: "
 "\"freenode.FlashCode,andrew\""
 
+msgid ""
+"automatically check CRC32 file checksum if it is found in the filename (8 "
+"hexadecimal chars)"
+msgstr ""
+
 msgid "rename incoming files if already exists (add \".1\", \".2\", ...)"
 msgstr ""
 "eingehende Dateien werden automatisch umbenannt um ein Überschreiben zu "
@@ -11002,6 +11027,14 @@ msgstr "%s%s: Die lokale Datei kann nicht erstellt werden"
 msgid "%s%s: unable to send ACK to sender"
 msgstr "%s%s: ACK kann nicht an Absender verschickt werden"
 
+#, fuzzy, c-format
+msgid "%s%s: wrong CRC32 for file %s"
+msgstr "%s%s: Fehlerhafte Argumente für die Funktion \"%s\" (Skript: %s)"
+
+#, fuzzy, c-format
+msgid "%s%s: CRC32 error while resuming"
+msgstr "%s%s: Fehler beim Laden der Datei \"%s\""
+
 #, c-format
 msgid "%s%s: unable to fork"
 msgstr "%s%s: es kann kein fork erstellt werden"
@@ -11064,7 +11097,3 @@ msgstr "Type"
 
 msgid "Constants"
 msgstr "Konstanten"
-
-#, fuzzy
-#~ msgid "%sConnected to %s (%ld.%ld.%ld.%ld) via xfer chat"
-#~ msgstr "Verbindung zu %s (%ld.%ld.%ld.%ld) via Transfer-Chat aufgebaut"

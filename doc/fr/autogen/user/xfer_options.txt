@@ -58,6 +58,11 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
+* [[option_xfer.file.auto_check_crc32]] *xfer.file.auto_check_crc32*
+** description: `vérifier automatiquement la somme de contrôle CRC32 du fichier si elle est trouvée dans le nom de fichier (8 caractères hexadécimaux)`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `off`)
+
 * [[option_xfer.file.auto_rename]] *xfer.file.auto_rename*
 ** description: `renommer les fichiers reçus s'ils existent déjà (ajoute ".1", ".2", ...)`
 ** type: booléen

@@ -30,6 +30,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h>
+#include <gcrypt.h>
 
 #include "../weechat-plugin.h"
 #include "xfer.h"
@@ -51,19 +52,25 @@ WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
 
 struct t_weechat_plugin *weechat_xfer_plugin = NULL;
 
-char *xfer_type_string[] =                 /* strings for types             */
+char *xfer_type_string[] =             /* strings for types                 */
 { "file_recv", "file_send", "chat_recv",
   "chat_send"
 };
 
-char *xfer_protocol_string[] =             /* strings for protocols         */
+char *xfer_protocol_string[] =         /* strings for protocols             */
 { "none", "dcc"
 };
 
-char *xfer_status_string[] =               /* strings for status            */
+char *xfer_status_string[] =           /* strings for status                */
 { N_("waiting"), N_("connecting"),
   N_("active"), N_("done"), N_("failed"),
-  N_("aborted")
+  N_("aborted"), N_("hashing")
+};
+
+char *xfer_hash_status_string[] =      /* strings for hash status           */
+{ "?",
+  N_("CRC in progress"), N_("CRC OK"),
+  N_("wrong CRC"), N_("CRC error")
 };
 
 struct t_xfer *xfer_list = NULL;       /* list of files/chats               */
@@ -71,7 +78,6 @@ struct t_xfer *last_xfer = NULL;       /* last file/chat in list            */
 int xfer_count = 0;                    /* number of xfer                    */
 
 int xfer_signal_upgrade_received = 0;  /* signal "upgrade" received ?       */
-
 
 void xfer_disconnect_all ();
 
@@ -568,6 +574,59 @@ xfer_nick_auto_accepted (const char *server, const char *nick)
 }
 
 /*
+ * Searches CRC32 in a filename.
+ *
+ * If more than one CRC32 are found, the last one is returned
+ * (with the higher index in filename).
+ *
+ * The chars before/after CRC32 must be either beginning/end of string or
+ * non-hexadecimal chars.
+ *
+ * Examples:
+ *
+ *   test_filename     => -1 (not found: no CRC32)
+ *   test_1234abcd     => 5  ("1234abcd")
+ *   1234abcd_test     => 0  ("1234abcd")
+ *   1234abcd_12345678 => 9  ("12345678")
+ *   123456789abcdef   => -1 (not found: missing delimiter around CRC32)
+ *
+ * Returns pointer to last CRC32 in string, NULL if no CRC32 was found.
+ */
+
+const char *
+xfer_filename_crc32 (const char *filename)
+{
+    int length;
+    const char *ptr_string, *ptr_crc32;
+
+    length = 0;
+    ptr_crc32 = NULL;
+
+    ptr_string = filename;
+    while (ptr_string && ptr_string[0])
+    {
+        if (((ptr_string[0] >= '0') && (ptr_string[0] <= '9'))
+            || ((ptr_string[0] >= 'A') && (ptr_string[0] <= 'F'))
+            || ((ptr_string[0] >= 'a') && (ptr_string[0] <= 'f')))
+        {
+            length++;
+        }
+        else
+        {
+            if (length == 8)
+                ptr_crc32 = ptr_string - 8;
+            length = 0;
+        }
+
+        ptr_string = weechat_utf8_next_char (ptr_string);
+    }
+    if (length == 8)
+        ptr_crc32 = ptr_string - 8;
+
+    return ptr_crc32;
+}
+
+/*
  * Adds a xfer to list.
  *
  * Returns pointer to new xfer, NULL if error.
@@ -582,7 +641,7 @@ xfer_new (const char *plugin_name, const char *plugin_id,
           int port, int sock, const char *local_filename)
 {
     struct t_xfer *new_xfer;
-    const char *ptr_color;
+    const char *ptr_color, *ptr_crc32;
 
     new_xfer = xfer_alloc ();
     if (!new_xfer)
@@ -633,6 +692,36 @@ xfer_new (const char *plugin_name, const char *plugin_id,
         new_xfer->local_filename = strdup (local_filename);
     else
         xfer_file_find_filename (new_xfer);
+
+    new_xfer->hash_handle = NULL;
+    new_xfer->hash_target = NULL;
+    new_xfer->hash_status = XFER_HASH_STATUS_UNKNOWN;
+
+    if ((type == XFER_TYPE_FILE_RECV)
+        && weechat_config_boolean (xfer_config_file_auto_check_crc32))
+    {
+        ptr_crc32 = xfer_filename_crc32 (new_xfer->filename);
+        if (ptr_crc32)
+        {
+            new_xfer->hash_handle = malloc (sizeof (gcry_md_hd_t));
+            if (new_xfer->hash_handle)
+            {
+                if (gcry_md_open (new_xfer->hash_handle, GCRY_MD_CRC32, 0) == 0)
+                {
+                    new_xfer->hash_target = weechat_strndup (ptr_crc32, 8);
+                    new_xfer->hash_status = XFER_HASH_STATUS_IN_PROGRESS;
+                }
+                else
+                {
+                    free (new_xfer->hash_handle);
+                    new_xfer->hash_handle = NULL;
+                    weechat_printf (NULL,
+                                    _("%s%s: hashing error"),
+                                    weechat_prefix ("error"), XFER_PLUGIN_NAME);
+                }
+            }
+        }
+    }
 
     /* write info message on core buffer */
     switch (type)
@@ -788,6 +877,13 @@ xfer_free (struct t_xfer *xfer)
         free (xfer->unterminated_message);
     if (xfer->local_filename)
         free (xfer->local_filename);
+    if (xfer->hash_handle)
+    {
+        gcry_md_close (*xfer->hash_handle);
+        free (xfer->hash_handle);
+    }
+    if (xfer->hash_target)
+        free (xfer->hash_target);
 
     free (xfer);
 
@@ -1450,6 +1546,12 @@ xfer_add_to_infolist (struct t_infolist *infolist, struct t_xfer *xfer)
     snprintf (value, sizeof (value), "%llu", xfer->eta);
     if (!weechat_infolist_new_var_string (ptr_item, "eta", value))
         return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "hash_target", xfer->hash_target))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "hash_status", xfer->hash_status))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "hash_status_string", xfer_hash_status_string[xfer->hash_status]))
+        return 0;
 
     return 1;
 }
@@ -1512,6 +1614,10 @@ xfer_print_log ()
         weechat_log_printf ("  last_activity . . . : %ld",   ptr_xfer->last_activity);
         weechat_log_printf ("  bytes_per_sec . . . : %llu",  ptr_xfer->bytes_per_sec);
         weechat_log_printf ("  eta . . . . . . . . : %llu",  ptr_xfer->eta);
+        weechat_log_printf ("  hash_target . . . . : '%s'",  ptr_xfer->hash_target);
+        weechat_log_printf ("  hash_status . . . . : %d (%s)",
+                            ptr_xfer->hash_status,
+                            xfer_hash_status_string[ptr_xfer->hash_status]);
         weechat_log_printf ("  prev_xfer . . . . . : 0x%lx", ptr_xfer->prev_xfer);
         weechat_log_printf ("  next_xfer . . . . . : 0x%lx", ptr_xfer->next_xfer);
     }

@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-02 15:18+0100\n"
-"PO-Revision-Date: 2013-12-31 10:03+0100\n"
+"POT-Creation-Date: 2014-01-06 11:16+0100\n"
+"PO-Revision-Date: 2014-01-06 10:16+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: cs\n"
@@ -9573,6 +9573,21 @@ msgstr "selhalo"
 msgid "aborted"
 msgstr "zrušeno"
 
+msgid "hashing"
+msgstr ""
+
+msgid "CRC in progress"
+msgstr ""
+
+msgid "CRC OK"
+msgstr ""
+
+msgid "wrong CRC"
+msgstr ""
+
+msgid "CRC error"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%s%s: file %s %s %s (%ld.%ld.%ld.%ld): %s"
 msgstr "%s%s: soubor %s %s %s: %s"
@@ -9600,6 +9615,10 @@ msgstr "%s%s: ruším aktivní xfer: \"%s\" od %s"
 #, c-format
 msgid "%s%s: not enough memory for new xfer"
 msgstr "%s%s: nedostatek paměti pro nový xfer"
+
+#, fuzzy, c-format
+msgid "%s%s: hashing error"
+msgstr "%s%s: chyba inicializace TLS"
 
 #, fuzzy, c-format
 msgid ""
@@ -9829,6 +9848,11 @@ msgid ""
 "\"nick\" (for all servers); example: \"freenode.FlashCode,andrew\""
 msgstr ""
 
+msgid ""
+"automatically check CRC32 file checksum if it is found in the filename (8 "
+"hexadecimal chars)"
+msgstr ""
+
 msgid "rename incoming files if already exists (add \".1\", \".2\", ...)"
 msgstr ""
 "přejmenovat příchozí soubory, jestliže již existují (přídat \".1\", "
@@ -9900,6 +9924,14 @@ msgstr "%s%s: nemohu zapisovat do lokálního souboru"
 msgid "%s%s: unable to send ACK to sender"
 msgstr "%s%s: nemohu se připojit k odesílateli"
 
+#, fuzzy, c-format
+msgid "%s%s: wrong CRC32 for file %s"
+msgstr "%s%s: špatné parametry pro funkci \"%s\" (skript: %s)"
+
+#, fuzzy, c-format
+msgid "%s%s: CRC32 error while resuming"
+msgstr "%s%s: chyba při načítání souboru \"%s\""
+
 #, c-format
 msgid "%s%s: unable to fork"
 msgstr "%s%s: nemohu provést fork"
@@ -9961,7 +9993,3 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
-
-#, fuzzy
-#~ msgid "%sConnected to %s (%ld.%ld.%ld.%ld) via xfer chat"
-#~ msgstr "Připojeno na %s (%d.%d.%d.%d) přes xfer rozhovor"

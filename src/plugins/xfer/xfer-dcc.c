@@ -21,6 +21,7 @@
 
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -31,6 +32,7 @@
 #include <time.h>
 #include <netdb.h>
 #include <errno.h>
+#include <gcrypt.h>
 
 #include "../weechat-plugin.h"
 #include "xfer.h"
@@ -219,6 +221,79 @@ xfer_dcc_recv_file_send_ack (struct t_xfer *xfer)
 }
 
 /*
+ * Reads a resumed xfer from disk for hashing.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+xfer_dcc_resume_hash (struct t_xfer *xfer)
+{
+    char *buf;
+    unsigned long long total_read;
+    ssize_t length_buf, to_read, num_read;
+    int ret, fd;
+
+    total_read = 0;
+    ret = 1;
+    fd = 0;
+
+    length_buf = 1024 * 1024;
+    buf = malloc (length_buf);
+    if (!buf)
+        return 0;
+
+    while (fd <= 0)
+    {
+        fd = open (xfer->local_filename, O_RDONLY);
+        if (fd < 0)
+        {
+            if (errno == EINTR)
+                continue;
+            fd = 0;
+            ret = 0;
+            break;
+        }
+    }
+
+    if (fd)
+    {
+        while (total_read < xfer->start_resume)
+        {
+            to_read = xfer->start_resume - total_read;
+            if (to_read > length_buf)
+                num_read = read (fd, buf, length_buf);
+            else
+                num_read = read (fd, buf, to_read);
+            if (num_read > 0)
+            {
+                gcry_md_write (*xfer->hash_handle, buf, num_read);
+                total_read += num_read;
+            }
+            else if (num_read < 0)
+            {
+                if (errno == EINTR)
+                    continue;
+                ret = 0;
+                break;
+            }
+        }
+
+        while (close (fd) < 0)
+        {
+            if (errno != EINTR)
+                break;
+        }
+    }
+
+    free (buf);
+
+    return ret;
+}
+
+/*
  * Child process for receiving file with DCC protocol.
  */
 
@@ -230,6 +305,26 @@ xfer_dcc_recv_file_child (struct t_xfer *xfer)
     time_t last_sent, new_time;
     unsigned long long pos_last_ack;
     fd_set read_fds, write_fds, except_fds;
+    ssize_t written, total_written;
+    unsigned char *bin_hash;
+    char hash[9];
+
+    /* if resuming, hash the portion of the file we have */
+    if ((xfer->start_resume > 0) && xfer->hash_handle)
+    {
+        xfer_network_write_pipe (xfer, XFER_STATUS_HASHING,
+                                 XFER_NO_ERROR);
+        if (!xfer_dcc_resume_hash (xfer))
+        {
+            gcry_md_close (*xfer->hash_handle);
+            free (xfer->hash_handle);
+            xfer->hash_handle = NULL;
+            xfer_network_write_pipe (xfer, XFER_STATUS_HASHING,
+                                     XFER_ERROR_HASH_RESUME_ERROR);
+        }
+        xfer_network_write_pipe (xfer, XFER_STATUS_CONNECTING,
+                                 XFER_NO_ERROR);
+    }
 
     /* first connect to sender (blocking) */
     if (!weechat_network_connect_to (xfer->proxy, xfer->sock,
@@ -289,6 +384,8 @@ xfer_dcc_recv_file_child (struct t_xfer *xfer)
             }
             else
             {
+                total_written = 0;
+
                 if (num_read == 0)
                 {
                     xfer_network_write_pipe (xfer, XFER_STATUS_FAILED,
@@ -296,11 +393,30 @@ xfer_dcc_recv_file_child (struct t_xfer *xfer)
                     return;
                 }
 
-                if (write (xfer->file, buffer, num_read) == -1)
+                /* bytes received, write to disk */
+                while (total_written < num_read)
                 {
-                    xfer_network_write_pipe (xfer, XFER_STATUS_FAILED,
-                                             XFER_ERROR_WRITE_LOCAL);
-                    return;
+                    written = write (xfer->file,
+                                     buffer + total_written,
+                                     num_read - total_written);
+                    if (written < 0)
+                    {
+                        if (errno == EINTR)
+                            continue;
+                        xfer_network_write_pipe (xfer, XFER_STATUS_FAILED,
+                                                 XFER_ERROR_WRITE_LOCAL);
+                        return;
+                    }
+                    else
+                    {
+                        if (xfer->hash_handle)
+                        {
+                            gcry_md_write (*xfer->hash_handle,
+                                           buffer + total_written,
+                                           written);
+                        }
+                        total_written += written;
+                    }
                 }
 
                 xfer->pos += (unsigned long long) num_read;
@@ -308,6 +424,34 @@ xfer_dcc_recv_file_child (struct t_xfer *xfer)
                 /* file received OK? */
                 if (xfer->pos >= xfer->size)
                 {
+                    /* check hash and report result to pipe */
+                    if (xfer->hash_handle)
+                    {
+                        gcry_md_final (*xfer->hash_handle);
+                        bin_hash = gcry_md_read (*xfer->hash_handle, 0);
+                        if (bin_hash)
+                        {
+                            snprintf (hash, 9, "%.2X%.2X%.2X%.2X",
+                                      bin_hash[0], bin_hash[1], bin_hash[2],
+                                      bin_hash[3]);
+                            if (weechat_strcasecmp (hash,
+                                                    xfer->hash_target) == 0)
+                            {
+                                xfer_network_write_pipe (xfer,
+                                                         XFER_STATUS_HASHED,
+                                                         XFER_NO_ERROR);
+                            }
+                            else
+                            {
+                                xfer_network_write_pipe (xfer,
+                                                         XFER_STATUS_HASHED,
+                                                         XFER_ERROR_HASH_MISMATCH);
+                            }
+                        }
+                    }
+
+                    fsync (xfer->file);
+
                     /*
                      * extra delay before sending ACK, otherwise the send of ACK
                      * may fail
