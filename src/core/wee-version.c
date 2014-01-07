@@ -69,7 +69,7 @@ version_get_name_version ()
 
 /*
  * Returns the output of "git describe" (non-empty only for a devel version,
- * if compilation was made* using the git repository, if git command was found).
+ * if compilation was made using the git repository, if git command was found).
  *
  * Example:
  *   v0.3.9-104-g7eb5cc
