@@ -290,6 +290,8 @@ eval_replace_vars_cb (void *data, const char *text)
         config_file_search_with_string (text, NULL, NULL, &ptr_option, NULL);
         if (ptr_option)
         {
+            if (!ptr_option->value)
+                return strdup ("");
             switch (ptr_option->type)
             {
                 case CONFIG_OPTION_TYPE_BOOLEAN:
@@ -305,7 +307,7 @@ eval_replace_vars_cb (void *data, const char *text)
                 case CONFIG_OPTION_TYPE_COLOR:
                     return strdup (gui_color_get_name (CONFIG_COLOR(ptr_option)));
                 case CONFIG_NUM_OPTION_TYPES:
-                    return NULL;
+                    return strdup ("");
             }
         }
     }

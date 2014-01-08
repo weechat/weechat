@@ -11,6 +11,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 0.4.3 (under dev)
 
+* core: fix crash in /eval when config option has a NULL value
 * core: fix crash with hdata_update on shared strings, add hdata type
   "shared_string" (bug #41104)
 * core: add support of UTF-8 chars in horizontal/vertical separators (options
