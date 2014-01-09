@@ -1194,6 +1194,49 @@ highlight = weechat.string_has_highlight(string, highlight_words)
 highlight = weechat.string_has_highlight("my test string", "test,word2") # 1
 ----
 
+==== weechat_string_has_highlight_regex
+
+_WeeChat ≥ 0.3.4._
+
+// TRANSLATION MISSING
+Check if a string has one or more highlights, using a regular expression.
+For at least one match of regular expression on string, it must be surrounded
+by word chars (alphanumeric character, "-", "_" or "|").
+
+Prototipo:
+
+[source,C]
+----
+int weechat_string_has_highlight_regex (const char *string, const char *regex);
+----
+
+Argomenti:
+
+* 'string': stringa
+* 'regex': espressione regolare
+
+Valore restituito:
+
+* 1 se la stringa ha uno o più eventi, altrimenti 0
+
+Esempio in C:
+
+[source,C]
+----
+int hl = weechat_string_has_highlight_regex ("my test string", "test|word2"); /* == 1 */
+----
+
+Script (Python):
+
+[source,python]
+----
+# prototipo
+highlight = weechat.string_has_highlight_regex(string, regex)
+
+# esempio
+highlight = weechat.string_has_highlight_regex("my test string", "test|word2") # 1
+----
+
 ==== weechat_string_split
 
 Divide una stringa in base a uno o più delimitatori.
