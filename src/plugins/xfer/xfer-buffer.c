@@ -44,7 +44,7 @@ xfer_buffer_refresh (const char *hotlist)
 {
     struct t_xfer *ptr_xfer, *xfer_selected;
     char str_color[256], suffix[32], status[64], date[128], eta[128];
-    char str_ip[32], str_hash[128];
+    char str_ip[128], str_hash[128];
     char *progress_bar, *str_pos, *str_total, *str_bytes_per_sec;
     int i, length, line, progress_bar_size, num_bars;
     unsigned long long pos, pct_complete;
@@ -93,14 +93,11 @@ xfer_buffer_refresh (const char *hotlist)
                       weechat_config_string (xfer_config_color_text_bg));
 
             str_ip[0] = '\0';
-            if (ptr_xfer->remote_address != 0)
+            if (ptr_xfer->remote_address_str)
             {
                 snprintf (str_ip, sizeof (str_ip),
-                          " (%ld.%ld.%ld.%ld)",
-                          ptr_xfer->remote_address >> 24,
-                          (ptr_xfer->remote_address >> 16) & 0xff,
-                          (ptr_xfer->remote_address >> 8) & 0xff,
-                          ptr_xfer->remote_address & 0xff);
+                          " (%s)",
+                          ptr_xfer->remote_address_str);
             }
 
             str_hash[0] = '\0';

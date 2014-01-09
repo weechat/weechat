@@ -157,15 +157,12 @@ xfer_command_xfer_list (int full)
                     weechat_printf (NULL,
                                     _("     plugin: %s (id: %s), file: %llu "
                                       "bytes (position: %llu), address: "
-                                      "%ld.%ld.%ld.%ld (port %d)"),
+                                      "%s (port %d)"),
                                     ptr_xfer->plugin_name,
                                     ptr_xfer->plugin_id,
                                     ptr_xfer->size,
                                     ptr_xfer->pos,
-                                    ptr_xfer->remote_address >> 24,
-                                    (ptr_xfer->remote_address >> 16) & 0xff,
-                                    (ptr_xfer->remote_address >> 8) & 0xff,
-                                    ptr_xfer->remote_address & 0xff,
+                                    ptr_xfer->remote_address_str,
                                     ptr_xfer->port);
                     date[0] = '\0';
                     date_tmp = localtime (&(ptr_xfer->start_transfer));

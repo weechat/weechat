@@ -253,14 +253,11 @@ xfer_network_send_file_fork (struct t_xfer *xfer)
     }
 
     weechat_printf (NULL,
-                    _("%s: sending file to %s (%ld.%ld.%ld.%ld, %s.%s), "
+                    _("%s: sending file to %s (%s, %s.%s), "
                       "name: %s (local filename: %s), %llu bytes (protocol: %s)"),
                     XFER_PLUGIN_NAME,
                     xfer->remote_nick,
-                    xfer->remote_address >> 24,
-                    (xfer->remote_address >> 16) & 0xff,
-                    (xfer->remote_address >> 8) & 0xff,
-                    xfer->remote_address & 0xff,
+                    xfer->remote_address_str,
                     xfer->plugin_name,
                     xfer->plugin_id,
                     xfer->filename,
@@ -375,12 +372,15 @@ xfer_network_fd_cb (void *arg_xfer, int fd)
 {
     struct t_xfer *xfer;
     int sock, flags, error;
-    struct sockaddr_in addr;
+    struct sockaddr_storage addr;
     socklen_t length;
+    char str_address[NI_MAXHOST];
 
     /* make C compiler happy */
     (void) fd;
 
+    length = sizeof (addr);
+    memset (&addr, 0, length);
     xfer = (struct t_xfer *)arg_xfer;
 
     if (xfer->status == XFER_STATUS_CONNECTING)
@@ -388,7 +388,6 @@ xfer_network_fd_cb (void *arg_xfer, int fd)
         if (xfer->type == XFER_TYPE_FILE_SEND)
         {
             xfer->last_activity = time (NULL);
-            length = sizeof (addr);
             sock = accept (xfer->sock,
                            (struct sockaddr *) &addr, &length);
             error = errno;
@@ -422,7 +421,15 @@ xfer_network_fd_cb (void *arg_xfer, int fd)
                 xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
                 return WEECHAT_RC_OK;
             }
-            xfer->remote_address = ntohl (addr.sin_addr.s_addr);
+            error = getnameinfo ((struct sockaddr *)&addr, length, str_address,
+                                 sizeof (str_address), NULL, 0, NI_NUMERICHOST);
+            if (error != 0)
+            {
+                snprintf (str_address, sizeof (str_address),
+                          "error: %s", gai_strerror (error));
+            }
+            xfer_set_remote_address (xfer, (struct sockaddr *)&addr, length,
+                                     str_address);
             xfer->status = XFER_STATUS_ACTIVE;
             xfer->start_transfer = time (NULL);
             xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
@@ -467,7 +474,15 @@ xfer_network_fd_cb (void *arg_xfer, int fd)
                 xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
                 return WEECHAT_RC_OK;
             }
-            xfer->remote_address = ntohl (addr.sin_addr.s_addr);
+            error = getnameinfo ((struct sockaddr *)&addr, length, str_address,
+                                 sizeof (str_address), NULL, 0, NI_NUMERICHOST);
+            if (error != 0)
+            {
+                snprintf (str_address, sizeof (str_address),
+                          "error: %s", gai_strerror (error));
+            }
+            xfer_set_remote_address (xfer, (struct sockaddr *)&addr, length,
+                                     str_address);
             xfer->status = XFER_STATUS_ACTIVE;
             xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
             xfer->hook_fd = weechat_hook_fd (xfer->sock,
@@ -528,15 +543,17 @@ xfer_network_connect (struct t_xfer *xfer)
     else
         xfer->status = XFER_STATUS_CONNECTING;
 
-    if (xfer->sock < 0)
-    {
-        xfer->sock = socket (AF_INET, SOCK_STREAM, 0);
-        if (xfer->sock < 0)
-            return 0;
-    }
-
     if (XFER_IS_SEND(xfer->type))
     {
+        /* create socket */
+        if (xfer->sock < 0)
+        {
+            xfer->sock = socket (xfer->remote_address->sa_family, SOCK_STREAM,
+                                 0);
+            if (xfer->sock < 0)
+                return 0;
+        }
+
         /* listen to socket */
         flags = fcntl (xfer->sock, F_GETFL);
         if (flags == -1)
@@ -566,13 +583,21 @@ xfer_network_connect (struct t_xfer *xfer)
     /* for chat receiving, connect to listening host */
     if (xfer->type == XFER_TYPE_CHAT_RECV)
     {
+        xfer->sock = weechat_network_connect_to (xfer->proxy,
+                                                 xfer->remote_address,
+                                                 xfer->remote_address_length);
+        if (xfer->sock < 0)
+            return 0;
+
         flags = fcntl (xfer->sock, F_GETFL);
         if (flags == -1)
             flags = 0;
         if (fcntl (xfer->sock, F_SETFL, flags | O_NONBLOCK) == -1)
+        {
+            close (xfer->sock);
+            xfer->sock = -1;
             return 0;
-        weechat_network_connect_to (xfer->proxy, xfer->sock,
-                                    xfer->remote_address, xfer->port);
+        }
 
         xfer->hook_fd = weechat_hook_fd (xfer->sock,
                                          1, 0, 0,

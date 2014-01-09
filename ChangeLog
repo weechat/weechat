@@ -97,6 +97,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * lua: fix crash on calls to callbacks during load of script
 * python: fix load of scripts with python >= 3.3
 * ruby: fix ruby init with ruby >= 2.0 (bug #41115)
+* xfer: add support of IPv6 for DCC chat/file (patch #7992)
 * xfer: use same infolist for hook and signals (patch #7974)
 * xfer: add option xfer.file.auto_check_crc32 (patch #7963)
 

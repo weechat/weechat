@@ -27,6 +27,7 @@ extern "C" {
 #endif
 
 #include <sys/types.h>
+#include <sys/socket.h>
 
 /* some systems like GNU/Hurd do not define PATH_MAX */
 #ifndef PATH_MAX
@@ -56,7 +57,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20140105-01"
+#define WEECHAT_PLUGIN_API_VERSION "20140109-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -807,8 +808,9 @@ struct t_weechat_plugin
     /* network */
     int (*network_pass_proxy) (const char *proxy, int sock,
                                const char *address, int port);
-    int (*network_connect_to) (const char *proxy, int sock,
-                               unsigned long address, int port);
+    int (*network_connect_to) (const char *proxy,
+                               struct sockaddr *address,
+                               socklen_t address_length);
 
     /* infos */
     const char *(*info_get) (struct t_weechat_plugin *plugin,
@@ -1587,9 +1589,10 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 #define weechat_network_pass_proxy(__proxy, __sock, __address, __port)  \
     weechat_plugin->network_pass_proxy(__proxy, __sock, __address,      \
                                        __port)
-#define weechat_network_connect_to(__proxy, __sock, __address, __port)  \
-    weechat_plugin->network_connect_to(__proxy, __sock, __address,      \
-                                       __port)
+#define weechat_network_connect_to(__proxy, __address,                  \
+                                   __address_length)                    \
+    weechat_plugin->network_connect_to(__proxy, __address,              \
+                                       __address_length)
 
 /* infos */
 #define weechat_info_get(__info_name, __arguments)                      \

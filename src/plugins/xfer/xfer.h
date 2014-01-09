@@ -140,8 +140,12 @@ struct t_xfer
     char *filename;                    /* filename                          */
     unsigned long long size;           /* file size                         */
     char *proxy;                       /* proxy to use (optional)           */
-    unsigned long local_address;       /* local IP address                  */
-    unsigned long remote_address;      /* remote IP address                 */
+    struct sockaddr *local_address;    /* local IP address                  */
+    socklen_t local_address_length;    /* local sockaddr length             */
+    char *local_address_str;           /* local IP address as string        */
+    struct sockaddr *remote_address;   /* remote IP address                 */
+    socklen_t remote_address_length;   /* remote sockaddr length            */
+    char *remote_address_str;          /* remote IP address as string       */
     int port;                          /* remote port                       */
 
     /* internal data */
@@ -191,6 +195,9 @@ extern struct t_xfer *xfer_search_by_number (int number);
 extern struct t_xfer *xfer_search_by_buffer (struct t_gui_buffer *buffer);
 extern void xfer_close (struct t_xfer *xfer, enum t_xfer_status status);
 extern void xfer_send_signal (struct t_xfer *xfer, const char *signal);
+extern void xfer_set_remote_address (struct t_xfer *xfer,
+                                     struct sockaddr *address, socklen_t length,
+                                     char *address_str);
 extern void xfer_free (struct t_xfer *xfer);
 extern int xfer_add_to_infolist (struct t_infolist *infolist,
                                  struct t_xfer *xfer);

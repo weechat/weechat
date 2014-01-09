@@ -327,8 +327,10 @@ xfer_dcc_recv_file_child (struct t_xfer *xfer)
     }
 
     /* first connect to sender (blocking) */
-    if (!weechat_network_connect_to (xfer->proxy, xfer->sock,
-                                     xfer->remote_address, xfer->port))
+    xfer->sock = weechat_network_connect_to (xfer->proxy,
+                                             xfer->remote_address,
+                                             xfer->remote_address_length);
+    if (xfer->sock == -1)
     {
         xfer_network_write_pipe (xfer, XFER_STATUS_FAILED,
                                  XFER_ERROR_CONNECT_SENDER);
