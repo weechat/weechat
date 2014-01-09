@@ -344,6 +344,9 @@ hook_valid (struct t_hook *hook)
     int type;
     struct t_hook *ptr_hook;
 
+    if (!hook)
+        return 0;
+
     for (type = 0; type < HOOK_NUM_TYPES; type++)
     {
         for (ptr_hook = weechat_hooks[type]; ptr_hook;

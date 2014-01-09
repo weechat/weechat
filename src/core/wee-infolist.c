@@ -287,6 +287,9 @@ infolist_valid (struct t_infolist *infolist)
 {
     struct t_infolist *ptr_infolist;
 
+    if (!infolist)
+        return 0;
+
     for (ptr_infolist = weechat_infolists; ptr_infolist;
          ptr_infolist = ptr_infolist->next_infolist)
     {

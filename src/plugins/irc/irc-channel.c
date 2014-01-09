@@ -51,7 +51,7 @@ irc_channel_valid (struct t_irc_server *server, struct t_irc_channel *channel)
 {
     struct t_irc_channel *ptr_channel;
 
-    if (!server)
+    if (!server || !channel)
         return 0;
 
     for (ptr_channel = server->channels; ptr_channel;

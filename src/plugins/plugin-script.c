@@ -256,7 +256,7 @@ plugin_script_valid (struct t_plugin_script *scripts,
 {
     struct t_plugin_script *ptr_script;
 
-    if (!script)
+    if (!scripts || !script)
         return 0;
 
     for (ptr_script = scripts; ptr_script;
