@@ -760,6 +760,13 @@ relay_config_free ()
         relay_config_regex_allowed_ips = NULL;
     }
 
+    if (relay_config_regex_websocket_allowed_origins)
+    {
+        regfree (relay_config_regex_websocket_allowed_origins);
+        free (relay_config_regex_websocket_allowed_origins);
+        relay_config_regex_websocket_allowed_origins = NULL;
+    }
+
     if (relay_config_hashtable_irc_backlog_tags)
     {
         weechat_hashtable_free (relay_config_hashtable_irc_backlog_tags);
