@@ -12219,6 +12219,9 @@ Questa funzione non è disponibile nelle API per lo scripting.
 
 ==== weechat_network_connect_to
 
+// TRANSLATION MISSING
+_Updated in version 0.4.3._
+
 Stabilisce una connessione con un host remoto.
 
 [IMPORTANT]
@@ -12231,38 +12234,37 @@ Prototipo:
 [source,C]
 ----
 int weechat_network_connect_to (const char *proxy,
-                                int sock,
-                                unsigned long address,
-                                int port);
+                                struct sockaddr *address,
+                                socklen_t address_length);
 ----
 
 Argomenti:
 
 * 'proxy': nome del proxy da utilizzare
-* 'sock': socket da utilizzare
-* 'address': indirizzo
-* 'port': porta
+// TRANSLATION MISSING
+* 'address': address to connect to (with port)
+// TRANSLATION MISSING
+* 'address_length': length of argument 'address'
 
 Valore restituito:
 
-* 1 se la connessione è andata a buon fine, 0 in
-  caso di errore
+// TRANSLATION MISSING
+* socket number (>= 0) if connection is OK, -1 if an error occurred
 
 Esempio in C:
 
+// TRANSLATION MISSING
 [source,C]
 ----
-struct sockaddr_in addr;
+struct sockaddr *addr;
 socklen_t length;
-unsigned long address;
+int sock;
 
-memset (&addr, 0, sizeof (struct sockaddr_in));
-length = sizeof (addr);
-getsockname (sock, (struct sockaddr *) &addr, &length);
-addr.sin_family = AF_INET;
-address = ntohl (addr.sin_addr.s_addr);
+/* allocate/set address and port in 'addr', set 'length' */
+/* ... */
 
-if (weechat_network_connect_to (NULL, sock, address, 6667))
+sock = weechat_network_connect_to (NULL, addr, length);
+if (sock >= 0)
 {
     /* OK */
 }

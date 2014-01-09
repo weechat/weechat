@@ -12210,6 +12210,8 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_network_connect_to
 
+_Mis à jour dans la version 0.4.3._
+
 Établit une connexion à une machine distante.
 
 [IMPORTANT]
@@ -12221,37 +12223,33 @@ Prototype :
 [source,C]
 ----
 int weechat_network_connect_to (const char *proxy,
-                                int sock,
-                                unsigned long address,
-                                int port);
+                                struct sockaddr *address,
+                                socklen_t address_length);
 ----
 
 Paramètres :
 
 * 'proxy' : nom du proxy à utiliser
-* 'sock' : socket à utiliser
-* 'address' : addresse
-* 'port' : port
+* 'address' : adresse où se connecter (avec le port)
+* 'address_length' : longeur du paramètre 'address'
 
 Valeur de retour :
 
-* 1 si la connexion est ok, 0 en cas d'erreur
+* numéro de socket (>= 0) si la connexion est OK, -1 en cas d'erreur
 
 Exemple en C :
 
 [source,C]
 ----
-struct sockaddr_in addr;
+struct sockaddr *addr;
 socklen_t length;
-unsigned long address;
+int sock;
 
-memset (&addr, 0, sizeof (struct sockaddr_in));
-length = sizeof (addr);
-getsockname (sock, (struct sockaddr *) &addr, &length);
-addr.sin_family = AF_INET;
-address = ntohl (addr.sin_addr.s_addr);
+/* allouer/définir l'adresse et le port dans 'addr', définir 'length' */
+/* ... */
 
-if (weechat_network_connect_to (NULL, sock, address, 6667))
+sock = weechat_network_connect_to (NULL, addr, length);
+if (sock >= 0)
 {
     /* OK */
 }

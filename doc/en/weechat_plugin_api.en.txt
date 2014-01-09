@@ -11995,6 +11995,8 @@ This function is not available in scripting API.
 
 ==== weechat_network_connect_to
 
+_Updated in version 0.4.3._
+
 Establish a connection to a remote host.
 
 [IMPORTANT]
@@ -12006,37 +12008,33 @@ Prototype:
 [source,C]
 ----
 int weechat_network_connect_to (const char *proxy,
-                                int sock,
-                                unsigned long address,
-                                int port);
+                                struct sockaddr *address,
+                                socklen_t address_length);
 ----
 
 Arguments:
 
 * 'proxy': proxy name to use
-* 'sock': socket to use
-* 'address': address
-* 'port': port
+* 'address': address to connect to (with port)
+* 'address_length': length of argument 'address'
 
 Return value:
 
-* 1 if connection is ok, 0 if an error occurred
+* socket number (>= 0) if connection is OK, -1 if an error occurred
 
 C example:
 
 [source,C]
 ----
-struct sockaddr_in addr;
+struct sockaddr *addr;
 socklen_t length;
-unsigned long address;
+int sock;
 
-memset (&addr, 0, sizeof (struct sockaddr_in));
-length = sizeof (addr);
-getsockname (sock, (struct sockaddr *) &addr, &length);
-addr.sin_family = AF_INET;
-address = ntohl (addr.sin_addr.s_addr);
+/* allocate/set address and port in 'addr', set 'length' */
+/* ... */
 
-if (weechat_network_connect_to (NULL, sock, address, 6667))
+sock = weechat_network_connect_to (NULL, addr, length);
+if (sock >= 0)
 {
     /* OK */
 }
