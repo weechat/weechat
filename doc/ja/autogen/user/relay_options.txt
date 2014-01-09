@@ -79,7 +79,7 @@
 ** 値: 0 .. 65535 (デフォルト値: `256`)
 
 * [[option_relay.network.allowed_ips]] *relay.network.allowed_ips*
-** 説明: `リレーの利用をを許可する IP アドレスの正規表現 (大文字小文字の区別無し、最初に "(?-i)" をつければ区別有り); IPv6 が有効で IPv4 を使って接続している場合、IPv6 アドレスを IPv4 にマッピングしたもの (例: "::ffff:127.0.0.1") が使われます、例: "^((::ffff:)?123.45.67.89|192.160.*)$"`
+** 説明: `POSIX extended regular expression with IPs allowed to use relay (case insensitive, use "(?-i)" at beginning to make it case sensitive); if IPv6 is enabled and that connection is made using IPv4, it will be IPv4-mapped IPv6 address (like: "::ffff:127.0.0.1"), example: "^((::ffff:)?123.45.67.89|192.160.*)$"`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
@@ -114,7 +114,7 @@
 ** 値: 未制約文字列 (デフォルト値: `"%h/ssl/relay.pem"`)
 
 * [[option_relay.network.websocket_allowed_origins]] *relay.network.websocket_allowed_origins*
-** 説明: `ウェブソケットに使うことを許可する origin の正規表現 (大文字小文字を区別しない、"(?-i)" を先頭に置くと大文字小文字を区別する)、例: "^http://(www\.)?example\.(com|org)"`
+** 説明: `POSIX extended regular expression with origins allowed in websockets (case insensitive, use "(?-i)" at beginning to make it case sensitive), example: "^http://(www\.)?example\.(com|org)"`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 

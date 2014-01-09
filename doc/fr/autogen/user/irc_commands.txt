@@ -201,7 +201,7 @@ pseudo: pseudo ou masque (peut démarrer ou se terminer par "*" comme joker)
 
        list: lister tous les ignores
         add: ajouter un ignore
-     pseudo: pseudo ou hôte (peut être une expression régulière si "re:" est donné ou un masque avec "*" pour remplacer un ou plusieurs caractères)
+     pseudo: pseudo ou hôte (peut être une expression régulière POSIX étendue si "re:" est donné ou un masque avec "*" pour remplacer un ou plusieurs caractères)
         del: supprimer un ignore
      numéro: numéro du ignore à supprimer (voir la liste des ignore pour le trouver)
        -all: supprimer tous les ignores
@@ -321,7 +321,7 @@ masque_serveur: liste des serveurs correspondant au masque
 
   canal: canal à lister
 serveur: nom du serveur
-  regex: expression régulière utilisée pour filtrer les résultats (insensible à la casse, peut commencer par "(?-i)" pour devenir sensible à la casse)
+  regex: expression régulière POSIX étendue utilisée pour filtrer les résultats (insensible à la casse, peut commencer par "(?-i)" pour devenir sensible à la casse)
 
 Exemples:
   lister tous les canaux du serveur (peut être très lent pour les grands réseaux):

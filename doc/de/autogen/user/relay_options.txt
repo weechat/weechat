@@ -79,7 +79,7 @@
 ** Werte: 0 .. 65535 (Standardwert: `256`)
 
 * [[option_relay.network.allowed_ips]] *relay.network.allowed_ips*
-** Beschreibung: `regulärer Ausdruck für IP Adressen die auf das Relay zugreifen dürfen (zwischen Groß- und Kleinschreibung wird dabei nicht unterschieden. Um zwischen Groß-und Kleinschreibung zu unterscheiden muss am Wortanfang "(?-i)" genutzt werden) . Sollte IPv6 aktiviert sein und es wird eine IPv4 Verbindung aufgebaut, werden die IPv6 Adressen nach IPv4 gewandelt  (siehe: "::ffff:127.0.0.1"), Beispiele: "^((::ffff:)?123.45.67.89|192.160.*)$"`
+** Beschreibung: `POSIX extended regular expression with IPs allowed to use relay (case insensitive, use "(?-i)" at beginning to make it case sensitive); if IPv6 is enabled and that connection is made using IPv4, it will be IPv4-mapped IPv6 address (like: "::ffff:127.0.0.1"), example: "^((::ffff:)?123.45.67.89|192.160.*)$"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -114,7 +114,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"%h/ssl/relay.pem"`)
 
 * [[option_relay.network.websocket_allowed_origins]] *relay.network.websocket_allowed_origins*
-** Beschreibung: `erlaubt regulären Ausdruck für Origins in WebSockets (Groß- und Kleinschreibung wird ignoriert, um Groß- und Kleinschreibung zu nutzen muss "(?-i)" dem Origin vorangestellt werden), Beispiele: "^http://(www\.)?example\.(com|org)"`
+** Beschreibung: `POSIX extended regular expression with origins allowed in websockets (case insensitive, use "(?-i)" at beginning to make it case sensitive), example: "^http://(www\.)?example\.(com|org)"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 

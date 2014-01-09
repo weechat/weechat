@@ -79,7 +79,7 @@
 ** wartości: 0 .. 65535 (domyślna wartość: `256`)
 
 * [[option_relay.network.allowed_ips]] *relay.network.allowed_ips*
-** opis: `dla wtyczki relay dozwolone są wyrażenia regularne zawierające adresy IP (wielkość znaków nie ma znaczenia, użyj "(?-i)" na początku, aby wielkość znaków miała znaczenie); jeśli obsługa IPv6 jest włączona a połączenie jest z użyciem IPv4, zostanie ono zmapowane na adres IPv6 (jak: "::ffff:127.0.0.1"), przykład: "^((::ffff:)?123.45.67.89|192.160.*)$"`
+** opis: `POSIX extended regular expression with IPs allowed to use relay (case insensitive, use "(?-i)" at beginning to make it case sensitive); if IPv6 is enabled and that connection is made using IPv4, it will be IPv4-mapped IPv6 address (like: "::ffff:127.0.0.1"), example: "^((::ffff:)?123.45.67.89|192.160.*)$"`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
@@ -114,7 +114,7 @@
 ** wartości: dowolny ciąg (domyślna wartość: `"%h/ssl/relay.pem"`)
 
 * [[option_relay.network.websocket_allowed_origins]] *relay.network.websocket_allowed_origins*
-** opis: `wyrażenie regularne ze źródłami dozwolonymi dla gniazd webowych (nie wrażliwe na wielkość znaków, umieszczenie "(?-i)" na początku sprawi, że wielość znaków będzie miała znaczenie), przykład: "^http://(www\.)?przykład\.(com|org)"`
+** opis: `POSIX extended regular expression with origins allowed in websockets (case insensitive, use "(?-i)" at beginning to make it case sensitive), example: "^http://(www\.)?example\.(com|org)"`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 

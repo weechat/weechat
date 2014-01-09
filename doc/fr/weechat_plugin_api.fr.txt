@@ -1060,7 +1060,7 @@ const char *weechat_string_regex_flags (const char *regex, int default_flags, in
 
 Paramètres :
 
-* 'regex' : expression régulière
+* 'regex' : expression régulière POSIX étendue
 * 'default_flags' : combinaison des valeurs suivantes (voir `man regcomp`) :
 ** REG_EXTENDED
 ** REG_ICASE
@@ -1117,7 +1117,7 @@ int weechat_string_regcomp (void *preg, const char *regex, int default_flags)
 Paramètres :
 
 * 'preg' : pointeur vers la structure 'regex_t'
-* 'regex' : expression régulière
+* 'regex' : expression régulière POSIX étendue
 * 'default_flags' : combinaison des valeurs suivantes (voir `man regcomp`) :
 ** REG_EXTENDED
 ** REG_ICASE
@@ -1188,7 +1188,7 @@ highlight = weechat.string_has_highlight("my test string", "test,word2") # 1
 _WeeChat ≥ 0.3.4._
 
 Vérifie si une chaîne a un ou plusieurs "highlights", en utilisant une
-expression régulière.
+expression régulière POSIX étendue. +
 Pour au moins une correspondance dans la chaîne, elle doit être entourée de
 caractères de mot (caractère alphanumérique, "-", "_" ou "|").
 
@@ -1202,7 +1202,7 @@ int weechat_string_has_highlight_regex (const char *string, const char *regex);
 Paramètres :
 
 * 'string' : chaîne
-* 'regex' : expression régulière
+* 'regex' : expression régulière POSIX étendue
 
 Valeur de retour :
 
@@ -10164,7 +10164,7 @@ Paramètres :
 ** 'input' : texte saisi
 ** 'text_search_input' : texte saisi sauvegardé avant la recherche de texte
 ** 'highlight_words' : liste des mots pour le highlight
-** 'highlight_regex' : expression régulière pour le highlight
+** 'highlight_regex' : expression régulière POSIX étendue pour le highlight
 ** 'highlight_tags_restrict' : restreindre les highlights aux messages
    comportant ces étiquettes
 ** 'highlight_tags' : forcer le highlight pour les messages avec ces étiquettes
@@ -10347,7 +10347,7 @@ Propriétés :
   tampon
 
 | highlight_regex | toute chaîne |
-  Expression régulière pour le highlight
+  Expression régulière POSIX étendue pour le highlight
 
 | highlight_tags_restrict | liste d'étiquettes séparées par des virgules |
   Restreindre les highlights aux messages avec ces étiquettes dans ce tampon

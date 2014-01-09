@@ -234,8 +234,8 @@ expression: expression to evaluate, variables with format ${variable} are replac
                 <   less
                 >=  greater or equal
                 >   greater
-                =~  is matching regex
-                !~  is NOT matching regex
+                =~  is matching POSIX extended regex
+                !~  is NOT matching POSIX extended regex
 
 An expression is considered as "true" if it is not NULL, not empty, and different from "0".
 The comparison is made using integers if the two expressions are valid integers.
@@ -298,7 +298,7 @@ disable: disable filters
    tags: comma separated list of tags, for example "irc_join,irc_part,irc_quit"
          - logical "and": use "+" between tags (for example: "nick_toto+irc_action")
          - tags can start or end with '*'
-  regex: regular expression to search in line
+  regex: POSIX extended regular expression to search in line
          - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
          - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
          - two regular expressions are created: one for prefix and one for message

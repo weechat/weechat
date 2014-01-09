@@ -1048,7 +1048,7 @@ const char *weechat_string_regex_flags (const char *regex, int default_flags, in
 
 Arguments:
 
-* 'regex': regular expression
+* 'regex': POSIX extended regular expression
 * 'default_flags': combination of following values (see `man regcomp`):
 ** REG_EXTENDED
 ** REG_ICASE
@@ -1088,8 +1088,9 @@ This function is not available in scripting API.
 
 _WeeChat ≥ 0.3.7._
 
-Compile a regular expression using optional flags at beginning of string (for
-format of flags, see <<_weechat_string_regex_flags,weechat_string_regex_flags>>).
+Compile a POSIX extended regular expression using optional flags at beginning
+of string (for format of flags, see
+<<_weechat_string_regex_flags,weechat_string_regex_flags>>).
 
 Prototype:
 
@@ -1101,7 +1102,7 @@ int weechat_string_regcomp (void *preg, const char *regex, int default_flags)
 Arguments:
 
 * 'preg': pointer to 'regex_t' structure
-* 'regex': regular expression
+* 'regex': POSIX extended regular expression
 * 'default_flags': combination of following values (see `man regcomp`):
 ** REG_EXTENDED
 ** REG_ICASE
@@ -1170,7 +1171,8 @@ highlight = weechat.string_has_highlight("my test string", "test,word2") # 1
 
 _WeeChat ≥ 0.3.4._
 
-Check if a string has one or more highlights, using a regular expression.
+Check if a string has one or more highlights, using a POSIX extended regular
+expression. +
 For at least one match of regular expression on string, it must be surrounded
 by word chars (alphanumeric character, "-", "_" or "|").
 
@@ -1184,7 +1186,7 @@ int weechat_string_has_highlight_regex (const char *string, const char *regex);
 Arguments:
 
 * 'string': string
-* 'regex': regular expression
+* 'regex': POSIX extended regular expression
 
 Return value:
 
@@ -9991,7 +9993,7 @@ Arguments:
 ** 'input': input text
 ** 'text_search_input': input saved before text search
 ** 'highlight_words': list of words to highlight
-** 'highlight_regex': regular expression for highlight
+** 'highlight_regex': POSIX extended regular expression for highlight
 ** 'highlight_tags_restrict': restrict highlights to messages with these tags
 ** 'highlight_tags': force highlight on messages with these tags
 ** 'hotlist_max_level_nicks': max hotlist level for some nicks
@@ -10164,7 +10166,7 @@ Properties:
   Comma separated list of words to remove from highlighted words on buffer
 
 | highlight_regex | any string |
-  Regular expression for highlight
+  POSIX extended regular expression for highlight
 
 | highlight_tags_restrict | comma separated list of tags |
   Restrict highlights to messages with these tags in this buffer

@@ -434,7 +434,7 @@
 ** valori: on, off (valore predefinito: `off`)
 
 * [[option_weechat.look.buffer_search_regex]] *weechat.look.buffer_search_regex*
-** descrizione: `default text search in buffer: if enabled, search regular expression, otherwise search simple string`
+** descrizione: `default text search in buffer: if enabled, search POSIX extended regular expression, otherwise search simple string`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `off`)
 
@@ -539,7 +539,7 @@
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
 * [[option_weechat.look.highlight_regex]] *weechat.look.highlight_regex*
-** descrizione: `espressione regolare usata per verificare se un messaggio contiene una notifica oppure no, almeno una corrispondenza nella stringa deve essere racchiusa da caratteri :(alfanumerici, "-", "_" or "|"), l'espressione regolare non è sensibile alle maiuscole (usare "(?-i)" all'inizio per renderla sensibile alle maiuscole), ad esempio: "flashcode|flashy", "(?-i)Flashcode|flashy"`
+** descrizione: `POSIX extended regular expression used to check if a message has highlight or not, at least one match in string must be surrounded by word chars (alphanumeric, "-", "_" or "|"), regular expression is case insensitive (use "(?-i)" at beginning to make it case sensitive), examples: "flashcode|flashy", "(?-i)FlashCode|flashy"`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 

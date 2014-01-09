@@ -588,10 +588,11 @@ relay_config_init ()
     relay_config_network_allowed_ips = weechat_config_new_option (
         relay_config_file, ptr_section,
         "allowed_ips", "string",
-        N_("regular expression with IPs allowed to use relay (case insensitive, "
-           "use \"(?-i)\" at beginning to make it case sensitive); if IPv6 is "
-           "enabled and that connection is made using IPv4, it will be "
-           "IPv4-mapped IPv6 address (like: \"::ffff:127.0.0.1\"), example: "
+        N_("POSIX extended regular expression with IPs allowed to use relay "
+           "(case insensitive, use \"(?-i)\" at beginning to make it case "
+           "sensitive); if IPv6 is enabled and that connection is made using "
+           "IPv4, it will be IPv4-mapped IPv6 address (like: "
+           "\"::ffff:127.0.0.1\"), example: "
            "\"^((::ffff:)?123.45.67.89|192.160.*)$\""),
         NULL, 0, 0, "", NULL, 0, NULL, NULL,
         &relay_config_change_network_allowed_ips, NULL, NULL, NULL);
@@ -642,9 +643,10 @@ relay_config_init ()
     relay_config_network_websocket_allowed_origins = weechat_config_new_option (
         relay_config_file, ptr_section,
         "websocket_allowed_origins", "string",
-        N_("regular expression with origins allowed in websockets (case "
-           "insensitive, use \"(?-i)\" at beginning to make it case sensitive), "
-           "example: \"^http://(www\\.)?example\\.(com|org)\""),
+        N_("POSIX extended regular expression with origins allowed in "
+           "websockets (case insensitive, use \"(?-i)\" at beginning to make "
+           "it case sensitive), example: "
+           "\"^http://(www\\.)?example\\.(com|org)\""),
         NULL, 0, 0, "", NULL, 0, NULL, NULL,
         &relay_config_change_network_websocket_allowed_origins, NULL, NULL, NULL);
 

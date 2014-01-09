@@ -234,8 +234,8 @@ expression: expression à évaluer, les variables avec le format ${variable} son
                 <   inférieur
                 >=  supérieur ou égal
                 >   supérieur
-                =~  correspond à l'expression régulière
-                !~  ne correspond PAS à l'expression régulière
+                =~  correspond à l'expression régulière POSIX étendue
+                !~  ne correspond PAS à l'expression régulière POSIX étendue
 
 Une expression est considérée comme "vraie" si elle est non NULL, non vide, et différente de "0".
 La comparaison est faite en utilisant des entiers si les deux expressions sont des entiers valides.
@@ -298,7 +298,7 @@ Exemples:
 étiquettes: liste d'étiquettes, séparées par des virgules, par exemple: "irc_join,irc_part,irc_quit"
             - "et" logique: utilisez "+" entre les étiquettes (par exemple: "nick_toto+irc_action")
             - les étiquettes peuvent commencer ou se terminer par '*'
-     regex: expression régulière à rechercher dans la ligne
+     regex: expression régulière POSIX étendue à rechercher dans la ligne
             - utiliser '\t' pour séparer le préfixe du message, les caractères spéciaux comme '|' doivent être échappés: '\|'
             - si l'expression régulière commence par '!' alors le résultat est inversé (utiliser '\!' pour démarrer par '!')
             - deux expressions régulières sont créées: une pour le préfixe et une pour le message

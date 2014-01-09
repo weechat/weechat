@@ -2071,8 +2071,8 @@ config_weechat_init_options ()
     config_look_buffer_search_regex = config_file_new_option (
         weechat_config_file, ptr_section,
         "buffer_search_regex", "boolean",
-        N_("default text search in buffer: if enabled, search regular expression, "
-           "otherwise search simple string"),
+        N_("default text search in buffer: if enabled, search POSIX extended "
+           "regular expression, otherwise search simple string"),
         NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_buffer_search_where = config_file_new_option (
         weechat_config_file, ptr_section,
@@ -2224,11 +2224,12 @@ config_weechat_init_options ()
     config_look_highlight_regex = config_file_new_option (
         weechat_config_file, ptr_section,
         "highlight_regex", "string",
-        N_("regular expression used to check if a message has highlight or not, "
-           "at least one match in string must be surrounded by word chars "
-            "(alphanumeric, \"-\", \"_\" or \"|\"), regular expression is case "
-           "insensitive (use \"(?-i)\" at beginning to make it case sensitive), "
-           "examples: \"flashcode|flashy\", \"(?-i)FlashCode|flashy\""),
+        N_("POSIX extended regular expression used to check if a message has "
+           "highlight or not, at least one match in string must be surrounded "
+           "by word chars (alphanumeric, \"-\", \"_\" or \"|\"), regular "
+           "expression is case insensitive (use \"(?-i)\" at beginning to make "
+           "it case sensitive), examples: \"flashcode|flashy\", "
+           "\"(?-i)FlashCode|flashy\""),
         NULL, 0, 0, "", NULL, 0, NULL, NULL, &config_change_highlight_regex, NULL, NULL, NULL);
     config_look_highlight_tags = config_file_new_option (
         weechat_config_file, ptr_section,

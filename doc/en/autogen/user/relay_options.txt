@@ -79,7 +79,7 @@
 ** values: 0 .. 65535 (default value: `256`)
 
 * [[option_relay.network.allowed_ips]] *relay.network.allowed_ips*
-** description: `regular expression with IPs allowed to use relay (case insensitive, use "(?-i)" at beginning to make it case sensitive); if IPv6 is enabled and that connection is made using IPv4, it will be IPv4-mapped IPv6 address (like: "::ffff:127.0.0.1"), example: "^((::ffff:)?123.45.67.89|192.160.*)$"`
+** description: `POSIX extended regular expression with IPs allowed to use relay (case insensitive, use "(?-i)" at beginning to make it case sensitive); if IPv6 is enabled and that connection is made using IPv4, it will be IPv4-mapped IPv6 address (like: "::ffff:127.0.0.1"), example: "^((::ffff:)?123.45.67.89|192.160.*)$"`
 ** type: string
 ** values: any string (default value: `""`)
 
@@ -114,7 +114,7 @@
 ** values: any string (default value: `"%h/ssl/relay.pem"`)
 
 * [[option_relay.network.websocket_allowed_origins]] *relay.network.websocket_allowed_origins*
-** description: `regular expression with origins allowed in websockets (case insensitive, use "(?-i)" at beginning to make it case sensitive), example: "^http://(www\.)?example\.(com|org)"`
+** description: `POSIX extended regular expression with origins allowed in websockets (case insensitive, use "(?-i)" at beginning to make it case sensitive), example: "^http://(www\.)?example\.(com|org)"`
 ** type: string
 ** values: any string (default value: `""`)
 

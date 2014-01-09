@@ -220,43 +220,43 @@ infolists: wyświetla informacje o infolistach
 /eval  [-n] <wyrażenie>
        [-n] -c <wyrażenie1> <operator> <wyrażenie2>
 
-        -n: wyświetla wynik bez wysyłania go do buforu (tryb debugowania)
-        -c: przetwarza jako warunek: użyj operatorów i nawiasów, zwraca wartość logiczną ("0" lub "1")
-wyrażenie: wyrażenie do przetworzenia, zmienne o formacie ${zmienna} są zastępowane (zobacz niżej)
-  operator: operator logiczny lub porównania:
-            - operatory logiczne:
-                &&  boolowskie "i"
-                ||  boolowskie "lub"
-            - operatory porównania:
-                ==  równy
-                !=  różny
-                <=  mniejszy lub równy
-                <   mniejszy
-                >=  większy lub równy
-                >   większy
-                =~  pasuje do wyrażenia regularnego
-                !~  NIE pasuje do wyrażenia regularnego
+        -n: display result without sending it to buffer (debug mode)
+        -c: evaluate as condition: use operators and parentheses, return a boolean value ("0" or "1")
+expression: expression to evaluate, variables with format ${variable} are replaced (see below)
+  operator: a logical or comparison operator:
+            - logical operators:
+                &&  boolean "and"
+                ||  boolean "or"
+            - comparison operators:
+                ==  equal
+                !=  not equal
+                <=  less or equal
+                <   less
+                >=  greater or equal
+                >   greater
+                =~  is matching POSIX extended regex
+                !~  is NOT matching POSIX extended regex
 
-Wyrażenie jest uznawane za "prawdziwe" jeśli nie jest NULL, nie jest puste, oraz różni się od "0".
-Porównania dokonuje się z użyciem liczb całkowitych jeśli oba wyrażenia są liczbami całkowitymi.
-W celu wymuszenia porównywania ciągów, należy umieścić każde wyrażenie w cudzysłowie, na przykład:
+An expression is considered as "true" if it is not NULL, not empty, and different from "0".
+The comparison is made using integers if the two expressions are valid integers.
+To force a string comparison, add double quotes around each expression, for example:
   50 > 100      ==> 0
   "50" > "100"  ==> 1
 
-Niektóre zmienne w wyrażeniach są zamieniane, poprzez zastosowanie formatu ${zmienna}, według priorytetu zmienną może być:
-  1. kolor (format color:xxx)
-  2. informacja (format: "info:nazwa,argumenty", argumenty są opcjonalne)
-  3. nazwa opcji (format: plik.sekcja.opcja)
-  4. zmienna lokalna w buforze
-  5. nazwa hdatay/zmiennej (wartość jest automatycznie konwertowana na ciąg znaków), domyślnie "window" i "buffer" wskazują na aktualne okno/bufor.
-Format dla hdata może być jednym z poniższych:
-  hdata.zmienna1.zmienna2...: inicjuje hdata (wskaźnik musi być znany), następnie wypytuje zmienne jedna po drugiej (inne hdata mogą być następne)
-  hdata[list].zmienna1.zmienna2...: inicjuje hdata z wykorzystaniem listy, na przykład:
-    ${buffer[gui_buffers].full_name}: pełna nazwa buforu w połączonej liście buforów
-    ${plugin[weechat_plugins].name}: nazwa pierwszej wtyczki w połączonej liście wtyczek
-Nazwy hdata i zmiennych, można znaleźć w  "Opisie API wtyczek", fukcja "weechat_hdata_get".
+Some variables are replaced in expression, using the format ${variable}, variable can be, by order of priority :
+  1. a color (format: "color:xxx")
+  2. an info (format: "info:name,arguments", arguments are optional)
+  3. an option (format: "file.section.option")
+  4. a local variable in buffer
+  5. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
+Format for hdata can be one of following:
+  hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
+  hdata[list].var1.var2...: start with a hdata using a list, for example:
+    ${buffer[gui_buffers].full_name}: full name of first buffer in linked list of buffers
+    ${plugin[weechat_plugins].name}: name of first plugin in linked list of plugins
+For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
 
-Przykłady:
+Examples:
   /eval -n ${info:version}                 ==> 0.4.3
   /eval -n ${weechat.look.scroll_amount}   ==> 3
   /eval -n ${window}                       ==> 0x2549aa0
@@ -282,52 +282,52 @@ Przykłady:
          add <nazwa> <bufor>[,<bufor>...] <tagi> <regex>
          del <nazwa>|-all
 
-   list: wyświetla wszystkie filtry
- enable: włącza filtry (filtry są domyślnie włączone)
-disable: wyłącza filtry
- toggle: przełącza filtry
-  nazwa: nazwa filtru
-    add: dodaje filtr
-    del: usuwa filtr
-   -all: usuwa wszystkie filtry
- bufor: oddzielona przecinkami lisa buforów, dla których filtr jest aktywny:
-         - jest to pełna nazwa zawierająca wtyczkę (przykład: "irc.freenode.#weechat")
-         - "*" oznacza wszystkie bufory
-         - nazwa zaczynająca się od '!' jest wykluczana
-         - nazwa może zaczynać się lub kończyć '*', aby dopasować wiele buforów
-   tagi: lista tagów oddzielona przecinkiem, np: "irc_join,irc_part,irc_quit"
-         - logiczne "i": użyj "+" pomiędzy tagami (na przykład: "nick_toto+irc_action")
-         - tagi mogą zaczynać się i kończyć '*' żeby dopasować wiele buforów
-  regex: wyrażenie regularne do wyszukania w linii
-         - użyj '\t' do oddzielenia prefiksu od wiadomości, znaki specjalne jak '|' muszą zostać poprzedzone '\' np: '\|'
-         - jeśli wyrażenie zaczyna się od '!', wtedy pasujący wynik jest odwracany (użyj '\!', aby zacząć od '!')
-         - dwa wyrażenia są tworzone: jedno dla prefiksu, drugie dla wiadomości
-         - wielkość znaków nie ma znaczenia dla wyrażeń, jeśli zaczynają się od "(?-i)" wielkość znaków ma znaczenie
+   list: list all filters
+ enable: enable filters (filters are enabled by default)
+disable: disable filters
+ toggle: toggle filters
+   name: filter name
+    add: add a filter
+    del: delete a filter
+   -all: delete all filters
+ buffer: comma separated list of buffers where filter is active:
+         - this is full name including plugin (example: "irc.freenode.#weechat")
+         - "*" means all buffers
+         - a name starting with '!' is excluded
+         - name can start or end with '*' to match many buffers
+   tags: comma separated list of tags, for example "irc_join,irc_part,irc_quit"
+         - logical "and": use "+" between tags (for example: "nick_toto+irc_action")
+         - tags can start or end with '*'
+  regex: POSIX extended regular expression to search in line
+         - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
+         - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
+         - two regular expressions are created: one for prefix and one for message
+         - regex are case insensitive, they can start by "(?-i)" to become case sensitive
 
-Domyślny skrót klawiszowy alt+'=' włącza/wyłącza filtrowanie.
+The default key alt+'=' toggles filtering on/off.
 
-Najczęściej używane tagi:
-  no_filter, no_highlight, no_log, log0..log9 (poziom logowania),
+Tags most commonly used:
+  no_filter, no_highlight, no_log, log0..log9 (log level),
   notify_none, notify_message, notify_private, notify_highlight,
-  nick_xxx (xxx to nick w wiadomości), prefix_nick_ccc (ccc to kolor nicka),
-  irc_xxx (xxx to nazwa komendy lub numer, zobacz /server raw),
+  nick_xxx (xxx is nick in message), prefix_nick_ccc (ccc is color of nick),
+  irc_xxx (xxx is command name or number, see /server raw or /debug tags),
   irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
-Aby zobaczyć listę tagów w liniach buforów wykonaj: /debug tags
+To see tags for lines in buffers: /debug tags
 
-Przykłady:
-  użyj inteligentnego filtru we wszystkich buforach IRC:
+Examples:
+  use IRC smart filter on all buffers:
     /filter add irc_smart * irc_smart_filter *
-  użyj inteligentnego filtru we wszystkich buforach IRC poza tymi zawierającymi "#weechat" w nazwie:
+  use IRC smart filter on all buffers except those with "#weechat" in name:
     /filter add irc_smart *,!*#weechat* irc_smart_filter *
-  filtruj wszystkie wiadomości IRC o join/part/quit:
+  filter all IRC join/part/quit messages:
     /filter add joinquit * irc_join,irc_part,irc_quit *
-  filtruj nicki wyświetlane przy wejściu na kanał albo za pomocą /names:
+  filter nicks displayed when joining channels or with /names:
     /filter add nicks * irc_366 *
-  filtruj nick "toto" na kanale IRC #weechat:
+  filter nick "toto" on IRC channel #weechat:
     /filter add toto irc.freenode.#weechat nick_toto *
-  filtruj wejścia/akcje IRC od użytkownika "toto":
+  filter IRC join/action messages from nick "toto":
     /filter add toto * nick_toto+irc_join,nick_toto+irc_action *
-  filtruj linie zawierające fraze "weechat sucks" na kanale IRC #weechat:
+  filter lines containing "weechat sucks" on IRC channel #weechat:
     /filter add sucks irc.freenode.#weechat * weechat sucks
 ----
 

@@ -199,23 +199,23 @@ nick: ニックネームまたはマスク (ワイルドカード "*" を最初�
          add [re:]<nick> [<server> [<channel>]]
          del <number>|-all
 
-     list: 無視エントリをリストアップ
-      add: 無視エントリを追加
-     nick: ニックネーム又はホスト名 ("re:" で正規表現を使える、"*" は一つ以上の文字にマッチ)
-      del: 無視エントリの削除
-   number: 削除する無視エントリ番号 (番号はリストを参照)
-     -all: 全ての無視エントリを削除
-   server: 無視設定を有効にする内部サーバ名
-  channel: 無視設定を有効にするチャンネル名
+     list: list all ignores
+      add: add an ignore
+     nick: nick or hostname (can be a POSIX extended regular expression if "re:" is given or a mask using "*" to replace one or more chars)
+      del: delete an ignore
+   number: number of ignore to delete (look at list to find it)
+     -all: delete all ignores
+   server: internal server name where ignore is working
+  channel: channel name where ignore is working
 
-注意: 正規表現で大文字小文字を区別するには "(?-i)" を最初につけてください。
+Note: the regular expression can start with "(?-i)" to become case sensitive.
 
-例:
-  全てのサーバ上のニックネーム "toto" を無視:
+Examples:
+  ignore nick "toto" everywhere:
     /ignore add toto
-  freenode サーバ上のホスト名 "toto@domain.com" を無視:
+  ignore host "toto@domain.com" on freenode server:
     /ignore add toto@domain.com freenode
-  freenode サーバの #weechat チャンネル上のホスト名 "toto*@*.domain.com" を無視:
+  ignore host "toto*@*.domain.com" on freenode/#weechat:
     /ignore add toto*@*.domain.com freenode #weechat
 ----
 
@@ -319,16 +319,16 @@ server_mask: このマスクにマッチするサーバのリスト
 ----
 /list  [<channel>[,<channel>...]] [<server>] [-re <regex>]
 
-channel: リストアップするチャンネル名
- server: サーバ名
-  regex: 結果をフィルタする正規表現 (大文字小文字は区別しない、"(?-i)" で始めれば区別する)
+channel: channel to list
+ server: server name
+  regex: POSIX extended regular expression used to filter results (case insensitive, can start by "(?-i)" to become case sensitive)
 
-例:
-  サーバ上の全てのチャンネルをリストアップ (大きなネットワークでは非常に遅い):
+Examples:
+  list all channels on server (can be very slow on large networks):
     /list
-  #weechat チャンネルをリストアップ:
+  list channel #weechat:
     /list #weechat
-  "#weechat" で始まる全てのチャンネルをリストアップ (大きなネットワークでは非常に遅い):
+  list all channels beginning with "#weechat" (can be very slow on large networks):
     /list -re #weechat.*
 ----
 

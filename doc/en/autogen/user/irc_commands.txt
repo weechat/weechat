@@ -201,7 +201,7 @@ nick: nick or mask (can start or end with "*" as wildcard)
 
      list: list all ignores
       add: add an ignore
-     nick: nick or hostname (can be regular expression if "re:" is given or a mask using "*" to replace one or more chars)
+     nick: nick or hostname (can be a POSIX extended regular expression if "re:" is given or a mask using "*" to replace one or more chars)
       del: delete an ignore
    number: number of ignore to delete (look at list to find it)
      -all: delete all ignores
@@ -321,7 +321,7 @@ server_mask: list of servers must match this mask
 
 channel: channel to list
  server: server name
-  regex: regular expression used to filter results (case insensitive, can start by "(?-i)" to become case sensitive)
+  regex: POSIX extended regular expression used to filter results (case insensitive, can start by "(?-i)" to become case sensitive)
 
 Examples:
   list all channels on server (can be very slow on large networks):

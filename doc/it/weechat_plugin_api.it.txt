@@ -1067,7 +1067,8 @@ const char *weechat_string_regex_flags (const char *regex, int default_flags, in
 
 Argomenti:
 
-* 'regex': espressione regolare
+// TRANSLATION MISSING
+* 'regex': POSIX extended regular expression
 * 'default_flags': combinazione dei seguenti valori (consultare `man regcomp`):
 ** REG_EXTENDED
 ** REG_ICASE
@@ -1112,8 +1113,9 @@ Questa funzione non è disponibile nelle API per lo scripting.
 
 _WeeChat ≥ 0.3.7._
 
-Compila un'espressione regolare usando flag opzionali all'inizio della stringa
-(per il formato delle flag consultare
+// TRANSLATION MISSING
+Compile a POSIX extended regular expression using optional flags at beginning
+of string (for format of flags, see
 <<_weechat_string_regex_flags,weechat_string_regex_flags>>).
 
 Prototipo:
@@ -1127,7 +1129,7 @@ Argomenti:
 
 // TRANSLATION MISSING
 * 'preg': pointer to 'regex_t' structure
-* 'regex': regular expression
+* 'regex': POSIX extended regular expression
 * 'default_flags': combination of following values (see `man regcomp`):
 ** REG_EXTENDED
 ** REG_ICASE
@@ -1199,7 +1201,8 @@ highlight = weechat.string_has_highlight("my test string", "test,word2") # 1
 _WeeChat ≥ 0.3.4._
 
 // TRANSLATION MISSING
-Check if a string has one or more highlights, using a regular expression.
+Check if a string has one or more highlights, using a POSIX extended regular
+expression. +
 For at least one match of regular expression on string, it must be surrounded
 by word chars (alphanumeric character, "-", "_" or "|").
 
@@ -1213,7 +1216,8 @@ int weechat_string_has_highlight_regex (const char *string, const char *regex);
 Argomenti:
 
 * 'string': stringa
-* 'regex': espressione regolare
+// TRANSLATION MISSING
+* 'regex': POSIX extended regular expression
 
 Valore restituito:
 
@@ -10203,7 +10207,8 @@ Argomenti:
 ** 'input': testo in ingresso
 ** 'text_search_input': input salvato prima della ricerca nel testo
 ** 'highlight_words': elenco di parole da evidenziare
-** 'highlight_regex': espressione regolare per l'evento
+// TRANSLATION MISSING
+** 'highlight_regex': POSIX extended regular expression for highlight
 // TRANSLATION MISSING
 ** 'highlight_tags_restrict': restrict highlights to messages with these tags
 // TRANSLATION MISSING
@@ -10391,8 +10396,9 @@ Properties:
   Elenco di parole separate da virgole da rimuovere dalle
   parole evidenziate nel buffer
 
+// TRANSLATION MISSING
 | highlight_regex | qualsiasi stringa |
-  Espressione regolare per l'evento
+  POSIX extended regular expression for highlight
 
 // TRANSLATION MISSING
 | highlight_tags_restrict | elenco separato da virgole di tag |
