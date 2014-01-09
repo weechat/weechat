@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-06 11:16+0100\n"
+"POT-Creation-Date: 2014-01-09 12:18+0100\n"
 "PO-Revision-Date: 2014-01-06 10:17+0100\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4601,6 +4601,10 @@ msgstr ""
 #, c-format
 msgid "%s%s: \"%s\" command can not be executed on a server buffer"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: unable to resolve local address of server socket: error %d %s"
+msgstr "%s%s: não foi possível setar opção \"nonblock\" para o socket"
 
 #, c-format
 msgid "%s%s: wrong arguments for \"%s\" command"
@@ -9214,7 +9218,7 @@ msgid "CRC error"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%s%s: file %s %s %s (%ld.%ld.%ld.%ld): %s"
+msgid "%s%s: file %s %s %s (%s): %s"
 msgstr "%s%s: arquivo %s %s %s: %s"
 
 msgid "sent to"
@@ -9230,7 +9234,7 @@ msgid "FAILED"
 msgstr "FALHOU"
 
 #, fuzzy, c-format
-msgid "%s%s: chat closed with %s (%ld.%ld.%ld.%ld)"
+msgid "%s%s: chat closed with %s (%s)"
 msgstr "%s: chat terminado com %s (%d.%d.%d.%d)"
 
 #, c-format
@@ -9242,13 +9246,16 @@ msgid "%s%s: not enough memory for new xfer"
 msgstr "%s%s: memória insuficiente para nova transferência"
 
 #, fuzzy, c-format
+msgid "%s%s: unable to interpret address: error %d %s"
+msgstr "%s%s: não foi possível criar pipe"
+
+#, fuzzy, c-format
 msgid "%s%s: hashing error"
 msgstr "%s%s: erro de inicialização do TLS"
 
 #, fuzzy, c-format
 msgid ""
-"%s: incoming file from %s (%ld.%ld.%ld.%ld, %s.%s), name: %s, %llu bytes "
-"(protocol: %s)"
+"%s: incoming file from %s (%s, %s.%s), name: %s, %llu bytes (protocol: %s)"
 msgstr ""
 "%s: recebendo arquivo de %s (%s.%s), ip: %d.%d.%d.%d, nome: %s, %llu bytes "
 "(protocolo: %s)"
@@ -9262,7 +9269,7 @@ msgstr ""
 "(protocolo: %s)"
 
 #, fuzzy, c-format
-msgid "%s: incoming chat request from %s (%ld.%ld.%ld.%ld, %s.%s)"
+msgid "%s: incoming chat request from %s (%s, %s.%s)"
 msgstr "%s: requisição de chat recebida de %s (%s.%s), ip: %d.%d.%d.%d"
 
 #, c-format
@@ -9290,11 +9297,13 @@ msgstr "%s%s: protocolo de transferência \"%s\" desconhecido"
 msgid "%s%s: cannot access file \"%s\""
 msgstr "%s%s: não é possível acessar o arquivo \"%s\""
 
-#, c-format
-msgid "%s%s: could not find address for \"%s\", falling back to local IP"
-msgstr ""
-"%s%s: não foi possível encontrar endereço para \"%s\", alternando para IP "
-"local"
+#, fuzzy, c-format
+msgid "%s%s: invalid address \"%s\" (option xfer.network.own_ip): error %d %s"
+msgstr "%s%s: charset inválido: \"%s\""
+
+#, fuzzy, c-format
+msgid "%s%s: unable to find address for \"%s\": error %d %s"
+msgstr "%s%s: charset inválido: \"%s\""
 
 #, fuzzy, c-format
 msgid "%s%s: cannot create socket for xfer: error %d %s"
@@ -9335,8 +9344,8 @@ msgid "%s%s: error sending data to \"%s\" via xfer chat"
 msgstr "%s%s: erro ao enviar dados para \"%s\" via chat de transferência"
 
 #, fuzzy, c-format
-msgid "%s%s: connected to %s (%ld.%ld.%ld.%ld)"
-msgstr "%s: chat terminado com %s (%d.%d.%d.%d)"
+msgid "%s%s: connected to %s (%s) via xfer chat"
+msgstr "%s: conectado a %s/%d (%s)"
 
 #, c-format
 msgid "%s%s: can't find xfer for buffer \"%s\""
@@ -9360,8 +9369,8 @@ msgstr ""
 
 #, c-format
 msgid ""
-"     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %ld."
-"%ld.%ld.%ld (port %d)"
+"     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %s "
+"(port %d)"
 msgstr ""
 
 #. TRANSLATORS: "%s" after "started on" is a date
@@ -9571,8 +9580,8 @@ msgstr "%s%s: não foi possível efetuar o fork"
 
 #, fuzzy, c-format
 msgid ""
-"%s: sending file to %s (%ld.%ld.%ld.%ld, %s.%s), name: %s (local filename: "
-"%s), %llu bytes (protocol: %s)"
+"%s: sending file to %s (%s, %s.%s), name: %s (local filename: %s), %llu "
+"bytes (protocol: %s)"
 msgstr ""
 "%s: enviando arquivo para %s (%s.%s): %s (arquivo local: %s), %llu bytes "
 "(protocolo: %s)"
@@ -9627,3 +9636,20 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#~ msgid "%s%s: could not find address for \"%s\", falling back to local IP"
+#~ msgstr ""
+#~ "%s%s: não foi possível encontrar endereço para \"%s\", alternando para IP "
+#~ "local"
+
+#, fuzzy
+#~ msgid "%s%s: connected to %s (%ld.%ld.%ld.%ld)"
+#~ msgstr "%s: chat terminado com %s (%d.%d.%d.%d)"
+
+#, fuzzy
+#~ msgid ""
+#~ "%s: sending file to %s (%ld.%ld.%ld.%ld, %s.%s), name: %s (local "
+#~ "filename: %s), %llu bytes (protocol: %s)"
+#~ msgstr ""
+#~ "%s: enviando arquivo para %s (%s.%s): %s (arquivo local: %s), %llu bytes "
+#~ "(protocolo: %s)"

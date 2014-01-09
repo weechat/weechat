@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-06 11:16+0100\n"
+"POT-Creation-Date: 2014-01-09 12:18+0100\n"
 "PO-Revision-Date: 2014-01-06 10:16+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4137,6 +4137,10 @@ msgstr "%s Szerver: %s%s %s[%s%s%s]\n"
 #, fuzzy, c-format
 msgid "%s%s: \"%s\" command can not be executed on a server buffer"
 msgstr "%s \"%s\" parancs nem futtatható a szerverablakban\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to resolve local address of server socket: error %d %s"
+msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 
 #, fuzzy, c-format
 msgid "%s%s: wrong arguments for \"%s\" command"
@@ -9000,7 +9004,7 @@ msgid "CRC error"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%s%s: file %s %s %s (%ld.%ld.%ld.%ld): %s"
+msgid "%s%s: file %s %s %s (%s): %s"
 msgstr "DCC: fájl %s%s%s"
 
 #, fuzzy
@@ -9018,7 +9022,7 @@ msgid "FAILED"
 msgstr "SIKERTELEN"
 
 #, fuzzy, c-format
-msgid "%s%s: chat closed with %s (%ld.%ld.%ld.%ld)"
+msgid "%s%s: chat closed with %s (%s)"
 msgstr "DCC beszélgetés vége: %s%s %s(%s%d.%d.%d.%d%s)\n"
 
 #, fuzzy, c-format
@@ -9030,13 +9034,16 @@ msgid "%s%s: not enough memory for new xfer"
 msgstr "%s nincs elegendő memória új DCC számára\n"
 
 #, fuzzy, c-format
+msgid "%s%s: unable to interpret address: error %d %s"
+msgstr "%s DCC: nem sikerült a csövet létrehozni\n"
+
+#, fuzzy, c-format
 msgid "%s%s: hashing error"
 msgstr "%s gnutls inicializációs hiba\n"
 
 #, fuzzy, c-format
 msgid ""
-"%s: incoming file from %s (%ld.%ld.%ld.%ld, %s.%s), name: %s, %llu bytes "
-"(protocol: %s)"
+"%s: incoming file from %s (%s, %s.%s), name: %s, %llu bytes (protocol: %s)"
 msgstr ""
 "Beérkező DCC fájl a következőtől: %s%s%s (%s%d.%d.%d.%d%s)%s: %s%s%s, %s%lu"
 "%s bájt\n"
@@ -9050,7 +9057,7 @@ msgstr ""
 "%lu%s bájt\n"
 
 #, fuzzy, c-format
-msgid "%s: incoming chat request from %s (%ld.%ld.%ld.%ld, %s.%s)"
+msgid "%s: incoming chat request from %s (%s, %s.%s)"
 msgstr "Beérkező DCC beszélgetés a következőtől: %s%s%s (%s%d.%d.%d.%d%s)\n"
 
 #, fuzzy, c-format
@@ -9079,9 +9086,12 @@ msgid "%s%s: cannot access file \"%s\""
 msgstr "%s nem sikerült a(z) \"%s\" fájlt elérni\n"
 
 #, fuzzy, c-format
-msgid "%s%s: could not find address for \"%s\", falling back to local IP"
-msgstr ""
-"%s nem sikerült a(z) '%s' címét meghatározni. Helyi IP-cím használata.\n"
+msgid "%s%s: invalid address \"%s\" (option xfer.network.own_ip): error %d %s"
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to find address for \"%s\": error %d %s"
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 #, fuzzy, c-format
 msgid "%s%s: cannot create socket for xfer: error %d %s"
@@ -9120,8 +9130,8 @@ msgid "%s%s: error sending data to \"%s\" via xfer chat"
 msgstr "%s hiba a(z) \"%s\" felé DCC CHAT-tel történő adatküldés közben\n"
 
 #, fuzzy, c-format
-msgid "%s%s: connected to %s (%ld.%ld.%ld.%ld)"
-msgstr "DCC beszélgetés vége: %s%s %s(%s%d.%d.%d.%d%s)\n"
+msgid "%s%s: connected to %s (%s) via xfer chat"
+msgstr "%s nincs csatlakozva a \"%s\" szerverhez!\n"
 
 #, fuzzy, c-format
 msgid "%s%s: can't find xfer for buffer \"%s\""
@@ -9143,8 +9153,8 @@ msgstr ""
 
 #, c-format
 msgid ""
-"     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %ld."
-"%ld.%ld.%ld (port %d)"
+"     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %s "
+"(port %d)"
 msgstr ""
 
 #. TRANSLATORS: "%s" after "started on" is a date
@@ -9357,8 +9367,8 @@ msgstr "%s DCC: nem sikerült forkolni\n"
 
 #, fuzzy, c-format
 msgid ""
-"%s: sending file to %s (%ld.%ld.%ld.%ld, %s.%s), name: %s (local filename: "
-"%s), %llu bytes (protocol: %s)"
+"%s: sending file to %s (%s, %s.%s), name: %s (local filename: %s), %llu "
+"bytes (protocol: %s)"
 msgstr ""
 "DCC fájl küldése a következőnek: %s%s%s: %s%s%s (helyi fájlnév: %s%s%s), %s"
 "%lu%s bájt\n"
@@ -9415,3 +9425,20 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#, fuzzy
+#~ msgid "%s%s: could not find address for \"%s\", falling back to local IP"
+#~ msgstr ""
+#~ "%s nem sikerült a(z) '%s' címét meghatározni. Helyi IP-cím használata.\n"
+
+#, fuzzy
+#~ msgid "%s%s: connected to %s (%ld.%ld.%ld.%ld)"
+#~ msgstr "DCC beszélgetés vége: %s%s %s(%s%d.%d.%d.%d%s)\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "%s: sending file to %s (%ld.%ld.%ld.%ld, %s.%s), name: %s (local "
+#~ "filename: %s), %llu bytes (protocol: %s)"
+#~ msgstr ""
+#~ "DCC fájl küldése a következőnek: %s%s%s: %s%s%s (helyi fájlnév: %s%s%s), "
+#~ "%s%lu%s bájt\n"

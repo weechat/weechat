@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-06 11:16+0100\n"
+"POT-Creation-Date: 2014-01-09 12:18+0100\n"
 "PO-Revision-Date: 2014-01-06 10:16+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -4835,6 +4835,10 @@ msgstr "%s%s%s%s への CTCP クエリ: %s%s%s%s%s"
 #, c-format
 msgid "%s%s: \"%s\" command can not be executed on a server buffer"
 msgstr "%s%s: \"%s\" コマンドはサーババッファでは実行できません"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to resolve local address of server socket: error %d %s"
+msgstr "%s%s: ソケットにオプション \"nonblock\" を設定できません: エラー %d %s"
 
 #, c-format
 msgid "%s%s: wrong arguments for \"%s\" command"
@@ -9980,8 +9984,8 @@ msgstr ""
 msgid "CRC error"
 msgstr "エラー"
 
-#, c-format
-msgid "%s%s: file %s %s %s (%ld.%ld.%ld.%ld): %s"
+#, fuzzy, c-format
+msgid "%s%s: file %s %s %s (%s): %s"
 msgstr "%s%s: ファイル %s %s %s (%ld.%ld.%ld.%ld): %s"
 
 msgid "sent to"
@@ -9997,7 +10001,7 @@ msgid "FAILED"
 msgstr "失敗"
 
 #, fuzzy, c-format
-msgid "%s%s: chat closed with %s (%ld.%ld.%ld.%ld)"
+msgid "%s%s: chat closed with %s (%s)"
 msgstr "%s: %s (%ld.%ld.%ld.%ld) とのチャットを終了"
 
 #, c-format
@@ -10009,13 +10013,16 @@ msgid "%s%s: not enough memory for new xfer"
 msgstr "%s%s: 新しい xfer 用のメモリ不足"
 
 #, fuzzy, c-format
+msgid "%s%s: unable to interpret address: error %d %s"
+msgstr "%s%s: パイプを作成できません: エラー %d %s"
+
+#, fuzzy, c-format
 msgid "%s%s: hashing error"
 msgstr "%s%s: TLS 初期化エラー"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%s: incoming file from %s (%ld.%ld.%ld.%ld, %s.%s), name: %s, %llu bytes "
-"(protocol: %s)"
+"%s: incoming file from %s (%s, %s.%s), name: %s, %llu bytes (protocol: %s)"
 msgstr ""
 "%s: %s (%ld.%ld.%ld.%ld、%s.%s) からファイルを受信、名前: %s、%llu バイト (プ"
 "ロトコル: %s)"
@@ -10028,8 +10035,8 @@ msgstr ""
 "%s: %s (%s.%s) へファイルを送信: 名前: %s (ローカルファイル名: %s)、%llu バイ"
 "ト (プロトコル: %s)"
 
-#, c-format
-msgid "%s: incoming chat request from %s (%ld.%ld.%ld.%ld, %s.%s)"
+#, fuzzy, c-format
+msgid "%s: incoming chat request from %s (%s, %s.%s)"
 msgstr "%s: %s (%ld.%ld.%ld.%ld、%s.%s) からチャット要求を受信"
 
 #, c-format
@@ -10056,11 +10063,13 @@ msgstr "%s%s: 未知の xfer プロトコル \"%s\""
 msgid "%s%s: cannot access file \"%s\""
 msgstr "%s%s: ファイル \"%s\" にアクセスできません"
 
-#, c-format
-msgid "%s%s: could not find address for \"%s\", falling back to local IP"
-msgstr ""
-"%s%s: \"%s\" のアドレスが見つかりません、ローカル IP アドレスに切り替えていま"
-"す"
+#, fuzzy, c-format
+msgid "%s%s: invalid address \"%s\" (option xfer.network.own_ip): error %d %s"
+msgstr "%1$s%2$s: %4$s 用に割り当てた不正なアドレス \"%3$s\""
+
+#, fuzzy, c-format
+msgid "%s%s: unable to find address for \"%s\": error %d %s"
+msgstr "%1$s%2$s: %4$s 用に割り当てた不正なアドレス \"%3$s\""
 
 #, c-format
 msgid "%s%s: cannot create socket for xfer: error %d %s"
@@ -10099,8 +10108,8 @@ msgid "%s%s: error sending data to \"%s\" via xfer chat"
 msgstr "%s%s: xfer チャットで \"%s\" にデータ転送中のエラー"
 
 #, fuzzy, c-format
-msgid "%s%s: connected to %s (%ld.%ld.%ld.%ld)"
-msgstr "%s: %s (%ld.%ld.%ld.%ld) とのチャットを終了"
+msgid "%s%s: connected to %s (%s) via xfer chat"
+msgstr "%s%s: %s/%d (%s) に接続完了"
 
 #, c-format
 msgid "%s%s: can't find xfer for buffer \"%s\""
@@ -10122,10 +10131,10 @@ msgid "%3d. %s, chat with %s (local nick: %s), started on %s, status: %s%s"
 msgstr ""
 "%3d. %s、%s とチャット中 (ローカルニックネーム: %s)、開始日時 %s、状態: %s%s"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %ld."
-"%ld.%ld.%ld (port %d)"
+"     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %s "
+"(port %d)"
 msgstr ""
 "     プラグイン: %s (id: %s)、ファイル: %llu バイト (位置: %llu)、アドレス: "
 "%ld.%ld.%ld.%ld (ポート %d)"
@@ -10327,13 +10336,13 @@ msgstr "%s%s: ファイル \"%s\" の読み込み中にエラー"
 msgid "%s%s: unable to fork"
 msgstr "%s%s: フォークできません"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%s: sending file to %s (%ld.%ld.%ld.%ld, %s.%s), name: %s (local filename: "
-"%s), %llu bytes (protocol: %s)"
+"%s: sending file to %s (%s, %s.%s), name: %s (local filename: %s), %llu "
+"bytes (protocol: %s)"
 msgstr ""
-"%s: %s (%ld.%ld.%ld.%ld、%s.%s) へファイルを送信、名前: %s (ローカルファイル"
-"名: %s)、%llu バイト (プロトコル: %s)"
+"%s: %s (%s.%s) へファイルを送信: 名前: %s (ローカルファイル名: %s)、%llu バイ"
+"ト (プロトコル: %s)"
 
 #, c-format
 msgid "%s%s: unable to create socket for sending file: error %d %s"
@@ -10385,3 +10394,19 @@ msgstr "タイプ"
 
 msgid "Constants"
 msgstr "定数"
+
+#~ msgid "%s%s: could not find address for \"%s\", falling back to local IP"
+#~ msgstr ""
+#~ "%s%s: \"%s\" のアドレスが見つかりません、ローカル IP アドレスに切り替えて"
+#~ "います"
+
+#, fuzzy
+#~ msgid "%s%s: connected to %s (%ld.%ld.%ld.%ld)"
+#~ msgstr "%s: %s (%ld.%ld.%ld.%ld) とのチャットを終了"
+
+#~ msgid ""
+#~ "%s: sending file to %s (%ld.%ld.%ld.%ld, %s.%s), name: %s (local "
+#~ "filename: %s), %llu bytes (protocol: %s)"
+#~ msgstr ""
+#~ "%s: %s (%ld.%ld.%ld.%ld、%s.%s) へファイルを送信、名前: %s (ローカルファイ"
+#~ "ル名: %s)、%llu バイト (プロトコル: %s)"

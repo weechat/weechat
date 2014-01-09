@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-06 11:16+0100\n"
-"PO-Revision-Date: 2014-01-06 10:23+0100\n"
+"POT-Creation-Date: 2014-01-09 12:18+0100\n"
+"PO-Revision-Date: 2014-01-09 12:23+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -5071,6 +5071,10 @@ msgstr "%sDemande CTCP vers %s%s%s: %s%s%s%s%s"
 msgid "%s%s: \"%s\" command can not be executed on a server buffer"
 msgstr ""
 "%s%s: la commande \"%s\" ne peut pas être exécutée dans un tampon serveur"
+
+#, c-format
+msgid "%s%s: unable to resolve local address of server socket: error %d %s"
+msgstr "%s%s: impossible de résoudre l'adresse locale du socket: erreur %d %s"
 
 #, c-format
 msgid "%s%s: wrong arguments for \"%s\" command"
@@ -10400,8 +10404,8 @@ msgid "CRC error"
 msgstr "erreur CRC"
 
 #, c-format
-msgid "%s%s: file %s %s %s (%ld.%ld.%ld.%ld): %s"
-msgstr "%s%s: fichier %s %s %s (%ld.%ld.%ld.%ld): %s"
+msgid "%s%s: file %s %s %s (%s): %s"
+msgstr "%s%s: fichier %s %s %s (%s): %s"
 
 msgid "sent to"
 msgstr "envoyé à"
@@ -10416,8 +10420,8 @@ msgid "FAILED"
 msgstr "ECHOUE"
 
 #, c-format
-msgid "%s%s: chat closed with %s (%ld.%ld.%ld.%ld)"
-msgstr "%s%s: discussion fermée avec %s (%ld.%ld.%ld.%ld)"
+msgid "%s%s: chat closed with %s (%s)"
+msgstr "%s%s: discussion fermée avec %s (%s)"
 
 #, c-format
 msgid "%s%s: aborting active xfer: \"%s\" from %s"
@@ -10428,16 +10432,18 @@ msgid "%s%s: not enough memory for new xfer"
 msgstr "%s%s: pas assez de mémoire pour un nouveau xfer"
 
 #, c-format
+msgid "%s%s: unable to interpret address: error %d %s"
+msgstr "%s%s: impossible d'interpréter l'adresse: erreur %d %s"
+
+#, c-format
 msgid "%s%s: hashing error"
 msgstr "%s%s: erreur de hash"
 
 #, c-format
 msgid ""
-"%s: incoming file from %s (%ld.%ld.%ld.%ld, %s.%s), name: %s, %llu bytes "
-"(protocol: %s)"
+"%s: incoming file from %s (%s, %s.%s), name: %s, %llu bytes (protocol: %s)"
 msgstr ""
-"%s: réception fichier de %s (%ld.%ld.%ld.%ld, %s.%s), nom: %s, %llu octets "
-"(protocole: %s)"
+"%s: réception fichier de %s (%s, %s.%s), nom: %s, %llu octets (protocole: %s)"
 
 #, c-format
 msgid ""
@@ -10448,8 +10454,8 @@ msgstr ""
 "(protocole: %s)"
 
 #, c-format
-msgid "%s: incoming chat request from %s (%ld.%ld.%ld.%ld, %s.%s)"
-msgstr "%s: demande de discussion reçue de %s (%ld.%ld.%ld.%ld, %s.%s)"
+msgid "%s: incoming chat request from %s (%s, %s.%s)"
+msgstr "%s: demande de discussion reçue de %s (%s, %s.%s)"
 
 #, c-format
 msgid "%s: sending chat request to %s (%s.%s)"
@@ -10476,10 +10482,13 @@ msgid "%s%s: cannot access file \"%s\""
 msgstr "%s%s: impossible d'accéder au fichier \"%s\""
 
 #, c-format
-msgid "%s%s: could not find address for \"%s\", falling back to local IP"
+msgid "%s%s: invalid address \"%s\" (option xfer.network.own_ip): error %d %s"
 msgstr ""
-"%s%s: impossible de trouver l'adresse pour \"%s\", utilisation de l'adresse "
-"IP locale"
+"%s%s: adresse \"%s\" invalide (option xfer.network.own_ip): erreur %d %s"
+
+#, c-format
+msgid "%s%s: unable to find address for \"%s\": error %d %s"
+msgstr "%s%s: impossible de trouver l'adresse pour \"%s\": erreur %d %s"
 
 #, c-format
 msgid "%s%s: cannot create socket for xfer: error %d %s"
@@ -10518,8 +10527,8 @@ msgid "%s%s: error sending data to \"%s\" via xfer chat"
 msgstr "%s%s: erreur d'envoi de données à \"%s\" via discussion xfer"
 
 #, c-format
-msgid "%s%s: connected to %s (%ld.%ld.%ld.%ld)"
-msgstr "%s%s: connecté à %s (%ld.%ld.%ld.%ld)"
+msgid "%s%s: connected to %s (%s) via xfer chat"
+msgstr "%s%s: connecté à %s (%s) via discussion xfer"
 
 #, c-format
 msgid "%s%s: can't find xfer for buffer \"%s\""
@@ -10543,11 +10552,11 @@ msgstr ""
 
 #, c-format
 msgid ""
-"     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %ld."
-"%ld.%ld.%ld (port %d)"
+"     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %s "
+"(port %d)"
 msgstr ""
 "     extension: %s (id: %s), fichier: %llu octets (position: %llu), adresse: "
-"%ld.%ld.%ld.%ld (port %d)"
+"%s (port %d)"
 
 #. TRANSLATORS: "%s" after "started on" is a date
 #, c-format
@@ -10764,11 +10773,11 @@ msgstr "%s%s: impossible de créer un processus"
 
 #, c-format
 msgid ""
-"%s: sending file to %s (%ld.%ld.%ld.%ld, %s.%s), name: %s (local filename: "
-"%s), %llu bytes (protocol: %s)"
+"%s: sending file to %s (%s, %s.%s), name: %s (local filename: %s), %llu "
+"bytes (protocol: %s)"
 msgstr ""
-"%s: envoi fichier à %s (%ld.%ld.%ld.%ld, %s.%s), nom: %s (nom local: %s), "
-"%llu octets (protocole: %s)"
+"%s: offre de fichier pour %s (%s, %s.%s), nom: %s (nom local: %s), %llu "
+"octets (protocole: %s)"
 
 #, c-format
 msgid "%s%s: unable to create socket for sending file: error %d %s"
@@ -10820,3 +10829,18 @@ msgstr "Type"
 
 msgid "Constants"
 msgstr "Constantes"
+
+#~ msgid "%s%s: could not find address for \"%s\", falling back to local IP"
+#~ msgstr ""
+#~ "%s%s: impossible de trouver l'adresse pour \"%s\", utilisation de "
+#~ "l'adresse IP locale"
+
+#~ msgid "%s%s: connected to %s (%ld.%ld.%ld.%ld)"
+#~ msgstr "%s%s: connecté à %s (%ld.%ld.%ld.%ld)"
+
+#~ msgid ""
+#~ "%s: sending file to %s (%ld.%ld.%ld.%ld, %s.%s), name: %s (local "
+#~ "filename: %s), %llu bytes (protocol: %s)"
+#~ msgstr ""
+#~ "%s: envoi fichier à %s (%ld.%ld.%ld.%ld, %s.%s), nom: %s (nom local: %s), "
+#~ "%llu octets (protocole: %s)"

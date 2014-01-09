@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-06 11:16+0100\n"
+"POT-Creation-Date: 2014-01-09 12:18+0100\n"
 "PO-Revision-Date: 2014-01-06 10:16+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4555,6 +4555,10 @@ msgstr "%sCTCP dotaz pro %s%s%s: %s%s%s%s%s"
 #, c-format
 msgid "%s%s: \"%s\" command can not be executed on a server buffer"
 msgstr "%s%s: \"%s\" příkaz nemůže být spuštěn v bufferu serveru"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to resolve local address of server socket: error %d %s"
+msgstr "%s%s: nemohu nastavit \"neblokovaci\" volbu na soket"
 
 #, c-format
 msgid "%s%s: wrong arguments for \"%s\" command"
@@ -9589,7 +9593,7 @@ msgid "CRC error"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%s%s: file %s %s %s (%ld.%ld.%ld.%ld): %s"
+msgid "%s%s: file %s %s %s (%s): %s"
 msgstr "%s%s: soubor %s %s %s: %s"
 
 msgid "sent to"
@@ -9605,7 +9609,7 @@ msgid "FAILED"
 msgstr "SELHALO"
 
 #, fuzzy, c-format
-msgid "%s%s: chat closed with %s (%ld.%ld.%ld.%ld)"
+msgid "%s%s: chat closed with %s (%s)"
 msgstr "%s: rozhovor zavřen s %s (%d.%d.%d.%d)"
 
 #, c-format
@@ -9617,13 +9621,16 @@ msgid "%s%s: not enough memory for new xfer"
 msgstr "%s%s: nedostatek paměti pro nový xfer"
 
 #, fuzzy, c-format
+msgid "%s%s: unable to interpret address: error %d %s"
+msgstr "%s%s: nemohu vytvořit rouru"
+
+#, fuzzy, c-format
 msgid "%s%s: hashing error"
 msgstr "%s%s: chyba inicializace TLS"
 
 #, fuzzy, c-format
 msgid ""
-"%s: incoming file from %s (%ld.%ld.%ld.%ld, %s.%s), name: %s, %llu bytes "
-"(protocol: %s)"
+"%s: incoming file from %s (%s, %s.%s), name: %s, %llu bytes (protocol: %s)"
 msgstr "%s: příchozí soubor od %s (%d.%d.%d.%d): %s, %llu bytů (protokol: %s)"
 
 #, fuzzy, c-format
@@ -9635,7 +9642,7 @@ msgstr ""
 "(protokol: %s)"
 
 #, fuzzy, c-format
-msgid "%s: incoming chat request from %s (%ld.%ld.%ld.%ld, %s.%s)"
+msgid "%s: incoming chat request from %s (%s, %s.%s)"
 msgstr "%s: příchozí požadavek rozhovoru od %s (%d.%d.%d.%d)"
 
 #, fuzzy, c-format
@@ -9662,9 +9669,13 @@ msgstr "%s%s: neznámá protokol xfer \"%s\""
 msgid "%s%s: cannot access file \"%s\""
 msgstr "%s%s: nemohu přistupovat k souboru \"%s\""
 
-#, c-format
-msgid "%s%s: could not find address for \"%s\", falling back to local IP"
-msgstr "%s%s: nemůžu najít adresu pro \"%s\", navracím se k lokální IP"
+#, fuzzy, c-format
+msgid "%s%s: invalid address \"%s\" (option xfer.network.own_ip): error %d %s"
+msgstr "%s%s: nekorektní znaková sada: \"%s\""
+
+#, fuzzy, c-format
+msgid "%s%s: unable to find address for \"%s\": error %d %s"
+msgstr "%s%s: nekorektní znaková sada: \"%s\""
 
 #, fuzzy, c-format
 msgid "%s%s: cannot create socket for xfer: error %d %s"
@@ -9703,8 +9714,8 @@ msgid "%s%s: error sending data to \"%s\" via xfer chat"
 msgstr "%s%s: chyba posílání dat k \"%s\" přes xfer chat"
 
 #, fuzzy, c-format
-msgid "%s%s: connected to %s (%ld.%ld.%ld.%ld)"
-msgstr "%s: rozhovor zavřen s %s (%d.%d.%d.%d)"
+msgid "%s%s: connected to %s (%s) via xfer chat"
+msgstr "%s: připojen k %s/%d (%s)"
 
 #, c-format
 msgid "%s%s: can't find xfer for buffer \"%s\""
@@ -9728,8 +9739,8 @@ msgstr ""
 
 #, fuzzy, c-format
 msgid ""
-"     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %ld."
-"%ld.%ld.%ld (port %d)"
+"     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %s "
+"(port %d)"
 msgstr ""
 "     plugin: %s (id: %s), soubor: %llu bytů (pozice: %llu), adresa: %d.%d.%d."
 "%d (port %d)"
@@ -9938,8 +9949,8 @@ msgstr "%s%s: nemohu provést fork"
 
 #, fuzzy, c-format
 msgid ""
-"%s: sending file to %s (%ld.%ld.%ld.%ld, %s.%s), name: %s (local filename: "
-"%s), %llu bytes (protocol: %s)"
+"%s: sending file to %s (%s, %s.%s), name: %s (local filename: %s), %llu "
+"bytes (protocol: %s)"
 msgstr ""
 "%s: posílám soubor k %s: %s (lokální jméno souboru: %s), %llu bytů "
 "(protokol: %s)"
@@ -9993,3 +10004,18 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#~ msgid "%s%s: could not find address for \"%s\", falling back to local IP"
+#~ msgstr "%s%s: nemůžu najít adresu pro \"%s\", navracím se k lokální IP"
+
+#, fuzzy
+#~ msgid "%s%s: connected to %s (%ld.%ld.%ld.%ld)"
+#~ msgstr "%s: rozhovor zavřen s %s (%d.%d.%d.%d)"
+
+#, fuzzy
+#~ msgid ""
+#~ "%s: sending file to %s (%ld.%ld.%ld.%ld, %s.%s), name: %s (local "
+#~ "filename: %s), %llu bytes (protocol: %s)"
+#~ msgstr ""
+#~ "%s: posílám soubor k %s: %s (lokální jméno souboru: %s), %llu bytů "
+#~ "(protokol: %s)"

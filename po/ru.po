@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-06 11:16+0100\n"
+"POT-Creation-Date: 2014-01-09 12:18+0100\n"
 "PO-Revision-Date: 2014-01-06 10:17+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4172,6 +4172,10 @@ msgstr "%sСервер: %s%s %s[%s%s%s]\n"
 #, fuzzy, c-format
 msgid "%s%s: \"%s\" command can not be executed on a server buffer"
 msgstr "%s \"%s\" команда может быть выполнена только в буфере сервера\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to resolve local address of server socket: error %d %s"
+msgstr "%s DCC: не могу установить неблокирующий режим для сокета\n"
 
 #, fuzzy, c-format
 msgid "%s%s: wrong arguments for \"%s\" command"
@@ -9027,7 +9031,7 @@ msgid "CRC error"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%s%s: file %s %s %s (%ld.%ld.%ld.%ld): %s"
+msgid "%s%s: file %s %s %s (%s): %s"
 msgstr "DCC: файл %s%s%s"
 
 #, fuzzy
@@ -9045,7 +9049,7 @@ msgid "FAILED"
 msgstr "НЕУДАЧА"
 
 #, fuzzy, c-format
-msgid "%s%s: chat closed with %s (%ld.%ld.%ld.%ld)"
+msgid "%s%s: chat closed with %s (%s)"
 msgstr "DCC-чат закончен с %s%s %s(%s%d.%d.%d.%d%s)\n"
 
 #, fuzzy, c-format
@@ -9057,13 +9061,16 @@ msgid "%s%s: not enough memory for new xfer"
 msgstr "%s недостаточно памяти для нового DCC\n"
 
 #, fuzzy, c-format
+msgid "%s%s: unable to interpret address: error %d %s"
+msgstr "%s DCC: не могу создать pipe\n"
+
+#, fuzzy, c-format
 msgid "%s%s: hashing error"
 msgstr "%s ошибка инициализации gnutls\n"
 
 #, fuzzy, c-format
 msgid ""
-"%s: incoming file from %s (%ld.%ld.%ld.%ld, %s.%s), name: %s, %llu bytes "
-"(protocol: %s)"
+"%s: incoming file from %s (%s, %s.%s), name: %s, %llu bytes (protocol: %s)"
 msgstr "Входящий файл от %s%s%s (%s%d.%d.%d.%d%s)%s: %s%s%s, %s%lu%s байт\n"
 
 #, fuzzy, c-format
@@ -9073,7 +9080,7 @@ msgid ""
 msgstr "Отправляю файл %s%s%s: %s%s%s (файл: %s%s%s), %s%lu%s байт\n"
 
 #, fuzzy, c-format
-msgid "%s: incoming chat request from %s (%ld.%ld.%ld.%ld, %s.%s)"
+msgid "%s: incoming chat request from %s (%s, %s.%s)"
 msgstr "Входящий запрос на DCC-чат от %s%s%s (%s%d.%d.%d.%d%s)\n"
 
 #, fuzzy, c-format
@@ -9102,8 +9109,12 @@ msgid "%s%s: cannot access file \"%s\""
 msgstr "%s нет доступа к файлу \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s: could not find address for \"%s\", falling back to local IP"
-msgstr "%s не могу найти адрес для '%s'. Откатываюсь на локальный IP.\n"
+msgid "%s%s: invalid address \"%s\" (option xfer.network.own_ip): error %d %s"
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to find address for \"%s\": error %d %s"
+msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%s%s: cannot create socket for xfer: error %d %s"
@@ -9142,8 +9153,8 @@ msgid "%s%s: error sending data to \"%s\" via xfer chat"
 msgstr "%s ошибка при отправке данных \"%s\" через DCC-чат\n"
 
 #, fuzzy, c-format
-msgid "%s%s: connected to %s (%ld.%ld.%ld.%ld)"
-msgstr "DCC-чат закончен с %s%s %s(%s%d.%d.%d.%d%s)\n"
+msgid "%s%s: connected to %s (%s) via xfer chat"
+msgstr "%s не подключен к серверу \"%s\"!\n"
 
 #, fuzzy, c-format
 msgid "%s%s: can't find xfer for buffer \"%s\""
@@ -9165,8 +9176,8 @@ msgstr ""
 
 #, c-format
 msgid ""
-"     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %ld."
-"%ld.%ld.%ld (port %d)"
+"     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %s "
+"(port %d)"
 msgstr ""
 
 #. TRANSLATORS: "%s" after "started on" is a date
@@ -9382,8 +9393,8 @@ msgstr "%s DCC: не могу forkнуться\n"
 
 #, fuzzy, c-format
 msgid ""
-"%s: sending file to %s (%ld.%ld.%ld.%ld, %s.%s), name: %s (local filename: "
-"%s), %llu bytes (protocol: %s)"
+"%s: sending file to %s (%s, %s.%s), name: %s (local filename: %s), %llu "
+"bytes (protocol: %s)"
 msgstr "Отправляю файл %s%s%s: %s%s%s (файл: %s%s%s), %s%lu%s байт\n"
 
 #, fuzzy, c-format
@@ -9438,3 +9449,17 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#, fuzzy
+#~ msgid "%s%s: could not find address for \"%s\", falling back to local IP"
+#~ msgstr "%s не могу найти адрес для '%s'. Откатываюсь на локальный IP.\n"
+
+#, fuzzy
+#~ msgid "%s%s: connected to %s (%ld.%ld.%ld.%ld)"
+#~ msgstr "DCC-чат закончен с %s%s %s(%s%d.%d.%d.%d%s)\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "%s: sending file to %s (%ld.%ld.%ld.%ld, %s.%s), name: %s (local "
+#~ "filename: %s), %llu bytes (protocol: %s)"
+#~ msgstr "Отправляю файл %s%s%s: %s%s%s (файл: %s%s%s), %s%lu%s байт\n"
