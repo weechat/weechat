@@ -17,7 +17,7 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-AM_CPPFLAGS = -DLOCALEDIR=\"$(datadir)/locale\"
+AM_CPPFLAGS = -DLOCALEDIR=\"$(datadir)/locale\" $(GCRYPT_CFLAGS)
 
 libdir = ${weechat_libdir}/plugins
 
@@ -47,6 +47,6 @@ xfer_la_SOURCES = xfer.c \
                   xfer-upgrade.h
 
 xfer_la_LDFLAGS = -module -no-undefined
-xfer_la_LIBADD  = $(XFER_LFLAGS)
+xfer_la_LIBADD  = $(XFER_LFLAGS) $(GCRYPT_LFLAGS)
 
 EXTRA_DIST = CMakeLists.txt
