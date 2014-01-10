@@ -39,6 +39,7 @@
 #include <sys/types.h>
 #include <netdb.h>
 #include <arpa/inet.h>
+#include <netinet/in.h>
 
 #ifdef HAVE_GNUTLS
 #include <gnutls/gnutls.h>
