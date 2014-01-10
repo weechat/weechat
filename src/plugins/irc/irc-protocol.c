@@ -4819,7 +4819,7 @@ irc_protocol_get_message_tag_time (struct t_hashtable *tags)
     if (strchr (tag_time, '-'))
     {
         /* date is with ISO 8601 format: "2012-11-24T07:41:02.018Z" */
-        strptime (tag_time, "%FT%T%z", &tm_date);
+        strptime (tag_time, "%Y-%m-%dT%H:%M:%S%z", &tm_date);
         if (tm_date.tm_year > 0)
         {
             time_msg = mktime (&tm_date);
