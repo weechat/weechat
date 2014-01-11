@@ -3019,6 +3019,24 @@ XS (XS_weechat_api_hook_focus)
     API_RETURN_STRING_FREE(result);
 }
 
+XS (XS_weechat_api_hook_set)
+{
+    char *hook, *property, *value;
+    dXSARGS;
+
+    API_FUNC(1, "hook_set", API_RETURN_ERROR);
+    if (items < 3)
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    hook = SvPV_nolen (ST (0));
+    property = SvPV_nolen (ST (1));
+    value = SvPV_nolen (ST (2));
+
+    weechat_hook_set (API_STR2PTR(hook), property, value);
+
+    API_RETURN_OK;
+}
+
 XS (XS_weechat_api_unhook)
 {
     dXSARGS;
@@ -4963,6 +4981,7 @@ weechat_perl_api_init (pTHX)
     API_DEF_FUNC(hook_info_hashtable);
     API_DEF_FUNC(hook_infolist);
     API_DEF_FUNC(hook_focus);
+    API_DEF_FUNC(hook_set);
     API_DEF_FUNC(unhook);
     API_DEF_FUNC(unhook_all);
     API_DEF_FUNC(buffer_new);

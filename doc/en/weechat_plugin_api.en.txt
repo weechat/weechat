@@ -6991,10 +6991,26 @@ with an extra argument:
 * 'options': options for command executed; the hashtable is duplicated in
   function, so it's safe to free it after this call
 
-For a standard command (not beginning with "url:"), the hashtable 'options' can
-contain arguments for command (and then 'command' must be only the command
-without arguments) _(WeeChat ≥ 0.4.0)_. +
-The keys in hashtable must be: 'arg1', 'arg2', ...
+For a standard command (not beginning with "url:"), following options are
+available:
+
+[width="100%",cols="^1,1,3",options="header"]
+|===
+| Option | Value | Description
+
+| argN (N ≥ 1) +
+  _(WeeChat ≥ 0.4.0)_ |
+  any string |
+  Arguments for command; if no argument is given with these options,
+  the command is automatically split like the shell does (and then command
+  arguments are read in the 'command' argument)
+
+| stdin +
+  _(WeeChat ≥ 0.4.3)_ |
+  (not used) |
+  Create a pipe for writing data on standard input (stdin) of child process
+  (see function <<_weechat_hook_set,weechat_hook_set>>)
+|===
 
 For command "url:...", following options are available (see
 `man curl_easy_setopt` for a description of each option):
@@ -9426,7 +9442,7 @@ hook = weechat.hook_focus("buffer_nicklist", "my_focus_nicklist_cb", "")
 
 ==== weechat_hook_set
 
-_WeeChat ≥ 0.3.9._
+_WeeChat ≥ 0.3.9 (script: WeeChat ≥ 0.4.3)._
 
 Set string value of a hook property.
 
@@ -9446,13 +9462,23 @@ Arguments:
 
 Properties:
 
-[width="100%",cols="^2,4,8",options="header"]
+[width="100%",cols="^2,2,2,5",options="header"]
 |===
-| Name | Value | Description
+| Name | Hook type | Value | Description
 
-| subplugin | any string |
+| subplugin | any type | any string |
   Name of sub plugin (commonly script name, which is displayed in
   `/help command` for a hook of type 'command')
+
+| stdin +
+  _(WeeChat ≥ 0.4.3)_ |
+  'process', 'process_hashtable' | any string |
+  Send data on standard input ('stdin') of child process
+
+| stdin_close +
+  _(WeeChat ≥ 0.4.3)_ |
+  'process', 'process_hashtable' | (not used) |
+  Close pipe used to send data on standard input ('stdin') of child process
 |===
 
 C example:
@@ -9466,8 +9492,23 @@ struct t_hook *my_command_hook =
 weechat_hook_set (my_command_hook, "subplugin", "test");
 ----
 
-[NOTE]
-This function is not available in scripting API.
+Script (Python):
+
+[source,python]
+----
+# prototype
+weechat.hook_set(hook, property, value)
+
+# example
+def my_process_cb(data, command, return_code, out, err):
+    # ...
+    return weechat.WEECHAT_RC_OK
+
+hook = weechat.hook_process_hashtable("/path/to/command", { "stdin": "1" },
+                                      20000, "my_process_cb", "")
+weechat.hook_set(hook, "stdin", "data sent to stdin of child process")
+weechat.hook_set(hook, "stdin_close", "")  # optional
+----
 
 ==== weechat_unhook
 

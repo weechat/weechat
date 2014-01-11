@@ -7098,11 +7098,26 @@ supplémentaire :
 * 'options' : options pour la commande exécutée; la hashtable est dupliquée dans
   la fonction, donc il est possible de la supprimer après cet appel
 
-Pour une commande standard (ne commençant pas par "url:"), la hashtable
-'options' peut contenir les paramètres pour la commande (et donc 'command' doit
-être seulement la commande sans les paramètres)
-_(WeeChat ≥ 0.4.0)_. +
-Les clés dans la hashtable doivent être: 'arg1', 'arg2', ...
+Pour une commande standard (ne commençant pas par "url:"), les options suivantes
+sont disponibles :
+
+[width="100%",cols="^1,1,3",options="header"]
+|===
+| Option | Valeur | Description
+
+| argN (N ≥ 1) +
+  _(WeeChat ≥ 0.4.0)_ |
+  toute chaîne |
+  Paramètres pour la commande ; si aucun paramètre n'est donné avec ces options,
+  la commande sera automatiquement découpée comme le fait le shell (et donc les
+  paramètres de la commande sont lus dans le paramètre 'command')
+
+| stdin +
+  _(WeeChat ≥ 0.4.3)_ |
+  (non utilisée) |
+  Créer un tuyau pour écrire sur l'entrée standard (stdin) du processus fils
+  (voir la fonction <<_weechat_hook_set,weechat_hook_set>>)
+|===
 
 Pour la commande "url:...", les options suivantes sont disponibles (voir
 `man curl_easy_setopt` pour une description de chaque option) :
@@ -9592,7 +9607,7 @@ hook = weechat.hook_focus("buffer_nicklist", "my_focus_nicklist_cb", "")
 
 ==== weechat_hook_set
 
-_WeeChat ≥ 0.3.9._
+_WeeChat ≥ 0.3.9 (script: WeeChat ≥ 0.4.3)._
 
 Affecte une valeur à une propriété d'un hook.
 
@@ -9612,13 +9627,24 @@ Paramètres :
 
 Propriétés :
 
-[width="100%",cols="^2,4,8",options="header"]
+[width="100%",cols="^2,2,2,5",options="header"]
 |===
-| Nom | Valeur | Description
+| Nom | Type de hook | Valeur | Description
 
-| subplugin | toute chaîne |
+| subplugin | tout type | toute chaîne |
   Nom de la sous-extension (couramment un nom de script, qui est affiché dans
   `/help commande` pour un hook de type 'command')
+
+| stdin +
+  _(WeeChat ≥ 0.4.3)_ |
+  'process', 'process_hashtable' | toute chaîne |
+  Envoyer les données sur l'entrée standard ('stdin') du processus fils
+
+| stdin_close +
+  _(WeeChat ≥ 0.4.3)_ |
+  'process', 'process_hashtable' | (non utilisée) |
+  Fermer le tuyau utilisé pour envoyer les données sur l'entrée standard
+  ('stdin') du processus fils
 |===
 
 Exemple en C :
@@ -9632,8 +9658,23 @@ struct t_hook *my_command_hook =
 weechat_hook_set (my_command_hook, "subplugin", "test");
 ----
 
-[NOTE]
-Cette fonction n'est pas disponible dans l'API script.
+Script (Python) :
+
+[source,python]
+----
+# prototype
+weechat.hook_set(hook, property, value)
+
+# exemple
+def my_process_cb(data, command, return_code, out, err):
+    # ...
+    return weechat.WEECHAT_RC_OK
+
+hook = weechat.hook_process_hashtable("/chemin/vers/commande", { "stdin": "1" },
+                                      20000, "my_process_cb", "")
+weechat.hook_set(hook, "stdin", "données envoyées sur le stdin du processus fils")
+weechat.hook_set(hook, "stdin_close", "")  # facultatif
+----
 
 ==== weechat_unhook
 

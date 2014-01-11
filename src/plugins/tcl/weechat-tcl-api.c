@@ -3505,6 +3505,27 @@ weechat_tcl_api_hook_focus (ClientData clientData, Tcl_Interp *interp,
 }
 
 static int
+weechat_tcl_api_hook_set (ClientData clientData, Tcl_Interp *interp,
+                          int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj *objp;
+    char *hook, *property, *value;
+    int i;
+
+    API_FUNC(1, "hook_set", API_RETURN_ERROR);
+    if (objc < 4)
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    hook = Tcl_GetStringFromObj (objv[1], &i);
+    property = Tcl_GetStringFromObj (objv[2], &i);
+    value = Tcl_GetStringFromObj (objv[3], &i);
+
+    weechat_hook_set (API_STR2PTR(hook), property, value);
+
+    API_RETURN_OK;
+}
+
+static int
 weechat_tcl_api_unhook (ClientData clientData, Tcl_Interp *interp,
                         int objc, Tcl_Obj *CONST objv[])
 {
@@ -5809,6 +5830,7 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     API_DEF_FUNC(hook_info_hashtable);
     API_DEF_FUNC(hook_infolist);
     API_DEF_FUNC(hook_focus);
+    API_DEF_FUNC(hook_set);
     API_DEF_FUNC(unhook);
     API_DEF_FUNC(unhook_all);
     API_DEF_FUNC(buffer_new);

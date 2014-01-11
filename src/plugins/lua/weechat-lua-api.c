@@ -3202,6 +3202,24 @@ weechat_lua_api_hook_focus (lua_State *L)
 }
 
 static int
+weechat_lua_api_hook_set (lua_State *L)
+{
+    const char *hook, *property, *value;
+
+    API_FUNC(1, "hook_set", API_RETURN_ERROR);
+    if (lua_gettop (L) < 3)
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    hook = lua_tostring (L, -3);
+    property = lua_tostring (L, -2);
+    value = lua_tostring (L, -1);
+
+    weechat_hook_set (API_STR2PTR(hook), property, value);
+
+    API_RETURN_OK;
+}
+
+static int
 weechat_lua_api_unhook (lua_State *L)
 {
     const char *hook;
@@ -5210,6 +5228,7 @@ const struct luaL_Reg weechat_lua_api_funcs[] = {
     API_DEF_FUNC(hook_info_hashtable),
     API_DEF_FUNC(hook_infolist),
     API_DEF_FUNC(hook_focus),
+    API_DEF_FUNC(hook_set),
     API_DEF_FUNC(unhook),
     API_DEF_FUNC(unhook_all),
     API_DEF_FUNC(buffer_new),

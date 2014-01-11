@@ -3159,6 +3159,25 @@ weechat_python_api_hook_focus (PyObject *self, PyObject *args)
 }
 
 static PyObject *
+weechat_python_api_hook_set (PyObject *self, PyObject *args)
+{
+    char *hook, *property, *value;
+
+    API_FUNC(1, "hook_set", API_RETURN_ERROR);
+    hook = NULL;
+    property = NULL;
+    value = NULL;
+    if (!PyArg_ParseTuple (args, "sss", &hook, &property, &value))
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    weechat_hook_set (API_STR2PTR(hook),
+                      property,
+                      value);
+
+    API_RETURN_OK;
+}
+
+static PyObject *
 weechat_python_api_unhook (PyObject *self, PyObject *args)
 {
     char *hook;
@@ -5122,6 +5141,7 @@ PyMethodDef weechat_python_funcs[] =
     API_DEF_FUNC(hook_info_hashtable),
     API_DEF_FUNC(hook_infolist),
     API_DEF_FUNC(hook_focus),
+    API_DEF_FUNC(hook_set),
     API_DEF_FUNC(unhook),
     API_DEF_FUNC(unhook_all),
     API_DEF_FUNC(buffer_new),

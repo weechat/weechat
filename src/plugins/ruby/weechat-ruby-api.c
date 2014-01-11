@@ -3649,6 +3649,31 @@ weechat_ruby_api_hook_focus (VALUE class, VALUE area, VALUE function,
 }
 
 static VALUE
+weechat_ruby_api_hook_set (VALUE class, VALUE hook, VALUE property,
+                           VALUE value)
+{
+    char *c_hook, *c_property, *c_value;
+
+    API_FUNC(1, "hook_set", API_RETURN_ERROR);
+    if (NIL_P (hook) || NIL_P (property) || NIL_P (value))
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    Check_Type (hook, T_STRING);
+    Check_Type (property, T_STRING);
+    Check_Type (value, T_STRING);
+
+    c_hook = StringValuePtr (hook);
+    c_property = StringValuePtr (property);
+    c_value = StringValuePtr (value);
+
+    weechat_hook_set (API_STR2PTR(c_hook),
+                      c_property,
+                      c_value);
+
+    API_RETURN_OK;
+}
+
+static VALUE
 weechat_ruby_api_unhook (VALUE class, VALUE hook)
 {
     char *c_hook;
@@ -6066,6 +6091,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(hook_info_hashtable, 6);
     API_DEF_FUNC(hook_infolist, 6);
     API_DEF_FUNC(hook_focus, 3);
+    API_DEF_FUNC(hook_set, 3);
     API_DEF_FUNC(unhook, 1);
     API_DEF_FUNC(unhook_all, 0);
     API_DEF_FUNC(buffer_new, 5);

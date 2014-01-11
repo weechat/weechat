@@ -88,8 +88,9 @@ enum t_hook_type
 #define HOOK_FD_FLAG_EXCEPTION  4
 
 /* constants for hook process */
-#define HOOK_PROCESS_STDOUT      0
-#define HOOK_PROCESS_STDERR      1
+#define HOOK_PROCESS_STDIN       0
+#define HOOK_PROCESS_STDOUT      1
+#define HOOK_PROCESS_STDERR      2
 #define HOOK_PROCESS_BUFFER_SIZE 65536
 
 /* macros to access hook specific data */
@@ -213,13 +214,13 @@ struct t_hook_process
     char *command;                     /* command executed by child         */
     struct t_hashtable *options;       /* options for process (see doc)     */
     long timeout;                      /* timeout (ms) (0 = no timeout)     */
-    int child_read[2];                 /* to read data in pipe from child   */
-    int child_write[2];                /* to write data in pipe for child   */
+    int child_read[3];                 /* read stdin/out/err data from child*/
+    int child_write[3];                /* write stdin/out/err data for child*/
     pid_t child_pid;                   /* pid of child process              */
-    struct t_hook *hook_fd[2];         /* hook fd for stdout/stderr         */
+    struct t_hook *hook_fd[3];         /* hook fd for stdin/out/err         */
     struct t_hook *hook_timer;         /* timer to check if child has died  */
-    char *buffer[2];                   /* buffers for child stdout/stderr   */
-    int buffer_size[2];                /* size of child stdout/stderr       */
+    char *buffer[3];                   /* buffers for child stdin/out/err   */
+    int buffer_size[3];                /* size of child stdin/out/err       */
 };
 
 /* hook connect */
