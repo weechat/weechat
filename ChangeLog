@@ -98,6 +98,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * irc: add option irc.look.notice_welcome_tags
 * irc: add server option "default_msg_kick" to customize default kick/kickban
   message (task #12777)
+* lua: fix detection of Lua 5.2 in autotools (patch #8270)
 * lua: fix crash on calls to callbacks during load of script
 * python: fix load of scripts with python >= 3.3
 * relay: fix memory leak on unload of relay plugin

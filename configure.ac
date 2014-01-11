@@ -698,13 +698,18 @@ if test "x$enable_lua" = "xyes" ; then
     AC_MSG_CHECKING(for Lua compiling and linking)
     LUA_TEST=`LT=luatest.c ; echo "#include <lua.h>" > $LT;  echo "#include <lualib.h>" >> $LT; echo "int main() { luaopen_base((lua_State *)lua_open()); return 0; }" >> $LT ; $CC -Wall $LT -o $LT.out $LUA_CFLAGS $LUA_LFLAGS $CFLAGS $LDFLAGS 1>/dev/null 2>&1 ; echo $?; rm -f $LT $LT.out 1>/dev/null 2>&1`
     if test "x$LUA_TEST" != "x0" ; then
-        AC_MSG_RESULT(no)
-        AC_MSG_WARN([
+        LUA52_TEST=`LT=luatest.c ; echo "#include <lua.h>" > $LT;  echo "#include <lualib.h>" >> $LT; echo "int main() { luaopen_base((lua_State *)luaL_newstate()); return 0; }" >> $LT ; $CC -Wall $LT -o $LT.out $LUA_CFLAGS $LUA_LFLAGS $CFLAGS $LDFLAGS 1>/dev/null 2>&1 ; echo $?; rm -f $LT $LT.out 1>/dev/null 2>&1`
+        if test "x$LUA52_TEST" != "x0" ; then
+            AC_MSG_RESULT(no)
+            AC_MSG_WARN([
 *** Lua (>=5.0) headers and/or librairies couldn't be found on your system.
 *** Try to install liblua, liblualib and liblua-dev with your software package manager.
 *** WeeChat will be built without Lua support.])
-        enable_lua="no"
-        not_found="$not_found lua"
+            enable_lua="no"
+            not_found="$not_found lua"
+        else
+            AC_MSG_RESULT(yes)
+        fi
     else
         AC_MSG_RESULT(yes)
     fi
