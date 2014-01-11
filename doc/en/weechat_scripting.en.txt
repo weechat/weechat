@@ -358,7 +358,7 @@ List of functions in script API:
   plugin_get_name
 | strings             |
   charset_set, iconv_to_internal, iconv_from_internal, gettext, ngettext, +
-  string_match, string_has_highlight, string_has_highlight_regex,
+  strlen_screen, string_match, string_has_highlight, string_has_highlight_regex,
   string_mask_to_regex, string_remove_color, string_is_command_char,
   string_input_for_buffer, string_eval_expression
 | directories         |
@@ -391,7 +391,8 @@ List of functions in script API:
   hook_process_hashtable, hook_connect, hook_print, hook_signal,
   hook_signal_send, hook_hsignal, hook_hsignal_send, hook_config,
   hook_completion, hook_completion_list_add, hook_modifier, hook_modifier_exec,
-  hook_info, hook_info_hashtable, hook_infolist, hook_focus, unhook, unhook_all
+  hook_info, hook_info_hashtable, hook_infolist, hook_focus, hook_set, unhook,
+  unhook_all
 | buffers             |
   buffer_new, current_buffer, buffer_search, buffer_search_main, buffer_clear,
   buffer_close, buffer_merge, buffer_unmerge, buffer_get_integer,
