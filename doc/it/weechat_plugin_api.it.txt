@@ -6151,7 +6151,16 @@ const char *weechat_prefix (const char *prefix);
 
 Argomenti:
 
-* 'prefix': nome del prefisso:
+// TRANSLATION MISSING
+* 'prefix': nome del prefisso, see table below
+
+Valore restituito:
+
+* valore del prefisso (stringa con prefisso e codici colori), stringa vuota
+  se il prefisso non è stato trovato
+
+// TRANSLATION MISSING
+List of prefixes:
 
 [width="70%",cols="^2e,^1,^3,5",options="header"]
 |===
@@ -6165,11 +6174,6 @@ Argomenti:
 
 [NOTE]
 Valori e colori possono essere personalizzati con il comando `/set`.
-
-Valore restituito:
-
-* valore del prefisso (stringa con prefisso e codici colori), stringa vuota
-  se il prefisso non è stato trovato
 
 Esempio in C:
 
@@ -8406,8 +8410,29 @@ struct t_hook *weechat_hook_hsignal (const char *signal,
 
 Argomenti:
 
+// TRANSLATION MISSING
 * 'signal': segnale da catturare, può iniziare o terminare con "*"
-  (priorità consentita, consultare la nota a proposito di <<hook_priority,priority>>):
+  (priorità consentita, consultare la nota a proposito di <<hook_priority,priority>>),
+  see table below
+* 'callback': funzione chiamata a segnale ricevuto, argomenti e valore
+  restituito:
+** 'void *data': puntatore
+** 'const char *signal': segnale ricevuto
+** 'struct t_hashtable *hashtable': tabella hash
+** valore restituito:
+*** 'WEECHAT_RC_OK'
+// TRANSLATION MISSING
+*** 'WEECHAT_RC_OK_EAT' (stop sending the signal immediately)
+    _(WeeChat ≥ 0.4.0)_
+*** 'WEECHAT_RC_ERROR'
+* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
+
+Valore restituito:
+
+* puntatore al nuovo hook, NULL in caso di errore
+
+// TRANSLATION MISSING
+List of hsignals sent by WeeChat and plugins:
 
 [width="100%",cols="^1,^3,5,5",options="header"]
 |===
@@ -8470,23 +8495,6 @@ Argomenti:
 [NOTE]
 ^(1)^ 'xxx' è l'argomento del segnale usato nella redirezione, 'yyy' è lo schema
 di redirezione.
-
-* 'callback': funzione chiamata a segnale ricevuto, argomenti e valore
-  restituito:
-** 'void *data': puntatore
-** 'const char *signal': segnale ricevuto
-** 'struct t_hashtable *hashtable': tabella hash
-** valore restituito:
-*** 'WEECHAT_RC_OK'
-// TRANSLATION MISSING
-*** 'WEECHAT_RC_OK_EAT' (stop sending the signal immediately)
-    _(WeeChat ≥ 0.4.0)_
-*** 'WEECHAT_RC_ERROR'
-* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
-
-Valore restituito:
-
-* puntatore al nuovo hook, NULL in caso di errore
 
 Esempio in C:
 
@@ -9015,10 +9023,25 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
 
 Argomenti:
 
+// TRANSLATION MISSING
 * 'modifier': nome modificatore, lista di modificatori utilizzati da
   Weechat o dai plugin
   (priorità consentita, consultare la nota riguardo la
-  <<hook_priority,priority>>)
+  <<hook_priority,priority>>), see table below
+* 'callback': funzione chiamata quando viene usato il modificatore,
+  argomenti e valore restituito:
+** 'void *data': puntatore
+** 'const char *modifier': nome del modificatore
+** 'const char *modifier_data': dati per il modificatore
+** 'const char *string': stringa da modificare
+** valore restituito: nuova stringa
+* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
+
+Valore restituito:
+
+* puntatore al nuovo hook, NULL in caso di errore
+
+List of modifiers used by WeeChat and plugins:
 
 [width="100%",cols="^2,3,4,4",options="header"]
 |===
@@ -9121,19 +9144,6 @@ Argomenti:
 [NOTE]
 ^(1)^ 'xxx' è il nome del comando IRC. +
 ^(2)^ 'yyy' è il nome della barra.
-
-* 'callback': funzione chiamata quando viene usato il modificatore,
-  argomenti e valore restituito:
-** 'void *data': puntatore
-** 'const char *modifier': nome del modificatore
-** 'const char *modifier_data': dati per il modificatore
-** 'const char *string': stringa da modificare
-** valore restituito: nuova stringa
-* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
-
-Valore restituito:
-
-* puntatore al nuovo hook, NULL in caso di errore
 
 Esempio in C:
 
@@ -12397,14 +12407,19 @@ const char *weechat_info_get (const char *info_name, const char *arguments);
 
 Argomenti:
 
-* 'info_name': nome delle informazioni da leggere:
-include::autogen/plugin_api/infos.txt[]
+// TRANSLATION MISSING
+* 'info_name': nome delle informazioni da leggere (see table below)
 * 'arguments': argomenti per l'informazione richiesta (opzionake, NULL se non
   è richiesto alcun argomento)
 
 Valore restituito:
 
 * stringa con l'informazione richiesta, NULL in caso di errore
+
+// TRANSLATION MISSING
+Infos:
+
+include::autogen/plugin_api/infos.txt[]
 
 Esempio in C:
 
@@ -12446,14 +12461,19 @@ struct t_hashtable *weechat_info_get_hashtable (const char *info_name,
 
 Argomenti:
 
-* 'info_name': nome della info da leggere
-include::autogen/plugin_api/infos_hashtable.txt[]
+// TRANSLATION MISSING
+* 'info_name': nome della info da leggere (see table below)
 * 'hashtable': tabella hash con argomenti (dipende dalla info richiesta)
 * (opzionale, NULL se l'argomento non viene richiesto)
 
 Valore restituito:
 
 * tabella hash con la info richiesta, NULL in caso di errore
+
+// TRANSLATION MISSING
+Infos:
+
+include::autogen/plugin_api/infos_hashtable.txt[]
 
 Esempio in C:
 
@@ -12824,8 +12844,8 @@ struct t_infolist *weechat_infolist_get (const char *infolist_name,
 
 Argomenti:
 
-* 'infolist_name': nome della lista info da leggere:
-include::autogen/plugin_api/infolists.txt[]
+// TRANSLATION MISSING
+* 'infolist_name': nome della lista info da leggere (see table below)
 * 'pointer': puntatore ad un elemento, per ricevere solo questo
   elemento nella lista info (opzionale, può essere NULL)
 * 'arguments': argomenti per la lista info richiesta (opzionale, NULL se
@@ -12834,6 +12854,11 @@ include::autogen/plugin_api/infolists.txt[]
 Valore restituito:
 
 * puntatore alla lista info, NULL in caso di errore
+
+// TRANSLATION MISSING
+Infolists:
+
+include::autogen/plugin_api/infolists.txt[]
 
 Esempio in C:
 
@@ -13511,16 +13536,17 @@ struct t_hdata *weechat_hdata_get (const char *hdata_name);
 
 Argomenti:
 
-* 'hdata_name': nome di un hdata
+// TRANSLATION MISSING
+* 'hdata_name': nome di un hdata (see list below)
+
+Valore restituito:
+
+* puntatore ad un hdata, NULL in caso di errore
 
 // TRANSLATION MISSING
 List of hdata:
 
 include::autogen/plugin_api/hdata.txt[]
-
-Valore restituito:
-
-* puntatore ad un hdata, NULL in caso di errore
 
 Esempio in C:
 

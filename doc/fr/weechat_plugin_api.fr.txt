@@ -6152,7 +6152,14 @@ const char *weechat_prefix (const char *prefix);
 
 Paramètres :
 
-* 'prefix' : nom du préfixe :
+* 'prefix' : nom du préfixe (voir le tableau ci-dessous)
+
+Valeur de retour :
+
+* valeur du préfixe (chaîne avec le préfixe et des codes couleur), chaîne vide
+  si le préfixe n'a pas été trouvé
+
+Liste des préfixes :
 
 [width="70%",cols="^2e,^1,^3,5",options="header"]
 |===
@@ -6166,11 +6173,6 @@ Paramètres :
 
 [NOTE]
 Les valeurs et couleurs peuvent être configurées avec la commande `/set`.
-
-Valeur de retour :
-
-* valeur du préfixe (chaîne avec le préfixe et des codes couleur), chaîne vide
-  si le préfixe n'a pas été trouvé
 
 Exemple en C :
 
@@ -6956,7 +6958,7 @@ struct t_hook *weechat_hook_process (const char *command,
 Paramètres :
 
 * 'command' : commande à lancer dans le processus fils ou URL
-  _(WeeChat ≥ 0.3.7)_, voir ci-dessous
+  _(WeeChat ≥ 0.3.7)_ (voir ci-dessous)
 * 'timeout' : timeout pour la commande (en millisecondes) : après ce délai, le
   processus fils est tué (0 signifie pas de limite)
 * 'callback' : function appelée quand des données du fils sont disponibles, or
@@ -7557,8 +7559,8 @@ struct t_hook *weechat_hook_signal (const char *signal,
 Paramètres :
 
 * 'signal' : signal à intercepter, peut commencer ou se terminer par "*"
-  (priorité autorisée, voir la note sur la <<hook_priority,priorité>>),
-  voir le tableau ci-dessous
+  (priorité autorisée, voir la note sur la <<hook_priority,priorité>>)
+  (voir le tableau ci-dessous)
 * 'callback' : fonction appelée quand le signal est reçu, paramètres et valeur
   de retour :
 ** 'void *data' : pointeur
@@ -8359,7 +8361,26 @@ struct t_hook *weechat_hook_hsignal (const char *signal,
 Paramètres :
 
 * 'signal' : signal à intercepter, peut commencer ou se terminer par "*"
-  (priorité autorisée, voir la note sur la <<hook_priority,priorité>>) :
+  (priorité autorisée, voir la note sur la <<hook_priority,priorité>>)
+  (voir le tableau ci-dessous)
+* 'callback' : fonction appelée quand le signal est reçu, paramètres et valeur
+  de retour :
+** 'void *data' : pointeur
+** 'const char *signal' : signal reçu
+** 'struct t_hashtable *hashtable' : hashtable
+** valeur de retour :
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_OK_EAT' (arrêter l'envoi du signal immédiatement)
+    _(WeeChat ≥ 0.4.0)_
+*** 'WEECHAT_RC_ERROR'
+* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+  WeeChat
+
+Valeur de retour :
+
+* pointeur vers le nouveau "hook", NULL en cas d'erreur
+
+Liste des hsignaux envoyés par WeeChat et les extensions :
 
 [width="100%",cols="^1,^3,5,5",options="header"]
 |===
@@ -8416,23 +8437,6 @@ Paramètres :
 [NOTE]
 ^(1)^ 'xxx' est l'argument "signal" utilisé dans la redirection, 'yyy' est le
 modèle de redirection ("pattern").
-
-* 'callback' : fonction appelée quand le signal est reçu, paramètres et valeur
-  de retour :
-** 'void *data' : pointeur
-** 'const char *signal' : signal reçu
-** 'struct t_hashtable *hashtable' : hashtable
-** valeur de retour :
-*** 'WEECHAT_RC_OK'
-*** 'WEECHAT_RC_OK_EAT' (arrêter l'envoi du signal immédiatement)
-    _(WeeChat ≥ 0.4.0)_
-*** 'WEECHAT_RC_ERROR'
-* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat
-
-Valeur de retour :
-
-* pointeur vers le nouveau "hook", NULL en cas d'erreur
 
 Exemple en C :
 
@@ -8970,7 +8974,23 @@ Paramètres :
 
 * 'modifier' : nom du "modifieur", liste des "modifieurs" utilisés par WeeChat
   ou des extensions
-  (priorité autorisée, voir la note sur la <<hook_priority,priorité>>) :
+  (priorité autorisée, voir la note sur la <<hook_priority,priorité>>)
+  (voir le tableau ci-dessous)
+* 'callback' : fonction appelée lorsque le "modifieur" est utilisé, paramètres
+  et valeur de retour :
+** 'void *data' : pointeur
+** 'const char *modifier' : nom du "modifieur"
+** 'const char *modifier_data' : données pour le "modifieur"
+** 'const char *string' : chaîne à modifier
+** valeur de retour : nouvelle chaîne
+* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+  WeeChat
+
+Valeur de retour :
+
+* pointeur vers le nouveau "hook", NULL en cas d'erreur
+
+Liste des modifieurs utilisés par WeeChat et les extensions :
 
 [width="100%",cols="^2,3,4,4",options="header"]
 |===
@@ -9076,20 +9096,6 @@ Paramètres :
 [NOTE]
 ^(1)^ 'xxx' est un nom de commande IRC. +
 ^(2)^ 'yyy' est le nom de la barre.
-
-* 'callback' : fonction appelée lorsque le "modifieur" est utilisé, paramètres
-  et valeur de retour :
-** 'void *data' : pointeur
-** 'const char *modifier' : nom du "modifieur"
-** 'const char *modifier_data' : données pour le "modifieur"
-** 'const char *string' : chaîne à modifier
-** valeur de retour : nouvelle chaîne
-* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat
-
-Valeur de retour :
-
-* pointeur vers le nouveau "hook", NULL en cas d'erreur
 
 Exemple en C :
 
@@ -12325,14 +12331,17 @@ const char *weechat_info_get (const char *info_name, const char *arguments);
 
 Paramètres :
 
-* 'info_name' : nom de l'information à lire :
-include::autogen/plugin_api/infos.txt[]
+* 'info_name' : nom de l'information à lire (voir le tableau ci-dessous)
 * 'arguments' : paramètres pour l'information demandée (optionnels, NULL si
   aucun paramètre n'est nécessaire)
 
 Valeur de retour :
 
 * chaîne avec l'information demandée, NULL en cas d'erreur
+
+Infos :
+
+include::autogen/plugin_api/infos.txt[]
 
 Exemple en C :
 
@@ -12375,14 +12384,17 @@ struct t_hashtable *weechat_info_get_hashtable (const char *info_name,
 
 Paramètres :
 
-* 'info_name' : nom de l'information à lire :
-include::autogen/plugin_api/infos_hashtable.txt[]
+* 'info_name' : nom de l'information à lire (voir le tableau ci-dessous)
 * 'hashtable' : hashtable avec les paramètres (dépendant de l'information
   demandée) (optionnel, NULL si aucun paramètre n'est nécessaire)
 
 Valeur de retour :
 
 * hashtable avec l'information demandée, NULL en cas d'erreur
+
+Infos :
+
+include::autogen/plugin_api/infos_hashtable.txt[]
 
 Exemple en C :
 
@@ -12752,8 +12764,7 @@ struct t_infolist *weechat_infolist_get (const char *infolist_name,
 
 Paramètres :
 
-* 'infolist_name' : nom de l'infolist à lire :
-include::autogen/plugin_api/infolists.txt[]
+* 'infolist_name' : nom de l'infolist à lire (voir le tableau ci-dessous)
 * 'pointer' : pointeur vers un objet, pour n'obtenir que celui-ci dans
   l'infolist (optionnel, peut être NULL)
 * 'arguments' : paramètres pour l'infolist demandée (optionnels, NULL si aucun
@@ -12762,6 +12773,10 @@ include::autogen/plugin_api/infolists.txt[]
 Valeur de retour :
 
 * pointeur vers l'infolist, NULL en cas d'erreur
+
+Infolists :
+
+include::autogen/plugin_api/infolists.txt[]
 
 Exemple en C :
 
@@ -13438,15 +13453,15 @@ struct t_hdata *weechat_hdata_get (const char *hdata_name);
 
 Paramètres :
 
-* 'hdata_name' : nom du hdata
-
-Liste des hdata :
-
-include::autogen/plugin_api/hdata.txt[]
+* 'hdata_name' : nom du hdata (voir la liste ci-dessous)
 
 Valeur de retour :
 
 * pointeur vers le hdata, NULL en cas d'erreur
+
+Liste des hdata :
+
+include::autogen/plugin_api/hdata.txt[]
 
 Exemple en C :
 
