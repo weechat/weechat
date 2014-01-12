@@ -3406,7 +3406,8 @@ Questa funzione non è disponibile nelle API per lo scripting.
 
 _WeeChat ≥ 0.3.4._
 
-Restituisce 1 se la tabella hash ha una chiave, altrimenti 0.
+// TRANSLATION MISSING
+Check if a key is in the hashtable.
 
 Prototipo:
 

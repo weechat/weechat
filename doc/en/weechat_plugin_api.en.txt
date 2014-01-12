@@ -1036,7 +1036,7 @@ regex = weechat.string_mask_to_regex("test*mask") # "test.*mask"
 
 _WeeChat ≥ 0.3.7._
 
-Get pointer on string after flags and return mask with flags to compile regular
+Get pointer on string after flags and mask with flags to compile regular
 expression.
 
 Prototype:
@@ -3353,7 +3353,7 @@ This function is not available in scripting API.
 
 _WeeChat ≥ 0.3.4._
 
-Return 1 if hashtable has key, otherwise 0.
+Check if a key is in the hashtable.
 
 Prototype:
 

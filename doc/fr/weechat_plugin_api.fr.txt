@@ -321,7 +321,7 @@ Paramètres :
 
 Valeur de retour :
 
-* chaîne convertie (doit être libérée par un appel à "free" après utilisation)
+* chaîne convertie (doit être supprimée par un appel à "free" après utilisation)
 
 Exemple en C :
 
@@ -361,7 +361,7 @@ Paramètres :
 
 Valeur de retour :
 
-* chaîne convertie (doit être libérée par un appel à "free" après utilisation)
+* chaîne convertie (doit être supprimée par un appel à "free" après utilisation)
 
 Exemple en C :
 
@@ -481,7 +481,7 @@ Paramètres :
 
 Valeur de retour :
 
-* chaîne dupliquée (doit être libérée par un appel à "free" après utilisation)
+* chaîne dupliquée (doit être supprimée par un appel à "free" après utilisation)
 
 Exemple en C :
 
@@ -879,7 +879,7 @@ Paramètres :
 
 Valeur de retour :
 
-* chaîne avec 'search' remplacée par 'replace' (doit être libérée par un appel
+* chaîne avec 'search' remplacée par 'replace' (doit être supprimée par un appel
   à "free" après utilisation)
 
 Exemple en C :
@@ -915,7 +915,7 @@ Paramètres :
 Valeur de retour :
 
 * chemin avec le `~` en début remplacé par le répertoire "home" (doit être
-  libéré par un appel à "free" après utilisation)
+  supprimé par un appel à "free" après utilisation)
 
 Exemple en C :
 
@@ -950,7 +950,7 @@ Paramètres :
 Valeur de retour :
 
 * chaîne sans les apostrophes/guillemets au début et à la fin (doit être
-  libérée par un appel à "free" après utilisation)
+  supprimée par un appel à "free" après utilisation)
 
 Exemple en C :
 
@@ -986,8 +986,8 @@ Paramètres :
 
 Valeur de retour :
 
-* chaîne avec les caractères supprimés (doit être libérée par un appel à "free"
-  après utilisation)
+* chaîne avec les caractères supprimés (doit être supprimée par un appel à
+  "free" après utilisation)
 
 Exemple en C :
 
@@ -1020,7 +1020,7 @@ Paramètres :
 
 Valeur de retour :
 
-* expression régulière, sous forme de chaîne (doit être libérée par un appel à
+* expression régulière, sous forme de chaîne (doit être supprimée par un appel à
   "free" après utilisation)
 
 Exemple en C :
@@ -1256,7 +1256,7 @@ Paramètres :
 
 Valeur de retour :
 
-* tableau de chaînes, NULL en cas de problème (doit être libéré par un appel à
+* tableau de chaînes, NULL en cas de problème (doit être supprimé par un appel à
   <<_weechat_string_free_split,weechat_string_free_split>> après utilisation)
 
 Exemples en C :
@@ -1289,7 +1289,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_string_free_split
 
-Libérer la mémoire utilisée pour le découpage d'une chaîne.
+Supprimer une chaîne découpée.
 
 Prototype :
 
@@ -1337,7 +1337,7 @@ Paramètres :
 
 Valeur de retour :
 
-* chaîne construite avec la chaîne découpée (doit être libérée par un appel à
+* chaîne construite avec la chaîne découpée (doit être supprimée par un appel à
   "free" après utilisation)
 
 Exemple en C :
@@ -1358,7 +1358,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_string_split_command
 
-Éclater une liste de commandes séparées par 'separator' (qui peut être échappé
+Découper une liste de commandes séparées par 'separator' (qui peut être échappé
 par "\" dans la chaîne).
 
 Prototype :
@@ -1370,12 +1370,12 @@ char **weechat_string_split_command (const char *command, char separator);
 
 Paramètres :
 
-* 'command' : commande à éclater
+* 'command' : commande à découper
 * 'separator' : séparateur
 
 Valeur de retour :
 
-* tableau de chaînes, NULL en cas de problème (doit être libéré par un appel à
+* tableau de chaînes, NULL en cas de problème (doit être supprimé par un appel à
   <<_weechat_free_split_command,weechat_free_split_command>> après utilisation)
 
 Exemple en C :
@@ -1394,7 +1394,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_string_free_split_command
 
-Libérer la mémoire utilisée par une commande éclatée.
+Supprimer une commande découpée.
 
 Prototype :
 
@@ -1405,7 +1405,7 @@ void weechat_string_free_split_command (char **split_command);
 
 Paramètres :
 
-* 'split_command' : commande éclatée par
+* 'split_command' : commande découpée par
   <<_weechat_string_split_command,weechat_string_split_command>>
 
 Exemple en C :
@@ -1438,7 +1438,7 @@ Paramètres :
 
 Valeur de retour :
 
-* chaîne formatée (doit être libérée par un appel à "free" après utilisation)
+* chaîne formatée (doit être supprimée par un appel à "free" après utilisation)
 
 Exemples en C :
 
@@ -1487,7 +1487,7 @@ Paramètres :
 
 Valeur de retour :
 
-* chaîne sans couleur (doit être libérée par un appel à "free" après
+* chaîne sans couleur (doit être supprimée par un appel à "free" après
   utilisation)
 
 Exemples en C :
@@ -1707,7 +1707,7 @@ Paramètres :
 
 Valeur de retour :
 
-* expression évaluée (doit être libérée après un appel à "free" après
+* expression évaluée (doit être supprimée après un appel à "free" après
   utilisation), ou NULL si problème (expression invalide ou pas assez de
   mémoire)
 
@@ -2260,7 +2260,8 @@ Paramètres :
 
 Valeur de retour :
 
-* chaîne dupliquée (doit être libérée avec un appel à "free" après utilisation)
+* chaîne dupliquée (doit être supprimée avec un appel à "free" après
+  utilisation)
 
 Exemple en C :
 
@@ -2461,7 +2462,7 @@ Paramètres :
 
 Valeur de retour :
 
-* contenu du fichier sous forme de chaîne (doit être libérée par un appel à
+* contenu du fichier sous forme de chaîne (doit être supprimé par un appel à
   "free" après utilisation)
 
 Exemple en C :
@@ -3627,9 +3628,9 @@ Paramètres :
 
 * 'hashtable' : pointeur vers la hashtable
 * 'property' : nom de la propriété :
-** 'callback_free_key' : définit la fonction "callback" pour libérer les clés de
-   la hashtable _(WeeChat ≥ 0.4.2)_
-** 'callback_free_value' : définit la fonction "callback" pour libérer les
+** 'callback_free_key' : définit la fonction "callback" pour supprimer les clés
+   de la hashtable _(WeeChat ≥ 0.4.2)_
+** 'callback_free_value' : définit la fonction "callback" pour supprimer les
    valeurs de la hashtable
 * 'pointer' : nouvelle valeur de pointeur pour la propriété
 
@@ -5574,7 +5575,7 @@ elif rc == weechat.WEECHAT_CONFIG_READ_FILE_NOT_FOUND:
 
 ==== weechat_config_option_free
 
-Libérer une option.
+Supprimer une option.
 
 Prototype :
 
@@ -5607,7 +5608,7 @@ weechat.config_option_free(option)
 
 ==== weechat_config_section_free_options
 
-Libérer toutes les options dans une section.
+Supprimer toutes les options dans une section.
 
 Prototype :
 
@@ -5640,7 +5641,7 @@ weechat.config_section_free_options(section)
 
 ==== weechat_config_section_free
 
-Libérer une section.
+Supprimer une section.
 
 Prototype :
 
@@ -5673,7 +5674,7 @@ weechat.config_section_free(section)
 
 ==== weechat_config_free
 
-Libérer un fichier de configuration.
+Supprimer un fichier de configuration.
 
 Prototype :
 
@@ -13158,7 +13159,7 @@ weechat.prnt("", "date/heure = %ld" % weechat.infolist_time(infolist, "mon_time"
 
 ==== weechat_infolist_free
 
-Libérer une infolist.
+Supprimer une infolist.
 
 Prototype :
 
