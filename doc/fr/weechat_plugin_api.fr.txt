@@ -224,7 +224,7 @@ Fonctions pour obtenir des informations sur les extensions.
 
 ==== weechat_plugin_get_name
 
-Retourne le nom d'une extension.
+Retourner le nom d'une extension.
 
 Prototype :
 
@@ -270,7 +270,7 @@ car elles sont ok avec UTF-8 et la locale.
 
 ==== weechat_charset_set
 
-Définit le nouveau jeu de caractères (le jeu de caractères par défaut est
+Définir le nouveau jeu de caractères (le jeu de caractères par défaut est
 'UTF-8', donc si votre extension utilise 'UTF-8', vous n'avez pas besoin
 d'appeler cette fonction).
 
@@ -305,7 +305,7 @@ weechat.charset_set("iso-8859-1")
 
 ==== weechat_iconv_to_internal
 
-Convertit une chaîne vers le jeu de caractères interne (UTF-8).
+Convertir une chaîne vers le jeu de caractères interne (UTF-8).
 
 Prototype :
 
@@ -345,7 +345,7 @@ str = weechat.iconv_to_internal("iso-8859-1", "chaîne iso : é à")
 
 ==== weechat_iconv_from_internal
 
-Convertie une chaîne du jeu de caractères interne (UTF-8) vers un autre.
+Convertir une chaîne du jeu de caractères interne (UTF-8) vers un autre.
 
 Prototype :
 
@@ -385,7 +385,7 @@ str = weechat.iconv_from_internal("iso-8859-1", "chaîne utf-8 : é à")
 
 ==== weechat_gettext
 
-Retourne la chaîne traduite (dépend de la langue locale).
+Retourner la chaîne traduite (dépend de la langue locale).
 
 Prototype :
 
@@ -422,7 +422,7 @@ str = weechat.gettext("hello")
 
 ==== weechat_ngettext
 
-Retourne la chaîne traduite, en utilisant le singulier ou le pluriel, selon
+Retourner la chaîne traduite, en utilisant le singulier ou le pluriel, selon
 le paramètre 'count'.
 
 Prototype :
@@ -465,7 +465,7 @@ str = weechat.ngettext("file", "files", num_files)
 
 ==== weechat_strndup
 
-Retourne la chaîne dupliquée, avec au plus 'length' caractères.
+Retourner la chaîne dupliquée, avec au plus 'length' caractères.
 
 Prototype :
 
@@ -497,7 +497,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_string_tolower
 
-Convertit une chaîne UTF-8 en minuscules.
+Convertir une chaîne UTF-8 en minuscules.
 
 Prototype :
 
@@ -549,7 +549,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_strcasecmp
 
-Comparaison de chaînes indépendante de la locale et de la casse.
+Comparer deux chaînes indépendemment de la locale et de la casse.
 
 Prototype :
 
@@ -584,7 +584,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.7._
 
-Comparaison de chaînes indépendante de la locale et de la casse, avec un
+Comparer deux chaînes indépendemment de la locale et de la casse, avec un
 intervalle pour comparer la casse.
 
 Prototype :
@@ -625,7 +625,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_strncasecmp
 
-Comparaison de chaînes indépendante de la locale et de la casse, pour 'max'
+Comparer deux chaînes indépendemment de la locale et de la casse, pour 'max'
 caractères.
 
 Prototype :
@@ -662,7 +662,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.7._
 
-Comparaison de chaînes indépendante de la locale et de la casse, pour 'max'
+Comparer deux chaînes indépendemment de la locale et de la casse, pour 'max'
 caractères, avec un intervalle pour comparer la casse.
 
 Prototype :
@@ -704,7 +704,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_strcmp_ignore_chars
 
-Comparaison de chaînes indépendante de la locale (et en option de la casse), en
+Comparer deux chaînes indépendemment de la locale (et en option de la casse), en
 ignorant des caractères.
 
 Prototype :
@@ -742,7 +742,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_strcasestr
 
-Recherche de chaîne indépendante de la locale et de la casse.
+Rechercher une chaîne indépendemment de la locale et de la casse.
 
 Prototype :
 
@@ -774,7 +774,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.4.2._
 
-Retourne le nombre de caractères nécessaires pour afficher la chaîne UTF-8
+Retourner le nombre de caractères nécessaires pour afficher la chaîne UTF-8
 sur l'écran.
 Les caractères non affichables ont une longueur de 1 (c'est la différence avec
 la fonction <<_weechat_utf8_strlen_screen,weechat_utf8_strlen_screen>>).
@@ -814,7 +814,7 @@ length = weechat.strlen_screen("é") # 1
 
 ==== weechat_string_match
 
-Vérifie si une chaîne correspond à un masque.
+Vérifier si une chaîne correspond à un masque.
 
 Prototype :
 
@@ -861,7 +861,7 @@ match4 = weechat.string_match("abcdef", "*de*", 0) # 1
 
 ==== weechat_string_replace
 
-Remplace toutes les occurrences d'une chaîne par une autre chaîne.
+Remplacer toutes les occurrences d'une chaîne par une autre chaîne.
 
 Prototype :
 
@@ -898,7 +898,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.3._
 
-Remplace le `~` en début de chaîne par le répertoire "home". Si la chaîne ne
+Remplacer le `~` en début de chaîne par le répertoire "home". Si la chaîne ne
 débute pas par `~`, alors une chaîne identique est retournée.
 
 Prototype :
@@ -932,8 +932,8 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_string_remove_quotes
 
-Supprime les apostrophes/guillemets au début et à la fin d'une chaîne (ignore
-les blancs s'ils sont avant la première apostrophe ou après la dernière).
+Supprimer les apostrophes/guillemets au début et à la fin d'une chaîne (les
+espaces avant la première apostrophe ou après la dernière sont ignorés).
 
 Prototype :
 
@@ -967,7 +967,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_string_strip
 
-Supprime des caractères au début et/ou à la fin d'une chaîne.
+Supprimer des caractères au début et/ou à la fin d'une chaîne.
 
 Prototype :
 
@@ -1003,7 +1003,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_string_mask_to_regex
 
-Retourne une expression régulière ("regex"), construite avec un masque où le
+Retourner une expression régulière ("regex"), construite avec un masque où le
 seul caractère spécial est "`*`". Tous les autres caractères spéciaux
 d'expression régulière sont échappés.
 
@@ -1048,8 +1048,8 @@ regex = weechat.string_mask_to_regex("test*mask") # "test.*mask"
 
 _WeeChat ≥ 0.3.7._
 
-Retourne un pointeur dans la chaîne après les "flags" et retourne le masque avec
-les "flags" pour compiler l'expression régulière.
+Retourner un pointeur dans la chaîne après les "flags" et le masque avec les
+"flags" pour compiler l'expression régulière.
 
 Prototype :
 
@@ -1103,7 +1103,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.7._
 
-Compile une expression régulière avec des "flags" optionnels en début de chaîne
+Compiler une expression régulière avec des "flags" optionnels en début de chaîne
 (pour le format des "flags", voir
 <<_weechat_string_regex_flags,weechat_string_regex_flags>>).
 
@@ -1145,7 +1145,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_string_has_highlight
 
-Vérifie si une chaîne a un ou plusieurs "highlights", en utilisant une liste
+Vérifier si une chaîne a un ou plusieurs "highlights", en utilisant une liste
 de mots "highlight".
 
 Prototype :
@@ -1187,7 +1187,7 @@ highlight = weechat.string_has_highlight("my test string", "test,word2") # 1
 
 _WeeChat ≥ 0.3.4._
 
-Vérifie si une chaîne a un ou plusieurs "highlights", en utilisant une
+Vérifier si une chaîne a un ou plusieurs "highlights", en utilisant une
 expression régulière POSIX étendue. +
 Pour au moins une correspondance dans la chaîne, elle doit être entourée de
 caractères de mot (caractère alphanumérique, "-", "_" ou "|").
@@ -1228,7 +1228,7 @@ highlight = weechat.string_has_highlight_regex("my test string", "test|word2") #
 
 ==== weechat_string_split
 
-Découpe une chaîne à l'aide de délimiteur(s).
+Découper une chaîne à l'aide de délimiteur(s).
 
 Prototype :
 
@@ -1289,7 +1289,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_string_free_split
 
-Libère la mémoire utilisée pour le découpage d'une chaîne.
+Libérer la mémoire utilisée pour le découpage d'une chaîne.
 
 Prototype :
 
@@ -1319,7 +1319,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_string_build_with_split_string
 
-Construit une chaîne à partir d'une chaîne découpée.
+Construire une chaîne à partir d'une chaîne découpée.
 
 Prototype :
 
@@ -1358,7 +1358,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_string_split_command
 
-Éclate une liste de commandes séparées par 'separator' (qui peut être échappé
+Éclater une liste de commandes séparées par 'separator' (qui peut être échappé
 par "\" dans la chaîne).
 
 Prototype :
@@ -1394,7 +1394,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_string_free_split_command
 
-Libère la mémoire utilisée par une commande éclatée.
+Libérer la mémoire utilisée par une commande éclatée.
 
 Prototype :
 
@@ -1422,7 +1422,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_string_format_size
 
-Construit une chaîne avec une taille de fichier formatée et une unité traduite
+Construire une chaîne avec une taille de fichier formatée et une unité traduite
 dans la langue locale.
 
 Prototype :
@@ -1468,7 +1468,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_string_remove_color
 
-Supprime les couleurs WeeChat dans une chaîne.
+Supprimer les couleurs WeeChat dans une chaîne.
 
 Prototype :
 
@@ -1520,7 +1520,7 @@ str = weechat.string_remove_color(ma_chaine, "?")
 
 _WeeChat ≥ 0.3.2._
 
-Encode une chaîne en base64.
+Encoder une chaîne en base64.
 
 Prototype :
 
@@ -1552,7 +1552,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.2._
 
-Décode une chaîne base64.
+Décoder une chaîne base64.
 
 Prototype :
 
@@ -1588,7 +1588,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.2._
 
-Vérifie si le premier caractère de la chaîne est un caractère de commande (le
+Vérifier si le premier caractère de la chaîne est un caractère de commande (le
 caractère par défaut de commande est '/').
 
 Prototype :
@@ -1630,7 +1630,7 @@ command_char2 = weechat.string_is_command_char("test")  # == 0
 
 _WeeChat ≥ 0.3.2._
 
-Retourne un pointeur vers le texte envoyé vers le tampon (pointeur à
+Retourner un pointeur vers le texte envoyé vers le tampon (pointeur à
 l'intérieur du paramètre "string"), ou NULL si c'est une commande.
 
 Prototype :
@@ -1674,7 +1674,7 @@ str3 = weechat.string_input_for_buffer("//test") # "/test"
 
 _WeeChat ≥ 0.4.0, mis à jour dans la 0.4.2._
 
-Évalue l'expression et retourne le résultat sous forme de chaîne.
+Évaluer l'expression et retourner le résultat sous forme de chaîne.
 Les variables spéciales avec le format `${variable}` sont étendues (voir la
 commande `/eval` dans le 'Guide utilisateur WeeChat').
 
@@ -1747,7 +1747,7 @@ Fonctions pour les chaînes UTF-8.
 
 ==== weechat_utf8_has_8bits
 
-Vérifie si une chaîne a des caractères 8-bits.
+Vérifier si une chaîne a des caractères 8-bits.
 
 Prototype :
 
@@ -1780,7 +1780,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_utf8_is_valid
 
-Vérifie si une chaîne est valide UTF-8.
+Vérifier si une chaîne est valide UTF-8.
 
 Prototype :
 
@@ -1819,7 +1819,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_utf8_normalize
 
-Normalise une chaîne UTF-8 : supprime tous les caractères non valides UTF-8
+Normaliser une chaîne UTF-8 : supprimer tous les caractères non valides UTF-8
 en les remplaçant par un caractère.
 
 Prototype :
@@ -1846,7 +1846,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_utf8_prev_char
 
-Retourne un pointeur vers le caractère UTF-8 précédent dans une chaîne.
+Retourner un pointeur vers le caractère UTF-8 précédent dans une chaîne.
 
 Prototype :
 
@@ -1878,7 +1878,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_utf8_next_char
 
-Retourne un pointeur vers le caractère UTF-8 suivant dans une chaîne.
+Retourner un pointeur vers le caractère UTF-8 suivant dans une chaîne.
 
 Prototype :
 
@@ -1908,7 +1908,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_utf8_char_int
 
-Retourne un caractère UTF-8 sous forme d'entier.
+Retourner un caractère UTF-8 sous forme d'entier.
 
 Prototype :
 
@@ -1937,7 +1937,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_utf8_char_size
 
-Retourne la taille d'un caractère UTF-8 (en octets).
+Retourner la taille d'un caractère UTF-8 (en octets).
 
 Prototype :
 
@@ -1966,7 +1966,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_utf8_strlen
 
-Retourne la taille d'une chaîne UTF-8 (en nombre de caractères UTF-8).
+Retourner la taille d'une chaîne UTF-8 (en nombre de caractères UTF-8).
 
 Prototype :
 
@@ -1995,7 +1995,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_utf8_strnlen
 
-Retourne la taille d'une chaîne UTF-8 (en nombre de caractères UTF-8), pour au
+Retourner la taille d'une chaîne UTF-8 (en nombre de caractères UTF-8), pour au
 maximum 'bytes' octets dans la chaîne.
 
 Prototype :
@@ -2026,7 +2026,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_utf8_strlen_screen
 
-Retourne le nombre de caractères nécessaires pour afficher la chaîne UTF-8
+Retourner le nombre de caractères nécessaires pour afficher la chaîne UTF-8
 sur l'écran.
 
 Prototype :
@@ -2056,7 +2056,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_utf8_charcmp
 
-Compare deux caractères UTF-8.
+Comparer deux caractères UTF-8.
 
 Prototype :
 
@@ -2089,7 +2089,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_utf8_charcasecmp
 
-Compare deux caractères UTF-8 en ignorant la casse.
+Comparer deux caractères UTF-8 en ignorant la casse.
 
 Prototype :
 
@@ -2122,7 +2122,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_utf8_char_size_screen
 
-Retourne le nombre de caractères nécessaires pour afficher le caractère UTF-8
+Retourner le nombre de caractères nécessaires pour afficher le caractère UTF-8
 sur l'écran.
 
 Prototype :
@@ -2184,7 +2184,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_utf8_real_pos
 
-Retourne la position réelle dans une chaîne UTF-8.
+Retourner la position réelle dans une chaîne UTF-8.
 
 Prototype :
 
@@ -2214,7 +2214,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_utf8_pos
 
-Retourne la position dans une chaîne UTF-8.
+Retourner la position dans une chaîne UTF-8.
 
 Prototype :
 
@@ -2244,7 +2244,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_utf8_strndup
 
-Retourne une chaîne dupliquée, avec au plus 'length' caractères.
+Retourner une chaîne dupliquée, avec au plus 'length' caractères.
 
 Prototype :
 
@@ -2281,7 +2281,7 @@ Fonctions liées aux répertoires.
 
 ==== weechat_mkdir_home
 
-Crée un répertoire dans le répertoire de WeeChat.
+Créer un répertoire dans le répertoire de WeeChat.
 
 Prototype :
 
@@ -2322,7 +2322,7 @@ weechat.mkdir_home("temp", 0755)
 
 ==== weechat_mkdir
 
-Crée un répertoire.
+Créer un répertoire.
 
 Prototype :
 
@@ -2363,7 +2363,7 @@ weechat.mkdir("/tmp/mydir", 0755)
 
 ==== weechat_mkdir_parents
 
-Crée un répertoire et ses parents si besoin.
+Créer un répertoire et ses parents si besoin.
 
 Prototype :
 
@@ -2404,7 +2404,7 @@ weechat.mkdir_parents("/tmp/my/dir", 0755)
 
 ==== weechat_exec_on_files
 
-Balaye les fichiers dans un répertoire et exécute un "callback" pour chaque
+Balayer les fichiers dans un répertoire et exécuter un "callback" pour chaque
 fichier.
 
 Prototype :
@@ -2446,7 +2446,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.1._
 
-Lit le contenu d'un fichier texte dans une chaîne de caractères.
+Lire le contenu d'un fichier texte dans une chaîne de caractères.
 
 Prototype :
 
@@ -2485,7 +2485,7 @@ Quelques fonctions utiles.
 
 ==== weechat_util_timeval_cmp
 
-Compare deux structures "timeval".
+Comparer deux structures "timeval".
 
 Prototype :
 
@@ -2520,7 +2520,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_util_timeval_diff
 
-Retourne la différence (en millisecondes) entre deux structures "timeval".
+Retourner la différence (en millisecondes) entre deux structures "timeval".
 
 Prototype :
 
@@ -2550,7 +2550,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_util_timeval_add
 
-Ajoute un intervalle (en millisecondes) à une structure "timeval".
+Ajouter un intervalle (en millisecondes) à une structure "timeval".
 
 Prototype :
 
@@ -2578,7 +2578,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.2._
 
-Retourne la date/heure sous forme de chaîne construite avec "strftime".
+Retourner la date/heure sous forme de chaîne construite avec "strftime".
 
 Prototype :
 
@@ -2607,7 +2607,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.9._
 
-Convertit une chaîne avec la version WeeChat en nombre.
+Convertir une chaîne avec la version WeeChat en nombre.
 
 Prototype :
 
@@ -2641,7 +2641,7 @@ Fonctions pour les listes triées.
 
 ==== weechat_list_new
 
-Crée une nouvelle liste.
+Créer une nouvelle liste.
 
 Prototype :
 
@@ -2674,7 +2674,7 @@ list = weechat.list_new()
 
 ==== weechat_list_add
 
-Ajoute un élément dans une liste.
+Ajouter un élément dans une liste.
 
 Prototype :
 
@@ -2721,7 +2721,7 @@ item = weechat.list_add(list, "ma donnée", weechat.WEECHAT_LIST_POS_SORT, "")
 
 ==== weechat_list_search
 
-Recherche un élément dans une liste.
+Rechercher un élément dans une liste.
 
 Prototype :
 
@@ -2762,7 +2762,7 @@ item = weechat.list_search(list, "ma donnée")
 
 _WeeChat ≥ 0.3.4._
 
-Recherche la position d'un élément dans une liste.
+Rechercher la position d'un élément dans une liste.
 
 Prototype :
 
@@ -2801,7 +2801,7 @@ pos_item = weechat.list_search_pos(list, "ma donnée")
 
 ==== weechat_list_casesearch
 
-Recherche un élément dans la liste, sans tenir compte de la casse.
+Rechercher un élément dans la liste, sans tenir compte de la casse.
 
 Prototype :
 
@@ -2842,7 +2842,8 @@ item = weechat.list_casesearch(list, "ma donnée")
 
 _WeeChat ≥ 0.3.4._
 
-Recherche la position d'un élément dans la liste, sans tenir compte de la casse.
+Rechercher la position d'un élément dans la liste, sans tenir compte de la
+casse.
 
 Prototype :
 
@@ -2881,7 +2882,7 @@ pos_item = weechat.list_casesearch_pos(list, "ma donnée")
 
 ==== weechat_list_get
 
-Retourne un élément de la liste par sa position.
+Retourner un élément de la liste par sa position.
 
 Prototype :
 
@@ -2920,7 +2921,7 @@ item = weechat.list_get(list, 0)
 
 ==== weechat_list_set
 
-Affecte une nouvelle valeur pour un élément.
+Affecter une nouvelle valeur pour un élément.
 
 Prototype :
 
@@ -2954,7 +2955,7 @@ weechat.list_set(item, "nouvelle donnée")
 
 ==== weechat_list_next
 
-Retourne l'éléement suivant dans la liste.
+Retourner l'éléement suivant dans la liste.
 
 Prototype :
 
@@ -2992,7 +2993,7 @@ item = weechat.list_next(item)
 
 ==== weechat_list_prev
 
-Retourne l'élément précédent dans la liste.
+Retourner l'élément précédent dans la liste.
 
 Prototype :
 
@@ -3030,7 +3031,7 @@ item = weechat.list_prev(item)
 
 ==== weechat_list_string
 
-Retourne la valeur de l'élément sous forme de chaîne.
+Retourner la valeur de l'élément sous forme de chaîne.
 
 Prototype :
 
@@ -3067,7 +3068,7 @@ weechat.prnt("", "valeur de l'item : %s" % weechat.list_string(item))
 
 ==== weechat_list_size
 
-Retourne la taille de la liste (nombre d'éléments).
+Retourner la taille de la liste (nombre d'éléments).
 
 Prototype :
 
@@ -3104,7 +3105,7 @@ weechat.prnt("", "taille de la liste : %d" % weechat.list_size(list))
 
 ==== weechat_list_remove
 
-Supprime un élément de la liste.
+Supprimer un élément de la liste.
 
 Prototype :
 
@@ -3139,7 +3140,7 @@ weechat.list_remove(list, item)
 
 ==== weechat_list_remove_all
 
-Supprime tous les éléments de la liste.
+Supprimer tous les éléments de la liste.
 
 Prototype :
 
@@ -3172,7 +3173,7 @@ weechat.list_remove_all(list)
 
 ==== weechat_list_free
 
-Supprime une liste.
+Supprimer une liste.
 
 Prototype :
 
@@ -3212,7 +3213,7 @@ Fonctions pour les hashtables.
 
 _WeeChat ≥ 0.3.3._
 
-Crée une nouvelle hashtable.
+Créer une nouvelle hashtable.
 
 Prototype :
 
@@ -3286,8 +3287,8 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.3, mis à jour dans la 0.4.2._
 
-Ajoute ou met à jour une entrée dans une hashtable avec une taille pour la clé
-et la valeur.
+Ajouter ou mettre à jour une entrée dans une hashtable avec une taille pour la
+clé et la valeur.
 
 Prototype :
 
@@ -3327,7 +3328,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.3, mis à jour dans la 0.4.2._
 
-Ajoute ou met à jour une entrée dans la hashtable.
+Ajouter ou mettre à jour une entrée dans la hashtable.
 
 Prototype :
 
@@ -3361,7 +3362,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.3._
 
-Retourne la valeur associée à une clé dans une hashtable.
+Retourner la valeur associée à une clé dans une hashtable.
 
 Prototype :
 
@@ -3393,7 +3394,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.4._
 
-Retourne 1 si la clé est dans la hashtable, sinon 0.
+Vérifier si une clé est présente dans la hashtable.
 
 Prototype :
 
@@ -3429,7 +3430,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.3._
 
-Appelle une fonction pour chaque entrée d'une hashtable.
+Appeller une fonction pour chaque entrée d'une hashtable.
 
 Prototype :
 
@@ -3473,7 +3474,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.7._
 
-Appelle une fonction pour chaque entrée d'une hashtable, en envoyant les clés
+Appeller une fonction pour chaque entrée d'une hashtable, en envoyant les clés
 et valeurs sous forme de chaînes.
 
 Prototype :
@@ -3521,7 +3522,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.3._
 
-Retourne une valeur entière pour une propriété d'une hashtable.
+Retourner une valeur entière pour une propriété d'une hashtable.
 
 Prototype :
 
@@ -3556,7 +3557,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.4._
 
-Retourne une valeur pour une propriété d'une hashtable sous forme de chaîne.
+Retourner une valeur pour une propriété d'une hashtable sous forme de chaîne.
 
 Prototype :
 
@@ -3612,7 +3613,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.4._
 
-Affecte un pointeur à une propriété d'une hashtable.
+Affecter un pointeur à une propriété d'une hashtable.
 
 Prototype :
 
@@ -3652,7 +3653,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.3._
 
-Ajoute les éléments d'une hashtable dans un objet infolist.
+Ajouter les éléments d'une hashtable dans un objet infolist.
 
 Prototype :
 
@@ -3697,7 +3698,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.3._
 
-Supprime un élément d'une hashtable.
+Supprimer un élément d'une hashtable.
 
 Prototype :
 
@@ -3725,7 +3726,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.3._
 
-Supprime tous les éléments d'une hashtable.
+Supprimer tous les éléments d'une hashtable.
 
 Prototype :
 
@@ -3752,7 +3753,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.3._
 
-Supprime une hashtable.
+Supprimer une hashtable.
 
 Prototype :
 
@@ -3782,7 +3783,7 @@ Fonctions pour les fichiers de configuration.
 
 ==== weechat_config_new
 
-Crée un nouveau fichier de configuration.
+Créer un nouveau fichier de configuration.
 
 Prototype :
 
@@ -3855,7 +3856,7 @@ config_file = weechat.config_new("test", "my_config_reload_cb", "")
 
 ==== weechat_config_new_section
 
-Crée une nouvelle section dans un fichier de configuration.
+Créer une nouvelle section dans un fichier de configuration.
 
 Prototype :
 
@@ -4101,7 +4102,7 @@ section = weechat.config_new_section(config_file, "section1", 1, 1,
 
 ==== weechat_config_search_section
 
-Recherche une section dans un fichier de configuration.
+Rechercher une section dans un fichier de configuration.
 
 Prototype :
 
@@ -4142,7 +4143,7 @@ section = weechat.config_search_section(config_file, "section")
 
 ==== weechat_config_new_option
 
-Crée une nouvelle option dans une section d'un fichier de configuration.
+Créer une nouvelle option dans une section d'un fichier de configuration.
 
 Prototype :
 
@@ -4358,7 +4359,7 @@ _(corrigé dans la version 0.4.1)_.
 
 ==== weechat_config_search_option
 
-Recherche une option dans une section d'un fichier de configuration.
+Rechercher une option dans une section d'un fichier de configuration.
 
 Prototype :
 
@@ -4401,7 +4402,7 @@ option = weechat.config_search_option(config_file, section, "option")
 
 ==== weechat_config_search_section_option
 
-Recherche une section et une option dans un fichier de configuration ou une
+Rechercher une section et une option dans un fichier de configuration ou une
 section.
 
 Prototype :
@@ -4452,7 +4453,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_config_search_with_string
 
-Retourne des infos sur fichier/section/option pour une option avec le nom
+Retourner des infos sur fichier/section/option pour une option avec le nom
 complet.
 
 Prototype :
@@ -4508,7 +4509,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_config_string_to_boolean
 
-Vérifie si un texte est "vrai" ou "faux", au sens booléen.
+Vérifier si un texte est "vrai" ou "faux", au sens booléen.
 
 Prototype :
 
@@ -4554,7 +4555,7 @@ if weechat.config_string_to_boolean(text):
 
 ==== weechat_config_option_reset
 
-Réinitialise une option à sa valeur par défaut.
+Réinitialiser une option à sa valeur par défaut.
 
 Prototype :
 
@@ -4801,7 +4802,7 @@ elif rc == weechat.WEECHAT_CONFIG_OPTION_UNSET_ERROR:
 
 ==== weechat_config_option_rename
 
-Renomme une option.
+Renommer une option.
 
 Prototype :
 
@@ -4836,7 +4837,7 @@ weechat.config_option_rename(option, "nouveau_nom")
 
 ==== weechat_config_option_get_pointer
 
-Retourne un pointeur vers une propriété de l'option.
+Retourner un pointeur vers une propriété de l'option.
 
 Prototype :
 
@@ -4882,7 +4883,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_config_option_is_null
 
-Vérifie si une option est "null" (valeur non définie).
+Vérifier si une option est "null" (valeur non définie).
 
 Prototype :
 
@@ -4928,7 +4929,7 @@ if weechat.config_option_is_null(option):
 
 ==== weechat_config_option_default_is_null
 
-Vérifie si la valeur par défaut d'une option est "null" (valeur non définie).
+Vérifier si la valeur par défaut d'une option est "null" (valeur non définie).
 
 Prototype :
 
@@ -4974,7 +4975,7 @@ if weechat.config_option_default_is_null(option):
 
 ==== weechat_config_boolean
 
-Retourne la valeur booléenne de l'option.
+Retourner la valeur booléenne de l'option.
 
 Prototype :
 
@@ -5021,7 +5022,7 @@ if weechat.config_boolean(option):
 
 ==== weechat_config_boolean_default
 
-Retourne la valeur booléenne par défaut de l'option.
+Retourner la valeur booléenne par défaut de l'option.
 
 Prototype :
 
@@ -5068,7 +5069,7 @@ if weechat.config_boolean_default(option):
 
 ==== weechat_config_integer
 
-Retourne la valeur entière de l'option.
+Retourner la valeur entière de l'option.
 
 Prototype :
 
@@ -5107,7 +5108,7 @@ value = weechat.config_integer(option)
 
 ==== weechat_config_integer_default
 
-Retourne la valeur entière par défaut de l'option.
+Retourner la valeur entière par défaut de l'option.
 
 Prototype :
 
@@ -5146,7 +5147,7 @@ value = weechat.config_integer_default(option)
 
 ==== weechat_config_string
 
-Retourne la valeur de l'option, sous forme de chaîne.
+Retourner la valeur de l'option, sous forme de chaîne.
 
 Prototype :
 
@@ -5185,7 +5186,7 @@ value = weechat.config_string(option)
 
 ==== weechat_config_string_default
 
-Retourne la valeur par défaut de l'option, sous forme de chaîne.
+Retourner la valeur par défaut de l'option, sous forme de chaîne.
 
 Prototype :
 
@@ -5224,7 +5225,7 @@ value = weechat.config_string_default(option)
 
 ==== weechat_config_color
 
-Retourne la valeur de l'option, sous forme de couleur.
+Retourner la valeur de l'option, sous forme de couleur.
 
 Prototype :
 
@@ -5263,7 +5264,7 @@ value = weechat.config_color(option)
 
 ==== weechat_config_color_default
 
-Retourne la valeur par défaut de l'option, sous forme de couleur.
+Retourner la valeur par défaut de l'option, sous forme de couleur.
 
 Prototype :
 
@@ -5303,7 +5304,7 @@ value = weechat.config_color_default(option)
 
 ==== weechat_config_write_option
 
-Écrit une ligne dans le fichier de configuration avec l'option et sa valeur
+Écrire une ligne dans le fichier de configuration avec l'option et sa valeur
 (cette fonction doit être appelée uniquement dans un "callback" "write" ou
 "write_default" pour une section).
 
@@ -5352,7 +5353,7 @@ def my_section_write_cb(data, config_file, section_name):
 
 ==== weechat_config_write_line
 
-Écrit une ligne dans un fichier de configuration (cette fonction doit être
+Écrire une ligne dans un fichier de configuration (cette fonction doit être
 appelée uniquement dans un "callback" "write" ou "write_default" pour une
 section).
 
@@ -5405,7 +5406,7 @@ def my_section_write_cb(data, config_file, section_name):
 
 ==== weechat_config_write
 
-Écrit un fichier de configuration sur le disque.
+Écrire un fichier de configuration sur le disque.
 
 Prototype :
 
@@ -5461,7 +5462,7 @@ elif rc == weechat.WEECHAT_CONFIG_WRITE_ERROR:
 
 ==== weechat_config_read
 
-Lit un fichier de configuration depuis le disque.
+Lire un fichier de configuration depuis le disque.
 
 Prototype :
 
@@ -5517,7 +5518,7 @@ elif rc == weechat.WEECHAT_CONFIG_READ_FILE_NOT_FOUND:
 
 ==== weechat_config_reload
 
-Relit un fichier de configuration depuis le disque.
+Relire un fichier de configuration depuis le disque.
 
 Prototype :
 
@@ -5573,7 +5574,7 @@ elif rc == weechat.WEECHAT_CONFIG_READ_FILE_NOT_FOUND:
 
 ==== weechat_config_option_free
 
-Libère une option.
+Libérer une option.
 
 Prototype :
 
@@ -5606,7 +5607,7 @@ weechat.config_option_free(option)
 
 ==== weechat_config_section_free_options
 
-Libère toutes les options dans une section.
+Libérer toutes les options dans une section.
 
 Prototype :
 
@@ -5639,7 +5640,7 @@ weechat.config_section_free_options(section)
 
 ==== weechat_config_section_free
 
-Libère une section.
+Libérer une section.
 
 Prototype :
 
@@ -5672,7 +5673,7 @@ weechat.config_section_free(section)
 
 ==== weechat_config_free
 
-Libère un fichier de configuration.
+Libérer un fichier de configuration.
 
 Prototype :
 
@@ -5705,7 +5706,7 @@ weechat.config_free(config_file)
 
 ==== weechat_config_get
 
-Recherche une option avec le nom complet.
+Rechercher une option avec le nom complet.
 
 Prototype :
 
@@ -5742,7 +5743,7 @@ option = weechat.config_get("weechat.look.item_time_format")
 
 ==== weechat_config_get_plugin
 
-Recherche une option dans le fichier de configuration des extensions
+Rechercher une option dans le fichier de configuration des extensions
 (plugins.conf).
 
 Prototype :
@@ -5783,7 +5784,7 @@ value = weechat.config_get_plugin("option")
 
 ==== weechat_config_is_set_plugin
 
-Vérifie si une option existe dans le fichier de configuration des extensions
+Vérifier si une option existe dans le fichier de configuration des extensions
 (plugins.conf).
 
 Prototype :
@@ -5944,7 +5945,7 @@ if int(version) >= 0x00030500:
 
 ==== weechat_config_unset_plugin
 
-Supprime une option du fichier de configuration des extensions (plugins.conf).
+Supprimer une option du fichier de configuration des extensions (plugins.conf).
 
 Prototype :
 
@@ -6139,7 +6140,7 @@ Fonctions pour afficher du texte dans les tampons.
 
 ==== weechat_prefix
 
-Retourne un préfixe.
+Retourner un préfixe.
 
 Prototype :
 
@@ -6190,7 +6191,7 @@ weechat.prnt("", "%sCeci est une erreur..." % weechat.prefix("error"))
 
 ==== weechat_color
 
-Retourne une chaîne avec un code couleur pour affichage.
+Retourner une chaîne avec un code couleur pour affichage.
 
 Prototype :
 
@@ -6274,7 +6275,7 @@ weechat.prnt("", "Couleur : %sbleu %scouleur par défaut %sjaune sur rouge"
 
 ==== weechat_printf
 
-Affiche un message sur un tampon.
+Afficher un message sur un tampon.
 
 Prototype :
 
@@ -6334,7 +6335,7 @@ La fonction s'appelle "print" dans les scripts ("prnt" en Python).
 
 ==== weechat_printf_date
 
-Affiche un message sur un tampon, en utilisant une date personnalisée.
+Afficher un message sur un tampon, en utilisant une date personnalisée.
 
 Prototype :
 
@@ -6363,7 +6364,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_printf_tags
 
-Affiche un message sur un tampon, avec des étiquettes personnalisées.
+Afficher un message sur un tampon, avec des étiquettes personnalisées.
 
 Prototype :
 
@@ -6393,7 +6394,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_printf_date_tags
 
-Affiche un message sur un tampon, en utilisant une date et des étiquettes
+Afficher un message sur un tampon, en utilisant une date et des étiquettes
 personnalisées.
 
 Prototype :
@@ -6464,7 +6465,7 @@ Python).
 
 ==== weechat_printf_y
 
-Affiche un message sur une ligne d'un tampon avec contenu libre.
+Afficher un message sur une ligne d'un tampon avec contenu libre.
 
 Prototype :
 
@@ -6503,7 +6504,7 @@ La fonction s'appelle "print_y" dans les scripts ("prnt_y" en Python).
 
 ==== weechat_log_printf
 
-Écrit un message dans le fichier de log WeeChat (weechat.log).
+Écrire un message dans le fichier de log WeeChat (weechat.log).
 
 Prototype :
 
@@ -6572,7 +6573,7 @@ hdata, focus.
 
 ==== weechat_hook_command
 
-Accroche une commande.
+Accrocher une commande.
 
 Prototype :
 
@@ -6783,7 +6784,7 @@ hook = weechat.hook_command_run("/input complete*", "my_command_run_cb", "")
 
 ==== weechat_hook_timer
 
-Accroche un "timer" (fonction appelée à intervalles réguliers).
+Accrocher un "timer" (fonction appelée à intervalles réguliers).
 
 Prototype :
 
@@ -6855,7 +6856,7 @@ hook = weechat.hook_timer(20 * 1000, 0, 0, "my_timer_cb", "")
 
 ==== weechat_hook_fd
 
-Accroche un descripteur de fichier (fichier ou socket).
+Accrocher un descripteur de fichier (fichier ou socket).
 
 Prototype :
 
@@ -6925,7 +6926,7 @@ hook = weechat.hook_fd(sock, 1, 0, 0, "my_fd_cb", "")
 
 ==== weechat_hook_process
 
-Accroche un processus (lancé par un fork), et intercepter sa sortie.
+Accrocher un processus (lancé par un fork), et intercepter sa sortie.
 
 [NOTE]
 Depuis la version 0.3.9.2, le shell n'est plus utilisé pour exécuter la
@@ -7073,7 +7074,7 @@ hook = weechat.hook_process("ls", 5000, "my_process_cb", "")
 
 _WeeChat ≥ 0.3.7._
 
-Accroche un processus (lancé par un fork) en utilisant des options dans une
+Accrocher un processus (lancé par un fork) en utilisant des options dans une
 hashtable, et intercepter sa sortie.
 
 Prototype :
@@ -7267,7 +7268,7 @@ hook3 = weechat.hook_process_hashtable("sh",
 
 ==== weechat_hook_connect
 
-Accroche une connexion (connexion à une machine distante en tâche de fond).
+Accrocher une connexion (connexion à une machine distante en tâche de fond).
 
 Prototype :
 
@@ -7442,7 +7443,7 @@ hook = weechat.hook_connect("", "my.server.org", 1234, 1, 0, "",
 
 ==== weechat_hook_print
 
-Intercepte un message affiché.
+Intercepter un message affiché.
 
 Prototype :
 
@@ -7538,7 +7539,7 @@ hook = weechat.hook_print("", "", "", 1, "my_print_cb", "")
 
 ==== weechat_hook_signal
 
-S'accroche à un signal.
+S'accrocher à un signal.
 
 Prototype :
 
@@ -8150,7 +8151,7 @@ hook = weechat.hook_signal("quit", "my_signal_cb", "")
 
 ==== weechat_hook_signal_send
 
-Envoie un signal.
+Envoyer un signal.
 
 Prototype :
 
@@ -8341,7 +8342,7 @@ weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
 
 _WeeChat ≥ 0.3.4._
 
-S'accroche à un hsignal (signal avec une hashtable).
+S'accrocher à un hsignal (signal avec une hashtable).
 
 Prototype :
 
@@ -8466,7 +8467,7 @@ hook = weechat.hook_hsignal("test", "my_hsignal_cb", "")
 
 _WeeChat ≥ 0.3.4._
 
-Envoie un hsignal (signal avec hashtable).
+Envoyer un hsignal (signal avec hashtable).
 
 Prototype :
 
@@ -8695,7 +8696,7 @@ weechat.hook_hsignal_send("irc_redirect_pattern",
 
 ==== weechat_hook_config
 
-S'accroche à une option de configuration.
+S'accrocher à une option de configuration.
 
 Prototype :
 
@@ -8762,7 +8763,7 @@ hook = weechat.hook_config("weechat.look.item_time_format", "my_config_cb", "")
 
 ==== weechat_hook_completion
 
-Accroche une complétion.
+Accrocher une complétion.
 
 Prototype :
 
@@ -8859,7 +8860,7 @@ hook = weechat.hook_completion("extension_item", "ma complétion !",
 
 _WeeChat ≥ 0.3.4._
 
-Retourne la valeur d'une propriété de la complétion sous forme de chaîne.
+Retourner la valeur d'une propriété de la complétion sous forme de chaîne.
 
 Prototype :
 
@@ -8914,7 +8915,7 @@ def my_completion_cb(data, completion_item, buffer, completion):
 
 ==== weechat_hook_completion_list_add
 
-Ajoute un mot pour une complétion.
+Ajouter un mot pour une complétion.
 
 Prototype :
 
@@ -8950,7 +8951,7 @@ weechat.hook_completion_list_add(completion, word, nick_completion, where)
 
 ==== weechat_hook_modifier
 
-Accroche un "modifieur".
+Accrocher un "modifieur".
 
 Prototype :
 
@@ -9135,7 +9136,7 @@ hook = weechat.hook_modifier("weechat_print", "my_modifier_cb", "")
 
 ==== weechat_hook_modifier_exec
 
-Exécute un ou plusieurs "modifieurs".
+Exécuter un ou plusieurs "modifieurs".
 
 Prototype :
 
@@ -9177,7 +9178,7 @@ weechat.hook_modifier_exec("mon_modifier", mes_donnees, ma_chaine)
 
 ==== weechat_hook_info
 
-Accroche une information (le "callback" prend et retourne une chaîne).
+Accrocher une information (le "callback" prend et retourne une chaîne).
 
 Prototype :
 
@@ -9250,7 +9251,7 @@ hook = weechat.hook_info("mon_info", "Une information", "Info sur les paramètre
 
 _WeeChat ≥ 0.3.4._
 
-Accroche une information (le "callback" prend et retourne une hashtable).
+Accrocher une information (le "callback" prend et retourne une hashtable).
 
 Prototype :
 
@@ -9327,7 +9328,7 @@ hook = weechat.hook_info_hashtable("mon_info_hashtable", "Une information",
 
 ==== weechat_hook_infolist
 
-Accroche une infolist : le "callback" retournera un pointeur vers l'infolist
+Accrocher une infolist : le "callback" retournera un pointeur vers l'infolist
 demandée.
 
 Prototype :
@@ -9412,7 +9413,7 @@ hook = weechat.hook_infolist("mon_infolist", "Mon infolist",
 
 ==== weechat_hook_hdata
 
-Accroche un hdata : le "callback" retournera un pointeur vers le hdata demandé.
+Accrocher un hdata : le "callback" retournera un pointeur vers le hdata demandé.
 
 Prototype :
 
@@ -9468,7 +9469,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_hook_focus
 
-Accroche un focus : évènement souris ou touche du clavier pressée dans le mode
+Accrocher un focus : évènement souris ou touche du clavier pressée dans le mode
 "curseur" (mouvement libre du curseur).
 
 Prototype :
@@ -9611,7 +9612,7 @@ hook = weechat.hook_focus("buffer_nicklist", "my_focus_nicklist_cb", "")
 
 _WeeChat ≥ 0.3.9 (script: WeeChat ≥ 0.4.3)._
 
-Affecte une valeur à une propriété d'un hook.
+Affecter une valeur à une propriété d'un hook.
 
 Prototype :
 
@@ -9680,7 +9681,7 @@ weechat.hook_set(hook, "stdin_close", "")  # facultatif
 
 ==== weechat_unhook
 
-Décroche quelque chose qui est a été accroché.
+Décrocher quelque chose qui est a été accroché.
 
 Prototype :
 
@@ -9715,7 +9716,7 @@ weechat.unhook(my_hook)
 
 ==== weechat_unhook_all
 
-Décroche tout ce qui a été accroché par l'extension courante.
+Décrocher tout ce qui a été accroché par l'extension courante.
 
 Prototype :
 
@@ -9749,7 +9750,7 @@ Fonctions pour créer/interroger/fermer les tampons.
 
 ==== weechat_buffer_new
 
-Ouvre un nouveau tampon.
+Ouvrir un nouveau tampon.
 
 Prototype :
 
@@ -9838,7 +9839,7 @@ buffer = weechat.buffer_new("mon_buffer", "my_input_cb", "", "my_close_cb", "")
 
 ==== weechat_current_buffer
 
-Retourne un pointeur vers le tampon courant (le tampon affiché par la fenêtre
+Retourner un pointeur vers le tampon courant (le tampon affiché par la fenêtre
 courante).
 
 Prototype :
@@ -9872,7 +9873,7 @@ weechat.prnt(weechat.current_buffer(), "Texte sur le tampon courant")
 
 ==== weechat_buffer_search
 
-Recherche un tampon par l'extension et/ou le nom.
+Rechercher un tampon par l'extension et/ou le nom.
 
 Prototype :
 
@@ -9913,7 +9914,7 @@ buffer = weechat.buffer_search("mon_extension", "mon_tampon")
 
 ==== weechat_buffer_search_main
 
-Recherche le tampon principal de WeeChat (tampon 'core', premier tampon
+Rechercher le tampon principal de WeeChat (tampon 'core', premier tampon
 affiché lorsque WeeChat démarre).
 
 Prototype :
@@ -9947,7 +9948,7 @@ buffer = weechat.buffer_search_main()
 
 ==== weechat_buffer_clear
 
-Efface le contenu d'un tampon.
+Effacer le contenu d'un tampon.
 
 Prototype :
 
@@ -9987,7 +9988,7 @@ if buffer != "":
 
 ==== weechat_buffer_close
 
-Ferme un tampon.
+Fermer un tampon.
 
 Prototype :
 
@@ -10026,7 +10027,7 @@ weechat.buffer_close(buffer)
 
 ==== weechat_buffer_merge
 
-Mélange le tampon avec un autre tampon : les deux tampons continueront
+Mélanger le tampon avec un autre tampon : les deux tampons continueront
 d'exister chacun de leur côté, mais avec le même numéro, et WeeChat affichera
 les lignes des deux tampons (lignes mélangées).
 
@@ -10066,7 +10067,7 @@ weechat.buffer_merge(weechat.current_buffer(), weechat.buffer_search_main())
 
 ==== weechat_buffer_unmerge
 
-Supprime le mélange d'un tampon.
+Supprimer le mélange d'un tampon.
 
 Prototype :
 
@@ -10102,7 +10103,7 @@ weechat.buffer_unmerge(weechat.current_buffer(), 1)
 
 ==== weechat_buffer_get_integer
 
-Retourne une valeur entière pour une propriété du tampon.
+Retourner une valeur entière pour une propriété du tampon.
 
 Prototype :
 
@@ -10181,7 +10182,7 @@ weechat.prnt("", "mon numéro de tampon est : %d" % weechat.buffer_get_integer(m
 
 ==== weechat_buffer_get_string
 
-Retourne la valeur d'une propriété du tampon sous forme de chaîne.
+Retourner la valeur d'une propriété du tampon sous forme de chaîne.
 
 Prototype :
 
@@ -10244,7 +10245,7 @@ weechat.prnt("", "nom / nom court du tampon sont : %s / %s"
 
 ==== weechat_buffer_get_pointer
 
-Retourne la valeur d'une propriété sous forme d'un pointeur.
+Retourner la valeur d'une propriété sous forme d'un pointeur.
 
 Prototype :
 
@@ -10287,7 +10288,7 @@ weechat.prnt("", "pointeur vers l'extension de mon tampon : %s" % weechat.buffer
 
 ==== weechat_buffer_set
 
-Affecte une valeur à une propriété d'un tampon.
+Affecter une valeur à une propriété d'un tampon.
 
 Prototype :
 
@@ -10490,7 +10491,7 @@ weechat.buffer_set(my_buffer, "localvar_del_toto", "")
 
 ==== weechat_buffer_set_pointer
 
-Affecte un pointeur à une propriété d'un tampon.
+Affecter un pointeur à une propriété d'un tampon.
 
 Prototype :
 
@@ -10548,7 +10549,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_buffer_string_replace_local_var
 
-Remplace les variables locales dans une chaîne par leurs valeurs, en utilisant
+Remplacer les variables locales dans une chaîne par leurs valeurs, en utilisant
 les variables locales du tampon.
 
 Prototype :
@@ -10596,7 +10597,7 @@ str = weechat.buffer_string_replace_local_var(my_buffer, "test avec $toto")
 
 _WeeChat ≥ 0.3.5._
 
-Vérifie si le tampon correspond à la liste de tampons.
+Vérifier si le tampon correspond à la liste de tampons.
 
 Prototype :
 
@@ -10655,7 +10656,7 @@ Fonctions pour interroger les fenêtres.
 
 ==== weechat_current_window
 
-Retourne le pointeur vers la fenêtre courante.
+Retourner le pointeur vers la fenêtre courante.
 
 Prototype :
 
@@ -10690,7 +10691,7 @@ current_window = weechat.current_window()
 
 _WeeChat ≥ 0.3.5._
 
-Retourne le pointeur vers la fenêtre affichant un tampon.
+Retourner le pointeur vers la fenêtre affichant un tampon.
 
 Prototype :
 
@@ -10731,7 +10732,7 @@ weechat.prnt("", "fenêtre affichant le tampon core: %s"
 
 ==== weechat_window_get_integer
 
-Retourne la valeur entière d'une propriété de la fenêtre.
+Retourner la valeur entière d'une propriété de la fenêtre.
 
 Prototype :
 
@@ -10799,7 +10800,7 @@ weechat.prnt("", "la fenêtre courante est en position (x,y) : (%d,%d)"
 
 ==== weechat_window_get_string
 
-Retourne la valeur d'une propriété de la fenêtre sous forme d'une chaîne.
+Retourner la valeur d'une propriété de la fenêtre sous forme d'une chaîne.
 
 [NOTE]
 Cette fonction n'est pas utilisée aujourd'hui, elle est réservée pour une
@@ -10824,7 +10825,7 @@ Valeur de retour :
 
 ==== weechat_window_get_pointer
 
-Retourne la valeur d'une propriété, sous forme d'un pointeur.
+Retourner la valeur d'une propriété, sous forme d'un pointeur.
 
 Prototype :
 
@@ -10868,7 +10869,7 @@ weechat.prnt("", "tampon affiché dans la fenêtre courante : %s"
 
 ==== weechat_window_set_title
 
-Définit le titre du terminal.
+Définir le titre du terminal.
 
 Prototype :
 
@@ -10906,7 +10907,7 @@ Fonctions pour la liste des pseudos.
 
 ==== weechat_nicklist_add_group
 
-Ajoute un groupe dans la liste des pseudos.
+Ajouter un groupe dans la liste des pseudos.
 
 Prototype :
 
@@ -10973,7 +10974,7 @@ group = weechat.nicklist_add_group(my_buffer, my_parent_group, "groupe_test",
 
 ==== weechat_nicklist_search_group
 
-Recherche un groupe dans la liste des pseudos.
+Rechercher un groupe dans la liste des pseudos.
 
 Prototype :
 
@@ -11016,7 +11017,7 @@ group = weechat.nicklist_search_group(my_buffer, "", "groupe_test")
 
 ==== weechat_nicklist_add_nick
 
-Ajoute un pseudo dans un groupe.
+Ajouter un pseudo dans un groupe.
 
 Prototype :
 
@@ -11088,7 +11089,7 @@ nick = weechat.nicklist_add_nick(my_buffer, my_group, "test_nick", color, "@", "
 
 ==== weechat_nicklist_search_nick
 
-Recherche un pseudo dans la liste des pseudos.
+Rechercher un pseudo dans la liste des pseudos.
 
 Prototype :
 
@@ -11131,7 +11132,7 @@ nick = weechat.nicklist_search_nick(my_buffer, "", "test_nick")
 
 ==== weechat_nicklist_remove_group
 
-Supprime un groupe de la liste des pseudos.
+Supprimer un groupe de la liste des pseudos.
 
 Prototype :
 
@@ -11167,7 +11168,7 @@ weechat.nicklist_remove_group(my_buffer, my_group)
 
 ==== weechat_nicklist_remove_nick
 
-Supprime un pseudo de la liste des pseudos.
+Supprimer un pseudo de la liste des pseudos.
 
 Prototype :
 
@@ -11202,7 +11203,7 @@ weechat.nicklist_remove_nick(my_buffer, my_nick)
 
 ==== weechat_nicklist_remove_all
 
-Supprime tous les groupes/pseudos de la liste des pseudos.
+Supprimer tous les groupes/pseudos de la liste des pseudos.
 
 Prototype :
 
@@ -11237,7 +11238,7 @@ weechat.nicklist_remove_all(my_buffer)
 
 _WeeChat ≥ 0.3.7._
 
-Retourne le prochain groupe ou pseudo de la liste des pseudos (utilisé
+Retourner le prochain groupe ou pseudo de la liste des pseudos (utilisé
 principalement pour afficher la liste des pseudos).
 
 Prototype :
@@ -11288,7 +11289,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.4._
 
-Retourne une valeur entière pour une propriété du groupe.
+Retourner une valeur entière pour une propriété du groupe.
 
 Prototype :
 
@@ -11333,7 +11334,7 @@ visible = weechat.nicklist_group_get_integer(buffer, group, "visible")
 
 _WeeChat ≥ 0.3.4._
 
-Retourne la valeur d'une propriété du groupe sous forme de chaîne.
+Retourner la valeur d'une propriété du groupe sous forme de chaîne.
 
 Prototype :
 
@@ -11378,7 +11379,7 @@ color = weechat.nicklist_group_get_string(buffer, group, "color")
 
 _WeeChat ≥ 0.3.4._
 
-Retourne la valeur d'une propriété du groupe sous forme d'un pointeur.
+Retourner la valeur d'une propriété du groupe sous forme d'un pointeur.
 
 Prototype :
 
@@ -11422,7 +11423,7 @@ parent = weechat.nicklist_group_get_pointer(buffer, group, "parent")
 
 _WeeChat ≥ 0.3.4._
 
-Affecte une valeur à une propriété d'un groupe.
+Affecter une valeur à une propriété d'un groupe.
 
 Prototype :
 
@@ -11492,7 +11493,7 @@ weechat.nicklist_group_set(buffer, group, "visible", "0")
 
 _WeeChat ≥ 0.3.4._
 
-Retourne une valeur entière pour une propriété du pseudo.
+Retourner une valeur entière pour une propriété du pseudo.
 
 Prototype :
 
@@ -11536,7 +11537,7 @@ visible = weechat.nicklist_nick_get_integer(buffer, nick, "visible")
 
 _WeeChat ≥ 0.3.4._
 
-Retourne la valeur d'une propriété du pseudo sous forme de chaîne.
+Retourner la valeur d'une propriété du pseudo sous forme de chaîne.
 
 Prototype :
 
@@ -11583,7 +11584,7 @@ color = weechat.nicklist_nick_get_string(buffer, nick, "color")
 
 _WeeChat ≥ 0.3.4._
 
-Retourne la valeur d'une propriété du pseudo sous forme d'un pointeur.
+Retourner la valeur d'une propriété du pseudo sous forme d'un pointeur.
 
 Prototype :
 
@@ -11627,7 +11628,7 @@ group = weechat.nicklist_nick_get_pointer(buffer, nick, "group")
 
 _WeeChat ≥ 0.3.4._
 
-Affecte une valeur à une propriété d'un pseudo.
+Affecter une valeur à une propriété d'un pseudo.
 
 Prototype :
 
@@ -11713,7 +11714,7 @@ Fonctions pour les barres.
 
 ==== weechat_bar_item_search
 
-Recherche un objet de barre.
+Rechercher un objet de barre.
 
 Prototype :
 
@@ -11752,7 +11753,7 @@ bar_item = weechat.bar_item_search("myitem")
 
 _Mis à jour dans la version 0.4.2._
 
-Créé un nouvel objet de barre.
+Créér un nouvel objet de barre.
 
 Prototype :
 
@@ -11838,7 +11839,7 @@ bar_item2 = weechat.bar_item_new("(extra)myitem2", "my_build_callback2", "")  # 
 
 ==== weechat_bar_item_update
 
-Met à jour le contenu d'un objet de barre, en appelant son "callback" de
+Mettre à jour le contenu d'un objet de barre, en appelant son "callback" de
 construction.
 
 Prototype :
@@ -11872,7 +11873,7 @@ weechat.bar_item_update("myitem")
 
 ==== weechat_bar_item_remove
 
-Supprime un objet de barre.
+Supprimer un objet de barre.
 
 Prototype :
 
@@ -11905,7 +11906,7 @@ weechat.bar_item_remove(myitem)
 
 ==== weechat_bar_search
 
-Recherche une barre.
+Rechercher une barre.
 
 Prototype :
 
@@ -11942,7 +11943,7 @@ bar = weechat.bar_search("mybar")
 
 ==== weechat_bar_new
 
-Créé une nouvelle barre.
+Créér une nouvelle barre.
 
 Prototype :
 
@@ -12052,7 +12053,7 @@ bar = weechat.bar_new("mybar", "off", "100", "window", "", "top", "horizontal", 
 
 ==== weechat_bar_set
 
-Affecte une nouvelle valeur pour une propriété de la barre.
+Affecter une nouvelle valeur pour une propriété de la barre.
 
 Prototype :
 
@@ -12094,7 +12095,7 @@ weechat.bar_set(my_bar, "position", "bottom")
 
 ==== weechat_bar_update
 
-Met à jour le contenu d'une barre à l'écran.
+Mettre à jour le contenu d'une barre à l'écran.
 
 Prototype :
 
@@ -12127,7 +12128,7 @@ weechat.bar_update("mybar")
 
 ==== weechat_bar_remove
 
-Supprime une barre.
+Supprimer une barre.
 
 Prototype :
 
@@ -12165,7 +12166,7 @@ Fonctions pour exécuter des commandes WeeChat.
 
 ==== weechat_command
 
-Exécute une commande.
+Exécuter une commande.
 
 Prototype :
 
@@ -12207,7 +12208,7 @@ Fonctions pour le réseau.
 
 ==== weechat_network_pass_proxy
 
-Établit une connexion/authentification avec un proxy.
+Établir une connexion/authentification avec un proxy.
 
 [IMPORTANT]
 Cette fonction est bloquante sur l'appel à connect(), donc elle doit être
@@ -12255,7 +12256,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _Mis à jour dans la version 0.4.3._
 
-Établit une connexion à une machine distante.
+Établir une connexion à une machine distante.
 
 [IMPORTANT]
 Cette fonction est bloquante sur l'appel à connect(), donc elle doit être
@@ -12312,7 +12313,7 @@ Fonctions pour obtenir des informations.
 
 ==== weechat_info_get
 
-Retourne une information, sous forme de chaîne, de WeeChat ou d'une extension.
+Retourner une information, sous forme de chaîne, de WeeChat ou d'une extension.
 
 Prototype :
 
@@ -12360,7 +12361,8 @@ weechat.prnt("", "Le répertoire de WeeChat est : %s" % weechat.info_get("weecha
 
 _WeeChat ≥ 0.3.4._
 
-Retourne une information, sous forme de hashtable, de WeeChat ou d'une extension.
+Retourner une information, sous forme de hashtable, de WeeChat ou d'une
+extension.
 
 Prototype :
 
@@ -12445,7 +12447,7 @@ Chaque variable a un type et une valeur. Les types possibles sont :
 
 ==== weechat_infolist_new
 
-Créé une "infolist".
+Créér une "infolist".
 
 Prototype :
 
@@ -12478,7 +12480,7 @@ infolist = weechat.infolist_new()
 
 ==== weechat_infolist_new_item
 
-Ajoute un objet dans l'infolist.
+Ajouter un objet dans l'infolist.
 
 Prototype :
 
@@ -12515,7 +12517,7 @@ item = weechat.infolist_new_item(infolist)
 
 ==== weechat_infolist_new_var_integer
 
-Ajoute une variable de type "integer" dans l'objet de l'infolist.
+Ajouter une variable de type "integer" dans l'objet de l'infolist.
 
 Prototype :
 
@@ -12558,7 +12560,7 @@ var = weechat.infolist_new_var_integer(item, "mon_entier", 123)
 
 ==== weechat_infolist_new_var_string
 
-Ajoute une variable de type "string" dans l'objet de l'infolist.
+Ajouter une variable de type "string" dans l'objet de l'infolist.
 
 Prototype :
 
@@ -12601,7 +12603,7 @@ var = weechat.infolist_new_var_string(item, "ma_chaine", "valeur")
 
 ==== weechat_infolist_new_var_pointer
 
-Ajoute une variable de type "pointer" dans l'objet de l'infolist.
+Ajouter une variable de type "pointer" dans l'objet de l'infolist.
 
 Prototype :
 
@@ -12644,7 +12646,7 @@ var = weechat.infolist_new_var_pointer(item, "mon_pointeur", pointer)
 
 ==== weechat_infolist_new_var_buffer
 
-Ajoute une variable de type "buffer" dans l'objet de l'infolist.
+Ajouter une variable de type "buffer" dans l'objet de l'infolist.
 
 Prototype :
 
@@ -12684,7 +12686,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_infolist_new_var_time
 
-Ajoute une variable de type "time" dans l'objet de l'infolist.
+Ajouter une variable de type "time" dans l'objet de l'infolist.
 
 Prototype :
 
@@ -12727,7 +12729,7 @@ var = weechat.infolist_new_var_time(item, "mon_time", int(time.time()))
 
 ==== weechat_infolist_get
 
-Retourne une "infolist" de WeeChat ou d'une extension.
+Retourner une "infolist" de WeeChat ou d'une extension.
 
 [IMPORTANT]
 Le contenu d'une infolist est une duplication des données réelles. Donc si vous
@@ -12780,7 +12782,7 @@ infolist = weechat.infolist_get("irc_server", "", "")
 
 ==== weechat_infolist_next
 
-Déplace le "curseur" vers l'objet suivant dans l'infolist. Le premier appel à
+Déplacer le "curseur" vers l'objet suivant dans l'infolist. Le premier appel à
 cette fonction sur une infolist déplace le curseur sur le premier objet de
 l'infolist.
 
@@ -12831,7 +12833,7 @@ else:
 
 ==== weechat_infolist_prev
 
-Déplace le "curseur" vers l'objet précédent dans l'infolist. Le premier appel à
+Déplacer le "curseur" vers l'objet précédent dans l'infolist. Le premier appel à
 cette fonction sur une infolist déplace le curseur sur le dernier objet de
 l'infolist.
 
@@ -12882,7 +12884,7 @@ else:
 
 ==== weechat_infolist_reset_item_cursor
 
-Réinitialise le "curseur" de l'infolist.
+Réinitialiser le "curseur" de l'infolist.
 
 Prototype :
 
@@ -12915,7 +12917,7 @@ weechat.infolist_reset_item_cursor(infolist)
 
 ==== weechat_infolist_fields
 
-Retourne la liste des champs pour l'objet courant de l'infolist.
+Retourner la liste des champs pour l'objet courant de l'infolist.
 
 Prototype :
 
@@ -12959,7 +12961,7 @@ fields = weechat.infolist_fields(infolist)
 
 ==== weechat_infolist_integer
 
-Retourne la valeur de la variable de l'objet courant de l'infolist, sous forme
+Retourner la valeur de la variable de l'objet courant de l'infolist, sous forme
 d'entier.
 
 Prototype :
@@ -12999,7 +13001,7 @@ weechat.prnt("", "entier = %d" % weechat.infolist_integer(infolist, "mon_entier"
 
 ==== weechat_infolist_string
 
-Retourne la valeur de la variable de l'objet courant de l'infolist, sous forme
+Retourner la valeur de la variable de l'objet courant de l'infolist, sous forme
 de chaîne de caractères.
 
 Prototype :
@@ -13039,7 +13041,7 @@ weechat.prnt("", "chaîne = %s" % weechat.infolist_string(infolist, "ma_chaine")
 
 ==== weechat_infolist_pointer
 
-Retourne la valeur de la variable de l'objet courant de l'infolist, sous forme
+Retourner la valeur de la variable de l'objet courant de l'infolist, sous forme
 de pointeur.
 
 Prototype :
@@ -13079,7 +13081,7 @@ weechat.prnt("", "pointeur = 0x%s" % weechat.infolist_pointer(infolist, "mon_poi
 
 ==== weechat_infolist_buffer
 
-Retourne la valeur de la variable de l'objet courant de l'infolist, sous forme
+Retourner la valeur de la variable de l'objet courant de l'infolist, sous forme
 de buffer.
 
 Prototype :
@@ -13116,7 +13118,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_infolist_time
 
-Retourne la valeur de la variable de l'objet courant de l'infolist, sous forme
+Retourner la valeur de la variable de l'objet courant de l'infolist, sous forme
 de date/heure.
 
 Prototype :
@@ -13156,7 +13158,7 @@ weechat.prnt("", "date/heure = %ld" % weechat.infolist_time(infolist, "mon_time"
 
 ==== weechat_infolist_free
 
-Libère une infolist.
+Libérer une infolist.
 
 Prototype :
 
@@ -13203,7 +13205,7 @@ Le seul moyen pour mettre à jour des données est d'appeler la fonction
 
 _WeeChat ≥ 0.3.6, mis à jour dans la 0.3.9 et 0.4.0._
 
-Créé un "hdata".
+Créér un "hdata".
 
 [NOTE]
 .hdata vs infolist
@@ -13273,7 +13275,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.6._
 
-Créé une nouvelle variable dans le hdata.
+Créér une nouvelle variable dans le hdata.
 
 Prototype :
 
@@ -13358,7 +13360,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.6._
 
-Créé un nouveau pointer vers une liste dans le hdata.
+Créér un nouveau pointer vers une liste dans le hdata.
 
 Prototype :
 
@@ -13418,7 +13420,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.6._
 
-Retourne un "hdata" pour une structure de WeeChat ou d'une extension.
+Retourner un "hdata" pour une structure de WeeChat ou d'une extension.
 
 [NOTE]
 Le "hdata" ne contient aucune donnée, il s'agit seulement d'une hashtable avec
@@ -13467,7 +13469,7 @@ hdata = weechat.hdata_get("irc_server")
 
 _WeeChat ≥ 0.3.6._
 
-Retourne la position (offset) de la variable dans le hdata.
+Retourner la position (offset) de la variable dans le hdata.
 
 Prototype :
 
@@ -13507,7 +13509,7 @@ offset = weechat.hdata_get_var_offset(hdata, "name")
 
 _WeeChat ≥ 0.3.6._
 
-Retourne le type de la variable dans le hdata (sous forme d'entier).
+Retourner le type de la variable dans le hdata (sous forme d'entier).
 
 Prototype :
 
@@ -13572,7 +13574,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.6._
 
-Retourne le type de la variable dans le hdata (sous forme de chaîne).
+Retourner le type de la variable dans le hdata (sous forme de chaîne).
 
 Prototype :
 
@@ -13612,7 +13614,7 @@ weechat.prnt("", "type = %s" % weechat.hdata_get_var_type_string(hdata, "name"))
 
 _WeeChat ≥ 0.3.9._
 
-Retourne la taille du tableau pour la variable dans le hdata.
+Retourner la taille du tableau pour la variable dans le hdata.
 
 Prototype :
 
@@ -13654,7 +13656,7 @@ array_size = weechat.hdata_get_var_array_size(hdata, pointer, "name")
 
 _WeeChat ≥ 0.3.9._
 
-Retourne la taille du tableau pour la variable dans le hdata (sous forme de
+Retourner la taille du tableau pour la variable dans le hdata (sous forme de
 chaîne).
 
 Prototype :
@@ -13698,7 +13700,7 @@ array_size = weechat.hdata_get_var_array_size_string(hdata, pointer, "name")
 
 _WeeChat ≥ 0.3.6._
 
-Retourne le hdata pour la variable dans le hdata.
+Retourner le hdata pour la variable dans le hdata.
 
 Prototype :
 
@@ -13738,7 +13740,7 @@ weechat.prnt("", "hdata = %s" % weechat.hdata_get_var_hdata(hdata, "name"))
 
 _WeeChat ≥ 0.3.6._
 
-Retourne un pointeur vers le contenu de la variable dans le hdata.
+Retourner un pointeur vers le contenu de la variable dans le hdata.
 
 Prototype :
 
@@ -13773,7 +13775,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.6._
 
-Retourne un pointeur vers le contenu de la variable dans le hdata, en utilisant
+Retourner un pointeur vers le contenu de la variable dans le hdata, en utilisant
 une position (offset).
 
 Prototype :
@@ -13810,7 +13812,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.6._
 
-Retourne un pointeur de liste du hdata.
+Retourner un pointeur de liste du hdata.
 
 Prototype :
 
@@ -13852,7 +13854,7 @@ buffers = weechat.hdata_get_list(hdata, "gui_buffers")
 
 _WeeChat ≥ 0.3.7._
 
-Vérifie si un pointeur est valide pour un hdata et un pointeur de liste.
+Vérifier si un pointeur est valide pour un hdata et un pointeur de liste.
 
 Prototype :
 
@@ -13910,7 +13912,7 @@ else:
 
 _WeeChat ≥ 0.3.6._
 
-Déplace le pointeur vers un autre élément dans la liste.
+Déplacer le pointeur vers un autre élément dans la liste.
 
 Prototype :
 
@@ -13968,7 +13970,7 @@ if buffer:
 
 _WeeChat ≥ 0.4.1._
 
-Cherche un élément dans la liste: l'expression 'search' est évaluée pour chaque
+Chercher un élément dans la liste: l'expression 'search' est évaluée pour chaque
 élément dans la liste, jusqu'à trouver l'élément (ou la fin de la liste).
 
 Prototype :
@@ -14029,7 +14031,7 @@ if server:
 
 _WeeChat ≥ 0.3.7._
 
-Retourne la valeur de la variable dans la structure en utilisant le hdata, sous
+Retourner la valeur de la variable dans la structure en utilisant le hdata, sous
 forme de caractère.
 
 Prototype :
@@ -14073,7 +14075,7 @@ weechat.prnt("", "letter = %c" % weechat.hdata_char(hdata, pointer, "letter"))
 
 _WeeChat ≥ 0.3.6._
 
-Retourne la valeur de la variable dans la structure en utilisant le hdata, sous
+Retourner la valeur de la variable dans la structure en utilisant le hdata, sous
 forme d'entier.
 
 Prototype :
@@ -14121,7 +14123,7 @@ weechat.prnt("", "number = %d" % weechat.hdata_integer(hdata, buffer, "number"))
 
 _WeeChat ≥ 0.3.6._
 
-Retourne la valeur de la variable dans la structure en utilisant le hdata, sous
+Retourner la valeur de la variable dans la structure en utilisant le hdata, sous
 forme d'entier long.
 
 Prototype :
@@ -14165,7 +14167,7 @@ weechat.prnt("", "longvar = %ld" % weechat.hdata_long(hdata, pointer, "longvar")
 
 _WeeChat ≥ 0.3.6._
 
-Retourne la valeur de la variable dans la structure en utilisant le hdata, sous
+Retourner la valeur de la variable dans la structure en utilisant le hdata, sous
 forme de chaîne.
 
 Prototype :
@@ -14213,7 +14215,7 @@ weechat.prnt("", "name = %s" % weechat.hdata_string(hdata, buffer, "name"))
 
 _WeeChat ≥ 0.3.6._
 
-Retourne la valeur de la variable dans la structure en utilisant le hdata, sous
+Retourner la valeur de la variable dans la structure en utilisant le hdata, sous
 forme de pointeur.
 
 Prototype :
@@ -14261,7 +14263,7 @@ weechat.prnt("", "lines = %lx" % weechat.hdata_pointer(hdata, buffer, "lines"))
 
 _WeeChat ≥ 0.3.6._
 
-Retourne la valeur de la variable dans la structure en utilisant le hdata, sous
+Retourner la valeur de la variable dans la structure en utilisant le hdata, sous
 forme de date/heure.
 
 Prototype :
@@ -14331,7 +14333,7 @@ if ptr:
 
 _WeeChat ≥ 0.3.7._
 
-Retourne la valeur de la variable dans la structure en utilisant le hdata, sous
+Retourner la valeur de la variable dans la structure en utilisant le hdata, sous
 forme de hashtable.
 
 Prototype :
@@ -14384,7 +14386,7 @@ for key in hash:
 
 _WeeChat ≥ 0.3.9._
 
-Définit une nouvelle valeur pour une variable dans un hdata.
+Définir une nouvelle valeur pour une variable dans un hdata.
 
 [NOTE]
 Cette fonction ne peut être appelée que dans un "callback" de mise à jour
@@ -14425,7 +14427,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.9._
 
-Met à jour des données dans le hdata.
+Mettre à jour des données dans le hdata.
 
 Prototype :
 
@@ -14514,7 +14516,7 @@ if own_lines:
 
 _WeeChat ≥ 0.3.6._
 
-Retourne une valeur pour une propriété d'un hdata sous forme de chaîne.
+Retourner une valeur pour une propriété d'un hdata sous forme de chaîne.
 
 Prototype :
 
@@ -14575,7 +14577,7 @@ Fonctions pour la mise à jour de WeeChat (commande "/upgrade").
 
 ==== weechat_upgrade_new
 
-Créé ou lit un fichier pour la mise à jour.
+Créér ou lire un fichier pour la mise à jour.
 
 Prototype :
 
@@ -14616,7 +14618,7 @@ upgrade_file = weechat.upgrade_new("mon_fichier", 1)
 
 ==== weechat_upgrade_write_object
 
-Écrit un objet dans le fichier de mise à jour.
+Écrire un objet dans le fichier de mise à jour.
 
 Prototype :
 
@@ -14664,7 +14666,7 @@ weechat.upgrade_write_object(upgrade_file, 1, infolist)
 
 ==== weechat_upgrade_read
 
-Lit un fichier de mise à jour.
+Lire un fichier de mise à jour.
 
 Prototype :
 
@@ -14730,7 +14732,7 @@ weechat.upgrade_read(upgrade_file, "my_upgrade_read_cb", ""))
 
 ==== weechat_upgrade_close
 
-Ferme un fichier de mise à jour.
+Fermer un fichier de mise à jour.
 
 Prototype :
 
