@@ -7548,9 +7548,33 @@ struct t_hook *weechat_hook_signal (const char *signal,
 
 Argomenti:
 
+// TRANSLATION MISSING
 * 'signal': segnale da catturare, può iniziare o terminare con "*"
   (priorità consentita, consultare la nota riguardo la
-  <<hook_priority,priority>>):
+  <<hook_priority,priority>>), see table below
+* 'callback': funzione chiamata a segnale ricevuto, argomenti e valore
+  restituito:
+** 'void *data': puntatore
+** 'const char *signal': segnale ricevuto
+** 'const char *type_data': tipo di dati inviati con il segnale:
+*** 'WEECHAT_HOOK_SIGNAL_STRING': stringa
+*** 'WEECHAT_HOOK_SIGNAL_INT': numero intero
+*** 'WEECHAT_HOOK_SIGNAL_POINTER': puntatore
+** 'void *signal_data': dati inviati con il segnale
+** valore restituito:
+*** 'WEECHAT_RC_OK'
+// TRANSLATION MISSING
+*** 'WEECHAT_RC_OK_EAT' (stop sending the signal immediately)
+    _(WeeChat ≥ 0.4.0)_
+*** 'WEECHAT_RC_ERROR'
+* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
+
+Valore restituito:
+
+* puntatore al nuovo hook, NULL in caso di errore
+
+// TRANSLATION MISSING
+List of signals sent by WeeChat and plugins:
 
 [width="100%",cols="^1,^3,^4,5",options="header"]
 |===
@@ -8139,27 +8163,6 @@ Argomenti:
 
 [NOTE]
 ^(1)^ 'xxx' è il nome del server IRC, 'yyy' è il nome del comando IRC.
-
-* 'callback': funzione chiamata a segnale ricevuto, argomenti e valore
-  restituito:
-** 'void *data': puntatore
-** 'const char *signal': segnale ricevuto
-** 'const char *type_data': tipo di dati inviati con il segnale:
-*** 'WEECHAT_HOOK_SIGNAL_STRING': stringa
-*** 'WEECHAT_HOOK_SIGNAL_INT': numero intero
-*** 'WEECHAT_HOOK_SIGNAL_POINTER': puntatore
-** 'void *signal_data': dati inviati con il segnale
-** valore restituito:
-*** 'WEECHAT_RC_OK'
-// TRANSLATION MISSING
-*** 'WEECHAT_RC_OK_EAT' (stop sending the signal immediately)
-    _(WeeChat ≥ 0.4.0)_
-*** 'WEECHAT_RC_ERROR'
-* 'callback_data': puntatore fornito alla callback quando chiamata da WeeChat
-
-Valore restituito:
-
-* puntatore al nuovo hook, NULL in caso di errore
 
 Esempio in C:
 

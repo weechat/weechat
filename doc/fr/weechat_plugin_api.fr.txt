@@ -7555,7 +7555,30 @@ struct t_hook *weechat_hook_signal (const char *signal,
 Paramètres :
 
 * 'signal' : signal à intercepter, peut commencer ou se terminer par "*"
-  (priorité autorisée, voir la note sur la <<hook_priority,priorité>>) :
+  (priorité autorisée, voir la note sur la <<hook_priority,priorité>>),
+  voir le tableau ci-dessous
+* 'callback' : fonction appelée quand le signal est reçu, paramètres et valeur
+  de retour :
+** 'void *data' : pointeur
+** 'const char *signal' : signal reçu
+** 'const char *type_data' : type de donnée reçu avec le signal :
+*** 'WEECHAT_HOOK_SIGNAL_STRING' : chaîne de caractères
+*** 'WEECHAT_HOOK_SIGNAL_INT' : nombre entier
+*** 'WEECHAT_HOOK_SIGNAL_POINTER' : pointeur
+** 'void *signal_data' : données envoyées avec le signal
+** valeur de retour :
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_OK_EAT' (arrêter l'envoi du signal immédiatement)
+    _(WeeChat ≥ 0.4.0)_
+*** 'WEECHAT_RC_ERROR'
+* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
+  WeeChat
+
+Valeur de retour :
+
+* pointeur vers le nouveau "hook", NULL en cas d'erreur
+
+Liste des signaux envoyés par WeeChat et les extensions :
 
 [width="100%",cols="^1,^3,^4,5",options="header"]
 |===
@@ -8091,27 +8114,6 @@ Paramètres :
 
 [NOTE]
 ^(1)^ 'xxx' est le nom du serveur IRC, 'yyy' est le nom d'une commande IRC.
-
-* 'callback' : fonction appelée quand le signal est reçu, paramètres et valeur
-  de retour :
-** 'void *data' : pointeur
-** 'const char *signal' : signal reçu
-** 'const char *type_data' : type de donnée reçu avec le signal :
-*** 'WEECHAT_HOOK_SIGNAL_STRING' : chaîne de caractères
-*** 'WEECHAT_HOOK_SIGNAL_INT' : nombre entier
-*** 'WEECHAT_HOOK_SIGNAL_POINTER' : pointeur
-** 'void *signal_data' : données envoyées avec le signal
-** valeur de retour :
-*** 'WEECHAT_RC_OK'
-*** 'WEECHAT_RC_OK_EAT' (arrêter l'envoi du signal immédiatement)
-    _(WeeChat ≥ 0.4.0)_
-*** 'WEECHAT_RC_ERROR'
-* 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
-  WeeChat
-
-Valeur de retour :
-
-* pointeur vers le nouveau "hook", NULL en cas d'erreur
 
 Exemple en C :
 

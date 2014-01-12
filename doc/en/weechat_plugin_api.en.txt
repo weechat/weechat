@@ -7437,7 +7437,28 @@ struct t_hook *weechat_hook_signal (const char *signal,
 Arguments:
 
 * 'signal': signal to catch, can begin or end with "*"
-  (priority allowed, see note about <<hook_priority,priority>>):
+  (priority allowed, see note about <<hook_priority,priority>>), see table below
+* 'callback': function called when signal is received, arguments and return
+  value:
+** 'void *data': pointer
+** 'const char *signal': signal received
+** 'const char *type_data': type of data sent with signal:
+*** 'WEECHAT_HOOK_SIGNAL_STRING': string
+*** 'WEECHAT_HOOK_SIGNAL_INT': integer number
+*** 'WEECHAT_HOOK_SIGNAL_POINTER': pointer
+** 'void *signal_data': data sent with signal
+** return value:
+*** 'WEECHAT_RC_OK'
+*** 'WEECHAT_RC_OK_EAT' (stop sending the signal immediately)
+    _(WeeChat ≥ 0.4.0)_
+*** 'WEECHAT_RC_ERROR'
+* 'callback_data': pointer given to callback when it is called by WeeChat
+
+Return value:
+
+* pointer to new hook, NULL if error occurred
+
+List of signals sent by WeeChat and plugins:
 
 [width="100%",cols="^1,^3,4,5",options="header"]
 |===
@@ -7973,26 +7994,6 @@ Arguments:
 
 [NOTE]
 ^(1)^ 'xxx' is IRC server name, 'yyy' is IRC command name.
-
-* 'callback': function called when signal is received, arguments and return
-  value:
-** 'void *data': pointer
-** 'const char *signal': signal received
-** 'const char *type_data': type of data sent with signal:
-*** 'WEECHAT_HOOK_SIGNAL_STRING': string
-*** 'WEECHAT_HOOK_SIGNAL_INT': integer number
-*** 'WEECHAT_HOOK_SIGNAL_POINTER': pointer
-** 'void *signal_data': data sent with signal
-** return value:
-*** 'WEECHAT_RC_OK'
-*** 'WEECHAT_RC_OK_EAT' (stop sending the signal immediately)
-    _(WeeChat ≥ 0.4.0)_
-*** 'WEECHAT_RC_ERROR'
-* 'callback_data': pointer given to callback when it is called by WeeChat
-
-Return value:
-
-* pointer to new hook, NULL if error occurred
 
 C example:
 
