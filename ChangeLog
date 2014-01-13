@@ -29,7 +29,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: add options weechat.look.buffer_auto_renumber and
   weechat.look.buffer_position, add option "renumber" in command /buffer, add
   bar item "buffer_last_number" (task #12766)
-* core: fix text emphasis with wide chars on screen like japanese (patch #8253)
+* core: fix text emphasis with wide chars on screen like Japanese (patch #8253)
 * core: add signal "buffer_cleared"
 * core: remove option on /unset of plugin description option (plugins.desc.xxx)
   (bug #40768)
@@ -64,7 +64,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: add options to customize default text search in buffers:
   weechat.look.buffer_search_{case_sensitive|force_default|regex|where}
 * doc: add Japanese plugin API reference
-* doc: add polish man page and user's guide
+* doc: add Polish man page and user's guide
 * api: add stdin options in functions hook_process_hashtable and hook_set
   to send data on stdin of child process, add function hook_set in script API
   (task #10847, task #13031)
@@ -164,8 +164,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   with a NULL value (bug #39419)
 * core: fix display bugs with some UTF-8 chars that truncates messages displayed
   (for example U+26C4) (bug #39201)
-* core: update man page and add translations (in french, german, italian, and
-  japanese)
+* core: update man page and add translations (in French, German, Italian, and
+  Japanese)
 * core: remove extra space after empty prefix (when prefix for action, error,
   join, network or quit is set to empty string) (bug #39218)
 * core: add option weechat.network.proxy_curl (task #12651)
@@ -1397,7 +1397,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: improve /set command, new command /unset (task #6085)
 * core: add new input action "set_unread_current_buffer" to set unread marker
   for current buffer only (task #7286)
-* core: add polish translation (thanks to Soltys)
+* core: add Polish translation (thanks to Soltys)
 * core: remove key functions, replaced by /input command
 * core: add argument with buffer number/range for command "/buffer close"
   (task #9390, task #7239)
@@ -1666,7 +1666,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * fix crash when setting look_one_server_buffer to ON (bug #16932)
 * add new functions in plugin/script API: get window info, get buffer info, get
   buffer content
-* add polish, Russian and Czech quickstart guide
+* add Polish, Russian and Czech quickstart guide
 * fix display bug with special char (bug #16732)
 * add color encoding for some commands like /me
 * add aspell plugin
@@ -2062,7 +2062,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * fix crash when entering text without any server connection
 * fix crash when /set command is executed
 * fix display bug (text was blinking when scrolling)
-* french translation
+* French translation
 * new IRC command: /stats, /service, /squit, /motd, /lusers, /links, /time,
   /trace, /admin, /info, /servlist, /squery, /who, /whowas, /die, /summon,
   /users, /wallops, /userhost, /ison, /ctcp ping
