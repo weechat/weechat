@@ -1,37 +1,37 @@
 * [[option_irc.color.input_nick]] *irc.color.input_nick*
 ** 説明: `インプットバーのニックネームに使う色`
 ** タイプ: 色
-** 値: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (デフォルト値: `lightcyan`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `lightcyan`)
 
 * [[option_irc.color.item_away]] *irc.color.item_away*
 ** 説明: `離席アイテムに使う色`
 ** タイプ: 色
-** 値: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (デフォルト値: `yellow`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `yellow`)
 
 * [[option_irc.color.item_channel_modes]] *irc.color.item_channel_modes*
 ** 説明: `チャンネル名付近のチャンネルモードに使う色`
 ** タイプ: 色
-** 値: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (デフォルト値: `default`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `default`)
 
 * [[option_irc.color.item_lag_counting]] *irc.color.item_lag_counting*
 ** 説明: `カウント中の遅延インジケータの色 (pong がサーバから返らない場合、遅延は増加する)`
 ** タイプ: 色
-** 値: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (デフォルト値: `default`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `default`)
 
 * [[option_irc.color.item_lag_finished]] *irc.color.item_lag_finished*
 ** 説明: `pong がサーバから返った場合の、遅延インジケータの色`
 ** タイプ: 色
-** 値: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (デフォルト値: `yellow`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `yellow`)
 
 * [[option_irc.color.message_join]] *irc.color.message_join*
 ** 説明: `参加メッセージの色`
 ** タイプ: 色
-** 値: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (デフォルト値: `green`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `green`)
 
 * [[option_irc.color.message_quit]] *irc.color.message_quit*
 ** 説明: `退出/終了 メッセージの色`
 ** タイプ: 色
-** 値: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (デフォルト値: `red`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `red`)
 
 * [[option_irc.color.mirc_remap]] *irc.color.mirc_remap*
 ** 説明: `メッセージに含まれる mirc カラーのマッピングをハッシュテーブルで変更: キーは "fg,bg" で -1(指定無し) から 15 までの整数、 値は WeeChat 色名か色番号 (フォーマットは: "1,-1:color1;2,7:color2")、例: "1,-1:darkgray;1,2:white,blue" はテキスト色が黒のものを "darkgray" に、背景色が青でテキスト色が黒のものを "white,blue" に変更; IRC コードに対するデフォルトの WeeChat 色は、0:白、1:黒、2:青、3:緑、4:ライトレッド、5:赤、6:赤紫、7:茶色、8:黄色、9:ライトグリーン、10:シアン、11:ライトシアン、12:ライトブルー、13:ライトマゼンタ、14:灰色、15:白`
@@ -46,22 +46,22 @@
 * [[option_irc.color.notice]] *irc.color.notice*
 ** 説明: `notices に含まれるテキスト "Notice" の色`
 ** タイプ: 色
-** 値: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (デフォルト値: `green`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `green`)
 
 * [[option_irc.color.reason_quit]] *irc.color.reason_quit*
 ** 説明: `退出/終了メッセージに含まれる理由の色`
 ** タイプ: 色
-** 値: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (デフォルト値: `default`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `default`)
 
 * [[option_irc.color.topic_new]] *irc.color.topic_new*
 ** 説明: `新しいチャンネルトピックの色 (トピックが変更されたとき)`
 ** タイプ: 色
-** 値: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (デフォルト値: `white`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `white`)
 
 * [[option_irc.color.topic_old]] *irc.color.topic_old*
 ** 説明: `古いチャンネルトピックの色 (トピックが変更されたとき)`
 ** タイプ: 色
-** 値: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (デフォルト値: `default`)
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `default`)
 
 * [[option_irc.look.buffer_switch_autojoin]] *irc.look.buffer_switch_autojoin*
 ** 説明: `自動で参加した場合に、自動的にチャンネルバッファを移動 (サーバオプション "autojoin" と共に使用)`
@@ -154,22 +154,22 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_irc.look.highlight_channel]] *irc.look.highlight_channel*
-** 説明: `comma separated list of words to highlight in channel buffers (case insensitive, use "(?-i)" at beginning of words to make them case sensitive; special variables $nick, $channel and $server are replaced by their value), these words are added to buffer property "highlight_words" only when buffer is created (it does not affect current buffers), an empty string disables default highlight on nick, examples: "$nick", "(?-i)$nick"`
+** 説明: `現在のバッファでハイライトする単語のコンマ区切りリスト (大文字小文字を区別しない、"(?-i)" を単語の最初につければ大文字小文字を区別する; 特殊変数 $nick、$channel、$server はそれぞれの値に置換される)、これらの単語は、バッファの作成時にバッファプロパティ "highlight_words" に追加される (既存のバッファには影響なし)、空文字列はニックネームに関するデフォルトのハイライトを無効にする、例: "$nick", "(?-i)$nick"`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"$nick"`)
 
 * [[option_irc.look.highlight_pv]] *irc.look.highlight_pv*
-** 説明: `comma separated list of words to highlight in private buffers (case insensitive, use "(?-i)" at beginning of words to make them case sensitive; special variables $nick, $channel and $server are replaced by their value), these words are added to buffer property "highlight_words" only when buffer is created (it does not affect current buffers), an empty string disables default highlight on nick, examples: "$nick", "(?-i)$nick"`
+** 説明: `プライベートバッファでハイライトする単語のコンマ区切りリスト (大文字小文字を区別しない、"(?-i)" を単語の最初につければ大文字小文字を区別する; 特殊変数 $nick、$channel、$server はそれぞれの値に置換される)、これらの単語は、バッファの作成時にバッファプロパティ "highlight_words" に追加される (既存のバッファには影響なし)、空文字列はニックネームに関するデフォルトのハイライトを無効にする、例: "$nick", "(?-i)$nick"`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"$nick"`)
 
 * [[option_irc.look.highlight_server]] *irc.look.highlight_server*
-** 説明: `comma separated list of words to highlight in server buffers (case insensitive, use "(?-i)" at beginning of words to make them case sensitive; special variables $nick, $channel and $server are replaced by their value), these words are added to buffer property "highlight_words" only when buffer is created (it does not affect current buffers), an empty string disables default highlight on nick, examples: "$nick", "(?-i)$nick"`
+** 説明: `サーババッファでハイライトする単語のコンマ区切りリスト (大文字小文字を区別しない、"(?-i)" を単語の最初につければ大文字小文字を区別する; 特殊変数 $nick、$channel、$server はそれぞれの値に置換される)、これらの単語は、バッファの作成時にバッファプロパティ "highlight_words" に追加される (既存のバッファには影響なし)、空文字列はニックネームに関するデフォルトのハイライトを無効にする、例: "$nick", "(?-i)$nick"`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"$nick"`)
 
 * [[option_irc.look.highlight_tags_restrict]] *irc.look.highlight_tags_restrict*
-** 説明: `restrict highlights to these tags on irc buffers (to have highlight on user messages but not server messages); tags must be separated by a comma and "+" can be used to make a logical "and" between tags; tags can start or end with "*" to match more than one tag; an empty value allows highlight on any tag`
+** 説明: `irc バッファでハイライトを禁止するタグ (ユーザメッセージをハイライトして、サーバメッセージをハイライトしない); タグの区切り文字はコンマ、論理積を取る場合には "+" 使ってください; 1 つ以上のタグにマッチさせるには各タグの最初と最後に "*" をつけてください; 任意のタグをハイライトさせるには空値を指定してください`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"irc_privmsg,irc_notice"`)
 
@@ -254,12 +254,12 @@
 ** 値: auto, never, always (デフォルト値: `auto`)
 
 * [[option_irc.look.notice_welcome_redirect]] *irc.look.notice_welcome_redirect*
-** 説明: `automatically redirect channel welcome notices to the channel buffer; such notices have the nick as target but a channel name in beginning of notice message, for example notices sent by freenode server which look like: "[#channel] Welcome to this channel..."`
+** 説明: `ようこそ通知メッセージは対象となるバッファに自動リダイレクト; ようこそ通知の通知先はニックネームとなっていますが、通知メッセージの最初チャンネル名が含まれています、freenode サーバが送信する通知メッセージの例: "[#channel] Welcome to this channel..."`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_irc.look.notice_welcome_tags]] *irc.look.notice_welcome_tags*
-** 説明: `comma separated list of tags used in a welcome notices redirected to a channel, for example: "notify_private"`
+** 説明: `ようこそ通知に使われ、チャンネルに転送するタグのコンマ区切りリスト、例えば: "notify_private"`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
@@ -304,7 +304,7 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_irc.look.smart_filter_delay]] *irc.look.smart_filter_delay*
-** 説明: `delay for filtering join/part/quit messages (in minutes): if the nick did not speak during the last N minutes, the join/part/quit is filtered`
+** 説明: `参加/退出/終了メッセージをフィルタするまでの遅延時間 (分単位): ニックネームが N 分以上発言しなかった場合、参加/退出/終了メッセージをフィルタする`
 ** タイプ: 整数
 ** 値: 1 .. 10080 (デフォルト値: `5`)
 
@@ -319,7 +319,7 @@
 ** 値: 0 .. 10080 (デフォルト値: `30`)
 
 * [[option_irc.look.smart_filter_mode]] *irc.look.smart_filter_mode*
-** 説明: `enable smart filter for "mode" messages: "*" to filter all modes, "xyz" to filter only modes x/y/z, "-xyz" to filter all modes but not x/y/z; examples: "ovh": filter modes o/v/h, "-bkl": filter all modes but not b/k/l`
+** 説明: `"mode" 変更メッセージに対するスマートフィルタを有効化する: すべてのモード変更メッセージをフィルタするには "*"、x/y/z モードの変更メッセージをフィルタするには "xyz"、x/y/z モード以外のモード変更メッセージをフィルタするには "-xyz"; 例: "ovh": o/v/h モードの変更メッセージをフィルタする、"-bkl": b/k/l モード以外のモード変更メッセージをフィルタ`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"ovh"`)
 
@@ -354,7 +354,7 @@
 ** 値: 0 .. 86400 (デフォルト値: `1800`)
 
 * [[option_irc.network.ban_mask_default]] *irc.network.ban_mask_default*
-** 説明: `default ban mask for commands /ban, /unban and /kickban; variables $nick, $user and $host are replaced by their values (extracted from "nick!user@host"); this default mask is used only if WeeChat knows the host for the nick`
+** 説明: `/ban、/unban、/kickban コマンドが使うデフォルトの禁止マスク; 変数 $nick、$user、$host はそれぞれの値に置換 ("nick!user@host" から展開) されます; このデフォルトマスクはニックネームのホスト名がわかる場合のみ利用されます`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"*!$user@$host"`)
 
@@ -364,7 +364,7 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_irc.network.colors_send]] *irc.network.colors_send*
-** 説明: `allow user to send colors with special codes (ctrl-c + a code and optional color: b=bold, cxx=color, cxx,yy=color+background, i=italic, o=disable color/attributes, r=reverse, u=underline)`
+** 説明: `特別なコードを使ってユーザが色を送信することを許可 (ctrl-c + 色コードと任意の色: b=太字、cxx=テキスト色、cxx,yy=テキスト色+背景色、i=イタリック、o=色や属性の無効化、r=反転、u=下線)`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
@@ -374,7 +374,7 @@
 ** 値: 0 .. 604800 (デフォルト値: `60`)
 
 * [[option_irc.network.lag_max]] *irc.network.lag_max*
-** 説明: `maximum lag (in seconds): if this lag is reached, WeeChat will consider that the answer from server (pong) will never be received and will give up counting the lag (0 = never give up)`
+** 説明: `遅延時間の最大値 (秒単位): 遅延時間がこの値よりも大きくなった場合、WeeChat はサーバからの応答 (pong) が到着しないと考え、遅延時間の計測を中止します (0 = 遅延時間の計測を中止しない)`
 ** タイプ: 整数
 ** 値: 0 .. 604800 (デフォルト値: `1800`)
 
@@ -384,7 +384,7 @@
 ** 値: 0 .. 86400000 (デフォルト値: `500`)
 
 * [[option_irc.network.lag_reconnect]] *irc.network.lag_reconnect*
-** 説明: `reconnect to server if lag is greater than or equal to this value (in seconds, 0 = never reconnect); this value must be less than or equal to irc.network.lag_max`
+** 説明: `遅延時間がこの値以上に長くなった場合は再接続 (秒単位、0 = 再接続しない); この値は必ず irc.network.lag_max 以下にしてください`
 ** タイプ: 整数
 ** 値: 0 .. 604800 (デフォルト値: `0`)
 
@@ -434,7 +434,7 @@
 ** 値: on, off (デフォルト値: `off`)
 
 * [[option_irc.server_default.autojoin]] *irc.server_default.autojoin*
-** 説明: `comma separated list of channels to join after connection to server (and after executing command + delay if they are set); the channels that require a key must be at beginning of the list, and all the keys must be given after the channels (separated by a space) (example: "#channel1,#channel2,#channel3 key1,key2" where #channel1 and #channel2 are protected by key1 and key2) (note: content is evaluated, see /help eval)`
+** 説明: `サーバに接続した後 (設定されていればさらにコマンドを実行し、遅延時間待った後) に参加するチャンネルのコンマ区切りリスト;鍵が必要なチャンネルはリストの最初に指定し、すべての鍵はチャンネルの後に指定してください (チャンネルと鍵の区切りは空白) (例: "#channel1,#channel2,#channel3 key1,key2" この場合 #channel1 と #channel2 への参加に必要な鍵はそれぞれ key1 と key2) (注意: 値は評価されます、/help eval を参照)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
@@ -474,12 +474,12 @@
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
 * [[option_irc.server_default.command]] *irc.server_default.command*
-** 説明: `command(s) to run after connection to server and before auto-join of channels (many commands can be separated by ";", use "\;" for a semicolon, special variables $nick, $channel and $server are replaced by their value) (note: content is evaluated, see /help eval)`
+** 説明: `サーバに接続した後、チャンネルに自動参加する前に実行するコマンド (";" で分けて 複数のコマンドを列挙できます、セミコロンは "\;" のように使ってください、特殊変数 $nick、$channel、$server はそれぞれの値に置換されます) (注意: 値は評価されます、/help eval を参照)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
 * [[option_irc.server_default.command_delay]] *irc.server_default.command_delay*
-** 説明: `delay (in seconds) after execution of command and before auto-join of channels (example: give some time for authentication before joining channels)`
+** 説明: `コマンドを実行して、チャンネルに自動参加するまでの遅延時間 (秒単位) (例: 認証に時間がかかる場合にチャンネル参加前に少し時間を空ける)`
 ** タイプ: 整数
 ** 値: 0 .. 3600 (デフォルト値: `0`)
 
@@ -489,7 +489,7 @@
 ** 値: 1 .. 3600 (デフォルト値: `60`)
 
 * [[option_irc.server_default.default_msg_kick]] *irc.server_default.default_msg_kick*
-** 説明: `default kick message used by commands "/kick" and "/kickban" (special variables $nick, $channel and $server are replaced by their value)`
+** 説明: `"/kick" と "/kickban" コマンドが使うデフォルトのキックメッセージ (特殊変数 $nick、$channel、$server はそれぞれの値に置換されます)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
@@ -524,7 +524,7 @@
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
 * [[option_irc.server_default.password]] *irc.server_default.password*
-** 説明: `password for server (note: content is evaluated, see /help eval)`
+** 説明: `サーバのパスワード (注意: 値は評価されます、/help eval を参照してください)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 

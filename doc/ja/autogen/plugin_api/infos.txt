@@ -42,9 +42,9 @@
 
 | weechat | locale | 翻訳メッセージに利用するロケール | -
 
-| weechat | term_height | height of terminal | -
+| weechat | term_height | ターミナルの高さ | -
 
-| weechat | term_width | width of terminal | -
+| weechat | term_width | ターミナルの幅 | -
 
 | weechat | version | WeeChat のバージョン | -
 

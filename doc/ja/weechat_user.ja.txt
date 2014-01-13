@@ -19,8 +19,7 @@ WeeChat (Wee Enhanced Environment for Chat) はフリーのチャットクライ
 
 主な特徴:
 
-// TRANSLATION MISSING
-* multi-protocols: IRC and Jabber (with script jabber.py or bitlbee/minbif)
+* マルチプロトコル: IRC 及び Jabber (jabber.py スクリプトや bitlbee/minbif が必要)
 * 複数のサーバへの接続 (SSL、IPv6、プロキシをサポート)
 * コンパクト、高速、軽量
 * プラグインとスクリプトでカスタマイズや拡張が可能
@@ -447,9 +446,8 @@ WeeChat 内で `/set` コマンドにパラメータを付けて設定します
 
 WeeChat を起動したターミナルの例:
 
-// TRANSLATION MISSING
 ....
- ▼ bar "title"
+ ▼ "title" バー
 ┌───────────────────────────────────────────────────────────────────────────┐
 │Welcome to #test, this is a test channel                                   │
 │12:52:27   --> | Flashy (flashcode@weechat.org) has joined #test   │@Flashy│
@@ -472,7 +470,7 @@ WeeChat を起動したターミナルの例:
 │[12:55] [6] [irc/freenode] 3:#test(+n){4}* [H: 4:#abc(2,5), 6]             │
 │[@Flashy(i)] hi peter!█                                                    │
 └───────────────────────────────────────────────────────────────────────────┘
- ▲ bars "status" and "input"                               bar "nicklist" ▲
+ ▲ "status" と "input" バー                               "nicklist" バー ▲
 ....
 
 スクリーンは以下のエリアから成ります:
@@ -499,8 +497,7 @@ WeeChat を起動したターミナルの例:
 | buffer_name           | `#test`               | 現在のバッファの名前
 | buffer_modes          | `+n`                  | IRC チャンネルモード
 | buffer_nicklist_count | `{4}`                 | ニックネームリスト中のニックネームの数
-// TRANSLATION MISSING
-| buffer_zoom           | !                     | `!` means the merged buffer is zoomed (only this one is displayed), empty value means all merged buffers are displayed
+| buffer_zoom           | !                     | `!` はマージされたバッファがズームされている状態 (ズームされたものだけを表示する状態) を示します、空の場合はすべてのマージされたバッファが表示されていることを示します
 | buffer_filter         | `*`                   | フィルタ表示: `*` の場合いくつかの行がフィルタされ (隠され) ます、空の場合すべての行が表示されます。
 | lag                   | `[Lag: 2.5]`          | 遅延秒表示 (遅延が短い場合は非表示)
 | hotlist               | `[H: 4:#abc(2,5), 6]` | 変化のあったバッファのリスト (未読メッセージ) (例では、'#abc' に 2 個のハイライトと 5 個の未読メッセージ、6 番目のバッファに 1 個の未読メッセージがあることを意味します。)
@@ -514,8 +511,7 @@ WeeChat を起動したターミナルの例:
 |===
 | アイテム     | 例                                           | 説明
 | input_paste  | `[Paste 7 lines ? [ctrl-Y] Yes [ctrl-N] No]` | 行をペーストする場合にユーザへ行われる質問
-// TRANSLATION MISSING
-| input_prompt | `[@Flashy]`                                  | Input prompt, for irc: nick and modes (mode "+i" means invisible on freenode)
+| input_prompt | `[@Flashy]`                                  | 入力プロンプト、irc の場合: ニックネームとモード (freenode では "+i" モードは不可視状態を意味します)
 | away         | `(away)`                                     | 離席状態表示
 | input_search | `[Search (~ str,msg)]`                       | 検索インジケータ ("`~`": 大文字小文字を区別しない、"`==`": 大文字小文字を区別する、"`str`": 検索文字列、"`regex`": 検索正規表現、"`msg`": メッセージ部分から検索、"`pre`": プレフィックス部分から検索、"`pre\|msg`": プレフィックス部分とメッセージ部分から検索)
 | input_text   | `hi peter!`                                  | 入力テキスト
@@ -542,9 +538,8 @@ WeeChat を起動したターミナルの例:
 
 水平方向分割の例 (`/window splith`):
 
-// TRANSLATION MISSING
 ....
-                          ▼ window #2 (buffer #4)
+                          ▼ ウィンドウ #2 (バッファ #4)
 ┌───────────────────────────────────────────────────────────────────────────┐
 │Welcome to #abc                                                            │
 │12:55:12     Max | hi                                              │@Flashy│
@@ -570,12 +565,11 @@ WeeChat を起動したターミナルの例:
 │[12:55] [6] [irc/freenode] 3:#test(+n){4}                                  │
 │[@Flashy] hi peter!█                                                       │
 └───────────────────────────────────────────────────────────────────────────┘
-                          ▲ window #1 (buffer #3)
+                          ▲ ウィンドウ #1 (バッファ #3)
 ....
 
 垂直方向分割の例 (`/window splitv`):
 
-// TRANSLATION MISSING
 ....
 ┌───────────────────────────────────────────────────────────────────────────┐
 │Welcome to #test                     │Welcome to #abc                      │
@@ -599,14 +593,13 @@ WeeChat を起動したターミナルの例:
 │[12:55] [irc/oftc] 3:#test(+n){4}    │[12:55] [irc/oftc] 4:#abc(+n){2}     │
 │[@Flashy] hi peter!█                 │[@Flashy]                            │
 └───────────────────────────────────────────────────────────────────────────┘
-      ▲ window #1 (buffer #3)               ▲ window #2 (buffer #4)
+      ▲ ウィンドウ #1 (バッファ #3)         ▲ ウィンドウ #2 (バッファ #4)
 ....
 
 垂直方向 + 水平方向分割の例:
 
-// TRANSLATION MISSING
 ....
-                                            ▼ window #3 (buffer #5)
+                                            ▼ ウィンドウ #3 (バッファ #5)
 ┌───────────────────────────────────────────────────────────────────────────┐
 │Welcome to #test                     │Welcome to #def                      │
 │12:54:15 peter | hey!        │@Flashy│12:55:42 @Flashy | hi        │@Flashy│
@@ -632,7 +625,7 @@ WeeChat を起動したターミナルの例:
 │[12:55] [irc/oftc] 3:#test(+n){4}    │[12:55] [irc/oftc] 4:#abc(+n){2}     │
 │[@Flashy] hi peter!█                 │[@Flashy]                            │
 └───────────────────────────────────────────────────────────────────────────┘
-      ▲ window #1 (buffer #3)               ▲ window #2 (buffer #4)
+      ▲ ウィンドウ #1 (バッファ #3)         ▲ ウィンドウ #2 (バッファ #4)
 ....
 
 [[bars]]
@@ -1157,8 +1150,7 @@ WeeChat はデフォルトマウスイベントの多くを定義しています
 | 修飾キー | 説明
 | ctrl     | key[ctrl] キー
 | alt      | key[alt] キー
-// TRANSLATION MISSING
-| ctrl-alt | Keys key[ctrl-]key[alt]
+| ctrl-alt | key[ctrl-]key[alt] キー
 |===
 
 ボタン/ホイールのリスト:
@@ -1264,9 +1256,8 @@ key[ctrl-c,c], key[xx]::
 key[ctrl-c,c], key[xx]key[,]key[yy]::
     テキスト表示色を `xx` に、背景色を `yy` に (以下の色リストを参照)
 
-// TRANSLATION MISSING
 key[ctrl-c,i]::
-    italic text
+    テキストをイタリック体に
 
 key[ctrl-c,o]::
     テキスト表示色と属性をリセット
@@ -1435,8 +1426,7 @@ WeeChat はスクリーンに色が表示された時点で色ペアを動的に
 
 * `*` : テキストを太字に
 * `!` : テキストを反転
-// TRANSLATION MISSING
-* `/` : italic
+* `/` : テキストをイタリック体に
 * `_` : テキストに下線を引く
 * `|` : 属性を保持:
   色を変えた際に太字/反転/下線属性をリセットしない
@@ -2523,13 +2513,11 @@ IRC プロキシを設定した場合には "freenode:mypass") で 8000 番ポ�
 
 Relay プラグインは WeeChat プロトコルを使ってリモートインターフェイスに対してデータを送信できます。
 
-// TRANSLATION MISSING
-You can connect with a remote interface, see the list on download page:
+リモートインターフェイスを使って接続できます、ダウンロードページのリストを御覧ください:
 http://weechat.org/download
 
 [IMPORTANT]
-// TRANSLATION MISSING
-WeeChat itself can NOT connect to another WeeChat with this protocol.
+このプロトコルを使った場合 WeeChat から他の WeeChat に接続することはできません。
 
 例:
 

@@ -77,50 +77,50 @@ message: 離席メッセージ (メッセージが無い場合は、離席状態
          get <property>
          <number>|<name>
 
-    list: list buffers (without argument, this list is displayed)
-   clear: clear buffer content (number for a buffer, -merged for merged buffers, -all for all buffers, or nothing for current buffer)
-    move: move buffer in the list (may be relative, for example -1)
-    swap: swap two buffers (swap with current buffer if only one number/name given)
-   merge: merge current buffer to another buffer (chat area will be mix of both buffers)
-          (by default ctrl-x switches between merged buffers)
- unmerge: unmerge buffer from other buffers which have same number
-renumber: renumber buffers (works only if option weechat.look.buffer_auto_renumber is off)
-   close: close buffer (number/range or name is optional)
-  notify: set notify level for current buffer: this level determines whether buffer will be added to hotlist or not:
-               none: never
-          highlight: for highlights only
-            message: for messages from users + highlights
-                all: all messages
-              reset: reset to default value (all)
-localvar: display local variables for current buffer
-     set: set a property for current buffer
-     get: display a property of current buffer
-  number: jump to buffer by number, possible prefix:
-          '+': relative jump, add number to current
-          '-': relative jump, sub number to current
-          '*': jump to number, using option "weechat.look.jump_current_to_previous_buffer"
-    name: jump to buffer by (partial) name
+    list: バッファをリストアップ (引数無しの場合、このリストが表示されます)
+   clear: バッファの内容を削除 (number はバッファ番号、マージバッファに対しては -merged、全てのバッファに対しては -all、何も無ければ現在のバッファ)
+    move: リストにバッファを移動 (相対指定も可能、例えば -1)
+    swap: 2 つのバッファを入れ替え (現在のバッファと引数で与えた番号/名称で指定されるバッファを入れ替える)
+   merge: 現在のバッファを他のバッファにマージ (2 つのバッファのチャットエリアが一緒になります)
+          (デフォルトでは ctrl-x でマージバッファの切り替え)
+ unmerge: 同じ番号を持つ他のバッファとのマージを解除
+renumber: バッファを記憶 (weechat.look.buffer_auto_renumber オプションがオフの場合にのみ有効)
+   close: バッファを閉じる (番号/範囲または名前は任意)
+  notify: 現在のバッファの通知レベルを設定: このレベルでバッファがホットリストに追加されるかどうかを定義します:
+               none: 通知しない
+          highlight: ハイライトがあった場合のみ通知
+            message: ユーザからのメッセージとハイライトがあった場合に通知
+                all: 全てのメッセージを通知
+              reset: デフォルトの値 (all) にリセット
+localvar: 現在のバッファのローカル変数を表示
+     set: 現在のバッファのプロパティを設定
+     get: 現在のバッファのプロパティを表示
+  number: 番号でバッファ移動、可能なプレフィックス:
+          '+': 相対移動、現在の番号に数を足す
+          '-': 相対移動、現在の番号から数を引く
+          '*': 番号に移動、オプション "weechat.look.jump_current_to_previous_buffer" が使われる
+    name: バッファ名 (一部) でバッファに移動
 
-Examples:
-  clear current buffer:
+例:
+  現在のバッファの内容を消去:
     /buffer clear
-  move buffer to number 5:
+  バッファを 5 番に移動:
     /buffer move 5
-  swap buffer 1 with 3:
+  バッファ 1 番と 3 番を入れ替え:
     /buffer swap 1 3
-  swap buffer #weechat with current buffer:
+  現在のバッファと #weechat バッファを入れ替え:
     /buffer swap #weechat
-  merge with core buffer:
+  コアバッファとマージ:
     /buffer merge 1
-  unmerge buffer:
+  バッファマージの解除:
     /buffer unmerge
-  close current buffer:
+  現在のバッファを閉じる:
     /buffer close
-  close buffers 5 to 7:
+  バッファ番号 5 から 7 を閉じる:
     /buffer close 5-7
-  jump to #weechat:
+  #weechat バッファに移動:
     /buffer #weechat
-  jump to next buffer:
+  次のバッファに移動:
     /buffer +1
 ----
 
@@ -193,24 +193,24 @@ stop: カーソルモードを終了
         mouse|cursor [verbose]
         hdata [free]
 
-     list: list plugins with debug levels
-      set: set debug level for plugin
-   plugin: name of plugin ("core" for WeeChat core)
-    level: debug level for plugin (0 = disable debug)
-     dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
-   buffer: dump buffer content with hexadecimal values in log file
-    color: display infos about current color pairs
-   cursor: toggle debug for cursor mode
-     dirs: display directories
-    hdata: display infos about hdata (with free: remove all hdata in memory)
-    hooks: display infos about hooks
-infolists: display infos about infolists
-     libs: display infos about external libraries used
-   memory: display infos about memory usage
-    mouse: toggle debug for mouse
-     tags: display tags for lines
-     term: display infos about terminal
-  windows: display windows tree
+     list: デバッグレベルの設定されたプラグインをリストアップ
+      set: プラグインのデバッグレベルを設定
+   plugin: プラグインの名前 ("core" は WeeChat コアを意味する)
+    level: プラグインのデバッグレベル (0 はデバッグの無効化)
+     dump: WeeChat ログファイルにメモリダンプを保存 (WeeChat がクラッシュした場合と同じダンプが書き込まれます)
+   buffer: ログファイルに 16 進値でバッファの内容をダンプ
+    color: 現在の色ペアに関する情報を表示
+   cursor: カーソルモードのデバッグを切り替え
+     dirs: ディレクトリを表示
+    hdata: hdata に関する情報を表示 (free を付ければ: メモリから全ての hdata を削除)
+    hooks: フックに関する情報を表示
+infolists: infolist に関する情報を表示
+     libs: 使用中の外部ライブラリに関する情報を表示
+   memory: メモリ使用量に関する情報を表示
+    mouse: マウスのデバックを切り替え
+     tags: 行のタグを表示
+     term: ターミナルに関する情報を表示
+  windows: ウィンドウツリーの情報を表示
 ----
 
 [[command_weechat_eval]]
@@ -220,43 +220,43 @@ infolists: display infos about infolists
 /eval  [-n] <expression>
        [-n] -c <expression1> <operator> <expression2>
 
-        -n: display result without sending it to buffer (debug mode)
-        -c: evaluate as condition: use operators and parentheses, return a boolean value ("0" or "1")
-expression: expression to evaluate, variables with format ${variable} are replaced (see below)
-  operator: a logical or comparison operator:
-            - logical operators:
-                &&  boolean "and"
-                ||  boolean "or"
-            - comparison operators:
-                ==  equal
-                !=  not equal
-                <=  less or equal
-                <   less
-                >=  greater or equal
-                >   greater
-                =~  is matching POSIX extended regex
-                !~  is NOT matching POSIX extended regex
+        -n: 結果をバッファに送信せずに表示 (デバッグモード)
+        -c: 条件として評価: 演算子と括弧をを使い、ブール値 ("0" または "1") を返します
+expression: 評価する式、フォーマット、${variable} 型のフォーマットの変数は置換されます (以下を参照)
+  operator: 論理演算子や比較演算子:
+            - 論理演算子:
+                &&  ブール演算の "and"
+                ||  ブール演算の "or"
+            - 比較演算子:
+                ==  等しい
+                !=  等しくない
+                <=  以下
+                <   より少ない
+                >=  以上
+                >   より大きい
+                =~  正規表現にマッチ
+                !~  正規表現にマッチしない
 
-An expression is considered as "true" if it is not NULL, not empty, and different from "0".
-The comparison is made using integers if the two expressions are valid integers.
-To force a string comparison, add double quotes around each expression, for example:
+式が NULL でない場合、空でない場合、"0" でない場合、式は "真" と評価されます。
+両方の式が有効な整数である場合、比較は整数を使って行われます。
+文字列比較を強制するには、それぞれの式をダブルクォートで囲みます、例えば:
   50 > 100      ==> 0
   "50" > "100"  ==> 1
 
-Some variables are replaced in expression, using the format ${variable}, variable can be, by order of priority :
-  1. a color (format: "color:xxx")
-  2. an info (format: "info:name,arguments", arguments are optional)
-  3. an option (format: "file.section.option")
-  4. a local variable in buffer
-  5. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
-Format for hdata can be one of following:
-  hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
-  hdata[list].var1.var2...: start with a hdata using a list, for example:
-    ${buffer[gui_buffers].full_name}: full name of first buffer in linked list of buffers
-    ${plugin[weechat_plugins].name}: name of first plugin in linked list of plugins
-For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
+式中の ${variable} 型のフォーマットの変数は置換さます。変数は以下の優先順位に従います。
+  1. 色 (フォーマット: "color:xxx")
+  2. 情報 (フォーマット: "info:name,arguments"、arguments は任意)
+  3. オプション (フォーマット: "file.section.option")
+  4. バッファのローカル変数
+  5. hdata の名前/変数 (値は自動的に文字列に変換されます)、デフォルトでは "window" と "buffer" は現在のウィンドウ/バッファを指します。
+hdata のフォーマットは以下の 1 つです:
+  hdata.var1.var2...: hdata (ポインタは既知) で始まり、1 個ずつ変数を続ける (他の hdata を続けることも可能)
+  hdata(list).var1.var2...: リストを使って hdata を始める、例:
+    ${buffer[gui_buffers].full_name}: バッファリストにリンクされた最初のバッファのフルネーム
+    ${plugin[weechat_plugins].name}: プラグインリストにリンクされた最初のプラグインの名前
+hdata と変数の名前については、"プラグイン API リファレンス" の "weechat_hdata_get" 関数を参照してください。
 
-Examples:
+例:
   /eval -n ${info:version}                 ==> 0.4.3
   /eval -n ${weechat.look.scroll_amount}   ==> 3
   /eval -n ${window}                       ==> 0x2549aa0
@@ -282,52 +282,52 @@ Examples:
          add <name> <buffer>[,<buffer>...] <tags> <regex>
          del <name>|-all
 
-   list: list all filters
- enable: enable filters (filters are enabled by default)
-disable: disable filters
- toggle: toggle filters
-   name: filter name
-    add: add a filter
-    del: delete a filter
-   -all: delete all filters
- buffer: comma separated list of buffers where filter is active:
-         - this is full name including plugin (example: "irc.freenode.#weechat")
-         - "*" means all buffers
-         - a name starting with '!' is excluded
-         - name can start or end with '*' to match many buffers
-   tags: comma separated list of tags, for example "irc_join,irc_part,irc_quit"
-         - logical "and": use "+" between tags (for example: "nick_toto+irc_action")
-         - tags can start or end with '*'
-  regex: POSIX extended regular expression to search in line
-         - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
-         - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
-         - two regular expressions are created: one for prefix and one for message
-         - regex are case insensitive, they can start by "(?-i)" to become case sensitive
+   list: 全てのフィルタをリストアップ
+ enable: フィルタを有効化 (フィルタはデフォルトで有効になっています)
+disable: フィルタを無効化
+ toggle: フィルタの有効無効を切り替え
+   name: フィルタの名前
+    add: フィルタを追加
+    del: フィルタを削除
+   -all: 全てのフィルタを削除
+ buffer: フィルタが有効化されているバッファのコンマ区切りリスト:
+         - これはプラグイン名を含む完全な名前です (例えば: "irc.freenode.#weechat")
+         - "*" は全てのバッファを意味します
+         - 名前が '!' から始まるものは除外されます
+         - 多くのバッファにマッチさせるためには名前を '*' から始めるか終わらせてください
+   tags: タグのコンマ区切りリスト、例えば "irc_join,irc_part,irc_quit"
+         - 論理積 "and": タグ同士を "+" でつなげる (例えば: "nick_toto+irc_action")
+         - タグの最初と最後には '*' を使うことができます
+  regex: 行単位検索の正規表現
+         - '\t' を使うと、プレフィックスをメッセージから分離できます。'|' 等の特別な文字は '\|' のようにエスケープしなければいけません
+         - 正規表現の最初に '!' が含まれる場合は、マッチ結果が反転されます (最初の '!' にマッチさせたければ、'\!' を使ってください)
+         - 2 種類の正規表現があります: 一方はプレフィックス用、他方はメッセージ用
+         - 正規表現は大文字小文字を区別しません、"(?-i)" から始まる場合は区別します
 
-The default key alt+'=' toggles filtering on/off.
+デフォルトではキー alt+'=' でフィルタリングの on/off を切り替えられます。
 
-Tags most commonly used:
+よく使われるタグ:
   no_filter, no_highlight, no_log, log0..log9 (log level),
   notify_none, notify_message, notify_private, notify_highlight,
-  nick_xxx (xxx is nick in message), prefix_nick_ccc (ccc is color of nick),
-  irc_xxx (xxx is command name or number, see /server raw or /debug tags),
+  nick_xxx (xxx はメッセージのニックネーム), prefix_nick_ccc (ccc はニックネームの色)
+  irc_xxx (xxx はコマンド名又は番号、/server raw または /debug tags で確認),
   irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
-To see tags for lines in buffers: /debug tags
+バッファ内でタグを見るには: /debug tags
 
-Examples:
-  use IRC smart filter on all buffers:
+例:
+  全てのバッファで IRC スマートフィルタを使用:
     /filter add irc_smart * irc_smart_filter *
-  use IRC smart filter on all buffers except those with "#weechat" in name:
+  名前に "#weechat" を含むバッファを除いた全てのバッファで IRC スマートフィルタを使用:
     /filter add irc_smart *,!*#weechat* irc_smart_filter *
-  filter all IRC join/part/quit messages:
+  全ての IRC join/part/quit メッセージをフィルタ:
     /filter add joinquit * irc_join,irc_part,irc_quit *
-  filter nicks displayed when joining channels or with /names:
+  チャンネルに入った時や /names で表示されるニックネームをフィルタ:
     /filter add nicks * irc_366 *
-  filter nick "toto" on IRC channel #weechat:
+  IRC チャンネル #weechat で "toto" を含むニックネームをフィルタ:
     /filter add toto irc.freenode.#weechat nick_toto *
-  filter IRC join/action messages from nick "toto":
+  ニックネーム "toto" からの IRC の参加/アクションメッセージをフィルタ:
     /filter add toto * nick_toto+irc_join,nick_toto+irc_action *
-  filter lines containing "weechat sucks" on IRC channel #weechat:
+  IRC チャンネル #weechat で "weechat sucks" を含む行をフィルタ:
     /filter add sucks irc.freenode.#weechat * weechat sucks
 ----
 
@@ -473,7 +473,7 @@ listdefault: デフォルトキーをリストアップ
 ----
 
 [[command_weechat_layout]]
-[command]*`layout`* manage buffers/windows layouts::
+[command]*`layout`* バッファ/ウィンドウレイアウトの管理::
 
 ----
 /layout  store [<name>] [buffers|windows]
@@ -482,17 +482,17 @@ listdefault: デフォルトキーをリストアップ
          del [<name>] [buffers|windows]
          rename <name> <new_name>
 
-  store: store current buffers/windows in a layout
-  apply: apply saved layout
-  leave: leave current layout (does not update any layout)
-    del: delete buffers and/or windows in a saved layout
-         (if neither "buffers" nor "windows" is given after the name, the layout is deleted)
- rename: rename a layout
-   name: name for saved layout (default is "default")
-buffers: save/apply only buffers (order of buffers)
-windows: save/apply only windows (buffer displayed by each window)
+  store: レイアウトに現在のバッファ/ウィンドウを保存
+  apply: 保存されたレイアウトを適用
+  leave: 現在のレイアウトを保持する (レイアウトを更新しない)
+    del: レイアウトとして保存されているバッファとウィンドウを削除
+         (名前の後に "バッファ" や "ウィンドウ" を指定しない場合、レイアウトを削除)
+ rename: レイアウトのリネーム
+   name: 保存されたレイアウトの名前 (初期状態は "default")
+buffers: バッファのみに対してレイアウトを保存/適用 (バッファの順番)
+windows: ウィンドウのみに対してレイアウトを保存/適用 (それぞれのウィンドウに表示されるバッファ)
 
-Without argument, this command displays saved layouts.
+引数無しでは、保存されたレイアウトを表示します。
 ----
 
 [[command_weechat_mouse]]
@@ -654,36 +654,36 @@ file: 保存する設定ファイル (拡張子 ".conf" は不要)
          set <name> <value>
          del <name>
 
-passphrase: change the passphrase (without passphrase, data is stored as plain text in file sec.conf)
-   -delete: delete passphrase
-   decrypt: decrypt data still encrypted (it happens only if passphrase was not given on startup)
-  -discard: discard all data still encrypted
-       set: add or change secured data
-       del: delete secured data
+passphrase: パスフレーズを変更 (パスフレーズがない場合、sec.conf ファイルに平文でデータを保存します)
+   -delete: パスフレーズを削除
+   decrypt: 暗号化されているデータを復号化 (起動時にパスフレーズが設定されていない場合に起きます)
+  -discard: 全ての暗号化データを破棄
+       set: 保護データを追加または変更
+       del: 保護データを削除
 
-Without argument, this command displays secured data in a new buffer.
+引数がない場合、新しいバッファに保護データを表示します。
 
-When a passphrase is used (data encrypted), it is asked by WeeChat on startup.
-It is possible to set environment variable "WEECHAT_PASSPHRASE" to prevent the prompt (this same variable is used by WeeChat on /upgrade).
+パスフレーズを利用する場合 (データが暗号化されている場合)、WeeChat は起動時にパスフレーズを尋ねます。
+環境変数 "WEECHAT_PASSPHRASE" を利用すれば入力を回避できます (WeeChat は /upgrade の時に同じ変数を利用します)。
 
-Secured data with format ${sec.data.xxx} can be used in:
-  - command line argument "--run-command"
-  - options weechat.startup.command_{before|after}_plugins
-  - proxy options: username, password
-  - irc server options: autojoin, command, password, sasl_{username|password}
-  - option relay.network.password
-  - command /eval.
+${sec.data.xxx} の形でフォーマットされた保護データは以下の様に利用できます:
+  - コマンドライン引数 "--run-command"
+  - weechat.startup.command_{before|after}_plugins オプション
+  - プロキシオプション: username、password
+  - irc サーバオプション: autojoin、command、password、sasl_{username|password}
+  - relay.network.password オプション
+  - /eval コマンド。
 
-Examples:
-  set a passphrase:
+例:
+  パスフレーズを設定:
     /secure passphrase this is my passphrase
-  encrypt freenode SASL password:
+  freenode の SASL パスワードを暗号化:
     /secure set freenode mypassword
     /set irc.server.freenode.sasl_password "${sec.data.freenode}"
-  encrypt oftc password for nickserv:
+  oftc の nickserv 用パスワードを暗号化:
     /secure set oftc mypassword
     /set irc.server.oftc.command "/msg nickserv identify ${sec.data.oftc}"
-  alias to ghost the nick "mynick":
+  ニックネーム "mynick" を取り戻すためのエイリアス ghost を設定
     /alias ghost /eval /msg -server freenode nickserv ghost mynick ${sec.data.freenode}
 ----
 

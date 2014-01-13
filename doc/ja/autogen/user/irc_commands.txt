@@ -65,21 +65,21 @@ channel: バン対象チャンネル
 /connect  <server> [<server>...] [-<option>[=<value>]] [-no<option>] [-nojoin] [-switch]
           -all|-auto|-open [-nojoin] [-switch]
 
-    server: server name, which can be:
-            - internal server name (created by /server add, recommended usage)
-            - hostname/port or IP/port (this will create a TEMPORARY server), port is 6667 by default
-            - URL with format: irc[6][s]://[nickname[:password]@]irc.example.org[:port][/#channel1][,#channel2[...]]
-    option: set option for server (for boolean option, value can be omitted)
-  nooption: set boolean option to 'off' (for example: -nossl)
-      -all: connect to all servers defined in configuration
-     -auto: connect to servers with autoconnect enabled
-     -open: connect to all opened servers that are not currently connected
-   -nojoin: do not join any channel (even if autojoin is enabled on server)
-   -switch: switch to next server address
+    server: サーバ名、これは:
+            - 内部サーバ名 (/server add で作成されたもの、利用推奨)
+            - ホスト名/ポート番号、又は IP アドレス/ポート番号 (これは一時的サーバを作る)、デフォルトのポート番号は 6667
+            - 次のフォーマットに従う URL: irc[6][s]://[nickname[:password]@]irc.example.org[:port][/#channel1][,#channel2[...]]
+    option: サーバに関するオプション (ブール型オプションでは、value は無視される)
+  nooption: ブール型オプションを 'off' にする (例: -nossl)
+      -all: 設定された全てのサーバに接続
+     -auto: 自動接続を有効化してサーバに接続
+     -open: 現在接続されていないがオープンされているサーバに接続
+   -nojoin: チャンネルに入らない (autojoin が有効化されていても)
+   -switch: 次のサーバアドレスに移動
 
-To disconnect from a server or stop any connection attempt, use command /disconnect.
+サーバとの接続を切断するか、接続試行を中止するには /disconnect コマンドを使ってください。
 
-Examples:
+例:
   /connect freenode
   /connect irc.oftc.net/6667
   /connect irc6.oftc.net/6667 -ipv6
@@ -199,23 +199,23 @@ nick: ニックネームまたはマスク (ワイルドカード "*" を最初�
          add [re:]<nick> [<server> [<channel>]]
          del <number>|-all
 
-     list: list all ignores
-      add: add an ignore
-     nick: nick or hostname (can be a POSIX extended regular expression if "re:" is given or a mask using "*" to replace one or more chars)
-      del: delete an ignore
-   number: number of ignore to delete (look at list to find it)
-     -all: delete all ignores
-   server: internal server name where ignore is working
-  channel: channel name where ignore is working
+     list: 無視エントリをリストアップ
+      add: 無視エントリを追加
+     nick: ニックネーム又はホスト名 ("re:" を付けることで POSIX 拡張正規表現を使えます、"*" は 1 つ以上の文字にマッチします)
+      del: 無視エントリの削除
+   number: 削除する無視エントリ番号 (番号はリストを参照)
+     -all: 全ての無視エントリを削除
+   server: 無視設定を有効にする内部サーバ名
+  channel: 無視設定を有効にするチャンネル名
 
-Note: the regular expression can start with "(?-i)" to become case sensitive.
+注意: 正規表現で大文字小文字を区別するには "(?-i)" を最初につけてください。
 
-Examples:
-  ignore nick "toto" everywhere:
+例:
+  全てのサーバ上のニックネーム "toto" を無視:
     /ignore add toto
-  ignore host "toto@domain.com" on freenode server:
+  freenode サーバ上のホスト名 "toto@domain.com" を無視:
     /ignore add toto@domain.com freenode
-  ignore host "toto*@*.domain.com" on freenode/#weechat:
+  freenode サーバの #weechat チャンネル上のホスト名 "toto*@*.domain.com" を無視:
     /ignore add toto*@*.domain.com freenode #weechat
 ----
 
@@ -271,9 +271,9 @@ nick: nick
 ----
 /kick  [<channel>] <nick> [<reason>]
 
-channel: channel where user is
-   nick: nick to kick
- reason: reason for kick (special variables $nick, $channel and $server are replaced by their value)
+channel: ユーザの居るチャンネル
+   nick: キックするニックネーム
+ reason: キック理由 (特殊変数 $nick、$channel、$server はそれぞれの値に置換されます)
 ----
 
 [[command_irc_kickban]]
@@ -282,14 +282,14 @@ channel: channel where user is
 ----
 /kickban  [<channel>] <nick> [<reason>]
 
-channel: channel where user is
-   nick: nick to kick and ban
- reason: reason for kick (special variables $nick, $channel and $channel are replaced by their value)
+channel: ユーザの居るチャンネル
+   nick: キックと参加禁止にするニックネーム
+ reason: キック理由 (特殊変数 $nick、$channel、$server はそれぞれの値に置換されます)
 
-It is possible to kick/ban with a mask, nick will be extracted from mask and replaced by "*".
+キックと参加禁止にマスクを使える場合、"*" のマスク展開後にマッチするニックネームがこれらの対象になる。
 
-Example:
-  ban "*!*@host.com" and then kick "toto":
+例:
+  "*!*@host.com" を参加禁止して "toto" をキック:
     /kickban toto!*@host.com
 ----
 
@@ -319,16 +319,16 @@ server_mask: このマスクにマッチするサーバのリスト
 ----
 /list  [<channel>[,<channel>...]] [<server>] [-re <regex>]
 
-channel: channel to list
- server: server name
-  regex: POSIX extended regular expression used to filter results (case insensitive, can start by "(?-i)" to become case sensitive)
+channel: リストアップするチャンネル名
+ server: サーバ名
+  regex: 結果をフィルタする POSIX 拡張正規表現 (大文字小文字は区別しない、"(?-i)" で始めれば区別する)
 
-Examples:
-  list all channels on server (can be very slow on large networks):
+例:
+  サーバ上の全てのチャンネルをリストアップ (大きなネットワークでは非常に遅い):
     /list
-  list channel #weechat:
+  #weechat チャンネルをリストアップ:
     /list #weechat
-  list all channels beginning with "#weechat" (can be very slow on large networks):
+  "#weechat" で始まる全てのチャンネルをリストアップ (大きなネットワークでは非常に遅い):
     /list -re #weechat.*
 ----
 
