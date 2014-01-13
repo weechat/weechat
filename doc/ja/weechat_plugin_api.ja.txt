@@ -1169,10 +1169,11 @@ highlight = weechat.string_has_highlight("my test string", "test,word2") # 1
 
 _WeeChat バージョン 0.3.4 以上で利用可。_
 
+// TRANSLATION MISSING
 POSIX 拡張正規表現を使って、文字列中から正規表現にマッチする部分が 1
 つ以上あるか確認。 +
-文字列中から正規表現にマッチする部分が少なくとも 1 つ以上あるためには、マッチ部分は単語文字
-(アルファベット、"-"、"_"、"|") で囲まれていなければなりません。
+For at least one match of regular expression on string, it must be surrounded
+by delimiters (chars different from: alphanumeric, "-", "_" and "|").
 
 プロトタイプ:
 

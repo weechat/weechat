@@ -539,7 +539,7 @@
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
 * [[option_weechat.look.highlight_regex]] *weechat.look.highlight_regex*
-** opis: `POSIX extended regular expression used to check if a message has highlight or not, at least one match in string must be surrounded by word chars (alphanumeric, "-", "_" or "|"), regular expression is case insensitive (use "(?-i)" at beginning to make it case sensitive), examples: "flashcode|flashy", "(?-i)FlashCode|flashy"`
+** opis: `POSIX extended regular expression used to check if a message has highlight or not, at least one match in string must be surrounded by delimiters (chars different from: alphanumeric, "-", "_" and "|"), regular expression is case insensitive (use "(?-i)" at beginning to make it case sensitive), examples: "flashcode|flashy", "(?-i)FlashCode|flashy"`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 

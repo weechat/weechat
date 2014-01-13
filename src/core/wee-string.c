@@ -985,7 +985,7 @@ string_has_highlight (const char *string, const char *highlight_words)
 
 /*
  * Checks if a string has a highlight using a compiled regular expression (any
- * match in string must be surrounded by word chars).
+ * match in string must be surrounded by delimiters).
  */
 
 int
@@ -1034,7 +1034,7 @@ string_has_highlight_regex_compiled (const char *string, regex_t *regex)
 
 /*
  * Checks if a string has a highlight using a regular expression (any match in
- * string must be surrounded by word chars).
+ * string must be surrounded by delimiters).
  */
 
 int

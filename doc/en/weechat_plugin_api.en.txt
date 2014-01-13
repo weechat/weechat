@@ -1174,7 +1174,7 @@ _WeeChat ≥ 0.3.4._
 Check if a string has one or more highlights, using a POSIX extended regular
 expression. +
 For at least one match of regular expression on string, it must be surrounded
-by word chars (alphanumeric character, "-", "_" or "|").
+by delimiters (chars different from: alphanumeric, "-", "_" and "|").
 
 Prototype:
 

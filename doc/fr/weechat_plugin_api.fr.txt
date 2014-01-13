@@ -1190,7 +1190,7 @@ _WeeChat ≥ 0.3.4._
 Vérifier si une chaîne a un ou plusieurs "highlights", en utilisant une
 expression régulière POSIX étendue. +
 Pour au moins une correspondance dans la chaîne, elle doit être entourée de
-caractères de mot (caractère alphanumérique, "-", "_" ou "|").
+délimiteurs (caractères différents de: alphanumérique, "-", "_" et "|").
 
 Prototype :
 
