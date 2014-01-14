@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-13 15:40+0100\n"
+"POT-Creation-Date: 2014-01-14 13:17+0100\n"
 "PO-Revision-Date: 2014-01-06 10:17+0100\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1868,6 +1868,10 @@ msgid "configuration options"
 msgstr "yapılandırma seçenekleri"
 
 msgid "names of plugins"
+msgstr "eklentilerin isimleri"
+
+#, fuzzy
+msgid "names of plugins installed"
 msgstr "eklentilerin isimleri"
 
 msgid "commands defined by plugins"

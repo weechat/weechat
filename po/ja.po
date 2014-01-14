@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-13 15:40+0100\n"
+"POT-Creation-Date: 2014-01-14 13:17+0100\n"
 "PO-Revision-Date: 2014-01-13 10:55+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -2616,6 +2616,10 @@ msgid "configuration options"
 msgstr "設定オプション"
 
 msgid "names of plugins"
+msgstr "プラグイン名"
+
+#, fuzzy
+msgid "names of plugins installed"
 msgstr "プラグイン名"
 
 msgid "commands defined by plugins"

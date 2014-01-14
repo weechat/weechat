@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-13 15:40+0100\n"
+"POT-Creation-Date: 2014-01-14 13:17+0100\n"
 "PO-Revision-Date: 2014-01-06 10:17+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2110,6 +2110,10 @@ msgstr "Не найден параметр\n"
 
 #, fuzzy
 msgid "names of plugins"
+msgstr "настроить параметры конфигурации"
+
+#, fuzzy
+msgid "names of plugins installed"
 msgstr "настроить параметры конфигурации"
 
 #, fuzzy

@@ -41,6 +41,7 @@
 #include "wee-proxy.h"
 #include "wee-secure.h"
 #include "wee-string.h"
+#include "wee-util.h"
 #include "../gui/gui-completion.h"
 #include "../gui/gui-bar.h"
 #include "../gui/gui-bar-window.h"
@@ -725,6 +726,92 @@ completion_list_add_plugins_cb (void *data,
     {
         gui_completion_list_add (completion, ptr_plugin->name,
                                  0, WEECHAT_LIST_POS_SORT);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Adds a plugin installed to completion list.
+ */
+
+void
+completion_list_add_plugins_installed_exec_cb (void *data, const char *filename)
+{
+    struct t_gui_completion *completion;
+    const char *pos, *pos2;
+    char *name;
+
+    completion = (struct t_gui_completion *)data;
+
+    /* start after last '/' (or '\') in path */
+    pos = strrchr (filename, DIR_SEPARATOR_CHAR);
+    if (pos)
+        pos++;
+    else
+        pos = filename;
+
+    /* truncate after the last '.' in name */
+    pos2 = strrchr (pos, '.');
+    if (pos2)
+        name = string_strndup (pos, pos2 - pos);
+    else
+        name = strdup (pos);
+
+    if (name)
+    {
+        gui_completion_list_add (completion, name, 0, WEECHAT_LIST_POS_SORT);
+        free (name);
+    }
+}
+
+/*
+ * Adds plugins installed to completion list.
+ */
+
+int
+completion_list_add_plugins_installed_cb (void *data,
+                                          const char *completion_item,
+                                          struct t_gui_buffer *buffer,
+                                          struct t_gui_completion *completion)
+{
+    char *plugin_path, *plugin_path2, *dir_name;
+    int length;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+
+    /* plugins in WeeChat home dir */
+    if (CONFIG_STRING(config_plugin_path)
+        && CONFIG_STRING(config_plugin_path)[0])
+    {
+        plugin_path = string_expand_home (CONFIG_STRING(config_plugin_path));
+        plugin_path2 = string_replace ((plugin_path) ?
+                                       plugin_path : CONFIG_STRING(config_plugin_path),
+                                       "%h", weechat_home);
+        util_exec_on_files ((plugin_path2) ?
+                            plugin_path2 : ((plugin_path) ?
+                                            plugin_path : CONFIG_STRING(config_plugin_path)),
+                            0,
+                            completion,
+                            &completion_list_add_plugins_installed_exec_cb);
+        if (plugin_path)
+            free (plugin_path);
+        if (plugin_path2)
+            free (plugin_path2);
+    }
+
+    /* plugins in WeeChat global lib dir */
+    length = strlen (WEECHAT_LIBDIR) + 16 + 1;
+    dir_name = malloc (length);
+    if (dir_name)
+    {
+        snprintf (dir_name, length, "%s/plugins", WEECHAT_LIBDIR);
+        util_exec_on_files (dir_name, 0, completion,
+                            &completion_list_add_plugins_installed_exec_cb);
+        free (dir_name);
     }
 
     return WEECHAT_RC_OK;
@@ -1416,6 +1503,9 @@ completion_init ()
     hook_completion (NULL, "plugins_names", /* formerly "%p" */
                      N_("names of plugins"),
                      &completion_list_add_plugins_cb, NULL);
+    hook_completion (NULL, "plugins_installed",
+                     N_("names of plugins installed"),
+                     &completion_list_add_plugins_installed_cb, NULL);
     hook_completion (NULL, "plugins_commands", /* formerly "%P" */
                      N_("commands defined by plugins"),
                      &completion_list_add_plugins_commands_cb, NULL);

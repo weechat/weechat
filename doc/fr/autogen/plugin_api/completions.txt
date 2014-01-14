@@ -116,6 +116,8 @@
 
 | weechat | plugins_commands | commandes définies par les extensions
 
+| weechat | plugins_installed | noms des extensions installées
+
 | weechat | plugins_names | noms des extensions
 
 | weechat | proxies_names | noms des proxies

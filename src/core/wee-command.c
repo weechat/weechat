@@ -6921,7 +6921,7 @@ command_init ()
                      "Without argument, this command lists loaded plugins."),
                   "list %(plugins_names)"
                   " || listfull %(plugins_names)"
-                  " || load %(filename)"
+                  " || load %(plugins_installed)"
                   " || autoload"
                   " || reload %(plugins_names)"
                   " || unload %(plugins_names)",

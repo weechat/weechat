@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-13 15:40+0100\n"
+"POT-Creation-Date: 2014-01-14 13:17+0100\n"
 "PO-Revision-Date: 2014-01-06 10:16+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -2758,6 +2758,10 @@ msgid "configuration options"
 msgstr "Konfigurationsoptionen"
 
 msgid "names of plugins"
+msgstr "Liste der Erweiterungen"
+
+#, fuzzy
+msgid "names of plugins installed"
 msgstr "Liste der Erweiterungen"
 
 msgid "commands defined by plugins"
