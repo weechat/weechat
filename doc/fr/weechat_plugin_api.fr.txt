@@ -503,7 +503,7 @@ Prototype :
 
 [source,C]
 ----
-void weechat_string_tolower (const char *string);
+void weechat_string_tolower (char *string);
 ----
 
 Paramètres :
@@ -514,7 +514,7 @@ Exemple en C :
 
 [source,C]
 ----
-char *str = "AbCdé";
+char str[] = "AbCdé";
 weechat_string_tolower (str); /* str vaut maintenant : "abcdé" */
 ----
 
@@ -529,7 +529,7 @@ Prototype :
 
 [source,C]
 ----
-void weechat_string_toupper (const char *string);
+void weechat_string_toupper (char *string);
 ----
 
 Paramètres :
@@ -540,7 +540,7 @@ Exemple en C :
 
 [source,C]
 ----
-char *str = "AbCdé";
+char str[] = "AbCdé";
 weechat_string_toupper (str); /* str vaut maintenant : "ABCDé" */
 ----
 

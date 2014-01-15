@@ -496,7 +496,7 @@ UTF-8 文字列を小文字に変換。
 
 [source,C]
 ----
-void weechat_string_tolower (const char *string);
+void weechat_string_tolower (char *string);
 ----
 
 引数:
@@ -507,7 +507,7 @@ C 言語での使用例:
 
 [source,C]
 ----
-char *str = "AbCdé";
+char str[] = "AbCdé";
 weechat_string_tolower (str); /* str is now: "abcdé" */
 ----
 
@@ -522,7 +522,7 @@ UTF-8 文字列を大文字に変換。
 
 [source,C]
 ----
-void weechat_string_toupper (const char *string);
+void weechat_string_toupper (char *string);
 ----
 
 引数:
@@ -533,7 +533,7 @@ C 言語での使用例:
 
 [source,C]
 ----
-char *str = "AbCdé";
+char str[] = "AbCdé";
 weechat_string_toupper (str); /* str is now: "ABCDé" */
 ----
 
