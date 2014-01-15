@@ -28,6 +28,8 @@ struct t_gui_buffer;
 
 #define WEECHAT_CONFIG_NAME "weechat"
 
+#define TAB_MAX_WIDTH 64
+
 enum t_config_look_align_end_of_lines
 {
     CONFIG_LOOK_ALIGN_END_OF_LINES_TIME = 0,
@@ -196,6 +198,7 @@ extern struct t_config_option *config_look_scroll_page_percent;
 extern struct t_config_option *config_look_search_text_not_found_alert;
 extern struct t_config_option *config_look_separator_horizontal;
 extern struct t_config_option *config_look_separator_vertical;
+extern struct t_config_option *config_look_tab_width;
 extern struct t_config_option *config_look_time_format;
 extern struct t_config_option *config_look_window_auto_zoom;
 extern struct t_config_option *config_look_window_separator_horizontal;
@@ -297,7 +300,7 @@ extern char ***config_highlight_tags;
 extern int config_num_highlight_tags;
 extern char **config_plugin_extensions;
 extern int config_num_plugin_extensions;
-
+extern char config_tab_spaces[];
 
 extern struct t_config_option *config_weechat_debug_get (const char *plugin_name);
 extern int config_weechat_debug_set (const char *plugin_name,

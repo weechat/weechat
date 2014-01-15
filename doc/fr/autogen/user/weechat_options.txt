@@ -838,6 +838,11 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
+* [[option_weechat.look.tab_width]] *weechat.look.tab_width*
+** description: `nombre d'espaces utilisés pour afficher les tabulations dans les messages`
+** type: entier
+** valeurs: 1 .. 64 (valeur par défaut: `1`)
+
 * [[option_weechat.look.time_format]] *weechat.look.time_format*
 ** description: `format de date/heure pour les dates converties en chaînes et affichées dans les messages (voir man strftime pour le format de date/heure)`
 ** type: chaîne

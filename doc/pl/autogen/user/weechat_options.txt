@@ -838,6 +838,11 @@
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
+* [[option_weechat.look.tab_width]] *weechat.look.tab_width*
+** opis: `number of spaces used to display tabs in messages`
+** typ: liczba
+** wartości: 1 .. 64 (domyślna wartość: `1`)
+
 * [[option_weechat.look.time_format]] *weechat.look.time_format*
 ** opis: `format czasu dla dat, konwertowany do ciągu i wyświetlany w wiadomościach (zobacz man strftime dla specyfikatorów daty/czasu)`
 ** typ: ciąg

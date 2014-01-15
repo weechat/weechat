@@ -166,6 +166,7 @@ struct t_config_option *config_look_scroll_page_percent;
 struct t_config_option *config_look_search_text_not_found_alert;
 struct t_config_option *config_look_separator_horizontal;
 struct t_config_option *config_look_separator_vertical;
+struct t_config_option *config_look_tab_width;
 struct t_config_option *config_look_time_format;
 struct t_config_option *config_look_window_auto_zoom;
 struct t_config_option *config_look_window_separator_horizontal;
@@ -281,6 +282,7 @@ char ***config_highlight_tags = NULL;
 int config_num_highlight_tags = 0;
 char **config_plugin_extensions = NULL;
 int config_num_plugin_extensions = 0;
+char config_tab_spaces[TAB_MAX_WIDTH + 1];
 
 
 /*
@@ -741,6 +743,23 @@ config_check_separator (void *data, struct t_config_option *option,
     (void) option;
 
     return (utf8_strlen_screen (value) <= 1) ? 1 : 0;
+}
+
+/*
+ * Callback for changes on option "weechat.look.tab_width".
+ */
+
+void
+config_change_tab_width (void *data, struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+    memset (config_tab_spaces, ' ', CONFIG_INTEGER(config_look_tab_width));
+    config_tab_spaces[CONFIG_INTEGER(config_look_tab_width)] = '\0';
+
+    gui_window_ask_refresh (1);
 }
 
 /*
@@ -2608,6 +2627,12 @@ config_weechat_init_options ()
            "width on screen must be exactly one char"),
         NULL, 0, 0, "", NULL, 0,
         &config_check_separator, NULL, &config_change_buffers, NULL, NULL, NULL);
+    config_look_tab_width = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "tab_width", "integer",
+        N_("number of spaces used to display tabs in messages"),
+        NULL, 1, TAB_MAX_WIDTH, "1", NULL, 0, NULL, NULL,
+        &config_change_tab_width, NULL, NULL, NULL);
     config_look_time_format = config_file_new_option (
         weechat_config_file, ptr_section,
         "time_format", "string",
@@ -3366,6 +3391,8 @@ config_weechat_init ()
     struct timeval tv_time;
     struct tm *local_time;
     time_t seconds;
+
+    snprintf (config_tab_spaces, sizeof (config_tab_spaces), " ");
 
     rc = config_weechat_init_options ();
 

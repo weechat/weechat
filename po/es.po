@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-14 13:17+0100\n"
+"POT-Creation-Date: 2014-01-15 13:58+0100\n"
 "PO-Revision-Date: 2014-01-06 10:16+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3259,6 +3259,10 @@ msgstr ""
 "carácter usado para dibujar separadores horizontales entre barras (un valor "
 "vacío dibujará una línea verdadera con ncurses), caracteres unicode NO están "
 "permitidos"
+
+#, fuzzy
+msgid "number of spaces used to display tabs in messages"
+msgstr "localización para traducción de mensajes"
 
 #, fuzzy
 msgid ""

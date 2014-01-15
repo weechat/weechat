@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-14 13:17+0100\n"
+"POT-Creation-Date: 2014-01-15 13:58+0100\n"
 "PO-Revision-Date: 2014-01-06 10:16+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3070,6 +3070,10 @@ msgstr ""
 "vykreslí skutečnou čáru při použití ncurses, ale může způsobit problém s "
 "výběrem URL v některých terminálech), znaky kódované do více bytů zde NEJSOU "
 "povoleny"
+
+#, fuzzy
+msgid "number of spaces used to display tabs in messages"
+msgstr "prefix pro zprávy akcí"
 
 #, fuzzy
 msgid ""

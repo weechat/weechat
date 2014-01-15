@@ -371,7 +371,7 @@ gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
                            int apply_style_inactive,
                            int nick_offline)
 {
-    char *next_char, *output, utf_char[16];
+    char *next_char, *output, utf_char[16], *ptr_char;
     int x, chars_displayed, display_char, size_on_screen;
 
     if (!simulate)
@@ -396,15 +396,20 @@ gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
         next_char = utf8_next_char (string);
         if (next_char)
         {
+            ptr_char = utf_char;
+
             memcpy (utf_char, string, next_char - string);
             utf_char[next_char - string] = '\0';
+
             if (!gui_chat_utf_char_valid (utf_char))
                 snprintf (utf_char, sizeof (utf_char), " ");
+            else if (utf_char[0] == '\t')
+                ptr_char = config_tab_spaces;
 
             display_char = (window->buffer->type != GUI_BUFFER_TYPE_FREE)
                 || (x >= window->scroll->start_col);
 
-            size_on_screen = utf8_strlen_screen (utf_char);
+            size_on_screen = utf8_strlen_screen (ptr_char);
             if ((max_chars_on_screen > 0)
                 && (chars_displayed + size_on_screen > max_chars_on_screen))
             {
@@ -414,9 +419,9 @@ gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
             {
                 if (!simulate)
                 {
-                    output = string_iconv_from_internal (NULL, utf_char);
+                    output = string_iconv_from_internal (NULL, ptr_char);
                     waddstr (GUI_WINDOW_OBJECTS(window)->win_chat,
-                             (output) ? output : utf_char);
+                             (output) ? output : ptr_char);
                     if (output)
                         free (output);
 

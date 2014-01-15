@@ -838,6 +838,11 @@
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
+* [[option_weechat.look.tab_width]] *weechat.look.tab_width*
+** descrizione: `number of spaces used to display tabs in messages`
+** tipo: intero
+** valori: 1 .. 64 (valore predefinito: `1`)
+
 * [[option_weechat.look.time_format]] *weechat.look.time_format*
 ** descrizione: `formato dell'ora per le date convertite in stringhe e mostrate nei messaggi(consultare man strftime per i dettagli su data/ora)`
 ** tipo: stringa

@@ -397,8 +397,9 @@ utf8_strnlen (const char *string, int bytes)
 int
 utf8_strlen_screen (const char *string)
 {
-    int length, num_char;
+    int length, num_char, add_for_tab;
     wchar_t *alloc_wstring, *ptr_wstring, wstring[4+2];
+    const char *ptr_string;
 
     if (!string || !string[0])
         return 0;
@@ -439,6 +440,16 @@ utf8_strlen_screen (const char *string)
 
     if (alloc_wstring)
         free (alloc_wstring);
+
+    add_for_tab = CONFIG_INTEGER(config_look_tab_width) - 1;
+    if (add_for_tab > 0)
+    {
+        for (ptr_string = string; ptr_string[0]; ptr_string++)
+        {
+            if (ptr_string[0] == '\t')
+                length += add_for_tab;
+        }
+    }
 
     return length;
 }

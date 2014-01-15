@@ -138,8 +138,8 @@ gui_chat_prefix_build ()
 int
 gui_chat_utf_char_valid (const char *utf_char)
 {
-    /* chars below 32 are not valid */
-    if ((unsigned char)utf_char[0] < 32)
+    /* chars below 32 are not valid (except TAB) */
+    if (((unsigned char)utf_char[0] < 32) && (utf_char[0] != '\t'))
         return 0;
 
     /* 146 or 0x7F are not valid */
