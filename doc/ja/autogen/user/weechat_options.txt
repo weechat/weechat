@@ -571,7 +571,7 @@
 * [[option_weechat.look.hotlist_names_count]] *weechat.look.hotlist_names_count*
 ** 説明: `ホットリストに載せるバッファ名の数の最大値 (0 = バッファ名は無し、番号のみ)`
 ** タイプ: 整数
-** 値: 0 .. 32 (デフォルト値: `3`)
+** 値: 0 .. 10000 (デフォルト値: `3`)
 
 * [[option_weechat.look.hotlist_names_length]] *weechat.look.hotlist_names_length*
 ** 説明: `ホットリストに載せるバッファ名の長さの最大値 (0 = 制限無し)`

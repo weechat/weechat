@@ -2286,9 +2286,9 @@ config_weechat_init_options ()
     config_look_hotlist_names_count = config_file_new_option (
         weechat_config_file, ptr_section,
         "hotlist_names_count", "integer",
-        N_("max number of names in hotlist (0 = no name "
-           "displayed, only buffer numbers)"),
-        NULL, 0, 32, "3", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
+        N_("max number of names in hotlist (0 = no name displayed, only buffer "
+           "numbers)"),
+        NULL, 0, GUI_BUFFERS_MAX, "3", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
     config_look_hotlist_names_length = config_file_new_option (
         weechat_config_file, ptr_section,
         "hotlist_names_length", "integer",

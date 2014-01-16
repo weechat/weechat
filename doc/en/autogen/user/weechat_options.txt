@@ -571,7 +571,7 @@
 * [[option_weechat.look.hotlist_names_count]] *weechat.look.hotlist_names_count*
 ** description: `max number of names in hotlist (0 = no name displayed, only buffer numbers)`
 ** type: integer
-** values: 0 .. 32 (default value: `3`)
+** values: 0 .. 10000 (default value: `3`)
 
 * [[option_weechat.look.hotlist_names_length]] *weechat.look.hotlist_names_length*
 ** description: `max length of names in hotlist (0 = no limit)`

@@ -571,7 +571,7 @@
 * [[option_weechat.look.hotlist_names_count]] *weechat.look.hotlist_names_count*
 ** description: `nombre maximum de noms dans la liste d'activité (0 = pas de nom affiché, seulement les numéros de tampons)`
 ** type: entier
-** valeurs: 0 .. 32 (valeur par défaut: `3`)
+** valeurs: 0 .. 10000 (valeur par défaut: `3`)
 
 * [[option_weechat.look.hotlist_names_length]] *weechat.look.hotlist_names_length*
 ** description: `nombre maximum des noms dans la liste d'activité (0 = pas de limite)`

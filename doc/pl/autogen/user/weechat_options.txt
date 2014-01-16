@@ -571,7 +571,7 @@
 * [[option_weechat.look.hotlist_names_count]] *weechat.look.hotlist_names_count*
 ** opis: `maksymalna ilość nazw w hotliście (0 = żadna nazwa nie zostanie wyświetlona, tylko numery buforów)`
 ** typ: liczba
-** wartości: 0 .. 32 (domyślna wartość: `3`)
+** wartości: 0 .. 10000 (domyślna wartość: `3`)
 
 * [[option_weechat.look.hotlist_names_length]] *weechat.look.hotlist_names_length*
 ** opis: `maksymalna długość nazwy w hotliście (0 = brak limitu)`
