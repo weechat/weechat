@@ -746,7 +746,7 @@ All combinations are summarized in this table:
 | hex[19] + "b" + "B"                | hex[19]`bB`             | bars        | Set bar background color
 | hex[19] + "b" + "_"                | hex[19]`b_`             | input bar   | Start input char (used only in item "input_text")
 | hex[19] + "b" + "-"                | hex[19]`b-`             | input bar   | Start input hidden char (used only in item "input_text")
-| hex[19] + "b" + "#"                | hex[19]`b#`             | input bar   | Move cursor char char (used only in item "input_text")
+| hex[19] + "b" + "#"                | hex[19]`b#`             | input bar   | Move cursor char (used only in item "input_text")
 | hex[19] + "b" + "i"                | hex[19]`bi`             | bars        | Start item
 | hex[19] + "b" + "l" (lower L)      | hex[19]`bl`             | bars        | Start line item
 | hex[19] + "E"                      | hex[19]`E`              | chat + bars | Emphasize text _(new in version 0.4.2)_
