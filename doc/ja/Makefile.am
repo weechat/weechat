@@ -28,6 +28,7 @@ EXTRA_DIST = CMakeLists.txt \
              weechat_faq.ja.txt \
              weechat_quickstart.ja.txt \
              weechat_tester.ja.txt \
+             weechat_dev.ja.txt \
              $(wildcard autogen/user/*.txt) \
              $(wildcard autogen/plugin_api/*.txt)
 
@@ -43,6 +44,7 @@ if DOC
 		weechat_faq.ja.html \
 		weechat_quickstart.ja.html \
 		weechat_tester.ja.html
+		weechat_dev.ja.html \
   doc_install = install-doc
   doc_uninstall = uninstall-doc
 endif
@@ -77,6 +79,10 @@ weechat_quickstart.ja.html: weechat_quickstart.ja.txt
 # tester's guide
 weechat_tester.ja.html: weechat_tester.ja.txt
 	$(ASCIIDOC) -a toc -a toc-title='目次' -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_tester.ja.html $(abs_top_srcdir)/doc/ja/weechat_tester.ja.txt
+
+# developer's guide
+weechat_dev.ja.html: weechat_dev.ja.txt
+	$(ASCIIDOC) -a toc -a toclevels=4 -a toc-title='目次' -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_dev.ja.html $(abs_top_srcdir)/doc/ja/weechat_dev.ja.txt
 
 # install man/docs
 
