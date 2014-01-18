@@ -154,7 +154,10 @@ utf8_normalize (char *string, char replacement)
 }
 
 /*
- * Returns pointer to previous UTF-8 char in a string.
+ * Gets pointer to previous UTF-8 char in a string.
+ *
+ * Returns pointer to previous UTF-8 char, NULL if not found (for example
+ * "string_start" was reached).
  */
 
 char *
@@ -195,7 +198,9 @@ utf8_prev_char (const char *string_start, const char *string)
 }
 
 /*
- * Returns pointer to next UTF-8 char in a string.
+ * Gets pointer to next UTF-8 char in a string.
+ *
+ * Returns pointer to next UTF-8 char, NULL if string was NULL.
  */
 
 char *
@@ -236,7 +241,9 @@ utf8_next_char (const char *string)
 }
 
 /*
- * Returns UTF-8 char as an integer.
+ * Gets UTF-8 char as an integer.
+ *
+ * Returns the UTF-8 char as integer number.
  */
 
 int
@@ -292,6 +299,9 @@ utf8_char_int (const char *string)
 
 /*
  * Gets wide char from string (first char).
+ *
+ * Returns the char as "wint_t", WEOF is string was NULL/empty or in case of
+ * error.
  */
 
 wint_t
@@ -346,8 +356,10 @@ utf8_char_size (const char *string)
 }
 
 /*
- * Returns length of an UTF-8 string in number of chars (not bytes).
+ * Gets length of an UTF-8 string in number of chars (not bytes).
  * Result is <= strlen(string).
+ *
+ * Returns length of string (>= 0).
  */
 
 int
@@ -368,7 +380,9 @@ utf8_strlen (const char *string)
 }
 
 /*
- * Returns length of an UTF-8 string for N bytes max in string.
+ * Gets length of an UTF-8 string for N bytes max in string.
+ *
+ * Returns length of string (>= 0).
  */
 
 int
@@ -391,7 +405,9 @@ utf8_strnlen (const char *string, int bytes)
 }
 
 /*
- * Returns number of chars needed on screen to display the UTF-8 string.
+ * Gets number of chars needed on screen to display the UTF-8 string.
+ *
+ * Returns the number of chars (>= 0).
  */
 
 int
@@ -456,6 +472,11 @@ utf8_strlen_screen (const char *string)
 
 /*
  * Compares two UTF-8 chars (case sensitive).
+ *
+ * Returns:
+ *   < 0: char1 < char2
+ *     0: char1 == char2
+ *   > 0: char1 > char2
  */
 
 int
@@ -489,6 +510,11 @@ utf8_charcmp (const char *string1, const char *string2)
 
 /*
  * Compares two UTF-8 chars (case is ignored).
+ *
+ * Returns:
+ *   < 0: char1 < char2
+ *     0: char1 == char2
+ *   > 0: char1 > char2
  */
 
 int
@@ -548,7 +574,9 @@ utf8_charcasecmp_range (const char *string1, const char *string2, int range)
 }
 
 /*
- * Returns number of chars needed on screen to display the UTF-8 char.
+ * Gets number of chars needed on screen to display the UTF-8 char.
+ *
+ * Returns the number of chars (>= 0).
  */
 
 int
@@ -572,6 +600,8 @@ utf8_char_size_screen (const char *string)
 
 /*
  * Moves forward N chars in an UTF-8 string.
+ *
+ * Returns pointer to the new position in string.
  */
 
 char *
@@ -589,11 +619,13 @@ utf8_add_offset (const char *string, int offset)
 }
 
 /*
- * Returns real position in UTF-8 string, in bytes.
+ * Gets real position in UTF-8 string, in bytes.
  *
  * Argument "pos" is a number of chars (not bytes).
  *
  * Example: ("déca", 2) returns 3.
+ *
+ * Returns the real position (>= 0).
  */
 
 int
@@ -618,11 +650,13 @@ utf8_real_pos (const char *string, int pos)
 }
 
 /*
- * Returns position in UTF-8 string, in chars.
+ * Gets position in UTF-8 string, in chars.
  *
  * Argument "real_pos" is a number of bytes (not chars).
  *
  * Example: ("déca", 3) returns 2.
+ *
+ * Returns the position in string.
  */
 
 int
@@ -646,6 +680,8 @@ utf8_pos (const char *string, int real_pos)
 
 /*
  * Duplicates an UTF-8 string, with max N chars.
+ *
+ * Note: result must be freed after use.
  */
 
 char *
