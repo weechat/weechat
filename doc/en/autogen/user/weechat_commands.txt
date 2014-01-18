@@ -519,7 +519,7 @@ Examples:
 [command]*`mute`* execute a command silently::
 
 ----
-/mute  [-current | -buffer <name> | -all] command
+/mute  [-current | -buffer <name> | -all] <command>
 
 -current: no output on current buffer
  -buffer: no output on specified buffer

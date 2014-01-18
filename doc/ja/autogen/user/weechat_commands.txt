@@ -519,7 +519,7 @@ disable: マウスの無効化
 [command]*`mute`* 静かにコマンドを実行::
 
 ----
-/mute  [-current | -buffer <name> | -all] command
+/mute  [-current | -buffer <name> | -all] <command>
 
 -current: 現在のバッファへの出力を禁止
  -buffer: 指定したバッファへの出力を禁止

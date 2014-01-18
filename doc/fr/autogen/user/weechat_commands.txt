@@ -519,7 +519,7 @@ Exemples:
 [command]*`mute`* exécuter une commande silencieusement::
 
 ----
-/mute  [-current | -buffer <nom> | -all] commande
+/mute  [-current | -buffer <nom> | -all] <commande>
 
 -current: pas d'affichage sur le tampon courant
  -buffer: pas d'affichage sur le tampon spécifié

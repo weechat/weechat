@@ -519,7 +519,7 @@ Beispiele:
 [command]*`mute`* Führt einen Befehl ohne Textausgabe aus::
 
 ----
-/mute  [-current | -buffer <name> | -all] command
+/mute  [-current | -buffer <name> | -all] <command>
 
 -current: Ausgabe im aktuellen Buffer wird unterdrückt
  -buffer: Ausgabe im ausgewählten Buffer wird unterdrückt
