@@ -458,40 +458,38 @@ weechat_aspell_command_cb (void *data, struct t_gui_buffer *buffer,
 void
 weechat_aspell_command_init ()
 {
-    weechat_hook_command ("aspell",
-                          N_("aspell plugin configuration"),
-                          N_("enable|disable|toggle"
-                             " || listdict"
-                             " || setdict <dict>[,<dict>...]"
-                             " || deldict"
-                             " || addword [<dict>] <word>"),
-                          N_("  enable: enable aspell\n"
-                             " disable: disable aspell\n"
-                             "  toggle: toggle aspell\n"
-                             "listdict: show installed dictionaries\n"
-                             " setdict: set dictionary for current buffer "
-                             "(multiple dictionaries can be separated by a "
-                             "comma)\n"
-                             " deldict: delete dictionary used on current "
-                             "buffer\n"
-                             " addword: add a word in personal aspell "
-                             "dictionary\n"
-                             "\n"
-                             "Input line beginning with a '/' is not checked, "
-                             "except for some commands (see /set "
-                             "aspell.check.commands).\n\n"
-                             "To enable aspell on all buffers, use option "
-                             "\"default_dict\", then enable aspell, for "
-                             "example:\n"
-                             "  /set aspell.check.default_dict \"en\"\n"
-                             "  /aspell enable\n\n"
-                             "Default key to toggle aspell is alt-s."),
-                          "enable"
-                          " || disable"
-                          " || toggle"
-                          " || listdict"
-                          " || setdict %(aspell_dicts)"
-                          " || deldict"
-                          " || addword",
-                          &weechat_aspell_command_cb, NULL);
+    weechat_hook_command (
+        "aspell",
+        N_("aspell plugin configuration"),
+        N_("enable|disable|toggle"
+           " || listdict"
+           " || setdict <dict>[,<dict>...]"
+           " || deldict"
+           " || addword [<dict>] <word>"),
+        N_("  enable: enable aspell\n"
+           " disable: disable aspell\n"
+           "  toggle: toggle aspell\n"
+           "listdict: show installed dictionaries\n"
+           " setdict: set dictionary for current buffer (multiple dictionaries "
+           "can be separated by a comma)\n"
+           " deldict: delete dictionary used on current buffer\n"
+           " addword: add a word in personal aspell dictionary\n"
+           "\n"
+           "Input line beginning with a '/' is not checked, except for some "
+           "commands (see /set aspell.check.commands).\n"
+           "\n"
+           "To enable aspell on all buffers, use option \"default_dict\", then "
+           "enable aspell, for example:\n"
+           "  /set aspell.check.default_dict \"en\"\n"
+           "  /aspell enable\n"
+           "\n"
+           "Default key to toggle aspell is alt-s."),
+        "enable"
+        " || disable"
+        " || toggle"
+        " || listdict"
+        " || setdict %(aspell_dicts)"
+        " || deldict"
+        " || addword",
+        &weechat_aspell_command_cb, NULL);
 }

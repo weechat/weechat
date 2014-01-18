@@ -240,41 +240,41 @@ rmodifier_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
 void
 rmodifier_command_init ()
 {
-    weechat_hook_command ("rmodifier",
-                          N_("alter modifier strings with regular expressions"),
-                          N_("list|listdefault"
-                             " || add <name> <modifiers> <groups> <regex>"
-                             " || del <name>|-all [<name>...]"
-                             " || missing"
-                             " || default -yes"),
-                          N_("       list: list all rmodifiers\n"
-                             "listdefault: list default rmodifiers\n"
-                             "        add: add a rmodifier\n"
-                             "       name: name of rmodifier\n"
-                             "  modifiers: comma separated list of modifiers\n"
-                             "     groups: action on groups captured in regular "
-                             "expression (inside parentheses): comma separated "
-                             "list of groups (from 1 to 9) with optional \"*\" "
-                             "after number to hide the group\n"
-                             "      regex: POSIX extended regular expression "
-                             "(case insensitive, can start by \"(?-i)\" to "
-                             "become case sensitive)\n"
-                             "        del: delete a rmodifier\n"
-                             "       -all: delete all rmodifiers\n"
-                             "    missing: add missing rmodifiers\n"
-                             "    default: restore default rmodifiers\n\n"
-                             "Examples:\n"
-                             "  hide everything typed after a command /password:\n"
-                             "    /rmodifier add password input_text_display 1,2* ^(/password +)(.*)\n"
-                             "  delete rmodifier \"password\":\n"
-                             "    /rmodifier del password\n"
-                             "  delete all rmodifiers:\n"
-                             "    /rmodifier del -all"),
-                          "list"
-                          " || listdefault"
-                          " || add %(rmodifier)"
-                          " || del %(rmodifier)|-all %(rmodifier)|%*"
-                          " || missing"
-                          " || default",
-                          &rmodifier_command_cb, NULL);
+    weechat_hook_command (
+        "rmodifier",
+        N_("alter modifier strings with regular expressions"),
+        N_("list|listdefault"
+           " || add <name> <modifiers> <groups> <regex>"
+           " || del <name>|-all [<name>...]"
+           " || missing"
+           " || default -yes"),
+        N_("       list: list all rmodifiers\n"
+           "listdefault: list default rmodifiers\n"
+           "        add: add a rmodifier\n"
+           "       name: name of rmodifier\n"
+           "  modifiers: comma separated list of modifiers\n"
+           "     groups: action on groups captured in regular expression "
+           "(inside parentheses): comma separated list of groups (from 1 to 9) "
+           "with optional \"*\" after number to hide the group\n"
+           "      regex: POSIX extended regular expression (case insensitive, "
+           "can start by \"(?-i)\" to become case sensitive)\n"
+           "        del: delete a rmodifier\n"
+           "       -all: delete all rmodifiers\n"
+           "    missing: add missing rmodifiers\n"
+           "    default: restore default rmodifiers\n"
+           "\n"
+           "Examples:\n"
+           "  hide everything typed after a command /password:\n"
+           "    /rmodifier add password input_text_display 1,2* ^(/password +)(.*)\n"
+           "  delete rmodifier \"password\":\n"
+           "    /rmodifier del password\n"
+           "  delete all rmodifiers:\n"
+           "    /rmodifier del -all"),
+        "list"
+        " || listdefault"
+        " || add %(rmodifier)"
+        " || del %(rmodifier)|-all %(rmodifier)|%*"
+        " || missing"
+        " || default",
+        &rmodifier_command_cb, NULL);
 }

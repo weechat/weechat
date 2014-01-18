@@ -154,30 +154,28 @@ plugin_script_init (struct t_weechat_plugin *weechat_plugin,
                                              "%s",
                                              string);
     }
-    weechat_hook_command (weechat_plugin->name,
-                          N_("list/load/unload scripts"),
-                          N_("list|listfull [<name>]"
-                             " || load [-q] <filename>"
-                             " || autoload"
-                             " || reload|unload [-q] [<name>]"),
-                          N_("    list: list loaded scripts\n"
-                             "listfull: list loaded scripts (verbose)\n"
-                             "    load: load a script\n"
-                             "autoload: load all scripts in \"autoload\" "
-                             "directory\n"
-                             "  reload: reload a script (if no name given, "
-                             "unload all scripts, then load all scripts in "
-                             "\"autoload\" directory)\n"
-                             "  unload: unload a script (if no name given, "
-                             "unload all scripts)\n"
-                             "filename: script (file) to load\n"
-                             "    name: a script name (name used in call to "
-                             "\"register\" function)\n"
-                             "      -q: quiet mode: do not display messages\n\n"
-                             "Without argument, this command "
-                             "lists all loaded scripts."),
-                          completion,
-                          init->callback_command, NULL);
+    weechat_hook_command (
+        weechat_plugin->name,
+        N_("list/load/unload scripts"),
+        N_("list|listfull [<name>]"
+           " || load [-q] <filename>"
+           " || autoload"
+           " || reload|unload [-q] [<name>]"),
+        N_("    list: list loaded scripts\n"
+           "listfull: list loaded scripts (verbose)\n"
+           "    load: load a script\n"
+           "autoload: load all scripts in \"autoload\" directory\n"
+           "  reload: reload a script (if no name given, unload all scripts, "
+           "then load all scripts in \"autoload\" directory)\n"
+           "  unload: unload a script (if no name given, unload all scripts)\n"
+           "filename: script (file) to load\n"
+           "    name: a script name (name used in call to \"register\" "
+           "function)\n"
+           "      -q: quiet mode: do not display messages\n"
+           "\n"
+           "Without argument, this command lists all loaded scripts."),
+        completion,
+        init->callback_command, NULL);
     if (string)
         free (string);
     if (completion)

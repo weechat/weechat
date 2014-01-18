@@ -983,53 +983,52 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     alias_config_read ();
 
-    weechat_hook_command ("alias",
-                          N_("create an alias for a command"),
-                          N_("[-completion <completion>] <alias> [<command> "
-                             "[;<command>...]]"),
-                          N_("completion: completion for alias (optional, by "
-                             "default completion is done with target "
-                             "command)\n"
-                             "            note: you can use %%command to use "
-                             "completion of an existing command\n"
-                             "     alias: name of alias (can start or end "
-                             "with \"*\" for alias listing)\n"
-                             "   command: command name with arguments (many "
-                             "commands can be separated by semicolons)\n\n"
-                             "Without argument, this command lists all "
-                             "defined alias.\n\n"
-                             "Note: in command, special variables "
-                             "are replaced:\n"
-                             "        $n: argument 'n' (between 1 and 9)\n"
-                             "       $-m: arguments from 1 to 'm'\n"
-                             "       $n-: arguments from 'n' to last\n"
-                             "      $n-m: arguments from 'n' to 'm'\n"
-                             "        $*: all arguments\n"
-                             "        $~: last argument\n"
-                             "      $var: where \"var\" is a local variable of "
-                             "buffer (see /buffer localvar)\n"
-                             "            examples: $nick, $channel, $server, "
-                             "$plugin, $name\n\n"
-                             "To remove an alias, use command /unalias.\n\n"
-                             "Examples:\n"
-                             "  alias /split to split window horizontally:\n"
-                             "    /alias split /window splith\n"
-                             "  alias /hello to say \"hello\" on all channels "
-                             "but not on #weechat:\n"
-                             "    /alias hello /allchan -exclude=#weechat msg "
-                             "* hello\n"
-                             "  alias /forcejoin to send IRC command "
-                             "\"forcejoin\" with completion of /sajoin:\n"
-                             "    /alias -completion %%sajoin forcejoin /quote forcejoin"),
-                          "-completion %- %(alias) %(commands)|%(alias_value)"
-                          " || %(alias) %(commands)|%(alias_value)",
-                          &alias_command_cb, NULL);
-
-    weechat_hook_command ("unalias", N_("remove aliases"),
-                          N_("<alias> [<alias>...]"),
-                          N_("alias: name of alias to remove"),
-                          "%(alias)|%*",
-                          &unalias_command_cb, NULL);
+    weechat_hook_command (
+        "alias",
+        N_("create an alias for a command"),
+        N_("[-completion <completion>] <alias> [<command> [;<command>...]]"),
+        N_("completion: completion for alias (optional, by default completion "
+           "is done with target command)\n"
+           "            note: you can use %%command to use completion of an "
+           "existing command\n"
+           "     alias: name of alias (can start or end with \"*\" for alias "
+           "listing)\n"
+           "   command: command name with arguments (many commands can be "
+           "separated by semicolons)\n"
+           "\n"
+           "Without argument, this command lists all defined alias.\n"
+           "\n"
+           "Note: in command, special variables are replaced:\n"
+           "        $n: argument 'n' (between 1 and 9)\n"
+           "       $-m: arguments from 1 to 'm'\n"
+           "       $n-: arguments from 'n' to last\n"
+           "      $n-m: arguments from 'n' to 'm'\n"
+           "        $*: all arguments\n"
+           "        $~: last argument\n"
+           "      $var: where \"var\" is a local variable of buffer (see "
+           "/buffer localvar)\n"
+           "            examples: $nick, $channel, $server, $plugin, $name\n"
+           "\n"
+           "To remove an alias, use command /unalias.\n"
+           "\n"
+           "Examples:\n"
+           "  alias /split to split window horizontally:\n"
+           "    /alias split /window splith\n"
+           "  alias /hello to say \"hello\" on all channels but not on "
+           "#weechat:\n"
+           "    /alias hello /allchan -exclude=#weechat msg * hello\n"
+           "  alias /forcejoin to send IRC command \"forcejoin\" with "
+           "completion of /sajoin:\n"
+           "    /alias -completion %%sajoin forcejoin /quote forcejoin"),
+        "-completion %- %(alias) %(commands)|%(alias_value)"
+        " || %(alias) %(commands)|%(alias_value)",
+        &alias_command_cb, NULL);
+    weechat_hook_command (
+        "unalias", N_("remove aliases"),
+        N_("<alias> [<alias>...]"),
+        N_("alias: name of alias to remove"),
+        "%(alias)|%*",
+        &unalias_command_cb, NULL);
 
     weechat_hook_completion ("alias", N_("list of aliases"),
                              &alias_completion_cb, NULL);

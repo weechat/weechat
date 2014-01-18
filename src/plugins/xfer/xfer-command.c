@@ -246,17 +246,19 @@ xfer_command_xfer (void *data, struct t_gui_buffer *buffer, int argc,
 void
 xfer_command_init ()
 {
-    weechat_hook_command ("me",
-                          N_("send a CTCP action to remote host"),
-                          N_("<message>"),
-                          N_("message: message to send"),
-                          NULL, &xfer_command_me, NULL);
-    weechat_hook_command ("xfer",
-                          N_("xfer control"),
-                          "[list|listfull]",
-                          N_("    list: list xfer\n"
-                             "listfull: list xfer (verbose)\n\n"
-                             "Without argument, this command opens buffer "
-                             "with xfer list."),
-                          "list|listfull", &xfer_command_xfer, NULL);
+    weechat_hook_command (
+        "me",
+        N_("send a CTCP action to remote host"),
+        N_("<message>"),
+        N_("message: message to send"),
+        NULL, &xfer_command_me, NULL);
+    weechat_hook_command (
+        "xfer",
+        N_("xfer control"),
+        "[list|listfull]",
+        N_("    list: list xfer\n"
+           "listfull: list xfer (verbose)\n"
+           "\n"
+           "Without argument, this command opens buffer with xfer list."),
+        "list|listfull", &xfer_command_xfer, NULL);
 }
