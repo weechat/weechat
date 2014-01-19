@@ -1666,7 +1666,7 @@ gui_input_insert (struct t_gui_buffer *buffer, const char *args)
     if (args)
     {
         gui_buffer_undo_snap (buffer);
-        args2 = string_convert_hex_chars (args);
+        args2 = string_convert_escaped_chars (args);
         gui_input_insert_string (buffer, (args2) ? args2 : args, -1);
         gui_input_text_changed_modifier_and_signal (buffer,
                                                     1, /* save undo */

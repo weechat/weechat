@@ -54,6 +54,11 @@
 #include "../plugins/plugin.h"
 
 
+#define IS_OCTAL_DIGIT(c) ((c >= '0') && (c <= '7'))
+#define HEX2DEC(c) (((c >= 'a') && (c <= 'f')) ? c - 'a' + 10 :         \
+                    ((c >= 'A') && (c <= 'F')) ? c - 'A' + 10 :         \
+                    c - '0')
+
 typedef uint32_t string_shared_count_t;
 
 struct t_hashtable *string_hashtable_shared = NULL;
@@ -623,74 +628,127 @@ string_strip (const char *string, int left, int right, const char *chars)
 }
 
 /*
- * Converts hex chars (\x??) to value.
+ * Converts escaped chars to their value.
+ *
+ * Following escaped chars are supported:
+ *   \"     double quote
+ *   \\     backslash
+ *   \a     alert (BEL)
+ *   \b     backspace
+ *   \e     escape
+ *   \f     form feed
+ *   \n     new line
+ *   \r     carriage return
+ *   \t     horizontal tab
+ *   \v     vertical tab
+ *   \0ooo  octal value (ooo is 0 to 3 digits)
+ *   \xhh   hexadecimal value (hh is 1 to 2 digits)
  *
  * Note: result must be freed after use.
  */
 
 char *
-string_convert_hex_chars (const char *string)
+string_convert_escaped_chars (const char *string)
 {
-    char *output, hex_str[8], *error;
-    int pos_output;
-    long number;
+    const unsigned char *ptr_string;
+    char *output;
+    int pos_output, i, value;
 
+    /* the output length is always <= to string length */
     output = malloc (strlen (string) + 1);
-    if (output)
+    if (!output)
+        return NULL;
+
+    pos_output = 0;
+    ptr_string = (const unsigned char *)string;
+    while (ptr_string && ptr_string[0])
     {
-        pos_output = 0;
-        while (string && string[0])
+        if (ptr_string[0] == '\\')
         {
-            if (string[0] == '\\')
+            ptr_string++;
+            switch (ptr_string[0])
             {
-                string++;
-                switch (string[0])
-                {
-                    case '\\':
-                        output[pos_output++] = '\\';
-                        string++;
-                        break;
-                    case 'x':
-                    case 'X':
-                        if (isxdigit ((unsigned char)string[1])
-                            && isxdigit ((unsigned char)string[2]))
+                case '"':
+                    output[pos_output++] = '"';
+                    ptr_string++;
+                    break;
+                case '\\':
+                    output[pos_output++] = '\\';
+                    ptr_string++;
+                    break;
+                case 'a':  /* alert */
+                    output[pos_output++] = 7;
+                    ptr_string++;
+                    break;
+                case 'b':  /* backspace */
+                    output[pos_output++] = 8;
+                    ptr_string++;
+                    break;
+                case 'e':  /* escape */
+                    output[pos_output++] = 27;
+                    ptr_string++;
+                    break;
+                case 'f':  /* form feed */
+                    output[pos_output++] = 12;
+                    ptr_string++;
+                    break;
+                case 'n':  /* new line */
+                    output[pos_output++] = 10;
+                    ptr_string++;
+                    break;
+                case 'r':  /* carriage return */
+                    output[pos_output++] = 13;
+                    ptr_string++;
+                    break;
+                case 't':  /* horizontal tab */
+                    output[pos_output++] = 9;
+                    ptr_string++;
+                    break;
+                case 'v':  /* vertical tab */
+                    output[pos_output++] = 11;
+                    ptr_string++;
+                    break;
+                case '0':  /* octal value (0 to 3 digits expected) */
+                    value = 0;
+                    for (i = 0; (i < 3) && IS_OCTAL_DIGIT(ptr_string[i + 1]); i++)
+                    {
+                        value = (value * 8) + (ptr_string[i + 1] - '0');
+                    }
+                    output[pos_output++] = value;
+                    ptr_string += 1 + i;
+                    break;
+                case 'x':  /* hexadecimal value (1 to 2 digits expected) */
+                case 'X':
+                    if (isxdigit (ptr_string[1]))
+                    {
+                        value = 0;
+                        for (i = 0; (i < 2) && isxdigit (ptr_string[i + 1]); i++)
                         {
-                            snprintf (hex_str, sizeof (hex_str),
-                                      "0x%c%c", string[1], string[2]);
-                            number = strtol (hex_str, &error, 16);
-                            if (error && !error[0])
-                            {
-                                output[pos_output++] = number;
-                                string += 3;
-                            }
-                            else
-                            {
-                                output[pos_output++] = '\\';
-                                output[pos_output++] = string[0];
-                                string++;
-                            }
+                            value = (value * 16) + HEX2DEC(ptr_string[i + 1]);
                         }
-                        else
-                        {
-                            output[pos_output++] = string[0];
-                            string++;
-                        }
-                        break;
-                    default:
-                        output[pos_output++] = '\\';
-                        output[pos_output++] = string[0];
-                        string++;
-                        break;
-                }
-            }
-            else
-            {
-                output[pos_output++] = string[0];
-                string++;
+                        output[pos_output++] = value;
+                        ptr_string += 1 + i;
+                    }
+                    else
+                    {
+                        output[pos_output++] = ptr_string[0];
+                        ptr_string++;
+                    }
+                    break;
+                default:
+                    output[pos_output++] = '\\';
+                    output[pos_output++] = ptr_string[0];
+                    ptr_string++;
+                    break;
             }
         }
-        output[pos_output] = '\0';
+        else
+        {
+            output[pos_output++] = ptr_string[0];
+            ptr_string++;
+        }
     }
+    output[pos_output] = '\0';
 
     return output;
 }

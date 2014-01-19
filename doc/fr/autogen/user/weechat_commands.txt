@@ -561,6 +561,44 @@ paramètres: paramètres donnés à l'extension lors de son chargement
 Sans paramètre, cette commande liste les extensions chargées.
 ----
 
+[[command_weechat_print]]
+[command]*`print`* afficher du texte dans un tampon::
+
+----
+/print  [-buffer <numéro>|<nom>] [-core] [-escape] [-date <date>] [-tags <étiquettes>] [-action|-error|-join|-network|-quit] <texte>
+        -stdout|-stderr <texte>
+
+-buffer: le tampon où est affiché le texte (par défaut: tampon courant)
+  -core: alias de "-buffer core.weechat"
+-escape: interpréter les caractères échappés (par exemple \a, \07, \x07)
+  -date: date du message, le format peut être :
+           -n: 'n' secondes avant maintenant
+           +n: 'n' secondes dans le futur
+            n: 'n' secondes depuis l'époque (voir man time)
+           date/heure (ISO 8601): yyyy-mm-ddThh:mm:ss, exemple: 2014-01-19T04:32:55
+           heure: hh:mm:ss (exemple: 04:32:55)
+  -tags: liste d'étiquettes séparées par des virgules (voir /help filter pour une liste des étiquettes couramment utilisées)
+  texte: texte à afficher (le préfixe et le message doivent être séparés par \t)
+-stdout: afficher le texte sur stdout (pas dans un tampon)
+-stderr: afficher le texte sur stderr (pas dans un tampon)
+
+Les options -action ... -quit utilisent le préfixe défini dans les options "weechat.look.prefix_*".
+
+Avec les options -stdout et -stderr, les caractères échappés sont toujours interprétés.
+
+Exemples:
+  afficher un pense-bête sur le tampon core avec un highlight:
+    /print -core -tags notify_highlight Pense-bête: acheter du lait
+  afficher une erreur sur le tampon core:
+    /print -core -error Une erreur ici
+  afficher un message sur le tampon core avec le préfixe "abc":
+    /print -core abc\tLe message
+  afficher un message sur le canal #weechat:
+    /print -buffer irc.freenode.#weechat Message sur #weechat
+  envoyer une alerte (BEL):
+    /print -stderr \a
+----
+
 [[command_weechat_proxy]]
 [command]*`proxy`* gestion des proxies::
 

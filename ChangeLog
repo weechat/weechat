@@ -11,6 +11,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 0.4.3 (under dev)
 
+* core: add command /print
 * core: add option weechat.look.tab_width
 * core: add completion "plugins_installed"
 * core: fix crash in /eval when config option has a NULL value

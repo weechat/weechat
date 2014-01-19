@@ -20,12 +20,18 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* this define is needed for strptime() (not on OpenBSD) */
+#if !defined(__OpenBSD__)
+#define _XOPEN_SOURCE 700
+#endif
+
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
 
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include <ctype.h>
 #include <time.h>
@@ -4172,6 +4178,182 @@ COMMAND_CALLBACK(plugin)
 }
 
 /*
+ * Callback for command "/print": display text on a buffer.
+ */
+
+COMMAND_CALLBACK(print)
+{
+    struct t_gui_buffer *ptr_buffer;
+    int i, escape, to_stdout, to_stderr;
+    time_t date, date_now;
+    struct tm tm_date;
+    char *tags, *pos, *text, *text2, *error;
+    const char *prefix;
+    long value;
+
+    /* make C compiler happy */
+    (void) data;
+
+    if (argc < 2)
+        return WEECHAT_RC_OK;
+
+    ptr_buffer = buffer;
+    date = 0;
+    tags = NULL;
+    prefix = NULL;
+    escape = 0;
+    to_stdout = 0;
+    to_stderr = 0;
+
+    for (i = 1; i < argc; i++)
+    {
+        if (string_strcasecmp (argv[i], "-buffer") == 0)
+        {
+            if (i + 1 >= argc)
+                return WEECHAT_RC_ERROR;
+            i++;
+            ptr_buffer = gui_buffer_search_by_number_or_name (argv[i]);
+            if (!ptr_buffer)
+                return WEECHAT_RC_ERROR;
+        }
+        else if (string_strcasecmp (argv[i], "-core") == 0)
+        {
+            ptr_buffer = NULL;
+        }
+        else if (string_strcasecmp (argv[i], "-escape") == 0)
+        {
+            escape = 1;
+        }
+        else if (string_strcasecmp (argv[i], "-date") == 0)
+        {
+            if (i + 1 >= argc)
+                return WEECHAT_RC_ERROR;
+            i++;
+            if ((argv[i][0] == '-') || (argv[i][0] == '+'))
+            {
+                error = NULL;
+                value = strtol (argv[i] + 1, &error, 10);
+                if (!error || error[0])
+                    return WEECHAT_RC_ERROR;
+                date = (argv[i][0] == '-') ?
+                    time (NULL) - value : time (NULL) + value;
+            }
+            else
+            {
+                error = NULL;
+                value = strtol (argv[i], &error, 10);
+                if (error && !error[0])
+                {
+                    date = value;
+                }
+                else
+                {
+                    memset (&tm_date, 0, sizeof (struct tm));
+                    if (strchr (argv[i], '-'))
+                    {
+                        /* ISO 8601 (date/time) */
+                        if (strptime (argv[i], "%Y-%m-%dT%H:%M:%S", &tm_date))
+                        {
+                            if (tm_date.tm_year > 0)
+                                date = mktime (&tm_date);
+                        }
+                    }
+                    else
+                    {
+                        /* time only (use current date) */
+                        date_now = time (NULL);
+                        localtime_r (&date_now, &tm_date);
+                        if (strptime (argv[i], "%H:%M:%S", &tm_date))
+                            date = mktime (&tm_date);
+                    }
+                }
+            }
+        }
+        else if (string_strcasecmp (argv[i], "-tags") == 0)
+        {
+            if (i + 1 >= argc)
+                return WEECHAT_RC_ERROR;
+            i++;
+            tags = argv[i];
+        }
+        else if (string_strcasecmp (argv[i], "-action") == 0)
+        {
+            prefix = gui_chat_prefix[GUI_CHAT_PREFIX_ACTION];
+        }
+        else if (string_strcasecmp (argv[i], "-error") == 0)
+        {
+            prefix = gui_chat_prefix[GUI_CHAT_PREFIX_ERROR];
+        }
+        else if (string_strcasecmp (argv[i], "-join") == 0)
+        {
+            prefix = gui_chat_prefix[GUI_CHAT_PREFIX_JOIN];
+        }
+        else if (string_strcasecmp (argv[i], "-network") == 0)
+        {
+            prefix = gui_chat_prefix[GUI_CHAT_PREFIX_NETWORK];
+        }
+        else if (string_strcasecmp (argv[i], "-quit") == 0)
+        {
+            prefix = gui_chat_prefix[GUI_CHAT_PREFIX_QUIT];
+        }
+        else if (string_strcasecmp (argv[i], "-stdout") == 0)
+        {
+            to_stdout = 1;
+        }
+        else if (string_strcasecmp (argv[i], "-stderr") == 0)
+        {
+            to_stderr = 1;
+        }
+        else
+            break;
+    }
+
+    if (i >= argc)
+        return WEECHAT_RC_OK;
+
+    if (to_stdout || to_stderr)
+    {
+        text = string_convert_escaped_chars (argv_eol[i]);
+        if (text)
+        {
+            fprintf ((to_stdout) ? stdout : stderr, "%s", text);
+            free (text);
+        }
+    }
+    else
+    {
+        text = strdup (argv_eol[i]);
+        if (text)
+        {
+            pos = NULL;
+            if (!prefix)
+            {
+                pos = strstr (text, "\\t");
+                if (pos)
+                {
+                    pos[0] = '\t';
+                    memmove (pos + 1, pos + 2, strlen (pos + 2) + 1);
+                }
+            }
+            text2 = (escape) ?
+                string_convert_escaped_chars (text) : strdup (text);
+            if (text2)
+            {
+                gui_chat_printf_date_tags (
+                    ptr_buffer, date, tags,
+                    "%s%s",
+                    (prefix) ? prefix : ((!prefix && !pos) ? "\t" : ""),
+                    text2);
+                free (text2);
+            }
+            free (text);
+        }
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Displays a list of proxies.
  */
 
@@ -6912,6 +7094,53 @@ command_init ()
         " || reload %(plugins_names)"
         " || unload %(plugins_names)",
         &command_plugin, NULL);
+    hook_command (
+        NULL, "print",
+        N_("display text on a buffer"),
+        N_("[-buffer <number>|<name>] [-core] [-escape] [-date <date>] "
+           "[-tags <tags>] [-action|-error|-join|-network|-quit] <text>"
+           " || -stdout|-stderr <text>"),
+        N_("-buffer: the buffer where text is displayed (default: current "
+           "buffer)\n"
+           "  -core: alias of \"-buffer core.weechat\"\n"
+           "-escape: interpret escaped chars (for example \\a, \\07, \\x07)\n"
+           "  -date: message date, format can be:\n"
+           "           -n: 'n' seconds before now\n"
+           "           +n: 'n' seconds in the future\n"
+           "            n: 'n' seconds since the Epoch (see man time)\n"
+           "           date/time (ISO 8601): yyyy-mm-ddThh:mm:ss, example: "
+           "2014-01-19T04:32:55\n"
+           "           time: hh:mm:ss (example: 04:32:55)\n"
+           "  -tags: comma-separated list of tags (see /help filter for a list "
+           "of tags most commonly used)\n"
+           "   text: text to display (prefix and message must be separated by "
+           "\\t)\n"
+           "-stdout: display text on stdout (not in a buffer)\n"
+           "-stderr: display text on stderr (not in a buffer)\n"
+           "\n"
+           "The options -action ... -quit use the prefix defined in options "
+           "\"weechat.look.prefix_*\".\n"
+           "\n"
+           "With options -stdout and -stderr, escaped chars are always "
+           "interpreted.\n"
+           "\n"
+           "Examples:\n"
+           "  display a reminder on core buffer with a highlight:\n"
+           "    /print -core -tags notify_highlight Reminder: buy milk\n"
+           "  display an error on core buffer:\n"
+           "    /print -core -error Some error here\n"
+           "  display message on core buffer with prefix \"abc\":\n"
+           "    /print -core abc\tThe message\n"
+           "  display a message on channel #weechat:\n"
+           "    /print -buffer irc.freenode.#weechat Message on #weechat\n"
+           "  send alert (BEL):\n"
+           "    /print -stderr \\a"),
+        "-buffer %(buffers_numbers)|%(buffers_plugins_names)"
+        " || -core|-escape|-date|-tags|-action|-error|-join|-network|-quit"
+        " || -prefix"
+        " || -stdout"
+        " || -stderr",
+        &command_print, NULL);
     hook_command (
         NULL, "proxy",
         N_("manage proxies"),
