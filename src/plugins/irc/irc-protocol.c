@@ -1556,6 +1556,17 @@ IRC_PROTOCOL_CALLBACK(pong)
         server->lag_next_check = time (NULL) +
             weechat_config_integer (irc_config_network_lag_check);
     }
+    else
+    {
+        weechat_printf_date_tags (irc_msgbuffer_get_target_buffer (server, NULL,
+                                                                   command, NULL, NULL),
+                                  date,
+                                  irc_protocol_tags (command, NULL, NULL),
+                                  "PONG%s%s",
+                                  (argc >= 4) ? ": " : "",
+                                  (argc >= 4) ? ((argv_eol[3][0] == ':') ?
+                                                 argv_eol[3] + 1 : argv_eol[3]) : "");
+    }
 
     return WEECHAT_RC_OK;
 }

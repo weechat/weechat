@@ -79,6 +79,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * aspell: fix detection of nicks with non-alphanumeric chars
 * guile: disable guile gmp allocator (fix crash on unload of relay plugin)
   (bug #40628)
+* irc: display PONG answer when resulting from manual /ping command
 * irc: fix time parsed in tag of messages on Cygwin
 * irc: use statusmsg from message 005 to check prefix char in status
   notices/messages
