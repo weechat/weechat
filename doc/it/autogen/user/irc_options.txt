@@ -136,7 +136,7 @@
 * [[option_irc.look.display_join_message]] *irc.look.display_join_message*
 ** descrizione: `elenco separato da virgole di messaggi da mostrare dopo l'ingresso in un canale: 329 = data di creazione del canale, 332 = argomento, 333 = nick/data per l'argomento, 366 = nomi sul canale`
 ** tipo: stringa
-** valori: qualsiasi stringa (valore predefinito: `"329,332,333,366"`)
+** valori: qualsiasi stringa (valore predefinito: `"329,332,333"`)
 
 * [[option_irc.look.display_old_topic]] *irc.look.display_old_topic*
 ** descrizione: `visualizza l'argomento del canale precedente quando viene cambiato`
