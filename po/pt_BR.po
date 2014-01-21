@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-21 12:29+0100\n"
+"POT-Creation-Date: 2014-01-21 15:28+0100\n"
 "PO-Revision-Date: 2014-01-18 21:23+0100\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -224,8 +224,8 @@ msgstr "%sNúmero de cor inválido \"%s\" (precisa ser entre %d e %d)"
 msgid "Buffers list:"
 msgstr "Lista de buffers:"
 
-#, c-format
-msgid "  %s[%s%d%s]%s (%s) %s%s%s (notify: %s)"
+#, fuzzy, c-format
+msgid "  %s[%s%d%s]%s %s%s.%s%s%s (notify: %s)"
 msgstr "  %s[%s%d%s]%s (%s) %s%s%s (notificar: %s)"
 
 #, c-format

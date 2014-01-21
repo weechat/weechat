@@ -565,13 +565,14 @@ COMMAND_CALLBACK(buffer)
              ptr_buffer = ptr_buffer->next_buffer)
         {
             gui_chat_printf (NULL,
-                             _("  %s[%s%d%s]%s (%s) %s%s%s (notify: %s)"),
+                             _("  %s[%s%d%s]%s %s%s.%s%s%s (notify: %s)"),
                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                              GUI_COLOR(GUI_COLOR_CHAT),
                              ptr_buffer->number,
                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                             GUI_COLOR(GUI_COLOR_CHAT),
+                             GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                              gui_buffer_get_plugin_name (ptr_buffer),
+                             GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                              GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                              ptr_buffer->name,
                              GUI_COLOR(GUI_COLOR_CHAT),

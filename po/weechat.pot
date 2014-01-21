@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-21 12:29+0100\n"
+"POT-Creation-Date: 2014-01-21 15:28+0100\n"
 "PO-Revision-Date: 2013-02-14 18:20+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -179,7 +179,7 @@ msgid "Buffers list:"
 msgstr ""
 
 #, c-format
-msgid "  %s[%s%d%s]%s (%s) %s%s%s (notify: %s)"
+msgid "  %s[%s%d%s]%s %s%s.%s%s%s (notify: %s)"
 msgstr ""
 
 #, c-format
