@@ -7914,7 +7914,7 @@ WeeChat とプラグインが送信するシグナルのリスト:
 | weechat | signal_sigwinch +
   _(WeeChat ≥ 0.4.3)_ |
   - |
-  Signal SIGWINCH received (terminal was resized, WeeChat will refresh screen)
+  Signal SIGWINCH received (terminal was resized)
 
 | weechat | upgrade |
   String: /upgrade に "-quit" 引数が与えられた場合は "quit"、それ以外は NULL |

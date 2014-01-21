@@ -7916,7 +7916,7 @@ List of signals sent by WeeChat and plugins:
 | weechat | signal_sigwinch +
   _(WeeChat ≥ 0.4.3)_ |
   - |
-  Signal SIGWINCH received (terminal was resized, WeeChat will refresh screen)
+  Signal SIGWINCH received (terminal was resized)
 
 | weechat | upgrade |
   String: "quit" if "-quit" argument was given for /upgrade, otherwise NULL |

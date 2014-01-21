@@ -8037,8 +8037,7 @@ Liste des signaux envoyés par WeeChat et les extensions :
 | weechat | signal_sigwinch +
   _(WeeChat ≥ 0.4.3)_ |
   - |
-  Signal SIGWINCH reçu (le terminal a été redimensionné, WeeChat va rafraîchir
-  l'écran)
+  Signal SIGWINCH reçu (le terminal a été redimensionné)
 
 | weechat | upgrade |
   Chaîne : "quit" si le paramètre "-quit" a été donné pour /upgrade, sinon NULL |
