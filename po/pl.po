@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-19 19:42+0100\n"
+"POT-Creation-Date: 2014-01-21 12:29+0100\n"
 "PO-Revision-Date: 2014-01-18 21:23+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6542,6 +6542,10 @@ msgid ""
 msgstr "%s%s: nieprawidłowy ciąg priorytetów, błąd na pozycji: \"%s\""
 
 #, c-format
+msgid "%s%s: fingerprint must have exactly 40 hexadecimal digits"
+msgstr ""
+
+#, c-format
 msgid ""
 "%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
 "memory because it's currently used"
@@ -6613,6 +6617,13 @@ msgstr ""
 msgid "size of the key used during the Diffie-Hellman Key Exchange"
 msgstr ""
 "rozmiar klucza używanego podczas połączenia Wymiany Kluczy Diffie-Hellmana"
+
+msgid ""
+"SHA1 fingerprint of certificate which is trusted and accepted for the server "
+"(it must be exactly 40 hexadecimal digits without separators); if this "
+"option is set, the other checks on certificates are NOT performed (option "
+"\"ssl_verify\")"
+msgstr ""
 
 msgid "check that the SSL connection is fully trusted"
 msgstr "sprawdź czy połączenie ssl jest w pełni zaufane"
@@ -8090,9 +8101,54 @@ msgstr "%s%s: timeout"
 msgid "%s%s: unable to create socket"
 msgstr "%s%s: nie można utworzyć gniazda"
 
+#, fuzzy, c-format
+msgid "%sgnutls: failed to calculate certificate fingerprint"
+msgstr "%sgnutls: nie można odczytać certyfikatu \"%s\""
+
 #, c-format
 msgid "%sgnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
 msgstr "%sgnutls: połączono używając %d-bitowego klucza Diffie-Hellmana"
+
+#, fuzzy, c-format
+msgid "%sgnutls: failed to initialize certificate structure"
+msgstr "%sgnutls: certyfikat partnera jest zaufany"
+
+#, c-format
+msgid "%sgnutls: receiving %d certificate"
+msgid_plural "%sgnutls: receiving %d certificates"
+msgstr[0] "%sgnutls: odbieram %d certyfikat"
+msgstr[1] "%sgnutls: odbieram %d certyfikaty"
+msgstr[2] "%sgnutls: odbieram %d certyfikatów"
+
+#, fuzzy, c-format
+msgid "%sgnutls: failed to import certificate[%d]"
+msgstr "%sgnutls: nie można odczytać certyfikatu \"%s\""
+
+#, c-format
+msgid "%s - certificate[%d] info:"
+msgstr "%s - certyfikat[%d] - informacje:"
+
+#, c-format
+msgid "%sgnutls: certificate has expired"
+msgstr "%sgnutls: certyfikat wygasł"
+
+#, c-format
+msgid "%sgnutls: certificate is not yet activated"
+msgstr "%sgnutls: certyfikat nie jest jeszcze aktywny"
+
+#, fuzzy, c-format
+msgid "%sgnutls: certificate fingerprint matches"
+msgstr "%sgnutls: wysyłam jeden certyfikat"
+
+#, c-format
+msgid ""
+"%sgnutls: certificate fingerprint does NOT match (check value of option irc."
+"server.%s.ssl_fingerprint)"
+msgstr ""
+
+#, c-format
+msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
+msgstr "%sgnutls: nazwa hosta w certyfikacie NIE pasuje do \"%s\""
 
 #, c-format
 msgid "%sgnutls: error while checking peer's certificate"
@@ -8113,29 +8169,6 @@ msgstr "%sgnutls: nieznany wystawca certyfikatu partnera"
 #, c-format
 msgid "%sgnutls: the certificate has been revoked"
 msgstr "%sgnutls: certyfikat został unieważniony"
-
-#, c-format
-msgid "%sgnutls: receiving %d certificate"
-msgid_plural "%sgnutls: receiving %d certificates"
-msgstr[0] "%sgnutls: odbieram %d certyfikat"
-msgstr[1] "%sgnutls: odbieram %d certyfikaty"
-msgstr[2] "%sgnutls: odbieram %d certyfikatów"
-
-#, c-format
-msgid "%s - certificate[%d] info:"
-msgstr "%s - certyfikat[%d] - informacje:"
-
-#, c-format
-msgid "%sgnutls: certificate has expired"
-msgstr "%sgnutls: certyfikat wygasł"
-
-#, c-format
-msgid "%sgnutls: certificate is not yet activated"
-msgstr "%sgnutls: certyfikat nie jest jeszcze aktywny"
-
-#, c-format
-msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
-msgstr "%sgnutls: nazwa hosta w certyfikacie NIE pasuje do \"%s\""
 
 #, c-format
 msgid "%sgnutls: sending one certificate"
@@ -10697,6 +10730,10 @@ msgstr "Typ"
 
 msgid "Constants"
 msgstr "Stałe"
+
+#, fuzzy
+#~ msgid "%sgnutls: fingerprint does NOT match"
+#~ msgstr "%sgnutls: nazwa hosta w certyfikacie NIE pasuje do \"%s\""
 
 #~ msgid "%s%s: could not find address for \"%s\", falling back to local IP"
 #~ msgstr "%s%s: nie można znaleźć adresu dla \"%s\", powracam do lokalnego IP"

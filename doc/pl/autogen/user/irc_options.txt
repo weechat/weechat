@@ -573,6 +573,11 @@
 ** typ: liczba
 ** wartości: 0 .. 2147483647 (domyślna wartość: `2048`)
 
+* [[option_irc.server_default.ssl_fingerprint]] *irc.server_default.ssl_fingerprint*
+** opis: `SHA1 fingerprint of certificate which is trusted and accepted for the server (it must be exactly 40 hexadecimal digits without separators); if this option is set, the other checks on certificates are NOT performed (option "ssl_verify")`
+** typ: ciąg
+** wartości: dowolny ciąg (domyślna wartość: `""`)
+
 * [[option_irc.server_default.ssl_priorities]] *irc.server_default.ssl_priorities*
 ** opis: `ciąg z priorytetami dla gnutls (składnię można znaleźć w dokumentacji gnutls dla funkcji  gnutls_priority_init, często używane ciągi to: "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")`
 ** typ: ciąg

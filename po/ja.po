@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-19 19:42+0100\n"
+"POT-Creation-Date: 2014-01-21 12:29+0100\n"
 "PO-Revision-Date: 2014-01-18 21:22+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -6413,6 +6413,10 @@ msgid ""
 msgstr "%s%s: 不正なプロパティ文字列、文字列のエラーの位置: \"%s\""
 
 #, c-format
+msgid "%s%s: fingerprint must have exactly 40 hexadecimal digits"
+msgstr ""
+
+#, c-format
 msgid ""
 "%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
 "memory because it's currently used"
@@ -6483,6 +6487,13 @@ msgstr ""
 
 msgid "size of the key used during the Diffie-Hellman Key Exchange"
 msgstr "Diffie-Hellman 鍵交換で使われる鍵長"
+
+msgid ""
+"SHA1 fingerprint of certificate which is trusted and accepted for the server "
+"(it must be exactly 40 hexadecimal digits without separators); if this "
+"option is set, the other checks on certificates are NOT performed (option "
+"\"ssl_verify\")"
+msgstr ""
 
 msgid "check that the SSL connection is fully trusted"
 msgstr "SSL 接続が完全に信頼できることを確認"
@@ -7926,9 +7937,52 @@ msgstr "%s%s: タイムアウト"
 msgid "%s%s: unable to create socket"
 msgstr "%s%s: ソケットの作成に失敗"
 
+#, fuzzy, c-format
+msgid "%sgnutls: failed to calculate certificate fingerprint"
+msgstr "%sgnutls: 証明書 \"%s\" が読めません"
+
 #, c-format
 msgid "%sgnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
 msgstr "%sgnutls: %d-bit Diffie-Hellman 共有鍵交換を使って接続しました"
+
+#, fuzzy, c-format
+msgid "%sgnutls: failed to initialize certificate structure"
+msgstr "%sgnutls: ピア証明書は信頼できます"
+
+#, c-format
+msgid "%sgnutls: receiving %d certificate"
+msgid_plural "%sgnutls: receiving %d certificates"
+msgstr[0] "%sgnutls: %d 個の証明書を受け取りました"
+
+#, fuzzy, c-format
+msgid "%sgnutls: failed to import certificate[%d]"
+msgstr "%sgnutls: 証明書 \"%s\" が読めません"
+
+#, c-format
+msgid "%s - certificate[%d] info:"
+msgstr "%s - 証明書[%d] 情報:"
+
+#, c-format
+msgid "%sgnutls: certificate has expired"
+msgstr "%sgnutls: 証明書は失効しました"
+
+#, c-format
+msgid "%sgnutls: certificate is not yet activated"
+msgstr "%sgnutls: 証明書はまだ使えません"
+
+#, fuzzy, c-format
+msgid "%sgnutls: certificate fingerprint matches"
+msgstr "%sgnutls: 一通の証明書の送信中"
+
+#, c-format
+msgid ""
+"%sgnutls: certificate fingerprint does NOT match (check value of option irc."
+"server.%s.ssl_fingerprint)"
+msgstr ""
+
+#, c-format
+msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
+msgstr "%sgnutls: 証明書内のホストネームは \"%s\" とマッチしません"
 
 #, c-format
 msgid "%sgnutls: error while checking peer's certificate"
@@ -7949,27 +8003,6 @@ msgstr "%sgnutls: ピア証明書に未知の問題"
 #, c-format
 msgid "%sgnutls: the certificate has been revoked"
 msgstr "%sgnutls: 証明書は破棄されました"
-
-#, c-format
-msgid "%sgnutls: receiving %d certificate"
-msgid_plural "%sgnutls: receiving %d certificates"
-msgstr[0] "%sgnutls: %d 個の証明書を受け取りました"
-
-#, c-format
-msgid "%s - certificate[%d] info:"
-msgstr "%s - 証明書[%d] 情報:"
-
-#, c-format
-msgid "%sgnutls: certificate has expired"
-msgstr "%sgnutls: 証明書は失効しました"
-
-#, c-format
-msgid "%sgnutls: certificate is not yet activated"
-msgstr "%sgnutls: 証明書はまだ使えません"
-
-#, c-format
-msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
-msgstr "%sgnutls: 証明書内のホストネームは \"%s\" とマッチしません"
 
 #, c-format
 msgid "%sgnutls: sending one certificate"
@@ -10504,3 +10537,7 @@ msgstr "タイプ"
 
 msgid "Constants"
 msgstr "定数"
+
+#, fuzzy
+#~ msgid "%sgnutls: fingerprint does NOT match"
+#~ msgstr "%sgnutls: 証明書内のホストネームは \"%s\" とマッチしません"

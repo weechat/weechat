@@ -573,6 +573,11 @@
 ** タイプ: 整数
 ** 値: 0 .. 2147483647 (デフォルト値: `2048`)
 
+* [[option_irc.server_default.ssl_fingerprint]] *irc.server_default.ssl_fingerprint*
+** 説明: `SHA1 fingerprint of certificate which is trusted and accepted for the server (it must be exactly 40 hexadecimal digits without separators); if this option is set, the other checks on certificates are NOT performed (option "ssl_verify")`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `""`)
+
 * [[option_irc.server_default.ssl_priorities]] *irc.server_default.ssl_priorities*
 ** 説明: `gnutls の優先度を示した文字列 (構文は、gnutls マニュアルの gnutls_priority_init 関数のドキュメントを参照、通例: "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")`
 ** タイプ: 文字列

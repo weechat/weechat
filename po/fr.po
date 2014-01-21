@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-19 19:42+0100\n"
-"PO-Revision-Date: 2014-01-19 23:27+0100\n"
+"POT-Creation-Date: 2014-01-21 12:29+0100\n"
+"PO-Revision-Date: 2014-01-21 12:30+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -6681,6 +6681,10 @@ msgstr ""
 "\"%s\""
 
 #, c-format
+msgid "%s%s: fingerprint must have exactly 40 hexadecimal digits"
+msgstr "%s%s: l'empreinte doit avoir exactement 40 chiffres hexadécimaux"
+
+#, c-format
 msgid ""
 "%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
 "memory because it's currently used"
@@ -6755,6 +6759,17 @@ msgstr ""
 
 msgid "size of the key used during the Diffie-Hellman Key Exchange"
 msgstr "taille de clé utilisée pour l'échange de clé Diffie-Hellman"
+
+msgid ""
+"SHA1 fingerprint of certificate which is trusted and accepted for the server "
+"(it must be exactly 40 hexadecimal digits without separators); if this "
+"option is set, the other checks on certificates are NOT performed (option "
+"\"ssl_verify\")"
+msgstr ""
+"empreinte SHA1 du certificat qui est de confiance et accepté pour le serveur "
+"(elle doit avoir exactement 40 caractères hexadécimaux sans séparateurs); si "
+"cette option est définie, les autres vérifications sur les certificats ne "
+"sont PAS effectuées (option \"ssl_verify\")"
 
 msgid "check that the SSL connection is fully trusted"
 msgstr "vérifier que la connexion SSL est entièrement de confiance"
@@ -8253,9 +8268,55 @@ msgid "%s%s: unable to create socket"
 msgstr "%s%s: impossible de créer le socket"
 
 #, c-format
+msgid "%sgnutls: failed to calculate certificate fingerprint"
+msgstr "%sgnutls: échec de calcul de l'empreinte du certificat"
+
+#, c-format
 msgid "%sgnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
 msgstr ""
 "%sgnutls: connecté en utilisant un échange secret Diffie-Hellman de %d bits"
+
+#, c-format
+msgid "%sgnutls: failed to initialize certificate structure"
+msgstr "%sgnutls: échec d'initialisation de la structure du certificat"
+
+#, c-format
+msgid "%sgnutls: receiving %d certificate"
+msgid_plural "%sgnutls: receiving %d certificates"
+msgstr[0] "%sgnutls: réception de %d certificat"
+msgstr[1] "%sgnutls: réception de %d certificats"
+
+#, c-format
+msgid "%sgnutls: failed to import certificate[%d]"
+msgstr "%sgnutls: impossible d'importer le certificat[%d]"
+
+#, c-format
+msgid "%s - certificate[%d] info:"
+msgstr "%s - info certificat[%d]:"
+
+#, c-format
+msgid "%sgnutls: certificate has expired"
+msgstr "%sgnutls: le certificat a expiré"
+
+#, c-format
+msgid "%sgnutls: certificate is not yet activated"
+msgstr "%sgnutls: le certificat n'a pas encore été activé"
+
+#, c-format
+msgid "%sgnutls: certificate fingerprint matches"
+msgstr "%sgnutls: l'empreinte du certificat correspond"
+
+#, c-format
+msgid ""
+"%sgnutls: certificate fingerprint does NOT match (check value of option irc."
+"server.%s.ssl_fingerprint)"
+msgstr ""
+"%sgnutls: l'empreinte du certificat ne correspond PAS (vérifiez la valeur de "
+"l'option irc.server.%s.ssl_fingerprint)"
+
+#, c-format
+msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
+msgstr "%sgnutls: le nom d'hôte du certificat ne correspond PAS à \"%s\""
 
 #, c-format
 msgid "%sgnutls: error while checking peer's certificate"
@@ -8276,28 +8337,6 @@ msgstr "%sgnutls: l'émetteur du certificat de l'hôte est inconnu"
 #, c-format
 msgid "%sgnutls: the certificate has been revoked"
 msgstr "%sgnutls: le certificat a été révoqué"
-
-#, c-format
-msgid "%sgnutls: receiving %d certificate"
-msgid_plural "%sgnutls: receiving %d certificates"
-msgstr[0] "%sgnutls: réception de %d certificat"
-msgstr[1] "%sgnutls: réception de %d certificats"
-
-#, c-format
-msgid "%s - certificate[%d] info:"
-msgstr "%s - info certificat[%d]:"
-
-#, c-format
-msgid "%sgnutls: certificate has expired"
-msgstr "%sgnutls: le certificat a expiré"
-
-#, c-format
-msgid "%sgnutls: certificate is not yet activated"
-msgstr "%sgnutls: le certificat n'a pas encore été activé"
-
-#, c-format
-msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
-msgstr "%sgnutls: le nom d'hôte du certificat ne correspond PAS à \"%s\""
 
 #, c-format
 msgid "%sgnutls: sending one certificate"
@@ -10919,6 +10958,9 @@ msgstr "Type"
 
 msgid "Constants"
 msgstr "Constantes"
+
+#~ msgid "%sgnutls: fingerprint does NOT match"
+#~ msgstr "%sgnutls: l'empreinte ne correspond PAS"
 
 #~ msgid "%s%s: could not find address for \"%s\", falling back to local IP"
 #~ msgstr ""

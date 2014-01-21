@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-19 19:42+0100\n"
+"POT-Creation-Date: 2014-01-21 12:29+0100\n"
 "PO-Revision-Date: 2014-01-18 21:20+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6086,6 +6086,10 @@ msgstr ""
 "%s%s: nevalidní řetězec priorit, chyba je na této pozici v řetězci: \"%s\""
 
 #, c-format
+msgid "%s%s: fingerprint must have exactly 40 hexadecimal digits"
+msgstr ""
+
+#, c-format
 msgid ""
 "%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
 "memory because it's currently used"
@@ -6155,6 +6159,13 @@ msgstr ""
 
 msgid "size of the key used during the Diffie-Hellman Key Exchange"
 msgstr "velikost klíče použitého při použití výměny klíčů Diffie Hellman"
+
+msgid ""
+"SHA1 fingerprint of certificate which is trusted and accepted for the server "
+"(it must be exactly 40 hexadecimal digits without separators); if this "
+"option is set, the other checks on certificates are NOT performed (option "
+"\"ssl_verify\")"
+msgstr ""
 
 #, fuzzy
 msgid "check that the SSL connection is fully trusted"
@@ -7538,9 +7549,54 @@ msgid "%s%s: unable to create socket"
 msgstr "%s%s: nemohu vytvořit server"
 
 #, fuzzy, c-format
+msgid "%sgnutls: failed to calculate certificate fingerprint"
+msgstr "%sgnutls: nemůžu číst certifikát \"%s\""
+
+#, fuzzy, c-format
 msgid "%sgnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
 msgstr ""
 "gnutls: připojují se pomocí %d-bit Diffie-Hellman zdílenéhé výměny tajemství"
+
+#, fuzzy, c-format
+msgid "%sgnutls: failed to initialize certificate structure"
+msgstr "gnutls: certifikát protějška je důvěryhodný"
+
+#, fuzzy, c-format
+msgid "%sgnutls: receiving %d certificate"
+msgid_plural "%sgnutls: receiving %d certificates"
+msgstr[0] "gnutls: přijímám %d certifikát"
+msgstr[1] "gnutls: přijímám %d certifikáty"
+msgstr[2] "gnutls: přijímám %d certifikátů"
+
+#, fuzzy, c-format
+msgid "%sgnutls: failed to import certificate[%d]"
+msgstr "%sgnutls: nemůžu číst certifikát \"%s\""
+
+#, fuzzy, c-format
+msgid "%s - certificate[%d] info:"
+msgstr " - informace o certifikátu[%d]:"
+
+#, c-format
+msgid "%sgnutls: certificate has expired"
+msgstr "%sgnutls: certifikát vypršel"
+
+#, c-format
+msgid "%sgnutls: certificate is not yet activated"
+msgstr "%sgnutls: certifikát ještě nebyl aktivován"
+
+#, fuzzy, c-format
+msgid "%sgnutls: certificate fingerprint matches"
+msgstr "gnutls: posílám jeden certifikát"
+
+#, c-format
+msgid ""
+"%sgnutls: certificate fingerprint does NOT match (check value of option irc."
+"server.%s.ssl_fingerprint)"
+msgstr ""
+
+#, c-format
+msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
+msgstr "%sguntls: jméno hosta v certifikátu NODPOVÍDÁ \"%s\""
 
 #, c-format
 msgid "%sgnutls: error while checking peer's certificate"
@@ -7561,29 +7617,6 @@ msgstr "%sgnutls: vydavatel certifikátu protějška je neznámý"
 #, c-format
 msgid "%sgnutls: the certificate has been revoked"
 msgstr "%sgnutls: certifikát byl zrušen"
-
-#, fuzzy, c-format
-msgid "%sgnutls: receiving %d certificate"
-msgid_plural "%sgnutls: receiving %d certificates"
-msgstr[0] "gnutls: přijímám %d certifikát"
-msgstr[1] "gnutls: přijímám %d certifikáty"
-msgstr[2] "gnutls: přijímám %d certifikátů"
-
-#, fuzzy, c-format
-msgid "%s - certificate[%d] info:"
-msgstr " - informace o certifikátu[%d]:"
-
-#, c-format
-msgid "%sgnutls: certificate has expired"
-msgstr "%sgnutls: certifikát vypršel"
-
-#, c-format
-msgid "%sgnutls: certificate is not yet activated"
-msgstr "%sgnutls: certifikát ještě nebyl aktivován"
-
-#, c-format
-msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
-msgstr "%sguntls: jméno hosta v certifikátu NODPOVÍDÁ \"%s\""
 
 #, fuzzy, c-format
 msgid "%sgnutls: sending one certificate"
@@ -10057,6 +10090,10 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#, fuzzy
+#~ msgid "%sgnutls: fingerprint does NOT match"
+#~ msgstr "%sguntls: jméno hosta v certifikátu NODPOVÍDÁ \"%s\""
 
 #~ msgid "%s%s: could not find address for \"%s\", falling back to local IP"
 #~ msgstr "%s%s: nemůžu najít adresu pro \"%s\", navracím se k lokální IP"

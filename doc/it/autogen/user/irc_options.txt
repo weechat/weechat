@@ -573,6 +573,11 @@
 ** tipo: intero
 ** valori: 0 .. 2147483647 (valore predefinito: `2048`)
 
+* [[option_irc.server_default.ssl_fingerprint]] *irc.server_default.ssl_fingerprint*
+** descrizione: `SHA1 fingerprint of certificate which is trusted and accepted for the server (it must be exactly 40 hexadecimal digits without separators); if this option is set, the other checks on certificates are NOT performed (option "ssl_verify")`
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: `""`)
+
 * [[option_irc.server_default.ssl_priorities]] *irc.server_default.ssl_priorities*
 ** descrizione: `stringa con le priorità per gnutls (per la sintassi, consultare la documentazione per la funzione gnutls_priority_init nel manuale di gnutls, stringhe comuni sono: "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")`
 ** tipo: stringa

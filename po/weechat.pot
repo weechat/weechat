@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-19 19:42+0100\n"
+"POT-Creation-Date: 2014-01-21 12:29+0100\n"
 "PO-Revision-Date: 2013-02-14 18:20+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4949,6 +4949,10 @@ msgid ""
 msgstr ""
 
 #, c-format
+msgid "%s%s: fingerprint must have exactly 40 hexadecimal digits"
+msgstr ""
+
+#, c-format
 msgid ""
 "%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
 "memory because it's currently used"
@@ -5001,6 +5005,13 @@ msgid ""
 msgstr ""
 
 msgid "size of the key used during the Diffie-Hellman Key Exchange"
+msgstr ""
+
+msgid ""
+"SHA1 fingerprint of certificate which is trusted and accepted for the server "
+"(it must be exactly 40 hexadecimal digits without separators); if this "
+"option is set, the other checks on certificates are NOT performed (option "
+"\"ssl_verify\")"
 msgstr ""
 
 msgid "check that the SSL connection is fully trusted"
@@ -6234,7 +6245,51 @@ msgid "%s%s: unable to create socket"
 msgstr ""
 
 #, c-format
+msgid "%sgnutls: failed to calculate certificate fingerprint"
+msgstr ""
+
+#, c-format
 msgid "%sgnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
+msgstr ""
+
+#, c-format
+msgid "%sgnutls: failed to initialize certificate structure"
+msgstr ""
+
+#, c-format
+msgid "%sgnutls: receiving %d certificate"
+msgid_plural "%sgnutls: receiving %d certificates"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%sgnutls: failed to import certificate[%d]"
+msgstr ""
+
+#, c-format
+msgid "%s - certificate[%d] info:"
+msgstr ""
+
+#, c-format
+msgid "%sgnutls: certificate has expired"
+msgstr ""
+
+#, c-format
+msgid "%sgnutls: certificate is not yet activated"
+msgstr ""
+
+#, c-format
+msgid "%sgnutls: certificate fingerprint matches"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sgnutls: certificate fingerprint does NOT match (check value of option irc."
+"server.%s.ssl_fingerprint)"
+msgstr ""
+
+#, c-format
+msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
 msgstr ""
 
 #, c-format
@@ -6255,28 +6310,6 @@ msgstr ""
 
 #, c-format
 msgid "%sgnutls: the certificate has been revoked"
-msgstr ""
-
-#, c-format
-msgid "%sgnutls: receiving %d certificate"
-msgid_plural "%sgnutls: receiving %d certificates"
-msgstr[0] ""
-msgstr[1] ""
-
-#, c-format
-msgid "%s - certificate[%d] info:"
-msgstr ""
-
-#, c-format
-msgid "%sgnutls: certificate has expired"
-msgstr ""
-
-#, c-format
-msgid "%sgnutls: certificate is not yet activated"
-msgstr ""
-
-#, c-format
-msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
 msgstr ""
 
 #, c-format

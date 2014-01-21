@@ -3755,14 +3755,17 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
                 if (fingerprint_match)
                 {
                     weechat_printf (server->buffer,
-                                    _("%sgnutls: fingerprint matches"),
+                                    _("%sgnutls: certificate fingerprint "
+                                      "matches"),
                                     weechat_prefix ("network"));
                 }
                 else
                 {
                     weechat_printf (server->buffer,
-                                    _("%sgnutls: fingerprint does NOT match"),
-                                    weechat_prefix ("error"));
+                                    _("%sgnutls: certificate fingerprint does "
+                                      "NOT match (check value of option "
+                                      "irc.server.%s.ssl_fingerprint)"),
+                                    weechat_prefix ("error"), server->name);
                     rc = -1;
                 }
                 goto end;

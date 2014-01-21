@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-19 19:42+0100\n"
+"POT-Creation-Date: 2014-01-21 12:29+0100\n"
 "PO-Revision-Date: 2014-01-06 10:17+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5664,6 +5664,10 @@ msgid ""
 msgstr ""
 
 #, c-format
+msgid "%s%s: fingerprint must have exactly 40 hexadecimal digits"
+msgstr ""
+
+#, c-format
 msgid ""
 "%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
 "memory because it's currently used"
@@ -5720,6 +5724,13 @@ msgid ""
 msgstr ""
 
 msgid "size of the key used during the Diffie-Hellman Key Exchange"
+msgstr ""
+
+msgid ""
+"SHA1 fingerprint of certificate which is trusted and accepted for the server "
+"(it must be exactly 40 hexadecimal digits without separators); if this "
+"option is set, the other checks on certificates are NOT performed (option "
+"\"ssl_verify\")"
 msgstr ""
 
 msgid "check that the SSL connection is fully trusted"
@@ -7051,9 +7062,54 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 msgid "%s%s: unable to create socket"
 msgstr "%s не могу создать сервер\n"
 
+#, fuzzy, c-format
+msgid "%sgnutls: failed to calculate certificate fingerprint"
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
 #, c-format
 msgid "%sgnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "%sgnutls: failed to initialize certificate structure"
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%sgnutls: receiving %d certificate"
+msgid_plural "%sgnutls: receiving %d certificates"
+msgstr[0] "Не могу записать лог-файл \"%s\"\n"
+msgstr[1] "Не могу записать лог-файл \"%s\"\n"
+msgstr[2] "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%sgnutls: failed to import certificate[%d]"
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, c-format
+msgid "%s - certificate[%d] info:"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sgnutls: certificate has expired"
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, c-format
+msgid "%sgnutls: certificate is not yet activated"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sgnutls: certificate fingerprint matches"
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, c-format
+msgid ""
+"%sgnutls: certificate fingerprint does NOT match (check value of option irc."
+"server.%s.ssl_fingerprint)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
+msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, c-format
 msgid "%sgnutls: error while checking peer's certificate"
@@ -7073,29 +7129,6 @@ msgstr ""
 
 #, fuzzy, c-format
 msgid "%sgnutls: the certificate has been revoked"
-msgstr "Не могу записать лог-файл \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%sgnutls: receiving %d certificate"
-msgid_plural "%sgnutls: receiving %d certificates"
-msgstr[0] "Не могу записать лог-файл \"%s\"\n"
-msgstr[1] "Не могу записать лог-файл \"%s\"\n"
-msgstr[2] "Не могу записать лог-файл \"%s\"\n"
-
-#, c-format
-msgid "%s - certificate[%d] info:"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%sgnutls: certificate has expired"
-msgstr "Не могу записать лог-файл \"%s\"\n"
-
-#, c-format
-msgid "%sgnutls: certificate is not yet activated"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
 msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, fuzzy, c-format
@@ -9502,6 +9535,10 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#, fuzzy
+#~ msgid "%sgnutls: fingerprint does NOT match"
+#~ msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, fuzzy
 #~ msgid "%s%s: could not find address for \"%s\", falling back to local IP"
