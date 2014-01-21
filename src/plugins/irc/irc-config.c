@@ -1059,6 +1059,16 @@ irc_config_server_check_value_cb (void *data,
                     return 0;
                 }
                 break;
+            case IRC_SERVER_OPTION_SSL_FINGERPRINT:
+                if (value && value[0] && (strlen (value) != 40))
+                {
+                    weechat_printf (NULL,
+                                    _("%s%s: fingerprint must have exactly 40 "
+                                      "hexadecimal digits"),
+                                    weechat_prefix ("error"), IRC_PLUGIN_NAME);
+                    return 0;
+                }
+                break;
         }
     }
 
