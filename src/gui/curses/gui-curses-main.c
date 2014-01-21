@@ -60,6 +60,7 @@
 
 
 int gui_reload_config = 0;
+int gui_signal_sigwinch_received = 0;
 int gui_term_cols = 0;
 int gui_term_lines = 0;
 
@@ -296,9 +297,9 @@ gui_main_signal_sighup ()
 void
 gui_main_signal_sigwinch ()
 {
-    gui_window_ask_refresh (2);
+    gui_signal_sigwinch_received = 1;
 
-    hook_signal_send ("signal_sigwinch", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+    gui_window_ask_refresh (2);
 }
 
 /*
@@ -477,6 +478,13 @@ gui_main_loop ()
         gui_main_refreshs ();
         if (gui_window_refresh_needed)
             gui_main_refreshs ();
+
+        if (gui_signal_sigwinch_received)
+        {
+            hook_signal_send ("signal_sigwinch",
+                              WEECHAT_HOOK_SIGNAL_STRING, NULL);
+            gui_signal_sigwinch_received = 0;
+        }
 
         gui_color_pairs_auto_reset_pending = 0;
 
