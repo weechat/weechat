@@ -3413,11 +3413,11 @@ COMMAND_CALLBACK(layout)
     /* display all layouts */
     if (argc == 1)
     {
-        /* display saved layouts */
+        /* display stored layouts */
         if (gui_layouts)
         {
             gui_chat_printf (NULL, "");
-            gui_chat_printf (NULL, _("Saved layouts:"));
+            gui_chat_printf (NULL, _("Stored layouts:"));
             for (ptr_layout = gui_layouts; ptr_layout;
                  ptr_layout = ptr_layout->next_layout)
             {
@@ -3440,7 +3440,7 @@ COMMAND_CALLBACK(layout)
             }
         }
         else
-            gui_chat_printf (NULL, _("No layout saved"));
+            gui_chat_printf (NULL, _("No stored layouts"));
 
         return WEECHAT_RC_OK;
     }
@@ -3458,13 +3458,13 @@ COMMAND_CALLBACK(layout)
             gui_layout_add (ptr_layout);
         }
         if (flag_buffers)
-            gui_layout_buffer_save (ptr_layout);
+            gui_layout_buffer_store (ptr_layout);
         if (flag_windows)
-            gui_layout_window_save (ptr_layout);
+            gui_layout_window_store (ptr_layout);
         gui_layout_current = ptr_layout;
         gui_chat_printf (NULL,
                          /* TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows" */
-                         _("Layout of %s%s%s saved in \"%s\" (current layout: %s)"),
+                         _("Layout of %s%s%s stored in \"%s\" (current layout: %s)"),
                          (flag_buffers) ? _("buffers") : "",
                          (flag_buffers && flag_windows) ? "+" : "",
                          (flag_windows) ? _("windows") : "",
@@ -5666,8 +5666,8 @@ COMMAND_CALLBACK(upgrade)
     weechat_quit = 1;
     weechat_upgrading = 1;
 
-    /* save layout, unload plugins, save config, then upgrade */
-    gui_layout_save_on_exit ();
+    /* store layout, unload plugins, save config, then upgrade */
+    gui_layout_store_on_exit ();
     plugin_end ();
     if (CONFIG_BOOLEAN(config_look_save_config_on_exit))
         (void) config_weechat_write ();
@@ -7005,17 +7005,17 @@ command_init ()
            " || del [<name>] [buffers|windows]"
            " || rename <name> <new_name>"),
         N_("  store: store current buffers/windows in a layout\n"
-           "  apply: apply saved layout\n"
+           "  apply: apply stored layout\n"
            "  leave: leave current layout (does not update any layout)\n"
-           "    del: delete buffers and/or windows in a saved layout\n"
+           "    del: delete buffers and/or windows in a stored layout\n"
            "         (if neither \"buffers\" nor \"windows\" is given after "
            "the name, the layout is deleted)\n"
            " rename: rename a layout\n"
-           "   name: name for saved layout (default is \"default\")\n"
-           "buffers: save/apply only buffers (order of buffers)\n"
-           "windows: save/apply only windows (buffer displayed by each window)\n"
+           "   name: name for stored layout (default is \"default\")\n"
+           "buffers: store/apply only buffers (order of buffers)\n"
+           "windows: store/apply only windows (buffer displayed by each window)\n"
            "\n"
-           "Without argument, this command displays saved layouts."),
+           "Without argument, this command displays stored layouts."),
         "store %(layouts_names)|buffers|windows buffers|windows"
         " || apply %(layouts_names)|buffers|windows buffers|windows"
         " || leave"

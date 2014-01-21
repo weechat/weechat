@@ -476,7 +476,7 @@ main (int argc, char *argv[])
 
     gui_main_loop ();                   /* WeeChat main loop                */
 
-    gui_layout_save_on_exit ();         /* save layout                      */
+    gui_layout_store_on_exit ();        /* store layout                     */
     plugin_end ();                      /* end plugin interface(s)          */
     if (CONFIG_BOOLEAN(config_look_save_config_on_exit))
         (void) config_weechat_write (); /* save WeeChat config file         */

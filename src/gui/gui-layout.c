@@ -309,11 +309,11 @@ gui_layout_buffer_get_number_all (struct t_gui_layout *layout)
 }
 
 /*
- * Saves current layout for buffers in a layout.
+ * Stores current layout for buffers in a layout.
  */
 
 void
-gui_layout_buffer_save (struct t_gui_layout *layout)
+gui_layout_buffer_store (struct t_gui_layout *layout)
 {
     struct t_gui_buffer *ptr_buffer;
 
@@ -521,11 +521,11 @@ gui_layout_window_add (struct t_gui_layout_window **layout_window,
 }
 
 /*
- * Saves tree of windows.
+ * Stores tree of windows.
  */
 
 void
-gui_layout_window_save_tree (struct t_gui_layout *layout,
+gui_layout_window_store_tree (struct t_gui_layout *layout,
                              struct t_gui_layout_window **layout_windows,
                              struct t_gui_layout_window *parent_layout,
                              struct t_gui_window_tree *tree)
@@ -559,25 +559,25 @@ gui_layout_window_save_tree (struct t_gui_layout *layout,
 
     if (tree->child1)
     {
-        gui_layout_window_save_tree (layout, layout_windows,
+        gui_layout_window_store_tree (layout, layout_windows,
                                      layout_window, tree->child1);
     }
 
     if (tree->child2)
     {
-        gui_layout_window_save_tree (layout, layout_windows,
+        gui_layout_window_store_tree (layout, layout_windows,
                                      layout_window, tree->child2);
     }
 }
 
 /*
- * Saves current layout for windows in a layout.
+ * Stores current layout for windows in a layout.
  *
  * Returns internal id of current window.
  */
 
 void
-gui_layout_window_save (struct t_gui_layout *layout)
+gui_layout_window_store (struct t_gui_layout *layout)
 {
     if (!layout)
         return;
@@ -587,7 +587,7 @@ gui_layout_window_save (struct t_gui_layout *layout)
     layout->internal_id = 1;
     layout->internal_id_current_window = -1;
 
-    gui_layout_window_save_tree (layout, &layout->layout_windows, NULL,
+    gui_layout_window_store_tree (layout, &layout->layout_windows, NULL,
                                  gui_windows_tree);
 }
 
@@ -759,15 +759,15 @@ gui_layout_window_apply (struct t_gui_layout *layout,
 }
 
 /*
- * Saves layout according to option "save_layout_on_exit".
+ * Stores layout according to option "store_layout_on_exit".
  */
 
 void
-gui_layout_save_on_exit ()
+gui_layout_store_on_exit ()
 {
     struct t_gui_layout *ptr_layout;
 
-    if (CONFIG_BOOLEAN(config_look_save_layout_on_exit) == CONFIG_LOOK_SAVE_LAYOUT_ON_EXIT_NONE)
+    if (CONFIG_BOOLEAN(config_look_store_layout_on_exit) == CONFIG_LOOK_STORE_LAYOUT_ON_EXIT_NONE)
         return;
 
     ptr_layout = gui_layout_current;
@@ -784,18 +784,18 @@ gui_layout_save_on_exit ()
         }
     }
 
-    /* save current layout */
-    switch (CONFIG_BOOLEAN(config_look_save_layout_on_exit))
+    /* store current layout */
+    switch (CONFIG_BOOLEAN(config_look_store_layout_on_exit))
     {
-        case CONFIG_LOOK_SAVE_LAYOUT_ON_EXIT_BUFFERS:
-            gui_layout_buffer_save (ptr_layout);
+        case CONFIG_LOOK_STORE_LAYOUT_ON_EXIT_BUFFERS:
+            gui_layout_buffer_store (ptr_layout);
             break;
-        case CONFIG_LOOK_SAVE_LAYOUT_ON_EXIT_WINDOWS:
-            gui_layout_window_save (ptr_layout);
+        case CONFIG_LOOK_STORE_LAYOUT_ON_EXIT_WINDOWS:
+            gui_layout_window_store (ptr_layout);
             break;
-        case CONFIG_LOOK_SAVE_LAYOUT_ON_EXIT_ALL:
-            gui_layout_buffer_save (ptr_layout);
-            gui_layout_window_save (ptr_layout);
+        case CONFIG_LOOK_STORE_LAYOUT_ON_EXIT_ALL:
+            gui_layout_buffer_store (ptr_layout);
+            gui_layout_window_store (ptr_layout);
             break;
         default:
             break;

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-21 15:28+0100\n"
+"POT-Creation-Date: 2014-01-21 21:52+0100\n"
 "PO-Revision-Date: 2014-01-18 21:22+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -479,18 +479,20 @@ msgid "%d new key added"
 msgid_plural "%d new keys added (context: \"%s\")"
 msgstr[0] "%d 個の新しいキーを追加しました (コンテキスト: \"%s\")"
 
-msgid "Saved layouts:"
+#, fuzzy
+msgid "Stored layouts:"
 msgstr "保存されたレイアウト:"
 
 msgid " (current layout)"
 msgstr " (現在のレイアウト)"
 
-msgid "No layout saved"
-msgstr "レイアウトが保存されていません"
+#, fuzzy
+msgid "No stored layouts"
+msgstr "レイアウトのリスト"
 
 #. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows"
-#, c-format
-msgid "Layout of %s%s%s saved in \"%s\" (current layout: %s)"
+#, fuzzy, c-format
+msgid "Layout of %s%s%s stored in \"%s\" (current layout: %s)"
 msgstr "%s%s%s のレイアウトを \"%s\" で保存しました (現在のレイアウト: %s)"
 
 msgid "buffers"
@@ -1842,19 +1844,20 @@ msgstr ""
 "store [<name>] [buffers|windows] || apply [<name>] [buffers|windows] || "
 "leave || del [<name>] [buffers|windows] || rename <name> <new_name>"
 
+#, fuzzy
 msgid ""
 "  store: store current buffers/windows in a layout\n"
-"  apply: apply saved layout\n"
+"  apply: apply stored layout\n"
 "  leave: leave current layout (does not update any layout)\n"
-"    del: delete buffers and/or windows in a saved layout\n"
+"    del: delete buffers and/or windows in a stored layout\n"
 "         (if neither \"buffers\" nor \"windows\" is given after the name, "
 "the layout is deleted)\n"
 " rename: rename a layout\n"
-"   name: name for saved layout (default is \"default\")\n"
-"buffers: save/apply only buffers (order of buffers)\n"
-"windows: save/apply only windows (buffer displayed by each window)\n"
+"   name: name for stored layout (default is \"default\")\n"
+"buffers: store/apply only buffers (order of buffers)\n"
+"windows: store/apply only windows (buffer displayed by each window)\n"
 "\n"
-"Without argument, this command displays saved layouts."
+"Without argument, this command displays stored layouts."
 msgstr ""
 "  store: レイアウトに現在のバッファ/ウィンドウを保存\n"
 "  apply: 保存されたレイアウトを適用\n"
@@ -3336,9 +3339,6 @@ msgstr "リードマーカー行の表示に使われる文字列 (行末まで�
 msgid "save configuration file on exit"
 msgstr "終了時に設定ファイルを保存"
 
-msgid "save layout on exit (buffers, windows, or both)"
-msgstr "終了時にレイアウトを保存 (buffers、windows または both)"
-
 msgid "how many lines to scroll by with scroll_up and scroll_down"
 msgstr "scroll_up と scroll_down でスクロールする行数"
 
@@ -3377,6 +3377,10 @@ msgstr ""
 "バーとウィンドウ周囲の垂直セパレータ文字 (空の場合は ncurses で線を描画する"
 "が、いくつかのターミナルでは URL 選択の際にバグを生ずる可能性がある); 必ずス"
 "クリーン上に描画した時の文字幅が 1 の文字を指定してください"
+
+#, fuzzy
+msgid "store layout on exit (buffers, windows, or both)"
+msgstr "終了時にレイアウトを保存 (buffers、windows または both)"
 
 #, fuzzy
 msgid "number of spaces used to display tabs in messages"
@@ -10537,6 +10541,9 @@ msgstr "タイプ"
 
 msgid "Constants"
 msgstr "定数"
+
+#~ msgid "No layout saved"
+#~ msgstr "レイアウトが保存されていません"
 
 #, fuzzy
 #~ msgid "%sgnutls: fingerprint does NOT match"

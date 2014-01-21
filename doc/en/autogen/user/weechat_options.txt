@@ -803,11 +803,6 @@
 ** type: boolean
 ** values: on, off (default value: `on`)
 
-* [[option_weechat.look.save_layout_on_exit]] *weechat.look.save_layout_on_exit*
-** description: `save layout on exit (buffers, windows, or both)`
-** type: integer
-** values: none, buffers, windows, all (default value: `none`)
-
 * [[option_weechat.look.scroll_amount]] *weechat.look.scroll_amount*
 ** description: `how many lines to scroll by with scroll_up and scroll_down`
 ** type: integer
@@ -837,6 +832,11 @@
 ** description: `char used to draw vertical separators around bars and windows (empty value will draw a real line with ncurses); width on screen must be exactly one char`
 ** type: string
 ** values: any string (default value: `""`)
+
+* [[option_weechat.look.store_layout_on_exit]] *weechat.look.store_layout_on_exit*
+** description: `store layout on exit (buffers, windows, or both)`
+** type: integer
+** values: none, buffers, windows, all (default value: `none`)
 
 * [[option_weechat.look.tab_width]] *weechat.look.tab_width*
 ** description: `number of spaces used to display tabs in messages`

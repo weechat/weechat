@@ -803,11 +803,6 @@
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
-* [[option_weechat.look.save_layout_on_exit]] *weechat.look.save_layout_on_exit*
-** 説明: `終了時にレイアウトを保存 (buffers、windows または both)`
-** タイプ: 整数
-** 値: none, buffers, windows, all (デフォルト値: `none`)
-
 * [[option_weechat.look.scroll_amount]] *weechat.look.scroll_amount*
 ** 説明: `scroll_up と scroll_down でスクロールする行数`
 ** タイプ: 整数
@@ -837,6 +832,11 @@
 ** 説明: `バーとウィンドウ周囲の垂直セパレータ文字 (空の場合は ncurses で線を描画するが、いくつかのターミナルでは URL 選択の際にバグを生ずる可能性がある); 必ずスクリーン上に描画した時の文字幅が 1 の文字を指定してください`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
+
+* [[option_weechat.look.store_layout_on_exit]] *weechat.look.store_layout_on_exit*
+** 説明: `store layout on exit (buffers, windows, or both)`
+** タイプ: 整数
+** 値: none, buffers, windows, all (デフォルト値: `none`)
 
 * [[option_weechat.look.tab_width]] *weechat.look.tab_width*
 ** 説明: `number of spaces used to display tabs in messages`

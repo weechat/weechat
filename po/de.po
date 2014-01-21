@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-21 15:28+0100\n"
+"POT-Creation-Date: 2014-01-21 21:52+0100\n"
 "PO-Revision-Date: 2014-01-18 21:20+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -500,18 +500,20 @@ msgid_plural "%d new keys added (context: \"%s\")"
 msgstr[0] "(%d) neue Taste hinzugefügt"
 msgstr[1] "(%d) neue Tasten hinzugefügt (Kontext: \"%s\")"
 
-msgid "Saved layouts:"
+#, fuzzy
+msgid "Stored layouts:"
 msgstr "gespeicherte Layouts:"
 
 msgid " (current layout)"
 msgstr " (aktuelles Layout)"
 
-msgid "No layout saved"
-msgstr "Kein Layout gespeichert"
+#, fuzzy
+msgid "No stored layouts"
+msgstr "Auflistung der Layouts"
 
 #. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows"
-#, c-format
-msgid "Layout of %s%s%s saved in \"%s\" (current layout: %s)"
+#, fuzzy, c-format
+msgid "Layout of %s%s%s stored in \"%s\" (current layout: %s)"
 msgstr "Layout %s%s%s gesichert in \"%s\" (aktuelles Layout: %s)"
 
 msgid "buffers"
@@ -1947,17 +1949,17 @@ msgstr ""
 #, fuzzy
 msgid ""
 "  store: store current buffers/windows in a layout\n"
-"  apply: apply saved layout\n"
+"  apply: apply stored layout\n"
 "  leave: leave current layout (does not update any layout)\n"
-"    del: delete buffers and/or windows in a saved layout\n"
+"    del: delete buffers and/or windows in a stored layout\n"
 "         (if neither \"buffers\" nor \"windows\" is given after the name, "
 "the layout is deleted)\n"
 " rename: rename a layout\n"
-"   name: name for saved layout (default is \"default\")\n"
-"buffers: save/apply only buffers (order of buffers)\n"
-"windows: save/apply only windows (buffer displayed by each window)\n"
+"   name: name for stored layout (default is \"default\")\n"
+"buffers: store/apply only buffers (order of buffers)\n"
+"windows: store/apply only windows (buffer displayed by each window)\n"
 "\n"
-"Without argument, this command displays saved layouts."
+"Without argument, this command displays stored layouts."
 msgstr ""
 "    add: erstellt ein Layout der zur Zeit verwendeten Buffer/Fenster\n"
 "  apply: das gespeicherte Layout anwenden\n"
@@ -3560,11 +3562,6 @@ msgstr ""
 msgid "save configuration file on exit"
 msgstr "die aktuelle Konfiguration wird beim Beenden automatisch gesichert"
 
-msgid "save layout on exit (buffers, windows, or both)"
-msgstr ""
-"beim Beenden wird das aktuelle Layout automatisch gesichert (Buffer, Fenster "
-"oder beides)"
-
 msgid "how many lines to scroll by with scroll_up and scroll_down"
 msgstr ""
 "Anzahl der zu scrollenden Zeilen wenn seitenweise geblättert wird (Bild hoch/"
@@ -3610,6 +3607,12 @@ msgstr ""
 "das angegebene Zeichen wird verwendet um die vertikale Linien zu zeichnen. "
 "Wird kein Zeichen angegeben, dann zeichnet ncurses eine durchgängige Linie. "
 "Die Schriftbreite muss exakt ein Zeichen betragen"
+
+#, fuzzy
+msgid "store layout on exit (buffers, windows, or both)"
+msgstr ""
+"beim Beenden wird das aktuelle Layout automatisch gesichert (Buffer, Fenster "
+"oder beides)"
 
 #, fuzzy
 msgid "number of spaces used to display tabs in messages"
@@ -11204,6 +11207,9 @@ msgstr "Type"
 
 msgid "Constants"
 msgstr "Konstanten"
+
+#~ msgid "No layout saved"
+#~ msgstr "Kein Layout gespeichert"
 
 #, fuzzy
 #~ msgid "%sgnutls: fingerprint does NOT match"

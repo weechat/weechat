@@ -1667,14 +1667,14 @@ gui_window_zoom (struct t_gui_window *window)
     }
     else
     {
-        /* save layout and zoom on current window */
+        /* store layout and zoom on current window */
         ptr_layout = gui_layout_alloc (GUI_LAYOUT_ZOOM);
         if (ptr_layout)
         {
             gui_layout_add (ptr_layout);
             hook_signal_send ("window_zoom",
                               WEECHAT_HOOK_SIGNAL_POINTER, gui_current_window);
-            gui_layout_window_save (ptr_layout);
+            gui_layout_window_store (ptr_layout);
             gui_window_merge_all (window);
             hook_signal_send ("window_zoomed",
                               WEECHAT_HOOK_SIGNAL_POINTER, gui_current_window);

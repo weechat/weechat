@@ -803,11 +803,6 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 
-* [[option_weechat.look.save_layout_on_exit]] *weechat.look.save_layout_on_exit*
-** description: `sauve la disposition en quittant (tampons, fenêtres, ou les deux)`
-** type: entier
-** valeurs: none, buffers, windows, all (valeur par défaut: `none`)
-
 * [[option_weechat.look.scroll_amount]] *weechat.look.scroll_amount*
 ** description: `nombre de lignes pour le défilement avec scroll_up et scroll_down`
 ** type: entier
@@ -837,6 +832,11 @@
 ** description: `caractère utilisé pour tracer les séparateurs verticaux autour des barres et fenêtres (une valeur vide tracera une vraie ligne avec ncurses); la largeur à l'écran doit être exactement d'un caractère`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
+
+* [[option_weechat.look.store_layout_on_exit]] *weechat.look.store_layout_on_exit*
+** description: `stocker la disposition en quittant (tampons, fenêtres, ou les deux)`
+** type: entier
+** valeurs: none, buffers, windows, all (valeur par défaut: `none`)
 
 * [[option_weechat.look.tab_width]] *weechat.look.tab_width*
 ** description: `nombre d'espaces utilisés pour afficher les tabulations dans les messages`

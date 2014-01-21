@@ -82,7 +82,7 @@ struct t_gui_buffer
     char *plugin_name_for_upgrade;     /* plugin name when upgrading        */
 
     int number;                        /* buffer number (first is 1)        */
-    int layout_number;                 /* number of buffer saved in layout  */
+    int layout_number;                 /* number of buffer stored in layout */
     int layout_number_merge_order;     /* order in merge for layout         */
     char *name;                        /* buffer name                       */
     char *full_name;                   /* plugin name + '.' + buffer name   */

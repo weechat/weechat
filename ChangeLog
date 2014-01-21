@@ -29,7 +29,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: use "+" separator to make a logical "and" between tags in command
   /filter, option weechat.look.highlight_tags and buffer property
   "highlight_tags"
-* core: rename options save/reset to store/del in command /layout
+* core: rename options save/reset to store/del in command /layout, rename
+  option weechat.look.save_layout_on_exit to weechat.look.store_layout_on_exit
 * core: add options weechat.look.buffer_auto_renumber and
   weechat.look.buffer_position, add option "renumber" in command /buffer, add
   bar item "buffer_last_number" (task #12766)

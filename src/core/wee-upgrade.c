@@ -354,7 +354,7 @@ upgrade_weechat_save_layout_window (struct t_upgrade_file *upgrade_file)
 
     if (ptr_layout)
     {
-        gui_layout_window_save (ptr_layout);
+        gui_layout_window_store (ptr_layout);
 
         /* save tree with layout of windows */
         rc = upgrade_weechat_save_layout_window_tree (upgrade_file, ptr_layout->layout_windows);

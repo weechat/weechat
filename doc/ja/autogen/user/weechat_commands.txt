@@ -482,17 +482,17 @@ listdefault: デフォルトキーをリストアップ
          del [<name>] [buffers|windows]
          rename <name> <new_name>
 
-  store: レイアウトに現在のバッファ/ウィンドウを保存
-  apply: 保存されたレイアウトを適用
-  leave: 現在のレイアウトを保持する (レイアウトを更新しない)
-    del: レイアウトとして保存されているバッファとウィンドウを削除
-         (名前の後に "バッファ" や "ウィンドウ" を指定しない場合、レイアウトを削除)
- rename: レイアウトのリネーム
-   name: 保存されたレイアウトの名前 (初期状態は "default")
-buffers: バッファのみに対してレイアウトを保存/適用 (バッファの順番)
-windows: ウィンドウのみに対してレイアウトを保存/適用 (それぞれのウィンドウに表示されるバッファ)
+  store: store current buffers/windows in a layout
+  apply: apply stored layout
+  leave: leave current layout (does not update any layout)
+    del: delete buffers and/or windows in a stored layout
+         (if neither "buffers" nor "windows" is given after the name, the layout is deleted)
+ rename: rename a layout
+   name: name for stored layout (default is "default")
+buffers: store/apply only buffers (order of buffers)
+windows: store/apply only windows (buffer displayed by each window)
 
-引数無しでは、保存されたレイアウトを表示します。
+Without argument, this command displays stored layouts.
 ----
 
 [[command_weechat_mouse]]

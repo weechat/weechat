@@ -91,12 +91,12 @@ enum t_config_look_read_marker
     CONFIG_LOOK_READ_MARKER_CHAR,
 };
 
-enum t_config_look_save_layout_on_exit
+enum t_config_look_store_layout_on_exit
 {
-    CONFIG_LOOK_SAVE_LAYOUT_ON_EXIT_NONE = 0,
-    CONFIG_LOOK_SAVE_LAYOUT_ON_EXIT_BUFFERS,
-    CONFIG_LOOK_SAVE_LAYOUT_ON_EXIT_WINDOWS,
-    CONFIG_LOOK_SAVE_LAYOUT_ON_EXIT_ALL,
+    CONFIG_LOOK_STORE_LAYOUT_ON_EXIT_NONE = 0,
+    CONFIG_LOOK_STORE_LAYOUT_ON_EXIT_BUFFERS,
+    CONFIG_LOOK_STORE_LAYOUT_ON_EXIT_WINDOWS,
+    CONFIG_LOOK_STORE_LAYOUT_ON_EXIT_ALL,
 };
 
 extern struct t_config_file *weechat_config_file;
@@ -191,13 +191,13 @@ extern struct t_config_option *config_look_read_marker;
 extern struct t_config_option *config_look_read_marker_always_show;
 extern struct t_config_option *config_look_read_marker_string;
 extern struct t_config_option *config_look_save_config_on_exit;
-extern struct t_config_option *config_look_save_layout_on_exit;
 extern struct t_config_option *config_look_scroll_amount;
 extern struct t_config_option *config_look_scroll_bottom_after_switch;
 extern struct t_config_option *config_look_scroll_page_percent;
 extern struct t_config_option *config_look_search_text_not_found_alert;
 extern struct t_config_option *config_look_separator_horizontal;
 extern struct t_config_option *config_look_separator_vertical;
+extern struct t_config_option *config_look_store_layout_on_exit;
 extern struct t_config_option *config_look_tab_width;
 extern struct t_config_option *config_look_time_format;
 extern struct t_config_option *config_look_window_auto_zoom;

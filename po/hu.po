@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-21 15:28+0100\n"
+"POT-Creation-Date: 2014-01-21 21:52+0100\n"
 "PO-Revision-Date: 2014-01-06 10:16+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -489,19 +489,20 @@ msgstr[0] "Nincs mellőzés megadva.\n"
 msgstr[1] "Nincs mellőzés megadva.\n"
 
 #, fuzzy
-msgid "Saved layouts:"
+msgid "Stored layouts:"
 msgstr "a pufferek időbélyege"
 
 msgid " (current layout)"
 msgstr ""
 
-msgid "No layout saved"
-msgstr ""
+#, fuzzy
+msgid "No stored layouts"
+msgstr "Aliaszok listája:\n"
 
 #. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows"
-#, c-format
-msgid "Layout of %s%s%s saved in \"%s\" (current layout: %s)"
-msgstr ""
+#, fuzzy, c-format
+msgid "Layout of %s%s%s stored in \"%s\" (current layout: %s)"
+msgstr "A %s%s%s szoba témája: "
 
 #, fuzzy
 msgid "buffers"
@@ -1541,17 +1542,17 @@ msgstr ""
 
 msgid ""
 "  store: store current buffers/windows in a layout\n"
-"  apply: apply saved layout\n"
+"  apply: apply stored layout\n"
 "  leave: leave current layout (does not update any layout)\n"
-"    del: delete buffers and/or windows in a saved layout\n"
+"    del: delete buffers and/or windows in a stored layout\n"
 "         (if neither \"buffers\" nor \"windows\" is given after the name, "
 "the layout is deleted)\n"
 " rename: rename a layout\n"
-"   name: name for saved layout (default is \"default\")\n"
-"buffers: save/apply only buffers (order of buffers)\n"
-"windows: save/apply only windows (buffer displayed by each window)\n"
+"   name: name for stored layout (default is \"default\")\n"
+"buffers: store/apply only buffers (order of buffers)\n"
+"windows: store/apply only windows (buffer displayed by each window)\n"
 "\n"
-"Without argument, this command displays saved layouts."
+"Without argument, this command displays stored layouts."
 msgstr ""
 
 msgid "mouse control"
@@ -2679,9 +2680,6 @@ msgstr ""
 msgid "save configuration file on exit"
 msgstr "beállítások mentése kilépéskor"
 
-msgid "save layout on exit (buffers, windows, or both)"
-msgstr ""
-
 msgid "how many lines to scroll by with scroll_up and scroll_down"
 msgstr "a scroll_up és scroll_down hány sort görgessen"
 
@@ -2708,6 +2706,9 @@ msgstr ""
 msgid ""
 "char used to draw vertical separators around bars and windows (empty value "
 "will draw a real line with ncurses); width on screen must be exactly one char"
+msgstr ""
+
+msgid "store layout on exit (buffers, windows, or both)"
 msgstr ""
 
 #, fuzzy

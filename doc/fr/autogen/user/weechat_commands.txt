@@ -483,16 +483,16 @@ Exemples:
          rename <nom> <nouveau_nom>
 
   store: stocker les tampons/fenêtres courants dans une disposition
-  apply: appliquer une disposition sauvegardée
+  apply: appliquer une disposition stockée
   leave: quitter la disposition courante (ne met à jour aucune disposition)
-    del: supprimer les tampons et/ou fenêtres dans une disposition sauvegardée
+    del: supprimer les tampons et/ou fenêtres dans une disposition stockée
          (si ni "buffers" ni "windows" n'est donné après le nom, la disposition est supprimée)
  rename: renommer une disposition
-    nom: nom pour la disposition sauvegardée (par défaut "default")
-buffers: sauver/appliquer seulement pour les tampons (ordre des tampons)
-windows: sauver/appliquer seulement pour les fenêtres (le tampon affiché par chaque fenêtre)
+    nom: nom pour la disposition stockée (par défaut "default")
+buffers: stocker/appliquer seulement pour les tampons (ordre des tampons)
+windows: stocker/appliquer seulement pour les fenêtres (le tampon affiché par chaque fenêtre)
 
-Sans paramètre, cette commande affiche les dispositions sauvegardées.
+Sans paramètre, cette commande affiche les dispositions stockées.
 ----
 
 [[command_weechat_mouse]]

@@ -483,16 +483,16 @@ Beispiele:
          rename <name> <new_name>
 
   store: store current buffers/windows in a layout
-  apply: apply saved layout
+  apply: apply stored layout
   leave: leave current layout (does not update any layout)
-    del: delete buffers and/or windows in a saved layout
+    del: delete buffers and/or windows in a stored layout
          (if neither "buffers" nor "windows" is given after the name, the layout is deleted)
  rename: rename a layout
-   name: name for saved layout (default is "default")
-buffers: save/apply only buffers (order of buffers)
-windows: save/apply only windows (buffer displayed by each window)
+   name: name for stored layout (default is "default")
+buffers: store/apply only buffers (order of buffers)
+windows: store/apply only windows (buffer displayed by each window)
 
-Without argument, this command displays saved layouts.
+Without argument, this command displays stored layouts.
 ----
 
 [[command_weechat_mouse]]

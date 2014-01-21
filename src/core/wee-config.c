@@ -159,13 +159,13 @@ struct t_config_option *config_look_read_marker;
 struct t_config_option *config_look_read_marker_always_show;
 struct t_config_option *config_look_read_marker_string;
 struct t_config_option *config_look_save_config_on_exit;
-struct t_config_option *config_look_save_layout_on_exit;
 struct t_config_option *config_look_scroll_amount;
 struct t_config_option *config_look_scroll_bottom_after_switch;
 struct t_config_option *config_look_scroll_page_percent;
 struct t_config_option *config_look_search_text_not_found_alert;
 struct t_config_option *config_look_separator_horizontal;
 struct t_config_option *config_look_separator_vertical;
+struct t_config_option *config_look_store_layout_on_exit;
 struct t_config_option *config_look_tab_width;
 struct t_config_option *config_look_time_format;
 struct t_config_option *config_look_window_auto_zoom;
@@ -2581,11 +2581,6 @@ config_weechat_init_options ()
         "save_config_on_exit", "boolean",
         N_("save configuration file on exit"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, &config_change_save_config_on_exit, NULL, NULL, NULL);
-    config_look_save_layout_on_exit = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "save_layout_on_exit", "integer",
-        N_("save layout on exit (buffers, windows, or both)"),
-        "none|buffers|windows|all", 0, 0, "none", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_scroll_amount = config_file_new_option (
         weechat_config_file, ptr_section,
         "scroll_amount", "integer",
@@ -2627,6 +2622,11 @@ config_weechat_init_options ()
            "width on screen must be exactly one char"),
         NULL, 0, 0, "", NULL, 0,
         &config_check_separator, NULL, &config_change_buffers, NULL, NULL, NULL);
+    config_look_store_layout_on_exit = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "store_layout_on_exit", "integer",
+        N_("store layout on exit (buffers, windows, or both)"),
+        "none|buffers|windows|all", 0, 0, "none", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_tab_width = config_file_new_option (
         weechat_config_file, ptr_section,
         "tab_width", "integer",
