@@ -7904,6 +7904,18 @@ WeeChat とプラグインが送信するシグナルのリスト:
   String: /quit の引数 |
   ユーザがコマンド `/quit` を実行
 
+// TRANSLATION MISSING
+| weechat | signal_sighup +
+  _(WeeChat ≥ 0.4.3)_ |
+  - |
+  Signal SIGHUP received (WeeChat will reload the configuration files)
+
+// TRANSLATION MISSING
+| weechat | signal_sigwinch +
+  _(WeeChat ≥ 0.4.3)_ |
+  - |
+  Signal SIGWINCH received (terminal was resized, WeeChat will refresh screen)
+
 | weechat | upgrade |
   String: /upgrade に "-quit" 引数が与えられた場合は "quit"、それ以外は NULL |
   ユーザがコマンド `/upgrade` を実行

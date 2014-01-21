@@ -8029,6 +8029,17 @@ Liste des signaux envoyés par WeeChat et les extensions :
   Chaîne : paramètres pour le /quit |
   La commande `/quit` a été exécutée par l'utilisateur
 
+| weechat | signal_sighup +
+  _(WeeChat ≥ 0.4.3)_ |
+  - |
+  Signal SIGHUP reçu (WeeChat va recharger les fichiers de configuration)
+
+| weechat | signal_sigwinch +
+  _(WeeChat ≥ 0.4.3)_ |
+  - |
+  Signal SIGWINCH reçu (le terminal a été redimensionné, WeeChat va rafraîchir
+  l'écran)
+
 | weechat | upgrade |
   Chaîne : "quit" si le paramètre "-quit" a été donné pour /upgrade, sinon NULL |
   La commande `/upgrade` a été exécutée par l'utilisateur

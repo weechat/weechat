@@ -7908,6 +7908,16 @@ List of signals sent by WeeChat and plugins:
   String: arguments for /quit |
   Command `/quit` issued by user
 
+| weechat | signal_sighup +
+  _(WeeChat ≥ 0.4.3)_ |
+  - |
+  Signal SIGHUP received (WeeChat will reload the configuration files)
+
+| weechat | signal_sigwinch +
+  _(WeeChat ≥ 0.4.3)_ |
+  - |
+  Signal SIGWINCH received (terminal was resized, WeeChat will refresh screen)
+
 | weechat | upgrade |
   String: "quit" if "-quit" argument was given for /upgrade, otherwise NULL |
   Command `/upgrade` issued by user

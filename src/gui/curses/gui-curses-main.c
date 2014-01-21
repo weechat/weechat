@@ -285,6 +285,8 @@ gui_main_signal_sighup ()
      * reloaded, but they are if signal SIGHUP is sent to WeeChat by user)
      */
     gui_reload_config = 1;
+
+    hook_signal_send ("signal_sighup", WEECHAT_HOOK_SIGNAL_STRING, NULL);
 }
 
 /*
@@ -295,6 +297,8 @@ void
 gui_main_signal_sigwinch ()
 {
     gui_window_ask_refresh (2);
+
+    hook_signal_send ("signal_sigwinch", WEECHAT_HOOK_SIGNAL_STRING, NULL);
 }
 
 /*
