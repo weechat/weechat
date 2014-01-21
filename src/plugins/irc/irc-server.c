@@ -3537,13 +3537,10 @@ irc_server_create_buffer (struct t_irc_server *server)
  */
 
 int
-irc_server_check_certificate_fingerprint (gnutls_session_t session,
-                                          struct t_irc_server *server,
+irc_server_check_certificate_fingerprint (struct t_irc_server *server,
+                                          gnutls_x509_crt_t certificate,
                                           const char *good_fingerprint)
 {
-    const gnutls_datum_t *cert_list;
-    unsigned int cert_list_len;
-    gnutls_x509_crt_t certificate;
     unsigned char fingerprint[20];
     size_t i, fingerprint_size;
     unsigned int value;
@@ -3554,50 +3551,17 @@ irc_server_check_certificate_fingerprint (gnutls_session_t session,
     if (strlen (good_fingerprint) != fingerprint_size * 2)
         return 0;
 
-    /* get the peer's raw certificate (chain) as sent by the peer */
-    cert_list_len = 0;
-    cert_list = gnutls_certificate_get_peers (session, &cert_list_len);
-    if (!cert_list || (cert_list_len == 0))
-    {
-        weechat_printf (server->buffer,
-                        _("%sgnutls: no server certificate found"),
-                        weechat_prefix ("error"));
-        return 0;
-    }
-
-    /* initialize the certificate structure */
-    if (gnutls_x509_crt_init (&certificate) != GNUTLS_E_SUCCESS)
-    {
-        weechat_printf (server->buffer,
-                        _("%sgnutls: failed to initialize certificate structure"),
-                        weechat_prefix ("error"));
-        return 0;
-    }
-
-    /* import the raw certificate data */
-    if (gnutls_x509_crt_import (certificate, &cert_list[0],
-                                GNUTLS_X509_FMT_DER) != GNUTLS_E_SUCCESS)
-    {
-        weechat_printf (server->buffer,
-                        _("%sgnutls: failed to import server certificate"),
-                        weechat_prefix ("error"));
-        gnutls_x509_crt_deinit (certificate);
-        return 0;
-    }
-
     /* calculate the SHA1 fingerprint for the certificate */
     if (gnutls_x509_crt_get_fingerprint (certificate, GNUTLS_DIG_SHA1,
                                          fingerprint,
                                          &fingerprint_size) != GNUTLS_E_SUCCESS)
     {
         weechat_printf (server->buffer,
-                        _("%sgnutls: failed to calculate server fingerprint"),
+                        _("%sgnutls: failed to calculate certificate "
+                          "fingerprint"),
                         weechat_prefix ("error"));
-        gnutls_x509_crt_deinit (certificate);
         return 0;
     }
-
-    gnutls_x509_crt_deinit (certificate);
 
     /* compare the fingerprints */
     for (i = 0; i < fingerprint_size; i++)
@@ -3608,6 +3572,7 @@ irc_server_check_certificate_fingerprint (gnutls_session_t session,
             return 0;
     }
 
+    /* fingerprint matches */
     return 1;
 }
 
@@ -3640,11 +3605,11 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
     gnutls_x509_crt_t cert_temp;
     const gnutls_datum_t *cert_list;
     gnutls_datum_t filedatum;
-    unsigned int cert_list_len, status;
+    unsigned int i, cert_list_len, status;
     time_t cert_time;
-    char *cert_path0, *cert_path1, *cert_path2, *cert_str, *hostname;
+    char *cert_path0, *cert_path1, *cert_path2, *cert_str;
     const char *weechat_dir, *fingerprint;
-    int rc, ret, i, j, hostname_match;
+    int rc, ret, fingerprint_match, hostname_match, cert_temp_init;
 #if LIBGNUTLS_VERSION_NUMBER >= 0x010706
     gnutls_datum_t cinfo;
     int rinfo;
@@ -3662,147 +3627,199 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
         return -1;
 
     server = (struct t_irc_server *) data;
-    hostname = server->current_address;
-    hostname_match = 0;
+    cert_temp_init = 0;
+    cert_list = NULL;
+    cert_list_len = 0;
 
     if (action == WEECHAT_HOOK_CONNECT_GNUTLS_CB_VERIFY_CERT)
     {
         weechat_printf (server->buffer,
-                        _("%sgnutls: connected using %d-bit Diffie-Hellman shared "
-                          "secret exchange"),
+                        _("%sgnutls: connected using %d-bit Diffie-Hellman "
+                          "shared secret exchange"),
                         weechat_prefix ("network"),
                         IRC_SERVER_OPTION_INTEGER (server,
                                                    IRC_SERVER_OPTION_SSL_DHKEY_SIZE));
 
-        /* skip normal checks if ssl_fingerprint is set and just check that */
+        /* initialize the certificate structure */
+        if (gnutls_x509_crt_init (&cert_temp) != GNUTLS_E_SUCCESS)
+        {
+            weechat_printf (server->buffer,
+                            _("%sgnutls: failed to initialize certificate "
+                              "structure"),
+                            weechat_prefix ("error"));
+            rc = -1;
+            goto end;
+        }
+
+        /* flag to do the "deinit" (at the end of function) */
+        cert_temp_init = 1;
+
+        /* get fingerprint option in server */
         fingerprint = IRC_SERVER_OPTION_STRING (server,
                                                 IRC_SERVER_OPTION_SSL_FINGERPRINT);
-        if (fingerprint && fingerprint[0])
+
+        /* set match options */
+        fingerprint_match = (fingerprint && fingerprint[0]) ? 0 : 1;
+        hostname_match = 0;
+
+        /* get the peer's raw certificate (chain) as sent by the peer */
+        cert_list = gnutls_certificate_get_peers (tls_session, &cert_list_len);
+        if (cert_list)
         {
-            if (!irc_server_check_certificate_fingerprint (tls_session, server,
-                                                           fingerprint))
+            weechat_printf (server->buffer,
+                            NG_("%sgnutls: receiving %d certificate",
+                                "%sgnutls: receiving %d certificates",
+                                cert_list_len),
+                            weechat_prefix ("network"),
+                            cert_list_len);
+
+            for (i = 0; i < cert_list_len; i++)
             {
-                rc = -1;
-                weechat_printf (server->buffer,
-                                _("%sgnutls: server fingerprint does NOT match"),
-                                weechat_prefix ("error"));
+                if (gnutls_x509_crt_import (cert_temp,
+                                            &cert_list[i],
+                                            GNUTLS_X509_FMT_DER) != GNUTLS_E_SUCCESS)
+                {
+                    weechat_printf (server->buffer,
+                                    _("%sgnutls: failed to import "
+                                      "certificate[%d]"),
+                                    weechat_prefix ("error"), i + 1);
+                    rc = -1;
+                    goto end;
+                }
+
+                /* checks on first certificate received */
+                if (i == 0)
+                {
+                    /* check if fingerprint matches the first certificate */
+                    if (fingerprint && fingerprint[0])
+                    {
+                        fingerprint_match = irc_server_check_certificate_fingerprint (server,
+                                                                                      cert_temp,
+                                                                                      fingerprint);
+                    }
+                    /* check if hostname matches in the first certificate */
+                    if (gnutls_x509_crt_check_hostname (cert_temp,
+                                                        server->current_address) != 0)
+                    {
+                        hostname_match = 1;
+                    }
+                }
+#if LIBGNUTLS_VERSION_NUMBER >= 0x010706
+                /* display infos about certificate */
+#if LIBGNUTLS_VERSION_NUMBER < 0x020400
+                rinfo = gnutls_x509_crt_print (cert_temp, GNUTLS_X509_CRT_ONELINE, &cinfo);
+#else
+                rinfo = gnutls_x509_crt_print (cert_temp, GNUTLS_CRT_PRINT_ONELINE, &cinfo);
+#endif
+                if (rinfo == 0)
+                {
+                    weechat_printf (server->buffer,
+                                    _("%s - certificate[%d] info:"),
+                                    weechat_prefix ("network"), i + 1);
+                    weechat_printf (server->buffer,
+                                    "%s   - %s",
+                                    weechat_prefix ("network"), cinfo.data);
+                    gnutls_free (cinfo.data);
+                }
+#endif
+                /* check dates, only if fingerprint is not set */
+                if (!fingerprint || !fingerprint[0])
+                {
+                    /* check expiration date */
+                    cert_time = gnutls_x509_crt_get_expiration_time (cert_temp);
+                    if (cert_time < time (NULL))
+                    {
+                        weechat_printf (server->buffer,
+                                        _("%sgnutls: certificate has expired"),
+                                        weechat_prefix ("error"));
+                        rc = -1;
+                    }
+                    /* check activation date */
+                    cert_time = gnutls_x509_crt_get_activation_time (cert_temp);
+                    if (cert_time > time (NULL))
+                    {
+                        weechat_printf (server->buffer,
+                                        _("%sgnutls: certificate is not yet activated"),
+                                        weechat_prefix ("error"));
+                        rc = -1;
+                    }
+                }
             }
-            else
+
+            /*
+             * if fingerprint is set, display if matches, and don't check
+             * anything else
+             */
+            if (fingerprint && fingerprint[0])
+            {
+                if (fingerprint_match)
+                {
+                    weechat_printf (server->buffer,
+                                    _("%sgnutls: fingerprint matches"),
+                                    weechat_prefix ("network"));
+                }
+                else
+                {
+                    weechat_printf (server->buffer,
+                                    _("%sgnutls: fingerprint does NOT match"),
+                                    weechat_prefix ("error"));
+                    rc = -1;
+                }
+                goto end;
+            }
+
+            if (!hostname_match)
             {
                 weechat_printf (server->buffer,
-                                _("%sgnutls: server fingerprint matches"),
-                                weechat_prefix ("network"));
+                                _("%sgnutls: the hostname in the "
+                                  "certificate does NOT match \"%s\""),
+                                weechat_prefix ("error"),
+                                server->current_address);
+                rc = -1;
             }
         }
-        else if (gnutls_certificate_verify_peers2 (tls_session, &status) < 0)
+
+        /* verify the peer’s certificate */
+        if (gnutls_certificate_verify_peers2 (tls_session, &status) < 0)
         {
             weechat_printf (server->buffer,
                             _("%sgnutls: error while checking peer's certificate"),
                             weechat_prefix ("error"));
             rc = -1;
+            goto end;
+        }
+
+        /* check if certificate is trusted */
+        if (status & GNUTLS_CERT_INVALID)
+        {
+            weechat_printf (server->buffer,
+                            _("%sgnutls: peer's certificate is NOT trusted"),
+                            weechat_prefix ("error"));
+            rc = -1;
         }
         else
         {
-            /* some checks */
-            if (status & GNUTLS_CERT_INVALID)
-            {
-                weechat_printf (server->buffer,
-                                _("%sgnutls: peer's certificate is NOT trusted"),
-                                weechat_prefix ("error"));
-                rc = -1;
-            }
-            else
-            {
-                weechat_printf (server->buffer,
-                                _("%sgnutls: peer's certificate is trusted"),
-                                weechat_prefix ("network"));
-            }
-            if (status & GNUTLS_CERT_SIGNER_NOT_FOUND)
-            {
-                weechat_printf (server->buffer,
-                                _("%sgnutls: peer's certificate issuer is unknown"),
-                                weechat_prefix ("error"));
-                rc = -1;
-            }
-            if (status & GNUTLS_CERT_REVOKED)
-            {
-                weechat_printf (server->buffer,
-                                _("%sgnutls: the certificate has been revoked"),
-                                weechat_prefix ("error"));
-                rc = -1;
-            }
+            weechat_printf (server->buffer,
+                            _("%sgnutls: peer's certificate is trusted"),
+                            weechat_prefix ("network"));
+        }
 
-            /* check certificates */
-            if (gnutls_x509_crt_init (&cert_temp) >= 0)
-            {
-                cert_list = gnutls_certificate_get_peers (tls_session, &cert_list_len);
-                if (cert_list)
-                {
-                    weechat_printf (server->buffer,
-                                    NG_("%sgnutls: receiving %d certificate",
-                                        "%sgnutls: receiving %d certificates",
-                                        cert_list_len),
-                                    weechat_prefix ("network"),
-                                    cert_list_len);
-                    for (i = 0, j = (int) cert_list_len; i < j; i++)
-                    {
-                        if (gnutls_x509_crt_import (cert_temp, &cert_list[i], GNUTLS_X509_FMT_DER) >= 0)
-                        {
-                            /* checking if hostname matches in the first certificate */
-                            if ((i == 0) && (gnutls_x509_crt_check_hostname (cert_temp, hostname) != 0))
-                            {
-                                hostname_match = 1;
-                            }
-#if LIBGNUTLS_VERSION_NUMBER >= 0x010706
-                            /* displaying infos about certificate */
-#if LIBGNUTLS_VERSION_NUMBER < 0x020400
-                            rinfo = gnutls_x509_crt_print (cert_temp, GNUTLS_X509_CRT_ONELINE, &cinfo);
-#else
-                            rinfo = gnutls_x509_crt_print (cert_temp, GNUTLS_CRT_PRINT_ONELINE, &cinfo);
-#endif
-                            if (rinfo == 0)
-                            {
-                                weechat_printf (server->buffer,
-                                                _("%s - certificate[%d] info:"),
-                                                weechat_prefix ("network"),
-                                                i + 1);
-                                weechat_printf (server->buffer,
-                                                "%s   - %s",
-                                                weechat_prefix ("network"),
-                                                cinfo.data);
-                                gnutls_free (cinfo.data);
-                            }
-#endif
-                            /* check expiration date */
-                            cert_time = gnutls_x509_crt_get_expiration_time (cert_temp);
-                            if (cert_time < time (NULL))
-                            {
-                                weechat_printf (server->buffer,
-                                                _("%sgnutls: certificate has expired"),
-                                                weechat_prefix ("error"));
-                                rc = -1;
-                            }
-                            /* check activation date */
-                            cert_time = gnutls_x509_crt_get_activation_time (cert_temp);
-                            if (cert_time > time (NULL))
-                            {
-                                weechat_printf (server->buffer,
-                                                _("%sgnutls: certificate is not yet activated"),
-                                                weechat_prefix ("error"));
-                                rc = -1;
-                            }
-                        }
-                    }
-                    if (hostname_match == 0)
-                    {
-                        weechat_printf (server->buffer,
-                                        _("%sgnutls: the hostname in the "
-                                          "certificate does NOT match \"%s\""),
-                                        weechat_prefix ("error"), hostname);
-                        rc = -1;
-                    }
-                }
-            }
+        /* check if certificate issuer is known */
+        if (status & GNUTLS_CERT_SIGNER_NOT_FOUND)
+        {
+            weechat_printf (server->buffer,
+                            _("%sgnutls: peer's certificate issuer is unknown"),
+                            weechat_prefix ("error"));
+            rc = -1;
+        }
+
+        /* check that certificate is not revoked */
+        if (status & GNUTLS_CERT_REVOKED)
+        {
+            weechat_printf (server->buffer,
+                            _("%sgnutls: the certificate has been revoked"),
+                            weechat_prefix ("error"));
+            rc = -1;
         }
     }
     else if (action == WEECHAT_HOOK_CONNECT_GNUTLS_CB_SET_CERT)
@@ -3911,12 +3928,16 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
         }
     }
 
+end:
     /* an error should stop the handshake unless the user doesn't care */
     if ((rc == -1)
         && (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SSL_VERIFY) == 0))
     {
         rc = 0;
     }
+
+    if (cert_temp_init)
+        gnutls_x509_crt_deinit (cert_temp);
 
     return rc;
 }
