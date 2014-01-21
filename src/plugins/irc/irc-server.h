@@ -41,6 +41,7 @@ enum t_irc_server_option
     IRC_SERVER_OPTION_SSL_CERT,      /* client ssl certificate file          */
     IRC_SERVER_OPTION_SSL_PRIORITIES, /* gnutls priorities                   */
     IRC_SERVER_OPTION_SSL_DHKEY_SIZE, /* Diffie Hellman key size             */
+    IRC_SERVER_OPTION_SSL_FINGERPRINT, /* SHA1 fingerprint of certificate    */
     IRC_SERVER_OPTION_SSL_VERIFY,    /* check if the connection is trusted   */
     IRC_SERVER_OPTION_PASSWORD,      /* password for server                  */
     IRC_SERVER_OPTION_CAPABILITIES,  /* client capabilities to enable        */

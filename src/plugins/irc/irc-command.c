@@ -4370,6 +4370,14 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
             weechat_printf (NULL, "  ssl_dhkey_size . . . : %s%d",
                             IRC_COLOR_CHAT_VALUE,
                             weechat_config_integer (server->options[IRC_SERVER_OPTION_SSL_DHKEY_SIZE]));
+        /* ssl_fingerprint */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_SSL_FINGERPRINT]))
+            weechat_printf (NULL, "  ssl_fingerprint. . . :   ('%s')",
+                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SSL_FINGERPRINT));
+        else
+            weechat_printf (NULL, "  ssl_fingerprint. . . : %s'%s'",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_string (server->options[IRC_SERVER_OPTION_SSL_FINGERPRINT]));
         /* ssl_verify */
         if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_SSL_VERIFY]))
             weechat_printf (NULL, "  ssl_verify . . . . . :   (%s)",

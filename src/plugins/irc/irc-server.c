@@ -72,7 +72,8 @@ struct t_irc_message *irc_msgq_last_msg = NULL;
 
 char *irc_server_option_string[IRC_SERVER_NUM_OPTIONS] =
 { "addresses", "proxy", "ipv6",
-  "ssl", "ssl_cert", "ssl_priorities", "ssl_dhkey_size", "ssl_verify",
+  "ssl", "ssl_cert", "ssl_priorities", "ssl_dhkey_size", "ssl_fingerprint",
+  "ssl_verify",
   "password", "capabilities",
   "sasl_mechanism", "sasl_username", "sasl_password", "sasl_timeout",
   "autoconnect", "autoreconnect", "autoreconnect_delay",
@@ -87,7 +88,8 @@ char *irc_server_option_string[IRC_SERVER_NUM_OPTIONS] =
 
 char *irc_server_option_default[IRC_SERVER_NUM_OPTIONS] =
 { "", "", "on",
-  "off", "", "NORMAL", "2048", "on",
+  "off", "", "NORMAL", "2048", "",
+  "on",
   "", "",
   "plain", "", "", "15",
   "off", "on", "10",
@@ -3525,6 +3527,90 @@ irc_server_create_buffer (struct t_irc_server *server)
 }
 
 #ifdef HAVE_GNUTLS
+
+/*
+ * Checks if a GnuTLS session uses the certificate with a given fingerprint.
+ *
+ * Returns:
+ *   1: certificate has the good fingerprint
+ *   0: certificate does NOT have the good fingerprint
+ */
+
+int
+irc_server_check_certificate_fingerprint (gnutls_session_t session,
+                                          struct t_irc_server *server,
+                                          const char *good_fingerprint)
+{
+    const gnutls_datum_t *cert_list;
+    unsigned int cert_list_len;
+    gnutls_x509_crt_t certificate;
+    unsigned char fingerprint[20];
+    size_t i, fingerprint_size;
+    unsigned int value;
+
+    fingerprint_size = sizeof (fingerprint);
+
+    /* invalid length for good_fingerprint? */
+    if (strlen (good_fingerprint) != fingerprint_size * 2)
+        return 0;
+
+    /* get the peer's raw certificate (chain) as sent by the peer */
+    cert_list_len = 0;
+    cert_list = gnutls_certificate_get_peers (session, &cert_list_len);
+    if (!cert_list || (cert_list_len == 0))
+    {
+        weechat_printf (server->buffer,
+                        _("%sgnutls: no server certificate found"),
+                        weechat_prefix ("error"));
+        return 0;
+    }
+
+    /* initialize the certificate structure */
+    if (gnutls_x509_crt_init (&certificate) != GNUTLS_E_SUCCESS)
+    {
+        weechat_printf (server->buffer,
+                        _("%sgnutls: failed to initialize certificate structure"),
+                        weechat_prefix ("error"));
+        return 0;
+    }
+
+    /* import the raw certificate data */
+    if (gnutls_x509_crt_import (certificate, &cert_list[0],
+                                GNUTLS_X509_FMT_DER) != GNUTLS_E_SUCCESS)
+    {
+        weechat_printf (server->buffer,
+                        _("%sgnutls: failed to import server certificate"),
+                        weechat_prefix ("error"));
+        gnutls_x509_crt_deinit (certificate);
+        return 0;
+    }
+
+    /* calculate the SHA1 fingerprint for the certificate */
+    if (gnutls_x509_crt_get_fingerprint (certificate, GNUTLS_DIG_SHA1,
+                                         fingerprint,
+                                         &fingerprint_size) != GNUTLS_E_SUCCESS)
+    {
+        weechat_printf (server->buffer,
+                        _("%sgnutls: failed to calculate server fingerprint"),
+                        weechat_prefix ("error"));
+        gnutls_x509_crt_deinit (certificate);
+        return 0;
+    }
+
+    gnutls_x509_crt_deinit (certificate);
+
+    /* compare the fingerprints */
+    for (i = 0; i < fingerprint_size; i++)
+    {
+        if (sscanf (&good_fingerprint[i * 2], "%02x", &value) != 1)
+            return 0;
+        if (value != fingerprint[i])
+            return 0;
+    }
+
+    return 1;
+}
+
 /*
  * GnuTLS callback called during handshake.
  *
@@ -3557,7 +3643,7 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
     unsigned int cert_list_len, status;
     time_t cert_time;
     char *cert_path0, *cert_path1, *cert_path2, *cert_str, *hostname;
-    const char *weechat_dir;
+    const char *weechat_dir, *fingerprint;
     int rc, ret, i, j, hostname_match;
 #if LIBGNUTLS_VERSION_NUMBER >= 0x010706
     gnutls_datum_t cinfo;
@@ -3587,7 +3673,28 @@ irc_server_gnutls_callback (void *data, gnutls_session_t tls_session,
                         weechat_prefix ("network"),
                         IRC_SERVER_OPTION_INTEGER (server,
                                                    IRC_SERVER_OPTION_SSL_DHKEY_SIZE));
-        if (gnutls_certificate_verify_peers2 (tls_session, &status) < 0)
+
+        /* skip normal checks if ssl_fingerprint is set and just check that */
+        fingerprint = IRC_SERVER_OPTION_STRING (server,
+                                                IRC_SERVER_OPTION_SSL_FINGERPRINT);
+        if (fingerprint && fingerprint[0])
+        {
+            if (!irc_server_check_certificate_fingerprint (tls_session, server,
+                                                           fingerprint))
+            {
+                rc = -1;
+                weechat_printf (server->buffer,
+                                _("%sgnutls: server fingerprint does NOT match"),
+                                weechat_prefix ("error"));
+            }
+            else
+            {
+                weechat_printf (server->buffer,
+                                _("%sgnutls: server fingerprint matches"),
+                                weechat_prefix ("network"));
+            }
+        }
+        else if (gnutls_certificate_verify_peers2 (tls_session, &status) < 0)
         {
             weechat_printf (server->buffer,
                             _("%sgnutls: error while checking peer's certificate"),
@@ -4749,6 +4856,9 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_integer (ptr_item, "ssl_dhkey_size",
                                            IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SSL_DHKEY_SIZE)))
         return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "ssl_fingerprint",
+                                           IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SSL_FINGERPRINT)))
+        return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "ssl_verify",
                                            IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SSL_VERIFY)))
         return 0;
@@ -4972,6 +5082,13 @@ irc_server_print_log ()
         else
             weechat_log_printf ("  ssl_dhkey_size . . . : '%d'",
                                 weechat_config_integer (ptr_server->options[IRC_SERVER_OPTION_SSL_DHKEY_SIZE]));
+        /* ssl_fingerprint */
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SSL_FINGERPRINT]))
+            weechat_log_printf ("  ssl_fingerprint. . . : null ('%s')",
+                                IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_SSL_FINGERPRINT));
+        else
+            weechat_log_printf ("  ssl_fingerprint. . . : '%s'",
+                                weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_SSL_FINGERPRINT]));
         /* ssl_verify */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SSL_VERIFY]))
             weechat_log_printf ("  ssl_verify . . . . . : null (%s)",
