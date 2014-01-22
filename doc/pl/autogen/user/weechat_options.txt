@@ -803,6 +803,11 @@
 ** typ: bool
 ** wartości: on, off (domyślna wartość: `on`)
 
+* [[option_weechat.look.save_layout_on_exit]] *weechat.look.save_layout_on_exit*
+** opis: `save layout on exit (buffers, windows, or both)`
+** typ: liczba
+** wartości: none, buffers, windows, all (domyślna wartość: `none`)
+
 * [[option_weechat.look.scroll_amount]] *weechat.look.scroll_amount*
 ** opis: `ile linii przewijać za pomocą scroll_up i scroll_down`
 ** typ: liczba
@@ -832,11 +837,6 @@
 ** opis: `znak używany do rysowania poziomych separatorów dookoła pasków i okien (pusta wartość oznacza rysowanie prawdziwych linii za pomocą ncurses); szerokość na ekranie musi wynosić dokładnie jeden znak`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
-
-* [[option_weechat.look.store_layout_on_exit]] *weechat.look.store_layout_on_exit*
-** opis: `store layout on exit (buffers, windows, or both)`
-** typ: liczba
-** wartości: none, buffers, windows, all (domyślna wartość: `none`)
 
 * [[option_weechat.look.tab_width]] *weechat.look.tab_width*
 ** opis: `number of spaces used to display tabs in messages`

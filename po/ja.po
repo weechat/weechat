@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-22 15:40+0100\n"
+"POT-Creation-Date: 2014-01-22 18:47+0100\n"
 "PO-Revision-Date: 2014-01-18 21:22+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -3339,6 +3339,10 @@ msgstr "リードマーカー行の表示に使われる文字列 (行末まで�
 msgid "save configuration file on exit"
 msgstr "終了時に設定ファイルを保存"
 
+#, fuzzy
+msgid "save layout on exit (buffers, windows, or both)"
+msgstr "終了時にレイアウトを保存 (buffers、windows または both)"
+
 msgid "how many lines to scroll by with scroll_up and scroll_down"
 msgstr "scroll_up と scroll_down でスクロールする行数"
 
@@ -3377,10 +3381,6 @@ msgstr ""
 "バーとウィンドウ周囲の垂直セパレータ文字 (空の場合は ncurses で線を描画する"
 "が、いくつかのターミナルでは URL 選択の際にバグを生ずる可能性がある); 必ずス"
 "クリーン上に描画した時の文字幅が 1 の文字を指定してください"
-
-#, fuzzy
-msgid "store layout on exit (buffers, windows, or both)"
-msgstr "終了時にレイアウトを保存 (buffers、windows または both)"
 
 #, fuzzy
 msgid "number of spaces used to display tabs in messages"

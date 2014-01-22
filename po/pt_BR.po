@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-22 15:40+0100\n"
+"POT-Creation-Date: 2014-01-22 18:47+0100\n"
 "PO-Revision-Date: 2014-01-18 21:23+0100\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3162,6 +3162,10 @@ msgstr ""
 msgid "save configuration file on exit"
 msgstr "salva arquivo de configuração na saída"
 
+#, fuzzy
+msgid "save layout on exit (buffers, windows, or both)"
+msgstr "salva disposição na saída (buffers, janelas, ou ambos)"
+
 msgid "how many lines to scroll by with scroll_up and scroll_down"
 msgstr "quantas linhas rolar com scroll_up e scroll_down"
 
@@ -3200,10 +3204,6 @@ msgstr ""
 "caractere usado para desenhar separadores verticais em volta de barras e "
 "janelas(valor vazio vai desenhar uam linha real com ncurses), caracteres "
 "extendidos NÃO são aceitos aqui"
-
-#, fuzzy
-msgid "store layout on exit (buffers, windows, or both)"
-msgstr "salva disposição na saída (buffers, janelas, ou ambos)"
 
 #, fuzzy
 msgid "number of spaces used to display tabs in messages"

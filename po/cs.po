@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-22 15:40+0100\n"
+"POT-Creation-Date: 2014-01-22 18:47+0100\n"
 "PO-Revision-Date: 2014-01-18 21:20+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3073,6 +3073,10 @@ msgstr ""
 msgid "save configuration file on exit"
 msgstr "uložit soubor s nastavením při ukončení"
 
+#, fuzzy
+msgid "save layout on exit (buffers, windows, or both)"
+msgstr "uložit rozložení při ukončení (buffery, okna nebo obojí)"
+
 msgid "how many lines to scroll by with scroll_up and scroll_down"
 msgstr "o kolik řádů posunou pomocí scroll_up a scroll_down"
 
@@ -3112,10 +3116,6 @@ msgstr ""
 "vykreslí skutečnou čáru při použití ncurses, ale může způsobit problém s "
 "výběrem URL v některých terminálech), znaky kódované do více bytů zde NEJSOU "
 "povoleny"
-
-#, fuzzy
-msgid "store layout on exit (buffers, windows, or both)"
-msgstr "uložit rozložení při ukončení (buffery, okna nebo obojí)"
 
 #, fuzzy
 msgid "number of spaces used to display tabs in messages"

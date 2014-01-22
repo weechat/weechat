@@ -13,11 +13,6 @@ http://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 == Version 0.4.3 (under dev)
 
-=== Layout
-
-Option 'weechat.look.save_layout_on_exit' has been renamed to
-'weechat.look.store_layout_on_exit'.
-
 === Colors in messages
 
 The color code for "reverse video" in IRC message has been fixed: now WeeChat

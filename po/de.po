@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-22 15:40+0100\n"
+"POT-Creation-Date: 2014-01-22 18:47+0100\n"
 "PO-Revision-Date: 2014-01-18 21:20+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -3562,6 +3562,12 @@ msgstr ""
 msgid "save configuration file on exit"
 msgstr "die aktuelle Konfiguration wird beim Beenden automatisch gesichert"
 
+#, fuzzy
+msgid "save layout on exit (buffers, windows, or both)"
+msgstr ""
+"beim Beenden wird das aktuelle Layout automatisch gesichert (Buffer, Fenster "
+"oder beides)"
+
 msgid "how many lines to scroll by with scroll_up and scroll_down"
 msgstr ""
 "Anzahl der zu scrollenden Zeilen wenn seitenweise geblättert wird (Bild hoch/"
@@ -3607,12 +3613,6 @@ msgstr ""
 "das angegebene Zeichen wird verwendet um die vertikale Linien zu zeichnen. "
 "Wird kein Zeichen angegeben, dann zeichnet ncurses eine durchgängige Linie. "
 "Die Schriftbreite muss exakt ein Zeichen betragen"
-
-#, fuzzy
-msgid "store layout on exit (buffers, windows, or both)"
-msgstr ""
-"beim Beenden wird das aktuelle Layout automatisch gesichert (Buffer, Fenster "
-"oder beides)"
 
 #, fuzzy
 msgid "number of spaces used to display tabs in messages"

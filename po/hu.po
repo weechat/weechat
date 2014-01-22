@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-22 15:40+0100\n"
+"POT-Creation-Date: 2014-01-22 18:47+0100\n"
 "PO-Revision-Date: 2014-01-06 10:16+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2680,6 +2680,9 @@ msgstr ""
 msgid "save configuration file on exit"
 msgstr "beállítások mentése kilépéskor"
 
+msgid "save layout on exit (buffers, windows, or both)"
+msgstr ""
+
 msgid "how many lines to scroll by with scroll_up and scroll_down"
 msgstr "a scroll_up és scroll_down hány sort görgessen"
 
@@ -2706,9 +2709,6 @@ msgstr ""
 msgid ""
 "char used to draw vertical separators around bars and windows (empty value "
 "will draw a real line with ncurses); width on screen must be exactly one char"
-msgstr ""
-
-msgid "store layout on exit (buffers, windows, or both)"
 msgstr ""
 
 #, fuzzy

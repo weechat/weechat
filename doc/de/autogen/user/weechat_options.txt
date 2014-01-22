@@ -803,6 +803,11 @@
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
+* [[option_weechat.look.save_layout_on_exit]] *weechat.look.save_layout_on_exit*
+** Beschreibung: `save layout on exit (buffers, windows, or both)`
+** Typ: integer
+** Werte: none, buffers, windows, all (Standardwert: `none`)
+
 * [[option_weechat.look.scroll_amount]] *weechat.look.scroll_amount*
 ** Beschreibung: `Anzahl der zu scrollenden Zeilen wenn seitenweise geblättert wird (Bild hoch/runter)`
 ** Typ: integer
@@ -832,11 +837,6 @@
 ** Beschreibung: `das angegebene Zeichen wird verwendet um die vertikale Linien zu zeichnen. Wird kein Zeichen angegeben, dann zeichnet ncurses eine durchgängige Linie. Die Schriftbreite muss exakt ein Zeichen betragen`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
-
-* [[option_weechat.look.store_layout_on_exit]] *weechat.look.store_layout_on_exit*
-** Beschreibung: `store layout on exit (buffers, windows, or both)`
-** Typ: integer
-** Werte: none, buffers, windows, all (Standardwert: `none`)
 
 * [[option_weechat.look.tab_width]] *weechat.look.tab_width*
 ** Beschreibung: `number of spaces used to display tabs in messages`

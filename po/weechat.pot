@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-22 15:40+0100\n"
+"POT-Creation-Date: 2014-01-22 18:47+0100\n"
 "PO-Revision-Date: 2013-02-14 18:20+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2422,6 +2422,9 @@ msgstr ""
 msgid "save configuration file on exit"
 msgstr ""
 
+msgid "save layout on exit (buffers, windows, or both)"
+msgstr ""
+
 msgid "how many lines to scroll by with scroll_up and scroll_down"
 msgstr ""
 
@@ -2448,9 +2451,6 @@ msgstr ""
 msgid ""
 "char used to draw vertical separators around bars and windows (empty value "
 "will draw a real line with ncurses); width on screen must be exactly one char"
-msgstr ""
-
-msgid "store layout on exit (buffers, windows, or both)"
 msgstr ""
 
 msgid "number of spaces used to display tabs in messages"
