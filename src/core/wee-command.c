@@ -7131,7 +7131,7 @@ command_init ()
            "  display an error on core buffer:\n"
            "    /print -core -error Some error here\n"
            "  display message on core buffer with prefix \"abc\":\n"
-           "    /print -core abc\tThe message\n"
+           "    /print -core abc\\tThe message\n"
            "  display a message on channel #weechat:\n"
            "    /print -buffer irc.freenode.#weechat Message on #weechat\n"
            "  send alert (BEL):\n"

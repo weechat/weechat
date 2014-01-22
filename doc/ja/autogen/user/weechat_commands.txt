@@ -592,7 +592,7 @@ Examples:
   display an error on core buffer:
     /print -core -error Some error here
   display message on core buffer with prefix "abc":
-    /print -core abc	The message
+    /print -core abc\tThe message
   display a message on channel #weechat:
     /print -buffer irc.freenode.#weechat Message on #weechat
   send alert (BEL):
