@@ -70,8 +70,9 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   weechat.look.buffer_search_{case_sensitive|force_default|regex|where}
 * doc: add Japanese plugin API reference and developer's guide
 * doc: add Polish man page and user's guide
+* api: add function "infolist_search_var"
 * api: add stdin options in functions hook_process_hashtable and hook_set
-  to send data on stdin of child process, add function hook_set in script API
+  to send data on stdin of child process, add function "hook_set" in script API
   (task #10847, task #13031)
 * api: add hdata "buffer_visited"
 * api: add support of infos with format `${info:name,arguments}` in function

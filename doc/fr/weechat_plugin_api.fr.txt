@@ -12941,6 +12941,53 @@ weechat.infolist_reset_item_cursor(infolist)
 weechat.infolist_reset_item_cursor(infolist)
 ----
 
+==== weechat_infolist_search_var
+
+_WeeChat ≥ 0.4.3._
+
+Chercher une variable dans l'objet courant de l'infolist.
+
+Prototype :
+
+[source,C]
+----
+struct t_infolist_var *weechat_infolist_search_var (struct t_infolist *infolist,
+                                                    const char *name);
+----
+
+Paramètres :
+
+* 'infolist' : pointeur vers l'infolist
+* 'name' : nom de la variable
+
+Valeur de retour :
+
+* ponteur vers la variable trouvée, NULL si la variable n'est pas trouvée
+
+Exemple en C :
+
+[source,C]
+----
+if (weechat_infolist_search_var (infolist, "name"))
+{
+    /* la variable "name" existe */
+    /* ... */
+}
+----
+
+Script (Python) :
+
+[source,python]
+----
+# prototype
+var = weechat.infolist_search_var(infolist, name)
+
+# exemple
+if weechat.infolist_search_var(infolist, "name"):
+    # la variable "name" existe
+    # ...
+----
+
 ==== weechat_infolist_fields
 
 Retourner la liste des champs pour l'objet courant de l'infolist.

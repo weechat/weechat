@@ -13025,6 +13025,57 @@ weechat.infolist_reset_item_cursor(infolist)
 weechat.infolist_reset_item_cursor(infolist)
 ----
 
+==== weechat_infolist_search_var
+
+_WeeChat ≥ 0.4.3._
+
+// TRANSLATION MISSING
+Search a variable in the current infolist item.
+
+Prototipo:
+
+[source,C]
+----
+struct t_infolist_var *weechat_infolist_search_var (struct t_infolist *infolist,
+                                                    const char *name);
+----
+
+Argomenti:
+
+* 'infolist': puntatore alla lista info
+* 'name': nome della variabile
+
+Valore restituito:
+
+// TRANSLATION MISSING
+* pointer to variable found, NULL if the variable was not found
+
+Esempio in C:
+
+// TRANSLATION MISSING
+[source,C]
+----
+if (weechat_infolist_search_var (infolist, "name"))
+{
+    /* variable "name" exists */
+    /* ... */
+}
+----
+
+Script (Python):
+
+// TRANSLATION MISSING
+[source,python]
+----
+# prototipo
+var = weechat.infolist_search_var(infolist, name)
+
+# esempio
+if weechat.infolist_search_var(infolist, "name"):
+    # variable "name" exists
+    # ...
+----
+
 ==== weechat_infolist_fields
 
 Restituisce una lista di campi per l'elemento della

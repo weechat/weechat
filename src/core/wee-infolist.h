@@ -69,6 +69,7 @@ extern struct t_infolist *last_weechat_infolist;
 /* list functions */
 
 extern struct t_infolist *infolist_new ();
+extern int infolist_valid (struct t_infolist *infolist);
 extern struct t_infolist_item *infolist_new_item (struct t_infolist *infolist);
 extern struct t_infolist_var *infolist_new_var_integer (struct t_infolist_item *item,
                                                         const char *name,
@@ -86,7 +87,8 @@ extern struct t_infolist_var *infolist_new_var_buffer (struct t_infolist_item *i
 extern struct t_infolist_var *infolist_new_var_time (struct t_infolist_item *item,
                                                      const char *name,
                                                      time_t time);
-extern int infolist_valid (struct t_infolist *infolist);
+extern struct t_infolist_var *infolist_search_var (struct t_infolist *infolist,
+                                                   const char *name);
 extern struct t_infolist_item *infolist_next (struct t_infolist *infolist);
 extern struct t_infolist_item *infolist_prev (struct t_infolist *infolist);
 extern void infolist_reset_item_cursor (struct t_infolist *infolist);
@@ -101,8 +103,6 @@ extern void *infolist_buffer (struct t_infolist *infolist,
                               const char *var, int *size);
 extern time_t infolist_time (struct t_infolist *infolist,
                              const char *var);
-extern struct t_infolist_var *infolist_search_var (struct t_infolist *infolist,
-                                                   const char *var);
 extern void infolist_free (struct t_infolist *infolist);
 extern void infolist_free_all_plugin (struct t_weechat_plugin *plugin);
 extern void infolist_print_log ();

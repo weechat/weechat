@@ -57,7 +57,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20140109-01"
+#define WEECHAT_PLUGIN_API_VERSION "20140122-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -839,6 +839,8 @@ struct t_weechat_plugin
     struct t_infolist_var *(*infolist_new_var_time) (struct t_infolist_item *item,
                                                      const char *name,
                                                      time_t time);
+    struct t_infolist_var *(*infolist_search_var) (struct t_infolist *infolist,
+                                                   const char *name);
     struct t_infolist *(*infolist_get) (struct t_weechat_plugin *plugin,
                                         const char *infolist_name,
                                         void *pointer,
@@ -1618,6 +1620,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                             __size)
 #define weechat_infolist_new_var_time(__item, __name, __time)           \
     weechat_plugin->infolist_new_var_time(__item, __name, __time)
+#define weechat_infolist_search_var(__list, __name)                     \
+    weechat_plugin->infolist_search_var(__list, __name)
 #define weechat_infolist_get(__infolist_name, __pointer, __arguments)   \
     weechat_plugin->infolist_get(weechat_plugin, __infolist_name,       \
                                  __pointer, __arguments)

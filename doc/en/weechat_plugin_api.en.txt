@@ -12718,6 +12718,53 @@ weechat.infolist_reset_item_cursor(infolist)
 weechat.infolist_reset_item_cursor(infolist)
 ----
 
+==== weechat_infolist_search_var
+
+_WeeChat ≥ 0.4.3._
+
+Search a variable in the current infolist item.
+
+Prototype:
+
+[source,C]
+----
+struct t_infolist_var *weechat_infolist_search_var (struct t_infolist *infolist,
+                                                    const char *name);
+----
+
+Arguments:
+
+* 'infolist': infolist pointer
+* 'name': variable name
+
+Return value:
+
+* pointer to variable found, NULL if the variable was not found
+
+C example:
+
+[source,C]
+----
+if (weechat_infolist_search_var (infolist, "name"))
+{
+    /* variable "name" exists */
+    /* ... */
+}
+----
+
+Script (Python):
+
+[source,python]
+----
+# prototype
+var = weechat.infolist_search_var(infolist, name)
+
+# example
+if weechat.infolist_search_var(infolist, "name"):
+    # variable "name" exists
+    # ...
+----
+
 ==== weechat_infolist_fields
 
 Return list of fields for current infolist item.

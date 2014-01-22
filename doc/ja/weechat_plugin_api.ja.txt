@@ -12715,6 +12715,57 @@ weechat.infolist_reset_item_cursor(infolist)
 weechat.infolist_reset_item_cursor(infolist)
 ----
 
+==== weechat_infolist_search_var
+
+_WeeChat バージョン 0.4.3 以上で利用可。_
+
+// TRANSLATION MISSING
+Search a variable in the current infolist item.
+
+プロトタイプ:
+
+[source,C]
+----
+struct t_infolist_var *weechat_infolist_search_var (struct t_infolist *infolist,
+                                                    const char *name);
+----
+
+引数:
+
+* 'infolist': インフォリストへのポインタ
+* 'name': 変数名
+
+戻り値:
+
+// TRANSLATION MISSING
+* pointer to variable found, NULL if the variable was not found
+
+C 言語での使用例:
+
+// TRANSLATION MISSING
+[source,C]
+----
+if (weechat_infolist_search_var (infolist, "name"))
+{
+    /* variable "name" exists */
+    /* ... */
+}
+----
+
+スクリプト (Python) での使用例:
+
+// TRANSLATION MISSING
+[source,python]
+----
+# prototype
+var = weechat.infolist_search_var(infolist, name)
+
+# example
+if weechat.infolist_search_var(infolist, "name"):
+    # variable "name" exists
+    # ...
+----
+
 ==== weechat_infolist_fields
 
 現在のインフォリストの要素に対するフィールドのリストを返す。

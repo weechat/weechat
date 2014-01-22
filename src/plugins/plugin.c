@@ -734,6 +734,7 @@ plugin_load (const char *filename, int argc, char **argv)
         new_plugin->infolist_new_var_pointer = &infolist_new_var_pointer;
         new_plugin->infolist_new_var_buffer = &infolist_new_var_buffer;
         new_plugin->infolist_new_var_time = &infolist_new_var_time;
+        new_plugin->infolist_search_var = &infolist_search_var;
         new_plugin->infolist_get = &hook_infolist_get;
         new_plugin->infolist_next = &plugin_api_infolist_next;
         new_plugin->infolist_prev = &plugin_api_infolist_prev;
