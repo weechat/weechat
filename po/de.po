@@ -1,7 +1,7 @@
 #
 # Copyright (C) 2005 Rudolf Polzer <weechat-te@durchnull.de>
 # Copyright (C) 2006-2007 Thomas Schuetz <i18n@internet-villa.de>
-# Copyright (C) 2009-2013 Nils Görs <weechatter@arcor.de>
+# Copyright (C) 2009-2014 Nils Görs <weechatter@arcor.de>
 #
 # This file is part of WeeChat, the extensible chat client.
 #
@@ -22,11 +22,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-22 18:47+0100\n"
-"PO-Revision-Date: 2014-01-18 21:20+0100\n"
+"POT-Creation-Date: 2014-01-23 11:21+0100\n"
+"PO-Revision-Date: 2014-01-22 21:22+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
-"Language: de\n"
+"Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -210,9 +210,9 @@ msgstr ""
 msgid "Buffers list:"
 msgstr "Liste der vorhandenen Buffer:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "  %s[%s%d%s]%s %s%s.%s%s%s (notify: %s)"
-msgstr "  %s[%s%d%s]%s (%s) %s%s%s (Benachrichtigung: %s)"
+msgstr "  %s[%s%d%s]%s %s%s.%s%s%s (Benachrichtigung: %s)"
 
 #, c-format
 msgid "%sError: incorrect buffer number"
@@ -500,21 +500,19 @@ msgid_plural "%d new keys added (context: \"%s\")"
 msgstr[0] "(%d) neue Taste hinzugefügt"
 msgstr[1] "(%d) neue Tasten hinzugefügt (Kontext: \"%s\")"
 
-#, fuzzy
 msgid "Stored layouts:"
-msgstr "gespeicherte Layouts:"
+msgstr "erstellte Layouts:"
 
 msgid " (current layout)"
 msgstr " (aktuelles Layout)"
 
-#, fuzzy
 msgid "No stored layouts"
-msgstr "Auflistung der Layouts"
+msgstr "keine Layouts erstellt"
 
 #. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows"
-#, fuzzy, c-format
+#, c-format
 msgid "Layout of %s%s%s stored in \"%s\" (current layout: %s)"
-msgstr "Layout %s%s%s gesichert in \"%s\" (aktuelles Layout: %s)"
+msgstr "Layout %s%s%s erstellt in \"%s\" (aktuelles Layout: %s)"
 
 msgid "buffers"
 msgstr "Buffer"
@@ -1355,7 +1353,6 @@ msgstr "wertet eine Expression aus und zeigt das Resultat im Buffer an"
 msgid "[-n] <expression> || [-n] -c <expression1> <operator> <expression2>"
 msgstr "[-n] <expression> || [-n] -c <expression1> <operator> <expression2>"
 
-#, fuzzy
 msgid ""
 "        -n: display result without sending it to buffer (debug mode)\n"
 "        -c: evaluate as condition: use operators and parentheses, return a "
@@ -1437,8 +1434,8 @@ msgstr ""
 "                <   kleiner\n"
 "                >=  größer oder gleich\n"
 "                >   größer\n"
-"                =~  stimmt mit regulärem Ausdruck überein\n"
-"                !~  stimmt NICHT mit regulärem Ausdruck überein\n"
+"                =~  stimmt mit regulärem POSIX Ausdruck überein\n"
+"                !~  stimmt NICHT mit regulärem POSIX Ausdruck überein\n"
 "\n"
 "Ein Ausdruck gilt als \"wahr\", sofern das Ergebnis nicht NULL, nicht leer "
 "und von \"0\" abweichend ist.\n"
@@ -1499,7 +1496,6 @@ msgstr ""
 "list || enable|disable|toggle [<name>] || add <name> <buffer>[,<buffer>...] "
 "<tags> <regex> || del <name>|-all"
 
-#, fuzzy
 msgid ""
 "   list: list all filters\n"
 " enable: enable filters (filters are enabled by default)\n"
@@ -1581,7 +1577,7 @@ msgstr ""
 "         - logisch \"und\":  wird \"+\" zwischen den Tags verwendet (zum "
 "Beispiel: \"nick_toto+irc_action\")\n"
 "         - Tags können mit '*' beginnen oder enden\n"
-"  regex: regulärer Ausdruck um in einer Zeile zu suchen\n"
+"  regex: erweiterter regulärer POSIX Ausdruc, um in einer Zeile zu suchen\n"
 "         - das Präfix (z.B. Nick) wird mittels '\\t' von der Nachricht "
 "getrennt. Sonderzeichen wie '|' müssen mit einer Escapesequenz : '\\|' "
 "eingebunden werden)\n"
@@ -1938,15 +1934,13 @@ msgstr ""
 msgid "manage buffers/windows layouts"
 msgstr "Verwaltet Buffer/Fenster Layouts"
 
-#, fuzzy
 msgid ""
 "store [<name>] [buffers|windows] || apply [<name>] [buffers|windows] || "
 "leave || del [<name>] [buffers|windows] || rename <name> <new_name>"
 msgstr ""
-"add [<name>] [buffers|windows] || apply [<name>] [buffers|windows] || leave "
-"|| del [<name>] [buffers|windows] || rename <name> <new_name>"
+"store [<name>] [buffers|windows] || apply [<name>] [buffers|windows] || "
+"leave || del [<name>] [buffers|windows] || rename <name> <new_name>"
 
-#, fuzzy
 msgid ""
 "  store: store current buffers/windows in a layout\n"
 "  apply: apply stored layout\n"
@@ -1961,20 +1955,20 @@ msgid ""
 "\n"
 "Without argument, this command displays stored layouts."
 msgstr ""
-"    add: erstellt ein Layout der zur Zeit verwendeten Buffer/Fenster\n"
-"  apply: das gespeicherte Layout anwenden\n"
+"  store: erstellt ein Layout der zur Zeit verwendeten Buffer/Fenster\n"
+"  apply: erstelle Layout verwenden\n"
 "  leave: belässt das aktuelle Layout (es wird kein Layout aktualisiert)\n"
-"    del: entfernt Buffer und/oder Fenster eines gesicherten Layouts\n"
+"    del: entfernt Buffer und/oder Fenster eines erstellten Layouts\n"
 "         (falls weder \"buffers\" noch \"windows\" angegeben wird, dann wird "
 "das Layout entfernt)\n"
 " rename: ein Layout umbenennen\n"
-"   name: Name unter welchem das Layout gesichert werden soll (Standardlayout "
-"lautet \"default\")\n"
-"buffers: speichert bzw. verwendet nur Buffer (Reihenfolge der Buffer)\n"
-"windows: speichert bzw. verwendet nur Fenster (Buffer welche im jeweiligen "
+"   name: Name unter welchem das Layout erstellt werden soll (Standardlayout "
+"heisst \"default\")\n"
+"buffers: erstellt bzw. verwendet nur Buffer (Reihenfolge der Buffer)\n"
+"windows: erstellt bzw. verwendet nur Fenster (Buffer welche im jeweiligen "
 "Fenster dargestellt werden)\n"
 "\n"
-"Wird der Befehl ohne Argumente aufgerufen wird das gespeicherte Layout "
+"Wird der Befehl ohne Argumente aufgerufen, werden die erstellten Layout "
 "dargestellt."
 
 msgid "mouse control"
@@ -2100,14 +2094,15 @@ msgstr ""
 "Ohne Angabe eines Arguments werden alle installierten Erweiterungen "
 "angezeigt."
 
-#, fuzzy
 msgid "display text on a buffer"
-msgstr "Textfarbe in Relay-Buffer"
+msgstr "gibt einen Text"
 
 msgid ""
 "[-buffer <number>|<name>] [-core] [-escape] [-date <date>] [-tags <tags>] [-"
 "action|-error|-join|-network|-quit] <text> || -stdout|-stderr <text>"
 msgstr ""
+"[-buffer <number>|<name>] [-core] [-escape] [-date <date>] [-tags <tags>] [-"
+"action|-error|-join|-network|-quit] <text> || -stdout|-stderr <text>"
 
 msgid ""
 "-buffer: the buffer where text is displayed (default: current buffer)\n"
@@ -2143,6 +2138,40 @@ msgid ""
 "  send alert (BEL):\n"
 "    /print -stderr \\a"
 msgstr ""
+"-buffer: Buffer in welchem der Text ausgegeben werden soll (standardmäßig: "
+"aktueller Buffer)\n"
+"  -core: Alias für \"-buffer core.weechat\"\n"
+"-escape: Escapesequenzen werden umgewandelt (zum Beispiel \\a, \\07, \\x07)\n"
+"  -date: Datum der Nachricht, mögliche Formatierung:\n"
+"           -n: 'n' vor dem jetzigen Zeipunkt, in Sekunden\n"
+"           +n: 'n' in Zukunft, in Sekunden\n"
+"            n: 'n' Sekunden seit der Epoche (siehe man time)\n"
+"           date/time (ISO 8601): yyyy-mm-ddThh:mm:ss, Beispiel: "
+"2014-01-19T04:32:55\n"
+"           time: hh:mm:ss (Beispiel: 04:32:55)\n"
+"  -tags: durch Kommata getrennte Liste von Tags (siehe /help filter für eine "
+"Liste von Tags die häufig genutzt werden)\n"
+"   text: Text der ausgegeben werden soll (Präfix und Nachricht muss durch "
+"\\t getrennt werden)\n"
+"-stdout: Text wird an stdout geschickt (und nicht im Buffer dargestellt)\n"
+"-stderr:  Text wird an stderr geschickt (und nicht im Buffer dargestellt)\n"
+"\n"
+"Die Option -action ... -quit nutzt den Präfix der in der Option \"weechat."
+"look.prefix_*\" definiert ist.\n"
+"\n"
+"Die Optionen -stdout und -stderr wandeln Escapesequenzen automatisch um.\n"
+"\n"
+"Beispiele:\n"
+"  zeigt eine Erinnerung, mit Highlight, im Core-Buffer dar:\n"
+"    /print -core -tags notify_highlight Reminder: Milch kaufen\n"
+"  zeigt eine Fehlernachricht im Core-Buffer an:\n"
+"    /print -core -error irgend ein Fehler\n"
+"  zeigt eine Nachricht im Core-Buffer mit dem Präfix \"abc\" an:\n"
+"    /print -core abc\\tmeine Nachricht\n"
+"  es wird eine Nachricht im Channel #weechat ausgegeben:\n"
+"    /print -buffer irc.freenode.#weechat Message on #weechat\n"
+"  verschickt Alarm (BEL):\n"
+"    /print -stderr \\a"
 
 msgid "manage proxies"
 msgstr "Proxys verwalten"
@@ -2806,9 +2835,8 @@ msgstr "Konfigurationsoptionen"
 msgid "names of plugins"
 msgstr "Liste der Erweiterungen"
 
-#, fuzzy
 msgid "names of plugins installed"
-msgstr "Liste der Erweiterungen"
+msgstr "Namen der installierten Erweiterungen"
 
 msgid "commands defined by plugins"
 msgstr "Befehle, definiert durch Erweiterungen"
@@ -3018,13 +3046,13 @@ msgstr ""
 "es werden immer die Standardeinstellungen verwendet (anstelle der zuletzt "
 "genutzten Sucheinstellungen)"
 
-#, fuzzy
 msgid ""
 "default text search in buffer: if enabled, search POSIX extended regular "
 "expression, otherwise search simple string"
 msgstr ""
-"standardmäßige Textsuche im Buffer: falls aktiviert wird mittels regulären "
-"Ausdrücken gesucht, andernfalls findet eine genaue Textsuche statt"
+"standardmäßige Textsuche im Buffer: falls aktiviert wird mittels erweiterten "
+"regulären POSIX Ausdrücken gesucht, andernfalls findet eine genaue Textsuche "
+"statt"
 
 msgid "default text search in buffer: in message, prefix, prefix and message"
 msgstr ""
@@ -3211,7 +3239,6 @@ msgstr ""
 "werden). Schlagwörter können mit \"*\", als Joker, beginnen oder enden; "
 "Beispiel: \"test,(?-i)*toto*,flash*\""
 
-#, fuzzy
 msgid ""
 "POSIX extended regular expression used to check if a message has highlight "
 "or not, at least one match in string must be surrounded by delimiters (chars "
@@ -3219,13 +3246,13 @@ msgid ""
 "case insensitive (use \"(?-i)\" at beginning to make it case sensitive), "
 "examples: \"flashcode|flashy\", \"(?-i)FlashCode|flashy\""
 msgstr ""
-"Suchmuster (regulärer Ausdruck) welches genutzt werden soll, um zu "
-"überprüfen ob eine Nachricht ein Highlight enthält oder nicht. Mindestens "
-"eine Zeichenkette muss dabei auf das Suchmuster passen (alphanumerisch, \"-"
-"\", \"_\" oder \"|\"). Das Suchmuster unterscheidet dabei nicht zwischen "
-"Groß-und Kleinschreibung (um zwischen Groß-und Kleinschreibung zu "
-"unterscheiden muss am Wortanfang \"(?-i)\" genutzt werden). Beispiele: "
-"\"flashcode|flashy\", \"(?-i)FlashCode|flashy\""
+"Suchmuster (erweiterter regulärer POSIX Ausdruck) welches genutzt werden "
+"soll, um zu überprüfen ob eine Nachricht ein Highlight enthält oder nicht. "
+"Mindestens eine Zeichenkette muss dabei auf das Suchmuster passen "
+"(alphanumerisch, \"-\", \"_\" oder \"|\"). Das Suchmuster unterscheidet "
+"dabei nicht zwischen Groß-und Kleinschreibung (um zwischen Groß-und "
+"Kleinschreibung zu unterscheiden muss am Wortanfang \"(?-i)\" genutzt "
+"werden). Beispiele: \"flashcode|flashy\", \"(?-i)FlashCode|flashy\""
 
 msgid ""
 "comma separated list of tags to highlight; case insensitive comparison; each "
@@ -3562,11 +3589,9 @@ msgstr ""
 msgid "save configuration file on exit"
 msgstr "die aktuelle Konfiguration wird beim Beenden automatisch gesichert"
 
-#, fuzzy
 msgid "save layout on exit (buffers, windows, or both)"
 msgstr ""
-"beim Beenden wird das aktuelle Layout automatisch gesichert (Buffer, Fenster "
-"oder beides)"
+"beim Beenden wird das aktuelle Layout gesichert (Buffer, Fenster oder beides)"
 
 msgid "how many lines to scroll by with scroll_up and scroll_down"
 msgstr ""
@@ -3614,10 +3639,8 @@ msgstr ""
 "Wird kein Zeichen angegeben, dann zeichnet ncurses eine durchgängige Linie. "
 "Die Schriftbreite muss exakt ein Zeichen betragen"
 
-#, fuzzy
 msgid "number of spaces used to display tabs in messages"
-msgstr ""
-"Lokalisation welche für die übersetzten Nachrichten verwendet werden soll"
+msgstr "Anzahl an Leerzeichen um Tabulatoren in Nachrichten darzustellen"
 
 msgid ""
 "time format for dates converted to strings and displayed in messages (see "
@@ -5268,11 +5291,11 @@ msgid "%s%s: \"%s\" command can not be executed on a server buffer"
 msgstr ""
 "%s%s: Der Befehl \"%s\" kann nicht in einem Server-Buffer ausgeführt werden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to resolve local address of server socket: error %d %s"
 msgstr ""
-"%s%s: Die \"nonblock\"-Option für den Socket kann nicht festlegt werden: "
-"Fehler %d %s"
+"%s%s: lokale Adresse des Server Socket kann nicht aufgelöst werden: Fehler "
+"%d %s"
 
 #, c-format
 msgid "%s%s: wrong arguments for \"%s\" command"
@@ -5836,7 +5859,6 @@ msgstr "Ignoriert Nicks/Hosts von Channels oder Servern"
 msgid "list || add [re:]<nick> [<server> [<channel>]] || del <number>|-all"
 msgstr "list || add [re:]<nick> [<server> [<channel>]] || del <number>|-all"
 
-#, fuzzy
 msgid ""
 "     list: list all ignores\n"
 "      add: add an ignore\n"
@@ -5861,9 +5883,9 @@ msgid ""
 msgstr ""
 "     list: zeigt alle Ignorierungen an\n"
 "      add: fügt eine Ignorierung hinzu\n"
-"     nick: Nick oder Hostname (dies kann ein regulärer Ausdruck sein, sofern "
-"\"re:\" angegeben wird oder eine Maske mittels \"*\" genutzt wird um ein "
-"oder mehrere Zeichen zu ersetzen)\n"
+"     nick: Nick oder Hostname (dies kann ein erweiterter regulärer POSIX "
+"Ausdruck sein, sofern \"re:\" angegeben wird oder eine Maske mittels \"*\" "
+"genutzt wird um ein oder mehrere Zeichen zu ersetzen)\n"
 "      del: entfernt eine Ignorierung\n"
 "   number: Nummer der Ignorierung die entfernt werden soll (nutze \"list\" "
 "um den entsprechenden Eintrag zu finden)\n"
@@ -6017,7 +6039,6 @@ msgstr "Channels mit ihrem Thema auflisten"
 msgid "[<channel>[,<channel>...]] [<server>] [-re <regex>]"
 msgstr "[<channel>[,<channel>...]] [<server>] [-re <regex>]"
 
-#, fuzzy
 msgid ""
 "channel: channel to list\n"
 " server: server name\n"
@@ -6035,10 +6056,10 @@ msgid ""
 msgstr ""
 "channel: aufzulistender Channel\n"
 " server: Servername\n"
-" regexp: regulärer Ausdruck der auf die Ausgabe angewendet werden soll "
-"(zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen "
-"Groß- und Kleinschreibung zu unterscheiden muss zu Beginn \"(?-i)\" genutzt "
-"werden)\n"
+" regexp: erweiterter regulärer POSIX Ausdruck, der auf die Ausgabe "
+"angewendet werden soll (zwischen Groß- und Kleinschreibung wird nicht "
+"unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss "
+"zu Beginn \"(?-i)\" genutzt werden)\n"
 "\n"
 "Beispiele:\n"
 "  listet alle Channels des Servers auf (dies kann bei großen Netzwerken sehr "
@@ -6818,7 +6839,7 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: fingerprint must have exactly 40 hexadecimal digits"
-msgstr ""
+msgstr "%s%s: Fingerprint muss aus exakt 40 hexadezimalen Zeichen bestehen"
 
 #, c-format
 msgid ""
@@ -6908,6 +6929,11 @@ msgid ""
 "option is set, the other checks on certificates are NOT performed (option "
 "\"ssl_verify\")"
 msgstr ""
+"SHA1 Fingerprint des Zertifikates welches als vertrauenswürdig eingestuft "
+"und für diesen Server akzeptiert wird (hier müssen exakt 40 hexadezimale "
+"Zeichen, ohne Trennung, angegeben werden); wird diese Option verwendet dann "
+"werden andere Optionen, die eine Überprüfung von Zertifikaten vornehmen, "
+"NICHT berücksichtigt (Option \"ssl_verify\")"
 
 msgid "check that the SSL connection is fully trusted"
 msgstr "Überprüft ob die SSL-Verbindung vertrauenswürdig ist"
@@ -7199,7 +7225,6 @@ msgstr ""
 "es wird bei einer privaten Unterhaltung eine Mitteilung ausgegeben falls der "
 "User wieder zurück ist (falls der User sich beim Server abgemeldet hat)"
 
-#, fuzzy
 msgid ""
 "comma separated list of words to highlight in server buffers (case "
 "insensitive, use \"(?-i)\" at beginning of words to make them case "
@@ -7213,13 +7238,12 @@ msgstr ""
 "Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht "
 "unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss "
 "zu Beginn \"(?-i)\" genutzt werden; des weiteren können folgende Variablen "
-"genutzt werden: $nick, $channel und $server). Die angegeben Wörter werden "
-"der lokalen Variable \"highlight_words\" hinzugefügt, sobald der Buffer "
-"geöffnet wird. Dies bedeutet, dass diese Option keinen direkten Einfluss auf "
+"genutzt werden: $nick, $channel und $server). Wird ein Buffer geöffnet, dann "
+"werden die angegeben Wörter dem Buffer-Merkmal  \"highlight_words\" "
+"hinzugefügt. Dies bedeutet, dass diese Option keinen direkten Einfluss auf "
 "schon geöffnete Buffer hat. Eine leere Zeichenkette deaktiviert ein "
 "Highlight für den Nick. Beispiel: \"$nick\", \"(?-i)$nick\""
 
-#, fuzzy
 msgid ""
 "comma separated list of words to highlight in channel buffers (case "
 "insensitive, use \"(?-i)\" at beginning of words to make them case "
@@ -7233,13 +7257,12 @@ msgstr ""
 "Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht "
 "unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss "
 "zu Beginn \"(?-i)\" genutzt werden; des weiteren können folgende Variablen "
-"genutzt werden: $nick, $channel und $server). Die angegeben Wörter werden "
-"der lokalen Variable \"highlight_words\" hinzugefügt, sobald der Buffer "
-"geöffnet wird. Dies bedeutet, dass diese Option keinen direkten Einfluss auf "
+"genutzt werden: $nick, $channel und $server). Wird ein Buffer geöffnet, dann "
+"werden die angegeben Wörter dem Buffer-Merkmal  \"highlight_words\" "
+"hinzugefügt. Dies bedeutet, dass diese Option keinen direkten Einfluss auf "
 "schon geöffnete Buffer hat. Eine leere Zeichenkette deaktiviert ein "
 "Highlight für den Nick. Beispiel: \"$nick\", \"(?-i)$nick\""
 
-#, fuzzy
 msgid ""
 "comma separated list of words to highlight in private buffers (case "
 "insensitive, use \"(?-i)\" at beginning of words to make them case "
@@ -7253,9 +7276,9 @@ msgstr ""
 "Highlight erscheinen sollen (zwischen Groß- und Kleinschreibung wird nicht "
 "unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss "
 "zu Beginn \"(?-i)\" genutzt werden; des weiteren können folgende Variablen "
-"genutzt werden: $nick, $channel und $server). Die angegeben Wörter werden "
-"der lokalen Variable \"highlight_words\" hinzugefügt, sobald der Buffer "
-"geöffnet wird. Dies bedeutet, dass diese Option keinen direkten Einfluss auf "
+"genutzt werden: $nick, $channel und $server). Wird ein Buffer geöffnet, dann "
+"werden die angegeben Wörter dem Buffer-Merkmal  \"highlight_words\" "
+"hinzugefügt. Dies bedeutet, dass diese Option keinen direkten Einfluss auf "
 "schon geöffnete Buffer hat. Eine leere Zeichenkette deaktiviert ein "
 "Highlight für den Nick. Beispiel: \"$nick\", \"(?-i)$nick\""
 
@@ -8475,9 +8498,9 @@ msgstr "%s%s: Zeitüberschreitung"
 msgid "%s%s: unable to create socket"
 msgstr "%s%s: Socket kann nicht erstellt werden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sgnutls: failed to calculate certificate fingerprint"
-msgstr "%sgnutls: Kann das Zertifikat \"%s\" nicht lesen"
+msgstr "%sgnutls: Fingerprint-Zertifikat konnte nicht berechnet werden"
 
 #, c-format
 msgid "%sgnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
@@ -8485,9 +8508,9 @@ msgstr ""
 "%sgnutls: Verbindung mittels geheimen %d-Bit Diffie-Hellman Schlüssels "
 "hergestellt"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sgnutls: failed to initialize certificate structure"
-msgstr "%sgnutls: Peer Zertifikat ist vertrauenswürdig"
+msgstr "%sgnutls: Zertifikatsstruktur konnte nicht initialisiert werden"
 
 #, c-format
 msgid "%sgnutls: receiving %d certificate"
@@ -8495,9 +8518,9 @@ msgid_plural "%sgnutls: receiving %d certificates"
 msgstr[0] "%sgnutls: empfange %d Zertifikat"
 msgstr[1] "%sgnutls: empfange %d Zertifikate"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sgnutls: failed to import certificate[%d]"
-msgstr "%sgnutls: Kann das Zertifikat \"%s\" nicht lesen"
+msgstr "%sgnutls:  Zertifikat[%d] konnte nicht importiert werden"
 
 #, c-format
 msgid "%s - certificate[%d] info:"
@@ -8511,15 +8534,17 @@ msgstr "%sgnutls: die Gültigkeitsdauer des Zertifikates ist abgelaufen"
 msgid "%sgnutls: certificate is not yet activated"
 msgstr "%sgnutls: Zertifikat ist noch nicht freigeschaltet"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sgnutls: certificate fingerprint matches"
-msgstr "%sgnutls: sende ein Zertifikat"
+msgstr "%sgnutls: Fingerprint Zertifikat stimmt überein"
 
 #, c-format
 msgid ""
 "%sgnutls: certificate fingerprint does NOT match (check value of option irc."
 "server.%s.ssl_fingerprint)"
 msgstr ""
+"%sgnutls: certificate fingerprint does NOT match (check value of option irc."
+"server.%s.ssl_fingerprint)"
 
 #, c-format
 msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
@@ -9499,7 +9524,6 @@ msgstr "Hintergrundfarbe in Relay-Buffer"
 msgid "text color of selected line in relay buffer"
 msgstr "Textfarbe für selektierte Zeile in Relay-Buffer"
 
-#, fuzzy
 msgid ""
 "POSIX extended regular expression with IPs allowed to use relay (case "
 "insensitive, use \"(?-i)\" at beginning to make it case sensitive); if IPv6 "
@@ -9507,12 +9531,13 @@ msgid ""
 "IPv6 address (like: \"::ffff:127.0.0.1\"), example: \"^((::ffff:)?"
 "123.45.67.89|192.160.*)$\""
 msgstr ""
-"regulärer Ausdruck für IP Adressen die auf das Relay zugreifen dürfen "
-"(zwischen Groß- und Kleinschreibung wird dabei nicht unterschieden. Um "
-"zwischen Groß-und Kleinschreibung zu unterscheiden muss am Wortanfang \"(?-"
-"i)\" genutzt werden) . Sollte IPv6 aktiviert sein und es wird eine IPv4 "
-"Verbindung aufgebaut, werden die IPv6 Adressen nach IPv4 gewandelt  (siehe: "
-"\"::ffff:127.0.0.1\"), Beispiele: \"^((::ffff:)?123.45.67.89|192.160.*)$\""
+"erweiterter regulärer POSIX Ausdruck für IP Adressen die auf das Relay "
+"zugreifen dürfen (zwischen Groß- und Kleinschreibung wird dabei nicht "
+"unterschieden. Um zwischen Groß-und Kleinschreibung zu unterscheiden muss am "
+"Wortanfang \"(?-i)\" genutzt werden) . Sollte IPv6 aktiviert sein und es "
+"wird eine IPv4 Verbindung aufgebaut, werden die IPv6 Adressen nach IPv4 "
+"gewandelt  (siehe: \"::ffff:127.0.0.1\"), Beispiele: \"^((::ffff:)?"
+"123.45.67.89|192.160.*)$\""
 
 msgid ""
 "address for bind (if empty, connection is possible on all interfaces, use "
@@ -9557,13 +9582,12 @@ msgstr ""
 "Datei mit SSL Zertifikat und privatem Schlüssel (zur Nutzung von Clients mit "
 "SSL)"
 
-#, fuzzy
 msgid ""
 "POSIX extended regular expression with origins allowed in websockets (case "
 "insensitive, use \"(?-i)\" at beginning to make it case sensitive), example: "
 "\"^http://(www\\.)?example\\.(com|org)\""
 msgstr ""
-"erlaubt regulären Ausdruck für Origins in WebSockets (Groß- und "
+"erweiterter regulärer POSIX Ausdruck für Origins in WebSockets (Groß- und "
 "Kleinschreibung wird ignoriert, um Groß- und Kleinschreibung zu nutzen muss "
 "\"(?-i)\" dem Origin vorangestellt werden), Beispiele: \"^http://(www\\.)?"
 "example\\.(com|org)\""
@@ -9752,7 +9776,6 @@ msgstr ""
 "list|listdefault || add <name> <modifiers> <groups> <regex> || del <name>|-"
 "all [<name>...] || missing || default -yes"
 
-#, fuzzy
 msgid ""
 "       list: list all rmodifiers\n"
 "listdefault: list default rmodifiers\n"
@@ -9786,9 +9809,9 @@ msgstr ""
 "Ausdrücke abgefragt werden (innerhalb der runden Klammern): durch Kommata "
 "getrennte Liste der Gruppen (von 1 bis 9). Optional kann nach der Nummer für "
 "die Gruppe ein \"*\" gesetzt werden um diese Gruppe auszublenden\n"
-"      regex: regulärer Ausdruck (zwischen Groß- und Kleinschreibung wird "
-"nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden "
-"muss zu Beginn \"(?-i)\" genutzt werden)\n"
+"      regex: erweiterter regulärer POSIX Ausdruck (zwischen Groß- und "
+"Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und "
+"Kleinschreibung zu unterscheiden muss zu Beginn \"(?-i)\" genutzt werden)\n"
 "        del: löscht einen rmodifier Eintrag\n"
 "       -all: löscht alle rmodifiers Einträge\n"
 "    missing: fügt fehlende rmodifiers hinzu\n"
@@ -10766,24 +10789,23 @@ msgid "aborted"
 msgstr "abgebrochen"
 
 msgid "hashing"
-msgstr ""
+msgstr "hashing"
 
 msgid "CRC in progress"
-msgstr ""
+msgstr "CRC in Bearbeitung"
 
 msgid "CRC OK"
-msgstr ""
+msgstr "CRC OK"
 
 msgid "wrong CRC"
-msgstr ""
+msgstr "CRC fehlerhaft"
 
-#, fuzzy
 msgid "CRC error"
-msgstr "Fehler"
+msgstr "CRC Fehler"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: file %s %s %s (%s): %s"
-msgstr "%s%s: Datei %s %s %s (%ld.%ld.%ld.%ld): %s"
+msgstr "%s%s: Datei %s %s %s (%s): %s"
 
 msgid "sent to"
 msgstr "gesendet an"
@@ -10797,9 +10819,9 @@ msgstr "OK"
 msgid "FAILED"
 msgstr "FEHLGESCHLAGEN"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: chat closed with %s (%s)"
-msgstr "%s: Chat mit %s (%ld.%ld.%ld.%ld) geschlossen"
+msgstr "%s%s: Chat mit %s (%s) beendet"
 
 #, c-format
 msgid "%s%s: aborting active xfer: \"%s\" from %s"
@@ -10810,20 +10832,19 @@ msgid "%s%s: not enough memory for new xfer"
 msgstr ""
 "%s%s: Für einen neuen Transfer steht nicht ausreichend Speicher zur Verfügung"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to interpret address: error %d %s"
-msgstr "%s%s: Pipe kann nicht erstellt werden: Fehler %d %s"
+msgstr "%s%s: Adresse kann nicht ausgewertet werden: Fehler %d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: hashing error"
-msgstr "%s%s: TLS Initialisierungsfehler"
+msgstr "%s%s: Fehler beim hashing"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s: incoming file from %s (%s, %s.%s), name: %s, %llu bytes (protocol: %s)"
 msgstr ""
-"%s: eingehende Datei von %s (%ld.%ld.%ld.%ld, %s.%s), Name: %s, %llu Bytes "
-"(Protokoll: %s)"
+"%s: eingehende Datei von %s (%s, %s.%s), Name: %s, %llu Bytes (Protokoll: %s)"
 
 #, c-format
 msgid ""
@@ -10833,9 +10854,9 @@ msgstr ""
 "%s: sende Datei an %s (%s.%s), Name: %s (lokaler Dateiname: %s), %llu Bytes "
 "(Protokoll: %s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: incoming chat request from %s (%s, %s.%s)"
-msgstr "%s: eingehende Chatanforderung von %s (%ld.%ld.%ld.%ld, %s.%s)"
+msgstr "%s: eingehende Chatanforderung von %s (%s, %s.%s)"
 
 #, c-format
 msgid "%s: sending chat request to %s (%s.%s)"
@@ -10861,13 +10882,14 @@ msgstr "%s%s: unbekanntes Transferprotokoll \"%s\""
 msgid "%s%s: cannot access file \"%s\""
 msgstr "%s%s: auf die Datei \"%s\" kann nicht zugegriffen werden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid address \"%s\" (option xfer.network.own_ip): error %d %s"
-msgstr "%s%s: ungültige Verbindungsadresse \"%s\" für %s"
+msgstr ""
+"%s%s: ungültige Adresse \"%s\" (Option xfer.network.own_ip): Fehler %d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to find address for \"%s\": error %d %s"
-msgstr "%s%s: ungültige Verbindungsadresse \"%s\" für %s"
+msgstr "%s%s: Adresse von \"%s\" konnte nicht gefunden werden: Fehler %d %s"
 
 #, c-format
 msgid "%s%s: cannot create socket for xfer: error %d %s"
@@ -10906,9 +10928,9 @@ msgstr ""
 msgid "%s%s: error sending data to \"%s\" via xfer chat"
 msgstr "%s%s: Fehler beim Senden von Daten an \"%s\" via Transfer-Chat"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: connected to %s (%s) via xfer chat"
-msgstr "%s%s: Verbindung zu %s/%d (%s) hergestellt"
+msgstr "%s%s: Verbindung, über xfer chat, mit %s (%s) hergestellt"
 
 #, c-format
 msgid "%s%s: can't find xfer for buffer \"%s\""
@@ -10930,13 +10952,13 @@ msgstr ""
 "%3d. %s, Der Chat mit %s (lokaler Nick: %s), wurde am %s gestartet, Status: "
 "%s%s"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %s "
 "(port %d)"
 msgstr ""
 "     Erweiterung: %s (id: %s), Datei: %llu Bytes (Position: %llu), Addresse: "
-"%ld.%ld.%ld.%ld (Port %d)"
+"%s (Port %d)"
 
 #. TRANSLATORS: "%s" after "started on" is a date
 #, c-format
@@ -11062,6 +11084,8 @@ msgid ""
 "automatically check CRC32 file checksum if it is found in the filename (8 "
 "hexadecimal chars)"
 msgstr ""
+"automatische Überprüfung der CRC32 Prüfsumme, sofern eine Prüfsumme im "
+"Dateinamen angegeben wird (mittels acht hexadezimalen Zeichen)"
 
 msgid "rename incoming files if already exists (add \".1\", \".2\", ...)"
 msgstr ""
@@ -11137,25 +11161,25 @@ msgstr "%s%s: Die lokale Datei kann nicht erstellt werden"
 msgid "%s%s: unable to send ACK to sender"
 msgstr "%s%s: ACK kann nicht an Absender verschickt werden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: wrong CRC32 for file %s"
-msgstr "%s%s: Fehlerhafte Argumente für die Funktion \"%s\" (Skript: %s)"
+msgstr "%s%s: Datei %s besitzt fehlerhafte CRC32 Prüfsumme"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: CRC32 error while resuming"
-msgstr "%s%s: Fehler beim Laden der Datei \"%s\""
+msgstr "%s%s: CRC32 Fehler bei der Wiederaufnahme"
 
 #, c-format
 msgid "%s%s: unable to fork"
 msgstr "%s%s: es kann kein fork erstellt werden"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s: sending file to %s (%s, %s.%s), name: %s (local filename: %s), %llu "
 "bytes (protocol: %s)"
 msgstr ""
-"%s: sende Datei an %s (%s.%s), Name: %s (lokaler Dateiname: %s), %llu Bytes "
-"(Protokoll: %s)"
+"%s: sende Datei an %s (%s, %s.%s), Name: %s (lokaler Dateiname: %s), %llu "
+"Bytes (Protokoll: %s)"
 
 #, c-format
 msgid "%s%s: unable to create socket for sending file: error %d %s"
@@ -11211,18 +11235,13 @@ msgstr "Konstanten"
 #~ msgid "No layout saved"
 #~ msgstr "Kein Layout gespeichert"
 
-#, fuzzy
-#~ msgid "%sgnutls: fingerprint does NOT match"
-#~ msgstr "%sgnutls: der Hostname im Zertifikat \"%s\" stimmt NICHT überein"
-
 #~ msgid "%s%s: could not find address for \"%s\", falling back to local IP"
 #~ msgstr ""
 #~ "%s%s: Adresse für \"%s\" wurde nicht gefunden. Es wird auf die lokale IP "
 #~ "zurückgegriffen"
 
-#, fuzzy
 #~ msgid "%s%s: connected to %s (%ld.%ld.%ld.%ld)"
-#~ msgstr "%s: Chat mit %s (%ld.%ld.%ld.%ld) geschlossen"
+#~ msgstr "%s%s: verbunden mit %s (%ld.%ld.%ld.%ld)"
 
 #~ msgid ""
 #~ "%s: sending file to %s (%ld.%ld.%ld.%ld, %s.%s), name: %s (local "
@@ -11230,3 +11249,6 @@ msgstr "Konstanten"
 #~ msgstr ""
 #~ "%s: sende Datei an %s (%ld.%ld.%ld.%ld, %s.%s), Name: %s (lokaler "
 #~ "Dateiname: %s), %llu Bytes (Protokoll: %s)"
+
+#~ msgid "Connected to %s (%ld.%ld.%ld.%ld) via xfer chat"
+#~ msgstr "Verbindung zu %s (%ld.%ld.%ld.%ld) via Transfer-Chat aufgebaut"

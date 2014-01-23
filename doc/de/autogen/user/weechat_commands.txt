@@ -220,43 +220,43 @@ infolists: zeigt Information über die Infolists an
 /eval  [-n] <expression>
        [-n] -c <expression1> <operator> <expression2>
 
-        -n: display result without sending it to buffer (debug mode)
-        -c: evaluate as condition: use operators and parentheses, return a boolean value ("0" or "1")
-expression: expression to evaluate, variables with format ${variable} are replaced (see below)
-  operator: a logical or comparison operator:
-            - logical operators:
-                &&  boolean "and"
-                ||  boolean "or"
-            - comparison operators:
-                ==  equal
-                !=  not equal
-                <=  less or equal
-                <   less
-                >=  greater or equal
-                >   greater
-                =~  is matching POSIX extended regex
-                !~  is NOT matching POSIX extended regex
+        -n: zeigt das Ergebnis lokal an, ohne das dieses in den Buffer gesendet wird (debug Modus)
+        -c: Auswertung als Bedingung: nutzt Operatoren und runde Klammern, Rückgabewert als Boolean-Wert ("0" oder "1")
+expression: Ausdruck welcher verarbeitet werden soll. Variablen im Format ${variable} werden ersetzt (siehe unten)
+  operator: ein logischer oder vergleichender Operand:
+            - logische Operanden:
+                &&  boolean "und"
+                ||  boolean "oder"
+            - vergleichende Operanden:
+                ==  gleich
+                !=  ungleich
+                <=  kleiner oder gleich
+                <   kleiner
+                >=  größer oder gleich
+                >   größer
+                =~  stimmt mit regulärem POSIX Ausdruck überein
+                !~  stimmt NICHT mit regulärem POSIX Ausdruck überein
 
-An expression is considered as "true" if it is not NULL, not empty, and different from "0".
-The comparison is made using integers if the two expressions are valid integers.
-To force a string comparison, add double quotes around each expression, for example:
+Ein Ausdruck gilt als "wahr", sofern das Ergebnis nicht NULL, nicht leer und von "0" abweichend ist.
+Der Vergleich findet zwischen zwei Integer Werten statt, sofern die beiden Ausdrücke gültige Integer-Werte sind.
+Um einen Vergleich zwischen zwei Zeichenketten zu erzwingen, müssen die Ausdrücke in Anführungszeichen gesetzt werden, zum Beispiel:
   50 > 100      ==> 0
   "50" > "100"  ==> 1
 
-Some variables are replaced in expression, using the format ${variable}, variable can be, by order of priority :
-  1. a color (format: "color:xxx")
-  2. an info (format: "info:name,arguments", arguments are optional)
-  3. an option (format: "file.section.option")
-  4. a local variable in buffer
-  5. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
-Format for hdata can be one of following:
-  hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
-  hdata[list].var1.var2...: start with a hdata using a list, for example:
-    ${buffer[gui_buffers].full_name}: full name of first buffer in linked list of buffers
-    ${plugin[weechat_plugins].name}: name of first plugin in linked list of plugins
-For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
+Einige Variablen werden im Ausdruck, mittels der Formatierung ${Variable}, ersetzt. Mögliche Variablen sind, nach Reihenfolge ihrer Priorität:
+  1. eine Farbe (Format: color:xxx)
+  2. eine Info (Format: "info:name,arguments", Argumente sind optional)
+  3. der Name einer Option (Format: file.section.option)
+  4. der Name einer lokalen Variablen eines Buffer
+  5. ein hdata Name/Variable (der Wert wird automatisch als Zeichenkette konvertiert), Standardmäßig wird für "window" und "buffer" das aktuelle Fenster/Buffer verwendet.
+Das Format für hdata kann wie folgt lauten:
+  hdata.var1.var2...: startet mit hdata (der Pointer muss bekannt sein) und fragt eine Variable nach der anderen ab (weitere hdata können folgen)
+  hdata[list].var1.var2...: startet hdata mittels einer Liste, zum Beispiel:
+    ${buffer[gui_buffers].full_name}: der vollständige Name des ersten Buffers, in der verknüpften Liste aller Buffer
+    ${plugin[weechat_plugins].name}: Name der ersten Erweiterung, in der verknüpften Liste aller Erweiterungen
+Die vorhandenen Namen für hdata und Variablen sind in der "Anleitung für API Erweiterung", Bereich "weechat_hdata_get". beschrieben
 
-Examples:
+Beispiele:
   /eval -n ${info:version}                 ==> 0.4.3
   /eval -n ${weechat.look.scroll_amount}   ==> 3
   /eval -n ${window}                       ==> 0x2549aa0
@@ -282,52 +282,52 @@ Examples:
          add <name> <buffer>[,<buffer>...] <tags> <regex>
          del <name>|-all
 
-   list: list all filters
- enable: enable filters (filters are enabled by default)
-disable: disable filters
- toggle: toggle filters
-   name: filter name
-    add: add a filter
-    del: delete a filter
-   -all: delete all filters
- buffer: comma separated list of buffers where filter is active:
-         - this is full name including plugin (example: "irc.freenode.#weechat")
-         - "*" means all buffers
-         - a name starting with '!' is excluded
-         - name can start or end with '*' to match many buffers
-   tags: comma separated list of tags, for example "irc_join,irc_part,irc_quit"
-         - logical "and": use "+" between tags (for example: "nick_toto+irc_action")
-         - tags can start or end with '*'
-  regex: POSIX extended regular expression to search in line
-         - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
-         - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
-         - two regular expressions are created: one for prefix and one for message
-         - regex are case insensitive, they can start by "(?-i)" to become case sensitive
+   list: alle Filter auflisten
+ enable: Filter wird aktiviert (Filter werden standardmäßig aktiviert)
+disable: Filter deaktivieren
+ toggle: Filter umschalten
+   name: Name des Filters
+    add: Filter hinzufügen
+    del: Filter entfernen
+   -all: entfernt alle Filter
+ buffer: durch Kommata getrennte Liste von Buffer in denen der Filter aktiv sein soll:
+         - ist der vollständige Name eines Buffer inklusive seiner Erweiterung (Beispiel: "irc.freenode.#weechat")
+         - "*" anwenden auf alle Buffer
+         - beginnt ein Name mit '!' wird für diesen Buffer kein Filter genutzt
+         - ein Name darf mit '*' beginnen oder enden um mehrere Buffer auszuwählen
+   tags: durch Kommata  getrennte Liste von Schlagwörtern. Zum Beispiel: "irc_join,irc_part,irc_quit"
+         - logisch "und":  wird "+" zwischen den Tags verwendet (zum Beispiel: "nick_toto+irc_action")
+         - Tags können mit '*' beginnen oder enden
+  regex: erweiterter regulärer POSIX Ausdruc, um in einer Zeile zu suchen
+         - das Präfix (z.B. Nick) wird mittels '\t' von der Nachricht getrennt. Sonderzeichen wie '|' müssen mit einer Escapesequenz : '\|' eingebunden werden)
+         - wird ein regulärer Ausdruck mit '!' eingeleitet dann wird das übereinstimmende Ergebnis umgekehrt  (nutze '\!' um mit '!' zu beginnen)
+         - es werden zwei reguläre Ausdrücke erstellt: Der erste für den Präfix und der zweite für die eigentliche Nachricht
+         - reguläre Ausdrücke unterscheiden nicht zwischen Groß- und Kleinschreibung. Um zwischen Groß- und Kleinschreibung zu unterscheiden müssen diese mit "(?-i)" eingeleitet werden.
 
-The default key alt+'=' toggles filtering on/off.
+Mit der Tastenvoreinstellung alt+'=' kann die Filterfunktion (de-)aktiviert werden.
 
-Tags most commonly used:
-  no_filter, no_highlight, no_log, log0..log9 (log level),
+Die am häufigsten gebrauchten Schlagwörter lauten:
+  no_filter, no_highlight, no_log, log0..log9 (log Level),
   notify_none, notify_message, notify_private, notify_highlight,
-  nick_xxx (xxx is nick in message), prefix_nick_ccc (ccc is color of nick),
-  irc_xxx (xxx is command name or number, see /server raw or /debug tags),
+  nick_xxx (xxx ist durch den Nicknamen zu ersetzen), prefix_nick_ccc (ccc ist die Farbe mit der der Nick dargestellt wird),
+  irc_xxx (xxx ist durch einen IRC-Befehl/-Nummer zu ersetzen, siehe /server raw oder /debug tags)
   irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
-To see tags for lines in buffers: /debug tags
+Mittels "/debug tags" kann man sich die Tags jeder einzelnen Zeile darstellen zu lassen.
 
-Examples:
-  use IRC smart filter on all buffers:
+Beispiele:
+  aktiviert einen einfachen IRC Filter für join/part/quit/nick Nachrichten für alle Buffer:
     /filter add irc_smart * irc_smart_filter *
-  use IRC smart filter on all buffers except those with "#weechat" in name:
+  aktiviert einen einfachen IRC Filter für join/part/quit/nick Nachrichten der für alle Buffer genutzt wird, außer Buffer die "#weechat" im Namen tragen:
     /filter add irc_smart *,!*#weechat* irc_smart_filter *
-  filter all IRC join/part/quit messages:
+  filtert alle IRC join/part/quit Nachrichten:
     /filter add joinquit * irc_join,irc_part,irc_quit *
-  filter nicks displayed when joining channels or with /names:
+  filtert Nicks wenn diese den Channel betreten oder durch den Befehl "/names" angezeigt werden:
     /filter add nicks * irc_366 *
-  filter nick "toto" on IRC channel #weechat:
+  filtert Nick "toto" im IRC Channel #weechat:
     /filter add toto irc.freenode.#weechat nick_toto *
-  filter IRC join/action messages from nick "toto":
+  filtert IRC join/action Nachrichten von Nick "toto":
     /filter add toto * nick_toto+irc_join,nick_toto+irc_action *
-  filter lines containing "weechat sucks" on IRC channel #weechat:
+  filtert Zeilen die "weechat sucks" im IRC Channel #weechat enthalten:
     /filter add sucks irc.freenode.#weechat * weechat sucks
 ----
 
@@ -482,17 +482,17 @@ Beispiele:
          del [<name>] [buffers|windows]
          rename <name> <new_name>
 
-  store: store current buffers/windows in a layout
-  apply: apply stored layout
-  leave: leave current layout (does not update any layout)
-    del: delete buffers and/or windows in a stored layout
-         (if neither "buffers" nor "windows" is given after the name, the layout is deleted)
- rename: rename a layout
-   name: name for stored layout (default is "default")
-buffers: store/apply only buffers (order of buffers)
-windows: store/apply only windows (buffer displayed by each window)
+  store: erstellt ein Layout der zur Zeit verwendeten Buffer/Fenster
+  apply: erstelle Layout verwenden
+  leave: belässt das aktuelle Layout (es wird kein Layout aktualisiert)
+    del: entfernt Buffer und/oder Fenster eines erstellten Layouts
+         (falls weder "buffers" noch "windows" angegeben wird, dann wird das Layout entfernt)
+ rename: ein Layout umbenennen
+   name: Name unter welchem das Layout erstellt werden soll (Standardlayout heisst "default")
+buffers: erstellt bzw. verwendet nur Buffer (Reihenfolge der Buffer)
+windows: erstellt bzw. verwendet nur Fenster (Buffer welche im jeweiligen Fenster dargestellt werden)
 
-Without argument, this command displays stored layouts.
+Wird der Befehl ohne Argumente aufgerufen, werden die erstellten Layout dargestellt.
 ----
 
 [[command_weechat_mouse]]
@@ -562,40 +562,40 @@ Ohne Angabe eines Arguments werden alle installierten Erweiterungen angezeigt.
 ----
 
 [[command_weechat_print]]
-[command]*`print`* display text on a buffer::
+[command]*`print`* gibt einen Text::
 
 ----
 /print  [-buffer <number>|<name>] [-core] [-escape] [-date <date>] [-tags <tags>] [-action|-error|-join|-network|-quit] <text>
         -stdout|-stderr <text>
 
--buffer: the buffer where text is displayed (default: current buffer)
-  -core: alias of "-buffer core.weechat"
--escape: interpret escaped chars (for example \a, \07, \x07)
-  -date: message date, format can be:
-           -n: 'n' seconds before now
-           +n: 'n' seconds in the future
-            n: 'n' seconds since the Epoch (see man time)
-           date/time (ISO 8601): yyyy-mm-ddThh:mm:ss, example: 2014-01-19T04:32:55
-           time: hh:mm:ss (example: 04:32:55)
-  -tags: comma-separated list of tags (see /help filter for a list of tags most commonly used)
-   text: text to display (prefix and message must be separated by \t)
--stdout: display text on stdout (not in a buffer)
--stderr: display text on stderr (not in a buffer)
+-buffer: Buffer in welchem der Text ausgegeben werden soll (standardmäßig: aktueller Buffer)
+  -core: Alias für "-buffer core.weechat"
+-escape: Escapesequenzen werden umgewandelt (zum Beispiel \a, \07, \x07)
+  -date: Datum der Nachricht, mögliche Formatierung:
+           -n: 'n' vor dem jetzigen Zeipunkt, in Sekunden
+           +n: 'n' in Zukunft, in Sekunden
+            n: 'n' Sekunden seit der Epoche (siehe man time)
+           date/time (ISO 8601): yyyy-mm-ddThh:mm:ss, Beispiel: 2014-01-19T04:32:55
+           time: hh:mm:ss (Beispiel: 04:32:55)
+  -tags: durch Kommata getrennte Liste von Tags (siehe /help filter für eine Liste von Tags die häufig genutzt werden)
+   text: Text der ausgegeben werden soll (Präfix und Nachricht muss durch \t getrennt werden)
+-stdout: Text wird an stdout geschickt (und nicht im Buffer dargestellt)
+-stderr:  Text wird an stderr geschickt (und nicht im Buffer dargestellt)
 
-The options -action ... -quit use the prefix defined in options "weechat.look.prefix_*".
+Die Option -action ... -quit nutzt den Präfix der in der Option "weechat.look.prefix_*" definiert ist.
 
-With options -stdout and -stderr, escaped chars are always interpreted.
+Die Optionen -stdout und -stderr wandeln Escapesequenzen automatisch um.
 
-Examples:
-  display a reminder on core buffer with a highlight:
-    /print -core -tags notify_highlight Reminder: buy milk
-  display an error on core buffer:
-    /print -core -error Some error here
-  display message on core buffer with prefix "abc":
-    /print -core abc\tThe message
-  display a message on channel #weechat:
+Beispiele:
+  zeigt eine Erinnerung, mit Highlight, im Core-Buffer dar:
+    /print -core -tags notify_highlight Reminder: Milch kaufen
+  zeigt eine Fehlernachricht im Core-Buffer an:
+    /print -core -error irgend ein Fehler
+  zeigt eine Nachricht im Core-Buffer mit dem Präfix "abc" an:
+    /print -core abc\tmeine Nachricht
+  es wird eine Nachricht im Channel #weechat ausgegeben:
     /print -buffer irc.freenode.#weechat Message on #weechat
-  send alert (BEL):
+  verschickt Alarm (BEL):
     /print -stderr \a
 ----
 

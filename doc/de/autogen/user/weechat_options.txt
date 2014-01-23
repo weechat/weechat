@@ -434,7 +434,7 @@
 ** Werte: on, off (Standardwert: `off`)
 
 * [[option_weechat.look.buffer_search_regex]] *weechat.look.buffer_search_regex*
-** Beschreibung: `default text search in buffer: if enabled, search POSIX extended regular expression, otherwise search simple string`
+** Beschreibung: `standardmäßige Textsuche im Buffer: falls aktiviert wird mittels erweiterten regulären POSIX Ausdrücken gesucht, andernfalls findet eine genaue Textsuche statt`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
@@ -539,7 +539,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_weechat.look.highlight_regex]] *weechat.look.highlight_regex*
-** Beschreibung: `POSIX extended regular expression used to check if a message has highlight or not, at least one match in string must be surrounded by delimiters (chars different from: alphanumeric, "-", "_" and "|"), regular expression is case insensitive (use "(?-i)" at beginning to make it case sensitive), examples: "flashcode|flashy", "(?-i)FlashCode|flashy"`
+** Beschreibung: `Suchmuster (erweiterter regulärer POSIX Ausdruck) welches genutzt werden soll, um zu überprüfen ob eine Nachricht ein Highlight enthält oder nicht. Mindestens eine Zeichenkette muss dabei auf das Suchmuster passen (alphanumerisch, "-", "_" oder "|"). Das Suchmuster unterscheidet dabei nicht zwischen Groß-und Kleinschreibung (um zwischen Groß-und Kleinschreibung zu unterscheiden muss am Wortanfang "(?-i)" genutzt werden). Beispiele: "flashcode|flashy", "(?-i)FlashCode|flashy"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -804,7 +804,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.look.save_layout_on_exit]] *weechat.look.save_layout_on_exit*
-** Beschreibung: `save layout on exit (buffers, windows, or both)`
+** Beschreibung: `beim Beenden wird das aktuelle Layout gesichert (Buffer, Fenster oder beides)`
 ** Typ: integer
 ** Werte: none, buffers, windows, all (Standardwert: `none`)
 
@@ -839,7 +839,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_weechat.look.tab_width]] *weechat.look.tab_width*
-** Beschreibung: `number of spaces used to display tabs in messages`
+** Beschreibung: `Anzahl an Leerzeichen um Tabulatoren in Nachrichten darzustellen`
 ** Typ: integer
 ** Werte: 1 .. 64 (Standardwert: `1`)
 

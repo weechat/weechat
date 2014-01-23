@@ -59,7 +59,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_xfer.file.auto_check_crc32]] *xfer.file.auto_check_crc32*
-** Beschreibung: `automatically check CRC32 file checksum if it is found in the filename (8 hexadecimal chars)`
+** Beschreibung: `automatische Überprüfung der CRC32 Prüfsumme, sofern eine Prüfsumme im Dateinamen angegeben wird (mittels acht hexadezimalen Zeichen)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
