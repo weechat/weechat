@@ -1,5 +1,8 @@
 = WeeChat FAQ (Często zadawane pytania)
-Sébastien Helleu <flashcode@flashtux.org>
+:author: Sébastien Helleu
+:email: flashcode@flashtux.org
+:toc:
+:toc-title: Spis treści
 
 
 [NOTE]

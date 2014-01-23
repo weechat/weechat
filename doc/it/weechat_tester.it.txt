@@ -1,5 +1,8 @@
 = Guida al Tester di WeeChat
-Sébastien Helleu <flashcode@flashtux.org>
+:author: Sébastien Helleu
+:email: flashcode@flashtux.org
+:lang: it
+:toc:
 
 
 [[purpose]]

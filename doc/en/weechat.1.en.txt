@@ -1,5 +1,6 @@
 = WEECHAT(1)
 :doctype: manpage
+:lang: en
 
 == NAME
 

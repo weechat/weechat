@@ -1,5 +1,9 @@
 = Poradnik użytkownika WeeChat
-Sébastien Helleu <flashcode@flashtux.org>
+:author: Sébastien Helleu
+:email: flashcode@flashtux.org
+:toc:
+:toclevels: 4
+:toc-title: Spis treści
 
 
 Ten dokument opisuje klienta rozmów WeeChat, będącego częścią WeeChat.

@@ -1,5 +1,9 @@
 = WeeChat スクリプト製作ガイド
-Sébastien Helleu <flashcode@flashtux.org>
+:author: Sébastien Helleu
+:email: flashcode@flashtux.org
+:toc:
+:toclevels: 3
+:toc-title: 目次
 
 
 このマニュアルは WeeChat チャットクライアントについて説明しており、WeeChat の一部です。

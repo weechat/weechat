@@ -1,5 +1,9 @@
 = WeeChat Scripting Guide
-Sébastien Helleu <flashcode@flashtux.org>
+:author: Sébastien Helleu
+:email: flashcode@flashtux.org
+:lang: en
+:toc:
+:toclevels: 3
 
 
 This manual documents WeeChat chat client, it is part of WeeChat.

@@ -1,5 +1,9 @@
 = WeeChat Relay Protocol
-Sébastien Helleu <flashcode@flashtux.org>
+:author: Sébastien Helleu
+:email: flashcode@flashtux.org
+:lang: en
+:toc:
+:toclevels: 4
 
 
 This document is the specification of WeeChat relay protocol: the protocol used

@@ -1,5 +1,9 @@
 = WeeChat プラグイン API リファレンス
-Sébastien Helleu <flashcode@flashtux.org>
+:author: Sébastien Helleu
+:email: flashcode@flashtux.org
+:toc:
+:toclevels: 4
+:toc-title: 目次
 
 
 このマニュアルは WeeChat チャットクライアントについての文書で、WeeChat の一部です。

@@ -1,5 +1,9 @@
 = Guida per l'Utente di WeeChat
-Sébastien Helleu <flashcode@flashtux.org>
+:author: Sébastien Helleu
+:email: flashcode@flashtux.org
+:lang: it
+:toc:
+:toclevels: 4
 
 
 Questo manuale documenta il client di chat WeeChat, ed è parte
