@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-22 18:47+0100\n"
+"POT-Creation-Date: 2014-01-23 11:24+0100\n"
 "PO-Revision-Date: 2014-01-06 10:16+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4299,8 +4299,12 @@ msgstr "%s \"%s\" parancs nem futtatható a szerverablakban\n"
 msgid "%s%s: notify already exists"
 msgstr "%s az ignore már létezik\n"
 
+#, c-format
+msgid "%sMonitor list is full (%d)"
+msgstr ""
+
 #, fuzzy, c-format
-msgid "%s: notification added for %s%s"
+msgid "%s: notification added for %s%s%s"
 msgstr "%s IP-cím nem található\n"
 
 #, fuzzy, c-format
@@ -4316,8 +4320,8 @@ msgid "%s: no notification in list"
 msgstr "%s nem található ilyen mellőzés\n"
 
 #, fuzzy, c-format
-msgid "%s: notification deleted"
-msgstr "Nincs mellőzés megadva.\n"
+msgid "%s: notification deleted for %s%s%s"
+msgstr "%s IP-cím nem található\n"
 
 #, fuzzy, c-format
 msgid "%s%s: notification not found"
@@ -6513,20 +6517,20 @@ msgid "Notify list is empty on all servers"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%snotify: %s%s%s is connected"
+msgid "%snotify: %s%s%s%s%s%s%s%s%s is connected"
 msgstr "%s%s%s kirúgta %s%s%s-t a(z) %s%s szobából"
 
 #, fuzzy, c-format
-msgid "%snotify: %s%s%s is offline"
+msgid "%snotify: %s%s%s%s%s%s%s%s%s is offline"
 msgstr "%s%s%s kirúgta %s%s%s-t a(z) %s%s szobából"
 
 #, fuzzy, c-format
-msgid "%snotify: %s%s%s has joined"
+msgid "%snotify: %s%s%s%s%s%s%s%s%s has joined"
 msgstr "%s%s%s kirúgta %s%s%s-t a(z) %s%s szobából"
 
 #, fuzzy, c-format
-msgid "%snotify: %s%s%s has quit"
-msgstr "%s%s%s kirúgta %s%s%s-t a(z) %s%s szobából"
+msgid "%snotify: %s%s%s%s%s%s%s%s%s has quit"
+msgstr "%s%s %s(%s%s%s)%s kilépett"
 
 #, fuzzy, c-format
 msgid "%snotify: %s%s%s is now away: \"%s\""
@@ -9512,6 +9516,14 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#, fuzzy
+#~ msgid "%s: notification deleted"
+#~ msgstr "Nincs mellőzés megadva.\n"
+
+#, fuzzy
+#~ msgid "%snotify: %s%s%s has quit"
+#~ msgstr "%s%s%s kirúgta %s%s%s-t a(z) %s%s szobából"
 
 #, fuzzy
 #~ msgid "%sgnutls: fingerprint does NOT match"

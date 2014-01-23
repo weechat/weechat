@@ -189,8 +189,12 @@ irc_notify_new (struct t_irc_server *server, const char *nick, int check_away)
 {
     struct t_irc_notify *new_notify;
 
-    if (!server || !nick || !nick[0])
+    if (!server || !nick || !nick[0]
+        || ((server->monitor > 0)
+            && ((server->notify_count >= server->monitor))))
+    {
         return NULL;
+    }
 
     new_notify = malloc (sizeof (*new_notify));
     if (new_notify)
@@ -210,37 +214,146 @@ irc_notify_new (struct t_irc_server *server, const char *nick, int check_away)
             server->notify_list = new_notify;
         server->last_notify = new_notify;
         new_notify->next_notify = NULL;
+
+        server->notify_count++;
     }
 
     return new_notify;
 }
 
 /*
- * Checks now ison/whois for a notify (called when a notify is added).
+ * Checks now if a nick is connected with ison/monitor + whois (if away checking
+ * is enabled).
+ *
+ * It is called when a notify is added.
  */
 
 void
 irc_notify_check_now (struct t_irc_notify *notify)
 {
-    if (notify->server->is_connected)
-    {
-        /* send the ISON for nick */
-        irc_redirect_new (notify->server, "ison", "notify", 1,
-                          NULL, 0, NULL);
-        irc_server_sendf (notify->server,
-                          IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
-                          "ISON :%s", notify->nick);
+    /* don't send anything if we are not connected to the server */
+    if (!notify->server->is_connected)
+        return;
 
-        if (notify->check_away)
+    if (notify->server->monitor > 0)
+    {
+        /* send MONITOR for nick */
+        irc_server_sendf (notify->server, IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
+                          "MONITOR + %s", notify->nick);
+    }
+    else
+    {
+        /* send ISON for nick (MONITOR not supported on server) */
+        irc_redirect_new (notify->server, "ison", "notify", 1, NULL, 0, NULL);
+        irc_server_sendf (notify->server, IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
+                          "ISON :%s", notify->nick);
+    }
+
+    if (notify->check_away)
+    {
+        /* send WHOIS for nick */
+        irc_redirect_new (notify->server, "whois", "notify", 1, notify->nick, 0,
+                          "301,401");
+        irc_server_sendf (notify->server, IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
+                          "WHOIS :%s", notify->nick);
+    }
+}
+
+/*
+ * Builds a message with nicks (ISON or MONITOR).
+ *
+ * Argument "message" must be "ISON :" or "MONITOR + " or "MONITOR - ".
+ * Argument "separator" must be " " for ISON and "," for MONITOR.
+ * Argument "num_nicks" is set with the number of nicks added in message.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+irc_notify_build_message_with_nicks (struct t_irc_server *server,
+                                     const char *irc_message,
+                                     const char *separator,
+                                     int *num_nicks)
+{
+    char *message, *message2;
+    int length, total_length, length_separator;
+    struct t_irc_notify *ptr_notify;
+
+    *num_nicks = 0;
+
+    length = strlen (irc_message) + 1;
+    total_length = length;
+    length_separator = strlen (separator);
+
+    message = malloc (length);
+    if (!message)
+        return NULL;
+    snprintf (message, length, "%s", irc_message);
+
+    for (ptr_notify = server->notify_list; ptr_notify;
+         ptr_notify = ptr_notify->next_notify)
+    {
+        length = strlen (ptr_notify->nick);
+        total_length += length + length_separator;
+        message2 = realloc (message, total_length);
+        if (!message2)
         {
-            /* send the WHOIS for nick */
-            irc_redirect_new (notify->server, "whois", "notify", 1,
-                              notify->nick, 0, "301,401");
-            irc_server_sendf (notify->server,
-                              IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
-                              "WHOIS :%s", notify->nick);
+            if (message)
+                free (message);
+            message = NULL;
+            break;
+        }
+        message = message2;
+        if (*num_nicks > 0)
+            strcat (message, separator);
+        strcat (message, ptr_notify->nick);
+
+        (*num_nicks)++;
+    }
+
+    return message;
+}
+
+/*
+ * Sends the MONITOR message (after server connection or if the option
+ * "irc.server.xxx.notify" is changed).
+ */
+
+void
+irc_notify_send_monitor (struct t_irc_server *server)
+{
+    struct t_hashtable *hashtable;
+    char *message, hash_key[32];
+    const char *str_message;
+    int num_nicks, number;
+
+    message = irc_notify_build_message_with_nicks (server,
+                                                   "MONITOR + ",
+                                                   ",",
+                                                   &num_nicks);
+    if (message && (num_nicks > 0))
+    {
+        hashtable = irc_message_split (server, message);
+        if (hashtable)
+        {
+            number = 1;
+            while (1)
+            {
+                snprintf (hash_key, sizeof (hash_key), "msg%d", number);
+                str_message = weechat_hashtable_get (hashtable,
+                                                     hash_key);
+                if (!str_message)
+                    break;
+                irc_server_sendf (server,
+                                  IRC_SERVER_SEND_OUTQ_PRIO_LOW,
+                                  NULL, "%s", str_message);
+                number++;
+            }
+            weechat_hashtable_free (hashtable);
         }
     }
+    if (message)
+        free (message);
 }
 
 /*
@@ -257,12 +370,10 @@ irc_notify_new_for_server (struct t_irc_server *server)
     irc_notify_free_all (server);
 
     notify = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_NOTIFY);
-
     if (!notify || !notify[0])
         return;
 
     items = weechat_string_split (notify, ",", 0, 0, &num_items);
-
     if (items)
     {
         for (i = 0; i < num_items; i++)
@@ -293,6 +404,10 @@ irc_notify_new_for_server (struct t_irc_server *server)
         }
         weechat_string_free_split (items);
     }
+
+    /* if we are using MONITOR, send it now with new nicks monitored */
+    if (server->is_connected && (server->monitor > 0))
+        irc_notify_send_monitor (server);
 }
 
 /*
@@ -316,14 +431,25 @@ irc_notify_new_for_all_servers ()
  */
 
 void
-irc_notify_free (struct t_irc_server *server, struct t_irc_notify *notify)
+irc_notify_free (struct t_irc_server *server, struct t_irc_notify *notify,
+                 int remove_monitor)
 {
     weechat_hook_signal_send ("irc_notify_removing",
                               WEECHAT_HOOK_SIGNAL_POINTER, notify);
 
     /* free data */
     if (notify->nick)
+    {
+        if ((server->monitor > 0) && remove_monitor
+            && (server->is_connected) && !irc_signal_upgrade_received)
+        {
+            /* remove one monitored nick */
+            irc_server_sendf (notify->server,
+                              IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
+                              "MONITOR - %s", notify->nick);
+        }
         free (notify->nick);
+    }
     if (notify->away_message)
         free (notify->away_message);
 
@@ -339,6 +465,9 @@ irc_notify_free (struct t_irc_server *server, struct t_irc_notify *notify)
 
     free (notify);
 
+    if (server->notify_count > 0)
+        server->notify_count--;
+
     weechat_hook_signal_send ("irc_notify_removed",
                               WEECHAT_HOOK_SIGNAL_STRING, NULL);
 }
@@ -350,9 +479,18 @@ irc_notify_free (struct t_irc_server *server, struct t_irc_notify *notify)
 void
 irc_notify_free_all (struct t_irc_server *server)
 {
+    /* remove all monitored nicks */
+    if ((server->monitor > 0) && (server->is_connected)
+        && !irc_signal_upgrade_received)
+    {
+        irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
+                          "MONITOR C");
+    }
+
+    /* free notify list */
     while (server->notify_list)
     {
-        irc_notify_free (server, server->notify_list);
+        irc_notify_free (server, server->notify_list, 0);
     }
 }
 
@@ -524,7 +662,7 @@ irc_notify_send_signal (struct t_irc_notify *notify,
  */
 
 void
-irc_notify_set_is_on_server (struct t_irc_notify *notify,
+irc_notify_set_is_on_server (struct t_irc_notify *notify, const char *host,
                              int is_on_server)
 {
     if (!notify)
@@ -540,18 +678,23 @@ irc_notify_set_is_on_server (struct t_irc_notify *notify,
                                               notify->nick),
                          (notify->is_on_server < 0) ?
                          ((is_on_server) ?
-                          _("%snotify: %s%s%s is connected") :
-                          _("%snotify: %s%s%s is offline")) :
+                          _("%snotify: %s%s%s%s%s%s%s%s%s is connected") :
+                          _("%snotify: %s%s%s%s%s%s%s%s%s is offline")) :
                          ((is_on_server) ?
-                          _("%snotify: %s%s%s has joined") :
-                          _("%snotify: %s%s%s has quit")),
+                          _("%snotify: %s%s%s%s%s%s%s%s%s has joined") :
+                          _("%snotify: %s%s%s%s%s%s%s%s%s has quit")),
                          weechat_prefix ("network"),
                          irc_nick_color_for_server_message (notify->server,
                                                             NULL,
                                                             notify->nick),
                          notify->nick,
-                         (is_on_server) ?
-                         IRC_COLOR_MESSAGE_JOIN : IRC_COLOR_MESSAGE_QUIT);
+                         (host && host[0]) ? IRC_COLOR_CHAT_DELIMITERS : "",
+                         (host && host[0]) ? " (" : "",
+                         (host && host[0]) ? IRC_COLOR_CHAT_HOST : "",
+                         (host && host[0]) ? host : "",
+                         (host && host[0]) ? IRC_COLOR_CHAT_DELIMITERS : "",
+                         (host && host[0]) ? ")" : "",
+                         (is_on_server) ? IRC_COLOR_MESSAGE_JOIN : IRC_COLOR_MESSAGE_QUIT);
     irc_notify_send_signal (notify, (is_on_server) ? "join" : "quit", NULL);
 
     notify->is_on_server = is_on_server;
@@ -726,7 +869,9 @@ irc_notify_hsignal_cb (void *data, const char *signal,
                                                                    ptr_notify->nick,
                                                                    nicks_recv[j]) == 0)
                                         {
-                                            irc_notify_set_is_on_server (ptr_notify, 1);
+                                            irc_notify_set_is_on_server (ptr_notify,
+                                                                         NULL,
+                                                                         1);
                                             ptr_notify->ison_received = 1;
                                         }
                                     }
@@ -757,7 +902,7 @@ irc_notify_hsignal_cb (void *data, const char *signal,
                     }
                     if (nick_was_sent)
                     {
-                        irc_notify_set_is_on_server (ptr_notify, 0);
+                        irc_notify_set_is_on_server (ptr_notify, NULL, 0);
                     }
                 }
 
@@ -824,11 +969,10 @@ irc_notify_hsignal_cb (void *data, const char *signal,
 int
 irc_notify_timer_ison_cb (void *data, int remaining_calls)
 {
-    char *message, *message2, hash_key[32];
+    char *message, hash_key[32];
     const char *str_message;
-    int total_length, length, nicks_added, number;
+    int num_nicks, number;
     struct t_irc_server *ptr_server;
-    struct t_irc_notify *ptr_notify, *ptr_next_notify;
     struct t_hashtable *hashtable;
 
     /* make C compiler happy */
@@ -838,41 +982,15 @@ irc_notify_timer_ison_cb (void *data, int remaining_calls)
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
-        if (ptr_server->is_connected && ptr_server->notify_list)
+        if (ptr_server->is_connected
+            && ptr_server->notify_list
+            && (ptr_server->monitor == 0))
         {
-            message = malloc (7);
-            if (!message)
-                continue;
-
-            snprintf (message, 7, "ISON :");
-            total_length = 7;
-            nicks_added = 0;
-
-            ptr_notify = ptr_server->notify_list;
-            while (ptr_notify)
-            {
-                ptr_next_notify = ptr_notify->next_notify;
-
-                length = strlen (ptr_notify->nick);
-                total_length += length + 1;
-                message2 = realloc (message, total_length);
-                if (!message2)
-                {
-                    if (message)
-                        free (message);
-                    message = NULL;
-                    break;
-                }
-                message = message2;
-                if (nicks_added > 0)
-                    strcat (message, " ");
-                strcat (message, ptr_notify->nick);
-                nicks_added++;
-
-                ptr_notify = ptr_next_notify;
-            }
-
-            if (message && (nicks_added > 0))
+            message = irc_notify_build_message_with_nicks (ptr_server,
+                                                           "ISON :",
+                                                           " ",
+                                                           &num_nicks);
+            if (message && (num_nicks > 0))
             {
                 hashtable = irc_message_split (ptr_server, message);
                 if (hashtable)
@@ -895,7 +1013,6 @@ irc_notify_timer_ison_cb (void *data, int remaining_calls)
                     weechat_hashtable_free (hashtable);
                 }
             }
-
             if (message)
                 free (message);
         }

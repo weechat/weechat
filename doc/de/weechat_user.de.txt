@@ -2263,6 +2263,10 @@ Unvollständige Liste der IRC Nachrichten bzw. Alias die angepasst werden könne
 | 671       | whois         | whois (sichere Verbindung)
 | 728       | quietlist     | quiet Liste
 | 729       | quietlist     | Ende der quiet Liste
+// TRANSLATION MISSING
+| 732       | monitor       | list of monitored nicks
+// TRANSLATION MISSING
+| 733       | monitor       | list of monitored nicks (end)
 | 901       |               | Sie sind nun eingelogged
 |===
 

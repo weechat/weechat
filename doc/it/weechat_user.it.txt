@@ -2324,6 +2324,10 @@ personalizzare:
 | 728       | quietlist     | quiet list
 // TRANSLATION MISSING
 | 729       | quietlist     | end of quiet list
+// TRANSLATION MISSING
+| 732       | monitor       | list of monitored nicks
+// TRANSLATION MISSING
+| 733       | monitor       | list of monitored nicks (end)
 | 901       |               | ora si è loggati
 |===
 

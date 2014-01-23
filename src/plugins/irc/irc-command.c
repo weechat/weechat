@@ -3428,17 +3428,27 @@ irc_command_notify (void *data, struct t_gui_buffer *buffer, int argc,
             return WEECHAT_RC_OK;
         }
 
+        if ((ptr_server->monitor > 0)
+            && (ptr_server->notify_count >= ptr_server->monitor))
+        {
+            weechat_printf (ptr_server->buffer,
+                            _("%sMonitor list is full (%d)"),
+                            weechat_prefix ("error"), ptr_server->monitor);
+            return WEECHAT_RC_OK;
+        }
+
         ptr_notify = irc_notify_new (ptr_server, argv[2], check_away);
         if (ptr_notify)
         {
             irc_notify_set_server_option (ptr_server);
             weechat_printf (ptr_server->buffer,
-                            _("%s: notification added for %s%s"),
+                            _("%s: notification added for %s%s%s"),
                             IRC_PLUGIN_NAME,
                             irc_nick_color_for_server_message (ptr_server,
                                                                NULL,
                                                                ptr_notify->nick),
-                            ptr_notify->nick);
+                            ptr_notify->nick,
+                            weechat_color ("reset"));
             irc_notify_check_now (ptr_notify);
         }
         else
@@ -3505,10 +3515,16 @@ irc_command_notify (void *data, struct t_gui_buffer *buffer, int argc,
             ptr_notify = irc_notify_search (ptr_server, argv[2]);
             if (ptr_notify)
             {
-                irc_notify_free (ptr_server, ptr_notify);
+                weechat_printf (ptr_server->buffer,
+                                _("%s: notification deleted for %s%s%s"),
+                                IRC_PLUGIN_NAME,
+                                irc_nick_color_for_server_message (ptr_server,
+                                                                   NULL,
+                                                                   ptr_notify->nick),
+                                ptr_notify->nick,
+                                weechat_color ("reset"));
+                irc_notify_free (ptr_server, ptr_notify, 1);
                 irc_notify_set_server_option (ptr_server);
-                weechat_printf (NULL, _("%s: notification deleted"),
-                                IRC_PLUGIN_NAME);
             }
             else
             {

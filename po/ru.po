@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-22 18:47+0100\n"
+"POT-Creation-Date: 2014-01-23 11:24+0100\n"
 "PO-Revision-Date: 2014-01-06 10:17+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4335,8 +4335,12 @@ msgstr "%s \"%s\" команда может быть выполнена толь
 msgid "%s%s: notify already exists"
 msgstr "%s игнорирование уже существует\n"
 
+#, c-format
+msgid "%sMonitor list is full (%d)"
+msgstr ""
+
 #, fuzzy, c-format
-msgid "%s: notification added for %s%s"
+msgid "%s: notification added for %s%s%s"
 msgstr "%s IP адрес не найден\n"
 
 #, fuzzy, c-format
@@ -4352,8 +4356,8 @@ msgid "%s: no notification in list"
 msgstr "%s игнорирования не найдены\n"
 
 #, fuzzy, c-format
-msgid "%s: notification deleted"
-msgstr "Игнорирования не заданы.\n"
+msgid "%s: notification deleted for %s%s%s"
+msgstr "%s IP адрес не найден\n"
 
 #, fuzzy, c-format
 msgid "%s%s: notification not found"
@@ -6542,20 +6546,20 @@ msgid "Notify list is empty on all servers"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%snotify: %s%s%s is connected"
+msgid "%snotify: %s%s%s%s%s%s%s%s%s is connected"
 msgstr "%s%s%s выкинул %s%s%s с канала %s%s"
 
 #, fuzzy, c-format
-msgid "%snotify: %s%s%s is offline"
+msgid "%snotify: %s%s%s%s%s%s%s%s%s is offline"
 msgstr "%s%s%s выкинул %s%s%s с канала %s%s"
 
 #, fuzzy, c-format
-msgid "%snotify: %s%s%s has joined"
+msgid "%snotify: %s%s%s%s%s%s%s%s%s has joined"
 msgstr "%s%s%s выкинул %s%s%s с канала %s%s"
 
 #, fuzzy, c-format
-msgid "%snotify: %s%s%s has quit"
-msgstr "%s%s%s выкинул %s%s%s с канала %s%s"
+msgid "%snotify: %s%s%s%s%s%s%s%s%s has quit"
+msgstr "%s%s %s(%s%s%s)%s вышел"
 
 #, fuzzy, c-format
 msgid "%snotify: %s%s%s is now away: \"%s\""
@@ -9536,6 +9540,14 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#, fuzzy
+#~ msgid "%s: notification deleted"
+#~ msgstr "Игнорирования не заданы.\n"
+
+#, fuzzy
+#~ msgid "%snotify: %s%s%s has quit"
+#~ msgstr "%s%s%s выкинул %s%s%s с канала %s%s"
 
 #~ msgid "No layout saved"
 #~ msgstr "Нет сохранённых раскладок"

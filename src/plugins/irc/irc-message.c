@@ -798,7 +798,7 @@ irc_message_split (struct t_irc_server *server, const char *message)
 {
     struct t_hashtable *hashtable;
     char **argv, **argv_eol, *tags, *host, *command, *arguments, target[512];
-    char *pos;
+    char *pos, monitor_action[3];
     int split_ok, argc, index_args, max_length_nick, max_length_host;
 
     split_ok = 0;
@@ -868,17 +868,47 @@ irc_message_split (struct t_irc_server *server, const char *message)
     if ((weechat_strcasecmp (command, "ison") == 0)
         || (weechat_strcasecmp (command, "wallops") == 0))
     {
+        /*
+         * ISON :nick1 nick2 nick3
+         * WALLOPS :some text here
+         */
         split_ok = irc_message_split_string (hashtable, tags, host, command,
                                              NULL, ":",
                                              (argv_eol[index_args][0] == ':') ?
                                              argv_eol[index_args] + 1 : argv_eol[index_args],
                                              NULL, ' ', max_length_host);
     }
+    else if (weechat_strcasecmp (command, "monitor") == 0)
+    {
+        /*
+         * MONITOR + nick1,nick2,nick3
+         * MONITOR - nick1,nick2,nick3
+         */
+        if (((argv_eol[index_args][0] == '+') || (argv_eol[index_args][0] == '-'))
+            && (argv_eol[index_args][1] == ' '))
+        {
+            snprintf (monitor_action, sizeof (monitor_action),
+                      "%c ", argv_eol[index_args][0]);
+            split_ok = irc_message_split_string (hashtable, tags, host, command,
+                                                 NULL, monitor_action,
+                                                 argv_eol[index_args] + 2,
+                                                 NULL, ',', max_length_host);
+        }
+        else
+        {
+            split_ok = irc_message_split_string (hashtable, tags, host, command,
+                                                 NULL, ":",
+                                                 (argv_eol[index_args][0] == ':') ?
+                                                 argv_eol[index_args] + 1 : argv_eol[index_args],
+                                                 NULL, ',', max_length_host);
+        }
+    }
     else if (weechat_strcasecmp (command, "join") == 0)
     {
-        /* split join (if it's more than 510 bytes) */
+        /* JOIN #channel1,#channel2,#channel3 key1,key2 */
         if (strlen (message) > 510)
         {
+            /* split join if it's more than 510 bytes */
             split_ok = irc_message_split_join (hashtable, tags, host,
                                                arguments);
         }
@@ -886,7 +916,10 @@ irc_message_split (struct t_irc_server *server, const char *message)
     else if ((weechat_strcasecmp (command, "privmsg") == 0)
              || (weechat_strcasecmp (command, "notice") == 0))
     {
-        /* split privmsg/notice */
+        /*
+         * PRIVMSG target :some text here
+         * NOTICE target :some text here
+         */
         if (index_args + 1 <= argc - 1)
         {
             split_ok = irc_message_split_privmsg_notice (hashtable, tags, host,
@@ -899,7 +932,7 @@ irc_message_split (struct t_irc_server *server, const char *message)
     }
     else if (weechat_strcasecmp (command, "005") == 0)
     {
-        /* split 005 (isupport) */
+        /* :server 005 nick MODES=4 CHANLIMIT=#:20 NICKLEN=16 USERLEN=10 ... */
         if (index_args + 1 <= argc - 1)
         {
             split_ok = irc_message_split_005 (hashtable, tags, host, command,
@@ -911,7 +944,7 @@ irc_message_split (struct t_irc_server *server, const char *message)
     else if (weechat_strcasecmp (command, "353") == 0)
     {
         /*
-         * split 353 (list of users on channel):
+         * list of users on channel:
          *   :server 353 mynick = #channel :mynick nick1 @nick2 +nick3
          */
         if (index_args + 2 <= argc - 1)

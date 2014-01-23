@@ -8606,6 +8606,7 @@ sono stringhe):
 ** 'mode_channel_ban_exception' ("mode #channel e")
 ** 'mode_channel_invite' ("mode #channel I")
 ** 'mode_user'
+** 'monitor'
 ** 'names'
 ** 'ping'
 ** 'time'

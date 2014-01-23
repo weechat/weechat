@@ -81,6 +81,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * aspell: fix detection of nicks with non-alphanumeric chars
 * guile: disable guile gmp allocator (fix crash on unload of relay plugin)
   (bug #40628)
+* irc: use MONITOR instead of ISON for /notify when it is available on server
+  (task #11477)
 * irc: do not display names by default when joining a channel (task #13045)
 * irc: add server option "ssl_fingerprint" (task #12724)
 * irc: display PONG answer when resulting from manual /ping command

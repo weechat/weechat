@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-22 18:47+0100\n"
+"POT-Creation-Date: 2014-01-23 11:24+0100\n"
 "PO-Revision-Date: 2014-01-18 21:21+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4939,7 +4939,11 @@ msgid "%s%s: notify already exists"
 msgstr "%s%s: la notificación ya existe"
 
 #, c-format
-msgid "%s: notification added for %s%s"
+msgid "%sMonitor list is full (%d)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s: notification added for %s%s%s"
 msgstr "%s: notificación para %s%s agregada"
 
 #, c-format
@@ -4954,9 +4958,9 @@ msgstr "%s: todas las notificaciones borradas"
 msgid "%s: no notification in list"
 msgstr "%s: no hay notificaciones en la lista"
 
-#, c-format
-msgid "%s: notification deleted"
-msgstr "%s: notificación borrada"
+#, fuzzy, c-format
+msgid "%s: notification deleted for %s%s%s"
+msgstr "%s: notificación para %s%s agregada"
 
 #, c-format
 msgid "%s%s: notification not found"
@@ -7289,21 +7293,21 @@ msgstr "Lista de notificaciones para todos los servidores:"
 msgid "Notify list is empty on all servers"
 msgstr "Lista de notificaciones vacía en todos los servidores"
 
-#, c-format
-msgid "%snotify: %s%s%s is connected"
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s%s%s%s%s%s%s is connected"
 msgstr "%saviso: %s%s%s está conectado"
 
-#, c-format
-msgid "%snotify: %s%s%s is offline"
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s%s%s%s%s%s%s is offline"
 msgstr "%saviso: %s%s%s está desconectado"
 
-#, c-format
-msgid "%snotify: %s%s%s has joined"
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s%s%s%s%s%s%s has joined"
 msgstr "%saviso: %s%s%s se ha unido"
 
-#, c-format
-msgid "%snotify: %s%s%s has quit"
-msgstr "%saviso: %s%s%s ha salido"
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s%s%s%s%s%s%s has quit"
+msgstr "%s%s%s%s%s%s%s%s%s%s ha salido"
 
 #, c-format
 msgid "%snotify: %s%s%s is now away: \"%s\""
@@ -10362,6 +10366,12 @@ msgstr "Tipo"
 
 msgid "Constants"
 msgstr "Constantes"
+
+#~ msgid "%s: notification deleted"
+#~ msgstr "%s: notificación borrada"
+
+#~ msgid "%snotify: %s%s%s has quit"
+#~ msgstr "%saviso: %s%s%s ha salido"
 
 #~ msgid "No layout saved"
 #~ msgstr "Ningún esquema guardado"

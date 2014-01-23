@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.3-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-23 11:21+0100\n"
+"POT-Creation-Date: 2014-01-23 11:24+0100\n"
 "PO-Revision-Date: 2014-01-22 21:22+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -5410,7 +5410,11 @@ msgid "%s%s: notify already exists"
 msgstr "%s%s: Benachrichtigung existiert schon"
 
 #, c-format
-msgid "%s: notification added for %s%s"
+msgid "%sMonitor list is full (%d)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s: notification added for %s%s%s"
 msgstr "%s: Benachrichtigung für %s%s hinzugefügt"
 
 #, c-format
@@ -5425,9 +5429,9 @@ msgstr "%s: alle Benachrichtigungen wurden gelöscht"
 msgid "%s: no notification in list"
 msgstr "%s keine Benachrichtigung in Liste vorhanden"
 
-#, c-format
-msgid "%s: notification deleted"
-msgstr "%s: Benachrichtigung gelöscht"
+#, fuzzy, c-format
+msgid "%s: notification deleted for %s%s%s"
+msgstr "%s: Benachrichtigung für %s%s hinzugefügt"
 
 #, c-format
 msgid "%s%s: notification not found"
@@ -7949,21 +7953,21 @@ msgstr "Benachrichtigungen für alle Server:"
 msgid "Notify list is empty on all servers"
 msgstr "es liegt für keinen Server eine Benachrichtigung vor"
 
-#, c-format
-msgid "%snotify: %s%s%s is connected"
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s%s%s%s%s%s%s is connected"
 msgstr "%snotify: %s%s%s ist angemeldet"
 
-#, c-format
-msgid "%snotify: %s%s%s is offline"
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s%s%s%s%s%s%s is offline"
 msgstr "%snotify: %s%s%s ist offline"
 
-#, c-format
-msgid "%snotify: %s%s%s has joined"
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s%s%s%s%s%s%s has joined"
 msgstr "%snotify: %s%s%s hat sich angemeldet"
 
-#, c-format
-msgid "%snotify: %s%s%s has quit"
-msgstr "%snotify: %s%s%s hat sich abgemeldet"
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s%s%s%s%s%s%s has quit"
+msgstr "%s%s%s%s%s%s%s%s%s%s hat den IRC verlassen"
 
 #, c-format
 msgid "%snotify: %s%s%s is now away: \"%s\""
@@ -11231,6 +11235,12 @@ msgstr "Type"
 
 msgid "Constants"
 msgstr "Konstanten"
+
+#~ msgid "%s: notification deleted"
+#~ msgstr "%s: Benachrichtigung gelöscht"
+
+#~ msgid "%snotify: %s%s%s has quit"
+#~ msgstr "%snotify: %s%s%s hat sich abgemeldet"
 
 #~ msgid "No layout saved"
 #~ msgstr "Kein Layout gespeichert"

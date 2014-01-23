@@ -2241,6 +2241,10 @@ Niepełna lista wiadomości IRC lub aliasów jakie można dostosować:
 | 671       | whois         | whois (bezpieczne połączenie)
 | 728       | quietlist     | cicha lista
 | 729       | quietlist     | koniec cichej listy
+// TRANSLATION MISSING
+| 732       | monitor       | list of monitored nicks
+// TRANSLATION MISSING
+| 733       | monitor       | list of monitored nicks (end)
 | 901       |               | jesteś teraz zalogowany
 |===
 

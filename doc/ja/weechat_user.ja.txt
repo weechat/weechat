@@ -2224,6 +2224,10 @@ weechat::
 | 671     | whois         | whois (セキュアな接続)
 | 728     | quietlist     | 発言禁止リスト
 | 729     | quietlist     | 発言禁止リストの終了
+// TRANSLATION MISSING
+| 732     | monitor       | list of monitored nicks
+// TRANSLATION MISSING
+| 733     | monitor       | list of monitored nicks (end)
 | 901     |               | ログインに成功
 |===
 

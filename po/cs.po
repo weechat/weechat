@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-22 18:47+0100\n"
+"POT-Creation-Date: 2014-01-23 11:24+0100\n"
 "PO-Revision-Date: 2014-01-18 21:20+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4722,7 +4722,11 @@ msgid "%s%s: notify already exists"
 msgstr "%s%s: notifikace již existuje"
 
 #, c-format
-msgid "%s: notification added for %s%s"
+msgid "%sMonitor list is full (%d)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s: notification added for %s%s%s"
 msgstr "%s: přidána notifikace pro %s%s"
 
 #, c-format
@@ -4737,9 +4741,9 @@ msgstr "%s: všechny notifikace byly smazány"
 msgid "%s: no notification in list"
 msgstr "%s: žádné notifikace v seznamu"
 
-#, c-format
-msgid "%s: notification deleted"
-msgstr "%s: notifikace smazána"
+#, fuzzy, c-format
+msgid "%s: notification deleted for %s%s%s"
+msgstr "%s: přidána notifikace pro %s%s"
 
 #, c-format
 msgid "%s%s: notification not found"
@@ -7012,20 +7016,20 @@ msgid "Notify list is empty on all servers"
 msgstr "Seznam notifikací na všech serverech je prázdný"
 
 #, fuzzy, c-format
-msgid "%snotify: %s%s%s is connected"
+msgid "%snotify: %s%s%s%s%s%s%s%s%s is connected"
 msgstr "%snotifikace: %s%s%s se připojil %s%s"
 
 #, fuzzy, c-format
-msgid "%snotify: %s%s%s is offline"
+msgid "%snotify: %s%s%s%s%s%s%s%s%s is offline"
 msgstr "%snotifikace: %s%s%s se připojil %s%s"
 
 #, fuzzy, c-format
-msgid "%snotify: %s%s%s has joined"
+msgid "%snotify: %s%s%s%s%s%s%s%s%s has joined"
 msgstr "%snotifikace: %s%s%s se připojil %s%s"
 
 #, fuzzy, c-format
-msgid "%snotify: %s%s%s has quit"
-msgstr "%snotifikace: %s%s%s odešel %s%s"
+msgid "%snotify: %s%s%s%s%s%s%s%s%s has quit"
+msgstr "%s%s%s%s%s%s%s%s%s%s skončil"
 
 #, c-format
 msgid "%snotify: %s%s%s is now away: \"%s\""
@@ -10092,6 +10096,13 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#~ msgid "%s: notification deleted"
+#~ msgstr "%s: notifikace smazána"
+
+#, fuzzy
+#~ msgid "%snotify: %s%s%s has quit"
+#~ msgstr "%snotifikace: %s%s%s odešel %s%s"
 
 #~ msgid "No layout saved"
 #~ msgstr "Nebylo uloženo žádné rozložení"

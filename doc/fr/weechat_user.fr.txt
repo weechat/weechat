@@ -2294,6 +2294,8 @@ Liste non exhaustive des messages ou alias que vous pouvez paramétrer :
 | 671     | whois         | whois (connexion sécurisée)
 | 728     | quietlist     | liste des "quiet"
 | 729     | quietlist     | fin de la liste des "quiet"
+| 732     | monitor       | liste des pseudos surveillés
+| 733     | monitor       | liste des pseudos surveillés (fin)
 | 901     |               | vous êtes maintenant identifié
 |===
 

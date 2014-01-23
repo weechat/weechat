@@ -54,9 +54,12 @@ extern void irc_notify_check_now (struct t_irc_notify *notify);
 extern void irc_notify_new_for_server (struct t_irc_server *server);
 extern void irc_notify_new_for_all_servers ();
 extern void irc_notify_free (struct t_irc_server *server,
-                             struct t_irc_notify *notify);
+                             struct t_irc_notify *notify, int remove_monitor);
+extern void irc_notify_set_is_on_server (struct t_irc_notify *notify,
+                                         const char *host, int is_on_server);
 extern void irc_notify_free_all (struct t_irc_server *server);
 extern void irc_notify_display_list (struct t_irc_server *server);
+extern void irc_notify_send_monitor (struct t_irc_server *server);
 extern int irc_notify_timer_ison_cb (void *data, int remaining_calls);
 extern int irc_notify_timer_whois_cb (void *data, int remaining_calls);
 extern struct t_hdata *irc_notify_hdata_notify_cb (void *data,

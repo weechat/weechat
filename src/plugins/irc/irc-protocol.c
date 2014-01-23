@@ -52,6 +52,7 @@
 #include "irc-nick.h"
 #include "irc-sasl.h"
 #include "irc-server.h"
+#include "irc-notify.h"
 
 
 /*
@@ -2159,6 +2160,8 @@ IRC_PROTOCOL_CALLBACK(001)
     /* connection to IRC server is OK! */
     server->is_connected = 1;
     server->reconnect_delay = 0;
+    server->monitor_time = time (NULL) + 5;
+
     if (server->hook_timer_connection)
     {
         weechat_unhook (server->hook_timer_connection);
@@ -2232,7 +2235,8 @@ IRC_PROTOCOL_CALLBACK(001)
 IRC_PROTOCOL_CALLBACK(005)
 {
     char *pos, *pos2, *pos_start, *error, *isupport2;
-    int length_isupport, length, nick_max_length, casemapping;
+    int length_isupport, length, casemapping;
+    long value;
 
     IRC_PROTOCOL_MIN_ARGS(4);
 
@@ -2262,9 +2266,9 @@ IRC_PROTOCOL_CALLBACK(005)
         if (pos2)
             pos2[0] = '\0';
         error = NULL;
-        nick_max_length = (int)strtol (pos, &error, 10);
-        if (error && !error[0] && (nick_max_length > 0))
-            server->nick_max_length = nick_max_length;
+        value = strtol (pos, &error, 10);
+        if (error && !error[0] && (value > 0))
+            server->nick_max_length = (int)value;
         if (pos2)
             pos2[0] = ' ';
     }
@@ -2310,6 +2314,22 @@ IRC_PROTOCOL_CALLBACK(005)
         if (server->chanmodes)
             free (server->chanmodes);
         server->chanmodes = strdup (pos);
+        if (pos2)
+            pos2[0] = ' ';
+    }
+
+    /* save monitor (limit) */
+    pos = strstr (argv_eol[3], "MONITOR=");
+    if (pos)
+    {
+        pos += 8;
+        pos2 = strchr (pos, ' ');
+        if (pos2)
+            pos2[0] = '\0';
+        error = NULL;
+        value = strtol (pos, &error, 10);
+        if (error && !error[0] && (value > 0))
+            server->monitor = (int)value;
         if (pos2)
             pos2[0] = ' ';
     }
@@ -4667,6 +4687,162 @@ IRC_PROTOCOL_CALLBACK(729)
 }
 
 /*
+ * Callback for the IRC message "730": monitored nicks are online
+ * (RPL_MONONLINE).
+ *
+ * Message looks like:
+ *   :server 730 mynick :nick1!user1@host1,nick2!user2@host2
+ */
+
+IRC_PROTOCOL_CALLBACK(730)
+{
+    struct t_irc_notify *ptr_notify;
+    const char *monitor_nick, *monitor_host;
+    char **nicks;
+    int i, num_nicks;
+
+    IRC_PROTOCOL_MIN_ARGS(4);
+
+    nicks = weechat_string_split ((argv_eol[3][0] == ':') ?
+                                  argv_eol[3] + 1 : argv_eol[3],
+                                  ",", 0, 0, &num_nicks);
+    if (nicks)
+    {
+        for (i = 0; i < num_nicks; i++)
+        {
+            monitor_nick = irc_message_get_nick_from_host (nicks[i]);
+            monitor_host = strchr (nicks[i], '!');
+            if (monitor_host)
+                monitor_host++;
+            ptr_notify = irc_notify_search (server, monitor_nick);
+            if (ptr_notify)
+                irc_notify_set_is_on_server (ptr_notify, monitor_host, 1);
+        }
+        weechat_string_free_split (nicks);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for the IRC message "731": monitored nicks are offline
+ * (RPL_MONOFFLINE).
+ *
+ * Message looks like:
+ *   :server 731 mynick :nick1!user1@host1,nick2!user2@host2
+ */
+
+IRC_PROTOCOL_CALLBACK(731)
+{
+    struct t_irc_notify *ptr_notify;
+    const char *monitor_nick, *monitor_host;
+    char **nicks;
+    int i, num_nicks;
+
+    IRC_PROTOCOL_MIN_ARGS(4);
+
+    nicks = weechat_string_split ((argv_eol[3][0] == ':') ?
+                                  argv_eol[3] + 1 : argv_eol[3],
+                                  ",", 0, 0, &num_nicks);
+    if (nicks)
+    {
+        for (i = 0; i < num_nicks; i++)
+        {
+            monitor_nick = irc_message_get_nick_from_host (nicks[i]);
+            monitor_host = strchr (nicks[i], '!');
+            if (monitor_host)
+                monitor_host++;
+            ptr_notify = irc_notify_search (server, monitor_nick);
+            if (ptr_notify)
+                irc_notify_set_is_on_server (ptr_notify, monitor_host, 0);
+        }
+        weechat_string_free_split (nicks);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for the IRC message "732": list of monitored nicks (RPL_MONLIST).
+ *
+ * Message looks like:
+ *   :server 732 mynick :nick1!user1@host1,nick2!user2@host2
+ */
+
+IRC_PROTOCOL_CALLBACK(732)
+{
+    char *pos_args;
+
+    IRC_PROTOCOL_MIN_ARGS(3);
+
+    pos_args = (argc > 3) ?
+        ((argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3]) : NULL;
+
+    weechat_printf_date_tags (irc_msgbuffer_get_target_buffer (server, NULL,
+                                                               command, "monitor",
+                                                               NULL),
+                              date,
+                              irc_protocol_tags (command, "irc_numeric", NULL),
+                              "%s%s",
+                              weechat_prefix ("network"),
+                              (pos_args && pos_args[0]) ? pos_args : "");
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for the IRC message "733": end of a monitor list (RPL_ENDOFMONLIST).
+ *
+ * Message looks like:
+ *   :server 733 mynick :End of MONITOR list
+ */
+
+IRC_PROTOCOL_CALLBACK(733)
+{
+    char *pos_args;
+
+    IRC_PROTOCOL_MIN_ARGS(3);
+
+    pos_args = (argc > 3) ?
+        ((argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3]) : NULL;
+
+    weechat_printf_date_tags (irc_msgbuffer_get_target_buffer (server, NULL,
+                                                               command, "monitor",
+                                                               NULL),
+                              date,
+                              irc_protocol_tags (command, "irc_numeric", NULL),
+                              "%s%s",
+                              weechat_prefix ("network"),
+                              (pos_args && pos_args[0]) ? pos_args : "");
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for the IRC message "734": monitor list is full (ERR_MONLISTFULL)
+ *
+ * Message looks like:
+ *   :server 734 mynick limit nick1,nick2 :Monitor list is full.
+ */
+
+IRC_PROTOCOL_CALLBACK(734)
+{
+    IRC_PROTOCOL_MIN_ARGS(5);
+
+    weechat_printf_date_tags (irc_msgbuffer_get_target_buffer (server, NULL,
+                                                               command, "monitor",
+                                                               NULL),
+                              date,
+                              irc_protocol_tags (command, "irc_numeric", NULL),
+                              "%s%s (%s)",
+                              weechat_prefix ("error"),
+                              (argv_eol[5][0] == ':') ? argv_eol[5] + 1 : argv_eol[5],
+                              argv[3]);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback for the IRC message "900": logged in as (SASL).
  *
  * Message looks like:
@@ -5005,6 +5181,11 @@ irc_protocol_recv_command (struct t_irc_server *server,
           { "671", /* whois (secure connection) */ 1, 0, &irc_protocol_cb_whois_nick_msg },
           { "728", /* quietlist */ 1, 0, &irc_protocol_cb_728 },
           { "729", /* end of quietlist */ 1, 0, &irc_protocol_cb_729 },
+          { "730", /* monitored nicks online */ 1, 0, &irc_protocol_cb_730 },
+          { "731", /* monitored nicks offline */ 1, 0, &irc_protocol_cb_731 },
+          { "732", /* list of monitored nicks */ 1, 0, &irc_protocol_cb_732 },
+          { "733", /* end of monitor list */ 1, 0, &irc_protocol_cb_733 },
+          { "734", /* monitor list is full */ 1, 0, &irc_protocol_cb_734 },
           { "900", /* logged in as (SASL) */ 1, 0, &irc_protocol_cb_900 },
           { "901", /* you are now logged in */ 1, 0, &irc_protocol_cb_901 },
           { "903", /* SASL authentication successful */ 1, 0, &irc_protocol_cb_sasl_end },

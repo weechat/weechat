@@ -403,6 +403,24 @@ irc_upgrade_read_cb (void *data,
                         if (str)
                             irc_upgrade_current_server->chanmodes = strdup (str);
                     }
+                    /* "monitor" is new in WeeChat 0.4.3 */
+                    if (weechat_infolist_search_var (infolist, "monitor"))
+                    {
+                        irc_upgrade_current_server->monitor = weechat_infolist_integer (infolist, "monitor");
+                    }
+                    else
+                    {
+                        /* WeeChat <= 0.4.2 */
+                        str = irc_server_get_isupport_value (irc_upgrade_current_server,
+                                                             "MONITOR");
+                        if (str)
+                        {
+                            error = NULL;
+                            number = strtol (str, &error, 10);
+                            if (error && !error[0])
+                                irc_upgrade_current_server->monitor = (int)number;
+                        }
+                    }
                     irc_upgrade_current_server->reconnect_delay = weechat_infolist_integer (infolist, "reconnect_delay");
                     irc_upgrade_current_server->reconnect_start = weechat_infolist_time (infolist, "reconnect_start");
                     irc_upgrade_current_server->command_time = weechat_infolist_time (infolist, "command_time");

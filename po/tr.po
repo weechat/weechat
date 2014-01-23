@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-22 18:47+0100\n"
+"POT-Creation-Date: 2014-01-23 11:24+0100\n"
 "PO-Revision-Date: 2014-01-06 10:17+0100\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3892,7 +3892,11 @@ msgid "%s%s: notify already exists"
 msgstr ""
 
 #, c-format
-msgid "%s: notification added for %s%s"
+msgid "%sMonitor list is full (%d)"
+msgstr ""
+
+#, c-format
+msgid "%s: notification added for %s%s%s"
 msgstr ""
 
 #, c-format
@@ -3908,7 +3912,7 @@ msgid "%s: no notification in list"
 msgstr ""
 
 #, c-format
-msgid "%s: notification deleted"
+msgid "%s: notification deleted for %s%s%s"
 msgstr ""
 
 #, c-format
@@ -5780,21 +5784,21 @@ msgstr ""
 msgid "Notify list is empty on all servers"
 msgstr ""
 
-#, c-format
-msgid "%snotify: %s%s%s is connected"
-msgstr ""
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s%s%s%s%s%s%s is connected"
+msgstr "%s%s%s%s%s%s%s%s%s%s çıktı"
 
-#, c-format
-msgid "%snotify: %s%s%s is offline"
-msgstr ""
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s%s%s%s%s%s%s is offline"
+msgstr "%s%s%s%s%s%s%s%s%s%s çıktı"
 
-#, c-format
-msgid "%snotify: %s%s%s has joined"
-msgstr ""
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s%s%s%s%s%s%s has joined"
+msgstr "%s%s%s%s%s%s%s%s%s%s katıldı %s%s%s"
 
-#, c-format
-msgid "%snotify: %s%s%s has quit"
-msgstr ""
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s%s%s%s%s%s%s has quit"
+msgstr "%s%s%s%s%s%s%s%s%s%s çıktı"
 
 #, c-format
 msgid "%snotify: %s%s%s is now away: \"%s\""

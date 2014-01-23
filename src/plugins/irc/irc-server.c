@@ -980,6 +980,8 @@ irc_server_alloc (const char *name)
     new_server->casemapping = IRC_SERVER_CASEMAPPING_RFC1459;
     new_server->chantypes = NULL;
     new_server->chanmodes = NULL;
+    new_server->monitor = 0;
+    new_server->monitor_time = 0;
     new_server->reconnect_delay = 0;
     new_server->reconnect_start = 0;
     new_server->command_time = 0;
@@ -1007,6 +1009,7 @@ irc_server_alloc (const char *name)
     new_server->last_redirect = NULL;
     new_server->notify_list = NULL;
     new_server->last_notify = NULL;
+    new_server->notify_count = 0;
     new_server->join_manual = weechat_hashtable_new (32,
                                                      WEECHAT_HASHTABLE_STRING,
                                                      WEECHAT_HASHTABLE_TIME,
@@ -2826,129 +2829,138 @@ irc_server_timer_cb (void *data, int remaining_calls)
         }
         else
         {
-            if (ptr_server->is_connected)
-            {
-                /* send queued messages */
-                irc_server_outqueue_send (ptr_server);
+            if (!ptr_server->is_connected)
+                continue;
 
-                /* check for lag */
-                if ((weechat_config_integer (irc_config_network_lag_check) > 0)
-                    && (ptr_server->lag_check_time.tv_sec == 0)
-                    && (current_time >= ptr_server->lag_next_check))
+            /* send queued messages */
+            irc_server_outqueue_send (ptr_server);
+
+            /* check for lag */
+            if ((weechat_config_integer (irc_config_network_lag_check) > 0)
+                && (ptr_server->lag_check_time.tv_sec == 0)
+                && (current_time >= ptr_server->lag_next_check))
+            {
+                irc_server_sendf (ptr_server, 0, NULL, "PING %s",
+                                  (ptr_server->current_address) ?
+                                  ptr_server->current_address : "weechat");
+                gettimeofday (&(ptr_server->lag_check_time), NULL);
+                ptr_server->lag = 0;
+                ptr_server->lag_last_refresh = 0;
+            }
+            else
+            {
+                /* check away (only if lag check was not done) */
+                away_check = IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_AWAY_CHECK);
+                if (away_check > 0)
                 {
-                    irc_server_sendf (ptr_server, 0, NULL, "PING %s",
-                                      (ptr_server->current_address) ?
-                                      ptr_server->current_address : "weechat");
-                    gettimeofday (&(ptr_server->lag_check_time), NULL);
-                    ptr_server->lag = 0;
-                    ptr_server->lag_last_refresh = 0;
+                    if ((ptr_server->last_away_check == 0)
+                        || (current_time >= ptr_server->last_away_check + (away_check * 60)))
+                    {
+                        irc_server_check_away (ptr_server);
+                    }
+                }
+            }
+
+            /* check if it's time to autojoin channels (after command delay) */
+            if ((ptr_server->command_time != 0)
+                && (current_time >= ptr_server->command_time +
+                    IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_COMMAND_DELAY)))
+            {
+                irc_server_autojoin_channels (ptr_server);
+                ptr_server->command_time = 0;
+            }
+
+            /* check if it's time to send MONITOR command */
+            if ((ptr_server->monitor_time != 0)
+                && (current_time >= ptr_server->monitor_time))
+            {
+                if (ptr_server->monitor > 0)
+                    irc_notify_send_monitor (ptr_server);
+                ptr_server->monitor_time = 0;
+            }
+
+            /* compute lag */
+            if (ptr_server->lag_check_time.tv_sec != 0)
+            {
+                gettimeofday (&tv, NULL);
+                ptr_server->lag = (int) weechat_util_timeval_diff (&(ptr_server->lag_check_time),
+                                                                   &tv);
+                /* refresh lag item if needed */
+                if (((ptr_server->lag_last_refresh == 0)
+                     || (current_time >= ptr_server->lag_last_refresh + weechat_config_integer (irc_config_network_lag_refresh_interval)))
+                    && (ptr_server->lag >= weechat_config_integer (irc_config_network_lag_min_show)))
+                {
+                    ptr_server->lag_last_refresh = current_time;
+                    weechat_bar_item_update ("lag");
+                }
+                /* lag timeout? => disconnect */
+                if ((weechat_config_integer (irc_config_network_lag_reconnect) > 0)
+                    && (ptr_server->lag >= weechat_config_integer (irc_config_network_lag_reconnect) * 1000))
+                {
+                    weechat_printf (ptr_server->buffer,
+                                    _("%s%s: lag is high, reconnecting to "
+                                      "server %s%s%s"),
+                                    weechat_prefix ("network"),
+                                    IRC_PLUGIN_NAME,
+                                    IRC_COLOR_CHAT_SERVER,
+                                    ptr_server->name,
+                                    IRC_COLOR_RESET);
+                    irc_server_disconnect (ptr_server, 0, 1);
                 }
                 else
                 {
-                    /* check away (only if lag check was not done) */
-                    away_check = IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_AWAY_CHECK);
-                    if (away_check > 0)
+                    /* stop lag counting if max lag is reached */
+                    if ((weechat_config_integer (irc_config_network_lag_max) > 0)
+                        && (ptr_server->lag >= (weechat_config_integer (irc_config_network_lag_max) * 1000)))
                     {
-                        if ((ptr_server->last_away_check == 0)
-                            || (current_time >= ptr_server->last_away_check + (away_check * 60)))
-                        {
-                            irc_server_check_away (ptr_server);
-                        }
-                    }
-                }
-
-                /* check if it's time to autojoin channels (after command delay) */
-                if ((ptr_server->command_time != 0)
-                    && (current_time >= ptr_server->command_time +
-                        IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_COMMAND_DELAY)))
-                {
-                    irc_server_autojoin_channels (ptr_server);
-                    ptr_server->command_time = 0;
-                }
-
-                /* compute lag */
-                if (ptr_server->lag_check_time.tv_sec != 0)
-                {
-                    gettimeofday (&tv, NULL);
-                    ptr_server->lag = (int) weechat_util_timeval_diff (&(ptr_server->lag_check_time),
-                                                                       &tv);
-                    /* refresh lag item if needed */
-                    if (((ptr_server->lag_last_refresh == 0)
-                         || (current_time >= ptr_server->lag_last_refresh + weechat_config_integer (irc_config_network_lag_refresh_interval)))
-                        && (ptr_server->lag >= weechat_config_integer (irc_config_network_lag_min_show)))
-                    {
+                        /* refresh lag item */
                         ptr_server->lag_last_refresh = current_time;
                         weechat_bar_item_update ("lag");
-                    }
-                    /* lag timeout? => disconnect */
-                    if ((weechat_config_integer (irc_config_network_lag_reconnect) > 0)
-                        && (ptr_server->lag >= weechat_config_integer (irc_config_network_lag_reconnect) * 1000))
-                    {
-                        weechat_printf (ptr_server->buffer,
-                                        _("%s%s: lag is high, reconnecting to "
-                                          "server %s%s%s"),
-                                        weechat_prefix ("network"),
-                                        IRC_PLUGIN_NAME,
-                                        IRC_COLOR_CHAT_SERVER,
-                                        ptr_server->name,
-                                        IRC_COLOR_RESET);
-                        irc_server_disconnect (ptr_server, 0, 1);
-                    }
-                    else
-                    {
-                        /* stop lag counting if max lag is reached */
-                        if ((weechat_config_integer (irc_config_network_lag_max) > 0)
-                            && (ptr_server->lag >= (weechat_config_integer (irc_config_network_lag_max) * 1000)))
-                        {
-                            /* refresh lag item */
-                            ptr_server->lag_last_refresh = current_time;
-                            weechat_bar_item_update ("lag");
 
-                            /* schedule next lag check in 5 seconds */
-                            ptr_server->lag_check_time.tv_sec = 0;
-                            ptr_server->lag_check_time.tv_usec = 0;
-                            ptr_server->lag_next_check = time (NULL) +
-                                weechat_config_integer (irc_config_network_lag_check);
-                        }
+                        /* schedule next lag check in 5 seconds */
+                        ptr_server->lag_check_time.tv_sec = 0;
+                        ptr_server->lag_check_time.tv_usec = 0;
+                        ptr_server->lag_next_check = time (NULL) +
+                            weechat_config_integer (irc_config_network_lag_check);
                     }
                 }
+            }
 
-                /* remove redirects if timeout occurs */
-                ptr_redirect = ptr_server->redirects;
-                while (ptr_redirect)
+            /* remove redirects if timeout occurs */
+            ptr_redirect = ptr_server->redirects;
+            while (ptr_redirect)
+            {
+                ptr_next_redirect = ptr_redirect->next_redirect;
+
+                if ((ptr_redirect->start_time > 0)
+                    && (ptr_redirect->start_time + ptr_redirect->timeout < current_time))
                 {
-                    ptr_next_redirect = ptr_redirect->next_redirect;
-
-                    if ((ptr_redirect->start_time > 0)
-                        && (ptr_redirect->start_time + ptr_redirect->timeout < current_time))
-                    {
-                        irc_redirect_stop (ptr_redirect, "timeout");
-                    }
-
-                    ptr_redirect = ptr_next_redirect;
+                    irc_redirect_stop (ptr_redirect, "timeout");
                 }
 
-                /* purge some data (every 10 minutes) */
-                if (current_time > ptr_server->last_data_purge + (60 * 10))
+                ptr_redirect = ptr_next_redirect;
+            }
+
+            /* purge some data (every 10 minutes) */
+            if (current_time > ptr_server->last_data_purge + (60 * 10))
+            {
+                weechat_hashtable_map (ptr_server->join_manual,
+                                       &irc_server_check_join_manual_cb,
+                                       NULL);
+                weechat_hashtable_map (ptr_server->join_noswitch,
+                                       &irc_server_check_join_noswitch_cb,
+                                       NULL);
+                for (ptr_channel = ptr_server->channels; ptr_channel;
+                     ptr_channel = ptr_channel->next_channel)
                 {
-                    weechat_hashtable_map (ptr_server->join_manual,
-                                           &irc_server_check_join_manual_cb,
-                                           NULL);
-                    weechat_hashtable_map (ptr_server->join_noswitch,
-                                           &irc_server_check_join_noswitch_cb,
-                                           NULL);
-                    for (ptr_channel = ptr_server->channels; ptr_channel;
-                         ptr_channel = ptr_channel->next_channel)
+                    if (ptr_channel->join_smart_filtered)
                     {
-                        if (ptr_channel->join_smart_filtered)
-                        {
-                            weechat_hashtable_map (ptr_channel->join_smart_filtered,
-                                                   &irc_server_check_join_smart_filtered_cb,
-                                                   NULL);
-                        }
+                        weechat_hashtable_map (ptr_channel->join_smart_filtered,
+                                               &irc_server_check_join_smart_filtered_cb,
+                                               NULL);
                     }
-                    ptr_server->last_data_purge = current_time;
                 }
+                ptr_server->last_data_purge = current_time;
             }
         }
     }
@@ -4251,7 +4263,7 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
     if (switch_address)
         irc_server_switch_address (server, 0);
     else
-        irc_server_set_index_current_address(server, 0);
+        irc_server_set_index_current_address (server, 0);
 
     if (server->nick_modes)
     {
@@ -4267,6 +4279,8 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
     server->lag_next_check = time (NULL) +
         weechat_config_integer (irc_config_network_lag_check);
     server->lag_last_refresh = 0;
+    server->monitor = 0;
+    server->monitor_time = 0;
 
     if (reconnect
         && IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_AUTORECONNECT))
@@ -4789,6 +4803,8 @@ irc_server_hdata_server_cb (void *data, const char *hdata_name)
         WEECHAT_HDATA_VAR(struct t_irc_server, casemapping, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, chantypes, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, chanmodes, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, monitor, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, monitor_time, TIME, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, reconnect_delay, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, reconnect_start, TIME, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, command_time, TIME, 0, NULL, NULL);
@@ -4811,6 +4827,7 @@ irc_server_hdata_server_cb (void *data, const char *hdata_name)
         WEECHAT_HDATA_VAR(struct t_irc_server, last_redirect, POINTER, 0, NULL, "irc_redirect");
         WEECHAT_HDATA_VAR(struct t_irc_server, notify_list, POINTER, 0, NULL, "irc_notify");
         WEECHAT_HDATA_VAR(struct t_irc_server, last_notify, POINTER, 0, NULL, "irc_notify");
+        WEECHAT_HDATA_VAR(struct t_irc_server, notify_count, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, join_manual, HASHTABLE, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, join_channel_key, HASHTABLE, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, join_noswitch, HASHTABLE, 0, NULL, NULL);
@@ -5002,6 +5019,10 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_string (ptr_item, "chantypes", server->chantypes))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "chanmodes", server->chanmodes))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "monitor", server->monitor))
+        return 0;
+    if (!weechat_infolist_new_var_time (ptr_item, "monitor_time", server->monitor_time))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "reconnect_delay", server->reconnect_delay))
         return 0;
@@ -5337,6 +5358,8 @@ irc_server_print_log ()
                             irc_server_casemapping_string[ptr_server->casemapping]);
         weechat_log_printf ("  chantypes. . . . . . : '%s'",  ptr_server->chantypes);
         weechat_log_printf ("  chanmodes. . . . . . : '%s'",  ptr_server->chanmodes);
+        weechat_log_printf ("  monitor. . . . . . . : %d",    ptr_server->monitor);
+        weechat_log_printf ("  monitor_time . . . . : %ld",   ptr_server->monitor_time);
         weechat_log_printf ("  reconnect_delay. . . : %d",    ptr_server->reconnect_delay);
         weechat_log_printf ("  reconnect_start. . . : %ld",   ptr_server->reconnect_start);
         weechat_log_printf ("  command_time . . . . : %ld",   ptr_server->command_time);
@@ -5364,6 +5387,7 @@ irc_server_print_log ()
         weechat_log_printf ("  last_redirect. . . . : 0x%lx", ptr_server->last_redirect);
         weechat_log_printf ("  notify_list. . . . . : 0x%lx", ptr_server->notify_list);
         weechat_log_printf ("  last_notify. . . . . : 0x%lx", ptr_server->last_notify);
+        weechat_log_printf ("  notify_count . . . . : %d",    ptr_server->notify_count);
         weechat_log_printf ("  join_manual. . . . . : 0x%lx (hashtable: '%s')",
                             ptr_server->join_manual,
                             weechat_hashtable_get_string (ptr_server->join_manual, "keys_values"));

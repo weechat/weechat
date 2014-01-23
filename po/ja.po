@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-22 18:47+0100\n"
+"POT-Creation-Date: 2014-01-23 11:24+0100\n"
 "PO-Revision-Date: 2014-01-18 21:22+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -5038,7 +5038,11 @@ msgid "%s%s: notify already exists"
 msgstr "%s%s: notify は既に存在しています"
 
 #, c-format
-msgid "%s: notification added for %s%s"
+msgid "%sMonitor list is full (%d)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s: notification added for %s%s%s"
 msgstr "%s: %s%s の通知を追加"
 
 #, c-format
@@ -5053,9 +5057,9 @@ msgstr "%s: 全ての通知を削除"
 msgid "%s: no notification in list"
 msgstr "%s: リストに通知がありません"
 
-#, c-format
-msgid "%s: notification deleted"
-msgstr "%s: 通知を削除"
+#, fuzzy, c-format
+msgid "%s: notification deleted for %s%s%s"
+msgstr "%s: %s%s の通知を追加"
 
 #, c-format
 msgid "%s%s: notification not found"
@@ -7410,21 +7414,21 @@ msgstr "全てのサーバの通知リスト:"
 msgid "Notify list is empty on all servers"
 msgstr "全てのサーバの通知リストは空です"
 
-#, c-format
-msgid "%snotify: %s%s%s is connected"
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s%s%s%s%s%s%s is connected"
 msgstr "%s通知: %s%s%s が接続しました"
 
-#, c-format
-msgid "%snotify: %s%s%s is offline"
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s%s%s%s%s%s%s is offline"
 msgstr "%s通知: %s%s%s はオフライン状態"
 
-#, c-format
-msgid "%snotify: %s%s%s has joined"
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s%s%s%s%s%s%s has joined"
 msgstr "%s通知: %s%s%s が参加"
 
-#, c-format
-msgid "%snotify: %s%s%s has quit"
-msgstr "%s通知: %s%s%s が終了"
+#, fuzzy, c-format
+msgid "%snotify: %s%s%s%s%s%s%s%s%s has quit"
+msgstr "%s%s%s%s%s%s%s%s%s%s が終了"
 
 #, c-format
 msgid "%snotify: %s%s%s is now away: \"%s\""
@@ -10541,6 +10545,12 @@ msgstr "タイプ"
 
 msgid "Constants"
 msgstr "定数"
+
+#~ msgid "%s: notification deleted"
+#~ msgstr "%s: 通知を削除"
+
+#~ msgid "%snotify: %s%s%s has quit"
+#~ msgstr "%s通知: %s%s%s が終了"
 
 #~ msgid "No layout saved"
 #~ msgstr "レイアウトが保存されていません"

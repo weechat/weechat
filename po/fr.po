@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-22 18:47+0100\n"
-"PO-Revision-Date: 2014-01-22 18:47+0100\n"
+"POT-Creation-Date: 2014-01-23 11:24+0100\n"
+"PO-Revision-Date: 2014-01-23 11:27+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -3486,7 +3486,8 @@ msgid "save configuration file on exit"
 msgstr "sauvegarder la configuration en quittant"
 
 msgid "save layout on exit (buffers, windows, or both)"
-msgstr "sauvegarder la disposition en quittant (tampons, fenêtres, ou les deux)"
+msgstr ""
+"sauvegarder la disposition en quittant (tampons, fenêtres, ou les deux)"
 
 msgid "how many lines to scroll by with scroll_up and scroll_down"
 msgstr "nombre de lignes pour le défilement avec scroll_up et scroll_down"
@@ -5275,8 +5276,12 @@ msgid "%s%s: notify already exists"
 msgstr "%s%s: la notification existe déjà"
 
 #, c-format
-msgid "%s: notification added for %s%s"
-msgstr "%s: notification ajoutée pour %s%s"
+msgid "%sMonitor list is full (%d)"
+msgstr "%sLa liste de surveillance est pleine (%d)"
+
+#, c-format
+msgid "%s: notification added for %s%s%s"
+msgstr "%s: notification ajoutée pour %s%s%s"
 
 #, c-format
 msgid "%s%s: error adding notification"
@@ -5291,8 +5296,8 @@ msgid "%s: no notification in list"
 msgstr "%s: pas de notification dans la liste"
 
 #, c-format
-msgid "%s: notification deleted"
-msgstr "%s: notification supprimée"
+msgid "%s: notification deleted for %s%s%s"
+msgstr "%s: notification supprimée pour %s%s%s"
 
 #, c-format
 msgid "%s%s: notification not found"
@@ -7731,20 +7736,20 @@ msgid "Notify list is empty on all servers"
 msgstr "La liste de notifications est vide sur tous les serveurs"
 
 #, c-format
-msgid "%snotify: %s%s%s is connected"
-msgstr "%snotify: %s%s%s est connecté"
+msgid "%snotify: %s%s%s%s%s%s%s%s%s is connected"
+msgstr "%snotify: %s%s%s%s%s%s%s%s%s est connecté"
 
 #, c-format
-msgid "%snotify: %s%s%s is offline"
-msgstr "%snotify: %s%s%s est déconnecté"
+msgid "%snotify: %s%s%s%s%s%s%s%s%s is offline"
+msgstr "%snotify: %s%s%s%s%s%s%s%s%s est déconnecté"
 
 #, c-format
-msgid "%snotify: %s%s%s has joined"
-msgstr "%snotify: %s%s%s a rejoint"
+msgid "%snotify: %s%s%s%s%s%s%s%s%s has joined"
+msgstr "%snotify: %s%s%s%s%s%s%s%s%s a rejoint"
 
 #, c-format
-msgid "%snotify: %s%s%s has quit"
-msgstr "%snotify: %s%s%s a quitté"
+msgid "%snotify: %s%s%s%s%s%s%s%s%s has quit"
+msgstr "%snotify: %s%s%s%s%s%s%s%s%s a quitté"
 
 #, c-format
 msgid "%snotify: %s%s%s is now away: \"%s\""
@@ -10957,6 +10962,12 @@ msgstr "Type"
 
 msgid "Constants"
 msgstr "Constantes"
+
+#~ msgid "%s: notification deleted"
+#~ msgstr "%s: notification supprimée"
+
+#~ msgid "%snotify: %s%s%s has quit"
+#~ msgstr "%snotify: %s%s%s a quitté"
 
 #~ msgid "No layout saved"
 #~ msgstr "Pas de disposition sauvée"

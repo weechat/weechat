@@ -135,6 +135,17 @@ struct t_irc_redirect_pattern irc_redirect_patterns_default[] =
       NULL,
       NULL, NULL,
     },
+    { "monitor", 0, 0,
+      /*
+       * monitor: start: 732: list of monitored nicks
+       *           stop: 733: end of a monitor list
+       *          extra; -
+       */
+      "732:2",
+      "733:1",
+      NULL,
+      NULL, NULL,
+    },
     { "names", 0, 0,
       /*
        * names: start: 353: list of nicks on channel

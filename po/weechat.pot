@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-22 18:47+0100\n"
+"POT-Creation-Date: 2014-01-23 11:24+0100\n"
 "PO-Revision-Date: 2013-02-14 18:20+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3895,7 +3895,11 @@ msgid "%s%s: notify already exists"
 msgstr ""
 
 #, c-format
-msgid "%s: notification added for %s%s"
+msgid "%sMonitor list is full (%d)"
+msgstr ""
+
+#, c-format
+msgid "%s: notification added for %s%s%s"
 msgstr ""
 
 #, c-format
@@ -3911,7 +3915,7 @@ msgid "%s: no notification in list"
 msgstr ""
 
 #, c-format
-msgid "%s: notification deleted"
+msgid "%s: notification deleted for %s%s%s"
 msgstr ""
 
 #, c-format
@@ -5737,19 +5741,19 @@ msgid "Notify list is empty on all servers"
 msgstr ""
 
 #, c-format
-msgid "%snotify: %s%s%s is connected"
+msgid "%snotify: %s%s%s%s%s%s%s%s%s is connected"
 msgstr ""
 
 #, c-format
-msgid "%snotify: %s%s%s is offline"
+msgid "%snotify: %s%s%s%s%s%s%s%s%s is offline"
 msgstr ""
 
 #, c-format
-msgid "%snotify: %s%s%s has joined"
+msgid "%snotify: %s%s%s%s%s%s%s%s%s has joined"
 msgstr ""
 
 #, c-format
-msgid "%snotify: %s%s%s has quit"
+msgid "%snotify: %s%s%s%s%s%s%s%s%s has quit"
 msgstr ""
 
 #, c-format
