@@ -410,7 +410,7 @@ liste des actions:
   switch_active_buffer: basculer vers le tampon mélangé suivant
   switch_active_buffer_previous: basculer vers le tampon mélangé précédent
   zoom_merged_buffer: zoom sur le tampon mélangé
-  insert: insérer du texte dans la ligne de commande
+  insert: insérer du texte dans la ligne de commande (les caractères échappés sont autorisés, voir /help print)
   paste_start: début de collage (mode "bracketed paste")
   paste_stop: fin de collage (mode "bracketed paste")
 
@@ -579,12 +579,13 @@ Sans paramètre, cette commande liste les extensions chargées.
            heure: hh:mm:ss (exemple: 04:32:55)
   -tags: liste d'étiquettes séparées par des virgules (voir /help filter pour une liste des étiquettes couramment utilisées)
   texte: texte à afficher (le préfixe et le message doivent être séparés par \t)
--stdout: afficher le texte sur stdout (pas dans un tampon)
--stderr: afficher le texte sur stderr (pas dans un tampon)
+-stdout: afficher le texte sur stdout (les caractères échappés sont interprétés)
+-stderr: afficher le texte sur stderr (les caractères échappés sont interprétés)
 
 Les options -action ... -quit utilisent le préfixe défini dans les options "weechat.look.prefix_*".
 
-Avec les options -stdout et -stderr, les caractères échappés sont toujours interprétés.
+Les caractères échappés suivants sont supportés:
+  \" \\ \a \b \e \f \n \r \t \v \0ooo \xhh \uhhhh \Uhhhhhhhh
 
 Exemples:
   afficher un pense-bête sur le tampon core avec un highlight:
@@ -595,6 +596,8 @@ Exemples:
     /print -core abc\tLe message
   afficher un message sur le canal #weechat:
     /print -buffer irc.freenode.#weechat Message sur #weechat
+  afficher un bonhomme de neige (U+2603):
+    /print -escape \u2603
   envoyer une alerte (BEL):
     /print -stderr \a
 ----

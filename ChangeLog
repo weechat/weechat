@@ -12,7 +12,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 == Version 0.4.3 (under dev)
 
 * core: add signals "signal_sighup" and "signal_sigwinch" (terminal resized)
-* core: add command /print
+* core: add command /print, add support of more escaped chars in command
+  "/input insert"
 * core: add option weechat.look.tab_width
 * core: add completion "plugins_installed"
 * core: fix crash in /eval when config option has a NULL value

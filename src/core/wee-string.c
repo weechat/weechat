@@ -631,18 +631,20 @@ string_strip (const char *string, int left, int right, const char *chars)
  * Converts escaped chars to their value.
  *
  * Following escaped chars are supported:
- *   \"     double quote
- *   \\     backslash
- *   \a     alert (BEL)
- *   \b     backspace
- *   \e     escape
- *   \f     form feed
- *   \n     new line
- *   \r     carriage return
- *   \t     horizontal tab
- *   \v     vertical tab
- *   \0ooo  octal value (ooo is 0 to 3 digits)
- *   \xhh   hexadecimal value (hh is 1 to 2 digits)
+ *   \"         double quote
+ *   \\         backslash
+ *   \a         alert (BEL)
+ *   \b         backspace
+ *   \e         escape
+ *   \f         form feed
+ *   \n         new line
+ *   \r         carriage return
+ *   \t         horizontal tab
+ *   \v         vertical tab
+ *   \0ooo      char as octal value (ooo is 0 to 3 digits)
+ *   \xhh       char as hexadecimal value (hh is 1 to 2 digits)
+ *   \uhhhh     unicode char as hexadecimal value (hhhh is 1 to 4 digits)
+ *   \Uhhhhhhhh unicode char as hexadecimal value (hhhhhhhh is 1 to 8 digits)
  *
  * Note: result must be freed after use.
  */
@@ -651,8 +653,9 @@ char *
 string_convert_escaped_chars (const char *string)
 {
     const unsigned char *ptr_string;
-    char *output;
-    int pos_output, i, value;
+    char *output, utf_char[16];
+    int pos_output, i, length;
+    unsigned int value;
 
     /* the output length is always <= to string length */
     output = malloc (strlen (string) + 1);
@@ -668,11 +671,11 @@ string_convert_escaped_chars (const char *string)
             ptr_string++;
             switch (ptr_string[0])
             {
-                case '"':
+                case '"':  /* double quote */
                     output[pos_output++] = '"';
                     ptr_string++;
                     break;
-                case '\\':
+                case '\\':  /* backslash */
                     output[pos_output++] = '\\';
                     ptr_string++;
                     break;
@@ -708,7 +711,7 @@ string_convert_escaped_chars (const char *string)
                     output[pos_output++] = 11;
                     ptr_string++;
                     break;
-                case '0':  /* octal value (0 to 3 digits expected) */
+                case '0':  /* char as octal value (0 to 3 digits) */
                     value = 0;
                     for (i = 0; (i < 3) && IS_OCTAL_DIGIT(ptr_string[i + 1]); i++)
                     {
@@ -717,7 +720,7 @@ string_convert_escaped_chars (const char *string)
                     output[pos_output++] = value;
                     ptr_string += 1 + i;
                     break;
-                case 'x':  /* hexadecimal value (1 to 2 digits expected) */
+                case 'x':  /* char as hexadecimal value (1 to 2 digits) */
                 case 'X':
                     if (isxdigit (ptr_string[1]))
                     {
@@ -727,6 +730,33 @@ string_convert_escaped_chars (const char *string)
                             value = (value * 16) + HEX2DEC(ptr_string[i + 1]);
                         }
                         output[pos_output++] = value;
+                        ptr_string += 1 + i;
+                    }
+                    else
+                    {
+                        output[pos_output++] = ptr_string[0];
+                        ptr_string++;
+                    }
+                    break;
+                case 'u':  /* unicode char as hexadecimal (1 to 4 digits) */
+                case 'U':  /* unicode char as hexadecimal (1 to 8 digits) */
+                    if (isxdigit (ptr_string[1]))
+                    {
+                        value = 0;
+                        for (i = 0;
+                             (i < ((ptr_string[0] == 'u') ? 4 : 8))
+                                 && isxdigit (ptr_string[i + 1]);
+                             i++)
+                        {
+                            value = (value * 16) + HEX2DEC(ptr_string[i + 1]);
+                        }
+                        utf8_int_string (value, utf_char);
+                        if (utf_char[0])
+                        {
+                            length = strlen (utf_char);
+                            memcpy (output + pos_output, utf_char, length);
+                            pos_output += length;
+                        }
                         ptr_string += 1 + i;
                     }
                     else

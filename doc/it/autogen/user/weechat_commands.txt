@@ -410,7 +410,7 @@ list of actions:
   switch_active_buffer: switch to next merged buffer
   switch_active_buffer_previous: switch to previous merged buffer
   zoom_merged_buffer: zoom on merged buffer
-  insert: insert text in command line
+  insert: insert text in command line (escaped chars are allowed, see /help print)
   paste_start: start paste (bracketed paste mode)
   paste_stop: stop paste (bracketed paste mode)
 
@@ -579,12 +579,13 @@ Senza argomento, questo comando elenca i plugin caricati.
            time: hh:mm:ss (example: 04:32:55)
   -tags: comma-separated list of tags (see /help filter for a list of tags most commonly used)
    text: text to display (prefix and message must be separated by \t)
--stdout: display text on stdout (not in a buffer)
--stderr: display text on stderr (not in a buffer)
+-stdout: display text on stdout (escaped chars are interpreted)
+-stderr: display text on stderr (escaped chars are interpreted)
 
 The options -action ... -quit use the prefix defined in options "weechat.look.prefix_*".
 
-With options -stdout and -stderr, escaped chars are always interpreted.
+Following escaped chars are supported:
+  \" \\ \a \b \e \f \n \r \t \v \0ooo \xhh \uhhhh \Uhhhhhhhh
 
 Examples:
   display a reminder on core buffer with a highlight:
@@ -595,6 +596,8 @@ Examples:
     /print -core abc\tThe message
   display a message on channel #weechat:
     /print -buffer irc.freenode.#weechat Message on #weechat
+  display a snowman (U+2603):
+    /print -escape \u2603
   send alert (BEL):
     /print -stderr \a
 ----
