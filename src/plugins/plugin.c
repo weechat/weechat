@@ -521,6 +521,7 @@ plugin_load (const char *filename, int argc, char **argv)
         new_plugin->string_regcomp = &string_regcomp;
         new_plugin->string_has_highlight = &string_has_highlight;
         new_plugin->string_has_highlight_regex = &string_has_highlight_regex;
+        new_plugin->string_replace_regex = &string_replace_regex;
         new_plugin->string_split = &string_split;
         new_plugin->string_free_split = &string_free_split;
         new_plugin->string_build_with_split_string = &string_build_with_split_string;

@@ -116,6 +116,7 @@ AH_VERBATIM([PLUGIN_RUBY], [#undef PLUGIN_RUBY])
 AH_VERBATIM([PLUGIN_LUA], [#undef PLUGIN_LUA])
 AH_VERBATIM([PLUGIN_TCL], [#undef PLUGIN_TCL])
 AH_VERBATIM([PLUGIN_GUILE], [#undef PLUGIN_GUILE])
+AH_VERBATIM([PLUGIN_TRIGGER], [#undef PLUGIN_TRIGGER])
 AH_VERBATIM([PLUGIN_XFER], [#undef PLUGIN_XFER])
 AH_VERBATIM([MAN], [#undef MAN])
 AH_VERBATIM([DOC], [#undef DOC])
@@ -145,6 +146,7 @@ AC_ARG_ENABLE(ruby,         [  --disable-ruby          turn off Ruby script plug
 AC_ARG_ENABLE(lua,          [  --disable-lua           turn off Lua script plugin (default=compiled if found)],enable_lua=$enableval,enable_lua=yes)
 AC_ARG_ENABLE(tcl,          [  --disable-tcl           turn off Tcl script plugin (default=compiled if found)],enable_tcl=$enableval,enable_tcl=yes)
 AC_ARG_ENABLE(guile,        [  --disable-guile         turn off Guile (scheme) script plugin (default=compiled if found)],enable_guile=$enableval,enable_guile=yes)
+AC_ARG_ENABLE(trigger,      [  --disable-trigger       turn off Trigger plugin (default=compiled)],enable_trigger=$enableval,enable_trigger=yes)
 AC_ARG_ENABLE(xfer,         [  --disable-xfer          turn off Xfer (file transfer) plugin (default=compiled if found)],enable_xfer=$enableval,enable_xfer=yes)
 AC_ARG_WITH(lua-inc,        [  --with-lua-inc=DIR,     lua include files are in DIR (default=autodetect)],lua_inc=$withval,lua_inc='')
 AC_ARG_WITH(lua-lib,        [  --with-lua-lib=DIR,     lua library files are in DIR (default=autodetect)],lua_lib=$withval,lua_lib='')
@@ -800,6 +802,18 @@ if test "x$enable_guile" = "xyes" ; then
     AC_DEFINE(PLUGIN_GUILE)
 fi
 
+# --------------------------------- trigger ------------------------------------
+
+if test "x$enable_trigger" = "xyes" ; then
+    TRIGGER_CFLAGS=""
+    TRIGGER_LFLAGS=""
+    AC_SUBST(TRIGGER_CFLAGS)
+    AC_SUBST(TRIGGER_LFLAGS)
+    AC_DEFINE(PLUGIN_TRIGGER)
+else
+    not_asked="$not_asked trigger"
+fi
+
 # ---------------------------------- xfer --------------------------------------
 
 if test "x$enable_xfer" = "xyes" ; then
@@ -1125,6 +1139,7 @@ AM_CONDITIONAL(PLUGIN_RUBY,             test "$enable_ruby" = "yes")
 AM_CONDITIONAL(PLUGIN_LUA,              test "$enable_lua" = "yes")
 AM_CONDITIONAL(PLUGIN_TCL,              test "$enable_tcl" = "yes")
 AM_CONDITIONAL(PLUGIN_GUILE,            test "$enable_guile" = "yes")
+AM_CONDITIONAL(PLUGIN_TRIGGER,          test "$enable_trigger" = "yes")
 AM_CONDITIONAL(PLUGIN_XFER,             test "$enable_xfer" = "yes")
 AM_CONDITIONAL(MAN,                     test "$enable_man" = "yes")
 AM_CONDITIONAL(DOC,                     test "$enable_doc" = "yes")
@@ -1157,6 +1172,7 @@ AC_OUTPUT([Makefile
            src/plugins/lua/Makefile
            src/plugins/tcl/Makefile
            src/plugins/guile/Makefile
+           src/plugins/trigger/Makefile
            src/plugins/xfer/Makefile
            src/gui/Makefile
            src/gui/curses/Makefile
@@ -1223,6 +1239,9 @@ if test "x$enable_tcl" = "xyes"; then
 fi
 if test "x$enable_guile" = "xyes"; then
     listplugins="$listplugins guile($GUILE_VERSION)"
+fi
+if test "x$enable_trigger" = "xyes"; then
+    listplugins="$listplugins trigger"
 fi
 if test "x$enable_xfer" = "xyes"; then
     listplugins="$listplugins xfer"

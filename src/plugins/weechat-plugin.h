@@ -28,6 +28,7 @@ extern "C" {
 
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <regex.h>
 
 /* some systems like GNU/Hurd do not define PATH_MAX */
 #ifndef PATH_MAX
@@ -57,7 +58,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20140122-01"
+#define WEECHAT_PLUGIN_API_VERSION "20140125-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -243,10 +244,12 @@ struct t_weechat_plugin
     char *(*string_mask_to_regex) (const char *mask);
     const char *(*string_regex_flags) (const char *regex, int default_flags,
                                        int *flags);
-    int (*string_regcomp) (void *preg, const char *regex, int default_flags);
+    int (*string_regcomp) (regex_t *preg, const char *regex, int default_flags);
     int (*string_has_highlight) (const char *string,
                                  const char *highlight_words);
     int (*string_has_highlight_regex) (const char *string, const char *regex);
+    char *(*string_replace_regex) (const char *string, regex_t *regex,
+                                   const char *replace);
     char **(*string_split) (const char *string, const char *separators,
                             int keep_eol, int num_items_max, int *num_items);
     void (*string_free_split) (char **split_string);
@@ -1008,6 +1011,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->string_has_highlight(__string, __highlight_words)
 #define weechat_string_has_highlight_regex(__string, __regex)           \
     weechat_plugin->string_has_highlight_regex(__string, __regex)
+#define weechat_string_replace_regex(__string, __regex, __replace)      \
+    weechat_plugin->string_replace_regex(__string, __regex, __replace)
 #define weechat_string_split(__string, __separator, __eol, __max,       \
                              __num_items)                               \
     weechat_plugin->string_split(__string, __separator, __eol,          \

@@ -947,13 +947,13 @@ string_regex_flags (const char *regex, int default_flags, int *flags)
  */
 
 int
-string_regcomp (void *preg, const char *regex, int default_flags)
+string_regcomp (regex_t *preg, const char *regex, int default_flags)
 {
     const char *ptr_regex;
     int flags;
 
     ptr_regex = string_regex_flags (regex, default_flags, &flags);
-    return regcomp ((regex_t *)preg, ptr_regex, flags);
+    return regcomp (preg, ptr_regex, flags);
 }
 
 /*
@@ -1142,6 +1142,221 @@ string_has_highlight_regex (const char *string, const char *regex)
     regfree (&reg);
 
     return rc;
+}
+
+/*
+ * Get replacement string for a regex, using array of "match"
+ * (for more info, see function "string_replace_regex").
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+string_replace_regex_get_replace (const char *string, regmatch_t *regex_match,
+                                  const char *replace)
+{
+    int length, length_current, length_add, match;
+    const char *ptr_replace, *ptr_add;
+    char *result, *result2, *modified_replace, *temp;
+
+    /* default length is length*2, it will grow later if needed */
+    length = (strlen (string) * 2);
+    result = malloc (length + 1);
+    if (!result)
+        return NULL;
+
+    result[0] = '\0';
+    length_current = 0;
+    ptr_replace = replace;
+    while (ptr_replace && ptr_replace[0])
+    {
+        ptr_add = NULL;
+        length_add = 0;
+        modified_replace = NULL;
+
+        if (ptr_replace[0] == '\\')
+        {
+            if (ptr_replace[1] == '\\')
+            {
+                ptr_add = ptr_replace;
+                length_add = 1;
+                ptr_replace += 2;
+            }
+            else if (isdigit ((unsigned char)ptr_replace[1]))
+            {
+                match = ptr_replace[1] - '0';
+                if (regex_match[match].rm_so >= 0)
+                {
+                    ptr_add = string + regex_match[match].rm_so;
+                    length_add = regex_match[match].rm_eo - regex_match[match].rm_so;
+                }
+                ptr_replace += 2;
+            }
+            else if ((ptr_replace[1] >= 32)
+                     && (ptr_replace[1] <= 126)
+                     && isdigit ((unsigned char)ptr_replace[2]))
+            {
+                match = ptr_replace[2] - '0';
+                if (regex_match[match].rm_so >= 0)
+                {
+                    temp = string_strndup (string + regex_match[match].rm_so,
+                                           regex_match[match].rm_eo - regex_match[match].rm_so);
+                    if (temp)
+                    {
+                        length_add = utf8_strlen (temp);
+                        modified_replace = malloc (length_add + 1);
+                        if (modified_replace)
+                        {
+                            memset (modified_replace, ptr_replace[1],
+                                    length_add);
+                            modified_replace[length_add] = '\0';
+                            ptr_add = modified_replace;
+                        }
+                        free (temp);
+                    }
+                }
+                ptr_replace += 3;
+            }
+            else
+            {
+                /* just ignore the '\' */
+                ptr_replace++;
+            }
+        }
+        else
+        {
+            ptr_add = ptr_replace;
+            length_add = utf8_char_size (ptr_replace);
+            ptr_replace += length_add;
+        }
+
+        if (ptr_add)
+        {
+            if (length_current + length_add > length)
+            {
+                length = (length * 2 >= length_current + length_add) ?
+                    length * 2 : length_current + length_add;
+                result2 = realloc (result, length + 1);
+                if (!result2)
+                {
+                    if (modified_replace)
+                        free (modified_replace);
+                    free (result);
+                    return NULL;
+                }
+                result = result2;
+            }
+            memcpy (result + length_current, ptr_add, length_add);
+            length_current += length_add;
+            result[length_current] = '\0';
+        }
+        if (modified_replace)
+            free (modified_replace);
+    }
+
+    return result;
+}
+
+/*
+ * Replaces a string by new one in a string, using a regular expression for
+ * searching string.
+ *
+ * The argument "regex" is a pointer to a regex compiled with function regcomp
+ * (or WeeChat function string_regcomp).
+ *
+ * The argument "replace" can contain references to matching groups, from \1
+ * to \9 for match 1 to 9 (\0 is the whole match).
+ * Special references \c0 to \c9 can be used to replace all matching chars by
+ * the char 'c', which can be between space (32) and '~' (126).
+ * For example \*1 will replace matching chars in group 1 by '*'.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+string_replace_regex (const char *string, regex_t *regex, const char *replace)
+{
+    char *result, *result2, *str_replace;
+    int length, length_replace, start_offset, i, rc, end;
+    regmatch_t regex_match[10];
+
+    if (!string)
+        return NULL;
+
+    length = strlen (string) + 1;
+    result = malloc (length);
+    if (!result)
+        return NULL;
+    snprintf (result, length, "%s", string);
+
+    start_offset = 0;
+    while (result && result[start_offset])
+    {
+        for (i = 0; i < 10; i++)
+        {
+            regex_match[i].rm_so = -1;
+        }
+
+        rc = regexec (regex, result + start_offset, 10, regex_match, 0);
+        /*
+         * no match found: exit the loop (if rm_eo == 0, it is an empty match
+         * at beginning of string: we consider there is no match, to prevent an
+         * infinite loop)
+         */
+        if ((rc != 0)
+            || (regex_match[0].rm_so < 0) || (regex_match[0].rm_eo <= 0))
+        {
+            break;
+        }
+
+        /* adjust the start/end offsets */
+        for (i = 0; i < 10; i++)
+        {
+            if (regex_match[i].rm_so >= 0)
+            {
+                regex_match[i].rm_so += start_offset;
+                regex_match[i].rm_eo += start_offset;
+            }
+        }
+
+        /* check if the regex matched the end of string */
+        end = !result[regex_match[0].rm_eo];
+
+        str_replace = string_replace_regex_get_replace (result, regex_match,
+                                                        replace);
+        length_replace = (str_replace) ? strlen (str_replace) : 0;
+
+        length = regex_match[0].rm_so + length_replace +
+            strlen (result + regex_match[0].rm_eo) + 1;
+        result2 = malloc (length);
+        if (!result2)
+        {
+            free (result);
+            return NULL;
+        }
+        result2[0] = '\0';
+        if (regex_match[0].rm_so > 0)
+        {
+            memcpy (result2, result, regex_match[0].rm_so);
+            result2[regex_match[0].rm_so] = '\0';
+        }
+        if (str_replace)
+            strcat (result2, str_replace);
+        strcat (result2, result + regex_match[0].rm_eo);
+
+        free (result);
+        result = result2;
+
+        if (str_replace)
+            free (str_replace);
+
+        if (end)
+            break;
+
+        start_offset = regex_match[0].rm_so + length_replace;
+    }
+
+    return result;
 }
 
 /*
