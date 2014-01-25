@@ -264,7 +264,7 @@
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
 * [[option_irc.look.notify_tags_ison]] *irc.look.notify_tags_ison*
-** description: `liste des étiquettes (séparées par des virgules) utilisées dans les messages affichés par notify lorsqu'un pseudo a rejoint ou quitté le serveur (résultat de la commande ison), par exemple: "notify_message", "notify_private" ou "notify_highlight"`
+** description: `liste des étiquettes (séparées par des virgules) utilisées dans les messages affichés par notify lorsqu'un pseudo a rejoint ou quitté le serveur (résultat de la commande ison ou monitor), par exemple: "notify_message", "notify_private" ou "notify_highlight"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"notify_message"`)
 

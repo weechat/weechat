@@ -2518,8 +2518,8 @@ irc_config_init ()
         irc_config_file, ptr_section,
         "notify_tags_ison", "string",
         N_("comma separated list of tags used in messages displayed by notify "
-           "when a nick joins or quits server (result of command ison), "
-           "for example: \"notify_message\", \"notify_private\" or "
+           "when a nick joins or quits server (result of command ison or "
+           "monitor), for example: \"notify_message\", \"notify_private\" or "
            "\"notify_highlight\""),
         NULL, 0, 0, "notify_message", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);

@@ -264,7 +264,7 @@
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
 * [[option_irc.look.notify_tags_ison]] *irc.look.notify_tags_ison*
-** opis: `oddzielona przecinkami lista tagów użytych w wiadomościach wyświetlanych przez powiadomienie, kiedy nick wejdzie lub wyjdzie z serwera (rezultat komendy ison), na przykład: "notify_message", "notify_private" lub "notify_higlight"`
+** opis: `comma separated list of tags used in messages displayed by notify when a nick joins or quits server (result of command ison or monitor), for example: "notify_message", "notify_private" or "notify_highlight"`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `"notify_message"`)
 
