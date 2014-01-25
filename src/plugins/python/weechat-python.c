@@ -49,6 +49,7 @@ struct t_plugin_script *python_current_script = NULL;
 struct t_plugin_script *python_registered_script = NULL;
 const char *python_current_script_filename = NULL;
 PyThreadState *python_mainThreadState = NULL;
+PyThreadState *python_current_interpreter = NULL;
 char *python2_bin = NULL;
 
 /* outputs subroutines */
@@ -590,7 +591,6 @@ weechat_python_load (const char *filename)
     wchar_t *wargv[] = { NULL, NULL };
 #endif
     FILE *fp;
-    PyThreadState *python_current_interpreter;
     PyObject *weechat_outputs, *python_path, *path;
     const char *weechat_home;
     char *str_home;
@@ -754,7 +754,6 @@ weechat_python_load (const char *filename)
     }
     python_current_script = python_registered_script;
 
-    python_current_script->interpreter = (PyThreadState *) python_current_interpreter;
     /* PyEval_ReleaseThread (python_current_script->interpreter); */
 
     /*

@@ -212,6 +212,7 @@ weechat_guile_api_register (SCM name, SCM author, SCM version, SCM license,
                             API_SCM_TO_STRING(version),
                             API_SCM_TO_STRING(description));
         }
+        guile_current_script->interpreter = scm_current_module ();
     }
     else
     {

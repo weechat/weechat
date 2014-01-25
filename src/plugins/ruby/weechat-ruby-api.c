@@ -156,6 +156,7 @@ weechat_ruby_api_register (VALUE class, VALUE name, VALUE author,
                                              "version %s (%s)"),
                             RUBY_PLUGIN_NAME, c_name, c_version, c_description);
         }
+        ruby_current_script->interpreter = (VALUE *)ruby_current_module;
     }
     else
     {

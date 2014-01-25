@@ -156,9 +156,6 @@ XS (XS_weechat_api_register)
                                              description, shutdown_func, charset);
     if (perl_current_script)
     {
-#ifndef MULTIPLICITY
-        perl_current_script->interpreter = SvPV_nolen (eval_pv ("__PACKAGE__", TRUE));
-#endif
         perl_registered_script = perl_current_script;
         if ((weechat_perl_plugin->debug >= 2) || !perl_quiet)
         {
@@ -167,6 +164,11 @@ XS (XS_weechat_api_register)
                                              "version %s (%s)"),
                             PERL_PLUGIN_NAME, name, version, description);
         }
+#ifdef MULTIPLICITY
+        perl_current_script->interpreter = perl_current_interpreter;
+#else
+        perl_current_script->interpreter = SvPV_nolen (eval_pv ("__PACKAGE__", TRUE));
+#endif
     }
     else
     {

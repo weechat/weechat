@@ -143,6 +143,7 @@ weechat_python_api_register (PyObject *self, PyObject *args)
                                              "version %s (%s)"),
                             PYTHON_PLUGIN_NAME, name, version, description);
         }
+        python_current_script->interpreter = (PyThreadState *)python_current_interpreter;
     }
     else
     {

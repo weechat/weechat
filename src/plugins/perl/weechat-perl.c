@@ -46,6 +46,9 @@ struct t_plugin_script *last_perl_script = NULL;
 struct t_plugin_script *perl_current_script = NULL;
 struct t_plugin_script *perl_registered_script = NULL;
 const char *perl_current_script_filename = NULL;
+#ifdef MULTIPLICITY
+PerlInterpreter *perl_current_interpreter = NULL;
+#endif
 int perl_quit_or_upgrade = 0;
 
 /*
@@ -345,10 +348,7 @@ weechat_perl_load (const char *filename)
     struct stat buf;
     char *perl_code;
     int length;
-
-#ifdef MULTIPLICITY
-    PerlInterpreter *perl_current_interpreter;
-#else
+#ifndef MULTIPLICITY
     char pkgname[64];
 #endif
 
@@ -454,9 +454,7 @@ weechat_perl_load (const char *filename)
     }
     perl_current_script = perl_registered_script;
 
-#ifdef MULTIPLICITY
-    perl_current_script->interpreter = (PerlInterpreter *)perl_current_interpreter;
-#else
+#ifndef MULTIPLICITY
     perl_current_script->interpreter = strdup (pkgname);
 #endif
 

@@ -156,6 +156,7 @@ weechat_lua_api_register (lua_State *L)
                                              "version %s (%s)"),
                             LUA_PLUGIN_NAME, name, version, description);
         }
+        lua_current_script->interpreter = (lua_State *) lua_current_interpreter;
     }
     else
     {

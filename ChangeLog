@@ -115,6 +115,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * python: fix load of scripts with python >= 3.3
 * relay: fix memory leak on unload of relay plugin
 * ruby: fix ruby init with ruby >= 2.0 (bug #41115)
+* scripts: fix script interpreter used after register during load of script
+  in python/perl/ruby/lua/guile plugins (bug #41345)
 * xfer: add support of IPv6 for DCC chat/file (patch #7992)
 * xfer: use same infolist for hook and signals (patch #7974)
 * xfer: add option xfer.file.auto_check_crc32 (patch #7963)

@@ -33,6 +33,9 @@ extern struct t_plugin_script *last_perl_script;
 extern struct t_plugin_script *perl_current_script;
 extern struct t_plugin_script *perl_registered_script;
 extern const char *perl_current_script_filename;
+#ifdef MULTIPLICITY
+extern PerlInterpreter *perl_current_interpreter;
+#endif
 
 extern HV *weechat_perl_hashtable_to_hash (struct t_hashtable *hashtable);
 extern struct t_hashtable *weechat_perl_hash_to_hashtable (SV *hash, int size,

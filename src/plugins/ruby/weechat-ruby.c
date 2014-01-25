@@ -71,6 +71,7 @@ struct t_plugin_script *last_ruby_script = NULL;
 struct t_plugin_script *ruby_current_script = NULL;
 struct t_plugin_script *ruby_registered_script = NULL;
 const char *ruby_current_script_filename = NULL;
+VALUE ruby_current_module = NULL;
 
 /*
  * string used to execute action "install":
@@ -502,7 +503,7 @@ int
 weechat_ruby_load (const char *filename)
 {
     char modname[64];
-    VALUE curModule, ruby_retcode, err, argv[1];
+    VALUE ruby_retcode, err, argv[1];
     int ruby_error;
     struct stat buf;
 
@@ -527,12 +528,13 @@ weechat_ruby_load (const char *filename)
     snprintf (modname, sizeof(modname), "%s%d", MOD_NAME_PREFIX, ruby_num);
     ruby_num++;
 
-    curModule = rb_define_module(modname);
+    ruby_current_module = rb_define_module (modname);
 
     ruby_current_script_filename = filename;
 
     argv[0] = rb_str_new2 (filename);
-    ruby_retcode = rb_protect_funcall (curModule, rb_intern("load_eval_file"),
+    ruby_retcode = rb_protect_funcall (ruby_current_module,
+                                       rb_intern ("load_eval_file"),
                                        &ruby_error, 1, argv);
 
     if (ruby_retcode == Qnil)
@@ -572,13 +574,14 @@ weechat_ruby_load (const char *filename)
 
         if (NUM2INT(ruby_retcode) == 1 || NUM2INT(ruby_retcode) == 2)
         {
-            weechat_ruby_print_exception(rb_iv_get(curModule, "@load_eval_file_error"));
+            weechat_ruby_print_exception(rb_iv_get (ruby_current_module,
+                                                    "@load_eval_file_error"));
         }
 
         return 0;
     }
 
-    (void) rb_protect_funcall (curModule, rb_intern("weechat_init"),
+    (void) rb_protect_funcall (ruby_current_module, rb_intern ("weechat_init"),
                                &ruby_error, 0, NULL);
 
     if (ruby_error)
@@ -611,7 +614,6 @@ weechat_ruby_load (const char *filename)
     }
     ruby_current_script = ruby_registered_script;
 
-    ruby_current_script->interpreter = (VALUE *) curModule;
     rb_gc_register_address (ruby_current_script->interpreter);
 
     /*

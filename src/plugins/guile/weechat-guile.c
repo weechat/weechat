@@ -425,7 +425,6 @@ weechat_guile_load (const char *filename)
     weechat_guile_catch (scm_gc_protect_object, (void *)module);
 
     guile_current_script = guile_registered_script;
-    guile_current_script->interpreter = (void *)module;
 
     /*
      * set input/close callbacks for buffers created by this script

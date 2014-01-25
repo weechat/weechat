@@ -445,8 +445,6 @@ weechat_lua_load (const char *filename)
     }
     lua_current_script = lua_registered_script;
 
-    lua_current_script->interpreter = (lua_State *) lua_current_interpreter;
-
     /*
      * set input/close callbacks for buffers created by this script
      * (to restore callbacks after upgrade)

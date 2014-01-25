@@ -42,6 +42,7 @@ extern struct t_plugin_script *last_python_script;
 extern struct t_plugin_script *python_current_script;
 extern struct t_plugin_script *python_registered_script;
 extern const char *python_current_script_filename;
+extern PyThreadState *python_current_interpreter;
 
 extern PyObject *weechat_python_hashtable_to_dict (struct t_hashtable *hashtable);
 extern struct t_hashtable *weechat_python_dict_to_hashtable (PyObject *dict,
