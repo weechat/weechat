@@ -363,58 +363,58 @@ value: Anzahl der gewünschten Einträgen im Befehlsverlauf anzeigen
 ----
 /input  <action> [<arguments>]
 
-list of actions:
-  return: simulate key "enter"
-  complete_next: complete word with next completion
-  complete_previous: complete word with previous completion
-  search_text: search text in buffer
-  search_switch_case: switch exact case for search
-  search_switch_regex: switch search type: string/regular expression
-  search_switch_where: switch search in messages/prefixes
-  search_previous: search previous line
-  search_next: search next line
-  search_stop: stop search
-  delete_previous_char: delete previous char
-  delete_next_char: delete next char
-  delete_previous_word: delete previous word
-  delete_next_word: delete next word
-  delete_beginning_of_line: delete from beginning of line until cursor
-  delete_end_of_line: delete from cursor until end of line
-  delete_line: delete entire line
-  clipboard_paste: paste from clipboard
-  transpose_chars: transpose two chars
-  undo: undo last command line action
-  redo: redo last command line action
-  move_beginning_of_line: move cursor to beginning of line
-  move_end_of_line: move cursor to end of line
-  move_previous_char: move cursor to previous char
-  move_next_char: move cursor to next char
-  move_previous_word: move cursor to previous word
-  move_next_word: move cursor to next word
-  history_previous: recall previous command in current buffer history
-  history_next: recall next command in current buffer history
-  history_global_previous: recall previous command in global history
-  history_global_next: recall next command in global history
-  jump_smart: jump to next buffer with activity
-  jump_last_buffer: jump to last buffer
-  jump_last_buffer_displayed: jump to last buffer displayed (before last jump to a buffer)
-  jump_previously_visited_buffer: jump to previously visited buffer
-  jump_next_visited_buffer: jump to next visited buffer
-  hotlist_clear: clear hotlist
-  grab_key: grab a key (optional argument: delay for end of grab, default is 500 milliseconds)
-  grab_key_command: grab a key with its associated command (optional argument: delay for end of grab, default is 500 milliseconds)
-  grab_mouse: grab mouse event code
-  grab_mouse_area: grab mouse event code with area
-  set_unread: set unread marker for all buffers
-  set_unread_current_buffer: set unread marker for current buffer
-  switch_active_buffer: switch to next merged buffer
-  switch_active_buffer_previous: switch to previous merged buffer
-  zoom_merged_buffer: zoom on merged buffer
-  insert: insert text in command line (escaped chars are allowed, see /help print)
-  paste_start: start paste (bracketed paste mode)
-  paste_stop: stop paste (bracketed paste mode)
+Auflistung der möglichen Aktionen:
+  return: simuliert die "enter" Taste
+  complete_next: vervollständigt Wort mit nächster Komplettierung
+  complete_previous: vervollständigt Word mit vorheriger Komplettierung
+  search_text: sucht nach Text im Buffer
+  search_switch_case: schaltet Groß-/Kleinschreibung ein und aus
+  search_switch_regex: Wechsel des Suchmodus: einfache Textsuche/reguläre Ausdrücke
+  search_switch_where: wechselt Suche in Nachricht/Präfix
+  search_previous: sucht vorheriger Zeile
+  search_next: sucht nächste Zeile
+  search_stop: suche stoppen
+  delete_previous_char: entfernt vorheriges Zeichen
+  delete_next_char: entfernt nächstes Zeichen
+  delete_previous_word: entfernt vorheriges Wort
+  delete_next_word: entfernt nächstes Wort
+  delete_beginning_of_line: entfernt alle Zeichen ab Zeilenanfang bis zum Cursor
+  delete_end_of_line: entfernt alle Zeichen ab Cursor bis zum Ende der Zeile
+  delete_line: löscht die komplette Eingabezeile
+  clipboard_paste: fügt Zeichenkette aus der Zwischenablage ein
+  transpose_chars: Zeichen austauschen
+  undo: letzten Befehl in der Eingabezeile rückgängig machen
+  redo: letzten Befehl in der Eingabezeile wiederherstellen
+  move_beginning_of_line: springt an den Anfang der Eingabezeile
+  move_end_of_line: springt ans Ende der Eingabezeile
+  move_previous_char: setzt den Cursor eine Position nach links
+  move_next_char: setzt den Cursor eine Position nach rechts
+  move_previous_word: springt zum Anfang des vorherigen Wortes, in der Eingabezeile
+  move_next_word: springt zum Anfang des nächsten Wortes, in der Eingabezeile
+  history_previous: ruft vorherigen Befehl oder Nachricht aus dem Befehlsspeicher auf (im Such-Modus: rückwärts suchen)
+  history_next: ruft nächsten Befehl oder Nachricht aus dem Befehlsspeicher auf (im Such-Modus: vorwärts suchen)
+  history_global_previous: ruft vorherigen Befehl/Nachricht aus dem globalen Befehlsspeicher auf (für alle Buffer)
+  history_global_next: ruft nächsten Befehl/Nachricht aus dem globalen Befehlsspeicher auf (für alle Buffer)
+  jump_smart: wechselt zum nächsten Buffer mit Aktivität (nach Priorität: highlight, Nachricht, …)
+  jump_last_buffer: springt zum letzten Buffer, in der Bufferliste
+  jump_last_buffer_displayed: wechselt zum jeweils zuletzt angezeigten Buffer
+  jump_previously_visited_buffer: springt zum letzten besuchten Buffer
+  jump_next_visited_buffer: springt zum nächsten besuchten Buffer
+  hotlist_clear: löscht Hotliste (Aktivitätsanzeige für die Buffer)
+  grab_key: fängt eine Taste (optionales Argument: Verzögerung um eine Taste einzufangen. Standard sind 500 Millisekunden)
+  grab_key_command: zeigt den Tastencode (inklusive des eingebundenen Befehls) einer Tastenkombination an und fügt ihn in die Befehlszeile ein (optionales Argument: Verzögerung um eine Taste einzufangen. Standard sind 500 Millisekunden)
+  grab_mouse: fängt den Code einer Maus Aktivität
+  grab_mouse_area: fängt den Code einer Maus Aktivität mit entsprechendem Bereich
+  set_unread: setzt für alle Buffer die Markierung der ungelesen Nachrichten
+  set_unread_current_buffer: setzt nur für den aktuellen Buffer eine Markierung der ungelesen Nachrichten
+  switch_active_buffer: springt zum nächsten zusammengefügten Buffer
+  switch_active_buffer_previous: springt zum vorherigen zusammengefügten Buffer
+  zoom_merged_buffer: zoomt in zusammengefügte Buffer
+  insert: fügt einen Text in die Eingabezeile ein (Escapesequenzen sind möglich, siehe /help print)
+  paste_start: Einfügen wird gestartet (bracketed paste mode)
+  paste_stop: Einfügen wird beendet (bracketed paste mode)
 
-This command is used by key bindings or plugins.
+Dieser Befehl wird sinnvollerweise mittels Tastenbelegungen oder Erweiterungen genutzt.
 ----
 
 [[command_weechat_key]]
@@ -568,37 +568,37 @@ Ohne Angabe eines Arguments werden alle installierten Erweiterungen angezeigt.
 /print  [-buffer <number>|<name>] [-core] [-escape] [-date <date>] [-tags <tags>] [-action|-error|-join|-network|-quit] <text>
         -stdout|-stderr <text>
 
--buffer: the buffer where text is displayed (default: current buffer)
-  -core: alias of "-buffer core.weechat"
--escape: interpret escaped chars (for example \a, \07, \x07)
-  -date: message date, format can be:
-           -n: 'n' seconds before now
-           +n: 'n' seconds in the future
-            n: 'n' seconds since the Epoch (see man time)
-           date/time (ISO 8601): yyyy-mm-ddThh:mm:ss, example: 2014-01-19T04:32:55
-           time: hh:mm:ss (example: 04:32:55)
-  -tags: comma-separated list of tags (see /help filter for a list of tags most commonly used)
-   text: text to display (prefix and message must be separated by \t)
--stdout: display text on stdout (escaped chars are interpreted)
--stderr: display text on stderr (escaped chars are interpreted)
+-buffer: Buffer in welchem der Text ausgegeben werden soll (standardmäßig: aktueller Buffer)
+  -core: Alias für "-buffer core.weechat"
+-escape: Escapesequenzen werden umgewandelt (zum Beispiel \a, \07, \x07)
+  -date: Datum der Nachricht, mögliche Formatierung:
+           -n: 'n' vor dem jetzigen Zeipunkt, in Sekunden
+           +n: 'n' in Zukunft, in Sekunden
+            n: 'n' Sekunden seit der Epoche (siehe man time)
+           date/time (ISO 8601): yyyy-mm-ddThh:mm:ss, Beispiel: 2014-01-19T04:32:55
+           time: hh:mm:ss (Beispiel: 04:32:55)
+  -tags: durch Kommata getrennte Liste von Tags (siehe /help filter für eine Liste von Tags die häufig genutzt werden)
+   text: Text der ausgegeben werden soll (Präfix und Nachricht muss durch \t getrennt werden)
+-stdout: Text wird an stdout geschickt (Escapesequenzen werden umgewandelt)
+-stderr:  Text wird an stderr geschickt (Escapesequenzen werden umgewandelt)
 
-The options -action ... -quit use the prefix defined in options "weechat.look.prefix_*".
+Die Option -action ... -quit nutzt den Präfix der in der Option "weechat.look.prefix_*" definiert ist.
 
-Following escaped chars are supported:
+Folgende Escapesequenzen werden unterstützt:
   \" \\ \a \b \e \f \n \r \t \v \0ooo \xhh \uhhhh \Uhhhhhhhh
 
-Examples:
-  display a reminder on core buffer with a highlight:
-    /print -core -tags notify_highlight Reminder: buy milk
-  display an error on core buffer:
-    /print -core -error Some error here
-  display message on core buffer with prefix "abc":
-    /print -core abc\tThe message
-  display a message on channel #weechat:
+Beispiele:
+  zeigt eine Erinnerung, mit Highlight, im Core-Buffer dar:
+    /print -core -tags notify_highlight Reminder: Milch kaufen
+  zeigt eine Fehlernachricht im Core-Buffer an:
+    /print -core -error irgend ein Fehler
+  zeigt eine Nachricht im Core-Buffer mit dem Präfix "abc" an:
+    /print -core abc\tmeine Nachricht
+  es wird eine Nachricht im Channel #weechat ausgegeben:
     /print -buffer irc.freenode.#weechat Message on #weechat
-  display a snowman (U+2603):
+  gibt einen Schneemann aus (U+2603):
     /print -escape \u2603
-  send alert (BEL):
+  verschickt Alarm (BEL):
     /print -stderr \a
 ----
 
