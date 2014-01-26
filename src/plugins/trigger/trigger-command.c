@@ -21,6 +21,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "../weechat-plugin.h"
 #include "trigger.h"
@@ -38,6 +39,7 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
 {
     struct t_trigger *ptr_trigger;
     const char *option;
+    char *name;
     int i, type, count, index_option, enabled;
 
     /* make C compiler happy */
@@ -176,7 +178,7 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
         }
         if (weechat_strcasecmp (argv[3], "name") == 0)
         {
-            if (!trigger_rename (ptr_trigger, argv_eol[4]))
+            if (!trigger_rename (ptr_trigger, argv[4]))
                 return WEECHAT_RC_OK;
         }
         else
@@ -194,6 +196,39 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
         }
         weechat_printf_tags (NULL, "no_trigger",
                              _("Trigger \"%s\" updated"), ptr_trigger->name);
+        return WEECHAT_RC_OK;
+    }
+
+    /* rename a trigger */
+    if (weechat_strcasecmp (argv[1], "rename") == 0)
+    {
+        if (argc < 4)
+        {
+            weechat_printf_tags (NULL, "no_trigger",
+                                 _("%sError: missing arguments for \"%s\" "
+                                   "command"),
+                                 weechat_prefix ("error"), "trigger");
+            return WEECHAT_RC_OK;
+        }
+        ptr_trigger = trigger_search (argv[2]);
+        if (!ptr_trigger)
+        {
+            weechat_printf_tags (NULL, "no_trigger",
+                                 _("%sTrigger \"%s\" not found"),
+                                 weechat_prefix ("error"), argv[2]);
+            return WEECHAT_RC_OK;
+        }
+        name = strdup (ptr_trigger->name);
+        if (name)
+        {
+            if (trigger_rename (ptr_trigger, argv[3]))
+            {
+                weechat_printf_tags (NULL, "no_trigger",
+                                     _("Trigger \"%s\" renamed to \"%s\""),
+                                     name, ptr_trigger->name);
+            }
+            free (name);
+        }
         return WEECHAT_RC_OK;
     }
 
@@ -301,6 +336,7 @@ trigger_command_init ()
         N_("list"
            " || add <name> <hook> [<arguments>]"
            " || set <name> <option> <value>"
+           " || rename <name> <new_name>"
            " || del <name>|-all [<name>...]"
            " || enable|disable|toggle <name>"
            " || monitor"),
@@ -319,6 +355,7 @@ trigger_command_init ()
            "           (for help on option, you can do /help "
            "trigger.trigger.<name>.<option>)\n"
            "    value: new value for the option\n"
+           "   rename: rename a trigger\n"
            "      del: delete a trigger\n"
            "     -all: delete all triggers\n"
            "   enable: enable a trigger\n"
@@ -353,6 +390,7 @@ trigger_command_init ()
         "list"
         " || add %(trigger_names) %(trigger_hooks)"
         " || set %(trigger_names) %(trigger_options)|name %(trigger_option_value)"
+        " || rename %(trigger_names) %(trigger_names)"
         " || del %(trigger_names)|-all %(trigger_names)|%*"
         " || enable|disable|toggle %(trigger_names)"
         " || monitor",

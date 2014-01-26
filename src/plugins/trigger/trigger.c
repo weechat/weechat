@@ -673,9 +673,9 @@ trigger_rename (struct t_trigger *trigger, const char *name)
 
     if (name[0] == '-')
     {
-        weechat_printf (NULL,
-                        _("%s%s: name can not start with \"-\""),
-                        weechat_prefix ("error"), TRIGGER_PLUGIN_NAME);
+        weechat_printf_tags (NULL, "no_trigger",
+                             _("%s%s: name can not start with \"-\""),
+                             weechat_prefix ("error"), TRIGGER_PLUGIN_NAME);
         return 0;
     }
 
