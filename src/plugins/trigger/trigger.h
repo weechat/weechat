@@ -122,7 +122,7 @@ extern struct t_trigger *trigger_new (const char *name,
                                       const char *replace,
                                       const char *command,
                                       const char *return_code);
-extern void trigger_rename (struct t_trigger *trigger, const char *name);
+extern int trigger_rename (struct t_trigger *trigger, const char *name);
 extern void trigger_free (struct t_trigger *trigger);
 extern void trigger_free_all ();
 

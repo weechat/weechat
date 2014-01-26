@@ -114,6 +114,13 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
                                  weechat_prefix ("error"), "trigger");
             return WEECHAT_RC_OK;
         }
+        if (argv[2][0] == '-')
+        {
+            weechat_printf (NULL,
+                            _("%s%s: name can not start with \"-\""),
+                            weechat_prefix ("error"), TRIGGER_PLUGIN_NAME);
+            return WEECHAT_RC_OK;
+        }
         type = trigger_search_hook_type (argv[3]);
         if (type < 0)
         {
@@ -169,7 +176,8 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
         }
         if (weechat_strcasecmp (argv[3], "name") == 0)
         {
-            trigger_rename (ptr_trigger, argv_eol[4]);
+            if (!trigger_rename (ptr_trigger, argv_eol[4]))
+                return WEECHAT_RC_OK;
         }
         else
         {

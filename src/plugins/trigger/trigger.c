@@ -656,21 +656,33 @@ trigger_new (const char *name, const char *enabled, const char *hook,
 
 /*
  * Renames a trigger.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error (trigger not renamed)
  */
 
-void
+int
 trigger_rename (struct t_trigger *trigger, const char *name)
 {
     int length, i;
     char *option_name;
 
     if (!name || !name[0])
-        return;
+        return 0;
+
+    if (name[0] == '-')
+    {
+        weechat_printf (NULL,
+                        _("%s%s: name can not start with \"-\""),
+                        weechat_prefix ("error"), TRIGGER_PLUGIN_NAME);
+        return 0;
+    }
 
     length = strlen (name) + 64;
     option_name = malloc (length);
     if (!option_name)
-        return;
+        return 0;
 
     for (i = 0; i < TRIGGER_NUM_OPTIONS; i++)
     {
@@ -689,6 +701,8 @@ trigger_rename (struct t_trigger *trigger, const char *name)
     trigger->name = strdup (name);
 
     free (option_name);
+
+    return 1;
 }
 
 /*
