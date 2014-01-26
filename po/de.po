@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-25 13:36+0100\n"
-"PO-Revision-Date: 2014-01-23 19:35+0100\n"
+"POT-Creation-Date: 2014-01-26 10:04+0100\n"
+"PO-Revision-Date: 2014-01-25 19:44+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
 "Language: de_DE\n"
@@ -1664,7 +1664,6 @@ msgstr "Funktionen für die Befehlszeile"
 msgid "<action> [<arguments>]"
 msgstr "<action> [<arguments>]"
 
-#, fuzzy
 msgid ""
 "list of actions:\n"
 "  return: simulate key \"enter\"\n"
@@ -1723,7 +1722,7 @@ msgid ""
 "\n"
 "This command is used by key bindings or plugins."
 msgstr ""
-"Auflistung der möglichen Funktionen:\n"
+"Auflistung der möglichen Aktionen:\n"
 "  return: simuliert die \"enter\" Taste\n"
 "  complete_next: vervollständigt Wort mit nächster Komplettierung\n"
 "  complete_previous: vervollständigt Word mit vorheriger Komplettierung\n"
@@ -1789,7 +1788,8 @@ msgstr ""
 "  switch_active_buffer_previous: springt zum vorherigen zusammengefügten "
 "Buffer\n"
 "  zoom_merged_buffer: zoomt in zusammengefügte Buffer\n"
-"  insert: fügt einen Text in die Eingabezeile ein\n"
+"  insert: fügt einen Text in die Eingabezeile ein (Escapesequenzen sind "
+"möglich, siehe /help print)\n"
 "  paste_start: Einfügen wird gestartet (bracketed paste mode)\n"
 "  paste_stop: Einfügen wird beendet (bracketed paste mode)\n"
 "\n"
@@ -2106,7 +2106,6 @@ msgstr ""
 "[-buffer <number>|<name>] [-core] [-escape] [-date <date>] [-tags <tags>] [-"
 "action|-error|-join|-network|-quit] <text> || -stdout|-stderr <text>"
 
-#, fuzzy
 msgid ""
 "-buffer: the buffer where text is displayed (default: current buffer)\n"
 "  -core: alias of \"-buffer core.weechat\"\n"
@@ -2160,13 +2159,16 @@ msgstr ""
 "Liste von Tags die häufig genutzt werden)\n"
 "   text: Text der ausgegeben werden soll (Präfix und Nachricht muss durch "
 "\\t getrennt werden)\n"
-"-stdout: Text wird an stdout geschickt (und nicht im Buffer dargestellt)\n"
-"-stderr:  Text wird an stderr geschickt (und nicht im Buffer dargestellt)\n"
+"-stdout: Text wird an stdout geschickt (Escapesequenzen werden umgewandelt)\n"
+"-stderr:  Text wird an stderr geschickt (Escapesequenzen werden "
+"umgewandelt)\n"
 "\n"
 "Die Option -action ... -quit nutzt den Präfix der in der Option \"weechat."
 "look.prefix_*\" definiert ist.\n"
 "\n"
-"Die Optionen -stdout und -stderr wandeln Escapesequenzen automatisch um.\n"
+"Folgende Escapesequenzen werden unterstützt:\n"
+"  \\\" \\\\ \\a \\b \\e \\f \\n \\r \\t \\v \\0ooo \\xhh \\uhhhh "
+"\\Uhhhhhhhh\n"
 "\n"
 "Beispiele:\n"
 "  zeigt eine Erinnerung, mit Highlight, im Core-Buffer dar:\n"
@@ -2177,6 +2179,8 @@ msgstr ""
 "    /print -core abc\\tmeine Nachricht\n"
 "  es wird eine Nachricht im Channel #weechat ausgegeben:\n"
 "    /print -buffer irc.freenode.#weechat Message on #weechat\n"
+"  gibt einen Schneemann aus (U+2603):\n"
+"    /print -escape \\u2603\n"
 "  verschickt Alarm (BEL):\n"
 "    /print -stderr \\a"
 
@@ -5418,11 +5422,11 @@ msgstr "%s%s: Benachrichtigung existiert schon"
 
 #, c-format
 msgid "%sMonitor list is full (%d)"
-msgstr ""
+msgstr "%sMonitor-Liste ist voll (%d)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: notification added for %s%s%s"
-msgstr "%s: Benachrichtigung für %s%s hinzugefügt"
+msgstr "%s: Benachrichtigung für %s%s%s hinzugefügt"
 
 #, c-format
 msgid "%s%s: error adding notification"
@@ -5436,9 +5440,9 @@ msgstr "%s: alle Benachrichtigungen wurden gelöscht"
 msgid "%s: no notification in list"
 msgstr "%s keine Benachrichtigung in Liste vorhanden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: notification deleted for %s%s%s"
-msgstr "%s: Benachrichtigung für %s%s hinzugefügt"
+msgstr "%s: Benachrichtigung für %s%s%s gelöscht"
 
 #, c-format
 msgid "%s%s: notification not found"
@@ -7455,7 +7459,6 @@ msgstr ""
 "durch Kommata getrennte Liste von Schlagwörtern für Willkommen-Nachrichten "
 "die in einen Channel umgeleitet werden. Zum Beispiel: \"notify_private\""
 
-#, fuzzy
 msgid ""
 "comma separated list of tags used in messages displayed by notify when a "
 "nick joins or quits server (result of command ison or monitor), for example: "
@@ -7463,8 +7466,8 @@ msgid ""
 msgstr ""
 "durch Kommata getrennte Liste von Schlagwörtern die in notify-Nachrichten "
 "genutzt werden sollen, falls ein Nick einen Server betritt oder verlässt "
-"(Rückgabe durch Befehl ison), zum Beispiel: \"notify_message\", "
-"\"notify_private\" oder \"notify_highlight\""
+"(Rückgabewert des Befehls ison oder monitor), zum Beispiel: \"notify_message"
+"\", \"notify_private\" oder \"notify_highlight\""
 
 msgid ""
 "comma separated list of tags used in messages displayed by notify when a "
@@ -7961,21 +7964,21 @@ msgstr "Benachrichtigungen für alle Server:"
 msgid "Notify list is empty on all servers"
 msgstr "es liegt für keinen Server eine Benachrichtigung vor"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%snotify: %s%s%s%s%s%s%s%s%s is connected"
-msgstr "%snotify: %s%s%s ist angemeldet"
+msgstr "%snotify: %s%s%s%s%s%s%s%s%s ist angemeldet"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%snotify: %s%s%s%s%s%s%s%s%s is offline"
-msgstr "%snotify: %s%s%s ist offline"
+msgstr "%snotify: %s%s%s%s%s%s%s%s%s ist offline"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%snotify: %s%s%s%s%s%s%s%s%s has joined"
-msgstr "%snotify: %s%s%s hat sich angemeldet"
+msgstr "%snotify: %s%s%s%s%s%s%s%s%s hat sich angemeldet"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%snotify: %s%s%s%s%s%s%s%s%s has quit"
-msgstr "%s%s%s%s%s%s%s%s%s%s hat den IRC verlassen"
+msgstr "%snotify: %s%s%s%s%s%s%s%s%s hat den IRC verlassen"
 
 #, c-format
 msgid "%snotify: %s%s%s is now away: \"%s\""
@@ -11243,30 +11246,3 @@ msgstr "Type"
 
 msgid "Constants"
 msgstr "Konstanten"
-
-#~ msgid "%s: notification deleted"
-#~ msgstr "%s: Benachrichtigung gelöscht"
-
-#~ msgid "%snotify: %s%s%s has quit"
-#~ msgstr "%snotify: %s%s%s hat sich abgemeldet"
-
-#~ msgid "No layout saved"
-#~ msgstr "Kein Layout gespeichert"
-
-#~ msgid "%s%s: could not find address for \"%s\", falling back to local IP"
-#~ msgstr ""
-#~ "%s%s: Adresse für \"%s\" wurde nicht gefunden. Es wird auf die lokale IP "
-#~ "zurückgegriffen"
-
-#~ msgid "%s%s: connected to %s (%ld.%ld.%ld.%ld)"
-#~ msgstr "%s%s: verbunden mit %s (%ld.%ld.%ld.%ld)"
-
-#~ msgid ""
-#~ "%s: sending file to %s (%ld.%ld.%ld.%ld, %s.%s), name: %s (local "
-#~ "filename: %s), %llu bytes (protocol: %s)"
-#~ msgstr ""
-#~ "%s: sende Datei an %s (%ld.%ld.%ld.%ld, %s.%s), Name: %s (lokaler "
-#~ "Dateiname: %s), %llu Bytes (Protokoll: %s)"
-
-#~ msgid "Connected to %s (%ld.%ld.%ld.%ld) via xfer chat"
-#~ msgstr "Verbindung zu %s (%ld.%ld.%ld.%ld) via Transfer-Chat aufgebaut"
