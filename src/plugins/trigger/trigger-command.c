@@ -30,6 +30,32 @@
 
 
 /*
+ * Set "enabled" value in a trigger.
+ *
+ * Argument "enable" can be:
+ *   -1: toggle trigger
+ *    0: disable trigger
+ *    1: enable trigger
+ */
+
+void
+trigger_command_set_enabled (struct t_trigger *trigger, int enable)
+{
+    if (enable < 0)
+    {
+        enable = weechat_config_boolean (trigger->options[TRIGGER_OPTION_ENABLED]) ?
+            0 : 1;
+    }
+    weechat_config_option_set (trigger->options[TRIGGER_OPTION_ENABLED],
+                               (enable) ? "on" : "off", 1);
+    weechat_printf_tags (NULL, "no_trigger",
+                         (enable) ?
+                         _("Trigger \"%s\" enabled") :
+                         _("Trigger \"%s\" disabled"),
+                         trigger->name);
+}
+
+/*
  * Callback for command "/trigger": manage triggers.
  */
 
@@ -40,7 +66,7 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
     struct t_trigger *ptr_trigger;
     const char *option;
     char *name;
-    int i, type, count, index_option, enabled;
+    int i, type, count, index_option, enable;
 
     /* make C compiler happy */
     (void) data;
@@ -226,7 +252,51 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
         return WEECHAT_RC_OK;
     }
 
-    /* delete a trigger */
+    /* enable/disable/toggle trigger(s) */
+    if ((weechat_strcasecmp (argv[1], "enable") == 0)
+        || (weechat_strcasecmp (argv[1], "disable") == 0)
+        || (weechat_strcasecmp (argv[1], "toggle") == 0))
+    {
+        if (argc < 3)
+        {
+            weechat_printf_tags (NULL, "no_trigger",
+                                 _("%sError: missing arguments for \"%s\" "
+                                   "command"),
+                                 weechat_prefix ("error"), "trigger");
+            return WEECHAT_RC_OK;
+        }
+        enable = -1;
+        if (weechat_strcasecmp (argv[1], "enable") == 0)
+            enable = 1;
+        else if (weechat_strcasecmp (argv[1], "disable") == 0)
+            enable = 0;
+        if (weechat_strcasecmp (argv[2], "-all") == 0)
+        {
+            for (ptr_trigger = triggers; ptr_trigger;
+                 ptr_trigger = ptr_trigger->next_trigger)
+            {
+                trigger_command_set_enabled (ptr_trigger, enable);
+            }
+        }
+        else
+        {
+            for (i = 2; i < argc; i++)
+            {
+                ptr_trigger = trigger_search (argv[i]);
+                if (ptr_trigger)
+                    trigger_command_set_enabled (ptr_trigger, enable);
+                else
+                {
+                    weechat_printf_tags (NULL, "no_trigger",
+                                         _("%sTrigger \"%s\" not found"),
+                                         weechat_prefix ("error"), argv[i]);
+                }
+            }
+        }
+        return WEECHAT_RC_OK;
+    }
+
+    /* delete trigger(s) */
     if (weechat_strcasecmp (argv[1], "del") == 0)
     {
         if (argc < 3)
@@ -267,46 +337,6 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
         return WEECHAT_RC_OK;
     }
 
-    /* enable/disable/toggle a trigger */
-    if ((weechat_strcasecmp (argv[1], "enable") == 0)
-        || (weechat_strcasecmp (argv[1], "disable") == 0)
-        || (weechat_strcasecmp (argv[1], "toggle") == 0))
-    {
-        if (argc < 3)
-        {
-            weechat_printf_tags (NULL, "no_trigger",
-                                 _("%sError: missing arguments for \"%s\" "
-                                   "command"),
-                                 weechat_prefix ("error"), "trigger");
-            return WEECHAT_RC_OK;
-        }
-        ptr_trigger = trigger_search (argv[2]);
-        if (!ptr_trigger)
-        {
-            weechat_printf_tags (NULL, "no_trigger",
-                                 _("%sTrigger \"%s\" not found"),
-                                 weechat_prefix ("error"), argv[2]);
-            return WEECHAT_RC_OK;
-        }
-        if (weechat_strcasecmp (argv[1], "enable") == 0)
-            enabled = 1;
-        else if (weechat_strcasecmp (argv[1], "disable") == 0)
-            enabled = 0;
-        else
-        {
-            enabled = weechat_config_boolean (ptr_trigger->options[TRIGGER_OPTION_ENABLED]) ?
-                0 : 1;
-        }
-        weechat_config_option_set (ptr_trigger->options[TRIGGER_OPTION_ENABLED],
-                                   (enabled) ? "on" : "off", 1);
-        weechat_printf_tags (NULL, "no_trigger",
-                             (enabled) ?
-                             _("Trigger \"%s\" enabled") :
-                             _("Trigger \"%s\" disabled"),
-                             ptr_trigger->name);
-        return WEECHAT_RC_OK;
-    }
-
     /* open the trigger monitor buffer */
     if (weechat_strcasecmp (argv[1], "monitor") == 0)
     {
@@ -331,8 +361,8 @@ trigger_command_init ()
            " || add <name> <hook> [<arguments>]"
            " || set <name> <option> <value>"
            " || rename <name> <new_name>"
+           " || enable|disable|toggle <name>|-all [<name>...]"
            " || del <name>|-all [<name>...]"
-           " || enable|disable|toggle <name>"
            " || monitor"),
         N_("      add: add a trigger\n"
            "     name: name of trigger\n"
@@ -350,11 +380,11 @@ trigger_command_init ()
            "trigger.trigger.<name>.<option>)\n"
            "    value: new value for the option\n"
            "   rename: rename a trigger\n"
+           "   enable: enable trigger(s)\n"
+           "  disable: disable trigger(s)\n"
+           "   toggle: toggle trigger(s)\n"
            "      del: delete a trigger\n"
-           "     -all: delete all triggers\n"
-           "   enable: enable a trigger\n"
-           "  disable: disable a trigger\n"
-           "   toggle: toggle a trigger\n"
+           "     -all: do action on all triggers\n"
            "  monitor: open the trigger monitor buffer\n"
            "\n"
            "When a trigger callback is called, following actions are performed, "
@@ -385,8 +415,7 @@ trigger_command_init ()
         " || add %(trigger_names) %(trigger_hooks)"
         " || set %(trigger_names) %(trigger_options)|name %(trigger_option_value)"
         " || rename %(trigger_names) %(trigger_names)"
-        " || del %(trigger_names)|-all %(trigger_names)|%*"
-        " || enable|disable|toggle %(trigger_names)"
+        " || enable|disable|toggle|del %(trigger_names)|-all %(trigger_names)|%*"
         " || monitor",
         &trigger_command_trigger, NULL);
 }
