@@ -73,22 +73,16 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
                     weechat_printf_tags (NULL, "no_trigger",
                                          "      conditions: \"%s\"", option);
                 }
-                if (ptr_trigger->regex_count > 0)
+                for (i = 0; i < ptr_trigger->regex_count; i++)
                 {
                     weechat_printf_tags (NULL, "no_trigger",
-                                         "      %d regex:",
-                                         ptr_trigger->regex_count);
-                    for (i = 0; i < ptr_trigger->regex_count; i++)
-                    {
-                        weechat_printf_tags (NULL, "no_trigger",
-                                             "        %d: %s%s %s-->%s %s",
-                                             i + 1,
-                                             weechat_color (weechat_config_string (trigger_config_color_regex)),
-                                             ptr_trigger->regex[i].str_regex,
-                                             weechat_color ("chat_delimiters"),
-                                             weechat_color (weechat_config_string (trigger_config_color_replace)),
-                                             ptr_trigger->regex[i].replace);
-                    }
+                                         "      regex %d: %s%s %s-->%s %s",
+                                         i + 1,
+                                         weechat_color (weechat_config_string (trigger_config_color_regex)),
+                                         ptr_trigger->regex[i].str_regex,
+                                         weechat_color ("chat_delimiters"),
+                                         weechat_color (weechat_config_string (trigger_config_color_replace)),
+                                         ptr_trigger->regex[i].replace);
                 }
                 option = weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_COMMAND]);
                 if (option && option[0])
