@@ -436,6 +436,7 @@ eval_compare (const char *expr1, int comparison, const char *expr2)
             goto end;
         }
         rc = (regexec (&regex, expr1, 0, NULL, 0) == 0) ? 1 : 0;
+        regfree (&regex);
         if (comparison == EVAL_COMPARE_REGEX_NOT_MATCHING)
             rc ^= 1;
         goto end;

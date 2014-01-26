@@ -11,6 +11,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 0.4.3 (under dev)
 
+* core: fix memory leak in regex matching when evaluating expression
 * core: add signals "signal_sighup" and "signal_sigwinch" (terminal resized)
 * core: add command /print, add support of more escaped chars in command
   "/input insert"
