@@ -562,7 +562,7 @@ trigger_callback_print_cb  (void *data, struct t_gui_buffer *buffer,
                                                    message);
         if (message2)
         {
-            weechat_hashtable_set (extra_vars, "tg_message", message);
+            weechat_hashtable_set (extra_vars, "tg_message", message2);
             free (message2);
         }
     }
