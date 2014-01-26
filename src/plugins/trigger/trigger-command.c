@@ -102,13 +102,19 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
                 for (i = 0; i < ptr_trigger->regex_count; i++)
                 {
                     weechat_printf_tags (NULL, "no_trigger",
-                                         "      regex %d: %s%s %s-->%s %s",
+                                         "      regex %d%s%s%s: "
+                                         "%s\"%s%s%s\" --> \"%s%s%s\"",
                                          i + 1,
+                                         (ptr_trigger->regex[i].variable) ? " (" : "",
+                                         (ptr_trigger->regex[i].variable) ? ptr_trigger->regex[i].variable : "",
+                                         (ptr_trigger->regex[i].variable) ? ")" : "",
+                                         weechat_color ("chat_delimiters"),
                                          weechat_color (weechat_config_string (trigger_config_color_regex)),
                                          ptr_trigger->regex[i].str_regex,
                                          weechat_color ("chat_delimiters"),
                                          weechat_color (weechat_config_string (trigger_config_color_replace)),
-                                         ptr_trigger->regex[i].replace);
+                                         ptr_trigger->regex[i].replace,
+                                         weechat_color ("chat_delimiters"));
                 }
                 option = weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_COMMAND]);
                 if (option && option[0])
@@ -408,8 +414,8 @@ trigger_command_init ()
            "  add text attributes in *bold*, _underline_ and /italic/:\n"
            "    /trigger add effects modifier weechat_print\n"
            "    /trigger set effects regex "
-           "==\\*(\\S+)\\*==*${color:bold}\\1${color:-bold}*"
-           "==_(\\S+)_==_${color:underline}\\1${color:-underline}_"
+           "==\\*(\\S+)\\*==*${color:bold}\\1${color:-bold}*== "
+           "==_(\\S+)_==_${color:underline}\\1${color:-underline}_== "
            "==/(\\S+)/==/${color:italic}\\1${color:-italic}/"),
         "list"
         " || add %(trigger_names) %(trigger_hooks)"

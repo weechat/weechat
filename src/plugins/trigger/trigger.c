@@ -50,6 +50,9 @@ char *trigger_option_default[TRIGGER_NUM_OPTIONS] =
 char *trigger_hook_type_string[TRIGGER_NUM_HOOK_TYPES] =
 { "signal", "hsignal", "modifier", "print", "timer" };
 
+char *trigger_hook_regex_default_var[TRIGGER_NUM_HOOK_TYPES] =
+{ "tg_signal_data", "", "tg_string", "tg_message", "" };
+
 char *trigger_return_code_string[TRIGGER_NUM_RETURN_CODES] =
 { "ok", "ok_eat", "error" };
 int trigger_return_code[TRIGGER_NUM_RETURN_CODES] =
@@ -199,6 +202,8 @@ trigger_free_regex (struct t_trigger *trigger)
     {
         for (i = 0; i < trigger->regex_count; i++)
         {
+            if (trigger->regex[i].variable)
+                free (trigger->regex[i].variable);
             if (trigger->regex[i].str_regex)
                 free (trigger->regex[i].str_regex);
             if (trigger->regex[i].regex)
@@ -224,9 +229,11 @@ trigger_free_regex (struct t_trigger *trigger)
 void
 trigger_set_regex (struct t_trigger *trigger)
 {
-    const char *option_regex, *pos, *pos2;
+    const char *option_regex, *ptr_option, *pos, *pos_replace, *pos_replace_end;
+    const char *pos_next_regex;
     char *delimiter;
-    int i, length_delimiter, regex_count;
+    int index, length_delimiter;
+    struct t_trigger_regex *new_regex;
 
     delimiter = NULL;
 
@@ -242,122 +249,133 @@ trigger_set_regex (struct t_trigger *trigger)
     if (strlen (option_regex) < 3)
         goto format_error;
 
-    /* search the delimiter (which can be more than one char) */
-    pos = weechat_utf8_next_char (option_regex);
-    while (pos[0] && weechat_utf8_charcmp (option_regex, pos) == 0)
+    /* parse regular expressions in the option */
+    ptr_option = option_regex;
+    while (ptr_option && ptr_option[0])
     {
-        pos = weechat_utf8_next_char (pos);
-    }
-    if (!pos[0])
-        goto format_error;
-    delimiter = weechat_strndup (option_regex, pos - option_regex);
-    if (!delimiter)
-        goto memory_error;
-    if (strcmp (delimiter, "\\") == 0)
-        goto format_error;
+        if (delimiter)
+        {
+            free (delimiter);
+            delimiter = NULL;
+        }
 
-    length_delimiter = strlen (delimiter);
-
-    /* count the number of regex in the option */
-    regex_count = 0;
-    pos = option_regex;
-    while (pos && pos[0])
-    {
-        /*
-         * if option "regex" ends with a delimiter, just ignore it
-         * and exit the loop
-         */
-        pos += length_delimiter;
+        /* search the delimiter (which can be more than one char) */
+        pos = weechat_utf8_next_char (ptr_option);
+        while (pos[0] && (weechat_utf8_charcmp (ptr_option, pos) == 0))
+        {
+            pos = weechat_utf8_next_char (pos);
+        }
         if (!pos[0])
-            break;
-
-        /* search the start of replacement string */
-        pos = strstr (pos + length_delimiter, delimiter);
-        if (!pos)
+            goto format_error;
+        delimiter = weechat_strndup (ptr_option, pos - ptr_option);
+        if (!delimiter)
+            goto memory_error;
+        if ((strcmp (delimiter, "\\") == 0) || (strcmp (delimiter, "(") == 0))
             goto format_error;
 
-        regex_count++;
+        length_delimiter = strlen (delimiter);
 
-        /* search the start of next regex */
-        pos = strstr (pos + length_delimiter, delimiter);
-    }
+        ptr_option = pos;
+        if (!ptr_option[0])
+            goto format_error;
 
-    /* at least one regex is needed */
-    if (regex_count == 0)
-        goto format_error;
+        /* search the start of replacement string */
+        pos_replace = strstr (ptr_option, delimiter);
+        if (!pos_replace)
+            goto format_error;
 
-    /* allocate with array of regex/replacement */
-    trigger->regex = malloc (regex_count * sizeof (trigger->regex[0]));
-    if (!trigger->regex)
-        goto memory_error;
+        /* search the end of replacement string */
+        pos_replace_end = strstr (pos_replace + length_delimiter, delimiter);
 
-    /* initialize regex */
-    for (i = 0; i < trigger->regex_count; i++)
-    {
-        trigger->regex[i].str_regex = NULL;
-        trigger->regex[i].regex = NULL;
-        trigger->regex[i].replace = NULL;
-        trigger->regex[i].replace_eval = NULL;
-    }
-    trigger->regex_count = regex_count;
-
-    /* allocate regex and replacement */
-    i = 0;
-    pos = option_regex;
-    while (pos && pos[0])
-    {
-        pos += length_delimiter;
-        if (!pos[0])
-            break;
-
-        pos2 = strstr (pos + length_delimiter, delimiter);
-        if (!pos)
-            break;
-
-        trigger->regex[i].str_regex = weechat_strndup (pos, pos2 - pos);
-        if (!trigger->regex[i].str_regex)
+        new_regex = realloc (trigger->regex,
+                             (trigger->regex_count + 1) * sizeof (trigger->regex[0]));
+        if (!new_regex)
             goto memory_error;
-        trigger->regex[i].regex = malloc (sizeof (*trigger->regex[i].regex));
-        if (!trigger->regex[i].regex)
+
+        trigger->regex = new_regex;
+        trigger->regex_count++;
+        index = trigger->regex_count - 1;
+
+        /* initialize new regex */
+        trigger->regex[index].variable = NULL;
+        trigger->regex[index].str_regex = NULL;
+        trigger->regex[index].regex = NULL;
+        trigger->regex[index].replace = NULL;
+        trigger->regex[index].replace_eval = NULL;
+
+        /* set string with regex */
+        trigger->regex[index].str_regex = weechat_strndup (ptr_option,
+                                                           pos_replace - ptr_option);
+        if (!trigger->regex[index].str_regex)
             goto memory_error;
-        if (weechat_string_regcomp (trigger->regex[i].regex,
-                                    trigger->regex[i].str_regex,
+
+        /* set regex */
+        trigger->regex[index].regex = malloc (sizeof (*trigger->regex[index].regex));
+        if (!trigger->regex[index].regex)
+            goto memory_error;
+        if (weechat_string_regcomp (trigger->regex[index].regex,
+                                    trigger->regex[index].str_regex,
                                     REG_EXTENDED | REG_ICASE) != 0)
         {
             weechat_printf (NULL,
                             _("%s%s: error compiling regular expression \"%s\""),
                             weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
-                            trigger->regex[i].str_regex);
-            free (trigger->regex[i].regex);
-            trigger->regex[i].regex = NULL;
+                            trigger->regex[index].str_regex);
+            free (trigger->regex[index].regex);
+            trigger->regex[index].regex = NULL;
             goto end;
         }
 
-        pos = pos2 + length_delimiter;
-
-        pos2 = strstr (pos + length_delimiter, delimiter);
-        trigger->regex[i].replace = (pos2) ?
-            weechat_strndup (pos, pos2 - pos) : strdup (pos);
-        if (!trigger->regex[i].replace)
+        /* set replace and replace_eval */
+        trigger->regex[index].replace = (pos_replace_end) ?
+            weechat_strndup (pos_replace + length_delimiter,
+                             pos_replace_end - pos_replace - length_delimiter) :
+            strdup (pos_replace + length_delimiter);
+        if (!trigger->regex[index].replace)
             goto memory_error;
-        trigger->regex[i].replace_eval =
-            weechat_string_eval_expression (trigger->regex[i].replace,
+        trigger->regex[index].replace_eval =
+            weechat_string_eval_expression (trigger->regex[index].replace,
                                             NULL, NULL, NULL);
+        if (!trigger->regex[index].replace_eval)
+            goto memory_error;
 
-        pos = pos2;
+        if (!pos_replace_end)
+            break;
 
-        i++;
+        /* set variable (optional) */
+        ptr_option = pos_replace_end + length_delimiter;
+        if (!ptr_option[0])
+            break;
+        if (ptr_option[0] == ' ')
+            pos_next_regex = ptr_option;
+        else
+        {
+            pos_next_regex = strchr (ptr_option, ' ');
+            trigger->regex[index].variable = (pos_next_regex) ?
+                weechat_strndup (ptr_option, pos_next_regex - ptr_option) :
+                strdup (ptr_option);
+            if (!trigger->regex[index].variable)
+                goto memory_error;
+        }
+        if (!pos_next_regex)
+            break;
+
+        /* skip spaces before next regex */
+        ptr_option = pos_next_regex + 1;
+        while (ptr_option[0] == ' ')
+        {
+            ptr_option++;
+        }
     }
 
     goto end;
 
 format_error:
     weechat_printf (NULL,
-                    _("%s%s: invalid value for option \"replace\", format "
-                      "is: \"/regex/replace\" (the char '/' can be "
-                      "replaced by one or more identical chars, except '\\' "
-                      "which is used for matching groups)"),
-                    weechat_prefix ("error"), TRIGGER_PLUGIN_NAME);
+                    _("%s%s: invalid value for option \"regex\", "
+                      "see /help trigger.trigger.%s.regex"),
+                    weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
+                    trigger->name);
     trigger_free_regex (trigger);
     goto end;
 
@@ -792,10 +810,16 @@ trigger_print_log ()
         weechat_log_printf ("  regex . . . . . . . . . : 0x%lx", ptr_trigger->regex);
         for (i = 0; i < ptr_trigger->regex_count; i++)
         {
-            weechat_log_printf ("    regex[%03d].regex. . . : 0x%lx",
+            weechat_log_printf ("    regex[%03d].variable . . : '%s'",
+                                i, ptr_trigger->regex[i].variable);
+            weechat_log_printf ("    regex[%03d].str_regex. . : '%s'",
+                                i, ptr_trigger->regex[i].str_regex);
+            weechat_log_printf ("    regex[%03d].regex. . . . : 0x%lx",
                                 i, ptr_trigger->regex[i].regex);
-            weechat_log_printf ("    regex[%03d].replace. . : '%s'",
+            weechat_log_printf ("    regex[%03d].replace. . . : '%s'",
                                 i, ptr_trigger->regex[i].replace);
+            weechat_log_printf ("    regex[%03d].replace_eval : '%s'",
+                                i, ptr_trigger->regex[i].replace_eval);
         }
         weechat_log_printf ("  hooks_count . . . . . . : %d",    ptr_trigger->hooks_count);
         weechat_log_printf ("  hooks . . . . . . . . . : 0x%lx", ptr_trigger->hooks);
@@ -900,8 +924,8 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     (void) plugin;
 
     trigger_config_write ();
+    trigger_free_all ();
     trigger_config_free ();
-
     trigger_callback_end ();
 
     return WEECHAT_RC_OK;

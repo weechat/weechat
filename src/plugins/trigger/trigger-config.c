@@ -173,7 +173,12 @@ trigger_config_create_option (const char *trigger_name, int index_option,
                 N_("replace text with a POSIX extended regular expression (it "
                    "is done only if conditions are OK, and before running the "
                    "command) (note: content is evaluated on trigger creation, "
-                   "see /help eval)"),
+                   "see /help eval); format is: \"/regex/replace/var\" (var "
+                   "is the hashtable variable to replace, it is optional), "
+                   "many regex can be separated by a space, for example: "
+                   "\"/regex1/replace1/var1 /regex2/replace2/var2\"; the "
+                   "separator \"/\" can be replaced by any char (one or more "
+                   "identical chars), except '\\' and parentheses"),
                 NULL, 0, 0, value, NULL, 0,
                 NULL, NULL, &trigger_config_change_regex, NULL, NULL, NULL);
             break;

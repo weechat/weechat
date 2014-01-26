@@ -67,41 +67,66 @@ trigger_callback_check_conditions (struct t_trigger *trigger,
 
 /*
  * Replaces text using one or more regex in the trigger.
- *
- * Note: result must be freed after use.
  */
 
-char *
-trigger_callback_replace_regex (struct t_trigger *trigger, const char *name,
-                                const char *value)
+void
+trigger_callback_replace_regex (struct t_trigger *trigger,
+                                struct t_hashtable *extra_vars)
 {
-    char *temp, *res;
+    char *value;
+    const char *ptr_key, *ptr_value;
     int i;
 
     if (trigger->regex_count == 0)
-        return strdup (value);
-
-    res = NULL;
+        return;
 
     for (i = 0; i < trigger->regex_count; i++)
     {
-        temp = weechat_string_replace_regex ((res) ? res : value,
-                                             trigger->regex[i].regex,
-                                             trigger->regex[i].replace_eval);
-        if (!temp)
-            return res;
-        res = temp;
+        ptr_key = (trigger->regex[i].variable) ?
+            trigger->regex[i].variable :
+            trigger_hook_regex_default_var[weechat_config_integer (trigger->options[TRIGGER_OPTION_HOOK])];
+        if (!ptr_key || !ptr_key[0])
+        {
+            if (trigger_buffer)
+            {
+                weechat_printf_tags (trigger_buffer, "no_trigger",
+                                     "\t  regex %d: %s",
+                                     i + 1, _("no variable"));
+            }
+            continue;
+        }
+
+        ptr_value = weechat_hashtable_get (extra_vars, ptr_key);
+        if (!ptr_value)
+        {
+            if (trigger_buffer)
+            {
+                weechat_printf_tags (trigger_buffer, "no_trigger",
+                                     "\t  regex %d (%s): %s",
+                                     i + 1, ptr_key, _("empty variable"));
+            }
+            continue;
+        }
+
+        value = weechat_string_replace_regex (ptr_value,
+                                              trigger->regex[i].regex,
+                                              trigger->regex[i].replace_eval);
+        if (!value)
+            continue;
 
         /* display debug info on trigger buffer */
         if (trigger_buffer)
         {
             weechat_printf_tags (trigger_buffer, "no_trigger",
-                                 "\t  %s (regex %d): \"%s%s\"",
-                                 name, i + 1, res, weechat_color ("reset"));
+                                 "\t  regex %d (%s): \"%s%s\"",
+                                 i + 1, ptr_key, value,
+                                 weechat_color ("reset"));
         }
-    }
 
-    return res;
+        weechat_hashtable_set (extra_vars, ptr_key, value);
+
+        free (value);
+    }
 }
 
 /*
@@ -157,7 +182,7 @@ trigger_callback_signal_cb (void *data, const char *signal,
     struct t_trigger *trigger;
     struct t_hashtable *extra_vars;
     const char *command, *ptr_signal_data;
-    char str_data[128], *signal_data2;
+    char str_data[128];
     int rc;
 
     /* get trigger pointer, return immediately if not found or trigger running */
@@ -234,17 +259,7 @@ trigger_callback_signal_cb (void *data, const char *signal,
         goto end;
 
     /* replace text with regex */
-    if (trigger->regex_count > 0)
-    {
-        signal_data2 = trigger_callback_replace_regex (trigger,
-                                                       "tg_signal_data",
-                                                       ptr_signal_data);
-        if (signal_data2)
-        {
-            weechat_hashtable_set (extra_vars, "tg_signal_data", signal_data2);
-            free (signal_data2);
-        }
-    }
+    trigger_callback_replace_regex (trigger, extra_vars);
 
     /* execute command */
     trigger_callback_run_command (trigger, NULL, NULL, extra_vars);
@@ -252,7 +267,9 @@ trigger_callback_signal_cb (void *data, const char *signal,
 end:
     if (extra_vars)
         weechat_hashtable_free (extra_vars);
+
     trigger->hook_running = 0;
+
     return rc;
 }
 
@@ -281,7 +298,7 @@ trigger_callback_modifier_cb (void *data, const char *modifier,
 {
     struct t_trigger *trigger;
     struct t_hashtable *extra_vars;
-    const char *command;
+    const char *command, *ptr_string;
     char *string_modified, *pos, *pos2, *plugin_name, *buffer_name;
     char *buffer_full_name, *tags;
     int no_trigger, length;
@@ -297,7 +314,6 @@ trigger_callback_modifier_cb (void *data, const char *modifier,
     trigger->hook_running = 1;
 
     extra_vars = NULL;
-    string_modified = NULL;
 
     /*
      * in a modifier, the only possible actions are regex or command;
@@ -400,29 +416,21 @@ trigger_callback_modifier_cb (void *data, const char *modifier,
         goto end;
 
     /* replace text with regex */
-    if (trigger->regex_count > 0)
-    {
-        string_modified = trigger_callback_replace_regex (trigger, "tg_string",
-                                                          string);
-        if (string_modified)
-        {
-            weechat_hashtable_set (extra_vars, "tg_string", string_modified);
-            if (strcmp (string, string_modified) == 0)
-            {
-                /* regex did not change the string, ignore it */
-                free (string_modified);
-                string_modified = NULL;
-            }
-        }
-    }
+    trigger_callback_replace_regex (trigger, extra_vars);
 
     /* execute command */
     trigger_callback_run_command (trigger, NULL, NULL, extra_vars);
 
 end:
+    ptr_string = weechat_hashtable_get (extra_vars, "tg_string");
+    string_modified = (ptr_string && (strcmp (ptr_string, string) != 0)) ?
+        strdup (ptr_string) : NULL;
+
     if (extra_vars)
         weechat_hashtable_free (extra_vars);
+
     trigger->hook_running = 0;
+
     return string_modified;
 }
 
@@ -439,7 +447,7 @@ trigger_callback_print_cb  (void *data, struct t_gui_buffer *buffer,
     struct t_trigger *trigger;
     struct t_hashtable *pointers, *extra_vars;
     const char *command, *localvar_type;
-    char *message2, *str_tags, *str_tags2, str_temp[128];
+    char *str_tags, *str_tags2, str_temp[128];
     int i, rc, length, tag_notify_private;
     struct tm *date_tmp;
 
@@ -556,16 +564,7 @@ trigger_callback_print_cb  (void *data, struct t_gui_buffer *buffer,
         goto end;
 
     /* replace text with regex */
-    if (trigger->regex_count > 0)
-    {
-        message2 = trigger_callback_replace_regex (trigger, "tg_message",
-                                                   message);
-        if (message2)
-        {
-            weechat_hashtable_set (extra_vars, "tg_message", message2);
-            free (message2);
-        }
-    }
+    trigger_callback_replace_regex (trigger, extra_vars);
 
     /* execute command */
     trigger_callback_run_command (trigger, buffer, pointers, extra_vars);
@@ -575,7 +574,9 @@ end:
         weechat_hashtable_free (pointers);
     if (extra_vars)
         weechat_hashtable_free (extra_vars);
+
     trigger->hook_running = 0;
+
     return rc;
 }
 

@@ -60,6 +60,7 @@ enum t_trigger_return_code
 
 struct t_trigger_regex
 {
+    char *variable;                    /* the hashtable key used            */
     char *str_regex;                   /* regex to search for replacement   */
     regex_t *regex;                    /* compiled regex                    */
     char *replace;                     /* replacement text                  */
@@ -75,8 +76,8 @@ struct t_trigger
     /* internal vars */
 
     /* regular expressions with their replacement text */
-    int regex_count;                   /* number of regex/replacement       */
-    struct t_trigger_regex *regex;     /* array of regex/replacement        */
+    int regex_count;                   /* number of regex                   */
+    struct t_trigger_regex *regex;     /* array of regex                    */
 
     /* hooks */
     int hooks_count;                   /* number of hooks                   */
@@ -95,6 +96,7 @@ extern struct t_weechat_plugin *weechat_trigger_plugin;
 extern char *trigger_option_string[];
 extern char *trigger_option_default[];
 extern char *trigger_hook_type_string[];
+extern char *trigger_hook_regex_default_var[];
 extern int trigger_return_code[];
 extern struct t_trigger *triggers;
 extern struct t_trigger *last_trigger;
