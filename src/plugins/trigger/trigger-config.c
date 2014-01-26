@@ -132,7 +132,8 @@ trigger_config_create_option (const char *trigger_name, int index_option,
             ptr_option = weechat_config_new_option (
                 trigger_config_file, trigger_config_section_trigger,
                 option_name, "boolean",
-                N_("true if trigger is enabled, otherwise false"),
+                N_("if disabled, the hooks are removed from trigger, so it is "
+                   "not called any more"),
                 NULL, 0, 0, value, NULL, 0,
                 NULL, NULL, &trigger_config_change_enabled, NULL, NULL, NULL);
             break;
@@ -149,7 +150,7 @@ trigger_config_create_option (const char *trigger_name, int index_option,
                 trigger_config_file, trigger_config_section_trigger,
                 option_name, "string",
                 N_("arguments for the hook (depend on the hook type); for "
-                   "signal/hsignal/modifier: name, for print: "
+                   "signal/hsignal/modifier: name[;name...], for print: "
                    "buffer;tags;strip_colors;message, for timer: "
                    "interval;align_second;max_calls"),
                 NULL, 0, 0, value, NULL, 0,
@@ -160,7 +161,8 @@ trigger_config_create_option (const char *trigger_name, int index_option,
                 trigger_config_file, trigger_config_section_trigger,
                 option_name, "string",
                 N_("condition(s) for running the command (it is checked in "
-                   "hook callback)"),
+                   "hook callback) (note: content is evaluated when trigger is "
+                   "run, see /help eval)"),
                 NULL, 0, 0, value, NULL, 0,
                 NULL, NULL, NULL, NULL, NULL, NULL);
             break;
@@ -168,7 +170,10 @@ trigger_config_create_option (const char *trigger_name, int index_option,
             ptr_option = weechat_config_new_option (
                 trigger_config_file, trigger_config_section_trigger,
                 option_name, "string",
-                N_("replace text with a POSIX extended regular expression"),
+                N_("replace text with a POSIX extended regular expression (it "
+                   "is done only if conditions are OK, and before running the "
+                   "command) (note: content is evaluated on trigger creation, "
+                   "see /help eval)"),
                 NULL, 0, 0, value, NULL, 0,
                 NULL, NULL, &trigger_config_change_regex, NULL, NULL, NULL);
             break;
@@ -176,7 +181,7 @@ trigger_config_create_option (const char *trigger_name, int index_option,
             ptr_option = weechat_config_new_option (
                 trigger_config_file, trigger_config_section_trigger,
                 option_name, "string",
-                N_("command run if conditions are OK"),
+                N_("command run if conditions are OK, after regex replacements"),
                 NULL, 0, 0, value, NULL, 0,
                 NULL, NULL, NULL, NULL, NULL, NULL);
             break;
@@ -184,7 +189,8 @@ trigger_config_create_option (const char *trigger_name, int index_option,
             ptr_option = weechat_config_new_option (
                 trigger_config_file, trigger_config_section_trigger,
                 option_name, "integer",
-                N_("return code for hook callback"),
+                N_("return code for hook callback (see plugin API reference to "
+                   "know where ok_eat or error can be used efficiently)"),
                 "ok|ok_eat|error", 0, 0, value, NULL, 0,
                 NULL, NULL, NULL, NULL, NULL, NULL);
             break;
