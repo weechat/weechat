@@ -72,24 +72,33 @@ trigger_callback_check_conditions (struct t_trigger *trigger,
  */
 
 char *
-trigger_callback_replace_regex (struct t_trigger *trigger, const char *string)
+trigger_callback_replace_regex (struct t_trigger *trigger, const char *name,
+                                const char *value)
 {
     char *temp, *res;
     int i;
 
     if (trigger->regex_count == 0)
-        return strdup (string);
+        return strdup (value);
 
     res = NULL;
 
     for (i = 0; i < trigger->regex_count; i++)
     {
-        temp = weechat_string_replace_regex ((res) ? res : string,
+        temp = weechat_string_replace_regex ((res) ? res : value,
                                              trigger->regex[i].regex,
                                              trigger->regex[i].replace_eval);
         if (!temp)
             return res;
         res = temp;
+
+        /* display debug info on trigger buffer */
+        if (trigger_buffer)
+        {
+            weechat_printf_tags (trigger_buffer, "no_trigger",
+                                 "\t  %s (regex %d): \"%s%s\"",
+                                 name, i + 1, res, weechat_color ("reset"));
+        }
     }
 
     return res;
@@ -227,7 +236,9 @@ trigger_callback_signal_cb (void *data, const char *signal,
     /* replace text with regex */
     if (trigger->regex_count > 0)
     {
-        signal_data2 = trigger_callback_replace_regex (trigger, ptr_signal_data);
+        signal_data2 = trigger_callback_replace_regex (trigger,
+                                                       "tg_signal_data",
+                                                       ptr_signal_data);
         if (signal_data2)
         {
             weechat_hashtable_set (extra_vars, "tg_signal_data", signal_data2);
@@ -391,7 +402,8 @@ trigger_callback_modifier_cb (void *data, const char *modifier,
     /* replace text with regex */
     if (trigger->regex_count > 0)
     {
-        string_modified = trigger_callback_replace_regex (trigger, string);
+        string_modified = trigger_callback_replace_regex (trigger, "tg_string",
+                                                          string);
         if (string_modified)
         {
             weechat_hashtable_set (extra_vars, "tg_string", string_modified);
@@ -546,7 +558,8 @@ trigger_callback_print_cb  (void *data, struct t_gui_buffer *buffer,
     /* replace text with regex */
     if (trigger->regex_count > 0)
     {
-        message2 = trigger_callback_replace_regex (trigger, message);
+        message2 = trigger_callback_replace_regex (trigger, "tg_message",
+                                                   message);
         if (message2)
         {
             weechat_hashtable_set (extra_vars, "tg_message", message);
