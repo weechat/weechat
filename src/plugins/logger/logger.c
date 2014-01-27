@@ -317,6 +317,7 @@ char *
 logger_get_mask_expanded (struct t_gui_buffer *buffer, const char *mask)
 {
     char *mask2, *mask_decoded, *mask_decoded2, *mask_decoded3, *mask_decoded4;
+    char *mask_decoded5;
     const char *dir_separator;
     int length;
     time_t seconds;
@@ -327,6 +328,7 @@ logger_get_mask_expanded (struct t_gui_buffer *buffer, const char *mask)
     mask_decoded2 = NULL;
     mask_decoded3 = NULL;
     mask_decoded4 = NULL;
+    mask_decoded5 = NULL;
 
     dir_separator = weechat_info_get ("dir_separator", "");
     if (!dir_separator)
@@ -351,25 +353,34 @@ logger_get_mask_expanded (struct t_gui_buffer *buffer, const char *mask)
     if (!mask_decoded2)
         goto end;
 
-    /* restore directory separator */
-    mask_decoded3 = weechat_string_replace (mask_decoded2,
-                                            "\01", dir_separator);
+#ifdef __CYGWIN__
+    mask_decoded3 = weechat_string_replace (mask_decoded2, "\\",
+                                            weechat_config_string (logger_config_file_replacement_char));
+#else
+    mask_decoded3 = strdup (mask_decoded2);
+#endif
     if (!mask_decoded3)
         goto end;
 
-    /* replace date/time specifiers in mask */
-    length = strlen (mask_decoded3) + 256 + 1;
-    mask_decoded4 = malloc (length);
+    /* restore directory separator */
+    mask_decoded4 = weechat_string_replace (mask_decoded3,
+                                            "\01", dir_separator);
     if (!mask_decoded4)
+        goto end;
+
+    /* replace date/time specifiers in mask */
+    length = strlen (mask_decoded4) + 256 + 1;
+    mask_decoded5 = malloc (length);
+    if (!mask_decoded5)
         goto end;
     seconds = time (NULL);
     date_tmp = localtime (&seconds);
-    mask_decoded4[0] = '\0';
-    strftime (mask_decoded4, length - 1, mask_decoded3, date_tmp);
+    mask_decoded5[0] = '\0';
+    strftime (mask_decoded5, length - 1, mask_decoded4, date_tmp);
 
     /* convert to lower case? */
     if (weechat_config_boolean (logger_config_file_name_lower_case))
-        weechat_string_tolower (mask_decoded4);
+        weechat_string_tolower (mask_decoded5);
 
     if (weechat_logger_plugin->debug)
     {
@@ -379,7 +390,7 @@ logger_get_mask_expanded (struct t_gui_buffer *buffer, const char *mask)
                              "decoded mask = \"%s\"",
                              LOGGER_PLUGIN_NAME,
                              weechat_buffer_get_string (buffer, "name"),
-                             mask, mask_decoded4);
+                             mask, mask_decoded5);
     }
 
 end:
@@ -391,8 +402,10 @@ end:
         free (mask_decoded2);
     if (mask_decoded3)
         free (mask_decoded3);
+    if (mask_decoded4)
+        free (mask_decoded4);
 
-    return mask_decoded4;
+    return mask_decoded5;
 }
 
 /*
