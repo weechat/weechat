@@ -11,6 +11,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 0.4.3 (under dev)
 
+* core: fix display of read marker when all buffers line are unread and that
+  option weechat.look.read_marker_always_show is on
 * core: fix memory leak in regex matching when evaluating expression
 * core: add signals "signal_sighup" and "signal_sigwinch" (terminal resized)
 * core: add command /print, add support of more escaped chars in command

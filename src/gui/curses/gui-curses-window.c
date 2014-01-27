@@ -1302,7 +1302,9 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
     }
 
     if (CONFIG_BOOLEAN(config_look_read_marker_always_show)
-        && set_last_read && !window->buffer->lines->last_read_line)
+        && set_last_read
+        && !window->buffer->lines->last_read_line
+        && !window->buffer->lines->first_line_not_read)
     {
         window->buffer->lines->last_read_line = window->buffer->lines->last_line;
     }
