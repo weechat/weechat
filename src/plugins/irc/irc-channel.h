@@ -48,8 +48,8 @@ struct t_irc_channel
     int limit;                         /* user limit (0 is limit not set)   */
     char *key;                         /* channel key (NULL if no key set)  */
     struct t_hashtable *join_msg_received; /* messages received after join: */
-                                       /* 366=names, 332/333=topic,         */
-                                       /* 329=creation date                 */
+                                       /* 353=names, 366=names count,       */
+                                       /* 332/333=topic, 329=creation date  */
     int checking_away;                 /* = 1 if checking away with WHO cmd */
     char *away_message;                /* to display away only once in pv   */
     int has_quit_server;               /* =1 if nick has quit (pv only), to */

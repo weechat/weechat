@@ -67,6 +67,21 @@ The default value for status bar items becomes:
 /set weechat.bar.status.items "[time],[buffer_count],[buffer_plugin],buffer_number+:+buffer_name+(buffer_modes)+{buffer_nicklist_count}+buffer_zoom+buffer_filter,[lag],[hotlist],completion,scroll"
 ----
 
+=== IRC messages on channel join
+
+The names are not displayed any more by default on channel join (they are in
+nicklist anyway).
+
+Names can be displayed with the value "353" in option
+'irc.look.display_join_message' (which is not in default value). +
+The value "366" shows only names count on channel.
+
+If you want to display all messages on join (including names), you can do:
+
+----
+/set /set irc.look.display_join_message "329,332,333,353,366"
+----
+
 === Maximum lag in IRC
 
 Option 'irc.network.lag_max' has been added.

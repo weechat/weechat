@@ -4074,10 +4074,10 @@ IRC_PROTOCOL_CALLBACK(366)
     ptr_channel = irc_channel_search (server, argv[3]);
     if (ptr_channel && ptr_channel->nicks)
     {
-        if (weechat_hashtable_has_key (ptr_channel->join_msg_received, command)
-            || weechat_hashtable_has_key (irc_config_hashtable_display_join_message, command))
+        /* display users on channel */
+        if (weechat_hashtable_has_key (ptr_channel->join_msg_received, "353")
+            || weechat_hashtable_has_key (irc_config_hashtable_display_join_message, "353"))
         {
-            /* display users on channel */
             infolist = weechat_infolist_get ("nicklist", ptr_channel->buffer, NULL);
             if (infolist)
             {
@@ -4165,8 +4165,12 @@ IRC_PROTOCOL_CALLBACK(366)
                 }
                 weechat_infolist_free (infolist);
             }
+        }
 
-            /* display number of nicks, ops, halfops & voices on the channel */
+        /* display number of nicks, ops, halfops & voices on the channel */
+        if (weechat_hashtable_has_key (ptr_channel->join_msg_received, "366")
+            || weechat_hashtable_has_key (irc_config_hashtable_display_join_message, "366"))
+        {
             irc_nick_count (server, ptr_channel, &num_nicks, &num_op, &num_halfop,
                             &num_voice, &num_normal);
             str_nicks_count[0] = '\0';
@@ -4257,7 +4261,10 @@ IRC_PROTOCOL_CALLBACK(366)
     }
 
     if (ptr_channel)
-        weechat_hashtable_set (ptr_channel->join_msg_received, command, "1");
+    {
+        weechat_hashtable_set (ptr_channel->join_msg_received, "353", "1");
+        weechat_hashtable_set (ptr_channel->join_msg_received, "366", "1");
+    }
 
     weechat_bar_item_update ("input_prompt");
 

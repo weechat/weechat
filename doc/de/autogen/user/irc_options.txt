@@ -134,9 +134,9 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.display_join_message]] *irc.look.display_join_message*
-** Beschreibung: `durch Kommata getrennte Liste von Nachrichten die beim betreten eines Channels angezeigt werden sollen: 329 = Erstellungsdatum des Channels, 332 = Topic, 333 = Nick/Datum für Topic, 366 = genutzte Namen im Channel`
+** Beschreibung: `comma-separated list of messages to display after joining a channel: 329 = channel creation date, 332 = topic, 333 = nick/date for topic, 353 = names on channel, 366 = names count`
 ** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette (Standardwert: `"329,332,333"`)
+** Werte: beliebige Zeichenkette (Standardwert: `"329,332,333,366"`)
 
 * [[option_irc.look.display_old_topic]] *irc.look.display_old_topic*
 ** Beschreibung: `Zeige das alte Thema an, falls das Thema des Channels geändert wurde`

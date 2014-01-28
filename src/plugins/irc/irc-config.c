@@ -2314,8 +2314,8 @@ irc_config_init ()
         "display_join_message", "string",
         N_("comma-separated list of messages to display after joining a channel: "
            "329 = channel creation date, 332 = topic, 333 = nick/date for topic, "
-           "366 = names on channel"),
-        NULL, 0, 0, "329,332,333", NULL, 0, NULL, NULL,
+           "353 = names on channel, 366 = names count"),
+        NULL, 0, 0, "329,332,333,366", NULL, 0, NULL, NULL,
         &irc_config_change_look_display_join_message, NULL, NULL, NULL);
     irc_config_look_display_old_topic = weechat_config_new_option (
         irc_config_file, ptr_section,
