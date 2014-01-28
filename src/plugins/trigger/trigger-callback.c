@@ -281,11 +281,98 @@ int
 trigger_callback_hsignal_cb (void *data, const char *signal,
                              struct t_hashtable *hashtable)
 {
-    (void) data;
-    (void) signal;
-    (void) hashtable;
+    struct t_trigger *trigger;
+    struct t_hashtable *pointers, *extra_vars;
+    const char *type_values, *command;
+    int rc;
 
-    return WEECHAT_RC_OK;
+    /* get trigger pointer, return immediately if not found or trigger running */
+    trigger = (struct t_trigger *)data;
+    if (!trigger || trigger->hook_running)
+        return WEECHAT_RC_OK;
+
+    trigger->hook_count_cb++;
+    trigger->hook_running = 1;
+
+    pointers = NULL;
+    extra_vars = NULL;
+
+    rc = trigger_return_code[weechat_config_integer (trigger->options[TRIGGER_OPTION_RETURN_CODE])];
+
+    /*
+     * in a hsignal, the only possible action is to execute a command;
+     * so if the command is empty, just exit without checking conditions
+     */
+    command = weechat_config_string (trigger->options[TRIGGER_OPTION_COMMAND]);
+    if (!command || !command[0])
+        goto end;
+
+    /* duplicate hashtable */
+    if (hashtable
+        && (strcmp (weechat_hashtable_get_string (hashtable, "type_keys"), "string") == 0))
+    {
+        type_values = weechat_hashtable_get_string (hashtable, "type_values");
+        if (strcmp (type_values, "pointer") == 0)
+        {
+            pointers = weechat_hashtable_dup (hashtable);
+            if (!pointers)
+                goto end;
+        }
+        else if (strcmp (type_values, "pointer") == 0)
+        {
+            extra_vars = weechat_hashtable_dup (hashtable);
+            if (!extra_vars)
+                goto end;
+        }
+    }
+
+    /* create hashtable (if not already created) */
+    if (!extra_vars)
+    {
+        extra_vars = weechat_hashtable_new (32,
+                                            WEECHAT_HASHTABLE_STRING,
+                                            WEECHAT_HASHTABLE_STRING,
+                                            NULL,
+                                            NULL);
+        if (!extra_vars)
+            goto end;
+    }
+
+    /* add data in hashtable used for conditions/replace/command */
+    weechat_hashtable_set (extra_vars, "tg_signal", signal);
+
+    /* display debug info on trigger buffer */
+    if (!trigger_buffer && (weechat_trigger_plugin->debug >= 1))
+        trigger_buffer_open (0);
+    if (trigger_buffer)
+    {
+        weechat_printf_tags (trigger_buffer, "no_trigger",
+                             "hsignal\t%s%s",
+                             weechat_color ("chat_channel"),
+                             trigger->name);
+        trigger_buffer_display_hashtable ("pointers", pointers);
+        trigger_buffer_display_hashtable ("extra_vars", extra_vars);
+    }
+
+    /* check conditions */
+    if (!trigger_callback_check_conditions (trigger, pointers, extra_vars))
+        goto end;
+
+    /* replace text with regex */
+    trigger_callback_replace_regex (trigger, extra_vars);
+
+    /* execute command */
+    trigger_callback_run_command (trigger, NULL, pointers, extra_vars);
+
+end:
+    if (pointers)
+        weechat_hashtable_free (pointers);
+    if (extra_vars)
+        weechat_hashtable_free (extra_vars);
+
+    trigger->hook_running = 0;
+
+    return rc;
 }
 
 /*
