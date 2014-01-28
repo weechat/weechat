@@ -181,7 +181,7 @@ trigger_callback_signal_cb (void *data, const char *signal,
 {
     struct t_trigger *trigger;
     struct t_hashtable *extra_vars;
-    const char *command, *ptr_signal_data;
+    const char *ptr_signal_data;
     char str_data[128];
     int rc;
 
@@ -196,14 +196,6 @@ trigger_callback_signal_cb (void *data, const char *signal,
     extra_vars = NULL;
 
     rc = trigger_return_code[weechat_config_integer (trigger->options[TRIGGER_OPTION_RETURN_CODE])];
-
-    /*
-     * in a signal, the only possible action is to execute a command;
-     * so if the command is empty, just exit without checking conditions
-     */
-    command = weechat_config_string (trigger->options[TRIGGER_OPTION_COMMAND]);
-    if (!command || !command[0])
-        goto end;
 
     /* create hashtable */
     extra_vars = weechat_hashtable_new (32,
@@ -283,7 +275,7 @@ trigger_callback_hsignal_cb (void *data, const char *signal,
 {
     struct t_trigger *trigger;
     struct t_hashtable *pointers, *extra_vars;
-    const char *type_values, *command;
+    const char *type_values;
     int rc;
 
     /* get trigger pointer, return immediately if not found or trigger running */
@@ -298,14 +290,6 @@ trigger_callback_hsignal_cb (void *data, const char *signal,
     extra_vars = NULL;
 
     rc = trigger_return_code[weechat_config_integer (trigger->options[TRIGGER_OPTION_RETURN_CODE])];
-
-    /*
-     * in a hsignal, the only possible action is to execute a command;
-     * so if the command is empty, just exit without checking conditions
-     */
-    command = weechat_config_string (trigger->options[TRIGGER_OPTION_COMMAND]);
-    if (!command || !command[0])
-        goto end;
 
     /* duplicate hashtable */
     if (hashtable
@@ -385,7 +369,7 @@ trigger_callback_modifier_cb (void *data, const char *modifier,
 {
     struct t_trigger *trigger;
     struct t_hashtable *extra_vars;
-    const char *command, *ptr_string;
+    const char *ptr_string;
     char *string_modified, *pos, *pos2, *plugin_name, *buffer_name;
     char *buffer_full_name, *tags;
     int no_trigger, length;
@@ -401,14 +385,6 @@ trigger_callback_modifier_cb (void *data, const char *modifier,
     trigger->hook_running = 1;
 
     extra_vars = NULL;
-
-    /*
-     * in a modifier, the only possible actions are regex or command;
-     * so if both are empty, just exit without checking conditions
-     */
-    command = weechat_config_string (trigger->options[TRIGGER_OPTION_COMMAND]);
-    if ((!command || !command[0]) && !trigger->regex)
-        goto end;
 
     /* create hashtable */
     extra_vars = weechat_hashtable_new (32,
@@ -533,7 +509,7 @@ trigger_callback_print_cb  (void *data, struct t_gui_buffer *buffer,
 {
     struct t_trigger *trigger;
     struct t_hashtable *pointers, *extra_vars;
-    const char *command, *localvar_type;
+    const char *localvar_type;
     char *str_tags, *str_tags2, str_temp[128];
     int i, rc, length, tag_notify_private;
     struct tm *date_tmp;
@@ -554,14 +530,6 @@ trigger_callback_print_cb  (void *data, struct t_gui_buffer *buffer,
     /* return if the buffer does not match buffers defined in the trigger */
     if (trigger->hook_print_buffers
         && !weechat_buffer_match_list (buffer, trigger->hook_print_buffers))
-        goto end;
-
-    /*
-     * in a print, the only possible action is to execute a command;
-     * so if the command is empty, just exit without checking conditions
-     */
-    command = weechat_config_string (trigger->options[TRIGGER_OPTION_COMMAND]);
-    if (!command || !command[0])
         goto end;
 
     /* create hashtables */
