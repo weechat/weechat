@@ -79,7 +79,7 @@ The value "366" shows only names count on channel.
 If you want to display all messages on join (including names), you can do:
 
 ----
-/set /set irc.look.display_join_message "329,332,333,353,366"
+/set irc.look.display_join_message "329,332,333,353,366"
 ----
 
 === Maximum lag in IRC
