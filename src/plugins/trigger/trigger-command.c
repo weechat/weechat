@@ -65,7 +65,7 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
 {
     struct t_trigger *ptr_trigger;
     const char *option;
-    char *name;
+    char *name, *value;
     int i, type, count, index_option, enable;
 
     /* make C compiler happy */
@@ -204,24 +204,43 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
         }
         if (weechat_strcasecmp (argv[3], "name") == 0)
         {
-            if (!trigger_rename (ptr_trigger, argv[4]))
-                return WEECHAT_RC_OK;
+            value = weechat_string_remove_quotes (argv[4], "'\"");
+            name = strdup (ptr_trigger->name);
+            if (value && name)
+            {
+                if (trigger_rename (ptr_trigger, value))
+                {
+                    weechat_printf_tags (NULL, "no_trigger",
+                                         _("Trigger \"%s\" renamed to \"%s\""),
+                                         name, ptr_trigger->name);
+                }
+            }
+            if (name)
+                free (name);
+            if (value)
+                free (value);
+            return WEECHAT_RC_OK;
         }
-        else
+        value = weechat_string_remove_quotes (argv_eol[4], "'\"");
+        if (value)
         {
             index_option = trigger_search_option (argv[3]);
-            if (index_option < 0)
+            if (index_option >= 0)
+            {
+                weechat_config_option_set (ptr_trigger->options[index_option],
+                                           value, 1);
+                weechat_printf_tags (NULL, "no_trigger",
+                                     _("Trigger \"%s\" updated"),
+                                     ptr_trigger->name);
+            }
+            else
             {
                 weechat_printf_tags (NULL, "no_trigger",
                                      _("%sTrigger option \"%s\" not found"),
                                      weechat_prefix ("error"), argv[3]);
-                return WEECHAT_RC_OK;
             }
-            weechat_config_option_set (ptr_trigger->options[index_option],
-                                       argv_eol[4], 1);
+            free (value);
         }
-        weechat_printf_tags (NULL, "no_trigger",
-                             _("Trigger \"%s\" updated"), ptr_trigger->name);
         return WEECHAT_RC_OK;
     }
 
