@@ -426,8 +426,9 @@ trigger_unhook (struct t_trigger *trigger)
 void
 trigger_hook (struct t_trigger *trigger)
 {
-    char **argv, **argv_eol, *tags, *message;
+    char **argv, **argv_eol, *tags, *message, *error1, *error2, *error3;
     int i, argc, strip_colors;
+    long interval, align_second, max_calls;
 
     trigger_unhook (trigger);
 
@@ -512,8 +513,32 @@ trigger_hook (struct t_trigger *trigger)
             }
             break;
         case TRIGGER_HOOK_TIMER:
-            if (argv && (argc >= 1))
+            if (argv && (argc >= 3))
             {
+                error1 = NULL;
+                error2 = NULL;
+                error3 = NULL;
+                interval = strtol (argv[0], &error1, 10);
+                align_second = strtol (argv[1], &error2, 10);
+                max_calls = strtol (argv[2], &error3, 10);
+                if (error1 && !error1[0]
+                    && error2 && !error2[0]
+                    && error3 && !error3[0]
+                    && (interval > 0)
+                    && (align_second >= 0)
+                    && (max_calls >= 0))
+                {
+                    trigger->hooks = malloc (1 * sizeof (trigger->hooks[0]));
+                    if (trigger->hooks)
+                    {
+                        trigger->hooks_count = 1;
+                        trigger->hooks[0] = weechat_hook_timer (interval,
+                                                                (int)align_second,
+                                                                (int)max_calls,
+                                                                &trigger_callback_timer_cb,
+                                                                trigger);
+                    }
+                }
             }
             break;
     }

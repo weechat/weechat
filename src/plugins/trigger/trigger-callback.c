@@ -527,7 +527,7 @@ trigger_callback_print_cb  (void *data, struct t_gui_buffer *buffer,
 
     rc = trigger_return_code[weechat_config_integer (trigger->options[TRIGGER_OPTION_RETURN_CODE])];
 
-    /* return if the buffer does not match buffers defined in the trigger */
+    /* do nothing if the buffer does not match buffers defined in the trigger */
     if (trigger->hook_print_buffers
         && !weechat_buffer_match_list (buffer, trigger->hook_print_buffers))
         goto end;
@@ -627,6 +627,83 @@ trigger_callback_print_cb  (void *data, struct t_gui_buffer *buffer,
 end:
     if (pointers)
         weechat_hashtable_free (pointers);
+    if (extra_vars)
+        weechat_hashtable_free (extra_vars);
+
+    trigger->hook_running = 0;
+
+    return rc;
+}
+
+/*
+ * Callback for a timer hooked.
+ */
+
+int
+trigger_callback_timer_cb  (void *data, int remaining_calls)
+{
+    struct t_trigger *trigger;
+    struct t_hashtable *extra_vars;
+    char str_temp[128];
+    int rc;
+    time_t date;
+    struct tm *date_tmp;
+
+    /* get trigger pointer, return immediately if not found or trigger running */
+    trigger = (struct t_trigger *)data;
+    if (!trigger || trigger->hook_running)
+        return WEECHAT_RC_OK;
+
+    trigger->hook_count_cb++;
+    trigger->hook_running = 1;
+
+    extra_vars = NULL;
+
+    rc = trigger_return_code[weechat_config_integer (trigger->options[TRIGGER_OPTION_RETURN_CODE])];
+
+    /* create hashtable */
+    extra_vars = weechat_hashtable_new (32,
+                                        WEECHAT_HASHTABLE_STRING,
+                                        WEECHAT_HASHTABLE_STRING,
+                                        NULL,
+                                        NULL);
+    if (!extra_vars)
+        goto end;
+
+    /* add data in hashtable used for conditions/replace/command */
+    snprintf (str_temp, sizeof (str_temp), "%d", remaining_calls);
+    weechat_hashtable_set (extra_vars, "tg_remaining_calls", str_temp);
+    date = time (NULL);
+    date_tmp = localtime (&date);
+    if (date_tmp)
+    {
+        strftime (str_temp, sizeof (str_temp), "%Y-%m-%d %H:%M:%S", date_tmp);
+        weechat_hashtable_set (extra_vars, "tg_date", str_temp);
+    }
+
+    /* display debug info on trigger buffer */
+    if (!trigger_buffer && (weechat_trigger_plugin->debug >= 1))
+        trigger_buffer_open (0);
+    if (trigger_buffer)
+    {
+        weechat_printf_tags (trigger_buffer, "no_trigger",
+                             "timer\t%s%s",
+                             weechat_color ("chat_channel"),
+                             trigger->name);
+        trigger_buffer_display_hashtable ("extra_vars", extra_vars);
+    }
+
+    /* check conditions */
+    if (!trigger_callback_check_conditions (trigger, NULL, extra_vars))
+        goto end;
+
+    /* replace text with regex */
+    trigger_callback_replace_regex (trigger, extra_vars);
+
+    /* execute command */
+    trigger_callback_run_command (trigger, NULL, NULL, extra_vars);
+
+end:
     if (extra_vars)
         weechat_hashtable_free (extra_vars);
 
