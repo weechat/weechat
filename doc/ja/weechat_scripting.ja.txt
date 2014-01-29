@@ -35,7 +35,7 @@ WeeChat (Wee Enhanced Environment for Chat) はフリー、高速、軽量な
 [[scripts_in_weechat]]
 == WeeChat のスクリプト
 
-[[languages_specifities]]
+[[languages_specificities]]
 === 言語仕様
 
 ==== Python

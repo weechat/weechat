@@ -730,7 +730,7 @@ Vous pouvez essayer les astuces suivantes pour consommer moins de mémoire :
 Il y a 3 possibilités :
 
 . vous pouvez nous joindre sur IRC : 'irc.freenode.net', canal '#weechat'
-. vous pouvez utiliser le site savannah :
+. vous pouvez utiliser le site Savannah :
   * reporter un bug: https://savannah.nongnu.org/bugs/?group=weechat
   * demander une nouvelle fonctionnalité: https://savannah.nongnu.org/task/?group=weechat
   * envoyer un patch: https://savannah.nongnu.org/patch/?group=weechat

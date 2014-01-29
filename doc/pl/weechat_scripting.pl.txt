@@ -35,7 +35,7 @@ ale API jest takie same dla wszystkich języków.
 [[scripts_in_weechat]]
 == Skrypty w WeeChat
 
-[[languages_specifities]]
+[[languages_specificities]]
 === Specyfika języków
 
 ==== Python

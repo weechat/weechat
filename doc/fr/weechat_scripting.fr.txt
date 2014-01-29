@@ -36,7 +36,7 @@ l'API est la même pour les autres langages.
 [[scripts_in_weechat]]
 == Scripts dans WeeChat
 
-[[languages_specifities]]
+[[languages_specificities]]
 === Spécificités des langages
 
 ==== Python
@@ -271,7 +271,7 @@ rapport de crash ;)
 === Callbacks
 
 Tous les "callbacks" WeeChat doivent retourner WEECHAT_RC_OK ou
-WEECHAT_RC_ERROR (l'exception est le callback du "modifier", qui retourne une
+WEECHAT_RC_ERROR (l'exception est le callback du modificateur, qui retourne une
 chaîne de caractères).
 
 Les "callbacks" C utilisent un paramètre "data", qui est un pointeur. Dans
@@ -662,9 +662,9 @@ Puis sous WeeChat :
 ----
 
 [[hook_timer]]
-==== Ajouter un timer
+==== Ajouter un minuteur
 
-Ajoutez un timer avec `hook_timer`.
+Ajoutez un minuteur avec `hook_timer`.
 
 Exemple :
 
@@ -674,7 +674,7 @@ def timer_cb(data, remaining_calls):
     # ...
     return weechat.WEECHAT_RC_OK
 
-# timer appelé chaque minute quand la seconde est 00
+# minuteur appelé chaque minute quand la seconde est 00
 weechat.hook_timer(60 * 1000, 60, 0, "timer_cb", "")
 ----
 
@@ -869,8 +869,8 @@ weechat.hook_signal("*,irc_in2_join", "join_cb", "")
 [[irc_modify_messages]]
 ==== Modifier des messages
 
-L'extension IRC envoie un "modifier" appelé "irc_in_xxx" ("xxx" est la commande
-IRC) pour un message reçu, de sorte que vous puissiez le modifier.
+L'extension IRC envoie un modificateur appelé "irc_in_xxx" ("xxx" est la
+commande IRC) pour un message reçu, de sorte que vous puissiez le modifier.
 
 [source,python]
 ----

@@ -724,7 +724,7 @@ Esistono diversi trucchi per ottimizzare l'uso della memoria:
 Esistono 3 modi:
 
 . entrando su IRC: 'irc.freenode.net', canale `#weechat'
-. utilizzando il sito savannah:
+. utilizzando il sito Savannah:
   * segnalare un bug: https://savannah.nongnu.org/bugs/?group=weechat
   * richiedere nuove funzionalità: https://savannah.nongnu.org/task/?group=weechat
   * inviare una patch: https://savannah.nongnu.org/patch/?group=weechat

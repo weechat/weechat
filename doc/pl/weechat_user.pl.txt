@@ -37,7 +37,7 @@ Główne cechy to:
 
 Strona domowa WeeChat: http://weechat.org/
 
-[[pre-requisites]]
+[[prerequisites]]
 === Wymagania
 
 Żeby zainstalować WeeChat, potrzebujesz:

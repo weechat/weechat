@@ -136,7 +136,7 @@ Under WeeChat:
 === Plugin example
 
 Full example of plugin, which adds a command '/double': displays two times
-arguments on current buffer, or execute two times a command (ok that's not
+arguments on current buffer, or execute two times a command (OK that's not
 very useful, but that's just an example!):
 
 [source,C]
@@ -263,7 +263,7 @@ name = weechat.plugin_get_name(plugin)
 === Strings
 
 Many string functions below are already available thru standard C functions,
-but it's recommended to use functions in this API because they are ok with
+but it's recommended to use functions in this API because they are OK with
 UTF-8 and locale.
 
 ==== weechat_charset_set
@@ -1115,7 +1115,7 @@ Arguments:
 
 Return value:
 
-* same return code as function `regcomp` (0 if ok, other value for error,
+* same return code as function `regcomp` (0 if OK, other value for error,
   see `man regcomp`)
 
 C example:
@@ -1428,7 +1428,7 @@ C examples:
 
 [source,C]
 ----
-/* examples with english locale */
+/* examples with English locale */
 
 char *str = weechat_string_format_size (0); /* str == "0 byte" */
 /* ... */
@@ -3632,7 +3632,7 @@ Arguments:
 
 Return value:
 
-* 1 if ok, 0 if error
+* 1 if OK, 0 if error
 
 C example:
 
@@ -4151,7 +4151,7 @@ Arguments:
 ** 'struct t_config_option *option': option pointer
 ** 'const char *value': new value for option
 ** return value:
-*** 1 if value is ok
+*** 1 if value is OK
 *** 0 if value is invalid
 * 'callback_check_value_data': pointer given to check_value callback when it
   is called by WeeChat
@@ -6472,7 +6472,7 @@ beginning of hooks list, so it will be found and executed before other hooks.
 It's useful for modifiers, because execution order is important.
 
 To set a priority, you must use this syntax, for argument where priority is
-allowed: "nnn|name" where "nnn" is nonnegative integer with priority and "name"
+allowed: "nnn|name" where "nnn" is non-negative integer with priority and "name"
 the name for argument (priority does not appear in name, it is automatically
 removed from string).
 
@@ -6870,7 +6870,7 @@ Arguments:
 ** 'const char *command': command executed by child
 ** 'int return_code': return code:
 *** '>= 0': child return code for a command, and for URL possible values are:
-**** '0': transfer ok
+**** '0': transfer OK
 **** '1': invalid URL
 **** '2': transfer error
 **** '3': not enough memory
@@ -6907,8 +6907,8 @@ will be called more than one time.
 
 [IMPORTANT]
 Even if most of times your callback is called only once, you must ensure that
-many calls to callback are ok in your code: you must concatenate data issued by
-many calls and use data only when return code is nonnegative.
+many calls to callback are OK in your code: you must concatenate data issued by
+many calls and use data only when return code is non-negative.
 
 C example:
 
@@ -7211,11 +7211,11 @@ Arguments:
 ** 'EXPORT'
 ** 'NONE'
 * 'local_hostname': local hostname to use for connection (optional)
-* 'callback': function called when connection is ok or failed, arguments and
+* 'callback': function called when connection is OK or failed, arguments and
   return value:
 ** 'void *data': pointer
 ** 'int status': connection status:
-*** 'WEECHAT_HOOK_CONNECT_OK': connection ok
+*** 'WEECHAT_HOOK_CONNECT_OK': connection OK
 *** 'WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND': address not found
 *** 'WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND': IP address not found
 *** 'WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED': connection refused
@@ -8910,12 +8910,14 @@ List of modifiers used by WeeChat and plugins:
 | irc_out1_xxx ^(1)^ +
   _(WeeChat ≥ 0.3.7)_ |
   Server name |
-  Content of message about to be sent to IRC server (before automatic split to fit in 512 bytes) |
+  Content of message about to be sent to IRC server (before automatic split to
+  fit in 512 bytes) |
   New content of message
 
 | irc_out_xxx ^(1)^ |
   Server name |
-  Content of message about to be sent to IRC server (after automatic split to fit in 512 bytes) |
+  Content of message about to be sent to IRC server (after automatic split to
+  fit in 512 bytes) |
   New content of message
 
 | bar_condition_yyy ^(2)^ |
@@ -11804,8 +11806,8 @@ Arguments:
 ** 'columns_horizontal': items are filled horizontally, displayed with columns
 ** 'columns_vertical': items are filled vertically, displayed with columns
 * 'filling_left_right':
-** 'horizontal': items are filled horitontally (space after each item)
-** 'vertical': items are filled verticaly (new line after each item)
+** 'horizontal': items are filled horizontally (space after each item)
+** 'vertical': items are filled vertically (new line after each item)
 ** 'columns_horizontal': items are filled horizontally, displayed with columns
 ** 'columns_vertical': items are filled vertically, displayed with columns
 * 'size': bar size in chars (0 means automatic size)
@@ -12015,7 +12017,7 @@ Network functions.
 
 ==== weechat_network_pass_proxy
 
-Establish a connection/authentification to a proxy.
+Establish a connection/authentication to a proxy.
 
 [IMPORTANT]
 This function is blocking on call to connect(), so it must be called in a forked
@@ -12040,7 +12042,7 @@ Arguments:
 
 Return value:
 
-* 1 if connection is ok, 0 if an error occurred
+* 1 if connection is OK, 0 if an error occurred
 
 C example:
 
@@ -14231,7 +14233,7 @@ Arguments:
 
 Return value:
 
-* 1 if ok, 0 if error
+* 1 if OK, 0 if error
 
 C example:
 
@@ -14454,7 +14456,7 @@ Arguments:
 
 Return value:
 
-* 1 if ok, 0 if error
+* 1 if OK, 0 if error
 
 C example:
 
@@ -14462,7 +14464,7 @@ C example:
 ----
 if (weechat_upgrade_write_object (upgrade_file, 1, &infolist))
 {
-    /* ok */
+    /* OK */
 }
 else
 {
@@ -14514,7 +14516,7 @@ Arguments:
 
 Return value:
 
-* 1 if ok, 0 if error
+* 1 if OK, 0 if error
 
 C example:
 

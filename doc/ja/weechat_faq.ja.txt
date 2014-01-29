@@ -699,7 +699,7 @@ OpenBSD では、プラグインファイル名の末尾が ".so.0.0" です (Li
 3 つの方法があります:
 
 . IRC に参加: 'irc.freenode.net' 、チャンネル '#weechat'
-. savannah ウェブサイトを利用:
+. Savannah ウェブサイトを利用:
   * バグ報告: https://savannah.nongnu.org/bugs/?group=weechat
   * 新機能のリクエスト: https://savannah.nongnu.org/task/?group=weechat
   * パッチ送信: https://savannah.nongnu.org/patch/?group=weechat

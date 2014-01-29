@@ -39,7 +39,7 @@ Le principali caratteristiche:
 
 La home page di WeeChat si trova qui: http://weechat.org/
 
-[[pre-requisites]]
+[[prerequisites]]
 === Requisiti
 
 Per poter installare WeeChat, è necessario:

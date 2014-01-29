@@ -701,7 +701,7 @@ You can try following tips to consume less memory:
 There are 3 ways:
 
 . you can join us on IRC: 'irc.freenode.net', channel '#weechat'
-. you can use the savannah website:
+. you can use the Savannah website:
   * report a bug: https://savannah.nongnu.org/bugs/?group=weechat
   * request a new feature: https://savannah.nongnu.org/task/?group=weechat
   * send a patch: https://savannah.nongnu.org/patch/?group=weechat

@@ -812,7 +812,7 @@ It is possible to restore WeeChat session on another machine if you copy the con
 ----
 /uptime  [-o | -ol]
 
- -o: send uptime to current buffer as input (english string)
+ -o: send uptime to current buffer as input (English string)
 -ol: send uptime to current buffer as input (translated string)
 ----
 
@@ -822,7 +822,7 @@ It is possible to restore WeeChat session on another machine if you copy the con
 ----
 /version  [-o | -ol]
 
- -o: send version to current buffer as input (english string)
+ -o: send version to current buffer as input (English string)
 -ol: send version to current buffer as input (translated string)
 ----
 

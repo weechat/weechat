@@ -1426,7 +1426,7 @@ C 言語での使用例:
 
 [source,C]
 ----
-/* examples with english locale */
+/* examples with English locale */
 
 char *str = weechat_string_format_size (0); /* str == "0 byte" */
 /* ... */

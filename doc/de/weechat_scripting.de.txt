@@ -35,7 +35,7 @@ Allerdings ist die API für alle Skriptsprachen nahezu identisch.
 [[scripts_in_weechat]]
 == Skripten in WeeChat
 
-[[languages_specifities]]
+[[languages_specificities]]
 === Besonderheiten der einzelnen Skriptsprachen
 
 ==== Python

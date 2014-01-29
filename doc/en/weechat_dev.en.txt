@@ -462,7 +462,7 @@ irc_server_outqueue_send (struct t_irc_server *server)
 ----
 
 * Indent the `if` conditions, and use parentheses around conditions with an
-  operator (not needed for single booleans), like this:
+  operator (not needed for single boolean), like this:
 
 [source,C]
 ----

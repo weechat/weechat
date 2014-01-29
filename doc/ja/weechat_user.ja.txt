@@ -37,7 +37,7 @@ WeeChat (Wee Enhanced Environment for Chat) はフリーのチャットクライ
 
 WeeChat のホームページ: http://weechat.org/
 
-[[pre-requisites]]
+[[prerequisites]]
 === 事前に必要なもの
 
 WeeChat をインストールするには、以下のものが必要です:

@@ -1225,7 +1225,7 @@ script_repo_file_read (int quiet)
                             }
                             if (!ptr_desc)
                             {
-                                /* default description (english) */
+                                /* default description (English) */
                                 ptr_desc = weechat_hashtable_get (descriptions,
                                                                   "en");
                             }

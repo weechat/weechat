@@ -36,7 +36,7 @@ Quasi tutti gli esempi in questo manuale sono scritti in Python, ma l'API
 [[scripts_in_weechat]]
 == Script in WeeChat
 
-[[languages_specifities]]
+[[languages_specificities]]
 === Specifiche per i linguaggi
 
 ==== Python

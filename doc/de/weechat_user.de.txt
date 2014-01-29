@@ -38,7 +38,7 @@ wesentliche Merkmale:
 
 Die WeeChat Homepage findet man unter: http://weechat.org/
 
-[[pre-requisites]]
+[[prerequisites]]
 === Vorbereitung
 
 Um WeeChat zu installieren wird folgendes benötigt:

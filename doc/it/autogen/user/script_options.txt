@@ -159,7 +159,7 @@
 ** valori: qualsiasi stringa (valore predefinito: `"p,n"`)
 
 * [[option_script.look.translate_description]] *script.look.translate_description*
-** descrizione: `translate description of scripts (if translation is available in your language, otherwise english version is used)`
+** descrizione: `translate description of scripts (if translation is available in your language, otherwise English version is used)`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 

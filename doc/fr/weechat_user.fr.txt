@@ -38,7 +38,7 @@ Ses principales fonctionnalités sont les suivantes :
 
 La page d'accueil de WeeChat est ici : http://weechat.org/
 
-[[pre-requisites]]
+[[prerequisites]]
 === Prérequis
 
 Pour installer WeeChat, vous devez avoir :
@@ -1177,17 +1177,17 @@ Vous pouvez modifier ou ajouter des associations avec la commande `/key` en
 utilisant le contexte "mouse" (pour la syntaxe voir
 <<command_weechat_key,la commande /key>>).
 
-Un nom d'évènement consiste en un modifieur (facultatif), un bouton/roulette et
-un geste (facultatif). Les différents éléments sont séparés par "-".
+Un nom d'évènement consiste en un modificateur (facultatif), un bouton/roulette
+et un geste (facultatif). Les différents éléments sont séparés par "-".
 
-Liste des modifieurs :
+Liste des modificateurs :
 
 [width="50%",cols="3m,4",options="header"]
 |===
-| Modifieur | Description
-| ctrl      | Touche key[ctrl]
-| alt       | Touche key[alt]
-| ctrl-alt  | Touches key[ctrl-]key[alt]
+| Modificateur | Description
+| ctrl         | Touche key[ctrl]
+| alt          | Touche key[alt]
+| ctrl-alt     | Touches key[ctrl-]key[alt]
 |===
 
 Liste des boutons/roulette :
@@ -1527,9 +1527,9 @@ Sections :
 |===
 | Section    | Commande de contrôle                      | Description
 | debug      | <<command_weechat_debug,/debug set>>      +
-               /set weechat.debug.*                      | Niveau de debug, pour le Debug level, pour le cœur et les extensions (les options peuvent être ajoutées/supprimées dans la section)
+               /set weechat.debug.*                      | Niveau de debug, pour le cœur et les extensions (les options peuvent être ajoutées/supprimées dans la section)
 | startup    | /set weechat.startup.*                    | Options de démarrage
-| look       | /set weechat.look.*                       | Look and feel
+| look       | /set weechat.look.*                       | Aspect/présentation
 | palette    | <<command_weechat_color,/color alias>>    +
                /set weechat.palette.*                    | Alias de couleurs (les options peuvent être ajoutées/supprimées dans la section)
 | color      | /set weechat.color.*                      | Couleurs
@@ -1599,7 +1599,7 @@ Les extensions par défaut sont :
 | irc       | Discussion avec le protocole IRC
 | logger    | Enregistrement des tampons dans des fichiers
 | relay     | Relai de données via le réseau
-| rmodifier | Modification des chaînes de "modifier" avec des expressions régulières
+| rmodifier | Modification des chaînes de modificateur avec des expressions régulières
 | script    | Gestionnaire de scripts
 | python    | Interface (API) pour scripts Python
 | perl      | Interface (API) pour scripts Perl
@@ -1918,7 +1918,7 @@ Sections :
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section        | Commande de contrôle           | Description
-| look           | /set irc.look.*                | Look and feel
+| look           | /set irc.look.*                | Aspect/présentation
 | color          | /set irc.color.*               | Couleurs
 | network        | /set irc.network.*             | Options réseau
 | msgbuffer      | /set irc.msgbuffer.*           | <<irc_target_buffer,Tampon cible pour les messages IRC>> (les options peuvent être ajoutées/supprimées dans la section)
@@ -2349,7 +2349,7 @@ Sections :
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section | Commande de contrôle | Description
-| look    | /set logger.look.*   | Look and feel
+| look    | /set logger.look.*   | Aspect/présentation
 | color   | /set logger.color.*  | Couleurs
 | file    | /set logger.file.*   | Options pour les fichiers de log
 | level   | /set logger.level.*  | Niveau de log par tampon (les options peuvent être ajoutées/supprimées dans la section)
@@ -2506,7 +2506,7 @@ Sections :
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section | Commande de contrôle               | Description
-| look    | /set relay.look.*                  | Look and feel
+| look    | /set relay.look.*                  | Aspect/présentation
 | color   | /set relay.color.*                 | Couleurs
 | network | /set relay.network.*               | Options réseau
 | irc     | /set relay.irc.*                   | Options spécifiques au protocole irc (proxy irc)
@@ -2598,7 +2598,7 @@ si aucun serveur n'a été spécifié dans le relai).
 L'extension Relay peut envoyer les données à une interface distante en
 utilisant le protocole WeeChat.
 
-Vous pouvez vous connected avec une interface distante, voir la liste sur la
+Vous pouvez vous connecter avec une interface distante, voir la liste sur la
 page de téléchargement : http://weechat.org/download
 
 [IMPORTANT]
@@ -2640,7 +2640,7 @@ L'URI doit toujours se terminer par "/weechat" (pour les protocoles 'irc' et
 [[rmodifier_plugin]]
 === Extension Rmodifier
 
-L'extension Rmodifier vous permet de modifier les chaînes de "modifier" avec
+L'extension Rmodifier vous permet de modifier les chaînes de modificateur avec
 des expressions régulières.
 
 L'utilisation typique est pour cacher les mots de passe lorsque vous les tapez,
@@ -2655,7 +2655,7 @@ Sections :
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section  | Commande de contrôle                           | Description
-| look     | /set rmodifier.look.*                          | Look and feel
+| look     | /set rmodifier.look.*                          | Aspect/présentation
 | modifier | <<command_rmodifier_rmodifier,/rmodifier add>> +
              /set rmodifier.modifier.*                      | Rmodifiers
 |===
@@ -2674,12 +2674,12 @@ include::autogen/user/rmodifier_commands.txt[]
 
 Un rmodifier se compose de trois éléments :
 
-. un ou plusieurs "modifiers"
+. un ou plusieurs modificateurs
 . une expression régulière, permettant de capturer des "groupes"
 . une chaîne décrivant la sortie en utilisant les numéros de "groupes" capturés
   dans l'expression régulière
 
-Pour la liste des modifiers utilisés par WeeChat ou des extensions, voir la
+Pour la liste des modificateurs utilisés par WeeChat ou des extensions, voir la
 'Référence API Extension WeeChat', fonction 'weechat_hook_modifier'.
 
 Pour chaque groupe capturé, les actions suivantes sont possibles :
@@ -2691,14 +2691,14 @@ Pour chaque groupe capturé, les actions suivantes sont possibles :
 
 Exemple du rmodifier par défaut pour la commande `/oper` :
 
-* modifiers : `history_add,input_text_display`
+* modificateurs : `history_add,input_text_display`
 ** `history_add` : appelé lorsque WeeChat stocke la commande dans l'historique
 ** `input_text_display` : appelé lorsque la ligne de commande a changé
    (agit uniquement sur l'affichage, pas le contenu de la ligne de commande)
 * expression régulière : `^(/oper +\S+ +)(.*)`
 * groupes : `1,2*`
 
-À chaque fois que les modifiers "history_add" ou "input_text_display" sont
+À chaque fois que les modificateurs "history_add" ou "input_text_display" sont
 appelés, l'expression régulière est vérifiée. Si la chaîne correspond, alors
 elle est remplacée par les groupes capturés, tels que définis dans la chaîne
 des groupes.
@@ -2734,7 +2734,7 @@ Sections :
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section | Commande de contrôle  | Description
-| look    | /set script.look.*    | Look and feel
+| look    | /set script.look.*    | Aspect/présentation
 | color   | /set script.color.*   | Couleurs
 | scripts | /set script.scripts.* | Options pour le téléchargement des scripts
 |===
@@ -2795,7 +2795,7 @@ Sections :
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Section | Commande de contrôle | Description
-| look    | /set xfer.look.*     | Look and feel
+| look    | /set xfer.look.*     | Aspect/présentation
 | color   | /set xfer.color.*    | Couleurs
 | network | /set xfer.network.*  | Options réseau
 | file    | /set xfer.file.*     | Options pour les fichiers envoyés/reçus

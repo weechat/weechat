@@ -478,7 +478,7 @@ script_config_init ()
         script_config_file, ptr_section,
         "translate_description", "boolean",
         N_("translate description of scripts (if translation is available in "
-           "your language, otherwise english version is used)"),
+           "your language, otherwise English version is used)"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, &script_config_reload_scripts_cb, NULL, NULL, NULL);
     script_config_look_use_keys = weechat_config_new_option (

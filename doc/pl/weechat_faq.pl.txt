@@ -704,7 +704,7 @@ W celu zmniejszenia używanej pamięci możesz zastosować się do poniższych r
 Są 3 możliwości:
 
 . możesz dołączyć do nas na IRC: 'irc.freenode.net', kanał '#weechat'
-. możesz użyć strony www savannah:
+. możesz użyć strony www Savannah:
   * zgłosić błąd: https://savannah.nongnu.org/bugs/?group=weechat
   * poprosić o nową możliwość: https://savannah.nongnu.org/task/?group=weechat
   * wysłać patch: https://savannah.nongnu.org/patch/?group=weechat

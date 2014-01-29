@@ -208,7 +208,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 [[plugin_api]]
 == API extension
 
-Les chapîtres ci-dessous décrivent les fonctions de l'API, classées par
+Les chapitres ci-dessous décrivent les fonctions de l'API, classées par
 catégorie.
 
 Pour chaque fonction, on donne :
@@ -805,7 +805,7 @@ Exemple en C :
 int length_on_screen = weechat_strlen_screen ("é"); /* == 1 */
 ----
 
-Script (Python):
+Script (Python) :
 
 [source,python]
 ----
@@ -926,7 +926,7 @@ Exemple en C :
 [source,C]
 ----
 char *str = weechat_string_expand_home ("~/fichier.txt");
-/* résultat: "/home/xxx/fichier.txt" */
+/* résultat : "/home/xxx/fichier.txt" */
 /* ... */
 free (str);
 ----
@@ -1194,7 +1194,7 @@ _WeeChat ≥ 0.3.4._
 Vérifier si une chaîne a un ou plusieurs "highlights", en utilisant une
 expression régulière POSIX étendue. +
 Pour au moins une correspondance dans la chaîne, elle doit être entourée de
-délimiteurs (caractères différents de: alphanumérique, "-", "_" et "|").
+délimiteurs (caractères différents de : alphanumérique, "-", "_" et "|").
 
 Prototype :
 
@@ -1486,7 +1486,7 @@ Paramètres :
 
 * 'string' : chaîne
 * 'replacement' : si non NULL et non vide, les couleurs WeeChat sont remplacées
-  par le premier caractère de cette chaine, sinon les codes couleurs WeeChat et
+  par le premier caractère de cette chaîne, sinon les codes couleurs WeeChat et
   les caractères suivants (rattachés à la couleur) sont supprimés de la chaîne
 
 Valeur de retour :
@@ -1537,8 +1537,8 @@ Paramètres :
 
 * 'from' : chaîne à encoder
 * 'length' : longueur de chaîne à encoder (par exemple `strlen(from)`)
-* 'to' : pointeur vers la chaîne pour stocker le résultat (doit être suffisamment
-  long, le résultat est plus long que la chaîne initiale)
+* 'to' : pointeur vers la chaîne pour stocker le résultat (doit être
+  suffisamment long, le résultat est plus long que la chaîne initiale)
 
 Exemple en C :
 
@@ -1568,8 +1568,8 @@ int weechat_string_decode_base64 (const char *from, char *to);
 Paramètres :
 
 * 'from' : chaîne à décoder
-* 'to' : pointeur vers la chaîne pour stocker le résultat (doit être suffisamment
-  long, le résultat est plus court que la chaîne initiale)
+* 'to' : pointeur vers la chaîne pour stocker le résultat (doit être
+  suffisamment long, le résultat est plus court que la chaîne initiale)
 
 Valeur de retour :
 
@@ -1695,19 +1695,19 @@ char *weechat_string_eval_expression (const char *expr,
 Paramètres :
 
 * 'expr' : l'expression à évaluer
-* 'pointers' : hashtable avec les pointeurs (les clés doivent être des chaînes,
-  les valeurs doivent être des pointeurs); les pointeurs "window" et "buffer"
-  sont automatiquement ajoutés s'ils ne sont pas dans la hashtable (avec le
-  pointer vers fenêtre/tampon courants) (peut être NULL)
+* 'pointers' : table de hachage avec les pointeurs (les clés doivent être des
+  chaînes, les valeurs doivent être des pointeurs); les pointeurs "window" et
+  "buffer" sont automatiquement ajoutés s'ils ne sont pas dans la table de
+  hachage (avec le pointer vers fenêtre/tampon courants) (peut être NULL)
 * 'extra_vars' : variables additionnelles qui seront étendues (peut être NULL)
-* 'options' : hashtable avec des options (les clés et valeurs doivent être des
-  des chaînes) (peut être NULL) :
+* 'options' : table de hachage avec des options (les clés et valeurs doivent
+  être des chaînes) (peut être NULL) :
 ** 'type' : le comportement par défaut est de juste remplacer les valeurs dans
    l'expression, d'autres types peuvent être choisis :
 *** 'condition' : l'expression est évaluée comme une condition : les opérateurs
     et parenthèses sont utilisés, le résultat est un booléen ("0" ou "1")
-** 'prefix' : préfixe avant les variables à remplacer (par défaut: "${")
-** 'suffix' : suffixe après les variables à remplacer (par défaut: "}")
+** 'prefix' : préfixe avant les variables à remplacer (par défaut : "${")
+** 'suffix' : suffixe après les variables à remplacer (par défaut : "}")
 
 Valeur de retour :
 
@@ -2623,7 +2623,7 @@ int weechat_util_version_number (const char *version);
 
 Paramètres :
 
-* 'version' : version WeeChat sous forme de chaîne (exemple: "0.3.9" ou
+* 'version' : version WeeChat sous forme de chaîne (exemple : "0.3.9" ou
   "0.3.9-dev")
 
 Exemple en C :
@@ -3210,15 +3210,15 @@ weechat.list_free(list)
 ----
 
 [[hashtables]]
-=== Hashtables
+=== Tables de hachage
 
-Fonctions pour les hashtables.
+Fonctions pour les tables de hachage.
 
 ==== weechat_hashtable_new
 
 _WeeChat ≥ 0.3.3._
 
-Créer une nouvelle hashtable.
+Créer une nouvelle table de hachage.
 
 Prototype :
 
@@ -3236,33 +3236,33 @@ struct t_hashtable *weechat_hashtable_new (int size,
 
 Paramètres :
 
-* 'size' : taille du tableau interne pour stocker les clés sous forme de "hash",
-  une grande valeur utilise plus de mémoire mais présente une meilleure
-  performance (cela n'est *pas* une limite sur le nombre d'entrées de la
-  hashtable)
-* 'type_keys' : type pour les clés dans la hashtable :
+* 'size' : taille du tableau interne pour stocker les clés sous forme de
+  hachage, une grande valeur utilise plus de mémoire mais présente une meilleure
+  performance (cela n'est *pas* une limite sur le nombre d'entrées de la table
+  de hachage)
+* 'type_keys' : type pour les clés dans la table de hachage :
 ** 'WEECHAT_HASHTABLE_INTEGER'
 ** 'WEECHAT_HASHTABLE_STRING'
 ** 'WEECHAT_HASHTABLE_POINTER'
 ** 'WEECHAT_HASHTABLE_BUFFER'
 ** 'WEECHAT_HASHTABLE_TIME'
-* 'type_values' : type pour les valeurs dans la hashtable :
+* 'type_values' : type pour les valeurs dans la table de hachage :
 ** 'WEECHAT_HASHTABLE_INTEGER'
 ** 'WEECHAT_HASHTABLE_STRING'
 ** 'WEECHAT_HASHTABLE_POINTER'
 ** 'WEECHAT_HASHTABLE_BUFFER'
 ** 'WEECHAT_HASHTABLE_TIME'
-* 'callback_hash_key' : fonction appelée pour rendre le "hash" d'une clé (la clé
-  sous forme de nombre entier), peut être NULL si le type de clé n'est pas
-  "buffer" (une fonction de hash par défaut est utilisée), paramètres et valeur
-  de retour :
-** 'struct t_hashtable *hashtable' : pointeur vers la hashtable
+* 'callback_hash_key' : fonction appelée pour rendre le hachage d'une clé (la
+  clé sous forme de nombre entier), peut être NULL si le type de clé n'est pas
+  "buffer" (une fonction de hachage par défaut est utilisée), paramètres et
+  valeur de retour :
+** 'struct t_hashtable *hashtable' : pointeur vers la table de hachage
 ** 'const void *key' : clé
-** valeur de retour : "hash" de la clé
+** valeur de retour : hachage de la clé
 * 'callback_keycmp' : fonction appelée pour comparer deux clés, peut être NULL
   si le type de clé n'est pas "buffer" (une fonction de comparaison par défaut
   est utilisée), paramètres et valeur de retour :
-** 'struct t_hashtable *hashtable' : pointeur vers la hashtable
+** 'struct t_hashtable *hashtable' : pointeur vers la table de hachage
 ** 'const void *key1' : première clé
 ** 'const void *key2' : seconde clé
 ** valeur de retour :
@@ -3272,7 +3272,7 @@ Paramètres :
 
 Valeur de retour :
 
-* pointeur vers la nouvelle hashtable, NULL en cas d'erreur
+* pointeur vers la nouvelle table de hachage, NULL en cas d'erreur
 
 Exemple en C :
 
@@ -3292,8 +3292,8 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.3, mis à jour dans la 0.4.2._
 
-Ajouter ou mettre à jour une entrée dans une hashtable avec une taille pour la
-clé et la valeur.
+Ajouter ou mettre à jour une entrée dans une table de hachage avec une taille
+pour la clé et la valeur.
 
 Prototype :
 
@@ -3306,13 +3306,13 @@ struct t_hashtable_item *weechat_hashtable_set_with_size (struct t_hashtable *ha
 
 Paramètres :
 
-* 'hashtable' : pointeur vers la hashtable
+* 'hashtable' : pointeur vers la table de hachage
 * 'key' : pointeur vers la clé
 * 'key_size' : taille de la clé (en octets), utilisée seulement si le type de
-  clés dans la hashtable est "buffer"
+  clés dans la table de hachage est "buffer"
 * 'value' : pointeur vers la valeur
 * 'value_size' : taille de la valeur (en octets), utilisée seulement si le type
-  de valeurs dans la hashtable est "buffer"
+  de valeurs dans la table de hachage est "buffer"
 
 Valeur de retour :
 
@@ -3333,7 +3333,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.3, mis à jour dans la 0.4.2._
 
-Ajouter ou mettre à jour une entrée dans la hashtable.
+Ajouter ou mettre à jour une entrée dans la table de hachage.
 
 Prototype :
 
@@ -3345,7 +3345,7 @@ struct t_hashtable_item *weechat_hashtable_set (struct t_hashtable *hashtable,
 
 Paramètres :
 
-* 'hashtable' : pointeur vers la hashtable
+* 'hashtable' : pointeur vers la table de hachage
 * 'key' : pointeur vers la clé
 * 'value' : pointeur vers la valeur
 
@@ -3367,7 +3367,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.3._
 
-Retourner la valeur associée à une clé dans une hashtable.
+Retourner la valeur associée à une clé dans une table de hachage.
 
 Prototype :
 
@@ -3378,7 +3378,7 @@ void *weechat_hashtable_get (struct t_hashtable *hashtable, void *key);
 
 Paramètres :
 
-* 'hashtable' : pointeur vers la hashtable
+* 'hashtable' : pointeur vers la table de hachage
 * 'key' : pointeur vers la clé
 
 Valeur en retour :
@@ -3399,7 +3399,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.4._
 
-Vérifier si une clé est présente dans la hashtable.
+Vérifier si une clé est présente dans la table de hachage.
 
 Prototype :
 
@@ -3410,12 +3410,13 @@ int weechat_hashtable_has_key (struct t_hashtable *hashtable, void *key);
 
 Paramètres :
 
-* 'hashtable' : pointeur vers la hashtable
+* 'hashtable' : pointeur vers la table de hachage
 * 'key' : pointeur vers la clé
 
 Valeur en retour :
 
-* 1 si la clé est dans la hashtable, 0 si la clé n'est pas dans la hashtable
+* 1 si la clé est dans la table de hachage, 0 si la clé n'est pas dans la table
+  de hachage
 
 Exemple en C :
 
@@ -3423,7 +3424,7 @@ Exemple en C :
 ----
 if (weechat_hashtable_has_key (hashtable, "ma_cle"))
 {
-    /* la clé est dans la hashtable */
+    /* la clé est dans la table de hachage */
     /* ... */
 }
 ----
@@ -3435,7 +3436,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.3._
 
-Appeller une fonction pour chaque entrée d'une hashtable.
+Appeller une fonction pour chaque entrée d'une table de hachage.
 
 Prototype :
 
@@ -3451,8 +3452,8 @@ void hashtable_map (struct t_hashtable *hashtable,
 
 Paramètres :
 
-* 'hashtable' : pointeur vers la hashtable
-* 'callback_map' : fonction appelée pour chaque entrée de la hashtable
+* 'hashtable' : pointeur vers la table de hachage
+* 'callback_map' : fonction appelée pour chaque entrée de la table de hachage
 * 'callback_map_data' : pointeur donné au "callback" lorsqu'il est appelé
 
 Exemple en C :
@@ -3479,8 +3480,8 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.7._
 
-Appeller une fonction pour chaque entrée d'une hashtable, en envoyant les clés
-et valeurs sous forme de chaînes.
+Appeller une fonction pour chaque entrée d'une table de hachage, en envoyant les
+clés et valeurs sous forme de chaînes.
 
 Prototype :
 
@@ -3496,8 +3497,8 @@ void hashtable_map_string (struct t_hashtable *hashtable,
 
 Paramètres :
 
-* 'hashtable' : pointeur vers la hashtable
-* 'callback_map' : fonction appelée pour chaque entrée de la hashtable
+* 'hashtable' : pointeur vers la table de hachage
+* 'callback_map' : fonction appelée pour chaque entrée de la table de hachage
 * 'callback_map_data' : pointeur donné au "callback" lorsqu'il est appelé
 
 [NOTE]
@@ -3527,7 +3528,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.3._
 
-Retourner une valeur entière pour une propriété d'une hashtable.
+Retourner une valeur entière pour une propriété d'une table de hachage.
 
 Prototype :
 
@@ -3539,10 +3540,10 @@ int weechat_hashtable_get_integer (struct t_hashtable *hashtable,
 
 Paramètres :
 
-* 'hashtable' : pointeur vers la hashtable
+* 'hashtable' : pointeur vers la table de hachage
 * 'property' : nom de propriété :
-** 'size' : taille du tableau interne "htable" dans la hashtable
-** 'items_count' : nombre d'éléments dans la hashtable
+** 'size' : taille du tableau interne "htable" dans la table de hachage
+** 'items_count' : nombre d'éléments dans la table de hachage
 
 Valeur en retour :
 
@@ -3562,7 +3563,8 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.4._
 
-Retourner une valeur pour une propriété d'une hashtable sous forme de chaîne.
+Retourner une valeur pour une propriété d'une table de hachage sous forme de
+chaîne.
 
 Prototype :
 
@@ -3574,7 +3576,7 @@ const char *weechat_hashtable_get_string (struct t_hashtable *hashtable,
 
 Paramètres :
 
-* 'hashtable' : pointeur vers la hashtable
+* 'hashtable' : pointeur vers la table de hachage
 * 'property' : nom de la propriété :
 ** 'type_keys' : type pour les clés :
 *** 'integer' : entier
@@ -3591,7 +3593,8 @@ Paramètres :
 ** 'keys' : chaîne avec la liste des clés (format : "clé1,clé2,clé3")
 ** 'keys_sorted' : chaîne avec la liste triée des clés (format :
    "clé1,clé2,clé3")
-** 'values' : chaîne avec la liste des valeurs (format : "valeur1,valeur2,valeur3")
+** 'values' : chaîne avec la liste des valeurs (format :
+   "valeur1,valeur2,valeur3")
 ** 'keys_values' : chaîne avec la liste des clés et valeurs
    (format : "clé1:valeur1,clé2:valeur2,clé3:valeur3")
 ** 'keys_values_sorted' : chaîne avec la liste des clés et valeurs (triée sur
@@ -3618,7 +3621,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.4._
 
-Affecter un pointeur à une propriété d'une hashtable.
+Affecter un pointeur à une propriété d'une table de hachage.
 
 Prototype :
 
@@ -3630,12 +3633,12 @@ void weechat_hashtable_set_pointer (struct t_hashtable *hashtable,
 
 Paramètres :
 
-* 'hashtable' : pointeur vers la hashtable
+* 'hashtable' : pointeur vers la table de hachage
 * 'property' : nom de la propriété :
 ** 'callback_free_key' : définit la fonction "callback" pour supprimer les clés
-   de la hashtable _(WeeChat ≥ 0.4.2)_
+   de la table de hachage _(WeeChat ≥ 0.4.2)_
 ** 'callback_free_value' : définit la fonction "callback" pour supprimer les
-   valeurs de la hashtable
+   valeurs de la table de hachage
 * 'pointer' : nouvelle valeur de pointeur pour la propriété
 
 Exemple en C :
@@ -3658,7 +3661,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.3._
 
-Ajouter les éléments d'une hashtable dans un objet infolist.
+Ajouter les éléments d'une table de hachage dans un objet infolist.
 
 Prototype :
 
@@ -3671,7 +3674,7 @@ int weechat_hashtable_add_to_infolist (struct t_hashtable *hashtable,
 
 Paramètres :
 
-* 'hashtable' : pointeur vers la hashtable
+* 'hashtable' : pointeur vers la table de hachage
 * 'infolist_item' : pointeur vers l'objet de l'infolist
 * 'prefix' : chaîne utilisée comme préfixe pour les noms dans l'infolist
 
@@ -3685,7 +3688,7 @@ Exemple en C :
 ----
 weechat_hashtable_add_to_infolist (hashtable, infolist_item, "testhash");
 
-/* si la hashtable contient :
+/* si la table de hachage contient :
      "cle1" => "valeur 1"
      "cle2" => "valeur 2"
    alors les variables suivantes seront ajoutées dans l'objet de l'infolist :
@@ -3703,7 +3706,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.3._
 
-Supprimer un élément d'une hashtable.
+Supprimer un élément d'une table de hachage.
 
 Prototype :
 
@@ -3714,7 +3717,7 @@ void weechat_hashtable_remove (struct t_hashtable *hashtable, const void *key);
 
 Paramètres :
 
-* 'hashtable' : pointeur vers la hashtable
+* 'hashtable' : pointeur vers la table de hachage
 * 'key' : pointeur vers la clé
 
 Exemple en C :
@@ -3731,7 +3734,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.3._
 
-Supprimer tous les éléments d'une hashtable.
+Supprimer tous les éléments d'une table de hachage.
 
 Prototype :
 
@@ -3742,7 +3745,7 @@ void weechat_hashtable_remove_all (struct t_hashtable *hashtable);
 
 Paramètres :
 
-* 'hashtable' : pointeur vers la hashtable
+* 'hashtable' : pointeur vers la table de hachage
 
 Exemple en C :
 
@@ -3758,7 +3761,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.3._
 
-Supprimer une hashtable.
+Supprimer une table de hachage.
 
 Prototype :
 
@@ -3769,7 +3772,7 @@ void weechat_hashtable_free (struct t_hashtable *hashtable);
 
 Paramètres :
 
-* 'hashtable' : pointeur vers la hashtable
+* 'hashtable' : pointeur vers la table de hachage
 
 Exemple en C :
 
@@ -4639,7 +4642,7 @@ Paramètres :
 
 Valeur de retour :
 
-* 'WEECHAT_CONFIG_OPTION_SET_OK_CHANGED' si la veleur de l'option a été changée
+* 'WEECHAT_CONFIG_OPTION_SET_OK_CHANGED' si la valeur de l'option a été changée
 * 'WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE' si la valeur n'a pas changé
 * 'WEECHAT_CONFIG_OPTION_SET_ERROR' en cas d'erreur
 
@@ -6045,7 +6048,7 @@ Paramètres :
    tampon)
 ** 'cursor' : mouvement libre du curseur à l'écran
 ** 'mouse' : touches pour les évènements de souris
-* 'keys' : hashtable avec les associations de touches
+* 'keys' : table de hachage avec les associations de touches
 
 Valeur de retour :
 
@@ -6091,7 +6094,8 @@ _WeeChat ≥ 0.3.6._
 Supprimer une/des association(s) de touche(s).
 
 [WARNING]
-When calling this function, ensure that you will not remove a user key binding.
+Lors de l'appel à cette fonction, assurez-vous que vous n'allez pas supprimer
+une touche définie par l'utilisateur.
 
 Prototype :
 
@@ -6221,7 +6225,7 @@ Paramètres :
 *** '-italic' : désactiver l'italique
 *** 'underline' : activer le souligné
 *** '-underline' : désactiver le souligné
-*** 'emphasis' : activer/désactiver la mise en valeur du texte (note: cela ne
+*** 'emphasis' : activer/désactiver la mise en valeur du texte (note : cela ne
     devrait être utilisé que dans les barres, car WeeChat utilise la mise en
     valeur du texte lors de la recherche de texte dans le tampon)
     _(WeeChat ≥ 0.4.2)_
@@ -6239,7 +6243,7 @@ Le format de la couleur est : attributs (optionnel) + nom de couleur + ",fond"
 
 * `*` : texte gras
 * `!` : mode vidéo inverse
-* `/` : italic
+* `/` : italique
 * `_` : texte souligné
 * `|` : garder les attributs : ne pas réinitialiser
   gras/inverse/italique/souligné lors du changement de couleur
@@ -6550,14 +6554,14 @@ La fonction s'appelle "log_print" dans les scripts.
 
 [[hook_priority]]
 [float]
-==== Hook priority
+==== Priorité de hook
 
 _WeeChat ≥ 0.3.4._
 
 Pour certains "hooks", vous pouvez définir une priorité. Un "hook" avec une
 priorité plus élevée sera au début de la liste des "hooks", et donc il sera
 trouvé et exécuté avant les autres "hooks". Cela est pratique pour les
-"modifieurs", car l'ordre d'exécution est important.
+modificateurs, car l'ordre d'exécution est important.
 
 Pour définir une priorité, vous devez utiliser cette syntaxe, pour un paramètre
 où la priorité est autorisée : "nnn|nom" où "nnn" est un entier positif ou nul
@@ -6570,7 +6574,7 @@ Exemple en C :
 
 [source,C]
 ----
-/* accroche un modifieur avec priorité = 2000 */
+/* accroche un modificateur avec priorité = 2000 */
 weechat_hook_modifier ("2000|input_text_display", &modifier_cb, NULL);
 ----
 
@@ -6607,7 +6611,7 @@ Paramètres :
 * 'args' : paramètres pour la commande (affichés avec `/help command`)
 * 'args_description' : description des paramètres (affichée avec
   `/help command`)
-* 'completion' : modèlé pour la complétion de la commande : liste des
+* 'completion' : modèle pour la complétion de la commande : liste des
   complétions pour chaque paramètre, séparés par des espaces. Plusieurs
   complétions sont possibles pour un paramètre, séparées par "|". Plusieurs
   modèles de complétions sont possibles pour une même commande, séparés par
@@ -6679,12 +6683,12 @@ struct t_hook *my_command_hook =
 Par exemple, si la commande appelée est `/command abc def ghi`, alors 'argv' et
 'argv_eol' ont les valeurs suivantes :
 
-* 'argv':
+* 'argv' :
 ** 'argv[0]' == "/command"
 ** 'argv[1]' == "abc"
 ** 'argv[2]' == "def"
 ** 'argv[3]' == "ghi"
-* 'argv_eol':
+* 'argv_eol' :
 ** 'argv_eol[0]' == "/command abc def ghi"
 ** 'argv_eol[1]' == "abc def ghi"
 ** 'argv_eol[2]' == "def ghi"
@@ -6740,7 +6744,7 @@ Paramètres :
 * 'callback' : fonction appelée lorsque la commande est exécutée, paramètres et
   valeur de retour :
 ** 'void *data' : pointeur
-** 'struct t_gui_buffer *buffer' : tampon où la command est exécutée
+** 'struct t_gui_buffer *buffer' : tampon où la commande est exécutée
 ** 'const char *command' : la commande exécutée, avec ses paramètres
 ** valeur de retour :
 *** 'WEECHAT_RC_OK'
@@ -6791,7 +6795,7 @@ hook = weechat.hook_command_run("/input complete*", "my_command_run_cb", "")
 
 ==== weechat_hook_timer
 
-Accrocher un "timer" (fonction appelée à intervalles réguliers).
+Accrocher un minuteur (fonction appelée à intervalles réguliers).
 
 Prototype :
 
@@ -6811,14 +6815,14 @@ Paramètres :
   seconde)
 * 'align_second' : alignement sur la seconde. Par exemple, si la date courante
   est 09:00, si l'intervalle est 60000 (60 secondes), et que align_second = 60,
-  alors le timer sera appelé chaque minute quand la seconde sera 0
-* 'max_calls' : nombre maximum d'appels au timer (si 0, le timer n'a pas de
-  fin)
+  alors le minuteur sera appelé chaque minute quand la seconde sera 0
+* 'max_calls' : nombre maximum d'appels au minuteur (si 0, le minuteur n'a pas
+  de fin)
 * 'callback' : fonction appelée quand le délai est atteint, paramètres et valeur
   de retour :
 ** 'void *data' : pointeur
-** 'int remaining_calls' : nombre d'appels restants (-1 si le timer n'a pas de
-   fin)
+** 'int remaining_calls' : nombre d'appels restants (-1 si le minuteur n'a pas
+   de fin)
 ** valeur de retour :
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_ERROR'
@@ -6840,7 +6844,7 @@ my_timer_cb (void *data, int remaining_calls)
     return WEECHAT_RC_OK;
 }
 
-/* timer appelé toutes les 20 secondes */
+/* minuteur appelé toutes les 20 secondes */
 struct t_hook *my_timer_hook =
     weechat_hook_timer (20 * 1000, 0, 0, &my_timer_cb, NULL);
 ----
@@ -6857,7 +6861,7 @@ def my_timer_cb(data, remaining_calls):
     # ...
     return weechat.WEECHAT_RC_OK
 
-# timer appelé toutes les 20 secondes
+# minuteur appelé toutes les 20 secondes
 hook = weechat.hook_timer(20 * 1000, 0, 0, "my_timer_cb", "")
 ----
 
@@ -6882,7 +6886,7 @@ Paramètres :
 
 * 'fd' : descripteur de fichier
 * 'flag_read' : 1 = intercepter un évènement de lecture, 0 = ignorer
-* 'flag_write' : 1 = intercepter un évènement d'éctiture, 0 = ignorer
+* 'flag_write' : 1 = intercepter un évènement d'écriture, 0 = ignorer
 * 'flag_exception' : 1 = intercepter un évènement d'exception, 0 = ignorer
 * 'callback' : fonction appelée lorsqu'un des évènements sélectionnés se
   produit pour le fichier (ou le socket), paramètres et valeur de retour :
@@ -6942,7 +6946,7 @@ paramètres (comme le fait le shell). +
 Si le découpage n'est pas correct (selon les guillemets utilisés dans votre
 commande), ou si vous souhaitez utiliser le shell, vous pouvez utiliser la
 fonction <<_weechat_hook_process_hashtable,weechat_hook_process_hashtable>> avec
-les paramètres dans la hashtable 'options' _(WeeChat ≥ 0.4.0)_.
+les paramètres dans la table de hachage 'options' _(WeeChat ≥ 0.4.0)_.
 
 Prototype :
 
@@ -6965,18 +6969,18 @@ Paramètres :
   _(WeeChat ≥ 0.3.7)_ (voir ci-dessous)
 * 'timeout' : timeout pour la commande (en millisecondes) : après ce délai, le
   processus fils est tué (0 signifie pas de limite)
-* 'callback' : function appelée quand des données du fils sont disponibles, or
+* 'callback' : fonction appelée quand des données du fils sont disponibles, or
   ou quand le fils s'est terminé, paramètres et valeur de retour :
 ** 'void *data' : pointeur
 ** 'const char *command' : commande exécutée par le fils
 ** 'int return_code' : code retour :
-*** '>= 0': code retour du fils pour une commande, et pour l'URL, les valeurs
+*** '>= 0' : code retour du fils pour une commande, et pour l'URL, les valeurs
     possibles sont :
-**** '0': transfert ok
-**** '1': URL invalide
-**** '2': erreur de transfert
-**** '3': pas assez de mémoire
-**** '4': erreur avec un fichier
+**** '0' : transfert ok
+**** '1' : URL invalide
+**** '2' : erreur de transfert
+**** '3' : pas assez de mémoire
+**** '4' : erreur avec un fichier
 *** '< 0' : 'WEECHAT_HOOK_PROCESS_RUNNING' (données disponibles, mais le
     fils tourne toujours) ou 'WEECHAT_HOOK_PROCESS_ERROR' (erreur en lançant
     la commande)
@@ -7082,7 +7086,7 @@ hook = weechat.hook_process("ls", 5000, "my_process_cb", "")
 _WeeChat ≥ 0.3.7._
 
 Accrocher un processus (lancé par un fork) en utilisant des options dans une
-hashtable, et intercepter sa sortie.
+table de hachage, et intercepter sa sortie.
 
 Prototype :
 
@@ -7103,8 +7107,9 @@ Les paramètres sont les mêmes que ceux de la fonction
 <<_weechat_hook_process,weechat_hook_process>>, avec un paramètre
 supplémentaire :
 
-* 'options' : options pour la commande exécutée; la hashtable est dupliquée dans
-  la fonction, donc il est possible de la supprimer après cet appel
+* 'options' : options pour la commande exécutée; la table de hachage est
+  dupliquée dans la fonction, donc il est possible de la supprimer après cet
+  appel
 
 Pour une commande standard (ne commençant pas par "url:"), les options suivantes
 sont disponibles :
@@ -7134,8 +7139,8 @@ include::autogen/plugin_api/url_options.txt[]
 
 [NOTE]
 ^(1)^ Lorsque des constantes sont disponibles, elles doivent être utilisées
-comme valeur pour l'option. Pour les options avec le type "mask", le format est :
-"valeur1+valeur2+valeur3".
+comme valeur pour l'option. Pour les options avec le type "mask", le format
+est : "valeur1+valeur2+valeur3".
 
 Pour l'URL, deux options supplémentaires (chaînes) sont autorisées, pour le
 fichier en entrée/sortie :
@@ -7180,7 +7185,7 @@ my_process_cb (void *data, const char *command, int return_code,
     return WEECHAT_RC_OK;
 }
 
-/* exemple 1: téléchargement d'une URL */
+/* exemple 1 : téléchargement d'une URL */
 struct t_hashtable *options = weechat_hashtable_new (8,
                                                      WEECHAT_HASHTABLE_STRING,
                                                      WEECHAT_HASHTABLE_STRING,
@@ -7196,7 +7201,7 @@ if (options)
     weechat_hashtable_free (options);
 }
 
-/* exemple 2: exécution d'un programme de notification avec le message de quelqu'un */
+/* exemple 2 : exécution d'un programme de notification avec le message de quelqu'un */
 struct t_hashtable *options_cmd1 = weechat_hashtable_new (8,
                                                           WEECHAT_HASHTABLE_STRING,
                                                           WEECHAT_HASHTABLE_STRING,
@@ -7215,7 +7220,7 @@ if (options_cmd1)
     weechat_hashtable_free (options_cmd1);
 }
 
-/* exemple 3: appeler le shell pour exécuter la commande (la commande doit être SURE) */
+/* exemple 3 : appeler le shell pour exécuter la commande (la commande doit être SURE) */
 struct t_hashtable *options_cmd2 = weechat_hashtable_new (8,
                                                           WEECHAT_HASHTABLE_STRING,
                                                           WEECHAT_HASHTABLE_STRING,
@@ -7233,7 +7238,7 @@ if (options_cmd2)
 }
 ----
 
-Script (Python):
+Script (Python) :
 
 [source,python]
 ----
@@ -7253,12 +7258,12 @@ def my_process_cb(data, command, return_code, out, err):
         weechat.prnt("", "stderr: %s" % err)
     return weechat.WEECHAT_RC_OK
 
-# exemple 1: téléchargement d'une URL
+# exemple 1 : téléchargement d'une URL
 hook1 = weechat.hook_process_hashtable("url:http://www.weechat.org/",
                                        { "file_out": "/tmp/weechat.org.html" },
                                        20000, "my_process_cb", "")
 
-# exemple 2: exécution d'un programme de notification avec le message de quelqu'un
+# exemple 2 : exécution d'un programme de notification avec le message de quelqu'un
 hook2 = weechat.hook_process_hashtable("my-notify-command",
                                        { "arg1": "-from",
                                          "arg2": nick,
@@ -7266,7 +7271,7 @@ hook2 = weechat.hook_process_hashtable("my-notify-command",
                                          "arg4": message }, # paramètre non sûr
                                        20000, "my_process_cb", "")
 
-# exemple 3: appeler le shell pour exécuter la commande (la commande doit être SURE)
+# exemple 3 : appeler le shell pour exécuter la commande (la commande doit être SURE)
 hook3 = weechat.hook_process_hashtable("sh",
                                        { "arg1": "-c",
                                          "arg2": "ls -l /tmp | grep something" },
@@ -7310,7 +7315,7 @@ Paramètres :
   IPv4
 * 'retry' : numéro de nouvelle tentative, utilisé pour se rabattre sur les
   adresses IPv4 si la connexion IPv6 échoue
-* 'gnutls_sess' : GnuTLS session (optionnel)
+* 'gnutls_sess' : session GnuTLS (optionnel)
 * 'gnutls_cb' : callback pour GnuTLS (optionnel)
 * 'gnutls_dhkey_size' : taille de clé utilisée pour l'échange de clé
   Diffie-Hellman (GnuTLS)
@@ -7599,22 +7604,22 @@ Liste des signaux envoyés par WeeChat et les extensions :
 
 | guile | guile_script_loaded +
   _(WeeChat ≥ 0.3.9)_ |
-  Chaîne: chemin vers le script |
+  Chaîne : chemin vers le script |
   Script scheme chargé
 
 | guile | guile_script_unloaded +
   _(WeeChat ≥ 0.3.9)_ |
-  Chaîne: chemin vers le script |
+  Chaîne : chemin vers le script |
   Script scheme déchargé
 
 | guile | guile_script_installed +
   _(WeeChat ≥ 0.3.9)_ |
-  Chaîne: liste de chemins vers scripts installés (séparés par des virgules) |
+  Chaîne : liste de chemins vers scripts installés (séparés par des virgules) |
   Script(s) scheme installé(s)
 
 | guile | guile_script_removed +
   _(WeeChat ≥ 0.3.9)_ |
-  Chaîne: liste de scripts supprimés (séparés par des virgules) |
+  Chaîne : liste de scripts supprimés (séparés par des virgules) |
   Script(s) scheme supprimé(s)
 
 | irc | xxx,irc_in_yyy ^(1)^ |
@@ -7642,11 +7647,13 @@ Liste des signaux envoyés par WeeChat et les extensions :
 | irc | xxx,irc_out1_yyy ^(1)^ +
   _(WeeChat ≥ 0.3.7)_ |
   Chaîne : message |
-  Message IRC envoyé au serveur (avant découpage automatique pour tenir dans les 512 octets)
+  Message IRC envoyé au serveur (avant découpage automatique pour tenir dans les
+  512 octets)
 
 | irc | xxx,irc_out_yyy ^(1)^ |
   Chaîne : message |
-  Message IRC envoyé au serveur (après découpage automatique pour tenir dans les 512 octets)
+  Message IRC envoyé au serveur (après découpage automatique pour tenir dans les
+  512 octets)
 
 | irc | xxx,irc_outtags_yyy ^(1)^ +
   _(WeeChat ≥ 0.3.4)_ |
@@ -7700,28 +7707,30 @@ Liste des signaux envoyés par WeeChat et les extensions :
 
 | irc | irc_notify_join +
   _(WeeChat ≥ 0.3.8)_ |
-  Chaîne: nom du serveur + "," + pseudo |
+  Chaîne : nom du serveur + "," + pseudo |
   Un pseudo dans la liste de notifications a rejoint le serveur
 
 | irc | irc_notify_quit +
   _(WeeChat ≥ 0.3.8)_ |
-  Chaîne: nom du serveur + "," + pseudo |
+  Chaîne : nom du serveur + "," + pseudo |
   Un pseudo dans la liste de notifications a quitté le serveur
 
 | irc | irc_notify_away +
   _(WeeChat ≥ 0.3.8)_ |
-  Chaîne: nom du serveur + "," + pseudo + "," + message d'absence |
+  Chaîne : nom du serveur + "," + pseudo + "," + message d'absence |
   Un pseudo dans la liste de notifications est maintenant absent sur le serveur
 
 | irc | irc_notify_still_away +
   _(WeeChat ≥ 0.3.8)_ |
-  Chaîne: nom du serveur + "," + pseudo + "," + message d'absence |
-  Un pseudo dans la liste de notifications est toujours absent sur le serveur (le message d'absence a changé)
+  Chaîne : nom du serveur + "," + pseudo + "," + message d'absence |
+  Un pseudo dans la liste de notifications est toujours absent sur le serveur
+  (le message d'absence a changé)
 
 | irc | irc_notify_back +
   _(WeeChat ≥ 0.3.8)_ |
-  Chaîne: nom du serveur + "," + pseudo |
-  Un pseudo dans la liste de notifications est de retour (statut d'absence supprimé)
+  Chaîne : nom du serveur + "," + pseudo |
+  Un pseudo dans la liste de notifications est de retour (statut d'absence
+  supprimé)
 
 | logger | logger_start |
   Pointeur : tampon |
@@ -7737,102 +7746,102 @@ Liste des signaux envoyés par WeeChat et les extensions :
 
 | lua | lua_script_loaded +
   _(WeeChat ≥ 0.3.9)_ |
-  Chaîne: chemin vers le script |
+  Chaîne : chemin vers le script |
   Script lua chargé
 
 | lua | lua_script_unloaded +
   _(WeeChat ≥ 0.3.9)_ |
-  Chaîne: chemin vers le script |
+  Chaîne : chemin vers le script |
   Script lua déchargé
 
 | lua | lua_script_installed +
   _(WeeChat ≥ 0.3.9)_ |
-  Chaîne: liste de chemins vers scripts installés (séparés par des virgules) |
+  Chaîne : liste de chemins vers scripts installés (séparés par des virgules) |
   Script(s) lua installé(s)
 
 | lua | lua_script_removed +
   _(WeeChat ≥ 0.3.9)_ |
-  Chaîne: liste de scripts supprimés (séparés par des virgules) |
+  Chaîne : liste de scripts supprimés (séparés par des virgules) |
   Script(s) lua supprimé(s)
 
 | perl | perl_script_loaded +
   _(WeeChat ≥ 0.3.9)_ |
-  Chaîne: chemin vers le script |
+  Chaîne : chemin vers le script |
   Script perl chargé
 
 | perl | perl_script_unloaded +
   _(WeeChat ≥ 0.3.9)_ |
-  Chaîne: chemin vers le script |
+  Chaîne : chemin vers le script |
   Script perl déchargé
 
 | perl | perl_script_installed +
   _(WeeChat ≥ 0.3.9)_ |
-  Chaîne: liste de chemins vers scripts installés (séparés par des virgules) |
+  Chaîne : liste de chemins vers scripts installés (séparés par des virgules) |
   Script(s) perl installé(s)
 
 | perl | perl_script_removed +
   _(WeeChat ≥ 0.3.9)_ |
-  Chaîne: liste de scripts supprimés (séparés par des virgules) |
+  Chaîne : liste de scripts supprimés (séparés par des virgules) |
   Script(s) perl supprimé(s)
 
 | python | python_script_loaded +
   _(WeeChat ≥ 0.3.9)_ |
-  Chaîne: chemin vers le script |
+  Chaîne : chemin vers le script |
   Script python chargé
 
 | python | python_script_unloaded +
   _(WeeChat ≥ 0.3.9)_ |
-  Chaîne: chemin vers le script |
+  Chaîne : chemin vers le script |
   Script python déchargé
 
 | python | python_script_installed +
   _(WeeChat ≥ 0.3.9)_ |
-  Chaîne: liste de chemins vers scripts installés (séparés par des virgules) |
+  Chaîne : liste de chemins vers scripts installés (séparés par des virgules) |
   Script(s) python installé(s)
 
 | python | python_script_removed +
   _(WeeChat ≥ 0.3.9)_ |
-  Chaîne: liste de scripts supprimés (séparés par des virgules) |
+  Chaîne : liste de scripts supprimés (séparés par des virgules) |
   Script(s) python supprimé(s)
 
 | ruby | ruby_script_loaded +
   _(WeeChat ≥ 0.3.9)_ |
-  Chaîne: chemin vers le script |
+  Chaîne : chemin vers le script |
   Script ruby chargé
 
 | ruby | ruby_script_unloaded +
   _(WeeChat ≥ 0.3.9)_ |
-  Chaîne: chemin vers le script |
+  Chaîne : chemin vers le script |
   Script ruby déchargé
 
 | ruby | ruby_script_installed +
   _(WeeChat ≥ 0.3.9)_ |
-  Chaîne: liste de chemins vers scripts installés (séparés par des virgules) |
+  Chaîne : liste de chemins vers scripts installés (séparés par des virgules) |
   Script(s) ruby installé(s)
 
 | ruby | ruby_script_removed +
   _(WeeChat ≥ 0.3.9)_ |
-  Chaîne: liste de scripts supprimés (séparés par des virgules) |
+  Chaîne : liste de scripts supprimés (séparés par des virgules) |
   Script(s) ruby supprimé(s)
 
 | tcl | tcl_script_loaded +
   _(WeeChat ≥ 0.3.9)_ |
-  Chaîne: chemin vers le script |
+  Chaîne : chemin vers le script |
   Script tcl chargé
 
 | tcl | tcl_script_unloaded +
   _(WeeChat ≥ 0.3.9)_ |
-  Chaîne: chemin vers le script |
+  Chaîne : chemin vers le script |
   Script tcl déchargé
 
 | tcl | tcl_script_installed +
   _(WeeChat ≥ 0.3.9)_ |
-  Chaîne: liste de chemins vers scripts installés (séparés par des virgules) |
+  Chaîne : liste de chemins vers scripts installés (séparés par des virgules) |
   Script(s) tcl installé(s)
 
 | tcl | tcl_script_removed +
   _(WeeChat ≥ 0.3.9)_ |
-  Chaîne: liste de scripts supprimés (séparés par des virgules) |
+  Chaîne : liste de scripts supprimés (séparés par des virgules) |
   Script(s) tcl supprimé(s)
 
 | weechat | buffer_opened |
@@ -8026,7 +8035,7 @@ Liste des signaux envoyés par WeeChat et les extensions :
 
 | weechat | plugin_unloaded +
   _(WeeChat ≥ 0.3.9)_ |
-  Chaîne : nom de l'extension déchargée (exemple: "irc") |
+  Chaîne : nom de l'extension déchargée (exemple : "irc") |
   Extension déchargée
 
 | weechat | quit |
@@ -8090,7 +8099,7 @@ Liste des signaux envoyés par WeeChat et les extensions :
 
 | weechat | window_zoomed |
   Pointeur : fenêtre courante |
-  Zomm effectué sur la fenêtre
+  Zoom effectué sur la fenêtre
 
 | weechat | window_unzoom |
   Pointeur : fenêtre courante |
@@ -8106,7 +8115,7 @@ Liste des signaux envoyés par WeeChat et les extensions :
 
 | xfer | xfer_send_ready |
   Pointeur : infolist avec l'info xfer |
-  Xfer ready
+  Xfer prêt
 
 | xfer | xfer_accept_resume |
   Pointeur : infolist avec l'info xfer |
@@ -8114,7 +8123,7 @@ Liste des signaux envoyés par WeeChat et les extensions :
 
 | xfer | xfer_send_accept_resume |
   Pointeur : infolist avec l'info xfer |
-  Reprise xfer accceptée
+  Reprise xfer acceptée
 
 | xfer | xfer_start_resume |
   Pointeur : infolist avec l'info xfer |
@@ -8325,7 +8334,7 @@ Le paramètre est une chaîne avec le format suivant :
    automatiquement par WeeChat)
 * point-virgule
 * liste d'étiquettes (séparées par des virgules) utilisées lors de l'envoi du
-  du message (optionnel)
+  message (optionnel)
 * point-virgule
 * texte ou commande (requis)
 
@@ -8359,7 +8368,7 @@ weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
 
 _WeeChat ≥ 0.3.4._
 
-S'accrocher à un hsignal (signal avec une hashtable).
+S'accrocher à un hsignal (signal avec une table de hachage).
 
 Prototype :
 
@@ -8381,7 +8390,7 @@ Paramètres :
   de retour :
 ** 'void *data' : pointeur
 ** 'const char *signal' : signal reçu
-** 'struct t_hashtable *hashtable' : hashtable
+** 'struct t_hashtable *hashtable' : table de hachage
 ** valeur de retour :
 *** 'WEECHAT_RC_OK'
 *** 'WEECHAT_RC_OK_EAT' (arrêter l'envoi du signal immédiatement)
@@ -8486,7 +8495,7 @@ hook = weechat.hook_hsignal("test", "my_hsignal_cb", "")
 
 _WeeChat ≥ 0.3.4._
 
-Envoyer un hsignal (signal avec hashtable).
+Envoyer un hsignal (signal avec table de hachage).
 
 Prototype :
 
@@ -8498,7 +8507,7 @@ void weechat_hook_hsignal_send (const char *signal, struct t_hashtable *hashtabl
 Paramètres :
 
 * 'signal' : signal à envoyer
-* 'hashtable' : hashtable
+* 'hashtable' : table de hachage
 
 Exemple en C :
 
@@ -8536,8 +8545,8 @@ _WeeChat ≥ 0.3.4._
 Le hsignal "irc_redirect_command" peut être envoyé pour rediriger la sortie
 d'une commande irc vers un "callback".
 
-Le paramètre est une hashtable avec les entrées suivantes (les clés et valeurs
-sont des chaînes) :
+Le paramètre est une table de hachage avec les entrées suivantes (les clés et
+valeurs sont des chaînes) :
 
 * 'server' : nom interne du serveur (requis)
 * 'pattern' : modèle de redirection à utiliser (requis), soit un par défaut
@@ -8564,8 +8573,8 @@ sont des chaînes) :
   défaut)
 * 'string' : chaîne qui doit être dans les messages irc reçus (optionnel, mais
   recommandé, si une chaîne peut être utilisée pour identifier les messages)
-* 'timeout' : temps d'attente maxi pour la redirection, en secondes (optionnel,
-  60 par défaut)
+* 'timeout' : temps d'attente maximum pour la redirection, en secondes
+  (optionnel, 60 par défaut)
 * 'cmd_filter' : liste de commandes irc (séparées par des virgules) à filtrer
   (seules ces commandes seront transmises au "callback", les autres seront
   ignorées) (optionnel)
@@ -8577,8 +8586,8 @@ Lorsque la réponse complète à votre commande a été reçue, un hsignal est e
 Ce hsignal a le nom 'irc_redirection_xxx_yyy' où 'xxx' est le 'signal' et 'yyy'
 le 'pattern' utilisé.
 
-La hashtable envoyée dans le hsignal a le contenu suivant (les clés et valeurs
-sont des chaînes) :
+La table de hachage envoyée dans le hsignal a le contenu suivant (les clés et
+valeurs sont des chaînes) :
 
 * 'output' : sortie de la commande (les messages sont séparés par "\n")
 * 'output_size' : nombre d'octets dans 'output' (sous forme de chaîne)
@@ -8645,11 +8654,11 @@ _WeeChat ≥ 0.3.4._
 Le hsignal "irc_redirect_pattern" peut être envoyé pour créer un modèle de
 redirection irc (voir <<hsignal_irc_redirect_command>>).
 
-Le paramètre est une hashtable avec les entrées suivantes (les clés et valeurs
-sont des chaînes) :
+Le paramètre est une table de hachage avec les entrées suivantes (les clés et
+valeurs sont des chaînes) :
 
 * 'pattern' : nom du modèle (requis)
-* 'timeout' : temps d'attente maxi pour le modèle, en secondes (optionnel, 60
+* 'timeout' : temps d'attente maximum pour le modèle, en secondes (optionnel, 60
   par défaut)
 * 'cmd_start' : liste de commandes (séparées par des virgules) démarrant la
   redirection (optionnel)
@@ -8971,7 +8980,7 @@ weechat.hook_completion_list_add(completion, word, nick_completion, where)
 
 ==== weechat_hook_modifier
 
-Accrocher un "modifieur".
+Accrocher un modificateur.
 
 Prototype :
 
@@ -8987,15 +8996,15 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
 
 Paramètres :
 
-* 'modifier' : nom du "modifieur", liste des "modifieurs" utilisés par WeeChat
+* 'modifier' : nom du modificateur, liste des modificateurs utilisés par WeeChat
   ou des extensions
   (priorité autorisée, voir la note sur la <<hook_priority,priorité>>)
   (voir le tableau ci-dessous)
-* 'callback' : fonction appelée lorsque le "modifieur" est utilisé, paramètres
+* 'callback' : fonction appelée lorsque le modificateur est utilisé, paramètres
   et valeur de retour :
 ** 'void *data' : pointeur
-** 'const char *modifier' : nom du "modifieur"
-** 'const char *modifier_data' : données pour le "modifieur"
+** 'const char *modifier' : nom du modificateur
+** 'const char *modifier_data' : données pour le modificateur
 ** 'const char *string' : chaîne à modifier
 ** valeur de retour : nouvelle chaîne
 * 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
@@ -9005,11 +9014,11 @@ Valeur de retour :
 
 * pointeur vers le nouveau "hook", NULL en cas d'erreur
 
-Liste des modifieurs utilisés par WeeChat et les extensions :
+Liste des modificateurs utilisés par WeeChat et les extensions :
 
 [width="100%",cols="^2,3,4,4",options="header"]
 |===
-| "Modifieur" | Données du "modifieur" | Chaîne | Sortie
+| Modificateur | Données du modificateur | Chaîne | Sortie
 
 | charset_decode |
   extension.nom_tampon |
@@ -9026,7 +9035,7 @@ Liste des modifieurs utilisés par WeeChat et les extensions :
 | irc_color_decode |
   "1" pour garder les couleurs, "0" pour les supprimer |
   Toute chaîne |
-  Chaîne avec dec codes couleur WeeChat, ou sans couleur
+  Chaîne avec des codes couleur WeeChat, ou sans couleur
 
 | irc_color_encode |
   "1" pour garder les couleurs, "0" pour les supprimer |
@@ -9036,8 +9045,8 @@ Liste des modifieurs utilisés par WeeChat et les extensions :
 | irc_command_auth +
   _(WeeChat ≥ 0.4.1)_ |
   Nom du serveur |
-  Commande d'authentification (par exemple: `/msg nickserv identify password`) |
-  Commande avec le mot de passe caché (par exemple: `/msg nickserv identify ********`)
+  Commande d'authentification (par exemple : `/msg nickserv identify password`) |
+  Commande avec le mot de passe caché (par exemple : `/msg nickserv identify ********`)
 
 | irc_message_auth +
   _(WeeChat ≥ 0.4.1)_ |
@@ -9059,12 +9068,14 @@ Liste des modifieurs utilisés par WeeChat et les extensions :
 | irc_out1_xxx ^(1)^ +
   _(WeeChat ≥ 0.3.7)_ |
   Nom de serveur |
-  Contenu du message qui va être envoyé au serveur IRC (avant découpage automatique pour tenir dans les 512 octets) |
+  Contenu du message qui va être envoyé au serveur IRC (avant découpage
+  automatique pour tenir dans les 512 octets) |
   Nouveau contenu du message
 
 | irc_out_xxx ^(1)^ |
   Nom de serveur |
-  Contenu du message qui va être envoyé au serveur IRC (après découpage automatique pour tenir dans les 512 octets) |
+  Contenu du message qui va être envoyé au serveur IRC (après découpage
+  automatique pour tenir dans les 512 octets) |
   Nouveau contenu du message
 
 | bar_condition_yyy ^(2)^ |
@@ -9158,7 +9169,7 @@ hook = weechat.hook_modifier("weechat_print", "my_modifier_cb", "")
 
 ==== weechat_hook_modifier_exec
 
-Exécuter un ou plusieurs "modifieurs".
+Exécuter un ou plusieurs modificateurs.
 
 Prototype :
 
@@ -9171,8 +9182,8 @@ char *weechat_hook_modifier_exec (const char *modifier,
 
 Paramètres :
 
-* 'modifier' : nom du "modifieur"
-* 'modifier_data' : données du "modifieur"
+* 'modifier' : nom du modificateur
+* 'modifier_data' : données du modificateur
 * 'string' : chaîne à modifier
 
 Valeur de retour :
@@ -9273,7 +9284,8 @@ hook = weechat.hook_info("mon_info", "Une information", "Info sur les paramètre
 
 _WeeChat ≥ 0.3.4._
 
-Accrocher une information (le "callback" prend et retourne une hashtable).
+Accrocher une information (le "callback" prend et retourne une table de
+hachage).
 
 Prototype :
 
@@ -9294,16 +9306,17 @@ Paramètres :
 * 'info_name' : nom de l'information
   (priorité autorisée, voir la note sur la <<hook_priority,priorité>>)
 * 'description' : description
-* 'args_description' : description de la hashtable attendue
+* 'args_description' : description de la table de hachage attendue
   (optionnel, peut être NULL)
-* 'output_description' : description de la hashtable retournée par le "callback"
-  (optionnel, peut être NULL)
+* 'output_description' : description de la table de hachage retournée par le
+  "callback" (optionnel, peut être NULL)
 * 'callback' : fonction appelée quand l'information est demandée, paramètres et
   valeur de retour :
 ** 'void *data' : pointeur
 ** 'const char *info_name' : nom de l'information
-** 'struct t_hashtable *hashtable' : hashtable, dépendant de l'information
-** valeur de retour : hashtable demandée
+** 'struct t_hashtable *hashtable' : table de hachage, dépendant de
+   l'information
+** valeur de retour : table de hachage demandée
 * 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
   WeeChat
 
@@ -9319,14 +9332,14 @@ struct t_hashtable *
 my_info_hashtable_cb (void *data, const char *info_name, struct t_hashtable *hashtable)
 {
     /* ... */
-    return pointer_vers_nouvelle_hashtable;
+    return pointer_vers_nouvelle_table_de_hachage;
 }
 
 /* ajoute l'information "mon_info_hashtable" */
 struct t_hook *my_info_hook = weechat_hook_info_hashtable ("mon_info_hashtable",
                                                            "Une information",
-                                                           "Info sur la hashtable en entrée",
-                                                           "Info sur la hashtable en sortie",
+                                                           "Info sur la table de hachage en entrée",
+                                                           "Info sur la table de hachage en sortie",
                                                            &my_info_hashtable_cb, NULL);
 ----
 
@@ -9343,8 +9356,8 @@ def my_info_hashtable_cb(data, info_name, hashtable):
     return { "test_cle": "test_valeur" }
 
 hook = weechat.hook_info_hashtable("mon_info_hashtable", "Une information",
-                                   "Info sur la hashtable en entrée",
-                                   "Info sur la hashtable en sortie",
+                                   "Info sur la table de hachage en entrée",
+                                   "Info sur la table de hachage en sortie",
                                    "my_info_hashtable_cb", "")
 ----
 
@@ -9511,14 +9524,14 @@ Paramètres :
 * 'callback' : fonction appelée quand le focus est fait, paramètres et valeur de
   retour :
 ** 'void *data' : pointeur
-** 'struct t_hashtable *info' : hashtable avec les informations sur le focus et
-   les chaînes retournées par les autres appels aux "callbacks" de focus (avec
-   plus haute priorité) (voir le tableau ci-dessous)
-** valeur de retour : soit le pointeur vers la hashtable "info" (avec la
-   hashtable complétée), ou un pointeur vers une nouvelle hashtable (créée par
-   le "callback", avec clés et valeurs de type "string"), le contenu de cette
-   nouvelle hashtable sera ajouté à 'info' pour les autres appels aux
-   "callbacks" focus
+** 'struct t_hashtable *info' : table de hachage avec les informations sur le
+   focus et les chaînes retournées par les autres appels aux "callbacks" de
+   focus (avec plus haute priorité) (voir le tableau ci-dessous)
+** valeur de retour : soit le pointeur vers la table de hachage "info" (avec la
+   table de hachage complétée), ou un pointeur vers une nouvelle table de
+   hachage (créée par le "callback", avec clés et valeurs de type "string"), le
+   contenu de cette nouvelle table de hachage sera ajouté à 'info' pour les
+   autres appels aux "callbacks" focus
 * 'callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
    WeeChat
 
@@ -9527,10 +9540,10 @@ Pour un geste de souris, votre "callback" sera appelé deux fois : la première
 lorsque le bouton est pressé (ici la zone correspond à vôtre zone), la seconde
 fois lorsque le bouton est relâché, et la zone peut ne pas correspondre à la
 vôtre : donc vous devez *toujours* tester dans le "callback" si la zone
-correspond avant d'utiliser les informations de la hashtable.
+correspond avant d'utiliser les informations de la table de hachage.
 
-Contenu de la hashtable envoyée au "callback" (les clés et valeurs sont de type
-"string) :
+Contenu de la table de hachage envoyée au "callback" (les clés et valeurs sont
+de type "string") :
 
 [width="100%",cols="5m,5,8,3",options="header"]
 |===
@@ -9603,7 +9616,7 @@ Exemple en C :
 struct t_hashtable *
 my_focus_nicklist_cb (void *data, struct t_hashtable *info)
 {
-    /* ajout de chaînes dans la hashtable */
+    /* ajout de chaînes dans la table de hachage */
     /* ... */
 
     return info;
@@ -9632,7 +9645,7 @@ hook = weechat.hook_focus("buffer_nicklist", "my_focus_nicklist_cb", "")
 
 ==== weechat_hook_set
 
-_WeeChat ≥ 0.3.9 (script: WeeChat ≥ 0.4.3)._
+_WeeChat ≥ 0.3.9 (script : WeeChat ≥ 0.4.3)._
 
 Affecter une valeur à une propriété d'un hook.
 
@@ -9714,7 +9727,7 @@ void weechat_unhook (struct t_hook *hook);
 
 Paramètres :
 
-* 'hook' : quelque chose d'accroché avec "weechat_hook_xxx()"
+* 'hook' : quelque chose accroché avec "weechat_hook_xxx()"
 
 Exemple en C :
 
@@ -9766,7 +9779,7 @@ weechat.unhook_all()
 ----
 
 [[buffers]]
-=== Buffers
+=== Tampons
 
 Fonctions pour créer/interroger/fermer les tampons.
 
@@ -10158,7 +10171,7 @@ Paramètres :
 ** 'nicklist' : 1 si la liste de pseudos est activée, sinon 0
 ** 'nicklist_case_sensitive' : 1 si les pseudos sont sensibles à la casse,
    sinon 0
-** 'nicklist_max_length' : longueur maxi d'un pseudo
+** 'nicklist_max_length' : longueur maximale d'un pseudo
 ** 'nicklist_display_groups' : 1 si les groupes sont affichés, sinon 0
 ** 'nicklist_count' : nombre de pseudos et groupes dans la liste de pseudos
 ** 'nicklist_groups_count' : nombre de groupes dans la liste de pseudos
@@ -10224,7 +10237,7 @@ Paramètres :
 ** 'full_name' : nom complet du tampon ("extension.nom") _(WeeChat ≥ 0.3.7)_
 ** 'short_name' : nom court du tampon (note: utilisé pour l'affichage seulement
    et peut être changé par l'utilisateur, il ne doit pas être utilisé pour
-   trouver le nom du tampon, utlisez à la place 'name', 'full_name' ou bien la
+   trouver le nom du tampon, utilisez à la place 'name', 'full_name' ou bien la
    variable locale 'channel')
 ** 'title' : titre du tampon
 ** 'input' : texte saisi
@@ -10343,8 +10356,8 @@ Propriétés :
 | completion_freeze | "0", "1" |
   "0" : pas de gel de la complétion (valeur par défaut)
   (option globale, le pointeur vers le tampon n'est pas utilisé) +
-  "1" : ne pas arrêter la complétion lorsque la ligne de commande est mise à jour
-  (option globale, le pointeur vers le tampon n'est pas utilisé)
+  "1" : ne pas arrêter la complétion lorsque la ligne de commande est mise à
+  jour (option globale, le pointeur vers le tampon n'est pas utilisé)
 
 | unread | - |
   Définit le marqueur de données non lues après la dernière ligne du tampon
@@ -10400,7 +10413,7 @@ Propriétés :
   groupes de la liste des pseudos
 
 | highlight_words | "-" ou une liste de mots séparés par des virgules |
-  "-" est une valeur spécials pour désactiver tout highlight sur ce tampon, ou
+  "-" est une valeur spéciale pour désactiver tout highlight sur ce tampon, ou
   une liste de mots à mettre en valeur dans ce tampon, par exemple :
   "abc,def,ghi"
 
@@ -10473,7 +10486,7 @@ Exemple en C :
 /* désactiver la hotlist (pour tous les tampons) */
 weechat_buffer_set (NULL, "hotlist", "-");
 
-/* activer à nouveaula hotlist */
+/* activer à nouveau la hotlist */
 weechat_buffer_set (NULL, "hotlist", "+");
 
 /* changer le nom du tampon */
@@ -10537,7 +10550,7 @@ Paramètres :
 ** 'nickcmp_callback' : définit la fonction "callback" de comparaison de pseudos
    (ce "callback" est appelé lors de la recherche d'un pseudo dans la liste des
    pseudos) _(WeeChat ≥ 0.3.9)_
-** 'nickcmp_callback_data': définit les données pour le "callback" de
+** 'nickcmp_callback_data' : définit les données pour le "callback" de
    comparaison de pseudos _(WeeChat ≥ 0.3.9)_
 * 'pointer' : nouvelle valeur de pointeur pour la propriété
 
@@ -10632,7 +10645,7 @@ Paramètres :
 
 * 'buffer' : pointeur vers le tampon
 * 'string' : liste de tampons, séparés par des virgules :
-** "*" signigie tous les tampons
+** "*" signifie tous les tampons
 ** un nom commençant par "!" est exclu
 ** un nom peut commencer ou se terminer par "*" pour correspondre à plusieurs
    tampons
@@ -11775,7 +11788,7 @@ bar_item = weechat.bar_item_search("myitem")
 
 _Mis à jour dans la version 0.4.2._
 
-Créér un nouvel objet de barre.
+Créer un nouvel objet de barre.
 
 Prototype :
 
@@ -11802,8 +11815,8 @@ Paramètres :
 ** 'struct t_gui_buffer *buffer' : tampon affiché dans la fenêtre (si la fenêtre
    est NULL alors c'est le tampon courant) ou tampon passé dans l'objet de
    barre avec la syntaxe : "@buffer:item" _(WeeChat ≥ 0.4.2)_
-** 'struct t_hashtable *extra_info' : toujours NULL (le paramètre est réservé pour
-   une version future) _(WeeChat ≥ 0.4.2)_
+** 'struct t_hashtable *extra_info' : toujours NULL (le paramètre est réservé
+   pour une version future) _(WeeChat ≥ 0.4.2)_
 ** valeur de retour : contenu de l'objet de barre
 * 'build_callback_data' : pointeur donné au "callback" lorsqu'il est appelé par
   WeeChat
@@ -11965,7 +11978,7 @@ bar = weechat.bar_search("mybar")
 
 ==== weechat_bar_new
 
-Créér une nouvelle barre.
+Créer une nouvelle barre.
 
 Prototype :
 
@@ -12006,20 +12019,20 @@ Paramètres :
 * 'position' : 'top' (en haut), 'bottom' (en bas), 'left' (à gauche) ou 'right'
   (à droite)
 * 'filling_top_bottom' :
-** 'horizontal' : les objets sont remplis horizontallement (avec un espace
+** 'horizontal' : les objets sont remplis horizontalement (avec un espace
    entre chaque objet)
 ** 'vertical' : les objets sont remplis verticalement (avec une nouvelle ligne
    entre chaque objet)
-** 'columns_horizontal' : les objets sont remplis horizontallement, affichés
+** 'columns_horizontal' : les objets sont remplis horizontalement, affichés
    sous forme de colonnes
 ** 'columns_vertical' : les objets sont remplis verticalement, affichés sous
    forme de colonnes
 * 'filling_left_right' :
-** 'horizontal' : les objets sont remplis horizontallement (avec un espace
+** 'horizontal' : les objets sont remplis horizontalement (avec un espace
    entre chaque objet)
 ** 'vertical' : les objets sont remplis verticalement (avec une nouvelle ligne
    entre chaque objet)
-** 'columns_horizontal' : les objets sont remplis horizontallement, affichés
+** 'columns_horizontal' : les objets sont remplis horizontalement, affichés
    sous forme de colonnes
 ** 'columns_vertical' : les objets sont remplis verticalement, affichés sous
    forme de colonnes
@@ -12031,7 +12044,7 @@ Paramètres :
 * 'separator' :
 ** 'on' : la barre a un séparateur avec les autres fenêtres/barres
 ** 'off' : pas de séparateur
-* 'items' : liste des objets dans la barre, séparés par une virbule (espace
+* 'items' : liste des objets dans la barre, séparés par une virgule (espace
   entre les objets), ou "+" (objets collés)
 
 Valeur de retour :
@@ -12297,7 +12310,7 @@ Paramètres :
 
 * 'proxy' : nom du proxy à utiliser
 * 'address' : adresse où se connecter (avec le port)
-* 'address_length' : longeur du paramètre 'address'
+* 'address_length' : longueur du paramètre 'address'
 
 Valeur de retour :
 
@@ -12386,7 +12399,7 @@ weechat.prnt("", "Le répertoire de WeeChat est : %s" % weechat.info_get("weecha
 
 _WeeChat ≥ 0.3.4._
 
-Retourner une information, sous forme de hashtable, de WeeChat ou d'une
+Retourner une information, sous forme de table de hachage, de WeeChat ou d'une
 extension.
 
 Prototype :
@@ -12400,12 +12413,12 @@ struct t_hashtable *weechat_info_get_hashtable (const char *info_name,
 Paramètres :
 
 * 'info_name' : nom de l'information à lire (voir le tableau ci-dessous)
-* 'hashtable' : hashtable avec les paramètres (dépendant de l'information
+* 'hashtable' : table de hachage avec les paramètres (dépendant de l'information
   demandée) (optionnel, NULL si aucun paramètre n'est nécessaire)
 
 Valeur de retour :
 
-* hashtable avec l'information demandée, NULL en cas d'erreur
+* table de hachage avec l'information demandée, NULL en cas d'erreur
 
 Infos :
 
@@ -12469,13 +12482,13 @@ Chaque variable a un type et une valeur. Les types possibles sont :
 * 'integer' : nombre entier
 * 'string' : chaîne de caractères
 * 'pointer' : pointeur
-* 'buffer' : tampon avec une taille fixe, peut contenit n'importe quel type
-  de données
+* 'buffer' : tampon avec une taille fixe, peut contenir n'importe quel type de
+  données
 * 'time' : date/heure
 
 ==== weechat_infolist_new
 
-Créér une "infolist".
+Créer une "infolist".
 
 Prototype :
 
@@ -12967,7 +12980,7 @@ Paramètres :
 
 Valeur de retour :
 
-* ponteur vers la variable trouvée, NULL si la variable n'est pas trouvée
+* pointeur vers la variable trouvée, NULL si la variable n'est pas trouvée
 
 Exemple en C :
 
@@ -13160,7 +13173,7 @@ weechat.prnt("", "pointeur = 0x%s" % weechat.infolist_pointer(infolist, "mon_poi
 ==== weechat_infolist_buffer
 
 Retourner la valeur de la variable de l'objet courant de l'infolist, sous forme
-de buffer.
+de tampon de données.
 
 Prototype :
 
@@ -13179,7 +13192,7 @@ Paramètres :
 
 Valeur de retour :
 
-* pointeur vers le "buffer"
+* pointeur vers le tampon de données
 
 Exemple en C :
 
@@ -13283,7 +13296,7 @@ Le seul moyen pour mettre à jour des données est d'appeler la fonction
 
 _WeeChat ≥ 0.3.6, mis à jour dans la 0.3.9 et 0.4.0._
 
-Créér un "hdata".
+Créer un "hdata".
 
 [NOTE]
 .hdata vs infolist
@@ -13329,8 +13342,8 @@ Paramètres :
   _(WeeChat ≥ 0.3.9)_, paramètres et valeur de retour :
 ** 'void *data' : pointeur
 ** 'struct t_hdata *hdata' : pointeur vers le hdata
-** 'struct t_hashtable *hashtable' : hashtable avec les variables à mettre à
-   jour (voir <<_weechat_hdata_update,weechat_hdata_update>>)
+** 'struct t_hashtable *hashtable' : table de hachage avec les variables à
+   mettre à jour (voir <<_weechat_hdata_update,weechat_hdata_update>>)
 ** valeur de retour : nombre de variables mises à jour
 * 'callback_update_data' : pointeur donné au "callback" lorsqu'il est appelé par
   WeeChat _(WeeChat ≥ 0.3.9)_
@@ -13353,7 +13366,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.6._
 
-Créér une nouvelle variable dans le hdata.
+Créer une nouvelle variable dans le hdata.
 
 Prototype :
 
@@ -13380,16 +13393,16 @@ Paramètres :
 ** WEECHAT_HDATA_OTHER
 * 'update_allowed' : 1 si la mise à jour de la variable est autorisée, sinon 0
   _(WeeChat ≥ 0.3.9)_
-* 'array_size' : non NULL seulement si la variable est un tableau, et peut être :
-  _(WeeChat ≥ 0.3.9)_
+* 'array_size' : non NULL seulement si la variable est un tableau, et peut
+  être : _(WeeChat ≥ 0.3.9)_
 ** nom d'une variable du hdata : cette variable sera utilisée comme taille de
    tableau (taille dynamique pour le tableau)
 ** entier (sous forme de chaîne) : taille fixe pour le tableau
 ** '*' : taille automatique : la taille est calculée en examinant les valeurs,
    lorsque le premier NULL est trouvé (seulement pour le type string, pointer ou
    hashtable)
-* 'hdata_name' : nom d'un hdata (si c'est un pointeur vers une structure qui a un
-  hdata)
+* 'hdata_name' : nom d'un hdata (si c'est un pointeur vers une structure qui a
+  un hdata)
 
 Exemple en C :
 
@@ -13438,7 +13451,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.6._
 
-Créér un nouveau pointer vers une liste dans le hdata.
+Créer un nouveau pointer vers une liste dans le hdata.
 
 Prototype :
 
@@ -13501,9 +13514,9 @@ _WeeChat ≥ 0.3.6._
 Retourner un "hdata" pour une structure de WeeChat ou d'une extension.
 
 [NOTE]
-Le "hdata" ne contient aucune donnée, il s'agit seulement d'une hashtable avec
-la position (offset) des variables dans la structure. Cela signifie que vous
-aurez besoin de ce hdata et d'un pointeur vers un objet WeeChat ou d'une
+Le "hdata" ne contient aucune donnée, il s'agit seulement d'une table de hachage
+avec la position (offset) des variables dans la structure. Cela signifie que
+vous aurez besoin de ce hdata et d'un pointeur vers un objet WeeChat ou d'une
 extension pour lire des données.
 
 Prototype :
@@ -14048,8 +14061,8 @@ if buffer:
 
 _WeeChat ≥ 0.4.1._
 
-Chercher un élément dans la liste: l'expression 'search' est évaluée pour chaque
-élément dans la liste, jusqu'à trouver l'élément (ou la fin de la liste).
+Chercher un élément dans la liste : l'expression 'search' est évaluée pour
+chaque élément dans la liste, jusqu'à trouver l'élément (ou la fin de la liste).
 
 Prototype :
 
@@ -14125,7 +14138,7 @@ Paramètres :
 * 'pointer' : pointeur vers un objet WeeChat ou d'une extension
 * 'name' : nom de la variable (doit être de type "char"); pour les tableaux,
   le nom peut être "N|name" où N est un index dans le tableau (démarrant à 0),
-  par exemple: "2|name"
+  par exemple : "2|name"
 
 Valeur de retour :
 
@@ -14169,7 +14182,7 @@ Paramètres :
 * 'pointer' : pointeur vers un objet WeeChat ou d'une extension
 * 'name' : nom de la variable (doit être de type "integer"); pour les tableaux,
   le nom peut être "N|name" où N est un index dans le tableau (démarrant à 0),
-  par exemple: "2|name"
+  par exemple : "2|name"
 
 Valeur de retour :
 
@@ -14217,7 +14230,7 @@ Paramètres :
 * 'pointer' : pointeur vers un objet WeeChat ou d'une extension
 * 'name' : nom de la variable (doit être de type "long"); pour les tableaux,
   le nom peut être "N|name" où N est un index dans le tableau (démarrant à 0),
-  par exemple: "2|name"
+  par exemple : "2|name"
 
 Valeur de retour :
 
@@ -14261,7 +14274,7 @@ Paramètres :
 * 'pointer' : pointeur vers un objet WeeChat ou d'une extension
 * 'name' : nom de la variable (doit être de type "string"); pour les tableaux,
   le nom peut être "N|name" où N est un index dans le tableau (démarrant à 0),
-  par exemple: "2|name"
+  par exemple : "2|name"
 
 Valeur de retour :
 
@@ -14309,7 +14322,7 @@ Paramètres :
 * 'pointer' : pointeur vers un objet WeeChat ou d'une extension
 * 'name' : nom de la variable (doit être de type "pointeur"); pour les tableaux,
   le nom peut être "N|name" où N est un index dans le tableau (démarrant à 0),
-  par exemple: "2|name"
+  par exemple : "2|name"
 
 Valeur de retour :
 
@@ -14357,7 +14370,7 @@ Paramètres :
 * 'pointer' : pointeur vers un objet WeeChat ou d'une extension
 * 'name' : nom de la variable (doit être de type "time"); pour les tableaux,
   le nom peut être "N|name" où N est un index dans le tableau (démarrant à 0),
-  par exemple: "2|name"
+  par exemple : "2|name"
 
 Valeur de retour :
 
@@ -14412,7 +14425,7 @@ if ptr:
 _WeeChat ≥ 0.3.7._
 
 Retourner la valeur de la variable dans la structure en utilisant le hdata, sous
-forme de hashtable.
+forme de table de hachage.
 
 Prototype :
 
@@ -14425,13 +14438,13 @@ Paramètres :
 
 * 'hdata' : pointeur vers le hdata
 * 'pointer' : pointeur vers un objet WeeChat ou d'une extension
-* 'name' : nom de la variable (doit être de type "hashtable"); pour les tableaux,
-  le nom peut être "N|name" où N est un index dans le tableau (démarrant à 0),
-  par exemple: "2|name"
+* 'name' : nom de la variable (doit être de type "hashtable"); pour les
+  tableaux, le nom peut être "N|name" où N est un index dans le tableau
+  (démarrant à 0), par exemple : "2|name"
 
 Valeur de retour :
 
-* valeur de la variable, sous forme de pointeur vers la hashtable
+* valeur de la variable, sous forme de pointeur vers la table de hachage
 
 Exemple en C :
 
@@ -14520,10 +14533,10 @@ Paramètres :
 * 'pointer' : pointeur vers un objet WeeChat ou d'une extension
 * 'hashtable' : variables à mettre à jour : les clés sont les noms des
   variables, les valeurs sont les nouvelles valeurs pour les variables (clés et
-  valeurs sont des chaînes de caractères), quelqes clés spéciales sont
+  valeurs sont des chaînes de caractères), quelques clés spéciales sont
   acceptées :
 ** clé `__create_allowed` (avec n'importe quelle valeur) : retourne 1 si la
-   création est autorisée pour la strucrure, sinon 0
+   création est autorisée pour la structure, sinon 0
    _(WeeChat ≥ 0.4.0)_
 ** clé `__delete_allowed` (avec n'importe quelle valeur) : retourne 1 si la
    suppression est autorisée pour la structure, sinon 0
@@ -14655,7 +14668,7 @@ Fonctions pour la mise à jour de WeeChat (commande "/upgrade").
 
 ==== weechat_upgrade_new
 
-Créér ou lire un fichier pour la mise à jour.
+Créer ou lire un fichier pour la mise à jour.
 
 Prototype :
 
@@ -14764,7 +14777,8 @@ Paramètres :
 * 'callback_read' : fonction appelée pour chaque objet lu dans le fichier de
   mise à jour, paramètres et valeur de retour :
 ** 'void *data' : pointeur
-** 'struct t_upgrade_file *upgrade_file' : pointeur vers le fichier de mise à jour
+** 'struct t_upgrade_file *upgrade_file' : pointeur vers le fichier de mise à
+   jour
 ** 'int object_id' : identifiant de l'objet
 ** 'struct t_infolist *infolist' : infolist avec le contenu de l'objet
 ** valeur de retour :

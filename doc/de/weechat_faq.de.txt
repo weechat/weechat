@@ -740,7 +740,7 @@ Damit WeeChat weniger Speicher benötigt, solltest Du folgende Tipps umsetzen:
 Es gibt drei Möglichkeiten:
 
 . Du kannst zu uns in den IRC kommen: 'irc.freenode.net', channel '#weechat'
-. Du kannst die Internetseite savannah nutzen:
+. Du kannst die Internetseite Savannah nutzen:
   * Einen Fehler melden: https://savannah.nongnu.org/bugs/?group=weechat
   * Einen Verbesserungsvorschlag machen: https://savannah.nongnu.org/task/?group=weechat
   * Einen Patch einsenden: https://savannah.nongnu.org/patch/?group=weechat

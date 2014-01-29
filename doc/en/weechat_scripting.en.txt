@@ -35,7 +35,7 @@ other languages.
 [[scripts_in_weechat]]
 == Scripts in WeeChat
 
-[[languages_specifities]]
+[[languages_specificities]]
 === Languages specificities
 
 ==== Python

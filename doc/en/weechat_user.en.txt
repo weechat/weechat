@@ -37,8 +37,8 @@ Main features are:
 
 WeeChat homepage is here: http://weechat.org/
 
-[[pre-requisites]]
-=== Pre-requisites
+[[prerequisites]]
+=== Prerequisites
 
 In order to install WeeChat, you need:
 

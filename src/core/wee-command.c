@@ -7369,7 +7369,7 @@ command_init ()
         NULL, "uptime",
         N_("show WeeChat uptime"),
         "[-o | -ol]",
-        N_(" -o: send uptime to current buffer as input (english string)\n"
+        N_(" -o: send uptime to current buffer as input (English string)\n"
            "-ol: send uptime to current buffer as input (translated string)"),
         "-o|-ol",
         &command_uptime, NULL);
@@ -7377,7 +7377,7 @@ command_init ()
         NULL, "version",
         N_("show WeeChat version and compilation date"),
         "[-o | -ol]",
-        N_(" -o: send version to current buffer as input (english string)\n"
+        N_(" -o: send version to current buffer as input (English string)\n"
            "-ol: send version to current buffer as input (translated string)"),
         "-o|-ol",
         &command_version, NULL);
