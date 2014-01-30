@@ -8120,7 +8120,8 @@ weechat.hook_signal_send("logger_backlog", weechat.WEECHAT_HOOK_SIGNAL_POINTER, 
 . 新しいスクリプトへのリンクをディレクトリ '~/.weechat/xxx/autoload/' に作成
 . 新しいスクリプトを読み込む
 
-スクリプト 'weeget.py' はスクリプトをインストールする際にこれらのシグナルを使っています。
+// TRANSLATION MISSING
+These signals are used by 'script' plugin to install scripts.
 
 引数はインストールするスクリプトのパスを収めた文字列です。
 
@@ -8153,7 +8154,8 @@ weechat.hook_signal_send("python_script_install", WEECHAT_HOOK_SIGNAL_STRING,
 
 リスト文字列に含まれるそれぞれのスクリプトについて、コールバックはスクリプトを再読み込みして削除します。
 
-スクリプト 'weeget.py' はスクリプトを削除する際にこれらのシグナルを使っています。
+// TRANSLATION MISSING
+These signals are used by 'script' plugin to remove scripts.
 
 引数は削除したいスクリプトのコンマ区切りリスト文字列です
 (パスを含まないスクリプトの名前を使います、例えば 'script.py').

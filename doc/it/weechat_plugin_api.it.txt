@@ -8298,8 +8298,8 @@ La callback compirà le seguenti azioni alla ricezione del segnale:
 . crea un link al nuovo script nella cartella '~/.weechat/xxx/autoload/'
 . carica il nuovo script
 
-Questi segnali vengono usati dallo script 'weeget.py' per installare gli
-script.
+// TRANSLATION MISSING
+These signals are used by 'script' plugin to install scripts.
 
 L'argomento è una stringa con il percorso dello script da installare.
 
@@ -8333,8 +8333,8 @@ seconda del linguaggio:
 
 Per ogni script nella lista, la callback scaricherà e rimuoverà lo script.
 
-Questi segnali vengono utilizzati dallo script 'weeget.py' per rimuovere gli
-script.
+// TRANSLATION MISSING
+These signals are used by 'script' plugin to remove scripts.
 
 L'argomento è una stringa con una lista separata da virgole di script da
 rimuovere (script è il nome senza percorso, ad esempio 'script.py').

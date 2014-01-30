@@ -8255,7 +8255,7 @@ Le "callback" effectuera les actions suivantes lorsqu'il recevra le signal :
   '~/.weechat/xxx/autoload/'
 . chargement du nouveau script
 
-Ces signaux sont utilisés par le script 'weeget.py' pour installer des scripts.
+Ces signaux sont utilisés par l'extension 'script' pour installer des scripts.
 
 Le paramètre est une chaîne avec le chemin vers le script à installer.
 
@@ -8290,7 +8290,7 @@ langage :
 Pour chaque script dans la liste, le "callback" déchargera et supprimera le
 script.
 
-Ces signaux sont utilisés par le script 'weeget.py' pour supprimer des scripts.
+Ces signaux sont utilisés par l'extension 'script' pour supprimer des scripts.
 
 Le paramètre est une chaîne avec une liste de scripts à supprimer (séparés par
 des virgules, nom du script sans le chemin, par exemple 'script.py').

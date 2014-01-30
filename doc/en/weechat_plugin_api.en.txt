@@ -8122,7 +8122,7 @@ The callback will do following actions when receiving signal:
 . create link to new script in directory '~/.weechat/xxx/autoload/'
 . load new script
 
-These signals are used by script 'weeget.py' to install scripts.
+These signals are used by 'script' plugin to install scripts.
 
 Argument is a string with path to script to install.
 
@@ -8155,7 +8155,7 @@ Five signals can be sent to remove list of scripts, according to language:
 
 For each script in list, the callback will unload then remove script.
 
-These signals are used by script 'weeget.py' to remove scripts.
+These signals are used by 'script' plugin to remove scripts.
 
 Argument is a string with comma-separated list of script to remove (script
 is name without path, for example 'script.py').
