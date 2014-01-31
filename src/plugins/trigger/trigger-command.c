@@ -493,7 +493,9 @@ trigger_command_init ()
            "  silently save config each hour:\n"
            "    /trigger add cfgsave timer 3600000;0;0 \"\" \"\" \"/mute /save\""),
         "list"
-        " || add %(trigger_names) %(trigger_hooks)"
+        " || add %(trigger_names) %(trigger_hooks) %(trigger_hook_arguments) "
+        "%(trigger_hook_condition) %(trigger_hook_regex) "
+        "%(trigger_hook_command) %(trigger_hook_rc)"
         " || set %(trigger_names) %(trigger_options)|name %(trigger_option_value)"
         " || rename %(trigger_names) %(trigger_names)"
         " || enable|disable|toggle|del %(trigger_names)|-all %(trigger_names)|%*"

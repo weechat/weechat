@@ -49,6 +49,16 @@ char *trigger_option_default[TRIGGER_NUM_OPTIONS] =
 
 char *trigger_hook_type_string[TRIGGER_NUM_HOOK_TYPES] =
 { "signal", "hsignal", "modifier", "print", "timer" };
+char *trigger_hook_default_arguments[TRIGGER_NUM_HOOK_TYPES] =
+{ "xxx", "xxx", "xxx", "", "60000;0;0" };
+char *trigger_hook_default_condition[TRIGGER_NUM_HOOK_TYPES] =
+{ "${...}", "${...}", "${...}", "${...}", "${...}" };
+char *trigger_hook_default_regex[TRIGGER_NUM_HOOK_TYPES] =
+{ "/abc/def", "/abc/def", "/abc/def", "/abc/def", "" };
+char *trigger_hook_default_command[TRIGGER_NUM_HOOK_TYPES] =
+{ "/cmd", "/cmd", "/cmd", "/cmd", "/cmd" };
+char *trigger_hook_default_rc[TRIGGER_NUM_HOOK_TYPES] =
+{ "ok,ok_eat,error", "ok,ok_eat,error", "", "ok,error", "ok" };
 
 char *trigger_hook_regex_default_var[TRIGGER_NUM_HOOK_TYPES] =
 { "tg_signal_data", "", "tg_string", "tg_message", "" };
