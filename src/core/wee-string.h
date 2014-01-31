@@ -64,7 +64,7 @@ extern char **string_split (const char *string, const char *separators,
 extern char **string_split_shared (const char *string, const char *separators,
                                    int keep_eol, int num_items_max,
                                    int *num_items);
-extern char **string_split_shell (const char *string);
+extern char **string_split_shell (const char *string, int *num_items);
 extern void string_free_split (char **split_string);
 extern void string_free_split_shared (char **split_string);
 extern char *string_build_with_split_string (const char **split_string,

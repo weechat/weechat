@@ -1387,7 +1387,7 @@ string_split_internal (const char *string, const char *separators, int keep_eol,
     char *ptr, *ptr1, *ptr2;
     const char *str_shared;
 
-    if (num_items != NULL)
+    if (num_items)
         *num_items = 0;
 
     if (!string || !string[0] || !separators || !separators[0])
@@ -1402,7 +1402,7 @@ string_split_internal (const char *string, const char *separators, int keep_eol,
     i = 1;
     while ((ptr = strpbrk (ptr, separators)))
     {
-        while (ptr[0] && (strchr (separators, ptr[0]) != NULL))
+        while (ptr[0] && strchr (separators, ptr[0]))
         {
             ptr++;
         }
@@ -1421,7 +1421,7 @@ string_split_internal (const char *string, const char *separators, int keep_eol,
 
     for (i = 0; i < n_items; i++)
     {
-        while (ptr1[0] && (strchr (separators, ptr1[0]) != NULL))
+        while (ptr1[0] && strchr (separators, ptr1[0]))
         {
             ptr1++;
         }
@@ -1522,7 +1522,7 @@ string_split_internal (const char *string, const char *separators, int keep_eol,
     }
 
     array[i] = NULL;
-    if (num_items != NULL)
+    if (num_items)
         *num_items = i;
 
     free (string2);
@@ -1577,11 +1577,14 @@ string_split_shared (const char *string, const char *separators, int keep_eol,
  */
 
 char **
-string_split_shell (const char *string)
+string_split_shell (const char *string, int *num_items)
 {
     int temp_len, num_args, add_char_to_temp, add_temp_to_args, quoted;
     char *string2, *temp, **args, **args2, state, escapedstate;
     char *ptr_string, *ptr_next, saved_char;
+
+    if (num_items)
+        *num_items = 0;
 
     if (!string)
         return NULL;
@@ -1748,6 +1751,9 @@ string_split_shell (const char *string)
     free (string2);
     free (temp);
 
+    if (num_items)
+        *num_items = num_args;
+
     return args;
 }
 
@@ -1845,7 +1851,7 @@ string_split_command (const char *command, char separator)
 
     nb_substr = 1;
     ptr = command;
-    while ( (p = strchr(ptr, separator)) != NULL)
+    while ((p = strchr(ptr, separator)) != NULL)
     {
         nb_substr++;
         ptr = ++p;

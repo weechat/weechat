@@ -1542,7 +1542,8 @@ hook_process_child (struct t_hook *hook_process)
              * if no arguments were found in hashtable, make an automatic split
              * of command, like the shell does
              */
-            exec_args = string_split_shell (HOOK_PROCESS(hook_process, command));
+            exec_args = string_split_shell (HOOK_PROCESS(hook_process, command),
+                                            NULL);
         }
 
         if (exec_args)
