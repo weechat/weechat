@@ -622,22 +622,59 @@ trigger_alloc (const char *name)
 }
 
 /*
- * Adds trigger to the end of a linked list.
+ * Searches for position of trigger in list (to keep triggers sorted by name).
+ */
+
+struct t_trigger *
+trigger_find_pos (struct t_trigger *trigger, struct t_trigger *list_triggers)
+{
+    struct t_trigger *ptr_trigger;
+
+    for (ptr_trigger = list_triggers; ptr_trigger;
+         ptr_trigger = ptr_trigger->next_trigger)
+    {
+        if (weechat_strcasecmp (trigger->name, ptr_trigger->name) < 0)
+            return ptr_trigger;
+    }
+
+    /* position not found */
+    return NULL;
+}
+
+/*
+ * Adds a trigger in a linked list.
  */
 
 void
 trigger_add (struct t_trigger *trigger,
-             struct t_trigger **triggers, struct t_trigger **last_trigger)
+             struct t_trigger **list_triggers,
+             struct t_trigger **last_list_trigger)
 {
-    trigger->prev_trigger = *last_trigger;
-    trigger->next_trigger = NULL;
-    if (!*triggers)
-        *triggers = trigger;
-    else
-        (*last_trigger)->next_trigger = trigger;
-    *last_trigger = trigger;
+    struct t_trigger *pos_trigger;
 
-    triggers_count++;
+    pos_trigger = trigger_find_pos (trigger, *list_triggers);
+    if (pos_trigger)
+    {
+        /* add trigger before "pos_trigger" */
+        trigger->prev_trigger = pos_trigger->prev_trigger;
+        trigger->next_trigger = pos_trigger;
+        if (pos_trigger->prev_trigger)
+            (pos_trigger->prev_trigger)->next_trigger = trigger;
+        else
+            *list_triggers = trigger;
+        pos_trigger->prev_trigger = trigger;
+    }
+    else
+    {
+        /* add trigger to end of list */
+        trigger->prev_trigger = *last_list_trigger;
+        trigger->next_trigger = NULL;
+        if (!*list_triggers)
+            *list_triggers = trigger;
+        else
+            (*last_list_trigger)->next_trigger = trigger;
+        *last_list_trigger = trigger;
+    }
 }
 
 /*
@@ -661,6 +698,7 @@ trigger_new_with_options (const char *name, struct t_config_option **options)
         new_trigger->options[i] = options[i];
     }
     trigger_add (new_trigger, &triggers, &last_trigger);
+    triggers_count++;
 
     trigger_set_regex (new_trigger);
 
@@ -764,6 +802,17 @@ trigger_rename (struct t_trigger *trigger, const char *name)
     trigger->name = strdup (name);
 
     free (option_name);
+
+    /* re-insert trigger in list (for sorting triggers by name) */
+    if (trigger->prev_trigger)
+        (trigger->prev_trigger)->next_trigger = trigger->next_trigger;
+    else
+        triggers = trigger->next_trigger;
+    if (trigger->next_trigger)
+        (trigger->next_trigger)->prev_trigger = trigger->prev_trigger;
+    else
+        last_trigger = trigger->prev_trigger;
+    trigger_add (trigger, &triggers, &last_trigger);
 
     return 1;
 }

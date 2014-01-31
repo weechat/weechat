@@ -114,8 +114,9 @@ extern void trigger_unhook (struct t_trigger *trigger);
 extern void trigger_hook (struct t_trigger *trigger);
 extern int trigger_name_valid (const char *name);
 extern struct t_trigger *trigger_alloc (const char *name);
-extern void trigger_add (struct t_trigger *trigger, struct t_trigger **triggers,
-                         struct t_trigger **last_trigger);
+extern void trigger_add (struct t_trigger *trigger,
+                         struct t_trigger **list_triggers,
+                         struct t_trigger **last_list_trigger);
 extern struct t_trigger *trigger_new_with_options (const char *name,
                                                    struct t_config_option **options);
 extern struct t_trigger *trigger_new (const char *name,
