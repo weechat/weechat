@@ -85,6 +85,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * aspell: fix detection of nicks with non-alphanumeric chars
 * guile: disable guile gmp allocator (fix crash on unload of relay plugin)
   (bug #40628)
+* irc: clear the gnutls session in all cases after SSL connection error
 * irc: use MONITOR instead of ISON for /notify when it is available on server
   (task #11477)
 * irc: do not display names by default when joining a channel (task #13045)

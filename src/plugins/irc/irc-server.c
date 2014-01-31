@@ -3004,12 +3004,11 @@ irc_server_close_connection (struct t_irc_server *server)
     {
 #ifdef HAVE_GNUTLS
         /* close SSL connection */
-        if ((server->sock != -1) && (server->ssl_connected))
+        if (server->ssl_connected)
         {
-            if (server->ssl_connected)
+            if (server->sock != -1)
                 gnutls_bye (server->gnutls_sess, GNUTLS_SHUT_WR);
-            if (server->ssl_connected)
-                gnutls_deinit (server->gnutls_sess);
+            gnutls_deinit (server->gnutls_sess);
         }
 #endif
     }
