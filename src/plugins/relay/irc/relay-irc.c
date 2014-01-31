@@ -1077,7 +1077,9 @@ void
 relay_irc_send_join_channels (struct t_relay_client *client)
 {
     struct t_infolist *infolist_channels;
-    const char *channel;
+    const char *name;
+    int type;
+    struct t_gui_buffer *buffer;
 
     infolist_channels = weechat_infolist_get ("irc_channel", NULL,
                                               client->protocol_args);
@@ -1085,10 +1087,22 @@ relay_irc_send_join_channels (struct t_relay_client *client)
     {
         while (weechat_infolist_next (infolist_channels))
         {
-            if (weechat_infolist_integer (infolist_channels, "nicks_count") > 0)
+            name = weechat_infolist_string (infolist_channels, "name");
+            type = weechat_infolist_integer (infolist_channels, "type");
+            buffer = weechat_infolist_pointer (infolist_channels, "buffer");
+            if (type == 0)
             {
-                channel = weechat_infolist_string (infolist_channels, "name");
-                relay_irc_send_join (client, channel);
+                /* channel */
+                if (weechat_infolist_integer (infolist_channels,
+                                              "nicks_count") > 0)
+                {
+                    relay_irc_send_join (client, name);
+                }
+            }
+            else if (type == 1)
+            {
+                /* private */
+                relay_irc_send_channel_backlog (client, name, buffer);
             }
         }
         weechat_infolist_free (infolist_channels);

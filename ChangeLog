@@ -118,6 +118,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * lua: fix detection of Lua 5.2 in autotools (patch #8270)
 * lua: fix crash on calls to callbacks during load of script
 * python: fix load of scripts with python >= 3.3
+* relay: send backlog for irc private buffers
 * relay: fix memory leak on unload of relay plugin
 * ruby: fix ruby init with ruby >= 2.0 (bug #41115)
 * scripts: fix script interpreter used after register during load of script
