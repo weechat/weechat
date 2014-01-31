@@ -645,7 +645,7 @@ trigger_callback_timer_cb  (void *data, int remaining_calls)
     struct t_trigger *trigger;
     struct t_hashtable *extra_vars;
     char str_temp[128];
-    int rc;
+    int rc, i;
     time_t date;
     struct tm *date_tmp;
 
@@ -653,6 +653,19 @@ trigger_callback_timer_cb  (void *data, int remaining_calls)
     trigger = (struct t_trigger *)data;
     if (!trigger || trigger->hook_running)
         return WEECHAT_RC_OK;
+
+    /*
+     * remove the hook if this is the last call to timer
+     * (because WeeChat will remove the hook after this call, so the pointer
+     * will become invalid)
+     */
+    if ((remaining_calls == 0) && trigger->hooks)
+    {
+        for (i = 0; i < trigger->hooks_count; i++)
+        {
+            trigger->hooks[i] = NULL;
+        }
+    }
 
     trigger->hook_count_cb++;
     trigger->hook_running = 1;
