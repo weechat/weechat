@@ -558,6 +558,29 @@ trigger_hook (struct t_trigger *trigger)
 }
 
 /*
+ * Checks if a trigger name is valid: it must not start with "-" and not have
+ * any spaces.
+ *
+ * Returns:
+ *   1: name is valid
+ *   0: name is invalid
+ */
+
+int
+trigger_name_valid (const char *name)
+{
+    if (!name || !name[0] || (name[0] == '-'))
+        return 0;
+
+    /* no spaces allowed */
+    if (strchr (name, ' '))
+        return 0;
+
+    /* name is valid */
+    return 1;
+}
+
+/*
  * Allocates and initializes new trigger structure.
  *
  * Returns pointer to new trigger, NULL if error.
@@ -568,6 +591,9 @@ trigger_alloc (const char *name)
 {
     struct t_trigger *new_trigger;
     int i;
+
+    if (!trigger_name_valid (name))
+        return NULL;
 
     if (trigger_search (name))
         return NULL;
@@ -660,17 +686,16 @@ trigger_new (const char *name, const char *enabled, const char *hook,
     struct t_trigger *new_trigger;
     int i;
 
-    /* it's not possible to create 2 triggers with same name */
-    if (trigger_search (name))
-        return NULL;
-
     /* look for type */
     if (trigger_search_hook_type (hook) < 0)
         return NULL;
 
     /* look for return code */
-    if (trigger_search_return_code (return_code) < 0)
+    if (return_code && return_code[0]
+        && (trigger_search_return_code (return_code) < 0))
+    {
         return NULL;
+    }
 
     value[TRIGGER_OPTION_ENABLED] = enabled;
     value[TRIGGER_OPTION_HOOK] = hook;
@@ -711,14 +736,9 @@ trigger_rename (struct t_trigger *trigger, const char *name)
     int length, i;
     char *option_name;
 
-    if (!name || !name[0])
-        return 0;
-
-    if (name[0] == '-')
+    if (!name || !name[0] || !trigger_name_valid (name)
+        || trigger_search (name))
     {
-        weechat_printf_tags (NULL, "no_trigger",
-                             _("%s%s: name can not start with \"-\""),
-                             weechat_prefix ("error"), TRIGGER_PLUGIN_NAME);
         return 0;
     }
 

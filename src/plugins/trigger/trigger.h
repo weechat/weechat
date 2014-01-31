@@ -106,11 +106,13 @@ extern struct t_trigger *last_trigger_temp;
 
 extern int trigger_search_option (const char *option_name);
 extern int trigger_search_hook_type (const char *type);
+extern int trigger_search_return_code (const char *return_code);
 extern struct t_trigger *trigger_search (const char *name);
 extern struct t_trigger *trigger_search_with_option (struct t_config_option *option);
 extern void trigger_set_regex (struct t_trigger *trigger);
 extern void trigger_unhook (struct t_trigger *trigger);
 extern void trigger_hook (struct t_trigger *trigger);
+extern int trigger_name_valid (const char *name);
 extern struct t_trigger *trigger_alloc (const char *name);
 extern void trigger_add (struct t_trigger *trigger, struct t_trigger **triggers,
                          struct t_trigger **last_trigger);
