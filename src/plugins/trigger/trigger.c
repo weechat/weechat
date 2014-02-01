@@ -159,7 +159,7 @@ trigger_search (const char *name)
     for (ptr_trigger = triggers; ptr_trigger;
          ptr_trigger = ptr_trigger->next_trigger)
     {
-        if (strcmp (ptr_trigger->name, name) == 0)
+        if (weechat_strcasecmp (ptr_trigger->name, name) == 0)
             return ptr_trigger;
     }
 
@@ -192,7 +192,7 @@ trigger_search_with_option (struct t_config_option *option)
     for (ptr_trigger = triggers; ptr_trigger;
          ptr_trigger = ptr_trigger->next_trigger)
     {
-        if (strncmp (ptr_trigger->name, ptr_name, pos_option - ptr_name) == 0)
+        if (weechat_strncasecmp (ptr_trigger->name, ptr_name, pos_option - ptr_name) == 0)
             break;
     }
 
