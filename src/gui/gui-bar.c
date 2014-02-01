@@ -520,7 +520,7 @@ gui_bar_search (const char *name)
 
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
-        if (strcmp (ptr_bar->name, name) == 0)
+        if (string_strcasecmp (ptr_bar->name, name) == 0)
             return ptr_bar;
     }
 
@@ -550,7 +550,7 @@ gui_bar_search_with_option_name (const char *option_name)
         {
             for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
             {
-                if (strcmp (ptr_bar->name, bar_name) == 0)
+                if (string_strcasecmp (ptr_bar->name, bar_name) == 0)
                     break;
             }
             free (bar_name);
@@ -1342,7 +1342,7 @@ gui_bar_default_items (const char *bar_name)
 
     for (i = 0; gui_bar_items_default_for_bars[i][0]; i++)
     {
-        if (strcmp (gui_bar_items_default_for_bars[i][0], bar_name) == 0)
+        if (string_strcasecmp (gui_bar_items_default_for_bars[i][0], bar_name) == 0)
             return gui_bar_items_default_for_bars[i][1];
     }
 
@@ -2078,7 +2078,7 @@ gui_bar_update (const char *name)
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
         if (!CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN])
-            && (strcmp (ptr_bar->name, name) == 0))
+            && (string_strcasecmp (ptr_bar->name, name) == 0))
         {
             gui_bar_ask_refresh (ptr_bar);
         }
