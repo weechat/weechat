@@ -22,7 +22,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <strings.h>
 
 #include "../weechat-plugin.h"
 #include "rmodifier.h"
@@ -342,7 +341,7 @@ rmodifier_new_with_string (const char *name, const char *value)
     new_rmodifier = NULL;
 
     pos1 = strchr (value, ';');
-    pos2 = rindex (value, ';');
+    pos2 = strrchr (value, ';');
     if (pos1 && pos2 && (pos2 > pos1))
     {
         modifiers = weechat_strndup (value, pos1 - value);
