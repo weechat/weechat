@@ -31,7 +31,7 @@
 #include <stdarg.h>
 #include <libgen.h>
 #include <sys/ioctl.h>
-#include <sys/termios.h>
+#include <termios.h>
 
 #include "../../core/weechat.h"
 #include "../../core/wee-config.h"
