@@ -290,9 +290,9 @@ WeeChat "core" は以下のディレクトリに配置されています:
 | doc/                                | 文書
 |    asciidoc.conf                    | asciidoc 設定ファイル (マクロ)
 |    asciidoc.css                     | asciidoc スタイル
-|    docgen.py                        | "autogen/" ディレクトリ内のファイルを作成する Python スクリプト (以下を参照)
+|    docgen.py                        | 'autogen/' ディレクトリ内のファイルを作成する Python スクリプト (以下を参照)
 |    XX/                              | 言語コード XX (言語コード: en、fr、de、it、...) 用のディレクトリ
-|       weechat.1.XX.txt              | man ページ
+|       weechat.1.XX.txt              | man ページ (`man weechat`)
 |       weechat_quickstart.XX.txt     | クイックスタートガイド
 |       weechat_user.XX.txt           | ユーザーガイド
 |       weechat_faq.XX.txt            | FAQ
@@ -300,7 +300,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       weechat_scripting.XX.txt      | スクリプト作成ガイド
 |       weechat_tester.XX.txt         | テスターガイド
 |       weechat_dev.XX.txt            | 開発者リファレンス (この文書)
-|       weechat_relay_protocol.XX.txt | リレープロトコル
+// TRANSLATION MISSING
+|       weechat_relay_protocol.XX.txt | リレープロトコル (for remote interfaces)
 |       cmdline_options.XX.txt        | コマンドラインオプション (man ページとユーザガイドに含まれるファイル)
 |       autogen/                      | docgen.py スクリプトが自動生成するファイル
 |          user/                      | ユーザーガイド用の自動生成ファイル (手作業による編集は*禁止* !)
@@ -501,13 +502,13 @@ else
 ----
 switch (string[0])
 {
-    case 'A': /* first case */
+    case 'A':  /* first case */
         foo ("abc", "def");
         break;
-    case 'B': /* second case */
+    case 'B':  /* second case */
         bar (1, 2, 3);
         break;
-    default: /* other cases */
+    default:  /* other cases */
         baz ();
         break;
 }
@@ -535,7 +536,7 @@ struct t_hook_fd *new_hook_fd;
 new_hook_fd = malloc (sizeof (*new_hook_fd));
 ----
 
-* Emacs テキストエディタのユーザは以下の lisp コードを
+* Emacs テキストエディタのユーザは以下の Lisp コードを
   '~/.emacs.el' に追記することで、適切なインデントを行うことができます。
 
 [source,lisp]

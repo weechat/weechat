@@ -25,7 +25,7 @@ Ce manuel documente l'intérieur de WeeChat :
 * règles de développement
 * le cœur
 * les extensions
-* comment contribuer à WeeChat
+* comment contribuer à WeeChat.
 
 [[repository]]
 == Dépôt
@@ -129,7 +129,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |    gui-hotlist.c              | Gestion de la "hotlist" (liste des tampons avec activité)
 |    gui-input.c                | Fonctions d'entrée (barre "input")
 |    gui-key.c                  | Fonctions pour le clavier
-|    gui-layout.c               | Dispositions ("layout")
+|    gui-layout.c               | Dispositions ("layouts")
 |    gui-line.c                 | Lignes dans les tampons
 |    gui-mouse.c                | Souris
 |    gui-nicklist.c             | Liste de pseudos dans les tampons
@@ -259,7 +259,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       script-info.c               | Info/infolists/hdata pour le gestionnaire de scripts
 |       script-repo.c               | Téléchargement et lecture du dépôt de scripts
 |    tcl/                           | Extension Tcl
-|       weechat-tcl.c               | Fonctions principales pour Tcl (chargement/déchargement de scripts, exécution de code Tcl)
+|       weechat-tcl.c               | Fonctions principales pour Tcl (chargement/déchargement des scripts, exécution de code Tcl)
 |       weechat-tcl-api.c           | Fonctions de l'API script Tcl
 |    xfer/                          | Extension Xfer (IRC DCC fichier/discussion)
 |       xfer.c                      | Fonctions principales de Xfer
@@ -286,9 +286,9 @@ Fichiers de documentation :
 | doc/                                | Documentation
 |    asciidoc.conf                    | Fichier de configuration Asciidoc (quelques macros)
 |    asciidoc.css                     | Style Asciidoc
-|    docgen.py                        | Script Python pour construire les fichiers dans le répertoire "autogen/" (voir ci-dessous)
+|    docgen.py                        | Script Python pour construire les fichiers dans le répertoire 'autogen/' (voir ci-dessous)
 |    XX/                              | Documentation pour la langue XX (langues : en, fr, de, it, ...)
-|       weechat.1.XX.txt              | Page de manuel
+|       weechat.1.XX.txt              | Page de manuel (`man weechat`)
 |       weechat_quickstart.XX.txt     | Guide de démarrage
 |       weechat_user.XX.txt           | Guide utilisateur
 |       weechat_faq.XX.txt            | FAQ (questions fréquemment posées)
@@ -296,7 +296,7 @@ Fichiers de documentation :
 |       weechat_scripting.XX.txt      | Guide pour scripts
 |       weechat_tester.XX.txt         | Guide du testeur
 |       weechat_dev.XX.txt            | Guide du développeur (ce document)
-|       weechat_relay_protocol.XX.txt | Protocole Relay
+|       weechat_relay_protocol.XX.txt | Protocole Relay (pour les interfaces distantes)
 |       cmdline_options.XX.txt        | Options de ligne de commande (fichier inclus dans la page de manuel et le guide utilisateur)
 |       autogen/                      | Fichiers automatiquement générés avec le script docgen.py
 |          user/                      | Fichiers automatiquement générés pour le guide utilisateur (ne *JAMAIS* les mettre à jour manuellement !)
@@ -508,13 +508,13 @@ else
 ----
 switch (string[0])
 {
-    case 'A': /* first case */
+    case 'A':  /* first case */
         foo ("abc", "def");
         break;
-    case 'B': /* second case */
+    case 'B':  /* second case */
         bar (1, 2, 3);
         break;
-    default: /* other cases */
+    default:  /* other cases */
         baz ();
         break;
 }
@@ -543,7 +543,7 @@ struct t_hook_fd *new_hook_fd;
 new_hook_fd = malloc (sizeof (*new_hook_fd));
 ----
 
-* Ce code lisp peut être utilisé dans votre '~/.emacs.el' pour indenter
+* Ce code Lisp peut être utilisé dans votre '~/.emacs.el' pour indenter
   correctement si vous utilisez l'éditeur de texte Emacs :
 
 [source,lisp]
@@ -972,7 +972,8 @@ core: update Japanese translations (patch #7783)
 Les fichiers gettext sont dans le répertoire 'po/'.
 
 Si vous souhaitez initialiser une nouvelle langue, utilisez la commande
-`msginit`. Par exemple pour créer un fichier vide pour le néerlandais :
+`msginit`. Par exemple pour créer un fichier qui est prêt à traduire en
+néerlandais :
 
 ----
 $ cd po
@@ -1034,7 +1035,7 @@ Les traductions manquantes dans les fichiers sont indiquées par cette chaîne :
 // TRANSLATION MISSING
 ----
 
-Vous devez traduire tous le fichier sauf les liens et les mots-clés spéciaux
+Vous devez traduire tout le fichier sauf les liens et les mots-clés spéciaux
 pour les notes, avertissements, ... Ces mots doivent être gardés tels quels :
 
 ----

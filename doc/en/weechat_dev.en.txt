@@ -24,7 +24,7 @@ This manual documents WeeChat internals:
 * coding rules
 * core internals
 * plugin internals
-* how to contribute to WeeChat
+* how to contribute to WeeChat.
 
 [[repository]]
 == Repository
@@ -285,9 +285,9 @@ Documentation files:
 | doc/                                | Documentation
 |    asciidoc.conf                    | Asciidoc configuration file (some macros)
 |    asciidoc.css                     | Asciidoc style
-|    docgen.py                        | Python script to build files in "autogen/" directory (see below)
+|    docgen.py                        | Python script to build files in 'autogen/' directory (see below)
 |    XX/                              | Documentation for language XX (languages: en, fr, de, it, ...)
-|       weechat.1.XX.txt              | Man page
+|       weechat.1.XX.txt              | Man page (`man weechat`)
 |       weechat_quickstart.XX.txt     | Quickstart guide
 |       weechat_user.XX.txt           | User's guide
 |       weechat_faq.XX.txt            | FAQ
@@ -295,7 +295,7 @@ Documentation files:
 |       weechat_scripting.XX.txt      | Scripting guide
 |       weechat_tester.XX.txt         | Tester's guide
 |       weechat_dev.XX.txt            | Developer's guide (this document)
-|       weechat_relay_protocol.XX.txt | Relay protocol
+|       weechat_relay_protocol.XX.txt | Relay protocol (for remote interfaces)
 |       cmdline_options.XX.txt        | Command-line options (file included in man page and user's guide)
 |       autogen/                      | Files auto-built with script docgen.py
 |          user/                      | Files auto-built for user's guide (do *NEVER* update manually!)
@@ -499,13 +499,13 @@ else
 ----
 switch (string[0])
 {
-    case 'A': /* first case */
+    case 'A':  /* first case */
         foo ("abc", "def");
         break;
-    case 'B': /* second case */
+    case 'B':  /* second case */
         bar (1, 2, 3);
         break;
-    default: /* other cases */
+    default:  /* other cases */
         baz ();
         break;
 }
@@ -533,7 +533,7 @@ struct t_hook_fd *new_hook_fd;
 new_hook_fd = malloc (sizeof (*new_hook_fd));
 ----
 
-* This lisp code can be used in your '~/.emacs.el' to indent properly if you are
+* This Lisp code can be used in your '~/.emacs.el' to indent properly if you are
   using Emacs as text editor:
 
 [source,lisp]
@@ -953,7 +953,7 @@ core: update Japanese translations (patch #7783)
 Gettext files are in directory 'po/'.
 
 If you want to initialize a new language, use command `msginit`. For example to
-create a dutch empty file:
+create a file which is ready to translate to Dutch:
 
 ----
 $ cd po
