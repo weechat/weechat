@@ -71,7 +71,7 @@ struct t_plugin_script *last_ruby_script = NULL;
 struct t_plugin_script *ruby_current_script = NULL;
 struct t_plugin_script *ruby_registered_script = NULL;
 const char *ruby_current_script_filename = NULL;
-VALUE ruby_current_module = NULL;
+VALUE ruby_current_module;
 
 /*
  * string used to execute action "install":
