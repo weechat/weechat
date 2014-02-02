@@ -1,5 +1,5 @@
 Document: weechat-plugin-it
-Title: WeeChat plugins API (Italian)
+Title: WeeChat plugin API reference (Italian)
 Author: Sébastien Helleu
 Abstract: This document describes the API to create plugins
  for WeeChat (Italian version).

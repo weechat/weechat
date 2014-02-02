@@ -104,4 +104,15 @@ IF(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
   ADD_CUSTOM_TARGET(doc-tester-fr ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.fr.html)
   INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.fr.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
 
+  # developer's guide
+  ADD_CUSTOM_COMMAND(
+    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_dev.fr.html
+    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_dev.fr.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_dev.fr.txt
+    DEPENDS
+    ${CMAKE_CURRENT_SOURCE_DIR}/weechat_dev.fr.txt
+    COMMENT "Building weechat_dev.fr.html"
+  )
+  ADD_CUSTOM_TARGET(doc-dev-fr ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_dev.fr.html)
+  INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_dev.fr.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
+
 ENDIF(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)

@@ -1,4 +1,4 @@
-= WeeChat Tester's Guide
+= WeeChat tester's guide
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: en

@@ -1,5 +1,5 @@
 Document: weechat-plugin-ja
-Title: WeeChat plugins API (Japanese)
+Title: WeeChat plugin API reference (Japanese)
 Author: Sébastien Helleu
 Abstract: This document describes the API to create plugins
  for WeeChat (Japanese version).

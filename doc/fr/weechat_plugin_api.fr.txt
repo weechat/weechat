@@ -1,4 +1,4 @@
-= Référence API Extension WeeChat
+= Référence API extension WeeChat
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: fr

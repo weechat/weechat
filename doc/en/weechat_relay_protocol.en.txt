@@ -1,4 +1,4 @@
-= WeeChat Relay Protocol
+= WeeChat Relay protocol
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: en

@@ -1,4 +1,4 @@
-= WeeChat Plugin API Reference
+= WeeChat plugin API reference
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: en

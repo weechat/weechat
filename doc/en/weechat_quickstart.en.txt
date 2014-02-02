@@ -1,4 +1,4 @@
-= WeeChat Quick Start Guide
+= WeeChat quick start guide
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: en

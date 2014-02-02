@@ -1,4 +1,4 @@
-= WeeChat User's Guide
+= WeeChat user's guide
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: en
