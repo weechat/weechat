@@ -134,7 +134,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.display_join_message]] *irc.look.display_join_message*
-** Beschreibung: `comma-separated list of messages to display after joining a channel: 329 = channel creation date, 332 = topic, 333 = nick/date for topic, 353 = names on channel, 366 = names count`
+** Beschreibung: `durch Kommata getrennte Liste von Nachrichten die beim Betreten eines Channels angezeigt werden sollen: 329 = Erstellungsdatum des Channels, 332 = Topic, 333 = Nick/Datum für Topic, 353 = genutzte Namen im Channel, 366 = Anzahl der Nicks im Channel`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"329,332,333,366"`)
 

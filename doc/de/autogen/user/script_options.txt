@@ -159,7 +159,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"p,n"`)
 
 * [[option_script.look.translate_description]] *script.look.translate_description*
-** Beschreibung: `Für die Beschreibung der Skripten wird die Muttersprache verwendet (sollte keine Übersetzung in der eigenen Sprache verfügbar sein, wird auf die englische Beschreibung zurückgegriffen)`
+** Beschreibung: `für die Beschreibung der Skripten wird die Muttersprache verwendet (sollte keine Übersetzung in der eigenen Sprache verfügbar sein, wird auf die englische Beschreibung zurückgegriffen)`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 

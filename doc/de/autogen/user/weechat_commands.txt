@@ -812,8 +812,8 @@ Es ist möglich die WeeChat-Sitzung auf einem anderen Rechner wiederherzustellen
 ----
 /uptime  [-o | -ol]
 
- -o: sendet die WeeChat Laufzeit in den aktuellen Buffer (englisch)
--ol: sendet die WeeChat Laufzeit in den aktuellen Buffer (in der voreingestellten Landessprache)
+ -o: die Laufzeit von WeeChat wird in den aktuellen Buffer geschrieben (in englischer Sprache)
+-ol: die Laufzeit von WeeChat wird in den aktuellen Buffer geschrieben (in der voreingestellten Landessprache)
 ----
 
 [[command_weechat_version]]
@@ -822,8 +822,8 @@ Es ist möglich die WeeChat-Sitzung auf einem anderen Rechner wiederherzustellen
 ----
 /version  [-o | -ol]
 
- -o: sendet die WeeChat Version in den aktuellen Buffer (englisch)
--ol: sendet die WeeChat Version in den aktuellen Buffer (in der Voreingestellten Landessprache)
+ -o: die Version von WeeChat wird in den aktuellen Buffer geschrieben (in englischer Sprache)
+-ol: die Version von WeeChat wird in den aktuellen Buffer geschrieben (in der voreingestellten Landessprache)
 ----
 
 [[command_weechat_wait]]
