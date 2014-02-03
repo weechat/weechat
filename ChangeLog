@@ -74,7 +74,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: fix truncated prefix when filters are toggled (bug #40204)
 * core: add options to customize default text search in buffers:
   weechat.look.buffer_search_{case_sensitive|force_default|regex|where}
-* doc: add French developer's guide
+* doc: add French developer's guide and relay protocol
 * doc: add Japanese plugin API reference and developer's guide
 * doc: add Polish man page and user's guide
 * api: add function "infolist_search_var"

@@ -29,6 +29,7 @@ EXTRA_DIST = CMakeLists.txt \
              weechat_faq.fr.txt \
              weechat_quickstart.fr.txt \
              weechat_tester.fr.txt \
+             weechat_relay_protocol.fr.txt \
              weechat_dev.fr.txt \
              $(wildcard autogen/user/*.txt) \
              $(wildcard autogen/plugin_api/*.txt)
@@ -45,6 +46,7 @@ if DOC
 		weechat_faq.fr.html \
 		weechat_quickstart.fr.html \
 		weechat_tester.fr.html \
+		weechat_relay_protocol.fr.html \
 		weechat_dev.fr.html
   doc_install = install-doc
   doc_uninstall = uninstall-doc
@@ -80,6 +82,10 @@ weechat_quickstart.fr.html: weechat_quickstart.fr.txt
 # tester's guide
 weechat_tester.fr.html: weechat_tester.fr.txt
 	$(ASCIIDOC) -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_tester.fr.html $(abs_top_srcdir)/doc/fr/weechat_tester.fr.txt
+
+# relay protocol
+weechat_relay_protocol.fr.html: weechat_relay_protocol.fr.txt
+	$(ASCIIDOC) -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_relay_protocol.fr.html $(abs_top_srcdir)/doc/fr/weechat_relay_protocol.fr.txt
 
 # developer's guide
 weechat_dev.fr.html: weechat_dev.fr.txt

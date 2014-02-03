@@ -29,8 +29,8 @@ EXTRA_DIST = CMakeLists.txt \
              weechat_faq.en.txt \
              weechat_quickstart.en.txt \
              weechat_tester.en.txt \
-             weechat_dev.en.txt \
              weechat_relay_protocol.en.txt \
+             weechat_dev.en.txt \
              $(wildcard autogen/user/*.txt) \
              $(wildcard autogen/plugin_api/*.txt)
 
@@ -46,8 +46,8 @@ if DOC
 		weechat_faq.en.html \
 		weechat_quickstart.en.html \
 		weechat_tester.en.html \
-		weechat_dev.en.html \
-		weechat_relay_protocol.en.html
+		weechat_relay_protocol.en.html \
+		weechat_dev.en.html
   doc_install = install-doc
   doc_uninstall = uninstall-doc
 endif

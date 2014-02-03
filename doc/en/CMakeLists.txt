@@ -104,17 +104,6 @@ IF(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
   ADD_CUSTOM_TARGET(doc-tester-en ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.en.html)
   INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.en.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
 
-  # developer's guide
-  ADD_CUSTOM_COMMAND(
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_dev.en.html
-    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_dev.en.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_dev.en.txt
-    DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/weechat_dev.en.txt
-    COMMENT "Building weechat_dev.en.html"
-  )
-  ADD_CUSTOM_TARGET(doc-dev-en ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_dev.en.html)
-  INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_dev.en.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
-
   # relay protocol
   ADD_CUSTOM_COMMAND(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_protocol.en.html
@@ -125,5 +114,16 @@ IF(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
   )
   ADD_CUSTOM_TARGET(doc-relay-protocol-en ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_protocol.en.html)
   INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_protocol.en.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
+
+  # developer's guide
+  ADD_CUSTOM_COMMAND(
+    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_dev.en.html
+    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_dev.en.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_dev.en.txt
+    DEPENDS
+    ${CMAKE_CURRENT_SOURCE_DIR}/weechat_dev.en.txt
+    COMMENT "Building weechat_dev.en.html"
+  )
+  ADD_CUSTOM_TARGET(doc-dev-en ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_dev.en.html)
+  INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_dev.en.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
 
 ENDIF(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
