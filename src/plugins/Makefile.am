@@ -113,10 +113,10 @@ EXTRA_DIST = CMakeLists.txt
 # install plugin header
 
 install-data-hook:
-	$(INSTALL) -d $(includedir)/$(PACKAGE)
-	$(INSTALL_DATA) $(abs_top_srcdir)/src/plugins/weechat-plugin.h $(includedir)/$(PACKAGE)
+	$(INSTALL) -d $(DESTDIR)/$(includedir)/$(PACKAGE)
+	$(INSTALL_DATA) $(abs_top_srcdir)/src/plugins/weechat-plugin.h $(DESTDIR)/$(includedir)/$(PACKAGE)
 
 # uninstall plugin header
 
 uninstall-hook:
-	$(RM) $(includedir)/$(PACKAGE)/weechat-plugin.h
+	$(RM) $(DESTDIR)/$(includedir)/$(PACKAGE)/weechat-plugin.h
