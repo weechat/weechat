@@ -1189,7 +1189,7 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
     }
 
     /* create data for line */
-    new_line_data = malloc (sizeof (*(new_line->data)));
+    new_line_data = malloc (sizeof (*new_line_data));
     if (!new_line_data)
     {
         free (new_line);
@@ -1337,7 +1337,7 @@ gui_line_add_y (struct t_gui_buffer *buffer, int y, const char *message)
             return;
         }
 
-        new_line_data = malloc (sizeof (*(new_line->data)));
+        new_line_data = malloc (sizeof (*new_line_data));
         if (!new_line_data)
         {
             free (new_line);
