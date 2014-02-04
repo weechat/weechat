@@ -192,8 +192,8 @@ Syntaxe :
 
 Paramètres :
 
-* 'nom': nom de l'info à obtenir
-* 'paramètres': paramètres pour l'info (facultatif)
+* 'nom' : nom de l'info à obtenir
+* 'paramètres' : paramètres pour l'info (facultatif)
 
 Exemple :
 
@@ -279,7 +279,7 @@ Exemples :
 
 ----
 input core.weechat /help filter
-input irc.freenode.#weechat hello guys!
+input irc.freenode.#weechat bonjour !
 ----
 
 [[command_sync]]
@@ -518,7 +518,7 @@ d'être utilisées.
 [[message_identifier]]
 === Identifiant
 
-Il y a deux types d'identifiants ('id'):
+Il y a deux types d'identifiants ('id') :
 
 * 'id' envoyé par le 'client' : 'relay' répondra avec le même 'id' dans sa
   réponse
@@ -530,58 +530,58 @@ Les identifiants réservés par WeeChat :
 
 [width="100%",cols="5,5,3,4,7",options="header"]
 |===
-| Identifiant | Reçu avec sync | Données envoyées |
-  Description | Action recommendée dans le client
+| Identifiant | Reçu avec 'sync' | Données envoyées |
+  Description | Action recommandée dans le client
 
-| _buffer_opened | buffers / buffer | hdata: buffer |
+| _buffer_opened | buffers / buffer | hdata : buffer |
   Tampon ouvert | Ouvrir le tampon
 
-| _buffer_moved | buffers / buffer | hdata: buffer |
+| _buffer_moved | buffers / buffer | hdata : buffer |
   Tampon déplacé | Déplacer le tampon
 
-| _buffer_merged | buffers / buffer | hdata: buffer |
+| _buffer_merged | buffers / buffer | hdata : buffer |
   Tampon mélangé | Mélanger le tampon
 
-| _buffer_unmerged | buffers / buffer | hdata: buffer |
+| _buffer_unmerged | buffers / buffer | hdata : buffer |
   Tampon sorti du mélange | Sortir le tampon du mélange
 
-| _buffer_renamed | buffers / buffer | hdata: buffer |
+| _buffer_renamed | buffers / buffer | hdata : buffer |
   Tampon renommé | Renommer le tampon
 
-| _buffer_title_changed | buffers / buffer | hdata: buffer |
+| _buffer_title_changed | buffers / buffer | hdata : buffer |
   Titre du tampon changé | Changer le titre du tampon
 
-| _buffer_type_changed | buffer | hdata: buffer |
+| _buffer_type_changed | buffer | hdata : buffer |
   Type de tampon changé | Changer le type de tampon
 
-| _buffer_localvar_added | buffer | hdata: buffer |
+| _buffer_localvar_added | buffer | hdata : buffer |
   Variable locale ajoutée | Ajouter la variable locale dans le tampon
 
-| _buffer_localvar_changed | buffer | hdata: buffer |
+| _buffer_localvar_changed | buffer | hdata : buffer |
   Variable locale changée | Changer la variable locale dans le tampon
 
-| _buffer_localvar_removed | buffer | hdata: buffer |
+| _buffer_localvar_removed | buffer | hdata : buffer |
   Variable locale supprimée | Supprimer la variable locale du tampon
 
-| _buffer_line_added | buffer | hdata: line |
+| _buffer_line_added | buffer | hdata : line |
   Ligne ajoutée dans le tampon | Afficher la ligne dans le tampon
 
-| _buffer_closing | buffers / buffer | hdata: buffer |
+| _buffer_closing | buffers / buffer | hdata : buffer |
   Tampon qui se ferme | Fermer le tampon
 
-| _nicklist | nicklist | hdata: nicklist_item |
+| _nicklist | nicklist | hdata : nicklist_item |
   Liste de pseudos pour un tampon | Remplacer la liste de pseudos
 
-| _nicklist_diff | nicklist | hdata: nicklist_item |
+| _nicklist_diff | nicklist | hdata : nicklist_item |
   Différence de liste de pseudos pour un tampon  | Mettre à jour la liste de pseudos
 
-| _pong | (always) | string: ping arguments |
+| _pong | (always) | chaîne : paramètres du ping |
   Réponse à un "ping" | Mesurer le temps de réponse
 
-| _upgrade | upgrade | (empty) |
-  WeeChat se met à jour | Se désynchroniser de from WeeChat (ou quitter)
+| _upgrade | upgrade | (vide) |
+  WeeChat se met à jour | Se désynchroniser de WeeChat (ou quitter)
 
-| _upgrade_ended | upgrade | (empty) |
+| _upgrade_ended | upgrade | (vide) |
   WeeChat a été mis à jour | (Re)synchroniser avec WeeChat
 |===
 
@@ -607,7 +607,7 @@ Données envoyées dans le hdata :
 |===
 
 Exemple : canal '#weechat' rejoint sur freenode, nouveau tampon
-'irc.freenode.#weechat':
+'irc.freenode.#weechat' :
 
 [source,python]
 ----
@@ -834,7 +834,7 @@ Données envoyées dans le hdata :
 
 [width="100%",cols="3m,2,10",options="header"]
 |===
-| Name            | Type             | Description
+| Nom             | Type             | Description
 | number          | entier           | Numéro de tampon (≥ 1)
 | full_name       | chaîne           | Nom complet (exemple : 'irc.freenode.#weechat')
 | local_variables | table de hachage | Variables locales
@@ -1241,7 +1241,7 @@ sont utilisés :
 | tim  | Date/heure            | 1 octet + longueur de la date/heure sous forme de chaîne
 | htb  | Table de hachage      | Variable
 | hda  | Contenu du hdata      | Variable
-| inf  | Info: nom + contenu   | Variable
+| inf  | Info : nom + contenu  | Variable
 | inl  | Contenu de l'infolist | Variable
 | arr  | Tableau d'objets      | 3 octets (type) + nombre d'objets + données
 |===
@@ -1407,7 +1407,7 @@ Exemple :
 │ str │ str │ 2 ║ key1 │ abc ║ key2 │ def │ ────► { 'key1' => 'abc',
 └─────┴─────┴───╨──────┴─────╨──────┴─────┘         'key2' => 'def' }
  └───┘ └───┘ └─┘ └──────────┘ └──────────┘
- type  type nombre élément 1    élement 2
+ type  type nombre élément 1    élément 2
  clés valeurs
 ....
 
@@ -1471,7 +1471,7 @@ hdata buffer:gui_buffers(*)/lines/first_line(*)/data
 │ buffer/lines/line/line_data │ ... │ 50 ║ ...
 └─────────────────────────────┴─────┴────╨──
  └───────────────────────────┘ └───┘ └──┘
-      h-path (hdata names)     clés nombre
+    h-path (noms de hdata)     clés nombre
 
    ──╥───────────┬───────────┬───────────┬───────╥──
  ... ║ 0x23cf970 │ 0x23cfb60 │ 0x23d5f40 │ ..... ║ ...

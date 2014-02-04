@@ -270,7 +270,7 @@ Examples:
 
 ----
 input core.weechat /help filter
-input irc.freenode.#weechat hello guys!
+input irc.freenode.#weechat hello!
 ----
 
 [[command_sync]]
@@ -512,7 +512,7 @@ WeeChat reserved identifiers:
 
 [width="100%",cols="5,5,3,4,7",options="header"]
 |===
-| Identifier | Received with sync | Data sent |
+| Identifier | Received with 'sync' | Data sent |
   Description | Recommended action in client
 
 | _buffer_opened | buffers / buffer | hdata: buffer |
