@@ -28,7 +28,6 @@ extern "C" {
 
 #include <sys/types.h>
 #include <sys/socket.h>
-#include <regex.h>
 
 /* some systems like GNU/Hurd do not define PATH_MAX */
 #ifndef PATH_MAX
@@ -244,11 +243,11 @@ struct t_weechat_plugin
     char *(*string_mask_to_regex) (const char *mask);
     const char *(*string_regex_flags) (const char *regex, int default_flags,
                                        int *flags);
-    int (*string_regcomp) (regex_t *preg, const char *regex, int default_flags);
+    int (*string_regcomp) (void *preg, const char *regex, int default_flags);
     int (*string_has_highlight) (const char *string,
                                  const char *highlight_words);
     int (*string_has_highlight_regex) (const char *string, const char *regex);
-    char *(*string_replace_regex) (const char *string, regex_t *regex,
+    char *(*string_replace_regex) (const char *string, void *regex,
                                    const char *replace);
     char **(*string_split) (const char *string, const char *separators,
                             int keep_eol, int num_items_max, int *num_items);

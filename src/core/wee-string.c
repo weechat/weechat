@@ -947,13 +947,13 @@ string_regex_flags (const char *regex, int default_flags, int *flags)
  */
 
 int
-string_regcomp (regex_t *preg, const char *regex, int default_flags)
+string_regcomp (void *preg, const char *regex, int default_flags)
 {
     const char *ptr_regex;
     int flags;
 
     ptr_regex = string_regex_flags (regex, default_flags, &flags);
-    return regcomp (preg, ptr_regex, flags);
+    return regcomp ((regex_t *)preg, ptr_regex, flags);
 }
 
 /*
@@ -1274,7 +1274,7 @@ string_replace_regex_get_replace (const char *string, regmatch_t *regex_match,
  */
 
 char *
-string_replace_regex (const char *string, regex_t *regex, const char *replace)
+string_replace_regex (const char *string, void *regex, const char *replace)
 {
     char *result, *result2, *str_replace;
     int length, length_replace, start_offset, i, rc, end;
@@ -1297,7 +1297,8 @@ string_replace_regex (const char *string, regex_t *regex, const char *replace)
             regex_match[i].rm_so = -1;
         }
 
-        rc = regexec (regex, result + start_offset, 10, regex_match, 0);
+        rc = regexec ((regex_t *)regex, result + start_offset, 10, regex_match,
+                      0);
         /*
          * no match found: exit the loop (if rm_eo == 0, it is an empty match
          * at beginning of string: we consider there is no match, to prevent an
