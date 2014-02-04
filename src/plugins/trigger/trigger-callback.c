@@ -548,7 +548,7 @@ trigger_callback_print_cb  (void *data, struct t_gui_buffer *buffer,
     if (!extra_vars)
         goto end;
 
-    /* add data in hashtable used for conditions/replace/command */
+    /* add data in hashtables used for conditions/replace/command */
     weechat_hashtable_set (pointers, "buffer", buffer);
     date_tmp = localtime (&date);
     if (date_tmp)
@@ -605,6 +605,88 @@ trigger_callback_print_cb  (void *data, struct t_gui_buffer *buffer,
     {
         weechat_printf_tags (trigger_buffer, "no_trigger",
                              "print\t%s%s",
+                             weechat_color ("chat_channel"),
+                             trigger->name);
+        weechat_printf_tags (trigger_buffer, "no_trigger",
+                             "\t  buffer: %s",
+                             weechat_buffer_get_string (buffer, "full_name"));
+        trigger_buffer_display_hashtable ("pointers", pointers);
+        trigger_buffer_display_hashtable ("extra_vars", extra_vars);
+    }
+
+    /* check conditions */
+    if (!trigger_callback_check_conditions (trigger, pointers, extra_vars))
+        goto end;
+
+    /* replace text with regex */
+    trigger_callback_replace_regex (trigger, extra_vars);
+
+    /* execute command */
+    trigger_callback_run_command (trigger, buffer, pointers, extra_vars);
+
+end:
+    if (pointers)
+        weechat_hashtable_free (pointers);
+    if (extra_vars)
+        weechat_hashtable_free (extra_vars);
+
+    trigger->hook_running = 0;
+
+    return rc;
+}
+
+/*
+ * Callback for a command_run hooked.
+ */
+
+int
+trigger_callback_command_run_cb  (void *data, struct t_gui_buffer *buffer,
+                                  const char *command)
+{
+    struct t_trigger *trigger;
+    struct t_hashtable *pointers, *extra_vars;
+    int rc;
+
+    /* get trigger pointer, return immediately if not found or trigger running */
+    trigger = (struct t_trigger *)data;
+    if (!trigger || trigger->hook_running)
+        return WEECHAT_RC_OK;
+
+    trigger->hook_count_cb++;
+    trigger->hook_running = 1;
+
+    pointers = NULL;
+    extra_vars = NULL;
+
+    rc = trigger_return_code[weechat_config_integer (trigger->options[TRIGGER_OPTION_RETURN_CODE])];
+
+    /* create hashtables */
+    pointers = weechat_hashtable_new (32,
+                                      WEECHAT_HASHTABLE_STRING,
+                                      WEECHAT_HASHTABLE_POINTER,
+                                      NULL,
+                                      NULL);
+    if (!pointers)
+        goto end;
+    extra_vars = weechat_hashtable_new (32,
+                                        WEECHAT_HASHTABLE_STRING,
+                                        WEECHAT_HASHTABLE_STRING,
+                                        NULL,
+                                        NULL);
+    if (!extra_vars)
+        goto end;
+
+    /* add data in hashtables used for conditions/replace/command */
+    weechat_hashtable_set (pointers, "buffer", buffer);
+    weechat_hashtable_set (extra_vars, "tg_command", command);
+
+    /* display debug info on trigger buffer */
+    if (!trigger_buffer && (weechat_trigger_plugin->debug >= 1))
+        trigger_buffer_open (0);
+    if (trigger_buffer)
+    {
+        weechat_printf_tags (trigger_buffer, "no_trigger",
+                             "command_run\t%s%s",
                              weechat_color ("chat_channel"),
                              trigger->name);
         weechat_printf_tags (trigger_buffer, "no_trigger",

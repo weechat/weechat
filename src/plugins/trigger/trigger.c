@@ -48,20 +48,21 @@ char *trigger_option_default[TRIGGER_NUM_OPTIONS] =
 { "on", "signal", "", "", "", "", "ok" };
 
 char *trigger_hook_type_string[TRIGGER_NUM_HOOK_TYPES] =
-{ "signal", "hsignal", "modifier", "print", "timer" };
+{ "signal", "hsignal", "modifier", "print", "command_run", "timer" };
 char *trigger_hook_default_arguments[TRIGGER_NUM_HOOK_TYPES] =
-{ "xxx", "xxx", "xxx", "", "60000;0;0" };
+{ "xxx", "xxx", "xxx", "", "/cmd", "60000;0;0" };
 char *trigger_hook_default_condition[TRIGGER_NUM_HOOK_TYPES] =
-{ "${...}", "${...}", "${...}", "${...}", "${...}" };
+{ "${...}", "${...}", "${...}", "${...}", "${...}", "${...}" };
 char *trigger_hook_default_regex[TRIGGER_NUM_HOOK_TYPES] =
-{ "/abc/def", "/abc/def", "/abc/def", "/abc/def", "" };
+{ "/abc/def", "/abc/def", "/abc/def", "/abc/def", "/abc/def" };
 char *trigger_hook_default_command[TRIGGER_NUM_HOOK_TYPES] =
-{ "/cmd", "/cmd", "/cmd", "/cmd", "/cmd" };
+{ "/cmd", "/cmd", "/cmd", "/cmd", "/cmd", "/cmd" };
 char *trigger_hook_default_rc[TRIGGER_NUM_HOOK_TYPES] =
-{ "ok,ok_eat,error", "ok,ok_eat,error", "", "ok,error", "ok" };
+{ "ok,ok_eat,error", "ok,ok_eat,error", "", "ok,error", "ok,ok_eat,error",
+  "ok" };
 
 char *trigger_hook_regex_default_var[TRIGGER_NUM_HOOK_TYPES] =
-{ "tg_signal_data", "", "tg_string", "tg_message", "" };
+{ "tg_signal_data", "", "tg_string", "tg_message", "tg_command", "" };
 
 char *trigger_return_code_string[TRIGGER_NUM_RETURN_CODES] =
 { "ok", "ok_eat", "error" };
@@ -521,6 +522,22 @@ trigger_hook (struct t_trigger *trigger)
                                                         strip_colors,
                                                         &trigger_callback_print_cb,
                                                         trigger);
+            }
+            break;
+        case TRIGGER_HOOK_COMMAND_RUN:
+            if (argv && (argc >= 1))
+            {
+                trigger->hooks = malloc (argc * sizeof (trigger->hooks[0]));
+                if (trigger->hooks)
+                {
+                    trigger->hooks_count = argc;
+                    for (i = 0; i < argc; i++)
+                    {
+                        trigger->hooks[i] = weechat_hook_command_run (argv[i],
+                                                                      &trigger_callback_command_run_cb,
+                                                                      trigger);
+                    }
+                }
             }
             break;
         case TRIGGER_HOOK_TIMER:

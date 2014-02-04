@@ -142,7 +142,8 @@ trigger_config_create_option (const char *trigger_name, int index_option,
                 trigger_config_file, trigger_config_section_trigger,
                 option_name, "integer",
                 N_("type of hook used"),
-                "signal|hsignal|modifier|print|timer", 0, 0, value, NULL, 0,
+                "signal|hsignal|modifier|print|command_run|timer",
+                0, 0, value, NULL, 0,
                 NULL, NULL, NULL, NULL, NULL, NULL);
             break;
         case TRIGGER_OPTION_ARGUMENTS:

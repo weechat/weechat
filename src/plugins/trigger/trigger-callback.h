@@ -32,6 +32,9 @@ extern int trigger_callback_print_cb  (void *data, struct t_gui_buffer *buffer,
                                        const char **tags, int displayed,
                                        int highlight, const char *prefix,
                                        const char *message);
+extern int trigger_callback_command_run_cb  (void *data,
+                                             struct t_gui_buffer *buffer,
+                                             const char *command);
 extern int trigger_callback_timer_cb  (void *data, int remaining_calls);
 extern void trigger_callback_init ();
 extern void trigger_callback_end ();

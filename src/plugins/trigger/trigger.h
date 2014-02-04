@@ -44,6 +44,7 @@ enum t_trigger_hook_type
     TRIGGER_HOOK_HSIGNAL,
     TRIGGER_HOOK_MODIFIER,
     TRIGGER_HOOK_PRINT,
+    TRIGGER_HOOK_COMMAND_RUN,
     TRIGGER_HOOK_TIMER,
     /* number of hook types */
     TRIGGER_NUM_HOOK_TYPES,
