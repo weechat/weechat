@@ -54,7 +54,7 @@ char *trigger_hook_default_arguments[TRIGGER_NUM_HOOK_TYPES] =
 char *trigger_hook_default_condition[TRIGGER_NUM_HOOK_TYPES] =
 { "${...}", "${...}", "${...}", "${...}", "${...}", "${...}" };
 char *trigger_hook_default_regex[TRIGGER_NUM_HOOK_TYPES] =
-{ "/abc/def", "/abc/def", "/abc/def", "/abc/def", "/abc/def" };
+{ "/abc/def", "/abc/def", "/abc/def", "/abc/def", "/abc/def", "/abc/def" };
 char *trigger_hook_default_command[TRIGGER_NUM_HOOK_TYPES] =
 { "/cmd", "/cmd", "/cmd", "/cmd", "/cmd", "/cmd" };
 char *trigger_hook_default_rc[TRIGGER_NUM_HOOK_TYPES] =
