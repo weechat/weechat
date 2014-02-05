@@ -157,7 +157,7 @@ trigger_completion_hooks_cb (void *data, const char *completion_item,
     {
         weechat_hook_completion_list_add (completion,
                                           trigger_hook_type_string[i],
-                                          0, WEECHAT_LIST_POS_SORT);
+                                          0, WEECHAT_LIST_POS_END);
     }
 
     return WEECHAT_RC_OK;
