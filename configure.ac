@@ -621,27 +621,23 @@ if test "x$enable_lua" = "xyes" ; then
     fi
 
     if test "x$LUA_CFLAGS" = "x" -o "x$LUA_LFLAGS" = "x" ; then
-        PKGCONFIG=""
-        AC_CHECK_PROGS(PKGCONFIG, pkg-config)
-        if test "x$PKGCONFIG" != "x"; then
-            AC_MSG_CHECKING(for Lua headers and librairies with pkg-config)
-            echo
-            for l in "$lua_suffix" "" "51" "5.1" "50" "5.0" ; do
-                pkgconfig_lua_found=`$PKGCONFIG --exists lua$l 2>/dev/null`
-                if test "x$?" = "x0" ; then
-                    LUA_VERSION=`$PKGCONFIG --modversion lua$l`
-                    LUA_CFLAGS="$LUA_CFLAGS "`$PKGCONFIG --cflags lua$l`
-                    LUA_LFLAGS="$LUA_LFLAGS "`$PKGCONFIG --libs lua$l`
+        AC_MSG_CHECKING(for Lua headers and librairies with pkg-config)
+        echo
+        for l in "$lua_suffix" "" "51" "5.1" "50" "5.0" ; do
+            pkgconfig_lua_found=`$PKGCONFIG --exists lua$l 2>/dev/null`
+            if test "x$?" = "x0" ; then
+                LUA_VERSION=`$PKGCONFIG --modversion lua$l`
+                LUA_CFLAGS="$LUA_CFLAGS "`$PKGCONFIG --cflags lua$l`
+                LUA_LFLAGS="$LUA_LFLAGS "`$PKGCONFIG --libs lua$l`
 
-                    pkgconfig_lualib_found=`$PKGCONFIG --exists lualib$l 2>/dev/null`
-                    if test  "x$?" = "x0"; then
-                        LUA_CFLAGS="$LUA_CFLAGS "`$PKGCONFIG --cflags lualib$l`
-                        LUA_LFLAGS="$LUA_LFLAGS "`$PKGCONFIG --libs lualib$l`
-                    fi
-                    break
+                pkgconfig_lualib_found=`$PKGCONFIG --exists lualib$l 2>/dev/null`
+                if test  "x$?" = "x0"; then
+                    LUA_CFLAGS="$LUA_CFLAGS "`$PKGCONFIG --cflags lualib$l`
+                    LUA_LFLAGS="$LUA_LFLAGS "`$PKGCONFIG --libs lualib$l`
                 fi
-            done
-        fi
+                break
+            fi
+        done
     fi
 
     if test "x$LUA_CFLAGS" = "x" -o "x$LUA_LFLAGS" = "x" ; then
@@ -773,22 +769,18 @@ if test "x$enable_guile" = "xyes" ; then
     enable_plugins="yes"
 
     guile_found="no"
-    PKGCONFIG=""
-    AC_CHECK_PROGS(PKGCONFIG, pkg-config)
-    if test "x$PKGCONFIG" != "x"; then
-        AC_MSG_CHECKING(for Guile headers and librairies)
-        echo
-        for v in "2.0" ; do
-            pkgconfig_guile_found=`$PKGCONFIG --exists guile-$v 2>/dev/null`
-            if test "x$?" = "x0" ; then
-                GUILE_VERSION=`$PKGCONFIG --modversion guile-$v`
-                GUILE_CFLAGS=`$PKGCONFIG --cflags guile-$v`
-                GUILE_LFLAGS=`$PKGCONFIG --libs guile-$v`
-                guile_found="yes"
-                break
-            fi
-        done
-    fi
+    AC_MSG_CHECKING(for Guile headers and librairies)
+    echo
+    for v in "2.0" ; do
+        pkgconfig_guile_found=`$PKGCONFIG --exists guile-$v 2>/dev/null`
+        if test "x$?" = "x0" ; then
+            GUILE_VERSION=`$PKGCONFIG --modversion guile-$v`
+            GUILE_CFLAGS=`$PKGCONFIG --cflags guile-$v`
+            GUILE_LFLAGS=`$PKGCONFIG --libs guile-$v`
+            guile_found="yes"
+            break
+        fi
+    done
 
     if test "x$guile_found" = "xno" ; then
         AC_MSG_WARN([
