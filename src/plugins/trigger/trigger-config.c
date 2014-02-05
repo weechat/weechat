@@ -64,6 +64,26 @@ trigger_config_change_enabled (void *data, struct t_config_option *option)
 }
 
 /*
+ * Callback called when trigger option "hook" is changed.
+ */
+
+void
+trigger_config_change_hook (void *data, struct t_config_option *option)
+{
+    struct t_trigger *ptr_trigger;
+
+    /* make C compiler happy */
+    (void) data;
+
+    ptr_trigger = trigger_search_with_option (option);
+    if (!ptr_trigger)
+        return;
+
+    if (ptr_trigger->options[TRIGGER_OPTION_ARGUMENTS])
+        trigger_hook (ptr_trigger);
+}
+
+/*
  * Callback called when trigger option "arguments" is changed.
  */
 
@@ -79,7 +99,8 @@ trigger_config_change_arguments (void *data, struct t_config_option *option)
     if (!ptr_trigger)
         return;
 
-    trigger_hook (ptr_trigger);
+    if (ptr_trigger->options[TRIGGER_OPTION_HOOK])
+        trigger_hook (ptr_trigger);
 }
 
 /*
@@ -144,7 +165,7 @@ trigger_config_create_option (const char *trigger_name, int index_option,
                 N_("type of hook used"),
                 "signal|hsignal|modifier|print|command_run|timer",
                 0, 0, value, NULL, 0,
-                NULL, NULL, NULL, NULL, NULL, NULL);
+                NULL, NULL, &trigger_config_change_hook, NULL, NULL, NULL);
             break;
         case TRIGGER_OPTION_ARGUMENTS:
             ptr_option = weechat_config_new_option (
