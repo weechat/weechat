@@ -22,71 +22,78 @@
 # and libraries are. It also determines what the name of the library is. This
 # code sets the following variables:
 #
-#  RUBY_EXECUTABLE   = full path to the ruby binary
-#  RUBY_INCLUDE_PATH = path to where ruby.h can be found
-#  RUBY_LIBRARY = path to where libruby.so* can be found
+#  RUBY_INCLUDE_DIRS = C flags to compile with ruby
+#  RUBY_LIBRARY_DIRS = linker flags to compile with ruby (found with pkg-config)
+#  RUBY_LIB          = ruby library (found without pkg-config)
 
 IF(RUBY_FOUND)
    # Already in cache, be silent
    SET(RUBY_FIND_QUIETLY TRUE)
 ENDIF(RUBY_FOUND)
 
-FIND_PROGRAM(RUBY_EXECUTABLE
-  NAMES ruby1.9.3 ruby193 ruby1.9.2 ruby192 ruby1.9.1 ruby191 ruby1.9 ruby19 ruby1.8 ruby18 ruby1.6 ruby16 ruby
-  PATHS /usr/bin /usr/local/bin /usr/pkg/bin
-  )
+FIND_PACKAGE(PkgConfig)
+IF(PKG_CONFIG_FOUND)
+  pkg_search_module(RUBY ruby-2.0 ruby-1.9 ruby-1.8)
+ENDIF(PKG_CONFIG_FOUND)
 
-IF(RUBY_EXECUTABLE)
-  EXECUTE_PROCESS(
-    COMMAND ${RUBY_EXECUTABLE} -r rbconfig -e "print RbConfig::CONFIG['rubyhdrdir'] || RbConfig::CONFIG['archdir']"
-    OUTPUT_VARIABLE RUBY_ARCH_DIR
+IF(RUBY_FOUND)
+
+  SET(RUBY_LIB "")
+  MARK_AS_ADVANCED(RUBY_LIB)
+
+ELSE(RUBY_FOUND)
+
+  FIND_PROGRAM(RUBY_EXECUTABLE
+    NAMES ruby1.9.3 ruby193 ruby1.9.2 ruby192 ruby1.9.1 ruby191 ruby1.9 ruby19 ruby1.8 ruby18 ruby
+    PATHS /usr/bin /usr/local/bin /usr/pkg/bin
     )
 
-  EXECUTE_PROCESS(
-    COMMAND ${RUBY_EXECUTABLE} -r rbconfig -e "print RbConfig::CONFIG['arch']"
-    OUTPUT_VARIABLE RUBY_ARCH
-    )
+  IF(RUBY_EXECUTABLE)
 
-  EXECUTE_PROCESS(
-    COMMAND ${RUBY_EXECUTABLE} -r rbconfig -e "print RbConfig::CONFIG['libdir']"
-    OUTPUT_VARIABLE RUBY_POSSIBLE_LIB_PATH
-    )
+    EXECUTE_PROCESS(
+      COMMAND ${RUBY_EXECUTABLE} -r rbconfig -e "print RbConfig::CONFIG['rubyhdrdir'] || RbConfig::CONFIG['archdir']"
+      OUTPUT_VARIABLE RUBY_ARCH_DIR
+      )
 
-  EXECUTE_PROCESS(
-    COMMAND ${RUBY_EXECUTABLE} -r rbconfig -e "print RbConfig::CONFIG['rubylibdir']"
-    OUTPUT_VARIABLE RUBY_RUBY_LIB_PATH
-    )
+    EXECUTE_PROCESS(
+      COMMAND ${RUBY_EXECUTABLE} -r rbconfig -e "print RbConfig::CONFIG['arch']"
+      OUTPUT_VARIABLE RUBY_ARCH
+      )
 
-  EXECUTE_PROCESS(
-    COMMAND ${RUBY_EXECUTABLE} -r rbconfig -e "print RbConfig::CONFIG['ruby_version']"
-    OUTPUT_VARIABLE RUBY_VERSION
-    )
+    EXECUTE_PROCESS(
+      COMMAND ${RUBY_EXECUTABLE} -r rbconfig -e "print RbConfig::CONFIG['libdir']"
+      OUTPUT_VARIABLE RUBY_POSSIBLE_LIB_PATH
+      )
 
-  FIND_PATH(RUBY_INCLUDE_PATH
-    NAMES ruby.h
-    PATHS ${RUBY_ARCH_DIR}
-    )
+    EXECUTE_PROCESS(
+      COMMAND ${RUBY_EXECUTABLE} -r rbconfig -e "print RbConfig::CONFIG['rubylibdir']"
+      OUTPUT_VARIABLE RUBY_RUBY_LIB_PATH
+      )
 
-  SET(RUBY_ARCH
-    "${RUBY_INCLUDE_PATH}/${RUBY_ARCH}")
+    FIND_PATH(RUBY_INCLUDE_DIRS
+      NAMES ruby.h
+      PATHS ${RUBY_ARCH_DIR}
+      )
 
-  FIND_LIBRARY(RUBY_LIBRARY
-    NAMES ruby-1.9.3 ruby1.9.3 ruby193 ruby-1.9.2 ruby1.9.2 ruby192 ruby-1.9.1 ruby1.9.1 ruby191 ruby1.9 ruby19 ruby1.8 ruby18 ruby1.6 ruby16 ruby
-    PATHS ${RUBY_POSSIBLE_LIB_PATH} ${RUBY_RUBY_LIB_PATH}
-    )
+    SET(RUBY_INCLUDE_ARCH "${RUBY_INCLUDE_DIRS}/${RUBY_ARCH}")
 
-  IF(RUBY_LIBRARY AND RUBY_INCLUDE_PATH)
-    SET(RUBY_FOUND TRUE)
-  ENDIF(RUBY_LIBRARY AND RUBY_INCLUDE_PATH)
+    FIND_LIBRARY(RUBY_LIB
+      NAMES ruby-1.9.3 ruby1.9.3 ruby193 ruby-1.9.2 ruby1.9.2 ruby192 ruby-1.9.1 ruby1.9.1 ruby191 ruby1.9 ruby19 ruby1.8 ruby18 ruby
+      PATHS ${RUBY_POSSIBLE_LIB_PATH} ${RUBY_RUBY_LIB_PATH}
+      )
 
-  IF(${RUBY_VERSION} STREQUAL "1.9.0")
-    SET(RUBY_FOUND FALSE)
-  ENDIF(${RUBY_VERSION} STREQUAL "1.9.0")
+    IF(RUBY_LIB AND RUBY_INCLUDE_DIRS)
+      SET(RUBY_FOUND TRUE)
+    ENDIF(RUBY_LIB AND RUBY_INCLUDE_DIRS)
 
-  MARK_AS_ADVANCED(
-    RUBY_EXECUTABLE
-    RUBY_LIBRARY
-    RUBY_ARCH
-    RUBY_INCLUDE_PATH
-    )
-ENDIF(RUBY_EXECUTABLE)
+    SET(RUBY_INCLUDE_DIRS "${RUBY_INCLUDE_DIRS};${RUBY_INCLUDE_ARCH}")
+
+    MARK_AS_ADVANCED(
+      RUBY_INCLUDE_DIRS
+      RUBY_LIBRARY_DIRS
+      RUBY_LIB
+      )
+
+  ENDIF(RUBY_EXECUTABLE)
+
+ENDIF(RUBY_FOUND)

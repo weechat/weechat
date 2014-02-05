@@ -553,31 +553,34 @@ fi
 RUBY_VERSION=
 
 if test "x$enable_ruby" = "xyes" ; then
-    AC_PATH_PROGS(RUBY, ruby1.9.3 ruby1.9.2 ruby1.9.1 ruby1.9 ruby1.8 ruby)
-    if test -z $RUBY ; then
-        AC_MSG_WARN([
+    RUBY_CFLAGS=""
+    RUBY_LFLAGS=""
+    for v in "2.0" "1.9" "1.8" ; do
+        pkgconfig_ruby_found=`$PKGCONFIG --exists ruby-$v 2>/dev/null`
+        if test "x$?" = "x0" ; then
+            RUBY_VERSION=`$PKGCONFIG --modversion ruby-$v`
+            RUBY_CFLAGS=`$PKGCONFIG --cflags ruby-$v`
+            RUBY_LFLAGS=`$PKGCONFIG --libs ruby-$v`
+            break
+        fi
+    done
+
+    if test "x$RUBY_CFLAGS" = "x" -o "x$RUBY_LFLAGS" = "x" ; then
+        AC_PATH_PROGS(RUBY, ruby1.9.3 ruby1.9.2 ruby1.9.1 ruby1.9 ruby1.8 ruby)
+        if test -z $RUBY ; then
+            AC_MSG_WARN([
 *** Ruby must be installed on your system but ruby interpreter couldn't be found in path.
 *** Please check that ruby is in path, or install it with your software package manager.
-*** WeeChat will be built without Ruby support.])
-        enable_ruby="no"
-        not_found="$not_found ruby"
-    else
-        RUBY_VERSION=`$RUBY -rrbconfig -e "puts RbConfig::CONFIG[['ruby_version']]"`
-        if test "$RUBY_VERSION" = "1.9.0"; then
-            AC_MSG_WARN([
-*** Ruby header files have been found, but they're of the version 1.9.0.
-*** Ruby 1.9.0 is an unstable release and should not be used in production.
-*** Please install Ruby 1.8.x (>= 1.8.6) or >= 1.9.1.
 *** WeeChat will be built without Ruby support.])
             enable_ruby="no"
             not_found="$not_found ruby"
         else
+            RUBY_VERSION=`$RUBY -rrbconfig -e "puts RbConfig::CONFIG[['MAJOR']] + '.' + RbConfig::CONFIG[['MINOR']] + '.' + RbConfig::CONFIG[['TEENY']]"`
             RUBY_INCLUDE=`$RUBY -rrbconfig -e "puts RbConfig::CONFIG[['rubyhdrdir']] || RbConfig::CONFIG[['archdir']]"`
             RUBY_ARCH=`$RUBY -rrbconfig -e 'print RbConfig::CONFIG[["arch"]]'`
             AC_MSG_CHECKING(for Ruby header files)
             if test -d "$RUBY_INCLUDE/"; then
-                M_RUBY_VERSION=`$RUBY -rrbconfig -e "puts RbConfig::CONFIG[['ruby_version']].gsub(/\./, '')[[0,3]]"`
-                RUBY_CFLAGS="-I$RUBY_INCLUDE/ -I$RUBY_INCLUDE/$RUBY_ARCH -DRUBY_VERSION=$M_RUBY_VERSION"
+                RUBY_CFLAGS="-I$RUBY_INCLUDE/ -I$RUBY_INCLUDE/$RUBY_ARCH"
             else
                 AC_MSG_WARN([
 *** Ruby header files couldn't be found on your system.

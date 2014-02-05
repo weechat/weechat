@@ -23,7 +23,7 @@
 #undef _
 
 #include <ruby.h>
-#if defined(RUBY_VERSION) && RUBY_VERSION >= 19
+#if (defined(RUBY_API_VERSION_MAJOR) && defined(RUBY_API_VERSION_MINOR)) && (RUBY_API_VERSION_MAJOR >= 2 || (RUBY_API_VERSION_MAJOR == 1 && RUBY_API_VERSION_MINOR >= 9))
 #include <ruby/encoding.h>
 #endif
 #ifdef HAVE_RUBY_VERSION_H
@@ -1149,7 +1149,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     /* init stdout/stderr buffer */
     ruby_buffer_output[0] = '\0';
 
-#if defined(RUBY_VERSION) && RUBY_VERSION >= 19
+#if (defined(RUBY_API_VERSION_MAJOR) && defined(RUBY_API_VERSION_MINOR)) && (RUBY_API_VERSION_MAJOR >= 2 || (RUBY_API_VERSION_MAJOR == 1 && RUBY_API_VERSION_MINOR >= 9))
     RUBY_INIT_STACK;
 #endif
 
