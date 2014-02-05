@@ -51,7 +51,7 @@ char *trigger_hook_type_string[TRIGGER_NUM_HOOK_TYPES] =
 { "signal", "hsignal", "modifier", "print", "command_run", "timer" };
 char *trigger_hook_default_arguments[TRIGGER_NUM_HOOK_TYPES] =
 { "xxx", "xxx", "xxx", "", "/cmd", "60000;0;0" };
-char *trigger_hook_default_condition[TRIGGER_NUM_HOOK_TYPES] =
+char *trigger_hook_default_conditions[TRIGGER_NUM_HOOK_TYPES] =
 { "${...}", "${...}", "${...}", "${...}", "${...}", "${...}" };
 char *trigger_hook_default_regex[TRIGGER_NUM_HOOK_TYPES] =
 { "/abc/def", "/abc/def", "/abc/def", "/abc/def", "/abc/def", "/abc/def" };

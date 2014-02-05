@@ -135,12 +135,11 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
 {
     struct t_trigger *ptr_trigger;
     const char *option;
-    char *value, **sargv;
-    int i, type, count, index_option, enable, sargc;
+    char *value, **sargv, **items, input[1024];
+    int i, type, count, index_option, enable, sargc, num_items, rc;
 
     /* make C compiler happy */
     (void) data;
-    (void) buffer;
 
     sargv = NULL;
 
@@ -193,6 +192,13 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
                 {
                     weechat_printf_tags (NULL, "no_trigger",
                                          "      command: \"%s\"", option);
+                }
+                rc = weechat_config_integer (ptr_trigger->options[TRIGGER_OPTION_RETURN_CODE]);
+                if (rc != TRIGGER_RC_OK)
+                {
+                    weechat_printf_tags (NULL, "no_trigger",
+                                         "      return code: %s",
+                                         trigger_return_code_string[rc]);
                 }
             }
         }
@@ -265,6 +271,38 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
                                  _("%sError: failed to create trigger \"%s\""),
                                  weechat_prefix ("error"), sargv[0]);
         }
+        goto end;
+    }
+
+    /* add trigger command in input (to help trigger creation) */
+    if (weechat_strcasecmp (argv[1], "addinput") == 0)
+    {
+        type = TRIGGER_HOOK_SIGNAL;
+        if (argc >= 3)
+        {
+            type = trigger_search_hook_type (argv[2]);
+            if (type < 0)
+            {
+                weechat_printf_tags (NULL, "no_trigger",
+                                     _("%sError: invalid hook type \"%s\""),
+                                     weechat_prefix ("error"), argv[2]);
+                goto end;
+            }
+        }
+        items = weechat_string_split (trigger_hook_default_rc[type], ",", 0, 0,
+                                      &num_items);
+        snprintf (input, sizeof (input),
+                  "/trigger add name %s \"%s\" \"%s\" \"%s\" \"%s\"%s%s%s",
+                  trigger_hook_type_string[type],
+                  trigger_hook_default_arguments[type],
+                  trigger_hook_default_conditions[type],
+                  trigger_hook_default_regex[type],
+                  trigger_hook_default_command[type],
+                  (items && (num_items > 0)) ? " \"" : "",
+                  (items && (num_items > 0)) ? items[0] : "",
+                  (items && (num_items > 0)) ? "\"" : "");
+        weechat_buffer_set (buffer, "input", input);
+        weechat_buffer_set (buffer, "input_pos", "13");
         goto end;
     }
 
@@ -454,35 +492,43 @@ trigger_command_init ()
         N_("list"
            " || add <name> <hook> [\"<arguments>\" [\"<conditions>\" "
            "[\"<regex>\" [\"<command>\" [\"<return_code>\"]]]]]"
+           " || addinput [<hook>]"
            " || set <name> <option> <value>"
            " || rename <name> <new_name>"
            " || enable|disable|toggle|restart <name>|-all [<name>...]"
            " || del <name>|-all [<name>...]"
            " || monitor"),
-        N_("      add: add a trigger\n"
-           "     name: name of trigger\n"
-           "     hook: signal, hsignal, modifier, print, timer\n"
-           "arguments: arguments for the hook, depending on hook (separated by "
-           "semicolons):\n"
-           "           signal: name(s) of signal\n"
-           "           hsignal: name(s) of hsignal\n"
-           "           modifier: name(s) of modifier\n"
-           "           print: buffer, tags, message, strip_colors\n"
-           "           timer: interval, align_second, max_calls\n"
-           "      set: set an option in a trigger\n"
-           "   option: name of option: name, hook, arguments, conditions, regex, "
-           "command, return_code\n"
-           "           (for help on option, you can do /help "
+        N_("        add: add a trigger\n"
+           "       name: name of trigger\n"
+           "       hook: signal, hsignal, modifier, print, timer\n"
+           "  arguments: arguments for the hook, depending on hook (separated "
+           "by semicolons):\n"
+           "             signal: name(s) of signal\n"
+           "             hsignal: name(s) of hsignal\n"
+           "             modifier: name(s) of modifier\n"
+           "             print: buffer, tags, message, strip_colors\n"
+           "             timer: interval, align_second, max_calls\n"
+           " conditions: evaluated conditions for the trigger\n"
+           "      regex: one or more regular expressions to replace strings "
+           "in variables\n"
+           "    command: command to execute (many commands can be separated by "
+           "\";\"\n"
+           "return_code: return code in callback (ok (default), ok_eat, error)\n"
+           "   addinput: set input with default arguments to create a trigger\n"
+           "        set: set an option in a trigger\n"
+           "     option: name of option: name, hook, arguments, conditions, "
+           "regex, command, return_code\n"
+           "             (for help on option, you can do /help "
            "trigger.trigger.<name>.<option>)\n"
-           "    value: new value for the option\n"
-           "   rename: rename a trigger\n"
-           "   enable: enable trigger(s)\n"
-           "  disable: disable trigger(s)\n"
-           "   toggle: toggle trigger(s)\n"
-           "  restart: restart trigger(s) (for timer)\n"
-           "      del: delete a trigger\n"
-           "     -all: do action on all triggers\n"
-           "  monitor: open the trigger monitor buffer\n"
+           "      value: new value for the option\n"
+           "     rename: rename a trigger\n"
+           "     enable: enable trigger(s)\n"
+           "    disable: disable trigger(s)\n"
+           "     toggle: toggle trigger(s)\n"
+           "    restart: restart trigger(s) (for timer)\n"
+           "        del: delete a trigger\n"
+           "       -all: do action on all triggers\n"
+           "    monitor: open the trigger monitor buffer\n"
            "\n"
            "When a trigger callback is called, following actions are performed, "
            "in this order:\n"
@@ -512,6 +558,7 @@ trigger_command_init ()
         " || add %(trigger_names) %(trigger_hooks) %(trigger_hook_arguments) "
         "%(trigger_hook_condition) %(trigger_hook_regex) "
         "%(trigger_hook_command) %(trigger_hook_rc)"
+        " || addinput %(trigger_hooks)"
         " || set %(trigger_names) %(trigger_options)|name %(trigger_option_value)"
         " || rename %(trigger_names) %(trigger_names)"
         " || enable|disable|toggle|restart|del %(trigger_names)|-all %(trigger_names)|%*"

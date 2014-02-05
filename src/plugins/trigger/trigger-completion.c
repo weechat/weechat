@@ -277,7 +277,7 @@ trigger_completion_hook_condition_cb (void *data, const char *completion_item,
     (void) buffer;
 
     trigger_completion_add_default_for_hook (completion,
-                                             trigger_hook_default_condition,
+                                             trigger_hook_default_conditions,
                                              NULL);
     weechat_hook_completion_list_add (completion, "\"\"", 0,
                                       WEECHAT_LIST_POS_END);
