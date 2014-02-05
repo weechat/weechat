@@ -76,10 +76,6 @@ struct t_trigger
 
     /* internal vars */
 
-    /* regular expressions with their replacement text */
-    int regex_count;                   /* number of regex                   */
-    struct t_trigger_regex *regex;     /* array of regex                    */
-
     /* hooks */
     int hooks_count;                   /* number of hooks                   */
     struct t_hook **hooks;             /* array of hooks (signal, ...)      */
@@ -87,6 +83,10 @@ struct t_trigger
     unsigned long hook_count_cmd;      /* number of commands run in callback*/
     int hook_running;                  /* 1 if one hook callback is running */
     char *hook_print_buffers;          /* buffers (for hook_print only)     */
+
+    /* regular expressions with their replacement text */
+    int regex_count;                   /* number of regex                   */
+    struct t_trigger_regex *regex;     /* array of regex                    */
 
     /* links to other triggers */
     struct t_trigger *prev_trigger;    /* link to previous trigger          */

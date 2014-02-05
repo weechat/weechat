@@ -201,6 +201,189 @@ trigger_search_with_option (struct t_config_option *option)
 }
 
 /*
+ * Unhooks things hooked in a trigger.
+ */
+
+void
+trigger_unhook (struct t_trigger *trigger)
+{
+    int i;
+
+    if (trigger->hooks)
+    {
+        for (i = 0; i < trigger->hooks_count; i++)
+        {
+            if (trigger->hooks[i])
+                weechat_unhook (trigger->hooks[i]);
+        }
+        free (trigger->hooks);
+        trigger->hooks = NULL;
+        trigger->hooks_count = 0;
+    }
+    trigger->hook_count_cb = 0;
+    trigger->hook_count_cmd = 0;
+    if (trigger->hook_print_buffers)
+    {
+        free (trigger->hook_print_buffers);
+        trigger->hook_print_buffers = NULL;
+    }
+}
+
+/*
+ * Creates hook(s) in a trigger.
+ */
+
+void
+trigger_hook (struct t_trigger *trigger)
+{
+    char **argv, **argv_eol, *tags, *message, *error1, *error2, *error3;
+    int i, argc, strip_colors;
+    long interval, align_second, max_calls;
+
+    trigger_unhook (trigger);
+
+    argv = weechat_string_split (weechat_config_string (trigger->options[TRIGGER_OPTION_ARGUMENTS]),
+                                 ";", 0, 0, &argc);
+    argv_eol = weechat_string_split (weechat_config_string (trigger->options[TRIGGER_OPTION_ARGUMENTS]),
+                                     ";", 1, 0, NULL);
+
+    switch (weechat_config_integer (trigger->options[TRIGGER_OPTION_HOOK]))
+    {
+        case TRIGGER_HOOK_SIGNAL:
+            if (argv && (argc >= 1))
+            {
+                trigger->hooks = malloc (argc * sizeof (trigger->hooks[0]));
+                if (trigger->hooks)
+                {
+                    trigger->hooks_count = argc;
+                    for (i = 0; i < argc; i++)
+                    {
+                        trigger->hooks[i] = weechat_hook_signal (argv[i],
+                                                                 &trigger_callback_signal_cb,
+                                                                 trigger);
+                    }
+                }
+            }
+            break;
+        case TRIGGER_HOOK_HSIGNAL:
+            if (argv && (argc >= 1))
+            {
+                trigger->hooks = malloc (argc * sizeof (trigger->hooks[0]));
+                if (trigger->hooks)
+                {
+                    trigger->hooks_count = argc;
+                    for (i = 0; i < argc; i++)
+                    {
+                        trigger->hooks[i] = weechat_hook_hsignal (argv[i],
+                                                                  &trigger_callback_hsignal_cb,
+                                                                  trigger);
+                    }
+                }
+            }
+            break;
+        case TRIGGER_HOOK_MODIFIER:
+            if (argv && (argc >= 1))
+            {
+                trigger->hooks = malloc (argc * sizeof (trigger->hooks[0]));
+                if (trigger->hooks)
+                {
+                    trigger->hooks_count = argc;
+                    for (i = 0; i < argc; i++)
+                    {
+                        trigger->hooks[i] = weechat_hook_modifier (argv[i],
+                                                                   &trigger_callback_modifier_cb,
+                                                                   trigger);
+                    }
+                }
+            }
+            break;
+        case TRIGGER_HOOK_PRINT:
+            tags = NULL;
+            message = NULL;
+            strip_colors = 0;
+            if (argv && (argc >= 1))
+            {
+                if (strcmp (argv[0], "*") != 0)
+                    trigger->hook_print_buffers = strdup (argv[0]);
+                if ((argc >= 2) && (strcmp (argv[1], "*") != 0))
+                    tags = argv[1];
+                if ((argc >= 3) && (strcmp (argv[2], "*") != 0))
+                    message = argv[2];
+                if (argc >= 4)
+                    strip_colors = (strcmp (argv[3], "0") != 0) ? 1 : 0;
+            }
+            trigger->hooks = malloc (1 * sizeof (trigger->hooks[0]));
+            if (trigger->hooks)
+            {
+                trigger->hooks_count = 1;
+                trigger->hooks[0] = weechat_hook_print (NULL, tags, message,
+                                                        strip_colors,
+                                                        &trigger_callback_print_cb,
+                                                        trigger);
+            }
+            break;
+        case TRIGGER_HOOK_COMMAND_RUN:
+            if (argv && (argc >= 1))
+            {
+                trigger->hooks = malloc (argc * sizeof (trigger->hooks[0]));
+                if (trigger->hooks)
+                {
+                    trigger->hooks_count = argc;
+                    for (i = 0; i < argc; i++)
+                    {
+                        trigger->hooks[i] = weechat_hook_command_run (argv[i],
+                                                                      &trigger_callback_command_run_cb,
+                                                                      trigger);
+                    }
+                }
+            }
+            break;
+        case TRIGGER_HOOK_TIMER:
+            if (argv && (argc >= 3))
+            {
+                error1 = NULL;
+                error2 = NULL;
+                error3 = NULL;
+                interval = strtol (argv[0], &error1, 10);
+                align_second = strtol (argv[1], &error2, 10);
+                max_calls = strtol (argv[2], &error3, 10);
+                if (error1 && !error1[0]
+                    && error2 && !error2[0]
+                    && error3 && !error3[0]
+                    && (interval > 0)
+                    && (align_second >= 0)
+                    && (max_calls >= 0))
+                {
+                    trigger->hooks = malloc (1 * sizeof (trigger->hooks[0]));
+                    if (trigger->hooks)
+                    {
+                        trigger->hooks_count = 1;
+                        trigger->hooks[0] = weechat_hook_timer (interval,
+                                                                (int)align_second,
+                                                                (int)max_calls,
+                                                                &trigger_callback_timer_cb,
+                                                                trigger);
+                    }
+                }
+            }
+            break;
+    }
+
+    if (!trigger->hooks)
+    {
+        weechat_printf (NULL,
+                        _("%sError: unable to create hook for trigger \"%s\" "
+                          "(bad arguments)"),
+                        weechat_prefix ("error"), trigger->name);
+    }
+
+    if (argv)
+        weechat_string_free_split (argv);
+    if (argv_eol)
+        weechat_string_free_split (argv_eol);
+}
+
+/*
  * Frees all the regex in a trigger.
  */
 
@@ -403,189 +586,6 @@ end:
 }
 
 /*
- * Unhooks things hooked in a trigger.
- */
-
-void
-trigger_unhook (struct t_trigger *trigger)
-{
-    int i;
-
-    if (trigger->hooks)
-    {
-        for (i = 0; i < trigger->hooks_count; i++)
-        {
-            if (trigger->hooks[i])
-                weechat_unhook (trigger->hooks[i]);
-        }
-        free (trigger->hooks);
-        trigger->hooks = NULL;
-        trigger->hooks_count = 0;
-    }
-    trigger->hook_count_cb = 0;
-    trigger->hook_count_cmd = 0;
-    if (trigger->hook_print_buffers)
-    {
-        free (trigger->hook_print_buffers);
-        trigger->hook_print_buffers = NULL;
-    }
-}
-
-/*
- * Creates hook(s) in a trigger.
- */
-
-void
-trigger_hook (struct t_trigger *trigger)
-{
-    char **argv, **argv_eol, *tags, *message, *error1, *error2, *error3;
-    int i, argc, strip_colors;
-    long interval, align_second, max_calls;
-
-    trigger_unhook (trigger);
-
-    argv = weechat_string_split (weechat_config_string (trigger->options[TRIGGER_OPTION_ARGUMENTS]),
-                                 ";", 0, 0, &argc);
-    argv_eol = weechat_string_split (weechat_config_string (trigger->options[TRIGGER_OPTION_ARGUMENTS]),
-                                     ";", 1, 0, NULL);
-
-    switch (weechat_config_integer (trigger->options[TRIGGER_OPTION_HOOK]))
-    {
-        case TRIGGER_HOOK_SIGNAL:
-            if (argv && (argc >= 1))
-            {
-                trigger->hooks = malloc (argc * sizeof (trigger->hooks[0]));
-                if (trigger->hooks)
-                {
-                    trigger->hooks_count = argc;
-                    for (i = 0; i < argc; i++)
-                    {
-                        trigger->hooks[i] = weechat_hook_signal (argv[i],
-                                                                 &trigger_callback_signal_cb,
-                                                                 trigger);
-                    }
-                }
-            }
-            break;
-        case TRIGGER_HOOK_HSIGNAL:
-            if (argv && (argc >= 1))
-            {
-                trigger->hooks = malloc (argc * sizeof (trigger->hooks[0]));
-                if (trigger->hooks)
-                {
-                    trigger->hooks_count = argc;
-                    for (i = 0; i < argc; i++)
-                    {
-                        trigger->hooks[i] = weechat_hook_hsignal (argv[i],
-                                                                  &trigger_callback_hsignal_cb,
-                                                                  trigger);
-                    }
-                }
-            }
-            break;
-        case TRIGGER_HOOK_MODIFIER:
-            if (argv && (argc >= 1))
-            {
-                trigger->hooks = malloc (argc * sizeof (trigger->hooks[0]));
-                if (trigger->hooks)
-                {
-                    trigger->hooks_count = argc;
-                    for (i = 0; i < argc; i++)
-                    {
-                        trigger->hooks[i] = weechat_hook_modifier (argv[i],
-                                                                   &trigger_callback_modifier_cb,
-                                                                   trigger);
-                    }
-                }
-            }
-            break;
-        case TRIGGER_HOOK_PRINT:
-            tags = NULL;
-            message = NULL;
-            strip_colors = 0;
-            if (argv && (argc >= 1))
-            {
-                if (strcmp (argv[0], "*") != 0)
-                    trigger->hook_print_buffers = strdup (argv[0]);
-                if ((argc >= 2) && (strcmp (argv[1], "*") != 0))
-                    tags = argv[1];
-                if ((argc >= 3) && (strcmp (argv[2], "*") != 0))
-                    message = argv[2];
-                if (argc >= 4)
-                    strip_colors = (strcmp (argv[3], "0") != 0) ? 1 : 0;
-            }
-            trigger->hooks = malloc (1 * sizeof (trigger->hooks[0]));
-            if (trigger->hooks)
-            {
-                trigger->hooks_count = 1;
-                trigger->hooks[0] = weechat_hook_print (NULL, tags, message,
-                                                        strip_colors,
-                                                        &trigger_callback_print_cb,
-                                                        trigger);
-            }
-            break;
-        case TRIGGER_HOOK_COMMAND_RUN:
-            if (argv && (argc >= 1))
-            {
-                trigger->hooks = malloc (argc * sizeof (trigger->hooks[0]));
-                if (trigger->hooks)
-                {
-                    trigger->hooks_count = argc;
-                    for (i = 0; i < argc; i++)
-                    {
-                        trigger->hooks[i] = weechat_hook_command_run (argv[i],
-                                                                      &trigger_callback_command_run_cb,
-                                                                      trigger);
-                    }
-                }
-            }
-            break;
-        case TRIGGER_HOOK_TIMER:
-            if (argv && (argc >= 3))
-            {
-                error1 = NULL;
-                error2 = NULL;
-                error3 = NULL;
-                interval = strtol (argv[0], &error1, 10);
-                align_second = strtol (argv[1], &error2, 10);
-                max_calls = strtol (argv[2], &error3, 10);
-                if (error1 && !error1[0]
-                    && error2 && !error2[0]
-                    && error3 && !error3[0]
-                    && (interval > 0)
-                    && (align_second >= 0)
-                    && (max_calls >= 0))
-                {
-                    trigger->hooks = malloc (1 * sizeof (trigger->hooks[0]));
-                    if (trigger->hooks)
-                    {
-                        trigger->hooks_count = 1;
-                        trigger->hooks[0] = weechat_hook_timer (interval,
-                                                                (int)align_second,
-                                                                (int)max_calls,
-                                                                &trigger_callback_timer_cb,
-                                                                trigger);
-                    }
-                }
-            }
-            break;
-    }
-
-    if (!trigger->hooks)
-    {
-        weechat_printf (NULL,
-                        _("%sError: unable to create hook for trigger \"%s\" "
-                          "(bad arguments)"),
-                        weechat_prefix ("error"), trigger->name);
-    }
-
-    if (argv)
-        weechat_string_free_split (argv);
-    if (argv_eol)
-        weechat_string_free_split (argv_eol);
-}
-
-/*
  * Checks if a trigger name is valid: it must not start with "-" and not have
  * any spaces.
  *
@@ -635,14 +635,14 @@ trigger_alloc (const char *name)
     {
         new_trigger->options[i] = NULL;
     }
-    new_trigger->regex_count = 0;
-    new_trigger->regex = NULL;
     new_trigger->hooks_count = 0;
     new_trigger->hooks = NULL;
     new_trigger->hook_count_cb = 0;
     new_trigger->hook_count_cmd = 0;
     new_trigger->hook_running = 0;
     new_trigger->hook_print_buffers = NULL;
+    new_trigger->regex_count = 0;
+    new_trigger->regex = NULL;
     new_trigger->prev_trigger = NULL;
     new_trigger->next_trigger = NULL;
 
@@ -928,6 +928,17 @@ trigger_print_log ()
         weechat_log_printf ("  return_code . . . . . . : %d ('%s')",
                             weechat_config_integer (ptr_trigger->options[TRIGGER_OPTION_RETURN_CODE]),
                             trigger_return_code_string[weechat_config_integer (ptr_trigger->options[TRIGGER_OPTION_RETURN_CODE])]);
+        weechat_log_printf ("  hooks_count . . . . . . : %d",    ptr_trigger->hooks_count);
+        weechat_log_printf ("  hooks . . . . . . . . . : 0x%lx", ptr_trigger->hooks);
+        for (i = 0; i < ptr_trigger->hooks_count; i++)
+        {
+            weechat_log_printf ("    hooks[%03d]. . . . . . : 0x%lx",
+                                i, ptr_trigger->hooks[i]);
+        }
+        weechat_log_printf ("  hook_count_cb . . . . . : %lu",   ptr_trigger->hook_count_cb);
+        weechat_log_printf ("  hook_count_cmd. . . . . : %lu",   ptr_trigger->hook_count_cmd);
+        weechat_log_printf ("  hook_running. . . . . . : %d",    ptr_trigger->hook_running);
+        weechat_log_printf ("  hook_print_buffers. . . : '%s'",  ptr_trigger->hook_print_buffers);
         weechat_log_printf ("  regex_count . . . . . . : %d",    ptr_trigger->regex_count);
         weechat_log_printf ("  regex . . . . . . . . . : 0x%lx", ptr_trigger->regex);
         for (i = 0; i < ptr_trigger->regex_count; i++)
@@ -943,17 +954,6 @@ trigger_print_log ()
             weechat_log_printf ("    regex[%03d].replace_eval : '%s'",
                                 i, ptr_trigger->regex[i].replace_eval);
         }
-        weechat_log_printf ("  hooks_count . . . . . . : %d",    ptr_trigger->hooks_count);
-        weechat_log_printf ("  hooks . . . . . . . . . : 0x%lx", ptr_trigger->hooks);
-        for (i = 0; i < ptr_trigger->hooks_count; i++)
-        {
-            weechat_log_printf ("    hooks[%03d]. . . . . . : 0x%lx",
-                                i, ptr_trigger->hooks[i]);
-        }
-        weechat_log_printf ("  hook_count_cb . . . . . : %lu",   ptr_trigger->hook_count_cb);
-        weechat_log_printf ("  hook_count_cmd. . . . . : %lu",   ptr_trigger->hook_count_cmd);
-        weechat_log_printf ("  hook_running. . . . . . : %d",    ptr_trigger->hook_running);
-        weechat_log_printf ("  hook_print_buffers. . . : '%s'",  ptr_trigger->hook_print_buffers);
         weechat_log_printf ("  prev_trigger. . . . . . : 0x%lx", ptr_trigger->prev_trigger);
         weechat_log_printf ("  next_trigger. . . . . . : 0x%lx", ptr_trigger->next_trigger);
     }
