@@ -586,6 +586,37 @@ end:
 }
 
 /*
+ * Sets the commands in a trigger.
+ */
+
+void
+trigger_set_commands (struct t_trigger *trigger)
+{
+    const char *option_command;
+    int i;
+
+    if (trigger->commands)
+    {
+        weechat_string_free_split (trigger->commands);
+        trigger->commands = NULL;
+    }
+    trigger->commands_count = 0;
+
+    option_command = weechat_config_string (trigger->options[TRIGGER_OPTION_COMMAND]);
+    if (option_command && option_command[0])
+    {
+        trigger->commands = weechat_string_split_command (option_command, ';');
+        if (trigger->commands)
+        {
+            for (i = 0; trigger->commands[i]; i++)
+            {
+            }
+            trigger->commands_count = i;
+        }
+    }
+}
+
+/*
  * Checks if a trigger name is valid: it must not start with "-" and not have
  * any spaces.
  *
@@ -643,6 +674,8 @@ trigger_alloc (const char *name)
     new_trigger->hook_print_buffers = NULL;
     new_trigger->regex_count = 0;
     new_trigger->regex = NULL;
+    new_trigger->commands_count = 0;
+    new_trigger->commands = NULL;
     new_trigger->prev_trigger = NULL;
     new_trigger->next_trigger = NULL;
 
@@ -729,6 +762,7 @@ trigger_new_with_options (const char *name, struct t_config_option **options)
     triggers_count++;
 
     trigger_set_regex (new_trigger);
+    trigger_set_commands (new_trigger);
 
     if (weechat_config_boolean (new_trigger->options[TRIGGER_OPTION_ENABLED]))
         trigger_hook (new_trigger);
@@ -877,6 +911,8 @@ trigger_free (struct t_trigger *trigger)
         if (trigger->options[i])
             weechat_config_option_free (trigger->options[i]);
     }
+    if (trigger->commands)
+        weechat_string_free_split (trigger->commands);
 
     free (trigger);
 
@@ -953,6 +989,16 @@ trigger_print_log ()
                                 i, ptr_trigger->regex[i].replace);
             weechat_log_printf ("    regex[%03d].replace_eval : '%s'",
                                 i, ptr_trigger->regex[i].replace_eval);
+        }
+        weechat_log_printf ("  commands_count. . . . . : %d",    ptr_trigger->commands_count);
+        weechat_log_printf ("  commands. . . . . . . . : 0x%lx", ptr_trigger->commands);
+        if (ptr_trigger->commands)
+        {
+            for (i = 0; ptr_trigger->commands[i]; i++)
+            {
+                weechat_log_printf ("    commands[%03d] . . . . : '%s'",
+                                    i, ptr_trigger->commands[i]);
+            }
         }
         weechat_log_printf ("  prev_trigger. . . . . . : 0x%lx", ptr_trigger->prev_trigger);
         weechat_log_printf ("  next_trigger. . . . . . : 0x%lx", ptr_trigger->next_trigger);

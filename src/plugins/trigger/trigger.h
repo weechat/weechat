@@ -88,6 +88,10 @@ struct t_trigger
     int regex_count;                   /* number of regex                   */
     struct t_trigger_regex *regex;     /* array of regex                    */
 
+    /* commands */
+    int commands_count;                /* number of commands                */
+    char **commands;                   /* commands                          */
+
     /* links to other triggers */
     struct t_trigger *prev_trigger;    /* link to previous trigger          */
     struct t_trigger *next_trigger;    /* link to next trigger              */
@@ -117,6 +121,7 @@ extern int trigger_search_return_code (const char *return_code);
 extern struct t_trigger *trigger_search (const char *name);
 extern struct t_trigger *trigger_search_with_option (struct t_config_option *option);
 extern void trigger_set_regex (struct t_trigger *trigger);
+extern void trigger_set_commands (struct t_trigger *trigger);
 extern void trigger_unhook (struct t_trigger *trigger);
 extern void trigger_hook (struct t_trigger *trigger);
 extern int trigger_name_valid (const char *name);

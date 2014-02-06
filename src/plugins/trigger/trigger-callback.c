@@ -139,32 +139,27 @@ trigger_callback_run_command (struct t_trigger *trigger,
                               struct t_hashtable *pointers,
                               struct t_hashtable *extra_vars)
 {
-    const char *command;
-    char *command_eval, **commands, **ptr_command;
+    char *command_eval;
+    int i;
 
-    command = weechat_config_string (trigger->options[TRIGGER_OPTION_COMMAND]);
-    if (!command || !command[0])
+    if (!trigger->commands)
         return;
 
-    command_eval = weechat_string_eval_expression (command, pointers,
-                                                   extra_vars, NULL);
-    if (command_eval)
+    for (i = 0; trigger->commands[i]; i++)
     {
-        commands = weechat_string_split_command (command_eval, ';');
-        if (commands)
+        command_eval = weechat_string_eval_expression (trigger->commands[i],
+                                                       pointers, extra_vars,
+                                                       NULL);
+        if (command_eval)
         {
-            for (ptr_command = commands; *ptr_command; ptr_command++)
+            /* display debug info on trigger buffer */
+            if (trigger_buffer)
             {
-                /* display debug info on trigger buffer */
-                if (trigger_buffer)
-                {
-                    weechat_printf_tags (trigger_buffer, "no_trigger",
-                                         "\t  running command \"%s\"",
-                                         *ptr_command);
-                }
-                weechat_command (buffer, *ptr_command);
+                weechat_printf_tags (trigger_buffer, "no_trigger",
+                                     "\t  running command \"%s\"",
+                                     trigger->commands[i]);
             }
-            weechat_string_free_split_command (commands);
+            weechat_command (buffer, trigger->commands[i]);
             trigger->hook_count_cmd++;
         }
         free (command_eval);

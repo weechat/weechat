@@ -125,6 +125,25 @@ trigger_config_change_regex (void *data, struct t_config_option *option)
 }
 
 /*
+ * Callback called when trigger option "command" is changed.
+ */
+
+void
+trigger_config_change_command (void *data, struct t_config_option *option)
+{
+    struct t_trigger *ptr_trigger;
+
+    /* make C compiler happy */
+    (void) data;
+
+    ptr_trigger = trigger_search_with_option (option);
+    if (!ptr_trigger)
+        return;
+
+    trigger_set_commands (ptr_trigger);
+}
+
+/*
  * Creates an option for a trigger.
  *
  * Returns pointer to new option, NULL if error.
@@ -212,7 +231,7 @@ trigger_config_create_option (const char *trigger_name, int index_option,
                 option_name, "string",
                 N_("command run if conditions are OK, after regex replacements"),
                 NULL, 0, 0, value, NULL, 0,
-                NULL, NULL, NULL, NULL, NULL, NULL);
+                NULL, NULL, &trigger_config_change_command, NULL, NULL, NULL);
             break;
         case TRIGGER_OPTION_RETURN_CODE:
             ptr_option = weechat_config_new_option (
