@@ -157,9 +157,9 @@ trigger_callback_run_command (struct t_trigger *trigger,
             {
                 weechat_printf_tags (trigger_buffer, "no_trigger",
                                      "\t  running command \"%s\"",
-                                     trigger->commands[i]);
+                                     command_eval);
             }
-            weechat_command (buffer, trigger->commands[i]);
+            weechat_command (buffer, command_eval);
             trigger->hook_count_cmd++;
         }
         free (command_eval);
