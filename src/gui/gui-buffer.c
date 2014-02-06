@@ -1958,7 +1958,14 @@ gui_buffer_compute_num_displayed ()
          ptr_window = ptr_window->next_window)
     {
         if (ptr_window->buffer)
-            ptr_window->buffer->num_displayed++;
+        {
+            for (ptr_buffer = gui_buffers; ptr_buffer;
+                 ptr_buffer = ptr_buffer->next_buffer)
+            {
+                if (ptr_buffer->number == ptr_window->buffer->number)
+                    ptr_buffer->num_displayed++;
+            }
+        }
     }
 }
 

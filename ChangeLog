@@ -11,6 +11,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 0.4.3 (under dev)
 
+* core: fix hotlist problems after apply of a layout (bug #41481)
 * core: fix installation of weechat-plugin.h with autotools (patch #8305)
 * core: fix compilation on Android (bug #41420, patch #8301, bug #41434)
 * core: fix crash when creating two bars with same name but different case
