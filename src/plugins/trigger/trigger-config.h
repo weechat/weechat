@@ -28,6 +28,8 @@ extern struct t_config_section *trigger_config_section_trigger;
 
 extern struct t_config_option *trigger_config_color_regex;
 extern struct t_config_option *trigger_config_color_replace;
+extern struct t_config_option *trigger_config_color_trigger;
+extern struct t_config_option *trigger_config_color_trigger_disabled;
 
 extern struct t_config_option *trigger_config_create_option (const char *trigger_name,
                                                              int index_option,

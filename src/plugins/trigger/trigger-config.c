@@ -39,6 +39,8 @@ struct t_config_option *trigger_config_look_test;
 
 struct t_config_option *trigger_config_color_regex;
 struct t_config_option *trigger_config_color_replace;
+struct t_config_option *trigger_config_color_trigger;
+struct t_config_option *trigger_config_color_trigger_disabled;
 
 
 /*
@@ -459,6 +461,18 @@ trigger_config_init ()
         "replace", "color",
         N_("text color for replacement text (for regular expressions)"),
         NULL, 0, 0, "cyan", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL);
+    trigger_config_color_trigger = weechat_config_new_option (
+        trigger_config_file, ptr_section,
+        "trigger", "color",
+        N_("text color for trigger name"),
+        NULL, 0, 0, "green", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL);
+    trigger_config_color_trigger_disabled = weechat_config_new_option (
+        trigger_config_file, ptr_section,
+        "trigger_disabled", "color",
+        N_("text color for disabled trigger name"),
+        NULL, 0, 0, "red", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL);
 
     /* trigger */
