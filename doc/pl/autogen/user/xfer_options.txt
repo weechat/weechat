@@ -59,7 +59,7 @@
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
 * [[option_xfer.file.auto_check_crc32]] *xfer.file.auto_check_crc32*
-** opis: `automatically check CRC32 file checksum if it is found in the filename (8 hexadecimal chars)`
+** opis: `automatycznie sprawdzaj sumę CRC32 dla pliku, jeśli znajduje się ona w jego nazwie (osiem znaków heksadecymalnych)`
 ** typ: bool
 ** wartości: on, off (domyślna wartość: `off`)
 

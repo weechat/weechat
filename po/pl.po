@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-29 14:07+0100\n"
-"PO-Revision-Date: 2014-01-29 14:13+0100\n"
+"POT-Creation-Date: 2014-02-06 11:19+0100\n"
+"PO-Revision-Date: 2014-02-06 11:21+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pl\n"
@@ -201,9 +201,9 @@ msgstr ""
 msgid "Buffers list:"
 msgstr "Lista buforów:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "  %s[%s%d%s]%s %s%s.%s%s%s (notify: %s)"
-msgstr "  %s[%s%d%s]%s (%s) %s%s%s (powiadomienia: %s)"
+msgstr "  %s[%s%d%s]%s %s%s.%s%s%s (powiadomienia: %s)"
 
 #, c-format
 msgid "%sError: incorrect buffer number"
@@ -485,21 +485,19 @@ msgstr[0] "dodano %d nowy klawisz"
 msgstr[1] "dodano %d nowe klawisze (kontekst: \"%s\")"
 msgstr[2] "dodano %d nowych klawiszy (kontekst: \"%s\")"
 
-#, fuzzy
 msgid "Stored layouts:"
 msgstr "Zapisane układy:"
 
 msgid " (current layout)"
 msgstr " (aktualny układ)"
 
-#, fuzzy
 msgid "No stored layouts"
-msgstr "lista układów"
+msgstr "Brak zapisanych układów"
 
 #. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows"
-#, fuzzy, c-format
+#, c-format
 msgid "Layout of %s%s%s stored in \"%s\" (current layout: %s)"
-msgstr "Układ dla %s%s%s zapisano w \"%s\" (obecny układ: %s)"
+msgstr "Układ %s%s%s zapisano w \"%s\" (obecny układ: %s)"
 
 msgid "buffers"
 msgstr "bufory"
@@ -1334,7 +1332,6 @@ msgstr "przetwarza wyrażenie i wysyła wynik do buforu"
 msgid "[-n] <expression> || [-n] -c <expression1> <operator> <expression2>"
 msgstr "[-n] <wyrażenie> || [-n] -c <wyrażenie1> <operator> <wyrażenie2>"
 
-#, fuzzy
 msgid ""
 "        -n: display result without sending it to buffer (debug mode)\n"
 "        -c: evaluate as condition: use operators and parentheses, return a "
@@ -1415,8 +1412,8 @@ msgstr ""
 "                <   mniejszy\n"
 "                >=  większy lub równy\n"
 "                >   większy\n"
-"                =~  pasuje do wyrażenia regularnego\n"
-"                !~  NIE pasuje do wyrażenia regularnego\n"
+"                =~  pasuje do rozszerzonego wyrażenia regularnego POSIX\n"
+"                !~  NIE pasuje do rozszerzonego wyrażenia regularnego POSIX\n"
 "\n"
 "Wyrażenie jest uznawane za \"prawdziwe\" jeśli nie jest NULL, nie jest "
 "puste, oraz różni się od \"0\".\n"
@@ -1476,7 +1473,6 @@ msgstr ""
 "list || enable|disable|toggle [<nazwa>] || add <nazwa> <bufor>[,<bufor>...] "
 "<tagi> <regex> || del <nazwa>|-all"
 
-#, fuzzy
 msgid ""
 "   list: list all filters\n"
 " enable: enable filters (filters are enabled by default)\n"
@@ -1558,7 +1554,7 @@ msgstr ""
 "\"nick_toto+irc_action\")\n"
 "         - tagi mogą zaczynać się i kończyć '*' żeby dopasować wiele "
 "buforów\n"
-"  regex: wyrażenie regularne do wyszukania w linii\n"
+"  regex: rozszerzone wyrażenie regularne POSIX do wyszukania w linii\n"
 "         - użyj '\\t' do oddzielenia prefiksu od wiadomości, znaki specjalne "
 "jak '|' muszą zostać poprzedzone '\\' np: '\\|'\n"
 "         - jeśli wyrażenie zaczyna się od '!', wtedy pasujący wynik jest "
@@ -1575,7 +1571,8 @@ msgstr ""
 "  notify_none, notify_message, notify_private, notify_highlight,\n"
 "  nick_xxx (xxx to nick w wiadomości), prefix_nick_ccc (ccc to kolor "
 "nicka),\n"
-"  irc_xxx (xxx to nazwa komendy lub numer, zobacz /server raw),\n"
+"  irc_xxx (xxx to nazwa komendy lub numer, zobacz /server raw lub /debug "
+"tags),\n"
 "  irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, "
 "irc_smart_filter, away_info.\n"
 "Aby zobaczyć listę tagów w liniach buforów wykonaj: /debug tags\n"
@@ -1637,7 +1634,6 @@ msgstr "funkcje linii komend"
 msgid "<action> [<arguments>]"
 msgstr "<akcja> [<argumenty>]"
 
-#, fuzzy
 msgid ""
 "list of actions:\n"
 "  return: simulate key \"enter\"\n"
@@ -1886,15 +1882,13 @@ msgstr ""
 msgid "manage buffers/windows layouts"
 msgstr "zarządzaj układami buforów/okien"
 
-#, fuzzy
 msgid ""
 "store [<name>] [buffers|windows] || apply [<name>] [buffers|windows] || "
 "leave || del [<name>] [buffers|windows] || rename <name> <new_name>"
 msgstr ""
-"add [<nazwa>] [buffers|windows] || apply [<nazwa>] [buffers|windows]|| leave "
-"|| reset [<nazwa>] [buffers|windows] || rename <nazwa> <nowa_nazwa>"
+"store [<nazwa>] [buffers|windows] || apply [<nazwa>] [buffers|windows] || "
+"leave || del [<nazwa>] [buffers|windows] || rename <nazwa> <nowa nazwa>"
 
-#, fuzzy
 msgid ""
 "  store: store current buffers/windows in a layout\n"
 "  apply: apply stored layout\n"
@@ -1909,12 +1903,12 @@ msgid ""
 "\n"
 "Without argument, this command displays stored layouts."
 msgstr ""
-"    add: tworzy układ używając obecnych buforów/okien\n"
+"  store: zachowuje układ używając obecnych buforów/okien\n"
 "  apply: stosuje zapisany układ\n"
 "  leave: opuszcza obecny układ (nie aktualizuje żadnego układu)\n"
-"  reset: resetuje bufory i/lub okna w zapisanym układzie\n"
-"         (jeśli zarówno bufory jak i okna zostaną zresetowane, układ jest "
-"kasowany)\n"
+"    del: usuwa bufory i/lub okna w zapisanym układzie\n"
+"         (jeśli zarówno \"buffers\" jak i \"windows\" nie zostaną podane po "
+"nazwie, układ jest kasowany)\n"
 " rename: zmienia nazwę układu\n"
 "   nazwa: nazwa zapisanego układu (domyślnie \"default\")\n"
 "buffers: zapisuje/stosuje tylko bufory (kolejność buforów)\n"
@@ -2041,14 +2035,15 @@ msgstr ""
 "\n"
 "Bez argumentów ta komenda wyświetli wszystkie załadowane wtyczki."
 
-#, fuzzy
 msgid "display text on a buffer"
-msgstr "kolor tekstu w buforze pośrednika"
+msgstr "wyświetl tekst w buforze"
 
 msgid ""
 "[-buffer <number>|<name>] [-core] [-escape] [-date <date>] [-tags <tags>] [-"
 "action|-error|-join|-network|-quit] <text> || -stdout|-stderr <text>"
 msgstr ""
+"[-buffer <numer>|<nazwa>] [-core] [-escape] [-date <data>] [-tags <tagi>] [-"
+"action|-error|-join|-network|-quit] <tekst> || -stdout|-stderr <tekst>"
 
 msgid ""
 "-buffer: the buffer where text is displayed (default: current buffer)\n"
@@ -2088,6 +2083,46 @@ msgid ""
 "  send alert (BEL):\n"
 "    /print -stderr \\a"
 msgstr ""
+"-buffer: bufor, w którym zostanie wyświetlony tekst (domyślnie: obecny "
+"bufor)\n"
+"  -core: alias dla bufora \"-buffer core.weechat\"\n"
+"-escape: interpretuj znaki poprzedzone \\ (na przykład \\a, \\07, \\x07)\n"
+"  -date: data wiadomości, możliwe formaty:\n"
+"           -n: 'n' sekund wcześniej\n"
+"           +n: 'n' sekund później\n"
+"            n: 'n' sekund od Epoch (zobacz man time)\n"
+"           data/czas (ISO 8601): yyyy-mm-ddThh:mm:ss, przykład: "
+"2014-01-19T04:32:55\n"
+"           czas: hh:mm:ss (przykład: 04:32:55)\n"
+"  -tags: oddzielona przecinkami lista tagów (zobacz /help filter w celu "
+"wyświetlenia listy najczęstszych tagów)\n"
+"   tekst: tekst do wyświetlenia (prefiks i wiadomość muszą być oddzielone za "
+"pomocą \\t)\n"
+"-stdout: wyświetl tekst na standardowe wyjście (znaki poprzedzone \\ są "
+"interpretowane)\n"
+"-stderr: wyświetl tekst na standardowe wyjście błędów (znaki poprzedzone \\ "
+"są interpretowane)\n"
+"\n"
+"Opcje -action ... -quit używają prefiksów zdefiniowanych w opcjach \"weechat."
+"look.prefix_*\".\n"
+"\n"
+"Wspierane znaczniki specjalne:\n"
+"  \\\" \\\\ \\a \\b \\e \\f \\n \\r \\t \\v \\0ooo \\xhh \\uhhhh "
+"\\Uhhhhhhhh\n"
+"\n"
+"Przykłady:\n"
+"  wyświetla przypomnienie w buforze głównym z higlightem:\n"
+"    /print -core -tags notify_highlight Reminder: kup mleko\n"
+"  wyświetla błąd w głównym buforze:\n"
+"    /print -core -error Jakiś błąd\n"
+"  wyświetla wiadomość w głównym buforze z prefiksem \"abc\":\n"
+"    /print -core abc\\tWiadomość\n"
+"  wyświetla wiadomość na kanale #weechat:\n"
+"    /print -buffer irc.freenode.#weechat Message on #weechat\n"
+"  wyświetla bałwana (U+2603):\n"
+"    /print -escape \\u2603\n"
+"  wysyła alert (BEL):\n"
+"    /print -stderr \\a"
 
 msgid "manage proxies"
 msgstr "zarządzanie proxy"
@@ -2725,9 +2760,8 @@ msgstr "opcje konfiguracyjne"
 msgid "names of plugins"
 msgstr "nazwy wtyczek"
 
-#, fuzzy
 msgid "names of plugins installed"
-msgstr "nazwy wtyczek"
+msgstr "nazwy zainstalowanych wtyczek"
 
 msgid "commands defined by plugins"
 msgstr "komendy zdefiniowane przez wtyczki"
@@ -2923,13 +2957,12 @@ msgstr ""
 "wymusza domyślne wartości dla wyszukiwań tekstowych w buforze (zamiast "
 "wartości z poprzedniego wyszukiwania)"
 
-#, fuzzy
 msgid ""
 "default text search in buffer: if enabled, search POSIX extended regular "
 "expression, otherwise search simple string"
 msgstr ""
-"domyślne wyszukiwanie w buforze: jeśli włączone szukane jest wyrażenie "
-"regularne, w przeciwnym wypadku prosty ciąg"
+"domyślne wyszukiwanie w buforze: jeśli włączone szukane jest rozszerzone "
+"wyrażenie regularne POSIX, w przeciwnym wypadku prosty ciąg"
 
 msgid "default text search in buffer: in message, prefix, prefix and message"
 msgstr ""
@@ -3105,7 +3138,6 @@ msgstr ""
 "znaków miała znaczenie), słowa mogą zaczynać się od \"*\" dla częściowego "
 "dopasowania; przykład: \"test,(?-i)*toto*,flash*\""
 
-#, fuzzy
 msgid ""
 "POSIX extended regular expression used to check if a message has highlight "
 "or not, at least one match in string must be surrounded by delimiters (chars "
@@ -3113,11 +3145,12 @@ msgid ""
 "case insensitive (use \"(?-i)\" at beginning to make it case sensitive), "
 "examples: \"flashcode|flashy\", \"(?-i)FlashCode|flashy\""
 msgstr ""
-"wyrażenie regularne używane do sprawdzenia, czy wiadomość posiada "
-"podświetlenie czy nie, przynajmniej jeden dopasowany ciąg musi być otoczony "
-"znakami (alfanumerycznymi, \"-\", \"_\" lub \"|\"), wielkość znaków nie ma "
-"wpływu na wyrażenie (użyj \"(?-i)\" na początku, aby wielkość znaków miała "
-"znaczenie), przykłady: \"flashcode|flashy\", \"(?-i)FlashCode|flashy\""
+"rozszerzone wyrażenie regularne POSIX używane do sprawdzenia, czy wiadomość "
+"posiada podświetlenie czy nie, przynajmniej jedno dopasowanie w ciąg musi "
+"być otoczone separatorami (znaki inne niż: alfanumeryczne, \"-\", \"_\" lub "
+"\"|\"), wielkość znaków nie ma wpływu na wyrażenie (użyj \"(?-i)\" na "
+"początku, aby wielkość znaków miała znaczenie), przykłady: \"flashcode|flashy"
+"\", \"(?-i)FlashCode|flashy\""
 
 msgid ""
 "comma separated list of tags to highlight; case insensitive comparison; each "
@@ -3431,9 +3464,8 @@ msgstr ""
 msgid "save configuration file on exit"
 msgstr "zapisz plik konfiguracyjny przy wyjściu"
 
-#, fuzzy
 msgid "save layout on exit (buffers, windows, or both)"
-msgstr "zapisz układ przy wyjściu (bufory, okna, lub oba)"
+msgstr "zapisz układ przy wyjściu (bufory, okna lub oba)"
 
 msgid "how many lines to scroll by with scroll_up and scroll_down"
 msgstr "ile linii przewijać za pomocą scroll_up i scroll_down"
@@ -3477,9 +3509,8 @@ msgstr ""
 "(pusta wartość oznacza rysowanie prawdziwych linii za pomocą ncurses); "
 "szerokość na ekranie musi wynosić dokładnie jeden znak"
 
-#, fuzzy
 msgid "number of spaces used to display tabs in messages"
-msgstr "zestaw znaków użyty do tłumaczenia wiadomości"
+msgstr "liczba spacji używana do wyświetlania tabulacji w wiadomościach"
 
 msgid ""
 "time format for dates converted to strings and displayed in messages (see "
@@ -5048,9 +5079,10 @@ msgstr "%sZapytanie CTCP do %s%s%s: %s%s%s%s%s"
 msgid "%s%s: \"%s\" command can not be executed on a server buffer"
 msgstr "%s%s: komenda \"%s\" nie można być wykonana w buforze serwera"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to resolve local address of server socket: error %d %s"
-msgstr "%s%s: nie można ustawić opcji \"nonblock\" dla gniazda: błąd %d %s"
+msgstr ""
+"%s%s: nie można odczytać lokalnego adresu serwera dla gniazda: błąd %d %s"
 
 #, c-format
 msgid "%s%s: wrong arguments for \"%s\" command"
@@ -5163,11 +5195,11 @@ msgstr "%s%s: powiadomienie juz istnieje"
 
 #, c-format
 msgid "%sMonitor list is full (%d)"
-msgstr ""
+msgstr "%sLista monitorowania jest pełna (%d)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: notification added for %s%s%s"
-msgstr "%s: powiadomienie dodane dla %s%s"
+msgstr "%s: powiadomienie dodane dla %s%s%s"
 
 #, c-format
 msgid "%s%s: error adding notification"
@@ -5181,9 +5213,9 @@ msgstr "%s: usunięto wszystkie powiadomienia"
 msgid "%s: no notification in list"
 msgstr "%s: brak powiadomień na liście"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: notification deleted for %s%s%s"
-msgstr "%s: powiadomienie dodane dla %s%s"
+msgstr "%s: powiadomienie usunięte dla %s%s%s"
 
 #, c-format
 msgid "%s%s: notification not found"
@@ -5594,7 +5626,6 @@ msgstr "ignoruje nicki/hosty z serwera lub kanałów"
 msgid "list || add [re:]<nick> [<server> [<channel>]] || del <number>|-all"
 msgstr "list || add [re:]<nick> [<serwer> [<kanał>]] || del <numer>|-all"
 
-#, fuzzy
 msgid ""
 "     list: list all ignores\n"
 "      add: add an ignore\n"
@@ -5617,10 +5648,11 @@ msgid ""
 "  ignore host \"toto*@*.domain.com\" on freenode/#weechat:\n"
 "    /ignore add toto*@*.domain.com freenode #weechat"
 msgstr ""
-"     list: wyświetla wszystkie ignory\n"
+"     list: wyświetla wszystkie ignorowane osoby\n"
 "      add: dodaje nową osobę do ignorowania\n"
-"     nick: nick lub host (jeśli dodamy \"re:\" można użyć wyrażenie "
-"regularne lub maska używając \"*\", aby zastąpić jeden lub więcej znaków)\n"
+"     nick: nick lub host (jeśli dodamy \"re:\" można użyć rozszerzonego "
+"wyrażenia regularnego POSIX lub maska używając \"*\", aby zastąpić jeden lub "
+"więcej znaków)\n"
 "      del: usuwa wpis o ignorowanej osobie\n"
 "   numer: numer wpisu do usunięcia (znajduję się na liście)\n"
 "     -all: usuwa wszystkie wpisy z listy ignorowanych\n"
@@ -5774,7 +5806,6 @@ msgstr "wyświetla kanały i ich tematy"
 msgid "[<channel>[,<channel>...]] [<server>] [-re <regex>]"
 msgstr "[<kanał>[,<kanał>...]] [<serwer>] [-re <regex>]"
 
-#, fuzzy
 msgid ""
 "channel: channel to list\n"
 " server: server name\n"
@@ -5792,9 +5823,9 @@ msgid ""
 msgstr ""
 "kanał: kanał do listowania\n"
 " serwer: nazwa serwera\n"
-"  regexp: wyrażenie regularne użyte do filtrowania wyników (wielkość znaków "
-"nie ma znaczenia, jeśli poprzedzone \"(?-i)\" to wielkość znaków ma "
-"znaczenie)\n"
+"  regexp: rozszerzone wyrażenie regularne POSIX użyte do filtrowania wyników "
+"(wielkość znaków nie ma znaczenia, jeśli poprzedzone \"(?-i)\" to wielkość "
+"znaków ma znaczenie)\n"
 "\n"
 "Przykłady:\n"
 "  wyświetla wszystkie kanały na serwerze (może być bardzo wolny w dużych "
@@ -6556,7 +6587,7 @@ msgstr "%s%s: nieprawidłowy ciąg priorytetów, błąd na pozycji: \"%s\""
 
 #, c-format
 msgid "%s%s: fingerprint must have exactly 40 hexadecimal digits"
-msgstr ""
+msgstr "%s%s: skrót musi mieć dokładnie 40 znaków heksadecymalnych"
 
 #, c-format
 msgid ""
@@ -6637,6 +6668,9 @@ msgid ""
 "option is set, the other checks on certificates are NOT performed (option "
 "\"ssl_verify\")"
 msgstr ""
+"skrót SHA1 certyfikatu, który jest zaufany i akceptowany dla serwera (40 "
+"znaków heksadecymalnych bez separatorów); jeśli ta opcja jest ustawiona, "
+"certyfikat NIE jest dalej sprawdzany (opcja \"ssl_verify\")"
 
 msgid "check that the SSL connection is fully trusted"
 msgstr "sprawdź czy połączenie ssl jest w pełni zaufane"
@@ -6887,15 +6921,14 @@ msgstr "wyświetlaj host podczas wchodzenia na kanał"
 msgid "display host in part/quit messages"
 msgstr "pokazuj host w wiadomościach o opuszczeniu kanału/wyjściu z IRC"
 
-#, fuzzy
 msgid ""
 "comma-separated list of messages to display after joining a channel: 329 = "
 "channel creation date, 332 = topic, 333 = nick/date for topic, 353 = names "
 "on channel, 366 = names count"
 msgstr ""
 "oddzielona przecinkami lista wiadomości wyświetlanych po wejściu na kanał: "
-"329 = data utworzenia, 332 = temat, 333 = autor/data tematu, 366 = osoby na "
-"kanale"
+"329 = data utworzenia, 332 = temat, 333 = autor/data tematu, 353 = osoby na "
+"kanale, 366 = ilość osób na kanale"
 
 msgid "display old topic when channel topic is changed"
 msgstr "wyświetl stary temat, kiedy zmieniany jest temat kanału"
@@ -6907,7 +6940,6 @@ msgstr ""
 msgid "display a message in private when user is back (after quit on server)"
 msgstr "pokaż prywatną wiadomość, kiedy użytkownik wróci na serwer"
 
-#, fuzzy
 msgid ""
 "comma separated list of words to highlight in server buffers (case "
 "insensitive, use \"(?-i)\" at beginning of words to make them case "
@@ -6925,7 +6957,6 @@ msgstr ""
 "tworzony (nie ma wpływu na obecne bufory), pusty ciąg wyłącza domyślne "
 "podświetlenia nicka, przykłady: \"$nick\", \"(?-i)$nick\""
 
-#, fuzzy
 msgid ""
 "comma separated list of words to highlight in channel buffers (case "
 "insensitive, use \"(?-i)\" at beginning of words to make them case "
@@ -6943,7 +6974,6 @@ msgstr ""
 "tworzony (nie ma wpływu na obecne bufory), pusty ciąg wyłącza domyślne "
 "podświetlenia nicka, przykłady: \"$nick\", \"(?-i)$nick\""
 
-#, fuzzy
 msgid ""
 "comma separated list of words to highlight in private buffers (case "
 "insensitive, use \"(?-i)\" at beginning of words to make them case "
@@ -7109,7 +7139,6 @@ msgstr ""
 "oddzielona przecinkami lista tagów użytych w wiadomościach powitalnych "
 "przekierowywanych na kanał, na przykład: \"notify_private\""
 
-#, fuzzy
 msgid ""
 "comma separated list of tags used in messages displayed by notify when a "
 "nick joins or quits server (result of command ison or monitor), for example: "
@@ -7117,8 +7146,8 @@ msgid ""
 msgstr ""
 "oddzielona przecinkami lista tagów użytych w wiadomościach wyświetlanych "
 "przez powiadomienie, kiedy nick wejdzie lub wyjdzie z serwera (rezultat "
-"komendy ison), na przykład: \"notify_message\", \"notify_private\" lub "
-"\"notify_higlight\""
+"komendy ison lub monitor), na przykład: \"notify_message\", \"notify_private"
+"\" lub \"notify_higlight\""
 
 msgid ""
 "comma separated list of tags used in messages displayed by notify when a "
@@ -7584,21 +7613,21 @@ msgstr "Lista powiadomień dla wszystkich serwerów:"
 msgid "Notify list is empty on all servers"
 msgstr "Lista powiadomień jest pusta na wszystkich serwerach"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%snotify: %s%s%s%s%s%s%s%s%s is connected"
-msgstr "%spowiadomienie: %s%s%s jest podłączony"
+msgstr "%spowiadomienie: %s%s%s%s%s%s%s%s%s jest podłączony"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%snotify: %s%s%s%s%s%s%s%s%s is offline"
-msgstr "%spowiadomienie: %s%s%s jest offline"
+msgstr "%spowiadomienie: %s%s%s%s%s%s%s%s%s jest offline"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%snotify: %s%s%s%s%s%s%s%s%s has joined"
-msgstr "%spowiadomienie: %s%s%s wszedł"
+msgstr "%spowiadomienie: %s%s%s%s%s%s%s%s%s wszedł"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%snotify: %s%s%s%s%s%s%s%s%s has quit"
-msgstr "%s%s%s%s%s%s%s%s%s%s wyszedł z IRC"
+msgstr "%spowiadomienie: %s%s%s%s%s%s%s%s%s wyszedł"
 
 #, c-format
 msgid "%snotify: %s%s%s is now away: \"%s\""
@@ -8116,17 +8145,17 @@ msgstr "%s%s: timeout"
 msgid "%s%s: unable to create socket"
 msgstr "%s%s: nie można utworzyć gniazda"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sgnutls: failed to calculate certificate fingerprint"
-msgstr "%sgnutls: nie można odczytać certyfikatu \"%s\""
+msgstr "%sgnutls: nie udało się wyliczyć odcisku certyfikatu"
 
 #, c-format
 msgid "%sgnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
 msgstr "%sgnutls: połączono używając %d-bitowego klucza Diffie-Hellmana"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sgnutls: failed to initialize certificate structure"
-msgstr "%sgnutls: certyfikat partnera jest zaufany"
+msgstr "%sgnutls: nie udało się zainicjować struktury certyfikatu"
 
 #, c-format
 msgid "%sgnutls: receiving %d certificate"
@@ -8135,9 +8164,9 @@ msgstr[0] "%sgnutls: odbieram %d certyfikat"
 msgstr[1] "%sgnutls: odbieram %d certyfikaty"
 msgstr[2] "%sgnutls: odbieram %d certyfikatów"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sgnutls: failed to import certificate[%d]"
-msgstr "%sgnutls: nie można odczytać certyfikatu \"%s\""
+msgstr "%sgnutls: nie udało się zaimportować certyfikatu[%d]"
 
 #, c-format
 msgid "%s - certificate[%d] info:"
@@ -8151,15 +8180,17 @@ msgstr "%sgnutls: certyfikat wygasł"
 msgid "%sgnutls: certificate is not yet activated"
 msgstr "%sgnutls: certyfikat nie jest jeszcze aktywny"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sgnutls: certificate fingerprint matches"
-msgstr "%sgnutls: wysyłam jeden certyfikat"
+msgstr "%sgnutls: skrót certyfikatu pasuje"
 
 #, c-format
 msgid ""
 "%sgnutls: certificate fingerprint does NOT match (check value of option irc."
 "server.%s.ssl_fingerprint)"
 msgstr ""
+"%sgnutls: skrót certyfikatu NIE pasuje (sprawdź wartość opcji irc.server.%s."
+"ssl_fingerprint)"
 
 #, c-format
 msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
@@ -9103,7 +9134,6 @@ msgstr "kolor tła w buforze pośrednika"
 msgid "text color of selected line in relay buffer"
 msgstr "kolor tekstu zaznaczonej linii w buforze pośrednika"
 
-#, fuzzy
 msgid ""
 "POSIX extended regular expression with IPs allowed to use relay (case "
 "insensitive, use \"(?-i)\" at beginning to make it case sensitive); if IPv6 "
@@ -9111,11 +9141,12 @@ msgid ""
 "IPv6 address (like: \"::ffff:127.0.0.1\"), example: \"^((::ffff:)?"
 "123.45.67.89|192.160.*)$\""
 msgstr ""
-"dla wtyczki relay dozwolone są wyrażenia regularne zawierające adresy IP "
-"(wielkość znaków nie ma znaczenia, użyj \"(?-i)\" na początku, aby wielkość "
-"znaków miała znaczenie); jeśli obsługa IPv6 jest włączona a połączenie jest "
-"z użyciem IPv4, zostanie ono zmapowane na adres IPv6 (jak: \"::"
-"ffff:127.0.0.1\"), przykład: \"^((::ffff:)?123.45.67.89|192.160.*)$\""
+"dla wtyczki relay dozwolone są rozszerzone wyrażenia regularne POSIX "
+"zawierające adresy IP (wielkość znaków nie ma znaczenia, użyj \"(?-i)\" na "
+"początku, aby wielkość znaków miała znaczenie); jeśli obsługa IPv6 jest "
+"włączona a połączenie jest z użyciem IPv4, zostanie ono zmapowane na adres "
+"IPv6 (jak: \"::ffff:127.0.0.1\"), przykład: \"^((::ffff:)?123.45.67.89|"
+"192.160.*)$\""
 
 msgid ""
 "address for bind (if empty, connection is possible on all interfaces, use "
@@ -9158,16 +9189,15 @@ msgstr ""
 "plik z certyfikatem SSL i kluczem prywatnym (dla obsługi klientów poprzez "
 "SSL)"
 
-#, fuzzy
 msgid ""
 "POSIX extended regular expression with origins allowed in websockets (case "
 "insensitive, use \"(?-i)\" at beginning to make it case sensitive), example: "
 "\"^http://(www\\.)?example\\.(com|org)\""
 msgstr ""
-"wyrażenie regularne ze źródłami dozwolonymi dla gniazd webowych (nie "
-"wrażliwe na wielkość znaków, umieszczenie \"(?-i)\" na początku sprawi, że "
-"wielość znaków będzie miała znaczenie), przykład: \"^http://(www\\.)?przykład"
-"\\.(com|org)\""
+"rozszerzone wyrażenia regularne POSIX ze źródłami dozwolonymi dla gniazd "
+"webowych (nie wrażliwe na wielkość znaków, umieszczenie \"(?-i)\" na "
+"początku sprawi, że wielość znaków będzie miała znaczenie), przykład: "
+"\"^http://(www\\.)?przykład\\.(com|org)\""
 
 msgid ""
 "maximum number of minutes in backlog per IRC channel (0 = unlimited, "
@@ -9347,7 +9377,6 @@ msgstr ""
 "list|listdefault || add <nazwa> <modyfikatory> <grupy> <regex> || del "
 "<nazwa>|-all [<nazwa>...] || missing || default -yes"
 
-#, fuzzy
 msgid ""
 "       list: list all rmodifiers\n"
 "listdefault: list default rmodifiers\n"
@@ -9380,8 +9409,8 @@ msgstr ""
 "     grupy: akcja na grupach przechwyconych w wyrażeniu regularnym (wewnątrz "
 "nawiasów): oddzielona przecinkami lista grup (od 1 do 9) z opcjonalnym "
 "znakiem \"*\" po numerze, aby ukryć grupę\n"
-"      regex: wyrażenie regularne (wielkość znaków nie ma znaczenia, jeśli "
-"poprzedzone \"(?-i)\" wielkość znaków ma znaczenie)\n"
+"      regex: rozszerzone wyrażenia regularne POSIX (wielkość znaków nie ma "
+"znaczenia, jeśli poprzedzone \"(?-i)\" wielkość znaków ma znaczenie)\n"
 "        del: usuwa rmodifier\n"
 "       -all: usuwa wszystkie rmodifiery\n"
 "    missing: dodaje brakujące rmodifiery\n"
@@ -10320,24 +10349,23 @@ msgid "aborted"
 msgstr "przerwano"
 
 msgid "hashing"
-msgstr ""
+msgstr "hashuje"
 
 msgid "CRC in progress"
-msgstr ""
+msgstr "wyliczam CRC"
 
 msgid "CRC OK"
-msgstr ""
+msgstr "CRC OK"
 
 msgid "wrong CRC"
-msgstr ""
+msgstr "nieprawidłowe CRC"
 
-#, fuzzy
 msgid "CRC error"
-msgstr "błąd"
+msgstr "błąd CRC"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: file %s %s %s (%s): %s"
-msgstr "%s%s: plik %s %s %s (%ld.%ld.%ld.%ld): %s"
+msgstr "%s%s: plik %s %s %s (%s): %s"
 
 msgid "sent to"
 msgstr "wysłano do"
@@ -10351,9 +10379,9 @@ msgstr "OK"
 msgid "FAILED"
 msgstr "NIEUDANY"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: chat closed with %s (%s)"
-msgstr "%s: rozmowa zakończona z %s (%ld.%ld.%ld.%ld)"
+msgstr "%s%s: rozmowa zakończona z %s (%s)"
 
 #, c-format
 msgid "%s%s: aborting active xfer: \"%s\" from %s"
@@ -10363,20 +10391,20 @@ msgstr "%s%s: przerywam aktywny xfer: \"%s\" od %s"
 msgid "%s%s: not enough memory for new xfer"
 msgstr "%s%s: za mało pamięci na nowy xfer"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to interpret address: error %d %s"
-msgstr "%s%s: nie można utworzyć strumienia: błąd %d %s"
+msgstr "%s%s: nie można zinterpretować adresu: błąd %d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: hashing error"
-msgstr "%s%s: błąd inicjacji TLS"
+msgstr "%s%s: błąd hashowania"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s: incoming file from %s (%s, %s.%s), name: %s, %llu bytes (protocol: %s)"
 msgstr ""
-"%s: plik przychodzący od %s (%ld.%ld.%ld.%ld, %s.%s), nazwa: %s, %llu bajtów "
-"(protokół: %s)"
+"%s: plik przychodzący od %s (%s, %s.%s), nazwa: %s, %llu bajtów (protokół: "
+"%s)"
 
 #, c-format
 msgid ""
@@ -10386,9 +10414,9 @@ msgstr ""
 "%s: oferuję plik do %s (%s.%s), nazwa: %s (lokalny plik: %s), %llu bajtów "
 "(protokół: %s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: incoming chat request from %s (%s, %s.%s)"
-msgstr "%s: przychodzące żądanie rozmowy od %s (%ld.%ld.%ld.%ld, %s.%s)"
+msgstr "%s: przychodzące żądanie rozmowy od %s (%s, %s.%s)"
 
 #, c-format
 msgid "%s: sending chat request to %s (%s.%s)"
@@ -10414,13 +10442,14 @@ msgstr "%s%s: nieznany protokół xfer \"%s\""
 msgid "%s%s: cannot access file \"%s\""
 msgstr "%s%s: nie można uzyskać dostępu do pliku \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid address \"%s\" (option xfer.network.own_ip): error %d %s"
-msgstr "%s%s: niepoprawny adres powiązania \"%s\" dla %s"
+msgstr ""
+"%s%s: niepoprawny adres  \"%s\" (opcja xfer.network.own_ip): błąd %d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to find address for \"%s\": error %d %s"
-msgstr "%s%s: niepoprawny adres powiązania \"%s\" dla %s"
+msgstr "%s%s: niemożna znaleźć adresu dla \"%s\": błąd %d %s"
 
 #, c-format
 msgid "%s%s: cannot create socket for xfer: error %d %s"
@@ -10458,9 +10487,9 @@ msgstr ""
 msgid "%s%s: error sending data to \"%s\" via xfer chat"
 msgstr "%s%s: błąd podczas wysyłania danych do \"%s\" przez rozmowę xfer"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: connected to %s (%s) via xfer chat"
-msgstr "%s%s: połączono z %s/%d (%s)"
+msgstr "%s%s: połączono z %s (%s) poprzez chat xfer"
 
 #, c-format
 msgid "%s%s: can't find xfer for buffer \"%s\""
@@ -10481,13 +10510,13 @@ msgstr ""
 msgid "%3d. %s, chat with %s (local nick: %s), started on %s, status: %s%s"
 msgstr "%3d. %s, rozmowa %s (lokalny nick: %s), rozpoczęto %s, status: %s%s"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "     plugin: %s (id: %s), file: %llu bytes (position: %llu), address: %s "
 "(port %d)"
 msgstr ""
-"     wtyczka: %s (id: %s), plik: %llu bajtów (pozycja: %llu), adres: %ld.%ld."
-"%ld.%ld (port %d)"
+"     wtyczka: %s (id: %s), plik: %llu bajtów (pozycja: %llu), adres: %s "
+"(port %d)"
 
 #. TRANSLATORS: "%s" after "started on" is a date
 #, c-format
@@ -10609,6 +10638,8 @@ msgid ""
 "automatically check CRC32 file checksum if it is found in the filename (8 "
 "hexadecimal chars)"
 msgstr ""
+"automatycznie sprawdzaj sumę CRC32 dla pliku, jeśli znajduje się ona w jego "
+"nazwie (osiem znaków heksadecymalnych)"
 
 msgid "rename incoming files if already exists (add \".1\", \".2\", ...)"
 msgstr ""
@@ -10678,25 +10709,25 @@ msgstr "%s%s: nie można zapisać pliku"
 msgid "%s%s: unable to send ACK to sender"
 msgstr "%s%s: nie można wysłać ACK do nadawcy"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: wrong CRC32 for file %s"
-msgstr "%s%s: nieprawidłowe argumenty dla funkcji \"%s\" (skrypt: %s)"
+msgstr "%s%s: nieprawidłowa wartość CRC32 dla pliku %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: CRC32 error while resuming"
-msgstr "%s%s: błąd podczas ładowania pliku \"%s\""
+msgstr "%s%s: błąd CRC32 podczas wznawiania"
 
 #, c-format
 msgid "%s%s: unable to fork"
 msgstr "%s%s: nie można uruchomić procesu potomnego"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s: sending file to %s (%s, %s.%s), name: %s (local filename: %s), %llu "
 "bytes (protocol: %s)"
 msgstr ""
-"%s: oferuję plik do %s (%s.%s), nazwa: %s (lokalny plik: %s), %llu bajtów "
-"(protokół: %s)"
+"%s: wysyłam plik do %s (%s, %s.%s), nazwa: %s (lokalny plik: %s), %llu "
+"bajtów (protokół: %s)"
 
 #, c-format
 msgid "%s%s: unable to create socket for sending file: error %d %s"
@@ -10745,30 +10776,3 @@ msgstr "Typ"
 
 msgid "Constants"
 msgstr "Stałe"
-
-#~ msgid "%s: notification deleted"
-#~ msgstr "%s: usunięto powiadomienie"
-
-#~ msgid "%snotify: %s%s%s has quit"
-#~ msgstr "%spowiadomienie: %s%s%s wyszedł"
-
-#~ msgid "No layout saved"
-#~ msgstr "Nie zapisano żadnego układu"
-
-#, fuzzy
-#~ msgid "%sgnutls: fingerprint does NOT match"
-#~ msgstr "%sgnutls: nazwa hosta w certyfikacie NIE pasuje do \"%s\""
-
-#~ msgid "%s%s: could not find address for \"%s\", falling back to local IP"
-#~ msgstr "%s%s: nie można znaleźć adresu dla \"%s\", powracam do lokalnego IP"
-
-#, fuzzy
-#~ msgid "%s%s: connected to %s (%ld.%ld.%ld.%ld)"
-#~ msgstr "%s: rozmowa zakończona z %s (%ld.%ld.%ld.%ld)"
-
-#~ msgid ""
-#~ "%s: sending file to %s (%ld.%ld.%ld.%ld, %s.%s), name: %s (local "
-#~ "filename: %s), %llu bytes (protocol: %s)"
-#~ msgstr ""
-#~ "%s: wysyłanie pliku do %s (%ld.%ld.%ld.%ld, %s.%s), nazwa: %s (lokalna "
-#~ "nazwa: %s), %llu bajtów (protokół: %s)"

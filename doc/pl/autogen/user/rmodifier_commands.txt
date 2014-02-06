@@ -8,24 +8,24 @@
             missing
             default -yes
 
-       list: list all rmodifiers
-listdefault: list default rmodifiers
-        add: add a rmodifier
-       name: name of rmodifier
-  modifiers: comma separated list of modifiers
-     groups: action on groups captured in regular expression (inside parentheses): comma separated list of groups (from 1 to 9) with optional "*" after number to hide the group
-      regex: POSIX extended regular expression (case insensitive, can start by "(?-i)" to become case sensitive)
-        del: delete a rmodifier
-       -all: delete all rmodifiers
-    missing: add missing rmodifiers
-    default: restore default rmodifiers
+       list: lista wszystkich rmodifierów
+listdefault: lista domyślnych rmodifierów
+        add: dodaje rmodifier
+       nazwa: nazwa rmodifiera
+  modyfikatory: oddzielona przecinkiem lista modyfikatorów
+     grupy: akcja na grupach przechwyconych w wyrażeniu regularnym (wewnątrz nawiasów): oddzielona przecinkami lista grup (od 1 do 9) z opcjonalnym znakiem "*" po numerze, aby ukryć grupę
+      regex: rozszerzone wyrażenia regularne POSIX (wielkość znaków nie ma znaczenia, jeśli poprzedzone "(?-i)" wielkość znaków ma znaczenie)
+        del: usuwa rmodifier
+       -all: usuwa wszystkie rmodifiery
+    missing: dodaje brakujące rmodifiery
+    default: przywraca domyślne rmodifiery
 
-Examples:
-  hide everything typed after a command /password:
+Przykłady:
+  ukrywa wszystko wpisane za komendą /password:
     /rmodifier add password input_text_display 1,2* ^(/password +)(.*)
-  delete rmodifier "password":
-    /rmodifier del password
-  delete all rmodifiers:
+  usuwa rmodifier "hasło":
+    /rmodifier del hasło
+  kasuje wszystkie rmodifiery:
     /rmodifier del -all
 ----
 

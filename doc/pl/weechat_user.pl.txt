@@ -1046,27 +1046,26 @@ zostanie wciśnięta w buforze tekstowym).
 Te skróty są używane s kontekście kursora (dowolne przemieszczanie kursora na
 ekranie).
 
-// TRANSLATION MISSING
 [width="100%",cols="^.^3,^.^3,.^10,.^8",options="header"]
 |===
 | Skrót         | Obszar   | Opis | Komenda
-| key[↑]        | -        | Move cursor one line up | `/cursor move up`
-| key[↓]        | -        | Move cursor one line down | `/cursor move down`
-| key[←]        | -        | Move cursor one column left | `/cursor move left`
-| key[→]        | -        | Move cursor one column right | `/cursor move right`
-| key[alt-↑]    | -        | Move cursor one area up | `/cursor move area_up`
-| key[alt-↓]    | -        | Move cursor one area down | `/cursor move area_down`
-| key[alt-←]    | -        | Move cursor one area left | `/cursor move area_left`
-| key[alt-→]    | -        | Move cursor one area right | `/cursor move area_right`
-| key[m]        | chat     | Quote message | `hsignal:chat_quote_message;/cursor stop`
-| key[q]        | chat     | Quote prefix + message | `hsignal:chat_quote_prefix_message;/cursor stop`
-| key[Q]        | chat     | Quote time + prefix + message | `hsignal:chat_quote_time_prefix_message;/cursor stop`
-| key[b]        | nicklist | Ban nick | `/window ${_window_number};/ban ${nick}`
-| key[k]        | nicklist | Kick nick | `/window ${_window_number};/kick ${nick}`
-| key[K]        | nicklist | Kick and ban nick | `/window ${_window_number};/kickban ${nick}`
-| key[q]        | nicklist | Open query with nick | `/window ${_window_number};/query ${nick};/cursor stop`
-| key[w]        | nicklist | Do a whois on nick | `/window ${_window_number};/whois ${nick}`
-| key[Enter] .3+| -     .3+| Stop cursor mode .3+| `/cursor stop`
+| key[↑]        | -        | Przesuń kursor linię wyżej | `/cursor move up`
+| key[↓]        | -        | Przesuń kursor linię niżej | `/cursor move down`
+| key[←]        | -        | Przesuń kursor kolumnę w lewo | `/cursor move left`
+| key[→]        | -        | Przesuń kursor kolumnę w prawo | `/cursor move right`
+| key[alt-↑]    | -        | Przesuń kursor obszar do góry | `/cursor move area_up`
+| key[alt-↓]    | -        | Przesuń kursor obszar w dół | `/cursor move area_down`
+| key[alt-←]    | -        | Przesuń kursor obszar w lewo | `/cursor move area_left`
+| key[alt-→]    | -        | Przesuń kursor obszar w prawo | `/cursor move area_right`
+| key[m]        | chat     | Cytuj wiadomość | `hsignal:chat_quote_message;/cursor stop`
+| key[q]        | chat     | Cytuj prefiks i wiadomość | `hsignal:chat_quote_prefix_message;/cursor stop`
+| key[Q]        | chat     | Cytuj czas, prefiks i wiadomość | `hsignal:chat_quote_time_prefix_message;/cursor stop`
+| key[b]        | nicklist | Zbanuj osobę | `/window ${_window_number};/ban ${nick}`
+| key[k]        | nicklist | Wykop osobę | `/window ${_window_number};/kick ${nick}`
+| key[K]        | nicklist | Wykop i zbanuj osobę | `/window ${_window_number};/kickban ${nick}`
+| key[q]        | nicklist | Otwórz rozmowę z osobą | `/window ${_window_number};/query ${nick};/cursor stop`
+| key[w]        | nicklist | Wykonaj whois dla osoby | `/window ${_window_number};/whois ${nick}`
+| key[Enter] .3+| -     .3+| Wyłącz tryb kursora .3+| `/cursor stop`
 | key[ctrl-j]
 | key[ctrl-m]
 |===
@@ -2245,10 +2244,8 @@ Niepełna lista wiadomości IRC lub aliasów jakie można dostosować:
 | 671       | whois         | whois (bezpieczne połączenie)
 | 728       | quietlist     | cicha lista
 | 729       | quietlist     | koniec cichej listy
-// TRANSLATION MISSING
-| 732       | monitor       | list of monitored nicks
-// TRANSLATION MISSING
-| 733       | monitor       | list of monitored nicks (end)
+| 732       | monitor       | lista monitorowanych nicków
+| 733       | monitor       | lista monitorowanych nicków (koniec)
 | 901       |               | jesteś teraz zalogowany
 |===
 

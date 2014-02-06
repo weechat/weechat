@@ -434,7 +434,7 @@
 ** wartości: on, off (domyślna wartość: `off`)
 
 * [[option_weechat.look.buffer_search_regex]] *weechat.look.buffer_search_regex*
-** opis: `default text search in buffer: if enabled, search POSIX extended regular expression, otherwise search simple string`
+** opis: `domyślne wyszukiwanie w buforze: jeśli włączone szukane jest rozszerzone wyrażenie regularne POSIX, w przeciwnym wypadku prosty ciąg`
 ** typ: bool
 ** wartości: on, off (domyślna wartość: `off`)
 
@@ -539,7 +539,7 @@
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
 * [[option_weechat.look.highlight_regex]] *weechat.look.highlight_regex*
-** opis: `POSIX extended regular expression used to check if a message has highlight or not, at least one match in string must be surrounded by delimiters (chars different from: alphanumeric, "-", "_" and "|"), regular expression is case insensitive (use "(?-i)" at beginning to make it case sensitive), examples: "flashcode|flashy", "(?-i)FlashCode|flashy"`
+** opis: `rozszerzone wyrażenie regularne POSIX używane do sprawdzenia, czy wiadomość posiada podświetlenie czy nie, przynajmniej jedno dopasowanie w ciąg musi być otoczone separatorami (znaki inne niż: alfanumeryczne, "-", "_" lub "|"), wielkość znaków nie ma wpływu na wyrażenie (użyj "(?-i)" na początku, aby wielkość znaków miała znaczenie), przykłady: "flashcode|flashy", "(?-i)FlashCode|flashy"`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
@@ -804,7 +804,7 @@
 ** wartości: on, off (domyślna wartość: `on`)
 
 * [[option_weechat.look.save_layout_on_exit]] *weechat.look.save_layout_on_exit*
-** opis: `save layout on exit (buffers, windows, or both)`
+** opis: `zapisz układ przy wyjściu (bufory, okna lub oba)`
 ** typ: liczba
 ** wartości: none, buffers, windows, all (domyślna wartość: `none`)
 
@@ -839,7 +839,7 @@
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
 * [[option_weechat.look.tab_width]] *weechat.look.tab_width*
-** opis: `number of spaces used to display tabs in messages`
+** opis: `liczba spacji używana do wyświetlania tabulacji w wiadomościach`
 ** typ: liczba
 ** wartości: 1 .. 64 (domyślna wartość: `1`)
 

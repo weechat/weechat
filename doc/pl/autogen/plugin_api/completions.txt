@@ -116,7 +116,7 @@
 
 | weechat | plugins_commands | komendy zdefiniowane przez wtyczki
 
-| weechat | plugins_installed | names of plugins installed
+| weechat | plugins_installed | nazwy zainstalowanych wtyczek
 
 | weechat | plugins_names | nazwy wtyczek
 
