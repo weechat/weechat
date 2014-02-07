@@ -111,7 +111,7 @@ server_create_window (t_irc_server *server)
     if (!SERVER(gui_windows))
     {
         server->window = gui_windows;
-        SERVER(gui_windows) = server;
+        gui_windows->server = server;
     }
     else
         gui_window_new (server, NULL);

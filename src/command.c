@@ -467,6 +467,9 @@ user_command (t_irc_server *server, char *command)
 int
 weechat_cmd_alias (int argc, char **argv)
 {
+    /* make C compiler happy */
+    (void) argv;
+
     if (argc == 0)
     {
         /* List all aliases */
@@ -657,6 +660,9 @@ weechat_cmd_set (int argc, char **argv)
 int
 weechat_cmd_unalias (int argc, char **argv)
 {
+    /* make C compiler happy */
+    (void) argv;
+
     if (argc != 1)
     {
         gui_printf

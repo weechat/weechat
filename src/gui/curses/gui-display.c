@@ -45,7 +45,7 @@ t_gui_window *last_gui_window = NULL;       /* pointer to last window       */
 t_gui_window *gui_current_window = NULL;    /* pointer to current window    */
 
 t_gui_color gui_colors[] =
-{ { "default", -1 | A_NORMAL },
+{ { "default", -1 },
   { "black", COLOR_BLACK | A_NORMAL },
   { "red", COLOR_RED | A_NORMAL },
   { "lightred", COLOR_RED | A_BOLD },
@@ -146,7 +146,7 @@ gui_get_color_by_value (int color_value)
 void
 gui_window_set_color (WINDOW *window, int num_color)
 {
-    if (has_colors)
+    if (has_colors ())
     {
         if (color_attr[num_color - 1] & A_BOLD)
             wattron (window, COLOR_PAIR (num_color) | A_BOLD);
@@ -1233,13 +1233,13 @@ gui_window_new (void *server, void *channel
     if ((new_window = (t_gui_window *)(malloc (sizeof (t_gui_window)))))
     {
         /* assign server and channel to window */
-        SERVER(new_window) = server;
-        CHANNEL(new_window) = channel;
+        new_window->server = server;
+        new_window->channel = channel;
         /* assign window to server and channel */
         if (server && !channel)
-            SERVER(new_window)->window = new_window;
+            ((t_irc_server *)new_window->server)->window = new_window;
         if (channel)
-            CHANNEL(new_window)->window = new_window;
+            ((t_irc_channel *)new_window->channel)->window = new_window;
         
         gui_calculate_pos_size (new_window);
         
@@ -1349,12 +1349,9 @@ void
 gui_resize_term_handler ()
 {
     t_gui_window *ptr_win;
-    int width, height;
     
     endwin ();
     refresh ();
-    
-    getmaxyx (stdscr, height, width);
     
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
