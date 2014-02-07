@@ -220,8 +220,6 @@ trigger_callback_signal_cb (void *data, const char *signal,
     trigger->hook_count_cb++;
     trigger->hook_running = 1;
 
-    extra_vars = NULL;
-
     rc = trigger_return_code[weechat_config_integer (trigger->options[TRIGGER_OPTION_RETURN_CODE])];
 
     /* create hashtable */
@@ -352,7 +350,8 @@ trigger_callback_modifier_cb (void *data, const char *modifier,
                               const char *modifier_data, const char *string)
 {
     struct t_trigger *trigger;
-    struct t_hashtable *extra_vars;
+    struct t_hashtable *pointers, *extra_vars;
+    struct t_gui_buffer *buffer;
     const char *ptr_string;
     char *string_modified, *pos, *pos2, *plugin_name, *buffer_name;
     char *buffer_full_name, *tags;
@@ -368,9 +367,14 @@ trigger_callback_modifier_cb (void *data, const char *modifier,
     trigger->hook_count_cb++;
     trigger->hook_running = 1;
 
-    extra_vars = NULL;
-
-    /* create hashtable */
+    /* create hashtables */
+    pointers = weechat_hashtable_new (32,
+                                      WEECHAT_HASHTABLE_STRING,
+                                      WEECHAT_HASHTABLE_POINTER,
+                                      NULL,
+                                      NULL);
+    if (!pointers)
+        goto end;
     extra_vars = weechat_hashtable_new (32,
                                         WEECHAT_HASHTABLE_STRING,
                                         WEECHAT_HASHTABLE_STRING,
@@ -401,6 +405,8 @@ trigger_callback_modifier_cb (void *data, const char *modifier,
                     buffer_name = weechat_strndup (pos, pos2 - pos);
                     if (buffer_name)
                     {
+                        buffer = weechat_buffer_search (plugin_name,
+                                                        buffer_name);
                         length = strlen (plugin_name) + 1 + strlen (buffer_name) + 1;
                         buffer_full_name = malloc (length);
                         if (buffer_full_name)
@@ -431,6 +437,7 @@ trigger_callback_modifier_cb (void *data, const char *modifier,
                 free (plugin_name);
             }
         }
+        weechat_hashtable_set (pointers, "buffer", buffer);
     }
 
     /*
@@ -441,13 +448,15 @@ trigger_callback_modifier_cb (void *data, const char *modifier,
         goto end;
 
     /* execute the trigger (conditions, regex, command) */
-    trigger_callback_execute (trigger, NULL, NULL, extra_vars);
+    trigger_callback_execute (trigger, buffer, NULL, extra_vars);
 
 end:
     ptr_string = weechat_hashtable_get (extra_vars, "tg_string");
     string_modified = (ptr_string && (strcmp (ptr_string, string) != 0)) ?
         strdup (ptr_string) : NULL;
 
+    if (pointers)
+        weechat_hashtable_free (pointers);
     if (extra_vars)
         weechat_hashtable_free (extra_vars);
 
