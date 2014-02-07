@@ -3347,12 +3347,47 @@ void
 gui_buffer_sort_by_layout_number ()
 {
     struct t_gui_buffer *ptr_buffer, *ptr_next_buffer;
+    struct t_gui_buffer *extra_buffers, *last_extra_buffer;
 
     ptr_buffer = gui_buffers;
 
     gui_buffers = NULL;
     last_gui_buffer = NULL;
 
+    /* list with buffers that are NOT in layout (layout_number == 0) */
+    extra_buffers = NULL;
+    last_extra_buffer = NULL;
+
+    while (ptr_buffer)
+    {
+        ptr_next_buffer = ptr_buffer->next_buffer;
+
+        /*
+         * add buffer if it is in layout (if not, it's stored in a temporary
+         * list and will be added later)
+         */
+        if (ptr_buffer->layout_number > 0)
+        {
+            /* insert buffer now in the final list */
+            gui_buffer_insert (ptr_buffer);
+        }
+        else
+        {
+            /* move the buffer in a temporary list */
+            ptr_buffer->prev_buffer = last_extra_buffer;
+            ptr_buffer->next_buffer = NULL;
+            if (extra_buffers)
+                last_extra_buffer->next_buffer = ptr_buffer;
+            else
+                extra_buffers = ptr_buffer;
+            last_extra_buffer = ptr_buffer;
+        }
+
+        ptr_buffer = ptr_next_buffer;
+    }
+
+    /* add buffers that are NOT in layout */
+    ptr_buffer = extra_buffers;
     while (ptr_buffer)
     {
         ptr_next_buffer = ptr_buffer->next_buffer;
