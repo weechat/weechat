@@ -167,6 +167,38 @@ trigger_callback_run_command (struct t_trigger *trigger,
 }
 
 /*
+ * Executes a trigger.
+ *
+ * Following actions are executed:
+ *   1. display debug info on trigger buffer
+ *   2. check conditions (if false, exit)
+ *   3. replace text with regex
+ *   4. execute command(s)
+ */
+
+void
+trigger_callback_execute (struct t_trigger *trigger,
+                          struct t_gui_buffer *buffer,
+                          struct t_hashtable *pointers,
+                          struct t_hashtable *extra_vars)
+{
+    /* display debug info on trigger buffer */
+    if (!trigger_buffer && (weechat_trigger_plugin->debug >= 1))
+        trigger_buffer_open (0);
+    trigger_buffer_display_trigger (trigger, buffer, pointers, extra_vars);
+
+    /* check conditions */
+    if (trigger_callback_check_conditions (trigger, pointers, extra_vars))
+    {
+        /* replace text with regex */
+        trigger_callback_replace_regex (trigger, extra_vars);
+
+        /* execute command(s) */
+        trigger_callback_run_command (trigger, buffer, pointers, extra_vars);
+    }
+}
+
+/*
  * Callback for a signal hooked.
  */
 
@@ -225,31 +257,8 @@ trigger_callback_signal_cb (void *data, const char *signal,
     }
     weechat_hashtable_set (extra_vars, "tg_signal_data", ptr_signal_data);
 
-    /* display debug info on trigger buffer */
-    if (!trigger_buffer && (weechat_trigger_plugin->debug >= 1))
-        trigger_buffer_open (0);
-    if (trigger_buffer)
-    {
-        weechat_printf_tags (trigger_buffer, "no_trigger",
-                             "signal\t%s%s",
-                             weechat_color ("chat_channel"),
-                             trigger->name);
-        weechat_printf_tags (trigger_buffer, "no_trigger",
-                             "\t  signal_data: \"%s%s\"",
-                             ptr_signal_data,
-                             weechat_color ("reset"));
-        trigger_buffer_display_hashtable ("extra_vars", extra_vars);
-    }
-
-    /* check conditions */
-    if (!trigger_callback_check_conditions (trigger, NULL, extra_vars))
-        goto end;
-
-    /* replace text with regex */
-    trigger_callback_replace_regex (trigger, extra_vars);
-
-    /* execute command */
-    trigger_callback_run_command (trigger, NULL, NULL, extra_vars);
+    /* execute the trigger (conditions, regex, command) */
+    trigger_callback_execute (trigger, NULL, NULL, extra_vars);
 
 end:
     if (extra_vars)
@@ -320,28 +329,8 @@ trigger_callback_hsignal_cb (void *data, const char *signal,
     /* add data in hashtable used for conditions/replace/command */
     weechat_hashtable_set (extra_vars, "tg_signal", signal);
 
-    /* display debug info on trigger buffer */
-    if (!trigger_buffer && (weechat_trigger_plugin->debug >= 1))
-        trigger_buffer_open (0);
-    if (trigger_buffer)
-    {
-        weechat_printf_tags (trigger_buffer, "no_trigger",
-                             "hsignal\t%s%s",
-                             weechat_color ("chat_channel"),
-                             trigger->name);
-        trigger_buffer_display_hashtable ("pointers", pointers);
-        trigger_buffer_display_hashtable ("extra_vars", extra_vars);
-    }
-
-    /* check conditions */
-    if (!trigger_callback_check_conditions (trigger, pointers, extra_vars))
-        goto end;
-
-    /* replace text with regex */
-    trigger_callback_replace_regex (trigger, extra_vars);
-
-    /* execute command */
-    trigger_callback_run_command (trigger, NULL, pointers, extra_vars);
+    /* execute the trigger (conditions, regex, command) */
+    trigger_callback_execute (trigger, NULL, NULL, extra_vars);
 
 end:
     if (pointers)
@@ -451,33 +440,8 @@ trigger_callback_modifier_cb (void *data, const char *modifier,
     if (no_trigger)
         goto end;
 
-    /* display debug info on trigger buffer */
-    if (!trigger_buffer && (weechat_trigger_plugin->debug >= 1))
-        trigger_buffer_open (0);
-    if (trigger_buffer)
-    {
-        weechat_printf_tags (trigger_buffer, "no_trigger",
-                             "modifier\t%s%s",
-                             weechat_color ("chat_channel"),
-                             trigger->name);
-        weechat_printf_tags (trigger_buffer, "no_trigger",
-                             "\t  modifier: %s", modifier);
-        weechat_printf_tags (trigger_buffer, "no_trigger",
-                             "\t  modifier_data: \"%s%s\"",
-                             modifier_data,
-                             weechat_color ("reset"));
-        trigger_buffer_display_hashtable ("extra_vars", extra_vars);
-    }
-
-    /* check conditions */
-    if (!trigger_callback_check_conditions (trigger, NULL, extra_vars))
-        goto end;
-
-    /* replace text with regex */
-    trigger_callback_replace_regex (trigger, extra_vars);
-
-    /* execute command */
-    trigger_callback_run_command (trigger, NULL, NULL, extra_vars);
+    /* execute the trigger (conditions, regex, command) */
+    trigger_callback_execute (trigger, NULL, NULL, extra_vars);
 
 end:
     ptr_string = weechat_hashtable_get (extra_vars, "tg_string");
@@ -593,31 +557,8 @@ trigger_callback_print_cb  (void *data, struct t_gui_buffer *buffer,
                (strcmp (localvar_type, "private") == 0)) ? 1 : 0);
     weechat_hashtable_set (extra_vars, "tg_msg_pv", str_temp);
 
-    /* display debug info on trigger buffer */
-    if (!trigger_buffer && (weechat_trigger_plugin->debug >= 1))
-        trigger_buffer_open (0);
-    if (trigger_buffer)
-    {
-        weechat_printf_tags (trigger_buffer, "no_trigger",
-                             "print\t%s%s",
-                             weechat_color ("chat_channel"),
-                             trigger->name);
-        weechat_printf_tags (trigger_buffer, "no_trigger",
-                             "\t  buffer: %s",
-                             weechat_buffer_get_string (buffer, "full_name"));
-        trigger_buffer_display_hashtable ("pointers", pointers);
-        trigger_buffer_display_hashtable ("extra_vars", extra_vars);
-    }
-
-    /* check conditions */
-    if (!trigger_callback_check_conditions (trigger, pointers, extra_vars))
-        goto end;
-
-    /* replace text with regex */
-    trigger_callback_replace_regex (trigger, extra_vars);
-
-    /* execute command */
-    trigger_callback_run_command (trigger, buffer, pointers, extra_vars);
+    /* execute the trigger (conditions, regex, command) */
+    trigger_callback_execute (trigger, buffer, pointers, extra_vars);
 
 end:
     if (pointers)
@@ -675,31 +616,8 @@ trigger_callback_command_run_cb  (void *data, struct t_gui_buffer *buffer,
     weechat_hashtable_set (pointers, "buffer", buffer);
     weechat_hashtable_set (extra_vars, "tg_command", command);
 
-    /* display debug info on trigger buffer */
-    if (!trigger_buffer && (weechat_trigger_plugin->debug >= 1))
-        trigger_buffer_open (0);
-    if (trigger_buffer)
-    {
-        weechat_printf_tags (trigger_buffer, "no_trigger",
-                             "command_run\t%s%s",
-                             weechat_color ("chat_channel"),
-                             trigger->name);
-        weechat_printf_tags (trigger_buffer, "no_trigger",
-                             "\t  buffer: %s",
-                             weechat_buffer_get_string (buffer, "full_name"));
-        trigger_buffer_display_hashtable ("pointers", pointers);
-        trigger_buffer_display_hashtable ("extra_vars", extra_vars);
-    }
-
-    /* check conditions */
-    if (!trigger_callback_check_conditions (trigger, pointers, extra_vars))
-        goto end;
-
-    /* replace text with regex */
-    trigger_callback_replace_regex (trigger, extra_vars);
-
-    /* execute command */
-    trigger_callback_run_command (trigger, buffer, pointers, extra_vars);
+    /* execute the trigger (conditions, regex, command) */
+    trigger_callback_execute (trigger, buffer, pointers, extra_vars);
 
 end:
     if (pointers)
@@ -771,27 +689,8 @@ trigger_callback_timer_cb  (void *data, int remaining_calls)
         weechat_hashtable_set (extra_vars, "tg_date", str_temp);
     }
 
-    /* display debug info on trigger buffer */
-    if (!trigger_buffer && (weechat_trigger_plugin->debug >= 1))
-        trigger_buffer_open (0);
-    if (trigger_buffer)
-    {
-        weechat_printf_tags (trigger_buffer, "no_trigger",
-                             "timer\t%s%s",
-                             weechat_color ("chat_channel"),
-                             trigger->name);
-        trigger_buffer_display_hashtable ("extra_vars", extra_vars);
-    }
-
-    /* check conditions */
-    if (!trigger_callback_check_conditions (trigger, NULL, extra_vars))
-        goto end;
-
-    /* replace text with regex */
-    trigger_callback_replace_regex (trigger, extra_vars);
-
-    /* execute command */
-    trigger_callback_run_command (trigger, NULL, NULL, extra_vars);
+    /* execute the trigger (conditions, regex, command) */
+    trigger_callback_execute (trigger, NULL, NULL, extra_vars);
 
 end:
     if (extra_vars)

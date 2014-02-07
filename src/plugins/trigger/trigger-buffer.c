@@ -26,6 +26,7 @@
 #include "../weechat-plugin.h"
 #include "trigger.h"
 #include "trigger-buffer.h"
+#include "trigger-config.h"
 
 
 struct t_gui_buffer *trigger_buffer = NULL;
@@ -84,6 +85,36 @@ trigger_buffer_display_hashtable (const char *name,
     weechat_printf_tags (trigger_buffer, "no_trigger", "  %s:", name);
 
     weechat_hashtable_map (hashtable, &trigger_buffer_hashtable_map_cb, NULL);
+}
+
+/*
+ * Displays a trigger in trigger buffer.
+ */
+
+void
+trigger_buffer_display_trigger (struct t_trigger *trigger,
+                                struct t_gui_buffer *buffer,
+                                struct t_hashtable *pointers,
+                                struct t_hashtable *extra_vars)
+{
+    if (!trigger_buffer)
+        return;
+
+    weechat_printf_tags (trigger_buffer, "no_trigger",
+                         "%s\t%s%s",
+                         trigger_hook_type_string[weechat_config_integer (trigger->options[TRIGGER_OPTION_HOOK])],
+                         weechat_color (weechat_config_string (trigger_config_color_trigger)),
+                         trigger->name);
+    if (buffer)
+    {
+        weechat_printf_tags (trigger_buffer, "no_trigger",
+                             "\t  buffer: %s",
+                             weechat_buffer_get_string (buffer, "full_name"));
+    }
+    if (pointers)
+        trigger_buffer_display_hashtable ("pointers", pointers);
+    if (extra_vars)
+        trigger_buffer_display_hashtable ("extra_vars", extra_vars);
 }
 
 /*
