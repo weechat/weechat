@@ -82,6 +82,10 @@ trigger_callback_replace_regex (struct t_trigger *trigger,
 
     for (i = 0; i < trigger->regex_count; i++)
     {
+        /* if regex is not set (invalid), skip it */
+        if (!trigger->regex[i].regex)
+            continue;
+
         ptr_key = (trigger->regex[i].variable) ?
             trigger->regex[i].variable :
             trigger_hook_regex_default_var[weechat_config_integer (trigger->options[TRIGGER_OPTION_HOOK])];
