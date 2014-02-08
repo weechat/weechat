@@ -293,10 +293,10 @@ weechat_charset_set ("iso-8859-1");
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.charset_set(charset)
 
-# example
+# 例
 weechat.charset_set("iso-8859-1")
 ----
 
@@ -333,10 +333,10 @@ free (str);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 str = weechat.iconv_to_internal(charset, string)
 
-# example
+# 例
 str = weechat.iconv_to_internal("iso-8859-1", "iso string: é à")
 ----
 
@@ -373,10 +373,10 @@ free (str);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 str = weechat.iconv_from_internal(charset, string)
 
-# example
+# 例
 str = weechat.iconv_from_internal("iso-8859-1", "utf-8 string: é à")
 ----
 
@@ -410,10 +410,10 @@ char *str = weechat_gettext ("hello");
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 str = weechat.gettext(string)
 
-# example
+# 例
 str = weechat.gettext("hello")
 ----
 
@@ -452,10 +452,10 @@ char *str = weechat_ngettext ("file", "files", num_files);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 str = weechat.ngettext(string, plural, count)
 
-# example
+# 例
 num_files = 2
 str = weechat.ngettext("file", "files", num_files)
 ----
@@ -799,10 +799,10 @@ int length_on_screen = weechat_strlen_screen ("é"); /* == 1 */
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 length = weechat.strlen_screen(string)
 
-# example
+# 例
 length = weechat.strlen_screen("é") # 1
 ----
 
@@ -843,10 +843,10 @@ int match4 = weechat_string_match ("abcdef", "*de*", 0); /* == 1 */
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 match = weechat.string_match(string, mask, case_sensitive)
 
-# examples
+# 例s
 match1 = weechat.string_match("abcdef", "abc*", 0) # 1
 match2 = weechat.string_match("abcdef", "*dd*", 0) # 0
 match3 = weechat.string_match("abcdef", "*def", 0) # 1
@@ -1028,10 +1028,10 @@ free (str_regex);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 regex = weechat.string_mask_to_regex(mask)
 
-# example
+# 例
 regex = weechat.string_mask_to_regex("test*mask") # "test.*mask"
 ----
 
@@ -1162,10 +1162,10 @@ int hl = weechat_string_has_highlight ("my test string", "test,word2"); /* == 1 
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 highlight = weechat.string_has_highlight(string, highlight_words)
 
-# example
+# 例
 highlight = weechat.string_has_highlight("my test string", "test,word2") # 1
 ----
 
@@ -1173,11 +1173,10 @@ highlight = weechat.string_has_highlight("my test string", "test,word2") # 1
 
 _WeeChat バージョン 0.3.4 以上で利用可。_
 
-// TRANSLATION MISSING
 POSIX 拡張正規表現を使って、文字列中から正規表現にマッチする部分が 1
 つ以上あるか確認。 +
-For at least one match of regular expression on string, it must be surrounded
-by delimiters (chars different from: alphanumeric, "-", "_" and "|").
+文字列を正規表現にマッチさせるには、マッチする部分の前後に区切り文字
+(アルファベット、"-"、"_"、"|" 以外) がなければいけません。
 
 プロトタイプ:
 
@@ -1206,10 +1205,10 @@ int hl = weechat_string_has_highlight_regex ("my test string", "test|word2"); /*
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 highlight = weechat.string_has_highlight_regex(string, regex)
 
-# example
+# 例
 highlight = weechat.string_has_highlight_regex("my test string", "test|word2") # 1
 ----
 
@@ -1490,10 +1489,10 @@ free (str);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 str = weechat.string_remove_color(string, replacement)
 
-# example
+# 例
 str = weechat.string_remove_color(my_string, "?")
 ----
 
@@ -1598,10 +1597,10 @@ int command_char2 = weechat_string_is_command_char ("test");  /* == 0 */
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 is_cmdchar = weechat.string_is_command_char(string)
 
-# examples
+# 例s
 command_char1 = weechat.string_is_command_char("/test") # == 1
 command_char2 = weechat.string_is_command_char("test")  # == 0
 ----
@@ -1641,10 +1640,10 @@ const char *str3 = weechat_string_input_for_buffer ("//test"); /* "/test" */
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 str = weechat.string_input_for_buffer(string)
 
-# examples
+# 例s
 str1 = weechat.string_input_for_buffer("test")   # "test"
 str2 = weechat.string_input_for_buffer("/test")  # ""
 str3 = weechat.string_input_for_buffer("//test") # "/test"
@@ -1709,10 +1708,10 @@ char *str3 = weechat_string_eval_expression ("abc =~ def", NULL, NULL, options);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 str = weechat.string_eval_expression(expr, pointers, extra_vars, options)
 
-# examples
+# 例s
 str1 = weechat.string_eval_expression("${buffer.full_name}", {}, {}, {})                          # "core.weechat"
 str2 = weechat.string_eval_expression("${window.win_width} > 100", {}, {}, {"type": "condition"}) # "1"
 str3 = weechat.string_eval_expression("abc =~ def", {}, {}, {"type": "condition"})                # "0"
@@ -2283,10 +2282,10 @@ if (!weechat_mkdir_home ("temp", 0755))
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.mkdir_home(directory, mode)
 
-# example
+# 例
 weechat.mkdir_home("temp", 0755)
 ----
 
@@ -2324,10 +2323,10 @@ if (!weechat_mkdir ("/tmp/mydir", 0755))
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.mkdir(directory, mode)
 
-# example
+# 例
 weechat.mkdir("/tmp/mydir", 0755)
 ----
 
@@ -2365,10 +2364,10 @@ if (!weechat_mkdir_parents ("/tmp/my/dir", 0755))
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.mkdir_parents(directory, mode)
 
-# example
+# 例
 weechat.mkdir_parents("/tmp/my/dir", 0755)
 ----
 
@@ -2632,10 +2631,10 @@ struct t_weelist *list = weechat_list_new ();
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 list = weechat.list_new()
 
-# example
+# 例
 list = weechat.list_new()
 ----
 
@@ -2679,10 +2678,10 @@ struct t_weelist_item *my_item =
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 item = weechat.list_add(list, data, where, user_data)
 
-# example
+# 例
 item = weechat.list_add(list, "my data", weechat.WEECHAT_LIST_POS_SORT, "")
 ----
 
@@ -2718,10 +2717,10 @@ struct t_weelist_item *item = weechat_list_search (list, "my data");
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 item = weechat.list_search(list, data)
 
-# example
+# 例
 item = weechat.list_search(list, "my data")
 ----
 
@@ -2759,10 +2758,10 @@ int pos_item = weechat_list_search_pos (list, "my data");
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 pos_item = weechat.list_search_pos(list, data)
 
-# example
+# 例
 pos_item = weechat.list_search_pos(list, "my data")
 ----
 
@@ -2798,10 +2797,10 @@ struct t_weelist_item *item = weechat_list_casesearch (list, "my data");
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 item = weechat.list_casesearch(list, data)
 
-# example
+# 例
 item = weechat.list_casesearch(list, "my data")
 ----
 
@@ -2839,10 +2838,10 @@ int pos_item = weechat_list_casesearch_pos (list, "my data");
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 pos_item = weechat.list_casesearch_pos(list, data)
 
-# example
+# 例
 pos_item = weechat.list_casesearch_pos(list, "my data")
 ----
 
@@ -2878,10 +2877,10 @@ struct t_weelist_item *item = weechat_list_get (list, 0); /* first item */
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 item = weechat.list_get(list, position)
 
-# example
+# 例
 item = weechat.list_get(list, 0)
 ----
 
@@ -2912,10 +2911,10 @@ weechat_list_set (item, "new data");
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.list_set(item, value)
 
-# example
+# 例
 weechat.list_set(item, "new data")
 ----
 
@@ -2949,10 +2948,10 @@ struct t_weelist_item *next_item = weechat_list_next (item);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 item = weechat.list_next(item)
 
-# example
+# 例
 item = weechat.list_next(item)
 ----
 
@@ -2986,10 +2985,10 @@ struct t_weelist_item *prev_item = weechat_list_prev (item);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 item = weechat.list_prev(item)
 
-# example
+# 例
 item = weechat.list_prev(item)
 ----
 
@@ -3023,10 +3022,10 @@ weechat_printf (NULL, "value of item: %s", weechat_list_string (item));
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.list_string(item)
 
-# example
+# 例
 weechat.prnt("", "value of item: %s" % weechat.list_string(item))
 ----
 
@@ -3060,10 +3059,10 @@ weechat_printf (NULL, "size of list: %d", weechat_list_size (list));
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 size = weechat.list_size(list)
 
-# example
+# 例
 weechat.prnt("", "size of list: %d" % weechat.list_size(list))
 ----
 
@@ -3095,10 +3094,10 @@ weechat_list_remove (list, item);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.list_remove(list, item)
 
-# example
+# 例
 weechat.list_remove(list, item)
 ----
 
@@ -3128,10 +3127,10 @@ weechat_list_remove_all (list);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.list_remove_all(list)
 
-# example
+# 例
 weechat.list_remove_all(list)
 ----
 
@@ -3161,10 +3160,10 @@ weechat_list_free (list);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.list_free(list)
 
-# example
+# 例
 weechat.list_free(list)
 ----
 
@@ -3799,10 +3798,10 @@ struct t_config_file *config_file = weechat_config_new ("test",
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 config_file = weechat.config_new(name, calback_reload, callback_reload_data)
 
-# example
+# 例
 def my_config_reload_cb(data, config_file):
     # ...
     return weechat.WEECHAT_RC_OK
@@ -4011,7 +4010,7 @@ struct t_config_section *new_section2 =
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 section = weechat.config_new_section(config_file, name,
     user_can_add_options, user_can_delete_options,
     callback_read, callback_read_data,
@@ -4019,7 +4018,7 @@ section = weechat.config_new_section(config_file, name,
     callback_create_option, callback_create_option_data,
     callback_delete_option, callback_delete_option_data)
 
-# example
+# 例
 def my_section_read_cb(data, config_file, section, option_name, value):
     # ...
     return weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED
@@ -4085,10 +4084,10 @@ struct t_config_section *section = weechat_config_search_section (config_file,
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 section = weechat.config_search_section(config_file, section_name)
 
-# example
+# 例
 section = weechat.config_search_section(config_file, "section")
 ----
 
@@ -4244,14 +4243,14 @@ struct t_config_option *option5 =
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 option = weechat.config_new_option(config_file, section, name, type, description,
     string_values, min, max, default_value, value, null_value_allowed,
     callback_check_value, callback_check_value_data,
     callback_change, callback_change_data,
     callback_delete, callback_delete_data)
 
-# example
+# 例
 def option4_check_value_cb(data, option, value):
     # ...
     return 1
@@ -4341,10 +4340,10 @@ struct t_config_option *option =
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 option = weechat.config_search_option(config_file, section, option_name)
 
-# example
+# 例
 option = weechat.config_search_option(config_file, section, "option")
 ----
 
@@ -4490,10 +4489,10 @@ else
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.config_string_to_boolean(text)
 
-# example
+# 例
 if weechat.config_string_to_boolean(text):
     # ...
 ----
@@ -4544,10 +4543,10 @@ switch (weechat_config_option_reset (option, 1))
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 rc = weechat.config_option_reset(option, run_callback)
 
-# example
+# 例
 rc = weechat.config_option_reset(option, 1)
 if rc == weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED:
     # ...
@@ -4604,10 +4603,10 @@ switch (weechat_config_option_set (option, "new_value", 1))
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 rc = weechat.config_option_set(option, value, run_callback)
 
-# example
+# 例
 rc = weechat.config_option_set(option, "new_value", 1)
 if rc == weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED:
     # ...
@@ -4667,10 +4666,10 @@ switch (weechat_config_option_set_null (option, 1))
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 rc = weechat.config_option_set_null(option, run_callback)
 
-# example
+# 例
 rc = weechat.config_option_set_null(option, 1)
 if rc == weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED:
     # ...
@@ -4727,10 +4726,10 @@ switch (weechat_config_option_unset (option))
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 rc = weechat.config_option_unset(option)
 
-# example
+# 例
 rc = weechat.config_option_unset(option)
 if rc == weechat.WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET:
     # ...
@@ -4770,10 +4769,10 @@ weechat_config_option_rename (option, "new_name");
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.config_option_rename(option, new_name)
 
-# example
+# 例
 weechat.config_option_rename(option, "new_name")
 ----
 
@@ -4858,10 +4857,10 @@ else
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 is_null = weechat.config_option_is_null(option)
 
-# example
+# 例
 if weechat.config_option_is_null(option):
     # ...
 ----
@@ -4904,10 +4903,10 @@ else
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 is_null = weechat.config_option_default_is_null(option)
 
-# example
+# 例
 if weechat.config_option_default_is_null(option):
     # ...
 ----
@@ -4950,10 +4949,10 @@ else
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.config_boolean(option)
 
-# example
+# 例
 option = weechat.config_get("plugin.section.option")
 if weechat.config_boolean(option):
     # ...
@@ -4997,10 +4996,10 @@ else
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.config_boolean_default(option)
 
-# example
+# 例
 option = weechat.config_get("plugin.section.option")
 if weechat.config_boolean_default(option):
     # ...
@@ -5037,10 +5036,10 @@ int value = weechat_config_integer (option);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.config_integer(option)
 
-# example
+# 例
 option = weechat.config_get("plugin.section.option")
 value = weechat.config_integer(option)
 ----
@@ -5076,10 +5075,10 @@ int value = weechat_config_integer_default (option);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.config_integer_default(option)
 
-# example
+# 例
 option = weechat.config_get("plugin.section.option")
 value = weechat.config_integer_default(option)
 ----
@@ -5115,10 +5114,10 @@ const char *value = weechat_config_string (option);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.config_string(option)
 
-# example
+# 例
 option = weechat.config_get("plugin.section.option")
 value = weechat.config_string(option)
 ----
@@ -5154,10 +5153,10 @@ const char *value = weechat_config_string_default (option);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.config_string_default(option)
 
-# example
+# 例
 option = weechat.config_get("plugin.section.option")
 value = weechat.config_string_default(option)
 ----
@@ -5193,10 +5192,10 @@ const char *color = weechat_config_color (option);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.config_color(option)
 
-# example
+# 例
 option = weechat.config_get("plugin.section.option")
 value = weechat.config_color(option)
 ----
@@ -5232,10 +5231,10 @@ const char *color = weechat_config_color_default (option);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.config_color_default(option)
 
-# example
+# 例
 option = weechat.config_get("plugin.section.option")
 value = weechat.config_color_default(option)
 ----
@@ -5278,10 +5277,10 @@ my_section_write_cb (void *data, struct t_config_file *config_file,
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.config_write_option(config_file, option)
 
-# example
+# 例
 def my_section_write_cb(data, config_file, section_name):
     weechat.config_write_line(config_file, "my_section", "")
     weechat.config_write_option(config_file, option)
@@ -5330,10 +5329,10 @@ my_section_write_cb (void *data, struct t_config_file *config_file,
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.config_write_line(config_file, option_name, value)
 
-# example
+# 例
 def my_section_write_cb(data, config_file, section_name):
     weechat.config_write_line(config_file, "my_section", "")
     weechat.config_write_line(config_file, "option", "value")
@@ -5383,10 +5382,10 @@ switch (weechat_config_write (config_file))
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 rc = weechat.config_write(config_file)
 
-# example
+# 例
 rc = weechat.config_write(config_file)
 if rc == weechat.WEECHAT_CONFIG_WRITE_OK:
     # ...
@@ -5439,10 +5438,10 @@ switch (weechat_config_read (config_file))
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 rc = weechat.config_read(config_file)
 
-# example
+# 例
 rc = weechat.config_read(config_file)
 if rc == weechat.WEECHAT_CONFIG_READ_OK:
     # ...
@@ -5495,10 +5494,10 @@ switch (weechat_config_reload (config_file))
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 rc = weechat.config_reload(config_file)
 
-# example
+# 例
 rc = weechat.config_reload(config_file)
 if rc == weechat.WEECHAT_CONFIG_READ_OK:
     # ...
@@ -5534,10 +5533,10 @@ weechat_config_option_free (option);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.config_option_free(option)
 
-# example
+# 例
 weechat.config_option_free(option)
 ----
 
@@ -5567,10 +5566,10 @@ weechat_config_section_free_options (section);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.config_section_free_options(section)
 
-# example
+# 例
 weechat.config_section_free_options(section)
 ----
 
@@ -5600,10 +5599,10 @@ weechat_config_section_free (section);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.config_section_free(section)
 
-# example
+# 例
 weechat.config_section_free(section)
 ----
 
@@ -5633,10 +5632,10 @@ weechat_config_free (config_file);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.config_free(config_file)
 
-# example
+# 例
 weechat.config_free(config_file)
 ----
 
@@ -5670,10 +5669,10 @@ struct t_config_option *option = weechat_config_get ("weechat.look.item_time_for
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 option = weechat.config_get(option_name)
 
-# example
+# 例
 option = weechat.config_get("weechat.look.item_time_format")
 ----
 
@@ -5710,10 +5709,10 @@ char *value = weechat_config_get_plugin ("option");
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.config_get_plugin(option_name)
 
-# example
+# 例
 value = weechat.config_get_plugin("option")
 ----
 
@@ -5755,10 +5754,10 @@ else
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.config_is_set_plugin(option_name)
 
-# example
+# 例
 if weechat.config_is_set_plugin("option"):
     # option is set
     # ...
@@ -5816,10 +5815,10 @@ switch (weechat_config_set_plugin ("option", "test_value"))
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 rc = weechat.config_set_plugin(option_name, value)
 
-# example
+# 例
 rc = weechat.config_set_plugin("option", "test_value")
 if rc == weechat.WEECHAT_CONFIG_OPTION_SET_OK_CHANGED:
     # ...
@@ -5866,10 +5865,10 @@ weechat_config_set_desc_plugin ("option", "description of option");
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.config_set_desc_plugin(option_name, description)
 
-# example
+# 例
 version = weechat.info_get("version_number", "") or 0
 if int(version) >= 0x00030500:
     weechat.config_set_desc_plugin("option", "description of option")
@@ -5923,10 +5922,10 @@ switch (weechat_config_unset_plugin ("option"))
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 rc = weechat.config_unset_plugin(option_name)
 
-# example
+# 例
 rc = weechat.config_unset_plugin("option")
 if rc == weechat.WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET:
     # ...
@@ -5997,10 +5996,10 @@ if (keys)
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 num_keys = weechat.key_bind(context, keys)
 
-# example
+# 例
 keys = { "@chat(python.test):button1": "hsignal:test_mouse",
          "@chat(python.test):wheelup": "/mycommand up",
          "@chat(python.test):wheeldown": "/mycommand down" }
@@ -6048,10 +6047,10 @@ weechat_key_unbind ("mouse", "area:chat(plugin.buffer)");
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 num_keys = weechat.key_unbind(context, key)
 
-# examples
+# 例s
 
 # remove a single key
 weechat.key_unbind("mouse", "@chat(plugin.buffer):button1")
@@ -6111,10 +6110,10 @@ weechat_printf (NULL, "%sThis is an error...", weechat_prefix ("error"));
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.prefix(prefix)
 
-# example
+# 例
 weechat.prnt("", "%sThis is an error..." % weechat.prefix("error"))
 ----
 
@@ -6190,10 +6189,10 @@ weechat_printf (NULL, "Color: %sblue %sdefault color %syellow on red",
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.color(color_name)
 
-# example
+# 例
 weechat.prnt("", "Color: %sblue %sdefault color %syellow on red"
     % (weechat.color("blue"), weechat.color("chat"), weechat.color("yellow,red")))
 ----
@@ -6241,10 +6240,10 @@ weechat_printf (buffer, "\t\t"); /* empty line (without time) */
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.prnt(buffer, message)
 
-# example
+# 例
 weechat.prnt("", "Hello on WeeChat buffer")
 weechat.prnt(buffer, "Hello on this buffer")
 weechat.prnt(buffer, "%sThis is an error!" % weechat.prefix("error"))
@@ -6369,10 +6368,10 @@ weechat_printf_date_tags (NULL, time (NULL) - 120, "notify_message",
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.prnt_date_tags(buffer, date, tags, message)
 
-# example
+# 例
 time = int(time.time())
 weechat.prnt_date_tags("", time - 120, "notify_message",
     "Message 2 minutes ago, with a tag 'notify_message'")
@@ -6410,10 +6409,10 @@ weechat_printf_y (buffer, 2, "My message on third line");
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.prnt_y(buffer, y, message)
 
-# example
+# 例
 weechat.prnt_y("", 2, "My message on third line")
 ----
 
@@ -6446,10 +6445,10 @@ weechat_log_printf ("My message in log file");
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.log_print(message)
 
-# example
+# 例
 weechat.log_print("My message in log file")
 ----
 
@@ -6599,11 +6598,11 @@ struct t_hook *my_command_hook =
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 hook = weechat.hook_command(command, description, args, args_description,
     completion, callback, callback_data)
 
-# example
+# 例
 def my_command_cb(data, buffer, args):
     # ...
     return weechat.WEECHAT_RC_OK
@@ -6679,10 +6678,10 @@ struct t_hook *my_command_run_hook =
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 hook = weechat.hook_command_run(command, callback, callback_data)
 
-# example
+# 例
 def my_command_run_cb(data, buffer, command):
     weechat.prnt("", "You want to complete? I'm eating the completion, ahah!")
     return weechat.WEECHAT_RC_OK_EAT
@@ -6745,10 +6744,10 @@ struct t_hook *my_timer_hook =
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 hook = weechat.hook_timer(interval, align_second, max_calls, callback, callback_data)
 
-# example
+# 例
 def my_timer_cb(data, remaining_calls):
     # ...
     return weechat.WEECHAT_RC_OK
@@ -6814,10 +6813,10 @@ struct t_hook *my_fd_hook = weechat_hook_fd (sock, 1, 0, 0, &my_fd_cb, NULL);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 hook = weechat.hook_fd(fd, flag_read, flag_write, flag_exception, callback, callback_data)
 
-# example
+# 例
 def my_fd_cb(data, fd):
     # ...
     return weechat.WEECHAT_RC_OK
@@ -6946,10 +6945,10 @@ struct t_hook *my_process_hook = weechat_hook_process ("ls", 5000,
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 hook = weechat.hook_process(command, timeout, callback, callback_data)
 
-# example
+# 例
 def my_process_cb(data, command, return_code, out, err):
     if return_code == weechat.WEECHAT_HOOK_PROCESS_ERROR:
         weechat.prnt("", "Error with command '%s'" % command)
@@ -7065,7 +7064,7 @@ my_process_cb (void *data, const char *command, int return_code,
     return WEECHAT_RC_OK;
 }
 
-/* example 1: download URL */
+/* 例 1: URL をダウンロード */
 struct t_hashtable *options = weechat_hashtable_new (8,
                                                      WEECHAT_HASHTABLE_STRING,
                                                      WEECHAT_HASHTABLE_STRING,
@@ -7081,7 +7080,7 @@ if (options)
     weechat_hashtable_free (options);
 }
 
-/* example 2: execute a notify program with a message from someone */
+/* 例 2: メッセージを渡して通知プログラムを実行 */
 struct t_hashtable *options_cmd1 = weechat_hashtable_new (8,
                                                           WEECHAT_HASHTABLE_STRING,
                                                           WEECHAT_HASHTABLE_STRING,
@@ -7100,7 +7099,7 @@ if (options_cmd1)
     weechat_hashtable_free (options_cmd1);
 }
 
-/* example 3: call shell to execute a command (command must be SAFE) */
+/* 例 3: コマンドを実行するためにシェルを呼び出す (必ず安全なコマンドを実行してください) */
 struct t_hashtable *options_cmd2 = weechat_hashtable_new (8,
                                                           WEECHAT_HASHTABLE_STRING,
                                                           WEECHAT_HASHTABLE_STRING,
@@ -7122,10 +7121,10 @@ if (options_cmd2)
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 hook = weechat.hook_process_hashtable(command, options, timeout, callback, callback_data)
 
-# example
+# 例
 def my_process_cb(data, command, return_code, out, err):
     if return_code == weechat.WEECHAT_HOOK_PROCESS_ERROR:
         weechat.prnt("", "Error with command '%s'" % command)
@@ -7138,12 +7137,12 @@ def my_process_cb(data, command, return_code, out, err):
         weechat.prnt("", "stderr: %s" % err)
     return weechat.WEECHAT_RC_OK
 
-# example 1: download URL
+# 例 1: URL をダウンロード
 hook1 = weechat.hook_process_hashtable("url:http://www.weechat.org/",
                                        { "file_out": "/tmp/weechat.org.html" },
                                        20000, "my_process_cb", "")
 
-# example 2: execute a notify program with a message from someone
+# 例 2: メッセージを渡して通知プログラムを実行
 hook2 = weechat.hook_process_hashtable("my-notify-command",
                                        { "arg1": "-from",
                                          "arg2": nick,
@@ -7151,7 +7150,7 @@ hook2 = weechat.hook_process_hashtable("my-notify-command",
                                          "arg4": message }, # untrusted argument
                                        20000, "my_process_cb", "")
 
-# example 3: call shell to execute a command (command must be SAFE)
+# 例 3: コマンドを実行するためにシェルを呼び出す (必ず安全なコマンドを実行してください)
 hook3 = weechat.hook_process_hashtable("sh",
                                        { "arg1": "-c",
                                          "arg2": "ls -l /tmp | grep something" },
@@ -7294,11 +7293,11 @@ struct t_hook *my_connect_hook = weechat_hook_connect (NULL,
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 hook = weechat.hook_connect(proxy, address, port, ipv6, retry, local_hostname,
     callback, callback_data)
 
-# example
+# 例
 def my_connect_cb(data, status, gnutls_rc, sock, error, ip_address):
     if status == WEECHAT_HOOK_CONNECT_OK:
         # ...
@@ -7408,10 +7407,10 @@ struct t_hook *my_print_hook =
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 hook = weechat.hook_print(buffer, tags, message, strip_colors, callback, callback_data)
 
-# example
+# 例
 def my_print_cb(data, buffer, date, tags, displayed, highlight, prefix, message):
     # ...
     return weechat.WEECHAT_RC_OK
@@ -7908,17 +7907,15 @@ WeeChat とプラグインが送信するシグナルのリスト:
   String: /quit の引数 |
   ユーザがコマンド `/quit` を実行
 
-// TRANSLATION MISSING
 | weechat | signal_sighup +
-  _(WeeChat ≥ 0.4.3)_ |
+  _(WeeChat バージョン 0.4.3 以上で利用可)_ |
   - |
-  Signal SIGHUP received (WeeChat will reload the configuration files)
+  SIGHUP シグナルを受信しました (WeeChat は設定ファイルを再読み込みします)
 
-// TRANSLATION MISSING
 | weechat | signal_sigwinch +
-  _(WeeChat ≥ 0.4.3)_ |
+  _(WeeChat バージョン 0.4.3 以上で利用可)_ |
   - |
-  Signal SIGWINCH received (terminal was resized)
+  SIGWINCH シグナルを受信しました (端末サイズが変更されました)
 
 | weechat | upgrade |
   String: /upgrade に "-quit" 引数が与えられた場合は "quit"、それ以外は NULL |
@@ -8031,10 +8028,10 @@ struct t_hook *my_signal_hook = weechat_hook_signal ("quit",
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 hook = weechat.hook_signal(signal, callback, callback_data)
 
-# example
+# 例
 def my_signal_cb(data, signal, signal_data):
     # ...
     return weechat.WEECHAT_RC_OK
@@ -8073,10 +8070,10 @@ weechat_hook_signal_send ("my_signal", WEECHAT_HOOK_SIGNAL_STRING, my_string);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.hook_signal_send(signal, type_data, signal_data)
 
-# example
+# 例
 weechat.hook_signal_send("my_signal", weechat.WEECHAT_HOOK_SIGNAL_STRING, my_string)
 ----
 
@@ -8120,8 +8117,7 @@ weechat.hook_signal_send("logger_backlog", weechat.WEECHAT_HOOK_SIGNAL_POINTER, 
 . 新しいスクリプトへのリンクをディレクトリ '~/.weechat/xxx/autoload/' に作成
 . 新しいスクリプトを読み込む
 
-// TRANSLATION MISSING
-These signals are used by 'script' plugin to install scripts.
+'script' プラグインはスクリプトをインストールする際にこれらのシグナルを使っています。
 
 引数はインストールするスクリプトのパスを収めた文字列です。
 
@@ -8154,8 +8150,7 @@ weechat.hook_signal_send("python_script_install", WEECHAT_HOOK_SIGNAL_STRING,
 
 リスト文字列に含まれるそれぞれのスクリプトについて、コールバックはスクリプトを再読み込みして削除します。
 
-// TRANSLATION MISSING
-These signals are used by 'script' plugin to remove scripts.
+'script' プラグインはスクリプトを削除する際にこれらのシグナルを使っています。
 
 引数は削除したいスクリプトのコンマ区切りリスト文字列です
 (パスを含まないスクリプトの名前を使います、例えば 'script.py').
@@ -8341,10 +8336,10 @@ struct t_hook *my_hsignal_hook = weechat_hook_hsignal ("test",
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 hook = weechat.hook_hsignal(signal, callback, callback_data)
 
-# example
+# 例
 def my_hsignal_cb(data, signal, hashtable):
     # ...
     return weechat.WEECHAT_RC_OK
@@ -8391,10 +8386,10 @@ if (hashtable)
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.hook_hsignal_send(signal, hashtable)
 
-# example
+# 例
 weechat.hook_hsignal_send("my_hsignal", { "key": "value" })
 ----
 
@@ -8628,10 +8623,10 @@ struct t_hook *my_config_hook = weechat_hook_config ("weechat.look.item_time_for
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 hook = weechat.hook_config(option, callback, callback_data)
 
-# example
+# 例
 def my_config_cb(data, option, value):
     # ...
     return weechat.WEECHAT_RC_OK
@@ -8719,10 +8714,10 @@ struct t_hook *my_completion_hook = weechat_hook_completion ("plugin_item",
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 hook = weechat.hook_completion(completion_item, description, callback, callback_data)
 
-# example
+# 例
 def my_completion_cb(data, completion_item, buffer, completion):
     weechat.hook_completion_list_add(completion, "word1", 0, weechat.WEECHAT_LIST_POS_SORT)
     weechat.hook_completion_list_add(completion, "test_word2", 0, weechat.WEECHAT_LIST_POS_SORT)
@@ -8777,10 +8772,10 @@ my_completion_cb (void *data, const char *completion_item,
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.hook_completion_get_string(completion, property)
 
-# example
+# 例
 def my_completion_cb(data, completion_item, buffer, completion):
     # get arguments of command
     args = weechat.hook_completion_get_string(completion, "args")
@@ -8819,10 +8814,10 @@ C 言語での使用例: <<_weechat_hook_completion,weechat_hook_completion>> �
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.hook_completion_list_add(completion, word, nick_completion, where)
 
-# example: see function hook_completion above
+# 例: 前の hook_completion 関数を参照
 ----
 
 ==== weechat_hook_modifier
@@ -8994,10 +8989,10 @@ struct t_hook *my_modifier_hook = weechat_hook_modifier ("weechat_print",
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 hook = weechat.hook_modifier(modifier, callback, callback_data)
 
-# example
+# 例
 def my_modifier_cb(data, modifier, modifier_data, string):
     return "%s xxx" % string
 
@@ -9039,10 +9034,10 @@ char *new_string = weechat_hook_modifier_exec ("my_modifier",
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.hook_modifier_exec(modifier, modifier_data, string)
 
-# example
+# 例
 weechat.hook_modifier_exec("my_modifier", my_data, my_string)
 ----
 
@@ -9102,10 +9097,10 @@ struct t_hook *my_info_hook = weechat_hook_info ("my_info",
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 hook = weechat.hook_info(info_name, description, args_description, callback, callback_data)
 
-# example
+# 例
 def my_info_cb(data, info_name, arguments):
     return "some_info"
 
@@ -9175,11 +9170,11 @@ struct t_hook *my_info_hook = weechat_hook_info_hashtable ("my_info_hashtable",
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 hook = weechat.hook_info_hashtable(info_name, description, args_description,
                                    output_description, callback, callback_data)
 
-# example
+# 例
 def my_info_hashtable_cb(data, info_name, hashtable):
     return { "test_key": "test_value" }
 
@@ -9257,11 +9252,11 @@ struct t_hook *my_infolist = weechat_hook_infolist ("my_infolist",
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 hook = weechat.hook_infolist(infolist_name, description, pointer_description,
                              args_description, callback, callback_data)
 
-# example
+# 例
 def my_infolist_cb(data, infolist_name, pointer, arguments):
     # build infolist
     # ...
@@ -9451,10 +9446,10 @@ struct t_hook *my_focus = weechat_hook_focus ("buffer_nicklist",
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 hook = weechat.hook_focus(area, callback, callback_data)
 
-# example
+# 例
 def my_focus_nicklist_cb(data, info):
     # build dict
     # ...
@@ -9519,10 +9514,10 @@ weechat_hook_set (my_command_hook, "subplugin", "test");
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.hook_set(hook, property, value)
 
-# example
+# 例
 def my_process_cb(data, command, return_code, out, err):
     # ...
     return weechat.WEECHAT_RC_OK
@@ -9561,10 +9556,10 @@ weechat_unhook (my_hook);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.unhook(hook)
 
-# example
+# 例
 weechat.unhook(my_hook)
 ----
 
@@ -9590,10 +9585,10 @@ weechat_unhook_all ();
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.unhook_all()
 
-# example
+# 例
 weechat.unhook_all()
 ----
 
@@ -9673,11 +9668,11 @@ struct t_gui_buffer *my_buffer = weechat_buffer_new ("my_buffer",
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 buffer = weechat.buffer_new(name, input_callback, input_callback_data,
     close_callback, close_callback_data)
 
-# example
+# 例
 def my_input_cb(data, buffer, input_data):
     weechat.prnt(buffer, "Text: %s" % input_data)
     return weechat.WEECHAT_RC_OK
@@ -9715,10 +9710,10 @@ weechat_printf (weechat_current_buffer (), "Text on current buffer");
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 buffer = weechat.current_buffer()
 
-# example
+# 例
 weechat.prnt(weechat.current_buffer(), "Text on current buffer")
 ----
 
@@ -9756,10 +9751,10 @@ struct t_gui_buffer *my_buffer = weechat_buffer_search ("my_plugin",
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 buffer = weechat.buffer_search(plugin, name)
 
-# example
+# 例
 buffer = weechat.buffer_search("my_plugin", "my_buffer")
 ----
 
@@ -9790,10 +9785,10 @@ struct t_gui_buffer *weechat_buffer = weechat_buffer_search_main ();
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 buffer = weechat.buffer_search_main()
 
-# example
+# 例
 buffer = weechat.buffer_search_main()
 ----
 
@@ -9828,10 +9823,10 @@ if (my_buffer)
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.buffer_clear(buffer)
 
-# example
+# 例
 buffer = weechat.buffer_search("my_plugin", "my_buffer")
 if buffer != "":
     weechat.buffer_clear(buffer)
@@ -9867,10 +9862,10 @@ weechat_buffer_close (my_buffer);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.buffer_close(buffer)
 
-# example
+# 例
 buffer = weechat.buffer_new("my_buffer", "my_input_cb", "", "my_close_cb", "")
 # ...
 weechat.buffer_close(buffer)
@@ -9908,10 +9903,10 @@ weechat_buffer_merge (weechat_current_buffer (),
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.buffer_merge(buffer, target_buffer)
 
-# example
+# 例
 # merge current buffer with WeeChat "core" buffer
 weechat.buffer_merge(weechat.current_buffer(), weechat.buffer_search_main())
 ----
@@ -9945,10 +9940,10 @@ weechat_buffer_unmerge (weechat_current_buffer (), 1);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.buffer_unmerge(buffer, number)
 
-# example
+# 例
 weechat.buffer_unmerge(weechat.current_buffer(), 1)
 ----
 
@@ -10023,10 +10018,10 @@ weechat_printf (NULL, "my buffer number is: %d",
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.buffer_get_integer(buffer, property)
 
-# example
+# 例
 weechat.prnt("", "my buffer number is: %d" % weechat.buffer_get_integer(my_buffer, "number"))
 ----
 
@@ -10081,10 +10076,10 @@ weechat_printf (NULL, "name / short name of buffer are: %s / %s",
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.buffer_get_string(buffer, property)
 
-# example
+# 例
 weechat.prnt("", "name / short name of buffer are: %s / %s"
     % (weechat.buffer_get_string(my_buffer, "name"),
     weechat.buffer_get_string(my_buffer, "short_name")))
@@ -10126,10 +10121,10 @@ weechat_printf (NULL, "plugin pointer of my buffer: %lx",
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.buffer_get_pointer(buffer, property)
 
-# example
+# 例
 weechat.prnt("", "plugin pointer of my buffer: %s" % weechat.buffer_get_pointer(my_buffer, "plugin"))
 ----
 
@@ -10305,10 +10300,10 @@ weechat_buffer_set (my_buffer, "localvar_del_toto", NULL);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.buffer_set(buffer, property, value)
 
-# examples
+# 例s
 
 # disable hotlist (for all buffers)
 weechat.buffer_set("", "hotlist", "-")
@@ -10416,10 +10411,10 @@ char *str = weechat_buffer_string_replace_local_var (my_buffer,
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.buffer_string_replace_local_var(buffer, string)
 
-# example
+# 例
 weechat.buffer_set(my_buffer, "localvar_set_toto", "abc")
 str = weechat.buffer_string_replace_local_var(my_buffer, "test with $toto")
 # str contains "test with abc"
@@ -10468,10 +10463,10 @@ if (buffer)
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 match = weechat.buffer_match_list(buffer, string)
 
-# example
+# 例
 buffer = weechat.buffer_search("irc", "freenode.#weechat")
 if buffer:
     weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "*"))                   # 1
@@ -10511,10 +10506,10 @@ struct t_gui_window *current_window = weechat_current_window ();
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 window = weechat.current_window()
 
-# example
+# 例
 current_window = weechat.current_window()
 ----
 
@@ -10552,10 +10547,10 @@ weechat_printf (NULL,
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 window = weechat.window_search_with_buffer(buffer)
 
-# example
+# 例
 weechat.prnt("", "window displaying core buffer: %s"
     % weechat.window_search_with_buffer(weechat.buffer_search_main()))
 ----
@@ -10612,10 +10607,10 @@ weechat_printf (NULL, "current window is at position (x,y): (%d,%d)",
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.window_get_integer(window, property)
 
-# example
+# 例
 weechat.prnt("", "current window is at position (x,y): (%d,%d)"
     % (weechat.window_get_integer(weechat.current_window(), "win_x"),
     weechat.window_get_integer(weechat.current_window(), "win_y")))
@@ -10681,10 +10676,10 @@ weechat_printf (NULL,
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.window_get_pointer(window, property)
 
-# example
+# 例
 weechat.prnt("", "buffer displayed in current window: %s"
     % weechat.window_get_pointer(weechat.current_window(), "buffer"))
 ----
@@ -10715,10 +10710,10 @@ weechat_window_set_title ("new title here");
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.window_set_title(window, title)
 
-# example
+# 例
 weechat.window_set_title("new title here")
 ----
 
@@ -10785,10 +10780,10 @@ struct t_gui_nick_group *my_group =
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 group = weechat.nicklist_add_group(buffer, parent_group, name, color, visible)
 
-# example
+# 例
 group = weechat.nicklist_add_group(my_buffer, my_parent_group, "test_group",
     "weechat.color.nicklist_group", 1)
 ----
@@ -10829,10 +10824,10 @@ struct t_gui_nick_group *ptr_group = weechat_nicklist_search_group (my_buffer,
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 group = weechat.nicklist_search_group(buffer, from_group, name)
 
-# example
+# 例
 group = weechat.nicklist_search_group(my_buffer, "", "test_group")
 ----
 
@@ -10897,10 +10892,10 @@ struct t_gui_nick *my_nick =
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 nick = weechat.nicklist_add_nick(buffer, group, name, color, prefix, prefix_color, visible)
 
-# example
+# 例
 if nick_away:
     color = "weechat.color.nicklist_away"
 else:
@@ -10944,10 +10939,10 @@ struct t_gui_nick *ptr_nick = weechat_nicklist_search_nick (my_buffer,
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 nick = weechat.nicklist_search_nick(buffer, from_group, name)
 
-# example
+# 例
 nick = weechat.nicklist_search_nick(my_buffer, "", "test_nick")
 ----
 
@@ -10979,10 +10974,10 @@ weechat_nicklist_remove_group (my_buffer, my_group);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.nicklist_remove_group(buffer, group)
 
-# example
+# 例
 weechat.nicklist_remove_group(my_buffer, my_group)
 ----
 
@@ -11014,10 +11009,10 @@ weechat_nicklist_remove_nick (my_buffer, my_nick);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.nicklist_remove_nick(buffer, nick)
 
-# example
+# 例
 weechat.nicklist_remove_nick(my_buffer, my_nick)
 ----
 
@@ -11047,10 +11042,10 @@ weechat_nicklist_remove_all (my_buffer);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.nicklist_remove_all(buffer)
 
-# example
+# 例
 weechat.nicklist_remove_all(my_buffer)
 ----
 
@@ -11142,10 +11137,10 @@ int visible = weechat_nicklist_group_get_integer (buffer, group, "visible");
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.nicklist_group_get_integer(buffer, group, property)
 
-# example
+# 例
 visible = weechat.nicklist_group_get_integer(buffer, group, "visible")
 ----
 
@@ -11187,10 +11182,10 @@ const char *color = weechat_nicklist_group_get_string (buffer, group, "color");
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.nicklist_group_get_string(buffer, group, property)
 
-# example
+# 例
 color = weechat.nicklist_group_get_string(buffer, group, "color")
 ----
 
@@ -11231,10 +11226,10 @@ struct t_gui_nick_group *parent = weechat_nicklist_group_get_pointer (buffer, gr
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.nicklist_group_get_pointer(buffer, group, property)
 
-# example
+# 例
 parent = weechat.nicklist_group_get_pointer(buffer, group, "parent")
 ----
 
@@ -11293,10 +11288,10 @@ weechat_nicklist_group_set (buffer, group, "visible", "0");
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.nicklist_group_set(buffer, group, property, value)
 
-# examples
+# 例s
 
 # change group color to "bar_fg"
 weechat.nicklist_group_set(buffer, group, "color", "bar_fg")
@@ -11345,10 +11340,10 @@ int visible = weechat_nicklist_nick_get_integer (buffer, nick, "visible");
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.nicklist_nick_get_integer(buffer, nick, property)
 
-# example
+# 例
 visible = weechat.nicklist_nick_get_integer(buffer, nick, "visible")
 ----
 
@@ -11392,10 +11387,10 @@ const char *color = weechat_nicklist_nick_get_string (buffer, nick, "color");
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.nicklist_nick_get_string(buffer, nick, property)
 
-# example
+# 例
 color = weechat.nicklist_nick_get_string(buffer, nick, "color")
 ----
 
@@ -11436,10 +11431,10 @@ struct t_gui_nick_group *group = weechat_nicklist_nick_get_pointer (buffer, nick
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.nicklist_nick_get_pointer(buffer, nick, property)
 
-# example
+# 例
 group = weechat.nicklist_nick_get_pointer(buffer, nick, "group")
 ----
 
@@ -11508,10 +11503,10 @@ weechat_nicklist_nick_set (buffer, nick, "visible", "0");
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.nicklist_nick_set(buffer, nick, property, value)
 
-# examples
+# 例s
 
 # change nick color to cyan
 weechat.nicklist_nick_set(buffer, nick, "color", "cyan")
@@ -11561,10 +11556,10 @@ struct t_gui_bar_item *bar_item = weechat_bar_item_search ("myitem");
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 bar_item = weechat.bar_item_search(name)
 
-# example
+# 例
 bar_item = weechat.bar_item_search("myitem")
 ----
 
@@ -11638,16 +11633,16 @@ struct t_gui_bar_item *my_item = weechat_bar_item_new ("myitem",
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 bar_item = weechat.bar_item_new(name, build_callback, build_callback_data)
 
-# example (callback without "buffer" and "extra_info")
+# 例 (コールバックに "buffer" と "extra_info" を除いた引数を渡す)
 def my_build_callback(data, item, window):
     return "my content"
 
 bar_item = weechat.bar_item_new("myitem", "my_build_callback", "")
 
-# example (callback with all arguments, for WeeChat ≥ 0.4.2)
+# 例 (コールバックに全ての引数を渡す、WeeChat バージョン 0.4.2 以上で利用可)
 def my_build_callback2(data, item, window, buffer, extra_info):
     return "my content"
 
@@ -11680,10 +11675,10 @@ weechat_bar_item_update ("myitem");
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.bar_item_update(name)
 
-# example
+# 例
 weechat.bar_item_update("myitem")
 ----
 
@@ -11713,10 +11708,10 @@ weechat_bar_item_remove (&my_item);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.bar_item_remove(item)
 
-# example
+# 例
 weechat.bar_item_remove(myitem)
 ----
 
@@ -11750,10 +11745,10 @@ struct t_gui_bar *bar = weechat_bar_search ("mybar");
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 bar = weechat.bar_search(name)
 
-# example
+# 例
 bar = weechat.bar_search("mybar")
 ----
 
@@ -11847,12 +11842,12 @@ struct t_gui_bar *my_bar = weechat_bar_new ("mybar",
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 bar = weechat.bar_new(name, hidden, priority, type, condition, position,
     filling_top_bottom, filling_left_right, size, size_max,
     color_fg, color_delim, color_bg, separator, items)
 
-# example
+# 例
 bar = weechat.bar_new("mybar", "off", "100", "window", "", "top", "horizontal", "vertical",
     "0", "5", "default", "cyan", "blue", "off", "time,buffer_number+buffer_name")
 ----
@@ -11892,10 +11887,10 @@ weechat_bar_set (mybar, "position", "bottom");
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.bar_set(bar, property, value)
 
-# example
+# 例
 weechat.bar_set(my_bar, "position", "bottom")
 ----
 
@@ -11925,10 +11920,10 @@ weechat_bar_update ("mybar");
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.bar_update(name)
 
-# example
+# 例
 weechat.bar_update("mybar")
 ----
 
@@ -11958,10 +11953,10 @@ weechat_bar_remove (mybar);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.bar_remove(bar)
 
-# example
+# 例
 weechat.bar_remove(my_bar)
 ----
 
@@ -12000,10 +11995,10 @@ weechat_command (weechat_buffer_search ("irc", "freenode.#weechat"),
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.command(buffer, command)
 
-# example
+# 例
 weechat.command(weechat.buffer_search("irc", "freenode.#weechat"), "/whois FlashCode")
 ----
 
@@ -12157,10 +12152,10 @@ weechat_printf (NULL, "WeeChat home is: %s",
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.info_get(info_name, arguments)
 
-# example
+# 例
 weechat.prnt("", "Current WeeChat version is: %s (compiled on %s)"
     % (weechat.info_get("version", ""), weechat.info_get("date", ""))
 weechat.prnt("", "WeeChat home is: %s" % weechat.info_get("weechat_dir", ""))
@@ -12228,10 +12223,10 @@ if (hashtable_in)
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 dict = weechat.info_get_hashtable(info_name, dict_in)
 
-# example
+# 例
 dict_in = { "message": ":nick!user@host PRIVMSG #weechat :message here" }
 weechat.prnt("", "message parsed: %s"
              % weechat.info_get_hashtable("irc_message_parse", dict_in))
@@ -12280,10 +12275,10 @@ struct t_infolist *infolist = weechat_infolist_new ();
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 infolist = weechat.infolist_new()
 
-# example
+# 例
 infolist = weechat.infolist_new()
 ----
 
@@ -12317,10 +12312,10 @@ struct t_infolist_item *item = weechat_infolist_new_item (infolist);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 item = weechat.infolist_new_item(infolist)
 
-# example
+# 例
 item = weechat.infolist_new_item(infolist)
 ----
 
@@ -12360,10 +12355,10 @@ struct t_infolist_var *var = weechat_infolist_new_var_integer (item,
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 var = weechat.infolist_new_var_integer(item, name, value)
 
-# example
+# 例
 var = weechat.infolist_new_var_integer(item, "my_integer", 123)
 ----
 
@@ -12403,10 +12398,10 @@ struct t_infolist_var *var = weechat_infolist_new_var_string (item,
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 var = weechat.infolist_new_var_string(item, name, value)
 
-# example
+# 例
 var = weechat.infolist_new_var_string(item, "my_string", "value")
 ----
 
@@ -12446,10 +12441,10 @@ struct t_infolist_var *var = weechat_infolist_new_var_pointer (item,
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 var = weechat.infolist_new_var_pointer(item, name, pointer)
 
-# example
+# 例
 var = weechat.infolist_new_var_pointer(item, "my_pointer", pointer)
 ----
 
@@ -12529,10 +12524,10 @@ struct t_infolist_var *var = weechat_infolist_new_var_time (item,
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 var = weechat.infolist_new_var_time(item, name, time)
 
-# example
+# 例
 var = weechat.infolist_new_var_time(item, "my_time", int(time.time()))
 ----
 
@@ -12583,10 +12578,10 @@ struct t_infolist *infolist = weechat_infolist_get ("irc_server", NULL, NULL);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 infolist = weechat.infolist_get(infolist_name, pointer, arguments)
 
-# example
+# 例
 infolist = weechat.infolist_get("irc_server", "", "")
 ----
 
@@ -12628,10 +12623,10 @@ else
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 rc = weechat.infolist_next(infolist)
 
-# example
+# 例
 rc = weechat.infolist_next(infolist)
 if rc:
     # read variables in item...
@@ -12678,10 +12673,10 @@ else
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 rc = weechat.infolist_prev(infolist)
 
-# example
+# 例
 rc = weechat.infolist_prev(infolist)
 if rc:
     # read variables in item...
@@ -12715,10 +12710,10 @@ weechat_infolist_reset_item_cursor (infolist);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.infolist_reset_item_cursor(infolist)
 
-# example
+# 例
 weechat.infolist_reset_item_cursor(infolist)
 ----
 
@@ -12726,8 +12721,7 @@ weechat.infolist_reset_item_cursor(infolist)
 
 _WeeChat バージョン 0.4.3 以上で利用可。_
 
-// TRANSLATION MISSING
-Search a variable in the current infolist item.
+現在のインフォリスト要素から変数を検索。
 
 プロトタイプ:
 
@@ -12744,32 +12738,29 @@ struct t_infolist_var *weechat_infolist_search_var (struct t_infolist *infolist,
 
 戻り値:
 
-// TRANSLATION MISSING
-* pointer to variable found, NULL if the variable was not found
+* 見つかった変数へのポインタ、見つからない場合は NULL
 
 C 言語での使用例:
 
-// TRANSLATION MISSING
 [source,C]
 ----
 if (weechat_infolist_search_var (infolist, "name"))
 {
-    /* variable "name" exists */
+    /* 変数 "name" が存在する場合 */
     /* ... */
 }
 ----
 
 スクリプト (Python) での使用例:
 
-// TRANSLATION MISSING
 [source,python]
 ----
-# prototype
+# プロトタイプ
 var = weechat.infolist_search_var(infolist, name)
 
-# example
+# 例
 if weechat.infolist_search_var(infolist, "name"):
-    # variable "name" exists
+    # 変数 "name" が存在する場合
     # ...
 ----
 
@@ -12807,10 +12798,10 @@ const char *fields = weechat_infolist_fields (infolist);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 fields = weechat.infolist_fields(infolist)
 
-# example
+# 例
 fields = weechat.infolist_fields(infolist)
 # fields contains something like:
 # "i:my_integer,s:my_string,p:my_pointer,b:my_buffer,t:my_time"
@@ -12848,10 +12839,10 @@ weechat_printf (NULL, "integer = %d",
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.infolist_integer(infolist, var)
 
-# example
+# 例
 weechat.prnt("", "integer = %d" % weechat.infolist_integer(infolist, "my_integer"))
 ----
 
@@ -12887,10 +12878,10 @@ weechat_printf (NULL, "string = %s",
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.infolist_string(infolist, var)
 
-# example
+# 例
 weechat.prnt("", "string = %s" % weechat.infolist_string(infolist, "my_string"))
 ----
 
@@ -12926,10 +12917,10 @@ weechat_printf (NULL, "pointer = 0x%lx",
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.infolist_pointer(infolist, var)
 
-# example
+# 例
 weechat.prnt("", "pointer = 0x%s" % weechat.infolist_pointer(infolist, "my_pointer"))
 ----
 
@@ -13000,10 +12991,10 @@ weechat_printf (NULL, "time = %ld",
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.infolist_time(infolist, var)
 
-# example
+# 例
 weechat.prnt("", "time = %ld" % weechat.infolist_time(infolist, "my_time"))
 ----
 
@@ -13033,10 +13024,10 @@ weechat_infolist_free (infolist);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.infolist_free(infolist)
 
-# example
+# 例
 weechat.infolist_free(infolist)
 ----
 
@@ -13300,10 +13291,10 @@ struct t_hdata *hdata = weechat_hdata_get ("irc_server");
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 hdata = weechat.hdata_get(hdata_name)
 
-# example
+# 例
 hdata = weechat.hdata_get("irc_server")
 ----
 
@@ -13340,10 +13331,10 @@ int offset = weechat_hdata_get_var_offset (hdata, "name");
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 offset = weechat.hdata_get_var_offset(hdata, name)
 
-# example
+# 例
 offset = weechat.hdata_get_var_offset(hdata, "name")
 ----
 
@@ -13445,10 +13436,10 @@ weechat_printf (NULL, "type = %s", weechat_hdata_get_var_type_string (hdata, "na
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 type = weechat.hdata_get_var_type_string(hdata, name)
 
-# example
+# 例
 weechat.prnt("", "type = %s" % weechat.hdata_get_var_type_string("name"))
 ----
 
@@ -13486,10 +13477,10 @@ int array_size = weechat_hdata_get_var_array_size (hdata, pointer, "name");
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 array_size = weechat.hdata_get_var_array_size(hdata, pointer, name)
 
-# example
+# 例
 array_size = weechat.hdata_get_var_array_size(hdata, pointer, "name")
 ----
 
@@ -13529,10 +13520,10 @@ const char *array_size = weechat_hdata_get_var_array_size_string (hdata, pointer
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 array_size = weechat.hdata_get_var_array_size_string(hdata, pointer, name)
 
-# example
+# 例
 array_size = weechat.hdata_get_var_array_size_string(hdata, pointer, "name")
 ----
 
@@ -13569,10 +13560,10 @@ weechat_printf (NULL, "hdata = %s", weechat_hdata_get_var_hdata (hdata, "name"))
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 hdata_name = weechat.hdata_get_var_hdata(hdata, name)
 
-# example
+# 例
 weechat.prnt("", "hdata = %s" % weechat.hdata_get_var_hdata(hdata, "name"))
 ----
 
@@ -13681,10 +13672,10 @@ struct t_gui_buffer *buffers = weechat_hdata_get_list (hdata, "gui_buffers");
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 list = weechat.hdata_get_list(hdata, name)
 
-# example
+# 例
 hdata = weechat.hdata_get("buffer")
 buffers = weechat.hdata_get_list(hdata, "gui_buffers")
 ----
@@ -13734,10 +13725,10 @@ else
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 rc = weechat.hdata_check_pointer(hdata, list, pointer)
 
-# example
+# 例
 hdata = weechat.hdata_get("buffer")
 if weechat.hdata_check_pointer(hdata, weechat.hdata_get_list(hdata, "gui_buffers"), ptr_buffer):
     # valid pointer
@@ -13790,10 +13781,10 @@ if (buffer)
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 pointer = weechat.hdata_move(hdata, pointer, count)
 
-# example
+# 例
 hdata = weechat.hdata_get("buffer")
 buffer = weechat.buffer_search_main()
 
@@ -13852,10 +13843,10 @@ if (server)
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 pointer = weechat.hdata_search(hdata, pointer, search, count)
 
-# example
+# 例
 hdata = weechat.hdata_get("irc_server")
 servers = weechat.hdata_get_list(hdata, "irc_servers")
 
@@ -13900,10 +13891,10 @@ weechat_printf (NULL, "letter = %c", weechat_hdata_char (hdata, pointer, "letter
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.hdata_char(hdata, pointer, name)
 
-# example
+# 例
 weechat.prnt("", "letter = %c" % weechat.hdata_char(hdata, pointer, "letter"))
 ----
 
@@ -13944,10 +13935,10 @@ weechat_printf (NULL, "number = %d", weechat_hdata_integer (hdata, buffer, "numb
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.hdata_integer(hdata, pointer, name)
 
-# example
+# 例
 hdata = weechat.hdata_get("buffer")
 buffer = weechat.buffer_search_main()
 weechat.prnt("", "number = %d" % weechat.hdata_integer(hdata, buffer, "number"))
@@ -13988,10 +13979,10 @@ weechat_printf (NULL, "longvar = %ld", weechat_hdata_long (hdata, pointer, "long
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.hdata_long(hdata, pointer, name)
 
-# example
+# 例
 weechat.prnt("", "longvar = %ld" % weechat.hdata_long(hdata, pointer, "longvar"))
 ----
 
@@ -14032,10 +14023,10 @@ weechat_printf (NULL, "name = %s", weechat_hdata_string (hdata, buffer, "name"))
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.hdata_string(hdata, pointer, name)
 
-# example
+# 例
 hdata = weechat.hdata_get("buffer")
 buffer = weechat.buffer_search_main()
 weechat.prnt("", "name = %s" % weechat.hdata_string(hdata, buffer, "name"))
@@ -14078,10 +14069,10 @@ weechat_printf (NULL, "lines = %lx", weechat_hdata_pointer (hdata, buffer, "line
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.hdata_pointer(hdata, pointer, name)
 
-# example
+# 例
 hdata = weechat.hdata_get("buffer")
 buffer = weechat.buffer_search_main()
 weechat.prnt("", "lines = %lx" % weechat.hdata_pointer(hdata, buffer, "lines"))
@@ -14140,10 +14131,10 @@ if (ptr)
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.hdata_time(hdata, pointer, name)
 
-# example
+# 例
 buf = weechat.buffer_search_main()
 ptr = weechat.hdata_pointer(weechat.hdata_get("buffer"), buf, "lines")
 if ptr:
@@ -14194,10 +14185,10 @@ weechat_printf (NULL, "%d local variables in core buffer",
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 hashtable = weechat.hdata_hashtable(hdata, pointer, name)
 
-# example
+# 例
 hdata = weechat.hdata_get("buffer")
 buffer = weechat.buffer_search_main()
 hash = weechat.hdata_hashtable(hdata, buffer, "local_variables")
@@ -14282,7 +14273,7 @@ C 言語での使用例:
 
 [source,C]
 ----
-/* subtract one hour on last message displayed in current buffer */
+/* 現在のバッファに表示されている最後のメッセージの時間を 1 時間前にする */
 
 struct t_gui_lines *own_lines;
 struct t_gui_line *line;
@@ -14319,10 +14310,10 @@ if (own_lines)
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 count = weechat.hdata_update(hdata, pointer, hashtable)
 
-# example: subtract one hour on last message displayed in current buffer
+# 例: 現在のバッファに表示されている最後のメッセージの時間を 1 時間前にする
 own_lines = weechat.hdata_pointer(weechat.hdata_get('buffer'), weechat.current_buffer(), 'own_lines')
 if own_lines:
     line = weechat.hdata_pointer(weechat.hdata_get('lines'), own_lines, 'last_line')
@@ -14382,10 +14373,10 @@ weechat_printf (NULL, "lists in hdata: %s", weechat_hdata_get_string (hdata, "li
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 value = weechat.hdata_get_string(hdata, property)
 
-# example
+# 例
 weechat.prnt("", "variables in hdata: %s" % weechat.hdata_get_string(hdata, "var_keys"))
 weechat.prnt("", "lists in hdata: %s" % weechat.hdata_get_string(hdata, "list_keys"))
 ----
@@ -14429,10 +14420,10 @@ struct t_upgrade_file *upgrade_file = weechat_upgrade_new ("my_file", 1);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 upgrade_file = weechat.upgrade_new(filename, write)
 
-# example
+# 例
 upgrade_file = weechat.upgrade_new("my_file", 1)
 ----
 
@@ -14477,10 +14468,10 @@ else
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 rc = weechat.upgrade_write_object(upgrade_file, object_id, infolist)
 
-# example
+# 例
 weechat.upgrade_write_object(upgrade_file, 1, infolist)
 ----
 
@@ -14539,10 +14530,10 @@ weechat_upgrade_read (upgrade_file, &my_upgrade_read_cb, NULL);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 rc = weechat.upgrade_read(upgrade_file, callback_read, callback_read_data)
 
-# example
+# 例
 def my_upgrade_read_cb(upgrade_file, object_id, infolist):
     # read variables...
     return weechat.WEECHAT_RC_OK
@@ -14576,9 +14567,9 @@ weechat_upgrade_close (upgrade_file);
 
 [source,python]
 ----
-# prototype
+# プロトタイプ
 weechat.upgrade_close(upgrade_file)
 
-# example
+# 例
 weechat.upgrade_close(upgrade_file)
 ----

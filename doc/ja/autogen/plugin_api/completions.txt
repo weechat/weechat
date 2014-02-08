@@ -116,7 +116,7 @@
 
 | weechat | plugins_commands | プラグインの定義するコマンド
 
-| weechat | plugins_installed | names of plugins installed
+| weechat | plugins_installed | インストールされたプラグインの名前
 
 | weechat | plugins_names | プラグイン名
 

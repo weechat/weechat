@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-29 14:07+0100\n"
-"PO-Revision-Date: 2014-01-29 14:13+0100\n"
+"POT-Creation-Date: 2014-02-08 15:08+0100\n"
+"PO-Revision-Date: 2014-01-30 11:25+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
 "Language: ja\n"
@@ -198,9 +198,9 @@ msgstr ""
 msgid "Buffers list:"
 msgstr "バッファリスト:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "  %s[%s%d%s]%s %s%s.%s%s%s (notify: %s)"
-msgstr "  %s[%s%d%s]%s (%s) %s%s%s (通知: %s)"
+msgstr "  %s[%s%d%s]%s %s%s.%s%s%s (通知: %s)"
 
 #, c-format
 msgid "%sError: incorrect buffer number"
@@ -479,21 +479,19 @@ msgid "%d new key added"
 msgid_plural "%d new keys added (context: \"%s\")"
 msgstr[0] "%d 個の新しいキーを追加しました (コンテキスト: \"%s\")"
 
-#, fuzzy
 msgid "Stored layouts:"
 msgstr "保存されたレイアウト:"
 
 msgid " (current layout)"
 msgstr " (現在のレイアウト)"
 
-#, fuzzy
 msgid "No stored layouts"
-msgstr "レイアウトのリスト"
+msgstr "保存されたレイアウトがありません"
 
 #. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows"
-#, fuzzy, c-format
+#, c-format
 msgid "Layout of %s%s%s stored in \"%s\" (current layout: %s)"
-msgstr "%s%s%s のレイアウトを \"%s\" で保存しました (現在のレイアウト: %s)"
+msgstr "%s%s%s のレイアウトを \"%s\" に保存しました (現在のレイアウト: %s)"
 
 msgid "buffers"
 msgstr "バッファ"
@@ -1595,7 +1593,6 @@ msgstr "コマンドライン関数"
 msgid "<action> [<arguments>]"
 msgstr "<action> [<arguments>]"
 
-#, fuzzy
 msgid ""
 "list of actions:\n"
 "  return: simulate key \"enter\"\n"
@@ -1704,7 +1701,8 @@ msgstr ""
 "  switch_active_buffer: 次のマージされたバッファに移動\n"
 "  switch_active_buffer_previous: 一つ前のマージされたバッファに移動\n"
 "  zoom_merged_buffer: マージされたバッファにズーム\n"
-"  insert: コマンドラインにテキストを挿入\n"
+"  insert: コマンドラインにテキストを挿入 (エスケープ文字も可、/help print を"
+"参照)\n"
 "  paste_start: ペーストの開始 (括弧付きペーストモード)\n"
 "  paste_stop: ペーストの終了 (括弧付きペーストモード)\n"
 "\n"
@@ -1846,7 +1844,6 @@ msgstr ""
 "store [<name>] [buffers|windows] || apply [<name>] [buffers|windows] || "
 "leave || del [<name>] [buffers|windows] || rename <name> <new_name>"
 
-#, fuzzy
 msgid ""
 "  store: store current buffers/windows in a layout\n"
 "  apply: apply stored layout\n"
@@ -1993,14 +1990,15 @@ msgstr ""
 "\n"
 "引数無しでは、ロードされたプラグインをリストアップ。"
 
-#, fuzzy
 msgid "display text on a buffer"
-msgstr "リレーバッファ内のテキスト色"
+msgstr "バッファ内にテキストを表示"
 
 msgid ""
 "[-buffer <number>|<name>] [-core] [-escape] [-date <date>] [-tags <tags>] [-"
 "action|-error|-join|-network|-quit] <text> || -stdout|-stderr <text>"
 msgstr ""
+"[-buffer <number>|<name>] [-core] [-escape] [-date <date>] [-tags <tags>] [-"
+"action|-error|-join|-network|-quit] <text> || -stdout|-stderr <text>"
 
 msgid ""
 "-buffer: the buffer where text is displayed (default: current buffer)\n"
@@ -2040,6 +2038,43 @@ msgid ""
 "  send alert (BEL):\n"
 "    /print -stderr \\a"
 msgstr ""
+"-buffer: テキストを表示するバッファ (デフォルト: 現在のバッファ)\n"
+"  -core: \"-buffer core.weechat\" のエイリアス\n"
+"-escape: エスケープ文字を解釈 (例えば \\a、\\07、\\x07)\n"
+"  -date: メッセージの日付、フォーマット:\n"
+"           -n: 今から 'n' 秒前\n"
+"           +n: 今から 'n' 秒後\n"
+"            n: エポックから 'n' 秒目 (man time を参照)\n"
+"           日付/時間 (ISO 8601): yyyy-mm-ddThh:mm:ss、例: "
+"2014-01-19T04:32:55\n"
+"           時間: hh:mm:ss (example: 04:32:55)\n"
+"  -tags: タグのコンマ区切りリスト (よく使うタグのリストは /help filter を参"
+"照)\n"
+"   text: 表示するテキスト (プレフィックスとメッセージは必ず \\t で区切ってく"
+"ださい)\n"
+"-stdout: 標準出力にテキストを表示 (エスケープ文字を解釈)\n"
+"-stderr: 標準エラー出力にテキストを表示 (エスケープ文字を解釈)\n"
+"\n"
+"オプション -action ... -quit をつけた場合、プレフィックスは \"weechat.look."
+"prefix_*\" で定義されているものになります。\n"
+"\n"
+"以下のエスケープ文字を使うことができます:\n"
+"  \\\" \\\\ \\a \\b \\e \\f \\n \\r \\t \\v \\0ooo \\xhh \\uhhhh "
+"\\Uhhhhhhhh\n"
+"\n"
+"例:\n"
+"  コアバッファにハイライトを付けてリマインダを表示:\n"
+"    /print -core -tags notify_highlight Reminder: buy milk\n"
+"  コアバッファにエラーを表示:\n"
+"    /print -core -error Some error here\n"
+"  コアバッファにプレフィックス \"abc\" を付けてメッセージを表示:\n"
+"    /print -core abc\tThe message\n"
+"  チャンネル #weechat にメッセージを表示:\n"
+"    /print -buffer irc.freenode.#weechat Message on #weechat\n"
+"  雪だるまを表示 (U+2603):\n"
+"    /print -escape \\u2603\n"
+"  警告を送信 (BEL):\n"
+"    /print -stderr \\a"
 
 msgid "manage proxies"
 msgstr "プロキシの管理"
@@ -2671,9 +2706,8 @@ msgstr "設定オプション"
 msgid "names of plugins"
 msgstr "プラグイン名"
 
-#, fuzzy
 msgid "names of plugins installed"
-msgstr "プラグイン名"
+msgstr "インストールされたプラグインの名前"
 
 msgid "commands defined by plugins"
 msgstr "プラグインの定義するコマンド"
@@ -3036,7 +3070,6 @@ msgstr ""
 "に \"(?-i)\" をつければ区別有り)、部分マッチさせるには単語の最初か最後に \"*"
 "\" をつける; 例: \"test,(?-i)*toto*,flash*\""
 
-#, fuzzy
 msgid ""
 "POSIX extended regular expression used to check if a message has highlight "
 "or not, at least one match in string must be surrounded by delimiters (chars "
@@ -3044,10 +3077,10 @@ msgid ""
 "case insensitive (use \"(?-i)\" at beginning to make it case sensitive), "
 "examples: \"flashcode|flashy\", \"(?-i)FlashCode|flashy\""
 msgstr ""
-"メッセージに含まれるハイライト箇所の有無を判断する POSIX 拡張正規表現、1 回以"
-"上マッチすればハイライトされる (英数字、\"-\"、\"_\"、\"|\")、正規表現は大文"
-"字小文字を区別しない (最初に \"(?-i)\" がある場合は区別する)、例: "
-"\"flashcode|flashy\"、\"(?-i)FlashCode|flashy\""
+"メッセージ中のハイライトの有無を判断する POSIX 拡張正規表現、マッチ部分は必ず"
+"区切り文字 (アルファベット、\"-\"、\"_\"、\"|\" 以外の文字) で囲まれていなけ"
+"ればいけない、正規表現は大文字小文字を区別しない (最初に \"(?-i)\" がある場合"
+"は区別する)、例: \"flashcode|flashy\"、\"(?-i)FlashCode|flashy\""
 
 msgid ""
 "comma separated list of tags to highlight; case insensitive comparison; each "
@@ -3345,9 +3378,8 @@ msgstr "リードマーカー行の表示に使われる文字列 (行末まで�
 msgid "save configuration file on exit"
 msgstr "終了時に設定ファイルを保存"
 
-#, fuzzy
 msgid "save layout on exit (buffers, windows, or both)"
-msgstr "終了時にレイアウトを保存 (buffers、windows または both)"
+msgstr "終了時にレイアウトを保存 (バッファ、ウィンドウ、両方)"
 
 msgid "how many lines to scroll by with scroll_up and scroll_down"
 msgstr "scroll_up と scroll_down でスクロールする行数"
@@ -3388,9 +3420,8 @@ msgstr ""
 "が、いくつかのターミナルでは URL 選択の際にバグを生ずる可能性がある); 必ずス"
 "クリーン上に描画した時の文字幅が 1 の文字を指定してください"
 
-#, fuzzy
 msgid "number of spaces used to display tabs in messages"
-msgstr "翻訳メッセージに利用するロケール"
+msgstr "メッセージに含まれるタブ文字を表示する際に使う空白文字の数"
 
 msgid ""
 "time format for dates converted to strings and displayed in messages (see "
@@ -5045,11 +5076,11 @@ msgstr "%s%s: notify は既に存在しています"
 
 #, c-format
 msgid "%sMonitor list is full (%d)"
-msgstr ""
+msgstr "%sこれ以上監視リストに追加できません (%d)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: notification added for %s%s%s"
-msgstr "%s: %s%s の通知を追加"
+msgstr "%s: %s%s%s の通知を追加"
 
 #, c-format
 msgid "%s%s: error adding notification"
@@ -5063,9 +5094,9 @@ msgstr "%s: 全ての通知を削除"
 msgid "%s: no notification in list"
 msgstr "%s: リストに通知がありません"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: notification deleted for %s%s%s"
-msgstr "%s: %s%s の通知を追加"
+msgstr "%s: %s%s%s の通知を削除"
 
 #, c-format
 msgid "%s%s: notification not found"
@@ -6428,7 +6459,7 @@ msgstr "%s%s: 不正なプロパティ文字列、文字列のエラーの位置
 
 #, c-format
 msgid "%s%s: fingerprint must have exactly 40 hexadecimal digits"
-msgstr ""
+msgstr "%s%s: 指紋は必ず 40 桁の 16 進数でなければいけません"
 
 #, c-format
 msgid ""
@@ -6508,6 +6539,9 @@ msgid ""
 "option is set, the other checks on certificates are NOT performed (option "
 "\"ssl_verify\")"
 msgstr ""
+"信頼でき、通信を認めるサーバ証明書の SHA1 指紋 (指紋は必ず空白を含まない 40 "
+"桁の 16 進数です); このオプションを設定した場合、証明書に対する他の妥当性確認"
+"は行われません (オプション \"ssl_verify\")"
 
 msgid "check that the SSL connection is fully trusted"
 msgstr "SSL 接続が完全に信頼できることを確認"
@@ -6745,7 +6779,6 @@ msgstr "ローカルクライアントからの参加メッセージにホスト
 msgid "display host in part/quit messages"
 msgstr "退出/終了 メッセージにホスト名を表示"
 
-#, fuzzy
 msgid ""
 "comma-separated list of messages to display after joining a channel: 329 = "
 "channel creation date, 332 = topic, 333 = nick/date for topic, 353 = names "
@@ -6753,7 +6786,7 @@ msgid ""
 msgstr ""
 "チャンネルに参加した後に表示するメッセージのコンマ区切りリスト: 329 = チャン"
 "ネル作成日、332 = トピック、333 = トピックを作成したニックネームおよび日付、"
-"366 = チャンネル参加者リスト"
+"353 = チャンネル参加者リスト、366 = 参加人数"
 
 msgid "display old topic when channel topic is changed"
 msgstr "チャンネルトピックが変更された場合に、古いトピックを表示"
@@ -6960,14 +6993,13 @@ msgstr ""
 "ようこそ通知に使われ、チャンネルに転送するタグのコンマ区切りリスト、例えば: "
 "\"notify_private\""
 
-#, fuzzy
 msgid ""
 "comma separated list of tags used in messages displayed by notify when a "
 "nick joins or quits server (result of command ison or monitor), for example: "
 "\"notify_message\", \"notify_private\" or \"notify_highlight\""
 msgstr ""
-"あるニックネームが参加またはサーバから切断したときの (ison コマンドの結果)、"
-"notify によって表示されたメッセージに使われたタグのコンマ区切りリスト、例え"
+"あるニックネームが参加またはサーバから切断した際の (ison または monitor コマ"
+"ンドの結果) notify が表示するメッセージで使うタグのコンマ区切りリスト、例え"
 "ば: \"notify_message\"、\"notify_highlight\"、\"notify_private\""
 
 msgid ""
@@ -7422,21 +7454,21 @@ msgstr "全てのサーバの通知リスト:"
 msgid "Notify list is empty on all servers"
 msgstr "全てのサーバの通知リストは空です"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%snotify: %s%s%s%s%s%s%s%s%s is connected"
-msgstr "%s通知: %s%s%s が接続しました"
+msgstr "%s通知: %s%s%s%s%s%s%s%s%s が接続しました"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%snotify: %s%s%s%s%s%s%s%s%s is offline"
-msgstr "%s通知: %s%s%s はオフライン状態"
+msgstr "%s通知: %s%s%s%s%s%s%s%s%s はオフライン状態"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%snotify: %s%s%s%s%s%s%s%s%s has joined"
-msgstr "%s通知: %s%s%s が参加"
+msgstr "%s通知: %s%s%s%s%s%s%s%s%s が参加"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%snotify: %s%s%s%s%s%s%s%s%s has quit"
-msgstr "%s%s%s%s%s%s%s%s%s%s が終了"
+msgstr "%s通知: %s%s%s%s%s%s%s%s%s が終了"
 
 #, c-format
 msgid "%snotify: %s%s%s is now away: \"%s\""
@@ -7953,26 +7985,26 @@ msgstr "%s%s: タイムアウト"
 msgid "%s%s: unable to create socket"
 msgstr "%s%s: ソケットの作成に失敗"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sgnutls: failed to calculate certificate fingerprint"
-msgstr "%sgnutls: 証明書 \"%s\" が読めません"
+msgstr "%sgnutls: 証明書指紋の計算に失敗しました"
 
 #, c-format
 msgid "%sgnutls: connected using %d-bit Diffie-Hellman shared secret exchange"
 msgstr "%sgnutls: %d-bit Diffie-Hellman 共有鍵交換を使って接続しました"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sgnutls: failed to initialize certificate structure"
-msgstr "%sgnutls: ピア証明書は信頼できます"
+msgstr "%sgnutls: 証明書構造の初期化に失敗しました"
 
 #, c-format
 msgid "%sgnutls: receiving %d certificate"
 msgid_plural "%sgnutls: receiving %d certificates"
 msgstr[0] "%sgnutls: %d 個の証明書を受け取りました"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sgnutls: failed to import certificate[%d]"
-msgstr "%sgnutls: 証明書 \"%s\" が読めません"
+msgstr "%sgnutls: 証明書[%d] のインポートに失敗しました"
 
 #, c-format
 msgid "%s - certificate[%d] info:"
@@ -7986,15 +8018,17 @@ msgstr "%sgnutls: 証明書は失効しました"
 msgid "%sgnutls: certificate is not yet activated"
 msgstr "%sgnutls: 証明書はまだ使えません"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sgnutls: certificate fingerprint matches"
-msgstr "%sgnutls: 一通の証明書の送信中"
+msgstr "%sgnutls: 証明書指紋が一致しました"
 
 #, c-format
 msgid ""
 "%sgnutls: certificate fingerprint does NOT match (check value of option irc."
 "server.%s.ssl_fingerprint)"
 msgstr ""
+"%sgnutls: 証明書の指紋が一致しません (オプション irc.server.%s."
+"ssl_fingerprint の値を確認して下さい)"
 
 #, c-format
 msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
@@ -10554,11 +10588,8 @@ msgstr "タイプ"
 msgid "Constants"
 msgstr "定数"
 
-#~ msgid "%s: notification deleted"
-#~ msgstr "%s: 通知を削除"
-
-#~ msgid "%snotify: %s%s%s has quit"
-#~ msgstr "%s通知: %s%s%s が終了"
+#~ msgid "store layout on exit (buffers, windows, or both)"
+#~ msgstr "終了時にレイアウトを保存します (バッファ、ウィンドウ、両方)"
 
 #~ msgid "No layout saved"
 #~ msgstr "レイアウトが保存されていません"

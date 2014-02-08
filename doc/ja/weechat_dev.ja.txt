@@ -69,8 +69,7 @@ WeeChat の主要なリポジトリは 2 つあります:
 |       xfer/      | xfer (IRC DCC ファイル/チャット)
 | doc/             | 文書
 | po/              | 翻訳ファイル (gettext)
-// TRANSLATION MISSING
-| test/            | Tools/files to test WeeChat (like Weercd, an IRC server)
+| test/            | WeeChat をテストするためのツールおよびファイル (Weercd IRC サーバなど)
 | debian/          | Debian パッケージ用
 |===
 
@@ -90,8 +89,7 @@ WeeChat "core" は以下のディレクトリに配置されています:
 | パス/ファイル名               | 説明
 | core/                         | コア関数: エントリポイント、内部構造体
 |    weechat.c                  | エントリポイント、コマンドラインオプション、main 関数、起動
-// TRANSLATION MISSING
-|    wee-backtrace.c            | Display a backtrace after a crash
+|    wee-backtrace.c            | クラッシュした際にバックトレースを表示
 |    wee-command.c              | WeeChat コアコマンド
 |    wee-completion.c           | デフォルト補完
 |    wee-config-file.c          | 設定ファイル管理
@@ -185,8 +183,7 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       irc-bar-item.c              | IRC バー要素
 |       irc-buffer.c                | IRC バッファ
 |       irc-channel.c               | IRC チャンネル
-// TRANSLATION MISSING
-|       irc-color.c                 | IRC colors
+|       irc-color.c                 | IRC 色
 |       irc-command.c               | IRC コマンド
 |       irc-completion.c            | IRC 補完
 |       irc-config.c                | IRC 設定オプション (irc.conf ファイル)
@@ -253,8 +250,7 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       weechat-ruby-api.c          | ruby スクリプト作成 API 関数
 |    script/                        | スクリプトマネージャ
 |       script.c                    | スクリプトマネージャの主要関数
-// TRANSLATION MISSING
-|       script-action.c             | Actions on scripts (load/unload, install/remove, ...)
+|       script-action.c             | スクリプトに対する操作 (ロード/アンロード、インストール/削除、...)
 |       script-buffer.c             | スクリプトマネージャ用のバッファ
 |       script-command.c            | スクリプトマネージャ用のコマンド
 |       script-completion.c         | スクリプトマネージャ用の補完
@@ -271,8 +267,7 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       xfer-command.c              | xfer コマンド
 |       xfer-completion.c           | xfer 補完
 |       xfer-config.c               | xfer 設定オプション (xfer.conf ファイル)
-// TRANSLATION MISSING
-|       xfer-dcc.c                  | DCC file transfer
+|       xfer-dcc.c                  | DCC ファイル転送
 |       xfer-file.c                 | xfer のファイル関数
 |       xfer-info.c                 | xfer の情報/インフォリスト/hdata
 |       xfer-network.c              | xfer のネットワーク関数
@@ -300,8 +295,7 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       weechat_scripting.XX.txt      | スクリプト作成ガイド
 |       weechat_tester.XX.txt         | テスターガイド
 |       weechat_dev.XX.txt            | 開発者リファレンス (この文書)
-// TRANSLATION MISSING
-|       weechat_relay_protocol.XX.txt | リレープロトコル (for remote interfaces)
+|       weechat_relay_protocol.XX.txt | リレープロトコル (リモートインターフェイス用)
 |       cmdline_options.XX.txt        | コマンドラインオプション (man ページとユーザガイドに含まれるファイル)
 |       autogen/                      | docgen.py スクリプトが自動生成するファイル
 |          user/                      | ユーザーガイド用の自動生成ファイル (手作業による編集は*禁止* !)
@@ -326,13 +320,12 @@ WeeChat とプラグインの翻訳は gettext で行います、ファイルは
 
 * ソースコード内で使用する、コメント、変数名、...
   は必ず*英語* で記述してください (他の言語を使わないでください)
-// TRANSLATION MISSING
-* Use a copyright header in each new source file with:
-** short description of file (one line),
-** date,
-** name,
-** e-mail,
-** license.
+* 新しいファイルにはコピーライトヘッダを入れ、以下の情報を含めてください:
+** ファイルの短い説明 (1 行)、
+** 日付、
+** 名前、
+** 電子メールアドレス、
+** ライセンス。
 
 [source,C]
 ----
@@ -563,10 +556,9 @@ http://www.python.org/dev/peps/pep-0008/ を参照
 [[naming_convention_files]]
 ==== ファイル
 
-// TRANSLATION MISSING
-File names are composed by letters and hyphens, with format: 'xxx-yyyyy.[ch]',
-where 'xxx' is directory/component (can be abbreviation) and 'yyyyy' a name for
-the file.
+ファイル名に使えるのは文字とハイフンだけで、フォーマット: 'xxx-yyyyy.[ch]'
+に従ってください。'xxx' はディレクトリおよび構成要素 (略称も可) で、'yyyyy'
+はファイルの名前です。
 
 主要ファイルにはディレクトリと同じ名前を付ける事ができます。例えば
 irc プラグインの 'irc.c' など。
@@ -993,10 +985,9 @@ $ msgcheck.py xx.po
 
 コマンド `/doc` を使って全ての (全てのプログラミング言語について) 自動生成するファイルを作成してください。
 
-// TRANSLATION MISSING
 [IMPORTANT]
-When using command `/doc`, be sure all C plugins (irc, charset, ...) are loaded,
-because files are built using data currently in memory.
+コマンド `/doc` を使う際に、すべての C 言語プラグイン (irc、charset、...)
+がロードされていることを確認して下さい、これはメモリ上にあるデータを使ってファイルを作成するためです。
 
 [[asciidoc]]
 ==== Asciidoc

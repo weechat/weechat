@@ -539,7 +539,7 @@
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
 * [[option_weechat.look.highlight_regex]] *weechat.look.highlight_regex*
-** 説明: `POSIX extended regular expression used to check if a message has highlight or not, at least one match in string must be surrounded by delimiters (chars different from: alphanumeric, "-", "_" and "|"), regular expression is case insensitive (use "(?-i)" at beginning to make it case sensitive), examples: "flashcode|flashy", "(?-i)FlashCode|flashy"`
+** 説明: `メッセージ中のハイライトの有無を判断する POSIX 拡張正規表現、マッチ部分は必ず区切り文字 (アルファベット、"-"、"_"、"|" 以外の文字) で囲まれていなければいけない、正規表現は大文字小文字を区別しない (最初に "(?-i)" がある場合は区別する)、例: "flashcode|flashy"、"(?-i)FlashCode|flashy"`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
@@ -804,7 +804,7 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_weechat.look.save_layout_on_exit]] *weechat.look.save_layout_on_exit*
-** 説明: `save layout on exit (buffers, windows, or both)`
+** 説明: `終了時にレイアウトを保存 (バッファ、ウィンドウ、両方)`
 ** タイプ: 整数
 ** 値: none, buffers, windows, all (デフォルト値: `none`)
 
@@ -839,7 +839,7 @@
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
 * [[option_weechat.look.tab_width]] *weechat.look.tab_width*
-** 説明: `number of spaces used to display tabs in messages`
+** 説明: `メッセージに含まれるタブ文字を表示する際に使う空白文字の数`
 ** タイプ: 整数
 ** 値: 1 .. 64 (デフォルト値: `1`)
 
