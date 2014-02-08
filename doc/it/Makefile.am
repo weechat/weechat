@@ -105,5 +105,5 @@ uninstall-doc:
 # clean
 
 clean-local:
-	-rm -f weechat.1
+	-rm -f weechat.1 weechat.1.it.txt cmdline_options.it.txt
 	-rm -f *.html
