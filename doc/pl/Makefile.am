@@ -21,10 +21,14 @@
 docdir = $(datadir)/doc/$(PACKAGE)
 
 EXTRA_DIST = CMakeLists.txt \
+             weechat.1.pl.txt \
+             cmdline_options.pl.txt \
+             weechat_user.pl.txt \
              weechat_scripting.pl.txt \
              weechat_faq.pl.txt \
              weechat_quickstart.pl.txt \
-             weechat_tester.pl.txt
+             weechat_tester.pl.txt \
+             $(wildcard autogen/user/*.txt)
 
 if MAN
   man_targets = weechat.1
