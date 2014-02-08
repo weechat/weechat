@@ -362,6 +362,7 @@ trigger_callback_modifier_cb (void *data, const char *modifier,
     int no_trigger, length;
 
     no_trigger = 0;
+    buffer = NULL;
 
     /* get trigger pointer, return immediately if not found or trigger running */
     trigger = (struct t_trigger *)data;
