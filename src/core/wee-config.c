@@ -2320,9 +2320,10 @@ config_weechat_init_options ()
     config_look_hotlist_sort = config_file_new_option (
         weechat_config_file, ptr_section,
         "hotlist_sort", "integer",
-        N_("hotlist sort type (group_time_asc (default), "
-           "group_time_desc, group_number_asc, group_number_desc, "
-           "number_asc, number_desc)"),
+        N_("sort of hotlist: group_time_*: group by notify level (highlights "
+           "first) then sort by time, group_number_*: group by notify level "
+           "(highlights first) then sort by number, number_*: sort by number; "
+           "asc = ascending sort, desc = descending sort"),
         "group_time_asc|group_time_desc|group_number_asc|"
         "group_number_desc|number_asc|number_desc",
         0, 0, "group_time_asc", NULL, 0, NULL, NULL, &config_change_hotlist_sort, NULL, NULL, NULL);

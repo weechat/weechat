@@ -599,7 +599,7 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_weechat.look.hotlist_sort]] *weechat.look.hotlist_sort*
-** 説明: `ホットリストのソートタイプ (group_time_asc (デフォルト)、group_time_desc、group_number_asc、group_number_desc、number_asc、number_desc)`
+** 説明: `sort of hotlist: group_time_*: group by notify level (highlights first) then sort by time, group_number_*: group by notify level (highlights first) then sort by number, number_*: sort by number; asc = ascending sort, desc = descending sort`
 ** タイプ: 整数
 ** 値: group_time_asc, group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc (デフォルト値: `group_time_asc`)
 

@@ -599,7 +599,7 @@
 ** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_weechat.look.hotlist_sort]] *weechat.look.hotlist_sort*
-** description: `type de tri pour la liste d'activité (group_time_asc (par défaut), group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc)`
+** description: `type de tri pour la liste d'activité: group_time_*: grouper par niveau de notification (les highlights en premier) puis tri par date, group_number_*: grouper par niveau de notification (les highlights en premier) puis tri par numéro, number_*: tri par numéro; asc = tri ascendant, desc = tri descendant`
 ** type: entier
 ** valeurs: group_time_asc, group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc (valeur par défaut: `group_time_asc`)
 

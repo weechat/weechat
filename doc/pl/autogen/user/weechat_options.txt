@@ -599,7 +599,7 @@
 ** wartości: on, off (domyślna wartość: `on`)
 
 * [[option_weechat.look.hotlist_sort]] *weechat.look.hotlist_sort*
-** opis: `typ sortowania hotlisty (group_time_asc (domyślny), group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc)`
+** opis: `sort of hotlist: group_time_*: group by notify level (highlights first) then sort by time, group_number_*: group by notify level (highlights first) then sort by number, number_*: sort by number; asc = ascending sort, desc = descending sort`
 ** typ: liczba
 ** wartości: group_time_asc, group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc (domyślna wartość: `group_time_asc`)
 

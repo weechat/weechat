@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-01-29 14:07+0100\n"
+"POT-Creation-Date: 2014-02-09 12:39+0100\n"
 "PO-Revision-Date: 2014-01-06 10:17+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2525,11 +2525,11 @@ msgid ""
 msgstr ""
 
 msgid ""
-"hotlist sort type (group_time_asc (default), group_time_desc, "
-"group_number_asc, group_number_desc, number_asc, number_desc)"
+"sort of hotlist: group_time_*: group by notify level (highlights first) then "
+"sort by time, group_number_*: group by notify level (highlights first) then "
+"sort by number, number_*: sort by number; asc = ascending sort, desc = "
+"descending sort"
 msgstr ""
-"тип сортировки хотлиста (group_time_asc (по-умолчанию), group_time_desc, "
-"group_number_asc, group_number_desc, number_asc, number_desc)"
 
 #, fuzzy
 msgid "text displayed at the end of the hotlist"
@@ -9545,6 +9545,13 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#~ msgid ""
+#~ "hotlist sort type (group_time_asc (default), group_time_desc, "
+#~ "group_number_asc, group_number_desc, number_asc, number_desc)"
+#~ msgstr ""
+#~ "тип сортировки хотлиста (group_time_asc (по-умолчанию), group_time_desc, "
+#~ "group_number_asc, group_number_desc, number_asc, number_desc)"
 
 #, fuzzy
 #~ msgid "%s: notification deleted"
