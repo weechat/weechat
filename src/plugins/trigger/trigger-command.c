@@ -766,6 +766,11 @@ trigger_command_init ()
            "\"==\\*(\\S+)\\*==*${color:bold}$1${color:-bold}*== "
            "==_(\\S+)_==_${color:underline}$1${color:-underline}_== "
            "==/(\\S+)/==/${color:italic}$1${color:-italic}/\"\n"
+           "  hide nicklist bar on small terminals:\n"
+           "    /trigger add resize_small signal signal_sigwinch "
+           "\"${info:term_width} < 100\" \"\" \"/bar hide nicklist\"\n"
+           "    /trigger add resize_big signal signal_sigwinch "
+           "\"${info:term_width} >= 100\" \"\" \"/bar show nicklist\"\n"
            "  silently save config each hour:\n"
            "    /trigger add cfgsave timer 3600000;0;0 \"\" \"\" \"/mute /save\""),
         "list|listfull|listdefault"
