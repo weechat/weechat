@@ -31,6 +31,8 @@ extern struct t_config_option *trigger_config_color_replace;
 extern struct t_config_option *trigger_config_color_trigger;
 extern struct t_config_option *trigger_config_color_trigger_disabled;
 
+extern char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS];
+
 extern struct t_config_option *trigger_config_create_option (const char *trigger_name,
                                                              int index_option,
                                                              const char *value);

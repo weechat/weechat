@@ -30,16 +30,122 @@
 
 
 /*
+ * Displays one trigger.
+ */
+
+void
+trigger_command_display_trigger (const char *name, int enabled, const char *hook,
+                                 const char *arguments, const char *conditions,
+                                 int regex_count, struct t_trigger_regex *regex,
+                                 int commands_count, char **commands,
+                                 int return_code, int full)
+{
+    char spaces[256];
+    int i, length;
+
+    if (full)
+    {
+        weechat_printf_tags (
+            NULL, "no_trigger",
+            "  %s%s%s: %s%s(%s%s%s)",
+            (enabled) ?
+            weechat_color (weechat_config_string (trigger_config_color_trigger)) :
+            weechat_color (weechat_config_string (trigger_config_color_trigger_disabled)),
+            name,
+            weechat_color ("reset"),
+            hook,
+            weechat_color ("chat_delimiters"),
+            weechat_color ("reset"),
+            arguments,
+            weechat_color ("chat_delimiters"));
+        length = weechat_strlen_screen (name) + 3;
+        if (length >= (int)sizeof (spaces))
+            length = sizeof (spaces) - 1;
+        memset (spaces, ' ', length);
+        spaces[length] = '\0';
+        if (conditions && conditions[0])
+        {
+            weechat_printf_tags (NULL, "no_trigger",
+                                 "%s =? %s\"%s%s%s\"",
+                                 spaces,
+                                 weechat_color ("chat_delimiters"),
+                                 weechat_color ("reset"),
+                                 conditions,
+                                 weechat_color ("chat_delimiters"));
+        }
+        for (i = 0; i < regex_count; i++)
+        {
+            weechat_printf_tags (NULL, "no_trigger",
+                                 "%s %d~ %s\"%s%s%s\" --> "
+                                 "\"%s%s%s\"%s%s%s%s",
+                                 spaces,
+                                 i + 1,
+                                 weechat_color ("chat_delimiters"),
+                                 weechat_color (weechat_config_string (trigger_config_color_regex)),
+                                 regex[i].str_regex,
+                                 weechat_color ("chat_delimiters"),
+                                 weechat_color (weechat_config_string (trigger_config_color_replace)),
+                                 regex[i].replace,
+                                 weechat_color ("chat_delimiters"),
+                                 weechat_color ("reset"),
+                                 (regex[i].variable) ? " (" : "",
+                                 (regex[i].variable) ? regex[i].variable : "",
+                                 (regex[i].variable) ? ")" : "");
+        }
+        if (commands)
+        {
+            for (i = 0; commands[i]; i++)
+            {
+                weechat_printf_tags (NULL, "no_trigger",
+                                     "%s %d> %s\"%s%s%s\"",
+                                     spaces,
+                                     i + 1,
+                                     weechat_color ("chat_delimiters"),
+                                     weechat_color ("reset"),
+                                     commands[i],
+                                     weechat_color ("chat_delimiters"));
+            }
+        }
+        if ((return_code >= 0) && (return_code != TRIGGER_RC_OK))
+        {
+            weechat_printf_tags (NULL, "no_trigger",
+                                 "%s $: %s",
+                                 spaces,
+                                 trigger_return_code_string[return_code]);
+        }
+    }
+    else
+    {
+        weechat_printf_tags (
+            NULL, "no_trigger",
+            "  %s%s%s: %s%s(%s%s%s)%s  (%s%s%d regex, %d %s)",
+            (enabled) ?
+            weechat_color (weechat_config_string (trigger_config_color_trigger)) :
+            weechat_color (weechat_config_string (trigger_config_color_trigger_disabled)),
+            name,
+            weechat_color ("reset"),
+            hook,
+            weechat_color ("chat_delimiters"),
+            weechat_color ("reset"),
+            arguments,
+            weechat_color ("chat_delimiters"),
+            weechat_color ("reset"),
+            (conditions && conditions[0]) ? _("conditions") : "",
+            (conditions && conditions[0]) ? ", " : "",
+            regex_count,
+            commands_count,
+            NG_("command", "commands", commands_count));
+    }
+}
+
+/*
  * Displays a list of triggers.
  */
 
 void
-trigger_command_list (int full)
+trigger_command_list (const char *message, int full)
 {
     struct t_trigger *ptr_trigger;
-    const char *option;
-    char spaces[256];
-    int i, length, rc;
 
     if (!triggers)
     {
@@ -48,109 +154,71 @@ trigger_command_list (int full)
     }
 
     weechat_printf_tags (NULL, "no_trigger", "");
-    weechat_printf_tags (NULL, "no_trigger", _("List of triggers:"));
+    weechat_printf_tags (NULL, "no_trigger", message);
 
     for (ptr_trigger = triggers; ptr_trigger;
          ptr_trigger = ptr_trigger->next_trigger)
     {
-        if (full)
-        {
-            weechat_printf_tags (
-                NULL, "no_trigger",
-                "  %s%s%s: %s%s(%s%s%s)%s",
-                weechat_config_boolean (ptr_trigger->options[TRIGGER_OPTION_ENABLED]) ?
-                weechat_color (weechat_config_string (trigger_config_color_trigger)) :
-                weechat_color (weechat_config_string (trigger_config_color_trigger_disabled)),
-                ptr_trigger->name,
-                weechat_color ("reset"),
-                weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_HOOK]),
-                weechat_color ("chat_delimiters"),
-                weechat_color ("reset"),
-                weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_ARGUMENTS]),
-                weechat_color ("chat_delimiters"),
-                weechat_color ("reset"));
-            length = weechat_strlen_screen (ptr_trigger->name) + 3;
-            if (length >= (int)sizeof (spaces))
-                length = sizeof (spaces) - 1;
-            memset (spaces, ' ', length);
-            spaces[length] = '\0';
-            option = weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_CONDITIONS]);
-            if (option && option[0])
-            {
-                weechat_printf_tags (NULL, "no_trigger",
-                                     "%s =? %s\"%s%s%s\"",
-                                     spaces,
-                                     weechat_color ("chat_delimiters"),
-                                     weechat_color ("reset"),
-                                     option,
-                                     weechat_color ("chat_delimiters"));
-            }
-            for (i = 0; i < ptr_trigger->regex_count; i++)
-            {
-                weechat_printf_tags (NULL, "no_trigger",
-                                     "%s %d~ %s\"%s%s%s\" --> "
-                                     "\"%s%s%s\"%s%s%s%s",
-                                     spaces,
-                                     i + 1,
-                                     weechat_color ("chat_delimiters"),
-                                     weechat_color (weechat_config_string (trigger_config_color_regex)),
-                                     ptr_trigger->regex[i].str_regex,
-                                     weechat_color ("chat_delimiters"),
-                                     weechat_color (weechat_config_string (trigger_config_color_replace)),
-                                     ptr_trigger->regex[i].replace,
-                                     weechat_color ("chat_delimiters"),
-                                     weechat_color ("reset"),
-                                     (ptr_trigger->regex[i].variable) ? " (" : "",
-                                     (ptr_trigger->regex[i].variable) ? ptr_trigger->regex[i].variable : "",
-                                     (ptr_trigger->regex[i].variable) ? ")" : "");
-            }
-            if (ptr_trigger->commands)
-            {
-                for (i = 0; ptr_trigger->commands[i]; i++)
-                {
-                    weechat_printf_tags (NULL, "no_trigger",
-                                         "%s %d> %s\"%s%s%s\"",
-                                         spaces,
-                                         i + 1,
-                                         weechat_color ("chat_delimiters"),
-                                         weechat_color ("reset"),
-                                         ptr_trigger->commands[i],
-                                         weechat_color ("chat_delimiters"));
-                }
-            }
-            rc = weechat_config_integer (ptr_trigger->options[TRIGGER_OPTION_RETURN_CODE]);
-            if (rc != TRIGGER_RC_OK)
-            {
-                weechat_printf_tags (NULL, "no_trigger",
-                                     "%s $: %s",
-                                     spaces,
-                                     trigger_return_code_string[rc]);
-            }
-        }
-        else
-        {
-            option = weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_CONDITIONS]);
-            weechat_printf_tags (
-                NULL, "no_trigger",
-                "  %s%s%s: %s%s(%s%s%s)%s  (%s%s%d regex, %d %s)",
-                weechat_config_boolean (ptr_trigger->options[TRIGGER_OPTION_ENABLED]) ?
-                weechat_color (weechat_config_string (trigger_config_color_trigger)) :
-                weechat_color (weechat_config_string (trigger_config_color_trigger_disabled)),
-                ptr_trigger->name,
-                weechat_color ("reset"),
-                weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_HOOK]),
-                weechat_color ("chat_delimiters"),
-                weechat_color ("reset"),
-                weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_ARGUMENTS]),
-                weechat_color ("chat_delimiters"),
-                weechat_color ("reset"),
-                (option && option[0]) ? _("conditions") : "",
-                (option && option[0]) ? ", " : "",
-                ptr_trigger->regex_count,
-                ptr_trigger->commands_count,
-                NG_("command", "commands", ptr_trigger->commands_count));
-        }
+        trigger_command_display_trigger (
+            ptr_trigger->name,
+            weechat_config_boolean (ptr_trigger->options[TRIGGER_OPTION_ENABLED]),
+            weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_HOOK]),
+            weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_ARGUMENTS]),
+            weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_CONDITIONS]),
+            ptr_trigger->regex_count,
+            ptr_trigger->regex,
+            ptr_trigger->commands_count,
+            ptr_trigger->commands,
+            weechat_config_integer (ptr_trigger->options[TRIGGER_OPTION_RETURN_CODE]),
+            full);
     }
+}
+
+/*
+ * Displays a list of default triggers.
+ */
+
+void
+trigger_command_list_default (int full)
+{
+    int i, regex_count, commands_count;
+    struct t_trigger_regex *regex;
+    char **commands;
+
+    regex_count = 0;
+    regex = NULL;
+    commands_count = 0;
+    commands = NULL;
+
+    weechat_printf_tags (NULL, "no_trigger", "");
+    weechat_printf_tags (NULL, "no_trigger", _("List of default triggers:"));
+
+    for (i = 0; trigger_config_default_list[i][0]; i++)
+    {
+        trigger_split_regex (trigger_config_default_list[i][0],
+                             trigger_config_default_list[i][5],
+                             &regex_count,
+                             &regex);
+        trigger_split_command (trigger_config_default_list[i][6],
+                               &commands_count,
+                               &commands);
+        trigger_command_display_trigger (
+            trigger_config_default_list[i][0],
+            weechat_config_string_to_boolean (trigger_config_default_list[i][1]),
+            trigger_config_default_list[i][2],
+            trigger_config_default_list[i][3],
+            trigger_config_default_list[i][4],
+            regex_count,
+            regex,
+            commands_count,
+            commands,
+            trigger_search_return_code (trigger_config_default_list[i][7]),
+            full);
+    }
+
+    trigger_free_regex (&regex_count, &regex);
+    if (commands)
+        weechat_string_free_split (commands);
 }
 
 /*
@@ -270,14 +338,21 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
     if ((argc == 1)
         || ((argc == 2) && (weechat_strcasecmp (argv[1], "list") == 0)))
     {
-        trigger_command_list (0);
+        trigger_command_list (_("List of triggers:"), 0);
         goto end;
     }
 
     /* full list of all triggers */
     if ((argc == 2) && (weechat_strcasecmp (argv[1], "listfull") == 0))
     {
-        trigger_command_list (1);
+        trigger_command_list (_("List of triggers:"), 1);
+        goto end;
+    }
+
+    /* list of default triggers */
+    if ((argc == 2) && (weechat_strcasecmp (argv[1], "listdefault") == 0))
+    {
+        trigger_command_list_default (1);
         goto end;
     }
 
@@ -537,6 +612,25 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
         goto end;
     }
 
+    /* restore default triggers */
+    if (weechat_strcasecmp (argv[1], "default") == 0)
+    {
+        if ((argc >= 3) && (weechat_strcasecmp (argv[2], "-yes") == 0))
+        {
+            trigger_free_all ();
+            trigger_create_default ();
+            trigger_command_list (_("Default triggers restored:"), 0);
+        }
+        else
+        {
+            weechat_printf (NULL,
+                            _("%sError: \"-yes\" argument is required for "
+                              "restoring default triggers (security reason)"),
+                            weechat_prefix ("error"));
+        }
+        goto end;
+    }
+
     /* open the trigger monitor buffer */
     if (weechat_strcasecmp (argv[1], "monitor") == 0)
     {
@@ -561,7 +655,7 @@ trigger_command_init ()
     weechat_hook_command (
         "trigger",
         N_("manage triggers"),
-        N_("list|listfull"
+        N_("list|listfull|listdefault"
            " || add <name> <hook> [\"<arguments>\" [\"<conditions>\" "
            "[\"<regex>\" [\"<command>\" [\"<return_code>\"]]]]]"
            " || addinput [<hook>]"
@@ -569,8 +663,12 @@ trigger_command_init ()
            " || rename <name> <new_name>"
            " || enable|disable|toggle|restart <name>|-all [<name>...]"
            " || del <name>|-all [<name>...]"
+           " || default -yes"
            " || monitor"),
-        N_("        add: add a trigger\n"
+        N_("       list: list triggers (without argument, this list is displayed)\n"
+           "   listfull: list triggers with detailed info for each trigger\n"
+           "listdefault: list default triggers\n"
+           "        add: add a trigger\n"
            "       name: name of trigger\n"
            "       hook: signal, hsignal, modifier, print, timer\n"
            "  arguments: arguments for the hook, depending on hook (separated "
@@ -600,6 +698,7 @@ trigger_command_init ()
            "    restart: restart trigger(s) (for timer)\n"
            "        del: delete a trigger\n"
            "       -all: do action on all triggers\n"
+           "    default: restore default triggers\n"
            "    monitor: open the trigger monitor buffer\n"
            "\n"
            "When a trigger callback is called, following actions are performed, "
@@ -626,7 +725,7 @@ trigger_command_init ()
            "==/(\\S+)/==/${color:italic}$1${color:-italic}/\"\n"
            "  silently save config each hour:\n"
            "    /trigger add cfgsave timer 3600000;0;0 \"\" \"\" \"/mute /save\""),
-        "list|listfull"
+        "list|listfull|listdefault"
         " || add %(trigger_names) %(trigger_hooks) %(trigger_hook_arguments) "
         "%(trigger_hook_condition) %(trigger_hook_regex) "
         "%(trigger_hook_command) %(trigger_hook_rc)"
@@ -634,6 +733,7 @@ trigger_command_init ()
         " || set %(trigger_names) %(trigger_options)|name %(trigger_option_value)"
         " || rename %(trigger_names) %(trigger_names)"
         " || enable|disable|toggle|restart|del %(trigger_names)|-all %(trigger_names)|%*"
+        " || default"
         " || monitor",
         &trigger_command_trigger, NULL);
 }

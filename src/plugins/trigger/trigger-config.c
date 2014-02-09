@@ -42,6 +42,51 @@ struct t_config_option *trigger_config_color_replace;
 struct t_config_option *trigger_config_color_trigger;
 struct t_config_option *trigger_config_color_trigger_disabled;
 
+char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
+{
+    /* beep on highlight/private message */
+    { "beep", "on",
+      "print",
+      "",
+      "${tg_highlight} || ${tg_msg_pv}",
+      "",
+      "/print -stderr \\a",
+      "ok" },
+    /* hide passwords in commands */
+    { "cmd_pass", "on",
+      "modifier",
+      "5000|input_text_display;5000|history_add;5000|irc_command_auth",
+      "",
+      "==^("
+      "(/(msg|quote) +nickserv "
+      "+(id|identify|register|ghost \\S+|release \\S+|regain \\S+) +)|"
+      "/oper +\\S+ +|"
+      "/quote pass +|"
+      "/set +\\S*password\\S* +|"
+      "/secure +(passphrase|decrypt|set \\S+) +)"
+      "(.*)"
+      "==$1$.*+",
+      "",
+      "" },
+    /* hide password in IRC auth message displayed */
+    { "msg_auth", "on",
+      "modifier",
+      "5000|irc_message_auth",
+      "",
+      "==^(.*(id|identify|register|ghost \\S+|release \\S+) +)(.*)==$1$.*+",
+      "",
+      "" },
+    /* hide server password in commands /server and /connect */
+    { "server_pass", "on",
+      "modifier",
+      "5000|input_text_display;5000|history_add",
+      "",
+      "==^(/(server|connect) .*-(sasl_)?password=)(\\S+)(.*)==$1$.*4$5"
+      "",
+      "" },
+    { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL },
+};
+
 
 /*
  * Callback called when trigger option "enabled" is changed.
@@ -121,7 +166,8 @@ trigger_config_change_regex (void *data, struct t_config_option *option)
     if (!ptr_trigger)
         return;
 
-    trigger_set_regex (ptr_trigger);
+    trigger_split_regex (ptr_trigger->name, weechat_config_string (option),
+                         &ptr_trigger->regex_count, &ptr_trigger->regex);
 }
 
 /*
@@ -140,7 +186,9 @@ trigger_config_change_command (void *data, struct t_config_option *option)
     if (!ptr_trigger)
         return;
 
-    trigger_set_commands (ptr_trigger);
+    trigger_split_command (weechat_config_string (option),
+                           &ptr_trigger->commands_count,
+                           &ptr_trigger->commands);
 }
 
 /*
@@ -402,6 +450,47 @@ trigger_config_trigger_read_cb (void *data, struct t_config_file *config_file,
 }
 
 /*
+ * Writes default triggers in trigger configuration file.
+ */
+
+int
+trigger_config_trigger_write_default_cb (void *data,
+                                         struct t_config_file *config_file,
+                                         const char *section_name)
+{
+    int i, j, quotes;
+    char option_name[512];
+
+    /* make C compiler happy */
+    (void) data;
+
+    if (!weechat_config_write_line (config_file, section_name, NULL))
+        return WEECHAT_CONFIG_WRITE_ERROR;
+
+    for (i = 0; trigger_config_default_list[i][0]; i++)
+    {
+        for (j = 0; j < TRIGGER_NUM_OPTIONS; j++)
+        {
+            snprintf (option_name, sizeof (option_name),
+                      "%s.%s",
+                      trigger_config_default_list[i][0],
+                      trigger_option_string[j]);
+            quotes = (j & (TRIGGER_OPTION_ARGUMENTS | TRIGGER_OPTION_CONDITIONS |
+                           TRIGGER_OPTION_REGEX | TRIGGER_OPTION_COMMAND));
+            if (!weechat_config_write_line (config_file, option_name, "%s%s%s",
+                                            (quotes) ? "\"" : "",
+                                            trigger_config_default_list[i][j + 1],
+                                            (quotes) ? "\"" : ""))
+            {
+                return WEECHAT_CONFIG_WRITE_ERROR;
+            }
+        }
+    }
+
+    return WEECHAT_CONFIG_WRITE_OK;
+}
+
+/*
  * Reloads trigger configuration file.
  */
 
@@ -502,7 +591,8 @@ trigger_config_init ()
                                               0, 0,
                                               &trigger_config_trigger_read_cb, NULL,
                                               NULL, NULL,
-                                              NULL, NULL, NULL, NULL,
+                                              &trigger_config_trigger_write_default_cb, NULL,
+                                              NULL, NULL,
                                               NULL, NULL);
     if (!ptr_section)
     {

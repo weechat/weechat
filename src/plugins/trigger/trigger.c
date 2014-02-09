@@ -388,42 +388,43 @@ trigger_hook (struct t_trigger *trigger)
  */
 
 void
-trigger_free_regex (struct t_trigger *trigger)
+trigger_free_regex (int *regex_count, struct t_trigger_regex **regex)
 {
     int i;
 
-    if (trigger->regex_count > 0)
+    if (*regex_count > 0)
     {
-        for (i = 0; i < trigger->regex_count; i++)
+        for (i = 0; i < *regex_count; i++)
         {
-            if (trigger->regex[i].variable)
-                free (trigger->regex[i].variable);
-            if (trigger->regex[i].str_regex)
-                free (trigger->regex[i].str_regex);
-            if (trigger->regex[i].regex)
+            if ((*regex)[i].variable)
+                free ((*regex)[i].variable);
+            if ((*regex)[i].str_regex)
+                free ((*regex)[i].str_regex);
+            if ((*regex)[i].regex)
             {
-                regfree (trigger->regex[i].regex);
-                free (trigger->regex[i].regex);
+                regfree ((*regex)[i].regex);
+                free ((*regex)[i].regex);
             }
-            if (trigger->regex[i].replace)
-                free (trigger->regex[i].replace);
-            if (trigger->regex[i].replace_eval)
-                free (trigger->regex[i].replace_eval);
+            if ((*regex)[i].replace)
+                free ((*regex)[i].replace);
+            if ((*regex)[i].replace_eval)
+                free ((*regex)[i].replace_eval);
         }
-        free (trigger->regex);
-        trigger->regex = NULL;
-        trigger->regex_count = 0;
+        free (*regex);
+        *regex = NULL;
+        *regex_count = 0;
     }
 }
 
 /*
- * Sets the regex and replacement text in a trigger.
+ * Splits the regex in structures, with regex and replacement text.
  */
 
 void
-trigger_set_regex (struct t_trigger *trigger)
+trigger_split_regex (const char *trigger_name, const char *str_regex,
+                     int *regex_count, struct t_trigger_regex **regex)
 {
-    const char *option_regex, *ptr_option, *pos, *pos_replace, *pos_replace_end;
+    const char *ptr_regex, *pos, *pos_replace, *pos_replace_end;
     const char *pos_next_regex;
     char *delimiter;
     int index, length_delimiter;
@@ -431,21 +432,22 @@ trigger_set_regex (struct t_trigger *trigger)
 
     delimiter = NULL;
 
-    /* remove all regex in the trigger */
-    trigger_free_regex (trigger);
+    if (!regex_count || !regex)
+        goto end;
 
-    /* get regex option in trigger */
-    option_regex = weechat_config_string (trigger->options[TRIGGER_OPTION_REGEX]);
-    if (!option_regex || !option_regex[0])
+    /* remove any existing regex */
+    trigger_free_regex (regex_count, regex);
+
+    if (!str_regex || !str_regex[0])
         goto end;
 
     /* min 3 chars, for example: "/a/" */
-    if (strlen (option_regex) < 3)
+    if (strlen (str_regex) < 3)
         goto format_error;
 
     /* parse regular expressions in the option */
-    ptr_option = option_regex;
-    while (ptr_option && ptr_option[0])
+    ptr_regex = str_regex;
+    while (ptr_regex && ptr_regex[0])
     {
         if (delimiter)
         {
@@ -454,14 +456,14 @@ trigger_set_regex (struct t_trigger *trigger)
         }
 
         /* search the delimiter (which can be more than one char) */
-        pos = weechat_utf8_next_char (ptr_option);
-        while (pos[0] && (weechat_utf8_charcmp (ptr_option, pos) == 0))
+        pos = weechat_utf8_next_char (ptr_regex);
+        while (pos[0] && (weechat_utf8_charcmp (ptr_regex, pos) == 0))
         {
             pos = weechat_utf8_next_char (pos);
         }
         if (!pos[0])
             goto format_error;
-        delimiter = weechat_strndup (ptr_option, pos - ptr_option);
+        delimiter = weechat_strndup (ptr_regex, pos - ptr_regex);
         if (!delimiter)
             goto memory_error;
         if ((strcmp (delimiter, "\\") == 0) || (strcmp (delimiter, "(") == 0))
@@ -469,96 +471,96 @@ trigger_set_regex (struct t_trigger *trigger)
 
         length_delimiter = strlen (delimiter);
 
-        ptr_option = pos;
-        if (!ptr_option[0])
+        ptr_regex = pos;
+        if (!ptr_regex[0])
             goto format_error;
 
         /* search the start of replacement string */
-        pos_replace = strstr (ptr_option, delimiter);
+        pos_replace = strstr (ptr_regex, delimiter);
         if (!pos_replace)
             goto format_error;
 
         /* search the end of replacement string */
         pos_replace_end = strstr (pos_replace + length_delimiter, delimiter);
 
-        new_regex = realloc (trigger->regex,
-                             (trigger->regex_count + 1) * sizeof (trigger->regex[0]));
+        new_regex = realloc (*regex,
+                             (*regex_count + 1) * sizeof ((*regex)[0]));
         if (!new_regex)
             goto memory_error;
 
-        trigger->regex = new_regex;
-        trigger->regex_count++;
-        index = trigger->regex_count - 1;
+        *regex = new_regex;
+        (*regex_count)++;
+        index = *regex_count - 1;
 
         /* initialize new regex */
-        trigger->regex[index].variable = NULL;
-        trigger->regex[index].str_regex = NULL;
-        trigger->regex[index].regex = NULL;
-        trigger->regex[index].replace = NULL;
-        trigger->regex[index].replace_eval = NULL;
+        (*regex)[index].variable = NULL;
+        (*regex)[index].str_regex = NULL;
+        (*regex)[index].regex = NULL;
+        (*regex)[index].replace = NULL;
+        (*regex)[index].replace_eval = NULL;
 
         /* set string with regex */
-        trigger->regex[index].str_regex = weechat_strndup (ptr_option,
-                                                           pos_replace - ptr_option);
-        if (!trigger->regex[index].str_regex)
+        (*regex)[index].str_regex = weechat_strndup (ptr_regex,
+                                                     pos_replace - ptr_regex);
+        if (!(*regex)[index].str_regex)
             goto memory_error;
 
         /* set regex */
-        trigger->regex[index].regex = malloc (sizeof (*trigger->regex[index].regex));
-        if (!trigger->regex[index].regex)
+        (*regex)[index].regex = malloc (sizeof (*(*regex)[index].regex));
+        if (!(*regex)[index].regex)
             goto memory_error;
-        if (weechat_string_regcomp (trigger->regex[index].regex,
-                                    trigger->regex[index].str_regex,
+        if (weechat_string_regcomp ((*regex)[index].regex,
+                                    (*regex)[index].str_regex,
                                     REG_EXTENDED | REG_ICASE) != 0)
         {
             weechat_printf (NULL,
                             _("%s%s: error compiling regular expression \"%s\""),
                             weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
-                            trigger->regex[index].str_regex);
-            free (trigger->regex[index].regex);
-            trigger->regex[index].regex = NULL;
+                            (*regex)[index].str_regex);
+            free ((*regex)[index].regex);
+            (*regex)[index].regex = NULL;
             goto end;
         }
 
         /* set replace and replace_eval */
-        trigger->regex[index].replace = (pos_replace_end) ?
+        (*regex)[index].replace = (pos_replace_end) ?
             weechat_strndup (pos_replace + length_delimiter,
                              pos_replace_end - pos_replace - length_delimiter) :
             strdup (pos_replace + length_delimiter);
-        if (!trigger->regex[index].replace)
+        if (!(*regex)[index].replace)
             goto memory_error;
-        trigger->regex[index].replace_eval =
-            weechat_string_eval_expression (trigger->regex[index].replace,
+        (*regex)[index].replace_eval =
+            weechat_string_eval_expression ((*regex)[index].replace,
                                             NULL, NULL, NULL);
-        if (!trigger->regex[index].replace_eval)
+        if (!(*regex)[index].replace_eval)
             goto memory_error;
 
         if (!pos_replace_end)
             break;
 
         /* set variable (optional) */
-        ptr_option = pos_replace_end + length_delimiter;
-        if (!ptr_option[0])
+        ptr_regex = pos_replace_end + length_delimiter;
+        if (!ptr_regex[0])
             break;
-        if (ptr_option[0] == ' ')
-            pos_next_regex = ptr_option;
+        if (ptr_regex[0] == ' ')
+            pos_next_regex = ptr_regex;
         else
         {
-            pos_next_regex = strchr (ptr_option, ' ');
-            trigger->regex[index].variable = (pos_next_regex) ?
-                weechat_strndup (ptr_option, pos_next_regex - ptr_option) :
-                strdup (ptr_option);
-            if (!trigger->regex[index].variable)
+            pos_next_regex = strchr (ptr_regex, ' ');
+            (*regex)[index].variable = (pos_next_regex) ?
+                weechat_strndup (ptr_regex, pos_next_regex - ptr_regex) :
+                strdup (ptr_regex);
+            if (!(*regex)[index].variable)
                 goto memory_error;
         }
         if (!pos_next_regex)
             break;
 
         /* skip spaces before next regex */
-        ptr_option = pos_next_regex + 1;
-        while (ptr_option[0] == ' ')
+        ptr_regex = pos_next_regex + 1;
+        while (ptr_regex[0] == ' ')
         {
-            ptr_option++;
+            ptr_regex++;
         }
     }
 
@@ -569,15 +571,15 @@ format_error:
                     _("%s%s: invalid value for option \"regex\", "
                       "see /help trigger.trigger.%s.regex"),
                     weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
-                    trigger->name);
-    trigger_free_regex (trigger);
+                    trigger_name);
+    trigger_free_regex (regex_count, regex);
     goto end;
 
 memory_error:
     weechat_printf (NULL,
                     _("%s%s: not enough memory"),
                     weechat_prefix ("error"), TRIGGER_PLUGIN_NAME);
-    trigger_free_regex (trigger);
+    trigger_free_regex (regex_count, regex);
     goto end;
 
 end:
@@ -586,32 +588,34 @@ end:
 }
 
 /*
- * Sets the commands in a trigger.
+ * Splits command of a trigger.
  */
 
 void
-trigger_set_commands (struct t_trigger *trigger)
+trigger_split_command (const char *command,
+                       int *commands_count, char ***commands)
 {
-    const char *option_command;
     int i;
 
-    if (trigger->commands)
-    {
-        weechat_string_free_split (trigger->commands);
-        trigger->commands = NULL;
-    }
-    trigger->commands_count = 0;
+    if (!commands_count || !commands)
+        return;
 
-    option_command = weechat_config_string (trigger->options[TRIGGER_OPTION_COMMAND]);
-    if (option_command && option_command[0])
+    if (*commands)
     {
-        trigger->commands = weechat_string_split_command (option_command, ';');
-        if (trigger->commands)
+        weechat_string_free_split (*commands);
+        *commands = NULL;
+    }
+    *commands_count = 0;
+
+    if (command && command[0])
+    {
+        *commands = weechat_string_split_command (command, ';');
+        if (*commands)
         {
-            for (i = 0; trigger->commands[i]; i++)
+            for (i = 0; (*commands)[i]; i++)
             {
             }
-            trigger->commands_count = i;
+            *commands_count = i;
         }
     }
 }
@@ -761,8 +765,13 @@ trigger_new_with_options (const char *name, struct t_config_option **options)
     trigger_add (new_trigger, &triggers, &last_trigger);
     triggers_count++;
 
-    trigger_set_regex (new_trigger);
-    trigger_set_commands (new_trigger);
+    trigger_split_regex (new_trigger->name,
+                         weechat_config_string (new_trigger->options[TRIGGER_OPTION_REGEX]),
+                         &new_trigger->regex_count,
+                         &new_trigger->regex);
+    trigger_split_command (weechat_config_string (new_trigger->options[TRIGGER_OPTION_COMMAND]),
+                           &new_trigger->commands_count,
+                           &new_trigger->commands);
 
     if (weechat_config_boolean (new_trigger->options[TRIGGER_OPTION_ENABLED]))
         trigger_hook (new_trigger);
@@ -820,6 +829,28 @@ trigger_new (const char *name, const char *enabled, const char *hook,
     }
 
     return new_trigger;
+}
+
+/*
+ * Creates default triggers.
+ */
+
+void
+trigger_create_default ()
+{
+    int i;
+
+    for (i = 0; trigger_config_default_list[i][0]; i++)
+    {
+        trigger_new (trigger_config_default_list[i][0],   /* name */
+                     trigger_config_default_list[i][1],   /* enabled */
+                     trigger_config_default_list[i][2],   /* hook */
+                     trigger_config_default_list[i][3],   /* arguments */
+                     trigger_config_default_list[i][4],   /* conditions */
+                     trigger_config_default_list[i][5],   /* regex */
+                     trigger_config_default_list[i][6],   /* command */
+                     trigger_config_default_list[i][7]);  /* return code */
+    }
 }
 
 /*
@@ -903,7 +934,7 @@ trigger_free (struct t_trigger *trigger)
 
     /* free data */
     trigger_unhook (trigger);
-    trigger_free_regex (trigger);
+    trigger_free_regex (&trigger->regex_count, &trigger->regex);
     if (trigger->name)
         free (trigger->name);
     for (i = 0; i < TRIGGER_NUM_OPTIONS; i++)

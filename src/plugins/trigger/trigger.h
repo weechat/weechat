@@ -120,8 +120,14 @@ extern int trigger_search_hook_type (const char *type);
 extern int trigger_search_return_code (const char *return_code);
 extern struct t_trigger *trigger_search (const char *name);
 extern struct t_trigger *trigger_search_with_option (struct t_config_option *option);
-extern void trigger_set_regex (struct t_trigger *trigger);
-extern void trigger_set_commands (struct t_trigger *trigger);
+extern void trigger_free_regex (int *regex_count,
+                                struct t_trigger_regex **regex);
+extern void trigger_split_regex (const char *trigger_name,
+                                 const char *str_regex,
+                                 int *regex_count,
+                                 struct t_trigger_regex **regex);
+extern void trigger_split_command (const char *command,
+                                   int *commands_count, char ***commands);
 extern void trigger_unhook (struct t_trigger *trigger);
 extern void trigger_hook (struct t_trigger *trigger);
 extern int trigger_name_valid (const char *name);
@@ -139,6 +145,7 @@ extern struct t_trigger *trigger_new (const char *name,
                                       const char *replace,
                                       const char *command,
                                       const char *return_code);
+extern void trigger_create_default ();
 extern int trigger_rename (struct t_trigger *trigger, const char *name);
 extern void trigger_free (struct t_trigger *trigger);
 extern void trigger_free_all ();
