@@ -9,7 +9,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 (file 'NEWS' in sources).
 
 
-== Version 0.4.3 (under dev)
+== Version 0.4.3 (2014-02-09)
 
 * core: fix hotlist problems after apply of a layout (bug #41481)
 * core: fix installation of weechat-plugin.h with autotools (patch #8305)
