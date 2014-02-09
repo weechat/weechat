@@ -37,6 +37,10 @@ struct t_config_option *trigger_config_look_test;
 
 /* trigger config, color section */
 
+struct t_config_option *trigger_config_color_flag_command;
+struct t_config_option *trigger_config_color_flag_conditions;
+struct t_config_option *trigger_config_color_flag_regex;
+struct t_config_option *trigger_config_color_flag_return_code;
 struct t_config_option *trigger_config_color_regex;
 struct t_config_option *trigger_config_color_replace;
 struct t_config_option *trigger_config_color_trigger;
@@ -560,6 +564,30 @@ trigger_config_init ()
         return 0;
     }
 
+    trigger_config_color_flag_command = weechat_config_new_option (
+        trigger_config_file, ptr_section,
+        "flag_command", "color",
+        N_("text color for command flag (in /trigger list)"),
+        NULL, 0, 0, "lightgreen", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL);
+    trigger_config_color_flag_conditions = weechat_config_new_option (
+        trigger_config_file, ptr_section,
+        "flag_conditions", "color",
+        N_("text color for conditions flag (in /trigger list)"),
+        NULL, 0, 0, "yellow", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL);
+    trigger_config_color_flag_regex = weechat_config_new_option (
+        trigger_config_file, ptr_section,
+        "flag_regex", "color",
+        N_("text color for regex flag (in /trigger list)"),
+        NULL, 0, 0, "lightcyan", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL);
+    trigger_config_color_flag_return_code = weechat_config_new_option (
+        trigger_config_file, ptr_section,
+        "flag_return_code", "color",
+        N_("text color for return code flag (in /trigger list)"),
+        NULL, 0, 0, "lightmagenta", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL);
     trigger_config_color_regex = weechat_config_new_option (
         trigger_config_file, ptr_section,
         "regex", "color",

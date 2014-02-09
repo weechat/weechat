@@ -40,6 +40,7 @@ trigger_command_display_trigger (const char *name, int enabled, const char *hook
                                  int commands_count, char **commands,
                                  int return_code, int full)
 {
+    char str_conditions[64], str_regex[64], str_command[64], str_rc[64];
     char spaces[256];
     int i, length;
 
@@ -47,7 +48,7 @@ trigger_command_display_trigger (const char *name, int enabled, const char *hook
     {
         weechat_printf_tags (
             NULL, "no_trigger",
-            "  %s%s%s: %s%s(%s%s%s)",
+            "  %s%s%s: %s%s%s%s%s%s%s",
             (enabled) ?
             weechat_color (weechat_config_string (trigger_config_color_trigger)) :
             weechat_color (weechat_config_string (trigger_config_color_trigger_disabled)),
@@ -55,9 +56,11 @@ trigger_command_display_trigger (const char *name, int enabled, const char *hook
             weechat_color ("reset"),
             hook,
             weechat_color ("chat_delimiters"),
+            (arguments && arguments[0]) ? "(" : "",
             weechat_color ("reset"),
             arguments,
-            weechat_color ("chat_delimiters"));
+            weechat_color ("chat_delimiters"),
+            (arguments && arguments[0]) ? ")" : "");
         length = weechat_strlen_screen (name) + 3;
         if (length >= (int)sizeof (spaces))
             length = sizeof (spaces) - 1;
@@ -66,8 +69,9 @@ trigger_command_display_trigger (const char *name, int enabled, const char *hook
         if (conditions && conditions[0])
         {
             weechat_printf_tags (NULL, "no_trigger",
-                                 "%s =? %s\"%s%s%s\"",
+                                 "%s %s=? %s\"%s%s%s\"",
                                  spaces,
+                                 weechat_color (weechat_config_string (trigger_config_color_flag_conditions)),
                                  weechat_color ("chat_delimiters"),
                                  weechat_color ("reset"),
                                  conditions,
@@ -76,9 +80,10 @@ trigger_command_display_trigger (const char *name, int enabled, const char *hook
         for (i = 0; i < regex_count; i++)
         {
             weechat_printf_tags (NULL, "no_trigger",
-                                 "%s %d~ %s\"%s%s%s\" --> "
+                                 "%s %s~%d %s\"%s%s%s\" --> "
                                  "\"%s%s%s\"%s%s%s%s",
                                  spaces,
+                                 weechat_color (weechat_config_string (trigger_config_color_flag_regex)),
                                  i + 1,
                                  weechat_color ("chat_delimiters"),
                                  weechat_color (weechat_config_string (trigger_config_color_regex)),
@@ -97,8 +102,9 @@ trigger_command_display_trigger (const char *name, int enabled, const char *hook
             for (i = 0; commands[i]; i++)
             {
                 weechat_printf_tags (NULL, "no_trigger",
-                                     "%s %d> %s\"%s%s%s\"",
+                                     "%s %s/%d %s\"%s%s%s\"",
                                      spaces,
+                                     weechat_color (weechat_config_string (trigger_config_color_flag_command)),
                                      i + 1,
                                      weechat_color ("chat_delimiters"),
                                      weechat_color ("reset"),
@@ -109,16 +115,52 @@ trigger_command_display_trigger (const char *name, int enabled, const char *hook
         if ((return_code >= 0) && (return_code != TRIGGER_RC_OK))
         {
             weechat_printf_tags (NULL, "no_trigger",
-                                 "%s $: %s",
+                                 "%s %s=> %s%s",
                                  spaces,
+                                 weechat_color (weechat_config_string (trigger_config_color_flag_return_code)),
+                                 weechat_color ("reset"),
                                  trigger_return_code_string[return_code]);
         }
     }
     else
     {
+        str_conditions[0] ='\0';
+        str_regex[0] = '\0';
+        str_command[0] = '\0';
+        str_rc[0] = '\0';
+        if (conditions && conditions[0])
+        {
+            snprintf (str_conditions, sizeof (str_conditions),
+                      " %s=?%s",
+                      weechat_color (weechat_config_string (trigger_config_color_flag_conditions)),
+                      weechat_color ("reset"));
+        }
+        if (regex_count > 0)
+        {
+            snprintf (str_regex, sizeof (str_regex),
+                      " %s~%d%s",
+                      weechat_color (weechat_config_string (trigger_config_color_flag_regex)),
+                      regex_count,
+                      weechat_color ("reset"));
+        }
+        if (commands_count > 0)
+        {
+            snprintf (str_command, sizeof (str_command),
+                      " %s/%d%s",
+                      weechat_color (weechat_config_string (trigger_config_color_flag_command)),
+                      commands_count,
+                      weechat_color ("reset"));
+        }
+        if ((return_code >= 0) && (return_code != TRIGGER_RC_OK))
+        {
+            snprintf (str_rc, sizeof (str_rc),
+                      " %s=>%s",
+                      weechat_color (weechat_config_string (trigger_config_color_flag_return_code)),
+                      weechat_color ("reset"));
+        }
         weechat_printf_tags (
             NULL, "no_trigger",
-            "  %s%s%s: %s%s(%s%s%s)%s  (%s%s%d regex, %d %s)",
+            "  %s%s%s: %s%s%s%s%s%s%s%s%s%s%s%s",
             (enabled) ?
             weechat_color (weechat_config_string (trigger_config_color_trigger)) :
             weechat_color (weechat_config_string (trigger_config_color_trigger_disabled)),
@@ -126,15 +168,16 @@ trigger_command_display_trigger (const char *name, int enabled, const char *hook
             weechat_color ("reset"),
             hook,
             weechat_color ("chat_delimiters"),
+            (arguments && arguments[0]) ? "(" : "",
             weechat_color ("reset"),
             arguments,
             weechat_color ("chat_delimiters"),
+            (arguments && arguments[0]) ? ")" : "",
             weechat_color ("reset"),
-            (conditions && conditions[0]) ? _("conditions") : "",
-            (conditions && conditions[0]) ? ", " : "",
-            regex_count,
-            commands_count,
-            NG_("command", "commands", commands_count));
+            str_conditions,
+            str_regex,
+            str_command,
+            str_rc);
     }
 }
 
