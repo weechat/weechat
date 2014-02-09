@@ -1153,11 +1153,12 @@ string_has_highlight_regex (const char *string, const char *regex)
 
 char *
 string_replace_regex_get_replace (const char *string, regmatch_t *regex_match,
-                                  const char *replace)
+                                  int last_match, const char *replace,
+                                  const char reference_char)
 {
     int length, length_current, length_add, match;
     const char *ptr_replace, *ptr_add;
-    char *result, *result2, *modified_replace, *temp;
+    char *result, *result2, *modified_replace, *temp, char_replace;
 
     /* default length is length*2, it will grow later if needed */
     length = (strlen (string) * 2);
@@ -1174,29 +1175,68 @@ string_replace_regex_get_replace (const char *string, regmatch_t *regex_match,
         length_add = 0;
         modified_replace = NULL;
 
-        if (ptr_replace[0] == '\\')
+        if ((ptr_replace[0] == '\\') && (ptr_replace[1] == reference_char))
         {
-            if (ptr_replace[1] == '\\')
+            /* escaped reference char */
+            ptr_add = ptr_replace + 1;
+            length_add = 1;
+            ptr_replace += 2;
+        }
+        else if (ptr_replace[0] == reference_char)
+        {
+            if ((ptr_replace[1] == '+') || isdigit ((unsigned char)ptr_replace[1]))
             {
-                ptr_add = ptr_replace;
-                length_add = 1;
-                ptr_replace += 2;
-            }
-            else if (isdigit ((unsigned char)ptr_replace[1]))
-            {
-                match = ptr_replace[1] - '0';
+                if (ptr_replace[1] == '+')
+                {
+                    /* reference to last match */
+                    match = last_match;
+                    ptr_replace += 2;
+                }
+                else
+                {
+                    /* reference to match 0 .. 99 */
+                    if (isdigit ((unsigned char)ptr_replace[2]))
+                    {
+                        match = ((ptr_replace[1] - '0') * 10) + (ptr_replace[2] - '0');
+                        ptr_replace += 3;
+                    }
+                    else
+                    {
+                        match = ptr_replace[1] - '0';
+                        ptr_replace += 2;
+                    }
+                }
                 if (regex_match[match].rm_so >= 0)
                 {
                     ptr_add = string + regex_match[match].rm_so;
                     length_add = regex_match[match].rm_eo - regex_match[match].rm_so;
                 }
-                ptr_replace += 2;
             }
-            else if ((ptr_replace[1] >= 32)
-                     && (ptr_replace[1] <= 126)
-                     && isdigit ((unsigned char)ptr_replace[2]))
+            else if ((ptr_replace[1] == '.')
+                     && (ptr_replace[2] >= 32) && (ptr_replace[2] <= 126)
+                     && ((ptr_replace[3] == '+') || isdigit ((unsigned char)ptr_replace[3])))
             {
-                match = ptr_replace[2] - '0';
+                char_replace = ptr_replace[2];
+                if (ptr_replace[3] == '+')
+                {
+                    /* reference to last match */
+                    match = last_match;
+                    ptr_replace += 4;
+                }
+                else
+                {
+                    /* reference to match 0 .. 99 */
+                    if (isdigit ((unsigned char)ptr_replace[4]))
+                    {
+                        match = ((ptr_replace[3] - '0') * 10) + (ptr_replace[4] - '0');
+                        ptr_replace += 5;
+                    }
+                    else
+                    {
+                        match = ptr_replace[3] - '0';
+                        ptr_replace += 4;
+                    }
+                }
                 if (regex_match[match].rm_so >= 0)
                 {
                     temp = string_strndup (string + regex_match[match].rm_so,
@@ -1207,19 +1247,17 @@ string_replace_regex_get_replace (const char *string, regmatch_t *regex_match,
                         modified_replace = malloc (length_add + 1);
                         if (modified_replace)
                         {
-                            memset (modified_replace, ptr_replace[1],
-                                    length_add);
+                            memset (modified_replace, char_replace, length_add);
                             modified_replace[length_add] = '\0';
                             ptr_add = modified_replace;
                         }
                         free (temp);
                     }
                 }
-                ptr_replace += 3;
             }
             else
             {
-                /* just ignore the '\' */
+                /* just ignore the reference char */
                 ptr_replace++;
             }
         }
@@ -1264,21 +1302,32 @@ string_replace_regex_get_replace (const char *string, regmatch_t *regex_match,
  * The argument "regex" is a pointer to a regex compiled with function regcomp
  * (or WeeChat function string_regcomp).
  *
- * The argument "replace" can contain references to matching groups, from \1
- * to \9 for match 1 to 9 (\0 is the whole match).
- * Special references \c0 to \c9 can be used to replace all matching chars by
- * the char 'c', which can be between space (32) and '~' (126).
- * For example \*1 will replace matching chars in group 1 by '*'.
+ * The argument "replace" can contain references to matches:
+ *   $0 .. $99  match 0 to 99 (0 is whole match, 1 .. 99 are groups captured)
+ *   $+         the last match (with highest number)
+ *   $.*N       match N (can be '+' or 0 to 99), with all chars replaced by '*'
+ *              (the char '*' can be replaced by any char between space (32)
+ *              and '~' (126))
+ *
+ * Examples:
+ *
+ *    string   | regex         | replace   | result
+ *   ----------+---------------+-----------+-------------
+ *    test foo | test          | Z         | Z foo
+ *    test foo | ^(test +)(.*) | $2        | foo
+ *    test foo | ^(test +)(.*) | $1 / $.*2 | test / ***
+ *    test foo | ^(test +)(.*) | $.%+      | %%%
  *
  * Note: result must be freed after use.
  */
 
 char *
-string_replace_regex (const char *string, void *regex, const char *replace)
+string_replace_regex (const char *string, void *regex, const char *replace,
+                      const char reference_char)
 {
     char *result, *result2, *str_replace;
-    int length, length_replace, start_offset, i, rc, end;
-    regmatch_t regex_match[10];
+    int length, length_replace, start_offset, i, rc, end, last_match;
+    regmatch_t regex_match[100];
 
     if (!string)
         return NULL;
@@ -1292,12 +1341,12 @@ string_replace_regex (const char *string, void *regex, const char *replace)
     start_offset = 0;
     while (result && result[start_offset])
     {
-        for (i = 0; i < 10; i++)
+        for (i = 0; i < 100; i++)
         {
             regex_match[i].rm_so = -1;
         }
 
-        rc = regexec ((regex_t *)regex, result + start_offset, 10, regex_match,
+        rc = regexec ((regex_t *)regex, result + start_offset, 100, regex_match,
                       0);
         /*
          * no match found: exit the loop (if rm_eo == 0, it is an empty match
@@ -1311,10 +1360,12 @@ string_replace_regex (const char *string, void *regex, const char *replace)
         }
 
         /* adjust the start/end offsets */
-        for (i = 0; i < 10; i++)
+        last_match = 0;
+        for (i = 0; i < 100; i++)
         {
             if (regex_match[i].rm_so >= 0)
             {
+                last_match = i;
                 regex_match[i].rm_so += start_offset;
                 regex_match[i].rm_eo += start_offset;
             }
@@ -1324,7 +1375,8 @@ string_replace_regex (const char *string, void *regex, const char *replace)
         end = !result[regex_match[0].rm_eo];
 
         str_replace = string_replace_regex_get_replace (result, regex_match,
-                                                        replace);
+                                                        last_match,
+                                                        replace, reference_char);
         length_replace = (str_replace) ? strlen (str_replace) : 0;
 
         length = regex_match[0].rm_so + length_replace +

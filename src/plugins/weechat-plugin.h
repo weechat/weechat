@@ -57,7 +57,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20140131-01"
+#define WEECHAT_PLUGIN_API_VERSION "20140208-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -248,7 +248,8 @@ struct t_weechat_plugin
                                  const char *highlight_words);
     int (*string_has_highlight_regex) (const char *string, const char *regex);
     char *(*string_replace_regex) (const char *string, void *regex,
-                                   const char *replace);
+                                   const char *replace,
+                                   const char reference_char);
     char **(*string_split) (const char *string, const char *separators,
                             int keep_eol, int num_items_max, int *num_items);
     char **(*string_split_shell) (const char *string, int *num_items);
@@ -1012,8 +1013,10 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->string_has_highlight(__string, __highlight_words)
 #define weechat_string_has_highlight_regex(__string, __regex)           \
     weechat_plugin->string_has_highlight_regex(__string, __regex)
-#define weechat_string_replace_regex(__string, __regex, __replace)      \
-    weechat_plugin->string_replace_regex(__string, __regex, __replace)
+#define weechat_string_replace_regex(__string, __regex, __replace,      \
+                                     __reference_char)                  \
+    weechat_plugin->string_replace_regex(__string, __regex, __replace,  \
+                                         __reference_char)
 #define weechat_string_split(__string, __separator, __eol, __max,       \
                              __num_items)                               \
     weechat_plugin->string_split(__string, __separator, __eol,          \

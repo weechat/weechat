@@ -114,7 +114,8 @@ trigger_callback_replace_regex (struct t_trigger *trigger,
 
         value = weechat_string_replace_regex (ptr_value,
                                               trigger->regex[i].regex,
-                                              trigger->regex[i].replace_eval);
+                                              trigger->regex[i].replace_eval,
+                                              '$');
         if (!value)
             continue;
 
