@@ -34,6 +34,58 @@ struct t_hashtable *trigger_callback_hashtable_options = NULL;
 
 
 /*
+ * Sets variables in "extra_vars" hashtable using tags from message.
+ *
+ * Returns:
+ *   0: tag "no_trigger" was in tags, callback must NOT be executed
+ *   1: no tag "no_trigger", callback can be executed
+ */
+
+int
+trigger_callback_set_tags (struct t_gui_buffer *buffer,
+                           const char **tags, int tags_count,
+                           struct t_hashtable *extra_vars)
+{
+    const char *localvar_type;
+    char str_temp[128];
+    int i;
+
+    snprintf (str_temp, sizeof (str_temp), "%d", tags_count);
+    weechat_hashtable_set (extra_vars, "tg_tags_count", str_temp);
+    localvar_type = (buffer) ?
+        weechat_buffer_get_string (buffer, "localvar_type") : NULL;
+
+    for (i = 0; i < tags_count; i++)
+    {
+        if (strcmp (tags[i], "no_trigger") == 0)
+        {
+            return 0;
+        }
+        else if (strncmp (tags[i], "notify_", 7) == 0)
+        {
+            weechat_hashtable_set (extra_vars, "tg_tag_notify", tags[i] + 7);
+            if (strcmp (tags[i] + 7, "private") == 0)
+            {
+                snprintf (str_temp, sizeof (str_temp), "%d",
+                          (localvar_type && (strcmp (localvar_type, "private") == 0)) ? 1 : 0);
+                weechat_hashtable_set (extra_vars, "tg_msg_pv", str_temp);
+            }
+        }
+        else if (strncmp (tags[i], "nick_", 5) == 0)
+        {
+            weechat_hashtable_set (extra_vars, "tg_tag_nick", tags[i] + 5);
+        }
+        else if (strncmp (tags[i], "prefix_nick_", 12) == 0)
+        {
+            weechat_hashtable_set (extra_vars, "tg_tag_prefix_nick",
+                                   tags[i] + 12);
+        }
+    }
+
+    return 1;
+}
+
+/*
  * Checks conditions for a trigger.
  *
  * Returns:
@@ -359,11 +411,12 @@ trigger_callback_modifier_cb (void *data, const char *modifier,
     struct t_gui_buffer *buffer;
     const char *ptr_string;
     char *string_modified, *pos, *pos2, *plugin_name, *buffer_name;
-    char *buffer_full_name, *tags;
-    int no_trigger, length;
+    char *buffer_full_name, *str_tags, **tags;
+    int length, num_tags;
 
-    no_trigger = 0;
     buffer = NULL;
+    tags = NULL;
+    num_tags = 0;
 
     /* get trigger pointer, return immediately if not found or trigger running */
     trigger = (struct t_trigger *)data;
@@ -428,15 +481,15 @@ trigger_callback_modifier_cb (void *data, const char *modifier,
                     pos2++;
                     if (pos2[0])
                     {
+                        tags = weechat_string_split (pos2, ",", 0, 0, &num_tags);
                         length = 1 + strlen (pos2) + 1 + 1;
-                        tags = malloc (length);
-                        if (tags)
+                        str_tags = malloc (length);
+                        if (str_tags)
                         {
-                            snprintf (tags, length, ",%s,", pos2);
-                            weechat_hashtable_set (extra_vars, "tg_tags", tags);
-                            if (strstr (tags, ",no_trigger,"))
-                                no_trigger = 1;
-                            free (tags);
+                            snprintf (str_tags, length, ",%s,", pos2);
+                            weechat_hashtable_set (extra_vars, "tg_tags",
+                                                   str_tags);
+                            free (str_tags);
                         }
                     }
                 }
@@ -446,12 +499,14 @@ trigger_callback_modifier_cb (void *data, const char *modifier,
         weechat_hashtable_set (pointers, "buffer", buffer);
     }
 
-    /*
-     * ignore this modifier if "no_trigger" was in tags
-     * (for modifier "weechat_print")
-     */
-    if (no_trigger)
-        goto end;
+    if (tags)
+    {
+        if (!trigger_callback_set_tags (buffer, (const char **)tags, num_tags,
+                                        extra_vars))
+        {
+            goto end;
+        }
+    }
 
     /* execute the trigger (conditions, regex, command) */
     trigger_callback_execute (trigger, buffer, NULL, extra_vars);
@@ -465,6 +520,9 @@ end:
         weechat_hashtable_free (pointers);
     if (extra_vars)
         weechat_hashtable_free (extra_vars);
+
+    if (tags)
+        weechat_string_free_split (tags);
 
     trigger->hook_running = 0;
 
@@ -483,9 +541,8 @@ trigger_callback_print_cb  (void *data, struct t_gui_buffer *buffer,
 {
     struct t_trigger *trigger;
     struct t_hashtable *pointers, *extra_vars;
-    const char *localvar_type;
     char *str_tags, *str_tags2, str_temp[128];
-    int i, rc, length, tag_notify_private;
+    int rc, length;
     struct tm *date_tmp;
 
     /* get trigger pointer, return immediately if not found or trigger running */
@@ -530,8 +587,13 @@ trigger_callback_print_cb  (void *data, struct t_gui_buffer *buffer,
         strftime (str_temp, sizeof (str_temp), "%Y-%m-%d %H:%M:%S", date_tmp);
         weechat_hashtable_set (extra_vars, "tg_date", str_temp);
     }
-    snprintf (str_temp, sizeof (str_temp), "%d", tags_count);
-    weechat_hashtable_set (extra_vars, "tg_tags_count", str_temp);
+    snprintf (str_temp, sizeof (str_temp), "%d", displayed);
+    weechat_hashtable_set (extra_vars, "tg_displayed", str_temp);
+    snprintf (str_temp, sizeof (str_temp), "%d", highlight);
+    weechat_hashtable_set (extra_vars, "tg_highlight", str_temp);
+    weechat_hashtable_set (extra_vars, "tg_prefix", prefix);
+    weechat_hashtable_set (extra_vars, "tg_message", message);
+
     str_tags = weechat_string_build_with_split_string (tags, ",");
     if (str_tags)
     {
@@ -546,31 +608,8 @@ trigger_callback_print_cb  (void *data, struct t_gui_buffer *buffer,
         }
         free (str_tags);
     }
-    snprintf (str_temp, sizeof (str_temp), "%d", displayed);
-    weechat_hashtable_set (extra_vars, "tg_displayed", str_temp);
-    snprintf (str_temp, sizeof (str_temp), "%d", highlight);
-    weechat_hashtable_set (extra_vars, "tg_highlight", str_temp);
-    weechat_hashtable_set (extra_vars, "tg_prefix", prefix);
-    weechat_hashtable_set (extra_vars, "tg_message", message);
-
-    localvar_type = weechat_buffer_get_string (buffer, "localvar_type");
-    tag_notify_private = 0;
-
-    for (i = 0; i < tags_count; i++)
-    {
-        if (strcmp (tags[i], "no_trigger") == 0)
-        {
-            goto end;
-        }
-        else if (strcmp (tags[i], "notify_private") == 0)
-        {
-            tag_notify_private = 1;
-        }
-    }
-    snprintf (str_temp, sizeof (str_temp), "%d",
-              (tag_notify_private && localvar_type &&
-               (strcmp (localvar_type, "private") == 0)) ? 1 : 0);
-    weechat_hashtable_set (extra_vars, "tg_msg_pv", str_temp);
+    if (!trigger_callback_set_tags (buffer, tags, tags_count, extra_vars))
+        goto end;
 
     /* execute the trigger (conditions, regex, command) */
     trigger_callback_execute (trigger, buffer, pointers, extra_vars);
