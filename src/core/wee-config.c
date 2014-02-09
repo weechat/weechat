@@ -301,6 +301,23 @@ config_change_sys_rlimit (void *data, struct t_config_option *option)
 }
 
 /*
+ * Callback for changes on options "weechat.look.save_{config|layout}_on_exit".
+ */
+
+void
+config_change_save_config_layout_on_exit ()
+{
+    if (gui_init_ok && !CONFIG_BOOLEAN(config_look_save_config_on_exit)
+        && (CONFIG_INTEGER(config_look_save_layout_on_exit) != CONFIG_LOOK_SAVE_LAYOUT_ON_EXIT_NONE))
+    {
+        gui_chat_printf (NULL,
+                         _("Warning: option weechat.look.save_config_on_exit "
+                           "is disabled, so the option "
+                           "weechat.look.save_layout_on_exit is ignored"));
+    }
+}
+
+/*
  * Callback for changes on option "weechat.look.save_config_on_exit".
  */
 
@@ -315,9 +332,25 @@ config_change_save_config_on_exit (void *data, struct t_config_option *option)
     {
         gui_chat_printf (NULL,
                          _("Warning: you should now issue /save to write "
-                           "\"save_config_on_exit\" option in configuration "
-                           "file"));
+                           "option weechat.look.save_config_on_exit in "
+                           "configuration file"));
     }
+
+    config_change_save_config_layout_on_exit ();
+}
+
+/*
+ * Callback for changes on option "weechat.look.save_layout_on_exit".
+ */
+
+void
+config_change_save_layout_on_exit (void *data, struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+    config_change_save_config_layout_on_exit ();
 }
 
 /*
@@ -2586,7 +2619,8 @@ config_weechat_init_options ()
         weechat_config_file, ptr_section,
         "save_layout_on_exit", "integer",
         N_("save layout on exit (buffers, windows, or both)"),
-        "none|buffers|windows|all", 0, 0, "none", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        "none|buffers|windows|all", 0, 0, "none", NULL, 0, NULL, NULL,
+        &config_change_save_layout_on_exit, NULL, NULL, NULL);
     config_look_scroll_amount = config_file_new_option (
         weechat_config_file, ptr_section,
         "scroll_amount", "integer",

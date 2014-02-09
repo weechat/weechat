@@ -9,6 +9,11 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 (file 'NEWS' in sources).
 
 
+== Version 0.4.4 (under dev!)
+
+* core: display a warning in case of inconsistency between the options
+  weechat.look.save_{config|layout}_on_exit
+
 == Version 0.4.3 (2014-02-09)
 
 * core: fix hotlist problems after apply of a layout (bug #41481)
