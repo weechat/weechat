@@ -30,21 +30,30 @@
 
 
 /*
- * Displays one trigger.
+ * Displays one trigger (internal function, must not be called directly).
  */
 
 void
-trigger_command_display_trigger (const char *name, int enabled, const char *hook,
-                                 const char *arguments, const char *conditions,
-                                 int regex_count, struct t_trigger_regex *regex,
-                                 int commands_count, char **commands,
-                                 int return_code, int full)
+trigger_command_display_trigger_internal (const char *name,
+                                          int enabled,
+                                          const char *hook,
+                                          const char *arguments,
+                                          const char *conditions,
+                                          int hooks_count,
+                                          int hook_count_cb,
+                                          int hook_count_cmd,
+                                          int regex_count,
+                                          struct t_trigger_regex *regex,
+                                          int commands_count,
+                                          char **commands,
+                                          int return_code,
+                                          int verbose)
 {
     char str_conditions[64], str_regex[64], str_command[64], str_rc[64];
     char spaces[256];
     int i, length;
 
-    if (full)
+    if (verbose >= 1)
     {
         weechat_printf_tags (
             NULL, "no_trigger",
@@ -66,6 +75,17 @@ trigger_command_display_trigger (const char *name, int enabled, const char *hook
             length = sizeof (spaces) - 1;
         memset (spaces, ' ', length);
         spaces[length] = '\0';
+        if (verbose >= 2)
+        {
+            weechat_printf_tags (NULL, "no_trigger",
+                                 "%s hooks: %d", spaces, hooks_count);
+            weechat_printf_tags (NULL, "no_trigger",
+                                 "%s callback: %d",
+                                 spaces, hook_count_cb);
+            weechat_printf_tags (NULL, "no_trigger",
+                                 "%s commands: %d",
+                                 spaces, hook_count_cmd);
+        }
         if (conditions && conditions[0])
         {
             weechat_printf_tags (NULL, "no_trigger",
@@ -182,11 +202,35 @@ trigger_command_display_trigger (const char *name, int enabled, const char *hook
 }
 
 /*
+ * Displays one trigger.
+ */
+
+void
+trigger_command_display_trigger (struct t_trigger *trigger, int verbose)
+{
+    trigger_command_display_trigger_internal (
+        trigger->name,
+        weechat_config_boolean (trigger->options[TRIGGER_OPTION_ENABLED]),
+        weechat_config_string (trigger->options[TRIGGER_OPTION_HOOK]),
+        weechat_config_string (trigger->options[TRIGGER_OPTION_ARGUMENTS]),
+        weechat_config_string (trigger->options[TRIGGER_OPTION_CONDITIONS]),
+        trigger->hooks_count,
+        trigger->hook_count_cb,
+        trigger->hook_count_cmd,
+        trigger->regex_count,
+        trigger->regex,
+        trigger->commands_count,
+        trigger->commands,
+        weechat_config_integer (trigger->options[TRIGGER_OPTION_RETURN_CODE]),
+        verbose);
+}
+
+/*
  * Displays a list of triggers.
  */
 
 void
-trigger_command_list (const char *message, int full)
+trigger_command_list (const char *message, int verbose)
 {
     struct t_trigger *ptr_trigger;
 
@@ -202,18 +246,7 @@ trigger_command_list (const char *message, int full)
     for (ptr_trigger = triggers; ptr_trigger;
          ptr_trigger = ptr_trigger->next_trigger)
     {
-        trigger_command_display_trigger (
-            ptr_trigger->name,
-            weechat_config_boolean (ptr_trigger->options[TRIGGER_OPTION_ENABLED]),
-            weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_HOOK]),
-            weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_ARGUMENTS]),
-            weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_CONDITIONS]),
-            ptr_trigger->regex_count,
-            ptr_trigger->regex,
-            ptr_trigger->commands_count,
-            ptr_trigger->commands,
-            weechat_config_integer (ptr_trigger->options[TRIGGER_OPTION_RETURN_CODE]),
-            full);
+        trigger_command_display_trigger (ptr_trigger, verbose);
     }
 }
 
@@ -222,7 +255,7 @@ trigger_command_list (const char *message, int full)
  */
 
 void
-trigger_command_list_default (int full)
+trigger_command_list_default (int verbose)
 {
     int i, regex_count, commands_count;
     struct t_trigger_regex *regex;
@@ -245,18 +278,21 @@ trigger_command_list_default (int full)
         trigger_split_command (trigger_config_default_list[i][6],
                                &commands_count,
                                &commands);
-        trigger_command_display_trigger (
+        trigger_command_display_trigger_internal (
             trigger_config_default_list[i][0],
             weechat_config_string_to_boolean (trigger_config_default_list[i][1]),
             trigger_config_default_list[i][2],
             trigger_config_default_list[i][3],
             trigger_config_default_list[i][4],
+            0,
+            0,
+            0,
             regex_count,
             regex,
             commands_count,
             commands,
             trigger_search_return_code (trigger_config_default_list[i][7]),
-            full);
+            verbose);
     }
 
     trigger_free_regex (&regex_count, &regex);
@@ -655,6 +691,31 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
         goto end;
     }
 
+    /* show detailed info on a trigger */
+    if (weechat_strcasecmp (argv[1], "show") == 0)
+    {
+        if (argc < 3)
+        {
+            weechat_printf_tags (NULL, "no_trigger",
+                                 _("%sError: missing arguments for \"%s\" "
+                                   "command"),
+                                 weechat_prefix ("error"), "trigger");
+            goto end;
+        }
+        ptr_trigger = trigger_search (argv[2]);
+        if (!ptr_trigger)
+        {
+            weechat_printf_tags (NULL, "no_trigger",
+                                 _("%sError: trigger \"%s\" not found"),
+                                 weechat_prefix ("error"), argv[2]);
+            goto end;
+        }
+        weechat_printf_tags (NULL, "no_trigger", "");
+        weechat_printf_tags (NULL, "no_trigger", _("Trigger:"));
+        trigger_command_display_trigger (ptr_trigger, 2);
+        goto end;
+    }
+
     /* restore default triggers */
     if (weechat_strcasecmp (argv[1], "default") == 0)
     {
@@ -705,6 +766,7 @@ trigger_command_init ()
            " || set <name> <option> <value>"
            " || rename <name> <new_name>"
            " || enable|disable|toggle|restart <name>|-all [<name>...]"
+           " || show <name>"
            " || del <name>|-all [<name>...]"
            " || default -yes"
            " || monitor"),
@@ -742,6 +804,7 @@ trigger_command_init ()
            "    disable: disable trigger(s)\n"
            "     toggle: toggle trigger(s)\n"
            "    restart: restart trigger(s) (for timer)\n"
+           "       show: show detailed info on a trigger (with some stats)\n"
            "        del: delete a trigger\n"
            "       -all: do action on all triggers\n"
            "    default: restore default triggers\n"
@@ -784,6 +847,7 @@ trigger_command_init ()
         " || set %(trigger_names) %(trigger_options)|name %(trigger_option_value)"
         " || rename %(trigger_names) %(trigger_names)"
         " || enable|disable|toggle|restart|del %(trigger_names)|-all %(trigger_names)|%*"
+        " || show %(trigger_names)"
         " || default"
         " || monitor",
         &trigger_command_trigger, NULL);
