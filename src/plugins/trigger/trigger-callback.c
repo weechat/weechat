@@ -756,6 +756,54 @@ end:
 }
 
 /*
+ * Callback for a config hooked.
+ */
+
+int
+trigger_callback_config_cb  (void *data, const char *option, const char *value)
+{
+    struct t_trigger *trigger;
+    struct t_hashtable *extra_vars;
+    int rc;
+
+    /* get trigger pointer, return immediately if not found or trigger running */
+    trigger = (struct t_trigger *)data;
+    if (!trigger || trigger->hook_running)
+        return WEECHAT_RC_OK;
+
+    trigger->hook_count_cb++;
+    trigger->hook_running = 1;
+
+    extra_vars = NULL;
+
+    rc = trigger_return_code[weechat_config_integer (trigger->options[TRIGGER_OPTION_RETURN_CODE])];
+
+    /* create hashtable */
+    extra_vars = weechat_hashtable_new (32,
+                                        WEECHAT_HASHTABLE_STRING,
+                                        WEECHAT_HASHTABLE_STRING,
+                                        NULL,
+                                        NULL);
+    if (!extra_vars)
+        goto end;
+
+    /* add data in hashtable used for conditions/replace/command */
+    weechat_hashtable_set (extra_vars, "tg_option", option);
+    weechat_hashtable_set (extra_vars, "tg_value", value);
+
+    /* execute the trigger (conditions, regex, command) */
+    trigger_callback_execute (trigger, NULL, NULL, extra_vars);
+
+end:
+    if (extra_vars)
+        weechat_hashtable_free (extra_vars);
+
+    trigger->hook_running = 0;
+
+    return rc;
+}
+
+/*
  * Initializes trigger callback.
  */
 

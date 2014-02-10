@@ -36,6 +36,8 @@ extern int trigger_callback_command_run_cb  (void *data,
                                              struct t_gui_buffer *buffer,
                                              const char *command);
 extern int trigger_callback_timer_cb  (void *data, int remaining_calls);
+extern int trigger_callback_config_cb  (void *data, const char *option,
+                                        const char *value);
 extern void trigger_callback_init ();
 extern void trigger_callback_end ();
 

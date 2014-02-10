@@ -46,6 +46,7 @@ enum t_trigger_hook_type
     TRIGGER_HOOK_PRINT,
     TRIGGER_HOOK_COMMAND_RUN,
     TRIGGER_HOOK_TIMER,
+    TRIGGER_HOOK_CONFIG,
     /* number of hook types */
     TRIGGER_NUM_HOOK_TYPES,
 };
@@ -101,6 +102,7 @@ extern struct t_weechat_plugin *weechat_trigger_plugin;
 extern char *trigger_option_string[];
 extern char *trigger_option_default[];
 extern char *trigger_hook_type_string[];
+extern char *trigger_hook_option_values;
 extern char *trigger_hook_default_arguments[];
 extern char *trigger_hook_default_conditions[];
 extern char *trigger_hook_default_regex[];
