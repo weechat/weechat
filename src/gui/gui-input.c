@@ -123,7 +123,8 @@ gui_input_replace_input (struct t_gui_buffer *buffer, const char *new_input)
 void
 gui_input_paste_pending_signal ()
 {
-    hook_signal_send ("input_paste_pending", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+    (void) hook_signal_send ("input_paste_pending",
+                             WEECHAT_HOOK_SIGNAL_STRING, NULL);
 }
 
 /*
@@ -166,7 +167,8 @@ gui_input_text_changed_modifier_and_signal (struct t_gui_buffer *buffer,
         gui_completion_stop (buffer->completion);
 
     /* send signal */
-    hook_signal_send ("input_text_changed", WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+    (void) hook_signal_send ("input_text_changed",
+                             WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }
 
 /*
@@ -176,8 +178,8 @@ gui_input_text_changed_modifier_and_signal (struct t_gui_buffer *buffer,
 void
 gui_input_text_cursor_moved_signal (struct t_gui_buffer *buffer)
 {
-    hook_signal_send ("input_text_cursor_moved", WEECHAT_HOOK_SIGNAL_POINTER,
-                      buffer);
+    (void) hook_signal_send ("input_text_cursor_moved",
+                             WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }
 
 /*
@@ -187,7 +189,8 @@ gui_input_text_cursor_moved_signal (struct t_gui_buffer *buffer)
 void
 gui_input_search_signal (struct t_gui_buffer *buffer)
 {
-    hook_signal_send ("input_search", WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+    (void) hook_signal_send ("input_search",
+                             WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }
 
 /*
@@ -1650,8 +1653,9 @@ gui_input_zoom_merged_buffer (struct t_gui_buffer *buffer)
 
     gui_buffer_ask_chat_refresh (buffer, 2);
 
-    hook_signal_send ((buffer_was_zoomed) ? "buffer_unzoomed" : "buffer_zoomed",
-                      WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+    (void) hook_signal_send ((buffer_was_zoomed) ?
+                             "buffer_unzoomed" : "buffer_zoomed",
+                             WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }
 
 /*

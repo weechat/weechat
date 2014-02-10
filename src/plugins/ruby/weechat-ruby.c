@@ -626,8 +626,9 @@ weechat_ruby_load (const char *filename)
                                         &weechat_ruby_api_buffer_input_data_cb,
                                         &weechat_ruby_api_buffer_close_cb);
 
-    weechat_hook_signal_send ("ruby_script_loaded", WEECHAT_HOOK_SIGNAL_STRING,
-                              ruby_current_script->filename);
+    (void) weechat_hook_signal_send ("ruby_script_loaded",
+                                     WEECHAT_HOOK_SIGNAL_STRING,
+                                     ruby_current_script->filename);
 
     return 1;
 }
@@ -686,8 +687,8 @@ weechat_ruby_unload (struct t_plugin_script *script)
     if (interpreter)
         rb_gc_unregister_address (interpreter);
 
-    weechat_hook_signal_send ("ruby_script_unloaded",
-                              WEECHAT_HOOK_SIGNAL_STRING, filename);
+    (void) weechat_hook_signal_send ("ruby_script_unloaded",
+                                     WEECHAT_HOOK_SIGNAL_STRING, filename);
     if (filename)
         free (filename);
 }

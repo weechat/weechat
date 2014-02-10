@@ -662,8 +662,8 @@ gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
     }
 
     /* send signal */
-    hook_signal_send ("window_opened",
-                      WEECHAT_HOOK_SIGNAL_POINTER, new_window);
+    (void) hook_signal_send ("window_opened",
+                             WEECHAT_HOOK_SIGNAL_POINTER, new_window);
 
     return new_window;
 }
@@ -943,7 +943,8 @@ gui_window_free (struct t_gui_window *window)
 
     old_current_window = gui_current_window;
 
-    hook_signal_send ("window_closing", WEECHAT_HOOK_SIGNAL_POINTER, window);
+    (void) hook_signal_send ("window_closing",
+                             WEECHAT_HOOK_SIGNAL_POINTER, window);
 
     if (window->buffer)
         gui_buffer_add_value_num_displayed (window->buffer, -1);
@@ -994,14 +995,16 @@ gui_window_free (struct t_gui_window *window)
         i++;
     }
 
-    hook_signal_send ("window_closed", WEECHAT_HOOK_SIGNAL_POINTER, window);
+    (void) hook_signal_send ("window_closed",
+                             WEECHAT_HOOK_SIGNAL_POINTER, window);
 
     free (window);
 
     if (gui_current_window != old_current_window)
     {
-        hook_signal_send ("window_switch",
-                          WEECHAT_HOOK_SIGNAL_POINTER, gui_current_window);
+        (void) hook_signal_send ("window_switch",
+                                 WEECHAT_HOOK_SIGNAL_POINTER,
+                                 gui_current_window);
     }
 }
 
@@ -1657,13 +1660,15 @@ gui_window_zoom (struct t_gui_window *window)
     if (ptr_layout)
     {
         /* restore layout as it was before zooming a window */
-        hook_signal_send ("window_unzoom",
-                          WEECHAT_HOOK_SIGNAL_POINTER, gui_current_window);
+        (void) hook_signal_send ("window_unzoom",
+                                 WEECHAT_HOOK_SIGNAL_POINTER,
+                                 gui_current_window);
         gui_layout_window_apply (ptr_layout,
                                  ptr_layout->internal_id_current_window);
         gui_layout_remove (ptr_layout);
-        hook_signal_send ("window_unzoomed",
-                          WEECHAT_HOOK_SIGNAL_POINTER, gui_current_window);
+        (void) hook_signal_send ("window_unzoomed",
+                                 WEECHAT_HOOK_SIGNAL_POINTER,
+                                 gui_current_window);
     }
     else
     {
@@ -1672,12 +1677,14 @@ gui_window_zoom (struct t_gui_window *window)
         if (ptr_layout)
         {
             gui_layout_add (ptr_layout);
-            hook_signal_send ("window_zoom",
-                              WEECHAT_HOOK_SIGNAL_POINTER, gui_current_window);
+            (void) hook_signal_send ("window_zoom",
+                                     WEECHAT_HOOK_SIGNAL_POINTER,
+                                     gui_current_window);
             gui_layout_window_store (ptr_layout);
             gui_window_merge_all (window);
-            hook_signal_send ("window_zoomed",
-                              WEECHAT_HOOK_SIGNAL_POINTER, gui_current_window);
+            (void) hook_signal_send ("window_zoomed",
+                                     WEECHAT_HOOK_SIGNAL_POINTER,
+                                     gui_current_window);
         }
     }
 }

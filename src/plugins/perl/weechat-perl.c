@@ -468,8 +468,9 @@ weechat_perl_load (const char *filename)
                                         &weechat_perl_api_buffer_input_data_cb,
                                         &weechat_perl_api_buffer_close_cb);
 
-    weechat_hook_signal_send ("perl_script_loaded", WEECHAT_HOOK_SIGNAL_STRING,
-                              perl_current_script->filename);
+    (void) weechat_hook_signal_send ("perl_script_loaded",
+                                     WEECHAT_HOOK_SIGNAL_STRING,
+                                     perl_current_script->filename);
 
     return 1;
 }
@@ -542,8 +543,8 @@ weechat_perl_unload (struct t_plugin_script *script)
         free (interpreter);
 #endif
 
-    weechat_hook_signal_send ("perl_script_unloaded",
-                              WEECHAT_HOOK_SIGNAL_STRING, filename);
+    (void) weechat_hook_signal_send ("perl_script_unloaded",
+                                     WEECHAT_HOOK_SIGNAL_STRING, filename);
     if (filename)
         free (filename);
 }

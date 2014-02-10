@@ -408,8 +408,8 @@ gui_key_flush (int paste)
 
         if (key_str[0])
         {
-            hook_signal_send ("key_pressed",
-                              WEECHAT_HOOK_SIGNAL_STRING, key_str);
+            (void) hook_signal_send ("key_pressed",
+                                     WEECHAT_HOOK_SIGNAL_STRING, key_str);
 
             if (gui_current_window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
                 input_old = (gui_current_window->buffer->input_buffer) ?
@@ -518,7 +518,7 @@ gui_key_read_cb (void *data, int fd)
     {
         /* no data on stdin, terminal lost */
         log_printf (_("Terminal lost, exiting WeeChat..."));
-        hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+        (void) hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
         weechat_quit = 1;
         return WEECHAT_RC_OK;
     }

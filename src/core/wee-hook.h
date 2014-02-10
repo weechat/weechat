@@ -510,14 +510,14 @@ extern struct t_hook *hook_signal (struct t_weechat_plugin *plugin,
                                    const char *signal,
                                    t_hook_callback_signal *callback,
                                    void *callback_data);
-extern void hook_signal_send (const char *signal, const char *type_data,
-                              void *signal_data);
+extern int hook_signal_send (const char *signal, const char *type_data,
+                             void *signal_data);
 extern struct t_hook *hook_hsignal (struct t_weechat_plugin *plugin,
                                     const char *signal,
                                     t_hook_callback_hsignal *callback,
                                     void *callback_data);
-extern void hook_hsignal_send (const char *signal,
-                               struct t_hashtable *hashtable);
+extern int hook_hsignal_send (const char *signal,
+                              struct t_hashtable *hashtable);
 extern struct t_hook *hook_config (struct t_weechat_plugin *plugin,
                                    const char *option,
                                    t_hook_callback_config *callback,

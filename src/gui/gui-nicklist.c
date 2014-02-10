@@ -72,14 +72,15 @@ gui_nicklist_send_signal (const char *signal, struct t_gui_buffer *buffer,
                       "0x%lx,%s",
                       (long unsigned int)(buffer),
                       (arguments) ? arguments : "");
-            hook_signal_send (signal, WEECHAT_HOOK_SIGNAL_STRING, str_args);
+            (void) hook_signal_send (signal,
+                                     WEECHAT_HOOK_SIGNAL_STRING, str_args);
             free (str_args);
         }
     }
     else
     {
-        hook_signal_send (signal, WEECHAT_HOOK_SIGNAL_STRING,
-                          (char *)arguments);
+        (void) hook_signal_send (signal,
+                                 WEECHAT_HOOK_SIGNAL_STRING, (char *)arguments);
     }
 }
 
@@ -114,7 +115,7 @@ gui_nicklist_send_hsignal (const char *signal, struct t_gui_buffer *buffer,
     if (nick)
         hashtable_set (gui_nicklist_hsignal, "nick", nick);
 
-    hook_hsignal_send (signal, gui_nicklist_hsignal);
+    (void) hook_hsignal_send (signal, gui_nicklist_hsignal);
 }
 
 /*

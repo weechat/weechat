@@ -1088,8 +1088,8 @@ plugin_script_action_install (struct t_weechat_plugin *weechat_plugin,
 
     snprintf (str_signal, sizeof (str_signal),
               "%s_script_installed", weechat_plugin->name);
-    weechat_hook_signal_send (str_signal, WEECHAT_HOOK_SIGNAL_STRING,
-                              ptr_list);
+    (void) weechat_hook_signal_send (str_signal, WEECHAT_HOOK_SIGNAL_STRING,
+                                     ptr_list);
 
     free (*list);
     *list = NULL;
@@ -1148,8 +1148,8 @@ plugin_script_action_remove (struct t_weechat_plugin *weechat_plugin,
 
     snprintf (str_signal, sizeof (str_signal),
               "%s_script_removed", weechat_plugin->name);
-    weechat_hook_signal_send (str_signal, WEECHAT_HOOK_SIGNAL_STRING,
-                              ptr_list);
+    (void) weechat_hook_signal_send (str_signal, WEECHAT_HOOK_SIGNAL_STRING,
+                                     ptr_list);
 
     free (*list);
     *list = NULL;

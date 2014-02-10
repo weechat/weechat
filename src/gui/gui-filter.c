@@ -154,8 +154,8 @@ gui_filter_buffer (struct t_gui_buffer *buffer,
     if (buffer->lines->lines_hidden != lines_hidden)
     {
         buffer->lines->lines_hidden = lines_hidden;
-        hook_signal_send ("buffer_lines_hidden",
-                          WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+        (void) hook_signal_send ("buffer_lines_hidden",
+                                 WEECHAT_HOOK_SIGNAL_POINTER, buffer);
     }
 
     if (lines_changed)
@@ -210,8 +210,8 @@ gui_filter_global_enable ()
     {
         gui_filters_enabled = 1;
         gui_filter_all_buffers ();
-        hook_signal_send ("filters_enabled",
-                          WEECHAT_HOOK_SIGNAL_STRING, NULL);
+        (void) hook_signal_send ("filters_enabled",
+                                 WEECHAT_HOOK_SIGNAL_STRING, NULL);
     }
 }
 
@@ -226,8 +226,8 @@ gui_filter_global_disable ()
     {
         gui_filters_enabled = 0;
         gui_filter_all_buffers ();
-        hook_signal_send ("filters_disabled",
-                          WEECHAT_HOOK_SIGNAL_STRING, NULL);
+        (void) hook_signal_send ("filters_disabled",
+                                 WEECHAT_HOOK_SIGNAL_STRING, NULL);
     }
 }
 
@@ -380,8 +380,8 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
         last_gui_filter = new_filter;
         new_filter->next_filter = NULL;
 
-        hook_signal_send ("filter_added",
-                          WEECHAT_HOOK_SIGNAL_POINTER, new_filter);
+        (void) hook_signal_send ("filter_added",
+                                 WEECHAT_HOOK_SIGNAL_POINTER, new_filter);
     }
 
     return new_filter;
@@ -419,8 +419,8 @@ gui_filter_free (struct t_gui_filter *filter)
 {
     int i;
 
-    hook_signal_send ("filter_removing",
-                      WEECHAT_HOOK_SIGNAL_POINTER, filter);
+    (void) hook_signal_send ("filter_removing",
+                             WEECHAT_HOOK_SIGNAL_POINTER, filter);
 
     /* free data */
     if (filter->name)
@@ -464,7 +464,7 @@ gui_filter_free (struct t_gui_filter *filter)
 
     free (filter);
 
-    hook_signal_send ("filter_removed", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+    (void) hook_signal_send ("filter_removed", WEECHAT_HOOK_SIGNAL_STRING, NULL);
 }
 
 /*

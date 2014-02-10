@@ -255,7 +255,7 @@ gui_main_signal_sigquit ()
 {
     log_printf (_("Signal %s received, exiting WeeChat..."),
                 "SIGQUIT");
-    hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+    (void) hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
     weechat_quit = 1;
 }
 
@@ -268,7 +268,7 @@ gui_main_signal_sigterm ()
 {
     log_printf (_("Signal %s received, exiting WeeChat..."),
                 "SIGTERM");
-    hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+    (void) hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
     weechat_quit = 1;
 }
 
@@ -287,7 +287,7 @@ gui_main_signal_sighup ()
      */
     gui_reload_config = 1;
 
-    hook_signal_send ("signal_sighup", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+    (void) hook_signal_send ("signal_sighup", WEECHAT_HOOK_SIGNAL_STRING, NULL);
 }
 
 /*
@@ -481,8 +481,8 @@ gui_main_loop ()
 
         if (gui_signal_sigwinch_received)
         {
-            hook_signal_send ("signal_sigwinch",
-                              WEECHAT_HOOK_SIGNAL_STRING, NULL);
+            (void) hook_signal_send ("signal_sigwinch",
+                                     WEECHAT_HOOK_SIGNAL_STRING, NULL);
             gui_signal_sigwinch_received = 0;
         }
 

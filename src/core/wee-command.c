@@ -1476,8 +1476,8 @@ COMMAND_CALLBACK(debug)
         else
             log_printf ("Dump request for WeeChat core and plugins");
         weechat_log_use_time = 0;
-        hook_signal_send ("debug_dump", WEECHAT_HOOK_SIGNAL_STRING,
-                          (argc > 2) ? argv_eol[2] : NULL);
+        (void) hook_signal_send ("debug_dump", WEECHAT_HOOK_SIGNAL_STRING,
+                                 (argc > 2) ? argv_eol[2] : NULL);
         weechat_log_use_time = 1;
     }
     else if (string_strcasecmp (argv[1], "buffer") == 0)
@@ -1521,7 +1521,7 @@ COMMAND_CALLBACK(debug)
     {
         gui_chat_printf (NULL, "");
         gui_chat_printf (NULL, "Libs:");
-        hook_signal_send ("debug_libs", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+        (void) hook_signal_send ("debug_libs", WEECHAT_HOOK_SIGNAL_STRING, NULL);
     }
     else if (string_strcasecmp (argv[1], "memory") == 0)
     {
@@ -4565,7 +4565,7 @@ COMMAND_CALLBACK(quit)
      * send quit signal: some plugins like irc use this signal to disconnect
      * from servers
      */
-    hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, pos_args);
+    (void) hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, pos_args);
 
     /* force end of WeeChat main loop */
     weechat_quit = 1;
@@ -5650,8 +5650,8 @@ COMMAND_CALLBACK(upgrade)
     }
 
     /* send "upgrade" signal to plugins */
-    hook_signal_send ("upgrade", WEECHAT_HOOK_SIGNAL_STRING,
-                      (quit) ? "quit" : NULL);
+    (void) hook_signal_send ("upgrade", WEECHAT_HOOK_SIGNAL_STRING,
+                             (quit) ? "quit" : NULL);
 
     if (!upgrade_weechat_save ())
     {

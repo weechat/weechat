@@ -57,7 +57,8 @@ int gui_add_hotlist = 1;                    /* 0 is for temporarily disable */
 void
 gui_hotlist_changed_signal ()
 {
-    hook_signal_send ("hotlist_changed", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+    (void) hook_signal_send ("hotlist_changed",
+                             WEECHAT_HOOK_SIGNAL_STRING, NULL);
 }
 
 /*

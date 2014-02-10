@@ -8047,14 +8047,16 @@ hook = weechat.hook_signal("quit", "my_signal_cb", "")
 
 ==== weechat_hook_signal_send
 
+_Updated in 0.4.4._
+
 Send a signal.
 
 Prototype:
 
 [source,C]
 ----
-void weechat_hook_signal_send (const char *signal, const char *type_data,
-                               void *signal_data);
+int weechat_hook_signal_send (const char *signal, const char *type_data,
+                              void *signal_data);
 ----
 
 Arguments:
@@ -8064,11 +8066,19 @@ Arguments:
   <<_weechat_hook_signal,weechat_hook_signal>>)
 * 'signal_data': data sent with signal
 
+Return value (_WeeChat ≥ 0.4.4)_:
+
+* return code of last callback executed ('WEECHAT_RC_OK' if no callback was
+  executed):
+** 'WEECHAT_RC_OK'
+** 'WEECHAT_RC_OK_EAT'
+** 'WEECHAT_RC_ERROR'
+
 C example:
 
 [source,C]
 ----
-weechat_hook_signal_send ("my_signal", WEECHAT_HOOK_SIGNAL_STRING, my_string);
+int rc = weechat_hook_signal_send ("my_signal", WEECHAT_HOOK_SIGNAL_STRING, my_string);
 ----
 
 Script (Python):
@@ -8076,10 +8086,10 @@ Script (Python):
 [source,python]
 ----
 # prototype
-weechat.hook_signal_send(signal, type_data, signal_data)
+rc = weechat.hook_signal_send(signal, type_data, signal_data)
 
 # example
-weechat.hook_signal_send("my_signal", weechat.WEECHAT_HOOK_SIGNAL_STRING, my_string)
+rc = weechat.hook_signal_send("my_signal", weechat.WEECHAT_HOOK_SIGNAL_STRING, my_string)
 ----
 
 [[signal_logger_backlog]]
@@ -8354,7 +8364,7 @@ hook = weechat.hook_hsignal("test", "my_hsignal_cb", "")
 
 ==== weechat_hook_hsignal_send
 
-_WeeChat ≥ 0.3.4._
+_WeeChat ≥ 0.3.4, updated in 0.4.4._
 
 Send a hsignal (signal with hashtable).
 
@@ -8362,7 +8372,7 @@ Prototype:
 
 [source,C]
 ----
-void weechat_hook_hsignal_send (const char *signal, struct t_hashtable *hashtable);
+int weechat_hook_hsignal_send (const char *signal, struct t_hashtable *hashtable);
 ----
 
 Arguments:
@@ -8370,10 +8380,19 @@ Arguments:
 * 'signal': signal to send
 * 'hashtable': hashtable
 
+Return value (_WeeChat ≥ 0.4.4)_:
+
+* return code of last callback executed ('WEECHAT_RC_OK' if no callback was
+  executed):
+** 'WEECHAT_RC_OK'
+** 'WEECHAT_RC_OK_EAT'
+** 'WEECHAT_RC_ERROR'
+
 C example:
 
 [source,C]
 ----
+int rc;
 struct t_hashtable *hashtable = weechat_hashtable_new (8,
                                                        WEECHAT_HASHTABLE_STRING,
                                                        WEECHAT_HASHTABLE_STRING,
@@ -8382,7 +8401,7 @@ struct t_hashtable *hashtable = weechat_hashtable_new (8,
 if (hashtable)
 {
     weechat_hashtable_set (hashtable, "key", "value");
-    weechat_hook_hsignal_send ("my_hsignal", hashtable);
+    rc = weechat_hook_hsignal_send ("my_hsignal", hashtable);
     weechat_hashtable_free (hashtable);
 }
 ----
@@ -8392,10 +8411,10 @@ Script (Python):
 [source,python]
 ----
 # prototype
-weechat.hook_hsignal_send(signal, hashtable)
+rc = weechat.hook_hsignal_send(signal, hashtable)
 
 # example
-weechat.hook_hsignal_send("my_hsignal", { "key": "value" })
+rc = weechat.hook_hsignal_send("my_hsignal", { "key": "value" })
 ----
 
 [[hsignal_irc_redirect_command]]
@@ -11573,7 +11592,7 @@ bar_item = weechat.bar_item_search("myitem")
 
 ==== weechat_bar_item_new
 
-_Updated in version 0.4.2._
+_Updated in 0.4.2._
 
 Create a new bar item.
 
@@ -12063,7 +12082,7 @@ This function is not available in scripting API.
 
 ==== weechat_network_connect_to
 
-_Updated in version 0.4.3._
+_Updated in 0.4.3._
 
 Establish a connection to a remote host.
 

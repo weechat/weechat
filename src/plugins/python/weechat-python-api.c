@@ -2584,38 +2584,38 @@ static PyObject *
 weechat_python_api_hook_signal_send (PyObject *self, PyObject *args)
 {
     char *signal, *type_data, *signal_data, *error;
-    int number;
+    int number, rc;
 
-    API_FUNC(1, "hook_signal_send", API_RETURN_ERROR);
+    API_FUNC(1, "hook_signal_send", API_RETURN_INT(WEECHAT_RC_ERROR));
     signal = NULL;
     type_data = NULL;
     signal_data = NULL;
     if (!PyArg_ParseTuple (args, "sss", &signal, &type_data, &signal_data))
-        API_WRONG_ARGS(API_RETURN_ERROR);
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_RC_ERROR));
 
     if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
     {
-        weechat_hook_signal_send (signal, type_data, signal_data);
-        API_RETURN_OK;
+        rc = weechat_hook_signal_send (signal, type_data, signal_data);
+        API_RETURN_INT(rc);
     }
     else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_INT) == 0)
     {
         error = NULL;
         number = (int)strtol (signal_data, &error, 10);
         if (error && !error[0])
-        {
-            weechat_hook_signal_send (signal, type_data, &number);
-        }
-        API_RETURN_OK;
+            rc = weechat_hook_signal_send (signal, type_data, &number);
+        else
+            rc = WEECHAT_RC_ERROR;
+        API_RETURN_INT(rc);
     }
     else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_POINTER) == 0)
     {
-        weechat_hook_signal_send (signal, type_data,
-                                  API_STR2PTR(signal_data));
-        API_RETURN_OK;
+        rc = weechat_hook_signal_send (signal, type_data,
+                                       API_STR2PTR(signal_data));
+        API_RETURN_INT(rc);
     }
 
-    API_RETURN_ERROR;
+    API_RETURN_INT(WEECHAT_RC_ERROR);
 }
 
 int
@@ -2687,24 +2687,25 @@ weechat_python_api_hook_hsignal_send (PyObject *self, PyObject *args)
     char *signal;
     struct t_hashtable *hashtable;
     PyObject *dict;
+    int rc;
 
-    API_FUNC(1, "hook_hsignal_send", API_RETURN_ERROR);
+    API_FUNC(1, "hook_hsignal_send", API_RETURN_INT(WEECHAT_RC_ERROR));
     signal = NULL;
     dict = NULL;
     if (!PyArg_ParseTuple (args, "sO", &signal, &dict))
-        API_WRONG_ARGS(API_RETURN_ERROR);
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_RC_ERROR));
 
     hashtable = weechat_python_dict_to_hashtable (dict,
                                                   WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
                                                   WEECHAT_HASHTABLE_STRING,
                                                   WEECHAT_HASHTABLE_STRING);
 
-    weechat_hook_hsignal_send (signal, hashtable);
+    rc = weechat_hook_hsignal_send (signal, hashtable);
 
     if (hashtable)
         weechat_hashtable_free (hashtable);
 
-    API_RETURN_OK;
+    API_RETURN_INT(rc);
 }
 
 int

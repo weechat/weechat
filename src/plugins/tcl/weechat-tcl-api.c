@@ -2918,42 +2918,41 @@ weechat_tcl_api_hook_signal_send (ClientData clientData, Tcl_Interp *interp,
 {
     Tcl_Obj *objp;
     char *signal, *type_data;
-    int number;
-    int i;
+    int number, i, rc;
 
-    API_FUNC(1, "hook_signal_send", API_RETURN_ERROR);
+    API_FUNC(1, "hook_signal_send", API_RETURN_INT(WEECHAT_RC_ERROR));
     if (objc < 4)
-        API_WRONG_ARGS(API_RETURN_ERROR);
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_RC_ERROR));
 
     signal = Tcl_GetStringFromObj (objv[1], &i);
     type_data = Tcl_GetStringFromObj (objv[2], &i);
     if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
     {
-        weechat_hook_signal_send (signal,
-                                  type_data,
-                                  Tcl_GetStringFromObj (objv[3], &i)); /* signal_data */
-        API_RETURN_OK;
+        rc = weechat_hook_signal_send (signal,
+                                       type_data,
+                                       Tcl_GetStringFromObj (objv[3], &i)); /* signal_data */
+        API_RETURN_INT(rc);
     }
     else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_INT) == 0)
     {
         if (Tcl_GetIntFromObj (interp, objv[3], &number) != TCL_OK)
         {
-            API_RETURN_ERROR;
+            API_RETURN_INT(WEECHAT_RC_ERROR);
         }
-        weechat_hook_signal_send (signal,
-                                  type_data,
-                                  &number); /* signal_data */
-        API_RETURN_OK;
+        rc = weechat_hook_signal_send (signal,
+                                       type_data,
+                                       &number); /* signal_data */
+        API_RETURN_INT(rc);
     }
     else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_POINTER) == 0)
     {
-        weechat_hook_signal_send (signal,
-                                  type_data,
-                                  API_STR2PTR(Tcl_GetStringFromObj (objv[3], &i))); /* signal_data */
-        API_RETURN_OK;
+        rc = weechat_hook_signal_send (signal,
+                                       type_data,
+                                       API_STR2PTR(Tcl_GetStringFromObj (objv[3], &i))); /* signal_data */
+        API_RETURN_INT(rc);
     }
 
-    API_RETURN_ERROR;
+    API_RETURN_INT(WEECHAT_RC_ERROR);
 }
 
 int
@@ -3025,11 +3024,11 @@ weechat_tcl_api_hook_hsignal_send (ClientData clientData, Tcl_Interp *interp,
     Tcl_Obj *objp;
     char *signal;
     struct t_hashtable *hashtable;
-    int i;
+    int i, rc;
 
-    API_FUNC(1, "hook_hsignal_send", API_RETURN_ERROR);
+    API_FUNC(1, "hook_hsignal_send", API_RETURN_INT(WEECHAT_RC_ERROR));
     if (objc < 3)
-        API_WRONG_ARGS(API_RETURN_ERROR);
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_RC_ERROR));
 
     signal = Tcl_GetStringFromObj (objv[1], &i);
     hashtable = weechat_tcl_dict_to_hashtable (interp, objv[2],
@@ -3037,12 +3036,12 @@ weechat_tcl_api_hook_hsignal_send (ClientData clientData, Tcl_Interp *interp,
                                                WEECHAT_HASHTABLE_STRING,
                                                WEECHAT_HASHTABLE_STRING);
 
-    weechat_hook_hsignal_send (signal, hashtable);
+    rc = weechat_hook_hsignal_send (signal, hashtable);
 
     if (hashtable)
         weechat_hashtable_free (hashtable);
 
-    API_RETURN_OK;
+    API_RETURN_INT(rc);
 }
 
 int

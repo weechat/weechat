@@ -912,8 +912,8 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
             && (strcmp (old_suggestions, ptr_suggestions) != 0)))
     {
         weechat_bar_item_update ("aspell_suggest");
-        weechat_hook_signal_send ("aspell_suggest",
-                                  WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+        (void) weechat_hook_signal_send ("aspell_suggest",
+                                         WEECHAT_HOOK_SIGNAL_POINTER, buffer);
     }
     if (old_suggestions)
         free (old_suggestions);

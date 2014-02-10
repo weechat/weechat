@@ -8220,14 +8220,17 @@ hook = weechat.hook_signal("quit", "my_signal_cb", "")
 
 ==== weechat_hook_signal_send
 
+// TRANSLATION MISSING
+_Updated in 0.4.4._
+
 Invia un segnale.
 
 Prototipo:
 
 [source,C]
 ----
-void weechat_hook_signal_send (const char *signal, const char *type_data,
-                               void *signal_data);
+int weechat_hook_signal_send (const char *signal, const char *type_data,
+                              void *signal_data);
 ----
 
 Argomenti:
@@ -8237,11 +8240,21 @@ Argomenti:
   <<_weechat_hook_signal,weechat_hook_signal>>)
 * 'signal_data': dati inviati con il segnale
 
+// TRANSLATION MISSING
+Return value (_WeeChat ≥ 0.4.4)_:
+
+// TRANSLATION MISSING
+* return code of last callback executed ('WEECHAT_RC_OK' if no callback was
+  executed):
+** 'WEECHAT_RC_OK'
+** 'WEECHAT_RC_OK_EAT'
+** 'WEECHAT_RC_ERROR'
+
 Esempio in C:
 
 [source,C]
 ----
-weechat_hook_signal_send ("my_signal", WEECHAT_HOOK_SIGNAL_STRING, my_string);
+int rc = weechat_hook_signal_send ("my_signal", WEECHAT_HOOK_SIGNAL_STRING, my_string);
 ----
 
 Script (Python):
@@ -8249,10 +8262,10 @@ Script (Python):
 [source,python]
 ----
 # prototipo
-weechat.hook_signal_send(signal, type_data, signal_data)
+rc = weechat.hook_signal_send(signal, type_data, signal_data)
 
 # esempio
-weechat.hook_signal_send("my_signal", weechat.WEECHAT_HOOK_SIGNAL_STRING, my_string)
+rc = weechat.hook_signal_send("my_signal", weechat.WEECHAT_HOOK_SIGNAL_STRING, my_string)
 ----
 
 [[signal_logger_backlog]]
@@ -8544,7 +8557,8 @@ hook = weechat.hook_hsignal("test", "my_hsignal_cb", "")
 
 ==== weechat_hook_hsignal_send
 
-_WeeChat ≥ 0.3.4._
+// TRANSLATION MISSING
+_WeeChat ≥ 0.3.4, updated in 0.4.4._
 
 Invia un hsignal (segnale con tabella hash).
 
@@ -8552,7 +8566,7 @@ Prototipo:
 
 [source,C]
 ----
-void weechat_hook_hsignal_send (const char *signal, struct t_hashtable *hashtable);
+int weechat_hook_hsignal_send (const char *signal, struct t_hashtable *hashtable);
 ----
 
 Argomenti:
@@ -8560,10 +8574,21 @@ Argomenti:
 * 'signal': segnale da inviare
 * 'hashtable': tabella hash
 
+// TRANSLATION MISSING
+Return value (_WeeChat ≥ 0.4.4)_:
+
+// TRANSLATION MISSING
+* return code of last callback executed ('WEECHAT_RC_OK' if no callback was
+  executed):
+** 'WEECHAT_RC_OK'
+** 'WEECHAT_RC_OK_EAT'
+** 'WEECHAT_RC_ERROR'
+
 Esempio in C:
 
 [source,C]
 ----
+int rc;
 struct t_hashtable *hashtable = weechat_hashtable_new (8,
                                                        WEECHAT_HASHTABLE_STRING,
                                                        WEECHAT_HASHTABLE_STRING,
@@ -8572,7 +8597,7 @@ struct t_hashtable *hashtable = weechat_hashtable_new (8,
 if (hashtable)
 {
     weechat_hashtable_set (hashtable, "key", "value");
-    weechat_hook_hsignal_send ("my_hsignal", hashtable);
+    rc = weechat_hook_hsignal_send ("my_hsignal", hashtable);
     weechat_hashtable_free (hashtable);
 }
 ----
@@ -8582,10 +8607,10 @@ Script (Python):
 [source,python]
 ----
 # prototipo
-weechat.hook_hsignal_send(signal, hashtable)
+rc = weechat.hook_hsignal_send(signal, hashtable)
 
 # esempio
-weechat.hook_hsignal_send("my_hsignal", { "key": "value" })
+rc = weechat.hook_hsignal_send("my_hsignal", { "key": "value" })
 ----
 
 [[hsignal_irc_redirect_command]]
@@ -11840,7 +11865,7 @@ bar_item = weechat.bar_item_search("myitem")
 ==== weechat_bar_item_new
 
 // TRANSLATION MISSING
-_Updated in version 0.4.2._
+_Updated in 0.4.2._
 
 Crea un nuovo elemento barra.
 
@@ -12349,7 +12374,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 ==== weechat_network_connect_to
 
 // TRANSLATION MISSING
-_Updated in version 0.4.3._
+_Updated in 0.4.3._
 
 Stabilisce una connessione con un host remoto.
 

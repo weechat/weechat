@@ -8042,14 +8042,17 @@ hook = weechat.hook_signal("quit", "my_signal_cb", "")
 
 ==== weechat_hook_signal_send
 
+// TRANSLATION MISSING
+_Updated in 0.4.4._
+
 シグナルを送信。
 
 プロトタイプ:
 
 [source,C]
 ----
-void weechat_hook_signal_send (const char *signal, const char *type_data,
-                               void *signal_data);
+int weechat_hook_signal_send (const char *signal, const char *type_data,
+                              void *signal_data);
 ----
 
 引数:
@@ -8059,11 +8062,21 @@ void weechat_hook_signal_send (const char *signal, const char *type_data,
   (<<_weechat_hook_signal,weechat_hook_signal>> を参照)
 * 'signal_data': シグナルと一緒に送信するデータ
 
+// TRANSLATION MISSING
+Return value (_WeeChat ≥ 0.4.4)_:
+
+// TRANSLATION MISSING
+* return code of last callback executed ('WEECHAT_RC_OK' if no callback was
+  executed):
+** 'WEECHAT_RC_OK'
+** 'WEECHAT_RC_OK_EAT'
+** 'WEECHAT_RC_ERROR'
+
 C 言語での使用例:
 
 [source,C]
 ----
-weechat_hook_signal_send ("my_signal", WEECHAT_HOOK_SIGNAL_STRING, my_string);
+int rc = weechat_hook_signal_send ("my_signal", WEECHAT_HOOK_SIGNAL_STRING, my_string);
 ----
 
 スクリプト (Python) での使用例:
@@ -8071,10 +8084,10 @@ weechat_hook_signal_send ("my_signal", WEECHAT_HOOK_SIGNAL_STRING, my_string);
 [source,python]
 ----
 # プロトタイプ
-weechat.hook_signal_send(signal, type_data, signal_data)
+rc = weechat.hook_signal_send(signal, type_data, signal_data)
 
 # 例
-weechat.hook_signal_send("my_signal", weechat.WEECHAT_HOOK_SIGNAL_STRING, my_string)
+rc = weechat.hook_signal_send("my_signal", weechat.WEECHAT_HOOK_SIGNAL_STRING, my_string)
 ----
 
 [[signal_logger_backlog]]
@@ -8349,7 +8362,8 @@ hook = weechat.hook_hsignal("test", "my_hsignal_cb", "")
 
 ==== weechat_hook_hsignal_send
 
-_WeeChat バージョン 0.3.4 以上で利用可。_
+// TRANSLATION MISSING
+_WeeChat バージョン 0.3.4 以上で利用可。, updated in 0.4.4._
 
 hsignal (ハッシュテーブルを持つシグナル) を送信。
 
@@ -8357,7 +8371,7 @@ hsignal (ハッシュテーブルを持つシグナル) を送信。
 
 [source,C]
 ----
-void weechat_hook_hsignal_send (const char *signal, struct t_hashtable *hashtable);
+int weechat_hook_hsignal_send (const char *signal, struct t_hashtable *hashtable);
 ----
 
 引数:
@@ -8365,10 +8379,21 @@ void weechat_hook_hsignal_send (const char *signal, struct t_hashtable *hashtabl
 * 'signal': 送信するシグナル
 * 'hashtable': ハッシュテーブル
 
+// TRANSLATION MISSING
+Return value (_WeeChat ≥ 0.4.4)_:
+
+// TRANSLATION MISSING
+* return code of last callback executed ('WEECHAT_RC_OK' if no callback was
+  executed):
+** 'WEECHAT_RC_OK'
+** 'WEECHAT_RC_OK_EAT'
+** 'WEECHAT_RC_ERROR'
+
 C 言語での使用例:
 
 [source,C]
 ----
+int rc;
 struct t_hashtable *hashtable = weechat_hashtable_new (8,
                                                        WEECHAT_HASHTABLE_STRING,
                                                        WEECHAT_HASHTABLE_STRING,
@@ -8377,7 +8402,7 @@ struct t_hashtable *hashtable = weechat_hashtable_new (8,
 if (hashtable)
 {
     weechat_hashtable_set (hashtable, "key", "value");
-    weechat_hook_hsignal_send ("my_hsignal", hashtable);
+    rc = weechat_hook_hsignal_send ("my_hsignal", hashtable);
     weechat_hashtable_free (hashtable);
 }
 ----
@@ -8387,10 +8412,10 @@ if (hashtable)
 [source,python]
 ----
 # プロトタイプ
-weechat.hook_hsignal_send(signal, hashtable)
+rc = weechat.hook_hsignal_send(signal, hashtable)
 
 # 例
-weechat.hook_hsignal_send("my_hsignal", { "key": "value" })
+rc = weechat.hook_hsignal_send("my_hsignal", { "key": "value" })
 ----
 
 [[hsignal_irc_redirect_command]]

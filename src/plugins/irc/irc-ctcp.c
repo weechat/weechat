@@ -629,16 +629,16 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
                                                  IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_PROXY));
                 weechat_infolist_new_var_string (item, "remote_address", pos_addr);
                 weechat_infolist_new_var_integer (item, "port", atoi (pos_port));
-                weechat_hook_signal_send ("xfer_add",
-                                          WEECHAT_HOOK_SIGNAL_POINTER,
-                                          infolist);
+                (void) weechat_hook_signal_send ("xfer_add",
+                                                 WEECHAT_HOOK_SIGNAL_POINTER,
+                                                 infolist);
             }
             weechat_infolist_free (infolist);
         }
 
-        weechat_hook_signal_send ("irc_dcc",
-                                  WEECHAT_HOOK_SIGNAL_STRING,
-                                  message);
+        (void) weechat_hook_signal_send ("irc_dcc",
+                                         WEECHAT_HOOK_SIGNAL_STRING,
+                                         message);
 
         if (filename)
             free (filename);
@@ -726,16 +726,16 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
                                                  (filename) ? filename : pos_file);
                 weechat_infolist_new_var_integer (item, "port", atoi (pos_port));
                 weechat_infolist_new_var_string (item, "start_resume", pos_start_resume);
-                weechat_hook_signal_send ("xfer_accept_resume",
-                                          WEECHAT_HOOK_SIGNAL_POINTER,
-                                          infolist);
+                (void) weechat_hook_signal_send ("xfer_accept_resume",
+                                                 WEECHAT_HOOK_SIGNAL_POINTER,
+                                                 infolist);
             }
             weechat_infolist_free (infolist);
         }
 
-        weechat_hook_signal_send ("irc_dcc",
-                                  WEECHAT_HOOK_SIGNAL_STRING,
-                                  message);
+        (void) weechat_hook_signal_send ("irc_dcc",
+                                         WEECHAT_HOOK_SIGNAL_STRING,
+                                         message);
 
         if (filename)
             free (filename);
@@ -823,16 +823,16 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
                                                  (filename) ? filename : pos_file);
                 weechat_infolist_new_var_integer (item, "port", atoi (pos_port));
                 weechat_infolist_new_var_string (item, "start_resume", pos_start_resume);
-                weechat_hook_signal_send ("xfer_start_resume",
-                                          WEECHAT_HOOK_SIGNAL_POINTER,
-                                          infolist);
+                (void) weechat_hook_signal_send ("xfer_start_resume",
+                                                 WEECHAT_HOOK_SIGNAL_POINTER,
+                                                 infolist);
             }
             weechat_infolist_free (infolist);
         }
 
-        weechat_hook_signal_send ("irc_dcc",
-                                  WEECHAT_HOOK_SIGNAL_STRING,
-                                  message);
+        (void) weechat_hook_signal_send ("irc_dcc",
+                                         WEECHAT_HOOK_SIGNAL_STRING,
+                                         message);
 
         if (filename)
             free (filename);
@@ -935,16 +935,16 @@ irc_ctcp_recv_dcc (struct t_irc_server *server, const char *nick,
                                                  IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_PROXY));
                 weechat_infolist_new_var_string (item, "remote_address", pos_addr);
                 weechat_infolist_new_var_integer (item, "port", atoi (pos_port));
-                weechat_hook_signal_send ("xfer_add",
-                                          WEECHAT_HOOK_SIGNAL_POINTER,
-                                          infolist);
+                (void) weechat_hook_signal_send ("xfer_add",
+                                                 WEECHAT_HOOK_SIGNAL_POINTER,
+                                                 infolist);
             }
             weechat_infolist_free (infolist);
         }
 
-        weechat_hook_signal_send ("irc_dcc",
-                                  WEECHAT_HOOK_SIGNAL_STRING,
-                                  message);
+        (void) weechat_hook_signal_send ("irc_dcc",
+                                         WEECHAT_HOOK_SIGNAL_STRING,
+                                         message);
 
         free (dcc_args);
     }
@@ -1053,9 +1053,9 @@ irc_ctcp_recv (struct t_irc_server *server, time_t date, const char *command,
                                               (pos_args) ? IRC_COLOR_RESET : "",
                                               (pos_args) ? " " : "",
                                               (pos_args) ? pos_args : "");
-                    weechat_hook_signal_send ("irc_pv",
-                                              WEECHAT_HOOK_SIGNAL_STRING,
-                                              message);
+                    (void) weechat_hook_signal_send ("irc_pv",
+                                                     WEECHAT_HOOK_SIGNAL_STRING,
+                                                     message);
                 }
             }
         }
@@ -1126,9 +1126,9 @@ irc_ctcp_recv (struct t_irc_server *server, time_t date, const char *command,
             }
         }
 
-        weechat_hook_signal_send ("irc_ctcp",
-                                  WEECHAT_HOOK_SIGNAL_STRING,
-                                  message);
+        (void) weechat_hook_signal_send ("irc_ctcp",
+                                         WEECHAT_HOOK_SIGNAL_STRING,
+                                         message);
 
         if (pos_space)
             pos_space[0] = ' ';

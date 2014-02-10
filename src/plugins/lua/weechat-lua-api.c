@@ -2643,13 +2643,13 @@ static int
 weechat_lua_api_hook_signal_send (lua_State *L)
 {
     const char *signal, *type_data, *signal_data;
-    int number;
+    int number, rc;
 
-    API_FUNC(1, "hook_signal_send", API_RETURN_ERROR);
+    API_FUNC(1, "hook_signal_send", API_RETURN_INT(WEECHAT_RC_ERROR));
     signal_data = NULL;
 
     if (lua_gettop (L) < 3)
-        API_WRONG_ARGS(API_RETURN_ERROR);
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_RC_ERROR));
 
     signal = lua_tostring (L, -3);
     type_data = lua_tostring (L, -2);
@@ -2657,24 +2657,24 @@ weechat_lua_api_hook_signal_send (lua_State *L)
     if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
     {
         signal_data = lua_tostring (L, -1);
-        weechat_hook_signal_send (signal, type_data, (void *)signal_data);
-        API_RETURN_OK;
+        rc = weechat_hook_signal_send (signal, type_data, (void *)signal_data);
+        API_RETURN_INT(rc);
     }
     else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_INT) == 0)
     {
         number = lua_tonumber (L, -1);
-        weechat_hook_signal_send (signal, type_data, &number);
-        API_RETURN_OK;
+        rc = weechat_hook_signal_send (signal, type_data, &number);
+        API_RETURN_INT(rc);
     }
     else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_POINTER) == 0)
     {
         signal_data = lua_tostring (L, -1);
-        weechat_hook_signal_send (signal, type_data,
-                                  API_STR2PTR(signal_data));
-        API_RETURN_OK;
+        rc = weechat_hook_signal_send (signal, type_data,
+                                       API_STR2PTR(signal_data));
+        API_RETURN_INT(rc);
     }
 
-    API_RETURN_ERROR;
+    API_RETURN_INT(WEECHAT_RC_ERROR);
 }
 
 int
@@ -2742,10 +2742,11 @@ weechat_lua_api_hook_hsignal_send (lua_State *L)
 {
     const char *signal;
     struct t_hashtable *hashtable;
+    int rc;
 
-    API_FUNC(1, "hook_hsignal_send", API_RETURN_ERROR);
+    API_FUNC(1, "hook_hsignal_send", API_RETURN_INT(WEECHAT_RC_ERROR));
     if (lua_gettop (L) < 2)
-        API_WRONG_ARGS(API_RETURN_ERROR);
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_RC_ERROR));
 
     signal = lua_tostring (L, -2);
     hashtable = weechat_lua_tohashtable (L, -1,
@@ -2753,12 +2754,12 @@ weechat_lua_api_hook_hsignal_send (lua_State *L)
                                          WEECHAT_HASHTABLE_STRING,
                                          WEECHAT_HASHTABLE_STRING);
 
-    weechat_hook_hsignal_send (signal, hashtable);
+    rc = weechat_hook_hsignal_send (signal, hashtable);
 
     if (hashtable)
         weechat_hashtable_free (hashtable);
 
-    API_RETURN_OK;
+    API_RETURN_INT(rc);
 }
 
 int

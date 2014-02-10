@@ -464,9 +464,9 @@ script_action_autoload (const char *name, int quiet, int autoload)
         snprintf (str_signal, sizeof (str_signal),
                   "%s_script_autoload",
                   script_language[ptr_script->language]);
-        weechat_hook_signal_send (str_signal,
-                                  WEECHAT_HOOK_SIGNAL_STRING,
-                                  filename);
+        (void) weechat_hook_signal_send (str_signal,
+                                         WEECHAT_HOOK_SIGNAL_STRING,
+                                         filename);
         free (filename);
     }
     if (!quiet)
@@ -546,9 +546,9 @@ script_action_install_process_cb (void *data, const char *command,
                         snprintf (str_signal, sizeof (str_signal),
                                   "%s_script_install",
                                   script_language[ptr_script->language]);
-                        weechat_hook_signal_send (str_signal,
-                                                  WEECHAT_HOOK_SIGNAL_STRING,
-                                                  filename2);
+                        (void) weechat_hook_signal_send (str_signal,
+                                                         WEECHAT_HOOK_SIGNAL_STRING,
+                                                         filename2);
                         free (filename2);
                     }
                     free (filename);
@@ -734,9 +734,9 @@ script_action_remove (const char *name, int quiet)
         snprintf (str_signal, sizeof (str_signal),
                   "%s_script_remove",
                   script_language[ptr_script->language]);
-        weechat_hook_signal_send (str_signal,
-                                  WEECHAT_HOOK_SIGNAL_STRING,
-                                  filename);
+        (void) weechat_hook_signal_send (str_signal,
+                                         WEECHAT_HOOK_SIGNAL_STRING,
+                                         filename);
         free (filename);
     }
 }

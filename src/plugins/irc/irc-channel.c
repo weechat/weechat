@@ -236,8 +236,9 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
         weechat_buffer_set (new_buffer, "localvar_set_channel", channel_name);
         if (server->is_away && server->away_message)
             weechat_buffer_set (new_buffer, "localvar_set_away", server->away_message);
-        weechat_hook_signal_send ("logger_backlog",
-                                  WEECHAT_HOOK_SIGNAL_POINTER, new_buffer);
+        (void) weechat_hook_signal_send ("logger_backlog",
+                                         WEECHAT_HOOK_SIGNAL_POINTER,
+                                         new_buffer);
         if (weechat_config_boolean (irc_config_network_send_unknown_commands))
             weechat_buffer_set (new_buffer, "input_get_unknown_commands", "1");
         if (channel_type == IRC_CHANNEL_TYPE_CHANNEL)
@@ -350,9 +351,9 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
         free (channel_name_lower);
     }
 
-    weechat_hook_signal_send ((channel_type == IRC_CHANNEL_TYPE_CHANNEL) ?
-                              "irc_channel_opened" : "irc_pv_opened",
-                              WEECHAT_HOOK_SIGNAL_POINTER, new_buffer);
+    (void) weechat_hook_signal_send ((channel_type == IRC_CHANNEL_TYPE_CHANNEL) ?
+                                     "irc_channel_opened" : "irc_pv_opened",
+                                     WEECHAT_HOOK_SIGNAL_POINTER, new_buffer);
 
     /* all is OK, return address of new channel */
     return new_channel;

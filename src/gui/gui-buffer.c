@@ -173,9 +173,9 @@ gui_buffer_local_var_add (struct t_gui_buffer *buffer, const char *name,
 
     ptr_value = hashtable_get (buffer->local_variables, name);
     hashtable_set (buffer->local_variables, name, value);
-    hook_signal_send ((ptr_value) ?
-                      "buffer_localvar_changed" : "buffer_localvar_added",
-                      WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+    (void) hook_signal_send ((ptr_value) ?
+                             "buffer_localvar_changed" : "buffer_localvar_added",
+                             WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }
 
 /*
@@ -194,8 +194,8 @@ gui_buffer_local_var_remove (struct t_gui_buffer *buffer, const char *name)
     if (ptr_value)
     {
         hashtable_remove (buffer->local_variables, name);
-        hook_signal_send ("buffer_localvar_removed",
-                          WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+        (void) hook_signal_send ("buffer_localvar_removed",
+                                 WEECHAT_HOOK_SIGNAL_POINTER, buffer);
     }
 }
 
@@ -209,8 +209,8 @@ gui_buffer_local_var_remove_all (struct t_gui_buffer *buffer)
     if (buffer && buffer->local_variables)
     {
         hashtable_remove_all (buffer->local_variables);
-        hook_signal_send ("buffer_localvar_removed",
-                          WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+        (void) hook_signal_send ("buffer_localvar_removed",
+                                 WEECHAT_HOOK_SIGNAL_POINTER, buffer);
     }
 }
 
@@ -713,8 +713,8 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
     }
     else
     {
-        hook_signal_send ("buffer_opened",
-                          WEECHAT_HOOK_SIGNAL_POINTER, new_buffer);
+        (void) hook_signal_send ("buffer_opened",
+                                 WEECHAT_HOOK_SIGNAL_POINTER, new_buffer);
     }
 
     return new_buffer;
@@ -1125,8 +1125,8 @@ gui_buffer_set_name (struct t_gui_buffer *buffer, const char *name)
 
         gui_buffer_local_var_add (buffer, "name", name);
 
-        hook_signal_send ("buffer_renamed",
-                          WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+        (void) hook_signal_send ("buffer_renamed",
+                                 WEECHAT_HOOK_SIGNAL_POINTER, buffer);
     }
 }
 
@@ -1149,8 +1149,8 @@ gui_buffer_set_short_name (struct t_gui_buffer *buffer, const char *short_name)
         buffer->mixed_lines->buffer_max_length_refresh = 1;
     gui_buffer_ask_chat_refresh (buffer, 1);
 
-    hook_signal_send ("buffer_renamed",
-                      WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+    (void) hook_signal_send ("buffer_renamed",
+                             WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }
 
 /*
@@ -1168,8 +1168,8 @@ gui_buffer_set_type (struct t_gui_buffer *buffer, enum t_gui_buffer_type type)
     buffer->type = type;
     gui_buffer_ask_chat_refresh (buffer, 2);
 
-    hook_signal_send ("buffer_type_changed",
-                      WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+    (void) hook_signal_send ("buffer_type_changed",
+                             WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }
 
 /*
@@ -1183,8 +1183,8 @@ gui_buffer_set_title (struct t_gui_buffer *buffer, const char *new_title)
         free (buffer->title);
     buffer->title = (new_title && new_title[0]) ? strdup (new_title) : NULL;
 
-    hook_signal_send ("buffer_title_changed",
-                      WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+    (void) hook_signal_send ("buffer_title_changed",
+                             WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }
 
 /*
@@ -2401,8 +2401,8 @@ gui_buffer_clear (struct t_gui_buffer *buffer)
 
     gui_buffer_ask_chat_refresh (buffer, 2);
 
-    hook_signal_send ("buffer_cleared",
-                      WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+    (void) hook_signal_send ("buffer_cleared",
+                             WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }
 
 /*
@@ -2435,8 +2435,8 @@ gui_buffer_close (struct t_gui_buffer *buffer)
     int index, i;
     struct t_gui_buffer_visited *ptr_buffer_visited;
 
-    hook_signal_send ("buffer_closing",
-                      WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+    (void) hook_signal_send ("buffer_closing",
+                             WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 
     if (buffer->close_callback)
     {
@@ -2624,8 +2624,8 @@ gui_buffer_close (struct t_gui_buffer *buffer)
     if (gui_buffers_count > 0)
         gui_buffers_count--;
 
-    hook_signal_send ("buffer_closed",
-                      WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+    (void) hook_signal_send ("buffer_closed",
+                             WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 
     free (buffer);
 }
@@ -2850,8 +2850,9 @@ gui_buffer_renumber (int number1, int number2, int start_number)
         }
         if (ptr_buffer_moved)
         {
-            hook_signal_send ("buffer_moved",
-                              WEECHAT_HOOK_SIGNAL_POINTER, ptr_buffer_moved);
+            (void) hook_signal_send ("buffer_moved",
+                                     WEECHAT_HOOK_SIGNAL_POINTER,
+                                     ptr_buffer_moved);
         }
         ptr_buffer = ptr_buffer2;
         if (ptr_buffer == ptr_last_buffer)
@@ -2982,8 +2983,8 @@ gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number)
         last_gui_buffer = ptr_last_buffer;
     }
 
-    hook_signal_send ("buffer_moved",
-                      WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+    (void) hook_signal_send ("buffer_moved",
+                             WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }
 
 /*
@@ -3074,10 +3075,10 @@ gui_buffer_swap (int number1, int number2)
     }
 
     /* send signals */
-    hook_signal_send ("buffer_moved",
-                      WEECHAT_HOOK_SIGNAL_POINTER, ptr_first_buffer[0]);
-    hook_signal_send ("buffer_moved",
-                      WEECHAT_HOOK_SIGNAL_POINTER, ptr_first_buffer[1]);
+    (void) hook_signal_send ("buffer_moved",
+                             WEECHAT_HOOK_SIGNAL_POINTER, ptr_first_buffer[0]);
+    (void) hook_signal_send ("buffer_moved",
+                             WEECHAT_HOOK_SIGNAL_POINTER, ptr_first_buffer[1]);
 }
 
 /*
@@ -3178,8 +3179,8 @@ gui_buffer_merge (struct t_gui_buffer *buffer,
 
     gui_window_ask_refresh (1);
 
-    hook_signal_send ("buffer_merged",
-                      WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+    (void) hook_signal_send ("buffer_merged",
+                             WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }
 
 /*
@@ -3307,8 +3308,8 @@ gui_buffer_unmerge (struct t_gui_buffer *buffer, int number)
 
     gui_window_ask_refresh (1);
 
-    hook_signal_send ("buffer_unmerged",
-                      WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+    (void) hook_signal_send ("buffer_unmerged",
+                             WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }
 
 /*

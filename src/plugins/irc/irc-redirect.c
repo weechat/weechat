@@ -748,7 +748,7 @@ irc_redirect_stop (struct t_irc_redirect *redirect, const char *error)
 
         snprintf (signal_name, sizeof (signal_name), "irc_redirection_%s_%s",
                   redirect->signal, redirect->pattern);
-        weechat_hook_hsignal_send (signal_name, hashtable);
+        (void) weechat_hook_hsignal_send (signal_name, hashtable);
 
         if (hashtable)
             weechat_hashtable_free (hashtable);

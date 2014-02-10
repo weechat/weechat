@@ -57,7 +57,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20140122-01"
+#define WEECHAT_PLUGIN_API_VERSION "20140210-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -591,16 +591,16 @@ struct t_weechat_plugin
                                                    const char *type_data,
                                                    void *signal_data),
                                    void *callback_data);
-    void (*hook_signal_send) (const char *signal, const char *type_data,
-                              void *signal_data);
+    int (*hook_signal_send) (const char *signal, const char *type_data,
+                             void *signal_data);
     struct t_hook *(*hook_hsignal) (struct t_weechat_plugin *plugin,
                                     const char *signal,
                                     int (*callback)(void *data,
                                                     const char *signal,
                                                     struct t_hashtable *hashtable),
                                     void *callback_data);
-    void (*hook_hsignal_send) (const char *signal,
-                               struct t_hashtable *hashtable);
+    int (*hook_hsignal_send) (const char *signal,
+                              struct t_hashtable *hashtable);
     struct t_hook *(*hook_config) (struct t_weechat_plugin *plugin,
                                    const char *option,
                                    int (*callback)(void *data,

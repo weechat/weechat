@@ -434,8 +434,8 @@ void
 irc_notify_free (struct t_irc_server *server, struct t_irc_notify *notify,
                  int remove_monitor)
 {
-    weechat_hook_signal_send ("irc_notify_removing",
-                              WEECHAT_HOOK_SIGNAL_POINTER, notify);
+    (void) weechat_hook_signal_send ("irc_notify_removing",
+                                     WEECHAT_HOOK_SIGNAL_POINTER, notify);
 
     /* free data */
     if (notify->nick)
@@ -468,8 +468,8 @@ irc_notify_free (struct t_irc_server *server, struct t_irc_notify *notify,
     if (server->notify_count > 0)
         server->notify_count--;
 
-    weechat_hook_signal_send ("irc_notify_removed",
-                              WEECHAT_HOOK_SIGNAL_STRING, NULL);
+    (void) weechat_hook_signal_send ("irc_notify_removed",
+                                     WEECHAT_HOOK_SIGNAL_STRING, NULL);
 }
 
 /*
@@ -650,7 +650,7 @@ irc_notify_send_signal (struct t_irc_notify *notify,
                   (away_message && away_message[0]) ? away_message : "");
     }
 
-    weechat_hook_signal_send (signal, WEECHAT_HOOK_SIGNAL_STRING, data);
+    (void) weechat_hook_signal_send (signal, WEECHAT_HOOK_SIGNAL_STRING, data);
 
     if (data)
         free (data);

@@ -766,8 +766,9 @@ weechat_python_load (const char *filename)
                                         &weechat_python_api_buffer_input_data_cb,
                                         &weechat_python_api_buffer_close_cb);
 
-    weechat_hook_signal_send ("python_script_loaded", WEECHAT_HOOK_SIGNAL_STRING,
-                              python_current_script->filename);
+    (void) weechat_hook_signal_send ("python_script_loaded",
+                                     WEECHAT_HOOK_SIGNAL_STRING,
+                                     python_current_script->filename);
 
     return 1;
 }
@@ -832,8 +833,8 @@ weechat_python_unload (struct t_plugin_script *script)
     if (old_interpreter)
         PyThreadState_Swap (old_interpreter);
 
-    weechat_hook_signal_send ("python_script_unloaded",
-                              WEECHAT_HOOK_SIGNAL_STRING, filename);
+    (void) weechat_hook_signal_send ("python_script_unloaded",
+                                     WEECHAT_HOOK_SIGNAL_STRING, filename);
     if (filename)
         free (filename);
 }

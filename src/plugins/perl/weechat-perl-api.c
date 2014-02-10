@@ -2474,39 +2474,39 @@ XS (XS_weechat_api_hook_signal)
 XS (XS_weechat_api_hook_signal_send)
 {
     char *signal, *type_data;
-    int number;
+    int number, rc;
     dXSARGS;
 
-    API_FUNC(1, "hook_signal_send", API_RETURN_ERROR);
+    API_FUNC(1, "hook_signal_send", API_RETURN_INT(WEECHAT_RC_ERROR));
     if (items < 3)
-        API_WRONG_ARGS(API_RETURN_ERROR);
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_RC_ERROR));
 
     signal = SvPV_nolen (ST (0));
     type_data = SvPV_nolen (ST (1));
     if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
     {
-        weechat_hook_signal_send (signal,
-                                  type_data,
-                                  SvPV_nolen (ST (2))); /* signal_data */
-        API_RETURN_OK;
+        rc = weechat_hook_signal_send (signal,
+                                       type_data,
+                                       SvPV_nolen (ST (2))); /* signal_data */
+        API_RETURN_INT(rc);
     }
     else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_INT) == 0)
     {
         number = SvIV(ST (2));
-        weechat_hook_signal_send (signal,
-                                  type_data,
-                                  &number); /* signal_data */
-        API_RETURN_OK;
+        rc = weechat_hook_signal_send (signal,
+                                       type_data,
+                                       &number); /* signal_data */
+        API_RETURN_INT(rc);
     }
     else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_POINTER) == 0)
     {
-        weechat_hook_signal_send (signal,
-                                  type_data,
-                                  API_STR2PTR(SvPV_nolen (ST (2)))); /* signal_data */
-        API_RETURN_OK;
+        rc = weechat_hook_signal_send (signal,
+                                       type_data,
+                                       API_STR2PTR(SvPV_nolen (ST (2)))); /* signal_data */
+        API_RETURN_INT(rc);
     }
 
-    API_RETURN_ERROR;
+    API_RETURN_INT(WEECHAT_RC_ERROR);
 }
 
 int
@@ -2572,11 +2572,12 @@ XS (XS_weechat_api_hook_hsignal_send)
 {
     char *signal;
     struct t_hashtable *hashtable;
+    int rc;
     dXSARGS;
 
-    API_FUNC(1, "hook_hsignal_send", API_RETURN_ERROR);
+    API_FUNC(1, "hook_hsignal_send", API_RETURN_INT(WEECHAT_RC_ERROR));
     if (items < 2)
-        API_WRONG_ARGS(API_RETURN_ERROR);
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_RC_ERROR));
 
     signal = SvPV_nolen (ST (0));
     hashtable = weechat_perl_hash_to_hashtable (ST (1),
@@ -2584,12 +2585,12 @@ XS (XS_weechat_api_hook_hsignal_send)
                                                 WEECHAT_HASHTABLE_STRING,
                                                 WEECHAT_HASHTABLE_STRING);
 
-    weechat_hook_hsignal_send (signal, hashtable);
+    rc = weechat_hook_hsignal_send (signal, hashtable);
 
     if (hashtable)
         weechat_hashtable_free (hashtable);
 
-    API_RETURN_OK;
+    API_RETURN_INT(rc);
 }
 
 int

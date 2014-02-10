@@ -2201,11 +2201,13 @@ hook_signal (struct t_weechat_plugin *plugin, const char *signal,
  * Sends a signal.
  */
 
-void
+int
 hook_signal_send (const char *signal, const char *type_data, void *signal_data)
 {
     struct t_hook *ptr_hook, *next_hook;
     int rc;
+
+    rc = WEECHAT_RC_OK;
 
     hook_exec_start ();
 
@@ -2231,6 +2233,8 @@ hook_signal_send (const char *signal, const char *type_data, void *signal_data)
     }
 
     hook_exec_end ();
+
+    return rc;
 }
 
 /*
@@ -2278,11 +2282,13 @@ hook_hsignal (struct t_weechat_plugin *plugin, const char *signal,
  * Sends a hsignal (signal with hashtable).
  */
 
-void
+int
 hook_hsignal_send (const char *signal, struct t_hashtable *hashtable)
 {
     struct t_hook *ptr_hook, *next_hook;
     int rc;
+
+    rc = WEECHAT_RC_OK;
 
     hook_exec_start ();
 
@@ -2308,6 +2314,8 @@ hook_hsignal_send (const char *signal, struct t_hashtable *hashtable)
     }
 
     hook_exec_end ();
+
+    return rc;
 }
 
 /*

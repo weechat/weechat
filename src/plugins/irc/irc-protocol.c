@@ -1764,9 +1764,9 @@ IRC_PROTOCOL_CALLBACK(privmsg)
         if (ptr_channel->has_quit_server)
             ptr_channel->has_quit_server = 0;
 
-        weechat_hook_signal_send ("irc_pv",
-                                  WEECHAT_HOOK_SIGNAL_STRING,
-                                  argv_eol[0]);
+        (void) weechat_hook_signal_send ("irc_pv",
+                                         WEECHAT_HOOK_SIGNAL_STRING,
+                                         argv_eol[0]);
     }
 
     return WEECHAT_RC_OK;
@@ -2183,8 +2183,8 @@ IRC_PROTOCOL_CALLBACK(001)
     }
 
     /* send signal "irc_server_connected" with server name */
-    weechat_hook_signal_send ("irc_server_connected",
-                              WEECHAT_HOOK_SIGNAL_STRING, server->name);
+    (void) weechat_hook_signal_send ("irc_server_connected",
+                                     WEECHAT_HOOK_SIGNAL_STRING, server->name);
 
     /* execute command when connected */
     server_command = weechat_string_eval_expression (IRC_SERVER_OPTION_STRING(server,

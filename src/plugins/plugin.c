@@ -862,8 +862,8 @@ plugin_load (const char *filename, int argc, char **argv)
                          name);
     }
 
-    hook_signal_send ("plugin_loaded", WEECHAT_HOOK_SIGNAL_STRING,
-                      (char *)filename);
+    (void) hook_signal_send ("plugin_loaded",
+                             WEECHAT_HOOK_SIGNAL_STRING, (char *)filename);
 
     return new_plugin;
 }
@@ -1046,7 +1046,8 @@ plugin_unload (struct t_weechat_plugin *plugin)
                          _("Plugin \"%s\" unloaded"),
                          (name) ? name : "???");
     }
-    hook_signal_send ("plugin_unloaded", WEECHAT_HOOK_SIGNAL_STRING, name);
+    (void) hook_signal_send ("plugin_unloaded",
+                             WEECHAT_HOOK_SIGNAL_STRING, name);
     if (name)
         free (name);
 }

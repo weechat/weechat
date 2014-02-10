@@ -209,8 +209,8 @@ gui_completion_stop (struct t_gui_completion *completion)
     if (completion->partial_completion_list)
     {
         gui_completion_partial_list_free_all (completion);
-        hook_signal_send ("partial_completion",
-                          WEECHAT_HOOK_SIGNAL_STRING, NULL);
+        (void) hook_signal_send ("partial_completion",
+                                 WEECHAT_HOOK_SIGNAL_STRING, NULL);
     }
 }
 
@@ -1052,8 +1052,8 @@ gui_completion_complete (struct t_gui_completion *completion)
                      */
                     gui_completion_partial_build_list (completion,
                                                        common_prefix_size);
-                    hook_signal_send ("partial_completion",
-                                      WEECHAT_HOOK_SIGNAL_STRING, NULL);
+                    (void) hook_signal_send ("partial_completion",
+                                             WEECHAT_HOOK_SIGNAL_STRING, NULL);
                     return;
                 }
 

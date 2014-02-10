@@ -424,8 +424,9 @@ xfer_send_signal (struct t_xfer *xfer, const char *signal)
     {
         if (xfer_add_to_infolist (infolist, xfer))
         {
-            weechat_hook_signal_send (signal, WEECHAT_HOOK_SIGNAL_POINTER,
-                                      infolist);
+            (void) weechat_hook_signal_send (signal,
+                                             WEECHAT_HOOK_SIGNAL_POINTER,
+                                             infolist);
         }
         weechat_infolist_free (infolist);
     }

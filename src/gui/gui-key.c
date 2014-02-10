@@ -666,8 +666,8 @@ gui_key_new (struct t_gui_buffer *buffer, int context, const char *key,
 
         expanded_name = gui_key_get_expanded_name (new_key->key);
 
-        hook_signal_send ("key_bind",
-                          WEECHAT_HOOK_SIGNAL_STRING, expanded_name);
+        (void) hook_signal_send ("key_bind",
+                                 WEECHAT_HOOK_SIGNAL_STRING, expanded_name);
 
         if (gui_key_verbose)
         {
@@ -886,8 +886,8 @@ gui_key_unbind (struct t_gui_buffer *buffer, int context, const char *key)
             gui_key_free (&gui_keys[context], &last_gui_key[context],
                           &gui_keys_count[context], ptr_key);
         }
-        hook_signal_send ("key_unbind",
-                          WEECHAT_HOOK_SIGNAL_STRING, (char *)key);
+        (void) hook_signal_send ("key_unbind",
+                                 WEECHAT_HOOK_SIGNAL_STRING, (char *)key);
         return 1;
     }
 
@@ -1134,7 +1134,7 @@ gui_key_focus_command (const char *key, int context,
                                              _("Sending hsignal: \"%s\""),
                                              commands[i] + 8);
                         }
-                        hook_hsignal_send (commands[i] + 8, hashtable);
+                        (void) hook_hsignal_send (commands[i] + 8, hashtable);
                     }
                 }
                 else

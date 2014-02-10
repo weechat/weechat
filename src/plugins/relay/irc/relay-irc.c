@@ -1146,9 +1146,8 @@ relay_irc_input_send (struct t_relay_client *client, const char *irc_channel,
                             RELAY_PLUGIN_NAME, buf);
         }
 
-        weechat_hook_signal_send ("irc_input_send",
-                                  WEECHAT_HOOK_SIGNAL_STRING,
-                                  buf);
+        (void) weechat_hook_signal_send ("irc_input_send",
+                                         WEECHAT_HOOK_SIGNAL_STRING, buf);
         free (buf);
     }
     free (vbuffer);
@@ -1729,8 +1728,8 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
                  */
                 if (redirect_msg)
                 {
-                    weechat_hook_hsignal_send ("irc_redirect_command",
-                                               hash_redirect);
+                    (void) weechat_hook_hsignal_send ("irc_redirect_command",
+                                                      hash_redirect);
                 }
                 weechat_hashtable_free (hash_redirect);
             }

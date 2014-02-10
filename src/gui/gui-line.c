@@ -1246,9 +1246,9 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
                 message_for_signal = gui_chat_build_string_prefix_message (new_line);
                 if (message_for_signal)
                 {
-                    hook_signal_send ("weechat_highlight",
-                                      WEECHAT_HOOK_SIGNAL_STRING,
-                                      message_for_signal);
+                    (void) hook_signal_send ("weechat_highlight",
+                                             WEECHAT_HOOK_SIGNAL_STRING,
+                                             message_for_signal);
                     free (message_for_signal);
                 }
             }
@@ -1260,9 +1260,9 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
                 message_for_signal = gui_chat_build_string_prefix_message (new_line);
                 if (message_for_signal)
                 {
-                    hook_signal_send ("weechat_pv",
-                                      WEECHAT_HOOK_SIGNAL_STRING,
-                                      message_for_signal);
+                    (void) hook_signal_send ("weechat_pv",
+                                             WEECHAT_HOOK_SIGNAL_STRING,
+                                             message_for_signal);
                     free (message_for_signal);
                 }
             }
@@ -1275,8 +1275,8 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
         buffer->own_lines->lines_hidden++;
         if (buffer->mixed_lines)
             buffer->mixed_lines->lines_hidden++;
-        hook_signal_send ("buffer_lines_hidden",
-                          WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+        (void) hook_signal_send ("buffer_lines_hidden",
+                                 WEECHAT_HOOK_SIGNAL_POINTER, buffer);
     }
 
     /* add mixed line, if buffer is attached to at least one other buffer */
@@ -1303,8 +1303,8 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
         }
     }
 
-    hook_signal_send ("buffer_line_added",
-                      WEECHAT_HOOK_SIGNAL_POINTER, new_line);
+    (void) hook_signal_send ("buffer_line_added",
+                             WEECHAT_HOOK_SIGNAL_POINTER, new_line);
 
     return new_line;
 }
@@ -1408,8 +1408,8 @@ gui_line_add_y (struct t_gui_buffer *buffer, int y, const char *message)
     if (!ptr_line->data->displayed)
     {
         buffer->own_lines->lines_hidden++;
-        hook_signal_send ("buffer_lines_hidden",
-                          WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+        (void) hook_signal_send ("buffer_lines_hidden",
+                                 WEECHAT_HOOK_SIGNAL_POINTER, buffer);
     }
 
     ptr_line->data->refresh_needed = 1;

@@ -930,7 +930,8 @@ config_day_change_timer_cb (void *data, int remaining_calls)
 
         /* send signal "day_changed" */
         strftime (str_time, sizeof (str_time), "%Y-%m-%d", local_time);
-        hook_signal_send ("day_changed", WEECHAT_HOOK_SIGNAL_STRING, str_time);
+        (void) hook_signal_send ("day_changed",
+                                 WEECHAT_HOOK_SIGNAL_STRING, str_time);
     }
 
     config_day_change_old_day = new_mday;

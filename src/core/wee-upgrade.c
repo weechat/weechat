@@ -818,5 +818,5 @@ upgrade_weechat_end ()
     weechat_upgrading = 0;
 
     /* send signal for end of /upgrade */
-    hook_signal_send ("upgrade_ended", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+    (void) hook_signal_send ("upgrade_ended", WEECHAT_HOOK_SIGNAL_STRING, NULL);
 }

@@ -253,8 +253,8 @@ irc_ignore_free (struct t_irc_ignore *ignore)
 {
     struct t_irc_ignore *ptr_ignore;
 
-    weechat_hook_signal_send ("irc_ignore_removing",
-                              WEECHAT_HOOK_SIGNAL_POINTER, ignore);
+    (void) weechat_hook_signal_send ("irc_ignore_removing",
+                                     WEECHAT_HOOK_SIGNAL_POINTER, ignore);
 
     /* decrement number for all ignore after this one */
     for (ptr_ignore = ignore->next_ignore; ptr_ignore;
@@ -288,8 +288,8 @@ irc_ignore_free (struct t_irc_ignore *ignore)
 
     free (ignore);
 
-    weechat_hook_signal_send ("irc_ignore_removed",
-                              WEECHAT_HOOK_SIGNAL_STRING, NULL);
+    (void) weechat_hook_signal_send ("irc_ignore_removed",
+                                     WEECHAT_HOOK_SIGNAL_STRING, NULL);
 }
 
 /*

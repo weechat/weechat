@@ -1313,8 +1313,8 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
 
     if (old_buffer != buffer)
     {
-        hook_signal_send ("buffer_switch",
-                          WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+        (void) hook_signal_send ("buffer_switch",
+                                 WEECHAT_HOOK_SIGNAL_POINTER, buffer);
     }
 }
 
@@ -1351,8 +1351,8 @@ gui_window_switch (struct t_gui_window *window)
 
     gui_input_move_to_buffer (old_window->buffer, window->buffer);
 
-    hook_signal_send ("window_switch",
-                      WEECHAT_HOOK_SIGNAL_POINTER, gui_current_window);
+    (void) hook_signal_send ("window_switch",
+                             WEECHAT_HOOK_SIGNAL_POINTER, gui_current_window);
 }
 
 /*
@@ -1394,8 +1394,8 @@ gui_window_page_up (struct t_gui_window *window)
                 snprintf (scroll, sizeof (scroll), "-%d",
                           num_lines + 1);
                 gui_window_scroll (window, scroll);
-                hook_signal_send ("window_scrolled",
-                                  WEECHAT_HOOK_SIGNAL_POINTER, window);
+                (void) hook_signal_send ("window_scrolled",
+                                         WEECHAT_HOOK_SIGNAL_POINTER, window);
             }
             break;
         case GUI_BUFFER_NUM_TYPES:
@@ -1451,8 +1451,8 @@ gui_window_page_down (struct t_gui_window *window)
             snprintf (scroll, sizeof (scroll), "+%d",
                       num_lines + 1);
             gui_window_scroll (window, scroll);
-            hook_signal_send ("window_scrolled",
-                              WEECHAT_HOOK_SIGNAL_POINTER, window);
+            (void) hook_signal_send ("window_scrolled",
+                                     WEECHAT_HOOK_SIGNAL_POINTER, window);
             break;
         case GUI_BUFFER_NUM_TYPES:
             break;
@@ -1491,8 +1491,8 @@ gui_window_scroll_up (struct t_gui_window *window)
                 snprintf (scroll, sizeof (scroll), "-%d",
                           CONFIG_INTEGER(config_look_scroll_amount));
                 gui_window_scroll (window, scroll);
-                hook_signal_send ("window_scrolled",
-                                  WEECHAT_HOOK_SIGNAL_POINTER, window);
+                (void) hook_signal_send ("window_scrolled",
+                                         WEECHAT_HOOK_SIGNAL_POINTER, window);
             }
             break;
         case GUI_BUFFER_NUM_TYPES:
@@ -1542,8 +1542,8 @@ gui_window_scroll_down (struct t_gui_window *window)
             snprintf (scroll, sizeof (scroll), "+%d",
                       CONFIG_INTEGER(config_look_scroll_amount));
             gui_window_scroll (window, scroll);
-            hook_signal_send ("window_scrolled",
-                              WEECHAT_HOOK_SIGNAL_POINTER, window);
+            (void) hook_signal_send ("window_scrolled",
+                                     WEECHAT_HOOK_SIGNAL_POINTER, window);
             break;
         case GUI_BUFFER_NUM_TYPES:
             break;
@@ -1575,8 +1575,8 @@ gui_window_scroll_top (struct t_gui_window *window)
             {
                 window->scroll->start_line = NULL;
                 gui_buffer_ask_chat_refresh (window->buffer, 2);
-                hook_signal_send ("window_scrolled",
-                                  WEECHAT_HOOK_SIGNAL_POINTER, window);
+                (void) hook_signal_send ("window_scrolled",
+                                         WEECHAT_HOOK_SIGNAL_POINTER, window);
             }
             break;
         case GUI_BUFFER_NUM_TYPES:
@@ -1615,8 +1615,8 @@ gui_window_scroll_bottom (struct t_gui_window *window)
             {
                 gui_buffer_ask_chat_refresh (window->buffer, 2);
             }
-            hook_signal_send ("window_scrolled",
-                              WEECHAT_HOOK_SIGNAL_POINTER, window);
+            (void) hook_signal_send ("window_scrolled",
+                                     WEECHAT_HOOK_SIGNAL_POINTER, window);
             break;
         case GUI_BUFFER_NUM_TYPES:
             break;

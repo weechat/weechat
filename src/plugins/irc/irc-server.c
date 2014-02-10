@@ -1725,16 +1725,17 @@ irc_server_send_signal (struct t_irc_server *server, const char *signal,
             {
                 snprintf (full_message_tags, length,
                           "%s;%s", tags, full_message);
-                weechat_hook_signal_send (str_signal,
-                                          WEECHAT_HOOK_SIGNAL_STRING,
-                                          (void *)full_message_tags);
+                (void) weechat_hook_signal_send (str_signal,
+                                                 WEECHAT_HOOK_SIGNAL_STRING,
+                                                 (void *)full_message_tags);
                 free (full_message_tags);
             }
         }
         else
         {
-            weechat_hook_signal_send (str_signal, WEECHAT_HOOK_SIGNAL_STRING,
-                                      (void *)full_message);
+            (void) weechat_hook_signal_send (str_signal,
+                                             WEECHAT_HOOK_SIGNAL_STRING,
+                                             (void *)full_message);
         }
         free (str_signal);
     }
@@ -3502,8 +3503,9 @@ irc_server_create_buffer (struct t_irc_server *server)
     weechat_buffer_set (server->buffer, "localvar_set_charset_modifier",
                         charset_modifier);
 
-    weechat_hook_signal_send ("logger_backlog",
-                              WEECHAT_HOOK_SIGNAL_POINTER, server->buffer);
+    (void) weechat_hook_signal_send ("logger_backlog",
+                                     WEECHAT_HOOK_SIGNAL_POINTER,
+                                     server->buffer);
 
     if (weechat_config_boolean (irc_config_network_send_unknown_commands))
         weechat_buffer_set (server->buffer, "input_get_unknown_commands", "1");
@@ -3531,8 +3533,9 @@ irc_server_create_buffer (struct t_irc_server *server)
         weechat_buffer_merge (server->buffer, ptr_buffer_for_merge);
     }
 
-    weechat_hook_signal_send ("irc_server_opened",
-                              WEECHAT_HOOK_SIGNAL_POINTER, server->buffer);
+    (void) weechat_hook_signal_send ("irc_server_opened",
+                                     WEECHAT_HOOK_SIGNAL_POINTER,
+                                     server->buffer);
 
     return server->buffer;
 }
@@ -4162,8 +4165,8 @@ irc_server_connect (struct t_irc_server *server)
 #endif
 
     /* send signal "irc_server_connecting" with server name */
-    weechat_hook_signal_send ("irc_server_connecting",
-                              WEECHAT_HOOK_SIGNAL_STRING, server->name);
+    (void) weechat_hook_signal_send ("irc_server_connecting",
+                                     WEECHAT_HOOK_SIGNAL_STRING, server->name);
 
     return 1;
 }
@@ -4299,8 +4302,8 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
     server->disconnected = 1;
 
     /* send signal "irc_server_disconnected" with server name */
-    weechat_hook_signal_send ("irc_server_disconnected",
-                              WEECHAT_HOOK_SIGNAL_STRING, server->name);
+    (void) weechat_hook_signal_send ("irc_server_disconnected",
+                                     WEECHAT_HOOK_SIGNAL_STRING, server->name);
 }
 
 /*
