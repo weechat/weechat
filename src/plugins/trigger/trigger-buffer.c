@@ -54,7 +54,8 @@ trigger_buffer_hashtable_map_cb (void *data,
 
     if (strcmp (value_type, "string") == 0)
     {
-        value_no_color = weechat_string_remove_color ((const char *)value, NULL);
+        value_no_color = (weechat_config_boolean (trigger_config_look_monitor_strip_colors)) ?
+            weechat_string_remove_color ((const char *)value, NULL) : NULL;
         weechat_printf_tags (trigger_buffer, "no_trigger",
                              "\t    %s: \"%s\"",
                              (char *)key,

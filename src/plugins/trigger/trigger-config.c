@@ -33,7 +33,7 @@ struct t_config_section *trigger_config_section_trigger = NULL;
 
 /* trigger config, look section */
 
-struct t_config_option *trigger_config_look_test;
+struct t_config_option *trigger_config_look_monitor_strip_colors;
 
 /* trigger config, color section */
 
@@ -545,11 +545,11 @@ trigger_config_init ()
         return 0;
     }
 
-    trigger_config_look_test = weechat_config_new_option (
+    trigger_config_look_monitor_strip_colors = weechat_config_new_option (
         trigger_config_file, ptr_section,
-        "test", "boolean",
-        "",
-        NULL, 0, 0, "on", NULL, 0, NULL, NULL,
+        "monitor_strip_colors", "boolean",
+        N_("strip colors in hashtable values displayed on monitor buffer"),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);
 
     /* color */
