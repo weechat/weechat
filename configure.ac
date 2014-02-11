@@ -1053,7 +1053,7 @@ AC_DEFINE_UNQUOTED(WEECHAT_SHAREDIR, "$WEECHAT_SHAREDIR")
 weechat_libdir=${libdir}/weechat
 AC_SUBST(weechat_libdir)
 
-COMMON_CFLAGS="-Wall -W -Werror-implicit-function-declaration"
+COMMON_CFLAGS="-Wall -Wextra -Werror-implicit-function-declaration"
 AC_MSG_CHECKING([whether we have GNU assembler])
 GAS=`as --version < /dev/null 2>/dev/null | grep GNU`
 if test "$GAS"; then
