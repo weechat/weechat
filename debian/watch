@@ -1,2 +1,2 @@
-version=2
-http://weechat.org/files/src/weechat-(\d.*)\.tar\.bz2
+version=3
+opts=pgpsigurlmangle=s/$/.asc/  http://weechat.org/files/src/weechat-(\d.*)\.tar\.bz2

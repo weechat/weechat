@@ -1,3 +1,51 @@
+weechat (0.4.3-1) unstable; urgency=medium
+
+  * New upstream release
+  * Bump Standards-Version to 3.9.5
+  * Update debian/watch to check upstream tarballs signatures
+  * Add new doc-base files:
+    - Devel guide in French and Japanese
+    - Plugins guide in Japanese
+    - Relay protocol guide in French
+    - User guide in Polish
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Mon, 10 Feb 2014 17:15:21 +0000
+
+weechat (0.4.2-3) unstable; urgency=low
+
+  * Fix FTBS while building without Internet access (add a missing build
+    dependency on docbook-xsl) (Closes: #727206)
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Wed, 23 Oct 2013 20:54:08 +0000
+
+weechat (0.4.2-2) unstable; urgency=low
+
+  * Move dependencies from Build-Depends-Indep to Build-Depends (weechat-curses
+    as arch:any needs them to build manpages)
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Tue, 08 Oct 2013 07:16:59 +0000
+
+weechat (0.4.2-1) unstable; urgency=low
+
+  * New upstream release
+    - Add build dependency on xsltproc
+    - Enable build of documentation and manpages (now disabled by default)
+    - Install new localized manpages
+    - weechat-curses renamed to weechat
+      o update packaging accordingly
+      o add symlinks for backward compatibility
+  * Refresh XPM menu icon following upstream changes
+  * Switch to debhelper >= 9
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Mon, 07 Oct 2013 21:40:15 +0000
+
+weechat (0.4.1-2) unstable; urgency=low
+
+  * Disable build of guile plugin (as guile-2.0-dev FTBFS on multiple
+    architectures)
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Sat, 29 Jun 2013 14:48:33 +0000
+
 weechat (0.4.1-1) unstable; urgency=low
 
   * New upstream release
