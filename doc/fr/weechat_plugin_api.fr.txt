@@ -7984,6 +7984,21 @@ Liste des signaux envoyés par WeeChat et les extensions :
   Chaîne : touche appuyée |
   Touche appuyée
 
+| weechat | key_combo_default +
+  _(WeeChat ≥ 0.4.4)_ |
+  Chaîne : combinaison de touches |
+  Combinaison de touches dans le contexte 'default'
+
+| weechat | key_combo_search +
+  _(WeeChat ≥ 0.4.4)_ |
+  Chaîne : combinaison de touches |
+  Combinaison de touches dans le contexte 'search'
+
+| weechat | key_combo_cursor +
+  _(WeeChat ≥ 0.4.4)_ |
+  Chaîne : combinaison de touches |
+  Combinaison de touches dans le contexte 'cursor'
+
 | weechat | nicklist_group_added +
   _(WeeChat ≥ 0.3.2)_ |
   Chaîne : pointeur tampon + "," + nom du groupe |

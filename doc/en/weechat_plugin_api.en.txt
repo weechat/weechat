@@ -7854,6 +7854,21 @@ List of signals sent by WeeChat and plugins:
   String: key pressed |
   Key pressed
 
+| weechat | key_combo_default +
+  _(WeeChat ≥ 0.4.4)_ |
+  String: key combo |
+  Key combo in 'default' context
+
+| weechat | key_combo_search +
+  _(WeeChat ≥ 0.4.4)_ |
+  String: key combo |
+  Key combo in 'search' context
+
+| weechat | key_combo_cursor +
+  _(WeeChat ≥ 0.4.4)_ |
+  String: key combo |
+  Key combo in 'cursor' context
+
 | weechat | nicklist_group_added +
   _(WeeChat ≥ 0.3.2)_ |
   String: buffer pointer + "," + group name |

@@ -1246,9 +1246,11 @@ end:
 int
 gui_key_pressed (const char *key_str)
 {
-    int i, first_key, context, length, length_key;
+    int i, first_key, context, length, length_key, rc, signal_sent;
     struct t_gui_key *ptr_key;
-    char *pos;
+    char *pos, signal_name[128];
+
+    signal_sent = 0;
 
     /* add key to buffer */
     first_key = (gui_key_combo_buffer[0] == '\0');
@@ -1329,8 +1331,14 @@ gui_key_pressed (const char *key_str)
         if (strcmp (ptr_key->key, gui_key_combo_buffer) == 0)
         {
             /* exact combo found => execute command */
+            signal_sent = 1;
+            snprintf (signal_name, sizeof (signal_name),
+                      "key_combo_%s", gui_key_context_string[context]);
+            rc = hook_signal_send (signal_name,
+                                   WEECHAT_HOOK_SIGNAL_STRING,
+                                   gui_key_combo_buffer);
             gui_key_combo_buffer[0] = '\0';
-            if (ptr_key->commands)
+            if ((rc != WEECHAT_RC_OK_EAT) && ptr_key->commands)
             {
                 for (i = 0; ptr_key->commands[i]; i++)
                 {
@@ -1343,7 +1351,30 @@ gui_key_pressed (const char *key_str)
     }
     else if (context == GUI_KEY_CONTEXT_CURSOR)
     {
+        signal_sent = 1;
+        snprintf (signal_name, sizeof (signal_name),
+                  "key_combo_%s", gui_key_context_string[context]);
+        if (hook_signal_send (signal_name,
+                              WEECHAT_HOOK_SIGNAL_STRING,
+                              gui_key_combo_buffer) == WEECHAT_RC_OK_EAT)
+        {
+            gui_key_combo_buffer[0] = '\0';
+            return 0;
+        }
         if (gui_key_focus (gui_key_combo_buffer, GUI_KEY_CONTEXT_CURSOR))
+        {
+            gui_key_combo_buffer[0] = '\0';
+            return 0;
+        }
+    }
+
+    if (!signal_sent && first_key)
+    {
+        snprintf (signal_name, sizeof (signal_name),
+                  "key_combo_%s", gui_key_context_string[context]);
+        if (hook_signal_send (signal_name,
+                              WEECHAT_HOOK_SIGNAL_STRING,
+                              gui_key_combo_buffer) == WEECHAT_RC_OK_EAT)
         {
             gui_key_combo_buffer[0] = '\0';
             return 0;
