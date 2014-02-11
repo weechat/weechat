@@ -3209,6 +3209,8 @@ hook_focus_get_data (struct t_hashtable *hashtable_focus1,
 void
 hook_set (struct t_hook *hook, const char *property, const char *value)
 {
+    ssize_t num_written;
+
     /* invalid hook? */
     if (!hook_valid (hook))
         return;
@@ -3226,9 +3228,9 @@ hook_set (struct t_hook *hook, const char *property, const char *value)
             && (HOOK_PROCESS(hook, child_write[HOOK_PROCESS_STDIN]) >= 0))
         {
             /* send data on child's stdin */
-            write (HOOK_PROCESS(hook, child_write[HOOK_PROCESS_STDIN]),
-                   value,
-                   strlen (value));
+            num_written = write (HOOK_PROCESS(hook, child_write[HOOK_PROCESS_STDIN]),
+                                 value, strlen (value));
+            (void) num_written;
         }
     }
     else if (string_strcasecmp (property, "stdin_close") == 0)
