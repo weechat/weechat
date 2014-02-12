@@ -8081,7 +8081,7 @@ Arguments:
   <<_weechat_hook_signal,weechat_hook_signal>>)
 * 'signal_data': data sent with signal
 
-Return value (_WeeChat ≥ 0.4.4)_:
+Return value _(WeeChat ≥ 0.4.4)_:
 
 * return code of last callback executed ('WEECHAT_RC_OK' if no callback was
   executed):
@@ -8395,7 +8395,7 @@ Arguments:
 * 'signal': signal to send
 * 'hashtable': hashtable
 
-Return value (_WeeChat ≥ 0.4.4)_:
+Return value _(WeeChat ≥ 0.4.4)_:
 
 * return code of last callback executed ('WEECHAT_RC_OK' if no callback was
   executed):

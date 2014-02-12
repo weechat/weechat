@@ -8259,7 +8259,7 @@ Argomenti:
 * 'signal_data': dati inviati con il segnale
 
 // TRANSLATION MISSING
-Return value (_WeeChat ≥ 0.4.4)_:
+Return value _(WeeChat ≥ 0.4.4)_:
 
 // TRANSLATION MISSING
 * return code of last callback executed ('WEECHAT_RC_OK' if no callback was
@@ -8593,7 +8593,7 @@ Argomenti:
 * 'hashtable': tabella hash
 
 // TRANSLATION MISSING
-Return value (_WeeChat ≥ 0.4.4)_:
+Return value _(WeeChat ≥ 0.4.4)_:
 
 // TRANSLATION MISSING
 * return code of last callback executed ('WEECHAT_RC_OK' if no callback was

@@ -8211,7 +8211,7 @@ Paramètres :
   <<_weechat_hook_signal,weechat_hook_signal>>)
 * 'signal_data' : données envoyées avec le signal
 
-Valeur de retour (_WeeChat ≥ 0.4.4)_ :
+Valeur de retour _(WeeChat ≥ 0.4.4)_ :
 
 * code retour du dernier "callback" exécuté ('WEECHAT_RC_OK' si aucun "callback"
   n'a été exécuté) :
@@ -8534,7 +8534,7 @@ Paramètres :
 * 'signal' : signal à envoyer
 * 'hashtable' : table de hachage
 
-Valeur de retour (_WeeChat ≥ 0.4.4)_ :
+Valeur de retour _(WeeChat ≥ 0.4.4)_ :
 
 * code retour du dernier "callback" exécuté ('WEECHAT_RC_OK' si aucun "callback"
   n'a été exécuté) :

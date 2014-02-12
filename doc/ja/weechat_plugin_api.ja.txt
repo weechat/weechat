@@ -8081,7 +8081,7 @@ int weechat_hook_signal_send (const char *signal, const char *type_data,
 * 'signal_data': シグナルと一緒に送信するデータ
 
 // TRANSLATION MISSING
-Return value (_WeeChat ≥ 0.4.4)_:
+Return value _(WeeChat ≥ 0.4.4)_:
 
 // TRANSLATION MISSING
 * return code of last callback executed ('WEECHAT_RC_OK' if no callback was
@@ -8398,7 +8398,7 @@ int weechat_hook_hsignal_send (const char *signal, struct t_hashtable *hashtable
 * 'hashtable': ハッシュテーブル
 
 // TRANSLATION MISSING
-Return value (_WeeChat ≥ 0.4.4)_:
+Return value _(WeeChat ≥ 0.4.4)_:
 
 // TRANSLATION MISSING
 * return code of last callback executed ('WEECHAT_RC_OK' if no callback was
