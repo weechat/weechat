@@ -1,3 +1,11 @@
+weechat (0.4.3-2) unstable; urgency=medium
+
+  * Add missing symlink for Polish manpage
+  * Change ruby-* Build-Depends to gem2deb so that ruby plugin will be
+    built against the newest Ruby interpreter available (Closes: #738685)
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Thu, 13 Feb 2014 12:11:54 +0000
+
 weechat (0.4.3-1) unstable; urgency=medium
 
   * New upstream release

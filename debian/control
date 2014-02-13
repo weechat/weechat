@@ -10,7 +10,7 @@ Build-Depends:
     debhelper (>= 9),
     cmake, pkg-config,
     libncursesw5-dev,
-    ruby1.9.1, ruby1.9.1-dev,
+    gem2deb,
     libperl-dev,
     python-dev,
     libaspell-dev,
