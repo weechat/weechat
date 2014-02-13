@@ -263,22 +263,23 @@ trigger_completion_hook_arguments_cb (void *data, const char *completion_item,
 }
 
 /*
- * Adds default condition for hook to completion list.
+ * Adds default conditions for hook to completion list.
  */
 
 int
-trigger_completion_hook_condition_cb (void *data, const char *completion_item,
-                                      struct t_gui_buffer *buffer,
-                                      struct t_gui_completion *completion)
+trigger_completion_hook_conditions_cb (void *data, const char *completion_item,
+                                       struct t_gui_buffer *buffer,
+                                       struct t_gui_completion *completion)
 {
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
     (void) buffer;
 
-    trigger_completion_add_default_for_hook (completion,
-                                             trigger_hook_default_conditions,
-                                             NULL);
+    weechat_hook_completion_list_add (completion,
+                                      "\"" TRIGGER_HOOK_DEFAULT_CONDITIONS "\"",
+                                      0,
+                                      WEECHAT_LIST_POS_END);
     weechat_hook_completion_list_add (completion, "\"\"", 0,
                                       WEECHAT_LIST_POS_END);
 
@@ -299,9 +300,10 @@ trigger_completion_hook_regex_cb (void *data, const char *completion_item,
     (void) completion_item;
     (void) buffer;
 
-    trigger_completion_add_default_for_hook (completion,
-                                             trigger_hook_default_regex,
-                                             NULL);
+    weechat_hook_completion_list_add (completion,
+                                      "\"" TRIGGER_HOOK_DEFAULT_REGEX "\"",
+                                      0,
+                                      WEECHAT_LIST_POS_END);
     weechat_hook_completion_list_add (completion, "\"\"", 0,
                                       WEECHAT_LIST_POS_END);
 
@@ -322,9 +324,10 @@ trigger_completion_hook_command_cb (void *data, const char *completion_item,
     (void) completion_item;
     (void) buffer;
 
-    trigger_completion_add_default_for_hook (completion,
-                                             trigger_hook_default_command,
-                                             NULL);
+    weechat_hook_completion_list_add (completion,
+                                      "\"" TRIGGER_HOOK_DEFAULT_COMMAND "\"",
+                                      0,
+                                      WEECHAT_LIST_POS_END);
     weechat_hook_completion_list_add (completion, "\"\"", 0,
                                       WEECHAT_LIST_POS_END);
 
@@ -374,9 +377,9 @@ trigger_completion_init ()
     weechat_hook_completion ("trigger_hook_arguments",
                              N_("default arguments for a hook"),
                              &trigger_completion_hook_arguments_cb, NULL);
-    weechat_hook_completion ("trigger_hook_condition",
-                             N_("default condition for a hook"),
-                             &trigger_completion_hook_condition_cb, NULL);
+    weechat_hook_completion ("trigger_hook_conditions",
+                             N_("default conditions for a hook"),
+                             &trigger_completion_hook_conditions_cb, NULL);
     weechat_hook_completion ("trigger_hook_regex",
                              N_("default regular expression for a hook"),
                              &trigger_completion_hook_regex_cb, NULL);

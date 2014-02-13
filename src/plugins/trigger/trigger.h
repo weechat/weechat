@@ -25,6 +25,10 @@
 #define weechat_plugin weechat_trigger_plugin
 #define TRIGGER_PLUGIN_NAME "trigger"
 
+#define TRIGGER_HOOK_DEFAULT_CONDITIONS "${...}"
+#define TRIGGER_HOOK_DEFAULT_REGEX      "/abc/def"
+#define TRIGGER_HOOK_DEFAULT_COMMAND    "/cmd"
+
 enum t_trigger_option
 {
     TRIGGER_OPTION_ENABLED = 0,        /* true if trigger is enabled        */
@@ -44,6 +48,7 @@ enum t_trigger_hook_type
     TRIGGER_HOOK_HSIGNAL,
     TRIGGER_HOOK_MODIFIER,
     TRIGGER_HOOK_PRINT,
+    TRIGGER_HOOK_COMMAND,
     TRIGGER_HOOK_COMMAND_RUN,
     TRIGGER_HOOK_TIMER,
     TRIGGER_HOOK_CONFIG,
@@ -104,9 +109,6 @@ extern char *trigger_option_default[];
 extern char *trigger_hook_type_string[];
 extern char *trigger_hook_option_values;
 extern char *trigger_hook_default_arguments[];
-extern char *trigger_hook_default_conditions[];
-extern char *trigger_hook_default_regex[];
-extern char *trigger_hook_default_command[];
 extern char *trigger_hook_default_rc[];
 extern char *trigger_hook_regex_default_var[];
 extern char *trigger_return_code_string[];

@@ -67,7 +67,8 @@ trigger_callback_set_tags (struct t_gui_buffer *buffer,
             if (strcmp (tags[i] + 7, "private") == 0)
             {
                 snprintf (str_temp, sizeof (str_temp), "%d",
-                          (localvar_type && (strcmp (localvar_type, "private") == 0)) ? 1 : 0);
+                          (localvar_type
+                           && (strcmp (localvar_type, "private") == 0)) ? 1 : 0);
                 weechat_hashtable_set (extra_vars, "tg_msg_pv", str_temp);
             }
         }
@@ -635,6 +636,72 @@ trigger_callback_print_cb  (void *data, struct t_gui_buffer *buffer,
     }
     if (!trigger_callback_set_tags (buffer, tags, tags_count, extra_vars))
         goto end;
+
+    /* execute the trigger (conditions, regex, command) */
+    trigger_callback_execute (trigger, buffer, pointers, extra_vars);
+
+end:
+    if (pointers)
+        weechat_hashtable_free (pointers);
+    if (extra_vars)
+        weechat_hashtable_free (extra_vars);
+
+    trigger->hook_running = 0;
+
+    return rc;
+}
+
+/*
+ * Callback for a command hooked.
+ */
+
+int
+trigger_callback_command_cb  (void *data, struct t_gui_buffer *buffer,
+                              int argc, char **argv, char **argv_eol)
+{
+    struct t_trigger *trigger;
+    struct t_hashtable *pointers, *extra_vars;
+    char str_name[32];
+    int rc, i;
+
+    /* get trigger pointer, return immediately if not found or trigger running */
+    trigger = (struct t_trigger *)data;
+    if (!trigger || trigger->hook_running)
+        return WEECHAT_RC_OK;
+
+    trigger->hook_count_cb++;
+    trigger->hook_running = 1;
+
+    pointers = NULL;
+    extra_vars = NULL;
+
+    rc = trigger_return_code[weechat_config_integer (trigger->options[TRIGGER_OPTION_RETURN_CODE])];
+
+    /* create hashtables */
+    pointers = weechat_hashtable_new (32,
+                                      WEECHAT_HASHTABLE_STRING,
+                                      WEECHAT_HASHTABLE_POINTER,
+                                      NULL,
+                                      NULL);
+    if (!pointers)
+        goto end;
+    extra_vars = weechat_hashtable_new (32,
+                                        WEECHAT_HASHTABLE_STRING,
+                                        WEECHAT_HASHTABLE_STRING,
+                                        NULL,
+                                        NULL);
+    if (!extra_vars)
+        goto end;
+
+    /* add data in hashtables used for conditions/replace/command */
+    weechat_hashtable_set (pointers, "buffer", buffer);
+    for (i = 0; i < argc; i++)
+    {
+        snprintf (str_name, sizeof (str_name), "tg_argv%d", i);
+        weechat_hashtable_set (extra_vars, str_name, argv[i]);
+        snprintf (str_name, sizeof (str_name), "tg_argv_eol%d", i);
+        weechat_hashtable_set (extra_vars, str_name, argv_eol[i]);
+    }
 
     /* execute the trigger (conditions, regex, command) */
     trigger_callback_execute (trigger, buffer, pointers, extra_vars);

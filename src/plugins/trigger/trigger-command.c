@@ -521,9 +521,9 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
                   "/trigger add name %s \"%s\" \"%s\" \"%s\" \"%s\"%s%s%s",
                   trigger_hook_type_string[type],
                   trigger_hook_default_arguments[type],
-                  trigger_hook_default_conditions[type],
-                  trigger_hook_default_regex[type],
-                  trigger_hook_default_command[type],
+                  TRIGGER_HOOK_DEFAULT_CONDITIONS,
+                  TRIGGER_HOOK_DEFAULT_REGEX,
+                  TRIGGER_HOOK_DEFAULT_COMMAND,
                   (items && (num_items > 0)) ? " \"" : "",
                   (items && (num_items > 0)) ? items[0] : "",
                   (items && (num_items > 0)) ? "\"" : "");
@@ -775,17 +775,20 @@ trigger_command_init ()
            "listdefault: list default triggers\n"
            "        add: add a trigger\n"
            "       name: name of trigger\n"
-           "       hook: signal, hsignal, modifier, print, command_run, timer, "
-           "config\n"
+           "       hook: signal, hsignal, modifier, print, command, command_run, "
+           "timer, config\n"
            "  arguments: arguments for the hook, depending on hook (separated "
            "by semicolons):\n"
-           "             signal: name(s) of signal\n"
-           "             hsignal: name(s) of hsignal\n"
-           "             modifier: name(s) of modifier\n"
+           "             signal: name(s) of signal (required)\n"
+           "             hsignal: name(s) of hsignal (required)\n"
+           "             modifier: name(s) of modifier (required)\n"
            "             print: buffer, tags, message, strip_colors\n"
-           "             command_run: command\n"
-           "             timer: interval, align_second, max_calls\n"
-           "             config: name of option\n"
+           "             command: command (required), description, arguents, "
+           "description of arguments, completion\n"
+           "             command_run: command (required)\n"
+           "             timer: interval (required), align_second (required), "
+           "max_calls (required)\n"
+           "             config: name of option (required)\n"
            " conditions: evaluated conditions for the trigger\n"
            "      regex: one or more regular expressions to replace strings "
            "in variables\n"
@@ -841,12 +844,13 @@ trigger_command_init ()
            "    /trigger add cfgsave timer 3600000;0;0 \"\" \"\" \"/mute /save\""),
         "list|listfull|listdefault"
         " || add %(trigger_names) %(trigger_hooks) %(trigger_hook_arguments) "
-        "%(trigger_hook_condition) %(trigger_hook_regex) "
+        "%(trigger_hook_conditions) %(trigger_hook_regex) "
         "%(trigger_hook_command) %(trigger_hook_rc)"
         " || addinput %(trigger_hooks)"
         " || set %(trigger_names) %(trigger_options)|name %(trigger_option_value)"
         " || rename %(trigger_names) %(trigger_names)"
-        " || enable|disable|toggle|restart|del %(trigger_names)|-all %(trigger_names)|%*"
+        " || enable|disable|toggle|restart|del %(trigger_names)|-all "
+        "%(trigger_names)|%*"
         " || show %(trigger_names)"
         " || default"
         " || monitor",

@@ -48,25 +48,20 @@ char *trigger_option_default[TRIGGER_NUM_OPTIONS] =
 { "on", "signal", "", "", "", "", "ok" };
 
 char *trigger_hook_type_string[TRIGGER_NUM_HOOK_TYPES] =
-{ "signal", "hsignal", "modifier", "print", "command_run", "timer", "config" };
+{ "signal", "hsignal", "modifier", "print", "command", "command_run", "timer",
+  "config" };
 char *trigger_hook_option_values =
-    "signal|hsignal|modifier|print|command_run|timer|config";
+    "signal|hsignal|modifier|print|command|command_run|timer|config";
 char *trigger_hook_default_arguments[TRIGGER_NUM_HOOK_TYPES] =
-{ "xxx", "xxx", "xxx", "", "/cmd", "60000;0;0", "xxx" };
-char *trigger_hook_default_conditions[TRIGGER_NUM_HOOK_TYPES] =
-{ "${...}", "${...}", "${...}", "${...}", "${...}", "${...}", "${...}" };
-char *trigger_hook_default_regex[TRIGGER_NUM_HOOK_TYPES] =
-{ "/abc/def", "/abc/def", "/abc/def", "/abc/def", "/abc/def", "/abc/def",
-  "/abc/def" };
-char *trigger_hook_default_command[TRIGGER_NUM_HOOK_TYPES] =
-{ "/cmd", "/cmd", "/cmd", "/cmd", "/cmd", "/cmd", "/cmd" };
+{ "xxx", "xxx", "xxx", "", "cmd;desc;args;args_desc;%(buffers_names)", "/cmd",
+  "60000;0;0", "xxx" };
 char *trigger_hook_default_rc[TRIGGER_NUM_HOOK_TYPES] =
-{ "ok,ok_eat,error", "ok,ok_eat,error", "", "ok,error", "ok,ok_eat,error",
-  "ok", "ok" };
+{ "ok,ok_eat,error", "ok,ok_eat,error", "", "ok,error", "ok,error",
+  "ok,ok_eat,error", "ok", "ok" };
 
 char *trigger_hook_regex_default_var[TRIGGER_NUM_HOOK_TYPES] =
-{ "tg_signal_data", "", "tg_string", "tg_message", "tg_command", "",
-  "tg_value" };
+{ "tg_signal_data", "", "tg_string", "tg_message", "tg_argv_eol1", "tg_command",
+  "", "tg_value" };
 
 char *trigger_return_code_string[TRIGGER_NUM_RETURN_CODES] =
 { "ok", "ok_eat", "error" };
@@ -262,9 +257,10 @@ trigger_hook (struct t_trigger *trigger)
                     trigger->hooks_count = argc;
                     for (i = 0; i < argc; i++)
                     {
-                        trigger->hooks[i] = weechat_hook_signal (argv[i],
-                                                                 &trigger_callback_signal_cb,
-                                                                 trigger);
+                        trigger->hooks[i] = weechat_hook_signal (
+                            argv[i],
+                            &trigger_callback_signal_cb,
+                            trigger);
                     }
                 }
             }
@@ -278,9 +274,10 @@ trigger_hook (struct t_trigger *trigger)
                     trigger->hooks_count = argc;
                     for (i = 0; i < argc; i++)
                     {
-                        trigger->hooks[i] = weechat_hook_hsignal (argv[i],
-                                                                  &trigger_callback_hsignal_cb,
-                                                                  trigger);
+                        trigger->hooks[i] = weechat_hook_hsignal (
+                            argv[i],
+                            &trigger_callback_hsignal_cb,
+                            trigger);
                     }
                 }
             }
@@ -294,9 +291,10 @@ trigger_hook (struct t_trigger *trigger)
                     trigger->hooks_count = argc;
                     for (i = 0; i < argc; i++)
                     {
-                        trigger->hooks[i] = weechat_hook_modifier (argv[i],
-                                                                   &trigger_callback_modifier_cb,
-                                                                   trigger);
+                        trigger->hooks[i] = weechat_hook_modifier (
+                            argv[i],
+                            &trigger_callback_modifier_cb,
+                            trigger);
                     }
                 }
             }
@@ -316,14 +314,35 @@ trigger_hook (struct t_trigger *trigger)
                 if (argc >= 4)
                     strip_colors = (strcmp (argv[3], "0") != 0) ? 1 : 0;
             }
-            trigger->hooks = malloc (1 * sizeof (trigger->hooks[0]));
+            trigger->hooks = malloc (sizeof (trigger->hooks[0]));
             if (trigger->hooks)
             {
                 trigger->hooks_count = 1;
-                trigger->hooks[0] = weechat_hook_print (NULL, tags, message,
-                                                        strip_colors,
-                                                        &trigger_callback_print_cb,
-                                                        trigger);
+                trigger->hooks[0] = weechat_hook_print (
+                    NULL,
+                    tags,
+                    message,
+                    strip_colors,
+                    &trigger_callback_print_cb,
+                    trigger);
+            }
+            break;
+        case TRIGGER_HOOK_COMMAND:
+            if (argv && (argc >= 1))
+            {
+                trigger->hooks = malloc (sizeof (trigger->hooks[0]));
+                if (trigger->hooks)
+                {
+                    trigger->hooks_count = 1;
+                    trigger->hooks[0] = weechat_hook_command (
+                        argv[0],  /* command */
+                        (argc > 1) ? argv[1] : "",  /* description */
+                        (argc > 2) ? argv[2] : "",  /* arguments */
+                        (argc > 3) ? argv[3] : "",  /* description of args */
+                        (argc > 4) ? argv[4] : "",  /* completion */
+                        &trigger_callback_command_cb,
+                        trigger);
+                }
             }
             break;
         case TRIGGER_HOOK_COMMAND_RUN:
@@ -335,9 +354,10 @@ trigger_hook (struct t_trigger *trigger)
                     trigger->hooks_count = argc;
                     for (i = 0; i < argc; i++)
                     {
-                        trigger->hooks[i] = weechat_hook_command_run (argv[i],
-                                                                      &trigger_callback_command_run_cb,
-                                                                      trigger);
+                        trigger->hooks[i] = weechat_hook_command_run (
+                            argv[i],
+                            &trigger_callback_command_run_cb,
+                            trigger);
                     }
                 }
             }
@@ -358,15 +378,16 @@ trigger_hook (struct t_trigger *trigger)
                     && (align_second >= 0)
                     && (max_calls >= 0))
                 {
-                    trigger->hooks = malloc (1 * sizeof (trigger->hooks[0]));
+                    trigger->hooks = malloc (sizeof (trigger->hooks[0]));
                     if (trigger->hooks)
                     {
                         trigger->hooks_count = 1;
-                        trigger->hooks[0] = weechat_hook_timer (interval,
-                                                                (int)align_second,
-                                                                (int)max_calls,
-                                                                &trigger_callback_timer_cb,
-                                                                trigger);
+                        trigger->hooks[0] = weechat_hook_timer (
+                            interval,
+                            (int)align_second,
+                            (int)max_calls,
+                            &trigger_callback_timer_cb,
+                            trigger);
                     }
                 }
             }
@@ -380,9 +401,10 @@ trigger_hook (struct t_trigger *trigger)
                     trigger->hooks_count = argc;
                     for (i = 0; i < argc; i++)
                     {
-                        trigger->hooks[i] = weechat_hook_config (argv[i],
-                                                                 &trigger_callback_config_cb,
-                                                                 trigger);
+                        trigger->hooks[i] = weechat_hook_config (
+                            argv[i],
+                            &trigger_callback_config_cb,
+                            trigger);
                     }
                 }
             }
