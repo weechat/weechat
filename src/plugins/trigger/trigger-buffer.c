@@ -105,10 +105,14 @@ trigger_buffer_display_trigger (struct t_trigger *trigger,
         return;
 
     weechat_printf_tags (trigger_buffer, "no_trigger",
-                         "%s\t%s%s",
+                         "%s\t%s%s %s(%s%s%s)",
                          trigger_hook_type_string[weechat_config_integer (trigger->options[TRIGGER_OPTION_HOOK])],
                          weechat_color (weechat_config_string (trigger_config_color_trigger)),
-                         trigger->name);
+                         trigger->name,
+                         weechat_color ("chat_delimiters"),
+                         weechat_color ("reset"),
+                         weechat_config_string (trigger->options[TRIGGER_OPTION_ARGUMENTS]),
+                         weechat_color ("chat_delimiters"));
     if (buffer)
     {
         weechat_printf_tags (trigger_buffer, "no_trigger",
