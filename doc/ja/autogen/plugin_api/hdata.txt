@@ -714,6 +714,7 @@
 *** 'area_name' (pointer)
 *** 'area_key' (string)
 *** 'command' (string)
+*** 'commands' (pointer)
 *** 'score' (integer)
 *** 'prev_key' (pointer, hdata: "key")
 *** 'next_key' (pointer, hdata: "key")
