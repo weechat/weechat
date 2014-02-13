@@ -20,6 +20,50 @@
 #ifndef __WEECHAT_TRIGGER_CALLBACK_H
 #define __WEECHAT_TRIGGER_CALLBACK_H 1
 
+#define TRIGGER_CALLBACK_CB_INIT(__rc)                          \
+    struct t_trigger *trigger;                                  \
+    struct t_hashtable *pointers, *extra_vars;                  \
+    int trigger_rc;                                             \
+    pointers = NULL;                                            \
+    extra_vars = NULL;                                          \
+    (void) trigger_rc;                                          \
+    trigger = (struct t_trigger *)data;                         \
+    if (!trigger || trigger->hook_running)                      \
+        return __rc;                                            \
+    trigger->hook_count_cb++;                                   \
+    trigger->hook_running = 1;                                  \
+    trigger_rc = trigger_return_code[                           \
+        weechat_config_integer (                                \
+            trigger->options[TRIGGER_OPTION_RETURN_CODE])];
+
+#define TRIGGER_CALLBACK_CB_NEW_POINTERS                        \
+    pointers = weechat_hashtable_new (                          \
+        32,                                                     \
+        WEECHAT_HASHTABLE_STRING,                               \
+        WEECHAT_HASHTABLE_POINTER,                              \
+        NULL,                                                   \
+        NULL);                                                  \
+    if (!pointers)                                              \
+        goto end;
+
+#define TRIGGER_CALLBACK_CB_NEW_EXTRA_VARS                      \
+    extra_vars = weechat_hashtable_new (                        \
+        32,                                                     \
+        WEECHAT_HASHTABLE_STRING,                               \
+        WEECHAT_HASHTABLE_STRING,                               \
+        NULL,                                                   \
+        NULL);                                                  \
+    if (!extra_vars)                                            \
+        goto end;
+
+#define TRIGGER_CALLBACK_CB_END(__rc)                           \
+    if (pointers)                                               \
+        weechat_hashtable_free (pointers);                      \
+    if (extra_vars)                                             \
+        weechat_hashtable_free (extra_vars);                    \
+    trigger->hook_running = 0;                                  \
+    return __rc;
+
 extern int trigger_callback_signal_cb (void *data, const char *signal,
                                        const char *type_data, void *signal_data);
 extern int trigger_callback_hsignal_cb (void *data, const char *signal,

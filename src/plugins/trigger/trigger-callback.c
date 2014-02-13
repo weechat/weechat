@@ -26,6 +26,7 @@
 
 #include "../weechat-plugin.h"
 #include "trigger.h"
+#include "trigger-callback.h"
 #include "trigger-buffer.h"
 
 
@@ -289,30 +290,12 @@ int
 trigger_callback_signal_cb (void *data, const char *signal,
                             const char *type_data, void *signal_data)
 {
-    struct t_trigger *trigger;
-    struct t_hashtable *extra_vars;
     const char *ptr_signal_data;
     char str_data[128];
-    int rc;
 
-    /* get trigger pointer, return immediately if not found or trigger running */
-    trigger = (struct t_trigger *)data;
-    if (!trigger || trigger->hook_running)
-        return WEECHAT_RC_OK;
+    TRIGGER_CALLBACK_CB_INIT(WEECHAT_RC_OK);
 
-    trigger->hook_count_cb++;
-    trigger->hook_running = 1;
-
-    rc = trigger_return_code[weechat_config_integer (trigger->options[TRIGGER_OPTION_RETURN_CODE])];
-
-    /* create hashtable */
-    extra_vars = weechat_hashtable_new (32,
-                                        WEECHAT_HASHTABLE_STRING,
-                                        WEECHAT_HASHTABLE_STRING,
-                                        NULL,
-                                        NULL);
-    if (!extra_vars)
-        goto end;
+    TRIGGER_CALLBACK_CB_NEW_EXTRA_VARS;
 
     /* add data in hashtable used for conditions/replace/command */
     weechat_hashtable_set (extra_vars, "tg_signal", signal);
@@ -339,15 +322,10 @@ trigger_callback_signal_cb (void *data, const char *signal,
     weechat_hashtable_set (extra_vars, "tg_signal_data", ptr_signal_data);
 
     /* execute the trigger (conditions, regex, command) */
-    trigger_callback_execute (trigger, NULL, NULL, extra_vars);
+    trigger_callback_execute (trigger, NULL, pointers, extra_vars);
 
 end:
-    if (extra_vars)
-        weechat_hashtable_free (extra_vars);
-
-    trigger->hook_running = 0;
-
-    return rc;
+    TRIGGER_CALLBACK_CB_END(trigger_rc);
 }
 
 /*
@@ -358,23 +336,9 @@ int
 trigger_callback_hsignal_cb (void *data, const char *signal,
                              struct t_hashtable *hashtable)
 {
-    struct t_trigger *trigger;
-    struct t_hashtable *pointers, *extra_vars;
     const char *type_values;
-    int rc;
 
-    /* get trigger pointer, return immediately if not found or trigger running */
-    trigger = (struct t_trigger *)data;
-    if (!trigger || trigger->hook_running)
-        return WEECHAT_RC_OK;
-
-    trigger->hook_count_cb++;
-    trigger->hook_running = 1;
-
-    pointers = NULL;
-    extra_vars = NULL;
-
-    rc = trigger_return_code[weechat_config_integer (trigger->options[TRIGGER_OPTION_RETURN_CODE])];
+    TRIGGER_CALLBACK_CB_INIT(WEECHAT_RC_OK);
 
     /* duplicate hashtable */
     if (hashtable
@@ -398,30 +362,17 @@ trigger_callback_hsignal_cb (void *data, const char *signal,
     /* create hashtable (if not already created) */
     if (!extra_vars)
     {
-        extra_vars = weechat_hashtable_new (32,
-                                            WEECHAT_HASHTABLE_STRING,
-                                            WEECHAT_HASHTABLE_STRING,
-                                            NULL,
-                                            NULL);
-        if (!extra_vars)
-            goto end;
+        TRIGGER_CALLBACK_CB_NEW_EXTRA_VARS;
     }
 
     /* add data in hashtable used for conditions/replace/command */
     weechat_hashtable_set (extra_vars, "tg_signal", signal);
 
     /* execute the trigger (conditions, regex, command) */
-    trigger_callback_execute (trigger, NULL, NULL, extra_vars);
+    trigger_callback_execute (trigger, NULL, pointers, extra_vars);
 
 end:
-    if (pointers)
-        weechat_hashtable_free (pointers);
-    if (extra_vars)
-        weechat_hashtable_free (extra_vars);
-
-    trigger->hook_running = 0;
-
-    return rc;
+    TRIGGER_CALLBACK_CB_END(trigger_rc);
 }
 
 /*
@@ -432,41 +383,20 @@ char *
 trigger_callback_modifier_cb (void *data, const char *modifier,
                               const char *modifier_data, const char *string)
 {
-    struct t_trigger *trigger;
-    struct t_hashtable *pointers, *extra_vars;
     struct t_gui_buffer *buffer;
     const char *ptr_string;
     char *string_modified, *pos, *pos2, *plugin_name, *buffer_name;
     char *buffer_full_name, *str_tags, **tags;
     int length, num_tags;
 
+    TRIGGER_CALLBACK_CB_INIT(NULL);
+
     buffer = NULL;
     tags = NULL;
     num_tags = 0;
 
-    /* get trigger pointer, return immediately if not found or trigger running */
-    trigger = (struct t_trigger *)data;
-    if (!trigger || trigger->hook_running)
-        return NULL;
-
-    trigger->hook_count_cb++;
-    trigger->hook_running = 1;
-
-    /* create hashtables */
-    pointers = weechat_hashtable_new (32,
-                                      WEECHAT_HASHTABLE_STRING,
-                                      WEECHAT_HASHTABLE_POINTER,
-                                      NULL,
-                                      NULL);
-    if (!pointers)
-        goto end;
-    extra_vars = weechat_hashtable_new (32,
-                                        WEECHAT_HASHTABLE_STRING,
-                                        WEECHAT_HASHTABLE_STRING,
-                                        NULL,
-                                        NULL);
-    if (!extra_vars)
-        goto end;
+    TRIGGER_CALLBACK_CB_NEW_POINTERS;
+    TRIGGER_CALLBACK_CB_NEW_EXTRA_VARS;
 
     /* add data in hashtable used for conditions/replace/command */
     weechat_hashtable_set (extra_vars, "tg_modifier", modifier);
@@ -535,24 +465,17 @@ trigger_callback_modifier_cb (void *data, const char *modifier,
     }
 
     /* execute the trigger (conditions, regex, command) */
-    trigger_callback_execute (trigger, buffer, NULL, extra_vars);
+    trigger_callback_execute (trigger, buffer, pointers, extra_vars);
 
 end:
     ptr_string = weechat_hashtable_get (extra_vars, "tg_string");
     string_modified = (ptr_string && (strcmp (ptr_string, string) != 0)) ?
         strdup (ptr_string) : NULL;
 
-    if (pointers)
-        weechat_hashtable_free (pointers);
-    if (extra_vars)
-        weechat_hashtable_free (extra_vars);
-
     if (tags)
         weechat_string_free_split (tags);
 
-    trigger->hook_running = 0;
-
-    return string_modified;
+    TRIGGER_CALLBACK_CB_END(string_modified);
 }
 
 /*
@@ -565,45 +488,19 @@ trigger_callback_print_cb  (void *data, struct t_gui_buffer *buffer,
                             int displayed, int highlight, const char *prefix,
                             const char *message)
 {
-    struct t_trigger *trigger;
-    struct t_hashtable *pointers, *extra_vars;
     char *str_tags, *str_tags2, str_temp[128];
-    int rc, length;
+    int length;
     struct tm *date_tmp;
 
-    /* get trigger pointer, return immediately if not found or trigger running */
-    trigger = (struct t_trigger *)data;
-    if (!trigger || trigger->hook_running)
-        return WEECHAT_RC_OK;
-
-    trigger->hook_count_cb++;
-    trigger->hook_running = 1;
-
-    pointers = NULL;
-    extra_vars = NULL;
-
-    rc = trigger_return_code[weechat_config_integer (trigger->options[TRIGGER_OPTION_RETURN_CODE])];
+    TRIGGER_CALLBACK_CB_INIT(WEECHAT_RC_OK);
 
     /* do nothing if the buffer does not match buffers defined in the trigger */
     if (trigger->hook_print_buffers
         && !weechat_buffer_match_list (buffer, trigger->hook_print_buffers))
         goto end;
 
-    /* create hashtables */
-    pointers = weechat_hashtable_new (32,
-                                      WEECHAT_HASHTABLE_STRING,
-                                      WEECHAT_HASHTABLE_POINTER,
-                                      NULL,
-                                      NULL);
-    if (!pointers)
-        goto end;
-    extra_vars = weechat_hashtable_new (32,
-                                        WEECHAT_HASHTABLE_STRING,
-                                        WEECHAT_HASHTABLE_STRING,
-                                        NULL,
-                                        NULL);
-    if (!extra_vars)
-        goto end;
+    TRIGGER_CALLBACK_CB_NEW_POINTERS;
+    TRIGGER_CALLBACK_CB_NEW_EXTRA_VARS;
 
     /* add data in hashtables used for conditions/replace/command */
     weechat_hashtable_set (pointers, "buffer", buffer);
@@ -641,14 +538,7 @@ trigger_callback_print_cb  (void *data, struct t_gui_buffer *buffer,
     trigger_callback_execute (trigger, buffer, pointers, extra_vars);
 
 end:
-    if (pointers)
-        weechat_hashtable_free (pointers);
-    if (extra_vars)
-        weechat_hashtable_free (extra_vars);
-
-    trigger->hook_running = 0;
-
-    return rc;
+    TRIGGER_CALLBACK_CB_END(trigger_rc);
 }
 
 /*
@@ -659,39 +549,13 @@ int
 trigger_callback_command_cb  (void *data, struct t_gui_buffer *buffer,
                               int argc, char **argv, char **argv_eol)
 {
-    struct t_trigger *trigger;
-    struct t_hashtable *pointers, *extra_vars;
     char str_name[32];
-    int rc, i;
+    int i;
 
-    /* get trigger pointer, return immediately if not found or trigger running */
-    trigger = (struct t_trigger *)data;
-    if (!trigger || trigger->hook_running)
-        return WEECHAT_RC_OK;
+    TRIGGER_CALLBACK_CB_INIT(WEECHAT_RC_OK);
 
-    trigger->hook_count_cb++;
-    trigger->hook_running = 1;
-
-    pointers = NULL;
-    extra_vars = NULL;
-
-    rc = trigger_return_code[weechat_config_integer (trigger->options[TRIGGER_OPTION_RETURN_CODE])];
-
-    /* create hashtables */
-    pointers = weechat_hashtable_new (32,
-                                      WEECHAT_HASHTABLE_STRING,
-                                      WEECHAT_HASHTABLE_POINTER,
-                                      NULL,
-                                      NULL);
-    if (!pointers)
-        goto end;
-    extra_vars = weechat_hashtable_new (32,
-                                        WEECHAT_HASHTABLE_STRING,
-                                        WEECHAT_HASHTABLE_STRING,
-                                        NULL,
-                                        NULL);
-    if (!extra_vars)
-        goto end;
+    TRIGGER_CALLBACK_CB_NEW_POINTERS;
+    TRIGGER_CALLBACK_CB_NEW_EXTRA_VARS;
 
     /* add data in hashtables used for conditions/replace/command */
     weechat_hashtable_set (pointers, "buffer", buffer);
@@ -707,14 +571,7 @@ trigger_callback_command_cb  (void *data, struct t_gui_buffer *buffer,
     trigger_callback_execute (trigger, buffer, pointers, extra_vars);
 
 end:
-    if (pointers)
-        weechat_hashtable_free (pointers);
-    if (extra_vars)
-        weechat_hashtable_free (extra_vars);
-
-    trigger->hook_running = 0;
-
-    return rc;
+    TRIGGER_CALLBACK_CB_END(trigger_rc);
 }
 
 /*
@@ -725,38 +582,10 @@ int
 trigger_callback_command_run_cb  (void *data, struct t_gui_buffer *buffer,
                                   const char *command)
 {
-    struct t_trigger *trigger;
-    struct t_hashtable *pointers, *extra_vars;
-    int rc;
+    TRIGGER_CALLBACK_CB_INIT(WEECHAT_RC_OK);
 
-    /* get trigger pointer, return immediately if not found or trigger running */
-    trigger = (struct t_trigger *)data;
-    if (!trigger || trigger->hook_running)
-        return WEECHAT_RC_OK;
-
-    trigger->hook_count_cb++;
-    trigger->hook_running = 1;
-
-    pointers = NULL;
-    extra_vars = NULL;
-
-    rc = trigger_return_code[weechat_config_integer (trigger->options[TRIGGER_OPTION_RETURN_CODE])];
-
-    /* create hashtables */
-    pointers = weechat_hashtable_new (32,
-                                      WEECHAT_HASHTABLE_STRING,
-                                      WEECHAT_HASHTABLE_POINTER,
-                                      NULL,
-                                      NULL);
-    if (!pointers)
-        goto end;
-    extra_vars = weechat_hashtable_new (32,
-                                        WEECHAT_HASHTABLE_STRING,
-                                        WEECHAT_HASHTABLE_STRING,
-                                        NULL,
-                                        NULL);
-    if (!extra_vars)
-        goto end;
+    TRIGGER_CALLBACK_CB_NEW_POINTERS;
+    TRIGGER_CALLBACK_CB_NEW_EXTRA_VARS;
 
     /* add data in hashtables used for conditions/replace/command */
     weechat_hashtable_set (pointers, "buffer", buffer);
@@ -766,14 +595,7 @@ trigger_callback_command_run_cb  (void *data, struct t_gui_buffer *buffer,
     trigger_callback_execute (trigger, buffer, pointers, extra_vars);
 
 end:
-    if (pointers)
-        weechat_hashtable_free (pointers);
-    if (extra_vars)
-        weechat_hashtable_free (extra_vars);
-
-    trigger->hook_running = 0;
-
-    return rc;
+    TRIGGER_CALLBACK_CB_END(trigger_rc);
 }
 
 /*
@@ -783,17 +605,12 @@ end:
 int
 trigger_callback_timer_cb  (void *data, int remaining_calls)
 {
-    struct t_trigger *trigger;
-    struct t_hashtable *extra_vars;
     char str_temp[128];
-    int rc, i;
+    int i;
     time_t date;
     struct tm *date_tmp;
 
-    /* get trigger pointer, return immediately if not found or trigger running */
-    trigger = (struct t_trigger *)data;
-    if (!trigger || trigger->hook_running)
-        return WEECHAT_RC_OK;
+    TRIGGER_CALLBACK_CB_INIT(WEECHAT_RC_OK);
 
     /*
      * remove the hook if this is the last call to timer
@@ -808,21 +625,7 @@ trigger_callback_timer_cb  (void *data, int remaining_calls)
         }
     }
 
-    trigger->hook_count_cb++;
-    trigger->hook_running = 1;
-
-    extra_vars = NULL;
-
-    rc = trigger_return_code[weechat_config_integer (trigger->options[TRIGGER_OPTION_RETURN_CODE])];
-
-    /* create hashtable */
-    extra_vars = weechat_hashtable_new (32,
-                                        WEECHAT_HASHTABLE_STRING,
-                                        WEECHAT_HASHTABLE_STRING,
-                                        NULL,
-                                        NULL);
-    if (!extra_vars)
-        goto end;
+    TRIGGER_CALLBACK_CB_NEW_EXTRA_VARS;
 
     /* add data in hashtable used for conditions/replace/command */
     snprintf (str_temp, sizeof (str_temp), "%d", remaining_calls);
@@ -836,15 +639,10 @@ trigger_callback_timer_cb  (void *data, int remaining_calls)
     }
 
     /* execute the trigger (conditions, regex, command) */
-    trigger_callback_execute (trigger, NULL, NULL, extra_vars);
+    trigger_callback_execute (trigger, NULL, pointers, extra_vars);
 
 end:
-    if (extra_vars)
-        weechat_hashtable_free (extra_vars);
-
-    trigger->hook_running = 0;
-
-    return rc;
+    TRIGGER_CALLBACK_CB_END(trigger_rc);
 }
 
 /*
@@ -854,45 +652,19 @@ end:
 int
 trigger_callback_config_cb  (void *data, const char *option, const char *value)
 {
-    struct t_trigger *trigger;
-    struct t_hashtable *extra_vars;
-    int rc;
+    TRIGGER_CALLBACK_CB_INIT(WEECHAT_RC_OK);
 
-    /* get trigger pointer, return immediately if not found or trigger running */
-    trigger = (struct t_trigger *)data;
-    if (!trigger || trigger->hook_running)
-        return WEECHAT_RC_OK;
-
-    trigger->hook_count_cb++;
-    trigger->hook_running = 1;
-
-    extra_vars = NULL;
-
-    rc = trigger_return_code[weechat_config_integer (trigger->options[TRIGGER_OPTION_RETURN_CODE])];
-
-    /* create hashtable */
-    extra_vars = weechat_hashtable_new (32,
-                                        WEECHAT_HASHTABLE_STRING,
-                                        WEECHAT_HASHTABLE_STRING,
-                                        NULL,
-                                        NULL);
-    if (!extra_vars)
-        goto end;
+    TRIGGER_CALLBACK_CB_NEW_EXTRA_VARS;
 
     /* add data in hashtable used for conditions/replace/command */
     weechat_hashtable_set (extra_vars, "tg_option", option);
     weechat_hashtable_set (extra_vars, "tg_value", value);
 
     /* execute the trigger (conditions, regex, command) */
-    trigger_callback_execute (trigger, NULL, NULL, extra_vars);
+    trigger_callback_execute (trigger, NULL, pointers, extra_vars);
 
 end:
-    if (extra_vars)
-        weechat_hashtable_free (extra_vars);
-
-    trigger->hook_running = 0;
-
-    return rc;
+    TRIGGER_CALLBACK_CB_END(trigger_rc);
 }
 
 /*
@@ -902,30 +674,13 @@ end:
 struct t_hashtable *
 trigger_callback_focus_cb (void *data, struct t_hashtable *info)
 {
-    struct t_trigger *trigger;
-    struct t_hashtable *pointers;
     const char *ptr_value;
     long unsigned int value;
     int rc;
 
-    /* get trigger pointer, return immediately if not found or trigger running */
-    trigger = (struct t_trigger *)data;
-    if (!trigger || trigger->hook_running)
-        return NULL;
+    TRIGGER_CALLBACK_CB_INIT(WEECHAT_RC_OK);
 
-    trigger->hook_count_cb++;
-    trigger->hook_running = 1;
-
-    pointers = NULL;
-
-    /* create hashtable */
-    pointers = weechat_hashtable_new (32,
-                                      WEECHAT_HASHTABLE_STRING,
-                                      WEECHAT_HASHTABLE_POINTER,
-                                      NULL,
-                                      NULL);
-    if (!pointers)
-        goto end;
+    TRIGGER_CALLBACK_CB_NEW_POINTERS;
 
     /* add data in hashtables used for conditions/replace/command */
     ptr_value = weechat_hashtable_get (info, "_window");
@@ -947,12 +702,7 @@ trigger_callback_focus_cb (void *data, struct t_hashtable *info)
     trigger_callback_execute (trigger, NULL, pointers, info);
 
 end:
-    if (pointers)
-        weechat_hashtable_free (pointers);
-
-    trigger->hook_running = 0;
-
-    return info;
+    TRIGGER_CALLBACK_CB_END(info);
 }
 
 /*
