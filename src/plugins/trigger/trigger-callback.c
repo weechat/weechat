@@ -35,6 +35,38 @@ struct t_hashtable *trigger_callback_hashtable_options = NULL;
 
 
 /*
+ * Parses an IRC message.
+ *
+ * Returns a hashtable with the parsed message, or NULL if error.
+ *
+ * Note: the hashtable must be freed after use.
+ */
+
+struct t_hashtable *
+trigger_callback_irc_message_parse (const char *irc_message,
+                                    const char *irc_server)
+{
+    struct t_hashtable *hashtable_in, *hashtable_out;
+
+    hashtable_out = NULL;
+
+    hashtable_in = weechat_hashtable_new (32,
+                                          WEECHAT_HASHTABLE_STRING,
+                                          WEECHAT_HASHTABLE_STRING,
+                                          NULL,
+                                          NULL);
+    if (hashtable_in)
+    {
+        weechat_hashtable_set (hashtable_in, "message", irc_message);
+        weechat_hashtable_set (hashtable_in, "server", irc_server);
+        hashtable_out = weechat_info_get_hashtable ("irc_message_parse",
+                                                    hashtable_in);
+        weechat_hashtable_free (hashtable_in);
+    }
+
+    return hashtable_out;
+}
+/*
  * Sets variables in "extra_vars" hashtable using tags from message.
  *
  * Returns:
@@ -291,11 +323,53 @@ trigger_callback_signal_cb (void *data, const char *signal,
                             const char *type_data, void *signal_data)
 {
     const char *ptr_signal_data;
-    char str_data[128];
+    char str_data[128], *irc_server;
+    const char *pos, *ptr_irc_message;
 
     TRIGGER_CALLBACK_CB_INIT(WEECHAT_RC_OK);
 
-    TRIGGER_CALLBACK_CB_NEW_EXTRA_VARS;
+    /* split IRC message (if signal_data is an IRC message) */
+    irc_server = NULL;
+    ptr_irc_message = NULL;
+    if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
+    {
+        if (strstr (signal, ",irc_in_")
+            || strstr (signal, ",irc_in2_")
+            || strstr (signal, ",irc_raw_in_")
+            || strstr (signal, ",irc_raw_in2_")
+            || strstr (signal, ",irc_out1_")
+            || strstr (signal, ",irc_out_"))
+        {
+            pos = strchr (signal, ',');
+            if (pos)
+            {
+                irc_server = weechat_strndup (signal, pos - signal);
+                ptr_irc_message = (const char *)signal_data;
+            }
+        }
+        else
+        {
+            pos = strstr (signal, ",irc_outtags_");
+            if (pos)
+            {
+                irc_server = weechat_strndup (signal, pos - signal);
+                pos = strchr ((const char *)signal_data, ';');
+                if (pos)
+                    ptr_irc_message = pos + 1;
+            }
+        }
+    }
+    if (irc_server && ptr_irc_message)
+        extra_vars = trigger_callback_irc_message_parse (ptr_irc_message,
+                                                         irc_server);
+    if (irc_server)
+        free (irc_server);
+
+    /* create hashtable (if not already created) */
+    if (!extra_vars)
+    {
+        TRIGGER_CALLBACK_CB_NEW_EXTRA_VARS;
+    }
 
     /* add data in hashtable used for conditions/replace/command */
     weechat_hashtable_set (extra_vars, "tg_signal", signal);
@@ -395,8 +469,21 @@ trigger_callback_modifier_cb (void *data, const char *modifier,
     tags = NULL;
     num_tags = 0;
 
+    /* split IRC message (if string is an IRC message) */
+    if (strncmp (modifier, "irc_in_", 7)
+        || strncmp (modifier, "irc_in2_", 8)
+        || strncmp (modifier, "irc_out1_", 9)
+        || strncmp (modifier, "irc_out_", 8))
+    {
+        extra_vars = trigger_callback_irc_message_parse (string,
+                                                         modifier_data);
+    }
+
     TRIGGER_CALLBACK_CB_NEW_POINTERS;
-    TRIGGER_CALLBACK_CB_NEW_EXTRA_VARS;
+    if (!extra_vars)
+    {
+        TRIGGER_CALLBACK_CB_NEW_EXTRA_VARS;
+    }
 
     /* add data in hashtable used for conditions/replace/command */
     weechat_hashtable_set (extra_vars, "tg_modifier", modifier);
