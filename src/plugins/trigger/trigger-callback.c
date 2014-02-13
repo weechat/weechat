@@ -474,10 +474,10 @@ trigger_callback_modifier_cb (void *data, const char *modifier,
     num_tags = 0;
 
     /* split IRC message (if string is an IRC message) */
-    if (strncmp (modifier, "irc_in_", 7)
-        || strncmp (modifier, "irc_in2_", 8)
-        || strncmp (modifier, "irc_out1_", 9)
-        || strncmp (modifier, "irc_out_", 8))
+    if ((strncmp (modifier, "irc_in_", 7) == 0)
+        || (strncmp (modifier, "irc_in2_", 8) == 0)
+        || (strncmp (modifier, "irc_out1_", 9) == 0)
+        || (strncmp (modifier, "irc_out_", 8) == 0))
     {
         extra_vars = trigger_callback_irc_message_parse (string,
                                                          modifier_data);
