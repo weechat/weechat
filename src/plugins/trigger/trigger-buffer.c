@@ -57,9 +57,12 @@ trigger_buffer_hashtable_map_cb (void *data,
         value_no_color = (weechat_config_boolean (trigger_config_look_monitor_strip_colors)) ?
             weechat_string_remove_color ((const char *)value, NULL) : NULL;
         weechat_printf_tags (trigger_buffer, "no_trigger",
-                             "\t    %s: \"%s\"",
+                             "\t    %s: %s\"%s%s%s\"",
                              (char *)key,
-                             (value_no_color) ? value_no_color : (const char *)value);
+                             weechat_color ("chat_delimiters"),
+                             weechat_color ("reset"),
+                             (value_no_color) ? value_no_color : (const char *)value,
+                             weechat_color ("chat_delimiters"));
         if (value_no_color)
             free (value_no_color);
     }
@@ -109,7 +112,8 @@ trigger_buffer_display_trigger (struct t_trigger *trigger,
     if (buffer)
     {
         weechat_printf_tags (trigger_buffer, "no_trigger",
-                             "\t  buffer: %s",
+                             "\t  buffer: %s%s",
+                             weechat_color ("chat_buffer"),
                              weechat_buffer_get_string (buffer, "full_name"));
     }
     if (pointers)

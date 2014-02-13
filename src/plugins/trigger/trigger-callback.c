@@ -175,9 +175,17 @@ trigger_callback_replace_regex (struct t_trigger *trigger,
         if (trigger_buffer)
         {
             weechat_printf_tags (trigger_buffer, "no_trigger",
-                                 "\t  regex %d (%s): \"%s%s\"",
-                                 i + 1, ptr_key, value,
-                                 weechat_color ("reset"));
+                                 "\t  regex %d %s(%s%s%s)%s: %s\"%s%s%s\"",
+                                 i + 1,
+                                 weechat_color ("chat_delimiters"),
+                                 weechat_color ("reset"),
+                                 ptr_key,
+                                 weechat_color ("chat_delimiters"),
+                                 weechat_color ("reset"),
+                                 weechat_color ("chat_delimiters"),
+                                 weechat_color ("reset"),
+                                 value,
+                                 weechat_color ("chat_delimiters"));
         }
 
         weechat_hashtable_set (extra_vars, ptr_key, value);
