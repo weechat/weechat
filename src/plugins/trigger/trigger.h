@@ -52,6 +52,7 @@ enum t_trigger_hook_type
     TRIGGER_HOOK_COMMAND_RUN,
     TRIGGER_HOOK_TIMER,
     TRIGGER_HOOK_CONFIG,
+    TRIGGER_HOOK_FOCUS,
     /* number of hook types */
     TRIGGER_NUM_HOOK_TYPES,
 };

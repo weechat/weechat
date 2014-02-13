@@ -896,6 +896,66 @@ end:
 }
 
 /*
+ * Callback for a focus hooked.
+ */
+
+struct t_hashtable *
+trigger_callback_focus_cb (void *data, struct t_hashtable *info)
+{
+    struct t_trigger *trigger;
+    struct t_hashtable *pointers;
+    const char *ptr_value;
+    long unsigned int value;
+    int rc;
+
+    /* get trigger pointer, return immediately if not found or trigger running */
+    trigger = (struct t_trigger *)data;
+    if (!trigger || trigger->hook_running)
+        return NULL;
+
+    trigger->hook_count_cb++;
+    trigger->hook_running = 1;
+
+    pointers = NULL;
+
+    /* create hashtable */
+    pointers = weechat_hashtable_new (32,
+                                      WEECHAT_HASHTABLE_STRING,
+                                      WEECHAT_HASHTABLE_POINTER,
+                                      NULL,
+                                      NULL);
+    if (!pointers)
+        goto end;
+
+    /* add data in hashtables used for conditions/replace/command */
+    ptr_value = weechat_hashtable_get (info, "_window");
+    if (ptr_value && ptr_value[0] && (strncmp (ptr_value, "0x", 2) == 0))
+    {
+        rc = sscanf (ptr_value + 2, "%lx", &value);
+        if ((rc != EOF) && (rc >= 1))
+            weechat_hashtable_set (pointers, "window", (void *)value);
+    }
+    ptr_value = weechat_hashtable_get (info, "_buffer");
+    if (ptr_value && ptr_value[0] && (strncmp (ptr_value, "0x", 2) == 0))
+    {
+        rc = sscanf (ptr_value + 2, "%lx", &value);
+        if ((rc != EOF) && (rc >= 1))
+            weechat_hashtable_set (pointers, "buffer", (void *)value);
+    }
+
+    /* execute the trigger (conditions, regex, command) */
+    trigger_callback_execute (trigger, NULL, pointers, info);
+
+end:
+    if (pointers)
+        weechat_hashtable_free (pointers);
+
+    trigger->hook_running = 0;
+
+    return info;
+}
+
+/*
  * Initializes trigger callback.
  */
 
