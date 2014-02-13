@@ -157,9 +157,10 @@ trigger_callback_check_conditions (struct t_trigger *trigger,
 
 void
 trigger_callback_replace_regex (struct t_trigger *trigger,
+                                struct t_hashtable *pointers,
                                 struct t_hashtable *extra_vars)
 {
-    char *value;
+    char *value, *replace_eval;
     const char *ptr_key, *ptr_value;
     int i;
 
@@ -198,33 +199,40 @@ trigger_callback_replace_regex (struct t_trigger *trigger,
             continue;
         }
 
-        value = weechat_string_replace_regex (ptr_value,
-                                              trigger->regex[i].regex,
-                                              trigger->regex[i].replace_eval,
-                                              '$');
-        if (!value)
-            continue;
-
-        /* display debug info on trigger buffer */
-        if (trigger_buffer)
+        replace_eval = weechat_string_eval_expression (trigger->regex[i].replace,
+                                                       pointers,
+                                                       extra_vars,
+                                                       NULL);
+        if (replace_eval)
         {
-            weechat_printf_tags (trigger_buffer, "no_trigger",
-                                 "\t  regex %d %s(%s%s%s)%s: %s\"%s%s%s\"",
-                                 i + 1,
-                                 weechat_color ("chat_delimiters"),
-                                 weechat_color ("reset"),
-                                 ptr_key,
-                                 weechat_color ("chat_delimiters"),
-                                 weechat_color ("reset"),
-                                 weechat_color ("chat_delimiters"),
-                                 weechat_color ("reset"),
-                                 value,
-                                 weechat_color ("chat_delimiters"));
+            value = weechat_string_replace_regex (ptr_value,
+                                                  trigger->regex[i].regex,
+                                                  replace_eval,
+                                                  '$');
+            if (value)
+            {
+                /* display debug info on trigger buffer */
+                if (trigger_buffer)
+                {
+                    weechat_printf_tags (trigger_buffer, "no_trigger",
+                                         "\t  regex %d %s(%s%s%s)%s: "
+                                         "%s\"%s%s%s\"",
+                                         i + 1,
+                                         weechat_color ("chat_delimiters"),
+                                         weechat_color ("reset"),
+                                         ptr_key,
+                                         weechat_color ("chat_delimiters"),
+                                         weechat_color ("reset"),
+                                         weechat_color ("chat_delimiters"),
+                                         weechat_color ("reset"),
+                                         value,
+                                         weechat_color ("chat_delimiters"));
+                }
+                weechat_hashtable_set (extra_vars, ptr_key, value);
+                free (value);
+            }
+            free (replace_eval);
         }
-
-        weechat_hashtable_set (extra_vars, ptr_key, value);
-
-        free (value);
     }
 }
 
@@ -307,7 +315,7 @@ trigger_callback_execute (struct t_trigger *trigger,
     if (trigger_callback_check_conditions (trigger, pointers, extra_vars))
     {
         /* replace text with regex */
-        trigger_callback_replace_regex (trigger, extra_vars);
+        trigger_callback_replace_regex (trigger, pointers, extra_vars);
 
         /* execute command(s) */
         trigger_callback_run_command (trigger, buffer, pointers, extra_vars);

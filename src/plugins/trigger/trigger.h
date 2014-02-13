@@ -72,7 +72,6 @@ struct t_trigger_regex
     char *str_regex;                   /* regex to search for replacement   */
     regex_t *regex;                    /* compiled regex                    */
     char *replace;                     /* replacement text                  */
-    char *replace_eval;                /* evaluatued replacement text       */
 };
 
 struct t_trigger
