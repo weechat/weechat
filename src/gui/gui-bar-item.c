@@ -69,7 +69,7 @@ char *gui_bar_items_default_for_bars[][2] =
   { GUI_BAR_DEFAULT_NAME_TITLE,
     "buffer_title" },
   { GUI_BAR_DEFAULT_NAME_STATUS,
-    "[time],[buffer_count],[buffer_plugin],buffer_number+:+"
+    "[time],[buffer_last_number],[buffer_plugin],buffer_number+:+"
     "buffer_name+(buffer_modes)+{buffer_nicklist_count}+buffer_zoom+"
     "buffer_filter,[lag],[hotlist],completion,scroll" },
   { GUI_BAR_DEFAULT_NAME_NICKLIST,
