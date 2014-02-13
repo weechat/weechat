@@ -473,7 +473,7 @@ trigger_callback_modifier_cb (void *data, const char *modifier,
     struct t_gui_buffer *buffer;
     const char *ptr_string;
     char *string_modified, *pos, *pos2, *plugin_name, *buffer_name;
-    char *buffer_full_name, *str_tags, **tags;
+    char *buffer_full_name, *str_tags, **tags, *prefix;
     int length, num_tags;
 
     TRIGGER_CALLBACK_CB_INIT(NULL);
@@ -508,6 +508,31 @@ trigger_callback_modifier_cb (void *data, const char *modifier,
     /* add special variables for a WeeChat message */
     if (strcmp (modifier, "weechat_print") == 0)
     {
+        /* set "tg_prefix" and "tg_message" */
+        pos = strchr (string, '\t');
+        if (pos)
+        {
+            if (pos > string)
+            {
+                prefix = weechat_strndup (string, pos - string);
+                if (prefix)
+                {
+                    weechat_hashtable_set (extra_vars, "tg_prefix", prefix);
+                    free (prefix);
+                }
+            }
+            pos++;
+            if (pos[0] == '\t')
+                pos++;
+            weechat_hashtable_set (extra_vars, "tg_message", pos);
+        }
+        else
+            weechat_hashtable_set (extra_vars, "tg_message", string);
+
+        /*
+         * extract buffer/tags from modifier data
+         * (format: "plugin;buffer_name;tags")
+         */
         pos = strchr (modifier_data, ';');
         if (pos)
         {
