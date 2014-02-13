@@ -360,8 +360,12 @@ trigger_callback_signal_cb (void *data, const char *signal,
         }
     }
     if (irc_server && ptr_irc_message)
+    {
         extra_vars = trigger_callback_irc_message_parse (ptr_irc_message,
                                                          irc_server);
+        if (extra_vars)
+            weechat_hashtable_set (extra_vars, "server", irc_server);
+    }
     if (irc_server)
         free (irc_server);
 
@@ -477,6 +481,8 @@ trigger_callback_modifier_cb (void *data, const char *modifier,
     {
         extra_vars = trigger_callback_irc_message_parse (string,
                                                          modifier_data);
+        if (extra_vars)
+            weechat_hashtable_set (extra_vars, "server", modifier_data);
     }
 
     TRIGGER_CALLBACK_CB_NEW_POINTERS;
