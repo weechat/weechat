@@ -72,6 +72,7 @@ struct t_trigger_regex
     char *str_regex;                   /* regex to search for replacement   */
     regex_t *regex;                    /* compiled regex                    */
     char *replace;                     /* replacement text                  */
+    char *replace_escaped;             /* repl. text (with chars escaped)   */
 };
 
 struct t_trigger

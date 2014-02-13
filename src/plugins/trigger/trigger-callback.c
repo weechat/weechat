@@ -199,10 +199,11 @@ trigger_callback_replace_regex (struct t_trigger *trigger,
             continue;
         }
 
-        replace_eval = weechat_string_eval_expression (trigger->regex[i].replace,
-                                                       pointers,
-                                                       extra_vars,
-                                                       NULL);
+        replace_eval = weechat_string_eval_expression (
+            trigger->regex[i].replace_escaped,
+            pointers,
+            extra_vars,
+            NULL);
         if (replace_eval)
         {
             value = weechat_string_replace_regex (ptr_value,

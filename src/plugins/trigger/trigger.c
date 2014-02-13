@@ -466,6 +466,8 @@ trigger_free_regex (int *regex_count, struct t_trigger_regex **regex)
             }
             if ((*regex)[i].replace)
                 free ((*regex)[i].replace);
+            if ((*regex)[i].replace_escaped)
+                free ((*regex)[i].replace_escaped);
         }
         free (*regex);
         *regex = NULL;
@@ -554,6 +556,7 @@ trigger_split_regex (const char *trigger_name, const char *str_regex,
         (*regex)[index].str_regex = NULL;
         (*regex)[index].regex = NULL;
         (*regex)[index].replace = NULL;
+        (*regex)[index].replace_escaped = NULL;
 
         /* set string with regex */
         (*regex)[index].str_regex = weechat_strndup (ptr_regex,
@@ -584,6 +587,10 @@ trigger_split_regex (const char *trigger_name, const char *str_regex,
                              pos_replace_end - pos_replace - length_delimiter) :
             strdup (pos_replace + length_delimiter);
         if (!(*regex)[index].replace)
+            goto memory_error;
+        (*regex)[index].replace_escaped =
+            weechat_string_convert_escaped_chars ((*regex)[index].replace);
+        if (!(*regex)[index].replace_escaped)
             goto memory_error;
 
         if (!pos_replace_end)
@@ -1061,14 +1068,16 @@ trigger_print_log ()
         weechat_log_printf ("  regex . . . . . . . . . : 0x%lx", ptr_trigger->regex);
         for (i = 0; i < ptr_trigger->regex_count; i++)
         {
-            weechat_log_printf ("    regex[%03d].variable . . : '%s'",
+            weechat_log_printf ("    regex[%03d].variable . . . : '%s'",
                                 i, ptr_trigger->regex[i].variable);
-            weechat_log_printf ("    regex[%03d].str_regex. . : '%s'",
+            weechat_log_printf ("    regex[%03d].str_regex. . . : '%s'",
                                 i, ptr_trigger->regex[i].str_regex);
-            weechat_log_printf ("    regex[%03d].regex. . . . : 0x%lx",
+            weechat_log_printf ("    regex[%03d].regex. . . . . : 0x%lx",
                                 i, ptr_trigger->regex[i].regex);
-            weechat_log_printf ("    regex[%03d].replace. . . : '%s'",
+            weechat_log_printf ("    regex[%03d].replace. . . . : '%s'",
                                 i, ptr_trigger->regex[i].replace);
+            weechat_log_printf ("    regex[%03d].replace_escaped: '%s'",
+                                i, ptr_trigger->regex[i].replace_escaped);
         }
         weechat_log_printf ("  commands_count. . . . . : %d",    ptr_trigger->commands_count);
         weechat_log_printf ("  commands. . . . . . . . : 0x%lx", ptr_trigger->commands);
