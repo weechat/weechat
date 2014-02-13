@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-02-09 12:43+0100\n"
+"POT-Creation-Date: 2014-02-13 10:01+0100\n"
 "PO-Revision-Date: 2014-01-29 14:11+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4771,9 +4771,13 @@ msgstr ""
 "%s%s: desconectado de %d %s (conexiones SSL no soportadas durante la "
 "actualización)"
 
-#, c-format
-msgid "%s%s: error with server from URL (\"%s\"), ignored"
-msgstr "%s%s: error con el servidor desde el URL (\"%s\"), ignorado"
+#, fuzzy, c-format
+msgid ""
+"%s%s: unable to create temporary server \"%s\" (check if there is already a "
+"server with this name)"
+msgstr ""
+"%s%s: no es posible registrar el script \"%s\" (otro script ya existe con "
+"ese nombre)"
 
 #, c-format
 msgid ""
@@ -4822,10 +4826,6 @@ msgstr "%s%s: ¡actualmente conectando al servidor \"%s\"!"
 #, c-format
 msgid "%s: server %s%s%s created (temporary server, NOT SAVED!)"
 msgstr "%s: servidor %s%s%s creado (temporalmente, ¡SIN GUARDAR!)"
-
-#, c-format
-msgid "%s%s: unable to create server \"%s\""
-msgstr "%s%s: no es posible crear el servidor \"%s\""
 
 #, c-format
 msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
@@ -7700,10 +7700,6 @@ msgid "%s%s: error when allocating new server"
 msgstr "%s%s: no hay suficiente memoria para crear el nuevo servidor"
 
 #, c-format
-msgid "%s%s: error creating new server \"%s\""
-msgstr "%s%s: error al crear el nuevo servidor \"%s\""
-
-#, c-format
 msgid ""
 "%s%s: sending data to server: null pointer (please report problem to "
 "developers)"
@@ -10376,6 +10372,15 @@ msgstr "Tipo"
 
 msgid "Constants"
 msgstr "Constantes"
+
+#~ msgid "%s%s: error with server from URL (\"%s\"), ignored"
+#~ msgstr "%s%s: error con el servidor desde el URL (\"%s\"), ignorado"
+
+#~ msgid "%s%s: unable to create server \"%s\""
+#~ msgstr "%s%s: no es posible crear el servidor \"%s\""
+
+#~ msgid "%s%s: error creating new server \"%s\""
+#~ msgstr "%s%s: error al crear el nuevo servidor \"%s\""
 
 #~ msgid ""
 #~ "hotlist sort type (group_time_asc (default), group_time_desc, "

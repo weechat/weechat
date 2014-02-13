@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-02-09 12:43+0100\n"
+"POT-Creation-Date: 2014-02-13 10:01+0100\n"
 "PO-Revision-Date: 2014-01-06 10:17+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4175,9 +4175,11 @@ msgid ""
 "%s%s: disconnected from %d %s (SSL connection not supported with upgrade)"
 msgstr ""
 
-#, fuzzy, c-format
-msgid "%s%s: error with server from URL (\"%s\"), ignored"
-msgstr "%s некорректный синтаксис IRC сервра ('%s'), игнорируется\n"
+#, c-format
+msgid ""
+"%s%s: unable to create temporary server \"%s\" (check if there is already a "
+"server with this name)"
+msgstr ""
 
 #, c-format
 msgid ""
@@ -4223,10 +4225,6 @@ msgstr "%s подключается к серверу \"%s\"!\n"
 #, fuzzy, c-format
 msgid "%s: server %s%s%s created (temporary server, NOT SAVED!)"
 msgstr "Сервер %s%s%s создан\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to create server \"%s\""
-msgstr "%s не могу создать сервер \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
@@ -6945,10 +6943,6 @@ msgstr "%s сервер \"%s\" не найден\n"
 msgid "%s%s: error when allocating new server"
 msgstr "%s не могу расположить новый сервер\n"
 
-#, fuzzy, c-format
-msgid "%s%s: error creating new server \"%s\""
-msgstr "%s недостаточно памяти для сообщения в строке информации\n"
-
 #, c-format
 msgid ""
 "%s%s: sending data to server: null pointer (please report problem to "
@@ -9550,6 +9544,18 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#, fuzzy
+#~ msgid "%s%s: error with server from URL (\"%s\"), ignored"
+#~ msgstr "%s некорректный синтаксис IRC сервра ('%s'), игнорируется\n"
+
+#, fuzzy
+#~ msgid "%s%s: unable to create server \"%s\""
+#~ msgstr "%s не могу создать сервер \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: error creating new server \"%s\""
+#~ msgstr "%s недостаточно памяти для сообщения в строке информации\n"
 
 #~ msgid ""
 #~ "hotlist sort type (group_time_asc (default), group_time_desc, "

@@ -1162,8 +1162,9 @@ irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
                     if (!ptr_server)
                     {
                         weechat_printf (NULL,
-                                        _("%s%s: unable to create server "
-                                          "\"%s\""),
+                                        _("%s%s: unable to create temporary "
+                                          "server \"%s\" (check if there is "
+                                          "already a server with this name)"),
                                         weechat_prefix ("error"),
                                         IRC_PLUGIN_NAME, argv[i]);
                     }

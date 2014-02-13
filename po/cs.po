@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-02-09 12:43+0100\n"
+"POT-Creation-Date: 2014-02-13 10:01+0100\n"
 "PO-Revision-Date: 2014-01-29 14:09+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4555,9 +4555,13 @@ msgid ""
 msgstr ""
 "%s%s: odpojuji se od %d %s (SSL připojení není podporováno pro aktualizaci)"
 
-#, c-format
-msgid "%s%s: error with server from URL (\"%s\"), ignored"
-msgstr "%s%s: chyba se serverem z URL (\"%s\"), ignorován"
+#, fuzzy, c-format
+msgid ""
+"%s%s: unable to create temporary server \"%s\" (check if there is already a "
+"server with this name)"
+msgstr ""
+"%s%s: nemohu registrovat skript \"%s\" (jiný skript se stejným jménem již "
+"existuje)"
 
 #, c-format
 msgid ""
@@ -4606,10 +4610,6 @@ msgstr "%s%s: zrovna připojuji k serveru \"%s\"!"
 #, c-format
 msgid "%s: server %s%s%s created (temporary server, NOT SAVED!)"
 msgstr "%s: server %s%s%s vytvořen (dočasný server, NEUKLÁDA SE!)"
-
-#, c-format
-msgid "%s%s: unable to create server \"%s\""
-msgstr "%s%s: nemohu vytvořit server \"%s\""
 
 #, c-format
 msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
@@ -7425,10 +7425,6 @@ msgid "%s%s: error when allocating new server"
 msgstr "%s%s: chyba při alokování nového serveru"
 
 #, c-format
-msgid "%s%s: error creating new server \"%s\""
-msgstr "%s%s: chyba při vytváření nového zprávu \"%s\""
-
-#, c-format
 msgid ""
 "%s%s: sending data to server: null pointer (please report problem to "
 "developers)"
@@ -10105,6 +10101,15 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#~ msgid "%s%s: error with server from URL (\"%s\"), ignored"
+#~ msgstr "%s%s: chyba se serverem z URL (\"%s\"), ignorován"
+
+#~ msgid "%s%s: unable to create server \"%s\""
+#~ msgstr "%s%s: nemohu vytvořit server \"%s\""
+
+#~ msgid "%s%s: error creating new server \"%s\""
+#~ msgstr "%s%s: chyba při vytváření nového zprávu \"%s\""
 
 #~ msgid ""
 #~ "hotlist sort type (group_time_asc (default), group_time_desc, "

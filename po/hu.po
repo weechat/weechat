@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-02-09 12:43+0100\n"
+"POT-Creation-Date: 2014-02-13 10:01+0100\n"
 "PO-Revision-Date: 2014-01-06 10:16+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4141,9 +4141,11 @@ msgid ""
 "%s%s: disconnected from %d %s (SSL connection not supported with upgrade)"
 msgstr ""
 
-#, fuzzy, c-format
-msgid "%s%s: error with server from URL (\"%s\"), ignored"
-msgstr "%s érvénytelen szintaxis az IRC szervernek ('%s'), mellőzve\n"
+#, c-format
+msgid ""
+"%s%s: unable to create temporary server \"%s\" (check if there is already a "
+"server with this name)"
+msgstr ""
 
 #, c-format
 msgid ""
@@ -4190,10 +4192,6 @@ msgstr "%s éppen kapcsolódik a(z) \"%s\" szerverhez!\n"
 #, fuzzy, c-format
 msgid "%s: server %s%s%s created (temporary server, NOT SAVED!)"
 msgstr "A %s%s%s szerver létrehozva\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to create server \"%s\""
-msgstr "%s nem sikerült a szervert létrehozni\n"
 
 #, fuzzy, c-format
 msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
@@ -6914,10 +6912,6 @@ msgstr "%s a \"%s\" szerver nem található\n"
 msgid "%s%s: error when allocating new server"
 msgstr "%s az új szerver lefoglalása sikertelen\n"
 
-#, fuzzy, c-format
-msgid "%s%s: error creating new server \"%s\""
-msgstr "%s nincs elég memória az információs pult üzenethez\n"
-
 #, c-format
 msgid ""
 "%s%s: sending data to server: null pointer (please report problem to "
@@ -9528,6 +9522,18 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#, fuzzy
+#~ msgid "%s%s: error with server from URL (\"%s\"), ignored"
+#~ msgstr "%s érvénytelen szintaxis az IRC szervernek ('%s'), mellőzve\n"
+
+#, fuzzy
+#~ msgid "%s%s: unable to create server \"%s\""
+#~ msgstr "%s nem sikerült a szervert létrehozni\n"
+
+#, fuzzy
+#~ msgid "%s%s: error creating new server \"%s\""
+#~ msgstr "%s nincs elég memória az információs pult üzenethez\n"
 
 #, fuzzy
 #~ msgid "%s: notification deleted"

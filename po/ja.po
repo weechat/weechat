@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-02-09 12:43+0100\n"
+"POT-Creation-Date: 2014-02-13 10:01+0100\n"
 "PO-Revision-Date: 2014-01-30 11:25+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -4905,9 +4905,13 @@ msgid ""
 msgstr ""
 "%s%s: %d 個の %s との切断を完了 (SSL 接続は upgrade でサポートされていません)"
 
-#, c-format
-msgid "%s%s: error with server from URL (\"%s\"), ignored"
-msgstr "%s%s: URL (\"%s\") のサーバでエラー、無視しました"
+#, fuzzy, c-format
+msgid ""
+"%s%s: unable to create temporary server \"%s\" (check if there is already a "
+"server with this name)"
+msgstr ""
+"%s%s: スクリプト \"%s\" を登録できません (同じ名前の別のスクリプトが存在しま"
+"す)"
 
 #, c-format
 msgid ""
@@ -4956,10 +4960,6 @@ msgstr "%s%s: サーバ \"%s\" に接続試行中!"
 #, c-format
 msgid "%s: server %s%s%s created (temporary server, NOT SAVED!)"
 msgstr "%s: サーバ %s%s%s が作成されました (一時的な作成で、保存されません!)"
-
-#, c-format
-msgid "%s%s: unable to create server \"%s\""
-msgstr "%s%s: サーバ \"%s\" に接続できません"
 
 #, c-format
 msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
@@ -7855,10 +7855,6 @@ msgid "%s%s: error when allocating new server"
 msgstr "%s%s: 新しいサーバの割り当て中にエラー"
 
 #, c-format
-msgid "%s%s: error creating new server \"%s\""
-msgstr "%s%s: 新しいサーバ \"%s\" の作成中にエラー"
-
-#, c-format
 msgid ""
 "%s%s: sending data to server: null pointer (please report problem to "
 "developers)"
@@ -10593,6 +10589,15 @@ msgstr "タイプ"
 
 msgid "Constants"
 msgstr "定数"
+
+#~ msgid "%s%s: error with server from URL (\"%s\"), ignored"
+#~ msgstr "%s%s: URL (\"%s\") のサーバでエラー、無視しました"
+
+#~ msgid "%s%s: unable to create server \"%s\""
+#~ msgstr "%s%s: サーバ \"%s\" に接続できません"
+
+#~ msgid "%s%s: error creating new server \"%s\""
+#~ msgstr "%s%s: 新しいサーバ \"%s\" の作成中にエラー"
 
 #~ msgid ""
 #~ "hotlist sort type (group_time_asc (default), group_time_desc, "

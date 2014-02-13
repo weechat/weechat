@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-02-09 12:43+0100\n"
+"POT-Creation-Date: 2014-02-13 10:01+0100\n"
 "PO-Revision-Date: 2014-01-29 14:13+0100\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4605,9 +4605,13 @@ msgid ""
 "%s%s: disconnected from %d %s (SSL connection not supported with upgrade)"
 msgstr ""
 
-#, c-format
-msgid "%s%s: error with server from URL (\"%s\"), ignored"
+#, fuzzy, c-format
+msgid ""
+"%s%s: unable to create temporary server \"%s\" (check if there is already a "
+"server with this name)"
 msgstr ""
+"%s%s: não foi possível registrar script \"%s\" (outro script já existe com "
+"este nome)"
 
 #, c-format
 msgid ""
@@ -4653,10 +4657,6 @@ msgstr ""
 
 #, c-format
 msgid "%s: server %s%s%s created (temporary server, NOT SAVED!)"
-msgstr ""
-
-#, c-format
-msgid "%s%s: unable to create server \"%s\""
 msgstr ""
 
 #, c-format
@@ -7126,10 +7126,6 @@ msgstr "%s%s: servidor \"%s\" não encontrado para redirecionamento"
 #, c-format
 msgid "%s%s: error when allocating new server"
 msgstr "%s%s: erro ao alocar novo servidor"
-
-#, c-format
-msgid "%s%s: error creating new server \"%s\""
-msgstr "%s%s: erro ao criar novo servidor \"%s\""
 
 #, c-format
 msgid ""
@@ -9739,6 +9735,9 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
+
+#~ msgid "%s%s: error creating new server \"%s\""
+#~ msgstr "%s%s: erro ao criar novo servidor \"%s\""
 
 #~ msgid ""
 #~ "hotlist sort type (group_time_asc (default), group_time_desc, "

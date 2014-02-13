@@ -1259,13 +1259,6 @@ irc_server_alloc_with_url (const char *irc_url)
             }
         }
     }
-    else
-    {
-        weechat_printf (NULL,
-                        _("%s%s: error creating new server \"%s\""),
-                        weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                        pos_address);
-    }
 
     free (irc_url2);
 

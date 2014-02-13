@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-02-09 12:43+0100\n"
+"POT-Creation-Date: 2014-02-13 10:01+0100\n"
 "PO-Revision-Date: 2014-02-06 11:21+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5021,9 +5021,13 @@ msgid ""
 msgstr ""
 "%s%s: rozłączono z %d %s (połączenie SSL nie wspierane z uaktualnianiem)"
 
-#, c-format
-msgid "%s%s: error with server from URL (\"%s\"), ignored"
-msgstr "%s%s: błąd z serwerem z adresu URL (\"%s\"), ignoruje"
+#, fuzzy, c-format
+msgid ""
+"%s%s: unable to create temporary server \"%s\" (check if there is already a "
+"server with this name)"
+msgstr ""
+"%s%s: nie można zarejestrować skryptu \"%s\" (istnieje inny skrypt o takiej "
+"samej nazwie))"
 
 #, c-format
 msgid ""
@@ -5072,10 +5076,6 @@ msgstr "%s%s: obecnie łączę się z serwerem \"%s\"!"
 #, c-format
 msgid "%s: server %s%s%s created (temporary server, NOT SAVED!)"
 msgstr "%s: utworzono serwer %s%s%s (tymczasowy serwer, NIE ZAPISANO!)"
-
-#, c-format
-msgid "%s%s: unable to create server \"%s\""
-msgstr "%s%s: nie można utworzyć serwera \"%s\""
 
 #, c-format
 msgid "%sCTCP query to %s%s%s: %s%s%s%s%s"
@@ -8017,10 +8017,6 @@ msgid "%s%s: error when allocating new server"
 msgstr "%s%s: błąd podczas przydzielania nowego serwera"
 
 #, c-format
-msgid "%s%s: error creating new server \"%s\""
-msgstr "%s%s: błąd podczas tworzenia serwera\"%s\""
-
-#, c-format
 msgid ""
 "%s%s: sending data to server: null pointer (please report problem to "
 "developers)"
@@ -10782,6 +10778,15 @@ msgstr "Typ"
 
 msgid "Constants"
 msgstr "Stałe"
+
+#~ msgid "%s%s: error with server from URL (\"%s\"), ignored"
+#~ msgstr "%s%s: błąd z serwerem z adresu URL (\"%s\"), ignoruje"
+
+#~ msgid "%s%s: unable to create server \"%s\""
+#~ msgstr "%s%s: nie można utworzyć serwera \"%s\""
+
+#~ msgid "%s%s: error creating new server \"%s\""
+#~ msgstr "%s%s: błąd podczas tworzenia serwera\"%s\""
 
 #~ msgid ""
 #~ "hotlist sort type (group_time_asc (default), group_time_desc, "
