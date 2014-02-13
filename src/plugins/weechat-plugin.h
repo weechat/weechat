@@ -57,7 +57,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20140208-01"
+#define WEECHAT_PLUGIN_API_VERSION "20140213-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -240,6 +240,7 @@ struct t_weechat_plugin
     char *(*string_remove_quotes) (const char *string, const char *quotes);
     char *(*string_strip) (const char *string, int left, int right,
                            const char *chars);
+    char *(*string_convert_escaped_chars) (const char *string);
     char *(*string_mask_to_regex) (const char *mask);
     const char *(*string_regex_flags) (const char *regex, int default_flags,
                                        int *flags);
@@ -1002,6 +1003,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->string_remove_quotes(__string, __quotes)
 #define weechat_string_strip(__string, __left, __right, __chars)        \
     weechat_plugin->string_strip(__string, __left, __right, __chars)
+#define weechat_string_convert_escaped_chars(__string)                  \
+    weechat_plugin->string_convert_escaped_chars(__string)
 #define weechat_string_mask_to_regex(__mask)                            \
     weechat_plugin->string_mask_to_regex(__mask)
 #define weechat_string_regex_flags(__regex, __default_flags, __flags)   \
