@@ -473,7 +473,7 @@ trigger_callback_modifier_cb (void *data, const char *modifier,
     struct t_gui_buffer *buffer;
     const char *ptr_string;
     char *string_modified, *pos, *pos2, *plugin_name, *buffer_name;
-    char *buffer_full_name, *str_tags, **tags, *prefix;
+    char *buffer_full_name, *str_tags, **tags, *prefix, *string_no_color;
     int length, num_tags;
 
     TRIGGER_CALLBACK_CB_INIT(NULL);
@@ -481,6 +481,7 @@ trigger_callback_modifier_cb (void *data, const char *modifier,
     buffer = NULL;
     tags = NULL;
     num_tags = 0;
+    string_no_color = NULL;
 
     /* split IRC message (if string is an IRC message) */
     if ((strncmp (modifier, "irc_in_", 7) == 0)
@@ -504,6 +505,12 @@ trigger_callback_modifier_cb (void *data, const char *modifier,
     weechat_hashtable_set (extra_vars, "tg_modifier", modifier);
     weechat_hashtable_set (extra_vars, "tg_modifier_data", modifier_data);
     weechat_hashtable_set (extra_vars, "tg_string", string);
+    string_no_color = weechat_string_remove_color (string, NULL);
+    if (string_no_color)
+    {
+        weechat_hashtable_set (extra_vars,
+                               "tg_string_nocolor", string_no_color);
+    }
 
     /* add special variables for a WeeChat message */
     if (strcmp (modifier, "weechat_print") == 0)
@@ -528,6 +535,35 @@ trigger_callback_modifier_cb (void *data, const char *modifier,
         }
         else
             weechat_hashtable_set (extra_vars, "tg_message", string);
+
+        /* set "tg_prefix_nocolor" and "tg_message_nocolor" */
+        if (string_no_color)
+        {
+            pos = strchr (string_no_color, '\t');
+            if (pos)
+            {
+                if (pos > string_no_color)
+                {
+                    prefix = weechat_strndup (string_no_color,
+                                              pos - string_no_color);
+                    if (prefix)
+                    {
+                        weechat_hashtable_set (extra_vars,
+                                               "tg_prefix_nocolor", prefix);
+                        free (prefix);
+                    }
+                }
+                pos++;
+                if (pos[0] == '\t')
+                    pos++;
+                weechat_hashtable_set (extra_vars, "tg_message_nocolor", pos);
+            }
+            else
+            {
+                weechat_hashtable_set (extra_vars,
+                                       "tg_message_nocolor", string_no_color);
+            }
+        }
 
         /*
          * extract buffer/tags from modifier data
@@ -601,6 +637,8 @@ end:
 
     if (tags)
         weechat_string_free_split (tags);
+    if (string_no_color)
+        free (string_no_color);
 
     TRIGGER_CALLBACK_CB_END(string_modified);
 }
@@ -615,7 +653,7 @@ trigger_callback_print_cb  (void *data, struct t_gui_buffer *buffer,
                             int displayed, int highlight, const char *prefix,
                             const char *message)
 {
-    char *str_tags, *str_tags2, str_temp[128];
+    char *str_tags, *str_tags2, str_temp[128], *str_no_color;
     int length;
     struct tm *date_tmp;
 
@@ -642,7 +680,19 @@ trigger_callback_print_cb  (void *data, struct t_gui_buffer *buffer,
     snprintf (str_temp, sizeof (str_temp), "%d", highlight);
     weechat_hashtable_set (extra_vars, "tg_highlight", str_temp);
     weechat_hashtable_set (extra_vars, "tg_prefix", prefix);
+    str_no_color = weechat_string_remove_color (prefix, NULL);
+    if (str_no_color)
+    {
+        weechat_hashtable_set (extra_vars, "tg_prefix_nocolor", str_no_color);
+        free (str_no_color);
+    }
     weechat_hashtable_set (extra_vars, "tg_message", message);
+    str_no_color = weechat_string_remove_color (message, NULL);
+    if (str_no_color)
+    {
+        weechat_hashtable_set (extra_vars, "tg_message_nocolor", str_no_color);
+        free (str_no_color);
+    }
 
     str_tags = weechat_string_build_with_split_string (tags, ",");
     if (str_tags)
