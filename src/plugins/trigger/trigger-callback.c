@@ -202,6 +202,13 @@ trigger_callback_run_command (struct t_trigger *trigger,
     if (!trigger->commands)
         return;
 
+    if (!buffer)
+    {
+        buffer = weechat_buffer_search_main ();
+        if (!buffer)
+            return;
+    }
+
     for (i = 0; trigger->commands[i]; i++)
     {
         command_eval = weechat_string_eval_expression (trigger->commands[i],
@@ -213,8 +220,18 @@ trigger_callback_run_command (struct t_trigger *trigger,
             if (trigger_buffer)
             {
                 weechat_printf_tags (trigger_buffer, "no_trigger",
-                                     "\t  running command \"%s\"",
-                                     command_eval);
+                                     _("%s  running command %s\"%s%s%s\"%s "
+                                       "on buffer %s%s%s"),
+                                     "\t",
+                                     weechat_color ("chat_delimiters"),
+                                     weechat_color ("reset"),
+                                     command_eval,
+                                     weechat_color ("chat_delimiters"),
+                                     weechat_color ("reset"),
+                                     weechat_color ("chat_buffer"),
+                                     weechat_buffer_get_string (buffer,
+                                                                "full_name"),
+                                     weechat_color ("reset"));
             }
             weechat_command (buffer, command_eval);
             trigger->hook_count_cmd++;
