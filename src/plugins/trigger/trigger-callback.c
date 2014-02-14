@@ -855,7 +855,7 @@ trigger_callback_focus_cb (void *data, struct t_hashtable *info)
     long unsigned int value;
     int rc;
 
-    TRIGGER_CALLBACK_CB_INIT(WEECHAT_RC_OK);
+    TRIGGER_CALLBACK_CB_INIT(info);
 
     TRIGGER_CALLBACK_CB_NEW_POINTERS;
 
