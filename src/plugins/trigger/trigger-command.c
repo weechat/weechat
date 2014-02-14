@@ -431,7 +431,7 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
 {
     struct t_trigger *ptr_trigger, *ptr_trigger2;
     char *value, **sargv, **items, input[1024], str_pos[16];
-    int i, type, count, index_option, enable, sargc, num_items;
+    int i, type, count, index_option, enable, sargc, num_items, rc;
 
     /* make C compiler happy */
     (void) data;
@@ -583,15 +583,18 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
                                  weechat_prefix ("error"), argv[2]);
             goto end;
         }
+        rc = trigger_hook_default_rc[weechat_config_integer (ptr_trigger->options[TRIGGER_OPTION_HOOK])][0];
         snprintf (input, sizeof (input),
-                  "//trigger add %s %s \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"",
+                  "//trigger add %s %s \"%s\" \"%s\" \"%s\" \"%s\"%s%s%s",
                   ptr_trigger->name,
                   weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_HOOK]),
                   weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_ARGUMENTS]),
                   weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_CONDITIONS]),
                   weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_REGEX]),
                   weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_COMMAND]),
-                  weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_RETURN_CODE]));
+                  (rc) ? " \"" : "",
+                  (rc) ? weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_RETURN_CODE]) : "",
+                  (rc) ? "\"" : "");
         if (weechat_strcasecmp (argv[1], "recreate") == 0)
         {
             trigger_free (ptr_trigger);
