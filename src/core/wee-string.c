@@ -1296,11 +1296,10 @@ string_replace_regex_get_replace (const char *string, regmatch_t *regex_match,
 }
 
 /*
- * Replaces a string by new one in a string, using a regular expression for
- * searching string.
+ * Replaces text in a string using a regular expression and replacement text.
  *
- * The argument "regex" is a pointer to a regex compiled with function regcomp
- * (or WeeChat function string_regcomp).
+ * The argument "regex" is a pointer to a regex compiled with WeeChat function
+ * string_regcomp (or function regcomp).
  *
  * The argument "replace" can contain references to matches:
  *   $0 .. $99  match 0 to 99 (0 is whole match, 1 .. 99 are groups captured)
