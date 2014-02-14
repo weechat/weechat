@@ -1614,8 +1614,8 @@ string_split_shared (const char *string, const char *separators, int keep_eol,
 /*
  * Splits a string like the shell does for a command with arguments.
  *
- * This function is a C conversion of python class "shlex"
- * (file: Lib/shlex.py in python repository)
+ * This function is a C conversion of Python class "shlex"
+ * (file: Lib/shlex.py in Python repository)
  * Doc: http://docs.python.org/3/library/shlex.html
  *
  * Copyrights in shlex.py:

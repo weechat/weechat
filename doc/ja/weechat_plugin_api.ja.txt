@@ -1327,6 +1327,53 @@ weechat_string_free_split (argv);
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
+==== weechat_string_split_shell
+
+_WeeChat バージョン 0.4.4 以上で利用可。_
+
+// TRANSLATION MISSING
+Split a string like the shell does for a command with arguments.
+
+// TRANSLATION MISSING
+This function is a C conversion of Python class "shlex" (file: Lib/shlex.py in
+Python repository), see: http://docs.python.org/3/library/shlex.html.
+
+プロトタイプ:
+
+[source,C]
+----
+char **weechat_string_split_shell (const char *string, int *num_items);
+----
+
+引数:
+
+* 'string': 分割する文字列
+* 'num_items': 分割回数を返す整数型変数へのポインタ
+
+戻り値:
+
+* 文字列の配列、分割に失敗した場合は NULL (使用後には必ず
+  <<_weechat_string_free_split,weechat_string_free_split>> を呼び出して領域を開放してください)
+
+C 言語での使用例:
+
+[source,C]
+----
+char **argv;
+int argc;
+argv = weechat_string_split_shell ("test 'first arg'  \"second arg\"", &argc);
+/* result: argv[0] == "test"
+           argv[1] == "first arg"
+           argv[2] == "second arg"
+           argv[3] == NULL
+           argc == 3
+*/
+weechat_string_free_split (argv);
+----
+
+[NOTE]
+スクリプト API ではこの関数を利用できません。
+
 ==== weechat_string_free_split
 
 文字列分割に使用したメモリを開放。

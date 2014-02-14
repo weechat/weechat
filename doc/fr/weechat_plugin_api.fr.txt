@@ -1350,6 +1350,54 @@ weechat_string_free_split (argv);
 [NOTE]
 Cette fonction n'est pas disponible dans l'API script.
 
+==== weechat_string_split_shell
+
+_WeeChat ≥ 0.4.4._
+
+Découper une chaîne comme le shell le fait pour une commande avec ses
+paramètres.
+
+Cette fonction est une conversion en C de la classe Python "shlex" (fichier :
+Lib/shlex.py dans le dépôt Python), voir :
+http://docs.python.org/3/library/shlex.html.
+
+Prototype :
+
+[source,C]
+----
+char **weechat_string_split_shell (const char *string, int *num_items);
+----
+
+Paramètres :
+
+* 'string' : chaîne à découper
+* 'num_items' : pointeur vers un entier qui contiendra le nombre de chaînes
+  créées
+
+Valeur de retour :
+
+* tableau de chaînes, NULL en cas de problème (doit être supprimé par un appel à
+  <<_weechat_string_free_split,weechat_string_free_split>> après utilisation)
+
+Exemple en C :
+
+[source,C]
+----
+char **argv;
+int argc;
+argv = weechat_string_split_shell ("test 'first arg'  \"second arg\"", &argc);
+/* résultat: argv[0] == "test"
+             argv[1] == "first arg"
+             argv[2] == "second arg"
+             argv[3] == NULL
+             argc == 3
+*/
+weechat_string_free_split (argv);
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 ==== weechat_string_free_split
 
 Supprimer une chaîne découpée.
