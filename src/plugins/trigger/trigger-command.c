@@ -405,7 +405,7 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
                          char **argv, char **argv_eol)
 {
     struct t_trigger *ptr_trigger;
-    char *value, **sargv, **items, input[1024];
+    char *value, **sargv, **items, input[1024], str_pos[16];
     int i, type, count, index_option, enable, sargc, num_items;
 
     /* make C compiler happy */
@@ -529,6 +529,49 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
                   (items && (num_items > 0)) ? "\"" : "");
         weechat_buffer_set (buffer, "input", input);
         weechat_buffer_set (buffer, "input_pos", "13");
+        goto end;
+    }
+
+    /* get command to create a trigger (in input or send it to buffer) */
+    if ((weechat_strcasecmp (argv[1], "input") == 0)
+        || (weechat_strcasecmp (argv[1], "output") == 0))
+    {
+        if (argc < 3)
+        {
+            weechat_printf_tags (NULL, "no_trigger",
+                                 _("%sError: missing arguments for \"%s\" "
+                                   "command"),
+                                 weechat_prefix ("error"), "trigger");
+            goto end;
+        }
+        ptr_trigger = trigger_search (argv[2]);
+        if (!ptr_trigger)
+        {
+            weechat_printf_tags (NULL, "no_trigger",
+                                 _("%sError: trigger \"%s\" not found"),
+                                 weechat_prefix ("error"), argv[2]);
+            goto end;
+        }
+        snprintf (input, sizeof (input),
+                  "//trigger add %s %s \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"",
+                  ptr_trigger->name,
+                  weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_HOOK]),
+                  weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_ARGUMENTS]),
+                  weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_CONDITIONS]),
+                  weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_REGEX]),
+                  weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_COMMAND]),
+                  weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_RETURN_CODE]));
+        if (weechat_strcasecmp (argv[1], "input") == 0)
+        {
+            weechat_buffer_set (buffer, "input", input + 1);
+            snprintf (str_pos, sizeof (str_pos),
+                      "%d", weechat_utf8_strlen (input + 1));
+            weechat_buffer_set (buffer, "input_pos", str_pos);
+        }
+        else
+        {
+            weechat_command (buffer, input);
+        }
         goto end;
     }
 
@@ -763,6 +806,7 @@ trigger_command_init ()
            " || add <name> <hook> [\"<arguments>\" [\"<conditions>\" "
            "[\"<regex>\" [\"<command>\" [\"<return_code>\"]]]]]"
            " || addinput [<hook>]"
+           " || input|output <name>"
            " || set <name> <option> <value>"
            " || rename <name> <new_name>"
            " || enable|disable|toggle|restart <name>|-all [<name>...]"
@@ -797,6 +841,8 @@ trigger_command_init ()
            "\";\"\n"
            "return_code: return code in callback (ok (default), ok_eat, error)\n"
            "   addinput: set input with default arguments to create a trigger\n"
+           "      input: set input with the command used to create the trigger\n"
+           "     output: send the command to create the trigger on the buffer\n"
            "        set: set an option in a trigger\n"
            "     option: name of option: name, hook, arguments, conditions, "
            "regex, command, return_code\n"
@@ -848,6 +894,7 @@ trigger_command_init ()
         "%(trigger_hook_conditions) %(trigger_hook_regex) "
         "%(trigger_hook_command) %(trigger_hook_rc)"
         " || addinput %(trigger_hooks)"
+        " || input|output %(trigger_names)"
         " || set %(trigger_names) %(trigger_options)|name %(trigger_option_value)"
         " || rename %(trigger_names) %(trigger_names)"
         " || enable|disable|toggle|restart|del %(trigger_names)|-all "
