@@ -910,7 +910,7 @@ trigger_command_init ()
 {
     weechat_hook_command (
         "trigger",
-        N_("manage triggers"),
+        N_("manage triggers, the Swiss Army knife for WeeChat"),
         N_("list|listfull|listdefault"
            " || add <name> <hook> [\"<arguments>\" [\"<conditions>\" "
            "[\"<regex>\" [\"<command>\" [\"<return_code>\"]]]]]"
