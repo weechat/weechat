@@ -404,7 +404,7 @@ int
 trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
                          char **argv, char **argv_eol)
 {
-    struct t_trigger *ptr_trigger;
+    struct t_trigger *ptr_trigger, *ptr_trigger2;
     char *value, **sargv, **items, input[1024], str_pos[16];
     int i, type, count, index_option, enable, sargc, num_items;
 
@@ -646,6 +646,60 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
         goto end;
     }
 
+    /* copy a trigger */
+    if (weechat_strcasecmp (argv[1], "copy") == 0)
+    {
+        if (argc < 4)
+        {
+            weechat_printf_tags (NULL, "no_trigger",
+                                 _("%sError: missing arguments for \"%s\" "
+                                   "command"),
+                                 weechat_prefix ("error"), "trigger");
+            goto end;
+        }
+        ptr_trigger = trigger_search (argv[2]);
+        if (!ptr_trigger)
+        {
+            weechat_printf_tags (NULL, "no_trigger",
+                                 _("%sError: trigger \"%s\" not found"),
+                                 weechat_prefix ("error"), argv[2]);
+            goto end;
+        }
+        /* check that new name is valid */
+        if (!trigger_name_valid (argv[3]))
+        {
+            weechat_printf_tags (NULL, "no_trigger",
+                                 _("%sError: invalid name for trigger"),
+                                 weechat_prefix ("error"));
+            goto end;
+        }
+        /* check that no trigger already exists with the new name */
+        if (trigger_search (argv[3]))
+        {
+            weechat_printf_tags (NULL, "no_trigger",
+                                 _("%sError: trigger \"%s\" already "
+                                   "exists"),
+                                 weechat_prefix ("error"), argv[3]);
+            goto end;
+        }
+        /* copy the trigger */
+        ptr_trigger2 = trigger_copy (ptr_trigger, argv[3]);
+        if (ptr_trigger2)
+        {
+            weechat_printf_tags (NULL, "no_trigger",
+                                 _("Trigger \"%s\" copied to \"%s\""),
+                                 ptr_trigger->name, ptr_trigger2->name);
+        }
+        else
+        {
+            weechat_printf_tags (NULL, "no_trigger",
+                                 _("%sError: failed to copy trigger "
+                                   "\"%s\""),
+                                 weechat_prefix ("error"), ptr_trigger->name);
+        }
+        goto end;
+    }
+
     /* enable/disable/toggle/restart trigger(s) */
     if ((weechat_strcasecmp (argv[1], "enable") == 0)
         || (weechat_strcasecmp (argv[1], "disable") == 0)
@@ -808,7 +862,7 @@ trigger_command_init ()
            " || addinput [<hook>]"
            " || input|output <name>"
            " || set <name> <option> <value>"
-           " || rename <name> <new_name>"
+           " || rename|copy <name> <new_name>"
            " || enable|disable|toggle|restart <name>|-all [<name>...]"
            " || show <name>"
            " || del <name>|-all [<name>...]"
@@ -850,6 +904,7 @@ trigger_command_init ()
            "trigger.trigger.<name>.<option>)\n"
            "      value: new value for the option\n"
            "     rename: rename a trigger\n"
+           "       copy: copy a trigger\n"
            "     enable: enable trigger(s)\n"
            "    disable: disable trigger(s)\n"
            "     toggle: toggle trigger(s)\n"
@@ -896,7 +951,7 @@ trigger_command_init ()
         " || addinput %(trigger_hooks)"
         " || input|output %(trigger_names)"
         " || set %(trigger_names) %(trigger_options)|name %(trigger_option_value)"
-        " || rename %(trigger_names) %(trigger_names)"
+        " || rename|copy %(trigger_names) %(trigger_names)"
         " || enable|disable|toggle|restart|del %(trigger_names)|-all "
         "%(trigger_names)|%*"
         " || show %(trigger_names)"

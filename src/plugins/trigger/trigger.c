@@ -969,6 +969,32 @@ trigger_rename (struct t_trigger *trigger, const char *name)
 }
 
 /*
+ * Copies a trigger.
+ *
+ * Returns a pointer to the new trigger, NULL if error.
+ */
+
+struct t_trigger *
+trigger_copy (struct t_trigger *trigger, const char *name)
+{
+    if (!name || !name[0] || !trigger_name_valid (name)
+        || trigger_search (name))
+    {
+        return NULL;
+    }
+
+    return trigger_new (
+        name,
+        weechat_config_string (trigger->options[TRIGGER_OPTION_ENABLED]),
+        weechat_config_string (trigger->options[TRIGGER_OPTION_HOOK]),
+        weechat_config_string (trigger->options[TRIGGER_OPTION_ARGUMENTS]),
+        weechat_config_string (trigger->options[TRIGGER_OPTION_CONDITIONS]),
+        weechat_config_string (trigger->options[TRIGGER_OPTION_REGEX]),
+        weechat_config_string (trigger->options[TRIGGER_OPTION_COMMAND]),
+        weechat_config_string (trigger->options[TRIGGER_OPTION_RETURN_CODE]));
+}
+
+/*
  * Deletes a trigger.
  */
 

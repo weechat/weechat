@@ -152,6 +152,8 @@ extern struct t_trigger *trigger_new (const char *name,
                                       const char *return_code);
 extern void trigger_create_default ();
 extern int trigger_rename (struct t_trigger *trigger, const char *name);
+extern struct t_trigger *trigger_copy (struct t_trigger *trigger,
+                                       const char *name);
 extern void trigger_free (struct t_trigger *trigger);
 extern void trigger_free_all ();
 
