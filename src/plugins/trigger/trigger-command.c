@@ -325,15 +325,26 @@ trigger_command_list_default (int verbose)
  */
 
 void
-trigger_command_set_enabled (struct t_trigger *trigger, int enable)
+trigger_command_set_enabled (struct t_trigger *trigger, int enable,
+                             int display_error)
 {
     if (enable == 2)
     {
-        trigger_unhook (trigger);
-        trigger_hook (trigger);
-        weechat_printf_tags (NULL, "no_trigger",
-                             _("Trigger \"%s\" restarted"),
-                             trigger->name);
+        if (weechat_config_boolean (trigger->options[TRIGGER_OPTION_ENABLED]))
+        {
+            trigger_unhook (trigger);
+            trigger_hook (trigger);
+            weechat_printf_tags (NULL, "no_trigger",
+                                 _("Trigger \"%s\" restarted"),
+                                 trigger->name);
+        }
+        else if (display_error)
+        {
+            weechat_printf_tags (NULL, "no_trigger",
+                                 _("%sError: a disabled trigger can not be "
+                                   "restarted"),
+                                 weechat_prefix ("error"));
+        }
     }
     else
     {
@@ -767,7 +778,7 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
             for (ptr_trigger = triggers; ptr_trigger;
                  ptr_trigger = ptr_trigger->next_trigger)
             {
-                trigger_command_set_enabled (ptr_trigger, enable);
+                trigger_command_set_enabled (ptr_trigger, enable, 0);
             }
         }
         else
@@ -776,7 +787,7 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
             {
                 ptr_trigger = trigger_search (argv[i]);
                 if (ptr_trigger)
-                    trigger_command_set_enabled (ptr_trigger, enable);
+                    trigger_command_set_enabled (ptr_trigger, enable, 1);
                 else
                 {
                     weechat_printf_tags (NULL, "no_trigger",
@@ -954,7 +965,7 @@ trigger_command_init ()
            "globally)\n"
            "     toggle: toggle trigger(s) (without arguments: toggle triggers "
            "globally)\n"
-           "    restart: restart trigger(s) (only for a timer)\n"
+           "    restart: restart trigger(s) (recreate the hooks)\n"
            "       show: show detailed info on a trigger (with some stats)\n"
            "        del: delete a trigger\n"
            "       -all: do action on all triggers\n"
