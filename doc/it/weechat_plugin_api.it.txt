@@ -1012,6 +1012,58 @@ free (str);
 [NOTE]
 Questa funzione non è disponibile nelle API per lo scripting.
 
+==== weechat_string_convert_escaped_chars
+
+_WeeChat ≥ 0.4.4._
+
+// TRANSLATION MISSING
+Convert escaped chars to their value:
+
+* `\"`: double quote
+* `\\`: backslash
+* `\a`: alert (BEL)
+* `\b`: backspace
+* `\e`: escape
+* `\f`: form feed
+* `\n`: new line
+* `\r`: carriage return
+* `\t`: horizontal tab
+* `\v`: vertical tab
+* `\0ooo`: char as octal value (ooo is 0 to 3 digits)
+* `\xhh`: char as hexadecimal value (hh is 1 to 2 digits)
+* `\uhhhh`: unicode char as hexadecimal value (hhhh is 1 to 4 digits)
+* `\Uhhhhhhhh`: unicode char as hexadecimal value (hhhhhhhh is 1 to 8 digits)
+
+Prototipo:
+
+[source,C]
+----
+char *weechat_string_convert_escaped_chars (const char *string);
+----
+
+Argomenti:
+
+* 'string': stringa
+
+Valore restituito:
+
+// TRANSLATION MISSING
+* string with escaped chars replaced by their value (deve essere liberata
+  chiamando "free" dopo l'uso)
+
+Esempio in C:
+
+[source,C]
+----
+char *str = weechat_string_convert_escaped_chars ("snowman: \\u2603");
+/* str == "snowman: ☃" */
+/* ... */
+free (str);
+----
+
+[NOTE]
+Questa funzione non è disponibile nelle API per lo scripting.
+
 ==== weechat_string_mask_to_regex
 
 Restituisce una espressione regolare con una mask, dove l'unico carattere

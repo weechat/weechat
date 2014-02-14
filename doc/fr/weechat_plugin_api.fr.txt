@@ -1005,6 +1005,58 @@ free (str);
 [NOTE]
 Cette fonction n'est pas disponible dans l'API script.
 
+==== weechat_string_convert_escaped_chars
+
+_WeeChat ≥ 0.4.4._
+
+Convertir les caractères échappés par leur valeur :
+
+* `\"` : double guillemet droit
+* `\\` : barre oblique inversée
+* `\a` : alerte (BEL)
+* `\b` : retour arrière
+* `\e` : échappement
+* `\f` : saut de page
+* `\n` : nouvelle ligne
+* `\r` : retour chariot
+* `\t` : tabulation horizontale
+* `\v` : tabulation verticale
+* `\0ooo` : caractère sous forme de valeur octale (ooo a 0 à 3 chiffres)
+* `\xhh` : caractère sous forme de valeur hexadécimale (hh a 1 à 2 chiffres)
+* `\uhhhh` : caractère unicode sous forme de valeur hexadécimale (hhhh a 1 à 4
+  chiffres)
+* `\Uhhhhhhhh` : caractère unicode sous forme de valeur hexadécimale (hhhhhhhh
+  a 1 à 8 chiffres)
+
+Prototype :
+
+[source,C]
+----
+char *weechat_string_convert_escaped_chars (const char *string);
+----
+
+Paramètres :
+
+* 'string' : chaîne
+
+Valeur de retour :
+
+* chaîne avec les caractères échappés remplacés par leur valeur (doit être
+  supprimée par un appel à "free" après utilisation)
+
+Exemple en C :
+
+[source,C]
+----
+char *str = weechat_string_convert_escaped_chars ("snowman: \\u2603");
+/* str == "snowman: ☃" */
+/* ... */
+free (str);
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 ==== weechat_string_mask_to_regex
 
 Retourner une expression régulière ("regex"), construite avec un masque où le

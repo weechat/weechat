@@ -994,6 +994,58 @@ free (str);
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
+==== weechat_string_convert_escaped_chars
+
+_WeeChat バージョン 0.4.4 以上で利用可。_
+
+// TRANSLATION MISSING
+Convert escaped chars to their value:
+
+* `\"`: double quote
+* `\\`: backslash
+* `\a`: alert (BEL)
+* `\b`: backspace
+* `\e`: escape
+* `\f`: form feed
+* `\n`: new line
+* `\r`: carriage return
+* `\t`: horizontal tab
+* `\v`: vertical tab
+* `\0ooo`: char as octal value (ooo is 0 to 3 digits)
+* `\xhh`: char as hexadecimal value (hh is 1 to 2 digits)
+* `\uhhhh`: unicode char as hexadecimal value (hhhh is 1 to 4 digits)
+* `\Uhhhhhhhh`: unicode char as hexadecimal value (hhhhhhhh is 1 to 8 digits)
+
+プロトタイプ:
+
+[source,C]
+----
+char *weechat_string_convert_escaped_chars (const char *string);
+----
+
+引数:
+
+* 'string': 文字列
+
+戻り値:
+
+// TRANSLATION MISSING
+* string with escaped chars replaced by their value
+  (使用後には必ず "free" を呼び出して領域を開放してください)
+
+C 言語での使用例:
+
+[source,C]
+----
+char *str = weechat_string_convert_escaped_chars ("snowman: \\u2603");
+/* str == "snowman: ☃" */
+/* ... */
+free (str);
+----
+
+[NOTE]
+スクリプト API ではこの関数を利用できません。
+
 ==== weechat_string_mask_to_regex
 
 マスクから正規表現を作りこれを返す、マスク用の特殊文字は
