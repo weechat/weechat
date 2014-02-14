@@ -3535,6 +3535,39 @@ weechat_hashtable_map_string (hashtable, &map_cb, NULL);
 [NOTE]
 Questa funzione non è disponibile nelle API per lo scripting.
 
+==== weechat_hashtable_dup
+
+_WeeChat ≥ 0.4.4._
+
+// TRANSLATION MISSING
+Duplicate a hashtable.
+
+Prototipo:
+
+[source,C]
+----
+struct t_hashtable *hashtable_dup (struct t_hashtable *hashtable);
+----
+
+Argomenti:
+
+* 'hashtable': puntatore alla tabella hash
+
+Valore restituito:
+
+// TRANSLATION MISSING
+* duplicated hashtable
+
+Esempio in C:
+
+[source,C]
+----
+struct t_hashtable *new_hashtable = weechat_hashtable_dup (hashtable);
+----
+
+[NOTE]
+Questa funzione non è disponibile nelle API per lo scripting.
+
 ==== weechat_hashtable_get_integer
 
 _WeeChat ≥ 0.3.3._

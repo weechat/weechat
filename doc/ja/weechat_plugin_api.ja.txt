@@ -3477,6 +3477,39 @@ weechat_hashtable_map_string (hashtable, &map_cb, NULL);
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
+==== weechat_hashtable_dup
+
+_WeeChat バージョン 0.4.4 以上で利用可。_
+
+// TRANSLATION MISSING
+Duplicate a hashtable.
+
+プロトタイプ:
+
+[source,C]
+----
+struct t_hashtable *hashtable_dup (struct t_hashtable *hashtable);
+----
+
+引数:
+
+* 'hashtable': ハッシュテーブルへのポインタ
+
+戻り値:
+
+// TRANSLATION MISSING
+* duplicated hashtable
+
+C 言語での使用例:
+
+[source,C]
+----
+struct t_hashtable *new_hashtable = weechat_hashtable_dup (hashtable);
+----
+
+[NOTE]
+スクリプト API ではこの関数を利用できません。
+
 ==== weechat_hashtable_get_integer
 
 _WeeChat バージョン 0.3.3 以上で利用可。_

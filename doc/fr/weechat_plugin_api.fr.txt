@@ -3381,7 +3381,7 @@ Paramètres :
 * 'hashtable' : pointeur vers la table de hachage
 * 'key' : pointeur vers la clé
 
-Valeur en retour :
+Valeur de retour :
 
 * valeur pour la clé, NULL si la clé n'est pas trouvée
 
@@ -3413,7 +3413,7 @@ Paramètres :
 * 'hashtable' : pointeur vers la table de hachage
 * 'key' : pointeur vers la clé
 
-Valeur en retour :
+Valeur de retour :
 
 * 1 si la clé est dans la table de hachage, 0 si la clé n'est pas dans la table
   de hachage
@@ -3524,6 +3524,37 @@ weechat_hashtable_map_string (hashtable, &map_cb, NULL);
 [NOTE]
 Cette fonction n'est pas disponible dans l'API script.
 
+==== weechat_hashtable_dup
+
+_WeeChat ≥ 0.4.4._
+
+Dupliquer une table de hachage.
+
+Prototype :
+
+[source,C]
+----
+struct t_hashtable *hashtable_dup (struct t_hashtable *hashtable);
+----
+
+Paramètres :
+
+* 'hashtable' : pointeur vers la table de hachage
+
+Valeur de retour :
+
+* table de hachage dupliquée
+
+Exemple en C :
+
+[source,C]
+----
+struct t_hashtable *new_hashtable = weechat_hashtable_dup (hashtable);
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 ==== weechat_hashtable_get_integer
 
 _WeeChat ≥ 0.3.3._
@@ -3545,7 +3576,7 @@ Paramètres :
 ** 'size' : taille du tableau interne "htable" dans la table de hachage
 ** 'items_count' : nombre d'éléments dans la table de hachage
 
-Valeur en retour :
+Valeur de retour :
 
 * valeur de la propriété sous forme d'entier
 
@@ -3600,7 +3631,7 @@ Paramètres :
 ** 'keys_values_sorted' : chaîne avec la liste des clés et valeurs (triée sur
    les clés) (format : "clé1:valeur1,clé2:valeur2,clé3:valeur3")
 
-Valeur en retour :
+Valeur de retour :
 
 * valeur de la propriété sous forme de chaîne
 
@@ -3678,7 +3709,7 @@ Paramètres :
 * 'infolist_item' : pointeur vers l'objet de l'infolist
 * 'prefix' : chaîne utilisée comme préfixe pour les noms dans l'infolist
 
-Valeur en retour :
+Valeur de retour :
 
 * 1 si ok, 0 en cas d'erreur
 
