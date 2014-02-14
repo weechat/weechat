@@ -1245,6 +1245,63 @@ highlight = weechat.string_has_highlight_regex(string, regex)
 highlight = weechat.string_has_highlight_regex("my test string", "test|word2") # 1
 ----
 
+==== weechat_string_replace_regex
+
+_WeeChat ≥ 0.4.4._
+
+// TRANSLATION MISSING
+Replace text in a string using a regular expression and replacement text.
+
+Prototipo:
+
+[source,C]
+----
+char *weechat_string_replace_regex (const char *string, void *regex,
+                                    const char *replace, const char reference_char);
+----
+
+Argomenti:
+
+// TRANSLATION MISSING
+* 'string': string
+* 'regex': pointer to a regular expression ('regex_t' structure) compiled with
+  WeeChat function <<_weechat_string_regcomp,weechat_string_regcomp>> or regcomp
+  (see `man regcomp`)
+* 'replace': replacement text, where following references are allowed:
+** `$0` to `$99`: match 0 to 99 in regular expression (0 is the whole match,
+   1 to 99 are groups captured between parentheses)
+** `$+`: the last match (with highest number)
+** `$.*N`: match `N` (can be `+` or `0` to `99`), with all chars replaced by `*`
+   (the `*` char can be any char between space (32) and `~` (126))
+* 'reference_char': the char used for reference to match (commonly '$')
+
+Valore restituito:
+
+// TRANSLATION MISSING
+* string with text replaced, NULL if problem (must be freed by calling "free"
+  after use)
+
+Esempio in C:
+
+[source,C]
+----
+regex_t my_regex;
+char *string;
+if (weechat_string_regcomp (&my_regex, "([0-9]{4})-([0-9]{2})-([0-9]{2})",
+                            REG_EXTENDED) == 0)
+{
+    string = weechat_string_replace_regex ("date: 2014-02-14", &my_regex,
+                                           "$3/$2/$1", '$');
+    /* string == "date: 14/02/2014" */
+    if (string)
+        free (string);
+    regfree (&my_regex);
+}
+----
+
+[NOTE]
+Questa funzione non è disponibile nelle API per lo scripting.
+
 ==== weechat_string_split
 
 Divide una stringa in base a uno o più delimitatori.
@@ -1300,6 +1357,9 @@ argv = weechat_string_split ("abc de  fghi", " ", 1, 0, &argc);
 */
 weechat_string_free_split (argv);
 ----
+
+[NOTE]
+Questa funzione non è disponibile nelle API per lo scripting.
 
 ==== weechat_string_free_split
 

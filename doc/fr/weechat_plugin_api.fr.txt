@@ -1230,6 +1230,65 @@ highlight = weechat.string_has_highlight_regex(string, regex)
 highlight = weechat.string_has_highlight_regex("my test string", "test|word2") # 1
 ----
 
+==== weechat_string_replace_regex
+
+_WeeChat ≥ 0.4.4._
+
+Remplacer du texte dans une chaîne en utilisant une expression régulière et du
+texte de remplacement.
+
+Prototype :
+
+[source,C]
+----
+char *weechat_string_replace_regex (const char *string, void *regex,
+                                    const char *replace, const char reference_char);
+----
+
+Paramètres :
+
+* 'string' : chaîne
+* 'regex' : pointeur vers une expression régulière (structure 'regex_t')
+  compilée avec la fonction WeeChat
+  <<_weechat_string_regcomp,weechat_string_regcomp>> ou regcomp (voir
+  `man regcomp`)
+* 'replace' : texte de remplacement, où les références suivantes sont
+  autorisées :
+** `$0` à `$99` : correspondance 0 à 99 dans l'expression régulière (0 est la
+   correspondance entière, 1 à 99 sont les groupes capturés entre parenthèses)
+** `$+` : la dernière correspondance (avec le numéro le plus élevé)
+** `$.*N` : correspondance `N` (peut être `+` ou de `0` à `99`), avec tous les
+   caractères remplacés par `*` (le caractère `*` peut être n'importe quel
+   caractère entre l'espace (32) et `~` (126))
+* 'reference_char' : le caractère utilisé pour les références aux
+  correspondances (en général '$')
+
+Valeur de retour :
+
+* chaîne avec le texte remplacé, NULL en cas de problème (doit être supprimée
+  par un appel à "free" après utilisation)
+
+Exemple en C :
+
+[source,C]
+----
+regex_t my_regex;
+char *string;
+if (weechat_string_regcomp (&my_regex, "([0-9]{4})-([0-9]{2})-([0-9]{2})",
+                            REG_EXTENDED) == 0)
+{
+    string = weechat_string_replace_regex ("date: 2014-02-14", &my_regex,
+                                           "$3/$2/$1", '$');
+    /* string == "date: 14/02/2014" */
+    if (string)
+        free (string);
+    regfree (&my_regex);
+}
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 ==== weechat_string_split
 
 Découper une chaîne à l'aide de délimiteur(s).
