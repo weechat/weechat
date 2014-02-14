@@ -482,7 +482,7 @@ hook_command_build_completion (struct t_hook_command *hook_command)
     {
         /*
          * build static part of template: it's first argument(s) which does not
-         * contain "%" or "|"
+         * contain "%"
          */
         last_space = NULL;
         ptr_template = hook_command->cplt_templates[i];
@@ -493,7 +493,7 @@ hook_command_build_completion (struct t_hook_command *hook_command)
                 last_space = ptr_template;
                 break;
             }
-            else if ((ptr_template[0] == '%') || (ptr_template[0] == '|'))
+            else if (ptr_template[0] == '%')
                 break;
             ptr_template = utf8_next_char (ptr_template);
         }
