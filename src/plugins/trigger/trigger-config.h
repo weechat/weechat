@@ -26,6 +26,7 @@
 extern struct t_config_file *trigger_config_file;
 extern struct t_config_section *trigger_config_section_trigger;
 
+extern struct t_config_option *trigger_config_look_enabled;
 extern struct t_config_option *trigger_config_look_monitor_strip_colors;
 
 extern struct t_config_option *trigger_config_color_flag_command;
@@ -39,9 +40,9 @@ extern struct t_config_option *trigger_config_color_trigger_disabled;
 
 extern char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS];
 
-extern struct t_config_option *trigger_config_create_option (const char *trigger_name,
-                                                             int index_option,
-                                                             const char *value);
+extern struct t_config_option *trigger_config_create_trigger_option (const char *trigger_name,
+                                                                     int index_option,
+                                                                     const char *value);
 extern int trigger_config_init ();
 extern int trigger_config_read ();
 extern int trigger_config_write ();

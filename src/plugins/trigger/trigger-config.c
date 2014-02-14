@@ -33,6 +33,7 @@ struct t_config_section *trigger_config_section_trigger = NULL;
 
 /* trigger config, look section */
 
+struct t_config_option *trigger_config_look_enabled;
 struct t_config_option *trigger_config_look_monitor_strip_colors;
 
 /* trigger config, color section */
@@ -93,11 +94,25 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
 
 
 /*
- * Callback called when trigger option "enabled" is changed.
+ * Callback for changes on option "trigger.look.enabled".
  */
 
 void
 trigger_config_change_enabled (void *data, struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+
+    trigger_enabled = weechat_config_boolean (option);
+}
+
+/*
+ * Callback for changes on option "trigger.trigger.xxx.enabled".
+ */
+
+void
+trigger_config_change_trigger_enabled (void *data,
+                                       struct t_config_option *option)
 {
     struct t_trigger *ptr_trigger;
 
@@ -115,11 +130,11 @@ trigger_config_change_enabled (void *data, struct t_config_option *option)
 }
 
 /*
- * Callback called when trigger option "hook" is changed.
+ * Callback for changes on option "trigger.trigger.xxx.hook".
  */
 
 void
-trigger_config_change_hook (void *data, struct t_config_option *option)
+trigger_config_change_trigger_hook (void *data, struct t_config_option *option)
 {
     struct t_trigger *ptr_trigger;
 
@@ -135,11 +150,12 @@ trigger_config_change_hook (void *data, struct t_config_option *option)
 }
 
 /*
- * Callback called when trigger option "arguments" is changed.
+ * Callback for changes on option "trigger.trigger.xxx.arguments".
  */
 
 void
-trigger_config_change_arguments (void *data, struct t_config_option *option)
+trigger_config_change_trigger_arguments (void *data,
+                                         struct t_config_option *option)
 {
     struct t_trigger *ptr_trigger;
 
@@ -155,11 +171,11 @@ trigger_config_change_arguments (void *data, struct t_config_option *option)
 }
 
 /*
- * Callback called when trigger option "regex" is changed.
+ * Callback for changes on option "trigger.trigger.xxx.regex".
  */
 
 void
-trigger_config_change_regex (void *data, struct t_config_option *option)
+trigger_config_change_trigger_regex (void *data, struct t_config_option *option)
 {
     struct t_trigger *ptr_trigger;
 
@@ -175,11 +191,12 @@ trigger_config_change_regex (void *data, struct t_config_option *option)
 }
 
 /*
- * Callback called when trigger option "command" is changed.
+ * Callback for changes on option "trigger.trigger.xxx.command".
  */
 
 void
-trigger_config_change_command (void *data, struct t_config_option *option)
+trigger_config_change_trigger_command (void *data,
+                                       struct t_config_option *option)
 {
     struct t_trigger *ptr_trigger;
 
@@ -202,8 +219,8 @@ trigger_config_change_command (void *data, struct t_config_option *option)
  */
 
 struct t_config_option *
-trigger_config_create_option (const char *trigger_name, int index_option,
-                              const char *value)
+trigger_config_create_trigger_option (const char *trigger_name, int index_option,
+                                      const char *value)
 {
     struct t_config_option *ptr_option;
     int length;
@@ -228,8 +245,8 @@ trigger_config_create_option (const char *trigger_name, int index_option,
                 option_name, "boolean",
                 N_("if disabled, the hooks are removed from trigger, so it is "
                    "not called any more"),
-                NULL, 0, 0, value, NULL, 0,
-                NULL, NULL, &trigger_config_change_enabled, NULL, NULL, NULL);
+                NULL, 0, 0, value, NULL, 0, NULL, NULL,
+                &trigger_config_change_trigger_enabled, NULL, NULL, NULL);
             break;
         case TRIGGER_OPTION_HOOK:
             ptr_option = weechat_config_new_option (
@@ -237,8 +254,8 @@ trigger_config_create_option (const char *trigger_name, int index_option,
                 option_name, "integer",
                 N_("type of hook used"),
                 trigger_hook_option_values,
-                0, 0, value, NULL, 0,
-                NULL, NULL, &trigger_config_change_hook, NULL, NULL, NULL);
+                0, 0, value, NULL, 0, NULL, NULL,
+                &trigger_config_change_trigger_hook, NULL, NULL, NULL);
             break;
         case TRIGGER_OPTION_ARGUMENTS:
             ptr_option = weechat_config_new_option (
@@ -248,8 +265,8 @@ trigger_config_create_option (const char *trigger_name, int index_option,
                    "signal/hsignal/modifier: name[;name...], for print: "
                    "buffer;tags;strip_colors;message, for timer: "
                    "interval;align_second;max_calls"),
-                NULL, 0, 0, value, NULL, 0,
-                NULL, NULL, &trigger_config_change_arguments, NULL, NULL, NULL);
+                NULL, 0, 0, value, NULL, 0, NULL, NULL,
+                &trigger_config_change_trigger_arguments, NULL, NULL, NULL);
             break;
         case TRIGGER_OPTION_CONDITIONS:
             ptr_option = weechat_config_new_option (
@@ -276,16 +293,16 @@ trigger_config_create_option (const char *trigger_name, int index_option,
                    "identical chars), except '\\' and parentheses; matching "
                    "groups can be used in replace: $0 to $99, $+ for last "
                    "match and $.cN to replace all chars of group N by char c"),
-                NULL, 0, 0, value, NULL, 0,
-                NULL, NULL, &trigger_config_change_regex, NULL, NULL, NULL);
+                NULL, 0, 0, value, NULL, 0, NULL, NULL,
+                &trigger_config_change_trigger_regex, NULL, NULL, NULL);
             break;
         case TRIGGER_OPTION_COMMAND:
             ptr_option = weechat_config_new_option (
                 trigger_config_file, trigger_config_section_trigger,
                 option_name, "string",
                 N_("command run if conditions are OK, after regex replacements"),
-                NULL, 0, 0, value, NULL, 0,
-                NULL, NULL, &trigger_config_change_command, NULL, NULL, NULL);
+                NULL, 0, 0, value, NULL, 0, NULL, NULL,
+                &trigger_config_change_trigger_command, NULL, NULL, NULL);
             break;
         case TRIGGER_OPTION_RETURN_CODE:
             ptr_option = weechat_config_new_option (
@@ -315,8 +332,8 @@ trigger_config_create_option_temp (struct t_trigger *temp_trigger,
 {
     struct t_config_option *new_option;
 
-    new_option = trigger_config_create_option (temp_trigger->name,
-                                               index_option, value);
+    new_option = trigger_config_create_trigger_option (temp_trigger->name,
+                                                       index_option, value);
     if (new_option
         && (index_option >= 0) && (index_option < TRIGGER_NUM_OPTIONS))
     {
@@ -343,9 +360,9 @@ trigger_config_use_temp_triggers ()
             if (!ptr_temp_trigger->options[i])
             {
                 ptr_temp_trigger->options[i] =
-                    trigger_config_create_option (ptr_temp_trigger->name,
-                                                  i,
-                                                  trigger_option_default[i]);
+                    trigger_config_create_trigger_option (ptr_temp_trigger->name,
+                                                          i,
+                                                          trigger_option_default[i]);
             }
             if (ptr_temp_trigger->options[i])
                 num_options_ok++;
@@ -545,6 +562,12 @@ trigger_config_init ()
         return 0;
     }
 
+    trigger_config_look_enabled = weechat_config_new_option (
+        trigger_config_file, ptr_section,
+        "enabled", "boolean",
+        N_("enable trigger support"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL,
+        &trigger_config_change_enabled, NULL, NULL, NULL);
     trigger_config_look_monitor_strip_colors = weechat_config_new_option (
         trigger_config_file, ptr_section,
         "monitor_strip_colors", "boolean",

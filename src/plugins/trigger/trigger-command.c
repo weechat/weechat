@@ -30,6 +30,18 @@
 
 
 /*
+ * Displays the status of triggers (global status).
+ */
+
+void
+trigger_command_display_status ()
+{
+    weechat_printf_tags (NULL, "no_trigger",
+                         (trigger_enabled) ?
+                         _("Triggers enabled") : _("Triggers disabled"));
+}
+
+/*
  * Displays one trigger (internal function, must not be called directly).
  */
 
@@ -234,13 +246,15 @@ trigger_command_list (const char *message, int verbose)
 {
     struct t_trigger *ptr_trigger;
 
+    weechat_printf_tags (NULL, "no_trigger", "");
+    trigger_command_display_status ();
+
     if (!triggers)
     {
         weechat_printf_tags (NULL, "no_trigger", _("No trigger defined"));
         return;
     }
 
-    weechat_printf_tags (NULL, "no_trigger", "");
     weechat_printf_tags (NULL, "no_trigger", message);
 
     for (ptr_trigger = triggers; ptr_trigger;
@@ -720,10 +734,25 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
     {
         if (argc < 3)
         {
-            weechat_printf_tags (NULL, "no_trigger",
-                                 _("%sError: missing arguments for \"%s\" "
-                                   "command"),
-                                 weechat_prefix ("error"), "trigger");
+            if (weechat_strcasecmp (argv[1], "restart") == 0)
+            {
+                weechat_printf_tags (NULL, "no_trigger",
+                                     _("%sError: missing arguments for \"%s\" "
+                                       "command"),
+                                     weechat_prefix ("error"), "trigger");
+                goto end;
+            }
+            if (weechat_strcasecmp (argv[1], "enable") == 0)
+                weechat_config_option_set (trigger_config_look_enabled, "1", 1);
+            else if (weechat_strcasecmp (argv[1], "disable") == 0)
+                weechat_config_option_set (trigger_config_look_enabled, "0", 1);
+            else if (weechat_strcasecmp (argv[1], "toggle") == 0)
+            {
+                weechat_config_option_set (trigger_config_look_enabled,
+                                           (trigger_enabled) ? "0" : "1",
+                                           1);
+            }
+            trigger_command_display_status ();
             goto end;
         }
         enable = -1;
@@ -875,7 +904,8 @@ trigger_command_init ()
            " || input|output|recreate <name>"
            " || set <name> <option> <value>"
            " || rename|copy <name> <new_name>"
-           " || enable|disable|toggle|restart <name>|-all [<name>...]"
+           " || enable|disable|toggle [<name>|-all [<name>...]]"
+           " || restart <name>|-all [<name>...]"
            " || show <name>"
            " || del <name>|-all [<name>...]"
            " || default -yes"
@@ -918,10 +948,13 @@ trigger_command_init ()
            "      value: new value for the option\n"
            "     rename: rename a trigger\n"
            "       copy: copy a trigger\n"
-           "     enable: enable trigger(s)\n"
-           "    disable: disable trigger(s)\n"
-           "     toggle: toggle trigger(s)\n"
-           "    restart: restart trigger(s) (for timer)\n"
+           "     enable: enable trigger(s) (without arguments: enable triggers "
+           "globally)\n"
+           "    disable: disable trigger(s) (without arguments: disable triggers "
+           "globally)\n"
+           "     toggle: toggle trigger(s) (without arguments: toggle triggers "
+           "globally)\n"
+           "    restart: restart trigger(s) (only for a timer)\n"
            "       show: show detailed info on a trigger (with some stats)\n"
            "        del: delete a trigger\n"
            "       -all: do action on all triggers\n"

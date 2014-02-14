@@ -27,6 +27,8 @@
     pointers = NULL;                                            \
     extra_vars = NULL;                                          \
     (void) trigger_rc;                                          \
+    if (!trigger_enabled)                                       \
+        return __rc;                                            \
     trigger = (struct t_trigger *)data;                         \
     if (!trigger || trigger->hook_running)                      \
         return __rc;                                            \

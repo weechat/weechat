@@ -75,6 +75,8 @@ int triggers_count = 0;                     /* number of triggers           */
 struct t_trigger *triggers_temp = NULL;     /* first temporary trigger      */
 struct t_trigger *last_trigger_temp = NULL; /* last temporary trigger       */
 
+int trigger_enabled = 1;                    /* 0 if triggers are disabled   */
+
 
 /*
  * Searches for a trigger option name.
@@ -874,7 +876,7 @@ trigger_new (const char *name, const char *enabled, const char *hook,
 
     for (i = 0; i < TRIGGER_NUM_OPTIONS; i++)
     {
-        option[i] = trigger_config_create_option (name, i, value[i]);
+        option[i] = trigger_config_create_trigger_option (name, i, value[i]);
     }
 
     new_trigger = trigger_new_with_options (name, option);

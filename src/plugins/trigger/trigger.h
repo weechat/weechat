@@ -119,6 +119,7 @@ extern struct t_trigger *last_trigger;
 extern int triggers_count;
 extern struct t_trigger *triggers_temp;
 extern struct t_trigger *last_trigger_temp;
+extern int trigger_enabled;
 
 extern int trigger_search_option (const char *option_name);
 extern int trigger_search_hook_type (const char *type);
