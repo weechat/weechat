@@ -871,41 +871,6 @@ match3 = weechat.string_match("abcdef", "*def", 0) # 1
 match4 = weechat.string_match("abcdef", "*de*", 0) # 1
 ----
 
-==== weechat_string_replace
-
-Sostituisce tutte le ricorrenze di una stringa con un'altra.
-
-Prototipo:
-
-[source,C]
-----
-char *weechat_string_replace (const char *string, const char *search,
-                              const char *replace);
-----
-
-Argomenti:
-
-* 'string': stringa
-* 'search': stringa da sostituire
-* 'replace': sostituzione per la stringa 'search'
-
-Valore restituito:
-
-* la stringa dopo 'search' sostituita da 'replace' (deve essere liberata
-  chiamando "free" dopo l'uso)
-
-Esempio in C:
-
-[source,C]
-----
-char *str = weechat_string_replace ("test", "s", "x"); /* result: "text" */
-/* ... */
-free (str);
-----
-
-[NOTE]
-Questa funzione non è disponibile nelle API per lo scripting.
-
 ==== weechat_string_expand_home
 
 _WeeChat ≥ 0.3.3._
@@ -1296,6 +1261,41 @@ highlight = weechat.string_has_highlight_regex(string, regex)
 # esempio
 highlight = weechat.string_has_highlight_regex("my test string", "test|word2") # 1
 ----
+
+==== weechat_string_replace
+
+Sostituisce tutte le ricorrenze di una stringa con un'altra.
+
+Prototipo:
+
+[source,C]
+----
+char *weechat_string_replace (const char *string, const char *search,
+                              const char *replace);
+----
+
+Argomenti:
+
+* 'string': stringa
+* 'search': stringa da sostituire
+* 'replace': sostituzione per la stringa 'search'
+
+Valore restituito:
+
+* la stringa dopo 'search' sostituita da 'replace' (deve essere liberata
+  chiamando "free" dopo l'uso)
+
+Esempio in C:
+
+[source,C]
+----
+char *str = weechat_string_replace ("test", "s", "x"); /* result: "text" */
+/* ... */
+free (str);
+----
+
+[NOTE]
+Questa funzione non è disponibile nelle API per lo scripting.
 
 ==== weechat_string_replace_regex
 

@@ -853,41 +853,6 @@ match3 = weechat.string_match("abcdef", "*def", 0) # 1
 match4 = weechat.string_match("abcdef", "*de*", 0) # 1
 ----
 
-==== weechat_string_replace
-
-マッチした全ての文字列を別の文字列で置換。
-
-プロトタイプ:
-
-[source,C]
-----
-char *weechat_string_replace (const char *string, const char *search,
-                              const char *replace);
-----
-
-引数:
-
-* 'string': 文字列
-* 'search': マッチさせる文字列
-* 'replace': 'search' を置き換える文字列
-
-戻り値:
-
-* 'search' を 'replace' で置き換えた文字列
-  (使用後には必ず "free" を呼び出して領域を開放してください)
-
-C 言語での使用例:
-
-[source,C]
-----
-char *str = weechat_string_replace ("test", "s", "x"); /* result: "text" */
-/* ... */
-free (str);
-----
-
-[NOTE]
-スクリプト API ではこの関数を利用できません。
-
 ==== weechat_string_expand_home
 
 _WeeChat バージョン 0.3.3 以上で利用可。_
@@ -1263,6 +1228,41 @@ highlight = weechat.string_has_highlight_regex(string, regex)
 # 例
 highlight = weechat.string_has_highlight_regex("my test string", "test|word2") # 1
 ----
+
+==== weechat_string_replace
+
+マッチした全ての文字列を別の文字列で置換。
+
+プロトタイプ:
+
+[source,C]
+----
+char *weechat_string_replace (const char *string, const char *search,
+                              const char *replace);
+----
+
+引数:
+
+* 'string': 文字列
+* 'search': マッチさせる文字列
+* 'replace': 'search' を置き換える文字列
+
+戻り値:
+
+* 'search' を 'replace' で置き換えた文字列
+  (使用後には必ず "free" を呼び出して領域を開放してください)
+
+C 言語での使用例:
+
+[source,C]
+----
+char *str = weechat_string_replace ("test", "s", "x"); /* result: "text" */
+/* ... */
+free (str);
+----
+
+[NOTE]
+スクリプト API ではこの関数を利用できません。
 
 ==== weechat_string_replace_regex
 
