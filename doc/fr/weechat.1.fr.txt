@@ -78,6 +78,9 @@ $HOME/.weechat/rmodifier.conf::
 $HOME/.weechat/script.conf::
     fichier de configuration pour l'extension 'script'
 
+$HOME/.weechat/trigger.conf::
+    fichier de configuration pour l'extension 'trigger'
+
 $HOME/.weechat/xfer.conf::
     fichier de configuration pour l'extension 'xfer'
 

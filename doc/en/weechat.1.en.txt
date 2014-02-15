@@ -76,6 +76,9 @@ $HOME/.weechat/rmodifier.conf::
 $HOME/.weechat/script.conf::
     configuration file for 'script' plugin
 
+$HOME/.weechat/trigger.conf::
+    configuration file for 'trigger' plugin
+
 $HOME/.weechat/xfer.conf::
     configuration file for 'xfer' plugin
 
