@@ -9,3 +9,4 @@ usr/lib/weechat/plugins/tcl.so
 usr/lib/weechat/plugins/script.so
 usr/lib/weechat/plugins/relay.so
 usr/lib/weechat/plugins/rmodifier.so
+usr/lib/weechat/plugins/trigger.so
