@@ -261,10 +261,8 @@ trigger_config_create_trigger_option (const char *trigger_name, int index_option
             ptr_option = weechat_config_new_option (
                 trigger_config_file, trigger_config_section_trigger,
                 option_name, "string",
-                N_("arguments for the hook (depend on the hook type); for "
-                   "signal/hsignal/modifier: name[;name...], for print: "
-                   "buffer;tags;strip_colors;message, for timer: "
-                   "interval;align_second;max_calls"),
+                N_("arguments for the hook (depend on the hook type, see /help "
+                   "trigger)"),
                 NULL, 0, 0, value, NULL, 0, NULL, NULL,
                 &trigger_config_change_trigger_arguments, NULL, NULL, NULL);
             break;
@@ -300,7 +298,8 @@ trigger_config_create_trigger_option (const char *trigger_name, int index_option
             ptr_option = weechat_config_new_option (
                 trigger_config_file, trigger_config_section_trigger,
                 option_name, "string",
-                N_("command run if conditions are OK, after regex replacements"),
+                N_("command(s) to run if conditions are OK, after regex "
+                   "replacements (many commands can be separated by semicolons)"),
                 NULL, 0, 0, value, NULL, 0, NULL, NULL,
                 &trigger_config_change_trigger_command, NULL, NULL, NULL);
             break;
