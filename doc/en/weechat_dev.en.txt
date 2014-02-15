@@ -66,6 +66,7 @@ The main WeeChat directories are:
 |       lua/       | Lua scripting API
 |       tcl/       | Tcl scripting API
 |       guile/     | Guile (scheme) scripting API
+|       trigger/   | Trigger plugin
 |       xfer/      | Xfer plugin (IRC DCC file/chat)
 | doc/             | Documentation
 | po/              | Translations files (gettext)
@@ -260,6 +261,13 @@ WeeChat "core" is located in following directories:
 |    tcl/                           | Tcl plugin
 |       weechat-tcl.c               | Main tcl functions (load/unload scripts, execute tcl code)
 |       weechat-tcl-api.c           | Tcl scripting API functions
+|    trigger/                       | Trigger plugin
+|       trigger.c                   | Main trigger functions
+|       trigger-buffer.c            | Trigger buffer
+|       trigger-callback.c          | Trigger callbacks
+|       trigger-command.c           | Trigger commands
+|       trigger-completion.c        | Trigger completions
+|       trigger-config.c            | Trigger config options (file trigger.conf)
 |    xfer/                          | Xfer plugin (IRC DCC file/chat)
 |       xfer.c                      | Main xfer functions
 |       xfer-buffer.c               | Xfer buffer
