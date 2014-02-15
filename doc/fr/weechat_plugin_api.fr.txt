@@ -3442,12 +3442,12 @@ Prototype :
 
 [source,C]
 ----
-void hashtable_map (struct t_hashtable *hashtable,
-                    void (*callback_map)(void *data,
-                                         struct t_hashtable *hashtable,
-                                         const void *key,
-                                         const void *value),
-                    void *callback_map_data);
+void weechat_hashtable_map (struct t_hashtable *hashtable,
+                            void (*callback_map)(void *data,
+                                                 struct t_hashtable *hashtable,
+                                                 const void *key,
+                                                 const void *value),
+                            void *callback_map_data);
 ----
 
 Paramètres :
@@ -3487,12 +3487,12 @@ Prototype :
 
 [source,C]
 ----
-void hashtable_map_string (struct t_hashtable *hashtable,
-                           void (*callback_map)(void *data,
-                                                struct t_hashtable *hashtable,
-                                                const char *key,
-                                                const char *value),
-                           void *callback_map_data);
+void weechat_hashtable_map_string (struct t_hashtable *hashtable,
+                                   void (*callback_map)(void *data,
+                                                        struct t_hashtable *hashtable,
+                                                        const char *key,
+                                                        const char *value),
+                                   void *callback_map_data);
 ----
 
 Paramètres :
