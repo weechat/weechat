@@ -14,7 +14,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 == Version 0.4.4 (under dev!)
 
 * core: add bare display mode (for easy text selection and click on URLs), new
-  key: key[alt-!], new options: weechat.look.bare_display_exit_on_input and
+  key: key[alt-!], new option "bare" in command /window, new options:
+  weechat.look.bare_display_exit_on_input and
   weechat.look.bare_display_time_format
 * core: fix freeze/crash in gnutls (bug #41576)
 * core: fix cmake warning CMP0007 on "make uninstall" (bug #41528)
