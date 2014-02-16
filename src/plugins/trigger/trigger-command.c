@@ -461,7 +461,8 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
     }
 
     /* add a trigger */
-    if (weechat_strcasecmp (argv[1], "add") == 0)
+    if ((weechat_strcasecmp (argv[1], "add") == 0)
+        || (weechat_strcasecmp (argv[1], "addoff") == 0))
     {
         sargv = weechat_string_split_shell (argv_eol[2], &sargc);
         if (!sargv || (sargc < 2))
@@ -504,7 +505,7 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
         }
         ptr_trigger = trigger_new (
             sargv[0],                      /* name */
-            "on",                          /* enabled */
+            (weechat_strcasecmp (argv[1], "add") == 0) ? "on" : "off",
             sargv[1],                      /* hook */
             (sargc > 2) ? sargv[2] : "",   /* arguments */
             (sargc > 3) ? sargv[3] : "",   /* conditions */
@@ -912,7 +913,7 @@ trigger_command_init ()
         "trigger",
         N_("manage triggers, the Swiss Army knife for WeeChat"),
         N_("list|listfull|listdefault"
-           " || add <name> <hook> [\"<arguments>\" [\"<conditions>\" "
+           " || add|addoff <name> <hook> [\"<arguments>\" [\"<conditions>\" "
            "[\"<regex>\" [\"<command>\" [\"<return_code>\"]]]]]"
            " || addinput [<hook>]"
            " || input|output|recreate <name>"
@@ -999,9 +1000,9 @@ trigger_command_init ()
            "  silently save config each hour:\n"
            "    /trigger add cfgsave timer 3600000;0;0 \"\" \"\" \"/mute /save\""),
         "list|listfull|listdefault"
-        " || add %(trigger_names) %(trigger_hooks) %(trigger_hook_arguments) "
-        "%(trigger_hook_conditions) %(trigger_hook_regex) "
-        "%(trigger_hook_command) %(trigger_hook_rc)"
+        " || add|addoff %(trigger_names) %(trigger_hooks) "
+        "%(trigger_hook_arguments) %(trigger_hook_conditions) "
+        "%(trigger_hook_regex) %(trigger_hook_command) %(trigger_hook_rc)"
         " || addinput %(trigger_hooks)"
         " || input|output|recreate %(trigger_names)"
         " || set %(trigger_names) %(trigger_options)|name %(trigger_option_value)"
