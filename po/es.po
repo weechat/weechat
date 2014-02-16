@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-02-13 10:01+0100\n"
-"PO-Revision-Date: 2014-01-29 14:11+0100\n"
+"POT-Creation-Date: 2014-02-16 10:12+0100\n"
+"PO-Revision-Date: 2014-02-16 11:21+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: es\n"
@@ -2428,7 +2428,7 @@ msgid ""
 "|| scroll_horiz [-window <number>] [+/-]<value>[%] || scroll_up|scroll_down|"
 "scroll_top|scroll_bottom|scroll_beyond_end|scroll_previous_highlight|"
 "scroll_next_highlight|scroll_unread [-window <number>] || swap [-window "
-"<number>] [up|down|left|right] || zoom[-window <number>]"
+"<number>] [up|down|left|right] || zoom[-window <number>] || bare [<delay>]"
 msgstr ""
 "list || -1|+1|b#|up|down|left|right [-window <número>] || <número> || splith|"
 "splitv [-window <número>] [<pct>] || resize [-window <número>] [+/-]<pct> || "
@@ -2476,6 +2476,8 @@ msgid ""
 "         swap: swap buffers of two windows (with optional direction for "
 "target window)\n"
 "         zoom: zoom on window\n"
+"         bare: toggle bare display (with optional delay in milliseconds for "
+"automatic return to standard display mode)\n"
 "\n"
 "For splith and splitv, pct is a percentage which represents size of new "
 "window, computed with current window as size reference. For example 25 means "
@@ -3249,6 +3251,16 @@ msgstr ""
 
 msgid "string displayed after prefix"
 msgstr "cadena mostrada después del prefijo"
+
+msgid "exit the bare display mode on any changes in input"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"time format in bare display mode (see man strftime for date/time specifiers)"
+msgstr ""
+"formato de hora para el elemento de barra \"time\" (ver el manual de "
+"strftime para los especificadores de fecha/hora)"
 
 msgid "use a marker (line or char) on buffers to show first unread line"
 msgstr ""
@@ -10372,49 +10384,3 @@ msgstr "Tipo"
 
 msgid "Constants"
 msgstr "Constantes"
-
-#~ msgid "%s%s: error with server from URL (\"%s\"), ignored"
-#~ msgstr "%s%s: error con el servidor desde el URL (\"%s\"), ignorado"
-
-#~ msgid "%s%s: unable to create server \"%s\""
-#~ msgstr "%s%s: no es posible crear el servidor \"%s\""
-
-#~ msgid "%s%s: error creating new server \"%s\""
-#~ msgstr "%s%s: error al crear el nuevo servidor \"%s\""
-
-#~ msgid ""
-#~ "hotlist sort type (group_time_asc (default), group_time_desc, "
-#~ "group_number_asc, group_number_desc, number_asc, number_desc)"
-#~ msgstr ""
-#~ "tipo de ordenamiento de la lista de actividad (group_time_asc (por "
-#~ "defecto), group_time_desc, group_number_asc, group_number_desc, "
-#~ "number_asc, number_desc)"
-
-#~ msgid "%s: notification deleted"
-#~ msgstr "%s: notificación borrada"
-
-#~ msgid "%snotify: %s%s%s has quit"
-#~ msgstr "%saviso: %s%s%s ha salido"
-
-#~ msgid "No layout saved"
-#~ msgstr "Ningún esquema guardado"
-
-#, fuzzy
-#~ msgid "%sgnutls: fingerprint does NOT match"
-#~ msgstr "%sgnutls: el hostname en el certificado NO concuerda con \"%s\""
-
-#~ msgid "%s%s: could not find address for \"%s\", falling back to local IP"
-#~ msgstr ""
-#~ "%s%s: no se pudo encontrar la dirección para \"%s\", utilizando la IP "
-#~ "local"
-
-#, fuzzy
-#~ msgid "%s%s: connected to %s (%ld.%ld.%ld.%ld)"
-#~ msgstr "%s: charla con %s (%ld.%ld.%ld.%ld) cerrada"
-
-#~ msgid ""
-#~ "%s: sending file to %s (%ld.%ld.%ld.%ld, %s.%s), name: %s (local "
-#~ "filename: %s), %llu bytes (protocol: %s)"
-#~ msgstr ""
-#~ "%s: enviando archivo a %s (%ld.%ld.%ld.%ld, %s.%s), nombre: %s (archivo "
-#~ "local: %s), %llu bytes (protocolo: %s)"

@@ -408,6 +408,16 @@
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `"--"`)
 
+* [[option_weechat.look.bare_display_exit_on_input]] *weechat.look.bare_display_exit_on_input*
+** opis: `exit the bare display mode on any changes in input`
+** typ: bool
+** wartości: on, off (domyślna wartość: `on`)
+
+* [[option_weechat.look.bare_display_time_format]] *weechat.look.bare_display_time_format*
+** opis: `time format in bare display mode (see man strftime for date/time specifiers)`
+** typ: ciąg
+** wartości: dowolny ciąg (domyślna wartość: `"%H:%M"`)
+
 * [[option_weechat.look.buffer_auto_renumber]] *weechat.look.buffer_auto_renumber*
 ** opis: `automatyczna zmiana numerów buforów, aby uzyskać tylko kolejne numery i zaczynać od numeru 1; jeśli wyłączone dozwolone są przerwy między numerami buforów i pierwszy bufor może mieć numer większy od 1`
 ** typ: bool

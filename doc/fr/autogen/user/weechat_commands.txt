@@ -869,6 +869,7 @@ Exemples:
          scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_beyond_end|scroll_previous_highlight|scroll_next_highlight|scroll_unread [-window <numéro>]
          swap [-window <numéro>] [up|down|left|right]
          zoom [-window <numéro>]
+         bare [<délai>]
 
          list: lister les fenêtres ouvertes (sans paramètre, cette liste est affichée)
            -1: sauter à la fenêtre précédente
@@ -899,6 +900,7 @@ scroll_next_highlight: faire défiler jusqu'au highlight suivant
 scroll_unread: faire défiler jusqu'au marqueur de données non lues
          swap: échanger les tampons de deux fenêtres (avec une direction facultative pour la fenêtre cible)
          zoom: zoomer sur la fenêtre
+         bare: activer/désactiver le more d'affichage dépouillé (avec un délai facultatif en millisecondes pour un retour automatique au mode d'affichage standard)
 
 Pour splith et splitv, pct est un pourcentage qui représente la taille de la nouvelle fenêtre, calculée par rapport à la taille de la fenêtre courante. Par exemple 25 signifie créer une fenêtre qui a pour taille: taille_courante / 4
 

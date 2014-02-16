@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-02-13 10:01+0100\n"
-"PO-Revision-Date: 2014-01-29 14:13+0100\n"
+"POT-Creation-Date: 2014-02-16 10:12+0100\n"
+"PO-Revision-Date: 2014-02-16 11:21+0100\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pt_BR\n"
@@ -2383,6 +2383,7 @@ msgstr ""
 msgid "manage windows"
 msgstr "gerencia janelas"
 
+#, fuzzy
 msgid ""
 "list || -1|+1|b#|up|down|left|right [-window <number>] || <number> || splith|"
 "splitv [-window <number>] [<pct>] || resize [-window <number>] [+/-]<pct> || "
@@ -2391,7 +2392,7 @@ msgid ""
 "|| scroll_horiz [-window <number>] [+/-]<value>[%] || scroll_up|scroll_down|"
 "scroll_top|scroll_bottom|scroll_beyond_end|scroll_previous_highlight|"
 "scroll_next_highlight|scroll_unread [-window <number>] || swap [-window "
-"<number>] [up|down|left|right] || zoom[-window <number>]"
+"<number>] [up|down|left|right] || zoom[-window <number>] || bare [<delay>]"
 msgstr ""
 "list || -1|+1|b#|up|down|left|right [-window <número>] || <número> || splith|"
 "splitv [-window <número>] [<pct>] || resize [-window <número>] [+/-]<pct> || "
@@ -2439,6 +2440,8 @@ msgid ""
 "         swap: swap buffers of two windows (with optional direction for "
 "target window)\n"
 "         zoom: zoom on window\n"
+"         bare: toggle bare display (with optional delay in milliseconds for "
+"automatic return to standard display mode)\n"
 "\n"
 "For splith and splitv, pct is a percentage which represents size of new "
 "window, computed with current window as size reference. For example 25 means "
@@ -3151,6 +3154,16 @@ msgstr ""
 
 msgid "string displayed after prefix"
 msgstr "cadeia de caracteres mostrada após prefixo"
+
+msgid "exit the bare display mode on any changes in input"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"time format in bare display mode (see man strftime for date/time specifiers)"
+msgstr ""
+"formato de tempo para o item de barra \"time\" (veja man strftime para "
+"especificadores de data/tempo)"
 
 msgid "use a marker (line or char) on buffers to show first unread line"
 msgstr ""
@@ -9735,38 +9748,3 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
-
-#~ msgid "%s%s: error creating new server \"%s\""
-#~ msgstr "%s%s: erro ao criar novo servidor \"%s\""
-
-#~ msgid ""
-#~ "hotlist sort type (group_time_asc (default), group_time_desc, "
-#~ "group_number_asc, group_number_desc, number_asc, number_desc)"
-#~ msgstr ""
-#~ "tipo de ordenação da lista de atividade (group_time_asc (default), "
-#~ "group_time_desc, group_number_asc, group_number_desc, number_asc, "
-#~ "number_desc)"
-
-#~ msgid "No layout saved"
-#~ msgstr "Nenhuma disposição salva"
-
-#, fuzzy
-#~ msgid "%sgnutls: fingerprint does NOT match"
-#~ msgstr "%sgnutls: o hostname no certificado NÃO É semelhante a \"%s\""
-
-#~ msgid "%s%s: could not find address for \"%s\", falling back to local IP"
-#~ msgstr ""
-#~ "%s%s: não foi possível encontrar endereço para \"%s\", alternando para IP "
-#~ "local"
-
-#, fuzzy
-#~ msgid "%s%s: connected to %s (%ld.%ld.%ld.%ld)"
-#~ msgstr "%s: chat terminado com %s (%d.%d.%d.%d)"
-
-#, fuzzy
-#~ msgid ""
-#~ "%s: sending file to %s (%ld.%ld.%ld.%ld, %s.%s), name: %s (local "
-#~ "filename: %s), %llu bytes (protocol: %s)"
-#~ msgstr ""
-#~ "%s: enviando arquivo para %s (%s.%s): %s (arquivo local: %s), %llu bytes "
-#~ "(protocolo: %s)"

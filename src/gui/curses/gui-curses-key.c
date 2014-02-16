@@ -214,6 +214,7 @@ gui_key_default_bindings (int context)
         BIND(/* m-m         */ "meta-m",             "/mute mouse toggle");
         BIND(/* start paste */ "meta2-200~",         "/input paste_start");
         BIND(/* end paste   */ "meta2-201~",         "/input paste_stop");
+        BIND(/* bare display*/ "meta-!",             "/window bare");
 
         /* bind meta-j + {01..99} to switch to buffers # > 10 */
         for (i = 1; i < 100; i++)

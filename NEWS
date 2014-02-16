@@ -13,6 +13,16 @@ http://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file 'ChangeLog' in sources).
 
 
+== Version 0.4.4 (under dev)
+
+=== Bare display
+
+A bare display mode has been added (for easy text selection and click on URLs),
+the new default key is key[alt-!].
+
+Use command `/key missing` to add the key or `/key listdiff` to see differences
+between your current keys and WeeChat default keys.
+
 == Version 0.4.3 (2014-02-09)
 
 === Colors in messages

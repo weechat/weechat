@@ -124,6 +124,8 @@ extern struct t_gui_window *gui_current_window;
 extern struct t_gui_window_tree *gui_windows_tree;
 extern int gui_window_cursor_x;
 extern int gui_window_cursor_y;
+extern int gui_window_bare_display;
+extern struct t_hook *gui_window_bare_display_timer;
 
 /* window functions */
 
@@ -229,6 +231,7 @@ extern void gui_window_switch_right (struct t_gui_window *window);
 extern int gui_window_balance (struct t_gui_window_tree *tree);
 extern void gui_window_swap (struct t_gui_window *window, int direction);
 extern void gui_window_refresh_screen (int full_refresh);
+extern void gui_window_bare_display_toggle (const char *delay);
 extern void gui_window_set_title (const char *title);
 extern void gui_window_send_clipboard (const char *storage_unit,
                                        const char *text);

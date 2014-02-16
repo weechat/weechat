@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-02-13 10:01+0100\n"
-"PO-Revision-Date: 2014-01-30 11:25+0900\n"
+"POT-Creation-Date: 2014-02-16 10:12+0100\n"
+"PO-Revision-Date: 2014-02-16 11:21+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
 "Language: ja\n"
@@ -2530,6 +2530,7 @@ msgstr ""
 msgid "manage windows"
 msgstr "ウィンドウの操作"
 
+#, fuzzy
 msgid ""
 "list || -1|+1|b#|up|down|left|right [-window <number>] || <number> || splith|"
 "splitv [-window <number>] [<pct>] || resize [-window <number>] [+/-]<pct> || "
@@ -2538,7 +2539,7 @@ msgid ""
 "|| scroll_horiz [-window <number>] [+/-]<value>[%] || scroll_up|scroll_down|"
 "scroll_top|scroll_bottom|scroll_beyond_end|scroll_previous_highlight|"
 "scroll_next_highlight|scroll_unread [-window <number>] || swap [-window "
-"<number>] [up|down|left|right] || zoom[-window <number>]"
+"<number>] [up|down|left|right] || zoom[-window <number>] || bare [<delay>]"
 msgstr ""
 "list || -1|+1|b#|up|down|left|right [-window <number>] || <number> || splith|"
 "splitv [-window <number>] [<pct>] || resize [-window <number>] [+/-]<pct> || "
@@ -2549,6 +2550,7 @@ msgstr ""
 "scroll_next_highlight|scroll_unread [-window <number>] || swap [-window "
 "<number>] [up|down|left|right] || zoom[-window <number>]"
 
+#, fuzzy
 msgid ""
 "         list: list opened windows (without argument, this list is "
 "displayed)\n"
@@ -2585,6 +2587,8 @@ msgid ""
 "         swap: swap buffers of two windows (with optional direction for "
 "target window)\n"
 "         zoom: zoom on window\n"
+"         bare: toggle bare display (with optional delay in milliseconds for "
+"automatic return to standard display mode)\n"
 "\n"
 "For splith and splitv, pct is a percentage which represents size of new "
 "window, computed with current window as size reference. For example 25 means "
@@ -3370,6 +3374,16 @@ msgstr ""
 
 msgid "string displayed after prefix"
 msgstr "プレフィックスの後ろに表示される文字列"
+
+msgid "exit the bare display mode on any changes in input"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"time format in bare display mode (see man strftime for date/time specifiers)"
+msgstr ""
+"\"time\" バーアイテムの時間フォーマット (日付/時間指定子は strftime の man を"
+"参照)"
 
 msgid "use a marker (line or char) on buffers to show first unread line"
 msgstr "最初の未読行を表示するマーカー (line か char) をバッファ内で使用"
@@ -10589,29 +10603,3 @@ msgstr "タイプ"
 
 msgid "Constants"
 msgstr "定数"
-
-#~ msgid "%s%s: error with server from URL (\"%s\"), ignored"
-#~ msgstr "%s%s: URL (\"%s\") のサーバでエラー、無視しました"
-
-#~ msgid "%s%s: unable to create server \"%s\""
-#~ msgstr "%s%s: サーバ \"%s\" に接続できません"
-
-#~ msgid "%s%s: error creating new server \"%s\""
-#~ msgstr "%s%s: 新しいサーバ \"%s\" の作成中にエラー"
-
-#~ msgid ""
-#~ "hotlist sort type (group_time_asc (default), group_time_desc, "
-#~ "group_number_asc, group_number_desc, number_asc, number_desc)"
-#~ msgstr ""
-#~ "ホットリストのソートタイプ (group_time_asc (デフォルト)、group_time_desc、"
-#~ "group_number_asc、group_number_desc、number_asc、number_desc)"
-
-#~ msgid "store layout on exit (buffers, windows, or both)"
-#~ msgstr "終了時にレイアウトを保存します (バッファ、ウィンドウ、両方)"
-
-#~ msgid "No layout saved"
-#~ msgstr "レイアウトが保存されていません"
-
-#, fuzzy
-#~ msgid "%sgnutls: fingerprint does NOT match"
-#~ msgstr "%sgnutls: 証明書内のホストネームは \"%s\" とマッチしません"

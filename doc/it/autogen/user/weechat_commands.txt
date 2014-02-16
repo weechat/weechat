@@ -869,6 +869,7 @@ Esempi:
          scroll_up|scroll_down|scroll_top|scroll_bottom|scroll_beyond_end|scroll_previous_highlight|scroll_next_highlight|scroll_unread [-window <number>]
          swap [-window <number>] [up|down|left|right]
          zoom[-window <number>]
+         bare [<delay>]
 
          list: list opened windows (without argument, this list is displayed)
            -1: jump to previous window
@@ -899,6 +900,7 @@ scroll_next_highlight: scroll to next highlight
 scroll_unread: scroll to unread marker
          swap: swap buffers of two windows (with optional direction for target window)
          zoom: zoom on window
+         bare: toggle bare display (with optional delay in milliseconds for automatic return to standard display mode)
 
 For splith and splitv, pct is a percentage which represents size of new window, computed with current window as size reference. For example 25 means create a new window with size = current_size / 4
 

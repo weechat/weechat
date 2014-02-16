@@ -411,6 +411,9 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
     if (!gui_init_ok)
         return;
 
+    if (gui_window_bare_display)
+        return;
+
     if ((bar_window->x < 0) || (bar_window->y < 0))
         return;
 

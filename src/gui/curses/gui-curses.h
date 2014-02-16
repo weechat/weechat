@@ -99,7 +99,6 @@ extern int gui_key_read_cb (void *data, int fd);
 
 /* window functions */
 extern void gui_window_read_terminal_size ();
-extern void gui_window_redraw_buffer (struct t_gui_buffer *buffer);
 extern void gui_window_clear (WINDOW *window, int fg, int bg);
 extern void gui_window_clrtoeol (WINDOW *window);
 extern void gui_window_save_style (WINDOW *window);

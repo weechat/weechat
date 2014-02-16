@@ -1019,6 +1019,8 @@ Poziom powiadomień dla bufora może zostać ustawiony za pomocą komendy `/buff
 | key[alt-]key[>]    | Przełącz na następny bufor z listy odwiedzonych buforów | `/input jump_next_visited_buffer`
 | key[alt-/]         | Przełącz na ostatnio wyświetlony bufor (przed ostatnią zmianą bufora) | `/input jump_last_buffer_displayed`
 | key[alt-=]         | Włącz/wyłącz filtry | `/filter toggle`
+// TRANSLATION MISSING
+| key[alt-!]         | Toggle bare display on/off | `/window bare`
 |===
 
 [[key_bindings_search_context]]

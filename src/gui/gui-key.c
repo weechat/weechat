@@ -1278,7 +1278,8 @@ gui_key_pressed (const char *key_str)
         if (pos)
         {
             pos[0] = '\0';
-            gui_mouse_event_end ();
+            if (!gui_window_bare_display)
+                gui_mouse_event_end ();
             gui_mouse_event_init ();
         }
         return 0;

@@ -408,6 +408,16 @@
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"--"`)
 
+* [[option_weechat.look.bare_display_exit_on_input]] *weechat.look.bare_display_exit_on_input*
+** descrizione: `exit the bare display mode on any changes in input`
+** tipo: bool
+** valori: on, off (valore predefinito: `on`)
+
+* [[option_weechat.look.bare_display_time_format]] *weechat.look.bare_display_time_format*
+** descrizione: `time format in bare display mode (see man strftime for date/time specifiers)`
+** tipo: stringa
+** valori: qualsiasi stringa (valore predefinito: `"%H:%M"`)
+
 * [[option_weechat.look.buffer_auto_renumber]] *weechat.look.buffer_auto_renumber*
 ** descrizione: `automatically renumber buffers to have only consecutive numbers and start with number 1; if disabled, gaps between buffer numbers are allowed and the first buffer can have a number greater than 1`
 ** tipo: bool

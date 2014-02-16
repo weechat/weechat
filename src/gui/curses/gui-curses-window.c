@@ -53,6 +53,7 @@
 #include "../gui-layout.h"
 #include "../gui-line.h"
 #include "../gui-main.h"
+#include "../gui-mouse.h"
 #include "../gui-nicklist.h"
 #include "gui-curses.h"
 
@@ -1158,38 +1159,6 @@ gui_window_draw_separators (struct t_gui_window *window)
                           0, 0, window->win_height,
                           CONFIG_STRING(config_look_separator_vertical));
         wnoutrefresh (GUI_WINDOW_OBJECTS(window)->win_separator_vertic);
-    }
-}
-
-/*
- * Redraws a buffer.
- */
-
-void
-gui_window_redraw_buffer (struct t_gui_buffer *buffer)
-{
-    if (!gui_init_ok)
-        return;
-
-    gui_chat_draw (buffer, 1);
-}
-
-/*
- * Redraws all buffers.
- */
-
-void
-gui_window_redraw_all_buffers ()
-{
-    struct t_gui_buffer *ptr_buffer;
-
-    if (!gui_init_ok)
-        return;
-
-    for (ptr_buffer = gui_buffers; ptr_buffer;
-         ptr_buffer = ptr_buffer->next_buffer)
-    {
-        gui_window_redraw_buffer (ptr_buffer);
     }
 }
 
@@ -2377,6 +2346,77 @@ gui_window_refresh_screen (int full_refresh)
     }
 
     gui_window_refresh_windows ();
+}
+
+/*
+ * Callback for bare display timer.
+ */
+
+int
+gui_window_bare_display_timer_cb (void *data, int remaining_calls)
+{
+    /* make C compiler happy */
+    (void) data;
+
+    if (gui_window_bare_display)
+        gui_window_bare_display_toggle (NULL);
+
+    if (remaining_calls == 0)
+        gui_window_bare_display_timer = NULL;
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Toggles bare display.
+ */
+
+void
+gui_window_bare_display_toggle (const char *delay)
+{
+    long milliseconds;
+    char *error;
+
+    gui_window_bare_display ^= 1;
+
+    if (gui_window_bare_display)
+    {
+        /* temporarily disable ncurses */
+        endwin ();
+        if (gui_mouse_enabled)
+            gui_mouse_disable ();
+        if (delay)
+        {
+            error = NULL;
+            milliseconds = strtol (delay, &error, 10);
+            if (error && !error[0] && (milliseconds >= 0))
+            {
+                if (gui_window_bare_display_timer)
+                {
+                    unhook (gui_window_bare_display_timer);
+                    gui_window_bare_display_timer = NULL;
+                }
+                gui_window_bare_display_timer = hook_timer (
+                    NULL,
+                    milliseconds, 0, 1,
+                    &gui_window_bare_display_timer_cb, NULL);
+            }
+        }
+    }
+    else
+    {
+        /* come back to standard display (with ncurses) */
+        refresh ();
+        if (gui_window_bare_display_timer)
+        {
+            unhook (gui_window_bare_display_timer);
+            gui_window_bare_display_timer = NULL;
+        }
+        if (CONFIG_BOOLEAN(config_look_mouse))
+            gui_mouse_enable ();
+    }
+
+    gui_window_ask_refresh (2);
 }
 
 /*

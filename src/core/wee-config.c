@@ -155,6 +155,8 @@ struct t_config_option *config_look_prefix_buffer_align_more;
 struct t_config_option *config_look_prefix_buffer_align_more_after;
 struct t_config_option *config_look_prefix_same_nick;
 struct t_config_option *config_look_prefix_suffix;
+struct t_config_option *config_look_bare_display_exit_on_input;
+struct t_config_option *config_look_bare_display_time_format;
 struct t_config_option *config_look_read_marker;
 struct t_config_option *config_look_read_marker_always_show;
 struct t_config_option *config_look_read_marker_string;
@@ -2594,6 +2596,17 @@ config_weechat_init_options ()
         "prefix_suffix", "string",
         N_("string displayed after prefix"),
         NULL, 0, 0, "|", NULL, 0, NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
+    config_look_bare_display_exit_on_input = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "bare_display_exit_on_input", "boolean",
+        N_("exit the bare display mode on any changes in input"),
+        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_look_bare_display_time_format = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "bare_display_time_format", "string",
+        N_("time format in bare display mode (see man strftime for date/time "
+           "specifiers)"),
+        NULL, 0, 0, "%H:%M", NULL, 0, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
     config_look_read_marker = config_file_new_option (
         weechat_config_file, ptr_section,
         "read_marker", "integer",

@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-02-13 10:01+0100\n"
-"PO-Revision-Date: 2014-01-29 14:09+0100\n"
+"POT-Creation-Date: 2014-02-16 10:12+0100\n"
+"PO-Revision-Date: 2014-02-16 11:21+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: cs\n"
@@ -2307,7 +2307,7 @@ msgid ""
 "|| scroll_horiz [-window <number>] [+/-]<value>[%] || scroll_up|scroll_down|"
 "scroll_top|scroll_bottom|scroll_beyond_end|scroll_previous_highlight|"
 "scroll_next_highlight|scroll_unread [-window <number>] || swap [-window "
-"<number>] [up|down|left|right] || zoom[-window <number>]"
+"<number>] [up|down|left|right] || zoom[-window <number>] || bare [<delay>]"
 msgstr ""
 "list || -1|+1|b#|up|down|left|right || splith|splitv [<pct>] || resize "
 "[+/-]<pct> || balance || merge [all] || page_up|page_down || refresh || "
@@ -2352,6 +2352,8 @@ msgid ""
 "         swap: swap buffers of two windows (with optional direction for "
 "target window)\n"
 "         zoom: zoom on window\n"
+"         bare: toggle bare display (with optional delay in milliseconds for "
+"automatic return to standard display mode)\n"
 "\n"
 "For splith and splitv, pct is a percentage which represents size of new "
 "window, computed with current window as size reference. For example 25 means "
@@ -3064,6 +3066,16 @@ msgstr ""
 
 msgid "string displayed after prefix"
 msgstr "řetězec zobrazený za prefixem"
+
+msgid "exit the bare display mode on any changes in input"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"time format in bare display mode (see man strftime for date/time specifiers)"
+msgstr ""
+"časový formát pro \"time\" položku panelu (viz. man strftime pro specifikaci "
+"data/času)"
 
 msgid "use a marker (line or char) on buffers to show first unread line"
 msgstr ""
@@ -10101,50 +10113,3 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
-
-#~ msgid "%s%s: error with server from URL (\"%s\"), ignored"
-#~ msgstr "%s%s: chyba se serverem z URL (\"%s\"), ignorován"
-
-#~ msgid "%s%s: unable to create server \"%s\""
-#~ msgstr "%s%s: nemohu vytvořit server \"%s\""
-
-#~ msgid "%s%s: error creating new server \"%s\""
-#~ msgstr "%s%s: chyba při vytváření nového zprávu \"%s\""
-
-#~ msgid ""
-#~ "hotlist sort type (group_time_asc (default), group_time_desc, "
-#~ "group_number_asc, group_number_desc, number_asc, number_desc)"
-#~ msgstr ""
-#~ "druh řazení hotlistu (group_time_asc [skupina_čas_vzestupně] (výchozí), "
-#~ "group_time_desc [skupina_čas_sestupne], group_number_asc "
-#~ "[skupina_číslo_vzestupně], group_number_desc [skupina_číslo_sestupně], "
-#~ "number_asc [číslo_vzestupně], number_desc [číslo_sestupně] )"
-
-#~ msgid "%s: notification deleted"
-#~ msgstr "%s: notifikace smazána"
-
-#, fuzzy
-#~ msgid "%snotify: %s%s%s has quit"
-#~ msgstr "%snotifikace: %s%s%s odešel %s%s"
-
-#~ msgid "No layout saved"
-#~ msgstr "Nebylo uloženo žádné rozložení"
-
-#, fuzzy
-#~ msgid "%sgnutls: fingerprint does NOT match"
-#~ msgstr "%sguntls: jméno hosta v certifikátu NODPOVÍDÁ \"%s\""
-
-#~ msgid "%s%s: could not find address for \"%s\", falling back to local IP"
-#~ msgstr "%s%s: nemůžu najít adresu pro \"%s\", navracím se k lokální IP"
-
-#, fuzzy
-#~ msgid "%s%s: connected to %s (%ld.%ld.%ld.%ld)"
-#~ msgstr "%s: rozhovor zavřen s %s (%d.%d.%d.%d)"
-
-#, fuzzy
-#~ msgid ""
-#~ "%s: sending file to %s (%ld.%ld.%ld.%ld, %s.%s), name: %s (local "
-#~ "filename: %s), %llu bytes (protocol: %s)"
-#~ msgstr ""
-#~ "%s: posílám soubor k %s: %s (lokální jméno souboru: %s), %llu bytů "
-#~ "(protokol: %s)"

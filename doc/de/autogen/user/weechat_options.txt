@@ -408,6 +408,16 @@
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"--"`)
 
+* [[option_weechat.look.bare_display_exit_on_input]] *weechat.look.bare_display_exit_on_input*
+** Beschreibung: `exit the bare display mode on any changes in input`
+** Typ: boolesch
+** Werte: on, off (Standardwert: `on`)
+
+* [[option_weechat.look.bare_display_time_format]] *weechat.look.bare_display_time_format*
+** Beschreibung: `time format in bare display mode (see man strftime for date/time specifiers)`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `"%H:%M"`)
+
 * [[option_weechat.look.buffer_auto_renumber]] *weechat.look.buffer_auto_renumber*
 ** Beschreibung: `automatisches nummerieren von Buffern um ausschließlich eine aufeinander folgende Durchnummerierung zu besitzen, die bei 1 beginnt; ist diese Option deaktiviert sind Lücken zwischen den Buffern möglich und der erste Buffer muss nicht mit der Zahl 1 beginnen`
 ** Typ: boolesch

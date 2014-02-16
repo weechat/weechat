@@ -408,6 +408,16 @@
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"--"`)
 
+* [[option_weechat.look.bare_display_exit_on_input]] *weechat.look.bare_display_exit_on_input*
+** 説明: `exit the bare display mode on any changes in input`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `on`)
+
+* [[option_weechat.look.bare_display_time_format]] *weechat.look.bare_display_time_format*
+** 説明: `time format in bare display mode (see man strftime for date/time specifiers)`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"%H:%M"`)
+
 * [[option_weechat.look.buffer_auto_renumber]] *weechat.look.buffer_auto_renumber*
 ** 説明: `自動的に番号を割り当てる場合、1 から始まる連番になります; 無効にした場合、バッファ番号に欠番が許され、最初のバッファに1より大きなバッファ番号を割り当てることが可能になります`
 ** タイプ: ブール

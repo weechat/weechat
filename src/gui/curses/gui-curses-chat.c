@@ -24,6 +24,7 @@
 #endif
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include <time.h>
 
@@ -1844,6 +1845,144 @@ gui_chat_draw_free_buffer (struct t_gui_window *window, int clear_chat)
 }
 
 /*
+ * Gets line content in bare display.
+ */
+
+char *
+gui_chat_get_bare_line (struct t_gui_line *line)
+{
+    char *prefix, *message, str_time[256], *str_line;
+    const char *tag_prefix_nick;
+    struct tm *local_time;
+    int length;
+
+    prefix = NULL;
+    message = NULL;
+    str_line = NULL;
+
+    prefix = (line->data->prefix) ?
+        gui_color_decode (line->data->prefix, NULL) : strdup ("");
+    if (!prefix)
+        goto end;
+    message = (line->data->message) ?
+        gui_color_decode (line->data->message, NULL) : strdup ("");
+    if (!message)
+        goto end;
+
+    str_time[0] = '\0';
+    if ((line->data->date > 0)
+        && CONFIG_STRING(config_look_bare_display_time_format)
+        && CONFIG_STRING(config_look_bare_display_time_format)[0])
+    {
+        local_time = localtime (&line->data->date);
+        strftime (str_time, sizeof (str_time),
+                  CONFIG_STRING(config_look_bare_display_time_format),
+                  local_time);
+    }
+    tag_prefix_nick = gui_line_search_tag_starting_with (line, "prefix_nick_");
+
+    length = strlen (str_time) + 1 + 1 + strlen (prefix) + 1 + 1
+        + strlen (message) + 1;
+    str_line = malloc (length);
+    if (str_line)
+    {
+        snprintf (str_line, length,
+                  "%s%s%s%s%s%s%s",
+                  str_time,
+                  (str_time[0]) ? " " : "",
+                  (prefix[0] && tag_prefix_nick) ? "<" : "",
+                  prefix,
+                  (prefix[0] && tag_prefix_nick) ? ">" : "",
+                  (prefix[0]) ? " " : "",
+                  message);
+    }
+
+end:
+    if (prefix)
+        free (prefix);
+    if (message)
+        free (message);
+
+    return str_line;
+}
+
+/*
+ * Draws a buffer in bare display (not ncurses).
+ */
+
+void
+gui_chat_draw_bare (struct t_gui_window *window)
+{
+    struct t_gui_line *ptr_line;
+    char *line;
+    int y, length, num_lines;
+
+    /* in bare display, we display ONLY the current window/buffer */
+    if (window != gui_current_window)
+        return;
+
+    /* clear screen */
+    printf ("\033[2J");
+
+    /* display lines */
+    if ((window->buffer->type == GUI_BUFFER_TYPE_FREE)
+        || window->scroll->start_line)
+    {
+        /* display from top to bottom (starting with "start_line") */
+        y = 0;
+        ptr_line = (window->scroll->start_line) ?
+            window->scroll->start_line : gui_line_get_first_displayed (window->buffer);
+        while (ptr_line && (y < gui_term_lines))
+        {
+            line = gui_chat_get_bare_line (ptr_line);
+            if (!line)
+                break;
+            length = utf8_strlen_screen (line);
+            num_lines = length / gui_term_cols;
+            if (length % gui_term_cols != 0)
+                num_lines++;
+            if (y + num_lines <= gui_term_lines)
+                printf ("\033[%d;1H%s", y + 1, line);
+            free (line);
+            y += num_lines;
+            ptr_line = gui_line_get_next_displayed (ptr_line);
+        }
+    }
+    else
+    {
+        /* display from bottom to top (starting with last line of buffer) */
+        y = gui_term_lines;
+        ptr_line = gui_line_get_last_displayed (window->buffer);
+        while (ptr_line && (y >= 0))
+        {
+            line = gui_chat_get_bare_line (ptr_line);
+            if (!line)
+                break;
+            length = utf8_strlen_screen (line);
+            num_lines = length / gui_term_cols;
+            if (length % gui_term_cols != 0)
+                num_lines++;
+            y -= num_lines;
+            if (y >= 0)
+                printf ("\033[%d;1H%s", y + 1, line);
+            free (line);
+            ptr_line = gui_line_get_prev_displayed (ptr_line);
+        }
+    }
+
+    /*
+     * move cursor to top/left or bottom/right, according to type of buffer and
+     * whether we are scrolling or not
+     */
+    printf ("\033[%d;1H",
+            (window->buffer->type == GUI_BUFFER_TYPE_FREE) ?
+            ((window->scroll->start_line) ? gui_term_lines : 1) :
+            ((window->scroll->start_line) ? 1 : gui_term_lines));
+
+    fflush (stdout);
+}
+
+/*
  * Draws chat window for a buffer.
  */
 
@@ -1857,6 +1996,13 @@ gui_chat_draw (struct t_gui_buffer *buffer, int clear_chat)
 
     if (!gui_init_ok)
         return;
+
+    if (gui_window_bare_display)
+    {
+        if (gui_current_window && (gui_current_window->buffer == buffer))
+            gui_chat_draw_bare (gui_current_window);
+        goto end;
+    }
 
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
@@ -1914,5 +2060,6 @@ gui_chat_draw (struct t_gui_buffer *buffer, int clear_chat)
         }
     }
 
+end:
     buffer->chat_refresh_needed = 0;
 }

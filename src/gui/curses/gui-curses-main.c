@@ -59,10 +59,10 @@
 #include "gui-curses.h"
 
 
-int gui_reload_config = 0;
-int gui_signal_sigwinch_received = 0;
-int gui_term_cols = 0;
-int gui_term_lines = 0;
+int gui_reload_config = 0;             /* 1 if config must be reloaded      */
+int gui_signal_sigwinch_received = 0;  /* sigwinch signal (term resized)    */
+int gui_term_cols = 0;                 /* number of columns in terminal     */
+int gui_term_lines = 0;                /* number of lines in terminal       */
 
 
 /*
@@ -375,9 +375,7 @@ gui_main_refreshs ()
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
         if (ptr_bar->bar_refresh_needed)
-        {
             gui_bar_draw (ptr_bar);
-        }
     }
 
     /* refresh window if needed (if asked during refresh of bars) */
@@ -393,7 +391,7 @@ gui_main_refreshs ()
         if (ptr_win->refresh_needed)
         {
             gui_window_switch_to_buffer (ptr_win, ptr_win->buffer, 0);
-            gui_window_redraw_buffer (ptr_win->buffer);
+            gui_chat_draw (ptr_win->buffer, 1);
             ptr_win->refresh_needed = 0;
         }
     }
@@ -409,18 +407,21 @@ gui_main_refreshs ()
         }
     }
 
-    /* refresh bars if needed */
-    for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
+    if (!gui_window_bare_display)
     {
-        if (ptr_bar->bar_refresh_needed)
+        /* refresh bars if needed */
+        for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
         {
-            gui_bar_draw (ptr_bar);
+            if (ptr_bar->bar_refresh_needed)
+            {
+                gui_bar_draw (ptr_bar);
+            }
         }
-    }
 
-    /* move cursor (for cursor mode) */
-    if (gui_cursor_mode)
-        gui_window_move_cursor ();
+        /* move cursor (for cursor mode) */
+        if (gui_cursor_mode)
+            gui_window_move_cursor ();
+    }
 }
 
 /*
@@ -476,7 +477,7 @@ gui_main_loop ()
         }
 
         gui_main_refreshs ();
-        if (gui_window_refresh_needed)
+        if (gui_window_refresh_needed && !gui_window_bare_display)
             gui_main_refreshs ();
 
         if (gui_signal_sigwinch_received)

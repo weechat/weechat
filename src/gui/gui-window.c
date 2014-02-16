@@ -67,6 +67,10 @@ struct t_gui_window_tree *gui_windows_tree = NULL; /* windows tree          */
 int gui_window_cursor_x = 0;           /* cursor pos on screen              */
 int gui_window_cursor_y = 0;           /* cursor pos on screen              */
 
+int gui_window_bare_display = 0;       /* 1 for bare disp. (disable ncurses)*/
+struct t_hook *gui_window_bare_display_timer = NULL;
+                                       /* timer for bare display            */
+
 
 /*
  * Searches for a window by number.

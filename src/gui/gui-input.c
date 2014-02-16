@@ -123,6 +123,12 @@ gui_input_replace_input (struct t_gui_buffer *buffer, const char *new_input)
 void
 gui_input_paste_pending_signal ()
 {
+    if (CONFIG_BOOLEAN(config_look_bare_display_exit_on_input)
+        && gui_window_bare_display)
+    {
+        gui_window_bare_display_toggle (NULL);
+    }
+
     (void) hook_signal_send ("input_paste_pending",
                              WEECHAT_HOOK_SIGNAL_STRING, NULL);
 }
@@ -137,6 +143,12 @@ gui_input_text_changed_modifier_and_signal (struct t_gui_buffer *buffer,
                                             int stop_completion)
 {
     char str_buffer[128], *new_input;
+
+    if (CONFIG_BOOLEAN(config_look_bare_display_exit_on_input)
+        && gui_window_bare_display)
+    {
+        gui_window_bare_display_toggle (NULL);
+    }
 
     if (!gui_cursor_mode)
     {
@@ -178,6 +190,12 @@ gui_input_text_changed_modifier_and_signal (struct t_gui_buffer *buffer,
 void
 gui_input_text_cursor_moved_signal (struct t_gui_buffer *buffer)
 {
+    if (CONFIG_BOOLEAN(config_look_bare_display_exit_on_input)
+        && gui_window_bare_display)
+    {
+        gui_window_bare_display_toggle (NULL);
+    }
+
     (void) hook_signal_send ("input_text_cursor_moved",
                              WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }
@@ -189,6 +207,12 @@ gui_input_text_cursor_moved_signal (struct t_gui_buffer *buffer)
 void
 gui_input_search_signal (struct t_gui_buffer *buffer)
 {
+    if (CONFIG_BOOLEAN(config_look_bare_display_exit_on_input)
+        && gui_window_bare_display)
+    {
+        gui_window_bare_display_toggle (NULL);
+    }
+
     (void) hook_signal_send ("input_search",
                              WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }
@@ -384,6 +408,12 @@ gui_input_return (struct t_gui_buffer *buffer)
 {
     struct t_gui_window *window;
     char *command;
+
+    if (CONFIG_BOOLEAN(config_look_bare_display_exit_on_input)
+        && gui_window_bare_display)
+    {
+        gui_window_bare_display_toggle (NULL);
+    }
 
     window = gui_window_search_with_buffer (buffer);
     if (window && window->buffer->input

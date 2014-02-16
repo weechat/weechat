@@ -187,6 +187,8 @@ extern struct t_config_option *config_look_prefix_buffer_align_more;
 extern struct t_config_option *config_look_prefix_buffer_align_more_after;
 extern struct t_config_option *config_look_prefix_same_nick;
 extern struct t_config_option *config_look_prefix_suffix;
+extern struct t_config_option *config_look_bare_display_exit_on_input;
+extern struct t_config_option *config_look_bare_display_time_format;
 extern struct t_config_option *config_look_read_marker;
 extern struct t_config_option *config_look_read_marker_always_show;
 extern struct t_config_option *config_look_read_marker_string;

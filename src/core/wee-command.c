@@ -1365,6 +1365,9 @@ COMMAND_CALLBACK(cursor)
     (void) buffer;
     (void) argv_eol;
 
+    if (gui_window_bare_display)
+        return WEECHAT_RC_OK;
+
     if (argc == 1)
     {
         gui_cursor_mode_toggle ();
@@ -6364,6 +6367,13 @@ COMMAND_CALLBACK(window)
         return WEECHAT_RC_OK;
     }
 
+    /* bare display */
+    if (string_strcasecmp (argv[1], "bare") == 0)
+    {
+        gui_window_bare_display_toggle ((argc > 2) ? argv[2] : NULL);
+        return WEECHAT_RC_OK;
+    }
+
     /* jump to window by buffer number */
     if (string_strncasecmp (argv[1], "b", 1) == 0)
     {
@@ -7426,7 +7436,8 @@ command_init ()
            "scroll_beyond_end|scroll_previous_highlight|scroll_next_highlight|"
            "scroll_unread [-window <number>]"
            " || swap [-window <number>] [up|down|left|right]"
-           " || zoom[-window <number>]"),
+           " || zoom[-window <number>]"
+           " || bare [<delay>]"),
         N_("         list: list opened windows (without argument, this list is "
            "displayed)\n"
            "           -1: jump to previous window\n"
@@ -7463,6 +7474,8 @@ command_init ()
            "         swap: swap buffers of two windows (with optional direction "
            "for target window)\n"
            "         zoom: zoom on window\n"
+           "         bare: toggle bare display (with optional delay in "
+           "milliseconds for automatic return to standard display mode)\n"
            "\n"
            "For splith and splitv, pct is a percentage which represents size of "
            "new window, computed with current window as size reference. For "
@@ -7506,6 +7519,7 @@ command_init ()
         " || swap up|down|left|right|-window %(windows_numbers)"
         " || zoom -window %(windows_numbers)"
         " || merge all|-window %(windows_numbers)"
+        " || bare"
         " || %(windows_numbers)",
         &command_window, NULL);
 }

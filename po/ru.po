@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-02-13 10:01+0100\n"
-"PO-Revision-Date: 2014-01-06 10:17+0100\n"
+"POT-Creation-Date: 2014-02-16 10:12+0100\n"
+"PO-Revision-Date: 2014-02-16 11:21+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: ru\n"
@@ -2019,7 +2019,7 @@ msgid ""
 "|| scroll_horiz [-window <number>] [+/-]<value>[%] || scroll_up|scroll_down|"
 "scroll_top|scroll_bottom|scroll_beyond_end|scroll_previous_highlight|"
 "scroll_next_highlight|scroll_unread [-window <number>] || swap [-window "
-"<number>] [up|down|left|right] || zoom[-window <number>]"
+"<number>] [up|down|left|right] || zoom[-window <number>] || bare [<delay>]"
 msgstr ""
 "[list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv "
 "[pct] | resize pct | merge [all]]"
@@ -2061,6 +2061,8 @@ msgid ""
 "         swap: swap buffers of two windows (with optional direction for "
 "target window)\n"
 "         zoom: zoom on window\n"
+"         bare: toggle bare display (with optional delay in milliseconds for "
+"automatic return to standard display mode)\n"
 "\n"
 "For splith and splitv, pct is a percentage which represents size of new "
 "window, computed with current window as size reference. For example 25 means "
@@ -2706,6 +2708,14 @@ msgstr ""
 #, fuzzy
 msgid "string displayed after prefix"
 msgstr "строка, вставляемая после автодополнения ника"
+
+msgid "exit the bare display mode on any changes in input"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"time format in bare display mode (see man strftime for date/time specifiers)"
+msgstr "отображение маркера даты при смене дня"
 
 #, fuzzy
 msgid "use a marker (line or char) on buffers to show first unread line"
@@ -9544,51 +9554,3 @@ msgstr ""
 
 msgid "Constants"
 msgstr ""
-
-#, fuzzy
-#~ msgid "%s%s: error with server from URL (\"%s\"), ignored"
-#~ msgstr "%s некорректный синтаксис IRC сервра ('%s'), игнорируется\n"
-
-#, fuzzy
-#~ msgid "%s%s: unable to create server \"%s\""
-#~ msgstr "%s не могу создать сервер \"%s\"\n"
-
-#, fuzzy
-#~ msgid "%s%s: error creating new server \"%s\""
-#~ msgstr "%s недостаточно памяти для сообщения в строке информации\n"
-
-#~ msgid ""
-#~ "hotlist sort type (group_time_asc (default), group_time_desc, "
-#~ "group_number_asc, group_number_desc, number_asc, number_desc)"
-#~ msgstr ""
-#~ "тип сортировки хотлиста (group_time_asc (по-умолчанию), group_time_desc, "
-#~ "group_number_asc, group_number_desc, number_asc, number_desc)"
-
-#, fuzzy
-#~ msgid "%s: notification deleted"
-#~ msgstr "Игнорирования не заданы.\n"
-
-#, fuzzy
-#~ msgid "%snotify: %s%s%s has quit"
-#~ msgstr "%s%s%s выкинул %s%s%s с канала %s%s"
-
-#~ msgid "No layout saved"
-#~ msgstr "Нет сохранённых раскладок"
-
-#, fuzzy
-#~ msgid "%sgnutls: fingerprint does NOT match"
-#~ msgstr "Не могу записать лог-файл \"%s\"\n"
-
-#, fuzzy
-#~ msgid "%s%s: could not find address for \"%s\", falling back to local IP"
-#~ msgstr "%s не могу найти адрес для '%s'. Откатываюсь на локальный IP.\n"
-
-#, fuzzy
-#~ msgid "%s%s: connected to %s (%ld.%ld.%ld.%ld)"
-#~ msgstr "DCC-чат закончен с %s%s %s(%s%d.%d.%d.%d%s)\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "%s: sending file to %s (%ld.%ld.%ld.%ld, %s.%s), name: %s (local "
-#~ "filename: %s), %llu bytes (protocol: %s)"
-#~ msgstr "Отправляю файл %s%s%s: %s%s%s (файл: %s%s%s), %s%lu%s байт\n"

@@ -1011,6 +1011,8 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
 | key[alt-]key[>]    | バッファ訪問履歴で次のバッファに移動 | `/input jump_next_visited_buffer`
 | key[alt-/]         | 最後に表示したバッファに移動 (バッファ移動前に表示していたウィンドウ) | `/input jump_last_buffer_displayed`
 | key[alt-=]         | フィルタの有効無効を切り替え | `/filter toggle`
+// TRANSLATION MISSING
+| key[alt-!]         | Toggle bare display on/off | `/window bare`
 |===
 
 [[key_bindings_search_context]]
