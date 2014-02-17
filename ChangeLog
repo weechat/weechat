@@ -24,6 +24,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: display a warning in case of inconsistency between the options
   weechat.look.save_{config|layout}_on_exit
 * api: add integer return code for functions hook_{signal|hsignal}_send
+* guile: fix module used after unload of a script
 * lua: fix interpreter used after unload of a script
 * perl: fix context used after unload of a script
 * python: fix interpreter used after unload of a script

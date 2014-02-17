@@ -495,6 +495,9 @@ weechat_guile_unload (struct t_plugin_script *script)
     if (interpreter)
         weechat_guile_catch (scm_gc_unprotect_object, interpreter);
 
+    if (guile_current_script)
+        scm_set_current_module ((SCM)(guile_current_script->interpreter));
+
     (void) weechat_hook_signal_send ("guile_script_unloaded",
                                      WEECHAT_HOOK_SIGNAL_STRING, filename);
     if (filename)
