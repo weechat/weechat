@@ -795,7 +795,6 @@ weechat_python_unload (struct t_plugin_script *script)
 {
     int *rc;
     void *interpreter;
-    PyThreadState *old_interpreter;
     char *filename;
 
     if ((weechat_python_plugin->debug >= 2) || !python_quiet)
@@ -814,12 +813,13 @@ weechat_python_unload (struct t_plugin_script *script)
     }
 
     filename = strdup (script->filename);
-    old_interpreter = PyThreadState_Swap (NULL);
     interpreter = script->interpreter;
 
     if (python_current_script == script)
+    {
         python_current_script = (python_current_script->prev_script) ?
             python_current_script->prev_script : python_current_script->next_script;
+    }
 
     plugin_script_remove (weechat_python_plugin, &python_scripts, &last_python_script,
                           script);
@@ -830,8 +830,8 @@ weechat_python_unload (struct t_plugin_script *script)
         Py_EndInterpreter (interpreter);
     }
 
-    if (old_interpreter)
-        PyThreadState_Swap (old_interpreter);
+    if (python_current_script)
+        PyThreadState_Swap (python_current_script->interpreter);
 
     (void) weechat_hook_signal_send ("python_script_unloaded",
                                      WEECHAT_HOOK_SIGNAL_STRING, filename);
