@@ -565,8 +565,8 @@ Bez argumentów ta komenda wyświetli wszystkie załadowane wtyczki.
 [command]*`print`* wyświetl tekst w buforze::
 
 ----
-/print  [-buffer <numer>|<nazwa>] [-core] [-escape] [-date <data>] [-tags <tagi>] [-action|-error|-join|-network|-quit] <tekst>
-        -stdout|-stderr <tekst>
+/print  [-buffer <number>|<name>] [-core] [-escape] [-date <date>] [-tags <tags>] [-action|-error|-join|-network|-quit] [<text>]
+        -stdout|-stderr [<text>]
 
 -buffer: bufor, w którym zostanie wyświetlony tekst (domyślnie: obecny bufor)
   -core: alias dla bufora "-buffer core.weechat"

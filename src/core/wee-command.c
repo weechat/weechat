@@ -4198,9 +4198,6 @@ COMMAND_CALLBACK(print)
     /* make C compiler happy */
     (void) data;
 
-    if (argc < 2)
-        return WEECHAT_RC_OK;
-
     ptr_buffer = buffer;
     date = 0;
     tags = NULL;
@@ -4312,12 +4309,9 @@ COMMAND_CALLBACK(print)
             break;
     }
 
-    if (i >= argc)
-        return WEECHAT_RC_OK;
-
     if (to_stdout || to_stderr)
     {
-        text = string_convert_escaped_chars (argv_eol[i]);
+        text = string_convert_escaped_chars ((i < argc) ? argv_eol[i] : "");
         if (text)
         {
             fprintf ((to_stdout) ? stdout : stderr, "%s", text);
@@ -4326,7 +4320,7 @@ COMMAND_CALLBACK(print)
     }
     else
     {
-        text = strdup (argv_eol[i]);
+        text = strdup ((i < argc) ? argv_eol[i] : "");
         if (text)
         {
             pos = NULL;
@@ -7110,8 +7104,8 @@ command_init ()
         NULL, "print",
         N_("display text on a buffer"),
         N_("[-buffer <number>|<name>] [-core] [-escape] [-date <date>] "
-           "[-tags <tags>] [-action|-error|-join|-network|-quit] <text>"
-           " || -stdout|-stderr <text>"),
+           "[-tags <tags>] [-action|-error|-join|-network|-quit] [<text>]"
+           " || -stdout|-stderr [<text>]"),
         N_("-buffer: the buffer where text is displayed (default: current "
            "buffer)\n"
            "  -core: alias of \"-buffer core.weechat\"\n"

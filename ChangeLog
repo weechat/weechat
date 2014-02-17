@@ -11,8 +11,9 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 (file 'NEWS' in sources).
 
 
-== Version 0.4.4 (under dev!)
+== Version 0.4.4 (under dev)
 
+* core: allow empty arguments for command /print
 * core: add bare display mode (for easy text selection and click on URLs), new
   key: key[alt-!], new option "bare" in command /window, new options:
   weechat.look.bare_display_exit_on_input and

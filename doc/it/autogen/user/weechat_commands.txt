@@ -565,8 +565,8 @@ Senza argomento, questo comando elenca i plugin caricati.
 [command]*`print`* display text on a buffer::
 
 ----
-/print  [-buffer <number>|<name>] [-core] [-escape] [-date <date>] [-tags <tags>] [-action|-error|-join|-network|-quit] <text>
-        -stdout|-stderr <text>
+/print  [-buffer <number>|<name>] [-core] [-escape] [-date <date>] [-tags <tags>] [-action|-error|-join|-network|-quit] [<text>]
+        -stdout|-stderr [<text>]
 
 -buffer: the buffer where text is displayed (default: current buffer)
   -core: alias of "-buffer core.weechat"

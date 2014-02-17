@@ -565,8 +565,8 @@ Ohne Angabe eines Arguments werden alle installierten Erweiterungen angezeigt.
 [command]*`print`* gibt einen Text::
 
 ----
-/print  [-buffer <number>|<name>] [-core] [-escape] [-date <date>] [-tags <tags>] [-action|-error|-join|-network|-quit] <text>
-        -stdout|-stderr <text>
+/print  [-buffer <number>|<name>] [-core] [-escape] [-date <date>] [-tags <tags>] [-action|-error|-join|-network|-quit] [<text>]
+        -stdout|-stderr [<text>]
 
 -buffer: Buffer in welchem der Text ausgegeben werden soll (standardmäßig: aktueller Buffer)
   -core: Alias für "-buffer core.weechat"

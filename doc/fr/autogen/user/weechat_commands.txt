@@ -565,8 +565,8 @@ Sans paramètre, cette commande liste les extensions chargées.
 [command]*`print`* afficher du texte dans un tampon::
 
 ----
-/print  [-buffer <numéro>|<nom>] [-core] [-escape] [-date <date>] [-tags <étiquettes>] [-action|-error|-join|-network|-quit] <texte>
-        -stdout|-stderr <texte>
+/print  [-buffer <numéro>|<nom>] [-core] [-escape] [-date <date>] [-tags <étiquettes>] [-action|-error|-join|-network|-quit] [<texte>]
+        -stdout|-stderr [<texte>]
 
 -buffer: le tampon où est affiché le texte (par défaut: tampon courant)
   -core: alias de "-buffer core.weechat"

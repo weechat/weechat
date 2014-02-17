@@ -565,8 +565,8 @@ arguments: ロードするプラグインに与える引数
 [command]*`print`* バッファ内にテキストを表示::
 
 ----
-/print  [-buffer <number>|<name>] [-core] [-escape] [-date <date>] [-tags <tags>] [-action|-error|-join|-network|-quit] <text>
-        -stdout|-stderr <text>
+/print  [-buffer <number>|<name>] [-core] [-escape] [-date <date>] [-tags <tags>] [-action|-error|-join|-network|-quit] [<text>]
+        -stdout|-stderr [<text>]
 
 -buffer: テキストを表示するバッファ (デフォルト: 現在のバッファ)
   -core: "-buffer core.weechat" のエイリアス
