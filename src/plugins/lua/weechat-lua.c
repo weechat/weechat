@@ -515,6 +515,9 @@ weechat_lua_unload (struct t_plugin_script *script)
     if (interpreter)
         lua_close (interpreter);
 
+    if (lua_current_script)
+        lua_current_interpreter = lua_current_script->interpreter;
+
     (void) weechat_hook_signal_send ("lua_script_unloaded",
                                      WEECHAT_HOOK_SIGNAL_STRING, filename);
     if (filename)
