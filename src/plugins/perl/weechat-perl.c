@@ -538,6 +538,10 @@ weechat_perl_unload (struct t_plugin_script *script)
         perl_destruct (interpreter);
         perl_free (interpreter);
     }
+    if (perl_current_script)
+    {
+        PERL_SET_CONTEXT (perl_current_script->interpreter);
+    }
 #else
     if (interpreter)
         free (interpreter);
