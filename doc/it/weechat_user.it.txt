@@ -1512,6 +1512,90 @@ Esempio di grassetto con il colore di primo piano del terminale:
 ----
 
 // TRANSLATION MISSING
+[[secured_data]]
+=== Secured data
+
+[[secured_data_storage]]
+==== Storage
+
+WeeChat can encrypt passwords or private data using secured data, stored in file
+'sec.conf'.
+
+This configuration file is read before any other file, and the values stored
+inside can be used in various WeeChat or plugins/scripts options.
+
+You can set a passphrase to encrypt data in 'sec.conf'. This is not mandatory
+but highly recommended, otherwise data is stored as plain text in file.
+
+----
+/secure passphrase this is my passphrase
+----
+
+When a passphrase is set, WeeChat will ask you to enter it on startup (but not
+on `/upgrade`).
+
+You can change this behavior and use a file with the passphrase (see option
+<<option_sec.crypt.passphrase_file,sec.crypt.passphrase_file>>).
+
+[[secured_data_encryption]]
+===== Encryption
+
+The encryption of data is made in 3 steps:
+
+. Derive a key from the passphrase (with optional salt).
+. Compute hash of data to encrypt.
+. Encrypt the hash + data (output is: salt + encrypted hash/data).
+
+[NOTE]
+The cipher block mode is 'CFB'.
+
+The result is put as hexadecimal string in file 'sec.conf', for example:
+
+----
+[data]
+__passphrase__ = on
+freenode = "53B1C86FCDA28FC122A95B0456ABD79B5AB74654F21C3D099A6CCA8173239EEA59533A1D83011251F96778AC3F5166A394"
+----
+
+[[secured_data_decryption]]
+===== Decryption
+
+The decryption of data is made in 3 steps:
+
+. Derive a key using salt and passphrase.
+. Decrypt hash + data.
+. Check that decrypted hash == hash of data.
+
+[[secured_data_manage]]
+==== Manage secured data
+
+To add secured data, use `/secure set`, for example a password for 'freenode'
+IRC server:
+
+----
+/secure set freenode mypassword
+----
+
+For comfort, secured data can be displayed in a dedicated buffer (key[alt-v] on
+buffer to see values), just do:
+
+----
+/secure
+----
+
+Secured data can be used in some options that can contain private data like
+password, using this format: "${sec.data.xxx}" where "xxx" is the name of
+secured data (used with `/secure set xxx ...`). +
+For a complete list of supported options, see `/help secure`.
+
+To use the 'freenode' password, for example with
+<<irc_sasl_authentication,SASL authentication>>:
+
+----
+/set irc.server.freenode.sasl_password "${sec.data.freenode}"
+----
+
+// TRANSLATION MISSING
 [[options_and_commands]]
 === Options and commands
 

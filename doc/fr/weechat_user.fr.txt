@@ -1500,6 +1500,97 @@ Exemple de gras avec la couleur de texte du terminal :
 /set weechat.color.status_time *99999
 ----
 
+[[secured_data]]
+=== Données sécurisées
+
+[[secured_data_storage]]
+==== Stockage
+
+WeeChat peut chiffrer les mots de passe ou les données sensibles en utilisant
+des données sécurisées, stockées dans le fichier 'sec.conf'.
+
+Ce fichier de configuration est lu avant tout autre fichier, et les valeurs
+ici stockées peuvent être utilisées dans diverses options de WeeChat ou des
+extensions/scripts.
+
+Vous pouvez définir une phrase secrète pour chiffrer les données dans le fichier
+'sec.conf'. Ce n'est pas obligatoire, mais fortement recommandé, sinon les
+données sont stockées sous forme de texte en clair dans le fichier.
+
+----
+/secure passphrase ceci est ma phrase secrète
+----
+
+Lorsqu'une phrase secrète est définie, WeeChat vous demandera de la saisir lors
+du démarrage (mais pas sur `/upgrade`).
+
+Vous pouvez modifier ce comportement et utiliser un fichier avec la phrase
+secrète (voir l'option
+<<option_sec.crypt.passphrase_file,sec.crypt.passphrase_file>>).
+
+[[secured_data_encryption]]
+===== Chiffrement
+
+Le chiffrement des données se fait en 3 étapes :
+
+. Dériver une clé de la phrase secrète (avec du salage en option).
+. Calculer la somme de contrôle des données à chiffrer.
+. Chiffrer la seomme de contrôle + les données (la sortie est : sel + somme de
+  contrôle et données chiffrées).
+
+[NOTE]
+Le mode de chiffrement par bloc est 'CFB'.
+
+Le résultat est stocké sous forme d'une chaîne hexadécimale dans le fichier
+'sec.conf', par exemple :
+
+----
+[data]
+__passphrase__ = on
+freenode = "53B1C86FCDA28FC122A95B0456ABD79B5AB74654F21C3D099A6CCA8173239EEA59533A1D83011251F96778AC3F5166A394"
+----
+
+[[secured_data_decryption]]
+===== Déchiffrement
+
+Le déchiffrement des données se fait en 3 étapes :
+
+. Dériver une clé en utilisant le sel et la phrase secrète.
+. Déchiffrer la somme de contrôle et les données.
+. Vérifier que la somme de contrôle déchiffrée correspond à la somme de contrôle
+  des données.
+
+[[secured_data_manage]]
+==== Gérer les données sécurisées
+
+Pour ajouter une donnée sécurisée, utilisez la commande `/secure set`, par
+exemple un mot de passe pour le serveur IRC 'freenode' :
+
+----
+/secure set freenode motdepasse
+----
+
+Pour plus de confort, les données sécurisées peuvent être affichées dans un
+tampon dédié (touche key[alt-v] sur le tampon pour voir les valeurs), faites
+simplement :
+
+----
+/secure
+----
+
+Les données sécurisées peuvent être utilisées dans quelques options qui peuvent
+contenir des données sensibles comme un mot de passe, en utilisant ce format :
+"${sec.data.xxx}" où "xxx" est le nom de la donnée sécurisée (utilisé dans la
+commande `/secure set xxx ...`). +
+Pour une liste complète des options supportées, voir `/help secure`.
+
+Pour utiliser le mot de passe 'freenode', par exemple avec
+<<irc_sasl_authentication,l'authentification SASL>>:
+
+----
+/set irc.server.freenode.sasl_password "${sec.data.freenode}"
+----
+
 [[options_and_commands]]
 === Options et commandes
 
