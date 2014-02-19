@@ -280,6 +280,7 @@ Examples:
 /filter  list
          enable|disable|toggle [<name>]
          add <name> <buffer>[,<buffer>...] <tags> <regex>
+         rename <name> <new_name>
          del <name>|-all
 
    list: list all filters
@@ -288,6 +289,7 @@ disable: disable filters
  toggle: toggle filters
    name: filter name
     add: add a filter
+ rename: rename a filter
     del: delete a filter
    -all: delete all filters
  buffer: comma separated list of buffers where filter is active:

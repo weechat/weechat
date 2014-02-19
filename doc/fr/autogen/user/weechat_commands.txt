@@ -280,6 +280,7 @@ Exemples:
 /filter  list
          enable|disable|toggle [<nom>]
          add <nom> <tampon>[,<tampon>...] <étiquettes> <regex>
+         rename <nom> <nouveau_nom>
          del <nom>|-all
 
       list: lister tous les filtres
@@ -288,6 +289,7 @@ Exemples:
     toggle: activer/désactiver les filtres
        nom: nom de filtre
        add: ajouter un filtre
+    rename: renommer un filtre
        del: supprimer un filtre
       -all: supprimer tous les filtres
     tampon: liste des tampons, séparés par des virgules, où le filtre est actif :

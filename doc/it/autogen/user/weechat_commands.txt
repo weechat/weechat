@@ -278,9 +278,10 @@ Examples:
 
 ----
 /filter  list
-         enable|disable|toggle [<nome>]
-         add <nome> <buffer>[,<buffer>...] <tag> <regex>]
-         del <nome>|-all
+         enable|disable|toggle [<name>]
+         add <name> <buffer>[,<buffer>...] <tags> <regex>
+         rename <name> <new_name>
+         del <name>|-all
 
    list: list all filters
  enable: enable filters (filters are enabled by default)
@@ -288,6 +289,7 @@ disable: disable filters
  toggle: toggle filters
    name: filter name
     add: add a filter
+ rename: rename a filter
     del: delete a filter
    -all: delete all filters
  buffer: comma separated list of buffers where filter is active:

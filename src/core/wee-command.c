@@ -6755,6 +6755,7 @@ command_init ()
         N_("list"
            " || enable|disable|toggle [<name>]"
            " || add <name> <buffer>[,<buffer>...] <tags> <regex>"
+           " || rename <name> <new_name>"
            " || del <name>|-all"),
         N_("   list: list all filters\n"
            " enable: enable filters (filters are enabled by default)\n"
@@ -6762,6 +6763,7 @@ command_init ()
            " toggle: toggle filters\n"
            "   name: filter name\n"
            "    add: add a filter\n"
+           " rename: rename a filter\n"
            "    del: delete a filter\n"
            "   -all: delete all filters\n"
            " buffer: comma separated list of buffers where filter is active:\n"
@@ -6819,6 +6821,7 @@ command_init ()
         " || disable %(filters_names)"
         " || toggle %(filters_names)"
         " || add %(filters_names) %(buffers_plugins_names)|*"
+        " || rename %(filters_names) %(filters_names)"
         " || del %(filters_names)|-all",
         &command_filter, NULL);
     hook_command (
