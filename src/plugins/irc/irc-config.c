@@ -2842,7 +2842,7 @@ irc_config_init ()
         N_("double the nick in /whois command (if only one nick is given), to "
            "get idle time in answer; for example: \"/whois nick\" will send "
            "\"whois nick nick\""),
-        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
 
     /* msgbuffer */
     ptr_section = weechat_config_new_section (irc_config_file, "msgbuffer",
