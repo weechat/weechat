@@ -462,7 +462,8 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
 
     /* add a trigger */
     if ((weechat_strcasecmp (argv[1], "add") == 0)
-        || (weechat_strcasecmp (argv[1], "addoff") == 0))
+        || (weechat_strcasecmp (argv[1], "addoff") == 0)
+        || (weechat_strcasecmp (argv[1], "addreplace") == 0))
     {
         sargv = weechat_string_split_shell (argv_eol[2], &sargc);
         if (!sargv || (sargc < 2))
@@ -495,6 +496,24 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
                                  weechat_prefix ("error"), sargv[6]);
             goto end;
         }
+        ptr_trigger = trigger_search (sargv[0]);
+        if (ptr_trigger)
+        {
+            if (weechat_strcasecmp (argv[1], "addreplace") == 0)
+            {
+                if (ptr_trigger)
+                    trigger_free (ptr_trigger);
+            }
+            else
+            {
+                weechat_printf_tags (NULL, "no_trigger",
+                                     _("%sError: trigger \"%s\" already exists "
+                                       "(choose another name or use option "
+                                       "\"addreplace\" to overwrite it)"),
+                                     weechat_prefix ("error"), sargv[0]);
+                goto end;
+            }
+        }
         ptr_trigger = trigger_alloc (sargv[0]);
         if (!ptr_trigger)
         {
@@ -505,7 +524,7 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
         }
         ptr_trigger = trigger_new (
             sargv[0],                      /* name */
-            (weechat_strcasecmp (argv[1], "add") == 0) ? "on" : "off",
+            (weechat_strcasecmp (argv[1], "addoff") == 0) ? "off" : "on",
             sargv[1],                      /* hook */
             (sargc > 2) ? sargv[2] : "",   /* arguments */
             (sargc > 3) ? sargv[3] : "",   /* conditions */
@@ -586,7 +605,8 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
         }
         rc = trigger_hook_default_rc[weechat_config_integer (ptr_trigger->options[TRIGGER_OPTION_HOOK])][0];
         snprintf (input, sizeof (input),
-                  "//trigger add %s %s \"%s\" \"%s\" \"%s\" \"%s\"%s%s%s",
+                  "//trigger %s %s %s \"%s\" \"%s\" \"%s\" \"%s\"%s%s%s",
+                  (weechat_strcasecmp (argv[1], "recreate") == 0) ? "addreplace" : "add",
                   ptr_trigger->name,
                   weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_HOOK]),
                   weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_ARGUMENTS]),
@@ -596,12 +616,6 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
                   (rc) ? " \"" : "",
                   (rc) ? weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_RETURN_CODE]) : "",
                   (rc) ? "\"" : "");
-        if (weechat_strcasecmp (argv[1], "recreate") == 0)
-        {
-            trigger_free (ptr_trigger);
-            weechat_printf_tags (NULL, "no_trigger",
-                                 _("Trigger \"%s\" removed"), argv[2]);
-        }
         if (weechat_strcasecmp (argv[1], "output") == 0)
         {
             weechat_command (buffer, input);
@@ -913,8 +927,9 @@ trigger_command_init ()
         "trigger",
         N_("manage triggers, the Swiss Army knife for WeeChat"),
         N_("list|listfull|listdefault"
-           " || add|addoff <name> <hook> [\"<arguments>\" [\"<conditions>\" "
-           "[\"<regex>\" [\"<command>\" [\"<return_code>\"]]]]]"
+           " || add|addoff|addreplace <name> <hook> [\"<arguments>\" "
+           "[\"<conditions>\" [\"<regex>\" [\"<command>\" "
+           "[\"<return_code>\"]]]]]"
            " || addinput [<hook>]"
            " || input|output|recreate <name>"
            " || set <name> <option> <value>"
@@ -929,6 +944,8 @@ trigger_command_init ()
            "   listfull: list triggers with detailed info for each trigger\n"
            "listdefault: list default triggers\n"
            "        add: add a trigger\n"
+           "     addoff: add a trigger (disabled)\n"
+           " addreplace: add or replace an existing trigger\n"
            "       name: name of trigger\n"
            "       hook: signal, hsignal, modifier, print, command, command_run, "
            "timer, config, focus\n"
@@ -954,7 +971,8 @@ trigger_command_init ()
            "   addinput: set input with default arguments to create a trigger\n"
            "      input: set input with the command used to create the trigger\n"
            "     output: send the command to create the trigger on the buffer\n"
-           "   recreate: same as input, but the trigger is first deleted\n"
+           "   recreate: same as input, with option \"addreplace\" instead of "
+           "\"add\"\n"
            "        set: set an option in a trigger\n"
            "     option: name of option: name, hook, arguments, conditions, "
            "regex, command, return_code\n"
@@ -1000,7 +1018,7 @@ trigger_command_init ()
            "  silently save config each hour:\n"
            "    /trigger add cfgsave timer 3600000;0;0 \"\" \"\" \"/mute /save\""),
         "list|listfull|listdefault"
-        " || add|addoff %(trigger_names) %(trigger_hooks) "
+        " || add|addoff|addreplace %(trigger_names) %(trigger_hooks) "
         "%(trigger_hook_arguments) %(trigger_hook_conditions) "
         "%(trigger_hook_regex) %(trigger_hook_command) %(trigger_hook_rc)"
         " || addinput %(trigger_hooks)"
