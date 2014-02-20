@@ -36,7 +36,7 @@ char *alias_default_list[][2] =
   { "AME",     "allchan /me"          },
   { "AMSG",    "allchan /msg *"       },
   { "ANICK",   "allserv /nick"        },
-  { "BEEP",    "print -stderr \\a"    },
+  { "BEEP",    "print -beep"          },
   { "BYE",     "quit"                 },
   { "C",       "buffer clear"         },
   { "CL",      "buffer clear"         },

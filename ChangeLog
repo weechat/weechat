@@ -25,6 +25,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: display a warning in case of inconsistency between the options
   weechat.look.save_{config|layout}_on_exit
 * api: add integer return code for functions hook_{signal|hsignal}_send
+* alias: change default command for alias /beep to "/print -beep"
 * guile: fix module used after unload of a script
 * irc: fix parsing of nick in host when '!' is not found (bug #41640)
 * lua: fix interpreter used after unload of a script
