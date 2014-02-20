@@ -844,12 +844,14 @@ maska: tylko informacje pasujące do maski
 ----
 /whois  [<serwer>] [<nick>[,<nick>...]]
 
-serwer: nazwa serwera
-  nick: nick (może być maska)
+server: server name
+  nick: nick (may be a mask)
 
-Bez argumentu, komenda ta wykona whois na:
-- twoim własnym nicki, jeśli bufor to serwer/kanał
-- zdalnym nicku, jeśli bufor to rozmowa prywatna.
+Without argument, this command will do a whois on:
+- your own nick if buffer is a server/channel
+- remote nick if buffer is a private.
+
+If option irc.network.whois_double_nick is enabled, two nicks are sent (if only one nick is given), to get idle time in answer.
 ----
 
 [[command_irc_whowas]]

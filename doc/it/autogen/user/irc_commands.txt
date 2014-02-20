@@ -851,6 +851,8 @@ server: server name
 Without argument, this command will do a whois on:
 - your own nick if buffer is a server/channel
 - remote nick if buffer is a private.
+
+If option irc.network.whois_double_nick is enabled, two nicks are sent (if only one nick is given), to get idle time in answer.
 ----
 
 [[command_irc_whowas]]

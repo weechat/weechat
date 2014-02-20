@@ -411,7 +411,7 @@
 * [[option_irc.network.whois_double_nick]] *irc.network.whois_double_nick*
 ** opis: `podwaja nick w komendzie /whois (jeśli podano tylko jeden nick), w celu otrzymania w odpowiedzi czasu bezczynności; na przykład: "/whois nick" wyśle "whois nick nick"`
 ** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
+** wartości: on, off (domyślna wartość: `off`)
 
 * [[option_irc.server_default.addresses]] *irc.server_default.addresses*
 ** opis: `lista host/port lub adres IP/port dla serwera (oddzielone przecinkiem)`

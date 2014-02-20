@@ -845,12 +845,14 @@ mask: nur Information über betreffende Nicknamen abfragen
 ----
 /whois  [<server>] [<nick>[,<nick>...]]
 
-server: Name des Servers (interner Servername)
-  nick: Nick, welcher abgefragt werden soll (kann auch eine Maske sein)
+server: server name
+  nick: nick (may be a mask)
 
-Ohne Angabe von Argumenten, nutzt /whois folgende Nicks:
-- den eigenen Nick, falls es sich um einen Server/Channel Buffer handelt
-- den Nick des Gesprächspartners, falls es sich um einen privaten Buffer handelt.
+Without argument, this command will do a whois on:
+- your own nick if buffer is a server/channel
+- remote nick if buffer is a private.
+
+If option irc.network.whois_double_nick is enabled, two nicks are sent (if only one nick is given), to get idle time in answer.
 ----
 
 [[command_irc_whowas]]

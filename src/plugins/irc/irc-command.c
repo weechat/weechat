@@ -6535,7 +6535,10 @@ irc_command_init ()
            "\n"
            "Without argument, this command will do a whois on:\n"
            "- your own nick if buffer is a server/channel\n"
-           "- remote nick if buffer is a private."),
+           "- remote nick if buffer is a private.\n"
+           "\n"
+           "If option irc.network.whois_double_nick is enabled, two nicks are "
+           "sent (if only one nick is given), to get idle time in answer."),
         "%(nicks)", &irc_command_whois, NULL);
     weechat_hook_command (
         "whowas",

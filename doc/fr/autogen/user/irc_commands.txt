@@ -851,6 +851,8 @@ serveur: nom de serveur
 Sans paramètre, cette commande effectuera un whois sur :
 - votre propre pseudo si le tampon est un serveur/canal
 - le pseudo distant si le tampon est un privé.
+
+Si l'option irc.network.whois_double_nick est activée, deux pseudos sont envoyés (si un seul est donné), pour avoir le temps d'inactivité dans la réponse.
 ----
 
 [[command_irc_whowas]]

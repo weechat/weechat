@@ -845,12 +845,14 @@ mask: マスクにマッチする情報
 ----
 /whois  [<server>] [<nick>[,<nick>...]]
 
-server: サーバ名
-  nick: ニックネーム (マスクも可)
+server: server name
+  nick: nick (may be a mask)
 
-引数が無い場合、このコマンドは以下のユーザに対する whois を行います:
-- バッファがサーバ/チャンネルの場合、自分自身のニックネーム
-- バッファがプライベートの場合、相手のニックネーム。
+Without argument, this command will do a whois on:
+- your own nick if buffer is a server/channel
+- remote nick if buffer is a private.
+
+If option irc.network.whois_double_nick is enabled, two nicks are sent (if only one nick is given), to get idle time in answer.
 ----
 
 [[command_irc_whowas]]
