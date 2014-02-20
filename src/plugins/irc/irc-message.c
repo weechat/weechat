@@ -101,8 +101,12 @@ irc_message_parse (struct t_irc_server *server, const char *message,
     if (ptr_message[0] == ':')
     {
         /* read host/nick */
+        pos3 = strchr (ptr_message, '@');
         pos2 = strchr (ptr_message, '!');
         pos = strchr (ptr_message, ' ');
+        /* if the prefix doesn't contain a '!', split the nick at '@' */
+        if (!pos2 || (pos && pos2 > pos))
+            pos2 = pos3;
         if (pos2 && (!pos || pos > pos2))
         {
             if (nick)
