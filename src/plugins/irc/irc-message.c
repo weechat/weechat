@@ -127,6 +127,12 @@ irc_message_parse (struct t_irc_server *server, const char *message,
                 ptr_message++;
             }
         }
+        else
+        {
+            if (host)
+                *host = strdup (ptr_message + 1);
+            ptr_message += strlen (ptr_message);
+        }
     }
 
     /* now we have: ptr_message --> "PRIVMSG #channel :hello!" */
