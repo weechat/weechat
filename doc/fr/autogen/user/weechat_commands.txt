@@ -569,6 +569,7 @@ Sans paramètre, cette commande liste les extensions chargées.
 ----
 /print  [-buffer <numéro>|<nom>] [-core] [-escape] [-date <date>] [-tags <étiquettes>] [-action|-error|-join|-network|-quit] [<texte>]
         -stdout|-stderr [<texte>]
+        -beep
 
 -buffer: le tampon où est affiché le texte (par défaut: tampon courant)
   -core: alias de "-buffer core.weechat"
@@ -580,9 +581,10 @@ Sans paramètre, cette commande liste les extensions chargées.
            date/heure (ISO 8601): yyyy-mm-ddThh:mm:ss, exemple: 2014-01-19T04:32:55
            heure: hh:mm:ss (exemple: 04:32:55)
   -tags: liste d'étiquettes séparées par des virgules (voir /help filter pour une liste des étiquettes couramment utilisées)
-  texte: texte à afficher (le préfixe et le message doivent être séparés par \t)
+  texte: texte à afficher (le préfixe et le message doivent être séparés par "\t", si le texte commence par "-", ajoutez "\" avant)
 -stdout: afficher le texte sur stdout (les caractères échappés sont interprétés)
 -stderr: afficher le texte sur stderr (les caractères échappés sont interprétés)
+  -beep: alias de "-stderr \a"
 
 Les options -action ... -quit utilisent le préfixe défini dans les options "weechat.look.prefix_*".
 
@@ -601,7 +603,7 @@ Exemples:
   afficher un bonhomme de neige (U+2603):
     /print -escape \u2603
   envoyer une alerte (BEL):
-    /print -stderr \a
+    /print -beep
 ----
 
 [[command_weechat_proxy]]

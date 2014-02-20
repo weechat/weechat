@@ -569,39 +569,41 @@ Ohne Angabe eines Arguments werden alle installierten Erweiterungen angezeigt.
 ----
 /print  [-buffer <number>|<name>] [-core] [-escape] [-date <date>] [-tags <tags>] [-action|-error|-join|-network|-quit] [<text>]
         -stdout|-stderr [<text>]
+        -beep
 
--buffer: Buffer in welchem der Text ausgegeben werden soll (standardmäßig: aktueller Buffer)
-  -core: Alias für "-buffer core.weechat"
--escape: Escapesequenzen werden umgewandelt (zum Beispiel \a, \07, \x07)
-  -date: Datum der Nachricht, mögliche Formatierung:
-           -n: 'n' vor dem jetzigen Zeipunkt, in Sekunden
-           +n: 'n' in Zukunft, in Sekunden
-            n: 'n' Sekunden seit der Epoche (siehe man time)
-           date/time (ISO 8601): yyyy-mm-ddThh:mm:ss, Beispiel: 2014-01-19T04:32:55
-           time: hh:mm:ss (Beispiel: 04:32:55)
-  -tags: durch Kommata getrennte Liste von Tags (siehe /help filter für eine Liste von Tags die häufig genutzt werden)
-   text: Text der ausgegeben werden soll (Präfix und Nachricht muss durch \t getrennt werden)
--stdout: Text wird an stdout geschickt (Escapesequenzen werden umgewandelt)
--stderr:  Text wird an stderr geschickt (Escapesequenzen werden umgewandelt)
+-buffer: the buffer where text is displayed (default: current buffer)
+  -core: alias of "-buffer core.weechat"
+-escape: interpret escaped chars (for example \a, \07, \x07)
+  -date: message date, format can be:
+           -n: 'n' seconds before now
+           +n: 'n' seconds in the future
+            n: 'n' seconds since the Epoch (see man time)
+           date/time (ISO 8601): yyyy-mm-ddThh:mm:ss, example: 2014-01-19T04:32:55
+           time: hh:mm:ss (example: 04:32:55)
+  -tags: comma-separated list of tags (see /help filter for a list of tags most commonly used)
+   text: text to display (prefix and message must be separated by "\t", if text starts with "-", then add a "\" before)
+-stdout: display text on stdout (escaped chars are interpreted)
+-stderr: display text on stderr (escaped chars are interpreted)
+  -beep: alias of "-stderr \a"
 
-Die Option -action ... -quit nutzt den Präfix der in der Option "weechat.look.prefix_*" definiert ist.
+The options -action ... -quit use the prefix defined in options "weechat.look.prefix_*".
 
-Folgende Escapesequenzen werden unterstützt:
+Following escaped chars are supported:
   \" \\ \a \b \e \f \n \r \t \v \0ooo \xhh \uhhhh \Uhhhhhhhh
 
-Beispiele:
-  zeigt eine Erinnerung, mit Highlight, im Core-Buffer dar:
-    /print -core -tags notify_highlight Reminder: Milch kaufen
-  zeigt eine Fehlernachricht im Core-Buffer an:
-    /print -core -error irgend ein Fehler
-  zeigt eine Nachricht im Core-Buffer mit dem Präfix "abc" an:
-    /print -core abc\tmeine Nachricht
-  es wird eine Nachricht im Channel #weechat ausgegeben:
+Examples:
+  display a reminder on core buffer with a highlight:
+    /print -core -tags notify_highlight Reminder: buy milk
+  display an error on core buffer:
+    /print -core -error Some error here
+  display message on core buffer with prefix "abc":
+    /print -core abc\tThe message
+  display a message on channel #weechat:
     /print -buffer irc.freenode.#weechat Message on #weechat
-  gibt einen Schneemann aus (U+2603):
+  display a snowman (U+2603):
     /print -escape \u2603
-  verschickt Alarm (BEL):
-    /print -stderr \a
+  send alert (BEL):
+    /print -beep
 ----
 
 [[command_weechat_proxy]]

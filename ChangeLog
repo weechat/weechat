@@ -13,6 +13,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 0.4.4 (under dev)
 
+* core: add option "-beep" in command /print
 * core: allow empty arguments for command /print
 * core: add bare display mode (for easy text selection and click on URLs), new
   key: key[alt-!], new option "bare" in command /window, new options:

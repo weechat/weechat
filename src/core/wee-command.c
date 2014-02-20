@@ -4191,8 +4191,8 @@ COMMAND_CALLBACK(print)
     int i, escape, to_stdout, to_stderr;
     time_t date, date_now;
     struct tm tm_date;
-    char *tags, *pos, *text, *text2, *error;
-    const char *prefix;
+    char *tags, *pos, *text, *text2, *error, empty_string[1] = { '\0' };
+    const char *prefix, *ptr_text;
     long value;
 
     /* make C compiler happy */
@@ -4205,6 +4205,7 @@ COMMAND_CALLBACK(print)
     escape = 0;
     to_stdout = 0;
     to_stderr = 0;
+    ptr_text = NULL;
 
     for (i = 1; i < argc; i++)
     {
@@ -4305,13 +4306,31 @@ COMMAND_CALLBACK(print)
         {
             to_stderr = 1;
         }
+        else if (string_strcasecmp (argv[i], "-beep") == 0)
+        {
+            fprintf (stderr, "\a");
+            return WEECHAT_RC_OK;
+        }
+        else if (argv[i][0] == '-')
+        {
+            /* unknown argument starting with "-", exit */
+            return WEECHAT_RC_ERROR;
+        }
         else
             break;
     }
 
+    if (i < argc)
+    {
+        ptr_text = (strncmp (argv_eol[i], "\\-", 2) == 0) ?
+            argv_eol[i] + 1 : argv_eol[i];
+    }
+    else
+        ptr_text = empty_string;
+
     if (to_stdout || to_stderr)
     {
-        text = string_convert_escaped_chars ((i < argc) ? argv_eol[i] : "");
+        text = string_convert_escaped_chars (ptr_text);
         if (text)
         {
             fprintf ((to_stdout) ? stdout : stderr, "%s", text);
@@ -4320,7 +4339,7 @@ COMMAND_CALLBACK(print)
     }
     else
     {
-        text = strdup ((i < argc) ? argv_eol[i] : "");
+        text = strdup (ptr_text);
         if (text)
         {
             pos = NULL;
@@ -7108,7 +7127,8 @@ command_init ()
         N_("display text on a buffer"),
         N_("[-buffer <number>|<name>] [-core] [-escape] [-date <date>] "
            "[-tags <tags>] [-action|-error|-join|-network|-quit] [<text>]"
-           " || -stdout|-stderr [<text>]"),
+           " || -stdout|-stderr [<text>]"
+           " || -beep"),
         N_("-buffer: the buffer where text is displayed (default: current "
            "buffer)\n"
            "  -core: alias of \"-buffer core.weechat\"\n"
@@ -7123,9 +7143,10 @@ command_init ()
            "  -tags: comma-separated list of tags (see /help filter for a list "
            "of tags most commonly used)\n"
            "   text: text to display (prefix and message must be separated by "
-           "\\t)\n"
+           "\"\\t\", if text starts with \"-\", then add a \"\\\" before)\n"
            "-stdout: display text on stdout (escaped chars are interpreted)\n"
            "-stderr: display text on stderr (escaped chars are interpreted)\n"
+           "  -beep: alias of \"-stderr \\a\"\n"
            "\n"
            "The options -action ... -quit use the prefix defined in options "
            "\"weechat.look.prefix_*\".\n"
@@ -7146,12 +7167,13 @@ command_init ()
            "  display a snowman (U+2603):\n"
            "    /print -escape \\u2603\n"
            "  send alert (BEL):\n"
-           "    /print -stderr \\a"),
+           "    /print -beep"),
         "-buffer %(buffers_numbers)|%(buffers_plugins_names)"
         " || -core|-escape|-date|-tags|-action|-error|-join|-network|-quit"
         " || -prefix"
         " || -stdout"
-        " || -stderr",
+        " || -stderr"
+        " || -beep",
         &command_print, NULL);
     hook_command (
         NULL, "proxy",
