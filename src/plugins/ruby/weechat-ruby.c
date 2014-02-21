@@ -813,6 +813,8 @@ weechat_ruby_command_cb (void *data, struct t_gui_buffer *buffer,
         {
             weechat_ruby_unload_all ();
         }
+        else
+            return WEECHAT_RC_ERROR;
     }
     else
     {
@@ -862,12 +864,7 @@ weechat_ruby_command_cb (void *data, struct t_gui_buffer *buffer,
             ruby_quiet = 0;
         }
         else
-        {
-            weechat_printf (NULL,
-                            weechat_gettext ("%s%s: unknown option for "
-                                             "command \"%s\""),
-                            weechat_prefix ("error"), RUBY_PLUGIN_NAME, "ruby");
-        }
+            return WEECHAT_RC_ERROR;
     }
 
     return WEECHAT_RC_OK;
