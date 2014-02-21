@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-02-20 11:41+0100\n"
-"PO-Revision-Date: 2014-02-16 11:21+0100\n"
+"POT-Creation-Date: 2014-02-20 11:55+0100\n"
+"PO-Revision-Date: 2014-02-20 12:25+0100\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pt_BR\n"
@@ -212,10 +212,6 @@ msgstr "%sErro: janela não foi encontrada para o comando \"%s\""
 #, c-format
 msgid "%sError: unable to scroll bar \"%s\""
 msgstr "%sErro: não foi possível rolar a barra \"%s\""
-
-#, c-format
-msgid "%sError: unknown option for \"%s\" command"
-msgstr "%sErro: opção desconhecida para o comando \"%s\""
 
 #, fuzzy, c-format
 msgid "%sError: buffer number %d is out of range (it must be between 1 and %d)"
@@ -662,10 +658,6 @@ msgstr "Nenhum plugin encontrado"
 
 msgid "  (no plugin)"
 msgstr "  (nenhum plugin)"
-
-#, c-format
-msgid "%sError: wrong argument count for \"%s\" command"
-msgstr "%sErro: número de argumentos errado para o comando \"%s\""
 
 msgid "List of proxies:"
 msgstr "Lista de proxys:"
@@ -2505,10 +2497,6 @@ msgstr ""
 "  rola para o começo do dia atual:\n"
 "    /window scroll -d"
 
-#, c-format
-msgid "%sError: missing arguments for \"%s\" command"
-msgstr "%sErro: faltando argumentos para o comando \"%s\""
-
 msgid "names of buffers"
 msgstr "nomes dos buffers"
 
@@ -3734,7 +3722,7 @@ msgid "%sYou can not write text in this buffer"
 msgstr ""
 
 #, c-format
-msgid "%sError with command \"%s\" (try /help %s)"
+msgid "%sError with command \"%s\" (help on command: /help %s)"
 msgstr ""
 
 #, fuzzy, c-format
@@ -4215,6 +4203,12 @@ msgstr "comandos do weechat"
 msgid "%s%s: error, circular reference when calling alias \"%s\""
 msgstr "%s%s: erro, referência circular ao chamar atalho \"%s\""
 
+msgid "List of aliases:"
+msgstr "Lista de atalhos:"
+
+msgid "No alias defined"
+msgstr "Nenhum atalho definido"
+
 #, c-format
 msgid "%s%s: error creating alias \"%s\" => \"%s\""
 msgstr "%s%s: erro ao criar atalho \"%s\" => \"%s\""
@@ -4223,15 +4217,9 @@ msgstr "%s%s: erro ao criar atalho \"%s\" => \"%s\""
 msgid "Alias \"%s\" => \"%s\" created"
 msgstr "Atalho \"%s\" => \"%s\" criado"
 
-msgid "List of aliases:"
-msgstr "Lista de atalhos:"
-
 #, c-format
 msgid "No alias found matching \"%s\""
 msgstr "Nenhum atalho semelhante a \"%s\" foi encontrado"
-
-msgid "No alias defined"
-msgstr "Nenhum atalho definido"
 
 #, c-format
 msgid "%sAlias \"%s\" not found"
@@ -4690,10 +4678,6 @@ msgid "%s%s: unable to resolve local address of server socket: error %d %s"
 msgstr "%s%s: não foi possível setar opção \"nonblock\" para o socket"
 
 #, c-format
-msgid "%s%s: wrong arguments for \"%s\" command"
-msgstr ""
-
-#, c-format
 msgid "%s%s: not connected to server \"%s\"!"
 msgstr ""
 
@@ -4715,10 +4699,6 @@ msgstr ""
 
 #, c-format
 msgid "%s: no ignore in list"
-msgstr ""
-
-#, c-format
-msgid "%s%s: missing arguments for \"%s\" command"
 msgstr ""
 
 #, c-format
@@ -4747,10 +4727,6 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: wrong ignore number"
-msgstr ""
-
-#, c-format
-msgid "%s%s: unknown option for \"%s\" command"
 msgstr ""
 
 #, c-format
@@ -4912,10 +4888,6 @@ msgstr "Todos os filtros foram excluídos"
 msgid ""
 "%s: messages outqueue DELETED for all servers. Some messages from you or "
 "WeeChat may have been lost!"
-msgstr ""
-
-#, c-format
-msgid "%s%s: wrong argument count for \"%s\" command"
 msgstr ""
 
 #, c-format
@@ -5804,10 +5776,6 @@ msgid ""
 "  nick: nick to search\n"
 " count: number of replies to return (full search if negative number)\n"
 "target: reply should match this mask"
-msgstr ""
-
-#, c-format
-msgid "%s%s: too few arguments for \"%s\" command"
 msgstr ""
 
 #, c-format
@@ -8538,10 +8506,6 @@ msgstr "%s: script \"%s\" descarregado"
 #, c-format
 msgid "%s%s: script \"%s\" not loaded"
 msgstr "%s%s: script \"%s\" não carregado"
-
-#, c-format
-msgid "%s%s: unknown option for command \"%s\""
-msgstr "%s%s: opção desconhecida para comando \"%s\""
 
 #, fuzzy
 msgid "Support of lua scripts"

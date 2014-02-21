@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-02-20 11:41+0100\n"
-"PO-Revision-Date: 2014-02-20 10:39+0100\n"
+"POT-Creation-Date: 2014-02-20 11:55+0100\n"
+"PO-Revision-Date: 2014-02-20 12:25+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
 "Language: ja\n"
@@ -185,10 +185,6 @@ msgstr "%sエラー: \"%s\" コマンドに対するウィンドウが見つか�
 #, c-format
 msgid "%sError: unable to scroll bar \"%s\""
 msgstr "%sエラー: バー \"%s\" をスクロールできません"
-
-#, c-format
-msgid "%sError: unknown option for \"%s\" command"
-msgstr "%sエラー: \"%s\" コマンドに対する未定義のオプションです"
 
 #, c-format
 msgid "%sError: buffer number %d is out of range (it must be between 1 and %d)"
@@ -630,10 +626,6 @@ msgstr "プラグインが見つかりません"
 
 msgid "  (no plugin)"
 msgstr "  (プラグイン無し)"
-
-#, c-format
-msgid "%sError: wrong argument count for \"%s\" command"
-msgstr "%sエラー: \"%s\" コマンドに対する引数の個数が違います"
 
 msgid "List of proxies:"
 msgstr "プロキシリスト:"
@@ -2666,10 +2658,6 @@ msgstr ""
 "  ウィンドウ #2 を拡大:\n"
 "    /window zoom -window 2"
 
-#, c-format
-msgid "%sError: missing arguments for \"%s\" command"
-msgstr "%sエラー: \"%s\" コマンドに引数がありません"
-
 msgid "names of buffers"
 msgstr "バッファの名前"
 
@@ -3953,8 +3941,8 @@ msgstr "コマンド '%s' の終了、タイムアウトになりました (%.1f
 msgid "%sYou can not write text in this buffer"
 msgstr "%sこのバッファに書き込むことは出来ません"
 
-#, c-format
-msgid "%sError with command \"%s\" (try /help %s)"
+#, fuzzy, c-format
+msgid "%sError with command \"%s\" (help on command: /help %s)"
 msgstr "%sコマンド \"%s\" にエラーがあります (/help %s を参照)"
 
 #, c-format
@@ -4468,6 +4456,12 @@ msgstr "エイリアスコマンド"
 msgid "%s%s: error, circular reference when calling alias \"%s\""
 msgstr "%s%s: エラー、別名 \"%s\" の呼び出し中に循環参照を検知"
 
+msgid "List of aliases:"
+msgstr "別名のリスト:"
+
+msgid "No alias defined"
+msgstr "別名が定義されていません"
+
 #, c-format
 msgid "%s%s: error creating alias \"%s\" => \"%s\""
 msgstr "%s%s: 別名 \"%s\" => \"%s\" 作成中にエラー"
@@ -4476,15 +4470,9 @@ msgstr "%s%s: 別名 \"%s\" => \"%s\" 作成中にエラー"
 msgid "Alias \"%s\" => \"%s\" created"
 msgstr "別名 \"%s\" => \"%s\" を作成しました"
 
-msgid "List of aliases:"
-msgstr "別名のリスト:"
-
 #, c-format
 msgid "No alias found matching \"%s\""
 msgstr "\"%s\" にマッチする別名が見つかりません"
-
-msgid "No alias defined"
-msgstr "別名が定義されていません"
 
 #, c-format
 msgid "%sAlias \"%s\" not found"
@@ -4996,10 +4984,6 @@ msgid "%s%s: unable to resolve local address of server socket: error %d %s"
 msgstr "%s%s: サーバソケットのローカルアドレスを解決できません: エラー %d %s"
 
 #, c-format
-msgid "%s%s: wrong arguments for \"%s\" command"
-msgstr "%s%s: \"%s\" コマンドの引数が違います"
-
-#, c-format
 msgid "%s%s: not connected to server \"%s\"!"
 msgstr "%s%s: サーバ \"%s\" に接続されていません!"
 
@@ -5022,10 +5006,6 @@ msgstr "%s: 無視リスト:"
 #, c-format
 msgid "%s: no ignore in list"
 msgstr "%s: 無視リストにエントリがありません"
-
-#, c-format
-msgid "%s%s: missing arguments for \"%s\" command"
-msgstr "%s%s: \"%s\" コマンドに引数が足りません"
 
 #, c-format
 msgid "%s%s: ignore already exists"
@@ -5054,10 +5034,6 @@ msgstr "%s%s: 無視エントリが見つかりません"
 #, c-format
 msgid "%s%s: wrong ignore number"
 msgstr "%s%s: 無効な無視エントリ番号"
-
-#, c-format
-msgid "%s%s: unknown option for \"%s\" command"
-msgstr "%s%s: \"%s\" コマンドの不正なオプション"
 
 #, c-format
 msgid "%s%s: command \"%s\" must be executed on connected irc server"
@@ -5224,10 +5200,6 @@ msgid ""
 msgstr ""
 "%s: すぺてのサーバに関するキューイングされていないメッセージが削除されまし"
 "た。あなたと WeeChat からのメッセージが失われた可能性があります!"
-
-#, c-format
-msgid "%s%s: wrong argument count for \"%s\" command"
-msgstr "%s%s: \"%s\" コマンドの間違った引数"
 
 #, c-format
 msgid "%s%s: you are not on channel \"%s\""
@@ -6417,10 +6389,6 @@ msgstr ""
 "  nick: 検索するニックネーム\n"
 " count: リプライの個数 (負の値で完全な検索)\n"
 "target: マスクに一致するものだけを返す"
-
-#, c-format
-msgid "%s%s: too few arguments for \"%s\" command"
-msgstr "%s%s: \"%s\" コマンドの引数が不足"
 
 #, c-format
 msgid "%s%s: command \"%s\" must be executed on irc buffer (server or channel)"
@@ -9342,10 +9310,6 @@ msgstr "%s: スクリプト \"%s\" がアンロードされました"
 #, c-format
 msgid "%s%s: script \"%s\" not loaded"
 msgstr "%s%s: スクリプト \"%s\" はロードされていません"
-
-#, c-format
-msgid "%s%s: unknown option for command \"%s\""
-msgstr "%s%s: コマンド \"%s\" のオプションが未定義です"
 
 msgid "Support of lua scripts"
 msgstr "lua スクリプトサポート"

@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-02-20 11:41+0100\n"
-"PO-Revision-Date: 2014-02-16 11:21+0100\n"
+"POT-Creation-Date: 2014-02-20 11:55+0100\n"
+"PO-Revision-Date: 2014-02-20 12:25+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: hu\n"
@@ -189,10 +189,6 @@ msgstr "%s a(z) \"%s\". puffer nem található a(z) \"%s\" parancshoz\n"
 #, fuzzy, c-format
 msgid "%sError: unable to scroll bar \"%s\""
 msgstr "%s nem sikerült a modul opciókat elmenteni\n"
-
-#, fuzzy, c-format
-msgid "%sError: unknown option for \"%s\" command"
-msgstr "%s ismeretlen opció a \"%s\" parancsnak\n"
 
 #, c-format
 msgid "%sError: buffer number %d is out of range (it must be between 1 and %d)"
@@ -664,10 +660,6 @@ msgstr "Nem található modul.\n"
 #, fuzzy
 msgid "  (no plugin)"
 msgstr "  (nem található bővítőmodul)\n"
-
-#, fuzzy, c-format
-msgid "%sError: wrong argument count for \"%s\" command"
-msgstr "%s rossz argumentum szám a \"%s\" parancsnak\n"
 
 #, fuzzy
 msgid "List of proxies:"
@@ -2078,10 +2070,6 @@ msgstr ""
 "hogy az új ablak hány százaléka lesz a szülőablaknak. Például 25 esetén a "
 "szülőablak negyedét kapjuk."
 
-#, fuzzy, c-format
-msgid "%sError: missing arguments for \"%s\" command"
-msgstr "%s hiányzó argumentum a \"%s\" parancsnak\n"
-
 #, fuzzy
 msgid "names of buffers"
 msgstr "puffer betöltése sikertelen"
@@ -3255,7 +3243,7 @@ msgid "%sYou can not write text in this buffer"
 msgstr "%s az utolsó puffert nem lehet bezárni\n"
 
 #, fuzzy, c-format
-msgid "%sError with command \"%s\" (try /help %s)"
+msgid "%sError with command \"%s\" (help on command: /help %s)"
 msgstr "%s a \"%s\" aliasz vagy parancs nem található\n"
 
 #, fuzzy, c-format
@@ -3744,6 +3732,14 @@ msgstr "%s belső parancsok:\n"
 msgid "%s%s: error, circular reference when calling alias \"%s\""
 msgstr "%s körreferencia a \"/%s\" aliasz hívásakor\n"
 
+#, fuzzy
+msgid "List of aliases:"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy
+msgid "No alias defined"
+msgstr "Nincs aliasz definiálva.\n"
+
 #, fuzzy, c-format
 msgid "%s%s: error creating alias \"%s\" => \"%s\""
 msgstr "%s nincs elég memória az információs pult üzenethez\n"
@@ -3752,17 +3748,9 @@ msgstr "%s nincs elég memória az információs pult üzenethez\n"
 msgid "Alias \"%s\" => \"%s\" created"
 msgstr "A \"%s\" => \"%s\" aliasz elkészült\n"
 
-#, fuzzy
-msgid "List of aliases:"
-msgstr "Aliaszok listája:\n"
-
 #, fuzzy, c-format
 msgid "No alias found matching \"%s\""
 msgstr "Nem található '%s' szerver.\n"
-
-#, fuzzy
-msgid "No alias defined"
-msgstr "Nincs aliasz definiálva.\n"
 
 #, fuzzy, c-format
 msgid "%sAlias \"%s\" not found"
@@ -4220,10 +4208,6 @@ msgid "%s%s: unable to resolve local address of server socket: error %d %s"
 msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 
 #, fuzzy, c-format
-msgid "%s%s: wrong arguments for \"%s\" command"
-msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
-
-#, fuzzy, c-format
 msgid "%s%s: not connected to server \"%s\"!"
 msgstr "%s nincs csatlakozva a \"%s\" szerverhez!\n"
 
@@ -4246,10 +4230,6 @@ msgstr "a /who lista vége"
 #, fuzzy, c-format
 msgid "%s: no ignore in list"
 msgstr "%s nem található ilyen mellőzés\n"
-
-#, fuzzy, c-format
-msgid "%s%s: missing arguments for \"%s\" command"
-msgstr "%s hiányzó argumentum a \"%s\" parancsnak\n"
 
 #, fuzzy, c-format
 msgid "%s%s: ignore already exists"
@@ -4278,10 +4258,6 @@ msgstr "aláírás nem található"
 #, fuzzy, c-format
 msgid "%s%s: wrong ignore number"
 msgstr "%s helytelen pufferszám\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unknown option for \"%s\" command"
-msgstr "%s ismeretlen opció a \"%s\" parancsnak\n"
 
 #, fuzzy, c-format
 msgid "%s%s: command \"%s\" must be executed on connected irc server"
@@ -4451,10 +4427,6 @@ msgid ""
 msgstr ""
 "Minden szerver kimenő üzenetlistája TÖRÖLVE. Néhány üzenete vagy WeeChat "
 "üzenetek elveszhettek!\n"
-
-#, fuzzy, c-format
-msgid "%s%s: wrong argument count for \"%s\" command"
-msgstr "%s rossz argumentum szám a \"%s\" parancsnak\n"
 
 #, fuzzy, c-format
 msgid "%s%s: you are not on channel \"%s\""
@@ -5587,10 +5559,6 @@ msgstr ""
 "felhasználó: felhasználó akit keresünk\n"
 "   számláló: válaszok száma (negatív esetén az összes)\n"
 "        cél: a válasznak illeszkednie kell ehhez a feltételhez"
-
-#, fuzzy, c-format
-msgid "%s%s: too few arguments for \"%s\" command"
-msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
 
 #, fuzzy, c-format
 msgid "%s%s: command \"%s\" must be executed on irc buffer (server or channel)"
@@ -8317,10 +8285,6 @@ msgstr "A \"%s\" modul eltávolítva.\n"
 #, fuzzy, c-format
 msgid "%s%s: script \"%s\" not loaded"
 msgstr "%s a \"%s\" szerver nem található\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unknown option for command \"%s\""
-msgstr "%s ismeretlen opció a \"%s\" parancsnak\n"
 
 #, fuzzy
 msgid "Support of lua scripts"

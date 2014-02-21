@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-02-20 11:41+0100\n"
+"POT-Creation-Date: 2014-02-20 11:55+0100\n"
 "PO-Revision-Date: 2014-02-16 11:21+0100\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -165,10 +165,6 @@ msgstr ""
 
 #, c-format
 msgid "%sError: unable to scroll bar \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%sError: unknown option for \"%s\" command"
 msgstr ""
 
 #, c-format
@@ -593,10 +589,6 @@ msgstr "Eklenti bulunamadı"
 
 msgid "  (no plugin)"
 msgstr "  (eklenti yok)"
-
-#, c-format
-msgid "%sError: wrong argument count for \"%s\" command"
-msgstr ""
 
 msgid "List of proxies:"
 msgstr ""
@@ -1872,10 +1864,6 @@ msgid ""
 "    /window zoom -window 2"
 msgstr ""
 
-#, c-format
-msgid "%sError: missing arguments for \"%s\" command"
-msgstr ""
-
 msgid "names of buffers"
 msgstr ""
 
@@ -2908,7 +2896,7 @@ msgid "%sYou can not write text in this buffer"
 msgstr ""
 
 #, c-format
-msgid "%sError with command \"%s\" (try /help %s)"
+msgid "%sError with command \"%s\" (help on command: /help %s)"
 msgstr ""
 
 #, c-format
@@ -3367,6 +3355,12 @@ msgstr ""
 msgid "%s%s: error, circular reference when calling alias \"%s\""
 msgstr ""
 
+msgid "List of aliases:"
+msgstr ""
+
+msgid "No alias defined"
+msgstr ""
+
 #, c-format
 msgid "%s%s: error creating alias \"%s\" => \"%s\""
 msgstr ""
@@ -3375,14 +3369,8 @@ msgstr ""
 msgid "Alias \"%s\" => \"%s\" created"
 msgstr ""
 
-msgid "List of aliases:"
-msgstr ""
-
 #, c-format
 msgid "No alias found matching \"%s\""
-msgstr ""
-
-msgid "No alias defined"
 msgstr ""
 
 #, c-format
@@ -3811,10 +3799,6 @@ msgid "%s%s: unable to resolve local address of server socket: error %d %s"
 msgstr ""
 
 #, c-format
-msgid "%s%s: wrong arguments for \"%s\" command"
-msgstr ""
-
-#, c-format
 msgid "%s%s: not connected to server \"%s\"!"
 msgstr ""
 
@@ -3836,10 +3820,6 @@ msgstr ""
 
 #, c-format
 msgid "%s: no ignore in list"
-msgstr ""
-
-#, c-format
-msgid "%s%s: missing arguments for \"%s\" command"
 msgstr ""
 
 #, c-format
@@ -3868,10 +3848,6 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: wrong ignore number"
-msgstr ""
-
-#, c-format
-msgid "%s%s: unknown option for \"%s\" command"
 msgstr ""
 
 #, c-format
@@ -4031,10 +4007,6 @@ msgstr "%s: sunucu %s%s%s oluşturuldu"
 msgid ""
 "%s: messages outqueue DELETED for all servers. Some messages from you or "
 "WeeChat may have been lost!"
-msgstr ""
-
-#, c-format
-msgid "%s%s: wrong argument count for \"%s\" command"
 msgstr ""
 
 #, c-format
@@ -4952,10 +4924,6 @@ msgid ""
 "  nick: nick to search\n"
 " count: number of replies to return (full search if negative number)\n"
 "target: reply should match this mask"
-msgstr ""
-
-#, c-format
-msgid "%s%s: too few arguments for \"%s\" command"
 msgstr ""
 
 #, c-format
@@ -7453,10 +7421,6 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: script \"%s\" not loaded"
-msgstr ""
-
-#, c-format
-msgid "%s%s: unknown option for command \"%s\""
 msgstr ""
 
 msgid "Support of lua scripts"

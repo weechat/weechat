@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-02-20 11:41+0100\n"
-"PO-Revision-Date: 2014-02-16 11:21+0100\n"
+"POT-Creation-Date: 2014-02-20 11:55+0100\n"
+"PO-Revision-Date: 2014-02-20 12:25+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: ru\n"
@@ -193,10 +193,6 @@ msgstr "%s буфер номер \"%s\" не найден для команды 
 #, fuzzy, c-format
 msgid "%sError: unable to scroll bar \"%s\""
 msgstr "%s не могу сохранить конфигурационный файл pluginов\n"
-
-#, fuzzy, c-format
-msgid "%sError: unknown option for \"%s\" command"
-msgstr "%s неизвестный параметр для команды \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%sError: buffer number %d is out of range (it must be between 1 and %d)"
@@ -677,10 +673,6 @@ msgstr "Plugin не найден\n"
 #, fuzzy
 msgid "  (no plugin)"
 msgstr "  (нет pluginа)\n"
-
-#, fuzzy, c-format
-msgid "%sError: wrong argument count for \"%s\" command"
-msgstr "%s некорректное количество аргументов команды \"%s\"\n"
 
 #, fuzzy
 msgid "List of proxies:"
@@ -2101,10 +2093,6 @@ msgstr ""
 "Для splith и splitv <прцт> - процент размера создаваемого окна относительно "
 "текущего. Например, 25 означает создать окно в 4 раза меньше текущего"
 
-#, fuzzy, c-format
-msgid "%sError: missing arguments for \"%s\" command"
-msgstr "%s нет аргументов для \"%s\" команды\n"
-
 #, fuzzy
 msgid "names of buffers"
 msgstr "загрузка буфера не удалась"
@@ -3281,7 +3269,7 @@ msgid "%sYou can not write text in this buffer"
 msgstr "%s невозможно закрыть единственный буфер\n"
 
 #, fuzzy, c-format
-msgid "%sError with command \"%s\" (try /help %s)"
+msgid "%sError with command \"%s\" (help on command: /help %s)"
 msgstr "%s сокращение или команда \"%s\" не найдены\n"
 
 #, fuzzy, c-format
@@ -3778,6 +3766,14 @@ msgstr "Внутренние команды %s:\n"
 msgid "%s%s: error, circular reference when calling alias \"%s\""
 msgstr "%s рекурсия при вызове сокращения \"/%s\"\n"
 
+#, fuzzy
+msgid "List of aliases:"
+msgstr "Список сокращений:\n"
+
+#, fuzzy
+msgid "No alias defined"
+msgstr "Сокращения не заданы.\n"
+
 #, fuzzy, c-format
 msgid "%s%s: error creating alias \"%s\" => \"%s\""
 msgstr "%s недостаточно памяти для сообщения в строке информации\n"
@@ -3786,17 +3782,9 @@ msgstr "%s недостаточно памяти для сообщения в с
 msgid "Alias \"%s\" => \"%s\" created"
 msgstr "Сокращение \"%s\" => \"%s\" создано\n"
 
-#, fuzzy
-msgid "List of aliases:"
-msgstr "Список сокращений:\n"
-
 #, fuzzy, c-format
 msgid "No alias found matching \"%s\""
 msgstr "Серверы с '%s' не найдены.\n"
-
-#, fuzzy
-msgid "No alias defined"
-msgstr "Сокращения не заданы.\n"
 
 #, fuzzy, c-format
 msgid "%sAlias \"%s\" not found"
@@ -4253,10 +4241,6 @@ msgid "%s%s: unable to resolve local address of server socket: error %d %s"
 msgstr "%s DCC: не могу установить неблокирующий режим для сокета\n"
 
 #, fuzzy, c-format
-msgid "%s%s: wrong arguments for \"%s\" command"
-msgstr "%s некорректные аргументы команды \"%s\"\n"
-
-#, fuzzy, c-format
 msgid "%s%s: not connected to server \"%s\"!"
 msgstr "%s не подключен к серверу \"%s\"!\n"
 
@@ -4279,10 +4263,6 @@ msgstr "конец списка /who"
 #, fuzzy, c-format
 msgid "%s: no ignore in list"
 msgstr "%s игнорирования не найдены\n"
-
-#, fuzzy, c-format
-msgid "%s%s: missing arguments for \"%s\" command"
-msgstr "%s нет аргументов для \"%s\" команды\n"
 
 #, fuzzy, c-format
 msgid "%s%s: ignore already exists"
@@ -4311,10 +4291,6 @@ msgstr "подпись не найдена"
 #, fuzzy, c-format
 msgid "%s%s: wrong ignore number"
 msgstr "%s неправильный номер буфера\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unknown option for \"%s\" command"
-msgstr "%s неизвестный параметр для команды \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%s%s: command \"%s\" must be executed on connected irc server"
@@ -4487,10 +4463,6 @@ msgid ""
 msgstr ""
 "Исходящая очередь сообщений УДАЛЕНА на всех серверах. Некоторые исходящие "
 "сообщения могли быть утеряны!\n"
-
-#, fuzzy, c-format
-msgid "%s%s: wrong argument count for \"%s\" command"
-msgstr "%s некорректное количество аргументов команды \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%s%s: you are not on channel \"%s\""
@@ -5611,10 +5583,6 @@ msgstr ""
 "       ник: искомый ник\n"
 "количество: количество ответов (неограничено при отрицательном аргументе)\n"
 "      цель: фильтровать результаты по маске"
-
-#, fuzzy, c-format
-msgid "%s%s: too few arguments for \"%s\" command"
-msgstr "%s некорректные аргументы команды \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%s%s: command \"%s\" must be executed on irc buffer (server or channel)"
@@ -8342,10 +8310,6 @@ msgstr "Plugin \"%s\" выгружен.\n"
 #, fuzzy, c-format
 msgid "%s%s: script \"%s\" not loaded"
 msgstr "%s сервер \"%s\" не найден\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unknown option for command \"%s\""
-msgstr "%s неизвестный параметр для команды \"%s\"\n"
 
 #, fuzzy
 msgid "Support of lua scripts"

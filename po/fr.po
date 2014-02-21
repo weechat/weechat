@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-02-20 11:41+0100\n"
-"PO-Revision-Date: 2014-02-20 11:43+0100\n"
+"POT-Creation-Date: 2014-02-20 11:55+0100\n"
+"PO-Revision-Date: 2014-02-20 12:24+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -187,10 +187,6 @@ msgstr "%sErreur: fenêtre non trouvée pour la commande \"%s\""
 #, c-format
 msgid "%sError: unable to scroll bar \"%s\""
 msgstr "%sErreur: impossible de faire défiler la barre \"%s\""
-
-#, c-format
-msgid "%sError: unknown option for \"%s\" command"
-msgstr "%sErreur: option inconnue pour la commande \"%s\""
 
 #, c-format
 msgid "%sError: buffer number %d is out of range (it must be between 1 and %d)"
@@ -639,10 +635,6 @@ msgstr "Aucune extension trouvée"
 
 msgid "  (no plugin)"
 msgstr "  (aucune extension)"
-
-#, c-format
-msgid "%sError: wrong argument count for \"%s\" command"
-msgstr "%sErreur: nombre de paramètres erroné pour la commande \"%s\""
 
 msgid "List of proxies:"
 msgstr "Liste des proxies:"
@@ -2735,10 +2727,6 @@ msgstr ""
 "  zoom sur la fenêtre numéro 2:\n"
 "    /window zoom -window 2"
 
-#, c-format
-msgid "%sError: missing arguments for \"%s\" command"
-msgstr "%sErreur: paramètres manquants pour la commande \"%s\""
-
 msgid "names of buffers"
 msgstr "noms des tampons"
 
@@ -4118,8 +4106,8 @@ msgid "%sYou can not write text in this buffer"
 msgstr "%sVous ne pouvez pas écrire de texte dans ce tampon"
 
 #, c-format
-msgid "%sError with command \"%s\" (try /help %s)"
-msgstr "%sErreur avec la commande \"%s\" (essayez /help %s)"
+msgid "%sError with command \"%s\" (help on command: /help %s)"
+msgstr "%sErreur avec la commande \"%s\" (aide sur la commande: /help %s)"
 
 #, c-format
 msgid ""
@@ -4656,6 +4644,12 @@ msgstr "Commandes d'alias"
 msgid "%s%s: error, circular reference when calling alias \"%s\""
 msgstr "%s%s: erreur, référence circulaire lors de l'appel à l'alias \"%s\""
 
+msgid "List of aliases:"
+msgstr "Liste des alias:"
+
+msgid "No alias defined"
+msgstr "Aucun alias défini"
+
 #, c-format
 msgid "%s%s: error creating alias \"%s\" => \"%s\""
 msgstr "%s%s: erreur en création de l'alias \"%s\" => \"%s\""
@@ -4664,15 +4658,9 @@ msgstr "%s%s: erreur en création de l'alias \"%s\" => \"%s\""
 msgid "Alias \"%s\" => \"%s\" created"
 msgstr "Alias \"%s\" => \"%s\" créé"
 
-msgid "List of aliases:"
-msgstr "Liste des alias:"
-
 #, c-format
 msgid "No alias found matching \"%s\""
 msgstr "Pas d'alias trouvé correspondant à \"%s\""
-
-msgid "No alias defined"
-msgstr "Aucun alias défini"
 
 #, c-format
 msgid "%sAlias \"%s\" not found"
@@ -5208,10 +5196,6 @@ msgid "%s%s: unable to resolve local address of server socket: error %d %s"
 msgstr "%s%s: impossible de résoudre l'adresse locale du socket: erreur %d %s"
 
 #, c-format
-msgid "%s%s: wrong arguments for \"%s\" command"
-msgstr "%s%s: paramètres invalides pour la commande \"%s\""
-
-#, c-format
 msgid "%s%s: not connected to server \"%s\"!"
 msgstr "%s%s: non connecté au serveur \"%s\" !"
 
@@ -5234,10 +5218,6 @@ msgstr "%s: liste ignore:"
 #, c-format
 msgid "%s: no ignore in list"
 msgstr "%s: pas d'ignore dans la liste"
-
-#, c-format
-msgid "%s%s: missing arguments for \"%s\" command"
-msgstr "%s%s: paramètres manquants pour la commande \"%s\""
 
 #, c-format
 msgid "%s%s: ignore already exists"
@@ -5266,10 +5246,6 @@ msgstr "%s%s: ignore non trouvé"
 #, c-format
 msgid "%s%s: wrong ignore number"
 msgstr "%s%s: numéro d'ignore incorrect"
-
-#, c-format
-msgid "%s%s: unknown option for \"%s\" command"
-msgstr "%s%s: option inconnue pour la commande \"%s\""
 
 #, c-format
 msgid "%s%s: command \"%s\" must be executed on connected irc server"
@@ -5442,10 +5418,6 @@ msgid ""
 msgstr ""
 "%s: la file d'attente de messages sortants a été SUPPRIMÉE. Quelques "
 "messages de vous ou WeeChat risquent d'être perdus !"
-
-#, c-format
-msgid "%s%s: wrong argument count for \"%s\" command"
-msgstr "%s%s: nombre de paramètres erroné pour la commande \"%s\""
 
 #, c-format
 msgid "%s%s: you are not on channel \"%s\""
@@ -6660,10 +6632,6 @@ msgstr ""
 "nombre: nombre de réponses à retourner (recherche complète si nombre "
 "négatif)\n"
 " cible: la réponse doit correspondre à ce masque"
-
-#, c-format
-msgid "%s%s: too few arguments for \"%s\" command"
-msgstr "%s%s: pas assez de paramètres pour la commande \"%s\""
 
 #, c-format
 msgid "%s%s: command \"%s\" must be executed on irc buffer (server or channel)"
@@ -9692,10 +9660,6 @@ msgstr "%s: script \"%s\" déchargé"
 #, c-format
 msgid "%s%s: script \"%s\" not loaded"
 msgstr "%s%s: script \"%s\" non chargé"
-
-#, c-format
-msgid "%s%s: unknown option for command \"%s\""
-msgstr "%s%s: option inconnue pour la commande \"%s\""
 
 msgid "Support of lua scripts"
 msgstr "Support des scripts lua"
