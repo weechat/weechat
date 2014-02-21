@@ -494,7 +494,7 @@ charset_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
         snprintf (option_name, length, "%s.%s", plugin_name, name);
     }
 
-    if ((argc > 1) && (weechat_strcasecmp (argv[1], "reset") == 0))
+    if (weechat_strcasecmp (argv[1], "reset") == 0)
     {
         charset_set (charset_config_section_decode, "decode", option_name,
                      NULL);
