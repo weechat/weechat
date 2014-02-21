@@ -26,6 +26,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: add signals "key_combo_{default|search|cursor}"
 * core: display a warning in case of inconsistency between the options
   weechat.look.save_{config|layout}_on_exit
+* api: add functions "hashtable_dup", "string_replace_regex",
+  "string_split_shell", "string_convert_escaped_chars"
 * api: add integer return code for functions hook_{signal|hsignal}_send
 * alias: change default command for alias /beep to "/print -beep"
 * guile: fix module used after unload of a script
@@ -34,6 +36,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * lua: fix interpreter used after unload of a script
 * perl: fix context used after unload of a script
 * python: fix interpreter used after unload of a script
+* trigger: add trigger plugin: new command /trigger and file trigger.conf
 
 == Version 0.4.3 (2014-02-09)
 
