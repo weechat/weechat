@@ -959,6 +959,8 @@ weechat_python_command_cb (void *data, struct t_gui_buffer *buffer,
         {
             weechat_python_unload_all ();
         }
+        else
+            return WEECHAT_RC_ERROR;
     }
     else
     {
@@ -1008,13 +1010,7 @@ weechat_python_command_cb (void *data, struct t_gui_buffer *buffer,
             python_quiet = 0;
         }
         else
-        {
-            weechat_printf (NULL,
-                            weechat_gettext ("%s%s: unknown option for "
-                                             "command \"%s\""),
-                            weechat_prefix ("error"), PYTHON_PLUGIN_NAME,
-                            "python");
-        }
+            return WEECHAT_RC_ERROR;
     }
 
     return WEECHAT_RC_OK;
