@@ -121,13 +121,7 @@ rmodifier_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
     if (weechat_strcasecmp (argv[1], "add") == 0)
     {
         if (argc < 6)
-        {
-            weechat_printf (NULL,
-                            _("%sError: missing arguments for \"%s\" "
-                              "command"),
-                            weechat_prefix ("error"), "rmodifier");
-            return WEECHAT_RC_OK;
-        }
+            return WEECHAT_RC_ERROR;
         ptr_rmodifier = rmodifier_new (argv[2], argv[3], argv_eol[5], argv[4]);
         if (!ptr_rmodifier)
         {
@@ -158,13 +152,7 @@ rmodifier_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
     if (weechat_strcasecmp (argv[1], "del") == 0)
     {
         if (argc < 3)
-        {
-            weechat_printf (NULL,
-                            _("%sError: missing arguments for \"%s\" "
-                              "command"),
-                            weechat_prefix ("error"), "rmodifier");
-            return WEECHAT_RC_OK;
-        }
+            return WEECHAT_RC_ERROR;
         if (weechat_strcasecmp (argv[2], "-all") == 0)
         {
             count = rmodifier_count;
@@ -230,7 +218,7 @@ rmodifier_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
         return WEECHAT_RC_OK;
     }
 
-    return WEECHAT_RC_OK;
+    return WEECHAT_RC_ERROR;
 }
 
 /*
