@@ -101,7 +101,7 @@ plugin_list = {
     'tcl': '',
     'guile': '',
     'trigger': 'o',
-    'xfer': 'o',
+    'xfer': 'co',
 }
 
 # options to ignore

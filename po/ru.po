@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-02-20 11:55+0100\n"
+"POT-Creation-Date: 2014-02-21 16:28+0100\n"
 "PO-Revision-Date: 2014-02-20 12:25+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -32,6 +32,99 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Poedit-Bookmarks: -1,-1,608,-1,-1,-1,-1,-1,-1,-1\n"
+
+#, fuzzy
+msgid "any string"
+msgstr "Ожидание"
+
+#, fuzzy
+msgid "any char"
+msgstr "развернуть символы"
+
+#, fuzzy
+msgid "max chars"
+msgstr "управление буферами"
+
+#, fuzzy
+msgid ""
+"a WeeChat color name (default, black, (dark)gray, white, (light)red, "
+"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
+"terminal color number or an alias; attributes are allowed before color (for "
+"text color only, not background): \"*\" for bold, \"!\" for reverse, \"/\" "
+"for italic, \"_\" for underline"
+msgstr ""
+"название цвета WeeChat (default, black, (dark)gray, white, (light)red, "
+"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), код "
+"или алиас цвета терминала; перед цветом допустимы атрибуты (только для цвета "
+"текста, но не фона): \"*\" жирный, \"!\" инверсия, \"_\" подчёркивание"
+
+#, fuzzy
+msgid "description"
+msgstr "  . описание: %s\n"
+
+msgid "type"
+msgstr "тип"
+
+#, fuzzy
+msgid "values"
+msgstr "  . значения: "
+
+#, fuzzy
+msgid "default value"
+msgstr "  . значение по умолчанию: %d\n"
+
+#. TRANSLATORS: please do not translate "(null)"
+msgid "undefined value allowed (null)"
+msgstr "разрешено неопределённое значение (null)"
+
+#, fuzzy
+msgid "Plugin"
+msgstr "  (нет pluginа)\n"
+
+msgid "Name"
+msgstr ""
+
+#, fuzzy
+msgid "Description"
+msgstr "  . описание: %s\n"
+
+#, fuzzy
+msgid "Arguments"
+msgstr "адресат тип [аргументы]"
+
+msgid "Hashtable (input)"
+msgstr ""
+
+msgid "Hashtable (output)"
+msgstr ""
+
+#, fuzzy
+msgid "Pointer"
+msgstr "минута"
+
+#, fuzzy
+msgid "plugin"
+msgstr "  (нет pluginа)\n"
+
+#, fuzzy
+msgid "variables"
+msgstr "  . тип: целочисленный\n"
+
+msgid "update allowed"
+msgstr ""
+
+msgid "lists"
+msgstr ""
+
+#, fuzzy
+msgid "Option"
+msgstr "[команда]"
+
+msgid "Type"
+msgstr ""
+
+msgid "Constants"
+msgstr ""
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, fuzzy, c-format
@@ -333,23 +426,8 @@ msgstr "команда users отключена"
 msgid "Option \"%s%s%s\":"
 msgstr "Ники %s%s%s: %s["
 
-#, fuzzy
-msgid "description"
-msgstr "  . описание: %s\n"
-
-msgid "type"
-msgstr "тип"
-
 msgid "boolean"
 msgstr "boolean"
-
-#, fuzzy
-msgid "values"
-msgstr "  . значения: "
-
-#, fuzzy
-msgid "default value"
-msgstr "  . значение по умолчанию: %d\n"
 
 #, fuzzy
 msgid "(undefined)"
@@ -367,37 +445,8 @@ msgid "integer"
 msgstr "минута"
 
 #, fuzzy
-msgid "any string"
-msgstr "Ожидание"
-
-#, fuzzy
-msgid "any char"
-msgstr "развернуть символы"
-
-#, fuzzy
-msgid "max chars"
-msgstr "управление буферами"
-
-#, fuzzy
 msgid "color"
 msgstr "цвет чата"
-
-#, fuzzy
-msgid ""
-"a WeeChat color name (default, black, (dark)gray, white, (light)red, "
-"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
-"terminal color number or an alias; attributes are allowed before color (for "
-"text color only, not background): \"*\" for bold, \"!\" for reverse, \"/\" "
-"for italic, \"_\" for underline"
-msgstr ""
-"название цвета WeeChat (default, black, (dark)gray, white, (light)red, "
-"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), код "
-"или алиас цвета терминала; перед цветом допустимы атрибуты (только для цвета "
-"текста, но не фона): \"*\" жирный, \"!\" инверсия, \"_\" подчёркивание"
-
-#. TRANSLATORS: please do not translate "(null)"
-msgid "undefined value allowed (null)"
-msgstr "разрешено неопределённое значение (null)"
 
 #, fuzzy, c-format
 msgid "%sNo help available, \"%s\" is not a command or an option"
@@ -4148,6 +4197,57 @@ msgstr "%s ошибка чтения FIFO pipe, закрываю его\n"
 msgid "name of FIFO pipe"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "%s%s: script \"%s\" already registered (register ignored)"
+msgstr "%s сервер \"%s\" уже существует, не могу создать его!\n"
+
+#, c-format
+msgid ""
+"%s%s: unable to register script \"%s\" (another script already exists with "
+"this name)"
+msgstr ""
+
+#, c-format
+msgid "%s: registered script \"%s\", version %s (%s)"
+msgstr ""
+
+msgid "Support of scheme scripts (with Guile)"
+msgstr ""
+
+#, c-format
+msgid "%s: stdout/stderr: %s%s"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: function \"%s\" must return a valid value"
+msgstr "%s plugin \"%s\" не найден\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error in function \"%s\""
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s: loading script \"%s\""
+msgstr "сессия: загружаю сервер \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: function \"register\" not found (or failed) in file \"%s\""
+msgstr ""
+"%s функция \"weechat_plugin_init\" не найдена в plugin'е \"%s\", загрузка не "
+"удалась\n"
+
+#, fuzzy, c-format
+msgid "%s: unloading script \"%s\""
+msgstr "сессия: загружаю сервер \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s: script \"%s\" unloaded"
+msgstr "Plugin \"%s\" выгружен.\n"
+
+#, fuzzy, c-format
+msgid "%s%s: script \"%s\" not loaded"
+msgstr "%s сервер \"%s\" не найден\n"
+
 msgid "away"
 msgstr ""
 
@@ -7353,6 +7453,58 @@ msgid "logger pointer (optional)"
 msgstr "Сохраняю конфигурацию\n"
 
 #, fuzzy
+msgid "Support of lua scripts"
+msgstr "Список сокращений:\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: script \"%s\" not found"
+msgstr "%s сервер \"%s\" не найден\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr "%s не могу создать сервер\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to redirect stdout and stderr"
+msgstr "%s не могу создать сервер\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to load file \"%s\""
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to execute file \"%s\""
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy
+msgid "Support of perl scripts"
+msgstr "Список сокращений:\n"
+
+#, c-format
+msgid "%s%s: function \"%s\" must return one valid value (%d)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: function \"%s\" is internally misused"
+msgstr "%s plugin \"%s\" не найден\n"
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory in function \"%s\""
+msgstr "%s недостаточно памяти для нового DCC\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to parse file \"%s\""
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to initialize %s"
+msgstr "%s не могу инициализировать plugin \"%s\"\n"
+
+#, fuzzy
 msgid "WeeChat version"
 msgstr "слоган WeeChat"
 
@@ -7646,10 +7798,6 @@ msgstr "цвет ника"
 msgid "nick in nicklist"
 msgstr "%s игнорирования не найдены\n"
 
-#, fuzzy
-msgid "plugin"
-msgstr "  (нет pluginа)\n"
-
 msgid "proxy"
 msgstr ""
 
@@ -7728,6 +7876,158 @@ msgstr "Загруженные plugin'ы\n"
 
 msgid "description of plugin option"
 msgstr ""
+
+#, fuzzy
+msgid "list/load/unload scripts"
+msgstr "перечислить/загрузить/выгрузить plugin'ы"
+
+#, fuzzy
+msgid ""
+"list|listfull [<name>] || load [-q] <filename> || autoload || reload|unload "
+"[-q] [<name>]"
+msgstr ""
+"[list [имя]] | [listfull [имя]] | [load имя_файла] | [autoload] | [reload "
+"[имя]] | [unload [имя]]"
+
+#, fuzzy
+msgid ""
+"    list: list loaded scripts\n"
+"listfull: list loaded scripts (verbose)\n"
+"    load: load a script\n"
+"autoload: load all scripts in \"autoload\" directory\n"
+"  reload: reload a script (if no name given, unload all scripts, then load "
+"all scripts in \"autoload\" directory)\n"
+"  unload: unload a script (if no name given, unload all scripts)\n"
+"filename: script (file) to load\n"
+"    name: a script name (name used in call to \"register\" function)\n"
+"      -q: quiet mode: do not display messages\n"
+"\n"
+"Without argument, this command lists all loaded scripts."
+msgstr ""
+"    list: перечислить загруженные pluginы\n"
+"listfull: перечислить загруженные pluginы с дополнительной информацией\n"
+"    load: загрузить plugin\n"
+"autoload: автоматическая загрузка pluginов из системной или пользовательской "
+"директории\n"
+"  reload: перезагрузить plugin (если имя не задано выгружает все pluginы и "
+"загружает автоматически загружаемые)\n"
+"  unload: выгружает один или все pluginы\n"
+"\n"
+"Команда /plugin без аргументов перечисляет загруженные pluginы."
+
+#, fuzzy
+msgid "list of scripts"
+msgstr "Список сокращений:\n"
+
+msgid "script pointer (optional)"
+msgstr ""
+
+msgid "script name (can start or end with \"*\" as wildcard) (optional)"
+msgstr ""
+
+#, fuzzy
+msgid "callback of a script"
+msgstr "Список сокращений:\n"
+
+#, fuzzy, c-format
+msgid ""
+"%s%s: warning, invalid pointer (\"%s\") for function \"%s\" (script: %s)"
+msgstr "%s некорректные аргументы команды \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s: error loading script \"%s\" (spaces or empty name not allowed)"
+msgstr "%s не могу загрузить plugin \"%s\" (недостаточно памяти)\n"
+
+#, c-format
+msgid ""
+"%s%s: warning, license \"%s\" for script \"%s\" differs from plugin license "
+"(\"%s\")"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s: error loading script \"%s\" (not enough memory)"
+msgstr "%s не могу загрузить plugin \"%s\" (недостаточно памяти)\n"
+
+#, fuzzy, c-format
+msgid "%s: script removed: %s"
+msgstr "не на канале"
+
+#, fuzzy, c-format
+msgid "%s%s: failed to remove script: %s (%s)"
+msgstr "%s DCC: не могу создать pipe\n"
+
+#, fuzzy, c-format
+msgid "%s: script \"%s\" not found, nothing was removed"
+msgstr "%s сервер \"%s\" не найден\n"
+
+#, fuzzy, c-format
+msgid "%s%s: failed to move script %s to %s (%s)"
+msgstr "%s DCC: не могу создать pipe\n"
+
+#. TRANSLATORS: "%s" is language (for example "perl")
+#, fuzzy, c-format
+msgid "%s scripts loaded:"
+msgstr "FIFO pipe закрыт\n"
+
+#, fuzzy, c-format
+msgid "    file: %s"
+msgstr "       IRC(%s)\n"
+
+#, c-format
+msgid "    written by \"%s\", license: %s"
+msgstr ""
+
+#, fuzzy
+msgid "  (none)"
+msgstr "(неизвестен)"
+
+#, fuzzy, c-format
+msgid "%s: scripts unloaded"
+msgstr "Plugin \"%s\" выгружен.\n"
+
+#, fuzzy, c-format
+msgid ""
+"%s%s: unable to call function \"%s\", script is not initialized (script: %s)"
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
+msgstr "%s некорректные аргументы команды \"%s\"\n"
+
+#, fuzzy
+msgid "Support of python scripts"
+msgstr "Список сокращений:\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to initialize WeeChat module"
+msgstr "%s не могу инициализировать plugin \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to redirect stdout"
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to redirect stderr"
+msgstr "%s не могу создать сервер\n"
+
+msgid "path to python 2.x interpreter"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: unable to launch global interpreter"
+msgstr "%s не могу создать сервер\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to get current interpreter state"
+msgstr "%s не могу создать сервер\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to free interpreter"
+msgstr "%s не могу создать сервер\n"
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory for parsing message"
+msgstr "%s недостаточно памяти для полученного сообщения\n"
 
 msgid "Actions (letter+enter):"
 msgstr ""
@@ -8137,10 +8437,6 @@ msgid "%s%s: not enough memory for listening on new port"
 msgstr "%s недостаточно памяти для нового DCC\n"
 
 #, fuzzy, c-format
-msgid "%s%s: not enough memory for parsing message"
-msgstr "%s недостаточно памяти для полученного сообщения\n"
-
-#, fuzzy, c-format
 msgid "%s%s: failed to execute command \"%s\" for client %s%s%s"
 msgstr "Не могу записать лог-файл \"%s\"\n"
 
@@ -8260,257 +8556,6 @@ msgstr "Сохраняю конфигурацию\n"
 msgid "rmodifier name (can start or end with \"*\" as joker) (optional)"
 msgstr ""
 
-#, fuzzy, c-format
-msgid "%s%s: script \"%s\" already registered (register ignored)"
-msgstr "%s сервер \"%s\" уже существует, не могу создать его!\n"
-
-#, c-format
-msgid ""
-"%s%s: unable to register script \"%s\" (another script already exists with "
-"this name)"
-msgstr ""
-
-#, c-format
-msgid "%s: registered script \"%s\", version %s (%s)"
-msgstr ""
-
-msgid "Support of scheme scripts (with Guile)"
-msgstr ""
-
-#, c-format
-msgid "%s: stdout/stderr: %s%s"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%s%s: function \"%s\" must return a valid value"
-msgstr "%s plugin \"%s\" не найден\n"
-
-#, fuzzy, c-format
-msgid "%s%s: error in function \"%s\""
-msgstr "Не могу записать лог-файл \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s: loading script \"%s\""
-msgstr "сессия: загружаю сервер \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: function \"register\" not found (or failed) in file \"%s\""
-msgstr ""
-"%s функция \"weechat_plugin_init\" не найдена в plugin'е \"%s\", загрузка не "
-"удалась\n"
-
-#, fuzzy, c-format
-msgid "%s: unloading script \"%s\""
-msgstr "сессия: загружаю сервер \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s: script \"%s\" unloaded"
-msgstr "Plugin \"%s\" выгружен.\n"
-
-#, fuzzy, c-format
-msgid "%s%s: script \"%s\" not loaded"
-msgstr "%s сервер \"%s\" не найден\n"
-
-#, fuzzy
-msgid "Support of lua scripts"
-msgstr "Список сокращений:\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to run function \"%s\""
-msgstr "Не могу записать лог-файл \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: script \"%s\" not found"
-msgstr "%s сервер \"%s\" не найден\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to create new sub-interpreter"
-msgstr "%s не могу создать сервер\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to redirect stdout and stderr"
-msgstr "%s не могу создать сервер\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to load file \"%s\""
-msgstr "Не могу записать лог-файл \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to execute file \"%s\""
-msgstr "Не могу записать лог-файл \"%s\"\n"
-
-#, fuzzy
-msgid "Support of perl scripts"
-msgstr "Список сокращений:\n"
-
-#, c-format
-msgid "%s%s: function \"%s\" must return one valid value (%d)"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%s%s: function \"%s\" is internally misused"
-msgstr "%s plugin \"%s\" не найден\n"
-
-#, fuzzy, c-format
-msgid "%s%s: not enough memory in function \"%s\""
-msgstr "%s недостаточно памяти для нового DCC\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to parse file \"%s\""
-msgstr "Не могу записать лог-файл \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to initialize %s"
-msgstr "%s не могу инициализировать plugin \"%s\"\n"
-
-#, fuzzy
-msgid "list/load/unload scripts"
-msgstr "перечислить/загрузить/выгрузить plugin'ы"
-
-#, fuzzy
-msgid ""
-"list|listfull [<name>] || load [-q] <filename> || autoload || reload|unload "
-"[-q] [<name>]"
-msgstr ""
-"[list [имя]] | [listfull [имя]] | [load имя_файла] | [autoload] | [reload "
-"[имя]] | [unload [имя]]"
-
-#, fuzzy
-msgid ""
-"    list: list loaded scripts\n"
-"listfull: list loaded scripts (verbose)\n"
-"    load: load a script\n"
-"autoload: load all scripts in \"autoload\" directory\n"
-"  reload: reload a script (if no name given, unload all scripts, then load "
-"all scripts in \"autoload\" directory)\n"
-"  unload: unload a script (if no name given, unload all scripts)\n"
-"filename: script (file) to load\n"
-"    name: a script name (name used in call to \"register\" function)\n"
-"      -q: quiet mode: do not display messages\n"
-"\n"
-"Without argument, this command lists all loaded scripts."
-msgstr ""
-"    list: перечислить загруженные pluginы\n"
-"listfull: перечислить загруженные pluginы с дополнительной информацией\n"
-"    load: загрузить plugin\n"
-"autoload: автоматическая загрузка pluginов из системной или пользовательской "
-"директории\n"
-"  reload: перезагрузить plugin (если имя не задано выгружает все pluginы и "
-"загружает автоматически загружаемые)\n"
-"  unload: выгружает один или все pluginы\n"
-"\n"
-"Команда /plugin без аргументов перечисляет загруженные pluginы."
-
-#, fuzzy
-msgid "list of scripts"
-msgstr "Список сокращений:\n"
-
-msgid "script pointer (optional)"
-msgstr ""
-
-msgid "script name (can start or end with \"*\" as wildcard) (optional)"
-msgstr ""
-
-#, fuzzy
-msgid "callback of a script"
-msgstr "Список сокращений:\n"
-
-#, fuzzy, c-format
-msgid ""
-"%s%s: warning, invalid pointer (\"%s\") for function \"%s\" (script: %s)"
-msgstr "%s некорректные аргументы команды \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s: error loading script \"%s\" (spaces or empty name not allowed)"
-msgstr "%s не могу загрузить plugin \"%s\" (недостаточно памяти)\n"
-
-#, c-format
-msgid ""
-"%s%s: warning, license \"%s\" for script \"%s\" differs from plugin license "
-"(\"%s\")"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%s: error loading script \"%s\" (not enough memory)"
-msgstr "%s не могу загрузить plugin \"%s\" (недостаточно памяти)\n"
-
-#, fuzzy, c-format
-msgid "%s: script removed: %s"
-msgstr "не на канале"
-
-#, fuzzy, c-format
-msgid "%s%s: failed to remove script: %s (%s)"
-msgstr "%s DCC: не могу создать pipe\n"
-
-#, fuzzy, c-format
-msgid "%s: script \"%s\" not found, nothing was removed"
-msgstr "%s сервер \"%s\" не найден\n"
-
-#, fuzzy, c-format
-msgid "%s%s: failed to move script %s to %s (%s)"
-msgstr "%s DCC: не могу создать pipe\n"
-
-#. TRANSLATORS: "%s" is language (for example "perl")
-#, fuzzy, c-format
-msgid "%s scripts loaded:"
-msgstr "FIFO pipe закрыт\n"
-
-#, fuzzy, c-format
-msgid "    file: %s"
-msgstr "       IRC(%s)\n"
-
-#, c-format
-msgid "    written by \"%s\", license: %s"
-msgstr ""
-
-#, fuzzy
-msgid "  (none)"
-msgstr "(неизвестен)"
-
-#, fuzzy, c-format
-msgid "%s: scripts unloaded"
-msgstr "Plugin \"%s\" выгружен.\n"
-
-#, fuzzy, c-format
-msgid ""
-"%s%s: unable to call function \"%s\", script is not initialized (script: %s)"
-msgstr "Не могу записать лог-файл \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
-msgstr "%s некорректные аргументы команды \"%s\"\n"
-
-#, fuzzy
-msgid "Support of python scripts"
-msgstr "Список сокращений:\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to initialize WeeChat module"
-msgstr "%s не могу инициализировать plugin \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to redirect stdout"
-msgstr "Не могу записать лог-файл \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to redirect stderr"
-msgstr "%s не могу создать сервер\n"
-
-msgid "path to python 2.x interpreter"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%s%s: unable to launch global interpreter"
-msgstr "%s не могу создать сервер\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to get current interpreter state"
-msgstr "%s не могу создать сервер\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to free interpreter"
-msgstr "%s не могу создать сервер\n"
-
 #, fuzzy
 msgid "Support of ruby scripts"
 msgstr "Список сокращений:\n"
@@ -8538,9 +8583,6 @@ msgstr "Не могу записать лог-файл \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to eval WeeChat ruby internal code"
 msgstr "%s не могу создать сервер\n"
-
-msgid "Scripts manager"
-msgstr ""
 
 #, fuzzy
 msgid "Scripts loaded:"
@@ -8663,10 +8705,6 @@ msgstr ""
 msgid "License"
 msgstr ""
 
-#, fuzzy
-msgid "Description"
-msgstr "  . описание: %s\n"
-
 msgid "Tags"
 msgstr ""
 
@@ -8716,6 +8754,9 @@ msgid ""
 msgstr ""
 
 msgid "Scripts"
+msgstr ""
+
+msgid "Scripts manager"
 msgstr ""
 
 #, fuzzy
@@ -9050,6 +9091,353 @@ msgstr "%s не могу создать сервер\n"
 #, fuzzy, c-format
 msgid "%s%s: error occurred while parsing file \"%s\": %s"
 msgstr "Не могу записать лог-файл \"%s\"\n"
+
+msgid "Run actions on events triggered by WeeChat/plugins"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sError: unable to create hook for trigger \"%s\" (bad arguments)"
+msgstr "%s неизвестный параметр для команды \"%s\"\n"
+
+#, c-format
+msgid ""
+"%s%s: invalid value for option \"regex\", see /help trigger.trigger.%s.regex"
+msgstr ""
+
+msgid "Trigger monitor"
+msgstr ""
+
+#, fuzzy
+msgid "no variable"
+msgstr "  . тип: целочисленный\n"
+
+#, fuzzy
+msgid "empty variable"
+msgstr "  . тип: целочисленный\n"
+
+#, fuzzy, c-format
+msgid "%s  running command %s\"%s%s%s\"%s on buffer %s%s%s"
+msgstr "Внутренние команды %s:\n"
+
+#, fuzzy
+msgid "Triggers enabled"
+msgstr "команда users отключена"
+
+#, fuzzy
+msgid "Triggers disabled"
+msgstr "команда users отключена"
+
+#, fuzzy
+msgid "No trigger defined"
+msgstr "Сокращения не заданы.\n"
+
+#, fuzzy
+msgid "List of default triggers:"
+msgstr "Список сокращений:\n"
+
+#, fuzzy, c-format
+msgid "Trigger \"%s\" restarted"
+msgstr "Сокращение \"%s\" => \"%s\" создано\n"
+
+#, c-format
+msgid "%sError: a disabled trigger can not be restarted"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Trigger \"%s\" enabled"
+msgstr "команда users отключена"
+
+#, fuzzy, c-format
+msgid "Trigger \"%s\" disabled"
+msgstr "команда users отключена"
+
+#, c-format
+msgid "%sError: invalid name for trigger"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sError: trigger \"%s\" already exists"
+msgstr "%s игнорирование уже существует\n"
+
+#, fuzzy, c-format
+msgid "Trigger \"%s\" renamed to \"%s\""
+msgstr "команда users отключена"
+
+#, fuzzy, c-format
+msgid "%sError: failed to rename trigger \"%s\""
+msgstr "%s не могу сохранить конфигурационный файл pluginов\n"
+
+#, fuzzy
+msgid "List of triggers:"
+msgstr "Список сокращений:\n"
+
+#, fuzzy, c-format
+msgid "%sError: invalid hook type \"%s\""
+msgstr "%s не могу установить клавишу \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%sError: invalid return code \"%s\""
+msgstr "%s не могу отвязать клавишу \"%s\"\n"
+
+#, c-format
+msgid ""
+"%sError: trigger \"%s\" already exists (choose another name or use option "
+"\"addreplace\" to overwrite it)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sError: failed to create trigger \"%s\""
+msgstr "%s не могу сохранить конфигурационный файл pluginов\n"
+
+#, fuzzy, c-format
+msgid "Trigger \"%s\" created"
+msgstr "Сокращение \"%s\" => \"%s\" создано\n"
+
+#, fuzzy, c-format
+msgid "%sError: trigger \"%s\" not found"
+msgstr "%s plugin \"%s\" не найден\n"
+
+#, fuzzy, c-format
+msgid "Trigger \"%s\" updated"
+msgstr "Сокращение \"%s\" => \"%s\" создано\n"
+
+#, fuzzy, c-format
+msgid "%sError: trigger option \"%s\" not found"
+msgstr "%s plugin \"%s\" не найден\n"
+
+#, fuzzy, c-format
+msgid "Trigger \"%s\" copied to \"%s\""
+msgstr "команда users отключена"
+
+#, fuzzy, c-format
+msgid "%sError: failed to copy trigger \"%s\""
+msgstr "%s не могу сохранить конфигурационный файл pluginов\n"
+
+#, fuzzy, c-format
+msgid "%sTrigger \"%s\" not found"
+msgstr "%s сервер \"%s\" не найден\n"
+
+#, fuzzy, c-format
+msgid "%d triggers removed"
+msgstr "     обработчики таймера:\n"
+
+#, fuzzy, c-format
+msgid "Trigger \"%s\" removed"
+msgstr "Сокращение \"%s\" удалено\n"
+
+msgid "Trigger:"
+msgstr ""
+
+#, fuzzy
+msgid "Default triggers restored:"
+msgstr "Комбинации клавиш по умолчанию восстановлены\n"
+
+#, fuzzy, c-format
+msgid ""
+"%sError: \"-yes\" argument is required for restoring default triggers "
+"(security reason)"
+msgstr ""
+"%s аргумент \"-yes\" необходим для сброса ключей (в целях безопасности)\n"
+
+msgid "manage triggers, the Swiss Army knife for WeeChat"
+msgstr ""
+
+msgid ""
+"list|listfull|listdefault || add|addoff|addreplace <name> <hook> "
+"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>"
+"\" [\"<return_code>\"]]]]] || addinput [<hook>] || input|output|recreate "
+"<name> || set <name> <option> <value> || rename|copy <name> <new_name> || "
+"enable|disable|toggle [<name>|-all [<name>...]] || restart <name>|-all "
+"[<name>...] || show <name> || del <name>|-all [<name>...] || default -yes || "
+"monitor"
+msgstr ""
+
+msgid ""
+"       list: list triggers (without argument, this list is displayed)\n"
+"   listfull: list triggers with detailed info for each trigger\n"
+"listdefault: list default triggers\n"
+"        add: add a trigger\n"
+"     addoff: add a trigger (disabled)\n"
+" addreplace: add or replace an existing trigger\n"
+"       name: name of trigger\n"
+"       hook: signal, hsignal, modifier, print, command, command_run, timer, "
+"config, focus\n"
+"  arguments: arguments for the hook, depending on hook (separated by "
+"semicolons):\n"
+"             signal: name(s) of signal (required)\n"
+"             hsignal: name(s) of hsignal (required)\n"
+"             modifier: name(s) of modifier (required)\n"
+"             print: buffer, tags, message, strip colors\n"
+"             command: command (required), description, arguments, "
+"description of arguments, completion\n"
+"             command_run: command (required)\n"
+"             timer: interval (required), align on second (required), max "
+"calls (required)\n"
+"             config: name of option (required)\n"
+"             focus: name(s) of area (required)\n"
+" conditions: evaluated conditions for the trigger\n"
+"      regex: one or more regular expressions to replace strings in "
+"variables\n"
+"    command: command to execute (many commands can be separated by \";\"\n"
+"return_code: return code in callback (ok (default), ok_eat, error)\n"
+"   addinput: set input with default arguments to create a trigger\n"
+"      input: set input with the command used to create the trigger\n"
+"     output: send the command to create the trigger on the buffer\n"
+"   recreate: same as \"input\", with option \"addreplace\" instead of \"add"
+"\"\n"
+"        set: set an option in a trigger\n"
+"     option: name of option: name, hook, arguments, conditions, regex, "
+"command, return_code\n"
+"             (for help on option, you can type: /help trigger.trigger.<name>."
+"<option>)\n"
+"      value: new value for the option\n"
+"     rename: rename a trigger\n"
+"       copy: copy a trigger\n"
+"     enable: enable trigger(s) (without arguments: enable triggers "
+"globally)\n"
+"    disable: disable trigger(s) (without arguments: disable triggers "
+"globally)\n"
+"     toggle: toggle trigger(s) (without arguments: toggle triggers "
+"globally)\n"
+"    restart: restart trigger(s) (recreate the hooks)\n"
+"       show: show detailed info on a trigger (with some stats)\n"
+"        del: delete a trigger\n"
+"       -all: do action on all triggers\n"
+"    default: restore default triggers\n"
+"    monitor: open the trigger monitor buffer\n"
+"\n"
+"When a trigger callback is called, following actions are performed, in this "
+"order:\n"
+"  1. check conditions; if false, exit\n"
+"  2. replace text using POSIX extended regular expression(s) (if defined in "
+"trigger)\n"
+"  3. execute command(s) (if defined in trigger)\n"
+"  4. exit with a return code (except for modifiers and focus)\n"
+"\n"
+"Examples (you can also look at default triggers with /trigger listdefault):\n"
+"  add text attributes *bold*, _underline_ and /italic/ (only in user "
+"messages):\n"
+"    /trigger add effects modifier weechat_print \"${tg_tag_nick}\" \"=="
+"\\*(\\S+)\\*==*${color:bold}$1${color:-bold}*== ==_(\\S+)_==_${color:"
+"underline}$1${color:-underline}_== ==/(\\S+)/==/${color:italic}$1${color:-"
+"italic}/\"\n"
+"  hide nicklist bar on small terminals:\n"
+"    /trigger add resize_small signal signal_sigwinch \"${info:term_width} < "
+"100\" \"\" \"/bar hide nicklist\"\n"
+"    /trigger add resize_big signal signal_sigwinch \"${info:term_width} >= "
+"100\" \"\" \"/bar show nicklist\"\n"
+"  silently save config each hour:\n"
+"    /trigger add cfgsave timer 3600000;0;0 \"\" \"\" \"/mute /save\""
+msgstr ""
+
+msgid "triggers"
+msgstr ""
+
+#, fuzzy
+msgid "options for triggers"
+msgstr "Список сокращений:\n"
+
+#, fuzzy
+msgid "value of a trigger option"
+msgstr "Не найден параметр\n"
+
+#, fuzzy
+msgid "hooks for triggers"
+msgstr "Список сокращений:\n"
+
+#, fuzzy
+msgid "default arguments for a hook"
+msgstr "список ников на канале"
+
+#, fuzzy
+msgid "default conditions for a hook"
+msgstr "цвет текста информационной панели"
+
+msgid "default regular expression for a hook"
+msgstr ""
+
+#, fuzzy
+msgid "default command for a hook"
+msgstr "Внутренние команды %s:\n"
+
+#, fuzzy
+msgid "default return codes for hook callback"
+msgstr "цвет текста информационной панели"
+
+msgid ""
+"if disabled, the hooks are removed from trigger, so it is not called any more"
+msgstr ""
+
+#, fuzzy
+msgid "type of hook used"
+msgstr "Список сокращений:\n"
+
+msgid "arguments for the hook (depend on the hook type, see /help trigger)"
+msgstr ""
+
+msgid ""
+"condition(s) for running the command (it is checked in hook callback) (note: "
+"content is evaluated when trigger is run, see /help eval)"
+msgstr ""
+
+msgid ""
+"replace text with a POSIX extended regular expression (it is done only if "
+"conditions are OK, and before running the command) (note: content is "
+"evaluated on trigger creation, see /help eval); format is: \"/regex/replace/"
+"var\" (var is the hashtable variable to replace, it is optional), many regex "
+"can be separated by a space, for example: \"/regex1/replace1/var1 /regex2/"
+"replace2/var2\"; the separator \"/\" can be replaced by any char (one or "
+"more identical chars), except '\\' and parentheses; matching groups can be "
+"used in replace: $0 to $99, $+ for last match and $.cN to replace all chars "
+"of group N by char c"
+msgstr ""
+
+msgid ""
+"command(s) to run if conditions are OK, after regex replacements (many "
+"commands can be separated by semicolons)"
+msgstr ""
+
+msgid ""
+"return code for hook callback (see plugin API reference to know where ok_eat/"
+"error can be used efficiently)"
+msgstr ""
+
+msgid "enable trigger support"
+msgstr ""
+
+msgid "strip colors in hashtable values displayed on monitor buffer"
+msgstr ""
+
+#, fuzzy
+msgid "text color for command flag (in /trigger list)"
+msgstr "цвет действий в поле ввода"
+
+#, fuzzy
+msgid "text color for conditions flag (in /trigger list)"
+msgstr "цвет действий в поле ввода"
+
+#, fuzzy
+msgid "text color for regex flag (in /trigger list)"
+msgstr "цвет ника"
+
+#, fuzzy
+msgid "text color for return code flag (in /trigger list)"
+msgstr "цвет ника"
+
+#, fuzzy
+msgid "text color for regular expressions"
+msgstr "цвет стрелки захода на канал (префикс)"
+
+msgid "text color for replacement text (for regular expressions)"
+msgstr ""
+
+#, fuzzy
+msgid "text color for trigger name"
+msgstr "цвет названия сервера"
+
+#, fuzzy
+msgid "text color for disabled trigger name"
+msgstr "цвет названия сервера"
 
 msgid "  [A] Accept"
 msgstr "  [A] Принять"
@@ -9484,44 +9872,3 @@ msgstr "%s DCC: не могу установить неблокирующий р
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
-
-#, fuzzy
-msgid "Plugin"
-msgstr "  (нет pluginа)\n"
-
-msgid "Name"
-msgstr ""
-
-#, fuzzy
-msgid "Arguments"
-msgstr "адресат тип [аргументы]"
-
-msgid "Hashtable (input)"
-msgstr ""
-
-msgid "Hashtable (output)"
-msgstr ""
-
-#, fuzzy
-msgid "Pointer"
-msgstr "минута"
-
-#, fuzzy
-msgid "variables"
-msgstr "  . тип: целочисленный\n"
-
-msgid "update allowed"
-msgstr ""
-
-msgid "lists"
-msgstr ""
-
-#, fuzzy
-msgid "Option"
-msgstr "[команда]"
-
-msgid "Type"
-msgstr ""
-
-msgid "Constants"
-msgstr ""

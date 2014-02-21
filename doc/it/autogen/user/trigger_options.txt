@@ -1,0 +1,50 @@
+* [[option_trigger.color.flag_command]] *trigger.color.flag_command*
+** descrizione: `text color for command flag (in /trigger list)`
+** tipo: colore
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `lightgreen`)
+
+* [[option_trigger.color.flag_conditions]] *trigger.color.flag_conditions*
+** descrizione: `text color for conditions flag (in /trigger list)`
+** tipo: colore
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `yellow`)
+
+* [[option_trigger.color.flag_regex]] *trigger.color.flag_regex*
+** descrizione: `text color for regex flag (in /trigger list)`
+** tipo: colore
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `lightcyan`)
+
+* [[option_trigger.color.flag_return_code]] *trigger.color.flag_return_code*
+** descrizione: `text color for return code flag (in /trigger list)`
+** tipo: colore
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `lightmagenta`)
+
+* [[option_trigger.color.regex]] *trigger.color.regex*
+** descrizione: `text color for regular expressions`
+** tipo: colore
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `white`)
+
+* [[option_trigger.color.replace]] *trigger.color.replace*
+** descrizione: `text color for replacement text (for regular expressions)`
+** tipo: colore
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `cyan`)
+
+* [[option_trigger.color.trigger]] *trigger.color.trigger*
+** descrizione: `text color for trigger name`
+** tipo: colore
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `green`)
+
+* [[option_trigger.color.trigger_disabled]] *trigger.color.trigger_disabled*
+** descrizione: `text color for disabled trigger name`
+** tipo: colore
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `red`)
+
+* [[option_trigger.look.enabled]] *trigger.look.enabled*
+** descrizione: `enable trigger support`
+** tipo: bool
+** valori: on, off (valore predefinito: `on`)
+
+* [[option_trigger.look.monitor_strip_colors]] *trigger.look.monitor_strip_colors*
+** descrizione: `strip colors in hashtable values displayed on monitor buffer`
+** tipo: bool
+** valori: on, off (valore predefinito: `off`)
+

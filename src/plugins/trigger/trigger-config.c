@@ -308,7 +308,7 @@ trigger_config_create_trigger_option (const char *trigger_name, int index_option
                 trigger_config_file, trigger_config_section_trigger,
                 option_name, "integer",
                 N_("return code for hook callback (see plugin API reference to "
-                   "know where ok_eat or error can be used efficiently)"),
+                   "know where ok_eat/error can be used efficiently)"),
                 "ok|ok_eat|error", 0, 0, value, NULL, 0,
                 NULL, NULL, NULL, NULL, NULL, NULL);
             break;

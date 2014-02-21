@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-02-20 11:55+0100\n"
+"POT-Creation-Date: 2014-02-21 16:28+0100\n"
 "PO-Revision-Date: 2014-02-20 12:25+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -29,6 +29,85 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "any string"
+msgstr "未制約文字列"
+
+msgid "any char"
+msgstr "未制約文字"
+
+msgid "max chars"
+msgstr "最大文字数"
+
+msgid ""
+"a WeeChat color name (default, black, (dark)gray, white, (light)red, "
+"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
+"terminal color number or an alias; attributes are allowed before color (for "
+"text color only, not background): \"*\" for bold, \"!\" for reverse, \"/\" "
+"for italic, \"_\" for underline"
+msgstr ""
+"WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、"
+"brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号ま"
+"たはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は"
+"出来ません): 太字は \"*\"、反転は \"!\"、イタリックは \"/\"、下線は \"_\""
+
+msgid "description"
+msgstr "説明"
+
+msgid "type"
+msgstr "タイプ"
+
+msgid "values"
+msgstr "値"
+
+msgid "default value"
+msgstr "デフォルト値"
+
+#. TRANSLATORS: please do not translate "(null)"
+msgid "undefined value allowed (null)"
+msgstr "(null) は設定できません"
+
+msgid "Plugin"
+msgstr "プラグイン"
+
+msgid "Name"
+msgstr "名前"
+
+msgid "Description"
+msgstr "説明"
+
+msgid "Arguments"
+msgstr "引数"
+
+msgid "Hashtable (input)"
+msgstr "ハッシュテーブル (入力)"
+
+msgid "Hashtable (output)"
+msgstr "ハッシュテーブル (出力)"
+
+msgid "Pointer"
+msgstr "ポインタ"
+
+msgid "plugin"
+msgstr "プラグイン"
+
+msgid "variables"
+msgstr "変数"
+
+msgid "update allowed"
+msgstr "アップデート可"
+
+msgid "lists"
+msgstr "リスト"
+
+msgid "Option"
+msgstr "オプション"
+
+msgid "Type"
+msgstr "タイプ"
+
+msgid "Constants"
+msgstr "定数"
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
@@ -322,20 +401,8 @@ msgstr "フィルタ \"%s\" を削除しました"
 msgid "Option \"%s%s%s\":"
 msgstr "オプション \"%s%s%s\":"
 
-msgid "description"
-msgstr "説明"
-
-msgid "type"
-msgstr "タイプ"
-
 msgid "boolean"
 msgstr "ブール"
-
-msgid "values"
-msgstr "値"
-
-msgid "default value"
-msgstr "デフォルト値"
 
 msgid "(undefined)"
 msgstr "(未定義)"
@@ -349,33 +416,8 @@ msgstr "文字列"
 msgid "integer"
 msgstr "整数"
 
-msgid "any string"
-msgstr "未制約文字列"
-
-msgid "any char"
-msgstr "未制約文字"
-
-msgid "max chars"
-msgstr "最大文字数"
-
 msgid "color"
 msgstr "色"
-
-msgid ""
-"a WeeChat color name (default, black, (dark)gray, white, (light)red, "
-"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
-"terminal color number or an alias; attributes are allowed before color (for "
-"text color only, not background): \"*\" for bold, \"!\" for reverse, \"/\" "
-"for italic, \"_\" for underline"
-msgstr ""
-"WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、"
-"brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号ま"
-"たはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は"
-"出来ません): 太字は \"*\"、反転は \"!\"、イタリックは \"/\"、下線は \"_\""
-
-#. TRANSLATORS: please do not translate "(null)"
-msgid "undefined value allowed (null)"
-msgstr "(null) は設定できません"
 
 #, c-format
 msgid "%sNo help available, \"%s\" is not a command or an option"
@@ -4887,6 +4929,59 @@ msgstr "%s%s: ファイルを開いている最中にエラー、ファイルを
 msgid "name of FIFO pipe"
 msgstr "FIFO パイプの名前"
 
+#, c-format
+msgid "%s%s: script \"%s\" already registered (register ignored)"
+msgstr "%s%s: サーバ \"%s\" は既に登録済みです (登録しませんでした)"
+
+#, c-format
+msgid ""
+"%s%s: unable to register script \"%s\" (another script already exists with "
+"this name)"
+msgstr ""
+"%s%s: スクリプト \"%s\" を登録できません (同じ名前の別のスクリプトが存在しま"
+"す)"
+
+#, c-format
+msgid "%s: registered script \"%s\", version %s (%s)"
+msgstr "%s: スクリプト \"%s\"、バージョン %s (%s) が登録されました"
+
+msgid "Support of scheme scripts (with Guile)"
+msgstr "scheme スクリプトサポート (Guile を利用)"
+
+#, c-format
+msgid "%s: stdout/stderr: %s%s"
+msgstr "%s: 標準出力/標準エラー: %s%s"
+
+#, c-format
+msgid "%s%s: function \"%s\" must return a valid value"
+msgstr "%s%s: 関数 \"%s\" は有効な値を返さなければいけません"
+
+#, c-format
+msgid "%s%s: error in function \"%s\""
+msgstr "%s%s: 関数 \"%s\" にエラー"
+
+#, c-format
+msgid "%s: loading script \"%s\""
+msgstr "%s: スクリプト \"%s\" のロード中"
+
+#, c-format
+msgid "%s%s: function \"register\" not found (or failed) in file \"%s\""
+msgstr ""
+"%s%s: ファイル \"%s\" 内に関数 \"register\" が見つかりません (または失敗しま"
+"した)"
+
+#, c-format
+msgid "%s: unloading script \"%s\""
+msgstr "%s: スクリプト \"%s\" のアンロード中"
+
+#, c-format
+msgid "%s: script \"%s\" unloaded"
+msgstr "%s: スクリプト \"%s\" がアンロードされました"
+
+#, c-format
+msgid "%s%s: script \"%s\" not loaded"
+msgstr "%s%s: スクリプト \"%s\" はロードされていません"
+
 msgid "away"
 msgstr "離席"
 
@@ -8318,6 +8413,56 @@ msgstr "logger バッファのリスト"
 msgid "logger pointer (optional)"
 msgstr "logger ポインタ (任意)"
 
+msgid "Support of lua scripts"
+msgstr "lua スクリプトサポート"
+
+#, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr "%s%s: 関数 \"%s\" を実行できません"
+
+#, c-format
+msgid "%s%s: script \"%s\" not found"
+msgstr "%s%s: スクリプト \"%s\" が見つかりません"
+
+#, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr "%s%s: 新しい sub-interpreter を作成できません"
+
+#, c-format
+msgid "%s%s: unable to redirect stdout and stderr"
+msgstr "%s%s: 標準出力と標準エラーをリダイレクトできません"
+
+#, c-format
+msgid "%s%s: unable to load file \"%s\""
+msgstr "%s%s: ファイル \"%s\" をロードできません"
+
+#, c-format
+msgid "%s%s: unable to execute file \"%s\""
+msgstr "%s%s: ファイル \"%s\" を実行できません"
+
+msgid "Support of perl scripts"
+msgstr "perl スクリプトサポート"
+
+#, c-format
+msgid "%s%s: function \"%s\" must return one valid value (%d)"
+msgstr "%s%s: 関数 \"%s\" は値を一つ返さなければいけません (%d)"
+
+#, c-format
+msgid "%s%s: function \"%s\" is internally misused"
+msgstr "%s%s: 関数 \"%s\" は内部的に誤用されています"
+
+#, c-format
+msgid "%s%s: not enough memory in function \"%s\""
+msgstr "%s%s: 関数 \"%s\" 内に十分なメモリがありません"
+
+#, c-format
+msgid "%s%s: unable to parse file \"%s\""
+msgstr "%s%s: ファイル \"%s\" を解析できません"
+
+#, c-format
+msgid "%s%s: unable to initialize %s"
+msgstr "%s%s: %s の初期化に失敗"
+
 msgid "WeeChat version"
 msgstr "WeeChat のバージョン"
 
@@ -8572,9 +8717,6 @@ msgstr "ニックネームリストにあるグループ"
 msgid "nick in nicklist"
 msgstr "ニックネームリストにあるニックネーム"
 
-msgid "plugin"
-msgstr "プラグイン"
-
 msgid "proxy"
 msgstr "プロキシ"
 
@@ -8653,6 +8795,161 @@ msgstr "プラグインがアンロードされました"
 
 msgid "description of plugin option"
 msgstr "プラグインオプションの説明"
+
+msgid "list/load/unload scripts"
+msgstr "スクリプトをリストアップ/ロード/アンロード"
+
+msgid ""
+"list|listfull [<name>] || load [-q] <filename> || autoload || reload|unload "
+"[-q] [<name>]"
+msgstr ""
+"list|listfull [<name>] || load [-q] <filename> || autoload || reload|unload "
+"[-q] [<name>]"
+
+msgid ""
+"    list: list loaded scripts\n"
+"listfull: list loaded scripts (verbose)\n"
+"    load: load a script\n"
+"autoload: load all scripts in \"autoload\" directory\n"
+"  reload: reload a script (if no name given, unload all scripts, then load "
+"all scripts in \"autoload\" directory)\n"
+"  unload: unload a script (if no name given, unload all scripts)\n"
+"filename: script (file) to load\n"
+"    name: a script name (name used in call to \"register\" function)\n"
+"      -q: quiet mode: do not display messages\n"
+"\n"
+"Without argument, this command lists all loaded scripts."
+msgstr ""
+"    list: ロード済みスクリプトをリストアップ\n"
+"listfull: ロード済みスクリプトをリストアップ (詳細)\n"
+"    load: スクリプトをロード\n"
+"autoload: \"autoload\" ディレクトリに含まれる全てのスクリプトをロード\n"
+"  reload: スクリプトのリロード (名前を指定しなかった場合、全てのスクリプトを"
+"アンロードし、\"autoload\" ディレクトリに含まれる全てのスクリプトをロード)\n"
+"  unload: スクリプトのアンロード (名前を指定しなかった場合、全てのスクリプト"
+"をアンロード)\n"
+"filename: ロードするスクリプト (ファイル)\n"
+"    name: スクリプト名 (名前は \"register\" 関数を呼び出すために使われる)\n"
+"      -q: 出力抑制モード: メッセージを表示しない\n"
+"\n"
+"引数無しの場合、全てのロード済みスクリプトをリストアップします。"
+
+msgid "list of scripts"
+msgstr "スクリプトのリスト"
+
+msgid "script pointer (optional)"
+msgstr "スクリプトポインタ (任意)"
+
+msgid "script name (can start or end with \"*\" as wildcard) (optional)"
+msgstr "スクリプト名 (ワイルドカードとして \"*\" で始めるか終われる) (任意)"
+
+msgid "callback of a script"
+msgstr "スクリプトのコールバック"
+
+#, c-format
+msgid ""
+"%s%s: warning, invalid pointer (\"%s\") for function \"%s\" (script: %s)"
+msgstr ""
+"%1$s%2$s: 警告、関数 \"%4$s\" の不正な引ポインタ (\"%3$s\") (スクリプト: "
+"%5$s)"
+
+#, c-format
+msgid "%s: error loading script \"%s\" (spaces or empty name not allowed)"
+msgstr ""
+"%s: スクリプト \"%s\" のロード中にエラー (空白または空の名前は利用できません)"
+
+#, c-format
+msgid ""
+"%s%s: warning, license \"%s\" for script \"%s\" differs from plugin license "
+"(\"%s\")"
+msgstr ""
+"%1$s%2$s: 警告、スクリプト \"%4$s\" のライセンス \"%3$s\" はプラグインライセ"
+"ンスと違います (\"%5$s\")"
+
+#, c-format
+msgid "%s: error loading script \"%s\" (not enough memory)"
+msgstr "%s: スクリプト \"%s\" のロード中にエラー (メモリ不足)"
+
+#, c-format
+msgid "%s: script removed: %s"
+msgstr "%s: スクリプトが削除されました: %s"
+
+#, c-format
+msgid "%s%s: failed to remove script: %s (%s)"
+msgstr "%s%s: スクリプトの削除に失敗: %s (%s)"
+
+#, c-format
+msgid "%s: script \"%s\" not found, nothing was removed"
+msgstr "%s: スクリプト \"%s\" が見つかりません、何も削除されませんした"
+
+#, c-format
+msgid "%s%s: failed to move script %s to %s (%s)"
+msgstr "%s%s: スクリプト %s を %s に移動することに失敗 (%s)"
+
+#. TRANSLATORS: "%s" is language (for example "perl")
+#, c-format
+msgid "%s scripts loaded:"
+msgstr "ロードされた %s スクリプト:"
+
+#, c-format
+msgid "    file: %s"
+msgstr "    ファイル: %s"
+
+#, c-format
+msgid "    written by \"%s\", license: %s"
+msgstr "    作者 \"%s\"、ライセンス: %s"
+
+msgid "  (none)"
+msgstr "  (無し)"
+
+#, c-format
+msgid "%s: scripts unloaded"
+msgstr "%s: スクリプトがロードされました"
+
+#, c-format
+msgid ""
+"%s%s: unable to call function \"%s\", script is not initialized (script: %s)"
+msgstr ""
+"%s%s: 関数 \"%s\" を呼び出せません、スクリプトは初期化されませんでした (スク"
+"リプト: %s)"
+
+#, c-format
+msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
+msgstr "%s%s: 関数 \"%s\" の不正な引数 (スクリプト: %s)"
+
+msgid "Support of python scripts"
+msgstr "python スクリプトサポート"
+
+#, c-format
+msgid "%s%s: unable to initialize WeeChat module"
+msgstr "%s%s: WeeChat モジュールを初期化に失敗"
+
+#, c-format
+msgid "%s%s: unable to redirect stdout"
+msgstr "%s%s: 標準入力のリダイレクトに失敗"
+
+#, c-format
+msgid "%s%s: unable to redirect stderr"
+msgstr "%s%s: 標準エラーのリダイレクトに失敗"
+
+msgid "path to python 2.x interpreter"
+msgstr "python 2.x インタプリタへのパス"
+
+#, c-format
+msgid "%s%s: unable to launch global interpreter"
+msgstr "%s%s: グローバルインタプリタの起動に失敗"
+
+#, c-format
+msgid "%s%s: unable to get current interpreter state"
+msgstr "%s%s: 現在のインタプリタの状態の取得に失敗"
+
+#, c-format
+msgid "%s%s: unable to free interpreter"
+msgstr "%s%s: インタプリタの開放に失敗"
+
+#, c-format
+msgid "%s%s: not enough memory for parsing message"
+msgstr "%s%s: メッセージ解析用のメモリが足りません"
 
 msgid "Actions (letter+enter):"
 msgstr "Actions (文字+enter):"
@@ -9117,10 +9414,6 @@ msgid "%s%s: not enough memory for listening on new port"
 msgstr "%s%s: 新しいポートをリッスンするためのメモリ不足"
 
 #, c-format
-msgid "%s%s: not enough memory for parsing message"
-msgstr "%s%s: メッセージ解析用のメモリが足りません"
-
-#, c-format
 msgid "%s%s: failed to execute command \"%s\" for client %s%s%s"
 msgstr ""
 "%1$s%2$s: クライアント %4$s%5$s%6$s に対するコマンド \"%3$s\" の実行に失敗"
@@ -9258,260 +9551,6 @@ msgstr "rmodifier ポインタ (任意)"
 msgid "rmodifier name (can start or end with \"*\" as joker) (optional)"
 msgstr "rmodifier 名 (ジョーカーとして \"*\" で始めるか終われる) (任意)"
 
-#, c-format
-msgid "%s%s: script \"%s\" already registered (register ignored)"
-msgstr "%s%s: サーバ \"%s\" は既に登録済みです (登録しませんでした)"
-
-#, c-format
-msgid ""
-"%s%s: unable to register script \"%s\" (another script already exists with "
-"this name)"
-msgstr ""
-"%s%s: スクリプト \"%s\" を登録できません (同じ名前の別のスクリプトが存在しま"
-"す)"
-
-#, c-format
-msgid "%s: registered script \"%s\", version %s (%s)"
-msgstr "%s: スクリプト \"%s\"、バージョン %s (%s) が登録されました"
-
-msgid "Support of scheme scripts (with Guile)"
-msgstr "scheme スクリプトサポート (Guile を利用)"
-
-#, c-format
-msgid "%s: stdout/stderr: %s%s"
-msgstr "%s: 標準出力/標準エラー: %s%s"
-
-#, c-format
-msgid "%s%s: function \"%s\" must return a valid value"
-msgstr "%s%s: 関数 \"%s\" は有効な値を返さなければいけません"
-
-#, c-format
-msgid "%s%s: error in function \"%s\""
-msgstr "%s%s: 関数 \"%s\" にエラー"
-
-#, c-format
-msgid "%s: loading script \"%s\""
-msgstr "%s: スクリプト \"%s\" のロード中"
-
-#, c-format
-msgid "%s%s: function \"register\" not found (or failed) in file \"%s\""
-msgstr ""
-"%s%s: ファイル \"%s\" 内に関数 \"register\" が見つかりません (または失敗しま"
-"した)"
-
-#, c-format
-msgid "%s: unloading script \"%s\""
-msgstr "%s: スクリプト \"%s\" のアンロード中"
-
-#, c-format
-msgid "%s: script \"%s\" unloaded"
-msgstr "%s: スクリプト \"%s\" がアンロードされました"
-
-#, c-format
-msgid "%s%s: script \"%s\" not loaded"
-msgstr "%s%s: スクリプト \"%s\" はロードされていません"
-
-msgid "Support of lua scripts"
-msgstr "lua スクリプトサポート"
-
-#, c-format
-msgid "%s%s: unable to run function \"%s\""
-msgstr "%s%s: 関数 \"%s\" を実行できません"
-
-#, c-format
-msgid "%s%s: script \"%s\" not found"
-msgstr "%s%s: スクリプト \"%s\" が見つかりません"
-
-#, c-format
-msgid "%s%s: unable to create new sub-interpreter"
-msgstr "%s%s: 新しい sub-interpreter を作成できません"
-
-#, c-format
-msgid "%s%s: unable to redirect stdout and stderr"
-msgstr "%s%s: 標準出力と標準エラーをリダイレクトできません"
-
-#, c-format
-msgid "%s%s: unable to load file \"%s\""
-msgstr "%s%s: ファイル \"%s\" をロードできません"
-
-#, c-format
-msgid "%s%s: unable to execute file \"%s\""
-msgstr "%s%s: ファイル \"%s\" を実行できません"
-
-msgid "Support of perl scripts"
-msgstr "perl スクリプトサポート"
-
-#, c-format
-msgid "%s%s: function \"%s\" must return one valid value (%d)"
-msgstr "%s%s: 関数 \"%s\" は値を一つ返さなければいけません (%d)"
-
-#, c-format
-msgid "%s%s: function \"%s\" is internally misused"
-msgstr "%s%s: 関数 \"%s\" は内部的に誤用されています"
-
-#, c-format
-msgid "%s%s: not enough memory in function \"%s\""
-msgstr "%s%s: 関数 \"%s\" 内に十分なメモリがありません"
-
-#, c-format
-msgid "%s%s: unable to parse file \"%s\""
-msgstr "%s%s: ファイル \"%s\" を解析できません"
-
-#, c-format
-msgid "%s%s: unable to initialize %s"
-msgstr "%s%s: %s の初期化に失敗"
-
-msgid "list/load/unload scripts"
-msgstr "スクリプトをリストアップ/ロード/アンロード"
-
-msgid ""
-"list|listfull [<name>] || load [-q] <filename> || autoload || reload|unload "
-"[-q] [<name>]"
-msgstr ""
-"list|listfull [<name>] || load [-q] <filename> || autoload || reload|unload "
-"[-q] [<name>]"
-
-msgid ""
-"    list: list loaded scripts\n"
-"listfull: list loaded scripts (verbose)\n"
-"    load: load a script\n"
-"autoload: load all scripts in \"autoload\" directory\n"
-"  reload: reload a script (if no name given, unload all scripts, then load "
-"all scripts in \"autoload\" directory)\n"
-"  unload: unload a script (if no name given, unload all scripts)\n"
-"filename: script (file) to load\n"
-"    name: a script name (name used in call to \"register\" function)\n"
-"      -q: quiet mode: do not display messages\n"
-"\n"
-"Without argument, this command lists all loaded scripts."
-msgstr ""
-"    list: ロード済みスクリプトをリストアップ\n"
-"listfull: ロード済みスクリプトをリストアップ (詳細)\n"
-"    load: スクリプトをロード\n"
-"autoload: \"autoload\" ディレクトリに含まれる全てのスクリプトをロード\n"
-"  reload: スクリプトのリロード (名前を指定しなかった場合、全てのスクリプトを"
-"アンロードし、\"autoload\" ディレクトリに含まれる全てのスクリプトをロード)\n"
-"  unload: スクリプトのアンロード (名前を指定しなかった場合、全てのスクリプト"
-"をアンロード)\n"
-"filename: ロードするスクリプト (ファイル)\n"
-"    name: スクリプト名 (名前は \"register\" 関数を呼び出すために使われる)\n"
-"      -q: 出力抑制モード: メッセージを表示しない\n"
-"\n"
-"引数無しの場合、全てのロード済みスクリプトをリストアップします。"
-
-msgid "list of scripts"
-msgstr "スクリプトのリスト"
-
-msgid "script pointer (optional)"
-msgstr "スクリプトポインタ (任意)"
-
-msgid "script name (can start or end with \"*\" as wildcard) (optional)"
-msgstr "スクリプト名 (ワイルドカードとして \"*\" で始めるか終われる) (任意)"
-
-msgid "callback of a script"
-msgstr "スクリプトのコールバック"
-
-#, c-format
-msgid ""
-"%s%s: warning, invalid pointer (\"%s\") for function \"%s\" (script: %s)"
-msgstr ""
-"%1$s%2$s: 警告、関数 \"%4$s\" の不正な引ポインタ (\"%3$s\") (スクリプト: "
-"%5$s)"
-
-#, c-format
-msgid "%s: error loading script \"%s\" (spaces or empty name not allowed)"
-msgstr ""
-"%s: スクリプト \"%s\" のロード中にエラー (空白または空の名前は利用できません)"
-
-#, c-format
-msgid ""
-"%s%s: warning, license \"%s\" for script \"%s\" differs from plugin license "
-"(\"%s\")"
-msgstr ""
-"%1$s%2$s: 警告、スクリプト \"%4$s\" のライセンス \"%3$s\" はプラグインライセ"
-"ンスと違います (\"%5$s\")"
-
-#, c-format
-msgid "%s: error loading script \"%s\" (not enough memory)"
-msgstr "%s: スクリプト \"%s\" のロード中にエラー (メモリ不足)"
-
-#, c-format
-msgid "%s: script removed: %s"
-msgstr "%s: スクリプトが削除されました: %s"
-
-#, c-format
-msgid "%s%s: failed to remove script: %s (%s)"
-msgstr "%s%s: スクリプトの削除に失敗: %s (%s)"
-
-#, c-format
-msgid "%s: script \"%s\" not found, nothing was removed"
-msgstr "%s: スクリプト \"%s\" が見つかりません、何も削除されませんした"
-
-#, c-format
-msgid "%s%s: failed to move script %s to %s (%s)"
-msgstr "%s%s: スクリプト %s を %s に移動することに失敗 (%s)"
-
-#. TRANSLATORS: "%s" is language (for example "perl")
-#, c-format
-msgid "%s scripts loaded:"
-msgstr "ロードされた %s スクリプト:"
-
-#, c-format
-msgid "    file: %s"
-msgstr "    ファイル: %s"
-
-#, c-format
-msgid "    written by \"%s\", license: %s"
-msgstr "    作者 \"%s\"、ライセンス: %s"
-
-msgid "  (none)"
-msgstr "  (無し)"
-
-#, c-format
-msgid "%s: scripts unloaded"
-msgstr "%s: スクリプトがロードされました"
-
-#, c-format
-msgid ""
-"%s%s: unable to call function \"%s\", script is not initialized (script: %s)"
-msgstr ""
-"%s%s: 関数 \"%s\" を呼び出せません、スクリプトは初期化されませんでした (スク"
-"リプト: %s)"
-
-#, c-format
-msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
-msgstr "%s%s: 関数 \"%s\" の不正な引数 (スクリプト: %s)"
-
-msgid "Support of python scripts"
-msgstr "python スクリプトサポート"
-
-#, c-format
-msgid "%s%s: unable to initialize WeeChat module"
-msgstr "%s%s: WeeChat モジュールを初期化に失敗"
-
-#, c-format
-msgid "%s%s: unable to redirect stdout"
-msgstr "%s%s: 標準入力のリダイレクトに失敗"
-
-#, c-format
-msgid "%s%s: unable to redirect stderr"
-msgstr "%s%s: 標準エラーのリダイレクトに失敗"
-
-msgid "path to python 2.x interpreter"
-msgstr "python 2.x インタプリタへのパス"
-
-#, c-format
-msgid "%s%s: unable to launch global interpreter"
-msgstr "%s%s: グローバルインタプリタの起動に失敗"
-
-#, c-format
-msgid "%s%s: unable to get current interpreter state"
-msgstr "%s%s: 現在のインタプリタの状態の取得に失敗"
-
-#, c-format
-msgid "%s%s: unable to free interpreter"
-msgstr "%s%s: インタプリタの開放に失敗"
-
 msgid "Support of ruby scripts"
 msgstr "ruby スクリプトサポート"
 
@@ -9538,9 +9577,6 @@ msgstr "%s%s: ファイル \"%s\" 内の関数 \"weechat_init\" を評価でき�
 #, c-format
 msgid "%s%s: unable to eval WeeChat ruby internal code"
 msgstr "%s%s: WeeChat ruby 内部コードを評価できません"
-
-msgid "Scripts manager"
-msgstr "スクリプトマネージャ"
 
 msgid "Scripts loaded:"
 msgstr "ロード済みスクリプト:"
@@ -9658,9 +9694,6 @@ msgstr "作者"
 msgid "License"
 msgstr "ライセンス"
 
-msgid "Description"
-msgstr "説明"
-
 msgid "Tags"
 msgstr "タグ"
 
@@ -9711,6 +9744,9 @@ msgstr ""
 
 msgid "Scripts"
 msgstr "スクリプト"
+
+msgid "Scripts manager"
+msgstr "スクリプトマネージャ"
 
 msgid "WeeChat scripts manager"
 msgstr "WeeChat スクリプトマネージャ"
@@ -10121,6 +10157,357 @@ msgstr "%s%s: 新しいインタプリタを作成できません"
 #, c-format
 msgid "%s%s: error occurred while parsing file \"%s\": %s"
 msgstr "%s%s: ファイル \"%s\" の解析中にエラーが発生: %s"
+
+msgid "Run actions on events triggered by WeeChat/plugins"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sError: unable to create hook for trigger \"%s\" (bad arguments)"
+msgstr "%sエラー: フィルタ \"%s\" の名前を \"%s\" に変更できません"
+
+#, c-format
+msgid ""
+"%s%s: invalid value for option \"regex\", see /help trigger.trigger.%s.regex"
+msgstr ""
+
+msgid "Trigger monitor"
+msgstr ""
+
+#, fuzzy
+msgid "no variable"
+msgstr "変数"
+
+#, fuzzy
+msgid "empty variable"
+msgstr "変数"
+
+#, fuzzy, c-format
+msgid "%s  running command %s\"%s%s%s\"%s on buffer %s%s%s"
+msgstr "バッファ \"%2$s\" でコマンドを実行中: \"%1$s\""
+
+#, fuzzy
+msgid "Triggers enabled"
+msgstr "フィルタ \"%s\" が有効化されました"
+
+#, fuzzy
+msgid "Triggers disabled"
+msgstr "フィルタ \"%s\" が無効化されました"
+
+#, fuzzy
+msgid "No trigger defined"
+msgstr "rmodifier は定義されていません"
+
+#, fuzzy
+msgid "List of default triggers:"
+msgstr "別名のリスト:"
+
+#, fuzzy, c-format
+msgid "Trigger \"%s\" restarted"
+msgstr "バー \"%s\" が作成されました"
+
+#, c-format
+msgid "%sError: a disabled trigger can not be restarted"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Trigger \"%s\" enabled"
+msgstr "フィルタ \"%s\" が有効化されました"
+
+#, fuzzy, c-format
+msgid "Trigger \"%s\" disabled"
+msgstr "フィルタ \"%s\" が無効化されました"
+
+#, c-format
+msgid "%sError: invalid name for trigger"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sError: trigger \"%s\" already exists"
+msgstr "%sエラー: フィルタ \"%s\" は既に存在します"
+
+#, fuzzy, c-format
+msgid "Trigger \"%s\" renamed to \"%s\""
+msgstr "フィルタ \"%s\" の名前を \"%s\" に変更しました"
+
+#, fuzzy, c-format
+msgid "%sError: failed to rename trigger \"%s\""
+msgstr "%sエラー: バー \"%s\" の作成に失敗しました"
+
+#, fuzzy
+msgid "List of triggers:"
+msgstr "プロキシリスト:"
+
+#, fuzzy, c-format
+msgid "%sError: invalid hook type \"%s\""
+msgstr "%sエラー: キー \"%s\" の割り当てに失敗しました"
+
+#, fuzzy, c-format
+msgid "%sError: invalid return code \"%s\""
+msgstr "%sエラー: キー \"%s\" の割り当てを解除できません"
+
+#, c-format
+msgid ""
+"%sError: trigger \"%s\" already exists (choose another name or use option "
+"\"addreplace\" to overwrite it)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sError: failed to create trigger \"%s\""
+msgstr "%sエラー: バー \"%s\" の作成に失敗しました"
+
+#, fuzzy, c-format
+msgid "Trigger \"%s\" created"
+msgstr "バー \"%s\" が作成されました"
+
+#, fuzzy, c-format
+msgid "%sError: trigger \"%s\" not found"
+msgstr "%sエラー: フィルタ \"%s\" が見つかりません"
+
+#, fuzzy, c-format
+msgid "Trigger \"%s\" updated"
+msgstr "バー \"%s\" がアップデートされました"
+
+#, fuzzy, c-format
+msgid "%sError: trigger option \"%s\" not found"
+msgstr "%sエラー: オプション \"%s\" が見つかりません"
+
+#, fuzzy, c-format
+msgid "Trigger \"%s\" copied to \"%s\""
+msgstr "フィルタ \"%s\" の名前を \"%s\" に変更しました"
+
+#, fuzzy, c-format
+msgid "%sError: failed to copy trigger \"%s\""
+msgstr "%sエラー: バー \"%s\" の作成に失敗しました"
+
+#, fuzzy, c-format
+msgid "%sTrigger \"%s\" not found"
+msgstr "%sキー \"%s\" が見つかりません"
+
+#, fuzzy, c-format
+msgid "%d triggers removed"
+msgstr "%d 個の rmodifier を削除"
+
+#, fuzzy, c-format
+msgid "Trigger \"%s\" removed"
+msgstr "Rmodifier \"%s\" を削除"
+
+msgid "Trigger:"
+msgstr ""
+
+#, fuzzy
+msgid "Default triggers restored:"
+msgstr "デフォルトに戻す場合の rmodifier:"
+
+#, fuzzy, c-format
+msgid ""
+"%sError: \"-yes\" argument is required for restoring default triggers "
+"(security reason)"
+msgstr ""
+"%sエラー: デフォルト rmodifiers に戻すためには \"-yes\" 引数が必要 (セキュリ"
+"ティ上の問題)"
+
+msgid "manage triggers, the Swiss Army knife for WeeChat"
+msgstr ""
+
+msgid ""
+"list|listfull|listdefault || add|addoff|addreplace <name> <hook> "
+"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>"
+"\" [\"<return_code>\"]]]]] || addinput [<hook>] || input|output|recreate "
+"<name> || set <name> <option> <value> || rename|copy <name> <new_name> || "
+"enable|disable|toggle [<name>|-all [<name>...]] || restart <name>|-all "
+"[<name>...] || show <name> || del <name>|-all [<name>...] || default -yes || "
+"monitor"
+msgstr ""
+
+msgid ""
+"       list: list triggers (without argument, this list is displayed)\n"
+"   listfull: list triggers with detailed info for each trigger\n"
+"listdefault: list default triggers\n"
+"        add: add a trigger\n"
+"     addoff: add a trigger (disabled)\n"
+" addreplace: add or replace an existing trigger\n"
+"       name: name of trigger\n"
+"       hook: signal, hsignal, modifier, print, command, command_run, timer, "
+"config, focus\n"
+"  arguments: arguments for the hook, depending on hook (separated by "
+"semicolons):\n"
+"             signal: name(s) of signal (required)\n"
+"             hsignal: name(s) of hsignal (required)\n"
+"             modifier: name(s) of modifier (required)\n"
+"             print: buffer, tags, message, strip colors\n"
+"             command: command (required), description, arguments, "
+"description of arguments, completion\n"
+"             command_run: command (required)\n"
+"             timer: interval (required), align on second (required), max "
+"calls (required)\n"
+"             config: name of option (required)\n"
+"             focus: name(s) of area (required)\n"
+" conditions: evaluated conditions for the trigger\n"
+"      regex: one or more regular expressions to replace strings in "
+"variables\n"
+"    command: command to execute (many commands can be separated by \";\"\n"
+"return_code: return code in callback (ok (default), ok_eat, error)\n"
+"   addinput: set input with default arguments to create a trigger\n"
+"      input: set input with the command used to create the trigger\n"
+"     output: send the command to create the trigger on the buffer\n"
+"   recreate: same as \"input\", with option \"addreplace\" instead of \"add"
+"\"\n"
+"        set: set an option in a trigger\n"
+"     option: name of option: name, hook, arguments, conditions, regex, "
+"command, return_code\n"
+"             (for help on option, you can type: /help trigger.trigger.<name>."
+"<option>)\n"
+"      value: new value for the option\n"
+"     rename: rename a trigger\n"
+"       copy: copy a trigger\n"
+"     enable: enable trigger(s) (without arguments: enable triggers "
+"globally)\n"
+"    disable: disable trigger(s) (without arguments: disable triggers "
+"globally)\n"
+"     toggle: toggle trigger(s) (without arguments: toggle triggers "
+"globally)\n"
+"    restart: restart trigger(s) (recreate the hooks)\n"
+"       show: show detailed info on a trigger (with some stats)\n"
+"        del: delete a trigger\n"
+"       -all: do action on all triggers\n"
+"    default: restore default triggers\n"
+"    monitor: open the trigger monitor buffer\n"
+"\n"
+"When a trigger callback is called, following actions are performed, in this "
+"order:\n"
+"  1. check conditions; if false, exit\n"
+"  2. replace text using POSIX extended regular expression(s) (if defined in "
+"trigger)\n"
+"  3. execute command(s) (if defined in trigger)\n"
+"  4. exit with a return code (except for modifiers and focus)\n"
+"\n"
+"Examples (you can also look at default triggers with /trigger listdefault):\n"
+"  add text attributes *bold*, _underline_ and /italic/ (only in user "
+"messages):\n"
+"    /trigger add effects modifier weechat_print \"${tg_tag_nick}\" \"=="
+"\\*(\\S+)\\*==*${color:bold}$1${color:-bold}*== ==_(\\S+)_==_${color:"
+"underline}$1${color:-underline}_== ==/(\\S+)/==/${color:italic}$1${color:-"
+"italic}/\"\n"
+"  hide nicklist bar on small terminals:\n"
+"    /trigger add resize_small signal signal_sigwinch \"${info:term_width} < "
+"100\" \"\" \"/bar hide nicklist\"\n"
+"    /trigger add resize_big signal signal_sigwinch \"${info:term_width} >= "
+"100\" \"\" \"/bar show nicklist\"\n"
+"  silently save config each hour:\n"
+"    /trigger add cfgsave timer 3600000;0;0 \"\" \"\" \"/mute /save\""
+msgstr ""
+
+msgid "triggers"
+msgstr ""
+
+#, fuzzy
+msgid "options for triggers"
+msgstr "プロキシのオプション"
+
+#, fuzzy
+msgid "value of a trigger option"
+msgstr "設定オプションの値"
+
+#, fuzzy
+msgid "hooks for triggers"
+msgstr "プロキシのオプション"
+
+#, fuzzy
+msgid "default arguments for a hook"
+msgstr "IRC チャンネルのデフォルト退出メッセージ"
+
+#, fuzzy
+msgid "default conditions for a hook"
+msgstr "バーのデフォルト背景色"
+
+msgid "default regular expression for a hook"
+msgstr ""
+
+#, fuzzy
+msgid "default command for a hook"
+msgstr "デフォルトコマンド:"
+
+#, fuzzy
+msgid "default return codes for hook callback"
+msgstr "バーのデフォルトテキスト色"
+
+msgid ""
+"if disabled, the hooks are removed from trigger, so it is not called any more"
+msgstr ""
+
+#, fuzzy
+msgid "type of hook used"
+msgstr "フックリスト"
+
+msgid "arguments for the hook (depend on the hook type, see /help trigger)"
+msgstr ""
+
+msgid ""
+"condition(s) for running the command (it is checked in hook callback) (note: "
+"content is evaluated when trigger is run, see /help eval)"
+msgstr ""
+
+msgid ""
+"replace text with a POSIX extended regular expression (it is done only if "
+"conditions are OK, and before running the command) (note: content is "
+"evaluated on trigger creation, see /help eval); format is: \"/regex/replace/"
+"var\" (var is the hashtable variable to replace, it is optional), many regex "
+"can be separated by a space, for example: \"/regex1/replace1/var1 /regex2/"
+"replace2/var2\"; the separator \"/\" can be replaced by any char (one or "
+"more identical chars), except '\\' and parentheses; matching groups can be "
+"used in replace: $0 to $99, $+ for last match and $.cN to replace all chars "
+"of group N by char c"
+msgstr ""
+
+msgid ""
+"command(s) to run if conditions are OK, after regex replacements (many "
+"commands can be separated by semicolons)"
+msgstr ""
+
+msgid ""
+"return code for hook callback (see plugin API reference to know where ok_eat/"
+"error can be used efficiently)"
+msgstr ""
+
+#, fuzzy
+msgid "enable trigger support"
+msgstr "マウスサポートの有効化"
+
+#, fuzzy
+msgid "strip colors in hashtable values displayed on monitor buffer"
+msgstr ""
+"トピックにつけられた色を無効化 (バッファタイルに表示される場合のみ利用)"
+
+#, fuzzy
+msgid "text color for command flag (in /trigger list)"
+msgstr "入力がアクションの場合のテキスト色"
+
+#, fuzzy
+msgid "text color for conditions flag (in /trigger list)"
+msgstr "入力がアクションの場合のテキスト色"
+
+#, fuzzy
+msgid "text color for regex flag (in /trigger list)"
+msgstr "ニックネームリスト内のグループのテキスト色"
+
+#, fuzzy
+msgid "text color for return code flag (in /trigger list)"
+msgstr "ニックネームリスト内のグループのテキスト色"
+
+#, fuzzy
+msgid "text color for regular expressions"
+msgstr "エラープレフィックスのテキスト色"
+
+msgid "text color for replacement text (for regular expressions)"
+msgstr ""
+
+#, fuzzy
+msgid "text color for trigger name"
+msgstr "サーバ名のテキスト色"
+
+#, fuzzy
+msgid "text color for disabled trigger name"
+msgstr "サーバ名のテキスト色"
 
 msgid "  [A] Accept"
 msgstr "  [A] 受け入れる"
@@ -10543,39 +10930,3 @@ msgstr "%s%s: ソケットにオプション \"nonblock\" を設定できませ�
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: \"%s\" のタイムアウト %s"
-
-msgid "Plugin"
-msgstr "プラグイン"
-
-msgid "Name"
-msgstr "名前"
-
-msgid "Arguments"
-msgstr "引数"
-
-msgid "Hashtable (input)"
-msgstr "ハッシュテーブル (入力)"
-
-msgid "Hashtable (output)"
-msgstr "ハッシュテーブル (出力)"
-
-msgid "Pointer"
-msgstr "ポインタ"
-
-msgid "variables"
-msgstr "変数"
-
-msgid "update allowed"
-msgstr "アップデート可"
-
-msgid "lists"
-msgstr "リスト"
-
-msgid "Option"
-msgstr "オプション"
-
-msgid "Type"
-msgstr "タイプ"
-
-msgid "Constants"
-msgstr "定数"

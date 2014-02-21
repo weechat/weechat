@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-02-20 11:55+0100\n"
+"POT-Creation-Date: 2014-02-21 16:28+0100\n"
 "PO-Revision-Date: 2014-02-20 12:25+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -29,6 +29,94 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#, fuzzy
+msgid "any string"
+msgstr "Várakozás"
+
+#, fuzzy
+msgid "any char"
+msgstr "karakterek felcserélése"
+
+#, fuzzy
+msgid "max chars"
+msgstr "pufferek kezelése"
+
+msgid ""
+"a WeeChat color name (default, black, (dark)gray, white, (light)red, "
+"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
+"terminal color number or an alias; attributes are allowed before color (for "
+"text color only, not background): \"*\" for bold, \"!\" for reverse, \"/\" "
+"for italic, \"_\" for underline"
+msgstr ""
+
+#, fuzzy
+msgid "description"
+msgstr "  . leírás : %s\n"
+
+msgid "type"
+msgstr ""
+
+#, fuzzy
+msgid "values"
+msgstr "  . értékek: "
+
+#, fuzzy
+msgid "default value"
+msgstr "  . alapérték: %d\n"
+
+#. TRANSLATORS: please do not translate "(null)"
+msgid "undefined value allowed (null)"
+msgstr ""
+
+#, fuzzy
+msgid "Plugin"
+msgstr "  (nem található bővítőmodul)\n"
+
+msgid "Name"
+msgstr ""
+
+#, fuzzy
+msgid "Description"
+msgstr "  . leírás : %s\n"
+
+#, fuzzy
+msgid "Arguments"
+msgstr "fogadó típusa [paraméterek]"
+
+msgid "Hashtable (input)"
+msgstr ""
+
+msgid "Hashtable (output)"
+msgstr ""
+
+#, fuzzy
+msgid "Pointer"
+msgstr "perc"
+
+#, fuzzy
+msgid "plugin"
+msgstr "  (nem található bővítőmodul)\n"
+
+#, fuzzy
+msgid "variables"
+msgstr "  . típus: szám\n"
+
+msgid "update allowed"
+msgstr ""
+
+msgid "lists"
+msgstr ""
+
+#, fuzzy
+msgid "Option"
+msgstr "[parancs]"
+
+msgid "Type"
+msgstr ""
+
+msgid "Constants"
+msgstr ""
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, fuzzy, c-format
@@ -328,23 +416,8 @@ msgstr "a felhasználók le lettek tiltva"
 msgid "Option \"%s%s%s\":"
 msgstr "Felhasználók a %s%s%s szobában: %s["
 
-#, fuzzy
-msgid "description"
-msgstr "  . leírás : %s\n"
-
-msgid "type"
-msgstr ""
-
 msgid "boolean"
 msgstr ""
-
-#, fuzzy
-msgid "values"
-msgstr "  . értékek: "
-
-#, fuzzy
-msgid "default value"
-msgstr "  . alapérték: %d\n"
 
 #, fuzzy
 msgid "(undefined)"
@@ -362,32 +435,8 @@ msgid "integer"
 msgstr "perc"
 
 #, fuzzy
-msgid "any string"
-msgstr "Várakozás"
-
-#, fuzzy
-msgid "any char"
-msgstr "karakterek felcserélése"
-
-#, fuzzy
-msgid "max chars"
-msgstr "pufferek kezelése"
-
-#, fuzzy
 msgid "color"
 msgstr "üzenetek színe"
-
-msgid ""
-"a WeeChat color name (default, black, (dark)gray, white, (light)red, "
-"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
-"terminal color number or an alias; attributes are allowed before color (for "
-"text color only, not background): \"*\" for bold, \"!\" for reverse, \"/\" "
-"for italic, \"_\" for underline"
-msgstr ""
-
-#. TRANSLATORS: please do not translate "(null)"
-msgid "undefined value allowed (null)"
-msgstr ""
 
 #, fuzzy, c-format
 msgid "%sNo help available, \"%s\" is not a command or an option"
@@ -4115,6 +4164,57 @@ msgstr "%s hiba a FIFO cső olvasása közben, bezárás\n"
 msgid "name of FIFO pipe"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "%s%s: script \"%s\" already registered (register ignored)"
+msgstr "%s a \"%s\" szerver már létezik, nem hozhatja létre!\n"
+
+#, c-format
+msgid ""
+"%s%s: unable to register script \"%s\" (another script already exists with "
+"this name)"
+msgstr ""
+
+#, c-format
+msgid "%s: registered script \"%s\", version %s (%s)"
+msgstr ""
+
+msgid "Support of scheme scripts (with Guile)"
+msgstr ""
+
+#, c-format
+msgid "%s: stdout/stderr: %s%s"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: function \"%s\" must return a valid value"
+msgstr "%s a \"%s\" modul nem található\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error in function \"%s\""
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, fuzzy, c-format
+msgid "%s: loading script \"%s\""
+msgstr "folyamat: \"%s\" szerver betöltése\n"
+
+#, fuzzy, c-format
+msgid "%s%s: function \"register\" not found (or failed) in file \"%s\""
+msgstr ""
+"%s a \"weechat_plugin_init\" függvény nem található a \"%s\" modulban, "
+"betöltés sikertelen\n"
+
+#, fuzzy, c-format
+msgid "%s: unloading script \"%s\""
+msgstr "folyamat: \"%s\" szerver betöltése\n"
+
+#, fuzzy, c-format
+msgid "%s: script \"%s\" unloaded"
+msgstr "A \"%s\" modul eltávolítva.\n"
+
+#, fuzzy, c-format
+msgid "%s%s: script \"%s\" not loaded"
+msgstr "%s a \"%s\" szerver nem található\n"
+
 msgid "away"
 msgstr ""
 
@@ -7326,6 +7426,58 @@ msgid "logger pointer (optional)"
 msgstr "Beállítások mentése a lemezre\n"
 
 #, fuzzy
+msgid "Support of lua scripts"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: script \"%s\" not found"
+msgstr "%s a \"%s\" szerver nem található\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr "%s nem sikerült a szervert létrehozni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to redirect stdout and stderr"
+msgstr "%s nem sikerült a szervert létrehozni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to load file \"%s\""
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to execute file \"%s\""
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, fuzzy
+msgid "Support of perl scripts"
+msgstr "Aliaszok listája:\n"
+
+#, c-format
+msgid "%s%s: function \"%s\" must return one valid value (%d)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: function \"%s\" is internally misused"
+msgstr "%s a \"%s\" modul nem található\n"
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory in function \"%s\""
+msgstr "%s nincs elegendő memória új DCC számára\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to parse file \"%s\""
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to initialize %s"
+msgstr "%s nem sikerült a modult betölteni \"%s\"\n"
+
+#, fuzzy
 msgid "WeeChat version"
 msgstr "WeeChat szlogen"
 
@@ -7619,10 +7771,6 @@ msgstr "név színe"
 msgid "nick in nicklist"
 msgstr "%s nem található ilyen mellőzés\n"
 
-#, fuzzy
-msgid "plugin"
-msgstr "  (nem található bővítőmodul)\n"
-
 msgid "proxy"
 msgstr ""
 
@@ -7702,6 +7850,158 @@ msgstr "Betöltött modulok:\n"
 
 msgid "description of plugin option"
 msgstr ""
+
+#, fuzzy
+msgid "list/load/unload scripts"
+msgstr "modulok listázása/betöltése/eltávolítása"
+
+#, fuzzy
+msgid ""
+"list|listfull [<name>] || load [-q] <filename> || autoload || reload|unload "
+"[-q] [<name>]"
+msgstr ""
+"[list [név]] | [listfull [név]] | [load fájlnév] | [autoload] | [reload "
+"[név]] | [unload [név]]"
+
+#, fuzzy
+msgid ""
+"    list: list loaded scripts\n"
+"listfull: list loaded scripts (verbose)\n"
+"    load: load a script\n"
+"autoload: load all scripts in \"autoload\" directory\n"
+"  reload: reload a script (if no name given, unload all scripts, then load "
+"all scripts in \"autoload\" directory)\n"
+"  unload: unload a script (if no name given, unload all scripts)\n"
+"filename: script (file) to load\n"
+"    name: a script name (name used in call to \"register\" function)\n"
+"      -q: quiet mode: do not display messages\n"
+"\n"
+"Without argument, this command lists all loaded scripts."
+msgstr ""
+"list: betöltött modulok listája\n"
+"listfull: betöltött modulok listája részletes információkkal együtt\n"
+"load: modul betöltése\n"
+"autoload: modulok automatikus betöltése a felhasználó vagy "
+"rendszerkönyvtárból\n"
+"reload: modul újratöltése (ha nincs név megadva, minden modul eltávolítása, "
+"majd automatikus modulbetöltés)\n"
+"unload: megadott vagy összes modul eltávolítása\n"
+"\n"
+"Paraméter nélkül a /plugin parancs listázza a betöltött modulokat."
+
+#, fuzzy
+msgid "list of scripts"
+msgstr "Aliaszok listája:\n"
+
+msgid "script pointer (optional)"
+msgstr ""
+
+msgid "script name (can start or end with \"*\" as wildcard) (optional)"
+msgstr ""
+
+#, fuzzy
+msgid "callback of a script"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy, c-format
+msgid ""
+"%s%s: warning, invalid pointer (\"%s\") for function \"%s\" (script: %s)"
+msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
+
+#, fuzzy, c-format
+msgid "%s: error loading script \"%s\" (spaces or empty name not allowed)"
+msgstr "%s nem sikerült a modult betölteni \"%s\" (nincs elég memória)\n"
+
+#, c-format
+msgid ""
+"%s%s: warning, license \"%s\" for script \"%s\" differs from plugin license "
+"(\"%s\")"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s: error loading script \"%s\" (not enough memory)"
+msgstr "%s nem sikerült a modult betölteni \"%s\" (nincs elég memória)\n"
+
+#, fuzzy, c-format
+msgid "%s: script removed: %s"
+msgstr "nincs a szobában"
+
+#, fuzzy, c-format
+msgid "%s%s: failed to remove script: %s (%s)"
+msgstr "%s DCC: nem sikerült a csövet létrehozni\n"
+
+#, fuzzy, c-format
+msgid "%s: script \"%s\" not found, nothing was removed"
+msgstr "%s a \"%s\" szerver nem található\n"
+
+#, fuzzy, c-format
+msgid "%s%s: failed to move script %s to %s (%s)"
+msgstr "%s DCC: nem sikerült a csövet létrehozni\n"
+
+#. TRANSLATORS: "%s" is language (for example "perl")
+#, fuzzy, c-format
+msgid "%s scripts loaded:"
+msgstr "FIFO cső bezárva\n"
+
+#, fuzzy, c-format
+msgid "    file: %s"
+msgstr "       IRC(%s)\n"
+
+#, c-format
+msgid "    written by \"%s\", license: %s"
+msgstr ""
+
+#, fuzzy
+msgid "  (none)"
+msgstr "(ismeretlen)"
+
+#, fuzzy, c-format
+msgid "%s: scripts unloaded"
+msgstr "A \"%s\" modul eltávolítva.\n"
+
+#, fuzzy, c-format
+msgid ""
+"%s%s: unable to call function \"%s\", script is not initialized (script: %s)"
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
+msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
+
+#, fuzzy
+msgid "Support of python scripts"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to initialize WeeChat module"
+msgstr "%s nem sikerült a modult betölteni \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to redirect stdout"
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to redirect stderr"
+msgstr "%s nem sikerült a szervert létrehozni\n"
+
+msgid "path to python 2.x interpreter"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: unable to launch global interpreter"
+msgstr "%s nem sikerült a szervert létrehozni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to get current interpreter state"
+msgstr "%s nem sikerült a szervert létrehozni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to free interpreter"
+msgstr "%s nem sikerült a szervert létrehozni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory for parsing message"
+msgstr "%s nincs elegendő memória a fogadott IRC üzenet számára\n"
 
 msgid "Actions (letter+enter):"
 msgstr ""
@@ -8112,10 +8412,6 @@ msgid "%s%s: not enough memory for listening on new port"
 msgstr "%s nincs elegendő memória új DCC számára\n"
 
 #, fuzzy, c-format
-msgid "%s%s: not enough memory for parsing message"
-msgstr "%s nincs elegendő memória a fogadott IRC üzenet számára\n"
-
-#, fuzzy, c-format
 msgid "%s%s: failed to execute command \"%s\" for client %s%s%s"
 msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
@@ -8235,257 +8531,6 @@ msgstr "Beállítások mentése a lemezre\n"
 msgid "rmodifier name (can start or end with \"*\" as joker) (optional)"
 msgstr ""
 
-#, fuzzy, c-format
-msgid "%s%s: script \"%s\" already registered (register ignored)"
-msgstr "%s a \"%s\" szerver már létezik, nem hozhatja létre!\n"
-
-#, c-format
-msgid ""
-"%s%s: unable to register script \"%s\" (another script already exists with "
-"this name)"
-msgstr ""
-
-#, c-format
-msgid "%s: registered script \"%s\", version %s (%s)"
-msgstr ""
-
-msgid "Support of scheme scripts (with Guile)"
-msgstr ""
-
-#, c-format
-msgid "%s: stdout/stderr: %s%s"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%s%s: function \"%s\" must return a valid value"
-msgstr "%s a \"%s\" modul nem található\n"
-
-#, fuzzy, c-format
-msgid "%s%s: error in function \"%s\""
-msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
-
-#, fuzzy, c-format
-msgid "%s: loading script \"%s\""
-msgstr "folyamat: \"%s\" szerver betöltése\n"
-
-#, fuzzy, c-format
-msgid "%s%s: function \"register\" not found (or failed) in file \"%s\""
-msgstr ""
-"%s a \"weechat_plugin_init\" függvény nem található a \"%s\" modulban, "
-"betöltés sikertelen\n"
-
-#, fuzzy, c-format
-msgid "%s: unloading script \"%s\""
-msgstr "folyamat: \"%s\" szerver betöltése\n"
-
-#, fuzzy, c-format
-msgid "%s: script \"%s\" unloaded"
-msgstr "A \"%s\" modul eltávolítva.\n"
-
-#, fuzzy, c-format
-msgid "%s%s: script \"%s\" not loaded"
-msgstr "%s a \"%s\" szerver nem található\n"
-
-#, fuzzy
-msgid "Support of lua scripts"
-msgstr "Aliaszok listája:\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to run function \"%s\""
-msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
-
-#, fuzzy, c-format
-msgid "%s%s: script \"%s\" not found"
-msgstr "%s a \"%s\" szerver nem található\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to create new sub-interpreter"
-msgstr "%s nem sikerült a szervert létrehozni\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to redirect stdout and stderr"
-msgstr "%s nem sikerült a szervert létrehozni\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to load file \"%s\""
-msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to execute file \"%s\""
-msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
-
-#, fuzzy
-msgid "Support of perl scripts"
-msgstr "Aliaszok listája:\n"
-
-#, c-format
-msgid "%s%s: function \"%s\" must return one valid value (%d)"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%s%s: function \"%s\" is internally misused"
-msgstr "%s a \"%s\" modul nem található\n"
-
-#, fuzzy, c-format
-msgid "%s%s: not enough memory in function \"%s\""
-msgstr "%s nincs elegendő memória új DCC számára\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to parse file \"%s\""
-msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to initialize %s"
-msgstr "%s nem sikerült a modult betölteni \"%s\"\n"
-
-#, fuzzy
-msgid "list/load/unload scripts"
-msgstr "modulok listázása/betöltése/eltávolítása"
-
-#, fuzzy
-msgid ""
-"list|listfull [<name>] || load [-q] <filename> || autoload || reload|unload "
-"[-q] [<name>]"
-msgstr ""
-"[list [név]] | [listfull [név]] | [load fájlnév] | [autoload] | [reload "
-"[név]] | [unload [név]]"
-
-#, fuzzy
-msgid ""
-"    list: list loaded scripts\n"
-"listfull: list loaded scripts (verbose)\n"
-"    load: load a script\n"
-"autoload: load all scripts in \"autoload\" directory\n"
-"  reload: reload a script (if no name given, unload all scripts, then load "
-"all scripts in \"autoload\" directory)\n"
-"  unload: unload a script (if no name given, unload all scripts)\n"
-"filename: script (file) to load\n"
-"    name: a script name (name used in call to \"register\" function)\n"
-"      -q: quiet mode: do not display messages\n"
-"\n"
-"Without argument, this command lists all loaded scripts."
-msgstr ""
-"list: betöltött modulok listája\n"
-"listfull: betöltött modulok listája részletes információkkal együtt\n"
-"load: modul betöltése\n"
-"autoload: modulok automatikus betöltése a felhasználó vagy "
-"rendszerkönyvtárból\n"
-"reload: modul újratöltése (ha nincs név megadva, minden modul eltávolítása, "
-"majd automatikus modulbetöltés)\n"
-"unload: megadott vagy összes modul eltávolítása\n"
-"\n"
-"Paraméter nélkül a /plugin parancs listázza a betöltött modulokat."
-
-#, fuzzy
-msgid "list of scripts"
-msgstr "Aliaszok listája:\n"
-
-msgid "script pointer (optional)"
-msgstr ""
-
-msgid "script name (can start or end with \"*\" as wildcard) (optional)"
-msgstr ""
-
-#, fuzzy
-msgid "callback of a script"
-msgstr "Aliaszok listája:\n"
-
-#, fuzzy, c-format
-msgid ""
-"%s%s: warning, invalid pointer (\"%s\") for function \"%s\" (script: %s)"
-msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
-
-#, fuzzy, c-format
-msgid "%s: error loading script \"%s\" (spaces or empty name not allowed)"
-msgstr "%s nem sikerült a modult betölteni \"%s\" (nincs elég memória)\n"
-
-#, c-format
-msgid ""
-"%s%s: warning, license \"%s\" for script \"%s\" differs from plugin license "
-"(\"%s\")"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%s: error loading script \"%s\" (not enough memory)"
-msgstr "%s nem sikerült a modult betölteni \"%s\" (nincs elég memória)\n"
-
-#, fuzzy, c-format
-msgid "%s: script removed: %s"
-msgstr "nincs a szobában"
-
-#, fuzzy, c-format
-msgid "%s%s: failed to remove script: %s (%s)"
-msgstr "%s DCC: nem sikerült a csövet létrehozni\n"
-
-#, fuzzy, c-format
-msgid "%s: script \"%s\" not found, nothing was removed"
-msgstr "%s a \"%s\" szerver nem található\n"
-
-#, fuzzy, c-format
-msgid "%s%s: failed to move script %s to %s (%s)"
-msgstr "%s DCC: nem sikerült a csövet létrehozni\n"
-
-#. TRANSLATORS: "%s" is language (for example "perl")
-#, fuzzy, c-format
-msgid "%s scripts loaded:"
-msgstr "FIFO cső bezárva\n"
-
-#, fuzzy, c-format
-msgid "    file: %s"
-msgstr "       IRC(%s)\n"
-
-#, c-format
-msgid "    written by \"%s\", license: %s"
-msgstr ""
-
-#, fuzzy
-msgid "  (none)"
-msgstr "(ismeretlen)"
-
-#, fuzzy, c-format
-msgid "%s: scripts unloaded"
-msgstr "A \"%s\" modul eltávolítva.\n"
-
-#, fuzzy, c-format
-msgid ""
-"%s%s: unable to call function \"%s\", script is not initialized (script: %s)"
-msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
-
-#, fuzzy, c-format
-msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
-msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
-
-#, fuzzy
-msgid "Support of python scripts"
-msgstr "Aliaszok listája:\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to initialize WeeChat module"
-msgstr "%s nem sikerült a modult betölteni \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to redirect stdout"
-msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to redirect stderr"
-msgstr "%s nem sikerült a szervert létrehozni\n"
-
-msgid "path to python 2.x interpreter"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%s%s: unable to launch global interpreter"
-msgstr "%s nem sikerült a szervert létrehozni\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to get current interpreter state"
-msgstr "%s nem sikerült a szervert létrehozni\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to free interpreter"
-msgstr "%s nem sikerült a szervert létrehozni\n"
-
 #, fuzzy
 msgid "Support of ruby scripts"
 msgstr "Aliaszok listája:\n"
@@ -8513,9 +8558,6 @@ msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to eval WeeChat ruby internal code"
 msgstr "%s nem sikerült a szervert létrehozni\n"
-
-msgid "Scripts manager"
-msgstr ""
 
 #, fuzzy
 msgid "Scripts loaded:"
@@ -8638,10 +8680,6 @@ msgstr ""
 msgid "License"
 msgstr ""
 
-#, fuzzy
-msgid "Description"
-msgstr "  . leírás : %s\n"
-
 msgid "Tags"
 msgstr ""
 
@@ -8691,6 +8729,9 @@ msgid ""
 msgstr ""
 
 msgid "Scripts"
+msgstr ""
+
+msgid "Scripts manager"
 msgstr ""
 
 #, fuzzy
@@ -9025,6 +9066,354 @@ msgstr "%s nem sikerült a szervert létrehozni\n"
 #, fuzzy, c-format
 msgid "%s%s: error occurred while parsing file \"%s\": %s"
 msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+msgid "Run actions on events triggered by WeeChat/plugins"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sError: unable to create hook for trigger \"%s\" (bad arguments)"
+msgstr "%s ismeretlen opció a \"%s\" parancsnak\n"
+
+#, c-format
+msgid ""
+"%s%s: invalid value for option \"regex\", see /help trigger.trigger.%s.regex"
+msgstr ""
+
+msgid "Trigger monitor"
+msgstr ""
+
+#, fuzzy
+msgid "no variable"
+msgstr "  . típus: szám\n"
+
+#, fuzzy
+msgid "empty variable"
+msgstr "  . típus: szám\n"
+
+#, fuzzy, c-format
+msgid "%s  running command %s\"%s%s%s\"%s on buffer %s%s%s"
+msgstr "%s belső parancsok:\n"
+
+#, fuzzy
+msgid "Triggers enabled"
+msgstr "a felhasználók le lettek tiltva"
+
+#, fuzzy
+msgid "Triggers disabled"
+msgstr "a felhasználók le lettek tiltva"
+
+#, fuzzy
+msgid "No trigger defined"
+msgstr "Nincs aliasz definiálva.\n"
+
+#, fuzzy
+msgid "List of default triggers:"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy, c-format
+msgid "Trigger \"%s\" restarted"
+msgstr "A \"%s\" => \"%s\" aliasz elkészült\n"
+
+#, c-format
+msgid "%sError: a disabled trigger can not be restarted"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Trigger \"%s\" enabled"
+msgstr "a felhasználók le lettek tiltva"
+
+#, fuzzy, c-format
+msgid "Trigger \"%s\" disabled"
+msgstr "a felhasználók le lettek tiltva"
+
+#, c-format
+msgid "%sError: invalid name for trigger"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sError: trigger \"%s\" already exists"
+msgstr "%s az ignore már létezik\n"
+
+#, fuzzy, c-format
+msgid "Trigger \"%s\" renamed to \"%s\""
+msgstr "a felhasználók le lettek tiltva"
+
+#, fuzzy, c-format
+msgid "%sError: failed to rename trigger \"%s\""
+msgstr "%s nem sikerült a modul opciókat elmenteni\n"
+
+#, fuzzy
+msgid "List of triggers:"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy, c-format
+msgid "%sError: invalid hook type \"%s\""
+msgstr "%s nem sikerült a(z) \"%s\" billentyűt hozzárendelni\n"
+
+#, fuzzy, c-format
+msgid "%sError: invalid return code \"%s\""
+msgstr "%s nem sikerült a(z) \"%s\" billentyűparancsot visszavonni\n"
+
+#, c-format
+msgid ""
+"%sError: trigger \"%s\" already exists (choose another name or use option "
+"\"addreplace\" to overwrite it)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sError: failed to create trigger \"%s\""
+msgstr "%s nem sikerült a modul opciókat elmenteni\n"
+
+#, fuzzy, c-format
+msgid "Trigger \"%s\" created"
+msgstr "A \"%s\" => \"%s\" aliasz elkészült\n"
+
+#, fuzzy, c-format
+msgid "%sError: trigger \"%s\" not found"
+msgstr "%s a \"%s\" modul nem található\n"
+
+#, fuzzy, c-format
+msgid "Trigger \"%s\" updated"
+msgstr "A \"%s\" => \"%s\" aliasz elkészült\n"
+
+#, fuzzy, c-format
+msgid "%sError: trigger option \"%s\" not found"
+msgstr "%s a \"%s\" modul nem található\n"
+
+#, fuzzy, c-format
+msgid "Trigger \"%s\" copied to \"%s\""
+msgstr "a felhasználók le lettek tiltva"
+
+#, fuzzy, c-format
+msgid "%sError: failed to copy trigger \"%s\""
+msgstr "%s nem sikerült a modul opciókat elmenteni\n"
+
+#, fuzzy, c-format
+msgid "%sTrigger \"%s\" not found"
+msgstr "%s a \"%s\" szerver nem található\n"
+
+#, fuzzy, c-format
+msgid "%d triggers removed"
+msgstr "     időkezelők:\n"
+
+#, fuzzy, c-format
+msgid "Trigger \"%s\" removed"
+msgstr "A \"%s\" aliasz eltávolítva\n"
+
+msgid "Trigger:"
+msgstr ""
+
+#, fuzzy
+msgid "Default triggers restored:"
+msgstr "Alapértelmezett billentyűparancsok visszaállítva\n"
+
+#, fuzzy, c-format
+msgid ""
+"%sError: \"-yes\" argument is required for restoring default triggers "
+"(security reason)"
+msgstr ""
+"%s \"-yes\" paraméter megadása kötelező a billentyűparancsok "
+"visszaállításához (biztonsági okokból)\n"
+
+msgid "manage triggers, the Swiss Army knife for WeeChat"
+msgstr ""
+
+msgid ""
+"list|listfull|listdefault || add|addoff|addreplace <name> <hook> "
+"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>"
+"\" [\"<return_code>\"]]]]] || addinput [<hook>] || input|output|recreate "
+"<name> || set <name> <option> <value> || rename|copy <name> <new_name> || "
+"enable|disable|toggle [<name>|-all [<name>...]] || restart <name>|-all "
+"[<name>...] || show <name> || del <name>|-all [<name>...] || default -yes || "
+"monitor"
+msgstr ""
+
+msgid ""
+"       list: list triggers (without argument, this list is displayed)\n"
+"   listfull: list triggers with detailed info for each trigger\n"
+"listdefault: list default triggers\n"
+"        add: add a trigger\n"
+"     addoff: add a trigger (disabled)\n"
+" addreplace: add or replace an existing trigger\n"
+"       name: name of trigger\n"
+"       hook: signal, hsignal, modifier, print, command, command_run, timer, "
+"config, focus\n"
+"  arguments: arguments for the hook, depending on hook (separated by "
+"semicolons):\n"
+"             signal: name(s) of signal (required)\n"
+"             hsignal: name(s) of hsignal (required)\n"
+"             modifier: name(s) of modifier (required)\n"
+"             print: buffer, tags, message, strip colors\n"
+"             command: command (required), description, arguments, "
+"description of arguments, completion\n"
+"             command_run: command (required)\n"
+"             timer: interval (required), align on second (required), max "
+"calls (required)\n"
+"             config: name of option (required)\n"
+"             focus: name(s) of area (required)\n"
+" conditions: evaluated conditions for the trigger\n"
+"      regex: one or more regular expressions to replace strings in "
+"variables\n"
+"    command: command to execute (many commands can be separated by \";\"\n"
+"return_code: return code in callback (ok (default), ok_eat, error)\n"
+"   addinput: set input with default arguments to create a trigger\n"
+"      input: set input with the command used to create the trigger\n"
+"     output: send the command to create the trigger on the buffer\n"
+"   recreate: same as \"input\", with option \"addreplace\" instead of \"add"
+"\"\n"
+"        set: set an option in a trigger\n"
+"     option: name of option: name, hook, arguments, conditions, regex, "
+"command, return_code\n"
+"             (for help on option, you can type: /help trigger.trigger.<name>."
+"<option>)\n"
+"      value: new value for the option\n"
+"     rename: rename a trigger\n"
+"       copy: copy a trigger\n"
+"     enable: enable trigger(s) (without arguments: enable triggers "
+"globally)\n"
+"    disable: disable trigger(s) (without arguments: disable triggers "
+"globally)\n"
+"     toggle: toggle trigger(s) (without arguments: toggle triggers "
+"globally)\n"
+"    restart: restart trigger(s) (recreate the hooks)\n"
+"       show: show detailed info on a trigger (with some stats)\n"
+"        del: delete a trigger\n"
+"       -all: do action on all triggers\n"
+"    default: restore default triggers\n"
+"    monitor: open the trigger monitor buffer\n"
+"\n"
+"When a trigger callback is called, following actions are performed, in this "
+"order:\n"
+"  1. check conditions; if false, exit\n"
+"  2. replace text using POSIX extended regular expression(s) (if defined in "
+"trigger)\n"
+"  3. execute command(s) (if defined in trigger)\n"
+"  4. exit with a return code (except for modifiers and focus)\n"
+"\n"
+"Examples (you can also look at default triggers with /trigger listdefault):\n"
+"  add text attributes *bold*, _underline_ and /italic/ (only in user "
+"messages):\n"
+"    /trigger add effects modifier weechat_print \"${tg_tag_nick}\" \"=="
+"\\*(\\S+)\\*==*${color:bold}$1${color:-bold}*== ==_(\\S+)_==_${color:"
+"underline}$1${color:-underline}_== ==/(\\S+)/==/${color:italic}$1${color:-"
+"italic}/\"\n"
+"  hide nicklist bar on small terminals:\n"
+"    /trigger add resize_small signal signal_sigwinch \"${info:term_width} < "
+"100\" \"\" \"/bar hide nicklist\"\n"
+"    /trigger add resize_big signal signal_sigwinch \"${info:term_width} >= "
+"100\" \"\" \"/bar show nicklist\"\n"
+"  silently save config each hour:\n"
+"    /trigger add cfgsave timer 3600000;0;0 \"\" \"\" \"/mute /save\""
+msgstr ""
+
+msgid "triggers"
+msgstr ""
+
+#, fuzzy
+msgid "options for triggers"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy
+msgid "value of a trigger option"
+msgstr "Nem található az opció\n"
+
+#, fuzzy
+msgid "hooks for triggers"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy
+msgid "default arguments for a hook"
+msgstr "felhasználók listája a szobában"
+
+#, fuzzy
+msgid "default conditions for a hook"
+msgstr "információs pult szövegének színe"
+
+msgid "default regular expression for a hook"
+msgstr ""
+
+#, fuzzy
+msgid "default command for a hook"
+msgstr "%s belső parancsok:\n"
+
+#, fuzzy
+msgid "default return codes for hook callback"
+msgstr "információs pult szövegének színe"
+
+msgid ""
+"if disabled, the hooks are removed from trigger, so it is not called any more"
+msgstr ""
+
+#, fuzzy
+msgid "type of hook used"
+msgstr "Aliaszok listája:\n"
+
+msgid "arguments for the hook (depend on the hook type, see /help trigger)"
+msgstr ""
+
+msgid ""
+"condition(s) for running the command (it is checked in hook callback) (note: "
+"content is evaluated when trigger is run, see /help eval)"
+msgstr ""
+
+msgid ""
+"replace text with a POSIX extended regular expression (it is done only if "
+"conditions are OK, and before running the command) (note: content is "
+"evaluated on trigger creation, see /help eval); format is: \"/regex/replace/"
+"var\" (var is the hashtable variable to replace, it is optional), many regex "
+"can be separated by a space, for example: \"/regex1/replace1/var1 /regex2/"
+"replace2/var2\"; the separator \"/\" can be replaced by any char (one or "
+"more identical chars), except '\\' and parentheses; matching groups can be "
+"used in replace: $0 to $99, $+ for last match and $.cN to replace all chars "
+"of group N by char c"
+msgstr ""
+
+msgid ""
+"command(s) to run if conditions are OK, after regex replacements (many "
+"commands can be separated by semicolons)"
+msgstr ""
+
+msgid ""
+"return code for hook callback (see plugin API reference to know where ok_eat/"
+"error can be used efficiently)"
+msgstr ""
+
+msgid "enable trigger support"
+msgstr ""
+
+msgid "strip colors in hashtable values displayed on monitor buffer"
+msgstr ""
+
+#, fuzzy
+msgid "text color for command flag (in /trigger list)"
+msgstr "kilépési nyíl színe"
+
+#, fuzzy
+msgid "text color for conditions flag (in /trigger list)"
+msgstr "kilépési nyíl színe"
+
+#, fuzzy
+msgid "text color for regex flag (in /trigger list)"
+msgstr "név színe"
+
+#, fuzzy
+msgid "text color for return code flag (in /trigger list)"
+msgstr "név színe"
+
+#, fuzzy
+msgid "text color for regular expressions"
+msgstr "belépési nyíl színe"
+
+msgid "text color for replacement text (for regular expressions)"
+msgstr ""
+
+#, fuzzy
+msgid "text color for trigger name"
+msgstr "szerver nevének színe"
+
+#, fuzzy
+msgid "text color for disabled trigger name"
+msgstr "szerver nevének színe"
 
 msgid "  [A] Accept"
 msgstr "  [A] Elfogadás"
@@ -9462,44 +9851,3 @@ msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
-
-#, fuzzy
-msgid "Plugin"
-msgstr "  (nem található bővítőmodul)\n"
-
-msgid "Name"
-msgstr ""
-
-#, fuzzy
-msgid "Arguments"
-msgstr "fogadó típusa [paraméterek]"
-
-msgid "Hashtable (input)"
-msgstr ""
-
-msgid "Hashtable (output)"
-msgstr ""
-
-#, fuzzy
-msgid "Pointer"
-msgstr "perc"
-
-#, fuzzy
-msgid "variables"
-msgstr "  . típus: szám\n"
-
-msgid "update allowed"
-msgstr ""
-
-msgid "lists"
-msgstr ""
-
-#, fuzzy
-msgid "Option"
-msgstr "[parancs]"
-
-msgid "Type"
-msgstr ""
-
-msgid "Constants"
-msgstr ""

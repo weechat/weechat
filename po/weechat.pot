@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-02-20 11:55+0100\n"
+"POT-Creation-Date: 2014-02-21 16:28+0100\n"
 "PO-Revision-Date: 2013-02-14 18:20+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -30,6 +30,81 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+msgid "any string"
+msgstr ""
+
+msgid "any char"
+msgstr ""
+
+msgid "max chars"
+msgstr ""
+
+msgid ""
+"a WeeChat color name (default, black, (dark)gray, white, (light)red, "
+"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
+"terminal color number or an alias; attributes are allowed before color (for "
+"text color only, not background): \"*\" for bold, \"!\" for reverse, \"/\" "
+"for italic, \"_\" for underline"
+msgstr ""
+
+msgid "description"
+msgstr ""
+
+msgid "type"
+msgstr ""
+
+msgid "values"
+msgstr ""
+
+msgid "default value"
+msgstr ""
+
+#. TRANSLATORS: please do not translate "(null)"
+msgid "undefined value allowed (null)"
+msgstr ""
+
+msgid "Plugin"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Arguments"
+msgstr ""
+
+msgid "Hashtable (input)"
+msgstr ""
+
+msgid "Hashtable (output)"
+msgstr ""
+
+msgid "Pointer"
+msgstr ""
+
+msgid "plugin"
+msgstr ""
+
+msgid "variables"
+msgstr ""
+
+msgid "update allowed"
+msgstr ""
+
+msgid "lists"
+msgstr ""
+
+msgid "Option"
+msgstr ""
+
+msgid "Type"
+msgstr ""
+
+msgid "Constants"
+msgstr ""
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
@@ -300,19 +375,7 @@ msgstr ""
 msgid "Option \"%s%s%s\":"
 msgstr ""
 
-msgid "description"
-msgstr ""
-
-msgid "type"
-msgstr ""
-
 msgid "boolean"
-msgstr ""
-
-msgid "values"
-msgstr ""
-
-msgid "default value"
 msgstr ""
 
 msgid "(undefined)"
@@ -327,28 +390,7 @@ msgstr ""
 msgid "integer"
 msgstr ""
 
-msgid "any string"
-msgstr ""
-
-msgid "any char"
-msgstr ""
-
-msgid "max chars"
-msgstr ""
-
 msgid "color"
-msgstr ""
-
-msgid ""
-"a WeeChat color name (default, black, (dark)gray, white, (light)red, "
-"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
-"terminal color number or an alias; attributes are allowed before color (for "
-"text color only, not background): \"*\" for bold, \"!\" for reverse, \"/\" "
-"for italic, \"_\" for underline"
-msgstr ""
-
-#. TRANSLATORS: please do not translate "(null)"
-msgid "undefined value allowed (null)"
 msgstr ""
 
 #, c-format
@@ -3712,6 +3754,55 @@ msgstr ""
 msgid "name of FIFO pipe"
 msgstr ""
 
+#, c-format
+msgid "%s%s: script \"%s\" already registered (register ignored)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: unable to register script \"%s\" (another script already exists with "
+"this name)"
+msgstr ""
+
+#, c-format
+msgid "%s: registered script \"%s\", version %s (%s)"
+msgstr ""
+
+msgid "Support of scheme scripts (with Guile)"
+msgstr ""
+
+#, c-format
+msgid "%s: stdout/stderr: %s%s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: function \"%s\" must return a valid value"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error in function \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s: loading script \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: function \"register\" not found (or failed) in file \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s: unloading script \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s: script \"%s\" unloaded"
+msgstr ""
+
+#, c-format
+msgid "%s%s: script \"%s\" not loaded"
+msgstr ""
+
 msgid "away"
 msgstr ""
 
@@ -6520,6 +6611,56 @@ msgstr ""
 msgid "logger pointer (optional)"
 msgstr ""
 
+msgid "Support of lua scripts"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: script \"%s\" not found"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to redirect stdout and stderr"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to load file \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to execute file \"%s\""
+msgstr ""
+
+msgid "Support of perl scripts"
+msgstr ""
+
+#, c-format
+msgid "%s%s: function \"%s\" must return one valid value (%d)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: function \"%s\" is internally misused"
+msgstr ""
+
+#, c-format
+msgid "%s%s: not enough memory in function \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to parse file \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to initialize %s"
+msgstr ""
+
 msgid "WeeChat version"
 msgstr ""
 
@@ -6767,9 +6908,6 @@ msgstr ""
 msgid "nick in nicklist"
 msgstr ""
 
-msgid "plugin"
-msgstr ""
-
 msgid "proxy"
 msgstr ""
 
@@ -6839,6 +6977,139 @@ msgid "Plugins unloaded"
 msgstr ""
 
 msgid "description of plugin option"
+msgstr ""
+
+msgid "list/load/unload scripts"
+msgstr ""
+
+msgid ""
+"list|listfull [<name>] || load [-q] <filename> || autoload || reload|unload "
+"[-q] [<name>]"
+msgstr ""
+
+msgid ""
+"    list: list loaded scripts\n"
+"listfull: list loaded scripts (verbose)\n"
+"    load: load a script\n"
+"autoload: load all scripts in \"autoload\" directory\n"
+"  reload: reload a script (if no name given, unload all scripts, then load "
+"all scripts in \"autoload\" directory)\n"
+"  unload: unload a script (if no name given, unload all scripts)\n"
+"filename: script (file) to load\n"
+"    name: a script name (name used in call to \"register\" function)\n"
+"      -q: quiet mode: do not display messages\n"
+"\n"
+"Without argument, this command lists all loaded scripts."
+msgstr ""
+
+msgid "list of scripts"
+msgstr ""
+
+msgid "script pointer (optional)"
+msgstr ""
+
+msgid "script name (can start or end with \"*\" as wildcard) (optional)"
+msgstr ""
+
+msgid "callback of a script"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: warning, invalid pointer (\"%s\") for function \"%s\" (script: %s)"
+msgstr ""
+
+#, c-format
+msgid "%s: error loading script \"%s\" (spaces or empty name not allowed)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: warning, license \"%s\" for script \"%s\" differs from plugin license "
+"(\"%s\")"
+msgstr ""
+
+#, c-format
+msgid "%s: error loading script \"%s\" (not enough memory)"
+msgstr ""
+
+#, c-format
+msgid "%s: script removed: %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: failed to remove script: %s (%s)"
+msgstr ""
+
+#, c-format
+msgid "%s: script \"%s\" not found, nothing was removed"
+msgstr ""
+
+#, c-format
+msgid "%s%s: failed to move script %s to %s (%s)"
+msgstr ""
+
+#. TRANSLATORS: "%s" is language (for example "perl")
+#, c-format
+msgid "%s scripts loaded:"
+msgstr ""
+
+#, c-format
+msgid "    file: %s"
+msgstr ""
+
+#, c-format
+msgid "    written by \"%s\", license: %s"
+msgstr ""
+
+msgid "  (none)"
+msgstr ""
+
+#, c-format
+msgid "%s: scripts unloaded"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: unable to call function \"%s\", script is not initialized (script: %s)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
+msgstr ""
+
+msgid "Support of python scripts"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to initialize WeeChat module"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to redirect stdout"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to redirect stderr"
+msgstr ""
+
+msgid "path to python 2.x interpreter"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to launch global interpreter"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to get current interpreter state"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to free interpreter"
+msgstr ""
+
+#, c-format
+msgid "%s%s: not enough memory for parsing message"
 msgstr ""
 
 msgid "Actions (letter+enter):"
@@ -7223,10 +7494,6 @@ msgid "%s%s: not enough memory for listening on new port"
 msgstr ""
 
 #, c-format
-msgid "%s%s: not enough memory for parsing message"
-msgstr ""
-
-#, c-format
 msgid "%s%s: failed to execute command \"%s\" for client %s%s%s"
 msgstr ""
 
@@ -7336,234 +7603,6 @@ msgstr ""
 msgid "rmodifier name (can start or end with \"*\" as joker) (optional)"
 msgstr ""
 
-#, c-format
-msgid "%s%s: script \"%s\" already registered (register ignored)"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s%s: unable to register script \"%s\" (another script already exists with "
-"this name)"
-msgstr ""
-
-#, c-format
-msgid "%s: registered script \"%s\", version %s (%s)"
-msgstr ""
-
-msgid "Support of scheme scripts (with Guile)"
-msgstr ""
-
-#, c-format
-msgid "%s: stdout/stderr: %s%s"
-msgstr ""
-
-#, c-format
-msgid "%s%s: function \"%s\" must return a valid value"
-msgstr ""
-
-#, c-format
-msgid "%s%s: error in function \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%s: loading script \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%s%s: function \"register\" not found (or failed) in file \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%s: unloading script \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%s: script \"%s\" unloaded"
-msgstr ""
-
-#, c-format
-msgid "%s%s: script \"%s\" not loaded"
-msgstr ""
-
-msgid "Support of lua scripts"
-msgstr ""
-
-#, c-format
-msgid "%s%s: unable to run function \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%s%s: script \"%s\" not found"
-msgstr ""
-
-#, c-format
-msgid "%s%s: unable to create new sub-interpreter"
-msgstr ""
-
-#, c-format
-msgid "%s%s: unable to redirect stdout and stderr"
-msgstr ""
-
-#, c-format
-msgid "%s%s: unable to load file \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%s%s: unable to execute file \"%s\""
-msgstr ""
-
-msgid "Support of perl scripts"
-msgstr ""
-
-#, c-format
-msgid "%s%s: function \"%s\" must return one valid value (%d)"
-msgstr ""
-
-#, c-format
-msgid "%s%s: function \"%s\" is internally misused"
-msgstr ""
-
-#, c-format
-msgid "%s%s: not enough memory in function \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%s%s: unable to parse file \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%s%s: unable to initialize %s"
-msgstr ""
-
-msgid "list/load/unload scripts"
-msgstr ""
-
-msgid ""
-"list|listfull [<name>] || load [-q] <filename> || autoload || reload|unload "
-"[-q] [<name>]"
-msgstr ""
-
-msgid ""
-"    list: list loaded scripts\n"
-"listfull: list loaded scripts (verbose)\n"
-"    load: load a script\n"
-"autoload: load all scripts in \"autoload\" directory\n"
-"  reload: reload a script (if no name given, unload all scripts, then load "
-"all scripts in \"autoload\" directory)\n"
-"  unload: unload a script (if no name given, unload all scripts)\n"
-"filename: script (file) to load\n"
-"    name: a script name (name used in call to \"register\" function)\n"
-"      -q: quiet mode: do not display messages\n"
-"\n"
-"Without argument, this command lists all loaded scripts."
-msgstr ""
-
-msgid "list of scripts"
-msgstr ""
-
-msgid "script pointer (optional)"
-msgstr ""
-
-msgid "script name (can start or end with \"*\" as wildcard) (optional)"
-msgstr ""
-
-msgid "callback of a script"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s%s: warning, invalid pointer (\"%s\") for function \"%s\" (script: %s)"
-msgstr ""
-
-#, c-format
-msgid "%s: error loading script \"%s\" (spaces or empty name not allowed)"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s%s: warning, license \"%s\" for script \"%s\" differs from plugin license "
-"(\"%s\")"
-msgstr ""
-
-#, c-format
-msgid "%s: error loading script \"%s\" (not enough memory)"
-msgstr ""
-
-#, c-format
-msgid "%s: script removed: %s"
-msgstr ""
-
-#, c-format
-msgid "%s%s: failed to remove script: %s (%s)"
-msgstr ""
-
-#, c-format
-msgid "%s: script \"%s\" not found, nothing was removed"
-msgstr ""
-
-#, c-format
-msgid "%s%s: failed to move script %s to %s (%s)"
-msgstr ""
-
-#. TRANSLATORS: "%s" is language (for example "perl")
-#, c-format
-msgid "%s scripts loaded:"
-msgstr ""
-
-#, c-format
-msgid "    file: %s"
-msgstr ""
-
-#, c-format
-msgid "    written by \"%s\", license: %s"
-msgstr ""
-
-msgid "  (none)"
-msgstr ""
-
-#, c-format
-msgid "%s: scripts unloaded"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s%s: unable to call function \"%s\", script is not initialized (script: %s)"
-msgstr ""
-
-#, c-format
-msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
-msgstr ""
-
-msgid "Support of python scripts"
-msgstr ""
-
-#, c-format
-msgid "%s%s: unable to initialize WeeChat module"
-msgstr ""
-
-#, c-format
-msgid "%s%s: unable to redirect stdout"
-msgstr ""
-
-#, c-format
-msgid "%s%s: unable to redirect stderr"
-msgstr ""
-
-msgid "path to python 2.x interpreter"
-msgstr ""
-
-#, c-format
-msgid "%s%s: unable to launch global interpreter"
-msgstr ""
-
-#, c-format
-msgid "%s%s: unable to get current interpreter state"
-msgstr ""
-
-#, c-format
-msgid "%s%s: unable to free interpreter"
-msgstr ""
-
 msgid "Support of ruby scripts"
 msgstr ""
 
@@ -7589,9 +7628,6 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: unable to eval WeeChat ruby internal code"
-msgstr ""
-
-msgid "Scripts manager"
 msgstr ""
 
 msgid "Scripts loaded:"
@@ -7706,9 +7742,6 @@ msgstr ""
 msgid "License"
 msgstr ""
 
-msgid "Description"
-msgstr ""
-
 msgid "Tags"
 msgstr ""
 
@@ -7754,6 +7787,9 @@ msgid ""
 msgstr ""
 
 msgid "Scripts"
+msgstr ""
+
+msgid "Scripts manager"
 msgstr ""
 
 msgid "WeeChat scripts manager"
@@ -8060,6 +8096,329 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: error occurred while parsing file \"%s\": %s"
+msgstr ""
+
+msgid "Run actions on events triggered by WeeChat/plugins"
+msgstr ""
+
+#, c-format
+msgid "%sError: unable to create hook for trigger \"%s\" (bad arguments)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: invalid value for option \"regex\", see /help trigger.trigger.%s.regex"
+msgstr ""
+
+msgid "Trigger monitor"
+msgstr ""
+
+msgid "no variable"
+msgstr ""
+
+msgid "empty variable"
+msgstr ""
+
+#, c-format
+msgid "%s  running command %s\"%s%s%s\"%s on buffer %s%s%s"
+msgstr ""
+
+msgid "Triggers enabled"
+msgstr ""
+
+msgid "Triggers disabled"
+msgstr ""
+
+msgid "No trigger defined"
+msgstr ""
+
+msgid "List of default triggers:"
+msgstr ""
+
+#, c-format
+msgid "Trigger \"%s\" restarted"
+msgstr ""
+
+#, c-format
+msgid "%sError: a disabled trigger can not be restarted"
+msgstr ""
+
+#, c-format
+msgid "Trigger \"%s\" enabled"
+msgstr ""
+
+#, c-format
+msgid "Trigger \"%s\" disabled"
+msgstr ""
+
+#, c-format
+msgid "%sError: invalid name for trigger"
+msgstr ""
+
+#, c-format
+msgid "%sError: trigger \"%s\" already exists"
+msgstr ""
+
+#, c-format
+msgid "Trigger \"%s\" renamed to \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sError: failed to rename trigger \"%s\""
+msgstr ""
+
+msgid "List of triggers:"
+msgstr ""
+
+#, c-format
+msgid "%sError: invalid hook type \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sError: invalid return code \"%s\""
+msgstr ""
+
+#, c-format
+msgid ""
+"%sError: trigger \"%s\" already exists (choose another name or use option "
+"\"addreplace\" to overwrite it)"
+msgstr ""
+
+#, c-format
+msgid "%sError: failed to create trigger \"%s\""
+msgstr ""
+
+#, c-format
+msgid "Trigger \"%s\" created"
+msgstr ""
+
+#, c-format
+msgid "%sError: trigger \"%s\" not found"
+msgstr ""
+
+#, c-format
+msgid "Trigger \"%s\" updated"
+msgstr ""
+
+#, c-format
+msgid "%sError: trigger option \"%s\" not found"
+msgstr ""
+
+#, c-format
+msgid "Trigger \"%s\" copied to \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sError: failed to copy trigger \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sTrigger \"%s\" not found"
+msgstr ""
+
+#, c-format
+msgid "%d triggers removed"
+msgstr ""
+
+#, c-format
+msgid "Trigger \"%s\" removed"
+msgstr ""
+
+msgid "Trigger:"
+msgstr ""
+
+msgid "Default triggers restored:"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sError: \"-yes\" argument is required for restoring default triggers "
+"(security reason)"
+msgstr ""
+
+msgid "manage triggers, the Swiss Army knife for WeeChat"
+msgstr ""
+
+msgid ""
+"list|listfull|listdefault || add|addoff|addreplace <name> <hook> "
+"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>"
+"\" [\"<return_code>\"]]]]] || addinput [<hook>] || input|output|recreate "
+"<name> || set <name> <option> <value> || rename|copy <name> <new_name> || "
+"enable|disable|toggle [<name>|-all [<name>...]] || restart <name>|-all "
+"[<name>...] || show <name> || del <name>|-all [<name>...] || default -yes || "
+"monitor"
+msgstr ""
+
+msgid ""
+"       list: list triggers (without argument, this list is displayed)\n"
+"   listfull: list triggers with detailed info for each trigger\n"
+"listdefault: list default triggers\n"
+"        add: add a trigger\n"
+"     addoff: add a trigger (disabled)\n"
+" addreplace: add or replace an existing trigger\n"
+"       name: name of trigger\n"
+"       hook: signal, hsignal, modifier, print, command, command_run, timer, "
+"config, focus\n"
+"  arguments: arguments for the hook, depending on hook (separated by "
+"semicolons):\n"
+"             signal: name(s) of signal (required)\n"
+"             hsignal: name(s) of hsignal (required)\n"
+"             modifier: name(s) of modifier (required)\n"
+"             print: buffer, tags, message, strip colors\n"
+"             command: command (required), description, arguments, "
+"description of arguments, completion\n"
+"             command_run: command (required)\n"
+"             timer: interval (required), align on second (required), max "
+"calls (required)\n"
+"             config: name of option (required)\n"
+"             focus: name(s) of area (required)\n"
+" conditions: evaluated conditions for the trigger\n"
+"      regex: one or more regular expressions to replace strings in "
+"variables\n"
+"    command: command to execute (many commands can be separated by \";\"\n"
+"return_code: return code in callback (ok (default), ok_eat, error)\n"
+"   addinput: set input with default arguments to create a trigger\n"
+"      input: set input with the command used to create the trigger\n"
+"     output: send the command to create the trigger on the buffer\n"
+"   recreate: same as \"input\", with option \"addreplace\" instead of \"add"
+"\"\n"
+"        set: set an option in a trigger\n"
+"     option: name of option: name, hook, arguments, conditions, regex, "
+"command, return_code\n"
+"             (for help on option, you can type: /help trigger.trigger.<name>."
+"<option>)\n"
+"      value: new value for the option\n"
+"     rename: rename a trigger\n"
+"       copy: copy a trigger\n"
+"     enable: enable trigger(s) (without arguments: enable triggers "
+"globally)\n"
+"    disable: disable trigger(s) (without arguments: disable triggers "
+"globally)\n"
+"     toggle: toggle trigger(s) (without arguments: toggle triggers "
+"globally)\n"
+"    restart: restart trigger(s) (recreate the hooks)\n"
+"       show: show detailed info on a trigger (with some stats)\n"
+"        del: delete a trigger\n"
+"       -all: do action on all triggers\n"
+"    default: restore default triggers\n"
+"    monitor: open the trigger monitor buffer\n"
+"\n"
+"When a trigger callback is called, following actions are performed, in this "
+"order:\n"
+"  1. check conditions; if false, exit\n"
+"  2. replace text using POSIX extended regular expression(s) (if defined in "
+"trigger)\n"
+"  3. execute command(s) (if defined in trigger)\n"
+"  4. exit with a return code (except for modifiers and focus)\n"
+"\n"
+"Examples (you can also look at default triggers with /trigger listdefault):\n"
+"  add text attributes *bold*, _underline_ and /italic/ (only in user "
+"messages):\n"
+"    /trigger add effects modifier weechat_print \"${tg_tag_nick}\" \"=="
+"\\*(\\S+)\\*==*${color:bold}$1${color:-bold}*== ==_(\\S+)_==_${color:"
+"underline}$1${color:-underline}_== ==/(\\S+)/==/${color:italic}$1${color:-"
+"italic}/\"\n"
+"  hide nicklist bar on small terminals:\n"
+"    /trigger add resize_small signal signal_sigwinch \"${info:term_width} < "
+"100\" \"\" \"/bar hide nicklist\"\n"
+"    /trigger add resize_big signal signal_sigwinch \"${info:term_width} >= "
+"100\" \"\" \"/bar show nicklist\"\n"
+"  silently save config each hour:\n"
+"    /trigger add cfgsave timer 3600000;0;0 \"\" \"\" \"/mute /save\""
+msgstr ""
+
+msgid "triggers"
+msgstr ""
+
+msgid "options for triggers"
+msgstr ""
+
+msgid "value of a trigger option"
+msgstr ""
+
+msgid "hooks for triggers"
+msgstr ""
+
+msgid "default arguments for a hook"
+msgstr ""
+
+msgid "default conditions for a hook"
+msgstr ""
+
+msgid "default regular expression for a hook"
+msgstr ""
+
+msgid "default command for a hook"
+msgstr ""
+
+msgid "default return codes for hook callback"
+msgstr ""
+
+msgid ""
+"if disabled, the hooks are removed from trigger, so it is not called any more"
+msgstr ""
+
+msgid "type of hook used"
+msgstr ""
+
+msgid "arguments for the hook (depend on the hook type, see /help trigger)"
+msgstr ""
+
+msgid ""
+"condition(s) for running the command (it is checked in hook callback) (note: "
+"content is evaluated when trigger is run, see /help eval)"
+msgstr ""
+
+msgid ""
+"replace text with a POSIX extended regular expression (it is done only if "
+"conditions are OK, and before running the command) (note: content is "
+"evaluated on trigger creation, see /help eval); format is: \"/regex/replace/"
+"var\" (var is the hashtable variable to replace, it is optional), many regex "
+"can be separated by a space, for example: \"/regex1/replace1/var1 /regex2/"
+"replace2/var2\"; the separator \"/\" can be replaced by any char (one or "
+"more identical chars), except '\\' and parentheses; matching groups can be "
+"used in replace: $0 to $99, $+ for last match and $.cN to replace all chars "
+"of group N by char c"
+msgstr ""
+
+msgid ""
+"command(s) to run if conditions are OK, after regex replacements (many "
+"commands can be separated by semicolons)"
+msgstr ""
+
+msgid ""
+"return code for hook callback (see plugin API reference to know where ok_eat/"
+"error can be used efficiently)"
+msgstr ""
+
+msgid "enable trigger support"
+msgstr ""
+
+msgid "strip colors in hashtable values displayed on monitor buffer"
+msgstr ""
+
+msgid "text color for command flag (in /trigger list)"
+msgstr ""
+
+msgid "text color for conditions flag (in /trigger list)"
+msgstr ""
+
+msgid "text color for regex flag (in /trigger list)"
+msgstr ""
+
+msgid "text color for return code flag (in /trigger list)"
+msgstr ""
+
+msgid "text color for regular expressions"
+msgstr ""
+
+msgid "text color for replacement text (for regular expressions)"
+msgstr ""
+
+msgid "text color for trigger name"
+msgstr ""
+
+msgid "text color for disabled trigger name"
 msgstr ""
 
 msgid "  [A] Accept"
@@ -8443,40 +8802,4 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
-msgstr ""
-
-msgid "Plugin"
-msgstr ""
-
-msgid "Name"
-msgstr ""
-
-msgid "Arguments"
-msgstr ""
-
-msgid "Hashtable (input)"
-msgstr ""
-
-msgid "Hashtable (output)"
-msgstr ""
-
-msgid "Pointer"
-msgstr ""
-
-msgid "variables"
-msgstr ""
-
-msgid "update allowed"
-msgstr ""
-
-msgid "lists"
-msgstr ""
-
-msgid "Option"
-msgstr ""
-
-msgid "Type"
-msgstr ""
-
-msgid "Constants"
 msgstr ""

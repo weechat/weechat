@@ -70,6 +70,24 @@
 
 | tcl | tcl_script | liste des scripts
 
+| trigger | trigger_hook_arguments | paramètres par défaut pour un hook
+
+| trigger | trigger_hook_command | commande par défaut pour un hook
+
+| trigger | trigger_hook_conditions | conditions par défaut pour un hook
+
+| trigger | trigger_hook_rc | code retour par défaut pour un callback de hook
+
+| trigger | trigger_hook_regex | expression régulière par défaut pour le hook
+
+| trigger | trigger_hooks | hooks pour les triggers
+
+| trigger | trigger_names | triggers
+
+| trigger | trigger_option_value | valeur d'une option de trigger
+
+| trigger | trigger_options | options pour les triggers
+
 | weechat | bars_names | noms des barres
 
 | weechat | bars_options | options pour les barres

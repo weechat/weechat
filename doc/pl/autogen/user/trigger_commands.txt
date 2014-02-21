@@ -1,0 +1,75 @@
+[[command_trigger_trigger]]
+[command]*`trigger`* manage triggers, the Swiss Army knife for WeeChat::
+
+----
+/trigger  list|listfull|listdefault
+          add|addoff|addreplace <name> <hook> ["<arguments>" ["<conditions>" ["<regex>" ["<command>" ["<return_code>"]]]]]
+          addinput [<hook>]
+          input|output|recreate <name>
+          set <name> <option> <value>
+          rename|copy <name> <new_name>
+          enable|disable|toggle [<name>|-all [<name>...]]
+          restart <name>|-all [<name>...]
+          show <name>
+          del <name>|-all [<name>...]
+          default -yes
+          monitor
+
+       list: list triggers (without argument, this list is displayed)
+   listfull: list triggers with detailed info for each trigger
+listdefault: list default triggers
+        add: add a trigger
+     addoff: add a trigger (disabled)
+ addreplace: add or replace an existing trigger
+       name: name of trigger
+       hook: signal, hsignal, modifier, print, command, command_run, timer, config, focus
+  arguments: arguments for the hook, depending on hook (separated by semicolons):
+             signal: name(s) of signal (required)
+             hsignal: name(s) of hsignal (required)
+             modifier: name(s) of modifier (required)
+             print: buffer, tags, message, strip colors
+             command: command (required), description, arguments, description of arguments, completion
+             command_run: command (required)
+             timer: interval (required), align on second (required), max calls (required)
+             config: name of option (required)
+             focus: name(s) of area (required)
+ conditions: evaluated conditions for the trigger
+      regex: one or more regular expressions to replace strings in variables
+    command: command to execute (many commands can be separated by ";"
+return_code: return code in callback (ok (default), ok_eat, error)
+   addinput: set input with default arguments to create a trigger
+      input: set input with the command used to create the trigger
+     output: send the command to create the trigger on the buffer
+   recreate: same as "input", with option "addreplace" instead of "add"
+        set: set an option in a trigger
+     option: name of option: name, hook, arguments, conditions, regex, command, return_code
+             (for help on option, you can type: /help trigger.trigger.<name>.<option>)
+      value: new value for the option
+     rename: rename a trigger
+       copy: copy a trigger
+     enable: enable trigger(s) (without arguments: enable triggers globally)
+    disable: disable trigger(s) (without arguments: disable triggers globally)
+     toggle: toggle trigger(s) (without arguments: toggle triggers globally)
+    restart: restart trigger(s) (recreate the hooks)
+       show: show detailed info on a trigger (with some stats)
+        del: delete a trigger
+       -all: do action on all triggers
+    default: restore default triggers
+    monitor: open the trigger monitor buffer
+
+When a trigger callback is called, following actions are performed, in this order:
+  1. check conditions; if false, exit
+  2. replace text using POSIX extended regular expression(s) (if defined in trigger)
+  3. execute command(s) (if defined in trigger)
+  4. exit with a return code (except for modifiers and focus)
+
+Examples (you can also look at default triggers with /trigger listdefault):
+  add text attributes *bold*, _underline_ and /italic/ (only in user messages):
+    /trigger add effects modifier weechat_print "${tg_tag_nick}" "==\*(\S+)\*==*${color:bold}$1${color:-bold}*== ==_(\S+)_==_${color:underline}$1${color:-underline}_== ==/(\S+)/==/${color:italic}$1${color:-italic}/"
+  hide nicklist bar on small terminals:
+    /trigger add resize_small signal signal_sigwinch "${info:term_width} < 100" "" "/bar hide nicklist"
+    /trigger add resize_big signal signal_sigwinch "${info:term_width} >= 100" "" "/bar show nicklist"
+  silently save config each hour:
+    /trigger add cfgsave timer 3600000;0;0 "" "" "/mute /save"
+----
+

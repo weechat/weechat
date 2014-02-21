@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-02-20 11:55+0100\n"
+"POT-Creation-Date: 2014-02-21 16:28+0100\n"
 "PO-Revision-Date: 2014-02-20 12:24+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -29,6 +29,90 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+msgid "any string"
+msgstr "jakýkoliv řetězec"
+
+msgid "any char"
+msgstr "jakýkoliv znak"
+
+msgid "max chars"
+msgstr "maximálně znaků"
+
+#, fuzzy
+msgid ""
+"a WeeChat color name (default, black, (dark)gray, white, (light)red, "
+"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
+"terminal color number or an alias; attributes are allowed before color (for "
+"text color only, not background): \"*\" for bold, \"!\" for reverse, \"/\" "
+"for italic, \"_\" for underline"
+msgstr ""
+"jméno WeeChat barvy (default, black, (dark)gray, white, (light)red, "
+"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), "
+"číslo barvy terminálu nebo alias; před barvou jsou povoleny atributy (pouze "
+"pro barvu textu, ne pro barvu pozadí): \"*\" pro tučné, \"!\" pro obrácené, "
+"\"_\" pro podtržené"
+
+msgid "description"
+msgstr "popis"
+
+msgid "type"
+msgstr "typ"
+
+msgid "values"
+msgstr "hodnoty"
+
+msgid "default value"
+msgstr "výchozí hodnota"
+
+#. TRANSLATORS: please do not translate "(null)"
+msgid "undefined value allowed (null)"
+msgstr "povolena nedefinnovaná hodnota (null)"
+
+msgid "Plugin"
+msgstr "Plugin"
+
+msgid "Name"
+msgstr "Jméno"
+
+msgid "Description"
+msgstr "Popis"
+
+msgid "Arguments"
+msgstr "Argumenty"
+
+msgid "Hashtable (input)"
+msgstr "Hash tabulka (vstup)"
+
+msgid "Hashtable (output)"
+msgstr "Hash tabulka (výstup)"
+
+msgid "Pointer"
+msgstr "Ukazatel"
+
+#, fuzzy
+msgid "plugin"
+msgstr "Plugin"
+
+#, fuzzy
+msgid "variables"
+msgstr "čtení - proměnná"
+
+msgid "update allowed"
+msgstr ""
+
+msgid "lists"
+msgstr ""
+
+#, fuzzy
+msgid "Option"
+msgstr "<volba>"
+
+msgid "Type"
+msgstr ""
+
+msgid "Constants"
+msgstr ""
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
@@ -321,20 +405,8 @@ msgstr "Filter \"%s\" smazán"
 msgid "Option \"%s%s%s\":"
 msgstr "Volba \"%s%s%s\":"
 
-msgid "description"
-msgstr "popis"
-
-msgid "type"
-msgstr "typ"
-
 msgid "boolean"
 msgstr "boolovský"
-
-msgid "values"
-msgstr "hodnoty"
-
-msgid "default value"
-msgstr "výchozí hodnota"
 
 msgid "(undefined)"
 msgstr "(nedefinováno)"
@@ -348,35 +420,8 @@ msgstr "řetězec"
 msgid "integer"
 msgstr "celé číslo"
 
-msgid "any string"
-msgstr "jakýkoliv řetězec"
-
-msgid "any char"
-msgstr "jakýkoliv znak"
-
-msgid "max chars"
-msgstr "maximálně znaků"
-
 msgid "color"
 msgstr "barva"
-
-#, fuzzy
-msgid ""
-"a WeeChat color name (default, black, (dark)gray, white, (light)red, "
-"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
-"terminal color number or an alias; attributes are allowed before color (for "
-"text color only, not background): \"*\" for bold, \"!\" for reverse, \"/\" "
-"for italic, \"_\" for underline"
-msgstr ""
-"jméno WeeChat barvy (default, black, (dark)gray, white, (light)red, "
-"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), "
-"číslo barvy terminálu nebo alias; před barvou jsou povoleny atributy (pouze "
-"pro barvu textu, ne pro barvu pozadí): \"*\" pro tučné, \"!\" pro obrácené, "
-"\"_\" pro podtržené"
-
-#. TRANSLATORS: please do not translate "(null)"
-msgid "undefined value allowed (null)"
-msgstr "povolena nedefinnovaná hodnota (null)"
 
 #, c-format
 msgid "%sNo help available, \"%s\" is not a command or an option"
@@ -4529,6 +4574,58 @@ msgstr "%s%s: chyba při otevírání souboru, zavírám ho"
 msgid "name of FIFO pipe"
 msgstr "jméno FIFO roury"
 
+#, fuzzy, c-format
+msgid "%s%s: script \"%s\" already registered (register ignored)"
+msgstr "%s%s: server \"%s\" již existuje, nemohu jej vytvořít!"
+
+#, c-format
+msgid ""
+"%s%s: unable to register script \"%s\" (another script already exists with "
+"this name)"
+msgstr ""
+"%s%s: nemohu registrovat skript \"%s\" (jiný skript se stejným jménem již "
+"existuje)"
+
+#, c-format
+msgid "%s: registered script \"%s\", version %s (%s)"
+msgstr "%s: zaregistrován skript \"%s\", verze %s (%s)"
+
+msgid "Support of scheme scripts (with Guile)"
+msgstr ""
+
+#, c-format
+msgid "%s: stdout/stderr: %s%s"
+msgstr "%s: stdout/stderr: %s%s"
+
+#, c-format
+msgid "%s%s: function \"%s\" must return a valid value"
+msgstr "%s%s: funkce \"%s\" musí vracet korektní hodnotu"
+
+#, c-format
+msgid "%s%s: error in function \"%s\""
+msgstr "%s%s: chyba ve funkci \"%s\""
+
+#, c-format
+msgid "%s: loading script \"%s\""
+msgstr "%s: načítám skript \"%s\""
+
+#, c-format
+msgid "%s%s: function \"register\" not found (or failed) in file \"%s\""
+msgstr ""
+"%s%s: funkce \"register\" nebyla nalezena (nebo selhala) v souboru \"%s\""
+
+#, c-format
+msgid "%s: unloading script \"%s\""
+msgstr "%s: odebírám skript \"%s\""
+
+#, c-format
+msgid "%s: script \"%s\" unloaded"
+msgstr "%s: skript \"%s\" odebrán"
+
+#, c-format
+msgid "%s%s: script \"%s\" not loaded"
+msgstr "%s%s: skript \"%s\" nenačten"
+
 msgid "away"
 msgstr "pryč"
 
@@ -7889,6 +7986,58 @@ msgstr "seznam logovacích bufferů"
 msgid "logger pointer (optional)"
 msgstr "ukazatel logeru (volitelné)"
 
+#, fuzzy
+msgid "Support of lua scripts"
+msgstr "seznam skriptů"
+
+#, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr "%s%s: nemůžu spustit funkci \"%s\""
+
+#, c-format
+msgid "%s%s: script \"%s\" not found"
+msgstr "%s%s: skript \"%s\" nenalezen"
+
+#, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr "%s%s: nemohu vytvořit nový pod-interpreter"
+
+#, c-format
+msgid "%s%s: unable to redirect stdout and stderr"
+msgstr "%s%s: nemohu přesměrovat stdout a stderr"
+
+#, c-format
+msgid "%s%s: unable to load file \"%s\""
+msgstr "%s%s: nemůžu načíst soubor \"%s\""
+
+#, c-format
+msgid "%s%s: unable to execute file \"%s\""
+msgstr "%s%s: nemůžu spustit soubor \"%s\""
+
+#, fuzzy
+msgid "Support of perl scripts"
+msgstr "seznam skriptů"
+
+#, c-format
+msgid "%s%s: function \"%s\" must return one valid value (%d)"
+msgstr "%s%s: funkce \"%s\" musí vracet jednu validní hodnotu (%d)"
+
+#, c-format
+msgid "%s%s: function \"%s\" is internally misused"
+msgstr "%s%s: funkce \"%s\" je vnitřně špatně použitá"
+
+#, c-format
+msgid "%s%s: not enough memory in function \"%s\""
+msgstr "%s%s: nedostatek paměti ve funkci \"%s\""
+
+#, c-format
+msgid "%s%s: unable to parse file \"%s\""
+msgstr "%s%s: nemůžu parsovat soubor \"%s\""
+
+#, c-format
+msgid "%s%s: unable to initialize %s"
+msgstr "%s%s: nemohu inicializovat %s"
+
 msgid "WeeChat version"
 msgstr "verze WeeChat"
 
@@ -8177,10 +8326,6 @@ msgstr "barva textu pro skupiny v seznamu přezdívek"
 msgid "nick in nicklist"
 msgstr "přezdívky v seznamu notifikací"
 
-#, fuzzy
-msgid "plugin"
-msgstr "Plugin"
-
 msgid "proxy"
 msgstr ""
 
@@ -8259,6 +8404,162 @@ msgstr "Pluginy odebrány"
 
 msgid "description of plugin option"
 msgstr "popis volby pluginu"
+
+msgid "list/load/unload scripts"
+msgstr "seznam/načíst/odebrat skirpty"
+
+#, fuzzy
+msgid ""
+"list|listfull [<name>] || load [-q] <filename> || autoload || reload|unload "
+"[-q] [<name>]"
+msgstr ""
+"list|listfull [<jméno>] || load <jméno_souboru> || autoload || reload|unload "
+"[<jméno>]"
+
+#, fuzzy
+msgid ""
+"    list: list loaded scripts\n"
+"listfull: list loaded scripts (verbose)\n"
+"    load: load a script\n"
+"autoload: load all scripts in \"autoload\" directory\n"
+"  reload: reload a script (if no name given, unload all scripts, then load "
+"all scripts in \"autoload\" directory)\n"
+"  unload: unload a script (if no name given, unload all scripts)\n"
+"filename: script (file) to load\n"
+"    name: a script name (name used in call to \"register\" function)\n"
+"      -q: quiet mode: do not display messages\n"
+"\n"
+"Without argument, this command lists all loaded scripts."
+msgstr ""
+"    list: vypíše načtené skripty\n"
+"listfull: vypíše načtené skripty s detailními informacemi\n"
+"    load: načte skript\n"
+"autolaod: načte všechny skripty v adresáři \"autoload\"\n"
+"  reload: znovu načte jeden skript (pokud není zadané žádné jméno odebere "
+"všechny skripty a pak načte skripty v adresáři \"autoload\")\n"
+"  unload: odebere skript (pokud není zadané žádné jméno odebere všechny "
+"skripty)\n"
+"filename: script (soubor) pro načtení\n"
+"    name: jméno scriptu (jméno použité ve volání funkce \"register\")\n"
+"\n"
+"Zavolání příkazu bez parametrů vypíše načtené skripty."
+
+msgid "list of scripts"
+msgstr "seznam skriptů"
+
+msgid "script pointer (optional)"
+msgstr "ukazatel skriptu (volitelný)"
+
+msgid "script name (can start or end with \"*\" as wildcard) (optional)"
+msgstr ""
+"jméno skriptu (může začínat nebo končit \"*\" jako zástupným znakem) "
+"(volitelné)"
+
+#, fuzzy
+msgid "callback of a script"
+msgstr "seznam skriptů"
+
+#, fuzzy, c-format
+msgid ""
+"%s%s: warning, invalid pointer (\"%s\") for function \"%s\" (script: %s)"
+msgstr "%s%s: špatné parametry pro funkci \"%s\" (skript: %s)"
+
+#, fuzzy, c-format
+msgid "%s: error loading script \"%s\" (spaces or empty name not allowed)"
+msgstr "%s: chyba načítání skriptu \"%s\" (nedostatek paměti)"
+
+#, c-format
+msgid ""
+"%s%s: warning, license \"%s\" for script \"%s\" differs from plugin license "
+"(\"%s\")"
+msgstr ""
+"%s%s: varování, licence \"%s\" pro skript \"%s\" je rozdílná od licence "
+"pluginu (\"%s\")"
+
+#, c-format
+msgid "%s: error loading script \"%s\" (not enough memory)"
+msgstr "%s: chyba načítání skriptu \"%s\" (nedostatek paměti)"
+
+#, c-format
+msgid "%s: script removed: %s"
+msgstr "%s: skript odebrána: %s"
+
+#, c-format
+msgid "%s%s: failed to remove script: %s (%s)"
+msgstr "%s%s: nemohu odebrat skript: %s (%s)"
+
+#, c-format
+msgid "%s: script \"%s\" not found, nothing was removed"
+msgstr "%s: skript \"%s\" nenalezen, nic nebylo odebráno"
+
+#, c-format
+msgid "%s%s: failed to move script %s to %s (%s)"
+msgstr "%s%s: selhalo přesunutí skriptu %s na %s (%s)"
+
+#. TRANSLATORS: "%s" is language (for example "perl")
+#, c-format
+msgid "%s scripts loaded:"
+msgstr "načteny %s skripty:"
+
+#, c-format
+msgid "    file: %s"
+msgstr "    soubor: %s"
+
+#, c-format
+msgid "    written by \"%s\", license: %s"
+msgstr "    napsal \"%s\", licence: %s"
+
+msgid "  (none)"
+msgstr "  (žádný)"
+
+#, c-format
+msgid "%s: scripts unloaded"
+msgstr "%s: skripty odebrány"
+
+#, c-format
+msgid ""
+"%s%s: unable to call function \"%s\", script is not initialized (script: %s)"
+msgstr ""
+"%s%s: nemohu zavolat funkci \"%s\", skript není inicializován (skript: %s)"
+
+#, c-format
+msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
+msgstr "%s%s: špatné parametry pro funkci \"%s\" (skript: %s)"
+
+#, fuzzy
+msgid "Support of python scripts"
+msgstr "seznam skriptů"
+
+#, c-format
+msgid "%s%s: unable to initialize WeeChat module"
+msgstr "%s%s: nemohu inicialiyovat modul WeeChat"
+
+#, c-format
+msgid "%s%s: unable to redirect stdout"
+msgstr "%s%s: nemůžu přesměrovat stdout"
+
+#, c-format
+msgid "%s%s: unable to redirect stderr"
+msgstr "%s%s: nemohu přesměrovat stderr"
+
+msgid "path to python 2.x interpreter"
+msgstr "cesta k interpretru python 2.x"
+
+#, c-format
+msgid "%s%s: unable to launch global interpreter"
+msgstr "%s%s: nemohu spustit globální interpreter"
+
+#, c-format
+msgid "%s%s: unable to get current interpreter state"
+msgstr "%s%s: nemohu získat aktuální status interpretru"
+
+#, c-format
+msgid "%s%s: unable to free interpreter"
+msgstr "%s%s: nemohu uvolnit interpreter"
+
+#, c-format
+msgid "%s%s: not enough memory for parsing message"
+msgstr "%s%s: nedostatek paměti pro rozdělení zprávy"
 
 msgid "Actions (letter+enter):"
 msgstr "Akce (písmeno+enter):"
@@ -8683,10 +8984,6 @@ msgstr "%s: poslouchám na portu %d (přesměrování %s.%s, maximálně %d klie
 msgid "%s%s: not enough memory for listening on new port"
 msgstr "%s%s: nedostatek paměti pro poslouchání na portu"
 
-#, c-format
-msgid "%s%s: not enough memory for parsing message"
-msgstr "%s%s: nedostatek paměti pro rozdělení zprávy"
-
 #, fuzzy, c-format
 msgid "%s%s: failed to execute command \"%s\" for client %s%s%s"
 msgstr "%s%s: selhalo parsování příkazu \"%s\" (prosím oznamte to vývojárům):"
@@ -8828,262 +9125,6 @@ msgstr ""
 "jméno rmodifikátoru (může začínat nebo končit \"*\" jako zástupným znakem) "
 "(volitelné)"
 
-#, fuzzy, c-format
-msgid "%s%s: script \"%s\" already registered (register ignored)"
-msgstr "%s%s: server \"%s\" již existuje, nemohu jej vytvořít!"
-
-#, c-format
-msgid ""
-"%s%s: unable to register script \"%s\" (another script already exists with "
-"this name)"
-msgstr ""
-"%s%s: nemohu registrovat skript \"%s\" (jiný skript se stejným jménem již "
-"existuje)"
-
-#, c-format
-msgid "%s: registered script \"%s\", version %s (%s)"
-msgstr "%s: zaregistrován skript \"%s\", verze %s (%s)"
-
-msgid "Support of scheme scripts (with Guile)"
-msgstr ""
-
-#, c-format
-msgid "%s: stdout/stderr: %s%s"
-msgstr "%s: stdout/stderr: %s%s"
-
-#, c-format
-msgid "%s%s: function \"%s\" must return a valid value"
-msgstr "%s%s: funkce \"%s\" musí vracet korektní hodnotu"
-
-#, c-format
-msgid "%s%s: error in function \"%s\""
-msgstr "%s%s: chyba ve funkci \"%s\""
-
-#, c-format
-msgid "%s: loading script \"%s\""
-msgstr "%s: načítám skript \"%s\""
-
-#, c-format
-msgid "%s%s: function \"register\" not found (or failed) in file \"%s\""
-msgstr ""
-"%s%s: funkce \"register\" nebyla nalezena (nebo selhala) v souboru \"%s\""
-
-#, c-format
-msgid "%s: unloading script \"%s\""
-msgstr "%s: odebírám skript \"%s\""
-
-#, c-format
-msgid "%s: script \"%s\" unloaded"
-msgstr "%s: skript \"%s\" odebrán"
-
-#, c-format
-msgid "%s%s: script \"%s\" not loaded"
-msgstr "%s%s: skript \"%s\" nenačten"
-
-#, fuzzy
-msgid "Support of lua scripts"
-msgstr "seznam skriptů"
-
-#, c-format
-msgid "%s%s: unable to run function \"%s\""
-msgstr "%s%s: nemůžu spustit funkci \"%s\""
-
-#, c-format
-msgid "%s%s: script \"%s\" not found"
-msgstr "%s%s: skript \"%s\" nenalezen"
-
-#, c-format
-msgid "%s%s: unable to create new sub-interpreter"
-msgstr "%s%s: nemohu vytvořit nový pod-interpreter"
-
-#, c-format
-msgid "%s%s: unable to redirect stdout and stderr"
-msgstr "%s%s: nemohu přesměrovat stdout a stderr"
-
-#, c-format
-msgid "%s%s: unable to load file \"%s\""
-msgstr "%s%s: nemůžu načíst soubor \"%s\""
-
-#, c-format
-msgid "%s%s: unable to execute file \"%s\""
-msgstr "%s%s: nemůžu spustit soubor \"%s\""
-
-#, fuzzy
-msgid "Support of perl scripts"
-msgstr "seznam skriptů"
-
-#, c-format
-msgid "%s%s: function \"%s\" must return one valid value (%d)"
-msgstr "%s%s: funkce \"%s\" musí vracet jednu validní hodnotu (%d)"
-
-#, c-format
-msgid "%s%s: function \"%s\" is internally misused"
-msgstr "%s%s: funkce \"%s\" je vnitřně špatně použitá"
-
-#, c-format
-msgid "%s%s: not enough memory in function \"%s\""
-msgstr "%s%s: nedostatek paměti ve funkci \"%s\""
-
-#, c-format
-msgid "%s%s: unable to parse file \"%s\""
-msgstr "%s%s: nemůžu parsovat soubor \"%s\""
-
-#, c-format
-msgid "%s%s: unable to initialize %s"
-msgstr "%s%s: nemohu inicializovat %s"
-
-msgid "list/load/unload scripts"
-msgstr "seznam/načíst/odebrat skirpty"
-
-#, fuzzy
-msgid ""
-"list|listfull [<name>] || load [-q] <filename> || autoload || reload|unload "
-"[-q] [<name>]"
-msgstr ""
-"list|listfull [<jméno>] || load <jméno_souboru> || autoload || reload|unload "
-"[<jméno>]"
-
-#, fuzzy
-msgid ""
-"    list: list loaded scripts\n"
-"listfull: list loaded scripts (verbose)\n"
-"    load: load a script\n"
-"autoload: load all scripts in \"autoload\" directory\n"
-"  reload: reload a script (if no name given, unload all scripts, then load "
-"all scripts in \"autoload\" directory)\n"
-"  unload: unload a script (if no name given, unload all scripts)\n"
-"filename: script (file) to load\n"
-"    name: a script name (name used in call to \"register\" function)\n"
-"      -q: quiet mode: do not display messages\n"
-"\n"
-"Without argument, this command lists all loaded scripts."
-msgstr ""
-"    list: vypíše načtené skripty\n"
-"listfull: vypíše načtené skripty s detailními informacemi\n"
-"    load: načte skript\n"
-"autolaod: načte všechny skripty v adresáři \"autoload\"\n"
-"  reload: znovu načte jeden skript (pokud není zadané žádné jméno odebere "
-"všechny skripty a pak načte skripty v adresáři \"autoload\")\n"
-"  unload: odebere skript (pokud není zadané žádné jméno odebere všechny "
-"skripty)\n"
-"filename: script (soubor) pro načtení\n"
-"    name: jméno scriptu (jméno použité ve volání funkce \"register\")\n"
-"\n"
-"Zavolání příkazu bez parametrů vypíše načtené skripty."
-
-msgid "list of scripts"
-msgstr "seznam skriptů"
-
-msgid "script pointer (optional)"
-msgstr "ukazatel skriptu (volitelný)"
-
-msgid "script name (can start or end with \"*\" as wildcard) (optional)"
-msgstr ""
-"jméno skriptu (může začínat nebo končit \"*\" jako zástupným znakem) "
-"(volitelné)"
-
-#, fuzzy
-msgid "callback of a script"
-msgstr "seznam skriptů"
-
-#, fuzzy, c-format
-msgid ""
-"%s%s: warning, invalid pointer (\"%s\") for function \"%s\" (script: %s)"
-msgstr "%s%s: špatné parametry pro funkci \"%s\" (skript: %s)"
-
-#, fuzzy, c-format
-msgid "%s: error loading script \"%s\" (spaces or empty name not allowed)"
-msgstr "%s: chyba načítání skriptu \"%s\" (nedostatek paměti)"
-
-#, c-format
-msgid ""
-"%s%s: warning, license \"%s\" for script \"%s\" differs from plugin license "
-"(\"%s\")"
-msgstr ""
-"%s%s: varování, licence \"%s\" pro skript \"%s\" je rozdílná od licence "
-"pluginu (\"%s\")"
-
-#, c-format
-msgid "%s: error loading script \"%s\" (not enough memory)"
-msgstr "%s: chyba načítání skriptu \"%s\" (nedostatek paměti)"
-
-#, c-format
-msgid "%s: script removed: %s"
-msgstr "%s: skript odebrána: %s"
-
-#, c-format
-msgid "%s%s: failed to remove script: %s (%s)"
-msgstr "%s%s: nemohu odebrat skript: %s (%s)"
-
-#, c-format
-msgid "%s: script \"%s\" not found, nothing was removed"
-msgstr "%s: skript \"%s\" nenalezen, nic nebylo odebráno"
-
-#, c-format
-msgid "%s%s: failed to move script %s to %s (%s)"
-msgstr "%s%s: selhalo přesunutí skriptu %s na %s (%s)"
-
-#. TRANSLATORS: "%s" is language (for example "perl")
-#, c-format
-msgid "%s scripts loaded:"
-msgstr "načteny %s skripty:"
-
-#, c-format
-msgid "    file: %s"
-msgstr "    soubor: %s"
-
-#, c-format
-msgid "    written by \"%s\", license: %s"
-msgstr "    napsal \"%s\", licence: %s"
-
-msgid "  (none)"
-msgstr "  (žádný)"
-
-#, c-format
-msgid "%s: scripts unloaded"
-msgstr "%s: skripty odebrány"
-
-#, c-format
-msgid ""
-"%s%s: unable to call function \"%s\", script is not initialized (script: %s)"
-msgstr ""
-"%s%s: nemohu zavolat funkci \"%s\", skript není inicializován (skript: %s)"
-
-#, c-format
-msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
-msgstr "%s%s: špatné parametry pro funkci \"%s\" (skript: %s)"
-
-#, fuzzy
-msgid "Support of python scripts"
-msgstr "seznam skriptů"
-
-#, c-format
-msgid "%s%s: unable to initialize WeeChat module"
-msgstr "%s%s: nemohu inicialiyovat modul WeeChat"
-
-#, c-format
-msgid "%s%s: unable to redirect stdout"
-msgstr "%s%s: nemůžu přesměrovat stdout"
-
-#, c-format
-msgid "%s%s: unable to redirect stderr"
-msgstr "%s%s: nemohu přesměrovat stderr"
-
-msgid "path to python 2.x interpreter"
-msgstr "cesta k interpretru python 2.x"
-
-#, c-format
-msgid "%s%s: unable to launch global interpreter"
-msgstr "%s%s: nemohu spustit globální interpreter"
-
-#, c-format
-msgid "%s%s: unable to get current interpreter state"
-msgstr "%s%s: nemohu získat aktuální status interpretru"
-
-#, c-format
-msgid "%s%s: unable to free interpreter"
-msgstr "%s%s: nemohu uvolnit interpreter"
-
 #, fuzzy
 msgid "Support of ruby scripts"
 msgstr "seznam skriptů"
@@ -9111,9 +9152,6 @@ msgstr "%s%s: nemůžu vyhodnotit funkci \"weechat_init\" v souboru \"%s\""
 #, c-format
 msgid "%s%s: unable to eval WeeChat ruby internal code"
 msgstr "%s%s: nemohu vyhodnotit interní kód WeeChat ruby"
-
-msgid "Scripts manager"
-msgstr ""
 
 #, fuzzy
 msgid "Scripts loaded:"
@@ -9234,9 +9272,6 @@ msgstr ""
 msgid "License"
 msgstr ""
 
-msgid "Description"
-msgstr "Popis"
-
 msgid "Tags"
 msgstr ""
 
@@ -9286,6 +9321,9 @@ msgid ""
 msgstr ""
 
 msgid "Scripts"
+msgstr ""
+
+msgid "Scripts manager"
 msgstr ""
 
 #, fuzzy
@@ -9623,6 +9661,357 @@ msgstr "%s%s: nemohu vytvořit nový interpretr"
 #, c-format
 msgid "%s%s: error occurred while parsing file \"%s\": %s"
 msgstr "%s%s: nastala chyba během parsováni souboru \"%s\": %s"
+
+msgid "Run actions on events triggered by WeeChat/plugins"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sError: unable to create hook for trigger \"%s\" (bad arguments)"
+msgstr "%sChyba: nemohu přejmenovat filter \"%s\" na \"%s\""
+
+#, c-format
+msgid ""
+"%s%s: invalid value for option \"regex\", see /help trigger.trigger.%s.regex"
+msgstr ""
+
+msgid "Trigger monitor"
+msgstr ""
+
+#, fuzzy
+msgid "no variable"
+msgstr "čtení - proměnná"
+
+#, fuzzy
+msgid "empty variable"
+msgstr "čtení - proměnná"
+
+#, fuzzy, c-format
+msgid "%s  running command %s\"%s%s%s\"%s on buffer %s%s%s"
+msgstr "výchozí příkaz:"
+
+#, fuzzy
+msgid "Triggers enabled"
+msgstr "Filtr \"%s\" povolen"
+
+#, fuzzy
+msgid "Triggers disabled"
+msgstr "Filtr \"%s\" zakázán"
+
+#, fuzzy
+msgid "No trigger defined"
+msgstr "Žádné rmodifikátory nejsou definovány"
+
+#, fuzzy
+msgid "List of default triggers:"
+msgstr "Seznam aliasů:"
+
+#, fuzzy, c-format
+msgid "Trigger \"%s\" restarted"
+msgstr "Pole \"%s\" vytvořeno"
+
+#, c-format
+msgid "%sError: a disabled trigger can not be restarted"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Trigger \"%s\" enabled"
+msgstr "Filtr \"%s\" povolen"
+
+#, fuzzy, c-format
+msgid "Trigger \"%s\" disabled"
+msgstr "Filtr \"%s\" zakázán"
+
+#, c-format
+msgid "%sError: invalid name for trigger"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sError: trigger \"%s\" already exists"
+msgstr "%sChyba: filtr \"%s\" již existuje"
+
+#, fuzzy, c-format
+msgid "Trigger \"%s\" renamed to \"%s\""
+msgstr "Filtr \"%s\" přejmenován na \"%s\""
+
+#, fuzzy, c-format
+msgid "%sError: failed to rename trigger \"%s\""
+msgstr "%sChyba: selhalo vytvoření pole \"%s\""
+
+#, fuzzy
+msgid "List of triggers:"
+msgstr "Seznam proxy:"
+
+#, fuzzy, c-format
+msgid "%sError: invalid hook type \"%s\""
+msgstr "%sChyba: nemohu napojit kalávesu \"%s\""
+
+#, fuzzy, c-format
+msgid "%sError: invalid return code \"%s\""
+msgstr "%sChyba: nemohu odpojit klávesu \"%s\""
+
+#, c-format
+msgid ""
+"%sError: trigger \"%s\" already exists (choose another name or use option "
+"\"addreplace\" to overwrite it)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sError: failed to create trigger \"%s\""
+msgstr "%sChyba: selhalo vytvoření pole \"%s\""
+
+#, fuzzy, c-format
+msgid "Trigger \"%s\" created"
+msgstr "Pole \"%s\" vytvořeno"
+
+#, fuzzy, c-format
+msgid "%sError: trigger \"%s\" not found"
+msgstr "%sChyba: filtr \"%s\" nenalezen"
+
+#, fuzzy, c-format
+msgid "Trigger \"%s\" updated"
+msgstr "Pole \"%s\" zaktualizováno"
+
+#, fuzzy, c-format
+msgid "%sError: trigger option \"%s\" not found"
+msgstr "%sChyba: plugin \"%s\" nenalezen"
+
+#, fuzzy, c-format
+msgid "Trigger \"%s\" copied to \"%s\""
+msgstr "Filtr \"%s\" přejmenován na \"%s\""
+
+#, fuzzy, c-format
+msgid "%sError: failed to copy trigger \"%s\""
+msgstr "%sChyba: selhalo vytvoření pole \"%s\""
+
+#, fuzzy, c-format
+msgid "%sTrigger \"%s\" not found"
+msgstr "%sKlávesa \"%s\" nenalezena"
+
+#, fuzzy, c-format
+msgid "%d triggers removed"
+msgstr "%d rmodifikátorů odebráno"
+
+#, fuzzy, c-format
+msgid "Trigger \"%s\" removed"
+msgstr "Rmodifikátor \"%s\" odebrán"
+
+msgid "Trigger:"
+msgstr ""
+
+#, fuzzy
+msgid "Default triggers restored:"
+msgstr "Výchozí rmodifikátory obnoveny:"
+
+#, fuzzy, c-format
+msgid ""
+"%sError: \"-yes\" argument is required for restoring default triggers "
+"(security reason)"
+msgstr ""
+"%sChyba: \"-yes\" argument je požadován pro obnovení výchozích rmodifikátorů "
+"(bezpečnostní opatření)"
+
+msgid "manage triggers, the Swiss Army knife for WeeChat"
+msgstr ""
+
+msgid ""
+"list|listfull|listdefault || add|addoff|addreplace <name> <hook> "
+"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>"
+"\" [\"<return_code>\"]]]]] || addinput [<hook>] || input|output|recreate "
+"<name> || set <name> <option> <value> || rename|copy <name> <new_name> || "
+"enable|disable|toggle [<name>|-all [<name>...]] || restart <name>|-all "
+"[<name>...] || show <name> || del <name>|-all [<name>...] || default -yes || "
+"monitor"
+msgstr ""
+
+msgid ""
+"       list: list triggers (without argument, this list is displayed)\n"
+"   listfull: list triggers with detailed info for each trigger\n"
+"listdefault: list default triggers\n"
+"        add: add a trigger\n"
+"     addoff: add a trigger (disabled)\n"
+" addreplace: add or replace an existing trigger\n"
+"       name: name of trigger\n"
+"       hook: signal, hsignal, modifier, print, command, command_run, timer, "
+"config, focus\n"
+"  arguments: arguments for the hook, depending on hook (separated by "
+"semicolons):\n"
+"             signal: name(s) of signal (required)\n"
+"             hsignal: name(s) of hsignal (required)\n"
+"             modifier: name(s) of modifier (required)\n"
+"             print: buffer, tags, message, strip colors\n"
+"             command: command (required), description, arguments, "
+"description of arguments, completion\n"
+"             command_run: command (required)\n"
+"             timer: interval (required), align on second (required), max "
+"calls (required)\n"
+"             config: name of option (required)\n"
+"             focus: name(s) of area (required)\n"
+" conditions: evaluated conditions for the trigger\n"
+"      regex: one or more regular expressions to replace strings in "
+"variables\n"
+"    command: command to execute (many commands can be separated by \";\"\n"
+"return_code: return code in callback (ok (default), ok_eat, error)\n"
+"   addinput: set input with default arguments to create a trigger\n"
+"      input: set input with the command used to create the trigger\n"
+"     output: send the command to create the trigger on the buffer\n"
+"   recreate: same as \"input\", with option \"addreplace\" instead of \"add"
+"\"\n"
+"        set: set an option in a trigger\n"
+"     option: name of option: name, hook, arguments, conditions, regex, "
+"command, return_code\n"
+"             (for help on option, you can type: /help trigger.trigger.<name>."
+"<option>)\n"
+"      value: new value for the option\n"
+"     rename: rename a trigger\n"
+"       copy: copy a trigger\n"
+"     enable: enable trigger(s) (without arguments: enable triggers "
+"globally)\n"
+"    disable: disable trigger(s) (without arguments: disable triggers "
+"globally)\n"
+"     toggle: toggle trigger(s) (without arguments: toggle triggers "
+"globally)\n"
+"    restart: restart trigger(s) (recreate the hooks)\n"
+"       show: show detailed info on a trigger (with some stats)\n"
+"        del: delete a trigger\n"
+"       -all: do action on all triggers\n"
+"    default: restore default triggers\n"
+"    monitor: open the trigger monitor buffer\n"
+"\n"
+"When a trigger callback is called, following actions are performed, in this "
+"order:\n"
+"  1. check conditions; if false, exit\n"
+"  2. replace text using POSIX extended regular expression(s) (if defined in "
+"trigger)\n"
+"  3. execute command(s) (if defined in trigger)\n"
+"  4. exit with a return code (except for modifiers and focus)\n"
+"\n"
+"Examples (you can also look at default triggers with /trigger listdefault):\n"
+"  add text attributes *bold*, _underline_ and /italic/ (only in user "
+"messages):\n"
+"    /trigger add effects modifier weechat_print \"${tg_tag_nick}\" \"=="
+"\\*(\\S+)\\*==*${color:bold}$1${color:-bold}*== ==_(\\S+)_==_${color:"
+"underline}$1${color:-underline}_== ==/(\\S+)/==/${color:italic}$1${color:-"
+"italic}/\"\n"
+"  hide nicklist bar on small terminals:\n"
+"    /trigger add resize_small signal signal_sigwinch \"${info:term_width} < "
+"100\" \"\" \"/bar hide nicklist\"\n"
+"    /trigger add resize_big signal signal_sigwinch \"${info:term_width} >= "
+"100\" \"\" \"/bar show nicklist\"\n"
+"  silently save config each hour:\n"
+"    /trigger add cfgsave timer 3600000;0;0 \"\" \"\" \"/mute /save\""
+msgstr ""
+
+msgid "triggers"
+msgstr ""
+
+#, fuzzy
+msgid "options for triggers"
+msgstr "volby pro proxy"
+
+#, fuzzy
+msgid "value of a trigger option"
+msgstr "hodnoty pro konfigurační nastavení"
+
+#, fuzzy
+msgid "hooks for triggers"
+msgstr "volby pro proxy"
+
+#, fuzzy
+msgid "default arguments for a hook"
+msgstr "výchozí odchozí zpráva pro IRC kanál"
+
+#, fuzzy
+msgid "default conditions for a hook"
+msgstr "výchozí barva pozadí pro pole"
+
+msgid "default regular expression for a hook"
+msgstr ""
+
+#, fuzzy
+msgid "default command for a hook"
+msgstr "výchozí příkaz:"
+
+#, fuzzy
+msgid "default return codes for hook callback"
+msgstr "výchozí barva textu pro pole"
+
+msgid ""
+"if disabled, the hooks are removed from trigger, so it is not called any more"
+msgstr ""
+
+#, fuzzy
+msgid "type of hook used"
+msgstr "seznam napojení"
+
+msgid "arguments for the hook (depend on the hook type, see /help trigger)"
+msgstr ""
+
+msgid ""
+"condition(s) for running the command (it is checked in hook callback) (note: "
+"content is evaluated when trigger is run, see /help eval)"
+msgstr ""
+
+msgid ""
+"replace text with a POSIX extended regular expression (it is done only if "
+"conditions are OK, and before running the command) (note: content is "
+"evaluated on trigger creation, see /help eval); format is: \"/regex/replace/"
+"var\" (var is the hashtable variable to replace, it is optional), many regex "
+"can be separated by a space, for example: \"/regex1/replace1/var1 /regex2/"
+"replace2/var2\"; the separator \"/\" can be replaced by any char (one or "
+"more identical chars), except '\\' and parentheses; matching groups can be "
+"used in replace: $0 to $99, $+ for last match and $.cN to replace all chars "
+"of group N by char c"
+msgstr ""
+
+msgid ""
+"command(s) to run if conditions are OK, after regex replacements (many "
+"commands can be separated by semicolons)"
+msgstr ""
+
+msgid ""
+"return code for hook callback (see plugin API reference to know where ok_eat/"
+"error can be used efficiently)"
+msgstr ""
+
+msgid "enable trigger support"
+msgstr ""
+
+#, fuzzy
+msgid "strip colors in hashtable values displayed on monitor buffer"
+msgstr ""
+"ořezávat barvy z tématu rozhovoru (použito pouze při zobrazování titulku "
+"bufferu)"
+
+#, fuzzy
+msgid "text color for command flag (in /trigger list)"
+msgstr "barva textu pro akce ve vstupní řádce"
+
+#, fuzzy
+msgid "text color for conditions flag (in /trigger list)"
+msgstr "barva textu pro akce ve vstupní řádce"
+
+#, fuzzy
+msgid "text color for regex flag (in /trigger list)"
+msgstr "barva textu pro skupiny v seznamu přezdívek"
+
+#, fuzzy
+msgid "text color for return code flag (in /trigger list)"
+msgstr "barva textu pro skupiny v seznamu přezdívek"
+
+#, fuzzy
+msgid "text color for regular expressions"
+msgstr "barva textu pro prefix chyby"
+
+msgid "text color for replacement text (for regular expressions)"
+msgstr ""
+
+#, fuzzy
+msgid "text color for trigger name"
+msgstr "barva textu pro jeméno serveru"
+
+#, fuzzy
+msgid "text color for disabled trigger name"
+msgstr "barva textu pro jeméno serveru"
 
 msgid "  [A] Accept"
 msgstr "  [A] Akceptovat"
@@ -10047,41 +10436,3 @@ msgstr "%s%s: nemohu nastavit \"neblokovaci\" volbu na soket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
-
-msgid "Plugin"
-msgstr "Plugin"
-
-msgid "Name"
-msgstr "Jméno"
-
-msgid "Arguments"
-msgstr "Argumenty"
-
-msgid "Hashtable (input)"
-msgstr "Hash tabulka (vstup)"
-
-msgid "Hashtable (output)"
-msgstr "Hash tabulka (výstup)"
-
-msgid "Pointer"
-msgstr "Ukazatel"
-
-#, fuzzy
-msgid "variables"
-msgstr "čtení - proměnná"
-
-msgid "update allowed"
-msgstr ""
-
-msgid "lists"
-msgstr ""
-
-#, fuzzy
-msgid "Option"
-msgstr "<volba>"
-
-msgid "Type"
-msgstr ""
-
-msgid "Constants"
-msgstr ""
