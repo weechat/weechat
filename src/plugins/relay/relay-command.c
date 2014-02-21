@@ -197,80 +197,68 @@ relay_command_relay (void *data, struct t_gui_buffer *buffer, int argc,
             relay_command_server_list ();
             return WEECHAT_RC_OK;
         }
+
         if (weechat_strcasecmp (argv[1], "add") == 0)
         {
-            if (argc >= 4)
-            {
-                if (relay_config_create_option_port (NULL,
-                                                     relay_config_file,
-                                                     relay_config_section_port,
-                                                     argv[2],
-                                                     argv_eol[3]) != WEECHAT_CONFIG_OPTION_SET_ERROR)
-                {
-                    weechat_printf (NULL,
-                                    _("%s: relay \"%s\" (port %s) added"),
-                                    RELAY_PLUGIN_NAME,
-                                    argv[2], argv_eol[3]);
-                }
-            }
-            else
+            if (argc < 4)
+                return WEECHAT_RC_ERROR;
+            if (relay_config_create_option_port (NULL,
+                                                 relay_config_file,
+                                                 relay_config_section_port,
+                                                 argv[2],
+                                                 argv_eol[3]) != WEECHAT_CONFIG_OPTION_SET_ERROR)
             {
                 weechat_printf (NULL,
-                                _("%s%s: missing arguments for \"%s\" "
-                                  "command"),
-                                weechat_prefix ("error"), RELAY_PLUGIN_NAME,
-                                "relay add");
+                                _("%s: relay \"%s\" (port %s) added"),
+                                RELAY_PLUGIN_NAME,
+                                argv[2], argv_eol[3]);
             }
             return WEECHAT_RC_OK;
         }
+
         if (weechat_strcasecmp (argv[1], "del") == 0)
         {
-            if (argc >= 3)
+            if (argc < 3)
+                return WEECHAT_RC_ERROR;
+            ptr_server = relay_server_search (argv_eol[2]);
+            if (ptr_server)
             {
-                ptr_server = relay_server_search (argv_eol[2]);
-                if (ptr_server)
-                {
-                    port = ptr_server->port;
-                    relay_server_free (ptr_server);
-                    ptr_option = weechat_config_search_option (relay_config_file,
-                                                               relay_config_section_port,
-                                                               argv_eol[2]);
-                    if (ptr_option)
-                        weechat_config_option_free (ptr_option);
-                    weechat_printf (NULL,
-                                    _("%s: relay \"%s\" (port %d) removed"),
-                                    RELAY_PLUGIN_NAME,
-                                    argv[2], port);
-                }
-                else
-                {
-                    weechat_printf (NULL,
-                                    _("%s%s: relay \"%s\" not found"),
-                                    weechat_prefix ("error"),
-                                    RELAY_PLUGIN_NAME,
-                                    argv_eol[2]);
-                }
+                port = ptr_server->port;
+                relay_server_free (ptr_server);
+                ptr_option = weechat_config_search_option (relay_config_file,
+                                                           relay_config_section_port,
+                                                           argv_eol[2]);
+                if (ptr_option)
+                    weechat_config_option_free (ptr_option);
+                weechat_printf (NULL,
+                                _("%s: relay \"%s\" (port %d) removed"),
+                                RELAY_PLUGIN_NAME,
+                                argv[2], port);
             }
             else
             {
                 weechat_printf (NULL,
-                                _("%s%s: missing arguments for \"%s\" "
-                                  "command"),
-                                weechat_prefix ("error"), RELAY_PLUGIN_NAME,
-                                "relay del");
+                                _("%s%s: relay \"%s\" not found"),
+                                weechat_prefix ("error"),
+                                RELAY_PLUGIN_NAME,
+                                argv_eol[2]);
             }
             return WEECHAT_RC_OK;
         }
+
         if (weechat_strcasecmp (argv[1], "raw") == 0)
         {
             relay_raw_open (1);
             return WEECHAT_RC_OK;
         }
+
         if (weechat_strcasecmp (argv[1], "sslcertkey") == 0)
         {
             relay_network_set_ssl_cert_key (1);
             return WEECHAT_RC_OK;
         }
+
+        return WEECHAT_RC_ERROR;
     }
 
     if (!relay_buffer)
