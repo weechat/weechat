@@ -625,6 +625,8 @@ weechat_guile_command_cb (void *data, struct t_gui_buffer *buffer,
         {
             weechat_guile_unload_all ();
         }
+        else
+            return WEECHAT_RC_ERROR;
     }
     else
     {
@@ -685,13 +687,7 @@ weechat_guile_command_cb (void *data, struct t_gui_buffer *buffer,
             weechat_guile_stdout_flush ();
         }
         else
-        {
-            weechat_printf (NULL,
-                            weechat_gettext ("%s%s: unknown option for "
-                                             "command \"%s\""),
-                            weechat_prefix ("error"), GUILE_PLUGIN_NAME,
-                            "guile");
-        }
+            return WEECHAT_RC_ERROR;
     }
 
     return WEECHAT_RC_OK;
