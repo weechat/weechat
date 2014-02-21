@@ -449,64 +449,6 @@ string_match (const char *string, const char *mask, int case_sensitive)
 }
 
 /*
- * Replaces a string by new one in a string.
- *
- * Note: result must be freed after use.
- */
-
-char *
-string_replace (const char *string, const char *search, const char *replace)
-{
-    const char *pos;
-    char *new_string;
-    int length1, length2, length_new, count;
-
-    if (!string || !search || !replace)
-        return NULL;
-
-    length1 = strlen (search);
-    length2 = strlen (replace);
-
-    /* count number of strings to replace */
-    count = 0;
-    pos = string;
-    while (pos && pos[0] && (pos = strstr (pos, search)))
-    {
-        count++;
-        pos += length1;
-    }
-
-    /* easy: no string to replace! */
-    if (count == 0)
-        return strdup (string);
-
-    /* compute needed memory for new string */
-    length_new = strlen (string) - (count * length1) + (count * length2) + 1;
-
-    /* allocate new string */
-    new_string = malloc (length_new);
-    if (!new_string)
-        return strdup (string);
-
-    /* replace all occurrences */
-    new_string[0] = '\0';
-    while (string && string[0])
-    {
-        pos = strstr (string, search);
-        if (pos)
-        {
-            strncat (new_string, string, pos - string);
-            strcat (new_string, replace);
-            pos += length1;
-        }
-        else
-            strcat (new_string, string);
-        string = pos;
-    }
-    return new_string;
-}
-
-/*
  * Expands home in a path.
  *
  * Example: "~/file.txt" => "/home/xxx/file.txt"
@@ -1145,6 +1087,331 @@ string_has_highlight_regex (const char *string, const char *regex)
 }
 
 /*
+ * Replaces a string by new one in a string.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+string_replace (const char *string, const char *search, const char *replace)
+{
+    const char *pos;
+    char *new_string;
+    int length1, length2, length_new, count;
+
+    if (!string || !search || !replace)
+        return NULL;
+
+    length1 = strlen (search);
+    length2 = strlen (replace);
+
+    /* count number of strings to replace */
+    count = 0;
+    pos = string;
+    while (pos && pos[0] && (pos = strstr (pos, search)))
+    {
+        count++;
+        pos += length1;
+    }
+
+    /* easy: no string to replace! */
+    if (count == 0)
+        return strdup (string);
+
+    /* compute needed memory for new string */
+    length_new = strlen (string) - (count * length1) + (count * length2) + 1;
+
+    /* allocate new string */
+    new_string = malloc (length_new);
+    if (!new_string)
+        return strdup (string);
+
+    /* replace all occurrences */
+    new_string[0] = '\0';
+    while (string && string[0])
+    {
+        pos = strstr (string, search);
+        if (pos)
+        {
+            strncat (new_string, string, pos - string);
+            strcat (new_string, replace);
+            pos += length1;
+        }
+        else
+            strcat (new_string, string);
+        string = pos;
+    }
+    return new_string;
+}
+
+/*
+ * Get replacement string for a regex, using array of "match"
+ * (for more info, see function "string_replace_regex").
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+string_replace_regex_get_replace (const char *string, regmatch_t *regex_match,
+                                  int last_match, const char *replace,
+                                  const char reference_char)
+{
+    int length, length_current, length_add, match;
+    const char *ptr_replace, *ptr_add;
+    char *result, *result2, *modified_replace, *temp, char_replace;
+
+    /* default length is length*2, it will grow later if needed */
+    length = (strlen (string) * 2);
+    result = malloc (length + 1);
+    if (!result)
+        return NULL;
+
+    result[0] = '\0';
+    length_current = 0;
+    ptr_replace = replace;
+    while (ptr_replace && ptr_replace[0])
+    {
+        ptr_add = NULL;
+        length_add = 0;
+        modified_replace = NULL;
+
+        if ((ptr_replace[0] == '\\') && (ptr_replace[1] == reference_char))
+        {
+            /* escaped reference char */
+            ptr_add = ptr_replace + 1;
+            length_add = 1;
+            ptr_replace += 2;
+        }
+        else if (ptr_replace[0] == reference_char)
+        {
+            if ((ptr_replace[1] == '+') || isdigit ((unsigned char)ptr_replace[1]))
+            {
+                if (ptr_replace[1] == '+')
+                {
+                    /* reference to last match */
+                    match = last_match;
+                    ptr_replace += 2;
+                }
+                else
+                {
+                    /* reference to match 0 .. 99 */
+                    if (isdigit ((unsigned char)ptr_replace[2]))
+                    {
+                        match = ((ptr_replace[1] - '0') * 10) + (ptr_replace[2] - '0');
+                        ptr_replace += 3;
+                    }
+                    else
+                    {
+                        match = ptr_replace[1] - '0';
+                        ptr_replace += 2;
+                    }
+                }
+                if (regex_match[match].rm_so >= 0)
+                {
+                    ptr_add = string + regex_match[match].rm_so;
+                    length_add = regex_match[match].rm_eo - regex_match[match].rm_so;
+                }
+            }
+            else if ((ptr_replace[1] == '.')
+                     && (ptr_replace[2] >= 32) && (ptr_replace[2] <= 126)
+                     && ((ptr_replace[3] == '+') || isdigit ((unsigned char)ptr_replace[3])))
+            {
+                char_replace = ptr_replace[2];
+                if (ptr_replace[3] == '+')
+                {
+                    /* reference to last match */
+                    match = last_match;
+                    ptr_replace += 4;
+                }
+                else
+                {
+                    /* reference to match 0 .. 99 */
+                    if (isdigit ((unsigned char)ptr_replace[4]))
+                    {
+                        match = ((ptr_replace[3] - '0') * 10) + (ptr_replace[4] - '0');
+                        ptr_replace += 5;
+                    }
+                    else
+                    {
+                        match = ptr_replace[3] - '0';
+                        ptr_replace += 4;
+                    }
+                }
+                if (regex_match[match].rm_so >= 0)
+                {
+                    temp = string_strndup (string + regex_match[match].rm_so,
+                                           regex_match[match].rm_eo - regex_match[match].rm_so);
+                    if (temp)
+                    {
+                        length_add = utf8_strlen (temp);
+                        modified_replace = malloc (length_add + 1);
+                        if (modified_replace)
+                        {
+                            memset (modified_replace, char_replace, length_add);
+                            modified_replace[length_add] = '\0';
+                            ptr_add = modified_replace;
+                        }
+                        free (temp);
+                    }
+                }
+            }
+            else
+            {
+                /* just ignore the reference char */
+                ptr_replace++;
+            }
+        }
+        else
+        {
+            ptr_add = ptr_replace;
+            length_add = utf8_char_size (ptr_replace);
+            ptr_replace += length_add;
+        }
+
+        if (ptr_add)
+        {
+            if (length_current + length_add > length)
+            {
+                length = (length * 2 >= length_current + length_add) ?
+                    length * 2 : length_current + length_add;
+                result2 = realloc (result, length + 1);
+                if (!result2)
+                {
+                    if (modified_replace)
+                        free (modified_replace);
+                    free (result);
+                    return NULL;
+                }
+                result = result2;
+            }
+            memcpy (result + length_current, ptr_add, length_add);
+            length_current += length_add;
+            result[length_current] = '\0';
+        }
+        if (modified_replace)
+            free (modified_replace);
+    }
+
+    return result;
+}
+
+/*
+ * Replaces text in a string using a regular expression and replacement text.
+ *
+ * The argument "regex" is a pointer to a regex compiled with WeeChat function
+ * string_regcomp (or function regcomp).
+ *
+ * The argument "replace" can contain references to matches:
+ *   $0 .. $99  match 0 to 99 (0 is whole match, 1 .. 99 are groups captured)
+ *   $+         the last match (with highest number)
+ *   $.*N       match N (can be '+' or 0 to 99), with all chars replaced by '*'
+ *              (the char '*' can be replaced by any char between space (32)
+ *              and '~' (126))
+ *
+ * Examples:
+ *
+ *    string   | regex         | replace   | result
+ *   ----------+---------------+-----------+-------------
+ *    test foo | test          | Z         | Z foo
+ *    test foo | ^(test +)(.*) | $2        | foo
+ *    test foo | ^(test +)(.*) | $1 / $.*2 | test / ***
+ *    test foo | ^(test +)(.*) | $.%+      | %%%
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+string_replace_regex (const char *string, void *regex, const char *replace,
+                      const char reference_char)
+{
+    char *result, *result2, *str_replace;
+    int length, length_replace, start_offset, i, rc, end, last_match;
+    regmatch_t regex_match[100];
+
+    if (!string)
+        return NULL;
+
+    length = strlen (string) + 1;
+    result = malloc (length);
+    if (!result)
+        return NULL;
+    snprintf (result, length, "%s", string);
+
+    start_offset = 0;
+    while (result && result[start_offset])
+    {
+        for (i = 0; i < 100; i++)
+        {
+            regex_match[i].rm_so = -1;
+        }
+
+        rc = regexec ((regex_t *)regex, result + start_offset, 100, regex_match,
+                      0);
+        /*
+         * no match found: exit the loop (if rm_eo == 0, it is an empty match
+         * at beginning of string: we consider there is no match, to prevent an
+         * infinite loop)
+         */
+        if ((rc != 0)
+            || (regex_match[0].rm_so < 0) || (regex_match[0].rm_eo <= 0))
+        {
+            break;
+        }
+
+        /* adjust the start/end offsets */
+        last_match = 0;
+        for (i = 0; i < 100; i++)
+        {
+            if (regex_match[i].rm_so >= 0)
+            {
+                last_match = i;
+                regex_match[i].rm_so += start_offset;
+                regex_match[i].rm_eo += start_offset;
+            }
+        }
+
+        /* check if the regex matched the end of string */
+        end = !result[regex_match[0].rm_eo];
+
+        str_replace = string_replace_regex_get_replace (result, regex_match,
+                                                        last_match,
+                                                        replace, reference_char);
+        length_replace = (str_replace) ? strlen (str_replace) : 0;
+
+        length = regex_match[0].rm_so + length_replace +
+            strlen (result + regex_match[0].rm_eo) + 1;
+        result2 = malloc (length);
+        if (!result2)
+        {
+            free (result);
+            return NULL;
+        }
+        result2[0] = '\0';
+        if (regex_match[0].rm_so > 0)
+        {
+            memcpy (result2, result, regex_match[0].rm_so);
+            result2[regex_match[0].rm_so] = '\0';
+        }
+        if (str_replace)
+            strcat (result2, str_replace);
+        strcat (result2, result + regex_match[0].rm_eo);
+
+        free (result);
+        result = result2;
+
+        if (str_replace)
+            free (str_replace);
+
+        if (end)
+            break;
+
+        start_offset = regex_match[0].rm_so + length_replace;
+    }
+
+    return result;
+}
+
+/*
  * Splits a string according to separators.
  *
  * This function must not be called directly (call string_split or
@@ -1172,7 +1439,7 @@ string_split_internal (const char *string, const char *separators, int keep_eol,
     char *ptr, *ptr1, *ptr2;
     const char *str_shared;
 
-    if (num_items != NULL)
+    if (num_items)
         *num_items = 0;
 
     if (!string || !string[0] || !separators || !separators[0])
@@ -1187,7 +1454,7 @@ string_split_internal (const char *string, const char *separators, int keep_eol,
     i = 1;
     while ((ptr = strpbrk (ptr, separators)))
     {
-        while (ptr[0] && (strchr (separators, ptr[0]) != NULL))
+        while (ptr[0] && strchr (separators, ptr[0]))
         {
             ptr++;
         }
@@ -1206,7 +1473,7 @@ string_split_internal (const char *string, const char *separators, int keep_eol,
 
     for (i = 0; i < n_items; i++)
     {
-        while (ptr1[0] && (strchr (separators, ptr1[0]) != NULL))
+        while (ptr1[0] && strchr (separators, ptr1[0]))
         {
             ptr1++;
         }
@@ -1307,7 +1574,7 @@ string_split_internal (const char *string, const char *separators, int keep_eol,
     }
 
     array[i] = NULL;
-    if (num_items != NULL)
+    if (num_items)
         *num_items = i;
 
     free (string2);
@@ -1347,8 +1614,8 @@ string_split_shared (const char *string, const char *separators, int keep_eol,
 /*
  * Splits a string like the shell does for a command with arguments.
  *
- * This function is a C conversion of python class "shlex"
- * (file: Lib/shlex.py in python repository)
+ * This function is a C conversion of Python class "shlex"
+ * (file: Lib/shlex.py in Python repository)
  * Doc: http://docs.python.org/3/library/shlex.html
  *
  * Copyrights in shlex.py:
@@ -1362,11 +1629,14 @@ string_split_shared (const char *string, const char *separators, int keep_eol,
  */
 
 char **
-string_split_shell (const char *string)
+string_split_shell (const char *string, int *num_items)
 {
     int temp_len, num_args, add_char_to_temp, add_temp_to_args, quoted;
     char *string2, *temp, **args, **args2, state, escapedstate;
     char *ptr_string, *ptr_next, saved_char;
+
+    if (num_items)
+        *num_items = 0;
 
     if (!string)
         return NULL;
@@ -1533,6 +1803,9 @@ string_split_shell (const char *string)
     free (string2);
     free (temp);
 
+    if (num_items)
+        *num_items = num_args;
+
     return args;
 }
 
@@ -1630,7 +1903,7 @@ string_split_command (const char *command, char separator)
 
     nb_substr = 1;
     ptr = command;
-    while ( (p = strchr(ptr, separator)) != NULL)
+    while ((p = strchr(ptr, separator)) != NULL)
     {
         nb_substr++;
         ptr = ++p;

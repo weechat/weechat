@@ -57,7 +57,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20140210-01"
+#define WEECHAT_PLUGIN_API_VERSION "20140221-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -240,6 +240,7 @@ struct t_weechat_plugin
     char *(*string_remove_quotes) (const char *string, const char *quotes);
     char *(*string_strip) (const char *string, int left, int right,
                            const char *chars);
+    char *(*string_convert_escaped_chars) (const char *string);
     char *(*string_mask_to_regex) (const char *mask);
     const char *(*string_regex_flags) (const char *regex, int default_flags,
                                        int *flags);
@@ -247,8 +248,12 @@ struct t_weechat_plugin
     int (*string_has_highlight) (const char *string,
                                  const char *highlight_words);
     int (*string_has_highlight_regex) (const char *string, const char *regex);
+    char *(*string_replace_regex) (const char *string, void *regex,
+                                   const char *replace,
+                                   const char reference_char);
     char **(*string_split) (const char *string, const char *separators,
                             int keep_eol, int num_items_max, int *num_items);
+    char **(*string_split_shell) (const char *string, int *num_items);
     void (*string_free_split) (char **split_string);
     char *(*string_build_with_split_string) (const char **split_string,
                                              const char *separator);
@@ -356,6 +361,7 @@ struct t_weechat_plugin
                                                         const char *key,
                                                         const char *value),
                                   void *callback_map_data);
+    struct t_hashtable *(*hashtable_dup) (struct t_hashtable *hashtable);
     int (*hashtable_get_integer) (struct t_hashtable *hashtable,
                                   const char *property);
     const char *(*hashtable_get_string) (struct t_hashtable *hashtable,
@@ -997,6 +1003,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->string_remove_quotes(__string, __quotes)
 #define weechat_string_strip(__string, __left, __right, __chars)        \
     weechat_plugin->string_strip(__string, __left, __right, __chars)
+#define weechat_string_convert_escaped_chars(__string)                  \
+    weechat_plugin->string_convert_escaped_chars(__string)
 #define weechat_string_mask_to_regex(__mask)                            \
     weechat_plugin->string_mask_to_regex(__mask)
 #define weechat_string_regex_flags(__regex, __default_flags, __flags)   \
@@ -1008,10 +1016,16 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->string_has_highlight(__string, __highlight_words)
 #define weechat_string_has_highlight_regex(__string, __regex)           \
     weechat_plugin->string_has_highlight_regex(__string, __regex)
+#define weechat_string_replace_regex(__string, __regex, __replace,      \
+                                     __reference_char)                  \
+    weechat_plugin->string_replace_regex(__string, __regex, __replace,  \
+                                         __reference_char)
 #define weechat_string_split(__string, __separator, __eol, __max,       \
                              __num_items)                               \
     weechat_plugin->string_split(__string, __separator, __eol,          \
                                  __max, __num_items)
+#define weechat_string_split_shell(__string, __num_items)               \
+    weechat_plugin->string_split_shell(__string, __num_items)
 #define weechat_string_free_split(__split_string)                       \
     weechat_plugin->string_free_split(__split_string)
 #define weechat_string_build_with_split_string(__split_string,          \
@@ -1155,6 +1169,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                      __cb_map_data)                     \
     weechat_plugin->hashtable_map_string(__hashtable, __cb_map,         \
                                          __cb_map_data)
+#define weechat_hashtable_dup(__hashtable)                              \
+    weechat_plugin->hashtable_dup(__hashtable)
 #define weechat_hashtable_get_integer(__hashtable, __property)          \
     weechat_plugin->hashtable_get_integer(__hashtable, __property)
 #define weechat_hashtable_get_string(__hashtable, __property)           \

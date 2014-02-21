@@ -67,6 +67,7 @@ Les répertoires principaux de WeeChat sont :
 |       lua/       | API script Lua
 |       tcl/       | API script Tcl
 |       guile/     | API script Guile (scheme)
+|       trigger/   | Extension Trigger
 |       xfer/      | Extension Xfer (IRC DCC fichier/discussion)
 | doc/             | Documentation
 | po/              | Fichiers de traductions (gettext)
@@ -261,6 +262,13 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |    tcl/                           | Extension Tcl
 |       weechat-tcl.c               | Fonctions principales pour Tcl (chargement/déchargement des scripts, exécution de code Tcl)
 |       weechat-tcl-api.c           | Fonctions de l'API script Tcl
+|    trigger/                       | Extension Trigger
+|       trigger.c                   | Fonctions principales de Trigger
+|       trigger-buffer.c            | Tampon Trigger
+|       trigger-callback.c          | Callbacks de Trigger
+|       trigger-command.c           | Commandes pour Trigger
+|       trigger-completion.c        | Complétions pour Trigger
+|       trigger-config.c            | Options de configuration pour Trigger (fichier trigger.conf)
 |    xfer/                          | Extension Xfer (IRC DCC fichier/discussion)
 |       xfer.c                      | Fonctions principales de Xfer
 |       xfer-buffer.c               | Tampon Xfer

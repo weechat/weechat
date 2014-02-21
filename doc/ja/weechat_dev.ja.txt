@@ -66,6 +66,8 @@ WeeChat の主要なリポジトリは 2 つあります:
 |       lua/       | lua スクリプト用 API
 |       tcl/       | tcl スクリプト用 API
 |       guile/     | guile (scheme) スクリプト用 API
+// TRANSLATION MISSING
+|       trigger/   | Trigger plugin
 |       xfer/      | xfer (IRC DCC ファイル/チャット)
 | doc/             | 文書
 | po/              | 翻訳ファイル (gettext)
@@ -260,6 +262,14 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |    tcl/                           | tcl プラグイン
 |       weechat-tcl.c               | tcl の主要関数 (スクリプトのロード/アンロード、tcl コードの実行)
 |       weechat-tcl-api.c           | tcl スクリプト作成 API 関数
+// TRANSLATION MISSING
+|    trigger/                       | Trigger plugin
+|       trigger.c                   | Main trigger functions
+|       trigger-buffer.c            | Trigger buffer
+|       trigger-callback.c          | Trigger callbacks
+|       trigger-command.c           | Trigger commands
+|       trigger-completion.c        | Trigger completions
+|       trigger-config.c            | Trigger config options (file trigger.conf)
 |    xfer/                          | xfer プラグイン (IRC DCC ファイル/チャット)
 |       xfer.c                      | xfer の主要関数
 |       xfer-buffer.c               | xfer バッファ

@@ -75,10 +75,6 @@ if PLUGIN_SCRIPT
 script_dir = script
 endif
 
-if PLUGIN_XFER
-xfer_dir = xfer
-endif
-
 if PLUGIN_PERL
 perl_dir = perl
 endif
@@ -103,10 +99,18 @@ if PLUGIN_GUILE
 guile_dir = guile
 endif
 
+if PLUGIN_TRIGGER
+trigger_dir = trigger
+endif
+
+if PLUGIN_XFER
+xfer_dir = xfer
+endif
+
 SUBDIRS = . $(alias_dir) $(aspell_dir) $(charset_dir) $(fifo_dir) $(irc_dir) \
-            $(logger_dir) $(relay_dir) $(rmodifier_dir) $(script_dir) $(xfer_dir) \
+            $(logger_dir) $(relay_dir) $(rmodifier_dir) $(script_dir) \
             $(perl_dir) $(python_dir) $(ruby_dir) $(lua_dir) $(tcl_dir) \
-            $(guile_dir)
+            $(guile_dir) $(trigger_dir) $(xfer_dir)
 
 EXTRA_DIST = CMakeLists.txt
 

@@ -853,41 +853,6 @@ match3 = weechat.string_match("abcdef", "*def", 0) # 1
 match4 = weechat.string_match("abcdef", "*de*", 0) # 1
 ----
 
-==== weechat_string_replace
-
-マッチした全ての文字列を別の文字列で置換。
-
-プロトタイプ:
-
-[source,C]
-----
-char *weechat_string_replace (const char *string, const char *search,
-                              const char *replace);
-----
-
-引数:
-
-* 'string': 文字列
-* 'search': マッチさせる文字列
-* 'replace': 'search' を置き換える文字列
-
-戻り値:
-
-* 'search' を 'replace' で置き換えた文字列
-  (使用後には必ず "free" を呼び出して領域を開放してください)
-
-C 言語での使用例:
-
-[source,C]
-----
-char *str = weechat_string_replace ("test", "s", "x"); /* result: "text" */
-/* ... */
-free (str);
-----
-
-[NOTE]
-スクリプト API ではこの関数を利用できません。
-
 ==== weechat_string_expand_home
 
 _WeeChat バージョン 0.3.3 以上で利用可。_
@@ -987,6 +952,58 @@ C 言語での使用例:
 [source,C]
 ----
 char *str = weechat_string_strip (".abc -", 0, 1, "- ."); /* result: ".abc" */
+/* ... */
+free (str);
+----
+
+[NOTE]
+スクリプト API ではこの関数を利用できません。
+
+==== weechat_string_convert_escaped_chars
+
+_WeeChat バージョン 0.4.4 以上で利用可。_
+
+// TRANSLATION MISSING
+Convert escaped chars to their value:
+
+* `\"`: double quote
+* `\\`: backslash
+* `\a`: alert (BEL)
+* `\b`: backspace
+* `\e`: escape
+* `\f`: form feed
+* `\n`: new line
+* `\r`: carriage return
+* `\t`: horizontal tab
+* `\v`: vertical tab
+* `\0ooo`: char as octal value (ooo is 0 to 3 digits)
+* `\xhh`: char as hexadecimal value (hh is 1 to 2 digits)
+* `\uhhhh`: unicode char as hexadecimal value (hhhh is 1 to 4 digits)
+* `\Uhhhhhhhh`: unicode char as hexadecimal value (hhhhhhhh is 1 to 8 digits)
+
+プロトタイプ:
+
+[source,C]
+----
+char *weechat_string_convert_escaped_chars (const char *string);
+----
+
+引数:
+
+* 'string': 文字列
+
+戻り値:
+
+// TRANSLATION MISSING
+* string with escaped chars replaced by their value
+  (使用後には必ず "free" を呼び出して領域を開放してください)
+
+C 言語での使用例:
+
+[source,C]
+----
+char *str = weechat_string_convert_escaped_chars ("snowman: \\u2603");
+/* str == "snowman: ☃" */
 /* ... */
 free (str);
 ----
@@ -1212,6 +1229,98 @@ highlight = weechat.string_has_highlight_regex(string, regex)
 highlight = weechat.string_has_highlight_regex("my test string", "test|word2") # 1
 ----
 
+==== weechat_string_replace
+
+マッチした全ての文字列を別の文字列で置換。
+
+プロトタイプ:
+
+[source,C]
+----
+char *weechat_string_replace (const char *string, const char *search,
+                              const char *replace);
+----
+
+引数:
+
+* 'string': 文字列
+* 'search': マッチさせる文字列
+* 'replace': 'search' を置き換える文字列
+
+戻り値:
+
+* 'search' を 'replace' で置き換えた文字列
+  (使用後には必ず "free" を呼び出して領域を開放してください)
+
+C 言語での使用例:
+
+[source,C]
+----
+char *str = weechat_string_replace ("test", "s", "x"); /* result: "text" */
+/* ... */
+free (str);
+----
+
+[NOTE]
+スクリプト API ではこの関数を利用できません。
+
+==== weechat_string_replace_regex
+
+_WeeChat バージョン 0.4.4 以上で利用可。_
+
+// TRANSLATION MISSING
+Replace text in a string using a regular expression and replacement text.
+
+プロトタイプ:
+
+[source,C]
+----
+char *weechat_string_replace_regex (const char *string, void *regex,
+                                    const char *replace, const char reference_char);
+----
+
+引数:
+
+// TRANSLATION MISSING
+* 'string': string
+* 'regex': pointer to a regular expression ('regex_t' structure) compiled with
+  WeeChat function <<_weechat_string_regcomp,weechat_string_regcomp>> or regcomp
+  (see `man regcomp`)
+* 'replace': replacement text, where following references are allowed:
+** `$0` to `$99`: match 0 to 99 in regular expression (0 is the whole match,
+   1 to 99 are groups captured between parentheses)
+** `$+`: the last match (with highest number)
+** `$.*N`: match `N` (can be `+` or `0` to `99`), with all chars replaced by `*`
+   (the `*` char can be any char between space (32) and `~` (126))
+* 'reference_char': the char used for reference to match (commonly '$')
+
+戻り値:
+
+// TRANSLATION MISSING
+* string with text replaced, NULL if problem (must be freed by calling "free"
+  after use)
+
+C 言語での使用例:
+
+[source,C]
+----
+regex_t my_regex;
+char *string;
+if (weechat_string_regcomp (&my_regex, "([0-9]{4})-([0-9]{2})-([0-9]{2})",
+                            REG_EXTENDED) == 0)
+{
+    string = weechat_string_replace_regex ("date: 2014-02-14", &my_regex,
+                                           "$3/$2/$1", '$');
+    /* string == "date: 14/02/2014" */
+    if (string)
+        free (string);
+    regfree (&my_regex);
+}
+----
+
+[NOTE]
+スクリプト API ではこの関数を利用できません。
+
 ==== weechat_string_split
 
 1 つ以上の区切り文字に従って文字列を分割。
@@ -1261,6 +1370,53 @@ argv = weechat_string_split ("abc de  fghi", " ", 1, 0, &argc);
 /* result: argv[0] == "abc de  fghi"
            argv[1] == "de  fghi"
            argv[2] == "fghi"
+           argv[3] == NULL
+           argc == 3
+*/
+weechat_string_free_split (argv);
+----
+
+[NOTE]
+スクリプト API ではこの関数を利用できません。
+
+==== weechat_string_split_shell
+
+_WeeChat バージョン 0.4.4 以上で利用可。_
+
+// TRANSLATION MISSING
+Split a string like the shell does for a command with arguments.
+
+// TRANSLATION MISSING
+This function is a C conversion of Python class "shlex" (file: Lib/shlex.py in
+Python repository), see: http://docs.python.org/3/library/shlex.html.
+
+プロトタイプ:
+
+[source,C]
+----
+char **weechat_string_split_shell (const char *string, int *num_items);
+----
+
+引数:
+
+* 'string': 分割する文字列
+* 'num_items': 分割回数を返す整数型変数へのポインタ
+
+戻り値:
+
+* 文字列の配列、分割に失敗した場合は NULL (使用後には必ず
+  <<_weechat_string_free_split,weechat_string_free_split>> を呼び出して領域を開放してください)
+
+C 言語での使用例:
+
+[source,C]
+----
+char **argv;
+int argc;
+argv = weechat_string_split_shell ("test 'first arg'  \"second arg\"", &argc);
+/* result: argv[0] == "test"
+           argv[1] == "first arg"
+           argv[2] == "second arg"
            argv[3] == NULL
            argc == 3
 */
@@ -3472,6 +3628,39 @@ map_cb (void *data, struct t_hashtable *hashtable,
 }
 /* ... */
 weechat_hashtable_map_string (hashtable, &map_cb, NULL);
+----
+
+[NOTE]
+スクリプト API ではこの関数を利用できません。
+
+==== weechat_hashtable_dup
+
+_WeeChat バージョン 0.4.4 以上で利用可。_
+
+// TRANSLATION MISSING
+Duplicate a hashtable.
+
+プロトタイプ:
+
+[source,C]
+----
+struct t_hashtable *hashtable_dup (struct t_hashtable *hashtable);
+----
+
+引数:
+
+* 'hashtable': ハッシュテーブルへのポインタ
+
+戻り値:
+
+// TRANSLATION MISSING
+* duplicated hashtable
+
+C 言語での使用例:
+
+[source,C]
+----
+struct t_hashtable *new_hashtable = weechat_hashtable_dup (hashtable);
 ----
 
 [NOTE]

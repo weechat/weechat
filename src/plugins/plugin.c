@@ -516,12 +516,15 @@ plugin_load (const char *filename, int argc, char **argv)
         new_plugin->string_expand_home = &string_expand_home;
         new_plugin->string_remove_quotes = &string_remove_quotes;
         new_plugin->string_strip = &string_strip;
+        new_plugin->string_convert_escaped_chars = &string_convert_escaped_chars;
         new_plugin->string_mask_to_regex = &string_mask_to_regex;
         new_plugin->string_regex_flags = &string_regex_flags;
         new_plugin->string_regcomp = &string_regcomp;
         new_plugin->string_has_highlight = &string_has_highlight;
         new_plugin->string_has_highlight_regex = &string_has_highlight_regex;
+        new_plugin->string_replace_regex = &string_replace_regex;
         new_plugin->string_split = &string_split;
+        new_plugin->string_split_shell = &string_split_shell;
         new_plugin->string_free_split = &string_free_split;
         new_plugin->string_build_with_split_string = &string_build_with_split_string;
         new_plugin->string_split_command = &string_split_command;
@@ -587,6 +590,7 @@ plugin_load (const char *filename, int argc, char **argv)
         new_plugin->hashtable_has_key = &hashtable_has_key;
         new_plugin->hashtable_map = &hashtable_map;
         new_plugin->hashtable_map_string = &hashtable_map_string;
+        new_plugin->hashtable_dup = &hashtable_dup;
         new_plugin->hashtable_get_integer = &hashtable_get_integer;
         new_plugin->hashtable_get_string = &hashtable_get_string;
         new_plugin->hashtable_set_pointer = &hashtable_set_pointer;

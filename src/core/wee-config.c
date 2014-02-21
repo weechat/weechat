@@ -1311,65 +1311,63 @@ config_weechat_proxy_read_cb (void *data, struct t_config_file *config_file,
     /* make C compiler happy */
     (void) data;
     (void) config_file;
-    (void) section;
 
-    if (option_name)
+    if (!option_name)
+        return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+
+    pos_option = strchr (option_name, '.');
+    if (!pos_option)
+        return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+
+    proxy_name = string_strndup (option_name, pos_option - option_name);
+    if (!proxy_name)
+        return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+
+    pos_option++;
+
+    /* search temporary proxy */
+    for (ptr_temp_proxy = weechat_temp_proxies; ptr_temp_proxy;
+         ptr_temp_proxy = ptr_temp_proxy->next_proxy)
     {
-        pos_option = strchr (option_name, '.');
-        if (pos_option)
+        if (strcmp (ptr_temp_proxy->name, proxy_name) == 0)
+            break;
+    }
+    if (!ptr_temp_proxy)
+    {
+        /* create new temporary proxy */
+        ptr_temp_proxy = proxy_alloc (proxy_name);
+        if (ptr_temp_proxy)
         {
-            proxy_name = string_strndup (option_name, pos_option - option_name);
-            if (proxy_name)
-            {
-                pos_option++;
-                for (ptr_temp_proxy = weechat_temp_proxies; ptr_temp_proxy;
-                     ptr_temp_proxy = ptr_temp_proxy->next_proxy)
-                {
-                    if (strcmp (ptr_temp_proxy->name, proxy_name) == 0)
-                        break;
-                }
-                if (!ptr_temp_proxy)
-                {
-                    /* create new temp proxy */
-                    ptr_temp_proxy = proxy_alloc (proxy_name);
-                    if (ptr_temp_proxy)
-                    {
-                        /* add new temp proxy at end of queue */
-                        ptr_temp_proxy->prev_proxy = last_weechat_temp_proxy;
-                        ptr_temp_proxy->next_proxy = NULL;
-
-                        if (!weechat_temp_proxies)
-                            weechat_temp_proxies = ptr_temp_proxy;
-                        else
-                            last_weechat_temp_proxy->next_proxy = ptr_temp_proxy;
-                        last_weechat_temp_proxy = ptr_temp_proxy;
-                    }
-                }
-
-                if (ptr_temp_proxy)
-                {
-                    index_option = proxy_search_option (pos_option);
-                    if (index_option >= 0)
-                    {
-                        proxy_create_option_temp (ptr_temp_proxy, index_option,
-                                                  value);
-                    }
-                    else
-                    {
-                        gui_chat_printf (NULL,
-                                         _("%sWarning: unknown option for "
-                                           "section \"%s\": %s (value: \"%s\")"),
-                                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                         section->name,
-                                         option_name,
-                                         value);
-                    }
-                }
-
-                free (proxy_name);
-            }
+            /* add new proxy at the end */
+            ptr_temp_proxy->prev_proxy = last_weechat_temp_proxy;
+            ptr_temp_proxy->next_proxy = NULL;
+            if (!weechat_temp_proxies)
+                weechat_temp_proxies = ptr_temp_proxy;
+            else
+                last_weechat_temp_proxy->next_proxy = ptr_temp_proxy;
+            last_weechat_temp_proxy = ptr_temp_proxy;
         }
     }
+
+    if (ptr_temp_proxy)
+    {
+        index_option = proxy_search_option (pos_option);
+        if (index_option >= 0)
+        {
+            proxy_create_option_temp (ptr_temp_proxy, index_option,
+                                      value);
+        }
+        else
+        {
+            gui_chat_printf (NULL,
+                             _("%sWarning: unknown option for section \"%s\": "
+                               "%s (value: \"%s\")"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             section->name, option_name, value);
+        }
+    }
+
+    free (proxy_name);
 
     return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
 }
@@ -1392,63 +1390,62 @@ config_weechat_bar_read_cb (void *data, struct t_config_file *config_file,
     (void) config_file;
     (void) section;
 
-    if (option_name)
+    if (!option_name)
+        return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+
+    pos_option = strchr (option_name, '.');
+    if (!pos_option)
+        return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+
+    bar_name = string_strndup (option_name, pos_option - option_name);
+    if (!bar_name)
+        return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+
+    pos_option++;
+
+    /* search temporary bar */
+    for (ptr_temp_bar = gui_temp_bars; ptr_temp_bar;
+         ptr_temp_bar = ptr_temp_bar->next_bar)
     {
-        pos_option = strchr (option_name, '.');
-        if (pos_option)
+        if (strcmp (ptr_temp_bar->name, bar_name) == 0)
+            break;
+    }
+    if (!ptr_temp_bar)
+    {
+        /* create new temporary bar */
+        ptr_temp_bar = gui_bar_alloc (bar_name);
+        if (ptr_temp_bar)
         {
-            bar_name = string_strndup (option_name, pos_option - option_name);
-            if (bar_name)
-            {
-                pos_option++;
-                for (ptr_temp_bar = gui_temp_bars; ptr_temp_bar;
-                     ptr_temp_bar = ptr_temp_bar->next_bar)
-                {
-                    if (strcmp (ptr_temp_bar->name, bar_name) == 0)
-                        break;
-                }
-                if (!ptr_temp_bar)
-                {
-                    /* create new temp bar */
-                    ptr_temp_bar = gui_bar_alloc (bar_name);
-                    if (ptr_temp_bar)
-                    {
-                        /* add new temp bar at end of queue */
-                        ptr_temp_bar->prev_bar = last_gui_temp_bar;
-                        ptr_temp_bar->next_bar = NULL;
-
-                        if (!gui_temp_bars)
-                            gui_temp_bars = ptr_temp_bar;
-                        else
-                            last_gui_temp_bar->next_bar = ptr_temp_bar;
-                        last_gui_temp_bar = ptr_temp_bar;
-                    }
-                }
-
-                if (ptr_temp_bar)
-                {
-                    index_option = gui_bar_search_option (pos_option);
-                    if (index_option >= 0)
-                    {
-                        gui_bar_create_option_temp (ptr_temp_bar, index_option,
-                                                    value);
-                    }
-                    else
-                    {
-                        gui_chat_printf (NULL,
-                                         _("%sWarning: unknown option for "
-                                           "section \"%s\": %s (value: \"%s\")"),
-                                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                         section->name,
-                                         option_name,
-                                         value);
-                    }
-                }
-
-                free (bar_name);
-            }
+            /* add new bar at the end */
+            ptr_temp_bar->prev_bar = last_gui_temp_bar;
+            ptr_temp_bar->next_bar = NULL;
+            if (!gui_temp_bars)
+                gui_temp_bars = ptr_temp_bar;
+            else
+                last_gui_temp_bar->next_bar = ptr_temp_bar;
+            last_gui_temp_bar = ptr_temp_bar;
         }
     }
+
+    if (ptr_temp_bar)
+    {
+        index_option = gui_bar_search_option (pos_option);
+        if (index_option >= 0)
+        {
+            gui_bar_create_option_temp (ptr_temp_bar, index_option,
+                                        value);
+        }
+        else
+        {
+            gui_chat_printf (NULL,
+                             _("%sWarning: unknown option for section \"%s\": "
+                               "%s (value: \"%s\")"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             section->name, option_name, value);
+        }
+    }
+
+    free (bar_name);
 
     return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
 }

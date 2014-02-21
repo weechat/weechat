@@ -1368,156 +1368,156 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
     length = strlen (bar_name) + 1 +
         strlen (gui_bar_option_string[index_option]) + 1;
     option_name = malloc (length);
-    if (option_name)
-    {
-        snprintf (option_name, length, "%s.%s",
-                  bar_name, gui_bar_option_string[index_option]);
+    if (!option_name)
+        return NULL;
 
-        switch (index_option)
-        {
-            case GUI_BAR_OPTION_HIDDEN:
-                ptr_option = config_file_new_option (
-                    weechat_config_file, weechat_config_section_bar,
-                    option_name, "boolean",
-                    N_("true if bar is hidden, false if it is displayed"),
-                    NULL, 0, 0, value, NULL, 0,
-                    NULL, NULL, &gui_bar_config_change_hidden, NULL, NULL, NULL);
-                break;
-            case GUI_BAR_OPTION_PRIORITY:
-                ptr_option = config_file_new_option (
-                    weechat_config_file, weechat_config_section_bar,
-                    option_name, "integer",
-                    N_("bar priority (high number means bar displayed first)"),
-                    NULL, 0, INT_MAX, value, NULL, 0,
-                    NULL, NULL, &gui_bar_config_change_priority, NULL, NULL, NULL);
-                break;
-            case GUI_BAR_OPTION_TYPE:
-                ptr_option = config_file_new_option (
-                    weechat_config_file, weechat_config_section_bar,
-                    option_name, "integer",
-                    N_("bar type (root, window, window_active, window_inactive)"),
-                    "root|window|window_active|window_inactive", 0, 0, value, NULL, 0,
-                    &gui_bar_config_check_type, NULL, NULL, NULL, NULL, NULL);
-                break;
-            case GUI_BAR_OPTION_CONDITIONS:
-                ptr_option = config_file_new_option (
-                    weechat_config_file, weechat_config_section_bar,
-                    option_name, "string",
-                    N_("condition(s) for displaying bar (for bars of type "
-                       "\"window\"): a simple condition: \"active\", "
-                       "\"inactive\", \"nicklist\" (window must be active/"
-                       "inactive, buffer must have a nicklist), or an "
-                       "expression with condition(s) (see /help eval), like: "
-                       "\"${nicklist} && ${window.win_width} > 100\" "
-                       "(local variables for expression are ${active}, "
-                       "${inactive} and ${nicklist})"),
-                    NULL, 0, 0, value, NULL, 0,
-                    NULL, NULL, &gui_bar_config_change_conditions, NULL, NULL, NULL);
-                break;
-            case GUI_BAR_OPTION_POSITION:
-                ptr_option = config_file_new_option (
-                    weechat_config_file, weechat_config_section_bar,
-                    option_name, "integer",
-                    N_("bar position (bottom, top, left, right)"),
-                    "bottom|top|left|right", 0, 0, value, NULL, 0,
-                    NULL, NULL, &gui_bar_config_change_position, NULL, NULL, NULL);
-                break;
-            case GUI_BAR_OPTION_FILLING_TOP_BOTTOM:
-                ptr_option = config_file_new_option (
-                    weechat_config_file, weechat_config_section_bar,
-                    option_name, "integer",
-                    N_("bar filling direction (\"horizontal\" (from left to "
-                       "right) or \"vertical\" (from top to bottom)) when bar "
-                       "position is top or bottom"),
-                    "horizontal|vertical|columns_horizontal|columns_vertical",
-                    0, 0, value, NULL, 0,
-                    NULL, NULL, &gui_bar_config_change_filling, NULL, NULL, NULL);
-                break;
-            case GUI_BAR_OPTION_FILLING_LEFT_RIGHT:
-                ptr_option = config_file_new_option (
-                    weechat_config_file, weechat_config_section_bar,
-                    option_name, "integer",
-                    N_("bar filling direction (\"horizontal\" (from left to "
-                       "right) or \"vertical\" (from top to bottom)) when bar "
-                       "position is left or right"),
-                    "horizontal|vertical|columns_horizontal|columns_vertical",
-                    0, 0, value, NULL, 0,
-                    NULL, NULL, &gui_bar_config_change_filling, NULL, NULL, NULL);
-                break;
-            case GUI_BAR_OPTION_SIZE:
-                ptr_option = config_file_new_option (
-                    weechat_config_file, weechat_config_section_bar,
-                    option_name, "integer",
-                    N_("bar size in chars (0 = auto size)"),
-                    NULL, 0, INT_MAX, value, NULL, 0,
-                    &gui_bar_config_check_size, NULL,
-                    &gui_bar_config_change_size, NULL,
-                    NULL, NULL);
-                break;
-            case GUI_BAR_OPTION_SIZE_MAX:
-                ptr_option = config_file_new_option (
-                    weechat_config_file, weechat_config_section_bar,
-                    option_name, "integer",
-                    N_("max bar size in chars (0 = no limit)"),
-                    NULL, 0, INT_MAX, value, NULL, 0,
-                    NULL, NULL,
-                    &gui_bar_config_change_size_max, NULL,
-                    NULL, NULL);
-                break;
-            case GUI_BAR_OPTION_COLOR_FG:
-                ptr_option = config_file_new_option (
-                    weechat_config_file, weechat_config_section_bar,
-                    option_name, "color",
-                    N_("default text color for bar"),
-                    NULL, 0, 0, value, NULL, 0,
-                    NULL, NULL,
-                    &gui_bar_config_change_color, NULL,
-                    NULL, NULL);
-                break;
-            case GUI_BAR_OPTION_COLOR_DELIM:
-                ptr_option = config_file_new_option (
-                    weechat_config_file, weechat_config_section_bar,
-                    option_name, "color",
-                    N_("default delimiter color for bar"),
-                    NULL, 0, 0, value, NULL, 0,
-                    NULL, NULL,
-                    &gui_bar_config_change_color, NULL,
-                    NULL, NULL);
-                break;
-            case GUI_BAR_OPTION_COLOR_BG:
-                ptr_option = config_file_new_option (
-                    weechat_config_file, weechat_config_section_bar,
-                    option_name, "color",
-                    N_("default background color for bar"),
-                    NULL, 0, 0, value, NULL, 0,
-                    NULL, NULL,
-                    &gui_bar_config_change_color, NULL,
-                    NULL, NULL);
-                break;
-            case GUI_BAR_OPTION_SEPARATOR:
-                ptr_option = config_file_new_option (
-                    weechat_config_file, weechat_config_section_bar,
-                    option_name, "boolean",
-                    N_("separator line between bar and other bars/windows"),
-                    NULL, 0, 0, value, NULL, 0,
-                    NULL, NULL, &gui_bar_config_change_separator, NULL, NULL, NULL);
-                break;
-            case GUI_BAR_OPTION_ITEMS:
-                ptr_option = config_file_new_option (
-                    weechat_config_file, weechat_config_section_bar,
-                    option_name, "string",
-                    N_("items of bar, they can be separated by comma (space "
-                       "between items) or \"+\" (glued items); special syntax "
-                       "\"@buffer:item\" can be used to force buffer used when "
-                       "displaying the bar item"),
-                    NULL, 0, 0, gui_bar_default_items (bar_name), value, 0,
-                    NULL, NULL, &gui_bar_config_change_items, NULL, NULL, NULL);
-                break;
-            case GUI_BAR_NUM_OPTIONS:
-                break;
-        }
-        free (option_name);
+    snprintf (option_name, length, "%s.%s",
+              bar_name, gui_bar_option_string[index_option]);
+
+    switch (index_option)
+    {
+        case GUI_BAR_OPTION_HIDDEN:
+            ptr_option = config_file_new_option (
+                weechat_config_file, weechat_config_section_bar,
+                option_name, "boolean",
+                N_("true if bar is hidden, false if it is displayed"),
+                NULL, 0, 0, value, NULL, 0,
+                NULL, NULL, &gui_bar_config_change_hidden, NULL, NULL, NULL);
+            break;
+        case GUI_BAR_OPTION_PRIORITY:
+            ptr_option = config_file_new_option (
+                weechat_config_file, weechat_config_section_bar,
+                option_name, "integer",
+                N_("bar priority (high number means bar displayed first)"),
+                NULL, 0, INT_MAX, value, NULL, 0,
+                NULL, NULL, &gui_bar_config_change_priority, NULL, NULL, NULL);
+            break;
+        case GUI_BAR_OPTION_TYPE:
+            ptr_option = config_file_new_option (
+                weechat_config_file, weechat_config_section_bar,
+                option_name, "integer",
+                N_("bar type (root, window, window_active, window_inactive)"),
+                "root|window|window_active|window_inactive", 0, 0, value, NULL, 0,
+                &gui_bar_config_check_type, NULL, NULL, NULL, NULL, NULL);
+            break;
+        case GUI_BAR_OPTION_CONDITIONS:
+            ptr_option = config_file_new_option (
+                weechat_config_file, weechat_config_section_bar,
+                option_name, "string",
+                N_("condition(s) for displaying bar (for bars of type "
+                   "\"window\"): a simple condition: \"active\", \"inactive\", "
+                   "\"nicklist\" (window must be active/inactive, buffer must "
+                   "have a nicklist), or an expression with condition(s) (see "
+                   "/help eval), like: \"${nicklist} && ${window.win_width} > "
+                   "100\" (local variables for expression are ${active}, "
+                   "${inactive} and ${nicklist})"),
+                NULL, 0, 0, value, NULL, 0,
+                NULL, NULL, &gui_bar_config_change_conditions, NULL, NULL, NULL);
+            break;
+        case GUI_BAR_OPTION_POSITION:
+            ptr_option = config_file_new_option (
+                weechat_config_file, weechat_config_section_bar,
+                option_name, "integer",
+                N_("bar position (bottom, top, left, right)"),
+                "bottom|top|left|right", 0, 0, value, NULL, 0,
+                NULL, NULL, &gui_bar_config_change_position, NULL, NULL, NULL);
+            break;
+        case GUI_BAR_OPTION_FILLING_TOP_BOTTOM:
+            ptr_option = config_file_new_option (
+                weechat_config_file, weechat_config_section_bar,
+                option_name, "integer",
+                N_("bar filling direction (\"horizontal\" (from left to right) "
+                   "or \"vertical\" (from top to bottom)) when bar position is "
+                   "top or bottom"),
+                "horizontal|vertical|columns_horizontal|columns_vertical",
+                0, 0, value, NULL, 0,
+                NULL, NULL, &gui_bar_config_change_filling, NULL, NULL, NULL);
+            break;
+        case GUI_BAR_OPTION_FILLING_LEFT_RIGHT:
+            ptr_option = config_file_new_option (
+                weechat_config_file, weechat_config_section_bar,
+                option_name, "integer",
+                N_("bar filling direction (\"horizontal\" (from left to right) "
+                   "or \"vertical\" (from top to bottom)) when bar position is "
+                   "left or right"),
+                "horizontal|vertical|columns_horizontal|columns_vertical",
+                0, 0, value, NULL, 0,
+                NULL, NULL, &gui_bar_config_change_filling, NULL, NULL, NULL);
+            break;
+        case GUI_BAR_OPTION_SIZE:
+            ptr_option = config_file_new_option (
+                weechat_config_file, weechat_config_section_bar,
+                option_name, "integer",
+                N_("bar size in chars (0 = auto size)"),
+                NULL, 0, INT_MAX, value, NULL, 0,
+                &gui_bar_config_check_size, NULL,
+                &gui_bar_config_change_size, NULL,
+                NULL, NULL);
+            break;
+        case GUI_BAR_OPTION_SIZE_MAX:
+            ptr_option = config_file_new_option (
+                weechat_config_file, weechat_config_section_bar,
+                option_name, "integer",
+                N_("max bar size in chars (0 = no limit)"),
+                NULL, 0, INT_MAX, value, NULL, 0,
+                NULL, NULL,
+                &gui_bar_config_change_size_max, NULL,
+                NULL, NULL);
+            break;
+        case GUI_BAR_OPTION_COLOR_FG:
+            ptr_option = config_file_new_option (
+                weechat_config_file, weechat_config_section_bar,
+                option_name, "color",
+                N_("default text color for bar"),
+                NULL, 0, 0, value, NULL, 0,
+                NULL, NULL,
+                &gui_bar_config_change_color, NULL,
+                NULL, NULL);
+            break;
+        case GUI_BAR_OPTION_COLOR_DELIM:
+            ptr_option = config_file_new_option (
+                weechat_config_file, weechat_config_section_bar,
+                option_name, "color",
+                N_("default delimiter color for bar"),
+                NULL, 0, 0, value, NULL, 0,
+                NULL, NULL,
+                &gui_bar_config_change_color, NULL,
+                NULL, NULL);
+            break;
+        case GUI_BAR_OPTION_COLOR_BG:
+            ptr_option = config_file_new_option (
+                weechat_config_file, weechat_config_section_bar,
+                option_name, "color",
+                N_("default background color for bar"),
+                NULL, 0, 0, value, NULL, 0,
+                NULL, NULL,
+                &gui_bar_config_change_color, NULL,
+                NULL, NULL);
+            break;
+        case GUI_BAR_OPTION_SEPARATOR:
+            ptr_option = config_file_new_option (
+                weechat_config_file, weechat_config_section_bar,
+                option_name, "boolean",
+                N_("separator line between bar and other bars/windows"),
+                NULL, 0, 0, value, NULL, 0,
+                NULL, NULL, &gui_bar_config_change_separator, NULL, NULL, NULL);
+            break;
+        case GUI_BAR_OPTION_ITEMS:
+            ptr_option = config_file_new_option (
+                weechat_config_file, weechat_config_section_bar,
+                option_name, "string",
+                N_("items of bar, they can be separated by comma (space "
+                   "between items) or \"+\" (glued items); special syntax "
+                   "\"@buffer:item\" can be used to force buffer used when "
+                   "displaying the bar item"),
+                NULL, 0, 0, gui_bar_default_items (bar_name), value, 0,
+                NULL, NULL, &gui_bar_config_change_items, NULL, NULL, NULL);
+            break;
+        case GUI_BAR_NUM_OPTIONS:
+            break;
     }
+
+    free (option_name);
 
     return ptr_option;
 }
@@ -1535,53 +1535,10 @@ gui_bar_create_option_temp (struct t_gui_bar *temp_bar, int index_option,
     new_option = gui_bar_create_option (temp_bar->name,
                                         index_option,
                                         value);
-    if (new_option)
+    if (new_option
+        && (index_option >= 0) && (index_option < GUI_BAR_NUM_OPTIONS))
     {
-        switch (index_option)
-        {
-            case GUI_BAR_OPTION_HIDDEN:
-                temp_bar->options[GUI_BAR_OPTION_HIDDEN] = new_option;
-                break;
-            case GUI_BAR_OPTION_PRIORITY:
-                temp_bar->options[GUI_BAR_OPTION_PRIORITY] = new_option;
-                break;
-            case GUI_BAR_OPTION_TYPE:
-                temp_bar->options[GUI_BAR_OPTION_TYPE] = new_option;
-                break;
-            case GUI_BAR_OPTION_CONDITIONS:
-                temp_bar->options[GUI_BAR_OPTION_CONDITIONS] = new_option;
-                break;
-            case GUI_BAR_OPTION_POSITION:
-                temp_bar->options[GUI_BAR_OPTION_POSITION] = new_option;
-                break;
-            case GUI_BAR_OPTION_FILLING_TOP_BOTTOM:
-                temp_bar->options[GUI_BAR_OPTION_FILLING_TOP_BOTTOM] = new_option;
-                break;
-            case GUI_BAR_OPTION_FILLING_LEFT_RIGHT:
-                temp_bar->options[GUI_BAR_OPTION_FILLING_LEFT_RIGHT] = new_option;
-                break;
-            case GUI_BAR_OPTION_SIZE:
-                temp_bar->options[GUI_BAR_OPTION_SIZE] = new_option;
-                break;
-            case GUI_BAR_OPTION_SIZE_MAX:
-                temp_bar->options[GUI_BAR_OPTION_SIZE_MAX] = new_option;
-                break;
-            case GUI_BAR_OPTION_COLOR_FG:
-                temp_bar->options[GUI_BAR_OPTION_COLOR_FG] = new_option;
-                break;
-            case GUI_BAR_OPTION_COLOR_DELIM:
-                temp_bar->options[GUI_BAR_OPTION_COLOR_DELIM] = new_option;
-                break;
-            case GUI_BAR_OPTION_COLOR_BG:
-                temp_bar->options[GUI_BAR_OPTION_COLOR_BG] = new_option;
-                break;
-            case GUI_BAR_OPTION_SEPARATOR:
-                temp_bar->options[GUI_BAR_OPTION_SEPARATOR] = new_option;
-                break;
-            case GUI_BAR_OPTION_ITEMS:
-                temp_bar->options[GUI_BAR_OPTION_ITEMS] = new_option;
-                break;
-        }
+        temp_bar->options[index_option] = new_option;
     }
 }
 
@@ -1648,51 +1605,51 @@ gui_bar_new_with_options (const char *name,
 
     /* create bar */
     new_bar = gui_bar_alloc (name);
-    if (new_bar)
+    if (!new_bar)
+        return NULL;
+
+    new_bar->options[GUI_BAR_OPTION_HIDDEN] = hidden;
+    new_bar->options[GUI_BAR_OPTION_PRIORITY] = priority;
+    new_bar->options[GUI_BAR_OPTION_TYPE] = type;
+    new_bar->options[GUI_BAR_OPTION_CONDITIONS] = conditions;
+    new_bar->options[GUI_BAR_OPTION_POSITION] = position;
+    new_bar->options[GUI_BAR_OPTION_FILLING_TOP_BOTTOM] = filling_top_bottom;
+    new_bar->options[GUI_BAR_OPTION_FILLING_LEFT_RIGHT] = filling_left_right;
+    new_bar->options[GUI_BAR_OPTION_SIZE] = size;
+    new_bar->options[GUI_BAR_OPTION_SIZE_MAX] = size_max;
+    new_bar->options[GUI_BAR_OPTION_COLOR_FG] = color_fg;
+    new_bar->options[GUI_BAR_OPTION_COLOR_DELIM] = color_delim;
+    new_bar->options[GUI_BAR_OPTION_COLOR_BG] = color_bg;
+    new_bar->options[GUI_BAR_OPTION_SEPARATOR] = separator;
+    new_bar->options[GUI_BAR_OPTION_ITEMS] = items;
+    new_bar->items_count = 0;
+    new_bar->items_subcount = NULL;
+    new_bar->items_array = NULL;
+    new_bar->items_buffer = NULL;
+    new_bar->items_prefix = NULL;
+    new_bar->items_name = NULL;
+    new_bar->items_suffix = NULL;
+    gui_bar_set_items_array (new_bar, CONFIG_STRING(items));
+    new_bar->bar_window = NULL;
+    new_bar->bar_refresh_needed = 1;
+
+    /* add bar to bars list */
+    gui_bar_insert (new_bar);
+
+    /* add window bar */
+    if (CONFIG_INTEGER(new_bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
     {
-        new_bar->options[GUI_BAR_OPTION_HIDDEN] = hidden;
-        new_bar->options[GUI_BAR_OPTION_PRIORITY] = priority;
-        new_bar->options[GUI_BAR_OPTION_TYPE] = type;
-        new_bar->options[GUI_BAR_OPTION_CONDITIONS] = conditions;
-        new_bar->options[GUI_BAR_OPTION_POSITION] = position;
-        new_bar->options[GUI_BAR_OPTION_FILLING_TOP_BOTTOM] = filling_top_bottom;
-        new_bar->options[GUI_BAR_OPTION_FILLING_LEFT_RIGHT] = filling_left_right;
-        new_bar->options[GUI_BAR_OPTION_SIZE] = size;
-        new_bar->options[GUI_BAR_OPTION_SIZE_MAX] = size_max;
-        new_bar->options[GUI_BAR_OPTION_COLOR_FG] = color_fg;
-        new_bar->options[GUI_BAR_OPTION_COLOR_DELIM] = color_delim;
-        new_bar->options[GUI_BAR_OPTION_COLOR_BG] = color_bg;
-        new_bar->options[GUI_BAR_OPTION_SEPARATOR] = separator;
-        new_bar->options[GUI_BAR_OPTION_ITEMS] = items;
-        new_bar->items_count = 0;
-        new_bar->items_subcount = NULL;
-        new_bar->items_array = NULL;
-        new_bar->items_buffer = NULL;
-        new_bar->items_prefix = NULL;
-        new_bar->items_name = NULL;
-        new_bar->items_suffix = NULL;
-        gui_bar_set_items_array (new_bar, CONFIG_STRING(items));
-        new_bar->bar_window = NULL;
-        new_bar->bar_refresh_needed = 1;
-
-        /* add bar to bars list */
-        gui_bar_insert (new_bar);
-
-        /* add window bar */
-        if (CONFIG_INTEGER(new_bar->options[GUI_BAR_OPTION_TYPE]) == GUI_BAR_TYPE_ROOT)
+        /* create only one window for bar */
+        gui_bar_window_new (new_bar, NULL);
+        gui_window_ask_refresh (1);
+    }
+    else
+    {
+        /* create bar window for all opened windows */
+        for (ptr_win = gui_windows; ptr_win;
+             ptr_win = ptr_win->next_window)
         {
-            /* create only one window for bar */
-            gui_bar_window_new (new_bar, NULL);
-            gui_window_ask_refresh (1);
-        }
-        else
-        {
-            /* create bar window for all opened windows */
-            for (ptr_win = gui_windows; ptr_win;
-                 ptr_win = ptr_win->next_window)
-            {
-                gui_bar_window_new (new_bar, ptr_win);
-            }
+            gui_bar_window_new (new_bar, ptr_win);
         }
     }
 
@@ -1867,7 +1824,7 @@ gui_bar_use_temp_bars ()
         }
     }
 
-    /* free all temp bars */
+    /* free all temporary bars */
     while (gui_temp_bars)
     {
         next_temp_bar = gui_temp_bars->next_bar;

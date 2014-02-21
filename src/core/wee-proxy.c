@@ -294,68 +294,69 @@ proxy_create_option (const char *proxy_name, int index_option,
     length = strlen (proxy_name) + 1 +
         strlen (proxy_option_string[index_option]) + 1;
     option_name = malloc (length);
-    if (option_name)
-    {
-        snprintf (option_name, length, "%s.%s",
-                  proxy_name, proxy_option_string[index_option]);
+    if (!option_name)
+        return NULL;
 
-        switch (index_option)
-        {
-            case PROXY_OPTION_TYPE:
-                ptr_option = config_file_new_option (
-                    weechat_config_file, weechat_config_section_proxy,
-                    option_name, "integer",
-                    N_("proxy type (http (default), socks4, socks5)"),
-                    "http|socks4|socks5", 0, 0, value, NULL, 0,
-                    NULL, NULL, NULL, NULL, NULL, NULL);
-                break;
-            case PROXY_OPTION_IPV6:
-                ptr_option = config_file_new_option (
-                    weechat_config_file, weechat_config_section_proxy,
-                    option_name, "boolean",
-                    N_("connect to proxy using ipv6"),
-                    NULL, 0, 0, value, NULL, 0,
-                    NULL, NULL, NULL, NULL, NULL, NULL);
-                break;
-            case PROXY_OPTION_ADDRESS:
-                ptr_option = config_file_new_option (
-                    weechat_config_file, weechat_config_section_proxy,
-                    option_name, "string",
-                    N_("proxy server address (IP or hostname)"),
-                    NULL, 0, 0, value, NULL, 0,
-                    NULL, NULL, NULL, NULL, NULL, NULL);
-                break;
-            case PROXY_OPTION_PORT:
-                ptr_option = config_file_new_option (
-                    weechat_config_file, weechat_config_section_proxy,
-                    option_name, "integer",
-                    N_("port for connecting to proxy server"),
-                    NULL, 0, 65535, value, NULL, 0,
-                    NULL, NULL, NULL, NULL, NULL, NULL);
-                break;
-            case PROXY_OPTION_USERNAME:
-                ptr_option = config_file_new_option (
-                    weechat_config_file, weechat_config_section_proxy,
-                    option_name, "string",
-                    N_("username for proxy server "
-                       "(note: content is evaluated, see /help eval)"),
-                    NULL, 0, 0, value, NULL, 0,
-                    NULL, NULL, NULL, NULL, NULL, NULL);
-                break;
-            case PROXY_OPTION_PASSWORD:
-                ptr_option = config_file_new_option (
-                    weechat_config_file, weechat_config_section_proxy,
-                    option_name, "string",
-                    N_("password for proxy server "
-                       "(note: content is evaluated, see /help eval)"),
-                    NULL, 0, 0, value, NULL, 0,
-                    NULL, NULL, NULL, NULL, NULL, NULL);
-                break;
-            case PROXY_NUM_OPTIONS:
-                break;
-        }
-        free (option_name);
+    snprintf (option_name, length, "%s.%s",
+              proxy_name, proxy_option_string[index_option]);
+
+    switch (index_option)
+    {
+        case PROXY_OPTION_TYPE:
+            ptr_option = config_file_new_option (
+                weechat_config_file, weechat_config_section_proxy,
+                option_name, "integer",
+                N_("proxy type (http (default), socks4, socks5)"),
+                "http|socks4|socks5", 0, 0, value, NULL, 0,
+                NULL, NULL, NULL, NULL, NULL, NULL);
+            break;
+        case PROXY_OPTION_IPV6:
+            ptr_option = config_file_new_option (
+                weechat_config_file, weechat_config_section_proxy,
+                option_name, "boolean",
+                N_("connect to proxy using ipv6"),
+                NULL, 0, 0, value, NULL, 0,
+                NULL, NULL, NULL, NULL, NULL, NULL);
+            break;
+        case PROXY_OPTION_ADDRESS:
+            ptr_option = config_file_new_option (
+                weechat_config_file, weechat_config_section_proxy,
+                option_name, "string",
+                N_("proxy server address (IP or hostname)"),
+                NULL, 0, 0, value, NULL, 0,
+                NULL, NULL, NULL, NULL, NULL, NULL);
+            break;
+        case PROXY_OPTION_PORT:
+            ptr_option = config_file_new_option (
+                weechat_config_file, weechat_config_section_proxy,
+                option_name, "integer",
+                N_("port for connecting to proxy server"),
+                NULL, 0, 65535, value, NULL, 0,
+                NULL, NULL, NULL, NULL, NULL, NULL);
+            break;
+        case PROXY_OPTION_USERNAME:
+            ptr_option = config_file_new_option (
+                weechat_config_file, weechat_config_section_proxy,
+                option_name, "string",
+                N_("username for proxy server "
+                   "(note: content is evaluated, see /help eval)"),
+                NULL, 0, 0, value, NULL, 0,
+                NULL, NULL, NULL, NULL, NULL, NULL);
+            break;
+        case PROXY_OPTION_PASSWORD:
+            ptr_option = config_file_new_option (
+                weechat_config_file, weechat_config_section_proxy,
+                option_name, "string",
+                N_("password for proxy server "
+                   "(note: content is evaluated, see /help eval)"),
+                NULL, 0, 0, value, NULL, 0,
+                NULL, NULL, NULL, NULL, NULL, NULL);
+            break;
+        case PROXY_NUM_OPTIONS:
+            break;
     }
+
+    free (option_name);
 
     return ptr_option;
 }
@@ -423,24 +424,24 @@ proxy_new_with_options (const char *name,
 
     /* create proxy */
     new_proxy = proxy_alloc (name);
-    if (new_proxy)
-    {
-        new_proxy->options[PROXY_OPTION_TYPE] = type;
-        new_proxy->options[PROXY_OPTION_IPV6] = ipv6;
-        new_proxy->options[PROXY_OPTION_ADDRESS] = address;
-        new_proxy->options[PROXY_OPTION_PORT] = port;
-        new_proxy->options[PROXY_OPTION_USERNAME] = username;
-        new_proxy->options[PROXY_OPTION_PASSWORD] = password;
+    if (!new_proxy)
+        return NULL;
 
-        /* add proxy to proxies list */
-        new_proxy->prev_proxy = last_weechat_proxy;
-        if (weechat_proxies)
-            last_weechat_proxy->next_proxy = new_proxy;
-        else
-            weechat_proxies = new_proxy;
-        last_weechat_proxy = new_proxy;
-        new_proxy->next_proxy = NULL;
-    }
+    new_proxy->options[PROXY_OPTION_TYPE] = type;
+    new_proxy->options[PROXY_OPTION_IPV6] = ipv6;
+    new_proxy->options[PROXY_OPTION_ADDRESS] = address;
+    new_proxy->options[PROXY_OPTION_PORT] = port;
+    new_proxy->options[PROXY_OPTION_USERNAME] = username;
+    new_proxy->options[PROXY_OPTION_PASSWORD] = password;
+
+    /* add proxy to proxies list */
+    new_proxy->prev_proxy = last_weechat_proxy;
+    if (weechat_proxies)
+        last_weechat_proxy->next_proxy = new_proxy;
+    else
+        weechat_proxies = new_proxy;
+    last_weechat_proxy = new_proxy;
+    new_proxy->next_proxy = NULL;
 
     return new_proxy;
 }

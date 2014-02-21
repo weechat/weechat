@@ -5043,13 +5043,14 @@ command_set_display_section (struct t_config_file *config_file,
                              struct t_config_section *section)
 {
     gui_chat_printf (NULL, "");
-    gui_chat_printf (NULL, "%s[%s%s%s]%s (%s)",
-                     GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                     GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                     section->name,
-                     GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                     GUI_COLOR(GUI_COLOR_CHAT),
-                     config_file->filename);
+    gui_chat_printf_date_tags (NULL, 0, "no_trigger",
+                               "%s[%s%s%s]%s (%s)",
+                               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                               GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+                               section->name,
+                               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                               GUI_COLOR(GUI_COLOR_CHAT),
+                               config_file->filename);
 }
 
 /*
@@ -5086,7 +5087,8 @@ command_set_display_option (struct t_config_option *option,
                               (CONFIG_BOOLEAN_DEFAULT(option)) ? "on" : "off");
                     display_default = str_default;
                 }
-                gui_chat_printf_date_tags (NULL, 0, GUI_CHAT_TAG_NO_HIGHLIGHT,
+                gui_chat_printf_date_tags (NULL, 0,
+                                           "no_trigger," GUI_CHAT_TAG_NO_HIGHLIGHT,
                                            "%s%s.%s.%s%s = %s%s%s%s%s%s%s%s%s%s",
                                            (message) ? message : "  ",
                                            option->config_file->name,
@@ -5121,7 +5123,8 @@ command_set_display_option (struct t_config_option *option,
                 }
                 if (option->string_values)
                 {
-                    gui_chat_printf_date_tags (NULL, 0, GUI_CHAT_TAG_NO_HIGHLIGHT,
+                    gui_chat_printf_date_tags (NULL, 0,
+                                               "no_trigger," GUI_CHAT_TAG_NO_HIGHLIGHT,
                                                "%s%s.%s.%s%s = %s%s%s%s%s%s%s%s%s%s",
                                                (message) ? message : "  ",
                                                option->config_file->name,
@@ -5141,7 +5144,8 @@ command_set_display_option (struct t_config_option *option,
                 }
                 else
                 {
-                    gui_chat_printf_date_tags (NULL, 0, GUI_CHAT_TAG_NO_HIGHLIGHT,
+                    gui_chat_printf_date_tags (NULL, 0,
+                                               "no_trigger," GUI_CHAT_TAG_NO_HIGHLIGHT,
                                                "%s%s.%s.%s%s = %s%d%s%s%s%s%s%s%s%s",
                                                (message) ? message : "  ",
                                                option->config_file->name,
@@ -5166,7 +5170,8 @@ command_set_display_option (struct t_config_option *option,
                 {
                     display_default = CONFIG_STRING_DEFAULT(option);
                 }
-                gui_chat_printf_date_tags (NULL, 0, GUI_CHAT_TAG_NO_HIGHLIGHT,
+                gui_chat_printf_date_tags (NULL, 0,
+                                           "no_trigger," GUI_CHAT_TAG_NO_HIGHLIGHT,
                                            "%s%s.%s.%s%s = \"%s%s%s\"%s%s%s%s%s%s%s%s%s%s%s",
                                            (message) ? message : "  ",
                                            option->config_file->name,
@@ -5199,7 +5204,8 @@ command_set_display_option (struct t_config_option *option,
                     }
                 }
                 color_name = gui_color_get_name (CONFIG_COLOR(option));
-                gui_chat_printf_date_tags (NULL, 0, GUI_CHAT_TAG_NO_HIGHLIGHT,
+                gui_chat_printf_date_tags (NULL, 0,
+                                           "no_trigger," GUI_CHAT_TAG_NO_HIGHLIGHT,
                                            "%s%s.%s.%s%s = %s%s%s%s%s%s%s%s%s%s",
                                            (message) ? message : "  ",
                                            option->config_file->name,
@@ -5224,7 +5230,8 @@ command_set_display_option (struct t_config_option *option,
     }
     else
     {
-        gui_chat_printf_date_tags (NULL, 0, GUI_CHAT_TAG_NO_HIGHLIGHT,
+        gui_chat_printf_date_tags (NULL, 0,
+                                   "no_trigger," GUI_CHAT_TAG_NO_HIGHLIGHT,
                                    "%s%s.%s.%s",
                                    (message) ? message : "  ",
                                    option->config_file->name,

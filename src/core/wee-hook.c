@@ -482,7 +482,7 @@ hook_command_build_completion (struct t_hook_command *hook_command)
     {
         /*
          * build static part of template: it's first argument(s) which does not
-         * contain "%" or "|"
+         * contain "%"
          */
         last_space = NULL;
         ptr_template = hook_command->cplt_templates[i];
@@ -493,7 +493,7 @@ hook_command_build_completion (struct t_hook_command *hook_command)
                 last_space = ptr_template;
                 break;
             }
-            else if ((ptr_template[0] == '%') || (ptr_template[0] == '|'))
+            else if (ptr_template[0] == '%')
                 break;
             ptr_template = utf8_next_char (ptr_template);
         }
@@ -1542,7 +1542,8 @@ hook_process_child (struct t_hook *hook_process)
              * if no arguments were found in hashtable, make an automatic split
              * of command, like the shell does
              */
-            exec_args = string_split_shell (HOOK_PROCESS(hook_process, command));
+            exec_args = string_split_shell (HOOK_PROCESS(hook_process, command),
+                                            NULL);
         }
 
         if (exec_args)
