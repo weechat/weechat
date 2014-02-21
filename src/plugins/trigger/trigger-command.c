@@ -431,11 +431,12 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
 {
     struct t_trigger *ptr_trigger, *ptr_trigger2;
     char *value, **sargv, **items, input[1024], str_pos[16];
-    int i, type, count, index_option, enable, sargc, num_items, rc;
+    int rc, i, type, count, index_option, enable, sargc, num_items, add_rc;
 
     /* make C compiler happy */
     (void) data;
 
+    rc = WEECHAT_RC_OK;
     sargv = NULL;
 
     /* list all triggers */
@@ -467,13 +468,7 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
     {
         sargv = weechat_string_split_shell (argv_eol[2], &sargc);
         if (!sargv || (sargc < 2))
-        {
-            weechat_printf_tags (NULL, "no_trigger",
-                                 _("%sError: missing arguments for \"%s\" "
-                                   "command"),
-                                 weechat_prefix ("error"), "trigger");
-            goto end;
-        }
+            goto error;
         if (!trigger_name_valid (sargv[0]))
         {
             weechat_printf_tags (NULL, "no_trigger",
@@ -588,13 +583,7 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
         || (weechat_strcasecmp (argv[1], "recreate") == 0))
     {
         if (argc < 3)
-        {
-            weechat_printf_tags (NULL, "no_trigger",
-                                 _("%sError: missing arguments for \"%s\" "
-                                   "command"),
-                                 weechat_prefix ("error"), "trigger");
-            goto end;
-        }
+            goto error;
         ptr_trigger = trigger_search (argv[2]);
         if (!ptr_trigger)
         {
@@ -603,7 +592,7 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
                                  weechat_prefix ("error"), argv[2]);
             goto end;
         }
-        rc = trigger_hook_default_rc[weechat_config_integer (ptr_trigger->options[TRIGGER_OPTION_HOOK])][0];
+        add_rc = trigger_hook_default_rc[weechat_config_integer (ptr_trigger->options[TRIGGER_OPTION_HOOK])][0];
         snprintf (input, sizeof (input),
                   "//trigger %s %s %s \"%s\" \"%s\" \"%s\" \"%s\"%s%s%s",
                   (weechat_strcasecmp (argv[1], "recreate") == 0) ? "addreplace" : "add",
@@ -613,9 +602,9 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
                   weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_CONDITIONS]),
                   weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_REGEX]),
                   weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_COMMAND]),
-                  (rc) ? " \"" : "",
-                  (rc) ? weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_RETURN_CODE]) : "",
-                  (rc) ? "\"" : "");
+                  (add_rc) ? " \"" : "",
+                  (add_rc) ? weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_RETURN_CODE]) : "",
+                  (add_rc) ? "\"" : "");
         if (weechat_strcasecmp (argv[1], "output") == 0)
         {
             weechat_command (buffer, input);
@@ -634,13 +623,7 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
     if (weechat_strcasecmp (argv[1], "set") == 0)
     {
         if (argc < 5)
-        {
-            weechat_printf_tags (NULL, "no_trigger",
-                                 _("%sError: missing arguments for \"%s\" "
-                                   "command"),
-                                 weechat_prefix ("error"), "trigger");
-            goto end;
-        }
+            goto error;
         ptr_trigger = trigger_search (argv[2]);
         if (!ptr_trigger)
         {
@@ -682,13 +665,7 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
     if (weechat_strcasecmp (argv[1], "rename") == 0)
     {
         if (argc < 4)
-        {
-            weechat_printf_tags (NULL, "no_trigger",
-                                 _("%sError: missing arguments for \"%s\" "
-                                   "command"),
-                                 weechat_prefix ("error"), "trigger");
-            goto end;
-        }
+            goto error;
         ptr_trigger = trigger_search (argv[2]);
         if (!ptr_trigger)
         {
@@ -705,13 +682,7 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
     if (weechat_strcasecmp (argv[1], "copy") == 0)
     {
         if (argc < 4)
-        {
-            weechat_printf_tags (NULL, "no_trigger",
-                                 _("%sError: missing arguments for \"%s\" "
-                                   "command"),
-                                 weechat_prefix ("error"), "trigger");
-            goto end;
-        }
+            goto error;
         ptr_trigger = trigger_search (argv[2]);
         if (!ptr_trigger)
         {
@@ -764,13 +735,7 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
         if (argc < 3)
         {
             if (weechat_strcasecmp (argv[1], "restart") == 0)
-            {
-                weechat_printf_tags (NULL, "no_trigger",
-                                     _("%sError: missing arguments for \"%s\" "
-                                       "command"),
-                                     weechat_prefix ("error"), "trigger");
-                goto end;
-            }
+                goto error;
             if (weechat_strcasecmp (argv[1], "enable") == 0)
                 weechat_config_option_set (trigger_config_look_enabled, "1", 1);
             else if (weechat_strcasecmp (argv[1], "disable") == 0)
@@ -821,13 +786,7 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
     if (weechat_strcasecmp (argv[1], "del") == 0)
     {
         if (argc < 3)
-        {
-            weechat_printf_tags (NULL, "no_trigger",
-                                 _("%sError: missing arguments for \"%s\" "
-                                   "command"),
-                                 weechat_prefix ("error"), "trigger");
-            goto end;
-        }
+            goto error;
         if (weechat_strcasecmp (argv[2], "-all") == 0)
         {
             count = triggers_count;
@@ -862,13 +821,7 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
     if (weechat_strcasecmp (argv[1], "show") == 0)
     {
         if (argc < 3)
-        {
-            weechat_printf_tags (NULL, "no_trigger",
-                                 _("%sError: missing arguments for \"%s\" "
-                                   "command"),
-                                 weechat_prefix ("error"), "trigger");
-            goto end;
-        }
+            goto error;
         ptr_trigger = trigger_search (argv[2]);
         if (!ptr_trigger)
         {
@@ -909,11 +862,14 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
         goto end;
     }
 
+error:
+    rc = WEECHAT_RC_ERROR;
+
 end:
     if (sargv)
         weechat_string_free_split (sargv);
 
-    return WEECHAT_RC_OK;
+    return rc;
 }
 
 /*
