@@ -23,13 +23,6 @@
 struct t_irc_server;
 struct t_irc_channel;
 
-#define IRC_COMMAND_TOO_FEW_ARGUMENTS(__buffer, __command)              \
-    weechat_printf (__buffer,                                           \
-                    _("%s%s: too few arguments for \"%s\" command"),    \
-                    weechat_prefix ("error"), IRC_PLUGIN_NAME,          \
-                    __command);                                         \
-    return WEECHAT_RC_OK;
-
 #define IRC_COMMAND_CHECK_SERVER(__command, __check_connection)         \
     if (!ptr_server)                                                    \
     {                                                                   \
