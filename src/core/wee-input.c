@@ -34,6 +34,7 @@
 #include "wee-utf8.h"
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-chat.h"
+#include "../gui/gui-filter.h"
 #include "../plugins/plugin.h"
 
 
@@ -67,19 +68,16 @@ input_exec_command (struct t_gui_buffer *buffer,
                     struct t_weechat_plugin *plugin,
                     const char *string)
 {
-    int rc;
-    char *command, *pos, *ptr_args;
+    char *command, *command_name, *pos;
 
     if ((!string) || (!string[0]))
         return;
 
     command = strdup (string);
     if (!command)
-        return ;
+        return;
 
-    /* look for end of command */
-    ptr_args = NULL;
-
+    /* ignore spaces at the end of command */
     pos = &command[strlen (command) - 1];
     if (pos[0] == ' ')
     {
@@ -88,44 +86,38 @@ input_exec_command (struct t_gui_buffer *buffer,
         pos[1] = '\0';
     }
 
-    rc = hook_command_exec (buffer, any_plugin, plugin, command);
-
+    /* extract command name */
     pos = strchr (command, ' ');
-    if (pos)
-    {
-        pos[0] = '\0';
-        pos++;
-        while (pos[0] == ' ')
-            pos++;
-        ptr_args = pos;
-        if (!ptr_args[0])
-            ptr_args = NULL;
-    }
+    command_name = (pos) ?
+        string_strndup (command, pos - command) : strdup (command);
 
-    switch (rc)
+    /* execute command */
+    switch (hook_command_exec (buffer, any_plugin, plugin, command))
     {
         case 0: /* command hooked, KO */
-            gui_chat_printf (NULL,
-                             _("%sError with command \"%s\" (try /help %s)"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             command + 1, command + 1);
+            gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                       _("%sError with command \"%s\" (help on "
+                                         "command: /help %s)"),
+                                       gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                       command, command_name + 1);
             break;
         case 1: /* command hooked, OK (executed) */
             break;
         case -2: /* command is ambiguous (exists for other plugins) */
-            gui_chat_printf (NULL,
-                             _("%sError: ambiguous command \"%s\": it exists "
-                               "in many plugins and not in \"%s\" plugin"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             command + 1,
-                             plugin_get_name (plugin));
+            gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                       _("%sError: ambiguous command \"%s\": "
+                                         "it exists in many plugins and not in "
+                                         "\"%s\" plugin"),
+                                       gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                       command_name,
+                                       plugin_get_name (plugin));
             break;
         case -3: /* command is running */
-            gui_chat_printf (NULL,
-                             _("%sError: too much calls to command \"%s\" "
-                               "(looping)"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             command + 1);
+            gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                       _("%sError: too much calls to command "
+                                         "\"%s\" (looping)"),
+                                       gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                       command_name);
             break;
         default: /* no command hooked */
             /*
@@ -138,11 +130,11 @@ input_exec_command (struct t_gui_buffer *buffer,
             }
             else
             {
-                gui_chat_printf (NULL,
-                                 _("%sError: unknown command \"%s\" (type "
-                                   "/help for help)"),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 command + 1);
+                gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                           _("%sError: unknown command \"%s\" "
+                                             "(type /help for help)"),
+                                           gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                           command_name);
             }
             break;
     }
