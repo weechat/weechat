@@ -207,7 +207,7 @@ script_command_script (void *data, struct t_gui_buffer *buffer, int argc,
         return WEECHAT_RC_OK;
     }
 
-    if ((argc > 1) && script_buffer && !script_buffer_detail_script
+    if (script_buffer && !script_buffer_detail_script
         && (script_buffer_selected_line >= 0)
         && (script_repo_count_displayed > 0))
     {
@@ -253,7 +253,7 @@ script_command_script (void *data, struct t_gui_buffer *buffer, int argc,
         }
     }
 
-    return WEECHAT_RC_OK;
+    return WEECHAT_RC_ERROR;
 }
 
 /*
