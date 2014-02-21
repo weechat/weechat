@@ -673,6 +673,8 @@ weechat_perl_command_cb (void *data, struct t_gui_buffer *buffer,
         {
             weechat_perl_unload_all ();
         }
+        else
+            return WEECHAT_RC_ERROR;
     }
     else
     {
@@ -722,12 +724,7 @@ weechat_perl_command_cb (void *data, struct t_gui_buffer *buffer,
             perl_quiet = 0;
         }
         else
-        {
-            weechat_printf (NULL,
-                            weechat_gettext ("%s%s: unknown option for "
-                                             "command \"%s\""),
-                            weechat_prefix ("error"), PERL_PLUGIN_NAME, "perl");
-        }
+            return WEECHAT_RC_ERROR;
     }
 
     return WEECHAT_RC_OK;
