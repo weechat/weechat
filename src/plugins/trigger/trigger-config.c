@@ -55,7 +55,7 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "",
       "${tg_highlight} || ${tg_msg_pv}",
       "",
-      "/print -stderr \\a",
+      "/print -beep",
       "ok" },
     /* hide passwords in commands */
     { "cmd_pass", "on",
