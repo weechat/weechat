@@ -667,7 +667,6 @@ relay_irc_get_line_info (struct t_relay_client *client,
         if (localvar_nick && localvar_nick[0]
             && ptr_nick && (strcmp (ptr_nick, localvar_nick) == 0))
         {
-            command = -1;
             return;
         }
     }
