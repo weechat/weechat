@@ -615,7 +615,12 @@ gui_color_emphasize (const char *string,
     int rc, length_search, length_emphasis, length_result;
     int pos1, pos2, real_pos1, real_pos2, count_emphasis;
 
-    if (!string && !regex)
+    /* string is required */
+    if (!string)
+        return NULL;
+
+    /* search or regex is required */
+    if (!search && !regex)
         return NULL;
 
     color_emphasis = gui_color_get_custom ("emphasis");

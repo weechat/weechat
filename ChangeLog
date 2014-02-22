@@ -13,6 +13,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 0.4.4 (under dev)
 
+* core: fix potential NULL pointer in function gui_color_emphasize
 * core: use same return code and message in all commands when arguments are
   wrong/missing
 * core: add option "-beep" in command /print
