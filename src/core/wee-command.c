@@ -2397,53 +2397,56 @@ COMMAND_CALLBACK(help)
                         length += strlen (ptr_option->string_values[i]) + 5;
                         i++;
                     }
-                    string = malloc (length);
-                    if (string)
+                    if (length > 0)
                     {
-                        string[0] = '\0';
-                        i = 0;
-                        while (ptr_option->string_values[i])
+                        string = malloc (length);
+                        if (string)
                         {
-                            strcat (string, "\"");
-                            strcat (string, ptr_option->string_values[i]);
-                            strcat (string, "\"");
-                            if (ptr_option->string_values[i + 1])
-                                strcat (string, ", ");
-                            i++;
-                        }
-                        gui_chat_printf (NULL, "  %s: %s",
-                                         _("type"), _("string"));
-                        gui_chat_printf (NULL, "  %s: %s",
-                                         _("values"), string);
-                        if (ptr_option->default_value)
-                        {
-                            gui_chat_printf (NULL, "  %s: \"%s\"",
-                                             _("default value"),
-                                             ptr_option->string_values[CONFIG_INTEGER_DEFAULT(ptr_option)]);
-                        }
-                        else
-                        {
+                            string[0] = '\0';
+                            i = 0;
+                            while (ptr_option->string_values[i])
+                            {
+                                strcat (string, "\"");
+                                strcat (string, ptr_option->string_values[i]);
+                                strcat (string, "\"");
+                                if (ptr_option->string_values[i + 1])
+                                    strcat (string, ", ");
+                                i++;
+                            }
                             gui_chat_printf (NULL, "  %s: %s",
-                                             _("default value"),
-                                             _("(undefined)"));
+                                             _("type"), _("string"));
+                            gui_chat_printf (NULL, "  %s: %s",
+                                             _("values"), string);
+                            if (ptr_option->default_value)
+                            {
+                                gui_chat_printf (NULL, "  %s: \"%s\"",
+                                                 _("default value"),
+                                                 ptr_option->string_values[CONFIG_INTEGER_DEFAULT(ptr_option)]);
+                            }
+                            else
+                            {
+                                gui_chat_printf (NULL, "  %s: %s",
+                                                 _("default value"),
+                                                 _("(undefined)"));
+                            }
+                            if (ptr_option->value)
+                            {
+                                gui_chat_printf (NULL,
+                                                 "  %s: \"%s%s%s\"",
+                                                 _("current value"),
+                                                 GUI_COLOR(GUI_COLOR_CHAT_VALUE),
+                                                 ptr_option->string_values[CONFIG_INTEGER(ptr_option)],
+                                                 GUI_COLOR(GUI_COLOR_CHAT));
+                            }
+                            else
+                            {
+                                gui_chat_printf (NULL,
+                                                 "  %s: %s",
+                                                 _("current value"),
+                                                 _("(undefined)"));
+                            }
+                            free (string);
                         }
-                        if (ptr_option->value)
-                        {
-                            gui_chat_printf (NULL,
-                                             "  %s: \"%s%s%s\"",
-                                             _("current value"),
-                                             GUI_COLOR(GUI_COLOR_CHAT_VALUE),
-                                             ptr_option->string_values[CONFIG_INTEGER(ptr_option)],
-                                             GUI_COLOR(GUI_COLOR_CHAT));
-                        }
-                        else
-                        {
-                            gui_chat_printf (NULL,
-                                             "  %s: %s",
-                                             _("current value"),
-                                             _("(undefined)"));
-                        }
-                        free (string);
                     }
                 }
                 else
