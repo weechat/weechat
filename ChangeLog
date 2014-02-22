@@ -13,6 +13,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 0.4.4 (under dev)
 
+* core: fix use of invalid pointer in function gui_bar_window_content_alloc
+  (in case of insufficient memory)
 * core: fix uninitialized value in function string_decode_base64
 * core: fix memory leak and use of invalid pointer in split of string (in case
   of insufficient memory)

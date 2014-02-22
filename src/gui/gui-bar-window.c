@@ -433,19 +433,23 @@ gui_bar_window_content_alloc (struct t_gui_bar_window *bar_window)
     bar_window->items_refresh_needed = NULL;
     bar_window->screen_col_size = 0;
     bar_window->screen_lines = 0;
-    bar_window->items_subcount = malloc (bar_window->items_count *
+    bar_window->items_subcount = calloc (1,
+                                         bar_window->items_count *
                                          sizeof (*bar_window->items_subcount));
     if (!bar_window->items_subcount)
         goto error;
-    bar_window->items_content = malloc ((bar_window->items_count) *
+    bar_window->items_content = calloc (1,
+                                        (bar_window->items_count) *
                                         sizeof (*bar_window->items_content));
     if (!bar_window->items_content)
         goto error;
-    bar_window->items_num_lines = malloc ((bar_window->items_count) *
+    bar_window->items_num_lines = calloc (1,
+                                          (bar_window->items_count) *
                                           sizeof (*bar_window->items_num_lines));
     if (!bar_window->items_num_lines)
         goto error;
-    bar_window->items_refresh_needed = malloc (bar_window->items_count *
+    bar_window->items_refresh_needed = calloc (1,
+                                               bar_window->items_count *
                                                sizeof (*bar_window->items_refresh_needed));
     if (!bar_window->items_refresh_needed)
         goto error;
