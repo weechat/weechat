@@ -569,10 +569,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                         }
 
                         if ((length_screen_before_cursor < 0) || (length_screen_after_cursor < 0))
-                        {
                             length_screen_before_cursor = gui_chat_strlen_screen (items[line]);
-                            length_screen_after_cursor = 0;
-                        }
 
                         diff = length_screen_before_cursor - chars_available;
                         if (diff > 0)
