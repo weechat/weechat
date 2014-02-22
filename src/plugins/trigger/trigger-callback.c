@@ -385,6 +385,7 @@ trigger_callback_signal_cb (void *data, const char *signal,
     }
 
     /* add data in hashtable used for conditions/replace/command */
+    ptr_signal_data = NULL;
     weechat_hashtable_set (extra_vars, "tg_signal", signal);
     if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
     {
