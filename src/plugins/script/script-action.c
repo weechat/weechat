@@ -208,7 +208,6 @@ script_action_unload (const char *name, int quiet)
     struct t_hdata *hdata;
     void *ptr_script;
 
-    language = -1;
     pos = strrchr (name, '.');
     if (pos)
     {
@@ -314,7 +313,6 @@ script_action_reload (const char *name, int quiet)
     struct t_hdata *hdata;
     void *ptr_script;
 
-    language = -1;
     pos = strrchr (name, '.');
     if (pos)
     {
