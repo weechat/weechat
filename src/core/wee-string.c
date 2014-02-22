@@ -1467,7 +1467,14 @@ string_split_internal (const char *string, const char *separators, int keep_eol,
 
     array = malloc ((n_items + 1) * sizeof (array[0]));
     if (!array)
+    {
+        free (string2);
         return NULL;
+    }
+    for (i = 0; i < n_items + 1; i++)
+    {
+        array[i] = NULL;
+    }
 
     ptr1 = string2;
 
