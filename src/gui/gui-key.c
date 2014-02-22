@@ -1332,7 +1332,6 @@ gui_key_pressed (const char *key_str)
         if (strcmp (ptr_key->key, gui_key_combo_buffer) == 0)
         {
             /* exact combo found => execute command */
-            signal_sent = 1;
             snprintf (signal_name, sizeof (signal_name),
                       "key_combo_%s", gui_key_context_string[context]);
             rc = hook_signal_send (signal_name,
