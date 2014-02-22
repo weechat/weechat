@@ -1804,7 +1804,7 @@ string_split_shell (const char *string, int *num_items)
         args[num_args - 1] = strdup (temp);
         args[num_args] = NULL;
         temp[0] = '\0';
-        temp_len = 0;
+        /*temp_len = 0;*/
     }
 
     free (string2);
