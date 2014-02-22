@@ -195,15 +195,13 @@ irc_ignore_check (struct t_irc_server *server, const char *channel,
     for (ptr_ignore = irc_ignore_list; ptr_ignore;
          ptr_ignore = ptr_ignore->next_ignore)
     {
-        server_match = 0;
-        channel_match = 0;
-
         if (strcmp (ptr_ignore->server, "*") == 0)
             server_match = 1;
         else
             server_match = (weechat_strcasecmp (ptr_ignore->server,
                                                 server->name) == 0);
 
+        channel_match = 0;
         if (!channel || (strcmp (ptr_ignore->channel, "*") == 0))
             channel_match = 1;
         else
