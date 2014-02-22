@@ -2837,7 +2837,7 @@ weechat_tcl_api_hook_signal_cb (void *data, const char *signal, const char *type
     struct t_plugin_script_cb *script_callback;
     void *func_argv[3];
     char empty_arg[1] = { '\0' };
-    static char value_str[64];
+    static char str_value[64];
     int *rc, ret, free_needed;
 
     script_callback = (struct t_plugin_script_cb *)data;
@@ -2853,9 +2853,13 @@ weechat_tcl_api_hook_signal_cb (void *data, const char *signal, const char *type
         }
         else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_INT) == 0)
         {
-            snprintf (value_str, sizeof (value_str) - 1,
-                      "%d", *((int *)signal_data));
-            func_argv[2] = value_str;
+            str_value[0] = '\0';
+            if (signal_data)
+            {
+                snprintf (str_value, sizeof (str_value),
+                          "%d", *((int *)signal_data));
+            }
+            func_argv[2] = str_value;
         }
         else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_POINTER) == 0)
         {
