@@ -462,7 +462,6 @@ relay_client_recv_cb (void *arg_client, int fd)
                 return WEECHAT_RC_OK;
             }
             ptr_buffer = decoded;
-            num_read = (int)decoded_length;
         }
 
         if ((client->websocket == 1)
