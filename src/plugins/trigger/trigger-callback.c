@@ -392,8 +392,12 @@ trigger_callback_signal_cb (void *data, const char *signal,
     }
     else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_INT) == 0)
     {
-        snprintf (str_data, sizeof (str_data),
-                  "%d", *((int *)signal_data));
+        str_data[0] = '\0';
+        if (signal_data)
+        {
+            snprintf (str_data, sizeof (str_data),
+                      "%d", *((int *)signal_data));
+        }
         ptr_signal_data = str_data;
     }
     else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_POINTER) == 0)
