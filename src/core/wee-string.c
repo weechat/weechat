@@ -2426,6 +2426,10 @@ string_decode_base64 (const char *from, char *to)
         length = 0;
         for (i = 0; i < 4; i++)
         {
+            in[i] = 0;
+        }
+        for (i = 0; i < 4; i++)
+        {
             c = 0;
             while (ptr_from[0] && (c == 0))
             {
