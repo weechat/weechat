@@ -121,7 +121,6 @@ irc_command_mode_nicks (struct t_irc_server *server,
                 max_modes = 1;
             if (max_modes > 128)
                 max_modes = 128;
-            max_modes = (number >= 1) ? number : 1;
         }
     }
 
