@@ -885,7 +885,6 @@ gui_chat_printf_y (struct t_gui_buffer *buffer, int y, const char *message, ...)
     {
         if (gui_init_ok)
         {
-            num_lines_to_add = 0;
             if (buffer->own_lines && buffer->own_lines->last_line)
                 num_lines_to_add = y - buffer->own_lines->last_line->data->y - 1;
             else
