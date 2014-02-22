@@ -224,6 +224,7 @@ secure_encrypt_data (const char *data, int length_data,
                      char **encrypted, int *length_encrypted)
 {
     int rc, length_salt, length_hash, length_hash_data, length_key;
+    int hd_md_opened, hd_cipher_opened;
     gcry_md_hd_t *hd_md;
     gcry_cipher_hd_t *hd_cipher;
     char salt[SALT_SIZE];
@@ -232,7 +233,9 @@ secure_encrypt_data (const char *data, int length_data,
     rc = -1;
 
     hd_md = NULL;
+    hd_md_opened = 0;
     hd_cipher = NULL;
+    hd_cipher_opened = 0;
     key = NULL;
     hash_and_data = NULL;
 
@@ -273,6 +276,7 @@ secure_encrypt_data (const char *data, int length_data,
         rc = -3;
         goto encend;
     }
+    hd_md_opened = 1;
     length_hash = gcry_md_get_algo_dlen (hash_algo);
     gcry_md_write (*hd_md, data, length_data);
     ptr_hash = gcry_md_read (*hd_md, hash_algo);
@@ -296,6 +300,7 @@ secure_encrypt_data (const char *data, int length_data,
         rc = -4;
         goto encend;
     }
+    hd_cipher_opened = 1;
     if (gcry_cipher_setkey (*hd_cipher, key, length_key) != 0)
     {
         rc = -5;
@@ -321,12 +326,14 @@ secure_encrypt_data (const char *data, int length_data,
 encend:
     if (hd_md)
     {
-        gcry_md_close (*hd_md);
+        if (hd_md_opened)
+            gcry_md_close (*hd_md);
         free (hd_md);
     }
     if (hd_cipher)
     {
-        gcry_cipher_close (*hd_cipher);
+        if (hd_cipher_opened)
+            gcry_cipher_close (*hd_cipher);
         free (hd_cipher);
     }
     if (key)
@@ -372,7 +379,7 @@ secure_decrypt_data (const char *buffer, int length_buffer,
                      int hash_algo, int cipher, const char *passphrase,
                      char **decrypted, int *length_decrypted)
 {
-    int rc, length_hash, length_key;
+    int rc, length_hash, length_key, hd_md_opened, hd_cipher_opened;
     gcry_md_hd_t *hd_md;
     gcry_cipher_hd_t *hd_cipher;
     unsigned char *ptr_hash, *key, *decrypted_hash_data;
@@ -385,7 +392,9 @@ secure_decrypt_data (const char *buffer, int length_buffer,
         return -2;
 
     hd_md = NULL;
+    hd_md_opened = 0;
     hd_cipher = NULL;
+    hd_cipher_opened = 0;
     key = NULL;
     decrypted_hash_data = NULL;
 
@@ -419,6 +428,7 @@ secure_decrypt_data (const char *buffer, int length_buffer,
         rc = -4;
         goto decend;
     }
+    hd_cipher_opened = 1;
     if (gcry_cipher_setkey (*hd_cipher, key, length_key) != 0)
     {
         rc = -5;
@@ -438,6 +448,7 @@ secure_decrypt_data (const char *buffer, int length_buffer,
         rc = -7;
         goto decend;
     }
+    hd_md_opened = 1;
     gcry_md_write (*hd_md, decrypted_hash_data + length_hash,
                    length_buffer - SALT_SIZE - length_hash);
     ptr_hash = gcry_md_read (*hd_md, hash_algo);
@@ -465,12 +476,14 @@ secure_decrypt_data (const char *buffer, int length_buffer,
 decend:
     if (hd_md)
     {
-        gcry_md_close (*hd_md);
+        if (hd_md_opened)
+            gcry_md_close (*hd_md);
         free (hd_md);
     }
     if (hd_cipher)
     {
-        gcry_cipher_close (*hd_cipher);
+        if (hd_cipher_opened)
+            gcry_cipher_close (*hd_cipher);
         free (hd_cipher);
     }
     if (key)
