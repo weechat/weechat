@@ -36,6 +36,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * lua: fix interpreter used after unload of a script
 * perl: fix context used after unload of a script
 * python: fix interpreter used after unload of a script
+* relay: fix NULL pointer when reading buffer lines for irc backlog
 * trigger: add trigger plugin: new command /trigger and file trigger.conf
 
 == Version 0.4.3 (2014-02-09)

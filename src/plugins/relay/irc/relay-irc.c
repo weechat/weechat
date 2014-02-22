@@ -665,7 +665,7 @@ relay_irc_get_line_info (struct t_relay_client *client,
     {
         localvar_nick = weechat_buffer_get_string (buffer, "localvar_nick");
         if (localvar_nick && localvar_nick[0]
-            && (strcmp (ptr_nick, localvar_nick) == 0))
+            && ptr_nick && (strcmp (ptr_nick, localvar_nick) == 0))
         {
             command = -1;
             return;
