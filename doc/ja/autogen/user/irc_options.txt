@@ -351,7 +351,7 @@
 * [[option_irc.network.autoreconnect_delay_max]] *irc.network.autoreconnect_delay_max*
 ** 説明: `サーバへの自動接続の遅延時間の最大値 (秒単位、0 = 制限無し)`
 ** タイプ: 整数
-** 値: 0 .. 86400 (デフォルト値: `1800`)
+** 値: 0 .. 604800 (デフォルト値: `600`)
 
 * [[option_irc.network.ban_mask_default]] *irc.network.ban_mask_default*
 ** 説明: `/ban、/unban、/kickban コマンドが使うデフォルトの禁止マスク; 変数 $nick、$user、$host はそれぞれの値に置換 ("nick!user@host" から展開) されます; このデフォルトマスクはニックネームのホスト名がわかる場合のみ利用されます`

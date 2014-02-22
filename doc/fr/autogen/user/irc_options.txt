@@ -351,7 +351,7 @@
 * [[option_irc.network.autoreconnect_delay_max]] *irc.network.autoreconnect_delay_max*
 ** description: `délai maximum d'auto-reconnexion au serveur (en secondes, 0 = pas de maximum)`
 ** type: entier
-** valeurs: 0 .. 86400 (valeur par défaut: `1800`)
+** valeurs: 0 .. 604800 (valeur par défaut: `600`)
 
 * [[option_irc.network.ban_mask_default]] *irc.network.ban_mask_default*
 ** description: `masque de bannissement par défaut pour les commandes /ban, /unban et /kickban; les variables $nick, $user et $host sont remplacées par leurs valeurs (extraites de "nick!user@host"); ce masque par défaut est utilisé seulement si WeeChat connaît l'hôte pour le pseudo`

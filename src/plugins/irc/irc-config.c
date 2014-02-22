@@ -2758,7 +2758,7 @@ irc_config_init ()
         irc_config_file, ptr_section,
         "autoreconnect_delay_max", "integer",
         N_("maximum autoreconnect delay to server (in seconds, 0 = no maximum)"),
-        NULL, 0, 3600 * 24, "1800", NULL, 0, NULL, NULL,
+        NULL, 0, 3600 * 24 * 7, "600", NULL, 0, NULL, NULL,
         NULL, NULL, NULL, NULL);
     irc_config_network_ban_mask_default = weechat_config_new_option (
         irc_config_file, ptr_section,
