@@ -257,7 +257,6 @@ irc_server_strcasecmp (struct t_irc_server *server,
     int casemapping, rc;
 
     casemapping = (server) ? server->casemapping : IRC_SERVER_CASEMAPPING_RFC1459;
-    rc = 0;
     switch (casemapping)
     {
         case IRC_SERVER_CASEMAPPING_RFC1459:
@@ -293,7 +292,6 @@ irc_server_strncasecmp (struct t_irc_server *server,
     int casemapping, rc;
 
     casemapping = (server) ? server->casemapping : IRC_SERVER_CASEMAPPING_RFC1459;
-    rc = 0;
     switch (casemapping)
     {
         case IRC_SERVER_CASEMAPPING_RFC1459:
