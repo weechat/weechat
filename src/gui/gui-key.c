@@ -1914,7 +1914,10 @@ gui_key_add_to_infolist (struct t_infolist *infolist, struct t_gui_key *key)
     if (expanded_key)
     {
         if (!infolist_new_var_string (ptr_item, "key", expanded_key))
+        {
+            free (expanded_key);
             return 0;
+        }
         free (expanded_key);
     }
     if (!infolist_new_var_integer (ptr_item, "area_type1", key->area_type[0]))
