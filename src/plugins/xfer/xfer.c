@@ -965,7 +965,6 @@ xfer_add_cb (void *data, const char *signal, const char *type_data,
     file_size = 0;
 
     sock = -1;
-    port = 0;
 
     plugin_name = weechat_infolist_string (infolist, "plugin_name");
     plugin_id = weechat_infolist_string (infolist, "plugin_id");
