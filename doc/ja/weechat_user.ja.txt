@@ -1145,8 +1145,9 @@ WeeChat でマウスが有効化されている場合、key[shift]
 WeeChat はデフォルトマウスイベントの多くを定義しています
 (<<key_bindings_mouse_context,"マウス" モード用のキー>>を参照)。
 
-`/key` コマンドで "mouse" コンテキストを指定することで割り当てを追加、変更できます
-(詳しい方法は <<command_weechat_key,/key コマンド>>を参照)。
+// TRANSLATION MISSING
+You can change or add bindings with the command `/key` using context "mouse"
+(for syntax, see command <<command_weechat_key,/key>>).
 
 イベント名には修飾キー (任意)、ボタン/ホイール名、ジェスチャー (任意)
 を利用できます。異なるイベントは "-" で分割してください。

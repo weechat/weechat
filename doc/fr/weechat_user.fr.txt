@@ -1177,8 +1177,8 @@ De nombreux évènements souris sont déjà définis par WeeChat (voir
 <<key_bindings_mouse_context,les touches pour le contexte "mouse">>).
 
 Vous pouvez modifier ou ajouter des associations avec la commande `/key` en
-utilisant le contexte "mouse" (pour la syntaxe voir
-<<command_weechat_key,la commande /key>>).
+utilisant le contexte "mouse" (pour la syntaxe voir la commande
+<<command_weechat_key,/key>>).
 
 Un nom d'évènement consiste en un modificateur (facultatif), un bouton/roulette
 et un geste (facultatif). Les différents éléments sont séparés par "-".

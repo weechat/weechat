@@ -1146,7 +1146,7 @@ Many default mouse events are already defined by WeeChat (see
 <<key_bindings_mouse_context,keys for "mouse" context>>).
 
 You can change or add bindings with the command `/key` using context "mouse"
-(for syntax, see <<command_weechat_key,command /key>>).
+(for syntax, see command <<command_weechat_key,/key>>).
 
 Event name consists of a modifier (optional), a button/wheel name and a gesture
 (optional). Different elements are separated by "-".

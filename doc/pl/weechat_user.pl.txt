@@ -1155,7 +1155,7 @@ Wiele domyślnych zdarzeń myszy jest już zdefiniowanych w WeeChat (zobacz
 <<key_bindings_mouse_context,skróty dla kontekstu myszy>>).
 
 Możesz zmienić lub dodać przypisania za pomocą komendy `/key` używając kontekstu
-"mouse" (dla składni zobacz <<command_weechat_key,komenda /key>>).
+"mouse" (dla składni zobacz komenda <<command_weechat_key,/key>>).
 
 Nazwa zdarzenia zawiera modyfikator (opcjonalny), nazwę klawisza/rolki i gest
 (opcjonalny). Różne elementy są rozdzielane przez "-".

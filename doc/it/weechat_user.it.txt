@@ -1190,7 +1190,8 @@ Molti eventi del mouse predefiniti sono già definiti da WeeChat (consultare
 <<key_bindings_mouse_context,tasti per il contesto "mouse">>).
 
 È possibile cambiare o aggiungere combinazioni con il comando `/key` usando il
-contesto "mouse" (per la sintassi, consultare <<command_weechat_key,comando /key>>).
+contesto "mouse" (per la sintassi, consultare comando
+<<command_weechat_key,/key>>).
 
 Il nome dell'evento consiste di un modificatore (opzionale), il nome di un
 pulsante/rotellina e un'azione (opzionale). Elementi diversi sono separati da "-".

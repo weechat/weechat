@@ -1162,7 +1162,7 @@ Es gibt eine Anzahl von Maus-Ereignissen, die standardmäßig durch WeeChat defi
 sind (siehe <<key_bindings_mouse_context,Tasten für "mouse"-Kontext>>).
 
 Man kann mit dem Befehl `/key` im Kontext "mouse" aber auch eigene Befehle zuweisen
-und löschen (für die Syntax, siehe <<command_weechat_key,/key Befehl>>).
+und löschen (für die Syntax, siehe Befehl <<command_weechat_key,/key>>).
 
 Der Name eines Ereignisses besteht aus einem Modifier (optional), einer Maustaste/Mausrad
 und der Mausgeste (optional). Die unterschiedlichen Elemente werden durch ein "-" getrennt.
