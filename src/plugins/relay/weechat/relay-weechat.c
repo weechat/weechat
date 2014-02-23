@@ -260,7 +260,14 @@ relay_weechat_alloc_with_infolist (struct t_relay_client *client,
                                        &relay_weechat_free_buffers_nicklist);
         RELAY_WEECHAT_DATA(client, hook_timer_nicklist) = NULL;
 
-        relay_weechat_hook_signals (client);
+        if (RELAY_CLIENT_HAS_ENDED(client))
+        {
+            RELAY_WEECHAT_DATA(client, hook_signal_buffer) = NULL;
+            RELAY_WEECHAT_DATA(client, hook_hsignal_nicklist) = NULL;
+            RELAY_WEECHAT_DATA(client, hook_signal_upgrade) = NULL;
+        }
+        else
+            relay_weechat_hook_signals (client);
     }
 }
 
