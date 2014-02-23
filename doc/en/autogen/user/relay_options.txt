@@ -88,6 +88,11 @@
 ** type: string
 ** values: any string (default value: `""`)
 
+* [[option_relay.network.clients_purge_delay]] *relay.network.clients_purge_delay*
+** description: `delay for purging disconnected clients (in minutes, 0 = purge clients immediately, -1 = never purge)`
+** type: integer
+** values: -1 .. 43200 (default value: `0`)
+
 * [[option_relay.network.compression_level]] *relay.network.compression_level*
 ** description: `compression level for packets sent to client with WeeChat protocol (0 = disable compression, 1 = low compression ... 9 = best compression)`
 ** type: integer

@@ -52,6 +52,7 @@ struct t_config_option *relay_config_color_text_selected;
 
 struct t_config_option *relay_config_network_allowed_ips;
 struct t_config_option *relay_config_network_bind_address;
+struct t_config_option *relay_config_network_clients_purge_delay;
 struct t_config_option *relay_config_network_compression_level;
 struct t_config_option *relay_config_network_ipv6;
 struct t_config_option *relay_config_network_max_clients;
@@ -604,6 +605,13 @@ relay_config_init ()
             "local machine only)"),
         NULL, 0, 0, "", NULL, 0, NULL, NULL,
         &relay_config_change_network_bind_address_cb, NULL, NULL, NULL);
+    relay_config_network_clients_purge_delay = weechat_config_new_option (
+        relay_config_file, ptr_section,
+        "clients_purge_delay", "integer",
+        N_("delay for purging disconnected clients (in minutes, 0 = purge "
+           "clients immediately, -1 = never purge)"),
+        NULL, -1, 60 * 24 * 30, "0", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL);
     relay_config_network_compression_level = weechat_config_new_option (
         relay_config_file, ptr_section,
         "compression_level", "integer",

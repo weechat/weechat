@@ -88,6 +88,11 @@
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
+* [[option_relay.network.clients_purge_delay]] *relay.network.clients_purge_delay*
+** Beschreibung: `delay for purging disconnected clients (in minutes, 0 = purge clients immediately, -1 = never purge)`
+** Typ: integer
+** Werte: -1 .. 43200 (Standardwert: `0`)
+
 * [[option_relay.network.compression_level]] *relay.network.compression_level*
 ** Beschreibung: `Kompressionsstärke der Pakete die durch das WeeChat Protokoll an den Client gesendet werden sollen (0 = Kompression deaktiviert, 1 = niedrige Kompression ... 9 = stärkste Kompression)`
 ** Typ: integer

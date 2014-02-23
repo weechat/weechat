@@ -822,18 +822,34 @@ relay_client_send (struct t_relay_client *client, const char *data,
 int
 relay_client_timer_cb (void *data, int remaining_calls)
 {
-    struct t_relay_client *ptr_client;
-    int num_sent, i;
+    struct t_relay_client *ptr_client, *ptr_next_client;
+    int num_sent, i, purge_delay;
     char *buf;
+    time_t current_time;
 
     /* make C compiler happy */
     (void) data;
     (void) remaining_calls;
 
-    for (ptr_client = relay_clients; ptr_client;
-         ptr_client = ptr_client->next_client)
+    purge_delay = weechat_config_integer (relay_config_network_clients_purge_delay);
+
+    current_time = time (NULL);
+
+    ptr_client = relay_clients;
+    while (ptr_client)
     {
-        if (ptr_client->sock >= 0)
+        ptr_next_client = ptr_client->next_client;
+
+        if (RELAY_CLIENT_HAS_ENDED(ptr_client))
+        {
+            if ((purge_delay >= 0)
+                && (current_time >= ptr_client->end_time + (purge_delay * 60)))
+            {
+                relay_client_free (ptr_client);
+                relay_buffer_refresh (NULL);
+            }
+        }
+        else if (ptr_client->sock >= 0)
         {
             while (ptr_client->outqueue)
             {
@@ -960,6 +976,8 @@ relay_client_timer_cb (void *data, int remaining_calls)
                 }
             }
         }
+
+        ptr_client = ptr_next_client;
     }
 
     return WEECHAT_RC_OK;
