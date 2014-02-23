@@ -465,7 +465,7 @@ Exemple de terminal avec WeeChat :
 ┌───────────────────────────────────────────────────────────────────────────┐
 │Bienvenue sur #test, canal de test                                         │
 │12:52:27   --> | Flashy (flashcode@weechat.org) a rejoint #test    │@Flashy│
-│12:52:27    -- | Pseudos #test: [@Flashy @joe +weebot]             │@joe   │
+│12:52:27    -- | Pseudos #test: [@Flashy @joe +weebot peter]       │@joe   │
 │12:52:27    -- | Canal #test: 4 pseudos (2 ops, 1 voice, 1 normal) │+weebot│
 │12:52:27    -- | Canal créé le Tue Jan 27 06:30:17 2009            │peter  │
 │12:54:15 peter | bonjour !                                         │       │
@@ -803,6 +803,7 @@ Quelques exemples de remplissage pour la barre 'nicklist' :
 │                                         │ jimmy17│
 │                                         │ jodie ▼│
 │[12:55] [6] [irc/freenode] 3:#test(+n){24}        │
+│[@carl] █                                         │
 └──────────────────────────────────────────────────┘
                 filling_left_right = vertical ▲
 
@@ -822,6 +823,7 @@ Quelques exemples de remplissage pour la barre 'nicklist' :
 │                                │ jimmy17         │
 │                                │ jodie           │
 │[12:55] [6] [irc/freenode] 3:#test(+n){24}        │
+│[@carl] █                                         │
 └──────────────────────────────────────────────────┘
         filling_left_right = columns_vertical ▲
 

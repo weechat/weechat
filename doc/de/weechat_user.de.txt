@@ -457,7 +457,7 @@ Beispiel des WeeChat-Terminals:
 ┌───────────────────────────────────────────────────────────────────────────┐
 │Welcome to #test, this is a test channel                                   │
 │12:52:27   --> | Flashy (flashcode@weechat.org) has joined #test   │@Flashy│
-│12:52:27    -- | Nicks #test: [@Flashy @joe +weebot]               │@joe   │
+│12:52:27    -- | Nicks #test: [@Flashy @joe +weebot peter]         │@joe   │
 │12:52:27    -- | Channel #test: 4 nicks (2 ops, 1 voice, 1 normal) │+weebot│
 │12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009       │peter  │
 │12:54:15 peter | hey!                                              │       │
@@ -788,6 +788,7 @@ Einige Beispiele, wie die Bar 'nicklist' dargestellt werden kann:
 │                                         │ jimmy17│
 │                                         │ jodie ▼│
 │[12:55] [6] [irc/freenode] 3:#test(+n){24}        │
+│[@carl] █                                         │
 └──────────────────────────────────────────────────┘
                 filling_left_right = vertical ▲
 
@@ -807,6 +808,7 @@ Einige Beispiele, wie die Bar 'nicklist' dargestellt werden kann:
 │                                │ jimmy17         │
 │                                │ jodie           │
 │[12:55] [6] [irc/freenode] 3:#test(+n){24}        │
+│[@carl] █                                         │
 └──────────────────────────────────────────────────┘
         filling_left_right = columns_vertical ▲
 
