@@ -482,7 +482,7 @@ Exemple de terminal avec WeeChat :
 │                                                                   │       │
 │                                                                   │       │
 │[12:55] [6] [irc/freenode] 3:#test(+n){4}* [H: 4:#abc(2,5), 6]             │
-│[@Flashy(i)] hi peter!█                                                    │
+│[@Flashy(i)] salut peter!█                                                 │
 └───────────────────────────────────────────────────────────────────────────┘
  ▲ barres "status" et "input"                            barre "nicklist" ▲
 ....
@@ -884,6 +884,90 @@ Même condition, mais afficher toujours la liste de pseudos sur le tampon
 ----
 /set weechat.bar.nicklist.conditions "${nicklist} && (${window.win_width} > 100 || ${buffer.full_name} == irc.bitlbee.&bitlbee)"
 ----
+
+[[bare_display]]
+=== Affichage dépouillé
+
+Un affichage spécial, appelé "dépouillé" ('bare display') peut être utilisé pour
+un clic facile sur les URLs longs et la sélection de texte (avec la souris).
+
+L'affichage dépouillé a les caractéristiques suivantes :
+
+* il n'affiche que le contenu du tampon courant : pas de découpage de fenêtres
+  ni de barre (pas de titre, liste de pseudos, statut, ligne de commande, ...)
+* le support souris de WeeChat est désactivé (s'il avait été activé) : vous
+  pouvez utiliser votre souris comme vous le faites dans le terminal pour
+  cliquer sur les URLs et sélectionner du texte
+* ncurses n'est pas utilisé, par conséquent les URLs ne sont pas coupés en fin
+  de ligne.
+
+La touche par défaut pour activer l'affichage dépouillé est key[alt-!], et la
+même touche pour en sortir (ou par défaut tout changement dans la ligne de
+commande sortira de l'affichage dépouillé, voir l'option
+<<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>).
+
+Le format de l'heure peut être personnalisé avec l'option
+<<option_weechat.look.bare_display_time_format,weechat.look.bare_display_time_format>>.
+
+L'affichage dépouillé peut être activé pour un temps donné en utilisant la
+commande <<command_weechat_window,/window>>.
+
+Si WeeChat ressemble à ceci :
+
+....
+┌───────────────────────────────────────────────────────────────────────────┐
+│Bienvenue sur #test, canal de test                                         │
+│12:52:27   --> | Flashy (flashcode@weechat.org) a rejoint #test    │@Flashy│
+│12:52:27    -- | Pseudos #test: [@Flashy @joe +weebot peter]       │@joe   │
+│12:52:27    -- | Canal #test: 4 pseudos (2 ops, 1 voice, 1 normal) │+weebot│
+│12:52:27    -- | Canal créé le Tue Jan 27 06:30:17 2009            │peter  │
+│12:54:15 peter | bonjour !                                         │       │
+│12:55:01  @joe | peter: hook_process: http://weechat.org/files/doc │       │
+│               | /devel/weechat_plugin_api.en.html#_weechat_hook_p │       │
+│               | rocess                                            │       │
+│                                                                   │       │
+│                                                                   │       │
+│                                                                   │       │
+│                                                                   │       │
+│                                                                   │       │
+│                                                                   │       │
+│                                                                   │       │
+│                                                                   │       │
+│                                                                   │       │
+│[12:55] [6] [irc/freenode] 3:#test(+n){4}* [H: 4:#abc(2,5), 6]             │
+│[@Flashy(i)] salut peter!█                                                 │
+└───────────────────────────────────────────────────────────────────────────┘
+....
+
+L'écran ressemblera à ça en mode dépouillé :
+
+....
+┌───────────────────────────────────────────────────────────────────────────┐
+│                                                                           │
+│                                                                           │
+│                                                                           │
+│                                                                           │
+│                                                                           │
+│                                                                           │
+│                                                                           │
+│                                                                           │
+│                                                                           │
+│                                                                           │
+│                                                                           │
+│                                                                           │
+│                                                                           │
+│12:52 --> Flashy (flashcode@weechat.org) a rejoin #test                    │
+│12:52 -- Pseudos #test: [@Flashy @joe +weebot peter]                       │
+│12:52 -- Canal #test: 4 pseudos (2 ops, 1 voice, 1 normal)                 │
+│12:52 -- Canal créé le Tue Jan 27 06:30:17 2009                            │
+│12:54 <peter> bonjour !                                                    │
+│12:55 <@joe> peter: hook_process: http://weechat.org/files/doc/devel/weecha│
+│t_plugin_api.en.html#_weechat_hook_process                                 │
+└───────────────────────────────────────────────────────────────────────────┘
+....
+
+Donc vous pouvez cliquer l'URL de 'joe' sans problème dans votre terminal (bien
+entendu cela suppose que votre terminal permet le clic sur les URLs).
 
 [[notify_levels]]
 === Niveaux de notification
