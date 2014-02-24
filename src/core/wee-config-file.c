@@ -2247,7 +2247,7 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
             /* encode line to internal charset */
             ptr_line2 = string_iconv_to_internal (NULL, ptr_line);
             if (ptr_line2)
-                snprintf (line, sizeof (line) - 1, "%s", ptr_line2);
+                snprintf (line, sizeof (line), "%s", ptr_line2);
 
             /* skip spaces */
             while (ptr_line[0] == ' ')
