@@ -197,7 +197,7 @@ upgrade_file_new (const char *filename, int write)
     {
         /* build name of file */
         length = strlen (weechat_home) + 1 + strlen (filename) + 16 + 1;
-        new_upgrade_file->filename = malloc (length + 1);
+        new_upgrade_file->filename = malloc (length);
         if (!new_upgrade_file->filename)
         {
             free (new_upgrade_file);
