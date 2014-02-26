@@ -1326,11 +1326,11 @@ gui_bar_item_default_hotlist (void *data, struct t_gui_bar_item *item,
                 strcat (str_hotlist, GUI_COLOR_CUSTOM_BAR_FG);
                 if (CONFIG_INTEGER(config_look_hotlist_names_length) == 0)
                 {
-                    snprintf (format, sizeof (format) - 1, "%%s");
+                    snprintf (format, sizeof (format), "%%s");
                 }
                 else
                 {
-                    snprintf (format, sizeof (format) - 1,
+                    snprintf (format, sizeof (format),
                               "%%.%ds",
                               CONFIG_INTEGER(config_look_hotlist_names_length));
                 }

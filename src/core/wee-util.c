@@ -460,7 +460,7 @@ util_exec_on_files (const char *directory, int hidden_files, void *data,
         {
             if (hidden_files || (entry->d_name[0] != '.'))
             {
-                snprintf (complete_filename, sizeof (complete_filename) - 1,
+                snprintf (complete_filename, sizeof (complete_filename),
                           "%s/%s", directory, entry->d_name);
                 lstat (complete_filename, &statbuf);
                 if (!S_ISDIR(statbuf.st_mode))
