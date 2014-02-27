@@ -2019,7 +2019,8 @@ gui_chat_draw (struct t_gui_buffer *buffer, int clear_chat)
 
             if (clear_chat)
             {
-                snprintf (format_empty, 32, "%%-%ds", ptr_win->win_chat_width);
+                snprintf (format_empty, sizeof (format_empty),
+                          "%%-%ds", ptr_win->win_chat_width);
                 for (i = 0; i < ptr_win->win_chat_height; i++)
                 {
                     mvwprintw (GUI_WINDOW_OBJECTS(ptr_win)->win_chat, i, 0,
