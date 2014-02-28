@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-02-28 14:23+0100\n"
+"POT-Creation-Date: 2014-02-28 14:57+0100\n"
 "PO-Revision-Date: 2014-02-20 12:25+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1890,7 +1890,7 @@ msgid ""
 "  - options weechat.startup.command_{before|after}_plugins\n"
 "  - proxy options: username, password\n"
 "  - irc server options: autojoin, command, password, sasl_{username|"
-"password}\n"
+"password}, username, realname\n"
 "  - option relay.network.password\n"
 "  - command /eval.\n"
 "\n"
@@ -5879,13 +5879,11 @@ msgstr "задержка (в секундах) перед повторным с�
 msgid "nicknames to use on server (separated by comma)"
 msgstr "ник, используемый на IRC сервере"
 
-#, fuzzy
-msgid "user name to use on server"
-msgstr "имя пользователя, используемое на IRC сервере"
+msgid "user name to use on server (note: content is evaluated, see /help eval)"
+msgstr ""
 
-#, fuzzy
-msgid "real name to use on server"
-msgstr "настоящее имя, используемое на IRC сервере"
+msgid "real name to use on server (note: content is evaluated, see /help eval)"
+msgstr ""
 
 #, fuzzy
 msgid ""
@@ -9881,3 +9879,11 @@ msgstr "%s DCC: не могу установить неблокирующий р
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#, fuzzy
+#~ msgid "user name to use on server"
+#~ msgstr "имя пользователя, используемое на IRC сервере"
+
+#, fuzzy
+#~ msgid "real name to use on server"
+#~ msgstr "настоящее имя, используемое на IRC сервере"

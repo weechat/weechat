@@ -534,7 +534,7 @@
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
 * [[option_irc.server_default.realname]] *irc.server_default.realname*
-** descrizione: `nome reale da usare sul server`
+** descrizione: `real name to use on server (note: content is evaluated, see /help eval)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
@@ -589,7 +589,7 @@
 ** valori: on, off (valore predefinito: `on`)
 
 * [[option_irc.server_default.username]] *irc.server_default.username*
-** descrizione: `nome utente da usare sul server`
+** descrizione: `user name to use on server (note: content is evaluated, see /help eval)`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 

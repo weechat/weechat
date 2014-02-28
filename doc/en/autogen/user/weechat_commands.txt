@@ -719,7 +719,7 @@ Secured data with format ${sec.data.xxx} can be used in:
   - command line argument "--run-command"
   - options weechat.startup.command_{before|after}_plugins
   - proxy options: username, password
-  - irc server options: autojoin, command, password, sasl_{username|password}
+  - irc server options: autojoin, command, password, sasl_{username|password}, username, realname
   - option relay.network.password
   - command /eval.
 

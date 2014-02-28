@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-02-28 14:23+0100\n"
+"POT-Creation-Date: 2014-02-28 14:57+0100\n"
 "PO-Revision-Date: 2014-02-20 12:25+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -2269,6 +2269,7 @@ msgstr ""
 "passphrase <passphrase>|-delete || decrypt <passphrase>|-discard || set "
 "<name> <value> || del <name>"
 
+#, fuzzy
 msgid ""
 "passphrase: change the passphrase (without passphrase, data is stored as "
 "plain text in file sec.conf)\n"
@@ -2291,7 +2292,7 @@ msgid ""
 "  - options weechat.startup.command_{before|after}_plugins\n"
 "  - proxy options: username, password\n"
 "  - irc server options: autojoin, command, password, sasl_{username|"
-"password}\n"
+"password}, username, realname\n"
 "  - option relay.network.password\n"
 "  - command /eval.\n"
 "\n"
@@ -6694,11 +6695,17 @@ msgstr "サーバへの再接続の際の遅延 (秒単位) 時間"
 msgid "nicknames to use on server (separated by comma)"
 msgstr "サーバで使用するニックネーム (コンマ区切り)"
 
-msgid "user name to use on server"
-msgstr "サーバで使用するユーザ名"
+#, fuzzy
+msgid "user name to use on server (note: content is evaluated, see /help eval)"
+msgstr ""
+"プロキシサーバのユーザ名 (注意: 値は評価されます、/help eval を参照してくださ"
+"い)"
 
-msgid "real name to use on server"
-msgstr "サーバで使用するリアルネーム"
+#, fuzzy
+msgid "real name to use on server (note: content is evaluated, see /help eval)"
+msgstr ""
+"プロキシサーバのユーザ名 (注意: 値は評価されます、/help eval を参照してくださ"
+"い)"
 
 msgid ""
 "custom local hostname/IP for server (optional, if empty local hostname is "
@@ -10940,3 +10947,9 @@ msgstr "%s%s: ソケットにオプション \"nonblock\" を設定できませ�
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: \"%s\" のタイムアウト %s"
+
+#~ msgid "user name to use on server"
+#~ msgstr "サーバで使用するユーザ名"
+
+#~ msgid "real name to use on server"
+#~ msgstr "サーバで使用するリアルネーム"

@@ -3110,21 +3110,23 @@ irc_server_reconnect_schedule (struct t_irc_server *server)
 void
 irc_server_login (struct t_irc_server *server)
 {
-    const char *username, *realname, *capabilities;
-    char *password, *username2;
+    const char *capabilities;
+    char *password, *username, *realname, *username2;
 
-    password = weechat_string_eval_expression (IRC_SERVER_OPTION_STRING(server,
-                                                                        IRC_SERVER_OPTION_PASSWORD),
-                                               NULL, NULL, NULL);
-    username = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_USERNAME);
-    realname = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_REALNAME);
+    password = weechat_string_eval_expression (
+        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_PASSWORD),
+        NULL, NULL, NULL);
+    username = weechat_string_eval_expression (
+        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_USERNAME),
+        NULL, NULL, NULL);
+    realname = weechat_string_eval_expression (
+        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_REALNAME),
+        NULL, NULL, NULL);
+
     capabilities = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_CAPABILITIES);
 
     if (password && password[0])
         irc_server_sendf (server, 0, NULL, "PASS %s", password);
-
-    if (password)
-        free (password);
 
     if (!server->nick)
     {
@@ -3161,6 +3163,13 @@ irc_server_login (struct t_irc_server *server)
         0, 1,
         &irc_server_timer_connection_cb,
         server);
+
+    if (password)
+        free (password);
+    if (username)
+        free (username);
+    if (realname)
+        free (realname);
 }
 
 /*

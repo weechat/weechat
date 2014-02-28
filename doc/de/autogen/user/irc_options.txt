@@ -534,7 +534,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_irc.server_default.realname]] *irc.server_default.realname*
-** Beschreibung: `Realen Namen bei diesem Server nutzen`
+** Beschreibung: `real name to use on server (note: content is evaluated, see /help eval)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -589,7 +589,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.server_default.username]] *irc.server_default.username*
-** Beschreibung: `Benutzername für diesen Server`
+** Beschreibung: `user name to use on server (note: content is evaluated, see /help eval)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 

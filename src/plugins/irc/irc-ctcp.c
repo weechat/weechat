@@ -332,7 +332,7 @@ irc_ctcp_reply_to_nick (struct t_irc_server *server,
 char *
 irc_ctcp_replace_variables (struct t_irc_server *server, const char *format)
 {
-    char *res, *temp;
+    char *res, *temp, *username, *realname;
     const char *info;
     time_t now;
     struct tm *local_time;
@@ -463,23 +463,35 @@ irc_ctcp_replace_variables (struct t_irc_server *server, const char *format)
      * $username: user name, example:
      *   name
      */
-    temp = weechat_string_replace (res, "$username",
-                                   IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_USERNAME));
-    free (res);
-    if (!temp)
-        return NULL;
-    res = temp;
+    username = weechat_string_eval_expression (
+        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_USERNAME),
+        NULL, NULL, NULL);
+    if (username)
+    {
+        temp = weechat_string_replace (res, "$username", username);
+        free (res);
+        if (!temp)
+            return NULL;
+        res = temp;
+        free (username);
+    }
 
     /*
      * $realname: real name, example:
      *   John doe
      */
-    temp = weechat_string_replace (res, "$realname",
-                                   IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_REALNAME));
-    free (res);
-    if (!temp)
-        return NULL;
-    res = temp;
+    realname = weechat_string_eval_expression (
+        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_REALNAME),
+        NULL, NULL, NULL);
+    if (realname)
+    {
+        temp = weechat_string_replace (res, "$realname", realname);
+        free (res);
+        if (!temp)
+            return NULL;
+        res = temp;
+        free (realname);
+    }
 
     /* return result */
     return res;

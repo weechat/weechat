@@ -703,37 +703,37 @@ Senza argomento, vengono salvati tutti i file (WeeChat e plugin).
          set <nome> <valore>
          del <nome>
 
-passphrase: cambia la chiave di cifratura (senza la chiave di cifratura, i dati vengono salvati in chiaron nel file sec.conf)
-   -delete: elimina la chiave di cifratura
-   decrypt: decifra tutti i dati ancora cifrati (accade solo se la chiave di cifratura non è stata digitata all'avvio)
-  -discard: scarta tutti i dati ancora cifrati
-       set: aggiunge o modifica dati sicuri
-       del: elimina dati sicuri
+passphrase: change the passphrase (without passphrase, data is stored as plain text in file sec.conf)
+   -delete: delete passphrase
+   decrypt: decrypt data still encrypted (it happens only if passphrase was not given on startup)
+  -discard: discard all data still encrypted
+       set: add or change secured data
+       del: delete secured data
 
-Senza argomento, questo comando mostra i dati messi al sicuro in un nuovo buffer.
+Without argument, this command displays secured data in a new buffer.
 
-Quando viene usata una chiave di cifratura (dati cifrati), questa viene richiesta da WeeChat all'avvio.
-È possibile impostare la variabile d'ambiente "WEECHAT_PASSPHRASE" per prevenire il prompt (questa stessa variabile viene usata da WeeChat con il comando /upgrade).
+When a passphrase is used (data encrypted), it is asked by WeeChat on startup.
+It is possible to set environment variable "WEECHAT_PASSPHRASE" to prevent the prompt (this same variable is used by WeeChat on /upgrade).
 
-I dati messi al sicuro con il formato ${sec.data.xxx} possono essere usati in questo modo:
-  - argomento della riga di comando "--run-command"
-  - opzioni weechat.startup.command_{before|after}_plugins
-  - opzioni del proxy: nome utente, password
-  - opzioni del server irc: autojoin, comando, password, sasl_{username|password}
-  - opzione relay.network.password
-  - comando /eval.
+Secured data with format ${sec.data.xxx} can be used in:
+  - command line argument "--run-command"
+  - options weechat.startup.command_{before|after}_plugins
+  - proxy options: username, password
+  - irc server options: autojoin, command, password, sasl_{username|password}, username, realname
+  - option relay.network.password
+  - command /eval.
 
-Esempi:
-  imposta una chiave di cifratura:
-    /secure passphrase questa è la mia chiave di cifratura
-  cifra la password SASL di freenode:
-    /secure set freenode miapassword
+Examples:
+  set a passphrase:
+    /secure passphrase this is my passphrase
+  encrypt freenode SASL password:
+    /secure set freenode mypassword
     /set irc.server.freenode.sasl_password "${sec.data.freenode}"
-  cifra la password di oftc per nickserv:
-    /secure set oftc miapassword
+  encrypt oftc password for nickserv:
+    /secure set oftc mypassword
     /set irc.server.oftc.command "/msg nickserv identify ${sec.data.oftc}"
-  alias per il "ghost" del nick "mionick":
-    /alias ghost /eval /msg -server freenode nickserv ghost mionick ${sec.data.freenode}
+  alias to ghost the nick "mynick":
+    /alias ghost /eval /msg -server freenode nickserv ghost mynick ${sec.data.freenode}
 ----
 
 [[command_weechat_set]]

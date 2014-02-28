@@ -7295,7 +7295,7 @@ command_init ()
            "  - options weechat.startup.command_{before|after}_plugins\n"
            "  - proxy options: username, password\n"
            "  - irc server options: autojoin, command, password, "
-           "sasl_{username|password}\n"
+           "sasl_{username|password}, username, realname\n"
            "  - option relay.network.password\n"
            "  - command /eval.\n"
            "\n"

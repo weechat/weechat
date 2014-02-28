@@ -534,7 +534,7 @@
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
 * [[option_irc.server_default.realname]] *irc.server_default.realname*
-** opis: `prawdziwa nazwa używana na serwerze`
+** opis: `real name to use on server (note: content is evaluated, see /help eval)`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
@@ -589,7 +589,7 @@
 ** wartości: on, off (domyślna wartość: `on`)
 
 * [[option_irc.server_default.username]] *irc.server_default.username*
-** opis: `nazwa użytkownika używana na serwerze`
+** opis: `user name to use on server (note: content is evaluated, see /help eval)`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 

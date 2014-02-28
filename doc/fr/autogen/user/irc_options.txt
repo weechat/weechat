@@ -534,7 +534,7 @@
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
 * [[option_irc.server_default.realname]] *irc.server_default.realname*
-** description: `nom réel pour le serveur`
+** description: `nom réel pour le serveur (note: le contenu est évalué, voir /help eval)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
@@ -589,7 +589,7 @@
 ** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_irc.server_default.username]] *irc.server_default.username*
-** description: `nom d'utilisateur pour le serveur`
+** description: `nom d'utilisateur pour le serveur (note: le contenu est évalué, voir /help eval)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 

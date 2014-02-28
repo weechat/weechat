@@ -719,7 +719,7 @@ Les données sécurisées avec le format ${sec.data.xxx} peuvent être utilisée
   - le paramètre de ligne de commande "--run-command"
   - les options weechat.startup.command_{before|after}_plugins
   - les options de proxy: username, password
-  - les options de serveur irc: autojoin, command, password, sasl_{username|password}
+  - les options de serveur irc: autojoin, command, password, sasl_{username|password}, username, realname
   - l'option relay.network.password
   - la commande /eval.
 

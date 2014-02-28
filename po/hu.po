@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-02-28 14:23+0100\n"
+"POT-Creation-Date: 2014-02-28 14:57+0100\n"
 "PO-Revision-Date: 2014-02-20 12:25+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1867,7 +1867,7 @@ msgid ""
 "  - options weechat.startup.command_{before|after}_plugins\n"
 "  - proxy options: username, password\n"
 "  - irc server options: autojoin, command, password, sasl_{username|"
-"password}\n"
+"password}, username, realname\n"
 "  - option relay.network.password\n"
 "  - command /eval.\n"
 "\n"
@@ -5855,13 +5855,11 @@ msgstr "két újracsatlakozási próba közti szünet (másodpercben)"
 msgid "nicknames to use on server (separated by comma)"
 msgstr "felhasználónév az IRC szerveren"
 
-#, fuzzy
-msgid "user name to use on server"
-msgstr "használni kívánt felhasználónév az IRC szerveren"
+msgid "user name to use on server (note: content is evaluated, see /help eval)"
+msgstr ""
 
-#, fuzzy
-msgid "real name to use on server"
-msgstr "az IRC szerveren használt valódi név"
+msgid "real name to use on server (note: content is evaluated, see /help eval)"
+msgstr ""
 
 #, fuzzy
 msgid ""
@@ -9860,3 +9858,11 @@ msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
+
+#, fuzzy
+#~ msgid "user name to use on server"
+#~ msgstr "használni kívánt felhasználónév az IRC szerveren"
+
+#, fuzzy
+#~ msgid "real name to use on server"
+#~ msgstr "az IRC szerveren használt valódi név"
