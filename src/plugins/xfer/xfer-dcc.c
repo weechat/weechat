@@ -433,7 +433,7 @@ xfer_dcc_recv_file_child (struct t_xfer *xfer)
                         bin_hash = gcry_md_read (*xfer->hash_handle, 0);
                         if (bin_hash)
                         {
-                            snprintf (hash, 9, "%.2X%.2X%.2X%.2X",
+                            snprintf (hash, sizeof (hash), "%.2X%.2X%.2X%.2X",
                                       bin_hash[0], bin_hash[1], bin_hash[2],
                                       bin_hash[3]);
                             if (weechat_strcasecmp (hash,
