@@ -244,11 +244,12 @@ To force a string comparison, add double quotes around each expression, for exam
   "50" > "100"  ==> 1
 
 Some variables are replaced in expression, using the format ${variable}, variable can be, by order of priority :
-  1. a color (format: "color:xxx")
-  2. an info (format: "info:name,arguments", arguments are optional)
-  3. an option (format: "file.section.option")
-  4. a local variable in buffer
-  5. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
+  1. a string with escaped chars (format: "esc:xxx" or "\xxx")
+  2. a color (format: "color:xxx")
+  3. an info (format: "info:name,arguments", arguments are optional)
+  4. an option (format: "file.section.option")
+  5. a local variable in buffer
+  6. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
 Format for hdata can be one of following:
   hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
   hdata[list].var1.var2...: start with a hdata using a list, for example:
@@ -256,13 +257,16 @@ Format for hdata can be one of following:
     ${plugin[weechat_plugins].name}: name of first plugin in linked list of plugins
 For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
 
-Examples:
+Examples (simple strings):
   /eval -n ${info:version}                 ==> 0.4.3
   /eval -n ${weechat.look.scroll_amount}   ==> 3
   /eval -n ${window}                       ==> 0x2549aa0
   /eval -n ${window.buffer}                ==> 0x2549320
   /eval -n ${window.buffer.full_name}      ==> core.weechat
   /eval -n ${window.buffer.number}         ==> 1
+  /eval -n ${\t}                           ==> <tab>
+
+Examples (conditions):
   /eval -n -c ${window.buffer.number} > 2  ==> 0
   /eval -n -c ${window.win_width} > 100    ==> 1
   /eval -n -c (8 > 12) || (5 > 2)          ==> 1
