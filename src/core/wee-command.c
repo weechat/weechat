@@ -1685,10 +1685,10 @@ COMMAND_CALLBACK(eval)
             if (expr)
             {
                 result = eval_expression (expr, NULL, NULL, options);
-                gui_chat_printf_date_tags (NULL, 0, "no_log", ">> %s", ptr_args);
+                gui_chat_printf_date_tags (NULL, 0, "no_log", "\t>> %s", ptr_args);
                 if (result)
                 {
-                    gui_chat_printf_date_tags (NULL, 0, "no_log", "== %s[%s%s%s]",
+                    gui_chat_printf_date_tags (NULL, 0, "no_log", "\t== %s[%s%s%s]",
                                                GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                                                GUI_COLOR(GUI_COLOR_CHAT),
                                                result,
@@ -1696,7 +1696,7 @@ COMMAND_CALLBACK(eval)
                 }
                 else
                 {
-                    gui_chat_printf_date_tags (NULL, 0, "no_log", "== %s<%s%s%s>",
+                    gui_chat_printf_date_tags (NULL, 0, "no_log", "\t== %s<%s%s%s>",
                                                GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                                                GUI_COLOR(GUI_COLOR_CHAT),
                                                _("error"),
