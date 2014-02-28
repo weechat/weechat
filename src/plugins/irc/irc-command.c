@@ -2475,8 +2475,8 @@ irc_command_kickban (void *data, struct t_gui_buffer *buffer, int argc,
     /* set ban for nick(+host) on channel */
     if (strchr (pos_nick, '@'))
     {
-        length = strlen (pos_nick) + 16;
-        mask = malloc (length + 1);
+        length = strlen (pos_nick) + 16 + 1;
+        mask = malloc (length);
         if (mask)
         {
             pos = strchr (pos_nick, '!');

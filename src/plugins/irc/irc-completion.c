@@ -431,8 +431,8 @@ irc_completion_channel_topic_cb (void *data, const char *completion_item,
              * instead of
              *   /topic #test is a test channel
              */
-            length = strlen (ptr_channel->name) + strlen (ptr_channel->topic) + 16;
-            topic = malloc (length + 1);
+            length = strlen (ptr_channel->name) + strlen (ptr_channel->topic) + 16 + 1;
+            topic = malloc (length);
             if (topic)
             {
                 snprintf (topic, length, "%s %s",
