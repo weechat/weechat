@@ -438,7 +438,7 @@ relay_irc_signal_irc_outtags_cb (void *data, const char *signal,
             && relay_irc_command_relayed (irc_command))
         {
             /* get host for nick (it is self nick) */
-            snprintf (str_infolist_args, sizeof (str_infolist_args) - 1,
+            snprintf (str_infolist_args, sizeof (str_infolist_args),
                       "%s,%s,%s",
                       client->protocol_args,
                       irc_channel,
