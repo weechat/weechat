@@ -484,7 +484,8 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
                                  weechat_prefix ("error"), sargv[1]);
             goto end;
         }
-        if ((sargc > 6) && (trigger_search_return_code (sargv[6]) < 0))
+        if ((sargc > 6) && sargv[6][0]
+            && (trigger_search_return_code (sargv[6]) < 0))
         {
             weechat_printf_tags (NULL, "no_trigger",
                                  _("%sError: invalid return code \"%s\""),
