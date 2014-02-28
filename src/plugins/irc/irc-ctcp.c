@@ -278,6 +278,7 @@ irc_ctcp_reply_to_nick (struct t_irc_server *server,
     int number;
     char hash_key[32];
     const char *str_args;
+    char *str_args_color;
 
     hashtable = irc_server_sendf (server,
                                   IRC_SERVER_SEND_OUTQ_PRIO_LOW | IRC_SERVER_SEND_RETURN_HASHTABLE,
@@ -298,6 +299,9 @@ irc_ctcp_reply_to_nick (struct t_irc_server *server,
                 str_args = weechat_hashtable_get (hashtable, hash_key);
                 if (!str_args)
                     break;
+                str_args_color = irc_color_decode (str_args, 1);
+                if (!str_args_color)
+                    break;
                 weechat_printf_tags (irc_msgbuffer_get_target_buffer (server,
                                                                       nick,
                                                                       NULL,
@@ -315,9 +319,10 @@ irc_ctcp_reply_to_nick (struct t_irc_server *server,
                                      IRC_COLOR_RESET,
                                      IRC_COLOR_CHAT_CHANNEL,
                                      ctcp,
-                                     (str_args[0]) ? IRC_COLOR_RESET : "",
-                                     (str_args[0]) ? " " : "",
-                                     str_args);
+                                     (str_args_color[0]) ? IRC_COLOR_RESET : "",
+                                     (str_args_color[0]) ? " " : "",
+                                     str_args_color);
+                free (str_args_color);
                 number++;
             }
         }

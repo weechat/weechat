@@ -41,6 +41,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * api: add integer return code for functions hook_{signal|hsignal}_send
 * alias: change default command for alias /beep to "/print -beep"
 * guile: fix module used after unload of a script
+* irc: fix colors in message with CTCP reply sent to another user
 * irc: evaluate content of server options "username" and "realname"
 * irc: set option irc.network.autoreconnect_delay_max to 600 by default,
   increase max value to 604800 seconds (7 days)
