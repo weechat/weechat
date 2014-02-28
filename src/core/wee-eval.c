@@ -252,14 +252,20 @@ eval_replace_vars_cb (void *data, const char *text)
             return strdup (ptr_value);
     }
 
-    /* 2. look for a color */
+    /* 2. convert escaped chars */
+    if (strncmp (text, "esc:", 4) == 0)
+        return string_convert_escaped_chars (text + 4);
+    if ((text[0] == '\\') && text[1] && (text[1] != '\\'))
+        return string_convert_escaped_chars (text);
+
+    /* 3. look for a color */
     if (strncmp (text, "color:", 6) == 0)
     {
         ptr_value = gui_color_get_custom (text + 6);
         return strdup ((ptr_value) ? ptr_value : "");
     }
 
-    /* 3. look for an info */
+    /* 4. look for an info */
     if (strncmp (text, "info:", 5) == 0)
     {
         ptr_value = NULL;
@@ -279,7 +285,7 @@ eval_replace_vars_cb (void *data, const char *text)
         return strdup ((ptr_value) ? ptr_value : "");
     }
 
-    /* 4. look for name of option: if found, return this value */
+    /* 5. look for name of option: if found, return this value */
     if (strncmp (text, "sec.data.", 9) == 0)
     {
         ptr_value = hashtable_get (secure_hashtable_data, text + 9);
@@ -312,7 +318,7 @@ eval_replace_vars_cb (void *data, const char *text)
         }
     }
 
-    /* 5. look for local variable in buffer */
+    /* 6. look for local variable in buffer */
     ptr_buffer = hashtable_get (pointers, "buffer");
     if (ptr_buffer)
     {
@@ -321,7 +327,7 @@ eval_replace_vars_cb (void *data, const char *text)
             return strdup (ptr_value);
     }
 
-    /* 6. look for hdata */
+    /* 7. look for hdata */
     value = NULL;
     hdata_name = NULL;
     list_name = NULL;

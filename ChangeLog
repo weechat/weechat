@@ -34,6 +34,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: add signals "key_combo_{default|search|cursor}"
 * core: display a warning in case of inconsistency between the options
   weechat.look.save_{config|layout}_on_exit
+* api: add support of escaped strings with format `${esc:xxx}` or `${\xxx}` in
+  function string_eval_expression and command /eval
 * api: add functions "hashtable_dup", "string_replace_regex",
   "string_split_shell", "string_convert_escaped_chars"
 * api: add integer return code for functions hook_{signal|hsignal}_send
