@@ -2000,7 +2000,7 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
             if (pos)
                 pos[0] = '\0';
 
-            snprintf (buffer, sizeof (buffer) - 1, "%s\r\n", ptr_msg);
+            snprintf (buffer, sizeof (buffer), "%s\r\n", ptr_msg);
 
             /* anti-flood: look whether we should queue outgoing message or not */
             time_now = time (NULL);
