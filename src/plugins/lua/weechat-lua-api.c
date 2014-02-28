@@ -2488,7 +2488,7 @@ weechat_lua_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
 
     if (script_callback && script_callback->function && script_callback->function[0])
     {
-        snprintf (timebuffer, sizeof (timebuffer) - 1, "%ld", (long int)date);
+        snprintf (timebuffer, sizeof (timebuffer), "%ld", (long int)date);
 
         func_argv[0] = (script_callback->data) ? script_callback->data : empty_arg;
         func_argv[1] = API_PTR2STR(buffer);
