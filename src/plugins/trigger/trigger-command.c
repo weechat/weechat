@@ -914,7 +914,7 @@ trigger_command_init ()
            "             print: buffer, tags, message, strip colors\n"
            "             command: command (required), description, arguments, "
            "description of arguments, completion\n"
-           "             command_run: command (required)\n"
+           "             command_run: command(s) (required)\n"
            "             timer: interval (required), align on second, max calls\n"
            "             config: name(s) of option (required)\n"
            "             focus: name(s) of area (required)\n"

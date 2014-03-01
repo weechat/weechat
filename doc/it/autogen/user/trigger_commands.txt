@@ -29,7 +29,7 @@ listdefault: list default triggers
              modifier: name(s) of modifier (required)
              print: buffer, tags, message, strip colors
              command: command (required), description, arguments, description of arguments, completion
-             command_run: command (required)
+             command_run: command(s) (required)
              timer: interval (required), align on second, max calls
              config: name(s) of option (required)
              focus: name(s) of area (required)

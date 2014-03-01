@@ -29,7 +29,7 @@ listdefault: lister les triggers par défaut
              modifier: nom(s) de modificateur (obligatoire)
              print: tampon, étiquettes, message, suppression des couleurs (0/1)
              command: commande (obligatoire), description, paramètres, description des paramètres, complétion
-             command_run: commande (obligatoire)
+             command_run: commande(s) (obligatoire)
              timer: intervalle (obligatoire), alignement sur la seconde, nombre max d'appels
              config: nom(s) de l'option (obligatoire)
              focus: nom(s) de la zone (obligatoire)
