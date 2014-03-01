@@ -31,7 +31,7 @@ listdefault: lister les triggers par défaut
              command: commande (obligatoire), description, paramètres, description des paramètres, complétion
              command_run: commande (obligatoire)
              timer: intervalle (obligatoire), alignement sur la seconde, nombre max d'appels
-             config: nom de l'option (obligatoire)
+             config: nom(s) de l'option (obligatoire)
              focus: nom(s) de la zone (obligatoire)
  conditions: conditions évaluées pour le trigger
       regex: une ou plusieurs expressions régulières pour remplacer des chaînes dans les variables

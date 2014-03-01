@@ -916,7 +916,7 @@ trigger_command_init ()
            "description of arguments, completion\n"
            "             command_run: command (required)\n"
            "             timer: interval (required), align on second, max calls\n"
-           "             config: name of option (required)\n"
+           "             config: name(s) of option (required)\n"
            "             focus: name(s) of area (required)\n"
            " conditions: evaluated conditions for the trigger\n"
            "      regex: one or more regular expressions to replace strings "

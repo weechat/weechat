@@ -31,7 +31,7 @@ listdefault: list default triggers
              command: command (required), description, arguments, description of arguments, completion
              command_run: command (required)
              timer: interval (required), align on second, max calls
-             config: name of option (required)
+             config: name(s) of option (required)
              focus: name(s) of area (required)
  conditions: evaluated conditions for the trigger
       regex: one or more regular expressions to replace strings in variables
