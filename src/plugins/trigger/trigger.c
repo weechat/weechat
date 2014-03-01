@@ -365,14 +365,14 @@ trigger_hook (struct t_trigger *trigger)
             }
             break;
         case TRIGGER_HOOK_TIMER:
-            if (argv && (argc >= 3))
+            if (argv && (argc >= 1))
             {
                 error1 = NULL;
                 error2 = NULL;
                 error3 = NULL;
                 interval = strtol (argv[0], &error1, 10);
-                align_second = strtol (argv[1], &error2, 10);
-                max_calls = strtol (argv[2], &error3, 10);
+                align_second = strtol ((argc >= 2) ? argv[1] : "0", &error2, 10);
+                max_calls = strtol ((argc >= 3) ? argv[2] : "0", &error3, 10);
                 if (error1 && !error1[0]
                     && error2 && !error2[0]
                     && error3 && !error3[0]
