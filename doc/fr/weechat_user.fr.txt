@@ -2956,6 +2956,522 @@ include::autogen/user/tcl_commands.txt[]
 
 include::autogen/user/guile_commands.txt[]
 
+[[trigger_plugin]]
+=== Extension Trigger
+
+Trigger est le couteau suisse de WeeChat : il peut accrocher différentes choses
+(signal, modificateur, print, ...), changer le contenu des données, et exécuter
+une ou plusieurs commandes. Une condition peut être utilisée pour empêcher le
+trigger de s'exécuter dans certaines circonstances.
+
+Utiliser les triggers nécessite de connaître le fonctionnement des signaux,
+modificateurs, etc... Il peut être utile de lire le chapitre sur les 'Hooks'
+dans la 'Référence API Extension WeeChat'.
+
+[[trigger_options]]
+==== Options (trigger.conf)
+
+Sections:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Commande de contrôle                     | Description
+| look    | /set trigger.look.*                      | Aspect/présentation
+| color   | /set trigger.color.*                     | Couleurs
+| trigger | <<command_trigger_trigger,/trigger add>> +
+            <<command_trigger_trigger,/trigger set>> +
+            /set trigger.trigger.*                   | Options des triggers
+|===
+
+Options:
+
+include::autogen/user/trigger_options.txt[]
+
+[[trigger_commands]]
+==== Commandes
+
+include::autogen/user/trigger_commands.txt[]
+
+[[trigger_anatomy]]
+==== Anatomie d'un trigger
+
+Un trigger a les options suivantes (les noms sont
+`trigger.trigger.<nom>.<option>`):
+
+[width="100%",cols="2m,2,10",options="header"]
+|===
+| Option | Valeurs | Description
+
+| enabled | `on`, `off` |
+  Lorsque l'option est `off`, le trigger est désactivé et les actions ne sont
+  plus exécutées.
+
+| hook | `signal`, `hsignal`, `modifier`, `print`, `command`, `command_run`,
+  `timer`, `config`, `focus` |
+  Le "hook" utilisé dans le trigger. Pour plus d'information, voir le chapitre
+  'Hooks' dans la 'Référence API Extension WeeChat'.
+
+| arguments | chaîne |
+  Les paramètres pour le "hook", ils dépendent du type de hook utilisé.
+
+| conditions | chaîne |
+  Conditions pour exécuter le trigger : elles sont évaluées (voir la commande
+  <<command_weechat_eval,/eval>>).
+
+| regex | chaîne |
+  Une ou plusieurs expressions régulières POSIX étendues, pour modifier les
+  données reçues dans le callback du "hook" (et d'autres choses ajoutées par
+  l'extension trigger), voir <<trigger_regex,expression régulière>>.
+
+| command | chaîne |
+  Commande à exécuter (plusieurs commandes peuvent être séparées par des
+  points-virgules); elle est évaluée (voir la commande
+  <<command_weechat_eval,/eval>>).
+
+| return_code | `ok`, `ok_eat`, `error` |
+  Le code retour du callback (`ok` par défaut, qui devrait être utilisé dans
+  quasiment tous les triggers, les autres valeurs sont rarement utilisées).
+|===
+
+Par exemple, le trigger 'beep' par défaut a les options suivantes :
+
+----
+trigger.trigger.beep.enabled = on
+trigger.trigger.beep.hook = print
+trigger.trigger.beep.arguments = ""
+trigger.trigger.beep.conditions = "${tg_highlight} || ${tg_msg_pv}"
+trigger.trigger.beep.regex = ""
+trigger.trigger.beep.command = "/print -beep"
+trigger.trigger.beep.return_code = ok
+----
+
+[[trigger_execution]]
+==== Exécution
+
+Lorsque le callback d'un trigger est appelé, les actions suivantes sont
+exécutées, dans cet ordre :
+
+. vérifier si les triggers sont globalement activés: si non, sortir
+. vérifier si le trigger est activé: si non, sortir
+. vérifier les conditions du trigger: si faux, sortir
+. remplacer du texte dans le trigger en utilisant des expressions régulières
+. exécuter la/les commande(s)
+. sortir avec un code retour (sauf pour les "hooks" 'modifier' et 'focus').
+
+[[trigger_hook_arguments]]
+==== Paramètres du hook
+
+Les paramètres dépendent du type de "hook" utilisé. Ils sont séparés par des
+points-virgules.
+
+[width="100%",cols="2,6,7",options="header"]
+|===
+| Hook | Paramètres | Exemples
+
+| signal |
+  1. nom de signal (priorité autorisée) (obligatoire) +
+  2. nom de signal (priorité autorisée) +
+  3. ... |
+  `*,irc_in_privmsg` +
+  `*,irc_in_privmsg;*,irc_in_notice` +
+  `signal_sigwinch`
+
+| hsignal |
+  1. nom de signal (priorité autorisée) (obligatoire) +
+  2. nom de signal (priorité autorisée) +
+  3. ... |
+  `nicklist_nick_added`
+
+| modifier |
+  1. nom de modificateur (priorité autorisée) (obligatoire) +
+  2. nom de modificateur (priorité autorisée) +
+  3. ... |
+  `weechat_print` +
+  `5000\|input_text_display;5000\|history_add`
+
+| print |
+  1. nom de tampon +
+  2. étiquettes +
+  3. message +
+  4. suppression des couleurs (0/1) |
+  `irc.freenode.*` +
+  `irc.freenode.#weechat` +
+  `irc.freenode.#weechat;irc_notice` +
+  `*;;;1`
+
+| command |
+  1. nom de commande (priorité autorisée) (obligatoire) +
+  2. description +
+  3. paramètres +
+  4. description des paramètres +
+  5. complétion |
+  `test` +
+  `5000\|test`
+
+| command_run |
+  1. commande (priorité autorisée) (obligatoire) +
+  2. commande (priorité autorisée) +
+  3. ... |
+  `/cmd paramètres`
+
+| timer |
+  1. intervalle, en millisecondes (obligatoire) +
+  2. alignement sur la seconde (par défaut : 0) +
+  3. nombre maximum d'appels (par défaut : 0, qui signifie "sans fin") |
+  `3600000` +
+  `60000;0;5`
+
+| config |
+  1. nom d'option (priorité autorisée) (obligatoire) +
+  2. nom d'option (priorité autorisée) +
+  3. ... |
+  `weechat.look.*`
+
+| focus |
+  1. nom d'aire (priorité autorisée) (obligatoire) +
+  2. nom d'aire (priorité autorisée) +
+  3. ... |
+  `buffer_nicklist`
+|===
+
+[[trigger_conditions]]
+==== Conditions
+
+Les conditions sont utilisées pour continuer l'exécution du trigger, ou tout
+stopper.
+
+Elles sont évaluées, et les données disponibles dans le callback peuvent être
+utilisées (voir <<trigger_callback_data,données dans les callbacks>> et la
+commande <<command_weechat_eval,/eval>>).
+
+Exemple : le trigger 'beep' par défaut utilise cette condition pour faire un
+beep seulement sur un highlight ou un message privé :
+
+----
+${tg_highlight} || ${tg_msg_pv}
+----
+
+[[trigger_regex]]
+==== Expression régulière
+
+L'expression régulière est utilisée pour modifier des variables dans la table de
+hachage du callback.
+
+Le format est : "/regex/remplacement" ou "/regex/remplacement/var" (où 'var' est
+une variable de la table de hachage). +
+Si 'var' n'est pas spécifiée, la variable par défaut est utilisée, elle dépend
+du type de hook :
+
+[width="50%",cols="4,5m",options="header"]
+|===
+| Hook        | Variable par défaut
+| signal      | tg_signal_data
+| hsignal     |
+| modifier    | tg_string
+| print       | tg_message
+| command     | tg_argv_eol1
+| command_run | tg_command
+| timer       |
+| config      | tg_value
+| focus       |
+|===
+
+Plusieurs expressions régulières peuvent être séparées par un espace, par
+exemple : "/regex1/remplacement1/var1 /regex2/remplacement2/var2".
+
+Le caractère "/" peut être remplacé par tout caractère (un ou plusieurs
+caractères identiques).
+
+Les groupes de correspondance peuvent être utilisés dans le "remplacement" :
+
+* `$0` à `$99` : `$0` est la correspondance complète, `$1` à `$99` sont les
+  groupes capturés
+* `$+` : la dernière correspondance (avec le numéro le plus élevé)
+* `$.cN` : la correspondance "N" avec tous les caractères remplacés par "c"
+  (exemple : `$.*2` est le groupe n°2 avec tous les caractères remplacés par
+  `*`).
+
+Exemple : utiliser du gras pour les mots entre "*" :
+
+----
+/\*(\S+)\*/*${color:bold}$1${color:-bold}*/
+----
+
+Exemple : le trigger par défaut 'server_pass' utilise cette expression régulière
+pour cacher le mot de passe dans les commandes `/server` et `/connect` (les
+caractères des mots de passe sont remplacés par `*`) :
+
+----
+==^(/(server|connect) .*-(sasl_)?password=)(\S+)(.*)==$1$.*4$5
+----
+
+[NOTE]
+Dans cet exemple, le séparateur utilisé est "==" car il y a "/" dans
+l'expression régulière.
+
+[[trigger_command]]
+==== Commande
+
+La commande est exécutée après le remplacement du texte avec l'expression
+régulière.
+Plusieurs commandes peuvent être séparées par des points-virgules.
+
+Elle est évaluée (voir la commande <<command_weechat_eval,/eval>>) et le texte
+remplacé avec l'expression régulière peut être utilisé dans la commande.
+
+Exemple : le trigger par défaut 'beep' utilise cette commande pour produire un
+beep (BEL) :
+
+----
+/print -beep
+----
+
+[[trigger_callback_data]]
+==== Données dans les callbacks
+
+Les données reçues dans les callbacks sont stockées dans des tables de hachage
+(pointeurs et chaînes) et peuvent être utilisées dans les options suivantes :
+
+* 'conditions'
+* 'regex'
+* 'command'
+
+Le contenu des tables de hachage dépend du type de hook.
+
+Une manière pratique de voir les données dans le trigger est d'ouvrir le tampon
+moniteur des triggers :
+
+----
+/trigger monitor
+----
+
+[[trigger_data_signal]]
+===== Signal
+
+Le callback "signal" définit les variables suivantes dans la table de hachage :
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Variable       | Type   | Description
+| tg_signal      | chaîne | Nom du signal
+| tg_signal_data | chaîne | Données envoyées avec le signal
+|===
+
+Si le signal contient un message IRC, le message est analysé et les données
+suivantes sont ajoutées dans la table de hachage :
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Variable             | Type   | Description
+| server               | chaîne | Nom du serveur (exemple : "freenode")
+| tags                 | chaîne | Étiquettes dans le message (rarement utilisées)
+| message_without_tags | chaîne | Message sans les étiquettes
+| nick                 | chaîne | Pseudo
+| host                 | chaîne | Nom d'hôte
+| command              | chaîne | Commane IRC (exemple : "PRIVMSG", "NOTICE", ...)
+| channel              | chaîne | Canal IRC
+| arguments            | chaîne | Paramètres de la commande (inclut la valeur de 'channel')
+|===
+
+[[trigger_data_hsignal]]
+===== Hsignal
+
+Le callback "hsignal" définit les variables suivantes dans la table de hachage :
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Variable  | Type   | Description
+| tg_signal | chaîne | Nom du signal
+|===
+
+La table de hachage contient toutes les clés/valeurs de la table de hachage
+reçue (type : chaîne/chaîne).
+
+[[trigger_data_modifier]]
+===== Modifier
+
+Le callback "modifier" définit les variables suivantes dans la table de hachage :
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Variable          | Type   | Description
+| tg_modifier       | chaîne | Nom du modificateur
+| tg_modifier_data  | chaîne | Données envoyées avec le modificateur
+| tg_string         | chaîne | La chaîne qui peut être modifiée
+| tg_string_nocolor | chaîne | La chaîne sans les codes couleur
+|===
+
+Pour le modificateur 'weechat_print', les variables en utilisant les étiquettes
+du message sont ajoutées (voir le <<trigger_data_print,hook print>> ci-dessous),
+ainsi que les variables suivantes :
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Variable           | Type     | Description
+| buffer             | pointeur | Tampon où le message est affiché
+| tg_plugin          | chaîne   | Extension du tampon où le message est affiché
+| tg_buffer          | chaîne   | Nom complet du tampon où le message est affiché
+| tg_prefix          | chaîne   | Préfixe du message affiché
+| tg_prefix_nocolor  | chaîne   | Préfixe sans les codes couleur
+| tg_message         | chaîne   | Message affiché
+| tg_message_nocolor | chaîne   | Message sans les codes couleur
+|===
+
+Si le modificateur contient un message IRC, le message est analysé et des
+données supplémentaires sont ajoutées dans la table de hachage (voir le
+<<trigger_data_signal,"hook" signal>>).
+
+[[trigger_data_print]]
+===== Print
+
+Le callback "print" définit les variables suivantes dans la table de hachage :
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Variable           | Type     | Description
+| buffer             | pointeur | Buffer
+| tg_date            | chaîne   | Date/heure du message (format : `YYYY-MM-DD hh:mm:ss`)
+| tg_displayed       | chaîne   | "1" si affiché, "0" si ligne filtrée
+| tg_highlight       | chaîne   | "1" si highlight, sinon "0"
+| tg_prefix          | chaîne   | Préfixe
+| tg_prefix_nocolor  | chaîne   | Préfixe sans les codes couleur
+| tg_message         | chaîne   | Message
+| tg_message_nocolor | chaîne   | Message sans les codes couleur
+|===
+
+Variables définies avec les étiquettes du message (elles sont définies aussi
+pour le modificateur 'weechat_print') :
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Variable           | Type   | Description
+| tg_tags            | chaîne | Étiquettes du message (avec une virgule en début/fin de chaîne)
+| tg_tags_count      | chaîne | Nombre d'étiquettes dans le message
+| tg_tag_notify      | chaîne | Niveau de notification ('none', 'message', 'private', 'highlight')
+| tg_tag_nick        | chaîne | Pseudo (depuis l'étiquette "nick_xxx")
+| tg_tag_prefix_nick | chaîne | Couleur du pseudo dans le préfixe (depuis l'étiquette "prefix_nick_ccc")
+| tg_msg_pv          | chaîne | "1" pour un message privé, sinon "0"
+|===
+
+[[trigger_data_command]]
+===== Command
+
+Le callback "command" définit les variables suivantes dans la table de hachage :
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Variable     | Type     | Description
+| buffer       | pointeur | Tampon
+| tg_argvN     | chaîne   | Paramètre n°N
+| tg_argv_eolN | chaîne   | Depuis le paramètre n°N jusqu'à la fin des paramètres
+|===
+
+[[trigger_data_command_run]]
+===== Command_run
+
+Le callback "command_run" définit les variables suivantes dans la table de
+hachage :
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Variable   | Type     | Description
+| buffer     | pointeur | Tampon
+| tg_command | chaîne   | Commande exécutée
+|===
+
+[[trigger_data_timer]]
+===== Timer
+
+Le callback "timer" définit les variables suivantes dans la table de hachage :
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Variable           | Type   | Description
+| tg_remaining_calls | chaîne | Nombre d'appels restants
+| tg_date            | chaîne | Date/heure courante (format : `YYYY-MM-DD hh:mm:ss`)
+|===
+
+[[trigger_data_config]]
+===== Config
+
+Le callback "config" définit les variables suivantes dans la table de hachage :
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Variable  | Type   | Description
+| tg_option | chaîne | Option
+| tg_value  | chaîne | Valeur
+|===
+
+[[trigger_data_focus]]
+===== Focus
+
+Le callback "focus" définit les variables suivantes dans la table de hachage :
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Variable | Type     | Description
+| window   | pointeur | Fenêtre
+| buffer   | pointeur | Tampon
+|===
+
+La table de hachage contient toutes les clés/valeurs de la table de hachage
+reçue (type : chaîne/chaîne).
+
+[[trigger_examples]]
+==== Exemples
+
+[[trigger_example_auto_pong]]
+===== Pong auto sur les requêtes ping
+
+Lorsque quelqu'un envoie un "ping" dans un tampon privé, le trigger répondra
+automatiquement avec un `pong` :
+
+----
+/trigger add pong print "" "${type} == private && ${tg_message} == ping" "" "pong"
+----
+
+[[trigger_example_responsive_layout]]
+===== Disposition réceptive
+
+Les triggers suivants peuvent être utilisées pour personnaliser l'affichage
+lorsque la taille du terminal change :
+
+----
+/trigger add resize_small signal signal_sigwinch "${info:term_width} < 100" "" "/bar hide nicklist"
+/trigger add resize_big signal signal_sigwinch "${info:term_width} >= 100" "" "/bar show nicklist"
+----
+
+Les triggers attrapent le signal "signal_sigwinch", qui et envoyé par WeeChat
+lorsque le signal SIGWINCH est reçu (lorsque la taille du terminal a changé).
+
+La condition avec `${info:term_width}` vérifie la largeur du terminal (vous
+pouvez aussi utiliser `${info:term_height}` si besoin).
+
+Dans l'exemple, si le terminal devient petit, la liste de pseudos est cachée.
+Et la barre est restaurée lorsque la largeur du terminal est supérieure ou
+égale à 100 caractères.
+
+[[trigger_example_config_save]]
+===== Sauvegarde automatique de la configuration
+
+Vous pouvez sauvegarder automatiquement les fichiers de configuration
+(`*.conf`), par example chaque heure :
+
+----
+/trigger add cfgsave timer 3600000;0;0 "" "" "/mute /save"
+----
+
+Les paramètres pour le minuteur sont :
+
+* '3600000' : 3600 * 1000 millisecondes, le callback est appelé toutes les
+  heures
+* '0' : alignement sur la seconde (pas d'alignement ici)
+* '0' : nombre maximum d'appels (0 = pas de fin pour le minuteur)
+
+La commande `/mute /save` sauvegarde silencieusement les fichiers de
+configuration (rien n'est affiché sur le tampon "core").
+
 [[xfer_plugin]]
 === Extension Xfer
 

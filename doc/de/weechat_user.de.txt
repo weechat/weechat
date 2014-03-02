@@ -2916,6 +2916,509 @@ include::autogen/user/tcl_commands.txt[]
 
 include::autogen/user/guile_commands.txt[]
 
+// TRANSLATION MISSING
+[[trigger_plugin]]
+=== Trigger plugin
+
+Trigger is the Swiss Army knife for WeeChat: it can hook many things (signal,
+modifier, print, ...), change the content of data, and execute one or more
+commands. A condition can be used to prevent the trigger to run in some
+circumstances.
+
+Using triggers require you to know how the signals, modifiers, ... are working.
+So you might consider reading the 'Hooks' chapter in the
+'WeeChat Plugin API Reference'.
+
+[[trigger_options]]
+==== Options (trigger.conf)
+
+Sections:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command                          | Beschreibung
+| look    | /set trigger.look.*                      | Erscheinungsbild
+| color   | /set trigger.color.*                     | Farben
+| trigger | <<command_trigger_trigger,/trigger add>> +
+            <<command_trigger_trigger,/trigger set>> +
+            /set trigger.trigger.*                   | Trigger options
+|===
+
+Options:
+
+include::autogen/user/trigger_options.txt[]
+
+[[trigger_commands]]
+==== Commands
+
+include::autogen/user/trigger_commands.txt[]
+
+[[trigger_anatomy]]
+==== Anatomy of a trigger
+
+A trigger has the following options (names are
+`trigger.trigger.<name>.<option>`):
+
+[width="100%",cols="2m,2,10",options="header"]
+|===
+| Option | Values | Description
+
+| enabled | `on`, `off` |
+  When option is `off`, the trigger is disabled and actions are not executed
+  any more.
+
+| hook | `signal`, `hsignal`, `modifier`, `print`, `command`, `command_run`,
+  `timer`, `config`, `focus` |
+  The hook used in trigger. For more information, see
+  'WeeChat Plugin API Reference', chapter 'Hooks'.
+
+| arguments | string |
+  The arguments for the hook, it depends on the hook type used.
+
+| conditions | string |
+  Conditions to execute the trigger; they are evaluated (see command
+  <<command_weechat_eval,/eval>>).
+
+| regex | string |
+  One or more POSIX extended regular expressions, to change data received in the
+  hook callback (and some stuff added by trigger plugin), see
+  <<trigger_regex,regular expression>>.
+
+| command | string |
+  Command to execute (many commands can be separated by semicolons); it is
+  evaluated (see command <<command_weechat_eval,/eval>>).
+
+| return_code | `ok`, `ok_eat`, `error` |
+  The return code of callback (default is `ok`, which should be used in almost
+  all triggers, the other values are rarely used).
+|===
+
+For example, the default 'beep' trigger has following options:
+
+----
+trigger.trigger.beep.enabled = on
+trigger.trigger.beep.hook = print
+trigger.trigger.beep.arguments = ""
+trigger.trigger.beep.conditions = "${tg_highlight} || ${tg_msg_pv}"
+trigger.trigger.beep.regex = ""
+trigger.trigger.beep.command = "/print -beep"
+trigger.trigger.beep.return_code = ok
+----
+
+[[trigger_execution]]
+==== Execution
+
+When a trigger callback is called, following actions are executed, in this
+order:
+
+. check if triggers are globally enabled: if not, exit
+. check if trigger is enabled: if not, exit
+. check trigger conditions: if false, exit
+. replace text in trigger using regular expression(s)
+. execute command(s)
+. exit with a return code (except for hooks 'modifier' and 'focus').
+
+[[trigger_hook_arguments]]
+==== Hook arguments
+
+The arguments depend on the hook used. They are separated by semicolons.
+
+[width="100%",cols="2,6,7",options="header"]
+|===
+| Hook | Arguments | Examples
+
+| signal |
+  1. signal name (priority allowed) (required) +
+  2. signal name (priority allowed) +
+  3. ... |
+  `*,irc_in_privmsg` +
+  `*,irc_in_privmsg;*,irc_in_notice` +
+  `signal_sigwinch`
+
+| hsignal |
+  1. signal name (priority allowed) (required) +
+  2. signal name (priority allowed) +
+  3. ... |
+  `nicklist_nick_added`
+
+| modifier |
+  1. modifier name (priority allowed) (required) +
+  2. modifier name (priority allowed) +
+  3. ... |
+  `weechat_print` +
+  `5000\|input_text_display;5000\|history_add`
+
+| print |
+  1. buffer name +
+  2. tags +
+  3. message +
+  4. strip colors (0/1) |
+  `irc.freenode.*` +
+  `irc.freenode.#weechat` +
+  `irc.freenode.#weechat;irc_notice` +
+  `*;;;1`
+
+| command |
+  1. command name (priority allowed) (required) +
+  2. description +
+  3. arguments +
+  4. description of arguments +
+  5. completion |
+  `test` +
+  `5000\|test`
+
+| command_run |
+  1. command (priority allowed) (required) +
+  2. command (priority allowed) +
+  3. ... |
+  `/cmd arguments`
+
+| timer |
+  1. interval in milliseconds (required) +
+  2. alignment on second (default: 0) +
+  3. max number of calls (default: 0, which means "no end") |
+  `3600000` +
+  `60000;0;5`
+
+| config |
+  1. option name (priority allowed) (required) +
+  2. option name (priority allowed) +
+  3. ... |
+  `weechat.look.*`
+
+| focus |
+  1. area name (priority allowed) (required) +
+  2. area name (priority allowed) +
+  3. ... |
+  `buffer_nicklist`
+|===
+
+[[trigger_conditions]]
+==== Conditions
+
+The conditions are used to continue processing in trigger, or stop everything.
+
+They are evaluated, and data available in callback can be used
+(see <<trigger_callback_data,data in callbacks>> and command
+<<command_weechat_eval,/eval>>).
+
+Example: the default 'beep' trigger uses this condition to make a beep only on
+highlight or private message:
+
+----
+${tg_highlight} || ${tg_msg_pv}
+----
+
+[[trigger_regex]]
+==== Regular expression
+
+The regular expression is used to change variables in callback hashtable.
+
+The format is: "/regex/replace" or "/regex/replace/var" (where 'var' is a
+variable of the hashtable). +
+If 'var' is not specified, the default variable is used, it depends on hook
+type:
+
+[width="50%",cols="4,5m",options="header"]
+|===
+| Hook        | Default variable
+| signal      | tg_signal_data
+| hsignal     |
+| modifier    | tg_string
+| print       | tg_message
+| command     | tg_argv_eol1
+| command_run | tg_command
+| timer       |
+| config      | tg_value
+| focus       |
+|===
+
+Many regular expressions can be separated by a space, for example:
+"/regex1/replace1/var1 /regex2/replace2/var2".
+
+The char "/" can be replaced by any char (one or more identical chars).
+
+Matching groups can be used in "replace":
+
+* `$0` to `$99`: `$0` is the whole match, `$1` to `$99` are groups captured
+* `$+`: the last match (with highest number)
+* `$.cN`: match "N" with all chars replaced by "c" (example: `$.*2` is the group
+  #2 with all chars replaced by `*`).
+
+Example: use bold for words between "*":
+
+----
+/\*(\S+)\*/*${color:bold}$1${color:-bold}*/
+----
+
+Example: default trigger 'server_pass' uses this regular expression to hide
+password in commands `/server` and `/connect` (chars in passwords are replaced
+by `*`):
+
+----
+==^(/(server|connect) .*-(sasl_)?password=)(\S+)(.*)==$1$.*4$5
+----
+
+[NOTE]
+In this example, the delimiter used is "==" because there is a "/" in the
+regular expression.
+
+[[trigger_command]]
+==== Command
+
+The command is executed after replacement of text with the regular expression.
+Many commands can be separated by semicolons.
+
+It is evaluated (see command <<command_weechat_eval,/eval>>) and text replaced
+with a regular expression can be used in the command.
+
+Example: default 'beep' trigger uses this command to make a beep (BEL):
+
+----
+/print -beep
+----
+
+[[trigger_callback_data]]
+==== Data in callbacks
+
+Data received in callbacks are stored in hashtables (pointers and strings) and
+can be used in following options:
+
+* 'conditions'
+* 'regex'
+* 'command'
+
+The content of hashtables depend on the hook type.
+
+A convenient way to see data in a trigger is to open trigger monitor buffer,
+using the command:
+
+----
+/trigger monitor
+----
+
+[[trigger_data_signal]]
+===== Signal
+
+The "signal" callback sets following variables in hashtable:
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Variable       | Type   | Description
+| tg_signal      | string | Name of signal
+| tg_signal_data | string | Data sent with the signal
+|===
+
+If the signal contains an IRC message, the message is parsed and following data
+is added in hashtable:
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Variable             | Type   | Description
+| server               | string | Name of server (example: "freenode")
+| tags                 | string | Tags in message (rarely used)
+| message_without_tags | string | Message without tags
+| nick                 | string | Nick
+| host                 | string | Hostname
+| command              | string | IRC command (example: "PRIVMSG", "NOTICE", ...)
+| channel              | string | IRC channel
+| arguments            | string | Arguments of command (includes value of 'channel')
+|===
+
+[[trigger_data_hsignal]]
+===== Hsignal
+
+The "hsignal" callback sets following variables in hashtable:
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Variable  | Type   | Description
+| tg_signal | string | Name of signal
+|===
+
+The hashtable contains all keys/values from hashtable received (type:
+string/string).
+
+[[trigger_data_modifier]]
+===== Modifier
+
+The "modifier" callback sets following variables in hashtable:
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Variable          | Type   | Description
+| tg_modifier       | string | Name of modifier
+| tg_modifier_data  | string | Data sent with modifier
+| tg_string         | string | The string that can be modified
+| tg_string_nocolor | string | The string without color codes
+|===
+
+For the 'weechat_print' modifier, variables using message tags are added (see
+<<trigger_data_print,hook print>> below), and following variables:
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Variable           | Type    | Description
+| buffer             | pointer | Buffer where message is printed
+| tg_plugin          | string  | Plugin of buffer where message is printed
+| tg_buffer          | string  | Full name of buffer where message is printed
+| tg_prefix          | string  | Prefix of message printed
+| tg_prefix_nocolor  | string  | Prefix without color codes
+| tg_message         | string  | Message printed
+| tg_message_nocolor | string  | Message without color codes
+|===
+
+If the modifier contains an IRC message, the message is parsed and extra data is
+added in hashtable (see <<trigger_data_signal,hook signal>>).
+
+[[trigger_data_print]]
+===== Print
+
+The "print" callback sets following variables in hashtable:
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Variable           | Type    | Description
+| buffer             | pointer | Buffer
+| tg_date            | string  | Message date/time (format: `YYYY-MM-DD hh:mm:ss`)
+| tg_displayed       | string  | "1" if displayed, "0" if line filtered
+| tg_highlight       | string  | "1" if highlight, otherwise "0"
+| tg_prefix          | string  | Prefix
+| tg_prefix_nocolor  | string  | Prefix without color codes
+| tg_message         | string  | Message
+| tg_message_nocolor | string  | Message without color codes
+|===
+
+Variables set using tags in message (they are set in modifier 'weechat_print'
+too):
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Variable           | Type   | Description
+| tg_tags            | string | Tags of message (with comma added at beginning/end of string)
+| tg_tags_count      | string | Number of tags in message
+| tg_tag_notify      | string | Notify level ('none', 'message', 'private', 'highlight')
+| tg_tag_nick        | string | Nick (from tag "nick_xxx")
+| tg_tag_prefix_nick | string | Color of nick in prefix (from tag "prefix_nick_ccc")
+| tg_msg_pv          | string | "1" for a private message, otherwise "0"
+|===
+
+[[trigger_data_command]]
+===== Command
+
+The "command" callback sets following variables in hashtable:
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Variable     | Type    | Description
+| buffer       | pointer | Buffer
+| tg_argvN     | string  | Argument #N
+| tg_argv_eolN | string  | From argument #N until end of arguments
+|===
+
+[[trigger_data_command_run]]
+===== Command_run
+
+The "command_run" callback sets following variables in hashtable:
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Variable   | Type    | Description
+| buffer     | pointer | Buffer
+| tg_command | string  | Command executed
+|===
+
+[[trigger_data_timer]]
+===== Timer
+
+The "timer" callback sets following variables in hashtable:
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Variable           | Type   | Description
+| tg_remaining_calls | string | Number of remaining calls
+| tg_date            | string | Current date/time (format: `YYYY-MM-DD hh:mm:ss`)
+|===
+
+[[trigger_data_config]]
+===== Config
+
+The "config" callback sets following variables in hashtable:
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Variable  | Type   | Description
+| tg_option | string | Option
+| tg_value  | string | Value
+|===
+
+[[trigger_data_focus]]
+===== Focus
+
+The "focus" callback sets following variables in hashtable:
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Variable | Type    | Description
+| window   | pointer | Window
+| buffer   | pointer | Buffer
+|===
+
+The hashtable contains all keys/values from hashtable received (type:
+string/string).
+
+[[trigger_examples]]
+==== Examples
+
+[[trigger_example_auto_pong]]
+===== Auto pong on ping queries
+
+When someone sends a "ping" in a private buffer, this trigger will auto-reply
+with `pong`:
+
+----
+/trigger add pong print "" "${type} == private && ${tg_message} == ping" "" "pong"
+----
+
+[[trigger_example_responsive_layout]]
+===== Responsive layout
+
+Following triggers can be used to customize things displayed when the size of
+terminal is changed:
+
+----
+/trigger add resize_small signal signal_sigwinch "${info:term_width} < 100" "" "/bar hide nicklist"
+/trigger add resize_big signal signal_sigwinch "${info:term_width} >= 100" "" "/bar show nicklist"
+----
+
+The triggers catch the signal "signal_sigwinch", which is sent by WeeChat when
+signal SIGWINCH is received (when terminal size is changed).
+
+The condition with `${info:term_width}` checks the width of terminal (you can
+also use `${info:term_height}` if needed).
+
+In the example, when the terminal becomes small, the nicklist is hidden. And the
+bar is restored when the width is greater or equal to 100 chars.
+
+[[trigger_example_config_save]]
+===== Automatic save of configuration
+
+You can automatically save configuration files (`*.conf`), for example each
+hour:
+
+----
+/trigger add cfgsave timer 3600000;0;0 "" "" "/mute /save"
+----
+
+Arguments for the timer hook are:
+
+* '3600000': 3600 * 1000 milliseconds, the callback is called each hour
+* '0': alignment on second (not aligned here)
+* '0': max number of calls (0 = no end for the timer)
+
+The command `/mute /save` will silently save configuration files (nothing
+displayed on core buffer).
+
 [[xfer_plugin]]
 === Xfer Erweiterung
 
