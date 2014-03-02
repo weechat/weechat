@@ -13,6 +13,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 0.4.4 (under dev)
 
+* core: fix memory leak in evaluation of sub-conditions
 * core: fix memory leak in function gui_key_add_to_infolist (in case of
   insufficient memory)
 * core: fix use of invalid pointer in function gui_bar_window_content_alloc

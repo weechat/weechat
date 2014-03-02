@@ -603,7 +603,11 @@ eval_expression_condition (const char *expr, struct t_hashtable *pointers,
                 + 1;
             tmp_value2 = malloc (length);
             if (!tmp_value2)
+            {
+                if (tmp_value)
+                    free (tmp_value);
                 goto end;
+            }
             tmp_value2[0] = '\0';
             if (pos > expr2)
             {
@@ -619,6 +623,8 @@ eval_expression_condition (const char *expr, struct t_hashtable *pointers,
             }
             free (expr2);
             expr2 = tmp_value2;
+            if (tmp_value)
+                free (tmp_value);
         }
     }
 
