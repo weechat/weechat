@@ -3262,9 +3262,10 @@ too):
 | Variable           | Type   | Description
 | tg_tags            | string | Tags of message (with comma added at beginning/end of string)
 | tg_tags_count      | string | Number of tags in message
-| tg_tag_notify      | string | Notify level ('none', 'message', 'private', 'highlight')
 | tg_tag_nick        | string | Nick (from tag "nick_xxx")
 | tg_tag_prefix_nick | string | Color of nick in prefix (from tag "prefix_nick_ccc")
+| tg_tag_notify      | string | Notify level ('none', 'message', 'private', 'highlight')
+| tg_notify          | string | Notify level, if different from 'none'
 | tg_msg_pv          | string | "1" for a private message, otherwise "0"
 |===
 

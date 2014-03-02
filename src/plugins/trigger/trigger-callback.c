@@ -97,12 +97,16 @@ trigger_callback_set_tags (struct t_gui_buffer *buffer,
         else if (strncmp (tags[i], "notify_", 7) == 0)
         {
             weechat_hashtable_set (extra_vars, "tg_tag_notify", tags[i] + 7);
-            if (strcmp (tags[i] + 7, "private") == 0)
+            if (strcmp (tags[i] + 7, "none") != 0)
             {
-                snprintf (str_temp, sizeof (str_temp), "%d",
-                          (localvar_type
-                           && (strcmp (localvar_type, "private") == 0)) ? 1 : 0);
-                weechat_hashtable_set (extra_vars, "tg_msg_pv", str_temp);
+                weechat_hashtable_set (extra_vars, "tg_notify", tags[i] + 7);
+                if (strcmp (tags[i] + 7, "private") == 0)
+                {
+                    snprintf (str_temp, sizeof (str_temp), "%d",
+                              (localvar_type
+                               && (strcmp (localvar_type, "private") == 0)) ? 1 : 0);
+                    weechat_hashtable_set (extra_vars, "tg_msg_pv", str_temp);
+                }
             }
         }
         else if (strncmp (tags[i], "nick_", 5) == 0)
