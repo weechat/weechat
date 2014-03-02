@@ -534,8 +534,6 @@ trigger_regex_split (const char *str_regex,
         delimiter = weechat_strndup (ptr_regex, pos - ptr_regex);
         if (!delimiter)
             goto memory_error;
-        if ((strcmp (delimiter, "\\") == 0) || (strcmp (delimiter, "(") == 0))
-            goto format_error;
 
         length_delimiter = strlen (delimiter);
 
