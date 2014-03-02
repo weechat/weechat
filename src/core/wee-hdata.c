@@ -967,6 +967,8 @@ hdata_free (struct t_hdata *hdata)
         free (hdata->var_next);
     if (hdata->hash_list)
         hashtable_free (hdata->hash_list);
+    if (hdata->name)
+        free (hdata->name);
 
     free (hdata);
 }
