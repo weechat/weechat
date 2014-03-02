@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-03-01 18:07+0100\n"
+"POT-Creation-Date: 2014-03-02 08:13+0100\n"
 "PO-Revision-Date: 2014-02-20 12:25+0100\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9314,10 +9314,9 @@ msgstr ""
 msgid "%sError: unable to create hook for trigger \"%s\" (bad arguments)"
 msgstr "%sErro: não foi possível renomear filtro \"%s\" para \"%s\""
 
-#, c-format
-msgid ""
-"%s%s: invalid value for option \"regex\", see /help trigger.trigger.%s.regex"
-msgstr ""
+#, fuzzy, c-format
+msgid "%sError: invalid regular expression in trigger \"%s\""
+msgstr "%s%s: erro ao compilar expressão regular \"%s\""
 
 msgid "Trigger monitor"
 msgstr ""
@@ -9389,6 +9388,14 @@ msgstr "Lista de proxys:"
 #, fuzzy, c-format
 msgid "%sError: invalid hook type \"%s\""
 msgstr "%sErro: não foi possível associar o atalho à tecla \"%s\""
+
+#, fuzzy, c-format
+msgid "%sError: invalid format for regular expression"
+msgstr "cor do texto para o prefixo de erro"
+
+#, fuzzy, c-format
+msgid "%sError: invalid regular expression (compilation failed)"
+msgstr "%sErro: incapaz de salvar a sessão em arquivo"
 
 #, fuzzy, c-format
 msgid "%sError: invalid return code \"%s\""
@@ -9578,6 +9585,18 @@ msgstr "comando padrão:"
 #, fuzzy
 msgid "default return codes for hook callback"
 msgstr "cor padrão do texto para a barra"
+
+#, c-format
+msgid ""
+"%sError: invalid format for option \"regex\", see /help trigger.trigger.%s."
+"regex"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sError: invalid regular expression in option \"regex\", see /help trigger."
+"trigger.%s.regex"
+msgstr ""
 
 msgid ""
 "if disabled, the hooks are removed from trigger, so it is not called any more"

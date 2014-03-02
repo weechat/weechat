@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-03-01 18:07+0100\n"
+"POT-Creation-Date: 2014-03-02 08:13+0100\n"
 "PO-Revision-Date: 2014-02-20 12:25+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10367,10 +10367,9 @@ msgstr ""
 msgid "%sError: unable to create hook for trigger \"%s\" (bad arguments)"
 msgstr "%sBłąd: nie można zmienić nazwy filtru z \"%s\" na \"%s\""
 
-#, c-format
-msgid ""
-"%s%s: invalid value for option \"regex\", see /help trigger.trigger.%s.regex"
-msgstr ""
+#, fuzzy, c-format
+msgid "%sError: invalid regular expression in trigger \"%s\""
+msgstr "%s%s: błąd podczas kompilowania wyrażenia regularnego \"%s\""
 
 msgid "Trigger monitor"
 msgstr ""
@@ -10442,6 +10441,14 @@ msgstr "Lista proxy:"
 #, fuzzy, c-format
 msgid "%sError: invalid hook type \"%s\""
 msgstr "%sBłąd: nie można przypisać klawisza \"%s\""
+
+#, fuzzy, c-format
+msgid "%sError: invalid format for regular expression"
+msgstr "kolor przedrostka błędu"
+
+#, fuzzy, c-format
+msgid "%sError: invalid regular expression (compilation failed)"
+msgstr "%sBłąd w wyrażeniu do przetworzenia"
 
 #, fuzzy, c-format
 msgid "%sError: invalid return code \"%s\""
@@ -10631,6 +10638,18 @@ msgstr "domyślna komenda:"
 #, fuzzy
 msgid "default return codes for hook callback"
 msgstr "domyślny kolor napisów na pasku"
+
+#, c-format
+msgid ""
+"%sError: invalid format for option \"regex\", see /help trigger.trigger.%s."
+"regex"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sError: invalid regular expression in option \"regex\", see /help trigger."
+"trigger.%s.regex"
+msgstr ""
 
 msgid ""
 "if disabled, the hooks are removed from trigger, so it is not called any more"

@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-03-01 18:07+0100\n"
-"PO-Revision-Date: 2014-03-01 18:08+0100\n"
+"POT-Creation-Date: 2014-03-02 08:13+0100\n"
+"PO-Revision-Date: 2014-03-02 08:15+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -10564,11 +10564,8 @@ msgstr ""
 "paramètres)"
 
 #, c-format
-msgid ""
-"%s%s: invalid value for option \"regex\", see /help trigger.trigger.%s.regex"
-msgstr ""
-"%s%s: valeur invalide pout l'option \"regex\", voir /help trigger.trigger.%s."
-"regex"
+msgid "%sError: invalid regular expression in trigger \"%s\""
+msgstr "%sErreur: expression régulière invalide dans le trigger \"%s\""
 
 msgid "Trigger monitor"
 msgstr "Moniteur de trigger"
@@ -10633,6 +10630,14 @@ msgstr "Liste des triggers:"
 #, c-format
 msgid "%sError: invalid hook type \"%s\""
 msgstr "%sErreur: type de hook \"%s\" invalide"
+
+#, c-format
+msgid "%sError: invalid format for regular expression"
+msgstr "%sErreur: format invalide pour l'expression régulière"
+
+#, c-format
+msgid "%sError: invalid regular expression (compilation failed)"
+msgstr "%sErreur: expression régulière invalide (la compilation a échoué)"
 
 #, c-format
 msgid "%sError: invalid return code \"%s\""
@@ -10904,6 +10909,22 @@ msgstr "commande par défaut pour un hook"
 
 msgid "default return codes for hook callback"
 msgstr "code retour par défaut pour un callback de hook"
+
+#, c-format
+msgid ""
+"%sError: invalid format for option \"regex\", see /help trigger.trigger.%s."
+"regex"
+msgstr ""
+"%sErreur: format invalide pour l'option \"regex\", voir /help trigger."
+"trigger.%s.regex"
+
+#, c-format
+msgid ""
+"%sError: invalid regular expression in option \"regex\", see /help trigger."
+"trigger.%s.regex"
+msgstr ""
+"%sErreur: expression régulière invalide dans l'option \"regex\", voir /help "
+"trigger.trigger.%s.regex"
 
 msgid ""
 "if disabled, the hooks are removed from trigger, so it is not called any more"

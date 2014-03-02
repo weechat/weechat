@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-03-01 18:07+0100\n"
+"POT-Creation-Date: 2014-03-02 08:13+0100\n"
 "PO-Revision-Date: 2014-02-20 12:24+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9680,10 +9680,9 @@ msgstr ""
 msgid "%sError: unable to create hook for trigger \"%s\" (bad arguments)"
 msgstr "%sChyba: nemohu přejmenovat filter \"%s\" na \"%s\""
 
-#, c-format
-msgid ""
-"%s%s: invalid value for option \"regex\", see /help trigger.trigger.%s.regex"
-msgstr ""
+#, fuzzy, c-format
+msgid "%sError: invalid regular expression in trigger \"%s\""
+msgstr "%s%s: chyba při zpracování regulárního výrazu \"%s\""
 
 msgid "Trigger monitor"
 msgstr ""
@@ -9755,6 +9754,14 @@ msgstr "Seznam proxy:"
 #, fuzzy, c-format
 msgid "%sError: invalid hook type \"%s\""
 msgstr "%sChyba: nemohu napojit kalávesu \"%s\""
+
+#, fuzzy, c-format
+msgid "%sError: invalid format for regular expression"
+msgstr "barva textu pro prefix chyby"
+
+#, fuzzy, c-format
+msgid "%sError: invalid regular expression (compilation failed)"
+msgstr "%s%s: \"%s\" není validní regulární výraz (%s)"
 
 #, fuzzy, c-format
 msgid "%sError: invalid return code \"%s\""
@@ -9944,6 +9951,18 @@ msgstr "výchozí příkaz:"
 #, fuzzy
 msgid "default return codes for hook callback"
 msgstr "výchozí barva textu pro pole"
+
+#, c-format
+msgid ""
+"%sError: invalid format for option \"regex\", see /help trigger.trigger.%s."
+"regex"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sError: invalid regular expression in option \"regex\", see /help trigger."
+"trigger.%s.regex"
+msgstr ""
 
 msgid ""
 "if disabled, the hooks are removed from trigger, so it is not called any more"

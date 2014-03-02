@@ -285,10 +285,10 @@ trigger_command_list_default (int verbose)
 
     for (i = 0; trigger_config_default_list[i][0]; i++)
     {
-        trigger_split_regex (trigger_config_default_list[i][0],
-                             trigger_config_default_list[i][5],
-                             &regex_count,
-                             &regex);
+        if (trigger_regex_split (trigger_config_default_list[i][5],
+                                 &regex_count,
+                                 &regex) < 0)
+            continue;
         trigger_split_command (trigger_config_default_list[i][6],
                                &commands_count,
                                &commands);
@@ -309,7 +309,7 @@ trigger_command_list_default (int verbose)
             verbose);
     }
 
-    trigger_free_regex (&regex_count, &regex);
+    trigger_regex_free (&regex_count, &regex);
     if (commands)
         weechat_string_free_split (commands);
 }
@@ -430,8 +430,10 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
                          char **argv, char **argv_eol)
 {
     struct t_trigger *ptr_trigger, *ptr_trigger2;
+    struct t_trigger_regex *regex;
     char *value, **sargv, **items, input[1024], str_pos[16];
     int rc, i, type, count, index_option, enable, sargc, num_items, add_rc;
+    int regex_count, regex_rc;
 
     /* make C compiler happy */
     (void) data;
@@ -483,6 +485,39 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
                                  _("%sError: invalid hook type \"%s\""),
                                  weechat_prefix ("error"), sargv[1]);
             goto end;
+        }
+        if ((sargc > 4) && sargv[4][0])
+        {
+            regex_count = 0;
+            regex = NULL;
+            regex_rc = trigger_regex_split (sargv[4], &regex_count, &regex);
+            trigger_regex_free (&regex_count, &regex);
+            switch (regex_rc)
+            {
+                case 0: /* OK */
+                    break;
+                case -1: /* format error */
+                    weechat_printf (NULL,
+                                    _("%sError: invalid format for regular "
+                                      "expression"),
+                                    weechat_prefix ("error"));
+                    goto end;
+                    break;
+                case -2: /* regex compilation error */
+                    weechat_printf (NULL,
+                                    _("%sError: invalid regular expression "
+                                      "(compilation failed)"),
+                                    weechat_prefix ("error"));
+                    goto end;
+                    break;
+                case -3: /* memory error */
+                    weechat_printf (NULL,
+                                    _("%s%s: not enough memory"),
+                                    weechat_prefix ("error"),
+                                    TRIGGER_PLUGIN_NAME);
+                    goto end;
+                    break;
+            }
         }
         if ((sargc > 6) && sargv[6][0]
             && (trigger_search_return_code (sargv[6]) < 0))

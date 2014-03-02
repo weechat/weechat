@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-03-01 18:07+0100\n"
+"POT-Creation-Date: 2014-03-02 08:13+0100\n"
 "PO-Revision-Date: 2014-02-20 12:25+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9081,10 +9081,9 @@ msgstr ""
 msgid "%sError: unable to create hook for trigger \"%s\" (bad arguments)"
 msgstr "%s ismeretlen opció a \"%s\" parancsnak\n"
 
-#, c-format
-msgid ""
-"%s%s: invalid value for option \"regex\", see /help trigger.trigger.%s.regex"
-msgstr ""
+#, fuzzy, c-format
+msgid "%sError: invalid regular expression in trigger \"%s\""
+msgstr "%s nincs elég memória az információs pult üzenethez\n"
 
 msgid "Trigger monitor"
 msgstr ""
@@ -9156,6 +9155,14 @@ msgstr "Aliaszok listája:\n"
 #, fuzzy, c-format
 msgid "%sError: invalid hook type \"%s\""
 msgstr "%s nem sikerült a(z) \"%s\" billentyűt hozzárendelni\n"
+
+#, fuzzy, c-format
+msgid "%sError: invalid format for regular expression"
+msgstr "belépési nyíl színe"
+
+#, fuzzy, c-format
+msgid "%sError: invalid regular expression (compilation failed)"
+msgstr "%s a(z) \"%s\" érvénytelen reguláris kifejezés (%s)\n"
 
 #, fuzzy, c-format
 msgid "%sError: invalid return code \"%s\""
@@ -9345,6 +9352,18 @@ msgstr "%s belső parancsok:\n"
 #, fuzzy
 msgid "default return codes for hook callback"
 msgstr "információs pult szövegének színe"
+
+#, c-format
+msgid ""
+"%sError: invalid format for option \"regex\", see /help trigger.trigger.%s."
+"regex"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sError: invalid regular expression in option \"regex\", see /help trigger."
+"trigger.%s.regex"
+msgstr ""
 
 msgid ""
 "if disabled, the hooks are removed from trigger, so it is not called any more"

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-03-01 18:07+0100\n"
+"POT-Creation-Date: 2014-03-02 08:13+0100\n"
 "PO-Revision-Date: 2014-02-20 12:25+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9106,10 +9106,9 @@ msgstr ""
 msgid "%sError: unable to create hook for trigger \"%s\" (bad arguments)"
 msgstr "%s неизвестный параметр для команды \"%s\"\n"
 
-#, c-format
-msgid ""
-"%s%s: invalid value for option \"regex\", see /help trigger.trigger.%s.regex"
-msgstr ""
+#, fuzzy, c-format
+msgid "%sError: invalid regular expression in trigger \"%s\""
+msgstr "%s недостаточно памяти для сообщения в строке информации\n"
 
 msgid "Trigger monitor"
 msgstr ""
@@ -9181,6 +9180,14 @@ msgstr "Список сокращений:\n"
 #, fuzzy, c-format
 msgid "%sError: invalid hook type \"%s\""
 msgstr "%s не могу установить клавишу \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%sError: invalid format for regular expression"
+msgstr "цвет стрелки захода на канал (префикс)"
+
+#, fuzzy, c-format
+msgid "%sError: invalid regular expression (compilation failed)"
+msgstr "%s \"%s\" не является регулярным выражением (%s)\n"
 
 #, fuzzy, c-format
 msgid "%sError: invalid return code \"%s\""
@@ -9369,6 +9376,18 @@ msgstr "Внутренние команды %s:\n"
 #, fuzzy
 msgid "default return codes for hook callback"
 msgstr "цвет текста информационной панели"
+
+#, c-format
+msgid ""
+"%sError: invalid format for option \"regex\", see /help trigger.trigger.%s."
+"regex"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sError: invalid regular expression in option \"regex\", see /help trigger."
+"trigger.%s.regex"
+msgstr ""
 
 msgid ""
 "if disabled, the hooks are removed from trigger, so it is not called any more"

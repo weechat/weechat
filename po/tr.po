@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-03-01 18:07+0100\n"
+"POT-Creation-Date: 2014-03-02 08:13+0100\n"
 "PO-Revision-Date: 2014-02-16 11:21+0100\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8159,10 +8159,9 @@ msgstr ""
 msgid "%sError: unable to create hook for trigger \"%s\" (bad arguments)"
 msgstr "%sHata: dosya \"%s\" oluşturulamaz"
 
-#, c-format
-msgid ""
-"%s%s: invalid value for option \"regex\", see /help trigger.trigger.%s.regex"
-msgstr ""
+#, fuzzy, c-format
+msgid "%sError: invalid regular expression in trigger \"%s\""
+msgstr "%sHata: dosya \"%s\" oluşturulamaz"
 
 msgid "Trigger monitor"
 msgstr ""
@@ -8231,6 +8230,14 @@ msgstr "filtrelerin listesi"
 #, fuzzy, c-format
 msgid "%sError: invalid hook type \"%s\""
 msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+
+#, fuzzy, c-format
+msgid "%sError: invalid format for regular expression"
+msgstr "sunucu isimleri için metin rengi"
+
+#, c-format
+msgid "%sError: invalid regular expression (compilation failed)"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%sError: invalid return code \"%s\""
@@ -8416,6 +8423,18 @@ msgstr "varsayılan komut:"
 #, fuzzy
 msgid "default return codes for hook callback"
 msgstr "çubuk için varsayılan metin rengi"
+
+#, c-format
+msgid ""
+"%sError: invalid format for option \"regex\", see /help trigger.trigger.%s."
+"regex"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sError: invalid regular expression in option \"regex\", see /help trigger."
+"trigger.%s.regex"
+msgstr ""
 
 msgid ""
 "if disabled, the hooks are removed from trigger, so it is not called any more"

@@ -449,7 +449,7 @@ trigger_hook (struct t_trigger *trigger)
  */
 
 void
-trigger_free_regex (int *regex_count, struct t_trigger_regex **regex)
+trigger_regex_free (int *regex_count, struct t_trigger_regex **regex)
 {
     int i;
 
@@ -479,25 +479,32 @@ trigger_free_regex (int *regex_count, struct t_trigger_regex **regex)
 
 /*
  * Splits the regex in structures, with regex and replacement text.
+ *
+ * Returns:
+ *    0: OK
+ *   -1: format error
+ *   -2: regex compilation error
+ *   -3: not enough memory
  */
 
-void
-trigger_split_regex (const char *trigger_name, const char *str_regex,
+int
+trigger_regex_split (const char *str_regex,
                      int *regex_count, struct t_trigger_regex **regex)
 {
     const char *ptr_regex, *pos, *pos_replace, *pos_replace_end;
     const char *pos_next_regex;
     char *delimiter;
-    int index, length_delimiter;
+    int rc, index, length_delimiter;
     struct t_trigger_regex *new_regex;
 
+    rc = 0;
     delimiter = NULL;
 
     if (!regex_count || !regex)
         goto end;
 
     /* remove any existing regex */
-    trigger_free_regex (regex_count, regex);
+    trigger_regex_free (regex_count, regex);
 
     if (!str_regex || !str_regex[0])
         goto end;
@@ -574,13 +581,15 @@ trigger_split_regex (const char *trigger_name, const char *str_regex,
                                     (*regex)[index].str_regex,
                                     REG_EXTENDED | REG_ICASE) != 0)
         {
+            /*
             weechat_printf (NULL,
                             _("%s%s: error compiling regular expression \"%s\""),
                             weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
                             (*regex)[index].str_regex);
+            */
             free ((*regex)[index].regex);
             (*regex)[index].regex = NULL;
-            goto end;
+            goto compile_error;
         }
 
         /* set replace and replace_eval */
@@ -627,24 +636,24 @@ trigger_split_regex (const char *trigger_name, const char *str_regex,
     goto end;
 
 format_error:
-    weechat_printf (NULL,
-                    _("%s%s: invalid value for option \"regex\", "
-                      "see /help trigger.trigger.%s.regex"),
-                    weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
-                    trigger_name);
-    trigger_free_regex (regex_count, regex);
+    rc = -1;
+    goto end;
+
+compile_error:
+    rc = -2;
     goto end;
 
 memory_error:
-    weechat_printf (NULL,
-                    _("%s%s: not enough memory"),
-                    weechat_prefix ("error"), TRIGGER_PLUGIN_NAME);
-    trigger_free_regex (regex_count, regex);
+    rc = -3;
     goto end;
 
 end:
     if (delimiter)
         free (delimiter);
+    if (rc < 0)
+        trigger_regex_free (regex_count, regex);
+
+    return rc;
 }
 
 /*
@@ -825,10 +834,16 @@ trigger_new_with_options (const char *name, struct t_config_option **options)
     trigger_add (new_trigger, &triggers, &last_trigger);
     triggers_count++;
 
-    trigger_split_regex (new_trigger->name,
-                         weechat_config_string (new_trigger->options[TRIGGER_OPTION_REGEX]),
-                         &new_trigger->regex_count,
-                         &new_trigger->regex);
+    if (trigger_regex_split (weechat_config_string (new_trigger->options[TRIGGER_OPTION_REGEX]),
+                             &new_trigger->regex_count,
+                             &new_trigger->regex) < 0)
+    {
+        weechat_printf (NULL,
+                        _("%sError: invalid regular expression in trigger "
+                          "\"%s\""),
+                        weechat_prefix ("error"),
+                        name);
+    }
     trigger_split_command (weechat_config_string (new_trigger->options[TRIGGER_OPTION_COMMAND]),
                            &new_trigger->commands_count,
                            &new_trigger->commands);
@@ -1020,7 +1035,7 @@ trigger_free (struct t_trigger *trigger)
 
     /* free data */
     trigger_unhook (trigger);
-    trigger_free_regex (&trigger->regex_count, &trigger->regex);
+    trigger_regex_free (&trigger->regex_count, &trigger->regex);
     if (trigger->name)
         free (trigger->name);
     for (i = 0; i < TRIGGER_NUM_OPTIONS; i++)

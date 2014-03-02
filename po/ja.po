@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-03-01 18:07+0100\n"
+"POT-Creation-Date: 2014-03-02 08:13+0100\n"
 "PO-Revision-Date: 2014-02-20 12:25+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -10182,10 +10182,9 @@ msgstr ""
 msgid "%sError: unable to create hook for trigger \"%s\" (bad arguments)"
 msgstr "%sエラー: フィルタ \"%s\" の名前を \"%s\" に変更できません"
 
-#, c-format
-msgid ""
-"%s%s: invalid value for option \"regex\", see /help trigger.trigger.%s.regex"
-msgstr ""
+#, fuzzy, c-format
+msgid "%sError: invalid regular expression in trigger \"%s\""
+msgstr "%s%s: 正規表現のコンパイル中にエラー \"%s\""
 
 msgid "Trigger monitor"
 msgstr ""
@@ -10257,6 +10256,14 @@ msgstr "プロキシリスト:"
 #, fuzzy, c-format
 msgid "%sError: invalid hook type \"%s\""
 msgstr "%sエラー: キー \"%s\" の割り当てに失敗しました"
+
+#, fuzzy, c-format
+msgid "%sError: invalid format for regular expression"
+msgstr "エラープレフィックスのテキスト色"
+
+#, fuzzy, c-format
+msgid "%sError: invalid regular expression (compilation failed)"
+msgstr "%s評価する式にエラーがあります"
 
 #, fuzzy, c-format
 msgid "%sError: invalid return code \"%s\""
@@ -10446,6 +10453,18 @@ msgstr "デフォルトコマンド:"
 #, fuzzy
 msgid "default return codes for hook callback"
 msgstr "バーのデフォルトテキスト色"
+
+#, c-format
+msgid ""
+"%sError: invalid format for option \"regex\", see /help trigger.trigger.%s."
+"regex"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sError: invalid regular expression in option \"regex\", see /help trigger."
+"trigger.%s.regex"
+msgstr ""
 
 msgid ""
 "if disabled, the hooks are removed from trigger, so it is not called any more"
