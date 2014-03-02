@@ -3422,6 +3422,20 @@ reçue (type : chaîne/chaîne).
 [[trigger_examples]]
 ==== Exemples
 
+[[trigger_example_url_color]]
+===== Couleur pour les URLs
+
+Afficher les URLs en vert :
+
+----
+/trigger add url_color modifier weechat_print "${tg_notify}" "==\S+://\S+==${color:green}$0${color:reset}=="
+----
+
+[NOTE]
+La simple expression régulière utilisée pour détecter l'URL peut ne pas capturer
+correctement toutes les URLs, mais elle est plus rapide qu'une expression
+régulière complexe.
+
 [[trigger_example_auto_pong]]
 ===== Pong auto sur les requêtes ping
 

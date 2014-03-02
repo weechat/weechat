@@ -3311,6 +3311,19 @@ string/string).
 [[trigger_examples]]
 ==== Examples
 
+[[trigger_example_url_color]]
+===== Color for URLs
+
+Display URLs in green:
+
+----
+/trigger add url_color modifier weechat_print "${tg_notify}" "==\S+://\S+==${color:green}$0${color:reset}=="
+----
+
+[NOTE]
+The simple regex used to detect URL may not catch well all URLs, but it is
+faster than a complex regex.
+
 [[trigger_example_auto_pong]]
 ===== Auto pong on ping queries
 
