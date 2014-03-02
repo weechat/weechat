@@ -90,6 +90,11 @@ input_exec_command (struct t_gui_buffer *buffer,
     pos = strchr (command, ' ');
     command_name = (pos) ?
         string_strndup (command, pos - command) : strdup (command);
+    if (!command_name)
+    {
+        free (command);
+        return;
+    }
 
     /* execute command */
     switch (hook_command_exec (buffer, any_plugin, plugin, command))
@@ -139,6 +144,7 @@ input_exec_command (struct t_gui_buffer *buffer,
             break;
     }
     free (command);
+    free (command_name);
 }
 
 /*
