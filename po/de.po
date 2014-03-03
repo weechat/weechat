@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2014-03-02 08:35+0100\n"
-"PO-Revision-Date: 2014-02-20 12:24+0100\n"
+"PO-Revision-Date: 2014-03-02 22:09+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
 "Language: de_DE\n"
@@ -45,11 +45,11 @@ msgid "max chars"
 msgstr "maximale Zeichenanzahl"
 
 msgid ""
-"a WeeChat color name (default, black, (dark)gray, white, (light)red, "
-"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
-"terminal color number or an alias; attributes are allowed before color (for "
-"text color only, not background): \"*\" for bold, \"!\" for reverse, \"/\" "
-"for italic, \"_\" for underline"
+"a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)"
+"green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal "
+"color number or an alias; attributes are allowed before color (for text "
+"color only, not background): \"*\" for bold, \"!\" for reverse, \"/\" for "
+"italic, \"_\" for underline"
 msgstr ""
 "ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, "
 "(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine "
@@ -373,7 +373,7 @@ msgstr "Kein Nachrichtenfilter definiert"
 
 #, c-format
 msgid "Filter \"%s\" enabled"
-msgstr "Filter \"%s\" ist aktiviert"
+msgstr "Filter \"%s\" aktiviert"
 
 #, c-format
 msgid "%sError: filter \"%s\" not found"
@@ -583,10 +583,10 @@ msgid "Layout \"%s\" has been renamed to \"%s\""
 msgstr "Layout \"%s\" wurde umbenannt. Der neue Name lautet \"%s\""
 
 msgid "Mouse enabled"
-msgstr "Maus ist aktiviert"
+msgstr "Maus wurde aktiviert"
 
 msgid "Mouse disabled"
-msgstr "Maus ist deaktiviert"
+msgstr "Maus wurde deaktiviert"
 
 msgid "Plugins loaded:"
 msgstr "Installierte Erweiterungen:"
@@ -1528,15 +1528,13 @@ msgstr ""
 "Filterfunktion um Nachrichten in Buffer aus- oder einzublenden, dazu können "
 "Schlagwörter oder reguläre Ausdrücke verwendet werden"
 
-#, fuzzy
 msgid ""
 "list || enable|disable|toggle [<name>] || add <name> <buffer>[,<buffer>...] "
 "<tags> <regex> || rename <name> <new_name> || del <name>|-all"
 msgstr ""
 "list || enable|disable|toggle [<name>] || add <name> <buffer>[,<buffer>...] "
-"<tags> <regex> || del <name>|-all"
+"<tags> <regex> || rename <name> <new_name> || del <name>|-all"
 
-#, fuzzy
 msgid ""
 "   list: list all filters\n"
 " enable: enable filters (filters are enabled by default)\n"
@@ -1603,6 +1601,7 @@ msgstr ""
 " toggle: Filter umschalten\n"
 "   name: Name des Filters\n"
 "    add: Filter hinzufügen\n"
+" rename: benennt einen Filter um\n"
 "    del: Filter entfernen\n"
 "   -all: entfernt alle Filter\n"
 " buffer: durch Kommata getrennte Liste von Buffer in denen der Filter aktiv "
@@ -1619,7 +1618,7 @@ msgstr ""
 "         - logisch \"und\":  wird \"+\" zwischen den Tags verwendet (zum "
 "Beispiel: \"nick_toto+irc_action\")\n"
 "         - Tags können mit '*' beginnen oder enden\n"
-"  regex: erweiterter regulärer POSIX Ausdruc, um in einer Zeile zu suchen\n"
+"  regex: erweiterter regulärer POSIX Ausdruck, um in einer Zeile zu suchen\n"
 "         - das Präfix (z.B. Nick) wird mittels '\\t' von der Nachricht "
 "getrennt. Sonderzeichen wie '|' müssen mit einer Escapesequenz : '\\|' "
 "eingebunden werden)\n"
@@ -2139,18 +2138,17 @@ msgstr ""
 "angezeigt."
 
 msgid "display text on a buffer"
-msgstr "gibt einen Text"
+msgstr "gibt einen Text in einem Buffer aus"
 
-#, fuzzy
 msgid ""
 "[-buffer <number>|<name>] [-core] [-escape] [-date <date>] [-tags <tags>] [-"
 "action|-error|-join|-network|-quit] [<text>] || -stdout|-stderr [<text>] || -"
 "beep"
 msgstr ""
 "[-buffer <number>|<name>] [-core] [-escape] [-date <date>] [-tags <tags>] [-"
-"action|-error|-join|-network|-quit] <text> || -stdout|-stderr <text>"
+"action|-error|-join|-network|-quit] [<text>] || -stdout|-stderr [<text>] || -"
+"beep"
 
-#, fuzzy
 msgid ""
 "-buffer: the buffer where text is displayed (default: current buffer)\n"
 "  -core: alias of \"-buffer core.weechat\"\n"
@@ -2208,6 +2206,7 @@ msgstr ""
 "\\t getrennt werden)\n"
 "-stdout: Text wird an stdout geschickt (Escapesequenzen werden umgewandelt)\n"
 "-stderr: Text wird an stderr geschickt (Escapesequenzen werden umgewandelt)\n"
+"  -beep: Alias für \"-stderr \\a\"\n"
 "\n"
 "Die Option -action ... -quit nutzt den Präfix der in der Option \"weechat."
 "look.prefix_*\" definiert ist.\n"
@@ -2716,7 +2715,6 @@ msgstr ""
 msgid "manage windows"
 msgstr "Fenster verwalten"
 
-#, fuzzy
 msgid ""
 "list || -1|+1|b#|up|down|left|right [-window <number>] || <number> || splith|"
 "splitv [-window <number>] [<pct>] || resize [-window <number>] [+/-]<pct> || "
@@ -2734,9 +2732,8 @@ msgstr ""
 "|| scroll_horiz [-window <number>] [+/-]<value>[%] || scroll_up|scroll_down|"
 "scroll_top|scroll_bottom|scroll_beyond_end|scroll_previous_highlight|"
 "scroll_next_highlight|scroll_unread [-window <number>] || swap [-window "
-"<number>] [up|down|left|right] || zoom[-window <number>]"
+"<number>] [up|down|left|right] || zoom[-window <number>] || bare [<delay>]"
 
-#, fuzzy
 msgid ""
 "         list: list opened windows (without argument, this list is "
 "displayed)\n"
@@ -2830,6 +2827,9 @@ msgstr ""
 "         swap: tauscht die Buffer von zwei Fenstern (mit optionaler Angabe "
 "für das Zielfenster)\n"
 "         zoom: vergrößert ein Fenster auf 100%\n"
+"         bare: wechselt zum einfachen Anzeigemodus (optional kann eine "
+"Wartezeit, in Millisekunden, angegeben werden, wann zum Standardmodus zurück "
+"gewechselt werden soll)\n"
 "\n"
 "Bei splith und splitv gibt \"pct\" die neue Größe des Fensters im Verhältnis "
 "zur aktuellen Größe an. Zum Beispiel würde ein Wert von 25 bedeuten, dass "
@@ -2948,14 +2948,15 @@ msgid ""
 "Warning: option weechat.look.save_config_on_exit is disabled, so the option "
 "weechat.look.save_layout_on_exit is ignored"
 msgstr ""
+"Warnung: Die Option weechat.look.save_config_on_exit wurde deaktiviert, "
+"somit wird die Option weechat.look.save_layout_on_exit ignoriert"
 
-#, fuzzy
 msgid ""
 "Warning: you should now issue /save to write option weechat.look."
 "save_config_on_exit in configuration file"
 msgstr ""
-"Warnung: Sie sollten jetzt /save ausführen, um die Option "
-"\"save_config_on_exit\" in die Konfigurationsdatei zu übernehmen"
+"Warnung: Sie sollten jetzt /save ausführen, um die Option weechat.look."
+"save_config_on_exit dauerhaft in die Konfigurationsdatei zu übernehmen"
 
 msgid ""
 "WARNING: this option can cause serious display bugs, if you have such "
@@ -3402,6 +3403,10 @@ msgid ""
 "sort by number, number_*: sort by number; asc = ascending sort, desc = "
 "descending sort"
 msgstr ""
+"Sortierung der Hotlist: group_time_*: nach Benachrichtigungstufe (Highlights "
+"zuerst) und dann nach Uhrzeit, group_number_*: nach Benachrichtigungstufe "
+"(Highlights zuerst) und dann nach Buffer-Nummer, number_*: sortiert nach "
+"Buffer-Nummer; asc = aufsteigende Sortierung, desc = absteigende Sortierung"
 
 msgid "text displayed at the end of the hotlist"
 msgstr "Text der am Ende der Hotlist angezeigt werden soll"
@@ -3637,14 +3642,13 @@ msgid "string displayed after prefix"
 msgstr "Nach dem Präfix anzufügende Zeichenfolge"
 
 msgid "exit the bare display mode on any changes in input"
-msgstr ""
+msgstr "beendet den einfachen Anzeigemodus durch Tastendruck"
 
-#, fuzzy
 msgid ""
 "time format in bare display mode (see man strftime for date/time specifiers)"
 msgstr ""
-"Format für die Zeitanzeige des Bar-Items, \"time\" (siehe man strftime, "
-"welche Platzhalter für das Datum und die Uhrzeit verwendet werden)"
+"Format für die Zeitanzeige im einfachen Anzeigemodus, \"time\" (siehe man "
+"strftime, welche Platzhalter für das Datum und die Uhrzeit verwendet werden)"
 
 msgid "use a marker (line or char) on buffers to show first unread line"
 msgstr ""
@@ -4260,9 +4264,9 @@ msgstr "Befehl '%s' beendet, Zeit ist verstrichen (%.1fs)"
 msgid "%sYou can not write text in this buffer"
 msgstr "%sIn diesen Buffer kann nicht geschrieben werden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError with command \"%s\" (help on command: /help %s)"
-msgstr "%sFehler mit dem Befehl \"%s\" aufgetreten (nutze: /help %s)"
+msgstr "%sFehler aufgetreten, mit dem Befehl \"%s\" (nutze: /help %s)"
 
 #, c-format
 msgid ""
@@ -5125,9 +5129,9 @@ msgid ""
 "suggestions in all languages)"
 msgstr ""
 "legt die Anzahl an Vorschlägen, für ein falsch geschriebenes Wort, fest. Die "
-"Vorschläge werden mittels der Bar-Item \"aspell_suggest\", für die "
-"jeweilige(n) Sprache(n), die für den Buffer augewählt wurden, angezeigt (-1 "
-"= deaktiviert die Funktion, 0 = zeigt alle verfügbaren Vorschläge, für alle "
+"Vorschläge werden mittels der Bar-Item \"aspell_suggest\", für die jeweilige"
+"(n) Sprache(n), die für den Buffer augewählt wurden, angezeigt (-1 = "
+"deaktiviert die Funktion, 0 = zeigt alle verfügbaren Vorschläge, für alle "
 "ausgewählten Sprachen, an)"
 
 msgid ""
@@ -5354,13 +5358,13 @@ msgstr ""
 "%s%s: Verbindung mit %d %s getrennt (Upgrade über eine SSL Verbindung nicht "
 "möglich)"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s: unable to create temporary server \"%s\" (check if there is already a "
 "server with this name)"
 msgstr ""
-"%s%s: Skript kann nicht registriert werden. \"%s\" (es existiert schon ein "
-"Skript mit demselben Namen)"
+"%s%s: temporärer Server, \"%s\", kann nicht erstellt werden (es sollte "
+"überprüft werden, ob schon ein Server mit dem selben Namen existiert)"
 
 #, c-format
 msgid ""
@@ -5810,8 +5814,8 @@ msgstr ""
 "werden)\n"
 "            - Hostname/Port oder IP/Port (damit wird lediglich ein "
 "TEMPORÄRER Server erstellt), Port 6667 wird standardmäßig verwendet\n"
-"            - URL mit folgendem Format: irc[6][s]://[nickname[:"
-"password]@]irc.example.org[:port][/#channel1][,#channel2[...]]\n"
+"            - URL mit folgendem Format: irc[6][s]://[nickname[:password]@]"
+"irc.example.org[:port][/#channel1][,#channel2[...]]\n"
 "    option: legt Option für den Server fest (die Boolean-Optionen können "
 "weggelassen werden)\n"
 "  nooption: deaktiviert eine Boolean Option (Beispiel: -nossl)\n"
@@ -6849,7 +6853,6 @@ msgstr "Information über User abfragen"
 msgid "[<server>] [<nick>[,<nick>...]]"
 msgstr "[<server>] [<nick>[,<nick>...]]"
 
-#, fuzzy
 msgid ""
 "server: server name\n"
 "  nick: nick (may be a mask)\n"
@@ -6867,7 +6870,11 @@ msgstr ""
 "Ohne Angabe von Argumenten, nutzt /whois folgende Nicks:\n"
 "- den eigenen Nick, falls es sich um einen Server/Channel Buffer handelt\n"
 "- den Nick des Gesprächspartners, falls es sich um einen privaten Buffer "
-"handelt."
+"handelt.\n"
+"\n"
+"Sollte die Option irc.network.whois_double_nick aktiviert sein, wird ein "
+"Nick zweimal verwendet (sofern der Nick nur einmal angegeben wurde), um die "
+"Idle-Zeit zu erhalten."
 
 msgid "ask for information about a nick which no longer exists"
 msgstr "Informationen über einen nicht mehr angemeldeten Nicknamen abfragen"
@@ -7113,15 +7120,15 @@ msgstr ""
 "Nicknamen, die auf dem IRC-Server benutzt werden sollen (durch Komma "
 "getrennt)"
 
-#, fuzzy
 msgid "user name to use on server (note: content is evaluated, see /help eval)"
 msgstr ""
-"Username für Proxy Server (Hinweis: Inhalt wird evaluiert, siehe /help eval)"
+"Username der auf dem Server genutzt werden soll (Hinweis: Inhalt wird "
+"evaluiert, siehe /help eval)"
 
-#, fuzzy
 msgid "real name to use on server (note: content is evaluated, see /help eval)"
 msgstr ""
-"Username für Proxy Server (Hinweis: Inhalt wird evaluiert, siehe /help eval)"
+"Realname der auf dem Server genutzt werden soll (Hinweis: Inhalt wird "
+"evaluiert, siehe /help eval)"
 
 msgid ""
 "custom local hostname/IP for server (optional, if empty local hostname is "
@@ -10081,8 +10088,8 @@ msgid ""
 "%sError: \"-yes\" argument is required for restoring default rmodifiers "
 "(security reason)"
 msgstr ""
-"%sFehler: Das Argument \"-yes\" ist aus Sicherheitsgründen zum zurücksetzen "
-"auf die Standardeinstellungen von rmodifier notwendig"
+"%sFehler: Um rmodifier auf Standardeinstellungen zurücksetzen ist es aus "
+"Sicherheitsgründen erforderlich, das Argument \"-yes\" zu nutzen"
 
 #, c-format
 msgid "%d rmodifier added"
@@ -10816,161 +10823,159 @@ msgstr "%s%s: Beim parsen der Datei \"%s\" ist ein Fehler aufgetreten: %s"
 
 msgid "Run actions on events triggered by WeeChat/plugins"
 msgstr ""
+"führt Aktionen bei einem Ereignis aus, welche durch WeeChat oder eine "
+"Erweiterung ausgelöst werden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError: unable to create hook for trigger \"%s\" (bad arguments)"
-msgstr "%sFehler: Umbenennung des Filters von \"%s\" in \"%s\" nicht möglich"
+msgstr ""
+"%sFehler: Hook kann für Trigger \"%s\" nicht erstellt werden (fehlerhafte "
+"Argumente)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError: invalid regular expression in trigger \"%s\""
-msgstr "%s%s: Fehler bei der Kompilierung des regulären Ausdruckes \"%s\""
+msgstr "%sFehler: regulärer Ausdruck in Trigger  \"%s\" ungültig"
 
 msgid "Trigger monitor"
-msgstr ""
+msgstr "Trigger-Monitor"
 
-#, fuzzy
 msgid "no variable"
-msgstr "Variablen"
+msgstr "keine Variable"
 
-#, fuzzy
 msgid "empty variable"
-msgstr "Variablen"
+msgstr "leere Variable"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s  running command %s\"%s%s%s\"%s on buffer %s%s%s"
-msgstr "auszuführender Befehl: \"%s\" in Buffer \"%s\""
+msgstr "%s  auszuführender Befehl %s\"%s%s%s\"%s in Buffer %s%s%s"
 
-#, fuzzy
 msgid "Triggers enabled"
-msgstr "Filter \"%s\" ist aktiviert"
+msgstr "Trigger aktiviert"
 
-#, fuzzy
 msgid "Triggers disabled"
-msgstr "Filter \"%s\" deaktiviert"
+msgstr "Trigger deaktiviert"
 
-#, fuzzy
 msgid "No trigger defined"
-msgstr "Kein rmodifier definiert"
+msgstr "Kein Trigger definiert"
 
-#, fuzzy
 msgid "List of default triggers:"
-msgstr "Liste der Alias:"
+msgstr "Liste der standardmäßigen Trigger:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Trigger \"%s\" restarted"
-msgstr "Infobar \"%s\" erstellt"
+msgstr "Trigger \"%s\" neu gestartet"
 
 #, c-format
 msgid "%sError: a disabled trigger can not be restarted"
-msgstr ""
+msgstr "%sFehler: ein deaktivierter Trigger kann nicht neu gestartet werden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Trigger \"%s\" enabled"
-msgstr "Filter \"%s\" ist aktiviert"
+msgstr "Trigger \"%s\" aktiviert"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Trigger \"%s\" disabled"
-msgstr "Filter \"%s\" deaktiviert"
+msgstr "Trigger \"%s\" deaktiviert"
 
 #, c-format
 msgid "%sError: invalid name for trigger"
-msgstr ""
+msgstr "%sFehler: ungültiger Name für Trigger"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError: trigger \"%s\" already exists"
-msgstr "%sFehler: Filter \"%s\" existiert bereits"
+msgstr "%sFehler: Trigger \"%s\" existiert bereits"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Trigger \"%s\" renamed to \"%s\""
-msgstr "Filter \"%s\" wurde umbenannt. Der neue Name lautet \"%s\""
+msgstr "Trigger \"%s\" wurde umbenannt. Der neue Name lautet \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError: failed to rename trigger \"%s\""
-msgstr "%sFehler: Infobar \"%s\" konnte nicht erstellt werden"
+msgstr "%sFehler: Trigger \"%s\" konnte nicht umbenannt werden"
 
-#, fuzzy
 msgid "List of triggers:"
-msgstr "Auflistung der Proxys:"
+msgstr "Auflistung der Trigger:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError: invalid hook type \"%s\""
-msgstr "%sFehler: Tastenbelegung, \"%s\", kann nicht zuordnet werden"
+msgstr "%sFehler: ungültiger hook Typ \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError: invalid format for regular expression"
-msgstr "Textfarbe für Fehler-Präfix"
+msgstr "%sFehler: ungültiges Format für regulären Ausdruck"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError: invalid regular expression (compilation failed)"
-msgstr "%sFehler im Ausdruck der verarbeitet werden soll"
+msgstr "%sFehler: regulärer Ausdruck ungültig (Kompilat fehlgeschlagen)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError: invalid return code \"%s\""
-msgstr "%sFehler: Tastenbelegung, \"%s\", kann nicht entfernt werden"
+msgstr "%sFehler: ungültiger Rückgabewert \"%s\""
 
 #, c-format
 msgid ""
 "%sError: trigger \"%s\" already exists (choose another name or use option "
 "\"addreplace\" to overwrite it)"
 msgstr ""
+"%sFehler: Trigger \"%s\" existiert schon (wähle einen anderen Namen oder "
+"nutze die Option \"addreplace\" um vorhandenen Trigger zu überschreiben)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError: failed to create trigger \"%s\""
-msgstr "%sFehler: Infobar \"%s\" konnte nicht erstellt werden"
+msgstr "%sFehler: Trigger \"%s\" konnte nicht erstellt werden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Trigger \"%s\" created"
-msgstr "Infobar \"%s\" erstellt"
+msgstr "Trigger \"%s\" erstellt"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError: trigger \"%s\" not found"
-msgstr "%sFehler: Filter \"%s\" nicht gefunden"
+msgstr "%sFehler: Trigger \"%s\" nicht gefunden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Trigger \"%s\" updated"
-msgstr "Infobar \"%s\" aktualisiert"
+msgstr "Trigger \"%s\" aktualisiert"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError: trigger option \"%s\" not found"
-msgstr "%sFehler: Option \"%s\" wurde nicht gefunden"
+msgstr "%sFehler: Trigger-Option \"%s\" wurde nicht gefunden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Trigger \"%s\" copied to \"%s\""
-msgstr "Filter \"%s\" wurde umbenannt. Der neue Name lautet \"%s\""
+msgstr "Trigger \"%s\" wurde kopiert, neue Name \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError: failed to copy trigger \"%s\""
-msgstr "%sFehler: Infobar \"%s\" konnte nicht erstellt werden"
+msgstr "%sFehler: Trigger \"%s\" konnte nicht kopiert werden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sTrigger \"%s\" not found"
-msgstr "%sTastenbelegung, \"%s\", nicht gefunden"
+msgstr "%sTrigger, \"%s\", nicht gefunden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%d triggers removed"
-msgstr "%d rmodifiers entfernt"
+msgstr "%d Trigger entfernt"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Trigger \"%s\" removed"
-msgstr "rmodifier \"%s\" entfernt"
+msgstr "Trigger \"%s\" entfernt"
 
 msgid "Trigger:"
-msgstr ""
+msgstr "Trigger:"
 
-#, fuzzy
 msgid "Default triggers restored:"
-msgstr "Standard rmodifier wiederhergestellt:"
+msgstr "Standard-Trigger wiederhergestellt:"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%sError: \"-yes\" argument is required for restoring default triggers "
 "(security reason)"
 msgstr ""
-"%sFehler: Das Argument \"-yes\" ist aus Sicherheitsgründen zum zurücksetzen "
-"auf die Standardeinstellungen von rmodifier notwendig"
+"%sFehler: Um Trigger auf Standardeinstellungen zurücksetzen ist es aus "
+"Sicherheitsgründen erforderlich, das Argument \"-yes\" zu nutzen"
 
 msgid "manage triggers, the Swiss Army knife for WeeChat"
-msgstr ""
+msgstr "verwaltet Trigger, das Schweizer Armeemesser für WeeChat"
 
 msgid ""
 "list|listfull|listdefault || add|addoff|addreplace <name> <hook> "
@@ -10981,6 +10986,13 @@ msgid ""
 "[<name>...] || show <name> || del <name>|-all [<name>...] || default -yes || "
 "monitor"
 msgstr ""
+"list|listfull|listdefault || add|addoff|addreplace <name> <hook> "
+"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>"
+"\" [\"<return_code>\"]]]]] || addinput [<hook>] || input|output|recreate "
+"<name> || set <name> <option> <value> || rename|copy <name> <new_name> || "
+"enable|disable|toggle [<name>|-all [<name>...]] || restart <name>|-all "
+"[<name>...] || show <name> || del <name>|-all [<name>...] || default -yes || "
+"monitor"
 
 msgid ""
 "       list: list triggers (without argument, this list is displayed)\n"
@@ -11046,8 +11058,8 @@ msgid ""
 "Examples (you can also look at default triggers with /trigger listdefault):\n"
 "  add text attributes *bold*, _underline_ and /italic/ (only in user "
 "messages):\n"
-"    /trigger add effects modifier weechat_print \"${tg_tag_nick}\" \"=="
-"\\*(\\S+)\\*==*${color:bold}$1${color:-bold}*== ==_(\\S+)_==_${color:"
+"    /trigger add effects modifier weechat_print \"${tg_tag_nick}\" \"==\\*"
+"(\\S+)\\*==*${color:bold}$1${color:-bold}*== ==_(\\S+)_==_${color:"
 "underline}$1${color:-underline}_== ==/(\\S+)/==/${color:italic}$1${color:-"
 "italic}/\"\n"
 "  hide nicklist bar on small terminals:\n"
@@ -11058,68 +11070,154 @@ msgid ""
 "  silently save config each hour:\n"
 "    /trigger add cfgsave timer 3600000;0;0 \"\" \"\" \"/mute /save\""
 msgstr ""
+"       list: zeigt eine Liste aller Trigger (ohne Angabe von Argumente wird "
+"diese Liste standardmäßig ausgegeben)\n"
+"   listfull: zeigt eine detaillierte Liste, mit zusätzlichen Informationen, "
+"aller Trigger an\n"
+"listdefault: zeigt die standardmäßig genutzen Trigger an\n"
+"        add: fügt einen Trigger hinzu\n"
+"     addoff: fügt einen Trigger hinzu (deaktiviert)\n"
+" addreplace: fügt oder ersetzt einen schon existierenden Trigger\n"
+"       name: Name des Trigger\n"
+"       hook: signal, hsignal, modifier, print, command, command_run, timer, "
+"config, focus\n"
+"  arguments: Argumente für den Hook, abhängig vom genutzten Hook (getrennt "
+"durch Semikolon):\n"
+"             signal: Name(en) des signals (erforderlich)\n"
+"             hsignal: Name(en) des hsignal (erforderlich)\n"
+"             modifier: Name(en) des modifier (erforderlich)\n"
+"             print: buffer, tags, message, strip colors\n"
+"             command: Befehl (erforderlich), Beschreibung, Argumente, "
+"Beschreibung der Argumente, Vervollständigung\n"
+"             command_run: Befehl(e) (erforderlich)\n"
+"             timer: Intervall (erforderlich), Anpassung an Sekunden "
+"(erforderlich), maximale Anzahl an Aufrufen\n"
+"             config: Name der Option (erforderlich)\n"
+"             focus: Name(n) für sichtbaren Bereich (erforderlich) (z.B. "
+"\"chat\" für Chatbereich)\n"
+" conditions: evaluierte Bedingungen für den Trigger\n"
+"      regex: einer oder mehrere reguläre Ausdrücke um Zeichenketten in "
+"Variablen zu ersetzen\n"
+"    command: Befehl welcher ausgeführt werden soll (mehrere Befehle müssen "
+"durch \";\" voneinander getrennt werden\n"
+"return_code: Rückgabewert für Callback (ok (standard), ok_eat, error)\n"
+"   addinput: erstellt einen Trigger mit einer standardmäßigen Mustervorlage\n"
+"      input: kopiert den kompletten Trigger-Befehl in die Eingabezeile\n"
+"     output: schickt den Trigger-Befehl als Text in den Buffer \n"
+"   recreate: wie \"input\", allerdings wird die Option \"addreplace\" "
+"anstelle von \"add\" genutzt\n"
+"        set: definiert, innerhalb eines Triggers, eine Option neu\n"
+"     option: Name einer Option: name, hook, arguments, conditions, regex, "
+"command, return_code\n"
+"             (um Hilfe über eine Option zu erhalten: /help trigger.trigger."
+"<name>.<option>)\n"
+"      value: neuer Wert für Option\n"
+"     rename: benennt einen Trigger um\n"
+"       copy: kopiert einen Trigger\n"
+"     enable: aktiviert Trigger (ohne Angabe von Argumenten: aktiviert alle "
+"Trigger)\n"
+"    disable: deaktiviert Trigger (ohne Angabe von Argumenten: deaktiviert "
+"alle Trigger)\n"
+"     toggle: de-/aktiviert Trigger (ohne Angabe von Argumenten: de-/"
+"aktiviert alle Trigger)\n"
+"    restart: startet Trigger neu (Hook(s) werden neu erstellt)\n"
+"       show: zeigt detaillierte Informationen zu einem Trigger (inklusive "
+"einer kleinen Statistik)\n"
+"        del: entfernt einen Trigger\n"
+"       -all: führt eine Aktion aus, die alle Trigger beinhaltet\n"
+"    default: stellt die standardmäßigen Trigger wieder her\n"
+"    monitor: öffnet den Trigger-Monitor Buffer\n"
+"\n"
+"Wenn ein Trigger-Callback aufgerufen wird, dann wird folgende Befehlskette "
+"ausgeführt:\n"
+"  1. Überprüfung von Bedingungen; falls unwahr, beenden\n"
+"  2. ersetze Text mittels erweitertem regulärer POSIX Ausdruck (sofern im "
+"Trigger definiert)\n"
+"  3. ein oder mehrere Befehle werden ausgeführt (sofern im Trigger "
+"definiert)\n"
+"  4. Beendigung mit einem Rückgabewert (ausgenommen sind modifiers und "
+"focus)\n"
+"\n"
+"Beispiele (die standardmäßig, eingebauten Trigger kann man sich mit \"/"
+"trigger listdefault\" anzeigen lassen):\n"
+"  fügt einer Nachricht die Textattribute *fett*, _unterstrichen_ und /"
+"kursiv/ hinzu:\n"
+"    /trigger add effects modifier weechat_print \"${tg_tag_nick}\" \"==\\*"
+"(\\S+)\\*==*${color:bold}$1${color:-bold}*== ==_(\\S+)_==_${color:"
+"underline}$1${color:-underline}_== ==/(\\S+)/==/${color:italic}$1${color:-"
+"italic}/\"\n"
+"  verbirgt die Nicklist auf kleineren Terminals:\n"
+"    /trigger add resize_small signal signal_sigwinch \"${info:term_width} < "
+"100\" \"\" \"/bar hide nicklist\"\n"
+"    /trigger add resize_big signal signal_sigwinch \"${info:term_width} >= "
+"100\" \"\" \"/bar show nicklist\"\n"
+"  speichert die Konfiguration jede Stunde ab:\n"
+"    /trigger add cfgsave timer 3600000;0;0 \"\" \"\" \"/mute /save\""
 
 msgid "triggers"
-msgstr ""
+msgstr "trigger"
 
-#, fuzzy
 msgid "options for triggers"
-msgstr "Optionen für Proxys"
+msgstr "Optionen für Trigger"
 
-#, fuzzy
 msgid "value of a trigger option"
-msgstr "Werte für eine Konfigurationsoption"
+msgstr "Werte für Trigger-Option"
 
-#, fuzzy
 msgid "hooks for triggers"
-msgstr "Optionen für Proxys"
+msgstr "Hooks für Trigger"
 
-#, fuzzy
 msgid "default arguments for a hook"
-msgstr "Standardnachricht beim Verlassen (/part) eines IRC-Channels"
+msgstr "Standardargumente für einen Hook"
 
-#, fuzzy
 msgid "default conditions for a hook"
-msgstr "Standardhintergrundfarbe der Infobar"
+msgstr "Standardbedingungen für einen Hook"
 
 msgid "default regular expression for a hook"
-msgstr ""
+msgstr "standardmäßiger regulärer Ausdruck für einen Hook"
 
-#, fuzzy
 msgid "default command for a hook"
-msgstr "Standardbefehl:"
+msgstr "Standardbefehl für einen Hook"
 
-#, fuzzy
 msgid "default return codes for hook callback"
-msgstr "Standardfarbe des Infobar-Textes"
+msgstr "Standardrückgabewerte für einen Hook-Callback"
 
 #, c-format
 msgid ""
 "%sError: invalid format for option \"regex\", see /help trigger.trigger.%s."
 "regex"
 msgstr ""
+"%sFehler: ungültiges Format in Option \"regex\", siehe /help trigger.trigger."
+"%s.regex"
 
 #, c-format
 msgid ""
 "%sError: invalid regular expression in option \"regex\", see /help trigger."
 "trigger.%s.regex"
 msgstr ""
+"%sFehler: regulärer Ausdruck in Option \"regex\" ist ungültig, siehe /help "
+"trigger.trigger.%s.regex"
 
 msgid ""
 "if disabled, the hooks are removed from trigger, so it is not called any more"
 msgstr ""
+"falls deaktiviert, wird der Hook durch Trigger entfernt. Dies bedeutet er "
+"wird nicht mehr ausgeführt"
 
-#, fuzzy
 msgid "type of hook used"
-msgstr "Auflistung der Hooks"
+msgstr "Art der genutzten Hooks"
 
 msgid "arguments for the hook (depend on the hook type, see /help trigger)"
 msgstr ""
+"Argumente die durch den Hook genutzt werden (hängt davon ab welcher Hook-Typ "
+"genutzt wird, siehe /help trigger)"
 
 msgid ""
 "condition(s) for running the command (it is checked in hook callback) (note: "
 "content is evaluated when trigger is run, see /help eval)"
 msgstr ""
+"Bedingung(en) um einen Befehl auszuführen (wird im Hook-Callback überprüft) "
+"(Hinweis: Inhalt ist evaluiert wenn der Trigger ausgeführt wird, siehe /help "
+"eval)"
 
 msgid ""
 "replace text with a POSIX extended regular expression (it is done only if "
@@ -11131,59 +11229,62 @@ msgid ""
 "more identical chars); matching groups can be used in replace: $0 to $99, $+ "
 "for last match and $.cN to replace all chars of group N by char c"
 msgstr ""
+"ersetzt Text mittels erweitertem regulären POSIX Ausdruck (dies passiert nur "
+"falls die Bedingungen erfüllt sind und bevor der Befehl ausgeführt wird) "
+"(Hinweis: Inhalt ist evaluiert wenn der Trigger ausgeführt wird, siehe /help "
+"eval); Format: \"/regex/replace/var\" (var ist eine Hashtable-Variable "
+"welche ersetzt wird, dies ist optional), mehrere reguläre Ausdrücke werden "
+"durch ein Leerzeichen voneinander getrennt, Beispiel: \"/regex1/replace1/"
+"var1 /regex2/replace2/var2\"; das Trennzeichen \"/\" kann durch jedes "
+"beliebe Zeichen ersetzt werden (eine oder mehrere identische Zeichen); "
+"matching groups kann in \"replace\" genutzt werden: $0 bis $99, $+ für "
+"letzten Treffer und $.cN ersetzt alle Zeichen der Gruppe N mit Zeichen c"
 
 msgid ""
 "command(s) to run if conditions are OK, after regex replacements (many "
 "commands can be separated by semicolons)"
 msgstr ""
+"Befehl(e) die ausgeführt werden falls Bedingungen OK sind, nachdem regulärer "
+"Ausdruck durchlaufen wurde (mehrere Befehle müssen durch Semikolon "
+"voneinander getrennt werden)"
 
 msgid ""
 "return code for hook callback (see plugin API reference to know where ok_eat/"
 "error can be used efficiently)"
 msgstr ""
+"Rückgabewert für Hook-Callback (siehe API Dokumentation um zu erfahren, wann "
+"es sinnvoll ist ok_eat/error zu nutzen)"
 
-#, fuzzy
 msgid "enable trigger support"
-msgstr "Mausunterstützung einschalten"
+msgstr "Triggerunterstützung einschalten"
 
-#, fuzzy
 msgid "strip colors in hashtable values displayed on monitor buffer"
 msgstr ""
-"Farben werden im Channel-Thema entfernt (wird nur genutzt wenn der Buffer-"
-"Titel angezeigt wird)"
+"entfernt Farben von Hashtablewerten die im Monitor-Buffer angezeigt werden"
 
-#, fuzzy
 msgid "text color for command flag (in /trigger list)"
-msgstr ""
-"Textfarbe in der Eingabezeile bei Aktivität (z.B. beim Einfügen von Zeilen)"
+msgstr "Textfarbe für Befehls-Flag (in /trigger list)"
 
-#, fuzzy
 msgid "text color for conditions flag (in /trigger list)"
-msgstr ""
-"Textfarbe in der Eingabezeile bei Aktivität (z.B. beim Einfügen von Zeilen)"
+msgstr "Textfarbe für Bedingungen-Flag (in /trigger list)"
 
-#, fuzzy
 msgid "text color for regex flag (in /trigger list)"
-msgstr "Textfarbe für Gruppen in Nickliste"
+msgstr "Textfarbe für Regex-Flag (in /trigger list)"
 
-#, fuzzy
 msgid "text color for return code flag (in /trigger list)"
-msgstr "Textfarbe für Gruppen in Nickliste"
+msgstr "Textfarbe für Rückgabewert-Flag (in /trigger list)"
 
-#, fuzzy
 msgid "text color for regular expressions"
-msgstr "Textfarbe für Fehler-Präfix"
+msgstr "Textfarbe für reguläre Ausdrücke"
 
 msgid "text color for replacement text (for regular expressions)"
-msgstr ""
+msgstr "Textfarbe für ausgetauschten Text (bei regulären Ausdrücken)"
 
-#, fuzzy
 msgid "text color for trigger name"
-msgstr "Textfarbe für den Namen des Servers"
+msgstr "Textfarbe für den Namen des Triggers"
 
-#, fuzzy
 msgid "text color for disabled trigger name"
-msgstr "Textfarbe für den Namen des Servers"
+msgstr "Textfarbe für den Namen des Triggers, wenn dieser deaktiviert ist"
 
 msgid "  [A] Accept"
 msgstr "  [A] annehmen"
@@ -11327,7 +11428,7 @@ msgstr "%s%s: Socket kann für xfer nicht erstellt werden: Fehler %d %s"
 
 #, c-format
 msgid "%s%s: cannot find available port for xfer"
-msgstr "%s%s: Kann keinen freien Port für den Transfer ermitteln"
+msgstr "%s%s: Es konnte kein Port für den Transfer ermitteln werden"
 
 #, c-format
 msgid "%s%s: error creating xfer"
@@ -11625,9 +11726,3 @@ msgstr ""
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: Zeitüberschreitung für \"%s\" mit %s"
-
-#~ msgid "user name to use on server"
-#~ msgstr "Benutzername für diesen Server"
-
-#~ msgid "real name to use on server"
-#~ msgstr "Realen Namen bei diesem Server nutzen"
