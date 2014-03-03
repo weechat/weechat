@@ -311,7 +311,7 @@ compilare o essere instabili. Siete avvisati!
 Per ottenere i sorgenti git, dare il comando:
 
 ----
-$ git clone git://git.sv.gnu.org/weechat.git
+$ git clone https://github.com/weechat/weechat.git
 ----
 
 Poi seguire le istruzioni per i sorgenti (consultare

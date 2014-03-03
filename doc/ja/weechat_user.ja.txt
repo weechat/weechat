@@ -295,7 +295,7 @@ $ ./configure --help
 git ソースを入手するには、以下のコマンドを使ってください:
 
 ----
-$ git clone git://git.sv.gnu.org/weechat.git
+$ git clone https://github.com/weechat/weechat.git
 ----
 
 その後は、ソースパッケージの説明に従ってください

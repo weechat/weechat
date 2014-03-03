@@ -69,7 +69,7 @@ $ cd ~/weechat-git
 Se si ha git installato, si può clonare il deposito git (raccomandato):
 
 ----
-$ git clone git://git.sv.gnu.org/weechat.git
+$ git clone https://github.com/weechat/weechat.git
 $ cd weechat
 ----
 
@@ -135,11 +135,3 @@ o far bollire la vostra birra) non esitate ad entrare in `#weechat` su
 
 Se non dovesse andare in crash - ditelo comunque, abbiamo bisogno dei vostri
 commenti!
-
-
-[[links]]
-== Collegamenti utili
-
-* Deposito GIT: http://git.savannah.gnu.org/gitweb/?p=weechat.git
-* Bug tracker: https://savannah.nongnu.org/bugs/?group=weechat
-* Feed RSS dei commit di WeeChat: http://git.savannah.gnu.org/gitweb/?p=weechat.git;a=rss

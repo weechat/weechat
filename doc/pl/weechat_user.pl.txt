@@ -297,7 +297,7 @@ mogą się nie kompilować lub być niestabilne. Zostałeś ostrzeżony!
 W celu pobrania źródeł z gita, wykonaj poniższą komendę:
 
 ----
-$ git clone git://git.sv.gnu.org/weechat.git
+$ git clone https://github.com/weechat/weechat.git
 ----
 
 Następnie postępuj zgodnie z instrukcjami dla pakietów źródłowych (zobacz

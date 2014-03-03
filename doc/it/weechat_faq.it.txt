@@ -721,16 +721,8 @@ Esistono diversi trucchi per ottimizzare l'uso della memoria:
 [[bug_task_patch]]
 === Come posso segnalare bug, richiedere nuove funzionalità o inviare patch?
 
-Esistono 3 modi:
-
-. entrando su IRC: 'irc.freenode.net', canale `#weechat'
-. utilizzando il sito Savannah:
-  * segnalare un bug: https://savannah.nongnu.org/bugs/?group=weechat
-  * richiedere nuove funzionalità: https://savannah.nongnu.org/task/?group=weechat
-  * inviare una patch: https://savannah.nongnu.org/patch/?group=weechat
-. è possibile scrivere agli sviluppatori, consultare la pagina di supporto per
-  le email dello sviluppatore: http://weechat.org/dev/support
-  (è possibile iscriversi ed inviare alla mailing list "support")
+// TRANSLATION MISSING
+See: http://weechat.org/dev/support
 
 [[gdb_error_threads]]
 === Quando eseguo WeeChat in gdb, c'è un errore riguardo ai thread, cosa posso fare?

@@ -701,16 +701,8 @@ W celu zmniejszenia używanej pamięci możesz zastosować się do poniższych r
 [[bug_task_patch]]
 === Jak zgłaszać błędy, prosić o nowe możliwości lub wysyłać patche?
 
-Są 3 możliwości:
-
-. możesz dołączyć do nas na IRC: 'irc.freenode.net', kanał '#weechat'
-. możesz użyć strony www Savannah:
-  * zgłosić błąd: https://savannah.nongnu.org/bugs/?group=weechat
-  * poprosić o nową możliwość: https://savannah.nongnu.org/task/?group=weechat
-  * wysłać patch: https://savannah.nongnu.org/patch/?group=weechat
-. możesz napisać do deweloperów, na stronie wsparcia możesz znaleźć ich maile:
-  http://weechat.org/dev/support
-  (możesz się zapisać na listę mailingową "support" i na niej pisać)
+// TRANSLATION MISSING
+See: http://weechat.org/dev/support
 
 [[gdb_error_threads]]
 === Kiedy uruchamiam WeeChat pod gdb dostaję komunikat o wątkach, co mogę z tym zrobić?

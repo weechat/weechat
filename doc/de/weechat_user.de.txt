@@ -298,7 +298,7 @@ sich die Quellen nicht kompilieren oder der Code ist nicht stabil. Sie sind gewa
 Um die Git Quellen zu beziehen nutzen Sie folgende Befehle:
 
 ----
-$ git clone git://git.sv.gnu.org/weechat.git
+$ git clone https://github.com/weechat/weechat.git
 ----
 
 Folgen Sie bitte der Anleitung zur Erstellung aus Quellpaketen (siehe <<source_package,Quellpakete>>).

@@ -70,7 +70,7 @@ $ cd ~/weechat-git
 Si vous avez git installé, vous pouvez cloner la base GIT (recommandé) :
 
 ----
-$ git clone git://git.sv.gnu.org/weechat.git
+$ git clone https://github.com/weechat/weechat.git
 $ cd weechat
 ----
 
@@ -135,11 +135,3 @@ pas à nous en avertir sur `#weechat`, serveur `irc.freenode.net`.
 
 S'il n'y a pas de plantage, dites-le nous aussi, nous avons besoin de votre
 retour et de vos impressions !
-
-
-[[links]]
-== Liens intéressants
-
-* Base GIT : http://git.savannah.gnu.org/gitweb/?p=weechat.git
-* Bug tracker : https://savannah.nongnu.org/bugs/?group=weechat
-* Flux RSS des commits WeeChat : http://git.savannah.gnu.org/gitweb/?p=weechat.git;a=rss

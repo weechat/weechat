@@ -66,7 +66,7 @@ If you have git installed, you can just clone the git repository (recommended
 way):
 
 ----
-$ git clone git://git.sv.gnu.org/weechat.git
+$ git clone https://github.com/weechat/weechat.git
 $ cd weechat
 ----
 
@@ -130,11 +130,3 @@ Now if you experience strange behavior (it may have issues or crash or boil
 your beer) don't hesitate to join `#weechat` at `irc.freenode.net` and tell us.
 
 If it doesn't crash - tell us too, we need your feedback!
-
-
-[[links]]
-== Useful links
-
-* GIT repository: http://git.savannah.gnu.org/gitweb/?p=weechat.git
-* Bug tracker: https://savannah.nongnu.org/bugs/?group=weechat
-* WeeChat commits RSS feed: http://git.savannah.gnu.org/gitweb/?p=weechat.git;a=rss

@@ -33,9 +33,9 @@ Ce manuel documente l'intérieur de WeeChat :
 WeeChat a deux dépôts principaux :
 
 * dépôt principal : il contient le code source et la documentation, l'URL est :
-  http://git.savannah.gnu.org/gitweb/?p=weechat.git
+  https://github.com/weechat/weechat
 * scripts : les scripts 'officiels' soumis sur weechat.org, l'URL est :
-  http://git.savannah.gnu.org/gitweb/?p=weechat/scripts.git
+  https://github.com/weechat/scripts
 
 Ce manuel documente seulement le dépôt principal.
 
@@ -934,11 +934,11 @@ server->hook_timer_sasl = weechat_hook_timer (timeout * 1000,
 [[git_repository]]
 === Dépôt Git
 
-Le dépôt Git est à cette URL : http://git.savannah.gnu.org/gitweb/?p=weechat.git
+Le dépôt Git est à cette URL : https://github.com/weechat/weechat
 
 Tout patch pour un bug ou une nouvelle fonctionnalité doit être effectué sur la
-branche master, le format préféré étant un patch fait avec `git diff` ou
-`git format-patch`, envoyé par e-mail.
+branche master, le format préféré étant une "pull request" sur Github. Un  patch
+peut aussi être envoyé par e-mail (fait avec `git diff` ou `git format-patch`).
 
 Le format du message de commit est le suivant :
 

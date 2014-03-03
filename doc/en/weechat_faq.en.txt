@@ -698,16 +698,7 @@ You can try following tips to consume less memory:
 [[bug_task_patch]]
 === How should I report bugs, ask for new features or send patches?
 
-There are 3 ways:
-
-. you can join us on IRC: 'irc.freenode.net', channel '#weechat'
-. you can use the Savannah website:
-  * report a bug: https://savannah.nongnu.org/bugs/?group=weechat
-  * request a new feature: https://savannah.nongnu.org/task/?group=weechat
-  * send a patch: https://savannah.nongnu.org/patch/?group=weechat
-. you can mail developers, look at support page for developer's mails:
-  http://weechat.org/dev/support
-  (you can subscribe and send to "support" mailing list)
+See: http://weechat.org/dev/support
 
 [[gdb_error_threads]]
 === When I run WeeChat under gdb, there is error about threads, what can I do?

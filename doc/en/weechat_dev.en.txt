@@ -32,9 +32,9 @@ This manual documents WeeChat internals:
 WeeChat has two main repositories:
 
 * core repository: it contains source code and documentation,
-  URL is: http://git.savannah.gnu.org/gitweb/?p=weechat.git
+  URL is: https://github.com/weechat/weechat
 * scripts: the 'official' scripts submitted on weechat.org,
-  URL is: http://git.savannah.gnu.org/gitweb/?p=weechat/scripts.git
+  URL is: https://github.com/weechat/scripts
 
 This manual documents only core repository.
 
@@ -918,10 +918,11 @@ server->hook_timer_sasl = weechat_hook_timer (timeout * 1000,
 [[git_repository]]
 === Git repository
 
-Git repository is at this URL: http://git.savannah.gnu.org/gitweb/?p=weechat.git
+Git repository is at this URL: https://github.com/weechat/weechat
 
-Any patch for bug or new feature must be done on master branch, preferred format
-is a patch made with `git diff` or `git format-patch`, sent by e-mail.
+Any patch for bug or new feature must be done on master branch, preferred way is
+a Github pull request. A patch can also be sent by e-mail (made with `git diff`
+or `git format-patch`).
 
 Format of commit message is the following:
 

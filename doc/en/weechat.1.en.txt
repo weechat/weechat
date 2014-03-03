@@ -101,9 +101,6 @@ Please read the COPYING file for more information.
 
 Web: <http://weechat.org/>
 
-== REPORTING BUGS
+== SUPPORT / REPORTING BUGS
 
-Please report bugs or feature requests at Savannah website:
-
-* bugs: <http://savannah.nongnu.org/bugs/?group=weechat>
-* feature requests: <http://savannah.nongnu.org/task/?group=weechat>
+For help or a bug report: <http://weechat.org/dev/support>

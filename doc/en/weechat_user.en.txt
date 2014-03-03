@@ -296,7 +296,7 @@ stable. You're warned!
 To get git sources, issue this command:
 
 ----
-$ git clone git://git.sv.gnu.org/weechat.git
+$ git clone https://github.com/weechat/weechat.git
 ----
 
 Then follow instructions for source package (see

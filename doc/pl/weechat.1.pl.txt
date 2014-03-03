@@ -101,9 +101,8 @@ Pełna licencja znajduje się w pliku COPYING.
 
 Strona www: <http://weechat.org/>
 
-== ZGŁASZANIE BŁĘDÓW
+// TRANSLATION MISSING
+== SUPPORT / REPORTING BUGS
 
-Błędy i propozycje nowych funkcji nelezy zglaszać na stronach Savannah:
-
-* błędy: <http://savannah.nongnu.org/bugs/?group=weechat>
-* nowe funkcje: <http://savannah.nongnu.org/task/?group=weechat>
+// TRANSLATION MISSING
+For help or a bug report: <http://weechat.org/dev/support>

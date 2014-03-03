@@ -300,7 +300,7 @@ que WeeChat ne compile pas et qu'il soit très instable. Vous êtes prévenus !
 Pour récupérer les sources git, tapez cette commande :
 
 ----
-$ git clone git://git.sv.gnu.org/weechat.git
+$ git clone https://github.com/weechat/weechat.git
 ----
 
 Suivez alors les instructions du paquet source (voir

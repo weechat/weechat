@@ -103,10 +103,6 @@ Merci de consulter le fichier COPYING pour plus d'informations.
 
 Site web : <http://weechat.org/>
 
-== SIGNALER DES BUGS
+== SUPPORT / SIGNALER DES BUGS
 
-Merci de signaler les bugs ou demandes de nouvelles fonctionnalités sur le site
-Savannah :
-
-* bugs : <http://savannah.nongnu.org/bugs/?group=weechat>
-* demandes de nouvelles fonctionnalités : <http://savannah.nongnu.org/task/?group=weechat>
+Pour de l'aide ou signaler un bug : <http://weechat.org/dev/support>

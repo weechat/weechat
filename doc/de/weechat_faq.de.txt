@@ -737,16 +737,8 @@ Damit WeeChat weniger Speicher benötigt, solltest Du folgende Tipps umsetzen:
 [[bug_task_patch]]
 === Was kann ich machen falls ich einen Fehler gefunden habe, nach neuen Funktionen fragen oder Patches einsenden möchte?
 
-Es gibt drei Möglichkeiten:
-
-. Du kannst zu uns in den IRC kommen: 'irc.freenode.net', channel '#weechat'
-. Du kannst die Internetseite Savannah nutzen:
-  * Einen Fehler melden: https://savannah.nongnu.org/bugs/?group=weechat
-  * Einen Verbesserungsvorschlag machen: https://savannah.nongnu.org/task/?group=weechat
-  * Einen Patch einsenden: https://savannah.nongnu.org/patch/?group=weechat
-. Du kannst den Entwicklern mailen, entsprechende Mail-Adressen auf der Supportseite:
-  http://weechat.org/dev/support
-  (Um emails an die "support" Mailing-Liste zu schicken, kannst Du diese abonnieren)
+// TRANSLATION MISSING
+See: http://weechat.org/dev/support
 
 [[gdb_error_threads]]
 === Wenn man WeeChat in gdb startet kann ein Thread-Fehler auftreten. Was beudeutet das?

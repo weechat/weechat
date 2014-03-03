@@ -32,9 +32,9 @@ WeeChat (Wee Enhanced Environment for Chat)
 WeeChat の主要なリポジトリは 2 つあります:
 
 * コアリポジトリ: ソースコードと文書が含まれています、
-  URL は: http://git.savannah.gnu.org/gitweb/?p=weechat.git
+  URL は: https://github.com/weechat/weechat
 * スクリプト: weechat.org に投稿された '公式' スクリプト、
-  URL は: http://git.savannah.gnu.org/gitweb/?p=weechat/scripts.git
+  URL は: https://github.com/weechat/scripts
 
 このマニュアルはコアリポジトリの解説です。
 
@@ -914,10 +914,12 @@ server->hook_timer_sasl = weechat_hook_timer (timeout * 1000,
 [[git_repository]]
 === Git リポジトリ
 
-Git リポジトリはこの URL にあります: http://git.savannah.gnu.org/gitweb/?p=weechat.git
+Git リポジトリはこの URL にあります: https://github.com/weechat/weechat
 
-バグや新機能のパッチは必ず master ブランチに対して適用できるものを作成し、`git diff`
-または `git format-patch` でパッチを作成することを推奨します、パッチはメールで送信してください。
+// TRANSLATION MISSING
+Any patch for bug or new feature must be done on master branch, preferred way is
+a Github pull request. A patch can also be sent by e-mail (made with `git diff`
+or `git format-patch`).
 
 コミットメッセージは以下のフォーマットに従ってください:
 

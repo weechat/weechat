@@ -72,7 +72,7 @@ $ cd ~/weechat-git
 Falls Du git installiert hast, clone das git Repository (empfohlen):
 
 ----
-$ git clone git://git.sv.gnu.org/weechat.git
+$ git clone https://github.com/weechat/weechat.git
 $ cd weechat
 ----
 
@@ -139,10 +139,3 @@ berichte uns darüber.
 
 Auch falls alles korrekt funktionieren sollte gib uns trotzdem Bescheid, wir
 brauchen Deine Rückmeldung!
-
-[[links]]
-== Nützliche Links
-
-* GIT repository: http://git.savannah.gnu.org/gitweb/?p=weechat.git
-* Bug tracker: https://savannah.nongnu.org/bugs/?group=weechat
-* WeeChat commits RSS feed: http://git.savannah.gnu.org/gitweb/?p=weechat.git;a=rss

@@ -102,10 +102,8 @@ Please read the COPYING file for more information.
 
 Web: <http://weechat.org/>
 
-== FEHLER MELDEN
+// TRANSLATION MISSING
+== SUPPORT / REPORTING BUGS
 
-Fehlerbeschreibungen oder Vorschläge für neue Funktionen können auf
-der Savannah Webseite hinterlegt werden:
-
-* Fehler: <http://savannah.nongnu.org/bugs/?group=weechat>
-* Feature-Request: <http://savannah.nongnu.org/task/?group=weechat>
+// TRANSLATION MISSING
+For help or a bug report: <http://weechat.org/dev/support>
