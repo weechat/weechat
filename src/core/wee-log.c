@@ -29,6 +29,7 @@
 #include <string.h>
 #include <stdarg.h>
 #include <errno.h>
+#include <limits.h>
 
 #ifdef HAVE_FLOCK
 #include <sys/file.h>
@@ -63,6 +64,7 @@ int
 log_open (const char *filename, const char *mode)
 {
     int filename_length;
+    char* log_name;
 
     /* exit if log already opened */
     if (weechat_log_file)
@@ -72,10 +74,23 @@ log_open (const char *filename, const char *mode)
         weechat_log_filename = strdup (filename);
     else
     {
-        filename_length = strlen (weechat_home) + 64;
+        log_name = getenv("WEECHAT_LOG_NAME");
+        if (log_name == NULL) {
+            log_name = WEECHAT_LOG_NAME;
+        }
+
+        filename_length = strlen (weechat_home) + strlen(log_name);
+        filename_length++; /* slash in path */
+        filename_length++; /* NULL terminator */
+
+        if (filename_length > PATH_MAX) {
+            // XXX emit useful warning?
+            return 0;
+        }
+
         weechat_log_filename = malloc (filename_length);
         snprintf (weechat_log_filename, filename_length,
-                  "%s/%s", weechat_home, WEECHAT_LOG_NAME);
+                  "%s/%s", weechat_home, log_name);
     }
 
     weechat_log_file = fopen (weechat_log_filename, mode);
