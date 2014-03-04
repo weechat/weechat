@@ -3739,9 +3739,9 @@ COMMAND_CALLBACK(mouse)
 
 COMMAND_CALLBACK(mute)
 {
-    int length, mute_mode;
+    int length, mute_mode, gui_chat_mute_old;
     char *command, *ptr_command;
-    struct t_gui_buffer *mute_buffer, *ptr_buffer;
+    struct t_gui_buffer *mute_buffer, *ptr_buffer, *gui_chat_mute_buffer_old;
 
     /* make C compiler happy */
     (void) data;
@@ -3751,6 +3751,9 @@ COMMAND_CALLBACK(mute)
         /* silently ignore missing arguments ("/mute" does nothing) */
         return WEECHAT_RC_OK;
     }
+
+    gui_chat_mute_old = gui_chat_mute;
+    gui_chat_mute_buffer_old = gui_chat_mute_buffer;
 
     mute_mode = GUI_CHAT_MUTE_BUFFER;
     mute_buffer = gui_buffer_search_main ();
@@ -3798,8 +3801,11 @@ COMMAND_CALLBACK(mute)
             }
         }
 
-        gui_chat_mute = GUI_CHAT_MUTE_DISABLED;
-        gui_chat_mute_buffer = NULL;
+        gui_chat_mute = gui_chat_mute_old;
+        gui_chat_mute_buffer =
+            (gui_chat_mute_buffer_old
+             && gui_buffer_valid (gui_chat_mute_buffer_old)) ?
+            gui_chat_mute_buffer_old : NULL;
     }
 
     return WEECHAT_RC_OK;
