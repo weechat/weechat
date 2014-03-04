@@ -107,7 +107,7 @@ Description: Fast, light and extensible chat client - plugins
   - Spell checking (thanks to aspell)
   - FIFO pipe for remote control
   - IRC proxy
-  - Realtime input/output changes through regular expressions
+  - Trigger
 
 Package: weechat-doc
 Section: doc
