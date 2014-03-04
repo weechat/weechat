@@ -8,7 +8,7 @@ This document lists all changes for each version.
 
 For a list of important changes that require manual action, please look at
 http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
-(file 'NEWS' in sources).
+(file 'NEWS.asciidoc' in sources).
 
 
 == Version 0.4.4 (under dev)

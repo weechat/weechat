@@ -84,7 +84,7 @@ $HOME/.weechat/weechat.log::
 == 著者
 
 WeeChat は Sébastien Helleu さんと貢献者によって作成されています
-(完全なリストは AUTHORS ファイルを参照してください)。
+(完全なリストは AUTHORS.asciidoc ファイルを参照してください)。
 
 著作権 (C) 2003-{sys:date "+%Y"} Sébastien Helleu <flashcode@flashtux.org>
 

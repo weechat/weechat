@@ -10,7 +10,7 @@ version.
 
 For a complete list of changes, please look at
 http://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
-(file 'ChangeLog' in sources).
+(file 'ChangeLog.asciidoc' in sources).
 
 
 == Version 0.4.4 (under dev)

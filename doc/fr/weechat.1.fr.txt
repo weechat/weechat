@@ -87,7 +87,7 @@ $HOME/.weechat/weechat.log::
 == AUTEURS
 
 WeeChat est écrit par Sébastien Helleu et des contributeurs (la liste complète
-est dans le fichier AUTHORS).
+est dans le fichier AUTHORS.asciidoc).
 
 Copyright (C) 2003-{sys:date "+%Y"} Sébastien Helleu <flashcode@flashtux.org>
 
