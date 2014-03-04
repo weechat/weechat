@@ -64,11 +64,11 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "",
       "==^("
       "(/(msg|quote) +nickserv "
-      "+(id|identify|register|ghost \\S+|release \\S+|regain \\S+) +)|"
+      "+(id|identify|register|ghost +\\S+|release +\\S+|regain +\\S+) +)|"
       "/oper +\\S+ +|"
-      "/quote pass +|"
+      "/quote +pass +|"
       "/set +\\S*password\\S* +|"
-      "/secure +(passphrase|decrypt|set \\S+) +)"
+      "/secure +(passphrase|decrypt|set +\\S+) +)"
       "(.*)"
       "==$1$.*+",
       "",
@@ -78,7 +78,7 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "modifier",
       "5000|irc_message_auth",
       "",
-      "==^(.*(id|identify|register|ghost \\S+|release \\S+) +)(.*)==$1$.*+",
+      "==^(.*(id|identify|register|ghost +\\S+|release +\\S+) +)(.*)==$1$.*+",
       "",
       "" },
     /* hide server password in commands /server and /connect */
