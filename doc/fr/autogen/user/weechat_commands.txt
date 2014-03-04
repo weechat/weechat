@@ -525,15 +525,15 @@ Exemples:
 [command]*`mute`* exécuter une commande silencieusement::
 
 ----
-/mute  [-current | -buffer <nom> | -all] <commande>
+/mute  [-core | -current | -buffer <nom>] <commande>
 
+   -core: pas d'affichage sur le tampon core WeeChat
 -current: pas d'affichage sur le tampon courant
  -buffer: pas d'affichage sur le tampon spécifié
      nom: nom complet du tampon (exemples: "irc.server.freenode", "irc.freenode.#weechat")
-    -all: pas d'affichage sur TOUS les tampons
 commande: commande à exécuter silencieusement (un '/' est automatiquement ajouté s'il n'est pas trouvé au début de la commande)
 
-Si aucune cible n'est spécifiée (-current, -buffer ou -all), alors par défaut seul le tampon core WeeChat sera silencieux.
+Si aucune cible n'est spécifiée (-core, -current ou -buffer), alors par défaut tous les tampons seront silencieux.
 
 Exemples:
   sauvegarde configuration:

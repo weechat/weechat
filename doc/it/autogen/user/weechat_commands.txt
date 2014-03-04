@@ -525,23 +525,23 @@ Esempi:
 [command]*`mute`* esegue un comando in silenzio::
 
 ----
-/mute  [-current | -buffer <nome> | -all] <comando>
+/mute  [-core | -current | -buffer <name>] <command>
 
--current: nessun output sul buffer corrente
- -buffer: nessun output sul buffer specificato
-    nome: nome completo del buffer (esempi: "irc.server.freenode", "irc.freenode.#weechat")
-    -all: nessun output su TUTTI i buffer
- command: comando da eseguire in silenzio (una '/' viene aggiunta automaticamente all'inizio del comando se non trovata)
+   -core: no output on WeeChat core buffer
+-current: no output on current buffer
+ -buffer: no output on specified buffer
+    name: full buffer name (examples: "irc.server.freenode", "irc.freenode.#weechat")
+ command: command to execute silently (a '/' is automatically added if not found at beginning of command)
 
-Se non viene specificata una destinazione (-current, -buffer o -all), la destinazione predefinita è il buffer core di WeeChat.
+If no target is specified (-core, -current or -buffer), then default is to mute all buffers.
 
-Esempi:
-  salva la configurazione:
+Examples:
+  config save:
     /mute save
-  messaggio sul canale IRC corrente:
-    /mute -current msg * ciao!
-  messaggio sul canale #weechat:
-    /mute -buffer irc.freenode.#weechat msg #weechat ciao!
+  message to current IRC channel:
+    /mute -current msg * hi!
+  message to #weechat channel:
+    /mute -buffer irc.freenode.#weechat msg #weechat hi!
 ----
 
 [[command_weechat_plugin]]

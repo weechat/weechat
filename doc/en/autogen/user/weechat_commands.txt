@@ -525,15 +525,15 @@ Examples:
 [command]*`mute`* execute a command silently::
 
 ----
-/mute  [-current | -buffer <name> | -all] <command>
+/mute  [-core | -current | -buffer <name>] <command>
 
+   -core: no output on WeeChat core buffer
 -current: no output on current buffer
  -buffer: no output on specified buffer
     name: full buffer name (examples: "irc.server.freenode", "irc.freenode.#weechat")
-    -all: no output on ALL buffers
  command: command to execute silently (a '/' is automatically added if not found at beginning of command)
 
-If no target is specified (-current, -buffer or -all), then default is to mute WeeChat core buffer only.
+If no target is specified (-core, -current or -buffer), then default is to mute all buffers.
 
 Examples:
   config save:

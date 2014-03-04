@@ -13,6 +13,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 0.4.4 (under dev)
 
+* core: mute all buffers by default in command /mute (replace option -all by
+  -core)
 * core: save and restore mute state in command /mute (bug #41748)
 * core: fix memory leak when removing a hdata
 * core: fix memory leak in evaluation of sub-conditions

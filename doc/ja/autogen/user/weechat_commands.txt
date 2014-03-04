@@ -525,22 +525,22 @@ disable: マウスの無効化
 [command]*`mute`* 静かにコマンドを実行::
 
 ----
-/mute  [-current | -buffer <name> | -all] <command>
+/mute  [-core | -current | -buffer <name>] <command>
 
--current: 現在のバッファへの出力を禁止
- -buffer: 指定したバッファへの出力を禁止
-    name: 完全なバッファの名前 (例: "irc.server.freenode"、"irc.freenode.#weechat")
-    -all: 全てのバッファへの出力を禁止
- command: 静かに実行するコマンド (最初に '/' が無い場合は自動的に追加されます)
+   -core: no output on WeeChat core buffer
+-current: no output on current buffer
+ -buffer: no output on specified buffer
+    name: full buffer name (examples: "irc.server.freenode", "irc.freenode.#weechat")
+ command: command to execute silently (a '/' is automatically added if not found at beginning of command)
 
-ターゲット (-current、-buffer、-all) が指定されなかった場合、デフォルトでは WeeChat コアバッファへの出力のみが抑制されます。
+If no target is specified (-core, -current or -buffer), then default is to mute all buffers.
 
-例:
-  save を行う:
+Examples:
+  config save:
     /mute save
-  現在の IRC チャンネルへのメッセージ:
+  message to current IRC channel:
     /mute -current msg * hi!
-  #weechat チャンネルへのメッセージ:
+  message to #weechat channel:
     /mute -buffer irc.freenode.#weechat msg #weechat hi!
 ----
 

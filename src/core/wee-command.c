@@ -3755,12 +3755,20 @@ COMMAND_CALLBACK(mute)
     gui_chat_mute_old = gui_chat_mute;
     gui_chat_mute_buffer_old = gui_chat_mute_buffer;
 
-    mute_mode = GUI_CHAT_MUTE_BUFFER;
-    mute_buffer = gui_buffer_search_main ();
+    mute_mode = GUI_CHAT_MUTE_ALL_BUFFERS;
+    mute_buffer = NULL;
+
     ptr_command = argv_eol[1];
 
-    if (string_strcasecmp (argv[1], "-current") == 0)
+    if (string_strcasecmp (argv[1], "-core") == 0)
     {
+        mute_mode = GUI_CHAT_MUTE_BUFFER;
+        mute_buffer = gui_buffer_search_main ();
+        ptr_command = argv_eol[2];
+    }
+    else if (string_strcasecmp (argv[1], "-current") == 0)
+    {
+        mute_mode = GUI_CHAT_MUTE_BUFFER;
         mute_buffer = buffer;
         ptr_command = argv_eol[2];
     }
@@ -3770,13 +3778,18 @@ COMMAND_CALLBACK(mute)
             return WEECHAT_RC_ERROR;
         ptr_buffer = gui_buffer_search_by_full_name (argv[2]);
         if (ptr_buffer)
+        {
+            mute_mode = GUI_CHAT_MUTE_BUFFER;
             mute_buffer = ptr_buffer;
+        }
         ptr_command = argv_eol[3];
     }
     else if (string_strcasecmp (argv[1], "-all") == 0)
     {
-        mute_mode = GUI_CHAT_MUTE_ALL_BUFFERS;
-        mute_buffer = NULL;
+        /*
+         * action ignored in WeeChat >= 0.4.4 (mute on all buffers is default)
+         * (kept for compatibility with old versions)
+         */
         ptr_command = argv_eol[2];
     }
 
@@ -7086,17 +7099,17 @@ command_init ()
     hook_command (
         NULL, "mute",
         N_("execute a command silently"),
-        N_("[-current | -buffer <name> | -all] <command>"),
-        N_("-current: no output on current buffer\n"
+        N_("[-core | -current | -buffer <name>] <command>"),
+        N_("   -core: no output on WeeChat core buffer\n"
+           "-current: no output on current buffer\n"
            " -buffer: no output on specified buffer\n"
            "    name: full buffer name (examples: \"irc.server.freenode\", "
            "\"irc.freenode.#weechat\")\n"
-           "    -all: no output on ALL buffers\n"
            " command: command to execute silently (a '/' is automatically added "
            "if not found at beginning of command)\n"
            "\n"
-           "If no target is specified (-current, -buffer or -all), then default "
-           "is to mute WeeChat core buffer only.\n"
+           "If no target is specified (-core, -current or -buffer), then "
+            "default is to mute all buffers.\n"
            "\n"
            "Examples:\n"
            "  config save:\n"
@@ -7105,9 +7118,8 @@ command_init ()
            "    /mute -current msg * hi!\n"
            "  message to #weechat channel:\n"
            "    /mute -buffer irc.freenode.#weechat msg #weechat hi!"),
-        "-current %(commands)|%*"
+        "-core|-current %(commands)|%*"
         " || -buffer %(buffers_plugins_names) %(commands)|%*"
-        " || -all %(commands)|%*"
         " || %(commands)|%*",
         &command_mute, NULL);
     hook_command (
