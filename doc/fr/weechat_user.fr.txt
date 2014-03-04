@@ -220,9 +220,6 @@ Liste des options couramment utilisées :
 | ENABLE_RELAY | `ON`, `OFF` | ON |
   Compiler <<relay_plugin,l'extension Relay>>.
 
-| ENABLE_RMODIFIER | `ON`, `OFF` | ON |
-  Compiler <<rmodifier_plugin,l'extension Rmodifier>>.
-
 | ENABLE_RUBY | `ON`, `OFF` | ON |
   Compiler <<scripts_plugins,l'extension Ruby>>.
 
@@ -1777,7 +1774,6 @@ Les extensions par défaut sont :
 | irc       | Discussion avec le protocole IRC
 | logger    | Enregistrement des tampons dans des fichiers
 | relay     | Relai de données via le réseau
-| rmodifier | Modification des chaînes de modificateur avec des expressions régulières
 | script    | Gestionnaire de scripts
 | python    | Interface (API) pour scripts Python
 | perl      | Interface (API) pour scripts Perl
@@ -2814,79 +2810,6 @@ websocket = new WebSocket("ws://server.com:9000/weechat");
 Le port (9000 dans l'exemple) est le port défini dans l'extension Relay.
 L'URI doit toujours se terminer par "/weechat" (pour les protocoles 'irc' et
 'weechat').
-
-[[rmodifier_plugin]]
-=== Extension Rmodifier
-
-L'extension Rmodifier vous permet de modifier les chaînes de modificateur avec
-des expressions régulières.
-
-L'utilisation typique est pour cacher les mots de passe lorsque vous les tapez,
-ou lorsque WeeChat les sauvegarde dans l'historique des commandes. Il est
-possible par exemple de remplacer chaque lettre de ces mots de passe par `*`.
-
-[[rmodifier_options]]
-==== Options (rmodifier.conf)
-
-Sections :
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section  | Commande de contrôle                           | Description
-| look     | /set rmodifier.look.*                          | Aspect/présentation
-| modifier | <<command_rmodifier_rmodifier,/rmodifier add>> +
-             /set rmodifier.modifier.*                      | Rmodifiers
-|===
-
-Options :
-
-include::autogen/user/rmodifier_options.txt[]
-
-[[rmodifier_commands]]
-==== Commandes
-
-include::autogen/user/rmodifier_commands.txt[]
-
-[[rmodifier_creation]]
-==== Création d'un rmodifier
-
-Un rmodifier se compose de trois éléments :
-
-. un ou plusieurs modificateurs
-. une expression régulière, permettant de capturer des "groupes"
-. une chaîne décrivant la sortie en utilisant les numéros de "groupes" capturés
-  dans l'expression régulière
-
-Pour la liste des modificateurs utilisés par WeeChat ou des extensions, voir la
-'Référence API Extension WeeChat', fonction 'weechat_hook_modifier'.
-
-Pour chaque groupe capturé, les actions suivantes sont possibles :
-
-* garder le groupe tel quel (en utilisant son numéro)
-* remplacer tous les caractères du groupe pour cacher le contenu
-  (numéro du groupe + `*`)
-* supprimer le groupe (si le groupe n'est pas utilisé dans la chaîne)
-
-Exemple du rmodifier par défaut pour la commande `/oper` :
-
-* modificateurs : `history_add,input_text_display`
-** `history_add` : appelé lorsque WeeChat stocke la commande dans l'historique
-** `input_text_display` : appelé lorsque la ligne de commande a changé
-   (agit uniquement sur l'affichage, pas le contenu de la ligne de commande)
-* expression régulière : `^(/oper +\S+ +)(.*)`
-* groupes : `1,2*`
-
-À chaque fois que les modificateurs "history_add" ou "input_text_display" sont
-appelés, l'expression régulière est vérifiée. Si la chaîne correspond, alors
-elle est remplacée par les groupes capturés, tels que définis dans la chaîne
-des groupes.
-
-Dans cet exemple, on garde le groupe numéro 1 tel quel, et on remplace tous les
-caractères du groupe 2 par le caractère de remplacement défini dans la
-configuration (option 'rmodifier.look.hide_char').
-
-Si la ligne de commande contient : `/oper nick password` alors l'affichage
-sera : `/oper nick ********`.
 
 [[scripts_plugins]]
 === Extensions Scripts

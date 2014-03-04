@@ -56,8 +56,6 @@
 
 | relay | relay_relays | protokół.nazwa dla obecnych relayów dla wtyczki relay
 
-| rmodifier | rmodifier | lista rmodifierów
-
 | ruby | ruby_script | lista skryptów
 
 | script | script_files | pliki w katalogach skryptów

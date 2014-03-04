@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-03-02 08:35+0100\n"
-"PO-Revision-Date: 2014-02-20 12:25+0100\n"
+"POT-Creation-Date: 2014-03-04 11:15+0100\n"
+"PO-Revision-Date: 2014-03-04 11:21+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: ru\n"
@@ -8454,116 +8454,6 @@ msgid ""
 msgstr ""
 
 #, fuzzy
-msgid "String modifier with regular expressions"
-msgstr "%s недостаточно памяти для сообщения в строке информации\n"
-
-#, fuzzy, c-format
-msgid "%s%s: error compiling regular expression \"%s\""
-msgstr "%s недостаточно памяти для сообщения в строке информации\n"
-
-#, fuzzy
-msgid "No rmodifier defined"
-msgstr "Сокращения не заданы.\n"
-
-#, fuzzy
-msgid "List of rmodifiers:"
-msgstr "Список сокращений:\n"
-
-#, fuzzy
-msgid "Default rmodifiers:"
-msgstr "Комбинации клавиш по умолчанию восстановлены\n"
-
-#, fuzzy, c-format
-msgid "%s%s: error creating rmodifier \"%s\""
-msgstr "%s недостаточно памяти для сообщения в строке информации\n"
-
-#, fuzzy, c-format
-msgid "Rmodifier \"%s\" created"
-msgstr "Сокращение \"%s\" => \"%s\" создано\n"
-
-#, fuzzy, c-format
-msgid "%d rmodifiers removed"
-msgstr "     обработчики таймера:\n"
-
-#, fuzzy, c-format
-msgid "Rmodifier \"%s\" removed"
-msgstr "Сокращение \"%s\" удалено\n"
-
-#, fuzzy, c-format
-msgid "%sRmodifier \"%s\" not found"
-msgstr "%s plugin \"%s\" не найден\n"
-
-#, fuzzy
-msgid "Default rmodifiers restored:"
-msgstr "Комбинации клавиш по умолчанию восстановлены\n"
-
-#, fuzzy, c-format
-msgid ""
-"%sError: \"-yes\" argument is required for restoring default rmodifiers "
-"(security reason)"
-msgstr ""
-"%s аргумент \"-yes\" необходим для сброса ключей (в целях безопасности)\n"
-
-#, fuzzy, c-format
-msgid "%d rmodifier added"
-msgid_plural "%d rmodifiers added"
-msgstr[0] "     обработчики таймера:\n"
-msgstr[1] "     обработчики таймера:\n"
-msgstr[2] "     обработчики таймера:\n"
-
-#, fuzzy
-msgid "alter modifier strings with regular expressions"
-msgstr "%s недостаточно памяти для сообщения в строке информации\n"
-
-msgid ""
-"list|listdefault || add <name> <modifiers> <groups> <regex> || del <name>|-"
-"all [<name>...] || missing || default -yes"
-msgstr ""
-
-msgid ""
-"       list: list all rmodifiers\n"
-"listdefault: list default rmodifiers\n"
-"        add: add a rmodifier\n"
-"       name: name of rmodifier\n"
-"  modifiers: comma separated list of modifiers\n"
-"     groups: action on groups captured in regular expression (inside "
-"parentheses): comma separated list of groups (from 1 to 9) with optional \"*"
-"\" after number to hide the group\n"
-"      regex: POSIX extended regular expression (case insensitive, can start "
-"by \"(?-i)\" to become case sensitive)\n"
-"        del: delete a rmodifier\n"
-"       -all: delete all rmodifiers\n"
-"    missing: add missing rmodifiers\n"
-"    default: restore default rmodifiers\n"
-"\n"
-"Examples:\n"
-"  hide everything typed after a command /password:\n"
-"    /rmodifier add password input_text_display 1,2* ^(/password +)(.*)\n"
-"  delete rmodifier \"password\":\n"
-"    /rmodifier del password\n"
-"  delete all rmodifiers:\n"
-"    /rmodifier del -all"
-msgstr ""
-
-#, fuzzy
-msgid "list of rmodifiers"
-msgstr "Список сокращений:\n"
-
-#, fuzzy, c-format
-msgid "%s%s: error creating rmodifier \"%s\" => \"%s\""
-msgstr "%s недостаточно памяти для сообщения в строке информации\n"
-
-msgid "char used to hide part of a string"
-msgstr ""
-
-#, fuzzy
-msgid "rmodifier pointer (optional)"
-msgstr "Сохраняю конфигурацию\n"
-
-msgid "rmodifier name (can start or end with \"*\" as joker) (optional)"
-msgstr ""
-
-#, fuzzy
 msgid "Support of ruby scripts"
 msgstr "Список сокращений:\n"
 
@@ -9896,11 +9786,3 @@ msgstr "%s DCC: не могу установить неблокирующий р
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
-
-#, fuzzy
-#~ msgid "user name to use on server"
-#~ msgstr "имя пользователя, используемое на IRC сервере"
-
-#, fuzzy
-#~ msgid "real name to use on server"
-#~ msgstr "настоящее имя, используемое на IRC сервере"

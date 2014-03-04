@@ -26,8 +26,6 @@
 
 | relay | relay | lista zdalnych klientów | wskaźnik relay (opcjonalny) | -
 
-| rmodifier | rmodifier | lista rmodifierów | wskaźnik rmodifier (opcjonalny) | nazwa rmodifier (może się zaczynać lub kończyć "*") (opcjonalne)
-
 | ruby | ruby_script | lista skryptów | wskaźnik skryptu (opcjonalne) | nazwa skryptu (może się zaczynać lub kończyć "*") (opcjonalne)
 
 | script | script_script | lista skryptów | wskaźnik skryptu (opcjonalne) | nazwa skryptu z rozszerzeniem (może się zaczynać lub kończyć "*") (opcjonalne)

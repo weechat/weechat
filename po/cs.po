@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-03-02 08:35+0100\n"
-"PO-Revision-Date: 2014-02-20 12:24+0100\n"
+"POT-Creation-Date: 2014-03-04 11:15+0100\n"
+"PO-Revision-Date: 2014-03-04 11:20+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: cs\n"
@@ -9008,135 +9008,6 @@ msgstr ""
 "\" (obdrženo: %d argumentů, očekáváno: alespoň %d)"
 
 #, fuzzy
-msgid "String modifier with regular expressions"
-msgstr "změnit řetězce modifikátorů pomocí regulárních výrazů"
-
-#, c-format
-msgid "%s%s: error compiling regular expression \"%s\""
-msgstr "%s%s: chyba při zpracování regulárního výrazu \"%s\""
-
-msgid "No rmodifier defined"
-msgstr "Žádné rmodifikátory nejsou definovány"
-
-msgid "List of rmodifiers:"
-msgstr "seznam rmodifikátory:"
-
-msgid "Default rmodifiers:"
-msgstr "Výchozí rmodifikátory:"
-
-#, c-format
-msgid "%s%s: error creating rmodifier \"%s\""
-msgstr "%s%s: chyba při vytváření rmodifikátoru \"%s\""
-
-#, c-format
-msgid "Rmodifier \"%s\" created"
-msgstr "Rmodifikátor \"%s\" vytvořen"
-
-#, c-format
-msgid "%d rmodifiers removed"
-msgstr "%d rmodifikátorů odebráno"
-
-#, c-format
-msgid "Rmodifier \"%s\" removed"
-msgstr "Rmodifikátor \"%s\" odebrán"
-
-#, c-format
-msgid "%sRmodifier \"%s\" not found"
-msgstr "%sRmodifikátor \"%s\" nenalezen"
-
-msgid "Default rmodifiers restored:"
-msgstr "Výchozí rmodifikátory obnoveny:"
-
-#, c-format
-msgid ""
-"%sError: \"-yes\" argument is required for restoring default rmodifiers "
-"(security reason)"
-msgstr ""
-"%sChyba: \"-yes\" argument je požadován pro obnovení výchozích rmodifikátorů "
-"(bezpečnostní opatření)"
-
-#, fuzzy, c-format
-msgid "%d rmodifier added"
-msgid_plural "%d rmodifiers added"
-msgstr[0] "%d rmodifikátorů odebráno"
-msgstr[1] "%d rmodifikátorů odebráno"
-msgstr[2] "%d rmodifikátorů odebráno"
-
-msgid "alter modifier strings with regular expressions"
-msgstr "změnit řetězce modifikátorů pomocí regulárních výrazů"
-
-#, fuzzy
-msgid ""
-"list|listdefault || add <name> <modifiers> <groups> <regex> || del <name>|-"
-"all [<name>...] || missing || default -yes"
-msgstr ""
-"list|listdefault || add <name> <modifiers> <groups> <regex> || del <name>|-"
-"all [<name>...] || default -yes"
-
-#, fuzzy
-msgid ""
-"       list: list all rmodifiers\n"
-"listdefault: list default rmodifiers\n"
-"        add: add a rmodifier\n"
-"       name: name of rmodifier\n"
-"  modifiers: comma separated list of modifiers\n"
-"     groups: action on groups captured in regular expression (inside "
-"parentheses): comma separated list of groups (from 1 to 9) with optional \"*"
-"\" after number to hide the group\n"
-"      regex: POSIX extended regular expression (case insensitive, can start "
-"by \"(?-i)\" to become case sensitive)\n"
-"        del: delete a rmodifier\n"
-"       -all: delete all rmodifiers\n"
-"    missing: add missing rmodifiers\n"
-"    default: restore default rmodifiers\n"
-"\n"
-"Examples:\n"
-"  hide everything typed after a command /password:\n"
-"    /rmodifier add password input_text_display 1,2* ^(/password +)(.*)\n"
-"  delete rmodifier \"password\":\n"
-"    /rmodifier del password\n"
-"  delete all rmodifiers:\n"
-"    /rmodifier del -all"
-msgstr ""
-"       list: vypíše všechny rmodifikátory\n"
-"listdefault: vypíše výchozí rmodifikátory\n"
-"        add: přidá rmodifikátor\n"
-"       name: jméno rmodifikátoru\n"
-"  modifiers: čárkou oddělený seznam modifikátorů\n"
-"     groups: akce na nalezených skupinách: čárkou oddělený seznam skupin (od "
-"1 do 9) s možností \"*\" za číslem pro schování skupiny\n"
-"      regex: regulární výraz\n"
-"        del: smaže rmodifikátor\n"
-"       -all: smaže všechny rmodifikátory\n"
-"    default: obnoví výchozí rmodifikátory\n"
-"\n"
-"Příklady:\n"
-"  schová vše napsané za příkazem /password:\n"
-"    /rmodifier add password input_text_display 1,2* ^(/password +)(.*)\n"
-"  smaže rmodifikátor \"password\":\n"
-"    /rmodifier del password\n"
-"  smaže všechny rmodifikátory:\n"
-"    /rmodifier del -all"
-
-msgid "list of rmodifiers"
-msgstr "seznam rmodifikátorů"
-
-#, c-format
-msgid "%s%s: error creating rmodifier \"%s\" => \"%s\""
-msgstr "%s%s: chyba vytváření rmodifikátoru \"%s\" => \"%s\""
-
-msgid "char used to hide part of a string"
-msgstr "znak použitý pro schování části řetězce"
-
-msgid "rmodifier pointer (optional)"
-msgstr "ukazatel rmodifikátoru (volitelné)"
-
-msgid "rmodifier name (can start or end with \"*\" as joker) (optional)"
-msgstr ""
-"jméno rmodifikátoru (může začínat nebo končit \"*\" jako zástupným znakem) "
-"(volitelné)"
-
-#, fuzzy
 msgid "Support of ruby scripts"
 msgstr "seznam skriptů"
 
@@ -10464,9 +10335,3 @@ msgstr "%s%s: nemohu nastavit \"neblokovaci\" volbu na soket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
-
-#~ msgid "user name to use on server"
-#~ msgstr "uživatelské jméno použité na serveru"
-
-#~ msgid "real name to use on server"
-#~ msgstr "skutečné jméno použité na serveru"

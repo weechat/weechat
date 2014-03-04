@@ -26,8 +26,6 @@
 
 | relay | relay | elenco di client relay | puntatore al relay (opzionale) | -
 
-| rmodifier | rmodifier | elenco di rmodifier | puntatore a rmodifier (opzionale) | nome rmodifier (può iniziare o terminare con "*" come carattere jolly) (opzionale)
-
 | ruby | ruby_script | elenco degli script | puntatore allo script (opzionale) | nome script (può iniziare o terminare con "*" come carattere jolly) (opzionale)
 
 | script | script_script | elenco degli script | puntatore allo script (opzionale) | nome script con l'estensione (può iniziare o terminare con "*" come carattere jolly) (opzionale)

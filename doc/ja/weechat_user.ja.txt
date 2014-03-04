@@ -217,9 +217,6 @@ cmake に対するオプションを指定するには、以下のフォーマ�
 | ENABLE_RELAY | `ON`, `OFF` | ON |
   <<relay_plugin,リレープラグイン>>のコンパイル
 
-| ENABLE_RMODIFIER | `ON`, `OFF` | ON |
-  <<rmodifier_plugin,Rmodifier プラグイン>>のコンパイル
-
 | ENABLE_RUBY | `ON`, `OFF` | ON |
   <<scripts_plugins,Ruby プラグイン>>のコンパイル
 
@@ -1719,22 +1716,21 @@ GNU/Linux の場合、プラグインファイルは ".so" という拡張子を
 [width="50%",cols="^1,5",options="header"]
 |===
 | プラグイン | 説明
-| alias     | コマンドの別名を定義
-| aspell    | コマンドラインのスペルチェック
-| charset   | バッファの文字コードに従ってデコード/エンコード
-| fifo      | 外部から WeeChat にコマンドを送信するための FIFO パイプ
-| irc       | IRC チャットプロトコル
-| logger    | バッファの内容をファイルに保存
-| relay     | ネットワーク経由でデータを中継
-| rmodifier | 正規表現を用いた文字列の置換
-| script    | スクリプトマネージャ
-| python    | Python スクリプト API
-| perl      | Perl スクリプト API
-| ruby      | Ruby スクリプト API
-| lua       | Lua スクリプト API
-| tcl       | Tcl スクリプト API
-| guile     | Guile (scheme) スクリプト API
-| xfer      | ファイル転送とダイレクトチャット
+| alias      | コマンドの別名を定義
+| aspell     | コマンドラインのスペルチェック
+| charset    | バッファの文字コードに従ってデコード/エンコード
+| fifo       | 外部から WeeChat にコマンドを送信するための FIFO パイプ
+| irc        | IRC チャットプロトコル
+| logger     | バッファの内容をファイルに保存
+| relay      | ネットワーク経由でデータを中継
+| script     | スクリプトマネージャ
+| python     | Python スクリプト API
+| perl       | Perl スクリプト API
+| ruby       | Ruby スクリプト API
+| lua        | Lua スクリプト API
+| tcl        | Tcl スクリプト API
+| guile      | Guile (scheme) スクリプト API
+| xfer       | ファイル転送とダイレクトチャット
 |===
 
 API を使ったプラグインやスクリプトの開発についてより詳しく学ぶには、'WeeChat
@@ -2725,74 +2721,6 @@ websocket = new WebSocket("ws://server.com:9000/weechat");
 
 ポート番号 (例では 9000 番) は Relay プラグインで定義したものです。URI
 の最後には必ず "/weechat" をつけます ('irc' と 'weechat' プロトコルの場合)。
-
-[[rmodifier_plugin]]
-=== Rmodifier プラグイン
-
-Rmodifier プラグインは正規表現を使って文字列を置換します。
-パスワードの入力時やに入力文字列を隠すことや WeeChat
-がパスワードを保存しないようにすることが典型的な利用ケースです。
-例えば、パスワード文字列を `*` で置き換えることができます。
-
-[[rmodifier_options]]
-==== オプション (rmodifier.conf)
-
-セクション:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| セクション | 操作コマンド                                   | 説明
-| look       | /set rmodifier.look.*                          | 外観
-| modifier   | <<command_rmodifier_rmodifier,/rmodifier add>> +
-               /set rmodifier.modifier.*                      | rmodifier
-|===
-
-オプション:
-
-include::autogen/user/rmodifier_options.txt[]
-
-[[rmodifier_commands]]
-==== コマンド
-
-include::autogen/user/rmodifier_commands.txt[]
-
-[[rmodifier_creation]]
-==== Rmodifier の作成
-
-rmodifier は 3 つの要素からなります:
-
-. 1 つ以上の "修飾子"
-. 文字列のマッチングと "グループ" 分けを行う正規表現
-. "グループ"
-  化された文字列に対するアクションを指定する文字列
-
-WeeChat またはプラグインが利用する修飾子の完全なリストは 'WeeChat プラグイン
-API リファレンス' の 'weechat_hook_modifier' 関数を参照してください。
-
-グループ化されたそれぞれの文字列に対して、以下のアクションが可能です:
-
-* 文字列に変更を加えない (グループ番号を指定)
-* 文字列を隠すために全ての文字を置換する (グループ番号 + `*` で指定)
-* 文字列を削除 (グループ番号を指定しない場合)
-
-`/oper` コマンドに対するデフォルト rmodifier の例:
-
-* 修飾子: `history_add,input_text_display`
-** `history_add`: WeeChat がコマンドを履歴に保存する際に呼び出される
-** `input_text_display`: コマンドラインを変更する際に呼び出される
-   (入力テキストが表示されたときにのみ適用、コマンドラインの内容には適用されない)
-* 正規表現: `^(/oper +\S+ +)(.*)`
-* グループに対するアクション: `1,2*`
-
-修飾子 "history_add" や "input_text_display" が呼び出されるたびに、
-正規表現が確認されます。文字列にマッチした場合、
-文字列はグループに対して定義されたアクションを使って置換されます。
-
-この例では、グループ番号 1 はそのまま、グループ番号 2 に含まれる全ての文字を設定済みの文字
-(オプション 'rmodifier.look.hide_char') で置換します。
-
-コマンドラインに `/oper nick password` のような文字列が含まれる場合、
-`/oper nick ********` のように表示されます。
 
 [[scripts_plugins]]
 === スクリプトプラグイン

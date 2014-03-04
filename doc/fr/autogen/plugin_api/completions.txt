@@ -56,8 +56,6 @@
 
 | relay | relay_relays | protocole.nom des relais courants pour l'extension relay
 
-| rmodifier | rmodifier | liste des rmodifiers
-
 | ruby | ruby_script | liste des scripts
 
 | script | script_files | fichiers dans les répertoires de script

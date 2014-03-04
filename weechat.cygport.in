@@ -91,7 +91,6 @@ weechat_CONTENTS="
     usr/lib/weechat/plugins/irc.dll
     usr/lib/weechat/plugins/logger.dll
     usr/lib/weechat/plugins/relay.dll
-    usr/lib/weechat/plugins/rmodifier.dll
     usr/lib/weechat/plugins/script.dll
     usr/lib/weechat/plugins/trigger.dll
     usr/lib/weechat/plugins/xfer.dll

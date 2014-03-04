@@ -56,8 +56,6 @@
 
 | relay | relay_relays | リレープラグインにおける現在のリレーの protocol.name
 
-| rmodifier | rmodifier | rmodifier のリスト
-
 | ruby | ruby_script | スクリプトのリスト
 
 | script | script_files | スクリプトディレクトリ内のファイル

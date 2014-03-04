@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-03-02 08:35+0100\n"
-"PO-Revision-Date: 2014-02-20 12:25+0100\n"
+"POT-Creation-Date: 2014-03-04 11:15+0100\n"
+"PO-Revision-Date: 2014-03-04 11:21+0100\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pt_BR\n"
@@ -8662,114 +8662,6 @@ msgstr ""
 "\" (recebidos: %d argumentos, esperados: ao menos %d)"
 
 #, fuzzy
-msgid "String modifier with regular expressions"
-msgstr "alterar string modifier com expressões regulares"
-
-#, c-format
-msgid "%s%s: error compiling regular expression \"%s\""
-msgstr "%s%s: erro ao compilar expressão regular \"%s\""
-
-msgid "No rmodifier defined"
-msgstr "Nenhuma rmodifier definido"
-
-msgid "List of rmodifiers:"
-msgstr "Lista de rmodifiers:"
-
-msgid "Default rmodifiers:"
-msgstr "Rmodifiers padrões:"
-
-#, c-format
-msgid "%s%s: error creating rmodifier \"%s\""
-msgstr "%s%s: erro ao criar rmodifier \"%s\""
-
-#, c-format
-msgid "Rmodifier \"%s\" created"
-msgstr "Rmodifier \"%s\" criado"
-
-#, c-format
-msgid "%d rmodifiers removed"
-msgstr "%d rmodifiers removidos"
-
-#, c-format
-msgid "Rmodifier \"%s\" removed"
-msgstr "Rmodifier \"%s\" removido"
-
-#, c-format
-msgid "%sRmodifier \"%s\" not found"
-msgstr "%sRmodifier \"%s\" não encontrado"
-
-msgid "Default rmodifiers restored:"
-msgstr "Rmodifiers padrões restaurados:"
-
-#, c-format
-msgid ""
-"%sError: \"-yes\" argument is required for restoring default rmodifiers "
-"(security reason)"
-msgstr ""
-"%sErro: argumento \"-yes\" é necessário para restaurar rmodifiers padrões "
-"(motivo de segurança)"
-
-#, fuzzy, c-format
-msgid "%d rmodifier added"
-msgid_plural "%d rmodifiers added"
-msgstr[0] "%d rmodifiers removidos"
-msgstr[1] "%d rmodifiers removidos"
-
-msgid "alter modifier strings with regular expressions"
-msgstr "alterar string modifier com expressões regulares"
-
-#, fuzzy
-msgid ""
-"list|listdefault || add <name> <modifiers> <groups> <regex> || del <name>|-"
-"all [<name>...] || missing || default -yes"
-msgstr ""
-"list|listdefault || add <nome> <modificadores> <grupos> <expressão_regular> "
-"|| del <nome>|-all [<nome>...] || default -yes"
-
-msgid ""
-"       list: list all rmodifiers\n"
-"listdefault: list default rmodifiers\n"
-"        add: add a rmodifier\n"
-"       name: name of rmodifier\n"
-"  modifiers: comma separated list of modifiers\n"
-"     groups: action on groups captured in regular expression (inside "
-"parentheses): comma separated list of groups (from 1 to 9) with optional \"*"
-"\" after number to hide the group\n"
-"      regex: POSIX extended regular expression (case insensitive, can start "
-"by \"(?-i)\" to become case sensitive)\n"
-"        del: delete a rmodifier\n"
-"       -all: delete all rmodifiers\n"
-"    missing: add missing rmodifiers\n"
-"    default: restore default rmodifiers\n"
-"\n"
-"Examples:\n"
-"  hide everything typed after a command /password:\n"
-"    /rmodifier add password input_text_display 1,2* ^(/password +)(.*)\n"
-"  delete rmodifier \"password\":\n"
-"    /rmodifier del password\n"
-"  delete all rmodifiers:\n"
-"    /rmodifier del -all"
-msgstr ""
-
-msgid "list of rmodifiers"
-msgstr "lista de rmodifiers"
-
-#, c-format
-msgid "%s%s: error creating rmodifier \"%s\" => \"%s\""
-msgstr "%s%s: erro ao criar rmodifier \"%s\" => \"%s\""
-
-msgid "char used to hide part of a string"
-msgstr "caractere usado para esconder parte de uma string"
-
-msgid "rmodifier pointer (optional)"
-msgstr "ponteiro rmodifier (opcional)"
-
-msgid "rmodifier name (can start or end with \"*\" as joker) (optional)"
-msgstr ""
-"nome do rmodifier (pode começar ou terminar com \"*\" como um coringa) "
-"(opcional)"
-
-#, fuzzy
 msgid "Support of ruby scripts"
 msgstr "list de scripts"
 
@@ -10100,9 +9992,3 @@ msgstr "%s%s: não foi possível setar opção \"nonblock\" para o socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: tempo esgotado para \"%s\" com %s"
-
-#~ msgid "user name to use on server"
-#~ msgstr "nome de usuário para utilizar no servidor"
-
-#~ msgid "real name to use on server"
-#~ msgstr "nome real para utilizar no servidor"

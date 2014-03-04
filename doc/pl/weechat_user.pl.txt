@@ -218,9 +218,6 @@ Lista popularnych opcji:
 | ENABLE_RELAY | `ON`, `OFF` | ON |
   Kompilacja <<relay_plugin,wtyczki relay>>.
 
-| ENABLE_RMODIFIER | `ON`, `OFF` | ON |
-  Kompilacja <<rmodifier_plugin,wtyczki rmodifier>>.
-
 | ENABLE_RUBY | `ON`, `OFF` | ON |
   Kompilacja <<scripts_plugins,wtyczki ruby>>.
 
@@ -1727,23 +1724,22 @@ Domyślne wtyczki:
 
 [width="50%",cols="^1,5",options="header"]
 |===
-| Wtyczka   | Opis
-| alias     | Definiuje aliasy dla komend
-| aspell    | Sprawdzanie pisowni w linii poleceń
-| charset   | Ustawianie kodowania dla buforów
-| fifo      | Kolejka FIFO używana do zdalnego wysyłania poleceń dla WeeChat
-| irc       | Protokół IRC
-| logger    | Logowanie zawartości buforów do plików
-| relay     | Przekazuje dane przez sieć
-| rmodifier | Zamienia ciągi pasujące do wyrażeń regularnych
-| script    | Zarządzanie skryptami
-| python    | Wsparcie dla skryptów napisanych w Pythonie
-| perl      | Wsparcie dla skryptów napisanych w Perlu
-| ruby      | Wsparcie dla skryptów napisanych w Ruby
-| lua       | Wsparcie dla skryptów napisanych w Lua
-| tcl       | Wsparcie dla skryptów napisanych w Tcl
-| guile     | Wsparcie dla skryptów napisanych w Guile (scheme)
-| xfer      | Przesyłanie plików i bezpośredni chat
+| Wtyczka | Opis
+| alias   | Definiuje aliasy dla komend
+| aspell  | Sprawdzanie pisowni w linii poleceń
+| charset | Ustawianie kodowania dla buforów
+| fifo    | Kolejka FIFO używana do zdalnego wysyłania poleceń dla WeeChat
+| irc     | Protokół IRC
+| logger  | Logowanie zawartości buforów do plików
+| relay   | Przekazuje dane przez sieć
+| script  | Zarządzanie skryptami
+| python  | Wsparcie dla skryptów napisanych w Pythonie
+| perl    | Wsparcie dla skryptów napisanych w Perlu
+| ruby    | Wsparcie dla skryptów napisanych w Ruby
+| lua     | Wsparcie dla skryptów napisanych w Lua
+| tcl     | Wsparcie dla skryptów napisanych w Tcl
+| guile   | Wsparcie dla skryptów napisanych w Guile (scheme)
+| xfer    | Przesyłanie plików i bezpośredni chat
 |===
 
 Więcej informacji o wtyczkach i tworzeniu skryptów (przez API), można znaleźć w
@@ -2746,73 +2742,6 @@ websocket = new WebSocket("ws://server.com:9000/weechat");
 
 Port (9000 w przykładzie) to port zdefiniowany we wtyczce relay.
 Adres URL musi się zawsze kończyć "/weechat" (dla protokołów 'irc' i 'weechat').
-
-[[rmodifier_plugin]]
-=== Wtyczka rmodifier
-
-Wtyczka rmodifier pozwala na modyfikowanie ciągów za pomocą wyrażeń regularnych.
-Najczęściej używana się jej do ukrywania haseł podczas wprowadzania lub, kiedy
-WeeChat zapisuje je w historii poleceń. Na przykład możliwe jest zastąpienie
-każdego znaku w haśle przez `*`.
-
-[[rmodifier_options]]
-==== Opcje (rmodifier.conf)
-
-Sekcje:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Sekcja   | Komenda                                        | Opis
-| look     | /set rmodifier.look.*                          | Wygląd
-| modifier | <<command_rmodifier_rmodifier,/rmodifier add>> +
-             /set rmodifier.modifier.*                      | Rmodifiers
-|===
-
-Opcje:
-
-include::autogen/user/rmodifier_options.txt[]
-
-[[rmodifier_commands]]
-==== Komendy
-
-include::autogen/user/rmodifier_commands.txt[]
-
-[[rmodifier_creation]]
-==== Tworzenie rmodifier
-
-Rmodifier składa się z trzech elementów:
-
-. jednego lub większej ilości "modfikatorów"
-. wyrażenia regularnego do przechwytywania "grup"
-. ciągu opisującego wyjście używając numeru "grup" przechwyconych przez wyrażenie
-
-Listę modyfikatorów używanych przez WeeChat lub wtyczki można znaleźć w
-'Opisie API wtyczek', funkcja 'weechat_hook_modifier'.
-
-Dla każdej z przechwyconych grup możliwe są następujące akcje:
-
-* nie zmieniaj nic (poprzez podanie numeru grupy)
-* zastąp wszystkie znaki w grupie, żeby ukryć jej zawartość (numer grupy + `*`)
-* usuń grupę (jeśli grupa nie jest użyta w ciągu)
-
-Przykład domyślnego rmodifiera dla komendy `/oper`:
-
-* modyfikatory: `history_add,input_text_display`
-** `history_add`: wywoływane, kiedy WeeChat zachowuje komendy w historii
-** `input_text_display`: wywoływane podczas zmian w linii poleceń
-   (dotyczy tylko wyświetlania, a nie zawartości)
-* wyrażenie regularne: `^(/oper +\S+ +)(.*)`
-* grupy: `1,2*`
-
-Za każdym razem, kiedy modyfikator "history_add" lub "input_text_display" jest
-wywoływany sprawdzane jest wyrażenie regularne. Jeśli ciąg pasuje jest on
-zastępowany przez przechwycone grupy, zgodnie z definicją grup.
-
-W tym przykładzie, grupa numer 1 jest zachowywana bez zmian, a znaki w grupie 2
-zastępowane są przez znak zdefiniowany w konfiguracji (opcja 'rmodifier.look.hide_char').
-
-Jeśli linia komend zawiera: `/oper nick hasło`, to wyświetlone będzie:
-`/oper nick *****`.
 
 [[scripts_plugins]]
 === Wtyczki skryptowe

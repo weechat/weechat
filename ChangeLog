@@ -57,6 +57,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * relay: add option relay.network.clients_purge_delay
 * relay: fix freeze after /upgrade when many disconnected clients still exist
 * relay: fix NULL pointer when reading buffer lines for irc backlog
+* rmodifier: remove plugin (replaced by trigger)
 * scripts: fix crash when a signal is received with type "int" and NULL pointer
   in signal_data
 * trigger: add trigger plugin: new command /trigger and file trigger.conf

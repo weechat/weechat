@@ -219,9 +219,6 @@ Liste von häufig verwendeten Optionen:
 | ENABLE_RELAY | `ON`, `OFF` | ON |
   kompiliert <<relay_plugin,Relay Erweiterung>>.
 
-| ENABLE_RMODIFIER | `ON`, `OFF` | ON |
-  kompiliert <<rmodifier_plugin,Rmodifier Erweiterung>>.
-
 | ENABLE_RUBY | `ON`, `OFF` | ON |
   kompiliert <<scripts_plugins,Ruby Erweiterung>>.
 
@@ -1751,7 +1748,6 @@ Standarderweiterungen:
 | irc         | IRC Chat-Protokoll
 | logger      | erstellt Protokolldateien von Buffern
 | relay       | Daten via Netzwerk übermitteln
-| rmodifier   | wandelt Schlüsselwörter mit regulären Ausdrücken
 | script      | Skripten-Manager
 | python      | Python-Skript API
 | perl        | Perl-Skript API
@@ -2778,75 +2774,6 @@ websocket = new WebSocket("ws://server.com:9000/weechat");
 
 Der Port (im Beispiel: 9000) ist der Port der in der Relay Erweiterung angegeben wurde.
 Die URI muss immer auf "/weechat" enden ('irc' und 'weechat' Protokoll).
-
-[[rmodifier_plugin]]
-=== Rmodifier Erweiterung
-
-Mittels der Rmodifer Erweiterung kann man Schlüsselwörter mittels regulären Ausdrücken
-wandeln. Ein typischer Anwendungsfall ist das Passwörter bei der Eingabe verborgen werden,
-oder das WeeChat diese verbirgt wenn sie im Befehlsverlauf gesichert werden.
-Ein einfaches Anwendungsbeispiel. Es ist möglich jedes einzelne Zeichen eines Passwortes
-durch das Zeichen `*` zu ersetzen.
-
-[[rmodifier_options]]
-==== Optionen (rmodifier.conf)
-
-Sektionen:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section  | Control command                                | Beschreibung
-| look     | /set rmodifier.look.*                          | Erscheinungsbild
-| modifier | <<command_rmodifier_rmodifier,/rmodifier add>> +
-             /set rmodifier.modifier.*                      | Rmodifiers
-|===
-
-Optionen:
-
-include::autogen/user/rmodifier_options.txt[]
-
-[[rmodifier_commands]]
-==== Befehle
-
-include::autogen/user/rmodifier_commands.txt[]
-
-[[rmodifier_creation]]
-==== Erstellen eines rmodifier
-
-Ein rmodifier besteht aus drei Elementen:
-
-. ein oder mehrere "modifiers"
-. ein regulärer Ausdruck  um "Gruppen" zu erkennen
-. eine Zeichenkette die als Textausgabe von "Gruppen" erkannt werden soll
-
-Um eine Auflistung der modifiers zu erhalten die von WeeChat oder einer
-Erweiterung genutzt werden siehe ''WeeChat Plugin API Reference', Funktion 'weechat_hook_modifier'.
-
-Für jede erkannte Gruppe sind folgende Aktionen möglich:
-
-* Gruppe wird in der vorliegenden Form beibehalten (wenn man die Gruppennummer nutzt)
-* alle Zeichen der Gruppe werden ersetzt um deren Inhalt zu verbergen (Gruppennummer + `*`)
-* Gruppe wird entfernt (falls Gruppe nicht in Zeichenkette genutzt wird)
-
-Beispiel der rmodifier-Standardeinstellung für den Befehl `/oper`:
-
-* modifiers: `history_add,input_text_display`
-** `history_add`: wird aufgerufen sobald WeeChat einen Befehl im Befehlsverlauf sichert
-** `input_text_display`: wird aufgerufen sobald sich die Eingabezeile ändert
-   (dies hat nur Einfluss auf die Darstellung aber nicht auf den Inhalt der Befehlszeile)
-* regulärer Ausdruck: `^(/oper +\S+ +)(.*)`
-* Gruppen: `1,2*`
-
-Bei jedem Aufruf von "history_add" oder "input_text_display" durch modifier wird der
-reguläre Ausdruck überprüft. Stimmen die Zeichenketten überein wird die Zeichenkette
-durch das definierte Zeichen ersetzt.
-
-In obigem Beispiel wird die Ausgabe für Gruppe 1 beibehalten und für die Gruppe 2
-werden alle Zeichen ersetzt. Das Zeichen welches zum Ersetzten genutzt werden soll
-kann in der Konfiguration bestimmt werden (Option: 'rmodifier.look.hide_char').
-
-Lautet die Befehlszeile `/oper nick password` wird diese in der Befehlszeile als
-`/oper nick ********` dargestellt.
 
 [[scripts_plugins]]
 === Erweiterungen für Skripten

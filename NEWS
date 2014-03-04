@@ -15,6 +15,17 @@ http://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 == Version 0.4.4 (under dev)
 
+=== Rmodifier replaced by Trigger plugin
+
+The trigger plugin replaces the rmodifier plugin, which has been removed
+(and trigger has much more features than rmodifier).
+
+Default triggers have same features as default rmodifiers (to hide passwords
+in commands and output).
+
+If you added some custom rmodifiers, you must create similar triggers, see
+`/help trigger` and the complete trigger doc in the 'WeeChat User's guide'.
+
 === Bare display
 
 A bare display mode has been added (for easy text selection and click on URLs),

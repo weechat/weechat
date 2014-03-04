@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-03-02 08:35+0100\n"
-"PO-Revision-Date: 2014-02-20 12:25+0100\n"
+"POT-Creation-Date: 2014-03-04 11:15+0100\n"
+"PO-Revision-Date: 2014-03-04 11:21+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
 "Language: ja\n"
@@ -9443,131 +9443,6 @@ msgstr ""
 "%s%s: クライアント %s%s%s から受け付けたコマンド \"%s\" に対する引数が足りま"
 "せん (受信: %d 個の引数、必要数: 少なくとも %d 個)"
 
-msgid "String modifier with regular expressions"
-msgstr "正規表現を用いた文字列置換"
-
-#, c-format
-msgid "%s%s: error compiling regular expression \"%s\""
-msgstr "%s%s: 正規表現のコンパイル中にエラー \"%s\""
-
-msgid "No rmodifier defined"
-msgstr "rmodifier は定義されていません"
-
-msgid "List of rmodifiers:"
-msgstr "rmodifier のリスト:"
-
-msgid "Default rmodifiers:"
-msgstr "デフォルトの rmodifier:"
-
-#, c-format
-msgid "%s%s: error creating rmodifier \"%s\""
-msgstr "%s%s: rmodifier の作成中にエラー \"%s\""
-
-#, c-format
-msgid "Rmodifier \"%s\" created"
-msgstr "Rmodifier \"%s\" を作成"
-
-#, c-format
-msgid "%d rmodifiers removed"
-msgstr "%d 個の rmodifier を削除"
-
-#, c-format
-msgid "Rmodifier \"%s\" removed"
-msgstr "Rmodifier \"%s\" を削除"
-
-#, c-format
-msgid "%sRmodifier \"%s\" not found"
-msgstr "%sRmodifier \"%s\" が見つかりません"
-
-msgid "Default rmodifiers restored:"
-msgstr "デフォルトに戻す場合の rmodifier:"
-
-#, c-format
-msgid ""
-"%sError: \"-yes\" argument is required for restoring default rmodifiers "
-"(security reason)"
-msgstr ""
-"%sエラー: デフォルト rmodifiers に戻すためには \"-yes\" 引数が必要 (セキュリ"
-"ティ上の問題)"
-
-#, c-format
-msgid "%d rmodifier added"
-msgid_plural "%d rmodifiers added"
-msgstr[0] "%d 個の rmodifier を追加"
-
-msgid "alter modifier strings with regular expressions"
-msgstr "正規表現で modifier 文字列を変更"
-
-msgid ""
-"list|listdefault || add <name> <modifiers> <groups> <regex> || del <name>|-"
-"all [<name>...] || missing || default -yes"
-msgstr ""
-"list|listdefault || add <name> <modifiers> <groups> <regex> || del <name>|-"
-"all [<name>...] || missing || default -yes"
-
-msgid ""
-"       list: list all rmodifiers\n"
-"listdefault: list default rmodifiers\n"
-"        add: add a rmodifier\n"
-"       name: name of rmodifier\n"
-"  modifiers: comma separated list of modifiers\n"
-"     groups: action on groups captured in regular expression (inside "
-"parentheses): comma separated list of groups (from 1 to 9) with optional \"*"
-"\" after number to hide the group\n"
-"      regex: POSIX extended regular expression (case insensitive, can start "
-"by \"(?-i)\" to become case sensitive)\n"
-"        del: delete a rmodifier\n"
-"       -all: delete all rmodifiers\n"
-"    missing: add missing rmodifiers\n"
-"    default: restore default rmodifiers\n"
-"\n"
-"Examples:\n"
-"  hide everything typed after a command /password:\n"
-"    /rmodifier add password input_text_display 1,2* ^(/password +)(.*)\n"
-"  delete rmodifier \"password\":\n"
-"    /rmodifier del password\n"
-"  delete all rmodifiers:\n"
-"    /rmodifier del -all"
-msgstr ""
-"       list: 全ての rmodifier をリストアップ\n"
-"listdefault: デフォルトの rmodifier をリストアップ\n"
-"        add: rmodifier を追加\n"
-"       name: rmodifier の名前\n"
-"  modifiers: rmodifier のコンマ区切りリスト\n"
-"     groups: 正規表現にマッチするグループに対するアクション (括弧内): グルー"
-"プ (1 から 9) のコンマ区切りリスト、グループを隠すには番号の後ろに任意で \"*"
-"\" をつける\n"
-"      regex: POSIX 拡張正規表現 (大文字小文字の区別無し、\"(?-i)\" で始めれば"
-"区別有り)\n"
-"        del: rmodifier を削除\n"
-"       -all: 全ての rmodifier を削除\n"
-"    missing: 見つからない rmodifier を追加\n"
-"    default: デフォルトの rmodifier に戻す\n"
-"\n"
-"例:\n"
-"  コマンド /password に続く入力は全て隠す:\n"
-"    /rmodifier add password input_text_display 1,2* ^(/password +)(.*)\n"
-"  rmodifier \"password\" を削除:\n"
-"    /rmodifier del password\n"
-"  全ての rmodifiers を削除:\n"
-"    /rmodifier del -all"
-
-msgid "list of rmodifiers"
-msgstr "rmodifier のリスト"
-
-#, c-format
-msgid "%s%s: error creating rmodifier \"%s\" => \"%s\""
-msgstr "%s%s: rmodifier \"%s\" => \"%s\" の作成中にエラー"
-
-msgid "char used to hide part of a string"
-msgstr "文字列の一部を隠すための文字"
-
-msgid "rmodifier pointer (optional)"
-msgstr "rmodifier ポインタ (任意)"
-
-msgid "rmodifier name (can start or end with \"*\" as joker) (optional)"
-msgstr "rmodifier 名 (ジョーカーとして \"*\" で始めるか終われる) (任意)"
-
 msgid "Support of ruby scripts"
 msgstr "ruby スクリプトサポート"
 
@@ -10964,9 +10839,3 @@ msgstr "%s%s: ソケットにオプション \"nonblock\" を設定できませ�
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: \"%s\" のタイムアウト %s"
-
-#~ msgid "user name to use on server"
-#~ msgstr "サーバで使用するユーザ名"
-
-#~ msgid "real name to use on server"
-#~ msgstr "サーバで使用するリアルネーム"

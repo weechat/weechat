@@ -46,33 +46,32 @@ Les répertoires principaux de WeeChat sont :
 
 [width="100%",cols="1v,5",options="header"]
 |===
-| Répertoire       | Description
-| src/             | Racine des sources
-|    core/         | Fonctions du cœur : point d'entrée, structures internes
-|    gui/          | Fonctions pour les tampons, fenêtres, ... (utilisées par toutes les interfaces)
-|       curses/    | Interface Curses
-|    plugins/      | API extension/script
-|       alias/     | Extension Alias
-|       aspell/    | Extension Aspell
-|       charset/   | Extension Charset
-|       fifo/      | Extension Fifo (tube FIFO utilisé pour envoyer des commandes à WeeChat)
-|       irc/       | Extension IRC (Internet Relay Chat)
-|       logger/    | Extension Logger (enregistrer les messages affichés dans des fichiers)
-|       relay/     | Extension Relay (proxy IRC + relai pour interfaces distantes)
-|       rmodifier/ | Extension Rmodifier (modifier des chaînes de modificateur avec des expressions régulières)
-|       script/    | Gestionnaire de scripts
-|       python/    | API script Python
-|       perl/      | API script Perl
-|       ruby/      | API script Ruby
-|       lua/       | API script Lua
-|       tcl/       | API script Tcl
-|       guile/     | API script Guile (scheme)
-|       trigger/   | Extension Trigger
-|       xfer/      | Extension Xfer (IRC DCC fichier/discussion)
-| doc/             | Documentation
-| po/              | Fichiers de traductions (gettext)
-| test/            | Outils/fichiers pour tester WeeChat (comme Weercd, un serveur IRC)
-| debian/          | Empaquetage Debian
+| Répertoire     | Description
+| src/           | Racine des sources
+|    core/       | Fonctions du cœur : point d'entrée, structures internes
+|    gui/        | Fonctions pour les tampons, fenêtres, ... (utilisées par toutes les interfaces)
+|       curses/  | Interface Curses
+|    plugins/    | API extension/script
+|       alias/   | Extension Alias
+|       aspell/  | Extension Aspell
+|       charset/ | Extension Charset
+|       fifo/    | Extension Fifo (tube FIFO utilisé pour envoyer des commandes à WeeChat)
+|       irc/     | Extension IRC (Internet Relay Chat)
+|       logger/  | Extension Logger (enregistrer les messages affichés dans des fichiers)
+|       relay/   | Extension Relay (proxy IRC + relai pour interfaces distantes)
+|       script/  | Gestionnaire de scripts
+|       python/  | API script Python
+|       perl/    | API script Perl
+|       ruby/    | API script Ruby
+|       lua/     | API script Lua
+|       tcl/     | API script Tcl
+|       guile/   | API script Guile (scheme)
+|       trigger/ | Extension Trigger
+|       xfer/    | Extension Xfer (IRC DCC fichier/discussion)
+| doc/           | Documentation
+| po/            | Fichiers de traductions (gettext)
+| test/          | Outils/fichiers pour tester WeeChat (comme Weercd, un serveur IRC)
+| debian/        | Empaquetage Debian
 |===
 
 [[sources]]
@@ -240,13 +239,6 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |          relay-weechat-msg.c      | Envoi de messages binaires aux clients
 |          relay-weechat-nicklist.c | Fonctions pour la liste de pseudos
 |          relay-weechat-protocol.c | Lecture des commandes des clients
-|    rmodifier/                     | Extension Rmodifier
-|       rmodifier.c                 | Fonctions principales de Rmodifier
-|       rmodifier-command.c         | Commandes de Rmodifier
-|       rmodifier-completion.c      | Complétions de Rmodifier
-|       rmodifier-config.c          | Options de configuration pour Rmodifier (fichier rmodifier.conf)
-|       rmodifier-debug.c           | Fonctions de debug pour Rmodifier
-|       rmodifier-info.c            | Info/infolists/hdata pour Rmodifier
 |    ruby/                          | Extension Ruby
 |       weechat-ruby.c              | Fonctions principales pour Ruby (chargement/déchargement des scripts, exécution de code Ruby)
 |       weechat-ruby-api.c          | Fonctions de l'API script Ruby

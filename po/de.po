@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-03-02 08:35+0100\n"
-"PO-Revision-Date: 2014-03-04 09:23+0100\n"
+"POT-Creation-Date: 2014-03-04 11:15+0100\n"
+"PO-Revision-Date: 2014-03-04 11:21+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
 "Language: de_DE\n"
@@ -10043,138 +10043,6 @@ msgid ""
 msgstr ""
 "%s%s: Zu wenige Argumente von Client %s%s%s für den Befehl \"%s\" erhalten "
 "(Empfangen: %d Argumente, mindestens Erwartet: %d)"
-
-msgid "String modifier with regular expressions"
-msgstr "Zeichenketten werden mittels regulären Ausdrücken verändert"
-
-#, c-format
-msgid "%s%s: error compiling regular expression \"%s\""
-msgstr "%s%s: Fehler bei der Kompilierung des regulären Ausdruckes \"%s\""
-
-msgid "No rmodifier defined"
-msgstr "Kein rmodifier definiert"
-
-msgid "List of rmodifiers:"
-msgstr "Liste der rmodifier:"
-
-msgid "Default rmodifiers:"
-msgstr "Standard rmodifier:"
-
-#, c-format
-msgid "%s%s: error creating rmodifier \"%s\""
-msgstr "%s%s: Fehler bei der Erstellung von rmodifier \"%s\""
-
-#, c-format
-msgid "Rmodifier \"%s\" created"
-msgstr "rmodifier \"%s\" erstellt"
-
-#, c-format
-msgid "%d rmodifiers removed"
-msgstr "%d rmodifiers entfernt"
-
-#, c-format
-msgid "Rmodifier \"%s\" removed"
-msgstr "rmodifier \"%s\" entfernt"
-
-#, c-format
-msgid "%sRmodifier \"%s\" not found"
-msgstr "%srmodifier \"%s\" nicht gefunden"
-
-msgid "Default rmodifiers restored:"
-msgstr "Standard rmodifier wiederhergestellt:"
-
-#, c-format
-msgid ""
-"%sError: \"-yes\" argument is required for restoring default rmodifiers "
-"(security reason)"
-msgstr ""
-"%sFehler: Um rmodifier auf Standardeinstellungen zurücksetzen ist es aus "
-"Sicherheitsgründen erforderlich, das Argument \"-yes\" zu nutzen"
-
-#, c-format
-msgid "%d rmodifier added"
-msgid_plural "%d rmodifiers added"
-msgstr[0] "%d rmodifier hinzugefügt"
-msgstr[1] "%d rmodifiers hinzugefügt"
-
-msgid "alter modifier strings with regular expressions"
-msgstr ""
-"wandelt Schlüsselwörter mit regulären Ausdrücken (regelt die Darstellung von "
-"Texten in WeeChat)"
-
-msgid ""
-"list|listdefault || add <name> <modifiers> <groups> <regex> || del <name>|-"
-"all [<name>...] || missing || default -yes"
-msgstr ""
-"list|listdefault || add <name> <modifiers> <groups> <regex> || del <name>|-"
-"all [<name>...] || missing || default -yes"
-
-msgid ""
-"       list: list all rmodifiers\n"
-"listdefault: list default rmodifiers\n"
-"        add: add a rmodifier\n"
-"       name: name of rmodifier\n"
-"  modifiers: comma separated list of modifiers\n"
-"     groups: action on groups captured in regular expression (inside "
-"parentheses): comma separated list of groups (from 1 to 9) with optional \"*"
-"\" after number to hide the group\n"
-"      regex: POSIX extended regular expression (case insensitive, can start "
-"by \"(?-i)\" to become case sensitive)\n"
-"        del: delete a rmodifier\n"
-"       -all: delete all rmodifiers\n"
-"    missing: add missing rmodifiers\n"
-"    default: restore default rmodifiers\n"
-"\n"
-"Examples:\n"
-"  hide everything typed after a command /password:\n"
-"    /rmodifier add password input_text_display 1,2* ^(/password +)(.*)\n"
-"  delete rmodifier \"password\":\n"
-"    /rmodifier del password\n"
-"  delete all rmodifiers:\n"
-"    /rmodifier del -all"
-msgstr ""
-"       list: zeigt alle rmodifier an\n"
-"listdefault: zeigt die Standardeinstellung für rmodifier an\n"
-"        add: einen rmodifier hinzufügen\n"
-"       name: Name des rmodifier\n"
-"  modifiers: durch Kommata getrennte Liste der modifier\n"
-"     groups: Aktion auf Gruppen (groups) anwenden, die durch reguläre "
-"Ausdrücke abgefragt werden (innerhalb der runden Klammern): durch Kommata "
-"getrennte Liste der Gruppen (von 1 bis 9). Optional kann nach der Nummer für "
-"die Gruppe ein \"*\" gesetzt werden um diese Gruppe auszublenden\n"
-"      regex: erweiterter regulärer POSIX Ausdruck (zwischen Groß- und "
-"Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und "
-"Kleinschreibung zu unterscheiden muss zu Beginn \"(?-i)\" genutzt werden)\n"
-"        del: löscht einen rmodifier Eintrag\n"
-"       -all: löscht alle rmodifiers Einträge\n"
-"    missing: fügt fehlende rmodifiers hinzu\n"
-"    default: setzt die rmodifier auf seine Standardwerte zurück\n"
-"\n"
-"Beispiele:\n"
-"  verbirgt die Eingabe nach dem Befehl /passwort:\n"
-"    /rmodifier add passwort input_text_display 1,2* ^(/passwort +)(.*)\n"
-"  lösche rmodifier \"passwort\":\n"
-"    /rmodifier del passwort\n"
-"  lösche alle rmodifiers:\n"
-"    /rmodifier del -all"
-
-msgid "list of rmodifiers"
-msgstr "Liste der rmodifier"
-
-#, c-format
-msgid "%s%s: error creating rmodifier \"%s\" => \"%s\""
-msgstr "%s%s: Fehler beim Erstellen des rmodifier \"%s\" => \"%s\""
-
-msgid "char used to hide part of a string"
-msgstr "Zeichen, das anstelle der eigentlichen Eingabe angezeigt wird"
-
-msgid "rmodifier pointer (optional)"
-msgstr "rmodifier Pointer (optional)"
-
-msgid "rmodifier name (can start or end with \"*\" as joker) (optional)"
-msgstr ""
-"rmodifier Name (darf mit einem \"*\" als Platzhalter beginnen oder enden) "
-"(optional)"
 
 msgid "Support of ruby scripts"
 msgstr "Unterstützung von Ruby-Skripten"

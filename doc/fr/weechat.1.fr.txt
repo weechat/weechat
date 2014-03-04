@@ -72,9 +72,6 @@ $HOME/.weechat/logger.conf::
 $HOME/.weechat/relay.conf::
     fichier de configuration pour l'extension 'relay'
 
-$HOME/.weechat/rmodifier.conf::
-    fichier de configuration pour l'extension 'rmodifier'
-
 $HOME/.weechat/script.conf::
     fichier de configuration pour l'extension 'script'
 

@@ -56,8 +56,6 @@
 
 | relay | relay_relays | Protokoll.Name des aktuellen Relays von der Relay-Erweiterung
 
-| rmodifier | rmodifier | Liste der rmodifier
-
 | ruby | ruby_script | Liste der Skripten
 
 | script | script_files | Dateien die sich in den Skript-Verzeichnissen befinden

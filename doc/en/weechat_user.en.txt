@@ -218,9 +218,6 @@ List of commonly used options:
 | ENABLE_RELAY | `ON`, `OFF` | ON |
   Compile <<relay_plugin,Relay plugin>>.
 
-| ENABLE_RMODIFIER | `ON`, `OFF` | ON |
-  Compile <<rmodifier_plugin,Rmodifier plugin>>.
-
 | ENABLE_RUBY | `ON`, `OFF` | ON |
   Compile <<scripts_plugins,Ruby plugin>>.
 
@@ -1715,23 +1712,22 @@ Default plugins are:
 
 [width="50%",cols="^1,5",options="header"]
 |===
-| Plugin    | Description
-| alias     | Define alias for commands
-| aspell    | Spell checking for command line
-| charset   | Charset decoding/encoding for buffers
-| fifo      | FIFO pipe used to remotely send commands to WeeChat
-| irc       | IRC chat protocol
-| logger    | Log buffers to files
-| relay     | Relay data via network
-| rmodifier | Alter modifier strings with regular expressions
-| script    | Scripts manager
-| python    | Python scripting API
-| perl      | Perl scripting API
-| ruby      | Ruby scripting API
-| lua       | Lua scripting API
-| tcl       | Tcl scripting API
-| guile     | Guile (scheme) scripting API
-| xfer      | File transfer and direct chat
+| Plugin  | Description
+| alias   | Define alias for commands
+| aspell  | Spell checking for command line
+| charset | Charset decoding/encoding for buffers
+| fifo    | FIFO pipe used to remotely send commands to WeeChat
+| irc     | IRC chat protocol
+| logger  | Log buffers to files
+| relay   | Relay data via network
+| script  | Scripts manager
+| python  | Python scripting API
+| perl    | Perl scripting API
+| ruby    | Ruby scripting API
+| lua     | Lua scripting API
+| tcl     | Tcl scripting API
+| guile   | Guile (scheme) scripting API
+| xfer    | File transfer and direct chat
 |===
 
 To learn more about plugin or script development (through API), please read
@@ -2722,74 +2718,6 @@ websocket = new WebSocket("ws://server.com:9000/weechat");
 
 The port (9000 in example) is the port defined in Relay plugin.
 The URI must always end with "/weechat" (for 'irc' and 'weechat' protocols).
-
-[[rmodifier_plugin]]
-=== Rmodifier plugin
-
-The Rmodifier plugin lets you alter modifier strings using regular expressions.
-Typical use is to hide password when you type them, or when WeeChat saves
-them in command history. For example, it is possible to replace each char in
-these passwords by `*`.
-
-[[rmodifier_options]]
-==== Options (rmodifier.conf)
-
-Sections:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section  | Control command                                | Description
-| look     | /set rmodifier.look.*                          | Look and feel
-| modifier | <<command_rmodifier_rmodifier,/rmodifier add>> +
-             /set rmodifier.modifier.*                      | Rmodifiers
-|===
-
-Options:
-
-include::autogen/user/rmodifier_options.txt[]
-
-[[rmodifier_commands]]
-==== Commands
-
-include::autogen/user/rmodifier_commands.txt[]
-
-[[rmodifier_creation]]
-==== Rmodifier creation
-
-A rmodifier consists of three elements:
-
-. one or more "modifiers"
-. a regular expression, to capture "groups"
-. a string that describes output using number of "groups" captured in regular
-  expression
-
-For list of modifiers used by WeeChat or plugins, see
-'WeeChat Plugin API Reference', function 'weechat_hook_modifier'.
-
-For each captured group, following actions are possible:
-
-* keep group as-is (by using group number)
-* replace all chars in group to hide content (group number + `*`)
-* remove group (if group is not used in string)
-
-Example of default rmodifier for command `/oper`:
-
-* modifiers: `history_add,input_text_display`
-** `history_add`: called when WeeChat stores command in history
-** `input_text_display`: called when command line has changed
-   (applies only on display, not content of command line)
-* regular expression: `^(/oper +\S+ +)(.*)`
-* groups: `1,2*`
-
-Each time modifiers "history_add" or "input_text_display" are called, regular
-expression is checked. If string matches, then it is replaced by captured groups,
-as defined in string with groups.
-
-In this example, we keep number 1 as-is, and we replace all chars of group 2 by
-replacement char defined in configuration (option 'rmodifier.look.hide_char').
-
-If command line contains: `/oper nick password` then display becomes:
-`/oper nick ********`.
 
 [[scripts_plugins]]
 === Scripts plugins

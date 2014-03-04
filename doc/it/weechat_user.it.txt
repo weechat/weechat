@@ -231,9 +231,6 @@ List of commonly used options:
 | ENABLE_RELAY | `ON`, `OFF` | ON |
   Compile <<relay_plugin,Relay plugin>>.
 
-| ENABLE_RMODIFIER | `ON`, `OFF` | ON |
-  Compile <<rmodifier_plugin,Rmodifier plugin>>.
-
 | ENABLE_RUBY | `ON`, `OFF` | ON |
   Compile <<scripts_plugins,Ruby plugin>>.
 
@@ -1779,23 +1776,22 @@ I plugin predefiniti sono:
 
 [width="50%",cols="^1,5",options="header"]
 |===
-| Plugin    | Descrizione
-| alias     | Definisce gli alias per i comandi
-| aspell    | Controllo ortografico per la riga di comando
-| charset   | Set di caratteri per la codifica/decodifica nei buffer
-| fifo      | pipe FIFO utilizzata per inviare comandi da remoto su WeeChat
-| irc       | protocollo chat per IRC
-| logger    | Registra i buffer su file
-| relay     | Relay dei dati via rete
-| rmodifier | Cambia le stringhe del modificatore con espressioni regolari
-| script    | Gestore script
-| python    | API per lo scripting in Python
-| perl      | API per lo scripting in Perl
-| ruby      | API per lo scripting in Ruby
-| lua       | API per lo scripting in Lua
-| tcl       | API per lo scripting in TCL
-| guile     | API per lo scripting in Guile (scheme)
-| xfer      | Trasferimento file e chat diretta
+| Plugin  | Descrizione
+| alias   | Definisce gli alias per i comandi
+| aspell  | Controllo ortografico per la riga di comando
+| charset | Set di caratteri per la codifica/decodifica nei buffer
+| fifo    | pipe FIFO utilizzata per inviare comandi da remoto su WeeChat
+| irc     | protocollo chat per IRC
+| logger  | Registra i buffer su file
+| relay   | Relay dei dati via rete
+| script  | Gestore script
+| python  | API per lo scripting in Python
+| perl    | API per lo scripting in Perl
+| ruby    | API per lo scripting in Ruby
+| lua     | API per lo scripting in Lua
+| tcl     | API per lo scripting in TCL
+| guile   | API per lo scripting in Guile (scheme)
+| xfer    | Trasferimento file e chat diretta
 |===
 
 Per saperne di più riguardo lo sviluppo di plugin o script (tramite le API), per
@@ -2842,80 +2838,6 @@ websocket = new WebSocket("ws://server.com:9000/weechat");
 
 The port (9000 in example) is the port defined in Relay plugin.
 The URI must always end with "/weechat" (for 'irc' and 'weechat' protocols).
-
-[[rmodifier_plugin]]
-=== Plugin Rmodifier
-
-Il plugin Rmodifier consente di cambiare le stringhe del modificatore
-utilizzando le espressioni regolari. Si usa tipicamente per nascondere la
-password quando viene digitata, o quando WeeChat la salva nella cronologia dei
-comandi. Ad esempio, è possibile sostituire ogni carattere in questa password
-con `*`.
-
-[[rmodifier_options]]
-==== Opzioni (rmodifier.conf)
-
-// TRANSLATION MISSING
-Sections:
-
-// TRANSLATION MISSING
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section  | Control command                                | Description
-| look     | /set rmodifier.look.*                          | Look and feel
-| modifier | <<command_rmodifier_rmodifier,/rmodifier add>> +
-             /set rmodifier.modifier.*                      | Rmodifiers
-|===
-
-// TRANSLATION MISSING
-Options:
-
-include::autogen/user/rmodifier_options.txt[]
-
-[[rmodifier_commands]]
-==== Comandi
-
-include::autogen/user/rmodifier_commands.txt[]
-
-[[rmodifier_creation]]
-==== Creazione di Rmodifier
-
-Un rmodifier è costituito da tre elementi:
-
-. uno o più "modificatori"
-. un'espressione regolare per catturare i "gruppi"
-. una stringa che descriva l'output facendo uso di "gruppi" catturati nelle
-  espressioni regolari
-
-Per un elenco di modificatori usati da WeeChat o dai plugin, consultare
-'WeeChat Plugin API Reference', function 'weechat_hook_modifier'.
-
-Per ogni gruppo catturato, sono consentite le seguenti azioni:
-
-* mantenere il gruppo così com'è (usando un numero per gruppo)
-* sostituire tutti i caratteri nel gruppo per nascondere il contenuto (numero
-  del gruppo + `*`)
-* rimuovere il gruppo (se il gruppo non viene utilizzato nella stringa)
-
-Esempio di rmodifier predefinito per il comando `/oper`:
-
-* modifier: `history_add,input_text_display`
-** `history_add`: chiamato quando WeeChat conserva il comando nella cronologia
-** `input_text_display`: chiamato quando la riga di comando è cambiata
-   (valida solo a video, non per il contenuto della riga di comando)
-* espressione regolare: `^(/oper +\S+ +)(.*)`
-* gruppi: `1,2*`
-
-Ad ogni chiamata dei modificatori "history_add" o "input_text_display", viene
-verificata l'espressione regolare. Se la stringa coincide, viene sostituita
-dai gruppi catturati, come definito nella stringa con i gruppi.
-
-In questo esempio, il numero 1 resta così com'è, e sostituiamo tutti i
-caratteri del gruppo 2 con il carattere di sostituzione definito nella
-configurazione (opzione 'rmodifier.look.hide_char').
-
-Se la riga di comando contiene: `/oper nick password` allora sullo schermo diventa:
-`/oper nick ********`.
 
 [[scripts_plugins]]
 === Plugin per gli script

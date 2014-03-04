@@ -1,5 +1,0 @@
-* [[option_rmodifier.look.hide_char]] *rmodifier.look.hide_char*
-** opis: `znak używany do ukrycia części ciągu`
-** typ: ciąg
-** wartości: dowolny ciąg (domyślna wartość: `"*"`)
-

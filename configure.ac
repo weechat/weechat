@@ -108,7 +108,6 @@ AH_VERBATIM([PLUGIN_FIFO], [#undef PLUGIN_FIFO])
 AH_VERBATIM([PLUGIN_IRC], [#undef PLUGIN_IRC])
 AH_VERBATIM([PLUGIN_LOGGER], [#undef PLUGIN_LOGGER])
 AH_VERBATIM([PLUGIN_RELAY], [#undef PLUGIN_RELAY])
-AH_VERBATIM([PLUGIN_RMODIFIER], [#undef PLUGIN_RMODIFIER])
 AH_VERBATIM([PLUGIN_SCRIPT], [#undef PLUGIN_SCRIPT])
 AH_VERBATIM([PLUGIN_PERL], [#undef PLUGIN_PERL])
 AH_VERBATIM([PLUGIN_PYTHON], [#undef PLUGIN_PYTHON])
@@ -136,7 +135,6 @@ AC_ARG_ENABLE(fifo,         [  --disable-fifo          turn off Fifo plugin (def
 AC_ARG_ENABLE(irc,          [  --disable-irc           turn off IRC plugin (default=compiled)],enable_irc=$enableval,enable_irc=yes)
 AC_ARG_ENABLE(logger,       [  --disable-logger        turn off Logger plugin (default=compiled)],enable_logger=$enableval,enable_logger=yes)
 AC_ARG_ENABLE(relay,        [  --disable-relay         turn off Relay plugin (default=compiled)],enable_relay=$enableval,enable_relay=yes)
-AC_ARG_ENABLE(rmodifier,    [  --disable-rmodifier     turn off Rmodifier plugin (default=compiled)],enable_rmodifier=$enableval,enable_rmodifier=yes)
 AC_ARG_ENABLE(script,       [  --disable-script        turn off Script plugin (default=compiled)],enable_script=$enableval,enable_script=yes)
 AC_ARG_ENABLE(scripts,      [  --disable-scripts       turn off script plugins (perl, python, ...) (default=compiled if found)],enable_scripts=$enableval,enable_scripts=yes)
 AC_ARG_ENABLE(perl,         [  --disable-perl          turn off Perl script plugin (default=compiled if found)],enable_perl=$enableval,enable_perl=yes)
@@ -402,14 +400,6 @@ if test "x$enable_relay" = "xyes" ; then
     AC_DEFINE(PLUGIN_RELAY)
 else
     not_asked="$not_asked relay"
-fi
-
-# ------------------------------- rmodifier ------------------------------------
-
-if test "x$enable_rmodifier" = "xyes" ; then
-    AC_DEFINE(PLUGIN_RMODIFIER)
-else
-    not_asked="$not_asked rmodifier"
 fi
 
 # --------------------------------- script -------------------------------------
@@ -1131,7 +1121,6 @@ AM_CONDITIONAL(PLUGIN_FIFO,             test "$enable_fifo" = "yes")
 AM_CONDITIONAL(PLUGIN_IRC,              test "$enable_irc" = "yes")
 AM_CONDITIONAL(PLUGIN_LOGGER,           test "$enable_logger" = "yes")
 AM_CONDITIONAL(PLUGIN_RELAY,            test "$enable_relay" = "yes")
-AM_CONDITIONAL(PLUGIN_RMODIFIER,        test "$enable_rmodifier" = "yes")
 AM_CONDITIONAL(PLUGIN_SCRIPT,           test "$enable_script" = "yes")
 AM_CONDITIONAL(PLUGIN_PERL,             test "$enable_perl" = "yes")
 AM_CONDITIONAL(PLUGIN_PYTHON,           test "$enable_python" = "yes")
@@ -1164,7 +1153,6 @@ AC_OUTPUT([Makefile
            src/plugins/irc/Makefile
            src/plugins/logger/Makefile
            src/plugins/relay/Makefile
-           src/plugins/rmodifier/Makefile
            src/plugins/script/Makefile
            src/plugins/perl/Makefile
            src/plugins/python/Makefile
@@ -1215,9 +1203,6 @@ if test "x$enable_logger" = "xyes"; then
 fi
 if test "x$enable_relay" = "xyes"; then
     listplugins="$listplugins relay"
-fi
-if test "x$enable_rmodifier" = "xyes"; then
-    listplugins="$listplugins rmodifier"
 fi
 if test "x$enable_script" = "xyes"; then
     listplugins="$listplugins script"

@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-03-02 08:35+0100\n"
-"PO-Revision-Date: 2014-03-02 08:36+0100\n"
+"POT-Creation-Date: 2014-03-04 11:15+0100\n"
+"PO-Revision-Date: 2014-03-04 11:21+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -9795,134 +9795,6 @@ msgstr ""
 "%s%s: trop peu de paramètres reçus du client %s%s%s pour la commande \"%s"
 "\" (reçu: %d paramètres, attendu: au moins %d)"
 
-msgid "String modifier with regular expressions"
-msgstr "Modificateur de chaîne avec expressions régulières"
-
-#, c-format
-msgid "%s%s: error compiling regular expression \"%s\""
-msgstr "%s%s: erreur de compilation de l'expression régulière \"%s\""
-
-msgid "No rmodifier defined"
-msgstr "Pas de rmodifier défini"
-
-msgid "List of rmodifiers:"
-msgstr "Liste des rmodifiers:"
-
-msgid "Default rmodifiers:"
-msgstr "Rmodifiers par défaut:"
-
-#, c-format
-msgid "%s%s: error creating rmodifier \"%s\""
-msgstr "%s%s: erreur de création du rmodifier \"%s\""
-
-#, c-format
-msgid "Rmodifier \"%s\" created"
-msgstr "Rmodifier \"%s\" créé"
-
-#, c-format
-msgid "%d rmodifiers removed"
-msgstr "%d rmodifiers supprimés"
-
-#, c-format
-msgid "Rmodifier \"%s\" removed"
-msgstr "Rmodifier \"%s\" supprimé"
-
-#, c-format
-msgid "%sRmodifier \"%s\" not found"
-msgstr "%sRmodifier \"%s\" non trouvé"
-
-msgid "Default rmodifiers restored:"
-msgstr "Rmodifiers par défaut restaurés:"
-
-#, c-format
-msgid ""
-"%sError: \"-yes\" argument is required for restoring default rmodifiers "
-"(security reason)"
-msgstr ""
-"%sErreur: le paramètre \"-yes\" est requis pour la restauration des "
-"rmodifiers par défaut (raison de sécurité)"
-
-#, c-format
-msgid "%d rmodifier added"
-msgid_plural "%d rmodifiers added"
-msgstr[0] "%d rmodifier ajouté"
-msgstr[1] "%d rmodifiers ajoutés"
-
-msgid "alter modifier strings with regular expressions"
-msgstr "modifier des chaînes de \"modifier\" avec des expressions régulières"
-
-msgid ""
-"list|listdefault || add <name> <modifiers> <groups> <regex> || del <name>|-"
-"all [<name>...] || missing || default -yes"
-msgstr ""
-"list|listdefault || add <nom> <modifiers> <groupes> <regex> || del <nom>|-"
-"all [<nom>...] || missing || default -yes"
-
-msgid ""
-"       list: list all rmodifiers\n"
-"listdefault: list default rmodifiers\n"
-"        add: add a rmodifier\n"
-"       name: name of rmodifier\n"
-"  modifiers: comma separated list of modifiers\n"
-"     groups: action on groups captured in regular expression (inside "
-"parentheses): comma separated list of groups (from 1 to 9) with optional \"*"
-"\" after number to hide the group\n"
-"      regex: POSIX extended regular expression (case insensitive, can start "
-"by \"(?-i)\" to become case sensitive)\n"
-"        del: delete a rmodifier\n"
-"       -all: delete all rmodifiers\n"
-"    missing: add missing rmodifiers\n"
-"    default: restore default rmodifiers\n"
-"\n"
-"Examples:\n"
-"  hide everything typed after a command /password:\n"
-"    /rmodifier add password input_text_display 1,2* ^(/password +)(.*)\n"
-"  delete rmodifier \"password\":\n"
-"    /rmodifier del password\n"
-"  delete all rmodifiers:\n"
-"    /rmodifier del -all"
-msgstr ""
-"       list: lister les rmodifiers\n"
-"listdefault: lister les rmodifiers par défaut\n"
-"        add: ajouter un rmodifier\n"
-"       name: nom du rmodifier\n"
-"  modifiers: liste de modifiers (séparés par une virgule)\n"
-"    groupes: action sur les groupes capturés dans l'expression régulière "
-"(entre parenthèses): liste de groupes (séparés par une virgule) (de 1 à 9) "
-"avec en option \"*\" après le nombre pour cacher le groupe\n"
-"      regex: expression régulière POSIX étendue (insensible à la casse, peut "
-"commencer par \"(?-i)\" pour devenir sensible à la casse)\n"
-"        del: supprimer un rmodifier\n"
-"       -all: supprimer tous les rmodifiers\n"
-"    missing: ajouter les rmodifiers manquants\n"
-"    default: restaurer les rmodifiers par défaut\n"
-"\n"
-"Exemples:\n"
-"  cacher tout ce qui est tapé après la commande /password:\n"
-"    /rmodifier add password input_text_display 1,2* ^(/password +)(.*)\n"
-"  supprimer le rmodifier \"password\":\n"
-"    /rmodifier del password\n"
-"  supprimer tous les rmodifiers:\n"
-"    /rmodifier del -all"
-
-msgid "list of rmodifiers"
-msgstr "liste des rmodifiers"
-
-#, c-format
-msgid "%s%s: error creating rmodifier \"%s\" => \"%s\""
-msgstr "%s%s: erreur de création du rmodifier \"%s\" => \"%s\""
-
-msgid "char used to hide part of a string"
-msgstr "caractère utilisé pour cacher une partie de la chaîne"
-
-msgid "rmodifier pointer (optional)"
-msgstr "pointeur vers le rmodifier (optionnel)"
-
-msgid "rmodifier name (can start or end with \"*\" as joker) (optional)"
-msgstr ""
-"nom du rmodifier (peut démarrer ou se terminer par \"*\" comme caractère "
-"joker) (optionnel)"
-
 msgid "Support of ruby scripts"
 msgstr "Support des scripts ruby"
 
@@ -11455,9 +11327,3 @@ msgstr ""
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
-
-#~ msgid "user name to use on server"
-#~ msgstr "nom d'utilisateur pour le serveur"
-
-#~ msgid "real name to use on server"
-#~ msgstr "nom réel pour le serveur"

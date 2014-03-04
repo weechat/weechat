@@ -45,34 +45,33 @@ WeeChat の主要なリポジトリは 2 つあります:
 
 [width="100%",cols="1v,5",options="header"]
 |===
-| ディレクトリ     | 説明
-| src/             | ソースコードのルートディレクトリ
-|    core/         | コア関数: エントリポイント、内部構造体
-|    gui/          | バッファ、ウィンドウ、... を操作する関数 (全てのインターフェイスで使う)
-|       curses/    | curses インターフェイス
-|    plugins/      | プラグインとスクリプト向け API
-|       alias/     | alias プラグイン
-|       aspell/    | aspell プラグイン
-|       charset/   | charset プラグイン
-|       fifo/      | fifo プラグイン (WeeChat にコマンドを送信する FIFO パイプ)
-|       irc/       | IRC (Internet Relay Chat) プラグイン
-|       logger/    | logger プラグイン (表示されたメッセージをファイルに書き込む)
-|       relay/     | relay プラグイン (irc プロキシ + リモートインターフェイス用の中継)
-|       rmodifier/ | rmodifier プラグイン (正規表現を含む修飾子文字列)
-|       script/    | スクリプトマネージャ
-|       python/    | python スクリプト用 API
-|       perl/      | perl スクリプト用 API
-|       ruby/      | ruby スクリプト用 API
-|       lua/       | lua スクリプト用 API
-|       tcl/       | tcl スクリプト用 API
-|       guile/     | guile (scheme) スクリプト用 API
+| ディレクトリ   | 説明
+| src/           | ソースコードのルートディレクトリ
+|    core/       | コア関数: エントリポイント、内部構造体
+|    gui/        | バッファ、ウィンドウ、... を操作する関数 (全てのインターフェイスで使う)
+|       curses/  | curses インターフェイス
+|    plugins/    | プラグインとスクリプト向け API
+|       alias/   | alias プラグイン
+|       aspell/  | aspell プラグイン
+|       charset/ | charset プラグイン
+|       fifo/    | fifo プラグイン (WeeChat にコマンドを送信する FIFO パイプ)
+|       irc/     | IRC (Internet Relay Chat) プラグイン
+|       logger/  | logger プラグイン (表示されたメッセージをファイルに書き込む)
+|       relay/   | relay プラグイン (irc プロキシ + リモートインターフェイス用の中継)
+|       script/  | スクリプトマネージャ
+|       python/  | python スクリプト用 API
+|       perl/    | perl スクリプト用 API
+|       ruby/    | ruby スクリプト用 API
+|       lua/     | lua スクリプト用 API
+|       tcl/     | tcl スクリプト用 API
+|       guile/   | guile (scheme) スクリプト用 API
 // TRANSLATION MISSING
-|       trigger/   | Trigger plugin
-|       xfer/      | xfer (IRC DCC ファイル/チャット)
-| doc/             | 文書
-| po/              | 翻訳ファイル (gettext)
-| test/            | WeeChat をテストするためのツールおよびファイル (Weercd IRC サーバなど)
-| debian/          | Debian パッケージ用
+|       trigger/ | Trigger plugin
+|       xfer/    | xfer (IRC DCC ファイル/チャット)
+| doc/           | 文書
+| po/            | 翻訳ファイル (gettext)
+| test/          | WeeChat をテストするためのツールおよびファイル (Weercd IRC サーバなど)
+| debian/        | Debian パッケージ用
 |===
 
 [[sources]]
@@ -240,13 +239,6 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |          relay-weechat-msg.c      | クライアントにバイナリメッセージを送信
 |          relay-weechat-nicklist.c | ニックネームリスト関数
 |          relay-weechat-protocol.c | クライアントからのコマンドを読み取る
-|    rmodifier/                     | rmodifier プラグイン
-|       rmodifier.c                 | rmodifier の主要関数
-|       rmodifier-command.c         | rmodifier コマンド
-|       rmodifier-completion.c      | rmodifier 補完
-|       rmodifier-config.c          | rmodifier 設定オプション (rmodifier.conf ファイル)
-|       rmodifier-debug.c           | rmodifier デバッグ関数
-|       rmodifier-info.c            | rmodifier の情報/インフォリスト/hdata
 |    ruby/                          | ruby プラグイン
 |       weechat-ruby.c              | ruby の主要関数 (スクリプトのロード/アンロード、ruby コードの実行)
 |       weechat-ruby-api.c          | ruby スクリプト作成 API 関数

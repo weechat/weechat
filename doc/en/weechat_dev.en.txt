@@ -45,33 +45,32 @@ The main WeeChat directories are:
 
 [width="100%",cols="1v,5",options="header"]
 |===
-| Directory        | Description
-| src/             | Root of sources
-|    core/         | Core functions: entry point, internal structures
-|    gui/          | Functions for buffers, windows, ... (used by all interfaces)
-|       curses/    | Curses interface
-|    plugins/      | Plugin and scripting API
-|       alias/     | Alias plugin
-|       aspell/    | Aspell plugin
-|       charset/   | Charset plugin
-|       fifo/      | Fifo plugin (FIFO pipe used to remotely send commands to WeeChat)
-|       irc/       | IRC (Internet Relay Chat) plugin
-|       logger/    | Logger plugin (write messages displayed to files)
-|       relay/     | Relay plugin (irc proxy + relay for remote interfaces)
-|       rmodifier/ | Rmodifier plugin (alter modifier strings with regular expressions)
-|       script/    | Scripts manager
-|       python/    | Python scripting API
-|       perl/      | Perl scripting API
-|       ruby/      | Ruby scripting API
-|       lua/       | Lua scripting API
-|       tcl/       | Tcl scripting API
-|       guile/     | Guile (scheme) scripting API
-|       trigger/   | Trigger plugin
-|       xfer/      | Xfer plugin (IRC DCC file/chat)
-| doc/             | Documentation
-| po/              | Translations files (gettext)
-| test/            | Tools/files to test WeeChat (like Weercd, an IRC server)
-| debian/          | Debian packaging
+| Directory      | Description
+| src/           | Root of sources
+|    core/       | Core functions: entry point, internal structures
+|    gui/        | Functions for buffers, windows, ... (used by all interfaces)
+|       curses/  | Curses interface
+|    plugins/    | Plugin and scripting API
+|       alias/   | Alias plugin
+|       aspell/  | Aspell plugin
+|       charset/ | Charset plugin
+|       fifo/    | Fifo plugin (FIFO pipe used to remotely send commands to WeeChat)
+|       irc/     | IRC (Internet Relay Chat) plugin
+|       logger/  | Logger plugin (write messages displayed to files)
+|       relay/   | Relay plugin (irc proxy + relay for remote interfaces)
+|       script/  | Scripts manager
+|       python/  | Python scripting API
+|       perl/    | Perl scripting API
+|       ruby/    | Ruby scripting API
+|       lua/     | Lua scripting API
+|       tcl/     | Tcl scripting API
+|       guile/   | Guile (scheme) scripting API
+|       trigger/ | Trigger plugin
+|       xfer/    | Xfer plugin (IRC DCC file/chat)
+| doc/           | Documentation
+| po/            | Translations files (gettext)
+| test/          | Tools/files to test WeeChat (like Weercd, an IRC server)
+| debian/        | Debian packaging
 |===
 
 [[sources]]
@@ -239,13 +238,6 @@ WeeChat "core" is located in following directories:
 |          relay-weechat-msg.c      | Send binary messages to clients
 |          relay-weechat-nicklist.c | Nicklist functions
 |          relay-weechat-protocol.c | Read commands from clients
-|    rmodifier/                     | Rmodifier plugin
-|       rmodifier.c                 | Main rmodifier functions
-|       rmodifier-command.c         | Rmodifier commands
-|       rmodifier-completion.c      | Rmodifier completions
-|       rmodifier-config.c          | Rmodifier config options (file rmodifier.conf)
-|       rmodifier-debug.c           | Rmodifier debug functions
-|       rmodifier-info.c            | Rmodifier info/infolists/hdata
 |    ruby/                          | Ruby plugin
 |       weechat-ruby.c              | Main ruby functions (load/unload scripts, execute ruby code)
 |       weechat-ruby-api.c          | Ruby scripting API functions

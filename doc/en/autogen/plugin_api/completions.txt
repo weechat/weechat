@@ -56,8 +56,6 @@
 
 | relay | relay_relays | protocol.name of current relays for relay plugin
 
-| rmodifier | rmodifier | list of rmodifiers
-
 | ruby | ruby_script | list of scripts
 
 | script | script_files | files in script directories
