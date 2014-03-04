@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-03-04 15:46+0100\n"
+"POT-Creation-Date: 2014-03-04 21:46+0100\n"
 "PO-Revision-Date: 2013-02-14 18:20+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8007,7 +8007,8 @@ msgstr ""
 msgid "%s%s: error occurred while parsing file \"%s\": %s"
 msgstr ""
 
-msgid "Run actions on events triggered by WeeChat/plugins"
+msgid ""
+"Text replacement and command execution on events triggered by WeeChat/plugins"
 msgstr ""
 
 #, c-format

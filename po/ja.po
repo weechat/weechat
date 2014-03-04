@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-03-04 15:46+0100\n"
+"POT-Creation-Date: 2014-03-04 21:46+0100\n"
 "PO-Revision-Date: 2014-03-04 11:21+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -10052,7 +10052,8 @@ msgstr "%s%s: 新しいインタプリタを作成できません"
 msgid "%s%s: error occurred while parsing file \"%s\": %s"
 msgstr "%s%s: ファイル \"%s\" の解析中にエラーが発生: %s"
 
-msgid "Run actions on events triggered by WeeChat/plugins"
+msgid ""
+"Text replacement and command execution on events triggered by WeeChat/plugins"
 msgstr ""
 
 #, fuzzy, c-format
