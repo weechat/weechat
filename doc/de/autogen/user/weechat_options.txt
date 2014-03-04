@@ -409,12 +409,12 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"--"`)
 
 * [[option_weechat.look.bare_display_exit_on_input]] *weechat.look.bare_display_exit_on_input*
-** Beschreibung: `exit the bare display mode on any changes in input`
+** Beschreibung: `beendet den einfachen Anzeigemodus durch Tastendruck`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.look.bare_display_time_format]] *weechat.look.bare_display_time_format*
-** Beschreibung: `time format in bare display mode (see man strftime for date/time specifiers)`
+** Beschreibung: `Format für die Zeitanzeige im einfachen Anzeigemodus, "time" (siehe man strftime, welche Platzhalter für das Datum und die Uhrzeit verwendet werden)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"%H:%M"`)
 
@@ -609,7 +609,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_weechat.look.hotlist_sort]] *weechat.look.hotlist_sort*
-** Beschreibung: `sort of hotlist: group_time_*: group by notify level (highlights first) then sort by time, group_number_*: group by notify level (highlights first) then sort by number, number_*: sort by number; asc = ascending sort, desc = descending sort`
+** Beschreibung: `Sortierung der Hotlist: group_time_*: nach Benachrichtigungstufe (Highlights zuerst) und dann nach Uhrzeit, group_number_*: nach Benachrichtigungstufe (Highlights zuerst) und dann nach Buffer-Nummer, number_*: sortiert nach Buffer-Nummer; asc = aufsteigende Sortierung, desc = absteigende Sortierung`
 ** Typ: integer
 ** Werte: group_time_asc, group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc (Standardwert: `group_time_asc`)
 

@@ -287,53 +287,53 @@ Examples (conditions):
          rename <name> <new_name>
          del <name>|-all
 
-   list: list all filters
- enable: enable filters (filters are enabled by default)
-disable: disable filters
- toggle: toggle filters
-   name: filter name
-    add: add a filter
- rename: rename a filter
-    del: delete a filter
-   -all: delete all filters
- buffer: comma separated list of buffers where filter is active:
-         - this is full name including plugin (example: "irc.freenode.#weechat")
-         - "*" means all buffers
-         - a name starting with '!' is excluded
-         - name can start or end with '*' to match many buffers
-   tags: comma separated list of tags, for example "irc_join,irc_part,irc_quit"
-         - logical "and": use "+" between tags (for example: "nick_toto+irc_action")
-         - tags can start or end with '*'
-  regex: POSIX extended regular expression to search in line
-         - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
-         - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
-         - two regular expressions are created: one for prefix and one for message
-         - regex are case insensitive, they can start by "(?-i)" to become case sensitive
+   list: alle Filter auflisten
+ enable: Filter wird aktiviert (Filter werden standardmäßig aktiviert)
+disable: Filter deaktivieren
+ toggle: Filter umschalten
+   name: Name des Filters
+    add: Filter hinzufügen
+ rename: benennt einen Filter um
+    del: Filter entfernen
+   -all: entfernt alle Filter
+ buffer: durch Kommata getrennte Liste von Buffer in denen der Filter aktiv sein soll:
+         - ist der vollständige Name eines Buffer inklusive seiner Erweiterung (Beispiel: "irc.freenode.#weechat")
+         - "*" anwenden auf alle Buffer
+         - beginnt ein Name mit '!' wird für diesen Buffer kein Filter genutzt
+         - ein Name darf mit '*' beginnen oder enden um mehrere Buffer auszuwählen
+   tags: durch Kommata  getrennte Liste von Schlagwörtern. Zum Beispiel: "irc_join,irc_part,irc_quit"
+         - logisch "und":  wird "+" zwischen den Tags verwendet (zum Beispiel: "nick_toto+irc_action")
+         - Tags können mit '*' beginnen oder enden
+  regex: erweiterter regulärer POSIX Ausdruck, um in einer Zeile zu suchen
+         - das Präfix (z.B. Nick) wird mittels '\t' von der Nachricht getrennt. Sonderzeichen wie '|' müssen mit einer Escapesequenz : '\|' eingebunden werden)
+         - wird ein regulärer Ausdruck mit '!' eingeleitet dann wird das übereinstimmende Ergebnis umgekehrt  (nutze '\!' um mit '!' zu beginnen)
+         - es werden zwei reguläre Ausdrücke erstellt: Der erste für den Präfix und der zweite für die eigentliche Nachricht
+         - reguläre Ausdrücke unterscheiden nicht zwischen Groß- und Kleinschreibung. Um zwischen Groß- und Kleinschreibung zu unterscheiden müssen diese mit "(?-i)" eingeleitet werden.
 
-The default key alt+'=' toggles filtering on/off.
+Mit der Tastenvoreinstellung alt+'=' kann die Filterfunktion (de-)aktiviert werden.
 
-Tags most commonly used:
-  no_filter, no_highlight, no_log, log0..log9 (log level),
+Die am häufigsten gebrauchten Schlagwörter lauten:
+  no_filter, no_highlight, no_log, log0..log9 (log Level),
   notify_none, notify_message, notify_private, notify_highlight,
-  nick_xxx (xxx is nick in message), prefix_nick_ccc (ccc is color of nick),
-  irc_xxx (xxx is command name or number, see /server raw or /debug tags),
+  nick_xxx (xxx ist durch den Nicknamen zu ersetzen), prefix_nick_ccc (ccc ist die Farbe mit der der Nick dargestellt wird),
+  irc_xxx (xxx ist durch einen IRC-Befehl/-Nummer zu ersetzen, siehe /server raw oder /debug tags)
   irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
-To see tags for lines in buffers: /debug tags
+Mittels "/debug tags" kann man sich die Tags jeder einzelnen Zeile darstellen zu lassen.
 
-Examples:
-  use IRC smart filter on all buffers:
+Beispiele:
+  aktiviert einen einfachen IRC Filter für join/part/quit/nick Nachrichten für alle Buffer:
     /filter add irc_smart * irc_smart_filter *
-  use IRC smart filter on all buffers except those with "#weechat" in name:
+  aktiviert einen einfachen IRC Filter für join/part/quit/nick Nachrichten der für alle Buffer genutzt wird, außer Buffer die "#weechat" im Namen tragen:
     /filter add irc_smart *,!*#weechat* irc_smart_filter *
-  filter all IRC join/part/quit messages:
+  filtert alle IRC join/part/quit Nachrichten:
     /filter add joinquit * irc_join,irc_part,irc_quit *
-  filter nicks displayed when joining channels or with /names:
+  filtert Nicks wenn diese den Channel betreten oder durch den Befehl "/names" angezeigt werden:
     /filter add nicks * irc_366 *
-  filter nick "toto" on IRC channel #weechat:
+  filtert Nick "toto" im IRC Channel #weechat:
     /filter add toto irc.freenode.#weechat nick_toto *
-  filter IRC join/action messages from nick "toto":
+  filtert IRC join/action Nachrichten von Nick "toto":
     /filter add toto * nick_toto+irc_join,nick_toto+irc_action *
-  filter lines containing "weechat sucks" on IRC channel #weechat:
+  filtert Zeilen die "weechat sucks" im IRC Channel #weechat enthalten:
     /filter add sucks irc.freenode.#weechat * weechat sucks
 ----
 
@@ -568,45 +568,45 @@ Ohne Angabe eines Arguments werden alle installierten Erweiterungen angezeigt.
 ----
 
 [[command_weechat_print]]
-[command]*`print`* gibt einen Text::
+[command]*`print`* gibt einen Text in einem Buffer aus::
 
 ----
 /print  [-buffer <number>|<name>] [-core] [-escape] [-date <date>] [-tags <tags>] [-action|-error|-join|-network|-quit] [<text>]
         -stdout|-stderr [<text>]
         -beep
 
--buffer: the buffer where text is displayed (default: current buffer)
-  -core: alias of "-buffer core.weechat"
--escape: interpret escaped chars (for example \a, \07, \x07)
-  -date: message date, format can be:
-           -n: 'n' seconds before now
-           +n: 'n' seconds in the future
-            n: 'n' seconds since the Epoch (see man time)
-           date/time (ISO 8601): yyyy-mm-ddThh:mm:ss, example: 2014-01-19T04:32:55
-           time: hh:mm:ss (example: 04:32:55)
-  -tags: comma-separated list of tags (see /help filter for a list of tags most commonly used)
-   text: text to display (prefix and message must be separated by "\t", if text starts with "-", then add a "\" before)
--stdout: display text on stdout (escaped chars are interpreted)
--stderr: display text on stderr (escaped chars are interpreted)
-  -beep: alias of "-stderr \a"
+-buffer: Buffer in welchem der Text ausgegeben werden soll (standardmäßig: aktueller Buffer)
+  -core: Alias für "-buffer core.weechat"
+-escape: Escapesequenzen werden umgewandelt (zum Beispiel \a, \07, \x07)
+  -date: Datum der Nachricht, mögliche Formatierung:
+           -n: 'n' vor dem jetzigen Zeipunkt, in Sekunden
+           +n: 'n' in Zukunft, in Sekunden
+            n: 'n' Sekunden seit der Epoche (siehe man time)
+           date/time (ISO 8601): yyyy-mm-ddThh:mm:ss, Beispiel: 2014-01-19T04:32:55
+           time: hh:mm:ss (Beispiel: 04:32:55)
+  -tags: durch Kommata getrennte Liste von Tags (siehe /help filter für eine Liste von Tags die häufig genutzt werden)
+   text: Text der ausgegeben werden soll (Präfix und Nachricht muss durch \t getrennt werden)
+-stdout: Text wird an stdout geschickt (Escapesequenzen werden umgewandelt)
+-stderr: Text wird an stderr geschickt (Escapesequenzen werden umgewandelt)
+  -beep: Alias für "-stderr \a"
 
-The options -action ... -quit use the prefix defined in options "weechat.look.prefix_*".
+Die Option -action ... -quit nutzt den Präfix der in der Option "weechat.look.prefix_*" definiert ist.
 
-Following escaped chars are supported:
+Folgende Escapesequenzen werden unterstützt:
   \" \\ \a \b \e \f \n \r \t \v \0ooo \xhh \uhhhh \Uhhhhhhhh
 
-Examples:
-  display a reminder on core buffer with a highlight:
-    /print -core -tags notify_highlight Reminder: buy milk
-  display an error on core buffer:
-    /print -core -error Some error here
-  display message on core buffer with prefix "abc":
-    /print -core abc\tThe message
-  display a message on channel #weechat:
+Beispiele:
+  zeigt eine Erinnerung, mit Highlight, im Core-Buffer dar:
+    /print -core -tags notify_highlight Reminder: Milch kaufen
+  zeigt eine Fehlernachricht im Core-Buffer an:
+    /print -core -error irgend ein Fehler
+  zeigt eine Nachricht im Core-Buffer mit dem Präfix "abc" an:
+    /print -core abc\tmeine Nachricht
+  es wird eine Nachricht im Channel #weechat ausgegeben:
     /print -buffer irc.freenode.#weechat Message on #weechat
-  display a snowman (U+2603):
+  gibt einen Schneemann aus (U+2603):
     /print -escape \u2603
-  send alert (BEL):
+  verschickt Alarm (BEL):
     /print -beep
 ----
 
@@ -879,49 +879,49 @@ Beispiele:
          zoom[-window <number>]
          bare [<delay>]
 
-         list: list opened windows (without argument, this list is displayed)
-           -1: jump to previous window
-           +1: jump to next window
-           b#: jump to next window displaying buffer number #
-           up: switch to window above current one
-         down: switch to window below current one
-         left: switch to window on the left
-        right: switch to window on the right
-       number: window number (see /window list)
-       splith: split current window horizontally
-       splitv: split current window vertically
-       resize: resize window size, new size is <pct> percentage of parent window
-      balance: balance the sizes of all windows
-        merge: merge window with another (all = keep only one window)
-      page_up: scroll one page up
-    page_down: scroll one page down
-      refresh: refresh screen
-       scroll: scroll a number of lines (+/-N) or with time: s=seconds, m=minutes, h=hours, d=days, M=months, y=years
- scroll_horiz: scroll horizontally a number of columns (+/-N) or percentage of window size (this scrolling is possible only on buffers with free content)
-    scroll_up: scroll a few lines up
-  scroll_down: scroll a few lines down
-   scroll_top: scroll to top of buffer
-scroll_bottom: scroll to bottom of buffer
-scroll_beyond_end: scroll beyond the end of buffer
-scroll_previous_highlight: scroll to previous highlight
-scroll_next_highlight: scroll to next highlight
-scroll_unread: scroll to unread marker
-         swap: swap buffers of two windows (with optional direction for target window)
-         zoom: zoom on window
-         bare: toggle bare display (with optional delay in milliseconds for automatic return to standard display mode)
+         list: listet die geöffneten Fenster (ohne Angabe von Argumente wird diese Liste standardmäßig ausgegeben)
+           -1: springt zum vorherigen Fenster
+           +1: springt zum nächsten Fenster
+           b#: springt zum nächsten Fenster, welches die Buffer Nummer # besitzt
+           up: wechselt zum Fenster über dem aktuellen
+         down: wechselt zum Fenster unter dem aktuellen
+         left: wechselt zum linken Fenster
+        right: wechselt zum rechten Fenster
+       number: Nummer des Fensters (siehe /window list)
+       splith: teilt das aktuelle Fenster horizontal
+       splitv: teilt das aktuelle Fenster vertikal
+       resize: verändert die Größe des aktuellen Fensters. Die neue Größe des Fensters ist prozentual <pct> zum Stammfensters groß
+      balance: passt die Größe aller Fenster an
+        merge: vereinigt Fenster miteinander (all = alle Fenster vereinigen)
+      page_up: scrollt eine Seite nach oben
+    page_down: scrollt eine Seite nach unten
+      refresh: Seite wird neu aufgebaut
+       scroll: scrollt eine Anzahl an Zeilen (+/-N) oder zu einer angegebenen Zeit: s=Sekunden, m=Minuten, h=Stunden, d=Tage, M=Monate, y=Jahre
+ scroll_horiz: scrollt horizontal eine Anzahl an Spalten (+/-N) oder prozentual von der Fenstergröße ausgehend (dieses scrolling ist nur in Buffern möglich die über einen freien Inhalt verfügen)
+    scroll_up: scrollt ein paar Zeilen nach oben
+  scroll_down: scrollt ein paar Zeilen nach unten
+   scroll_top: scrollt zum Anfang des Buffers
+scroll_bottom: scrollt zum Ende des  Buffers
+scroll_beyond_end: scrollt über das Ende des Buffers hinaus
+scroll_previous_highlight: scrollt zum vorherigen Hightlight
+scroll_next_highlight: scrollt zum nächsten Highlight
+scroll_unread: springt zur ersten ungelesenen Zeile in einem Buffer
+         swap: tauscht die Buffer von zwei Fenstern (mit optionaler Angabe für das Zielfenster)
+         zoom: vergrößert ein Fenster auf 100%
+         bare: wechselt zum einfachen Anzeigemodus (optional kann eine Wartezeit, in Millisekunden, angegeben werden, wann zum Standardmodus zurück gewechselt werden soll)
 
-For splith and splitv, pct is a percentage which represents size of new window, computed with current window as size reference. For example 25 means create a new window with size = current_size / 4
+Bei splith und splitv gibt "pct" die neue Größe des Fensters im Verhältnis zur aktuellen Größe an. Zum Beispiel würde ein Wert von 25 bedeuten, dass das neue Fenster nur noch ein Viertel der Größe des alten Fensters besitzt.
 
-Examples:
-  jump to window displaying buffer #1:
+Beispiele:
+  springt zum Fenster mit dem Buffer #1:
     /window b1
-  scroll 2 lines up:
+   scrollt zwei Zeilen hoch:
     /window scroll -2
-  scroll 2 days up:
+  scrollt zwei Tage hoch: /window scroll -2d
     /window scroll -2d
-  scroll to beginning of current day:
+  scrollt zum Beginn des aktuellen Tages:
     /window scroll -d
-  zoom on window #2:
+  Fenster #2 wird vergrößert:
     /window zoom -window 2
 ----
 
