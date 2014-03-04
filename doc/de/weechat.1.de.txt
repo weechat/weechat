@@ -86,7 +86,7 @@ $HOME/.weechat/weechat.log::
 == AUTOREN
 
 WeeChat ist programmiert von Sébastien Helleu und Beitragenden (eine vollständige Auflistung
-findet man in der AUTHORS Datei).
+findet man in der AUTHORS.asciidoc Datei).
 
 Copyright (C) 2003-{sys:date "+%Y"} Sébastien Helleu <flashcode@flashtux.org>
 

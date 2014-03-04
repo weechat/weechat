@@ -97,11 +97,11 @@ weechat_CONTENTS="
     usr/share/locale/
     usr/share/icons/
     usr/share/man/
-    usr/share/doc/weechat/AUTHORS
-    usr/share/doc/weechat/ChangeLog
+    usr/share/doc/weechat/AUTHORS.asciidoc
+    usr/share/doc/weechat/ChangeLog.asciidoc
     usr/share/doc/weechat/COPYING
-    usr/share/doc/weechat/NEWS
-    usr/share/doc/weechat/README
+    usr/share/doc/weechat/NEWS.asciidoc
+    usr/share/doc/weechat/README.asciidoc
 "
 
 #
