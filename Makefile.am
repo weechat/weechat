@@ -30,8 +30,8 @@ SUBDIRS = po doc intl src
 EXTRA_DIST = AUTHORS.asciidoc \
              ChangeLog.asciidoc \
              INSTALL.asciidoc \
-             NEWS.asciidoc \
              README.asciidoc \
+             ReleaseNotes.asciidoc \
              CMakeLists.txt \
              config.rpath \
              config.h.cmake \

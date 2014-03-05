@@ -10,7 +10,7 @@ http://weechat.org/files/changelog/ChangeLog-devel.html[here]).
 
 For a list of important changes that require manual action, please look at
 http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
-(file 'NEWS.asciidoc' in sources).
+(file 'ReleaseNotes.asciidoc' in sources).
 
 
 == Version 0.4.4 (under dev)
