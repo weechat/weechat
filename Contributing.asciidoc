@@ -19,7 +19,7 @@ Please follow *all* these instructions when reporting a bug:
 * If possible, please include a reproducible example: explain the steps which
   led you to the problem.
 * If you are reporting a crash:
-** Please report crash and attach backtrace from gdb (look at
+** Please attach the backtrace from gdb (look at
   http://weechat.org/files/doc/devel/weechat_user.en.html#report_crashes[user's guide]
   for more info).
 ** Most of times, the WeeChat crash log file (`weechat_crash_YYYYMMDD_xxx.log`)
@@ -30,7 +30,7 @@ Please follow *all* these instructions when reporting a bug:
 == Feature requests
 
 WeeChat is under active development, so your idea may already have been
-implemented, or scheduled for a future version (check in
+implemented, or scheduled for a future version (you can check in
 http://weechat.org/dev/[roadmap]).
 
 Before submitting a feature request, it's better to discuss about it in IRC
