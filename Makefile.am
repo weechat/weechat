@@ -27,7 +27,12 @@ build-config-git.h:
 
 SUBDIRS = po doc intl src
 
-EXTRA_DIST = CMakeLists.txt \
+EXTRA_DIST = AUTHORS.asciidoc \
+             ChangeLog.asciidoc \
+             INSTALL.asciidoc \
+             NEWS.asciidoc \
+             README.asciidoc \
+             CMakeLists.txt \
              config.rpath \
              config.h.cmake \
              git-version.sh \
