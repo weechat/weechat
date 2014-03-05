@@ -46,9 +46,13 @@
 #include "relay-websocket.h"
 
 
-char *relay_client_status_string[] =   /* strings for status                */
+char *relay_client_status_string[] =   /* status strings for display        */
 { N_("connecting"), N_("waiting auth"),
   N_("connected"), N_("auth failed"), N_("disconnected")
+};
+char *relay_client_status_name[] =     /* name of status (for signal/info)  */
+{ "connecting", "waiting_auth",
+  "connected", "auth_failed", "disconnected"
 };
 
 char *relay_client_data_type_string[] = /* strings for data types           */
@@ -131,6 +135,21 @@ relay_client_search_by_id (int id)
 
     /* client not found */
     return NULL;
+}
+
+/*
+ * Sends a signal with the status of client ("relay_client_xxx").
+ */
+
+void
+relay_client_send_signal (struct t_relay_client *client)
+{
+    char signal[128];
+
+    snprintf (signal, sizeof (signal),
+              "relay_client_%s",
+              relay_client_status_name[client->status]);
+    weechat_hook_signal_send (signal, WEECHAT_HOOK_SIGNAL_POINTER, client);
 }
 
 /*
@@ -1139,6 +1158,8 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
             relay_buffer_open ();
         }
 
+        relay_client_send_signal (new_client);
+
         relay_buffer_refresh (WEECHAT_HOTLIST_PRIVATE);
     }
     else
@@ -1317,6 +1338,8 @@ relay_client_set_status (struct t_relay_client *client,
                 gnutls_deinit (client->gnutls_sess);
 #endif
         }
+
+        relay_client_send_signal (client);
     }
 
     relay_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);

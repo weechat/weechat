@@ -7854,6 +7854,31 @@ List of signals sent by WeeChat and plugins:
   String: comma-separated list of scripts removed |
   Python script(s) removed
 
+| relay | relay_client_connecting +
+  _(WeeChat ≥ 0.4.4)_ |
+  Pointer: relay client |
+  A relay client is connecting
+
+| relay | relay_client_waiting_auth +
+  _(WeeChat ≥ 0.4.4)_ |
+  Pointer: relay client |
+  Waiting for authentication from a relay client
+
+| relay | relay_client_connected +
+  _(WeeChat ≥ 0.4.4)_ |
+  Pointer: relay client |
+  A relay client is connected
+
+| relay | relay_client_auth_failed +
+  _(WeeChat ≥ 0.4.4)_ |
+  Pointer: relay client |
+  Authentication of a relay client has failed
+
+| relay | relay_client_disconnected +
+  _(WeeChat ≥ 0.4.4)_ |
+  Pointer: relay client |
+  A relay client is disconnected
+
 | ruby | ruby_script_loaded +
   _(WeeChat ≥ 0.3.9)_ |
   String: path to script |

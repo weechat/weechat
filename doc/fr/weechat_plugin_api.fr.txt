@@ -7994,6 +7994,31 @@ Liste des signaux envoyés par WeeChat et les extensions :
   Chaîne : liste de scripts supprimés (séparés par des virgules) |
   Script(s) python supprimé(s)
 
+| relay | relay_client_connecting +
+  _(WeeChat ≥ 0.4.4)_ |
+  Pointeur : client relay |
+  Un client relay est en train de se connecter
+
+| relay | relay_client_waiting_auth +
+  _(WeeChat ≥ 0.4.4)_ |
+  Pointeur : client relay |
+  Attente de l'authentification d'un client relay
+
+| relay | relay_client_connected +
+  _(WeeChat ≥ 0.4.4)_ |
+  Pointeur : client relay |
+  Un client relay est connecté
+
+| relay | relay_client_auth_failed +
+  _(WeeChat ≥ 0.4.4)_ |
+  Pointeur : client relay |
+  L'authentification d'un client relay a échoué
+
+| relay | relay_client_disconnected +
+  _(WeeChat ≥ 0.4.4)_ |
+  Pointeur : client relay |
+  Un client relay est déconnecté
+
 | ruby | ruby_script_loaded +
   _(WeeChat ≥ 0.3.9)_ |
   Chaîne : chemin vers le script |

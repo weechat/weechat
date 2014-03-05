@@ -7858,6 +7858,36 @@ WeeChat とプラグインが送信するシグナルのリスト:
   String: 削除されたスクリプトへのパスのコンマ区切りリスト |
   Python スクリプトを削除
 
+// TRANSLATION MISSING
+| relay | relay_client_connecting +
+  _(WeeChat ≥ 0.4.4)_ |
+  Pointer: relay client |
+  A relay client is connecting
+
+// TRANSLATION MISSING
+| relay | relay_client_waiting_auth +
+  _(WeeChat ≥ 0.4.4)_ |
+  Pointer: relay client |
+  Waiting for authentication from a relay client
+
+// TRANSLATION MISSING
+| relay | relay_client_connected +
+  _(WeeChat ≥ 0.4.4)_ |
+  Pointer: relay client |
+  A relay client is connected
+
+// TRANSLATION MISSING
+| relay | relay_client_auth_failed +
+  _(WeeChat ≥ 0.4.4)_ |
+  Pointer: relay client |
+  Authentication of a relay client has failed
+
+// TRANSLATION MISSING
+| relay | relay_client_disconnected +
+  _(WeeChat ≥ 0.4.4)_ |
+  Pointer: relay client |
+  A relay client is disconnected
+
 | ruby | ruby_script_loaded +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
   String: スクリプトへのパス |
