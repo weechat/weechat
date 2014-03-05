@@ -65,7 +65,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(-,root,root,0755)
-%doc AUTHORS.asciidoc ChangeLog.asciidoc COPYING INSTALL.asciidoc README.asciidoc ReleaseNotes.asciidoc
+%doc AUTHORS.asciidoc ChangeLog.asciidoc COPYING README.asciidoc ReleaseNotes.asciidoc
 %doc %{_docdir}/%{name}/*.html
 %{_mandir}/man1/%{name}.1*
 %{_mandir}/*/man1/%{name}.1*
