@@ -27,7 +27,7 @@ AC_PREREQ(2.56)
 AC_INIT(WeeChat, 0.4.4-dev, flashcode@flashtux.org)
 AC_CONFIG_SRCDIR([configure.ac])
 AM_CONFIG_HEADER(config.h)
-AM_INIT_AUTOMAKE
+AM_INIT_AUTOMAKE([foreign])
 LICENSE="GPL3"
 
 # Checks for programs
