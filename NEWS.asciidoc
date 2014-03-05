@@ -5,7 +5,9 @@
 
 
 This document lists important changes for each version, that require manual
-actions. It is recommended to read it when upgrading to a new stable
+actions (the latest formatted version of this document can be found
+http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[here]). +
+It is recommended to read it when upgrading to a new stable
 version.
 
 For a complete list of changes, please look at
