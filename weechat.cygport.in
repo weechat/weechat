@@ -99,6 +99,7 @@ weechat_CONTENTS="
     usr/share/man/
     usr/share/doc/weechat/AUTHORS.asciidoc
     usr/share/doc/weechat/ChangeLog.asciidoc
+    usr/share/doc/weechat/Contributing.asciidoc
     usr/share/doc/weechat/COPYING
     usr/share/doc/weechat/README.asciidoc
     usr/share/doc/weechat/ReleaseNotes.asciidoc

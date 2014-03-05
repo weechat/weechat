@@ -1,0 +1,45 @@
+= Reporting WeeChat issues
+:author: Sébastien Helleu
+:email: flashcode@flashtux.org
+
+== Report bugs
+
+Please follow *all* these instructions when reporting a bug:
+
+* Use only English.
+* Always give the following info:
+** The *version* of WeeChat: output of `/v` in WeeChat, for example:
+  `WeeChat 0.4.4-dev (git: v0.4.3-215-g2d77782)`. +
+  If WeeChat does not start at all, give the version displayed by
+  `weechat --help`.
+** The operating system, including distribution name and its version for Linux
+   (examples: Linux Debian Wheezy, FreeBSD 10.0, Windows/Cygwin 64-bit, ...).
+* Check if the problem has been fixed in development version (if you are using a
+  stable release or old version).
+* If possible, please include a reproducible example: explain the steps which
+  led you to the problem.
+* If you are reporting a crash:
+** Please report crash and attach backtrace from gdb (look at
+  http://weechat.org/files/doc/devel/weechat_user.en.html#report_crashes[user's guide]
+  for more info).
+** Most of times, the WeeChat crash log file (`weechat_crash_YYYYMMDD_xxx.log`)
+   is *not useful* to fix the bug, so please report this file *ONLY* if a
+   developer asks you to send it (and be careful, this file can contain personal
+   data like passwords).
+
+== Feature requests
+
+WeeChat is under active development, so your idea may already have been
+implemented, or scheduled for a future version (check in
+http://weechat.org/dev/[roadmap]).
+
+Before submitting a feature request, it's better to discuss about it in IRC
+(server: 'chat.freenode.net', channel '#weechat').
+
+== Contributing
+
+If you want to fix a bug or add a new feature, it's always a good idea to
+discuss about it in IRC.
+
+And you can look at http://weechat.org/[developer's guide] for coding rules
+(styles, naming convention, and other useful info).
