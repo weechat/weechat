@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-03-04 21:46+0100\n"
-"PO-Revision-Date: 2014-03-04 21:47+0100\n"
+"POT-Creation-Date: 2014-03-05 11:39+0100\n"
+"PO-Revision-Date: 2014-03-05 11:36+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -9720,6 +9720,17 @@ msgstr ""
 "activée par le client, car l'heure est envoyée sous forme d'étiquette irc); "
 "chaîne vide = désactiver l'heure dans les messages d'historique"
 
+msgid "number of clients for relay"
+msgstr "nombre de clients pour le relai"
+
+#. TRANSLATORS: please do not translate the status names, they must be used in English
+msgid ""
+"status name (optional): connecting, waiting_auth, connected, auth_failed, "
+"disconnected"
+msgstr ""
+"nom du statut (optionnel): connecting, waiting_auth, connected, auth_failed, "
+"disconnected"
+
 msgid "list of relay clients"
 msgstr "liste des clients pour le relai"
 
@@ -11329,3 +11340,6 @@ msgstr ""
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
+
+#~ msgid "number of clients for relay (for optional status)"
+#~ msgstr "nombre de clients pour le relai"

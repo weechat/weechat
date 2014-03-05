@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-03-04 21:46+0100\n"
+"POT-Creation-Date: 2014-03-05 11:39+0100\n"
 "PO-Revision-Date: 2014-03-04 11:21+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -9968,6 +9968,16 @@ msgstr ""
 "time\", durch den Client aktiviert wurde, da die Zeitanzeige als irc-Tag "
 "gesendet wird); keine Zeichenkette = deaktiviert die Zeitanzeige im "
 "Verlaufsspeicher"
+
+#, fuzzy
+msgid "number of clients for relay"
+msgstr "Liste der Relay-Clients"
+
+#. TRANSLATORS: please do not translate the status names, they must be used in English
+msgid ""
+"status name (optional): connecting, waiting_auth, connected, auth_failed, "
+"disconnected"
+msgstr ""
 
 msgid "list of relay clients"
 msgstr "Liste der Relay-Clients"

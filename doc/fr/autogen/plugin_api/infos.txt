@@ -26,6 +26,8 @@
 
 | python | python2_bin | chemin vers l'interpréteur python 2.x | -
 
+| relay | relay_client_count | nombre de clients pour le relai | nom du statut (optionnel): connecting, waiting_auth, connected, auth_failed, disconnected
+
 | weechat | charset_internal | charset interne à WeeChat | -
 
 | weechat | charset_terminal | charset du terminal | -

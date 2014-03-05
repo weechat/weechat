@@ -138,6 +138,27 @@ relay_client_search_by_id (int id)
 }
 
 /*
+ * Searches for a client status.
+ *
+ * Returns index of status in enum t_relay_status, -1 if status is not found.
+ */
+
+int
+relay_client_status_search (const char *name)
+{
+    int i;
+
+    for (i = 0; i < RELAY_NUM_STATUS; i++)
+    {
+        if (strcmp (relay_client_status_name[i], name) == 0)
+            return i;
+    }
+
+    /* status not found */
+    return -1;
+}
+
+/*
  * Sends a signal with the status of client ("relay_client_xxx").
  */
 

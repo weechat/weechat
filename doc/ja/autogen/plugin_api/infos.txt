@@ -26,6 +26,8 @@
 
 | python | python2_bin | python 2.x インタプリタへのパス | -
 
+| relay | relay_client_count | number of clients for relay | status name (optional): connecting, waiting_auth, connected, auth_failed, disconnected
+
 | weechat | charset_internal | WeeChat 内部文字集合 | -
 
 | weechat | charset_terminal | ターミナルの文字集合 | -

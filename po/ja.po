@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-03-04 21:46+0100\n"
+"POT-Creation-Date: 2014-03-05 11:39+0100\n"
 "PO-Revision-Date: 2014-03-04 11:21+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -9364,6 +9364,16 @@ msgstr ""
 "(メッセージの irc タグ内に時間の情報が含まれるため、クライアントがサーバの "
 "\"server-time\" 機能を利用可能にした場合、これは利用されません); 空文字列 = "
 "バックログメッセージで時間を表示しない"
+
+#, fuzzy
+msgid "number of clients for relay"
+msgstr "中継するクライアントのリスト"
+
+#. TRANSLATORS: please do not translate the status names, they must be used in English
+msgid ""
+"status name (optional): connecting, waiting_auth, connected, auth_failed, "
+"disconnected"
+msgstr ""
 
 msgid "list of relay clients"
 msgstr "リレークライアントのリスト"

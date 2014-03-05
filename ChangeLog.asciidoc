@@ -59,6 +59,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * lua: fix interpreter used after unload of a script
 * perl: fix context used after unload of a script
 * python: fix interpreter used after unload of a script
+* relay: add info "relay_client_count" with optional status name as argument
 * relay: add signals "relay_client_xxx" for client status changes (closes #2)
 * relay: add option relay.network.clients_purge_delay
 * relay: fix freeze after /upgrade when many disconnected clients still exist
