@@ -489,7 +489,6 @@ main (int argc, char *argv[])
     gui_key_end ();                     /* remove all keys                  */
     unhook_all ();                      /* remove all hooks                 */
     hdata_end ();                       /* end hdata                        */
-    eval_end ();                        /* end eval                         */
     secure_end ();                      /* end secured data                 */
     string_end ();                      /* end string                       */
     weechat_shutdown (EXIT_SUCCESS, 0); /* quit WeeChat (oh no, why?)       */

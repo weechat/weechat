@@ -780,7 +780,7 @@ char *
 eval_expression (const char *expr, struct t_hashtable *pointers,
                  struct t_hashtable *extra_vars, struct t_hashtable *options)
 {
-    int condition, rc;
+    int condition, rc, pointers_allocated;
     char *value;
     const char *prefix, *suffix, *default_prefix = "${", *default_suffix = "}";
     const char *ptr_value;
@@ -790,25 +790,21 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
         return NULL;
 
     condition = 0;
+    pointers_allocated = 0;
     prefix = default_prefix;
     suffix = default_suffix;
 
     /* create hashtable pointers if it's NULL */
     if (!pointers)
     {
-        if (eval_hashtable_pointers)
-            hashtable_remove_all (eval_hashtable_pointers);
-        else
-        {
-            eval_hashtable_pointers = hashtable_new (32,
-                                                     WEECHAT_HASHTABLE_STRING,
-                                                     WEECHAT_HASHTABLE_POINTER,
-                                                     NULL,
-                                                     NULL);
-            if (!eval_hashtable_pointers)
-                return NULL;
-        }
-        pointers = eval_hashtable_pointers;
+        pointers = hashtable_new (32,
+                                  WEECHAT_HASHTABLE_STRING,
+                                  WEECHAT_HASHTABLE_POINTER,
+                                  NULL,
+                                  NULL);
+        if (!pointers)
+            return NULL;
+        pointers_allocated = 1;
     }
 
     /*
@@ -863,19 +859,8 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
         value = eval_replace_vars (expr, pointers, extra_vars, prefix, suffix);
     }
 
+    if (pointers_allocated)
+        hashtable_free (pointers);
+
     return value;
-}
-
-/*
- * Frees all allocated data.
- */
-
-void
-eval_end ()
-{
-    if (eval_hashtable_pointers)
-    {
-        hashtable_free (eval_hashtable_pointers);
-        eval_hashtable_pointers = NULL;
-    }
 }
