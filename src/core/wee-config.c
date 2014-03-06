@@ -113,6 +113,7 @@ struct t_config_option *config_look_highlight;
 struct t_config_option *config_look_highlight_regex;
 struct t_config_option *config_look_highlight_tags;
 struct t_config_option *config_look_hotlist_add_buffer_if_away;
+struct t_config_option *config_look_hotlist_add_conditions;
 struct t_config_option *config_look_hotlist_buffer_separator;
 struct t_config_option *config_look_hotlist_count_max;
 struct t_config_option *config_look_hotlist_count_min_msg;
@@ -2293,12 +2294,17 @@ config_weechat_init_options ()
            "messages from nick \"FlashCode\", \"irc_notice+nick_toto*\" for "
            "notices from a nick starting with \"toto\""),
         NULL, 0, 0, "", NULL, 0, NULL, NULL, &config_change_highlight_tags, NULL, NULL, NULL);
-    config_look_hotlist_add_buffer_if_away = config_file_new_option (
+    config_look_hotlist_add_conditions = config_file_new_option (
         weechat_config_file, ptr_section,
-        "hotlist_add_buffer_if_away", "boolean",
-        N_("add any buffer to hotlist (including current or visible buffers) "
-           "if local variable \"away\" is set on buffer"),
-        NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        "hotlist_add_conditions", "string",
+        N_("conditions to add a buffer in hotlist (if notify level is OK for "
+           "the buffer); you can use in these conditions: \"window\" (current "
+           "window pointer), \"buffer\" (buffer pointer to add in hotlist), "
+           "\"priority\" (0 = low, 1 = message, 2 = private, 3 = highlight); "
+           "by default a buffer is added to hotlist if you are away, or if the "
+           "buffer is not visible on screen (not displayed in any window)"),
+        NULL, 0, 0, "${away} || ${buffer.num_displayed} == 0",
+        NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_hotlist_buffer_separator = config_file_new_option (
         weechat_config_file, ptr_section,
         "hotlist_buffer_separator", "string",

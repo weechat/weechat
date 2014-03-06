@@ -17,6 +17,24 @@ http://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 == Version 0.4.4 (under dev)
 
+=== Hotlist conditions
+
+A new option 'weechat.look.hotlist_add_conditions' has been added. This option
+replaces the option 'weechat.look.hotlist_add_buffer_if_away', which has been
+removed.
+
+Default conditions are `${away} || ${buffer.num_displayed} == 0`, which means
+that a buffer is added in hotlist if you are away ("away" local variable is
+set), or if the buffer is not visible on screen (not displayed in any window).
+
+If you have set 'weechat.look.hotlist_add_buffer_if_away' to `off` (to not add
+current buffer in hotlist when you are away), then you must manually change the
+default conditions with the following command:
+
+----
+/set weechat.look.hotlist_add_conditions "${buffer.num_displayed} == 0"
+----
+
 === Rmodifier replaced by Trigger plugin
 
 The trigger plugin replaces the rmodifier plugin, which has been removed

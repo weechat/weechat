@@ -49,6 +49,7 @@
 #include "../gui-color.h"
 #include "../gui-cursor.h"
 #include "../gui-filter.h"
+#include "../gui-hotlist.h"
 #include "../gui-input.h"
 #include "../gui-layout.h"
 #include "../gui-line.h"
@@ -583,6 +584,9 @@ gui_main_end (int clean_exit)
 
         /* free some variables used for nicklist */
         gui_nicklist_end ();
+
+        /* free some variables used for hotlist */
+        gui_hotlist_end ();
     }
 
     /* end of Curses output */

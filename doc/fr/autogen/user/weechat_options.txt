@@ -558,10 +558,10 @@
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
-* [[option_weechat.look.hotlist_add_buffer_if_away]] *weechat.look.hotlist_add_buffer_if_away*
-** description: `ajouter tout tampon dans la hotlist (incluant le tampon courant ou les tampons visibles) si la variable locale "away" est définie sur le tampon`
-** type: booléen
-** valeurs: on, off (valeur par défaut: `on`)
+* [[option_weechat.look.hotlist_add_conditions]] *weechat.look.hotlist_add_conditions*
+** description: `conditions pour ajouter un tampon dans la hotlist (si le niveau de notification est OK pour le tampon); vous pouvez utiliser dans ces conditions : \"window\" (pointeur de la fenêtre courante), \"buffer\" (pointeur du tampon à ajouter dans la hotlist), "priority" (0 = faible, 1 = message, 2 = privé, 3 = highlight); par défaut un tampon est ajouté dans la hotlist si vous êtes absent, ou si le tampon n'est pas visible à l'écran (pas affiché dans une fenêtre)`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `"${away} || ${buffer.num_displayed} == 0"`)
 
 * [[option_weechat.look.hotlist_buffer_separator]] *weechat.look.hotlist_buffer_separator*
 ** description: `chaîne affichée entre les tampons dans la hotlist`

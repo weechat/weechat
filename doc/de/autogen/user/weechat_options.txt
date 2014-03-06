@@ -558,10 +558,10 @@
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
-* [[option_weechat.look.hotlist_add_buffer_if_away]] *weechat.look.hotlist_add_buffer_if_away*
-** Beschreibung: `fügt einen beliebigen Buffer zur Hotlist hinzu (dies schließt den aktuellen oder jeden anderen sichtbaren Buffer ein), sofern die lokale Variable "away" für den Buffer gesetzt wurde`
-** Typ: boolesch
-** Werte: on, off (Standardwert: `on`)
+* [[option_weechat.look.hotlist_add_conditions]] *weechat.look.hotlist_add_conditions*
+** Beschreibung: `conditions to add a buffer in hotlist (if notify level is OK for the buffer); you can use in these conditions: "window" (current window pointer), "buffer" (buffer pointer to add in hotlist), "priority" (0 = low, 1 = message, 2 = private, 3 = highlight); by default a buffer is added to hotlist if you are away, or if the buffer is not visible on screen (not displayed in any window)`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `"${away} || ${buffer.num_displayed} == 0"`)
 
 * [[option_weechat.look.hotlist_buffer_separator]] *weechat.look.hotlist_buffer_separator*
 ** Beschreibung: `Zeichen welches zum Trennen zwischen den verschiedenen Buffern in der Hotlist genutzt werden soll`

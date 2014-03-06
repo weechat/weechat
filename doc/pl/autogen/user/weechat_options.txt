@@ -558,10 +558,10 @@
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 
-* [[option_weechat.look.hotlist_add_buffer_if_away]] *weechat.look.hotlist_add_buffer_if_away*
-** opis: `dodaje dowolny bufor do hotlisty (włączając obecny lub widoczne bufory) jeśli lokalna zmienna "away" jest ustawiona dla bufora`
-** typ: bool
-** wartości: on, off (domyślna wartość: `on`)
+* [[option_weechat.look.hotlist_add_conditions]] *weechat.look.hotlist_add_conditions*
+** opis: `conditions to add a buffer in hotlist (if notify level is OK for the buffer); you can use in these conditions: "window" (current window pointer), "buffer" (buffer pointer to add in hotlist), "priority" (0 = low, 1 = message, 2 = private, 3 = highlight); by default a buffer is added to hotlist if you are away, or if the buffer is not visible on screen (not displayed in any window)`
+** typ: ciąg
+** wartości: dowolny ciąg (domyślna wartość: `"${away} || ${buffer.num_displayed} == 0"`)
 
 * [[option_weechat.look.hotlist_buffer_separator]] *weechat.look.hotlist_buffer_separator*
 ** opis: `ciąg znaków wyświetlany pomiędzy buforami w hotliście`
