@@ -23,6 +23,8 @@ Homepage: http://weechat.org/
 * Developed from scratch.
 * Free software, released under GPLv3.
 
+image::http://static.weechat.org/images/screenshots/medium/weechat_2013-04-27_phlux.png[align="center"]
+
 == Install
 
 === Dependencies
