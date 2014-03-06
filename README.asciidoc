@@ -1,6 +1,7 @@
 = WeeChat
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
+:lang: en
 
 
 WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat

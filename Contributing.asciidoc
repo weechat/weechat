@@ -1,6 +1,8 @@
 = Reporting WeeChat issues
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
+:lang: en
+
 
 == Report bugs
 
