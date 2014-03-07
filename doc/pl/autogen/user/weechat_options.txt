@@ -451,7 +451,7 @@
 * [[option_weechat.look.buffer_search_where]] *weechat.look.buffer_search_where*
 ** opis: `domyślny tekst do wyszukiwania w buforze: w wiadomości, prefiksie, prefiksie i wiadomości`
 ** typ: liczba
-** wartości: prefix, message, prefix_message (domyślna wartość: `message`)
+** wartości: prefix, message, prefix_message (domyślna wartość: `prefix_message`)
 
 * [[option_weechat.look.buffer_time_format]] *weechat.look.buffer_time_format*
 ** opis: `format czasu używany dla każdej linii w buforze (zobacz man strftime dla specyfikatorów daty/czasu) (uwaga: zawartość jest przetwarzana, dlatego można użyć kolorów w formacie "${color:xxx}", zobacz /help eval); na przykład czas w odcieniach szarości (wymaga wsparcia dla 256 kolorów):"${color:252}%H${color:245}%M${color:240}%S"`

@@ -2132,7 +2132,8 @@ config_weechat_init_options ()
         "buffer_search_where", "integer",
         N_("default text search in buffer: in message, prefix, prefix and "
            "message"),
-        "prefix|message|prefix_message", 0, 0, "message", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+        "prefix|message|prefix_message", 0, 0, "prefix_message",
+        NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_buffer_time_format = config_file_new_option (
         weechat_config_file, ptr_section,
         "buffer_time_format", "string",
