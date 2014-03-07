@@ -124,7 +124,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_xfer.network.port_range]] *xfer.network.port_range*
-** Beschreibung: `schränkt den ausgehenden Datenversand/Chats auf die ausschließliche Nutzung von Ports in einem vorgegebenen Bereich ein (hilfreich bei NAT) (Syntax: ein einzelner Port, z.B. 5000 oder ein Port-Bereich, z.B. 5000-5015. Es wird empfohlen nur Ports zu nutzen die über 1024 liegen. Denn nur der User "root" kann auf den Port-Bereich unter 1024 zugreifen)`
+** Beschreibung: `schränkt den ausgehenden Datenversand/Chats auf die ausschließliche Nutzung von Ports in einem vorgegebenen Bereich ein (hilfreich bei NAT) (Syntax: ein einzelner Port, z.B. 5000 oder ein Port-Bereich, z.B. 5000-5015. Ohne Angabe eines Wertes wird ein beliebiger Port genutzt. Es wird empfohlen nur Ports zu nutzen die über 1024 liegen. Denn nur der User "root" kann auf den Port-Bereich unter 1024 zugreifen)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 

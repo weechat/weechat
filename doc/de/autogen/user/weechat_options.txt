@@ -559,7 +559,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_weechat.look.hotlist_add_conditions]] *weechat.look.hotlist_add_conditions*
-** Beschreibung: `conditions to add a buffer in hotlist (if notify level is OK for the buffer); you can use in these conditions: "window" (current window pointer), "buffer" (buffer pointer to add in hotlist), "priority" (0 = low, 1 = message, 2 = private, 3 = highlight); by default a buffer is added to hotlist if you are away, or if the buffer is not visible on screen (not displayed in any window)`
+** Beschreibung: `Bedingungen um einen Buffer in die Hotlist einzutragen (sofern der Notify-Level für den Buffer korrekt ist); es können folgende Bedingungen genutzt werden: "window" (zur Zeit genutzter Window-Pointer), "buffer" (Buffer-Pointer welcher zur Hotlist hinzugefügt werden soll), "priority" (0 = niedrig, 1 = Nachricht, 2 = Privat, 3 = Highlight); standardmäßig wird ein Buffer in die Hotlist eingetragen falls man abwesend it, oder falls der Buffer nicht auf dem Bildschirm sichtbar ist (er wird nicht in einem Fenster dargestellt)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"${away} || ${buffer.num_displayed} == 0"`)
 

@@ -89,7 +89,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_relay.network.clients_purge_delay]] *relay.network.clients_purge_delay*
-** Beschreibung: `delay for purging disconnected clients (in minutes, 0 = purge clients immediately, -1 = never purge)`
+** Beschreibung: `Wartezeit bis nicht verbundene Clients gelöscht werden (in Minuten, 0 = lösche Clients unmittelbar, -1 = niemals löschen)`
 ** Typ: integer
 ** Werte: -1 .. 43200 (Standardwert: `0`)
 
