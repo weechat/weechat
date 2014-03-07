@@ -333,6 +333,43 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(nicklist)
 }
 
 /*
+ * Timer callback for input command.
+ */
+
+int
+relay_weechat_protocol_input_timer_cb (void *data,
+                                       int remaining_calls)
+{
+    char **timer_args;
+    int i;
+    struct t_gui_buffer *ptr_buffer;
+
+    /* make C compiler happy */
+    (void) remaining_calls;
+
+    timer_args = (char **)data;
+
+    if (!timer_args)
+        return WEECHAT_RC_ERROR;
+
+    if (timer_args[0] && timer_args[1] && timer_args[2])
+    {
+        ptr_buffer = weechat_buffer_search (timer_args[0], timer_args[1]);
+        if (ptr_buffer)
+            weechat_command (ptr_buffer, timer_args[2]);
+    }
+
+    for (i = 0; i < 3; i++)
+    {
+        if (timer_args[i])
+            free (timer_args[i]);
+    }
+    free (timer_args);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback for command "input" (from client).
  *
  * Message looks like:
@@ -344,7 +381,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(nicklist)
 RELAY_WEECHAT_PROTOCOL_CALLBACK(input)
 {
     struct t_gui_buffer *ptr_buffer;
-    char *pos;
+    char *pos, **timer_args;
 
     RELAY_WEECHAT_PROTOCOL_MIN_ARGS(2);
 
@@ -353,7 +390,25 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(input)
     {
         pos = strchr (argv_eol[0], ' ');
         if (pos)
-            weechat_command (ptr_buffer, pos + 1);
+        {
+            /*
+             * use a timer to execute the command after we go back in the
+             * WeeChat main loop (some commands like /upgrade executed now can
+             * cause a crash)
+             */
+            timer_args = malloc (3 * sizeof (*timer_args));
+            if (timer_args)
+            {
+                timer_args[0] = strdup (weechat_buffer_get_string (ptr_buffer,
+                                                                   "plugin"));
+                timer_args[1] = strdup (weechat_buffer_get_string (ptr_buffer,
+                                                                   "name"));
+                timer_args[2] = strdup (pos + 1);
+                weechat_hook_timer (1, 0, 1,
+                                    &relay_weechat_protocol_input_timer_cb,
+                                    timer_args);
+            }
+        }
     }
 
     return WEECHAT_RC_OK;
