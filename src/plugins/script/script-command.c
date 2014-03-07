@@ -124,7 +124,7 @@ int
 script_command_script (void *data, struct t_gui_buffer *buffer, int argc,
                        char **argv, char **argv_eol)
 {
-    char *error;
+    char *error, command[128];
     long value;
     int line;
 
@@ -207,11 +207,9 @@ script_command_script (void *data, struct t_gui_buffer *buffer, int argc,
         return WEECHAT_RC_OK;
     }
 
-    if (script_buffer && !script_buffer_detail_script
-        && (script_buffer_selected_line >= 0)
-        && (script_repo_count_displayed > 0))
+    if (weechat_strcasecmp (argv[1], "up") == 0)
     {
-        if (weechat_strcasecmp (argv[1], "up") == 0)
+        if (script_buffer)
         {
             value = 1;
             if (argc > 2)
@@ -221,17 +219,31 @@ script_command_script (void *data, struct t_gui_buffer *buffer, int argc,
                 if (!error || error[0])
                     value = 1;
             }
-            line = script_buffer_selected_line - value;
-            if (line < 0)
-                line = 0;
-            if (line != script_buffer_selected_line)
+            if (script_buffer_detail_script)
             {
-                script_buffer_set_current_line (line);
-                script_buffer_check_line_outside_window ();
+                snprintf (command, sizeof (command),
+                          "/window scroll -%d", (int)value);
+                weechat_command (script_buffer, command);
             }
-            return WEECHAT_RC_OK;
+            else if ((script_buffer_selected_line >= 0)
+                     && (script_repo_count_displayed > 0))
+            {
+                line = script_buffer_selected_line - value;
+                if (line < 0)
+                    line = 0;
+                if (line != script_buffer_selected_line)
+                {
+                    script_buffer_set_current_line (line);
+                    script_buffer_check_line_outside_window ();
+                }
+            }
         }
-        else if (weechat_strcasecmp (argv[1], "down") == 0)
+        return WEECHAT_RC_OK;
+    }
+
+    if (weechat_strcasecmp (argv[1], "down") == 0)
+    {
+        if (script_buffer)
         {
             value = 1;
             if (argc > 2)
@@ -241,16 +253,26 @@ script_command_script (void *data, struct t_gui_buffer *buffer, int argc,
                 if (!error || error[0])
                     value = 1;
             }
-            line = script_buffer_selected_line + value;
-            if (line >= script_repo_count_displayed)
-                line = script_repo_count_displayed - 1;
-            if (line != script_buffer_selected_line)
+            if (script_buffer_detail_script)
             {
-                script_buffer_set_current_line (line);
-                script_buffer_check_line_outside_window ();
+                snprintf (command, sizeof (command),
+                          "/window scroll +%d", (int)value);
+                weechat_command (script_buffer, command);
             }
-            return WEECHAT_RC_OK;
+            else if ((script_buffer_selected_line >= 0)
+                     && (script_repo_count_displayed > 0))
+            {
+                line = script_buffer_selected_line + value;
+                if (line >= script_repo_count_displayed)
+                    line = script_repo_count_displayed - 1;
+                if (line != script_buffer_selected_line)
+                {
+                    script_buffer_set_current_line (line);
+                    script_buffer_check_line_outside_window ();
+                }
+            }
         }
+        return WEECHAT_RC_OK;
     }
 
     return WEECHAT_RC_ERROR;
