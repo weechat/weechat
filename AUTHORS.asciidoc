@@ -72,6 +72,7 @@ Alphabetically:
 * Rudolf Polzer (divVerent)
 * Ryuunosuke Ayanokouzi
 * Sergio Durigan Junior
+* Shawn Smith
 * Simon Arlott
 * Simon Kuhnle
 * Stefano Pigozzi
