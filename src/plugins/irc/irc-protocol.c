@@ -3,6 +3,7 @@
  *
  * Copyright (C) 2003-2014 Sébastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2006 Emmanuel Bouthenot <kolter@openics.org>
+ * Copyright (C) 2014 Shawn Smith <ShawnSmith0828@gmail.com>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -313,6 +314,18 @@ IRC_PROTOCOL_CALLBACK(cap)
                     free (cap_req);
             }
         }
+    }
+    else if (strcmp (argv[3], "LIST") == 0)
+    {
+        if (argc > 4)
+        {
+            ptr_caps = (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4];
+            weechat_printf_date_tags (server->buffer, date, NULL,
+                                     _("%s%s: client capability, enabled for current session: %s"),
+                                     weechat_prefix("network"),
+                                     IRC_PLUGIN_NAME,
+                                     ptr_caps);
+	}
     }
     else if (strcmp (argv[3], "ACK") == 0)
     {
