@@ -186,7 +186,7 @@ trigger_buffer_set_callbacks ()
 }
 
 /*
- * Opens script buffer.
+ * Opens trigger buffer.
  */
 
 void
