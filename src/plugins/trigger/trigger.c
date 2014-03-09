@@ -1174,10 +1174,6 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
     int i, upgrading;
 
-    /* make C compiler happy */
-    (void) argc;
-    (void) argv;
-
     weechat_plugin = plugin;
 
     trigger_callback_init ();
