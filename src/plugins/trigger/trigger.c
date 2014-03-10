@@ -433,9 +433,10 @@ trigger_hook (struct t_trigger *trigger)
     if (!trigger->hooks)
     {
         weechat_printf (NULL,
-                        _("%sError: unable to create hook for trigger \"%s\" "
+                        _("%s%s: unable to create hook for trigger \"%s\" "
                           "(bad arguments)"),
-                        weechat_prefix ("error"), trigger->name);
+                        weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
+                        trigger->name);
     }
 
     if (argv)
@@ -837,9 +838,9 @@ trigger_new_with_options (const char *name, struct t_config_option **options)
                              &new_trigger->regex) < 0)
     {
         weechat_printf (NULL,
-                        _("%sError: invalid regular expression in trigger "
+                        _("%s%s: invalid regular expression in trigger "
                           "\"%s\""),
-                        weechat_prefix ("error"),
+                        weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
                         name);
     }
     trigger_split_command (weechat_config_string (new_trigger->options[TRIGGER_OPTION_COMMAND]),

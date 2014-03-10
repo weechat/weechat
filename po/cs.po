@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-03-06 19:25+0100\n"
-"PO-Revision-Date: 2014-03-06 18:56+0100\n"
+"POT-Creation-Date: 2014-03-10 21:02+0100\n"
+"PO-Revision-Date: 2014-03-10 21:06+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: cs\n"
@@ -9560,11 +9560,11 @@ msgid ""
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%sError: unable to create hook for trigger \"%s\" (bad arguments)"
+msgid "%s%s: unable to create hook for trigger \"%s\" (bad arguments)"
 msgstr "%sChyba: nemohu přejmenovat filter \"%s\" na \"%s\""
 
 #, fuzzy, c-format
-msgid "%sError: invalid regular expression in trigger \"%s\""
+msgid "%s%s: invalid regular expression in trigger \"%s\""
 msgstr "%s%s: chyba při zpracování regulárního výrazu \"%s\""
 
 msgid "Trigger monitor"
@@ -9602,9 +9602,9 @@ msgstr "Seznam aliasů:"
 msgid "Trigger \"%s\" restarted"
 msgstr "Pole \"%s\" vytvořeno"
 
-#, c-format
-msgid "%sError: a disabled trigger can not be restarted"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s%s: a disabled trigger can not be restarted"
+msgstr "%s%s: nemohu získat aktuální status interpretru"
 
 #, fuzzy, c-format
 msgid "Trigger \"%s\" enabled"
@@ -9614,12 +9614,12 @@ msgstr "Filtr \"%s\" povolen"
 msgid "Trigger \"%s\" disabled"
 msgstr "Filtr \"%s\" zakázán"
 
-#, c-format
-msgid "%sError: invalid name for trigger"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s%s: invalid name for trigger"
+msgstr "%s%s: nekorektní znaková sada: \"%s\""
 
 #, fuzzy, c-format
-msgid "%sError: trigger \"%s\" already exists"
+msgid "%s%s: trigger \"%s\" already exists"
 msgstr "%sChyba: filtr \"%s\" již existuje"
 
 #, fuzzy, c-format
@@ -9627,7 +9627,7 @@ msgid "Trigger \"%s\" renamed to \"%s\""
 msgstr "Filtr \"%s\" přejmenován na \"%s\""
 
 #, fuzzy, c-format
-msgid "%sError: failed to rename trigger \"%s\""
+msgid "%s%s: failed to rename trigger \"%s\""
 msgstr "%sChyba: selhalo vytvoření pole \"%s\""
 
 #, fuzzy
@@ -9635,29 +9635,29 @@ msgid "List of triggers:"
 msgstr "Seznam proxy:"
 
 #, fuzzy, c-format
-msgid "%sError: invalid hook type \"%s\""
+msgid "%s%s: invalid hook type \"%s\""
 msgstr "%sChyba: nemohu napojit kalávesu \"%s\""
 
 #, fuzzy, c-format
-msgid "%sError: invalid format for regular expression"
+msgid "%s%s: invalid format for regular expression"
 msgstr "barva textu pro prefix chyby"
 
 #, fuzzy, c-format
-msgid "%sError: invalid regular expression (compilation failed)"
+msgid "%s%s: invalid regular expression (compilation failed)"
 msgstr "%s%s: \"%s\" není validní regulární výraz (%s)"
 
 #, fuzzy, c-format
-msgid "%sError: invalid return code \"%s\""
+msgid "%s%s: invalid return code \"%s\""
 msgstr "%sChyba: nemohu odpojit klávesu \"%s\""
 
 #, c-format
 msgid ""
-"%sError: trigger \"%s\" already exists (choose another name or use option "
+"%s%s: trigger \"%s\" already exists (choose another name or use option "
 "\"addreplace\" to overwrite it)"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%sError: failed to create trigger \"%s\""
+msgid "%s%s: failed to create trigger \"%s\""
 msgstr "%sChyba: selhalo vytvoření pole \"%s\""
 
 #, fuzzy, c-format
@@ -9665,15 +9665,15 @@ msgid "Trigger \"%s\" created"
 msgstr "Pole \"%s\" vytvořeno"
 
 #, fuzzy, c-format
-msgid "%sError: trigger \"%s\" not found"
-msgstr "%sChyba: filtr \"%s\" nenalezen"
+msgid "%s%s: trigger \"%s\" not found"
+msgstr "%sKlávesa \"%s\" nenalezena"
 
 #, fuzzy, c-format
 msgid "Trigger \"%s\" updated"
 msgstr "Pole \"%s\" zaktualizováno"
 
 #, fuzzy, c-format
-msgid "%sError: trigger option \"%s\" not found"
+msgid "%s%s: trigger option \"%s\" not found"
 msgstr "%sChyba: plugin \"%s\" nenalezen"
 
 #, fuzzy, c-format
@@ -9681,7 +9681,7 @@ msgid "Trigger \"%s\" copied to \"%s\""
 msgstr "Filtr \"%s\" přejmenován na \"%s\""
 
 #, fuzzy, c-format
-msgid "%sError: failed to copy trigger \"%s\""
+msgid "%s%s: failed to copy trigger \"%s\""
 msgstr "%sChyba: selhalo vytvoření pole \"%s\""
 
 #, fuzzy, c-format
@@ -9705,8 +9705,8 @@ msgstr "Výchozí rmodifikátory obnoveny:"
 
 #, fuzzy, c-format
 msgid ""
-"%sError: \"-yes\" argument is required for restoring default triggers "
-"(security reason)"
+"%s%s: \"-yes\" argument is required for restoring default triggers (security "
+"reason)"
 msgstr ""
 "%sChyba: \"-yes\" argument je požadován pro obnovení výchozích rmodifikátorů "
 "(bezpečnostní opatření)"
@@ -9837,15 +9837,14 @@ msgstr "výchozí barva textu pro pole"
 
 #, c-format
 msgid ""
-"%sError: invalid format for option \"regex\", see /help trigger.trigger.%s."
-"regex"
+"%s%s: invalid format for option \"regex\", see /help trigger.trigger.%s.regex"
 msgstr ""
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%sError: invalid regular expression in option \"regex\", see /help trigger."
+"%s%s: invalid regular expression in option \"regex\", see /help trigger."
 "trigger.%s.regex"
-msgstr ""
+msgstr "%s%s: chyba při zpracování regulárního výrazu \"%s\""
 
 msgid ""
 "if disabled, the hooks are removed from trigger, so it is not called any more"

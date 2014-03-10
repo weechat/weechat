@@ -194,15 +194,17 @@ trigger_config_change_trigger_regex (void *data, struct t_config_option *option)
             break;
         case -1: /* format error */
             weechat_printf (NULL,
-                            _("%sError: invalid format for option \"regex\", "
+                            _("%s%s: invalid format for option \"regex\", "
                               "see /help trigger.trigger.%s.regex"),
-                            weechat_prefix ("error"), ptr_trigger->name);
+                            weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
+                            ptr_trigger->name);
             break;
         case -2: /* regex compilation error */
             weechat_printf (NULL,
-                            _("%sError: invalid regular expression in option "
+                            _("%s%s: invalid regular expression in option "
                               "\"regex\", see /help trigger.trigger.%s.regex"),
-                            weechat_prefix ("error"), ptr_trigger->name);
+                            weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
+                            ptr_trigger->name);
             break;
         case -3: /* memory error */
             weechat_printf (NULL,

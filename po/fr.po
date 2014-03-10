@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-03-06 19:25+0100\n"
-"PO-Revision-Date: 2014-03-06 19:26+0100\n"
+"POT-Creation-Date: 2014-03-10 21:02+0100\n"
+"PO-Revision-Date: 2014-03-10 21:07+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -10449,14 +10449,13 @@ msgstr ""
 "par WeeChat/extensions"
 
 #, c-format
-msgid "%sError: unable to create hook for trigger \"%s\" (bad arguments)"
+msgid "%s%s: unable to create hook for trigger \"%s\" (bad arguments)"
 msgstr ""
-"%sErreur: impossible de créer le hook pour le trigger \"%s\" (mauvais "
-"paramètres)"
+"%s%s: impossible de créer le hook pour le trigger \"%s\" (mauvais paramètres)"
 
 #, c-format
-msgid "%sError: invalid regular expression in trigger \"%s\""
-msgstr "%sErreur: expression régulière invalide dans le trigger \"%s\""
+msgid "%s%s: invalid regular expression in trigger \"%s\""
+msgstr "%s%s: expression régulière invalide dans le trigger \"%s\""
 
 msgid "Trigger monitor"
 msgstr "Moniteur de trigger"
@@ -10488,8 +10487,8 @@ msgid "Trigger \"%s\" restarted"
 msgstr "Trigger \"%s\" redémarré"
 
 #, c-format
-msgid "%sError: a disabled trigger can not be restarted"
-msgstr "%sErreur: un trigger désactivé ne peut pas être redémarré"
+msgid "%s%s: a disabled trigger can not be restarted"
+msgstr "%s%s: un trigger désactivé ne peut pas être redémarré"
 
 #, c-format
 msgid "Trigger \"%s\" enabled"
@@ -10500,75 +10499,75 @@ msgid "Trigger \"%s\" disabled"
 msgstr "Trigger \"%s\" désactivé"
 
 #, c-format
-msgid "%sError: invalid name for trigger"
-msgstr "%sErreur: nom invalide pour le trigger"
+msgid "%s%s: invalid name for trigger"
+msgstr "%s%s: nom invalide pour le trigger"
 
 #, c-format
-msgid "%sError: trigger \"%s\" already exists"
-msgstr "%sErreur: le trigger \"%s\" existe déjà"
+msgid "%s%s: trigger \"%s\" already exists"
+msgstr "%s%s: le trigger \"%s\" existe déjà"
 
 #, c-format
 msgid "Trigger \"%s\" renamed to \"%s\""
 msgstr "Trigger \"%s\" renommé en \"%s\""
 
 #, c-format
-msgid "%sError: failed to rename trigger \"%s\""
-msgstr "%sErreur: impossible de renommer le trigger \"%s\""
+msgid "%s%s: failed to rename trigger \"%s\""
+msgstr "%s%s: impossible de renommer le trigger \"%s\""
 
 msgid "List of triggers:"
 msgstr "Liste des triggers:"
 
 #, c-format
-msgid "%sError: invalid hook type \"%s\""
-msgstr "%sErreur: type de hook \"%s\" invalide"
+msgid "%s%s: invalid hook type \"%s\""
+msgstr "%s%s: type de hook \"%s\" invalide"
 
 #, c-format
-msgid "%sError: invalid format for regular expression"
-msgstr "%sErreur: format invalide pour l'expression régulière"
+msgid "%s%s: invalid format for regular expression"
+msgstr "%s%s: format invalide pour l'expression régulière"
 
 #, c-format
-msgid "%sError: invalid regular expression (compilation failed)"
-msgstr "%sErreur: expression régulière invalide (la compilation a échoué)"
+msgid "%s%s: invalid regular expression (compilation failed)"
+msgstr "%s%s: expression régulière invalide (la compilation a échoué)"
 
 #, c-format
-msgid "%sError: invalid return code \"%s\""
-msgstr "%sErreur: code retour \"%s\" invalide"
+msgid "%s%s: invalid return code \"%s\""
+msgstr "%s%s: code retour \"%s\" invalide"
 
 #, c-format
 msgid ""
-"%sError: trigger \"%s\" already exists (choose another name or use option "
+"%s%s: trigger \"%s\" already exists (choose another name or use option "
 "\"addreplace\" to overwrite it)"
 msgstr ""
-"%sErreur: le trigger \"%s\" existe déjà (utilisez un autre nom ou utilisez "
+"%s%s: le trigger \"%s\" existe déjà (utilisez un autre nom ou utilisez "
 "l'option \"addreplace\" pour l'écraser)"
 
 #, c-format
-msgid "%sError: failed to create trigger \"%s\""
-msgstr "%sErreur: impossible de créer le trigger \"%s\""
+msgid "%s%s: failed to create trigger \"%s\""
+msgstr "%s%s: impossible de créer le trigger \"%s\""
 
 #, c-format
 msgid "Trigger \"%s\" created"
 msgstr "Trigger \"%s\" créé"
 
 #, c-format
-msgid "%sError: trigger \"%s\" not found"
-msgstr "%sErreur: trigger \"%s\" non trouvé"
+msgid "%s%s: trigger \"%s\" not found"
+msgstr "%s%s: trigger \"%s\" non trouvé"
 
 #, c-format
 msgid "Trigger \"%s\" updated"
 msgstr "Trigger \"%s\" mis à jour"
 
 #, c-format
-msgid "%sError: trigger option \"%s\" not found"
-msgstr "%sErreur: option de trigger \"%s\" non trouvée"
+msgid "%s%s: trigger option \"%s\" not found"
+msgstr "%s%s: option de trigger \"%s\" non trouvée"
 
 #, c-format
 msgid "Trigger \"%s\" copied to \"%s\""
 msgstr "Trigger \"%s\" copié en \"%s\""
 
 #, c-format
-msgid "%sError: failed to copy trigger \"%s\""
-msgstr "%sErreur: impossible de copier le trigger \"%s\""
+msgid "%s%s: failed to copy trigger \"%s\""
+msgstr "%s%s: impossible de copier le trigger \"%s\""
 
 #, c-format
 msgid "%sTrigger \"%s\" not found"
@@ -10590,11 +10589,11 @@ msgstr "Triggers par défaut restaurés:"
 
 #, c-format
 msgid ""
-"%sError: \"-yes\" argument is required for restoring default triggers "
-"(security reason)"
+"%s%s: \"-yes\" argument is required for restoring default triggers (security "
+"reason)"
 msgstr ""
-"%sErreur: le paramètre \"-yes\" est requis pour la restauration des triggers "
-"par défaut (raison de sécurité)"
+"%s%s: le paramètre \"-yes\" est requis pour la restauration des triggers par "
+"défaut (raison de sécurité)"
 
 msgid "manage triggers, the Swiss Army knife for WeeChat"
 msgstr "gestion des triggers, le couteau Suisse pour WeeChat"
@@ -10803,18 +10802,17 @@ msgstr "code retour par défaut pour un callback de hook"
 
 #, c-format
 msgid ""
-"%sError: invalid format for option \"regex\", see /help trigger.trigger.%s."
-"regex"
+"%s%s: invalid format for option \"regex\", see /help trigger.trigger.%s.regex"
 msgstr ""
-"%sErreur: format invalide pour l'option \"regex\", voir /help trigger."
-"trigger.%s.regex"
+"%s%s: format invalide pour l'option \"regex\", voir /help trigger.trigger.%s."
+"regex"
 
 #, c-format
 msgid ""
-"%sError: invalid regular expression in option \"regex\", see /help trigger."
+"%s%s: invalid regular expression in option \"regex\", see /help trigger."
 "trigger.%s.regex"
 msgstr ""
-"%sErreur: expression régulière invalide dans l'option \"regex\", voir /help "
+"%s%s: expression régulière invalide dans l'option \"regex\", voir /help "
 "trigger.trigger.%s.regex"
 
 msgid ""

@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-03-06 19:25+0100\n"
-"PO-Revision-Date: 2014-03-06 18:56+0100\n"
+"POT-Creation-Date: 2014-03-10 21:02+0100\n"
+"PO-Revision-Date: 2014-03-10 21:07+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pl\n"
@@ -10249,11 +10249,11 @@ msgid ""
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%sError: unable to create hook for trigger \"%s\" (bad arguments)"
+msgid "%s%s: unable to create hook for trigger \"%s\" (bad arguments)"
 msgstr "%sBłąd: nie można zmienić nazwy filtru z \"%s\" na \"%s\""
 
 #, fuzzy, c-format
-msgid "%sError: invalid regular expression in trigger \"%s\""
+msgid "%s%s: invalid regular expression in trigger \"%s\""
 msgstr "%s%s: błąd podczas kompilowania wyrażenia regularnego \"%s\""
 
 msgid "Trigger monitor"
@@ -10291,9 +10291,9 @@ msgstr "Lista aliasów:"
 msgid "Trigger \"%s\" restarted"
 msgstr "Utworzono pasek \"%s\""
 
-#, c-format
-msgid "%sError: a disabled trigger can not be restarted"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s%s: a disabled trigger can not be restarted"
+msgstr "%s%s: nie można pobrać obecnego stanu interpretera"
 
 #, fuzzy, c-format
 msgid "Trigger \"%s\" enabled"
@@ -10303,12 +10303,12 @@ msgstr "Filtr \"%s\" włączony"
 msgid "Trigger \"%s\" disabled"
 msgstr "Filtr \"%s\" wyłączony"
 
-#, c-format
-msgid "%sError: invalid name for trigger"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s%s: invalid name for trigger"
+msgstr "%s%s: niepoprawny adres powiązania \"%s\" dla %s"
 
 #, fuzzy, c-format
-msgid "%sError: trigger \"%s\" already exists"
+msgid "%s%s: trigger \"%s\" already exists"
 msgstr "%sBłąd: filtr \"%s\" już istnieje"
 
 #, fuzzy, c-format
@@ -10316,7 +10316,7 @@ msgid "Trigger \"%s\" renamed to \"%s\""
 msgstr "Zmieniono nazwę filtru z \"%s\" na \"%s\""
 
 #, fuzzy, c-format
-msgid "%sError: failed to rename trigger \"%s\""
+msgid "%s%s: failed to rename trigger \"%s\""
 msgstr "%sBłąd: nie udało sią stworzyć paska \"%s\""
 
 #, fuzzy
@@ -10324,29 +10324,29 @@ msgid "List of triggers:"
 msgstr "Lista proxy:"
 
 #, fuzzy, c-format
-msgid "%sError: invalid hook type \"%s\""
+msgid "%s%s: invalid hook type \"%s\""
 msgstr "%sBłąd: nie można przypisać klawisza \"%s\""
 
 #, fuzzy, c-format
-msgid "%sError: invalid format for regular expression"
+msgid "%s%s: invalid format for regular expression"
 msgstr "kolor przedrostka błędu"
 
 #, fuzzy, c-format
-msgid "%sError: invalid regular expression (compilation failed)"
+msgid "%s%s: invalid regular expression (compilation failed)"
 msgstr "%sBłąd w wyrażeniu do przetworzenia"
 
 #, fuzzy, c-format
-msgid "%sError: invalid return code \"%s\""
+msgid "%s%s: invalid return code \"%s\""
 msgstr "%sBłąd: nie można od bindować klawisza \"%s\""
 
 #, c-format
 msgid ""
-"%sError: trigger \"%s\" already exists (choose another name or use option "
+"%s%s: trigger \"%s\" already exists (choose another name or use option "
 "\"addreplace\" to overwrite it)"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%sError: failed to create trigger \"%s\""
+msgid "%s%s: failed to create trigger \"%s\""
 msgstr "%sBłąd: nie udało sią stworzyć paska \"%s\""
 
 #, fuzzy, c-format
@@ -10354,15 +10354,15 @@ msgid "Trigger \"%s\" created"
 msgstr "Utworzono pasek \"%s\""
 
 #, fuzzy, c-format
-msgid "%sError: trigger \"%s\" not found"
-msgstr "%sBłąd: nie odnaleziono filtru \"%s\""
+msgid "%s%s: trigger \"%s\" not found"
+msgstr "%sKlawisz \"%s\" nie znaleziony"
 
 #, fuzzy, c-format
 msgid "Trigger \"%s\" updated"
 msgstr "Uaktualniono pasek \"%s\""
 
 #, fuzzy, c-format
-msgid "%sError: trigger option \"%s\" not found"
+msgid "%s%s: trigger option \"%s\" not found"
 msgstr "%sBłąd: nie znaleziono opcji \"%s\""
 
 #, fuzzy, c-format
@@ -10370,7 +10370,7 @@ msgid "Trigger \"%s\" copied to \"%s\""
 msgstr "Zmieniono nazwę filtru z \"%s\" na \"%s\""
 
 #, fuzzy, c-format
-msgid "%sError: failed to copy trigger \"%s\""
+msgid "%s%s: failed to copy trigger \"%s\""
 msgstr "%sBłąd: nie udało sią stworzyć paska \"%s\""
 
 #, fuzzy, c-format
@@ -10394,8 +10394,8 @@ msgstr "Przywrócono domyślne rmofifiery:"
 
 #, fuzzy, c-format
 msgid ""
-"%sError: \"-yes\" argument is required for restoring default triggers "
-"(security reason)"
+"%s%s: \"-yes\" argument is required for restoring default triggers (security "
+"reason)"
 msgstr ""
 "%sBłąd: argument \"-yes\" wymagany do przywrócenia domyślnych rmodifierów "
 "(względy bezpieczeństwa)"
@@ -10526,15 +10526,14 @@ msgstr "domyślny kolor napisów na pasku"
 
 #, c-format
 msgid ""
-"%sError: invalid format for option \"regex\", see /help trigger.trigger.%s."
-"regex"
+"%s%s: invalid format for option \"regex\", see /help trigger.trigger.%s.regex"
 msgstr ""
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%sError: invalid regular expression in option \"regex\", see /help trigger."
+"%s%s: invalid regular expression in option \"regex\", see /help trigger."
 "trigger.%s.regex"
-msgstr ""
+msgstr "%s%s: błąd podczas kompilowania wyrażenia regularnego \"%s\""
 
 msgid ""
 "if disabled, the hooks are removed from trigger, so it is not called any more"

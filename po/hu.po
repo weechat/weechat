@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-03-06 19:25+0100\n"
-"PO-Revision-Date: 2014-03-06 18:56+0100\n"
+"POT-Creation-Date: 2014-03-10 21:02+0100\n"
+"PO-Revision-Date: 2014-03-10 21:07+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: hu\n"
@@ -8979,11 +8979,11 @@ msgid ""
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%sError: unable to create hook for trigger \"%s\" (bad arguments)"
+msgid "%s%s: unable to create hook for trigger \"%s\" (bad arguments)"
 msgstr "%s ismeretlen opció a \"%s\" parancsnak\n"
 
 #, fuzzy, c-format
-msgid "%sError: invalid regular expression in trigger \"%s\""
+msgid "%s%s: invalid regular expression in trigger \"%s\""
 msgstr "%s nincs elég memória az információs pult üzenethez\n"
 
 msgid "Trigger monitor"
@@ -9021,9 +9021,9 @@ msgstr "Aliaszok listája:\n"
 msgid "Trigger \"%s\" restarted"
 msgstr "A \"%s\" => \"%s\" aliasz elkészült\n"
 
-#, c-format
-msgid "%sError: a disabled trigger can not be restarted"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s%s: a disabled trigger can not be restarted"
+msgstr "%s nem sikerült a szervert létrehozni\n"
 
 #, fuzzy, c-format
 msgid "Trigger \"%s\" enabled"
@@ -9033,12 +9033,12 @@ msgstr "a felhasználók le lettek tiltva"
 msgid "Trigger \"%s\" disabled"
 msgstr "a felhasználók le lettek tiltva"
 
-#, c-format
-msgid "%sError: invalid name for trigger"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s%s: invalid name for trigger"
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 #, fuzzy, c-format
-msgid "%sError: trigger \"%s\" already exists"
+msgid "%s%s: trigger \"%s\" already exists"
 msgstr "%s az ignore már létezik\n"
 
 #, fuzzy, c-format
@@ -9046,7 +9046,7 @@ msgid "Trigger \"%s\" renamed to \"%s\""
 msgstr "a felhasználók le lettek tiltva"
 
 #, fuzzy, c-format
-msgid "%sError: failed to rename trigger \"%s\""
+msgid "%s%s: failed to rename trigger \"%s\""
 msgstr "%s nem sikerült a modul opciókat elmenteni\n"
 
 #, fuzzy
@@ -9054,29 +9054,29 @@ msgid "List of triggers:"
 msgstr "Aliaszok listája:\n"
 
 #, fuzzy, c-format
-msgid "%sError: invalid hook type \"%s\""
+msgid "%s%s: invalid hook type \"%s\""
 msgstr "%s nem sikerült a(z) \"%s\" billentyűt hozzárendelni\n"
 
 #, fuzzy, c-format
-msgid "%sError: invalid format for regular expression"
+msgid "%s%s: invalid format for regular expression"
 msgstr "belépési nyíl színe"
 
 #, fuzzy, c-format
-msgid "%sError: invalid regular expression (compilation failed)"
+msgid "%s%s: invalid regular expression (compilation failed)"
 msgstr "%s a(z) \"%s\" érvénytelen reguláris kifejezés (%s)\n"
 
 #, fuzzy, c-format
-msgid "%sError: invalid return code \"%s\""
+msgid "%s%s: invalid return code \"%s\""
 msgstr "%s nem sikerült a(z) \"%s\" billentyűparancsot visszavonni\n"
 
 #, c-format
 msgid ""
-"%sError: trigger \"%s\" already exists (choose another name or use option "
+"%s%s: trigger \"%s\" already exists (choose another name or use option "
 "\"addreplace\" to overwrite it)"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%sError: failed to create trigger \"%s\""
+msgid "%s%s: failed to create trigger \"%s\""
 msgstr "%s nem sikerült a modul opciókat elmenteni\n"
 
 #, fuzzy, c-format
@@ -9084,15 +9084,15 @@ msgid "Trigger \"%s\" created"
 msgstr "A \"%s\" => \"%s\" aliasz elkészült\n"
 
 #, fuzzy, c-format
-msgid "%sError: trigger \"%s\" not found"
-msgstr "%s a \"%s\" modul nem található\n"
+msgid "%s%s: trigger \"%s\" not found"
+msgstr "%s a \"%s\" szerver nem található\n"
 
 #, fuzzy, c-format
 msgid "Trigger \"%s\" updated"
 msgstr "A \"%s\" => \"%s\" aliasz elkészült\n"
 
 #, fuzzy, c-format
-msgid "%sError: trigger option \"%s\" not found"
+msgid "%s%s: trigger option \"%s\" not found"
 msgstr "%s a \"%s\" modul nem található\n"
 
 #, fuzzy, c-format
@@ -9100,7 +9100,7 @@ msgid "Trigger \"%s\" copied to \"%s\""
 msgstr "a felhasználók le lettek tiltva"
 
 #, fuzzy, c-format
-msgid "%sError: failed to copy trigger \"%s\""
+msgid "%s%s: failed to copy trigger \"%s\""
 msgstr "%s nem sikerült a modul opciókat elmenteni\n"
 
 #, fuzzy, c-format
@@ -9124,8 +9124,8 @@ msgstr "Alapértelmezett billentyűparancsok visszaállítva\n"
 
 #, fuzzy, c-format
 msgid ""
-"%sError: \"-yes\" argument is required for restoring default triggers "
-"(security reason)"
+"%s%s: \"-yes\" argument is required for restoring default triggers (security "
+"reason)"
 msgstr ""
 "%s \"-yes\" paraméter megadása kötelező a billentyűparancsok "
 "visszaállításához (biztonsági okokból)\n"
@@ -9256,15 +9256,14 @@ msgstr "információs pult szövegének színe"
 
 #, c-format
 msgid ""
-"%sError: invalid format for option \"regex\", see /help trigger.trigger.%s."
-"regex"
+"%s%s: invalid format for option \"regex\", see /help trigger.trigger.%s.regex"
 msgstr ""
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%sError: invalid regular expression in option \"regex\", see /help trigger."
+"%s%s: invalid regular expression in option \"regex\", see /help trigger."
 "trigger.%s.regex"
-msgstr ""
+msgstr "%s nincs elég memória az információs pult üzenethez\n"
 
 msgid ""
 "if disabled, the hooks are removed from trigger, so it is not called any more"

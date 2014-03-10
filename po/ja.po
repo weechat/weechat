@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-03-06 19:25+0100\n"
-"PO-Revision-Date: 2014-03-06 18:56+0100\n"
+"POT-Creation-Date: 2014-03-10 21:02+0100\n"
+"PO-Revision-Date: 2014-03-10 21:07+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
 "Language: ja\n"
@@ -10066,11 +10066,11 @@ msgid ""
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%sError: unable to create hook for trigger \"%s\" (bad arguments)"
+msgid "%s%s: unable to create hook for trigger \"%s\" (bad arguments)"
 msgstr "%sエラー: フィルタ \"%s\" の名前を \"%s\" に変更できません"
 
 #, fuzzy, c-format
-msgid "%sError: invalid regular expression in trigger \"%s\""
+msgid "%s%s: invalid regular expression in trigger \"%s\""
 msgstr "%s%s: 正規表現のコンパイル中にエラー \"%s\""
 
 msgid "Trigger monitor"
@@ -10108,9 +10108,9 @@ msgstr "別名のリスト:"
 msgid "Trigger \"%s\" restarted"
 msgstr "バー \"%s\" が作成されました"
 
-#, c-format
-msgid "%sError: a disabled trigger can not be restarted"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s%s: a disabled trigger can not be restarted"
+msgstr "%s%s: 現在のインタプリタの状態の取得に失敗"
 
 #, fuzzy, c-format
 msgid "Trigger \"%s\" enabled"
@@ -10120,12 +10120,12 @@ msgstr "フィルタ \"%s\" が有効化されました"
 msgid "Trigger \"%s\" disabled"
 msgstr "フィルタ \"%s\" が無効化されました"
 
-#, c-format
-msgid "%sError: invalid name for trigger"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s%s: invalid name for trigger"
+msgstr "%1$s%2$s: %4$s 用に割り当てた不正なアドレス \"%3$s\""
 
 #, fuzzy, c-format
-msgid "%sError: trigger \"%s\" already exists"
+msgid "%s%s: trigger \"%s\" already exists"
 msgstr "%sエラー: フィルタ \"%s\" は既に存在します"
 
 #, fuzzy, c-format
@@ -10133,7 +10133,7 @@ msgid "Trigger \"%s\" renamed to \"%s\""
 msgstr "フィルタ \"%s\" の名前を \"%s\" に変更しました"
 
 #, fuzzy, c-format
-msgid "%sError: failed to rename trigger \"%s\""
+msgid "%s%s: failed to rename trigger \"%s\""
 msgstr "%sエラー: バー \"%s\" の作成に失敗しました"
 
 #, fuzzy
@@ -10141,29 +10141,29 @@ msgid "List of triggers:"
 msgstr "プロキシリスト:"
 
 #, fuzzy, c-format
-msgid "%sError: invalid hook type \"%s\""
+msgid "%s%s: invalid hook type \"%s\""
 msgstr "%sエラー: キー \"%s\" の割り当てに失敗しました"
 
 #, fuzzy, c-format
-msgid "%sError: invalid format for regular expression"
+msgid "%s%s: invalid format for regular expression"
 msgstr "エラープレフィックスのテキスト色"
 
 #, fuzzy, c-format
-msgid "%sError: invalid regular expression (compilation failed)"
+msgid "%s%s: invalid regular expression (compilation failed)"
 msgstr "%s評価する式にエラーがあります"
 
 #, fuzzy, c-format
-msgid "%sError: invalid return code \"%s\""
+msgid "%s%s: invalid return code \"%s\""
 msgstr "%sエラー: キー \"%s\" の割り当てを解除できません"
 
 #, c-format
 msgid ""
-"%sError: trigger \"%s\" already exists (choose another name or use option "
+"%s%s: trigger \"%s\" already exists (choose another name or use option "
 "\"addreplace\" to overwrite it)"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%sError: failed to create trigger \"%s\""
+msgid "%s%s: failed to create trigger \"%s\""
 msgstr "%sエラー: バー \"%s\" の作成に失敗しました"
 
 #, fuzzy, c-format
@@ -10171,15 +10171,15 @@ msgid "Trigger \"%s\" created"
 msgstr "バー \"%s\" が作成されました"
 
 #, fuzzy, c-format
-msgid "%sError: trigger \"%s\" not found"
-msgstr "%sエラー: フィルタ \"%s\" が見つかりません"
+msgid "%s%s: trigger \"%s\" not found"
+msgstr "%sキー \"%s\" が見つかりません"
 
 #, fuzzy, c-format
 msgid "Trigger \"%s\" updated"
 msgstr "バー \"%s\" がアップデートされました"
 
 #, fuzzy, c-format
-msgid "%sError: trigger option \"%s\" not found"
+msgid "%s%s: trigger option \"%s\" not found"
 msgstr "%sエラー: オプション \"%s\" が見つかりません"
 
 #, fuzzy, c-format
@@ -10187,7 +10187,7 @@ msgid "Trigger \"%s\" copied to \"%s\""
 msgstr "フィルタ \"%s\" の名前を \"%s\" に変更しました"
 
 #, fuzzy, c-format
-msgid "%sError: failed to copy trigger \"%s\""
+msgid "%s%s: failed to copy trigger \"%s\""
 msgstr "%sエラー: バー \"%s\" の作成に失敗しました"
 
 #, fuzzy, c-format
@@ -10211,8 +10211,8 @@ msgstr "デフォルトに戻す場合の rmodifier:"
 
 #, fuzzy, c-format
 msgid ""
-"%sError: \"-yes\" argument is required for restoring default triggers "
-"(security reason)"
+"%s%s: \"-yes\" argument is required for restoring default triggers (security "
+"reason)"
 msgstr ""
 "%sエラー: デフォルト rmodifiers に戻すためには \"-yes\" 引数が必要 (セキュリ"
 "ティ上の問題)"
@@ -10343,15 +10343,14 @@ msgstr "バーのデフォルトテキスト色"
 
 #, c-format
 msgid ""
-"%sError: invalid format for option \"regex\", see /help trigger.trigger.%s."
-"regex"
+"%s%s: invalid format for option \"regex\", see /help trigger.trigger.%s.regex"
 msgstr ""
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%sError: invalid regular expression in option \"regex\", see /help trigger."
+"%s%s: invalid regular expression in option \"regex\", see /help trigger."
 "trigger.%s.regex"
-msgstr ""
+msgstr "%s%s: 正規表現のコンパイル中にエラー \"%s\""
 
 msgid ""
 "if disabled, the hooks are removed from trigger, so it is not called any more"

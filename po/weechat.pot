@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-03-06 19:25+0100\n"
+"POT-Creation-Date: 2014-03-10 21:02+0100\n"
 "PO-Revision-Date: 2013-02-14 18:20+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8022,11 +8022,11 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid "%sError: unable to create hook for trigger \"%s\" (bad arguments)"
+msgid "%s%s: unable to create hook for trigger \"%s\" (bad arguments)"
 msgstr ""
 
 #, c-format
-msgid "%sError: invalid regular expression in trigger \"%s\""
+msgid "%s%s: invalid regular expression in trigger \"%s\""
 msgstr ""
 
 msgid "Trigger monitor"
@@ -8059,7 +8059,7 @@ msgid "Trigger \"%s\" restarted"
 msgstr ""
 
 #, c-format
-msgid "%sError: a disabled trigger can not be restarted"
+msgid "%s%s: a disabled trigger can not be restarted"
 msgstr ""
 
 #, c-format
@@ -8071,11 +8071,11 @@ msgid "Trigger \"%s\" disabled"
 msgstr ""
 
 #, c-format
-msgid "%sError: invalid name for trigger"
+msgid "%s%s: invalid name for trigger"
 msgstr ""
 
 #, c-format
-msgid "%sError: trigger \"%s\" already exists"
+msgid "%s%s: trigger \"%s\" already exists"
 msgstr ""
 
 #, c-format
@@ -8083,36 +8083,36 @@ msgid "Trigger \"%s\" renamed to \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%sError: failed to rename trigger \"%s\""
+msgid "%s%s: failed to rename trigger \"%s\""
 msgstr ""
 
 msgid "List of triggers:"
 msgstr ""
 
 #, c-format
-msgid "%sError: invalid hook type \"%s\""
+msgid "%s%s: invalid hook type \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%sError: invalid format for regular expression"
+msgid "%s%s: invalid format for regular expression"
 msgstr ""
 
 #, c-format
-msgid "%sError: invalid regular expression (compilation failed)"
+msgid "%s%s: invalid regular expression (compilation failed)"
 msgstr ""
 
 #, c-format
-msgid "%sError: invalid return code \"%s\""
+msgid "%s%s: invalid return code \"%s\""
 msgstr ""
 
 #, c-format
 msgid ""
-"%sError: trigger \"%s\" already exists (choose another name or use option "
+"%s%s: trigger \"%s\" already exists (choose another name or use option "
 "\"addreplace\" to overwrite it)"
 msgstr ""
 
 #, c-format
-msgid "%sError: failed to create trigger \"%s\""
+msgid "%s%s: failed to create trigger \"%s\""
 msgstr ""
 
 #, c-format
@@ -8120,7 +8120,7 @@ msgid "Trigger \"%s\" created"
 msgstr ""
 
 #, c-format
-msgid "%sError: trigger \"%s\" not found"
+msgid "%s%s: trigger \"%s\" not found"
 msgstr ""
 
 #, c-format
@@ -8128,7 +8128,7 @@ msgid "Trigger \"%s\" updated"
 msgstr ""
 
 #, c-format
-msgid "%sError: trigger option \"%s\" not found"
+msgid "%s%s: trigger option \"%s\" not found"
 msgstr ""
 
 #, c-format
@@ -8136,7 +8136,7 @@ msgid "Trigger \"%s\" copied to \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%sError: failed to copy trigger \"%s\""
+msgid "%s%s: failed to copy trigger \"%s\""
 msgstr ""
 
 #, c-format
@@ -8159,8 +8159,8 @@ msgstr ""
 
 #, c-format
 msgid ""
-"%sError: \"-yes\" argument is required for restoring default triggers "
-"(security reason)"
+"%s%s: \"-yes\" argument is required for restoring default triggers (security "
+"reason)"
 msgstr ""
 
 msgid "manage triggers, the Swiss Army knife for WeeChat"
@@ -8282,13 +8282,12 @@ msgstr ""
 
 #, c-format
 msgid ""
-"%sError: invalid format for option \"regex\", see /help trigger.trigger.%s."
-"regex"
+"%s%s: invalid format for option \"regex\", see /help trigger.trigger.%s.regex"
 msgstr ""
 
 #, c-format
 msgid ""
-"%sError: invalid regular expression in option \"regex\", see /help trigger."
+"%s%s: invalid regular expression in option \"regex\", see /help trigger."
 "trigger.%s.regex"
 msgstr ""
 

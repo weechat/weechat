@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-03-06 19:25+0100\n"
-"PO-Revision-Date: 2014-03-07 09:24+0100\n"
+"POT-Creation-Date: 2014-03-10 21:02+0100\n"
+"PO-Revision-Date: 2014-03-10 21:07+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
 "Language: de_DE\n"
@@ -10716,14 +10716,14 @@ msgstr ""
 "Veränderung von Text und Ausführen von Befehlen bei einem Ereignis, welche "
 "durch WeeChat oder eine Erweiterung ausgelöst werden"
 
-#, c-format
-msgid "%sError: unable to create hook for trigger \"%s\" (bad arguments)"
+#, fuzzy, c-format
+msgid "%s%s: unable to create hook for trigger \"%s\" (bad arguments)"
 msgstr ""
 "%sFehler: Hook kann für Trigger \"%s\" nicht erstellt werden (fehlerhafte "
 "Argumente)"
 
-#, c-format
-msgid "%sError: invalid regular expression in trigger \"%s\""
+#, fuzzy, c-format
+msgid "%s%s: invalid regular expression in trigger \"%s\""
 msgstr "%sFehler: regulärer Ausdruck in Trigger  \"%s\" ungültig"
 
 msgid "Trigger monitor"
@@ -10755,8 +10755,8 @@ msgstr "Liste der standardmäßigen Trigger:"
 msgid "Trigger \"%s\" restarted"
 msgstr "Trigger \"%s\" neu gestartet"
 
-#, c-format
-msgid "%sError: a disabled trigger can not be restarted"
+#, fuzzy, c-format
+msgid "%s%s: a disabled trigger can not be restarted"
 msgstr "%sFehler: ein deaktivierter Trigger kann nicht neu gestartet werden"
 
 #, c-format
@@ -10767,75 +10767,75 @@ msgstr "Trigger \"%s\" aktiviert"
 msgid "Trigger \"%s\" disabled"
 msgstr "Trigger \"%s\" deaktiviert"
 
-#, c-format
-msgid "%sError: invalid name for trigger"
+#, fuzzy, c-format
+msgid "%s%s: invalid name for trigger"
 msgstr "%sFehler: ungültiger Name für Trigger"
 
-#, c-format
-msgid "%sError: trigger \"%s\" already exists"
+#, fuzzy, c-format
+msgid "%s%s: trigger \"%s\" already exists"
 msgstr "%sFehler: Trigger \"%s\" existiert bereits"
 
 #, c-format
 msgid "Trigger \"%s\" renamed to \"%s\""
 msgstr "Trigger \"%s\" wurde umbenannt. Der neue Name lautet \"%s\""
 
-#, c-format
-msgid "%sError: failed to rename trigger \"%s\""
+#, fuzzy, c-format
+msgid "%s%s: failed to rename trigger \"%s\""
 msgstr "%sFehler: Trigger \"%s\" konnte nicht umbenannt werden"
 
 msgid "List of triggers:"
 msgstr "Auflistung der Trigger:"
 
-#, c-format
-msgid "%sError: invalid hook type \"%s\""
+#, fuzzy, c-format
+msgid "%s%s: invalid hook type \"%s\""
 msgstr "%sFehler: ungültiger hook Typ \"%s\""
 
-#, c-format
-msgid "%sError: invalid format for regular expression"
+#, fuzzy, c-format
+msgid "%s%s: invalid format for regular expression"
 msgstr "%sFehler: ungültiges Format für regulären Ausdruck"
 
-#, c-format
-msgid "%sError: invalid regular expression (compilation failed)"
+#, fuzzy, c-format
+msgid "%s%s: invalid regular expression (compilation failed)"
 msgstr "%sFehler: regulärer Ausdruck ungültig (Kompilat fehlgeschlagen)"
 
-#, c-format
-msgid "%sError: invalid return code \"%s\""
+#, fuzzy, c-format
+msgid "%s%s: invalid return code \"%s\""
 msgstr "%sFehler: ungültiger Rückgabewert \"%s\""
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%sError: trigger \"%s\" already exists (choose another name or use option "
+"%s%s: trigger \"%s\" already exists (choose another name or use option "
 "\"addreplace\" to overwrite it)"
 msgstr ""
 "%sFehler: Trigger \"%s\" existiert schon (wähle einen anderen Namen oder "
 "nutze die Option \"addreplace\" um vorhandenen Trigger zu überschreiben)"
 
-#, c-format
-msgid "%sError: failed to create trigger \"%s\""
+#, fuzzy, c-format
+msgid "%s%s: failed to create trigger \"%s\""
 msgstr "%sFehler: Trigger \"%s\" konnte nicht erstellt werden"
 
 #, c-format
 msgid "Trigger \"%s\" created"
 msgstr "Trigger \"%s\" erstellt"
 
-#, c-format
-msgid "%sError: trigger \"%s\" not found"
-msgstr "%sFehler: Trigger \"%s\" nicht gefunden"
+#, fuzzy, c-format
+msgid "%s%s: trigger \"%s\" not found"
+msgstr "%sTrigger, \"%s\", nicht gefunden"
 
 #, c-format
 msgid "Trigger \"%s\" updated"
 msgstr "Trigger \"%s\" aktualisiert"
 
-#, c-format
-msgid "%sError: trigger option \"%s\" not found"
+#, fuzzy, c-format
+msgid "%s%s: trigger option \"%s\" not found"
 msgstr "%sFehler: Trigger-Option \"%s\" wurde nicht gefunden"
 
 #, c-format
 msgid "Trigger \"%s\" copied to \"%s\""
 msgstr "Trigger \"%s\" wurde kopiert, neue Name \"%s\""
 
-#, c-format
-msgid "%sError: failed to copy trigger \"%s\""
+#, fuzzy, c-format
+msgid "%s%s: failed to copy trigger \"%s\""
 msgstr "%sFehler: Trigger \"%s\" konnte nicht kopiert werden"
 
 #, c-format
@@ -10856,10 +10856,10 @@ msgstr "Trigger:"
 msgid "Default triggers restored:"
 msgstr "Standard-Trigger wiederhergestellt:"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%sError: \"-yes\" argument is required for restoring default triggers "
-"(security reason)"
+"%s%s: \"-yes\" argument is required for restoring default triggers (security "
+"reason)"
 msgstr ""
 "%sFehler: Um Trigger auf Standardeinstellungen zurücksetzen ist es aus "
 "Sicherheitsgründen erforderlich, das Argument \"-yes\" zu nutzen"
@@ -11071,17 +11071,16 @@ msgstr "Standardbefehl für einen Hook"
 msgid "default return codes for hook callback"
 msgstr "Standardrückgabewerte für einen Hook-Callback"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%sError: invalid format for option \"regex\", see /help trigger.trigger.%s."
-"regex"
+"%s%s: invalid format for option \"regex\", see /help trigger.trigger.%s.regex"
 msgstr ""
 "%sFehler: ungültiges Format in Option \"regex\", siehe /help trigger.trigger."
 "%s.regex"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%sError: invalid regular expression in option \"regex\", see /help trigger."
+"%s%s: invalid regular expression in option \"regex\", see /help trigger."
 "trigger.%s.regex"
 msgstr ""
 "%sFehler: regulärer Ausdruck in Option \"regex\" ist ungültig, siehe /help "

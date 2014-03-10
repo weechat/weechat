@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-03-06 19:25+0100\n"
-"PO-Revision-Date: 2014-03-06 18:56+0100\n"
+"POT-Creation-Date: 2014-03-10 21:02+0100\n"
+"PO-Revision-Date: 2014-03-10 21:07+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: it\n"
@@ -9990,11 +9990,11 @@ msgid ""
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%sError: unable to create hook for trigger \"%s\" (bad arguments)"
+msgid "%s%s: unable to create hook for trigger \"%s\" (bad arguments)"
 msgstr "%sErrore: impossibile rinominare il filtro da \"%s\" a \"%s\""
 
 #, fuzzy, c-format
-msgid "%sError: invalid regular expression in trigger \"%s\""
+msgid "%s%s: invalid regular expression in trigger \"%s\""
 msgstr "%s%s: errore nella compilazione dell'espressione regolare \"%s\""
 
 msgid "Trigger monitor"
@@ -10032,9 +10032,9 @@ msgstr "Elenco degli alias:"
 msgid "Trigger \"%s\" restarted"
 msgstr "Barra \"%s\" creata"
 
-#, c-format
-msgid "%sError: a disabled trigger can not be restarted"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s%s: a disabled trigger can not be restarted"
+msgstr "%s%s: impossibile ricevere lo stato attuale dell'interprete"
 
 #, fuzzy, c-format
 msgid "Trigger \"%s\" enabled"
@@ -10044,12 +10044,12 @@ msgstr "Filtro \"%s\" abilitato"
 msgid "Trigger \"%s\" disabled"
 msgstr "Filtro \"%s\" disabilitato"
 
-#, c-format
-msgid "%sError: invalid name for trigger"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s%s: invalid name for trigger"
+msgstr "%s%s: set di caratter invalido: \"%s\""
 
 #, fuzzy, c-format
-msgid "%sError: trigger \"%s\" already exists"
+msgid "%s%s: trigger \"%s\" already exists"
 msgstr "%sErrore: il filtro \"%s\" esiste già"
 
 #, fuzzy, c-format
@@ -10057,7 +10057,7 @@ msgid "Trigger \"%s\" renamed to \"%s\""
 msgstr "Filtro \"%s\" rinominato in \"%s\""
 
 #, fuzzy, c-format
-msgid "%sError: failed to rename trigger \"%s\""
+msgid "%s%s: failed to rename trigger \"%s\""
 msgstr "%sErrore: creazione della barra \"%s\" fallita"
 
 #, fuzzy
@@ -10065,29 +10065,29 @@ msgid "List of triggers:"
 msgstr "Elenco di proxy:"
 
 #, fuzzy, c-format
-msgid "%sError: invalid hook type \"%s\""
+msgid "%s%s: invalid hook type \"%s\""
 msgstr "%sErrore: impossibile associare il tasto \"%s\""
 
 #, fuzzy, c-format
-msgid "%sError: invalid format for regular expression"
+msgid "%s%s: invalid format for regular expression"
 msgstr "colore del testo per il prefisso di errore"
 
 #, fuzzy, c-format
-msgid "%sError: invalid regular expression (compilation failed)"
+msgid "%s%s: invalid regular expression (compilation failed)"
 msgstr "%sErrore nell'espressione da analizzare"
 
 #, fuzzy, c-format
-msgid "%sError: invalid return code \"%s\""
+msgid "%s%s: invalid return code \"%s\""
 msgstr "%sErrore: impossibile rimuovere la combinazione del tasto \"%s\""
 
 #, c-format
 msgid ""
-"%sError: trigger \"%s\" already exists (choose another name or use option "
+"%s%s: trigger \"%s\" already exists (choose another name or use option "
 "\"addreplace\" to overwrite it)"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%sError: failed to create trigger \"%s\""
+msgid "%s%s: failed to create trigger \"%s\""
 msgstr "%sErrore: creazione della barra \"%s\" fallita"
 
 #, fuzzy, c-format
@@ -10095,15 +10095,15 @@ msgid "Trigger \"%s\" created"
 msgstr "Barra \"%s\" creata"
 
 #, fuzzy, c-format
-msgid "%sError: trigger \"%s\" not found"
-msgstr "%sErrore: filtro \"%s\" non trovato"
+msgid "%s%s: trigger \"%s\" not found"
+msgstr "%sTasto \"%s\" non trovato"
 
 #, fuzzy, c-format
 msgid "Trigger \"%s\" updated"
 msgstr "Barra \"%s\" aggiornata"
 
 #, fuzzy, c-format
-msgid "%sError: trigger option \"%s\" not found"
+msgid "%s%s: trigger option \"%s\" not found"
 msgstr "%sErrore: opzione \"%s\" non trovata"
 
 #, fuzzy, c-format
@@ -10111,7 +10111,7 @@ msgid "Trigger \"%s\" copied to \"%s\""
 msgstr "Filtro \"%s\" rinominato in \"%s\""
 
 #, fuzzy, c-format
-msgid "%sError: failed to copy trigger \"%s\""
+msgid "%s%s: failed to copy trigger \"%s\""
 msgstr "%sErrore: creazione della barra \"%s\" fallita"
 
 #, fuzzy, c-format
@@ -10135,8 +10135,8 @@ msgstr "Rmodifier predefiniti ripristinati:"
 
 #, fuzzy, c-format
 msgid ""
-"%sError: \"-yes\" argument is required for restoring default triggers "
-"(security reason)"
+"%s%s: \"-yes\" argument is required for restoring default triggers (security "
+"reason)"
 msgstr ""
 "%sErrore: l'argomento \"-yes\" è richiesto per ripristinare gli rmodifier "
 "predefiniti (motivi di sicurezza)"
@@ -10267,15 +10267,14 @@ msgstr "colore predefinito del testo per la barra"
 
 #, c-format
 msgid ""
-"%sError: invalid format for option \"regex\", see /help trigger.trigger.%s."
-"regex"
+"%s%s: invalid format for option \"regex\", see /help trigger.trigger.%s.regex"
 msgstr ""
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%sError: invalid regular expression in option \"regex\", see /help trigger."
+"%s%s: invalid regular expression in option \"regex\", see /help trigger."
 "trigger.%s.regex"
-msgstr ""
+msgstr "%s%s: errore nella compilazione dell'espressione regolare \"%s\""
 
 msgid ""
 "if disabled, the hooks are removed from trigger, so it is not called any more"
