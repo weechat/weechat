@@ -88,6 +88,7 @@ plugin_list = {
     'alias': '',
     'aspell': 'o',
     'charset': 'o',
+    'exec': 'o',
     'fifo': 'o',
     'irc': 'co',
     'logger': 'o',

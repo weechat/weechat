@@ -113,6 +113,14 @@
 ./src/plugins/aspell/weechat-aspell-speller.c
 ./src/plugins/aspell/weechat-aspell-speller.h
 ./src/plugins/charset/charset.c
+./src/plugins/exec/exec.c
+./src/plugins/exec/exec-command.c
+./src/plugins/exec/exec-command.h
+./src/plugins/exec/exec-completion.c
+./src/plugins/exec/exec-completion.h
+./src/plugins/exec/exec-config.c
+./src/plugins/exec/exec-config.h
+./src/plugins/exec/exec.h
 ./src/plugins/fifo/fifo.c
 ./src/plugins/fifo/fifo.h
 ./src/plugins/fifo/fifo-info.c

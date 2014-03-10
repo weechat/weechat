@@ -51,6 +51,10 @@ if PLUGIN_CHARSET
 charset_dir = charset
 endif
 
+if PLUGIN_EXEC
+exec_dir = exec
+endif
+
 if PLUGIN_FIFO
 fifo_dir = fifo
 endif
@@ -103,10 +107,10 @@ if PLUGIN_XFER
 xfer_dir = xfer
 endif
 
-SUBDIRS = . $(alias_dir) $(aspell_dir) $(charset_dir) $(fifo_dir) $(irc_dir) \
-            $(logger_dir) $(relay_dir) $(script_dir) $(perl_dir) $(python_dir) \
-            $(ruby_dir) $(lua_dir) $(tcl_dir) $(guile_dir) $(trigger_dir) \
-            $(xfer_dir)
+SUBDIRS = . $(alias_dir) $(aspell_dir) $(charset_dir) $(exec_dir) $(fifo_dir) \
+            $(irc_dir) $(logger_dir) $(relay_dir) $(script_dir) $(perl_dir) \
+            $(python_dir) $(ruby_dir) $(lua_dir) $(tcl_dir) $(guile_dir) \
+            $(trigger_dir) $(xfer_dir)
 
 EXTRA_DIST = CMakeLists.txt
 
