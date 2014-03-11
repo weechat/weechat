@@ -15,6 +15,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 0.4.4 (under dev)
 
+* core: add missing \0 at the end of stderr buffer in hook_process
 * core: fix detection of terminated process in hook_process
 * core: set option weechat.look.buffer_search_where to prefix_message by default
 * core: fix "/window scroll -N" on a buffer with free content

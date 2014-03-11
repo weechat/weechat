@@ -1607,15 +1607,15 @@ hook_process_child (struct t_hook *hook_process)
 void
 hook_process_send_buffers (struct t_hook *hook_process, int callback_rc)
 {
-    int i, size;
+    int size;
 
     /* add '\0' at end of stdout and stderr */
-    for (i = 0; i < 2; i++)
-    {
-        size = HOOK_PROCESS(hook_process, buffer_size[i]);
-        if (size > 0)
-            HOOK_PROCESS(hook_process, buffer[i])[size] = '\0';
-    }
+    size = HOOK_PROCESS(hook_process, buffer_size[HOOK_PROCESS_STDOUT]);
+    if (size > 0)
+        HOOK_PROCESS(hook_process, buffer[HOOK_PROCESS_STDOUT])[size] = '\0';
+    size = HOOK_PROCESS(hook_process, buffer_size[HOOK_PROCESS_STDERR]);
+    if (size > 0)
+        HOOK_PROCESS(hook_process, buffer[HOOK_PROCESS_STDERR])[size] = '\0';
 
     /* send buffers to callback */
     (void) (HOOK_PROCESS(hook_process, callback))
