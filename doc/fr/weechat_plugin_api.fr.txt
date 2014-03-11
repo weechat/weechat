@@ -10164,6 +10164,8 @@ weechat.prnt(weechat.current_buffer(), "Texte sur le tampon courant")
 
 ==== weechat_buffer_search
 
+_Mis à jour dans la 0.4.4._
+
 Rechercher un tampon par l'extension et/ou le nom.
 
 Prototype :
@@ -10176,20 +10178,24 @@ struct t_gui_buffer *weechat_buffer_search (const char *plugin,
 
 Paramètres :
 
-* 'plugin' : nom de l'extension
+* 'plugin' : nom de l'extension, la valeur spéciale suivante est autorisée :
+** `==` : le nom utilisé est le nom complet du tampon (par exemple :
+   `irc.freenode.#weechat` au lieu de `freenode.#weechat`)
+   _(WeeChat ≥ 0.4.4)_
 * 'name' : nom du tampon, si c'est NULL ou une chaîne vide, le tampon courant
-  est retourné (tampon affiché par la fenêtre courante)
+  est retourné (tampon affiché par la fenêtre courante); si le nom commence par
+  `(?i)`, la recherche est insensible à la casse _(WeeChat ≥ 0.4.4)_
 
 Valeur de retour :
 
 * pointeur vers le tampon trouvé, NULL s'il n'a pas été trouvé
 
-Exemple en C :
+Exemples en C :
 
 [source,C]
 ----
-struct t_gui_buffer *my_buffer = weechat_buffer_search ("mon_extension",
-                                                        "mon_tampon");
+struct t_gui_buffer *buffer1 = weechat_buffer_search ("irc", "freenode.#weechat");
+struct t_gui_buffer *buffer2 = weechat_buffer_search ("==", "irc.freenode.#test"); /* WeeChat ≥ 0.4.4 */
 ----
 
 Script (Python) :

@@ -2036,6 +2036,40 @@ gui_buffer_search_main ()
 }
 
 /*
+ * Searches for a buffer by full name (example: "irc.freenode.#weechat").
+ */
+
+struct t_gui_buffer *
+gui_buffer_search_by_full_name (const char *full_name)
+{
+    struct t_gui_buffer *ptr_buffer;
+    int case_sensitive;
+
+    case_sensitive = 1;
+    if (strncmp (full_name, "(?i)", 4) == 0)
+    {
+        case_sensitive = 0;
+        full_name += 4;
+    }
+
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if (ptr_buffer->full_name
+            && ((case_sensitive
+                 && strcmp (ptr_buffer->full_name, full_name) == 0)
+                || (!case_sensitive
+                    && string_strcasecmp (ptr_buffer->full_name, full_name) == 0)))
+        {
+            return ptr_buffer;
+        }
+    }
+
+    /* buffer not found */
+    return NULL;
+}
+
+/*
  * Searches for a buffer by plugin and name.
  */
 
@@ -2043,10 +2077,20 @@ struct t_gui_buffer *
 gui_buffer_search_by_name (const char *plugin, const char *name)
 {
     struct t_gui_buffer *ptr_buffer;
-    int plugin_match;
+    int plugin_match, case_sensitive;
 
     if (!name || !name[0])
         return gui_current_window->buffer;
+
+    if (plugin && (strcmp (plugin, "==") == 0))
+        return gui_buffer_search_by_full_name (name);
+
+    case_sensitive = 1;
+    if (strncmp (name, "(?i)", 4) == 0)
+    {
+        case_sensitive = 0;
+        name += 4;
+    }
 
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
@@ -2059,33 +2103,14 @@ gui_buffer_search_by_name (const char *plugin, const char *name)
                 if (strcmp (plugin, gui_buffer_get_plugin_name (ptr_buffer)) != 0)
                     plugin_match = 0;
             }
-            if (plugin_match && (strcmp (ptr_buffer->name, name) == 0))
+            if (plugin_match
+                && ((case_sensitive
+                     && strcmp (ptr_buffer->name, name) == 0)
+                    || (!case_sensitive
+                        && string_strcasecmp (ptr_buffer->name, name) == 0)))
             {
                 return ptr_buffer;
             }
-        }
-    }
-
-    /* buffer not found */
-    return NULL;
-}
-
-/*
- * Searches for a buffer by full name (example: "irc.freenode.#weechat").
- */
-
-struct t_gui_buffer *
-gui_buffer_search_by_full_name (const char *full_name)
-{
-    struct t_gui_buffer *ptr_buffer;
-
-    for (ptr_buffer = gui_buffers; ptr_buffer;
-         ptr_buffer = ptr_buffer->next_buffer)
-    {
-        if (ptr_buffer->full_name
-            && (strcmp (ptr_buffer->full_name, full_name) == 0))
-        {
-            return ptr_buffer;
         }
     }
 

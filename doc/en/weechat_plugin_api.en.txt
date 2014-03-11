@@ -9972,6 +9972,8 @@ weechat.prnt(weechat.current_buffer(), "Text on current buffer")
 
 ==== weechat_buffer_search
 
+_Updated in 0.4.4._
+
 Search a buffer by plugin and/or name.
 
 Prototype:
@@ -9984,20 +9986,24 @@ struct t_gui_buffer *weechat_buffer_search (const char *plugin,
 
 Arguments:
 
-* 'plugin': name of plugin
+* 'plugin': name of plugin, following special value is allowed:
+** `==`: the name used is the buffer full name (for example:
+   `irc.freenode.#weechat` instead of `freenode.#weechat`)
+   _(WeeChat ≥ 0.4.4)_
 * 'name': name of buffer, if it is NULL or empty string, the current buffer is
-  returned (buffer displayed by current window)
+  returned (buffer displayed by current window); if the name starts with
+  `(?i)`, the search is case insensitive _(WeeChat ≥ 0.4.4)_
 
 Return value:
 
 * pointer to buffer found, NULL if not found
 
-C example:
+C examples:
 
 [source,C]
 ----
-struct t_gui_buffer *my_buffer = weechat_buffer_search ("my_plugin",
-                                                        "my_buffer");
+struct t_gui_buffer *buffer1 = weechat_buffer_search ("irc", "freenode.#weechat");
+struct t_gui_buffer *buffer2 = weechat_buffer_search ("==", "irc.freenode.#test"); /* WeeChat ≥ 0.4.4 */
 ----
 
 Script (Python):
