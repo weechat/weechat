@@ -243,28 +243,30 @@ exec_end_command (struct t_exec_cmd *exec_cmd, int return_code)
     ptr_buffer = weechat_buffer_search (exec_cmd->buffer_plugin,
                                         exec_cmd->buffer_name);
 
+    /* display stdout/stderr (if output to buffer, the buffer must exist) */
+    exec_command_display_output (exec_cmd, ptr_buffer, 1);
+    exec_command_display_output (exec_cmd, ptr_buffer, 0);
+
     /* display return code (only if output is NOT sent to buffer) */
     if (!exec_cmd->output_to_buffer)
     {
         if (return_code >= 0)
         {
             weechat_printf_tags (ptr_buffer, "exec_rc",
-                                 "%s: end of command \"%s\" (rc=%d)",
-                                 EXEC_PLUGIN_NAME, exec_cmd->command,
-                                 return_code);
+                                 _("%s: end of command %d (\"%s\"), "
+                                   "return code: %d"),
+                                 EXEC_PLUGIN_NAME, exec_cmd->number,
+                                 exec_cmd->command, return_code);
         }
         else
         {
             weechat_printf_tags (ptr_buffer, "exec_rc",
-                                 _("%s%s: unexpected end of command \"%s\""),
+                                 _("%s%s: unexpected end of command %d "
+                                   "(\"%s\")"),
                                  weechat_prefix ("error"), EXEC_PLUGIN_NAME,
-                                 exec_cmd->command);
+                                 exec_cmd->number, exec_cmd->command);
         }
     }
-
-    /* display stdout/stderr (if output to buffer, the buffer must exist) */
-    exec_command_display_output (exec_cmd, ptr_buffer, 1);
-    exec_command_display_output (exec_cmd, ptr_buffer, 0);
 
     /* (re)set some variables after the end of command */
     exec_cmd->hook = NULL;
