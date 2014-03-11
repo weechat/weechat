@@ -1720,13 +1720,21 @@ hook_process_timer_cb (void *arg_hook_process, int remaining_calls)
     }
     else
     {
-        if (!HOOK_PROCESS(hook_process, hook_fd[HOOK_PROCESS_STDOUT])
-            && !HOOK_PROCESS(hook_process, hook_fd[HOOK_PROCESS_STDERR]))
+        if (waitpid (HOOK_PROCESS(hook_process, child_pid),
+                     &status, WNOHANG) > 0)
         {
-            if (waitpid (HOOK_PROCESS(hook_process, child_pid), &status, WNOHANG) > 0)
+            if (WIFEXITED(status))
             {
+                /* child terminated normally */
                 rc = WEXITSTATUS(status);
                 hook_process_send_buffers (hook_process, rc);
+                unhook (hook_process);
+            }
+            else if (WIFSIGNALED(status))
+            {
+                /* child terminated by a signal */
+                hook_process_send_buffers (hook_process,
+                                           WEECHAT_HOOK_PROCESS_ERROR);
                 unhook (hook_process);
             }
         }
