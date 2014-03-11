@@ -218,9 +218,7 @@ exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
             return WEECHAT_RC_ERROR;
         ptr_exec_cmd = exec_command_search_running_id (argv[2]);
         if (ptr_exec_cmd)
-        {
-            /* TODO: send signal to the process */
-        }
+            weechat_hook_set (ptr_exec_cmd->hook, "signal", argv[3]);
         return WEECHAT_RC_OK;
     }
 
@@ -231,9 +229,7 @@ exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
             return WEECHAT_RC_ERROR;
         ptr_exec_cmd = exec_command_search_running_id (argv[2]);
         if (ptr_exec_cmd)
-        {
-            /* TODO: send KILL signal to the process */
-        }
+            weechat_hook_set (ptr_exec_cmd->hook, "signal", "kill");
         return WEECHAT_RC_OK;
     }
 
@@ -243,7 +239,10 @@ exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
         for (ptr_exec_cmd = exec_cmds; ptr_exec_cmd;
              ptr_exec_cmd = ptr_exec_cmd->next_cmd)
         {
-            /* TODO: send KILL signal to the process */
+            if (ptr_exec_cmd->hook)
+            {
+                weechat_hook_set (ptr_exec_cmd->hook, "signal", "kill");
+            }
         }
         return WEECHAT_RC_OK;
     }
