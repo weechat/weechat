@@ -173,10 +173,10 @@ exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
     int i, command_index, use_shell, detached, pipe_stdin, output_to_buffer;
-    int length;
+    int length, count;
     long timeout;
     char *error, *ptr_name, *text;
-    struct t_exec_cmd *ptr_exec_cmd, *new_exec_cmd;
+    struct t_exec_cmd *ptr_exec_cmd, *ptr_next_exec_cmd, *new_exec_cmd;
     struct t_hashtable *options_cmd;
     struct t_infolist *ptr_infolist;
 
@@ -256,6 +256,61 @@ exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
         ptr_exec_cmd = exec_command_search_running_id (argv[2]);
         if (ptr_exec_cmd)
             weechat_hook_set (ptr_exec_cmd->hook, argv[3], argv_eol[4]);
+        return WEECHAT_RC_OK;
+    }
+
+    /* delete terminated command(s) */
+    if (weechat_strcasecmp (argv[1], "-del") == 0)
+    {
+        if (argc < 3)
+            return WEECHAT_RC_ERROR;
+        if (weechat_strcasecmp (argv[2], "-all") == 0)
+        {
+            count = 0;
+            ptr_exec_cmd = exec_cmds;
+            while (ptr_exec_cmd)
+            {
+                ptr_next_exec_cmd = ptr_exec_cmd->next_cmd;
+                if (!ptr_exec_cmd->hook)
+                {
+                    exec_free (ptr_exec_cmd);
+                    count++;
+                }
+                ptr_exec_cmd = ptr_next_exec_cmd;
+            }
+            weechat_printf (NULL, _("%d commands removed"), count);
+        }
+        else
+        {
+            for (i = 2; i < argc; i++)
+            {
+                ptr_exec_cmd = exec_search_by_id (argv[i]);
+                if (ptr_exec_cmd)
+                {
+                    if (ptr_exec_cmd->hook)
+                    {
+                        weechat_printf (NULL,
+                                        _("%s%s: command with id \"%s\" is still "
+                                          "running"),
+                                        weechat_prefix ("error"), EXEC_PLUGIN_NAME,
+                                        argv[i]);
+                    }
+                    else
+                    {
+                        exec_free (ptr_exec_cmd);
+                        weechat_printf (NULL,
+                                        _("Command \"%s\" removed"), argv[i]);
+                    }
+                }
+                else
+                {
+                    weechat_printf (NULL,
+                                    _("%s%s: command id \"%s\" not found"),
+                                    weechat_prefix ("error"), EXEC_PLUGIN_NAME,
+                                    argv[i]);
+                }
+            }
+        }
         return WEECHAT_RC_OK;
     }
 
@@ -409,7 +464,8 @@ exec_command_init ()
            " || -signal <id> <signal>"
            " || -kill <id>"
            " || -killall"
-           " || -set <id> <property> <value>"),
+           " || -set <id> <property> <value>"
+           " || -del <id>|-all [<id>...]"),
         N_("   -list: list commands\n"
            "   -nosh: do not use the shell to execute the command (required if "
            "the command has some unsafe data, for example the content of a "
@@ -433,11 +489,14 @@ exec_command_init ()
            "    -set: set a hook property (see function hook_set in plugin API "
            "reference)\n"
            "property: hook property\n"
-           "   value: new value for hook property"),
+           "   value: new value for hook property\n"
+           "    -del: delete a terminated command\n"
+           "    -all: delete all terminated commands"),
         "-list"
         " || -nosh|-bg|-stdin|-o|-timeout|-name|%*"
         " || -in|-signal|-kill %(exec_commands_ids)"
         " || -killall"
-        " || -set %(exec_commands_ids) stdin|stdin_close|signal",
+        " || -set %(exec_commands_ids) stdin|stdin_close|signal"
+        " || -del %(exec_commands_ids)|-all %(exec_commands_ids)|%*",
         &exec_command_exec, NULL);
 }
