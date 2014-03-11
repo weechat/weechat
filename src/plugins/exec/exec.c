@@ -246,19 +246,19 @@ exec_end_command (struct t_exec_cmd *exec_cmd, int return_code)
     /* display return code (only if output is NOT sent to buffer) */
     if (!exec_cmd->output_to_buffer)
     {
-        weechat_printf (ptr_buffer, "");
         if (return_code >= 0)
         {
-            weechat_printf (ptr_buffer, "%s: end of command \"%s\" (rc=%d)",
-                            EXEC_PLUGIN_NAME, exec_cmd->command,
-                            return_code);
+            weechat_printf_tags (ptr_buffer, "exec_rc",
+                                 "%s: end of command \"%s\" (rc=%d)",
+                                 EXEC_PLUGIN_NAME, exec_cmd->command,
+                                 return_code);
         }
         else
         {
-            weechat_printf (ptr_buffer,
-                            _("%s%s: unexpected end of command \"%s\""),
-                            weechat_prefix ("error"), EXEC_PLUGIN_NAME,
-                            exec_cmd->command);
+            weechat_printf_tags (ptr_buffer, "exec_rc",
+                                 _("%s%s: unexpected end of command \"%s\""),
+                                 weechat_prefix ("error"), EXEC_PLUGIN_NAME,
+                                 exec_cmd->command);
         }
     }
 
