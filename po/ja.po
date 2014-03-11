@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-03-10 21:02+0100\n"
+"POT-Creation-Date: 2014-03-11 13:02+0100\n"
 "PO-Revision-Date: 2014-03-10 21:07+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
@@ -3988,6 +3988,10 @@ msgstr "%sエラー: hook_fd で不正なファイルディスクリプタ (%d) 
 #, c-format
 msgid "End of command '%s', timeout reached (%.1fs)"
 msgstr "コマンド '%s' の終了、タイムアウトになりました (%.1fs)"
+
+#, c-format
+msgid "%sError sending signal %d to pid %d: %s"
+msgstr ""
 
 #, c-format
 msgid "%sYou can not write text in this buffer"
