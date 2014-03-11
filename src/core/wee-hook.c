@@ -1384,6 +1384,8 @@ hook_process_hashtable (struct t_weechat_plugin *plugin,
     new_hook_process->callback = callback;
     new_hook_process->command = strdup (command);
     new_hook_process->options = (options) ? hashtable_dup (options) : NULL;
+    new_hook_process->detached = (options && hashtable_has_key (options,
+                                                                "detached"));
     new_hook_process->timeout = timeout;
     new_hook_process->child_read[HOOK_PROCESS_STDIN] = -1;
     new_hook_process->child_read[HOOK_PROCESS_STDOUT] = -1;
@@ -1468,17 +1470,35 @@ hook_process_child (struct t_hook *hook_process)
         close (HOOK_PROCESS(hook_process, child_write[HOOK_PROCESS_STDIN]));
 
     /* redirect stdout/stderr to pipe (so that parent process can read them) */
-    close (HOOK_PROCESS(hook_process, child_read[HOOK_PROCESS_STDOUT]));
-    close (HOOK_PROCESS(hook_process, child_read[HOOK_PROCESS_STDERR]));
-    if (dup2 (HOOK_PROCESS(hook_process, child_write[HOOK_PROCESS_STDOUT]),
+    if (HOOK_PROCESS(hook_process, child_read[HOOK_PROCESS_STDOUT]) >= 0)
+    {
+        close (HOOK_PROCESS(hook_process, child_read[HOOK_PROCESS_STDOUT]));
+        if (dup2 (HOOK_PROCESS(hook_process, child_write[HOOK_PROCESS_STDOUT]),
               STDOUT_FILENO) < 0)
-    {
-        _exit (EXIT_FAILURE);
+        {
+            _exit (EXIT_FAILURE);
+        }
     }
-    if (dup2 (HOOK_PROCESS(hook_process, child_write[HOOK_PROCESS_STDERR]),
-              STDERR_FILENO) < 0)
+    else
     {
-        _exit (EXIT_FAILURE);
+        /* detached mode: write stdout in /dev/null */
+        f = freopen ("/dev/null", "w", stdout);
+        (void) f;
+    }
+    if (HOOK_PROCESS(hook_process, child_read[HOOK_PROCESS_STDERR]) >= 0)
+    {
+        close (HOOK_PROCESS(hook_process, child_read[HOOK_PROCESS_STDERR]));
+        if (dup2 (HOOK_PROCESS(hook_process, child_write[HOOK_PROCESS_STDERR]),
+                  STDERR_FILENO) < 0)
+        {
+            _exit (EXIT_FAILURE);
+        }
+    }
+    else
+    {
+        /* detached mode: write stderr in /dev/null */
+        f = freopen ("/dev/null", "w", stderr);
+        (void) f;
     }
 
     rc = EXIT_SUCCESS;
@@ -1769,11 +1789,14 @@ hook_process_run (struct t_hook *hook_process)
             goto error;
     }
 
-    /* create pipes for stdout/err */
-    if (pipe (pipes[HOOK_PROCESS_STDOUT]) < 0)
-        goto error;
-    if (pipe (pipes[HOOK_PROCESS_STDERR]) < 0)
-        goto error;
+    /* create pipes for stdout/err (if not running in detached mode) */
+    if (!HOOK_PROCESS(hook_process, detached))
+    {
+        if (pipe (pipes[HOOK_PROCESS_STDOUT]) < 0)
+            goto error;
+        if (pipe (pipes[HOOK_PROCESS_STDERR]) < 0)
+            goto error;
+    }
 
     /* assign pipes to variables in hook */
     for (i = 0; i < 3; i++)
@@ -1811,24 +1834,36 @@ hook_process_run (struct t_hook *hook_process)
         close (HOOK_PROCESS(hook_process, child_read[HOOK_PROCESS_STDIN]));
         HOOK_PROCESS(hook_process, child_read[HOOK_PROCESS_STDIN]) = -1;
     }
-    close (HOOK_PROCESS(hook_process, child_write[HOOK_PROCESS_STDOUT]));
-    HOOK_PROCESS(hook_process, child_write[HOOK_PROCESS_STDOUT]) = -1;
-    close (HOOK_PROCESS(hook_process, child_write[HOOK_PROCESS_STDERR]));
-    HOOK_PROCESS(hook_process, child_write[HOOK_PROCESS_STDERR]) = -1;
+    if (HOOK_PROCESS(hook_process, child_read[HOOK_PROCESS_STDOUT]) >= 0)
+    {
+        close (HOOK_PROCESS(hook_process, child_write[HOOK_PROCESS_STDOUT]));
+        HOOK_PROCESS(hook_process, child_write[HOOK_PROCESS_STDOUT]) = -1;
+    }
+    if (HOOK_PROCESS(hook_process, child_read[HOOK_PROCESS_STDERR]) >= 0)
+    {
+        close (HOOK_PROCESS(hook_process, child_write[HOOK_PROCESS_STDERR]));
+        HOOK_PROCESS(hook_process, child_write[HOOK_PROCESS_STDERR]) = -1;
+    }
 
-    HOOK_PROCESS(hook_process, hook_fd[HOOK_PROCESS_STDOUT]) =
-        hook_fd (hook_process->plugin,
-                 HOOK_PROCESS(hook_process, child_read[HOOK_PROCESS_STDOUT]),
-                 1, 0, 0,
-                 &hook_process_child_read_stdout_cb,
-                 hook_process);
+    if (HOOK_PROCESS(hook_process, child_read[HOOK_PROCESS_STDOUT]) >= 0)
+    {
+        HOOK_PROCESS(hook_process, hook_fd[HOOK_PROCESS_STDOUT]) =
+            hook_fd (hook_process->plugin,
+                     HOOK_PROCESS(hook_process, child_read[HOOK_PROCESS_STDOUT]),
+                     1, 0, 0,
+                     &hook_process_child_read_stdout_cb,
+                     hook_process);
+    }
 
-    HOOK_PROCESS(hook_process, hook_fd[HOOK_PROCESS_STDERR]) =
-        hook_fd (hook_process->plugin,
-                 HOOK_PROCESS(hook_process, child_read[HOOK_PROCESS_STDERR]),
-                 1, 0, 0,
-                 &hook_process_child_read_stderr_cb,
-                 hook_process);
+    if (HOOK_PROCESS(hook_process, child_read[HOOK_PROCESS_STDERR]) >= 0)
+    {
+        HOOK_PROCESS(hook_process, hook_fd[HOOK_PROCESS_STDERR]) =
+            hook_fd (hook_process->plugin,
+                     HOOK_PROCESS(hook_process, child_read[HOOK_PROCESS_STDERR]),
+                     1, 0, 0,
+                     &hook_process_child_read_stderr_cb,
+                     hook_process);
+    }
 
     timeout = HOOK_PROCESS(hook_process, timeout);
     interval = 100;
@@ -3714,7 +3749,9 @@ hook_add_to_infolist_pointer (struct t_infolist *infolist, struct t_hook *hook)
                     return 0;
                 if (!infolist_new_var_string (ptr_item, "options", hashtable_get_string (HOOK_PROCESS(hook, options), "keys_values")))
                     return 0;
-                if (!infolist_new_var_integer (ptr_item, "timeout", HOOK_PROCESS(hook, timeout)))
+                if (!infolist_new_var_integer (ptr_item, "detached", HOOK_PROCESS(hook, detached)))
+                    return 0;
+                if (!infolist_new_var_integer (ptr_item, "timeout", (int)(HOOK_PROCESS(hook, timeout))))
                     return 0;
                 if (!infolist_new_var_integer (ptr_item, "child_read_stdin", HOOK_PROCESS(hook, child_read[HOOK_PROCESS_STDIN])))
                     return 0;
@@ -4196,7 +4233,8 @@ hook_print_log ()
                                     HOOK_PROCESS(ptr_hook, options),
                                     hashtable_get_string (HOOK_PROCESS(ptr_hook, options),
                                                           "keys_values"));
-                        log_printf ("    timeout . . . . . . . : %d",    HOOK_PROCESS(ptr_hook, timeout));
+                        log_printf ("    detached. . . . . . . : %d",    HOOK_PROCESS(ptr_hook, detached));
+                        log_printf ("    timeout . . . . . . . : %ld",   HOOK_PROCESS(ptr_hook, timeout));
                         log_printf ("    child_read[stdin] . . : %d",    HOOK_PROCESS(ptr_hook, child_read[HOOK_PROCESS_STDIN]));
                         log_printf ("    child_write[stdin]. . : %d",    HOOK_PROCESS(ptr_hook, child_write[HOOK_PROCESS_STDIN]));
                         log_printf ("    child_read[stdout]. . : %d",    HOOK_PROCESS(ptr_hook, child_read[HOOK_PROCESS_STDOUT]));

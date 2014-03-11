@@ -213,6 +213,7 @@ struct t_hook_process
     t_hook_callback_process *callback; /* process callback (after child end)*/
     char *command;                     /* command executed by child         */
     struct t_hashtable *options;       /* options for process (see doc)     */
+    int detached;                      /* detached mode (background)        */
     long timeout;                      /* timeout (ms) (0 = no timeout)     */
     int child_read[3];                 /* read stdin/out/err data from child*/
     int child_write[3];                /* write stdin/out/err data for child*/

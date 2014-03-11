@@ -7200,6 +7200,13 @@ struct t_hook *weechat_hook_process_hashtable (const char *command,
   (非使用) |
   データを書き込むためのパイプを子プロセスの標準入力 (stdin)
   に作成します (関数 <<_weechat_hook_set,weechat_hook_set>> を参照)
+
+// TRANSLATION MISSING
+| detached +
+  _(WeeChat バージョン 0.4.4 以上で利用可)_ |
+  (非使用) |
+  Run the process in a detached mode: stdout and stderr are redirected to
+  '/dev/null'
 |===
 
 "url:..." 型のコマンドでは、以下のコマンドを使うことができます

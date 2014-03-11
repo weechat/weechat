@@ -7320,6 +7320,12 @@ sont disponibles :
   (non utilisée) |
   Créer un tuyau pour écrire sur l'entrée standard (stdin) du processus fils
   (voir la fonction <<_weechat_hook_set,weechat_hook_set>>)
+
+| detached +
+  _(WeeChat ≥ 0.4.4)_ |
+  (non utilisée) |
+  Lancer le process dans un mode détaché : stdout et stderr sont redirigés vers
+  '/dev/null'
 |===
 
 Pour la commande "url:...", les options suivantes sont disponibles (voir

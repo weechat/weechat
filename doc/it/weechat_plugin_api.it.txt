@@ -7313,6 +7313,13 @@ available:
   (not used) |
   Create a pipe for writing data on standard input (stdin) of child process
   (see function <<_weechat_hook_set,weechat_hook_set>>)
+
+// TRANSLATION MISSING
+| detached +
+  _(WeeChat ≥ 0.4.4)_ |
+  (not used) |
+  Run the process in a detached mode: stdout and stderr are redirected to
+  '/dev/null'
 |===
 
 Per il comando "url:..." sono disponibili le seguenti opzioni (consultare
