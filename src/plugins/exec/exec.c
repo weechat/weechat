@@ -118,6 +118,7 @@ exec_add ()
     new_exec_cmd->hook = NULL;
     new_exec_cmd->command = NULL;
     new_exec_cmd->pid = 0;
+    new_exec_cmd->detached = 0;
     new_exec_cmd->start_time = time (NULL);
     new_exec_cmd->end_time = 0;
     new_exec_cmd->buffer_plugin = NULL;
@@ -247,8 +248,11 @@ exec_end_command (struct t_exec_cmd *exec_cmd, int return_code)
     exec_command_display_output (exec_cmd, ptr_buffer, 1);
     exec_command_display_output (exec_cmd, ptr_buffer, 0);
 
-    /* display return code (only if output is NOT sent to buffer) */
-    if (!exec_cmd->output_to_buffer)
+    /*
+     * display return code (only if command is not detached and if output is
+     * NOT sent to buffer)
+     */
+    if (!exec_cmd->detached && !exec_cmd->output_to_buffer)
     {
         if (return_code >= 0)
         {
@@ -410,6 +414,7 @@ exec_print_log ()
         weechat_log_printf ("  hook. . . . . . . . . . : 0x%lx", ptr_exec_cmd->hook);
         weechat_log_printf ("  command . . . . . . . . : '%s'",  ptr_exec_cmd->command);
         weechat_log_printf ("  pid . . . . . . . . . . : %d",    ptr_exec_cmd->pid);
+        weechat_log_printf ("  detached. . . . . . . . : %d",    ptr_exec_cmd->detached);
         weechat_log_printf ("  start_time. . . . . . . : %ld",   ptr_exec_cmd->start_time);
         weechat_log_printf ("  end_time. . . . . . . . : %ld",   ptr_exec_cmd->end_time);
         weechat_log_printf ("  buffer_plugin . . . . . : '%s'",  ptr_exec_cmd->buffer_plugin);

@@ -33,6 +33,7 @@ struct t_exec_cmd
     struct t_hook *hook;               /* pointer to process hook           */
     char *command;                     /* command (with arguments)          */
     pid_t pid;                         /* process id                        */
+    int detached;                      /* 1 if command is detached          */
     time_t start_time;                 /* start time                        */
     time_t end_time;                   /* end time                          */
 

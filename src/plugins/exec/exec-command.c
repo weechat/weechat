@@ -172,7 +172,8 @@ int
 exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
-    int i, command_index, use_shell, pipe_stdin, output_to_buffer, length;
+    int i, command_index, use_shell, detached, pipe_stdin, output_to_buffer;
+    int length;
     long timeout;
     char *error, *ptr_name, *text;
     struct t_exec_cmd *ptr_exec_cmd, *new_exec_cmd;
@@ -261,6 +262,7 @@ exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
     /* parse command options */
     command_index = -1;
     use_shell = 1;
+    detached = 0;
     pipe_stdin = 0;
     timeout = 0;
     output_to_buffer = 0;
@@ -272,12 +274,20 @@ exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
         {
             use_shell = 0;
         }
+        else if (weechat_strcasecmp (argv[i], "-bg") == 0)
+        {
+            if (output_to_buffer)
+                return WEECHAT_RC_ERROR;
+            detached = 1;
+        }
         else if (weechat_strcasecmp (argv[i], "-stdin") == 0)
         {
             pipe_stdin = 1;
         }
         else if (weechat_strcasecmp (argv[i], "-o") == 0)
         {
+            if (detached)
+                return WEECHAT_RC_ERROR;
             output_to_buffer = 1;
         }
         else if (weechat_strcasecmp (argv[i], "-timeout") == 0)
@@ -329,6 +339,10 @@ exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
         weechat_hashtable_set (options_cmd, "arg1", "-c");
         weechat_hashtable_set (options_cmd, "arg2", argv_eol[command_index]);
     }
+    if (pipe_stdin)
+        weechat_hashtable_set (options_cmd, "stdin", "1");
+    if (detached)
+        weechat_hashtable_set (options_cmd, "detached", "1");
     if (weechat_exec_plugin->debug >= 1)
     {
         weechat_printf (NULL, "%s: executing command: \"%s%s%s\"",
@@ -337,8 +351,6 @@ exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
                         argv_eol[command_index],
                         (use_shell) ? "" : "'");
     }
-    if (pipe_stdin)
-        weechat_hashtable_set (options_cmd, "stdin", "1");
     new_exec_cmd->hook = weechat_hook_process_hashtable (
         (use_shell) ? "sh" : argv_eol[command_index],
         options_cmd,
@@ -360,6 +372,7 @@ exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
 
     new_exec_cmd->name = (ptr_name) ? strdup (ptr_name) : NULL;
     new_exec_cmd->command = strdup (argv_eol[command_index]);
+    new_exec_cmd->detached = detached;
     new_exec_cmd->buffer_plugin = strdup (weechat_buffer_get_string (buffer,
                                                                      "plugin"));
     new_exec_cmd->buffer_name = strdup (weechat_buffer_get_string (buffer,
@@ -390,7 +403,8 @@ exec_command_init ()
         "exec",
         N_("execute external commands"),
         N_("-list"
-           " || [-nosh] [-stdin] [-o] [-timeout <timeout>] [-name <name>] <id>"
+           " || [-nosh] [-bg] [-stdin] [-o] [-timeout <timeout>] [-name <name>] "
+           "<command>"
            " || -in <id> <text>"
            " || -signal <id> <signal>"
            " || -kill <id>"
@@ -400,9 +414,12 @@ exec_command_init ()
            "   -nosh: do not use the shell to execute the command (required if "
            "the command has some unsafe data, for example the content of a "
             "message from another user)\n"
+           "     -bg: run process in background: do not display process output "
+           "neither return code (not compatible with option -o)\n"
            "  -stdin: create a pipe for sending data to the process (with "
            "/exec -in)\n"
-           "      -o: send output of command to the current buffer\n"
+           "      -o: send output of command to the current buffer "
+           "(not compatible with option -bg)\n"
            "-timeout: set a timeout for the command (in seconds)\n"
            "   -name: set a name for the command (to name it later with /exec)\n"
            " command: the command to execute\n"
@@ -418,7 +435,7 @@ exec_command_init ()
            "property: hook property\n"
            "   value: new value for hook property"),
         "-list"
-        " || -nosh|-stdin|-o|-timeout|-name|%*"
+        " || -nosh|-bg|-stdin|-o|-timeout|-name|%*"
         " || -in|-signal|-kill %(exec_commands_ids)"
         " || -killall"
         " || -set %(exec_commands_ids) stdin|stdin_close|signal",
