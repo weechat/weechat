@@ -399,7 +399,8 @@ exec_command_init ()
            "or one of these names: hup, int, quit, kill, term, usr1, usr2\n"
            "   -kill: alias of \"-signal <id> kill\"\n"
            "-killall: kill all running processes\n"
-           "  number: command number"),
+           "      id: command identifier: either its number or name (if set "
+           "with \"-name xxx\")"),
         "-list"
         " || -nosh|-stdin|-o|-timeout|-name|%*"
         " || -in|-signal|-kill %(exec_commands_ids)"
