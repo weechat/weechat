@@ -261,10 +261,10 @@ exec_end_command (struct t_exec_cmd *exec_cmd, int return_code)
         else
         {
             weechat_printf_tags (ptr_buffer, "exec_rc",
-                                 _("%s%s: unexpected end of command %d "
+                                 _("%s: unexpected end of command %d "
                                    "(\"%s\")"),
-                                 weechat_prefix ("error"), EXEC_PLUGIN_NAME,
-                                 exec_cmd->number, exec_cmd->command);
+                                 EXEC_PLUGIN_NAME, exec_cmd->number,
+                                 exec_cmd->command);
         }
     }
 
