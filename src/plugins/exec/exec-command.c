@@ -198,7 +198,7 @@ exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
         if (argc < 4)
             return WEECHAT_RC_ERROR;
         ptr_exec_cmd = exec_command_search_running_id (argv[2]);
-        if (ptr_exec_cmd->hook)
+        if (ptr_exec_cmd && ptr_exec_cmd->hook)
         {
             length = strlen (argv_eol[3]) + 1 + 1;
             text = malloc (length);
