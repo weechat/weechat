@@ -49,7 +49,6 @@ relay_weechat_protocol_get_buffer (const char *arg)
     struct t_gui_buffer *ptr_buffer;
     long unsigned int value;
     int rc;
-    char *pos, *plugin;
     struct t_hdata *ptr_hdata;
 
     ptr_buffer = NULL;
@@ -72,18 +71,7 @@ relay_weechat_protocol_get_buffer (const char *arg)
         }
     }
     else
-    {
-        pos = strchr (arg, '.');
-        if (pos)
-        {
-            plugin = weechat_strndup (arg, pos - arg);
-            if (plugin)
-            {
-                ptr_buffer = weechat_buffer_search (plugin, pos + 1);
-                free (plugin);
-            }
-        }
-    }
+        ptr_buffer = weechat_buffer_search ("==", arg);
 
     return ptr_buffer;
 }
@@ -352,14 +340,14 @@ relay_weechat_protocol_input_timer_cb (void *data,
     if (!timer_args)
         return WEECHAT_RC_ERROR;
 
-    if (timer_args[0] && timer_args[1] && timer_args[2])
+    if (timer_args[0] && timer_args[1])
     {
-        ptr_buffer = weechat_buffer_search (timer_args[0], timer_args[1]);
+        ptr_buffer = weechat_buffer_search ("==", timer_args[0]);
         if (ptr_buffer)
-            weechat_command (ptr_buffer, timer_args[2]);
+            weechat_command (ptr_buffer, timer_args[1]);
     }
 
-    for (i = 0; i < 3; i++)
+    for (i = 0; i < 2; i++)
     {
         if (timer_args[i])
             free (timer_args[i]);
@@ -396,14 +384,12 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(input)
              * WeeChat main loop (some commands like /upgrade executed now can
              * cause a crash)
              */
-            timer_args = malloc (3 * sizeof (*timer_args));
+            timer_args = malloc (2 * sizeof (*timer_args));
             if (timer_args)
             {
                 timer_args[0] = strdup (weechat_buffer_get_string (ptr_buffer,
-                                                                   "plugin"));
-                timer_args[1] = strdup (weechat_buffer_get_string (ptr_buffer,
-                                                                   "name"));
-                timer_args[2] = strdup (pos + 1);
+                                                                   "full_name"));
+                timer_args[1] = strdup (pos + 1);
                 weechat_hook_timer (1, 0, 1,
                                     &relay_weechat_protocol_input_timer_cb,
                                     timer_args);
