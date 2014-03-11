@@ -395,9 +395,9 @@ exec_command_init ()
            "   -name: set a name for the command (to name it later with /exec)\n"
            " command: the command to execute\n"
            "     -in: send text on standard input of process\n"
-           " -signal: send a signal (integer or name) to the process (example: "
-           "kill, 9, ...)\n"
-           "   -kill: alias of \"-signal <id> 9\"\n"
+           " -signal: send a signal to the process; the signal can be an integer "
+           "or one of these names: hup, int, quit, kill, term, usr1, usr2\n"
+           "   -kill: alias of \"-signal <id> kill\"\n"
            "-killall: kill all running processes\n"
            "  number: command number"),
         "-list"
