@@ -247,6 +247,17 @@ exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
         return WEECHAT_RC_OK;
     }
 
+    /* set a hook property */
+    if (weechat_strcasecmp (argv[1], "-set") == 0)
+    {
+        if (argc < 5)
+            return WEECHAT_RC_ERROR;
+        ptr_exec_cmd = exec_command_search_running_id (argv[2]);
+        if (ptr_exec_cmd)
+            weechat_hook_set (ptr_exec_cmd->hook, argv[3], argv_eol[4]);
+        return WEECHAT_RC_OK;
+    }
+
     /* parse command options */
     command_index = -1;
     use_shell = 1;
@@ -383,7 +394,8 @@ exec_command_init ()
            " || -in <id> <text>"
            " || -signal <id> <signal>"
            " || -kill <id>"
-           " || -killall"),
+           " || -killall"
+           " || -set <id> <property> <value>"),
         N_("   -list: list commands\n"
            "   -nosh: do not use the shell to execute the command (required if "
            "the command has some unsafe data, for example the content of a "
@@ -394,16 +406,21 @@ exec_command_init ()
            "-timeout: set a timeout for the command (in seconds)\n"
            "   -name: set a name for the command (to name it later with /exec)\n"
            " command: the command to execute\n"
+           "      id: command identifier: either its number or name (if set "
+           "with \"-name xxx\")"
            "     -in: send text on standard input of process\n"
            " -signal: send a signal to the process; the signal can be an integer "
            "or one of these names: hup, int, quit, kill, term, usr1, usr2\n"
            "   -kill: alias of \"-signal <id> kill\"\n"
            "-killall: kill all running processes\n"
-           "      id: command identifier: either its number or name (if set "
-           "with \"-name xxx\")"),
+           "    -set: set a hook property (see function hook_set in plugin API "
+           "reference)\n"
+           "property: property for function hook_set\n"
+           "   value: new value for property"),
         "-list"
         " || -nosh|-stdin|-o|-timeout|-name|%*"
         " || -in|-signal|-kill %(exec_commands_ids)"
-        " || -killall",
+        " || -killall"
+        " || -set %(exec_commands_ids) stdin|stdin_close|signal",
         &exec_command_exec, NULL);
 }
