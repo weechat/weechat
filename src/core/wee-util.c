@@ -103,6 +103,16 @@ struct t_rlimit_resource rlimit_resource[] =
 };
 #endif /* HAVE_SYS_RESOURCE_H */
 
+struct t_util_signal util_signals[] =
+{ { "hup", SIGHUP },
+  { "int", SIGINT },
+  { "quit", SIGQUIT },
+  { "kill", SIGKILL },
+  { "term", SIGTERM },
+  { "usr1", SIGUSR1 },
+  { "usr2", SIGUSR2 },
+  { NULL, 0 },
+};
 
 /*
  * Sets resource limit.
@@ -300,6 +310,28 @@ util_get_time_string (const time_t *date)
     }
 
     return text_time;
+}
+
+/*
+ * Gets a signal number with a name; only some commonly used signal names are
+ * supported here (see declaration of util_signals[]).
+ *
+ * Returns the signal number, -1 if not found.
+ */
+
+int
+util_signal_search (const char *name)
+{
+    int i;
+
+    for (i = 0; util_signals[i].name; i++)
+    {
+        if (string_strcasecmp (util_signals[i].name, name) == 0)
+            return util_signals[i].signal;
+    }
+
+    /* signal not found */
+    return -1;
 }
 
 /*

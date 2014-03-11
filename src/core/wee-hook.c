@@ -3219,6 +3219,9 @@ void
 hook_set (struct t_hook *hook, const char *property, const char *value)
 {
     ssize_t num_written;
+    char *error;
+    long number;
+    int rc;
 
     /* invalid hook? */
     if (!hook_valid (hook))
@@ -3251,6 +3254,34 @@ hook_set (struct t_hook *hook, const char *property, const char *value)
             /* close stdin pipe */
             close (HOOK_PROCESS(hook, child_write[HOOK_PROCESS_STDIN]));
             HOOK_PROCESS(hook, child_write[HOOK_PROCESS_STDIN]) = -1;
+        }
+    }
+    else if (string_strcasecmp (property, "signal") == 0)
+    {
+        if (!hook->deleted
+            && (hook->type == HOOK_TYPE_PROCESS)
+            && (HOOK_PROCESS(hook, child_pid) > 0))
+        {
+            error = NULL;
+            number = strtol (value, &error, 10);
+            if (!error || error[0])
+            {
+                /* not a number? look for signal by name */
+                number = util_signal_search (value);
+            }
+            if (number >= 0)
+            {
+                rc = kill (HOOK_PROCESS(hook, child_pid), (int)number);
+                if (rc < 0)
+                {
+                    gui_chat_printf (NULL,
+                                     _("%sError sending signal %d to pid %d: %s"),
+                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                     (int)number,
+                                     HOOK_PROCESS(hook, child_pid),
+                                     strerror (errno));
+                }
+            }
         }
     }
 }

@@ -9743,6 +9743,13 @@ Properties:
   _(WeeChat ≥ 0.4.3)_ |
   'process', 'process_hashtable' | (not used) |
   Close pipe used to send data on standard input ('stdin') of child process
+
+| signal +
+  _(WeeChat ≥ 0.4.4)_ |
+  'process', 'process_hashtable' |
+  signal number or one of these names: `hup`, `int`, `quit`, `kill`, `term`,
+  `usr1`, `usr2` |
+  Send a signal to the child process
 |===
 
 C example:

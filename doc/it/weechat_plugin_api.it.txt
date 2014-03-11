@@ -9986,6 +9986,15 @@ Properties:
   'process', 'process_hashtable' | (not used) |
 // TRANSLATION MISSING
   Close pipe used to send data on standard input ('stdin') of child process
+
+| signal +
+  _(WeeChat ≥ 0.4.4)_ |
+  'process', 'process_hashtable' |
+// TRANSLATION MISSING
+  signal number or one of these names: `hup`, `int`, `quit`, `kill`, `term`,
+  `usr1`, `usr2` |
+// TRANSLATION MISSING
+  Send a signal to the child process
 |===
 
 Esempio in C:

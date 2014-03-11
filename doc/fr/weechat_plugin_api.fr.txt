@@ -9932,6 +9932,13 @@ Propriétés :
   'process', 'process_hashtable' | (non utilisée) |
   Fermer le tuyau utilisé pour envoyer les données sur l'entrée standard
   ('stdin') du processus fils
+
+| signal +
+  _(WeeChat ≥ 0.4.4)_ |
+  'process', 'process_hashtable' |
+  numéro de signal ou un de ces noms : `hup`, `int`, `quit`, `kill`, `term`,
+  `usr1`, `usr2` |
+  Envoyer un signal au processus fils
 |===
 
 Exemple en C :

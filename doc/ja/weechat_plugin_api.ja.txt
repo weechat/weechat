@@ -9759,6 +9759,15 @@ void weechat_hook_set (struct t_hook *hook, const char *property,
   _(WeeChat バージョン 0.4.3 以上で利用可)_ |
   'process' 、'process_hashtable' | (非使用) |
   子プロセスの標準入力 ('stdin') にデータを送信するパイプを閉じる
+
+| signal +
+  _(WeeChat ≥ 0.4.4)_ |
+  'process', 'process_hashtable' |
+// TRANSLATION MISSING
+  signal number or one of these names: `hup`, `int`, `quit`, `kill`, `term`,
+  `usr1`, `usr2` |
+// TRANSLATION MISSING
+  Send a signal to the child process
 |===
 
 C 言語での使用例:
