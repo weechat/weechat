@@ -407,7 +407,7 @@ exec_command_init ()
            "   -name: set a name for the command (to name it later with /exec)\n"
            " command: the command to execute\n"
            "      id: command identifier: either its number or name (if set "
-           "with \"-name xxx\")"
+           "with \"-name xxx\")\n"
            "     -in: send text on standard input of process\n"
            " -signal: send a signal to the process; the signal can be an integer "
            "or one of these names: hup, int, quit, kill, term, usr1, usr2\n"
@@ -415,8 +415,8 @@ exec_command_init ()
            "-killall: kill all running processes\n"
            "    -set: set a hook property (see function hook_set in plugin API "
            "reference)\n"
-           "property: property for function hook_set\n"
-           "   value: new value for property"),
+           "property: hook property\n"
+           "   value: new value for hook property"),
         "-list"
         " || -nosh|-stdin|-o|-timeout|-name|%*"
         " || -in|-signal|-kill %(exec_commands_ids)"
