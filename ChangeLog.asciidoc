@@ -59,6 +59,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * api: add integer return code for functions hook_{signal|hsignal}_send
 * alias: change default command for alias /beep to "/print -beep"
 * guile: fix module used after unload of a script
+* irc: add "#" before any channel in /join, even /join 0 (closes #20)
 * irc: display output of CAP LIST in server buffer
 * irc: fix colors in message with CTCP reply sent to another user
 * irc: evaluate content of server options "username" and "realname"

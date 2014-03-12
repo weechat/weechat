@@ -2172,8 +2172,6 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
 
     /*
      * add "#" in front of each channel if no prefix is given
-     * (exception if there is only "0", which is a special join argument to
-     * part all channels)
      */
     if (channels)
     {
@@ -2203,8 +2201,7 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
                 if (i > 0)
                     strcat (new_args, ",");
                 pos_channel = new_args + strlen (new_args);
-                if (((num_channels > 1) || (strcmp (channels[i], "0") != 0))
-                    && !irc_channel_is_channel (server, channels[i]))
+                if (!irc_channel_is_channel (server, channels[i]))
                 {
                     strcat (new_args, "#");
                 }
