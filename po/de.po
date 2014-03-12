@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2014-03-12 09:24+0100\n"
-"PO-Revision-Date: 2014-03-10 21:07+0100\n"
+"PO-Revision-Date: 2014-03-12 21:33+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
 "Language: de_DE\n"
@@ -45,11 +45,11 @@ msgid "max chars"
 msgstr "maximale Zeichenanzahl"
 
 msgid ""
-"a WeeChat color name (default, black, (dark)gray, white, (light)red, "
-"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
-"terminal color number or an alias; attributes are allowed before color (for "
-"text color only, not background): \"*\" for bold, \"!\" for reverse, \"/\" "
-"for italic, \"_\" for underline"
+"a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)"
+"green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal "
+"color number or an alias; attributes are allowed before color (for text "
+"color only, not background): \"*\" for bold, \"!\" for reverse, \"/\" for "
+"italic, \"_\" for underline"
 msgstr ""
 "ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, "
 "(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine "
@@ -4274,7 +4274,7 @@ msgstr "Befehl '%s' beendet, Zeit ist verstrichen (%.1fs)"
 
 #, c-format
 msgid "%sError sending signal %d to pid %d: %s"
-msgstr ""
+msgstr "%sFehler beim Versenden des Signals %d an pid %d: %s"
 
 #, c-format
 msgid "%sYou can not write text in this buffer"
@@ -4282,7 +4282,7 @@ msgstr "%sIn diesen Buffer kann nicht geschrieben werden"
 
 #, c-format
 msgid "%sError with command \"%s\" (help on command: /help %s)"
-msgstr "%sFehler aufgetreten, mit dem Befehl \"%s\" (nutze: /help %s)"
+msgstr "%sFehler mit dem Befehl \"%s\" aufgetreten (nutze: /help %s)"
 
 #, c-format
 msgid ""
@@ -5141,9 +5141,9 @@ msgid ""
 "suggestions in all languages)"
 msgstr ""
 "legt die Anzahl an Vorschlägen, für ein falsch geschriebenes Wort, fest. Die "
-"Vorschläge werden mittels der Bar-Item \"aspell_suggest\", für die "
-"jeweilige(n) Sprache(n), die für den Buffer augewählt wurden, angezeigt (-1 "
-"= deaktiviert die Funktion, 0 = zeigt alle verfügbaren Vorschläge, für alle "
+"Vorschläge werden mittels der Bar-Item \"aspell_suggest\", für die jeweilige"
+"(n) Sprache(n), die für den Buffer augewählt wurden, angezeigt (-1 = "
+"deaktiviert die Funktion, 0 = zeigt alle verfügbaren Vorschläge, für alle "
 "ausgewählten Sprachen, an)"
 
 msgid ""
@@ -5826,8 +5826,8 @@ msgstr ""
 "werden)\n"
 "            - Hostname/Port oder IP/Port (damit wird lediglich ein "
 "TEMPORÄRER Server erstellt), Port 6667 wird standardmäßig verwendet\n"
-"            - URL mit folgendem Format: irc[6][s]://[nickname[:"
-"password]@]irc.example.org[:port][/#channel1][,#channel2[...]]\n"
+"            - URL mit folgendem Format: irc[6][s]://[nickname[:password]@]"
+"irc.example.org[:port][/#channel1][,#channel2[...]]\n"
 "    option: legt Option für den Server fest (die Boolean-Optionen können "
 "weggelassen werden)\n"
 "  nooption: deaktiviert eine Boolean Option (Beispiel: -nossl)\n"
@@ -8137,9 +8137,9 @@ msgstr "%s%s: Client Fähigkeit, Anfrage: %s"
 msgid "%s%s: client capability: sasl not supported"
 msgstr "%s%s: Client Fähigkeit: SASL wird nicht unterstützt"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: client capability, currently enabled: %s"
-msgstr "%s%s: Client Fähigkeit, aktiviert: %s"
+msgstr "%s%s: Client Fähigkeit (CAP), aktuell aktiviert: %s"
 
 #, c-format
 msgid "%s%s: client capability, enabled: %s"
@@ -10724,15 +10724,15 @@ msgstr ""
 "Veränderung von Text und Ausführen von Befehlen bei einem Ereignis, welche "
 "durch WeeChat oder eine Erweiterung ausgelöst werden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to create hook for trigger \"%s\" (bad arguments)"
 msgstr ""
-"%sFehler: Hook kann für Trigger \"%s\" nicht erstellt werden (fehlerhafte "
+"%s%s: Hook für Trigger \"%s\" kann nicht erstellt werden (fehlerhafte "
 "Argumente)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid regular expression in trigger \"%s\""
-msgstr "%sFehler: regulärer Ausdruck in Trigger  \"%s\" ungültig"
+msgstr "%s%s: ungültiger regulärer Ausdruck in Trigger \"%s\""
 
 msgid "Trigger monitor"
 msgstr "Trigger-Monitor"
@@ -10763,9 +10763,9 @@ msgstr "Liste der standardmäßigen Trigger:"
 msgid "Trigger \"%s\" restarted"
 msgstr "Trigger \"%s\" neu gestartet"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: a disabled trigger can not be restarted"
-msgstr "%sFehler: ein deaktivierter Trigger kann nicht neu gestartet werden"
+msgstr "%s%s: ein deaktivierter Trigger kann nicht neu gestartet werden"
 
 #, c-format
 msgid "Trigger \"%s\" enabled"
@@ -10775,76 +10775,76 @@ msgstr "Trigger \"%s\" aktiviert"
 msgid "Trigger \"%s\" disabled"
 msgstr "Trigger \"%s\" deaktiviert"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid name for trigger"
-msgstr "%sFehler: ungültiger Name für Trigger"
+msgstr "%s%s: ungültiger Name für Trigger"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: trigger \"%s\" already exists"
-msgstr "%sFehler: Trigger \"%s\" existiert bereits"
+msgstr "%s%s: Trigger \"%s\" existiert bereits"
 
 #, c-format
 msgid "Trigger \"%s\" renamed to \"%s\""
 msgstr "Trigger \"%s\" wurde umbenannt. Der neue Name lautet \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: failed to rename trigger \"%s\""
-msgstr "%sFehler: Trigger \"%s\" konnte nicht umbenannt werden"
+msgstr "%s%s: Trigger \"%s\" konnte nicht umbenannt werden"
 
 msgid "List of triggers:"
 msgstr "Auflistung der Trigger:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid hook type \"%s\""
-msgstr "%sFehler: ungültiger hook Typ \"%s\""
+msgstr "%s%s: ungültiger hook Typ \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid format for regular expression"
-msgstr "%sFehler: ungültiges Format für regulären Ausdruck"
+msgstr "%s%s: ungültiges Format für regulären Ausdruck"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid regular expression (compilation failed)"
-msgstr "%sFehler: regulärer Ausdruck ungültig (Kompilat fehlgeschlagen)"
+msgstr "%s%s: ungültiger regulärer Ausdruck (Kompilat fehlgeschlagen)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid return code \"%s\""
-msgstr "%sFehler: ungültiger Rückgabewert \"%s\""
+msgstr "%s%s: ungültiger Rückgabewert \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s: trigger \"%s\" already exists (choose another name or use option "
 "\"addreplace\" to overwrite it)"
 msgstr ""
-"%sFehler: Trigger \"%s\" existiert schon (wähle einen anderen Namen oder "
-"nutze die Option \"addreplace\" um vorhandenen Trigger zu überschreiben)"
+"%s%s: Trigger \"%s\" existiert schon (wähle einen anderen Namen oder nutze "
+"die Option \"addreplace\" um vorhandenen Trigger zu überschreiben)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: failed to create trigger \"%s\""
-msgstr "%sFehler: Trigger \"%s\" konnte nicht erstellt werden"
+msgstr "%s%s: Trigger \"%s\" konnte nicht erstellt werden"
 
 #, c-format
 msgid "Trigger \"%s\" created"
 msgstr "Trigger \"%s\" erstellt"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: trigger \"%s\" not found"
-msgstr "%sTrigger, \"%s\", nicht gefunden"
+msgstr "%s%s: Trigger, \"%s\", nicht gefunden"
 
 #, c-format
 msgid "Trigger \"%s\" updated"
 msgstr "Trigger \"%s\" aktualisiert"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: trigger option \"%s\" not found"
-msgstr "%sFehler: Trigger-Option \"%s\" wurde nicht gefunden"
+msgstr "%s%s: Trigger-Option \"%s\" wurde nicht gefunden"
 
 #, c-format
 msgid "Trigger \"%s\" copied to \"%s\""
 msgstr "Trigger \"%s\" wurde kopiert, neue Name \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: failed to copy trigger \"%s\""
-msgstr "%sFehler: Trigger \"%s\" konnte nicht kopiert werden"
+msgstr "%s%s: Trigger \"%s\" konnte nicht kopiert werden"
 
 #, c-format
 msgid "%sTrigger \"%s\" not found"
@@ -10864,12 +10864,12 @@ msgstr "Trigger:"
 msgid "Default triggers restored:"
 msgstr "Standard-Trigger wiederhergestellt:"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s: \"-yes\" argument is required for restoring default triggers (security "
 "reason)"
 msgstr ""
-"%sFehler: Um Trigger auf Standardeinstellungen zurücksetzen ist es aus "
+"%s%s: Um Trigger auf Standardeinstellungen zurücksetzen ist es aus "
 "Sicherheitsgründen erforderlich, das Argument \"-yes\" zu nutzen"
 
 msgid "manage triggers, the Swiss Army knife for WeeChat"
@@ -10956,8 +10956,8 @@ msgid ""
 "Examples (you can also look at default triggers with /trigger listdefault):\n"
 "  add text attributes *bold*, _underline_ and /italic/ (only in user "
 "messages):\n"
-"    /trigger add effects modifier weechat_print \"${tg_tag_nick}\" \"=="
-"\\*(\\S+)\\*==*${color:bold}$1${color:-bold}*== ==_(\\S+)_==_${color:"
+"    /trigger add effects modifier weechat_print \"${tg_tag_nick}\" \"==\\*"
+"(\\S+)\\*==*${color:bold}$1${color:-bold}*== ==_(\\S+)_==_${color:"
 "underline}$1${color:-underline}_== ==/(\\S+)/==/${color:italic}$1${color:-"
 "italic}/\"\n"
 "  hide nicklist bar on small terminals:\n"
@@ -11040,8 +11040,8 @@ msgstr ""
 "trigger listdefault\" anzeigen lassen):\n"
 "  fügt einer Nachricht die Textattribute *fett*, _unterstrichen_ und /"
 "kursiv/ hinzu:\n"
-"    /trigger add effects modifier weechat_print \"${tg_tag_nick}\" \"=="
-"\\*(\\S+)\\*==*${color:bold}$1${color:-bold}*== ==_(\\S+)_==_${color:"
+"    /trigger add effects modifier weechat_print \"${tg_tag_nick}\" \"==\\*"
+"(\\S+)\\*==*${color:bold}$1${color:-bold}*== ==_(\\S+)_==_${color:"
 "underline}$1${color:-underline}_== ==/(\\S+)/==/${color:italic}$1${color:-"
 "italic}/\"\n"
 "  verbirgt die Nicklist auf kleineren Terminals:\n"
@@ -11079,20 +11079,20 @@ msgstr "Standardbefehl für einen Hook"
 msgid "default return codes for hook callback"
 msgstr "Standardrückgabewerte für einen Hook-Callback"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s: invalid format for option \"regex\", see /help trigger.trigger.%s.regex"
 msgstr ""
-"%sFehler: ungültiges Format in Option \"regex\", siehe /help trigger.trigger."
-"%s.regex"
+"%s%s: ungültiges Format in Option \"regex\", siehe /help trigger.trigger.%s."
+"regex"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s: invalid regular expression in option \"regex\", see /help trigger."
 "trigger.%s.regex"
 msgstr ""
-"%sFehler: regulärer Ausdruck in Option \"regex\" ist ungültig, siehe /help "
-"trigger.trigger.%s.regex"
+"%s%s: ungültiger regulärer Ausdruck in Option \"regex\", siehe /help trigger."
+"trigger.%s.regex"
 
 msgid ""
 "if disabled, the hooks are removed from trigger, so it is not called any more"
