@@ -308,6 +308,30 @@ exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
         return WEECHAT_RC_OK;
     }
 
+    /* send text to a running process (if given), then close stdin */
+    if (weechat_strcasecmp (argv[1], "-inclose") == 0)
+    {
+        if (argc < 3)
+            return WEECHAT_RC_ERROR;
+        ptr_exec_cmd = exec_command_search_running_id (argv[2]);
+        if (ptr_exec_cmd && ptr_exec_cmd->hook)
+        {
+            if (argc > 3)
+            {
+                length = strlen (argv_eol[3]) + 1 + 1;
+                text = malloc (length);
+                if (text)
+                {
+                    snprintf (text, length, "%s\n", argv_eol[3]);
+                    weechat_hook_set (ptr_exec_cmd->hook, "stdin", text);
+                    free (text);
+                }
+            }
+            weechat_hook_set (ptr_exec_cmd->hook, "stdin_close", "1");
+        }
+        return WEECHAT_RC_OK;
+    }
+
     /* send a signal to a running process */
     if (weechat_strcasecmp (argv[1], "-signal") == 0)
     {
@@ -561,6 +585,7 @@ exec_command_init ()
            " || [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-l|-o|-n] "
            "[-timeout <timeout>] [-name <name>] <command>"
            " || -in <id> <text>"
+           " || -inclose <id> [<text>]"
            " || -signal <id> <signal>"
            " || -kill <id>"
            " || -killall"
@@ -590,6 +615,8 @@ exec_command_init ()
            "      id: command identifier: either its number or name (if set "
            "with \"-name xxx\")\n"
            "     -in: send text on standard input of process\n"
+           "-inclose: same a -in, but stdin is closed after (and text is "
+           "optional: without text, the stdin is just closed)\n"
            " -signal: send a signal to the process; the signal can be an integer "
            "or one of these names: hup, int, quit, kill, term, usr1, usr2\n"
            "   -kill: alias of \"-signal <id> kill\"\n"
@@ -605,7 +632,7 @@ exec_command_init ()
            "exec.command.default_options."),
         "-list"
         " || -sh|-nosh|-bg|-nobg|-stdin|-nostdin|-l|-o|-n|-ns|-timeout|-name|%*"
-        " || -in|-signal|-kill %(exec_commands_ids)"
+        " || -in|-inclose|-signal|-kill %(exec_commands_ids)"
         " || -killall"
         " || -set %(exec_commands_ids) stdin|stdin_close|signal"
         " || -del %(exec_commands_ids)|-all %(exec_commands_ids)|%*",
