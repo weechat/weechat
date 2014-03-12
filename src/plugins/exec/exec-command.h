@@ -20,6 +20,17 @@
 #ifndef __WEECHAT_EXEC_COMMAND_H
 #define __WEECHAT_EXEC_COMMAND_H 1
 
+struct t_exec_cmd_options
+{
+    int command_index;
+    int use_shell;
+    int detached;
+    int pipe_stdin;
+    int timeout;
+    int output_to_buffer;
+    const char *ptr_name;
+};
+
 extern void exec_command_init ();
 
 #endif /* __WEECHAT_EXEC_COMMAND_H */

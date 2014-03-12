@@ -32,12 +32,37 @@ struct t_config_file *exec_config_file = NULL;
 
 /* exec config, command section */
 
+struct t_config_option *exec_config_command_default_options;
 struct t_config_option *exec_config_command_purge_delay;
 
 /* exec config, color section */
 
 struct t_config_option *exec_config_color_flag_running;
 struct t_config_option *exec_config_color_flag_finished;
+
+char **exec_config_cmd_options = NULL;
+int exec_config_cmd_num_options = 0;
+
+
+/*
+ * Callback for changes on option "exec.command.default_options".
+ */
+
+void
+exec_config_change_command_default_options (void *data,
+                                            struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+    if (exec_config_cmd_options)
+        weechat_string_free_split (exec_config_cmd_options);
+
+    exec_config_cmd_options = weechat_string_split (
+        weechat_config_string (exec_config_command_default_options),
+        " ", 0, 0, &exec_config_cmd_num_options);
+}
 
 /*
  * Reloads exec configuration file.
@@ -82,6 +107,14 @@ exec_config_init ()
         return 0;
     }
 
+    exec_config_command_default_options = weechat_config_new_option (
+        exec_config_file, ptr_section,
+        "default_options", "string",
+        N_("default options for command /exec (see /help exec); example: "
+           "\"-nosh -bg\" to run all commands in background (no output), and "
+           "without using the shell"),
+        NULL, 0, 0, "", NULL, 0, NULL, NULL,
+        &exec_config_change_command_default_options, NULL, NULL, NULL);
     exec_config_command_purge_delay = weechat_config_new_option (
         exec_config_file, ptr_section,
         "purge_delay", "integer",
@@ -148,4 +181,11 @@ void
 exec_config_free ()
 {
     weechat_config_free (exec_config_file);
+
+    if (exec_config_cmd_options)
+    {
+        weechat_string_free_split (exec_config_cmd_options);
+        exec_config_cmd_options = NULL;
+        exec_config_cmd_num_options = 0;
+    }
 }

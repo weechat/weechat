@@ -26,6 +26,7 @@
 
 #include "../weechat-plugin.h"
 #include "exec.h"
+#include "exec-command.h"
 #include "exec-config.h"
 
 
@@ -165,6 +166,88 @@ exec_command_search_running_id (const char *id)
 }
 
 /*
+ * Parse command options.
+ *
+ * Returns:
+ *   1: options parsed successfully
+ *   0: error parsing options
+ */
+
+int
+exec_command_parse_options (struct t_exec_cmd_options *cmd_options,
+                            int argc, char **argv, int start_arg,
+                            int set_command_index)
+{
+    int i;
+    char *error;
+
+    for (i = start_arg; i < argc; i++)
+    {
+        if (weechat_strcasecmp (argv[i], "-sh") == 0)
+        {
+            cmd_options->use_shell = 1;
+        }
+        else if (weechat_strcasecmp (argv[i], "-nosh") == 0)
+        {
+            cmd_options->use_shell = 0;
+        }
+        else if (weechat_strcasecmp (argv[i], "-bg") == 0)
+        {
+            cmd_options->detached = 1;
+        }
+        else if (weechat_strcasecmp (argv[i], "-nobg") == 0)
+        {
+            cmd_options->detached = 0;
+        }
+        else if (weechat_strcasecmp (argv[i], "-stdin") == 0)
+        {
+            cmd_options->pipe_stdin = 1;
+        }
+        else if (weechat_strcasecmp (argv[i], "-nostdin") == 0)
+        {
+            cmd_options->pipe_stdin = 0;
+        }
+        else if (weechat_strcasecmp (argv[i], "-l") == 0)
+        {
+            cmd_options->output_to_buffer = 0;
+        }
+        else if (weechat_strcasecmp (argv[i], "-o") == 0)
+        {
+            cmd_options->output_to_buffer = 1;
+        }
+        else if (weechat_strcasecmp (argv[i], "-timeout") == 0)
+        {
+            if (i + 1 >= argc)
+                return 0;
+            i++;
+            error = NULL;
+            cmd_options->timeout = strtol (argv[i], &error, 10);
+            if (!error || error[0])
+                return 0;
+        }
+        else if (weechat_strcasecmp (argv[i], "-name") == 0)
+        {
+            if (i + 1 >= argc)
+                return 0;
+            i++;
+            cmd_options->ptr_name = argv[i];
+        }
+        else
+        {
+            if (set_command_index)
+            {
+                cmd_options->command_index = i;
+                break;
+            }
+            else
+                return 0;
+        }
+    }
+
+    return 1;
+}
+
+/*
  * Callback for command "/exec": manage executed commands.
  */
 
@@ -172,12 +255,11 @@ int
 exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
-    int i, command_index, use_shell, detached, pipe_stdin, output_to_buffer;
-    int length, count;
-    long timeout;
-    char *error, *ptr_name, *text;
+    int i, length, count;
+    char *text;
     struct t_exec_cmd *ptr_exec_cmd, *ptr_next_exec_cmd, *new_exec_cmd;
-    struct t_hashtable *options_cmd;
+    struct t_exec_cmd_options cmd_options;
+    struct t_hashtable *process_options;
     struct t_infolist *ptr_infolist;
 
     /* make C compiler happy */
@@ -315,60 +397,35 @@ exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
     }
 
     /* parse command options */
-    command_index = -1;
-    use_shell = 1;
-    detached = 0;
-    pipe_stdin = 0;
-    timeout = 0;
-    output_to_buffer = 0;
-    ptr_name = NULL;
+    cmd_options.command_index = -1;
+    cmd_options.use_shell = 1;
+    cmd_options.detached = 0;
+    cmd_options.pipe_stdin = 0;
+    cmd_options.timeout = 0;
+    cmd_options.output_to_buffer = 0;
+    cmd_options.ptr_name = NULL;
 
-    for (i = 1; i < argc; i++)
+    /* parse default options */
+    if (!exec_command_parse_options (&cmd_options,
+                                     exec_config_cmd_num_options,
+                                     exec_config_cmd_options,
+                                     0, 0))
     {
-        if (weechat_strcasecmp (argv[i], "-nosh") == 0)
-        {
-            use_shell = 0;
-        }
-        else if (weechat_strcasecmp (argv[i], "-bg") == 0)
-        {
-            if (output_to_buffer)
-                return WEECHAT_RC_ERROR;
-            detached = 1;
-        }
-        else if (weechat_strcasecmp (argv[i], "-stdin") == 0)
-        {
-            pipe_stdin = 1;
-        }
-        else if (weechat_strcasecmp (argv[i], "-o") == 0)
-        {
-            if (detached)
-                return WEECHAT_RC_ERROR;
-            output_to_buffer = 1;
-        }
-        else if (weechat_strcasecmp (argv[i], "-timeout") == 0)
-        {
-            if (i + 1 >= argc)
-                return WEECHAT_RC_ERROR;
-            i++;
-            error = NULL;
-            timeout = strtol (argv[i], &error, 10);
-            if (!error || error[0])
-                return WEECHAT_RC_ERROR;
-        }
-        else if (weechat_strcasecmp (argv[i], "-name") == 0)
-        {
-            if (i + 1 >= argc)
-                return WEECHAT_RC_ERROR;
-            i++;
-            ptr_name = argv[i];
-        }
-        else
-        {
-            command_index = i;
-            break;
-        }
+        weechat_printf (NULL,
+                        _("%s%s: invalid options in option "
+                          "exec.command.default_options"),
+                        weechat_prefix ("error"), EXEC_PLUGIN_NAME);
+        return WEECHAT_RC_ERROR;
     }
-    if (command_index < 0)
+    if (!exec_command_parse_options (&cmd_options, argc, argv, 1, 1))
+        return WEECHAT_RC_ERROR;
+
+    /* "-bg" and "-o" are incompatible options */
+    if (cmd_options.detached && cmd_options.output_to_buffer)
+        return WEECHAT_RC_ERROR;
+
+    /* command not found? */
+    if (cmd_options.command_index < 0)
         return WEECHAT_RC_ERROR;
 
     new_exec_cmd = exec_add ();
@@ -376,44 +433,45 @@ exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
         return WEECHAT_RC_ERROR;
 
     /* create hashtable for weechat_hook_process_hashtable() */
-    options_cmd = weechat_hashtable_new (32,
-                                         WEECHAT_HASHTABLE_STRING,
-                                         WEECHAT_HASHTABLE_STRING,
-                                         NULL,
-                                         NULL);
-    if (!options_cmd)
+    process_options = weechat_hashtable_new (32,
+                                             WEECHAT_HASHTABLE_STRING,
+                                             WEECHAT_HASHTABLE_STRING,
+                                             NULL,
+                                             NULL);
+    if (!process_options)
     {
         exec_free (new_exec_cmd);
         return WEECHAT_RC_ERROR;
     }
 
     /* run the command in background */
-    if (use_shell)
+    if (cmd_options.use_shell)
     {
         /* command will be: sh -c "command arguments..." */
-        weechat_hashtable_set (options_cmd, "arg1", "-c");
-        weechat_hashtable_set (options_cmd, "arg2", argv_eol[command_index]);
+        weechat_hashtable_set (process_options, "arg1", "-c");
+        weechat_hashtable_set (process_options, "arg2",
+                               argv_eol[cmd_options.command_index]);
     }
-    if (pipe_stdin)
-        weechat_hashtable_set (options_cmd, "stdin", "1");
-    if (detached)
-        weechat_hashtable_set (options_cmd, "detached", "1");
+    if (cmd_options.pipe_stdin)
+        weechat_hashtable_set (process_options, "stdin", "1");
+    if (cmd_options.detached)
+        weechat_hashtable_set (process_options, "detached", "1");
     if (weechat_exec_plugin->debug >= 1)
     {
         weechat_printf (NULL, "%s: executing command: \"%s%s%s\"",
                         EXEC_PLUGIN_NAME,
-                        (use_shell) ? "" : "sh -c '",
-                        argv_eol[command_index],
-                        (use_shell) ? "" : "'");
+                        (cmd_options.use_shell) ? "" : "sh -c '",
+                        argv_eol[cmd_options.command_index],
+                        (cmd_options.use_shell) ? "" : "'");
     }
     new_exec_cmd->hook = weechat_hook_process_hashtable (
-        (use_shell) ? "sh" : argv_eol[command_index],
-        options_cmd,
-        (int)(timeout * 1000),
+        (cmd_options.use_shell) ? "sh" : argv_eol[cmd_options.command_index],
+        process_options,
+        cmd_options.timeout * 1000,
         &exec_process_cb,
         new_exec_cmd);
 
-    weechat_hashtable_free (options_cmd);
+    weechat_hashtable_free (process_options);
 
     if (!new_exec_cmd->hook)
     {
@@ -421,18 +479,19 @@ exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
         weechat_printf (NULL,
                         _("%s%s: failed to run command \"%s\""),
                         weechat_prefix ("error"), EXEC_PLUGIN_NAME,
-                        argv_eol[command_index]);
+                        argv_eol[cmd_options.command_index]);
         return WEECHAT_RC_OK;
     }
 
-    new_exec_cmd->name = (ptr_name) ? strdup (ptr_name) : NULL;
-    new_exec_cmd->command = strdup (argv_eol[command_index]);
-    new_exec_cmd->detached = detached;
+    new_exec_cmd->name = (cmd_options.ptr_name) ?
+        strdup (cmd_options.ptr_name) : NULL;
+    new_exec_cmd->command = strdup (argv_eol[cmd_options.command_index]);
+    new_exec_cmd->detached = cmd_options.detached;
     new_exec_cmd->buffer_plugin = strdup (weechat_buffer_get_string (buffer,
                                                                      "plugin"));
     new_exec_cmd->buffer_name = strdup (weechat_buffer_get_string (buffer,
                                                                    "name"));
-    new_exec_cmd->output_to_buffer = output_to_buffer;
+    new_exec_cmd->output_to_buffer = cmd_options.output_to_buffer;
     ptr_infolist = weechat_infolist_get ("hook", new_exec_cmd->hook, NULL);
     if (ptr_infolist)
     {
@@ -458,8 +517,8 @@ exec_command_init ()
         "exec",
         N_("execute external commands"),
         N_("-list"
-           " || [-nosh] [-bg] [-stdin] [-o] [-timeout <timeout>] [-name <name>] "
-           "<command>"
+           " || [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-l|-o] "
+           "[-timeout <timeout>] [-name <name>] <command>"
            " || -in <id> <text>"
            " || -signal <id> <signal>"
            " || -kill <id>"
@@ -467,13 +526,18 @@ exec_command_init ()
            " || -set <id> <property> <value>"
            " || -del <id>|-all [<id>...]"),
         N_("   -list: list commands\n"
+           "     -sh: use the shell to execute the command (default)\n"
            "   -nosh: do not use the shell to execute the command (required if "
            "the command has some unsafe data, for example the content of a "
             "message from another user)\n"
            "     -bg: run process in background: do not display process output "
            "neither return code (not compatible with option -o)\n"
+           "   -nobg: catch process output and display return code (default)\n"
            "  -stdin: create a pipe for sending data to the process (with "
            "/exec -in)\n"
+           "-nostdin: do not create a pipe for stdin (default)\n"
+           "      -l: display locally output of command on current buffer "
+           "(default)\n"
            "      -o: send output of command to the current buffer "
            "(not compatible with option -bg)\n"
            "-timeout: set a timeout for the command (in seconds)\n"
@@ -491,9 +555,12 @@ exec_command_init ()
            "property: hook property\n"
            "   value: new value for hook property\n"
            "    -del: delete a terminated command\n"
-           "    -all: delete all terminated commands"),
+           "    -all: delete all terminated commands\n"
+           "\n"
+           "Default options can be set in the option "
+           "exec.command.default_options."),
         "-list"
-        " || -nosh|-bg|-stdin|-o|-timeout|-name|%*"
+        " || -sh|-nosh|-bg|-nobg|-stdin|-nostdin|-l|-o|-timeout|-name|%*"
         " || -in|-signal|-kill %(exec_commands_ids)"
         " || -killall"
         " || -set %(exec_commands_ids) stdin|stdin_close|signal"
