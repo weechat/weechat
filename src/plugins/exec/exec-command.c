@@ -604,7 +604,7 @@ exec_command_init ()
            "Default options can be set in the option "
            "exec.command.default_options."),
         "-list"
-        " || -sh|-nosh|-bg|-nobg|-stdin|-nostdin|-l|-o|-n|-timeout|-name|%*"
+        " || -sh|-nosh|-bg|-nobg|-stdin|-nostdin|-l|-o|-n|-ns|-timeout|-name|%*"
         " || -in|-signal|-kill %(exec_commands_ids)"
         " || -killall"
         " || -set %(exec_commands_ids) stdin|stdin_close|signal"
