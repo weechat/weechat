@@ -252,7 +252,7 @@ if test "x$ac_found_iconv_header" = "xyes" ; then
                 return 0;
             }
             return 1;
-      }],iconv_found="yes")
+      }],iconv_found="yes", iconv_found="no", iconv_found="assume-yes")
   if test "x$iconv_found" = "xno" ; then
      AC_MSG_RESULT(no)
   else
