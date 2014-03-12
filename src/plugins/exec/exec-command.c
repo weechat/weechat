@@ -26,6 +26,7 @@
 
 #include "../weechat-plugin.h"
 #include "exec.h"
+#include "exec-buffer.h"
 #include "exec-command.h"
 #include "exec-config.h"
 
@@ -210,10 +211,22 @@ exec_command_parse_options (struct t_exec_cmd_options *cmd_options,
         else if (weechat_strcasecmp (argv[i], "-l") == 0)
         {
             cmd_options->output_to_buffer = 0;
+            cmd_options->new_buffer = 0;
         }
         else if (weechat_strcasecmp (argv[i], "-o") == 0)
         {
             cmd_options->output_to_buffer = 1;
+            cmd_options->new_buffer = 0;
+        }
+        else if (weechat_strcasecmp (argv[i], "-n") == 0)
+        {
+            cmd_options->output_to_buffer = 0;
+            cmd_options->new_buffer = 2;
+        }
+        else if (weechat_strcasecmp (argv[i], "-ns") == 0)
+        {
+            cmd_options->output_to_buffer = 0;
+            cmd_options->new_buffer = 1;
         }
         else if (weechat_strcasecmp (argv[i], "-timeout") == 0)
         {
@@ -256,11 +269,12 @@ exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
     int i, length, count;
-    char *text;
+    char *text, str_buffer[512];
     struct t_exec_cmd *ptr_exec_cmd, *ptr_next_exec_cmd, *new_exec_cmd;
     struct t_exec_cmd_options cmd_options;
     struct t_hashtable *process_options;
     struct t_infolist *ptr_infolist;
+    struct t_gui_buffer *new_buffer;
 
     /* make C compiler happy */
     (void) data;
@@ -403,6 +417,7 @@ exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
     cmd_options.pipe_stdin = 0;
     cmd_options.timeout = 0;
     cmd_options.output_to_buffer = 0;
+    cmd_options.new_buffer = 0;
     cmd_options.ptr_name = NULL;
 
     /* parse default options */
@@ -420,8 +435,9 @@ exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
     if (!exec_command_parse_options (&cmd_options, argc, argv, 1, 1))
         return WEECHAT_RC_ERROR;
 
-    /* "-bg" and "-o" are incompatible options */
-    if (cmd_options.detached && cmd_options.output_to_buffer)
+    /* options "-bg" and "-o"/"-n" are incompatible */
+    if (cmd_options.detached
+        && (cmd_options.output_to_buffer || cmd_options.new_buffer))
         return WEECHAT_RC_ERROR;
 
     /* command not found? */
@@ -443,8 +459,6 @@ exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
         exec_free (new_exec_cmd);
         return WEECHAT_RC_ERROR;
     }
-
-    /* run the command in background */
     if (cmd_options.use_shell)
     {
         /* command will be: sh -c "command arguments..." */
@@ -456,6 +470,40 @@ exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
         weechat_hashtable_set (process_options, "stdin", "1");
     if (cmd_options.detached)
         weechat_hashtable_set (process_options, "detached", "1");
+
+    /* set variables in new command (before running the command) */
+    new_exec_cmd->name = (cmd_options.ptr_name) ?
+        strdup (cmd_options.ptr_name) : NULL;
+    new_exec_cmd->command = strdup (argv_eol[cmd_options.command_index]);
+    new_exec_cmd->detached = cmd_options.detached;
+    new_exec_cmd->output_to_buffer = cmd_options.output_to_buffer;
+    if (cmd_options.new_buffer)
+    {
+        /* output in a new buffer */
+        if (new_exec_cmd->name)
+        {
+            snprintf (str_buffer, sizeof (str_buffer),
+                      "exec.%s", new_exec_cmd->name);
+        }
+        else
+        {
+            snprintf (str_buffer, sizeof (str_buffer),
+                      "exec.%d", new_exec_cmd->number);
+        }
+        new_buffer = exec_buffer_new (str_buffer, (cmd_options.new_buffer > 1));
+        if (new_buffer)
+        {
+            new_exec_cmd->buffer_full_name =
+                strdup (weechat_buffer_get_string (new_buffer, "full_name"));
+        }
+    }
+    else
+    {
+        new_exec_cmd->buffer_full_name =
+            strdup (weechat_buffer_get_string (buffer, "full_name"));
+    }
+
+    /* execute the command */
     if (weechat_exec_plugin->debug >= 1)
     {
         weechat_printf (NULL, "%s: executing command: \"%s%s%s\"",
@@ -471,37 +519,30 @@ exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
         &exec_process_cb,
         new_exec_cmd);
 
-    weechat_hashtable_free (process_options);
-
-    if (!new_exec_cmd->hook)
+    if (new_exec_cmd->hook)
+    {
+        /* get PID of command */
+        ptr_infolist = weechat_infolist_get ("hook", new_exec_cmd->hook, NULL);
+        if (ptr_infolist)
+        {
+            if (weechat_infolist_next (ptr_infolist))
+            {
+                new_exec_cmd->pid = weechat_infolist_integer (ptr_infolist,
+                                                              "child_pid");
+            }
+            weechat_infolist_free (ptr_infolist);
+        }
+    }
+    else
     {
         exec_free (new_exec_cmd);
         weechat_printf (NULL,
                         _("%s%s: failed to run command \"%s\""),
                         weechat_prefix ("error"), EXEC_PLUGIN_NAME,
                         argv_eol[cmd_options.command_index]);
-        return WEECHAT_RC_OK;
     }
 
-    new_exec_cmd->name = (cmd_options.ptr_name) ?
-        strdup (cmd_options.ptr_name) : NULL;
-    new_exec_cmd->command = strdup (argv_eol[cmd_options.command_index]);
-    new_exec_cmd->detached = cmd_options.detached;
-    new_exec_cmd->buffer_plugin = strdup (weechat_buffer_get_string (buffer,
-                                                                     "plugin"));
-    new_exec_cmd->buffer_name = strdup (weechat_buffer_get_string (buffer,
-                                                                   "name"));
-    new_exec_cmd->output_to_buffer = cmd_options.output_to_buffer;
-    ptr_infolist = weechat_infolist_get ("hook", new_exec_cmd->hook, NULL);
-    if (ptr_infolist)
-    {
-        if (weechat_infolist_next (ptr_infolist))
-        {
-            new_exec_cmd->pid = weechat_infolist_integer (ptr_infolist,
-                                                          "child_pid");
-        }
-        weechat_infolist_free (ptr_infolist);
-    }
+    weechat_hashtable_free (process_options);
 
     return WEECHAT_RC_OK;
 }
@@ -517,7 +558,7 @@ exec_command_init ()
         "exec",
         N_("execute external commands"),
         N_("-list"
-           " || [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-l|-o] "
+           " || [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-l|-o|-n] "
            "[-timeout <timeout>] [-name <name>] <command>"
            " || -in <id> <text>"
            " || -signal <id> <signal>"
@@ -531,7 +572,7 @@ exec_command_init ()
            "the command has some unsafe data, for example the content of a "
             "message from another user)\n"
            "     -bg: run process in background: do not display process output "
-           "neither return code (not compatible with option -o)\n"
+           "neither return code (not compatible with option -o/-n)\n"
            "   -nobg: catch process output and display return code (default)\n"
            "  -stdin: create a pipe for sending data to the process (with "
            "/exec -in)\n"
@@ -540,6 +581,9 @@ exec_command_init ()
            "(default)\n"
            "      -o: send output of command to the current buffer "
            "(not compatible with option -bg)\n"
+           "      -n: display output of command in a new buffer (not compatible "
+           "with -bg)\n"
+           "     -ns: same as -n, but don't switch to the new buffer\n"
            "-timeout: set a timeout for the command (in seconds)\n"
            "   -name: set a name for the command (to name it later with /exec)\n"
            " command: the command to execute\n"
@@ -560,7 +604,7 @@ exec_command_init ()
            "Default options can be set in the option "
            "exec.command.default_options."),
         "-list"
-        " || -sh|-nosh|-bg|-nobg|-stdin|-nostdin|-l|-o|-timeout|-name|%*"
+        " || -sh|-nosh|-bg|-nobg|-stdin|-nostdin|-l|-o|-n|-timeout|-name|%*"
         " || -in|-signal|-kill %(exec_commands_ids)"
         " || -killall"
         " || -set %(exec_commands_ids) stdin|stdin_close|signal"

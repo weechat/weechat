@@ -22,13 +22,14 @@
 
 struct t_exec_cmd_options
 {
-    int command_index;
-    int use_shell;
-    int detached;
-    int pipe_stdin;
-    int timeout;
-    int output_to_buffer;
-    const char *ptr_name;
+    int command_index;                 /* index of command in arguments     */
+    int use_shell;                     /* 1 to use shell (sh -c "command")  */
+    int detached;                      /* 1 if detached (no output)         */
+    int pipe_stdin;                    /* 1 to create a pipe for stdin      */
+    int timeout;                       /* timeout (in seconds)              */
+    int output_to_buffer;              /* 1 if output is sent to buffer     */
+    int new_buffer;                    /* output in a new buffer            */
+    const char *ptr_name;              /* name of command                   */
 };
 
 extern void exec_command_init ();

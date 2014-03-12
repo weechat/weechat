@@ -25,6 +25,8 @@ lib_LTLIBRARIES = exec.la
 
 exec_la_SOURCES = exec.c \
                   exec.h \
+                  exec-buffer.c \
+                  exec-buffer.h \
                   exec-command.c \
                   exec-command.h \
                   exec-completion.c \

@@ -114,6 +114,8 @@
 ./src/plugins/aspell/weechat-aspell-speller.h
 ./src/plugins/charset/charset.c
 ./src/plugins/exec/exec.c
+./src/plugins/exec/exec-buffer.c
+./src/plugins/exec/exec-buffer.h
 ./src/plugins/exec/exec-command.c
 ./src/plugins/exec/exec-command.h
 ./src/plugins/exec/exec-completion.c

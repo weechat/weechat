@@ -19,6 +19,7 @@
 
 ADD_LIBRARY(exec MODULE
 exec.c exec.h
+exec-buffer.c exec-buffer.h
 exec-command.c exec-command.h
 exec-completion.c exec-completion.h
 exec-config.c exec-config.h)

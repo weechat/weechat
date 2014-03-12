@@ -38,9 +38,8 @@ struct t_exec_cmd
     time_t end_time;                   /* end time                          */
 
     /* buffer */
-    char *buffer_plugin;               /* buffer plugin (where cmd is exec) */
-    char *buffer_name;                 /* buffer name (where cmd is exec)   */
     int output_to_buffer;              /* 1 if output is sent to buffer     */
+    char *buffer_full_name;            /* buffer where output is displayed  */
 
     /* command output */
     int stdout_size;                   /* number of bytes in stdout         */

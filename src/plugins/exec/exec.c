@@ -26,6 +26,7 @@
 
 #include "../weechat-plugin.h"
 #include "exec.h"
+#include "exec-buffer.h"
 #include "exec-command.h"
 #include "exec-completion.h"
 #include "exec-config.h"
@@ -121,9 +122,8 @@ exec_add ()
     new_exec_cmd->detached = 0;
     new_exec_cmd->start_time = time (NULL);
     new_exec_cmd->end_time = 0;
-    new_exec_cmd->buffer_plugin = NULL;
-    new_exec_cmd->buffer_name = NULL;
     new_exec_cmd->output_to_buffer = 0;
+    new_exec_cmd->buffer_full_name = NULL;
     new_exec_cmd->stdout_size = 0;
     new_exec_cmd->stdout = NULL;
     new_exec_cmd->stderr_size = 0;
@@ -241,8 +241,7 @@ exec_end_command (struct t_exec_cmd *exec_cmd, int return_code)
 {
     struct t_gui_buffer *ptr_buffer;
 
-    ptr_buffer = weechat_buffer_search (exec_cmd->buffer_plugin,
-                                        exec_cmd->buffer_name);
+    ptr_buffer = weechat_buffer_search ("==", exec_cmd->buffer_full_name);
 
     /* display stdout/stderr (if output to buffer, the buffer must exist) */
     exec_command_display_output (exec_cmd, ptr_buffer, 1);
@@ -368,10 +367,8 @@ exec_free (struct t_exec_cmd *exec_cmd)
         free (exec_cmd->name);
     if (exec_cmd->command)
         free (exec_cmd->command);
-    if (exec_cmd->buffer_plugin)
-        free (exec_cmd->buffer_plugin);
-    if (exec_cmd->buffer_name)
-        free (exec_cmd->buffer_name);
+    if (exec_cmd->buffer_full_name)
+        free (exec_cmd->buffer_full_name);
     if (exec_cmd->stdout)
         free (exec_cmd->stdout);
     if (exec_cmd->stderr)
@@ -417,9 +414,8 @@ exec_print_log ()
         weechat_log_printf ("  detached. . . . . . . . : %d",    ptr_exec_cmd->detached);
         weechat_log_printf ("  start_time. . . . . . . : %ld",   ptr_exec_cmd->start_time);
         weechat_log_printf ("  end_time. . . . . . . . : %ld",   ptr_exec_cmd->end_time);
-        weechat_log_printf ("  buffer_plugin . . . . . : '%s'",  ptr_exec_cmd->buffer_plugin);
-        weechat_log_printf ("  buffer_name . . . . . . : '%s'",  ptr_exec_cmd->buffer_name);
         weechat_log_printf ("  output_to_buffer. . . . : %d",    ptr_exec_cmd->output_to_buffer);
+        weechat_log_printf ("  buffer_full_name. . . . : '%s'",  ptr_exec_cmd->buffer_full_name);
         weechat_log_printf ("  stdout_size . . . . . . : %d",    ptr_exec_cmd->stdout_size);
         weechat_log_printf ("  stdout. . . . . . . . . : '%s'",  ptr_exec_cmd->stdout);
         weechat_log_printf ("  stderr_size . . . . . . : %d",    ptr_exec_cmd->stderr_size);
@@ -467,9 +463,7 @@ exec_debug_dump_cb (void *data, const char *signal, const char *type_data,
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
-    /* make C compiler happy */
-    (void) argc;
-    (void) argv;
+    int i, upgrading;
 
     weechat_plugin = plugin;
 
@@ -485,6 +479,19 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     /* hook completions */
     exec_completion_init ();
+
+    /* look at arguments */
+    upgrading = 0;
+    for (i = 0; i < argc; i++)
+    {
+        if (weechat_strcasecmp (argv[i], "--upgrade") == 0)
+        {
+            upgrading = 1;
+        }
+    }
+
+    if (upgrading)
+        exec_buffer_set_callbacks ();
 
     return WEECHAT_RC_OK;
 }
