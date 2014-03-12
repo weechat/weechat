@@ -40,6 +40,7 @@ struct t_exec_cmd
     /* buffer */
     int output_to_buffer;              /* 1 if output is sent to buffer     */
     char *buffer_full_name;            /* buffer where output is displayed  */
+    int line_numbers;                  /* 1 if lines numbers are displayed  */
 
     /* command output */
     int stdout_size;                   /* number of bytes in stdout         */

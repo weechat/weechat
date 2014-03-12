@@ -247,6 +247,14 @@ exec_command_parse_options (struct t_exec_cmd_options *cmd_options,
         {
             cmd_options->switch_to_buffer = 0;
         }
+        else if (weechat_strcasecmp (argv[i], "-ln") == 0)
+        {
+            cmd_options->line_numbers = 1;
+        }
+        else if (weechat_strcasecmp (argv[i], "-noln") == 0)
+        {
+            cmd_options->line_numbers = 0;
+        }
         else if (weechat_strcasecmp (argv[i], "-timeout") == 0)
         {
             if (i + 1 >= argc)
@@ -464,6 +472,7 @@ exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
     cmd_options.output_to_buffer = 0;
     cmd_options.new_buffer = 0;
     cmd_options.switch_to_buffer = 1;
+    cmd_options.line_numbers = -1;
     cmd_options.ptr_command_name = NULL;
 
     /* parse default options */
@@ -567,6 +576,8 @@ exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
         if (cmd_options.switch_to_buffer)
             weechat_buffer_set (cmd_options.ptr_buffer, "display", "1");
     }
+    new_exec_cmd->line_numbers = (cmd_options.line_numbers < 0) ?
+        cmd_options.new_buffer : cmd_options.line_numbers;
 
     /* execute the command */
     if (weechat_exec_plugin->debug >= 1)
@@ -624,7 +635,8 @@ exec_command_init ()
         N_("execute external commands"),
         N_("-list"
            " || [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <name>] "
-           "[-l|-o|-n] |-sw|-nosw] [-timeout <timeout>] [-name <name>] <command>"
+           "[-l|-o|-n] |-sw|-nosw] [-ln|-noln] [-timeout <timeout>] "
+           "[-name <name>] <command>"
            " || -in <id> <text>"
            " || -inclose <id> [<text>]"
            " || -signal <id> <signal>"
@@ -653,6 +665,8 @@ exec_command_init ()
            "with -bg)\n"
            "     -sw: switch to the output buffer (default)\n"
            "   -nosw: don't switch to the output buffer\n"
+           "     -ln: display line numbers (default in new buffer only)\n"
+           "   -noln: don't display line numbers\n"
            "-timeout: set a timeout for the command (in seconds)\n"
            "   -name: set a name for the command (to name it later with /exec)\n"
            " command: the command to execute; if beginning with \"url:\", the "
@@ -678,7 +692,7 @@ exec_command_init ()
            "exec.command.default_options."),
         "-list"
         " || -sh|-nosh|-bg|-nobg|-stdin|-nostdin|-buffer|-l|-o|-n|-sw|-nosw|"
-        "-timeout|-name|%*"
+        "-ln|-noln|-timeout|-name|%*"
         " || -in|-inclose|-signal|-kill %(exec_commands_ids)"
         " || -killall"
         " || -set %(exec_commands_ids) stdin|stdin_close|signal"

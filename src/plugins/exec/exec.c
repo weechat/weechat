@@ -124,6 +124,7 @@ exec_add ()
     new_exec_cmd->end_time = 0;
     new_exec_cmd->output_to_buffer = 0;
     new_exec_cmd->buffer_full_name = NULL;
+    new_exec_cmd->line_numbers = 0;
     new_exec_cmd->stdout_size = 0;
     new_exec_cmd->stdout = NULL;
     new_exec_cmd->stderr_size = 0;
@@ -193,8 +194,8 @@ void
 exec_command_display_output (struct t_exec_cmd *exec_cmd,
                              struct t_gui_buffer *buffer, int stdout)
 {
-    char *ptr_output, **lines, str_number[32], str_tags[1024];
-    int i, num_lines;
+    char *ptr_output, **lines, *line, str_number[32], str_tags[1024];
+    int i, num_lines, length;
 
     ptr_output = (stdout) ? exec_cmd->stdout : exec_cmd->stderr;
     if (!ptr_output)
@@ -214,17 +215,33 @@ exec_command_display_output (struct t_exec_cmd *exec_cmd,
     for (i = 0; i < num_lines; i++)
     {
         if (exec_cmd->output_to_buffer)
-            weechat_command (buffer, lines[i]);
+        {
+            if (exec_cmd->line_numbers)
+            {
+                length = 32 + strlen (lines[i]) + 1;
+                line = malloc (length);
+                if (line)
+                {
+                    snprintf (line, length, "%d. %s", i + 1, lines[i]);
+                    weechat_command (buffer, line);
+                    free (line);
+                }
+            }
+            else
+                weechat_command (buffer, lines[i]);
+        }
         else
         {
+
             snprintf (str_number, sizeof (str_number), "%d", exec_cmd->number);
             snprintf (str_tags, sizeof (str_tags),
                       "exec_%s,exec_cmd_%s",
                       (stdout) ? "stdout" : "stderr",
                       (exec_cmd->name) ? exec_cmd->name : str_number);
+            snprintf (str_number, sizeof (str_number), "%d\t", i + 1);
             weechat_printf_tags (buffer, str_tags,
                                  "%s%s",
-                                 (stdout) ? " \t" : weechat_prefix ("error"),
+                                 (exec_cmd->line_numbers) ? str_number : " \t",
                                  lines[i]);
         }
     }
@@ -416,6 +433,7 @@ exec_print_log ()
         weechat_log_printf ("  end_time. . . . . . . . : %ld",   ptr_exec_cmd->end_time);
         weechat_log_printf ("  output_to_buffer. . . . : %d",    ptr_exec_cmd->output_to_buffer);
         weechat_log_printf ("  buffer_full_name. . . . : '%s'",  ptr_exec_cmd->buffer_full_name);
+        weechat_log_printf ("  line_numbers. . . . . . : %d",    ptr_exec_cmd->line_numbers);
         weechat_log_printf ("  stdout_size . . . . . . : %d",    ptr_exec_cmd->stdout_size);
         weechat_log_printf ("  stdout. . . . . . . . . : '%s'",  ptr_exec_cmd->stdout);
         weechat_log_printf ("  stderr_size . . . . . . : %d",    ptr_exec_cmd->stderr_size);
