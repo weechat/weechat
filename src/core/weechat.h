@@ -83,13 +83,15 @@
     #define DIR_SEPARATOR_CHAR  '/'
 #endif
 
-/* some systems like GNU/Hurd do not define PATH_MAX */
-#ifndef PATH_MAX
-    #define PATH_MAX 4096
-#endif
-
 /* internal charset */
 #define WEECHAT_INTERNAL_CHARSET "UTF-8"
+
+/* Provide macros to feature GCC function attribute */
+#if     __GNUC__ >= 4
+#define WEECHAT_SENTINEL __attribute__((__sentinel__))
+#else
+#define WEECHAT_SENTINEL
+#endif
 
 /* global variables and functions */
 extern int weechat_debug_core;
@@ -100,6 +102,7 @@ extern struct timeval weechat_current_start_timeval;
 extern int weechat_upgrade_count;
 extern int weechat_quit;
 extern char *weechat_home;
+extern char *weechat_dir_absolute_path;
 extern char *weechat_local_charset;
 extern int weechat_plugin_no_dlclose;
 extern int weechat_no_gnutls;

@@ -88,6 +88,7 @@ struct timeval weechat_current_start_timeval; /* start time used to display */
 int weechat_quit = 0;                  /* = 1 if quit request from user     */
 int weechat_sigsegv = 0;               /* SIGSEGV received?                 */
 char *weechat_home = NULL;             /* home dir. (default: ~/.weechat)   */
+char *weechat_dir_absolute_path = NULL;/* home dir absolute path            */
 char *weechat_local_charset = NULL;    /* example: ISO-8859-1, UTF-8        */
 int weechat_server_cmd_line = 0;       /* at least 1 server on cmd line     */
 int weechat_auto_load_plugins = 1;     /* auto load plugins                 */
@@ -164,6 +165,7 @@ weechat_parse_args (int argc, char *argv[])
     weechat_argv0 = strdup (argv[0]);
     weechat_upgrading = 0;
     weechat_home = NULL;
+    weechat_dir_absolute_path = NULL;
     weechat_server_cmd_line = 0;
     weechat_auto_load_plugins = 1;
     weechat_plugin_no_dlclose = 0;
@@ -180,7 +182,10 @@ weechat_parse_args (int argc, char *argv[])
             || (strcmp (argv[i], "--dir") == 0))
         {
             if (i + 1 < argc)
+            {
                 weechat_home = strdup (argv[++i]);
+                weechat_dir_absolute_path = util_realpath(weechat_home);
+            }
             else
             {
                 string_iconv_fprintf (stderr,
@@ -311,11 +316,13 @@ weechat_create_home_dir ()
             {
                 snprintf (weechat_home, dir_length,
                           "%s%s", ptr_home, config_weechat_home + 1);
+                weechat_dir_absolute_path = util_realpath(weechat_home);
             }
         }
         else
         {
             weechat_home = strdup (config_weechat_home);
+            weechat_dir_absolute_path = util_realpath(weechat_home);
         }
 
         if (!weechat_home)
@@ -397,6 +404,8 @@ weechat_shutdown (int return_code, int crash)
         free (weechat_argv0);
     if (weechat_home)
         free (weechat_home);
+    if (weechat_dir_absolute_path)
+        free (weechat_dir_absolute_path);
     log_close ();
     if (weechat_local_charset)
         free (weechat_local_charset);

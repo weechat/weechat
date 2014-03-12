@@ -167,7 +167,8 @@ char *
 script_repo_get_filename_loaded (struct t_script_repo *script)
 {
     const char *weechat_home;
-    char *filename, resolved_path[PATH_MAX];
+    char *filename;
+    char *resolved_path;
     int length;
     struct stat st;
 
@@ -199,13 +200,15 @@ script_repo_get_filename_loaded (struct t_script_repo *script)
         return NULL;
     }
 
-    if (realpath (filename, resolved_path))
+    resolved_path = weechat_util_realpath(filename);
+    if (resolved_path)
     {
         if (strcmp (filename, resolved_path) != 0)
         {
             free (filename);
-            return strdup (resolved_path);
+            return resolved_path;
         }
+        free (resolved_path);
     }
 
     return filename;

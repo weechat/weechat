@@ -41,6 +41,7 @@
 #include "wee-log.h"
 #include "wee-string.h"
 #include "wee-version.h"
+#include "wee-util.h"
 #include "../gui/gui-color.h"
 #include "../gui/gui-chat.h"
 #include "../plugins/plugin.h"
@@ -2022,7 +2023,7 @@ config_file_write_internal (struct t_config_file *config_file,
                             int default_options)
 {
     int filename_length, rc;
-    char *filename, *filename2, resolved_path[PATH_MAX];
+    char *filename, *filename2, *resolved_path;
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
 
@@ -2051,17 +2052,16 @@ config_file_write_internal (struct t_config_file *config_file,
     snprintf (filename2, filename_length + 32, "%s.weechattmp", filename);
 
     /* if filename is a symbolic link, use target as filename */
-    if (realpath (filename, resolved_path))
+    if ((resolved_path = util_realpath (filename)))
     {
         if (strcmp (filename, resolved_path) != 0)
         {
             free (filename);
-            filename = strdup (resolved_path);
-            if (!filename)
-            {
-                free (filename2);
-                return WEECHAT_CONFIG_WRITE_MEMORY_ERROR;
-            }
+            filename = resolved_path;
+        }
+        else
+        {
+            free (resolved_path);
         }
     }
 

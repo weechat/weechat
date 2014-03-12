@@ -29,11 +29,6 @@ extern "C" {
 #include <sys/types.h>
 #include <sys/socket.h>
 
-/* some systems like GNU/Hurd do not define PATH_MAX */
-#ifndef PATH_MAX
-    #define PATH_MAX 4096
-#endif
-
 struct t_config_option;
 struct t_gui_window;
 struct t_gui_buffer;
@@ -57,7 +52,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20140304-01"
+#define WEECHAT_PLUGIN_API_VERSION "20140309-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -160,6 +155,13 @@ struct timeval;
 #define WEECHAT_HOOK_SIGNAL_STRING                  "string"
 #define WEECHAT_HOOK_SIGNAL_INT                     "int"
 #define WEECHAT_HOOK_SIGNAL_POINTER                 "pointer"
+
+/* Provide macros to feature GCC function attribute */
+#if     __GNUC__ >= 4
+#define WEECHAT_SENTINEL __attribute__((__sentinel__))
+#else
+#define WEECHAT_SENTINEL
+#endif
 
 /* macro to format string with variable args, using dynamic buffer size */
 #define weechat_va_format(__format)                                     \
@@ -269,6 +271,7 @@ struct t_weechat_plugin
                                      struct t_hashtable *pointers,
                                      struct t_hashtable *extra_vars,
                                      struct t_hashtable *options);
+    WEECHAT_SENTINEL char *(*string_strconcat) (const char *string1, ...);
 
     /* UTF-8 strings */
     int (*utf8_has_8bits) (const char *string);
@@ -303,6 +306,7 @@ struct t_weechat_plugin
     void (*util_timeval_add) (struct timeval *tv, long interval);
     char *(*util_get_time_string) (const time_t *date);
     int (*util_version_number) (const char *version);
+    char *(*util_realpath) (const char *filename);
 
     /* sorted lists */
     struct t_weelist *(*list_new) ();
@@ -1052,6 +1056,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                        __extra_vars, __options)         \
     weechat_plugin->string_eval_expression(__expr, __pointers,          \
                                            __extra_vars, __options)
+#define weechat_string_strconcat(__string1, ...)                        \
+    weechat_plugin->string_strconcat(__string1, __VA_ARGS__)
 
 /* UTF-8 strings */
 #define weechat_utf8_has_8bits(__string)                                \
@@ -1114,6 +1120,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->util_get_time_string(__date)
 #define weechat_util_version_number(__version)                          \
     weechat_plugin->util_version_number(__version)
+#define weechat_util_realpath(__filename)                               \
+    weechat_plugin->util_realpath(__filename)
 
 /* sorted list */
 #define weechat_list_new()                                              \

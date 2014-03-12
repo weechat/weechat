@@ -287,7 +287,6 @@ plugin_api_info_get_internal (void *data, const char *info_name,
 {
     time_t inactivity;
     static char value[32], version_number[32] = { '\0' };
-    static char weechat_dir_absolute_path[PATH_MAX] = { '\0' };
 
     /* make C compiler happy */
     (void) data;
@@ -323,12 +322,7 @@ plugin_api_info_get_internal (void *data, const char *info_name,
     }
     else if (string_strcasecmp (info_name, "weechat_dir") == 0)
     {
-        if (!weechat_dir_absolute_path[0])
-        {
-            if (!realpath (weechat_home, weechat_dir_absolute_path))
-                return NULL;
-        }
-        return (weechat_dir_absolute_path[0]) ?
+        return (weechat_dir_absolute_path) ?
             weechat_dir_absolute_path : weechat_home;
     }
     else if (string_strcasecmp (info_name, "weechat_libdir") == 0)

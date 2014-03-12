@@ -536,6 +536,7 @@ plugin_load (const char *filename, int argc, char **argv)
         new_plugin->string_is_command_char = &string_is_command_char;
         new_plugin->string_input_for_buffer = &string_input_for_buffer;
         new_plugin->string_eval_expression = &eval_expression;
+        new_plugin->string_strconcat = &string_strconcat;
 
         new_plugin->utf8_has_8bits = &utf8_has_8bits;
         new_plugin->utf8_is_valid = &utf8_is_valid;
@@ -566,6 +567,7 @@ plugin_load (const char *filename, int argc, char **argv)
         new_plugin->util_timeval_add = &util_timeval_add;
         new_plugin->util_get_time_string = &util_get_time_string;
         new_plugin->util_version_number = &util_version_number;
+        new_plugin->util_realpath = &util_realpath;
 
         new_plugin->list_new = &weelist_new;
         new_plugin->list_add = &weelist_add;

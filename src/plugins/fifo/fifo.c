@@ -64,16 +64,11 @@ void
 fifo_remove_old_pipes ()
 {
     char *buf;
-    int buf_len, prefix_len;
+    int prefix_len;
     const char *weechat_home, *dir_separator;
     DIR *dp;
     struct dirent *entry;
     struct stat statbuf;
-
-    buf_len = PATH_MAX;
-    buf = malloc (buf_len);
-    if (!buf)
-        return;
 
     weechat_home = weechat_info_get ("weechat_dir", "");
     dir_separator = weechat_info_get ("dir_separator", "");
@@ -90,21 +85,22 @@ fifo_remove_old_pipes ()
 
             if (strncmp (entry->d_name, FIFO_FILENAME_PREFIX, prefix_len) == 0)
             {
-                snprintf (buf, buf_len, "%s%s%s",
-                          weechat_home, dir_separator, entry->d_name);
-                if (stat (buf, &statbuf) != -1)
+                buf = weechat_string_strconcat(weechat_home, dir_separator, entry->d_name, NULL);
+                if (buf)
                 {
-                    weechat_printf (NULL,
-                                    _("%s: removing old fifo pipe \"%s\""),
-                                    FIFO_PLUGIN_NAME, buf);
-                    unlink (buf);
+                    if (stat (buf, &statbuf) != -1)
+                    {
+                        weechat_printf (NULL,
+                                        _("%s: removing old fifo pipe \"%s\""),
+                                        FIFO_PLUGIN_NAME, buf);
+                        unlink (buf);
+                    }
+                    free (buf);
                 }
             }
         }
         closedir (dp);
     }
-
-    free (buf);
 }
 
 /*

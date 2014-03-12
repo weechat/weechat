@@ -362,9 +362,9 @@ completion_list_add_filename_cb (void *data,
                                  struct t_gui_completion *completion)
 {
     char home[3] = { '~', DIR_SEPARATOR_CHAR, '\0' };
-    char *ptr_home, *pos, buf[PATH_MAX], *real_prefix, *prefix, *path_dir;
+    char *ptr_home, *pos, *buf, *real_prefix, *prefix, *path_dir;
     char *path_base, *dir_name;
-    int length_path_base;
+    int length_path_base, res;
     DIR *dp;
     struct dirent *entry;
     struct stat statbuf;
@@ -406,7 +406,7 @@ completion_list_add_filename_cb (void *data,
     if (!real_prefix || !prefix)
         goto end;
 
-    snprintf (buf, sizeof (buf), "%s", completion->base_word + strlen (prefix));
+    buf = strdup(completion->base_word + strlen (prefix));
     pos = strrchr (buf, DIR_SEPARATOR_CHAR);
     if (pos)
     {
@@ -419,12 +419,12 @@ completion_list_add_filename_cb (void *data,
         path_dir = strdup ("");
         path_base = strdup (buf);
     }
+    free(buf);
+
     if (!path_dir || !path_base)
         goto end;
 
-    snprintf (buf, sizeof (buf),
-              "%s%s%s", real_prefix, DIR_SEPARATOR, path_dir);
-    dir_name = strdup (buf);
+    dir_name = string_strconcat(real_prefix, DIR_SEPARATOR, path_dir, NULL);
     if (!dir_name)
         goto end;
 
@@ -446,25 +446,26 @@ completion_list_add_filename_cb (void *data,
         }
 
         /* skip entry if not accessible */
-        snprintf (buf, sizeof (buf), "%s%s%s",
-                  dir_name, DIR_SEPARATOR, entry->d_name);
-        if (stat (buf, &statbuf) == -1)
+        buf = string_strconcat(dir_name, DIR_SEPARATOR, entry->d_name, NULL);
+        res = stat (buf, &statbuf);
+        free(buf);
+        if (res == -1)
             continue;
 
         /* build full path name */
-        snprintf (buf, sizeof (buf),
-                  "%s%s%s%s%s%s",
-                  prefix,
-                  (prefix[0] && !strchr (prefix, DIR_SEPARATOR_CHAR)) ?
-                  DIR_SEPARATOR : "",
-                  path_dir,
-                  (path_dir[0]) ? DIR_SEPARATOR : "",
-                  entry->d_name,
-                  S_ISDIR(statbuf.st_mode) ? DIR_SEPARATOR : "");
+        buf = string_strconcat(prefix,
+                     (prefix[0] && !strchr (prefix, DIR_SEPARATOR_CHAR)) ?
+                     DIR_SEPARATOR : "",
+                     path_dir,
+                     (path_dir[0]) ? DIR_SEPARATOR : "",
+                     entry->d_name,
+                     S_ISDIR(statbuf.st_mode) ? DIR_SEPARATOR : "",
+                     NULL);
 
         /* add path to list of completions */
         gui_completion_list_add (completion, buf,
                                  0, WEECHAT_LIST_POS_SORT);
+        free(buf);
     }
     closedir (dp);
 
