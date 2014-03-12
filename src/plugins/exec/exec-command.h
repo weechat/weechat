@@ -27,9 +27,12 @@ struct t_exec_cmd_options
     int detached;                      /* 1 if detached (no output)         */
     int pipe_stdin;                    /* 1 to create a pipe for stdin      */
     int timeout;                       /* timeout (in seconds)              */
+    const char *ptr_buffer_name;       /* name of buffer                    */
+    struct t_gui_buffer *ptr_buffer;   /* pointer to buffer                 */
     int output_to_buffer;              /* 1 if output is sent to buffer     */
     int new_buffer;                    /* output in a new buffer            */
-    const char *ptr_name;              /* name of command                   */
+    int switch_to_buffer;              /* switch to the output buffer       */
+    const char *ptr_command_name;      /* name of command                   */
 };
 
 extern void exec_command_init ();

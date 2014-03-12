@@ -208,6 +208,22 @@ exec_command_parse_options (struct t_exec_cmd_options *cmd_options,
         {
             cmd_options->pipe_stdin = 0;
         }
+        else if (weechat_strcasecmp (argv[i], "-buffer") == 0)
+        {
+            if (i + 1 >= argc)
+                return 0;
+            i++;
+            cmd_options->ptr_buffer_name = argv[i];
+            cmd_options->ptr_buffer = weechat_buffer_search ("==", argv[i]);
+            if (cmd_options->ptr_buffer
+                && (weechat_buffer_get_integer (cmd_options->ptr_buffer, "type") != 0))
+            {
+                /* only a buffer with formatted content is allowed */
+                return 0;
+            }
+            if (!cmd_options->ptr_buffer)
+                cmd_options->new_buffer = 1;
+        }
         else if (weechat_strcasecmp (argv[i], "-l") == 0)
         {
             cmd_options->output_to_buffer = 0;
@@ -221,12 +237,15 @@ exec_command_parse_options (struct t_exec_cmd_options *cmd_options,
         else if (weechat_strcasecmp (argv[i], "-n") == 0)
         {
             cmd_options->output_to_buffer = 0;
-            cmd_options->new_buffer = 2;
-        }
-        else if (weechat_strcasecmp (argv[i], "-ns") == 0)
-        {
-            cmd_options->output_to_buffer = 0;
             cmd_options->new_buffer = 1;
+        }
+        else if (weechat_strcasecmp (argv[i], "-sw") == 0)
+        {
+            cmd_options->switch_to_buffer = 1;
+        }
+        else if (weechat_strcasecmp (argv[i], "-nosw") == 0)
+        {
+            cmd_options->switch_to_buffer = 0;
         }
         else if (weechat_strcasecmp (argv[i], "-timeout") == 0)
         {
@@ -243,7 +262,7 @@ exec_command_parse_options (struct t_exec_cmd_options *cmd_options,
             if (i + 1 >= argc)
                 return 0;
             i++;
-            cmd_options->ptr_name = argv[i];
+            cmd_options->ptr_command_name = argv[i];
         }
         else
         {
@@ -440,9 +459,12 @@ exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
     cmd_options.detached = 0;
     cmd_options.pipe_stdin = 0;
     cmd_options.timeout = 0;
+    cmd_options.ptr_buffer_name = NULL;
+    cmd_options.ptr_buffer = buffer;
     cmd_options.output_to_buffer = 0;
     cmd_options.new_buffer = 0;
-    cmd_options.ptr_name = NULL;
+    cmd_options.switch_to_buffer = 1;
+    cmd_options.ptr_command_name = NULL;
 
     /* parse default options */
     if (!exec_command_parse_options (&cmd_options,
@@ -496,14 +518,27 @@ exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
         weechat_hashtable_set (process_options, "detached", "1");
 
     /* set variables in new command (before running the command) */
-    new_exec_cmd->name = (cmd_options.ptr_name) ?
-        strdup (cmd_options.ptr_name) : NULL;
+    new_exec_cmd->name = (cmd_options.ptr_command_name) ?
+        strdup (cmd_options.ptr_command_name) : NULL;
     new_exec_cmd->command = strdup (argv_eol[cmd_options.command_index]);
     new_exec_cmd->detached = cmd_options.detached;
     new_exec_cmd->output_to_buffer = cmd_options.output_to_buffer;
-    if (cmd_options.new_buffer)
+    if (cmd_options.ptr_buffer_name && !cmd_options.ptr_buffer)
     {
-        /* output in a new buffer */
+        /* output in a new buffer using given name */
+        new_exec_cmd->output_to_buffer = 0;
+        snprintf (str_buffer, sizeof (str_buffer),
+                  "exec.%s", cmd_options.ptr_buffer_name);
+        new_buffer = exec_buffer_new (str_buffer, cmd_options.switch_to_buffer);
+        if (new_buffer)
+        {
+            new_exec_cmd->buffer_full_name =
+                strdup (weechat_buffer_get_string (new_buffer, "full_name"));
+        }
+    }
+    else if (cmd_options.new_buffer)
+    {
+        /* output in a new buffer using automatic name */
         if (new_exec_cmd->name)
         {
             snprintf (str_buffer, sizeof (str_buffer),
@@ -514,17 +549,20 @@ exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
             snprintf (str_buffer, sizeof (str_buffer),
                       "exec.%d", new_exec_cmd->number);
         }
-        new_buffer = exec_buffer_new (str_buffer, (cmd_options.new_buffer > 1));
+        new_buffer = exec_buffer_new (str_buffer, cmd_options.switch_to_buffer);
         if (new_buffer)
         {
             new_exec_cmd->buffer_full_name =
                 strdup (weechat_buffer_get_string (new_buffer, "full_name"));
         }
     }
-    else
+    else if (cmd_options.ptr_buffer)
     {
         new_exec_cmd->buffer_full_name =
-            strdup (weechat_buffer_get_string (buffer, "full_name"));
+            strdup (weechat_buffer_get_string (cmd_options.ptr_buffer,
+                                               "full_name"));
+        if (cmd_options.switch_to_buffer)
+            weechat_buffer_set (cmd_options.ptr_buffer, "display", "1");
     }
 
     /* execute the command */
@@ -582,8 +620,8 @@ exec_command_init ()
         "exec",
         N_("execute external commands"),
         N_("-list"
-           " || [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-l|-o|-n] "
-           "[-timeout <timeout>] [-name <name>] <command>"
+           " || [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <name>] "
+           "[-l|-o|-n] |-sw|-nosw] [-timeout <timeout>] [-name <name>] <command>"
            " || -in <id> <text>"
            " || -inclose <id> [<text>]"
            " || -signal <id> <signal>"
@@ -602,13 +640,16 @@ exec_command_init ()
            "  -stdin: create a pipe for sending data to the process (with "
            "/exec -in)\n"
            "-nostdin: do not create a pipe for stdin (default)\n"
-           "      -l: display locally output of command on current buffer "
-           "(default)\n"
-           "      -o: send output of command to the current buffer "
+           " -buffer: display/send output of command on this buffer (if the "
+           "buffer is not found, a new buffer with name \"exec.exec.xxx\" is "
+           "created)\n"
+           "      -l: display locally output of command on buffer (default)\n"
+           "      -o: send output of command to the buffer "
            "(not compatible with option -bg)\n"
            "      -n: display output of command in a new buffer (not compatible "
            "with -bg)\n"
-           "     -ns: same as -n, but don't switch to the new buffer\n"
+           "     -sw: switch to the output buffer (default)\n"
+           "   -nosw: don't switch to the output buffer\n"
            "-timeout: set a timeout for the command (in seconds)\n"
            "   -name: set a name for the command (to name it later with /exec)\n"
            " command: the command to execute\n"
@@ -631,7 +672,8 @@ exec_command_init ()
            "Default options can be set in the option "
            "exec.command.default_options."),
         "-list"
-        " || -sh|-nosh|-bg|-nobg|-stdin|-nostdin|-l|-o|-n|-ns|-timeout|-name|%*"
+        " || -sh|-nosh|-bg|-nobg|-stdin|-nostdin|-buffer|-l|-o|-n|-sw|-nosw|"
+        "-timeout|-name|%*"
         " || -in|-inclose|-signal|-kill %(exec_commands_ids)"
         " || -killall"
         " || -set %(exec_commands_ids) stdin|stdin_close|signal"
