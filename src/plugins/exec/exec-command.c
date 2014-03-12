@@ -505,6 +505,9 @@ exec_command_exec (void *data, struct t_gui_buffer *buffer, int argc,
         exec_free (new_exec_cmd);
         return WEECHAT_RC_ERROR;
     }
+    /* automatically disable shell if we are downloading an URL */
+    if (strncmp (argv_eol[cmd_options.command_index], "url:", 4) == 0)
+        cmd_options.use_shell = 0;
     if (cmd_options.use_shell)
     {
         /* command will be: sh -c "command arguments..." */
@@ -652,7 +655,9 @@ exec_command_init ()
            "   -nosw: don't switch to the output buffer\n"
            "-timeout: set a timeout for the command (in seconds)\n"
            "   -name: set a name for the command (to name it later with /exec)\n"
-           " command: the command to execute\n"
+           " command: the command to execute; if beginning with \"url:\", the "
+           "shell is disabled and the content of URL is downloaded and sent as "
+           "output\n"
            "      id: command identifier: either its number or name (if set "
            "with \"-name xxx\")\n"
            "     -in: send text on standard input of process\n"
