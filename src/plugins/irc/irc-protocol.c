@@ -321,10 +321,11 @@ IRC_PROTOCOL_CALLBACK(cap)
         {
             ptr_caps = (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4];
             weechat_printf_date_tags (server->buffer, date, NULL,
-                                     _("%s%s: client capability, enabled for current session: %s"),
-                                     weechat_prefix("network"),
-                                     IRC_PLUGIN_NAME,
-                                     ptr_caps);
+                                      _("%s%s: client capability, currently "
+                                        "enabled: %s"),
+                                      weechat_prefix ("network"),
+                                      IRC_PLUGIN_NAME,
+                                      ptr_caps);
 	}
     }
     else if (strcmp (argv[3], "ACK") == 0)
@@ -334,7 +335,8 @@ IRC_PROTOCOL_CALLBACK(cap)
             ptr_caps = (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4];
             weechat_printf_date_tags (server->buffer, date, NULL,
                                       _("%s%s: client capability, enabled: %s"),
-                                      weechat_prefix ("network"), IRC_PLUGIN_NAME,
+                                      weechat_prefix ("network"),
+                                      IRC_PLUGIN_NAME,
                                       ptr_caps);
             sasl_to_do = 0;
             caps_supported = weechat_string_split (ptr_caps, " ", 0, 0,
