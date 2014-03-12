@@ -71,7 +71,9 @@ run "mkdir intl"
 
 # execute autotools cmds
 run "autopoint -f"
-run "libtoolize --automake --force --copy"
+LIBTOOLIZE=libtoolize
+test `uname` = "Darwin" && LIBTOOLIZE=glibtoolize
+run "$LIBTOOLIZE --automake --force --copy"
 run "aclocal --force -I config/m4"
 run "autoheader"
 run "autoconf"
