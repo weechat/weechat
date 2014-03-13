@@ -195,8 +195,9 @@ void
 exec_command_display_output (struct t_exec_cmd *exec_cmd,
                              struct t_gui_buffer *buffer, int stdout)
 {
-    char *ptr_output, **lines, *line, str_number[32], str_tags[1024];
-    int i, num_lines, length;
+    char *ptr_output, *ptr_line, *line, *line2, *pos;
+    char str_number[32], str_tags[1024];
+    int line_nb, length;
 
     ptr_output = (stdout) ? exec_cmd->stdout : exec_cmd->stderr;
     if (!ptr_output)
@@ -209,27 +210,36 @@ exec_command_display_output (struct t_exec_cmd *exec_cmd,
     if (exec_cmd->output_to_buffer && !buffer)
         return;
 
-    lines = weechat_string_split (ptr_output, "\n", 0, 0, &num_lines);
-    if (!lines)
-        return;
-
-    for (i = 0; i < num_lines; i++)
+    ptr_line = ptr_output;
+    line_nb = 1;
+    while (ptr_line)
     {
+        /* ignore last empty line */
+        if (!ptr_line[0])
+            break;
+
+        /* search end of line */
+        pos = strchr (ptr_line, '\n');
+        line = (pos) ?
+            weechat_strndup (ptr_line, pos - ptr_line) : strdup (ptr_line);
+        if (!line)
+            break;
+
         if (exec_cmd->output_to_buffer)
         {
             if (exec_cmd->line_numbers)
             {
-                length = 32 + strlen (lines[i]) + 1;
-                line = malloc (length);
-                if (line)
+                length = 32 + strlen (line) + 1;
+                line2 = malloc (length);
+                if (line2)
                 {
-                    snprintf (line, length, "%d. %s", i + 1, lines[i]);
-                    weechat_command (buffer, line);
-                    free (line);
+                    snprintf (line2, length, "%d. %s", line_nb, line);
+                    weechat_command (buffer, line2);
+                    free (line2);
                 }
             }
             else
-                weechat_command (buffer, lines[i]);
+                weechat_command (buffer, (line[0]) ? line : " ");
         }
         else
         {
@@ -239,15 +249,17 @@ exec_command_display_output (struct t_exec_cmd *exec_cmd,
                       "exec_%s,exec_cmd_%s",
                       (stdout) ? "stdout" : "stderr",
                       (exec_cmd->name) ? exec_cmd->name : str_number);
-            snprintf (str_number, sizeof (str_number), "%d\t", i + 1);
+            snprintf (str_number, sizeof (str_number), "%d\t", line_nb);
             weechat_printf_tags (buffer, str_tags,
                                  "%s%s",
                                  (exec_cmd->line_numbers) ? str_number : " \t",
-                                 lines[i]);
+                                 line);
         }
-    }
 
-    weechat_string_free_split (lines);
+        free (line);
+        line_nb++;
+        ptr_line = (pos) ? pos + 1 : NULL;
+    }
 }
 
 /*
