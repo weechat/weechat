@@ -125,6 +125,7 @@ exec_add ()
     new_exec_cmd->output_to_buffer = 0;
     new_exec_cmd->buffer_full_name = NULL;
     new_exec_cmd->line_numbers = 0;
+    new_exec_cmd->display_rc = 0;
     new_exec_cmd->stdout_size = 0;
     new_exec_cmd->stdout = NULL;
     new_exec_cmd->stderr_size = 0;
@@ -268,7 +269,8 @@ exec_end_command (struct t_exec_cmd *exec_cmd, int return_code)
      * display return code (only if command is not detached and if output is
      * NOT sent to buffer)
      */
-    if (!exec_cmd->detached && !exec_cmd->output_to_buffer)
+    if (!exec_cmd->detached && !exec_cmd->output_to_buffer
+        && exec_cmd->display_rc)
     {
         if (return_code >= 0)
         {
@@ -434,6 +436,7 @@ exec_print_log ()
         weechat_log_printf ("  output_to_buffer. . . . : %d",    ptr_exec_cmd->output_to_buffer);
         weechat_log_printf ("  buffer_full_name. . . . : '%s'",  ptr_exec_cmd->buffer_full_name);
         weechat_log_printf ("  line_numbers. . . . . . : %d",    ptr_exec_cmd->line_numbers);
+        weechat_log_printf ("  display_rc. . . . . . . : %d",    ptr_exec_cmd->display_rc);
         weechat_log_printf ("  stdout_size . . . . . . : %d",    ptr_exec_cmd->stdout_size);
         weechat_log_printf ("  stdout. . . . . . . . . : '%s'",  ptr_exec_cmd->stdout);
         weechat_log_printf ("  stderr_size . . . . . . : %d",    ptr_exec_cmd->stderr_size);

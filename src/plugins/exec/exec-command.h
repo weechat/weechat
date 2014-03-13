@@ -33,6 +33,7 @@ struct t_exec_cmd_options
     int new_buffer;                    /* output in a new buffer            */
     int switch_to_buffer;              /* switch to the output buffer       */
     int line_numbers;                  /* 1 to display line numbers         */
+    int display_rc;                    /* 1 to display return code          */
     const char *ptr_command_name;      /* name of command                   */
 };
 
