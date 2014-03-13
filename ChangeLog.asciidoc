@@ -16,7 +16,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 == Version 0.4.4 (under dev)
 
 * core: fix highlight problem with "(?-i)" and upper case letters in option
-  weechat.look.highlight
+  weechat.look.highlight (closes #24)
 * core: use glibtoolize on Mac (autotools) (closes #22)
 * core: fix detection of terminated process in hook_process
 * core: set option weechat.look.buffer_search_where to prefix_message by default
