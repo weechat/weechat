@@ -910,7 +910,7 @@ int
 string_has_highlight (const char *string, const char *highlight_words)
 {
     char *msg, *highlight, *match, *match_pre, *match_post, *msg_pos;
-    char *pos, *pos_end, *ptr_str, *ptr_string_ref;
+    char *pos, *pos_end;
     int end, length, startswith, endswith, wildcard_start, wildcard_end, flags;
 
     if (!string || !string[0] || !highlight_words || !highlight_words[0])
@@ -919,20 +919,18 @@ string_has_highlight (const char *string, const char *highlight_words)
     msg = strdup (string);
     if (!msg)
         return 0;
-    string_tolower (msg);
+
     highlight = strdup (highlight_words);
     if (!highlight)
     {
         free (msg);
         return 0;
     }
-    string_tolower (highlight);
 
     pos = highlight;
     end = 0;
     while (!end)
     {
-        ptr_string_ref = (char *)string;
         flags = 0;
         pos = (char *)string_regex_flags (pos, REG_ICASE, &flags);
 
@@ -948,16 +946,6 @@ string_has_highlight (const char *string, const char *highlight_words)
             free (msg);
             free (highlight);
             return 0;
-        }
-
-        if (flags & REG_ICASE)
-        {
-            for (ptr_str = pos; ptr_str < pos_end; ptr_str++)
-            {
-                if ((ptr_str[0] >= 'A') && (ptr_str[0] <= 'Z'))
-                    ptr_str[0] += ('a' - 'A');
-            }
-            ptr_string_ref = msg;
         }
 
         length = pos_end - pos;
@@ -978,15 +966,18 @@ string_has_highlight (const char *string, const char *highlight_words)
 
         if (length > 0)
         {
-            msg_pos = ptr_string_ref;
-            /* highlight found! */
-            while ((match = strstr (msg_pos, pos)) != NULL)
+            msg_pos = msg;
+            while (1)
             {
-                match_pre = utf8_prev_char (ptr_string_ref, match);
+                match = (flags & REG_ICASE) ?
+                    string_strcasestr (msg_pos, pos) : strstr (msg_pos, pos);
+                if (!match)
+                    break;
+                match_pre = utf8_prev_char (msg, match);
                 if (!match_pre)
                     match_pre = match - 1;
                 match_post = match + length;
-                startswith = ((match == ptr_string_ref) || (!string_is_word_char (match_pre)));
+                startswith = ((match == msg) || (!string_is_word_char (match_pre)));
                 endswith = ((!match_post[0]) || (!string_is_word_char (match_post)));
                 if ((wildcard_start && wildcard_end) ||
                     (!wildcard_start && !wildcard_end &&
@@ -994,6 +985,7 @@ string_has_highlight (const char *string, const char *highlight_words)
                     (wildcard_start && endswith) ||
                     (wildcard_end && startswith))
                 {
+                    /* highlight found! */
                     free (msg);
                     free (highlight);
                     return 1;
