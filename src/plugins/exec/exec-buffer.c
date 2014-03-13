@@ -122,7 +122,7 @@ exec_buffer_new (const char *name, int switch_to_buffer)
 
     new_buffer = weechat_buffer_search (EXEC_PLUGIN_NAME, name);
     if (new_buffer)
-        return new_buffer;
+        goto end;
 
     new_buffer = weechat_buffer_new (name,
                                      &exec_buffer_input_cb, NULL,
@@ -138,6 +138,7 @@ exec_buffer_new (const char *name, int switch_to_buffer)
     weechat_buffer_set (new_buffer, "time_for_each_line", "0");
     weechat_buffer_set (new_buffer, "input_get_unknown_commands", "0");
 
+end:
     if (switch_to_buffer)
         weechat_buffer_set (new_buffer, "display", "1");
 
