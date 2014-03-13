@@ -59,7 +59,9 @@ extern int string_has_highlight_regex_compiled (const char *string,
 extern int string_has_highlight_regex (const char *string, const char *regex);
 extern char *string_replace_regex (const char *string, void *regex,
                                    const char *replace,
-                                   const char reference_char);
+                                   const char reference_char,
+                                   char *(*callback)(void *data, const char *text),
+                                   void *callback_data);
 extern char **string_split (const char *string, const char *separators,
                             int keep_eol, int num_items_max, int *num_items);
 extern char **string_split_shared (const char *string, const char *separators,
