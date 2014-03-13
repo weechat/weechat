@@ -26,6 +26,7 @@
 #include "../weechat-plugin.h"
 #include "exec.h"
 #include "exec-buffer.h"
+#include "exec-command.h"
 #include "exec-config.h"
 
 
@@ -37,6 +38,9 @@ int
 exec_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
                       const char *input_data)
 {
+    char **argv, **argv_eol;
+    int argc;
+
     /* make C compiler happy */
     (void) data;
 
@@ -46,6 +50,17 @@ exec_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
         weechat_buffer_close (buffer);
         return WEECHAT_RC_OK;
     }
+
+    argv = weechat_string_split (input_data, " ", 0, 0, &argc);
+    argv_eol = weechat_string_split (input_data, " ", 1, 0, NULL);
+
+    if (argv && argv_eol)
+        exec_command_run (buffer, argc, argv, argv_eol, 0);
+
+    if (argv)
+        weechat_string_free_split (argv);
+    if (argv_eol)
+        weechat_string_free_split (argv_eol);
 
     return WEECHAT_RC_OK;
 }

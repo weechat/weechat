@@ -36,6 +36,9 @@ struct t_exec_cmd_options
     const char *ptr_command_name;      /* name of command                   */
 };
 
+extern int exec_command_run (struct t_gui_buffer *buffer,
+                             int argc, char **argv, char **argv_eol,
+                             int start_arg);
 extern void exec_command_init ();
 
 #endif /* __WEECHAT_EXEC_COMMAND_H */
