@@ -388,7 +388,6 @@ exec_command_run (struct t_gui_buffer *buffer,
         strdup (cmd_options.ptr_command_name) : NULL;
     new_exec_cmd->command = strdup (argv_eol[cmd_options.command_index]);
     new_exec_cmd->detached = cmd_options.detached;
-    new_exec_cmd->output_to_buffer = cmd_options.output_to_buffer;
     if (cmd_options.ptr_buffer_name && !cmd_options.ptr_buffer)
     {
         /* output in a new buffer using given name */
@@ -434,8 +433,10 @@ exec_command_run (struct t_gui_buffer *buffer,
         && (strcmp (weechat_buffer_get_string (cmd_options.ptr_buffer, "plugin"),
                     EXEC_PLUGIN_NAME) == 0))
     {
+        cmd_options.output_to_buffer = 0;
         cmd_options.new_buffer = 1;
     }
+    new_exec_cmd->output_to_buffer = cmd_options.output_to_buffer;
     new_exec_cmd->line_numbers = (cmd_options.line_numbers < 0) ?
         cmd_options.new_buffer : cmd_options.line_numbers;
     new_exec_cmd->display_rc = cmd_options.display_rc;
