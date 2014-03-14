@@ -548,7 +548,7 @@ xfer_network_connect (struct t_xfer *xfer)
         /* create socket */
         if (xfer->sock < 0)
         {
-            xfer->sock = socket (xfer->remote_address->sa_family, SOCK_STREAM,
+            xfer->sock = socket (xfer->local_address->sa_family, SOCK_STREAM,
                                  0);
             if (xfer->sock < 0)
                 return 0;

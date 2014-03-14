@@ -669,21 +669,14 @@ xfer_new (const char *plugin_name, const char *plugin_id,
         snprintf (str_address, sizeof (str_address), "?");
     }
 
-    new_xfer->local_address = calloc (1, sizeof (struct sockaddr_storage));
-    new_xfer->local_address_length = sizeof (struct sockaddr_storage);
-    new_xfer->remote_address = calloc (1, sizeof (struct sockaddr_storage));
-    new_xfer->remote_address_length = sizeof (struct sockaddr_storage);
-
     if (XFER_IS_RECV(type))
     {
         new_xfer->local_address_str = strdup ("");
-        new_xfer->remote_address_str = strdup (str_address);
-        memcpy (new_xfer->remote_address, address, address_length);
+        xfer_set_remote_address(new_xfer, address, address_length, str_address);
     }
     else
     {
-        new_xfer->local_address_str = strdup (str_address);
-        memcpy (new_xfer->local_address, address, address_length);
+        xfer_set_local_address(new_xfer, address, address_length, str_address);
         new_xfer->remote_address_str = strdup ("");
     }
 
@@ -835,18 +828,36 @@ xfer_new (const char *plugin_name, const char *plugin_id,
  */
 
 void
-xfer_set_remote_address (struct t_xfer *xfer, struct sockaddr *address,
-                         socklen_t length, char *address_str)
+xfer_set_remote_address (struct t_xfer *xfer, const struct sockaddr *address,
+                         socklen_t length, const char *address_str)
 {
     if (xfer->remote_address)
         free (xfer->remote_address);
-    xfer->remote_address = calloc (1, length);
+    xfer->remote_address = malloc (length);
     xfer->remote_address_length = length;
     memcpy (xfer->remote_address, address, length);
 
     if (xfer->remote_address_str)
         free (xfer->remote_address_str);
     xfer->remote_address_str = strdup ((address_str) ? address_str : "");
+}
+
+/*
+ * Sets the local address field.
+ */
+void
+xfer_set_local_address (struct t_xfer *xfer, const struct sockaddr *address,
+                         socklen_t length, const char *address_str)
+{
+    if (xfer->local_address)
+        free (xfer->local_address);
+    xfer->local_address = malloc (length);
+    xfer->local_address_length = length;
+    memcpy (xfer->local_address, address, length);
+
+    if (xfer->local_address_str)
+        free (xfer->local_address_str);
+    xfer->local_address_str = strdup ((address_str) ? address_str : "");
 }
 
 /*
