@@ -1157,7 +1157,8 @@ COMMAND_CALLBACK(color)
 {
     char *str_alias, *str_rgb, *pos, *error;
     char str_color[1024], str_command[1024];
-    long number;
+    long number, limit;
+    unsigned int rgb;
     int i;
     struct t_gui_color_palette *color_palette;
 
@@ -1299,6 +1300,46 @@ COMMAND_CALLBACK(color)
     if (string_strcasecmp (argv[1], "switch") == 0)
     {
         gui_color_switch_colors ();
+        return WEECHAT_RC_OK;
+    }
+
+    /* convert terminal color to RGB color */
+    if (string_strcasecmp (argv[1], "term2rgb") == 0)
+    {
+        if (argc < 3)
+            return WEECHAT_RC_ERROR;
+        error = NULL;
+        number = strtol (argv[2], &error, 10);
+        if (!error || error[0] || (number < 0) || (number > 255))
+            return WEECHAT_RC_ERROR;
+        gui_chat_printf (NULL,
+                         "%ld -> #%06x",
+                         number,
+                         gui_color_convert_term_to_rgb (number));
+        return WEECHAT_RC_OK;
+    }
+
+    /* convert RGB color to terminal color */
+    if (string_strcasecmp (argv[1], "rgb2term") == 0)
+    {
+        if (argc < 3)
+            return WEECHAT_RC_ERROR;
+        if (sscanf ((argv[2][0] == '#') ? argv[2] + 1 : argv[2], "%x", &rgb) != 1)
+            return WEECHAT_RC_ERROR;
+        if (rgb > 0xFFFFFF)
+            return WEECHAT_RC_ERROR;
+        limit = 256;
+        if (argc > 3)
+        {
+            error = NULL;
+            limit = strtol (argv[3], &error, 10);
+            if (!error || error[0] || (limit < 1) || (limit > 256))
+                return WEECHAT_RC_ERROR;
+        }
+        gui_chat_printf (NULL,
+                         "#%06x -> %d",
+                         rgb,
+                         gui_color_convert_rgb_to_term (rgb, limit));
         return WEECHAT_RC_OK;
     }
 
@@ -6612,16 +6653,25 @@ command_init ()
     hook_command (
         NULL, "color",
         N_("define color aliases and display palette of colors"),
-        N_("alias <color> <name> || unalias <color> || reset || -o"),
-        N_("  alias: add an alias for a color\n"
-           "unalias: delete an alias\n"
-           "  color: color number (greater than or equal to 0, max depends on "
+        N_("alias <color> <name>"
+           " || unalias <color>"
+           " || reset"
+           " || term2rgb <color>"
+           " || rgb2term <rgb> [<limit>]"
+           " || -o"),
+        N_("   alias: add an alias for a color\n"
+           " unalias: delete an alias\n"
+           "   color: color number (greater than or equal to 0, max depends on "
            "terminal, commonly 63 or 255)\n"
-           "   name: alias name for color (for example: \"orange\")\n"
-           "  reset: reset all color pairs (required when no more color pairs "
+           "    name: alias name for color (for example: \"orange\")\n"
+           "   reset: reset all color pairs (required when no more color pairs "
            "are available if automatic reset is disabled, see option "
            "weechat.look.color_pairs_auto_reset)\n"
-           "     -o: send terminal/colors info to current buffer as input\n"
+           "term2rgb: convert a terminal color (0-255) to RGB color\n"
+           "rgb2term: convert a RGB color to terminal color (0-255)\n"
+           "   limit: number of colors to use in terminal table (starting from "
+           "0); default is 256\n"
+           "      -o: send terminal/colors info to current buffer as input\n"
            "\n"
            "Without argument, this command displays colors in a new buffer.\n"
            "\n"
@@ -6633,6 +6683,8 @@ command_init ()
         "alias %(palette_colors)"
         " || unalias %(palette_colors)"
         " || reset"
+        " || term2rgb"
+        " || rgb2term"
         " || -o",
         &command_color, NULL);
     /*
