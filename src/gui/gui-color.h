@@ -170,6 +170,8 @@ extern int gui_color_attr_get_flag (char c);
 extern void gui_color_attr_build_string (int color, char *str_attr);
 extern const char *gui_color_get_custom (const char *color_name);
 extern char *gui_color_decode (const char *string, const char *replacement);
+extern int gui_color_convert_term_to_rgb (int color);
+extern int gui_color_convert_rgb_to_term (int rgb, int limit);
 extern char *gui_color_emphasize (const char *string, const char *search,
                                   int case_sensitive, regex_t *regex);
 extern void gui_color_free (struct t_gui_color *color);
