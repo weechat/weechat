@@ -17,7 +17,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 * core: fix highlight problem with "(?-i)" and upper case letters in option
   weechat.look.highlight (closes #24)
-* core: use glibtoolize on Mac (autotools) (closes #22)
+* core: use glibtoolize on Mac OS X (autotools) (closes #22)
 * core: fix detection of terminated process in hook_process
 * core: set option weechat.look.buffer_search_where to prefix_message by default
 * core: fix "/window scroll -N" on a buffer with free content
@@ -87,6 +87,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * scripts: fix crash when a signal is received with type "int" and NULL pointer
   in signal_data
 * trigger: add trigger plugin: new command /trigger and file trigger.conf
+* xfer: fix connection to remote host in DCC receive on Mac OS X (closes #25)
 * xfer: remove bind on xfer.network.own_ip (closes #5)
 
 == Version 0.4.3 (2014-02-09)
