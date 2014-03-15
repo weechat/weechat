@@ -49,5 +49,11 @@ propriété: propriété du hook
      -all: supprimer toutes les commandes terminées
 
 Les options par défaut peuvent être définies dans l'option exec.command.default_options.
+
+Exemples:
+  /exec -n ls -l /tmp
+  /exec -n ps xu | grep weechat
+  /exec -n -norc url:http://pastebin.com/raw.php?i=xxxxxxxx
+  /exec -o uptime
 ----
 

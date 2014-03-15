@@ -49,5 +49,11 @@ property: Hook-Fähigkeit
     -all: entfernt alle beendeten Befehle
 
 Standardoptionen können in der Option exec.command.default_options bestimmt werden.
+
+Beispiele:
+  /exec -n ls -l /tmp
+  /exec -n ps xu | grep weechat
+  /exec -n -norc url:http://pastebin.com/raw.php?i=xxxxxxxx
+  /exec -o uptime
 ----
 

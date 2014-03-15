@@ -741,7 +741,13 @@ exec_command_init ()
            "    -all: delete all terminated commands\n"
            "\n"
            "Default options can be set in the option "
-           "exec.command.default_options."),
+           "exec.command.default_options.\n"
+           "\n"
+           "Examples:\n"
+           "  /exec -n ls -l /tmp\n"
+           "  /exec -n ps xu | grep weechat\n"
+           "  /exec -n -norc url:http://pastebin.com/raw.php?i=xxxxxxxx\n"
+           "  /exec -o uptime"),
         "-list"
         " || -sh|-nosh|-bg|-nobg|-stdin|-nostdin|-buffer|-l|-o|-n|-sw|-nosw|"
         "-ln|-noln|-color|-timeout|-name|%*"

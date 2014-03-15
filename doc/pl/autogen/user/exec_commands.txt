@@ -49,5 +49,11 @@ property: hook property
     -all: delete all terminated commands
 
 Default options can be set in the option exec.command.default_options.
+
+Examples:
+  /exec -n ls -l /tmp
+  /exec -n ps xu | grep weechat
+  /exec -n -norc url:http://pastebin.com/raw.php?i=xxxxxxxx
+  /exec -o uptime
 ----
 
