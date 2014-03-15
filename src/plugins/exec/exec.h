@@ -25,6 +25,14 @@
 #define weechat_plugin weechat_exec_plugin
 #define EXEC_PLUGIN_NAME "exec"
 
+enum t_exec_color {
+    EXEC_COLOR_OFF = 0,
+    EXEC_COLOR_DECODE,
+    EXEC_COLOR_STRIP,
+    /* number of color actions */
+    EXEC_NUM_COLORS,
+};
+
 struct t_exec_cmd
 {
     /* command/process */
@@ -41,6 +49,7 @@ struct t_exec_cmd
     int output_to_buffer;              /* 1 if output is sent to buffer     */
     char *buffer_full_name;            /* buffer where output is displayed  */
     int line_numbers;                  /* 1 if lines numbers are displayed  */
+    int color;                         /* what to do with ANSI colors       */
     int display_rc;                    /* 1 if return code is displayed     */
 
     /* command output */
@@ -59,6 +68,7 @@ extern struct t_exec_cmd *exec_cmds;
 extern struct t_exec_cmd *last_exec_cmd;
 extern int exec_cmds_count;
 
+extern int exec_search_color (const char *color);
 extern struct t_exec_cmd *exec_search_by_id (const char *id);
 extern struct t_exec_cmd *exec_add ();
 extern int exec_process_cb (void *data, const char *command, int return_code,

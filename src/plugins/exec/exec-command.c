@@ -255,6 +255,15 @@ exec_command_parse_options (struct t_exec_cmd_options *cmd_options,
         {
             cmd_options->line_numbers = 0;
         }
+        else if (weechat_strcasecmp (argv[i], "-color") == 0)
+        {
+            if (i + 1 >= argc)
+                return 0;
+            i++;
+            cmd_options->color = exec_search_color (argv[i]);
+            if (cmd_options->color < 0)
+                return 0;
+        }
         else if (weechat_strcasecmp (argv[i], "-rc") == 0)
         {
             cmd_options->display_rc = 1;
@@ -326,6 +335,7 @@ exec_command_run (struct t_gui_buffer *buffer,
     cmd_options.new_buffer = 0;
     cmd_options.switch_to_buffer = 1;
     cmd_options.line_numbers = -1;
+    cmd_options.color = EXEC_COLOR_DECODE;
     cmd_options.display_rc = 1;
     cmd_options.ptr_command_name = NULL;
 
@@ -439,6 +449,7 @@ exec_command_run (struct t_gui_buffer *buffer,
     new_exec_cmd->output_to_buffer = cmd_options.output_to_buffer;
     new_exec_cmd->line_numbers = (cmd_options.line_numbers < 0) ?
         cmd_options.new_buffer : cmd_options.line_numbers;
+    new_exec_cmd->color = cmd_options.color;
     new_exec_cmd->display_rc = cmd_options.display_rc;
 
     /* execute the command */
@@ -670,8 +681,8 @@ exec_command_init ()
         N_("execute external commands"),
         N_("-list"
            " || [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <name>] "
-           "[-l|-o|-n] |-sw|-nosw] [-ln|-noln] [-rc|-norc] "
-           "[-timeout <timeout>] [-name <name>] <command>"
+           "[-l|-o|-n] |-sw|-nosw] [-ln|-noln] [-color off|decode|strip] "
+           "[-rc|-norc] [-timeout <timeout>] [-name <name>] <command>"
            " || -in <id> <text>"
            " || -inclose <id> [<text>]"
            " || -signal <id> <signal>"
@@ -702,6 +713,10 @@ exec_command_init ()
            "   -nosw: don't switch to the output buffer\n"
            "     -ln: display line numbers (default in new buffer only)\n"
            "   -noln: don't display line numbers\n"
+           "  -color: action on ANSI colors in output:\n"
+           "             off: keep ANSI codes as-is\n"
+           "          decode: convert ANSI colors to WeeChat/IRC (default)\n"
+           "           strip: remove ANSI colors\n"
            "     -rc: display return code (default)\n"
            "   -norc: don't display return code\n"
            "-timeout: set a timeout for the command (in seconds)\n"
@@ -729,7 +744,7 @@ exec_command_init ()
            "exec.command.default_options."),
         "-list"
         " || -sh|-nosh|-bg|-nobg|-stdin|-nostdin|-buffer|-l|-o|-n|-sw|-nosw|"
-        "-ln|-noln|-timeout|-name|%*"
+        "-ln|-noln|-color|-timeout|-name|%*"
         " || -in|-inclose|-signal|-kill %(exec_commands_ids)"
         " || -killall"
         " || -set %(exec_commands_ids) stdin|stdin_close|signal"

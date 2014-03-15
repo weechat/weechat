@@ -44,6 +44,33 @@ struct t_exec_cmd *exec_cmds = NULL;        /* first executed command       */
 struct t_exec_cmd *last_exec_cmd = NULL;    /* last executed command        */
 int exec_cmds_count = 0;                    /* number of executed commands  */
 
+char *exec_color_string[EXEC_NUM_COLORS] =
+{ "off", "decode", "strip" };
+
+
+/*
+ * Searches for a color action name.
+ *
+ * Returns index of color in enum t_exec_color, -1 if not found.
+ */
+
+int
+exec_search_color (const char *color)
+{
+    int i;
+
+    if (!color)
+        return -1;
+
+    for (i = 0; i < EXEC_NUM_COLORS; i++)
+    {
+        if (weechat_strcasecmp (exec_color_string[i], color) == 0)
+            return i;
+    }
+
+    /* color not found */
+    return -1;
+}
 
 /*
  * Searches for an executed command by id, which can be a number or a name.
@@ -224,6 +251,19 @@ exec_command_display_output (struct t_exec_cmd *exec_cmd,
             weechat_strndup (ptr_line, pos - ptr_line) : strdup (ptr_line);
         if (!line)
             break;
+
+        if (exec_cmd->color != EXEC_COLOR_OFF)
+        {
+            line2 = weechat_hook_modifier_exec (
+                (exec_cmd->output_to_buffer) ?
+                "irc_color_decode_ansi" : "color_decode_ansi",
+                (exec_cmd->color == EXEC_COLOR_DECODE) ? "1" : "0",
+                line);
+            free (line);
+            if (!line2)
+                break;
+            line = line2;
+        }
 
         if (exec_cmd->output_to_buffer)
         {
