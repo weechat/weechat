@@ -54,6 +54,8 @@ WeeChat の主要なリポジトリは 2 つあります:
 |       alias/   | alias プラグイン
 |       aspell/  | aspell プラグイン
 |       charset/ | charset プラグイン
+// TRANSLATION MISSING
+|       exec/    | Exec plugin
 |       fifo/    | fifo プラグイン (WeeChat にコマンドを送信する FIFO パイプ)
 |       irc/     | IRC (Internet Relay Chat) プラグイン
 |       logger/  | logger プラグイン (表示されたメッセージをファイルに書き込む)
@@ -173,6 +175,13 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       weechat-aspell-speller.c    | スペルチェッカ管理
 |    charset/                       | charset プラグイン
 |       charset.c                   | charset 関数
+// TRANSLATION MISSING
+|    exec/                          | Exec plugin
+|       exec.c                      | Main exec functions
+|       exec-buffer.c               | Exec buffer
+|       exec-command.c              | Exec commands
+|       exec-completion.c           | Exec completions
+|       exec-config.c               | Exec config options (file exec.conf)
 |    fifo/                          | fifo プラグイン
 |       fifo.c                      | fifo の主要関数
 |       fifo-info.c                 | fifo の情報/インフォリスト/hdata

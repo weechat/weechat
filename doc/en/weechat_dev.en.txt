@@ -54,6 +54,7 @@ The main WeeChat directories are:
 |       alias/   | Alias plugin
 |       aspell/  | Aspell plugin
 |       charset/ | Charset plugin
+|       exec/    | Exec plugin
 |       fifo/    | Fifo plugin (FIFO pipe used to remotely send commands to WeeChat)
 |       irc/     | IRC (Internet Relay Chat) plugin
 |       logger/  | Logger plugin (write messages displayed to files)
@@ -172,6 +173,12 @@ WeeChat "core" is located in following directories:
 |       weechat-aspell-speller.c    | Spellers management
 |    charset/                       | Charset plugin
 |       charset.c                   | Charset functions
+|    exec/                          | Exec plugin
+|       exec.c                      | Main exec functions
+|       exec-buffer.c               | Exec buffer
+|       exec-command.c              | Exec commands
+|       exec-completion.c           | Exec completions
+|       exec-config.c               | Exec config options (file exec.conf)
 |    fifo/                          | Fifo plugin
 |       fifo.c                      | Main fifo functions
 |       fifo-info.c                 | Fifo info/infolists/hdata

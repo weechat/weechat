@@ -55,6 +55,7 @@ Les répertoires principaux de WeeChat sont :
 |       alias/   | Extension Alias
 |       aspell/  | Extension Aspell
 |       charset/ | Extension Charset
+|       exec/    | Extension Exec
 |       fifo/    | Extension Fifo (tube FIFO utilisé pour envoyer des commandes à WeeChat)
 |       irc/     | Extension IRC (Internet Relay Chat)
 |       logger/  | Extension Logger (enregistrer les messages affichés dans des fichiers)
@@ -173,6 +174,12 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       weechat-aspell-speller.c    | Gestion des correcteurs orthographiques
 |    charset/                       | Extension Charset
 |       charset.c                   | Fonctions pour Charset
+|    exec/                          | Extension Exec
+|       exec.c                      | Fonctions principales de Exec
+|       exec-buffer.c               | Tampon Exec
+|       exec-command.c              | Commandes pour Exec
+|       exec-completion.c           | Complétions pour Exec
+|       exec-config.c               | Options de configuration pour Exec (fichier exec.conf)
 |    fifo/                          | Extension Fifo
 |       fifo.c                      | Fonctions principales de Fifo
 |       fifo-info.c                 | Info/infolists/hdata pour Fifo
