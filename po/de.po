@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2014-03-15 15:06+0100\n"
-"PO-Revision-Date: 2014-03-12 21:33+0100\n"
+"PO-Revision-Date: 2014-03-15 19:06+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
 "Language: de_DE\n"
@@ -45,11 +45,11 @@ msgid "max chars"
 msgstr "maximale Zeichenanzahl"
 
 msgid ""
-"a WeeChat color name (default, black, (dark)gray, white, (light)red, "
-"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
-"terminal color number or an alias; attributes are allowed before color (for "
-"text color only, not background): \"*\" for bold, \"!\" for reverse, \"/\" "
-"for italic, \"_\" for underline"
+"a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)"
+"green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal "
+"color number or an alias; attributes are allowed before color (for text "
+"color only, not background): \"*\" for bold, \"!\" for reverse, \"/\" for "
+"italic, \"_\" for underline"
 msgstr ""
 "ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, "
 "(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine "
@@ -1223,13 +1223,13 @@ msgstr ""
 msgid "define color aliases and display palette of colors"
 msgstr "definiert Farbaliase und stellt eine Palette der möglichen Farben dar"
 
-#, fuzzy
 msgid ""
 "alias <color> <name> || unalias <color> || reset || term2rgb <color> || "
 "rgb2term <rgb> [<limit>] || -o"
-msgstr "alias <color> <name> || unalias <color> || reset || -o"
+msgstr ""
+"alias <color> <name> || unalias <color> || reset || term2rgb <color> || "
+"rgb2term <rgb> [<limit>] || -o"
 
-#, fuzzy
 msgid ""
 "   alias: add an alias for a color\n"
 " unalias: delete an alias\n"
@@ -1261,6 +1261,10 @@ msgstr ""
 "  reset: setzt alle Farbpaarungen zurück (nützlich falls keine Farbpaarung "
 "mehr verfügbar sein sollte und die automatische Reset-Option deaktiviert "
 "ist, siehe Option: weechat.look.color_pairs_auto_reset)\n"
+"term2rgb: konvertiert eine Terminalfarbe (0-255) in eine RGB Farbe\n"
+"rgb2term: konvertiert eine RGB Farbe in eine Terminalfarbe (0-255) \n"
+"   limit: Anzahl an Farben die aus der Terminalpalette genutzt werden sollen "
+"(beginnend von 0); Standardwert: 256\n"
 "     -o: sendet Terminal-/Farbinformationen in den aktuellen Buffer\n"
 "\n"
 "Ohne Angabe von Argumenten wird in einem separaten Buffer die darstellbare "
@@ -2109,7 +2113,7 @@ msgstr ""
 "  /mute -buffer irc.freenode.#weechat msg #weechat hi!"
 
 msgid "list/load/unload plugins"
-msgstr "Erweiterungen verwalten (auflisten/installieren/deinstallieren)"
+msgstr "Erweiterungen verwalten (auflisten/installieren/beenden)"
 
 msgid ""
 "list|listfull [<name>] || load <filename> [<arguments>] || autoload "
@@ -2137,10 +2141,10 @@ msgstr ""
 "     load: installiert eine Erweiterung\n"
 " autoload: installiert automatisch alle Erweiterungen aus dem System- oder "
 "Benutzerverzeichnis\n"
-"   reload: installiert eine Erweiterung erneut (falls kein Name angegeben "
-"wird, werden alle Erweiterungen entfernt und neu installiert)\n"
-"   unload: deinstalliere eine oder alle Erweiterungen (wird kein Name "
-"angegeben dann werden alle Erweiterung entfernt)\n"
+"   reload: startet eine Erweiterung erneut (falls kein Name angegeben wird, "
+"werden alle Erweiterungen beendet und neu gestartet)\n"
+"   unload: beendet eine oder alle Erweiterungen (wird kein Name angegeben "
+"dann werden alle Erweiterung beendet)\n"
 " filename: Erweiterung (Datei) welche installiert werden soll\n"
 "     name: Name einer Erweiterung\n"
 "arguments: Argumente die der Erweiterung beim installieren übergeben werden "
@@ -3360,9 +3364,9 @@ msgstr ""
 "werden: \"window\" (zur Zeit genutzter Window-Pointer), \"buffer\" (Buffer-"
 "Pointer welcher zur Hotlist hinzugefügt werden soll), \"priority\" (0 = "
 "niedrig, 1 = Nachricht, 2 = Privat, 3 = Highlight); standardmäßig wird ein "
-"Buffer in die Hotlist eingetragen falls man abwesend it, oder falls der "
-"Buffer nicht auf dem Bildschirm sichtbar ist (er wird nicht in einem Fenster "
-"dargestellt)"
+"Buffer in die Hotlist eingetragen falls man abwesend sein sollte oder falls "
+"der Buffer nicht auf dem Bildschirm sichtbar ist (Buffer wird nicht in einem "
+"Fenster dargestellt)"
 
 msgid "string displayed between buffers in hotlist"
 msgstr ""
@@ -4184,7 +4188,7 @@ msgstr ""
 "ersetzt, voreingestellt ist \"~/.weechat\")"
 
 msgid "save configuration files when unloading plugins"
-msgstr "speichert Konfigurationen, falls Erweiterungen deinstalliert werden"
+msgstr "speichert Konfigurationen, falls Erweiterungen beendet werden"
 
 msgid "FATAL: error initializing configuration options"
 msgstr "FATAL: Fehler bei der Initialisierung der Konfiguration-Optionen"
@@ -5149,9 +5153,9 @@ msgid ""
 "suggestions in all languages)"
 msgstr ""
 "legt die Anzahl an Vorschlägen, für ein falsch geschriebenes Wort, fest. Die "
-"Vorschläge werden mittels der Bar-Item \"aspell_suggest\", für die "
-"jeweilige(n) Sprache(n), die für den Buffer augewählt wurden, angezeigt (-1 "
-"= deaktiviert die Funktion, 0 = zeigt alle verfügbaren Vorschläge, für alle "
+"Vorschläge werden mittels der Bar-Item \"aspell_suggest\", für die jeweilige"
+"(n) Sprache(n), die für den Buffer augewählt wurden, angezeigt (-1 = "
+"deaktiviert die Funktion, 0 = zeigt alle verfügbaren Vorschläge, für alle "
 "ausgewählten Sprachen, an)"
 
 msgid ""
@@ -5251,78 +5255,75 @@ msgstr ""
 "  reset: setze im aktuellen Buffer den Zeichensatz zurück"
 
 msgid "Execution of external commands in WeeChat"
-msgstr ""
+msgstr "externe Befehle  aus WeeChat heraus ausführen"
 
 #, c-format
 msgid "%s: end of command %d (\"%s\"), return code: %d"
-msgstr ""
+msgstr "%s: Befehl %d (\"%s\") wurde beendet, Rückgabewert: %d"
 
 #, c-format
 msgid "%s: unexpected end of command %d (\"%s\")"
-msgstr ""
+msgstr "%s: unerwartetes Ende von Befehl %d (\"%s\")"
 
-#, fuzzy
 msgid "Executed commands"
-msgstr "WeeChat Befehle"
+msgstr "ausgeführte Befehle"
 
 msgid "No command is running"
-msgstr ""
+msgstr "es wird im Moment kein Befehl ausgeführt"
 
-#, fuzzy
 msgid "Commands:"
-msgstr "Befehl /%s"
+msgstr "Befehle:"
 
 #. TRANSLATORS: format: hours + minutes, for example: 3h59
 #, c-format
 msgid "%dh%02d"
-msgstr ""
+msgstr "%dStd%02d"
 
 #. TRANSLATORS: format: minutes + seconds, for example: 3m59
 #, c-format
 msgid "%dm%02d"
-msgstr ""
+msgstr "%dMin%02d"
 
 #. TRANSLATORS: format: seconds, for example: 59s
 #, c-format
 msgid "%ds"
-msgstr ""
+msgstr "%dSek"
 
 #. TRANSLATORS: %s before "ago" is elapsed time, for example: "3m59"
-#, fuzzy, c-format
+#, c-format
 msgid "  %s%s%s %d%s%s%s: %s\"%s%s%s\"%s (pid: %d, started %s ago)"
-msgstr "  %s[%s%d%s]%s %s%s.%s%s%s (Benachrichtigung: %s)"
+msgstr "  %s%s%s %d%s%s%s: %s\"%s%s%s\"%s (pid: %d, gestartet vor %s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: command id \"%s\" not found"
-msgstr "%s%s: Befehl \"%s\" nicht gefunden:"
+msgstr "%s%s: ID von Befehl \"%s\" nicht gefunden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: command with id \"%s\" is not running any more"
-msgstr "%s: Das Skript \"%s\" kann wieder überschrieben werden"
+msgstr "%s%s: Befehl mit ID \"%s\" wird nicht mehr ausgeführt"
 
 #, c-format
 msgid "%s%s: invalid options in option exec.command.default_options"
-msgstr ""
+msgstr "%s%s: ungültige Optionen in Option exec.command.default_options"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: failed to run command \"%s\""
-msgstr "%s%s: Kann die Funktion \"%s\" nicht ausführen"
+msgstr "%s%s: Befehl \"%s\" konnte nicht ausgeführt werden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%d commands removed"
-msgstr "    eingehängte (hooked) Befehle:"
+msgstr "%d Befehle entfernt"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: command with id \"%s\" is still running"
-msgstr "%s%s: Befehl \"%s\" nicht gefunden:"
+msgstr "%s%s: Befehl mit ID \"%s\" wird weiterhin ausgeführt"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Command \"%s\" removed"
-msgstr "Alias \"%s\" entfernt"
+msgstr "Befehl \"%s\" entfernt"
 
-#, fuzzy
 msgid "execute external commands"
-msgstr "Führt einen Befehl ohne Textausgabe aus"
+msgstr "führe externe Befehle aus"
 
 msgid ""
 "-list || [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <name>] [-l|-o|-"
@@ -5331,6 +5332,11 @@ msgid ""
 "[<text>] || -signal <id> <signal> || -kill <id> || -killall || -set <id> "
 "<property> <value> || -del <id>|-all [<id>...]"
 msgstr ""
+"-list || [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <name>] [-l|-o|-"
+"n] |-sw|-nosw] [-ln|-noln] [-color off|decode|strip] [-rc|-norc] [-timeout "
+"<timeout>] [-name <name>] <command> || -in <id> <text> || -inclose <id> "
+"[<text>] || -signal <id> <signal> || -kill <id> || -killall || -set <id> "
+"<property> <value> || -del <id>|-all [<id>...]"
 
 msgid ""
 "   -list: list commands\n"
@@ -5383,30 +5389,94 @@ msgid ""
 "\n"
 "Default options can be set in the option exec.command.default_options."
 msgstr ""
+"   -list: zeigt laufende Befehle an\n"
+"     -sh: die shell wird verwendet um Befehle auszuführen "
+"(Standardverhalten)\n"
+"   -nosh: die shell wird nicht verwendet um Befehle auszuführen (wird "
+"benötigt, falls der Befehl mit sensiblen Daten hantiert. Zum Beispiel der "
+"Inhalt einer Nachricht eines anderen Users)\n"
+"     -bg: führt Prozess im Hintergrund aus: gibt weder eine Prozessausgabe "
+"noch einen Rückgabewert aus (nicht kompatibel mit Optionen -o/-n)\n"
+"   -nobg: gibt Prozessausgabe und Rückgabewert aus (Standardverhalten)\n"
+"  -stdin: erstellt eine PIPE um Daten zu dem Prozess zu senden (mittels /"
+"exec -in/-inclose)\n"
+"-nostdin: es wird keine PIPE für stdin erstellt (Standardverhalten)\n"
+" -buffer: zeigt/sendet Ausgabe des Befehls an diesen Buffer (wird der "
+"angegebene Buffer nicht gefunden wird ein neuer Bufger mit dem Namen \"exec."
+"exec.xxx\" erstellt)\n"
+"      -l: gibt die Ausgabe des Befehls lokal im Buffer aus "
+"(Standardverhalten)\n"
+"      -o: gibt die Ausgabe des Befehls im Buffer aus (nicht kompatibel mit "
+"Option -bg)\n"
+"      -n: gibt die Ausgabe des Befehls in einem neuen Buffer aus (nicht "
+"kompatibel mit Option -bg)\n"
+"     -sw: es wird zum Ausgabebuffer gewechselt (Standardverhalten)\n"
+"   -nosw: es wird nicht zum Ausgabebuffer gewechselt\n"
+"    -ln: legt eine Zeilennummerierung an (Standardverhalten, nur für neue "
+"Buffer)\n"
+"   -noln: es wird keine Zeilennummerierung angezeigt\n"
+"  -color: es wird eine der folgenden Aktionen bei ANSI Zeichenkodierungen in "
+"der Ausgabe durchgeführt:\n"
+"            ansi: ANSI-Kodierung wird beibehalten\n"
+"          decode: konvertiert ANSI-Farben zu WeeChat/IRC Farben"
+"(Standardverhalten)\n"
+"           strip: ANSI-Farben werden entfernt\n"
+"     -rc: der Rückgabewert wird ausgegeben (Standardverhalten)\n"
+"   -norc: der Rückgabewert wird unterdrückt\n"
+"-timeout: gibt eine Zeitbeschränkung für den auszuführenden Befehl an (in "
+"Sekunden)\n"
+"  -name: dem Befehl wird ein Name zugewiesen (um den Befehl später mittels /"
+"exec zu nutzen)\n"
+" command: Befehl der ausgeführt werden soll; beginnt der Befehl mit \"url:"
+"\", wird die shell deaktiviert und der Inhalt der URL wird heruntergeladen "
+"und im Buffer ausgegeben\n"
+"      id: identifiziert eindeutig einen Befehl: entweder durch eine Nummer "
+"oder einen Namen (sofern ein Name mittels \"-name xxx\" zugewiesen wurde)\n"
+"     -in: sendet Text an die Standardeingabe des Prozesses\n"
+"-inclose: wie -in aber stdin wird danach geschlossen (und der Text ist "
+"optional: ohne Text wird stdin umgehend geschlossen\n"
+" -signal: schickt ein Signal an den Prozess; das Signal kann entweder ein "
+"Integerwert oder eines der folgenden Schlüsselworte sein: hup, int, quit, "
+"kill, term, usr1, usr2\n"
+"   -kill: Alias für \"-signal <id> kill\"\n"
+"-killall: beendet alle laufenden Prozesse\n"
+"    -set: nutzt eine Hook-Fähigkeit (siehe Funktion hook_set in Anleitung "
+"für API Erweiterung)\n"
+"property: Hook-Fähigkeit\n"
+"   value: neuer Wert für Hook-Fähigkeit\n"
+"    -del: entfernt einen beendeten Befehl\n"
+"    -all: entfernt alle beendeten Befehle\n"
+"\n"
+"Standardoptionen können in der Option exec.command.default_options bestimmt "
+"werden."
 
 msgid "ids (numbers and names) of executed commands"
-msgstr ""
+msgstr "IDs (Nummern und Namen) von ausgeführten Befehlen"
 
 msgid ""
 "default options for command /exec (see /help exec); example: \"-nosh -bg\" "
 "to run all commands in background (no output), and without using the shell"
 msgstr ""
+"Standardoptionen für den Befehl /exec (siehe /help exec); Beispiele:  \"-"
+"nosh -bg\" führt alle Befehle im Hintergrund aus (keine Textausgabe) und "
+"ohne das die shell genutzt wird"
 
-#, fuzzy
 msgid ""
 "delay for purging finished commands (in seconds, 0 = purge commands "
 "immediately, -1 = never purge)"
 msgstr ""
-"Wartezeit bis nicht verbundene Clients gelöscht werden (in Minuten, 0 = "
-"lösche Clients unmittelbar, -1 = niemals löschen)"
+"Wartezeit bis nicht mehr ausgeführte Befehle gelöscht werden (in Sekunden, 0 "
+"= lösche Befehle unmittelbar, -1 = niemals löschen)"
 
-#, fuzzy
 msgid "text color for a running command flag in list of commands"
-msgstr "Textfarbe für Befehls-Flag (in /trigger list)"
+msgstr ""
+"Textfarbe des Statusindikator (in der Auflistung der Befehle) für Befehle "
+"die zur Zeit ausgeführt werden"
 
-#, fuzzy
 msgid "text color for a finished command flag in list of commands"
-msgstr "Textfarbe für Befehls-Flag (in /trigger list)"
+msgstr ""
+"Textfarbe des Statusindikator (in der Auflistung der Befehle) für beendete "
+"Befehle"
 
 msgid "FIFO pipe for remote control"
 msgstr "FIFO Pipe für Fernsteuerung"
@@ -5495,11 +5565,11 @@ msgstr ""
 
 #, c-format
 msgid "%s: unloading script \"%s\""
-msgstr "%s: Deinstalliere das Skript \"%s\""
+msgstr "%s: Skript \"%s\" wird beendet"
 
 #, c-format
 msgid "%s: script \"%s\" unloaded"
-msgstr "%s: Das Skript \"%s\" wurde deinstalliert"
+msgstr "%s: Skript \"%s\" wurde beendet"
 
 #, c-format
 msgid "%s%s: script \"%s\" not loaded"
@@ -5992,8 +6062,8 @@ msgstr ""
 "werden)\n"
 "            - Hostname/Port oder IP/Port (damit wird lediglich ein "
 "TEMPORÄRER Server erstellt), Port 6667 wird standardmäßig verwendet\n"
-"            - URL mit folgendem Format: irc[6][s]://[nickname[:"
-"password]@]irc.example.org[:port][/#channel1][,#channel2[...]]\n"
+"            - URL mit folgendem Format: irc[6][s]://[nickname[:password]@]"
+"irc.example.org[:port][/#channel1][,#channel2[...]]\n"
 "    option: legt Option für den Server fest (die Boolean-Optionen können "
 "weggelassen werden)\n"
 "  nooption: deaktiviert eine Boolean Option (Beispiel: -nossl)\n"
@@ -9282,20 +9352,19 @@ msgid "height of terminal"
 msgstr "Höhe des Terminals"
 
 msgid "POSIX extended regular expression to search ANSI escape codes"
-msgstr ""
+msgstr "erweiterte reguläre POSIX Ausdrücke um ANSI Escapesequenz zu suchen"
 
 msgid "terminal color (0-255) converted to RGB color"
-msgstr ""
+msgstr "Terminalfarbe (0-255) wurde umgewandelt in RGB Farbe"
 
-#, fuzzy
 msgid "color (terminal color: 0-255)"
-msgstr "Terminal-Farben:"
+msgstr "Farben (Terminalfarben: 0-255)"
 
 msgid "RGB color converted to terminal color (0-255)"
-msgstr ""
+msgstr "RGB Farbe wurde umgewandelt in Terminalfarbe (0-255)"
 
 msgid "rgb,limit (limit is optional and is set to 256 by default)"
-msgstr ""
+msgstr "RGB,limit (Obergrenze ist optional und ist Standardmäßig 256)"
 
 msgid "list of bars"
 msgstr "Auflistung der Bars"
@@ -9577,20 +9646,20 @@ msgstr "Erweiterung \"%s\" wurde installiert"
 
 #, c-format
 msgid "Plugin \"%s\" unloaded"
-msgstr "Erweiterung \"%s\" wurde deinstalliert"
+msgstr "Erweiterung \"%s\" wurde beendet"
 
 #, c-format
 msgid "%sError: plugin \"%s\" not found"
 msgstr "%sFehler: die Erweiterung \"%s\" wurde nicht gefunden"
 
 msgid "Plugins unloaded"
-msgstr "Erweiterungen wurden deinstalliert"
+msgstr "Erweiterungen wurden beendet"
 
 msgid "description of plugin option"
 msgstr "Beschreibung der Erweiterungsoption"
 
 msgid "list/load/unload scripts"
-msgstr "auflisten/installieren/deinstallieren von Skripten"
+msgstr "auflisten/installieren/beenden von Skripten"
 
 msgid ""
 "list|listfull [<name>] || load [-q] <filename> || autoload || reload|unload "
@@ -9616,12 +9685,12 @@ msgstr ""
 "    list: installierte Skripten werden aufgelistet\n"
 "listfull: detaillierte Auflistung aller installierten Skripten\n"
 "    load: installiert ein Skript\n"
-"autoload: installiert automatisch alle Skripten aus dem \"autoload\" "
+"autoload: startet automatisch alle Skripten aus dem \"autoload\" "
 "Verzeichnis\n"
-"  reload: ein Skript wird erneut installiert (wird kein Name angegeben, dann "
-"werden alle Skripten entfernt und erneut installiert)\n"
-"  unload: deinstalliert ein Skript (wird kein Name angegeben, dann werden "
-"alle Skripten deinstalliert)\n"
+"  reload: ein Skript wird erneut gestartet (wird kein Name angegeben, dann "
+"werden alle Skripten beendet und erneut gestartet)\n"
+"  unload: beendet ein Skript (wird kein Name angegeben, dann werden alle "
+"Skripten beendet)\n"
 "filename: Skript (Datei) welches geladen werden soll\n"
 "    name: Name eines Skriptes (der Name der in der \"register\" Funktion der "
 "Skript-API genutzt wird)\n"
@@ -9702,7 +9771,7 @@ msgstr "  (keine)"
 
 #, c-format
 msgid "%s: scripts unloaded"
-msgstr "%s: Skripten deinstalliert"
+msgstr "%s: Skripten beendet"
 
 #, c-format
 msgid ""
@@ -11138,8 +11207,8 @@ msgid ""
 "Examples (you can also look at default triggers with /trigger listdefault):\n"
 "  add text attributes *bold*, _underline_ and /italic/ (only in user "
 "messages):\n"
-"    /trigger add effects modifier weechat_print \"${tg_tag_nick}\" \"=="
-"\\*(\\S+)\\*==*${color:bold}$1${color:-bold}*== ==_(\\S+)_==_${color:"
+"    /trigger add effects modifier weechat_print \"${tg_tag_nick}\" \"==\\*"
+"(\\S+)\\*==*${color:bold}$1${color:-bold}*== ==_(\\S+)_==_${color:"
 "underline}$1${color:-underline}_== ==/(\\S+)/==/${color:italic}$1${color:-"
 "italic}/\"\n"
 "  hide nicklist bar on small terminals:\n"
@@ -11222,8 +11291,8 @@ msgstr ""
 "trigger listdefault\" anzeigen lassen):\n"
 "  fügt einer Nachricht die Textattribute *fett*, _unterstrichen_ und /"
 "kursiv/ hinzu:\n"
-"    /trigger add effects modifier weechat_print \"${tg_tag_nick}\" \"=="
-"\\*(\\S+)\\*==*${color:bold}$1${color:-bold}*== ==_(\\S+)_==_${color:"
+"    /trigger add effects modifier weechat_print \"${tg_tag_nick}\" \"==\\*"
+"(\\S+)\\*==*${color:bold}$1${color:-bold}*== ==_(\\S+)_==_${color:"
 "underline}$1${color:-underline}_== ==/(\\S+)/==/${color:italic}$1${color:-"
 "italic}/\"\n"
 "  verbirgt die Nicklist auf kleineren Terminals:\n"
