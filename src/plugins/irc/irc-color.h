@@ -59,6 +59,8 @@
 #define IRC_COLOR_UNDERLINE_CHAR '\x1F'  /* underlined text                 */
 #define IRC_COLOR_UNDERLINE_STR  "\x1F"  /*   [1F]...[1F]                   */
 
+#define IRC_COLOR_TERM2IRC_NUM_COLORS 16
+
 /* macros for WeeChat core and IRC colors */
 
 #define IRC_COLOR_BAR_FG weechat_color("bar_fg")
@@ -92,11 +94,20 @@
 #define IRC_COLOR_ITEM_LAG_COUNTING weechat_color(weechat_config_string(irc_config_color_item_lag_counting))
 #define IRC_COLOR_ITEM_LAG_FINISHED weechat_color(weechat_config_string(irc_config_color_item_lag_finished))
 
+struct t_irc_color_ansi_state
+{
+    char keep_colors;
+    char bold;
+    char underline;
+    char italic;
+};
+
 extern char *irc_color_decode (const char *string, int keep_colors);
 extern char *irc_color_encode (const char *string, int keep_colors);
 extern char *irc_color_modifier_cb (void *data, const char *modifier,
                                     const char *modifier_data,
                                     const char *string);
 extern char *irc_color_for_tags (const char *color);
+extern void irc_color_end ();
 
 #endif /* __WEECHAT_IRC_COLOR_H */

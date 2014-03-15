@@ -1429,8 +1429,8 @@ I codici colore per key[ctrl-c,c] sono:
 | 11     | azzurro chiaro | lightcyan
 | 12     | blu chiaro     | lightblue
 | 13     | rosa chiaro    | lightmagenta
-| 14     | grigio         | gray
-| 15     | grigio chiaro  | white
+| 14     | grigio         | darkgray
+| 15     | grigio chiaro  | gray
 |===
 
 Esempio: visualizza "ciao a tutti!" con "ciao" scritto in blu chiaro grassetto

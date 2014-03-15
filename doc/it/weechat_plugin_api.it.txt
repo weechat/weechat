@@ -1302,14 +1302,17 @@ Questa funzione non è disponibile nelle API per lo scripting.
 _WeeChat ≥ 0.4.4._
 
 // TRANSLATION MISSING
-Replace text in a string using a regular expression and replacement text.
+Replace text in a string using a regular expression, replacement text and
+optional callback.
 
 Prototipo:
 
 [source,C]
 ----
 char *weechat_string_replace_regex (const char *string, void *regex,
-                                    const char *replace, const char reference_char);
+                                    const char *replace, const char reference_char,
+                                    char *(*callback)(void *data, const char *text),
+                                    void *callback_data);
 ----
 
 Argomenti:
@@ -1326,6 +1329,13 @@ Argomenti:
 ** `$.*N`: match `N` (can be `+` or `0` to `99`), with all chars replaced by `*`
    (the `*` char can be any char between space (32) and `~` (126))
 * 'reference_char': the char used for reference to match (commonly '$')
+* 'callback': an optional callback called for each reference in 'replace'
+  (except for matches replaced by a char); the callback must return:
+** newly allocated string: it is used as replacement text (it is freed after
+   use)
+** NULL: the text received in callback is used as replacement text (without
+   changes)
+* 'callback_data': pointer given to callback when it is called
 
 Valore restituito:
 
@@ -1343,7 +1353,7 @@ if (weechat_string_regcomp (&my_regex, "([0-9]{4})-([0-9]{2})-([0-9]{2})",
                             REG_EXTENDED) == 0)
 {
     string = weechat_string_replace_regex ("date: 2014-02-14", &my_regex,
-                                           "$3/$2/$1", '$');
+                                           "$3/$2/$1", '$', NULL, NULL);
     /* string == "date: 14/02/2014" */
     if (string)
         free (string);
@@ -9346,15 +9356,24 @@ List of modifiers used by WeeChat and plugins:
   Qualsiasi stringa |
   Stringa codificata da UTF-8 al set caratteri trovato per il plugin/buffer
 
+// TRANSLATION MISSING
 | irc_color_decode |
   "1" per mantenere i colori, "0" per rimuovere i colori |
   Qualsiasi stringa |
-  Stringa con i codici colori di Weechat, o senza colore
+  String with IRC colors converted to WeeChat colors (or IRC colors removed)
 
+// TRANSLATION MISSING
 | irc_color_encode |
   "1" per mantenere i colori, "0" per rimuovere i colori |
   Qualsiasi stringa |
-  Stringa con i codici colori IRC, o senza colore
+  String with IRC colors (or IRC colors removed)
+
+// TRANSLATION MISSING
+| irc_color_decode_ansi +
+  _(WeeChat ≥ 0.4.4)_ |
+  "1" per mantenere i colori, "0" per rimuovere i colori |
+  Qualsiasi stringa |
+  String with ANSI colors converted to IRC colors (or ANSI colors removed)
 
 // TRANSLATION MISSING
 | irc_command_auth +
@@ -9391,6 +9410,13 @@ List of modifiers used by WeeChat and plugins:
   Nome server |
   Contenuto del messaggio che sta per essere inviato al server IRC (dopo la divisione automatica da adattare in 512 byte) |
   Nuovo contenuto del messaggio
+
+// TRANSLATION MISSING
+| color_decode_ansi +
+  _(WeeChat ≥ 0.4.4)_ |
+  "1" per mantenere i colori, "0" per rimuovere i colori |
+  Qualsiasi stringa |
+  String with ANSI colors converted to WeeChat colors (or ANSI colors removed)
 
 | bar_condition_yyy ^(2)^ |
   Stringa con puntatore alla finestra ("0x123..") |

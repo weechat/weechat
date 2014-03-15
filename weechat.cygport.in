@@ -87,6 +87,7 @@ weechat_CONTENTS="
     usr/lib/weechat/plugins/alias.dll
     usr/lib/weechat/plugins/aspell.dll
     usr/lib/weechat/plugins/charset.dll
+    usr/lib/weechat/plugins/exec.dll
     usr/lib/weechat/plugins/fifo.dll
     usr/lib/weechat/plugins/irc.dll
     usr/lib/weechat/plugins/logger.dll

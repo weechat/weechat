@@ -86,7 +86,6 @@ extern int gui_color_get_pair (int fg, int bg);
 extern int gui_color_weechat_get_pair (int weechat_color);
 extern void gui_color_pre_init ();
 extern void gui_color_init ();
-extern void gui_color_end ();
 
 /* chat functions */
 extern void gui_chat_calculate_line_diff (struct t_gui_window *window,

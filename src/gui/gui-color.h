@@ -138,6 +138,12 @@ enum t_gui_color_enum
 #define GUI_COLOR_EXTENDED_MASK               0x00FFFFF
 #define GUI_COLOR_EXTENDED_MAX                99999
 
+#define GUI_COLOR_REGEX_ANSI_DECODE             \
+    "\33("                                      \
+    "([()].)|"                                  \
+    "([<>])|"                                   \
+    "(\\[[0-9;?]*[A-Za-z]))"
+
 /* color structure */
 
 struct t_gui_color
@@ -169,7 +175,10 @@ extern const char *gui_color_search_config (const char *color_name);
 extern int gui_color_attr_get_flag (char c);
 extern void gui_color_attr_build_string (int color, char *str_attr);
 extern const char *gui_color_get_custom (const char *color_name);
+extern int gui_color_convert_term_to_rgb (int color);
+extern int gui_color_convert_rgb_to_term (int rgb, int limit);
 extern char *gui_color_decode (const char *string, const char *replacement);
+extern char *gui_color_decode_ansi (const char *string, int keep_colors);
 extern char *gui_color_emphasize (const char *string, const char *search,
                                   int case_sensitive, regex_t *regex);
 extern void gui_color_free (struct t_gui_color *color);
@@ -178,7 +187,7 @@ extern int gui_color_palette_get_alias (const char *alias);
 extern struct t_gui_color_palette *gui_color_palette_get (int number);
 extern void gui_color_palette_add (int number, const char *value);
 extern void gui_color_palette_remove (int number);
-extern void gui_color_palette_free_structs ();
+extern void gui_color_end ();
 
 /* color functions (GUI dependent) */
 
@@ -189,6 +198,7 @@ extern int gui_color_assign_by_diff (int *color, const char *color_name,
 extern int gui_color_get_weechat_colors_number ();
 extern int gui_color_get_term_colors ();
 extern const char *gui_color_get_name (int num_color);
+extern void gui_color_free_vars ();
 extern void gui_color_init_weechat ();
 extern void gui_color_display_terminal_colors ();
 extern void gui_color_info_term_colors (char *buffer, int size);

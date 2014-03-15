@@ -189,6 +189,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     /* modifiers */
     weechat_hook_modifier ("irc_color_decode", &irc_color_modifier_cb, NULL);
     weechat_hook_modifier ("irc_color_encode", &irc_color_modifier_cb, NULL);
+    weechat_hook_modifier ("irc_color_decode_ansi", &irc_color_modifier_cb, NULL);
 
     /* hook completions */
     irc_completion_init ();
@@ -280,6 +281,8 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     irc_notify_end ();
 
     irc_redirect_end ();
+
+    irc_color_end ();
 
     return WEECHAT_RC_OK;
 }

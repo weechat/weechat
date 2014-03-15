@@ -1268,14 +1268,17 @@ This function is not available in scripting API.
 
 _WeeChat ≥ 0.4.4._
 
-Replace text in a string using a regular expression and replacement text.
+Replace text in a string using a regular expression, replacement text and
+optional callback.
 
 Prototype:
 
 [source,C]
 ----
 char *weechat_string_replace_regex (const char *string, void *regex,
-                                    const char *replace, const char reference_char);
+                                    const char *replace, const char reference_char,
+                                    char *(*callback)(void *data, const char *text),
+                                    void *callback_data);
 ----
 
 Arguments:
@@ -1291,6 +1294,13 @@ Arguments:
 ** `$.*N`: match `N` (can be `+` or `0` to `99`), with all chars replaced by `*`
    (the `*` char can be any char between space (32) and `~` (126))
 * 'reference_char': the char used for reference to match (commonly '$')
+* 'callback': an optional callback called for each reference in 'replace'
+  (except for matches replaced by a char); the callback must return:
+** newly allocated string: it is used as replacement text (it is freed after
+   use)
+** NULL: the text received in callback is used as replacement text (without
+   changes)
+* 'callback_data': pointer given to callback when it is called
 
 Return value:
 
@@ -1307,7 +1317,7 @@ if (weechat_string_regcomp (&my_regex, "([0-9]{4})-([0-9]{2})-([0-9]{2})",
                             REG_EXTENDED) == 0)
 {
     string = weechat_string_replace_regex ("date: 2014-02-14", &my_regex,
-                                           "$3/$2/$1", '$');
+                                           "$3/$2/$1", '$', NULL, NULL);
     /* string == "date: 14/02/2014" */
     if (string)
         free (string);
@@ -9122,12 +9132,18 @@ List of modifiers used by WeeChat and plugins:
 | irc_color_decode |
   "1" to keep colors, "0" to remove colors |
   Any string |
-  String with WeeChat color codes, or without color
+  String with IRC colors converted to WeeChat colors (or IRC colors removed)
 
 | irc_color_encode |
   "1" to keep colors, "0" to remove colors |
   Any string |
-  String with IRC color codes, or without color
+  String with IRC colors (or IRC colors removed)
+
+| irc_color_decode_ansi +
+  _(WeeChat ≥ 0.4.4)_ |
+  "1" to keep colors, "0" to remove colors |
+  Any string |
+  String with ANSI colors converted to IRC colors (or ANSI colors removed)
 
 | irc_command_auth +
   _(WeeChat ≥ 0.4.1)_ |
@@ -9164,6 +9180,12 @@ List of modifiers used by WeeChat and plugins:
   Content of message about to be sent to IRC server (after automatic split to
   fit in 512 bytes) |
   New content of message
+
+| color_decode_ansi +
+  _(WeeChat ≥ 0.4.4)_ |
+  "1" to keep colors, "0" to remove colors |
+  Any string |
+  String with ANSI colors converted to WeeChat colors (or ANSI colors removed)
 
 | bar_condition_yyy ^(2)^ |
   String with window pointer ("0x123..") |

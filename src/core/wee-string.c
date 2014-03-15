@@ -1146,7 +1146,9 @@ string_replace (const char *string, const char *search, const char *replace)
 char *
 string_replace_regex_get_replace (const char *string, regmatch_t *regex_match,
                                   int last_match, const char *replace,
-                                  const char reference_char)
+                                  const char reference_char,
+                                  char *(*callback)(void *data, const char *text),
+                                  void *callback_data)
 {
     int length, length_current, length_add, match;
     const char *ptr_replace, *ptr_add;
@@ -1200,8 +1202,26 @@ string_replace_regex_get_replace (const char *string, regmatch_t *regex_match,
                 }
                 if (regex_match[match].rm_so >= 0)
                 {
-                    ptr_add = string + regex_match[match].rm_so;
-                    length_add = regex_match[match].rm_eo - regex_match[match].rm_so;
+                    if (callback)
+                    {
+                        temp = string_strndup (string + regex_match[match].rm_so,
+                                               regex_match[match].rm_eo - regex_match[match].rm_so);
+                        if (temp)
+                        {
+                            modified_replace = (*callback) (callback_data, temp);
+                            if (modified_replace)
+                            {
+                                ptr_add = modified_replace;
+                                length_add = strlen (modified_replace);
+                            }
+                            free (temp);
+                        }
+                    }
+                    if (!ptr_add)
+                    {
+                        ptr_add = string + regex_match[match].rm_so;
+                        length_add = regex_match[match].rm_eo - regex_match[match].rm_so;
+                    }
                 }
             }
             else if ((ptr_replace[1] == '.')
@@ -1300,6 +1320,11 @@ string_replace_regex_get_replace (const char *string, regmatch_t *regex_match,
  *              (the char '*' can be replaced by any char between space (32)
  *              and '~' (126))
  *
+ * If the callback is not NULL, it is called for every reference to a match
+ * (except for matches replaced by a char).
+ * If not NULL, the string returned by the callback (which must have been newly
+ * allocated) is used and freed after use.
+ *
  * Examples:
  *
  *    string   | regex         | replace   | result
@@ -1314,7 +1339,9 @@ string_replace_regex_get_replace (const char *string, regmatch_t *regex_match,
 
 char *
 string_replace_regex (const char *string, void *regex, const char *replace,
-                      const char reference_char)
+                      const char reference_char,
+                      char *(*callback)(void *data, const char *text),
+                      void *callback_data)
 {
     char *result, *result2, *str_replace;
     int length, length_replace, start_offset, i, rc, end, last_match;
@@ -1365,9 +1392,13 @@ string_replace_regex (const char *string, void *regex, const char *replace,
         /* check if the regex matched the end of string */
         end = !result[regex_match[0].rm_eo];
 
-        str_replace = string_replace_regex_get_replace (result, regex_match,
+        str_replace = string_replace_regex_get_replace (result,
+                                                        regex_match,
                                                         last_match,
-                                                        replace, reference_char);
+                                                        replace,
+                                                        reference_char,
+                                                        callback,
+                                                        callback_data);
         length_replace = (str_replace) ? strlen (str_replace) : 0;
 
         length = regex_match[0].rm_so + length_replace +

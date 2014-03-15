@@ -1387,8 +1387,8 @@ Kody kolorów dla key[ctrl-c,c]:
 | 11   | light cyan    | lightcyan
 | 12   | light blue    | lightblue
 | 13   | light magenta | lightmagenta
-| 14   | gray          | gray
-| 15   | light gray    | white
+| 14   | gray          | darkgray
+| 15   | light gray    | gray
 |===
 
 Przykład: wyświetlenie "hello everybody!" z pogrubionym jasno niebieskim "hello"

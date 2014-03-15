@@ -1,4 +1,5 @@
 usr/lib/weechat/plugins/aspell.so
+usr/lib/weechat/plugins/exec.so
 usr/lib/weechat/plugins/fifo.so
 usr/lib/weechat/plugins/guile.so
 usr/lib/weechat/plugins/perl.so
