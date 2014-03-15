@@ -102,8 +102,14 @@ int gui_color_term256[256] =
 
 /* ANSI colors */
 regex_t *gui_color_regex_ansi = NULL;
-char *gui_color_ansi[8] =
-{ "black", "red", "green", "yellow", "blue", "magenta", "cyan", "white" };
+char *gui_color_ansi[16] =
+{
+    /* 0-7 */
+    "black", "red", "green", "brown", "blue", "magenta", "cyan", "gray",
+    /* 8-15 */
+    "darkgray", "lightred", "lightgreen", "yellow", "lightblue", "lightmagenta",
+    "lightcyan", "white",
+};
 
 
 /*
@@ -875,6 +881,30 @@ gui_color_decode_ansi_cb (void *data, const char *text)
                 break;
             case 49: /* default background color */
                 strcat (output, gui_color_get_custom (",default"));
+                break;
+            case 90: /* text color (bright) */
+            case 91:
+            case 92:
+            case 93:
+            case 94:
+            case 95:
+            case 96:
+            case 97:
+                strcat (output,
+                        gui_color_get_custom (gui_color_ansi[value - 90 + 8]));
+                break;
+            case 100: /* background color (bright) */
+            case 101:
+            case 102:
+            case 103:
+            case 104:
+            case 105:
+            case 106:
+            case 107:
+                snprintf (str_color, sizeof (str_color),
+                          "|,%s",
+                          gui_color_ansi[value - 100 + 8]);
+                strcat (output, gui_color_get_custom (str_color));
                 break;
         }
     }
