@@ -9300,12 +9300,13 @@ Liste des modificateurs utilisés par WeeChat et les extensions :
 | irc_color_decode |
   "1" pour garder les couleurs, "0" pour les supprimer |
   Toute chaîne |
-  Chaîne avec des codes couleur WeeChat, ou sans couleur
+  Chaîne avec les couleurs IRC converties en couleurs WeeChat (ou avec les
+  couleurs IRC supprimées)
 
 | irc_color_encode |
   "1" pour garder les couleurs, "0" pour les supprimer |
   Toute chaîne |
-  Chaîne avec des codes couleur IRC, ou sans couleur
+  Chaîne avec les couleurs IRC (ou avec les couleurs IRC supprimées)
 
 | irc_command_auth +
   _(WeeChat ≥ 0.4.1)_ |
@@ -9342,6 +9343,13 @@ Liste des modificateurs utilisés par WeeChat et les extensions :
   Contenu du message qui va être envoyé au serveur IRC (après découpage
   automatique pour tenir dans les 512 octets) |
   Nouveau contenu du message
+
+| color_decode_ansi +
+  _(WeeChat ≥ 0.4.4)_ |
+  "1" pour garder les couleurs, "0" pour les supprimer |
+  Toute chaîne |
+  Chaîne avec les couleurs ANSI converties en couleurs WeeChat (ou avec les
+  couleurs ANSI supprimées)
 
 | bar_condition_yyy ^(2)^ |
   Chaîne avec un pointeur vers la fenêtre ("0x123..") |

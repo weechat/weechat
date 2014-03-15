@@ -1539,20 +1539,3 @@ gui_color_dump ()
         }
     }
 }
-
-/*
- * Ends GUI colors.
- */
-
-void
-gui_color_end ()
-{
-    int i;
-
-    for (i = 0; i < GUI_COLOR_NUM_COLORS; i++)
-    {
-        gui_color_free (gui_color[i]);
-    }
-    gui_color_palette_free_structs ();
-    gui_color_free_vars ();
-}

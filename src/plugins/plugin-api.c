@@ -278,6 +278,25 @@ plugin_api_command (struct t_weechat_plugin *plugin,
 }
 
 /*
+ * Modifier to decode ANSI colors.
+ */
+
+char *
+plugin_api_modifier_color_decode_ansi (void *data,
+                                       const char *modifier,
+                                       const char *modifier_data,
+                                       const char *string)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) modifier;
+
+    return gui_color_decode_ansi (string,
+                                  (modifier_data && (strcmp (modifier_data, "1") == 0)) ?
+                                  1: 0);
+}
+
+/*
  * Gets info about WeeChat.
  */
 
@@ -288,10 +307,11 @@ plugin_api_info_get_internal (void *data, const char *info_name,
     time_t inactivity;
     static char value[32], version_number[32] = { '\0' };
     static char weechat_dir_absolute_path[PATH_MAX] = { '\0' };
+    int rgb, limit;
+    char *pos, *color;
 
     /* make C compiler happy */
     (void) data;
-    (void) arguments;
 
     if (!info_name)
         return NULL;
@@ -396,6 +416,43 @@ plugin_api_info_get_internal (void *data, const char *info_name,
     {
         snprintf (value, sizeof (value), "%d", gui_window_get_height ());
         return value;
+    }
+    else if (string_strcasecmp (info_name, "color_ansi_regex") == 0)
+    {
+        return GUI_COLOR_REGEX_ANSI_DECODE;
+    }
+    else if (string_strcasecmp (info_name, "color_term2rgb") == 0)
+    {
+        if (arguments && arguments[0])
+        {
+            snprintf (value, sizeof (value),
+                      "%d",
+                      gui_color_convert_term_to_rgb (atoi (arguments)));
+            return value;
+        }
+    }
+    else if (string_strcasecmp (info_name, "color_rgb2term") == 0)
+    {
+        if (arguments && arguments[0])
+        {
+            limit = 256;
+            pos = strchr (arguments, ',');
+            if (pos)
+            {
+                color = string_strndup (arguments, pos - arguments);
+                if (!color)
+                    return NULL;
+                rgb = atoi (color);
+                limit = atoi (pos + 1);
+                free (color);
+            }
+            else
+                rgb = atoi (arguments);
+            snprintf (value, sizeof (value),
+                      "%d",
+                      gui_color_convert_rgb_to_term (rgb, limit));
+            return value;
+        }
     }
 
     /* info not found */
@@ -1097,6 +1154,10 @@ plugin_api_infolist_free (struct t_infolist *infolist)
 void
 plugin_api_init ()
 {
+    /* WeeChat core modifiers */
+    hook_modifier (NULL, "color_decode_ansi",
+                   &plugin_api_modifier_color_decode_ansi, NULL);
+
     /* WeeChat core info hooks */
     hook_info (NULL, "version", N_("WeeChat version"), NULL,
                &plugin_api_info_get_internal, NULL);
@@ -1140,6 +1201,12 @@ plugin_api_init ()
     hook_info (NULL, "term_width", N_("width of terminal"), NULL,
                &plugin_api_info_get_internal, NULL);
     hook_info (NULL, "term_height", N_("height of terminal"), NULL,
+               &plugin_api_info_get_internal, NULL);
+    hook_info (NULL, "color_ansi_regex", N_("regular expression to match ANSI escape codes"), NULL,
+               &plugin_api_info_get_internal, NULL);
+    hook_info (NULL, "color_term2rgb", N_("terminal color (0-255) converted to RGB color"), NULL,
+               &plugin_api_info_get_internal, NULL);
+    hook_info (NULL, "color_rgb2term", N_("RGB color converted to terminal color (0-255)"), NULL,
                &plugin_api_info_get_internal, NULL);
 
     /* WeeChat core infolist hooks */

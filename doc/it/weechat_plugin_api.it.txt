@@ -9356,15 +9356,17 @@ List of modifiers used by WeeChat and plugins:
   Qualsiasi stringa |
   Stringa codificata da UTF-8 al set caratteri trovato per il plugin/buffer
 
+// TRANSLATION MISSING
 | irc_color_decode |
   "1" per mantenere i colori, "0" per rimuovere i colori |
   Qualsiasi stringa |
-  Stringa con i codici colori di Weechat, o senza colore
+  String with IRC colors converted to WeeChat colors (or IRC colors removed)
 
+// TRANSLATION MISSING
 | irc_color_encode |
   "1" per mantenere i colori, "0" per rimuovere i colori |
   Qualsiasi stringa |
-  Stringa con i codici colori IRC, o senza colore
+  String with IRC colors (or IRC colors removed)
 
 // TRANSLATION MISSING
 | irc_command_auth +
@@ -9401,6 +9403,13 @@ List of modifiers used by WeeChat and plugins:
   Nome server |
   Contenuto del messaggio che sta per essere inviato al server IRC (dopo la divisione automatica da adattare in 512 byte) |
   Nuovo contenuto del messaggio
+
+// TRANSLATION MISSING
+| color_decode_ansi +
+  _(WeeChat ≥ 0.4.4)_ |
+  "1" per mantenere i colori, "0" per rimuovere i colori |
+  Qualsiasi stringa |
+  String with ANSI colors converted to WeeChat colors (or ANSI colors removed)
 
 | bar_condition_yyy ^(2)^ |
   Stringa con puntatore alla finestra ("0x123..") |

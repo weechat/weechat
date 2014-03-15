@@ -100,6 +100,11 @@ int gui_color_term256[256] =
     0xd0d0d0, 0xdadada, 0xe4e4e4, 0xeeeeee,                      /* 252-255 */
 };
 
+/* ANSI colors */
+regex_t *gui_color_regex_ansi = NULL;
+char *gui_color_ansi[8] =
+{ "black", "red", "green", "yellow", "blue", "magenta", "cyan", "white" };
+
 
 /*
  * Searches for a color with configuration option name.
@@ -705,6 +710,216 @@ gui_color_decode (const char *string, const char *replacement)
 }
 
 /*
+ * Converts ANSI color codes to WeeChat colors (or removes them).
+ *
+ * This callback is called by gui_color_decode_ansi, it must not be called
+ * directly.
+ */
+
+char *
+gui_color_decode_ansi_cb (void *data, const char *text)
+{
+    unsigned long keep_colors;
+    char *text2, **items, *output, str_color[128];
+    int i, length, num_items, value;
+
+    keep_colors = (unsigned long)data;
+
+    /* if we don't keep colors of if text is empty, just return empty string */
+    if (!keep_colors || !text || !text[0])
+        return strdup ("");
+
+    /* only sequences ending with 'm' are used, the others are discarded */
+    length = strlen (text);
+    if (text[length - 1] != 'm')
+        return strdup ("");
+
+    /* sequence "\33[m" resets color */
+    if (length < 4)
+        return strdup (gui_color_get_custom ("reset"));
+
+    text2 = NULL;
+    items = NULL;
+    output = NULL;
+
+    /* extract text between "\33[" and "m" */
+    text2 = string_strndup (text + 2, length - 3);
+    if (!text2)
+        goto end;
+
+    items = string_split (text2, ";", 0, 0, &num_items);
+    if (!items)
+        goto end;
+
+    output = malloc ((32 * num_items) + 1);
+    if (!output)
+        goto end;
+    output[0] = '\0';
+
+    for (i = 0; i < num_items; i++)
+    {
+        value = atoi (items[i]);
+        switch (value)
+        {
+            case 0: /* reset */
+                strcat (output, gui_color_get_custom ("reset"));
+                break;
+            case 1: /* bold */
+                strcat (output, gui_color_get_custom ("bold"));
+                break;
+            case 2: /* remove bold */
+            case 21:
+            case 22:
+                strcat (output, gui_color_get_custom ("-bold"));
+                break;
+            case 3: /* italic */
+                strcat (output, gui_color_get_custom ("italic"));
+                break;
+            case 4: /* underline */
+                strcat (output, gui_color_get_custom ("underline"));
+                break;
+            case 23: /* remove italic */
+                strcat (output, gui_color_get_custom ("-italic"));
+                break;
+            case 24: /* remove underline */
+                strcat (output, gui_color_get_custom ("-underline"));
+                break;
+            case 30: /* text color */
+            case 31:
+            case 32:
+            case 33:
+            case 34:
+            case 35:
+            case 36:
+            case 37:
+                strcat (output,
+                        gui_color_get_custom (gui_color_ansi[value - 30]));
+                break;
+            case 38: /* text color */
+                if (i + 1 < num_items)
+                {
+                    switch (atoi (items[i + 1]))
+                    {
+                        case 2: /* RGB color */
+                            if (i + 4 < num_items)
+                            {
+                                snprintf (str_color, sizeof (str_color),
+                                          "|%d",
+                                          gui_color_convert_rgb_to_term (
+                                              (atoi (items[i + 2]) << 16) |
+                                              (atoi (items[i + 3]) << 8) |
+                                              atoi (items[i + 4]),
+                                              256));
+                                strcat (output, gui_color_get_custom (str_color));
+                                i += 4;
+                            }
+                            break;
+                        case 5: /* terminal color (0-255) */
+                            if (i + 2 < num_items)
+                            {
+                                snprintf (str_color, sizeof (str_color),
+                                          "|%d", atoi (items[i + 2]));
+                                strcat (output, gui_color_get_custom (str_color));
+                                i += 2;
+                            }
+                            break;
+                    }
+                }
+                break;
+            case 39: /* default text color */
+                strcat (output, gui_color_get_custom ("default"));
+                break;
+            case 40: /* background color */
+            case 41:
+            case 42:
+            case 43:
+            case 44:
+            case 45:
+            case 46:
+            case 47:
+                snprintf (str_color, sizeof (str_color),
+                          "|,%s",
+                          gui_color_ansi[value - 40]);
+                strcat (output, gui_color_get_custom (str_color));
+                break;
+            case 48: /* background color */
+                if (i + 1 < num_items)
+                {
+                    switch (atoi (items[i + 1]))
+                    {
+                        case 2: /* RGB color */
+                            if (i + 4 < num_items)
+                            {
+                                snprintf (str_color, sizeof (str_color),
+                                          "|,%d",
+                                          gui_color_convert_rgb_to_term (
+                                              (atoi (items[i + 2]) << 16) |
+                                              (atoi (items[i + 3]) << 8) |
+                                              atoi (items[i + 4]),
+                                              256));
+                                strcat (output, gui_color_get_custom (str_color));
+                                i += 4;
+                            }
+                            break;
+                        case 5: /* terminal color (0-255) */
+                            if (i + 2 < num_items)
+                            {
+                                snprintf (str_color, sizeof (str_color),
+                                          "|,%d", atoi (items[i + 2]));
+                                strcat (output, gui_color_get_custom (str_color));
+                                i += 2;
+                            }
+                            break;
+                    }
+                }
+                break;
+            case 49: /* default background color */
+                strcat (output, gui_color_get_custom (",default"));
+                break;
+        }
+    }
+
+end:
+    if (items)
+        string_free_split (items);
+    if (text2)
+        free (text2);
+
+    return (output) ? output : strdup ("");
+}
+
+/*
+ * Converts ANSI color codes to WeeChat colors (or removes them).
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+gui_color_decode_ansi (const char *string, int keep_colors)
+{
+    /* allocate/compile regex if needed (first call) */
+    if (!gui_color_regex_ansi)
+    {
+        gui_color_regex_ansi = malloc (sizeof (*gui_color_regex_ansi));
+        if (!gui_color_regex_ansi)
+            return NULL;
+        if (string_regcomp (gui_color_regex_ansi,
+                            GUI_COLOR_REGEX_ANSI_DECODE,
+                            REG_EXTENDED) != 0)
+        {
+            free (gui_color_regex_ansi);
+            gui_color_regex_ansi = NULL;
+            return NULL;
+        }
+    }
+
+    return string_replace_regex (string, gui_color_regex_ansi,
+                                 "$0", '$',
+                                 &gui_color_decode_ansi_cb,
+                                 (void *)((unsigned long)keep_colors));
+}
+
+/*
  * Emphasizes a string or regular expression in a string (which can contain
  * colors).
  *
@@ -1026,4 +1241,28 @@ gui_color_palette_free_structs ()
         hashtable_free (gui_color_hash_palette_alias);
     if (gui_color_list_with_alias)
         weelist_free (gui_color_list_with_alias);
+}
+
+/*
+ * Ends GUI colors.
+ */
+
+void
+gui_color_end ()
+{
+    int i;
+
+    for (i = 0; i < GUI_COLOR_NUM_COLORS; i++)
+    {
+        gui_color_free (gui_color[i]);
+    }
+    gui_color_palette_free_structs ();
+    gui_color_free_vars ();
+
+    if (gui_color_regex_ansi)
+    {
+        regfree (gui_color_regex_ansi);
+        free (gui_color_regex_ansi);
+        gui_color_regex_ansi = NULL;
+    }
 }

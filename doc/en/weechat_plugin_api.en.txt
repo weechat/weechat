@@ -9132,12 +9132,12 @@ List of modifiers used by WeeChat and plugins:
 | irc_color_decode |
   "1" to keep colors, "0" to remove colors |
   Any string |
-  String with WeeChat color codes, or without color
+  String with IRC colors converted to WeeChat colors (or IRC colors removed)
 
 | irc_color_encode |
   "1" to keep colors, "0" to remove colors |
   Any string |
-  String with IRC color codes, or without color
+  String with IRC colors (or IRC colors removed)
 
 | irc_command_auth +
   _(WeeChat ≥ 0.4.1)_ |
@@ -9174,6 +9174,12 @@ List of modifiers used by WeeChat and plugins:
   Content of message about to be sent to IRC server (after automatic split to
   fit in 512 bytes) |
   New content of message
+
+| color_decode_ansi +
+  _(WeeChat ≥ 0.4.4)_ |
+  "1" to keep colors, "0" to remove colors |
+  Any string |
+  String with ANSI colors converted to WeeChat colors (or ANSI colors removed)
 
 | bar_condition_yyy ^(2)^ |
   String with window pointer ("0x123..") |

@@ -9148,15 +9148,17 @@ WeeChat とプラグインが使う修飾子のリスト:
   任意の文字列 |
   UTF-8 からプラグインおよびバッファの文字セットにエンコードされた文字列
 
+// TRANSLATION MISSING
 | irc_color_decode |
   色を保持する場合は "1"、削除する場合は "0" |
   任意の文字列 |
-  WeeChat 色コードを含む文字列および含まない文字列
+  String with IRC colors converted to WeeChat colors (or IRC colors removed)
 
+// TRANSLATION MISSING
 | irc_color_encode |
   色を保持する場合は "1"、削除する場合は "0" |
   任意の文字列 |
-  IRC 色コードを含む文字列および含まない文字列
+  String with IRC colors (or IRC colors removed)
 
 | irc_command_auth +
   _(WeeChat バージョン 0.4.1 以上で利用可)_ |
@@ -9191,6 +9193,13 @@ WeeChat とプラグインが使う修飾子のリスト:
   サーバ名 |
   IRC サーバに送信するメッセージの内容 (512 バイトを超えないように自動分割した後) |
   メッセージの新しい内容
+
+// TRANSLATION MISSING
+| color_decode_ansi +
+  _(WeeChat バージョン 0.4.4 以上で利用可)_ |
+  色を保持する場合は "1"、削除する場合は "0" |
+  任意の文字列 |
+  String with ANSI colors converted to WeeChat colors (or ANSI colors removed)
 
 | bar_condition_yyy ^(2)^ |
   ウィンドウへのポインタの文字列 ("0x123..") |
