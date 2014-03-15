@@ -62,6 +62,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
   "string_split_shell", "string_convert_escaped_chars"
 * api: add integer return code for functions hook_{signal|hsignal}_send
 * alias: change default command for alias /beep to "/print -beep"
+* exec: add exec plugin: new command /exec and file exec.conf
 * guile: fix module used after unload of a script
 * irc: add "#" before any channel in /join, even /join 0 (closes #20)
 * irc: display output of CAP LIST in server buffer
