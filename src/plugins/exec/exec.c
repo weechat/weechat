@@ -153,10 +153,10 @@ exec_add ()
     new_exec_cmd->buffer_full_name = NULL;
     new_exec_cmd->line_numbers = 0;
     new_exec_cmd->display_rc = 0;
-    new_exec_cmd->stdout_size = 0;
-    new_exec_cmd->stdout = NULL;
-    new_exec_cmd->stderr_size = 0;
-    new_exec_cmd->stderr = NULL;
+    new_exec_cmd->out_size = 0;
+    new_exec_cmd->out = NULL;
+    new_exec_cmd->err_size = 0;
+    new_exec_cmd->err = NULL;
     new_exec_cmd->return_code = -1;
 
     exec_cmds_count++;
@@ -220,13 +220,13 @@ exec_command_concat_output (int *size, char **output, const char *text)
 
 void
 exec_command_display_output (struct t_exec_cmd *exec_cmd,
-                             struct t_gui_buffer *buffer, int stdout)
+                             struct t_gui_buffer *buffer, int out)
 {
     char *ptr_output, *ptr_line, *line, *line2, *pos;
     char str_number[32], str_tags[1024];
     int line_nb, length;
 
-    ptr_output = (stdout) ? exec_cmd->stdout : exec_cmd->stderr;
+    ptr_output = (out) ? exec_cmd->out : exec_cmd->err;
     if (!ptr_output)
         return;
 
@@ -287,7 +287,7 @@ exec_command_display_output (struct t_exec_cmd *exec_cmd,
             snprintf (str_number, sizeof (str_number), "%d", exec_cmd->number);
             snprintf (str_tags, sizeof (str_tags),
                       "exec_%s,exec_cmd_%s",
-                      (stdout) ? "stdout" : "stderr",
+                      (out) ? "stdout" : "stderr",
                       (exec_cmd->name) ? exec_cmd->name : str_number);
             snprintf (str_number, sizeof (str_number), "%d\t", line_nb);
             weechat_printf_tags (buffer, str_tags,
@@ -394,14 +394,14 @@ exec_process_cb (void *data, const char *command, int return_code,
 
     if (out)
     {
-        exec_command_concat_output (&ptr_exec_cmd->stdout_size,
-                                    &ptr_exec_cmd->stdout,
+        exec_command_concat_output (&ptr_exec_cmd->out_size,
+                                    &ptr_exec_cmd->out,
                                     out);
     }
     if (err)
     {
-        exec_command_concat_output (&ptr_exec_cmd->stderr_size,
-                                    &ptr_exec_cmd->stderr,
+        exec_command_concat_output (&ptr_exec_cmd->err_size,
+                                    &ptr_exec_cmd->err,
                                     err);
     }
 
@@ -440,10 +440,10 @@ exec_free (struct t_exec_cmd *exec_cmd)
         free (exec_cmd->command);
     if (exec_cmd->buffer_full_name)
         free (exec_cmd->buffer_full_name);
-    if (exec_cmd->stdout)
-        free (exec_cmd->stdout);
-    if (exec_cmd->stderr)
-        free (exec_cmd->stderr);
+    if (exec_cmd->out)
+        free (exec_cmd->out);
+    if (exec_cmd->err)
+        free (exec_cmd->err);
 
     free (exec_cmd);
 
@@ -489,10 +489,10 @@ exec_print_log ()
         weechat_log_printf ("  buffer_full_name. . . . : '%s'",  ptr_exec_cmd->buffer_full_name);
         weechat_log_printf ("  line_numbers. . . . . . : %d",    ptr_exec_cmd->line_numbers);
         weechat_log_printf ("  display_rc. . . . . . . : %d",    ptr_exec_cmd->display_rc);
-        weechat_log_printf ("  stdout_size . . . . . . : %d",    ptr_exec_cmd->stdout_size);
-        weechat_log_printf ("  stdout. . . . . . . . . : '%s'",  ptr_exec_cmd->stdout);
-        weechat_log_printf ("  stderr_size . . . . . . : %d",    ptr_exec_cmd->stderr_size);
-        weechat_log_printf ("  stderr. . . . . . . . . : '%s'",  ptr_exec_cmd->stderr);
+        weechat_log_printf ("  out_size. . . . . . . . : %d",    ptr_exec_cmd->out_size);
+        weechat_log_printf ("  out . . . . . . . . . . : '%s'",  ptr_exec_cmd->out);
+        weechat_log_printf ("  err_size. . . . . . . . : %d",    ptr_exec_cmd->err_size);
+        weechat_log_printf ("  err . . . . . . . . . . : '%s'",  ptr_exec_cmd->err);
         weechat_log_printf ("  return_code . . . . . . : %d",    ptr_exec_cmd->return_code);
         weechat_log_printf ("  prev_cmd. . . . . . . . : 0x%lx", ptr_exec_cmd->prev_cmd);
         weechat_log_printf ("  next_cmd. . . . . . . . : 0x%lx", ptr_exec_cmd->next_cmd);

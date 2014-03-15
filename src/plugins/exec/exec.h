@@ -25,7 +25,8 @@
 #define weechat_plugin weechat_exec_plugin
 #define EXEC_PLUGIN_NAME "exec"
 
-enum t_exec_color {
+enum t_exec_color
+{
     EXEC_COLOR_ANSI = 0,
     EXEC_COLOR_DECODE,
     EXEC_COLOR_STRIP,
@@ -53,10 +54,10 @@ struct t_exec_cmd
     int display_rc;                    /* 1 if return code is displayed     */
 
     /* command output */
-    int stdout_size;                   /* number of bytes in stdout         */
-    char *stdout;                      /* stdout of command                 */
-    int stderr_size;                   /* number of bytes in stderr         */
-    char *stderr;                      /* stderr of command                 */
+    int out_size;                      /* number of bytes in stdout         */
+    char *out;                         /* stdout of command                 */
+    int err_size;                      /* number of bytes in stderr         */
+    char *err;                         /* stderr of command                 */
     int return_code;                   /* command return code               */
 
     struct t_exec_cmd *prev_cmd;       /* link to previous command          */
