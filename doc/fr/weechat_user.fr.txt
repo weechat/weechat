@@ -1992,6 +1992,33 @@ Pour voir tous les jeux de caractères utilisés, utilisez la commande suivante 
 Pour tout problème avec les jeux de caractères, merci de consulter la
 'FAQ WeeChat'.
 
+[[exec_plugin]]
+=== Extension Exec
+
+La commande `/exec` vous permet de lancer des commandes externes dans WeeChat et
+d'afficher la sortie localement, ou de l'envoyer à un tampon.
+
+[[exec_options]]
+==== Options (exec.conf)
+
+Sections :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Commande de contrôle | Description
+| command | /set exec.command.*  | Options for commands
+| color   | /set exec.color.*    | Colors
+|===
+
+Options :
+
+include::autogen/user/exec_options.txt[]
+
+[[exec_commands]]
+==== Commandes
+
+include::autogen/user/exec_commands.txt[]
+
 [[fifo_plugin]]
 === Extension Fifo
 

@@ -1,0 +1,20 @@
+* [[option_exec.color.flag_finished]] *exec.color.flag_finished*
+** description: `couleur du texte pour le drapeau d'une commande terminée dans la liste des commandes`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `lightred`)
+
+* [[option_exec.color.flag_running]] *exec.color.flag_running*
+** description: `couleur du texte pour le drapeau d'une commande qui tourne dans la liste des commandes`
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `lightgreen`)
+
+* [[option_exec.command.default_options]] *exec.command.default_options*
+** description: `options par défaut pour la commande /exec (voir /help exec); exemple: "-nosh -bg" pour lancer toutes les commandes en tâche de fond (sans sortie) et sans utiliser le shell`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `""`)
+
+* [[option_exec.command.purge_delay]] *exec.command.purge_delay*
+** description: `délai pour purger les commandes terminées (en secondes, 0 = purger les commandes immédiatement, -1 = ne jamais purger)`
+** type: entier
+** valeurs: -1 .. 25920000 (valeur par défaut: `0`)
+

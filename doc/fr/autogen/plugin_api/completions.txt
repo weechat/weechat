@@ -10,6 +10,8 @@
 
 | aspell | aspell_langs | liste de toutes les langues supportées par aspell
 
+| exec | exec_commands_ids | ids (nombres et noms) des commandes exécutées
+
 | guile | guile_script | liste des scripts
 
 | irc | irc_channel | canal IRC courant

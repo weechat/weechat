@@ -128,24 +128,29 @@ Przykłady:
 [command]*`color`* definiuje aliasy i wyświetla paletę kolorów::
 
 ----
-/color  alias <kolor> <nazwa>
-        unalias <kolor>
+/color  alias <color> <name>
+        unalias <color>
         reset
+        term2rgb <color>
+        rgb2term <rgb> [<limit>]
         -o
 
-  alias: dodaje alias dla koloru
-unalias: usuwa alias
-  color: numer koloru (większy lub równy 0, maksymalna wartość zależy od terminala, zazwyczaj 63 lub 255)
-   nazwa: nazwa aliasu dla koloru (na przykład: "orange")
-  reset: resetuje wszystkie pary kolorów (wymagane jeśli nie ma dostępnej większej ilości par kolorów, jeśli automatyczny reset jest wyłączony, zobacz opcję weechat.look.color_pairs_auto_reset)
-     -o: wysyła informacje o terminalu/kolorach do obecnego bufora
+   alias: add an alias for a color
+ unalias: delete an alias
+   color: color number (greater than or equal to 0, max depends on terminal, commonly 63 or 255)
+    name: alias name for color (for example: "orange")
+   reset: reset all color pairs (required when no more color pairs are available if automatic reset is disabled, see option weechat.look.color_pairs_auto_reset)
+term2rgb: convert a terminal color (0-255) to RGB color
+rgb2term: convert a RGB color to terminal color (0-255)
+   limit: number of colors to use in terminal table (starting from 0); default is 256
+      -o: send terminal/colors info to current buffer as input
 
-Bez podania argumentu komenda wyświetli kolory w nowym buforze.
+Without argument, this command displays colors in a new buffer.
 
-Przykłady:
-  dodaje alias "orange" dla koloru 214:
+Examples:
+  add alias "orange" for color 214:
     /color alias 214 orange
-  usuwa kolor 214:
+  delete color 214:
     /color unalias 214
 ----
 

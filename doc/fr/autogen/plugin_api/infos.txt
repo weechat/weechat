@@ -32,6 +32,12 @@
 
 | weechat | charset_terminal | charset du terminal | -
 
+| weechat | color_ansi_regex | expression régulière POSIX étendue pour chercher les codes ANSI échappés | -
+
+| weechat | color_rgb2term | couleur RGB convertie en couleur du terminal (0-255) | rgb,limite (la limite est optionnelle et vaut 256 par défaut)
+
+| weechat | color_term2rgb | couleur du terminal (0-255) convertie en couleur RGB | couleur (couleur du terminal: 0-255)
+
 | weechat | cursor_mode | 1 si le mode curseur est activé | -
 
 | weechat | date | date de compilation de WeeChat | -

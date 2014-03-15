@@ -1,0 +1,53 @@
+[[command_exec_exec]]
+[command]*`exec`* exécuter des commandes externes::
+
+----
+/exec  -list
+       [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <nom>] [-l|-o|-n] |-sw|-nosw] [-ln|-noln] [-color off|decode|strip] [-rc|-norc] [-timeout <délai>] [-name <nom>] <commande>
+       -in <id> <texte>
+       -inclose <id> [<texte>]
+       -signal <id> <signal>
+       -kill <id>
+       -killall
+       -set <id> <propriété> <valeur>
+       -del <id>|-all [<id>...]
+
+    -list: lister les commandes
+      -sh: utiliser le shell pour exécuter la commande (par défaut)
+    -nosh: ne pas utiliser le shell pour exécuter la commande (requis si la commande a des données non fiables, par exemple le contenu d'un message d'un autre utilisateur)
+      -bg: lancer le processus en tâche de fond : ne pas afficher la sortie ni le code retour (non compatible avec les options -o/-n)
+    -nobg: capturer la sortie du processus et afficher le code retour (par défaut)
+   -stdin: créer un tuyau pour envoyer des données sur l'entrée standard du processus (avec /exec -in/-inclose)
+ -nostdin: ne pas créer de tuyau pour l'entrée standard (par défaut)
+  -buffer: afficher/envoyer la sortie de la commande sur ce tampon (si le tampon n'est pas trouvé, un nouveau tampon avec le nom "exec.exec.xxx" est créé)
+       -l: afficher localement la sortie de la commande sur le tampon (par défaut)
+       -o: envoyer la sortie de la commande au tampon (non compatible avec l'option -bg)
+       -n: afficher la sortie de la commande dans un nouveau tampon (non compatible avec l'option -bg)
+      -sw: basculer vers le tampon de sortie (par défaut)
+    -nosw: ne pas basculer vers le tampon de sortie
+      -ln: afficher les numéros de ligne (par défaut dans un nouveau tampon seulement)
+    -noln: ne pas afficher les numéros de ligne
+   -color: action sur les couleurs ANSI dans la sortie :
+            ansi: garder les codes ANSI tels quels
+          decode: convertir les couleurs ANSI en couleurs WeeChat/IRC (par défaut)
+           strip: supprimer les couleurs ANSI
+      -rc: afficher le code retour (par défaut)
+    -norc: ne pas afficher le code retour
+ -timeout: définir un délai maximum pour la commande (en secondes)
+    -name: définir un nom pour la commande (pour la nommer plus tard avec /exec)
+ commande: la commande à exécuter; si elle commence par "url:", le shell est désactivé et le contenu de l'URL est téléchargé et envoyé comme sortie
+       id: identifiant de commande : soit le numéro ou le nom (si défini avec "-name xxx")
+      -in: envoyer le texte sur l'entrée standard du processus
+ -inclose: identique à -in, mais l'entrée standard est fermée après (et le texte est facultatif : sans texte, l'entrée standard est juste fermée)
+  -signal: envoyer un signal au processus; le signal peut être un entier ou l'un de ces noms : hup, int, quit, kill, term, usr1, usr2
+    -kill: alias de "-signal <id> kill"
+ -killall: tuer tous les processus
+     -set: définir une propriété du hook (voir la fonction hook_set dans l'API de référence extension)
+propriété: propriété du hook
+   valeur: nouvelle valeur pour la propriété du hook
+     -del: supprimer la commande terminée
+     -all: supprimer toutes les commandes terminées
+
+Les options par défaut peuvent être définies dans l'option exec.command.default_options.
+----
+

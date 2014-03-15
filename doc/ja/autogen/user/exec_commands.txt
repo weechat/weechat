@@ -1,0 +1,53 @@
+[[command_exec_exec]]
+[command]*`exec`* execute external commands::
+
+----
+/exec  -list
+       [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <name>] [-l|-o|-n] |-sw|-nosw] [-ln|-noln] [-color off|decode|strip] [-rc|-norc] [-timeout <timeout>] [-name <name>] <command>
+       -in <id> <text>
+       -inclose <id> [<text>]
+       -signal <id> <signal>
+       -kill <id>
+       -killall
+       -set <id> <property> <value>
+       -del <id>|-all [<id>...]
+
+   -list: list commands
+     -sh: use the shell to execute the command (default)
+   -nosh: do not use the shell to execute the command (required if the command has some unsafe data, for example the content of a message from another user)
+     -bg: run process in background: do not display process output neither return code (not compatible with options -o/-n)
+   -nobg: catch process output and display return code (default)
+  -stdin: create a pipe for sending data to the process (with /exec -in/-inclose)
+-nostdin: do not create a pipe for stdin (default)
+ -buffer: display/send output of command on this buffer (if the buffer is not found, a new buffer with name "exec.exec.xxx" is created)
+      -l: display locally output of command on buffer (default)
+      -o: send output of command to the buffer (not compatible with option -bg)
+      -n: display output of command in a new buffer (not compatible with option -bg)
+     -sw: switch to the output buffer (default)
+   -nosw: don't switch to the output buffer
+     -ln: display line numbers (default in new buffer only)
+   -noln: don't display line numbers
+  -color: action on ANSI colors in output:
+            ansi: keep ANSI codes as-is
+          decode: convert ANSI colors to WeeChat/IRC (default)
+           strip: remove ANSI colors
+     -rc: display return code (default)
+   -norc: don't display return code
+-timeout: set a timeout for the command (in seconds)
+   -name: set a name for the command (to name it later with /exec)
+ command: the command to execute; if beginning with "url:", the shell is disabled and the content of URL is downloaded and sent as output
+      id: command identifier: either its number or name (if set with "-name xxx")
+     -in: send text on standard input of process
+-inclose: same a -in, but stdin is closed after (and text is optional: without text, the stdin is just closed)
+ -signal: send a signal to the process; the signal can be an integer or one of these names: hup, int, quit, kill, term, usr1, usr2
+   -kill: alias of "-signal <id> kill"
+-killall: kill all running processes
+    -set: set a hook property (see function hook_set in plugin API reference)
+property: hook property
+   value: new value for hook property
+    -del: delete a terminated command
+    -all: delete all terminated commands
+
+Default options can be set in the option exec.command.default_options.
+----
+

@@ -1,0 +1,20 @@
+* [[option_exec.color.flag_finished]] *exec.color.flag_finished*
+** Beschreibung: `text color for a finished command flag in list of commands`
+** Typ: Farbe
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `lightred`)
+
+* [[option_exec.color.flag_running]] *exec.color.flag_running*
+** Beschreibung: `text color for a running command flag in list of commands`
+** Typ: Farbe
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `lightgreen`)
+
+* [[option_exec.command.default_options]] *exec.command.default_options*
+** Beschreibung: `default options for command /exec (see /help exec); example: "-nosh -bg" to run all commands in background (no output), and without using the shell`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `""`)
+
+* [[option_exec.command.purge_delay]] *exec.command.purge_delay*
+** Beschreibung: `delay for purging finished commands (in seconds, 0 = purge commands immediately, -1 = never purge)`
+** Typ: integer
+** Werte: -1 .. 25920000 (Standardwert: `0`)
+

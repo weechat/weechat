@@ -1202,11 +1202,13 @@ plugin_api_init ()
                &plugin_api_info_get_internal, NULL);
     hook_info (NULL, "term_height", N_("height of terminal"), NULL,
                &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "color_ansi_regex", N_("regular expression to match ANSI escape codes"), NULL,
+    hook_info (NULL, "color_ansi_regex", N_("POSIX extended regular expression to search ANSI escape codes"), NULL,
                &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "color_term2rgb", N_("terminal color (0-255) converted to RGB color"), NULL,
+    hook_info (NULL, "color_term2rgb", N_("terminal color (0-255) converted to RGB color"),
+               N_("color (terminal color: 0-255)"),
                &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "color_rgb2term", N_("RGB color converted to terminal color (0-255)"), NULL,
+    hook_info (NULL, "color_rgb2term", N_("RGB color converted to terminal color (0-255)"),
+               N_("rgb,limit (limit is optional and is set to 256 by default)"),
                &plugin_api_info_get_internal, NULL);
 
     /* WeeChat core infolist hooks */

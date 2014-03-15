@@ -1,0 +1,20 @@
+* [[option_exec.color.flag_finished]] *exec.color.flag_finished*
+** description: `text color for a finished command flag in list of commands`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (default value: `lightred`)
+
+* [[option_exec.color.flag_running]] *exec.color.flag_running*
+** description: `text color for a running command flag in list of commands`
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (default value: `lightgreen`)
+
+* [[option_exec.command.default_options]] *exec.command.default_options*
+** description: `default options for command /exec (see /help exec); example: "-nosh -bg" to run all commands in background (no output), and without using the shell`
+** type: string
+** values: any string (default value: `""`)
+
+* [[option_exec.command.purge_delay]] *exec.command.purge_delay*
+** description: `delay for purging finished commands (in seconds, 0 = purge commands immediately, -1 = never purge)`
+** type: integer
+** values: -1 .. 25920000 (default value: `0`)
+

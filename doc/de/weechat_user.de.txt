@@ -1961,6 +1961,34 @@ Um sich alle genutzten Zeichensätze anzeigen zu lassen wird folgender Befehl ge
 sollten Probleme bei der Zeichensatzdarstellung auftreten dann werfen Sie bitte
 einen Blick in die 'WeeChat FAQ'.
 
+// TRANSLATION MISSING
+[[exec_plugin]]
+=== Exec plugin
+
+The `/exec` command lets you execute external commands inside WeeChat and
+display the output locally, or send it to a buffer.
+
+[[exec_options]]
+==== Options (exec.conf)
+
+Sections:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command     | Description
+| command | /set exec.command.* | Options for commands
+| color   | /set exec.color.*   | Colors
+|===
+
+Options:
+
+include::autogen/user/exec_options.txt[]
+
+[[exec_commands]]
+==== Commands
+
+include::autogen/user/exec_commands.txt[]
+
 [[fifo_plugin]]
 === Fifo Erweiterung
 

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-03-12 09:24+0100\n"
+"POT-Creation-Date: 2014-03-15 15:06+0100\n"
 "PO-Revision-Date: 2014-03-10 21:07+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1156,19 +1156,25 @@ msgstr ""
 msgid "define color aliases and display palette of colors"
 msgstr ""
 
-msgid "alias <color> <name> || unalias <color> || reset || -o"
+msgid ""
+"alias <color> <name> || unalias <color> || reset || term2rgb <color> || "
+"rgb2term <rgb> [<limit>] || -o"
 msgstr ""
 
 msgid ""
-"  alias: add an alias for a color\n"
-"unalias: delete an alias\n"
-"  color: color number (greater than or equal to 0, max depends on terminal, "
+"   alias: add an alias for a color\n"
+" unalias: delete an alias\n"
+"   color: color number (greater than or equal to 0, max depends on terminal, "
 "commonly 63 or 255)\n"
-"   name: alias name for color (for example: \"orange\")\n"
-"  reset: reset all color pairs (required when no more color pairs are "
+"    name: alias name for color (for example: \"orange\")\n"
+"   reset: reset all color pairs (required when no more color pairs are "
 "available if automatic reset is disabled, see option weechat.look."
 "color_pairs_auto_reset)\n"
-"     -o: send terminal/colors info to current buffer as input\n"
+"term2rgb: convert a terminal color (0-255) to RGB color\n"
+"rgb2term: convert a RGB color to terminal color (0-255)\n"
+"   limit: number of colors to use in terminal table (starting from 0); "
+"default is 256\n"
+"      -o: send terminal/colors info to current buffer as input\n"
 "\n"
 "Without argument, this command displays colors in a new buffer.\n"
 "\n"
@@ -4128,6 +4134,161 @@ msgid ""
 "charset: new charset for current buffer\n"
 "  reset: reset charsets for current buffer"
 msgstr ""
+
+msgid "Execution of external commands in WeeChat"
+msgstr ""
+
+#, c-format
+msgid "%s: end of command %d (\"%s\"), return code: %d"
+msgstr ""
+
+#, c-format
+msgid "%s: unexpected end of command %d (\"%s\")"
+msgstr ""
+
+#, fuzzy
+msgid "Executed commands"
+msgstr "%s belső parancsok:\n"
+
+msgid "No command is running"
+msgstr ""
+
+#, fuzzy
+msgid "Commands:"
+msgstr "%s belső parancsok:\n"
+
+#. TRANSLATORS: format: hours + minutes, for example: 3h59
+#, c-format
+msgid "%dh%02d"
+msgstr ""
+
+#. TRANSLATORS: format: minutes + seconds, for example: 3m59
+#, c-format
+msgid "%dm%02d"
+msgstr ""
+
+#. TRANSLATORS: format: seconds, for example: 59s
+#, c-format
+msgid "%ds"
+msgstr ""
+
+#. TRANSLATORS: %s before "ago" is elapsed time, for example: "3m59"
+#, fuzzy, c-format
+msgid "  %s%s%s %d%s%s%s: %s\"%s%s%s\"%s (pid: %d, started %s ago)"
+msgstr "%s%s %s(%s%s%s)%s kilépett"
+
+#, fuzzy, c-format
+msgid "%s%s: command id \"%s\" not found"
+msgstr "%s a \"%s\" modul nem található\n"
+
+#, fuzzy, c-format
+msgid "%s%s: command with id \"%s\" is not running any more"
+msgstr "%s a \"%s\" szerver nem található\n"
+
+#, c-format
+msgid "%s%s: invalid options in option exec.command.default_options"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: failed to run command \"%s\""
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, fuzzy, c-format
+msgid "%d commands removed"
+msgstr "     parancskezelők:\n"
+
+#, fuzzy, c-format
+msgid "%s%s: command with id \"%s\" is still running"
+msgstr "%s a \"%s\" modul nem található\n"
+
+#, fuzzy, c-format
+msgid "Command \"%s\" removed"
+msgstr "A \"%s\" aliasz eltávolítva\n"
+
+#, fuzzy
+msgid "execute external commands"
+msgstr "%s belső parancsok:\n"
+
+msgid ""
+"-list || [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <name>] [-l|-o|-"
+"n] |-sw|-nosw] [-ln|-noln] [-color off|decode|strip] [-rc|-norc] [-timeout "
+"<timeout>] [-name <name>] <command> || -in <id> <text> || -inclose <id> "
+"[<text>] || -signal <id> <signal> || -kill <id> || -killall || -set <id> "
+"<property> <value> || -del <id>|-all [<id>...]"
+msgstr ""
+
+msgid ""
+"   -list: list commands\n"
+"     -sh: use the shell to execute the command (default)\n"
+"   -nosh: do not use the shell to execute the command (required if the "
+"command has some unsafe data, for example the content of a message from "
+"another user)\n"
+"     -bg: run process in background: do not display process output neither "
+"return code (not compatible with options -o/-n)\n"
+"   -nobg: catch process output and display return code (default)\n"
+"  -stdin: create a pipe for sending data to the process (with /exec -in/-"
+"inclose)\n"
+"-nostdin: do not create a pipe for stdin (default)\n"
+" -buffer: display/send output of command on this buffer (if the buffer is "
+"not found, a new buffer with name \"exec.exec.xxx\" is created)\n"
+"      -l: display locally output of command on buffer (default)\n"
+"      -o: send output of command to the buffer (not compatible with option -"
+"bg)\n"
+"      -n: display output of command in a new buffer (not compatible with "
+"option -bg)\n"
+"     -sw: switch to the output buffer (default)\n"
+"   -nosw: don't switch to the output buffer\n"
+"     -ln: display line numbers (default in new buffer only)\n"
+"   -noln: don't display line numbers\n"
+"  -color: action on ANSI colors in output:\n"
+"            ansi: keep ANSI codes as-is\n"
+"          decode: convert ANSI colors to WeeChat/IRC (default)\n"
+"           strip: remove ANSI colors\n"
+"     -rc: display return code (default)\n"
+"   -norc: don't display return code\n"
+"-timeout: set a timeout for the command (in seconds)\n"
+"   -name: set a name for the command (to name it later with /exec)\n"
+" command: the command to execute; if beginning with \"url:\", the shell is "
+"disabled and the content of URL is downloaded and sent as output\n"
+"      id: command identifier: either its number or name (if set with \"-name "
+"xxx\")\n"
+"     -in: send text on standard input of process\n"
+"-inclose: same a -in, but stdin is closed after (and text is optional: "
+"without text, the stdin is just closed)\n"
+" -signal: send a signal to the process; the signal can be an integer or one "
+"of these names: hup, int, quit, kill, term, usr1, usr2\n"
+"   -kill: alias of \"-signal <id> kill\"\n"
+"-killall: kill all running processes\n"
+"    -set: set a hook property (see function hook_set in plugin API "
+"reference)\n"
+"property: hook property\n"
+"   value: new value for hook property\n"
+"    -del: delete a terminated command\n"
+"    -all: delete all terminated commands\n"
+"\n"
+"Default options can be set in the option exec.command.default_options."
+msgstr ""
+
+msgid "ids (numbers and names) of executed commands"
+msgstr ""
+
+msgid ""
+"default options for command /exec (see /help exec); example: \"-nosh -bg\" "
+"to run all commands in background (no output), and without using the shell"
+msgstr ""
+
+msgid ""
+"delay for purging finished commands (in seconds, 0 = purge commands "
+"immediately, -1 = never purge)"
+msgstr ""
+
+#, fuzzy
+msgid "text color for a running command flag in list of commands"
+msgstr "kilépési nyíl színe"
+
+#, fuzzy
+msgid "text color for a finished command flag in list of commands"
+msgstr "kilépési nyíl színe"
 
 #, fuzzy
 msgid "FIFO pipe for remote control"
@@ -7558,6 +7719,22 @@ msgid "width of terminal"
 msgstr ""
 
 msgid "height of terminal"
+msgstr ""
+
+msgid "POSIX extended regular expression to search ANSI escape codes"
+msgstr ""
+
+msgid "terminal color (0-255) converted to RGB color"
+msgstr ""
+
+#, fuzzy
+msgid "color (terminal color: 0-255)"
+msgstr "pufferek kezelése"
+
+msgid "RGB color converted to terminal color (0-255)"
+msgstr ""
+
+msgid "rgb,limit (limit is optional and is set to 256 by default)"
 msgstr ""
 
 #, fuzzy
