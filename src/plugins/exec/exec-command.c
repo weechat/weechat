@@ -398,53 +398,56 @@ exec_command_run (struct t_gui_buffer *buffer,
         strdup (cmd_options.ptr_command_name) : NULL;
     new_exec_cmd->command = strdup (argv_eol[cmd_options.command_index]);
     new_exec_cmd->detached = cmd_options.detached;
-    if (cmd_options.ptr_buffer_name && !cmd_options.ptr_buffer)
+    if (!cmd_options.detached)
     {
-        /* output in a new buffer using given name */
-        new_exec_cmd->output_to_buffer = 0;
-        snprintf (str_buffer, sizeof (str_buffer),
-                  "exec.%s", cmd_options.ptr_buffer_name);
-        new_buffer = exec_buffer_new (str_buffer, cmd_options.switch_to_buffer);
-        if (new_buffer)
+        if (cmd_options.ptr_buffer_name && !cmd_options.ptr_buffer)
+        {
+            /* output in a new buffer using given name */
+            new_exec_cmd->output_to_buffer = 0;
+            snprintf (str_buffer, sizeof (str_buffer),
+                      "exec.%s", cmd_options.ptr_buffer_name);
+            new_buffer = exec_buffer_new (str_buffer, cmd_options.switch_to_buffer);
+            if (new_buffer)
+            {
+                new_exec_cmd->buffer_full_name =
+                    strdup (weechat_buffer_get_string (new_buffer, "full_name"));
+            }
+        }
+        else if (cmd_options.new_buffer)
+        {
+            /* output in a new buffer using automatic name */
+            if (new_exec_cmd->name)
+            {
+                snprintf (str_buffer, sizeof (str_buffer),
+                          "exec.%s", new_exec_cmd->name);
+            }
+            else
+            {
+                snprintf (str_buffer, sizeof (str_buffer),
+                          "exec.%d", new_exec_cmd->number);
+            }
+            new_buffer = exec_buffer_new (str_buffer, cmd_options.switch_to_buffer);
+            if (new_buffer)
+            {
+                new_exec_cmd->buffer_full_name =
+                    strdup (weechat_buffer_get_string (new_buffer, "full_name"));
+            }
+        }
+        else if (cmd_options.ptr_buffer)
         {
             new_exec_cmd->buffer_full_name =
-                strdup (weechat_buffer_get_string (new_buffer, "full_name"));
+                strdup (weechat_buffer_get_string (cmd_options.ptr_buffer,
+                                                   "full_name"));
+            if (cmd_options.switch_to_buffer)
+                weechat_buffer_set (cmd_options.ptr_buffer, "display", "1");
         }
-    }
-    else if (cmd_options.new_buffer)
-    {
-        /* output in a new buffer using automatic name */
-        if (new_exec_cmd->name)
+        if (cmd_options.ptr_buffer
+            && (strcmp (weechat_buffer_get_string (cmd_options.ptr_buffer, "plugin"),
+                        EXEC_PLUGIN_NAME) == 0))
         {
-            snprintf (str_buffer, sizeof (str_buffer),
-                      "exec.%s", new_exec_cmd->name);
+            cmd_options.output_to_buffer = 0;
+            cmd_options.new_buffer = 1;
         }
-        else
-        {
-            snprintf (str_buffer, sizeof (str_buffer),
-                      "exec.%d", new_exec_cmd->number);
-        }
-        new_buffer = exec_buffer_new (str_buffer, cmd_options.switch_to_buffer);
-        if (new_buffer)
-        {
-            new_exec_cmd->buffer_full_name =
-                strdup (weechat_buffer_get_string (new_buffer, "full_name"));
-        }
-    }
-    else if (cmd_options.ptr_buffer)
-    {
-        new_exec_cmd->buffer_full_name =
-            strdup (weechat_buffer_get_string (cmd_options.ptr_buffer,
-                                               "full_name"));
-        if (cmd_options.switch_to_buffer)
-            weechat_buffer_set (cmd_options.ptr_buffer, "display", "1");
-    }
-    if (cmd_options.ptr_buffer
-        && (strcmp (weechat_buffer_get_string (cmd_options.ptr_buffer, "plugin"),
-                    EXEC_PLUGIN_NAME) == 0))
-    {
-        cmd_options.output_to_buffer = 0;
-        cmd_options.new_buffer = 1;
     }
     new_exec_cmd->output_to_buffer = cmd_options.output_to_buffer;
     new_exec_cmd->line_numbers = (cmd_options.line_numbers < 0) ?
