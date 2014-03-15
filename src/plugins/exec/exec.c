@@ -45,7 +45,7 @@ struct t_exec_cmd *last_exec_cmd = NULL;    /* last executed command        */
 int exec_cmds_count = 0;                    /* number of executed commands  */
 
 char *exec_color_string[EXEC_NUM_COLORS] =
-{ "off", "decode", "strip" };
+{ "ansi", "decode", "strip" };
 
 
 /*
@@ -252,7 +252,7 @@ exec_command_display_output (struct t_exec_cmd *exec_cmd,
         if (!line)
             break;
 
-        if (exec_cmd->color != EXEC_COLOR_OFF)
+        if (exec_cmd->color != EXEC_COLOR_ANSI)
         {
             line2 = weechat_hook_modifier_exec (
                 (exec_cmd->output_to_buffer) ?

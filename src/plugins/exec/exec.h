@@ -26,7 +26,7 @@
 #define EXEC_PLUGIN_NAME "exec"
 
 enum t_exec_color {
-    EXEC_COLOR_OFF = 0,
+    EXEC_COLOR_ANSI = 0,
     EXEC_COLOR_DECODE,
     EXEC_COLOR_STRIP,
     /* number of color actions */

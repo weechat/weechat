@@ -714,7 +714,7 @@ exec_command_init ()
            "     -ln: display line numbers (default in new buffer only)\n"
            "   -noln: don't display line numbers\n"
            "  -color: action on ANSI colors in output:\n"
-           "             off: keep ANSI codes as-is\n"
+           "            ansi: keep ANSI codes as-is\n"
            "          decode: convert ANSI colors to WeeChat/IRC (default)\n"
            "           strip: remove ANSI colors\n"
            "     -rc: display return code (default)\n"
