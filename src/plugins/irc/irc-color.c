@@ -666,6 +666,34 @@ irc_color_decode_ansi_cb (void *data, const char *text)
                           IRC_COLOR_COLOR_CHAR);
                 strcat (output, str_color);
                 break;
+            case 90: /* text color (bright) */
+            case 91:
+            case 92:
+            case 93:
+            case 94:
+            case 95:
+            case 96:
+            case 97:
+                snprintf (str_color, sizeof (str_color),
+                          "%c%02d",
+                          IRC_COLOR_COLOR_CHAR,
+                          irc_color_term2irc[value - 90 + 8]);
+                strcat (output, str_color);
+                break;
+            case 100: /* background color (bright) */
+            case 101:
+            case 102:
+            case 103:
+            case 104:
+            case 105:
+            case 106:
+            case 107:
+                snprintf (str_color, sizeof (str_color),
+                          "%c,%02d",
+                          IRC_COLOR_COLOR_CHAR,
+                          irc_color_term2irc[value - 100 + 8]);
+                strcat (output, str_color);
+                break;
         }
     }
 
