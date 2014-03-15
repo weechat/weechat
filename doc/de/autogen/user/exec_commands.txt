@@ -1,5 +1,5 @@
 [[command_exec_exec]]
-[command]*`exec`* execute external commands::
+[command]*`exec`* führe externe Befehle aus::
 
 ----
 /exec  -list
@@ -12,42 +12,42 @@
        -set <id> <property> <value>
        -del <id>|-all [<id>...]
 
-   -list: list commands
-     -sh: use the shell to execute the command (default)
-   -nosh: do not use the shell to execute the command (required if the command has some unsafe data, for example the content of a message from another user)
-     -bg: run process in background: do not display process output neither return code (not compatible with options -o/-n)
-   -nobg: catch process output and display return code (default)
-  -stdin: create a pipe for sending data to the process (with /exec -in/-inclose)
--nostdin: do not create a pipe for stdin (default)
- -buffer: display/send output of command on this buffer (if the buffer is not found, a new buffer with name "exec.exec.xxx" is created)
-      -l: display locally output of command on buffer (default)
-      -o: send output of command to the buffer (not compatible with option -bg)
-      -n: display output of command in a new buffer (not compatible with option -bg)
-     -sw: switch to the output buffer (default)
-   -nosw: don't switch to the output buffer
-     -ln: display line numbers (default in new buffer only)
-   -noln: don't display line numbers
-  -color: action on ANSI colors in output:
-            ansi: keep ANSI codes as-is
-          decode: convert ANSI colors to WeeChat/IRC (default)
-           strip: remove ANSI colors
-     -rc: display return code (default)
-   -norc: don't display return code
--timeout: set a timeout for the command (in seconds)
-   -name: set a name for the command (to name it later with /exec)
- command: the command to execute; if beginning with "url:", the shell is disabled and the content of URL is downloaded and sent as output
-      id: command identifier: either its number or name (if set with "-name xxx")
-     -in: send text on standard input of process
--inclose: same a -in, but stdin is closed after (and text is optional: without text, the stdin is just closed)
- -signal: send a signal to the process; the signal can be an integer or one of these names: hup, int, quit, kill, term, usr1, usr2
-   -kill: alias of "-signal <id> kill"
--killall: kill all running processes
-    -set: set a hook property (see function hook_set in plugin API reference)
-property: hook property
-   value: new value for hook property
-    -del: delete a terminated command
-    -all: delete all terminated commands
+   -list: zeigt laufende Befehle an
+     -sh: die shell wird verwendet um Befehle auszuführen (Standardverhalten)
+   -nosh: die shell wird nicht verwendet um Befehle auszuführen (wird benötigt, falls der Befehl mit sensiblen Daten hantiert. Zum Beispiel der Inhalt einer Nachricht eines anderen Users)
+     -bg: führt Prozess im Hintergrund aus: gibt weder eine Prozessausgabe noch einen Rückgabewert aus (nicht kompatibel mit Optionen -o/-n)
+   -nobg: gibt Prozessausgabe und Rückgabewert aus (Standardverhalten)
+  -stdin: erstellt eine PIPE um Daten zu dem Prozess zu senden (mittels /exec -in/-inclose)
+-nostdin: es wird keine PIPE für stdin erstellt (Standardverhalten)
+ -buffer: zeigt/sendet Ausgabe des Befehls an diesen Buffer (wird der angegebene Buffer nicht gefunden wird ein neuer Bufger mit dem Namen "exec.exec.xxx" erstellt)
+      -l: gibt die Ausgabe des Befehls lokal im Buffer aus (Standardverhalten)
+      -o: gibt die Ausgabe des Befehls im Buffer aus (nicht kompatibel mit Option -bg)
+      -n: gibt die Ausgabe des Befehls in einem neuen Buffer aus (nicht kompatibel mit Option -bg)
+     -sw: es wird zum Ausgabebuffer gewechselt (Standardverhalten)
+   -nosw: es wird nicht zum Ausgabebuffer gewechselt
+    -ln: legt eine Zeilennummerierung an (Standardverhalten, nur für neue Buffer)
+   -noln: es wird keine Zeilennummerierung angezeigt
+  -color: es wird eine der folgenden Aktionen bei ANSI Zeichenkodierungen in der Ausgabe durchgeführt:
+            ansi: ANSI-Kodierung wird beibehalten
+          decode: konvertiert ANSI-Farben zu WeeChat/IRC Farben(Standardverhalten)
+           strip: ANSI-Farben werden entfernt
+     -rc: der Rückgabewert wird ausgegeben (Standardverhalten)
+   -norc: der Rückgabewert wird unterdrückt
+-timeout: gibt eine Zeitbeschränkung für den auszuführenden Befehl an (in Sekunden)
+  -name: dem Befehl wird ein Name zugewiesen (um den Befehl später mittels /exec zu nutzen)
+ command: Befehl der ausgeführt werden soll; beginnt der Befehl mit "url:", wird die shell deaktiviert und der Inhalt der URL wird heruntergeladen und im Buffer ausgegeben
+      id: identifiziert eindeutig einen Befehl: entweder durch eine Nummer oder einen Namen (sofern ein Name mittels "-name xxx" zugewiesen wurde)
+     -in: sendet Text an die Standardeingabe des Prozesses
+-inclose: wie -in aber stdin wird danach geschlossen (und der Text ist optional: ohne Text wird stdin umgehend geschlossen
+ -signal: schickt ein Signal an den Prozess; das Signal kann entweder ein Integerwert oder eines der folgenden Schlüsselworte sein: hup, int, quit, kill, term, usr1, usr2
+   -kill: Alias für "-signal <id> kill"
+-killall: beendet alle laufenden Prozesse
+    -set: nutzt eine Hook-Fähigkeit (siehe Funktion hook_set in Anleitung für API Erweiterung)
+property: Hook-Fähigkeit
+   value: neuer Wert für Hook-Fähigkeit
+    -del: entfernt einen beendeten Befehl
+    -all: entfernt alle beendeten Befehle
 
-Default options can be set in the option exec.command.default_options.
+Standardoptionen können in der Option exec.command.default_options bestimmt werden.
 ----
 

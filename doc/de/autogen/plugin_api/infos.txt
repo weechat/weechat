@@ -32,11 +32,11 @@
 
 | weechat | charset_terminal | Terminal Zeichensatz | -
 
-| weechat | color_ansi_regex | POSIX extended regular expression to search ANSI escape codes | -
+| weechat | color_ansi_regex | erweiterte reguläre POSIX Ausdrücke um ANSI Escapesequenz zu suchen | -
 
-| weechat | color_rgb2term | RGB color converted to terminal color (0-255) | rgb,limit (limit is optional and is set to 256 by default)
+| weechat | color_rgb2term | RGB Farbe wurde umgewandelt in Terminalfarbe (0-255) | RGB,limit (Obergrenze ist optional und ist Standardmäßig 256)
 
-| weechat | color_term2rgb | terminal color (0-255) converted to RGB color | color (terminal color: 0-255)
+| weechat | color_term2rgb | Terminalfarbe (0-255) wurde umgewandelt in RGB Farbe | Farben (Terminalfarben: 0-255)
 
 | weechat | cursor_mode | 1, falls Cursor-Modus aktiviert ist | -
 

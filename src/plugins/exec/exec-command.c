@@ -727,7 +727,7 @@ exec_command_init ()
            "      id: command identifier: either its number or name (if set "
            "with \"-name xxx\")\n"
            "     -in: send text on standard input of process\n"
-           "-inclose: same a -in, but stdin is closed after (and text is "
+           "-inclose: same as -in, but stdin is closed after (and text is "
            "optional: without text, the stdin is just closed)\n"
            " -signal: send a signal to the process; the signal can be an integer "
            "or one of these names: hup, int, quit, kill, term, usr1, usr2\n"

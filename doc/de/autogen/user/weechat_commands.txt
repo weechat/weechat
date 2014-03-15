@@ -135,22 +135,22 @@ Beispiele:
         rgb2term <rgb> [<limit>]
         -o
 
-   alias: add an alias for a color
- unalias: delete an alias
-   color: color number (greater than or equal to 0, max depends on terminal, commonly 63 or 255)
-    name: alias name for color (for example: "orange")
-   reset: reset all color pairs (required when no more color pairs are available if automatic reset is disabled, see option weechat.look.color_pairs_auto_reset)
-term2rgb: convert a terminal color (0-255) to RGB color
-rgb2term: convert a RGB color to terminal color (0-255)
-   limit: number of colors to use in terminal table (starting from 0); default is 256
-      -o: send terminal/colors info to current buffer as input
+  alias: weist einer Farbzahl einen Namen zu
+unalias: entfernt einen Namen
+  color: Farbnummer (>= 0, maximale Anzahl ist abhängig vom Terminal, üblicherweise 63 oder 255 Farben)
+   name: Aliasname für eine Farbe (zum Beispiel: "orange")
+  reset: setzt alle Farbpaarungen zurück (nützlich falls keine Farbpaarung mehr verfügbar sein sollte und die automatische Reset-Option deaktiviert ist, siehe Option: weechat.look.color_pairs_auto_reset)
+term2rgb: konvertiert eine Terminalfarbe (0-255) in eine RGB Farbe
+rgb2term: konvertiert eine RGB Farbe in eine Terminalfarbe (0-255)
+   limit: Anzahl an Farben die aus der Terminalpalette genutzt werden sollen (beginnend von 0); Standardwert: 256
+     -o: sendet Terminal-/Farbinformationen in den aktuellen Buffer
 
-Without argument, this command displays colors in a new buffer.
+Ohne Angabe von Argumenten wird in einem separaten Buffer die darstellbare Farbpalette angezeigt.
 
-Examples:
-  add alias "orange" for color 214:
+Beispiele:
+  der Farbe 214 wird das Alias "orange" zugeordnet:
     /color alias 214 orange
-  delete color 214:
+  löscht die Farbe 214:
     /color unalias 214
 ----
 
@@ -550,7 +550,7 @@ Beispiele:
 ----
 
 [[command_weechat_plugin]]
-[command]*`plugin`* Erweiterungen verwalten (auflisten/installieren/deinstallieren)::
+[command]*`plugin`* Erweiterungen verwalten (auflisten/installieren/beenden)::
 
 ----
 /plugin  list|listfull [<name>]
@@ -563,8 +563,8 @@ Beispiele:
  listfull: detaillierte Auflistung aller installierten Erweiterungen
      load: installiert eine Erweiterung
  autoload: installiert automatisch alle Erweiterungen aus dem System- oder Benutzerverzeichnis
-   reload: installiert eine Erweiterung erneut (falls kein Name angegeben wird, werden alle Erweiterungen entfernt und neu installiert)
-   unload: deinstalliere eine oder alle Erweiterungen (wird kein Name angegeben dann werden alle Erweiterung entfernt)
+   reload: startet eine Erweiterung erneut (falls kein Name angegeben wird, werden alle Erweiterungen beendet und neu gestartet)
+   unload: beendet eine oder alle Erweiterungen (wird kein Name angegeben dann werden alle Erweiterung beendet)
  filename: Erweiterung (Datei) welche installiert werden soll
      name: Name einer Erweiterung
 arguments: Argumente die der Erweiterung beim installieren übergeben werden sollen
