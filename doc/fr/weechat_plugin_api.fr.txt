@@ -9308,6 +9308,13 @@ Liste des modificateurs utilisés par WeeChat et les extensions :
   Toute chaîne |
   Chaîne avec les couleurs IRC (ou avec les couleurs IRC supprimées)
 
+| irc_color_decode_ansi +
+  _(WeeChat ≥ 0.4.4)_ |
+  "1" pour garder les couleurs, "0" pour les supprimer |
+  Toute chaîne |
+  Chaîne avec les couleurs ANSI converties en couleurs IRC (ou avec les couleurs
+  ANSI supprimées)
+
 | irc_command_auth +
   _(WeeChat ≥ 0.4.1)_ |
   Nom du serveur |

@@ -9160,6 +9160,13 @@ WeeChat とプラグインが使う修飾子のリスト:
   任意の文字列 |
   String with IRC colors (or IRC colors removed)
 
+// TRANSLATION MISSING
+| irc_color_decode_ansi +
+  _(WeeChat バージョン 0.4.4 以上で利用可)_ |
+  色を保持する場合は "1"、削除する場合は "0" |
+  任意の文字列 |
+  String with ANSI colors converted to IRC colors (or ANSI colors removed)
+
 | irc_command_auth +
   _(WeeChat バージョン 0.4.1 以上で利用可)_ |
   サーバ名 |

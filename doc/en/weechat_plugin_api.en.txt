@@ -9139,6 +9139,12 @@ List of modifiers used by WeeChat and plugins:
   Any string |
   String with IRC colors (or IRC colors removed)
 
+| irc_color_decode_ansi +
+  _(WeeChat ≥ 0.4.4)_ |
+  "1" to keep colors, "0" to remove colors |
+  Any string |
+  String with ANSI colors converted to IRC colors (or ANSI colors removed)
+
 | irc_command_auth +
   _(WeeChat ≥ 0.4.1)_ |
   Server name |

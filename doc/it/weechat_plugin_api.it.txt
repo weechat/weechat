@@ -9369,6 +9369,13 @@ List of modifiers used by WeeChat and plugins:
   String with IRC colors (or IRC colors removed)
 
 // TRANSLATION MISSING
+| irc_color_decode_ansi +
+  _(WeeChat ≥ 0.4.4)_ |
+  "1" per mantenere i colori, "0" per rimuovere i colori |
+  Qualsiasi stringa |
+  String with ANSI colors converted to IRC colors (or ANSI colors removed)
+
+// TRANSLATION MISSING
 | irc_command_auth +
   _(WeeChat ≥ 0.4.1)_ |
   Nome server |
