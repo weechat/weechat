@@ -1417,8 +1417,8 @@ Les codes couleur pour key[ctrl-c,c] sont :
 | 11   | cyan clair   | lightcyan
 | 12   | bleu clair   | lightblue
 | 13   | violet clair | lightmagenta
-| 14   | gris         | gray
-| 15   | gris clair   | white
+| 14   | gris         | darkgray
+| 15   | gris clair   | gray
 |===
 
 Exemple : affichage de "bonjour tout le monde !" avec "bonjour" en bleu clair

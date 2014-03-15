@@ -1379,8 +1379,8 @@ key[ctrl-c,c] 用の色コード:
 | 11   | 明るい青緑色    | lightcyan
 | 12   | 明るい青        | lightblue
 | 13   | 明るい赤紫色    | lightmagenta
-| 14   | 灰色            | gray
-| 15   | 明るい灰色      | white
+| 14   | 灰色            | darkgray
+| 15   | 明るい灰色      | gray
 |===
 
 例: "こんにちは皆さん!" の "こんにちは" を太字の明るい青、"皆さん"
