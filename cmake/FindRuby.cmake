@@ -33,7 +33,7 @@ ENDIF(RUBY_FOUND)
 
 FIND_PACKAGE(PkgConfig)
 IF(PKG_CONFIG_FOUND)
-  pkg_search_module(RUBY ruby-2.0 ruby-1.9 ruby-1.8)
+  pkg_search_module(RUBY ruby-2.1 ruby-2.0 ruby-1.9 ruby-1.8)
 ENDIF(PKG_CONFIG_FOUND)
 
 IF(RUBY_FOUND)
