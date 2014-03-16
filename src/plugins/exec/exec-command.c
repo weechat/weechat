@@ -391,7 +391,7 @@ exec_command_run (struct t_gui_buffer *buffer,
     cmd_options.new_buffer = 0;
     cmd_options.switch_to_buffer = 1;
     cmd_options.line_numbers = -1;
-    cmd_options.color = EXEC_COLOR_DECODE;
+    cmd_options.color = EXEC_COLOR_AUTO;
     cmd_options.display_rc = 1;
     cmd_options.ptr_command_name = NULL;
     cmd_options.pipe_command = NULL;
@@ -752,9 +752,10 @@ exec_command_init ()
         N_("execute external commands"),
         N_("-list"
            " || [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <name>] "
-           "[-l|-o|-n] |-sw|-nosw] [-ln|-noln] [-color off|decode|strip] "
-           "[-rc|-norc] [-timeout <timeout>] [-name <name>] "
-           "[-pipe <command>] [-hsignal <name>] <command>"
+           "[-l|-o|-n] |-sw|-nosw] [-ln|-noln] "
+           "[-color ansi|auto|irc|weechat|strip] [-rc|-norc] "
+           "[-timeout <timeout>] [-name <name>] [-pipe <command>] "
+           "[-hsignal <name>] <command>"
            " || -in <id> <text>"
            " || -inclose <id> [<text>]"
            " || -signal <id> <signal>"
@@ -786,9 +787,11 @@ exec_command_init ()
            "     -ln: display line numbers (default in new buffer only)\n"
            "   -noln: don't display line numbers\n"
            "  -color: action on ANSI colors in output:\n"
-           "            ansi: keep ANSI codes as-is\n"
-           "          decode: convert ANSI colors to WeeChat/IRC (default)\n"
-           "           strip: remove ANSI colors\n"
+           "             ansi: keep ANSI codes as-is\n"
+           "             auto: convert ANSI colors to WeeChat/IRC (default)\n"
+           "              irc: convert ANSI colors to IRC colors\n"
+           "          weechat: convert ANSI colors to WeeChat colors\n"
+           "            strip: remove ANSI colors\n"
            "     -rc: display return code (default)\n"
            "   -norc: don't display return code\n"
            "-timeout: set a timeout for the command (in seconds)\n"

@@ -28,7 +28,9 @@
 enum t_exec_color
 {
     EXEC_COLOR_ANSI = 0,
-    EXEC_COLOR_DECODE,
+    EXEC_COLOR_AUTO,
+    EXEC_COLOR_IRC,
+    EXEC_COLOR_WEECHAT,
     EXEC_COLOR_STRIP,
     /* number of color actions */
     EXEC_NUM_COLORS,

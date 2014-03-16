@@ -45,7 +45,7 @@ struct t_exec_cmd *last_exec_cmd = NULL;    /* last executed command        */
 int exec_cmds_count = 0;                    /* number of executed commands  */
 
 char *exec_color_string[EXEC_NUM_COLORS] =
-{ "ansi", "decode", "strip" };
+{ "ansi", "auto", "irc", "weechat", "strip" };
 
 
 /*
@@ -225,16 +225,35 @@ exec_concat_output (int *size, char **output, const char *text)
 char *
 exec_decode_color (struct t_exec_cmd *exec_cmd, const char *string)
 {
+    int irc_color, keep_colors;
+
     if (!string)
         return NULL;
 
-    if (exec_cmd->color == EXEC_COLOR_ANSI)
-        return strdup (string);
+    irc_color = 0;
+    keep_colors = 1;
+    switch (exec_cmd->color)
+    {
+        case EXEC_COLOR_ANSI:
+            return strdup (string);
+            break;
+        case EXEC_COLOR_AUTO:
+            irc_color = (exec_cmd->output_to_buffer || exec_cmd->pipe_command);
+            break;
+        case EXEC_COLOR_IRC:
+            irc_color = 1;
+            break;
+        case EXEC_COLOR_WEECHAT:
+            irc_color = 0;
+            break;
+        case EXEC_COLOR_STRIP:
+            keep_colors = 0;
+            break;
+    }
 
     return weechat_hook_modifier_exec (
-        (exec_cmd->output_to_buffer || exec_cmd->pipe_command) ?
-        "irc_color_decode_ansi" : "color_decode_ansi",
-        (exec_cmd->color == EXEC_COLOR_DECODE) ? "1" : "0",
+        (irc_color) ? "irc_color_decode_ansi" : "color_decode_ansi",
+        (keep_colors) ? "1" : "0",
         string);
 }
 
