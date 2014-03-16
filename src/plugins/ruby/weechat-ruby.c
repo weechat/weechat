@@ -572,10 +572,10 @@ weechat_ruby_load (const char *filename)
                 break;
         }
 
-        if (NUM2INT(ruby_retcode) == 1 || NUM2INT(ruby_retcode) == 2)
+        if (NUM2INT(ruby_retcode) == 2)
         {
-            weechat_ruby_print_exception(rb_iv_get (ruby_current_module,
-                                                    "@load_eval_file_error"));
+            weechat_ruby_print_exception (rb_iv_get (ruby_current_module,
+                                                     "@load_eval_file_error"));
         }
 
         return 0;

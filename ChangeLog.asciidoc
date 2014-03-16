@@ -84,6 +84,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * relay: fix freeze after /upgrade when many disconnected clients still exist
 * relay: fix NULL pointer when reading buffer lines for irc backlog
 * rmodifier: remove plugin (replaced by trigger)
+* ruby: fix crash when trying to load a directory with /ruby load
 * ruby: add detection of Ruby 2.1
 * script: fix scroll on script buffer in the detailed view of script
   (closes #6)
