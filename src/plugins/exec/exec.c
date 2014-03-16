@@ -397,6 +397,8 @@ exec_end_command (struct t_exec_cmd *exec_cmd, int return_code)
             weechat_hashtable_set (hashtable, "err", output);
             if (output)
                 free (output);
+            snprintf (str_number, sizeof (str_number), "%d", return_code);
+            weechat_hashtable_set (hashtable, "rc", str_number);
             weechat_hook_hsignal_send (exec_cmd->hsignal, hashtable);
             weechat_hashtable_free (hashtable);
         }
