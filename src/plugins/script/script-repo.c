@@ -23,7 +23,7 @@
  * this define is needed for strptime()
  * but is not used for OpenBSD, it causes bug with gcrypt (see bug #37373)
  */
-#if !defined(__OpenBSD__)
+#if !defined(__OpenBSD__) && !defined(__sun)
 #define _XOPEN_SOURCE 700
 #endif
 

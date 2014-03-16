@@ -21,8 +21,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* this define is needed for strptime() (not on OpenBSD) */
-#if !defined(__OpenBSD__)
+/* this define is needed for strptime() (not on OpenBSD/Sun) */
+#if !defined(__OpenBSD__) && !defined(__sun)
 #define _XOPEN_SOURCE 700
 #endif
 
