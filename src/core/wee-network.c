@@ -26,6 +26,13 @@
 #include "config.h"
 #endif
 
+/* _XPG4_2 is needed on SunOS for macros like CMSG_SPACE */
+/* __EXTENSIONS__ is needed on SunOS for constants like NI_MAXHOST */
+#ifdef __sun
+#define _XPG4_2
+#define __EXTENSIONS__
+#endif
+
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdlib.h>

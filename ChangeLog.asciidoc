@@ -15,6 +15,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 0.4.4 (under dev)
 
+* core: fix compilation on SmartOS (bug #40981, closes #23)
 * core: add missing \0 at the end of stderr buffer in hook_process
 * core: fix highlight problem with "(?-i)" and upper case letters in option
   weechat.look.highlight (closes #24)

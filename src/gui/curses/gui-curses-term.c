@@ -24,7 +24,11 @@
 #endif
 
 #ifdef HAVE_NCURSESW_CURSES_H
+#ifdef __sun
+#include <ncurses/term.h>
+#else
 #include <ncursesw/term.h>
+#endif
 #else
 #include <term.h>
 #endif
