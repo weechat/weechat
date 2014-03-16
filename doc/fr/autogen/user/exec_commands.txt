@@ -3,7 +3,7 @@
 
 ----
 /exec  -list
-       [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <nom>] [-l|-o|-n] |-sw|-nosw] [-ln|-noln] [-color off|decode|strip] [-rc|-norc] [-timeout <délai>] [-name <nom>] [-pipe <commande>] [-hsignal <nom>] <commande>
+       [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <nom>] [-l|-o|-n] |-sw|-nosw] [-ln|-noln] [-color ansi|auto|irc|weechat|strip] [-rc|-norc] [-timeout <délai>] [-name <nom>] [-pipe <commande>] [-hsignal <nom>] <commande>
        -in <id> <texte>
        -inclose <id> [<texte>]
        -signal <id> <signal>
@@ -28,9 +28,11 @@
       -ln: afficher les numéros de ligne (par défaut dans un nouveau tampon seulement)
     -noln: ne pas afficher les numéros de ligne
    -color: action sur les couleurs ANSI dans la sortie :
-            ansi: garder les codes ANSI tels quels
-          decode: convertir les couleurs ANSI en couleurs WeeChat/IRC (par défaut)
-           strip: supprimer les couleurs ANSI
+              ansi: garder les codes ANSI tels quels
+              auto: convertir les couleurs ANSI en couleurs WeeChat/IRC (par défaut)
+               irc: convertir les couleurs ANSI en couleurs IRC
+           weechat: convertir les couleurs ANSI en couleurs WeeChat
+             strip: supprimer les couleurs ANSI
       -rc: afficher le code retour (par défaut)
     -norc: ne pas afficher le code retour
  -timeout: définir un délai maximum pour la commande (en secondes)
