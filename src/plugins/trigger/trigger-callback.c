@@ -448,7 +448,7 @@ trigger_callback_hsignal_cb (void *data, const char *signal,
             if (!pointers)
                 goto end;
         }
-        else if (strcmp (type_values, "pointer") == 0)
+        else if (strcmp (type_values, "string") == 0)
         {
             extra_vars = weechat_hashtable_dup (hashtable);
             if (!extra_vars)
