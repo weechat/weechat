@@ -179,7 +179,7 @@ exec_command_parse_options (struct t_exec_cmd_options *cmd_options,
                             int argc, char **argv, int start_arg,
                             int set_command_index)
 {
-    int i;
+    int i, j, end, length, length_total;
     char *error;
 
     for (i = start_arg; i < argc; i++)
@@ -289,6 +289,62 @@ exec_command_parse_options (struct t_exec_cmd_options *cmd_options,
             i++;
             cmd_options->ptr_command_name = argv[i];
         }
+        else if (weechat_strcasecmp (argv[i], "-pipe") == 0)
+        {
+            if (i + 1 >= argc)
+                return 0;
+            i++;
+            if (cmd_options->pipe_command)
+            {
+                free (cmd_options->pipe_command);
+                cmd_options->pipe_command = NULL;
+            }
+            if (argv[i][0] == '"')
+            {
+                /* search the ending double quote */
+                length_total = 1;
+                end = i;
+                while (end < argc)
+                {
+                    length = strlen (argv[end]);
+                    length_total += length + 1;
+                    if ((length > 0) && (argv[end][length - 1] == '"'))
+                        break;
+                    end++;
+                }
+                if (end == argc)
+                    return 0;
+                cmd_options->pipe_command = malloc (length_total);
+                if (!cmd_options->pipe_command)
+                    return 0;
+                cmd_options->pipe_command[0] = '\0';
+                for (j = i; j <= end; j++)
+                {
+                    if (cmd_options->pipe_command[0])
+                        strcat (cmd_options->pipe_command, " ");
+                    strcat (cmd_options->pipe_command,
+                            (j == i) ? argv[j] + 1 : argv[j]);
+                }
+                length = strlen (cmd_options->pipe_command);
+                if (length > 0)
+                    cmd_options->pipe_command[length - 1] = '\0';
+                i = end;
+            }
+            else
+                cmd_options->pipe_command = strdup (argv[i]);
+        }
+        else if (weechat_strcasecmp (argv[i], "-hsignal") == 0)
+        {
+            if (i + 1 >= argc)
+                return 0;
+            i++;
+            if (cmd_options->hsignal)
+            {
+                free (cmd_options->hsignal);
+                cmd_options->hsignal = NULL;
+            }
+            cmd_options->hsignal = strdup (argv[i]);
+        }
         else
         {
             if (set_command_index)
@@ -338,6 +394,8 @@ exec_command_run (struct t_gui_buffer *buffer,
     cmd_options.color = EXEC_COLOR_DECODE;
     cmd_options.display_rc = 1;
     cmd_options.ptr_command_name = NULL;
+    cmd_options.pipe_command = NULL;
+    cmd_options.hsignal = NULL;
 
     /* parse default options */
     if (!exec_command_parse_options (&cmd_options,
@@ -357,6 +415,12 @@ exec_command_run (struct t_gui_buffer *buffer,
     /* options "-bg" and "-o"/"-n" are incompatible */
     if (cmd_options.detached
         && (cmd_options.output_to_buffer || cmd_options.new_buffer))
+        return WEECHAT_RC_ERROR;
+
+    /* options "-pipe" and "-bg"/"-o"/"-n" are incompatible */
+    if (cmd_options.pipe_command
+        && (cmd_options.detached || cmd_options.output_to_buffer
+            || cmd_options.new_buffer))
         return WEECHAT_RC_ERROR;
 
     /* command not found? */
@@ -398,7 +462,9 @@ exec_command_run (struct t_gui_buffer *buffer,
         strdup (cmd_options.ptr_command_name) : NULL;
     new_exec_cmd->command = strdup (argv_eol[cmd_options.command_index]);
     new_exec_cmd->detached = cmd_options.detached;
-    if (!cmd_options.detached)
+
+    if (!cmd_options.detached && !cmd_options.pipe_command
+        && !cmd_options.hsignal)
     {
         if (cmd_options.ptr_buffer_name && !cmd_options.ptr_buffer)
         {
@@ -454,6 +520,8 @@ exec_command_run (struct t_gui_buffer *buffer,
         cmd_options.new_buffer : cmd_options.line_numbers;
     new_exec_cmd->color = cmd_options.color;
     new_exec_cmd->display_rc = cmd_options.display_rc;
+    new_exec_cmd->pipe_command = cmd_options.pipe_command;
+    new_exec_cmd->hsignal = cmd_options.hsignal;
 
     /* execute the command */
     if (weechat_exec_plugin->debug >= 1)
@@ -685,7 +753,8 @@ exec_command_init ()
         N_("-list"
            " || [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <name>] "
            "[-l|-o|-n] |-sw|-nosw] [-ln|-noln] [-color off|decode|strip] "
-           "[-rc|-norc] [-timeout <timeout>] [-name <name>] <command>"
+           "[-rc|-norc] [-timeout <timeout>] [-name <name>] "
+           "[-pipe <command>] [-hsignal <name>] <command>"
            " || -in <id> <text>"
            " || -inclose <id> [<text>]"
            " || -signal <id> <signal>"
@@ -724,6 +793,13 @@ exec_command_init ()
            "   -norc: don't display return code\n"
            "-timeout: set a timeout for the command (in seconds)\n"
            "   -name: set a name for the command (to name it later with /exec)\n"
+           "   -pipe: send the output to a WeeChat/plugin command (line by "
+           "line); if there are spaces in command/arguments, enclose them with "
+           "double quotes; variable $line is replaced by the line (by default "
+           "the line is added after the command, separated by a space) "
+           "(not compatible with options -bg/-o/-n)\n"
+           "-hsignal: send the output as a hsignal (to be used for example in "
+           "a trigger) (not compatible with options -bg/-o/-n)\n"
            " command: the command to execute; if beginning with \"url:\", the "
            "shell is disabled and the content of URL is downloaded and sent as "
            "output\n"
@@ -753,7 +829,7 @@ exec_command_init ()
            "  /exec -o uptime"),
         "-list"
         " || -sh|-nosh|-bg|-nobg|-stdin|-nostdin|-buffer|-l|-o|-n|-sw|-nosw|"
-        "-ln|-noln|-color|-timeout|-name|%*"
+        "-ln|-noln|-color|-timeout|-name|-pipe|-hsignal|%*"
         " || -in|-inclose|-signal|-kill %(exec_commands_ids)"
         " || -killall"
         " || -set %(exec_commands_ids) stdin|stdin_close|signal"

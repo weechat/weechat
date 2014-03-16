@@ -158,6 +158,8 @@ exec_add ()
     new_exec_cmd->err_size = 0;
     new_exec_cmd->err = NULL;
     new_exec_cmd->return_code = -1;
+    new_exec_cmd->pipe_command = NULL;
+    new_exec_cmd->hsignal = NULL;
 
     exec_cmds_count++;
 
@@ -198,7 +200,7 @@ exec_timer_delete_cb (void *data, int remaining_calls)
  */
 
 void
-exec_command_concat_output (int *size, char **output, const char *text)
+exec_concat_output (int *size, char **output, const char *text)
 {
     int length, new_size;
     char *new_output;
@@ -215,12 +217,34 @@ exec_command_concat_output (int *size, char **output, const char *text)
 }
 
 /*
+ * Decodes colors in a string (from stdout/stderr).
+ *
+ * Returns string with colors as-is, decoded or removed.
+ */
+
+char *
+exec_decode_color (struct t_exec_cmd *exec_cmd, const char *string)
+{
+    if (!string)
+        return NULL;
+
+    if (exec_cmd->color == EXEC_COLOR_ANSI)
+        return strdup (string);
+
+    return weechat_hook_modifier_exec (
+        (exec_cmd->output_to_buffer || exec_cmd->pipe_command) ?
+        "irc_color_decode_ansi" : "color_decode_ansi",
+        (exec_cmd->color == EXEC_COLOR_DECODE) ? "1" : "0",
+        string);
+}
+
+/*
  * Displays output of a command.
  */
 
 void
-exec_command_display_output (struct t_exec_cmd *exec_cmd,
-                             struct t_gui_buffer *buffer, int out)
+exec_display_output (struct t_exec_cmd *exec_cmd,
+                     struct t_gui_buffer *buffer, int out)
 {
     char *ptr_output, *ptr_line, *line, *line2, *pos;
     char str_number[32], str_tags[1024];
@@ -234,7 +258,7 @@ exec_command_display_output (struct t_exec_cmd *exec_cmd,
      * if output is sent to the buffer, the buffer must exist
      * (we don't send output by default to core buffer)
      */
-    if (exec_cmd->output_to_buffer && !buffer)
+    if (exec_cmd->output_to_buffer && !exec_cmd->pipe_command && !buffer)
         return;
 
     ptr_line = ptr_output;
@@ -252,20 +276,40 @@ exec_command_display_output (struct t_exec_cmd *exec_cmd,
         if (!line)
             break;
 
-        if (exec_cmd->color != EXEC_COLOR_ANSI)
-        {
-            line2 = weechat_hook_modifier_exec (
-                (exec_cmd->output_to_buffer) ?
-                "irc_color_decode_ansi" : "color_decode_ansi",
-                (exec_cmd->color == EXEC_COLOR_DECODE) ? "1" : "0",
-                line);
-            free (line);
-            if (!line2)
-                break;
-            line = line2;
-        }
+        /* decode colors */
+        line2 = exec_decode_color (exec_cmd, line);
+        free (line);
+        if (!line2)
+            break;
+        line = line2;
 
-        if (exec_cmd->output_to_buffer)
+        if (exec_cmd->pipe_command)
+        {
+            if (strstr (exec_cmd->pipe_command, "$line"))
+            {
+                /* replace $line by line content */
+                line2 = weechat_string_replace (exec_cmd->pipe_command,
+                                                "$line", line);
+                if (line2)
+                {
+                    weechat_command (buffer, line2);
+                    free (line2);
+                }
+            }
+            else
+            {
+                /* add line at the end of command, after a space */
+                length = strlen (exec_cmd->pipe_command) + 1 + strlen (line) + 1;
+                line2 = malloc (length);
+                if (line2)
+                {
+                    snprintf (line2, length, "%s %s", exec_cmd->pipe_command, line);
+                    weechat_command (buffer, line2);
+                    free (line2);
+                }
+            }
+        }
+        else if (exec_cmd->output_to_buffer)
         {
             if (exec_cmd->line_numbers)
             {
@@ -310,35 +354,65 @@ void
 exec_end_command (struct t_exec_cmd *exec_cmd, int return_code)
 {
     struct t_gui_buffer *ptr_buffer;
+    struct t_hashtable *hashtable;
+    char str_number[32], *output;
 
-    ptr_buffer = weechat_buffer_search ("==", exec_cmd->buffer_full_name);
-
-    /* display stdout/stderr (if output to buffer, the buffer must exist) */
-    exec_command_display_output (exec_cmd, ptr_buffer, 1);
-    exec_command_display_output (exec_cmd, ptr_buffer, 0);
-
-    /*
-     * display return code (only if command is not detached and if output is
-     * NOT sent to buffer)
-     */
-    if (!exec_cmd->detached && !exec_cmd->output_to_buffer
-        && exec_cmd->display_rc)
+    if (exec_cmd->hsignal)
     {
-        if (return_code >= 0)
+        hashtable = weechat_hashtable_new (32,
+                                           WEECHAT_HASHTABLE_STRING,
+                                           WEECHAT_HASHTABLE_STRING,
+                                           NULL,
+                                           NULL);
+        if (hashtable)
         {
-            weechat_printf_tags (ptr_buffer, "exec_rc",
-                                 _("%s: end of command %d (\"%s\"), "
-                                   "return code: %d"),
-                                 EXEC_PLUGIN_NAME, exec_cmd->number,
-                                 exec_cmd->command, return_code);
+            weechat_hashtable_set (hashtable, "command", exec_cmd->command);
+            snprintf (str_number, sizeof (str_number), "%d", exec_cmd->number);
+            weechat_hashtable_set (hashtable, "number", str_number);
+            weechat_hashtable_set (hashtable, "name", exec_cmd->name);
+            output = exec_decode_color (exec_cmd, exec_cmd->out);
+            weechat_hashtable_set (hashtable, "out", output);
+            if (output)
+                free (output);
+            output = exec_decode_color (exec_cmd, exec_cmd->err);
+            weechat_hashtable_set (hashtable, "err", output);
+            if (output)
+                free (output);
+            weechat_hook_hsignal_send (exec_cmd->hsignal, hashtable);
+            weechat_hashtable_free (hashtable);
         }
-        else
+    }
+    else
+    {
+        ptr_buffer = weechat_buffer_search ("==", exec_cmd->buffer_full_name);
+
+        exec_display_output (exec_cmd, ptr_buffer, 1);
+        exec_display_output (exec_cmd, ptr_buffer, 0);
+
+        /*
+         * display return code (only if command is not detached, if output is
+         * NOT sent to buffer, and if command is not piped)
+         */
+        if (exec_cmd->display_rc
+            && !exec_cmd->detached && !exec_cmd->output_to_buffer
+            && !exec_cmd->pipe_command)
         {
-            weechat_printf_tags (ptr_buffer, "exec_rc",
-                                 _("%s: unexpected end of command %d "
-                                   "(\"%s\")"),
-                                 EXEC_PLUGIN_NAME, exec_cmd->number,
-                                 exec_cmd->command);
+            if (return_code >= 0)
+            {
+                weechat_printf_tags (ptr_buffer, "exec_rc",
+                                     _("%s: end of command %d (\"%s\"), "
+                                       "return code: %d"),
+                                     EXEC_PLUGIN_NAME, exec_cmd->number,
+                                     exec_cmd->command, return_code);
+            }
+            else
+            {
+                weechat_printf_tags (ptr_buffer, "exec_rc",
+                                     _("%s: unexpected end of command %d "
+                                       "(\"%s\")"),
+                                     EXEC_PLUGIN_NAME, exec_cmd->number,
+                                     exec_cmd->command);
+            }
         }
     }
 
@@ -394,15 +468,15 @@ exec_process_cb (void *data, const char *command, int return_code,
 
     if (out)
     {
-        exec_command_concat_output (&ptr_exec_cmd->out_size,
-                                    &ptr_exec_cmd->out,
-                                    out);
+        exec_concat_output (&ptr_exec_cmd->out_size,
+                            &ptr_exec_cmd->out,
+                            out);
     }
     if (err)
     {
-        exec_command_concat_output (&ptr_exec_cmd->err_size,
-                                    &ptr_exec_cmd->err,
-                                    err);
+        exec_concat_output (&ptr_exec_cmd->err_size,
+                            &ptr_exec_cmd->err,
+                            err);
     }
 
     if (return_code >= 0)
@@ -444,6 +518,10 @@ exec_free (struct t_exec_cmd *exec_cmd)
         free (exec_cmd->out);
     if (exec_cmd->err)
         free (exec_cmd->err);
+    if (exec_cmd->pipe_command)
+        free (exec_cmd->pipe_command);
+    if (exec_cmd->hsignal)
+        free (exec_cmd->hsignal);
 
     free (exec_cmd);
 
@@ -494,6 +572,8 @@ exec_print_log ()
         weechat_log_printf ("  err_size. . . . . . . . : %d",    ptr_exec_cmd->err_size);
         weechat_log_printf ("  err . . . . . . . . . . : '%s'",  ptr_exec_cmd->err);
         weechat_log_printf ("  return_code . . . . . . : %d",    ptr_exec_cmd->return_code);
+        weechat_log_printf ("  pipe_command. . . . . . : '%s'",  ptr_exec_cmd->pipe_command);
+        weechat_log_printf ("  hsignal . . . . . . . . : '%s'",  ptr_exec_cmd->hsignal);
         weechat_log_printf ("  prev_cmd. . . . . . . . : 0x%lx", ptr_exec_cmd->prev_cmd);
         weechat_log_printf ("  next_cmd. . . . . . . . : 0x%lx", ptr_exec_cmd->next_cmd);
     }

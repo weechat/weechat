@@ -36,6 +36,8 @@ struct t_exec_cmd_options
     int color;                         /* what to do with ANSI colors       */
     int display_rc;                    /* 1 to display return code          */
     const char *ptr_command_name;      /* name of command                   */
+    char *pipe_command;                /* output piped to WeeChat/plugin cmd*/
+    char *hsignal;                     /* send a hsignal with output        */
 };
 
 extern int exec_command_run (struct t_gui_buffer *buffer,

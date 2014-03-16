@@ -3,7 +3,7 @@
 
 ----
 /exec  -list
-       [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <name>] [-l|-o|-n] |-sw|-nosw] [-ln|-noln] [-color off|decode|strip] [-rc|-norc] [-timeout <timeout>] [-name <name>] <command>
+       [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <name>] [-l|-o|-n] |-sw|-nosw] [-ln|-noln] [-color off|decode|strip] [-rc|-norc] [-timeout <timeout>] [-name <name>] [-pipe <command>] [-hsignal <name>] <command>
        -in <id> <text>
        -inclose <id> [<text>]
        -signal <id> <signal>
@@ -35,6 +35,8 @@
    -norc: don't display return code
 -timeout: set a timeout for the command (in seconds)
    -name: set a name for the command (to name it later with /exec)
+   -pipe: send the output to a WeeChat/plugin command (line by line); if there are spaces in command/arguments, enclose them with double quotes; variable $line is replaced by the line (by default the line is added after the command, separated by a space) (not compatible with options -bg/-o/-n)
+-hsignal: send the output as a hsignal (to be used for example in a trigger) (not compatible with options -bg/-o/-n)
  command: the command to execute; if beginning with "url:", the shell is disabled and the content of URL is downloaded and sent as output
       id: command identifier: either its number or name (if set with "-name xxx")
      -in: send text on standard input of process

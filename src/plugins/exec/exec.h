@@ -60,6 +60,10 @@ struct t_exec_cmd
     char *err;                         /* stderr of command                 */
     int return_code;                   /* command return code               */
 
+    /* pipe/hsignal */
+    char *pipe_command;                /* output piped to WeeChat/plugin cmd*/
+    char *hsignal;                     /* send a hsignal with output        */
+
     struct t_exec_cmd *prev_cmd;       /* link to previous command          */
     struct t_exec_cmd *next_cmd;       /* link to next command              */
 };

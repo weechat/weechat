@@ -3,7 +3,7 @@
 
 ----
 /exec  -list
-       [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <nom>] [-l|-o|-n] |-sw|-nosw] [-ln|-noln] [-color off|decode|strip] [-rc|-norc] [-timeout <délai>] [-name <nom>] <commande>
+       [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <nom>] [-l|-o|-n] |-sw|-nosw] [-ln|-noln] [-color off|decode|strip] [-rc|-norc] [-timeout <délai>] [-name <nom>] [-pipe <commande>] [-hsignal <nom>] <commande>
        -in <id> <texte>
        -inclose <id> [<texte>]
        -signal <id> <signal>
@@ -35,6 +35,8 @@
     -norc: ne pas afficher le code retour
  -timeout: définir un délai maximum pour la commande (en secondes)
     -name: définir un nom pour la commande (pour la nommer plus tard avec /exec)
+    -pipe: envoyer la sortie vers une commande WeeChat/extension (ligne par ligne); s'il y a des espaces dans la commande/paramètres, entourez les de guillemets; la variable $line est remplacée par la ligne (par défaut la ligne est ajoutée après la commande, séparée par un espace) (non compatible avec les options -bg/-o/-n)
+ -hsignal: envoyer la sortie sous forme de hsignal (pour être utilisé par exemple dans un trigger) (non compatible avec les options -bg/-o/-n)
  commande: la commande à exécuter; si elle commence par "url:", le shell est désactivé et le contenu de l'URL est téléchargé et envoyé comme sortie
        id: identifiant de commande : soit le numéro ou le nom (si défini avec "-name xxx")
       -in: envoyer le texte sur l'entrée standard du processus
