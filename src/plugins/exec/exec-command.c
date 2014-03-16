@@ -829,7 +829,8 @@ exec_command_init ()
            "  /exec -n ls -l /tmp\n"
            "  /exec -n ps xu | grep weechat\n"
            "  /exec -n -norc url:http://pastebin.com/raw.php?i=xxxxxxxx\n"
-           "  /exec -o uptime"),
+           "  /exec -o uptime\n"
+           "  /exec -pipe \"/print Machine uptime:\" uptime"),
         "-list"
         " || -sh|-nosh|-bg|-nobg|-stdin|-nostdin|-buffer|-l|-o|-n|-sw|-nosw|"
         "-ln|-noln|-color|-timeout|-name|-pipe|-hsignal|%*"

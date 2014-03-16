@@ -59,5 +59,6 @@ Exemples:
   /exec -n ps xu | grep weechat
   /exec -n -norc url:http://pastebin.com/raw.php?i=xxxxxxxx
   /exec -o uptime
+  /exec -pipe "/print Uptime de la machine:" uptime
 ----
 
