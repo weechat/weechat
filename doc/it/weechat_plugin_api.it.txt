@@ -6685,7 +6685,11 @@ void weechat_printf_y (struct t_gui_buffer *buffer, int y,
 Argomenti:
 
 * 'buffer': puntatore al buffer
-* 'y': numero di riga (la prima riga è 0)
+// TRANSLATION MISSING
+* 'y': numero di riga (la prima riga è 0); a negative value adds a line after
+  last line displayed: absolute value of 'y' is the number of lines after last
+  line (for example -1 is immediately after last line, -2 is 2 lines after last
+  line) _(WeeChat ≥ 0.4.4)_
 * 'message': messaggio da visualizzare
 
 Esempio in C:

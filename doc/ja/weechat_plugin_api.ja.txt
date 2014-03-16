@@ -6594,7 +6594,11 @@ void weechat_printf_y (struct t_gui_buffer *buffer, int y,
 引数:
 
 * 'buffer': バッファへのポインタ
-* 'y': 行番号 (1 行目は 0)
+// TRANSLATION MISSING
+* 'y': 行番号 (1 行目は 0); a negative value adds a line after last line
+  displayed: absolute value of 'y' is the number of lines after last line (for
+  example -1 is immediately after last line, -2 is 2 lines after last line)
+  _(WeeChat バージョン 0.4.4 以上で利用可)_
 * 'message': 表示するメッセージ
 
 C 言語での使用例:

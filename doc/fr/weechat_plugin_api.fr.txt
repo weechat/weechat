@@ -6689,7 +6689,11 @@ void weechat_printf_y (struct t_gui_buffer *buffer, int y,
 Paramètres :
 
 * 'buffer' : pointeur vers le tampon
-* 'y' : numéro de ligne (la première ligne est 0)
+* 'y' : numéro de ligne (la première ligne est 0); une valeur négative affiche
+  une ligne après la dernière ligne affichée: la valeur absolue de 'y' est le
+  nombre de lignes après la dernière ligne (par exemple -1 est immédiatement
+  après la dernière ligne, -2 est 2 lignes après la dernière ligne)
+  _(WeeChat ≥ 0.4.4)_
 * 'message' : message à afficher
 
 Exemple en C :

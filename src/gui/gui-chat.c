@@ -863,7 +863,7 @@ gui_chat_printf_y (struct t_gui_buffer *buffer, int y, const char *message, ...)
     /* no message: delete line */
     if (!vbuffer[0])
     {
-        if (gui_init_ok)
+        if (gui_init_ok && (y >= 0))
         {
             for (ptr_line = buffer->own_lines->first_line; ptr_line;
                  ptr_line = ptr_line->next_line)
@@ -885,6 +885,13 @@ gui_chat_printf_y (struct t_gui_buffer *buffer, int y, const char *message, ...)
     {
         if (gui_init_ok)
         {
+            /* if y is negative, add a line -N lines after the last line */
+            if (y < 0)
+            {
+                y = (buffer->own_lines && buffer->own_lines->last_line) ?
+                    buffer->own_lines->last_line->data->y - y : (-1 * y) - 1;
+            }
+            /* compute the number of lines to add before y */
             if (buffer->own_lines && buffer->own_lines->last_line)
                 num_lines_to_add = y - buffer->own_lines->last_line->data->y - 1;
             else
