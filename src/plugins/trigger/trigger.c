@@ -61,7 +61,7 @@ char *trigger_hook_default_rc[TRIGGER_NUM_HOOK_TYPES] =
 
 char *trigger_hook_regex_default_var[TRIGGER_NUM_HOOK_TYPES] =
 { "tg_signal_data", "", "tg_string", "tg_message", "tg_argv_eol1", "tg_command",
-  "", "tg_value", "" };
+  "tg_remaining_calls", "tg_value", "" };
 
 char *trigger_return_code_string[TRIGGER_NUM_RETURN_CODES] =
 { "ok", "ok_eat", "error" };

@@ -3023,7 +3023,7 @@ type:
 | print       | tg_message
 | command     | tg_argv_eol1
 | command_run | tg_command
-| timer       |
+| timer       | tg_remaining_calls
 | config      | tg_value
 | focus       |
 |===
