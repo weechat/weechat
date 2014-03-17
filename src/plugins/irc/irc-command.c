@@ -5849,7 +5849,7 @@ irc_command_init ()
         N_("channel: channel where user is\n"
            "   nick: nick to kick and ban\n"
            " reason: reason for kick (special variables $nick, $channel and "
-           "$channel are replaced by their value)\n"
+           "$server are replaced by their value)\n"
            "\n"
            "It is possible to kick/ban with a mask, nick will be extracted from "
            "mask and replaced by \"*\".\n"

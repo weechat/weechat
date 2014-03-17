@@ -282,14 +282,14 @@ kanał: kanał, na którym znajduje się użytkownik
 ----
 /kickban  [<kanał>] <nick> [<powód>]
 
-kanał: kanał, na którym jest użytkownik
-   nick: nick do wykopania i zbanowania
- powód: powód do wykopania (specjalne zmienne jak $nick, $channel i $server są podmieniane na odpowiednie wartości)
+channel: channel where user is
+   nick: nick to kick and ban
+ reason: reason for kick (special variables $nick, $channel and $server are replaced by their value)
 
-Możliwe jest kopanie/banowanie za pomocą maski, nick zostanie wyciągnięty z maski i zastąpiony "*".
+It is possible to kick/ban with a mask, nick will be extracted from mask and replaced by "*".
 
-Przykład:
-  zbanuje "*!*@host.com", następnie wykopie "toto":
+Example:
+  ban "*!*@host.com" and then kick "toto":
     /kickban toto!*@host.com
 ----
 
