@@ -381,7 +381,7 @@ exec_command_run (struct t_gui_buffer *buffer,
 
     /* parse command options */
     cmd_options.command_index = -1;
-    cmd_options.use_shell = 1;
+    cmd_options.use_shell = 0;
     cmd_options.detached = 0;
     cmd_options.pipe_stdin = 0;
     cmd_options.timeout = 0;
@@ -764,10 +764,11 @@ exec_command_init ()
            " || -set <id> <property> <value>"
            " || -del <id>|-all [<id>...]"),
         N_("   -list: list commands\n"
-           "     -sh: use the shell to execute the command (default)\n"
+           "     -sh: use the shell to execute the command (WARNING: use this "
+           "option ONLY if all arguments are safe date, see option -nosh)\n"
            "   -nosh: do not use the shell to execute the command (required if "
            "the command has some unsafe data, for example the content of a "
-            "message from another user)\n"
+            "message from another user) (default)\n"
            "     -bg: run process in background: do not display process output "
            "neither return code (not compatible with options -o/-n)\n"
            "   -nobg: catch process output and display return code (default)\n"

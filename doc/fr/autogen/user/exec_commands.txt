@@ -13,8 +13,8 @@
        -del <id>|-all [<id>...]
 
     -list: lister les commandes
-      -sh: utiliser le shell pour exécuter la commande (par défaut)
-    -nosh: ne pas utiliser le shell pour exécuter la commande (requis si la commande a des données non fiables, par exemple le contenu d'un message d'un autre utilisateur)
+      -sh: utiliser le shell pour exécuter la commande (ATTENTION : utilisez cette option SEULEMENT si tous les paramètres sont des données fiables, voir l'option -nosh)
+    -nosh: ne pas utiliser le shell pour exécuter la commande (requis si la commande a des données non fiables, par exemple le contenu d'un message d'un autre utilisateur) (par défaut)
       -bg: lancer le processus en tâche de fond : ne pas afficher la sortie ni le code retour (non compatible avec les options -o/-n)
     -nobg: capturer la sortie du processus et afficher le code retour (par défaut)
    -stdin: créer un tuyau pour envoyer des données sur l'entrée standard du processus (avec /exec -in/-inclose)
