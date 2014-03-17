@@ -1088,7 +1088,7 @@ gui_window_switch_by_buffer (struct t_gui_window *window, int buffer_number)
 void
 gui_window_scroll (struct t_gui_window *window, char *scroll)
 {
-    int direction, stop, count_msg;
+    int direction, stop, count_msg, scroll_from_end_free_buffer;
     char time_letter, saved_char;
     time_t old_date, diff_date;
     char *pos, *error;
@@ -1102,12 +1102,18 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
     direction = 1;
     number = 0;
     time_letter = ' ';
+    scroll_from_end_free_buffer = 0;
 
     /* search direction */
     if (scroll[0] == '-')
     {
         direction = -1;
         scroll++;
+        if (scroll[0] == '-')
+        {
+            scroll_from_end_free_buffer = 1;
+            scroll++;
+        }
     }
     else if (scroll[0] == '+')
     {
@@ -1155,8 +1161,8 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
          * it's not possible to scroll before first line of buffer on a buffer
          * with free content
          */
-        if (!window->scroll->start_line
-            && (window->buffer->type == GUI_BUFFER_TYPE_FREE))
+        if (!scroll_from_end_free_buffer && !window->scroll->start_line
+           && (window->buffer->type == GUI_BUFFER_TYPE_FREE))
             return;
         ptr_line = (window->scroll->start_line) ?
             window->scroll->start_line : window->buffer->lines->last_line;

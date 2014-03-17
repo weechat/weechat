@@ -1576,7 +1576,7 @@ gui_window_scroll_bottom (struct t_gui_window *window)
             window->scroll->start_line = NULL;
             if (window->buffer->lines->lines_count > window->win_chat_height)
             {
-                snprintf (scroll, sizeof (scroll), "-%d",
+                snprintf (scroll, sizeof (scroll), "--%d",
                           window->win_chat_height - 1);
                 gui_window_scroll (window, scroll);
             }
