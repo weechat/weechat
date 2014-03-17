@@ -24,7 +24,7 @@ Niveaux de log utilisés par l'extension IRC:
 
 Exemples:
   définir le niveau d'enregistrement à 5 pour le tampon courant:
-      /logger set 5
+    /logger set 5
   désactiver l'enregistrement pour le tampon courant:
     /logger disable
   définir le niveau à 3 pour les tampons IRC:
