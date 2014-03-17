@@ -176,7 +176,7 @@
 * [[option_script.scripts.cache_expire]] *script.scripts.cache_expire*
 ** Beschreibung: `Ablaufdatum des lokalen Caches, in Minuten (-1 = ohne Ablaufdatum, 0 = umgehend)`
 ** Typ: integer
-** Werte: -1 .. 525600 (Standardwert: `60`)
+** Werte: -1 .. 525600 (Standardwert: `1440`)
 
 * [[option_script.scripts.dir]] *script.scripts.dir*
 ** Beschreibung: `lokales Cache-Verzeichnis für Skripten`

@@ -176,7 +176,7 @@
 * [[option_script.scripts.cache_expire]] *script.scripts.cache_expire*
 ** 説明: `ローカルキャッシュが無効になる時間、分単位 (-1 = 再取得しない、0 = 常に再取得)`
 ** タイプ: 整数
-** 値: -1 .. 525600 (デフォルト値: `60`)
+** 値: -1 .. 525600 (デフォルト値: `1440`)
 
 * [[option_script.scripts.dir]] *script.scripts.dir*
 ** 説明: `スクリプトのローカルキャッシュディレクトリ`

@@ -176,7 +176,7 @@
 * [[option_script.scripts.cache_expire]] *script.scripts.cache_expire*
 ** opis: `lokalnie zapisany czas wygaśnięcia, w minutach (-1 = nigdy nie wygasa, 0 = zawsze wygasa)`
 ** typ: liczba
-** wartości: -1 .. 525600 (domyślna wartość: `60`)
+** wartości: -1 .. 525600 (domyślna wartość: `1440`)
 
 * [[option_script.scripts.dir]] *script.scripts.dir*
 ** opis: `lokalny katalog dla skryptów`

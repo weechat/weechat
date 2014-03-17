@@ -176,7 +176,7 @@
 * [[option_script.scripts.cache_expire]] *script.scripts.cache_expire*
 ** description: `temps d'expiration du cache local, en minutes (-1 = n'expire jamais, 0 = expire toujours)`
 ** type: entier
-** valeurs: -1 .. 525600 (valeur par défaut: `60`)
+** valeurs: -1 .. 525600 (valeur par défaut: `1440`)
 
 * [[option_script.scripts.dir]] *script.scripts.dir*
 ** description: `répertoire du cache local pour les scripts`
