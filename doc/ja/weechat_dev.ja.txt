@@ -54,8 +54,7 @@ WeeChat の主要なリポジトリは 2 つあります:
 |       alias/   | alias プラグイン
 |       aspell/  | aspell プラグイン
 |       charset/ | charset プラグイン
-// TRANSLATION MISSING
-|       exec/    | Exec plugin
+|       exec/    | exec プラグイン
 |       fifo/    | fifo プラグイン (WeeChat にコマンドを送信する FIFO パイプ)
 |       irc/     | IRC (Internet Relay Chat) プラグイン
 |       logger/  | logger プラグイン (表示されたメッセージをファイルに書き込む)
@@ -67,8 +66,7 @@ WeeChat の主要なリポジトリは 2 つあります:
 |       lua/     | lua スクリプト用 API
 |       tcl/     | tcl スクリプト用 API
 |       guile/   | guile (scheme) スクリプト用 API
-// TRANSLATION MISSING
-|       trigger/ | Trigger plugin
+|       trigger/ | trigger プラグイン
 |       xfer/    | xfer (IRC DCC ファイル/チャット)
 | doc/           | 文書
 | po/            | 翻訳ファイル (gettext)
@@ -175,13 +173,12 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       weechat-aspell-speller.c    | スペルチェッカ管理
 |    charset/                       | charset プラグイン
 |       charset.c                   | charset 関数
-// TRANSLATION MISSING
-|    exec/                          | Exec plugin
-|       exec.c                      | Main exec functions
-|       exec-buffer.c               | Exec buffer
-|       exec-command.c              | Exec commands
-|       exec-completion.c           | Exec completions
-|       exec-config.c               | Exec config options (file exec.conf)
+|    exec/                          | Exec プラグイン
+|       exec.c                      | exec の主要関数
+|       exec-buffer.c               | Exec バッファ
+|       exec-command.c              | Exec コマンド
+|       exec-completion.c           | Exec 補完
+|       exec-config.c               | Exec 設定オプション (exec.conf ファイル)
 |    fifo/                          | fifo プラグイン
 |       fifo.c                      | fifo の主要関数
 |       fifo-info.c                 | fifo の情報/インフォリスト/hdata
@@ -263,14 +260,13 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |    tcl/                           | tcl プラグイン
 |       weechat-tcl.c               | tcl の主要関数 (スクリプトのロード/アンロード、tcl コードの実行)
 |       weechat-tcl-api.c           | tcl スクリプト作成 API 関数
-// TRANSLATION MISSING
-|    trigger/                       | Trigger plugin
-|       trigger.c                   | Main trigger functions
-|       trigger-buffer.c            | Trigger buffer
-|       trigger-callback.c          | Trigger callbacks
-|       trigger-command.c           | Trigger commands
-|       trigger-completion.c        | Trigger completions
-|       trigger-config.c            | Trigger config options (file trigger.conf)
+|    trigger/                       | trigger プラグイン
+|       trigger.c                   | trigger の主要関数
+|       trigger-buffer.c            | trigger バッファ
+|       trigger-callback.c          | trigger コールバック
+|       trigger-command.c           | trigger コマンド
+|       trigger-completion.c        | trigger 補完
+|       trigger-config.c            | trigger 設定オプション (trigger.conf ファイル)
 |    xfer/                          | xfer プラグイン (IRC DCC ファイル/チャット)
 |       xfer.c                      | xfer の主要関数
 |       xfer-buffer.c               | xfer バッファ
@@ -917,10 +913,9 @@ server->hook_timer_sasl = weechat_hook_timer (timeout * 1000,
 
 Git リポジトリはこの URL にあります: https://github.com/weechat/weechat
 
-// TRANSLATION MISSING
-Any patch for bug or new feature must be done on master branch, preferred way is
-a Github pull request. A patch can also be sent by e-mail (made with `git diff`
-or `git format-patch`).
+バグや新機能のパッチは必ず master ブランチに対して適用できるものを作成し、Github の pull
+リクエストを使って提出することを推奨します。パッチは電子メールで送信することも可能です
+(`git diff` または `git format-patch` で作成してください)。
 
 コミットメッセージは以下のフォーマットに従ってください:
 

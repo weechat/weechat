@@ -857,32 +857,31 @@ WeeChat を起動したターミナルの例:
 /set weechat.bar.nicklist.conditions "${nicklist} && (${window.win_width} > 100 || ${buffer.full_name} == irc.bitlbee.&bitlbee)"
 ----
 
-// TRANSLATION MISSING
 [[bare_display]]
-=== Bare display
+=== 最小限表示
 
-A special display, called "bare display" can be used for easy click on long URLs
-and selection of text (using the mouse).
+"最小限表示" と呼ばれる特殊な表示状態を使うことで、(マウスを使って) 長い
+URL を簡単にクリックしたり、テキストを簡単に選択できるようになっています。
 
-The bare display has following features:
+最小限表示は以下の機能を持っています:
 
-* it displays only the content of current buffer: no window split neither bars
-  (no title, nicklist, status, input, ...)
-* the WeeChat mouse support is disabled (if it was enabled): you can use your
-  mouse like you do in the terminal to click on URLs and select text
-* ncurses is not used, therefore URLs are not cut at the end of lines.
+* 現在のバッファの内容だけを表示: 分割ウィンドウやバー等
+  (タイトル、ニックネームリスト、状態、入力、...) も表示しない
+* WeeChat マウスサポートを無効化 (有効化されていた場合):
+  ターミナルでやるのと同じように URL をクリックしたりテキストを選択できます
+* ncurses を使わない、このため URL を行の最後で分断されることがなくなります。
 
-The default key to enabled bare display is key[alt-!], and same key to exit (or
-by default anything changing the input will exit the bare display, see option
-<<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>).
+最小限表示を有効化するデフォルトキーは key[alt-!] で、終了するには同じキーを押してください
+(また、デフォルトでは入力が変更された場合に最小限表示を終了します、<<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>
+オプションを参照)。
 
-The time format can be customized with the option
-<<option_weechat.look.bare_display_time_format,weechat.look.bare_display_time_format>>.
+<<option_weechat.look.bare_display_time_format,weechat.look.bare_display_time_format>>
+オプションを使えば、時間フォーマットを変更することも可能です。
 
-The bare display can be enabled for a specific delay using the command
-<<command_weechat_window,/window>>.
+<<command_weechat_window,/window>>
+コマンドを使えば、指定秒後に最低限表示を有効化することができます。
 
-If WeeChat looks like that:
+WeeChat が以下のような表示状態の場合:
 
 ....
 ┌───────────────────────────────────────────────────────────────────────────┐
@@ -909,7 +908,7 @@ If WeeChat looks like that:
 └───────────────────────────────────────────────────────────────────────────┘
 ....
 
-The screen will look like that in bare display:
+最低限表示では以下の様に表示されます:
 
 ....
 ┌───────────────────────────────────────────────────────────────────────────┐
@@ -936,8 +935,8 @@ The screen will look like that in bare display:
 └───────────────────────────────────────────────────────────────────────────┘
 ....
 
-So you can click the URL from 'joe' without any problem in your terminal (of
-course this supposes that your terminal supports click on URLs).
+このため、ターミナルで問題なく 'joe' さんからの URL をクリックできます
+(もちろん、使用中のターミナルで URL をクリックできるように設定されていなければいけませんが)。
 
 [[notify_levels]]
 === 通知レベル
@@ -1092,8 +1091,7 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
 | key[alt-]key[>]    | バッファ訪問履歴で次のバッファに移動 | `/input jump_next_visited_buffer`
 | key[alt-/]         | 最後に表示したバッファに移動 (バッファ移動前に表示していたウィンドウ) | `/input jump_last_buffer_displayed`
 | key[alt-=]         | フィルタの有効無効を切り替え | `/filter toggle`
-// TRANSLATION MISSING
-| key[alt-!]         | Toggle bare display on/off | `/window bare`
+| key[alt-!]         | 最小限表示の有効無効を切り替え | `/window bare`
 |===
 
 [[key_bindings_search_context]]
@@ -1224,9 +1222,8 @@ WeeChat でマウスが有効化されている場合、key[shift]
 WeeChat はデフォルトマウスイベントの多くを定義しています
 (<<key_bindings_mouse_context,"マウス" モード用のキー>>を参照)。
 
-// TRANSLATION MISSING
-You can change or add bindings with the command `/key` using context "mouse"
-(for syntax, see command <<command_weechat_key,/key>>).
+`/key` コマンドで "mouse" コンテキストを指定することで割り当てを追加、変更できます
+(詳しい使い方は <<command_weechat_key,/key>> コマンドを参照)。
 
 イベント名には修飾キー (任意)、ボタン/ホイール名、ジェスチャー (任意)
 を利用できます。異なるイベントは "-" で分割してください。
@@ -1540,45 +1537,44 @@ WeeChat はスクリーンに色が表示された時点で色ペアを動的に
 /set weechat.color.status_time *99999
 ----
 
-// TRANSLATION MISSING
 [[secured_data]]
-=== Secured data
+=== 暗号化データ
 
 [[secured_data_storage]]
-==== Storage
+==== データの保存
 
-WeeChat can encrypt passwords or private data using secured data, stored in file
-'sec.conf'.
+WeeChat はパスワード及び 'sec.conf'
+ファイルに保存されている個人データを暗号化することができます。
 
-This configuration file is read before any other file, and the values stored
-inside can be used in various WeeChat or plugins/scripts options.
+この設定ファイルは他のどのファイルよりも先に読まれ、ファイルに保存されている値を
+WeeChat 及びプラグイン/スクリプトのオプションで使うことができます。
 
-You can set a passphrase to encrypt data in 'sec.conf'. This is not mandatory
-but highly recommended, otherwise data is stored as plain text in file.
+'sec.conf'
+に含まれるデータを暗号化するパスフレーズを設定することが可能です。これは必須ではありませんが、パスフレーズを設定することを強く勧めます。パスフレーズを設定しない場合、データは平文でファイルに保存されます。
 
 ----
 /secure passphrase this is my passphrase
 ----
 
-When a passphrase is set, WeeChat will ask you to enter it on startup (but not
-on `/upgrade`).
+パスフレーズを設定した場合、WeeChat
+の起動時にパスフレーズの入力が求められるようになります (`/upgrade` 時には求められません)。
 
-You can change this behavior and use a file with the passphrase (see option
-<<option_sec.crypt.passphrase_file,sec.crypt.passphrase_file>>).
+この挙動を変更し、パスフレーズを保存したファイルを使うことも可能です
+(<<option_sec.crypt.passphrase_file,sec.crypt.passphrase_file>> オプションを参照してください)。
 
 [[secured_data_encryption]]
-===== Encryption
+===== 暗号化
 
-The encryption of data is made in 3 steps:
+データの暗号化は 3 段階に分けて行われます:
 
-. Derive a key from the passphrase (with optional salt).
-. Compute hash of data to encrypt.
-. Encrypt the hash + data (output is: salt + encrypted hash/data).
+. パスフレーズから鍵を生成 (任意の salt を加えます)。
+. 暗号化するデータのハッシュを計算。
+. ハッシュとデータを暗号化 (出力: salt + 暗号化済みのハッシュ/データ)。
 
 [NOTE]
-The cipher block mode is 'CFB'.
+ブロック暗号モードは 'CFB' です。
 
-The result is put as hexadecimal string in file 'sec.conf', for example:
+結果は 16 進数文字列として 'sec.conf' ファイルに保存されます、例:
 
 ----
 [data]
@@ -1587,38 +1583,38 @@ freenode = "53B1C86FCDA28FC122A95B0456ABD79B5AB74654F21C3D099A6CCA8173239EEA5953
 ----
 
 [[secured_data_decryption]]
-===== Decryption
+===== 復号化
 
-The decryption of data is made in 3 steps:
+データの復号化は 3 段階に分けて行われます:
 
-. Derive a key using salt and passphrase.
-. Decrypt hash + data.
-. Check that decrypted hash == hash of data.
+. salt とパスフレーズを使って鍵を生成。
+. ハッシュとデータを復号化。
+. 復号化したハッシュとデータのハッシュが同じことを確認。
 
 [[secured_data_manage]]
-==== Manage secured data
+==== 暗号化データの管理
 
-To add secured data, use `/secure set`, for example a password for 'freenode'
-IRC server:
+暗号化データを追加するには、`/secure set` を使ってください、'freenode'
+IRC サーバのパスワードを設定する例:
 
 ----
 /secure set freenode mypassword
 ----
 
-For comfort, secured data can be displayed in a dedicated buffer (key[alt-v] on
-buffer to see values), just do:
+利便性を考慮して、暗号化データを専用のバッファに表示できるようになっています
+(値を見るにはバッファで key[alt-v]、以下のコマンドを実行してください:
 
 ----
 /secure
 ----
 
-Secured data can be used in some options that can contain private data like
-password, using this format: "${sec.data.xxx}" where "xxx" is the name of
-secured data (used with `/secure set xxx ...`). +
-For a complete list of supported options, see `/help secure`.
+例えばパスワードなどの個人データを含むオプションで暗号化データを使うことができます、フォーマット:
+"${sec.data.xxx}" ここで "xxx" は暗号化データの名前です
+(`/secure set xxx ...` のように使った)。 +
+利用できるオプションの完全なリストはを見るには、`/help secure` を使ってください。
 
-To use the 'freenode' password, for example with
-<<irc_sasl_authentication,SASL authentication>>:
+例えば上の 'freenode' パスワードを
+<<irc_sasl_authentication,SASL 認証>>で使うには:
 
 ----
 /set irc.server.freenode.sasl_password "${sec.data.freenode}"
@@ -2818,7 +2814,7 @@ include::autogen/user/guile_commands.txt[]
 
 // TRANSLATION MISSING
 [[trigger_plugin]]
-=== Trigger plugin
+=== トリガプラグイン
 
 Trigger is the Swiss Army knife for WeeChat: it can hook many things (signal,
 modifier, print, ...), change the content of data, and execute one or more

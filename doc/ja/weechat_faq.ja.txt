@@ -696,8 +696,7 @@ OpenBSD では、プラグインファイル名の末尾が ".so.0.0" です (Li
 [[bug_task_patch]]
 === どのようにバグ報告、新機能のリクエスト、パッチ送信すればよいですか。
 
-// TRANSLATION MISSING
-See: http://weechat.org/dev/support
+以下のページを参照してください: http://weechat.org/dev/support
 
 [[gdb_error_threads]]
 === gdb で WeeChat を実行する場合、スレッドに関するエラーが発生します。

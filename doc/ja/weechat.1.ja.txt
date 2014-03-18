@@ -96,8 +96,6 @@ GNU 一般公衆利用許諾契約書 (バージョン2か、希望によって�
 
 Web: <http://weechat.org/>
 
-// TRANSLATION MISSING
-== SUPPORT / REPORTING BUGS
+== サポート / バグ報告
 
-// TRANSLATION MISSING
-For help or a bug report: <http://weechat.org/dev/support>
+手助けを受けたりバグを報告するには: <http://weechat.org/dev/support>
