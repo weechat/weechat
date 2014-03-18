@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2014-03-18 09:19+0100\n"
-"PO-Revision-Date: 2014-03-18 09:21+0100\n"
+"PO-Revision-Date: 2014-03-19 01:42+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/WeeChat>\n"
 "Language: ja\n"
@@ -40,11 +40,11 @@ msgid "max chars"
 msgstr "最大文字数"
 
 msgid ""
-"a WeeChat color name (default, black, (dark)gray, white, (light)red, "
-"(light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a "
-"terminal color number or an alias; attributes are allowed before color (for "
-"text color only, not background): \"*\" for bold, \"!\" for reverse, \"/\" "
-"for italic, \"_\" for underline"
+"a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)"
+"green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal "
+"color number or an alias; attributes are allowed before color (for text "
+"color only, not background): \"*\" for bold, \"!\" for reverse, \"/\" for "
+"italic, \"_\" for underline"
 msgstr ""
 "WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、"
 "brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号ま"
@@ -1175,13 +1175,13 @@ msgstr ""
 msgid "define color aliases and display palette of colors"
 msgstr "色の別名の定義と、カラーパレットの表示"
 
-#, fuzzy
 msgid ""
 "alias <color> <name> || unalias <color> || reset || term2rgb <color> || "
 "rgb2term <rgb> [<limit>] || -o"
-msgstr "alias <color> <name> || unalias <color> || reset || -o"
+msgstr ""
+"alias <color> <name> || unalias <color> || reset || term2rgb <color> || "
+"rgb2term <rgb> [<limit>] || -o"
 
-#, fuzzy
 msgid ""
 "   alias: add an alias for a color\n"
 " unalias: delete an alias\n"
@@ -1205,13 +1205,16 @@ msgid ""
 "  delete color 214:\n"
 "    /color unalias 214"
 msgstr ""
-"  alias: ある色に別名を追加\n"
-"unalias: 別名の削除\n"
-"  color: カラー番号 (0 以上、最大値はターミナル依存、多くの場合 63 か 255)\n"
-"   name: カラーの別名 (例えば: \"orange\")\n"
-"  reset: 全てのカラーペアをリセット (自動的なリセットが無効化されており、これ"
-"以上のカラーペアが利用できない場合に必要、オプション weechat.look."
+"   alias: ある色に別名を追加\n"
+" unalias: 別名の削除\n"
+"   color: カラー番号 (0 以上、最大値はターミナル依存、多くの場合 63 か 255)\n"
+"    name: カラーの別名 (例えば: \"orange\")\n"
+"   reset: 全てのカラーペアをリセット (自動的なリセットが無効化されており、こ"
+"れ以上のカラーペアが利用できない場合に必要、オプション weechat.look."
 "color_pairs_auto_reset を参照)\n"
+"term2rgb: ターミナル色 (0-255) を RGB 色に変換\n"
+"rgb2term: RGB 色をターミナル色 (0-255) に変換\n"
+"   limit: ターミナルテーブル内で使う色の数 (0 から始まる); デフォルトは 256\n"
 "     -o: 端末/色情報を現在の入力としてバッファに送る\n"
 "\n"
 "引数無しの場合、コマンドは新しいバッファに色を表示します。\n"
@@ -1341,7 +1344,6 @@ msgstr "式を評価して結果をバッファに送信"
 msgid "[-n] <expression> || [-n] -c <expression1> <operator> <expression2>"
 msgstr "[-n] <expression> || [-n] -c <expression1> <operator> <expression2>"
 
-#, fuzzy
 msgid ""
 "        -n: display result without sending it to buffer (debug mode)\n"
 "        -c: evaluate as condition: use operators and parentheses, return a "
@@ -1438,11 +1440,13 @@ msgstr ""
 "\n"
 "式中の ${variable} 型のフォーマットの変数は置換さます。変数は以下の優先順位に"
 "従います。\n"
-"  1. 色 (フォーマット: \"color:xxx\")\n"
-"  2. 情報 (フォーマット: \"info:name,arguments\"、arguments は任意)\n"
-"  3. オプション (フォーマット: \"file.section.option\")\n"
-"  4. バッファのローカル変数\n"
-"  5. hdata の名前/変数 (値は自動的に文字列に変換されます)、デフォルトでは "
+"  1. エスケープ文字を含む文字列 (フォーマット: \"esc:xxx\" または \"\\xxx"
+"\")\n"
+"  2. 色 (フォーマット: \"color:xxx\")\n"
+"  3. 情報 (フォーマット: \"info:name,arguments\"、arguments は任意)\n"
+"  4. オプション (フォーマット: \"file.section.option\")\n"
+"  5. バッファのローカル変数\n"
+"  6. hdata の名前/変数 (値は自動的に文字列に変換されます)、デフォルトでは "
 "\"window\" と \"buffer\" は現在のウィンドウ/バッファを指します。\n"
 "hdata のフォーマットは以下の 1 つです:\n"
 "  hdata.var1.var2...: hdata (ポインタは既知) で始まり、1 個ずつ変数を続ける "
@@ -1455,13 +1459,16 @@ msgstr ""
 "hdata と変数の名前については、\"プラグイン API リファレンス\" の "
 "\"weechat_hdata_get\" 関数を参照してください。\n"
 "\n"
-"例:\n"
+"例 (単純な文字列):\n"
 "  /eval -n ${info:version}                 ==> 0.4.3\n"
 "  /eval -n ${weechat.look.scroll_amount}   ==> 3\n"
 "  /eval -n ${window}                       ==> 0x2549aa0\n"
 "  /eval -n ${window.buffer}                ==> 0x2549320\n"
 "  /eval -n ${window.buffer.full_name}      ==> core.weechat\n"
 "  /eval -n ${window.buffer.number}         ==> 1\n"
+"  /eval -n ${\\t}                           ==> <tab>\n"
+"\n"
+"例 (条件):\n"
 "  /eval -n -c ${window.buffer.number} > 2  ==> 0\n"
 "  /eval -n -c ${window.win_width} > 100    ==> 1\n"
 "  /eval -n -c (8 > 12) || (5 > 2)          ==> 1\n"
@@ -1475,15 +1482,13 @@ msgid ""
 "filter messages in buffers, to hide/show them according to tags or regex"
 msgstr "タグか正規表現に基づくバッファメッセージの非表示/表示"
 
-#, fuzzy
 msgid ""
 "list || enable|disable|toggle [<name>] || add <name> <buffer>[,<buffer>...] "
 "<tags> <regex> || rename <name> <new_name> || del <name>|-all"
 msgstr ""
 "list || enable|disable|toggle [<name>] || add <name> <buffer>[,<buffer>...] "
-"<tags> <regex> || del <name>|-all"
+"<tags> <regex> || rename <name> <new_name> || del <name>|-all"
 
-#, fuzzy
 msgid ""
 "   list: list all filters\n"
 " enable: enable filters (filters are enabled by default)\n"
@@ -1550,6 +1555,7 @@ msgstr ""
 " toggle: フィルタの有効無効を切り替え\n"
 "   name: フィルタの名前\n"
 "    add: フィルタを追加\n"
+" rename: フィルタをリネーム\n"
 "    del: フィルタを削除\n"
 "   -all: 全てのフィルタを削除\n"
 " buffer: フィルタが有効化されているバッファのコンマ区切りリスト:\n"
@@ -1960,11 +1966,9 @@ msgstr ""
 msgid "execute a command silently"
 msgstr "静かにコマンドを実行"
 
-#, fuzzy
 msgid "[-core | -current | -buffer <name>] <command>"
-msgstr "[-current | -buffer <name> | -all] <command>"
+msgstr "[-core | -current | -buffer <name>] <command>"
 
-#, fuzzy
 msgid ""
 "   -core: no output on WeeChat core buffer\n"
 "-current: no output on current buffer\n"
@@ -1985,16 +1989,16 @@ msgid ""
 "  message to #weechat channel:\n"
 "    /mute -buffer irc.freenode.#weechat msg #weechat hi!"
 msgstr ""
-"-current: 現在のバッファへの出力を禁止\n"
-" -buffer: 指定したバッファへの出力を禁止\n"
+"   -core: WeeChat コアバッファへの出力を抑制\n"
+"-current: 現在のバッファへの出力を抑制\n"
+" -buffer: 指定したバッファへの出力を抑制\n"
 "    name: 完全なバッファの名前 (例: \"irc.server.freenode\"、\"irc.freenode."
 "#weechat\")\n"
-"    -all: 全てのバッファへの出力を禁止\n"
 " command: 静かに実行するコマンド (最初に '/' が無い場合は自動的に追加されま"
 "す)\n"
 "\n"
-"ターゲット (-current、-buffer、-all) が指定されなかった場合、デフォルトでは "
-"WeeChat コアバッファへの出力のみが抑制されます。\n"
+"ターゲット (-core、-current、-buffer) が指定されなかった場合、デフォルトでは"
+"全ての出力を抑制します。\n"
 "\n"
 "例:\n"
 "  save を行う:\n"
@@ -2045,16 +2049,15 @@ msgstr ""
 msgid "display text on a buffer"
 msgstr "バッファ内にテキストを表示"
 
-#, fuzzy
 msgid ""
 "[-buffer <number>|<name>] [-core] [-escape] [-date <date>] [-tags <tags>] [-"
 "action|-error|-join|-network|-quit] [<text>] || -stdout|-stderr [<text>] || -"
 "beep"
 msgstr ""
 "[-buffer <number>|<name>] [-core] [-escape] [-date <date>] [-tags <tags>] [-"
-"action|-error|-join|-network|-quit] <text> || -stdout|-stderr <text>"
+"action|-error|-join|-network|-quit] [<text>] || -stdout|-stderr [<text>] || -"
+"beep"
 
-#, fuzzy
 msgid ""
 "-buffer: the buffer where text is displayed (default: current buffer)\n"
 "  -core: alias of \"-buffer core.weechat\"\n"
@@ -2108,9 +2111,10 @@ msgstr ""
 "  -tags: タグのコンマ区切りリスト (よく使うタグのリストは /help filter を参"
 "照)\n"
 "   text: 表示するテキスト (プレフィックスとメッセージは必ず \\t で区切ってく"
-"ださい)\n"
+"ださい、\"-\" で始まるテキストは \"\\\" を前置してください)\n"
 "-stdout: 標準出力にテキストを表示 (エスケープ文字を解釈)\n"
 "-stderr: 標準エラー出力にテキストを表示 (エスケープ文字を解釈)\n"
+"  -beep: \"-stderr \\a\" の別名\n"
 "\n"
 "オプション -action ... -quit をつけた場合、プレフィックスは \"weechat.look."
 "prefix_*\" で定義されているものになります。\n"
@@ -2279,7 +2283,6 @@ msgstr ""
 "passphrase <passphrase>|-delete || decrypt <passphrase>|-discard || set "
 "<name> <value> || del <name>"
 
-#, fuzzy
 msgid ""
 "passphrase: change the passphrase (without passphrase, data is stored as "
 "plain text in file sec.conf)\n"
@@ -2341,7 +2344,7 @@ msgstr ""
 "  - weechat.startup.command_{before|after}_plugins オプション\n"
 "  - プロキシオプション: username、password\n"
 "  - irc サーバオプション: autojoin、command、password、sasl_{username|"
-"password}\n"
+"password}、username、realname\n"
 "  - relay.network.password オプション\n"
 "  - /eval コマンド。\n"
 "\n"
@@ -2588,7 +2591,6 @@ msgstr ""
 msgid "manage windows"
 msgstr "ウィンドウの操作"
 
-#, fuzzy
 msgid ""
 "list || -1|+1|b#|up|down|left|right [-window <number>] || <number> || splith|"
 "splitv [-window <number>] [<pct>] || resize [-window <number>] [+/-]<pct> || "
@@ -2606,9 +2608,8 @@ msgstr ""
 "|| scroll_horiz [-window <number>] [+/-]<value>[%] || scroll_up|scroll_down|"
 "scroll_top|scroll_bottom|scroll_beyond_end|scroll_previous_highlight|"
 "scroll_next_highlight|scroll_unread [-window <number>] || swap [-window "
-"<number>] [up|down|left|right] || zoom[-window <number>]"
+"<number>] [up|down|left|right] || zoom[-window <number>] || bare [<delay>]"
 
-#, fuzzy
 msgid ""
 "         list: list opened windows (without argument, this list is "
 "displayed)\n"
@@ -2699,6 +2700,8 @@ msgstr ""
 "         swap: 2 つのウィンドウのバッファを入れ替え (ターゲットウィンドウの方"
 "向を任意指定)\n"
 "         zoom: ウィンドウを拡大\n"
+"         bare: 最小限表示を切り替える (自動的に標準表示モードに戻るまでの時間"
+"をミリ秒単位で任意指定)\n"
 "\n"
 "splith と splitv に関しては、pct は新しいウィンドウのパーセンテージで、現在の"
 "ウィンドウサイズに対する割合で計算されます。例えば、25 は size = "
@@ -2813,14 +2816,15 @@ msgid ""
 "Warning: option weechat.look.save_config_on_exit is disabled, so the option "
 "weechat.look.save_layout_on_exit is ignored"
 msgstr ""
+"警告: weechat.look.save_config_on_exit オプションが無効化されているため、"
+"weechat.look.save_layout_on_exit を無視します"
 
-#, fuzzy
 msgid ""
 "Warning: you should now issue /save to write option weechat.look."
 "save_config_on_exit in configuration file"
 msgstr ""
-"警告: 設定ファイルに \"save_config_on_exit\" オプションを書き込むには、/save "
-"を使ってください"
+"警告: 設定ファイルに weechat.look.save_config_on_exit オプションを書き込むに"
+"は、/save を使ってください"
 
 msgid ""
 "WARNING: this option can cause serious display bugs, if you have such "
@@ -3167,6 +3171,12 @@ msgid ""
 "to hotlist if you are away, or if the buffer is not visible on screen (not "
 "displayed in any window)"
 msgstr ""
+"ホットリストでバッファを追加する条件 (追加するバッファの通知レベルが OK の場"
+"合); 以下の条件を使うことができます: \"window\" (現在のウィンドウポイン"
+"タ)、\"buffer\" (ホットリストに追加するバッファポインタ)、\"priority\" (0 = "
+"低い、1 = メッセージ、2 = プライベートメッセージ、3 = ハイライト); デフォルト"
+"では離席状態またはバッファがスクリーンに表示されていない場合にホットリストへ"
+"バッファを追加します"
 
 msgid "string displayed between buffers in hotlist"
 msgstr "ホットリストにあるバッファの間に表示される文字列"
@@ -3220,6 +3230,10 @@ msgid ""
 "sort by number, number_*: sort by number; asc = ascending sort, desc = "
 "descending sort"
 msgstr ""
+"ホットリストのソート: group_time_*: 通知レベルでグループ化した (ハイライトを"
+"前にした) 後に時間でソート、group_number_*: 通知レベルでグループ化した (ハイ"
+"ライトを前にした) 後に番号でソート、number_*: 番号でソート; asc = 昇順、desc "
+"= 降順"
 
 msgid "text displayed at the end of the hotlist"
 msgstr "ホットリストの最後に表示されるテキスト"
@@ -3432,13 +3446,12 @@ msgid "string displayed after prefix"
 msgstr "プレフィックスの後ろに表示される文字列"
 
 msgid "exit the bare display mode on any changes in input"
-msgstr ""
+msgstr "入力の変更に対する最小限表示モードを終了する"
 
-#, fuzzy
 msgid ""
 "time format in bare display mode (see man strftime for date/time specifiers)"
 msgstr ""
-"\"time\" バーアイテムの時間フォーマット (日付/時間指定子は strftime の man を"
+"最小限表示モードで使う時間フォーマット (日付/時間指定子は strftime の man を"
 "参照)"
 
 msgid "use a marker (line or char) on buffers to show first unread line"
@@ -3999,15 +4012,16 @@ msgstr "コマンド '%s' の終了、タイムアウトになりました (%.1f
 
 #, c-format
 msgid "%sError sending signal %d to pid %d: %s"
-msgstr ""
+msgstr "%sシグナル %d を pid %d に送信中にエラー: %s"
 
 #, c-format
 msgid "%sYou can not write text in this buffer"
 msgstr "%sこのバッファに書き込むことは出来ません"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sError with command \"%s\" (help on command: /help %s)"
-msgstr "%sコマンド \"%s\" にエラーがあります (/help %s を参照)"
+msgstr ""
+"%sコマンド \"%s\" にエラーがあります (コマンドに関するヘルプ: /help %s)"
 
 #, c-format
 msgid ""
@@ -4381,9 +4395,9 @@ msgid ""
 "(see /help eval), like: \"${nicklist} && ${window.win_width} > 100\" (local "
 "variables for expression are ${active}, ${inactive} and ${nicklist})"
 msgstr ""
-"バー表示の状態 (\"window\" タイプのバー): 単純な状態: \"active\"、\"inactive"
-"\"、\"nicklist\" (ウィンドウはアクティブ/非アクティブ、バッファにはニックネー"
-"ムリストが含まれる)、状態に関する式 (/help eval を参照)、例えば: "
+"バーを表示する条件 (\"window\" タイプのバー): 単純な条件: \"active"
+"\"、\"inactive\"、\"nicklist\" (ウィンドウはアクティブ/非アクティブ、バッファ"
+"にはニックネームリストが含まれる)、条件式 (/help eval を参照)、例えば: "
 "\"${nicklist} && ${window.win_width} > 100\" (式のローカル変数は "
 "${active}、${inactive}、${nicklist})"
 
@@ -4907,78 +4921,75 @@ msgstr ""
 "  reset: 現在のバッファの文字集合をリセット"
 
 msgid "Execution of external commands in WeeChat"
-msgstr ""
+msgstr "WeeChat 内部で外部コマンドの実行"
 
 #, c-format
 msgid "%s: end of command %d (\"%s\"), return code: %d"
-msgstr ""
+msgstr "%s: コマンド %d (\"%s\") が終了、リターンコード: %d"
 
 #, c-format
 msgid "%s: unexpected end of command %d (\"%s\")"
-msgstr ""
+msgstr "%s: コマンド %d (\"%s\") が予期せず終了"
 
-#, fuzzy
 msgid "Executed commands"
-msgstr "weechat コマンド"
+msgstr "実行されたコマンド"
 
 msgid "No command is running"
-msgstr ""
+msgstr "実行中のコマンドはありません"
 
-#, fuzzy
 msgid "Commands:"
-msgstr "コマンド /%s"
+msgstr "コマンド:"
 
 #. TRANSLATORS: format: hours + minutes, for example: 3h59
 #, c-format
 msgid "%dh%02d"
-msgstr ""
+msgstr "%d 時間 %02d 分"
 
 #. TRANSLATORS: format: minutes + seconds, for example: 3m59
 #, c-format
 msgid "%dm%02d"
-msgstr ""
+msgstr "%d 分 %02d 秒"
 
 #. TRANSLATORS: format: seconds, for example: 59s
 #, c-format
 msgid "%ds"
-msgstr ""
+msgstr "%d 秒"
 
 #. TRANSLATORS: %s before "ago" is elapsed time, for example: "3m59"
-#, fuzzy, c-format
+#, c-format
 msgid "  %s%s%s %d%s%s%s: %s\"%s%s%s\"%s (pid: %d, started %s ago)"
-msgstr "  %s[%s%d%s]%s %s%s.%s%s%s (通知: %s)"
+msgstr "  %s%s%s %d%s%s%s: %s\"%s%s%s\"%s (pid: %d、%s 前に開始)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: command id \"%s\" not found"
-msgstr "%s%s: コマンド \"%s\" が見つかりません:"
+msgstr "%s%s: コマンド id \"%s\" が見つかりません"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: command with id \"%s\" is not running any more"
-msgstr "%s: スクリプト \"%s\" のホールド状態が解除されました"
+msgstr "%s%s: id \"%s\" のコマンドはもはや実行中ではありません"
 
 #, c-format
 msgid "%s%s: invalid options in option exec.command.default_options"
-msgstr ""
+msgstr "%s%s: オプション exec.command.default_options では無効なオプション"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: failed to run command \"%s\""
-msgstr "%s%s: 関数 \"%s\" を実行できません"
+msgstr "%s%s: コマンド \"%s\" の実行に失敗しました"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%d commands removed"
-msgstr "    フックされたコマンド:"
+msgstr "%d 個のコマンドを削除"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: command with id \"%s\" is still running"
-msgstr "%s%s: コマンド \"%s\" が見つかりません:"
+msgstr "%s%s: id \"%s\" のコマンドはまだ実行中です"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Command \"%s\" removed"
-msgstr "別名 \"%s\" が削除されました"
+msgstr "コマンド \"%s\" を削除"
 
-#, fuzzy
 msgid "execute external commands"
-msgstr "静かにコマンドを実行"
+msgstr "外部コマンドを実行"
 
 msgid ""
 "-list || [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <name>] [-l|-o|-"
@@ -4988,6 +4999,12 @@ msgid ""
 "<signal> || -kill <id> || -killall || -set <id> <property> <value> || -del "
 "<id>|-all [<id>...]"
 msgstr ""
+"-list || [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <name>] [-l|-o|-"
+"n] |-sw|-nosw] [-ln|-noln] [-color ansi|auto|irc|weechat|strip] [-rc|-norc] "
+"[-timeout <timeout>] [-name <name>] [-pipe <command>] [-hsignal <name>] "
+"<command> || -in <id> <text> || -inclose <id> [<text>] || -signal <id> "
+"<signal> || -kill <id> || -killall || -set <id> <property> <value> || -del "
+"<id>|-all [<id>...]"
 
 msgid ""
 "   -list: list commands\n"
@@ -5056,27 +5073,94 @@ msgid ""
 "  /exec -o uptime\n"
 "  /exec -pipe \"/print Machine uptime:\" uptime"
 msgstr ""
+"   -list: コマンドをリストアップ\n"
+"     -sh: コマンドを実行する際にシェルを使う (警告: このオプションを使えるの"
+"は、全ての引数が安全なデータの場合だけです、オプション -nosh を参照)\n"
+"   -nosh: コマンドを実行する際にシェルを使わない (コマンドに安全でないデータ"
+"が含まれる場合に必要、例えば他のユーザからのメッセージの内容) (デフォルト)\n"
+"     -bg: プロセスをバックグラウンド実行: プロセスの出力およびリターンコード"
+"を表示しない (オプション -o/-n と互換性はありません)\n"
+"   -nobg: プロセスの出力を受け取り、リターンコードを表示する (デフォルト)\n"
+"  -stdin: プロセスにデータを送信するパイプを作成する (/exec -in/-inclose を使"
+"う)\n"
+"-nostdin: 標準入力用にパイプを作成しない (デフォルト)\n"
+" -buffer: コマンドの出力をこのバッファに表示 / 送信する (バッファが見つからな"
+"い場合、新しいバッファ \"exec.exec.xxx\" が作られます)\n"
+"      -l: コマンドの出力をカレントバッファに表示 (デフォルト)\n"
+"      -o: コマンドの出力をカレントバッファに送信 (オプション -bg と互換性はあ"
+"りません)\n"
+"      -n: コマンドの出力を新しいバッファに表示 (オプション -bg と互換性はあり"
+"ません)\n"
+"     -sw: 出力バッファに移動 (デフォルト)\n"
+"   -nosw: 出力バッファに移動しない\n"
+"     -ln: 行数を表示 (新しいバッファに表示する場合はデフォルト)\n"
+"   -noln: 行数を表示しない\n"
+"  -color: 出力に含まれる ANSI 色に対する挙動:\n"
+"             ansi: ANSI 色をそのままにする\n"
+"             auto: ANSI 色を WeeChat/IRC 色に変換 (デフォルト)\n"
+"              irc: ANSI 色を IRC 色に変換\n"
+"          weechat: ANSI 色を WeeChat 色に変換\n"
+"            strip: ANSI 色を削除\n"
+"     -rc: リターンコードを表示 (デフォルト)\n"
+"   -norc: リターンコードを表示しない\n"
+"-timeout: コマンドのタイムアウトを設定 (秒単位)\n"
+"   -name: コマンドの名前を設定 (後から名前を付けるには /exec を使う)\n"
+"   -pipe: WeeChat およびプラグインコマンドに出力を送信 (1 行ごと); コマンドお"
+"よび引数に空白が含まれる場合、2 重引用符で囲ってください; 引数 $line はその行"
+"で置換されます (デフォルトではコマンドの後ろに空白を付けてから行を追加しま"
+"す) (オプション -bg/-o/-n と互換性はありません)\n"
+"-hsignal: hsignal として出力を送信 (例えばトリガで使われます) (オプション -"
+"bg/-o/-n と互換性はありません)\n"
+" command: 実行するコマンド; \"url:\" で始まる場合、シェルは無効化され、URL の"
+"内容がダウンロードされ、出力として送信されます\n"
+"      id: コマンド識別子: 番号か名前 (\"-name xxx\" で設定した場合) のどちら"
+"か一方\n"
+"     -in: プロセスの標準入力にテキストを送信\n"
+"-inclose: -in と同じ、ただし使用後に標準入力を閉じる (テキストは任意: テキス"
+"トが無い場合、標準入力をすぐに閉じる)\n"
+" -signal: プロセスにシグナルを送信; シグナルは整数値または次の名前の 1 つ: "
+"hup、int、quit、kill、term、usr1、usr2\n"
+"   -kill: \"-signal <id> kill\" のエイリアス\n"
+"-killall: 全ての実行中プロセスを kill する\n"
+"    -set: フックプロパティを設定 (プラグイン API リファレンスの hook_set 関数"
+"を参照)\n"
+"property: フックプロパティ\n"
+"   value: フックプロパティの新しい値\n"
+"    -del: 中断されたコマンドを削除\n"
+"    -all: 全ての中断されたコマンドを削除\n"
+"\n"
+"オプション exec.command.default_options でデフォルトオプションの設定が可能で"
+"す。\n"
+"\n"
+"例:\n"
+"  /exec -n ls -l /tmp\n"
+"  /exec -n ps xu | grep weechat\n"
+"  /exec -n -norc url:http://pastebin.com/raw.php?i=xxxxxxxx\n"
+"  /exec -o uptime\n"
+"  /exec -pipe \"/print Machine uptime:\" uptime"
 
 msgid "ids (numbers and names) of executed commands"
-msgstr ""
+msgstr "実行されたコマンドの識別子 (番号と名前)"
 
 msgid ""
 "default options for command /exec (see /help exec); example: \"-nosh -bg\" "
 "to run all commands in background (no output), and without using the shell"
 msgstr ""
+"/exec コマンドのデフォルトオプション (/help exec を参照); 例: \"-nosh -bg\" "
+"は全てのコマンドをバックグラウンドで実行し (出力なし)、シェルを使わない"
 
 msgid ""
 "delay for purging finished commands (in seconds, 0 = purge commands "
 "immediately, -1 = never purge)"
 msgstr ""
+"接続を切ったクライアントを追い出すまでの遅延時間 (秒単位、0 = すぐにクライア"
+"ントを追い出す、-1 = 追い出さない)"
 
-#, fuzzy
 msgid "text color for a running command flag in list of commands"
-msgstr "入力がアクションの場合のテキスト色"
+msgstr "コマンドリストで使う実行中コマンドのフラグに対するテキスト色"
 
-#, fuzzy
 msgid "text color for a finished command flag in list of commands"
-msgstr "入力がアクションの場合のテキスト色"
+msgstr "コマンドリストで使う実行完了コマンドのフラグに対するテキスト色"
 
 msgid "FIFO pipe for remote control"
 msgstr "リモート操作用の FIFO パイプ"
@@ -5201,13 +5285,13 @@ msgid ""
 msgstr ""
 "%s%s: %d 個の %s との切断を完了 (SSL 接続は upgrade でサポートされていません)"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s: unable to create temporary server \"%s\" (check if there is already a "
 "server with this name)"
 msgstr ""
-"%s%s: スクリプト \"%s\" を登録できません (同じ名前の別のスクリプトが存在しま"
-"す)"
+"%s%s: 一時的なサーバ \"%s\" を作成できません (同じ名前のサーバが登録済みでな"
+"いか確認してください)"
 
 #, c-format
 msgid ""
@@ -5634,8 +5718,8 @@ msgstr ""
 "            - 内部サーバ名 (/server add で作成されたもの、利用推奨)\n"
 "            - ホスト名/ポート番号、又は IP アドレス/ポート番号 (これは一時的"
 "サーバを作る)、デフォルトのポート番号は 6667\n"
-"            - 次のフォーマットに従う URL: irc[6][s]://[nickname[:"
-"password]@]irc.example.org[:port][/#channel1][,#channel2[...]]\n"
+"            - 次のフォーマットに従う URL: irc[6][s]://[nickname[:password]@]"
+"irc.example.org[:port][/#channel1][,#channel2[...]]\n"
 "    option: サーバに関するオプション (ブール型オプションでは、value は無視さ"
 "れる)\n"
 "  nooption: ブール型オプションを 'off' にする (例: -nossl)\n"
@@ -5912,7 +5996,6 @@ msgstr ""
 msgid "kicks and bans a nick from a channel"
 msgstr "チャンネルからニックネームをキックして参加を禁止"
 
-#, fuzzy
 msgid ""
 "channel: channel where user is\n"
 "   nick: nick to kick and ban\n"
@@ -5931,8 +6014,8 @@ msgstr ""
 " reason: キック理由 (特殊変数 $nick、$channel、$server はそれぞれの値に置換さ"
 "れます)\n"
 "\n"
-"キックと参加禁止にマスクを使える場合、\"*\" のマスク展開後にマッチするニック"
-"ネームがこれらの対象になる。\n"
+"キックと参加禁止にマスクを使うことが可能で、\"*\" のマスク展開後にマッチする"
+"ニックネームがこれらの対象になります。\n"
 "\n"
 "例:\n"
 "  \"*!*@host.com\" を参加禁止して \"toto\" をキック:\n"
@@ -6643,7 +6726,6 @@ msgstr "ユーザに関する情報を要求"
 msgid "[<server>] [<nick>[,<nick>...]]"
 msgstr "[<server>] [<nick>[,<nick>...]]"
 
-#, fuzzy
 msgid ""
 "server: server name\n"
 "  nick: nick (may be a mask)\n"
@@ -6660,7 +6742,11 @@ msgstr ""
 "\n"
 "引数が無い場合、このコマンドは以下のユーザに対する whois を行います:\n"
 "- バッファがサーバ/チャンネルの場合、自分自身のニックネーム\n"
-"- バッファがプライベートの場合、相手のニックネーム。"
+"- バッファがプライベートの場合、相手のニックネーム。\n"
+"\n"
+"オプション irc.network.whois_double_nick が有効の場合、アイドル時間を返しても"
+"らうためにニックネームを 2 つ送信します (ニックネームを 1 つ指定した場合で"
+"も)。"
 
 msgid "ask for information about a nick which no longer exists"
 msgstr "既に存在しないニックネームに関する情報を要求"
@@ -6881,17 +6967,14 @@ msgstr "サーバへの再接続の際の遅延 (秒単位) 時間"
 msgid "nicknames to use on server (separated by comma)"
 msgstr "サーバで使用するニックネーム (コンマ区切り)"
 
-#, fuzzy
 msgid "user name to use on server (note: content is evaluated, see /help eval)"
 msgstr ""
-"プロキシサーバのユーザ名 (注意: 値は評価されます、/help eval を参照してくださ"
+"サーバで使用するユーザ名 (注意: 値は評価されます、/help eval を参照してくださ"
 "い)"
 
-#, fuzzy
 msgid "real name to use on server (note: content is evaluated, see /help eval)"
 msgstr ""
-"プロキシサーバのユーザ名 (注意: 値は評価されます、/help eval を参照してくださ"
-"い)"
+"サーバで使用する実名 (注意: 値は評価されます、/help eval を参照してください)"
 
 msgid ""
 "custom local hostname/IP for server (optional, if empty local hostname is "
@@ -7792,9 +7875,9 @@ msgstr "%s%s: クライアントの機能、リクエスト中: %s"
 msgid "%s%s: client capability: sasl not supported"
 msgstr "%s%s: クライアントの機能: sasl はサポートされていません"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: client capability, currently enabled: %s"
-msgstr "%s%s: クライアントの機能、有効化: %s"
+msgstr "%s%s: クライアントの機能、現在有効化: %s"
 
 #, c-format
 msgid "%s%s: client capability, enabled: %s"
@@ -8730,20 +8813,19 @@ msgid "height of terminal"
 msgstr "ターミナルの高さ"
 
 msgid "POSIX extended regular expression to search ANSI escape codes"
-msgstr ""
+msgstr "ANSI エスケープコードを検索する POSIX 拡張正規表現"
 
 msgid "terminal color (0-255) converted to RGB color"
-msgstr ""
+msgstr "RGB 色コードに変換されたターミナル色コード (0-255)"
 
-#, fuzzy
 msgid "color (terminal color: 0-255)"
-msgstr "ターミナル色:"
+msgstr "色コード (ターミナル色コード: 0-255)"
 
 msgid "RGB color converted to terminal color (0-255)"
-msgstr ""
+msgstr "ターミナル色コード (0-255) に変換されたRGB 色コード"
 
 msgid "rgb,limit (limit is optional and is set to 256 by default)"
-msgstr ""
+msgstr "rgb,limit (limit は任意でデフォルトでは 256 に設定)"
 
 msgid "list of bars"
 msgstr "バーのリスト"
@@ -9496,6 +9578,8 @@ msgid ""
 "delay for purging disconnected clients (in minutes, 0 = purge clients "
 "immediately, -1 = never purge)"
 msgstr ""
+"接続を切ったクライアントを追い出すまでの遅延時間 (分単位、0 = すぐにクライア"
+"ントを追い出す、-1 = 追い出さない)"
 
 msgid ""
 "compression level for packets sent to client with WeeChat protocol (0 = "
@@ -9569,7 +9653,6 @@ msgstr ""
 "\"server-time\" 機能を利用可能にした場合、これは利用されません); 空文字列 = "
 "バックログメッセージで時間を表示しない"
 
-#, fuzzy
 msgid "number of clients for relay"
 msgstr "中継するクライアントのリスト"
 
@@ -9578,6 +9661,7 @@ msgid ""
 "status name (optional): connecting, waiting_auth, connected, auth_failed, "
 "disconnected"
 msgstr ""
+"状態名 (任意): connecting、waiting_auth、connected、auth_failed、disconnected"
 
 msgid "list of relay clients"
 msgstr "リレークライアントのリスト"
@@ -10269,161 +10353,157 @@ msgstr "%s%s: ファイル \"%s\" の解析中にエラーが発生: %s"
 msgid ""
 "Text replacement and command execution on events triggered by WeeChat/plugins"
 msgstr ""
+"WeeChat およびプラグインの決めたトリガイベントでテキスト置換とコマンド実行"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to create hook for trigger \"%s\" (bad arguments)"
-msgstr "%sエラー: フィルタ \"%s\" の名前を \"%s\" に変更できません"
+msgstr "%s%s: トリガ \"%s\" のフックを作成できません (無効な引数)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid regular expression in trigger \"%s\""
-msgstr "%s%s: 正規表現のコンパイル中にエラー \"%s\""
+msgstr "%s%s: トリガ \"%s\" の正規表現が間違っています"
 
 msgid "Trigger monitor"
-msgstr ""
+msgstr "トリガモニタ"
 
-#, fuzzy
 msgid "no variable"
-msgstr "変数"
+msgstr "変数がありません"
 
-#, fuzzy
 msgid "empty variable"
-msgstr "変数"
+msgstr "変数が空です"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s  running command %s\"%s%s%s\"%s on buffer %s%s%s"
-msgstr "バッファ \"%2$s\" でコマンドを実行中: \"%1$s\""
+msgstr ""
+"%1$s  バッファ %7$s%8$s%9$s でコマンド %2$s\"%3$s%4$s%5$s\"%6$s を実行中"
 
-#, fuzzy
 msgid "Triggers enabled"
-msgstr "フィルタ \"%s\" が有効化されました"
+msgstr "トリガが有効化されました"
 
-#, fuzzy
 msgid "Triggers disabled"
-msgstr "フィルタ \"%s\" が無効化されました"
+msgstr "トリガが無効化されました"
 
-#, fuzzy
 msgid "No trigger defined"
-msgstr "rmodifier は定義されていません"
+msgstr "トリガは定義されていません"
 
-#, fuzzy
 msgid "List of default triggers:"
-msgstr "別名のリスト:"
+msgstr "デフォルトトリガのリスト:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Trigger \"%s\" restarted"
-msgstr "バー \"%s\" が作成されました"
+msgstr "トリガ \"%s\" が再開されました"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: a disabled trigger can not be restarted"
-msgstr "%s%s: 現在のインタプリタの状態の取得に失敗"
+msgstr "%s%s: 無効化されたトリガを再開できません"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Trigger \"%s\" enabled"
-msgstr "フィルタ \"%s\" が有効化されました"
+msgstr "トリガ \"%s\" が有効化されました"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Trigger \"%s\" disabled"
-msgstr "フィルタ \"%s\" が無効化されました"
+msgstr "トリガ \"%s\" が無効化されました"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid name for trigger"
-msgstr "%1$s%2$s: %4$s 用に割り当てた不正なアドレス \"%3$s\""
+msgstr "%s%s: トリガの名前が無効です"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: trigger \"%s\" already exists"
-msgstr "%sエラー: フィルタ \"%s\" は既に存在します"
+msgstr "%s%s: トリガ \"%s\" は既に存在します"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Trigger \"%s\" renamed to \"%s\""
-msgstr "フィルタ \"%s\" の名前を \"%s\" に変更しました"
+msgstr "トリガ \"%s\" の名前を \"%s\" に変更しました"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: failed to rename trigger \"%s\""
-msgstr "%sエラー: バー \"%s\" の作成に失敗しました"
+msgstr "%s%s: トリガ \"%s\" の名前変更に失敗しました"
 
-#, fuzzy
 msgid "List of triggers:"
-msgstr "プロキシリスト:"
+msgstr "トリガのリスト:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid hook type \"%s\""
-msgstr "%sエラー: キー \"%s\" の割り当てに失敗しました"
+msgstr "%s%s: 無効なフックタイプ \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid format for regular expression"
-msgstr "エラープレフィックスのテキスト色"
+msgstr "%s%s: 正規表現用のフォーマットが間違っています"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid regular expression (compilation failed)"
-msgstr "%s評価する式にエラーがあります"
+msgstr "%s%s: 不正な正規表現 (コンパイル失敗)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: invalid return code \"%s\""
-msgstr "%sエラー: キー \"%s\" の割り当てを解除できません"
+msgstr "%s%s: 無効なリターンコード \"%s\""
 
 #, c-format
 msgid ""
 "%s%s: trigger \"%s\" already exists (choose another name or use option "
 "\"addreplace\" to overwrite it)"
 msgstr ""
+"%s%s: トリガ \"%s\" は既に存在しています (他の名前を選ぶか、\"addreplace\" オ"
+"プションで上書きを有効化してください)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: failed to create trigger \"%s\""
-msgstr "%sエラー: バー \"%s\" の作成に失敗しました"
+msgstr "%s%s: トリガ \"%s\" の作成に失敗しました"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Trigger \"%s\" created"
-msgstr "バー \"%s\" が作成されました"
+msgstr "トリガ \"%s\" が作成されました"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: trigger \"%s\" not found"
-msgstr "%sキー \"%s\" が見つかりません"
+msgstr "%s%s: トリガ \"%s\" が見つかりません"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Trigger \"%s\" updated"
-msgstr "バー \"%s\" がアップデートされました"
+msgstr "トリガ \"%s\" がアップデートされました"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: trigger option \"%s\" not found"
-msgstr "%sエラー: オプション \"%s\" が見つかりません"
+msgstr "%s%s: トリガオプション \"%s\" が見つかりません"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Trigger \"%s\" copied to \"%s\""
-msgstr "フィルタ \"%s\" の名前を \"%s\" に変更しました"
+msgstr "トリガ \"%s\" を \"%s\" にコピーしました"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: failed to copy trigger \"%s\""
-msgstr "%sエラー: バー \"%s\" の作成に失敗しました"
+msgstr "%s%s: トリガ \"%s\" のコピーに失敗しました"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sTrigger \"%s\" not found"
-msgstr "%sキー \"%s\" が見つかりません"
+msgstr "%sトリガ \"%s\" が見つかりません"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%d triggers removed"
-msgstr "%d 個の rmodifier を削除"
+msgstr "%d 個のトリガを削除"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Trigger \"%s\" removed"
-msgstr "Rmodifier \"%s\" を削除"
+msgstr "トリガ \"%s\" を削除"
 
 msgid "Trigger:"
-msgstr ""
+msgstr "トリガ:"
 
-#, fuzzy
 msgid "Default triggers restored:"
-msgstr "デフォルトに戻す場合の rmodifier:"
+msgstr "復元されたデフォルトトリガ:"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s: \"-yes\" argument is required for restoring default triggers (security "
 "reason)"
 msgstr ""
-"%sエラー: デフォルト rmodifiers に戻すためには \"-yes\" 引数が必要 (セキュリ"
-"ティ上の問題)"
+"%s%s: デフォルトトリガに戻すためには \"-yes\" 引数が必要です (セキュリティ上"
+"の問題)"
 
 msgid "manage triggers, the Swiss Army knife for WeeChat"
-msgstr ""
+msgstr "トリガ (WeeChat 用のスイスアーミーナイフ) の管理"
 
 msgid ""
 "list|listfull|listdefault || add|addoff|addreplace <name> <hook> "
@@ -10434,6 +10514,13 @@ msgid ""
 "[<name>...] || show <name> || del <name>|-all [<name>...] || default -yes || "
 "monitor"
 msgstr ""
+"list|listfull|listdefault || add|addoff|addreplace <name> <hook> "
+"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>"
+"\" [\"<return_code>\"]]]]] || addinput [<hook>] || input|output|recreate "
+"<name> || set <name> <option> <value> || rename|copy <name> <new_name> || "
+"enable|disable|toggle [<name>|-all [<name>...]] || restart <name>|-all "
+"[<name>...] || show <name> || del <name>|-all [<name>...] || default -yes || "
+"monitor"
 
 msgid ""
 "       list: list triggers (without argument, this list is displayed)\n"
@@ -10499,8 +10586,8 @@ msgid ""
 "Examples (you can also look at default triggers with /trigger listdefault):\n"
 "  add text attributes *bold*, _underline_ and /italic/ (only in user "
 "messages):\n"
-"    /trigger add effects modifier weechat_print \"${tg_tag_nick}\" \"=="
-"\\*(\\S+)\\*==*${color:bold}$1${color:-bold}*== ==_(\\S+)_==_${color:"
+"    /trigger add effects modifier weechat_print \"${tg_tag_nick}\" \"==\\*"
+"(\\S+)\\*==*${color:bold}$1${color:-bold}*== ==_(\\S+)_==_${color:"
 "underline}$1${color:-underline}_== ==/(\\S+)/==/${color:italic}$1${color:-"
 "italic}/\"\n"
 "  hide nicklist bar on small terminals:\n"
@@ -10511,67 +10598,134 @@ msgid ""
 "  silently save config each hour:\n"
 "    /trigger add cfgsave timer 3600000;0;0 \"\" \"\" \"/mute /save\""
 msgstr ""
+"       list: トリガをリストアップ (引数なしの場合、このリストを表示します)\n"
+"   listfull: 各トリガに関する詳細な情報を付けてトリガをリストアップ\n"
+"listdefault: デフォルトトリガをリストアップ\n"
+"        add: トリガを追加\n"
+"     addoff: トリガを追加 (無効状態で)\n"
+" addreplace: 追加または存在するトリガを置換\n"
+"       name: トリガの名前\n"
+"       hook: signal、hsignal、modifier、print、command、command_run、timer、"
+"config、focus\n"
+"  arguments: フックの引数、フックの種類に依存 (セミコロンで区切る):\n"
+"             signal: シグナルの名前 (必須)\n"
+"             hsignal: hsignal の名前 (必須)\n"
+"             modifier: modifier の名前 (必須)\n"
+"             print: バッファ、タグ、メッセージ、色の削除\n"
+"             command: コマンド (必須)、説明、引数、引数の説明、補完\n"
+"             command_run: コマンド (必須)\n"
+"             timer: インターバル (必須)、秒の調節、最大呼び出し回数\n"
+"             config: オプションの名前 (必須)\n"
+"             focus: エリアの名前 (必須)\n"
+" conditions: トリガの実行条件\n"
+"      regex: 変数内の文字列を置換する 1 つ以上の正規表現\n"
+"    command: 実行するコマンド (複数のコマンドは \";\" で区切ってください)\n"
+"return_code: コールバック内のリターンコード (ok (デフォルト)、ok_eat、"
+"error)\n"
+"   addinput: 入力にトリガを作る際のデフォルト引数を設定\n"
+"      input: 入力にトリガを作る際に使われるコマンドを設定\n"
+"     output: バッファでトリガを作る際のコマンドを送信\n"
+"   recreate: \"add\" の代わりに \"addreplace\" オプションを使うことを除いて "
+"\"input\" と同じ\n"
+"        set: トリガにオプションを設定\n"
+"     option: オプションの名前: name、hook、arguments、conditions、regex、"
+"command、return_code\n"
+"             (オプションに関するヘルプを見るには: /help trigger.trigger."
+"<name>.<option>)\n"
+"      value: オプションの新しい値\n"
+"     rename: トリガの名前を変更\n"
+"       copy: トリガをコピー\n"
+"     enable: トリガを有効化 (引数なしの場合: 大域的にトリガを有効化)\n"
+"    disable: トリガを無効化 (引数なしの場合: 大域的にトリガを無効化)\n"
+"     toggle: トリガの有効無効を切り替え (引数なしの場合: 大域的にトリガの有効"
+"無効を切り替え)\n"
+"    restart: トリガの再開 (フックを再作成)\n"
+"       show: トリガに関する情報を表示 (状態を含めて)\n"
+"        del: トリガを削除\n"
+"       -all: 全てのトリガに関するアクションを実行\n"
+"    default: デフォルトトリガを復元\n"
+"    monitor: トリガ監視バッファを開く\n"
+"\n"
+"トリガコールバックを呼び出す際には、以下の順番通りにアクションを実行します:\n"
+"  1. 条件を確認; 偽の場合、終了\n"
+"  2. POSIX 拡張正規表現を使ってテキストを置換 (トリガに定義されている場合)\n"
+"  3. コマンドを実行 (トリガに定義されている場合)\n"
+"  4. リターンコードを返して終了 (modifier と focus を除く)\n"
+"\n"
+"例 (/trigger listdefault でデフォルトトリガを見ることができます):\n"
+"  テキスト属性 *太字*、_下線_、/イタリック/ を追加 (ユーザメッセージのみ):\n"
+"    /trigger add effects modifier weechat_print \"${tg_tag_nick}\" \"==\\*"
+"(\\S+)\\*==*${color:bold}$1${color:-bold}*== ==_(\\S+)_==_${color:"
+"underline}$1${color:-underline}_== ==/(\\S+)/==/${color:italic}$1${color:-"
+"italic}/\"\n"
+"  狭い端末ではニックネームリストバーを隠す:\n"
+"    /trigger add resize_small signal signal_sigwinch \"${info:term_width} < "
+"100\" \"\" \"/bar hide nicklist\"\n"
+"    /trigger add resize_big signal signal_sigwinch \"${info:term_width} >= "
+"100\" \"\" \"/bar show nicklist\"\n"
+"  設定を 1 時間毎に黙々と保存:\n"
+"    /trigger add cfgsave timer 3600000;0;0 \"\" \"\" \"/mute /save\""
 
 msgid "triggers"
-msgstr ""
+msgstr "トリガ"
 
-#, fuzzy
 msgid "options for triggers"
-msgstr "プロキシのオプション"
+msgstr "トリガに対するオプション"
 
-#, fuzzy
 msgid "value of a trigger option"
-msgstr "設定オプションの値"
+msgstr "トリガオプションの値"
 
-#, fuzzy
 msgid "hooks for triggers"
-msgstr "プロキシのオプション"
+msgstr "トリガに対するフック"
 
-#, fuzzy
 msgid "default arguments for a hook"
-msgstr "IRC チャンネルのデフォルト退出メッセージ"
+msgstr "フックに対するデフォルト引数"
 
-#, fuzzy
 msgid "default conditions for a hook"
-msgstr "バーのデフォルト背景色"
+msgstr "バーのデフォルト状態"
 
 msgid "default regular expression for a hook"
-msgstr ""
+msgstr "フックに対するデフォルトの正規表現"
 
-#, fuzzy
 msgid "default command for a hook"
-msgstr "デフォルトコマンド:"
+msgstr "フックに対するデフォルトコマンド"
 
-#, fuzzy
 msgid "default return codes for hook callback"
-msgstr "バーのデフォルトテキスト色"
+msgstr "フックコールバックに対するデフォルトのリターンコード"
 
 #, c-format
 msgid ""
 "%s%s: invalid format for option \"regex\", see /help trigger.trigger.%s.regex"
 msgstr ""
+"%s%s: オプション \"regex\" の書式が無効です、/help trigger.trigger.%s.regex "
+"を御覧ください"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s: invalid regular expression in option \"regex\", see /help trigger."
 "trigger.%s.regex"
-msgstr "%s%s: 正規表現のコンパイル中にエラー \"%s\""
+msgstr ""
+"%s%s: オプション \"regex\" の正規表現が無効です、/help trigger.trigger.%s."
+"regex を御覧ください"
 
 msgid ""
 "if disabled, the hooks are removed from trigger, so it is not called any more"
 msgstr ""
+"無効の場合、フックをトリガから削除します、このため今後トリガは呼び出されませ"
+"ん"
 
-#, fuzzy
 msgid "type of hook used"
-msgstr "フックリスト"
+msgstr "利用中のフックのタイプ"
 
 msgid "arguments for the hook (depend on the hook type, see /help trigger)"
-msgstr ""
+msgstr "フックの引数 (フックタイプに依存、/help trigger を参照)"
 
 msgid ""
 "condition(s) for running the command (it is checked in hook callback) (note: "
 "content is evaluated when trigger is run, see /help eval)"
 msgstr ""
+"コマンドを実行する条件 (フックコールバック内で確認されます) (注意: 内容はトリ"
+"ガの実行時に評価されます、/help eval を参照)"
 
 msgid ""
 "replace text with a POSIX extended regular expression (it is done only if "
@@ -10583,56 +10737,58 @@ msgid ""
 "more identical chars); matching groups can be used in replace: $0 to $99, $+ "
 "for last match and $.cN to replace all chars of group N by char c"
 msgstr ""
+"POSIX 拡張正規表現で置換するテキスト (条件が満足され、コマンドが実行される前"
+"に置換されます) (注意: 内容はトリガの実行時に評価されます、/help eval を参"
+"照); フォーマット: \"/regex/replace/var\" (var は置換するハッシュテーブル値、"
+"任意)、複数の正規表現は空白で区切ってください、例: \"/regex1/replace1/var1 /"
+"regex2/replace2/var2\"; 区切り文字 \"/\" は任意の文字で置換できます (1 文字以"
+"上の同一文字)、ただし '\\' と括弧を除く; マッチするグループを置換テキストに使"
+"うこともできます: $0 から $99、$+ は最後にマッチしたグループ、$.cN グループ "
+"N のすべての文字を c で置換"
 
 msgid ""
 "command(s) to run if conditions are OK, after regex replacements (many "
 "commands can be separated by semicolons)"
 msgstr ""
+"正規表現置換が行われた後に条件が満足された場合に実行するコマンド (多くのコマ"
+"ンドを実行するにはセミコロンで区切ってください)"
 
 msgid ""
 "return code for hook callback (see plugin API reference to know where ok_eat/"
 "error can be used efficiently)"
 msgstr ""
+"フックコールバックのリターンコード (ok_eat/error を効率的に利用する方法はプラ"
+"グイン API リファレンスを参照)"
 
-#, fuzzy
 msgid "enable trigger support"
-msgstr "マウスサポートの有効化"
+msgstr "トリガサポートの有効化"
 
-#, fuzzy
 msgid "strip colors in hashtable values displayed on monitor buffer"
-msgstr ""
-"トピックにつけられた色を無効化 (バッファタイルに表示される場合のみ利用)"
+msgstr "モニタバッファに表示されるハッシュテーブルの値から色を削除"
 
-#, fuzzy
 msgid "text color for command flag (in /trigger list)"
-msgstr "入力がアクションの場合のテキスト色"
+msgstr "コマンドフラグに対するテキスト色 (/trigger list 用)"
 
-#, fuzzy
 msgid "text color for conditions flag (in /trigger list)"
-msgstr "入力がアクションの場合のテキスト色"
+msgstr "状態フラグに対するテキスト色 (/trigger list 用)"
 
-#, fuzzy
 msgid "text color for regex flag (in /trigger list)"
-msgstr "ニックネームリスト内のグループのテキスト色"
+msgstr "正規表現フラグに対するテキスト色 (/trigger list 用)"
 
-#, fuzzy
 msgid "text color for return code flag (in /trigger list)"
-msgstr "ニックネームリスト内のグループのテキスト色"
+msgstr "リターンコードに対するテキスト色 (/trigger list 用)"
 
-#, fuzzy
 msgid "text color for regular expressions"
-msgstr "エラープレフィックスのテキスト色"
+msgstr "正規表現に対するテキスト色"
 
 msgid "text color for replacement text (for regular expressions)"
-msgstr ""
+msgstr "置換テキストに対するテキスト色 (正規表現用)"
 
-#, fuzzy
 msgid "text color for trigger name"
-msgstr "サーバ名のテキスト色"
+msgstr "トリガ名に対するテキスト色"
 
-#, fuzzy
 msgid "text color for disabled trigger name"
-msgstr "サーバ名のテキスト色"
+msgstr "無効化されたトリガの名前に対するテキスト色"
 
 msgid "  [A] Accept"
 msgstr "  [A] 受け入れる"

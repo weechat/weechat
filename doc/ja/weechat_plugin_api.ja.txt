@@ -963,23 +963,22 @@ free (str);
 
 _WeeChat バージョン 0.4.4 以上で利用可。_
 
-// TRANSLATION MISSING
-Convert escaped chars to their value:
+エスケープ文字を値に変換:
 
-* `\"`: double quote
-* `\\`: backslash
-* `\a`: alert (BEL)
-* `\b`: backspace
-* `\e`: escape
-* `\f`: form feed
-* `\n`: new line
-* `\r`: carriage return
-* `\t`: horizontal tab
-* `\v`: vertical tab
-* `\0ooo`: char as octal value (ooo is 0 to 3 digits)
-* `\xhh`: char as hexadecimal value (hh is 1 to 2 digits)
-* `\uhhhh`: unicode char as hexadecimal value (hhhh is 1 to 4 digits)
-* `\Uhhhhhhhh`: unicode char as hexadecimal value (hhhhhhhh is 1 to 8 digits)
+* `\"`: 二重引用符
+* `\\`: バックスラッシュ
+* `\a`: アラート (BEL)
+* `\b`: バックスペース
+* `\e`: エスケープ
+* `\f`: 改ページ
+* `\n`: 改行
+* `\r`: キャリッジリターン
+* `\t`: 水平タブ
+* `\v`: 垂直タブ
+* `\0ooo`: 文字の 8 進数表現 (ooo は 0 桁から 3 桁)
+* `\xhh`: 文字の 16 進数表現 (hh は 1 桁から 2 桁)
+* `\uhhhh`: ユニコード文字の 16 進数表現 (hhhh は 1 桁から 4 桁)
+* `\Uhhhhhhhh`: ユニコード文字の 16 進数表現 (hhhhhhhh は 1 桁から 8 桁)
 
 プロトタイプ:
 
@@ -994,8 +993,7 @@ char *weechat_string_convert_escaped_chars (const char *string);
 
 戻り値:
 
-// TRANSLATION MISSING
-* string with escaped chars replaced by their value
+* エスケープ文字を値に変換した文字列
   (使用後には必ず "free" を呼び出して領域を開放してください)
 
 C 言語での使用例:
@@ -1268,9 +1266,7 @@ free (str);
 
 _WeeChat バージョン 0.4.4 以上で利用可。_
 
-// TRANSLATION MISSING
-Replace text in a string using a regular expression, replacement text and
-optional callback.
+文字列中のテキストを正規表現、置換先テキスト、任意指定のコールバックを使って置換。
 
 プロトタイプ:
 
@@ -1284,31 +1280,29 @@ char *weechat_string_replace_regex (const char *string, void *regex,
 
 引数:
 
-// TRANSLATION MISSING
-* 'string': string
-* 'regex': pointer to a regular expression ('regex_t' structure) compiled with
-  WeeChat function <<_weechat_string_regcomp,weechat_string_regcomp>> or regcomp
-  (see `man regcomp`)
-* 'replace': replacement text, where following references are allowed:
-** `$0` to `$99`: match 0 to 99 in regular expression (0 is the whole match,
-   1 to 99 are groups captured between parentheses)
-** `$+`: the last match (with highest number)
-** `$.*N`: match `N` (can be `+` or `0` to `99`), with all chars replaced by `*`
-   (the `*` char can be any char between space (32) and `~` (126))
-* 'reference_char': the char used for reference to match (commonly '$')
-* 'callback': an optional callback called for each reference in 'replace'
-  (except for matches replaced by a char); the callback must return:
-** newly allocated string: it is used as replacement text (it is freed after
-   use)
-** NULL: the text received in callback is used as replacement text (without
-   changes)
-* 'callback_data': pointer given to callback when it is called
+* 'string': 文字列
+* 'regex': WeeChat 関数 <<_weechat_string_regcomp,weechat_string_regcomp>>
+  または regcomp (`man regcomp` を参照)
+  でコンパイルした正規表現へのポインタ ('regex_t' 構造体)
+* 'replace': 置換先テキスト、以下のリファレンスを使うことができます:
+** `$0` から `$99`: 正規表現中の 0 から 99 番目のマッチ部分 (0
+   はマッチする部分全体、1 から 99 は括弧で括られたグループ)
+** `$+`: 最後にマッチした部分 (最大の番号を持つマッチ部分)
+** `$.*N`: `*` で全ての文字を置換した `N` 番目 (`+` または `0` から `99` を使うことができます)
+   のマッチ部分 (`*` 文字は空白 (32) から `~` (126) までの任意の文字を使うことができます)
+* 'reference_char': マッチ部分を参照するための文字 (通常は '$')
+* 'callback': 'replace' に含まれる各リファレンスに対して呼び出される任意指定可能なコールバック
+  (マッチ部分を文字で置換する場合を除く); このコールバックは必ず以下の値を返してください:
+** 新しく割り当てられた文字列: 文字列を置換先テキストとして使います
+   (文字列は使用後に開放されます)
+** NULL: コールバックに渡されたテキストを置換先テキストとして使います
+   (文字列に変更を加えません)
+* 'callback_data': コールバックを呼び出す際にコールバックに渡すポインタ
 
 戻り値:
 
-// TRANSLATION MISSING
-* string with text replaced, NULL if problem (must be freed by calling "free"
-  after use)
+* 置換されたテキストを含む文字、問題が起きた場合は NULL
+  (使用後には必ず "free" を呼び出して領域を開放してください)
 
 C 言語での使用例:
 
@@ -1393,12 +1387,10 @@ weechat_string_free_split (argv);
 
 _WeeChat バージョン 0.4.4 以上で利用可。_
 
-// TRANSLATION MISSING
-Split a string like the shell does for a command with arguments.
+コマンドを引数を分割する際にシェルがやるように文字列を分割。
 
-// TRANSLATION MISSING
-This function is a C conversion of Python class "shlex" (file: Lib/shlex.py in
-Python repository), see: http://docs.python.org/3/library/shlex.html.
+この関数は Python クラス "shlex" の C 言語実装です (ファイル: Python リポジトリの
+Lib/shlex.py)、参照: http://docs.python.org/3/library/shlex.html。
 
 プロトタイプ:
 
@@ -3647,8 +3639,7 @@ weechat_hashtable_map_string (hashtable, &map_cb, NULL);
 
 _WeeChat バージョン 0.4.4 以上で利用可。_
 
-// TRANSLATION MISSING
-Duplicate a hashtable.
+ハッシュテーブルを複製。
 
 プロトタイプ:
 
@@ -3663,8 +3654,7 @@ struct t_hashtable *hashtable_dup (struct t_hashtable *hashtable);
 
 戻り値:
 
-// TRANSLATION MISSING
-* duplicated hashtable
+* 複製されたハッシュテーブ
 
 C 言語での使用例:
 
@@ -6594,10 +6584,9 @@ void weechat_printf_y (struct t_gui_buffer *buffer, int y,
 引数:
 
 * 'buffer': バッファへのポインタ
-// TRANSLATION MISSING
-* 'y': 行番号 (1 行目は 0); a negative value adds a line after last line
-  displayed: absolute value of 'y' is the number of lines after last line (for
-  example -1 is immediately after last line, -2 is 2 lines after last line)
+* 'y': 行番号 (1 行目は 0); 負数の場合は表示された最後の行の後に行を追加する:
+  'y' の絶対値で最後の行の後に追加する行数を指定 (例えば
+  -1 は最後の行のすぐ後、-2 は 最後の行の 2 行後)
   _(WeeChat バージョン 0.4.4 以上で利用可)_
 * 'message': 表示するメッセージ
 
@@ -7215,12 +7204,11 @@ struct t_hook *weechat_hook_process_hashtable (const char *command,
   データを書き込むためのパイプを子プロセスの標準入力 (stdin)
   に作成します (関数 <<_weechat_hook_set,weechat_hook_set>> を参照)
 
-// TRANSLATION MISSING
 | detached +
   _(WeeChat バージョン 0.4.4 以上で利用可)_ |
   (非使用) |
-  Run the process in a detached mode: stdout and stderr are redirected to
-  '/dev/null'
+  detached モードでプロセスを実行: 標準出力と標準エラー出力を
+  '/dev/null' にリダイレクトする
 |===
 
 "url:..." 型のコマンドでは、以下のコマンドを使うことができます
@@ -7879,35 +7867,30 @@ WeeChat とプラグインが送信するシグナルのリスト:
   String: 削除されたスクリプトへのパスのコンマ区切りリスト |
   Python スクリプトを削除
 
-// TRANSLATION MISSING
 | relay | relay_client_connecting +
-  _(WeeChat ≥ 0.4.4)_ |
-  Pointer: relay client |
-  A relay client is connecting
+  _(WeeChat バージョン 0.4.4 以上で利用可)_ |
+  Pointer: リレークライアント |
+  リレークライアントが接続中
 
-// TRANSLATION MISSING
 | relay | relay_client_waiting_auth +
-  _(WeeChat ≥ 0.4.4)_ |
-  Pointer: relay client |
-  Waiting for authentication from a relay client
+  _(WeeChat バージョン 0.4.4 以上で利用可)_ |
+  Pointer: リレークライアント |
+  リレークライアントからの認証待ち
 
-// TRANSLATION MISSING
 | relay | relay_client_connected +
-  _(WeeChat ≥ 0.4.4)_ |
-  Pointer: relay client |
-  A relay client is connected
+  _(WeeChat バージョン 0.4.4 以上で利用可)_ |
+  Pointer: リレークライアント |
+  リレークライアントが接続
 
-// TRANSLATION MISSING
 | relay | relay_client_auth_failed +
-  _(WeeChat ≥ 0.4.4)_ |
-  Pointer: relay client |
-  Authentication of a relay client has failed
+  _(WeeChat バージョン 0.4.4 以上で利用可)_ |
+  Pointer: リレークライアント |
+  リレークライアントの認証に失敗
 
-// TRANSLATION MISSING
 | relay | relay_client_disconnected +
-  _(WeeChat ≥ 0.4.4)_ |
-  Pointer: relay client |
-  A relay client is disconnected
+  _(WeeChat バージョン 0.4.4 以上で利用可)_ |
+  Pointer: リレークライアント |
+  リレークライアントが切断
 
 | ruby | ruby_script_loaded +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
@@ -8089,23 +8072,20 @@ WeeChat とプラグインが送信するシグナルのリスト:
   String: 押されたキー |
   キーが押された
 
-// TRANSLATION MISSING
 | weechat | key_combo_default +
-  _(WeeChat ≥ 0.4.4)_ |
-  String: key combo |
-  Key combo in 'default' context
+  _(WeeChat バージョン 0.4.4 以上で利用可)_ |
+  String: キーの組み合わせ |
+  'default' コンテキスト内のキーの組み合わせ
 
-// TRANSLATION MISSING
 | weechat | key_combo_search +
-  _(WeeChat ≥ 0.4.4)_ |
-  String: key combo |
-  Key combo in 'search' context
+  _(WeeChat バージョン 0.4.4 以上で利用可)_ |
+  String: キーの組み合わせ |
+  'search' コンテキスト内のキーの組み合わせ
 
-// TRANSLATION MISSING
 | weechat | key_combo_cursor +
-  _(WeeChat ≥ 0.4.4)_ |
-  String: key combo |
-  Key combo in 'cursor' context
+  _(WeeChat バージョン 0.4.4 以上で利用可)_ |
+  String: キーの組み合わせ |
+  'cursor' コンテキスト内のキーの組み合わせ
 
 | weechat | nicklist_group_added +
   _(WeeChat バージョン 0.3.2 以上で利用可)_ |
@@ -8300,8 +8280,7 @@ hook = weechat.hook_signal("quit", "my_signal_cb", "")
 
 ==== weechat_hook_signal_send
 
-// TRANSLATION MISSING
-_Updated in 0.4.4._
+_バージョン 0.4.4 で更新。_
 
 シグナルを送信。
 
@@ -8320,12 +8299,10 @@ int weechat_hook_signal_send (const char *signal, const char *type_data,
   (<<_weechat_hook_signal,weechat_hook_signal>> を参照)
 * 'signal_data': シグナルと一緒に送信するデータ
 
-// TRANSLATION MISSING
-Return value _(WeeChat ≥ 0.4.4)_:
+戻り値 _(WeeChat バージョン 0.4.4 以上で利用可。)_:
 
-// TRANSLATION MISSING
-* return code of last callback executed ('WEECHAT_RC_OK' if no callback was
-  executed):
+* 最後に実行したコールバックの戻り値
+  (コールバックを実行しなかった場合は 'WEECHAT_RC_OK'):
 ** 'WEECHAT_RC_OK'
 ** 'WEECHAT_RC_OK_EAT'
 ** 'WEECHAT_RC_ERROR'
@@ -8620,8 +8597,7 @@ hook = weechat.hook_hsignal("test", "my_hsignal_cb", "")
 
 ==== weechat_hook_hsignal_send
 
-// TRANSLATION MISSING
-_WeeChat バージョン 0.3.4 以上で利用可。, updated in 0.4.4._
+_WeeChat バージョン 0.3.4 以上で利用可、バージョン 0.4.4 で更新。_
 
 hsignal (ハッシュテーブルを持つシグナル) を送信。
 
@@ -8637,12 +8613,10 @@ int weechat_hook_hsignal_send (const char *signal, struct t_hashtable *hashtable
 * 'signal': 送信するシグナル
 * 'hashtable': ハッシュテーブル
 
-// TRANSLATION MISSING
-Return value _(WeeChat ≥ 0.4.4)_:
+戻り値 _(WeeChat バージョン 0.4.4 以上で利用可。)_:
 
-// TRANSLATION MISSING
-* return code of last callback executed ('WEECHAT_RC_OK' if no callback was
-  executed):
+* 最後に実行したコールバックの戻り値
+  (コールバックを実行しなかった場合は 'WEECHAT_RC_OK'):
 ** 'WEECHAT_RC_OK'
 ** 'WEECHAT_RC_OK_EAT'
 ** 'WEECHAT_RC_ERROR'
@@ -9152,24 +9126,21 @@ WeeChat とプラグインが使う修飾子のリスト:
   任意の文字列 |
   UTF-8 からプラグインおよびバッファの文字セットにエンコードされた文字列
 
-// TRANSLATION MISSING
 | irc_color_decode |
   色を保持する場合は "1"、削除する場合は "0" |
   任意の文字列 |
-  String with IRC colors converted to WeeChat colors (or IRC colors removed)
+  WeeChat 色コードに変換された IRC 色コードを含む (または IRC 色コードを削除された) 文字列
 
-// TRANSLATION MISSING
 | irc_color_encode |
   色を保持する場合は "1"、削除する場合は "0" |
   任意の文字列 |
-  String with IRC colors (or IRC colors removed)
+  IRC 色コードを含む (または IRC 色コードを削除された) 文字列
 
-// TRANSLATION MISSING
 | irc_color_decode_ansi +
   _(WeeChat バージョン 0.4.4 以上で利用可)_ |
   色を保持する場合は "1"、削除する場合は "0" |
   任意の文字列 |
-  String with ANSI colors converted to IRC colors (or ANSI colors removed)
+  IRC 色コードに変換された ANSI 色コードを含む (または ANSI 色コードを削除された) 文字列
 
 | irc_command_auth +
   _(WeeChat バージョン 0.4.1 以上で利用可)_ |
@@ -9205,12 +9176,11 @@ WeeChat とプラグインが使う修飾子のリスト:
   IRC サーバに送信するメッセージの内容 (512 バイトを超えないように自動分割した後) |
   メッセージの新しい内容
 
-// TRANSLATION MISSING
 | color_decode_ansi +
   _(WeeChat バージョン 0.4.4 以上で利用可)_ |
   色を保持する場合は "1"、削除する場合は "0" |
   任意の文字列 |
-  String with ANSI colors converted to WeeChat colors (or ANSI colors removed)
+  WeeChat 色コードに変換された ANSI 色コードを含む (または ANSI 色コードを削除された) 文字列
 
 | bar_condition_yyy ^(2)^ |
   ウィンドウへのポインタの文字列 ("0x123..") |
@@ -9798,13 +9768,11 @@ void weechat_hook_set (struct t_hook *hook, const char *property,
   子プロセスの標準入力 ('stdin') にデータを送信するパイプを閉じる
 
 | signal +
-  _(WeeChat ≥ 0.4.4)_ |
-  'process', 'process_hashtable' |
-// TRANSLATION MISSING
-  signal number or one of these names: `hup`, `int`, `quit`, `kill`, `term`,
-  `usr1`, `usr2` |
-// TRANSLATION MISSING
-  Send a signal to the child process
+  _(WeeChat バージョン 0.4.4 以上で利用可)_ |
+  'process'、'process_hashtable' |
+  シグナル番号または以下の名前から 1 つ:
+  `hup`、`int`、`quit`、`kill`、`term`、`usr1`、`usr2` |
+  子プロセスにシグナルを送信
 |===
 
 C 言語での使用例:
@@ -10041,15 +10009,13 @@ struct t_gui_buffer *weechat_buffer_search (const char *plugin,
 
 引数:
 
-// TRANSLATION MISSING
-* 'plugin': name of plugin, following special value is allowed:
-** `==`: the name used is the buffer full name (for example:
-   `irc.freenode.#weechat` instead of `freenode.#weechat`)
-   _(WeeChat ≥ 0.4.4)_
-// TRANSLATION MISSING
-* 'name': name of buffer, if it is NULL or empty string, the current buffer is
-  returned (buffer displayed by current window); if the name starts with
-  `(?i)`, the search is case insensitive _(WeeChat ≥ 0.4.4)_
+* 'plugin': プラグインの名前、以下の特殊値を使うことができます:
+** `==`: name 引数でバッファの完全な名前を使う (例:
+   `freenode.#weechat` ではなく `irc.freenode.#weechat`)
+   _(WeeChat バージョン 0.4.4 以上で利用可)_
+* 'name': バッファの名前、NULL または空文字列の場合、現在のバッファ
+  (現在のウィンドウに表示されているバッファ) を返す; 名前が `(?i)`
+  で始まる場合、検索は大文字小文字を区別せずに検索 _(WeeChat バージョン 0.4.4 以上で利用可)_
 
 戻り値:
 
