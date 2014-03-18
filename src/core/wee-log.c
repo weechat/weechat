@@ -153,9 +153,7 @@ log_printf (const char *message, ...)
             ptr_buffer++;
         }
 
-        if (!weechat_log_use_time)
-            string_iconv_fprintf (weechat_log_file, "%s\n", vbuffer);
-        else
+        if (weechat_log_use_time)
         {
             seconds = time (NULL);
             date_tmp = localtime (&seconds);
@@ -171,6 +169,8 @@ log_printf (const char *message, ...)
             else
                 string_iconv_fprintf (weechat_log_file, "%s\n", vbuffer);
         }
+        else
+            string_iconv_fprintf (weechat_log_file, "%s\n", vbuffer);
 
         fflush (weechat_log_file);
 

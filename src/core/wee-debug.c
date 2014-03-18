@@ -84,15 +84,9 @@ debug_dump (int crash)
 
     log_printf ("");
     if (crash)
-    {
-        log_printf ("******             WeeChat CRASH DUMP              ******");
-        log_printf ("****** Please send this file to WeeChat developers ******");
-        log_printf ("******    and explain when this crash happened     ******");
-    }
+        log_printf ("****** WeeChat CRASH DUMP ******");
     else
-    {
-        log_printf ("******            WeeChat dump request             ******");
-    }
+        log_printf ("****** WeeChat dump request ******");
 
     gui_window_print_log ();
     gui_buffer_print_log ();
@@ -116,7 +110,7 @@ debug_dump (int crash)
     plugin_print_log ();
 
     log_printf ("");
-    log_printf ("******             End of WeeChat dump             ******");
+    log_printf ("****** End of WeeChat dump ******");
     log_printf ("");
 }
 
@@ -164,11 +158,11 @@ debug_sigsegv ()
     string_iconv_fprintf (stderr, "***\n");
     string_iconv_fprintf (stderr, "*** Please help WeeChat developers to fix this bug:\n");
     string_iconv_fprintf (stderr, "***   1. If you have a core file, please run:  gdb /path/to/weechat core\n");
-    string_iconv_fprintf (stderr, "***      then issue \"bt\" command and send result to developers\n");
-    string_iconv_fprintf (stderr, "***      To enable core files with bash shell: ulimit -c 10000\n");
-    string_iconv_fprintf (stderr, "***   2. Otherwise send backtrace (below) and weechat.log\n");
-    string_iconv_fprintf (stderr, "***      (be careful, private info may be in this file since\n");
-    string_iconv_fprintf (stderr, "***      part of chats are displayed, so remove lines if needed)\n\n");
+    string_iconv_fprintf (stderr, "***      then issue command: \"bt full\" and send result to developers\n");
+    string_iconv_fprintf (stderr, "***      (see user's guide for more info about report of crashes).\n");
+    string_iconv_fprintf (stderr, "***   2. Otherwise send backtrace (below), only if it is a complete trace.\n");
+    string_iconv_fprintf (stderr, "***      Keep the crash log file, just in case developers ask you some info\n");
+    string_iconv_fprintf (stderr, "***      (be careful, private info like passwords may be in this file).\n\n");
 
     weechat_backtrace ();
 
