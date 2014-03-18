@@ -15,6 +15,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 0.4.4 (under dev)
 
+* core: check validity of buffer pointer when data is sent to a buffer
+  (command/text from user and API function "command")
 * core: fix crash when buffer is closed during execution of multiple commands
   (closes #27)
 * core: fix compilation on SmartOS (bug #40981, closes #23)

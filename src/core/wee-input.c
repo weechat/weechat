@@ -159,8 +159,11 @@ input_data (struct t_gui_buffer *buffer, const char *data)
     const char *ptr_data, *ptr_data_for_buffer;
     int length, char_size, first_command;
 
-    if (!buffer || !data || !data[0] || (data[0] == '\r') || (data[0] == '\n'))
+    if (!buffer || !gui_buffer_valid (buffer)
+        || !data || !data[0] || (data[0] == '\r') || (data[0] == '\n'))
+    {
         return;
+    }
 
     buffer_full_name = strdup (buffer->full_name);
     if (!buffer_full_name)
