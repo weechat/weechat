@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-03-17 17:21+0100\n"
+"POT-Creation-Date: 2014-03-18 09:19+0100\n"
 "PO-Revision-Date: 2013-02-14 18:20+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2866,7 +2866,7 @@ msgid "FATAL: error initializing configuration options"
 msgstr ""
 
 #, c-format
-msgid "Writing configuration file %s %s"
+msgid "Writing configuration file %s%s%s"
 msgstr ""
 
 msgid "(default options)"

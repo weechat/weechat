@@ -2065,8 +2065,9 @@ config_file_write_internal (struct t_config_file *config_file,
         }
     }
 
-    log_printf (_("Writing configuration file %s %s"),
+    log_printf (_("Writing configuration file %s%s%s"),
                 config_file->filename,
+                (default_options) ? " " : "",
                 (default_options) ? _("(default options)") : "");
 
     /* open temp file in write mode */
