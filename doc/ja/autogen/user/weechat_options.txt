@@ -409,12 +409,12 @@
 ** 値: 未制約文字列 (デフォルト値: `"--"`)
 
 * [[option_weechat.look.bare_display_exit_on_input]] *weechat.look.bare_display_exit_on_input*
-** 説明: `exit the bare display mode on any changes in input`
+** 説明: `入力の変更に対する最小限表示モードを終了する`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_weechat.look.bare_display_time_format]] *weechat.look.bare_display_time_format*
-** 説明: `time format in bare display mode (see man strftime for date/time specifiers)`
+** 説明: `最小限表示モードで使う時間フォーマット (日付/時間指定子は strftime の man を参照)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"%H:%M"`)
 
@@ -559,7 +559,7 @@
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
 * [[option_weechat.look.hotlist_add_conditions]] *weechat.look.hotlist_add_conditions*
-** 説明: `conditions to add a buffer in hotlist (if notify level is OK for the buffer); you can use in these conditions: "window" (current window pointer), "buffer" (buffer pointer to add in hotlist), "priority" (0 = low, 1 = message, 2 = private, 3 = highlight); by default a buffer is added to hotlist if you are away, or if the buffer is not visible on screen (not displayed in any window)`
+** 説明: `ホットリストでバッファを追加する条件 (追加するバッファの通知レベルが OK の場合); 以下の条件を使うことができます: "window" (現在のウィンドウポインタ)、"buffer" (ホットリストに追加するバッファポインタ)、"priority" (0 = 低い、1 = メッセージ、2 = プライベートメッセージ、3 = ハイライト); デフォルトでは離席状態またはバッファがスクリーンに表示されていない場合にホットリストへバッファを追加します`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"${away} || ${buffer.num_displayed} == 0"`)
 
@@ -609,7 +609,7 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_weechat.look.hotlist_sort]] *weechat.look.hotlist_sort*
-** 説明: `sort of hotlist: group_time_*: group by notify level (highlights first) then sort by time, group_number_*: group by notify level (highlights first) then sort by number, number_*: sort by number; asc = ascending sort, desc = descending sort`
+** 説明: `ホットリストのソート: group_time_*: 通知レベルでグループ化した (ハイライトを前にした) 後に時間でソート、group_number_*: 通知レベルでグループ化した (ハイライトを前にした) 後に番号でソート、number_*: 番号でソート; asc = 昇順、desc = 降順`
 ** タイプ: 整数
 ** 値: group_time_asc, group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc (デフォルト値: `group_time_asc`)
 

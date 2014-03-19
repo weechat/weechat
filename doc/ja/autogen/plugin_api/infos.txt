@@ -26,17 +26,17 @@
 
 | python | python2_bin | python 2.x インタプリタへのパス | -
 
-| relay | relay_client_count | number of clients for relay | status name (optional): connecting, waiting_auth, connected, auth_failed, disconnected
+| relay | relay_client_count | 中継するクライアントのリスト | 状態名 (任意): connecting、waiting_auth、connected、auth_failed、disconnected
 
 | weechat | charset_internal | WeeChat 内部文字集合 | -
 
 | weechat | charset_terminal | ターミナルの文字集合 | -
 
-| weechat | color_ansi_regex | POSIX extended regular expression to search ANSI escape codes | -
+| weechat | color_ansi_regex | ANSI エスケープコードを検索する POSIX 拡張正規表現 | -
 
-| weechat | color_rgb2term | RGB color converted to terminal color (0-255) | rgb,limit (limit is optional and is set to 256 by default)
+| weechat | color_rgb2term | ターミナル色コード (0-255) に変換されたRGB 色コード | rgb,limit (limit は任意でデフォルトでは 256 に設定)
 
-| weechat | color_term2rgb | terminal color (0-255) converted to RGB color | color (terminal color: 0-255)
+| weechat | color_term2rgb | RGB 色コードに変換されたターミナル色コード (0-255) | 色コード (ターミナル色コード: 0-255)
 
 | weechat | cursor_mode | カーソルモードが有効の場合 1 | -
 

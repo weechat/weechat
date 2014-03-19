@@ -1,20 +1,20 @@
 * [[option_exec.color.flag_finished]] *exec.color.flag_finished*
-** 説明: `text color for a finished command flag in list of commands`
+** 説明: `コマンドリストで使う実行完了コマンドのフラグに対するテキスト色`
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `lightred`)
 
 * [[option_exec.color.flag_running]] *exec.color.flag_running*
-** 説明: `text color for a running command flag in list of commands`
+** 説明: `コマンドリストで使う実行中コマンドのフラグに対するテキスト色`
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `lightgreen`)
 
 * [[option_exec.command.default_options]] *exec.command.default_options*
-** 説明: `default options for command /exec (see /help exec); example: "-nosh -bg" to run all commands in background (no output), and without using the shell`
+** 説明: `/exec コマンドのデフォルトオプション (/help exec を参照); 例: "-nosh -bg" は全てのコマンドをバックグラウンドで実行し (出力なし)、シェルを使わない`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
 * [[option_exec.command.purge_delay]] *exec.command.purge_delay*
-** 説明: `delay for purging finished commands (in seconds, 0 = purge commands immediately, -1 = never purge)`
+** 説明: `接続を切ったクライアントを追い出すまでの遅延時間 (秒単位、0 = すぐにクライアントを追い出す、-1 = 追い出さない)`
 ** タイプ: 整数
 ** 値: -1 .. 25920000 (デフォルト値: `0`)
 

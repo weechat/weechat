@@ -89,7 +89,7 @@
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
 * [[option_relay.network.clients_purge_delay]] *relay.network.clients_purge_delay*
-** 説明: `delay for purging disconnected clients (in minutes, 0 = purge clients immediately, -1 = never purge)`
+** 説明: `接続を切ったクライアントを追い出すまでの遅延時間 (分単位、0 = すぐにクライアントを追い出す、-1 = 追い出さない)`
 ** タイプ: 整数
 ** 値: -1 .. 43200 (デフォルト値: `0`)
 

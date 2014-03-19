@@ -534,7 +534,7 @@
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
 * [[option_irc.server_default.realname]] *irc.server_default.realname*
-** 説明: `real name to use on server (note: content is evaluated, see /help eval)`
+** 説明: `サーバで使用する実名 (注意: 値は評価されます、/help eval を参照してください)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
@@ -589,7 +589,7 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_irc.server_default.username]] *irc.server_default.username*
-** 説明: `user name to use on server (note: content is evaluated, see /help eval)`
+** 説明: `サーバで使用するユーザ名 (注意: 値は評価されます、/help eval を参照してください)`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 

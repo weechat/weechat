@@ -282,14 +282,14 @@ channel: ユーザの居るチャンネル
 ----
 /kickban  [<channel>] <nick> [<reason>]
 
-channel: channel where user is
-   nick: nick to kick and ban
- reason: reason for kick (special variables $nick, $channel and $server are replaced by their value)
+channel: ユーザの居るチャンネル
+   nick: キックと参加禁止にするニックネーム
+ reason: キック理由 (特殊変数 $nick、$channel、$server はそれぞれの値に置換されます)
 
-It is possible to kick/ban with a mask, nick will be extracted from mask and replaced by "*".
+キックと参加禁止にマスクを使うことが可能で、"*" のマスク展開後にマッチするニックネームがこれらの対象になります。
 
-Example:
-  ban "*!*@host.com" and then kick "toto":
+例:
+  "*!*@host.com" を参加禁止して "toto" をキック:
     /kickban toto!*@host.com
 ----
 
@@ -845,14 +845,14 @@ mask: マスクにマッチする情報
 ----
 /whois  [<server>] [<nick>[,<nick>...]]
 
-server: server name
-  nick: nick (may be a mask)
+server: サーバ名
+  nick: ニックネーム (マスクも可)
 
-Without argument, this command will do a whois on:
-- your own nick if buffer is a server/channel
-- remote nick if buffer is a private.
+引数が無い場合、このコマンドは以下のユーザに対する whois を行います:
+- バッファがサーバ/チャンネルの場合、自分自身のニックネーム
+- バッファがプライベートの場合、相手のニックネーム。
 
-If option irc.network.whois_double_nick is enabled, two nicks are sent (if only one nick is given), to get idle time in answer.
+オプション irc.network.whois_double_nick が有効の場合、アイドル時間を返してもらうためにニックネームを 2 つ送信します (ニックネームを 1 つ指定した場合でも)。
 ----
 
 [[command_irc_whowas]]

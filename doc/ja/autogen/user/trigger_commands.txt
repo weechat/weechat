@@ -1,5 +1,5 @@
 [[command_trigger_trigger]]
-[command]*`trigger`* manage triggers, the Swiss Army knife for WeeChat::
+[command]*`trigger`* トリガ (WeeChat 用のスイスアーミーナイフ) の管理::
 
 ----
 /trigger  list|listfull|listdefault
@@ -15,61 +15,61 @@
           default -yes
           monitor
 
-       list: list triggers (without argument, this list is displayed)
-   listfull: list triggers with detailed info for each trigger
-listdefault: list default triggers
-        add: add a trigger
-     addoff: add a trigger (disabled)
- addreplace: add or replace an existing trigger
-       name: name of trigger
-       hook: signal, hsignal, modifier, print, command, command_run, timer, config, focus
-  arguments: arguments for the hook, depending on hook (separated by semicolons):
-             signal: name(s) of signal (required)
-             hsignal: name(s) of hsignal (required)
-             modifier: name(s) of modifier (required)
-             print: buffer, tags, message, strip colors
-             command: command (required), description, arguments, description of arguments, completion
-             command_run: command(s) (required)
-             timer: interval (required), align on second, max calls
-             config: name(s) of option (required)
-             focus: name(s) of area (required)
- conditions: evaluated conditions for the trigger
-      regex: one or more regular expressions to replace strings in variables
-    command: command to execute (many commands can be separated by ";"
-return_code: return code in callback (ok (default), ok_eat, error)
-   addinput: set input with default arguments to create a trigger
-      input: set input with the command used to create the trigger
-     output: send the command to create the trigger on the buffer
-   recreate: same as "input", with option "addreplace" instead of "add"
-        set: set an option in a trigger
-     option: name of option: name, hook, arguments, conditions, regex, command, return_code
-             (for help on option, you can type: /help trigger.trigger.<name>.<option>)
-      value: new value for the option
-     rename: rename a trigger
-       copy: copy a trigger
-     enable: enable trigger(s) (without arguments: enable triggers globally)
-    disable: disable trigger(s) (without arguments: disable triggers globally)
-     toggle: toggle trigger(s) (without arguments: toggle triggers globally)
-    restart: restart trigger(s) (recreate the hooks)
-       show: show detailed info on a trigger (with some stats)
-        del: delete a trigger
-       -all: do action on all triggers
-    default: restore default triggers
-    monitor: open the trigger monitor buffer
+       list: トリガをリストアップ (引数なしの場合、このリストを表示します)
+   listfull: 各トリガに関する詳細な情報を付けてトリガをリストアップ
+listdefault: デフォルトトリガをリストアップ
+        add: トリガを追加
+     addoff: トリガを追加 (無効状態で)
+ addreplace: 追加または存在するトリガを置換
+       name: トリガの名前
+       hook: signal、hsignal、modifier、print、command、command_run、timer、config、focus
+  arguments: フックの引数、フックの種類に依存 (セミコロンで区切る):
+             signal: シグナルの名前 (必須)
+             hsignal: hsignal の名前 (必須)
+             modifier: modifier の名前 (必須)
+             print: バッファ、タグ、メッセージ、色の削除
+             command: コマンド (必須)、説明、引数、引数の説明、補完
+             command_run: コマンド (必須)
+             timer: インターバル (必須)、秒の調節、最大呼び出し回数
+             config: オプションの名前 (必須)
+             focus: エリアの名前 (必須)
+ conditions: トリガの実行条件
+      regex: 変数内の文字列を置換する 1 つ以上の正規表現
+    command: 実行するコマンド (複数のコマンドは ";" で区切ってください)
+return_code: コールバック内のリターンコード (ok (デフォルト)、ok_eat、error)
+   addinput: 入力にトリガを作る際のデフォルト引数を設定
+      input: 入力にトリガを作る際に使われるコマンドを設定
+     output: バッファでトリガを作る際のコマンドを送信
+   recreate: "add" の代わりに "addreplace" オプションを使うことを除いて "input" と同じ
+        set: トリガにオプションを設定
+     option: オプションの名前: name、hook、arguments、conditions、regex、command、return_code
+             (オプションに関するヘルプを見るには: /help trigger.trigger.<name>.<option>)
+      value: オプションの新しい値
+     rename: トリガの名前を変更
+       copy: トリガをコピー
+     enable: トリガを有効化 (引数なしの場合: 大域的にトリガを有効化)
+    disable: トリガを無効化 (引数なしの場合: 大域的にトリガを無効化)
+     toggle: トリガの有効無効を切り替え (引数なしの場合: 大域的にトリガの有効無効を切り替え)
+    restart: トリガの再開 (フックを再作成)
+       show: トリガに関する情報を表示 (状態を含めて)
+        del: トリガを削除
+       -all: 全てのトリガに関するアクションを実行
+    default: デフォルトトリガを復元
+    monitor: トリガ監視バッファを開く
 
-When a trigger callback is called, following actions are performed, in this order:
-  1. check conditions; if false, exit
-  2. replace text using POSIX extended regular expression(s) (if defined in trigger)
-  3. execute command(s) (if defined in trigger)
-  4. exit with a return code (except for modifiers and focus)
+トリガコールバックを呼び出す際には、以下の順番通りにアクションを実行します:
+  1. 条件を確認; 偽の場合、終了
+  2. POSIX 拡張正規表現を使ってテキストを置換 (トリガに定義されている場合)
+  3. コマンドを実行 (トリガに定義されている場合)
+  4. リターンコードを返して終了 (modifier と focus を除く)
 
-Examples (you can also look at default triggers with /trigger listdefault):
-  add text attributes *bold*, _underline_ and /italic/ (only in user messages):
+例 (/trigger listdefault でデフォルトトリガを見ることができます):
+  テキスト属性 *太字*、_下線_、/イタリック/ を追加 (ユーザメッセージのみ):
     /trigger add effects modifier weechat_print "${tg_tag_nick}" "==\*(\S+)\*==*${color:bold}$1${color:-bold}*== ==_(\S+)_==_${color:underline}$1${color:-underline}_== ==/(\S+)/==/${color:italic}$1${color:-italic}/"
-  hide nicklist bar on small terminals:
+  狭い端末ではニックネームリストバーを隠す:
     /trigger add resize_small signal signal_sigwinch "${info:term_width} < 100" "" "/bar hide nicklist"
     /trigger add resize_big signal signal_sigwinch "${info:term_width} >= 100" "" "/bar show nicklist"
-  silently save config each hour:
+  設定を 1 時間毎に黙々と保存:
     /trigger add cfgsave timer 3600000;0;0 "" "" "/mute /save"
 ----
 
