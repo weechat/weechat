@@ -268,7 +268,7 @@ irc_command_admin (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
- * Executes a command on all channels.
+ * Executes a command on all channels (or queries).
  *
  * If server is NULL, executes command on all channels of all connected servers.
  * Special variables $server/$channel/$nick are replaced in command.
@@ -276,6 +276,7 @@ irc_command_admin (void *data, struct t_gui_buffer *buffer, int argc,
 
 void
 irc_command_exec_all_channels (struct t_irc_server *server,
+                               int channel_type,
                                const char *exclude_channels,
                                const char *command)
 {
@@ -316,7 +317,7 @@ irc_command_exec_all_channels (struct t_irc_server *server,
                 {
                     next_channel = ptr_channel->next_channel;
 
-                    if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
+                    if (ptr_channel->type == channel_type)
                     {
                         excluded = 0;
                         if (channels)
@@ -399,6 +400,59 @@ irc_command_allchan (void *data, struct t_gui_buffer *buffer, int argc,
     {
         weechat_buffer_set (NULL, "hotlist", "-");
         irc_command_exec_all_channels ((current_server) ? ptr_server : NULL,
+                                       IRC_CHANNEL_TYPE_CHANNEL,
+                                       ptr_exclude_channels,
+                                       ptr_command);
+        weechat_buffer_set (NULL, "hotlist", "+");
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for command "/allpv": executes a command on all privates of all
+ * connected servers.
+ */
+
+int
+irc_command_allpv (void *data, struct t_gui_buffer *buffer, int argc,
+                   char **argv, char **argv_eol)
+{
+    int i, current_server;
+    const char *ptr_exclude_channels, *ptr_command;
+
+    IRC_BUFFER_GET_SERVER(buffer);
+
+    /* make C compiler happy */
+    (void) data;
+
+    if (argc < 2)
+        return WEECHAT_RC_ERROR;
+
+    current_server = 0;
+    ptr_exclude_channels = NULL;
+    ptr_command = argv_eol[1];
+    for (i = 1; i < argc; i++)
+    {
+        if (weechat_strcasecmp (argv[i], "-current") == 0)
+        {
+            current_server = 1;
+            ptr_command = argv_eol[i + 1];
+        }
+        else if (weechat_strncasecmp (argv[i], "-exclude=", 9) == 0)
+        {
+            ptr_exclude_channels = argv[i] + 9;
+            ptr_command = argv_eol[i + 1];
+        }
+        else
+            break;
+    }
+
+    if (ptr_command && ptr_command[0])
+    {
+        weechat_buffer_set (NULL, "hotlist", "-");
+        irc_command_exec_all_channels ((current_server) ? ptr_server : NULL,
+                                       IRC_CHANNEL_TYPE_PRIVATE,
                                        ptr_exclude_channels,
                                        ptr_command);
         weechat_buffer_set (NULL, "hotlist", "+");
@@ -5620,6 +5674,30 @@ irc_command_init ()
            "with #linux:\n"
            "    /allchan -exclude=#weechat,#linux* msg * hello"),
         NULL, &irc_command_allchan, NULL);
+    weechat_hook_command (
+        "allpv",
+        N_("execute a command on all private buffers of all connected servers"),
+        N_("[-current] [-exclude=<nick>[,<nick>...]] <command> "
+           "[<arguments>]"),
+        N_(" -current: execute command for private  buffers of current server "
+           "only\n"
+           " -exclude: exclude some nicks ('*' is allowed at beginning or "
+           "end of nick name, to exclude many nicks)\n"
+           "  command: command to execute\n"
+           "arguments: arguments for command (special variables $nick, $channel "
+           "and $server are replaced by their value)\n"
+           "\n"
+           "Examples:\n"
+           "  execute '/me is testing' on all private buffers:\n"
+           "    /allpv me is testing\n"
+           "  say 'hello' everywhere but not for nick foo:\n"
+           "    /allpv -exclude=foo msg * hello\n"
+           "  say 'hello' everywhere but not for nick foo and nicks beginning "
+           "with bar:\n"
+           "    /allpv -exclude=foo,bar* msg * hello\n"
+           "  close all private buffers:\n"
+           "    /allpv close"),
+        NULL, &irc_command_allpv, NULL);
     weechat_hook_command (
         "allserv",
         N_("execute a command on all connected servers"),

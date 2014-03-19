@@ -27,6 +27,28 @@ Exemples:
     /allchan -exclude=#weechat,#linux* msg * bonjour
 ----
 
+[[command_irc_allpv]]
+[command]*`allpv`* exécuter une commande sur tous les tampons privés de tous les serveurs connectés::
+
+----
+/allpv  [-current] [-exclude=<pseudo>[,<pseudo>...]] <commande> [<paramètres>]
+
+  -current: exécuter la commande pour les tampons privés du serveur courant seulement
+  -exclude: exclure certains pseudos ('*' est autorisé au début ou à la fin du pseudo, pour exclure plusieurs pseudos)
+  commande: commande à exécuter
+paramètres: paramètres pour la commande (les variables spéciales $nick, $channel et $server sont remplacées par leur valeur)
+
+Exemples:
+  exécuter '/me teste' sur tous les tampons privés:
+    /allpv me teste
+  dire 'bonjour' partout sauf sur pour le pseudo foo:
+    /allpv -exclude=foo msg * bonjour
+  dire 'bonjour' partout sauf pour le pseudo foo et les pseudos commençant par bar:
+    /allpv -exclude=foo,bar* msg * bonjour
+  fermer tous les tampons privés:
+    /allpv close
+----
+
 [[command_irc_allserv]]
 [command]*`allserv`* exécuter une commande sur tous les serveurs connectés::
 
