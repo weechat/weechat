@@ -33,7 +33,7 @@ Examples:
 ----
 /allpv  [-current] [-exclude=<nick>[,<nick>...]] <command> [<arguments>]
 
- -current: execute command for private  buffers of current server only
+ -current: execute command for private buffers of current server only
  -exclude: exclude some nicks ('*' is allowed at beginning or end of nick name, to exclude many nicks)
   command: command to execute
 arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)

@@ -5679,7 +5679,7 @@ irc_command_init ()
         N_("execute a command on all private buffers of all connected servers"),
         N_("[-current] [-exclude=<nick>[,<nick>...]] <command> "
            "[<arguments>]"),
-        N_(" -current: execute command for private  buffers of current server "
+        N_(" -current: execute command for private buffers of current server "
            "only\n"
            " -exclude: exclude some nicks ('*' is allowed at beginning or "
            "end of nick name, to exclude many nicks)\n"
