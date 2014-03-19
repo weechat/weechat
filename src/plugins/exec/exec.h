@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_EXEC_H
-#define __WEECHAT_EXEC_H 1
+#ifndef WEECHAT_EXEC_H
+#define WEECHAT_EXEC_H 1
 
 #include <time.h>
 
@@ -83,4 +83,4 @@ extern int exec_process_cb (void *data, const char *command, int return_code,
 extern void exec_free (struct t_exec_cmd *exec_cmd);
 extern void exec_free_all ();
 
-#endif /* __WEECHAT_EXEC_H */
+#endif /* WEECHAT_EXEC_H */

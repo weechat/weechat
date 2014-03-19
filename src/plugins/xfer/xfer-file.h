@@ -17,10 +17,10 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_XFER_FILE_H
-#define __WEECHAT_XFER_FILE_H 1
+#ifndef WEECHAT_XFER_FILE_H
+#define WEECHAT_XFER_FILE_H 1
 
 extern void xfer_file_find_filename (struct t_xfer *xfer);
 extern void xfer_file_calculate_speed (struct t_xfer *xfer, int ended);
 
-#endif /* __WEECHAT_XFER_FILE_H */
+#endif /* WEECHAT_XFER_FILE_H */

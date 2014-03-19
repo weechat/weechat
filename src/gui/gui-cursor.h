@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_GUI_CURSOR_H
-#define __WEECHAT_GUI_CURSOR_H 1
+#ifndef WEECHAT_GUI_CURSOR_H
+#define WEECHAT_GUI_CURSOR_H 1
 
 /* cursor variables */
 
@@ -36,4 +36,4 @@ extern void gui_cursor_move_add_xy (int add_x, int add_y);
 extern void gui_cursor_move_area_add_xy (int add_x, int add_y);
 extern void gui_cursor_move_area (const char *area);
 
-#endif /* __WEECHAT_GUI_CURSOR_H */
+#endif /* WEECHAT_GUI_CURSOR_H */

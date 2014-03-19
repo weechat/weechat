@@ -19,8 +19,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_WEECHAT_PLUGIN_H
-#define __WEECHAT_WEECHAT_PLUGIN_H 1
+#ifndef WEECHAT_WEECHAT_PLUGIN_H
+#define WEECHAT_WEECHAT_PLUGIN_H 1
 
 #ifdef __cplusplus
 extern "C" {
@@ -956,7 +956,7 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->iconv_to_internal(__charset, __string)
 #define weechat_iconv_from_internal(__charset, __string)                \
     weechat_plugin->iconv_from_internal(__charset, __string)
-#ifndef __WEECHAT_H
+#ifndef WEECHAT_H
 #ifndef _
 #define _(string) weechat_plugin->gettext(string)
 #endif /* _ */
@@ -967,7 +967,7 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 #define NG_(single,plural,number)                                       \
     weechat_plugin->ngettext(single, plural, number)
 #endif /* NG_ */
-#endif /* __WEECHAT_H */
+#endif /* WEECHAT_H */
 #define weechat_gettext(string) weechat_plugin->gettext(string)
 #define weechat_ngettext(single,plural,number)                          \
     weechat_plugin->ngettext(single, plural, number)
@@ -1758,4 +1758,4 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 }
 #endif
 
-#endif /* __WEECHAT_WEECHAT_PLUGIN_H */
+#endif /* WEECHAT_WEECHAT_PLUGIN_H */

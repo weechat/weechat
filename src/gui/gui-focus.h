@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_GUI_FOCUS_H
-#define __WEECHAT_GUI_FOCUS 1
+#ifndef WEECHAT_GUI_FOCUS_H
+#define WEECHAT_GUI_FOCUS 1
 
 /* focus structures */
 
@@ -46,4 +46,4 @@ extern void gui_focus_free_info (struct t_gui_focus_info *focus_info);
 extern struct t_hashtable *gui_focus_to_hashtable (struct t_gui_focus_info *focus_info,
                                                    const char *key);
 
-#endif /* __WEECHAT_GUI_FOCUS_H */
+#endif /* WEECHAT_GUI_FOCUS_H */

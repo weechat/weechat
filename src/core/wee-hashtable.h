@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_HASHTABLE_H
-#define __WEECHAT_HASHTABLE_H 1
+#ifndef WEECHAT_HASHTABLE_H
+#define WEECHAT_HASHTABLE_H 1
 
 struct t_hashtable;
 struct t_infolist_item;
@@ -155,4 +155,4 @@ extern void hashtable_free (struct t_hashtable *hashtable);
 extern void hashtable_print_log (struct t_hashtable *hashtable,
                                  const char *name);
 
-#endif /* __WEECHAT_HASHTABLE_H */
+#endif /* WEECHAT_HASHTABLE_H */

@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_IRC_MSGBUFFER_H
-#define __WEECHAT_IRC_MSGBUFFER_H 1
+#ifndef WEECHAT_IRC_MSGBUFFER_H
+#define WEECHAT_IRC_MSGBUFFER_H 1
 
 enum t_irc_msgbuffer_target
 {
@@ -44,4 +44,4 @@ extern struct t_gui_buffer *irc_msgbuffer_get_target_buffer (struct t_irc_server
                                                              const char *alias,
                                                              struct t_gui_buffer *default_buffer);
 
-#endif /* __WEECHAT_IRC_MSGBUFFER_H */
+#endif /* WEECHAT_IRC_MSGBUFFER_H */

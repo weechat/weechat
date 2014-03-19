@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_SCRIPT_BUFFER_H
-#define __WEECHAT_SCRIPT_BUFFER_H 1
+#ifndef WEECHAT_SCRIPT_BUFFER_H
+#define WEECHAT_SCRIPT_BUFFER_H 1
 
 #define SCRIPT_BUFFER_NAME "scripts"
 
@@ -46,4 +46,4 @@ extern void script_buffer_set_callbacks ();
 extern void script_buffer_set_keys ();
 extern void script_buffer_open ();
 
-#endif /* __WEECHAT_SCRIPT_BUFFER_H */
+#endif /* WEECHAT_SCRIPT_BUFFER_H */

@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_DEBUG_H
-#define __WEECHAT_DEBUG_H 1
+#ifndef WEECHAT_DEBUG_H
+#define WEECHAT_DEBUG_H 1
 
 struct t_gui_window_tree;
 
@@ -31,4 +31,4 @@ extern void debug_infolists ();
 extern void debug_directories ();
 extern void debug_init ();
 
-#endif /* __WEECHAT_DEBUG_H */
+#endif /* WEECHAT_DEBUG_H */

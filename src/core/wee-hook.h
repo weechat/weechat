@@ -18,8 +18,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_HOOK_H
-#define __WEECHAT_HOOK_H 1
+#ifndef WEECHAT_HOOK_H
+#define WEECHAT_HOOK_H 1
 
 #include <unistd.h>
 
@@ -599,4 +599,4 @@ extern int hook_add_to_infolist (struct t_infolist *infolist,
                                  const char *arguments);
 extern void hook_print_log ();
 
-#endif /* __WEECHAT_HOOK_H */
+#endif /* WEECHAT_HOOK_H */

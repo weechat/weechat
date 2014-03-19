@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_GUI_CURSES_H
-#define __WEECHAT_GUI_CURSES_H 1
+#ifndef WEECHAT_GUI_CURSES_H
+#define WEECHAT_GUI_CURSES_H 1
 
 #include <time.h>
 
@@ -134,4 +134,4 @@ extern void gui_window_vline (WINDOW *window, int x, int y, int height,
                               const char *string);
 extern void gui_window_set_title (const char *title);
 
-#endif /* __WEECHAT_GUI_CURSES_H */
+#endif /* WEECHAT_GUI_CURSES_H */

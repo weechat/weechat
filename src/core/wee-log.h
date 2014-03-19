@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_LOG_H
-#define __WEECHAT_LOG_H 1
+#ifndef WEECHAT_LOG_H
+#define WEECHAT_LOG_H 1
 
 extern char *weechat_log_filename;
 extern FILE *weechat_log_file;
@@ -30,4 +30,4 @@ extern void log_printf (const char *message, ...);
 extern void log_printf_hexa (const char *spaces, const char *string);
 extern int log_crash_rename ();
 
-#endif /* __WEECHAT_LOG_H */
+#endif /* WEECHAT_LOG_H */

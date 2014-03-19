@@ -17,9 +17,9 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_TRIGGER_COMMAND_H
-#define __WEECHAT_TRIGGER_COMMAND_H 1
+#ifndef WEECHAT_TRIGGER_COMMAND_H
+#define WEECHAT_TRIGGER_COMMAND_H 1
 
 extern void trigger_command_init ();
 
-#endif /* __WEECHAT_TRIGGER_COMMAND_H */
+#endif /* WEECHAT_TRIGGER_COMMAND_H */

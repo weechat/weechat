@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_IRC_PROTOCOL_H
-#define __WEECHAT_IRC_PROTOCOL_H 1
+#ifndef WEECHAT_IRC_PROTOCOL_H
+#define WEECHAT_IRC_PROTOCOL_H 1
 
 #define IRC_PROTOCOL_CALLBACK(__command)                                \
     int                                                                 \
@@ -89,4 +89,4 @@ extern void irc_protocol_recv_command (struct t_irc_server *server,
                                        const char *msg_command,
                                        const char *msg_channel);
 
-#endif /* __WEECHAT_IRC_PROTOCOL_H */
+#endif /* WEECHAT_IRC_PROTOCOL_H */

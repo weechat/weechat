@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_UPGRADE_H
-#define __WEECHAT_UPGRADE_H 1
+#ifndef WEECHAT_UPGRADE_H
+#define WEECHAT_UPGRADE_H 1
 
 #include "wee-upgrade-file.h"
 
@@ -41,4 +41,4 @@ int upgrade_weechat_save ();
 int upgrade_weechat_load ();
 void upgrade_weechat_end ();
 
-#endif /* __WEECHAT_UPGRADE_H */
+#endif /* WEECHAT_UPGRADE_H */

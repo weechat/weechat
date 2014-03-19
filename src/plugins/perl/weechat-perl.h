@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_PERL_H
-#define __WEECHAT_PERL_H 1
+#ifndef WEECHAT_PERL_H
+#define WEECHAT_PERL_H 1
 
 #define weechat_plugin weechat_perl_plugin
 #define PERL_PLUGIN_NAME "perl"
@@ -45,4 +45,4 @@ extern void *weechat_perl_exec (struct t_plugin_script *script,
                                 int ret_type, const char *function,
                                 const char *format, void **argv);
 
-#endif /* __WEECHAT_PERL_H */
+#endif /* WEECHAT_PERL_H */

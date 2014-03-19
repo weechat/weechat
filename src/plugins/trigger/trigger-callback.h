@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_TRIGGER_CALLBACK_H
-#define __WEECHAT_TRIGGER_CALLBACK_H 1
+#ifndef WEECHAT_TRIGGER_CALLBACK_H
+#define WEECHAT_TRIGGER_CALLBACK_H 1
 
 #define TRIGGER_CALLBACK_CB_INIT(__rc)                          \
     struct t_trigger *trigger;                                  \
@@ -91,4 +91,4 @@ extern struct t_hashtable *trigger_callback_focus_cb (void *data,
 extern void trigger_callback_init ();
 extern void trigger_callback_end ();
 
-#endif /* __WEECHAT_TRIGGER_CALLBACK_H */
+#endif /* WEECHAT_TRIGGER_CALLBACK_H */

@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_GUI_HISTORY_H
-#define __WEECHAT_GUI_HISTORY_H 1
+#ifndef WEECHAT_GUI_HISTORY_H
+#define WEECHAT_GUI_HISTORY_H 1
 
 struct t_gui_buffer;
 
@@ -44,4 +44,4 @@ extern struct t_hdata *gui_history_hdata_history_cb (void *data,
 extern int gui_history_add_to_infolist (struct t_infolist *infolist,
                                         struct t_gui_history *history);
 
-#endif /* __WEECHAT_GUI_HISTORY_H */
+#endif /* WEECHAT_GUI_HISTORY_H */

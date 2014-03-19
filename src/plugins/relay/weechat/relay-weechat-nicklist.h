@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_RELAY_WEECHAT_NICKLIST_H
-#define __WEECHAT_RELAY_WEECHAT_NICKLIST_H 1
+#ifndef WEECHAT_RELAY_WEECHAT_NICKLIST_H
+#define WEECHAT_RELAY_WEECHAT_NICKLIST_H 1
 
 #define RELAY_WEECHAT_NICKLIST_DIFF_UNKNOWN ' '
 #define RELAY_WEECHAT_NICKLIST_DIFF_PARENT  '^'
@@ -54,4 +54,4 @@ extern void relay_weechat_nicklist_add_item (struct t_relay_weechat_nicklist *ni
                                              struct t_gui_nick *nick);
 extern void relay_weechat_nicklist_free (struct t_relay_weechat_nicklist *nicklist);
 
-#endif /* __WEECHAT_RELAY_WEECHAT_NICKLIST_H */
+#endif /* WEECHAT_RELAY_WEECHAT_NICKLIST_H */

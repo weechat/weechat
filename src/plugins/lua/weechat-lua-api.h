@@ -18,8 +18,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_LUA_API_H
-#define __WEECHAT_LUA_API_H 1
+#ifndef WEECHAT_LUA_API_H
+#define WEECHAT_LUA_API_H 1
 
 extern struct luaL_Reg weechat_lua_api_funcs[];
 extern struct t_lua_const weechat_lua_api_consts[];
@@ -30,4 +30,4 @@ extern int weechat_lua_api_buffer_input_data_cb (void *data,
 extern int weechat_lua_api_buffer_close_cb (void *data,
                                             struct t_gui_buffer *buffer);
 
-#endif /* __WEECHAT_LUA_API_H */
+#endif /* WEECHAT_LUA_API_H */

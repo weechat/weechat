@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_GUI_KEY_H
-#define __WEECHAT_GUI_KEY_H 1
+#ifndef WEECHAT_GUI_KEY_H
+#define WEECHAT_GUI_KEY_H 1
 
 struct t_hashtable;
 
@@ -142,4 +142,4 @@ extern void gui_key_print_log (struct t_gui_buffer *buffer);
 
 extern void gui_key_default_bindings ();
 
-#endif /* __WEECHAT_GUI_KEY_H */
+#endif /* WEECHAT_GUI_KEY_H */

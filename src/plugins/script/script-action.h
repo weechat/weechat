@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_SCRIPT_ACTION_H
-#define __WEECHAT_SCRIPT_ACTION_H 1
+#ifndef WEECHAT_SCRIPT_ACTION_H
+#define WEECHAT_SCRIPT_ACTION_H 1
 
 extern char *script_actions;
 
@@ -26,4 +26,4 @@ extern int script_action_run ();
 extern void script_action_schedule (const char *action, int need_repository,
                                     int quiet);
 
-#endif /* __WEECHAT_SCRIPT_ACTION_H */
+#endif /* WEECHAT_SCRIPT_ACTION_H */

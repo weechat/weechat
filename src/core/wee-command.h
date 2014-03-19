@@ -18,8 +18,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_COMMAND_H
-#define __WEECHAT_COMMAND_H 1
+#ifndef WEECHAT_COMMAND_H
+#define WEECHAT_COMMAND_H 1
 
 #define COMMAND_CALLBACK(__command)                                     \
     int                                                                 \
@@ -56,4 +56,4 @@ extern void command_version_display (struct t_gui_buffer *buffer,
                                      int translated_string,
                                      int display_git_version);
 
-#endif /* __WEECHAT_COMMAND_H */
+#endif /* WEECHAT_COMMAND_H */

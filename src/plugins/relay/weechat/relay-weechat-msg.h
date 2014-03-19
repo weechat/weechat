@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_RELAY_WEECHAT_MSG_H
-#define __WEECHAT_RELAY_WEECHAT_MSG_H 1
+#ifndef WEECHAT_RELAY_WEECHAT_MSG_H
+#define WEECHAT_RELAY_WEECHAT_MSG_H 1
 
 struct t_relay_weechat_nicklist;
 
@@ -81,4 +81,4 @@ extern void relay_weechat_msg_send (struct t_relay_client *client,
                                     struct t_relay_weechat_msg *msg);
 extern void relay_weechat_msg_free (struct t_relay_weechat_msg *msg);
 
-#endif /* __WEECHAT_RELAY_WEECHAT_MSG_H */
+#endif /* WEECHAT_RELAY_WEECHAT_MSG_H */

@@ -17,9 +17,9 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_IRC_DEBUG_H
-#define __WEECHAT_IRC_DEBUG_H 1
+#ifndef WEECHAT_IRC_DEBUG_H
+#define WEECHAT_IRC_DEBUG_H 1
 
 extern void irc_debug_init ();
 
-#endif /* __WEECHAT_IRC_DEBUG_H */
+#endif /* WEECHAT_IRC_DEBUG_H */

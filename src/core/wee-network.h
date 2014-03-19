@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_NETWORK_H
-#define __WEECHAT_NETWORK_H 1
+#ifndef WEECHAT_NETWORK_H
+#define WEECHAT_NETWORK_H 1
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -55,4 +55,4 @@ extern int network_connect_to (const char *proxy, struct sockaddr *address,
                                socklen_t address_length);
 extern void network_connect_with_fork (struct t_hook *hook_connect);
 
-#endif /* __WEECHAT_NETWORK_H */
+#endif /* WEECHAT_NETWORK_H */

@@ -18,8 +18,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_CONFIG_FILE_H
-#define __WEECHAT_CONFIG_FILE_H 1
+#ifndef WEECHAT_CONFIG_FILE_H
+#define WEECHAT_CONFIG_FILE_H 1
 
 #define CONFIG_BOOLEAN(option) (*((int *)((option)->value)))
 #define CONFIG_BOOLEAN_DEFAULT(option) (*((int *)((option)->default_value)))
@@ -259,4 +259,4 @@ extern int config_file_add_to_infolist (struct t_infolist *infolist,
                                         const char *option_name);
 extern void config_file_print_log ();
 
-#endif /* __WEECHAT_CONFIG_FILE_H */
+#endif /* WEECHAT_CONFIG_FILE_H */

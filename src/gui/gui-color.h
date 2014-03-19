@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_GUI_COLOR_H
-#define __WEECHAT_GUI_COLOR_H 1
+#ifndef WEECHAT_GUI_COLOR_H
+#define WEECHAT_GUI_COLOR_H 1
 
 #include <regex.h>
 
@@ -213,4 +213,4 @@ extern struct t_gui_color_palette *gui_color_palette_new (int number,
 extern void gui_color_palette_free (struct t_gui_color_palette *color_palette);
 extern void gui_color_dump ();
 
-#endif /* __WEECHAT_GUI_COLOR_H */
+#endif /* WEECHAT_GUI_COLOR_H */

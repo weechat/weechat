@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_PROXY_H
-#define __WEECHAT_PROXY_H 1
+#ifndef WEECHAT_PROXY_H
+#define WEECHAT_PROXY_H 1
 
 struct t_infolist;
 
@@ -87,4 +87,4 @@ extern int proxy_add_to_infolist (struct t_infolist *infolist,
                                   struct t_proxy *proxy);
 extern void proxy_print_log ();
 
-#endif /* __WEECHAT_PROXY_H */
+#endif /* WEECHAT_PROXY_H */

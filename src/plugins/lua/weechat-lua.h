@@ -18,8 +18,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_LUA_H
-#define __WEECHAT_LUA_H 1
+#ifndef WEECHAT_LUA_H
+#define WEECHAT_LUA_H 1
 
 #define weechat_plugin weechat_lua_plugin
 #define LUA_PLUGIN_NAME "lua"
@@ -58,4 +58,4 @@ extern void weechat_lua_register_lib(lua_State *L, const char *libname,
                                      const luaL_Reg *lua_api_funcs,
                                      struct t_lua_const lua_api_consts[]);
 
-#endif /* __WEECHAT_LUA_H */
+#endif /* WEECHAT_LUA_H */

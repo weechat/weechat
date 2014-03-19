@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_RELAY_NETWORK_H
-#define __WEECHAT_RELAY_NETWORK_H 1
+#ifndef WEECHAT_RELAY_NETWORK_H
+#define WEECHAT_RELAY_NETWORK_H 1
 
 #ifdef HAVE_GNUTLS
 #include <gnutls/gnutls.h>
@@ -37,4 +37,4 @@ extern void relay_network_set_ssl_cert_key (int verbose);
 extern void relay_network_init ();
 extern void relay_network_end ();
 
-#endif /* __WEECHAT_RELAY_NETWORK_H */
+#endif /* WEECHAT_RELAY_NETWORK_H */

@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_IRC_CTCP_H
-#define __WEECHAT_IRC_CTCP_H 1
+#ifndef WEECHAT_IRC_CTCP_H
+#define WEECHAT_IRC_CTCP_H 1
 
 struct t_irc_server;
 struct t_irc_channel;
@@ -41,4 +41,4 @@ extern void irc_ctcp_recv (struct t_irc_server *server, time_t date,
                            const char *remote_nick, char *arguments,
                            char *message);
 
-#endif /* __WEECHAT_IRC_CTCP_H */
+#endif /* WEECHAT_IRC_CTCP_H */

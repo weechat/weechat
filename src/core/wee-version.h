@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_VERSION_H
-#define __WEECHAT_VERSION_H 1
+#ifndef WEECHAT_VERSION_H
+#define WEECHAT_VERSION_H 1
 
 extern const char *version_get_name ();
 extern const char *version_get_version ();
@@ -28,4 +28,4 @@ extern const char *version_get_version_with_git ();
 extern const char *version_get_compilation_date ();
 extern const char *version_get_compilation_time ();
 
-#endif /* __WEECHAT_VERSION_H */
+#endif /* WEECHAT_VERSION_H */

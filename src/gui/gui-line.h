@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_GUI_LINE_H
-#define __WEECHAT_GUI_LINE_H 1
+#ifndef WEECHAT_GUI_LINE_H
+#define WEECHAT_GUI_LINE_H 1
 
 #include <regex.h>
 
@@ -124,4 +124,4 @@ extern int gui_line_add_to_infolist (struct t_infolist *infolist,
                                      struct t_gui_line *line);
 extern void gui_lines_print_log (struct t_gui_lines *lines);
 
-#endif /* __WEECHAT_GUI_LINE_H */
+#endif /* WEECHAT_GUI_LINE_H */

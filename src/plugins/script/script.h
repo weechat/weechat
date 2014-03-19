@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_SCRIPT_H
-#define __WEECHAT_SCRIPT_H 1
+#ifndef WEECHAT_SCRIPT_H
+#define WEECHAT_SCRIPT_H 1
 
 #define weechat_plugin weechat_script_plugin
 #define SCRIPT_PLUGIN_NAME "script"
@@ -37,4 +37,4 @@ extern int script_language_search_by_extension (const char *extension);
 extern void script_actions_add (const char *action);
 extern void script_get_loaded_plugins_and_scripts ();
 
-#endif /* __WEECHAT_SCRIPT_H */
+#endif /* WEECHAT_SCRIPT_H */

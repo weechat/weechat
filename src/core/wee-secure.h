@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_SECURE_H
-#define __WEECHAT_SECURE_H 1
+#ifndef WEECHAT_SECURE_H
+#define WEECHAT_SECURE_H 1
 
 #define SECURE_CONFIG_NAME "sec"
 
@@ -68,4 +68,4 @@ extern void secure_buffer_assign ();
 extern void secure_buffer_open ();
 extern void secure_end ();
 
-#endif /* __WEECHAT_SECURE_H */
+#endif /* WEECHAT_SECURE_H */

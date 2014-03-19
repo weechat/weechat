@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_LOGGER_TAIL_H
-#define __WEECHAT_LOGGER_TAIL_H 1
+#ifndef WEECHAT_LOGGER_TAIL_H
+#define WEECHAT_LOGGER_TAIL_H 1
 
 struct t_logger_line
 {
@@ -30,4 +30,4 @@ extern struct t_logger_line *logger_tail_file (const char *filename,
                                                int n_lines);
 extern void logger_tail_free (struct t_logger_line *lines);
 
-#endif /* __WEECHAT_LOGGER_TAIL_H */
+#endif /* WEECHAT_LOGGER_TAIL_H */

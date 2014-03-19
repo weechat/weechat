@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_IRC_NICK_H
-#define __WEECHAT_IRC_NICK_H 1
+#ifndef WEECHAT_IRC_NICK_H
+#define WEECHAT_IRC_NICK_H 1
 
 #define IRC_NICK_VALID_CHARS "abcdefghijklmnopqrstuvwxyzABCDEFGHI"      \
     "JKLMNOPQRSTUVWXYZ0123456789-[]\\`_^{|}"
@@ -108,4 +108,4 @@ extern int irc_nick_add_to_infolist (struct t_infolist *infolist,
                                      struct t_irc_nick *nick);
 extern void irc_nick_print_log (struct t_irc_nick *nick);
 
-#endif /* __WEECHAT_IRC_NICK_H */
+#endif /* WEECHAT_IRC_NICK_H */

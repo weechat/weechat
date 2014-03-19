@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_GUI_WINDOW_H
-#define __WEECHAT_GUI_WINDOW_H 1
+#ifndef WEECHAT_GUI_WINDOW_H
+#define WEECHAT_GUI_WINDOW_H 1
 
 struct t_infolist;
 struct t_gui_bar_window;
@@ -240,4 +240,4 @@ extern void gui_window_move_cursor ();
 extern void gui_window_term_display_infos ();
 extern void gui_window_objects_print_log (struct t_gui_window *window);
 
-#endif /* __WEECHAT_GUI_WINDOW_H */
+#endif /* WEECHAT_GUI_WINDOW_H */

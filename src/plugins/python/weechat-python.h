@@ -18,8 +18,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_PYTHON_H
-#define __WEECHAT_PYTHON_H 1
+#ifndef WEECHAT_PYTHON_H
+#define WEECHAT_PYTHON_H 1
 
 #define weechat_plugin weechat_python_plugin
 #define PYTHON_PLUGIN_NAME "python"
@@ -53,4 +53,4 @@ extern void *weechat_python_exec (struct t_plugin_script *script,
                                   int ret_type, const char *function,
                                   char *format, void **argv);
 
-#endif /* __WEECHAT_PYTHON_H */
+#endif /* WEECHAT_PYTHON_H */

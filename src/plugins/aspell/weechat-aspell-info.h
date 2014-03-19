@@ -17,9 +17,9 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_ASPELL_INFO_H
-#define __WEECHAT_ASPELL_INFO_H 1
+#ifndef WEECHAT_ASPELL_INFO_H
+#define WEECHAT_ASPELL_INFO_H 1
 
 extern void weechat_aspell_info_init ();
 
-#endif /* __WEECHAT_ASPELL_INFO_H */
+#endif /* WEECHAT_ASPELL_INFO_H */

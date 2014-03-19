@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_INFOLIST_H
-#define __WEECHAT_INFOLIST_H 1
+#ifndef WEECHAT_INFOLIST_H
+#define WEECHAT_INFOLIST_H 1
 
 /* list structures */
 
@@ -107,4 +107,4 @@ extern void infolist_free (struct t_infolist *infolist);
 extern void infolist_free_all_plugin (struct t_weechat_plugin *plugin);
 extern void infolist_print_log ();
 
-#endif /* __WEECHAT_INFOLIST_H */
+#endif /* WEECHAT_INFOLIST_H */

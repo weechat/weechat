@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_XFER_H
-#define __WEECHAT_XFER_H 1
+#ifndef WEECHAT_XFER_H
+#define WEECHAT_XFER_H 1
 
 #include <unistd.h>
 #include <gcrypt.h>
@@ -205,4 +205,4 @@ extern void xfer_free (struct t_xfer *xfer);
 extern int xfer_add_to_infolist (struct t_infolist *infolist,
                                  struct t_xfer *xfer);
 
-#endif /* __WEECHAT_XFER_H */
+#endif /* WEECHAT_XFER_H */

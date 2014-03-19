@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_PLUGIN_SCRIPT_CALLBACK_H
-#define __WEECHAT_PLUGIN_SCRIPT_CALLBACK_H 1
+#ifndef WEECHAT_PLUGIN_SCRIPT_CALLBACK_H
+#define WEECHAT_PLUGIN_SCRIPT_CALLBACK_H 1
 
 struct t_plugin_script_cb
 {
@@ -47,4 +47,4 @@ extern struct t_hdata *plugin_script_callback_hdata_callback_cb (void *data,
 extern void plugin_script_callback_print_log (struct t_weechat_plugin *weechat_plugin,
                                               struct t_plugin_script_cb *script_callback);
 
-#endif /* __WEECHAT_PLUGIN_SCRIPT_CALLBACK_H */
+#endif /* WEECHAT_PLUGIN_SCRIPT_CALLBACK_H */

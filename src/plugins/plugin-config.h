@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_PLUGIN_CONFIG_H
-#define __WEECHAT_PLUGIN_CONFIG_H 1
+#ifndef WEECHAT_PLUGIN_CONFIG_H
+#define WEECHAT_PLUGIN_CONFIG_H 1
 
 #define PLUGIN_CONFIG_NAME "plugins"
 
@@ -37,4 +37,4 @@ extern int plugin_config_read ();
 extern int plugin_config_write ();
 extern void plugin_config_end ();
 
-#endif /* __WEECHAT_PLUGIN_CONFIG_H */
+#endif /* WEECHAT_PLUGIN_CONFIG_H */

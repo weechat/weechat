@@ -18,8 +18,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_CONFIG_H
-#define __WEECHAT_CONFIG_H 1
+#ifndef WEECHAT_CONFIG_H
+#define WEECHAT_CONFIG_H 1
 
 #include <regex.h>
 #include "wee-config-file.h"
@@ -315,4 +315,4 @@ extern int config_weechat_read ();
 extern int config_weechat_write ();
 extern void config_weechat_free ();
 
-#endif /* __WEECHAT_CONFIG_H */
+#endif /* WEECHAT_CONFIG_H */

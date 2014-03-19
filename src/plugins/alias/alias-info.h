@@ -17,9 +17,9 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_ALIAS_INFO_H
-#define __WEECHAT_ALIAS_INFO_H 1
+#ifndef WEECHAT_ALIAS_INFO_H
+#define WEECHAT_ALIAS_INFO_H 1
 
 extern void alias_info_init ();
 
-#endif /* __WEECHAT_ALIAS_INFO_H */
+#endif /* WEECHAT_ALIAS_INFO_H */

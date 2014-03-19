@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_IRC_CHANNEL_H
-#define __WEECHAT_IRC_CHANNEL_H 1
+#ifndef WEECHAT_IRC_CHANNEL_H
+#define WEECHAT_IRC_CHANNEL_H 1
 
 #define IRC_CHANNEL_DEFAULT_CHANTYPES "#&+!"
 
@@ -150,4 +150,4 @@ extern int irc_channel_add_to_infolist (struct t_infolist *infolist,
                                         struct t_irc_channel *channel);
 extern void irc_channel_print_log (struct t_irc_channel *channel);
 
-#endif /* __WEECHAT_IRC_CHANNEL_H */
+#endif /* WEECHAT_IRC_CHANNEL_H */

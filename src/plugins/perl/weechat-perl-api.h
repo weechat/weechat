@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_PERL_API_H
-#define __WEECHAT_PERL_API_H 1
+#ifndef WEECHAT_PERL_API_H
+#define WEECHAT_PERL_API_H 1
 
 extern int weechat_perl_api_buffer_input_data_cb (void *data,
                                                   struct t_gui_buffer *buffer,
@@ -27,4 +27,4 @@ extern int weechat_perl_api_buffer_close_cb (void *data,
                                              struct t_gui_buffer *buffer);
 extern void weechat_perl_api_init (pTHX);
 
-#endif /* __WEECHAT_PERL_API_H */
+#endif /* WEECHAT_PERL_API_H */

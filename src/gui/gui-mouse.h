@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_GUI_MOUSE_H
-#define __WEECHAT_GUI_MOUSE_H 1
+#ifndef WEECHAT_GUI_MOUSE_H
+#define WEECHAT_GUI_MOUSE_H 1
 
 /* mouse variables */
 
@@ -46,4 +46,4 @@ extern void gui_mouse_grab_init (int area);
 extern void gui_mouse_event_init ();
 extern void gui_mouse_event_end ();
 
-#endif /* __WEECHAT_GUI_MOUSE_H */
+#endif /* WEECHAT_GUI_MOUSE_H */

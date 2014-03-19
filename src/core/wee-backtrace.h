@@ -17,11 +17,11 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_BACKTACE_H
-#define __WEECHAT_BACKTACE_H 1
+#ifndef WEECHAT_BACKTACE_H
+#define WEECHAT_BACKTACE_H 1
 
 #define BACKTRACE_MAX 128
 
 extern void weechat_backtrace ();
 
-#endif /* __WEECHAT_BACKTACE_H */
+#endif /* WEECHAT_BACKTACE_H */

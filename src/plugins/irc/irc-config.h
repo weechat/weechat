@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_IRC_CONFIG_H
-#define __WEECHAT_IRC_CONFIG_H 1
+#ifndef WEECHAT_IRC_CONFIG_H
+#define WEECHAT_IRC_CONFIG_H 1
 
 #define IRC_CONFIG_NAME "irc"
 
@@ -219,4 +219,4 @@ extern int irc_config_read ();
 extern int irc_config_write (int write_temp_servers);
 extern void irc_config_free ();
 
-#endif /* __WEECHAT_IRC_CONFIG_H */
+#endif /* WEECHAT_IRC_CONFIG_H */

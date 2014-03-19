@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_TRIGGER_BUFFER_H
-#define __WEECHAT_TRIGGER_BUFFER_H 1
+#ifndef WEECHAT_TRIGGER_BUFFER_H
+#define WEECHAT_TRIGGER_BUFFER_H 1
 
 #define TRIGGER_BUFFER_NAME "monitor"
 
@@ -31,4 +31,4 @@ extern void trigger_buffer_display_trigger (struct t_trigger *trigger,
 extern void trigger_buffer_set_callbacks ();
 extern void trigger_buffer_open (int switch_to_buffer);
 
-#endif /* __WEECHAT_TRIGGER_BUFFER_H */
+#endif /* WEECHAT_TRIGGER_BUFFER_H */

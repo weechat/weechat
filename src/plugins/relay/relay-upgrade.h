@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_RELAY_UPGRADE_H
-#define __WEECHAT_RELAY_UPGRADE_H 1
+#ifndef WEECHAT_RELAY_UPGRADE_H
+#define WEECHAT_RELAY_UPGRADE_H 1
 
 #define RELAY_UPGRADE_FILENAME "relay"
 
@@ -34,4 +34,4 @@ enum t_relay_upgrade_type
 extern int relay_upgrade_save ();
 extern int relay_upgrade_load ();
 
-#endif /* __WEECHAT_RELAY_UPGRADE_H */
+#endif /* WEECHAT_RELAY_UPGRADE_H */

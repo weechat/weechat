@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_GUI_LAYOUT_H
-#define __WEECHAT_GUI_LAYOUT_H 1
+#ifndef WEECHAT_GUI_LAYOUT_H
+#define WEECHAT_GUI_LAYOUT_H 1
 
 #define GUI_LAYOUT_DEFAULT_NAME "default"
 
@@ -129,4 +129,4 @@ extern void gui_layout_print_log ();
 extern void gui_layout_init ();
 extern void gui_layout_end ();
 
-#endif /* __WEECHAT_GUI_LAYOUT_H */
+#endif /* WEECHAT_GUI_LAYOUT_H */

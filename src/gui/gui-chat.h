@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_GUI_CHAT_H
-#define __WEECHAT_GUI_CHAT_H 1
+#ifndef WEECHAT_GUI_CHAT_H
+#define WEECHAT_GUI_CHAT_H 1
 
 struct t_hashtable;
 struct t_gui_window;
@@ -105,4 +105,4 @@ extern void gui_chat_draw (struct t_gui_buffer *buffer, int clear_chat);
 extern void gui_chat_draw_line (struct t_gui_buffer *buffer,
                                 struct t_gui_line *line);
 
-#endif /* __WEECHAT_GUI_CHAT_H */
+#endif /* WEECHAT_GUI_CHAT_H */

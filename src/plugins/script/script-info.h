@@ -17,9 +17,9 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_SCRIPT_INFO_H
-#define __WEECHAT_SCRIPT_INFO_H 1
+#ifndef WEECHAT_SCRIPT_INFO_H
+#define WEECHAT_SCRIPT_INFO_H 1
 
 extern void script_info_init ();
 
-#endif /* __WEECHAT_SCRIPT_INFO_H */
+#endif /* WEECHAT_SCRIPT_INFO_H */

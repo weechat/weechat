@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_IRC_BUFFER_H
-#define __WEECHAT_IRC_BUFFER_H 1
+#ifndef WEECHAT_IRC_BUFFER_H
+#define WEECHAT_IRC_BUFFER_H 1
 
 #define IRC_BUFFER_GET_SERVER(__buffer)                                 \
     struct t_weechat_plugin *buffer_plugin = NULL;                      \
@@ -60,4 +60,4 @@ extern int irc_buffer_nickcmp_cb (void *data,
 extern struct t_gui_buffer *irc_buffer_search_server_lowest_number ();
 extern struct t_gui_buffer *irc_buffer_search_private_lowest_number (struct t_irc_server *server);
 
-#endif /* __WEECHAT_IRC_BUFFER_H */
+#endif /* WEECHAT_IRC_BUFFER_H */

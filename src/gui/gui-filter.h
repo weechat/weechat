@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_GUI_FILTER_H
-#define __WEECHAT_GUI_FILTER_H 1
+#ifndef WEECHAT_GUI_FILTER_H
+#define WEECHAT_GUI_FILTER_H 1
 
 #include <regex.h>
 
@@ -75,4 +75,4 @@ extern int gui_filter_add_to_infolist (struct t_infolist *infolist,
                                        struct t_gui_filter *filter);
 extern void gui_filter_print_log ();
 
-#endif /* __WEECHAT_GUI_FILTER_H */
+#endif /* WEECHAT_GUI_FILTER_H */

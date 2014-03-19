@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_LOGGER_BUFFER_H
-#define __WEECHAT_LOGGER_BUFFER_H 1
+#ifndef WEECHAT_LOGGER_BUFFER_H
+#define WEECHAT_LOGGER_BUFFER_H 1
 
 struct t_infolist;
 
@@ -48,4 +48,4 @@ extern void logger_buffer_free (struct t_logger_buffer *logger_buffer);
 extern int logger_buffer_add_to_infolist (struct t_infolist *infolist,
                                           struct t_logger_buffer *logger_buffer);
 
-#endif /* __WEECHAT_LOGGER_BUFFER_H */
+#endif /* WEECHAT_LOGGER_BUFFER_H */

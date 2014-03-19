@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_GUI_MAIN_H
-#define __WEECHAT_GUI_MAIN_H 1
+#ifndef WEECHAT_GUI_MAIN_H
+#define WEECHAT_GUI_MAIN_H 1
 
 /* main functions (GUI dependent) */
 
@@ -34,4 +34,4 @@ extern void gui_main_end (int clean_exit);
 /* terminal functions (GUI dependent) */
 extern void gui_term_set_eat_newline_glitch (int value);
 
-#endif /* __WEECHAT_GUI_MAIN_H */
+#endif /* WEECHAT_GUI_MAIN_H */

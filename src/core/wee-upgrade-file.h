@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_UPGRADE_FILE_H
-#define __WEECHAT_UPGRADE_FILE_H 1
+#ifndef WEECHAT_UPGRADE_FILE_H
+#define WEECHAT_UPGRADE_FILE_H 1
 
 #define UPGRADE_SIGNATURE "===== WeeChat Upgrade file v2.2 - binary, do not edit! ====="
 
@@ -63,4 +63,4 @@ extern int upgrade_file_read (struct t_upgrade_file *upgrade_file,
                               void *callback_read_data);
 extern void upgrade_file_close (struct t_upgrade_file *upgrade_file);
 
-#endif /* __WEECHAT_UPGRADE_FILE_H */
+#endif /* WEECHAT_UPGRADE_FILE_H */

@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_UTIL_H
-#define __WEECHAT_UTIL_H 1
+#ifndef WEECHAT_UTIL_H
+#define WEECHAT_UTIL_H 1
 
 #ifdef HAVE_SYS_RESOURCE_H
 struct t_rlimit_resource
@@ -53,4 +53,4 @@ extern char *util_search_full_lib_name (const char *filename,
 extern char *util_file_get_content (const char *filename);
 extern int util_version_number (const char *version);
 
-#endif /* __WEECHAT_UTIL_H */
+#endif /* WEECHAT_UTIL_H */

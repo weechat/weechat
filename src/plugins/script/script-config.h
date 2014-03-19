@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_SCRIPT_CONFIG_H
-#define __WEECHAT_SCRIPT_CONFIG_H 1
+#ifndef WEECHAT_SCRIPT_CONFIG_H
+#define WEECHAT_SCRIPT_CONFIG_H 1
 
 #define SCRIPT_CONFIG_NAME "script"
 
@@ -78,4 +78,4 @@ extern int script_config_read ();
 extern int script_config_write ();
 extern void script_config_free ();
 
-#endif /* __WEECHAT_SCRIPT_CONFIG_H */
+#endif /* WEECHAT_SCRIPT_CONFIG_H */

@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_IRC_COMMAND_H
-#define __WEECHAT_IRC_COMMAND_H 1
+#ifndef WEECHAT_IRC_COMMAND_H
+#define WEECHAT_IRC_COMMAND_H 1
 
 struct t_irc_server;
 struct t_irc_channel;
@@ -61,4 +61,4 @@ extern void irc_command_quit_server (struct t_irc_server *server,
                                      const char *arguments);
 extern void irc_command_init ();
 
-#endif /* __WEECHAT_IRC_COMMAND_H */
+#endif /* WEECHAT_IRC_COMMAND_H */

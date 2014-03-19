@@ -17,11 +17,11 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_EXEC_BUFFER_H
-#define __WEECHAT_EXEC_BUFFER_H 1
+#ifndef WEECHAT_EXEC_BUFFER_H
+#define WEECHAT_EXEC_BUFFER_H 1
 
 extern void exec_buffer_set_callbacks ();
 extern struct t_gui_buffer *exec_buffer_new (const char *name,
                                              int switch_to_buffer);
 
-#endif /* __WEECHAT_EXEC_BUFFER_H */
+#endif /* WEECHAT_EXEC_BUFFER_H */

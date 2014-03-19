@@ -18,8 +18,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_RUBY_API_H
-#define __WEECHAT_RUBY_API_H 1
+#ifndef WEECHAT_RUBY_API_H
+#define WEECHAT_RUBY_API_H 1
 
 extern int weechat_ruby_api_buffer_input_data_cb (void *data,
                                                   struct t_gui_buffer *buffer,
@@ -28,4 +28,4 @@ extern int weechat_ruby_api_buffer_close_cb (void *data,
                                              struct t_gui_buffer *buffer);
 extern void weechat_ruby_api_init (VALUE ruby_mWeechat);
 
-#endif /* __WEECHAT_RUBY_API_H */
+#endif /* WEECHAT_RUBY_API_H */

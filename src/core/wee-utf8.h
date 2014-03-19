@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_UTF8_H
-#define __WEECHAT_UTF8_H 1
+#ifndef WEECHAT_UTF8_H
+#define WEECHAT_UTF8_H 1
 
 #ifndef __USE_XOPEN
 #define __USE_XOPEN
@@ -51,4 +51,4 @@ extern int utf8_real_pos (const char *string, int pos);
 extern int utf8_pos (const char *string, int real_pos);
 extern char *utf8_strndup (const char *string, int length);
 
-#endif /* __WEECHAT_UTF8_H */
+#endif /* WEECHAT_UTF8_H */

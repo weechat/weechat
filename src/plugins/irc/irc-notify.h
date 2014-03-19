@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_IRC_NOTIFY_H
-#define __WEECHAT_IRC_NOTIFY_H 1
+#ifndef WEECHAT_IRC_NOTIFY_H
+#define WEECHAT_IRC_NOTIFY_H 1
 
 struct t_irc_server;
 
@@ -72,4 +72,4 @@ extern void irc_notify_hook_timer_whois ();
 extern void irc_notify_init ();
 extern void irc_notify_end ();
 
-#endif /* __WEECHAT_IRC_NOTIFY_H */
+#endif /* WEECHAT_IRC_NOTIFY_H */

@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_COMPLETION_H
-#define __WEECHAT_COMPLETION_H 1
+#ifndef WEECHAT_COMPLETION_H
+#define WEECHAT_COMPLETION_H 1
 
 struct t_gui_buffer;
 struct t_gui_completion;
@@ -29,4 +29,4 @@ extern int completion_list_add_filename_cb (void *data,
                                             struct t_gui_completion *completion);
 extern void completion_init ();
 
-#endif /* __WEECHAT_COMPLETION_H */
+#endif /* WEECHAT_COMPLETION_H */

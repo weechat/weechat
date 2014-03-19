@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_GUI_INPUT_H
-#define __WEECHAT_GUI_INPUT_H 1
+#ifndef WEECHAT_GUI_INPUT_H
+#define WEECHAT_GUI_INPUT_H 1
 
 struct t_gui_buffer;
 
@@ -86,4 +86,4 @@ extern void gui_input_insert (struct t_gui_buffer *buffer, const char *args);
 extern void gui_input_undo (struct t_gui_buffer *buffer);
 extern void gui_input_redo (struct t_gui_buffer *buffer);
 
-#endif /* __WEECHAT_GUI_INPUT_H */
+#endif /* WEECHAT_GUI_INPUT_H */

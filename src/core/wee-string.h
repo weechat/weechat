@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_STRING_H
-#define __WEECHAT_STRING_H 1
+#ifndef WEECHAT_STRING_H
+#define WEECHAT_STRING_H 1
 
 #include <regex.h>
 
@@ -97,4 +97,4 @@ extern const char *string_shared_get (const char *string);
 extern void string_shared_free (const char *string);
 extern void string_end ();
 
-#endif /* __WEECHAT_STRING_H */
+#endif /* WEECHAT_STRING_H */

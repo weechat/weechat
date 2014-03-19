@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_LIST_H
-#define __WEECHAT_LIST_H 1
+#ifndef WEECHAT_LIST_H
+#define WEECHAT_LIST_H 1
 
 struct t_weelist_item
 {
@@ -58,4 +58,4 @@ extern void weelist_remove_all (struct t_weelist *weelist);
 extern void weelist_free (struct t_weelist *weelist);
 extern void weelist_print_log (struct t_weelist *weelist, const char *name);
 
-#endif /* __WEECHAT_LIST_H */
+#endif /* WEECHAT_LIST_H */

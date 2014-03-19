@@ -18,8 +18,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_PLUGIN_SCRIPT_API_H
-#define __WEECHAT_PLUGIN_SCRIPT_API_H 1
+#ifndef WEECHAT_PLUGIN_SCRIPT_API_H
+#define WEECHAT_PLUGIN_SCRIPT_API_H 1
 
 extern void plugin_script_api_charset_set (struct t_plugin_script *script,
                                            const char *charset);
@@ -360,4 +360,4 @@ extern int plugin_script_api_upgrade_read (struct t_weechat_plugin *weechat_plug
                                            const char *function,
                                            const char *data);
 
-#endif /* __WEECHAT_PLUGIN_SCRIPT_API_H */
+#endif /* WEECHAT_PLUGIN_SCRIPT_API_H */

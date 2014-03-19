@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_LOGGER_H
-#define __WEECHAT_LOGGER_H 1
+#ifndef WEECHAT_LOGGER_H
+#define WEECHAT_LOGGER_H 1
 
 #define weechat_plugin weechat_logger_plugin
 #define LOGGER_PLUGIN_NAME "logger"
@@ -34,4 +34,4 @@ extern void logger_stop_all (int write_info_line);
 extern void logger_adjust_log_filenames ();
 extern int logger_timer_cb (void *data, int remaining_calls);
 
-#endif /* __WEECHAT_LOGGER_H */
+#endif /* WEECHAT_LOGGER_H */

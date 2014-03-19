@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_RELAY_H
-#define __WEECHAT_RELAY_H 1
+#ifndef WEECHAT_RELAY_H
+#define WEECHAT_RELAY_H 1
 
 #define weechat_plugin weechat_relay_plugin
 #define RELAY_PLUGIN_NAME "relay"
@@ -46,4 +46,4 @@ extern char *relay_protocol_string[];
 
 extern int relay_protocol_search (const char *name);
 
-#endif /* __WEECHAT_RELAY_H */
+#endif /* WEECHAT_RELAY_H */

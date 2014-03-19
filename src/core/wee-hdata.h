@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_HDATA_H
-#define __WEECHAT_HDATA_H 1
+#ifndef WEECHAT_HDATA_H
+#define WEECHAT_HDATA_H 1
 
 #define HDATA_VAR(__struct, __name, __type, __update_allowed,           \
                   __array_size, __hdata_name)                           \
@@ -127,4 +127,4 @@ extern void hdata_print_log ();
 extern void hdata_init ();
 extern void hdata_end ();
 
-#endif /* __WEECHAT_HDATA_H */
+#endif /* WEECHAT_HDATA_H */

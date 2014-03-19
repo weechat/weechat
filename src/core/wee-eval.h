@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_EVAL_H
-#define __WEECHAT_EVAL_H 1
+#ifndef WEECHAT_EVAL_H
+#define WEECHAT_EVAL_H 1
 
 #define EVAL_STR_FALSE "0"
 #define EVAL_STR_TRUE  "1"
@@ -53,4 +53,4 @@ extern char *eval_expression (const char *expr,
                               struct t_hashtable *extra_vars,
                               struct t_hashtable *options);
 
-#endif /* __WEECHAT_EVAL_H */
+#endif /* WEECHAT_EVAL_H */

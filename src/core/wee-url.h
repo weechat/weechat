@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_URL_H
-#define __WEECHAT_URL_H 1
+#ifndef WEECHAT_URL_H
+#define WEECHAT_URL_H 1
 
 struct t_hashtable;
 struct t_infolist;
@@ -57,4 +57,4 @@ extern int weeurl_download (const char *url, struct t_hashtable *options);
 extern int weeurl_option_add_to_infolist (struct t_infolist *infolist,
                                           struct t_url_option *option);
 
-#endif /* __WEECHAT_URL_H */
+#endif /* WEECHAT_URL_H */

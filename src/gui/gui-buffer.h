@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_GUI_BUFFER_H
-#define __WEECHAT_GUI_BUFFER_H 1
+#ifndef WEECHAT_GUI_BUFFER_H
+#define WEECHAT_GUI_BUFFER_H 1
 
 #include <limits.h>
 #include <regex.h>
@@ -330,4 +330,4 @@ extern int gui_buffer_add_to_infolist (struct t_infolist *infolist,
 extern void gui_buffer_dump_hexa (struct t_gui_buffer *buffer);
 extern void gui_buffer_print_log ();
 
-#endif /* __WEECHAT_GUI_BUFFER_H */
+#endif /* WEECHAT_GUI_BUFFER_H */

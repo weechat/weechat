@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_GUI_BAR_H
-#define __WEECHAT_GUI_BAR_H 1
+#ifndef WEECHAT_GUI_BAR_H
+#define WEECHAT_GUI_BAR_H 1
 
 struct t_infolist;
 struct t_weechat_plugin;
@@ -159,4 +159,4 @@ extern int gui_bar_add_to_infolist (struct t_infolist *infolist,
                                     struct t_gui_bar *bar);
 extern void gui_bar_print_log ();
 
-#endif /* __WEECHAT_GUI_BAR_H */
+#endif /* WEECHAT_GUI_BAR_H */

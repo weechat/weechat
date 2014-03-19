@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __WEECHAT_RELAY_WEBSOCKET_H
-#define __WEECHAT_RELAY_WEBSOCKET_H 1
+#ifndef WEECHAT_RELAY_WEBSOCKET_H
+#define WEECHAT_RELAY_WEBSOCKET_H 1
 
 extern int relay_websocket_is_http_get_weechat (const char *message);
 extern void relay_websocket_save_header (struct t_relay_client *client,
@@ -36,4 +36,4 @@ extern char *relay_websocket_encode_frame (struct t_relay_client *client,
                                            unsigned long long length,
                                            unsigned long long *length_frame);
 
-#endif /* __WEECHAT_RELAY_WEBSOCKET_H */
+#endif /* WEECHAT_RELAY_WEBSOCKET_H */
