@@ -284,6 +284,7 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
 
     regex1 = NULL;
     regex2 = NULL;
+
     if (strcmp (ptr_start_regex, "*") != 0)
     {
         pos_tab = strstr (ptr_start_regex, "\\t");
@@ -299,7 +300,7 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
             pos_regex_message = ptr_start_regex;
         }
 
-        if (regex_prefix)
+        if (regex_prefix && regex_prefix[0])
         {
             regex1 = malloc (sizeof (*regex1));
             if (regex1)
@@ -314,18 +315,24 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
             }
         }
 
-        regex2 = malloc (sizeof (*regex2));
-        if (regex2)
+        if (pos_regex_message && pos_regex_message[0])
         {
-            if (string_regcomp (regex2, pos_regex_message,
-                                REG_EXTENDED | REG_ICASE | REG_NOSUB) != 0)
+            regex2 = malloc (sizeof (*regex2));
+            if (regex2)
             {
-                if (regex_prefix)
-                    free (regex_prefix);
-                if (regex1)
-                    free (regex1);
-                free (regex2);
-                return NULL;
+                if (string_regcomp (regex2, pos_regex_message,
+                                    REG_EXTENDED | REG_ICASE | REG_NOSUB) != 0)
+                {
+                    if (regex_prefix)
+                        free (regex_prefix);
+                    if (regex1)
+                    {
+                        regfree (regex1);
+                        free (regex1);
+                    }
+                    free (regex2);
+                    return NULL;
+                }
             }
         }
 
