@@ -1086,7 +1086,9 @@ Befehl festgelegt werden:
 | key[alt-F12]       | springt zum Ende der Nickliste | `/bar scroll nicklist * e`
 | key[alt-a]         | wechselt zum nächsten Buffer mit Aktivität (nach Priorität: highlight, Nachricht, ...) | `/input jump_smart`
 | key[alt-h]         | löscht Hotliste (Aktivitätsanzeige für die Buffer) | `/input hotlist_clear`
-| key[alt-j,alt-l]   | wechselt zum letzten Buffer | `/input jump_last_buffer`
+// TRANSLATION MISSING
+| key[alt-j,alt-f]   | Switch to first buffer | `/buffer -`
+| key[alt-j,alt-l]   | wechselt zum letzten Buffer | `/buffer +`
 | key[alt-j,alt-r]   | wechselt zum IRC RAW Buffer | `/server raw`
 | key[alt-j,alt-s]   | wechselt zum IRC Server Buffer | `/server jump`
 | key[alt-0...9]     | wechselt zum Buffer mit der Nummer (0 = 10) | `/buffer *N`

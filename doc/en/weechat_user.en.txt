@@ -1072,7 +1072,8 @@ The notify level for a buffer can be set with command `/buffer`:
 | key[alt-F12]       | Go to the end of nicklist | `/bar scroll nicklist * e`
 | key[alt-a]         | Switch to next buffer with activity (with priority: highlight, message, other) | `/input jump_smart`
 | key[alt-h]         | Clear hotlist (activity notification on other buffers) | `/input hotlist_clear`
-| key[alt-j,alt-l]   | Switch to last buffer | `/input jump_last_buffer`
+| key[alt-j,alt-f]   | Switch to first buffer | `/buffer -`
+| key[alt-j,alt-l]   | Switch to last buffer | `/buffer +`
 | key[alt-j,alt-r]   | Switch to IRC raw buffer | `/server raw`
 | key[alt-j,alt-s]   | Switch to IRC server buffer | `/server jump`
 | key[alt-0...9]     | Switch to buffer by number (0 = 10) | `/buffer *N`

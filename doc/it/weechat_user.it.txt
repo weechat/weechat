@@ -1109,7 +1109,9 @@ Il livello di notifica per un buffer può essere impostato con il comando `/buff
 | key[alt-F12]       | Sposta alla fine della lista nick | `/bar scroll nicklist * e`
 | key[alt-a]         | Passa al buffer successivo con attività (con priorità: highligh, messagge, altro) | `/input jump_smart`
 | key[alt-h]         | Pulisce hotlist (notifica di attività su altri buffer) | `/input hotlist_clear`
-| key[alt-j,alt-l]   | Passa all'ultimo buffer | `/input jump_last_buffer`
+// TRANSLATION MISSING
+| key[alt-j,alt-f]   | Switch to first buffer | `/buffer -`
+| key[alt-j,alt-l]   | Passa all'ultimo buffer | `/buffer +`
 | key[alt-j,alt-r]   | Passa al buffer raw IRC | `/server raw`
 | key[alt-j,alt-s]   | Passa al buffer server IRC | `/server jump`
 | key[alt-0...9]     | Passa al buffer numero (0 = 10) | `/buffer *N`

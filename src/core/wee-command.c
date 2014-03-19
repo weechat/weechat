@@ -623,7 +623,7 @@ COMMAND_CALLBACK(buffer)
             return WEECHAT_RC_ERROR;
         if (strcmp (argv[2], "-") == 0)
         {
-            gui_buffer_move_to_number (buffer, 1);
+            gui_buffer_move_to_number (buffer, gui_buffers->number);
         }
         else if (strcmp (argv[2], "+") == 0)
         {
@@ -997,47 +997,53 @@ COMMAND_CALLBACK(buffer)
     /* relative jump '-' */
     if (argv[1][0] == '-')
     {
-        error = NULL;
-        number = strtol (argv[1] + 1, &error, 10);
-        if (error && !error[0])
+        if (strcmp (argv[1], "-") == 0)
         {
-            if (number <= 0)
-                return WEECHAT_RC_OK;
-            count = 0;
-            prev_number = gui_current_window->buffer->number;
-            ptr_buffer = gui_current_window->buffer;
-            while (1)
-            {
-                ptr_buffer = ptr_buffer->prev_buffer;
-                if (!ptr_buffer)
-                    ptr_buffer = last_gui_buffer;
-
-                /* if we have looped on all buffers, exit the loop */
-                if (ptr_buffer == gui_current_window->buffer)
-                    break;
-
-                if ((ptr_buffer->number != gui_current_window->buffer->number)
-                    && (ptr_buffer->number != prev_number))
-                {
-                    /* increase count each time we discover a different number */
-                    count++;
-                    if (count == number)
-                    {
-                        gui_buffer_switch_by_number (gui_current_window,
-                                                     ptr_buffer->number);
-                        break;
-                    }
-                }
-                prev_number = ptr_buffer->number;
-            }
+            gui_buffer_switch_by_number (gui_current_window,
+                                         gui_buffers->number);
         }
         else
         {
-            /* invalid number */
-            gui_chat_printf (NULL,
-                             _("%sError: incorrect buffer number"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-            return WEECHAT_RC_OK;
+            error = NULL;
+            number = strtol (argv[1] + 1, &error, 10);
+            if (error && !error[0] && (number > 0))
+            {
+                count = 0;
+                prev_number = gui_current_window->buffer->number;
+                ptr_buffer = gui_current_window->buffer;
+                while (1)
+                {
+                    ptr_buffer = ptr_buffer->prev_buffer;
+                    if (!ptr_buffer)
+                        ptr_buffer = last_gui_buffer;
+
+                    /* if we have looped on all buffers, exit the loop */
+                    if (ptr_buffer == gui_current_window->buffer)
+                        break;
+
+                    if ((ptr_buffer->number != gui_current_window->buffer->number)
+                        && (ptr_buffer->number != prev_number))
+                    {
+                        /* increase count each time we discover a different number */
+                        count++;
+                        if (count == number)
+                        {
+                            gui_buffer_switch_by_number (gui_current_window,
+                                                         ptr_buffer->number);
+                            break;
+                        }
+                    }
+                    prev_number = ptr_buffer->number;
+                }
+            }
+            else
+            {
+                /* invalid number */
+                gui_chat_printf (NULL,
+                                 _("%sError: incorrect buffer number"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                return WEECHAT_RC_OK;
+            }
         }
         return WEECHAT_RC_OK;
     }
@@ -1045,47 +1051,53 @@ COMMAND_CALLBACK(buffer)
     /* relative jump '+' */
     if (argv[1][0] == '+')
     {
-        error = NULL;
-        number = strtol (argv[1] + 1, &error, 10);
-        if (error && !error[0])
+        if (strcmp (argv[1], "+") == 0)
         {
-            if (number <= 0)
-                return WEECHAT_RC_OK;
-            count = 0;
-            prev_number = gui_current_window->buffer->number;
-            ptr_buffer = gui_current_window->buffer;
-            while (1)
-            {
-                ptr_buffer = ptr_buffer->next_buffer;
-                if (!ptr_buffer)
-                    ptr_buffer = gui_buffers;
-
-                /* if we have looped on all buffers, exit the loop */
-                if (ptr_buffer == gui_current_window->buffer)
-                    break;
-
-                if ((ptr_buffer->number != gui_current_window->buffer->number)
-                    && (ptr_buffer->number != prev_number))
-                {
-                    /* increase count each time we discover a different number */
-                    count++;
-                    if (count == number)
-                    {
-                        gui_buffer_switch_by_number (gui_current_window,
-                                                     ptr_buffer->number);
-                        break;
-                    }
-                }
-                prev_number = ptr_buffer->number;
-            }
+            gui_buffer_switch_by_number (gui_current_window,
+                                         last_gui_buffer->number);
         }
         else
         {
-            /* invalid number */
-            gui_chat_printf (NULL,
-                             _("%sError: incorrect buffer number"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-            return WEECHAT_RC_OK;
+            error = NULL;
+            number = strtol (argv[1] + 1, &error, 10);
+            if (error && !error[0] && (number > 0))
+            {
+                count = 0;
+                prev_number = gui_current_window->buffer->number;
+                ptr_buffer = gui_current_window->buffer;
+                while (1)
+                {
+                    ptr_buffer = ptr_buffer->next_buffer;
+                    if (!ptr_buffer)
+                        ptr_buffer = gui_buffers;
+
+                    /* if we have looped on all buffers, exit the loop */
+                    if (ptr_buffer == gui_current_window->buffer)
+                        break;
+
+                    if ((ptr_buffer->number != gui_current_window->buffer->number)
+                        && (ptr_buffer->number != prev_number))
+                    {
+                        /* increase count each time we discover a different number */
+                        count++;
+                        if (count == number)
+                        {
+                            gui_buffer_switch_by_number (gui_current_window,
+                                                         ptr_buffer->number);
+                            break;
+                        }
+                    }
+                    prev_number = ptr_buffer->number;
+                }
+            }
+            else
+            {
+                /* invalid number */
+                gui_chat_printf (NULL,
+                                 _("%sError: incorrect buffer number"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                return WEECHAT_RC_OK;
+            }
         }
         return WEECHAT_RC_OK;
     }
@@ -2763,8 +2775,9 @@ COMMAND_CALLBACK(input)
         gui_input_history_global_next (buffer);
     else if (string_strcasecmp (argv[1], "jump_smart") == 0)
         gui_input_jump_smart (buffer);
+    /* not used any more in WeeChat >= 0.4.4 (replaced by "/buffer ++") */
     else if (string_strcasecmp (argv[1], "jump_last_buffer") == 0)
-        gui_input_jump_last_buffer (buffer);
+        input_data (buffer, "/buffer +");
     else if (string_strcasecmp (argv[1], "jump_last_buffer_displayed") == 0)
         gui_input_jump_last_buffer_displayed (buffer);
     else if (string_strcasecmp (argv[1], "jump_previously_visited_buffer") == 0)
@@ -6574,7 +6587,8 @@ command_init ()
         N_("manage buffers"),
         N_("list"
            " || clear [<number>|<name>|-merged|-all]"
-           " || move|merge <number>"
+           " || move <number>|-|+"
+           " || merge <number>"
            " || swap <number1>|<name1> [<number2>|<name2>]"
            " || unmerge [<number>|-all]"
            " || renumber [<number1> [<number2> [<start>]]]"
@@ -6583,11 +6597,13 @@ command_init ()
            " || localvar"
            " || set <property> <value>"
            " || get <property>"
-           " || <number>|<name>"),
+           " || <number>|-|+|<name>"),
         N_("    list: list buffers (without argument, this list is displayed)\n"
            "   clear: clear buffer content (number for a buffer, -merged for "
            "merged buffers, -all for all buffers, or nothing for current buffer)\n"
-           "    move: move buffer in the list (may be relative, for example -1)\n"
+           "    move: move buffer in the list (may be relative, for example -1); "
+           "\"-\" = move to first buffer number, \"+\" = move to last buffer "
+           "number + 1\n"
            "    swap: swap two buffers (swap with current buffer if only one "
            "number/name given)\n"
            "   merge: merge current buffer to another buffer (chat area will "
@@ -6612,6 +6628,8 @@ command_init ()
            "          '-': relative jump, sub number to current\n"
            "          '*': jump to number, using option \"weechat.look."
            "jump_current_to_previous_buffer\"\n"
+           "       -: jump to first buffer number\n"
+           "       +: jump to last buffer number\n"
            "    name: jump to buffer by (partial) name\n"
            "\n"
            "Examples:\n"
@@ -6634,7 +6652,9 @@ command_init ()
            "  jump to #weechat:\n"
            "    /buffer #weechat\n"
            "  jump to next buffer:\n"
-           "    /buffer +1"),
+           "    /buffer +1\n"
+           "  jump to last buffer number:\n"
+           "    /buffer +"),
         "clear -merged|-all|%(buffers_numbers)|%(buffers_plugins_names)"
         " || move %(buffers_numbers)"
         " || swap %(buffers_numbers)"
@@ -6648,7 +6668,7 @@ command_init ()
         " || set %(buffer_properties_set)"
         " || get %(buffer_properties_get)"
         " || %(buffers_plugins_names)|%(buffers_names)|%(irc_channels)|"
-        "%(irc_privates)|%(buffers_numbers)",
+        "%(irc_privates)|%(buffers_numbers)|-|-1|+|+1",
         &command_buffer, NULL);
     hook_command (
         NULL, "color",
@@ -6988,7 +7008,6 @@ command_init ()
            "  history_global_previous: recall previous command in global history\n"
            "  history_global_next: recall next command in global history\n"
            "  jump_smart: jump to next buffer with activity\n"
-           "  jump_last_buffer: jump to last buffer\n"
            "  jump_last_buffer_displayed: jump to last buffer displayed (before "
            "last jump to a buffer)\n"
            "  jump_previously_visited_buffer: jump to previously visited buffer\n"
@@ -7018,12 +7037,11 @@ command_init ()
         "clipboard_paste|transpose_chars|undo|redo|move_beginning_of_line|"
         "move_end_of_line|move_previous_char|move_next_char|move_previous_word|"
         "move_next_word|history_previous|history_next|history_global_previous|"
-        "history_global_next|jump_smart|jump_last_buffer|"
-        "jump_previously_visited_buffer|jump_next_visited_buffer|hotlist_clear|"
-        "grab_key|grab_key_command|grab_mouse|grab_mouse_area|set_unread|"
-        "set_unread_current_buffer|switch_active_buffer|"
-        "switch_active_buffer_previous|zoom_merged_buffer|insert|paste_start|"
-        "paste_stop",
+        "history_global_next|jump_smart|jump_previously_visited_buffer|"
+        "jump_next_visited_buffer|hotlist_clear|grab_key|grab_key_command|"
+        "grab_mouse|grab_mouse_area|set_unread|set_unread_current_buffer|"
+        "switch_active_buffer|switch_active_buffer_previous|zoom_merged_buffer|"
+        "insert|paste_start|paste_stop",
         &command_input, NULL);
     hook_command (
         NULL, "key",

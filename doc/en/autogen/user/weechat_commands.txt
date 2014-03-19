@@ -66,7 +66,8 @@ Examples:
 ----
 /buffer  list
          clear [<number>|<name>|-merged|-all]
-         move|merge <number>
+         move <number>|-|+
+         merge <number>
          swap <number1>|<name1> [<number2>|<name2>]
          unmerge [<number>|-all]
          renumber [<number1> [<number2> [<start>]]]
@@ -75,11 +76,11 @@ Examples:
          localvar
          set <property> <value>
          get <property>
-         <number>|<name>
+         <number>|-|+|<name>
 
     list: list buffers (without argument, this list is displayed)
    clear: clear buffer content (number for a buffer, -merged for merged buffers, -all for all buffers, or nothing for current buffer)
-    move: move buffer in the list (may be relative, for example -1)
+    move: move buffer in the list (may be relative, for example -1); "-" = move to first buffer number, "+" = move to last buffer number + 1
     swap: swap two buffers (swap with current buffer if only one number/name given)
    merge: merge current buffer to another buffer (chat area will be mix of both buffers)
           (by default ctrl-x switches between merged buffers)
@@ -99,6 +100,8 @@ localvar: display local variables for current buffer
           '+': relative jump, add number to current
           '-': relative jump, sub number to current
           '*': jump to number, using option "weechat.look.jump_current_to_previous_buffer"
+       -: jump to first buffer number
+       +: jump to last buffer number
     name: jump to buffer by (partial) name
 
 Examples:
@@ -122,6 +125,8 @@ Examples:
     /buffer #weechat
   jump to next buffer:
     /buffer +1
+  jump to last buffer number:
+    /buffer +
 ----
 
 [[command_weechat_color]]
@@ -407,7 +412,6 @@ list of actions:
   history_global_previous: recall previous command in global history
   history_global_next: recall next command in global history
   jump_smart: jump to next buffer with activity
-  jump_last_buffer: jump to last buffer
   jump_last_buffer_displayed: jump to last buffer displayed (before last jump to a buffer)
   jump_previously_visited_buffer: jump to previously visited buffer
   jump_next_visited_buffer: jump to next visited buffer

@@ -1101,7 +1101,8 @@ commande `/buffer` :
 | key[alt-F12]       | Aller à la fin de la liste des pseudos | `/bar scroll nicklist * e`
 | key[alt-a]         | Sauter au prochain tampon avec activité (avec priorité : highlight, message, autre) | `/input jump_smart`
 | key[alt-h]         | Vider la hotlist (notification d'activité sur les autres tampons) | `/input hotlist_clear`
-| key[alt-j,alt-l]   | Sauter au dernier tampon | `/input jump_last_buffer`
+| key[alt-j,alt-f]   | Sauter au premier tampon | `/buffer -`
+| key[alt-j,alt-l]   | Sauter au dernier tampon | `/buffer +`
 | key[alt-j,alt-r]   | Sauter au tampon IRC de données brutes | `/server raw`
 | key[alt-j,alt-s]   | Sauter au tampon IRC du serveur | `/server jump`
 | key[alt-0...9]     | Sauter au tampon qui porte ce numéro (0 = 10) | `/buffer *N`

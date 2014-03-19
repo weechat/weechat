@@ -66,7 +66,8 @@ Exemples:
 ----
 /buffer  list
          clear [<nombre>|<nom>|-merged|-all]
-         move|merge <nombre>
+         move <nombre>|-|+
+         merge <nombre>
          swap <nombre1>|<nom1> [<nombre2>|<nom2>]
          unmerge [<nombre>|-all]
          renumber <nombre1> [<nombre2> [<départ>]]
@@ -79,7 +80,7 @@ Exemples:
 
     list: lister les tampons ouverts (sans paramètre, cette liste est affichée)
    clear: effacer le contenu du tampon (un numéro pour un tampon, -merged pour les tampons mélangés, -all pour tous les tampons, ou rien pour le tampon courant)
-    move: déplacer le tampon dans la liste (peut être relatif, par exemple -1)
+    move: déplacer le tampon dans la liste (peut être relatif, par exemple -1); "-" = déplacer vers le premier numéro de tampon, "+" = déplacer vers le dernier numéro de tampon + 1
     swap: échanger deux tampons (échanger avec le tampon courant si un seul numéro/nom donné)
    merge: mélanger le tampon courant avec un autre tampon (la zone de discussion sera un mélange des deux tampons)
           (par défaut ctrl-x bascule entre les tampons mélangés)
@@ -99,6 +100,8 @@ localvar: afficher la liste des variables locales pour le tampon courant
           '+': saut relatif, ajoute le numéro au courant,
           '-': saut relatif, soustrait le numéro au courant,
           '*': saut au numéro en utilisant l'option "jump_current_to_previous_buffer"
+       -: sauter au premier numéro de tampon
+       +: sauter au dernier numéro de tampon
      nom: sauter au tampon par nom (partiel)
 
 Exemples:
@@ -122,6 +125,8 @@ Exemples:
     /buffer #weechat
   aller au tampon suivant:
     /buffer +1
+  aller au dernier numéro de tampon:
+    /buffer +
 ----
 
 [[command_weechat_color]]
@@ -407,7 +412,6 @@ liste des actions:
   history_global_previous: rappeler la commande précédente dans l'historique global
   history_global_next: rappeler la commande suivante dans l'historique global
   jump_smart: sauter au prochain tampon avec de l'activité
-  jump_last_buffer: sauter au dernier tampon
   jump_last_buffer_displayed: sauter au dernier tampon affiché (avant le dernier saut vers un tampon)
   jump_previously_visited_buffer: sauter au tampon visité précédemment
   jump_next_visited_buffer: sauter au tampon visité après

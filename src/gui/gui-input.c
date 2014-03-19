@@ -1422,24 +1422,6 @@ gui_input_jump_smart (struct t_gui_buffer *buffer)
 }
 
 /*
- * Jumps to last buffer (default key: meta-j, meta-l).
- */
-
-void
-gui_input_jump_last_buffer (struct t_gui_buffer *buffer)
-{
-    struct t_gui_window *window;
-
-    window = gui_window_search_with_buffer (buffer);
-    if (window
-        && (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
-        && last_gui_buffer)
-    {
-        gui_buffer_switch_by_number (window, last_gui_buffer->number);
-    }
-}
-
-/*
  * Jumps to last buffer displayed (before last jump to a buffer) (default key:
  * meta-/).
  */

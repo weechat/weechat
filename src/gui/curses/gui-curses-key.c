@@ -132,7 +132,8 @@ gui_key_default_bindings (int context)
         BIND(/* ^down       */ "meta-OB",            "/input history_global_next");
         BIND(/* ^down       */ "meta2-1;5B",         "/input history_global_next");
         BIND(/* m-a         */ "meta-a",             "/input jump_smart");
-        BIND(/* m-j,m-l     */ "meta-jmeta-l",       "/input jump_last_buffer");
+        BIND(/* m-j,m-f     */ "meta-jmeta-f",       "/buffer -");
+        BIND(/* m-j,m-l     */ "meta-jmeta-l",       "/buffer +");
         BIND(/* m-j,m-r     */ "meta-jmeta-r",       "/server raw");
         BIND(/* m-j,m-s     */ "meta-jmeta-s",       "/server jump");
         BIND(/* m-h         */ "meta-h",             "/input hotlist_clear");

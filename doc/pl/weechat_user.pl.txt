@@ -1080,7 +1080,9 @@ Poziom powiadomień dla bufora może zostać ustawiony za pomocą komendy `/buff
 | key[alt-F12]       | Idź na koniec listy nicków | `/bar scroll nicklist * e`
 | key[alt-a]         | Przełącz na następny bufor z aktywnością (z priorytetem: powiadomienie, wiadomość, inne) | `/input jump_smart`
 | key[alt-h]         | Wyczyść hotlistę (powiadomienia o aktywności w innych buforach) | `/input hotlist_clear`
-| key[alt-j,alt-l]   | Przełącz na ostatni bufor | `/input jump_last_buffer`
+// TRANSLATION MISSING
+| key[alt-j,alt-f]   | Switch to first buffer | `/buffer -`
+| key[alt-j,alt-l]   | Przełącz na ostatni bufor | `/buffer +`
 | key[alt-j,alt-r]   | Przełącz na bufor IRC raw | `/server raw`
 | key[alt-j,alt-s]   | Przełącz na bufor serwera IRC | `/server jump`
 | key[alt-0...9]     | Przełącz na bufor za pomocą liczb (0 = 10) | `/buffer *N`

@@ -17,6 +17,26 @@ http://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 == Version 0.4.4 (under dev)
 
+=== Jump to first/last buffer
+
+The command `/input jump_last_buffer` has been replaced by `/buffer +`.
+You can rebind the key key[alt-j,alt-l]:
+
+----
+/key bind meta-jmeta-l /buffer +
+----
+
+[NOTE]
+The command `/input jump_last_buffer` still works for compatibility reasons,
+but it should not be used any more.
+
+Similarly, a new key has been added to jump to first buffer: key[alt-j,alt-f].
+You can add it with following command:
+
+----
+/key missing
+----
+
 === Hotlist conditions
 
 A new option 'weechat.look.hotlist_add_conditions' has been added. This option

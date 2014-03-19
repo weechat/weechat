@@ -1071,7 +1071,9 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
 | key[alt-F12]       | ニックネームリストを一番下にスクロール | `/bar scroll nicklist * e`
 | key[alt-a]         | 変更のあった次のバッファに移動 (優先順位: ハイライト、新規メッセージ、その他) | `/input jump_smart`
 | key[alt-h]         | ホットリスト (他のバッファにあった変更通知リスト) を消去 | `/input hotlist_clear`
-| key[alt-j,alt-l]   | 最後のバッファに移動 | `/input jump_last_buffer`
+// TRANSLATION MISSING
+| key[alt-j,alt-f]   | Switch to first buffer | `/buffer -`
+| key[alt-j,alt-l]   | 最後のバッファに移動 | `/buffer +`
 | key[alt-j,alt-r]   | IRC 生バッファに移動 | `/server raw`
 | key[alt-j,alt-s]   | IRC サーババッファに移動 | `/server jump`
 | key[alt-0...9]     | 番号のバッファに移動 (0 = 10) | `/buffer *N`
