@@ -8,7 +8,7 @@ target: Server
 ----
 
 [[command_irc_allchan]]
-[command]*`allchan`* Führt einen Befehl aus der an alle Channels gesendet wird, die mit einem Server verbunden sind::
+[command]*`allchan`* führt einen Befehl aus der an alle Channels gesendet wird, die mit einem Server verbunden sind::
 
 ----
 /allchan  [-current] [-exclude=<channel>[,<channel>...]] <command> [<arguments>]
@@ -19,33 +19,33 @@ target: Server
 arguments: Argumente für Befehl (Variablen die genutzt werden können: $nick, $channel und $server)
 
 Beispiele:
-  Führe den Befehl '/me Ich teste gerade etwas...' für alle Channels aus:
+  führe den Befehl '/me Ich teste gerade etwas...' für alle Channels aus:
     /allchan me Ich teste gerade etwas...
-  Schicke 'Hallo Welt' an jeden Channel, ausgenommen an den #weechat Channel:
+  schicke 'Hallo Welt' an jeden Channel, ausgenommen an den #weechat Channel:
     /allchan -exclude=#weechat msg * Hallo Welt
-  Schicke 'Hallo Welt' an jeden Channel, ausgenommen an den #weechat Channel und Channels die mit #linux beginnen:
+  schicke 'Hallo Welt' an jeden Channel, ausgenommen an den #weechat Channel und Channels die mit #linux beginnen:
     /allchan -exclude=#weechat,#linux* msg * Hallo Welt
 ----
 
 [[command_irc_allpv]]
-[command]*`allpv`* execute a command on all private buffers of all connected servers::
+[command]*`allpv`* führt einen Befehl aus der an alle privaten Buffer gesendet wird, die mit einem Server verbunden sind::
 
 ----
 /allpv  [-current] [-exclude=<nick>[,<nick>...]] <command> [<arguments>]
 
- -current: execute command for private buffers of current server only
- -exclude: exclude some nicks ('*' is allowed at beginning or end of nick name, to exclude many nicks)
-  command: command to execute
-arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
+ -current: führt einen Befehl aus der für alle privaten Buffer, des aktuellen Servers, Anwendung findet
+ -exclude: dient zum Ausschluss ausgewählter Nicks ('*' wird zu Beginn oder am Ende des Nicknamens akzeptiert, um mehrere Nicks auszuschließen)
+  command: Befehl der ausgeführt werden soll
+arguments: Argumente für Befehl (Variablen die genutzt werden können: $nick, $channel und $server)
 
-Examples:
-  execute '/me is testing' on all private buffers:
-    /allpv me is testing
-  say 'hello' everywhere but not for nick foo:
-    /allpv -exclude=foo msg * hello
-  say 'hello' everywhere but not for nick foo and nicks beginning with bar:
-    /allpv -exclude=foo,bar* msg * hello
-  close all private buffers:
+Beispiele:
+  führe den Befehl '/me Ich teste gerade etwas...' für alle privaten Buffer aus:
+    /allpv me Ich teste gerade etwas...
+  schicke 'Hallo' an alle, ausgenommen an Nick foo:
+    /allpv -exclude=foo msg * Hallo
+  schicke 'Hallo' an alle, ausgenommen für Nick foo und Nicks die mit bar beginnen:
+    /allpv -exclude=foo,bar* msg * Hallo
+  schließe alle privaten Buffer:
     /allpv close
 ----
 
