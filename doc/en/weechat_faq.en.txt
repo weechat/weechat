@@ -541,37 +541,13 @@ For help: `/help filter` and `/help irc.look.smart_filter`
 [[filter_irc_join_channel_messages]]
 === How can I filter some messages displayed when I join an IRC channel?
 
-With WeeChat ≥ 0.4.1, you can disable some messages with option
-'irc.look.display_join_message'.
+With WeeChat ≥ 0.4.1, you can choose which messages are displayed or not when
+joining a channel with the option 'irc.look.display_join_message' (see
+`/help irc.look.display_join_message` for more info).
 
-For example, to disable names (which is IRC message '366'):
-
-----
-/set irc.look.display_join_message "329,332,333"
-----
-
-[NOTE]
-For help: `/help irc.look.display_join_message`
-
-Another solution is to filter messages on tag:
-
-* 'irc_366': names on channel
-* 'irc_332,irc_333': channel topic/date
-* 'irc_329': channel creation date
-
-You can find tags for other messages by looking at IRC raw server
-(`/server raw`).
-
-Examples:
-
-* filter names:
-----
-/filter add irc_join_names * irc_366 *
-----
-* filter topic (and date):
-----
-/filter add irc_join_topic_date * irc_332,irc_333 *
-----
+To hide messages (but keep them in buffer), you can filter them using the tag
+(for example 'irc_329' for channel creation date). See `/help filter` for help
+with filters.
 
 [[filter_voice_messages]]
 === How can I filter voice messages (eg on Bitlbee server)?

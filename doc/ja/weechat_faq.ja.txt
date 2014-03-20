@@ -539,37 +539,15 @@ of channels):
 [[filter_irc_join_channel_messages]]
 === どうすれば IRC チャンネルに参加した際に表示される一部のメッセージをフィルタできますか。
 
-WeeChat ≥ 0.4.1 では、オプション 'irc.look.display_join_message'
-を使って一部のメッセージを隠すことができます。
+// TRANSLATION MISSING
+With WeeChat ≥ 0.4.1, you can choose which messages are displayed or not when
+joining a channel with the option 'irc.look.display_join_message' (see
+`/help irc.look.display_join_message` for more info).
 
-例えば、ニックネームリストを隠すには (この IRC メッセージの番号は '366'):
-
-----
-/set irc.look.display_join_message "329,332,333"
-----
-
-[NOTE]
-ヘルプを見るには: `/help irc.look.display_join_message`
-
-他の解決策としてタグでメッセージをフィルタリングすることもできます:
-
-* 'irc_366': チャンネルにいるユーザの名前
-* 'irc_332,irc_333': チャンネルのトピック/日時
-* 'irc_329': チャンネル作成日時
-
-IRC 生サーバ (`/server raw`) を参照することで、
-その他のメッセージに対応するタグを確認できます。
-
-例:
-
-* 名前をフィルタ:
-----
-/filter add irc_join_names * irc_366 *
-----
-* トピック (と日時) をフィルタ:
-----
-/filter add irc_join_topic_date * irc_332,irc_333 *
-----
+// TRANSLATION MISSING
+To hide messages (but keep them in buffer), you can filter them using the tag
+(for example 'irc_329' for channel creation date). See `/help filter` for help
+with filters.
 
 [[filter_voice_messages]]
 === どうすれば voice メッセージをフィルタできますか (例えば Bitlbee サーバ上で)。

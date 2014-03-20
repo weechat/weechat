@@ -565,37 +565,13 @@ Pour l'aide : `/help filter` et `/help irc.look.smart_filter`
 [[filter_irc_join_channel_messages]]
 === Comment puis-je filtrer certains messages affichés quand je rejoins un canal IRC ?
 
-Avec WeeChat ≥ 0.4.1, vous pouvez désactiver des messages avec l'option
-'irc.look.display_join_message'.
+Avec WeeChat ≥ 0.4.1, vous pouvez choisir les messages affichés ou non lorque
+vous rejoignez un canal avec l'option 'irc.look.display_join_message' (voir
+`/help irc.look.display_join_message` pour plus d'informations).
 
-Par exemple, pour désactiver les noms (qui est le message IRC '366') :
-
-----
-/set irc.look.display_join_message "329,332,333"
-----
-
-[NOTE]
-Pour l'aide : `/help irc.look.display_join_message`
-
-Une autre solution est de filtrer les messages par l'étiquette :
-
-* 'irc_366' : noms sur le canal
-* 'irc_332,irc_333' : titre/date du canal
-* 'irc_329' : date de création du canal
-
-Vous pouvez trouver les étiquettes pour les autres messages en regardant le
-tampon des données brutes IRC (`/server raw`).
-
-Exemples :
-
-* filtrer les noms :
-----
-/filter add irc_join_names * irc_366 *
-----
-* filtrer le titre (et la date):
-----
-/filter add irc_join_topic_date * irc_332,irc_333 *
-----
+Pour cacher des messages (mais les garder dans le tampon), vous pouvez les
+filtrer en utilisant l'étiquette (par exemple 'irc_329' pour la date de création
+du canal). Voir `/help filter` pour l'aide sur les filtres.
 
 [[filter_voice_messages]]
 === Comment puis-je filtrer les messages voice (par exemple sur le serveur Bitlbee) ?
