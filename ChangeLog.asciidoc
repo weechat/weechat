@@ -64,6 +64,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * api: add option "detached" in function hook_process_hashtable
 * api: add option "signal" in function hook_set to send a signal to the child
   process
+* api: add support of nested variables in function string_eval_expression and
+  command /eval (closes #35)
 * api: add support of escaped strings with format `${esc:xxx}` or `${\xxx}` in
   function string_eval_expression and command /eval
 * api: add functions "hashtable_dup", "string_replace_regex",

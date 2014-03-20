@@ -1861,6 +1861,11 @@ Evaluate an expression and return result as a string.
 Special variables with format `${variable}` are expanded (see command `/eval` in
 'WeeChat User's guide').
 
+// TRANSLATION MISSING
+[NOTE]
+Since version 0.4.4, nested variables are supported, for example:
+`${color:${variable}}`.
+
 Prototipo:
 
 [source,C]

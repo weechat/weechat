@@ -2578,8 +2578,10 @@ string_input_for_buffer (const char *string)
 }
 
 /*
- * Replaces ${codes} using a callback that returns replacement value (this value
+ * Replaces ${vars} using a callback that returns replacement value (this value
  * must be newly allocated because it will be freed in this function).
+ *
+ * Nested variables are supported, for example: "${var1:${var2}}".
  *
  * Argument "errors" is set with number of keys not found by callback.
  *
@@ -2595,8 +2597,8 @@ string_replace_with_callback (const char *string,
                               int *errors)
 {
     int length_prefix, length_suffix, length, length_value, index_string;
-    int index_result;
-    char *result, *result2, *key, *value;
+    int index_result, sub_count, sub_level, sub_errors;
+    char *result, *result2, *key, *key2, *value;
     const char *pos_end_name;
 
     *errors = 0;
@@ -2623,43 +2625,82 @@ string_replace_with_callback (const char *string,
             }
             else if (strncmp (string + index_string, prefix, length_prefix) == 0)
             {
-                pos_end_name = strstr (string + index_string + length_prefix, suffix);
-                if (pos_end_name)
+                sub_count = 0;
+                sub_level = 0;
+                pos_end_name = string + index_string + length_prefix;
+                while (pos_end_name[0])
                 {
-                    key = string_strndup (string + index_string + length_prefix,
-                                          pos_end_name - (string + index_string + length_prefix));
-                    if (key)
+                    if (strncmp (pos_end_name, suffix, length_suffix) == 0)
                     {
-                        value = (*callback) (callback_data, key);
-                        if (value)
+                        if (sub_level == 0)
+                            break;
+                        sub_level--;
+                    }
+                    if ((pos_end_name[0] == '\\')
+                        && (pos_end_name[1] == prefix[0]))
+                    {
+                        pos_end_name++;
+                    }
+                    else if (strncmp (pos_end_name, prefix, length_prefix) == 0)
+                    {
+                        sub_count++;
+                        sub_level++;
+                    }
+                    pos_end_name++;
+                }
+                /* prefix without matching suffix => error! */
+                if (!pos_end_name[0])
+                {
+                    result[index_result] = '\0';
+                    (*errors)++;
+                    return result;
+                }
+                key = string_strndup (string + index_string + length_prefix,
+                                      pos_end_name - (string + index_string + length_prefix));
+                if (key)
+                {
+                    if (sub_count > 0)
+                    {
+                        sub_errors = 0;
+                        key2 = string_replace_with_callback (key, prefix,
+                                                             suffix, callback,
+                                                             callback_data,
+                                                             &sub_errors);
+                        (*errors) += sub_errors;
+                        free (key);
+                        key = key2;
+                    }
+                    value = (*callback) (callback_data, (key) ? key : "");
+                    if (value)
+                    {
+                        length_value = strlen (value);
+                        if (length_value > 0)
                         {
-                            length_value = strlen (value);
                             length += length_value;
                             result2 = realloc (result, length);
                             if (!result2)
                             {
                                 if (result)
                                     free (result);
-                                free (key);
+                                if (key)
+                                    free (key);
                                 free (value);
                                 return NULL;
                             }
                             result = result2;
                             strcpy (result + index_result, value);
                             index_result += length_value;
-                            index_string += pos_end_name - string -
-                                index_string + length_suffix;
-                            free (value);
                         }
-                        else
-                        {
-                            result[index_result++] = string[index_string++];
-                            (*errors)++;
-                        }
-                        free (key);
+                        index_string = pos_end_name - string + length_suffix;
+                        free (value);
                     }
                     else
+                    {
                         result[index_result++] = string[index_string++];
+                        (*errors)++;
+                    }
+                    if (key)
+                        free (key);
                 }
                 else
                     result[index_result++] = string[index_string++];

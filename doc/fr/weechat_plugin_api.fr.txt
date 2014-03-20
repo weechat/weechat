@@ -1851,6 +1851,10 @@ _WeeChat ≥ 0.4.0, mis à jour dans la 0.4.2._
 Les variables spéciales avec le format `${variable}` sont étendues (voir la
 commande `/eval` dans le 'Guide utilisateur WeeChat').
 
+[NOTE]
+Depuis la version 0.4.4, les variables imbriquées sont supportées, par exemple :
+`${color:${variable}}`.
+
 Prototype :
 
 [source,C]
