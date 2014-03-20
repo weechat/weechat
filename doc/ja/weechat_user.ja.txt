@@ -177,6 +177,9 @@ cmake に対するオプションを指定するには、以下のフォーマ�
 | ENABLE_ENCHANT | `ON`, `OFF` | OFF |
   Enchant と含めた <<aspell_plugin,Aspell プラグイン>>のコンパイル。
 
+| ENABLE_EXEC | `ON`, `OFF` | ON |
+  <<exec_plugin,Exec プラグイン>>のコンパイル。
+
 | ENABLE_FIFO | `ON`, `OFF` | ON |
   <<fifo_plugin,Fifo プラグイン>>のコンパイル。
 
@@ -229,6 +232,9 @@ cmake に対するオプションを指定するには、以下のフォーマ�
 
 | ENABLE_TCL | `ON`, `OFF` | ON |
   <<scripts_plugins,Tcl プラグイン>>のコンパイル
+
+| ENABLE_TRIGGER | `ON`, `OFF` | ON |
+  <<trigger_plugin,Trigger プラグイン>>のコンパイル
 
 | ENABLE_XFER | `ON`, `OFF` | ON |
   <<xfer_plugin,Xfer プラグイン>>のコンパイル
@@ -1717,6 +1723,8 @@ GNU/Linux の場合、プラグインファイルは ".so" という拡張子を
 | alias      | コマンドの別名を定義
 | aspell     | コマンドラインのスペルチェック
 | charset    | バッファの文字コードに従ってデコード/エンコード
+// TRANSLATION MISSING
+| exec       | Execution of external commands in WeeChat
 | fifo       | 外部から WeeChat にコマンドを送信するための FIFO パイプ
 | irc        | IRC チャットプロトコル
 | logger     | バッファの内容をファイルに保存
@@ -1728,6 +1736,8 @@ GNU/Linux の場合、プラグインファイルは ".so" という拡張子を
 | lua        | Lua スクリプト API
 | tcl        | Tcl スクリプト API
 | guile      | Guile (scheme) スクリプト API
+// TRANSLATION MISSING
+| trigger    | Text replacement and command execution on events triggered by WeeChat/plugins
 | xfer       | ファイル転送とダイレクトチャット
 |===
 

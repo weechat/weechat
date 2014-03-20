@@ -180,6 +180,9 @@ Liste des options couramment utilisées :
 | ENABLE_ENCHANT | `ON`, `OFF` | OFF |
   Compiler <<aspell_plugin,l'extension Aspell>> avec Enchant.
 
+| ENABLE_EXEC | `ON`, `OFF` | ON |
+  Compiler <<exec_plugin,l'extension Exec>>.
+
 | ENABLE_FIFO | `ON`, `OFF` | ON |
   Compiler <<fifo_plugin,l'extension Fifo>>.
 
@@ -232,6 +235,9 @@ Liste des options couramment utilisées :
 
 | ENABLE_TCL | `ON`, `OFF` | ON |
   Compiler <<scripts_plugins,l'extension Tcl>>.
+
+| ENABLE_TRIGGER | `ON`, `OFF` | ON |
+  Compiler <<trigger_plugin,l'extension Trigger>>.
 
 | ENABLE_XFER | `ON`, `OFF` | ON |
   Compiler <<xfer_plugin,l'extension Xfer>>.
@@ -1771,6 +1777,7 @@ Les extensions par défaut sont :
 | alias     | Définir des alias pour les commandes
 | aspell    | Vérification orthographique de la ligne de commande
 | charset   | Encodage/encodage avec jeu de caractère sur les tampons
+| exec      | Exécution de commandes externes dans WeeChat
 | fifo      | Tube FIFO pour envoyer des commandes à distance vers WeeChat
 | irc       | Discussion avec le protocole IRC
 | logger    | Enregistrement des tampons dans des fichiers
@@ -1782,6 +1789,7 @@ Les extensions par défaut sont :
 | lua       | Interface (API) pour scripts Lua
 | tcl       | Interface (API) pour scripts Tcl
 | guile     | Interface (API) pour scripts Guile (scheme)
+| trigger   | Remplacement de texte et exécution de commande sur des évènements de WeeChat ou des extensions
 | xfer      | Transfert de fichier et discussion directe
 |===
 

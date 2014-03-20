@@ -178,6 +178,9 @@ Lista popularnych opcji:
 | ENABLE_ENCHANT | `ON`, `OFF` | OFF |
   Kompilacja <<aspell_plugin,wtyczki aspell>> z Enchant.
 
+| ENABLE_EXEC | `ON`, `OFF` | ON |
+  Kompilacja <<exec_plugin,wtyczki exec>>.
+
 | ENABLE_FIFO | `ON`, `OFF` | ON |
   Kompilacja <<fifo_plugin,wtyczki fifo>>.
 
@@ -230,6 +233,9 @@ Lista popularnych opcji:
 
 | ENABLE_TCL | `ON`, `OFF` | ON |
   Kompilacja <<scripts_plugins,wtyczki tcl>>.
+
+| ENABLE_TRIGGER | `ON`, `OFF` | ON |
+  Kompilacja <<trigger_plugin,wtyczki trigger>>.
 
 | ENABLE_XFER | `ON`, `OFF` | ON |
   Kompilacja <<xfer_plugin,wtyczki xfer>>.
@@ -1730,6 +1736,8 @@ Domyślne wtyczki:
 | alias   | Definiuje aliasy dla komend
 | aspell  | Sprawdzanie pisowni w linii poleceń
 | charset | Ustawianie kodowania dla buforów
+// TRANSLATION MISSING
+| exec    | Execution of external commands in WeeChat
 | fifo    | Kolejka FIFO używana do zdalnego wysyłania poleceń dla WeeChat
 | irc     | Protokół IRC
 | logger  | Logowanie zawartości buforów do plików
@@ -1741,6 +1749,8 @@ Domyślne wtyczki:
 | lua     | Wsparcie dla skryptów napisanych w Lua
 | tcl     | Wsparcie dla skryptów napisanych w Tcl
 | guile   | Wsparcie dla skryptów napisanych w Guile (scheme)
+// TRANSLATION MISSING
+| trigger | Text replacement and command execution on events triggered by WeeChat/plugins
 | xfer    | Przesyłanie plików i bezpośredni chat
 |===
 

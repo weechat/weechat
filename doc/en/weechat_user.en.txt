@@ -178,6 +178,9 @@ List of commonly used options:
 | ENABLE_ENCHANT | `ON`, `OFF` | OFF |
   Compile <<aspell_plugin,Aspell plugin>> with Enchant.
 
+| ENABLE_EXEC | `ON`, `OFF` | ON |
+  Compile <<exec_plugin,Exec plugin>>.
+
 | ENABLE_FIFO | `ON`, `OFF` | ON |
   Compile <<fifo_plugin,Fifo plugin>>.
 
@@ -230,6 +233,9 @@ List of commonly used options:
 
 | ENABLE_TCL | `ON`, `OFF` | ON |
   Compile <<scripts_plugins,Tcl plugin>>.
+
+| ENABLE_TRIGGER | `ON`, `OFF` | ON |
+  Compile <<trigger_plugin,Trigger plugin>>.
 
 | ENABLE_XFER | `ON`, `OFF` | ON |
   Compile <<xfer_plugin,Xfer plugin>>.
@@ -1717,6 +1723,7 @@ Default plugins are:
 | alias   | Define alias for commands
 | aspell  | Spell checking for command line
 | charset | Charset decoding/encoding for buffers
+| exec    | Execution of external commands in WeeChat
 | fifo    | FIFO pipe used to remotely send commands to WeeChat
 | irc     | IRC chat protocol
 | logger  | Log buffers to files
@@ -1728,6 +1735,7 @@ Default plugins are:
 | lua     | Lua scripting API
 | tcl     | Tcl scripting API
 | guile   | Guile (scheme) scripting API
+| trigger | Text replacement and command execution on events triggered by WeeChat/plugins
 | xfer    | File transfer and direct chat
 |===
 

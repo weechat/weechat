@@ -179,6 +179,9 @@ Liste von häufig verwendeten Optionen:
 | ENABLE_ENCHANT | `ON`, `OFF` | OFF |
   kompiliert <<aspell_plugin,Aspell plugin>> mittels Enchant.
 
+| ENABLE_EXEC | `ON`, `OFF` | ON |
+  kompiliert <<exec_plugin,Exec Erweiterung>>.
+
 | ENABLE_FIFO | `ON`, `OFF` | ON |
   kompiliert <<fifo_plugin,Fifo Erweiterung>>.
 
@@ -231,6 +234,9 @@ Liste von häufig verwendeten Optionen:
 
 | ENABLE_TCL | `ON`, `OFF` | ON |
   kompiliert <<scripts_plugins,Tcl Erweiterung>>.
+
+| ENABLE_TRIGGER | `ON`, `OFF` | ON |
+  kompiliert <<trigger_plugin,Trigger Erweiterung>>.
 
 | ENABLE_XFER | `ON`, `OFF` | ON |
   kompiliert <<xfer_plugin,Xfer Erweiterung>>.
@@ -1746,6 +1752,8 @@ Standarderweiterungen:
 | alias       | definiert Alias für Befehle
 | aspell      | Rechtschreibprüfung für Befehlszeile
 | charset     | Zeichensatz (de)-kodierung in Buffern
+// TRANSLATION MISSING
+| exec        | Execution of external commands in WeeChat
 | fifo        | FIFO Pipe die zur Fernsteuerung von WeeChat genutzt werden kann
 | irc         | IRC Chat-Protokoll
 | logger      | erstellt Protokolldateien von Buffern
@@ -1757,6 +1765,8 @@ Standarderweiterungen:
 | lua         | Lua-Skript API
 | tcl         | Tcl-Skript API
 | guile       | Guile(scheme)-Skript API
+// TRANSLATION MISSING
+| trigger     | Text replacement and command execution on events triggered by WeeChat/plugins
 | xfer        | Datentransfer und Direktchat
 |===
 
