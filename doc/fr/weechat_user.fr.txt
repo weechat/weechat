@@ -3008,10 +3008,9 @@ trigger.trigger.beep.return_code = ok
 ==== Exécution
 
 Lorsque le callback d'un trigger est appelé, les actions suivantes sont
-exécutées, dans cet ordre :
+exécutées, dans cet ordre, si les triggers sont globalement activés et si le
+trigger lui-même est activé :
 
-. vérifier si les triggers sont globalement activés: si non, sortir
-. vérifier si le trigger est activé: si non, sortir
 . vérifier les conditions du trigger: si faux, sortir
 . remplacer du texte dans le trigger en utilisant des expressions régulières
 . exécuter la/les commande(s)

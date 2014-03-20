@@ -2943,10 +2943,8 @@ trigger.trigger.beep.return_code = ok
 ==== Execution
 
 When a trigger callback is called, following actions are executed, in this
-order:
+order, if triggers are globally enabled and if the trigger itself is enabled:
 
-. check if triggers are globally enabled: if not, exit
-. check if trigger is enabled: if not, exit
 . check trigger conditions: if false, exit
 . replace text in trigger using regular expression(s)
 . execute command(s)
