@@ -165,7 +165,7 @@ Beispiele:
 ----
 /command  <plugin> <command>
 
- plugin: Name der Erweiterung ('weechat' für interne WeeChat Befehle)
+ plugin: Name der Erweiterung ('core' für interne WeeChat Befehle)
 command: auszuführender Befehl (es wird automatisch ein '/' vorangestellt, falls dieser nicht angegeben wurde)
 ----
 

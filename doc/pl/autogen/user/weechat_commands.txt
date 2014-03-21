@@ -165,7 +165,7 @@ Examples:
 ----
 /command  <wtyczka> <komenda>
 
- wtyczka: nazwa wtyczki ('weechat' dla wewnętrznych komend WeeChat )
+ wtyczka: nazwa wtyczki ('core' dla wewnętrznych komend WeeChat )
 komenda: komenda do wywołania ( '/' jest automatycznie dodawane jeśli nie występuje na początku komendy)
 ----
 

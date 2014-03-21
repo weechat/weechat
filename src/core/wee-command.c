@@ -6715,7 +6715,7 @@ command_init ()
         NULL, "50000|command",
         N_("launch explicit WeeChat or plugin command"),
         N_("<plugin> <command>"),
-        N_(" plugin: plugin name ('weechat' for WeeChat internal command)\n"
+        N_(" plugin: plugin name ('core' for WeeChat internal command)\n"
            "command: command to execute (a '/' is automatically added if not "
            "found at beginning of command)"),
         "%(plugins_names)|" PLUGIN_CORE " %(plugins_commands)",

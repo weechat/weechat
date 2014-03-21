@@ -165,7 +165,7 @@ Exemples:
 ----
 /command  <extension> <commande>
 
-extension: nom de l'extension ('weechat' pour une commande interne WeeChat)
+extension: nom de l'extension ('core' pour une commande interne WeeChat)
  commande: commande à exécuter (un '/' est automatiquement ajouté s'il n'est pas trouvé au début de la commande)
 ----
 

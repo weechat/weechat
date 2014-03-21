@@ -165,7 +165,7 @@ rgb2term: RGB 色をターミナル色 (0-255) に変換
 ----
 /command  <plugin> <command>
 
- plugin: プラグインの名前 ('weechat' は WeeChat の内部コマンドを意味します)
+ plugin: プラグインの名前 ('core' は WeeChat の内部コマンドを意味します)
 command: 実行するコマンド (コマンドの最初に '/' が無い場合、'/' が自動的に追加されます)
 ----
 
