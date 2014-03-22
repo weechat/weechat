@@ -4,7 +4,7 @@
 ----
 /admin  [<cible>]
 
-cible: serveur
+cible: nom du serveur
 ----
 
 [[command_irc_allchan]]
@@ -74,8 +74,8 @@ Exemples:
 ----
 /ban  [<canal>] [<pseudo> [<pseudo>...]]
 
- canal: nom du canal pour bannissement
-pseudo: pseudo ou hôte à bannir
+ canal: nom du canal
+pseudo: pseudo ou hôte
 
 Sans paramètre, cette commande affiche la liste des bannissements pour le canal courant.
 ----
@@ -117,7 +117,7 @@ Exemples:
 ----
 /ctcp  <cible> <type> [<arguments>]
 
-    cible: pseudo ou canal à qui envoyer le CTCP
+    cible: pseudo ou nom de canal à qui envoyer le CTCP
      type: type de CTCP (exemples: "version", "ping", etc...)
 arguments: paramètres pour le CTCP
 ----
@@ -128,7 +128,7 @@ arguments: paramètres pour le CTCP
 ----
 /cycle  [<canal>[,<canal>...]] [message]
 
-  canal: canal à quitter
+  canal: nom du canal à quitter
 message: message de fin (affiché aux autres utilisateurs)
 ----
 
@@ -139,7 +139,7 @@ message: message de fin (affiché aux autres utilisateurs)
 /dcc  chat <pseudo>
       send <pseudo> <fichier>
 
- pseudo: pseudo pour la discussion ou le fichier
+ pseudo: pseudo
 fichier: nom du fichier (sur la machine locale)
 
 Exemples:
@@ -196,10 +196,10 @@ cible: nom du serveur
 ----
 /disconnect  [<serveur>|-all|-pending [<raison>]]
 
- serveur: nom du serveur pour se déconnecter
+ serveur: nom interne du serveur
     -all: se déconnecter de tous les serveurs
 -pending: annuler la reconnexion automatique sur les serveurs en cours de reconnexion
-  raison: raison pour le quit
+  raison: raison pour le "quit"
 ----
 
 [[command_irc_halfop]]
@@ -256,8 +256,8 @@ cible: nom du serveur
 ----
 /invite  <pseudo> [<pseudo>...] [<canal>]
 
-pseudo: pseudo à inviter
- canal: canal pour l'invitation
+pseudo: pseudo
+ canal: canal
 ----
 
 [[command_irc_ison]]
@@ -293,9 +293,9 @@ Exemples:
 ----
 /kick  [<canal>] <pseudo> [<raison>]
 
- canal: canal où l'utilisateur se trouve
-pseudo: pseudo à éliminer
-raison: raison pour l'élimination (les variables spéciales $nick, $channel et $server sont remplacées par leur valeur)
+ canal: nom du canal
+pseudo: pseudo
+raison: raison (les variables spéciales $nick, $channel et $server sont remplacées par leur valeur)
 ----
 
 [[command_irc_kickban]]
@@ -304,9 +304,9 @@ raison: raison pour l'élimination (les variables spéciales $nick, $channel et 
 ----
 /kickban  [<canal>] <pseudo> [<raison>]
 
- canal: canal où l'utilisateur se trouve
-pseudo: pseudo à éliminer et bannir
-raison: raison pour l'élimination (les variables spéciales $nick, $channel et $server sont remplacées par leur valeur)
+ canal: nom du canal
+pseudo: pseudo
+raison: raison (les variables spéciales $nick, $channel et $server sont remplacées par leur valeur)
 
 Il est possible d'éliminer/bannir avec un masque, le pseudo sera extrait du masque et remplacé par "*".
 
@@ -462,7 +462,7 @@ pseudo: nouveau pseudo
 /notice  [-server <serveur>] <cible> <texte>
 
 serveur: envoyer à ce serveur (nom interne)
-  cible: pseudo ou canal
+  cible: pseudo ou nom de canal
   texte: texte à envoyer
 ----
 
@@ -549,7 +549,7 @@ démon2: faire suivre le message à ce démon
 /query  [-server <serveur>] <pseudo>[,<pseudo>...] [<texte>]
 
 serveur: envoyer à ce serveur (nom interne)
- pseudo: pseudo pour la conversation privée
+ pseudo: pseudo
   texte: texte à envoyer
 ----
 
@@ -559,8 +559,8 @@ serveur: envoyer à ce serveur (nom interne)
 ----
 /quiet  [<canal>] [<pseudo> [<pseudo>...]]
 
- canal: nom du canal pour faire taire
-pseudo: pseudo ou hôte à faire taire
+ canal: nom du canal
+pseudo: pseudo ou hôte
 
 Sans paramètre, cette commande affiche la liste des "quiet" pour le canal courant.
 ----
@@ -582,7 +582,7 @@ données: données brutes à envoyer
 /reconnect  <serveur> [<serveur>...] [-nojoin] [-switch]
             -all [-nojoin] [-switch]
 
-serveur: nom du serveur pour se reconnecter
+serveur: serveur pour se reconnecter (nom interne)
    -all: se reconnecter à tous les serveurs
 -nojoin: ne rejoindre aucun canal (même si l'autojoin est activé pour le serveur)
 -switch: basculer vers l'adresse suivante du serveur
@@ -731,7 +731,7 @@ service: nom du service
 /squit  <serveur> <commentaire>
 
     serveur: nom du serveur
-commentaire: commentaire pour quitter
+commentaire: commentaire
 ----
 
 [[command_irc_stats]]
@@ -771,8 +771,8 @@ cible: demander l'heure de ce serveur
 /topic  [<canal>] [<titre>|-delete]
 
   canal: nom du canal
-  titre: nouveau titre pour le canal
--delete: supprime le titre du canal
+  titre: nouveau titre
+-delete: supprimer le titre du canal
 ----
 
 [[command_irc_trace]]
@@ -781,7 +781,7 @@ cible: demander l'heure de ce serveur
 ----
 /trace  [<cible>]
 
-cible: serveur
+cible: nom du serveur
 ----
 
 [[command_irc_unban]]
@@ -790,8 +790,8 @@ cible: serveur
 ----
 /unban  [<canal>] <pseudo> [<pseudo>...]
 
- canal: nom du canal pour supprimer le bannissement
-pseudo: pseudo ou hôte pour supprimer le bannissement
+ canal: nom du canal
+pseudo: pseudo ou hôte
 ----
 
 [[command_irc_unquiet]]
@@ -800,8 +800,8 @@ pseudo: pseudo ou hôte pour supprimer le bannissement
 ----
 /unquiet  [<canal>] [<pseudo> [<pseudo>...]]
 
- canal: nom du canal pour ne plus taire
-pseudo: pseudo ou hôte à ne plus taire
+ canal: nom du canal
+pseudo: pseudo ou hôte
 ----
 
 [[command_irc_userhost]]
@@ -819,7 +819,7 @@ pseudo: pseudo
 ----
 /users  [<cible>]
 
-cible: serveur
+cible: nom du serveur
 ----
 
 [[command_irc_version]]
@@ -893,7 +893,7 @@ Si l'option irc.network.whois_double_nick est activée, deux pseudos sont envoy�
 ----
 /whowas  <pseudo>[,<pseudo>...] [<nombre> [<cible>]]
 
-pseudo: pseudo à chercher
+pseudo: pseudo
 nombre: nombre de réponses à retourner (recherche complète si nombre négatif)
  cible: la réponse doit correspondre à ce masque
 ----

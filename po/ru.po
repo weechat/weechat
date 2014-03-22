@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-03-22 09:22+0100\n"
-"PO-Revision-Date: 2014-03-10 21:07+0100\n"
+"POT-Creation-Date: 2014-03-22 09:49+0100\n"
+"PO-Revision-Date: 2014-03-22 09:52+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: ru\n"
@@ -4765,8 +4765,8 @@ msgstr "найти информацию об администрации серв
 msgid "[<target>]"
 msgstr "[цель]"
 
-msgid "target: server"
-msgstr "цель: сервер"
+msgid "target: server name"
+msgstr "цель: название сервера"
 
 #, fuzzy
 msgid "execute a command on all channels of all connected servers"
@@ -4854,8 +4854,8 @@ msgstr "[канал] [ник [ник ...]]"
 
 #, fuzzy
 msgid ""
-"channel: channel for ban\n"
-"   nick: user or host to ban\n"
+"channel: channel name\n"
+"   nick: user or host\n"
 "\n"
 "Without argument, this command display ban list for current channel."
 msgstr ""
@@ -4921,7 +4921,7 @@ msgstr "адресат тип [аргументы]"
 
 #, fuzzy
 msgid ""
-" target: nick or channel to send CTCP to\n"
+" target: nick or channel name to send CTCP to\n"
 "   type: CTCP type (examples: \"version\", \"ping\", ..)\n"
 "arguments: arguments for CTCP"
 msgstr ""
@@ -4938,7 +4938,7 @@ msgstr "[канал[,канал]] [сообщение]"
 
 #, fuzzy
 msgid ""
-"channel: channel name for cycle\n"
+"channel: channel name\n"
 "message: part message (displayed to other users)"
 msgstr ""
 "    канал: название покидаемого канала\n"
@@ -4953,7 +4953,7 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"nick: nick for chat or file\n"
+"nick: nick\n"
 "file: filename (on local host)\n"
 "\n"
 "Examples:\n"
@@ -5007,9 +5007,6 @@ msgstr ""
 msgid "shutdown the server"
 msgstr "выключить сервер"
 
-msgid "target: server name"
-msgstr "цель: название сервера"
-
 #, fuzzy
 msgid "disconnect from one or all IRC servers"
 msgstr "отключиться от сервера(-ов)"
@@ -5020,10 +5017,10 @@ msgstr "[[сервер] маска_сервера]"
 
 #, fuzzy
 msgid ""
-"  server: server name to disconnect\n"
+"  server: internal server name\n"
 "    -all: disconnect from all servers\n"
 "-pending: cancel auto-reconnection on servers currently reconnecting\n"
-"  reason: reason for quit"
+"  reason: reason for the \"quit\""
 msgstr ""
 "   -all: переподключиться ко всем серверам\n"
 " сервер: название сервера для переподключения-nojoin: не заходить на каналы "
@@ -5079,8 +5076,8 @@ msgstr "ник [ник ...]"
 
 #, fuzzy
 msgid ""
-"   nick: nick to invite\n"
-"channel: channel to invite"
+"   nick: nick\n"
+"channel: channel name"
 msgstr ""
 "  ник: приглашаемый ник\n"
 "канал: целевой канал"
@@ -5125,10 +5122,10 @@ msgstr "[канал] ник [комментарий]"
 
 #, fuzzy
 msgid ""
-"channel: channel where user is\n"
-"   nick: nick to kick\n"
-" reason: reason for kick (special variables $nick, $channel and $server are "
-"replaced by their value)"
+"channel: channel name\n"
+"   nick: nick\n"
+" reason: reason (special variables $nick, $channel and $server are replaced "
+"by their value)"
 msgstr ""
 "      канал: канал, на котором присутствует пользователь\n"
 "        ник: цель для кика\n"
@@ -5139,10 +5136,10 @@ msgstr "кикает и банит пользователя с канала"
 
 #, fuzzy
 msgid ""
-"channel: channel where user is\n"
-"   nick: nick to kick and ban\n"
-" reason: reason for kick (special variables $nick, $channel and $server are "
-"replaced by their value)\n"
+"channel: channel name\n"
+"   nick: nick\n"
+" reason: reason (special variables $nick, $channel and $server are replaced "
+"by their value)\n"
 "\n"
 "It is possible to kick/ban with a mask, nick will be extracted from mask and "
 "replaced by \"*\".\n"
@@ -5164,8 +5161,8 @@ msgstr "ник текст"
 
 #, fuzzy
 msgid ""
-"  nick: nick to kill\n"
-"reason: reason for kill"
+"  nick: nick\n"
+"reason: reason"
 msgstr ""
 "  ник: приглашаемый ник\n"
 "канал: целевой канал"
@@ -5353,7 +5350,7 @@ msgstr "адресат[,адресат] текст"
 #, fuzzy
 msgid ""
 "server: send to this server (internal name)\n"
-"target: nick or channel\n"
+"target: nick or channel name\n"
 "  text: text to send"
 msgstr ""
 "адресат: ник или канал (можно использовать маску, '*' = текущий канал)\n"
@@ -5457,11 +5454,11 @@ msgstr "[сервер | ник]"
 #, fuzzy
 msgid ""
 "server: send to this server (internal name)\n"
-"  nick: nick for private conversation\n"
+"  nick: nick\n"
 "  text: text to send"
 msgstr ""
-"  ник: ник собеседника\n"
-"текст: отправляемый текст"
+"адресат: ник или канал (можно использовать маску, '*' = текущий канал)\n"
+"текст: отправляаемый текст"
 
 #, fuzzy
 msgid "quiet nicks or hosts"
@@ -5469,8 +5466,8 @@ msgstr "снимает бан с хоста или ника"
 
 #, fuzzy
 msgid ""
-"channel: channel for quiet\n"
-"   nick: user or host to quiet\n"
+"channel: channel name\n"
+"   nick: user or host\n"
 "\n"
 "Without argument, this command display quiet list for current channel."
 msgstr ""
@@ -5501,7 +5498,7 @@ msgstr "[-all [-nojoin] | сервер [сервер ...] [-nojoin]]"
 
 #, fuzzy
 msgid ""
-" server: server name to reconnect\n"
+" server: server to reconnect (internal name)\n"
 "   -all: reconnect to all servers\n"
 "-nojoin: do not join any channel (even if autojoin is enabled on server)\n"
 "-switch: switch to next server address"
@@ -5530,14 +5527,6 @@ msgstr "принудительно удалить пользователя с к
 #, fuzzy
 msgid "<nick> <channel>[,<channel>...]"
 msgstr "ник канал"
-
-#, fuzzy
-msgid ""
-"   nick: nick\n"
-"channel: channel name"
-msgstr ""
-"  ник: приглашаемый ник\n"
-"канал: целевой канал"
 
 msgid "change mode on channel, without having operator status"
 msgstr ""
@@ -5577,14 +5566,6 @@ msgstr "принудительно удалить пользователя с к
 #, fuzzy
 msgid "force a user to quit server with a reason"
 msgstr "принудительно удалить пользователя с канала"
-
-#, fuzzy
-msgid ""
-"  nick: nick\n"
-"reason: reason"
-msgstr ""
-"  ник: приглашаемый ник\n"
-"канал: целевой канал"
 
 msgid "register a new service"
 msgstr "зарегистрировать новый сервис"
@@ -5711,7 +5692,7 @@ msgstr "сервер комментарий"
 #, fuzzy
 msgid ""
 " server: server name\n"
-"comment: comment for quit"
+"comment: comment"
 msgstr ""
 "    сервер: название сервера\n"
 "коментарий: комментарий при выходе"
@@ -5767,7 +5748,7 @@ msgstr "[канал] [тема]"
 #, fuzzy
 msgid ""
 "channel: channel name\n"
-"  topic: new topic for channel\n"
+"  topic: new topic\n"
 "-delete: delete channel topic"
 msgstr ""
 "канал: название канала\n"
@@ -5786,8 +5767,8 @@ msgstr "[канал] ник [ник ...]"
 
 #, fuzzy
 msgid ""
-"channel: channel for unban\n"
-"   nick: user or host to unban"
+"channel: channel name\n"
+"   nick: user or host"
 msgstr ""
 "канал: канал для снятия бана\n"
 "  ник: ник или хост для снятия бана"
@@ -5795,14 +5776,6 @@ msgstr ""
 #, fuzzy
 msgid "unquiet nicks or hosts"
 msgstr "снимает бан с хоста или ника"
-
-#, fuzzy
-msgid ""
-"channel: channel for unquiet\n"
-"   nick: user or host to unquiet"
-msgstr ""
-"канал: канал для снятия бана\n"
-"  ник: ник или хост для снятия бана"
 
 #, fuzzy
 msgid "return a list of information about nicks"
@@ -5909,7 +5882,7 @@ msgstr "ник [,ник [,ник ...]] [количество [цель]]"
 
 #, fuzzy
 msgid ""
-"  nick: nick to search\n"
+"  nick: nick\n"
 " count: number of replies to return (full search if negative number)\n"
 "target: reply should match this mask"
 msgstr ""

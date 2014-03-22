@@ -4,7 +4,7 @@
 ----
 /admin  [<cel>]
 
-cel: serwer
+cel: nazwa serwera
 ----
 
 [[command_irc_allchan]]
@@ -74,10 +74,10 @@ Przykłady:
 ----
 /ban  [<kanał>] [<nick> [<nick>...]]
 
-kanał: kanał, na którym dajemy bana
-   nick: użytkownik lub host do zbanowania
+channel: channel name
+   nick: user or host
 
-Bez podania argumentu komenda wyświetla listę banów na obecnym kanale.
+Without argument, this command display ban list for current channel.
 ----
 
 [[command_irc_connect]]
@@ -117,9 +117,9 @@ Przykłady:
 ----
 /ctcp  <cel> <typ> [<argumenty>]
 
- cel: nick albo kanał, na który wysłać CTCP
-     typ: typ CTCP (przykłady: "version", "ping", ..)
-argumenty: argumenty dla CTCP
+ target: nick or channel name to send CTCP to
+   type: CTCP type (examples: "version", "ping", ..)
+arguments: arguments for CTCP
 ----
 
 [[command_irc_cycle]]
@@ -128,8 +128,8 @@ argumenty: argumenty dla CTCP
 ----
 /cycle  [<kanał>[,<kanał>...]] [<wiadomość>]
 
-kanał: nazwa kanału
-wiadomość: wiadomość (pokazywana innym użytkownikom)
+channel: channel name
+message: part message (displayed to other users)
 ----
 
 [[command_irc_dcc]]
@@ -139,13 +139,13 @@ wiadomość: wiadomość (pokazywana innym użytkownikom)
 /dcc  chat <nick>
       send <nick> <plik>
 
-nick: osoba, do której wysyłamy plik lub chcemy rozpocząć rozmowę
-plik: nazwa pliku (na lokalnym hoście)
+nick: nick
+file: filename (on local host)
 
-Przykłady:
-  rozmowa z użytkownikiem "toto":
+Examples:
+  chat with nick "toto":
     /dcc chat toto
-  wyśle plik "/home/foo/bar.txt" użytkownikowi "toto":
+  send file "/home/foo/bar.txt" to nick "toto":
     /dcc send toto /home/foo/bar.txt
 ----
 
@@ -196,10 +196,10 @@ cel: nazwa serwera
 ----
 /disconnect  [<serwer>|-all|-pending [<powód>]]
 
-  serwer: nazwa serwera do rozłączenia
-    -all: rozłącza się ze wszystkimi serwerami
--pending: anuluje automatyczne łączenie dla serwerów ponownie łączących się
-  powód: powód rozłączenia
+  server: internal server name
+    -all: disconnect from all servers
+-pending: cancel auto-reconnection on servers currently reconnecting
+  reason: reason for the "quit"
 ----
 
 [[command_irc_halfop]]
@@ -256,8 +256,8 @@ cel: nazwa serwera
 ----
 /invite  <nick> [<nick>...] [<kanał>]
 
-   nick: nick do zaproszenia
-kanał: kanał na który zapraszamy
+   nick: nick
+kanał: nazwa kanału
 ----
 
 [[command_irc_ison]]
@@ -293,9 +293,9 @@ Przykłady:
 ----
 /kick  [<kanał>] <nick> [<powód>]
 
-kanał: kanał, na którym znajduje się użytkownik
-   nick: osoba do wykopania
- powód: powód wykopania (specjalne zmienne jak $nick, $channel i $server są podmieniane na odpowiednie wartości)
+channel: channel name
+   nick: nick
+ reason: reason (special variables $nick, $channel and $server are replaced by their value)
 ----
 
 [[command_irc_kickban]]
@@ -304,9 +304,9 @@ kanał: kanał, na którym znajduje się użytkownik
 ----
 /kickban  [<kanał>] <nick> [<powód>]
 
-channel: channel where user is
-   nick: nick to kick and ban
- reason: reason for kick (special variables $nick, $channel and $server are replaced by their value)
+channel: channel name
+   nick: nick
+ reason: reason (special variables $nick, $channel and $server are replaced by their value)
 
 It is possible to kick/ban with a mask, nick will be extracted from mask and replaced by "*".
 
@@ -321,8 +321,8 @@ Example:
 ----
 /kill  <nick> <powód>
 
-  nick: nick do zabicia
-powód: powód do zabicia
+  nick: nick
+powód: powód
 ----
 
 [[command_irc_links]]
@@ -461,9 +461,9 @@ nick: nowy nick
 ----
 /notice  [-server <serwer>] <cel> <tekst>
 
-serwer: wyślij do tego serwera (nazwa wewnętrzna)
-cel: nick lub kanał
-  tekst: wiadomość do wysłania
+server: send to this server (internal name)
+target: nick or channel name
+  text: text to send
 ----
 
 [[command_irc_notify]]
@@ -548,9 +548,9 @@ demon2: prześlij do tego demona
 ----
 /query  [-server <serwer>] <nick>[,<nick>...] [<tekst>]
 
-serwer: wyślij do tego serwera (nazwa wewnętrzna)
-  nick: nazwa użytkownika, z którym chcemy rozpocząć prywatną rozmowę
-  tekst: wiadomość do wysłania
+server: send to this server (internal name)
+  nick: nick
+  text: text to send
 ----
 
 [[command_irc_quiet]]
@@ -559,10 +559,10 @@ serwer: wyślij do tego serwera (nazwa wewnętrzna)
 ----
 /quiet  [<kanał>] [<nick> [<nick>...]]
 
-kanał: kanał, na którym uciszamy
-   nick: nazwa użytkownika lub host do uciszenia
+channel: channel name
+   nick: user or host
 
-Bez podania argumentu komenda wyświetla listę uciszeń na obecnym kanale.
+Without argument, this command display quiet list for current channel.
 ----
 
 [[command_irc_quote]]
@@ -582,10 +582,10 @@ serwer: wyślij do tego serwera (nazwa wewnętrzna)
 /reconnect  <serwer> [<serwer>...] [-nojoin] [-switch]
             -all [-nojoin] [-switch]
 
- serwer: nazwa serwera do ponownego połączenia
-   -all: ponownie łączy się ze wszystkimi serwerami
--nojoin: nie wchodź na żadne kanały (nawet jeśli są zdefiniowane kanały do automatycznego wejścia dla serwera)
--switch: przełącza na kolejny adres serwera
+ server: server to reconnect (internal name)
+   -all: reconnect to all servers
+-nojoin: do not join any channel (even if autojoin is enabled on server)
+-switch: switch to next server address
 ----
 
 [[command_irc_rehash]]
@@ -729,8 +729,8 @@ usługa: nazwa usługi
 ----
 /squit  <serwer> <komentarz>
 
- serwer: nazwa serwera
-komentarz: powód rozłączenia
+ server: server name
+comment: comment
 ----
 
 [[command_irc_stats]]
@@ -769,9 +769,9 @@ cel: pobierz czas podanego serwera
 ----
 /topic  [<kanał>] [<temat>|-delete]
 
-kanał: nazwa kanału
-  temat: nowy temat kanału
--delete: kasuje temat kanału
+channel: channel name
+  topic: new topic
+-delete: delete channel topic
 ----
 
 [[command_irc_trace]]
@@ -780,7 +780,7 @@ kanał: nazwa kanału
 ----
 /trace  [<cel>]
 
-cel: serwer
+cel: nazwa serwera
 ----
 
 [[command_irc_unban]]
@@ -789,8 +789,8 @@ cel: serwer
 ----
 /unban  [<kanał>] <nick> [<nick> ...]
 
-kanał: kanał, na którym zdejmujemy bana
-   nick: użytkownik lub host do odbanowania
+channel: channel name
+   nick: user or host
 ----
 
 [[command_irc_unquiet]]
@@ -799,8 +799,8 @@ kanał: kanał, na którym zdejmujemy bana
 ----
 /unquiet  [<kanał>] [<nick> [<nick>...]]
 
-channel: channel for unquiet
-   nick: user or host to unquiet
+channel: channel name
+   nick: user or host
 ----
 
 [[command_irc_userhost]]
@@ -818,7 +818,7 @@ nick: nazwa użytkownika
 ----
 /users  [<cel>]
 
-cel: serwer
+cel: nazwa serwera
 ----
 
 [[command_irc_version]]
@@ -892,8 +892,8 @@ If option irc.network.whois_double_nick is enabled, two nicks are sent (if only 
 ----
 /whowas  <nick>[,<nick>...] [<ilość> [<cel>]]
 
-  nick: nick do wyszukania
- ilość: ilość zwracanych odpowiedzi (pełne wyszukiwanie dla numerów ujemnych)
-cel: odpowiedź powinna pasować do maski
+  nick: nick
+ count: number of replies to return (full search if negative number)
+target: reply should match this mask
 ----
 

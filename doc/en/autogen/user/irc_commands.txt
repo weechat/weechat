@@ -4,7 +4,7 @@
 ----
 /admin  [<target>]
 
-target: server
+target: server name
 ----
 
 [[command_irc_allchan]]
@@ -74,8 +74,8 @@ Examples:
 ----
 /ban  [<channel>] [<nick> [<nick>...]]
 
-channel: channel for ban
-   nick: user or host to ban
+channel: channel name
+   nick: user or host
 
 Without argument, this command display ban list for current channel.
 ----
@@ -117,7 +117,7 @@ Examples:
 ----
 /ctcp  <target> <type> [<arguments>]
 
- target: nick or channel to send CTCP to
+ target: nick or channel name to send CTCP to
    type: CTCP type (examples: "version", "ping", ..)
 arguments: arguments for CTCP
 ----
@@ -128,7 +128,7 @@ arguments: arguments for CTCP
 ----
 /cycle  [<channel>[,<channel>...]] [<message>]
 
-channel: channel name for cycle
+channel: channel name
 message: part message (displayed to other users)
 ----
 
@@ -139,7 +139,7 @@ message: part message (displayed to other users)
 /dcc  chat <nick>
       send <nick> <file>
 
-nick: nick for chat or file
+nick: nick
 file: filename (on local host)
 
 Examples:
@@ -196,10 +196,10 @@ target: server name
 ----
 /disconnect  [<server>|-all|-pending [<reason>]]
 
-  server: server name to disconnect
+  server: internal server name
     -all: disconnect from all servers
 -pending: cancel auto-reconnection on servers currently reconnecting
-  reason: reason for quit
+  reason: reason for the "quit"
 ----
 
 [[command_irc_halfop]]
@@ -256,8 +256,8 @@ target: server name
 ----
 /invite  <nick> [<nick>...] [<channel>]
 
-   nick: nick to invite
-channel: channel to invite
+   nick: nick
+channel: channel name
 ----
 
 [[command_irc_ison]]
@@ -293,9 +293,9 @@ Examples:
 ----
 /kick  [<channel>] <nick> [<reason>]
 
-channel: channel where user is
-   nick: nick to kick
- reason: reason for kick (special variables $nick, $channel and $server are replaced by their value)
+channel: channel name
+   nick: nick
+ reason: reason (special variables $nick, $channel and $server are replaced by their value)
 ----
 
 [[command_irc_kickban]]
@@ -304,9 +304,9 @@ channel: channel where user is
 ----
 /kickban  [<channel>] <nick> [<reason>]
 
-channel: channel where user is
-   nick: nick to kick and ban
- reason: reason for kick (special variables $nick, $channel and $server are replaced by their value)
+channel: channel name
+   nick: nick
+ reason: reason (special variables $nick, $channel and $server are replaced by their value)
 
 It is possible to kick/ban with a mask, nick will be extracted from mask and replaced by "*".
 
@@ -321,8 +321,8 @@ Example:
 ----
 /kill  <nick> <reason>
 
-  nick: nick to kill
-reason: reason for kill
+  nick: nick
+reason: reason
 ----
 
 [[command_irc_links]]
@@ -462,7 +462,7 @@ nick: new nick
 /notice  [-server <server>] <target> <text>
 
 server: send to this server (internal name)
-target: nick or channel
+target: nick or channel name
   text: text to send
 ----
 
@@ -549,7 +549,7 @@ daemon2: forward message to this daemon
 /query  [-server <server>] <nick>[,<nick>...] [<text>]
 
 server: send to this server (internal name)
-  nick: nick for private conversation
+  nick: nick
   text: text to send
 ----
 
@@ -559,8 +559,8 @@ server: send to this server (internal name)
 ----
 /quiet  [<channel>] [<nick> [<nick>...]]
 
-channel: channel for quiet
-   nick: user or host to quiet
+channel: channel name
+   nick: user or host
 
 Without argument, this command display quiet list for current channel.
 ----
@@ -582,7 +582,7 @@ server: send to this server (internal name)
 /reconnect  <server> [<server>...] [-nojoin] [-switch]
             -all [-nojoin] [-switch]
 
- server: server name to reconnect
+ server: server to reconnect (internal name)
    -all: reconnect to all servers
 -nojoin: do not join any channel (even if autojoin is enabled on server)
 -switch: switch to next server address
@@ -731,7 +731,7 @@ service: name of service
 /squit  <server> <comment>
 
  server: server name
-comment: comment for quit
+comment: comment
 ----
 
 [[command_irc_stats]]
@@ -771,7 +771,7 @@ target: query time from specified server
 /topic  [<channel>] [<topic>|-delete]
 
 channel: channel name
-  topic: new topic for channel
+  topic: new topic
 -delete: delete channel topic
 ----
 
@@ -781,7 +781,7 @@ channel: channel name
 ----
 /trace  [<target>]
 
-target: server
+target: server name
 ----
 
 [[command_irc_unban]]
@@ -790,8 +790,8 @@ target: server
 ----
 /unban  [<channel>] <nick> [<nick>...]
 
-channel: channel for unban
-   nick: user or host to unban
+channel: channel name
+   nick: user or host
 ----
 
 [[command_irc_unquiet]]
@@ -800,8 +800,8 @@ channel: channel for unban
 ----
 /unquiet  [<channel>] [<nick> [<nick>...]]
 
-channel: channel for unquiet
-   nick: user or host to unquiet
+channel: channel name
+   nick: user or host
 ----
 
 [[command_irc_userhost]]
@@ -819,7 +819,7 @@ nick: nick
 ----
 /users  [<target>]
 
-target: server
+target: server name
 ----
 
 [[command_irc_version]]
@@ -893,7 +893,7 @@ If option irc.network.whois_double_nick is enabled, two nicks are sent (if only 
 ----
 /whowas  <nick>[,<nick>...] [<count> [<target>]]
 
-  nick: nick to search
+  nick: nick
  count: number of replies to return (full search if negative number)
 target: reply should match this mask
 ----

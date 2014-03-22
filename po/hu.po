@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-03-22 09:22+0100\n"
-"PO-Revision-Date: 2014-03-10 21:07+0100\n"
+"POT-Creation-Date: 2014-03-22 09:49+0100\n"
+"PO-Revision-Date: 2014-03-22 09:52+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: hu\n"
@@ -4729,8 +4729,8 @@ msgstr "információ lekérdezése a szerver adminisztrátorról"
 msgid "[<target>]"
 msgstr "[cél]"
 
-msgid "target: server"
-msgstr "cél: szerver"
+msgid "target: server name"
+msgstr "cél: szerver neve"
 
 #, fuzzy
 msgid "execute a command on all channels of all connected servers"
@@ -4818,8 +4818,8 @@ msgstr "[szoba] [név [név ...]]"
 
 #, fuzzy
 msgid ""
-"channel: channel for ban\n"
-"   nick: user or host to ban\n"
+"channel: channel name\n"
+"   nick: user or host\n"
 "\n"
 "Without argument, this command display ban list for current channel."
 msgstr ""
@@ -4886,7 +4886,7 @@ msgstr "fogadó típusa [paraméterek]"
 
 #, fuzzy
 msgid ""
-" target: nick or channel to send CTCP to\n"
+" target: nick or channel name to send CTCP to\n"
 "   type: CTCP type (examples: \"version\", \"ping\", ..)\n"
 "arguments: arguments for CTCP"
 msgstr ""
@@ -4903,7 +4903,7 @@ msgstr "[szoba,[szoba] [kilépő_üzenet]]"
 
 #, fuzzy
 msgid ""
-"channel: channel name for cycle\n"
+"channel: channel name\n"
 "message: part message (displayed to other users)"
 msgstr ""
 "        szoba: a szoba ahonnan ki szeretnénk lépni\n"
@@ -4918,7 +4918,7 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"nick: nick for chat or file\n"
+"nick: nick\n"
 "file: filename (on local host)\n"
 "\n"
 "Examples:\n"
@@ -4972,9 +4972,6 @@ msgstr ""
 msgid "shutdown the server"
 msgstr "szerver leállítása"
 
-msgid "target: server name"
-msgstr "cél: szerver neve"
-
 #, fuzzy
 msgid "disconnect from one or all IRC servers"
 msgstr "kilépés a szerver(ek)ről"
@@ -4985,10 +4982,10 @@ msgstr "[[szerver] szerver_maszk]"
 
 #, fuzzy
 msgid ""
-"  server: server name to disconnect\n"
+"  server: internal server name\n"
 "    -all: disconnect from all servers\n"
 "-pending: cancel auto-reconnection on servers currently reconnecting\n"
-"  reason: reason for quit"
+"  reason: reason for the \"quit\""
 msgstr ""
 "-all: újracsatlakozás minden szerverhez\n"
 "szervernév: újracsatlakozás a megadott szerverhez\n"
@@ -5045,8 +5042,8 @@ msgstr "név [név...]"
 
 #, fuzzy
 msgid ""
-"   nick: nick to invite\n"
-"channel: channel to invite"
+"   nick: nick\n"
+"channel: channel name"
 msgstr ""
 "  név: meghívandó név\n"
 "szoba: meghívandó szoba"
@@ -5091,10 +5088,10 @@ msgstr "[szoba] név [megjegyzés]"
 
 #, fuzzy
 msgid ""
-"channel: channel where user is\n"
-"   nick: nick to kick\n"
-" reason: reason for kick (special variables $nick, $channel and $server are "
-"replaced by their value)"
+"channel: channel name\n"
+"   nick: nick\n"
+" reason: reason (special variables $nick, $channel and $server are replaced "
+"by their value)"
 msgstr ""
 "     szoba: a szoba, ahol a felhasználó tartózkodik\n"
 "       név: a kirúgandó neve\n"
@@ -5105,10 +5102,10 @@ msgstr "kirúgja és kitiltja a felhasználót a szobából"
 
 #, fuzzy
 msgid ""
-"channel: channel where user is\n"
-"   nick: nick to kick and ban\n"
-" reason: reason for kick (special variables $nick, $channel and $server are "
-"replaced by their value)\n"
+"channel: channel name\n"
+"   nick: nick\n"
+" reason: reason (special variables $nick, $channel and $server are replaced "
+"by their value)\n"
 "\n"
 "It is possible to kick/ban with a mask, nick will be extracted from mask and "
 "replaced by \"*\".\n"
@@ -5130,8 +5127,8 @@ msgstr "név szöveg"
 
 #, fuzzy
 msgid ""
-"  nick: nick to kill\n"
-"reason: reason for kill"
+"  nick: nick\n"
+"reason: reason"
 msgstr ""
 "  név: meghívandó név\n"
 "szoba: meghívandó szoba"
@@ -5321,7 +5318,7 @@ msgstr "fogadó [,fogadó] szöveg"
 #, fuzzy
 msgid ""
 "server: send to this server (internal name)\n"
-"target: nick or channel\n"
+"target: nick or channel name\n"
 "  text: text to send"
 msgstr ""
 "fogadó: név vagy szoba (esetleg maszk, '*' = aktuális szoba)\n"
@@ -5425,11 +5422,11 @@ msgstr "[szerver | név]"
 #, fuzzy
 msgid ""
 "server: send to this server (internal name)\n"
-"  nick: nick for private conversation\n"
+"  nick: nick\n"
 "  text: text to send"
 msgstr ""
-"becenév: privát beszélgetésre hívott felhasználó beceneve\n"
-" szöveg: küldendő üzenet"
+"fogadó: név vagy szoba (esetleg maszk, '*' = aktuális szoba)\n"
+"szöveg: küldendő üzenet"
 
 #, fuzzy
 msgid "quiet nicks or hosts"
@@ -5437,8 +5434,8 @@ msgstr "gép vagy felhasználó tiltásának visszavonása"
 
 #, fuzzy
 msgid ""
-"channel: channel for quiet\n"
-"   nick: user or host to quiet\n"
+"channel: channel name\n"
+"   nick: user or host\n"
 "\n"
 "Without argument, this command display quiet list for current channel."
 msgstr ""
@@ -5469,7 +5466,7 @@ msgstr "[-all [-nojoin] | szervernév [szervernév ...] [-nojoin]]"
 
 #, fuzzy
 msgid ""
-" server: server name to reconnect\n"
+" server: server to reconnect (internal name)\n"
 "   -all: reconnect to all servers\n"
 "-nojoin: do not join any channel (even if autojoin is enabled on server)\n"
 "-switch: switch to next server address"
@@ -5499,14 +5496,6 @@ msgstr "felhasználó erőszakos eltávolítása a szobából"
 #, fuzzy
 msgid "<nick> <channel>[,<channel>...]"
 msgstr "név szoba"
-
-#, fuzzy
-msgid ""
-"   nick: nick\n"
-"channel: channel name"
-msgstr ""
-"  név: meghívandó név\n"
-"szoba: meghívandó szoba"
 
 msgid "change mode on channel, without having operator status"
 msgstr ""
@@ -5546,14 +5535,6 @@ msgstr "felhasználó erőszakos eltávolítása a szobából"
 #, fuzzy
 msgid "force a user to quit server with a reason"
 msgstr "felhasználó erőszakos eltávolítása a szobából"
-
-#, fuzzy
-msgid ""
-"  nick: nick\n"
-"reason: reason"
-msgstr ""
-"  név: meghívandó név\n"
-"szoba: meghívandó szoba"
 
 msgid "register a new service"
 msgstr "új szolgáltatás regisztrálása"
@@ -5683,7 +5664,7 @@ msgstr "szerver megjegyzés"
 #, fuzzy
 msgid ""
 " server: server name\n"
-"comment: comment for quit"
+"comment: comment"
 msgstr ""
 "   szerver: szerver neve\n"
 "megjegyzés: megjegyzés a kilépéshez"
@@ -5739,7 +5720,7 @@ msgstr "[szoba] [téma]"
 #, fuzzy
 msgid ""
 "channel: channel name\n"
-"  topic: new topic for channel\n"
+"  topic: new topic\n"
 "-delete: delete channel topic"
 msgstr ""
 "szoba: szoba neve \n"
@@ -5758,8 +5739,8 @@ msgstr "[szoba] név [név ...]"
 
 #, fuzzy
 msgid ""
-"channel: channel for unban\n"
-"   nick: user or host to unban"
+"channel: channel name\n"
+"   nick: user or host"
 msgstr ""
 "szoba: szoba ahol a parancsot végrehajtjuk\n"
 "  név: felhasználó vagy gép melyen a parancsot végrehajtjuk"
@@ -5767,14 +5748,6 @@ msgstr ""
 #, fuzzy
 msgid "unquiet nicks or hosts"
 msgstr "gép vagy felhasználó tiltásának visszavonása"
-
-#, fuzzy
-msgid ""
-"channel: channel for unquiet\n"
-"   nick: user or host to unquiet"
-msgstr ""
-"szoba: szoba ahol a parancsot végrehajtjuk\n"
-"  név: felhasználó vagy gép melyen a parancsot végrehajtjuk"
 
 #, fuzzy
 msgid "return a list of information about nicks"
@@ -5885,7 +5858,7 @@ msgstr "felhasználó [,felhasználó [,felhasználó ...]] [számláló [cél]]
 
 #, fuzzy
 msgid ""
-"  nick: nick to search\n"
+"  nick: nick\n"
 " count: number of replies to return (full search if negative number)\n"
 "target: reply should match this mask"
 msgstr ""

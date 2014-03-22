@@ -4,7 +4,7 @@
 ----
 /admin  [<target>]
 
-target: Server
+target: Servername
 ----
 
 [[command_irc_allchan]]
@@ -74,10 +74,10 @@ Beispiele:
 ----
 /ban  [<channel>] [<nick> [<nick>...]]
 
-channel: Channel in dem der Bann ausgeführt werden soll
-   nick: User oder Host für den der Bann gelten soll
+channel: channel name
+   nick: user or host
 
-Ohne Angabe von Argumenten wird die Ban-Liste für den aktuellen Channel angezeigt.
+Without argument, this command display ban list for current channel.
 ----
 
 [[command_irc_connect]]
@@ -117,9 +117,9 @@ Beispiele:
 ----
 /ctcp  <target> <type> [<arguments>]
 
-   target: User oder Channel an welchen eine CTCP-Nachricht geschickt werden soll
-     type: CTCP-Nachricht (z.B. "version", "ping", ..)
-arguments: Argumente für CTCP
+ target: nick or channel name to send CTCP to
+   type: CTCP type (examples: "version", "ping", ..)
+arguments: arguments for CTCP
 ----
 
 [[command_irc_cycle]]
@@ -128,8 +128,8 @@ arguments: Argumente für CTCP
 ----
 /cycle  [<channel>[,<channel>...]] [<message>]
 
-channel: Name des Channels
-message: Nachricht beim Verlassen des Channels (wird den anderen Usern im Channel angezeigt)
+channel: channel name
+message: part message (displayed to other users)
 ----
 
 [[command_irc_dcc]]
@@ -139,13 +139,13 @@ message: Nachricht beim Verlassen des Channels (wird den anderen Usern im Channe
 /dcc  chat <nick>
       send <nick> <file>
 
-nick: Empfänger einer Datei bzw. eines Chats
-file: zu versendende (lokal vorliegende) Datei
+nick: nick
+file: filename (on local host)
 
-Beispiel:
-  Sendet eine Chat-Anfrage an den User "toto"
+Examples:
+  chat with nick "toto":
     /dcc chat toto
-  Sendet die Datei "/home/foo/bar.txt" an den User "toto"
+  send file "/home/foo/bar.txt" to nick "toto":
     /dcc send toto /home/foo/bar.txt
 ----
 
@@ -196,10 +196,10 @@ target: Servername
 ----
 /disconnect  [<server>|-all|-pending [<reason>]]
 
-server: Name des Servers zu dem die Verbindung getrennt werden soll
-  -all: Verbindung zu allen Servern trennen
--pending: bricht eine  automatische Wiederverbindung für Server ab, zu denen gerade eine Wiederverbindung aufgebaut werden soll
-reason: Begründung der Trennung
+  server: internal server name
+    -all: disconnect from all servers
+-pending: cancel auto-reconnection on servers currently reconnecting
+  reason: reason for the "quit"
 ----
 
 [[command_irc_halfop]]
@@ -256,8 +256,8 @@ target: Servername
 ----
 /invite  <nick> [<nick>...] [<channel>]
 
-   nick: Nick welcher eingeladen werden soll
-channel: Channel für den die Einladung gelten soll
+   nick: Nickname
+channel: Name des Channels
 ----
 
 [[command_irc_ison]]
@@ -293,9 +293,9 @@ Beispiele:
 ----
 /kick  [<channel>] <nick> [<reason>]
 
-channel: Channel in dem der Benutzers sich befindet
-   nick: Nick der rausgeworfen werden soll
- reason: Begründung für den Rauswurf (Variablen die genutzt werden können: $nick, $channel und $server)
+channel: channel name
+   nick: nick
+ reason: reason (special variables $nick, $channel and $server are replaced by their value)
 ----
 
 [[command_irc_kickban]]
@@ -304,14 +304,14 @@ channel: Channel in dem der Benutzers sich befindet
 ----
 /kickban  [<channel>] <nick> [<reason>]
 
-channel: Channel in dem sich der User befindet
-   nick: Nickname der rausgeworfen und gebannt werden soll
- reason: Begründung weshalb der User rausgeworfen wurde (Variablen die genutzt werden können: $nick, $channel und $server)
+channel: channel name
+   nick: nick
+ reason: reason (special variables $nick, $channel and $server are replaced by their value)
 
-Es ist möglich kick/ban mittels einer Maske durchzuführen. Der Nick wird aus der Maske heraus gefiltert und durch Joker ("*") ersetzt.
+It is possible to kick/ban with a mask, nick will be extracted from mask and replaced by "*".
 
-Beispiel:
-  Sperre "*!*@host.com" und kicke dann "toto":
+Example:
+  ban "*!*@host.com" and then kick "toto":
     /kickban toto!*@host.com
 ----
 
@@ -321,8 +321,8 @@ Beispiel:
 ----
 /kill  <nick> <reason>
 
-  nick: Nickname, der Person, die rausgeworfen werden soll
-reason: Begründung für den Rauswurf
+  nick: Nickname
+reason: Grund der Abmeldung
 ----
 
 [[command_irc_links]]
@@ -461,9 +461,9 @@ nick: neuer Nickname
 ----
 /notice  [-server <server>] <target> <text>
 
-server: an diesen Server senden (interner Name)
-target: Nickname oder Channel
-  text: zu sendender Text
+server: send to this server (internal name)
+target: nick or channel name
+  text: text to send
 ----
 
 [[command_irc_notify]]
@@ -548,9 +548,9 @@ Daemon2: Nachricht an diesen Daemon weiterleiten
 ----
 /query  [-server <server>] <nick>[,<nick>...] [<text>]
 
-server: an diesen Server senden (interner Name)
-  nick: Nickname für privaten Chat
-  text: Text der gesendet werden soll
+server: send to this server (internal name)
+  nick: nick
+  text: text to send
 ----
 
 [[command_irc_quiet]]
@@ -559,10 +559,10 @@ server: an diesen Server senden (interner Name)
 ----
 /quiet  [<channel>] [<nick> [<nick>...]]
 
-channel: Channel in dem jemanden das Wort entzogen werden soll
-   nick: User oder Host dem das Wort entzogen werden soll
+channel: channel name
+   nick: user or host
 
-Ohne Angabe von Argumenten wird, für den aktuellen Channel, eine Liste ausgegeben mit den User/Hosts denen das Wort entzogen worden ist.
+Without argument, this command display quiet list for current channel.
 ----
 
 [[command_irc_quote]]
@@ -582,10 +582,10 @@ data: unbearbeitete (RAW) Daten die gesendet werden sollen
 /reconnect  <server> [<server>...] [-nojoin] [-switch]
             -all [-nojoin] [-switch]
 
- server: Servername zu welchem neu verbunden werden soll
-   -all: mit allen Servern neu verbinden
--nojoin: Channels werden nicht betreten (auch falls autojoin für diesen Server aktiviert ist)
--switch: wechselt zur nächsten Server-Adresse
+ server: server to reconnect (internal name)
+   -all: reconnect to all servers
+-nojoin: do not join any channel (even if autojoin is enabled on server)
+-switch: switch to next server address
 ----
 
 [[command_irc_rehash]]
@@ -730,8 +730,8 @@ service: Name des Service
 ----
 /squit  <server> <comment>
 
- server: Name des Servers
-comment: Trennungsgrund
+ server: server name
+comment: comment
 ----
 
 [[command_irc_stats]]
@@ -770,9 +770,9 @@ target: Zeit des angegebenen Servers abfragen
 ----
 /topic  [<channel>] [<topic>|-delete]
 
-channel: Name des Channels
-  topic: Thema für den Channel
--delete: entfernt das Thema des Channels
+channel: channel name
+  topic: new topic
+-delete: delete channel topic
 ----
 
 [[command_irc_trace]]
@@ -781,7 +781,7 @@ channel: Name des Channels
 ----
 /trace  [<target>]
 
-target: Server
+target: Servername
 ----
 
 [[command_irc_unban]]
@@ -790,8 +790,8 @@ target: Server
 ----
 /unban  [<channel>] <nick> [<nick>...]
 
-channel: Channel in dem der Bann aufzuheben ist
-   nick: User oder Host für den der Bann aufzuheben ist
+channel: channel name
+   nick: user or host
 ----
 
 [[command_irc_unquiet]]
@@ -800,8 +800,8 @@ channel: Channel in dem der Bann aufzuheben ist
 ----
 /unquiet  [<channel>] [<nick> [<nick>...]]
 
-channel: channel for unquiet
-   nick: user or host to unquiet
+channel: channel name
+   nick: user or host
 ----
 
 [[command_irc_userhost]]
@@ -819,7 +819,7 @@ nick: Nickname
 ----
 /users  [<target>]
 
-target: Server
+target: Servername
 ----
 
 [[command_irc_version]]
@@ -893,8 +893,8 @@ Sollte die Option irc.network.whois_double_nick aktiviert sein, wird ein Nick zw
 ----
 /whowas  <nick>[,<nick>...] [<count> [<target>]]
 
-  nick: Nickname, welcher gesucht werden soll
- count: maximale Anzahl an Antworten (negative Zahl für eine vollständige Liste)
-target: Antwort soll auf diese Suchmaske zutreffen
+  nick: nick
+ count: number of replies to return (full search if negative number)
+target: reply should match this mask
 ----
 

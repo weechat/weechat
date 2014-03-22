@@ -5720,7 +5720,7 @@ irc_command_init ()
         "admin",
         N_("find information about the administrator of the server"),
         N_("[<target>]"),
-        N_("target: server"),
+        N_("target: server name"),
         NULL, &irc_command_admin, NULL);
     weechat_hook_command (
         "allchan",
@@ -5791,8 +5791,8 @@ irc_command_init ()
         "ban",
         N_("ban nicks or hosts"),
         N_("[<channel>] [<nick> [<nick>...]]"),
-        N_("channel: channel for ban\n"
-           "   nick: user or host to ban\n"
+        N_("channel: channel name\n"
+           "   nick: user or host\n"
            "\n"
            "Without argument, this command display ban list for current channel."),
         "%(irc_channel_nicks_hosts)", &irc_command_ban, NULL);
@@ -5837,7 +5837,7 @@ irc_command_init ()
         "ctcp",
         N_("send a CTCP message (Client-To-Client Protocol)"),
         N_("<target> <type> [<arguments>]"),
-        N_(" target: nick or channel to send CTCP to\n"
+        N_(" target: nick or channel name to send CTCP to\n"
            "   type: CTCP type (examples: \"version\", \"ping\", ..)\n"
            "arguments: arguments for CTCP"),
         "%(irc_channel)|%(nicks) action|clientinfo|finger|ping|source|time|"
@@ -5847,14 +5847,14 @@ irc_command_init ()
         "cycle",
         N_("leave and rejoin a channel"),
         N_("[<channel>[,<channel>...]] [<message>]"),
-        N_("channel: channel name for cycle\n"
+        N_("channel: channel name\n"
            "message: part message (displayed to other users)"),
         "%(irc_msg_part)", &irc_command_cycle, NULL);
     weechat_hook_command (
         "dcc",
         N_("start a DCC (file transfer or direct chat)"),
         N_("chat <nick> || send <nick> <file>"),
-        N_("nick: nick for chat or file\n"
+        N_("nick: nick\n"
            "file: filename (on local host)\n"
            "\n"
            "Examples:\n"
@@ -5898,11 +5898,11 @@ irc_command_init ()
         "disconnect",
         N_("disconnect from one or all IRC servers"),
         N_("[<server>|-all|-pending [<reason>]]"),
-        N_("  server: server name to disconnect\n"
+        N_("  server: internal server name\n"
            "    -all: disconnect from all servers\n"
            "-pending: cancel auto-reconnection on servers currently "
            "reconnecting\n"
-           "  reason: reason for quit"),
+           "  reason: reason for the \"quit\""),
         "%(irc_servers)|-all|-pending",
         &irc_command_disconnect, NULL);
     weechat_hook_command (
@@ -5953,8 +5953,8 @@ irc_command_init ()
         "invite",
         N_("invite a nick on a channel"),
         N_("<nick> [<nick>...] [<channel>]"),
-        N_("   nick: nick to invite\n"
-           "channel: channel to invite"),
+        N_("   nick: nick\n"
+           "channel: channel name"),
         "%(nicks) %(irc_server_channels)", &irc_command_invite, NULL);
     weechat_hook_command (
         "ison",
@@ -5984,19 +5984,19 @@ irc_command_init ()
         "kick",
         N_("forcibly remove a user from a channel"),
         N_("[<channel>] <nick> [<reason>]"),
-        N_("channel: channel where user is\n"
-           "   nick: nick to kick\n"
-           " reason: reason for kick (special variables $nick, $channel and "
-           "$server are replaced by their value)"),
+        N_("channel: channel name\n"
+           "   nick: nick\n"
+           " reason: reason (special variables $nick, $channel and $server are "
+           "replaced by their value)"),
         "%(nicks) %(irc_msg_kick) %-", &irc_command_kick, NULL);
     weechat_hook_command (
         "kickban",
         N_("kicks and bans a nick from a channel"),
         N_("[<channel>] <nick> [<reason>]"),
-        N_("channel: channel where user is\n"
-           "   nick: nick to kick and ban\n"
-           " reason: reason for kick (special variables $nick, $channel and "
-           "$server are replaced by their value)\n"
+        N_("channel: channel name\n"
+           "   nick: nick\n"
+           " reason: reason (special variables $nick, $channel and $server are "
+           "replaced by their value)\n"
            "\n"
            "It is possible to kick/ban with a mask, nick will be extracted from "
            "mask and replaced by \"*\".\n"
@@ -6010,8 +6010,8 @@ irc_command_init ()
         "kill",
         N_("close client-server connection"),
         N_("<nick> <reason>"),
-        N_("  nick: nick to kill\n"
-           "reason: reason for kill"),
+        N_("  nick: nick\n"
+           "reason: reason"),
         "%(nicks) %-", &irc_command_kill, NULL);
     weechat_hook_command (
         "links",
@@ -6131,7 +6131,7 @@ irc_command_init ()
         N_("send notice message to user"),
         N_("[-server <server>] <target> <text>"),
         N_("server: send to this server (internal name)\n"
-           "target: nick or channel\n"
+           "target: nick or channel name\n"
            "  text: text to send"),
         "%(nicks)|-server %(irc_servers)", &irc_command_notice, NULL);
     weechat_hook_command (
@@ -6200,15 +6200,15 @@ irc_command_init ()
         N_("send a private message to a nick"),
         N_("[-server <server>] <nick>[,<nick>...] [<text>]"),
         N_("server: send to this server (internal name)\n"
-           "  nick: nick for private conversation\n"
+           "  nick: nick\n"
            "  text: text to send"),
         "%(nicks)|-server %(irc_servers)", &irc_command_query, NULL);
     weechat_hook_command (
         "quiet",
         N_("quiet nicks or hosts"),
         N_("[<channel>] [<nick> [<nick>...]]"),
-        N_("channel: channel for quiet\n"
-           "   nick: user or host to quiet\n"
+        N_("channel: channel name\n"
+           "   nick: user or host\n"
            "\n"
            "Without argument, this command display quiet list for current "
            "channel."),
@@ -6225,7 +6225,7 @@ irc_command_init ()
         N_("reconnect to server(s)"),
         N_("<server> [<server>...] [-nojoin] [-switch]"
            " || -all [-nojoin] [-switch]"),
-        N_(" server: server name to reconnect\n"
+        N_(" server: server to reconnect (internal name)\n"
            "   -all: reconnect to all servers\n"
            "-nojoin: do not join any channel (even if autojoin is enabled on "
            "server)\n"
@@ -6355,7 +6355,7 @@ irc_command_init ()
         N_("disconnect server links"),
         N_("<server> <comment>"),
         N_( " server: server name\n"
-            "comment: comment for quit"),
+            "comment: comment"),
         NULL, &irc_command_squit, NULL);
     weechat_hook_command (
         "stats",
@@ -6385,28 +6385,28 @@ irc_command_init ()
         N_("get/set channel topic"),
         N_("[<channel>] [<topic>|-delete]"),
         N_("channel: channel name\n"
-           "  topic: new topic for channel\n"
+           "  topic: new topic\n"
            "-delete: delete channel topic"),
         "%(irc_channel_topic)|-delete", &irc_command_topic, NULL);
     weechat_hook_command (
         "trace",
         N_("find the route to specific server"),
         N_("[<target>]"),
-        N_("target: server"),
+        N_("target: server name"),
         NULL, &irc_command_trace, NULL);
     weechat_hook_command (
         "unban",
         N_("unban nicks or hosts"),
         N_("[<channel>] <nick> [<nick>...]"),
-        N_("channel: channel for unban\n"
-           "   nick: user or host to unban"),
+        N_("channel: channel name\n"
+           "   nick: user or host"),
         NULL, &irc_command_unban, NULL);
     weechat_hook_command (
         "unquiet",
         N_("unquiet nicks or hosts"),
         N_("[<channel>] [<nick> [<nick>...]]"),
-        N_("channel: channel for unquiet\n"
-           "   nick: user or host to unquiet"),
+        N_("channel: channel name\n"
+           "   nick: user or host"),
         "%(irc_channel_nicks_hosts)", &irc_command_unquiet, NULL);
     weechat_hook_command (
         "userhost",
@@ -6418,7 +6418,7 @@ irc_command_init ()
         "users",
         N_("list of users logged into the server"),
         N_("[<target>]"),
-        N_("target: server"),
+        N_("target: server name"),
         NULL, &irc_command_users, NULL);
     weechat_hook_command (
         "version",
@@ -6473,7 +6473,7 @@ irc_command_init ()
         "whowas",
         N_("ask for information about a nick which no longer exists"),
         N_("<nick>[,<nick>...] [<count> [<target>]]"),
-        N_("  nick: nick to search\n"
+        N_("  nick: nick\n"
            " count: number of replies to return (full search if negative "
            "number)\n"
            "target: reply should match this mask"),
