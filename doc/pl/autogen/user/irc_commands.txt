@@ -793,6 +793,16 @@ kanał: kanał, na którym zdejmujemy bana
    nick: użytkownik lub host do odbanowania
 ----
 
+[[command_irc_unquiet]]
+[command]*`unquiet`* unquiet nicks or hosts::
+
+----
+/unquiet  [<kanał>] [<nick> [<nick>...]]
+
+channel: channel for unquiet
+   nick: user or host to unquiet
+----
+
 [[command_irc_userhost]]
 [command]*`userhost`* zwraca listę informacji o użytkownikach::
 

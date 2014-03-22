@@ -5266,6 +5266,75 @@ irc_command_unban (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
+ * Callback for command "/unquiet": unquiets nicks or hosts.
+ */
+
+int
+irc_command_unquiet (void *data, struct t_gui_buffer *buffer, int argc,
+                     char **argv, char **argv_eol)
+{
+    char *pos_channel;
+    int pos_args;
+
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
+    IRC_COMMAND_CHECK_SERVER("unquiet", 1);
+
+    /* make C compiler happy */
+    (void) data;
+    (void) argv_eol;
+
+    if (argc < 2)
+        return WEECHAT_RC_ERROR;
+
+    if (irc_channel_is_channel (ptr_server, argv[1]))
+    {
+        pos_channel = argv[1];
+        pos_args = 2;
+    }
+    else
+    {
+        pos_channel = NULL;
+        pos_args = 1;
+    }
+
+    /* channel not given, use default buffer */
+    if (!pos_channel)
+    {
+        if (ptr_channel && (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL))
+            pos_channel = ptr_channel->name;
+        else
+        {
+            weechat_printf (ptr_server->buffer,
+                            _("%s%s: \"%s\" command can only be "
+                              "executed in a channel buffer"),
+                            weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                            "unquiet");
+            return WEECHAT_RC_OK;
+        }
+    }
+
+    if (argv[pos_args])
+    {
+        /* loop on users */
+        while (argv[pos_args])
+        {
+            irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                              "MODE %s -q %s",
+                              pos_channel, argv[pos_args]);
+            pos_args++;
+        }
+    }
+    else
+    {
+        irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                          "MODE %s -q",
+                          pos_channel);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback for command "/userhost": returns a list of information about
  * nicknames.
  */
@@ -6332,6 +6401,13 @@ irc_command_init ()
         N_("channel: channel for unban\n"
            "   nick: user or host to unban"),
         NULL, &irc_command_unban, NULL);
+    weechat_hook_command (
+        "unquiet",
+        N_("unquiet nicks or hosts"),
+        N_("[<channel>] [<nick> [<nick>...]]"),
+        N_("channel: channel for unquiet\n"
+           "   nick: user or host to unquiet"),
+        "%(irc_channel_nicks_hosts)", &irc_command_unquiet, NULL);
     weechat_hook_command (
         "userhost",
         N_("return a list of information about nicks"),

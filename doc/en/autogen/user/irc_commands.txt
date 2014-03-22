@@ -794,6 +794,16 @@ channel: channel for unban
    nick: user or host to unban
 ----
 
+[[command_irc_unquiet]]
+[command]*`unquiet`* unquiet nicks or hosts::
+
+----
+/unquiet  [<channel>] [<nick> [<nick>...]]
+
+channel: channel for unquiet
+   nick: user or host to unquiet
+----
+
 [[command_irc_userhost]]
 [command]*`userhost`* return a list of information about nicks::
 

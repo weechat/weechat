@@ -794,6 +794,16 @@ canale: canale da cui rimuovere il ban
   nick: utente o host a cui rimuovere il ban
 ----
 
+[[command_irc_unquiet]]
+[command]*`unquiet`* unquiet nicks or hosts::
+
+----
+/unquiet  [<canale>] [<nick> [<nick>...]]
+
+channel: channel for unquiet
+   nick: user or host to unquiet
+----
+
 [[command_irc_userhost]]
 [command]*`userhost`* restituisce un elenco di informazioni sui nick::
 

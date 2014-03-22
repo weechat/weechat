@@ -794,6 +794,16 @@ cible: serveur
 pseudo: pseudo ou hôte pour supprimer le bannissement
 ----
 
+[[command_irc_unquiet]]
+[command]*`unquiet`* ne plus taire des pseudos ou hôtes::
+
+----
+/unquiet  [<canal>] [<pseudo> [<pseudo>...]]
+
+ canal: nom du canal pour ne plus taire
+pseudo: pseudo ou hôte à ne plus taire
+----
+
 [[command_irc_userhost]]
 [command]*`userhost`* retourner une liste d'informations sur des pseudos::
 
