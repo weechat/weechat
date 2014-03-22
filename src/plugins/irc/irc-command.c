@@ -6404,7 +6404,7 @@ irc_command_init ()
     weechat_hook_command (
         "unquiet",
         N_("unquiet nicks or hosts"),
-        N_("[<channel>] [<nick> [<nick>...]]"),
+        N_("[<channel>] <nick> [<nick>...]"),
         N_("channel: channel name\n"
            "   nick: user or host"),
         "%(irc_channel_nicks_hosts)", &irc_command_unquiet, NULL);

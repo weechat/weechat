@@ -798,7 +798,7 @@ pseudo: pseudo ou hôte
 [command]*`unquiet`* ne plus taire des pseudos ou hôtes::
 
 ----
-/unquiet  [<canal>] [<pseudo> [<pseudo>...]]
+/unquiet  [<canal>] <pseudo> [<pseudo>...]
 
  canal: nom du canal
 pseudo: pseudo ou hôte

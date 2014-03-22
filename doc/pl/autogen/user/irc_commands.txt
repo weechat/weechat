@@ -797,7 +797,7 @@ channel: channel name
 [command]*`unquiet`* unquiet nicks or hosts::
 
 ----
-/unquiet  [<kanał>] [<nick> [<nick>...]]
+/unquiet  [<kanał>] <nick> [<nick> ...]
 
 channel: channel name
    nick: user or host
