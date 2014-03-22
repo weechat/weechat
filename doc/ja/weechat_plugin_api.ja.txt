@@ -1815,10 +1815,9 @@ _WeeChat バージョン 0.4.0 以上で利用可、バージョン 0.4.2 で更
 という書式で書かれた特殊変数は展開される
 ('WeeChat ユーザガイド' のコマンド `/eval` を参照)。
 
-// TRANSLATION MISSING
 [NOTE]
-Since version 0.4.4, nested variables are supported, for example:
-`${color:${variable}}`.
+バージョン 0.4.4 以降、入れ子変数を使えるようになりました、例:
+`${color:${variable}}`。
 
 プロトタイプ:
 

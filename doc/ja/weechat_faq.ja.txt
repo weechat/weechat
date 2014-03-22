@@ -539,15 +539,13 @@ of channels):
 [[filter_irc_join_channel_messages]]
 === どうすれば IRC チャンネルに参加した際に表示される一部のメッセージをフィルタできますか。
 
-// TRANSLATION MISSING
-With WeeChat ≥ 0.4.1, you can choose which messages are displayed or not when
-joining a channel with the option 'irc.look.display_join_message' (see
-`/help irc.look.display_join_message` for more info).
+WeeChat バージョン 0.4.1 以上の場合、'irc.look.display_join_message'
+オプションを使って、チャンネル参加時に表示するメッセージの種類を選択できます
+(より詳しい情報は `/help irc.look.display_join_message` を参照)。
 
-// TRANSLATION MISSING
-To hide messages (but keep them in buffer), you can filter them using the tag
-(for example 'irc_329' for channel creation date). See `/help filter` for help
-with filters.
+メッセージを隠す (ただしバッファに残す) には、タグを使ってメッセージをフィルタしてください
+(たとえばチャンネル作成日時を隠すには 'irc_329' タグを使ってください)。フィルタの書き方に関する情報は
+`/help filter` を参照してください。
 
 [[filter_voice_messages]]
 === どうすれば voice メッセージをフィルタできますか (例えば Bitlbee サーバ上で)。
