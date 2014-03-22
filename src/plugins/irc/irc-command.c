@@ -5792,7 +5792,7 @@ irc_command_init ()
         N_("ban nicks or hosts"),
         N_("[<channel>] [<nick> [<nick>...]]"),
         N_("channel: channel name\n"
-           "   nick: user or host\n"
+           "   nick: nick or host\n"
            "\n"
            "Without argument, this command display ban list for current channel."),
         "%(irc_channel_nicks_hosts)", &irc_command_ban, NULL);
@@ -6208,7 +6208,7 @@ irc_command_init ()
         N_("quiet nicks or hosts"),
         N_("[<channel>] [<nick> [<nick>...]]"),
         N_("channel: channel name\n"
-           "   nick: user or host\n"
+           "   nick: nick or host\n"
            "\n"
            "Without argument, this command display quiet list for current "
            "channel."),
@@ -6399,14 +6399,14 @@ irc_command_init ()
         N_("unban nicks or hosts"),
         N_("[<channel>] <nick> [<nick>...]"),
         N_("channel: channel name\n"
-           "   nick: user or host"),
+           "   nick: nick or host"),
         NULL, &irc_command_unban, NULL);
     weechat_hook_command (
         "unquiet",
         N_("unquiet nicks or hosts"),
         N_("[<channel>] <nick> [<nick>...]"),
         N_("channel: channel name\n"
-           "   nick: user or host"),
+           "   nick: nick or host"),
         "%(irc_channel_nicks_hosts)", &irc_command_unquiet, NULL);
     weechat_hook_command (
         "userhost",

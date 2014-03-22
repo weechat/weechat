@@ -75,7 +75,7 @@ Przykłady:
 /ban  [<kanał>] [<nick> [<nick>...]]
 
 channel: channel name
-   nick: user or host
+   nick: nick or host
 
 Without argument, this command display ban list for current channel.
 ----
@@ -560,7 +560,7 @@ server: send to this server (internal name)
 /quiet  [<kanał>] [<nick> [<nick>...]]
 
 channel: channel name
-   nick: user or host
+   nick: nick or host
 
 Without argument, this command display quiet list for current channel.
 ----
@@ -790,7 +790,7 @@ cel: nazwa serwera
 /unban  [<kanał>] <nick> [<nick> ...]
 
 channel: channel name
-   nick: user or host
+   nick: nick or host
 ----
 
 [[command_irc_unquiet]]
@@ -800,7 +800,7 @@ channel: channel name
 /unquiet  [<kanał>] <nick> [<nick> ...]
 
 channel: channel name
-   nick: user or host
+   nick: nick or host
 ----
 
 [[command_irc_userhost]]
