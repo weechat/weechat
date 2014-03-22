@@ -62,5 +62,5 @@ Before submitting a feature request, it's better to discuss about it in IRC
 If you want to fix a bug or add a new feature, it's always a good idea to
 discuss about it in IRC.
 
-And you can look at http://weechat.org/[developer's guide] for coding rules
+And you can look at http://weechat.org/files/doc/devel/weechat_dev.en.html[developer's guide] for coding rules
 (styles, naming convention, and other useful info).
