@@ -2022,7 +2022,7 @@ $ echo '*hello!' >~/.weechat/weechat_fifo_12345
   oddzielić je za pomocą "\n"):
 
 ----
-$ echo -e '*/python unload\n*/python autoload' >~/.weechat/weechat_fifo_12345
+$ printf '%b' '*/python unload\n*/python autoload\n' >~/.weechat/weechat_fifo_12345
 ----
 
 Można napisać skrypt wysyłający komendy do wszystkich uruchomionych kopi WeeChat
@@ -2034,7 +2034,7 @@ w tym samym czasie, na przykład:
 if [ $# -eq 1 ]; then
     for fifo in ~/.weechat/weechat_fifo_*
     do
-        echo -e "$1" >$fifo
+        printf '%b\n' "$1" >"$fifo"
     done
 fi
 ----

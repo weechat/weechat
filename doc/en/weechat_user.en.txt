@@ -2003,7 +2003,7 @@ $ echo '*hello!' >~/.weechat/weechat_fifo_12345
   with "\n"):
 
 ----
-$ echo -e '*/python unload\n*/python autoload' >~/.weechat/weechat_fifo_12345
+$ printf '%b' '*/python unload\n*/python autoload\n' >~/.weechat/weechat_fifo_12345
 ----
 
 You can write a script to send command to all running WeeChat at same time,
@@ -2015,7 +2015,7 @@ for example:
 if [ $# -eq 1 ]; then
     for fifo in ~/.weechat/weechat_fifo_*
     do
-        echo -e "$1" >$fifo
+        printf '%b\n' "$1" >"$fifo"
     done
 fi
 ----

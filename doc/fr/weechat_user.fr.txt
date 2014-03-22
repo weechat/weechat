@@ -2071,7 +2071,7 @@ $ echo '*bonjour !' >~/.weechat/weechat_fifo_12345
   les séparer par "\n") :
 
 ----
-$ echo -e '*/python unload\n*/python autoload' >~/.weechat/weechat_fifo_12345
+$ printf '%b' '*/python unload\n*/python autoload\n' >~/.weechat/weechat_fifo_12345
 ----
 
 Vous pouvez écrire un script qui envoie les commandes à tous les WeeChat qui
@@ -2083,7 +2083,7 @@ tournent en même temps, par exemple :
 if [ $# -eq 1 ]; then
     for fifo in ~/.weechat/weechat_fifo_*
     do
-        echo -e "$1" >$fifo
+        printf '%b\n' "$1" >"$fifo"
     done
 fi
 ----
