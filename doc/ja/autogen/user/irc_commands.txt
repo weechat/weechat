@@ -14,7 +14,7 @@ target: サーバ名
 /allchan  [-current] [-exclude=<channel>[,<channel>...]] <command> [<arguments>]
 
  -current: 現在のサーバ上のチャンネルに対してコマンドを実行
- -exclude: いくつかのチャンネルを除外 (複数のチャンネルを除外するには '*' をチャンネル名の最初と最後につける)
+ -exclude: 一部のチャンネルを除外 (複数のチャンネルを除外するには '*' をチャンネル名の最初と最後につける)
   command: 実行するコマンド
 arguments: コマンドの引数 (特殊変数 $nick、$channel、$server はそれぞれの値に置き換えられます)
 
@@ -23,29 +23,29 @@ arguments: コマンドの引数 (特殊変数 $nick、$channel、$server はそ
     /allchan me is testing
   #weechat 以外の全てのチャンネルで 'hello' と発言:
     /allchan -exclude=#weechat msg * hello
-  #weechat と #linux で始まるチャンネルを除いが全てのチャンネルで 'hello' と発言:
+  #weechat と #linux で始まるチャンネルを除く全てのチャンネルで 'hello' と発言:
     /allchan -exclude=#weechat,#linux* msg * hello
 ----
 
 [[command_irc_allpv]]
-[command]*`allpv`* execute a command on all private buffers of all connected servers::
+[command]*`allpv`* 全ての接続済みサーバの全てのプライベートバッファに対してコマンドを実行::
 
 ----
 /allpv  [-current] [-exclude=<nick>[,<nick>...]] <command> [<arguments>]
 
- -current: execute command for private buffers of current server only
- -exclude: exclude some nicks ('*' is allowed at beginning or end of nick name, to exclude many nicks)
-  command: command to execute
-arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
+ -current: 現在のサーバ上のプライベートバッファに対してコマンドを実行
+ -exclude: 一部のニックネームを除外 (複数のニックネームを除外するには '*' をニックネームの最初と最後につける)
+  command: 実行するコマンド
+arguments: コマンドの引数 (特殊変数 $nick、$channel、$server はそれぞれの値に置き換えられます)
 
-Examples:
-  execute '/me is testing' on all private buffers:
+例:
+  全てのプライベートバッファに対して '/me is testing' を実行:
     /allpv me is testing
-  say 'hello' everywhere but not for nick foo:
+  ニックネーム foo を除く全てのプライベートバッファで 'hello' と発言:
     /allpv -exclude=foo msg * hello
-  say 'hello' everywhere but not for nick foo and nicks beginning with bar:
+  ニックネーム foo と bar で始まるニックネームを除く全てのチャンネルで 'hello' と発言:
     /allpv -exclude=foo,bar* msg * hello
-  close all private buffers:
+  全てのプライベートバッファを閉じる:
     /allpv close
 ----
 
