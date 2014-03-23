@@ -225,13 +225,14 @@ werden sollte:
 ----
 
 [[terminal_copy_paste]]
-=== Wie kann ich einen Text kopieren und einfügen ohne das die Nickliste mit eingefügt wird?
+=== Wie kann ich einen Text kopieren und einfügen ohne das die Nickliste mit kopiert wird?
 
 Hierzu kannst Du ein Terminal nutzen welches Block-Auswahl erlaubt (wie z.B. rxvt-unicode,
 konsole, gnome-terminal, ...). Im Normalfall erfolgt die Markierung mittels der Tasten
 key[ctrl-]key[alt-] in Verbindung mit der Auswahl durch die Maus.
 
-Eine weitere Möglichkeit besteht darin die Nickliste nach oben oder unten zu verschieben:
+Eine weitere Möglichkeit besteht darin die Nickliste am oberen oder unteren 
+Bildschirm zu positionieren:
 
 ----
 /set weechat.bar.nicklist.position top
@@ -567,17 +568,17 @@ zum anderen mit einer globalen Filterung (*alle* join/part/quit Nachrichten werd
 Für weitere Hilfe: `/help filter` und `/help irc.look.smart_filter`
 
 [[filter_irc_join_channel_messages]]
-=== Wie kann ich Nachrichten filtern wenn ich einen IRC Channel betrete?
+=== Wie kann ich Server-Nachrichten filtern wenn ich einen IRC Channel betrete?
 
-// TRANSLATION MISSING
-With WeeChat ≥ 0.4.1, you can choose which messages are displayed or not when
-joining a channel with the option 'irc.look.display_join_message' (see
-`/help irc.look.display_join_message` for more info).
+Ab WeeChat ≥ 0.4.1 kann man auswählen welche Server Nachrichten beim Betreten
+eines Channels angezeigt und welche verborgen werden sollen. Dazu nutzt man
+die Option 'irc.look.display_join_message' (für weitere Informationen, siehe
+`/help irc.look.display_join_message`).
 
-// TRANSLATION MISSING
-To hide messages (but keep them in buffer), you can filter them using the tag
-(for example 'irc_329' for channel creation date). See `/help filter` for help
-with filters.
+Um Nachrichten visuell zu verbergen können diese gefiltert werden, mittels
+ihrem Tag (zum Beispiel 'irc_329', ist für das Erstellungsdatum des Channels).
+Siehe `/help filter` um weitere Informationen über die Filterfunktion zu
+erhalten.
 
 [[filter_voice_messages]]
 === Wie kann ich voice Nachrichten filtern (z.B. auf Bitlbee Servern)?
@@ -711,15 +712,14 @@ Damit WeeChat weniger Speicher benötigt, solltest Du folgende Tipps umsetzen:
 == Entwicklung
 
 [[bug_task_patch]]
-=== Was kann ich machen falls ich einen Fehler gefunden habe, nach neuen Funktionen fragen oder Patches einsenden möchte?
+=== Was kann ich machen falls ich einen Fehler gefunden habe, mich nach neuen Funktionen erkundigen, oder Patches einsenden möchte?
 
-// TRANSLATION MISSING
-See: http://weechat.org/dev/support
+siehe: http://weechat.org/dev/support
 
 [[gdb_error_threads]]
-=== Wenn man WeeChat in gdb startet kann ein Thread-Fehler auftreten. Was beudeutet das?
+=== Wenn man WeeChat in gdb startet, kann ein Thread-Fehler auftreten. Was beudeutet das?
 
-Falls man WeeChat in gdb ausführt kann folgende Fehlermeldung erscheinen:
+Falls man WeeChat in gdb ausführt, kann folgende Fehlermeldung erscheinen:
 
 ----
 $ gdb /Pfad/zu/weechat
@@ -750,7 +750,7 @@ ist Hilfe gerne gesehen.
 
 Es gibt einiges zu tun z.B. testen, programmieren, Dokumentation, ...
 
-Bitte kontaktiere uns via IRC oder email, schaue auf die Support-Seite:
+Bitte kontaktiere uns via IRC oder email, wirf einen Blick auf die Support-Seite:
 http://weechat.org/dev/support
 
 [[donate]]
