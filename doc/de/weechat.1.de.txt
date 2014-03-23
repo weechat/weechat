@@ -99,8 +99,6 @@ Please read the COPYING file for more information.
 
 Web: <http://weechat.org/>
 
-// TRANSLATION MISSING
-== SUPPORT / REPORTING BUGS
+== SUPPORT / FEHLER MELDEN
 
-// TRANSLATION MISSING
-For help or a bug report: <http://weechat.org/dev/support>
+für Hilfe oder um einen Fehler zu melden: <http://weechat.org/dev/support>
