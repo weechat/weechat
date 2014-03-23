@@ -231,7 +231,7 @@ Hierzu kannst Du ein Terminal nutzen welches Block-Auswahl erlaubt (wie z.B. rxv
 konsole, gnome-terminal, ...). Im Normalfall erfolgt die Markierung mittels der Tasten
 key[ctrl-]key[alt-] in Verbindung mit der Auswahl durch die Maus.
 
-Eine weitere Möglichkeit besteht darin die Nickliste am oberen oder unteren 
+Eine weitere Möglichkeit besteht darin die Nickliste am oberen oder unteren
 Bildschirm zu positionieren:
 
 ----

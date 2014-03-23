@@ -891,7 +891,7 @@ Der vereinfachte Anzeigemodus hat folgende Funktionen:
 
 Der Standardtastenbefehl um den vereinfachten Textmodus zu aktivieren ist key[alt-!],
 mit dem selben Tastenbefehl wird dieser Modus wieder beendet (es kann auch mit jeder
-beliegen Tasteneingabe der Modus beendet werden, siehe Option 
+beliegen Tasteneingabe der Modus beendet werden, siehe Option
 <<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>).
 
 Das Format für die Zeitanzeige kann mit folgender Option angepasst werden
@@ -1596,7 +1596,7 @@ da ansonsten die Daten in Klartext gesichert werden.
 Wenn eine Passphrase genutzt wird fragt WeeChat diese beim Programmstart
 ab (bei einem `/upgrade` ist dies nicht der Fall).
 
-Die Passphrase kann auch in einer Datei gesichert werden (siehe Option 
+Die Passphrase kann auch in einer Datei gesichert werden (siehe Option
 <<option_sec.crypt.passphrase_file,sec.crypt.passphrase_file>>).
 
 [[secured_data_encryption]]
