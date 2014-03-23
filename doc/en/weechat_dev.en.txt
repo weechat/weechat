@@ -923,7 +923,13 @@ Any patch for bug or new feature must be done on master branch, preferred way is
 a Github pull request. A patch can also be sent by e-mail (made with `git diff`
 or `git format-patch`).
 
-Format of commit message is the following:
+Format of commit message is the following (to close a GitHub issue):
+
+----
+component: fix a problem (closes #123)
+----
+
+For a Savannah bug:
 
 ----
 component: fix a problem (bug #12345)
@@ -931,20 +937,25 @@ component: fix a problem (bug #12345)
 
 Where 'component' is one of following:
 
-* WeeChat core: 'core' (files in directory 'src/' except 'doc' and 'plugins')
+* WeeChat core: 'core' (files in root directory, 'po/' and 'src/',
+  except 'src/plugins/')
 * documentation files: 'doc' (files in directory 'doc/')
-* name of a plugin: 'irc', 'python', 'relay', ... (files in directory 'src/plugins/')
+* name of a plugin: 'irc', 'python', 'relay', ... (files in directory
+  'src/plugins/')
 
 Some rules to follow:
 
 * use only English
 * use infinitive form of verb
-* if commit is related to something in tracker (bug, task, patch), write it
-  in parenthesis after the message (format: bug #12345, task #12345, patch #12345)
+* if commit is related to something in tracker, write it in parenthesis after
+  the message, with this format:
+** GitHub: closes #123
+** Savannah: bug #12345, task #12345, patch #12345
 
 Examples of commit messages:
 
 ----
+irc: add command /unquiet (closes #36)
 core: add callback "nickcmp" for nick comparison in buffers
 irc: fix freeze when reading on socket with SSL enabled (bug #35097)
 ruby: add detection of ruby version 1.9.3 in cmake

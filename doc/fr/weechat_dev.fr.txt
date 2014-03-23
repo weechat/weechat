@@ -939,7 +939,13 @@ Tout patch pour un bug ou une nouvelle fonctionnalité doit être effectué sur 
 branche master, le format préféré étant une "pull request" sur Github. Un  patch
 peut aussi être envoyé par e-mail (fait avec `git diff` ou `git format-patch`).
 
-Le format du message de commit est le suivant :
+Le format du message de commit est le suivant (pour fermer un bug GitHub) :
+
+----
+component: fix a problem (closes #123)
+----
+
+Pour un bug Savannah :
 
 ----
 component: fix a problem (bug #12345)
@@ -947,8 +953,8 @@ component: fix a problem (bug #12345)
 
 Où 'component' est :
 
-* pour le cœur WeeChat : 'core' (les fichiers dans le répertoire 'src/', sauf
-  'doc' et 'plugins')
+* pour le cœur WeeChat : 'core' (les fichiers dans le répertoire racine, 'po/'
+  et 'src/', sauf 'src/plugins/')
 * fichiers de documentation : 'doc' (fichiers dans le répertoire 'doc/')
 * nom d'une extension : 'irc', 'python', 'relay', ... (fichiers dans le
   répertoire 'src/plugins/')
@@ -957,12 +963,15 @@ Quelques règles à suivre :
 
 * utilisez seulement l'anglais
 * utilisez des verbes à l'infinitif
-* si le commit est relatif au tracker (bug, task, patch), écrivez-le entre
-  parenthèses après le message (format: bug #12345, task #12345, patch #12345)
+* si le commit est relatif au tracker, écrivez-le entre parenthèses après le
+  message, avec ce format :
+** GitHub : closes #123
+** Savannah : bug #12345, task #12345, patch #12345
 
 Exemples de messages de commit :
 
 ----
+irc: add command /unquiet (closes #36)
 core: add callback "nickcmp" for nick comparison in buffers
 irc: fix freeze when reading on socket with SSL enabled (bug #35097)
 ruby: add detection of ruby version 1.9.3 in cmake
@@ -998,7 +1007,7 @@ $ msgcheck.py xx.po
 ----
 
 [[build_autogen_files]]
-===== Construire les fichier auto-générés
+===== Construire les fichiers auto-générés
 
 Les fichiers dans le répertoire 'doc/XX/autogen/' sont automatiquement générés
 par le script 'doc/docgen.py'.

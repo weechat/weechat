@@ -917,7 +917,14 @@ Git リポジトリはこの URL にあります: https://github.com/weechat/wee
 リクエストを使って提出することを推奨します。パッチは電子メールで送信することも可能です
 (`git diff` または `git format-patch` で作成してください)。
 
-コミットメッセージは以下のフォーマットに従ってください:
+// TRANSLATION MISSING
+Format of commit message is the following (to close a GitHub issue):
+
+----
+component: fix a problem (closes #123)
+----
+
+For a Savannah bug:
 
 ----
 component: fix a problem (bug #12345)
@@ -925,7 +932,9 @@ component: fix a problem (bug #12345)
 
 ここで 'component' は以下の 1 つです:
 
-* WeeChat コア: 'core' (ディレクトリ doc と plugins 以外の 'src/' ディレクトリに含まれるファイル)
+// TRANSLATION MISSING
+* WeeChat core: 'core' (files in root directory, 'po/' and 'src/',
+  except 'src/plugins/')
 * 文書ファイル: 'doc' ('doc/' ディレクトリに含まれるファイル)
 * プラグインの名前: 'irc'、'python'、'relay'、... ('src/plugins/' ディレクトリに含まれるファイル)
 
@@ -933,12 +942,16 @@ component: fix a problem (bug #12345)
 
 * 英語を使ってください
 * 動詞の原形を使ってください
-* コミットの内容がトラッカーに関するもの (バグ、タスク、パッチ)
-  である場合には、カッコで括ったトラッカー番号をコミットメッセージの後につけてください (フォーマット: bug #12345、task #12345、patch #12345)
+// TRANSLATION MISSING
+* if commit is related to something in tracker, write it in parenthesis after
+  the message, with this format:
+** GitHub: closes #123
+** Savannah: bug #12345, task #12345, patch #12345
 
 コミットメッセージの例:
 
 ----
+irc: add command /unquiet (closes #36)
 core: add callback "nickcmp" for nick comparison in buffers
 irc: fix freeze when reading on socket with SSL enabled (bug #35097)
 ruby: add detection of ruby version 1.9.3 in cmake
