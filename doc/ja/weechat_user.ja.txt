@@ -1077,8 +1077,7 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
 | key[alt-F12]       | ニックネームリストを一番下にスクロール | `/bar scroll nicklist * e`
 | key[alt-a]         | 変更のあった次のバッファに移動 (優先順位: ハイライト、新規メッセージ、その他) | `/input jump_smart`
 | key[alt-h]         | ホットリスト (他のバッファにあった変更通知リスト) を消去 | `/input hotlist_clear`
-// TRANSLATION MISSING
-| key[alt-j,alt-f]   | Switch to first buffer | `/buffer -`
+| key[alt-j,alt-f]   | 最初のバッファに移動 | `/buffer -`
 | key[alt-j,alt-l]   | 最後のバッファに移動 | `/buffer +`
 | key[alt-j,alt-r]   | IRC 生バッファに移動 | `/server raw`
 | key[alt-j,alt-s]   | IRC サーババッファに移動 | `/server jump`
@@ -1723,8 +1722,7 @@ GNU/Linux の場合、プラグインファイルは ".so" という拡張子を
 | alias      | コマンドの別名を定義
 | aspell     | コマンドラインのスペルチェック
 | charset    | バッファの文字コードに従ってデコード/エンコード
-// TRANSLATION MISSING
-| exec       | Execution of external commands in WeeChat
+| exec       | WeeChat 内部から外部コマンドを実行
 | fifo       | 外部から WeeChat にコマンドを送信するための FIFO パイプ
 | irc        | IRC チャットプロトコル
 | logger     | バッファの内容をファイルに保存
@@ -1736,8 +1734,7 @@ GNU/Linux の場合、プラグインファイルは ".so" という拡張子を
 | lua        | Lua スクリプト API
 | tcl        | Tcl スクリプト API
 | guile      | Guile (scheme) スクリプト API
-// TRANSLATION MISSING
-| trigger    | Text replacement and command execution on events triggered by WeeChat/plugins
+| trigger    | WeeChat およびプラグインが発生させたイベントに対するテキスト置換とコマンド実行
 | xfer       | ファイル転送とダイレクトチャット
 |===
 
@@ -1938,31 +1935,30 @@ IRC チャンネル (またはプライベートメッセージ) の文字コー
 
 文字コードに関する問題があれば、'WeeChat FAQ' を参照してください。
 
-// TRANSLATION MISSING
 [[exec_plugin]]
-=== Exec plugin
+=== exec プラグイン
 
-The `/exec` command lets you execute external commands inside WeeChat and
-display the output locally, or send it to a buffer.
+`/exec` コマンドを使うことで WeeChat
+内部から外部コマンドを実行し、その結果を表示したりバッファに送信することが可能になります。
 
 [[exec_options]]
-==== Options (exec.conf)
+==== オプション (exec.conf)
 
-Sections:
+セクション:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
-| Section | Control command     | Description
-| command | /set exec.command.* | Options for commands
-| color   | /set exec.color.*   | Colors
+| セクション | 操作コマンド     | 説明
+| command | /set exec.command.* | コマンドに対するオプション
+| color   | /set exec.color.*   | 色
 |===
 
-Options:
+オプション:
 
 include::autogen/user/exec_options.txt[]
 
 [[exec_commands]]
-==== Commands
+==== コマンド
 
 include::autogen/user/exec_commands.txt[]
 
@@ -2824,23 +2820,22 @@ include::autogen/user/tcl_commands.txt[]
 
 include::autogen/user/guile_commands.txt[]
 
-// TRANSLATION MISSING
 [[trigger_plugin]]
 === トリガプラグイン
 
-Trigger is the Swiss Army knife for WeeChat: it can hook many things (signal,
-modifier, print, ...), change the content of data, and execute one or more
-commands. A condition can be used to prevent the trigger to run in some
-circumstances.
+トリガは WeeChat の便利ツールです:
+様々なもの
+(signal、modifier、print、...)
+をフックして、データの内容を書き換えたり、複数のコマンドを実行することができます。条件をつけることで一部の場合だけトリガを実行するように設定することもできます。
 
-Using triggers require you to know how the signals, modifiers, ... are working.
-So you might consider reading the 'Hooks' chapter in the
-'WeeChat Plugin API Reference'.
+トリガを使うにはシグナル、修飾子、...
+がどのように動いているかを知らなければいけません。これを知るには 'WeeChat
+プラグイン API リファレンス' の 'フック' の章を読むことをお勧めします。
 
 [[trigger_options]]
-==== Options (trigger.conf)
+==== オプション (trigger.conf)
 
-Sections:
+セクション:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2849,59 +2844,59 @@ Sections:
 | color      | /set trigger.color.*                     | 色
 | trigger    | <<command_trigger_trigger,/trigger add>> +
                <<command_trigger_trigger,/trigger set>> +
-               /set trigger.trigger.*                   | Trigger options
+               /set trigger.trigger.*                   | トリガオプション
 |===
 
-Options:
+オプション:
 
 include::autogen/user/trigger_options.txt[]
 
 [[trigger_commands]]
-==== Commands
+==== コマンド
 
 include::autogen/user/trigger_commands.txt[]
 
 [[trigger_anatomy]]
-==== Anatomy of a trigger
+==== トリガの構造
 
-A trigger has the following options (names are
+トリガは以下のオプションをとります (名前は
 `trigger.trigger.<name>.<option>`):
 
 [width="100%",cols="2m,2,10",options="header"]
 |===
-| Option | Values | Description
+| オプション | 値 | 説明
 
-| enabled | `on`, `off` |
-  When option is `off`, the trigger is disabled and actions are not executed
-  any more.
+| enabled | `on`、`off` |
+  オプションが `off`
+  の場合、トリガは無効化され、アクションは実行されません。
 
-| hook | `signal`, `hsignal`, `modifier`, `print`, `command`, `command_run`,
-  `timer`, `config`, `focus` |
-  The hook used in trigger. For more information, see
-  'WeeChat Plugin API Reference', chapter 'Hooks'.
+| hook | `signal`、`hsignal`、`modifier`、`print`、`command`、`command_run`、
+  `timer`、`config`、`focus` |
+  トリガの中で使われるフック。より詳しい情報は、'WeeChat
+  プラグイン API リファレンス' の 'フック' の章を参照してください。
 
-| arguments | string |
-  The arguments for the hook, it depends on the hook type used.
+| arguments | 文字列 |
+  フックに対する引数、指定したフックの型に依存します。
 
-| conditions | string |
-  Conditions to execute the trigger; they are evaluated (see command
-  <<command_weechat_eval,/eval>>).
+| conditions | 文字列 |
+  トリガを実行する条件; 内容は評価されます (コマンド
+  <<command_weechat_eval,/eval>> を参照)。
 
-| regex | string |
-  One or more POSIX extended regular expressions, to change data received in the
-  hook callback (and some stuff added by trigger plugin), see
-  <<trigger_regex,regular expression>>.
+| regex | 文字列 |
+  1 つ以上の POSIX 拡張正規表現、フックコールバック
+  (とトリガプラグインによって追加されるもの)
+  が受け取るデータに変更を加えるためのもの<<trigger_regex,正規表現>>を参照。
 
-| command | string |
-  Command to execute (many commands can be separated by semicolons); it is
-  evaluated (see command <<command_weechat_eval,/eval>>).
+| command | 文字列 |
+  実行するコマンド (複数のコマンドを使う場合には各コマンドをセミコロンで区切ってください);
+  内容は評価されます (コマンド <<command_weechat_eval,/eval>> を参照)。
 
-| return_code | `ok`, `ok_eat`, `error` |
-  The return code of callback (default is `ok`, which should be used in almost
-  all triggers, the other values are rarely used).
+| return_code | `ok`、`ok_eat`、`error` |
+  コールバックの戻り値 (デフォルトは
+  `ok`、ほとんどすべてのトリガで戻り値はこれを使うべきで、ほかの値を使うことは極めてまれです)。
 |===
 
-For example, the default 'beep' trigger has following options:
+例えば、デフォルトの 'beep' トリガは以下のオプションをとります:
 
 ----
 trigger.trigger.beep.enabled = on
@@ -2914,120 +2909,119 @@ trigger.trigger.beep.return_code = ok
 ----
 
 [[trigger_execution]]
-==== Execution
+==== 実行
 
-When a trigger callback is called, following actions are executed, in this
-order, if triggers are globally enabled and if the trigger itself is enabled:
+トリガ機能が有効になっていてさらに対象のトリガが有効化されている場合に、トリガコールバックが呼び出されると、以下のアクションがこの順番で実行されます:
 
-. check trigger conditions: if false, exit
-. replace text in trigger using regular expression(s)
-. execute command(s)
-. exit with a return code (except for hooks 'modifier' and 'focus').
+. トリガ条件の確認: 偽の場合、終了
+. 正規表現を使ってトリガ内でテキスト置換
+. コマンドを実行
+. リターンコードを付けて終了 ('modifier' と 'focus' フックの場合を除く)。
 
 [[trigger_hook_arguments]]
-==== Hook arguments
+==== フック引数
 
-The arguments depend on the hook used. They are separated by semicolons.
+引数は使用するフックの種類に依存します。引数はセミコロンで区切ってください。
 
 [width="100%",cols="2,6,7",options="header"]
 |===
-| Hook | Arguments | Examples
+| フック | 引数 | 例
 
 | signal |
-  1. signal name (priority allowed) (required) +
-  2. signal name (priority allowed) +
+  1. シグナル名 (優先度の指定も可) (必須) +
+  2. シグナル名 (優先度の指定も可) +
   3. ... |
   `*,irc_in_privmsg` +
   `*,irc_in_privmsg;*,irc_in_notice` +
   `signal_sigwinch`
 
 | hsignal |
-  1. signal name (priority allowed) (required) +
-  2. signal name (priority allowed) +
+  1. シグナル名 (優先度の指定も可) (必須) +
+  2. シグナル名 (優先度の指定も可) +
   3. ... |
   `nicklist_nick_added`
 
 | modifier |
-  1. modifier name (priority allowed) (required) +
-  2. modifier name (priority allowed) +
+  1. 修飾子名 (優先度の指定も可) (必須) +
+  2. 修飾子名 (優先度の指定も可) +
   3. ... |
   `weechat_print` +
   `5000\|input_text_display;5000\|history_add`
 
 | print |
-  1. buffer name +
-  2. tags +
-  3. message +
-  4. strip colors (0/1) |
+  1. バッファ名 +
+  2. タグ +
+  3. メッセージ +
+  4. 色の削除 (0/1) |
   `irc.freenode.*` +
   `irc.freenode.#weechat` +
   `irc.freenode.#weechat;irc_notice` +
   `*;;;1`
 
 | command |
-  1. command name (priority allowed) (required) +
-  2. description +
-  3. arguments +
-  4. description of arguments +
-  5. completion |
+  1. コマンド名 (優先度の指定も可) (必須) +
+  2. 説明 +
+  3. 引数 +
+  4. 引数の説明 +
+  5. 補完 |
   `test` +
   `5000\|test`
 
 | command_run |
-  1. command (priority allowed) (required) +
-  2. command (priority allowed) +
+  1. コマンド (優先度の指定も可) (必須) +
+  2. コマンド (優先度の指定も可) +
   3. ... |
   `/cmd arguments`
 
 | timer |
-  1. interval in milliseconds (required) +
-  2. alignment on second (default: 0) +
-  3. max number of calls (default: 0, which means "no end") |
+  1. インターバルするミリ秒数 (必須) +
+  2. 秒の調整 (デフォルト: 0) +
+  3. 呼び出し回数の最大値 (デフォルト: 0、"無限に" 呼び出すことを意味します) |
   `3600000` +
   `60000;0;5`
 
 | config |
-  1. option name (priority allowed) (required) +
-  2. option name (priority allowed) +
+  1. オプション名 (優先度の指定も可) (必須) +
+  2. オプション名 (優先度の指定も可) +
   3. ... |
   `weechat.look.*`
 
 | focus |
-  1. area name (priority allowed) (required) +
-  2. area name (priority allowed) +
+  1. エリア名 (優先度の指定も可) (必須) +
+  2. エリア名 (優先度の指定も可) +
   3. ... |
   `buffer_nicklist`
 |===
 
 [[trigger_conditions]]
-==== Conditions
+==== 条件
 
-The conditions are used to continue processing in trigger, or stop everything.
+条件を指定することで、トリガ内で処理を継続するか完全に止めるかを制御できます。
 
-They are evaluated, and data available in callback can be used
-(see <<trigger_callback_data,data in callbacks>> and command
-<<command_weechat_eval,/eval>>).
+条件は評価され、コールバック内で利用できるデータを条件として利用できます
+(<<trigger_callback_data,コールバック内のデータ>>とコマンド
+<<command_weechat_eval,/eval>> を参照)。
 
-Example: the default 'beep' trigger uses this condition to make a beep only on
-highlight or private message:
+例: デフォルトの 'beep'
+トリガは以下の条件を使い、ハイライトまたはプライベートメッセージの場合だけビープを鳴らすようにしています:
 
 ----
 ${tg_highlight} || ${tg_msg_pv}
 ----
 
 [[trigger_regex]]
-==== Regular expression
+==== 正規表現
 
-The regular expression is used to change variables in callback hashtable.
+正規表現はコールバックハッシュテーブル内の変数を変更するために使われます。
 
-The format is: "/regex/replace" or "/regex/replace/var" (where 'var' is a
-variable of the hashtable). +
-If 'var' is not specified, the default variable is used, it depends on hook
-type:
+フォーマットは: "/regex/replace" または "/regex/replace/var" (ここで
+'var' はハッシュテーブルの変数)。 +
+'var'
+が指定されなかった場合、デフォルト変数を使います、これはフックの種類に依存します:
 
 [width="50%",cols="4,5m",options="header"]
 |===
-| Hook        | Default variable
+| フック      | デフォルト変数
 | signal      | tg_signal_data
 | hsignal     |
 | modifier    | tg_string
@@ -3039,65 +3033,63 @@ type:
 | focus       |
 |===
 
-Many regular expressions can be separated by a space, for example:
-"/regex1/replace1/var1 /regex2/replace2/var2".
+複数の正規表現を使う場合は空白で区切ってください、例:
+"/regex1/replace1/var1 /regex2/replace2/var2"。
 
-The char "/" can be replaced by any char (one or more identical chars).
+文字 "/" を任意の文字 (1 つ以上の同じ文字) に変えることができます。
 
-Matching groups can be used in "replace":
+マッチグループを "replace" の中で利用できます:
 
-* `$0` to `$99`: `$0` is the whole match, `$1` to `$99` are groups captured
-* `$+`: the last match (with highest number)
-* `$.cN`: match "N" with all chars replaced by "c" (example: `$.*2` is the group
-  #2 with all chars replaced by `*`).
+* `$0` から `$99`: `$0` はマッチ部分の全体、`$1` から `$99` はグループ化されたマッチ部分
+* `$+`: 最後のマッチ部分 (最大のグループ番号を持つ)
+* `$.cN`: マッチグループ "N" のすべての文字を "c" で置換した文字列 (例: `$.*2` はグループ
+  #2 のすべての文字を `*` で置換した文字列).
 
-Example: use bold for words between "*":
+例: "*" で囲まれた文字を太字にする:
 
 ----
 /\*(\S+)\*/*${color:bold}$1${color:-bold}*/
 ----
 
-Example: default trigger 'server_pass' uses this regular expression to hide
-password in commands `/server` and `/connect` (chars in passwords are replaced
-by `*`):
+例: デフォルトトリガ 'server_pass' はこの正規表現を使って、`/server`
+と `/connect` コマンドのパスワードを隠しています (パスワード部分の文字を
+`*` で置換しています):
 
 ----
 ==^(/(server|connect) .*-(sasl_)?password=)(\S+)(.*)==$1$.*4$5
 ----
 
 [NOTE]
-In this example, the delimiter used is "==" because there is a "/" in the
-regular expression.
+この例では、区切り文字として "==" を使っています、これは正規表現内で "/"
+を使うためです。
 
 [[trigger_command]]
-==== Command
+==== コマンド
 
-The command is executed after replacement of text with the regular expression.
-Many commands can be separated by semicolons.
+コマンドは正規表現を使ったテキスト置換の後に実行されます。複数のコマンドを実行するにはセミコロンで区切ってください。
 
-It is evaluated (see command <<command_weechat_eval,/eval>>) and text replaced
-with a regular expression can be used in the command.
+コマンドは評価され (コマンド <<command_weechat_eval,/eval>> を参照)
+コマンド内では正規表現を使って置換したテキストを使うことができます。
 
-Example: default 'beep' trigger uses this command to make a beep (BEL):
+例: デフォルトの 'beep' トリガは以下のコマンドを実行してビープ (BEL) を鳴らしています:
 
 ----
 /print -beep
 ----
 
 [[trigger_callback_data]]
-==== Data in callbacks
+==== コールバック内におけるデータ
 
-Data received in callbacks are stored in hashtables (pointers and strings) and
-can be used in following options:
+コールバック内で受け取ったデータはハッシュテーブル (ポインタと文字列)
+の中に保存され、以下のオプションで使うことができます:
 
 * 'conditions'
 * 'regex'
 * 'command'
 
-The content of hashtables depend on the hook type.
+ハッシュテーブルの内容はフックの種類に依存します。
 
-A convenient way to see data in a trigger is to open trigger monitor buffer,
-using the command:
+トリガ内部におけるデータを簡単に確認するには、以下のコマンドを使ってトリガ監視バッファを開いてください:
 
 ----
 /trigger monitor
@@ -3106,238 +3098,238 @@ using the command:
 [[trigger_data_signal]]
 ===== Signal
 
-The "signal" callback sets following variables in hashtable:
+"signal" コールバックは以下の変数をハッシュテーブルに格納します:
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
-| Variable       | Type   | Description
-| tg_signal      | string | Name of signal
-| tg_signal_data | string | Data sent with the signal
+| 変数           | 型     | 説明
+| tg_signal      | string | シグナル名
+| tg_signal_data | string | シグナルと一緒に送信されたデータ
 |===
 
-If the signal contains an IRC message, the message is parsed and following data
-is added in hashtable:
+シグナルが IRC
+メッセージを含む場合、メッセージは解析され以下のデータがハッシュテーブルに追加されます:
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
-| Variable             | Type   | Description
-| server               | string | Name of server (example: "freenode")
-| tags                 | string | Tags in message (rarely used)
-| message_without_tags | string | Message without tags
-| nick                 | string | Nick
-| host                 | string | Hostname
-| command              | string | IRC command (example: "PRIVMSG", "NOTICE", ...)
-| channel              | string | IRC channel
-| arguments            | string | Arguments of command (includes value of 'channel')
+| 変数                 | 型     | 説明
+| server               | string | サーバの名前 (例: "freenode")
+| tags                 | string | メッセージ内のタグ (使われることはまれです)
+| message_without_tags | string | タグを含まないメッセージ
+| nick                 | string | ニックネーム
+| host                 | string | ホスト名
+| command              | string | IRC コマンド (例: "PRIVMSG"、"NOTICE"、...)
+| channel              | string | IRC チャンネル
+| arguments            | string | コマンドの引数 ('channel' の値を含みます)
 |===
 
 [[trigger_data_hsignal]]
 ===== Hsignal
 
-The "hsignal" callback sets following variables in hashtable:
+"hsignal" コールバックは以下の変数をハッシュテーブルに格納します:
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
-| Variable  | Type   | Description
-| tg_signal | string | Name of signal
+| 変数      | 型     | 説明
+| tg_signal | string | シグナル名
 |===
 
-The hashtable contains all keys/values from hashtable received (type:
-string/string).
+ハッシュテーブルには受け取ったハッシュテーブルに含まれる全てのキーおよび値 (型:
+string/string) が含まれています。
 
 [[trigger_data_modifier]]
 ===== Modifier
 
-The "modifier" callback sets following variables in hashtable:
+"modifier" コールバックは以下の変数をハッシュテーブルに格納します:
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
-| Variable          | Type   | Description
-| tg_modifier       | string | Name of modifier
-| tg_modifier_data  | string | Data sent with modifier
-| tg_string         | string | The string that can be modified
-| tg_string_nocolor | string | The string without color codes
+| 変数              | 型     | 説明
+| tg_modifier       | string | 修飾子の名前
+| tg_modifier_data  | string | 修飾子と一緒に送信されたデータ
+| tg_string         | string | 修正可能な文字列
+| tg_string_nocolor | string | 色コードを含まない文字列
 |===
 
-For the 'weechat_print' modifier, variables using message tags are added (see
-<<trigger_data_print,hook print>> below), and following variables:
+'weechat_print' 修飾子では、メッセージタグを使う変数 (下の
+<<trigger_data_print,Print>> を参照) と以下の変数が追加されます:
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
-| Variable           | Type    | Description
-| buffer             | pointer | Buffer where message is printed
-| tg_plugin          | string  | Plugin of buffer where message is printed
-| tg_buffer          | string  | Full name of buffer where message is printed
-| tg_prefix          | string  | Prefix of message printed
-| tg_prefix_nocolor  | string  | Prefix without color codes
-| tg_message         | string  | Message printed
-| tg_message_nocolor | string  | Message without color codes
+| 変数               | 型      | 説明
+| buffer             | pointer | メッセージが表示されたバッファ
+| tg_plugin          | string  | メッセージが表示されたバッファのプラグイン
+| tg_buffer          | string  | メッセージが表示されたバッファの完全な名前
+| tg_prefix          | string  | 表示されたメッセージのプレフィックス
+| tg_prefix_nocolor  | string  | 色コードを削除したプレフィックス
+| tg_message         | string  | 表示されたメッセージ
+| tg_message_nocolor | string  | 色コードを削除したメッセージ
 |===
 
-If the modifier contains an IRC message, the message is parsed and extra data is
-added in hashtable (see <<trigger_data_signal,hook signal>>).
+修飾子が IRC メッセージを含む場合、メッセージは解析され追加のデータがハッシュテーブルに追加されます
+(<<trigger_data_signal,Signal>> を参照)。
 
 [[trigger_data_print]]
 ===== Print
 
-The "print" callback sets following variables in hashtable:
+"print" コールバックは以下の変数をハッシュテーブルに格納します:
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
-| Variable           | Type    | Description
-| buffer             | pointer | Buffer
-| tg_date            | string  | Message date/time (format: `YYYY-MM-DD hh:mm:ss`)
-| tg_displayed       | string  | "1" if displayed, "0" if line filtered
-| tg_highlight       | string  | "1" if highlight, otherwise "0"
-| tg_prefix          | string  | Prefix
-| tg_prefix_nocolor  | string  | Prefix without color codes
-| tg_message         | string  | Message
-| tg_message_nocolor | string  | Message without color codes
+| 変数               | 型      | 説明
+| buffer             | pointer | メッセージが表示されたバッファ
+| buffer             | pointer | バッファ
+| tg_date            | string  | メッセージの日付と時間 (フォーマット: `YYYY-MM-DD hh:mm:ss`)
+| tg_displayed       | string  | 表示された場合 "1"、フィルタされた場合 "0"
+| tg_highlight       | string  | ハイライトされた場合 "1"、それ以外は "0"
+| tg_prefix          | string  | プレフィックス
+| tg_prefix_nocolor  | string  | 色コードを削除したプレフィックス
+| tg_message         | string  | メッセージ
+| tg_message_nocolor | string  | 色コードを削除したメッセージ
 |===
 
-Variables set using tags in message (they are set in modifier 'weechat_print'
-too):
+メッセージのタグをもとにして変数が格納されます
+(変数は 'weechat_print' 修飾子でも格納されます):
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
-| Variable           | Type   | Description
-| tg_tags            | string | Tags of message (with comma added at beginning/end of string)
-| tg_tags_count      | string | Number of tags in message
-| tg_tag_nick        | string | Nick (from tag "nick_xxx")
-| tg_tag_prefix_nick | string | Color of nick in prefix (from tag "prefix_nick_ccc")
-| tg_tag_notify      | string | Notify level ('none', 'message', 'private', 'highlight')
-| tg_notify          | string | Notify level, if different from 'none'
-| tg_msg_pv          | string | "1" for a private message, otherwise "0"
+| 変数               | 型     | 説明
+| tg_tags            | string | メッセージのタグ (文字列の最初と最後にコンマが追加されます)
+| tg_tags_count      | string | メッセージのタグの個数
+| tg_tag_nick        | string | ニックネーム ("nick_xxx" タグから)
+| tg_tag_prefix_nick | string | プレフィックスで使うニックネームの色 ("prefix_nick_ccc" タグから)
+| tg_tag_notify      | string | 通知レベル ('none'、'message'、'private'、'highlight')
+| tg_notify          | string | 通知レベルが 'none' 以外の場合、その通知レベル
+| tg_msg_pv          | string | プライベートメッセージの場合 "1"、それ以外は "0"
 |===
 
 [[trigger_data_command]]
 ===== Command
 
-The "command" callback sets following variables in hashtable:
+"command" コールバックは以下の変数をハッシュテーブルに格納します:
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
-| Variable     | Type    | Description
-| buffer       | pointer | Buffer
-| tg_argvN     | string  | Argument #N
-| tg_argv_eolN | string  | From argument #N until end of arguments
+| 変数         | 型      | 説明
+| buffer       | pointer | バッファ
+| tg_argvN     | string  | N 番目の引数
+| tg_argv_eolN | string  | N 番目の引数から最後の引数まで
 |===
 
 [[trigger_data_command_run]]
 ===== Command_run
 
-The "command_run" callback sets following variables in hashtable:
+"command_run" コールバックは以下の変数をハッシュテーブルに格納します:
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
-| Variable   | Type    | Description
-| buffer     | pointer | Buffer
-| tg_command | string  | Command executed
+| 変数       | 型      | 説明
+| buffer     | pointer | バッファ
+| tg_command | string  | 実行されたコマンド
 |===
 
 [[trigger_data_timer]]
 ===== Timer
 
-The "timer" callback sets following variables in hashtable:
+"timer" コールバックは以下の変数をハッシュテーブルに格納します:
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
-| Variable           | Type   | Description
-| tg_remaining_calls | string | Number of remaining calls
-| tg_date            | string | Current date/time (format: `YYYY-MM-DD hh:mm:ss`)
+| 変数               | 型     | 説明
+| tg_remaining_calls | string | 残り呼び出し回数
+| tg_date            | string | 現在の日付および時間 (フォーマット: `YYYY-MM-DD hh:mm:ss`)
 |===
 
 [[trigger_data_config]]
 ===== Config
 
-The "config" callback sets following variables in hashtable:
+"config" コールバックは以下の変数をハッシュテーブルに格納します:
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
-| Variable  | Type   | Description
-| tg_option | string | Option
-| tg_value  | string | Value
+| 変数      | 型     | 説明
+| tg_option | string | オプション
+| tg_value  | string | 値
 |===
 
 [[trigger_data_focus]]
 ===== Focus
 
-The "focus" callback sets following variables in hashtable:
+"focus" コールバックは以下の変数をハッシュテーブルに格納します:
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
-| Variable | Type    | Description
-| window   | pointer | Window
-| buffer   | pointer | Buffer
+| 変数     | 型      | 説明
+| window   | pointer | ウィンドウ
+| buffer   | pointer | バッファ
 |===
 
-The hashtable contains all keys/values from hashtable received (type:
-string/string).
+ハッシュテーブルには受け取ったハッシュテーブルに含まれる全てのキーおよび値 (型:
+string/string) が含まれています。
 
 [[trigger_examples]]
-==== Examples
+==== 例
 
 [[trigger_example_url_color]]
-===== Color for URLs
+===== URL の色
 
-Display URLs in green:
+URL を緑色にする:
 
 ----
 /trigger add url_color modifier weechat_print "${tg_notify}" "==\S+://\S+==${color:green}$0${color:reset}=="
 ----
 
 [NOTE]
-The simple regex used to detect URL may not catch well all URLs, but it is
-faster than a complex regex.
+ここで使われている URL を検出するための単純な正規表現はすべての URL
+をうまく検出するものではありませんが、複雑な正規表現を使うよりも高速です。
 
 [[trigger_example_auto_pong]]
-===== Auto pong on ping queries
+===== ping クエリに対する自動応答
 
-When someone sends a "ping" in a private buffer, this trigger will auto-reply
-with `pong`:
+誰かがプライベートバッファで "ping" を送信した場合、このトリガは
+`pong` で自動的に応答します:
 
 ----
 /trigger add pong print "" "${type} == private && ${tg_message} == ping" "" "pong"
 ----
 
 [[trigger_example_responsive_layout]]
-===== Responsive layout
+===== レスポンシブレイアウト
 
-Following triggers can be used to customize things displayed when the size of
-terminal is changed:
+以下のトリガはターミナルのサイズが変更されたときに表示されている内容をカスタマイズするものです:
 
 ----
 /trigger add resize_small signal signal_sigwinch "${info:term_width} < 100" "" "/bar hide nicklist"
 /trigger add resize_big signal signal_sigwinch "${info:term_width} >= 100" "" "/bar show nicklist"
 ----
 
-The triggers catch the signal "signal_sigwinch", which is sent by WeeChat when
-signal SIGWINCH is received (when terminal size is changed).
+WeeChat は SIGWINCH を受けとたった際 (ターミナルのサイズが変更された際)
+に "signal_sigwinch" シグナルを送信し、このトリガはこのシグナルをキャッチします。
 
-The condition with `${info:term_width}` checks the width of terminal (you can
-also use `${info:term_height}` if needed).
+`${info:term_width}` を使った条件でターミナルの横幅を確認します (必要であれば
+`${info:term_height}` を使うことも可能です)。
 
-In the example, when the terminal becomes small, the nicklist is hidden. And the
-bar is restored when the width is greater or equal to 100 chars.
+この例では、ターミナルが小さくなった場合、ニックネームリストを隠します。さらに横幅が
+100 文字幅以上になった場合、ニックネームリストを表示します。
 
 [[trigger_example_config_save]]
-===== Automatic save of configuration
+===== 設定の自動保存
 
-You can automatically save configuration files (`*.conf`), for example each
-hour:
+例えば 1 時間ごとに、設定ファイル (`*.conf`)
+を自動的に保存することが可能です:
 
 ----
 /trigger add cfgsave timer 3600000;0;0 "" "" "/mute /save"
 ----
 
-Arguments for the timer hook are:
+timer フックに対する引数は:
 
-* '3600000': 3600 * 1000 milliseconds, the callback is called each hour
-* '0': alignment on second (not aligned here)
-* '0': max number of calls (0 = no end for the timer)
+* '3600000': 3600 * 1000 ミリ秒、コールバックは毎時間呼び出される
+* '0': 秒の調整 (この場合調整しない)
+* '0': 呼び出し回数の最大値 (0 = タイマーを無限に繰り返す)
 
-The command `/mute /save` will silently save configuration files (nothing
-displayed on core buffer).
+コマンド `/mute /save` は無言で設定ファイルを保存します
+(core バッファに対して何も表示しません)。
 
 [[xfer_plugin]]
 === Xfer プラグイン
