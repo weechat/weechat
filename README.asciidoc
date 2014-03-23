@@ -47,7 +47,7 @@ Following packages are optional:
   (for man page: xsltproc, docbook-xml, docbook-xsl)
 
 For a complete list of dependencies and versions recommended, please look at
-http://weechat.org/files/doc/devel/weechat_user.en.html[user's guide].
+http://weechat.org/files/doc/devel/weechat_user.en.html#dependencies[user's guide].
 
 === Compile
 
@@ -67,7 +67,7 @@ $ make install     (as root for installation in system directories)
 ----
 
 For more information or installation with autotools, please look at
-http://weechat.org/files/doc/devel/weechat_user.en.html[user's guide].
+http://weechat.org/files/doc/devel/weechat_user.en.html#compile_with_autotools[user's guide].
 
 == Copyright
 
