@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-03-22 10:02+0100\n"
-"PO-Revision-Date: 2014-03-22 10:03+0100\n"
+"POT-Creation-Date: 2014-03-24 14:22+0100\n"
+"PO-Revision-Date: 2014-03-24 14:23+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -8185,8 +8185,8 @@ msgid "%snotify: %s%s%s%s%s%s%s%s%s is offline"
 msgstr "%snotify: %s%s%s%s%s%s%s%s%s est déconnecté"
 
 #, c-format
-msgid "%snotify: %s%s%s%s%s%s%s%s%s has joined"
-msgstr "%snotify: %s%s%s%s%s%s%s%s%s a rejoint"
+msgid "%snotify: %s%s%s%s%s%s%s%s%s has connected"
+msgstr "%snotify: %s%s%s%s%s%s%s%s%s s'est connecté"
 
 #, c-format
 msgid "%snotify: %s%s%s%s%s%s%s%s%s has quit"

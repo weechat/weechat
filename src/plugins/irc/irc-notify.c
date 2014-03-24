@@ -681,7 +681,7 @@ irc_notify_set_is_on_server (struct t_irc_notify *notify, const char *host,
                           _("%snotify: %s%s%s%s%s%s%s%s%s is connected") :
                           _("%snotify: %s%s%s%s%s%s%s%s%s is offline")) :
                          ((is_on_server) ?
-                          _("%snotify: %s%s%s%s%s%s%s%s%s has joined") :
+                          _("%snotify: %s%s%s%s%s%s%s%s%s has connected") :
                           _("%snotify: %s%s%s%s%s%s%s%s%s has quit")),
                          weechat_prefix ("network"),
                          irc_nick_color_for_server_message (notify->server,
