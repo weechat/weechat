@@ -216,6 +216,9 @@ WeeChat は自動的にデフォルトバー "input" を作成します:
 [[terminal_copy_paste]]
 === どうすればニックネームリストを選択せずにテキストだけをコピー/ペーストできますか。
 
+// TRANSLATION MISSING
+With WeeChat ≥ 0.4.4, you can use the bare display (default key: key[alt-!]).
+
 矩形選択のできるターミナルを使ってください (rxvt-unicode、
 konsole、gnome-terminal、...)。通常、キーは key[ctrl-]key[alt-] マウス選択です。
 
@@ -227,6 +230,9 @@ konsole、gnome-terminal、...)。通常、キーは key[ctrl-]key[alt-] マウ�
 
 [[urls]]
 === どうすれば長い (一行以上に渡る) URL をクリックできますか。
+
+// TRANSLATION MISSING
+With WeeChat ≥ 0.4.4, you can use the bare display (default key: key[alt-!]).
 
 デフォルトでは、WeeChat はそれぞれの行の最初に時間とプレフィックス、
 さらにチャットエリアを囲むようにオプションバーを表示します。url のクリックを簡単にするには、

@@ -216,6 +216,8 @@ any bar:
 [[terminal_copy_paste]]
 === How can I copy/paste text without pasting nicklist?
 
+With WeeChat ≥ 0.4.4, you can use the bare display (default key: key[alt-!]).
+
 You can use a terminal with rectangular selection (like rxvt-unicode,
 konsole, gnome-terminal, ...). Key is usually key[ctrl-]key[alt-] mouse
 selection.
@@ -228,6 +230,8 @@ Another solution is to move nicklist to top or bottom, for example:
 
 [[urls]]
 === How can I click on long URLs (more than one line)?
+
+With WeeChat ≥ 0.4.4, you can use the bare display (default key: key[alt-!]).
 
 By default, WeeChat displays time and prefix for each line and optional bars
 around chat area. To make easier URL click, you can move nicklist to top and

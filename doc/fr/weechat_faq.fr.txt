@@ -222,6 +222,9 @@ barre, WeeChat recréera automatiquement la barre par défaut "input" si l'objet
 [[terminal_copy_paste]]
 === Comment puis-je copier/coller du texte sans coller la liste des pseudos ?
 
+Avec WeeChat ≥ 0.4.4, vous pouvez utiliser l'affichage dépouillé (touche par
+défaut : key[alt-!]).
+
 Vous pouvez utiliser un terminal qui propose la sélection rectangulaire (comme
 rxvt-unicode, konsole, gnome-terminal, etc...). La touche est habituellement
 key[ctrl-]key[alt-] sélection à la souris.
@@ -235,6 +238,9 @@ exemple :
 
 [[urls]]
 === Comment puis-je cliquer sur les longs URLs (plus d'une ligne) ?
+
+Avec WeeChat ≥ 0.4.4, vous pouvez utiliser l'affichage dépouillé (touche par
+défaut : key[alt-!]).
 
 Par défaut, WeeChat affiche l'heure et un préfixe pour chaque ligne avec des
 barres optionnelles autour de la zone de discussion. Pour rendre la le clic
