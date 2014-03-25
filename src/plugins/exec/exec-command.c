@@ -239,6 +239,19 @@ exec_command_parse_options (struct t_exec_cmd_options *cmd_options,
             cmd_options->output_to_buffer = 0;
             cmd_options->new_buffer = 1;
         }
+        else if (weechat_strcasecmp (argv[i], "-nf") == 0)
+        {
+            cmd_options->output_to_buffer = 0;
+            cmd_options->new_buffer = 2;
+        }
+        else if (weechat_strcasecmp (argv[i], "-cl") == 0)
+        {
+            cmd_options->new_buffer_clear = 1;
+        }
+        else if (weechat_strcasecmp (argv[i], "-nocl") == 0)
+        {
+            cmd_options->new_buffer_clear = 0;
+        }
         else if (weechat_strcasecmp (argv[i], "-sw") == 0)
         {
             cmd_options->switch_to_buffer = 1;
@@ -377,7 +390,7 @@ exec_command_run (struct t_gui_buffer *buffer,
     struct t_exec_cmd_options cmd_options;
     struct t_hashtable *process_options;
     struct t_infolist *ptr_infolist;
-    struct t_gui_buffer *new_buffer;
+    struct t_gui_buffer *ptr_new_buffer;
 
     /* parse command options */
     cmd_options.command_index = -1;
@@ -389,6 +402,7 @@ exec_command_run (struct t_gui_buffer *buffer,
     cmd_options.ptr_buffer = buffer;
     cmd_options.output_to_buffer = 0;
     cmd_options.new_buffer = 0;
+    cmd_options.new_buffer_clear = 0;
     cmd_options.switch_to_buffer = 1;
     cmd_options.line_numbers = -1;
     cmd_options.color = EXEC_COLOR_AUTO;
@@ -472,11 +486,15 @@ exec_command_run (struct t_gui_buffer *buffer,
             new_exec_cmd->output_to_buffer = 0;
             snprintf (str_buffer, sizeof (str_buffer),
                       "exec.%s", cmd_options.ptr_buffer_name);
-            new_buffer = exec_buffer_new (str_buffer, cmd_options.switch_to_buffer);
-            if (new_buffer)
+            ptr_new_buffer = exec_buffer_new (str_buffer,
+                                              (cmd_options.new_buffer == 2),
+                                              cmd_options.new_buffer_clear,
+                                              cmd_options.switch_to_buffer);
+            if (ptr_new_buffer)
             {
                 new_exec_cmd->buffer_full_name =
-                    strdup (weechat_buffer_get_string (new_buffer, "full_name"));
+                    strdup (weechat_buffer_get_string (ptr_new_buffer,
+                                                       "full_name"));
             }
         }
         else if (cmd_options.new_buffer)
@@ -492,11 +510,15 @@ exec_command_run (struct t_gui_buffer *buffer,
                 snprintf (str_buffer, sizeof (str_buffer),
                           "exec.%d", new_exec_cmd->number);
             }
-            new_buffer = exec_buffer_new (str_buffer, cmd_options.switch_to_buffer);
-            if (new_buffer)
+            ptr_new_buffer = exec_buffer_new (str_buffer,
+                                              (cmd_options.new_buffer == 2),
+                                              cmd_options.new_buffer_clear,
+                                              cmd_options.switch_to_buffer);
+            if (ptr_new_buffer)
             {
                 new_exec_cmd->buffer_full_name =
-                    strdup (weechat_buffer_get_string (new_buffer, "full_name"));
+                    strdup (weechat_buffer_get_string (ptr_new_buffer,
+                                                       "full_name"));
             }
         }
         else if (cmd_options.ptr_buffer)
@@ -752,7 +774,7 @@ exec_command_init ()
         N_("execute external commands"),
         N_("-list"
            " || [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <name>] "
-           "[-l|-o|-n] |-sw|-nosw] [-ln|-noln] "
+           "[-l|-o|-n|-nf] [-cl|-nocl] [-sw|-nosw] [-ln|-noln] "
            "[-color ansi|auto|irc|weechat|strip] [-rc|-norc] "
            "[-timeout <timeout>] [-name <name>] [-pipe <command>] "
            "[-hsignal <name>] <command>"
@@ -783,6 +805,11 @@ exec_command_init ()
            "(not compatible with option -bg)\n"
            "      -n: display output of command in a new buffer (not compatible "
            "with option -bg)\n"
+           "     -nf: display output of command in a new buffer with free "
+           "content (no word-wrap, no limit on number of lines) (not compatible "
+           "with option -bg)\n"
+           "     -cl: clear the new buffer before displaying output\n"
+           "   -nocl: append to the new buffer without clear (default)\n"
            "     -sw: switch to the output buffer (default)\n"
            "   -nosw: don't switch to the output buffer\n"
            "     -ln: display line numbers (default in new buffer only)\n"
@@ -830,11 +857,13 @@ exec_command_init ()
            "  /exec -n ls -l /tmp\n"
            "  /exec -n ps xu | grep weechat\n"
            "  /exec -n -norc url:http://pastebin.com/raw.php?i=xxxxxxxx\n"
+           "  /exec -nf -noln links -dump "
+           "http://weechat.org/files/doc/devel/weechat_user.en.html\n"
            "  /exec -o uptime\n"
            "  /exec -pipe \"/print Machine uptime:\" uptime"),
         "-list"
-        " || -sh|-nosh|-bg|-nobg|-stdin|-nostdin|-buffer|-l|-o|-n|-sw|-nosw|"
-        "-ln|-noln|-color|-timeout|-name|-pipe|-hsignal|%*"
+        " || -sh|-nosh|-bg|-nobg|-stdin|-nostdin|-buffer|-l|-o|-n|-nf|"
+        "-cl|-nocl|-sw|-nosw|-ln|-noln|-color|-timeout|-name|-pipe|-hsignal|%*"
         " || -in|-inclose|-signal|-kill %(exec_commands_ids)"
         " || -killall"
         " || -set %(exec_commands_ids) stdin|stdin_close|signal"

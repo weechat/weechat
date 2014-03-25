@@ -116,13 +116,26 @@ exec_buffer_set_callbacks ()
  */
 
 struct t_gui_buffer *
-exec_buffer_new (const char *name, int switch_to_buffer)
+exec_buffer_new (const char *name, int free_content, int clear_buffer,
+                 int switch_to_buffer)
 {
     struct t_gui_buffer *new_buffer;
+    int buffer_type;
 
     new_buffer = weechat_buffer_search (EXEC_PLUGIN_NAME, name);
     if (new_buffer)
+    {
+        buffer_type = weechat_buffer_get_integer (new_buffer, "type");
+        if (((buffer_type == 0) && free_content)
+            || ((buffer_type == 1) && !free_content))
+        {
+            /* change the type of buffer */
+            weechat_buffer_set (new_buffer,
+                                "type",
+                                (free_content) ? "free" : "formatted");
+        }
         goto end;
+    }
 
     new_buffer = weechat_buffer_new (name,
                                      &exec_buffer_input_cb, NULL,
@@ -132,6 +145,8 @@ exec_buffer_new (const char *name, int switch_to_buffer)
     if (!new_buffer)
         return NULL;
 
+    if (free_content)
+        weechat_buffer_set (new_buffer, "type", "free");
     weechat_buffer_set (new_buffer, "title", _("Executed commands"));
     weechat_buffer_set (new_buffer, "localvar_set_type", "exec");
     weechat_buffer_set (new_buffer, "localvar_set_no_log", "1");
@@ -139,6 +154,8 @@ exec_buffer_new (const char *name, int switch_to_buffer)
     weechat_buffer_set (new_buffer, "input_get_unknown_commands", "0");
 
 end:
+    if (clear_buffer)
+        weechat_buffer_clear (new_buffer);
     if (switch_to_buffer)
         weechat_buffer_set (new_buffer, "display", "1");
 

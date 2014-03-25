@@ -22,6 +22,8 @@
 
 extern void exec_buffer_set_callbacks ();
 extern struct t_gui_buffer *exec_buffer_new (const char *name,
+                                             int free_content,
+                                             int clear_buffer,
                                              int switch_to_buffer);
 
 #endif /* WEECHAT_EXEC_BUFFER_H */

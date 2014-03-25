@@ -3,7 +3,7 @@
 
 ----
 /exec  -list
-       [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <name>] [-l|-o|-n] |-sw|-nosw] [-ln|-noln] [-color ansi|auto|irc|weechat|strip] [-rc|-norc] [-timeout <timeout>] [-name <name>] [-pipe <command>] [-hsignal <name>] <command>
+       [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <name>] [-l|-o|-n|-nf] [-cl|-nocl] [-sw|-nosw] [-ln|-noln] [-color ansi|auto|irc|weechat|strip] [-rc|-norc] [-timeout <timeout>] [-name <name>] [-pipe <command>] [-hsignal <name>] <command>
        -in <id> <text>
        -inclose <id> [<text>]
        -signal <id> <signal>
@@ -23,6 +23,9 @@
       -l: display locally output of command on buffer (default)
       -o: send output of command to the buffer (not compatible with option -bg)
       -n: display output of command in a new buffer (not compatible with option -bg)
+     -nf: display output of command in a new buffer with free content (no word-wrap, no limit on number of lines) (not compatible with option -bg)
+     -cl: clear the new buffer before displaying output
+   -nocl: append to the new buffer without clear (default)
      -sw: switch to the output buffer (default)
    -nosw: don't switch to the output buffer
      -ln: display line numbers (default in new buffer only)
@@ -58,6 +61,7 @@ Examples:
   /exec -n ls -l /tmp
   /exec -n ps xu | grep weechat
   /exec -n -norc url:http://pastebin.com/raw.php?i=xxxxxxxx
+  /exec -nf -noln links -dump http://weechat.org/files/doc/devel/weechat_user.en.html
   /exec -o uptime
   /exec -pipe "/print Machine uptime:" uptime
 ----

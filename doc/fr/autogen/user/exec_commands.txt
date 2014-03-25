@@ -3,7 +3,7 @@
 
 ----
 /exec  -list
-       [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <nom>] [-l|-o|-n] |-sw|-nosw] [-ln|-noln] [-color ansi|auto|irc|weechat|strip] [-rc|-norc] [-timeout <délai>] [-name <nom>] [-pipe <commande>] [-hsignal <nom>] <commande>
+       [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <nom>] [-l|-o|-n|-nf] [-cl|-nocl] [-sw|-nosw] [-ln|-noln] [-color ansi|auto|irc|weechat|strip] [-rc|-norc] [-timeout <délai>] [-name <nom>] [-pipe <commande>] [-hsignal <nom>] <commande>
        -in <id> <texte>
        -inclose <id> [<texte>]
        -signal <id> <signal>
@@ -23,6 +23,9 @@
        -l: afficher localement la sortie de la commande sur le tampon (par défaut)
        -o: envoyer la sortie de la commande au tampon (non compatible avec l'option -bg)
        -n: afficher la sortie de la commande dans un nouveau tampon (non compatible avec l'option -bg)
+      -nf: afficher la sortie de la commande dans un nouveau tampon avec contenu libre (pas de coupure des mots, pas de limite sur le nombre de lignes) (non compatible avec l'option -bg)
+      -cl: effacer le nouveau tampon avant d'afficher la sortie
+    -nocl: ajouter au nouveau tampon sans effacer (par défaut)
       -sw: basculer vers le tampon de sortie (par défaut)
     -nosw: ne pas basculer vers le tampon de sortie
       -ln: afficher les numéros de ligne (par défaut dans un nouveau tampon seulement)
@@ -58,6 +61,7 @@ Exemples:
   /exec -n ls -l /tmp
   /exec -n ps xu | grep weechat
   /exec -n -norc url:http://pastebin.com/raw.php?i=xxxxxxxx
+  /exec -nf -noln links -dump http://weechat.org/files/doc/devel/weechat_user.en.html
   /exec -o uptime
   /exec -pipe "/print Uptime de la machine:" uptime
 ----

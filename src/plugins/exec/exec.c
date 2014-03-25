@@ -352,11 +352,22 @@ exec_display_output (struct t_exec_cmd *exec_cmd,
                       "exec_%s,exec_cmd_%s",
                       (out) ? "stdout" : "stderr",
                       (exec_cmd->name) ? exec_cmd->name : str_number);
-            snprintf (str_number, sizeof (str_number), "%d\t", line_nb);
-            weechat_printf_tags (buffer, str_tags,
-                                 "%s%s",
-                                 (exec_cmd->line_numbers) ? str_number : " \t",
-                                 line);
+            if (weechat_buffer_get_integer (buffer, "type") == 1)
+            {
+                snprintf (str_number, sizeof (str_number), "%d. ", line_nb);
+                weechat_printf_y (buffer, -1,
+                                  "%s%s",
+                                  (exec_cmd->line_numbers) ? str_number : " ",
+                                  line);
+            }
+            else
+            {
+                snprintf (str_number, sizeof (str_number), "%d\t", line_nb);
+                weechat_printf_tags (buffer, str_tags,
+                                     "%s%s",
+                                     (exec_cmd->line_numbers) ? str_number : " \t",
+                                     line);
+            }
         }
 
         free (line);
@@ -375,6 +386,7 @@ exec_end_command (struct t_exec_cmd *exec_cmd, int return_code)
     struct t_gui_buffer *ptr_buffer;
     struct t_hashtable *hashtable;
     char str_number[32], *output;
+    int buffer_type;
 
     if (exec_cmd->hsignal)
     {
@@ -418,21 +430,44 @@ exec_end_command (struct t_exec_cmd *exec_cmd, int return_code)
             && !exec_cmd->detached && !exec_cmd->output_to_buffer
             && !exec_cmd->pipe_command)
         {
+            buffer_type = weechat_buffer_get_integer (ptr_buffer, "type");
             if (return_code >= 0)
             {
-                weechat_printf_tags (ptr_buffer, "exec_rc",
-                                     _("%s: end of command %d (\"%s\"), "
+                if (buffer_type == 1)
+                {
+                    weechat_printf_y (ptr_buffer, -1,
+                                      ("%s: end of command %d (\"%s\"), "
                                        "return code: %d"),
-                                     EXEC_PLUGIN_NAME, exec_cmd->number,
-                                     exec_cmd->command, return_code);
+                                      EXEC_PLUGIN_NAME, exec_cmd->number,
+                                      exec_cmd->command, return_code);
+                }
+                else
+                {
+                    weechat_printf_tags (ptr_buffer, "exec_rc",
+                                         _("%s: end of command %d (\"%s\"), "
+                                           "return code: %d"),
+                                         EXEC_PLUGIN_NAME, exec_cmd->number,
+                                         exec_cmd->command, return_code);
+                }
             }
             else
             {
-                weechat_printf_tags (ptr_buffer, "exec_rc",
-                                     _("%s: unexpected end of command %d "
-                                       "(\"%s\")"),
-                                     EXEC_PLUGIN_NAME, exec_cmd->number,
-                                     exec_cmd->command);
+                if (buffer_type == 1)
+                {
+                    weechat_printf_y (ptr_buffer, -1,
+                                      _("%s: unexpected end of command %d "
+                                        "(\"%s\")"),
+                                      EXEC_PLUGIN_NAME, exec_cmd->number,
+                                      exec_cmd->command);
+                }
+                else
+                {
+                    weechat_printf_tags (ptr_buffer, "exec_rc",
+                                         _("%s: unexpected end of command %d "
+                                           "(\"%s\")"),
+                                         EXEC_PLUGIN_NAME, exec_cmd->number,
+                                         exec_cmd->command);
+                }
             }
         }
     }

@@ -30,7 +30,8 @@ struct t_exec_cmd_options
     const char *ptr_buffer_name;       /* name of buffer                    */
     struct t_gui_buffer *ptr_buffer;   /* pointer to buffer                 */
     int output_to_buffer;              /* 1 if output is sent to buffer     */
-    int new_buffer;                    /* output in a new buffer            */
+    int new_buffer;                    /* 1=new buffer, 2=new buf. free cont*/
+    int new_buffer_clear;              /* 1 to clear buffer before output   */
     int switch_to_buffer;              /* switch to the output buffer       */
     int line_numbers;                  /* 1 to display line numbers         */
     int color;                         /* what to do with ANSI colors       */
