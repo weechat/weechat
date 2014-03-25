@@ -472,6 +472,15 @@ upgrade_weechat_read_cb (void *data,
                             infolist_integer (infolist, "type");
                         upgrade_current_buffer->notify =
                             infolist_integer (infolist, "notify");
+                        if (infolist_search_var (infolist, "day_change"))
+                        {
+                            upgrade_current_buffer->day_change =
+                                infolist_integer (infolist, "day_change");
+                        }
+                        else
+                        {
+                            upgrade_current_buffer->day_change = 1;
+                        }
                         upgrade_current_buffer->nicklist_case_sensitive =
                             infolist_integer (infolist, "nicklist_case_sensitive");
                         upgrade_current_buffer->nicklist_display_groups =
