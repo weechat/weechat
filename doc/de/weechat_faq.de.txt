@@ -267,7 +267,11 @@ Zeilen angefügt (dies führt dazu, dass URLs beim Markieren korrekt erkannt wer
 Bei der Nutzung dieser Option kann es zu Darstellungsfehlern kommen. Sollte dies
 auftreten, sollte diese Option wieder deaktiviert werden.
 
-Eine weitere Möglichkeit ist, ein Skript zu nutzen: http://weechat.org/scripts/stable/tag/url
+Eine weitere Möglichkeit ist, ein Skript zu nutzen:
+
+----
+/script search url
+----
 
 [[change_locale_without_quit]]
 === Ich möchte die Meldungen von Weechat in einer anderen Sprache ausgeben lassen, ohne WeeChat zu beenden. Ist dies möglich?
@@ -653,7 +657,11 @@ Beim Skript 'launcher.pl' müssen noch die Befehle angepasst werden:
 /set plugins.var.perl.launcher.signal.weechat_highlight "/Pfad/zum/Befehl Argumente"
 ----
 
-andere Skripten die auch zu diesem Thema passen: http://weechat.org/scripts/stable/tag/notify/
+andere Skripten die auch zu diesem Thema passen:
+
+----
+/script search notify
+----
 
 [[irc_target_buffer]]
 === Wie kann ich bei zusammengefügten Buffern den Zielbuffer ändern (z.B. bei einem Server-Buffer)?

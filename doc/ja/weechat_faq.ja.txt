@@ -253,7 +253,11 @@ WeeChat ≥ 0.3.6 では、"eat_newline_glitch" オプションを有効化で�
 このオプションには表示上の問題を引き起こす可能性があります。
 表示上の問題が起きた場合はこのオプションを無効化してください。
 
-別の解決策として、スクリプトを利用することもできます: http://weechat.org/scripts/stable/tag/url
+別の解決策として、スクリプトを利用することもできます:
+
+----
+/script search url
+----
 
 [[change_locale_without_quit]]
 === WeeChat が出力するメッセージの言語を、再起動せずに変更したいです。このようなことは可能ですか。
@@ -614,7 +618,11 @@ WeeChat 0.3.3 以下では、オプション名が 'irc.network.away_check' と
 /set plugins.var.perl.launcher.signal.weechat_highlight "/path/to/command arguments"
 ----
 
-この問題に対するその他のスクリプトは: http://weechat.org/scripts/stable/tag/notify/
+この問題に対するその他のスクリプトは:
+
+----
+/script search notify
+----
 
 [[irc_target_buffer]]
 === どうすればマージされたバッファ内であるコマンドを発行するターゲットバッファを変更できますか。

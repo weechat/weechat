@@ -251,7 +251,11 @@ URL selection):
 This option may cause display bugs. If you experience such problem, you must
 turn off this option.
 
-Other solution is to use a script: http://weechat.org/scripts/stable/tag/url
+Other solution is to use a script:
+
+----
+/script search url
+----
 
 [[change_locale_without_quit]]
 === I want to change the language used by WeeChat for messages, but without exiting WeeChat, is it possible?
@@ -613,7 +617,11 @@ For 'launcher.pl', you have to setup command:
 /set plugins.var.perl.launcher.signal.weechat_highlight "/path/to/command arguments"
 ----
 
-Other scripts on this subject: http://weechat.org/scripts/stable/tag/notify/
+Other scripts on this subject:
+
+----
+/script search notify
+----
 
 [[irc_target_buffer]]
 === How can I change target buffer for commands on merged buffers (like buffer with servers)?

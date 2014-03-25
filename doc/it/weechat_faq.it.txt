@@ -264,7 +264,11 @@ visualizzata (non interferisce con la selezione delle url):
 Questa opzione può causare bug di visualizzazione. Se si dovessero verificare
 tali problemi, è necessario disabilitare questa opzione.
 
-Una soluzione alternativa è usare uno script: http://weechat.org/scripts/stable/tag/url
+Una soluzione alternativa è usare uno script:
+
+----
+/script search url
+----
 
 [[change_locale_without_quit]]
 === Voglio cambiare la lingua utilizzata da WeeChat per i messaggi, ma senza uscire da WeeChat, è possibile?
@@ -640,7 +644,11 @@ Per 'launcher.pl', bisogna impostare il comando:
 /set plugins.var.perl.launcher.signal.weechat_highlight "/path/del/comando argomenti"
 ----
 
-Altri script correlati: http://weechat.org/scripts/stable/tag/notify/
+Altri script correlati:
+
+----
+/script search notify
+----
 
 [[irc_target_buffer]]
 === Come si può modificare il buffer destinazione per i comandi sui buffer uniti (come i buffer con i server)?

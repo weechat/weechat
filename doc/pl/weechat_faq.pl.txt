@@ -254,7 +254,11 @@ zaznaczania urli):
 Ta opcja może spowodować pojawienie się błędów. Jeśli doświadczysz takich problemów
 wyłącz tą opcję.
 
-Innym rozwiązaniem jest użycie skryptu: http://weechat.org/scripts/stable/tag/url
+Innym rozwiązaniem jest użycie skryptu:
+
+----
+/script search url
+----
 
 [[change_locale_without_quit]]
 === Chcę zmienić język komunikatów wyświetlanych przez WeeChat, ale bez jego zamykania, czy jest to możliwe?
@@ -621,7 +625,11 @@ Dla 'launcher.pl', należ przeprowadzić konfigurację:
 /set plugins.var.perl.launcher.signal.weechat_highlight "/ścieżka/do/komendy argumenty"
 ----
 
-Inne podobne skrypty: http://weechat.org/scripts/stable/tag/notify/
+Inne podobne skrypty:
+
+----
+/script search notify
+----
 
 [[irc_target_buffer]]
 === Jak mogę zmienić docelowy bufor dla komendy w połączonym buforze (jak bufor z serwerami)?
