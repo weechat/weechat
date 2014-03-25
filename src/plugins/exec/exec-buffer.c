@@ -147,6 +147,7 @@ exec_buffer_new (const char *name, int free_content, int clear_buffer,
 
     if (free_content)
         weechat_buffer_set (new_buffer, "type", "free");
+    weechat_buffer_set (new_buffer, "clear", "1");
     weechat_buffer_set (new_buffer, "title", _("Executed commands"));
     weechat_buffer_set (new_buffer, "localvar_set_type", "exec");
     weechat_buffer_set (new_buffer, "localvar_set_no_log", "1");
