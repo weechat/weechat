@@ -10259,7 +10259,12 @@ int weechat_buffer_get_integer (struct t_gui_buffer *buffer,
 ** 'active': バッファがマージされて選択されている場合は 2、バッファが選択されている場合は
    1、バッファがマージされ選択されていない場合は 0
 ** 'print_hooks_enabled': プリントフックが有効化されている場合は 1、そうでない場合は 0
+// TRANSLATION MISSING
 ** 'day_change': 日付変更メッセージを表示する場合は 1、そうでない場合は 0
+   _(WeeChat ≥ 0.4.3)_
+// TRANSLATION MISSING
+** 'clear': 1 if buffer can be cleared with command `/buffer clear`, otherwise 0
+   _(WeeChat ≥ 0.4.4)_
 ** 'lines_hidden': バッファに非表示 (フィルタされた) メッセージが 1
    行以上含まれる場合は 1、すべてのメッセージが表示冴えている場合は 0
 ** 'prefix_max_length': バッファプレフィックスの最大長
@@ -10466,9 +10471,11 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
 | short_name | 任意の文字列 |
   指定したバッファの新しい短縮名を設定
 
+// TRANSLATION MISSING
 | type | "formatted" または "free" |
   バッファのタイプを設定: "formatted" (チャットメッセージ用)、または
-  "free" (自由内容用)
+  "free" (自由内容用); when the value is "free", the property 'clear' is forced
+  to "0" _(WeeChat ≥ 0.4.4)_
 
 | notify | "0", "1", "2", "3" |
   バッファの通知レベルを設定: "0" = ホットリストに追加しない、"1" =
@@ -10478,9 +10485,19 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
 | print_hooks_enabled | "0" or "1" |
   プリントフックを無効化する場合は "0"、有効化する場合は "1" (新規バッファに対するデフォルト)
 
-| day_change | "0" または "1" |
+// TRANSLATION MISSING
+| day_change +
+  _(WeeChat ≥ 0.4.3)_ | "0" または "1" |
   日付変更メッセージを隠す場合は "0"、表示する場合は
   "1" (新規バッファに対するデフォルト)
+
+// TRANSLATION MISSING
+| clear +
+  _(WeeChat ≥ 0.4.4)_ | "0" or "1" |
+  "0" to prevent user from clearing buffer with the command `/buffer clear`,
+  "1" to let user clear the buffer (default for a new buffer)
+   (note: even when it is set to "0", the buffer can still be cleared with
+   the function <<_weechat_buffer_clear,weechat_buffer_clear>>)
 
 | title | 任意の文字列 |
   指定したバッファの新しいタイトルを設定

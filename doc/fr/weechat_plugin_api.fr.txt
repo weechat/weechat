@@ -10464,6 +10464,9 @@ Paramètres :
    actif, 0 si le tampon est mélangé et n'est pas sélectionné
 ** 'print_hooks_enabled' : 1 si les hooks "print" sont activés, sinon 0
 ** 'day_change' : 1 si les messages de changement de jour sont affichés, sinon 0
+   _(WeeChat ≥ 0.4.3)_
+** 'clear' : 1 si le tampon peut être effacé avec la commande `/buffer clear`,
+   sinon 0 _(WeeChat ≥ 0.4.4)_
 ** 'lines_hidden' : 1 si au moins une ligne est cachée dans le tampon
    (filtrée), ou 0 si toutes les lignes sont affichées
 ** 'prefix_max_length' : longueur maximale du préfixe dans ce tampon
@@ -10679,7 +10682,8 @@ Propriétés :
 
 | type | "formatted" ou "free" |
   Définit le type de tampon : "formatted" (pour afficher les messages d'une
-  discussion), ou "free" (pour du contenu libre)
+  discussion), ou "free" (pour du contenu libre); lorsque la valeur est "free",
+  la propriété 'clear' est forcée à "0" _(WeeChat ≥ 0.4.4)_
 
 | notify | "0", "1", "2", "3" |
   Définit le niveau de notification du tampon : "0" = ne jamais ajouter à la
@@ -10690,9 +10694,18 @@ Propriétés :
   "0" pour désactiver les hooks "print", "1" pour les activer
   (par défaut pour un nouveau tampon)
 
-| day_change | "0" ou "1" |
+| day_change +
+  _(WeeChat ≥ 0.4.3)_ | "0" ou "1" |
   "0" pour cacher les messages de changement de jour, "1" pour les voir
   (par défaut pour un nouveau tampon)
+
+| clear +
+  _(WeeChat ≥ 0.4.4)_ | "0" ou "1" |
+  "0" pour empêcher l'utilisateur d'effacer le tampon avec la commande
+  `/buffer clear`, "1" pour autoriser l'utilisateur à effacer le tampon (par
+   défaut pour un nouveau tampon) (note : même lorsque la valeur est "0", le
+   tampon peut toujours être effacé avec la fonction
+   <<_weechat_buffer_clear,weechat_buffer_clear>>)
 
 | title | toute chaîne |
   Change le titre du tampon

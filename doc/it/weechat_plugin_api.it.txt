@@ -10530,6 +10530,10 @@ Argomenti:
    altrimenti 0
 // TRANSLATION MISSING
 ** 'day_change': 1 if messages for the day change are displayed, otherwise 0
+   _(WeeChat ≥ 0.4.3)_
+// TRANSLATION MISSING
+** 'clear': 1 if buffer can be cleared with command `/buffer clear`, otherwise 0
+   _(WeeChat ≥ 0.4.4)_
 ** 'lines_hidden': 1 se almeno una riga è nascosta sul buffer (filtrata),
    oppure 0 se vengono visualizzate tutte le righe
 ** 'prefix_max_length': lunghezza massima del prefisso in questo buffer
@@ -10750,9 +10754,11 @@ Properties:
 | short_name | qualsiasi stringa |
   Imposta nuovo nome breve per il buffer
 
+// TRANSLATION MISSING
 | type | "formatted" oppure "free" |
   Imposta tipo per il: "formatted" (per stampare i messaggi di chat),
-  oppure "free" (per contenuto libero)
+  oppure "free" (per contenuto libero); when the value is "free", the property
+  'clear' is forced to "0" _(WeeChat ≥ 0.4.4)_
 
 | notify | "0", "1", "2", "3" |
   Imposta il livello di notifica per il buffer: "0" = non aggiungere alla hotlist,
@@ -10764,9 +10770,18 @@ Properties:
   "0" to disable print hooks, "1" to enable them (default for a new buffer)
 
 // TRANSLATION MISSING
-| day_change | "0" oppure "1" |
+| day_change +
+  _(WeeChat ≥ 0.4.3)_ | "0" oppure "1" |
   "0" to hide messages for the day change, "1" to see them
   (default for a new buffer)
+
+// TRANSLATION MISSING
+| clear +
+  _(WeeChat ≥ 0.4.4)_ | "0" or "1" |
+  "0" to prevent user from clearing buffer with the command `/buffer clear`,
+  "1" to let user clear the buffer (default for a new buffer)
+   (note: even when it is set to "0", the buffer can still be cleared with
+   the function <<_weechat_buffer_clear,weechat_buffer_clear>>)
 
 | title | qualsiasi stringa |
   Imposta nuovo titolo per il buffer

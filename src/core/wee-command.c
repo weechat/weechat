@@ -598,7 +598,7 @@ COMMAND_CALLBACK(buffer)
                              ptr_buffer2 = ptr_buffer2->next_buffer)
                         {
                             if ((ptr_buffer2->number == ptr_buffer->number)
-                                && (ptr_buffer2->type == GUI_BUFFER_TYPE_FORMATTED))
+                                && ptr_buffer2->clear)
                             {
                                 gui_buffer_clear (ptr_buffer2);
                             }
@@ -609,7 +609,7 @@ COMMAND_CALLBACK(buffer)
         }
         else
         {
-            if (buffer->type == GUI_BUFFER_TYPE_FORMATTED)
+            if (buffer->clear)
                 gui_buffer_clear (buffer);
         }
 

@@ -10268,6 +10268,9 @@ Arguments:
    0 if buffer is merged and not selected
 ** 'print_hooks_enabled': 1 if print hooks are enabled, otherwise 0
 ** 'day_change': 1 if messages for the day change are displayed, otherwise 0
+   _(WeeChat ≥ 0.4.3)_
+** 'clear': 1 if buffer can be cleared with command `/buffer clear`, otherwise 0
+   _(WeeChat ≥ 0.4.4)_
 ** 'lines_hidden': 1 if at least one line is hidden on buffer (filtered), or 0
    if all lines are displayed
 ** 'prefix_max_length': max length for prefix in this buffer
@@ -10476,7 +10479,8 @@ Properties:
 
 | type | "formatted" or "free" |
   Set type for buffer: "formatted" (for printing chat messages), or "free" (for
-  free content)
+  free content); when the value is "free", the property 'clear' is forced to "0"
+  _(WeeChat ≥ 0.4.4)_
 
 | notify | "0", "1", "2", "3" |
   Set notify level for buffer: "0" = never add to hotlist, "1" = add for
@@ -10486,9 +10490,17 @@ Properties:
 | print_hooks_enabled | "0" or "1" |
   "0" to disable print hooks, "1" to enable them (default for a new buffer)
 
-| day_change | "0" or "1" |
+| day_change +
+  _(WeeChat ≥ 0.4.3)_ | "0" or "1" |
   "0" to hide messages for the day change, "1" to see them
   (default for a new buffer)
+
+| clear +
+  _(WeeChat ≥ 0.4.4)_ | "0" or "1" |
+  "0" to prevent user from clearing buffer with the command `/buffer clear`,
+  "1" to let user clear the buffer (default for a new buffer)
+   (note: even when it is set to "0", the buffer can still be cleared with
+   the function <<_weechat_buffer_clear,weechat_buffer_clear>>)
 
 | title | any string |
   Set new title for buffer

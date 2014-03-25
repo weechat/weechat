@@ -98,6 +98,8 @@ struct t_gui_buffer
                                        /* 2 = the only active (merged)      */
     int print_hooks_enabled;           /* 1 if print hooks are enabled      */
     int day_change;                    /* 1 if "day change" displayed       */
+    int clear;                         /* 1 if clear of buffer is allowed   */
+                                       /* with command /buffer clear        */
 
     /* close callback */
     int (*close_callback)(void *data,  /* called when buffer is closed      */
