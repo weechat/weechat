@@ -35,12 +35,8 @@ More info on this page: http://weechat.org/about/features
 [[gui]]
 === I heard about many GUIs for WeeChat. How can I compile/use them?
 
-Some remote GUIs are available:
-
-* http://weechat.org/download/devel[QWeeChat] (Qt)
-* https://github.com/ubergeek42/weechat-android[weechat-android] (Android)
-* https://github.com/the-kenny/weechat.el[weechat.el] (Emacs)
-* https://github.com/eirikb/weecloud[weecloud] (Web)
+Some remote GUIs are available, see the links on features page:
+http://weechat.org/about/features
 
 [[compile_git]]
 === I can't compile WeeChat after cloning git repository, why?
