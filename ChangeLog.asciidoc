@@ -15,6 +15,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 0.4.4 (under dev)
 
+* core: add buffer property "clear"
 * core: fix add of filter on OS X when regex for message is empty (filter regex
   ending with "\t")
 * core: check validity of buffer pointer when data is sent to a buffer
