@@ -58,8 +58,9 @@ autotools を使って (cmake を使わずに) コンパイルする場合、
 ヘルプを見るには、`/help` と入力してください。コマンドに関するヘルプを見るには、`/help command` と入力してください。
 キーとコマンドはドキュメント内にリストアップされています。
 
-新しいユーザはクイックスタートガイドを読むことをお勧めします
-(ウェブサイトのドキュメントページを参照)。
+// TRANSLATION MISSING
+It's recommended for new users to read the quickstart guide:
+http://weechat.org/doc
 
 [[display]]
 == 表示

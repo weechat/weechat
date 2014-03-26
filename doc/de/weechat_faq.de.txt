@@ -64,8 +64,8 @@ Befehle sowie die Belegung der jeweiligen Tasten sind in der Dokumentation
 aufgeführt. (Tipp: Mit den Tasten <Bild-hoch>/<Bild-runter> kann man seitenweise
 in den Buffern blättern)
 
-Neue Benutzer sollten unbedingt die 'quickstart'-Anleitung lesen (siehe
-Dokumentation auf der Internetseite).
+Neue Benutzer sollten unbedingt die 'quickstart'-Anleitung lesen:
+http://weechat.org/doc
 
 [[display]]
 == Anzeige

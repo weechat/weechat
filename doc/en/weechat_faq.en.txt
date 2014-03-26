@@ -57,8 +57,8 @@ than git cloning for installing updates.
 For help you can type `/help`. For help about a command, type `/help command`.
 Keys and commands are listed in documentation.
 
-It's recommended for new users to read the quickstart guide (see the doc page
-on the website).
+It's recommended for new users to read the quickstart guide:
+http://weechat.org/doc
 
 [[display]]
 == Display

@@ -58,8 +58,8 @@ przy aktualizowaniu jak klonowanie z gita.
 Dla pomocy wpisz `/help`. Aby uzyskać pomoc dla komendy wpisz `/help komenda`.
 Klawisze i komendy są wypisane w dokumentacji.
 
-Nowym użytkownikom zaleca się przeczytanie quickstart (szybki start)
-(zobacz stronę z dokumentacją na stronie www).
+Nowym użytkownikom zaleca się przeczytanie quickstart (szybki start):
+http://weechat.org/doc
 
 [[display]]
 == Wyświetlanie

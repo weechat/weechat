@@ -60,8 +60,7 @@ per l'installazione degli aggiornamenti.
 Per l'aiuto digitare `/help`. Per l'aiuto su un comando, digitare `/help comando`.
 Tasti e comandi sono elencati nella documentazione.
 
-Si raccomanda ai nuovi utenti di leggere la guida rapida (consultare la pagina
-della documentazione sul sito).
+Si raccomanda ai nuovi utenti di leggere la guida rapida: http://weechat.org/doc
 
 [[display]]
 == Visualizzare

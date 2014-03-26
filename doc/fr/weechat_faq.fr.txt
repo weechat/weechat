@@ -59,7 +59,7 @@ Pour obtenir de l'aide tapez `/help`. Pour de l'aide sur une commande, tapez
 `/help commande`. Les touches et commandes sont listées dans la documentation.
 
 Il est recommandé pour les nouveaux utilisateurs de lire le guide de démarrage
-rapide (voir la page de doc sur le site).
+rapide : http://weechat.org/doc
 
 [[display]]
 == Affichage
