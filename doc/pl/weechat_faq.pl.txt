@@ -655,19 +655,15 @@ Musisz ustawić:
 /plugin autoload
 ----
 
-[[load_scripts]]
-=== Jak załadować skrypty Perl/Python/Ruby/Lua/Tcl? Czy skrypty są kompatybilne z innymi klientami IRC?
+// TRANSLATION MISSING
+[[install_scripts]]
+=== How can I install scripts? Are scripts compatible with other IRC clients?
 
-Możesz użyć komend `/perl`, `/python`, `/ruby`, `/lua` oraz `/tcl`, aby załadować
-skrypt (domyślna lokalizacja skryptów to '~/.weechat/<język>/').
+// TRANSLATION MISSING
+You can use the command `/script` to install and manage scripts
+(see `/help script` for help).
 
 Skrypty nie są kompatybilne z innymi klientami IRC.
-
-Uwagi:
-
-* skrypty w '~/.weechat/<język>/autoload/' są automatycznie ładowane przy
-  uruchomieniu WeeChat.
-* wtyczka 'tcl' jest dostępna dla wersji ≥ 0.3.0.
 
 [[settings]]
 == Ustawienia

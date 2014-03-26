@@ -650,19 +650,15 @@ OpenBSD では、プラグインファイル名の末尾が ".so.0.0" です (Li
 /plugin autoload
 ----
 
-[[load_scripts]]
-=== どうすれば Perl/Python/Ruby/Lua/Tcl スクリプトをロードできますか。スクリプトは他の IRC クライアントのものと互換性がありますか。
+// TRANSLATION MISSING
+[[install_scripts]]
+=== How can I install scripts? Are scripts compatible with other IRC clients?
 
-`/perl` 、`/python` 、`/ruby` 、`/lua` 、`/tcl` コマンドを使ってスクリプトをロードしてください
-(スクリプトのデフォルトパスは '~/.weechat/<language>/' )。
+// TRANSLATION MISSING
+You can use the command `/script` to install and manage scripts
+(see `/help script` for help).
 
 スクリプトは他の IRC クライアントのものと互換性がありません。
-
-注意:
-
-* '~/.weechat/<language>/autoload/' の中にあるスクリプトは
-  WeeChat の起動時に自動的にロードされます。
-* 'tcl' プラグインはバージョン 0.3.0 以上で利用できます。
 
 [[settings]]
 == 設定

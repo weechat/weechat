@@ -687,20 +687,15 @@ Um dies zu beheben muss folgendes konfiguriert werden:
 /plugin autoload
 ----
 
-[[load_scripts]]
-=== Wie kann ich Perl/Python/Ruby/Lua/Tcl Skripten laden und sind Skripten von anderen IRC-Clients kompatibel?
+// TRANSLATION MISSING
+[[install_scripts]]
+=== How can I install scripts? Are scripts compatible with other IRC clients?
+
+// TRANSLATION MISSING
+You can use the command `/script` to install and manage scripts
+(see `/help script` for help).
 
 Die Skripten für WeeChat sind mit anderer IRC-Clients nicht kompatibel und vice versa.
-
-Um Skripten zu laden nutze den Befehl für die jeweilige Skriptsprache:
-`/perl`, `/python`, `/ruby`, `/lua` und `/tcl`
-
-Anmerkung:
-
-* Voreingestellter Pfad der Skripten: '~/.weechat/<Skriptsprache>/'
-* Skripten die sich im Verzeichnis '~/.weechat/<Skriptsprache>/autoload/' befinden werden
-  beim Start von WeeChat automatisch geladen.
-* Eine 'tcl' Erweiterung ist ab Version ≥ 0.3.0 verfügbar.
 
 [[settings]]
 == Einstellungen
