@@ -146,7 +146,11 @@ aucune fenêtre) ou affiché par une ou plusieurs fenêtres.
 [[buffers_list]]
 === Comment afficher la liste des tampons sur la gauche ?
 
-Utilisez le script 'buffers.pl'.
+Utilisez le script 'buffers.pl' :
+
+----
+/script install buffers.pl
+----
 
 Pour limiter la taille de la barre :
 

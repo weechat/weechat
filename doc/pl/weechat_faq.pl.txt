@@ -142,7 +142,11 @@ okno) lub wyświetlany w jednym lub więcej oknach.
 [[buffers_list]]
 === Jak wyświetlić listę z buforami po lewej stronie?
 
-Użyj skryptu 'buffers.pl'.
+Użyj skryptu 'buffers.pl':
+
+----
+/script install buffers.pl
+----
 
 W celu ograniczenia rozmiaru paska:
 

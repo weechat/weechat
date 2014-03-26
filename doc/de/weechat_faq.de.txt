@@ -150,7 +150,11 @@ angezeigt.
 [[buffers_list]]
 === Wie kann ich eine Liste mit den Buffern z.B. auf der linken Seite anzeigen lassen?
 
-Nutze dazu das Skript 'buffers.pl'.
+Nutze dazu das Skript 'buffers.pl':
+
+----
+/script install buffers.pl
+----
 
 Um die Größe der Bar zu limitieren:
 

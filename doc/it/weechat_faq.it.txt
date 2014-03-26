@@ -147,7 +147,11 @@ da una finestra) o visualizzato da una o più finestre.
 [[buffers_list]]
 === Come si può visualizzare la lista dei buffer sulla sinistra?
 
-Utilizzando lo script 'buffers.pl'.
+Utilizzando lo script 'buffers.pl':
+
+----
+/script install buffers.pl
+----
 
 Per limitare la dimensione della barra:
 

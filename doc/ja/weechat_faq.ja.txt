@@ -142,7 +142,12 @@ WeeChat をインストールすることをお勧めします。
 [[buffers_list]]
 === どうすれば左側にバッファリストを表示できますか。
 
-'buffers.pl' スクリプトを使ってください。
+// TRANSLATION MISSING
+Use script 'buffers.pl':
+
+----
+/script install buffers.pl
+----
 
 バーのサイズを制限するには:
 

@@ -140,7 +140,11 @@ window) or displayed by one or more windows.
 [[buffers_list]]
 === How to display the buffers list on the left side?
 
-Use script 'buffers.pl'.
+Use script 'buffers.pl':
+
+----
+/script install buffers.pl
+----
 
 To limit size of bar:
 
