@@ -59,7 +59,6 @@ struct t_gui_key
     char *area_name[2];             /* name of areas (for cursor/mouse)     */
     char *area_key;                 /* key after area (after ":")           */
     char *command;                  /* associated command                   */
-    char **commands;                /* command split on ';'                 */
     int score;                      /* score, for sorting keys              */
     struct t_gui_key *prev_key;     /* link to previous key                 */
     struct t_gui_key *next_key;     /* link to next key                     */
