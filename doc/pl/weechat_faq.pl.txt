@@ -323,6 +323,31 @@ Poruszanie się między podświetleniami: key[alt-p] / key[alt-n].
 
 Po więcej informacji zajrzyj do poradnika użytkownika (domyślne skróty klawiszowe).
 
+// TRANSLATION MISSING
+[[terminal_focus]]
+=== How can I execute commands when terminal gets/loses focus?
+
+You must enable the focus events with a special code sent to terminal.
+
+*Important*:
+
+* Currently, *only* 'xterm' seems to support this feature.
+* It does *not* work under screen/tmux.
+
+To send the code when WeeChat is starting:
+
+----
+/set weechat.startup.command_after_plugins "/print -stdout \033[?1004h\n"
+----
+
+And then you bind two keys for the focus (replace the `/print` commands by the
+commands of your choice):
+
+----
+/key bind meta2-I /print -core focus
+/key bind meta2-O /print -core unfocus
+----
+
 [[key_bindings]]
 == Przypisania klawiszy
 
