@@ -34,7 +34,6 @@ Plus d'infos sur cette page : http://weechat.org/about/features
 [[gui]]
 === J'ai entendu parler de plusieurs interfaces pour WeeChat. Comment puis-je les compiler/utiliser ?
 
-// TRANSLATION MISSING
 Des interfaces distantes sont disponibles, voir les liens sur la page des
 fonctionnalités : http://weechat.org/about/features
 
@@ -702,11 +701,9 @@ Vous devez configurer ça :
 /plugin autoload
 ----
 
-// TRANSLATION MISSING
 [[install_scripts]]
 === Comment puis-je installer des scripts ? Les scripts sont-ils compatibles avec d'autres clients IRC ?
 
-// TRANSLATION MISSING
 Vous pouvez utiliser la commande `/script` pour installer et gérer les scripts
 (voir `/help script` pour de l'aide).
 
