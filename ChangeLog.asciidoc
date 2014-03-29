@@ -15,6 +15,9 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 0.4.4 (under dev)
 
+* core: fix alignment of lines in merged buffers when options
+  weechat.look.prefix_align and weechat.look.prefix_buffer_align are set to
+  "none" (closes #43)
 * core: quit WeeChat on signal SIGHUP, remove signal "signal_sighup"
 * core: add text search in buffers with free content (task #13051)
 * core: add buffer property "clear"
