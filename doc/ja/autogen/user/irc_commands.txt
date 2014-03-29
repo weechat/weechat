@@ -74,10 +74,10 @@ arguments: コマンドの引数 (特殊変数 $nick、$channel、$server はそ
 ----
 /ban  [<channel>] [<nick> [<nick>...]]
 
-channel: channel name
-   nick: nick or host
+channel: チャンネル名
+   nick: ニックネームまたはホスト名
 
-Without argument, this command display ban list for current channel.
+引数無しの場合は、現在のチャンネルのバンリストを表示。
 ----
 
 [[command_irc_connect]]
@@ -117,9 +117,9 @@ Without argument, this command display ban list for current channel.
 ----
 /ctcp  <target> <type> [<arguments>]
 
- target: nick or channel name to send CTCP to
-   type: CTCP type (examples: "version", "ping", ..)
-arguments: arguments for CTCP
+ target: CTCP を送信するニックネーム又はチャンネル
+   type: CTCP タイプ (例: "version"、"ping"、..)
+arguments: CTCP の引数
 ----
 
 [[command_irc_cycle]]
@@ -128,8 +128,8 @@ arguments: arguments for CTCP
 ----
 /cycle  [<channel>[,<channel>...]] [<message>]
 
-channel: channel name
-message: part message (displayed to other users)
+channel: チャンネル名
+message: 退出メッセージ (他のユーザに宛てる)
 ----
 
 [[command_irc_dcc]]
@@ -139,13 +139,13 @@ message: part message (displayed to other users)
 /dcc  chat <nick>
       send <nick> <file>
 
-nick: nick
-file: filename (on local host)
+nick: ニックネーム
+file: ファイルネーム (ローカルホスト上の)
 
-Examples:
-  chat with nick "toto":
+例:
+  "toto" とチャット:
     /dcc chat toto
-  send file "/home/foo/bar.txt" to nick "toto":
+  ファイル "/home/foo/bar.txt" を ニックネーム "toto" に送信:
     /dcc send toto /home/foo/bar.txt
 ----
 
@@ -196,10 +196,10 @@ target: サーバ名
 ----
 /disconnect  [<server>|-all|-pending [<reason>]]
 
-  server: internal server name
-    -all: disconnect from all servers
--pending: cancel auto-reconnection on servers currently reconnecting
-  reason: reason for the "quit"
+  server: 内部サーバ名
+    -all: 全てのサーバとの接続を切る
+-pending: 現在再接続試行中のサーバに対する自動再接続を止める
+  reason: "quit" の理由
 ----
 
 [[command_irc_halfop]]
@@ -293,9 +293,9 @@ nick: nick
 ----
 /kick  [<channel>] <nick> [<reason>]
 
-channel: channel name
-   nick: nick
- reason: reason (special variables $nick, $channel and $server are replaced by their value)
+channel: チャンネル名
+   nick: ニックネーム
+ reason: 理由 (特殊変数 $nick、$channel、$server はそれぞれの値に置換されます)
 ----
 
 [[command_irc_kickban]]
@@ -304,14 +304,14 @@ channel: channel name
 ----
 /kickban  [<channel>] <nick> [<reason>]
 
-channel: channel name
-   nick: nick
- reason: reason (special variables $nick, $channel and $server are replaced by their value)
+channel: チャンネル名
+   nick: ニックネーム
+ reason: 理由 (特殊変数 $nick、$channel、$server はそれぞれの値に置換されます)
 
-It is possible to kick/ban with a mask, nick will be extracted from mask and replaced by "*".
+キックと参加禁止にマスクを使うことが可能で、"*" のマスク展開後にマッチするニックネームがこれらの対象になります。
 
-Example:
-  ban "*!*@host.com" and then kick "toto":
+例:
+  "*!*@host.com" を参加禁止して "toto" をキック:
     /kickban toto!*@host.com
 ----
 
@@ -461,9 +461,9 @@ nick: 新しいニックネーム
 ----
 /notice  [-server <server>] <target> <text>
 
-server: send to this server (internal name)
-target: nick or channel name
-  text: text to send
+server: このサーバに送信 (内部サーバ名)
+target: ニックネーム又はチャンネル名
+  text: 送信するテキスト
 ----
 
 [[command_irc_notify]]
@@ -548,9 +548,9 @@ daemon2: メッセージをデーモンに転送
 ----
 /query  [-server <server>] <nick>[,<nick>...] [<text>]
 
-server: send to this server (internal name)
-  nick: nick
-  text: text to send
+server: このサーバに送信 (内部サーバ名)
+target: ニックネーム
+  text: 送信するテキスト
 ----
 
 [[command_irc_quiet]]
@@ -559,10 +559,10 @@ server: send to this server (internal name)
 ----
 /quiet  [<channel>] [<nick> [<nick>...]]
 
-channel: channel name
-   nick: nick or host
+channel: チャンネル名
+   nick: ニックネーム又はホスト名
 
-Without argument, this command display quiet list for current channel.
+引数無しの場合は、現在のチャンネルの発言禁止リストを表示。
 ----
 
 [[command_irc_quote]]
@@ -582,10 +582,10 @@ server: 送信先サーバ (内部サーバ名)
 /reconnect  <server> [<server>...] [-nojoin] [-switch]
             -all [-nojoin] [-switch]
 
- server: server to reconnect (internal name)
-   -all: reconnect to all servers
--nojoin: do not join any channel (even if autojoin is enabled on server)
--switch: switch to next server address
+ server: 再接続するサーバ (内部名)
+   -all: 全てのサーバに再接続
+-nojoin: チャンネルに参加しない (autojoin がサーバで有効化されていても)
+-switch: 次のサーバアドレスに移動
 ----
 
 [[command_irc_rehash]]
@@ -730,8 +730,8 @@ service: サービス名
 ----
 /squit  <server> <comment>
 
- server: server name
-comment: comment
+ server: サーバ名
+comment: コメント
 ----
 
 [[command_irc_stats]]
@@ -770,9 +770,9 @@ target: 時間を要求するサーバを指定
 ----
 /topic  [<channel>] [<topic>|-delete]
 
-channel: channel name
-  topic: new topic
--delete: delete channel topic
+channel: チャンネル名
+  topic: 新しいトピック
+-delete: チャンネルトピックを削除
 ----
 
 [[command_irc_trace]]
@@ -790,18 +790,18 @@ target: サーバ名
 ----
 /unban  [<channel>] <nick> [<nick>...]
 
-channel: channel name
-   nick: nick or host
+channel: チャンネル名
+   nick: ニックネーム又はホスト名
 ----
 
 [[command_irc_unquiet]]
-[command]*`unquiet`* unquiet nicks or hosts::
+[command]*`unquiet`* ニックネーム又はホスト名に対する発言禁止を解除::
 
 ----
 /unquiet  [<channel>] <nick> [<nick>...]
 
-channel: channel name
-   nick: nick or host
+channel: チャンネル名
+   nick: ニックネーム又はホスト名
 ----
 
 [[command_irc_userhost]]
@@ -893,8 +893,8 @@ server: サーバ名
 ----
 /whowas  <nick>[,<nick>...] [<count> [<target>]]
 
-  nick: nick
- count: number of replies to return (full search if negative number)
-target: reply should match this mask
+  nick: ニックネーム
+ count: リプライの個数 (負の値で完全な検索)
+target: マスクに一致するものだけを返す
 ----
 
