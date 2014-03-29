@@ -8344,12 +8344,6 @@ List of signals sent by WeeChat and plugins:
   Comando `/quit` digitato dall'utente
 
 // TRANSLATION MISSING
-| weechat | signal_sighup +
-  _(WeeChat ≥ 0.4.3)_ |
-  - |
-  Signal SIGHUP received (WeeChat will reload the configuration files)
-
-// TRANSLATION MISSING
 | weechat | signal_sigwinch +
   _(WeeChat ≥ 0.4.3)_ |
   - |

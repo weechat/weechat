@@ -60,7 +60,6 @@
 #include "gui-curses.h"
 
 
-int gui_reload_config = 0;             /* 1 if config must be reloaded      */
 int gui_signal_sigwinch_received = 0;  /* sigwinch signal (term resized)    */
 int gui_term_cols = 0;                 /* number of columns in terminal     */
 int gui_term_lines = 0;                /* number of lines in terminal       */
@@ -274,21 +273,16 @@ gui_main_signal_sigterm ()
 }
 
 /*
- * Callback for system signal SIGHUP: reloads WeeChat configuration.
+ * Callback for system signal SIGHUP: quits WeeChat.
  */
 
 void
 gui_main_signal_sighup ()
 {
-    /*
-     * SIGHUP signal is received when terminal is closed (exit of WeeChat
-     * without using /quit command), that's why we set only flag to reload
-     * configuration files later (when terminal is closed, config files are NOT
-     * reloaded, but they are if signal SIGHUP is sent to WeeChat by user)
-     */
-    gui_reload_config = 1;
-
-    (void) hook_signal_send ("signal_sighup", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+    log_printf (_("Signal %s received, exiting WeeChat..."),
+                "SIGHUP");
+    (void) hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+    weechat_quit = 1;
 }
 
 /*
@@ -438,11 +432,9 @@ gui_main_loop ()
     int max_fd;
     int ready;
 
-    /* catch SIGTERM signal: quit program */
+    /* catch SIGTERM/SIGQUIT/SIGHUP signals: quit program */
     util_catch_signal (SIGTERM, &gui_main_signal_sigterm);
     util_catch_signal (SIGQUIT, &gui_main_signal_sigquit);
-
-    /* catch SIGHUP signal: reload configuration */
     util_catch_signal (SIGHUP, &gui_main_signal_sighup);
 
     /* catch SIGWINCH signal: redraw screen */
@@ -456,15 +448,6 @@ gui_main_loop ()
 
     while (!weechat_quit)
     {
-        /* reload config, if SIGHUP received */
-        if (gui_reload_config)
-        {
-            gui_reload_config = 0;
-            log_printf (_("Signal SIGHUP received, reloading configuration "
-                          "files"));
-            command_reload (NULL, NULL, 0, NULL, NULL);
-        }
-
         /* execute hook timers */
         hook_timer_exec ();
 

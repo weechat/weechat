@@ -15,6 +15,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 0.4.4 (under dev)
 
+* core: quit WeeChat on signal SIGHUP, remove signal "signal_sighup"
 * core: add text search in buffers with free content (task #13051)
 * core: add buffer property "clear"
 * core: fix add of filter on OS X when regex for message is empty (filter regex
