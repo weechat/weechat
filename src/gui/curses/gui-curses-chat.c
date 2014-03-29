@@ -429,7 +429,8 @@ gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
                     if (gui_window_current_emphasis)
                     {
                         gui_window_emphasize (GUI_WINDOW_OBJECTS(window)->win_chat,
-                                              x, window->win_chat_cursor_y,
+                                              x - window->scroll->start_col,
+                                              window->win_chat_cursor_y,
                                               size_on_screen);
                     }
                 }
@@ -1550,6 +1551,8 @@ void
 gui_chat_display_line_y (struct t_gui_window *window, struct t_gui_line *line,
                          int y)
 {
+    char *ptr_data, *message_with_search;
+
     /* reset color & style for a new line */
     gui_chat_reset_style (window, line, 0, 1,
                           GUI_COLOR_CHAT_INACTIVE_WINDOW,
@@ -1558,16 +1561,37 @@ gui_chat_display_line_y (struct t_gui_window *window, struct t_gui_line *line,
 
     window->win_chat_cursor_x = 0;
     window->win_chat_cursor_y = y;
+    gui_window_current_emphasis = 0;
 
     gui_chat_clrtoeol (window);
 
-    if (gui_chat_display_word_raw (window, line, line->data->message,
+    /* emphasize text (if searching text) */
+    ptr_data = line->data->message;
+    message_with_search = NULL;
+    if ((window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
+        && (window->buffer->text_search_where & GUI_TEXT_SEARCH_IN_MESSAGE)
+        && (!window->buffer->text_search_regex
+            || window->buffer->text_search_regex_compiled))
+    {
+        message_with_search = gui_color_emphasize (ptr_data,
+                                                   window->buffer->input_buffer,
+                                                   window->buffer->text_search_exact,
+                                                   window->buffer->text_search_regex_compiled);
+        if (message_with_search)
+            ptr_data = message_with_search;
+    }
+
+    /* display the line */
+    if (gui_chat_display_word_raw (window, line, ptr_data,
                                    window->win_chat_width, 0,
                                    CONFIG_BOOLEAN(config_look_color_inactive_message),
                                    0) < window->win_chat_width)
     {
         gui_window_clrtoeol (GUI_WINDOW_OBJECTS(window)->win_chat);
     }
+
+    if (message_with_search)
+        free (message_with_search);
 }
 
 /*

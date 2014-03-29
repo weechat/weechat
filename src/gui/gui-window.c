@@ -1571,29 +1571,38 @@ gui_window_search_text (struct t_gui_window *window)
 void
 gui_window_search_start (struct t_gui_window *window)
 {
-    window->buffer->text_search = GUI_TEXT_SEARCH_BACKWARD;
+    window->buffer->text_search =
+        (window->buffer->type == GUI_BUFFER_TYPE_FORMATTED) ?
+        GUI_TEXT_SEARCH_BACKWARD : GUI_TEXT_SEARCH_FORWARD;
+
     if ((window->buffer->text_search_where == 0)
         ||  CONFIG_BOOLEAN(config_look_buffer_search_force_default))
     {
         /* set default search values */
         window->buffer->text_search_exact = CONFIG_BOOLEAN(config_look_buffer_search_case_sensitive);
         window->buffer->text_search_regex = CONFIG_BOOLEAN(config_look_buffer_search_regex);
-        switch (CONFIG_INTEGER(config_look_buffer_search_where))
+        if (window->buffer->type == GUI_BUFFER_TYPE_FORMATTED)
         {
-            case CONFIG_LOOK_BUFFER_SEARCH_PREFIX:
-                window->buffer->text_search_where = GUI_TEXT_SEARCH_IN_PREFIX;
-                break;
-            case CONFIG_LOOK_BUFFER_SEARCH_MESSAGE:
-                window->buffer->text_search_where = GUI_TEXT_SEARCH_IN_MESSAGE;
-                break;
-            case CONFIG_LOOK_BUFFER_SEARCH_PREFIX_MESSAGE:
-                window->buffer->text_search_where = GUI_TEXT_SEARCH_IN_PREFIX | GUI_TEXT_SEARCH_IN_MESSAGE;
-                break;
-            default:
-                window->buffer->text_search_where = GUI_TEXT_SEARCH_IN_MESSAGE;
-                break;
+            switch (CONFIG_INTEGER(config_look_buffer_search_where))
+            {
+                case CONFIG_LOOK_BUFFER_SEARCH_PREFIX:
+                    window->buffer->text_search_where = GUI_TEXT_SEARCH_IN_PREFIX;
+                    break;
+                case CONFIG_LOOK_BUFFER_SEARCH_MESSAGE:
+                    window->buffer->text_search_where = GUI_TEXT_SEARCH_IN_MESSAGE;
+                    break;
+                case CONFIG_LOOK_BUFFER_SEARCH_PREFIX_MESSAGE:
+                    window->buffer->text_search_where = GUI_TEXT_SEARCH_IN_PREFIX | GUI_TEXT_SEARCH_IN_MESSAGE;
+                    break;
+                default:
+                    window->buffer->text_search_where = GUI_TEXT_SEARCH_IN_MESSAGE;
+                    break;
+            }
         }
+        else
+            window->buffer->text_search_where = GUI_TEXT_SEARCH_IN_MESSAGE;
     }
+
     window->buffer->text_search_found = 0;
     gui_input_search_compile_regex (window->buffer);
     if (window->buffer->text_search_input)
@@ -1616,7 +1625,9 @@ gui_window_search_restart (struct t_gui_window *window)
 {
     window->scroll->start_line = NULL;
     window->scroll->start_line_pos = 0;
-    window->buffer->text_search = GUI_TEXT_SEARCH_BACKWARD;
+    window->buffer->text_search =
+        (window->buffer->type == GUI_BUFFER_TYPE_FORMATTED) ?
+        GUI_TEXT_SEARCH_BACKWARD : GUI_TEXT_SEARCH_FORWARD;
     window->buffer->text_search_found = 0;
     gui_input_search_compile_regex (window->buffer);
     if (gui_window_search_text (window))
