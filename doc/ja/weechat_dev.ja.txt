@@ -917,24 +917,22 @@ Git リポジトリはこの URL にあります: https://github.com/weechat/wee
 リクエストを使って提出することを推奨します。パッチは電子メールで送信することも可能です
 (`git diff` または `git format-patch` で作成してください)。
 
-// TRANSLATION MISSING
-Format of commit message is the following (to close a GitHub issue):
+コミットメッセージは以下のフォーマットに従ってください (GitHub の issue を閉じる場合):
 
 ----
 component: fix a problem (closes #123)
 ----
 
-For a Savannah bug:
+Savannah のバグを閉じる場合:
 
 ----
 component: fix a problem (bug #12345)
 ----
 
-ここで 'component' は以下の 1 つです:
+'component' には以下から 1 つ選んで記入してください:
 
-// TRANSLATION MISSING
-* WeeChat core: 'core' (files in root directory, 'po/' and 'src/',
-  except 'src/plugins/')
+* WeeChat コア: 'core' (ルートディレクトリ、'po/' ディレクトリ、 'src/'
+  ディレクトリに含まれるファイル、ただし 'src/plugins/' 内のファイルを除く)
 * 文書ファイル: 'doc' ('doc/' ディレクトリに含まれるファイル)
 * プラグインの名前: 'irc'、'python'、'relay'、... ('src/plugins/' ディレクトリに含まれるファイル)
 
@@ -942,9 +940,7 @@ component: fix a problem (bug #12345)
 
 * 英語を使ってください
 * 動詞の原形を使ってください
-// TRANSLATION MISSING
-* if commit is related to something in tracker, write it in parenthesis after
-  the message, with this format:
+* コミットの内容がトラッカーに関するものである場合には、コミットメッセージの後にカッコで括ってその旨記載してください、フォーマットは以下のようにしてください:
 ** GitHub: closes #123
 ** Savannah: bug #12345, task #12345, patch #12345
 
