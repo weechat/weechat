@@ -469,7 +469,7 @@
 ** wartości: 0 .. 1000000 (domyślna wartość: `25`)
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** opis: `oddzielona przecinkami lista opcji włączanych dla serwera, jeśli są dostępne; opcje wspierane przez WeeChat: multi-prefix, userhost-in-names (przykład: "multi-prefix,userhost-in-names")`
+** opis: `comma-separated list of client capabilities to enable for server if they are available; capabilities supported by WeeChat are: multi-prefix, userhost-in-names, away-notify (example: "multi-prefix,userhost-in-names,away-notify")`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 

@@ -971,6 +971,7 @@ irc_server_alloc (const char *name)
     new_server->nick_alternate_number = -1;
     new_server->nick = NULL;
     new_server->nick_modes = NULL;
+    new_server->cap_away_notify = 0;
     new_server->isupport = NULL;
     new_server->prefix_modes = NULL;
     new_server->prefix_chars = NULL;
@@ -2865,13 +2866,12 @@ irc_server_timer_cb (void *data, int remaining_calls)
             {
                 /* check away (only if lag check was not done) */
                 away_check = IRC_SERVER_OPTION_INTEGER(ptr_server, IRC_SERVER_OPTION_AWAY_CHECK);
-                if (away_check > 0)
+                if (!ptr_server->cap_away_notify
+                    && (away_check > 0)
+                    && ((ptr_server->last_away_check == 0)
+                        || (current_time >= ptr_server->last_away_check + (away_check * 60))))
                 {
-                    if ((ptr_server->last_away_check == 0)
-                        || (current_time >= ptr_server->last_away_check + (away_check * 60)))
-                    {
-                        irc_server_check_away (ptr_server);
-                    }
+                    irc_server_check_away (ptr_server);
                 }
             }
 
@@ -4295,6 +4295,7 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
         server->nick_modes = NULL;
         weechat_bar_item_update ("input_prompt");
     }
+    server->cap_away_notify = 0;
     server->is_away = 0;
     server->away_time = 0;
     server->lag = 0;
@@ -4820,6 +4821,7 @@ irc_server_hdata_server_cb (void *data, const char *hdata_name)
         WEECHAT_HDATA_VAR(struct t_irc_server, nick_alternate_number, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, nick, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, nick_modes, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, cap_away_notify, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, isupport, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, prefix_modes, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, prefix_chars, STRING, 0, NULL, NULL);
@@ -5027,6 +5029,8 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_string (ptr_item, "nick", server->nick))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "nick_modes", server->nick_modes))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "cap_away_notify", server->cap_away_notify))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "isupport", server->isupport))
         return 0;
@@ -5373,6 +5377,7 @@ irc_server_print_log ()
         weechat_log_printf ("  nick_alternate_number: %d",    ptr_server->nick_alternate_number);
         weechat_log_printf ("  nick . . . . . . . . : '%s'",  ptr_server->nick);
         weechat_log_printf ("  nick_modes . . . . . : '%s'",  ptr_server->nick_modes);
+        weechat_log_printf ("  cap_away_notify. . . : %d",    ptr_server->cap_away_notify);
         weechat_log_printf ("  isupport . . . . . . : '%s'",  ptr_server->isupport);
         weechat_log_printf ("  prefix_modes . . . . : '%s'",  ptr_server->prefix_modes);
         weechat_log_printf ("  prefix_chars . . . . : '%s'",  ptr_server->prefix_chars);

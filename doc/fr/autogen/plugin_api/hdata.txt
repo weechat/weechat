@@ -175,6 +175,7 @@
 *** 'nick_alternate_number' (integer)
 *** 'nick' (string)
 *** 'nick_modes' (string)
+*** 'cap_away_notify' (integer)
 *** 'isupport' (string)
 *** 'prefix_modes' (string)
 *** 'prefix_chars' (string)

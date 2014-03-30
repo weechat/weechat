@@ -211,6 +211,33 @@ IRC_PROTOCOL_CALLBACK(authenticate)
 }
 
 /*
+ * Callback for the IRC message "AWAY": away info about a nick (with capability
+ * "away-notify").
+ *
+ * Message looks like:
+ *   :nick!user@host AWAY
+ *   :nick!user@host AWAY :I am away
+ */
+
+IRC_PROTOCOL_CALLBACK(away)
+{
+    struct t_irc_channel *ptr_channel;
+    struct t_irc_nick *ptr_nick;
+
+    IRC_PROTOCOL_MIN_ARGS(2);
+
+    for (ptr_channel = server->channels; ptr_channel;
+         ptr_channel = ptr_channel->next_channel)
+    {
+        ptr_nick = irc_nick_search (server, ptr_channel, nick);
+        if (ptr_nick)
+            irc_nick_set_away (server, ptr_channel, ptr_nick, (argc > 2));
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback for the IRC message "CAP": client capability.
  *
  * Message looks like:
@@ -349,6 +376,10 @@ IRC_PROTOCOL_CALLBACK(cap)
                     {
                         sasl_to_do = 1;
                         break;
+                    }
+                    else if (strcmp (caps_supported[i], "away-notify") == 0)
+                    {
+                        server->cap_away_notify = 1;
                     }
                 }
                 weechat_string_free_split (caps_supported);
@@ -5076,6 +5107,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
     struct t_hashtable *hash_tags;
     struct t_irc_protocol_msg irc_protocol_messages[] =
         { { "authenticate", /* authenticate */ 1, 0, &irc_protocol_cb_authenticate },
+          { "away", /* away (cap away-notify) */ 1, 0, &irc_protocol_cb_away },
           { "cap", /* client capability */ 1, 0, &irc_protocol_cb_cap },
           { "error", /* error received from IRC server */ 1, 0, &irc_protocol_cb_error },
           { "invite", /* invite a nick on a channel */ 1, 0, &irc_protocol_cb_invite },
