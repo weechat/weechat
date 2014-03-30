@@ -475,7 +475,8 @@ gui_window_set_custom_color_bg (WINDOW *window, int bg)
  */
 
 void
-gui_window_set_custom_color_fg_bg (WINDOW *window, int fg, int bg)
+gui_window_set_custom_color_fg_bg (WINDOW *window, int fg, int bg,
+                                   int reset_attributes)
 {
     int attributes;
 
@@ -503,7 +504,7 @@ gui_window_set_custom_color_fg_bg (WINDOW *window, int fg, int bg)
         }
         else if ((fg & GUI_COLOR_EXTENDED_MASK) < GUI_CURSES_NUM_WEECHAT_COLORS)
         {
-            if (!(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
+            if (reset_attributes && !(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
                 gui_window_remove_color_style (window, A_ALL_ATTR);
             attributes = gui_color_get_extended_attrs (fg) |
                 gui_weechat_colors[fg & GUI_COLOR_EXTENDED_MASK].attributes;
@@ -844,7 +845,7 @@ gui_window_string_apply_color_fg_bg (unsigned char **string, WINDOW *window)
     }
     if (window && (fg >= 0) && (bg >= 0))
     {
-        gui_window_set_custom_color_fg_bg (window, fg, bg);
+        gui_window_set_custom_color_fg_bg (window, fg, bg, 1);
     }
 
     *string = ptr_string;
