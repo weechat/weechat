@@ -787,7 +787,7 @@ exec_command_init ()
            " || -del <id>|-all [<id>...]"),
         N_("   -list: list commands\n"
            "     -sh: use the shell to execute the command (WARNING: use this "
-           "option ONLY if all arguments are safe date, see option -nosh)\n"
+           "option ONLY if all arguments are safe, see option -nosh)\n"
            "   -nosh: do not use the shell to execute the command (required if "
            "the command has some unsafe data, for example the content of a "
             "message from another user) (default)\n"

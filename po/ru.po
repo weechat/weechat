@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-03-25 09:20+0100\n"
+"POT-Creation-Date: 2014-03-30 12:23+0200\n"
 "PO-Revision-Date: 2014-03-24 14:23+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3657,10 +3657,6 @@ msgid "Signal %s received, exiting WeeChat..."
 msgstr ""
 
 #, fuzzy
-msgid "Signal SIGHUP received, reloading configuration files"
-msgstr "%s не могу сохранить конфигурационный файл\n"
-
-#, fuzzy
 msgid "Mouse is enabled"
 msgstr "команда users отключена"
 
@@ -4258,7 +4254,7 @@ msgstr ""
 msgid ""
 "   -list: list commands\n"
 "     -sh: use the shell to execute the command (WARNING: use this option "
-"ONLY if all arguments are safe date, see option -nosh)\n"
+"ONLY if all arguments are safe, see option -nosh)\n"
 "   -nosh: do not use the shell to execute the command (required if the "
 "command has some unsafe data, for example the content of a message from "
 "another user) (default)\n"
@@ -10024,3 +10020,7 @@ msgstr "%s DCC: не могу установить неблокирующий р
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Signal SIGHUP received, reloading configuration files"
+#~ msgstr "%s не могу сохранить конфигурационный файл\n"
