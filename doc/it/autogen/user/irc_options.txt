@@ -354,9 +354,9 @@
 ** valori: 0 .. 604800 (valore predefinito: `600`)
 
 * [[option_irc.network.ban_mask_default]] *irc.network.ban_mask_default*
-** descrizione: `default ban mask for commands /ban, /unban and /kickban; variables $nick, $user and $host are replaced by their values (extracted from "nick!user@host"); this default mask is used only if WeeChat knows the host for the nick`
+** descrizione: `default ban mask for commands /ban, /unban and /kickban; variables $nick, $user, $ident and $host are replaced by their values (extracted from "nick!user@host"); $ident is the same as $user if $user does not start with "~", otherwise it is set to "*"; this default mask is used only if WeeChat knows the host for the nick`
 ** tipo: stringa
-** valori: qualsiasi stringa (valore predefinito: `"*!$user@$host"`)
+** valori: qualsiasi stringa (valore predefinito: `"*!$ident@$host"`)
 
 * [[option_irc.network.colors_receive]] *irc.network.colors_receive*
 ** descrizione: `se disabilitato, i codici colori vengono ignorati nei messaggi in entrata`

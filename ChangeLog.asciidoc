@@ -81,6 +81,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * alias: change default command for alias /beep to "/print -beep"
 * exec: add exec plugin: new command /exec and file exec.conf
 * guile: fix module used after unload of a script
+* irc: allow "$ident" in option irc.network.ban_mask_default (closes #18)
 * irc: add support of "away-notify" capability (closes #12)
 * irc: add command /unquiet (closes #36)
 * irc: add command /allpv (task #13111)

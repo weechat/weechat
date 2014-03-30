@@ -1056,7 +1056,7 @@ char *
 irc_nick_default_ban_mask (struct t_irc_nick *nick)
 {
     const char *ptr_ban_mask;
-    char *pos_hostname, user[128], *res, *temp;
+    char *pos_hostname, user[128], ident[128], *res, *temp;
 
     if (!nick)
         return NULL;
@@ -1073,6 +1073,7 @@ irc_nick_default_ban_mask (struct t_irc_nick *nick)
 
     strncpy (user, nick->host, pos_hostname - nick->host);
     user[pos_hostname - nick->host] = '\0';
+    strcpy (ident, (user[0] != '~') ? user : "*");
     pos_hostname++;
 
     /* replace nick */
@@ -1083,6 +1084,13 @@ irc_nick_default_ban_mask (struct t_irc_nick *nick)
 
     /* replace user */
     temp = weechat_string_replace (res, "$user", user);
+    free (res);
+    if (!temp)
+        return NULL;
+    res = temp;
+
+    /* replace ident */
+    temp = weechat_string_replace (res, "$ident", ident);
     free (res);
     if (!temp)
         return NULL;

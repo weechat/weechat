@@ -354,9 +354,9 @@
 ** 値: 0 .. 604800 (デフォルト値: `600`)
 
 * [[option_irc.network.ban_mask_default]] *irc.network.ban_mask_default*
-** 説明: `/ban、/unban、/kickban コマンドが使うデフォルトの禁止マスク; 変数 $nick、$user、$host はそれぞれの値に置換 ("nick!user@host" から展開) されます; このデフォルトマスクはニックネームのホスト名がわかる場合のみ利用されます`
+** 説明: `default ban mask for commands /ban, /unban and /kickban; variables $nick, $user, $ident and $host are replaced by their values (extracted from "nick!user@host"); $ident is the same as $user if $user does not start with "~", otherwise it is set to "*"; this default mask is used only if WeeChat knows the host for the nick`
 ** タイプ: 文字列
-** 値: 未制約文字列 (デフォルト値: `"*!$user@$host"`)
+** 値: 未制約文字列 (デフォルト値: `"*!$ident@$host"`)
 
 * [[option_irc.network.colors_receive]] *irc.network.colors_receive*
 ** 説明: `オフの場合、到着メッセージに含まれる色コードを無視`
