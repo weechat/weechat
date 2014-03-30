@@ -2375,7 +2375,7 @@ gui_window_bare_display_timer_cb (void *data, int remaining_calls)
 void
 gui_window_bare_display_toggle (const char *delay)
 {
-    long milliseconds;
+    float seconds;
     char *error;
 
     gui_window_bare_display ^= 1;
@@ -2389,8 +2389,8 @@ gui_window_bare_display_toggle (const char *delay)
         if (delay)
         {
             error = NULL;
-            milliseconds = strtol (delay, &error, 10);
-            if (error && !error[0] && (milliseconds >= 0))
+            seconds = strtof (delay, &error);
+            if (error && !error[0] && (seconds >= 0))
             {
                 if (gui_window_bare_display_timer)
                 {
@@ -2399,7 +2399,7 @@ gui_window_bare_display_toggle (const char *delay)
                 }
                 gui_window_bare_display_timer = hook_timer (
                     NULL,
-                    milliseconds, 0, 1,
+                    seconds * 1000, 0, 1,
                     &gui_window_bare_display_timer_cb, NULL);
             }
         }

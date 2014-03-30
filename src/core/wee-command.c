@@ -7591,7 +7591,8 @@ command_init ()
            "for target window)\n"
            "         zoom: zoom on window\n"
            "         bare: toggle bare display (with optional delay in "
-           "milliseconds for automatic return to standard display mode)\n"
+           "seconds, as decimal number, for automatic return to standard "
+           "display mode)\n"
            "\n"
            "For splith and splitv, pct is a percentage which represents size of "
            "new window, computed with current window as size reference. For "
@@ -7607,7 +7608,9 @@ command_init ()
            "  scroll to beginning of current day:\n"
            "    /window scroll -d\n"
            "  zoom on window #2:\n"
-           "    /window zoom -window 2"),
+           "    /window zoom -window 2\n"
+           "  enable bare display for 2.5 seconds:\n"
+           "    /window bare 2.5"),
         "list"
         " || -1 -window %(windows_numbers)"
         " || +1 -window %(windows_numbers)"
