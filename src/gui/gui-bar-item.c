@@ -2006,6 +2006,8 @@ gui_bar_item_init ()
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_ZOOM]);
     gui_bar_item_hook_signal ("buffer_unzoomed",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_ZOOM]);
+    gui_bar_item_hook_signal ("buffer_switch",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_ZOOM]);
 
     /* buffer nicklist count */
     gui_bar_item_new (NULL,
