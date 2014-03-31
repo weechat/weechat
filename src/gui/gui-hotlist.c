@@ -502,7 +502,9 @@ gui_hotlist_remove_buffer (struct t_gui_buffer *buffer)
     {
         next_hotlist = ptr_hotlist->next_hotlist;
 
-        if (ptr_hotlist->buffer->number == buffer->number)
+        if ((ptr_hotlist->buffer->number == buffer->number)
+            && (!ptr_hotlist->buffer->zoomed
+                || (ptr_hotlist->buffer->active == 2)))
         {
             gui_hotlist_free (&gui_hotlist, &last_gui_hotlist, ptr_hotlist);
             hotlist_changed = 1;
