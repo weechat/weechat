@@ -96,6 +96,8 @@ struct t_gui_buffer
     int active;                        /* 0 = buffer merged and not active  */
                                        /* 1 = active (merged or not)        */
                                        /* 2 = the only active (merged)      */
+    int zoomed;                        /* 1 if a merged buffer is zoomed    */
+                                       /* (it can be another buffer)        */
     int print_hooks_enabled;           /* 1 if print hooks are enabled      */
     int day_change;                    /* 1 if "day change" displayed       */
     int clear;                         /* 1 if clear of buffer is allowed   */
@@ -278,6 +280,7 @@ extern void gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
                             const char *value);
 extern void gui_buffer_set_pointer (struct t_gui_buffer *buffer,
                                     const char *property, void *pointer);
+extern void gui_buffer_compute_num_displayed ();
 extern void gui_buffer_add_value_num_displayed (struct t_gui_buffer *buffer,
                                                 int value);
 extern int gui_buffer_is_main (const char *plugin_name, const char *name);

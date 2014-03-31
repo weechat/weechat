@@ -1617,6 +1617,7 @@ void
 gui_input_zoom_merged_buffer (struct t_gui_buffer *buffer)
 {
     struct t_gui_window *ptr_window;
+    struct t_gui_buffer *ptr_buffer;
     int buffer_was_zoomed;
 
     /* do nothing if current buffer is not merged with another buffer */
@@ -1659,6 +1660,20 @@ gui_input_zoom_merged_buffer (struct t_gui_buffer *buffer)
         buffer->active = 1;
         buffer->lines = buffer->mixed_lines;
     }
+
+    /* set "zoomed" in merged buffers */
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if (ptr_buffer->number > buffer->number)
+            break;
+        if (ptr_buffer->number == buffer->number)
+        {
+            ptr_buffer->zoomed = (buffer->active == 2) ? 1 : 0;
+        }
+    }
+
+    gui_buffer_compute_num_displayed ();
 
     gui_buffer_ask_chat_refresh (buffer, 2);
 

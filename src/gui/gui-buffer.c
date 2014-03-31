@@ -76,14 +76,14 @@ char *gui_buffer_notify_string[GUI_BUFFER_NUM_NOTIFY] =
 
 char *gui_buffer_properties_get_integer[] =
 { "number", "layout_number", "layout_number_merge_order", "type", "notify",
-  "num_displayed", "active", "print_hooks_enabled", "day_change", "clear",
-  "lines_hidden", "prefix_max_length", "time_for_each_line", "nicklist",
-  "nicklist_case_sensitive", "nicklist_max_length", "nicklist_display_groups",
-  "nicklist_count", "nicklist_groups_count", "nicklist_nicks_count",
-  "nicklist_visible_count", "input", "input_get_unknown_commands",
-  "input_size", "input_length", "input_pos", "input_1st_display",
-  "num_history", "text_search", "text_search_exact", "text_search_regex",
-  "text_search_where", "text_search_found",
+  "num_displayed", "active", "zoomed", "print_hooks_enabled", "day_change",
+  "clear", "lines_hidden", "prefix_max_length", "time_for_each_line",
+  "nicklist", "nicklist_case_sensitive", "nicklist_max_length",
+  "nicklist_display_groups", "nicklist_count", "nicklist_groups_count",
+  "nicklist_nicks_count", "nicklist_visible_count", "input",
+  "input_get_unknown_commands", "input_size", "input_length", "input_pos",
+  "input_1st_display", "num_history", "text_search", "text_search_exact",
+  "text_search_regex", "text_search_where", "text_search_found",
   NULL
 };
 char *gui_buffer_properties_get_string[] =
@@ -591,6 +591,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
     new_buffer->notify = CONFIG_INTEGER(config_look_buffer_notify_default);
     new_buffer->num_displayed = 0;
     new_buffer->active = 1;
+    new_buffer->zoomed = 0;
     new_buffer->print_hooks_enabled = 1;
     new_buffer->day_change = 1;
     new_buffer->clear = 1;
@@ -978,6 +979,8 @@ gui_buffer_get_integer (struct t_gui_buffer *buffer, const char *property)
             return buffer->num_displayed;
         else if (string_strcasecmp (property, "active") == 0)
             return buffer->active;
+        else if (string_strcasecmp (property, "zoomed") == 0)
+            return buffer->zoomed;
         else if (string_strcasecmp (property, "print_hooks_enabled") == 0)
             return buffer->print_hooks_enabled;
         else if (string_strcasecmp (property, "day_change") == 0)
@@ -1976,8 +1979,11 @@ gui_buffer_compute_num_displayed ()
             for (ptr_buffer = gui_buffers; ptr_buffer;
                  ptr_buffer = ptr_buffer->next_buffer)
             {
-                if (ptr_buffer->number == ptr_window->buffer->number)
+                if ((ptr_buffer->number == ptr_window->buffer->number)
+                    && (!ptr_buffer->zoomed || (ptr_buffer->active == 2)))
+                {
                     ptr_buffer->num_displayed++;
+                }
             }
         }
     }
@@ -3821,6 +3827,7 @@ gui_buffer_hdata_buffer_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_gui_buffer, notify, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, num_displayed, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, active, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_buffer, zoomed, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, print_hooks_enabled, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, day_change, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, clear, INTEGER, 0, NULL, NULL);
@@ -3995,6 +4002,8 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
     if (!infolist_new_var_integer (ptr_item, "num_displayed", buffer->num_displayed))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "active", buffer->active))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "zoomed", buffer->zoomed))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "print_hooks_enabled", buffer->print_hooks_enabled))
         return 0;
@@ -4206,6 +4215,7 @@ gui_buffer_print_log ()
         log_printf ("  notify. . . . . . . . . : %d",    ptr_buffer->notify);
         log_printf ("  num_displayed . . . . . : %d",    ptr_buffer->num_displayed);
         log_printf ("  active. . . . . . . . . : %d",    ptr_buffer->active);
+        log_printf ("  zoomed. . . . . . . . . : %d",    ptr_buffer->zoomed);
         log_printf ("  print_hooks_enabled . . : %d",    ptr_buffer->print_hooks_enabled);
         log_printf ("  day_change. . . . . . . : %d",    ptr_buffer->day_change);
         log_printf ("  clear . . . . . . . . . : %d",    ptr_buffer->clear);

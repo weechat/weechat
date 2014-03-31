@@ -15,6 +15,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 0.4.4 (under dev)
 
+* core: add non-active merged buffers with activity in hotlist (if another
+  merged buffer is zoomed) (task #12845)
 * core: fix refresh of bar item "buffer_zoom" on buffer switch
 * core: fix reset of attributes in bars when "resetcolor" is used (closes #41)
 * core: fix alignment of lines in merged buffers when options

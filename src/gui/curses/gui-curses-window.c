@@ -1219,7 +1219,9 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
     }
 
     window->buffer = buffer;
-    gui_buffer_add_value_num_displayed (buffer, 1);
+
+    gui_buffer_set_active_buffer (buffer);
+    gui_buffer_compute_num_displayed ();
 
     if (!weechat_upgrading && (old_buffer != buffer))
         gui_hotlist_remove_buffer (buffer);
@@ -1262,8 +1264,6 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
         window->scroll->scrolling = 0;
         window->scroll->lines_after = 0;
     }
-
-    gui_buffer_set_active_buffer (buffer);
 
     for (ptr_bar_window = window->bar_windows; ptr_bar_window;
          ptr_bar_window = ptr_bar_window->next_bar_window)
