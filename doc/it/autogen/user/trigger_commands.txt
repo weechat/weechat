@@ -13,7 +13,7 @@
           show <name>
           del <name>|-all [<name>...]
           default -yes
-          monitor
+          monitor [<filter>]
 
        list: list triggers (without argument, this list is displayed)
    listfull: list triggers with detailed info for each trigger
@@ -55,7 +55,8 @@ return_code: return code in callback (ok (default), ok_eat, error)
         del: delete a trigger
        -all: do action on all triggers
     default: restore default triggers
-    monitor: open the trigger monitor buffer
+    monitor: open the trigger monitor buffer, with optional filter:
+     filter: filter hooks/triggers to display (a hook must start with "@", for example "@signal"), many filters can be separated by commas; each trigger name can start or end with "*"
 
 When a trigger callback is called, following actions are performed, in this order:
   1. check conditions; if false, exit
@@ -71,5 +72,7 @@ Examples (you can also look at default triggers with /trigger listdefault):
     /trigger add resize_big signal signal_sigwinch "${info:term_width} >= 100" "" "/bar show nicklist"
   silently save config each hour:
     /trigger add cfgsave timer 3600000;0;0 "" "" "/mute /save"
+  open trigger monitor and show only modifiers and triggers whose name starts with "resize":
+    /trigger monitor @modifier,resize*
 ----
 

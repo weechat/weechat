@@ -24,11 +24,12 @@
 
 struct t_gui_buffer *trigger_buffer;
 
-extern void trigger_buffer_display_trigger (struct t_trigger *trigger,
-                                            struct t_gui_buffer *buffer,
-                                            struct t_hashtable *pointers,
-                                            struct t_hashtable *extra_vars);
 extern void trigger_buffer_set_callbacks ();
-extern void trigger_buffer_open (int switch_to_buffer);
+extern void trigger_buffer_open (const char *filter, int switch_to_buffer);
+extern int trigger_buffer_display_trigger (struct t_trigger *trigger,
+                                           struct t_gui_buffer *buffer,
+                                           struct t_hashtable *pointers,
+                                           struct t_hashtable *extra_vars);
+extern void trigger_buffer_end ();
 
 #endif /* WEECHAT_TRIGGER_BUFFER_H */

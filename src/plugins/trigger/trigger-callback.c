@@ -162,7 +162,8 @@ trigger_callback_check_conditions (struct t_trigger *trigger,
 void
 trigger_callback_replace_regex (struct t_trigger *trigger,
                                 struct t_hashtable *pointers,
-                                struct t_hashtable *extra_vars)
+                                struct t_hashtable *extra_vars,
+                                int display_monitor)
 {
     char *value, *replace_eval;
     const char *ptr_key, *ptr_value;
@@ -182,7 +183,7 @@ trigger_callback_replace_regex (struct t_trigger *trigger,
             trigger_hook_regex_default_var[weechat_config_integer (trigger->options[TRIGGER_OPTION_HOOK])];
         if (!ptr_key || !ptr_key[0])
         {
-            if (trigger_buffer)
+            if (trigger_buffer && display_monitor)
             {
                 weechat_printf_tags (trigger_buffer, "no_trigger",
                                      "\t  regex %d: %s",
@@ -194,7 +195,7 @@ trigger_callback_replace_regex (struct t_trigger *trigger,
         ptr_value = weechat_hashtable_get (extra_vars, ptr_key);
         if (!ptr_value)
         {
-            if (trigger_buffer)
+            if (trigger_buffer && display_monitor)
             {
                 weechat_printf_tags (trigger_buffer, "no_trigger",
                                      "\t  regex %d (%s): %s",
@@ -218,7 +219,7 @@ trigger_callback_replace_regex (struct t_trigger *trigger,
             if (value)
             {
                 /* display debug info on trigger buffer */
-                if (trigger_buffer)
+                if (trigger_buffer && display_monitor)
                 {
                     weechat_printf_tags (trigger_buffer, "no_trigger",
                                          "\t  regex %d %s(%s%s%s)%s: "
@@ -250,7 +251,8 @@ void
 trigger_callback_run_command (struct t_trigger *trigger,
                               struct t_gui_buffer *buffer,
                               struct t_hashtable *pointers,
-                              struct t_hashtable *extra_vars)
+                              struct t_hashtable *extra_vars,
+                              int display_monitor)
 {
     char *command_eval;
     int i;
@@ -273,7 +275,7 @@ trigger_callback_run_command (struct t_trigger *trigger,
         if (command_eval)
         {
             /* display debug info on trigger buffer */
-            if (trigger_buffer)
+            if (trigger_buffer && display_monitor)
             {
                 weechat_printf_tags (trigger_buffer, "no_trigger",
                                      _("%s  running command %s\"%s%s%s\"%s "
@@ -312,19 +314,26 @@ trigger_callback_execute (struct t_trigger *trigger,
                           struct t_hashtable *pointers,
                           struct t_hashtable *extra_vars)
 {
+    int display_monitor;
+
     /* display debug info on trigger buffer */
     if (!trigger_buffer && (weechat_trigger_plugin->debug >= 1))
-        trigger_buffer_open (0);
-    trigger_buffer_display_trigger (trigger, buffer, pointers, extra_vars);
+        trigger_buffer_open (NULL, 0);
+    display_monitor = trigger_buffer_display_trigger (trigger,
+                                                      buffer,
+                                                      pointers,
+                                                      extra_vars);
 
     /* check conditions */
     if (trigger_callback_check_conditions (trigger, pointers, extra_vars))
     {
         /* replace text with regex */
-        trigger_callback_replace_regex (trigger, pointers, extra_vars);
+        trigger_callback_replace_regex (trigger, pointers, extra_vars,
+                                        display_monitor);
 
         /* execute command(s) */
-        trigger_callback_run_command (trigger, buffer, pointers, extra_vars);
+        trigger_callback_run_command (trigger, buffer, pointers, extra_vars,
+                                      display_monitor);
     }
 }
 

@@ -912,7 +912,7 @@ trigger_command_trigger (void *data, struct t_gui_buffer *buffer, int argc,
     /* open the trigger monitor buffer */
     if (weechat_strcasecmp (argv[1], "monitor") == 0)
     {
-        trigger_buffer_open (1);
+        trigger_buffer_open ((argc > 2) ? argv_eol[2] : NULL, 1);
         goto end;
     }
 
@@ -949,7 +949,7 @@ trigger_command_init ()
            " || show <name>"
            " || del <name>|-all [<name>...]"
            " || default -yes"
-           " || monitor"),
+           " || monitor [<filter>]"),
         N_("       list: list triggers (without argument, this list is displayed)\n"
            "   listfull: list triggers with detailed info for each trigger\n"
            "listdefault: list default triggers\n"
@@ -1001,7 +1001,10 @@ trigger_command_init ()
            "        del: delete a trigger\n"
            "       -all: do action on all triggers\n"
            "    default: restore default triggers\n"
-           "    monitor: open the trigger monitor buffer\n"
+           "    monitor: open the trigger monitor buffer, with optional filter:\n"
+           "     filter: filter hooks/triggers to display (a hook must start "
+           "with \"@\", for example \"@signal\"), many filters can be separated "
+           "by commas; each trigger name can start or end with \"*\"\n"
            "\n"
            "When a trigger callback is called, following actions are performed, "
            "in this order:\n"
@@ -1025,7 +1028,10 @@ trigger_command_init ()
            "    /trigger add resize_big signal signal_sigwinch "
            "\"${info:term_width} >= 100\" \"\" \"/bar show nicklist\"\n"
            "  silently save config each hour:\n"
-           "    /trigger add cfgsave timer 3600000;0;0 \"\" \"\" \"/mute /save\""),
+           "    /trigger add cfgsave timer 3600000;0;0 \"\" \"\" \"/mute /save\"\n"
+           "  open trigger monitor and show only modifiers and triggers whose "
+           "name starts with \"resize\":\n"
+           "    /trigger monitor @modifier,resize*"),
         "list|listfull|listdefault"
         " || add|addoff|addreplace %(trigger_names) %(trigger_hooks) "
         "%(trigger_hook_arguments) %(trigger_hook_conditions) "
@@ -1038,6 +1044,6 @@ trigger_command_init ()
         "%(trigger_names)|%*"
         " || show %(trigger_names)"
         " || default"
-        " || monitor",
+        " || monitor %(trigger_names)|%(trigger_hooks_filter)",
         &trigger_command_trigger, NULL);
 }

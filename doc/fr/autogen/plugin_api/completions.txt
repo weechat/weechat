@@ -82,6 +82,8 @@
 
 | trigger | trigger_hooks | hooks pour les triggers
 
+| trigger | trigger_hooks_filter | hooks pour les triggers (pour filtrer dans le tampon moniteur)
+
 | trigger | trigger_names | triggers
 
 | trigger | trigger_option_value | valeur d'une option de trigger

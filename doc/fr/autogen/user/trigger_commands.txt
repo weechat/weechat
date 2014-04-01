@@ -13,7 +13,7 @@
           show <nom>
           del <nom>|-all [<nom>...]
           default -yes
-          monitor
+          monitor [<filtre>]
 
        list: lister les triggers (sans paramètre, cette liste est affichée)
    listfull: lister les triggers avec des informations détaillées pour chaque trigger
@@ -56,6 +56,7 @@ code_retour: code retour dans le callback (ok (par défaut), ok_eat, error)
        -all: effectuer l'action sur tous les triggers
     default: restaurer les triggers par défaut
     monitor: ouvrir le tampon moniteur des triggers
+     filtre: filtrer les hooks/triggers à afficher (un hook doit commencer par "@", par exemple "@signal"), plusieurs filtres peuvent être séparés par des virgules; chaque nom de trigger peut commencer ou se terminer par "*"
 
 Lorsqu'un callback de trigger est appelé, les actions suivantes sont exécutées, dans cet ordre :
   1. vérifier les conditions; si faux, sortir
@@ -71,5 +72,7 @@ Exemples (vous pouvez aussi regarder les triggers par défaut avec /trigger list
     /trigger add resize_big signal signal_sigwinch "${info:term_width} >= 100" "" "/bar show nicklist"
   sauver la configuration chaque heure (de manière silencieuse):
     /trigger add cfgsave timer 3600000;0;0 "" "" "/mute /save"
+  ouvrir le tampon moniteur des triggers et afficher seulement les modificateurs et les triggers dont le nom commence par "resize":
+    /trigger monitor @modifier,resize*
 ----
 

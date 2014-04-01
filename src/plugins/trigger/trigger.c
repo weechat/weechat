@@ -1218,6 +1218,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     /* make C compiler happy */
     (void) plugin;
 
+    trigger_buffer_end ();
     trigger_config_write ();
     trigger_free_all ();
     trigger_config_free ();

@@ -82,6 +82,8 @@
 
 | trigger | trigger_hooks | Hooks für Trigger
 
+| trigger | trigger_hooks_filter | hooks for triggers (for filter in monitor buffer)
+
 | trigger | trigger_names | trigger
 
 | trigger | trigger_option_value | Werte für Trigger-Option

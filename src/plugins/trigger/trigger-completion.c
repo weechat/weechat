@@ -164,6 +164,34 @@ trigger_completion_hooks_cb (void *data, const char *completion_item,
 }
 
 /*
+ * Adds hooks for filtering triggers to completion list.
+ */
+
+int
+trigger_completion_hooks_filter_cb (void *data, const char *completion_item,
+                                    struct t_gui_buffer *buffer,
+                                    struct t_gui_completion *completion)
+{
+    int i;
+    char str_hook[128];
+
+    /* make C compiler happy */
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+
+    for (i = 0; i < TRIGGER_NUM_HOOK_TYPES; i++)
+    {
+        snprintf (str_hook, sizeof (str_hook),
+                  "@%s", trigger_hook_type_string[i]);
+        weechat_hook_completion_list_add (completion, str_hook,
+                                          0, WEECHAT_LIST_POS_END);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Adds a word with quotes around to completion list.
  */
 
@@ -374,6 +402,9 @@ trigger_completion_init ()
     weechat_hook_completion ("trigger_hooks",
                              N_("hooks for triggers"),
                              &trigger_completion_hooks_cb, NULL);
+    weechat_hook_completion ("trigger_hooks_filter",
+                             N_("hooks for triggers (for filter in monitor buffer)"),
+                             &trigger_completion_hooks_filter_cb, NULL);
     weechat_hook_completion ("trigger_hook_arguments",
                              N_("default arguments for a hook"),
                              &trigger_completion_hook_arguments_cb, NULL);
