@@ -481,6 +481,7 @@ upgrade_weechat_read_cb (void *data,
                         {
                             upgrade_current_buffer->day_change = 1;
                         }
+                        /* "clear" is in WeeChat >= 0.4.4 */
                         if (infolist_search_var (infolist, "clear"))
                         {
                             upgrade_current_buffer->clear =
@@ -491,6 +492,16 @@ upgrade_weechat_read_cb (void *data,
                             upgrade_current_buffer->clear =
                                 (upgrade_current_buffer->type == GUI_BUFFER_TYPE_FREE) ?
                                 0 : 1;
+                        }
+                        /* "filter" is in WeeChat >= 0.4.4 */
+                        if (infolist_search_var (infolist, "filter"))
+                        {
+                            upgrade_current_buffer->filter =
+                                infolist_integer (infolist, "filter");
+                        }
+                        else
+                        {
+                            upgrade_current_buffer->filter = 1;
                         }
                         upgrade_current_buffer->nicklist_case_sensitive =
                             infolist_integer (infolist, "nicklist_case_sensitive");

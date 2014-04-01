@@ -1138,6 +1138,8 @@ Il livello di notifica per un buffer può essere impostato con il comando `/buff
 | key[alt-/]         | Passa all'ultimo buffer mostrato (prima dell'ultimo passaggio ad un buffer) | `/input jump_last_buffer_displayed`
 | key[alt-=]         | Attiva/disattiva filtri | `/filter toggle`
 // TRANSLATION MISSING
+| key[alt--]         | Toggle filters on/off in current buffer | `/filter toggle @`
+// TRANSLATION MISSING
 | key[alt-!]         | Toggle bare display on/off | `/window bare`
 |===
 

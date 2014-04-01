@@ -494,6 +494,7 @@
 *** 'print_hooks_enabled' (integer)
 *** 'day_change' (integer)
 *** 'clear' (integer)
+*** 'filter' (integer)
 *** 'close_callback' (pointer)
 *** 'close_callback_data' (pointer)
 *** 'title' (string)

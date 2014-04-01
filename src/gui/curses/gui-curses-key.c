@@ -199,6 +199,7 @@ gui_key_default_bindings (int context)
         BIND(/* m-w,m-s     */ "meta-wmeta-s",       "/window swap");
         BIND(/* m-z         */ "meta-z",             "/window zoom");
         BIND(/* m-=         */ "meta-=",             "/filter toggle");
+        BIND(/* m-=         */ "meta--",             "/filter toggle @");
         BIND(/* m-0         */ "meta-0",             "/buffer *10");
         BIND(/* m-1         */ "meta-1",             "/buffer *1");
         BIND(/* m-2         */ "meta-2",             "/buffer *2");

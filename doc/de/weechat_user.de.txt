@@ -1115,6 +1115,8 @@ Befehl festgelegt werden:
 | key[alt-]key[>]    | springt zum nächsten besuchten Buffer | `/input jump_next_visited_buffer`
 | key[alt-/]         | wechselt zum jeweils zuletzt angezeigten Buffern | `/input jump_last_buffer_displayed`
 | key[alt-=]         | schaltet Filterfunktion an/aus | `/filter toggle`
+// TRANSLATION MISSING
+| key[alt--]         | Toggle filters on/off in current buffer | `/filter toggle @`
 | key[alt-!]         | schaltet einfachen Anzeigemodus an/aus | `/window bare`
 |===
 

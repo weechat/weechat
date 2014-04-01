@@ -1099,6 +1099,7 @@ The notify level for a buffer can be set with command `/buffer`:
 | key[alt-]key[>]    | Switch to next buffer in list of visited buffers | `/input jump_next_visited_buffer`
 | key[alt-/]         | Switch to last buffer displayed (before last jump to a buffer) | `/input jump_last_buffer_displayed`
 | key[alt-=]         | Toggle filters on/off | `/filter toggle`
+| key[alt--]         | Toggle filters on/off in current buffer | `/filter toggle @`
 | key[alt-!]         | Toggle bare display on/off | `/window bare`
 |===
 

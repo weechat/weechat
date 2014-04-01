@@ -61,8 +61,8 @@ gui_filter_check_line (struct t_gui_line_data *line_data)
     struct t_gui_filter *ptr_filter;
     int rc;
 
-    /* line is always displayed if filters are disabled */
-    if (!gui_filters_enabled)
+    /* line is always displayed if filters are disabled (globally or in buffer) */
+    if (!gui_filters_enabled || !line_data->buffer->filter)
         return 1;
 
     if (gui_line_has_tag_no_filter (line_data))

@@ -48,6 +48,7 @@
 #include "gui-chat.h"
 #include "gui-color.h"
 #include "gui-completion.h"
+#include "gui-filter.h"
 #include "gui-history.h"
 #include "gui-hotlist.h"
 #include "gui-input.h"
@@ -77,7 +78,7 @@ char *gui_buffer_notify_string[GUI_BUFFER_NUM_NOTIFY] =
 char *gui_buffer_properties_get_integer[] =
 { "number", "layout_number", "layout_number_merge_order", "type", "notify",
   "num_displayed", "active", "zoomed", "print_hooks_enabled", "day_change",
-  "clear", "lines_hidden", "prefix_max_length", "time_for_each_line",
+  "clear", "filter", "lines_hidden", "prefix_max_length", "time_for_each_line",
   "nicklist", "nicklist_case_sensitive", "nicklist_max_length",
   "nicklist_display_groups", "nicklist_count", "nicklist_groups_count",
   "nicklist_nicks_count", "nicklist_visible_count", "input",
@@ -97,12 +98,12 @@ char *gui_buffer_properties_get_pointer[] =
   NULL
 };
 char *gui_buffer_properties_set[] =
-{ "unread", "display", "print_hooks_enabled", "day_change", "clear", "number",
-  "name", "short_name", "type", "notify", "title", "time_for_each_line",
-  "nicklist", "nicklist_case_sensitive", "nicklist_display_groups",
-  "highlight_words", "highlight_words_add", "highlight_words_del",
-  "highlight_regex", "highlight_tags_restrict", "highlight_tags",
-  "hotlist_max_level_nicks", "hotlist_max_level_nicks_add",
+{ "unread", "display", "print_hooks_enabled", "day_change", "clear", "filter",
+  "number", "name", "short_name", "type", "notify", "title",
+  "time_for_each_line", "nicklist", "nicklist_case_sensitive",
+  "nicklist_display_groups", "highlight_words", "highlight_words_add",
+  "highlight_words_del", "highlight_regex", "highlight_tags_restrict",
+  "highlight_tags", "hotlist_max_level_nicks", "hotlist_max_level_nicks_add",
   "hotlist_max_level_nicks_del", "input", "input_pos",
   "input_get_unknown_commands",
   NULL
@@ -595,6 +596,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
     new_buffer->print_hooks_enabled = 1;
     new_buffer->day_change = 1;
     new_buffer->clear = 1;
+    new_buffer->filter = 1;
 
     /* close callback */
     new_buffer->close_callback = close_callback;
@@ -987,6 +989,8 @@ gui_buffer_get_integer (struct t_gui_buffer *buffer, const char *property)
             return buffer->day_change;
         else if (string_strcasecmp (property, "clear") == 0)
             return buffer->clear;
+        else if (string_strcasecmp (property, "filter") == 0)
+            return buffer->filter;
         else if (string_strcasecmp (property, "lines_hidden") == 0)
             return buffer->lines->lines_hidden;
         else if (string_strcasecmp (property, "prefix_max_length") == 0)
@@ -1767,6 +1771,16 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
         number = strtol (value, &error, 10);
         if (error && !error[0])
             buffer->clear = (number) ? 1 : 0;
+    }
+    else if (string_strcasecmp (property, "filter") == 0)
+    {
+        error = NULL;
+        number = strtol (value, &error, 10);
+        if (error && !error[0])
+        {
+            buffer->filter = (number) ? 1 : 0;
+            gui_filter_buffer (buffer, NULL);
+        }
     }
     else if (string_strcasecmp (property, "number") == 0)
     {
@@ -3831,6 +3845,7 @@ gui_buffer_hdata_buffer_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_gui_buffer, print_hooks_enabled, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, day_change, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, clear, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_buffer, filter, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, close_callback, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, close_callback_data, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, title, STRING, 0, NULL, NULL);
@@ -4010,6 +4025,8 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
     if (!infolist_new_var_integer (ptr_item, "day_change", buffer->day_change))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "clear", buffer->clear))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "filter", buffer->filter))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "first_line_not_read", buffer->lines->first_line_not_read))
         return 0;
@@ -4219,6 +4236,7 @@ gui_buffer_print_log ()
         log_printf ("  print_hooks_enabled . . : %d",    ptr_buffer->print_hooks_enabled);
         log_printf ("  day_change. . . . . . . : %d",    ptr_buffer->day_change);
         log_printf ("  clear . . . . . . . . . : %d",    ptr_buffer->clear);
+        log_printf ("  filter. . . . . . . . . : %d",    ptr_buffer->filter);
         log_printf ("  close_callback. . . . . : 0x%lx", ptr_buffer->close_callback);
         log_printf ("  close_callback_data . . : 0x%lx", ptr_buffer->close_callback_data);
         log_printf ("  title . . . . . . . . . : '%s'",  ptr_buffer->title);

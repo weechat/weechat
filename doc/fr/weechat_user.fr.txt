@@ -1128,6 +1128,7 @@ commande `/buffer` :
 | key[alt-]key[>]    | Sauter au tampon suivant dans la liste des tampons visités | `/input jump_next_visited_buffer`
 | key[alt-/]         | Sauter au dernier tampon affiché (avant le dernier saut vers un tampon) | `/input jump_last_buffer_displayed`
 | key[alt-=]         | Activer/désactiver les filtres | `/filter toggle`
+| key[alt--]         | Activer/désactiver les filtres dans le tampon courant | `/filter toggle @`
 | key[alt-!]         | Activer/désactiver le mode d'affichage dépouillé | `/window bare`
 |===
 

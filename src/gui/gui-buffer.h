@@ -102,6 +102,7 @@ struct t_gui_buffer
     int day_change;                    /* 1 if "day change" displayed       */
     int clear;                         /* 1 if clear of buffer is allowed   */
                                        /* with command /buffer clear        */
+    int filter;                        /* 1 if filters enabled for buffer   */
 
     /* close callback */
     int (*close_callback)(void *data,  /* called when buffer is closed      */

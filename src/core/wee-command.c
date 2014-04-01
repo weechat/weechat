@@ -1823,7 +1823,6 @@ COMMAND_CALLBACK(filter)
 
     /* make C compiler happy */
     (void) data;
-    (void) buffer;
 
     if ((argc == 1)
         || ((argc == 2) && (string_strcasecmp (argv[1], "list") == 0)))
@@ -1860,26 +1859,41 @@ COMMAND_CALLBACK(filter)
     {
         if (argc > 2)
         {
-            /* enable a filter */
-            ptr_filter = gui_filter_search_by_name (argv[2]);
-            if (ptr_filter)
+            if (strcmp (argv[2], "@") == 0)
             {
-                if (!ptr_filter->enabled)
+                /* enable filters in buffer */
+                if (!buffer->filter)
                 {
-                    ptr_filter->enabled = 1;
-                    gui_filter_all_buffers ();
-                    gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                               _("Filter \"%s\" enabled"),
-                                               ptr_filter->name);
+                    buffer->filter = 1;
+                    gui_filter_buffer (buffer, NULL);
                 }
             }
             else
             {
-                gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                           _("%sError: filter \"%s\" not found"),
-                                           gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                           argv[2]);
-                return WEECHAT_RC_OK;
+                /* enable a filter */
+                ptr_filter = gui_filter_search_by_name (argv[2]);
+                if (ptr_filter)
+                {
+                    if (!ptr_filter->enabled)
+                    {
+                        ptr_filter->enabled = 1;
+                        gui_filter_all_buffers ();
+                        gui_chat_printf_date_tags (NULL, 0,
+                                                   GUI_FILTER_TAG_NO_FILTER,
+                                                   _("Filter \"%s\" enabled"),
+                                                   ptr_filter->name);
+                    }
+                }
+                else
+                {
+                    gui_chat_printf_date_tags (NULL, 0,
+                                               GUI_FILTER_TAG_NO_FILTER,
+                                               _("%sError: filter \"%s\" not "
+                                                 "found"),
+                                               gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                               argv[2]);
+                    return WEECHAT_RC_OK;
+                }
             }
         }
         else
@@ -1900,26 +1914,41 @@ COMMAND_CALLBACK(filter)
     {
         if (argc > 2)
         {
-            /* disable a filter */
-            ptr_filter = gui_filter_search_by_name (argv[2]);
-            if (ptr_filter)
+            if (strcmp (argv[2], "@") == 0)
             {
-                if (ptr_filter->enabled)
+                /* disable filters in buffer */
+                if (buffer->filter)
                 {
-                    ptr_filter->enabled = 0;
-                    gui_filter_all_buffers ();
-                    gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                               _("Filter \"%s\" disabled"),
-                                               ptr_filter->name);
+                    buffer->filter = 0;
+                    gui_filter_buffer (buffer, NULL);
                 }
             }
             else
             {
-                gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                           _("%sError: filter \"%s\" not found"),
-                                           gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                           argv[2]);
-                return WEECHAT_RC_OK;
+                /* disable a filter */
+                ptr_filter = gui_filter_search_by_name (argv[2]);
+                if (ptr_filter)
+                {
+                    if (ptr_filter->enabled)
+                    {
+                        ptr_filter->enabled = 0;
+                        gui_filter_all_buffers ();
+                        gui_chat_printf_date_tags (NULL, 0,
+                                                   GUI_FILTER_TAG_NO_FILTER,
+                                                   _("Filter \"%s\" disabled"),
+                                                   ptr_filter->name);
+                    }
+                }
+                else
+                {
+                    gui_chat_printf_date_tags (NULL, 0,
+                                               GUI_FILTER_TAG_NO_FILTER,
+                                               _("%sError: filter \"%s\" not "
+                                                 "found"),
+                                               gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                               argv[2]);
+                    return WEECHAT_RC_OK;
+                }
             }
         }
         else
@@ -1940,20 +1969,31 @@ COMMAND_CALLBACK(filter)
     {
         if (argc > 2)
         {
-            /* toggle a filter */
-            ptr_filter = gui_filter_search_by_name (argv[2]);
-            if (ptr_filter)
+            if (strcmp (argv[2], "@") == 0)
             {
-                ptr_filter->enabled ^= 1;
-                gui_filter_all_buffers ();
+                /* toggle filters in buffer */
+                buffer->filter ^= 1;
+                gui_filter_buffer (buffer, NULL);
             }
             else
             {
-                gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                           _("%sError: filter \"%s\" not found"),
-                                           gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                           argv[2]);
-                return WEECHAT_RC_OK;
+                /* toggle a filter */
+                ptr_filter = gui_filter_search_by_name (argv[2]);
+                if (ptr_filter)
+                {
+                    ptr_filter->enabled ^= 1;
+                    gui_filter_all_buffers ();
+                }
+                else
+                {
+                    gui_chat_printf_date_tags (NULL, 0,
+                                               GUI_FILTER_TAG_NO_FILTER,
+                                               _("%sError: filter \"%s\" not "
+                                                 "found"),
+                                               gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                               argv[2]);
+                    return WEECHAT_RC_OK;
+                }
             }
         }
         else
@@ -6872,7 +6912,7 @@ command_init ()
         N_("filter messages in buffers, to hide/show them according to tags or "
            "regex"),
         N_("list"
-           " || enable|disable|toggle [<name>]"
+           " || enable|disable|toggle [<name>|@]"
            " || add <name> <buffer>[,<buffer>...] <tags> <regex>"
            " || rename <name> <new_name>"
            " || del <name>|-all"),
@@ -6880,7 +6920,8 @@ command_init ()
            " enable: enable filters (filters are enabled by default)\n"
            "disable: disable filters\n"
            " toggle: toggle filters\n"
-           "   name: filter name\n"
+           "   name: filter name (\"@\" = enable/disable all filters in current "
+           "buffer)\n"
            "    add: add a filter\n"
            " rename: rename a filter\n"
            "    del: delete a filter\n"
@@ -6936,9 +6977,9 @@ command_init ()
            "  filter lines containing \"weechat sucks\" on IRC channel #weechat:\n"
            "    /filter add sucks irc.freenode.#weechat * weechat sucks"),
         "list"
-        " || enable %(filters_names)"
-        " || disable %(filters_names)"
-        " || toggle %(filters_names)"
+        " || enable %(filters_names)|@"
+        " || disable %(filters_names)|@"
+        " || toggle %(filters_names)|@"
         " || add %(filters_names) %(buffers_plugins_names)|*"
         " || rename %(filters_names) %(filters_names)"
         " || del %(filters_names)|-all",

@@ -292,7 +292,7 @@ Examples (conditions):
 
 ----
 /filter  list
-         enable|disable|toggle [<name>]
+         enable|disable|toggle [<name>|@]
          add <name> <buffer>[,<buffer>...] <tags> <regex>
          rename <name> <new_name>
          del <name>|-all
@@ -301,7 +301,7 @@ Examples (conditions):
  enable: enable filters (filters are enabled by default)
 disable: disable filters
  toggle: toggle filters
-   name: filter name
+   name: filter name ("@" = enable/disable all filters in current buffer)
     add: add a filter
  rename: rename a filter
     del: delete a filter
