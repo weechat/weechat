@@ -82,7 +82,7 @@
 
 | trigger | trigger_hooks | Hooks für Trigger
 
-| trigger | trigger_hooks_filter | hooks for triggers (for filter in monitor buffer)
+| trigger | trigger_hooks_filter | Hooks für Trigger (definiert den Filter für den Monitor-Buffer)
 
 | trigger | trigger_names | trigger
 

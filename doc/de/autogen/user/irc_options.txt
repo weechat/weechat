@@ -354,7 +354,7 @@
 ** Werte: 0 .. 604800 (Standardwert: `600`)
 
 * [[option_irc.network.ban_mask_default]] *irc.network.ban_mask_default*
-** Beschreibung: `default ban mask for commands /ban, /unban and /kickban; variables $nick, $user, $ident and $host are replaced by their values (extracted from "nick!user@host"); $ident is the same as $user if $user does not start with "~", otherwise it is set to "*"; this default mask is used only if WeeChat knows the host for the nick`
+** Beschreibung: `Vorgabewert für Befehle /ban, /unban und /kickban; Variablen $nick, $user, $ident und $host werden durch den jeweiligen Wert ersetzt (extrahiert aus "nick!user@host"); $ident ist identisch mit $user, sofern $user nicht mit  "~" beginnt. Andernfalls wird daraus "*"; diese Vorgabemaske wird nur angewendet, sofern WeeChat den Host des Nicks ermitteln kann`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"*!$ident@$host"`)
 
@@ -469,7 +469,7 @@
 ** Werte: 0 .. 1000000 (Standardwert: `25`)
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** Beschreibung: `comma-separated list of client capabilities to enable for server if they are available; capabilities supported by WeeChat are: multi-prefix, userhost-in-names, away-notify (example: "multi-prefix,userhost-in-names,away-notify")`
+** Beschreibung: `durch Kommata getrennte Liste von erweiterten Client Fähigkeiten ("client capabilities"), welche vom Server angeboten und genutzt werden sollen. Fähigkeiten die von WeeChat unterstützt werden: multi-prefix, userhost-in-name, away-notify (Beispiel: "multi-prefix, userhost-in-name,away-notify")`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
