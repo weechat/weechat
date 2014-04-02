@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-04-02 19:52+0200\n"
+"POT-Creation-Date: 2014-04-02 19:54+0200\n"
 "PO-Revision-Date: 2014-03-24 14:23+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9215,7 +9215,7 @@ msgid "%s%s: invalid regular expression in trigger \"%s\""
 msgstr "%s nincs elég memória az információs pult üzenethez\n"
 
 #, c-format
-msgid "Trigger monitor (filter: %s) | Input: q=close words=filter"
+msgid "Trigger monitor (filter: %s) | Input: q=close, words=filter"
 msgstr ""
 
 #, fuzzy

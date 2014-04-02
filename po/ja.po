@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-04-02 19:52+0200\n"
+"POT-Creation-Date: 2014-04-02 19:54+0200\n"
 "PO-Revision-Date: 2014-03-29 20:07+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
@@ -10419,7 +10419,7 @@ msgid "%s%s: invalid regular expression in trigger \"%s\""
 msgstr "%s%s: トリガ \"%s\" の正規表現が間違っています"
 
 #, c-format
-msgid "Trigger monitor (filter: %s) | Input: q=close words=filter"
+msgid "Trigger monitor (filter: %s) | Input: q=close, words=filter"
 msgstr ""
 
 msgid "no variable"

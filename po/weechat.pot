@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-04-02 19:52+0200\n"
+"POT-Creation-Date: 2014-04-02 19:54+0200\n"
 "PO-Revision-Date: 2013-02-14 18:20+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8252,7 +8252,7 @@ msgid "%s%s: invalid regular expression in trigger \"%s\""
 msgstr ""
 
 #, c-format
-msgid "Trigger monitor (filter: %s) | Input: q=close words=filter"
+msgid "Trigger monitor (filter: %s) | Input: q=close, words=filter"
 msgstr ""
 
 msgid "no variable"

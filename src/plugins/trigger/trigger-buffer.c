@@ -103,7 +103,7 @@ trigger_buffer_set_title ()
 
     ptr_filter = weechat_buffer_get_string (trigger_buffer, "localvar_trigger_filter");
     snprintf (title, sizeof (title),
-              _("Trigger monitor (filter: %s) | Input: q=close words=filter"),
+              _("Trigger monitor (filter: %s) | Input: q=close, words=filter"),
               (ptr_filter) ? ptr_filter : "*");
 
     weechat_buffer_set (trigger_buffer, "title", title);
