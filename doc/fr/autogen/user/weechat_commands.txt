@@ -917,7 +917,7 @@ scroll_next_highlight: faire défiler jusqu'au highlight suivant
 scroll_unread: faire défiler jusqu'au marqueur de données non lues
          swap: échanger les tampons de deux fenêtres (avec une direction facultative pour la fenêtre cible)
          zoom: zoomer sur la fenêtre
-         bare: activer/désactiver le mode d'affichage dépouillé (avec un délai facultatif en secondes, sous forme de nombre décimal, pour un retour automatique au mode d'affichage standard)
+         bare: activer/désactiver le mode d'affichage dépouillé (avec un délai facultatif en secondes pour un retour automatique au mode d'affichage standard)
 
 Pour splith et splitv, pct est un pourcentage qui représente la taille de la nouvelle fenêtre, calculée par rapport à la taille de la fenêtre courante. Par exemple 25 signifie créer une fenêtre qui a pour taille: taille_courante / 4
 
@@ -932,7 +932,7 @@ Exemples:
     /window scroll -d
   zoom sur la fenêtre numéro 2:
     /window zoom -window 2
-  activer le mode d'affichage dépouillé pendant 2,5 secondes:
-    /window bare 2.5
+  activer le mode d'affichage dépouillé pendant 2 secondes:
+    /window bare 2
 ----
 
