@@ -98,8 +98,8 @@ char *gui_buffer_properties_get_pointer[] =
   NULL
 };
 char *gui_buffer_properties_set[] =
-{ "unread", "display", "print_hooks_enabled", "day_change", "clear", "filter",
-  "number", "name", "short_name", "type", "notify", "title",
+{ "hotlist", "unread", "display", "print_hooks_enabled", "day_change", "clear",
+  "filter", "number", "name", "short_name", "type", "notify", "title",
   "time_for_each_line", "nicklist", "nicklist_case_sensitive",
   "nicklist_display_groups", "highlight_words", "highlight_words_add",
   "highlight_words_del", "highlight_regex", "highlight_tags_restrict",
