@@ -268,6 +268,14 @@ exec_command_parse_options (struct t_exec_cmd_options *cmd_options,
         {
             cmd_options->line_numbers = 0;
         }
+        else if (weechat_strcasecmp (argv[i], "-flush") == 0)
+        {
+            cmd_options->flush = 1;
+        }
+        else if (weechat_strcasecmp (argv[i], "-noflush") == 0)
+        {
+            cmd_options->flush = 0;
+        }
         else if (weechat_strcasecmp (argv[i], "-color") == 0)
         {
             if (i + 1 >= argc)
@@ -405,6 +413,7 @@ exec_command_run (struct t_gui_buffer *buffer,
     cmd_options.new_buffer_clear = 0;
     cmd_options.switch_to_buffer = 1;
     cmd_options.line_numbers = -1;
+    cmd_options.flush = 1;
     cmd_options.color = EXEC_COLOR_AUTO;
     cmd_options.display_rc = 1;
     cmd_options.ptr_command_name = NULL;
@@ -470,6 +479,8 @@ exec_command_run (struct t_gui_buffer *buffer,
         weechat_hashtable_set (process_options, "stdin", "1");
     if (cmd_options.detached)
         weechat_hashtable_set (process_options, "detached", "1");
+    if (cmd_options.flush)
+        weechat_hashtable_set (process_options, "buffer_flush", "1");
 
     /* set variables in new command (before running the command) */
     new_exec_cmd->name = (cmd_options.ptr_command_name) ?
@@ -775,7 +786,7 @@ exec_command_init ()
         N_("-list"
            " || [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <name>] "
            "[-l|-o|-n|-nf] [-cl|-nocl] [-sw|-nosw] [-ln|-noln] "
-           "[-color ansi|auto|irc|weechat|strip] [-rc|-norc] "
+           "[-flush|-noflush] [-color ansi|auto|irc|weechat|strip] [-rc|-norc] "
            "[-timeout <timeout>] [-name <name>] [-pipe <command>] "
            "[-hsignal <name>] <command>"
            " || -in <id> <text>"
@@ -814,6 +825,8 @@ exec_command_init ()
            "   -nosw: don't switch to the output buffer\n"
            "     -ln: display line numbers (default in new buffer only)\n"
            "   -noln: don't display line numbers\n"
+           "  -flush: display output of command in real time (default)\n"
+           "-noflush: display output of command after its end\n"
            "  -color: action on ANSI colors in output:\n"
            "             ansi: keep ANSI codes as-is\n"
            "             auto: convert ANSI colors to WeeChat/IRC (default)\n"
@@ -863,7 +876,8 @@ exec_command_init ()
            "  /exec -pipe \"/print Machine uptime:\" uptime"),
         "-list"
         " || -sh|-nosh|-bg|-nobg|-stdin|-nostdin|-buffer|-l|-o|-n|-nf|"
-        "-cl|-nocl|-sw|-nosw|-ln|-noln|-color|-timeout|-name|-pipe|-hsignal|%*"
+        "-cl|-nocl|-sw|-nosw|-ln|-noln|-flush|-noflush|-color|-timeout|-name|"
+        "-pipe|-hsignal|%*"
         " || -in|-inclose|-signal|-kill %(exec_commands_ids)"
         " || -killall"
         " || -set %(exec_commands_ids) stdin|stdin_close|signal"

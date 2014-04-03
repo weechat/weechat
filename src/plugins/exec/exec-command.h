@@ -34,6 +34,7 @@ struct t_exec_cmd_options
     int new_buffer_clear;              /* 1 to clear buffer before output   */
     int switch_to_buffer;              /* switch to the output buffer       */
     int line_numbers;                  /* 1 to display line numbers         */
+    int flush;                         /* 1 to flush lines immediately      */
     int color;                         /* what to do with ANSI colors       */
     int display_rc;                    /* 1 to display return code          */
     const char *ptr_command_name;      /* name of command                   */

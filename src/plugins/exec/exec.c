@@ -114,7 +114,7 @@ struct t_exec_cmd *
 exec_add ()
 {
     struct t_exec_cmd *new_exec_cmd, *ptr_exec_cmd;
-    int number;
+    int i, number;
 
     /* find first available number */
     number = (last_exec_cmd) ? last_exec_cmd->number + 1 : 0;
@@ -153,10 +153,12 @@ exec_add ()
     new_exec_cmd->buffer_full_name = NULL;
     new_exec_cmd->line_numbers = 0;
     new_exec_cmd->display_rc = 0;
-    new_exec_cmd->out_size = 0;
-    new_exec_cmd->out = NULL;
-    new_exec_cmd->err_size = 0;
-    new_exec_cmd->err = NULL;
+    new_exec_cmd->output_line_nb = 0;
+    for (i = 0; i < 2; i++)
+    {
+        new_exec_cmd->output_size[i] = 0;
+        new_exec_cmd->output[i] = NULL;
+    }
     new_exec_cmd->return_code = -1;
     new_exec_cmd->pipe_command = NULL;
     new_exec_cmd->hsignal = NULL;
@@ -193,27 +195,6 @@ exec_timer_delete_cb (void *data, int remaining_calls)
     }
 
     return WEECHAT_RC_OK;
-}
-
-/*
- * Concatenates some text to stdout/stderr of a command.
- */
-
-void
-exec_concat_output (int *size, char **output, const char *text)
-{
-    int length, new_size;
-    char *new_output;
-
-    length = strlen (text);
-    new_size = *size + length;
-    new_output = realloc (*output, new_size + 1);
-    if (!new_output)
-        return;
-
-    *output = new_output;
-    memcpy (*output + *size, text, length + 1);
-    *size = new_size;
 }
 
 /*
@@ -258,19 +239,22 @@ exec_decode_color (struct t_exec_cmd *exec_cmd, const char *string)
 }
 
 /*
- * Displays output of a command.
+ * Displays a line of output.
  */
 
 void
-exec_display_output (struct t_exec_cmd *exec_cmd,
-                     struct t_gui_buffer *buffer, int out)
+exec_display_line (struct t_exec_cmd *exec_cmd, struct t_gui_buffer *buffer,
+                   int out, const char *line)
 {
+    char *line_color, *line2, str_number[32], str_tags[1024];
+    int length;
+    /*
     char *ptr_output, *ptr_line, *line, *line2, *pos;
     char str_number[32], str_tags[1024];
-    int line_nb, length;
+    int length;
+    */
 
-    ptr_output = (out) ? exec_cmd->out : exec_cmd->err;
-    if (!ptr_output)
+    if (!exec_cmd || !line)
         return;
 
     /*
@@ -280,99 +264,149 @@ exec_display_output (struct t_exec_cmd *exec_cmd,
     if (exec_cmd->output_to_buffer && !exec_cmd->pipe_command && !buffer)
         return;
 
-    ptr_line = ptr_output;
-    line_nb = 1;
-    while (ptr_line)
+    /* decode colors */
+    line_color = exec_decode_color (exec_cmd, line);
+    if (!line_color)
+        return;
+
+    exec_cmd->output_line_nb++;
+
+    if (exec_cmd->pipe_command)
     {
-        /* ignore last empty line */
-        if (!ptr_line[0])
-            break;
-
-        /* search end of line */
-        pos = strchr (ptr_line, '\n');
-        line = (pos) ?
-            weechat_strndup (ptr_line, pos - ptr_line) : strdup (ptr_line);
-        if (!line)
-            break;
-
-        /* decode colors */
-        line2 = exec_decode_color (exec_cmd, line);
-        free (line);
-        if (!line2)
-            break;
-        line = line2;
-
-        if (exec_cmd->pipe_command)
+        if (strstr (exec_cmd->pipe_command, "$line"))
         {
-            if (strstr (exec_cmd->pipe_command, "$line"))
+            /* replace $line by line content */
+            line2 = weechat_string_replace (exec_cmd->pipe_command,
+                                            "$line", line_color);
+            if (line2)
             {
-                /* replace $line by line content */
-                line2 = weechat_string_replace (exec_cmd->pipe_command,
-                                                "$line", line);
-                if (line2)
-                {
-                    weechat_command (buffer, line2);
-                    free (line2);
-                }
+                weechat_command (buffer, line2);
+                free (line2);
             }
-            else
-            {
-                /* add line at the end of command, after a space */
-                length = strlen (exec_cmd->pipe_command) + 1 + strlen (line) + 1;
-                line2 = malloc (length);
-                if (line2)
-                {
-                    snprintf (line2, length, "%s %s", exec_cmd->pipe_command, line);
-                    weechat_command (buffer, line2);
-                    free (line2);
-                }
-            }
-        }
-        else if (exec_cmd->output_to_buffer)
-        {
-            if (exec_cmd->line_numbers)
-            {
-                length = 32 + strlen (line) + 1;
-                line2 = malloc (length);
-                if (line2)
-                {
-                    snprintf (line2, length, "%d. %s", line_nb, line);
-                    weechat_command (buffer, line2);
-                    free (line2);
-                }
-            }
-            else
-                weechat_command (buffer, (line[0]) ? line : " ");
         }
         else
         {
-
-            snprintf (str_number, sizeof (str_number), "%d", exec_cmd->number);
-            snprintf (str_tags, sizeof (str_tags),
-                      "exec_%s,exec_cmd_%s",
-                      (out) ? "stdout" : "stderr",
-                      (exec_cmd->name) ? exec_cmd->name : str_number);
-            if (weechat_buffer_get_integer (buffer, "type") == 1)
+            /* add line at the end of command, after a space */
+            length = strlen (exec_cmd->pipe_command) + 1 + strlen (line_color) + 1;
+            line2 = malloc (length);
+            if (line2)
             {
-                snprintf (str_number, sizeof (str_number), "%d. ", line_nb);
-                weechat_printf_y (buffer, -1,
-                                  "%s%s",
-                                  (exec_cmd->line_numbers) ? str_number : " ",
-                                  line);
-            }
-            else
-            {
-                snprintf (str_number, sizeof (str_number), "%d\t", line_nb);
-                weechat_printf_tags (buffer, str_tags,
-                                     "%s%s",
-                                     (exec_cmd->line_numbers) ? str_number : " \t",
-                                     line);
+                snprintf (line2, length,
+                          "%s %s", exec_cmd->pipe_command, line_color);
+                weechat_command (buffer, line2);
+                free (line2);
             }
         }
+    }
+    else if (exec_cmd->output_to_buffer)
+    {
+        if (exec_cmd->line_numbers)
+        {
+            length = 32 + strlen (line_color) + 1;
+            line2 = malloc (length);
+            if (line2)
+            {
+                snprintf (line2, length,
+                          "%d. %s", exec_cmd->output_line_nb, line_color);
+                weechat_command (buffer, line2);
+                free (line2);
+            }
+        }
+        else
+            weechat_command (buffer, (line_color[0]) ? line_color : " ");
+    }
+    else
+    {
+        snprintf (str_number, sizeof (str_number), "%d", exec_cmd->number);
+        snprintf (str_tags, sizeof (str_tags),
+                  "exec_%s,exec_cmd_%s",
+                  (out) ? "stdout" : "stderr",
+                  (exec_cmd->name) ? exec_cmd->name : str_number);
+        if (weechat_buffer_get_integer (buffer, "type") == 1)
+        {
+            snprintf (str_number, sizeof (str_number),
+                      "%d. ", exec_cmd->output_line_nb);
+            weechat_printf_y (buffer, -1,
+                              "%s%s",
+                              (exec_cmd->line_numbers) ? str_number : " ",
+                              line_color);
+        }
+        else
+        {
+            snprintf (str_number, sizeof (str_number),
+                      "%d\t", exec_cmd->output_line_nb);
+            weechat_printf_tags (buffer, str_tags,
+                                 "%s%s",
+                                 (exec_cmd->line_numbers) ? str_number : " \t",
+                                 line_color);
+        }
+    }
+}
 
-        free (line);
-        line_nb++;
-        ptr_line = (pos) ? pos + 1 : NULL;
+/*
+ * Concatenates some text to stdout/stderr of a command.
+ */
+
+void
+exec_concat_output (struct t_exec_cmd *exec_cmd, struct t_gui_buffer *buffer,
+                    int out, const char *text)
+{
+    int length, new_size;
+    const char *ptr_text;
+    char *new_output, *pos, *line;
+
+    ptr_text = text;
+
+    /* if output is not sent as hsignal, display lines (ending with '\n') */
+    if (!exec_cmd->hsignal)
+    {
+        ptr_text = text;
+        while (ptr_text[0])
+        {
+            pos = strchr (ptr_text, '\n');
+            if (!pos)
+                break;
+            if (exec_cmd->output_size[out] > 0)
+            {
+                length = exec_cmd->output_size[out] + (pos - ptr_text) + 1;
+                line = malloc (length);
+                if (line)
+                {
+                    memcpy (line, exec_cmd->output[out],
+                            exec_cmd->output_size[out]);
+                    memcpy (line + exec_cmd->output_size[out],
+                            ptr_text, pos - ptr_text);
+                    line[length - 1] = '\0';
+                }
+            }
+            else
+                line = weechat_strndup (ptr_text, pos - ptr_text);
+            if (!line)
+                break;
+            if (exec_cmd->output[out])
+            {
+                free (exec_cmd->output[out]);
+                exec_cmd->output[out] = NULL;
+            }
+            exec_cmd->output_size[out] = 0;
+            exec_display_line (exec_cmd, buffer, out, line);
+            free (line);
+            ptr_text = pos + 1;
+        }
+    }
+
+    /* concatenate ptr_text to output buffer */
+    length = strlen (ptr_text);
+    if (length > 0)
+    {
+        new_size = exec_cmd->output_size[out] + length;
+        new_output = realloc (exec_cmd->output[out], new_size + 1);
+        if (!new_output)
+            return;
+        exec_cmd->output[out] = new_output;
+        memcpy (exec_cmd->output[out] + exec_cmd->output_size[out],
+                ptr_text, length + 1);
+        exec_cmd->output_size[out] = new_size;
     }
 }
 
@@ -386,7 +420,7 @@ exec_end_command (struct t_exec_cmd *exec_cmd, int return_code)
     struct t_gui_buffer *ptr_buffer;
     struct t_hashtable *hashtable;
     char str_number[32], *output;
-    int buffer_type;
+    int i, buffer_type;
 
     if (exec_cmd->hsignal)
     {
@@ -401,11 +435,11 @@ exec_end_command (struct t_exec_cmd *exec_cmd, int return_code)
             snprintf (str_number, sizeof (str_number), "%d", exec_cmd->number);
             weechat_hashtable_set (hashtable, "number", str_number);
             weechat_hashtable_set (hashtable, "name", exec_cmd->name);
-            output = exec_decode_color (exec_cmd, exec_cmd->out);
+            output = exec_decode_color (exec_cmd, exec_cmd->output[EXEC_STDOUT]);
             weechat_hashtable_set (hashtable, "out", output);
             if (output)
                 free (output);
-            output = exec_decode_color (exec_cmd, exec_cmd->err);
+            output = exec_decode_color (exec_cmd, exec_cmd->output[EXEC_STDERR]);
             weechat_hashtable_set (hashtable, "err", output);
             if (output)
                 free (output);
@@ -419,8 +453,11 @@ exec_end_command (struct t_exec_cmd *exec_cmd, int return_code)
     {
         ptr_buffer = weechat_buffer_search ("==", exec_cmd->buffer_full_name);
 
-        exec_display_output (exec_cmd, ptr_buffer, 1);
-        exec_display_output (exec_cmd, ptr_buffer, 0);
+        /* display the last line of output (if not ending with '\n') */
+        exec_display_line (exec_cmd, ptr_buffer, EXEC_STDOUT,
+                           exec_cmd->output[EXEC_STDOUT]);
+        exec_display_line (exec_cmd, ptr_buffer, EXEC_STDERR,
+                           exec_cmd->output[EXEC_STDERR]);
 
         /*
          * display return code (only if command is not detached, if output is
@@ -477,6 +514,15 @@ exec_end_command (struct t_exec_cmd *exec_cmd, int return_code)
     exec_cmd->pid = 0;
     exec_cmd->end_time = time (NULL);
     exec_cmd->return_code = return_code;
+    for (i = 0; i < 2; i++)
+    {
+        if (exec_cmd->output[i])
+        {
+            free (exec_cmd->output[i]);
+            exec_cmd->output[i] = NULL;
+        }
+        exec_cmd->output_size[i] = 0;
+    }
 
     /* schedule a timer to remove the executed command */
     if (weechat_config_integer (exec_config_command_purge_delay) >= 0)
@@ -496,6 +542,7 @@ exec_process_cb (void *data, const char *command, int return_code,
                  const char *out, const char *err)
 {
     struct t_exec_cmd *ptr_exec_cmd;
+    struct t_gui_buffer *ptr_buffer;
 
     /* make C compiler happy */
     (void) command;
@@ -516,17 +563,14 @@ exec_process_cb (void *data, const char *command, int return_code,
                         (err) ? strlen (err) : 0);
     }
 
-    if (out)
+    if (out || err)
     {
-        exec_concat_output (&ptr_exec_cmd->out_size,
-                            &ptr_exec_cmd->out,
-                            out);
-    }
-    if (err)
-    {
-        exec_concat_output (&ptr_exec_cmd->err_size,
-                            &ptr_exec_cmd->err,
-                            err);
+        ptr_buffer = weechat_buffer_search ("==",
+                                            ptr_exec_cmd->buffer_full_name);
+        if (out)
+            exec_concat_output (ptr_exec_cmd, ptr_buffer, EXEC_STDOUT, out);
+        if (err)
+            exec_concat_output (ptr_exec_cmd, ptr_buffer, EXEC_STDERR, err);
     }
 
     if (return_code == WEECHAT_HOOK_PROCESS_ERROR)
@@ -544,6 +588,8 @@ exec_process_cb (void *data, const char *command, int return_code,
 void
 exec_free (struct t_exec_cmd *exec_cmd)
 {
+    int i;
+
     if (!exec_cmd)
         return;
 
@@ -566,10 +612,11 @@ exec_free (struct t_exec_cmd *exec_cmd)
         free (exec_cmd->command);
     if (exec_cmd->buffer_full_name)
         free (exec_cmd->buffer_full_name);
-    if (exec_cmd->out)
-        free (exec_cmd->out);
-    if (exec_cmd->err)
-        free (exec_cmd->err);
+    for (i = 0; i < 2; i++)
+    {
+        if (exec_cmd->output[i])
+            free (exec_cmd->output[i]);
+    }
     if (exec_cmd->pipe_command)
         free (exec_cmd->pipe_command);
     if (exec_cmd->hsignal)
@@ -619,10 +666,11 @@ exec_print_log ()
         weechat_log_printf ("  buffer_full_name. . . . : '%s'",  ptr_exec_cmd->buffer_full_name);
         weechat_log_printf ("  line_numbers. . . . . . : %d",    ptr_exec_cmd->line_numbers);
         weechat_log_printf ("  display_rc. . . . . . . : %d",    ptr_exec_cmd->display_rc);
-        weechat_log_printf ("  out_size. . . . . . . . : %d",    ptr_exec_cmd->out_size);
-        weechat_log_printf ("  out . . . . . . . . . . : '%s'",  ptr_exec_cmd->out);
-        weechat_log_printf ("  err_size. . . . . . . . : %d",    ptr_exec_cmd->err_size);
-        weechat_log_printf ("  err . . . . . . . . . . : '%s'",  ptr_exec_cmd->err);
+        weechat_log_printf ("  output_line_nb. . . . . : %d",    ptr_exec_cmd->output_line_nb);
+        weechat_log_printf ("  output_size[stdout] . . : %d",    ptr_exec_cmd->output_size[EXEC_STDOUT]);
+        weechat_log_printf ("  output[stdout]. . . . . : '%s'",  ptr_exec_cmd->output[EXEC_STDOUT]);
+        weechat_log_printf ("  output_size[stderr] . . : %d",    ptr_exec_cmd->output_size[EXEC_STDERR]);
+        weechat_log_printf ("  output[stderr]. . . . . : '%s'",  ptr_exec_cmd->output[EXEC_STDERR]);
         weechat_log_printf ("  return_code . . . . . . : %d",    ptr_exec_cmd->return_code);
         weechat_log_printf ("  pipe_command. . . . . . : '%s'",  ptr_exec_cmd->pipe_command);
         weechat_log_printf ("  hsignal . . . . . . . . : '%s'",  ptr_exec_cmd->hsignal);
