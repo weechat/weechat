@@ -72,9 +72,24 @@ exec_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
 int
 exec_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
 {
+    const char *full_name;
+    struct t_exec_cmd *ptr_exec_cmd;
+
     /* make C compiler happy */
     (void) data;
-    (void) buffer;
+
+    /* kill any command whose output is on this buffer */
+    full_name = weechat_buffer_get_string (buffer, "full_name");
+    for (ptr_exec_cmd = exec_cmds; ptr_exec_cmd;
+         ptr_exec_cmd = ptr_exec_cmd->next_cmd)
+    {
+        if (ptr_exec_cmd->hook
+            && ptr_exec_cmd->buffer_full_name
+            && (strcmp (ptr_exec_cmd->buffer_full_name, full_name) == 0))
+        {
+            weechat_hook_set (ptr_exec_cmd->hook, "signal", "kill");
+        }
+    }
 
     return WEECHAT_RC_OK;
 }
