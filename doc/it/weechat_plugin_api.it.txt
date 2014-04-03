@@ -10725,7 +10725,7 @@ Properties:
 
 // TRANSLATION MISSING
 | hotlist | "+", "-", WEECHAT_HOTLIST_LOW, WEECHAT_HOTLIST_MESSAGE,
-  WEECHAT_HOTLIST_PRIVATE, WEECHAT_HOTLIST_HIGHLIGHT |
+  WEECHAT_HOTLIST_PRIVATE, WEECHAT_HOTLIST_HIGHLIGHT, "-1" |
   "+": abilita hotlist (impostazione globale , il puntatore al buffer pointer non
   è utilizzato) +
   "-": disabilita hotlist (impostazione globale, il puntatore al buffer non è

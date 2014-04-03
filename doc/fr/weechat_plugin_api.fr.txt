@@ -10652,7 +10652,7 @@ Propriétés :
 | Nom | Valeur | Description
 
 | hotlist | "+", "-", WEECHAT_HOTLIST_LOW, WEECHAT_HOTLIST_MESSAGE,
-  WEECHAT_HOTLIST_PRIVATE, WEECHAT_HOTLIST_HIGHLIGHT |
+  WEECHAT_HOTLIST_PRIVATE, WEECHAT_HOTLIST_HIGHLIGHT, "-1" |
   "+" : active la hotlist (option globale, le pointeur vers le tampon n'est pas
   utilisé) +
   "-" : désactive la hotlist (option globale, le pointeur vers le tampon n'est
