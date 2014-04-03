@@ -80,6 +80,8 @@ h5 {
 span.command {
   padding: .2em .5em;
   border: solid 1px #ccc;
+  border-radius: 4px;
+  box-shadow: 1px 1px 2px #ccc;
   margin-right: 12px;
   background: #eee;
   font-size: 1.1em;
