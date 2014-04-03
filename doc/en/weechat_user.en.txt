@@ -1926,6 +1926,12 @@ It's equivalent to:
 To set IRC channel (or private) charset, use same commands as server,
 but on channel (or private) buffer.
 
+To set charset for all channels/privates of an IRC server:
+
+----
+/set charset.encode.irc.freenode ISO-8859-15
+----
+
 To see all charsets used, use following command:
 
 ----

@@ -1926,6 +1926,13 @@ IRC サーバの文字コードを設定するには、サーババッファで 
 IRC チャンネル (またはプライベートメッセージ) の文字コードを設定するには、
 サーバの文字コード設定と同様のコマンドをチャンネル (またはプライベートメッセージ) バッファで使ってください。
 
+// TRANSLATION MISSING
+To set charset for all channels/privates of an IRC server:
+
+----
+/set charset.encode.irc.freenode ISO-8859-15
+----
+
 すべての文字コード設定を確認するには、以下のコマンドを利用してください:
 
 ----

@@ -1967,6 +1967,13 @@ ist identisch mit den Befehlen:
 Um den Zeichensatz in einem IRC-Channel (oder in einem privaten Buffer) zu ändern
 wird der selbe Befehl im entsprechenden Buffer genutzt.
 
+// TRANSLATION MISSING
+To set charset for all channels/privates of an IRC server:
+
+----
+/set charset.encode.irc.freenode ISO-8859-15
+----
+
 Um sich alle genutzten Zeichensätze anzeigen zu lassen wird folgender Befehl genutzt:
 
 ----

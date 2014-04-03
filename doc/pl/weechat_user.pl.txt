@@ -1944,6 +1944,13 @@ Jest równoważne z:
 Aby ustawić kodowanie dla kanału (lub prywatnej rozmowy) należy wykonać to samo,
 co w przypadku serwera, tylko w buforze kanału (lub prywatnej rozmowy).
 
+// TRANSLATION MISSING
+To set charset for all channels/privates of an IRC server:
+
+----
+/set charset.encode.irc.freenode ISO-8859-15
+----
+
 W celu wyświetlenia wszystkich ustawionych kodowań, wykonaj:
 
 ----

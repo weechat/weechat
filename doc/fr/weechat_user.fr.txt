@@ -1990,6 +1990,12 @@ Pour modifier le jeu de caractères d'un canal IRC (ou d'une conversation
 privée), utilisez la même commande que pour le serveur, mais sur le tampon du
 canal (ou du privé).
 
+Pour définir le jeu de caractères pour tous les canaux/privés d'un serveur IRC :
+
+----
+/set charset.encode.irc.freenode ISO-8859-15
+----
+
 Pour voir tous les jeux de caractères utilisés, utilisez la commande suivante :
 
 ----

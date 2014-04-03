@@ -2007,6 +2007,13 @@ Ad esempio:
 Per impostare il set caratteri per il canale IRC (o il privato), utilizzare gli
 stessi comandi per il server, ma sul buffer del canale (o quello privato).
 
+// TRANSLATION MISSING
+To set charset for all channels/privates of an IRC server:
+
+----
+/set charset.encode.irc.freenode ISO-8859-15
+----
+
 Per visualizzare tutti i set caratteri utilizzati, utilizzare il comando seguente:
 
 ----
