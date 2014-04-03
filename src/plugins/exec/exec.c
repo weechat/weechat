@@ -248,11 +248,6 @@ exec_display_line (struct t_exec_cmd *exec_cmd, struct t_gui_buffer *buffer,
 {
     char *line_color, *line2, str_number[32], str_tags[1024];
     int length;
-    /*
-    char *ptr_output, *ptr_line, *line, *line2, *pos;
-    char str_number[32], str_tags[1024];
-    int length;
-    */
 
     if (!exec_cmd || !line)
         return;
