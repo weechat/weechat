@@ -315,7 +315,7 @@ exec_display_line (struct t_exec_cmd *exec_cmd, struct t_gui_buffer *buffer,
         snprintf (str_number, sizeof (str_number), "%d", exec_cmd->number);
         snprintf (str_tags, sizeof (str_tags),
                   "exec_%s,exec_cmd_%s",
-                  (out) ? "stdout" : "stderr",
+                  (out == EXEC_STDOUT) ? "stdout" : "stderr",
                   (exec_cmd->name) ? exec_cmd->name : str_number);
         if (weechat_buffer_get_integer (buffer, "type") == 1)
         {
