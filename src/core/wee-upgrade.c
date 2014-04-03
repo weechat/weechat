@@ -769,6 +769,7 @@ upgrade_weechat_load ()
 
     upgrade_file = upgrade_file_new (WEECHAT_UPGRADE_FILENAME, 0);
     rc = upgrade_file_read (upgrade_file, &upgrade_weechat_read_cb, NULL);
+    upgrade_file_close (upgrade_file);
 
     if (!hotlist_reset)
         gui_hotlist_clear ();

@@ -241,6 +241,7 @@ relay_upgrade_load ()
 
     upgrade_file = weechat_upgrade_new (RELAY_UPGRADE_FILENAME, 0);
     rc = weechat_upgrade_read (upgrade_file, &relay_upgrade_read_cb, NULL);
+    weechat_upgrade_close (upgrade_file);
 
     return rc;
 }

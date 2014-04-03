@@ -15,6 +15,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 0.4.4 (under dev)
 
+* core: close .upgrade files before deleting them after /upgrade
 * core: add default key key[alt--] (toggle filters in current buffer)
   (closes #17)
 * core: add non-active merged buffers with activity in hotlist (if another

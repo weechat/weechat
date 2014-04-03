@@ -721,6 +721,7 @@ irc_upgrade_load ()
 
     upgrade_file = weechat_upgrade_new (IRC_UPGRADE_FILENAME, 0);
     rc = weechat_upgrade_read (upgrade_file, &irc_upgrade_read_cb, NULL);
+    weechat_upgrade_close (upgrade_file);
 
     return rc;
 }
