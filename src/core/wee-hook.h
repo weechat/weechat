@@ -222,6 +222,7 @@ struct t_hook_process
     struct t_hook *hook_timer;         /* timer to check if child has died  */
     char *buffer[3];                   /* buffers for child stdin/out/err   */
     int buffer_size[3];                /* size of child stdin/out/err       */
+    int buffer_flush;                  /* bytes to flush output buffers     */
 };
 
 /* hook connect */

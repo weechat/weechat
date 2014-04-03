@@ -7208,6 +7208,13 @@ struct t_hook *weechat_hook_process_hashtable (const char *command,
   データを書き込むためのパイプを子プロセスの標準入力 (stdin)
   に作成します (関数 <<_weechat_hook_set,weechat_hook_set>> を参照)
 
+// TRANSLATION MISSING
+| buffer_flush +
+  _(WeeChat バージョン 0.4.4 以上で利用可)_ |
+  number of bytes |
+  Minimum number of bytes to flush stdout/stderr (to send output to callback),
+  between 1 and 65536 (default); 1 = send any output immediately to the callback
+
 | detached +
   _(WeeChat バージョン 0.4.4 以上で利用可)_ |
   (非使用) |

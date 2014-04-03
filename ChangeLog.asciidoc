@@ -70,6 +70,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: add signals "key_combo_{default|search|cursor}"
 * core: display a warning in case of inconsistency between the options
   weechat.look.save_{config|layout}_on_exit
+* api: add option "buffer_flush" in function hook_process_hashtable
 * api: allow negative value for y in function printf_y
 * api: add support of case insensitive search and search by buffer full name
   in function buffer_search (bug #34318)

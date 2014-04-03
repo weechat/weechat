@@ -1351,7 +1351,9 @@ hook_process_hashtable (struct t_weechat_plugin *plugin,
 {
     struct t_hook *new_hook;
     struct t_hook_process *new_hook_process;
-    char *stdout_buffer, *stderr_buffer;
+    char *stdout_buffer, *stderr_buffer, *error;
+    const char *ptr_value;
+    long number;
 
     stdout_buffer = NULL;
     stderr_buffer = NULL;
@@ -1404,6 +1406,20 @@ hook_process_hashtable (struct t_weechat_plugin *plugin,
     new_hook_process->buffer_size[HOOK_PROCESS_STDIN] = 0;
     new_hook_process->buffer_size[HOOK_PROCESS_STDOUT] = 0;
     new_hook_process->buffer_size[HOOK_PROCESS_STDERR] = 0;
+    new_hook_process->buffer_flush = HOOK_PROCESS_BUFFER_SIZE;
+    if (options)
+    {
+        ptr_value = hashtable_get (options, "buffer_flush");
+        if (ptr_value && ptr_value[0])
+        {
+            number = strtol (ptr_value, &error, 10);
+            if (error && !error[0]
+                && (number >= 1) && (number <= HOOK_PROCESS_BUFFER_SIZE))
+            {
+                new_hook_process->buffer_flush = (int)number;
+            }
+        }
+    }
 
     hook_add_to_list (new_hook);
 
@@ -1668,6 +1684,12 @@ hook_process_child_read (struct t_hook *hook_process, int fd,
     {
         hook_process_add_to_buffer (hook_process, index_buffer,
                                     buffer, num_read);
+        if (HOOK_PROCESS(hook_process, buffer_size[index_buffer]) >=
+            HOOK_PROCESS(hook_process, buffer_flush))
+        {
+            hook_process_send_buffers (hook_process,
+                                       WEECHAT_HOOK_PROCESS_RUNNING);
+        }
     }
     else if (num_read == 0)
     {

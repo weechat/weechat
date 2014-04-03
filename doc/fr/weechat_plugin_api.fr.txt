@@ -7339,6 +7339,13 @@ sont disponibles :
   Créer un tuyau pour écrire sur l'entrée standard (stdin) du processus fils
   (voir la fonction <<_weechat_hook_set,weechat_hook_set>>)
 
+| buffer_flush +
+  _(WeeChat ≥ 0.4.4)_ |
+  nombre d'octets |
+  Nombre minimum d'octets pour vider stdout/stderr (pour envoyer la sortie au
+  "callback"), entre 1 et 65536 (par défaut); 1 = envoyer toute sortie
+  immédiatement au "callback"
+
 | detached +
   _(WeeChat ≥ 0.4.4)_ |
   (non utilisée) |
