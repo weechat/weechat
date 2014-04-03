@@ -873,7 +873,9 @@ exec_command_init ()
            "  /exec -nf -noln links -dump "
            "http://weechat.org/files/doc/devel/weechat_user.en.html\n"
            "  /exec -o uptime\n"
-           "  /exec -pipe \"/print Machine uptime:\" uptime"),
+           "  /exec -pipe \"/print Machine uptime:\" uptime\n"
+           "  /exec -n tail -f /var/log/messages\n"
+           "  /exec -kill 0"),
         "-list"
         " || -sh|-nosh|-bg|-nobg|-stdin|-nostdin|-buffer|-l|-o|-n|-nf|"
         "-cl|-nocl|-sw|-nosw|-ln|-noln|-flush|-noflush|-color|-timeout|-name|"

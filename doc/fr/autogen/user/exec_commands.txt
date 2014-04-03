@@ -66,5 +66,7 @@ Exemples:
   /exec -nf -noln links -dump http://weechat.org/files/doc/devel/weechat_user.en.html
   /exec -o uptime
   /exec -pipe "/print Uptime de la machine:" uptime
+  /exec -n tail -f /var/log/messages
+  /exec -kill 0
 ----
 
