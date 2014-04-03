@@ -1709,19 +1709,24 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     if (!property || !value)
         return;
 
-    /* properties that does NOT need a buffer */
+    /* properties with optional buffer */
     if (string_strcasecmp (property, "hotlist") == 0)
     {
         if (strcmp (value, "-") == 0)
             gui_add_hotlist = 0;
         else if (strcmp (value, "+") == 0)
             gui_add_hotlist = 1;
-        else
+        else if (buffer)
         {
             error = NULL;
             number = strtol (value, &error, 10);
             if (error && !error[0])
-                (void) gui_hotlist_add (buffer, number, NULL);
+            {
+                if (number < 0)
+                    gui_hotlist_remove_buffer (buffer);
+                else
+                    (void) gui_hotlist_add (buffer, number, NULL);
+            }
         }
     }
     else if (string_strcasecmp (property, "completion_freeze") == 0)

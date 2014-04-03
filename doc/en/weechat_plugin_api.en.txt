@@ -10454,7 +10454,8 @@ Properties:
   WEECHAT_HOTLIST_PRIVATE, WEECHAT_HOTLIST_HIGHLIGHT |
   "+": enable hotlist (global setting, buffer pointer is not used) +
   "-": disable hotlist (global setting, buffer pointer is not used) +
-  priority: add buffer to hotlist with this priority
+  priority: add buffer to hotlist with this priority +
+  "-1": remove buffer from hotlist _(WeeChat ≥ 0.4.4)_
 
 | completion_freeze | "0", "1" |
   "0": no freeze of completion (default value)

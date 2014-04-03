@@ -10443,11 +10443,13 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
 |===
 | 名前 | 値 | 説明
 
+// TRANSLATION MISSING
 | hotlist | "+", "-", WEECHAT_HOTLIST_LOW, WEECHAT_HOTLIST_MESSAGE,
   WEECHAT_HOTLIST_PRIVATE, WEECHAT_HOTLIST_HIGHLIGHT |
   "+": ホットリストを有効化 (グローバル設定、バッファへのポインタは使われない) +
   "-": ホットリストを無効化 (グローバル設定、バッファへのポインタは使われない) +
-  優先度: この優先度でホットリストにバッファを追加
+  優先度: この優先度でホットリストにバッファを追加 +
+  "-1": remove buffer from hotlist _(WeeChat ≥ 0.4.4)_
 
 | completion_freeze | "0", "1" |
   "0": 補完を止める (デフォルト)

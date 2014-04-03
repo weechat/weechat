@@ -10657,7 +10657,8 @@ Propriétés :
   utilisé) +
   "-" : désactive la hotlist (option globale, le pointeur vers le tampon n'est
   pas utilisé) +
-  priorité : ajouter ce tampon dans la hotlist avec cette priorité
+  priorité : ajouter ce tampon dans la hotlist avec cette priorité +
+  "-1" : supprimer ce tampon de la hotlist _(WeeChat ≥ 0.4.4)_
 
 | completion_freeze | "0", "1" |
   "0" : pas de gel de la complétion (valeur par défaut)

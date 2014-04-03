@@ -492,7 +492,7 @@ gui_hotlist_remove_buffer (struct t_gui_buffer *buffer)
     int hotlist_changed;
     struct t_gui_hotlist *ptr_hotlist, *next_hotlist;
 
-    if (weechat_upgrading)
+    if (!buffer || weechat_upgrading)
         return;
 
     hotlist_changed = 0;
