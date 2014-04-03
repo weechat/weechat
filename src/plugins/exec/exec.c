@@ -516,12 +516,6 @@ exec_process_cb (void *data, const char *command, int return_code,
                         (err) ? strlen (err) : 0);
     }
 
-    if (return_code == WEECHAT_HOOK_PROCESS_ERROR)
-    {
-        exec_end_command (ptr_exec_cmd, -1);
-        return WEECHAT_RC_OK;
-    }
-
     if (out)
     {
         exec_concat_output (&ptr_exec_cmd->out_size,
@@ -535,7 +529,9 @@ exec_process_cb (void *data, const char *command, int return_code,
                             err);
     }
 
-    if (return_code >= 0)
+    if (return_code == WEECHAT_HOOK_PROCESS_ERROR)
+        exec_end_command (ptr_exec_cmd, -1);
+    else if (return_code >= 0)
         exec_end_command (ptr_exec_cmd, return_code);
 
     return WEECHAT_RC_OK;
