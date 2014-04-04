@@ -183,10 +183,10 @@
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
-* [[option_irc.look.item_channel_modes_hide_key]] *irc.look.item_channel_modes_hide_key*
-** 説明: `チャンネルモードに含まれるチャンネルキーを隠す (チャンネルにモード +k が設定されていた場合、全てのチャンネルモード引数を隠す)`
-** タイプ: ブール
-** 値: on, off (デフォルト値: `off`)
+* [[option_irc.look.item_channel_modes_hide_args]] *irc.look.item_channel_modes_hide_args*
+** 説明: `hide channel modes arguments if at least one of these modes is in channel modes ("*" to always hide all arguments, empty value to never hide arguments); example: "kf" to hide arguments if "k" or "f" are in channel modes`
+** タイプ: 文字列
+** 値: 未制約文字列 (デフォルト値: `"k"`)
 
 * [[option_irc.look.item_display_server]] *irc.look.item_display_server*
 ** 説明: `IRC サーバが表示されるバーアイテムの名前 (ステータスバー用)`

@@ -119,7 +119,7 @@ extern struct t_config_option *irc_config_look_highlight_channel;
 extern struct t_config_option *irc_config_look_highlight_pv;
 extern struct t_config_option *irc_config_look_highlight_tags_restrict;
 extern struct t_config_option *irc_config_look_item_away_message;
-extern struct t_config_option *irc_config_look_item_channel_modes_hide_key;
+extern struct t_config_option *irc_config_look_item_channel_modes_hide_args;
 extern struct t_config_option *irc_config_look_item_display_server;
 extern struct t_config_option *irc_config_look_item_nick_modes;
 extern struct t_config_option *irc_config_look_item_nick_prefix;
@@ -196,6 +196,7 @@ extern char **irc_config_nicks_hide_password;
 extern int irc_config_num_nicks_hide_password;
 
 extern void irc_config_set_nick_colors ();
+extern int irc_config_display_channel_modes_arguments (const char *modes);
 extern int irc_config_server_check_value_cb (void *data,
                                              struct t_config_option *option,
                                              const char *value);

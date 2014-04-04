@@ -17,6 +17,19 @@ http://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 == Version 0.4.4 (under dev)
 
+=== Hide IRC channel modes arguments
+
+The option 'irc.look.item_channel_modes_hide_key' has been renamed to
+'irc.look.item_channel_modes_hide_args' and it now a string. +
+It can now hide arguments for multiple channel modes.
+
+By default, a channel key (mode "k") will hide channel arguments. For old
+behavior (never hide arguments, even with a channel key), you can do:
+
+----
+/set irc.look.item_channel_modes_hide_args ""
+----
+
 === Jump to first/last buffer
 
 The command `/input jump_last_buffer` has been replaced by `/buffer +`.

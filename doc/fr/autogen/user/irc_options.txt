@@ -183,10 +183,10 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 
-* [[option_irc.look.item_channel_modes_hide_key]] *irc.look.item_channel_modes_hide_key*
-** description: `cacher la clé du canal (cela cachera tous les paramètres des modes du canal si le mode +k est défini sur le canal)`
-** type: booléen
-** valeurs: on, off (valeur par défaut: `off`)
+* [[option_irc.look.item_channel_modes_hide_args]] *irc.look.item_channel_modes_hide_args*
+** description: `cacher les paramètres des modes du canal si au moins un de ces modes est dans les modes du canal ("*" pour toujours cacher les paramètres, valeur vide pour ne jamais cacher les paramètres); exemple: "kf" pour cacher les paramètres si "k" ou "f" sont dans les modes du canal`
+** type: chaîne
+** valeurs: toute chaîne (valeur par défaut: `"k"`)
 
 * [[option_irc.look.item_display_server]] *irc.look.item_display_server*
 ** description: `nom de l'objet de barre où est affiché le serveur IRC (pour la barre de statut)`

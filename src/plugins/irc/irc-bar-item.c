@@ -260,7 +260,7 @@ irc_bar_item_buffer_modes (void *data, struct t_gui_bar_item *item,
                            struct t_hashtable *extra_info)
 {
     char modes[128], *modes_without_args;
-    const char *pos_space, *pos_key;
+    const char *pos_space;
     int part_from_channel;
     struct t_irc_server *server;
     struct t_irc_channel *channel;
@@ -287,17 +287,13 @@ irc_bar_item_buffer_modes (void *data, struct t_gui_bar_item *item,
         && (strcmp (channel->modes, "+") != 0))
     {
         modes_without_args = NULL;
-        if (weechat_config_boolean (irc_config_look_item_channel_modes_hide_key))
+        if (!irc_config_display_channel_modes_arguments (channel->modes))
         {
             pos_space = strchr(channel->modes, ' ');
             if (pos_space)
             {
-                pos_key = strchr(channel->modes, 'k');
-                if (pos_key && (pos_key < pos_space))
-                {
-                    modes_without_args = weechat_strndup (channel->modes,
-                                                          pos_space - channel->modes);
-                }
+                modes_without_args = weechat_strndup (channel->modes,
+                                                      pos_space - channel->modes);
             }
         }
         snprintf (modes, sizeof (modes),

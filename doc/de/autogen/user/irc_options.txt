@@ -183,10 +183,10 @@
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
-* [[option_irc.look.item_channel_modes_hide_key]] *irc.look.item_channel_modes_hide_key*
-** Beschreibung: `der Channel-Schlüssel wird nicht im Channel Modus angezeigt (diese Option unterdrückt alle Channel-Modi falls der Modus für den Channel auf +k gesetzt wurde)`
-** Typ: boolesch
-** Werte: on, off (Standardwert: `off`)
+* [[option_irc.look.item_channel_modes_hide_args]] *irc.look.item_channel_modes_hide_args*
+** Beschreibung: `hide channel modes arguments if at least one of these modes is in channel modes ("*" to always hide all arguments, empty value to never hide arguments); example: "kf" to hide arguments if "k" or "f" are in channel modes`
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette (Standardwert: `"k"`)
 
 * [[option_irc.look.item_display_server]] *irc.look.item_display_server*
 ** Beschreibung: `Name der Bar-Item in dem der IRC Server angezeigt wird (für Status-Bar)`

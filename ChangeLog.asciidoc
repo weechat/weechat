@@ -90,6 +90,9 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * alias: change default command for alias /beep to "/print -beep"
 * exec: add exec plugin: new command /exec and file exec.conf
 * guile: fix module used after unload of a script
+* irc: rename option irc.look.item_channel_modes_hide_key to
+  irc.look.item_channel_modes_hide_args, value is now a string
+  (task #12070, task #12163, closes #48)
 * irc: add option irc.color.item_nick_modes (closes #47)
 * irc: allow "$ident" in option irc.network.ban_mask_default (closes #18)
 * irc: add support of "away-notify" capability (closes #12)

@@ -71,7 +71,7 @@ struct t_config_option *irc_config_look_highlight_channel;
 struct t_config_option *irc_config_look_highlight_pv;
 struct t_config_option *irc_config_look_highlight_tags_restrict;
 struct t_config_option *irc_config_look_item_away_message;
-struct t_config_option *irc_config_look_item_channel_modes_hide_key;
+struct t_config_option *irc_config_look_item_channel_modes_hide_args;
 struct t_config_option *irc_config_look_item_display_server;
 struct t_config_option *irc_config_look_item_nick_modes;
 struct t_config_option *irc_config_look_item_nick_prefix;
@@ -244,6 +244,45 @@ irc_config_set_nick_colors ()
         weechat_string_split (weechat_config_string (weechat_config_get ("weechat.color.chat_nick_colors")),
                               ",", 0, 0,
                               &irc_config_num_nick_colors);
+}
+
+/*
+ * Checks if channel modes arguments must be displayed or hidden
+ * (according to option irc.look.item_channel_modes_hide_args).
+ *
+ * Returns:
+ *   1: channel modes arguments must be displayed
+ *   0: channel modes arguments must be hidden
+ */
+
+int
+irc_config_display_channel_modes_arguments (const char *modes)
+{
+    char *pos_space, *pos;
+    const char *ptr_mode;
+
+    pos_space = strchr (modes, ' ');
+    if (!pos_space)
+        return 1;
+
+    ptr_mode = weechat_config_string (irc_config_look_item_channel_modes_hide_args);
+    if (!ptr_mode)
+        return 1;
+
+    /* "*" means hide all arguments */
+    if (strcmp (ptr_mode, "*") == 0)
+        return 0;
+
+    while (ptr_mode[0])
+    {
+        pos = strchr (modes, ptr_mode[0]);
+        if (pos && (pos < pos_space))
+            return 0;
+        ptr_mode++;
+    }
+
+    /* arguments are displayed by default */
+    return 1;
 }
 
 /*
@@ -445,12 +484,12 @@ irc_config_change_look_item_away_message (void *data,
 }
 
 /*
- * Callback for changes on option "irc.look.item_channel_modes_hide_key".
+ * Callback for changes on option "irc.look.item_channel_modes_hide_args".
  */
 
 void
-irc_config_change_look_item_channel_modes_hide_key (void *data,
-                                                    struct t_config_option *option)
+irc_config_change_look_item_channel_modes_hide_args (void *data,
+                                                     struct t_config_option *option)
 {
     /* make C compiler happy */
     (void) data;
@@ -2357,13 +2396,15 @@ irc_config_init ()
         N_("display server away message in away bar item"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL,
         &irc_config_change_look_item_away_message, NULL, NULL, NULL);
-    irc_config_look_item_channel_modes_hide_key = weechat_config_new_option (
+    irc_config_look_item_channel_modes_hide_args = weechat_config_new_option (
         irc_config_file, ptr_section,
-        "item_channel_modes_hide_key", "boolean",
-        N_("hide channel key in channel modes (this will hide all channel modes "
-           "arguments if mode +k is set on channel)"),
-        NULL, 0, 0, "off", NULL, 0, NULL, NULL,
-        &irc_config_change_look_item_channel_modes_hide_key, NULL, NULL, NULL);
+        "item_channel_modes_hide_args", "string",
+        N_("hide channel modes arguments if at least one of these modes is in "
+           "channel modes (\"*\" to always hide all arguments, empty value to "
+           "never hide arguments); example: \"kf\" to hide arguments if \"k\" "
+           "or \"f\" are in channel modes"),
+        NULL, 0, 0, "k", NULL, 0, NULL, NULL,
+        &irc_config_change_look_item_channel_modes_hide_args, NULL, NULL, NULL);
     irc_config_look_item_display_server = weechat_config_new_option (
         irc_config_file, ptr_section,
         "item_display_server", "integer",

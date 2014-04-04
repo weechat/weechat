@@ -183,10 +183,10 @@
 ** type: boolean
 ** values: on, off (default value: `on`)
 
-* [[option_irc.look.item_channel_modes_hide_key]] *irc.look.item_channel_modes_hide_key*
-** description: `hide channel key in channel modes (this will hide all channel modes arguments if mode +k is set on channel)`
-** type: boolean
-** values: on, off (default value: `off`)
+* [[option_irc.look.item_channel_modes_hide_args]] *irc.look.item_channel_modes_hide_args*
+** description: `hide channel modes arguments if at least one of these modes is in channel modes ("*" to always hide all arguments, empty value to never hide arguments); example: "kf" to hide arguments if "k" or "f" are in channel modes`
+** type: string
+** values: any string (default value: `"k"`)
 
 * [[option_irc.look.item_display_server]] *irc.look.item_display_server*
 ** description: `name of bar item where IRC server is displayed (for status bar)`
