@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-04-04 09:38+0200\n"
+"POT-Creation-Date: 2014-04-04 10:26+0200\n"
 "PO-Revision-Date: 2014-04-02 20:17+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -4630,9 +4630,12 @@ msgstr ""
 "aktualisieren [z] Farben zurücksetzen [q] Buffer schließen | Befehle: [alt-"
 "c] wechselt Farben (für 10 Sekunden)"
 
-#, c-format
-msgid "WeeChat color pairs (in use: %d, left: %d):"
+#, fuzzy, c-format
+msgid "WeeChat color pairs auto-allocated (in use: %d, left: %d):"
 msgstr "WeeChat Farbpaare (in Benutzung: %d; noch frei verfügbar: %d):"
+
+msgid "(press alt-c to see the colors you can use in options)"
+msgstr ""
 
 #, c-format
 msgid "Last auto reset of pairs: %s"

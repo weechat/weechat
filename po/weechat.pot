@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-04-04 09:38+0200\n"
+"POT-Creation-Date: 2014-04-04 10:26+0200\n"
 "PO-Revision-Date: 2013-02-14 18:20+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3231,7 +3231,10 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid "WeeChat color pairs (in use: %d, left: %d):"
+msgid "WeeChat color pairs auto-allocated (in use: %d, left: %d):"
+msgstr ""
+
+msgid "(press alt-c to see the colors you can use in options)"
 msgstr ""
 
 #, c-format

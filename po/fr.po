@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-04-04 09:38+0200\n"
-"PO-Revision-Date: 2014-04-04 09:39+0200\n"
+"POT-Creation-Date: 2014-04-04 10:26+0200\n"
+"PO-Revision-Date: 2014-04-04 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -4516,8 +4516,15 @@ msgstr ""
 "Basculer temporairement vers les couleurs du terminal"
 
 #, c-format
-msgid "WeeChat color pairs (in use: %d, left: %d):"
-msgstr "Paires de couleurs WeeChat (en utilisation: %d, libres: %d):"
+msgid "WeeChat color pairs auto-allocated (in use: %d, left: %d):"
+msgstr ""
+"Paires de couleurs WeeChat automatiquement allouées (en utilisation: %d, "
+"libres: %d):"
+
+msgid "(press alt-c to see the colors you can use in options)"
+msgstr ""
+"(appuyez sur alt-c pour voir les couleurs que vous pouvez utiliser dans les "
+"options)"
 
 #, c-format
 msgid "Last auto reset of pairs: %s"

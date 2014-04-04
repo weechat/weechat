@@ -822,7 +822,8 @@ gui_color_buffer_display ()
     else
     {
         gui_chat_printf_y (gui_color_buffer, y++,
-                           _("WeeChat color pairs (in use: %d, left: %d):"),
+                           _("WeeChat color pairs auto-allocated "
+                             "(in use: %d, left: %d):"),
                            gui_color_pairs_used,
                            gui_color_num_pairs - gui_color_pairs_used);
     }
@@ -876,6 +877,10 @@ gui_color_buffer_display ()
                            " %s",
                            str_line);
     }
+    gui_chat_printf_y (gui_color_buffer, y++,
+                       (gui_color_use_term_colors) ?
+                       "" : _("(press alt-c to see the colors you can use "
+                              "in options)"));
 
     if (gui_color_buffer_extra_info)
     {

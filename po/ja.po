@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-04-04 09:38+0200\n"
+"POT-Creation-Date: 2014-04-04 10:26+0200\n"
 "PO-Revision-Date: 2014-03-29 20:07+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
@@ -4341,9 +4341,12 @@ msgstr ""
 "WeeChat 色 | アクション: [e] 追加情報の表示 [r] リフレッシュ [z] 色のリセッ"
 "ト [q] 色バッファ | キー: [alt-c] 一時的にターミナル色を変更"
 
-#, c-format
-msgid "WeeChat color pairs (in use: %d, left: %d):"
+#, fuzzy, c-format
+msgid "WeeChat color pairs auto-allocated (in use: %d, left: %d):"
 msgstr "WeeChat 色ペア (使用中: %d、残り: %d):"
+
+msgid "(press alt-c to see the colors you can use in options)"
+msgstr ""
 
 #, c-format
 msgid "Last auto reset of pairs: %s"
