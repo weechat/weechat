@@ -99,7 +99,11 @@ vedere "irc" ed altri plugin nella lista.
 [[create_irc_server]]
 == Creare un server IRC
 
-Si può aggiungere un server IRC con il comando `/server`, per esempio:
+// TRANSLATION MISSING
+The server 'freenode' is created by default on first startup.
+
+// TRANSLATION MISSING
+You can add another IRC server with `/server` command, for example:
 
 ----
 /server add oftc irc.oftc.net/6667
@@ -124,23 +128,23 @@ Per ogni opzione del server, WeeChat usa il proprio valore se definito
 ("irc.server_default.xxx").
 
 Per esempio ci sono dei nick predefiniti (basati sul proprio login un*x), ed
-è possibile sovrascriverli per il server oftc con il seguente comando:
+è possibile sovrascriverli per il server freenode con il seguente comando:
 
 ----
-/set irc.server.oftc.nicks "mynick,mynick2,mynick3,mynick4,mynick5"
+/set irc.server.freenode.nicks "mynick,mynick2,mynick3,mynick4,mynick5"
 ----
 
 Per impostare il nome utente ed il nome reale:
 
 ----
-/set irc.server.oftc.username "Mio nome utente"
-/set irc.server.oftc.realname "Mio nome reale"
+/set irc.server.freenode.username "Mio nome utente"
+/set irc.server.freenode.realname "Mio nome reale"
 ----
 
 Per impostare la connessione automatica al server all'avvio:
 
 ----
-/set irc.server.oftc.autoconnect on
+/set irc.server.freenode.autoconnect on
 ----
 
 Se SASL è disponibile sul server, è possibile usarlo per l'autenticazione
@@ -148,15 +152,15 @@ Se SASL è disponibile sul server, è possibile usarlo per l'autenticazione
 
 ----
 /set irc.server_default.sasl_mechanism dh-blowfish
-/set irc.server.oftc.sasl_username "mynick"
-/set irc.server.oftc.sasl_password "xxxxxxx"
+/set irc.server.freenode.sasl_username "mynick"
+/set irc.server.freenode.sasl_password "xxxxxxx"
 ----
 
 Per eseguire un comando dopo la connessione al server, ad esempio per
 autenticarsi con nickserv (solo se non viene usato SASL per l'autenticazione):
 
 ----
-/set irc.server.oftc.command "/msg nickserv identify xxxxxxx"
+/set irc.server.freenode.command "/msg nickserv identify xxxxxxx"
 ----
 
 [NOTE]
@@ -166,7 +170,7 @@ Per entrare automaticamente in alcuni canali quando ci si connette
 al server:
 
 ----
-/set irc.server.oftc.autojoin "#canale1,#canale2"
+/set irc.server.freenode.autojoin "#canale1,#canale2"
 ----
 
 Per eliminare il valore di un'opzione del server, e usare invece il valore
@@ -174,14 +178,14 @@ predefinito, per esempio per utilizzare i nick predefiniti
 (irc.server_default.nicks):
 
 ----
-/set irc.server.oftc.nicks null
+/set irc.server.freenode.nicks null
 ----
 
 Altre opzioni: è possibile impostare altre opzioni con il seguente comando
 ("xxx" è il nome dell'opzione):
 
 ----
-/set irc.server.oftc.xxx value
+/set irc.server.freenode.xxx value
 ----
 
 
@@ -189,7 +193,7 @@ Altre opzioni: è possibile impostare altre opzioni con il seguente comando
 == Connessione al server IRC e ingresso automatico nei canali
 
 ----
-/connect oftc
+/connect freenode
 ----
 
 [NOTE]

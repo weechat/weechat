@@ -98,7 +98,11 @@ WeeChat после изменений в настройках)
 [[create_irc_server]]
 == Добавление IRC сервера
 
-Вы можете добавить сервер используя команду `/server`, на пример:
+// TRANSLATION MISSING
+The server 'freenode' is created by default on first startup.
+
+// TRANSLATION MISSING
+You can add another IRC server with `/server` command, for example:
 
 ----
 /server add oftc irc.oftc.net/6667
@@ -122,23 +126,23 @@ WeeChat использует стандартные значения для вс
 Иначе используется стандартное значение ("irc.server_default.xxx").
 
 На пример: есть ники по умолчанию (базируются на логине un*x системы), и
-вы можете переназначить их для сервера oftc используя команду:
+вы можете переназначить их для сервера freenode используя команду:
 
 ----
-/set irc.server.oftc.nicks "mynick,mynick2,mynick3,mynick4,mynick5"
+/set irc.server.freenode.nicks "mynick,mynick2,mynick3,mynick4,mynick5"
 ----
 
 Что бы установить имя, и реальное Имя:
 
 ----
-/set irc.server.oftc.username "My user name"
-/set irc.server.oftc.realname "My real name"
+/set irc.server.freenode.username "My user name"
+/set irc.server.freenode.realname "My real name"
 ----
 
 Для соединения с сервером при старте программы:
 
 ----
-/set irc.server.oftc.autoconnect on
+/set irc.server.freenode.autoconnect on
 ----
 
 // TRANSLATION MISSING
@@ -147,8 +151,8 @@ identified before you join channels):
 
 ----
 /set irc.server_default.sasl_mechanism dh-blowfish
-/set irc.server.oftc.sasl_username "mynick"
-/set irc.server.oftc.sasl_password "xxxxxxx"
+/set irc.server.freenode.sasl_username "mynick"
+/set irc.server.freenode.sasl_password "xxxxxxx"
 ----
 
 // TRANSLATION MISSING
@@ -156,7 +160,7 @@ To run a command after connection to server, for example to authenticate
 with nickserv (only if you don't use SASL for authentication):
 
 ----
-/set irc.server.oftc.command "/msg nickserv identify xxxxxxx"
+/set irc.server.freenode.command "/msg nickserv identify xxxxxxx"
 ----
 
 [NOTE]
@@ -165,21 +169,21 @@ with nickserv (only if you don't use SASL for authentication):
 Для автовхода на каналы при подключении используйте:
 
 ----
-/set irc.server.oftc.autojoin "#channel1,#channel2"
+/set irc.server.freenode.autojoin "#channel1,#channel2"
 ----
 
 Что бы удалить значение опции, и использовать ее стандартное значение
 на пример для ников по умолчанию (irc.server_default.nicks):
 
 ----
-/set irc.server.oftc.nicks null
+/set irc.server.freenode.nicks null
 ----
 
 Другие настройки вы можете изменить используя следующую команду
 (заменяя "xxx" соответствующей опцией)
 
 ----
-/set irc.server.oftc.xxx value
+/set irc.server.freenode.xxx value
 ----
 
 
@@ -187,7 +191,7 @@ with nickserv (only if you don't use SASL for authentication):
 == Подключение к серверу, и автовход на каналы
 
 ----
-/connect oftc
+/connect freenode
 ----
 
 [NOTE]

@@ -103,7 +103,11 @@ Erweiterungen sollten aufgelistet werden.
 [[create_irc_server]]
 == Einen IRC-Server erstellen
 
-Du kannst einen IRC-Server mit dem Befehl `/server` hinzufügen, z.B.:
+// TRANSLATION MISSING
+The server 'freenode' is created by default on first startup.
+
+// TRANSLATION MISSING
+You can add another IRC server with `/server` command, for example:
 
 ----
 /server add oftc irc.oftc.net/6667
@@ -128,25 +132,25 @@ definiert (nicht "null"). Andernfalls verwendet WeeChat Vorgabewerte
 ("irc.server_default.xxx").
 
 Als Beispiel erwähnt ist die Vorgabe (default) für Nicks, die auf dem Un*x Login
-basiert. Diese Vorgabe kann nun für den oftc-Server mittels folgendem Befehl
+basiert. Diese Vorgabe kann nun für den freenode-Server mittels folgendem Befehl
 überschrieben werden:
 
 ----
-/set irc.server.oftc.nicks "mynick,mynick2,mynick3,mynick4,mynick5"
+/set irc.server.freenode.nicks "mynick,mynick2,mynick3,mynick4,mynick5"
 ----
 
 Um einen User- und realen Namen zu setzen:
 
 ----
-/set irc.server.oftc.username "Mein User-Name"
-/set irc.server.oftc.realname "Mein wirklicher Name"
+/set irc.server.freenode.username "Mein User-Name"
+/set irc.server.freenode.realname "Mein wirklicher Name"
 ----
 
 Um beim Start von WeeChat automatisch eine Verbindung zu einem Server
 herzustellen:
 
 ----
-/set irc.server.oftc.autoconnect on
+/set irc.server.freenode.autoconnect on
 ----
 
 Sollte der Server SASL unterstützen, kann man sich damit Authentifizieren
@@ -154,15 +158,15 @@ Sollte der Server SASL unterstützen, kann man sich damit Authentifizieren
 
 ----
 /set irc.server_default.sasl_mechanism dh-blowfish
-/set irc.server.oftc.sasl_username "mynick"
-/set irc.server.oftc.sasl_password "xxxxxxx"
+/set irc.server.freenode.sasl_username "mynick"
+/set irc.server.freenode.sasl_password "xxxxxxx"
 ----
 
 Unterstützt der Server keine SASL Authentifizierung, muss man sich bei "nickserv"
 identifizieren:
 
 ----
-/set irc.server.oftc.command "/msg nickserv identify xxxxxxx"
+/set irc.server.freenode.command "/msg nickserv identify xxxxxxx"
 ----
 
 [NOTE]
@@ -172,7 +176,7 @@ Um ein auto-join (automatisches 'betreten') von Channels (Räumen) nach der
 Verbindung zum Server zu erreichen:
 
 ----
-/set irc.server.oftc.autojoin "#channel1,#channel2"
+/set irc.server.freenode.autojoin "#channel1,#channel2"
 ----
 
 Um einen Wert der Server-Optionen zu entfernen und stattdessen wieder den
@@ -180,14 +184,14 @@ Vorgabewert (default) zu nutzen, z.B. Nutzung der vorgegebenen Nicks
 (irc.server_default.nicks):
 
 ----
-/set irc.server.oftc.nicks null
+/set irc.server.freenode.nicks null
 ----
 
 Andere Optionen: Du kannst andere Optionen mit folgendem Befehl festlegen ("xxx"
 ist der Optionsname):
 
 ----
-/set irc.server.oftc.xxx value
+/set irc.server.freenode.xxx value
 ----
 
 
@@ -195,7 +199,7 @@ ist der Optionsname):
 == Verbinden mit dem IRC-Server und auto-join der Channel
 
 ----
-/connect oftc
+/connect freenode
 ----
 
 [NOTE]

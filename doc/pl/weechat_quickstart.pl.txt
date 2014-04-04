@@ -97,7 +97,11 @@ na liście "irc" oraz inne wtyczki.
 [[create_irc_server]]
 == Tworzenie serwera IRC
 
-Możesz dodać serwer IRC za pomocą komendy `/server`, na przykład:
+// TRANSLATION MISSING
+The server 'freenode' is created by default on first startup.
+
+// TRANSLATION MISSING
+You can add another IRC server with `/server` command, for example:
 
 ----
 /server add oftc irc.oftc.net/6667
@@ -121,23 +125,23 @@ Dla każdej opcji serwera WeeChat używa jej wartości jeśli jest zdefiniowana 
 "null"). W przeciwnym przypadku WeeChat używa wartości domyślnych ("irc.server_default.xxx").
 
 Na przykład znajdują się tam domyślne nicki (bazujące na Twoim loginie un*x),
-możesz je zmienić dla serwera oftc następującą komendą:
+możesz je zmienić dla serwera freenode następującą komendą:
 
 ----
-/set irc.server.oftc.nicks "mójnick,mójnick2,mójnick3,mójnick4,mójnick5"
+/set irc.server.freenode.nicks "mójnick,mójnick2,mójnick3,mójnick4,mójnick5"
 ----
 
 Ustawienie nazwy użytkownika i imienia:
 
 ----
-/set irc.server.oftc.username "Moja nazwa użytkownika"
-/set irc.server.oftc.realname "Moje imię"
+/set irc.server.freenode.username "Moja nazwa użytkownika"
+/set irc.server.freenode.realname "Moje imię"
 ----
 
 Aby włączyć automatyczne łączenie się z serwerem przy starcie:
 
 ----
-/set irc.server.oftc.autoconnect on
+/set irc.server.freenode.autoconnect on
 ----
 
 Jeśli SASL jest dostępny na serwerze, można użyć go do uwierzytelnienia (zostaniesz
@@ -145,15 +149,15 @@ zidentyfikowany przed wejściem na kanał):
 
 ----
 /set irc.server_default.sasl_mechanism dh-blowfish
-/set irc.server.oftc.sasl_username "mójnick"
-/set irc.server.oftc.sasl_password "xxxxxxx"
+/set irc.server.freenode.sasl_username "mójnick"
+/set irc.server.freenode.sasl_password "xxxxxxx"
 ----
 
 Żeby wykonać komendę po połączeniu z serwerem, na przykład uwierzytelnienie
 przez nickserv (tylko jeśli nie uwierzytelniasz się przez SASL):
 
 ----
-/set irc.server.oftc.command "/msg nickserv identify xxxxxxx"
+/set irc.server.freenode.command "/msg nickserv identify xxxxxxx"
 ----
 
 [NOTE]
@@ -162,21 +166,21 @@ Wiele komend może być oddzielonych ';' (średnik).
 Aby automatycznie wejść na kanały po połączeniu z serwerem:
 
 ----
-/set irc.server.oftc.autojoin "#kanał1,#kanał2"
+/set irc.server.freenode.autojoin "#kanał1,#kanał2"
 ----
 
 Aby usunąć wartość dla opcji serwera, używając w zamian wartości domyślnej,
 na przykład, aby używać domyślnych nicków (irc.server_default.nicks):
 
 ----
-/set irc.server.oftc.nicks null
+/set irc.server.freenode.nicks null
 ----
 
 Inne opcje: możesz ustawić pozostałe opcje za pomocą komendy ("xxx" to
 nazwa opcji):
 
 ----
-/set irc.server.oftc.xxx wartość
+/set irc.server.freenode.xxx wartość
 ----
 
 
@@ -184,7 +188,7 @@ nazwa opcji):
 == Łączenie się z serwerem IRC i automatyczne wchodzenie na kanały
 
 ----
-/connect oftc
+/connect freenode
 ----
 
 [NOTE]

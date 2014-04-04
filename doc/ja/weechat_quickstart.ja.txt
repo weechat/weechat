@@ -97,7 +97,11 @@ IRC 等全てのネットワークプロトコルはそれぞれ異なるプラ�
 [[create_irc_server]]
 == サーバ情報を作成する
 
-`/server` コマンドで IRC サーバを追加できます。例:
+// TRANSLATION MISSING
+The server 'freenode' is created by default on first startup.
+
+// TRANSLATION MISSING
+You can add another IRC server with `/server` command, for example:
 
 ----
 /server add oftc irc.oftc.net/6667
@@ -121,23 +125,23 @@ IRC 等全てのネットワークプロトコルはそれぞれ異なるプラ�
 はデフォルト設定を使用します ("irc.server_default.xxx")。
 
 例えばデフォルトでは (un*x ログイン名をベースにした)
-ニックネームが設定されますが、以下のコマンドで oftc サーバ用の設定として上書きすることが可能です:
+ニックネームが設定されますが、以下のコマンドで freenode サーバ用の設定として上書きすることが可能です:
 
 ----
-/set irc.server.oftc.nicks "mynick,mynick2,mynick3,mynick4,mynick5"
+/set irc.server.freenode.nicks "mynick,mynick2,mynick3,mynick4,mynick5"
 ----
 
 ユーザ名と実名を設定する場合:
 
 ----
-/set irc.server.oftc.username "My user name"
-/set irc.server.oftc.realname "My real name"
+/set irc.server.freenode.username "My user name"
+/set irc.server.freenode.realname "My real name"
 ----
 
 サーバへの自動接続を設定する場合:
 
 ----
-/set irc.server.oftc.autoconnect on
+/set irc.server.freenode.autoconnect on
 ----
 
 サーバで SASL を利用可能な場合、SASL を利用してニックネーム認証することができます
@@ -145,15 +149,15 @@ IRC 等全てのネットワークプロトコルはそれぞれ異なるプラ�
 
 ----
 /set irc.server_default.sasl_mechanism dh-blowfish
-/set irc.server.oftc.sasl_username "mynick"
-/set irc.server.oftc.sasl_password "xxxxxxx"
+/set irc.server.freenode.sasl_username "mynick"
+/set irc.server.freenode.sasl_password "xxxxxxx"
 ----
 
 例えば nickserv との認証などを行うためにサーバ接続後にコマンドを実行するには
 (SASL を利用して認証を行わない場合):
 
 ----
-/set irc.server.oftc.command "/msg nickserv identify xxxxxxx"
+/set irc.server.freenode.command "/msg nickserv identify xxxxxxx"
 ----
 
 [NOTE]
@@ -162,21 +166,21 @@ IRC 等全てのネットワークプロトコルはそれぞれ異なるプラ�
 チャンネルへの自動参加を設定する場合:
 
 ----
-/set irc.server.oftc.autojoin "#channel1,#channel2"
+/set irc.server.freenode.autojoin "#channel1,#channel2"
 ----
 
 サーバオプションの代わりにデフォルトの値を使用する、例えばデフォルトのニックネーム
 (irc.server_default.nicks) を使用する場合:
 
 ----
-/set irc.server.oftc.nicks null
+/set irc.server.freenode.nicks null
 ----
 
 その他設定: その他のオプションも以下のコマンドで設定できます
 ("xxx" は設定名です):
 
 ----
-/set irc.server.oftc.xxx value
+/set irc.server.freenode.xxx value
 ----
 
 
@@ -184,7 +188,7 @@ IRC 等全てのネットワークプロトコルはそれぞれ異なるプラ�
 == サーバに接続し、チャンネルに自動接続する
 
 ----
-/connect oftc
+/connect freenode
 ----
 
 [NOTE]
