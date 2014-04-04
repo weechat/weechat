@@ -579,7 +579,7 @@
 ** wartości: 0 .. 2147483647 (domyślna wartość: `2048`)
 
 * [[option_irc.server_default.ssl_fingerprint]] *irc.server_default.ssl_fingerprint*
-** opis: `skrót SHA1 certyfikatu, który jest zaufany i akceptowany dla serwera (40 znaków heksadecymalnych bez separatorów); jeśli ta opcja jest ustawiona, certyfikat NIE jest dalej sprawdzany (opcja "ssl_verify")`
+** opis: `SHA1 fingerprint of certificate which is trusted and accepted for the server (it must be exactly 40 hexadecimal digits without separators); many fingerprints can be separated by commas; if this option is set, the other checks on certificates are NOT performed (option "ssl_verify")`
 ** typ: ciąg
 ** wartości: dowolny ciąg (domyślna wartość: `""`)
 

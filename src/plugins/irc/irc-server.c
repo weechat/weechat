@@ -3563,6 +3563,37 @@ irc_server_create_buffer (struct t_irc_server *server)
 }
 
 #ifdef HAVE_GNUTLS
+/*
+ * Compares two fingerprints: one hexadecimal (given by user), the second binary
+ * (received from IRC server).
+ *
+ * Returns:
+ *    0: fingerprints are the same
+ *   -1: fingerprints are different
+ */
+
+int
+irc_server_compare_fingerprints (const char *fingerprint,
+                                 const unsigned char *fingerprint_server,
+                                 ssize_t fingerprint_size)
+{
+    ssize_t i;
+    unsigned int value;
+
+    if ((ssize_t)strlen (fingerprint) != fingerprint_size * 2)
+        return -1;
+
+    for (i = 0; i < fingerprint_size; i++)
+    {
+        if (sscanf (&fingerprint[i * 2], "%02x", &value) != 1)
+            return -1;
+        if (value != fingerprint_server[i])
+            return -1;
+    }
+
+    /* fingerprints are the same */
+    return 0;
+}
 
 /*
  * Checks if a GnuTLS session uses the certificate with a given fingerprint.
@@ -3575,21 +3606,18 @@ irc_server_create_buffer (struct t_irc_server *server)
 int
 irc_server_check_certificate_fingerprint (struct t_irc_server *server,
                                           gnutls_x509_crt_t certificate,
-                                          const char *good_fingerprint)
+                                          const char *good_fingerprints)
 {
-    unsigned char fingerprint[20];
-    size_t i, fingerprint_size;
-    unsigned int value;
+    unsigned char fingerprint_server[20];
+    char **fingerprints;
+    int i, rc;
+    size_t fingerprint_size;
 
-    fingerprint_size = sizeof (fingerprint);
-
-    /* invalid length for good_fingerprint? */
-    if (strlen (good_fingerprint) != fingerprint_size * 2)
-        return 0;
+    fingerprint_size = sizeof (fingerprint_server);
 
     /* calculate the SHA1 fingerprint for the certificate */
     if (gnutls_x509_crt_get_fingerprint (certificate, GNUTLS_DIG_SHA1,
-                                         fingerprint,
+                                         fingerprint_server,
                                          &fingerprint_size) != GNUTLS_E_SUCCESS)
     {
         weechat_printf (server->buffer,
@@ -3599,17 +3627,28 @@ irc_server_check_certificate_fingerprint (struct t_irc_server *server,
         return 0;
     }
 
-    /* compare the fingerprints */
-    for (i = 0; i < fingerprint_size; i++)
+    /* split good_fingerprints */
+    fingerprints = weechat_string_split (good_fingerprints, ",", 0, 0, NULL);
+    if (!fingerprints)
+        return 0;
+
+    rc = 0;
+
+    for (i = 0; fingerprints[i]; i++)
     {
-        if (sscanf (&good_fingerprint[i * 2], "%02x", &value) != 1)
-            return 0;
-        if (value != fingerprint[i])
-            return 0;
+        /* check if the fingerprint matches */
+        if (irc_server_compare_fingerprints (fingerprints[i],
+                                             fingerprint_server,
+                                             fingerprint_size) == 0)
+        {
+            rc = 1;
+            break;
+        }
     }
 
-    /* fingerprint matches */
-    return 1;
+    weechat_string_free_split (fingerprints);
+
+    return rc;
 }
 
 /*

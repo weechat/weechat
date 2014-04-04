@@ -579,7 +579,7 @@
 ** valeurs: 0 .. 2147483647 (valeur par défaut: `2048`)
 
 * [[option_irc.server_default.ssl_fingerprint]] *irc.server_default.ssl_fingerprint*
-** description: `empreinte SHA1 du certificat qui est de confiance et accepté pour le serveur (elle doit avoir exactement 40 caractères hexadécimaux sans séparateurs); si cette option est définie, les autres vérifications sur les certificats ne sont PAS effectuées (option "ssl_verify")`
+** description: `empreinte SHA1 du certificat qui est de confiance et accepté pour le serveur (elle doit avoir exactement 40 caractères hexadécimaux sans séparateurs); plusieurs empreintes peuvent être séparées par des virgules; si cette option est définie, les autres vérifications sur les certificats ne sont PAS effectuées (option "ssl_verify")`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 

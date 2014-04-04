@@ -1016,8 +1016,9 @@ irc_config_server_check_value_cb (void *data,
                                   struct t_config_option *option,
                                   const char *value)
 {
-    int index_option, proxy_found;
+    int i, index_option, proxy_found, rc;
     const char *pos_error, *proxy_name;
+    char **fingerprints;
     struct t_infolist *infolist;
 
     /* make C compiler happy */
@@ -1072,11 +1073,30 @@ irc_config_server_check_value_cb (void *data,
             case IRC_SERVER_OPTION_SSL_FINGERPRINT:
                 if (value && value[0] && (strlen (value) != 40))
                 {
-                    weechat_printf (NULL,
-                                    _("%s%s: fingerprint must have exactly 40 "
-                                      "hexadecimal digits"),
-                                    weechat_prefix ("error"), IRC_PLUGIN_NAME);
-                    return 0;
+                    fingerprints = weechat_string_split (value, ",", 0, 0, NULL);
+                    if (fingerprints)
+                    {
+                        rc = 1;
+                        for (i = 0; fingerprints[i]; i++)
+                        {
+                            if (strlen (fingerprints[i]) != 40)
+                            {
+                                rc = 0;
+                                break;
+                            }
+                        }
+                        weechat_string_free_split (fingerprints);
+                        if (!rc)
+                        {
+                            weechat_printf (NULL,
+                                            _("%s%s: fingerprint must have "
+                                              "exactly 40 hexadecimal "
+                                              "digits"),
+                                            weechat_prefix ("error"),
+                                            IRC_PLUGIN_NAME);
+                            return 0;
+                        }
+                    }
                 }
                 break;
         }
@@ -1595,8 +1615,9 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 option_name, "string",
                 N_("SHA1 fingerprint of certificate which is trusted and "
                    "accepted for the server (it must be exactly 40 hexadecimal "
-                   "digits without separators); if this option is set, the "
-                   "other checks on certificates are NOT performed (option "
+                   "digits without separators); many fingerprints can be "
+                   "separated by commas; if this option is set, the other "
+                   "checks on certificates are NOT performed (option "
                    "\"ssl_verify\")"),
                 NULL, 0, 0,
                 default_value, value,
