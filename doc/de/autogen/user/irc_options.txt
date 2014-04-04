@@ -24,7 +24,7 @@
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `yellow`)
 
 * [[option_irc.color.item_nick_modes]] *irc.color.item_nick_modes*
-** Beschreibung: `color for nick modes in bar item "input_prompt"`
+** Beschreibung: `Farbe in der der Nick-Modus in dem Bar-Item "input_prompt" angezeigt werden soll`
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `default`)
 
@@ -184,7 +184,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.item_channel_modes_hide_args]] *irc.look.item_channel_modes_hide_args*
-** Beschreibung: `hide channel modes arguments if at least one of these modes is in channel modes ("*" to always hide all arguments, empty value to never hide arguments); example: "kf" to hide arguments if "k" or "f" are in channel modes`
+** Beschreibung: `unterdrückt die Ausgabe von Argumenten die die Channel-Modi betreffen, sofern der entsprechende Modus für den Channel gesetzt ist ("*" unterdrückt jedwede Ausgabe von Argumenten; wird kein Wert angegeben, dann werden alle Argumente angezeigt); Beispiele: "kf" unterdrückt die Argumente, falls "k" oder "f"  für den Channel gesetzt sind`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"k"`)
 
@@ -194,12 +194,12 @@
 ** Werte: buffer_plugin, buffer_name (Standardwert: `buffer_plugin`)
 
 * [[option_irc.look.item_nick_modes]] *irc.look.item_nick_modes*
-** Beschreibung: `display nick modes in bar item "input_prompt"`
+** Beschreibung: `der Nick-Modus wird in dem Bar-Item "input_prompt" angezeigt`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.item_nick_prefix]] *irc.look.item_nick_prefix*
-** Beschreibung: `display nick prefix in bar item "input_prompt"`
+** Beschreibung: `der Nick-Präfix wird im Bar-Item "input_prompt" angezeigt`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
@@ -579,7 +579,7 @@
 ** Werte: 0 .. 2147483647 (Standardwert: `2048`)
 
 * [[option_irc.server_default.ssl_fingerprint]] *irc.server_default.ssl_fingerprint*
-** Beschreibung: `SHA1 fingerprint of certificate which is trusted and accepted for the server (it must be exactly 40 hexadecimal digits without separators); many fingerprints can be separated by commas; if this option is set, the other checks on certificates are NOT performed (option "ssl_verify")`
+** Beschreibung: `SHA1 Fingerprint des Zertifikates welches als vertrauenswürdig eingestuft und für diesen Server akzeptiert wird (hier müssen exakt 40 hexadezimale Zeichen, ohne Trennung, angegeben werden); mehrere Fingerprints können durch Kommata voneinander getrennt werden; wenn diese Option verwendet wird, dann werden andere Optionen, die eine Überprüfung von Zertifikaten vornehmen, NICHT berücksichtigt (Option "ssl_verify")`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
