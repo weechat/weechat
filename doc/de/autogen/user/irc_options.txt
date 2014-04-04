@@ -23,6 +23,11 @@
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `yellow`)
 
+* [[option_irc.color.item_nick_modes]] *irc.color.item_nick_modes*
+** Beschreibung: `color for nick modes in bar item "input_prompt"`
+** Typ: Farbe
+** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen (Standardwert: `default`)
+
 * [[option_irc.color.message_join]] *irc.color.message_join*
 ** Beschreibung: `Textfarbe in der die Meldungen für das Betreten eines Channels angezeigt werden soll`
 ** Typ: Farbe
@@ -189,12 +194,12 @@
 ** Werte: buffer_plugin, buffer_name (Standardwert: `buffer_plugin`)
 
 * [[option_irc.look.item_nick_modes]] *irc.look.item_nick_modes*
-** Beschreibung: `zeigt Nick-Modi in "input_prompt" Bar-Item`
+** Beschreibung: `display nick modes in bar item "input_prompt"`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.item_nick_prefix]] *irc.look.item_nick_prefix*
-** Beschreibung: `der Nick-Präfix wird in "input_prompt" Bar-Item angezeigt`
+** Beschreibung: `display nick prefix in bar item "input_prompt"`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 

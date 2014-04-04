@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-04-03 12:10+0200\n"
+"POT-Creation-Date: 2014-04-04 09:38+0200\n"
 "PO-Revision-Date: 2013-02-14 18:20+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5562,10 +5562,10 @@ msgstr ""
 msgid "name of bar item where IRC server is displayed (for status bar)"
 msgstr ""
 
-msgid "display nick modes in \"input_prompt\" bar item"
+msgid "display nick modes in bar item \"input_prompt\""
 msgstr ""
 
-msgid "display nick prefix in \"input_prompt\" bar item"
+msgid "display nick prefix in bar item \"input_prompt\""
 msgstr ""
 
 msgid ""
@@ -5731,6 +5731,9 @@ msgid ""
 msgstr ""
 
 msgid "color for lag indicator, when pong has been received from server"
+msgstr ""
+
+msgid "color for nick modes in bar item \"input_prompt\""
 msgstr ""
 
 msgid "color for text in join messages"

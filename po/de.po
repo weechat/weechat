@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-04-03 12:10+0200\n"
+"POT-Creation-Date: 2014-04-04 09:38+0200\n"
 "PO-Revision-Date: 2014-04-02 20:17+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -7786,10 +7786,12 @@ msgid "name of bar item where IRC server is displayed (for status bar)"
 msgstr ""
 "Name der Bar-Item in dem der IRC Server angezeigt wird (für Status-Bar)"
 
-msgid "display nick modes in \"input_prompt\" bar item"
-msgstr "zeigt Nick-Modi in \"input_prompt\" Bar-Item"
+#, fuzzy
+msgid "display nick modes in bar item \"input_prompt\""
+msgstr "Farbe für den Nick-Suffix (Zeichenkette die nach dem Nick steht)"
 
-msgid "display nick prefix in \"input_prompt\" bar item"
+#, fuzzy
+msgid "display nick prefix in bar item \"input_prompt\""
 msgstr "der Nick-Präfix wird in \"input_prompt\" Bar-Item angezeigt"
 
 msgid ""
@@ -8047,6 +8049,10 @@ msgid "color for lag indicator, when pong has been received from server"
 msgstr ""
 "Farbe in der die Anzeige für die Verzögerung (Lag) dargestellt werden soll, "
 "sobald ein \"pong\" vom Server empfangen wurde"
+
+#, fuzzy
+msgid "color for nick modes in bar item \"input_prompt\""
+msgstr "Farbe für den Nick-Suffix (Zeichenkette die nach dem Nick steht)"
 
 msgid "color for text in join messages"
 msgstr ""
@@ -11993,3 +11999,6 @@ msgstr ""
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: Zeitüberschreitung für \"%s\" mit %s"
+
+#~ msgid "display nick modes in \"input_prompt\" bar item"
+#~ msgstr "zeigt Nick-Modi in \"input_prompt\" Bar-Item"

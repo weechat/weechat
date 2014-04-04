@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-04-03 12:10+0200\n"
+"POT-Creation-Date: 2014-04-04 09:38+0200\n"
 "PO-Revision-Date: 2014-03-29 20:07+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
@@ -7306,10 +7306,14 @@ msgstr ""
 msgid "name of bar item where IRC server is displayed (for status bar)"
 msgstr "IRC サーバが表示されるバーアイテムの名前 (ステータスバー用)"
 
-msgid "display nick modes in \"input_prompt\" bar item"
-msgstr "\"input_prompt\" バーアイテムではニックネームモードを表示"
+#, fuzzy
+msgid "display nick modes in bar item \"input_prompt\""
+msgstr ""
+"ニックネームサフィックスの色 (プレフィックス中のニックネームの後に表示される"
+"文字列)"
 
-msgid "display nick prefix in \"input_prompt\" bar item"
+#, fuzzy
+msgid "display nick prefix in bar item \"input_prompt\""
 msgstr "\"input_prompt\" バーアイテムではニックネームプレフィックスを表示"
 
 msgid ""
@@ -7543,6 +7547,12 @@ msgstr ""
 
 msgid "color for lag indicator, when pong has been received from server"
 msgstr "pong がサーバから返った場合の、遅延インジケータの色"
+
+#, fuzzy
+msgid "color for nick modes in bar item \"input_prompt\""
+msgstr ""
+"ニックネームサフィックスの色 (プレフィックス中のニックネームの後に表示される"
+"文字列)"
 
 msgid "color for text in join messages"
 msgstr "参加メッセージの色"
@@ -11283,6 +11293,9 @@ msgstr "%s%s: ソケットにオプション \"nonblock\" を設定できませ�
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: \"%s\" のタイムアウト %s"
+
+#~ msgid "display nick modes in \"input_prompt\" bar item"
+#~ msgstr "\"input_prompt\" バーアイテムではニックネームモードを表示"
 
 #, fuzzy
 #~ msgid "Trigger monitor | Filter: %s"

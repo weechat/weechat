@@ -111,6 +111,7 @@ struct t_config_option *irc_config_color_item_away;
 struct t_config_option *irc_config_color_item_channel_modes;
 struct t_config_option *irc_config_color_item_lag_counting;
 struct t_config_option *irc_config_color_item_lag_finished;
+struct t_config_option *irc_config_color_item_nick_modes;
 struct t_config_option *irc_config_color_message_join;
 struct t_config_option *irc_config_color_message_quit;
 struct t_config_option *irc_config_color_mirc_remap;
@@ -459,36 +460,6 @@ irc_config_change_look_item_channel_modes_hide_key (void *data,
 }
 
 /*
- * Callback for changes on option "irc.look.item_nick_modes".
- */
-
-void
-irc_config_change_look_item_nick_modes (void *data,
-                                        struct t_config_option *option)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) option;
-
-    weechat_bar_item_update ("input_prompt");
-}
-
-/*
- * Callback for changes on option "irc.look.item_nick_prefix".
- */
-
-void
-irc_config_change_look_item_nick_prefix (void *data,
-                                         struct t_config_option *option)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) option;
-
-    weechat_bar_item_update ("input_prompt");
-}
-
-/*
  * Callback for changes on option "irc.look.highlight_tags_restrict".
  */
 
@@ -647,12 +618,12 @@ irc_config_change_look_topic_strip_colors (void *data,
 }
 
 /*
- * Callback for changes on option "irc.color.input_nick".
+ * Callback for changes on an option affecting bar item "input_prompt".
  */
 
 void
-irc_config_change_color_input_nick (void *data,
-                                    struct t_config_option *option)
+irc_config_change_bar_item_input_prompt (void *data,
+                                         struct t_config_option *option)
 {
     /* make C compiler happy */
     (void) data;
@@ -2402,15 +2373,15 @@ irc_config_init ()
     irc_config_look_item_nick_modes = weechat_config_new_option (
         irc_config_file, ptr_section,
         "item_nick_modes", "boolean",
-        N_("display nick modes in \"input_prompt\" bar item"),
+        N_("display nick modes in bar item \"input_prompt\""),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL,
-        &irc_config_change_look_item_nick_modes, NULL, NULL, NULL);
+        &irc_config_change_bar_item_input_prompt, NULL, NULL, NULL);
     irc_config_look_item_nick_prefix = weechat_config_new_option (
         irc_config_file, ptr_section,
         "item_nick_prefix", "boolean",
-        N_("display nick prefix in \"input_prompt\" bar item"),
+        N_("display nick prefix in bar item \"input_prompt\""),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL,
-        &irc_config_change_look_item_nick_prefix, NULL, NULL, NULL);
+        &irc_config_change_bar_item_input_prompt, NULL, NULL, NULL);
     irc_config_look_msgbuffer_fallback = weechat_config_new_option (
         irc_config_file, ptr_section,
         "msgbuffer_fallback", "integer",
@@ -2640,7 +2611,7 @@ irc_config_init ()
         "input_nick", "color",
         N_("color for nick in input bar"),
         NULL, -1, 0, "lightcyan", NULL, 0, NULL, NULL,
-        &irc_config_change_color_input_nick, NULL, NULL, NULL);
+        &irc_config_change_bar_item_input_prompt, NULL, NULL, NULL);
     irc_config_color_item_away = weechat_config_new_option (
         irc_config_file, ptr_section,
         "item_away", "color",
@@ -2666,6 +2637,12 @@ irc_config_init ()
         N_("color for lag indicator, when pong has been received from server"),
         NULL, -1, 0, "yellow", NULL, 0, NULL, NULL,
         &irc_config_change_color_item_lag, NULL, NULL, NULL);
+    irc_config_color_item_nick_modes = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "item_nick_modes", "color",
+        N_("color for nick modes in bar item \"input_prompt\""),
+        NULL, -1, 0, "default", NULL, 0, NULL, NULL,
+        &irc_config_change_bar_item_input_prompt, NULL, NULL, NULL);
     irc_config_color_message_join = weechat_config_new_option (
         irc_config_file, ptr_section,
         "message_join", "color",

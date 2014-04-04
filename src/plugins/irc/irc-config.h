@@ -157,6 +157,7 @@ extern struct t_config_option *irc_config_color_item_away;
 extern struct t_config_option *irc_config_color_item_channel_modes;
 extern struct t_config_option *irc_config_color_item_lag_counting;
 extern struct t_config_option *irc_config_color_item_lag_finished;
+extern struct t_config_option *irc_config_color_item_nick_modes;
 extern struct t_config_option *irc_config_color_message_join;
 extern struct t_config_option *irc_config_color_message_quit;
 extern struct t_config_option *irc_config_color_mirc_remap;

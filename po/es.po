@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-04-03 12:10+0200\n"
+"POT-Creation-Date: 2014-04-04 09:38+0200\n"
 "PO-Revision-Date: 2014-03-24 14:23+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7067,10 +7067,13 @@ msgstr ""
 "nombre del elemento de barra donde el servidor IRC es mostrado (para la "
 "barra de estado)"
 
-msgid "display nick modes in \"input_prompt\" bar item"
-msgstr "mostrar los modos del apodo en el elemento de barra \"input_prompt\""
+#, fuzzy
+msgid "display nick modes in bar item \"input_prompt\""
+msgstr ""
+"color del sufijo del apodo (el sufijo es el texto mostrado después del apodo)"
 
-msgid "display nick prefix in \"input_prompt\" bar item"
+#, fuzzy
+msgid "display nick prefix in bar item \"input_prompt\""
 msgstr "mostrar el prefijo del apodo en el elemento de barra \"input_prompt\""
 
 msgid ""
@@ -7285,6 +7288,11 @@ msgstr ""
 
 msgid "color for lag indicator, when pong has been received from server"
 msgstr "color del indicador de lag, cuando se recibió el pong del servidor"
+
+#, fuzzy
+msgid "color for nick modes in bar item \"input_prompt\""
+msgstr ""
+"color del sufijo del apodo (el sufijo es el texto mostrado después del apodo)"
 
 msgid "color for text in join messages"
 msgstr "color para el texto en mensajes de unión"
@@ -10885,6 +10893,10 @@ msgstr "%s%s: no es posible configurar la opción \"nonblock\" para el socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: tiempo de espera máximo para \"%s\" con %s"
+
+#~ msgid "display nick modes in \"input_prompt\" bar item"
+#~ msgstr ""
+#~ "mostrar los modos del apodo en el elemento de barra \"input_prompt\""
 
 #~ msgid "Signal SIGHUP received, reloading configuration files"
 #~ msgstr "Señal SIGHUP recibida, recargando archivos de configuración"

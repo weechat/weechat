@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-04-03 12:10+0200\n"
+"POT-Creation-Date: 2014-04-04 09:38+0200\n"
 "PO-Revision-Date: 2014-03-24 14:23+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6800,10 +6800,12 @@ msgstr ""
 msgid "name of bar item where IRC server is displayed (for status bar)"
 msgstr "jméno položky pole, kde je IRC server zobrazen (pro stavový řádek)"
 
-msgid "display nick modes in \"input_prompt\" bar item"
-msgstr "zobrazovat módy přezdívky v položce pole \"input_prompt\""
+#, fuzzy
+msgid "display nick modes in bar item \"input_prompt\""
+msgstr "barva přípony přezdívky (přípona je uživatelský řetězec za přezdívkou)"
 
-msgid "display nick prefix in \"input_prompt\" bar item"
+#, fuzzy
+msgid "display nick prefix in bar item \"input_prompt\""
 msgstr "zobrazovat předponu přezdívky v položce pole \"input_prompt\""
 
 msgid ""
@@ -7014,6 +7016,10 @@ msgstr ""
 
 msgid "color for lag indicator, when pong has been received from server"
 msgstr "barva ukazatele lagu, pokud bylo od serveru obdrženo pong"
+
+#, fuzzy
+msgid "color for nick modes in bar item \"input_prompt\""
+msgstr "barva přípony přezdívky (přípona je uživatelský řetězec za přezdívkou)"
 
 msgid "color for text in join messages"
 msgstr "barva textu vezprávách připojení"
@@ -10611,6 +10617,9 @@ msgstr "%s%s: nemohu nastavit \"neblokovaci\" volbu na soket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
+
+#~ msgid "display nick modes in \"input_prompt\" bar item"
+#~ msgstr "zobrazovat módy přezdívky v položce pole \"input_prompt\""
 
 #~ msgid "Signal SIGHUP received, reloading configuration files"
 #~ msgstr "Obdržen signál SIGHUP, znovunačítám konfigurační soubory"

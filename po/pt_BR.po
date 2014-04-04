@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-04-03 12:10+0200\n"
+"POT-Creation-Date: 2014-04-04 09:38+0200\n"
 "PO-Revision-Date: 2014-03-24 14:23+0100\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6531,11 +6531,15 @@ msgstr ""
 msgid "name of bar item where IRC server is displayed (for status bar)"
 msgstr ""
 
-msgid "display nick modes in \"input_prompt\" bar item"
+#, fuzzy
+msgid "display nick modes in bar item \"input_prompt\""
 msgstr ""
+"cor para o sufixo do apelido (string exibida depois do apelido no prefixo)"
 
-msgid "display nick prefix in \"input_prompt\" bar item"
+#, fuzzy
+msgid "display nick prefix in bar item \"input_prompt\""
 msgstr ""
+"cor para o sufixo do apelido (string exibida depois do apelido no prefixo)"
 
 msgid ""
 "default target buffer for msgbuffer options when target is private and that "
@@ -6714,6 +6718,11 @@ msgstr ""
 
 msgid "color for lag indicator, when pong has been received from server"
 msgstr ""
+
+#, fuzzy
+msgid "color for nick modes in bar item \"input_prompt\""
+msgstr ""
+"cor para o sufixo do apelido (string exibida depois do apelido no prefixo)"
 
 msgid "color for text in join messages"
 msgstr ""

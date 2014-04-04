@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-04-03 12:10+0200\n"
+"POT-Creation-Date: 2014-04-04 09:38+0200\n"
 "PO-Revision-Date: 2014-03-24 14:23+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@szluug.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7372,10 +7372,14 @@ msgstr ""
 msgid "name of bar item where IRC server is displayed (for status bar)"
 msgstr "nazwa paska, w którym wyświetlany jest serwer IRC (dla paska stanu)"
 
-msgid "display nick modes in \"input_prompt\" bar item"
-msgstr "wyświetl atrybuty nicka w elemencie paska \"input_prompt\""
+#, fuzzy
+msgid "display nick modes in bar item \"input_prompt\""
+msgstr ""
+"kolor przyrostka nicka (przyrostek to ciąg wyświetlany za nickiem w "
+"prefiksie)"
 
-msgid "display nick prefix in \"input_prompt\" bar item"
+#, fuzzy
+msgid "display nick prefix in bar item \"input_prompt\""
 msgstr "wyświetl przedrostek nicka w elemencie paska \"input_prompt\""
 
 msgid ""
@@ -7612,6 +7616,12 @@ msgstr ""
 
 msgid "color for lag indicator, when pong has been received from server"
 msgstr "kolor wskaźnika opóźnienia, kiedy otrzymamy pong od serwera"
+
+#, fuzzy
+msgid "color for nick modes in bar item \"input_prompt\""
+msgstr ""
+"kolor przyrostka nicka (przyrostek to ciąg wyświetlany za nickiem w "
+"prefiksie)"
 
 msgid "color for text in join messages"
 msgstr "kolor tekstu w wiadomościach o wejściu na kanał"
@@ -11315,6 +11325,9 @@ msgstr "%s%s: nie można ustawić opcji \"nonblock\" dla gniazda: błąd %d %s"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: przekroczono czas na \"%s\" z %s"
+
+#~ msgid "display nick modes in \"input_prompt\" bar item"
+#~ msgstr "wyświetl atrybuty nicka w elemencie paska \"input_prompt\""
 
 #~ msgid "Signal SIGHUP received, reloading configuration files"
 #~ msgstr "Otrzymano sygnał SIGHUP, przeładowuję pliki konfiguracyjne"

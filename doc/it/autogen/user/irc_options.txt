@@ -23,6 +23,11 @@
 ** tipo: colore
 ** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `yellow`)
 
+* [[option_irc.color.item_nick_modes]] *irc.color.item_nick_modes*
+** descrizione: `color for nick modes in bar item "input_prompt"`
+** tipo: colore
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline (valore predefinito: `default`)
+
 * [[option_irc.color.message_join]] *irc.color.message_join*
 ** descrizione: `colore per il testo nei messaggi di entrata`
 ** tipo: colore
@@ -189,12 +194,12 @@
 ** valori: buffer_plugin, buffer_name (valore predefinito: `buffer_plugin`)
 
 * [[option_irc.look.item_nick_modes]] *irc.look.item_nick_modes*
-** descrizione: `visualizza le modalità nick nell'elemento barra "input_prompt"`
+** descrizione: `display nick modes in bar item "input_prompt"`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 
 * [[option_irc.look.item_nick_prefix]] *irc.look.item_nick_prefix*
-** descrizione: `visualizza il prefisso del nick nell'elemento barra "input_prompt"`
+** descrizione: `display nick prefix in bar item "input_prompt"`
 ** tipo: bool
 ** valori: on, off (valore predefinito: `on`)
 

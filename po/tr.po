@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-04-03 12:10+0200\n"
+"POT-Creation-Date: 2014-04-04 09:38+0200\n"
 "PO-Revision-Date: 2014-03-24 14:23+0100\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5616,11 +5616,13 @@ msgstr ""
 msgid "name of bar item where IRC server is displayed (for status bar)"
 msgstr ""
 
-msgid "display nick modes in \"input_prompt\" bar item"
-msgstr ""
+#, fuzzy
+msgid "display nick modes in bar item \"input_prompt\""
+msgstr "sohbet penceresindeki rumuzlar için metin rengi"
 
-msgid "display nick prefix in \"input_prompt\" bar item"
-msgstr ""
+#, fuzzy
+msgid "display nick prefix in bar item \"input_prompt\""
+msgstr "sohbet penceresindeki rumuzlar için metin rengi"
 
 msgid ""
 "default target buffer for msgbuffer options when target is private and that "
@@ -5786,6 +5788,10 @@ msgstr ""
 
 msgid "color for lag indicator, when pong has been received from server"
 msgstr ""
+
+#, fuzzy
+msgid "color for nick modes in bar item \"input_prompt\""
+msgstr "sohbet penceresindeki rumuzlar için metin rengi"
 
 msgid "color for text in join messages"
 msgstr "Bağlanma iletisi metni için renk"

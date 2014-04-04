@@ -491,7 +491,7 @@ irc_bar_item_input_prompt (void *data, struct t_gui_bar_item *item,
                       IRC_COLOR_INPUT_NICK,
                       server->nick,
                       IRC_COLOR_BAR_DELIM,
-                      IRC_COLOR_BAR_FG,
+                      IRC_COLOR_ITEM_NICK_MODES,
                       server->nick_modes,
                       IRC_COLOR_BAR_DELIM);
         }

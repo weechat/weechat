@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-04-03 12:10+0200\n"
+"POT-Creation-Date: 2014-04-04 09:38+0200\n"
 "PO-Revision-Date: 2014-03-24 14:23+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7216,10 +7216,14 @@ msgstr ""
 "nome dell'elemento barra dove è mostrato il server IRC (per la barra di "
 "stato)"
 
-msgid "display nick modes in \"input_prompt\" bar item"
-msgstr "visualizza le modalità nick nell'elemento barra \"input_prompt\""
+#, fuzzy
+msgid "display nick modes in bar item \"input_prompt\""
+msgstr ""
+"colore per il prefisso del nick (stringa visualizzata dopo il nick nel "
+"prefisso)"
 
-msgid "display nick prefix in \"input_prompt\" bar item"
+#, fuzzy
+msgid "display nick prefix in bar item \"input_prompt\""
 msgstr "visualizza il prefisso del nick nell'elemento barra \"input_prompt\""
 
 msgid ""
@@ -7435,6 +7439,12 @@ msgstr ""
 msgid "color for lag indicator, when pong has been received from server"
 msgstr ""
 "colore per l'indicatore di ritardo, quando il pong viene ricevuto dal server"
+
+#, fuzzy
+msgid "color for nick modes in bar item \"input_prompt\""
+msgstr ""
+"colore per il prefisso del nick (stringa visualizzata dopo il nick nel "
+"prefisso)"
 
 msgid "color for text in join messages"
 msgstr "colore per il testo nei messaggi di entrata"
@@ -11048,6 +11058,9 @@ msgstr ""
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: timeout per \"%s\" con %s"
+
+#~ msgid "display nick modes in \"input_prompt\" bar item"
+#~ msgstr "visualizza le modalità nick nell'elemento barra \"input_prompt\""
 
 #~ msgid "Signal SIGHUP received, reloading configuration files"
 #~ msgstr "Ricevuto segnale SIGHUP, caricamento dei file di configurazione"
