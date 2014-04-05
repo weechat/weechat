@@ -83,13 +83,13 @@ weechat_quickstart.en.html: weechat_quickstart.en.txt
 weechat_tester.en.html: weechat_tester.en.txt
 	$(ASCIIDOC) -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_tester.en.html $(abs_top_srcdir)/doc/en/weechat_tester.en.txt
 
-# developer's guide
-weechat_dev.en.html: weechat_dev.en.txt
-	$(ASCIIDOC) -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_dev.en.html $(abs_top_srcdir)/doc/en/weechat_dev.en.txt
-
 # relay protocol
 weechat_relay_protocol.en.html: weechat_relay_protocol.en.txt
 	$(ASCIIDOC) -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_relay_protocol.en.html $(abs_top_srcdir)/doc/en/weechat_relay_protocol.en.txt
+
+# developer's guide
+weechat_dev.en.html: weechat_dev.en.txt
+	$(ASCIIDOC) -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_dev.en.html $(abs_top_srcdir)/doc/en/weechat_dev.en.txt
 
 # install man/docs
 
