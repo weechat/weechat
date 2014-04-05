@@ -29,6 +29,7 @@ EXTRA_DIST = CMakeLists.txt \
              weechat_quickstart.ja.txt \
              weechat_tester.ja.txt \
              weechat_dev.ja.txt \
+             weechat_dev.ja.txt \
              $(wildcard autogen/user/*.txt) \
              $(wildcard autogen/plugin_api/*.txt)
 
@@ -83,6 +84,10 @@ weechat_tester.ja.html: weechat_tester.ja.txt
 # developer's guide
 weechat_dev.ja.html: weechat_dev.ja.txt
 	$(ASCIIDOC) -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_dev.ja.html $(abs_top_srcdir)/doc/ja/weechat_dev.ja.txt
+
+# relay protocol
+weechat_relay_protocol.ja.html: weechat_relay_protocol.ja.txt
+	$(ASCIIDOC) -a revision="$(VERSION)" -a stylesheet=$(abs_top_srcdir)/doc/asciidoc.css -f $(abs_top_srcdir)/doc/asciidoc.conf -n -o weechat_relay_protocol.ja.html $(abs_top_srcdir)/doc/ja/weechat_relay_protocol.ja.txt
 
 # install man/docs
 

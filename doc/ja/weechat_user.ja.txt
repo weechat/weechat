@@ -1098,8 +1098,7 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
 | key[alt-]key[>]    | バッファ訪問履歴で次のバッファに移動 | `/input jump_next_visited_buffer`
 | key[alt-/]         | 最後に表示したバッファに移動 (バッファ移動前に表示していたウィンドウ) | `/input jump_last_buffer_displayed`
 | key[alt-=]         | フィルタの有効無効を切り替え | `/filter toggle`
-// TRANSLATION MISSING
-| key[alt--]         | Toggle filters on/off in current buffer | `/filter toggle @`
+| key[alt--]         | 現在のバッファのフィルタの有効無効を切り替え | `/filter toggle @`
 | key[alt-!]         | 最小限表示の有効無効を切り替え | `/window bare`
 |===
 
@@ -1926,8 +1925,7 @@ IRC サーバの文字コードを設定するには、サーババッファで 
 IRC チャンネル (またはプライベートメッセージ) の文字コードを設定するには、
 サーバの文字コード設定と同様のコマンドをチャンネル (またはプライベートメッセージ) バッファで使ってください。
 
-// TRANSLATION MISSING
-To set charset for all channels/privates of an IRC server:
+IRC サーバの全てのチャンネルおよびプライベートバッファに対する文字コードを設定するには:
 
 ----
 /set charset.encode.irc.freenode ISO-8859-15

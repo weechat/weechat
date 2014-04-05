@@ -17,7 +17,7 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-IF (ENABLE_MAN)
+IF(ENABLE_MAN)
   # man page
   ADD_CUSTOM_COMMAND(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat.1
@@ -28,10 +28,10 @@ IF (ENABLE_MAN)
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.ja.txt
     ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.ja.txt
     COMMENT "Building weechat.1 (ja)"
-    )
+  )
   ADD_CUSTOM_TARGET(doc-man-ja ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat.1)
   INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat.1 DESTINATION ${MANDIR}/ja/man1)
-ENDIF (ENABLE_MAN)
+ENDIF(ENABLE_MAN)
 
 IF(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
 
@@ -103,6 +103,17 @@ IF(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
   )
   ADD_CUSTOM_TARGET(doc-tester-ja ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.ja.html)
   INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.ja.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
+
+  # relay protocol
+  ADD_CUSTOM_COMMAND(
+    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_protocol.ja.html
+    COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_protocol.ja.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_relay_protocol.ja.txt
+    DEPENDS
+    ${CMAKE_CURRENT_SOURCE_DIR}/weechat_relay_protocol.ja.txt
+    COMMENT "Building weechat_relay_protocol.ja.html"
+  )
+  ADD_CUSTOM_TARGET(doc-relay-protocol-ja ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_protocol.ja.html)
+  INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_protocol.ja.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
 
   # developer's guide
   ADD_CUSTOM_COMMAND(

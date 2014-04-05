@@ -7208,12 +7208,11 @@ struct t_hook *weechat_hook_process_hashtable (const char *command,
   データを書き込むためのパイプを子プロセスの標準入力 (stdin)
   に作成します (関数 <<_weechat_hook_set,weechat_hook_set>> を参照)
 
-// TRANSLATION MISSING
 | buffer_flush +
   _(WeeChat バージョン 0.4.4 以上で利用可)_ |
-  number of bytes |
-  Minimum number of bytes to flush stdout/stderr (to send output to callback),
-  between 1 and 65536 (default); 1 = send any output immediately to the callback
+  バイト数 |
+  標準出力および標準エラー出力をフラッシュ (出力をコールバックに送信) するバイト数の最小値、
+  1 から 65536 (デフォルト) まで; 1 = すべての出力をすぐにコールバックに送信
 
 | detached +
   _(WeeChat バージョン 0.4.4 以上で利用可)_ |
@@ -10443,13 +10442,12 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
 |===
 | 名前 | 値 | 説明
 
-// TRANSLATION MISSING
 | hotlist | "+", "-", WEECHAT_HOTLIST_LOW, WEECHAT_HOTLIST_MESSAGE,
   WEECHAT_HOTLIST_PRIVATE, WEECHAT_HOTLIST_HIGHLIGHT, "-1" |
   "+": ホットリストを有効化 (グローバル設定、バッファへのポインタは使われない) +
   "-": ホットリストを無効化 (グローバル設定、バッファへのポインタは使われない) +
   優先度: この優先度でホットリストにバッファを追加 +
-  "-1": remove buffer from hotlist _(WeeChat ≥ 0.4.4)_
+  "-1": ホットリストからバッファを削除 _(WeeChat バージョン 0.4.4 以上で利用可)_
 
 | completion_freeze | "0", "1" |
   "0": 補完を止める (デフォルト)

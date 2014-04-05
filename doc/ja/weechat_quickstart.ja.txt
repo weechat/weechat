@@ -97,11 +97,9 @@ IRC 等全てのネットワークプロトコルはそれぞれ異なるプラ�
 [[create_irc_server]]
 == サーバ情報を作成する
 
-// TRANSLATION MISSING
-The server 'freenode' is created by default on first startup.
+デフォルト設定では最初の起動時にサーバ 'freenode' が作成されます。
 
-// TRANSLATION MISSING
-You can add another IRC server with `/server` command, for example:
+他のサーバを追加するには `/server` コマンドを使ってください、例:
 
 ----
 /server add oftc irc.oftc.net/6667
