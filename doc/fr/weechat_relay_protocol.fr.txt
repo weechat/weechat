@@ -309,8 +309,8 @@ Paramètres :
   'buffers,upgrade,buffer,nicklist' pour "*" et 'buffer,nicklist' pour un
   tampon) :
 ** 'buffers' : recevoir les signaux à propos des tampons (ouverts/fermés,
-   déplacés, renommés, mélangés); peut être utilisé seulement avec "*"
-   _(WeeChat ≥ 0.4.1)_
+   déplacés, renommés, mélangés, masqués/démasqués); peut être utilisé seulement
+   avec "*" _(WeeChat ≥ 0.4.1)_
 ** 'upgrade' : recevoir les signaux à propos de la mise à jour de WeeChat
    (mise à jour, fin de mise à jour); peut être utilisé seulement avec "*"
    _(WeeChat ≥ 0.4.1)_
@@ -545,6 +545,12 @@ Les identifiants réservés par WeeChat :
 | _buffer_unmerged | buffers / buffer | hdata : buffer |
   Tampon sorti du mélange | Sortir le tampon du mélange
 
+| _buffer_hidden | buffers / buffer | hdata : buffer |
+  Tampon masqué | Masquer le le tampon
+
+| _buffer_unmerged | buffers / buffer | hdata : buffer |
+  Tampon démasqué | Démasquer le tampon
+
 | _buffer_renamed | buffers / buffer | hdata : buffer |
   Tampon renommé | Renommer le tampon
 
@@ -716,6 +722,72 @@ Exemple : tampon 'irc.freenode.#weechat' sorti du mélange :
 [source,python]
 ----
 id: '_buffer_unmerged'
+hda:
+  keys: {'number': 'int', 'full_name': 'str', 'prev_buffer': 'ptr', 'next_buffer': 'ptr'}
+  path: ['buffer']
+  item 1:
+    __path: ['0x4db4c00']
+    number: 3
+    full_name: 'irc.freenode.#weechat'
+    prev_buffer: '0x4cef9b0'
+    next_buffer: '0x0'
+----
+
+[[message_buffer_hidden]]
+==== _buffer_hidden
+
+Ce message est envoyé au client lorsque le signal "buffer_hidden" est envoyé par
+WeeChat.
+
+Données envoyées dans le hdata :
+
+[width="100%",cols="3m,2,10",options="header"]
+|===
+| Nom         | Type     | Description
+| number      | entier   | Numéro de tampon (≥ 1)
+| full_name   | chaîne   | Nom complet (exemple : 'irc.freenode.#weechat')
+| prev_buffer | pointeur | Pointeur vers le tampon précédent
+| next_buffer | pointeur | Pointeur vers le tampon suivant
+|===
+
+Exemple : tampon 'irc.freenode.#weechat' masqué :
+
+[source,python]
+----
+id: '_buffer_hidden'
+hda:
+  keys: {'number': 'int', 'full_name': 'str', 'prev_buffer': 'ptr', 'next_buffer': 'ptr'}
+  path: ['buffer']
+  item 1:
+    __path: ['0x4db4c00']
+    number: 2
+    full_name: 'irc.freenode.#weechat'
+    prev_buffer: '0x4cef9b0'
+    next_buffer: '0x0'
+----
+
+[[message_buffer_unhidden]]
+==== _buffer_unhidden
+
+Ce message est envoyé au client lorsque le signal "buffer_unhidden" est envoyé
+par WeeChat.
+
+Données envoyées dans le hdata :
+
+[width="100%",cols="3m,2,10",options="header"]
+|===
+| Nom         | Type     | Description
+| number      | entier   | Numéro de tampon (≥ 1)
+| full_name   | chaîne   | Nom complet (exemple : 'irc.freenode.#weechat')
+| prev_buffer | pointeur | Pointeur vers le tampon précédent
+| next_buffer | pointeur | Pointeur vers le tampon suivant
+|===
+
+Exemple : tampon 'irc.freenode.#weechat' démasqué :
+
+[source,python]
+----
+id: '_buffer_unhidden'
 hda:
   keys: {'number': 'int', 'full_name': 'str', 'prev_buffer': 'ptr', 'next_buffer': 'ptr'}
   path: ['buffer']

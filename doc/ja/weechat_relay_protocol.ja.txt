@@ -299,9 +299,10 @@ sync [<buffer>[,<buffer>...] <option>[,<option>...]]
   全てのバッファを指定するには "*" を使ってください
 * 'options': 以下に挙げるキーワード、コンマ区切り ("*" に対するデフォルトは
   'buffers,upgrade,buffer,nicklist'、バッファに対するデフォルトは 'buffer,nicklist'):
-** 'buffers': バッファに関するシグナルを受信 (バッファのオープン/クローズ、移動、リネーム、マージ/アンマージ);
-   名前が "*" のバッファに対してのみ利用可能
-   _(WeeChat バージョン 0.4.1 以上で利用可)_
+// TRANSLATION MISSING
+** 'buffers': receive signals about buffers (opened/closed, moved, renamed,
+   merged/unmerged, hidden/unhidden); this can be used only with name "*"
+   _(WeeChat ≥ 0.4.1)_
 ** 'upgrade': WeeChat アップグレードに関するシグナルを受信 (アップグレード、アップグレードの終了);
    名前が "*" のバッファに対してのみ利用可能
    _(WeeChat バージョン 0.4.1 以上で利用可)_
@@ -528,6 +529,14 @@ WeeChat の予約識別子:
 | _buffer_unmerged | buffers / buffer | hdata: buffer |
   バッファのアンマージ | バッファをアンマージ
 
+// TRANSLATION MISSING
+| _buffer_hidden | buffers / buffer | hdata: buffer |
+  Buffer hidden | Hide buffer
+
+// TRANSLATION MISSING
+| _buffer_unhidden | buffers / buffer | hdata: buffer |
+  Buffer unhidden | Unhide buffer
+
 | _buffer_renamed | buffers / buffer | hdata: buffer |
   バッファのリネーム | バッファをリネーム
 
@@ -699,6 +708,74 @@ hdata として送られるデータ:
 [source,python]
 ----
 id: '_buffer_unmerged'
+hda:
+  keys: {'number': 'int', 'full_name': 'str', 'prev_buffer': 'ptr', 'next_buffer': 'ptr'}
+  path: ['buffer']
+  item 1:
+    __path: ['0x4db4c00']
+    number: 3
+    full_name: 'irc.freenode.#weechat'
+    prev_buffer: '0x4cef9b0'
+    next_buffer: '0x0'
+----
+
+[[message_buffer_hidden]]
+==== _buffer_hidden
+
+このメッセージは WeeChat が "buffer_hidden"
+シグナルを送信する際にクライアントに送られます。
+
+hdata として送られるデータ:
+
+[width="100%",cols="3m,2,10",options="header"]
+|===
+| 名前        | 型      | 説明
+| number      | integer | バッファ番号 (≥ 1)
+| full_name   | string  | 完全な名前 (例: 'irc.freenode.#weechat')
+| prev_buffer | pointer | 前のバッファへのポインタ
+| next_buffer | pointer | 次のバッファへのポインタ
+|===
+
+// TRANSLATION MISSING
+Example: buffer 'irc.freenode.#weechat' hidden:
+
+[source,python]
+----
+id: '_buffer_hidden'
+hda:
+  keys: {'number': 'int', 'full_name': 'str', 'prev_buffer': 'ptr', 'next_buffer': 'ptr'}
+  path: ['buffer']
+  item 1:
+    __path: ['0x4db4c00']
+    number: 2
+    full_name: 'irc.freenode.#weechat'
+    prev_buffer: '0x4cef9b0'
+    next_buffer: '0x0'
+----
+
+[[message_buffer_unhidden]]
+==== _buffer_unhidden
+
+このメッセージは WeeChat が "buffer_unhidden"
+シグナルを送信する際にクライアントに送られます。
+
+hdata として送られるデータ:
+
+[width="100%",cols="3m,2,10",options="header"]
+|===
+| 名前        | 型      | 説明
+| number      | integer | バッファ番号 (≥ 1)
+| full_name   | string  | 完全な名前 (例: 'irc.freenode.#weechat')
+| prev_buffer | pointer | 前のバッファへのポインタ
+| next_buffer | pointer | 次のバッファへのポインタ
+|===
+
+// TRANSLATION MISSING
+Example: buffer 'irc.freenode.#weechat' unhidden:
+
+[source,python]
+----
+id: '_buffer_unhidden'
 hda:
   keys: {'number': 'int', 'full_name': 'str', 'prev_buffer': 'ptr', 'next_buffer': 'ptr'}
   path: ['buffer']

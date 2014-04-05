@@ -299,7 +299,7 @@ Arguments:
 * 'options': one of following keywords, separated by commas (default is
   'buffers,upgrade,buffer,nicklist' for "*" and 'buffer,nicklist' for a buffer):
 ** 'buffers': receive signals about buffers (opened/closed, moved, renamed,
-   merged/unmerged); this can be used only with name "*"
+   merged/unmerged, hidden/unhidden); this can be used only with name "*"
    _(WeeChat ≥ 0.4.1)_
 ** 'upgrade': receive signals about WeeChat upgrade (upgrade, upgrade ended);
    this can be used only with name "*"
@@ -527,6 +527,12 @@ WeeChat reserved identifiers:
 | _buffer_unmerged | buffers / buffer | hdata: buffer |
   Buffer unmerged | Unmerge buffer
 
+| _buffer_hidden | buffers / buffer | hdata: buffer |
+  Buffer hidden | Hide buffer
+
+| _buffer_unhidden | buffers / buffer | hdata: buffer |
+  Buffer unhidden | Unhide buffer
+
 | _buffer_renamed | buffers / buffer | hdata: buffer |
   Buffer renamed | Rename buffer
 
@@ -698,6 +704,72 @@ Example: buffer 'irc.freenode.#weechat' unmerged:
 [source,python]
 ----
 id: '_buffer_unmerged'
+hda:
+  keys: {'number': 'int', 'full_name': 'str', 'prev_buffer': 'ptr', 'next_buffer': 'ptr'}
+  path: ['buffer']
+  item 1:
+    __path: ['0x4db4c00']
+    number: 3
+    full_name: 'irc.freenode.#weechat'
+    prev_buffer: '0x4cef9b0'
+    next_buffer: '0x0'
+----
+
+[[message_buffer_hidden]]
+==== _buffer_hidden
+
+This message is sent to the client when the signal "buffer_hidden" is sent by
+WeeChat.
+
+Data sent as hdata:
+
+[width="100%",cols="3m,2,10",options="header"]
+|===
+| Name        | Type    | Description
+| number      | integer | Buffer number (≥ 1)
+| full_name   | string  | Full name (example: 'irc.freenode.#weechat')
+| prev_buffer | pointer | Pointer to previous buffer
+| next_buffer | pointer | Pointer to next buffer
+|===
+
+Example: buffer 'irc.freenode.#weechat' hidden:
+
+[source,python]
+----
+id: '_buffer_hidden'
+hda:
+  keys: {'number': 'int', 'full_name': 'str', 'prev_buffer': 'ptr', 'next_buffer': 'ptr'}
+  path: ['buffer']
+  item 1:
+    __path: ['0x4db4c00']
+    number: 2
+    full_name: 'irc.freenode.#weechat'
+    prev_buffer: '0x4cef9b0'
+    next_buffer: '0x0'
+----
+
+[[message_buffer_unhidden]]
+==== _buffer_unhidden
+
+This message is sent to the client when the signal "buffer_unhidden" is sent by
+WeeChat.
+
+Data sent as hdata:
+
+[width="100%",cols="3m,2,10",options="header"]
+|===
+| Name        | Type    | Description
+| number      | integer | Buffer number (≥ 1)
+| full_name   | string  | Full name (example: 'irc.freenode.#weechat')
+| prev_buffer | pointer | Pointer to previous buffer
+| next_buffer | pointer | Pointer to next buffer
+|===
+
+Example: buffer 'irc.freenode.#weechat' unhidden:
+
+[source,python]
+----
+id: '_buffer_unhidden'
 hda:
   keys: {'number': 'int', 'full_name': 'str', 'prev_buffer': 'ptr', 'next_buffer': 'ptr'}
   path: ['buffer']
