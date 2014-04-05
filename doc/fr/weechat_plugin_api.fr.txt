@@ -10472,11 +10472,17 @@ Paramètres :
 ** 'num_displayed' : nombre de fenêtres affichant ce tampon
 ** 'active' : 2 si le tampon est le seul actif (mélangé), 1 si le tampon est
    actif, 0 si le tampon est mélangé et n'est pas sélectionné
+** 'hidden' : 1 si le tampon est caché, sinon 0
+   _(WeeChat ≥ 0.4.4)_
+** 'zoomed' : 1 si le tampon est mélangé et zoomé, sinon 0
+   _(WeeChat ≥ 0.4.4)_
 ** 'print_hooks_enabled' : 1 si les hooks "print" sont activés, sinon 0
 ** 'day_change' : 1 si les messages de changement de jour sont affichés, sinon 0
    _(WeeChat ≥ 0.4.3)_
 ** 'clear' : 1 si le tampon peut être effacé avec la commande `/buffer clear`,
    sinon 0 _(WeeChat ≥ 0.4.4)_
+** 'filter' : 1 si les filtres sont activés sur le tampon, sinon 0
+   _(WeeChat ≥ 0.4.4)_
 ** 'lines_hidden' : 1 si au moins une ligne est cachée dans le tampon
    (filtrée), ou 0 si toutes les lignes sont affichées
 ** 'prefix_max_length' : longueur maximale du préfixe dans ce tampon
@@ -10668,7 +10674,7 @@ Propriétés :
   priorité : ajouter ce tampon dans la hotlist avec cette priorité +
   "-1" : supprimer ce tampon de la hotlist _(WeeChat ≥ 0.4.4)_
 
-| completion_freeze | "0", "1" |
+| completion_freeze | "0" ou "1" |
   "0" : pas de gel de la complétion (valeur par défaut)
   (option globale, le pointeur vers le tampon n'est pas utilisé) +
   "1" : ne pas arrêter la complétion lorsque la ligne de commande est mise à
@@ -10677,10 +10683,15 @@ Propriétés :
 | unread | - |
   Définit le marqueur de données non lues après la dernière ligne du tampon
 
-| display | "1", "auto" |
+| display | "1" ou "auto" |
   "1" : basculer vers ce tampon dans la fenêtre active +
   "auto" : basculer vers ce tampon dans la fenêtre active, le marqueur de
   données non lues n'est pas réinitialisé
+
+| hidden +
+  _(WeeChat ≥ 0.4.4)_ | "0" ou "1" |
+  "0" : démasquer le tampon +
+  "1" : masquer le tampon
 
 | number | numéro |
   Déplace le tampon vers ce numéro
@@ -10717,6 +10728,11 @@ Propriétés :
    défaut pour un nouveau tampon) (note : même lorsque la valeur est "0", le
    tampon peut toujours être effacé avec la fonction
    <<_weechat_buffer_clear,weechat_buffer_clear>>)
+
+| filter +
+  _(WeeChat ≥ 0.4.4)_ | "0" or "1" |
+  "0" : désactiver les filtres sur le tampon +
+  "1" : activer les filtres sur le tampon
 
 | title | toute chaîne |
   Change le titre du tampon

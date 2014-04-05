@@ -10537,6 +10537,12 @@ Argomenti:
 // TRANSLATION MISSING
 ** 'active': 2 if buffer is the only active (merged), 1 se il buffer è attivo,
    0 se il buffer è unito e non selezionato
+// TRANSLATION MISSING
+** 'hidden': 1 if buffer is hidden, otherwise 0
+   _(WeeChat ≥ 0.4.4)_
+// TRANSLATION MISSING
+** 'zoomed': 1 if buffer is merged and zoomed, otherwise 0
+   _(WeeChat ≥ 0.4.4)_
 ** 'print_hooks_enabled': 1 se gli hook sulla stampa sono abilitati,
    altrimenti 0
 // TRANSLATION MISSING
@@ -10544,6 +10550,9 @@ Argomenti:
    _(WeeChat ≥ 0.4.3)_
 // TRANSLATION MISSING
 ** 'clear': 1 if buffer can be cleared with command `/buffer clear`, otherwise 0
+   _(WeeChat ≥ 0.4.4)_
+// TRANSLATION MISSING
+** 'filter': 1 if filters are enabled on buffer, otherwise 0
    _(WeeChat ≥ 0.4.4)_
 ** 'lines_hidden': 1 se almeno una riga è nascosta sul buffer (filtrata),
    oppure 0 se vengono visualizzate tutte le righe
@@ -10744,7 +10753,7 @@ Properties:
   "-1": remove buffer from hotlist _(WeeChat ≥ 0.4.4)_
 
 // TRANSLATION MISSING
-| completion_freeze | "0", "1" |
+| completion_freeze | "0" oppure "1" |
   "0": no freeze of completion (default value)
   (impostazione globale, il puntatore al buffer non è utilizzato) +
   "1": do not stop completion when command line is updated
@@ -10753,10 +10762,16 @@ Properties:
 | unread | - |
   Imposta l'evidenziatore di lettura dopo l'ultima riga del buffer
 
-| display | "1", "auto" |
+| display | "1" oppure "auto" |
   "1": passa a questo buffer nella finestra corrente +
   "auto": passa a questo buffer nella finestra corrente, l'evidenziatore di
   lettura non viene resettato
+
+// TRANSLATION MISSING
+| hidden +
+  _(WeeChat ≥ 0.4.4)_ | "0" oppure "1" |
+  "0": unhide the buffer +
+  "1": hide the buffer
 
 | number | numero |
   Sposta buffer a questo numero
@@ -10795,6 +10810,12 @@ Properties:
   "1" to let user clear the buffer (default for a new buffer)
    (note: even when it is set to "0", the buffer can still be cleared with
    the function <<_weechat_buffer_clear,weechat_buffer_clear>>)
+
+// TRANSLATION MISSING
+| filter +
+  _(WeeChat ≥ 0.4.4)_ | "0" or "1" |
+  "0": disable filters on buffer +
+  "1": enable filters on buffer
 
 | title | qualsiasi stringa |
   Imposta nuovo titolo per il buffer

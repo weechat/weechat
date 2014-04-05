@@ -10269,10 +10269,19 @@ int weechat_buffer_get_integer (struct t_gui_buffer *buffer,
 ** 'num_displayed': バッファを表示しているウィンドウの数
 ** 'active': バッファがマージされて選択されている場合は 2、バッファが選択されている場合は
    1、バッファがマージされ選択されていない場合は 0
+// TRANSLATION MISSING
+** 'hidden': 1 if buffer is hidden, otherwise 0
+   _(WeeChat バージョン 0.4.4 以上で利用可)_
+// TRANSLATION MISSING
+** 'zoomed': 1 if buffer is merged and zoomed, otherwise 0
+   _(WeeChat バージョン 0.4.4 以上で利用可)_
 ** 'print_hooks_enabled': プリントフックが有効化されている場合は 1、そうでない場合は 0
 ** 'day_change': 日付変更メッセージを表示する場合は 1、そうでない場合は 0
    _(WeeChat バージョン 0.4.3 以上で利用可)_
 ** 'clear': コマンド `/buffer clear` でバッファをクリアできる場合は 1、これ以外は 0
+   _(WeeChat バージョン 0.4.4 以上で利用可)_
+// TRANSLATION MISSING
+** 'filter': 1 if filters are enabled on buffer, otherwise 0
    _(WeeChat バージョン 0.4.4 以上で利用可)_
 ** 'lines_hidden': バッファに非表示 (フィルタされた) メッセージが 1
    行以上含まれる場合は 1、すべてのメッセージが表示冴えている場合は 0
@@ -10459,7 +10468,7 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
   優先度: この優先度でホットリストにバッファを追加 +
   "-1": ホットリストからバッファを削除 _(WeeChat バージョン 0.4.4 以上で利用可)_
 
-| completion_freeze | "0", "1" |
+| completion_freeze | "0" または "1" |
   "0": 補完を止める (デフォルト)
   (グローバル設定、バッファへのポインタは使われない) +
   "1": コマンドラインが更新された際に補完を継続する
@@ -10468,9 +10477,15 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
 | unread | - |
   バッファの最後の行の後に未読マーカーを設定
 
-| display | "1", "auto" |
+| display | "1" または "auto" |
   "1": 指定したバッファを現在のウィンドウに表示 +
   "auto": 指定したバッファを現在のウィンドウに表示、読了マーカーをリセットしない
+
+// TRANSLATION MISSING
+| hidden +
+  _(WeeChat バージョン 0.4.4 以上で利用可)_ | "0" または "1" |
+  "0": unhide the buffer +
+  "1": hide the buffer
 
 | number | 番号 |
   指定したバッファをこの番号に移動
@@ -10505,6 +10520,12 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
   バッファのクリアを許可する場合は "1" (新規バッファに対するデフォルト)
    (注意: この値が "0" に設定されていたとしても、関数
    <<_weechat_buffer_clear,weechat_buffer_clear>> を使えばバッファをクリアすることが可能です)
+
+// TRANSLATION MISSING
+| filter +
+  _(WeeChat バージョン 0.4.4 以上で利用可)_ | "0" or "1" |
+  "0": disable filters on buffer +
+  "1": enable filters on buffer
 
 | title | 任意の文字列 |
   指定したバッファの新しいタイトルを設定

@@ -10275,10 +10275,16 @@ Arguments:
 ** 'num_displayed': number of windows displaying buffer
 ** 'active': 2 if buffer is the only active (merged), 1 if buffer is active,
    0 if buffer is merged and not selected
+** 'hidden': 1 if buffer is hidden, otherwise 0
+   _(WeeChat ≥ 0.4.4)_
+** 'zoomed': 1 if buffer is merged and zoomed, otherwise 0
+   _(WeeChat ≥ 0.4.4)_
 ** 'print_hooks_enabled': 1 if print hooks are enabled, otherwise 0
 ** 'day_change': 1 if messages for the day change are displayed, otherwise 0
    _(WeeChat ≥ 0.4.3)_
 ** 'clear': 1 if buffer can be cleared with command `/buffer clear`, otherwise 0
+   _(WeeChat ≥ 0.4.4)_
+** 'filter': 1 if filters are enabled on buffer, otherwise 0
    _(WeeChat ≥ 0.4.4)_
 ** 'lines_hidden': 1 if at least one line is hidden on buffer (filtered), or 0
    if all lines are displayed
@@ -10465,7 +10471,7 @@ Properties:
   priority: add buffer to hotlist with this priority +
   "-1": remove buffer from hotlist _(WeeChat ≥ 0.4.4)_
 
-| completion_freeze | "0", "1" |
+| completion_freeze | "0" or "1" |
   "0": no freeze of completion (default value)
   (global setting, buffer pointer is not used) +
   "1": do not stop completion when command line is updated
@@ -10474,9 +10480,14 @@ Properties:
 | unread | - |
   Set unread marker after last line of buffer
 
-| display | "1", "auto" |
+| display | "1" or "auto" |
   "1": switch to this buffer in current window +
   "auto": switch to this buffer in current window, read marker is not reset
+
+| hidden +
+  _(WeeChat ≥ 0.4.4)_ | "0" or "1" |
+  "0": unhide the buffer +
+  "1": hide the buffer
 
 | number | number |
   Move buffer to this number
@@ -10511,6 +10522,11 @@ Properties:
   "1" to let user clear the buffer (default for a new buffer)
    (note: even when it is set to "0", the buffer can still be cleared with
    the function <<_weechat_buffer_clear,weechat_buffer_clear>>)
+
+| filter +
+  _(WeeChat ≥ 0.4.4)_ | "0" or "1" |
+  "0": disable filters on buffer +
+  "1": enable filters on buffer
 
 | title | any string |
   Set new title for buffer
