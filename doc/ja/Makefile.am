@@ -28,7 +28,7 @@ EXTRA_DIST = CMakeLists.txt \
              weechat_faq.ja.txt \
              weechat_quickstart.ja.txt \
              weechat_tester.ja.txt \
-             weechat_dev.ja.txt \
+             weechat_relay_protocol.ja.txt \
              weechat_dev.ja.txt \
              $(wildcard autogen/user/*.txt) \
              $(wildcard autogen/plugin_api/*.txt)
