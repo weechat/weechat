@@ -3467,6 +3467,22 @@ gui_buffer_hide (struct t_gui_buffer *buffer)
 }
 
 /*
+ * Hides all buffers.
+ */
+
+void
+gui_buffer_hide_all ()
+{
+    struct t_gui_buffer *ptr_buffer;
+
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        gui_buffer_hide (ptr_buffer);
+    }
+}
+
+/*
  * Unhides a buffer.
  */
 
@@ -3480,6 +3496,22 @@ gui_buffer_unhide (struct t_gui_buffer *buffer)
 
     (void) hook_signal_send ("buffer_unhidden",
                              WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+}
+
+/*
+ * Unhides all buffers.
+ */
+
+void
+gui_buffer_unhide_all ()
+{
+    struct t_gui_buffer *ptr_buffer;
+
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        gui_buffer_unhide (ptr_buffer);
+    }
 }
 
 /*

@@ -70,8 +70,8 @@ Exemples:
          swap <nombre1>|<nom1> [<nombre2>|<nom2>]
          merge <nombre>
          unmerge [<nombre>|-all]
-         hide [<nombre>|<nom> [<nombre>|<nom>...]]
-         unhide [<nombre>|<nom> [<nombre>|<nom>...]]
+         hide [<nombre>|<nom>|-all [<nombre>|<nom>...]]
+         unhide [<nombre>|<nom>|-all [<nombre>|<nom>...]]
          renumber <nombre1> [<nombre2> [<départ>]]
          close [<n1>[-<n2>]|<nom>]
          notify <niveau>

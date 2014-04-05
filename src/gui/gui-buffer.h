@@ -316,7 +316,9 @@ extern void gui_buffer_merge (struct t_gui_buffer *buffer,
 extern void gui_buffer_unmerge (struct t_gui_buffer *buffer, int number);
 extern void gui_buffer_unmerge_all ();
 extern void gui_buffer_hide (struct t_gui_buffer *buffer);
+extern void gui_buffer_hide_all ();
 extern void gui_buffer_unhide (struct t_gui_buffer *buffer);
+extern void gui_buffer_unhide_all ();
 extern void gui_buffer_sort_by_layout_number ();
 extern void gui_buffer_undo_snap (struct t_gui_buffer *buffer);
 extern void gui_buffer_undo_snap_free (struct t_gui_buffer *buffer);

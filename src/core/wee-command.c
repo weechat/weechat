@@ -770,25 +770,30 @@ COMMAND_CALLBACK(buffer)
     {
         if (argc > 2)
         {
-            for (i = 2; i < argc; i++)
+            if (string_strcasecmp (argv[2], "-all") == 0)
+                gui_buffer_hide_all ();
+            else
             {
-                ptr_buffer = gui_buffer_search_by_number_or_name (argv[i]);
-                if (ptr_buffer)
+                for (i = 2; i < argc; i++)
                 {
-                    number = strtol (argv[2], &error, 10);
-                    if (error && !error[0])
+                    ptr_buffer = gui_buffer_search_by_number_or_name (argv[i]);
+                    if (ptr_buffer)
                     {
-                        for (ptr_buffer2 = gui_buffers; ptr_buffer2;
-                             ptr_buffer2 = ptr_buffer2->next_buffer)
+                        number = strtol (argv[2], &error, 10);
+                        if (error && !error[0])
                         {
-                            if (ptr_buffer2->number == ptr_buffer->number)
+                            for (ptr_buffer2 = gui_buffers; ptr_buffer2;
+                                 ptr_buffer2 = ptr_buffer2->next_buffer)
                             {
-                                gui_buffer_hide (ptr_buffer2);
+                                if (ptr_buffer2->number == ptr_buffer->number)
+                                {
+                                    gui_buffer_hide (ptr_buffer2);
+                                }
                             }
                         }
+                        else
+                            gui_buffer_hide (ptr_buffer);
                     }
-                    else
-                        gui_buffer_hide (ptr_buffer);
                 }
             }
         }
@@ -803,25 +808,30 @@ COMMAND_CALLBACK(buffer)
     {
         if (argc > 2)
         {
-            for (i = 2; i < argc; i++)
+            if (string_strcasecmp (argv[2], "-all") == 0)
+                gui_buffer_unhide_all ();
+            else
             {
-                ptr_buffer = gui_buffer_search_by_number_or_name (argv[i]);
-                if (ptr_buffer)
+                for (i = 2; i < argc; i++)
                 {
-                    number = strtol (argv[2], &error, 10);
-                    if (error && !error[0])
+                    ptr_buffer = gui_buffer_search_by_number_or_name (argv[i]);
+                    if (ptr_buffer)
                     {
-                        for (ptr_buffer2 = gui_buffers; ptr_buffer2;
-                             ptr_buffer2 = ptr_buffer2->next_buffer)
+                        number = strtol (argv[2], &error, 10);
+                        if (error && !error[0])
                         {
-                            if (ptr_buffer2->number == ptr_buffer->number)
+                            for (ptr_buffer2 = gui_buffers; ptr_buffer2;
+                                 ptr_buffer2 = ptr_buffer2->next_buffer)
                             {
-                                gui_buffer_unhide (ptr_buffer2);
+                                if (ptr_buffer2->number == ptr_buffer->number)
+                                {
+                                    gui_buffer_unhide (ptr_buffer2);
+                                }
                             }
                         }
+                        else
+                            gui_buffer_unhide (ptr_buffer);
                     }
-                    else
-                        gui_buffer_unhide (ptr_buffer);
                 }
             }
         }
@@ -6747,8 +6757,8 @@ command_init ()
            " || swap <number1>|<name1> [<number2>|<name2>]"
            " || merge <number>"
            " || unmerge [<number>|-all]"
-           " || hide [<number>|<name> [<number>|<name>...]]"
-           " || unhide [<number>|<name> [<number>|<name>...]]"
+           " || hide [<number>|<name>|-all [<number>|<name>...]]"
+           " || unhide [<number>|<name>|-all [<number>|<name>...]]"
            " || renumber [<number1> [<number2> [<start>]]]"
            " || close [<n1>[-<n2>]|<name>]"
            " || notify <level>"
@@ -6821,8 +6831,10 @@ command_init ()
         " || swap %(buffers_numbers)"
         " || merge %(buffers_numbers)"
         " || unmerge %(buffers_numbers)|-all"
-        " || hide %(buffers_numbers)|%(buffers_plugins_names)|%*"
-        " || unhide %(buffers_numbers)|%(buffers_plugins_names)|%*"
+        " || hide %(buffers_numbers)|%(buffers_plugins_names)|-all "
+        "%(buffers_numbers)|%(buffers_plugins_names)|%*"
+        " || unhide %(buffers_numbers)|%(buffers_plugins_names)|-all "
+        "%(buffers_numbers)|%(buffers_plugins_names)|%*"
         " || renumber %(buffers_numbers) %(buffers_numbers) %(buffers_numbers)"
         " || close %(buffers_plugins_names)"
         " || list"
