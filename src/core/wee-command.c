@@ -6712,7 +6712,8 @@ command_init ()
            "    /buffer +1\n"
            "  jump to last buffer number:\n"
            "    /buffer +"),
-        "clear -merged|-all|%(buffers_numbers)|%(buffers_plugins_names)"
+        "clear -merged|-all|%(buffers_numbers)|%(buffers_plugins_names) "
+        "%(buffers_numbers)|%(buffers_plugins_names)|%*"
         " || move %(buffers_numbers)"
         " || swap %(buffers_numbers)"
         " || merge %(buffers_numbers)"
