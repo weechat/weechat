@@ -8106,6 +8106,14 @@ Liste des signaux envoyés par WeeChat et les extensions :
   Pointeur : tampon |
   Tampon vidé
 
+| weechat | buffer_hidden |
+  Pointeur : tampon |
+  Tampon masqué
+
+| weechat | buffer_unhidden |
+  Pointeur : tampon |
+  Tampon démasqué
+
 | weechat | buffer_line_added +
   _(WeeChat ≥ 0.3.7)_ |
   Pointeur : ligne |

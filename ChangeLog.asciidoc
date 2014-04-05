@@ -15,6 +15,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 0.4.4 (under dev)
 
+* core: add hidden buffers, add options hide/unhide in command /buffer
 * core: fix "/buffer clear" with a name (don't clear all merged buffers with
   same number)
 * core: fix evaluation of expression with regex when a comparison char is in

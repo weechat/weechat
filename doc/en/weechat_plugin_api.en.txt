@@ -7964,6 +7964,14 @@ List of signals sent by WeeChat and plugins:
   Pointer: buffer |
   Buffer cleared
 
+| weechat | buffer_hidden |
+  Pointer: buffer |
+  Buffer hidden
+
+| weechat | buffer_unhidden |
+  Pointer: buffer |
+  Buffer unhidden
+
 | weechat | buffer_line_added +
   _(WeeChat ≥ 0.3.7)_ |
   Pointer: line |

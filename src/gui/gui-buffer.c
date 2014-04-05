@@ -77,14 +77,15 @@ char *gui_buffer_notify_string[GUI_BUFFER_NUM_NOTIFY] =
 
 char *gui_buffer_properties_get_integer[] =
 { "number", "layout_number", "layout_number_merge_order", "type", "notify",
-  "num_displayed", "active", "zoomed", "print_hooks_enabled", "day_change",
-  "clear", "filter", "lines_hidden", "prefix_max_length", "time_for_each_line",
-  "nicklist", "nicklist_case_sensitive", "nicklist_max_length",
-  "nicklist_display_groups", "nicklist_count", "nicklist_groups_count",
-  "nicklist_nicks_count", "nicklist_visible_count", "input",
-  "input_get_unknown_commands", "input_size", "input_length", "input_pos",
-  "input_1st_display", "num_history", "text_search", "text_search_exact",
-  "text_search_regex", "text_search_where", "text_search_found",
+  "num_displayed", "active", "hidden", "zoomed", "print_hooks_enabled",
+  "day_change", "clear", "filter", "lines_hidden", "prefix_max_length",
+  "time_for_each_line", "nicklist", "nicklist_case_sensitive",
+  "nicklist_max_length", "nicklist_display_groups", "nicklist_count",
+  "nicklist_groups_count", "nicklist_nicks_count", "nicklist_visible_count",
+  "input", "input_get_unknown_commands", "input_size", "input_length",
+  "input_pos", "input_1st_display", "num_history", "text_search",
+  "text_search_exact", "text_search_regex", "text_search_where",
+  "text_search_found",
   NULL
 };
 char *gui_buffer_properties_get_string[] =
@@ -98,8 +99,8 @@ char *gui_buffer_properties_get_pointer[] =
   NULL
 };
 char *gui_buffer_properties_set[] =
-{ "hotlist", "unread", "display", "print_hooks_enabled", "day_change", "clear",
-  "filter", "number", "name", "short_name", "type", "notify", "title",
+{ "hotlist", "unread", "display", "hidden", "print_hooks_enabled", "day_change",
+  "clear", "filter", "number", "name", "short_name", "type", "notify", "title",
   "time_for_each_line", "nicklist", "nicklist_case_sensitive",
   "nicklist_display_groups", "highlight_words", "highlight_words_add",
   "highlight_words_del", "highlight_regex", "highlight_tags_restrict",
@@ -592,6 +593,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
     new_buffer->notify = CONFIG_INTEGER(config_look_buffer_notify_default);
     new_buffer->num_displayed = 0;
     new_buffer->active = 1;
+    new_buffer->hidden = 0;
     new_buffer->zoomed = 0;
     new_buffer->print_hooks_enabled = 1;
     new_buffer->day_change = 1;
@@ -981,6 +983,8 @@ gui_buffer_get_integer (struct t_gui_buffer *buffer, const char *property)
             return buffer->num_displayed;
         else if (string_strcasecmp (property, "active") == 0)
             return buffer->active;
+        else if (string_strcasecmp (property, "hidden") == 0)
+            return buffer->hidden;
         else if (string_strcasecmp (property, "zoomed") == 0)
             return buffer->zoomed;
         else if (string_strcasecmp (property, "print_hooks_enabled") == 0)
@@ -1753,6 +1757,18 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
                                      (string_strcasecmp (value, "auto") == 0) ?
                                      0 : 1);
     }
+    else if (string_strcasecmp (property, "hidden") == 0)
+    {
+        error = NULL;
+        number = strtol (value, &error, 10);
+        if (error && !error[0])
+        {
+            if (number)
+                gui_buffer_hide (buffer);
+            else
+                gui_buffer_unhide (buffer);
+        }
+    }
     else if (string_strcasecmp (property, "print_hooks_enabled") == 0)
     {
         error = NULL;
@@ -2512,7 +2528,9 @@ gui_buffer_close (struct t_gui_buffer *buffer)
     /* first unmerge buffer if it is merged to at least one other buffer */
     if (gui_buffer_count_merged_buffers (buffer->number) > 1)
     {
-        ptr_back_to_buffer = gui_buffer_get_next_active_buffer (buffer);
+        ptr_back_to_buffer = gui_buffer_get_next_active_buffer (buffer, 0);
+        if (!ptr_back_to_buffer)
+            ptr_back_to_buffer = gui_buffer_get_next_active_buffer (buffer, 1);
         gui_buffer_unmerge (buffer, last_gui_buffer->number + 1);
     }
 
@@ -2763,56 +2781,82 @@ gui_buffer_set_active_buffer (struct t_gui_buffer *buffer)
 
 /*
  * Gets next active buffer (when many buffers are merged).
+ *
+ * If "allow_hidden_buffer" == 1, an hidden buffer can be returned.
+ * Otherwise an hidden buffer is never returned (if all other merged buffers are
+ * hidden, then NULL is returned).
  */
 
 struct t_gui_buffer *
-gui_buffer_get_next_active_buffer (struct t_gui_buffer *buffer)
+gui_buffer_get_next_active_buffer (struct t_gui_buffer *buffer,
+                                   int allow_hidden_buffer)
 {
     struct t_gui_buffer *ptr_buffer;
 
-    if (buffer->next_buffer
-        && (buffer->next_buffer->number == buffer->number))
-        return buffer->next_buffer;
-    else
+    /* search after buffer */
+    for (ptr_buffer = buffer->next_buffer; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
     {
-        for (ptr_buffer = gui_buffers; ptr_buffer;
-             ptr_buffer = ptr_buffer->next_buffer)
+        if (ptr_buffer->number != buffer->number)
+            break;
+        if (allow_hidden_buffer || !ptr_buffer->hidden)
+            return ptr_buffer;
+    }
+
+    /* search before buffer */
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if (ptr_buffer == buffer)
+            break;
+        if ((ptr_buffer->number == buffer->number)
+            && (allow_hidden_buffer || !ptr_buffer->hidden))
         {
-            if ((ptr_buffer != buffer)
-                && (ptr_buffer->number == buffer->number))
-            {
-                return ptr_buffer;
-            }
+            return ptr_buffer;
         }
     }
-    return buffer;
+
+    return NULL;
 }
 
 /*
  * Gets previous active buffer (when many buffers are merged).
+ *
+ * If "allow_hidden_buffer" == 1, an hidden buffer can be returned.
+ * Otherwise an hidden buffer is never returned (if all other merged buffers are
+ * hidden, then NULL is returned).
  */
 
 struct t_gui_buffer *
-gui_buffer_get_previous_active_buffer (struct t_gui_buffer *buffer)
+gui_buffer_get_previous_active_buffer (struct t_gui_buffer *buffer,
+                                       int allow_hidden_buffer)
 {
     struct t_gui_buffer *ptr_buffer;
 
-    if (buffer->prev_buffer
-        && (buffer->prev_buffer->number == buffer->number))
-        return buffer->prev_buffer;
-    else
+    /* search before buffer */
+    for (ptr_buffer = buffer->prev_buffer; ptr_buffer;
+         ptr_buffer = ptr_buffer->prev_buffer)
     {
-        for (ptr_buffer = last_gui_buffer; ptr_buffer;
-             ptr_buffer = ptr_buffer->prev_buffer)
+        if (ptr_buffer->number != buffer->number)
+            break;
+        if (allow_hidden_buffer || !ptr_buffer->hidden)
+            return ptr_buffer;
+    }
+
+    /* search after buffer */
+    for (ptr_buffer = last_gui_buffer; ptr_buffer;
+         ptr_buffer = ptr_buffer->prev_buffer)
+    {
+        if (ptr_buffer == buffer)
+            break;
+        if ((ptr_buffer->number == buffer->number)
+            && (allow_hidden_buffer || !ptr_buffer->hidden))
         {
-            if ((ptr_buffer != buffer)
-                && (ptr_buffer->number == buffer->number))
-            {
-                return ptr_buffer;
-            }
+            return ptr_buffer;
         }
     }
-    return buffer;
+
+    return NULL;
 }
 
 /*
@@ -3308,7 +3352,9 @@ gui_buffer_unmerge (struct t_gui_buffer *buffer, int number)
     else
     {
         /* remove this buffer from mixed_lines, but keep other buffers merged */
-        ptr_new_active_buffer = gui_buffer_get_next_active_buffer (buffer);
+        ptr_new_active_buffer = gui_buffer_get_next_active_buffer (buffer, 0);
+        if (!ptr_new_active_buffer)
+            ptr_new_active_buffer = gui_buffer_get_next_active_buffer (buffer, 1);
         if (ptr_new_active_buffer)
             gui_buffer_set_active_buffer (ptr_new_active_buffer);
         gui_line_mixed_free_buffer (buffer);
@@ -3402,6 +3448,38 @@ gui_buffer_unmerge_all ()
             ptr_buffer = ptr_buffer->next_buffer;
         }
     }
+}
+
+/*
+ * Hides a buffer.
+ */
+
+void
+gui_buffer_hide (struct t_gui_buffer *buffer)
+{
+    if (!buffer || buffer->hidden)
+        return;
+
+    buffer->hidden = 1;
+
+    (void) hook_signal_send ("buffer_hidden",
+                             WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+}
+
+/*
+ * Unhides a buffer.
+ */
+
+void
+gui_buffer_unhide (struct t_gui_buffer *buffer)
+{
+    if (!buffer || !buffer->hidden)
+        return;
+
+    buffer->hidden = 0;
+
+    (void) hook_signal_send ("buffer_unhidden",
+                             WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }
 
 /*
@@ -3846,6 +3924,7 @@ gui_buffer_hdata_buffer_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_gui_buffer, notify, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, num_displayed, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, active, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_buffer, hidden, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, zoomed, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, print_hooks_enabled, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, day_change, INTEGER, 0, NULL, NULL);
@@ -4022,6 +4101,8 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
     if (!infolist_new_var_integer (ptr_item, "num_displayed", buffer->num_displayed))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "active", buffer->active))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "hidden", buffer->hidden))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "zoomed", buffer->zoomed))
         return 0;
@@ -4237,6 +4318,7 @@ gui_buffer_print_log ()
         log_printf ("  notify. . . . . . . . . : %d",    ptr_buffer->notify);
         log_printf ("  num_displayed . . . . . : %d",    ptr_buffer->num_displayed);
         log_printf ("  active. . . . . . . . . : %d",    ptr_buffer->active);
+        log_printf ("  hidden. . . . . . . . . : %d",    ptr_buffer->hidden);
         log_printf ("  zoomed. . . . . . . . . : %d",    ptr_buffer->zoomed);
         log_printf ("  print_hooks_enabled . . : %d",    ptr_buffer->print_hooks_enabled);
         log_printf ("  day_change. . . . . . . : %d",    ptr_buffer->day_change);

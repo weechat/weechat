@@ -562,7 +562,7 @@ COMMAND_CALLBACK(buffer)
              ptr_buffer = ptr_buffer->next_buffer)
         {
             gui_chat_printf (NULL,
-                             _("  %s[%s%d%s]%s %s%s.%s%s%s (notify: %s)"),
+                             _("  %s[%s%d%s]%s %s%s.%s%s%s (notify: %s)%s%s"),
                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                              GUI_COLOR(GUI_COLOR_CHAT),
                              ptr_buffer->number,
@@ -573,13 +573,16 @@ COMMAND_CALLBACK(buffer)
                              GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                              ptr_buffer->name,
                              GUI_COLOR(GUI_COLOR_CHAT),
-                             gui_buffer_notify_string[ptr_buffer->notify]);
+                             gui_buffer_notify_string[ptr_buffer->notify],
+                             (ptr_buffer->hidden) ? " " : "",
+                             /* TRANSLATORS: "hidden" is displayed in list of buffers */
+                             (ptr_buffer->hidden) ? _("(hidden)") : "");
         }
 
         return WEECHAT_RC_OK;
     }
 
-    /* clear content of buffer */
+    /* clear content of buffer(s) */
     if (string_strcasecmp (argv[1], "clear") == 0)
     {
         if (argc > 2)
@@ -758,6 +761,72 @@ COMMAND_CALLBACK(buffer)
             }
         }
         gui_buffer_unmerge (buffer, (int)number);
+
+        return WEECHAT_RC_OK;
+    }
+
+    /* hide buffer(s) */
+    if (string_strcasecmp (argv[1], "hide") == 0)
+    {
+        if (argc > 2)
+        {
+            for (i = 2; i < argc; i++)
+            {
+                ptr_buffer = gui_buffer_search_by_number_or_name (argv[i]);
+                if (ptr_buffer)
+                {
+                    number = strtol (argv[2], &error, 10);
+                    if (error && !error[0])
+                    {
+                        for (ptr_buffer2 = gui_buffers; ptr_buffer2;
+                             ptr_buffer2 = ptr_buffer2->next_buffer)
+                        {
+                            if (ptr_buffer2->number == ptr_buffer->number)
+                            {
+                                gui_buffer_hide (ptr_buffer2);
+                            }
+                        }
+                    }
+                    else
+                        gui_buffer_hide (ptr_buffer);
+                }
+            }
+        }
+        else
+            gui_buffer_hide (buffer);
+
+        return WEECHAT_RC_OK;
+    }
+
+    /* unhide buffer(s) */
+    if (string_strcasecmp (argv[1], "unhide") == 0)
+    {
+        if (argc > 2)
+        {
+            for (i = 2; i < argc; i++)
+            {
+                ptr_buffer = gui_buffer_search_by_number_or_name (argv[i]);
+                if (ptr_buffer)
+                {
+                    number = strtol (argv[2], &error, 10);
+                    if (error && !error[0])
+                    {
+                        for (ptr_buffer2 = gui_buffers; ptr_buffer2;
+                             ptr_buffer2 = ptr_buffer2->next_buffer)
+                        {
+                            if (ptr_buffer2->number == ptr_buffer->number)
+                            {
+                                gui_buffer_unhide (ptr_buffer2);
+                            }
+                        }
+                    }
+                    else
+                        gui_buffer_unhide (ptr_buffer);
+                }
+            }
+        }
+        else
+            gui_buffer_unhide (buffer);
 
         return WEECHAT_RC_OK;
     }
@@ -1016,8 +1085,16 @@ COMMAND_CALLBACK(buffer)
     {
         if (strcmp (argv[1], "-") == 0)
         {
+            /* search first non-hidden buffer */
+            for (ptr_buffer = gui_buffers; ptr_buffer;
+                 ptr_buffer = ptr_buffer->next_buffer)
+            {
+                if (!ptr_buffer->hidden)
+                    break;
+            }
             gui_buffer_switch_by_number (gui_current_window,
-                                         gui_buffers->number);
+                                         (ptr_buffer) ?
+                                         ptr_buffer->number : gui_buffers->number);
         }
         else
         {
@@ -1038,19 +1115,26 @@ COMMAND_CALLBACK(buffer)
                     if (ptr_buffer == gui_current_window->buffer)
                         break;
 
-                    if ((ptr_buffer->number != gui_current_window->buffer->number)
-                        && (ptr_buffer->number != prev_number))
+                    /* skip hidden buffers */
+                    if (!ptr_buffer->hidden)
                     {
-                        /* increase count each time we discover a different number */
-                        count++;
-                        if (count == number)
+                        if ((ptr_buffer->number != gui_current_window->buffer->number)
+                            && (ptr_buffer->number != prev_number))
                         {
-                            gui_buffer_switch_by_number (gui_current_window,
-                                                         ptr_buffer->number);
-                            break;
+                            /*
+                             * increase count each time we discover a different
+                             * number
+                             */
+                            count++;
+                            if (count == number)
+                            {
+                                gui_buffer_switch_by_number (gui_current_window,
+                                                             ptr_buffer->number);
+                                break;
+                            }
                         }
+                        prev_number = ptr_buffer->number;
                     }
-                    prev_number = ptr_buffer->number;
                 }
             }
             else
@@ -1070,8 +1154,16 @@ COMMAND_CALLBACK(buffer)
     {
         if (strcmp (argv[1], "+") == 0)
         {
+            /* search last non-hidden buffer */
+            for (ptr_buffer = last_gui_buffer; ptr_buffer;
+                 ptr_buffer = ptr_buffer->prev_buffer)
+            {
+                if (!ptr_buffer->hidden)
+                    break;
+            }
             gui_buffer_switch_by_number (gui_current_window,
-                                         last_gui_buffer->number);
+                                         (ptr_buffer) ?
+                                         ptr_buffer->number : last_gui_buffer->number);
         }
         else
         {
@@ -1092,19 +1184,26 @@ COMMAND_CALLBACK(buffer)
                     if (ptr_buffer == gui_current_window->buffer)
                         break;
 
-                    if ((ptr_buffer->number != gui_current_window->buffer->number)
-                        && (ptr_buffer->number != prev_number))
+                    /* skip hidden buffers */
+                    if (!ptr_buffer->hidden)
                     {
-                        /* increase count each time we discover a different number */
-                        count++;
-                        if (count == number)
+                        if ((ptr_buffer->number != gui_current_window->buffer->number)
+                            && (ptr_buffer->number != prev_number))
                         {
-                            gui_buffer_switch_by_number (gui_current_window,
-                                                         ptr_buffer->number);
-                            break;
+                            /*
+                             * increase count each time we discover a different
+                             * number
+                             */
+                            count++;
+                            if (count == number)
+                            {
+                                gui_buffer_switch_by_number (gui_current_window,
+                                                             ptr_buffer->number);
+                                break;
+                            }
                         }
+                        prev_number = ptr_buffer->number;
                     }
-                    prev_number = ptr_buffer->number;
                 }
             }
             else
@@ -6643,11 +6742,13 @@ command_init ()
         NULL, "buffer",
         N_("manage buffers"),
         N_("list"
-           " || clear [<number>|<name>|-merged|-all]"
+           " || clear [<number>|<name>|-merged|-all [<number>|<name>...]]"
            " || move <number>|-|+"
-           " || merge <number>"
            " || swap <number1>|<name1> [<number2>|<name2>]"
+           " || merge <number>"
            " || unmerge [<number>|-all]"
+           " || hide [<number>|<name> [<number>|<name>...]]"
+           " || unhide [<number>|<name> [<number>|<name>...]]"
            " || renumber [<number1> [<number2> [<start>]]]"
            " || close [<n1>[-<n2>]|<name>]"
            " || notify <level>"
@@ -6667,6 +6768,8 @@ command_init ()
            "be mix of both buffers)\n"
            "          (by default ctrl-x switches between merged buffers)\n"
            " unmerge: unmerge buffer from other buffers which have same number\n"
+           "    hide: hide the buffer\n"
+           "  unhide: unhide the buffer\n"
            "renumber: renumber buffers (works only if option weechat.look."
            "buffer_auto_renumber is off)\n"
            "   close: close buffer (number/range or name is optional)\n"
@@ -6718,6 +6821,8 @@ command_init ()
         " || swap %(buffers_numbers)"
         " || merge %(buffers_numbers)"
         " || unmerge %(buffers_numbers)|-all"
+        " || hide %(buffers_numbers)|%(buffers_plugins_names)|%*"
+        " || unhide %(buffers_numbers)|%(buffers_plugins_names)|%*"
         " || renumber %(buffers_numbers) %(buffers_numbers) %(buffers_numbers)"
         " || close %(buffers_plugins_names)"
         " || list"

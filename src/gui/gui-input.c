@@ -1578,7 +1578,7 @@ gui_input_switch_active_buffer (struct t_gui_buffer *buffer)
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_window *window;
 
-    ptr_buffer = gui_buffer_get_next_active_buffer (buffer);
+    ptr_buffer = gui_buffer_get_next_active_buffer (buffer, 0);
     if (ptr_buffer)
     {
         gui_buffer_set_active_buffer (ptr_buffer);
@@ -1598,7 +1598,7 @@ gui_input_switch_active_buffer_previous (struct t_gui_buffer *buffer)
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_window *window;
 
-    ptr_buffer = gui_buffer_get_previous_active_buffer (buffer);
+    ptr_buffer = gui_buffer_get_previous_active_buffer (buffer, 0);
     if (ptr_buffer)
     {
         gui_buffer_set_active_buffer (ptr_buffer);

@@ -490,6 +490,7 @@
 *** 'notify' (integer)
 *** 'num_displayed' (integer)
 *** 'active' (integer)
+*** 'hidden' (integer)
 *** 'zoomed' (integer)
 *** 'print_hooks_enabled' (integer)
 *** 'day_change' (integer)

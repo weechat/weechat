@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-04-04 15:58+0200\n"
-"PO-Revision-Date: 2014-03-24 14:23+0100\n"
+"POT-Creation-Date: 2014-04-05 16:09+0200\n"
+"PO-Revision-Date: 2014-04-05 16:12+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: cs\n"
@@ -193,6 +193,7 @@ msgstr ""
 "  %s%s%s: %s%s%s (podmínka: %s), %s, vyplňuje: %s(nahoře/dole)/%s(vlevo/"
 "vpravo), %s: %s"
 
+#. TRANSLATORS: "hidden" is displayed in list of buffers
 msgid "(hidden)"
 msgstr "(skrytý)"
 
@@ -280,7 +281,7 @@ msgid "Buffers list:"
 msgstr "Seznam bufferů:"
 
 #, fuzzy, c-format
-msgid "  %s[%s%d%s]%s %s%s.%s%s%s (notify: %s)"
+msgid "  %s[%s%d%s]%s %s%s.%s%s%s (notify: %s)%s%s"
 msgstr "  %s[%s%d%s]%s (%s) %s%s%s (notifikace: %s)"
 
 #, c-format
@@ -1085,11 +1086,12 @@ msgstr "řídit buffery"
 
 #, fuzzy
 msgid ""
-"list || clear [<number>|<name>|-merged|-all] || move <number>|-|+ || merge "
-"<number> || swap <number1>|<name1> [<number2>|<name2>] || unmerge [<number>|-"
-"all] || renumber [<number1> [<number2> [<start>]]] || close [<n1>[-<n2>]|"
-"<name>] || notify <level> || localvar || set <property> <value> || get "
-"<property> || <number>|-|+|<name>"
+"list || clear [<number>|<name>|-merged|-all [<number>|<name>...]] || move "
+"<number>|-|+ || swap <number1>|<name1> [<number2>|<name2>] || merge <number> "
+"|| unmerge [<number>|-all] || hide [<number>|<name> [<number>|<name>...]] || "
+"unhide [<number>|<name> [<number>|<name>...]] || renumber [<number1> "
+"[<number2> [<start>]]] || close [<n1>[-<n2>]|<name>] || notify <level> || "
+"localvar || set <property> <value> || get <property> || <number>|-|+|<name>"
 msgstr ""
 "list || clear [<číslo>|-merged|-all] || move|merge <číslo> || unmerge "
 "[<číslo>] || close [<n1>[-<n2>]] || notify <úroveň> || localvar || set "
@@ -1108,6 +1110,8 @@ msgid ""
 "both buffers)\n"
 "          (by default ctrl-x switches between merged buffers)\n"
 " unmerge: unmerge buffer from other buffers which have same number\n"
+"    hide: hide the buffer\n"
+"  unhide: unhide the buffer\n"
 "renumber: renumber buffers (works only if option weechat.look."
 "buffer_auto_renumber is off)\n"
 "   close: close buffer (number/range or name is optional)\n"
@@ -10618,18 +10622,3 @@ msgstr "%s%s: nemohu nastavit \"neblokovaci\" volbu na soket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
-
-#, fuzzy
-#~ msgid ""
-#~ "hide channel key in channel modes (this will hide all channel modes "
-#~ "arguments if mode +k is set on channel)"
-#~ msgstr ""
-#~ "schovat klíč kanálu pokud jsou zobrazeny módy v \"buffer_name\" položce "
-#~ "panelu (toto schová všechny argumenty módů kanálu pokud je +k nastaveno "
-#~ "na kanálu)"
-
-#~ msgid "display nick modes in \"input_prompt\" bar item"
-#~ msgstr "zobrazovat módy přezdívky v položce pole \"input_prompt\""
-
-#~ msgid "Signal SIGHUP received, reloading configuration files"
-#~ msgstr "Obdržen signál SIGHUP, znovunačítám konfigurační soubory"

@@ -65,11 +65,13 @@ Exemples:
 
 ----
 /buffer  list
-         clear [<nombre>|<nom>|-merged|-all]
+         clear [<nombre>|<nom>|-merged|-all [<nombre>|<nom>...]]
          move <nombre>|-|+
-         merge <nombre>
          swap <nombre1>|<nom1> [<nombre2>|<nom2>]
+         merge <nombre>
          unmerge [<nombre>|-all]
+         hide [<nombre>|<nom> [<nombre>|<nom>...]]
+         unhide [<nombre>|<nom> [<nombre>|<nom>...]]
          renumber <nombre1> [<nombre2> [<départ>]]
          close [<n1>[-<n2>]|<nom>]
          notify <niveau>
@@ -85,6 +87,8 @@ Exemples:
    merge: mélanger le tampon courant avec un autre tampon (la zone de discussion sera un mélange des deux tampons)
           (par défaut ctrl-x bascule entre les tampons mélangés)
  unmerge: détacher le tampon courant des autres tampons portant le même numéro
+    hide: masquer le tampon
+  unhide: démasquer le tampon
 renumber: renuméroter des tampons (fonctionne seulement si l'option weechat.look.buffer_auto_renumber est désactivée)
    close: fermer le tampon (nombre/intervalle ou nom optionnel)
   notify: définir le niveau de notification pour le tampon courant: ce niveau détermine si le tampon doit être ajouté à la hotlist ou pas:

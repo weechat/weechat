@@ -65,11 +65,13 @@ Przykłady:
 
 ----
 /buffer  list
-         clear [<number>|<name>|-merged|-all]
+         clear [<number>|<name>|-merged|-all [<number>|<name>...]]
          move <number>|-|+
-         merge <number>
          swap <number1>|<name1> [<number2>|<name2>]
+         merge <number>
          unmerge [<number>|-all]
+         hide [<number>|<name> [<number>|<name>...]]
+         unhide [<number>|<name> [<number>|<name>...]]
          renumber [<number1> [<number2> [<start>]]]
          close [<n1>[-<n2>]|<name>]
          notify <level>
@@ -85,6 +87,8 @@ Przykłady:
    merge: merge current buffer to another buffer (chat area will be mix of both buffers)
           (by default ctrl-x switches between merged buffers)
  unmerge: unmerge buffer from other buffers which have same number
+    hide: hide the buffer
+  unhide: unhide the buffer
 renumber: renumber buffers (works only if option weechat.look.buffer_auto_renumber is off)
    close: close buffer (number/range or name is optional)
   notify: set notify level for current buffer: this level determines whether buffer will be added to hotlist or not:

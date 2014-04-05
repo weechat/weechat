@@ -96,6 +96,7 @@ struct t_gui_buffer
     int active;                        /* 0 = buffer merged and not active  */
                                        /* 1 = active (merged or not)        */
                                        /* 2 = the only active (merged)      */
+    int hidden;                        /* 1 = buffer hidden                 */
     int zoomed;                        /* 1 if a merged buffer is zoomed    */
                                        /* (it can be another buffer)        */
     int print_hooks_enabled;           /* 1 if print hooks are enabled      */
@@ -303,8 +304,10 @@ extern void gui_buffer_close (struct t_gui_buffer *buffer);
 extern void gui_buffer_switch_by_number (struct t_gui_window *window,
                                          int number);
 extern void gui_buffer_set_active_buffer (struct t_gui_buffer *buffer);
-extern struct t_gui_buffer *gui_buffer_get_next_active_buffer (struct t_gui_buffer *buffer);
-extern struct t_gui_buffer *gui_buffer_get_previous_active_buffer (struct t_gui_buffer *buffer);
+extern struct t_gui_buffer *gui_buffer_get_next_active_buffer (struct t_gui_buffer *buffer,
+                                                               int allow_hidden_buffer);
+extern struct t_gui_buffer *gui_buffer_get_previous_active_buffer (struct t_gui_buffer *buffer,
+                                                                   int allow_hidden_buffer);
 extern void gui_buffer_renumber (int number1, int number2, int start_number);
 extern void gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number);
 extern void gui_buffer_swap (int number1, int number2);
@@ -312,6 +315,8 @@ extern void gui_buffer_merge (struct t_gui_buffer *buffer,
                               struct t_gui_buffer *target_buffer);
 extern void gui_buffer_unmerge (struct t_gui_buffer *buffer, int number);
 extern void gui_buffer_unmerge_all ();
+extern void gui_buffer_hide (struct t_gui_buffer *buffer);
+extern void gui_buffer_unhide (struct t_gui_buffer *buffer);
 extern void gui_buffer_sort_by_layout_number ();
 extern void gui_buffer_undo_snap (struct t_gui_buffer *buffer);
 extern void gui_buffer_undo_snap_free (struct t_gui_buffer *buffer);

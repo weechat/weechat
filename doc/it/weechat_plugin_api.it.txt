@@ -8133,6 +8133,16 @@ List of signals sent by WeeChat and plugins:
   Puntatore: buffer |
   Buffer cleared
 
+// TRANSLATION MISSING
+| weechat | buffer_hidden |
+  Pointer: buffer |
+  Buffer hidden
+
+// TRANSLATION MISSING
+| weechat | buffer_unhidden |
+  Pointer: buffer |
+  Buffer unhidden
+
 | weechat | buffer_line_added +
   _(WeeChat ≥ 0.3.7)_ |
   Puntatore: riga |

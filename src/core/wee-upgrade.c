@@ -472,6 +472,16 @@ upgrade_weechat_read_cb (void *data,
                             infolist_integer (infolist, "type");
                         upgrade_current_buffer->notify =
                             infolist_integer (infolist, "notify");
+                        /* "hidden" is in WeeChat >= 0.4.4 */
+                        if (infolist_search_var (infolist, "hidden"))
+                        {
+                            upgrade_current_buffer->hidden =
+                                infolist_integer (infolist, "hidden");
+                        }
+                        else
+                        {
+                            upgrade_current_buffer->hidden = 0;
+                        }
                         if (infolist_search_var (infolist, "day_change"))
                         {
                             upgrade_current_buffer->day_change =
