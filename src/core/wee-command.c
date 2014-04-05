@@ -546,7 +546,7 @@ COMMAND_CALLBACK(buffer)
     struct t_gui_buffer *weechat_buffer;
     long number, number1, number2, numbers[3];
     char *error, *value, *pos, *str_number1, *pos_number2;
-    int i, error_main_buffer, num_buffers, count, prev_number;
+    int i, error_main_buffer, num_buffers, count, prev_number, clear_number;
 
     /* make C compiler happy */
     (void) data;
@@ -590,18 +590,35 @@ COMMAND_CALLBACK(buffer)
             {
                 for (i = 2; i < argc; i++)
                 {
-                    ptr_buffer = (string_strcasecmp (argv[i], "-merged") == 0) ?
-                                  buffer : gui_buffer_search_by_number_or_name (argv[i]);
+                    if (string_strcasecmp (argv[i], "-merged") == 0)
+                    {
+                        ptr_buffer = buffer;
+                        clear_number = 1;
+                    }
+                    else
+                    {
+                        ptr_buffer = gui_buffer_search_by_number_or_name (argv[i]);
+                        number = strtol (argv[2], &error, 10);
+                        clear_number = (error && !error[0]);
+                    }
                     if (ptr_buffer)
                     {
-                        for (ptr_buffer2 = gui_buffers; ptr_buffer2;
-                             ptr_buffer2 = ptr_buffer2->next_buffer)
+                        if (clear_number)
                         {
-                            if ((ptr_buffer2->number == ptr_buffer->number)
-                                && ptr_buffer2->clear)
+                            for (ptr_buffer2 = gui_buffers; ptr_buffer2;
+                                 ptr_buffer2 = ptr_buffer2->next_buffer)
                             {
-                                gui_buffer_clear (ptr_buffer2);
+                                if ((ptr_buffer2->number == ptr_buffer->number)
+                                    && ptr_buffer2->clear)
+                                {
+                                    gui_buffer_clear (ptr_buffer2);
+                                }
                             }
+                        }
+                        else
+                        {
+                            if (ptr_buffer->clear)
+                                gui_buffer_clear (ptr_buffer);
                         }
                     }
                 }
