@@ -718,6 +718,8 @@ hda:
 [[message_buffer_hidden]]
 ==== _buffer_hidden
 
+_WeeChat ≥ 0.4.4._
+
 This message is sent to the client when the signal "buffer_hidden" is sent by
 WeeChat.
 
@@ -750,6 +752,8 @@ hda:
 
 [[message_buffer_unhidden]]
 ==== _buffer_unhidden
+
+_WeeChat ≥ 0.4.4._
 
 This message is sent to the client when the signal "buffer_unhidden" is sent by
 WeeChat.
