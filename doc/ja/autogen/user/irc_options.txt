@@ -24,7 +24,7 @@
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `yellow`)
 
 * [[option_irc.color.item_nick_modes]] *irc.color.item_nick_modes*
-** 説明: `color for nick modes in bar item "input_prompt"`
+** 説明: `"input_prompt" バーアイテム内のニックネームモードに付ける色`
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `default`)
 
@@ -184,7 +184,7 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_irc.look.item_channel_modes_hide_args]] *irc.look.item_channel_modes_hide_args*
-** 説明: `hide channel modes arguments if at least one of these modes is in channel modes ("*" to always hide all arguments, empty value to never hide arguments); example: "kf" to hide arguments if "k" or "f" are in channel modes`
+** 説明: `設定したモードのうち少なくとも 1 つがチャンネルモードに設定されていた場合、チャンネルモード引数を隠す (全ての引数を隠すには "*" を使ってください、値が空の場合は全てのチャンネルモード引数が表示されます); 例: チャンネルモードに "k" または "f" が設定されていた場合にチャンネルモード引数を隠すには "kf" と設定してください`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"k"`)
 
@@ -194,12 +194,12 @@
 ** 値: buffer_plugin, buffer_name (デフォルト値: `buffer_plugin`)
 
 * [[option_irc.look.item_nick_modes]] *irc.look.item_nick_modes*
-** 説明: `display nick modes in bar item "input_prompt"`
+** 説明: `"input_prompt" バーアイテムではニックネームモードを表示`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_irc.look.item_nick_prefix]] *irc.look.item_nick_prefix*
-** 説明: `display nick prefix in bar item "input_prompt"`
+** 説明: `"input_prompt" バーアイテムではニックネームプレフィックスを表示`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
@@ -359,7 +359,7 @@
 ** 値: 0 .. 604800 (デフォルト値: `600`)
 
 * [[option_irc.network.ban_mask_default]] *irc.network.ban_mask_default*
-** 説明: `default ban mask for commands /ban, /unban and /kickban; variables $nick, $user, $ident and $host are replaced by their values (extracted from "nick!user@host"); $ident is the same as $user if $user does not start with "~", otherwise it is set to "*"; this default mask is used only if WeeChat knows the host for the nick`
+** 説明: `/ban、/unban、/kickban コマンドが使うデフォルトの禁止マスク; 変数 $nick、$user、$ident、$host はそれぞれの値に置換 ("nick!user@host" から展開) されます; $user が "~" で始まらない場合 $ident は $user と同じで、それ以外の場合 $ident は "*" になります; 設定したデフォルトマスクはニックネームのホスト名がわかる場合のみ利用されます`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"*!$ident@$host"`)
 
@@ -474,7 +474,7 @@
 ** 値: 0 .. 1000000 (デフォルト値: `25`)
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** 説明: `comma-separated list of client capabilities to enable for server if they are available; capabilities supported by WeeChat are: multi-prefix, userhost-in-names, away-notify (example: "multi-prefix,userhost-in-names,away-notify")`
+** 説明: `サーバで利用可能ならば有効化する "client capabilities" のコンマ区切りリスト; WeeChat で利用できる機能: multi-prefix、userhost-in-names、away-notify (例: "multi-prefix,userhost-in-names,away-notify")`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
@@ -579,7 +579,7 @@
 ** 値: 0 .. 2147483647 (デフォルト値: `2048`)
 
 * [[option_irc.server_default.ssl_fingerprint]] *irc.server_default.ssl_fingerprint*
-** 説明: `SHA1 fingerprint of certificate which is trusted and accepted for the server (it must be exactly 40 hexadecimal digits without separators); many fingerprints can be separated by commas; if this option is set, the other checks on certificates are NOT performed (option "ssl_verify")`
+** 説明: `信頼でき、通信を認めるサーバ証明書の SHA1 指紋 (指紋は必ず空白を含まない 40 桁の 16 進数です); 複数の指紋を設定する場合はコンマで区切ってください; このオプションを設定した場合、証明書に対する他の妥当性確認は行われません (オプション "ssl_verify")`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 

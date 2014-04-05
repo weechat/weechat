@@ -82,7 +82,7 @@
 
 | trigger | trigger_hooks | トリガに対するフック
 
-| trigger | trigger_hooks_filter | hooks for triggers (for filter in monitor buffer)
+| trigger | trigger_hooks_filter | トリガに対するフック (モニタバッファのフィルタ用)
 
 | trigger | trigger_names | トリガ
 

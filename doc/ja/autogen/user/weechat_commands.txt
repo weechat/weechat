@@ -297,53 +297,53 @@ hdata と変数の名前については、"プラグイン API リファレン�
          rename <name> <new_name>
          del <name>|-all
 
-   list: list all filters
- enable: enable filters (filters are enabled by default)
-disable: disable filters
- toggle: toggle filters
-   name: filter name ("@" = enable/disable all filters in current buffer)
-    add: add a filter
- rename: rename a filter
-    del: delete a filter
-   -all: delete all filters
- buffer: comma separated list of buffers where filter is active:
-         - this is full name including plugin (example: "irc.freenode.#weechat")
-         - "*" means all buffers
-         - a name starting with '!' is excluded
-         - name can start or end with '*' to match many buffers
-   tags: comma separated list of tags, for example "irc_join,irc_part,irc_quit"
-         - logical "and": use "+" between tags (for example: "nick_toto+irc_action")
-         - tags can start or end with '*'
-  regex: POSIX extended regular expression to search in line
-         - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
-         - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
-         - two regular expressions are created: one for prefix and one for message
-         - regex are case insensitive, they can start by "(?-i)" to become case sensitive
+   list: 全てのフィルタをリストアップ
+ enable: フィルタを有効化 (フィルタはデフォルトで有効になっています)
+disable: フィルタを無効化
+ toggle: フィルタの有効無効を切り替え
+   name: フィルタの名前 ("@" = 現在のバッファに設定されている全てのフィルタを有効化/無効化)
+    add: フィルタを追加
+ rename: フィルタをリネーム
+    del: フィルタを削除
+   -all: 全てのフィルタを削除
+ buffer: フィルタが有効化されているバッファのコンマ区切りリスト:
+         - これはプラグイン名を含む完全な名前です (例えば: "irc.freenode.#weechat")
+         - "*" は全てのバッファを意味します
+         - 名前が '!' から始まるものは除外されます
+         - 多くのバッファにマッチさせるためには名前を '*' から始めるか終わらせてください
+   tags: タグのコンマ区切りリスト、例えば "irc_join,irc_part,irc_quit"
+         - 論理積 "and": タグ同士を "+" でつなげる (例えば: "nick_toto+irc_action")
+         - タグの最初と最後には '*' を使うことができます
+  regex: 行単位検索の正規表現
+         - '\t' を使うと、プレフィックスをメッセージから分離できます。'|' 等の特別な文字は '\|' のようにエスケープしなければいけません
+         - 正規表現の最初に '!' が含まれる場合は、マッチ結果が反転されます (最初の '!' にマッチさせたければ、'\!' を使ってください)
+         - 2 種類の正規表現があります: 一方はプレフィックス用、他方はメッセージ用
+         - 正規表現は大文字小文字を区別しません、"(?-i)" から始まる場合は区別します
 
-The default key alt+'=' toggles filtering on/off.
+デフォルトではキー alt+'=' でフィルタリングの on/off を切り替えられます。
 
-Tags most commonly used:
+よく使われるタグ:
   no_filter, no_highlight, no_log, log0..log9 (log level),
   notify_none, notify_message, notify_private, notify_highlight,
-  nick_xxx (xxx is nick in message), prefix_nick_ccc (ccc is color of nick),
-  irc_xxx (xxx is command name or number, see /server raw or /debug tags),
+  nick_xxx (xxx はメッセージのニックネーム), prefix_nick_ccc (ccc はニックネームの色)
+  irc_xxx (xxx はコマンド名又は番号、/server raw または /debug tags で確認),
   irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
-To see tags for lines in buffers: /debug tags
+バッファ内でタグを見るには: /debug tags
 
-Examples:
-  use IRC smart filter on all buffers:
+例:
+  全てのバッファで IRC スマートフィルタを使用:
     /filter add irc_smart * irc_smart_filter *
-  use IRC smart filter on all buffers except those with "#weechat" in name:
+  名前に "#weechat" を含むバッファを除いた全てのバッファで IRC スマートフィルタを使用:
     /filter add irc_smart *,!*#weechat* irc_smart_filter *
-  filter all IRC join/part/quit messages:
+  全ての IRC join/part/quit メッセージをフィルタ:
     /filter add joinquit * irc_join,irc_part,irc_quit *
-  filter nicks displayed when joining channels or with /names:
+  チャンネルに入った時や /names で表示されるニックネームをフィルタ:
     /filter add nicks * irc_366 *
-  filter nick "toto" on IRC channel #weechat:
+  IRC チャンネル #weechat で "toto" を含むニックネームをフィルタ:
     /filter add toto irc.freenode.#weechat nick_toto *
-  filter IRC join/action messages from nick "toto":
+  ニックネーム "toto" からの IRC の参加/アクションメッセージをフィルタ:
     /filter add toto * nick_toto+irc_join,nick_toto+irc_action *
-  filter lines containing "weechat sucks" on IRC channel #weechat:
+  IRC チャンネル #weechat で "weechat sucks" を含む行をフィルタ:
     /filter add sucks irc.freenode.#weechat * weechat sucks
 ----
 
@@ -888,51 +888,51 @@ command: 実行するコマンド (コマンドが '/' で始まらない場合�
          zoom[-window <number>]
          bare [<delay>]
 
-         list: list opened windows (without argument, this list is displayed)
-           -1: jump to previous window
-           +1: jump to next window
-           b#: jump to next window displaying buffer number #
-           up: switch to window above current one
-         down: switch to window below current one
-         left: switch to window on the left
-        right: switch to window on the right
-       number: window number (see /window list)
-       splith: split current window horizontally
-       splitv: split current window vertically
-       resize: resize window size, new size is <pct> percentage of parent window
-      balance: balance the sizes of all windows
-        merge: merge window with another (all = keep only one window)
-      page_up: scroll one page up
-    page_down: scroll one page down
-      refresh: refresh screen
-       scroll: scroll a number of lines (+/-N) or with time: s=seconds, m=minutes, h=hours, d=days, M=months, y=years
- scroll_horiz: scroll horizontally a number of columns (+/-N) or percentage of window size (this scrolling is possible only on buffers with free content)
-    scroll_up: scroll a few lines up
-  scroll_down: scroll a few lines down
-   scroll_top: scroll to top of buffer
-scroll_bottom: scroll to bottom of buffer
-scroll_beyond_end: scroll beyond the end of buffer
-scroll_previous_highlight: scroll to previous highlight
-scroll_next_highlight: scroll to next highlight
-scroll_unread: scroll to unread marker
-         swap: swap buffers of two windows (with optional direction for target window)
-         zoom: zoom on window
-         bare: toggle bare display (with optional delay in seconds for automatic return to standard display mode)
+         list: 開けられたウィンドウのリストアップ (引数無しの場合、このリストが表示されます)
+           -1: 前のウィンドウに移動
+           +1: 次のウィンドウに移動
+           b#: バッファ番号 # のウィンドウに移動
+           up: 現在のウィンドウの上のウィンドウに移動
+         down: 現在のウィンドウの下のウィンドウに移動
+         left: 左のウィンドウに移動
+        right: 右のウィンドウに移動
+       number: ウィンドウ番号 (/window list を参照)
+       splith: 現在のウィンドウを水平分割
+       splitv: 現在のウィンドウを垂直分割
+       resize: ウィンドウサイズの変更、新しいサイズは親ウィンドウの <pct> パーセントで指定
+      balance: 全てのウィンドウのサイズを均等にする
+        merge: ウィンドウを他のものをマージする (all = 一つのウィンドウにまとめる)
+      page_up: 1 ページ分上方向にスクロール
+    page_down: 1 ページ分下方向にスクロール
+      refresh: スクリーンのリフレッシュ
+       scroll: 指定行数 (+/-N) か指定期間 (s=秒、m=分、h=時間、d=日、M=月、y=年) スクロール
+ scroll_horiz: 指定列数 (+/-N) かウィンドウサイズの割合で水平方向にスクロール (フリーコンテンツを含むバッファ以外は無効)
+    scroll_up: 数行分上方向にスクロール
+  scroll_down: 数行分下方向にスクロール
+   scroll_top: バッファの一番上にスクロール
+scroll_bottom: バッファの一番下にスクロール
+scroll_beyond_end: バッファの末尾を越えてスクロール
+scroll_previous_highlight: 一つ前のハイライトにスクロール
+scroll_next_highlight: 次のハイライトにスクロール
+scroll_unread: 未読マーカにスクロール
+         swap: 2 つのウィンドウのバッファを入れ替え (ターゲットウィンドウの方向を任意指定)
+         zoom: ウィンドウを拡大
+         bare: 最小限表示を切り替える (自動的に標準表示モードに戻るまでの時間を秒単位で任意指定)
 
-For splith and splitv, pct is a percentage which represents size of new window, computed with current window as size reference. For example 25 means create a new window with size = current_size / 4
+splith と splitv に関しては、pct は新しいウィンドウのパーセンテージで、現在のウィンドウサイズに対する割合で計算されます。例えば、25 は size = current_size / 4 の新しいウィンドウを作成します。
 
-Examples:
-  jump to window displaying buffer #1:
+例:
+  バッファ #1 を表示しているウィンドウに移動:
     /window b1
-  scroll 2 lines up:
+  2 行分上方向にスクロール:
     /window scroll -2
-  scroll 2 days up:
+  2 日分上方向にスクロール:
     /window scroll -2d
-  scroll to beginning of current day:
+  今日の最初にスクロール:
     /window scroll -d
-  zoom on window #2:
+  ウィンドウ #2 を拡大:
     /window zoom -window 2
-  enable bare display for 2 seconds:
+  最小限表示を 2 秒間有効にする:
     /window bare 2
 ----
 
