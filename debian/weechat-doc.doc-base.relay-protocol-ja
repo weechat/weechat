@@ -1,0 +1,10 @@
+Document: weechat-relay-protocol-ja
+Title: WeeChat Relay protocol (Japanese)
+Author: Sébastien Helleu
+Abstract: This manual describes WeeChat Relay Protocol, used by
+ remote GUI to communicate with Relay plugin (Japanese version).
+Section: Network/Communication
+
+Format: HTML
+Index: /usr/share/doc/weechat-doc/html/weechat_relay_protocol.ja.html
+Files: /usr/share/doc/weechat-doc/html/weechat_relay_protocol.ja.html
