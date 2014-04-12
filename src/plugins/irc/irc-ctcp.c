@@ -113,7 +113,9 @@ irc_ctcp_display_request (struct t_irc_server *server,
                           time_t date,
                           const char *command,
                           struct t_irc_channel *channel,
-                          const char *nick,  const char *ctcp,
+                          const char *nick,
+                          const char *address,
+                          const char *ctcp,
                           const char *arguments,
                           const char *reply)
 {
@@ -126,7 +128,8 @@ irc_ctcp_display_request (struct t_irc_server *server,
                                                                NULL, "ctcp",
                                                                (channel) ? channel->buffer : NULL),
                               date,
-                              irc_protocol_tags (command, "irc_ctcp", NULL),
+                              irc_protocol_tags (command, "irc_ctcp", NULL,
+                                                 address),
                               _("%sCTCP requested by %s%s%s: %s%s%s%s%s%s"),
                               weechat_prefix ("network"),
                               irc_nick_color_for_message (server, NULL, nick),
@@ -147,7 +150,7 @@ irc_ctcp_display_request (struct t_irc_server *server,
 void
 irc_ctcp_display_reply_from_nick (struct t_irc_server *server, time_t date,
                                   const char *command, const char *nick,
-                                  char *arguments)
+                                  const char *address, char *arguments)
 {
     char *pos_end, *pos_space, *pos_args, *pos_usec;
     struct timeval tv;
@@ -191,7 +194,7 @@ irc_ctcp_display_reply_from_nick (struct t_irc_server *server, time_t date,
                                               date,
                                               irc_protocol_tags (command,
                                                                  "irc_ctcp",
-                                                                 NULL),
+                                                                 NULL, NULL),
                                               _("%sCTCP reply from %s%s%s: %s%s%s "
                                                 "%ld.%ld %s"),
                                               weechat_prefix ("network"),
@@ -221,7 +224,7 @@ irc_ctcp_display_reply_from_nick (struct t_irc_server *server, time_t date,
                                           date,
                                           irc_protocol_tags (command,
                                                              "irc_ctcp",
-                                                             NULL),
+                                                             NULL, address),
                                           _("%sCTCP reply from %s%s%s: %s%s%s%s%s"),
                                           weechat_prefix ("network"),
                                           irc_nick_color_for_message (server, NULL,
@@ -242,7 +245,8 @@ irc_ctcp_display_reply_from_nick (struct t_irc_server *server, time_t date,
                                                                        NULL, "ctcp",
                                                                        NULL),
                                       date,
-                                      irc_protocol_tags (command, NULL, NULL),
+                                      irc_protocol_tags (command, NULL, NULL,
+                                                         address),
                                       _("%sCTCP reply from %s%s%s: %s%s%s%s%s"),
                                       weechat_prefix ("network"),
                                       irc_nick_color_for_message (server, NULL,
@@ -310,7 +314,7 @@ irc_ctcp_reply_to_nick (struct t_irc_server *server,
                                      irc_protocol_tags (command,
                                                         "irc_ctcp,irc_ctcp_reply,"
                                                         "notify_none,no_highlight",
-                                                        NULL),
+                                                        NULL, NULL),
                                      _("%sCTCP reply to %s%s%s: %s%s%s%s%s"),
                                      weechat_prefix ("network"),
                                      irc_nick_color_for_message (server, NULL,
@@ -1023,7 +1027,7 @@ irc_ctcp_recv (struct t_irc_server *server, time_t date, const char *command,
                                                              (nick_is_me) ?
                                                              "irc_action,notify_none,no_highlight" :
                                                              "irc_action,notify_message",
-                                                             nick),
+                                                             nick, address),
                                           "%s%s%s%s%s%s%s",
                                           weechat_prefix ("action"),
                                           irc_nick_mode_for_display (server, ptr_nick, 0),
@@ -1061,7 +1065,7 @@ irc_ctcp_recv (struct t_irc_server *server, time_t date, const char *command,
                                                                  (nick_is_me) ?
                                                                  "irc_action,notify_none,no_highlight" :
                                                                  "irc_action,notify_private",
-                                                                 nick),
+                                                                 nick, address),
                                               "%s%s%s%s%s%s",
                                               weechat_prefix ("action"),
                                               (nick_is_me) ?
@@ -1081,7 +1085,7 @@ irc_ctcp_recv (struct t_irc_server *server, time_t date, const char *command,
         {
             reply = irc_ctcp_get_reply (server, arguments + 1);
             irc_ctcp_display_request (server, date, command, channel, nick,
-                                      arguments + 1, pos_args, reply);
+                                      address, arguments + 1, pos_args, reply);
             if (!reply || reply[0])
             {
                 irc_ctcp_reply_to_nick (server, command, channel, nick,
@@ -1100,7 +1104,8 @@ irc_ctcp_recv (struct t_irc_server *server, time_t date, const char *command,
             if (reply)
             {
                 irc_ctcp_display_request (server, date, command, channel, nick,
-                                          arguments + 1, pos_args, reply);
+                                          address, arguments + 1, pos_args,
+                                          reply);
 
                 if (reply[0])
                 {
@@ -1125,7 +1130,7 @@ irc_ctcp_recv (struct t_irc_server *server, time_t date, const char *command,
                                               date,
                                               irc_protocol_tags (command,
                                                                  "irc_ctcp",
-                                                                 NULL),
+                                                                 NULL, address),
                                               _("%sUnknown CTCP requested by %s%s%s: "
                                                 "%s%s%s%s%s"),
                                               weechat_prefix ("network"),
