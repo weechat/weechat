@@ -79,6 +79,11 @@ in commands and output).
 If you added some custom rmodifiers, you must create similar triggers, see
 `/help trigger` and the complete trigger doc in the 'WeeChat User's guide'.
 
+[NOTE]
+If on startup you have an error about API mismatch in plugin 'rmodifier.so',
+you can manually remove the file (the command `make install` does not remove
+obsolete plugins).
+
 === Bare display
 
 A bare display mode has been added (for easy text selection and click on URLs),
