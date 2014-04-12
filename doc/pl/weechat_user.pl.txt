@@ -3240,6 +3240,8 @@ too):
 | tg_tags_count      | string | Number of tags in message
 | tg_tag_nick        | string | Nick (from tag "nick_xxx")
 | tg_tag_prefix_nick | string | Color of nick in prefix (from tag "prefix_nick_ccc")
+// TRANSLATION MISSING
+| tg_tag_host        | string | User name and host, format: username@host (from tag "host_xxx")
 | tg_tag_notify      | string | Notify level ('none', 'message', 'private', 'highlight')
 | tg_notify          | string | Notify level, if different from 'none'
 | tg_msg_pv          | string | "1" for a private message, otherwise "0"

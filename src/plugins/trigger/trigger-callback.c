@@ -118,6 +118,10 @@ trigger_callback_set_tags (struct t_gui_buffer *buffer,
             weechat_hashtable_set (extra_vars, "tg_tag_prefix_nick",
                                    tags[i] + 12);
         }
+        else if (strncmp (tags[i], "host_", 5) == 0)
+        {
+            weechat_hashtable_set (extra_vars, "tg_tag_host", tags[i] + 5);
+        }
     }
 
     return 1;

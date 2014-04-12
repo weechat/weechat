@@ -3314,6 +3314,7 @@ pour le modificateur 'weechat_print') :
 | tg_tags_count      | chaîne | Nombre d'étiquettes dans le message
 | tg_tag_nick        | chaîne | Pseudo (depuis l'étiquette "nick_xxx")
 | tg_tag_prefix_nick | chaîne | Couleur du pseudo dans le préfixe (depuis l'étiquette "prefix_nick_ccc")
+| tg_tag_host        | chaîne | Nom d'utilisateur et hôte, format: utilisateur@hôte (depuis l'étiquette "host_xxx")
 | tg_tag_notify      | chaîne | Niveau de notification ('none', 'message', 'private', 'highlight')
 | tg_notify          | chaîne | Niveau de notification, si différent de 'none'
 | tg_msg_pv          | chaîne | "1" pour un message privé, sinon "0"

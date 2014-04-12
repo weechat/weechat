@@ -3284,6 +3284,8 @@ Variablen welche gesetzt werden, aufgrund der Nutzung von Tags in einer Nachrich
 | tg_tags_count      | string | Anzahl an Tags der Nachricht
 | tg_tag_nick        | string | Nick (extrahiert aus Tag "nick_xxx")
 | tg_tag_prefix_nick | string | Nickfarbe für Präfix (extrahier aus Tag "prefix_nick_ccc")
+// TRANSLATION MISSING
+| tg_tag_host        | string | User name and host, format: username@host (from tag "host_xxx")
 | tg_tag_notify      | string | Benachrichtigungsstufe ('none', 'message', 'private', 'highlight')
 | tg_notify          | string | Benachrichtigungsstufe, falls von 'none' abweichend
 | tg_msg_pv          | string | "1" für eine private Nachricht, andernfalls "0"
