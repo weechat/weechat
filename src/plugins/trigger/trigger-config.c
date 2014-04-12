@@ -310,11 +310,12 @@ trigger_config_create_trigger_option (const char *trigger_name, int index_option
                    "see /help eval); format is: \"/regex/replace/var\" (var "
                    "is the hashtable variable to replace, it is optional), "
                    "many regex can be separated by a space, for example: "
-                   "\"/regex1/replace1/var1 /regex2/replace2/var2\"; the "
-                   "separator \"/\" can be replaced by any char (one or more "
-                   "identical chars); matching groups can be used in replace: "
-                   "$0 to $99, $+ for last match and $.cN to replace all chars "
-                   "of group N by char c"),
+                   "\"/regex1/replace1/var1 /regex2/replace2/var2\"; escaped "
+                   "chars are interpreted in the regex (for example \"\\n\"); "
+                   "the separator \"/\" can be replaced by any char (one or "
+                   "more identical chars); matching groups can be used in "
+                   "replace: $0 to $99, $+ for last match and $.cN to replace "
+                   "all chars of group N by char c"),
                 NULL, 0, 0, value, NULL, 0, NULL, NULL,
                 &trigger_config_change_trigger_regex, NULL, NULL, NULL);
             break;

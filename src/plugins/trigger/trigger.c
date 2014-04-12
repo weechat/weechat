@@ -494,12 +494,13 @@ trigger_regex_split (const char *str_regex,
 {
     const char *ptr_regex, *pos, *pos_replace, *pos_replace_end;
     const char *pos_next_regex;
-    char *delimiter;
+    char *delimiter, *str_regex_escaped;
     int rc, index, length_delimiter;
     struct t_trigger_regex *new_regex;
 
     rc = 0;
     delimiter = NULL;
+    str_regex_escaped = NULL;
 
     if (!regex_count || !regex)
         goto end;
@@ -571,13 +572,16 @@ trigger_regex_split (const char *str_regex,
                                                      pos_replace - ptr_regex);
         if (!(*regex)[index].str_regex)
             goto memory_error;
+        str_regex_escaped = weechat_string_convert_escaped_chars ((*regex)[index].str_regex);
+        if (!str_regex_escaped)
+            goto memory_error;
 
         /* set regex */
         (*regex)[index].regex = malloc (sizeof (*(*regex)[index].regex));
         if (!(*regex)[index].regex)
             goto memory_error;
         if (weechat_string_regcomp ((*regex)[index].regex,
-                                    (*regex)[index].str_regex,
+                                    str_regex_escaped,
                                     REG_EXTENDED | REG_ICASE) != 0)
         {
             free ((*regex)[index].regex);
@@ -643,6 +647,8 @@ memory_error:
 end:
     if (delimiter)
         free (delimiter);
+    if (str_regex_escaped)
+        free (str_regex_escaped);
     if (rc < 0)
         trigger_regex_free (regex_count, regex);
 
