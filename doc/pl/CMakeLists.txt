@@ -17,9 +17,9 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-IF (ENABLE_MAN)
+if(ENABLE_MAN)
   # man page
-  ADD_CUSTOM_COMMAND(
+  add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat.1
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.pl.txt ${CMAKE_CURRENT_BINARY_DIR}/
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.pl.txt ${CMAKE_CURRENT_BINARY_DIR}/
@@ -29,14 +29,14 @@ IF (ENABLE_MAN)
     ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.pl.txt
     COMMENT "Building weechat.1 (pl)"
   )
-  ADD_CUSTOM_TARGET(doc-man-pl ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat.1)
-  INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat.1 DESTINATION ${MANDIR}/pl/man1)
-ENDIF (ENABLE_MAN)
+  add_custom_target(doc-man-pl ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat.1)
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat.1 DESTINATION ${MANDIR}/pl/man1)
+endif()
 
-IF(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
+if(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
 
   # user's guide
-  ADD_CUSTOM_COMMAND(
+  add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.pl.html
     COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.pl.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_user.pl.txt
     DEPENDS
@@ -45,51 +45,51 @@ IF(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
     ${CMAKE_CURRENT_SOURCE_DIR}/autogen/user/*.txt
     COMMENT "Building weechat_user.pl.html"
   )
-  ADD_CUSTOM_TARGET(doc-user-pl ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.pl.html)
-  INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.pl.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
+  add_custom_target(doc-user-pl ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.pl.html)
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.pl.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
 
   # scripting guide
-  ADD_CUSTOM_COMMAND(
+  add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.pl.html
     COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.pl.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_scripting.pl.txt
     DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat_scripting.pl.txt
     COMMENT "Building weechat_scripting.pl.html"
   )
-  ADD_CUSTOM_TARGET(doc-scripting-pl ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.pl.html)
-  INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.pl.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
+  add_custom_target(doc-scripting-pl ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.pl.html)
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.pl.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
 
   # FAQ
-  ADD_CUSTOM_COMMAND(
+  add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.pl.html
     COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.pl.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_faq.pl.txt
     DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat_faq.pl.txt
     COMMENT "Building weechat_faq.pl.html"
   )
-  ADD_CUSTOM_TARGET(doc-faq-pl ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.pl.html)
-  INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.pl.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
+  add_custom_target(doc-faq-pl ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.pl.html)
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.pl.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
 
   # quickstart
-  ADD_CUSTOM_COMMAND(
+  add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.pl.html
     COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.pl.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.pl.txt
     DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.pl.txt
     COMMENT "Building weechat_quickstart.pl.html"
   )
-  ADD_CUSTOM_TARGET(doc-quickstart-pl ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.pl.html)
-  INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.pl.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
+  add_custom_target(doc-quickstart-pl ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.pl.html)
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.pl.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
 
   # tester's guide
-  ADD_CUSTOM_COMMAND(
+  add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.pl.html
     COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.pl.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_tester.pl.txt
     DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat_tester.pl.txt
     COMMENT "Building weechat_tester.pl.html"
   )
-  ADD_CUSTOM_TARGET(doc-tester-pl ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.pl.html)
-  INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.pl.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
+  add_custom_target(doc-tester-pl ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.pl.html)
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.pl.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
 
-ENDIF(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
+endif()

@@ -28,76 +28,76 @@
 #  PYTHON_LIBRARY = path to where libpython.so* can be found
 #  PYTHON_LFLAGS = python compiler options for linking
 
-IF(PYTHON_FOUND)
+if(PYTHON_FOUND)
    # Already in cache, be silent
-   SET(PYTHON_FIND_QUIETLY TRUE)
-ENDIF(PYTHON_FOUND)
+   set(PYTHON_FIND_QUIETLY TRUE)
+endif()
 
-IF(ENABLE_PYTHON3)
-  FIND_PROGRAM(PYTHON_EXECUTABLE
+if(ENABLE_PYTHON3)
+  find_program(PYTHON_EXECUTABLE
     NAMES python3.4 python3.3 python3.2 python3.1 python3.0 python3 python2.7 python2.6 python2.5 python
     PATHS /usr/bin /usr/local/bin /usr/pkg/bin
     )
-ELSE(ENABLE_PYTHON3)
-  FIND_PROGRAM(PYTHON_EXECUTABLE
+else()
+  find_program(PYTHON_EXECUTABLE
     NAMES python2.7 python2.6 python2.5 python
     PATHS /usr/bin /usr/local/bin /usr/pkg/bin
     )
-ENDIF(ENABLE_PYTHON3)
+endif()
 
-IF(PYTHON_EXECUTABLE)
-  EXECUTE_PROCESS(
+if(PYTHON_EXECUTABLE)
+  execute_process(
     COMMAND ${PYTHON_EXECUTABLE} -c "import sys; from distutils.sysconfig import *; sys.stdout.write(get_config_var('INCLUDEPY'))"
     OUTPUT_VARIABLE PYTHON_INC_DIR
     )
 
-  EXECUTE_PROCESS(
+  execute_process(
     COMMAND ${PYTHON_EXECUTABLE} -c "import sys; from distutils.sysconfig import *; sys.stdout.write(get_config_var('LIBPL'))"
     OUTPUT_VARIABLE PYTHON_POSSIBLE_LIB_PATH
     )
 
-  EXECUTE_PROCESS(
+  execute_process(
     COMMAND ${PYTHON_EXECUTABLE} -c "import sys; from distutils.sysconfig import *; sys.stdout.write(get_config_var('LINKFORSHARED'))"
     OUTPUT_VARIABLE PYTHON_LFLAGS
     )
 
-  FIND_PATH(PYTHON_INCLUDE_PATH
+  find_path(PYTHON_INCLUDE_PATH
     NAMES Python.h
     PATHS ${PYTHON_INC_DIR}
     )
-  IF(ENABLE_PYTHON3)
-    FIND_LIBRARY(PYTHON_LIBRARY
+  if(ENABLE_PYTHON3)
+    find_library(PYTHON_LIBRARY
       NAMES python3.4 python3.3 python3.2 python3.1 python3.0 python3 python2.7 python2.6 python2.5 python
       PATHS ${PYTHON_POSSIBLE_LIB_PATH}
       )
-  ELSE(ENABLE_PYTHON3)
-    FIND_LIBRARY(PYTHON_LIBRARY
+  else()
+    find_library(PYTHON_LIBRARY
       NAMES python2.7 python2.6 python2.5 python
       PATHS ${PYTHON_POSSIBLE_LIB_PATH}
       )
-  ENDIF(ENABLE_PYTHON3)
+  endif()
 
-  IF(PYTHON_LIBRARY AND PYTHON_INCLUDE_PATH)
-    EXECUTE_PROCESS(
+  if(PYTHON_LIBRARY AND PYTHON_INCLUDE_PATH)
+    execute_process(
       COMMAND ${PYTHON_EXECUTABLE} -c "import sys; sys.stdout.write(sys.version[:3])"
       OUTPUT_VARIABLE PYTHON_VERSION
       )
-    EXECUTE_PROCESS(
+    execute_process(
       COMMAND ${PYTHON_EXECUTABLE} -c "import sys; sys.stdout.write(str(sys.version_info < (2,5)))"
       OUTPUT_VARIABLE PYTHON_OLD_VERSION
       )
-    IF(${PYTHON_OLD_VERSION} STREQUAL "True")
-      MESSAGE("Python >= 2.5 is needed to build python plugin, version found: ${PYTHON_VERSION}")
-    ELSE()
-      SET(PYTHON_FOUND TRUE)
-    ENDIF(${PYTHON_OLD_VERSION} STREQUAL "True")
-  ENDIF(PYTHON_LIBRARY AND PYTHON_INCLUDE_PATH)
+    if(${PYTHON_OLD_VERSION} STREQUAL "True")
+      message("Python >= 2.5 is needed to build python plugin, version found: ${PYTHON_VERSION}")
+    else()
+      set(PYTHON_FOUND TRUE)
+    endif()
+  endif()
 
-  MARK_AS_ADVANCED(
+  mark_as_advanced(
     PYTHON_EXECUTABLE
     PYTHON_INCLUDE_PATH
     PYTHON_LIBRARY
     PYTHON_LFLAGS
     )
 
-ENDIF(PYTHON_EXECUTABLE)
+endif()

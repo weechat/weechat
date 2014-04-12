@@ -17,41 +17,41 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-IF(NCURSES_FOUND)
-  SET(NCURSES_FIND_QUIETLY TRUE)
-ENDIF(NCURSES_FOUND)
+if(NCURSES_FOUND)
+  set(NCURSES_FIND_QUIETLY TRUE)
+endif()
 
-FIND_PATH(NCURSES_INCLUDE_PATH
+find_path(NCURSES_INCLUDE_PATH
   NAMES ncurses.h curses.h
   PATHS /usr/include/ncursesw /usr/include/ncurses /usr/include
   /usr/local/include/ncursesw /usr/local/include/ncurses /usr/local/include
   /usr/pkg/include/ncursesw /usr/pkg/include/ncurses /usr/pkg/include
 )
 
-FIND_LIBRARY(NCURSESW_LIBRARY
+find_library(NCURSESW_LIBRARY
   NAMES ncursesw
   PATHS /lib /usr/lib /usr/local/lib /usr/pkg/lib
 )
 
-IF (NCURSESW_LIBRARY)
-  SET(NCURSES_LIBRARY ${NCURSESW_LIBRARY})
-ELSE(NCURSESW_LIBRARY)
-  FIND_LIBRARY(NCURSES_LIBRARY
+if(NCURSESW_LIBRARY)
+  set(NCURSES_LIBRARY ${NCURSESW_LIBRARY})
+else()
+  find_library(NCURSES_LIBRARY
     NAMES ncurses
     PATHS /lib /usr/lib /usr/local/lib /usr/pkg/lib
   )
-  IF (NCURSES_LIBRARY)
-    MESSAGE("*** WARNING:\n"
+  if(NCURSES_LIBRARY)
+    message("*** WARNING:\n"
       "*** ncursesw library not found! Falling back to \"ncurses\"\n"
       "*** Be careful, UTF-8 display may not work properly if your locale is UTF-8.")
-  ENDIF(NCURSES_LIBRARY)
-ENDIF(NCURSESW_LIBRARY)
+  endif()
+endif()
 
-IF (NCURSES_INCLUDE_PATH AND NCURSES_LIBRARY)
-  SET(NCURSES_FOUND TRUE)
-ENDIF(NCURSES_INCLUDE_PATH AND NCURSES_LIBRARY)
+if(NCURSES_INCLUDE_PATH AND NCURSES_LIBRARY)
+  set(NCURSES_FOUND TRUE)
+endif()
 
-MARK_AS_ADVANCED(
+mark_as_advanced(
   NCURSES_INCLUDE_PATH
   NCURSES_LIBRARY
 )

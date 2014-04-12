@@ -17,16 +17,16 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-ADD_LIBRARY(charset MODULE charset.c)
-SET_TARGET_PROPERTIES(charset PROPERTIES PREFIX "")
+add_library(charset MODULE charset.c)
+set_target_properties(charset PROPERTIES PREFIX "")
 
-IF(ICONV_FOUND)
-  INCLUDE_DIRECTORIES(${ICONV_INCLUDE_PATH})
-  IF(ICONV_LIBRARY)
-    TARGET_LINK_LIBRARIES(charset ${ICONV_LIBRARY})
-  ELSE(ICONV_LIBRARY)
-    TARGET_LINK_LIBRARIES(charset)
-  ENDIF(ICONV_LIBRARY)
-ENDIF(ICONV_FOUND)
+if(ICONV_FOUND)
+  include_directories(${ICONV_INCLUDE_PATH})
+  if(ICONV_LIBRARY)
+    target_link_libraries(charset ${ICONV_LIBRARY})
+  else()
+    target_link_libraries(charset)
+  endif()
+endif()
 
-INSTALL(TARGETS charset LIBRARY DESTINATION ${LIBDIR}/plugins)
+install(TARGETS charset LIBRARY DESTINATION ${LIBDIR}/plugins)

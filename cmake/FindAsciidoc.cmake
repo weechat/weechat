@@ -20,32 +20,32 @@
 # - Find Asciidoc
 # This module finds if asciidoc (version 8 or newer) is installed.
 
-IF (ASCIIDOC_FOUND)
+if(ASCIIDOC_FOUND)
   # Already in cache, be silent
-  SET(ASCIIDOC_FIND_QUIETLY TRUE)
-ENDIF (ASCIIDOC_FOUND)
+  set(ASCIIDOC_FIND_QUIETLY TRUE)
+endif()
 
-FIND_PROGRAM(
+find_program(
   ASCIIDOC_EXECUTABLE asciidoc
   PATHS /bin /usr/bin /usr/local/bin /usr/pkg/bin
 )
 
-FIND_PROGRAM(
+find_program(
   A2X_EXECUTABLE a2x
   PATHS /bin /usr/bin /usr/local/bin /usr/pkg/bin
 )
 
-IF(ASCIIDOC_EXECUTABLE AND A2X_EXECUTABLE)
-  EXECUTE_PROCESS(
+if(ASCIIDOC_EXECUTABLE AND A2X_EXECUTABLE)
+  execute_process(
     COMMAND ${ASCIIDOC_EXECUTABLE} --version
     OUTPUT_VARIABLE ASCIIDOC_VERSION
     )
 
-  IF(${ASCIIDOC_VERSION} MATCHES "asciidoc 8.*")
-    SET(ASCIIDOC_FOUND TRUE)
-  ENDIF(${ASCIIDOC_VERSION} MATCHES "asciidoc 8.*")
+  if(${ASCIIDOC_VERSION} MATCHES "asciidoc 8.*")
+    set(ASCIIDOC_FOUND TRUE)
+  endif()
 
-  MARK_AS_ADVANCED(
+  mark_as_advanced(
     ASCIIDOC_EXECUTABLE
     )
-ENDIF(ASCIIDOC_EXECUTABLE AND A2X_EXECUTABLE)
+endif()

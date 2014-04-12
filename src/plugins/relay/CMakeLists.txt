@@ -17,7 +17,7 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-ADD_LIBRARY(relay MODULE
+add_library(relay MODULE
 relay.c relay.h
 relay-buffer.c relay-buffer.h
 relay-client.c relay-client.h
@@ -35,18 +35,18 @@ relay-raw.c relay-raw.h
 relay-server.c relay-server.h
 relay-upgrade.c relay-upgrade.h
 relay-websocket.c relay-websocket.h)
-SET_TARGET_PROPERTIES(relay PROPERTIES PREFIX "")
+set_target_properties(relay PROPERTIES PREFIX "")
 
-SET (LINK_LIBS)
+set(LINK_LIBS)
 
-LIST(APPEND LINK_LIBS ${ZLIB_LIBRARY})
-LIST(APPEND LINK_LIBS ${GCRYPT_LDFLAGS})
+list(APPEND LINK_LIBS ${ZLIB_LIBRARY})
+list(APPEND LINK_LIBS ${GCRYPT_LDFLAGS})
 
-IF(GNUTLS_FOUND)
-  INCLUDE_DIRECTORIES(${GNUTLS_INCLUDE_PATH})
-  LIST(APPEND LINK_LIBS ${GNUTLS_LIBRARY})
-ENDIF(GNUTLS_FOUND)
+if(GNUTLS_FOUND)
+  include_directories(${GNUTLS_INCLUDE_PATH})
+  list(APPEND LINK_LIBS ${GNUTLS_LIBRARY})
+endif()
 
-TARGET_LINK_LIBRARIES(relay ${LINK_LIBS})
+target_link_libraries(relay ${LINK_LIBS})
 
-INSTALL(TARGETS relay LIBRARY DESTINATION ${LIBDIR}/plugins)
+install(TARGETS relay LIBRARY DESTINATION ${LIBDIR}/plugins)

@@ -17,11 +17,11 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-ADD_LIBRARY(fifo MODULE
+add_library(fifo MODULE
 fifo.c fifo.h
 fifo-info.c fifo-info.h)
-SET_TARGET_PROPERTIES(fifo PROPERTIES PREFIX "")
+set_target_properties(fifo PROPERTIES PREFIX "")
 
-TARGET_LINK_LIBRARIES(fifo)
+target_link_libraries(fifo)
 
-INSTALL(TARGETS fifo LIBRARY DESTINATION ${LIBDIR}/plugins)
+install(TARGETS fifo LIBRARY DESTINATION ${LIBDIR}/plugins)

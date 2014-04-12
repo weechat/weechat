@@ -17,7 +17,7 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-ADD_LIBRARY(xfer MODULE
+add_library(xfer MODULE
 xfer.c xfer.h
 xfer-buffer.c xfer-buffer.h
 xfer-chat.c xfer-chat.h
@@ -29,12 +29,12 @@ xfer-file.c xfer-file.h
 xfer-info.c xfer-info.h
 xfer-network.c xfer-network.h
 xfer-upgrade.c xfer-upgrade.h)
-SET_TARGET_PROPERTIES(xfer PROPERTIES PREFIX "")
+set_target_properties(xfer PROPERTIES PREFIX "")
 
-SET (LINK_LIBS)
+set(LINK_LIBS)
 
-LIST(APPEND LINK_LIBS ${GCRYPT_LDFLAGS})
+list(APPEND LINK_LIBS ${GCRYPT_LDFLAGS})
 
-TARGET_LINK_LIBRARIES(xfer ${LINK_LIBS})
+target_link_libraries(xfer ${LINK_LIBS})
 
-INSTALL(TARGETS xfer LIBRARY DESTINATION ${LIBDIR}/plugins)
+install(TARGETS xfer LIBRARY DESTINATION ${LIBDIR}/plugins)

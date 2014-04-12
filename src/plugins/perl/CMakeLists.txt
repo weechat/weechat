@@ -17,30 +17,30 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-ADD_LIBRARY(perl MODULE weechat-perl.c weechat-perl.h weechat-perl-api.c
+add_library(perl MODULE weechat-perl.c weechat-perl.h weechat-perl-api.c
 weechat-perl-api.h)
 
-SET_TARGET_PROPERTIES(perl PROPERTIES PREFIX "")
+set_target_properties(perl PROPERTIES PREFIX "")
 
-IF(PERL_FOUND)
-  IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+if(PERL_FOUND)
+  if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     # remove "-arch xxx" on Mac OS X
     STRING(REGEX REPLACE "-arch ppc|-arch i386|-arch x86_64" "" PERL_CFLAGS "${PERL_CFLAGS}")
     STRING(REGEX REPLACE "-arch ppc|-arch i386|-arch x86_64" "" PERL_LFLAGS "${PERL_LFLAGS}")
-  ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-  ADD_DEFINITIONS(${PERL_CFLAGS})
-  INCLUDE_DIRECTORIES(${PERL_INCLUDE_PATH})
+  endif()
+  add_definitions(${PERL_CFLAGS})
+  include_directories(${PERL_INCLUDE_PATH})
   # ugly hack to force linking against Dynaloader.a
-  STRING(REGEX MATCH "/[^ $]*/DynaLoader.a" PERL_DYNALOADER ${PERL_LFLAGS})
-  IF(PERL_DYNALOADER)
-    STRING(REPLACE "${PERL_DYNALOADER}" "" PERL_LFLAGS "${PERL_LFLAGS}")
-    SET(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${PERL_LFLAGS}")
-    EXECUTE_PROCESS(COMMAND ${CMAKE_COMMAND} -E copy ${PERL_DYNALOADER} ${CMAKE_CURRENT_BINARY_DIR}/libDynaLoader.a)
-    TARGET_LINK_LIBRARIES(perl ${PERL_LIBRARY} weechat_plugins_scripts ${CMAKE_CURRENT_BINARY_DIR}/libDynaLoader.a)
-  ELSE(PERL_DYNALOADER)
-    SET(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${PERL_LFLAGS}")
-    TARGET_LINK_LIBRARIES(perl ${PERL_LIBRARY} weechat_plugins_scripts)
-  ENDIF(PERL_DYNALOADER)
-ENDIF(PERL_FOUND)
+  string(REGEX MATCH "/[^ $]*/DynaLoader.a" PERL_DYNALOADER ${PERL_LFLAGS})
+  if(PERL_DYNALOADER)
+    string(REPLACE "${PERL_DYNALOADER}" "" PERL_LFLAGS "${PERL_LFLAGS}")
+    set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${PERL_LFLAGS}")
+    execute_process(COMMAND ${CMAKE_COMMAND} -E copy ${PERL_DYNALOADER} ${CMAKE_CURRENT_BINARY_DIR}/libDynaLoader.a)
+    target_link_libraries(perl ${PERL_LIBRARY} weechat_plugins_scripts ${CMAKE_CURRENT_BINARY_DIR}/libDynaLoader.a)
+  else()
+    set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${PERL_LFLAGS}")
+    target_link_libraries(perl ${PERL_LIBRARY} weechat_plugins_scripts)
+  endif()
+endif()
 
-INSTALL(TARGETS perl LIBRARY DESTINATION ${LIBDIR}/plugins)
+install(TARGETS perl LIBRARY DESTINATION ${LIBDIR}/plugins)

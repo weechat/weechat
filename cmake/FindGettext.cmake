@@ -27,46 +27,45 @@
 #
 #  GETTEXT_FOUND = is gettext usable on system?
 
-IF(GETTEXT_FOUND)
+if(GETTEXT_FOUND)
    # Already in cache, be silent
-   SET(GETTEXT_FIND_QUIETLY TRUE)
-ENDIF(GETTEXT_FOUND)
+   set(GETTEXT_FIND_QUIETLY TRUE)
+endif()
 
-INCLUDE(CheckIncludeFiles)
-INCLUDE(CheckLibraryExists)
-INCLUDE(CheckFunctionExists)
+include(CheckIncludeFiles)
+include(CheckLibraryExists)
+include(CheckFunctionExists)
 
-FIND_PATH(LIBINTL_INCLUDE
+find_path(LIBINTL_INCLUDE
   NAMES libintl.h
   PATH /usr/local/include /usr/pkg/include /usr/include
 )
 
-SET(CMAKE_REQUIRED_INCLUDES ${LIBINTL_INCLUDE})
+set(CMAKE_REQUIRED_INCLUDES ${LIBINTL_INCLUDE})
 
-CHECK_INCLUDE_FILES(libintl.h HAVE_LIBINTL_H)
+check_include_files(libintl.h HAVE_LIBINTL_H)
 
-IF(HAVE_LIBINTL_H)
-
-  CHECK_FUNCTION_EXISTS(dgettext LIBC_HAS_DGETTEXT)
-  IF(LIBC_HAS_DGETTEXT)
-    SET(GETTEXT_FOUND TRUE)
-  ELSE(LIBC_HAS_DGETTEXT)
-    FIND_LIBRARY(LIBINTL_LIBRARY NAMES intl
+if(HAVE_LIBINTL_H)
+  check_function_exists(dgettext LIBC_HAS_DGETTEXT)
+  if(LIBC_HAS_DGETTEXT)
+    set(GETTEXT_FOUND TRUE)
+  else()
+    find_library(LIBINTL_LIBRARY NAMES intl
       PATHS
       /usr/local/lib
       /usr/lib
       )
-    IF(LIBINTL_LIBRARY)
-      IF(${CMAKE_SYSTEM_NAME} STREQUAL "OpenBSD")
-        SET(CMAKE_REQUIRED_LIBRARIES "iconv")
-        CHECK_LIBRARY_EXISTS(${LIBINTL_LIBRARY} "libintl_dgettext" "" LIBINTL_HAS_DGETTEXT)
-      ELSE(${CMAKE_SYSTEM_NAME} STREQUAL "OpenBSD")
-        CHECK_LIBRARY_EXISTS(${LIBINTL_LIBRARY} "dgettext" "" LIBINTL_HAS_DGETTEXT)
-      ENDIF(${CMAKE_SYSTEM_NAME} STREQUAL "OpenBSD")
+    if(LIBINTL_LIBRARY)
+      if(${CMAKE_SYSTEM_NAME} STREQUAL "OpenBSD")
+        set(CMAKE_REQUIRED_LIBRARIES "iconv")
+        check_library_exists(${LIBINTL_LIBRARY} "libintl_dgettext" "" LIBINTL_HAS_DGETTEXT)
+      else()
+        check_library_exists(${LIBINTL_LIBRARY} "dgettext" "" LIBINTL_HAS_DGETTEXT)
+      endif()
 
-      IF(LIBINTL_HAS_DGETTEXT)
-        SET(GETTEXT_FOUND TRUE)
-      ENDIF(LIBINTL_HAS_DGETTEXT)
-    ENDIF(LIBINTL_LIBRARY)
-  ENDIF(LIBC_HAS_DGETTEXT)
-ENDIF(HAVE_LIBINTL_H)
+      if(LIBINTL_HAS_DGETTEXT)
+        set(GETTEXT_FOUND TRUE)
+      endif()
+    endif()
+  endif()
+endif()

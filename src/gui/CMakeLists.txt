@@ -17,7 +17,7 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-SET(LIB_GUI_COMMON_SRC
+set(LIB_GUI_COMMON_SRC
 gui-bar.c gui-bar.h
 gui-bar-item.c gui-bar-item.h
 gui-bar-window.c gui-bar-window.h
@@ -39,9 +39,9 @@ gui-mouse.c gui-mouse.h
 gui-nicklist.c gui-nicklist.h
 gui-window.c gui-window.h)
 
-INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR})
-ADD_LIBRARY(weechat_gui_common STATIC ${LIB_GUI_COMMON_SRC})
+include_directories(${CMAKE_BINARY_DIR})
+add_library(weechat_gui_common STATIC ${LIB_GUI_COMMON_SRC})
 
-IF(ENABLE_NCURSES)
-  SUBDIRS( curses )
-ENDIF(ENABLE_NCURSES)
+if(ENABLE_NCURSES)
+  subdirs( curses )
+endif()

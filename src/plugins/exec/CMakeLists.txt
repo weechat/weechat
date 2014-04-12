@@ -17,14 +17,14 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-ADD_LIBRARY(exec MODULE
+add_library(exec MODULE
 exec.c exec.h
 exec-buffer.c exec-buffer.h
 exec-command.c exec-command.h
 exec-completion.c exec-completion.h
 exec-config.c exec-config.h)
-SET_TARGET_PROPERTIES(exec PROPERTIES PREFIX "")
+set_target_properties(exec PROPERTIES PREFIX "")
 
-TARGET_LINK_LIBRARIES(exec)
+target_link_libraries(exec)
 
-INSTALL(TARGETS exec LIBRARY DESTINATION ${LIBDIR}/plugins)
+install(TARGETS exec LIBRARY DESTINATION ${LIBDIR}/plugins)

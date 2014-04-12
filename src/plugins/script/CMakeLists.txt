@@ -17,7 +17,7 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-ADD_LIBRARY(script MODULE
+add_library(script MODULE
 script.c script.h
 script-action.c script-action.h
 script-buffer.c script-buffer.h
@@ -26,13 +26,13 @@ script-completion.c script-completion.h
 script-config.c script-config.h
 script-info.c script-info.h
 script-repo.c script-repo.h)
-SET_TARGET_PROPERTIES(script PROPERTIES PREFIX "")
+set_target_properties(script PROPERTIES PREFIX "")
 
-SET (LINK_LIBS)
+set(LINK_LIBS)
 
-LIST(APPEND LINK_LIBS ${ZLIB_LIBRARY})
-LIST(APPEND LINK_LIBS ${GCRYPT_LDFLAGS})
+list(APPEND LINK_LIBS ${ZLIB_LIBRARY})
+list(APPEND LINK_LIBS ${GCRYPT_LDFLAGS})
 
-TARGET_LINK_LIBRARIES(script ${LINK_LIBS})
+target_link_libraries(script ${LINK_LIBS})
 
-INSTALL(TARGETS script LIBRARY DESTINATION ${LIBDIR}/plugins)
+install(TARGETS script LIBRARY DESTINATION ${LIBDIR}/plugins)

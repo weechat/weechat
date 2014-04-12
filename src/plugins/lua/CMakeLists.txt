@@ -18,18 +18,18 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-ADD_LIBRARY(lua MODULE weechat-lua.c weechat-lua.h weechat-lua-api.c
+add_library(lua MODULE weechat-lua.c weechat-lua.h weechat-lua-api.c
 weechat-lua-api.h)
 
-SET_TARGET_PROPERTIES(lua PROPERTIES PREFIX "")
+set_target_properties(lua PROPERTIES PREFIX "")
 
-IF(LUA_FOUND)
-  INCLUDE_DIRECTORIES(${LUA_INCLUDE_PATH} )
-  IF(LUA_LIBRARY AND LUALIB_LIBRARY)
-    TARGET_LINK_LIBRARIES(lua ${LUA_LIBRARY} ${LUALIB_LIBRARY} weechat_plugins_scripts)
-  ELSE(LUA_LIBRARY AND LUALIB_LIBRARY)
-    TARGET_LINK_LIBRARIES(lua ${LUA_LIBRARY} weechat_plugins_scripts)
-  ENDIF(LUA_LIBRARY AND LUALIB_LIBRARY)
-ENDIF(LUA_FOUND)
+if(LUA_FOUND)
+  include_directories(${LUA_INCLUDE_PATH} )
+  if(LUA_LIBRARY AND LUALIB_LIBRARY)
+    target_link_libraries(lua ${LUA_LIBRARY} ${LUALIB_LIBRARY} weechat_plugins_scripts)
+  else()
+    target_link_libraries(lua ${LUA_LIBRARY} weechat_plugins_scripts)
+  endif()
+endif()
 
-INSTALL(TARGETS lua LIBRARY DESTINATION ${LIBDIR}/plugins)
+install(TARGETS lua LIBRARY DESTINATION ${LIBDIR}/plugins)

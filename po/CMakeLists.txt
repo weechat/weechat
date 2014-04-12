@@ -17,7 +17,7 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-SET(PO_FILES
+set(PO_FILES
   fr.po
   es.po
   cs.po
@@ -31,29 +31,29 @@ SET(PO_FILES
   tr.po
   )
 
-SET(BUGS_ADDRESS "flashcode@flashtux.org")
-SET(POT_FILE ${PROJECT_NAME}.pot)
-SET(POT_FILE_PATH ${CMAKE_CURRENT_BINARY_DIR}/${POT_FILE})
+set(BUGS_ADDRESS "flashcode@flashtux.org")
+set(POT_FILE ${PROJECT_NAME}.pot)
+set(POT_FILE_PATH ${CMAKE_CURRENT_BINARY_DIR}/${POT_FILE})
 
-INCLUDE(srcfiles.cmake)
+include(srcfiles.cmake)
 
 # Looking for xgettext, msgmerge and msgfmt
-FIND_PROGRAM(XGETTEXT_EXECUTABLE xgettext)
-FIND_PROGRAM(MSGMERGE_EXECUTABLE msgmerge)
-FIND_PROGRAM(MSGFMT_EXECUTABLE msgfmt)
+find_program(XGETTEXT_EXECUTABLE xgettext)
+find_program(MSGMERGE_EXECUTABLE msgmerge)
+find_program(MSGFMT_EXECUTABLE msgfmt)
 
-IF(XGETTEXT_EXECUTABLE AND MSGMERGE_EXECUTABLE AND MSGFMT_EXECUTABLE)
+if(XGETTEXT_EXECUTABLE AND MSGMERGE_EXECUTABLE AND MSGFMT_EXECUTABLE)
 
   # Create PO template file weechat.pot
-  SET(SRC_FILES)
-  SET(POT_DEPENDS)
+  set(SRC_FILES)
+  set(POT_DEPENDS)
 
-  FOREACH(srcfile ${WEECHAT_SOURCES})
-    SET(SRC_FILES ${SRC_FILES} ${srcfile})
-    SET(POT_DEPENDS ${POT_DEPENDS} ${CMAKE_SOURCE_DIR}/${srcfile})
-  ENDFOREACH(srcfile ${WEECHAT_SOURCES})
+  foreach(srcfile ${WEECHAT_SOURCES})
+    set(SRC_FILES ${SRC_FILES} ${srcfile})
+    set(POT_DEPENDS ${POT_DEPENDS} ${CMAKE_SOURCE_DIR}/${srcfile})
+  endforeach(srcfile ${WEECHAT_SOURCES})
 
-  ADD_CUSTOM_COMMAND(
+  add_custom_command(
     OUTPUT ${POT_FILE_PATH}
     COMMAND ${XGETTEXT_EXECUTABLE}
     ARGS -o ${POT_FILE_PATH} --add-comments='TRANSLATORS:' --keyword='_' --keyword='weechat_gettext' --keyword='N_' --keyword='NG_:1,2' --keyword='weechat_ngettext:1,2' --no-location --from-code=UTF-8 --directory=${CMAKE_SOURCE_DIR} --package-name='WeeChat' --package-version=${VERSION} --msgid-bugs-address=${BUGS_ADDRESS} --copyright-holder='NAME' ${SRC_FILES}
@@ -61,14 +61,14 @@ IF(XGETTEXT_EXECUTABLE AND MSGMERGE_EXECUTABLE AND MSGFMT_EXECUTABLE)
     COMMENT "Generating ${POT_FILE}"
     )
 
-  SET(GMO_FILES)
-  SET(UPDATE_PO_TARGETS)
-  FOREACH(pofile ${PO_FILES})
-    GET_FILENAME_COMPONENT(polang ${pofile} NAME_WE)
+  set(GMO_FILES)
+  set(UPDATE_PO_TARGETS)
+  foreach(pofile ${PO_FILES})
+    get_filename_component(polang ${pofile} NAME_WE)
 
     # Compile .po files in build directory (to binary .gmo files)
-    SET(gmofile ${CMAKE_CURRENT_BINARY_DIR}/${polang}.gmo)
-    ADD_CUSTOM_COMMAND(
+    set(gmofile ${CMAKE_CURRENT_BINARY_DIR}/${polang}.gmo)
+    add_custom_command(
       OUTPUT ${gmofile}
       COMMAND ${MSGMERGE_EXECUTABLE} ARGS --quiet -o ${CMAKE_CURRENT_BINARY_DIR}/${pofile} ${CMAKE_CURRENT_SOURCE_DIR}/${pofile} ${POT_FILE_PATH}
       COMMAND ${MSGFMT_EXECUTABLE} ARGS -o ${gmofile} ${CMAKE_CURRENT_BINARY_DIR}/${pofile}
@@ -78,27 +78,27 @@ IF(XGETTEXT_EXECUTABLE AND MSGMERGE_EXECUTABLE AND MSGFMT_EXECUTABLE)
       )
 
     # Update .po files in source directory (if needed)
-    ADD_CUSTOM_TARGET(
+    add_custom_target(
       update-${pofile}
       COMMAND ${MSGMERGE_EXECUTABLE} --quiet --update --backup=none ${CMAKE_CURRENT_SOURCE_DIR}/${pofile} ${POT_FILE_PATH}
       COMMENT "Updating ${polang}.po"
       )
-    SET(UPDATE_PO_TARGETS ${UPDATE_PO_TARGETS} update-${pofile})
+    set(UPDATE_PO_TARGETS ${UPDATE_PO_TARGETS} update-${pofile})
 
-    INSTALL(FILES ${gmofile} DESTINATION ${LOCALEDIR}/${polang}/LC_MESSAGES RENAME ${PROJECT_NAME}.mo)
-    SET(GMO_FILES ${GMO_FILES} ${gmofile})
-  ENDFOREACH(pofile ${PO_FILES})
+    install(FILES ${gmofile} DESTINATION ${LOCALEDIR}/${polang}/LC_MESSAGES RENAME ${PROJECT_NAME}.mo)
+    set(GMO_FILES ${GMO_FILES} ${gmofile})
+  endforeach(pofile ${PO_FILES})
 
-  ADD_CUSTOM_TARGET(translations ALL DEPENDS ${GMO_FILES})
+  add_custom_target(translations ALL DEPENDS ${GMO_FILES})
 
   # Update weechat.pot in source directory (if needed)
-  ADD_CUSTOM_TARGET(
+  add_custom_target(
     update-${POT_FILE}
     COMMAND ${MSGMERGE_EXECUTABLE} --quiet --update --backup=none ${CMAKE_CURRENT_SOURCE_DIR}/${POT_FILE} ${POT_FILE_PATH}
     COMMENT "Updating ${POT_FILE}"
     )
 
   # Update all .po and weechat.pot in source directory (if needed)
-  ADD_CUSTOM_TARGET(update-po DEPENDS update-${POT_FILE} ${UPDATE_PO_TARGETS})
+  add_custom_target(update-po DEPENDS update-${POT_FILE} ${UPDATE_PO_TARGETS})
 
-ENDIF(XGETTEXT_EXECUTABLE AND MSGMERGE_EXECUTABLE AND MSGFMT_EXECUTABLE)
+endif()

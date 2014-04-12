@@ -28,45 +28,45 @@
 #
 #  ICONV_FOUND = is iconv usable on system?
 
-IF(ICONV_FOUND)
+if(ICONV_FOUND)
    # Already in cache, be silent
    set(ICONV_FIND_QUIETLY TRUE)
-ENDIF(ICONV_FOUND)
+endif()
 
-INCLUDE(CheckLibraryExists)
-INCLUDE(CheckFunctionExists)
+include(CheckLibraryExists)
+include(CheckFunctionExists)
 
-FIND_PATH(ICONV_INCLUDE_PATH
+find_path(ICONV_INCLUDE_PATH
   NAMES iconv.h
   PATHS /usr/include /usr/local/include /usr/pkg/include
 )
 
-FIND_LIBRARY(ICONV_LIBRARY
+find_library(ICONV_LIBRARY
   NAMES iconv
   PATHS /lib /usr/lib /usr/local/lib /usr/pkg/lib
 )
 
-IF(ICONV_INCLUDE_PATH)
-  IF(ICONV_LIBRARY)
-    STRING(REGEX REPLACE "/[^/]*$" "" ICONV_LIB_PATH "${ICONV_LIBRARY}")
-    CHECK_LIBRARY_EXISTS(iconv libiconv_open ${ICONV_LIB_PATH} LIBICONV_OPEN_FOUND)
-    CHECK_LIBRARY_EXISTS(iconv iconv_open ${ICONV_LIB_PATH} ICONV_OPEN_FOUND)
-    IF(LIBICONV_OPEN_FOUND OR ICONV_OPEN_FOUND)
-       SET(ICONV_FOUND TRUE)
-    ENDIF(LIBICONV_OPEN_FOUND OR ICONV_OPEN_FOUND)
-  ELSE(ICONV_LIBRARY)
-    CHECK_FUNCTION_EXISTS(iconv_open ICONV_FOUND)
-  ENDIF(ICONV_LIBRARY)
-ENDIF(ICONV_INCLUDE_PATH)
+if(ICONV_INCLUDE_PATH)
+  if(ICONV_LIBRARY)
+    string(REGEX REPLACE "/[^/]*$" "" ICONV_LIB_PATH "${ICONV_LIBRARY}")
+    check_library_exists(iconv libiconv_open ${ICONV_LIB_PATH} LIBICONV_OPEN_FOUND)
+    check_library_exists(iconv iconv_open ${ICONV_LIB_PATH} ICONV_OPEN_FOUND)
+    if(LIBICONV_OPEN_FOUND OR ICONV_OPEN_FOUND)
+       set(ICONV_FOUND TRUE)
+    endif()
+  else()
+    check_function_exists(iconv_open ICONV_FOUND)
+  endif()
+endif()
 
 include(CheckCSourceCompiles)
 
-IF(ICONV_LIBRARY)
-  SET(CMAKE_REQUIRED_LIBRARIES ${ICONV_LIBRARY})
-  SET(CMAKE_REQUIRED_INCLUDES ${ICONV_INCLUDE_PATH})
-ENDIF(ICONV_LIBRARY)
+if(ICONV_LIBRARY)
+  set(CMAKE_REQUIRED_LIBRARIES ${ICONV_LIBRARY})
+  set(CMAKE_REQUIRED_INCLUDES ${ICONV_INCLUDE_PATH})
+endif()
 
-SET(CMAKE_REQUIRED_FLAGS -Werror)
+set(CMAKE_REQUIRED_FLAGS -Werror)
 check_c_source_compiles("
   #include <iconv.h>
   int main(){
@@ -79,7 +79,8 @@ check_c_source_compiles("
     return 0;
   }
 " ICONV_2ARG_IS_CONST)
-MARK_AS_ADVANCED(
+
+mark_as_advanced(
   ICONV_INCLUDE_PATH
   ICONV_LIBRARY
   ICONV_FOUND

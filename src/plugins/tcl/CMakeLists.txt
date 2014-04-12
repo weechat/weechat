@@ -19,19 +19,17 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-ADD_LIBRARY(tcl MODULE weechat-tcl.c weechat-tcl.h
+add_library(tcl MODULE weechat-tcl.c weechat-tcl.h
 weechat-tcl-api.c weechat-tcl-api.h)
 
-SET_TARGET_PROPERTIES(tcl PROPERTIES PREFIX "")
+set_target_properties(tcl PROPERTIES PREFIX "")
 
-IF(TCL_FOUND)
-  SET(CMAKE_REQUIRED_INCLUDES "${TCL_INCLUDE_PATH}")
-  SET(CMAKE_REQUIRED_LIBRARIES "${TCL_LIBRARY}")
+if(TCL_FOUND)
+  set(CMAKE_REQUIRED_INCLUDES "${TCL_INCLUDE_PATH}")
+  set(CMAKE_REQUIRED_LIBRARIES "${TCL_LIBRARY}")
+  include_directories(${TCL_INCLUDE_PATH})
+  set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${TCL_LFLAGS}")
+  target_link_libraries(tcl ${TCL_LIBRARY} weechat_plugins_scripts)
+endif()
 
-  INCLUDE_DIRECTORIES(${TCL_INCLUDE_PATH})
-  SET(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${TCL_LFLAGS}")
-  TARGET_LINK_LIBRARIES(tcl ${TCL_LIBRARY} weechat_plugins_scripts)
-
-ENDIF(TCL_FOUND)
-
-INSTALL(TARGETS tcl LIBRARY DESTINATION ${LIBDIR}/plugins)
+install(TARGETS tcl LIBRARY DESTINATION ${LIBDIR}/plugins)

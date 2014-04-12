@@ -17,17 +17,17 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-IF(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
+if(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
 
   # quickstart
-  ADD_CUSTOM_COMMAND(
+  add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.es.html
     COMMAND ${ASCIIDOC_EXECUTABLE} ARGS -a revision="${VERSION}" -a stylesheet=${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.css -f ${CMAKE_CURRENT_SOURCE_DIR}/../asciidoc.conf -n -o ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.es.html ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.es.txt
     DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat_quickstart.es.txt
     COMMENT "Building weechat_quickstart.es.html"
   )
-  ADD_CUSTOM_TARGET(doc-quickstart-es ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.es.html)
-  INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.es.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
+  add_custom_target(doc-quickstart-es ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.es.html)
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.es.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
 
-ENDIF(ENABLE_DOC AND SOURCEHIGHLIGHT_FOUND)
+endif()

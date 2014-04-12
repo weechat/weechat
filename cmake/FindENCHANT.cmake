@@ -12,19 +12,19 @@
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
 
-if (ENCHANT_INCLUDE_DIR AND ENCHANT_LIBRARIES)
+if(ENCHANT_INCLUDE_DIR AND ENCHANT_LIBRARIES)
 
   # in cache already
   set(ENCHANT_FOUND TRUE)
 
-else (ENCHANT_INCLUDE_DIR AND ENCHANT_LIBRARIES)
-  if (NOT WIN32)
+else()
+  if(NOT WIN32)
     # use pkg-config to get the directories and then use these values
     # in the FIND_PATH() and FIND_LIBRARY() calls
     find_package(PkgConfig)
     pkg_check_modules(PC_ENCHANT enchant)
     set(ENCHANT_DEFINITIONS ${PC_ENCHANT_CFLAGS_OTHER})
-  endif (NOT WIN32)
+  endif()
 
   find_path(ENCHANT_INCLUDE_DIR
             NAMES enchant++.h
@@ -41,4 +41,4 @@ else (ENCHANT_INCLUDE_DIR AND ENCHANT_LIBRARIES)
 
   mark_as_advanced(ENCHANT_INCLUDE_DIR ENCHANT_LIBRARIES)
 
-endif (ENCHANT_INCLUDE_DIR AND ENCHANT_LIBRARIES)
+endif()

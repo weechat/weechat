@@ -19,7 +19,7 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-SET(LIB_CORE_SRC
+set(LIB_CORE_SRC
 weechat.c weechat.h
 wee-backtrace.c wee-backtrace.h
 wee-command.c wee-command.h
@@ -47,23 +47,23 @@ wee-util.c wee-util.h
 wee-version.c wee-version.h)
 
 # Check for flock support
-INCLUDE(CheckSymbolExists)
-CHECK_SYMBOL_EXISTS(flock "sys/file.h" HAVE_FLOCK)
+include(CheckSymbolExists)
+check_symbol_exists(flock "sys/file.h" HAVE_FLOCK)
 
-IF(${CMAKE_SYSTEM_NAME} STREQUAL "FreeBSD")
-  FIND_LIBRARY(EXECINFO_LIB_PATH execinfo /usr/local/lib)
-  SET(CMAKE_REQUIRED_LIBRARIES "${EXECINFO_LIB_PATH}")
-  CHECK_FUNCTION_EXISTS(backtrace HAVE_BACKTRACE)
-ELSE(${CMAKE_SYSTEM_NAME} STREQUAL "FreeBSD")
-  CHECK_SYMBOL_EXISTS(backtrace "execinfo.h" HAVE_BACKTRACE)
-ENDIF(${CMAKE_SYSTEM_NAME} STREQUAL "FreeBSD")
+if(${CMAKE_SYSTEM_NAME} STREQUAL "FreeBSD")
+  find_library(EXECINFO_LIB_PATH execinfo /usr/local/lib)
+  set(CMAKE_REQUIRED_LIBRARIES "${EXECINFO_LIB_PATH}")
+  check_function_exists(backtrace HAVE_BACKTRACE)
+else()
+  check_symbol_exists(backtrace "execinfo.h" HAVE_BACKTRACE)
+endif()
 
-IF(GNUTLS_FOUND)
-  INCLUDE_DIRECTORIES(${GNUTLS_INCLUDE_PATH})
-ENDIF(GNUTLS_FOUND)
+if(GNUTLS_FOUND)
+  include_directories(${GNUTLS_INCLUDE_PATH})
+endif()
 
-INCLUDE_DIRECTORIES(${CURL_INCLUDE_DIRS})
+include_directories(${CURL_INCLUDE_DIRS})
 
-INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR})
-ADD_LIBRARY(weechat_core STATIC ${LIB_CORE_SRC})
-ADD_DEPENDENCIES(weechat_core version_git)
+include_directories(${CMAKE_BINARY_DIR})
+add_library(weechat_core STATIC ${LIB_CORE_SRC})
+add_dependencies(weechat_core version_git)

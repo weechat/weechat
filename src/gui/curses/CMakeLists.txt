@@ -19,7 +19,7 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-SET(WEECHAT_CURSES_SRC
+set(WEECHAT_CURSES_SRC
 gui-curses.h
 gui-curses-bar-window.c
 gui-curses-chat.c
@@ -30,60 +30,59 @@ gui-curses-mouse.c
 gui-curses-term.c
 gui-curses-window.c)
 
-SET(EXECUTABLE weechat)
+set(EXECUTABLE weechat)
 
-FIND_PACKAGE(Ncurses)
-IF(NCURSES_FOUND)
-  CHECK_INCLUDE_FILES(ncursesw/ncurses.h NCURSESW_HEADERS)
-  IF(NCURSESW_HEADERS)
-    ADD_DEFINITIONS(-DHAVE_NCURSESW_CURSES_H)
-  ELSE(NCURSESW_HEADERS)
-    CHECK_INCLUDE_FILES(ncurses.h NCURSES_HEADERS)
-    IF(NCURSES_HEADERS)
-      ADD_DEFINITIONS(-DHAVE_NCURSES_H)
-    ENDIF(NCURSES_HEADERS)
-  ENDIF(NCURSESW_HEADERS)
+find_package(Ncurses)
+if(NCURSES_FOUND)
+  check_include_files(ncursesw/ncurses.h NCURSESW_HEADERS)
+  if(NCURSESW_HEADERS)
+    add_definitions(-DHAVE_NCURSESW_CURSES_H)
+  else()
+    check_include_files(ncurses.h NCURSES_HEADERS)
+    if(NCURSES_HEADERS)
+      add_definitions(-DHAVE_NCURSES_H)
+    endif()
+  endif()
+  list(APPEND EXTRA_LIBS ${NCURSES_LIBRARY})
+endif()
 
-  LIST(APPEND EXTRA_LIBS ${NCURSES_LIBRARY})
-ENDIF(NCURSES_FOUND)
+if(${CMAKE_SYSTEM_NAME} STREQUAL "FreeBSD")
+  if(HAVE_BACKTRACE)
+    list(APPEND EXTRA_LIBS "execinfo")
+  endif()
+endif()
 
-IF(${CMAKE_SYSTEM_NAME} STREQUAL "FreeBSD")
-  IF(HAVE_BACKTRACE)
-    LIST(APPEND EXTRA_LIBS "execinfo")
-  ENDIF(HAVE_BACKTRACE)
-ENDIF(${CMAKE_SYSTEM_NAME} STREQUAL "FreeBSD")
+if(${CMAKE_SYSTEM_NAME} STREQUAL "SunOS")
+  list(APPEND EXTRA_LIBS "socket" "nsl")
+endif()
 
-IF(${CMAKE_SYSTEM_NAME} STREQUAL "SunOS")
-  LIST(APPEND EXTRA_LIBS "socket" "nsl")
-ENDIF(${CMAKE_SYSTEM_NAME} STREQUAL "SunOS")
+list(APPEND EXTRA_LIBS "pthread")
 
-LIST(APPEND EXTRA_LIBS "pthread")
+if(ICONV_LIBRARY)
+  list(APPEND EXTRA_LIBS ${ICONV_LIBRARY})
+endif()
 
-IF(ICONV_LIBRARY)
-  LIST(APPEND EXTRA_LIBS ${ICONV_LIBRARY})
-ENDIF(ICONV_LIBRARY)
+if(LIBINTL_LIBRARY)
+  list(APPEND EXTRA_LIBS ${LIBINTL_LIBRARY})
+endif()
 
-IF(LIBINTL_LIBRARY)
-  LIST(APPEND EXTRA_LIBS ${LIBINTL_LIBRARY})
-ENDIF(LIBINTL_LIBRARY)
+list(APPEND EXTRA_LIBS "m")
 
-LIST(APPEND EXTRA_LIBS "m")
+list(APPEND EXTRA_LIBS ${CURL_LIBRARIES})
 
-LIST(APPEND EXTRA_LIBS ${CURL_LIBRARIES})
+add_executable(${EXECUTABLE} ${WEECHAT_CURSES_SRC})
 
-ADD_EXECUTABLE(${EXECUTABLE} ${WEECHAT_CURSES_SRC})
-
-INCLUDE_DIRECTORIES(.. ../../core ../../plugins ${NCURSES_INCLUDE_PATH})
+include_directories(.. ../../core ../../plugins ${NCURSES_INCLUDE_PATH})
 
 # Because of a linker bug, we have to link 2 times with libweechat_core.a
-TARGET_LINK_LIBRARIES(${EXECUTABLE} ${STATIC_LIBS} ${EXTRA_LIBS} ${STATIC_LIBS})
+target_link_libraries(${EXECUTABLE} ${STATIC_LIBS} ${EXTRA_LIBS} ${STATIC_LIBS})
 
-INSTALL(TARGETS ${EXECUTABLE} RUNTIME DESTINATION bin)
+install(TARGETS ${EXECUTABLE} RUNTIME DESTINATION bin)
 
 # Create a symbolic link weechat-curses -> weechat
 # This link is created for compatibility with old versions on /upgrade.
 # It may be removed in future.
-INSTALL(CODE "
+install(CODE "
   EXECUTE_PROCESS(
     COMMAND ${CMAKE_COMMAND} -E remove -f \"\$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/weechat-curses${CMAKE_EXECUTABLE_SUFFIX}\"
     COMMAND ${CMAKE_COMMAND} -E create_symlink weechat${CMAKE_EXECUTABLE_SUFFIX} \"\$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/weechat-curses${CMAKE_EXECUTABLE_SUFFIX}\"

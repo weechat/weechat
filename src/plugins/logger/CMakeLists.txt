@@ -17,14 +17,14 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-ADD_LIBRARY(logger MODULE
+add_library(logger MODULE
 logger.c logger.h
 logger-buffer.c logger-buffer.h
 logger-config.c logger-config.h
 logger-info.c logger-info.h
 logger-tail.c logger-tail.h)
-SET_TARGET_PROPERTIES(logger PROPERTIES PREFIX "")
+set_target_properties(logger PROPERTIES PREFIX "")
 
-TARGET_LINK_LIBRARIES(logger)
+target_link_libraries(logger)
 
-INSTALL(TARGETS logger LIBRARY DESTINATION ${LIBDIR}/plugins)
+install(TARGETS logger LIBRARY DESTINATION ${LIBDIR}/plugins)

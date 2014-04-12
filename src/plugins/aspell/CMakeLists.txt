@@ -18,7 +18,7 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-ADD_LIBRARY(aspell MODULE
+add_library(aspell MODULE
 weechat-aspell.c weechat-aspell.h
 weechat-aspell-bar-item.c weechat-aspell-bar-item.h
 weechat-aspell-command.c weechat-aspell-command.h
@@ -26,17 +26,17 @@ weechat-aspell-completion.c weechat-aspell-completion.h
 weechat-aspell-config.c weechat-aspell-config.h
 weechat-aspell-info.c weechat-aspell-info.h
 weechat-aspell-speller.c weechat-aspell-speller.h)
-SET_TARGET_PROPERTIES(aspell PROPERTIES PREFIX "")
+set_target_properties(aspell PROPERTIES PREFIX "")
 
-IF(ENCHANT_FOUND)
-  INCLUDE_DIRECTORIES(${ENCHANT_INCLUDE_DIR})
-  TARGET_LINK_LIBRARIES(aspell ${ENCHANT_LIBRARIES})
-  ADD_DEFINITIONS(-DUSE_ENCHANT)
-ELSE(ENCHANT_FOUND)
-  IF(ASPELL_FOUND)
-    INCLUDE_DIRECTORIES(${ASPELL_INCLUDE_PATH})
-    TARGET_LINK_LIBRARIES(aspell ${ASPELL_LIBRARY})
-  ENDIF(ASPELL_FOUND)
-ENDIF(ENCHANT_FOUND)
+if(ENCHANT_FOUND)
+  include_directories(${ENCHANT_INCLUDE_DIR})
+  target_link_libraries(aspell ${ENCHANT_LIBRARIES})
+  add_definitions(-DUSE_ENCHANT)
+else()
+  if(ASPELL_FOUND)
+    include_directories(${ASPELL_INCLUDE_PATH})
+    target_link_libraries(aspell ${ASPELL_LIBRARY})
+  endif()
+endif()
 
-INSTALL(TARGETS aspell LIBRARY DESTINATION ${LIBDIR}/plugins)
+install(TARGETS aspell LIBRARY DESTINATION ${LIBDIR}/plugins)

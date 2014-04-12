@@ -17,16 +17,16 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-ADD_LIBRARY(ruby MODULE weechat-ruby.c weechat-ruby.h weechat-ruby-api.c
+add_library(ruby MODULE weechat-ruby.c weechat-ruby.h weechat-ruby-api.c
 weechat-ruby-api.h)
 
-SET_TARGET_PROPERTIES(ruby PROPERTIES PREFIX "")
+set_target_properties(ruby PROPERTIES PREFIX "")
 
-IF(RUBY_FOUND)
-  INCLUDE_DIRECTORIES(${RUBY_INCLUDE_DIRS})
-  SET(LINK_LIBS)
-  LIST(APPEND LINK_LIBS ${RUBY_LDFLAGS})
-  TARGET_LINK_LIBRARIES(ruby ${LINK_LIBS} ${RUBY_LIB} weechat_plugins_scripts)
-ENDIF(RUBY_FOUND)
+if(RUBY_FOUND)
+  include_directories(${RUBY_INCLUDE_DIRS})
+  set(LINK_LIBS)
+  list(APPEND LINK_LIBS ${RUBY_LDFLAGS})
+  target_link_libraries(ruby ${LINK_LIBS} ${RUBY_LIB} weechat_plugins_scripts)
+endif(RUBY_FOUND)
 
-INSTALL(TARGETS ruby LIBRARY DESTINATION ${LIBDIR}/plugins)
+install(TARGETS ruby LIBRARY DESTINATION ${LIBDIR}/plugins)

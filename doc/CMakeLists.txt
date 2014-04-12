@@ -18,19 +18,17 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-IF(ENABLE_MAN OR ENABLE_DOC)
-
-  FIND_PACKAGE(Sourcehighlight)
-  FIND_PACKAGE(Asciidoc)
-  IF(ASCIIDOC_FOUND)
-    ADD_SUBDIRECTORY( en )
-    ADD_SUBDIRECTORY( fr )
-    ADD_SUBDIRECTORY( it )
-    ADD_SUBDIRECTORY( de )
-    ADD_SUBDIRECTORY( pl )
-    ADD_SUBDIRECTORY( es )
-    ADD_SUBDIRECTORY( ru )
-    ADD_SUBDIRECTORY( ja )
-  ENDIF(ASCIIDOC_FOUND)
-
-ENDIF(ENABLE_MAN OR ENABLE_DOC)
+if(ENABLE_MAN OR ENABLE_DOC)
+  find_package(Sourcehighlight)
+  find_package(Asciidoc)
+  if(ASCIIDOC_FOUND)
+    add_subdirectory( en )
+    add_subdirectory( fr )
+    add_subdirectory( it )
+    add_subdirectory( de )
+    add_subdirectory( pl )
+    add_subdirectory( es )
+    add_subdirectory( ru )
+    add_subdirectory( ja )
+  endif()
+endif()

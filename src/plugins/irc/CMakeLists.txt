@@ -17,7 +17,7 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-ADD_LIBRARY(irc MODULE
+add_library(irc MODULE
 irc.c irc.h
 irc-bar-item.c irc-bar-item.h
 irc-buffer.c irc-buffer.h
@@ -42,17 +42,17 @@ irc-redirect.c irc-redirect.h
 irc-sasl.c irc-sasl.h
 irc-server.c irc-server.h
 irc-upgrade.c irc-upgrade.h)
-SET_TARGET_PROPERTIES(irc PROPERTIES PREFIX "")
+set_target_properties(irc PROPERTIES PREFIX "")
 
-SET (LINK_LIBS)
+set(LINK_LIBS)
 
-IF(GNUTLS_FOUND)
-  INCLUDE_DIRECTORIES(${GNUTLS_INCLUDE_PATH})
-  LIST(APPEND LINK_LIBS ${GNUTLS_LIBRARY})
-ENDIF(GNUTLS_FOUND)
+if(GNUTLS_FOUND)
+  include_directories(${GNUTLS_INCLUDE_PATH})
+  list(APPEND LINK_LIBS ${GNUTLS_LIBRARY})
+endif()
 
-LIST(APPEND LINK_LIBS ${GCRYPT_LDFLAGS})
+list(APPEND LINK_LIBS ${GCRYPT_LDFLAGS})
 
-TARGET_LINK_LIBRARIES(irc ${LINK_LIBS})
+target_link_libraries(irc ${LINK_LIBS})
 
-INSTALL(TARGETS irc LIBRARY DESTINATION ${LIBDIR}/plugins)
+install(TARGETS irc LIBRARY DESTINATION ${LIBDIR}/plugins)

@@ -17,16 +17,16 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-ADD_LIBRARY(guile MODULE weechat-guile.c weechat-guile.h
+add_library(guile MODULE weechat-guile.c weechat-guile.h
 weechat-guile-api.c weechat-guile-api.h)
 
-SET_TARGET_PROPERTIES(guile PROPERTIES PREFIX "")
+set_target_properties(guile PROPERTIES PREFIX "")
 
-IF(GUILE_FOUND)
-  INCLUDE_DIRECTORIES(${GUILE_INCLUDE_DIRS})
-  SET(LINK_LIBS)
-  LIST(APPEND LINK_LIBS ${GUILE_LDFLAGS})
-  TARGET_LINK_LIBRARIES(guile ${LINK_LIBS} weechat_plugins_scripts)
-ENDIF(GUILE_FOUND)
+if(GUILE_FOUND)
+  include_directories(${GUILE_INCLUDE_DIRS})
+  set(LINK_LIBS)
+  list(APPEND LINK_LIBS ${GUILE_LDFLAGS})
+  target_link_libraries(guile ${LINK_LIBS} weechat_plugins_scripts)
+endif()
 
-INSTALL(TARGETS guile LIBRARY DESTINATION ${LIBDIR}/plugins)
+install(TARGETS guile LIBRARY DESTINATION ${LIBDIR}/plugins)

@@ -28,58 +28,54 @@
 #
 #  LUA_FOUND = is liblua usable on system?
 
-IF(LUA_FOUND)
+if(LUA_FOUND)
    # Already in cache, be silent
-   SET(LUA_FIND_QUIETLY TRUE)
-ENDIF(LUA_FOUND)
+   set(LUA_FIND_QUIETLY TRUE)
+endif()
 
-FIND_PATH(
+find_path(
         LUA51_INCLUDE_PATH lua.h
         PATHS /usr/include /usr/local/include /usr/pkg/include
         PATH_SUFFIXES lua51 lua5.1 lua-5.1
 )
 
-FIND_LIBRARY(
+find_library(
         LUA51_LIBRARY NAMES lua51 lua5.1 lua-5.1 lua
         PATHS /lib /usr/lib /usr/local/lib /usr/pkg/lib
         PATH_SUFFIXES lua51 lua5.1 lua-5.1
 )
 
-IF(LUA51_INCLUDE_PATH AND LUA51_LIBRARY)
-  SET(LUA_INCLUDE_PATH "${LUA51_INCLUDE_PATH}")
-  SET(LUA_LIBRARY "${LUA51_LIBRARY}")
-  SET(LUA_VERSION "5.1")
-  SET(LUA_FOUND TRUE)
-ELSE(LUA51_INCLUDE_PATH AND LUA51_LIBRARY)
-  FIND_PATH(
+if(LUA51_INCLUDE_PATH AND LUA51_LIBRARY)
+  set(LUA_INCLUDE_PATH "${LUA51_INCLUDE_PATH}")
+  set(LUA_LIBRARY "${LUA51_LIBRARY}")
+  set(LUA_VERSION "5.1")
+  set(LUA_FOUND TRUE)
+else()
+  find_path(
         LUA50_INCLUDE_PATH lua.h
         PATHS /usr/include /usr/local/include /usr/pkg/include
         PATH_SUFFIXES lua50 lua5.0 lua-5.0 lua
   )
-
-  FIND_LIBRARY(
+  find_library(
         LUA50_LIBRARY NAMES lua50 lua5.0 lua-5.0 lua
         PATHS /lib /usr/lib /usr/local/lib /usr/pkg/lib
         PATH_SUFFIXES lua50 lua5.0 lua-5.0 lua
   )
-
-  FIND_LIBRARY(
+  find_library(
         LUALIB50_LIBRARY NAMES lualib50 lualib5.0 lualib-5.0 lualib
         PATHS /lib /usr/lib /usr/local/lib /usr/pkg/lib
         PATH_SUFFIXES lua50 lua5.0 lua-5.0 lua
   )
+  if(LUA50_INCLUDE_PATH AND LUA50_LIBRARY AND LUALIB50_LIBRARY)
+    set(LUA_INCLUDE_PATH "${LUA50_INCLUDE_PATH}")
+    set(LUA_LIBRARY "${LUA50_LIBRARY}")
+    set(LUALIB_LIBRARY "${LUALIB50_LIBRARY}")
+    set(LUA_VERSION "5.0")
+    set(LUA_FOUND TRUE)
+  endif()
+endif()
 
-  IF(LUA50_INCLUDE_PATH AND LUA50_LIBRARY AND LUALIB50_LIBRARY)
-    SET(LUA_INCLUDE_PATH "${LUA50_INCLUDE_PATH}")
-    SET(LUA_LIBRARY "${LUA50_LIBRARY}")
-    SET(LUALIB_LIBRARY "${LUALIB50_LIBRARY}")
-    SET(LUA_VERSION "5.0")
-    SET(LUA_FOUND TRUE)
-  ENDIF(LUA50_INCLUDE_PATH AND LUA50_LIBRARY AND LUALIB50_LIBRARY)
-ENDIF(LUA51_INCLUDE_PATH AND LUA51_LIBRARY)
-
-
-MARK_AS_ADVANCED(
+mark_as_advanced(
   LUA_INCLUDE_PATH
   LUA_LIBRARY
   LUALIB_LIBRARY

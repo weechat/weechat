@@ -26,12 +26,12 @@
 # GUILE_INCLUDE_DIRS = Guile include directory
 # GUILE_LIBRARIES    = Link options to compile Guile
 
-IF(GUILE_FOUND)
+if(GUILE_FOUND)
    # Already in cache, be silent
-   SET(GUILE_FIND_QUIETLY TRUE)
-ENDIF(GUILE_FOUND)
+   set(GUILE_FIND_QUIETLY TRUE)
+endif()
 
-FIND_PACKAGE(PkgConfig)
-IF(PKG_CONFIG_FOUND)
+find_package(PkgConfig)
+if(PKG_CONFIG_FOUND)
   pkg_search_module(GUILE guile-2.0)
-ENDIF(PKG_CONFIG_FOUND)
+endif()

@@ -17,12 +17,12 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-ADD_LIBRARY(alias MODULE
+add_library(alias MODULE
 alias.c alias.h
 alias-config.c alias-config.h
 alias-info.c alias-info.h)
-SET_TARGET_PROPERTIES(alias PROPERTIES PREFIX "")
+set_target_properties(alias PROPERTIES PREFIX "")
 
-TARGET_LINK_LIBRARIES(alias)
+target_link_libraries(alias)
 
-INSTALL(TARGETS alias LIBRARY DESTINATION ${LIBDIR}/plugins)
+install(TARGETS alias LIBRARY DESTINATION ${LIBDIR}/plugins)
