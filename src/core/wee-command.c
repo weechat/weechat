@@ -7093,6 +7093,7 @@ command_init ()
            "  notify_none, notify_message, notify_private, notify_highlight,\n"
            "  nick_xxx (xxx is nick in message), prefix_nick_ccc (ccc is color "
            "of nick),\n"
+           "  host_xxx (xxx is username + host in message),\n"
            "  irc_xxx (xxx is command name or number, see /server raw or /debug "
            "tags),\n"
            "  irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, "
