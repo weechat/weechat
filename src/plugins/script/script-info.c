@@ -99,7 +99,8 @@ script_info_init ()
     weechat_hook_infolist ("script_script",
                            N_("list of scripts"),
                            N_("script pointer (optional)"),
-                           N_("script name with extension (can start or end with \"*\" as wildcard) (optional)"),
+                           N_("script name with extension "
+                              "(wildcard \"*\" is allowed) (optional)"),
                            &script_info_get_infolist_cb, NULL);
 
     /* hdata hooks */

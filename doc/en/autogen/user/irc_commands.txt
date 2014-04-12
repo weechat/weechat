@@ -14,7 +14,7 @@ target: server name
 /allchan  [-current] [-exclude=<channel>[,<channel>...]] <command> [<arguments>]
 
  -current: execute command for channels of current server only
- -exclude: exclude some channels ('*' is allowed at beginning or end of channel name, to exclude many channels)
+ -exclude: exclude some channels (wildcard "*" is allowed)
   command: command to execute
 arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
 
@@ -34,7 +34,7 @@ Examples:
 /allpv  [-current] [-exclude=<nick>[,<nick>...]] <command> [<arguments>]
 
  -current: execute command for private buffers of current server only
- -exclude: exclude some nicks ('*' is allowed at beginning or end of nick name, to exclude many nicks)
+ -exclude: exclude some nicks (wildcard "*" is allowed)
   command: command to execute
 arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
 
@@ -55,7 +55,7 @@ Examples:
 ----
 /allserv  [-exclude=<server>[,<server>...]] <command> [<arguments>]
 
- -exclude: exclude some servers ('*' is allowed at beginning or end of server name, to exclude many servers)
+ -exclude: exclude some servers (wildcard "*" is allowed)
   command: command to execute
 arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
 
@@ -155,7 +155,7 @@ Examples:
 ----
 /dehalfop  <nick> [<nick>...]
 
-nick: nick or mask (can start or end with "*" as wildcard)
+nick: nick or mask (wildcard "*" is allowed)
    *: remove channel half-operator status from everybody on channel except yourself
 ----
 
@@ -166,7 +166,7 @@ nick: nick or mask (can start or end with "*" as wildcard)
 /deop  <nick> [<nick>...]
        * -yes
 
-nick: nick or mask (can start or end with "*" as wildcard)
+nick: nick or mask (wildcard "*" is allowed)
    *: remove channel operator status from everybody on channel except yourself
 ----
 
@@ -177,7 +177,7 @@ nick: nick or mask (can start or end with "*" as wildcard)
 /devoice  <nick> [<nick>...]
           * -yes
 
-nick: nick or mask (can start or end with "*" as wildcard)
+nick: nick or mask (wildcard "*" is allowed)
    *: remove voice from everybody on channel
 ----
 
@@ -209,7 +209,7 @@ target: server name
 /halfop  <nick> [<nick>...]
          * -yes
 
-nick: nick or mask (can start or end with "*" as wildcard)
+nick: nick or mask (wildcard "*" is allowed)
    *: give channel half-operator status to everybody on channel
 ----
 
@@ -498,7 +498,7 @@ Examples:
 /op  <nick> [<nick>...]
      * -yes
 
-nick: nick or mask (can start or end with "*" as wildcard)
+nick: nick or mask (wildcard "*" is allowed)
    *: give channel operator status to everybody on channel
 ----
 
@@ -838,7 +838,7 @@ server: server name
 ----
 /voice  <nick> [<nick>...]
 
-nick: nick or mask (can start or end with "*" as wildcard)
+nick: nick or mask (wildcard "*" is allowed)
    *: give voice to everybody on channel
 ----
 

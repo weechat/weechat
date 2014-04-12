@@ -2289,11 +2289,11 @@ config_weechat_init_options ()
         weechat_config_file, ptr_section,
         "highlight_tags", "string",
         N_("comma separated list of tags to highlight; case insensitive "
-           "comparison; each tag can start or end with \"*\" to match more "
-           "than one tag; many tags can be separated by \"+\" to make a "
-           "logical \"and\" between tags; examples: \"nick_flashcode\" for "
-           "messages from nick \"FlashCode\", \"irc_notice+nick_toto*\" for "
-           "notices from a nick starting with \"toto\""),
+           "comparison; wildcard \"*\" is allowed in each tag; many tags can "
+           "be separated by \"+\" to make a logical \"and\" between tags; "
+           "examples: \"nick_flashcode\" for messages from nick \"FlashCode\", "
+           "\"irc_notice+nick_toto*\" for notices from a nick starting with "
+           "\"toto\""),
         NULL, 0, 0, "", NULL, 0, NULL, NULL, &config_change_highlight_tags, NULL, NULL, NULL);
     config_look_hotlist_add_conditions = config_file_new_option (
         weechat_config_file, ptr_section,
@@ -3324,8 +3324,8 @@ config_weechat_init_options ()
         N_("comma separated list of plugins to load automatically "
            "at startup, \"*\" means all plugins found, a name beginning with "
            "\"!\" is a negative value to prevent a plugin from being loaded, "
-           "names can start or end with \"*\" to match several plugins "
-           "(examples: \"*\" or \"*,!lua,!tcl\")"),
+           "wildcard \"*\" is allowed in names (examples: \"*\" or "
+           "\"*,!lua,!tcl\")"),
         NULL, 0, 0, "*", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     config_plugin_debug = config_file_new_option (
         weechat_config_file, ptr_section,

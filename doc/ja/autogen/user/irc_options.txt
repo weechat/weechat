@@ -174,7 +174,7 @@
 ** 値: 未制約文字列 (デフォルト値: `"$nick"`)
 
 * [[option_irc.look.highlight_tags_restrict]] *irc.look.highlight_tags_restrict*
-** 説明: `irc バッファでハイライトを禁止するタグ (ユーザメッセージをハイライトして、サーバメッセージをハイライトしない); タグの区切り文字はコンマ、論理積を取る場合には "+" 使ってください; 1 つ以上のタグにマッチさせるには各タグの最初と最後に "*" をつけてください; 任意のタグをハイライトさせるには空値を指定してください`
+** 説明: `restrict highlights to these tags on irc buffers (to have highlight on user messages but not server messages); tags must be separated by a comma and "+" can be used to make a logical "and" between tags; wildcard "*" is allowed in tags; an empty value allows highlight on any tag`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"irc_privmsg,irc_notice"`)
 

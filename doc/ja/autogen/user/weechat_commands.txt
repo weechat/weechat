@@ -314,10 +314,10 @@ disable: disable filters
          - this is full name including plugin (example: "irc.freenode.#weechat")
          - "*" means all buffers
          - a name starting with '!' is excluded
-         - name can start or end with '*' to match many buffers
+         - wildcard "*" is allowed
    tags: comma separated list of tags, for example "irc_join,irc_part,irc_quit"
          - logical "and": use "+" between tags (for example: "nick_toto+irc_action")
-         - tags can start or end with '*'
+         - wildcard "*" is allowed
   regex: POSIX extended regular expression to search in line
          - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
          - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
@@ -451,44 +451,44 @@ value: 表示する履歴エントリの数
       resetall -yes [<context>]
       missing [<context>]
 
-       list: 現在のキーをリストアップ (引数無しの場合、このリストが表示されます)
-listdefault: デフォルトキーをリストアップ
-   listdiff: デフォルトと現在のキーの違いをリストアップ (追加、再定義、削除されたキー)
-    context: コンテキストの名前 ("default" または "search")
-       bind: キーにコマンドを割り当てるか、キーに割り当てられたコマンドを表示 ("default" コンテキストに対する)
-   bindctxt: キーにコマンドを割り当てるか、キーに割り当てられたコマンドを表示 (指定されたコンテキストに対する)
-    command: コマンド (複数のコマンドはセミコロンで分けて書く)
-     unbind: キーバインドを削除 ("default" コンテキストに対する)
- unbindctxt: キーバインドを削除 (指定されたコンテキストに対する)
-      reset: キーをデフォルトの割り当てにリセットする ("default" コンテキストに対する)
-  resetctxt: キーをデフォルトの割り当てにリセットする (指定されたコンテキストに対する)
-   resetall: デフォルトの割り当てにリストアし、全ての個人的な設定を削除 (注意して使用!)
-    missing: 未割り当てのキーを追加 (デフォルトの割り当てに無い)、新しい WeeChat バージョンをインストールした後に便利
+       list: list all current keys (without argument, this list is displayed)
+listdefault: list default keys
+   listdiff: list differences between current and default keys (keys added, redefined or deleted)
+    context: name of context ("default" or "search")
+       bind: bind a command to a key or display command bound to key (for context "default")
+   bindctxt: bind a command to a key or display command bound to key, for given context
+    command: command (many commands can be separated by semicolons)
+     unbind: remove a key binding (for context "default")
+ unbindctxt: remove a key binding for given context
+      reset: reset a key to default binding (for context "default")
+  resetctxt: reset a key to default binding, for given context
+   resetall: restore bindings to the default values and delete ALL personal bindings (use carefully!)
+    missing: add missing keys (using default bindings), useful after installing new WeeChat version
 
-キーにコマンドを割り当てる場合、alt+k (または Esc の後に k) した後に、割り当てたいキーを押すことをお勧めします: これはコマンドラインにキーコードを入力することになります。
+When binding a command to a key, it is recommended to use key alt+k (or Esc then k), and then press the key to bind: this will insert key code in command line.
 
-"mouse" コンテント ("cursor" コンテキストの一部) に対しては、キーは以下のフォーマット: "@area:key" または "@area1>area2:key"。 ここで、area は以下の値を取れます:
-          *: スクリーン上の任意のエリア
-       chat: チャットエリア (任意のバッファ)
-  chat(xxx): 名前 "xxx" を持つチャットエリア (プラグイン含む完全な名前)
-     bar(*): 任意のバー
-   bar(xxx): バー "xxx"
-    item(*): 任意のバーアイテム
-  item(xxx): バーアイテム "xxx"
-多くのマウスイベントにマッチさせるには '*' で開始または終了するキーを使います。
-"hsignal:name" というフォーマットのコマンドに対する特別な値はマウスコンテキストに使えます、これはフォーカスハッシュテーブルを引数にして hsignal "name" を送ります。
-その他の特別な値 "-" はキーを無効化するために利用されます。(これはキーの探索時には無視されます)
+For context "mouse" (possible in context "cursor" too), key has format: "@area:key" or "@area1>area2:key" where area can be:
+          *: any area on screen
+       chat: chat area (any buffer)
+  chat(xxx): char area for buffer with name "xxx" (full name including plugin)
+     bar(*): any bar
+   bar(xxx): bar "xxx"
+    item(*): any bar item
+  item(xxx): bar item "xxx"
+Wildcard "*" is allowed in key to match many mouse events.
+A special value for command with format "hsignal:name" can be used for context mouse, this will send the hsignal "name" with the focus hashtable as argument.
+Another special value "-" can be used to disable key (it will be ignored when looking for keys).
 
-例:
-  alt-x キーをニックネームリストバーに割り当てる:
+Examples:
+  key alt-x to toggle nicklist bar:
     /key bind meta-x /bar toggle nicklist
-  alt-r キーを #weechat IRC チャンネルへの移動に割り当てる:
+  key alt-r to jump to #weechat IRC channel:
     /key bind meta-r /buffer #weechat
-  alt-r キーの割り当てをデフォルトに戻す:
+  restore default binding for key alt-r:
     /key reset meta-r
-  "tab" キーをバッファ検索の終了に割り当てる:
+  key "tab" to stop search in buffer:
     /key bindctxt search ctrl-I /input search_stop
-  ニック上でのマウスのセンターボタンをニックネームの情報取得に割り当てる:
+  middle button of mouse on a nick to retrieve info on nick:
     /key bindctxt mouse @item(buffer_nicklist):button3 /msg nickserv info ${nick}
 ----
 
@@ -758,26 +758,26 @@ ${sec.data.xxx} の形でフォーマットされた保護データは以下の�
 /set  [<option> [<value>]]
       diff [<option> [<option>...]]
 
-option: オプションの名前 (多くのオプションをリストアップするには、'*' で始めるか終わるかしてください)
- value: オプションに対する新しい値
-  diff: 変更されたオプションのみを表示
+option: name of an option (wildcard "*" is allowed)
+ value: new value for option
+  diff: display only changed options
 
-新しいオプションは以下の変数型に従います:
-  boolean: on、off、toggle
-  integer: 番号、++番号、--番号
-   string: 任意の文字列 (空文字列は "")
-    color: 色の名前、++色番号、--色番号
+New value can be, according to variable type:
+  boolean: on, off or toggle
+  integer: number, ++number or --number
+   string: any string ("" for empty string)
+    color: color name, ++number or --number
 
-どんな型であっても、オプションの値を削除する (未定義値にする) には null が使えます。これはいくつかの特別なプラグイン変数でのみ有効です。
+For all types, you can use null to remove option value (undefined value). This works only for some special plugin variables.
 
-例:
-  ハイライトに関するオプションを表示:
+Examples:
+  display options about highlight:
     /set *highlight*
-  highlight に単語を追加:
+  add a word to highlight:
     /set weechat.look.highlight "word"
-  変更されたオプションを表示:
+  display changed options:
     /set diff
-  irc プラグインのオプションの内、変更されたオプションを表示
+  display changed options in irc plugin:
     /set diff irc.*
 ----
 
@@ -787,14 +787,14 @@ option: オプションの名前 (多くのオプションをリストアップ�
 ----
 /unset  <option>
 
-option: オプションの名前 ("*" で始めるか終わるかすれば大量のオプションをリセットできます、注意して使用!)
+option: name of an option (wildcard "*" is allowed to mass-reset options, use carefully!)
 
-オプションの種類によって (一般的なオプションを) リセットまたは (サーバなどの任意な設定を) 削除が行われます。
+According to option, it's reset (for standard options) or removed (for optional settings, like server values).
 
-例:
-  オプションのリセット:
+Examples:
+  reset one option:
     /unset weechat.look.item_time_format
-  全ての色関連オプションをリセット:
+  reset all color options:
     /unset weechat.color.*
 ----
 

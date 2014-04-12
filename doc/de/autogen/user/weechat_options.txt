@@ -554,7 +554,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_weechat.look.highlight_tags]] *weechat.look.highlight_tags*
-** Beschreibung: `eine durch Kommata getrennte Liste von Tags, die eine highlight-Nachricht erzeugen; Groß- und Kleinschreibung wird dabei nicht beachtet; Tags können mit "*" beginnen oder enden um mehr als ein Tag zu markieren. Um eine logische "und" Verknüpfung zu verwenden, können mehrere Tags durch "+" zusammengefügt werden. Beispiele: "nick_flashcode" für Nachrichten von "FlashCode", "irc_notice+nick_toto*" für Notice-Nachrichten von Nicks, die mit "toto" beginnen`
+** Beschreibung: `comma separated list of tags to highlight; case insensitive comparison; wildcard "*" is allowed in each tag; many tags can be separated by "+" to make a logical "and" between tags; examples: "nick_flashcode" for messages from nick "FlashCode", "irc_notice+nick_toto*" for notices from a nick starting with "toto"`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
@@ -899,7 +899,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `""`)
 
 * [[option_weechat.plugin.autoload]] *weechat.plugin.autoload*
-** Beschreibung: `durch Kommata getrennte Liste der Erweiterungen, die beim Programmstart automatisch geladen werden sollen; "*" lädt alle vorhandenen Erweiterungen. Beginnt der Name hingegen mit "!" wird die Erweiterung nicht geladen. Suchmuster können mit einem Joker ("*") beginnen oder enden um mehrere Erweiterungen zu laden (Beispiele: "*" oder "*,!lua,!tcl")`
+** Beschreibung: `comma separated list of plugins to load automatically at startup, "*" means all plugins found, a name beginning with "!" is a negative value to prevent a plugin from being loaded, wildcard "*" is allowed in names (examples: "*" or "*,!lua,!tcl")`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"*"`)
 

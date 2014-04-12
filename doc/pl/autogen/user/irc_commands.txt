@@ -13,18 +13,18 @@ cel: nazwa serwera
 ----
 /allchan  [-current] [-exclude=<kanał>[,<kanał>...]] <komenda> [<argumenty>]
 
- -current: wykonuje komendę tylko na kanałach obecnego serwera
- -exclude: wyklucza niektóre kanały ('*' jest dozwolone na początku lub końcu nazwy kanału, aby wykluczyć wiele kanałów)
-  komenda: komenda do wykonania
-argumenty: argumenty dla komendy (specjalne zmienne $nick, $channel i $server są zamieniane na odpowiednie wartości)
+ -current: execute command for channels of current server only
+ -exclude: exclude some channels (wildcard "*" is allowed)
+  command: command to execute
+arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
 
-Przykłady:
-  wykonuje '/me testuje' na wszystkich kanałach:
-    /allchan me testuje
-  mówi 'witam' wszędzie tylko nie na #weechat:
-    /allchan -exclude=#weechat msg * witam
-  mówi 'witam' wszędzie poza #weechat oraz kanałami zaczynającymi się od #linux:
-    /allchan -exclude=#weechat,#linux* msg * witam
+Examples:
+  execute '/me is testing' on all channels:
+    /allchan me is testing
+  say 'hello' everywhere but not on #weechat:
+    /allchan -exclude=#weechat msg * hello
+  say 'hello' everywhere but not on #weechat and channels beginning with #linux:
+    /allchan -exclude=#weechat,#linux* msg * hello
 ----
 
 [[command_irc_allpv]]
@@ -34,7 +34,7 @@ Przykłady:
 /allpv  [-current] [-exclude=<nick>[,<nick>...]] <command> [<arguments>]
 
  -current: execute command for private buffers of current server only
- -exclude: exclude some nicks ('*' is allowed at beginning or end of nick name, to exclude many nicks)
+ -exclude: exclude some nicks (wildcard "*" is allowed)
   command: command to execute
 arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
 
@@ -55,16 +55,16 @@ Examples:
 ----
 /allserv  [-exclude=<serwer>[,<serwer>...]] <komenda> [<argumenty>]
 
- -exclude: wyklucza niektóre serwery ('*' jest dozwolone na początku lub końcu nazwy, w celu wykluczenia wielu serwerów)
-  komenda: komenda do wykonania
-argumenty: argumenty dla komendy (specjalne zmienne $nick, $channel i $server są zamieniane na odpowiednie wartości)
+ -exclude: exclude some servers (wildcard "*" is allowed)
+  command: command to execute
+arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
 
-Przykłady:
-  zmienia nick na wszystkich serwerach:
-    /allserv nick nowy_nick
-  ustawia stan nieobecności na wszystkich serwerach:
-    /allserv away Jestem nieobecny
-  wykonuje whois na własnym nicku na wszystkich serwerach:
+Examples:
+  change nick on all servers:
+    /allserv nick newnick
+  set away on all servers:
+    /allserv away I'm away
+  do a whois on my nick on all servers:
     /allserv whois $nick
 ----
 
@@ -155,8 +155,8 @@ Examples:
 ----
 /dehalfop  <nick> [<nick>...]
 
-nick: nick lub maska (może zaczynać się lub kończyć "*")
-   *: zabiera status pół-operatora kanału wszystkim na kanale poza tobą
+nick: nick or mask (wildcard "*" is allowed)
+   *: remove channel half-operator status from everybody on channel except yourself
 ----
 
 [[command_irc_deop]]
@@ -166,8 +166,8 @@ nick: nick lub maska (może zaczynać się lub kończyć "*")
 /deop  <nick> [<nick>...]
        * -yes
 
-nick: nick lub maska (może zaczynać się lub kończyć "*")
-   *: zabiera status operatora kanału wszystkim na kanale poza tobą
+nick: nick or mask (wildcard "*" is allowed)
+   *: remove channel operator status from everybody on channel except yourself
 ----
 
 [[command_irc_devoice]]
@@ -177,8 +177,8 @@ nick: nick lub maska (może zaczynać się lub kończyć "*")
 /devoice  <nick> [<nick>...]
           * -yes
 
-nick: nick lub maska (może zaczynać się lub kończyć "*")
-   *: odbiera głos wszystkim na kanale
+nick: nick or mask (wildcard "*" is allowed)
+   *: remove voice from everybody on channel
 ----
 
 [[command_irc_die]]
@@ -209,8 +209,8 @@ cel: nazwa serwera
 /halfop  <nick> [<nick>...]
          * -yes
 
-nick: nick lub maska (może zaczynać się lub kończyć "*")
-   *: nadaje status pół-operatora kanału wszystkim na kanale poza tobą
+nick: nick or mask (wildcard "*" is allowed)
+   *: give channel half-operator status to everybody on channel
 ----
 
 [[command_irc_ignore]]
@@ -498,8 +498,8 @@ Przykłady:
 /op  <nick> [<nick>...]
      * -yes
 
-nick: nick lub maska (może zaczynać się lub kończyć "*")
-   *: nadaje status operatora kanału wszystkim na kanale poza tobą
+nick: nick or mask (wildcard "*" is allowed)
+   *: give channel operator status to everybody on channel
 ----
 
 [[command_irc_oper]]
@@ -837,8 +837,8 @@ serwer: nazwa serwera
 ----
 /voice  <nick> [<nick>...]
 
-nick: nick lub maska (może zaczynać się lub kończyć "*")
-   *: daje głos każdemu na kanale
+nick: nick or mask (wildcard "*" is allowed)
+   *: give voice to everybody on channel
 ----
 
 [[command_irc_wallchops]]

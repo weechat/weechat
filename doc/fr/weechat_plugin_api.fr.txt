@@ -818,6 +818,8 @@ length = weechat.strlen_screen("é") # 1
 
 ==== weechat_string_match
 
+_Mis à jour dans la 0.4.4._
+
 Vérifier si une chaîne correspond à un masque.
 
 Prototype :
@@ -831,9 +833,13 @@ int weechat_string_match (const char *string, const char *mask,
 Paramètres :
 
 * 'string' : chaîne
-* 'mask' : masque, peut commencer ou se terminer par "`*`" (aucune autre "`*`"
-  n'est autorisée dans le masque)
+* 'mask' : masque avec des caractères joker ("*"), chaque joker correspond à 0
+  ou plusieurs caractères dans la chaîne
 * 'case_sensitive' : 1 pour une comparaison tenant compte de la casse, sinon 0
+
+[NOTE]
+Depuis la version 0.4.4, les caractères joker sont autorisés à l'intérieur du
+masque (pas seulement au début et à la fin du masque).
 
 Valeur de retour :
 
@@ -843,10 +849,11 @@ Exemple en C :
 
 [source,C]
 ----
-int match1 = weechat_string_match ("abcdef", "abc*", 0); /* == 1 */
-int match2 = weechat_string_match ("abcdef", "*dd*", 0); /* == 0 */
-int match3 = weechat_string_match ("abcdef", "*def", 0); /* == 1 */
-int match4 = weechat_string_match ("abcdef", "*de*", 0); /* == 1 */
+int match1 = weechat_string_match ("abcdef", "abc*", 0);  /* == 1 */
+int match2 = weechat_string_match ("abcdef", "*dd*", 0);  /* == 0 */
+int match3 = weechat_string_match ("abcdef", "*def", 0);  /* == 1 */
+int match4 = weechat_string_match ("abcdef", "*de*", 0);  /* == 1 */
+int match5 = weechat_string_match ("abcdef", "*b*d*", 0); /* == 1 */
 ----
 
 Script (Python) :
@@ -857,10 +864,11 @@ Script (Python) :
 match = weechat.string_match(string, mask, case_sensitive)
 
 # exemples
-match1 = weechat.string_match("abcdef", "abc*", 0) # 1
-match2 = weechat.string_match("abcdef", "*dd*", 0) # 0
-match3 = weechat.string_match("abcdef", "*def", 0) # 1
-match4 = weechat.string_match("abcdef", "*de*", 0) # 1
+match1 = weechat.string_match("abcdef", "abc*", 0)  # 1
+match2 = weechat.string_match("abcdef", "*dd*", 0)  # 0
+match3 = weechat.string_match("abcdef", "*def", 0)  # 1
+match4 = weechat.string_match("abcdef", "*de*", 0)  # 1
+match5 = weechat.string_match("abcdef", "*b*d*", 0) # 1
 ----
 
 ==== weechat_string_expand_home
@@ -6946,8 +6954,7 @@ struct t_hook *weechat_hook_command_run (const char *command,
 
 Paramètres :
 
-* 'command' : commande à intercepter, peut commencer ou se terminer par le
-  caractère joker "*"
+* 'command' : commande à intercepter (le caractère joker "*" est autorisé)
   (priorité autorisée, voir la note sur la <<hook_priority,priorité>>)
 * 'callback' : fonction appelée lorsque la commande est exécutée, paramètres et
   valeur de retour :
@@ -7706,8 +7713,7 @@ Paramètres :
 ** avec WeeChat ≥ 0.4.3 : liste d'étiquettes (séparées par des virgules) qui
    doivent être dans le message ("ou" logique); il est possible de combiner
    plusieurs étiquettes sous forme d'un "et" logique avec le séparateur "+";
-   chaque étiquette peut commencer ou se terminer par "*" pour correspondre à
-   plusieurs étiquettes
+   le caractère joker "*" est autorisé dans les étiquettes
 ** avec WeeChat ≤ 0.4.2 : liste d'étiquettes (séparées par des virgules) qui
    doivent toutes être dans le message ("et" logique)
 * 'message' : seulement les messages contenant cette chaîne seront interceptés
@@ -7788,7 +7794,7 @@ struct t_hook *weechat_hook_signal (const char *signal,
 
 Paramètres :
 
-* 'signal' : signal à intercepter, peut commencer ou se terminer par "*"
+* 'signal' : signal à intercepter, le caractère joker "*" est autorisé
   (priorité autorisée, voir la note sur la <<hook_priority,priorité>>)
   (voir le tableau ci-dessous)
 * 'callback' : fonction appelée quand le signal est reçu, paramètres et valeur
@@ -8657,7 +8663,7 @@ struct t_hook *weechat_hook_hsignal (const char *signal,
 
 Paramètres :
 
-* 'signal' : signal à intercepter, peut commencer ou se terminer par "*"
+* 'signal' : signal à intercepter, le caractère joker "*" est autorisé
   (priorité autorisée, voir la note sur la <<hook_priority,priorité>>)
   (voir le tableau ci-dessous)
 * 'callback' : fonction appelée quand le signal est reçu, paramètres et valeur
@@ -9024,8 +9030,9 @@ struct t_hook *weechat_hook_config (const char *option,
 Paramètres :
 
 * 'option' : option, le format est le nom complet, celui utilisé avec la
-  commande `/set` (par exemple : `weechat.look.item_time_format`)
-  (priorité autorisée, voir la note sur la <<hook_priority,priorité>>)
+  commande `/set` (par exemple : `weechat.look.item_time_format`), le caractère
+  joker "*" est autorisé (priorité autorisée, voir la note sur la
+  <<hook_priority,priorité>>)
 * 'callback' : fonction appelée lorsque l'option de configuration est modifiée,
   paramètres et valeur de retour :
 ** 'void *data' : pointeur
@@ -10988,8 +10995,7 @@ Paramètres :
 * 'string' : liste de tampons, séparés par des virgules :
 ** "*" signifie tous les tampons
 ** un nom commençant par "!" est exclu
-** un nom peut commencer ou se terminer par "*" pour correspondre à plusieurs
-   tampons
+** le caractère joker "*" est autorisé dans le nom
 
 Valeur de retour :
 

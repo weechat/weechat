@@ -2,9 +2,9 @@
 |===
 | Plugin | Nome | Descrizione | Puntatore | Argomenti
 
-| alias | alias | elenco di alias | puntatore all'alias (opzionale) | nome alias (può iniziare o terminare con "*" come carattere jolly) (opzionale)
+| alias | alias | elenco di alias | puntatore all'alias (opzionale) | alias name (wildcard "*" is allowed) (optional)
 
-| guile | guile_script | elenco degli script | puntatore allo script (opzionale) | nome script (può iniziare o terminare con "*" come carattere jolly) (opzionale)
+| guile | guile_script | elenco degli script | puntatore allo script (opzionale) | script name (wildcard "*" is allowed) (optional)
 
 | irc | irc_channel | elenco dei canali per un server IRC | puntatore al canale (opzionale) | server,canale (canale è opzionale)
 
@@ -12,41 +12,41 @@
 
 | irc | irc_nick | elenco dei nick per un canale IRC | puntatore al nick (opzionale) | server,canale,nick (canale e nick sono opzionali)
 
-| irc | irc_notify | elenco delle notifiche | puntatore alla notifica (opzionale) | nome server (può iniziare o terminare con "*" come carattere jolly) (opzionale)
+| irc | irc_notify | elenco delle notifiche | puntatore alla notifica (opzionale) | server name (wildcard "*" is allowed) (optional)
 
-| irc | irc_server | elenco di server IRC | puntatore al server (opzionale) | nome server (può iniziare o terminare con "*" come carattere jolly) (opzionale)
+| irc | irc_server | elenco di server IRC | puntatore al server (opzionale) | server name (wildcard "*" is allowed) (optional)
 
 | logger | logger_buffer | elenco dei buffer logger | puntatore al logger (opzionale) | -
 
-| lua | lua_script | elenco degli script | puntatore allo script (opzionale) | nome script (può iniziare o terminare con "*" come carattere jolly) (opzionale)
+| lua | lua_script | elenco degli script | puntatore allo script (opzionale) | script name (wildcard "*" is allowed) (optional)
 
-| perl | perl_script | elenco degli script | puntatore allo script (opzionale) | nome script (può iniziare o terminare con "*" come carattere jolly) (opzionale)
+| perl | perl_script | elenco degli script | puntatore allo script (opzionale) | script name (wildcard "*" is allowed) (optional)
 
-| python | python_script | elenco degli script | puntatore allo script (opzionale) | nome script (può iniziare o terminare con "*" come carattere jolly) (opzionale)
+| python | python_script | elenco degli script | puntatore allo script (opzionale) | script name (wildcard "*" is allowed) (optional)
 
 | relay | relay | elenco di client relay | puntatore al relay (opzionale) | -
 
-| ruby | ruby_script | elenco degli script | puntatore allo script (opzionale) | nome script (può iniziare o terminare con "*" come carattere jolly) (opzionale)
+| ruby | ruby_script | elenco degli script | puntatore allo script (opzionale) | script name (wildcard "*" is allowed) (optional)
 
-| script | script_script | elenco degli script | puntatore allo script (opzionale) | nome script con l'estensione (può iniziare o terminare con "*" come carattere jolly) (opzionale)
+| script | script_script | elenco degli script | puntatore allo script (opzionale) | script name with extension (wildcard "*" is allowed) (optional)
 
-| tcl | tcl_script | elenco degli script | puntatore allo script (opzionale) | nome script (può iniziare o terminare con "*" come carattere jolly) (opzionale)
+| tcl | tcl_script | elenco degli script | puntatore allo script (opzionale) | script name (wildcard "*" is allowed) (optional)
 
-| weechat | bar | elenco delle barre | puntatore alla barra (opzionale) | nome barra (può iniziare o terminare con "*" come carattere jolly (opzionale)
+| weechat | bar | elenco delle barre | puntatore alla barra (opzionale) | bar name (wildcard "*" is allowed) (optional)
 
-| weechat | bar_item | elenco degli elementi barra | puntatore all'elemento della barra (opzionale) | nome dell'elemento della barra (può iniziare o terminare con "*" come carattere jolly) (opzionale)
+| weechat | bar_item | elenco degli elementi barra | puntatore all'elemento della barra (opzionale) | bar item name (wildcard "*" is allowed) (optional)
 
 | weechat | bar_window | elenco delle finestre barra | puntatore alla finestra della barra (opzionale) | -
 
-| weechat | buffer | elenco dei buffer | puntatore al buffer (opzionale) | nome buffer (può iniziare o terminare con "*" come carattere jolly) (opzionale)
+| weechat | buffer | elenco dei buffer | puntatore al buffer (opzionale) | buffer name (wildcard "*" is allowed) (optional)
 
 | weechat | buffer_lines | righe di un buffer | puntatore al buffer | -
 
-| weechat | filter | elenco dei filtri | - | nome filtro (può iniziare o terminare con "*" come carattere jolly) (opzionale)
+| weechat | filter | elenco dei filtri | - | filter name (wildcard "*" is allowed) (optional)
 
 | weechat | history | cronologia dei comandi | puntatore al buffer (se non impostato, restituisce la cronologia globale) (opzionale) | -
 
-| weechat | hook | elenco di hook | puntatore all'hook (opzionale) | tipo,argomenti (il tipo è comando/timer/.., gli argomenti sono necessari solo per ottenere alcuni hook, (possono iniziare o terminare con "*" come carattere jolly, entrambi sono opzionali)
+| weechat | hook | elenco di hook | puntatore all'hook (opzionale) | type,arguments (type is command/timer/.., arguments to get only some hooks (wildcard "*" is allowed), both are optional)
 
 | weechat | hotlist | elenco dei buffer nella hotlist | - | -
 
@@ -56,11 +56,11 @@
 
 | weechat | nicklist | nick nella lista nick per un buffer | puntatore al buffer | nick_xxx o group_xxx per ottenere solo xxx di nick/group (opzionale)
 
-| weechat | option | elenco delle opzioni | - | nome opzione (può iniziare o terminare con "*" come carattere jolly) (opzionale)
+| weechat | option | elenco delle opzioni | - | option name (wildcard "*" is allowed) (optional)
 
-| weechat | plugin | elenco dei plugin | puntatore al plugin (opzionale) | nome plugin (può iniziare o terminare con "*" come carattere jolly) (opzionale)
+| weechat | plugin | elenco dei plugin | puntatore al plugin (opzionale) | plugin name (wildcard "*" is allowed) (optional)
 
-| weechat | proxy | elenco dei proxy | puntatore al proxy (opzionale) | nome del proxy (può iniziare o terminare con "*" come carattere jolly) (opzionale)
+| weechat | proxy | elenco dei proxy | puntatore al proxy (opzionale) | proxy name (wildcard "*" is allowed) (optional)
 
 | weechat | url_options | opzioni per la URL | - | -
 

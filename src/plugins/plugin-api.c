@@ -1214,11 +1214,11 @@ plugin_api_init ()
     /* WeeChat core infolist hooks */
     hook_infolist (NULL, "bar", N_("list of bars"),
                    N_("bar pointer (optional)"),
-                   N_("bar name (can start or end with \"*\" as wildcard) (optional)"),
+                   N_("bar name (wildcard \"*\" is allowed) (optional)"),
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "bar_item", N_("list of bar items"),
                    N_("bar item pointer (optional)"),
-                   N_("bar item name (can start or end with \"*\" as wildcard) (optional)"),
+                   N_("bar item name (wildcard \"*\" is allowed) (optional)"),
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "bar_window", N_("list of bar windows"),
                    N_("bar window pointer (optional)"),
@@ -1226,7 +1226,7 @@ plugin_api_init ()
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "buffer", N_("list of buffers"),
                    N_("buffer pointer (optional)"),
-                   N_("buffer name (can start or end with \"*\" as wildcard) (optional)"),
+                   N_("buffer name (wildcard \"*\" is allowed) (optional)"),
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "buffer_lines", N_("lines of a buffer"),
                    N_("buffer pointer"),
@@ -1234,7 +1234,7 @@ plugin_api_init ()
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "filter", N_("list of filters"),
                    NULL,
-                   N_("filter name (can start or end with \"*\" as wildcard) (optional)"),
+                   N_("filter name (wildcard \"*\" is allowed) (optional)"),
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "history", N_("history of commands"),
                    N_("buffer pointer (if not set, return global history) (optional)"),
@@ -1243,8 +1243,8 @@ plugin_api_init ()
     hook_infolist (NULL, "hook", N_("list of hooks"),
                    N_("hook pointer (optional)"),
                    N_("type,arguments (type is command/timer/.., arguments to "
-                      "get only some hooks (can start or end with \"*\" as "
-                      "wildcard), both are optional)"),
+                      "get only some hooks (wildcard \"*\" is allowed), "
+                      "both are optional)"),
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "hotlist", N_("list of buffers in hotlist"),
                    NULL,
@@ -1266,15 +1266,15 @@ plugin_api_init ()
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "option", N_("list of options"),
                    NULL,
-                   N_("option name (can start or end with \"*\" as wildcard) (optional)"),
+                   N_("option name (wildcard \"*\" is allowed) (optional)"),
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "plugin", N_("list of plugins"),
                    N_("plugin pointer (optional)"),
-                   N_("plugin name (can start or end with \"*\" as wildcard) (optional)"),
+                   N_("plugin name (wildcard \"*\" is allowed) (optional)"),
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "proxy", N_("list of proxies"),
                    N_("proxy pointer (optional)"),
-                   N_("proxy name (can start or end with \"*\" as wildcard) (optional)"),
+                   N_("proxy name (wildcard \"*\" is allowed) (optional)"),
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "url_options", N_("options for URL"),
                    NULL,

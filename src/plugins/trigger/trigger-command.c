@@ -1004,7 +1004,7 @@ trigger_command_init ()
            "    monitor: open the trigger monitor buffer, with optional filter:\n"
            "     filter: filter hooks/triggers to display (a hook must start "
            "with \"@\", for example \"@signal\"), many filters can be separated "
-           "by commas; each trigger name can start or end with \"*\"\n"
+           "by commas; wildcard \"*\" is allowed in each trigger name\n"
            "\n"
            "When a trigger callback is called, following actions are performed, "
            "in this order:\n"

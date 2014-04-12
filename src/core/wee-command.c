@@ -5593,8 +5593,7 @@ command_set_display_option_lists (char **argv, int arg_start, int arg_end,
             {
                 gui_chat_printf (NULL,
                                  _("%sOption \"%s\" not found (tip: you can use "
-                                   "\"*\" at beginning and/or end of option to "
-                                   "see a sublist)"),
+                                   "wildcard \"*\" in option to see a sublist)"),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                  argv[i]);
             }
@@ -7070,12 +7069,12 @@ command_init ()
            "freenode.#weechat\")\n"
            "         - \"*\" means all buffers\n"
            "         - a name starting with '!' is excluded\n"
-           "         - name can start or end with '*' to match many buffers\n"
+           "         - wildcard \"*\" is allowed\n"
            "   tags: comma separated list of tags, for example \"irc_join,"
            "irc_part,irc_quit\"\n"
            "         - logical \"and\": use \"+\" between tags (for example: "
            "\"nick_toto+irc_action\")\n"
-           "         - tags can start or end with '*'\n"
+           "         - wildcard \"*\" is allowed\n"
            "  regex: POSIX extended regular expression to search in line\n"
            "         - use '\\t' to separate prefix from message, special chars "
            "like '|' must be escaped: '\\|'\n"
@@ -7271,7 +7270,7 @@ command_init ()
            "   bar(xxx): bar \"xxx\"\n"
            "    item(*): any bar item\n"
            "  item(xxx): bar item \"xxx\"\n"
-           "The key can start or end with '*' to match many mouse events.\n"
+           "Wildcard \"*\" is allowed in key to match many mouse events.\n"
            "A special value for command with format \"hsignal:name\" can be "
            "used for context mouse, this will send the hsignal \"name\" with "
            "the focus hashtable as argument.\n"
@@ -7591,8 +7590,7 @@ command_init ()
         NULL, "set",
         N_("set config options"),
         N_("[<option> [<value>]] || diff [<option> [<option>...]]"),
-        N_("option: name of an option (can start or end with '*' to list many "
-           "options)\n"
+        N_("option: name of an option (wildcard \"*\" is allowed)\n"
            " value: new value for option\n"
            "  diff: display only changed options\n"
            "\n"
@@ -7621,8 +7619,8 @@ command_init ()
         NULL, "unset",
         N_("unset/reset config options"),
         N_("<option>"),
-        N_("option: name of an option (may begin or end with \"*\" to "
-           "mass-reset options, use carefully!)\n"
+        N_("option: name of an option (wildcard \"*\" is allowed to mass-reset "
+           "options, use carefully!)\n"
            "\n"
            "According to option, it's reset (for standard options) or removed "
            "(for optional settings, like server values).\n"

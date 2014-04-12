@@ -56,7 +56,7 @@ code_retour: code retour dans le callback (ok (par défaut), ok_eat, error)
        -all: effectuer l'action sur tous les triggers
     default: restaurer les triggers par défaut
     monitor: ouvrir le tampon moniteur des triggers
-     filtre: filtrer les hooks/triggers à afficher (un hook doit commencer par "@", par exemple "@signal"), plusieurs filtres peuvent être séparés par des virgules; chaque nom de trigger peut commencer ou se terminer par "*"
+     filtre: filtrer les hooks/triggers à afficher (un hook doit commencer par "@", par exemple "@signal"), plusieurs filtres peuvent être séparés par des virgules; le caractère joker "*" est autorisé dans chaque nom de trigger
 
 Lorsqu'un callback de trigger est appelé, les actions suivantes sont exécutées, dans cet ordre :
   1. vérifier les conditions; si faux, sortir

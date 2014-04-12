@@ -554,7 +554,7 @@
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
 * [[option_weechat.look.highlight_tags]] *weechat.look.highlight_tags*
-** description: `liste des étiquettes pour le highlight (séparées par des virgules); la comparaison ne tient pas compte de la casse; chaque étiquette peut commencer ou se terminer par "*" pour correspondre à plus d'une étiquette; plusieurs étiquettes peuvent être séparées par "+" pour faire un "et" logique entre les étiquettes; exemples: "nick_flashcode" pour les messages du pseudo "FlashCode", "irc_notice+nick_toto*" pour les notices d'un pseudo commençant par "toto"`
+** description: `liste des étiquettes pour le highlight (séparées par des virgules); la comparaison ne tient pas compte de la casse; le caractère joker "*" est autorisé dans chaque étiquette; plusieurs étiquettes peuvent être séparées par "+" pour faire un "et" logique entre les étiquettes; exemples: "nick_flashcode" pour les messages du pseudo "FlashCode", "irc_notice+nick_toto*" pour les notices d'un pseudo commençant par "toto"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
@@ -899,7 +899,7 @@
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
 * [[option_weechat.plugin.autoload]] *weechat.plugin.autoload*
-** description: `liste des extensions à charger automatiquement au démarrage (séparées par des virgules), "*" signifie toutes les extensions trouvées, un nom commençant par "!" est une valeur négative pour empêcher une extension d'être chargée, les noms peuvent commencer ou se terminer par "*" pour indiquer plusieurs extensions (exemples: "*" ou "*,!lua,!tcl")`
+** description: `liste des extensions à charger automatiquement au démarrage (séparées par des virgules), "*" signifie toutes les extensions trouvées, un nom commençant par "!" est une valeur négative pour empêcher une extension d'être chargée, le caractère joker "*" est autorisé dans les noms (exemples: "*" ou "*,!lua,!tcl")`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"*"`)
 

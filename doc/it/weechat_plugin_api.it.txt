@@ -826,6 +826,9 @@ length = weechat.strlen_screen("é") # 1
 
 ==== weechat_string_match
 
+// TRANSLATION MISSING
+_Updated in 0.4.4._
+
 Verifica se una stringa coincide ad una mask.
 
 Prototipo:
@@ -839,9 +842,15 @@ int weechat_string_match (const char *string, const char *mask,
 Argomenti:
 
 * 'string': stringa
-* 'mask': mask, può iniziare o terminare con "`*`" (nessun altro "`*`"
-  consentito all'interno della mask)
+// TRANSLATION MISSING
+* 'mask': mask with wildcards ("*"), each wildcard matches 0 or more chars in
+  the string
 * 'case_sensitive': 1 per il confronto sensibile alle maiuscole, altrimenti 0
+
+// TRANSLATION MISSING
+[NOTE]
+Since version 0.4.4, wildcards are allowed inside the mask
+(not only beginning/end of mask).
 
 Valore restituito:
 
@@ -851,10 +860,11 @@ Esempio in C:
 
 [source,C]
 ----
-int match1 = weechat_string_match ("abcdef", "abc*", 0); /* == 1 */
-int match2 = weechat_string_match ("abcdef", "*dd*", 0); /* == 0 */
-int match3 = weechat_string_match ("abcdef", "*def", 0); /* == 1 */
-int match4 = weechat_string_match ("abcdef", "*de*", 0); /* == 1 */
+int match1 = weechat_string_match ("abcdef", "abc*", 0);  /* == 1 */
+int match2 = weechat_string_match ("abcdef", "*dd*", 0);  /* == 0 */
+int match3 = weechat_string_match ("abcdef", "*def", 0);  /* == 1 */
+int match4 = weechat_string_match ("abcdef", "*de*", 0);  /* == 1 */
+int match5 = weechat_string_match ("abcdef", "*b*d*", 0); /* == 1 */
 ----
 
 Script (Python):
@@ -865,10 +875,11 @@ Script (Python):
 match = weechat.string_match(string, mask, case_sensitive)
 
 # esempio
-match1 = weechat.string_match("abcdef", "abc*", 0) # 1
-match2 = weechat.string_match("abcdef", "*dd*", 0) # 0
-match3 = weechat.string_match("abcdef", "*def", 0) # 1
-match4 = weechat.string_match("abcdef", "*de*", 0) # 1
+match1 = weechat.string_match("abcdef", "abc*", 0)  # 1
+match2 = weechat.string_match("abcdef", "*dd*", 0)  # 0
+match3 = weechat.string_match("abcdef", "*def", 0)  # 1
+match4 = weechat.string_match("abcdef", "*de*", 0)  # 1
+match5 = weechat.string_match("abcdef", "*b*d*", 0) # 1
 ----
 
 ==== weechat_string_expand_home
@@ -6942,7 +6953,8 @@ struct t_hook *weechat_hook_command_run (const char *command,
 
 Argomenti:
 
-* 'command': comando su cui eseguire l'hook, può iniziare o terminare con "*"
+// TRANSLATION MISSING
+* 'command': comando su cui eseguire l'hook (wildcard "*" is allowed)
   (priorità consentita, consultare la nota riguardo la
   <<hook_priority,priority>>)
 * 'callback': funzione chiamata quando il comando è in esecuzione, argomenti e
@@ -7701,7 +7713,7 @@ Argomenti:
 // TRANSLATION MISSING
 ** with WeeChat ≥ 0.4.3: comma-separated list of tags that must be in message
    (logical "or"); it is possible to combine many tags as a logical "and" with
-   separator "+"; each tag can start or end with "*" to match many tags
+   separator "+"; wildcard "*" is allowed in tags
 // TRANSLATION MISSING
 ** with WeeChat ≤ 0.4.2: comma-separated list of tags that must all be in
    message (logical "and")
@@ -7783,7 +7795,7 @@ struct t_hook *weechat_hook_signal (const char *signal,
 Argomenti:
 
 // TRANSLATION MISSING
-* 'signal': segnale da catturare, può iniziare o terminare con "*"
+* 'signal': segnale da catturare, wildcard "*" is allowed
   (priorità consentita, consultare la nota riguardo la
   <<hook_priority,priority>>), see table below
 * 'callback': funzione chiamata a segnale ricevuto, argomenti e valore
@@ -8717,7 +8729,7 @@ struct t_hook *weechat_hook_hsignal (const char *signal,
 Argomenti:
 
 // TRANSLATION MISSING
-* 'signal': segnale da catturare, può iniziare o terminare con "*"
+* 'signal': segnale da catturare, wildcard "*" is allowed
   (priorità consentita, consultare la nota a proposito di <<hook_priority,priority>>),
   see table below
 * 'callback': funzione chiamata a segnale ricevuto, argomenti e valore
@@ -9086,8 +9098,9 @@ struct t_hook *weechat_hook_config (const char *option,
 
 Argomenti:
 
+// TRANSLATION MISSING
 * 'option': opzione, il formato è il nome completo, come usato con il comando
-  `/set` (ad esempio: `weechat.look.item_time_format`)
+  `/set` (ad esempio: `weechat.look.item_time_format`), wildcard "*" is allowed
   (priorità consentita, consultare la note riguardo la
   <<hook_priority,priority>>)
 * 'callback': funzione chiamata quando l'opzione di configurazione è cambiata,
@@ -11075,7 +11088,8 @@ Argomenti:
 * 'string': elenco separato da virgole di buffer:
 ** "*" indica tutti i buffer
 ** il nome preceduto da "!" viene escluso
-** il nome può iniziare o terminare con "*" per corrispondere a più buffer
+// TRANSLATION MISSING
+** wildcard "*" is allowed in name
 
 Valore restituito:
 

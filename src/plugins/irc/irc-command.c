@@ -166,8 +166,7 @@ irc_command_mode_nicks (struct t_irc_server *server,
                 if (set[0] == '-'
                     && (mode[0] == 'o' || mode[0] == 'h')
                     && argv[i][0]
-                    && ((argv[i][0] == '*')
-                        || (argv[i][strlen (argv[i]) - 1] == '*'))
+                    && strchr (argv[i], '*')
                     && (strcmp (server->nick, ptr_nick->name) == 0))
                 {
                     continue;
@@ -5730,8 +5729,7 @@ irc_command_init ()
         N_("[-current] [-exclude=<channel>[,<channel>...]] <command> "
            "[<arguments>]"),
         N_(" -current: execute command for channels of current server only\n"
-           " -exclude: exclude some channels ('*' is allowed at beginning or "
-           "end of channel name, to exclude many channels)\n"
+           " -exclude: exclude some channels (wildcard \"*\" is allowed)\n"
            "  command: command to execute\n"
            "arguments: arguments for command (special variables $nick, $channel "
            "and $server are replaced by their value)\n"
@@ -5752,8 +5750,7 @@ irc_command_init ()
            "[<arguments>]"),
         N_(" -current: execute command for private buffers of current server "
            "only\n"
-           " -exclude: exclude some nicks ('*' is allowed at beginning or "
-           "end of nick name, to exclude many nicks)\n"
+           " -exclude: exclude some nicks (wildcard \"*\" is allowed)\n"
            "  command: command to execute\n"
            "arguments: arguments for command (special variables $nick, $channel "
            "and $server are replaced by their value)\n"
@@ -5774,8 +5771,7 @@ irc_command_init ()
         N_("execute a command on all connected servers"),
         N_("[-exclude=<server>[,<server>...]] "
            "<command> [<arguments>]"),
-        N_(" -exclude: exclude some servers ('*' is allowed at beginning or end "
-           "of server name, to exclude many servers)\n"
+        N_(" -exclude: exclude some servers (wildcard \"*\" is allowed)\n"
            "  command: command to execute\n"
            "arguments: arguments for command (special variables $nick, $channel "
            "and $server are replaced by their value)\n"
@@ -5871,7 +5867,7 @@ irc_command_init ()
         "dehalfop",
         N_("remove channel half-operator status from nick(s)"),
         N_("<nick> [<nick>...]"),
-        N_("nick: nick or mask (can start or end with \"*\" as wildcard)\n"
+        N_("nick: nick or mask (wildcard \"*\" is allowed)\n"
            "   *: remove channel half-operator status from everybody on channel "
            "except yourself"),
         "%(nicks)", &irc_command_dehalfop, NULL);
@@ -5879,7 +5875,7 @@ irc_command_init ()
         "deop",
         N_("remove channel operator status from nick(s)"),
         N_("<nick> [<nick>...] || * -yes"),
-        N_("nick: nick or mask (can start or end with \"*\" as wildcard)\n"
+        N_("nick: nick or mask (wildcard \"*\" is allowed)\n"
            "   *: remove channel operator status from everybody on channel "
            "except yourself"),
         "%(nicks)|%*", &irc_command_deop, NULL);
@@ -5887,7 +5883,7 @@ irc_command_init ()
         "devoice",
         N_("remove voice from nick(s)"),
         N_("<nick> [<nick>...] || * -yes"),
-        N_("nick: nick or mask (can start or end with \"*\" as wildcard)\n"
+        N_("nick: nick or mask (wildcard \"*\" is allowed)\n"
            "   *: remove voice from everybody on channel"),
         "%(nicks)|%*", &irc_command_devoice, NULL);
     weechat_hook_command (
@@ -5911,7 +5907,7 @@ irc_command_init ()
         "halfop",
         N_("give channel half-operator status to nick(s)"),
         N_("<nick> [<nick>...] || * -yes"),
-        N_("nick: nick or mask (can start or end with \"*\" as wildcard)\n"
+        N_("nick: nick or mask (wildcard \"*\" is allowed)\n"
            "   *: give channel half-operator status to everybody on channel"),
         "%(nicks)", &irc_command_halfop, NULL);
     weechat_hook_command (
@@ -6166,7 +6162,7 @@ irc_command_init ()
         "op",
         N_("give channel operator status to nick(s)"),
         N_("<nick> [<nick>...] || * -yes"),
-        N_("nick: nick or mask (can start or end with \"*\" as wildcard)\n"
+        N_("nick: nick or mask (wildcard \"*\" is allowed)\n"
            "   *: give channel operator status to everybody on channel"),
         "%(nicks)|%*", &irc_command_op, NULL);
     weechat_hook_command (
@@ -6433,7 +6429,7 @@ irc_command_init ()
         "voice",
         N_("give voice to nick(s)"),
         N_("<nick> [<nick>...]"),
-        N_("nick: nick or mask (can start or end with \"*\" as wildcard)\n"
+        N_("nick: nick or mask (wildcard \"*\" is allowed)\n"
            "   *: give voice to everybody on channel"),
         "%(nicks)|%*", &irc_command_voice, NULL);
     weechat_hook_command (

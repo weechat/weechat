@@ -314,10 +314,10 @@ Exemples (conditions):
             - il s'agit du nom complet incluant l'extension (exemple: "irc.freenode.#weechat")
             - "*" signifie tous les tampons
             - un nom commençant par '!' est exclu
-            - le nom peut commencer ou se terminer par '*' pour plusieurs tampons
+            - le caractère joker "*" est autorisé
 étiquettes: liste d'étiquettes, séparées par des virgules, par exemple: "irc_join,irc_part,irc_quit"
             - "et" logique: utilisez "+" entre les étiquettes (par exemple: "nick_toto+irc_action")
-            - les étiquettes peuvent commencer ou se terminer par '*'
+            - le caractère joker "*" est autorisé
      regex: expression régulière POSIX étendue à rechercher dans la ligne
             - utiliser '\t' pour séparer le préfixe du message, les caractères spéciaux comme '|' doivent être échappés: '\|'
             - si l'expression régulière commence par '!' alors le résultat est inversé (utiliser '\!' pour démarrer par '!')
@@ -475,7 +475,7 @@ Pour le contexte "mouse" (possible aussi pour le contexte "cursor"), la touche a
    bar(xxx): la barre "xxx"
     item(*): n'importe quel objet de barre
   item(xxx): l'objet de barre "xxx"
-La touche peut commencer ou se terminer par '*' pour plusieurs évènements de la souris.
+La caractère joker "*" est autorisé pour plusieurs évènements de la souris.
 Une valeur spéciale pour la commande avec le format "hsignal:nom" peut être utilisée dans le contexte "mouse", cela enverra le signal "nom" avec la table de hachage du focus comme paramètre.
 Une autre valeur spéciale "-" peut être utilisée pour désactiver la touche (elle sera ignorée lors de la recherche de touches).
 
@@ -758,7 +758,7 @@ Exemples :
 /set  [<option> [<valeur>]]
       diff [<option> [<option>...]]
 
-option: nom d'une option (peut démarrer ou se terminer par '*' pour lister plusieurs options)
+option: nom d'une option (le caractère joker "*" est autorisé)
 valeur: nouvelle valeur pour l'option
   diff: afficher seulement les options modifiées
 
@@ -787,7 +787,7 @@ Exemples:
 ----
 /unset  <option>
 
-option: nom d'une option (peut commencer ou se terminer par "*" pour réinitialiser plusieurs options, à utiliser avec prudence !)
+option: nom d'une option (le caractère joker "*" est autorisé pour réinitialiser plusieurs options, à utiliser avec prudence !)
 
 Selon l'option, elle est réinitialisée (pour les options standards) ou supprimée (pour les options facultatives, comme les valeurs pour les serveurs).
 

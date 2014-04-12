@@ -554,7 +554,7 @@
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
 * [[option_weechat.look.highlight_tags]] *weechat.look.highlight_tags*
-** descrizione: `comma separated list of tags to highlight; case insensitive comparison; each tag can start or end with "*" to match more than one tag; many tags can be separated by "+" to make a logical "and" between tags; examples: "nick_flashcode" for messages from nick "FlashCode", "irc_notice+nick_toto*" for notices from a nick starting with "toto"`
+** descrizione: `comma separated list of tags to highlight; case insensitive comparison; wildcard "*" is allowed in each tag; many tags can be separated by "+" to make a logical "and" between tags; examples: "nick_flashcode" for messages from nick "FlashCode", "irc_notice+nick_toto*" for notices from a nick starting with "toto"`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
@@ -899,7 +899,7 @@
 ** valori: qualsiasi stringa (valore predefinito: `""`)
 
 * [[option_weechat.plugin.autoload]] *weechat.plugin.autoload*
-** descrizione: `elenco separato da virgole di plugin da caricare automaticamente all'avvio, "*" equivale a tutti i plugin trovati. un nome che comincia con "!" è un valore negativo per impedire il caricamento di un plugin, i nomi possono  iniziare o finire con "*" per corrispondere a più plugin (esempi: "*" oppure "*,!lua,!tcl")`
+** descrizione: `comma separated list of plugins to load automatically at startup, "*" means all plugins found, a name beginning with "!" is a negative value to prevent a plugin from being loaded, wildcard "*" is allowed in names (examples: "*" or "*,!lua,!tcl")`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"*"`)
 

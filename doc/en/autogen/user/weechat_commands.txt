@@ -314,10 +314,10 @@ disable: disable filters
          - this is full name including plugin (example: "irc.freenode.#weechat")
          - "*" means all buffers
          - a name starting with '!' is excluded
-         - name can start or end with '*' to match many buffers
+         - wildcard "*" is allowed
    tags: comma separated list of tags, for example "irc_join,irc_part,irc_quit"
          - logical "and": use "+" between tags (for example: "nick_toto+irc_action")
-         - tags can start or end with '*'
+         - wildcard "*" is allowed
   regex: POSIX extended regular expression to search in line
          - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
          - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
@@ -475,7 +475,7 @@ For context "mouse" (possible in context "cursor" too), key has format: "@area:k
    bar(xxx): bar "xxx"
     item(*): any bar item
   item(xxx): bar item "xxx"
-The key can start or end with '*' to match many mouse events.
+Wildcard "*" is allowed in key to match many mouse events.
 A special value for command with format "hsignal:name" can be used for context mouse, this will send the hsignal "name" with the focus hashtable as argument.
 Another special value "-" can be used to disable key (it will be ignored when looking for keys).
 
@@ -758,7 +758,7 @@ Examples:
 /set  [<option> [<value>]]
       diff [<option> [<option>...]]
 
-option: name of an option (can start or end with '*' to list many options)
+option: name of an option (wildcard "*" is allowed)
  value: new value for option
   diff: display only changed options
 
@@ -787,7 +787,7 @@ Examples:
 ----
 /unset  <option>
 
-option: name of an option (may begin or end with "*" to mass-reset options, use carefully!)
+option: name of an option (wildcard "*" is allowed to mass-reset options, use carefully!)
 
 According to option, it's reset (for standard options) or removed (for optional settings, like server values).
 

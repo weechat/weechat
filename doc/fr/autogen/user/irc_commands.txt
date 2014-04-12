@@ -14,7 +14,7 @@ cible: nom du serveur
 /allchan  [-current] [-exclude=<canal>[,<canal>...]] <commande> [<paramètres>]
 
   -current: exécuter la commande pour les canaux du serveur courant seulement
-  -exclude: exclure certains canaux ('*' est autorisé au début ou à la fin du nom du canal, pour exclure plusieurs canaux)
+  -exclude: exclure certains canaux (le caractère joker "*" est autorisé)
   commande: commande à exécuter
 paramètres: paramètres pour la commande (les variables spéciales $nick, $channel et $server sont remplacées par leur valeur)
 
@@ -34,7 +34,7 @@ Exemples:
 /allpv  [-current] [-exclude=<pseudo>[,<pseudo>...]] <commande> [<paramètres>]
 
   -current: exécuter la commande pour les tampons privés du serveur courant seulement
-  -exclude: exclure certains pseudos ('*' est autorisé au début ou à la fin du pseudo, pour exclure plusieurs pseudos)
+  -exclude: exclure certains pseudos (le caractère joker "*" est autorisé)
   commande: commande à exécuter
 paramètres: paramètres pour la commande (les variables spéciales $nick, $channel et $server sont remplacées par leur valeur)
 
@@ -55,7 +55,7 @@ Exemples:
 ----
 /allserv  [-exclude=<serveur>[,<serveur>...]] <commande> [<paramètres>]
 
-  -exclude: exclude certains serveurs ('*' est autorisé en début ou fin du nom du serveur, pour exclure plusieurs serveurs)
+  -exclude: exclude certains serveurs (le caractère joker "*" est autorisé)
   commande: commande à exécuter
 paramètres: paramètres pour la commande (les variables spéciales $nick, $channel et $server sont remplacées par leur valeur)
 
@@ -155,7 +155,7 @@ Exemples:
 ----
 /dehalfop  <pseudo> [<pseudo>...]
 
-pseudo: pseudo ou masque (peut démarrer ou se terminer par "*" comme joker)
+pseudo: pseudo ou masque (le caractère joker "*" est autorisé)
      *: retirer le statut de demi-opérateur de tout le monde sur le canal excepté vous-même
 ----
 
@@ -166,7 +166,7 @@ pseudo: pseudo ou masque (peut démarrer ou se terminer par "*" comme joker)
 /deop  <pseudo> [<pseudo>...]
        * -yes
 
-pseudo: pseudo ou masque (peut démarrer ou se terminer par "*" comme joker)
+pseudo: pseudo ou masque (le caractère joker "*" est autorisé)
      *: retirer le statut d'opérateur de tout le monde sur le canal excepté vous-même
 ----
 
@@ -177,7 +177,7 @@ pseudo: pseudo ou masque (peut démarrer ou se terminer par "*" comme joker)
 /devoice  <pseudo> [<pseudo>...]
           * -yes
 
-pseudo: pseudo ou masque (peut démarrer ou se terminer par "*" comme joker)
+pseudo: pseudo ou masque (le caractère joker "*" est autorisé)
      *: retirer la voix de tout le monde sur le canal
 ----
 
@@ -209,7 +209,7 @@ cible: nom du serveur
 /halfop  <pseudo> [<pseudo>...]
          * -yes
 
-pseudo: pseudo ou masque (peut démarrer ou se terminer par "*" comme joker)
+pseudo: pseudo ou masque (le caractère joker "*" est autorisé)
      *: donner le statut de demi-opérateur à tout le monde sur le canal
 ----
 
@@ -498,7 +498,7 @@ Exemples:
 /op  <pseudo> [<pseudo>...]
      * -yes
 
-pseudo: pseudo ou masque (peut démarrer ou se terminer par "*" comme joker)
+pseudo: pseudo ou masque (le caractère joker "*" est autorisé)
      *: donner le statut d'opérateur à tout le monde sur le canal
 ----
 
@@ -838,7 +838,7 @@ serveur: nom du serveur
 ----
 /voice  <pseudo> [<pseudo>...]
 
-pseudo: pseudo ou masque (peut démarrer ou se terminer par "*" comme joker)
+pseudo: pseudo ou masque (le caractère joker "*" est autorisé)
      *: donner la voix à tout le monde sur le canal
 ----
 

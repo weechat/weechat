@@ -174,7 +174,7 @@
 ** valeurs: toute chaîne (valeur par défaut: `"$nick"`)
 
 * [[option_irc.look.highlight_tags_restrict]] *irc.look.highlight_tags_restrict*
-** description: `restreindre les highlights à ces étiquettes sur les tampons irc (pour avoir un highlight seulement sur les messages utilisateur et pas les messages du serveur); les étiquettes doivent être séparées par des virgules et "+" peut être utilisé pour faire un "et" logique entre étiquettes; les étiquettes peuvent commencer ou se terminer par "*" pour correspondre à plus d'une étiquette; une valeur vide autorise le highlight sur n'importe quelle étiquette`
+** description: `restreindre les highlights à ces étiquettes sur les tampons irc (pour avoir un highlight seulement sur les messages utilisateur et pas les messages du serveur); les étiquettes doivent être séparées par des virgules et "+" peut être utilisé pour faire un "et" logique entre étiquettes; le caractère joker "*" est autorisé dans les étiquettes; une valeur vide autorise le highlight sur n'importe quelle étiquette`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"irc_privmsg,irc_notice"`)
 

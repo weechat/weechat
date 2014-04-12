@@ -193,7 +193,7 @@ plugin_script_init (struct t_weechat_plugin *weechat_plugin,
                             init->callback_hdata, weechat_plugin);
         weechat_hook_infolist (string, N_("list of scripts"),
                                N_("script pointer (optional)"),
-                               N_("script name (can start or end with \"*\" as wildcard) (optional)"),
+                               N_("script name (wildcard \"*\" is allowed) (optional)"),
                                init->callback_infolist, NULL);
         snprintf (string, length, "%s_callback", weechat_plugin->name);
         weechat_hook_hdata (string, N_("callback of a script"),

@@ -363,7 +363,8 @@ string_strcasestr (const char *string, const char *search)
 /*
  * Checks if a string matches a mask.
  *
- * Mask can begin or end with "*", no other "*" are allowed inside mask.
+ * The mask can contain wildcards ("*"), each wildcard matches 0 or more chars
+ * in the string.
  *
  * Returns:
  *   1: string matches mask
@@ -373,78 +374,92 @@ string_strcasestr (const char *string, const char *search)
 int
 string_match (const char *string, const char *mask, int case_sensitive)
 {
-    char last, *mask2;
-    int len_string, len_mask, rc;
+    const char *ptr_string, *ptr_mask, *pos_word, *pos_end;
+    char *word;
+    int wildcard, length_word;
 
-    if (!mask || !mask[0])
+    if (!string || !mask || !mask[0])
         return 0;
 
-    /* if mask is "*", then any string matches */
-    if (strcmp (mask, "*") == 0)
+    ptr_string = string;
+    ptr_mask = mask;
+
+    while (ptr_mask[0])
+    {
+        wildcard = 0;
+
+        /* if we are on a wildcard, set the wildcard flag and skip it */
+        if (ptr_mask[0] == '*')
+        {
+            wildcard = 1;
+            ptr_mask++;
+            while (ptr_mask[0] == '*')
+            {
+                ptr_mask++;
+            }
+            if (!ptr_mask[0])
+                return 1;
+        }
+
+        /* no match if some mask without string */
+        if (!string[0])
+            return 0;
+
+        /* search the next wildcard (after the word) */
+        pos_end = strchr (ptr_mask, '*');
+
+        /* extract the word before the wildcard (or the end of mask) */
+        if (pos_end)
+        {
+            length_word = pos_end - ptr_mask;
+        }
+        else
+        {
+            length_word = strlen (ptr_mask);
+            pos_end = ptr_mask + length_word;
+        }
+        word = string_strndup (ptr_mask, length_word);
+        if (!word)
+            return 0;
+
+        /* check if the word is matching */
+        if (wildcard)
+        {
+            /* search the word anywhere in the string (from current position) */
+            pos_word = (case_sensitive) ?
+                strstr (ptr_string, word) : string_strcasestr (ptr_string, word);
+            if (!pos_word)
+            {
+                free (word);
+                return 0;
+            }
+            ptr_string = pos_word + length_word;
+        }
+        else
+        {
+            /* check if word is at beginning of string */
+            if ((case_sensitive
+                 && (strncmp (ptr_string, word, length_word) != 0))
+                || (!case_sensitive
+                    && (string_strncasecmp (ptr_string, word,
+                                            utf8_strlen (word)) != 0)))
+            {
+                free (word);
+                return 0;
+            }
+            ptr_string += length_word;
+        }
+
+        free (word);
+
+        ptr_mask = pos_end;
+    }
+
+    /* match if no more string/mask */
+    if (!ptr_string[0] && !ptr_mask[0])
         return 1;
 
-    len_string = strlen (string);
-    len_mask = strlen (mask);
-
-    last = mask[len_mask - 1];
-
-    /* mask begins with "*" */
-    if ((mask[0] == '*') && (last != '*'))
-    {
-        /* not enough chars in string to match */
-        if (len_string < len_mask - 1)
-            return 0;
-        /* check if end of string matches */
-        if ((case_sensitive && (strcmp (string + len_string - (len_mask - 1),
-                                        mask + 1) == 0))
-            || (!case_sensitive && (string_strcasecmp (string + len_string - (len_mask - 1),
-                                                       mask + 1) == 0)))
-            return 1;
-        /* no match */
-        return 0;
-    }
-
-    /* mask ends with "*" */
-    if ((mask[0] != '*') && (last == '*'))
-    {
-        /* not enough chars in string to match */
-        if (len_string < len_mask - 1)
-            return 0;
-        /* check if beginning of string matches */
-        if ((case_sensitive && (strncmp (string, mask, len_mask - 1) == 0))
-            || (!case_sensitive && (string_strncasecmp (string,
-                                                        mask,
-                                                        len_mask - 1) == 0)))
-            return 1;
-        /* no match */
-        return 0;
-    }
-
-    /* mask begins and ends with "*" */
-    if ((mask[0] == '*') && (last == '*'))
-    {
-        /* not enough chars in string to match */
-        if (len_string < len_mask - 2)
-            return 0;
-        /* keep only relevant chars in mask for searching string */
-        mask2 = string_strndup (mask + 1, len_mask - 2);
-        if (!mask2)
-            return 0;
-        /* search string */
-        rc = ((case_sensitive && strstr (string, mask2))
-              || (!case_sensitive && string_strcasestr (string, mask2))) ?
-            1 : 0;
-        /* free and return */
-        free (mask2);
-        return rc;
-    }
-
-    /* no "*" at all, compare strings */
-    if ((case_sensitive && (strcmp (string, mask) == 0))
-        || (!case_sensitive && (string_strcasecmp (string, mask) == 0)))
-        return 1;
-
-    /* no match */
+    /* no match in other cases */
     return 0;
 }
 

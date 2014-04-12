@@ -2406,9 +2406,8 @@ irc_config_init ()
         N_("restrict highlights to these tags on irc buffers (to have "
            "highlight on user messages but not server messages); tags "
            "must be separated by a comma and \"+\" can be used to make a "
-           "logical \"and\" between tags; tags can start or end with \"*\" "
-           "to match more than one tag; an empty value allows highlight on any "
-           "tag"),
+           "logical \"and\" between tags; wildcard \"*\" is allowed in tags; "
+           "an empty value allows highlight on any tag"),
         NULL, 0, 0, "irc_privmsg,irc_notice", NULL, 0, NULL, NULL,
         &irc_config_change_look_highlight_tags_restrict, NULL, NULL, NULL);
     irc_config_look_item_away_message = weechat_config_new_option (

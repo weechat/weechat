@@ -808,6 +808,9 @@ length = weechat.strlen_screen("é") # 1
 
 ==== weechat_string_match
 
+// TRANSLATION MISSING
+_Updated in 0.4.4._
+
 文字列がマスクにマッチするか確認。
 
 プロトタイプ:
@@ -821,9 +824,15 @@ int weechat_string_match (const char *string, const char *mask,
 引数:
 
 * 'string': 文字列
-* 'mask': マスク、最初と最後に "`*`" をつけることができます
-  ("`*`" をマスクの内側につけることはできません)
+// TRANSLATION MISSING
+* 'mask': mask with wildcards ("*"), each wildcard matches 0 or more chars in
+  the string
 * 'case_sensitive': 大文字小文字を区別する場合は 1、区別しない場合は 0
+
+// TRANSLATION MISSING
+[NOTE]
+Since version 0.4.4, wildcards are allowed inside the mask
+(not only beginning/end of mask).
 
 戻り値:
 
@@ -833,10 +842,11 @@ C 言語での使用例:
 
 [source,C]
 ----
-int match1 = weechat_string_match ("abcdef", "abc*", 0); /* == 1 */
-int match2 = weechat_string_match ("abcdef", "*dd*", 0); /* == 0 */
-int match3 = weechat_string_match ("abcdef", "*def", 0); /* == 1 */
-int match4 = weechat_string_match ("abcdef", "*de*", 0); /* == 1 */
+int match1 = weechat_string_match ("abcdef", "abc*", 0);  /* == 1 */
+int match2 = weechat_string_match ("abcdef", "*dd*", 0);  /* == 0 */
+int match3 = weechat_string_match ("abcdef", "*def", 0);  /* == 1 */
+int match4 = weechat_string_match ("abcdef", "*de*", 0);  /* == 1 */
+int match5 = weechat_string_match ("abcdef", "*b*d*", 0); /* == 1 */
 ----
 
 スクリプト (Python) での使用例:
@@ -847,10 +857,11 @@ int match4 = weechat_string_match ("abcdef", "*de*", 0); /* == 1 */
 match = weechat.string_match(string, mask, case_sensitive)
 
 # 例s
-match1 = weechat.string_match("abcdef", "abc*", 0) # 1
-match2 = weechat.string_match("abcdef", "*dd*", 0) # 0
-match3 = weechat.string_match("abcdef", "*def", 0) # 1
-match4 = weechat.string_match("abcdef", "*de*", 0) # 1
+match1 = weechat.string_match("abcdef", "abc*", 0)  # 1
+match2 = weechat.string_match("abcdef", "*dd*", 0)  # 0
+match3 = weechat.string_match("abcdef", "*def", 0)  # 1
+match4 = weechat.string_match("abcdef", "*de*", 0)  # 1
+match5 = weechat.string_match("abcdef", "*b*d*", 0) # 1
 ----
 
 ==== weechat_string_expand_home
@@ -6832,7 +6843,8 @@ struct t_hook *weechat_hook_command_run (const char *command,
 
 引数:
 
-* 'command': フックするコマンド、ワイルドカード "*" を最初や最後につけることも可能
+// TRANSLATION MISSING
+* 'command': command to hook (wildcard "*" is allowed)
   (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
 * 'callback': コマンドが実行される際に呼び出す関数、引数と戻り値:
 ** 'void *data': ポインタ
@@ -7563,9 +7575,10 @@ struct t_hook *weechat_hook_print (struct t_gui_buffer *buffer,
 
 * 'buffer': バッファへのポインタ、NULL の場合、任意のバッファからのメッセージをキャッチする
 * 'tags': このタグが付けられたメッセージだけをキャッチする (任意):
-** WeeChat バージョン 0.4.3 以上の場合: メッセージに付けられたタグのコンマ区切りリスト (論理 "or");
-   複数の条件を論理 "and" で組み合わせる場合は区切りに "+" を使ってください;
-   タグは最初と最後に "*" をつけて多くのタグにマッチさせることができます
+// TRANSLATION MISSING
+** with WeeChat ≥ 0.4.3: comma-separated list of tags that must be in message
+   (logical "or"); it is possible to combine many tags as a logical "and" with
+   separator "+"; wildcard "*" is allowed in tags
 ** WeeChat バージョン 0.4.2 以下の場合: 論理 "and"
    で組み合わせたタグのコンマ区切りリスト
 * 'message': この文字列を含むメッセージだけをキャッチする
@@ -7645,9 +7658,10 @@ struct t_hook *weechat_hook_signal (const char *signal,
 
 引数:
 
-* 'signal': キャッチするシグナル、最初と最後に "*" を使えます
-  (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
-  (以下の表を参照)
+// TRANSLATION MISSING
+* 'signal': signal to catch, wildcard "*" is allowed
+  (priority allowed, see note about <<hook_priority,priority>>)
+  (see table below)
 * 'callback':
   シグナルを受信した際に呼び出す関数、引数と戻り値:
 ** 'void *data': ポインタ
@@ -8503,9 +8517,10 @@ struct t_hook *weechat_hook_hsignal (const char *signal,
 
 Arguments:
 
-* 'signal': キャッチするシグナル、最初と最後に "*" を使えます
-  (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
-  (以下の表を参照)
+// TRANSLATION MISSING
+* 'signal': signal to catch, wildcard "*" is allowed
+  (priority allowed, see note about <<hook_priority,priority>>)
+  (see table below)
 * 'callback':
   シグナルを受信した際に呼び出す関数、引数と戻り値:
 ** 'void *data': ポインタ
@@ -8858,8 +8873,9 @@ struct t_hook *weechat_hook_config (const char *option,
 
 引数:
 
+// TRANSLATION MISSING
 * 'option': オプション、フォーマットは完全な名前、コマンド `/set` で使うのと同じ
-  (例: `weechat.look.item_time_format`)
+  (例: `weechat.look.item_time_format`), wildcard "*" is allowed
   (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
 * 'callback':
   設定オプションが変更されたら呼び出す関数、引数と戻り値:
@@ -10770,7 +10786,8 @@ int weechat_buffer_match_list (struct t_gui_buffer *buffer, const char *string);
 * 'string': バッファのコンマ区切りリスト:
 ** "*" 任意のバッファにマッチ
 ** 名前の最初に "!" がある場合はその名前を含まない場合にマッチ
-** 名前の最初か最後に "*" がある場合は多くのバッファにマッチ
+// TRANSLATION MISSING
+** wildcard "*" is allowed in name
 
 戻り値:
 

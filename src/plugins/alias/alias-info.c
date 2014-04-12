@@ -94,6 +94,6 @@ alias_info_init ()
 {
     weechat_hook_infolist ("alias", N_("list of aliases"),
                            N_("alias pointer (optional)"),
-                           N_("alias name (can start or end with \"*\" as wildcard) (optional)"),
+                           N_("alias name (wildcard \"*\" is allowed) (optional)"),
                            &alias_info_get_infolist_cb, NULL);
 }

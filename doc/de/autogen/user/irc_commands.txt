@@ -13,18 +13,18 @@ target: Servername
 ----
 /allchan  [-current] [-exclude=<channel>[,<channel>...]] <command> [<arguments>]
 
- -current: führt einen Befehl aus der an alle Channels des aktuellen Servers gesendet wird
- -exclude: dient zum Ausschluss ausgewählter Channels ('*' wird zu Beginn oder am Ende des Channel-Namens akzeptiert, um mehrere Channels auszuschließen)
-  command: Befehl der ausgeführt werden soll
-arguments: Argumente für Befehl (Variablen die genutzt werden können: $nick, $channel und $server)
+ -current: execute command for channels of current server only
+ -exclude: exclude some channels (wildcard "*" is allowed)
+  command: command to execute
+arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
 
-Beispiele:
-  führe den Befehl '/me Ich teste gerade etwas...' für alle Channels aus:
-    /allchan me Ich teste gerade etwas...
-  schicke 'Hallo Welt' an jeden Channel, ausgenommen an den #weechat Channel:
-    /allchan -exclude=#weechat msg * Hallo Welt
-  schicke 'Hallo Welt' an jeden Channel, ausgenommen an den #weechat Channel und Channels die mit #linux beginnen:
-    /allchan -exclude=#weechat,#linux* msg * Hallo Welt
+Examples:
+  execute '/me is testing' on all channels:
+    /allchan me is testing
+  say 'hello' everywhere but not on #weechat:
+    /allchan -exclude=#weechat msg * hello
+  say 'hello' everywhere but not on #weechat and channels beginning with #linux:
+    /allchan -exclude=#weechat,#linux* msg * hello
 ----
 
 [[command_irc_allpv]]
@@ -33,19 +33,19 @@ Beispiele:
 ----
 /allpv  [-current] [-exclude=<nick>[,<nick>...]] <command> [<arguments>]
 
- -current: führt einen Befehl aus der für alle privaten Buffer, des aktuellen Servers, Anwendung findet
- -exclude: dient zum Ausschluss ausgewählter Nicks ('*' wird zu Beginn oder am Ende des Nicknamens akzeptiert, um mehrere Nicks auszuschließen)
-  command: Befehl der ausgeführt werden soll
-arguments: Argumente für Befehl (Variablen die genutzt werden können: $nick, $channel und $server)
+ -current: execute command for private buffers of current server only
+ -exclude: exclude some nicks (wildcard "*" is allowed)
+  command: command to execute
+arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
 
-Beispiele:
-  führe den Befehl '/me Ich teste gerade etwas...' für alle privaten Buffer aus:
-    /allpv me Ich teste gerade etwas...
-  schicke 'Hallo' an alle, ausgenommen an Nick foo:
-    /allpv -exclude=foo msg * Hallo
-  schicke 'Hallo' an alle, ausgenommen für Nick foo und Nicks die mit bar beginnen:
-    /allpv -exclude=foo,bar* msg * Hallo
-  schließe alle privaten Buffer:
+Examples:
+  execute '/me is testing' on all private buffers:
+    /allpv me is testing
+  say 'hello' everywhere but not for nick foo:
+    /allpv -exclude=foo msg * hello
+  say 'hello' everywhere but not for nick foo and nicks beginning with bar:
+    /allpv -exclude=foo,bar* msg * hello
+  close all private buffers:
     /allpv close
 ----
 
@@ -55,16 +55,16 @@ Beispiele:
 ----
 /allserv  [-exclude=<server>[,<server>...]] <command> [<arguments>]
 
- -exclude: dient zum Ausschluss ausgewählter Server ('*' wird zu Beginn oder am Ende des Servernamens akzeptiert, um mehrere Server auszuschließen)
-  command: Befehl der ausgeführt werden soll
-arguments: Argumente für Befehl (Variablen die genutzt werden können: $nick, $channel und $server)
+ -exclude: exclude some servers (wildcard "*" is allowed)
+  command: command to execute
+arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
 
-Beispiele:
-  ändere den Nick auf allen Servern:
+Examples:
+  change nick on all servers:
     /allserv nick newnick
-  setzt den Status, auf allen Servern,auf abwesend:
+  set away on all servers:
     /allserv away I'm away
-  führt ein whois mit meinem nick auf allen Servern aus:
+  do a whois on my nick on all servers:
     /allserv whois $nick
 ----
 
@@ -155,8 +155,8 @@ Beispiel:
 ----
 /dehalfop  <nick> [<nick>...]
 
-nick: Nick oder Maske (darf mit einem "*" als Platzhalter beginnen oder enden)
-   *: entzieht allen Nicks im Channel den half-operator-Status, ausgenommen sich selber
+nick: nick or mask (wildcard "*" is allowed)
+   *: remove channel half-operator status from everybody on channel except yourself
 ----
 
 [[command_irc_deop]]
@@ -166,8 +166,8 @@ nick: Nick oder Maske (darf mit einem "*" als Platzhalter beginnen oder enden)
 /deop  <nick> [<nick>...]
        * -yes
 
-nick: Nick oder Maske (darf mit einem "*" als Platzhalter beginnen oder enden)
-   *: entzieht allen Nicks im Channel den Operator-Status, ausgenommen sich selber
+nick: nick or mask (wildcard "*" is allowed)
+   *: remove channel operator status from everybody on channel except yourself
 ----
 
 [[command_irc_devoice]]
@@ -177,8 +177,8 @@ nick: Nick oder Maske (darf mit einem "*" als Platzhalter beginnen oder enden)
 /devoice  <nick> [<nick>...]
           * -yes
 
-nick: Nick oder Maske (darf mit einem "*" als Platzhalter beginnen oder enden)
-   *: entzieht allen Nicks im Channel den voice-Status
+nick: nick or mask (wildcard "*" is allowed)
+   *: remove voice from everybody on channel
 ----
 
 [[command_irc_die]]
@@ -209,8 +209,8 @@ reason: Begründung der Trennung
 /halfop  <nick> [<nick>...]
          * -yes
 
-nick: Nick oder Maske (darf mit einem "*" als Platzhalter beginnen oder enden)
-   *: vergibt an alle Nicks im Channel den half-operator-Status
+nick: nick or mask (wildcard "*" is allowed)
+   *: give channel half-operator status to everybody on channel
 ----
 
 [[command_irc_ignore]]
@@ -498,8 +498,8 @@ Beispiele:
 /op  <nick> [<nick>...]
      * -yes
 
-nick: Nick oder Maske (darf mit einem "*" als Platzhalter beginnen oder enden)
-   *: vergibt an alle Nicks im Channel den Operator-Status
+nick: nick or mask (wildcard "*" is allowed)
+   *: give channel operator status to everybody on channel
 ----
 
 [[command_irc_oper]]
@@ -838,8 +838,8 @@ server: Servername
 ----
 /voice  <nick> [<nick>...]
 
-nick: Nick oder Maske (darf mit einem "*" als Platzhalter beginnen oder enden)
-   *: vergibt an alle Nicks im Channel den voice-Status
+nick: nick or mask (wildcard "*" is allowed)
+   *: give voice to everybody on channel
 ----
 
 [[command_irc_wallchops]]
