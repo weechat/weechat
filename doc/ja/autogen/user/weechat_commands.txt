@@ -588,38 +588,39 @@ arguments: ロードするプラグインに与える引数
         -stdout|-stderr [<text>]
         -beep
 
--buffer: テキストを表示するバッファ (デフォルト: 現在のバッファ)
-  -core: "-buffer core.weechat" のエイリアス
--escape: エスケープ文字を解釈 (例えば \a、\07、\x07)
-  -date: メッセージの日付、フォーマット:
-           -n: 今から 'n' 秒前
-           +n: 今から 'n' 秒後
-            n: エポックから 'n' 秒目 (man time を参照)
-           日付/時間 (ISO 8601): yyyy-mm-ddThh:mm:ss、例: 2014-01-19T04:32:55
-           時間: hh:mm:ss (example: 04:32:55)
-  -tags: タグのコンマ区切りリスト (よく使うタグのリストは /help filter を参照)
-   text: 表示するテキスト (プレフィックスとメッセージは必ず \t で区切ってください、"-" で始まるテキストは "\" を前置してください)
--stdout: 標準出力にテキストを表示 (エスケープ文字を解釈)
--stderr: 標準エラー出力にテキストを表示 (エスケープ文字を解釈)
-  -beep: "-stderr \a" の別名
+ -buffer: display text in this buffer (default: buffer where command is executed)
+   -core: alias of "-buffer core.weechat"
+-current: display text on current buffer
+ -escape: interpret escaped chars (for example \a, \07, \x07)
+   -date: message date, format can be:
+            -n: 'n' seconds before now
+            +n: 'n' seconds in the future
+             n: 'n' seconds since the Epoch (see man time)
+            date/time (ISO 8601): yyyy-mm-ddThh:mm:ss, example: 2014-01-19T04:32:55
+            time: hh:mm:ss (example: 04:32:55)
+   -tags: comma-separated list of tags (see /help filter for a list of tags most commonly used)
+    text: text to display (prefix and message must be separated by "\t", if text starts with "-", then add a "\" before)
+ -stdout: display text on stdout (escaped chars are interpreted)
+ -stderr: display text on stderr (escaped chars are interpreted)
+   -beep: alias of "-stderr \a"
 
-オプション -action ... -quit をつけた場合、プレフィックスは "weechat.look.prefix_*" で定義されているものになります。
+The options -action ... -quit use the prefix defined in options "weechat.look.prefix_*".
 
-以下のエスケープ文字を使うことができます:
+Following escaped chars are supported:
   \" \\ \a \b \e \f \n \r \t \v \0ooo \xhh \uhhhh \Uhhhhhhhh
 
-例:
-  コアバッファにハイライトを付けてリマインダを表示:
+Examples:
+  display a reminder on core buffer with a highlight:
     /print -core -tags notify_highlight Reminder: buy milk
-  コアバッファにエラーを表示:
+  display an error on core buffer:
     /print -core -error Some error here
-  コアバッファにプレフィックス "abc" を付けてメッセージを表示:
-    /print -core abc	The message
-  チャンネル #weechat にメッセージを表示:
+  display message on core buffer with prefix "abc":
+    /print -core abc\tThe message
+  display a message on channel #weechat:
     /print -buffer irc.freenode.#weechat Message on #weechat
-  雪だるまを表示 (U+2603):
+  display a snowman (U+2603):
     /print -escape \u2603
-  警告を送信 (BEL):
+  send alert (BEL):
     /print -beep
 ----
 

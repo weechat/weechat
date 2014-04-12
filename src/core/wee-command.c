@@ -4477,6 +4477,10 @@ COMMAND_CALLBACK(print)
             if (!ptr_buffer)
                 return WEECHAT_RC_ERROR;
         }
+        else if (string_strcasecmp (argv[i], "-current") == 0)
+        {
+            ptr_buffer = (gui_current_window) ? gui_current_window->buffer : NULL;
+        }
         else if (string_strcasecmp (argv[i], "-core") == 0)
         {
             ptr_buffer = NULL;
@@ -7402,24 +7406,25 @@ command_init ()
            "[-tags <tags>] [-action|-error|-join|-network|-quit] [<text>]"
            " || -stdout|-stderr [<text>]"
            " || -beep"),
-        N_("-buffer: the buffer where text is displayed (default: current "
-           "buffer)\n"
-           "  -core: alias of \"-buffer core.weechat\"\n"
-           "-escape: interpret escaped chars (for example \\a, \\07, \\x07)\n"
-           "  -date: message date, format can be:\n"
-           "           -n: 'n' seconds before now\n"
-           "           +n: 'n' seconds in the future\n"
-           "            n: 'n' seconds since the Epoch (see man time)\n"
-           "           date/time (ISO 8601): yyyy-mm-ddThh:mm:ss, example: "
+        N_(" -buffer: display text in this buffer (default: buffer where "
+           "command is executed)\n"
+           "   -core: alias of \"-buffer core.weechat\"\n"
+           "-current: display text on current buffer\n"
+           " -escape: interpret escaped chars (for example \\a, \\07, \\x07)\n"
+           "   -date: message date, format can be:\n"
+           "            -n: 'n' seconds before now\n"
+           "            +n: 'n' seconds in the future\n"
+           "             n: 'n' seconds since the Epoch (see man time)\n"
+           "            date/time (ISO 8601): yyyy-mm-ddThh:mm:ss, example: "
            "2014-01-19T04:32:55\n"
-           "           time: hh:mm:ss (example: 04:32:55)\n"
-           "  -tags: comma-separated list of tags (see /help filter for a list "
-           "of tags most commonly used)\n"
-           "   text: text to display (prefix and message must be separated by "
+           "            time: hh:mm:ss (example: 04:32:55)\n"
+           "   -tags: comma-separated list of tags (see /help filter for a "
+           "list of tags most commonly used)\n"
+           "    text: text to display (prefix and message must be separated by "
            "\"\\t\", if text starts with \"-\", then add a \"\\\" before)\n"
-           "-stdout: display text on stdout (escaped chars are interpreted)\n"
-           "-stderr: display text on stderr (escaped chars are interpreted)\n"
-           "  -beep: alias of \"-stderr \\a\"\n"
+           " -stdout: display text on stdout (escaped chars are interpreted)\n"
+           " -stderr: display text on stderr (escaped chars are interpreted)\n"
+           "   -beep: alias of \"-stderr \\a\"\n"
            "\n"
            "The options -action ... -quit use the prefix defined in options "
            "\"weechat.look.prefix_*\".\n"

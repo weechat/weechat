@@ -66,7 +66,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: fix potential NULL pointer in function gui_color_emphasize
 * core: use same return code and message in all commands when arguments are
   wrong/missing
-* core: add option "-beep" in command /print
+* core: add options "-beep" and "-current" in command /print
 * core: allow empty arguments for command /print
 * core: add bare display mode (for easy text selection and click on URLs), new
   key: key[alt-!], new option "bare" in command /window, new options:

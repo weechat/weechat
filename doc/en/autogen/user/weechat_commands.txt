@@ -588,20 +588,21 @@ Without argument, this command lists loaded plugins.
         -stdout|-stderr [<text>]
         -beep
 
--buffer: the buffer where text is displayed (default: current buffer)
-  -core: alias of "-buffer core.weechat"
--escape: interpret escaped chars (for example \a, \07, \x07)
-  -date: message date, format can be:
-           -n: 'n' seconds before now
-           +n: 'n' seconds in the future
-            n: 'n' seconds since the Epoch (see man time)
-           date/time (ISO 8601): yyyy-mm-ddThh:mm:ss, example: 2014-01-19T04:32:55
-           time: hh:mm:ss (example: 04:32:55)
-  -tags: comma-separated list of tags (see /help filter for a list of tags most commonly used)
-   text: text to display (prefix and message must be separated by "\t", if text starts with "-", then add a "\" before)
--stdout: display text on stdout (escaped chars are interpreted)
--stderr: display text on stderr (escaped chars are interpreted)
-  -beep: alias of "-stderr \a"
+ -buffer: display text in this buffer (default: buffer where command is executed)
+   -core: alias of "-buffer core.weechat"
+-current: display text on current buffer
+ -escape: interpret escaped chars (for example \a, \07, \x07)
+   -date: message date, format can be:
+            -n: 'n' seconds before now
+            +n: 'n' seconds in the future
+             n: 'n' seconds since the Epoch (see man time)
+            date/time (ISO 8601): yyyy-mm-ddThh:mm:ss, example: 2014-01-19T04:32:55
+            time: hh:mm:ss (example: 04:32:55)
+   -tags: comma-separated list of tags (see /help filter for a list of tags most commonly used)
+    text: text to display (prefix and message must be separated by "\t", if text starts with "-", then add a "\" before)
+ -stdout: display text on stdout (escaped chars are interpreted)
+ -stderr: display text on stderr (escaped chars are interpreted)
+   -beep: alias of "-stderr \a"
 
 The options -action ... -quit use the prefix defined in options "weechat.look.prefix_*".
 
