@@ -580,12 +580,6 @@ trigger_regex_split (const char *str_regex,
                                     (*regex)[index].str_regex,
                                     REG_EXTENDED | REG_ICASE) != 0)
         {
-            /*
-            weechat_printf (NULL,
-                            _("%s%s: error compiling regular expression \"%s\""),
-                            weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
-                            (*regex)[index].str_regex);
-            */
             free ((*regex)[index].regex);
             (*regex)[index].regex = NULL;
             goto compile_error;
