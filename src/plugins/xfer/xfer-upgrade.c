@@ -137,6 +137,8 @@ xfer_upgrade_load ()
     xfer_upgrade_set_buffer_callbacks ();
 
     upgrade_file = weechat_upgrade_new (XFER_UPGRADE_FILENAME, 0);
+    if (!upgrade_file)
+        return 0;
     rc = weechat_upgrade_read (upgrade_file, &xfer_upgrade_read_cb, NULL);
     weechat_upgrade_close (upgrade_file);
 

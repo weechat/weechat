@@ -775,6 +775,8 @@ upgrade_weechat_load ()
     upgrade_layout = gui_layout_alloc (GUI_LAYOUT_UPGRADE);
 
     upgrade_file = upgrade_file_new (WEECHAT_UPGRADE_FILENAME, 0);
+    if (!upgrade_file)
+        return 0;
     rc = upgrade_file_read (upgrade_file, &upgrade_weechat_read_cb, NULL);
     upgrade_file_close (upgrade_file);
 

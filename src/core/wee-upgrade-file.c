@@ -780,5 +780,6 @@ upgrade_file_read (struct t_upgrade_file *upgrade_file,
 void
 upgrade_file_close (struct t_upgrade_file *upgrade_file)
 {
-    fclose (upgrade_file->file);
+    if (upgrade_file && upgrade_file->file)
+        fclose (upgrade_file->file);
 }
