@@ -307,7 +307,7 @@ xfer_config_init ()
     xfer_config_file_convert_spaces = weechat_config_new_option (
         xfer_config_file, ptr_section,
         "convert_spaces", "boolean",
-        N_("convert spaces to underscores when sending files"),
+        N_("convert spaces to underscores when sending and receiving files"),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL);
     xfer_config_file_download_path = weechat_config_new_option (
         xfer_config_file, ptr_section,

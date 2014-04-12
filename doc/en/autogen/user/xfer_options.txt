@@ -74,7 +74,7 @@
 ** values: on, off (default value: `on`)
 
 * [[option_xfer.file.convert_spaces]] *xfer.file.convert_spaces*
-** description: `convert spaces to underscores when sending files`
+** description: `convert spaces to underscores when sending and receiving files`
 ** type: boolean
 ** values: on, off (default value: `on`)
 

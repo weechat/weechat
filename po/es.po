@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-04-05 18:37+0200\n"
+"POT-Creation-Date: 2014-04-12 08:30+0200\n"
 "PO-Revision-Date: 2014-04-05 16:12+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10809,7 +10809,8 @@ msgstr ""
 "continuar automáticamente la transferencia si se pierde la conexión con la "
 "máquina remota"
 
-msgid "convert spaces to underscores when sending files"
+#, fuzzy
+msgid "convert spaces to underscores when sending and receiving files"
 msgstr "convertir los espacios a guiones bajos cuando se envían los archivos"
 
 msgid ""

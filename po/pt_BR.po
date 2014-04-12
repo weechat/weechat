@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-04-05 18:37+0200\n"
+"POT-Creation-Date: 2014-04-12 08:30+0200\n"
 "PO-Revision-Date: 2014-04-05 16:12+0200\n"
 "Last-Translator: Sergio Durigan Junior <sergiosdj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10173,7 +10173,8 @@ msgstr ""
 "Retomar automaticamente a transferência de arquivo se a conexão com o "
 "remetente foi perdida"
 
-msgid "convert spaces to underscores when sending files"
+#, fuzzy
+msgid "convert spaces to underscores when sending and receiving files"
 msgstr "converter espaços para underscores (_) quando enviar arquivos"
 
 msgid ""

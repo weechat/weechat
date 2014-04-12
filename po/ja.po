@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-04-05 18:37+0200\n"
+"POT-Creation-Date: 2014-04-12 08:30+0200\n"
 "PO-Revision-Date: 2014-04-05 16:12+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
@@ -11216,7 +11216,8 @@ msgid ""
 msgstr ""
 "リモートホストとの接続が切れた場合、自動的にファイル転送をリジュームする"
 
-msgid "convert spaces to underscores when sending files"
+#, fuzzy
+msgid "convert spaces to underscores when sending and receiving files"
 msgstr "ファイルの送信時にスペースをアンダースコアに変換"
 
 msgid ""

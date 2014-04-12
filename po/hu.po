@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-04-05 18:37+0200\n"
+"POT-Creation-Date: 2014-04-12 08:30+0200\n"
 "PO-Revision-Date: 2014-04-05 16:12+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9941,7 +9941,8 @@ msgstr ""
 "dcc adatátvitel automatikus felépítése, ha megszakad a kapcsolat a távoli "
 "géppel"
 
-msgid "convert spaces to underscores when sending files"
+#, fuzzy
+msgid "convert spaces to underscores when sending and receiving files"
 msgstr "szóközök alulvonássá alakítása küldéskor"
 
 #, fuzzy
