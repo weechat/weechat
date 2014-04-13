@@ -2536,6 +2536,10 @@ personalizzare:
 | 369       | whowas        | whowas (fine)
 | 378       | whois         | whois (connesso da)
 | 379       | whois         | whois (usa le modalità)
+// TRANSLATION MISSING
+| 401       | whois         | no such nick/channel
+// TRANSLATION MISSING
+| 402       | whois         | no such server
 | 432       |               | nick errato
 | 433       |               | nick già utilizzato
 | 438       |               | non autorizzato a cambiare nick

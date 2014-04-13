@@ -2429,6 +2429,8 @@ Non-comprehensive list of IRC messages or alias that you can customize:
 | 369     | whowas        | whowas (end)
 | 378     | whois         | whois (connecting from)
 | 379     | whois         | whois (using modes)
+| 401     | whois         | no such nick/channel
+| 402     | whois         | no such server
 | 432     |               | erroneous nickname
 | 433     |               | nickname already in use
 | 438     |               | not authorized to change nickname

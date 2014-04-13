@@ -2428,6 +2428,10 @@ weechat::
 | 369     | whowas        | whowas (終了)
 | 378     | whois         | whois (接続元)
 | 379     | whois         | whois (モード)
+// TRANSLATION MISSING
+| 401     | whois         | no such nick/channel
+// TRANSLATION MISSING
+| 402     | whois         | no such server
 | 432     |               | erroneous ニックネーム
 | 433     |               | ニックネームが使用されています
 | 438     |               | ニックネームを変更する権限がありません

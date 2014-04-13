@@ -2509,6 +2509,8 @@ Liste non exhaustive des messages ou alias que vous pouvez paramétrer :
 | 369     | whowas        | whowas (fin)
 | 378     | whois         | whois (connexion depuis)
 | 379     | whois         | whois (utilise les modes)
+| 401     | whois         | pas de tel pseudo/canal
+| 402     | whois         | pas de tel serveur
 | 432     |               | pseudo erroné
 | 433     |               | pseudo déjà en cours d'utilisation
 | 438     |               | pas autorisé à changer de pseudo

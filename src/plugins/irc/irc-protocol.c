@@ -508,21 +508,26 @@ IRC_PROTOCOL_CALLBACK(generic_error)
 
     ptr_buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
 
-    weechat_printf_date_tags (irc_msgbuffer_get_target_buffer (server, NULL,
-                                                               command, NULL,
-                                                               ptr_buffer),
-                              date,
-                              irc_protocol_tags (command, NULL, NULL, NULL),
-                              "%s%s%s%s%s%s",
-                              weechat_prefix ("network"),
-                              (ptr_channel && chan_nick
-                               && (irc_server_strcasecmp (server, chan_nick,
-                                                          ptr_channel->name) == 0)) ?
-                              IRC_COLOR_CHAT_CHANNEL : "",
-                              (chan_nick) ? chan_nick : "",
-                              IRC_COLOR_RESET,
-                              (chan_nick) ? ": " : "",
-                              args);
+    weechat_printf_date_tags (
+        irc_msgbuffer_get_target_buffer (
+            server,
+            NULL,
+            command,
+            ((strcmp (command, "401") == 0) || (strcmp (command, "402") == 0)) ?
+            "whois" : NULL,
+            ptr_buffer),
+        date,
+        irc_protocol_tags (command, NULL, NULL, NULL),
+        "%s%s%s%s%s%s",
+        weechat_prefix ("network"),
+        (ptr_channel && chan_nick
+         && (irc_server_strcasecmp (server, chan_nick,
+                                    ptr_channel->name) == 0)) ?
+        IRC_COLOR_CHAT_CHANNEL : "",
+        (chan_nick) ? chan_nick : "",
+        IRC_COLOR_RESET,
+        (chan_nick) ? ": " : "",
+        args);
 
     return WEECHAT_RC_OK;
 }
