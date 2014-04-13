@@ -299,10 +299,9 @@ sync [<buffer>[,<buffer>...] <option>[,<option>...]]
   全てのバッファを指定するには "*" を使ってください
 * 'options': 以下に挙げるキーワード、コンマ区切り ("*" に対するデフォルトは
   'buffers,upgrade,buffer,nicklist'、バッファに対するデフォルトは 'buffer,nicklist'):
-// TRANSLATION MISSING
-** 'buffers': receive signals about buffers (opened/closed, moved, renamed,
-   merged/unmerged, hidden/unhidden); this can be used only with name "*"
-   _(WeeChat ≥ 0.4.1)_
+** 'buffers': バッファに関するシグナルを受け取る (オープン/クローズ、移動、リネーム、
+   マージ/アンマージ、隠す/隠さない); これは名前が "*" の場合のみ利用可能
+   _(WeeChat バージョン 0.4.1 以上で利用可)_
 ** 'upgrade': WeeChat アップグレードに関するシグナルを受信 (アップグレード、アップグレードの終了);
    名前が "*" のバッファに対してのみ利用可能
    _(WeeChat バージョン 0.4.1 以上で利用可)_
@@ -529,13 +528,11 @@ WeeChat の予約識別子:
 | _buffer_unmerged | buffers / buffer | hdata: buffer |
   バッファのアンマージ | バッファをアンマージ
 
-// TRANSLATION MISSING
 | _buffer_hidden | buffers / buffer | hdata: buffer |
-  Buffer hidden | Hide buffer
+  バッファを隠す | バッファを隠す
 
-// TRANSLATION MISSING
 | _buffer_unhidden | buffers / buffer | hdata: buffer |
-  Buffer unhidden | Unhide buffer
+  バッファを隠すことを止める | バッファを隠すことを止める
 
 | _buffer_renamed | buffers / buffer | hdata: buffer |
   バッファのリネーム | バッファをリネーム
@@ -738,8 +735,7 @@ hdata として送られるデータ:
 | next_buffer | pointer | 次のバッファへのポインタ
 |===
 
-// TRANSLATION MISSING
-Example: buffer 'irc.freenode.#weechat' hidden:
+例: バッファ 'irc.freenode.#weechat' を隠す:
 
 [source,python]
 ----
@@ -774,8 +770,7 @@ hdata として送られるデータ:
 | next_buffer | pointer | 次のバッファへのポインタ
 |===
 
-// TRANSLATION MISSING
-Example: buffer 'irc.freenode.#weechat' unhidden:
+例: バッファ 'irc.freenode.#weechat' を隠すことを止める:
 
 [source,python]
 ----
