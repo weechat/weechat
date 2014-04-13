@@ -7901,6 +7901,11 @@ List of signals sent by WeeChat and plugins:
   Pointer: relay client |
   Waiting for authentication from a relay client
 
+| relay | relay_client_auth_ok +
+  _(WeeChat ≥ 0.4.4)_ |
+  Pointer: relay client |
+  Successful authentication from a relay client
+
 | relay | relay_client_connected +
   _(WeeChat ≥ 0.4.4)_ |
   Pointer: relay client |

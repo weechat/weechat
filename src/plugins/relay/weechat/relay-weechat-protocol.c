@@ -175,7 +175,12 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
                     if (password)
                     {
                         if (strcmp (password, pos) == 0)
+                        {
                             RELAY_WEECHAT_DATA(client, password_ok) = 1;
+                            weechat_hook_signal_send ("relay_client_auth_ok",
+                                                      WEECHAT_HOOK_SIGNAL_POINTER,
+                                                      client);
+                        }
                         free (password);
                     }
                 }

@@ -7901,6 +7901,12 @@ WeeChat とプラグインが送信するシグナルのリスト:
   Pointer: リレークライアント |
   リレークライアントからの認証待ち
 
+// TRANSLATION MISSING
+| relay | relay_client_auth_ok +
+  _(WeeChat バージョン 0.4.4 以上で利用可)_ |
+  Pointer: リレークライアント |
+  Successful authentication from a relay client
+
 | relay | relay_client_connected +
   _(WeeChat バージョン 0.4.4 以上で利用可)_ |
   Pointer: リレークライアント |

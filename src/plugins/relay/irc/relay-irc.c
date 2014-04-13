@@ -1385,7 +1385,12 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
                     if (password)
                     {
                         if (strcmp (password, pos_password) == 0)
+                        {
                             RELAY_IRC_DATA(client, password_ok) = 1;
+                            weechat_hook_signal_send ("relay_client_auth_ok",
+                                                      WEECHAT_HOOK_SIGNAL_POINTER,
+                                                      client);
+                        }
                         free (password);
                     }
                 }
