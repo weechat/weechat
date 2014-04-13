@@ -2428,10 +2428,8 @@ weechat::
 | 369     | whowas        | whowas (終了)
 | 378     | whois         | whois (接続元)
 | 379     | whois         | whois (モード)
-// TRANSLATION MISSING
-| 401     | whois         | no such nick/channel
-// TRANSLATION MISSING
-| 402     | whois         | no such server
+| 401     | whois         | 指定したニックネームおよびチャンネルがありません
+| 402     | whois         | 指定したサーバがありません
 | 432     |               | erroneous ニックネーム
 | 433     |               | ニックネームが使用されています
 | 438     |               | ニックネームを変更する権限がありません
@@ -3209,8 +3207,7 @@ string/string) が含まれています。
 | tg_tags_count      | string | メッセージのタグの個数
 | tg_tag_nick        | string | ニックネーム ("nick_xxx" タグから)
 | tg_tag_prefix_nick | string | プレフィックスで使うニックネームの色 ("prefix_nick_ccc" タグから)
-// TRANSLATION MISSING
-| tg_tag_host        | string | User name and host, format: username@host (from tag "host_xxx")
+| tg_tag_host        | string | ユーザ名とホスト名、フォーマット: username@host ("host_xxx" タグから)
 | tg_tag_notify      | string | 通知レベル ('none'、'message'、'private'、'highlight')
 | tg_notify          | string | 通知レベルが 'none' 以外の場合、その通知レベル
 | tg_msg_pv          | string | プライベートメッセージの場合 "1"、それ以外は "0"

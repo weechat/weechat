@@ -44,8 +44,9 @@ if DOC
 		weechat_scripting.ja.html \
 		weechat_faq.ja.html \
 		weechat_quickstart.ja.html \
-		weechat_tester.ja.html
-		weechat_dev.ja.html \
+		weechat_tester.ja.html \
+		weechat_relay_protocol.ja.html \
+		weechat_dev.ja.html
   doc_install = install-doc
   doc_uninstall = uninstall-doc
 endif

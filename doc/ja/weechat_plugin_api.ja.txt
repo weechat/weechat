@@ -808,8 +808,7 @@ length = weechat.strlen_screen("é") # 1
 
 ==== weechat_string_match
 
-// TRANSLATION MISSING
-_Updated in 0.4.4._
+_バージョン 0.4.4 で更新。_
 
 文字列がマスクにマッチするか確認。
 
@@ -824,15 +823,13 @@ int weechat_string_match (const char *string, const char *mask,
 引数:
 
 * 'string': 文字列
-// TRANSLATION MISSING
-* 'mask': mask with wildcards ("*"), each wildcard matches 0 or more chars in
-  the string
+* 'mask': ワイルドカード ("*") を含むマスク、各ワイルドカードは文字列中の
+  0 個またはそれ以上の文字にマッチします
 * 'case_sensitive': 大文字小文字を区別する場合は 1、区別しない場合は 0
 
-// TRANSLATION MISSING
 [NOTE]
-Since version 0.4.4, wildcards are allowed inside the mask
-(not only beginning/end of mask).
+バージョン 0.4.4 以上では、ワイルドカードをマスクの内部で使うことが可能です
+(マスクの最初および最後だけではありません)。
 
 戻り値:
 
@@ -6843,8 +6840,7 @@ struct t_hook *weechat_hook_command_run (const char *command,
 
 引数:
 
-// TRANSLATION MISSING
-* 'command': command to hook (wildcard "*" is allowed)
+* 'command': フックするコマンド (ワイルドカード "*" を使うことができます)
   (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
 * 'callback': コマンドが実行される際に呼び出す関数、引数と戻り値:
 ** 'void *data': ポインタ
@@ -7575,10 +7571,9 @@ struct t_hook *weechat_hook_print (struct t_gui_buffer *buffer,
 
 * 'buffer': バッファへのポインタ、NULL の場合、任意のバッファからのメッセージをキャッチする
 * 'tags': このタグが付けられたメッセージだけをキャッチする (任意):
-// TRANSLATION MISSING
-** with WeeChat ≥ 0.4.3: comma-separated list of tags that must be in message
-   (logical "or"); it is possible to combine many tags as a logical "and" with
-   separator "+"; wildcard "*" is allowed in tags
+** WeeChat バージョン 0.4.3 以上の場合: メッセージに付けられたタグのコンマ区切りリスト (論理 "or");
+   複数の条件を論理 "and" で組み合わせる場合は区切りに "+" を使ってください;
+   ワイルドカード "*" を使うことができます
 ** WeeChat バージョン 0.4.2 以下の場合: 論理 "and"
    で組み合わせたタグのコンマ区切りリスト
 * 'message': この文字列を含むメッセージだけをキャッチする
@@ -7658,10 +7653,9 @@ struct t_hook *weechat_hook_signal (const char *signal,
 
 引数:
 
-// TRANSLATION MISSING
-* 'signal': signal to catch, wildcard "*" is allowed
-  (priority allowed, see note about <<hook_priority,priority>>)
-  (see table below)
+* 'signal': キャッチするシグナル、ワイルドカード "*" を使うことができます
+  (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
+  (以下の表を参照)
 * 'callback':
   シグナルを受信した際に呼び出す関数、引数と戻り値:
 ** 'void *data': ポインタ
@@ -7901,11 +7895,10 @@ WeeChat とプラグインが送信するシグナルのリスト:
   Pointer: リレークライアント |
   リレークライアントからの認証待ち
 
-// TRANSLATION MISSING
 | relay | relay_client_auth_ok +
   _(WeeChat バージョン 0.4.4 以上で利用可)_ |
   Pointer: リレークライアント |
-  Successful authentication from a relay client
+  リレークライアントからの認証に成功
 
 | relay | relay_client_connected +
   _(WeeChat バージョン 0.4.4 以上で利用可)_ |
@@ -7978,15 +7971,13 @@ WeeChat とプラグインが送信するシグナルのリスト:
   Pointer: バッファ |
   バッファをクリア
 
-// TRANSLATION MISSING
 | weechat | buffer_hidden |
-  Pointer: buffer |
-  Buffer hidden
+  Pointer: バッファ |
+  バッファを隠す
 
-// TRANSLATION MISSING
 | weechat | buffer_unhidden |
-  Pointer: buffer |
-  Buffer unhidden
+  Pointer: バッファ |
+  バッファを隠すことを止める
 
 | weechat | buffer_line_added +
   _(WeeChat バージョン 0.3.7 以上で利用可)_ |
@@ -8523,10 +8514,9 @@ struct t_hook *weechat_hook_hsignal (const char *signal,
 
 Arguments:
 
-// TRANSLATION MISSING
-* 'signal': signal to catch, wildcard "*" is allowed
-  (priority allowed, see note about <<hook_priority,priority>>)
-  (see table below)
+* 'signal': キャッチするシグナル、ワイルドカード "*" を使うことができます
+  (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
+  (以下の表を参照)
 * 'callback':
   シグナルを受信した際に呼び出す関数、引数と戻り値:
 ** 'void *data': ポインタ
@@ -8879,9 +8869,8 @@ struct t_hook *weechat_hook_config (const char *option,
 
 引数:
 
-// TRANSLATION MISSING
 * 'option': オプション、フォーマットは完全な名前、コマンド `/set` で使うのと同じ
-  (例: `weechat.look.item_time_format`), wildcard "*" is allowed
+  (例: `weechat.look.item_time_format`)、ワイルドカード "*" を使うことができます
   (優先度の設定が可能、<<hook_priority,優先度>>に関する注意を参照)
 * 'callback':
   設定オプションが変更されたら呼び出す関数、引数と戻り値:
@@ -10285,25 +10274,22 @@ int weechat_buffer_get_integer (struct t_gui_buffer *buffer,
 ** 'number': バッファの番号 (1 以上)
 ** 'layout_number': レイアウトに保存されたバッファの番号
 ** 'layout_number_merge_order': レイアウトのマージをする際の順番
-** 'short_name_is_set': 短い名前が設定されている場合は 1、そうでなければ 0
+** 'short_name_is_set': 短い名前が設定されている場合は 1、そうでない場合は 0
 ** 'type': バッファタイプ (0: フォーマット済み、1: 自由内容)
 ** 'notify': バッファの通知レベル
 ** 'num_displayed': バッファを表示しているウィンドウの数
 ** 'active': バッファがマージされて選択されている場合は 2、バッファが選択されている場合は
    1、バッファがマージされ選択されていない場合は 0
-// TRANSLATION MISSING
-** 'hidden': 1 if buffer is hidden, otherwise 0
+** 'hidden': バッファが隠されている場合は 1、そうでない場合は 0
    _(WeeChat バージョン 0.4.4 以上で利用可)_
-// TRANSLATION MISSING
-** 'zoomed': 1 if buffer is merged and zoomed, otherwise 0
+** 'zoomed': バッファがマージとズームされている場合は 1、そうでない場合は 0
    _(WeeChat バージョン 0.4.4 以上で利用可)_
 ** 'print_hooks_enabled': プリントフックが有効化されている場合は 1、そうでない場合は 0
 ** 'day_change': 日付変更メッセージを表示する場合は 1、そうでない場合は 0
    _(WeeChat バージョン 0.4.3 以上で利用可)_
-** 'clear': コマンド `/buffer clear` でバッファをクリアできる場合は 1、これ以外は 0
+** 'clear': コマンド `/buffer clear` でバッファをクリアできる場合は 1、そうでない場合は 0
    _(WeeChat バージョン 0.4.4 以上で利用可)_
-// TRANSLATION MISSING
-** 'filter': 1 if filters are enabled on buffer, otherwise 0
+** 'filter': バッファでフィルタが有効な場合は 1、そうでない場合は 0
    _(WeeChat バージョン 0.4.4 以上で利用可)_
 ** 'lines_hidden': バッファに非表示 (フィルタされた) メッセージが 1
    行以上含まれる場合は 1、すべてのメッセージが表示冴えている場合は 0
@@ -10503,11 +10489,10 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
   "1": 指定したバッファを現在のウィンドウに表示 +
   "auto": 指定したバッファを現在のウィンドウに表示、読了マーカーをリセットしない
 
-// TRANSLATION MISSING
 | hidden +
   _(WeeChat バージョン 0.4.4 以上で利用可)_ | "0" または "1" |
-  "0": unhide the buffer +
-  "1": hide the buffer
+  "0": バッファを隠すことを止める +
+  "1": バッファを隠す
 
 | number | 番号 |
   指定したバッファをこの番号に移動
@@ -10543,11 +10528,10 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
    (注意: この値が "0" に設定されていたとしても、関数
    <<_weechat_buffer_clear,weechat_buffer_clear>> を使えばバッファをクリアすることが可能です)
 
-// TRANSLATION MISSING
 | filter +
-  _(WeeChat バージョン 0.4.4 以上で利用可)_ | "0" or "1" |
-  "0": disable filters on buffer +
-  "1": enable filters on buffer
+  _(WeeChat バージョン 0.4.4 以上で利用可)_ | "0" または "1" |
+  "0": バッファでフィルタを無効化 +
+  "1": バッファでフィルタを有効化
 
 | title | 任意の文字列 |
   指定したバッファの新しいタイトルを設定
@@ -10792,8 +10776,7 @@ int weechat_buffer_match_list (struct t_gui_buffer *buffer, const char *string);
 * 'string': バッファのコンマ区切りリスト:
 ** "*" 任意のバッファにマッチ
 ** 名前の最初に "!" がある場合はその名前を含まない場合にマッチ
-// TRANSLATION MISSING
-** wildcard "*" is allowed in name
+** 名前にワイルドカード "*" を使うことができます
 
 戻り値:
 
