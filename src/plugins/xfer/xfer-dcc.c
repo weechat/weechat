@@ -54,6 +54,14 @@ xfer_dcc_send_file_child (struct t_xfer *xfer)
     time_t last_sent, new_time, last_second, sent_ok;
     unsigned long long sent_last_second;
 
+    /* empty file? just return immediately */
+    if (xfer->pos >= xfer->size)
+    {
+        xfer_network_write_pipe (xfer, XFER_STATUS_DONE,
+                                 XFER_NO_ERROR);
+        return;
+    }
+
     blocksize = xfer->blocksize;
     if (weechat_config_integer (xfer_config_network_speed_limit) > 0)
     {
@@ -386,9 +394,7 @@ xfer_dcc_recv_file_child (struct t_xfer *xfer)
             }
             else
             {
-                total_written = 0;
-
-                if (num_read == 0)
+                if ((num_read == 0) && (xfer->pos < xfer->size))
                 {
                     xfer_network_write_pipe (xfer, XFER_STATUS_FAILED,
                                              XFER_ERROR_RECV_BLOCK);
@@ -396,6 +402,7 @@ xfer_dcc_recv_file_child (struct t_xfer *xfer)
                 }
 
                 /* bytes received, write to disk */
+                total_written = 0;
                 while (total_written < num_read)
                 {
                     written = write (xfer->file,

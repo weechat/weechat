@@ -225,16 +225,14 @@ xfer_network_send_file_fork (struct t_xfer *xfer)
 
     switch (pid = fork ())
     {
-        /* fork failed */
-        case -1:
+        case -1:  /* fork failed */
             weechat_printf (NULL,
                             _("%s%s: unable to fork"),
                             weechat_prefix ("error"), XFER_PLUGIN_NAME);
             xfer_close (xfer, XFER_STATUS_FAILED);
             xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
             return;
-            /* child process */
-        case 0:
+        case 0:  /* child process */
             rc = setuid (getuid ());
             (void) rc;
             close (xfer->child_read);
@@ -298,16 +296,14 @@ xfer_network_recv_file_fork (struct t_xfer *xfer)
 
     switch (pid = fork ())
     {
-        /* fork failed */
-        case -1:
+        case -1:  /* fork failed */
             weechat_printf (NULL,
                             _("%s%s: unable to fork"),
                             weechat_prefix ("error"), XFER_PLUGIN_NAME);
             xfer_close (xfer, XFER_STATUS_FAILED);
             xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
             return;
-        /* child process */
-        case 0:
+        case 0:  /* child process */
             rc = setuid (getuid ());
             (void) rc;
             close (xfer->child_read);
