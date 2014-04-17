@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-04-12 22:51+0200\n"
+"POT-Creation-Date: 2014-04-17 23:29+0200\n"
 "PO-Revision-Date: 2014-04-05 16:12+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6761,8 +6761,9 @@ msgstr "felhasználók listája a szobában"
 msgid "nick pointer (optional)"
 msgstr ""
 
-msgid "server,channel,nick (channel and nick are optional)"
-msgstr ""
+#, fuzzy
+msgid "server,channel,nick (nick is optional)"
+msgstr "szoba: szoba neve"
 
 #, fuzzy
 msgid "list of IRC ignores"

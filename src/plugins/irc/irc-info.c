@@ -650,7 +650,7 @@ irc_info_init ()
     weechat_hook_infolist ("irc_nick",
                            N_("list of nicks for an IRC channel"),
                            N_("nick pointer (optional)"),
-                           N_("server,channel,nick (channel and nick are optional)"),
+                           N_("server,channel,nick (nick is optional)"),
                            &irc_info_get_infolist_cb, NULL);
     weechat_hook_infolist ("irc_ignore",
                            N_("list of IRC ignores"),

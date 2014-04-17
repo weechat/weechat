@@ -10,7 +10,7 @@
 
 | irc | irc_ignore | list of IRC ignores | ignore pointer (optional) | -
 
-| irc | irc_nick | list of nicks for an IRC channel | nick pointer (optional) | server,channel,nick (channel and nick are optional)
+| irc | irc_nick | list of nicks for an IRC channel | nick pointer (optional) | server,channel,nick (nick is optional)
 
 | irc | irc_notify | list of notify | notify pointer (optional) | server name (wildcard "*" is allowed) (optional)
 

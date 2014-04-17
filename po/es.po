@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-04-12 22:51+0200\n"
+"POT-Creation-Date: 2014-04-17 23:29+0200\n"
 "PO-Revision-Date: 2014-04-05 16:12+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7591,8 +7591,9 @@ msgstr "lista de apodos de un canal IRC"
 msgid "nick pointer (optional)"
 msgstr "puntero del apodo (opcional)"
 
-msgid "server,channel,nick (channel and nick are optional)"
-msgstr "servidor,canal,apodo (canal y apodo es opcional)"
+#, fuzzy
+msgid "server,channel,nick (nick is optional)"
+msgstr "servidor,canal (canal es opcional)"
 
 msgid "list of IRC ignores"
 msgstr "lista de IRC ignores"
@@ -10923,3 +10924,6 @@ msgstr "%s%s: no es posible configurar la opción \"nonblock\" para el socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: tiempo de espera máximo para \"%s\" con %s"
+
+#~ msgid "server,channel,nick (channel and nick are optional)"
+#~ msgstr "servidor,canal,apodo (canal y apodo es opcional)"

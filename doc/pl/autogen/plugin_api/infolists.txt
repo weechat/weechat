@@ -10,7 +10,7 @@
 
 | irc | irc_ignore | lista ignorów IRC | wskaźnik ignorowania (opcjonalne) | -
 
-| irc | irc_nick | lista nicków na kanale IRC | wskaźnik nicka (opcjonalne) | serwer,kanał,nick (kanał oraz nick są opcjonalne)
+| irc | irc_nick | lista nicków na kanale IRC | wskaźnik nicka (opcjonalne) | server,channel,nick (nick is optional)
 
 | irc | irc_notify | lista powiadomień | wskaźnik powiadomienia (opcjonalne) | server name (wildcard "*" is allowed) (optional)
 

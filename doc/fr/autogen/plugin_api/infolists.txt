@@ -10,7 +10,7 @@
 
 | irc | irc_ignore | liste des ignores IRC | pointeur vers l'ignore (optionnel) | -
 
-| irc | irc_nick | liste des pseudos pour un canal IRC | pointeur vers le pseudo (optionnel) | serveur,canal,pseudo (canal et pseudo sont optionnels)
+| irc | irc_nick | liste des pseudos pour un canal IRC | pointeur vers le pseudo (optionnel) | serveur,canal,pseudo (le pseudo est optionnel)
 
 | irc | irc_notify | liste des notifications | pointeur vers la notification (optionnel) | nom de serveur (le caractère joker "*" est autorisé) (optionnel)
 

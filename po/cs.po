@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-04-12 22:51+0200\n"
+"POT-Creation-Date: 2014-04-17 23:29+0200\n"
 "PO-Revision-Date: 2014-04-05 16:12+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7299,8 +7299,9 @@ msgstr "seznam uživatelů pro IRC kanál"
 msgid "nick pointer (optional)"
 msgstr "ukazatel přezdívky (volitelné)"
 
-msgid "server,channel,nick (channel and nick are optional)"
-msgstr "server,kanál,přezdívka (kanál a přezdívka jsou volitelné)"
+#, fuzzy
+msgid "server,channel,nick (nick is optional)"
+msgstr "server,kanál (kanál je volitelný)"
 
 msgid "list of IRC ignores"
 msgstr "seznam pro IRC ignorování"
@@ -10642,3 +10643,6 @@ msgstr "%s%s: nemohu nastavit \"neblokovaci\" volbu na soket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
+
+#~ msgid "server,channel,nick (channel and nick are optional)"
+#~ msgstr "server,kanál,přezdívka (kanál a přezdívka jsou volitelné)"

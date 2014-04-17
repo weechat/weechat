@@ -10,7 +10,7 @@
 
 | irc | irc_ignore | IRC 無視のリスト | 無視ポインタ (任意) | -
 
-| irc | irc_nick | IRC チャンネルのニックネームのリスト | ニックネームポインタ (任意) | server,channel,nick (チャンネルとニックネームは任意)
+| irc | irc_nick | IRC チャンネルのニックネームのリスト | ニックネームポインタ (任意) | server,channel,nick (nick is optional)
 
 | irc | irc_notify | 通知のリスト | 通知ポインタ (任意) | サーバ名 (ワイルドカード "*" を使うことができます) (任意)
 
