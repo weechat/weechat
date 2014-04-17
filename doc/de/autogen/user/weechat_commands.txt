@@ -301,54 +301,54 @@ Beispiele (Bedingungen):
          rename <name> <new_name>
          del <name>|-all
 
-   list: list all filters
- enable: enable filters (filters are enabled by default)
-disable: disable filters
- toggle: toggle filters
-   name: filter name ("@" = enable/disable all filters in current buffer)
-    add: add a filter
- rename: rename a filter
-    del: delete a filter
-   -all: delete all filters
- buffer: comma separated list of buffers where filter is active:
-         - this is full name including plugin (example: "irc.freenode.#weechat")
-         - "*" means all buffers
-         - a name starting with '!' is excluded
-         - wildcard "*" is allowed
-   tags: comma separated list of tags, for example "irc_join,irc_part,irc_quit"
-         - logical "and": use "+" between tags (for example: "nick_toto+irc_action")
-         - wildcard "*" is allowed
-  regex: POSIX extended regular expression to search in line
-         - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
-         - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
-         - two regular expressions are created: one for prefix and one for message
-         - regex are case insensitive, they can start by "(?-i)" to become case sensitive
+   list: alle Filter auflisten
+ enable: Filter wird aktiviert (Filter werden standardmäßig aktiviert)
+disable: Filter deaktivieren
+ toggle: Filter umschalten
+   name: Name des Filters ("@" = aktiviert/deaktiviert alle Filter im aktuellen Buffer)
+    add: Filter hinzufügen
+ rename: benennt einen Filter um
+    del: Filter entfernen
+   -all: entfernt alle Filter
+ buffer: durch Kommata getrennte Liste von Buffer in denen der Filter aktiv sein soll:
+         - ist der vollständige Name eines Buffer inklusive seiner Erweiterung (Beispiel: "irc.freenode.#weechat")
+         - "*" bedeutet, alle Buffer
+         - beginnt ein Name mit '!' wird für diesen Buffer kein Filter genutzt
+         - Platzhalter "*" kann verwendet werden
+   tags: durch Kommata  getrennte Liste von Schlagwörtern. Zum Beispiel: "irc_join,irc_part,irc_quit"
+         - logisch "und":  wird "+" zwischen den Tags verwendet (zum Beispiel: "nick_toto+irc_action")
+         - Platzhalter "*" kann verwendet werden
+  regex: erweiterter regulärer POSIX Ausdruck, um in einer Zeile zu suchen
+         - das Präfix (z.B. Nick) wird mittels '\t' von der Nachricht getrennt. Sonderzeichen wie '|' müssen mit einer Escapesequenz : '\|' eingebunden werden)
+         - wird ein regulärer Ausdruck mit '!' eingeleitet dann wird das übereinstimmende Ergebnis umgekehrt  (nutze '\!' um mit '!' zu beginnen)
+         - es werden zwei reguläre Ausdrücke erstellt: Der erste für den Präfix und der zweite für die eigentliche Nachricht
+         - reguläre Ausdrücke unterscheiden nicht zwischen Groß- und Kleinschreibung. Um zwischen Groß- und Kleinschreibung zu unterscheiden müssen diese mit "(?-i)" eingeleitet werden.
 
-The default key alt+'=' toggles filtering on/off.
+Mit der Tastenvoreinstellung alt+'=' kann die Filterfunktion (de-)aktiviert werden.
 
-Tags most commonly used:
-  no_filter, no_highlight, no_log, log0..log9 (log level),
+Die am häufigsten gebrauchten Schlagwörter lauten:
+  no_filter, no_highlight, no_log, log0..log9 (log Level),
   notify_none, notify_message, notify_private, notify_highlight,
-  nick_xxx (xxx is nick in message), prefix_nick_ccc (ccc is color of nick),
-  host_xxx (xxx is username + host in message),
-  irc_xxx (xxx is command name or number, see /server raw or /debug tags),
+  nick_xxx (xxx ist durch den Nicknamen zu ersetzen), prefix_nick_ccc (ccc ist die Farbe mit der der Nick dargestellt wird),
+  host_xxx (xxx ist durch den Username + Host zu ersetzen),
+  irc_xxx (xxx ist durch einen IRC-Befehl/-Nummer zu ersetzen, siehe /server raw oder /debug tags)
   irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
-To see tags for lines in buffers: /debug tags
+Mittels "/debug tags" kann man sich die Tags jeder einzelnen Zeile darstellen zu lassen.
 
-Examples:
-  use IRC smart filter on all buffers:
+Beispiele:
+  aktiviert einen einfachen IRC Filter für join/part/quit/nick Nachrichten für alle Buffer:
     /filter add irc_smart * irc_smart_filter *
-  use IRC smart filter on all buffers except those with "#weechat" in name:
+  aktiviert einen einfachen IRC Filter für join/part/quit/nick Nachrichten der für alle Buffer genutzt wird, außer Buffer die "#weechat" im Namen tragen:
     /filter add irc_smart *,!*#weechat* irc_smart_filter *
-  filter all IRC join/part/quit messages:
+  filtert alle IRC join/part/quit Nachrichten:
     /filter add joinquit * irc_join,irc_part,irc_quit *
-  filter nicks displayed when joining channels or with /names:
+  filtert Nicks wenn diese den Channel betreten oder durch den Befehl "/names" angezeigt werden:
     /filter add nicks * irc_366 *
-  filter nick "toto" on IRC channel #weechat:
+  filtert Nick "toto" im IRC Channel #weechat:
     /filter add toto irc.freenode.#weechat nick_toto *
-  filter IRC join/action messages from nick "toto":
+  filtert IRC join/action Nachrichten von Nick "toto":
     /filter add toto * nick_toto+irc_join,nick_toto+irc_action *
-  filter lines containing "weechat sucks" on IRC channel #weechat:
+  filtert Zeilen die "weechat sucks" im IRC Channel #weechat enthalten:
     /filter add sucks irc.freenode.#weechat * weechat sucks
 ----
 
@@ -451,44 +451,44 @@ Dieser Befehl wird sinnvollerweise mittels Tastenbelegungen oder Erweiterungen g
       resetall -yes [<context>]
       missing [<context>]
 
-       list: list all current keys (without argument, this list is displayed)
-listdefault: list default keys
-   listdiff: list differences between current and default keys (keys added, redefined or deleted)
-    context: name of context ("default" or "search")
-       bind: bind a command to a key or display command bound to key (for context "default")
-   bindctxt: bind a command to a key or display command bound to key, for given context
-    command: command (many commands can be separated by semicolons)
-     unbind: remove a key binding (for context "default")
- unbindctxt: remove a key binding for given context
-      reset: reset a key to default binding (for context "default")
-  resetctxt: reset a key to default binding, for given context
-   resetall: restore bindings to the default values and delete ALL personal bindings (use carefully!)
-    missing: add missing keys (using default bindings), useful after installing new WeeChat version
+       list: zeigt die aktuelle Tastenbelegungen an (ohne Angabe von Argumente wird diese Liste standardmäßig ausgegeben)
+listdefault: zeigt die Standardeinstellung der Tastenbelegung an
+   listdiff: zeigt die Unterschiede zwischen der aktuell genutzten Tastaturbelegung und der Standardbelegung an (hinzugefügte/verändert/gelöschte Tastenbelegungen)
+    context: Name des Kontextes ("default" oder "search")
+       bind: belegt eine Taste mit einem Befehl oder zeigt an welcher Befehl auf eine Taste gelegt wurde (für Kontext  "default")
+   bindctxt: belegt eine Taste mit einem Befehl oder zeigt an welcher Befehl auf eine Taste gelegt wurde, dies trifft für Kontext definierte Tasten zu
+    command: Befehl (mehrere Befehle werden durch ein Semikolon getrennt)
+     unbind: hebt eine Tastenbelegung auf (für Kontext "default")
+ unbindctxt: hebt eine Tastenbelegung für den angegebenen Kontext auf
+      reset: die Tastenbelegung wird für die ausgewählte Taste auf die Standardeinstellung zurück gesetzt (für Kontext "default")
+  resetctxt: die Tastenbelegung wird für die ausgewählte Taste auf die Standardeinstellung zurück gesetzt, dies trifft für den ausgewählten Kontext zu
+   resetall: die Tastenbelegung wird auf die Standardeinstellungen zurück gesetzt. Dies löscht ALLE persönlichen Tastenbelegungen (Vorsicht!)
+    missing: fügt fehlende Tastenbelegungen hinzu (dazu wird die Standardbelegung genutzt). Dies kann sinnvoll sein wenn man auf eine neue WeeChat Version umgestiegen ist
 
-When binding a command to a key, it is recommended to use key alt+k (or Esc then k), and then press the key to bind: this will insert key code in command line.
+Falls einer Taste ein Befehl zugeordnet werden soll ist es ratsam zuerst mit der Tastenkombination alt+k (oder Esc + k) einen Fangmodus zu aktivieren um damit die neu zu belegende Taste zu greifen. Durch diesen Schritt wird der entsprechende Tasten-Code in die Befehlszeile übernommen.
 
-For context "mouse" (possible in context "cursor" too), key has format: "@area:key" or "@area1>area2:key" where area can be:
-          *: any area on screen
-       chat: chat area (any buffer)
-  chat(xxx): char area for buffer with name "xxx" (full name including plugin)
-     bar(*): any bar
-   bar(xxx): bar "xxx"
-    item(*): any bar item
-  item(xxx): bar item "xxx"
-Wildcard "*" is allowed in key to match many mouse events.
-A special value for command with format "hsignal:name" can be used for context mouse, this will send the hsignal "name" with the focus hashtable as argument.
-Another special value "-" can be used to disable key (it will be ignored when looking for keys).
+Für Kontext "mouse" (Kontext "cursor" ist auch möglich), hat der zu verwendende Schlüssel folgendes Format: "@area:Schlüssel" oder "@area1>area2:Schlüssel". "area" kann folgende Werte habe:
+          *: jedweder Bereich des Bildschirms
+       chat: Chatbereich (für jeden Buffer)
+  chat(xxx): Chatbereich für einen Buffer mit dem Namen "xxx" (vollständiger Name mit Erweiterung. Beispiel: chat(perl.iset):)
+     bar(*): beliebige Bar
+   bar(xxx): Bar mit dem Namen "xxx"
+    item(*): beliebiges Bar-Item
+  item(xxx): Bar-Item mit Namen "xxx"
+Der Platzhalter "*" kann verwendet werden um mehrere unterschiedliche Mausereignisse auszuwählen.
+Für den Kontext "mouse" kann ein besonderer Übergabewert für den zu nutzenden Befehl verwendet werden, "hsignal:name".  Dieses sendet das hsignal "name" und als Inhalt ein Hashtable als Argument.
+Ein weiterer Übergabewert ist "-" und kann genutzt werden um einen Schlüssel zu deaktivieren (der Schlüssel wird bei der Durchführung übersprungen).
 
-Examples:
-  key alt-x to toggle nicklist bar:
+Beispiele:
+  Mit der Tastenkombination "alt-x" wird die Nicklist-Bar an-und aus geschaltet:
     /key bind meta-x /bar toggle nicklist
-  key alt-r to jump to #weechat IRC channel:
+  Mit der Tastenkombination "alt-r" wird direkt zum IRC #weechat Buffer gewechselt:
     /key bind meta-r /buffer #weechat
-  restore default binding for key alt-r:
+  Die Tastenkombination "alt-r" wird auf die Standardfunktion zurückgesetzt:
     /key reset meta-r
-  key "tab" to stop search in buffer:
+  "Tab"-Taste nutzen um im Kontext "search" die Suche innerhalb eines Buffers zu beenden:
     /key bindctxt search ctrl-I /input search_stop
-  middle button of mouse on a nick to retrieve info on nick:
+  Auswahl eines Nicknamens mittels mittlerer Maustaste zeigt zusätzliche Informationen zu dem Nick an:
     /key bindctxt mouse @item(buffer_nicklist):button3 /msg nickserv info ${nick}
 ----
 
@@ -589,39 +589,39 @@ Ohne Angabe eines Arguments werden alle installierten Erweiterungen angezeigt.
         -stdout|-stderr [<text>]
         -beep
 
- -buffer: display text in this buffer (default: buffer where command is executed)
-   -core: alias of "-buffer core.weechat"
--current: display text on current buffer
- -escape: interpret escaped chars (for example \a, \07, \x07)
-   -date: message date, format can be:
-            -n: 'n' seconds before now
-            +n: 'n' seconds in the future
-             n: 'n' seconds since the Epoch (see man time)
-            date/time (ISO 8601): yyyy-mm-ddThh:mm:ss, example: 2014-01-19T04:32:55
-            time: hh:mm:ss (example: 04:32:55)
-   -tags: comma-separated list of tags (see /help filter for a list of tags most commonly used)
-    text: text to display (prefix and message must be separated by "\t", if text starts with "-", then add a "\" before)
- -stdout: display text on stdout (escaped chars are interpreted)
- -stderr: display text on stderr (escaped chars are interpreted)
-   -beep: alias of "-stderr \a"
+-buffer: Buffer in welchem der Text ausgegeben werden soll (standardmäßig: aktueller Buffer)
+  -core: Alias für "-buffer core.weechat"
+-current: Text wird im aktuell genutzten Buffer ausgegeben
+-escape: Escapesequenzen werden umgewandelt (zum Beispiel \a, \07, \x07)
+  -date: Datum der Nachricht, mögliche Formatierung:
+           -n: 'n' vor dem jetzigen Zeipunkt, in Sekunden
+           +n: 'n' in Zukunft, in Sekunden
+            n: 'n' Sekunden seit der Epoche (siehe man time)
+           date/time (ISO 8601): yyyy-mm-ddThh:mm:ss, Beispiel: 2014-01-19T04:32:55
+           time: hh:mm:ss (Beispiel: 04:32:55)
+  -tags: durch Kommata getrennte Liste von Tags (siehe /help filter für eine Liste von Tags die häufig genutzt werden)
+   text: Text der ausgegeben werden soll (Präfix und Nachricht muss durch \t getrennt werden)
+-stdout: Text wird an stdout geschickt (Escapesequenzen werden umgewandelt)
+-stderr: Text wird an stderr geschickt (Escapesequenzen werden umgewandelt)
+  -beep: Alias für "-stderr \a"
 
-The options -action ... -quit use the prefix defined in options "weechat.look.prefix_*".
+Die Option -action ... -quit nutzt den Präfix der in der Option "weechat.look.prefix_*" definiert ist.
 
-Following escaped chars are supported:
+Folgende Escapesequenzen werden unterstützt:
   \" \\ \a \b \e \f \n \r \t \v \0ooo \xhh \uhhhh \Uhhhhhhhh
 
-Examples:
-  display a reminder on core buffer with a highlight:
-    /print -core -tags notify_highlight Reminder: buy milk
-  display an error on core buffer:
-    /print -core -error Some error here
-  display message on core buffer with prefix "abc":
-    /print -core abc\tThe message
-  display a message on channel #weechat:
+Beispiele:
+  zeigt eine Erinnerung, mit Highlight, im Core-Buffer dar:
+    /print -core -tags notify_highlight Reminder: Milch kaufen
+  zeigt eine Fehlernachricht im Core-Buffer an:
+    /print -core -error irgend ein Fehler
+  zeigt eine Nachricht im Core-Buffer mit dem Präfix "abc" an:
+    /print -core abc\tmeine Nachricht
+  es wird eine Nachricht im Channel #weechat ausgegeben:
     /print -buffer irc.freenode.#weechat Message on #weechat
-  display a snowman (U+2603):
+  gibt einen Schneemann aus (U+2603):
     /print -escape \u2603
-  send alert (BEL):
+  verschickt Alarm (BEL):
     /print -beep
 ----
 
@@ -758,26 +758,26 @@ Beispiele:
 /set  [<option> [<value>]]
       diff [<option> [<option>...]]
 
-option: name of an option (wildcard "*" is allowed)
- value: new value for option
-  diff: display only changed options
+option: Name der zu ändernden Option (um mehrere Optionen anzuzeigen, kann der Platzhalter "*" verwendet werden)
+ value: neuer Wert, den die Option erhalten soll
+  diff: es werden nur Optionen angezeigt, die geändert wurden
 
-New value can be, according to variable type:
-  boolean: on, off or toggle
-  integer: number, ++number or --number
-   string: any string ("" for empty string)
-    color: color name, ++number or --number
+Abhängig von der ausgewählten Option, kann die Variable folgenden Inhalt haben:
+  boolean: on, off oder toggle
+  integer: Anzahl, ++Anzahl oder --Anzahl
+  string : jede Zeichenkette ("" für eine leere Zeichenkette)
+  color  : Name einer Farbe, ++Anzahl oder --Anzahl
 
-For all types, you can use null to remove option value (undefined value). This works only for some special plugin variables.
+Für alle Typen von Variablen kann die Zeichenkette "null" (ohne "")  genutzt werden, um den Wert der Option zu löschen (undefinierter Wert). Dies kann nur auf einige besondere Variablen (Erweiterungen) angewendet werden.
 
-Examples:
-  display options about highlight:
+Beispiele:
+  Zeigt alle Optionen an, die etwas mit highlight zu tun haben:
     /set *highlight*
-  add a word to highlight:
+  Fügt ein highlight-Wort hinzu:
     /set weechat.look.highlight "word"
-  display changed options:
+  zeigt geänderte Optionen an:
     /set diff
-  display changed options in irc plugin:
+  zeigt geänderte Optionen, der IRC Erweiterung, an:
     /set diff irc.*
 ----
 
@@ -787,14 +787,14 @@ Examples:
 ----
 /unset  <option>
 
-option: name of an option (wildcard "*" is allowed to mass-reset options, use carefully!)
+option: Name einer Option (Platzhalter "*" kann verwendet werden um viele Optionen in einem Arbeitsschritt zurückzusetzen. Nutzen Sie diese Funktion mit äußerster Sorgfalt!)
 
-According to option, it's reset (for standard options) or removed (for optional settings, like server values).
+Gemäß der jeweiligen Option wird diese zurückgesetzt (bei Standard-Optionen) oder komplett entfernt (bei optionalen Einstellungen, zum Beispiel die Server-Einstellungen).
 
-Examples:
-  reset one option:
+Beispiele:
+  Eine Option zurücksetzen:
     /unset weechat.look.item_time_format
-  reset all color options:
+  Alle Farboptionen zurücksetzen:
     /unset weechat.color.*
 ----
 

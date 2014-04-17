@@ -44,7 +44,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"1,-1:darkgray"`)
 
 * [[option_irc.color.nick_prefixes]] *irc.color.nick_prefixes*
-** Beschreibung: `Farben für Nick Präfix für das Modus-Symbol (o=op, h=halfop, v=voice, ..), Format: "o:color1;h:color2;v:color3" (falls ein Modus nicht gefunden wird versucht WeeChat die nächsten Modi die der Server sendet ("PREFIX"); ein spezieller Modus "*" kann als Standardfarbe genutzt werden falls kein Modus in der Liste gefunden wurde)`
+** Beschreibung: `Farben für Nick Präfix für das Modus-Symbol (o=op, h=halfop, v=voice, ..), Format: "o:color1;h:color2;v:color3" (wird ein Modus nicht gefunden probiert WeeChat einen der nächsten Modi aus, die der Server sendet ("PREFIX"); wird kein Modus in der Liste gefunden, wird eine Standardfarbe verwendet die dem Zeichen "*" zugeordnet wurde)`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"q:lightred;a:lightcyan;o:lightgreen;h:lightmagenta;v:yellow;*:lightblue"`)
 
@@ -174,7 +174,7 @@
 ** Werte: beliebige Zeichenkette (Standardwert: `"$nick"`)
 
 * [[option_irc.look.highlight_tags_restrict]] *irc.look.highlight_tags_restrict*
-** Beschreibung: `restrict highlights to these tags on irc buffers (to have highlight on user messages but not server messages); tags must be separated by a comma and "+" can be used to make a logical "and" between tags; wildcard "*" is allowed in tags; an empty value allows highlight on any tag`
+** Beschreibung: `beschränkt Highlights für IRC Buffer auf bestimmte Tags (um Highlights durch User- aber nicht durch Servernachrichten zu erhalten); Tags müssen durch Kommata getrennt werden; um eine logische "und" Verknüpfung zu verwenden, können mehrere Tags durch "+" zusammengefügt werden; der Platzhalter "*" kann verwendet werden um mehr als ein Tag zu markieren; wird kein Wert angegeben, erzeugt jedes Tag ein Highlight`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"irc_privmsg,irc_notice"`)
 

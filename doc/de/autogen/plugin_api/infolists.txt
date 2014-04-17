@@ -2,9 +2,9 @@
 |===
 | Erweiterung | Name | Beschreibung | Pointer | Argumente
 
-| alias | alias | Liste der Alias | Alias Pointer (optional) | alias name (wildcard "*" is allowed) (optional)
+| alias | alias | Liste der Alias | Alias Pointer (optional) | Name des Alias (Platzhalter "*" kann verwendet werden) (optional)
 
-| guile | guile_script | Liste der Skripten | Skript Pointer (optional) | script name (wildcard "*" is allowed) (optional)
+| guile | guile_script | Liste der Skripten | Skript Pointer (optional) | Name des Skriptes (Platzhalter "*" kann verwendet werden) (optional)
 
 | irc | irc_channel | Liste der Channels eines IRC-Servers | Channel Pointer (optional) | Server,Channel (Channel ist optional)
 
@@ -12,41 +12,41 @@
 
 | irc | irc_nick | Liste der Nicks im IRC-Channel | Nick Pointer (optional) | Server,Channel,Nick (Channel und Nick sind optional)
 
-| irc | irc_notify | Liste mit Benachrichtigungen | Benachrichtigungspointer (optional) | server name (wildcard "*" is allowed) (optional)
+| irc | irc_notify | Liste mit Benachrichtigungen | Benachrichtigungspointer (optional) | Servername (Platzhalter "*" kann verwendet werden) (optional)
 
-| irc | irc_server | Liste der IRC-Server | Server Pointer (optional) | server name (wildcard "*" is allowed) (optional)
+| irc | irc_server | Liste der IRC-Server | Server Pointer (optional) | Servername (Platzhalter "*" kann verwendet werden) (optional)
 
 | logger | logger_buffer | Auflistung der protokollierten Buffer | Logger Pointer (optional) | -
 
-| lua | lua_script | Liste der Skripten | Skript Pointer (optional) | script name (wildcard "*" is allowed) (optional)
+| lua | lua_script | Liste der Skripten | Skript Pointer (optional) | Name des Skriptes (Platzhalter "*" kann verwendet werden) (optional)
 
-| perl | perl_script | Liste der Skripten | Skript Pointer (optional) | script name (wildcard "*" is allowed) (optional)
+| perl | perl_script | Liste der Skripten | Skript Pointer (optional) | Name des Skriptes (Platzhalter "*" kann verwendet werden) (optional)
 
-| python | python_script | Liste der Skripten | Skript Pointer (optional) | script name (wildcard "*" is allowed) (optional)
+| python | python_script | Liste der Skripten | Skript Pointer (optional) | Name des Skriptes (Platzhalter "*" kann verwendet werden) (optional)
 
 | relay | relay | Liste der Relay-Clients | Relay Pointer (optional) | -
 
-| ruby | ruby_script | Liste der Skripten | Skript Pointer (optional) | script name (wildcard "*" is allowed) (optional)
+| ruby | ruby_script | Liste der Skripten | Skript Pointer (optional) | Name des Skriptes (Platzhalter "*" kann verwendet werden) (optional)
 
-| script | script_script | Liste der Skripten | Skript Pointer (optional) | script name with extension (wildcard "*" is allowed) (optional)
+| script | script_script | Liste der Skripten | Skript Pointer (optional) | Name des Skriptes, mit Dateierweiterung (Platzhalter "*" kann verwendet werden) (optional)
 
-| tcl | tcl_script | Liste der Skripten | Skript Pointer (optional) | script name (wildcard "*" is allowed) (optional)
+| tcl | tcl_script | Liste der Skripten | Skript Pointer (optional) | Name des Skriptes (Platzhalter "*" kann verwendet werden) (optional)
 
-| weechat | bar | Auflistung der Bars | Bar Pointer (optional) | bar name (wildcard "*" is allowed) (optional)
+| weechat | bar | Auflistung der Bars | Bar Pointer (optional) | Name der Bar (Platzhalter "*" kann verwendet werden) (optional)
 
-| weechat | bar_item | Auflistung der Bar-Items | Bar Item Pointer (optional) | bar item name (wildcard "*" is allowed) (optional)
+| weechat | bar_item | Auflistung der Bar-Items | Bar Item Pointer (optional) | Name des Bar-Item (Platzhalter "*" kann verwendet werden) (optional)
 
 | weechat | bar_window | Auflistung der Bar-Fenster | Bar-Fenster Pointer (optional) | -
 
-| weechat | buffer | Auflistung der Buffer | Buffer Pointer (optional) | buffer name (wildcard "*" is allowed) (optional)
+| weechat | buffer | Auflistung der Buffer | Buffer Pointer (optional) | Name des Buffers (Platzhalter "*" kann verwendet werden) (optional)
 
 | weechat | buffer_lines | Zeilen des Buffers | Buffer Pointer | -
 
-| weechat | filter | Auflistung der Filter | - | filter name (wildcard "*" is allowed) (optional)
+| weechat | filter | Auflistung der Filter | - | Name des Filters (Platzhalter "*" kann verwendet werden) (optional)
 
 | weechat | history | Verlaufspeicher der Befehle | Buffer Pointer (falls nicht gesetzt, wird der globale Verlauf zurückgegeben) (optional) | -
 
-| weechat | hook | Auflistung der Hooks | Hook-Pointer (optional) | type,arguments (type is command/timer/.., arguments to get only some hooks (wildcard "*" is allowed), both are optional)
+| weechat | hook | Auflistung der Hooks | Hook-Pointer (optional) | type,arguments (type ist ein command/timer/.., arguments dient dazu nur einige hooks abzufragen (Platzhalter "*" kann verwendet werden), beide Optionen sind optional)
 
 | weechat | hotlist | Liste der Buffer in Hotlist | - | -
 
@@ -56,11 +56,11 @@
 
 | weechat | nicklist | Nicks in Nickliste für einen Buffer | Buffer Pointer | nick_xxx oder group_xxx um nur den Nick/Group xxx abzufragen (optional)
 
-| weechat | option | Auflistung der Optionen | - | option name (wildcard "*" is allowed) (optional)
+| weechat | option | Auflistung der Optionen | - | Name einer Option (Platzhalter "*" kann verwendet werden) (optional)
 
-| weechat | plugin | Auflistung der Erweiterungen | Pointer der Erweiterung (optional) | plugin name (wildcard "*" is allowed) (optional)
+| weechat | plugin | Auflistung der Erweiterungen | Pointer der Erweiterung (optional) | Name einer Erweiterung (Platzhalter "*" kann verwendet werden) (optional)
 
-| weechat | proxy | Liste der Proxys | Proxy Pointer (optional) | proxy name (wildcard "*" is allowed) (optional)
+| weechat | proxy | Liste der Proxys | Proxy Pointer (optional) | Name des Proxy (Platzhalter "*" kann verwendet werden) (optional)
 
 | weechat | url_options | Optionen für URL | - | -
 

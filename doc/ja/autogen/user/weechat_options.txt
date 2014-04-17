@@ -554,7 +554,7 @@
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
 * [[option_weechat.look.highlight_tags]] *weechat.look.highlight_tags*
-** 説明: `comma separated list of tags to highlight; case insensitive comparison; wildcard "*" is allowed in each tag; many tags can be separated by "+" to make a logical "and" between tags; examples: "nick_flashcode" for messages from nick "FlashCode", "irc_notice+nick_toto*" for notices from a nick starting with "toto"`
+** 説明: `ハイライトするタグのコンマ区切りリスト; 大文字小文字の区別なし; 各タグでワイルドカード "*" を使うことができます; 論理積 "and" を取るにはタグ同士を "+" でつなげてください; 例: ニックネーム "FlashCode" からのメッセージは "nick_flashcode"、ニックネームが "toto" で始まるユーザからの notice メッセージは "irc_notice+nick_toto*"`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
@@ -899,7 +899,7 @@
 ** 値: 未制約文字列 (デフォルト値: `""`)
 
 * [[option_weechat.plugin.autoload]] *weechat.plugin.autoload*
-** 説明: `comma separated list of plugins to load automatically at startup, "*" means all plugins found, a name beginning with "!" is a negative value to prevent a plugin from being loaded, wildcard "*" is allowed in names (examples: "*" or "*,!lua,!tcl")`
+** 説明: `スタートアップ時にロードするプラグインのコンマ区切りリスト、"*" は見つかった全てのプラグイン、"!" から始まる名前はロードしないプラグイン、名前にワイルドカード "*" を使うことができます (例: "*" または "*,!lua,!tcl")`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"*"`)
 

@@ -1,5 +1,5 @@
 * [[option_charset.default.decode]] *charset.default.decode*
-** Beschreibung: `global decoding charset: charset used to decode incoming messages when they are not UTF-8 valid`
+** Beschreibung: `globale Zeichendekodierung: Zeichendekodierung die für eingehende Nachrichten genutzt werden soll, falls diese nicht UTF-8 gültig ist`
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette (Standardwert: `"iso-8859-1"`)
 

@@ -13,17 +13,17 @@ target: サーバ名
 ----
 /allchan  [-current] [-exclude=<channel>[,<channel>...]] <command> [<arguments>]
 
- -current: execute command for channels of current server only
- -exclude: exclude some channels (wildcard "*" is allowed)
-  command: command to execute
-arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
+ -current: 現在のサーバ上のチャンネルに対してコマンドを実行
+ -exclude: 一部のチャンネルを除外 (ワイルドカード '*' を使うことができます)
+  command: 実行するコマンド
+arguments: コマンドの引数 (特殊変数 $nick、$channel、$server はそれぞれの値に置き換えられます)
 
-Examples:
-  execute '/me is testing' on all channels:
+例:
+  全てのチャンネルに対して '/me is testing' を実行:
     /allchan me is testing
-  say 'hello' everywhere but not on #weechat:
+  #weechat 以外の全てのチャンネルで 'hello' と発言:
     /allchan -exclude=#weechat msg * hello
-  say 'hello' everywhere but not on #weechat and channels beginning with #linux:
+  #weechat と #linux で始まるチャンネルを除く全てのチャンネルで 'hello' と発言:
     /allchan -exclude=#weechat,#linux* msg * hello
 ----
 
@@ -33,19 +33,19 @@ Examples:
 ----
 /allpv  [-current] [-exclude=<nick>[,<nick>...]] <command> [<arguments>]
 
- -current: execute command for private buffers of current server only
- -exclude: exclude some nicks (wildcard "*" is allowed)
-  command: command to execute
-arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
+ -current: 現在のサーバ上のプライベートバッファに対してコマンドを実行
+ -exclude: 一部のニックネームを除外 (ワイルドカード '*' を使うことができます)
+  command: 実行するコマンド
+arguments: コマンドの引数 (特殊変数 $nick、$channel、$server はそれぞれの値に置き換えられます)
 
-Examples:
-  execute '/me is testing' on all private buffers:
+例:
+  全てのプライベートバッファに対して '/me is testing' を実行:
     /allpv me is testing
-  say 'hello' everywhere but not for nick foo:
+  ニックネーム foo を除く全てのプライベートバッファで 'hello' と発言:
     /allpv -exclude=foo msg * hello
-  say 'hello' everywhere but not for nick foo and nicks beginning with bar:
+  ニックネーム foo と bar で始まるニックネームを除く全てのチャンネルで 'hello' と発言:
     /allpv -exclude=foo,bar* msg * hello
-  close all private buffers:
+  全てのプライベートバッファを閉じる:
     /allpv close
 ----
 
@@ -55,16 +55,16 @@ Examples:
 ----
 /allserv  [-exclude=<server>[,<server>...]] <command> [<arguments>]
 
- -exclude: exclude some servers (wildcard "*" is allowed)
-  command: command to execute
-arguments: arguments for command (special variables $nick, $channel and $server are replaced by their value)
+ -exclude: いくつかのサーバを除外 (ワイルドカード '*' を使うことができます)
+  command: 実行するコマンド
+arguments: コマンドの引数 (特殊変数 $nick、$channel、$server はそれぞれの値に置き換えられます)
 
-Examples:
-  change nick on all servers:
+例:
+  全てのサーバでニックネーム変更:
     /allserv nick newnick
-  set away on all servers:
+  全てのサーバで離席状態を変更:
     /allserv away I'm away
-  do a whois on my nick on all servers:
+  すべてのサーバで自分のニックネームに対して whois を実行:
     /allserv whois $nick
 ----
 
@@ -155,8 +155,8 @@ file: ファイルネーム (ローカルホスト上の)
 ----
 /dehalfop  <nick> [<nick>...]
 
-nick: nick or mask (wildcard "*" is allowed)
-   *: remove channel half-operator status from everybody on channel except yourself
+nick: ニックネームまたはマスク (ワイルドカード "*" を使うことができます)
+   *: 自分以外のチャンネル参加者からチャンネルの half-operator 権を剥奪
 ----
 
 [[command_irc_deop]]
@@ -166,8 +166,8 @@ nick: nick or mask (wildcard "*" is allowed)
 /deop  <nick> [<nick>...]
        * -yes
 
-nick: nick or mask (wildcard "*" is allowed)
-   *: remove channel operator status from everybody on channel except yourself
+nick: ニックネームまたはマスク (ワイルドカード "*" を使うことができます)
+   *: 自分以外のチャンネル参加者からチャンネルオペレータ権を剥奪
 ----
 
 [[command_irc_devoice]]
@@ -177,8 +177,8 @@ nick: nick or mask (wildcard "*" is allowed)
 /devoice  <nick> [<nick>...]
           * -yes
 
-nick: nick or mask (wildcard "*" is allowed)
-   *: remove voice from everybody on channel
+nick: ニックネームまたはマスク (ワイルドカード "*" を使うことができます)
+   *: チャンネル参加者全員から voice 状態を剥奪
 ----
 
 [[command_irc_die]]
@@ -209,8 +209,8 @@ target: サーバ名
 /halfop  <nick> [<nick>...]
          * -yes
 
-nick: nick or mask (wildcard "*" is allowed)
-   *: give channel half-operator status to everybody on channel
+nick: ニックネームまたはマスク (ワイルドカード "*" を使うことができます)
+   *: チャンネル参加者全員に half-operator 権を付与
 ----
 
 [[command_irc_ignore]]
@@ -498,8 +498,8 @@ server: 内部サーバ名 (デフォルトでは現在のサーバ)
 /op  <nick> [<nick>...]
      * -yes
 
-nick: nick or mask (wildcard "*" is allowed)
-   *: give channel operator status to everybody on channel
+nick: ニックネームまたはマスク (ワイルドカード "*" を使うことができます)
+   *: チャンネル参加者全員にチャンネルオペレータ権を付与
 ----
 
 [[command_irc_oper]]
@@ -838,8 +838,8 @@ server: サーバ名
 ----
 /voice  <nick> [<nick>...]
 
-nick: nick or mask (wildcard "*" is allowed)
-   *: give voice to everybody on channel
+nick: ニックネームまたはマスク (ワイルドカード "*" を使うことができます)
+   *: チャンネル参加者全員に voice 権を付与
 ----
 
 [[command_irc_wallchops]]

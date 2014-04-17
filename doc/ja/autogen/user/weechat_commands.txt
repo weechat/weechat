@@ -70,8 +70,8 @@ message: 離席メッセージ (メッセージが無い場合は、離席状態
          swap <number1>|<name1> [<number2>|<name2>]
          merge <number>
          unmerge [<number>|-all]
-         hide [<number>|<name>|-all [<number>|<name>...]]
-         unhide [<number>|<name>|-all [<number>|<name>...]]
+         hide [<number>|<name> [<number>|<name>...]]
+         unhide [<number>|<name> [<number>|<name>...]]
          renumber [<number1> [<number2> [<start>]]]
          close [<n1>[-<n2>]|<name>]
          notify <level>
@@ -80,56 +80,56 @@ message: 離席メッセージ (メッセージが無い場合は、離席状態
          get <property>
          <number>|-|+|<name>
 
-    list: list buffers (without argument, this list is displayed)
-   clear: clear buffer content (number for a buffer, -merged for merged buffers, -all for all buffers, or nothing for current buffer)
-    move: move buffer in the list (may be relative, for example -1); "-" = move to first buffer number, "+" = move to last buffer number + 1
-    swap: swap two buffers (swap with current buffer if only one number/name given)
-   merge: merge current buffer to another buffer (chat area will be mix of both buffers)
-          (by default ctrl-x switches between merged buffers)
- unmerge: unmerge buffer from other buffers which have same number
-    hide: hide the buffer
-  unhide: unhide the buffer
-renumber: renumber buffers (works only if option weechat.look.buffer_auto_renumber is off)
-   close: close buffer (number/range or name is optional)
-  notify: set notify level for current buffer: this level determines whether buffer will be added to hotlist or not:
-               none: never
-          highlight: for highlights only
-            message: for messages from users + highlights
-                all: all messages
-              reset: reset to default value (all)
-localvar: display local variables for current buffer
-     set: set a property for current buffer
-     get: display a property of current buffer
-  number: jump to buffer by number, possible prefix:
-          '+': relative jump, add number to current
-          '-': relative jump, sub number to current
-          '*': jump to number, using option "weechat.look.jump_current_to_previous_buffer"
-       -: jump to first buffer number
-       +: jump to last buffer number
-    name: jump to buffer by (partial) name
+    list: バッファをリストアップ (引数無しの場合、このリストが表示されます)
+   clear: バッファの内容を削除 (number はバッファ番号、マージバッファに対しては -merged、全てのバッファに対しては -all、何も無ければ現在のバッファ)
+    move: リストにバッファを移動 (相対指定も可能、例えば -1); "-" = 最初のバッファ番号に移動、"+" = 最後のバッファ番号 + 1 に移動
+    swap: 2 つのバッファを入れ替え (現在のバッファと引数で与えた番号/名称で指定されるバッファを入れ替える)
+   merge: 現在のバッファを他のバッファにマージ (2 つのバッファのチャットエリアが一緒になります)
+          (デフォルトでは ctrl-x でマージバッファの切り替え)
+ unmerge: 同じ番号を持つ他のバッファとのマージを解除
+    hide: バッファを隠す
+  unhide: バッファを隠すことを止める
+renumber: バッファを記憶 (weechat.look.buffer_auto_renumber オプションがオフの場合にのみ有効)
+   close: バッファを閉じる (番号/範囲または名前は任意)
+  notify: 現在のバッファの通知レベルを設定: このレベルでバッファがホットリストに追加されるかどうかを定義します:
+               none: 通知しない
+          highlight: ハイライトがあった場合のみ通知
+            message: ユーザからのメッセージとハイライトがあった場合に通知
+                all: 全てのメッセージを通知
+              reset: デフォルトの値 (all) にリセット
+localvar: 現在のバッファのローカル変数を表示
+     set: 現在のバッファのプロパティを設定
+     get: 現在のバッファのプロパティを表示
+  number: 番号でバッファ移動、可能なプレフィックス:
+          '+': 相対移動、現在の番号に数を足す
+          '-': 相対移動、現在の番号から数を引く
+          '*': 番号に移動、オプション "weechat.look.jump_current_to_previous_buffer" が使われる
+       -: 最初のバッファ番号に移動
+       +: 最後のバッファ番号に移動
+    name: バッファ名 (一部) でバッファに移動
 
-Examples:
-  clear current buffer:
+例:
+  現在のバッファの内容を消去:
     /buffer clear
-  move buffer to number 5:
+  バッファを 5 番に移動:
     /buffer move 5
-  swap buffer 1 with 3:
+  バッファ 1 番と 3 番を入れ替え:
     /buffer swap 1 3
-  swap buffer #weechat with current buffer:
+  現在のバッファと #weechat バッファを入れ替え:
     /buffer swap #weechat
-  merge with core buffer:
+  コアバッファとマージ:
     /buffer merge 1
-  unmerge buffer:
+  バッファマージの解除:
     /buffer unmerge
-  close current buffer:
+  現在のバッファを閉じる:
     /buffer close
-  close buffers 5 to 7:
+  バッファ番号 5 から 7 を閉じる:
     /buffer close 5-7
-  jump to #weechat:
+  #weechat バッファに移動:
     /buffer #weechat
-  jump to next buffer:
+  次のバッファに移動:
     /buffer +1
-  jump to last buffer number:
+  最後のバッファ番号に移動:
     /buffer +
 ----
 
@@ -301,54 +301,54 @@ hdata と変数の名前については、"プラグイン API リファレン�
          rename <name> <new_name>
          del <name>|-all
 
-   list: list all filters
- enable: enable filters (filters are enabled by default)
-disable: disable filters
- toggle: toggle filters
-   name: filter name ("@" = enable/disable all filters in current buffer)
-    add: add a filter
- rename: rename a filter
-    del: delete a filter
-   -all: delete all filters
- buffer: comma separated list of buffers where filter is active:
-         - this is full name including plugin (example: "irc.freenode.#weechat")
-         - "*" means all buffers
-         - a name starting with '!' is excluded
-         - wildcard "*" is allowed
-   tags: comma separated list of tags, for example "irc_join,irc_part,irc_quit"
-         - logical "and": use "+" between tags (for example: "nick_toto+irc_action")
-         - wildcard "*" is allowed
-  regex: POSIX extended regular expression to search in line
-         - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
-         - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
-         - two regular expressions are created: one for prefix and one for message
-         - regex are case insensitive, they can start by "(?-i)" to become case sensitive
+   list: 全てのフィルタをリストアップ
+ enable: フィルタを有効化 (フィルタはデフォルトで有効になっています)
+disable: フィルタを無効化
+ toggle: フィルタの有効無効を切り替え
+   name: フィルタの名前 ("@" = 現在のバッファに設定されている全てのフィルタを有効化/無効化)
+    add: フィルタを追加
+ rename: フィルタをリネーム
+    del: フィルタを削除
+   -all: 全てのフィルタを削除
+ buffer: フィルタが有効化されているバッファのコンマ区切りリスト:
+         - これはプラグイン名を含む完全な名前です (例えば: "irc.freenode.#weechat")
+         - "*" は全てのバッファを意味します
+         - 名前が '!' から始まるものは除外されます
+         - ワイルドカード '*' を使うことができます
+   tags: タグのコンマ区切りリスト、例えば "irc_join,irc_part,irc_quit"
+         - 論理積 "and": タグ同士を "+" でつなげる (例えば: "nick_toto+irc_action")
+         - ワイルドカード '*' を使うことができます
+  regex: 行単位検索の正規表現
+         - '\t' を使うと、プレフィックスをメッセージから分離できます。'|' 等の特別な文字は '\|' のようにエスケープしなければいけません
+         - 正規表現の最初に '!' が含まれる場合は、マッチ結果が反転されます (最初の '!' にマッチさせたければ、'\!' を使ってください)
+         - 2 種類の正規表現があります: 一方はプレフィックス用、他方はメッセージ用
+         - 正規表現は大文字小文字を区別しません、"(?-i)" から始まる場合は区別します
 
-The default key alt+'=' toggles filtering on/off.
+デフォルトではキー alt+'=' でフィルタリングの on/off を切り替えられます。
 
-Tags most commonly used:
-  no_filter, no_highlight, no_log, log0..log9 (log level),
-  notify_none, notify_message, notify_private, notify_highlight,
-  nick_xxx (xxx is nick in message), prefix_nick_ccc (ccc is color of nick),
-  host_xxx (xxx is username + host in message),
-  irc_xxx (xxx is command name or number, see /server raw or /debug tags),
-  irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
-To see tags for lines in buffers: /debug tags
+よく使われるタグ:
+  no_filter、no_highlight、no_log、log0..log9 (ログレベル)、
+  notify_none、notify_message、notify_private、notify_highlight、
+  nick_xxx (xxx はメッセージのニックネーム部分)、prefix_nick_ccc (ccc はニックネームの色)、
+  host_xxx (xxx はメッセージのユーザ名 + ホスト名部分)、
+  irc_xxx (xxx はコマンド名又は番号、/server raw または /debug tags で確認)、
+  irc_numeric、irc_error、irc_action、irc_ctcp、irc_ctcp_reply、irc_smart_filter、away_info。
+バッファ内でタグを見るには: /debug tags
 
-Examples:
-  use IRC smart filter on all buffers:
+例:
+  全てのバッファで IRC スマートフィルタを使用:
     /filter add irc_smart * irc_smart_filter *
-  use IRC smart filter on all buffers except those with "#weechat" in name:
+  名前に "#weechat" を含むバッファを除いた全てのバッファで IRC スマートフィルタを使用:
     /filter add irc_smart *,!*#weechat* irc_smart_filter *
-  filter all IRC join/part/quit messages:
+  全ての IRC join/part/quit メッセージをフィルタ:
     /filter add joinquit * irc_join,irc_part,irc_quit *
-  filter nicks displayed when joining channels or with /names:
+  チャンネルに入った時や /names で表示されるニックネームをフィルタ:
     /filter add nicks * irc_366 *
-  filter nick "toto" on IRC channel #weechat:
+  IRC チャンネル #weechat で "toto" を含むニックネームをフィルタ:
     /filter add toto irc.freenode.#weechat nick_toto *
-  filter IRC join/action messages from nick "toto":
+  ニックネーム "toto" からの IRC の参加/アクションメッセージをフィルタ:
     /filter add toto * nick_toto+irc_join,nick_toto+irc_action *
-  filter lines containing "weechat sucks" on IRC channel #weechat:
+  IRC チャンネル #weechat で "weechat sucks" を含む行をフィルタ:
     /filter add sucks irc.freenode.#weechat * weechat sucks
 ----
 
@@ -451,44 +451,44 @@ value: 表示する履歴エントリの数
       resetall -yes [<context>]
       missing [<context>]
 
-       list: list all current keys (without argument, this list is displayed)
-listdefault: list default keys
-   listdiff: list differences between current and default keys (keys added, redefined or deleted)
-    context: name of context ("default" or "search")
-       bind: bind a command to a key or display command bound to key (for context "default")
-   bindctxt: bind a command to a key or display command bound to key, for given context
-    command: command (many commands can be separated by semicolons)
-     unbind: remove a key binding (for context "default")
- unbindctxt: remove a key binding for given context
-      reset: reset a key to default binding (for context "default")
-  resetctxt: reset a key to default binding, for given context
-   resetall: restore bindings to the default values and delete ALL personal bindings (use carefully!)
-    missing: add missing keys (using default bindings), useful after installing new WeeChat version
+       list: 現在のキーをリストアップ (引数無しの場合、このリストが表示されます)
+listdefault: デフォルトキーをリストアップ
+   listdiff: デフォルトと現在のキーの違いをリストアップ (追加、再定義、削除されたキー)
+    context: コンテキストの名前 ("default" または "search")
+       bind: キーにコマンドを割り当てるか、キーに割り当てられたコマンドを表示 ("default" コンテキストに対する)
+   bindctxt: キーにコマンドを割り当てるか、キーに割り当てられたコマンドを表示 (指定されたコンテキストに対する)
+    command: コマンド (複数のコマンドはセミコロンで分けて書く)
+     unbind: キーバインドを削除 ("default" コンテキストに対する)
+ unbindctxt: キーバインドを削除 (指定されたコンテキストに対する)
+      reset: キーをデフォルトの割り当てにリセットする ("default" コンテキストに対する)
+  resetctxt: キーをデフォルトの割り当てにリセットする (指定されたコンテキストに対する)
+   resetall: デフォルトの割り当てにリストアし、全ての個人的な設定を削除 (注意して使用!)
+    missing: 未割り当てのキーを追加 (デフォルトの割り当てに無い)、新しい WeeChat バージョンをインストールした後に便利
 
-When binding a command to a key, it is recommended to use key alt+k (or Esc then k), and then press the key to bind: this will insert key code in command line.
+キーにコマンドを割り当てる場合、alt+k (または Esc の後に k) した後に、割り当てたいキーを押すことをお勧めします: これはコマンドラインにキーコードを入力することになります。
 
-For context "mouse" (possible in context "cursor" too), key has format: "@area:key" or "@area1>area2:key" where area can be:
-          *: any area on screen
-       chat: chat area (any buffer)
-  chat(xxx): char area for buffer with name "xxx" (full name including plugin)
-     bar(*): any bar
-   bar(xxx): bar "xxx"
-    item(*): any bar item
-  item(xxx): bar item "xxx"
-Wildcard "*" is allowed in key to match many mouse events.
-A special value for command with format "hsignal:name" can be used for context mouse, this will send the hsignal "name" with the focus hashtable as argument.
-Another special value "-" can be used to disable key (it will be ignored when looking for keys).
+"mouse" コンテント ("cursor" コンテキストの一部) に対しては、キーは以下のフォーマット: "@area:key" または "@area1>area2:key"。 ここで、area は以下の値を取れます:
+          *: スクリーン上の任意のエリア
+       chat: チャットエリア (任意のバッファ)
+  chat(xxx): 名前 "xxx" を持つチャットエリア (プラグイン含む完全な名前)
+     bar(*): 任意のバー
+   bar(xxx): バー "xxx"
+    item(*): 任意のバーアイテム
+  item(xxx): バーアイテム "xxx"
+多くのマウスイベントにマッチさせるにはワイルドカード '*' をキーに使ってください。
+"hsignal:name" というフォーマットのコマンドに対する特別な値はマウスコンテキストに使えます、これはフォーカスハッシュテーブルを引数にして hsignal "name" を送ります。
+その他の特別な値 "-" はキーを無効化するために利用されます。(これはキーの探索時には無視されます)
 
-Examples:
-  key alt-x to toggle nicklist bar:
+例:
+  alt-x キーをニックネームリストバーに割り当てる:
     /key bind meta-x /bar toggle nicklist
-  key alt-r to jump to #weechat IRC channel:
+  alt-r キーを #weechat IRC チャンネルへの移動に割り当てる:
     /key bind meta-r /buffer #weechat
-  restore default binding for key alt-r:
+  alt-r キーの割り当てをデフォルトに戻す:
     /key reset meta-r
-  key "tab" to stop search in buffer:
+  "tab" キーをバッファ検索の終了に割り当てる:
     /key bindctxt search ctrl-I /input search_stop
-  middle button of mouse on a nick to retrieve info on nick:
+  ニック上でのマウスのセンターボタンをニックネームの情報取得に割り当てる:
     /key bindctxt mouse @item(buffer_nicklist):button3 /msg nickserv info ${nick}
 ----
 
@@ -589,39 +589,39 @@ arguments: ロードするプラグインに与える引数
         -stdout|-stderr [<text>]
         -beep
 
- -buffer: display text in this buffer (default: buffer where command is executed)
-   -core: alias of "-buffer core.weechat"
--current: display text on current buffer
- -escape: interpret escaped chars (for example \a, \07, \x07)
-   -date: message date, format can be:
-            -n: 'n' seconds before now
-            +n: 'n' seconds in the future
-             n: 'n' seconds since the Epoch (see man time)
-            date/time (ISO 8601): yyyy-mm-ddThh:mm:ss, example: 2014-01-19T04:32:55
-            time: hh:mm:ss (example: 04:32:55)
-   -tags: comma-separated list of tags (see /help filter for a list of tags most commonly used)
-    text: text to display (prefix and message must be separated by "\t", if text starts with "-", then add a "\" before)
- -stdout: display text on stdout (escaped chars are interpreted)
- -stderr: display text on stderr (escaped chars are interpreted)
-   -beep: alias of "-stderr \a"
+ -buffer: 指定したバッファにテキストを表示 (デフォルト: コマンドを実行したバッファ)
+   -core: "-buffer core.weechat" のエイリアス
+-current: 現在のバッファにテキストを表示
+ -escape: エスケープ文字を解釈 (例えば \a、\07、\x07)
+   -date: メッセージの日付、フォーマット:
+            -n: 今から 'n' 秒前
+            +n: 今から 'n' 秒後
+             n: エポックから 'n' 秒目 (man time を参照)
+            日付/時間 (ISO 8601): yyyy-mm-ddThh:mm:ss、例: 2014-01-19T04:32:55
+           時間: hh:mm:ss (example: 04:32:55)
+   -tags: タグのコンマ区切りリスト (よく使うタグのリストは /help filter を参照)
+    text: 表示するテキスト (プレフィックスとメッセージは必ず \t で区切ってください、"-" で始まるテキストは "\" を前置してください)
+ -stdout: 標準出力にテキストを表示 (エスケープ文字を解釈)
+ -stderr: 標準エラー出力にテキストを表示 (エスケープ文字を解釈)
+   -beep: "-stderr \a" の別名
 
-The options -action ... -quit use the prefix defined in options "weechat.look.prefix_*".
+オプション -action ... -quit をつけた場合、プレフィックスは "weechat.look.prefix_*" で定義されているものになります。
 
-Following escaped chars are supported:
+以下のエスケープ文字を使うことができます:
   \" \\ \a \b \e \f \n \r \t \v \0ooo \xhh \uhhhh \Uhhhhhhhh
 
-Examples:
-  display a reminder on core buffer with a highlight:
+例:
+  コアバッファにハイライトを付けてリマインダを表示:
     /print -core -tags notify_highlight Reminder: buy milk
-  display an error on core buffer:
+  コアバッファにエラーを表示:
     /print -core -error Some error here
-  display message on core buffer with prefix "abc":
-    /print -core abc\tThe message
-  display a message on channel #weechat:
+  コアバッファにプレフィックス "abc" を付けてメッセージを表示:
+    /print -core abc	The message
+  チャンネル #weechat にメッセージを表示:
     /print -buffer irc.freenode.#weechat Message on #weechat
-  display a snowman (U+2603):
+  雪だるまを表示 (U+2603):
     /print -escape \u2603
-  send alert (BEL):
+  警告を送信 (BEL):
     /print -beep
 ----
 
@@ -758,26 +758,26 @@ ${sec.data.xxx} の形でフォーマットされた保護データは以下の�
 /set  [<option> [<value>]]
       diff [<option> [<option>...]]
 
-option: name of an option (wildcard "*" is allowed)
- value: new value for option
-  diff: display only changed options
+option: オプションの名前 (ワイルドカード '*' を使うことができます)
+ value: オプションに対する新しい値
+  diff: 変更されたオプションのみを表示
 
-New value can be, according to variable type:
-  boolean: on, off or toggle
-  integer: number, ++number or --number
-   string: any string ("" for empty string)
-    color: color name, ++number or --number
+新しいオプションは以下の変数型に従います:
+  boolean: on、off、toggle
+  integer: 番号、++番号、--番号
+   string: 任意の文字列 (空文字列は "")
+    color: 色の名前、++色番号、--色番号
 
-For all types, you can use null to remove option value (undefined value). This works only for some special plugin variables.
+どんな型であっても、オプションの値を削除する (未定義値にする) には null が使えます。これはいくつかの特別なプラグイン変数でのみ有効です。
 
-Examples:
-  display options about highlight:
+例:
+  ハイライトに関するオプションを表示:
     /set *highlight*
-  add a word to highlight:
+  highlight に単語を追加:
     /set weechat.look.highlight "word"
-  display changed options:
+  変更されたオプションを表示:
     /set diff
-  display changed options in irc plugin:
+  irc プラグインのオプションの内、変更されたオプションを表示
     /set diff irc.*
 ----
 
@@ -787,14 +787,14 @@ Examples:
 ----
 /unset  <option>
 
-option: name of an option (wildcard "*" is allowed to mass-reset options, use carefully!)
+option: オプションの名前 (大量のオプションをリセットするにはワイルドカード "*" を使ってください、注意して使用!)
 
-According to option, it's reset (for standard options) or removed (for optional settings, like server values).
+オプションの種類によって (一般的なオプションを) リセットまたは (サーバなどの任意な設定を) 削除が行われます。
 
-Examples:
-  reset one option:
+例:
+  オプションのリセット:
     /unset weechat.look.item_time_format
-  reset all color options:
+  全ての色関連オプションをリセット:
     /unset weechat.color.*
 ----
 

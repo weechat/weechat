@@ -74,7 +74,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_xfer.file.convert_spaces]] *xfer.file.convert_spaces*
-** Beschreibung: `convert spaces to underscores when sending and receiving files`
+** Beschreibung: `beim Versenden und Empfangen von Dateien werden Leerzeichen im Dateinamen durch einen Unterstrich ersetzt`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `on`)
 

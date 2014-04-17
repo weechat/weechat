@@ -74,7 +74,7 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_xfer.file.convert_spaces]] *xfer.file.convert_spaces*
-** 説明: `convert spaces to underscores when sending and receiving files`
+** 説明: `ファイルの送受信時にスペースをアンダースコアに変換`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
