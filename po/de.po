@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2014-04-17 23:29+0200\n"
-"PO-Revision-Date: 2014-04-13 14:17+0100\n"
+"PO-Revision-Date: 2014-04-18 09:31+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
 "Language: de_DE\n"
@@ -8371,9 +8371,8 @@ msgstr "Liste der Nicks im IRC-Channel"
 msgid "nick pointer (optional)"
 msgstr "Nick Pointer (optional)"
 
-#, fuzzy
 msgid "server,channel,nick (nick is optional)"
-msgstr "Server,Channel (Channel ist optional)"
+msgstr "server,channel,nick (nick ist optional)"
 
 msgid "list of IRC ignores"
 msgstr "Liste von ignorierten IRCs"
@@ -11994,6 +11993,3 @@ msgstr ""
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: Zeitüberschreitung für \"%s\" mit %s"
-
-#~ msgid "server,channel,nick (channel and nick are optional)"
-#~ msgstr "Server,Channel,Nick (Channel und Nick sind optional)"
