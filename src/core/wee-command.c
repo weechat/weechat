@@ -109,7 +109,8 @@ command_bar_list (int full)
             if (full)
             {
                 gui_chat_printf (NULL,
-                                 _("  %s%s%s: %s%s%s (cond: %s), %s, "
+                                 /* TRANSLATORS: the last thing displayed is "width:" or "height:" with its value */
+                                 _("  %s%s%s: %s%s%s (conditions: %s), %s, "
                                    "filling: %s(top/bottom)/%s(left/right), "
                                    "%s: %s"),
                                  GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
@@ -7003,7 +7004,7 @@ command_init ()
            "  \"50\" > \"100\"  ==> 1\n"
            "\n"
            "Some variables are replaced in expression, using the format "
-           "${variable}, variable can be, by order of priority :\n"
+           "${variable}, variable can be, by order of priority:\n"
            "  1. a string with escaped chars (format: \"esc:xxx\" or \"\\xxx\")\n"
            "  2. a color (format: \"color:xxx\")\n"
            "  3. an info (format: \"info:name,arguments\", arguments are "

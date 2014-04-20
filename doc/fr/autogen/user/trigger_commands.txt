@@ -15,64 +15,64 @@
           default -yes
           monitor [<filtre>]
 
-       list: lister les triggers (sans paramètre, cette liste est affichée)
-   listfull: lister les triggers avec des informations détaillées pour chaque trigger
-listdefault: lister les triggers par défaut
-        add: ajouter un trigger
-     addoff: ajouter un trigger (désactivé)
- addreplace: ajouter ou remplacer un trigger existant
-        nom: nom du trigger
-       hook: signal, hsignal, modifier, print, command, command_run, timer, config, focus
- paramètres: paramètres pour le hook, dépendant du hook (séparés par des points-virgules):
-             signal: nom(s) de signal (obligatoire)
-             hsignal: nom(s) de signal (obligatoire)
-             modifier: nom(s) de modificateur (obligatoire)
-             print: tampon, étiquettes, message, suppression des couleurs (0/1)
-             command: commande (obligatoire), description, paramètres, description des paramètres, complétion
-             command_run: commande(s) (obligatoire)
-             timer: intervalle (obligatoire), alignement sur la seconde, nombre max d'appels
-             config: nom(s) de l'option (obligatoire)
-             focus: nom(s) de la zone (obligatoire)
- conditions: conditions évaluées pour le trigger
-      regex: une ou plusieurs expressions régulières pour remplacer des chaînes dans les variables
-   commande: commande à exécuter (plusieurs commandes peuvent être séparées par ";")
-code_retour: code retour dans le callback (ok (par défaut), ok_eat, error)
-   addinput: définir la ligne de commande avec les paramètres par défaut pour créer un trigger
-      input: définir la ligne de commande utilisée pour créer le trigger
-     output: envoyer la commande pour créer le trigger sur le tampon
-   recreate: comme "input", avec l'option "addreplace" au lieu de "add"
-        set: définir une option dans un trigger
-     option: nom de l'option: name, hook, arguments, conditions, regex, command, return_code
-             (pour l'aide sur l'option, vous pouvez taper: /help trigger.trigger.<nom>.<option>)
-     valeur: nouvelle valeur pour l'option
-     rename: renommer un trigger
-       copy: copier un trigger
-     enable: activer un/des trigger(s) (sans paramètre: activer les triggers globalement)
-    disable: désactiver un/des trigger(s) (sans paramètre: désactiver les triggers globalement)
-     toggle: activer/désactiver un/des trigger(s) (sans paramètres: activer/désactiver les triggers globalement)
-    restart: redémarrer un/des trigger(s) (recréer les hooks)
-       show: afficher des informations détaillées sur un trigger (avec quelques statistiques)
-        del: supprimer un trigger
-       -all: effectuer l'action sur tous les triggers
-    default: restaurer les triggers par défaut
-    monitor: ouvrir le tampon moniteur des triggers
-     filtre: filtrer les hooks/triggers à afficher (un hook doit commencer par "@", par exemple "@signal"), plusieurs filtres peuvent être séparés par des virgules; le caractère joker "*" est autorisé dans chaque nom de trigger
+       list : lister les triggers (sans paramètre, cette liste est affichée)
+   listfull : lister les triggers avec des informations détaillées pour chaque trigger
+listdefault : lister les triggers par défaut
+        add : ajouter un trigger
+     addoff : ajouter un trigger (désactivé)
+ addreplace : ajouter ou remplacer un trigger existant
+        nom : nom du trigger
+       hook : signal, hsignal, modifier, print, command, command_run, timer, config, focus
+ paramètres : paramètres pour le hook, dépendant du hook (séparés par des points-virgules) :
+              signal : nom(s) de signal (obligatoire)
+              hsignal : nom(s) de signal (obligatoire)
+              modifier : nom(s) de modificateur (obligatoire)
+              print : tampon, étiquettes, message, suppression des couleurs (0/1)
+              command : commande (obligatoire), description, paramètres, description des paramètres, complétion
+              command_run : commande(s) (obligatoire)
+              timer : intervalle (obligatoire), alignement sur la seconde, nombre max d'appels
+              config : nom(s) de l'option (obligatoire)
+              focus : nom(s) de la zone (obligatoire)
+ conditions : conditions évaluées pour le trigger
+      regex : une ou plusieurs expressions régulières pour remplacer des chaînes dans les variables
+   commande : commande à exécuter (plusieurs commandes peuvent être séparées par ";")
+code_retour : code retour dans le callback (ok (par défaut), ok_eat, error)
+   addinput : définir la ligne de commande avec les paramètres par défaut pour créer un trigger
+      input : définir la ligne de commande utilisée pour créer le trigger
+     output : envoyer la commande pour créer le trigger sur le tampon
+   recreate : comme "input", avec l'option "addreplace" au lieu de "add"
+        set : définir une option dans un trigger
+     option : nom de l'option : name, hook, arguments, conditions, regex, command, return_code
+              (pour l'aide sur l'option, vous pouvez taper : /help trigger.trigger.<nom>.<option>)
+     valeur : nouvelle valeur pour l'option
+     rename : renommer un trigger
+       copy : copier un trigger
+     enable : activer un/des trigger(s) (sans paramètre : activer les triggers globalement)
+    disable : désactiver un/des trigger(s) (sans paramètre : désactiver les triggers globalement)
+     toggle : activer/désactiver un/des trigger(s) (sans paramètre : activer/désactiver les triggers globalement)
+    restart : redémarrer un/des trigger(s) (recréer les hooks)
+       show : afficher des informations détaillées sur un trigger (avec quelques statistiques)
+        del : supprimer un trigger
+       -all : effectuer l'action sur tous les triggers
+    default : restaurer les triggers par défaut
+    monitor : ouvrir le tampon moniteur des triggers
+     filtre : filtrer les hooks/triggers à afficher (un hook doit commencer par "@", par exemple "@signal"), plusieurs filtres peuvent être séparés par des virgules ; le caractère joker "*" est autorisé dans chaque nom de trigger
 
-Lorsqu'un callback de trigger est appelé, les actions suivantes sont exécutées, dans cet ordre :
-  1. vérifier les conditions; si faux, sortir
+Lorsqu'un callback de trigger est appelé, les actions suivantes sont exécutées, dans cet ordre :
+  1. vérifier les conditions ; si faux, sortir
   2. remplacer le texte en utilisant une/des expression(s)s régulière(s)s POSIX étendue(s)s (si définie(s) dans le trigger)
   3. exécuter le(s) commande(s) (si définie(s) dans le trigger)
   4. sortir avec le code retour (sauf pour les modificateurs et focus)
 
-Exemples (vous pouvez aussi regarder les triggers par défaut avec /trigger listdefault):
-  ajouter des attributs *gras*, _souligné_ et /italique/ (seulement dans les messages d'utilisateurs):
+Exemples (vous pouvez aussi regarder les triggers par défaut avec /trigger listdefault) :
+  ajouter des attributs *gras*, _souligné_ et /italique/ (seulement dans les messages d'utilisateurs) :
     /trigger add effects modifier weechat_print "${tg_tag_nick}" "==\*(\S+)\*==*${color:bold}$1${color:-bold}*== ==_(\S+)_==_${color:underline}$1${color:-underline}_== ==/(\S+)/==/${color:italic}$1${color:-italic}/"
-  cacher la barre de pseudos sur les petits terminaux:
+  cacher la barre de pseudos sur les petits terminaux :
     /trigger add resize_small signal signal_sigwinch "${info:term_width} < 100" "" "/bar hide nicklist"
     /trigger add resize_big signal signal_sigwinch "${info:term_width} >= 100" "" "/bar show nicklist"
-  sauver la configuration chaque heure (de manière silencieuse):
+  sauver la configuration chaque heure (de manière silencieuse) :
     /trigger add cfgsave timer 3600000;0;0 "" "" "/mute /save"
-  ouvrir le tampon moniteur des triggers et afficher seulement les modificateurs et les triggers dont le nom commence par "resize":
+  ouvrir le tampon moniteur des triggers et afficher seulement les modificateurs et les triggers dont le nom commence par "resize" :
     /trigger monitor @modifier,resize*
 ----
 

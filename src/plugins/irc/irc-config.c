@@ -2725,10 +2725,10 @@ irc_config_init ()
            "color names or numbers (format is: \"1,-1:color1;2,7:color2\"), "
            "example: \"1,-1:darkgray;1,2:white,blue\" to remap black to "
            "\"darkgray\" and black on blue to \"white,blue\"; default "
-           "WeeChat colors for IRC codes: 0:white, 1:black, 2:blue, 3:green, "
-           "4:lightred, 5:red, 6:magenta, 7:brown, 8:yellow, 9: lightgreen, "
-           "10:cyan, 11:lightcyan, 12:lightblue, 13:lightmagenta, 14:gray, "
-           "15:white"),
+           "WeeChat colors for IRC codes: 0=white, 1=black, 2=blue, 3=green, "
+           "4=lightred, 5=red, 6=magenta, 7=brown, 8=yellow, 9=lightgreen, "
+           "10=cyan, 11=lightcyan, 12=lightblue, 13=lightmagenta, 14=gray, "
+           "15=white"),
         NULL, 0, 0, "1,-1:darkgray", NULL, 0, NULL, NULL,
         &irc_config_change_color_mirc_remap, NULL, NULL, NULL);
     irc_config_color_nick_prefixes = weechat_config_new_option (

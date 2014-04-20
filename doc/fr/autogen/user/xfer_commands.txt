@@ -4,7 +4,7 @@
 ----
 /me  <message>
 
-message: message à envoyer
+message : message à envoyer
 ----
 
 [[command_xfer_xfer]]
@@ -13,8 +13,8 @@ message: message à envoyer
 ----
 /xfer  [list|listfull]
 
-    list: lister les xfer
-listfull: lister les xfer (verbeux)
+    list : lister les xfer
+listfull : lister les xfer (verbeux)
 
 Sans paramètre, cette commande ouvre le tampon avec la liste des xfer.
 ----

@@ -1,72 +1,72 @@
 * [[option_irc.color.input_nick]] *irc.color.input_nick*
 ** description: `couleur du pseudo dans la barre de saisie`
 ** type: couleur
-** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `lightcyan`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `lightcyan`)
 
 * [[option_irc.color.item_away]] *irc.color.item_away*
 ** description: `couleur pour l'objet away`
 ** type: couleur
-** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `yellow`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `yellow`)
 
 * [[option_irc.color.item_channel_modes]] *irc.color.item_channel_modes*
 ** description: `couleur pour les modes du canal, à côté du nom du canal`
 ** type: couleur
-** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `default`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `default`)
 
 * [[option_irc.color.item_lag_counting]] *irc.color.item_lag_counting*
 ** description: `couleur pour l'indicateur de lag, lorsque le décompte est en cours (pong non reçu du serveur, le lag augmente)`
 ** type: couleur
-** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `default`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `default`)
 
 * [[option_irc.color.item_lag_finished]] *irc.color.item_lag_finished*
 ** description: `couleur pour l'indicateur de lag, lorsque le pong a été reçu du serveur`
 ** type: couleur
-** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `yellow`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `yellow`)
 
 * [[option_irc.color.item_nick_modes]] *irc.color.item_nick_modes*
 ** description: `couleur pour les modes du pseudo dans l'objet de barre "input_prompt"`
 ** type: couleur
-** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `default`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `default`)
 
 * [[option_irc.color.message_join]] *irc.color.message_join*
 ** description: `couleur pour le texte dans les messages join`
 ** type: couleur
-** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `green`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `green`)
 
 * [[option_irc.color.message_quit]] *irc.color.message_quit*
 ** description: `couleur pour le texte dans les messages part/quit`
 ** type: couleur
-** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `red`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `red`)
 
 * [[option_irc.color.mirc_remap]] *irc.color.mirc_remap*
-** description: `réassigner les couleurs mirc dans les messages en utilisant une table de hachage: les clés sont "fg,bg" sous forme d'entiers entre -1 (non spécifié) et 15, les valeurs sont des noms de couleur WeeChat ou nombres (le format est: "1,-1:couleur1;2,7:couleur2"), exemple: "1,-1:darkgray;1,2:white,blue" pour réassigner le noir en "darkgray" et le noir sur bleu en "white,blue"; les couleurs WeeChat par défaut pour les codes IRC sont: 0:white, 1:black, 2:blue, 3:green, 4:lightred, 5:red, 6:magenta, 7:brown, 8:yellow, 9:lightgreen, 10:cyan, 11:lightcyan, 12:lightblue, 13:lightmagenta, 14:gray, 15:white`
+** description: `réassigner les couleurs mirc dans les messages en utilisant une table de hachage : les clés sont "fg,bg" sous forme d'entiers entre -1 (non spécifié) et 15, les valeurs sont des noms de couleur WeeChat ou nombres (le format est : "1,-1:couleur1;2,7:couleur2"), exemple : "1,-1:darkgray;1,2:white,blue" pour réassigner le noir en "darkgray" et le noir sur bleu en "white,blue" ; les couleurs WeeChat par défaut pour les codes IRC sont : 0=white, 1=black, 2=blue, 3=green, 4=lightred, 5=red, 6=magenta, 7=brown, 8=yellow, 9=lightgreen, 10=cyan, 11=lightcyan, 12=lightblue, 13=lightmagenta, 14=gray, 15=white`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"1,-1:darkgray"`)
 
 * [[option_irc.color.nick_prefixes]] *irc.color.nick_prefixes*
-** description: `couleur pour les préfixes du pseudo en utilisant les caractères de mode (o=op, h=halfop, v=voice, ...), le format est: "o:couleur1;h:couleur2;v:couleur3" (si un mode n'est pas trouvé, WeeChat essaiera avec les modes suivants reçus du serveur ("PREFIX"); un mode spécial "*" peut être utilisé comme couleur par défaut si aucun mode n'est trouvé dans la liste)`
+** description: `couleur pour les préfixes du pseudo en utilisant les caractères de mode (o=op, h=halfop, v=voice, ...), le format est : "o:couleur1;h:couleur2;v:couleur3" (si un mode n'est pas trouvé, WeeChat essaiera avec les modes suivants reçus du serveur ("PREFIX") ; un mode spécial "*" peut être utilisé comme couleur par défaut si aucun mode n'est trouvé dans la liste)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"q:lightred;a:lightcyan;o:lightgreen;h:lightmagenta;v:yellow;*:lightblue"`)
 
 * [[option_irc.color.notice]] *irc.color.notice*
 ** description: `couleur pour le texte "Notice" dans les notices`
 ** type: couleur
-** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `green`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `green`)
 
 * [[option_irc.color.reason_quit]] *irc.color.reason_quit*
 ** description: `couleur pour la raison dans les messages part/quit`
 ** type: couleur
-** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `default`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `default`)
 
 * [[option_irc.color.topic_new]] *irc.color.topic_new*
 ** description: `couleur pour le nouveau titre du canal (lorsque le titre est changé)`
 ** type: couleur
-** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `white`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `white`)
 
 * [[option_irc.color.topic_old]] *irc.color.topic_old*
 ** description: `couleur pour l'ancien titre du canal (lorsque le titre est changé)`
 ** type: couleur
-** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `default`)
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné (valeur par défaut: `default`)
 
 * [[option_irc.look.buffer_switch_autojoin]] *irc.look.buffer_switch_autojoin*
 ** description: `basculer automatiquement vers le tampon du canal lorsqu'il est automatiquement rejoint (avec l'option du serveur "autojoin")`
@@ -104,7 +104,7 @@
 ** valeurs: toute chaîne (valeur par défaut: `"%a, %d %b %Y %T %z"`)
 
 * [[option_irc.look.display_away]] *irc.look.display_away*
-** description: `afficher un message pour l'absence/retour (off: ne rien afficher/envoyer, local: afficher en local, channel: envoyer l'action aux canaux)`
+** description: `afficher un message pour l'absence/retour (off : ne rien afficher/envoyer, local : afficher en local, channel : envoyer l'action aux canaux)`
 ** type: entier
 ** valeurs: off, local, channel (valeur par défaut: `local`)
 
@@ -139,7 +139,7 @@
 ** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_irc.look.display_join_message]] *irc.look.display_join_message*
-** description: `liste de messages (séparés par des virgules) à afficher après avoir rejoint un canal: 329 = date de création du canal, 332 = titre, 333 = pseudo/date pour le titre, 353 = noms sur le canal, 366 = décompte des noms`
+** description: `liste de messages (séparés par des virgules) à afficher après avoir rejoint un canal : 329 = date de création du canal, 332 = titre, 333 = pseudo/date pour le titre, 353 = noms sur le canal, 366 = décompte des noms`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"329,332,333,366"`)
 
@@ -159,22 +159,22 @@
 ** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_irc.look.highlight_channel]] *irc.look.highlight_channel*
-** description: `liste de mots pour le highlight dans les tampons de type "canal", séparés par des virgules (insensible à la casse, utilisez "(?-i)" au début des mots pour les rendre sensibles à la casse; les variables spéciales $nick, $channel et $server sont remplacées par leurs valeurs), ces mots sont ajoutés à la propriété du tampon "highlight_words" seulement lorsque le tampon est créé (cela n'affecte pas les tampons courants), une chaîne vide désactive le highlight par défaut sur le pseudo, exemples: "$nick", "(?-i)$nick"`
+** description: `liste de mots pour le highlight dans les tampons de type "canal", séparés par des virgules (insensible à la casse, utilisez "(?-i)" au début des mots pour les rendre sensibles à la casse ; les variables spéciales $nick, $channel et $server sont remplacées par leurs valeurs), ces mots sont ajoutés à la propriété du tampon "highlight_words" seulement lorsque le tampon est créé (cela n'affecte pas les tampons courants), une chaîne vide désactive le highlight par défaut sur le pseudo, exemples : "$nick", "(?-i)$nick"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"$nick"`)
 
 * [[option_irc.look.highlight_pv]] *irc.look.highlight_pv*
-** description: `liste de mots pour le highlight dans les tampons de type "privé", séparés par des virgules (insensible à la casse, utilisez "(?-i)" au début des mots pour les rendre sensibles à la casse; les variables spéciales $nick, $channel et $server sont remplacées par leurs valeurs), ces mots sont ajoutés à la propriété du tampon "highlight_words" seulement lorsque le tampon est créé (cela n'affecte pas les tampons courants), une chaîne vide désactive le highlight par défaut sur le pseudo, exemples: "$nick", "(?-i)$nick"`
+** description: `liste de mots pour le highlight dans les tampons de type "privé", séparés par des virgules (insensible à la casse, utilisez "(?-i)" au début des mots pour les rendre sensibles à la casse ; les variables spéciales $nick, $channel et $server sont remplacées par leurs valeurs), ces mots sont ajoutés à la propriété du tampon "highlight_words" seulement lorsque le tampon est créé (cela n'affecte pas les tampons courants), une chaîne vide désactive le highlight par défaut sur le pseudo, exemples : "$nick", "(?-i)$nick"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"$nick"`)
 
 * [[option_irc.look.highlight_server]] *irc.look.highlight_server*
-** description: `liste de mots pour le highlight dans les tampons de type "serveur", séparés par des virgules (insensible à la casse, utilisez "(?-i)" au début des mots pour les rendre sensibles à la casse; les variables spéciales $nick, $channel et $server sont remplacées par leurs valeurs), ces mots sont ajoutés à la propriété du tampon "highlight_words" seulement lorsque le tampon est créé (cela n'affecte pas les tampons courants), une chaîne vide désactive le highlight par défaut sur le pseudo, exemples: "$nick", "(?-i)$nick"`
+** description: `liste de mots pour le highlight dans les tampons de type "serveur", séparés par des virgules (insensible à la casse, utilisez "(?-i)" au début des mots pour les rendre sensibles à la casse ; les variables spéciales $nick, $channel et $server sont remplacées par leurs valeurs), ces mots sont ajoutés à la propriété du tampon "highlight_words" seulement lorsque le tampon est créé (cela n'affecte pas les tampons courants), une chaîne vide désactive le highlight par défaut sur le pseudo, exemples : "$nick", "(?-i)$nick"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"$nick"`)
 
 * [[option_irc.look.highlight_tags_restrict]] *irc.look.highlight_tags_restrict*
-** description: `restreindre les highlights à ces étiquettes sur les tampons irc (pour avoir un highlight seulement sur les messages utilisateur et pas les messages du serveur); les étiquettes doivent être séparées par des virgules et "+" peut être utilisé pour faire un "et" logique entre étiquettes; le caractère joker "*" est autorisé dans les étiquettes; une valeur vide autorise le highlight sur n'importe quelle étiquette`
+** description: `restreindre les highlights à ces étiquettes sur les tampons irc (pour avoir un highlight seulement sur les messages utilisateur et pas les messages du serveur) ; les étiquettes doivent être séparées par des virgules et "+" peut être utilisé pour faire un "et" logique entre étiquettes ; le caractère joker "*" est autorisé dans les étiquettes ; une valeur vide autorise le highlight sur n'importe quelle étiquette`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"irc_privmsg,irc_notice"`)
 
@@ -184,7 +184,7 @@
 ** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_irc.look.item_channel_modes_hide_args]] *irc.look.item_channel_modes_hide_args*
-** description: `cacher les paramètres des modes du canal si au moins un de ces modes est dans les modes du canal ("*" pour toujours cacher les paramètres, valeur vide pour ne jamais cacher les paramètres); exemple: "kf" pour cacher les paramètres si "k" ou "f" sont dans les modes du canal`
+** description: `cacher les paramètres des modes du canal si au moins un de ces modes est dans les modes du canal ("*" pour toujours cacher les paramètres, valeur vide pour ne jamais cacher les paramètres) ; exemple : "kf" pour cacher les paramètres si "k" ou "f" sont dans les modes du canal`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"k"`)
 
@@ -219,22 +219,22 @@
 ** valeurs: none, next, near_server (valeur par défaut: `none`)
 
 * [[option_irc.look.nick_color_force]] *irc.look.nick_color_force*
-** description: `force la couleur pour certains pseudos: le hash calculé avec le pseudo pour trouver la couleur ne sera pas utilisé pour ces pseudos (le format est: "pseudo1:couleur1;pseudo2:couleur2"); la recherche de pseudos s'effectue avec la casse exacte puis en minuscules, donc il est possible d'utiliser uniquement des minuscules pour les pseudos dans cette option`
+** description: `force la couleur pour certains pseudos : le hash calculé avec le pseudo pour trouver la couleur ne sera pas utilisé pour ces pseudos (le format est : "pseudo1:couleur1;pseudo2:couleur2") ; la recherche de pseudos s'effectue avec la casse exacte puis en minuscules, donc il est possible d'utiliser uniquement des minuscules pour les pseudos dans cette option`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
 * [[option_irc.look.nick_color_hash]] *irc.look.nick_color_hash*
-** description: `algorithme de hash utilisé pour trouver la couleur du pseudo: djb2 = variante de djb2 (la position des lettres compte: les anagrammes d'un pseudo ont une couleur différente), sum = somme des lettres`
+** description: `algorithme de hash utilisé pour trouver la couleur du pseudo : djb2 = variante de djb2 (la position des lettres compte : les anagrammes d'un pseudo ont une couleur différente), sum = somme des lettres`
 ** type: entier
 ** valeurs: djb2, sum (valeur par défaut: `sum`)
 
 * [[option_irc.look.nick_color_stop_chars]] *irc.look.nick_color_stop_chars*
-** description: `caractères utilisés pour l'arrêt dans le pseudo lors du calcul de la couleur avec les lettres du pseudo (au moins un caractère en dehors de cette liste doit être dans la chaîne avant de s'arrêter) (exemple: le pseudo "|nick|away" avec "|" dans les caractères retournera la couleur du pseudo "|nick")`
+** description: `caractères utilisés pour l'arrêt dans le pseudo lors du calcul de la couleur avec les lettres du pseudo (au moins un caractère en dehors de cette liste doit être dans la chaîne avant de s'arrêter) (exemple : le pseudo "|nick|away" avec "|" dans les caractères retournera la couleur du pseudo "|nick")`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"_|["`)
 
 * [[option_irc.look.nick_completion_smart]] *irc.look.nick_completion_smart*
-** description: `complétion intelligente pour les pseudos (complète d'abord avec les personnes qui ont parlé récemment): speakers = tous ceux qui ont parlé (incluant les highlights), speakers_highlights = seulement ceux qui ont parlé avec un highlight`
+** description: `complétion intelligente pour les pseudos (complète d'abord avec les personnes qui ont parlé récemment) : speakers = tous ceux qui ont parlé (incluant les highlights), speakers_highlights = seulement ceux qui ont parlé avec un highlight`
 ** type: entier
 ** valeurs: off, speakers, speakers_highlights (valeur par défaut: `speakers`)
 
@@ -249,7 +249,7 @@
 ** valeurs: on, off (valeur par défaut: `off`)
 
 * [[option_irc.look.nicks_hide_password]] *irc.look.nicks_hide_password*
-** description: `liste des pseudos (séparés par des virgules) pour lesquels les mots de passe seront masqués quand un message est envoyé, par exemple pour cacher le mot de passe dans le message affiché par "/msg nickserv identify motedepasse", exemple: "nickserv|nickbot"`
+** description: `liste des pseudos (séparés par des virgules) pour lesquels les mots de passe seront masqués quand un message est envoyé, par exemple pour cacher le mot de passe dans le message affiché par "/msg nickserv identify motedepasse", exemple : "nickserv|nickbot"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"nickserv"`)
 
@@ -259,22 +259,22 @@
 ** valeurs: auto, never, always (valeur par défaut: `auto`)
 
 * [[option_irc.look.notice_welcome_redirect]] *irc.look.notice_welcome_redirect*
-** description: `rediriger automatiquement les notices de bienvenue sur le canal vers le tampon du canal; de telles notices ont le pseudo comme cible mais le nom du canal au début du message de notice, par exemple les notices envoyées par le serveur freenode qui ressemblent à: "[#canal] Bienvenue sur ce canal..."`
+** description: `rediriger automatiquement les notices de bienvenue sur le canal vers le tampon du canal ; de telles notices ont le pseudo comme cible mais le nom du canal au début du message de notice, par exemple les notices envoyées par le serveur freenode qui ressemblent à : "[#canal] Bienvenue sur ce canal..."`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_irc.look.notice_welcome_tags]] *irc.look.notice_welcome_tags*
-** description: `liste des étiquettes (séparées par des virgules) utilisées dans la notice de bienvenue redirigée vers un canal, par exemple: "notify_private"`
+** description: `liste des étiquettes (séparées par des virgules) utilisées dans la notice de bienvenue redirigée vers un canal, par exemple : "notify_private"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
 * [[option_irc.look.notify_tags_ison]] *irc.look.notify_tags_ison*
-** description: `liste des étiquettes (séparées par des virgules) utilisées dans les messages affichés par notify lorsqu'un pseudo a rejoint ou quitté le serveur (résultat de la commande ison ou monitor), par exemple: "notify_message", "notify_private" ou "notify_highlight"`
+** description: `liste des étiquettes (séparées par des virgules) utilisées dans les messages affichés par notify lorsqu'un pseudo a rejoint ou quitté le serveur (résultat de la commande ison ou monitor), par exemple : "notify_message", "notify_private" ou "notify_highlight"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"notify_message"`)
 
 * [[option_irc.look.notify_tags_whois]] *irc.look.notify_tags_whois*
-** description: `liste des étiquettes (séparées par des virgules) utilisées dans les messages affichés par notify lorsque le statut d'absence d'un pseudo change (résultat de la commande whois), par exemple: "notify_message", "notify_private" ou "notify_highlight"`
+** description: `liste des étiquettes (séparées par des virgules) utilisées dans les messages affichés par notify lorsque le statut d'absence d'un pseudo change (résultat de la commande whois), par exemple : "notify_message", "notify_private" ou "notify_highlight"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"notify_message"`)
 
@@ -289,7 +289,7 @@
 ** valeurs: independent, merge_by_server, merge_all (valeur par défaut: `independent`)
 
 * [[option_irc.look.pv_tags]] *irc.look.pv_tags*
-** description: `liste des étiquettes (séparées par des virgules) utilisées dans les messages privés, par exemple: "notify_message", "notify_private" ou "notify_highlight"`
+** description: `liste des étiquettes (séparées par des virgules) utilisées dans les messages privés, par exemple : "notify_message", "notify_private" ou "notify_highlight"`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"notify_private"`)
 
@@ -309,7 +309,7 @@
 ** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_irc.look.smart_filter_delay]] *irc.look.smart_filter_delay*
-** description: `délai pour filtrer les messages join/part/quit (en minutes): si le pseudo n'a pas parlé durant les N dernières minutes, le join/part/quit est filtré`
+** description: `délai pour filtrer les messages join/part/quit (en minutes) : si le pseudo n'a pas parlé durant les N dernières minutes, le join/part/quit est filtré`
 ** type: entier
 ** valeurs: 1 .. 10080 (valeur par défaut: `5`)
 
@@ -319,12 +319,12 @@
 ** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_irc.look.smart_filter_join_unmask]] *irc.look.smart_filter_join_unmask*
-** description: `délai pour démasquer un message "join" qui a été filtré avec l'étiquette "irc_smart_filter" (en minutes): si le pseudo a rejoint au maximum il y a N minutes et qu'il a dit quelque chose sur le canal (message, notice ou mise à jour du topic), le "join" est démasqué, tout comme les changements de pseudo après ce "join" (0 = désactiver: ne jamais démasquer un "join")`
+** description: `délai pour démasquer un message "join" qui a été filtré avec l'étiquette "irc_smart_filter" (en minutes) : si le pseudo a rejoint au maximum il y a N minutes et qu'il a dit quelque chose sur le canal (message, notice ou mise à jour du topic), le "join" est démasqué, tout comme les changements de pseudo après ce "join" (0 = désactiver : ne jamais démasquer un "join")`
 ** type: entier
 ** valeurs: 0 .. 10080 (valeur par défaut: `30`)
 
 * [[option_irc.look.smart_filter_mode]] *irc.look.smart_filter_mode*
-** description: `activer le filtre intelligent pour les messages "mode": "*" pour filtrer tous les modes, "xyz" pour filtrer seulement les modes x/y/z, "-xyz" pour filtrer tous les modes sauf x/y/z; exemples: "ovh": filtrer les modes o/v/h, "-bkl": filtrer tous les modes sauf b/k/l`
+** description: `activer le filtre intelligent pour les messages "mode" : "*" pour filtrer tous les modes, "xyz" pour filtrer seulement les modes x/y/z, "-xyz" pour filtrer tous les modes sauf x/y/z ; exemples : "ovh" : filtrer les modes o/v/h, "-bkl" : filtrer tous les modes sauf b/k/l`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"ovh"`)
 
@@ -344,7 +344,7 @@
 ** valeurs: on, off (valeur par défaut: `off`)
 
 * [[option_irc.network.alternate_nick]] *irc.network.alternate_nick*
-** description: `obtenir un pseudo alternatif lorsque le pseudo est déjà utilisé sur le serveur: ajouter des "_" jusqu'à ce que le pseudo ait une longueur de 9, puis remplacer le dernier caractère (ou les deux derniers) par un nombre de 1 à 99, jusqu'à trouver un pseudo non utilisé sur le serveur`
+** description: `obtenir un pseudo alternatif lorsque le pseudo est déjà utilisé sur le serveur : ajouter des "_" jusqu'à ce que le pseudo ait une longueur de 9, puis remplacer le dernier caractère (ou les deux derniers) par un nombre de 1 à 99, jusqu'à trouver un pseudo non utilisé sur le serveur`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 
@@ -359,7 +359,7 @@
 ** valeurs: 0 .. 604800 (valeur par défaut: `600`)
 
 * [[option_irc.network.ban_mask_default]] *irc.network.ban_mask_default*
-** description: `masque de bannissement par défaut pour les commandes /ban, /unban et /kickban; les variables $nick, $user, $ident et $host sont remplacées par leurs valeurs (extraites de "nick!user@host"); $ident est identique à $user si $user ne commence pas par "~", sinon $ident vaut "*"; ce masque par défaut est utilisé seulement si WeeChat connaît l'hôte pour le pseudo`
+** description: `masque de bannissement par défaut pour les commandes /ban, /unban et /kickban ; les variables $nick, $user, $ident et $host sont remplacées par leurs valeurs (extraites de "nick!user@host") ; $ident est identique à $user si $user ne commence pas par "~", sinon $ident vaut "*" ; ce masque par défaut est utilisé seulement si WeeChat connaît l'hôte pour le pseudo`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"*!$ident@$host"`)
 
@@ -369,7 +369,7 @@
 ** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_irc.network.colors_send]] *irc.network.colors_send*
-** description: `autorise l'utilisateur à envoyer des couleurs avec des codes spéciaux (ctrl-c + un code et une couleur optionnelle: b=gras, cxx=couleur, cxx,yy=couleur+fond, i=italique, o=désactiver couleur/attributs, r=inversé, u=souligné)`
+** description: `autorise l'utilisateur à envoyer des couleurs avec des codes spéciaux (ctrl-c + un code et une couleur optionnelle : b=gras, cxx=couleur, cxx,yy=couleur+fond, i=italique, o=désactiver couleur/attributs, r=inversé, u=souligné)`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 
@@ -379,7 +379,7 @@
 ** valeurs: 0 .. 604800 (valeur par défaut: `60`)
 
 * [[option_irc.network.lag_max]] *irc.network.lag_max*
-** description: `lag maximum (en secondes): si ce lag est atteint, WeeChat considérera que la réponse du serveur (pong) ne sera jamais reçue et arrêtera de compter le lag (0 = ne jamais abandonner)`
+** description: `lag maximum (en secondes) : si ce lag est atteint, WeeChat considérera que la réponse du serveur (pong) ne sera jamais reçue et arrêtera de compter le lag (0 = ne jamais abandonner)`
 ** type: entier
 ** valeurs: 0 .. 604800 (valeur par défaut: `1800`)
 
@@ -389,7 +389,7 @@
 ** valeurs: 0 .. 86400000 (valeur par défaut: `500`)
 
 * [[option_irc.network.lag_reconnect]] *irc.network.lag_reconnect*
-** description: `se reconnecter au serveur si le lag est supérieur ou égal à cette valeur (en secondes, 0 = ne jamais se reconnecter); cette valeur doit être inférieure ou égale à irc.network.lag_max`
+** description: `se reconnecter au serveur si le lag est supérieur ou égal à cette valeur (en secondes, 0 = ne jamais se reconnecter) ; cette valeur doit être inférieure ou égale à irc.network.lag_max`
 ** type: entier
 ** valeurs: 0 .. 604800 (valeur par défaut: `0`)
 
@@ -414,7 +414,7 @@
 ** valeurs: on, off (valeur par défaut: `off`)
 
 * [[option_irc.network.whois_double_nick]] *irc.network.whois_double_nick*
-** description: `doubler le pseudo dans la commande /whois (si un seul pseudo est donné), pour avoir le temps d'inactivité dans la réponse; par exemple: "/whois pseudo" enverra "whois pseudo pseudo"`
+** description: `doubler le pseudo dans la commande /whois (si un seul pseudo est donné), pour avoir le temps d'inactivité dans la réponse ; par exemple : "/whois pseudo" enverra "whois pseudo pseudo"`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `off`)
 
@@ -424,12 +424,12 @@
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
 * [[option_irc.server_default.anti_flood_prio_high]] *irc.server_default.anti_flood_prio_high*
-** description: `anti-flood pour la file d'attente haute priorité : nombre de secondes entre deux messages utilisateur ou commandes envoyés au serveur IRC (0 = pas d'anti-flood)`
+** description: `anti-flood pour la file d'attente haute priorité : nombre de secondes entre deux messages utilisateur ou commandes envoyés au serveur IRC (0 = pas d'anti-flood)`
 ** type: entier
 ** valeurs: 0 .. 60 (valeur par défaut: `2`)
 
 * [[option_irc.server_default.anti_flood_prio_low]] *irc.server_default.anti_flood_prio_low*
-** description: `anti-flood pour la file d'attente basse priorité : nombre de secondes entre deux messages envoyés au serveur IRC (messages comme les réponses automatiques aux CTCP) (0 = pas d'anti-flood)`
+** description: `anti-flood pour la file d'attente basse priorité : nombre de secondes entre deux messages envoyés au serveur IRC (messages comme les réponses automatiques aux CTCP) (0 = pas d'anti-flood)`
 ** type: entier
 ** valeurs: 0 .. 60 (valeur par défaut: `2`)
 
@@ -439,7 +439,7 @@
 ** valeurs: on, off (valeur par défaut: `off`)
 
 * [[option_irc.server_default.autojoin]] *irc.server_default.autojoin*
-** description: `liste des canaux (séparés par des virgules) à rejoindre après la connexion au serveur (et après exécution de la commande + délai s'ils sont définis); les canaux nécessitant une clé doivent être en début de liste, et toutes les clés doivent être données après les canaux (séparées par un espace) (exemple: "#canal1,#canal2,#canal3 clé1,clé2" où #canal1 et #canal2 sont protégés par clé1 et clé2) (note: le contenu est évalué, voir /help eval)`
+** description: `liste des canaux (séparés par des virgules) à rejoindre après la connexion au serveur (et après exécution de la commande + délai s'ils sont définis) ; les canaux nécessitant une clé doivent être en début de liste, et toutes les clés doivent être données après les canaux (séparées par un espace) (exemple : "#canal1,#canal2,#canal3 clé1,clé2" où #canal1 et #canal2 sont protégés par clé1 et clé2) (note : le contenu est évalué, voir /help eval)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
@@ -454,7 +454,7 @@
 ** valeurs: 1 .. 65535 (valeur par défaut: `10`)
 
 * [[option_irc.server_default.autorejoin]] *irc.server_default.autorejoin*
-** description: `rejoindre automatiquement les canaux après un "kick"; vous pouvez définir une variable locale de tampon sur un canal pour remplacer cette valeur (nom de la variable: "autorejoin", valeur: "on" ou "off")`
+** description: `rejoindre automatiquement les canaux après un "kick" ; vous pouvez définir une variable locale de tampon sur un canal pour remplacer cette valeur (nom de la variable : "autorejoin", valeur : "on" ou "off")`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `off`)
 
@@ -474,17 +474,17 @@
 ** valeurs: 0 .. 1000000 (valeur par défaut: `25`)
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** description: `liste séparée par des virgules de capacités client ("client capabilities") à activer sur le serveur si elles sont disponibles; les capacités supportées par WeeChat sont: multi-prefix, userhost-in-names, away-notify (exemple: "multi-prefix,userhost-in-names,away-notify")`
+** description: `liste séparée par des virgules de capacités client ("client capabilities") à activer sur le serveur si elles sont disponibles ; les capacités supportées par WeeChat sont : multi-prefix, userhost-in-names, away-notify (exemple : "multi-prefix,userhost-in-names,away-notify")`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
 * [[option_irc.server_default.command]] *irc.server_default.command*
-** description: `commande(s) à exécuter après la connexion au serveur et avant le "join" automatique des canaux (plusieurs commandes peuvent être séparées par ";", utilisez "\;" pour un point-virgule, les variables spéciales $nick, $channel et $server sont remplacées par leur valeur) (note: le contenu est évalué, voir /help eval)`
+** description: `commande(s) à exécuter après la connexion au serveur et avant le "join" automatique des canaux (plusieurs commandes peuvent être séparées par ";", utilisez "\;" pour un point-virgule, les variables spéciales $nick, $channel et $server sont remplacées par leur valeur) (note : le contenu est évalué, voir /help eval)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
 * [[option_irc.server_default.command_delay]] *irc.server_default.command_delay*
-** description: `délai (en secondes) après exécution de la commande et avant le "join" automatique des canaux (exemple: donner du temps pour l'authentification avant de rejoindre les canaux)`
+** description: `délai (en secondes) après exécution de la commande et avant le "join" automatique des canaux (exemple : donner du temps pour l'authentification avant de rejoindre les canaux)`
 ** type: entier
 ** valeurs: 0 .. 3600 (valeur par défaut: `0`)
 
@@ -509,7 +509,7 @@
 ** valeurs: toute chaîne (valeur par défaut: `"WeeChat %v"`)
 
 * [[option_irc.server_default.ipv6]] *irc.server_default.ipv6*
-** description: `utiliser le protocole IPv6 pour la communication avec le serveur (essayer IPv6 puis repli sur l'IPv4); si désactivé, seulement l'IPv4 est utilisé`
+** description: `utiliser le protocole IPv6 pour la communication avec le serveur (essayer IPv6 puis repli sur l'IPv4) ; si désactivé, seulement l'IPv4 est utilisé`
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 
@@ -529,7 +529,7 @@
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
 * [[option_irc.server_default.password]] *irc.server_default.password*
-** description: `mot de passe pour le serveur (note: le contenu est évalué, voir /help eval)`
+** description: `mot de passe pour le serveur (note : le contenu est évalué, voir /help eval)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
@@ -539,17 +539,17 @@
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
 * [[option_irc.server_default.realname]] *irc.server_default.realname*
-** description: `nom réel pour le serveur (note: le contenu est évalué, voir /help eval)`
+** description: `nom réel pour le serveur (note : le contenu est évalué, voir /help eval)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
 * [[option_irc.server_default.sasl_mechanism]] *irc.server_default.sasl_mechanism*
-** description: `mécanisme pour l'authentification SASL: "plain" pour un mot de passe en clair, "dh-blowfish" pour un mot de passe chiffré avec blowfish, "dh-aes" pour un mot de passe chiffré avec AES, "external" pour une authentification en utilisant un certificat SSL côté client`
+** description: `mécanisme pour l'authentification SASL : "plain" pour un mot de passe en clair, "dh-blowfish" pour un mot de passe chiffré avec blowfish, "dh-aes" pour un mot de passe chiffré avec AES, "external" pour une authentification en utilisant un certificat SSL côté client`
 ** type: entier
 ** valeurs: plain, dh-blowfish, dh-aes, external (valeur par défaut: `plain`)
 
 * [[option_irc.server_default.sasl_password]] *irc.server_default.sasl_password*
-** description: `mot de passe pour l'authentification SASL (note: le contenu est évalué, voir /help eval)`
+** description: `mot de passe pour l'authentification SASL (note : le contenu est évalué, voir /help eval)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
@@ -559,7 +559,7 @@
 ** valeurs: 1 .. 3600 (valeur par défaut: `15`)
 
 * [[option_irc.server_default.sasl_username]] *irc.server_default.sasl_username*
-** description: `nom d'utilisateur pour l'authentification SASL (note: le contenu est évalué, voir /help eval)`
+** description: `nom d'utilisateur pour l'authentification SASL (note : le contenu est évalué, voir /help eval)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
@@ -569,7 +569,7 @@
 ** valeurs: on, off (valeur par défaut: `off`)
 
 * [[option_irc.server_default.ssl_cert]] *irc.server_default.ssl_cert*
-** description: `fichier de certificat SSL utilisé pour identifier automatiquement votre pseudo ("%h" sera remplacé par le répertoire de base WeeChat, par défaut: "~/.weechat")`
+** description: `fichier de certificat SSL utilisé pour identifier automatiquement votre pseudo ("%h" sera remplacé par le répertoire de base WeeChat, par défaut : "~/.weechat")`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
@@ -579,12 +579,12 @@
 ** valeurs: 0 .. 2147483647 (valeur par défaut: `2048`)
 
 * [[option_irc.server_default.ssl_fingerprint]] *irc.server_default.ssl_fingerprint*
-** description: `empreinte SHA1 du certificat qui est de confiance et accepté pour le serveur (elle doit avoir exactement 40 caractères hexadécimaux sans séparateurs); plusieurs empreintes peuvent être séparées par des virgules; si cette option est définie, les autres vérifications sur les certificats ne sont PAS effectuées (option "ssl_verify")`
+** description: `empreinte SHA1 du certificat qui est de confiance et accepté pour le serveur (elle doit avoir exactement 40 caractères hexadécimaux sans séparateurs) ; plusieurs empreintes peuvent être séparées par des virgules ; si cette option est définie, les autres vérifications sur les certificats ne sont PAS effectuées (option "ssl_verify")`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 
 * [[option_irc.server_default.ssl_priorities]] *irc.server_default.ssl_priorities*
-** description: `chaîne avec les priorités pour gnutls (pour la syntaxe, voir la documentation de la fonction gnutls_priority_init du manuel gnutls, les chaînes courantes sont: "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")`
+** description: `chaîne avec les priorités pour gnutls (pour la syntaxe, voir la documentation de la fonction gnutls_priority_init du manuel gnutls, les chaînes courantes sont : "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `"NORMAL"`)
 
@@ -594,7 +594,7 @@
 ** valeurs: on, off (valeur par défaut: `on`)
 
 * [[option_irc.server_default.username]] *irc.server_default.username*
-** description: `nom d'utilisateur pour le serveur (note: le contenu est évalué, voir /help eval)`
+** description: `nom d'utilisateur pour le serveur (note : le contenu est évalué, voir /help eval)`
 ** type: chaîne
 ** valeurs: toute chaîne (valeur par défaut: `""`)
 

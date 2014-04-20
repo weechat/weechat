@@ -11,28 +11,28 @@
          upgrade
          update
 
-          list: lister les scripts chargés (tous les langages)
-            -o: envoyer la liste des scripts chargés au tampon
-            -i: copier la liste des scripts chargés dans la ligne de commande (pour envoi au tampon)
-        search: chercher des scripts par étiquettes ou texte et afficher le résultat sur le tampon des scripts
-          show: afficher des infos détaillées sur le script
-          load: charger un ou plusieurs scripts
-        unload: décharger un ou plusieurs scripts
-        reload: recharger un ou plusieurs scripts
-      autoload: charger automatiquement un ou plusieurs scripts
-    noautoload: ne pas charger automatiquement un ou plusieurs scripts
-toggleautoload: activer/désactiver le chargement automatique
-       install: installer/mettre à jour un ou plusieurs scripts
-        remove: supprimer un ou plusieurs scripts
- installremove: installer ou supprimer un ou plusieurs scripts, selon l'état courant
-          hold: figer/défiger un ou plusieurs scripts (un script figé ne sera plus mis à jour et ne peut pas être supprimé)
-            -q: mode silencieux: ne pas afficher de messages
-       upgrade: mettre à jour les scripts obsolètes (avec nouvelle version disponible)
-        update: mettre à jour le cache local des scripts
+          list : lister les scripts chargés (tous les langages)
+            -o : envoyer la liste des scripts chargés au tampon
+            -i : copier la liste des scripts chargés dans la ligne de commande (pour envoi au tampon)
+        search : chercher des scripts par étiquettes ou texte et afficher le résultat sur le tampon des scripts
+          show : afficher des infos détaillées sur le script
+          load : charger un ou plusieurs scripts
+        unload : décharger un ou plusieurs scripts
+        reload : recharger un ou plusieurs scripts
+      autoload : charger automatiquement un ou plusieurs scripts
+    noautoload : ne pas charger automatiquement un ou plusieurs scripts
+toggleautoload : activer/désactiver le chargement automatique
+       install : installer/mettre à jour un ou plusieurs scripts
+        remove : supprimer un ou plusieurs scripts
+ installremove : installer ou supprimer un ou plusieurs scripts, selon l'état courant
+          hold : figer/défiger un ou plusieurs scripts (un script figé ne sera plus mis à jour et ne peut pas être supprimé)
+            -q : mode silencieux : ne pas afficher de messages
+       upgrade : mettre à jour les scripts obsolètes (avec nouvelle version disponible)
+        update : mettre à jour le cache local des scripts
 
 Sans paramètre, cette commande ouvre un tampon avec la liste des scripts.
 
-Sur le tampon des scripts, les statuts pour chaque script sont:
+Sur le tampon des scripts, les statuts pour chaque script sont :
   * i a H r N
   | | | | | |
   | | | | | obsolète (nouvelle version disponible)
@@ -42,7 +42,7 @@ Sur le tampon des scripts, les statuts pour chaque script sont:
   | installé
   script populaire
 
-Les touches sur le tampon des scripts:
+Les touches sur le tampon des scripts :
   alt+i  installer le script
   alt+r  supprimer le script
   alt+l  charger le script
@@ -52,21 +52,21 @@ Les touches sur le tampon des scripts:
   alt+h  (dé)figer le script
   alt+v  voir le script
 
-Entrée autorisée sur le tampon des scripts:
+Entrée autorisée sur le tampon des scripts :
   i/r/l/L/u/h  action sur le script (identique aux touches ci-dessus)
   q            fermer le tampon
   $            rafraîchir le tampon
   s:x,y        trier le tampon en utilisant les clés x et y (voir /help script.look.sort)
   s:           réinitialiser le tri (utiliser le tri par défaut)
-  word(s)      filtrer les scripts: recherche du/des mot(s) dans les scripts (description, étiquettes, ...)
+  word(s)      filtrer les scripts : recherche du/des mot(s) dans les scripts (description, étiquettes, ...)
   *            supprimer le filtre
 
-Actions de la souris sur le tampon des scripts:
+Actions de la souris sur le tampon des scripts :
   roulette       faire défiler la liste
   bouton gauche  sélectionner le script
   bouton droit   installer/supprimer le script
 
-Exemples:
+Exemples :
   /script search url
   /script install iset.pl buffers.pl
   /script remove iset.pl

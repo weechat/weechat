@@ -257,7 +257,7 @@ To force a string comparison, add double quotes around each expression, for exam
   50 > 100      ==> 0
   "50" > "100"  ==> 1
 
-Some variables are replaced in expression, using the format ${variable}, variable can be, by order of priority :
+Some variables are replaced in expression, using the format ${variable}, variable can be, by order of priority:
   1. a string with escaped chars (format: "esc:xxx" or "\xxx")
   2. a color (format: "color:xxx")
   3. an info (format: "info:name,arguments", arguments are optional)

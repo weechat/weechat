@@ -26,7 +26,7 @@
 
 | python | python2_bin | chemin vers l'interpréteur python 2.x | -
 
-| relay | relay_client_count | nombre de clients pour le relai | nom du statut (optionnel): connecting, waiting_auth, connected, auth_failed, disconnected
+| relay | relay_client_count | nombre de clients pour le relai | nom du statut (optionnel) : connecting, waiting_auth, connected, auth_failed, disconnected
 
 | weechat | charset_internal | charset interne à WeeChat | -
 
@@ -36,7 +36,7 @@
 
 | weechat | color_rgb2term | couleur RGB convertie en couleur du terminal (0-255) | rgb,limite (la limite est optionnelle et vaut 256 par défaut)
 
-| weechat | color_term2rgb | couleur du terminal (0-255) convertie en couleur RGB | couleur (couleur du terminal: 0-255)
+| weechat | color_term2rgb | couleur du terminal (0-255) convertie en couleur RGB | couleur (couleur du terminal : 0-255)
 
 | weechat | cursor_mode | 1 si le mode curseur est activé | -
 

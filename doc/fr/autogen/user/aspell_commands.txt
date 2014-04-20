@@ -8,17 +8,17 @@
          deldict
          addword [<dict>] <mot>
 
-  enable: activer aspell
- disable: désactiver aspell
-  toggle: activer/désactiver aspell
-listdict: afficher les dictionnaires installés
- setdict: définir le dictionnaire pour le tampon courant (plusieurs dictionnaires peuvent être séparés par une virgule)
- deldict: supprimer le dictionnaire utilisé sur le tampon courant
- addword: ajouter un mot dans le dictionnaire personnel aspell
+  enable : activer aspell
+ disable : désactiver aspell
+  toggle : activer/désactiver aspell
+listdict : afficher les dictionnaires installés
+ setdict : définir le dictionnaire pour le tampon courant (plusieurs dictionnaires peuvent être séparés par une virgule)
+ deldict : supprimer le dictionnaire utilisé sur le tampon courant
+ addword : ajouter un mot dans le dictionnaire personnel aspell
 
 Les lignes d'entrée commençant par '/' ne sont pas vérifiées, sauf pour certaines commandes (voir /set aspell.check.commands).
 
-Pour activer aspell sur tous les tampons, utilisez l'option "default_dict", par exemple :
+Pour activer aspell sur tous les tampons, utilisez l'option "default_dict", par exemple :
   /set aspell.check.default_dict "en"
   /aspell enable
 

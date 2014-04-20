@@ -5,9 +5,9 @@
 /charset  decode|encode <charset>
           reset
 
- decode: changer le charset de décodage
- encode: changer le charset d'encodage
-charset: nouveau charset pour le tampon courant
-  reset: réinitialiser les charsets pour le tampon courant
+ decode : changer le charset de décodage
+ encode : changer le charset d'encodage
+charset : nouveau charset pour le tampon courant
+  reset : réinitialiser les charsets pour le tampon courant
 ----
 
