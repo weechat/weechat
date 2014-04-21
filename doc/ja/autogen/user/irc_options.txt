@@ -39,7 +39,7 @@
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、ターミナル色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_" (デフォルト値: `red`)
 
 * [[option_irc.color.mirc_remap]] *irc.color.mirc_remap*
-** 説明: `remap mirc colors in messages using a hashtable: keys are "fg,bg" as integers between -1 (not specified) and 15, values are WeeChat color names or numbers (format is: "1,-1:color1;2,7:color2"), example: "1,-1:darkgray;1,2:white,blue" to remap black to "darkgray" and black on blue to "white,blue"; default WeeChat colors for IRC codes: 0=white, 1=black, 2=blue, 3=green, 4=lightred, 5=red, 6=magenta, 7=brown, 8=yellow, 9=lightgreen, 10=cyan, 11=lightcyan, 12=lightblue, 13=lightmagenta, 14=gray, 15=white`
+** 説明: `メッセージに含まれる mirc カラーのマッピングをハッシュテーブルで変更: キーは "fg,bg" で -1(指定無し) から 15 までの整数、 値は WeeChat 色名か色番号 (フォーマットは: "1,-1:color1;2,7:color2")、例: "1,-1:darkgray;1,2:white,blue" はテキスト色が黒のものを "darkgray" に、背景色が青でテキスト色が黒のものを "white,blue" に変更; IRC コードに対するデフォルトの WeeChat 色は、0=白、1=黒、2=青、3=緑、4=ライトレッド、5=赤、6=赤紫、7=茶色、8=黄色、9=ライトグリーン、10=シアン、11=ライトシアン、12=ライトブルー、13=ライトマゼンタ、14=灰色、15=白`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"1,-1:darkgray"`)
 
