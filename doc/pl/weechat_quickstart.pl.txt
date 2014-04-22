@@ -18,7 +18,6 @@ Wywołaj z terminala:
 $ weechat
 ----
 
-
 [[help_options]]
 == Pomoc online / opcje
 
@@ -80,7 +79,6 @@ komendy `/save`, która wymusza zapisanie opcji).
 Możesz edytować ręcznie pliki konfiguracyjne (*.conf) i przeładować je za pomocą
 komendy `/reload`, jeśli nie chcesz użyć komendy `/set`.
 
-
 [[core_vs_plugins]]
 == Rdzeń vs wtyczki
 
@@ -92,7 +90,6 @@ Wszystkie protokoły sieciowe jak IRC są dostarczane w oddzielnych wtyczkach.
 
 Użyj komendy `/plugin` do wyświetlenia załadowanych wtyczek, powinieneś zobaczyć
 na liście "irc" oraz inne wtyczki.
-
 
 [[create_irc_server]]
 == Tworzenie serwera IRC
@@ -112,7 +109,6 @@ Jak zawsze w razie wątpliwości dostępna jest pomoc:
 ----
 /help server
 ----
-
 
 [[irc_server_options]]
 == Ustawianie własnych opcji dla serwerów IRC
@@ -183,7 +179,6 @@ nazwa opcji):
 /set irc.server.freenode.xxx wartość
 ----
 
-
 [[connect_to_irc_server]]
 == Łączenie się z serwerem IRC i automatyczne wchodzenie na kanały
 
@@ -206,7 +201,6 @@ oddzielne bufory dla serwerów:
 /set irc.look.server_buffer independent
 ----
 
-
 [[join_part_irc_channels]]
 == Wchodzenie/wychodzenie z kanałów IRC
 
@@ -228,6 +222,21 @@ Zamknięcie bufora serwera lub kanału (`/close` jest aliasem `/buffer close`):
 /close
 ----
 
+// TRANSLATION MISSING
+[[irc_private_messages]]
+== IRC private messages
+
+Open a buffer and send a message to another user (nick 'foo'):
+
+----
+/query foo this is a message
+----
+
+Close the private buffer:
+
+----
+/close
+----
 
 [[buffer_window]]
 == Zarządzanie buforami/oknami
@@ -253,7 +262,6 @@ oraz duże okno (2/3), użyj komendy:
 ----
 /window splitv 33
 ----
-
 
 [[key_bindings]]
 == Skróty klawiszowe
@@ -293,7 +301,6 @@ Aby usunąć klawisz:
 /key unbind meta-y
 ----
 
-
 [[plugins_scripts]]
 == Wtyczki/skrypty
 
@@ -308,7 +315,6 @@ http://weechat.org/scripts
 
 Możesz zarządzać skryptami w WeeChat dzięki komendzie `/script` (zobacz `/help script`
 po więcej informacji).
-
 
 [[more_doc]]
 == Więcej dokumentacji

@@ -17,7 +17,6 @@ X 用ターミナルエミュレータは rxvt-unicode を推奨します (UTF-8
 $ weechat
 ----
 
-
 [[help_options]]
 == オンラインヘルプ / オプション
 
@@ -80,7 +79,6 @@ WeeChat を再起動する必要は*ありません*)。
 `/set` コマンド以外の設定方法として、設定ファイル (*.conf)
 を直接修正し、`/reload` コマンドで再読込することもできます。
 
-
 [[core_vs_plugins]]
 == コア vs プラグイン
 
@@ -92,7 +90,6 @@ IRC 等全てのネットワークプロトコルはそれぞれ異なるプラ�
 
 `/plugin` コマンドで読み込まれているプラグイン一覧を表示できます。"irc"
 やその他のプラグインはここから確認してください。
-
 
 [[create_irc_server]]
 == サーバ情報を作成する
@@ -110,7 +107,6 @@ IRC 等全てのネットワークプロトコルはそれぞれ異なるプラ�
 ----
 /help server
 ----
-
 
 [[irc_server_options]]
 == IRC サーバのオプションを設定する
@@ -181,7 +177,6 @@ IRC 等全てのネットワークプロトコルはそれぞれ異なるプラ�
 /set irc.server.freenode.xxx value
 ----
 
-
 [[connect_to_irc_server]]
 == サーバに接続し、チャンネルに自動接続する
 
@@ -204,7 +199,6 @@ IRC 等全てのネットワークプロトコルはそれぞれ異なるプラ�
 /set irc.look.server_buffer independent
 ----
 
-
 [[join_part_irc_channels]]
 == チャンネルに接続 / 切断する
 
@@ -226,6 +220,21 @@ IRC 等全てのネットワークプロトコルはそれぞれ異なるプラ�
 /close
 ----
 
+// TRANSLATION MISSING
+[[irc_private_messages]]
+== IRC private messages
+
+Open a buffer and send a message to another user (nick 'foo'):
+
+----
+/query foo this is a message
+----
+
+Close the private buffer:
+
+----
+/close
+----
 
 [[buffer_window]]
 == バッファ / ウィンドウ管理
@@ -252,7 +261,6 @@ IRC 等全てのネットワークプロトコルはそれぞれ異なるプラ�
 ----
 /window splitv 33
 ----
-
 
 [[key_bindings]]
 == キー割り当て設定
@@ -290,7 +298,6 @@ WeeChat はデフォルトでたくさんのショートカットキーが設定
 /key unbind meta-y
 ----
 
-
 [[plugins_scripts]]
 == プラグイン / スクリプト
 
@@ -304,7 +311,6 @@ http://weechat.org/scripts
 
 WeeChat ではコマンド `/script` を使うことで、スクリプトの管理ができます
 (より詳しい情報を見るには `/help script` を参照してください)。
-
 
 [[more_doc]]
 == 詳しいドキュメント情報

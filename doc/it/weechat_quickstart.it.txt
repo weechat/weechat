@@ -18,7 +18,6 @@ Avviare dalla propria shell:
 $ weechat
 ----
 
-
 [[help_options]]
 == Aiuto online / opzioni
 
@@ -81,7 +80,6 @@ Tutte le impostazioni vengono salvato all'uscita di WeeChat (o con il comando
 Si possono modificare manualmente i file di configurazione (*.conf) e
 ricaricarli con il comando `/reload` se non si vuole usare il comando `/set`.
 
-
 [[core_vs_plugins]]
 == Core vs plugin
 
@@ -94,7 +92,6 @@ Tutti i protocolli di rete come IRC sono forniti in plugin separati.
 
 Utilizzando il comando `plugin` per elencare i plugin caricati, è possibile
 vedere "irc" ed altri plugin nella lista.
-
 
 [[create_irc_server]]
 == Creare un server IRC
@@ -114,7 +111,6 @@ Come al solito, è disponibile l'aiuto se c'è qualche problema:
 ----
 /help server
 ----
-
 
 [[irc_server_options]]
 == Impostare opzioni personalizzate per il server IRC
@@ -188,7 +184,6 @@ Altre opzioni: è possibile impostare altre opzioni con il seguente comando
 /set irc.server.freenode.xxx value
 ----
 
-
 [[connect_to_irc_server]]
 == Connessione al server IRC e ingresso automatico nei canali
 
@@ -212,7 +207,6 @@ buffer dei server indipendenti:
 /set irc.look.server_buffer independent
 ----
 
-
 [[join_part_irc_channels]]
 == Entrare/uscire dai canali IRC
 
@@ -234,6 +228,21 @@ Chiude il buffer del server o del canale (`/close` è un alias per `/buffer clos
 /close
 ----
 
+// TRANSLATION MISSING
+[[irc_private_messages]]
+== IRC private messages
+
+Open a buffer and send a message to another user (nick 'foo'):
+
+----
+/query foo this is a message
+----
+
+Close the private buffer:
+
+----
+/close
+----
 
 [[buffer_window]]
 == Gestione buffer/finestra
@@ -262,7 +271,6 @@ Per esempio, per dividere verticalmente lo schermo in una finestra piccola
 ----
 /window splitv 33
 ----
-
 
 [[key_bindings]]
 == Associazione tasti
@@ -303,7 +311,6 @@ Per eliminare il tasto:
 /key unbind meta-y
 ----
 
-
 [[plugins_scripts]]
 == Plugin/script
 
@@ -318,7 +325,6 @@ http://weechat.org/scripts
 
 È possibile gestire gli script in WeeChat con il comando `/script` (consultare
 `/help script` per maggiori informazioni).
-
 
 [[more_doc]]
 == Ulteriore documentazione

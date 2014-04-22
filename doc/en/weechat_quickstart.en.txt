@@ -17,7 +17,6 @@ Run from your shell:
 $ weechat
 ----
 
-
 [[help_options]]
 == Online help / options
 
@@ -80,7 +79,6 @@ a write of the options).
 You can edit configuration files (*.conf) by hand and reload them by
 `/reload` command if you don't want to use `/set` command.
 
-
 [[core_vs_plugins]]
 == Core vs plugins
 
@@ -92,7 +90,6 @@ All network protocols like IRC are provided in separate plugins.
 
 Use the `/plugin` command to list loaded plugins, you should see "irc" and
 other plugins in the list.
-
 
 [[create_irc_server]]
 == Create an IRC server
@@ -110,7 +107,6 @@ As usual, help is available if you're lost:
 ----
 /help server
 ----
-
 
 [[irc_server_options]]
 == Set custom IRC server options
@@ -181,7 +177,6 @@ option name):
 /set irc.server.freenode.xxx value
 ----
 
-
 [[connect_to_irc_server]]
 == Connect to IRC server and auto-join channels
 
@@ -204,7 +199,6 @@ server buffers:
 /set irc.look.server_buffer independent
 ----
 
-
 [[join_part_irc_channels]]
 == Join/part IRC channels
 
@@ -226,6 +220,20 @@ Close server or channel buffer (`/close` is an alias for `/buffer close`):
 /close
 ----
 
+[[irc_private_messages]]
+== IRC private messages
+
+Open a buffer and send a message to another user (nick 'foo'):
+
+----
+/query foo this is a message
+----
+
+Close the private buffer:
+
+----
+/close
+----
 
 [[buffer_window]]
 == Buffer/window management
@@ -252,7 +260,6 @@ and a large window (2/3), use command:
 ----
 /window splitv 33
 ----
-
 
 [[key_bindings]]
 == Key bindings
@@ -290,7 +297,6 @@ To remove key:
 /key unbind meta-y
 ----
 
-
 [[plugins_scripts]]
 == Plugins/scripts
 
@@ -304,7 +310,6 @@ http://weechat.org/scripts
 
 You can manage scripts in WeeChat with command `/script` (see `/help script`
 for more info).
-
 
 [[more_doc]]
 == More documentation

@@ -19,7 +19,6 @@ Run from your shell:
 $ weechat
 ----
 
-
 [[help_options]]
 == Ayuda en linea / Opciones
 
@@ -85,7 +84,6 @@ Puede editar los ficheros de configuración (*.conf) directamente y
 después recargarlos con el comando `/reload` si no desea usar el
 comando `/set`.
 
-
 [[core_vs_plugins]]
 == Núcleo vs Plugins
 
@@ -99,7 +97,6 @@ Todos los protocolos de red como IRC, provienen en plugins separados.
 
 Use el comando `/plugin` para ver una lista de los plugins cargados,
 seguramente vera irc y otros.
-
 
 [[create_irc_server]]
 == Crear un servidor IRC
@@ -119,7 +116,6 @@ La ayuda está disponible; si te pierdes:
 ----
 /help server
 ----
-
 
 [[irc_server_options]]
 == Personalizar las opciones de un servidor IRC
@@ -196,7 +192,6 @@ donde "xxx" es el nombre de la opción.
 /set irc.server.freenode.xxx valor
 ----
 
-
 [[connect_to_irc_server]]
 == Conectarse a un servidor IRC
 
@@ -220,7 +215,6 @@ servidores juntos para tenerlos de manera independiente:
 /set irc.look.server_buffer independent
 ----
 
-
 [[join_part_irc_channels]]
 == join/part y canales IRC
 
@@ -243,6 +237,21 @@ Cierra un servidor o el buffer de un canal (`/close` es un alias de
 /close
 ----
 
+// TRANSLATION MISSING
+[[irc_private_messages]]
+== IRC private messages
+
+Open a buffer and send a message to another user (nick 'foo'):
+
+----
+/query foo this is a message
+----
+
+Close the private buffer:
+
+----
+/close
+----
 
 [[buffer_window]]
 == Manipulando buffer/ventana
@@ -271,7 +280,6 @@ junto a otras mas grande (2/3) use el comando
 ----
 /window splitv 33
 ----
-
 
 [[key_bindings]]
 == Atajos de teclado
@@ -313,7 +321,6 @@ Para eliminar una combinación:
 /key unbind meta-y
 ----
 
-
 [[plugins_scripts]]
 == Plugins/scripts
 
@@ -329,7 +336,6 @@ http://weechat.org/scripts
 // TRANSLATION MISSING
 You can manage scripts in WeeChat with command `/script` (see `/help script`
 for more info).
-
 
 [[more_doc]]
 == Más documentación

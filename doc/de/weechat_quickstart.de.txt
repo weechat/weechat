@@ -18,7 +18,6 @@ Starte aus Deiner shell:
 $ weechat
 ----
 
-
 [[help_options]]
 == Online-Hilfe / Optionen
 
@@ -85,7 +84,6 @@ Konfigurationsdateien (*.conf) können auch per Hand editiert und mit dem Befehl
 `/reload` neu eingelesen werden (falls man z.B. den `/set` Befehl nicht
 verwenden möchte).
 
-
 [[core_vs_plugins]]
 == Kern (Core) vs Erweiterungen
 
@@ -98,7 +96,6 @@ Alle Netzwerkprotokolle, z.B. IRC, werden als separate Erweiterung bereit gestel
 
 Benutze den Befehl `/plugin` um alle Erweiterungen aufzulisten, "irc" sowie andere
 Erweiterungen sollten aufgelistet werden.
-
 
 [[create_irc_server]]
 == Einen IRC-Server erstellen
@@ -118,7 +115,6 @@ Falls man nicht mehr weiter weiß, einfach die Hilfe aufrufen:
 ----
 /help server
 ----
-
 
 [[irc_server_options]]
 == Setzen eigener IRC-Server Optionen
@@ -194,7 +190,6 @@ ist der Optionsname):
 /set irc.server.freenode.xxx value
 ----
 
-
 [[connect_to_irc_server]]
 == Verbinden mit dem IRC-Server und auto-join der Channel
 
@@ -219,7 +214,6 @@ um eigenständige Server-Buffer zu nutzen:
 /set irc.look.server_buffer independent
 ----
 
-
 [[join_part_irc_channels]]
 == Betreten/verlassen der IRC-Channel
 
@@ -241,6 +235,21 @@ Schließen eines Server- oder Channel-Buffers (`/close` ist ein Alias für `/buf
 /close
 ----
 
+// TRANSLATION MISSING
+[[irc_private_messages]]
+== IRC private messages
+
+Open a buffer and send a message to another user (nick 'foo'):
+
+----
+/query foo this is a message
+----
+
+Close the private buffer:
+
+----
+/close
+----
 
 [[buffer_window]]
 == Buffer/Fenster Verwaltung
@@ -269,7 +278,6 @@ und ein großes Fenster (2/3 Höhe) aufzuteilen, benutze diesen Befehl:
 ----
 /window splitv 33
 ----
-
 
 [[key_bindings]]
 == Tastaturbelegung
@@ -310,7 +318,6 @@ Entfernen der Belegung:
 /key unbind meta-y
 ----
 
-
 [[plugins_scripts]]
 == Erweiterungen/Skripten
 
@@ -324,7 +331,6 @@ http://weechat.org/scripts
 
 Skripten können mit dem Befehl `/script` verwaltet werden (siehe `/help script` für
 weitere Informationen zur Bedienung).
-
 
 [[more_doc]]
 == Weitere Dokumentation

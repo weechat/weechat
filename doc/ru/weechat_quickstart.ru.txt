@@ -18,7 +18,6 @@ Run from your shell:
 $ weechat
 ----
 
-
 [[help_options]]
 == помощь \ настройки
 
@@ -81,7 +80,6 @@ WeeChat после изменений в настройках)
 Вы можете редактировать файлы кофигурации (*.conf) в ручную, и применять параметры
 с помощью команды `/reload`, в случае, если вас не устраивает `/set`.
 
-
 [[core_vs_plugins]]
 == Ядро vs плагины
 
@@ -93,7 +91,6 @@ WeeChat после изменений в настройках)
 
 Используйте команду `/plugin` что бы увидеть все загруженные плагины, среди них
 будет IRC, и остальные плагины.
-
 
 [[create_irc_server]]
 == Добавление IRC сервера
@@ -113,7 +110,6 @@ You can add another IRC server with `/server` command, for example:
 ----
 /help server
 ----
-
 
 [[irc_server_options]]
 == Дополнительные опции сервера
@@ -186,7 +182,6 @@ with nickserv (only if you don't use SASL for authentication):
 /set irc.server.freenode.xxx value
 ----
 
-
 [[connect_to_irc_server]]
 == Подключение к серверу, и автовход на каналы
 
@@ -209,7 +204,6 @@ with nickserv (only if you don't use SASL for authentication):
 /set irc.look.server_buffer independent
 ----
 
-
 [[join_part_irc_channels]]
 == Подключение\разделение IRC каналов
 
@@ -231,6 +225,21 @@ with nickserv (only if you don't use SASL for authentication):
 /close
 ----
 
+// TRANSLATION MISSING
+[[irc_private_messages]]
+== IRC private messages
+
+Open a buffer and send a message to another user (nick 'foo'):
+
+----
+/query foo this is a message
+----
+
+Close the private buffer:
+
+----
+/close
+----
 
 [[buffer_window]]
 == Управление буферами\окнами
@@ -257,7 +266,6 @@ with nickserv (only if you don't use SASL for authentication):
 ----
 /window splitv 33
 ----
-
 
 [[key_bindings]]
 == Комбинации клавиш
@@ -295,7 +303,6 @@ with nickserv (only if you don't use SASL for authentication):
 /key unbind meta-y
 ----
 
-
 [[plugins_scripts]]
 == Плагины/Скрипты
 
@@ -310,7 +317,6 @@ http://weechat.org/scripts
 // TRANSLATION MISSING
 You can manage scripts in WeeChat with command `/script` (see `/help script`
 for more info).
-
 
 [[more_doc]]
 == Больше документации
