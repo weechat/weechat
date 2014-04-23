@@ -100,11 +100,9 @@ Erweiterungen sollten aufgelistet werden.
 [[create_irc_server]]
 == Einen IRC-Server erstellen
 
-// TRANSLATION MISSING
-The server 'freenode' is created by default on first startup.
+Der Server 'freenode' wird standardmäßig beim ersten Programmstart erstellt.
 
-// TRANSLATION MISSING
-You can add another IRC server with `/server` command, for example:
+Ein weiterer IRC Server kann mit dem `/server` Befehl erstellt werden. Zum Beispiel:
 
 ----
 /server add oftc irc.oftc.net/6667
@@ -235,17 +233,16 @@ Schließen eines Server- oder Channel-Buffers (`/close` ist ein Alias für `/buf
 /close
 ----
 
-// TRANSLATION MISSING
 [[irc_private_messages]]
-== IRC private messages
+== IRC private Nachrichten
 
-Open a buffer and send a message to another user (nick 'foo'):
+Öffnet einen Buffer und schickt eine Nachricht an einen User (Nick 'foo'):
 
 ----
 /query foo this is a message
 ----
 
-Close the private buffer:
+Schließt einen privaten Buffer:
 
 ----
 /close
