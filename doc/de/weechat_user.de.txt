@@ -1115,8 +1115,7 @@ Befehl festgelegt werden:
 | key[alt-]key[>]    | springt zum nächsten besuchten Buffer | `/input jump_next_visited_buffer`
 | key[alt-/]         | wechselt zum jeweils zuletzt angezeigten Buffern | `/input jump_last_buffer_displayed`
 | key[alt-=]         | schaltet Filterfunktion an/aus | `/filter toggle`
-// TRANSLATION MISSING
-| key[alt--]         | Toggle filters on/off in current buffer | `/filter toggle @`
+| key[alt--]         | schaltet, für den aktuellen Buffer, Filterfunktion an/aus | `/filter toggle @`
 | key[alt-!]         | schaltet einfachen Anzeigemodus an/aus | `/window bare`
 |===
 
@@ -1967,8 +1966,7 @@ ist identisch mit den Befehlen:
 Um den Zeichensatz in einem IRC-Channel (oder in einem privaten Buffer) zu ändern
 wird der selbe Befehl im entsprechenden Buffer genutzt.
 
-// TRANSLATION MISSING
-To set charset for all channels/privates of an IRC server:
+Um die Zeichenkodierung für alle Channels und privaten Buffer eines IRC Server zu ändern:
 
 ----
 /set charset.encode.irc.freenode ISO-8859-15
@@ -2480,10 +2478,8 @@ Unvollständige Liste der IRC Nachrichten bzw. Alias die angepasst werden könne
 | 369       | whowas        | whowas (Ende)
 | 378       | whois         | whois (Verbindung von)
 | 379       | whois         | whois (genutzte Modi)
-// TRANSLATION MISSING
-| 401       | whois         | no such nick/channel
-// TRANSLATION MISSING
-| 402       | whois         | no such server
+| 401       | whois         | kein solcher Nick/Channel
+| 402       | whois         | kein solcher Server
 | 432       |               | fehlerhafter Nickname
 | 433       |               | Nickname wird schon verwendet
 | 438       |               | nicht autorisiert um Nicknamen zu ändern
@@ -3288,8 +3284,7 @@ Variablen welche gesetzt werden, aufgrund der Nutzung von Tags in einer Nachrich
 | tg_tags_count      | string | Anzahl an Tags der Nachricht
 | tg_tag_nick        | string | Nick (extrahiert aus Tag "nick_xxx")
 | tg_tag_prefix_nick | string | Nickfarbe für Präfix (extrahier aus Tag "prefix_nick_ccc")
-// TRANSLATION MISSING
-| tg_tag_host        | string | User name and host, format: username@host (from tag "host_xxx")
+| tg_tag_host        | string | Username und Host, Format: username@host (extrahiert aus Tag "host_xxx")
 | tg_tag_notify      | string | Benachrichtigungsstufe ('none', 'message', 'private', 'highlight')
 | tg_notify          | string | Benachrichtigungsstufe, falls von 'none' abweichend
 | tg_msg_pv          | string | "1" für eine private Nachricht, andernfalls "0"
