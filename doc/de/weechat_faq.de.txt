@@ -34,10 +34,9 @@ http://weechat.org/about/features
 == Kompilierung / Installation
 
 [[gui]]
-=== Ich habe gehört es gibt mehrere GUIs für WeeChat. Wie kann ich diese kompilieren bzw. nutzen?
+=== Ich habe gehört es gibt verschiedene GUIs für WeeChat. Wie kann ich diese kompilieren bzw. nutzen?
 
-// TRANSLATION MISSING
-Some remote GUIs are available, see the links on features page:
+Die grafischen Oberflächen findet man auf folgender Seite:
 http://weechat.org/about/features
 
 [[compile_git]]
@@ -228,8 +227,7 @@ werden sollte:
 [[terminal_copy_paste]]
 === Wie kann ich einen Text kopieren und einfügen ohne das die Nickliste mit kopiert wird?
 
-// TRANSLATION MISSING
-With WeeChat ≥ 0.4.4, you can use the bare display (default key: key[alt-!]).
+Ab WeeChat ≥ 0.4.4 kann ein einfacher Anzeigemodus genutzt werden (Standardtastenbelegung: key[alt-!]).
 
 Hierzu kannst Du ein Terminal nutzen welches Block-Auswahl erlaubt (wie z.B. rxvt-unicode,
 konsole, gnome-terminal, ...). Im Normalfall erfolgt die Markierung mittels der Tasten
@@ -245,8 +243,7 @@ Bildschirm zu positionieren:
 [[urls]]
 === Wie kann ich eine URL aufrufen die einen Zeilenumbruch besitzt?
 
-// TRANSLATION MISSING
-With WeeChat ≥ 0.4.4, you can use the bare display (default key: key[alt-!]).
+Ab WeeChat ≥ 0.4.4 kann ein einfacher Anzeigemodus genutzt werden (Standardtastenbelegung: key[alt-!]).
 
 WeeChat stellt standardmäßig die Uhrzeit als auch einen Präfix in jeder
 Zeile dar. Optional können zusätzlich auch Bars im Chatfenster dargestellt
@@ -339,25 +336,25 @@ und um zu Highlight-Nachrichten zu springen: key[alt-p] / key[alt-n].
 
 Siehe Benutzeranleitung für weitere Informationen zu dieser Funktion (Standardtastenbelegung).
 
-// TRANSLATION MISSING
 [[terminal_focus]]
-=== How can I execute commands when terminal gets/loses focus?
+=== Wie kann ich Befehle ausführen, wenn der Terminal (keinen) Fokus hat?
 
-You must enable the focus events with a special code sent to terminal.
+Dazu muss ein spezieller Code an das Terminal gesendet werden um diese
+Funktionalität zu aktivieren.
 
-*Important*:
+*Wichtig*:
 
-* Currently, *only* 'xterm' seems to support this feature.
-* It does *not* work under screen/tmux.
+* Gegenwärtig scheint diese Funktion *ausschließlich* durch 'xterm' zur Verfügung gestellt zu werden.
+* Unter screen/tmux funktioniert diese Funktion *nicht*.
 
-To send the code when WeeChat is starting:
+Um den speziellen Code während des Startvorgangs von WeeChat zu aktivieren:
 
 ----
 /set weechat.startup.command_after_plugins "/print -stdout \033[?1004h\n"
 ----
 
-And then you bind two keys for the focus (replace the `/print` commands by the
-commands of your choice):
+Zusätzlich sollten noch zwei Tastenbefehle eingebunden werden (der Befehl
+`/print` sollte durch einen Befehl Ihrer Wahl ersetzt werden):
 
 ----
 /key bind meta2-I /print -core focus
@@ -712,13 +709,11 @@ Um dies zu beheben muss folgendes konfiguriert werden:
 /plugin autoload
 ----
 
-// TRANSLATION MISSING
 [[install_scripts]]
-=== How can I install scripts? Are scripts compatible with other IRC clients?
+=== Wie kann ich Skripten installieren? Sind Skripten kompatibel mit anderen IRC Clients?
 
-// TRANSLATION MISSING
-You can use the command `/script` to install and manage scripts
-(see `/help script` for help).
+Zum installieren und verwalten von Skripten kann der Befehl `/script` genutzt werden
+(siehe `/help script` für eine Hilfe).
 
 Die Skripten für WeeChat sind mit anderer IRC-Clients nicht kompatibel und vice versa.
 
