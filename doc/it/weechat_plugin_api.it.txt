@@ -3731,7 +3731,7 @@ Prototipo:
 
 [source,C]
 ----
-struct t_hashtable *hashtable_dup (struct t_hashtable *hashtable);
+struct t_hashtable *weechat_hashtable_dup (struct t_hashtable *hashtable);
 ----
 
 Argomenti:
