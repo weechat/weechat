@@ -808,7 +808,7 @@ length = weechat.strlen_screen("é") # 1
 
 ==== weechat_string_match
 
-_バージョン 0.4.4 で更新。_
+_バージョン 1.0 で更新。_
 
 文字列がマスクにマッチするか確認。
 
@@ -828,7 +828,7 @@ int weechat_string_match (const char *string, const char *mask,
 * 'case_sensitive': 大文字小文字を区別する場合は 1、区別しない場合は 0
 
 [NOTE]
-バージョン 0.4.4 以上では、ワイルドカードをマスクの内部で使うことが可能です
+バージョン 1.0 以上では、ワイルドカードをマスクの内部で使うことが可能です
 (マスクの最初および最後だけではありません)。
 
 戻り値:
@@ -969,7 +969,7 @@ free (str);
 
 ==== weechat_string_convert_escaped_chars
 
-_WeeChat バージョン 0.4.4 以上で利用可。_
+_WeeChat バージョン 1.0 以上で利用可。_
 
 エスケープ文字を値に変換:
 
@@ -1272,7 +1272,7 @@ free (str);
 
 ==== weechat_string_replace_regex
 
-_WeeChat バージョン 0.4.4 以上で利用可。_
+_WeeChat バージョン 1.0 以上で利用可。_
 
 文字列中のテキストを正規表現、置換先テキスト、任意指定のコールバックを使って置換。
 
@@ -1393,7 +1393,7 @@ weechat_string_free_split (argv);
 
 ==== weechat_string_split_shell
 
-_WeeChat バージョン 0.4.4 以上で利用可。_
+_WeeChat バージョン 1.0 以上で利用可。_
 
 コマンドを引数を分割する際にシェルがやるように文字列を分割。
 
@@ -1824,7 +1824,7 @@ _WeeChat バージョン 0.4.0 以上で利用可、バージョン 0.4.2 で更
 ('WeeChat ユーザガイド' のコマンド `/eval` を参照)。
 
 [NOTE]
-バージョン 0.4.4 以降、入れ子変数を使えるようになりました、例:
+バージョン 1.0 以降、入れ子変数を使えるようになりました、例:
 `${color:${variable}}`。
 
 プロトタイプ:
@@ -3649,7 +3649,7 @@ weechat_hashtable_map_string (hashtable, &map_cb, NULL);
 
 ==== weechat_hashtable_dup
 
-_WeeChat バージョン 0.4.4 以上で利用可。_
+_WeeChat バージョン 1.0 以上で利用可。_
 
 ハッシュテーブルを複製。
 
@@ -6599,7 +6599,7 @@ void weechat_printf_y (struct t_gui_buffer *buffer, int y,
 * 'y': 行番号 (1 行目は 0); 負数の場合は表示された最後の行の後に行を追加する:
   'y' の絶対値で最後の行の後に追加する行数を指定 (例えば
   -1 は最後の行のすぐ後、-2 は 最後の行の 2 行後)
-  _(WeeChat バージョン 0.4.4 以上で利用可)_
+  _(WeeChat バージョン 1.0 以上で利用可)_
 * 'message': 表示するメッセージ
 
 C 言語での使用例:
@@ -7217,13 +7217,13 @@ struct t_hook *weechat_hook_process_hashtable (const char *command,
   に作成します (関数 <<_weechat_hook_set,weechat_hook_set>> を参照)
 
 | buffer_flush +
-  _(WeeChat バージョン 0.4.4 以上で利用可)_ |
+  _(WeeChat バージョン 1.0 以上で利用可)_ |
   バイト数 |
   標準出力および標準エラー出力をフラッシュ (出力をコールバックに送信) するバイト数の最小値、
   1 から 65536 (デフォルト) まで; 1 = すべての出力をすぐにコールバックに送信
 
 | detached +
-  _(WeeChat バージョン 0.4.4 以上で利用可)_ |
+  _(WeeChat バージョン 1.0 以上で利用可)_ |
   (非使用) |
   detached モードでプロセスを実行: 標準出力と標準エラー出力を
   '/dev/null' にリダイレクトする
@@ -7886,32 +7886,32 @@ WeeChat とプラグインが送信するシグナルのリスト:
   Python スクリプトを削除
 
 | relay | relay_client_connecting +
-  _(WeeChat バージョン 0.4.4 以上で利用可)_ |
+  _(WeeChat バージョン 1.0 以上で利用可)_ |
   Pointer: リレークライアント |
   リレークライアントが接続中
 
 | relay | relay_client_waiting_auth +
-  _(WeeChat バージョン 0.4.4 以上で利用可)_ |
+  _(WeeChat バージョン 1.0 以上で利用可)_ |
   Pointer: リレークライアント |
   リレークライアントからの認証待ち
 
 | relay | relay_client_auth_ok +
-  _(WeeChat バージョン 0.4.4 以上で利用可)_ |
+  _(WeeChat バージョン 1.0 以上で利用可)_ |
   Pointer: リレークライアント |
   リレークライアントからの認証に成功
 
 | relay | relay_client_connected +
-  _(WeeChat バージョン 0.4.4 以上で利用可)_ |
+  _(WeeChat バージョン 1.0 以上で利用可)_ |
   Pointer: リレークライアント |
   リレークライアントが接続
 
 | relay | relay_client_auth_failed +
-  _(WeeChat バージョン 0.4.4 以上で利用可)_ |
+  _(WeeChat バージョン 1.0 以上で利用可)_ |
   Pointer: リレークライアント |
   リレークライアントの認証に失敗
 
 | relay | relay_client_disconnected +
-  _(WeeChat バージョン 0.4.4 以上で利用可)_ |
+  _(WeeChat バージョン 1.0 以上で利用可)_ |
   Pointer: リレークライアント |
   リレークライアントが切断
 
@@ -8104,17 +8104,17 @@ WeeChat とプラグインが送信するシグナルのリスト:
   キーが押された
 
 | weechat | key_combo_default +
-  _(WeeChat バージョン 0.4.4 以上で利用可)_ |
+  _(WeeChat バージョン 1.0 以上で利用可)_ |
   String: キーの組み合わせ |
   'default' コンテキスト内のキーの組み合わせ
 
 | weechat | key_combo_search +
-  _(WeeChat バージョン 0.4.4 以上で利用可)_ |
+  _(WeeChat バージョン 1.0 以上で利用可)_ |
   String: キーの組み合わせ |
   'search' コンテキスト内のキーの組み合わせ
 
 | weechat | key_combo_cursor +
-  _(WeeChat バージョン 0.4.4 以上で利用可)_ |
+  _(WeeChat バージョン 1.0 以上で利用可)_ |
   String: キーの組み合わせ |
   'cursor' コンテキスト内のキーの組み合わせ
 
@@ -8306,7 +8306,7 @@ hook = weechat.hook_signal("quit", "my_signal_cb", "")
 
 ==== weechat_hook_signal_send
 
-_バージョン 0.4.4 で更新。_
+_バージョン 1.0 で更新。_
 
 シグナルを送信。
 
@@ -8325,7 +8325,7 @@ int weechat_hook_signal_send (const char *signal, const char *type_data,
   (<<_weechat_hook_signal,weechat_hook_signal>> を参照)
 * 'signal_data': シグナルと一緒に送信するデータ
 
-戻り値 _(WeeChat バージョン 0.4.4 以上で利用可。)_:
+戻り値 _(WeeChat バージョン 1.0 以上で利用可。)_:
 
 * 最後に実行したコールバックの戻り値
   (コールバックを実行しなかった場合は 'WEECHAT_RC_OK'):
@@ -8623,7 +8623,7 @@ hook = weechat.hook_hsignal("test", "my_hsignal_cb", "")
 
 ==== weechat_hook_hsignal_send
 
-_WeeChat バージョン 0.3.4 以上で利用可、バージョン 0.4.4 で更新。_
+_WeeChat バージョン 0.3.4 以上で利用可、バージョン 1.0 で更新。_
 
 hsignal (ハッシュテーブルを持つシグナル) を送信。
 
@@ -8639,7 +8639,7 @@ int weechat_hook_hsignal_send (const char *signal, struct t_hashtable *hashtable
 * 'signal': 送信するシグナル
 * 'hashtable': ハッシュテーブル
 
-戻り値 _(WeeChat バージョン 0.4.4 以上で利用可。)_:
+戻り値 _(WeeChat バージョン 1.0 以上で利用可。)_:
 
 * 最後に実行したコールバックの戻り値
   (コールバックを実行しなかった場合は 'WEECHAT_RC_OK'):
@@ -9163,7 +9163,7 @@ WeeChat とプラグインが使う修飾子のリスト:
   IRC 色コードを含む (または IRC 色コードを削除された) 文字列
 
 | irc_color_decode_ansi +
-  _(WeeChat バージョン 0.4.4 以上で利用可)_ |
+  _(WeeChat バージョン 1.0 以上で利用可)_ |
   色を保持する場合は "1"、削除する場合は "0" |
   任意の文字列 |
   IRC 色コードに変換された ANSI 色コードを含む (または ANSI 色コードを削除された) 文字列
@@ -9203,7 +9203,7 @@ WeeChat とプラグインが使う修飾子のリスト:
   メッセージの新しい内容
 
 | color_decode_ansi +
-  _(WeeChat バージョン 0.4.4 以上で利用可)_ |
+  _(WeeChat バージョン 1.0 以上で利用可)_ |
   色を保持する場合は "1"、削除する場合は "0" |
   任意の文字列 |
   WeeChat 色コードに変換された ANSI 色コードを含む (または ANSI 色コードを削除された) 文字列
@@ -9794,7 +9794,7 @@ void weechat_hook_set (struct t_hook *hook, const char *property,
   子プロセスの標準入力 ('stdin') にデータを送信するパイプを閉じる
 
 | signal +
-  _(WeeChat バージョン 0.4.4 以上で利用可)_ |
+  _(WeeChat バージョン 1.0 以上で利用可)_ |
   'process'、'process_hashtable' |
   シグナル番号または以下の名前から 1 つ:
   `hup`、`int`、`quit`、`kill`、`term`、`usr1`、`usr2` |
@@ -10021,7 +10021,7 @@ weechat.prnt(weechat.current_buffer(), "Text on current buffer")
 
 ==== weechat_buffer_search
 
-_バージョン 0.4.4 で更新。_
+_バージョン 1.0 で更新。_
 
 プラグインおよび名前でバッファを検索。
 
@@ -10038,10 +10038,10 @@ struct t_gui_buffer *weechat_buffer_search (const char *plugin,
 * 'plugin': プラグインの名前、以下の特殊値を使うことができます:
 ** `==`: name 引数でバッファの完全な名前を使う (例:
    `freenode.#weechat` ではなく `irc.freenode.#weechat`)
-   _(WeeChat バージョン 0.4.4 以上で利用可)_
+   _(WeeChat バージョン 1.0 以上で利用可)_
 * 'name': バッファの名前、NULL または空文字列の場合、現在のバッファ
   (現在のウィンドウに表示されているバッファ) を返す; 名前が `(?i)`
-  で始まる場合、検索は大文字小文字を区別せずに検索 _(WeeChat バージョン 0.4.4 以上で利用可)_
+  で始まる場合、検索は大文字小文字を区別せずに検索 _(WeeChat バージョン 1.0 以上で利用可)_
 
 戻り値:
 
@@ -10052,7 +10052,7 @@ C 言語での使用例:
 [source,C]
 ----
 struct t_gui_buffer *buffer1 = weechat_buffer_search ("irc", "freenode.#weechat");
-struct t_gui_buffer *buffer2 = weechat_buffer_search ("==", "irc.freenode.#test"); /* WeeChat ≥ 0.4.4 */
+struct t_gui_buffer *buffer2 = weechat_buffer_search ("==", "irc.freenode.#test"); /* WeeChat ≥ 1.0 */
 ----
 
 スクリプト (Python) での使用例:
@@ -10281,16 +10281,16 @@ int weechat_buffer_get_integer (struct t_gui_buffer *buffer,
 ** 'active': バッファがマージされて選択されている場合は 2、バッファが選択されている場合は
    1、バッファがマージされ選択されていない場合は 0
 ** 'hidden': バッファが隠されている場合は 1、そうでない場合は 0
-   _(WeeChat バージョン 0.4.4 以上で利用可)_
+   _(WeeChat バージョン 1.0 以上で利用可)_
 ** 'zoomed': バッファがマージとズームされている場合は 1、そうでない場合は 0
-   _(WeeChat バージョン 0.4.4 以上で利用可)_
+   _(WeeChat バージョン 1.0 以上で利用可)_
 ** 'print_hooks_enabled': プリントフックが有効化されている場合は 1、そうでない場合は 0
 ** 'day_change': 日付変更メッセージを表示する場合は 1、そうでない場合は 0
    _(WeeChat バージョン 0.4.3 以上で利用可)_
 ** 'clear': コマンド `/buffer clear` でバッファをクリアできる場合は 1、そうでない場合は 0
-   _(WeeChat バージョン 0.4.4 以上で利用可)_
+   _(WeeChat バージョン 1.0 以上で利用可)_
 ** 'filter': バッファでフィルタが有効な場合は 1、そうでない場合は 0
-   _(WeeChat バージョン 0.4.4 以上で利用可)_
+   _(WeeChat バージョン 1.0 以上で利用可)_
 ** 'lines_hidden': バッファに非表示 (フィルタされた) メッセージが 1
    行以上含まれる場合は 1、すべてのメッセージが表示冴えている場合は 0
 ** 'prefix_max_length': バッファプレフィックスの最大長
@@ -10474,7 +10474,7 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
   "+": ホットリストを有効化 (グローバル設定、バッファへのポインタは使われない) +
   "-": ホットリストを無効化 (グローバル設定、バッファへのポインタは使われない) +
   優先度: この優先度でホットリストにバッファを追加 +
-  "-1": ホットリストからバッファを削除 _(WeeChat バージョン 0.4.4 以上で利用可)_
+  "-1": ホットリストからバッファを削除 _(WeeChat バージョン 1.0 以上で利用可)_
 
 | completion_freeze | "0" または "1" |
   "0": 補完を止める (デフォルト)
@@ -10490,7 +10490,7 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
   "auto": 指定したバッファを現在のウィンドウに表示、読了マーカーをリセットしない
 
 | hidden +
-  _(WeeChat バージョン 0.4.4 以上で利用可)_ | "0" または "1" |
+  _(WeeChat バージョン 1.0 以上で利用可)_ | "0" または "1" |
   "0": バッファを隠すことを止める +
   "1": バッファを隠す
 
@@ -10506,7 +10506,7 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
 | type | "formatted" または "free" |
   バッファのタイプを設定: "formatted" (チャットメッセージ用)、または
   "free" (自由内容用); 値が "free" の場合、'clear' プロパティは強制的に
-  "0" に設定されます _(WeeChat バージョン 0.4.4 以上で利用可)_
+  "0" に設定されます _(WeeChat バージョン 1.0 以上で利用可)_
 
 | notify | "0", "1", "2", "3" |
   バッファの通知レベルを設定: "0" = ホットリストに追加しない、"1" =
@@ -10522,14 +10522,14 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
   "1" (新規バッファに対するデフォルト)
 
 | clear +
-  _(WeeChat バージョン 0.4.4 以上で利用可)_ | "0" または "1" |
+  _(WeeChat バージョン 1.0 以上で利用可)_ | "0" または "1" |
   ユーザからのコマンド `/buffer clear` でバッファのクリアを禁止する場合は "0"、
   バッファのクリアを許可する場合は "1" (新規バッファに対するデフォルト)
    (注意: この値が "0" に設定されていたとしても、関数
    <<_weechat_buffer_clear,weechat_buffer_clear>> を使えばバッファをクリアすることが可能です)
 
 | filter +
-  _(WeeChat バージョン 0.4.4 以上で利用可)_ | "0" または "1" |
+  _(WeeChat バージョン 1.0 以上で利用可)_ | "0" または "1" |
   "0": バッファでフィルタを無効化 +
   "1": バッファでフィルタを有効化
 

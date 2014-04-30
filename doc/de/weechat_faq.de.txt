@@ -227,7 +227,7 @@ werden sollte:
 [[terminal_copy_paste]]
 === Wie kann ich einen Text kopieren und einfügen ohne das die Nickliste mit kopiert wird?
 
-Ab WeeChat ≥ 0.4.4 kann ein einfacher Anzeigemodus genutzt werden (Standardtastenbelegung: key[alt-!]).
+Ab WeeChat ≥ 1.0 kann ein einfacher Anzeigemodus genutzt werden (Standardtastenbelegung: key[alt-!]).
 
 Hierzu kannst Du ein Terminal nutzen welches Block-Auswahl erlaubt (wie z.B. rxvt-unicode,
 konsole, gnome-terminal, ...). Im Normalfall erfolgt die Markierung mittels der Tasten
@@ -243,7 +243,7 @@ Bildschirm zu positionieren:
 [[urls]]
 === Wie kann ich eine URL aufrufen die einen Zeilenumbruch besitzt?
 
-Ab WeeChat ≥ 0.4.4 kann ein einfacher Anzeigemodus genutzt werden (Standardtastenbelegung: key[alt-!]).
+Ab WeeChat ≥ 1.0 kann ein einfacher Anzeigemodus genutzt werden (Standardtastenbelegung: key[alt-!]).
 
 WeeChat stellt standardmäßig die Uhrzeit als auch einen Präfix in jeder
 Zeile dar. Optional können zusätzlich auch Bars im Chatfenster dargestellt

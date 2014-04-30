@@ -17,7 +17,7 @@ First, some basic things:
 Please give some info:
 
 * The *version* of WeeChat: output of `/v` in WeeChat, for example:
-  `WeeChat 0.4.4-dev (git: v0.4.3-215-g2d77782)`. +
+  `WeeChat 1.0-dev (git: v0.4.3-475-gb174b3c)`. +
   If WeeChat does not start at all, give the version displayed by
   `weechat --help` (or the version installed with your package manager).
 * The operating system, including distribution name (for Linux) and its version

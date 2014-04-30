@@ -719,7 +719,7 @@ hda:
 [[message_buffer_hidden]]
 ==== _buffer_hidden
 
-_WeeChat バージョン 0.4.4 以上で利用可。_
+_WeeChat バージョン 1.0 以上で利用可。_
 
 このメッセージは WeeChat が "buffer_hidden"
 シグナルを送信する際にクライアントに送られます。
@@ -754,7 +754,7 @@ hda:
 [[message_buffer_unhidden]]
 ==== _buffer_unhidden
 
-_WeeChat バージョン 0.4.4 以上で利用可。_
+_WeeChat バージョン 1.0 以上で利用可。_
 
 このメッセージは WeeChat が "buffer_unhidden"
 シグナルを送信する際にクライアントに送られます。

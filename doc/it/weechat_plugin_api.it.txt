@@ -827,7 +827,7 @@ length = weechat.strlen_screen("é") # 1
 ==== weechat_string_match
 
 // TRANSLATION MISSING
-_Updated in 0.4.4._
+_Updated in 1.0._
 
 Verifica se una stringa coincide ad una mask.
 
@@ -849,7 +849,7 @@ Argomenti:
 
 // TRANSLATION MISSING
 [NOTE]
-Since version 0.4.4, wildcards are allowed inside the mask
+Since version 1.0, wildcards are allowed inside the mask
 (not only beginning/end of mask).
 
 Valore restituito:
@@ -990,7 +990,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 
 ==== weechat_string_convert_escaped_chars
 
-_WeeChat ≥ 0.4.4._
+_WeeChat ≥ 1.0._
 
 // TRANSLATION MISSING
 Convert escaped chars to their value:
@@ -1310,7 +1310,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 
 ==== weechat_string_replace_regex
 
-_WeeChat ≥ 0.4.4._
+_WeeChat ≥ 1.0._
 
 // TRANSLATION MISSING
 Replace text in a string using a regular expression, replacement text and
@@ -1436,7 +1436,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 
 ==== weechat_string_split_shell
 
-_WeeChat ≥ 0.4.4._
+_WeeChat ≥ 1.0._
 
 // TRANSLATION MISSING
 Split a string like the shell does for a command with arguments.
@@ -1874,7 +1874,7 @@ Special variables with format `${variable}` are expanded (see command `/eval` in
 
 // TRANSLATION MISSING
 [NOTE]
-Since version 0.4.4, nested variables are supported, for example:
+Since version 1.0, nested variables are supported, for example:
 `${color:${variable}}`.
 
 Prototipo:
@@ -3722,7 +3722,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 
 ==== weechat_hashtable_dup
 
-_WeeChat ≥ 0.4.4._
+_WeeChat ≥ 1.0._
 
 // TRANSLATION MISSING
 Duplicate a hashtable.
@@ -6705,7 +6705,7 @@ Argomenti:
 * 'y': numero di riga (la prima riga è 0); a negative value adds a line after
   last line displayed: absolute value of 'y' is the number of lines after last
   line (for example -1 is immediately after last line, -2 is 2 lines after last
-  line) _(WeeChat ≥ 0.4.4)_
+  line) _(WeeChat ≥ 1.0)_
 * 'message': messaggio da visualizzare
 
 Esempio in C:
@@ -7347,14 +7347,14 @@ available:
 
 // TRANSLATION MISSING
 | buffer_flush +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   number of bytes |
   Minimum number of bytes to flush stdout/stderr (to send output to callback),
   between 1 and 65536 (default); 1 = send any output immediately to the callback
 
 // TRANSLATION MISSING
 | detached +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   (not used) |
   Run the process in a detached mode: stdout and stderr are redirected to
   '/dev/null'
@@ -8052,37 +8052,37 @@ List of signals sent by WeeChat and plugins:
 
 // TRANSLATION MISSING
 | relay | relay_client_connecting +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   Pointer: relay client |
   A relay client is connecting
 
 // TRANSLATION MISSING
 | relay | relay_client_waiting_auth +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   Pointer: relay client |
   Waiting for authentication from a relay client
 
 // TRANSLATION MISSING
 | relay | relay_client_auth_ok +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   Pointer: relay client |
   Successful authentication from a relay client
 
 // TRANSLATION MISSING
 | relay | relay_client_connected +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   Pointer: relay client |
   A relay client is connected
 
 // TRANSLATION MISSING
 | relay | relay_client_auth_failed +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   Pointer: relay client |
   Authentication of a relay client has failed
 
 // TRANSLATION MISSING
 | relay | relay_client_disconnected +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   Pointer: relay client |
   A relay client is disconnected
 
@@ -8294,19 +8294,19 @@ List of signals sent by WeeChat and plugins:
 
 // TRANSLATION MISSING
 | weechat | key_combo_default +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   String: key combo |
   Key combo in 'default' context
 
 // TRANSLATION MISSING
 | weechat | key_combo_search +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   String: key combo |
   Key combo in 'search' context
 
 // TRANSLATION MISSING
 | weechat | key_combo_cursor +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   String: key combo |
   Key combo in 'cursor' context
 
@@ -8516,7 +8516,7 @@ hook = weechat.hook_signal("quit", "my_signal_cb", "")
 ==== weechat_hook_signal_send
 
 // TRANSLATION MISSING
-_Updated in 0.4.4._
+_Updated in 1.0._
 
 Invia un segnale.
 
@@ -8536,7 +8536,7 @@ Argomenti:
 * 'signal_data': dati inviati con il segnale
 
 // TRANSLATION MISSING
-Return value _(WeeChat ≥ 0.4.4)_:
+Return value _(WeeChat ≥ 1.0)_:
 
 // TRANSLATION MISSING
 * return code of last callback executed ('WEECHAT_RC_OK' if no callback was
@@ -8853,7 +8853,7 @@ hook = weechat.hook_hsignal("test", "my_hsignal_cb", "")
 ==== weechat_hook_hsignal_send
 
 // TRANSLATION MISSING
-_WeeChat ≥ 0.3.4, updated in 0.4.4._
+_WeeChat ≥ 0.3.4, updated in 1.0._
 
 Invia un hsignal (segnale con tabella hash).
 
@@ -8870,7 +8870,7 @@ Argomenti:
 * 'hashtable': tabella hash
 
 // TRANSLATION MISSING
-Return value _(WeeChat ≥ 0.4.4)_:
+Return value _(WeeChat ≥ 1.0)_:
 
 // TRANSLATION MISSING
 * return code of last callback executed ('WEECHAT_RC_OK' if no callback was
@@ -9409,7 +9409,7 @@ List of modifiers used by WeeChat and plugins:
 
 // TRANSLATION MISSING
 | irc_color_decode_ansi +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   "1" per mantenere i colori, "0" per rimuovere i colori |
   Qualsiasi stringa |
   String with ANSI colors converted to IRC colors (or ANSI colors removed)
@@ -9452,7 +9452,7 @@ List of modifiers used by WeeChat and plugins:
 
 // TRANSLATION MISSING
 | color_decode_ansi +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   "1" per mantenere i colori, "0" per rimuovere i colori |
   Qualsiasi stringa |
   String with ANSI colors converted to WeeChat colors (or ANSI colors removed)
@@ -10060,7 +10060,7 @@ Properties:
   Close pipe used to send data on standard input ('stdin') of child process
 
 | signal +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   'process', 'process_hashtable' |
 // TRANSLATION MISSING
   signal number or one of these names: `hup`, `int`, `quit`, `kill`, `term`,
@@ -10292,7 +10292,7 @@ weechat.prnt(weechat.current_buffer(), "Testo sul buffer corrente")
 ==== weechat_buffer_search
 
 // TRANSLATION MISSING
-_Updated in 0.4.4._
+_Updated in 1.0._
 
 Cerca un buffer tramite plugin e/o nome.
 
@@ -10310,11 +10310,11 @@ Argomenti:
 * 'plugin': name of plugin, following special value is allowed:
 ** `==`: the name used is the buffer full name (for example:
    `irc.freenode.#weechat` instead of `freenode.#weechat`)
-   _(WeeChat ≥ 0.4.4)_
+   _(WeeChat ≥ 1.0)_
 // TRANSLATION MISSING
 * 'name': name of buffer, if it is NULL or empty string, the current buffer is
   returned (buffer displayed by current window); if the name starts with
-  `(?i)`, the search is case insensitive _(WeeChat ≥ 0.4.4)_
+  `(?i)`, the search is case insensitive _(WeeChat ≥ 1.0)_
 
 Valore restituito:
 
@@ -10325,7 +10325,7 @@ Esempio in C:
 [source,C]
 ----
 struct t_gui_buffer *buffer1 = weechat_buffer_search ("irc", "freenode.#weechat");
-struct t_gui_buffer *buffer2 = weechat_buffer_search ("==", "irc.freenode.#test"); /* WeeChat ≥ 0.4.4 */
+struct t_gui_buffer *buffer2 = weechat_buffer_search ("==", "irc.freenode.#test"); /* WeeChat ≥ 1.0 */
 ----
 
 Script (Python):
@@ -10558,10 +10558,10 @@ Argomenti:
    0 se il buffer è unito e non selezionato
 // TRANSLATION MISSING
 ** 'hidden': 1 if buffer is hidden, otherwise 0
-   _(WeeChat ≥ 0.4.4)_
+   _(WeeChat ≥ 1.0)_
 // TRANSLATION MISSING
 ** 'zoomed': 1 if buffer is merged and zoomed, otherwise 0
-   _(WeeChat ≥ 0.4.4)_
+   _(WeeChat ≥ 1.0)_
 ** 'print_hooks_enabled': 1 se gli hook sulla stampa sono abilitati,
    altrimenti 0
 // TRANSLATION MISSING
@@ -10569,10 +10569,10 @@ Argomenti:
    _(WeeChat ≥ 0.4.3)_
 // TRANSLATION MISSING
 ** 'clear': 1 if buffer can be cleared with command `/buffer clear`, otherwise 0
-   _(WeeChat ≥ 0.4.4)_
+   _(WeeChat ≥ 1.0)_
 // TRANSLATION MISSING
 ** 'filter': 1 if filters are enabled on buffer, otherwise 0
-   _(WeeChat ≥ 0.4.4)_
+   _(WeeChat ≥ 1.0)_
 ** 'lines_hidden': 1 se almeno una riga è nascosta sul buffer (filtrata),
    oppure 0 se vengono visualizzate tutte le righe
 ** 'prefix_max_length': lunghezza massima del prefisso in questo buffer
@@ -10769,7 +10769,7 @@ Properties:
   "-": disabilita hotlist (impostazione globale, il puntatore al buffer non è
   utilizzato) +
   priorità: aggiunge il buffer alla hotlist con questa proprietà +
-  "-1": remove buffer from hotlist _(WeeChat ≥ 0.4.4)_
+  "-1": remove buffer from hotlist _(WeeChat ≥ 1.0)_
 
 // TRANSLATION MISSING
 | completion_freeze | "0" oppure "1" |
@@ -10788,7 +10788,7 @@ Properties:
 
 // TRANSLATION MISSING
 | hidden +
-  _(WeeChat ≥ 0.4.4)_ | "0" oppure "1" |
+  _(WeeChat ≥ 1.0)_ | "0" oppure "1" |
   "0": unhide the buffer +
   "1": hide the buffer
 
@@ -10805,7 +10805,7 @@ Properties:
 | type | "formatted" oppure "free" |
   Imposta tipo per il: "formatted" (per stampare i messaggi di chat),
   oppure "free" (per contenuto libero); when the value is "free", the property
-  'clear' is forced to "0" _(WeeChat ≥ 0.4.4)_
+  'clear' is forced to "0" _(WeeChat ≥ 1.0)_
 
 | notify | "0", "1", "2", "3" |
   Imposta il livello di notifica per il buffer: "0" = non aggiungere alla hotlist,
@@ -10824,7 +10824,7 @@ Properties:
 
 // TRANSLATION MISSING
 | clear +
-  _(WeeChat ≥ 0.4.4)_ | "0" or "1" |
+  _(WeeChat ≥ 1.0)_ | "0" or "1" |
   "0" to prevent user from clearing buffer with the command `/buffer clear`,
   "1" to let user clear the buffer (default for a new buffer)
    (note: even when it is set to "0", the buffer can still be cleared with
@@ -10832,7 +10832,7 @@ Properties:
 
 // TRANSLATION MISSING
 | filter +
-  _(WeeChat ≥ 0.4.4)_ | "0" or "1" |
+  _(WeeChat ≥ 1.0)_ | "0" or "1" |
   "0": disable filters on buffer +
   "1": enable filters on buffer
 

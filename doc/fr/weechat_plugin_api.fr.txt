@@ -818,7 +818,7 @@ length = weechat.strlen_screen("é") # 1
 
 ==== weechat_string_match
 
-_Mis à jour dans la 0.4.4._
+_Mis à jour dans la 1.0._
 
 Vérifier si une chaîne correspond à un masque.
 
@@ -838,7 +838,7 @@ Paramètres :
 * 'case_sensitive' : 1 pour une comparaison tenant compte de la casse, sinon 0
 
 [NOTE]
-Depuis la version 0.4.4, les caractères joker sont autorisés à l'intérieur du
+Depuis la version 1.0, les caractères joker sont autorisés à l'intérieur du
 masque (pas seulement au début et à la fin du masque).
 
 Valeur de retour :
@@ -980,7 +980,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_string_convert_escaped_chars
 
-_WeeChat ≥ 0.4.4._
+_WeeChat ≥ 1.0._
 
 Convertir les caractères échappés par leur valeur :
 
@@ -1292,7 +1292,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_string_replace_regex
 
-_WeeChat ≥ 0.4.4._
+_WeeChat ≥ 1.0._
 
 Remplacer du texte dans une chaîne en utilisant une expression régulière, du
 texte de remplacement et un "callback" optionnel.
@@ -1422,7 +1422,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_string_split_shell
 
-_WeeChat ≥ 0.4.4._
+_WeeChat ≥ 1.0._
 
 Découper une chaîne comme le shell le fait pour une commande avec ses
 paramètres.
@@ -1860,7 +1860,7 @@ Les variables spéciales avec le format `${variable}` sont étendues (voir la
 commande `/eval` dans le 'Guide utilisateur WeeChat').
 
 [NOTE]
-Depuis la version 0.4.4, les variables imbriquées sont supportées, par exemple :
+Depuis la version 1.0, les variables imbriquées sont supportées, par exemple :
 `${color:${variable}}`.
 
 Prototype :
@@ -3707,7 +3707,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_hashtable_dup
 
-_WeeChat ≥ 0.4.4._
+_WeeChat ≥ 1.0._
 
 Dupliquer une table de hachage.
 
@@ -6705,7 +6705,7 @@ Paramètres :
   une ligne après la dernière ligne affichée: la valeur absolue de 'y' est le
   nombre de lignes après la dernière ligne (par exemple -1 est immédiatement
   après la dernière ligne, -2 est 2 lignes après la dernière ligne)
-  _(WeeChat ≥ 0.4.4)_
+  _(WeeChat ≥ 1.0)_
 * 'message' : message à afficher
 
 Exemple en C :
@@ -7347,14 +7347,14 @@ sont disponibles :
   (voir la fonction <<_weechat_hook_set,weechat_hook_set>>)
 
 | buffer_flush +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   nombre d'octets |
   Nombre minimum d'octets pour vider stdout/stderr (pour envoyer la sortie au
   "callback"), entre 1 et 65536 (par défaut); 1 = envoyer toute sortie
   immédiatement au "callback"
 
 | detached +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   (non utilisée) |
   Lancer le process dans un mode détaché : stdout et stderr sont redirigés vers
   '/dev/null'
@@ -8032,32 +8032,32 @@ Liste des signaux envoyés par WeeChat et les extensions :
   Script(s) python supprimé(s)
 
 | relay | relay_client_connecting +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   Pointeur : client relay |
   Un client relay est en train de se connecter
 
 | relay | relay_client_waiting_auth +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   Pointeur : client relay |
   Attente de l'authentification d'un client relay
 
 | relay | relay_client_auth_ok +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   Pointeur : client relay |
   Authentification réussie d'un client relay
 
 | relay | relay_client_connected +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   Pointeur : client relay |
   Un client relay est connecté
 
 | relay | relay_client_auth_failed +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   Pointeur : client relay |
   L'authentification d'un client relay a échoué
 
 | relay | relay_client_disconnected +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   Pointeur : client relay |
   Un client relay est déconnecté
 
@@ -8250,17 +8250,17 @@ Liste des signaux envoyés par WeeChat et les extensions :
   Touche appuyée
 
 | weechat | key_combo_default +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   Chaîne : combinaison de touches |
   Combinaison de touches dans le contexte 'default'
 
 | weechat | key_combo_search +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   Chaîne : combinaison de touches |
   Combinaison de touches dans le contexte 'search'
 
 | weechat | key_combo_cursor +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   Chaîne : combinaison de touches |
   Combinaison de touches dans le contexte 'cursor'
 
@@ -8452,7 +8452,7 @@ hook = weechat.hook_signal("quit", "my_signal_cb", "")
 
 ==== weechat_hook_signal_send
 
-_Mis à jour dans la 0.4.4._
+_Mis à jour dans la 1.0._
 
 Envoyer un signal.
 
@@ -8471,7 +8471,7 @@ Paramètres :
   <<_weechat_hook_signal,weechat_hook_signal>>)
 * 'signal_data' : données envoyées avec le signal
 
-Valeur de retour _(WeeChat ≥ 0.4.4)_ :
+Valeur de retour _(WeeChat ≥ 1.0)_ :
 
 * code retour du dernier "callback" exécuté ('WEECHAT_RC_OK' si aucun "callback"
   n'a été exécuté) :
@@ -8778,7 +8778,7 @@ hook = weechat.hook_hsignal("test", "my_hsignal_cb", "")
 
 ==== weechat_hook_hsignal_send
 
-_WeeChat ≥ 0.3.4, mis à jour dans la 0.4.4._
+_WeeChat ≥ 0.3.4, mis à jour dans la 1.0._
 
 Envoyer un hsignal (signal avec table de hachage).
 
@@ -8794,7 +8794,7 @@ Paramètres :
 * 'signal' : signal à envoyer
 * 'hashtable' : table de hachage
 
-Valeur de retour _(WeeChat ≥ 0.4.4)_ :
+Valeur de retour _(WeeChat ≥ 1.0)_ :
 
 * code retour du dernier "callback" exécuté ('WEECHAT_RC_OK' si aucun "callback"
   n'a été exécuté) :
@@ -9339,7 +9339,7 @@ Liste des modificateurs utilisés par WeeChat et les extensions :
   Chaîne avec les couleurs IRC (ou avec les couleurs IRC supprimées)
 
 | irc_color_decode_ansi +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   "1" pour garder les couleurs, "0" pour les supprimer |
   Toute chaîne |
   Chaîne avec les couleurs ANSI converties en couleurs IRC (ou avec les couleurs
@@ -9382,7 +9382,7 @@ Liste des modificateurs utilisés par WeeChat et les extensions :
   Nouveau contenu du message
 
 | color_decode_ansi +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   "1" pour garder les couleurs, "0" pour les supprimer |
   Toute chaîne |
   Chaîne avec les couleurs ANSI converties en couleurs WeeChat (ou avec les
@@ -9995,7 +9995,7 @@ Propriétés :
   ('stdin') du processus fils
 
 | signal +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   'process', 'process_hashtable' |
   numéro de signal ou un de ces noms : `hup`, `int`, `quit`, `kill`, `term`,
   `usr1`, `usr2` |
@@ -10225,7 +10225,7 @@ weechat.prnt(weechat.current_buffer(), "Texte sur le tampon courant")
 
 ==== weechat_buffer_search
 
-_Mis à jour dans la 0.4.4._
+_Mis à jour dans la 1.0._
 
 Rechercher un tampon par l'extension et/ou le nom.
 
@@ -10242,10 +10242,10 @@ Paramètres :
 * 'plugin' : nom de l'extension, la valeur spéciale suivante est autorisée :
 ** `==` : le nom utilisé est le nom complet du tampon (par exemple :
    `irc.freenode.#weechat` au lieu de `freenode.#weechat`)
-   _(WeeChat ≥ 0.4.4)_
+   _(WeeChat ≥ 1.0)_
 * 'name' : nom du tampon, si c'est NULL ou une chaîne vide, le tampon courant
   est retourné (tampon affiché par la fenêtre courante); si le nom commence par
-  `(?i)`, la recherche est insensible à la casse _(WeeChat ≥ 0.4.4)_
+  `(?i)`, la recherche est insensible à la casse _(WeeChat ≥ 1.0)_
 
 Valeur de retour :
 
@@ -10256,7 +10256,7 @@ Exemples en C :
 [source,C]
 ----
 struct t_gui_buffer *buffer1 = weechat_buffer_search ("irc", "freenode.#weechat");
-struct t_gui_buffer *buffer2 = weechat_buffer_search ("==", "irc.freenode.#test"); /* WeeChat ≥ 0.4.4 */
+struct t_gui_buffer *buffer2 = weechat_buffer_search ("==", "irc.freenode.#test"); /* WeeChat ≥ 1.0 */
 ----
 
 Script (Python) :
@@ -10485,16 +10485,16 @@ Paramètres :
 ** 'active' : 2 si le tampon est le seul actif (mélangé), 1 si le tampon est
    actif, 0 si le tampon est mélangé et n'est pas sélectionné
 ** 'hidden' : 1 si le tampon est caché, sinon 0
-   _(WeeChat ≥ 0.4.4)_
+   _(WeeChat ≥ 1.0)_
 ** 'zoomed' : 1 si le tampon est mélangé et zoomé, sinon 0
-   _(WeeChat ≥ 0.4.4)_
+   _(WeeChat ≥ 1.0)_
 ** 'print_hooks_enabled' : 1 si les hooks "print" sont activés, sinon 0
 ** 'day_change' : 1 si les messages de changement de jour sont affichés, sinon 0
    _(WeeChat ≥ 0.4.3)_
 ** 'clear' : 1 si le tampon peut être effacé avec la commande `/buffer clear`,
-   sinon 0 _(WeeChat ≥ 0.4.4)_
+   sinon 0 _(WeeChat ≥ 1.0)_
 ** 'filter' : 1 si les filtres sont activés sur le tampon, sinon 0
-   _(WeeChat ≥ 0.4.4)_
+   _(WeeChat ≥ 1.0)_
 ** 'lines_hidden' : 1 si au moins une ligne est cachée dans le tampon
    (filtrée), ou 0 si toutes les lignes sont affichées
 ** 'prefix_max_length' : longueur maximale du préfixe dans ce tampon
@@ -10684,7 +10684,7 @@ Propriétés :
   "-" : désactive la hotlist (option globale, le pointeur vers le tampon n'est
   pas utilisé) +
   priorité : ajouter ce tampon dans la hotlist avec cette priorité +
-  "-1" : supprimer ce tampon de la hotlist _(WeeChat ≥ 0.4.4)_
+  "-1" : supprimer ce tampon de la hotlist _(WeeChat ≥ 1.0)_
 
 | completion_freeze | "0" ou "1" |
   "0" : pas de gel de la complétion (valeur par défaut)
@@ -10701,7 +10701,7 @@ Propriétés :
   données non lues n'est pas réinitialisé
 
 | hidden +
-  _(WeeChat ≥ 0.4.4)_ | "0" ou "1" |
+  _(WeeChat ≥ 1.0)_ | "0" ou "1" |
   "0" : démasquer le tampon +
   "1" : masquer le tampon
 
@@ -10717,7 +10717,7 @@ Propriétés :
 | type | "formatted" ou "free" |
   Définit le type de tampon : "formatted" (pour afficher les messages d'une
   discussion), ou "free" (pour du contenu libre); lorsque la valeur est "free",
-  la propriété 'clear' est forcée à "0" _(WeeChat ≥ 0.4.4)_
+  la propriété 'clear' est forcée à "0" _(WeeChat ≥ 1.0)_
 
 | notify | "0", "1", "2", "3" |
   Définit le niveau de notification du tampon : "0" = ne jamais ajouter à la
@@ -10734,7 +10734,7 @@ Propriétés :
   (par défaut pour un nouveau tampon)
 
 | clear +
-  _(WeeChat ≥ 0.4.4)_ | "0" ou "1" |
+  _(WeeChat ≥ 1.0)_ | "0" ou "1" |
   "0" pour empêcher l'utilisateur d'effacer le tampon avec la commande
   `/buffer clear`, "1" pour autoriser l'utilisateur à effacer le tampon (par
    défaut pour un nouveau tampon) (note : même lorsque la valeur est "0", le
@@ -10742,7 +10742,7 @@ Propriétés :
    <<_weechat_buffer_clear,weechat_buffer_clear>>)
 
 | filter +
-  _(WeeChat ≥ 0.4.4)_ | "0" or "1" |
+  _(WeeChat ≥ 1.0)_ | "0" or "1" |
   "0" : désactiver les filtres sur le tampon +
   "1" : activer les filtres sur le tampon
 

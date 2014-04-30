@@ -15,7 +15,7 @@ http://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file 'ChangeLog.asciidoc' in sources).
 
 
-== Version 0.4.4 (under dev)
+== Version 1.0 (under dev)
 
 === Hide IRC channel modes arguments
 

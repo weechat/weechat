@@ -2942,7 +2942,7 @@ COMMAND_CALLBACK(input)
         gui_input_history_global_next (buffer);
     else if (string_strcasecmp (argv[1], "jump_smart") == 0)
         gui_input_jump_smart (buffer);
-    /* not used any more in WeeChat >= 0.4.4 (replaced by "/buffer ++") */
+    /* not used any more in WeeChat >= 1.0 (replaced by "/buffer ++") */
     else if (string_strcasecmp (argv[1], "jump_last_buffer") == 0)
         input_data (buffer, "/buffer +");
     else if (string_strcasecmp (argv[1], "jump_last_buffer_displayed") == 0)
@@ -4008,7 +4008,7 @@ COMMAND_CALLBACK(mute)
     else if (string_strcasecmp (argv[1], "-all") == 0)
     {
         /*
-         * action ignored in WeeChat >= 0.4.4 (mute on all buffers is default)
+         * action ignored in WeeChat >= 1.0 (mute on all buffers is default)
          * (kept for compatibility with old versions)
          */
         ptr_command = argv_eol[2];

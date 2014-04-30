@@ -23,6 +23,7 @@ cmake_minimum_required(VERSION 2.4)
 
 project(weechat C)
 
+# CMake options
 set(CMAKE_VERBOSE_MAKEFILE OFF)
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
 set(CMAKE_SKIP_RPATH ON)
@@ -31,11 +32,20 @@ if(PREFIX)
   set(CMAKE_INSTALL_PREFIX ${PREFIX} CACHE PATH "Install path prefix" FORCE)
 endif()
 
-set(VERSION_MAJOR "0")
-set(VERSION_MINOR "4")
-set(VERSION_PATCH "4-dev")
-set(VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH})
+# version
+set(VERSION_MAJOR "1")
+set(VERSION_MINOR "0-dev")
+set(VERSION_PATCH "")
+if(VERSION_PATCH STREQUAL "")
+  set(VERSION ${VERSION_MAJOR}.${VERSION_MINOR})
+else()
+  set(VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH})
+endif()
+
+# license
 set(LICENSE "GPL3")
+
+# package string
 set(PKG_STRING "${PROJECT_NAME} ${VERSION}")
 string(REPLACE "\";\"" "\ " PKG_STRING ${PKG_STRING})
 

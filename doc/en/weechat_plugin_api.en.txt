@@ -809,7 +809,7 @@ length = weechat.strlen_screen("é") # 1
 
 ==== weechat_string_match
 
-_Updated in 0.4.4._
+_Updated in 1.0._
 
 Check if a string matches a mask.
 
@@ -829,7 +829,7 @@ Arguments:
 * 'case_sensitive': 1 for case sensitive comparison, otherwise 0
 
 [NOTE]
-Since version 0.4.4, wildcards are allowed inside the mask
+Since version 1.0, wildcards are allowed inside the mask
 (not only beginning/end of mask).
 
 Return value:
@@ -970,7 +970,7 @@ This function is not available in scripting API.
 
 ==== weechat_string_convert_escaped_chars
 
-_WeeChat ≥ 0.4.4._
+_WeeChat ≥ 1.0._
 
 Convert escaped chars to their value:
 
@@ -1274,7 +1274,7 @@ This function is not available in scripting API.
 
 ==== weechat_string_replace_regex
 
-_WeeChat ≥ 0.4.4._
+_WeeChat ≥ 1.0._
 
 Replace text in a string using a regular expression, replacement text and
 optional callback.
@@ -1396,7 +1396,7 @@ This function is not available in scripting API.
 
 ==== weechat_string_split_shell
 
-_WeeChat ≥ 0.4.4._
+_WeeChat ≥ 1.0._
 
 Split a string like the shell does for a command with arguments.
 
@@ -1828,7 +1828,7 @@ Special variables with format `${variable}` are expanded (see command `/eval` in
 'WeeChat User's guide').
 
 [NOTE]
-Since version 0.4.4, nested variables are supported, for example:
+Since version 1.0, nested variables are supported, for example:
 `${color:${variable}}`.
 
 Prototype:
@@ -3653,7 +3653,7 @@ This function is not available in scripting API.
 
 ==== weechat_hashtable_dup
 
-_WeeChat ≥ 0.4.4._
+_WeeChat ≥ 1.0._
 
 Duplicate a hashtable.
 
@@ -6603,7 +6603,7 @@ Arguments:
 * 'y': line number (first line is 0); a negative value adds a line after last
   line displayed: absolute value of 'y' is the number of lines after last line
   (for example -1 is immediately after last line, -2 is 2 lines after last line)
-  _(WeeChat ≥ 0.4.4)_
+  _(WeeChat ≥ 1.0)_
 * 'message': message to display
 
 C example:
@@ -7223,13 +7223,13 @@ available:
   (see function <<_weechat_hook_set,weechat_hook_set>>)
 
 | buffer_flush +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   number of bytes |
   Minimum number of bytes to flush stdout/stderr (to send output to callback),
   between 1 and 65536 (default); 1 = send any output immediately to the callback
 
 | detached +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   (not used) |
   Run the process in a detached mode: stdout and stderr are redirected to
   '/dev/null'
@@ -7892,32 +7892,32 @@ List of signals sent by WeeChat and plugins:
   Python script(s) removed
 
 | relay | relay_client_connecting +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   Pointer: relay client |
   A relay client is connecting
 
 | relay | relay_client_waiting_auth +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   Pointer: relay client |
   Waiting for authentication from a relay client
 
 | relay | relay_client_auth_ok +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   Pointer: relay client |
   Successful authentication from a relay client
 
 | relay | relay_client_connected +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   Pointer: relay client |
   A relay client is connected
 
 | relay | relay_client_auth_failed +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   Pointer: relay client |
   Authentication of a relay client has failed
 
 | relay | relay_client_disconnected +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   Pointer: relay client |
   A relay client is disconnected
 
@@ -8110,17 +8110,17 @@ List of signals sent by WeeChat and plugins:
   Key pressed
 
 | weechat | key_combo_default +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   String: key combo |
   Key combo in 'default' context
 
 | weechat | key_combo_search +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   String: key combo |
   Key combo in 'search' context
 
 | weechat | key_combo_cursor +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   String: key combo |
   Key combo in 'cursor' context
 
@@ -8312,7 +8312,7 @@ hook = weechat.hook_signal("quit", "my_signal_cb", "")
 
 ==== weechat_hook_signal_send
 
-_Updated in 0.4.4._
+_Updated in 1.0._
 
 Send a signal.
 
@@ -8331,7 +8331,7 @@ Arguments:
   <<_weechat_hook_signal,weechat_hook_signal>>)
 * 'signal_data': data sent with signal
 
-Return value _(WeeChat ≥ 0.4.4)_:
+Return value _(WeeChat ≥ 1.0)_:
 
 * return code of last callback executed ('WEECHAT_RC_OK' if no callback was
   executed):
@@ -8629,7 +8629,7 @@ hook = weechat.hook_hsignal("test", "my_hsignal_cb", "")
 
 ==== weechat_hook_hsignal_send
 
-_WeeChat ≥ 0.3.4, updated in 0.4.4._
+_WeeChat ≥ 0.3.4, updated in 1.0._
 
 Send a hsignal (signal with hashtable).
 
@@ -8645,7 +8645,7 @@ Arguments:
 * 'signal': signal to send
 * 'hashtable': hashtable
 
-Return value _(WeeChat ≥ 0.4.4)_:
+Return value _(WeeChat ≥ 1.0)_:
 
 * return code of last callback executed ('WEECHAT_RC_OK' if no callback was
   executed):
@@ -9169,7 +9169,7 @@ List of modifiers used by WeeChat and plugins:
   String with IRC colors (or IRC colors removed)
 
 | irc_color_decode_ansi +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   "1" to keep colors, "0" to remove colors |
   Any string |
   String with ANSI colors converted to IRC colors (or ANSI colors removed)
@@ -9211,7 +9211,7 @@ List of modifiers used by WeeChat and plugins:
   New content of message
 
 | color_decode_ansi +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   "1" to keep colors, "0" to remove colors |
   Any string |
   String with ANSI colors converted to WeeChat colors (or ANSI colors removed)
@@ -9802,7 +9802,7 @@ Properties:
   Close pipe used to send data on standard input ('stdin') of child process
 
 | signal +
-  _(WeeChat ≥ 0.4.4)_ |
+  _(WeeChat ≥ 1.0)_ |
   'process', 'process_hashtable' |
   signal number or one of these names: `hup`, `int`, `quit`, `kill`, `term`,
   `usr1`, `usr2` |
@@ -10029,7 +10029,7 @@ weechat.prnt(weechat.current_buffer(), "Text on current buffer")
 
 ==== weechat_buffer_search
 
-_Updated in 0.4.4._
+_Updated in 1.0._
 
 Search a buffer by plugin and/or name.
 
@@ -10046,10 +10046,10 @@ Arguments:
 * 'plugin': name of plugin, following special value is allowed:
 ** `==`: the name used is the buffer full name (for example:
    `irc.freenode.#weechat` instead of `freenode.#weechat`)
-   _(WeeChat ≥ 0.4.4)_
+   _(WeeChat ≥ 1.0)_
 * 'name': name of buffer, if it is NULL or empty string, the current buffer is
   returned (buffer displayed by current window); if the name starts with
-  `(?i)`, the search is case insensitive _(WeeChat ≥ 0.4.4)_
+  `(?i)`, the search is case insensitive _(WeeChat ≥ 1.0)_
 
 Return value:
 
@@ -10060,7 +10060,7 @@ C examples:
 [source,C]
 ----
 struct t_gui_buffer *buffer1 = weechat_buffer_search ("irc", "freenode.#weechat");
-struct t_gui_buffer *buffer2 = weechat_buffer_search ("==", "irc.freenode.#test"); /* WeeChat ≥ 0.4.4 */
+struct t_gui_buffer *buffer2 = weechat_buffer_search ("==", "irc.freenode.#test"); /* WeeChat ≥ 1.0 */
 ----
 
 Script (Python):
@@ -10289,16 +10289,16 @@ Arguments:
 ** 'active': 2 if buffer is the only active (merged), 1 if buffer is active,
    0 if buffer is merged and not selected
 ** 'hidden': 1 if buffer is hidden, otherwise 0
-   _(WeeChat ≥ 0.4.4)_
+   _(WeeChat ≥ 1.0)_
 ** 'zoomed': 1 if buffer is merged and zoomed, otherwise 0
-   _(WeeChat ≥ 0.4.4)_
+   _(WeeChat ≥ 1.0)_
 ** 'print_hooks_enabled': 1 if print hooks are enabled, otherwise 0
 ** 'day_change': 1 if messages for the day change are displayed, otherwise 0
    _(WeeChat ≥ 0.4.3)_
 ** 'clear': 1 if buffer can be cleared with command `/buffer clear`, otherwise 0
-   _(WeeChat ≥ 0.4.4)_
+   _(WeeChat ≥ 1.0)_
 ** 'filter': 1 if filters are enabled on buffer, otherwise 0
-   _(WeeChat ≥ 0.4.4)_
+   _(WeeChat ≥ 1.0)_
 ** 'lines_hidden': 1 if at least one line is hidden on buffer (filtered), or 0
    if all lines are displayed
 ** 'prefix_max_length': max length for prefix in this buffer
@@ -10482,7 +10482,7 @@ Properties:
   "+": enable hotlist (global setting, buffer pointer is not used) +
   "-": disable hotlist (global setting, buffer pointer is not used) +
   priority: add buffer to hotlist with this priority +
-  "-1": remove buffer from hotlist _(WeeChat ≥ 0.4.4)_
+  "-1": remove buffer from hotlist _(WeeChat ≥ 1.0)_
 
 | completion_freeze | "0" or "1" |
   "0": no freeze of completion (default value)
@@ -10498,7 +10498,7 @@ Properties:
   "auto": switch to this buffer in current window, read marker is not reset
 
 | hidden +
-  _(WeeChat ≥ 0.4.4)_ | "0" or "1" |
+  _(WeeChat ≥ 1.0)_ | "0" or "1" |
   "0": unhide the buffer +
   "1": hide the buffer
 
@@ -10514,7 +10514,7 @@ Properties:
 | type | "formatted" or "free" |
   Set type for buffer: "formatted" (for printing chat messages), or "free" (for
   free content); when the value is "free", the property 'clear' is forced to "0"
-  _(WeeChat ≥ 0.4.4)_
+  _(WeeChat ≥ 1.0)_
 
 | notify | "0", "1", "2", "3" |
   Set notify level for buffer: "0" = never add to hotlist, "1" = add for
@@ -10530,14 +10530,14 @@ Properties:
   (default for a new buffer)
 
 | clear +
-  _(WeeChat ≥ 0.4.4)_ | "0" or "1" |
+  _(WeeChat ≥ 1.0)_ | "0" or "1" |
   "0" to prevent user from clearing buffer with the command `/buffer clear`,
   "1" to let user clear the buffer (default for a new buffer)
    (note: even when it is set to "0", the buffer can still be cleared with
    the function <<_weechat_buffer_clear,weechat_buffer_clear>>)
 
 | filter +
-  _(WeeChat ≥ 0.4.4)_ | "0" or "1" |
+  _(WeeChat ≥ 1.0)_ | "0" or "1" |
   "0": disable filters on buffer +
   "1": enable filters on buffer
 

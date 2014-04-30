@@ -13,7 +13,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 (file 'ReleaseNotes.asciidoc' in sources).
 
 
-== Version 0.4.4 (under dev)
+== Version 1.0 (under dev)
 
 * core: fix restoration of core buffer properties after /upgrade
 * core: add hidden buffers, add options hide/unhide in command /buffer

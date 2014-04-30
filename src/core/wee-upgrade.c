@@ -470,7 +470,7 @@ upgrade_weechat_read_cb (void *data,
                         infolist_integer (infolist, "type");
                     upgrade_current_buffer->notify =
                         infolist_integer (infolist, "notify");
-                    /* "hidden" is in WeeChat >= 0.4.4 */
+                    /* "hidden" is new in WeeChat 1.0 */
                     if (infolist_search_var (infolist, "hidden"))
                     {
                         upgrade_current_buffer->hidden =
@@ -489,7 +489,7 @@ upgrade_weechat_read_cb (void *data,
                     {
                         upgrade_current_buffer->day_change = 1;
                     }
-                    /* "clear" is in WeeChat >= 0.4.4 */
+                    /* "clear" is new in WeeChat 1.0 */
                     if (infolist_search_var (infolist, "clear"))
                     {
                         upgrade_current_buffer->clear =
@@ -501,7 +501,7 @@ upgrade_weechat_read_cb (void *data,
                             (upgrade_current_buffer->type == GUI_BUFFER_TYPE_FREE) ?
                             0 : 1;
                     }
-                    /* "filter" is in WeeChat >= 0.4.4 */
+                    /* "filter" is new in WeeChat 1.0 */
                     if (infolist_search_var (infolist, "filter"))
                     {
                         upgrade_current_buffer->filter =
