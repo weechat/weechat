@@ -1,0 +1,15 @@
+language: c
+
+before_install:
+    - sudo apt-get update -qq
+    - sudo apt-get build-dep weechat
+
+before_script:
+    - ulimit -c unlimited
+
+script:
+    - mkdir build
+    - cd build
+    - cmake .. -DCMAKE_BUILD_TYPE=Debug
+    - make
+    - sudo make install
