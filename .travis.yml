@@ -2,13 +2,10 @@ language: c
 
 before_install:
     - sudo apt-get update -qq
-    - sudo apt-get build-dep weechat
-
-before_script:
-    - ulimit -c unlimited
+    - sudo apt-get -y build-dep weechat
 
 script:
     - mkdir build;cd build
-    - cmake .. -DCMAKE_BUILD_TYPE=Debug
+    - cmake ..
     - make
-    - sudo make install
+    - sudo make instal
