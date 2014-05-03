@@ -2,7 +2,7 @@ language: c
 
 before_install:
     - sudo apt-get update -qq
-    - sudo apt-get -y install devscripts
+    - sudo apt-get -y install devscripts equivs
     - sudo mk-build-deps -i debian/control
 
 script:
