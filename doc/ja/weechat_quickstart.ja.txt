@@ -220,17 +220,16 @@ IRC 等全てのネットワークプロトコルはそれぞれ異なるプラ�
 /close
 ----
 
-// TRANSLATION MISSING
 [[irc_private_messages]]
-== IRC private messages
+== IRC プライベートメッセージ
 
-Open a buffer and send a message to another user (nick 'foo'):
+バッファを開いてメッセージを他のユーザ (ニックネーム 'foo') 宛に送信する:
 
 ----
 /query foo this is a message
 ----
 
-Close the private buffer:
+プライベートバッファを閉じる:
 
 ----
 /close
