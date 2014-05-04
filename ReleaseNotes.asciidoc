@@ -87,7 +87,7 @@ obsolete plugins).
 === Bare display
 
 A bare display mode has been added (for easy text selection and click on URLs),
-the new default key is key[alt-!].
+the new default key is key[alt-l].
 
 Use command `/key missing` to add the key or `/key listdiff` to see differences
 between your current keys and WeeChat default keys.

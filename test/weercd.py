@@ -19,38 +19,38 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-#
-# weercd - the WeeChat IRC testing server
-#
-# It can be used with any IRC client (not only WeeChat).
-#
-# In the "flood" mode, various IRC commands are sent in a short time (privmsg,
-# notice, join/quit, ..) to test client resistance and memory usage (to quickly
-# detect memory leaks, for example with client scripts).
-#
-# This script works with Python 2.x (>= 2.7) and 3.x.
-#
-# It is *STRONGLY RECOMMENDED* to connect this server with a client in a test
-# environment:
-# - for WeeChat, another home with: `weechat --dir /tmp/weechat`
-# - on a test machine, because CPU will be used a lot by client to display
-#   messages from weercd
-# - if possible locally (ie server and client on same machine), to speed up
-#   data exchange between server and client.
-#
-# Instructions to use this server with WeeChat:
-#   1. open a terminal and run server:
-#        python weercd.py
-#   2. open another terminal and run WeeChat with home in /tmp:
-#        weechat --dir /tmp/weechat
-#   3. optional: install script(s) (/script install ...)
-#   4. add server and connect to it:
-#        /server add weercd 127.0.0.1/7777
-#        /connect weercd
-#   5. wait some months.....
-#      WeeChat still not crashed and does not use 200 TB of RAM ?
-#      Yeah, it's stable \o/
-#
+"""
+weercd - the WeeChat IRC testing server
+
+It can be used with any IRC client (not only WeeChat).
+
+In the "flood" mode, various IRC commands are sent in a short time (privmsg,
+notice, join/quit, ..) to test client resistance and memory usage (to quickly
+detect memory leaks, for example with client scripts).
+
+This script works with Python 2.x (>= 2.7) and 3.x.
+
+It is *STRONGLY RECOMMENDED* to connect this server with a client in a test
+environment:
+- for WeeChat, another home with: `weechat --dir /tmp/weechat`
+- on a test machine, because CPU will be used a lot by client to display
+  messages from weercd
+- if possible locally (ie server and client on same machine), to speed up
+  data exchange between server and client.
+
+Instructions to use this server with WeeChat:
+  1. open a terminal and run server:
+       python weercd.py
+  2. open another terminal and run WeeChat with home in /tmp:
+       weechat --dir /tmp/weechat
+  3. optional: install script(s) (/script install ...)
+  4. add server and connect to it:
+       /server add weercd 127.0.0.1/7777
+       /connect weercd
+  5. wait some months.....
+     WeeChat still not crashed and does not use 200 TB of RAM ?
+     Yeah, it's stable!
+"""
 
 from __future__ import division, print_function
 
@@ -70,9 +70,32 @@ NAME = 'weercd'
 VERSION = '0.8'
 
 
-class Client:
+def fuzzy_string(minlength=1, maxlength=50, spaces=False):
+    """Return a fuzzy string (random length and content)."""
+    length = random.randint(minlength, maxlength)
+    strspace = ''
+    if spaces:
+        strspace = ' '
+    return ''.join(random.choice(string.ascii_uppercase +
+                                 string.ascii_lowercase +
+                                 string.digits + strspace)
+                   for x in range(length))
 
-    def __init__(self, sock, addr, args, **kwargs):
+
+def fuzzy_host():
+    """Return a fuzzy host name."""
+    return '{0}@{1}'.format(fuzzy_string(1, 10), fuzzy_string(1, 10))
+
+
+def fuzzy_channel():
+    """Return a fuzzy channel name."""
+    return '#{0}'.format(fuzzy_string(1, 25))
+
+
+class Client(object):
+    """A client of weercd server."""
+
+    def __init__(self, sock, addr, args):
         self.sock, self.addr = sock, addr
         self.args = args
         self.name = NAME
@@ -105,43 +128,24 @@ class Client:
         try:
             while not self.quit:
                 self.flood()
-        except Exception as e:
+        except Exception as exc:
             if self.quit:
                 self.endmsg = 'quit received'
             else:
                 self.endmsg = 'connection lost'
-            self.endexcept = e
+            self.endexcept = exc
         except KeyboardInterrupt:
             self.endmsg = 'interrupted'
         else:
             self.endmsg = 'quit received'
 
-    def fuzzy_str(self, minlength=1, maxlength=50, spaces=False):
-        """Return a fuzzy string (random length and content)."""
-        length = random.randint(minlength, maxlength)
-        strspace = ''
-        if spaces:
-            strspace = ' '
-        return ''.join(random.choice(string.ascii_uppercase +
-                                     string.ascii_lowercase +
-                                     string.digits + strspace)
-                       for x in range(length))
-
-    def fuzzy_host(self):
-        """Return a fuzzy host name."""
-        return '{0}@{1}'.format(self.fuzzy_str(1, 10), self.fuzzy_str(1, 10))
-
     def fuzzy_nick(self, with_number=False):
         """Return a fuzzy nick name."""
         if with_number:
             self.nicknumber += 1
-            return '{0}{1}'.format(self.fuzzy_str(1, 5), self.nicknumber)
+            return '{0}{1}'.format(fuzzy_string(1, 5), self.nicknumber)
         else:
-            return self.fuzzy_str(1, 10)
-
-    def fuzzy_chan(self):
-        """Return a fuzzy channel name."""
-        return '#{0}'.format(self.fuzzy_str(1, 25))
+            return fuzzy_string(1, 10)
 
     def send(self, data):
         """Send one message to client."""
@@ -177,9 +181,9 @@ class Client:
         elif data.startswith('NICK '):
             self.nick = data[5:]
         elif data.startswith('PART '):
-            m = re.search('^PART :?(#[^ ]+)', data)
-            if m:
-                channel = m.group(1)
+            match = re.search('^PART :?(#[^ ]+)', data)
+            if match:
+                channel = match.group(1)
                 if channel in self.channels:
                     del self.channels[channel]
         elif data.startswith('QUIT '):
@@ -188,7 +192,7 @@ class Client:
 
     def read(self, timeout):
         """Read raw data received from client."""
-        inr, outr, exceptr = select.select([self.sock], [], [], timeout)
+        inr = select.select([self.sock], [], [], timeout)[0]
         if inr:
             data = self.sock.recv(4096)
             if data:
@@ -236,7 +240,7 @@ class Client:
 
     def flood_self_join(self):
         """Self join on a new channel."""
-        channel = self.fuzzy_chan()
+        channel = fuzzy_channel()
         if channel in self.channels:
             return
         self.send_cmd('JOIN', channel,
@@ -249,8 +253,8 @@ class Client:
 
     def flood_user_notice(self):
         """Notice for the user."""
-        self.send_cmd('NOTICE', self.fuzzy_str(1, 400, spaces=True),
-                      nick=self.fuzzy_nick(), host=self.fuzzy_host())
+        self.send_cmd('NOTICE', fuzzy_string(1, 400, spaces=True),
+                      nick=self.fuzzy_nick(), host=fuzzy_host())
 
     def flood_channel_join(self, channel):
         """Join of a user in a channel."""
@@ -258,7 +262,7 @@ class Client:
             return
         newnick = self.fuzzy_nick(with_number=True)
         self.send_cmd('JOIN', channel,
-                      nick=newnick, host=self.fuzzy_host(), target='')
+                      nick=newnick, host=fuzzy_host(), target='')
         self.channels[channel].append(newnick)
 
     def flood_channel_part(self, channel):
@@ -270,10 +274,10 @@ class Client:
             return
         if random.randint(1, 2) == 1:
             self.send_cmd('PART', channel,
-                          nick=rnick, host=self.fuzzy_host(), target='')
+                          nick=rnick, host=fuzzy_host(), target='')
         else:
-            self.send_cmd('QUIT', self.fuzzy_str(1, 30),
-                          nick=rnick, host=self.fuzzy_host(), target='')
+            self.send_cmd('QUIT', fuzzy_string(1, 30),
+                          nick=rnick, host=fuzzy_host(), target='')
         self.channels[channel].remove(rnick)
 
     def flood_channel_kick(self, channel):
@@ -283,8 +287,8 @@ class Client:
         rnick1 = self.channel_random_nick(channel)
         rnick2 = self.channel_random_nick(channel)
         if rnick1 and rnick2 and rnick1 != rnick2:
-            self.send_cmd('KICK', self.fuzzy_str(1, 50),
-                          nick=rnick1, host=self.fuzzy_host(),
+            self.send_cmd('KICK', fuzzy_string(1, 50),
+                          nick=rnick1, host=fuzzy_host(),
                           target='{0} {1}'.format(channel, rnick2))
             self.channels[channel].remove(rnick2)
 
@@ -295,11 +299,11 @@ class Client:
         rnick = self.channel_random_nick(channel)
         if not rnick:
             return
-        msg = self.fuzzy_str(1, 400, spaces=True)
+        msg = fuzzy_string(1, 400, spaces=True)
         if 'channel' in self.args.notice and random.randint(1, 100) == 100:
             # notice for channel
             self.send_cmd('NOTICE', msg,
-                          nick=rnick, host=self.fuzzy_host(), target=channel)
+                          nick=rnick, host=fuzzy_host(), target=channel)
         else:
             # add random highlight
             if random.randint(1, 100) == 100:
@@ -312,7 +316,7 @@ class Client:
                 # CTCP version
                 msg = '\x01VERSION\x01'
             self.send_cmd('PRIVMSG', msg,
-                          nick=rnick, host=self.fuzzy_host(), target=channel)
+                          nick=rnick, host=fuzzy_host(), target=channel)
 
     def flood(self):
         """Yay, funny stuff here! Flood the client!"""
@@ -360,11 +364,11 @@ class Client:
                     self.send(message.format(self=self))
                     count += 1
                 self.read(0.1 if stdin else self.args.sleep)
-        except IOError as e:
+        except IOError as exc:
             self.endmsg = 'unable to read file {0}'.format(self.args.file)
-            self.endexcept = e
+            self.endexcept = exc
             return
-        except Exception as e:
+        except Exception as exc:
             traceback.print_exc()
             self.endmsg = 'connection lost'
             return
@@ -378,7 +382,7 @@ class Client:
             sys.stdout.flush()
             try:
                 sys.stdin.readline()
-            except:
+            except Exception:
                 pass
 
     def stats(self):
@@ -400,14 +404,16 @@ class Client:
                         countrate=countrate,
                         bytesrate=bytesrate))
         if self.endmsg == 'connection lost':
-            print('Uh-oh! No quit received, client has crashed? Ahah \o/')
+            print('Uh-oh! No quit received, client has crashed? Ahah \\o/')
 
     def __del__(self):
         self.stats()
         print('Closing connection with', self.addr)
         self.sock.close()
 
-if __name__ == "__main__":
+
+def main():
+    """Main function."""
     # parse command line arguments
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
@@ -457,8 +463,8 @@ if __name__ == "__main__":
             servsock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             servsock.bind((args.host or '', args.port))
             servsock.listen(1)
-        except Exception as e:
-            print('Socket error: {0}'.format(e))
+        except Exception as exc:
+            print('Socket error: {0}'.format(exc))
             sys.exit(1)
         print('Listening on port', args.port, '(ctrl-C to exit)')
         clientsock = None
@@ -475,3 +481,6 @@ if __name__ == "__main__":
         # no loop if message were sent from a file
         if args.file:
             break
+
+if __name__ == "__main__":
+    main()

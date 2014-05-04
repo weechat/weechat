@@ -889,7 +889,7 @@ Der vereinfachte Anzeigemodus hat folgende Funktionen:
   wie in einem Terminal genutzt werden um URLs anzuklicken oder Text zu markieren
 * ncurses wird nicht genutzt, deshalb werden URLs nicht am Ende der Zeile angeschnitten.
 
-Der Standardtastenbefehl um den vereinfachten Textmodus zu aktivieren ist key[alt-!],
+Der Standardtastenbefehl um den vereinfachten Textmodus zu aktivieren ist key[alt-l],
 mit dem selben Tastenbefehl wird dieser Modus wieder beendet (es kann auch mit jeder
 beliegen Tasteneingabe der Modus beendet werden, siehe Option
 <<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>).
@@ -1100,6 +1100,7 @@ Befehl festgelegt werden:
 | key[alt-j,alt-s]   | wechselt zum IRC Server Buffer | `/server jump`
 | key[alt-0...9]     | wechselt zum Buffer mit der Nummer (0 = 10) | `/buffer *N`
 | key[alt-j,01...99] | wechselt zum Buffer mit der angegeben Nummer | `/buffer NN`
+| key[alt-l]         | schaltet einfachen Anzeigemodus an/aus | `/window bare`
 | key[alt-m]         | schaltet Mausfunktion ein/aus | `/mouse toggle`
 | key[alt-n]         | springt zur nächsten Highlight Nachricht | `/window scroll_next_highlight`
 | key[alt-p]         | springt zur vorherigen Highlight Nachricht | `/window scroll_previous_highlight`
@@ -1116,7 +1117,6 @@ Befehl festgelegt werden:
 | key[alt-/]         | wechselt zum jeweils zuletzt angezeigten Buffern | `/input jump_last_buffer_displayed`
 | key[alt-=]         | schaltet Filterfunktion an/aus | `/filter toggle`
 | key[alt--]         | schaltet, für den aktuellen Buffer, Filterfunktion an/aus | `/filter toggle @`
-| key[alt-!]         | schaltet einfachen Anzeigemodus an/aus | `/window bare`
 |===
 
 [[key_bindings_search_context]]

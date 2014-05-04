@@ -904,7 +904,7 @@ L'affichage dépouillé a les caractéristiques suivantes :
 * ncurses n'est pas utilisé, par conséquent les URLs ne sont pas coupés en fin
   de ligne.
 
-La touche par défaut pour activer l'affichage dépouillé est key[alt-!], et la
+La touche par défaut pour activer l'affichage dépouillé est key[alt-l], et la
 même touche pour en sortir (ou par défaut tout changement dans la ligne de
 commande sortira de l'affichage dépouillé, voir l'option
 <<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>).
@@ -1113,6 +1113,7 @@ commande `/buffer` :
 | key[alt-j,alt-s]   | Sauter au tampon IRC du serveur | `/server jump`
 | key[alt-0...9]     | Sauter au tampon qui porte ce numéro (0 = 10) | `/buffer *N`
 | key[alt-j,01...99] | Sauter au tampon qui porte ce numéro | `/buffer NN`
+| key[alt-l]         | Activer/désactiver le mode d'affichage dépouillé | `/window bare`
 | key[alt-m]         | Activer/désactiver la souris | `/mouse toggle`
 | key[alt-n]         | Se positionner sur le highlight suivant | `/window scroll_next_highlight`
 | key[alt-p]         | Se positionner sur le highlight précédent | `/window scroll_previous_highlight`
@@ -1129,7 +1130,6 @@ commande `/buffer` :
 | key[alt-/]         | Sauter au dernier tampon affiché (avant le dernier saut vers un tampon) | `/input jump_last_buffer_displayed`
 | key[alt-=]         | Activer/désactiver les filtres | `/filter toggle`
 | key[alt--]         | Activer/désactiver les filtres dans le tampon courant | `/filter toggle @`
-| key[alt-!]         | Activer/désactiver le mode d'affichage dépouillé | `/window bare`
 |===
 
 [[key_bindings_search_context]]

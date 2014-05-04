@@ -877,7 +877,7 @@ URL を簡単にクリックしたり、テキストを簡単に選択できる�
   ターミナルでやるのと同じように URL をクリックしたりテキストを選択できます
 * ncurses を使わない、このため URL を行の最後で分断されることがなくなります。
 
-最小限表示を有効化するデフォルトキーは key[alt-!] で、終了するには同じキーを押してください
+最小限表示を有効化するデフォルトキーは key[alt-l] で、終了するには同じキーを押してください
 (また、デフォルトでは入力が変更された場合に最小限表示を終了します、<<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>
 オプションを参照)。
 
@@ -1083,6 +1083,7 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
 | key[alt-j,alt-s]   | IRC サーババッファに移動 | `/server jump`
 | key[alt-0...9]     | 番号のバッファに移動 (0 = 10) | `/buffer *N`
 | key[alt-j,01...99] | 番号のバッファに移動 | `/buffer NN`
+| key[alt-l]         | 最小限表示の有効無効を切り替え | `/window bare`
 | key[alt-m]         | マウスの有効無効を切り替え | `/mouse toggle`
 | key[alt-n]         | 次のハイライトまでスクロール | `/window scroll_next_highlight`
 | key[alt-p]         | 前のハイライトまでスクロール | `/window scroll_previous_highlight`
@@ -1099,7 +1100,6 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
 | key[alt-/]         | 最後に表示したバッファに移動 (バッファ移動前に表示していたウィンドウ) | `/input jump_last_buffer_displayed`
 | key[alt-=]         | フィルタの有効無効を切り替え | `/filter toggle`
 | key[alt--]         | 現在のバッファのフィルタの有効無効を切り替え | `/filter toggle @`
-| key[alt-!]         | 最小限表示の有効無効を切り替え | `/window bare`
 |===
 
 [[key_bindings_search_context]]

@@ -885,7 +885,7 @@ The bare display has following features:
   mouse like you do in the terminal to click on URLs and select text
 * ncurses is not used, therefore URLs are not cut at the end of lines.
 
-The default key to enabled bare display is key[alt-!], and same key to exit (or
+The default key to enabled bare display is key[alt-l], and same key to exit (or
 by default anything changing the input will exit the bare display, see option
 <<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>).
 
@@ -1093,6 +1093,8 @@ Poziom powiadomień dla bufora może zostać ustawiony za pomocą komendy `/buff
 | key[alt-j,alt-s]   | Przełącz na bufor serwera IRC | `/server jump`
 | key[alt-0...9]     | Przełącz na bufor za pomocą liczb (0 = 10) | `/buffer *N`
 | key[alt-j,01...99] | Przełącz na bufor za pomocą liczb | `/buffer NN`
+// TRANSLATION MISSING
+| key[alt-l]         | Toggle bare display on/off | `/window bare`
 | key[alt-m]         | Przełącz obsługę myszy | `/mouse toggle`
 | key[alt-n]         | Przewiń do następnego powiadomienia | `/window scroll_next_highlight`
 | key[alt-p]         | Przewiń do poprzedniego powiadomienia | `/window scroll_previous_highlight`
@@ -1110,8 +1112,6 @@ Poziom powiadomień dla bufora może zostać ustawiony za pomocą komendy `/buff
 | key[alt-=]         | Włącz/wyłącz filtry | `/filter toggle`
 // TRANSLATION MISSING
 | key[alt--]         | Toggle filters on/off in current buffer | `/filter toggle @`
-// TRANSLATION MISSING
-| key[alt-!]         | Toggle bare display on/off | `/window bare`
 |===
 
 [[key_bindings_search_context]]

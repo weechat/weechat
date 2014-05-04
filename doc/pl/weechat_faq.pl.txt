@@ -219,7 +219,7 @@ użyty w żadnym z pasków:
 === Jak mogę kopiować/wklejać tekst bez wklejania listy nicków?
 
 // TRANSLATION MISSING
-With WeeChat ≥ 1.0, you can use the bare display (default key: key[alt-!]).
+With WeeChat ≥ 1.0, you can use the bare display (default key: key[alt-l]).
 
 Możesz użyć terminala z prostokątnym zaznaczaniem (jak rxvt-unicode,
 konsole, gnome-terminal, ...). Klawisze to zazwyczaj key[ctrl-]key[alt-] zaznaczenie myszką.
@@ -234,7 +234,7 @@ Innym rozwiązaniem jest przesunięcie listy nicków na górę lub dół, na prz
 === Jak mogę kliknąć na długi URL (dłuższy niż linia)?
 
 // TRANSLATION MISSING
-With WeeChat ≥ 1.0, you can use the bare display (default key: key[alt-!]).
+With WeeChat ≥ 1.0, you can use the bare display (default key: key[alt-l]).
 
 Domyślnie WeeChat wyświetla czas i przedrostki dla każdej linii i opcjonalne paski
 dookoła obszaru rozmowy. Aby usprawnić klikanie w urle można przesunąć listę nicków

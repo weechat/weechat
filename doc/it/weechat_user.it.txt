@@ -912,7 +912,7 @@ The bare display has following features:
   mouse like you do in the terminal to click on URLs and select text
 * ncurses is not used, therefore URLs are not cut at the end of lines.
 
-The default key to enabled bare display is key[alt-!], and same key to exit (or
+The default key to enabled bare display is key[alt-l], and same key to exit (or
 by default anything changing the input will exit the bare display, see option
 <<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>).
 
@@ -1122,6 +1122,8 @@ Il livello di notifica per un buffer può essere impostato con il comando `/buff
 | key[alt-j,alt-s]   | Passa al buffer server IRC | `/server jump`
 | key[alt-0...9]     | Passa al buffer numero (0 = 10) | `/buffer *N`
 | key[alt-j,01...99] | Passa al buffer numero | `/buffer NN`
+// TRANSLATION MISSING
+| key[alt-l]         | Toggle bare display on/off | `/window bare`
 | key[alt-m]         | Abilita/disabilita | `/mouse toggle`
 | key[alt-n]         | Scorre fino alla notifica successiva | `/window scroll_next_highlight`
 | key[alt-p]         | Scorre fino alla notifica precedente | `/window scroll_previous_highlight`
@@ -1139,8 +1141,6 @@ Il livello di notifica per un buffer può essere impostato con il comando `/buff
 | key[alt-=]         | Attiva/disattiva filtri | `/filter toggle`
 // TRANSLATION MISSING
 | key[alt--]         | Toggle filters on/off in current buffer | `/filter toggle @`
-// TRANSLATION MISSING
-| key[alt-!]         | Toggle bare display on/off | `/window bare`
 |===
 
 [[key_bindings_search_context]]

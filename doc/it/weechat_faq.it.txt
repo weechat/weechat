@@ -226,7 +226,7 @@ non viene usato da un'altra barra:
 === Come posso copiare/incollare testo senza incollare la lista nick?
 
 // TRANSLATION MISSING
-With WeeChat ≥ 1.0, you can use the bare display (default key: key[alt-!]).
+With WeeChat ≥ 1.0, you can use the bare display (default key: key[alt-l]).
 
 È possibile usare un terminale con la selezione rettangolare (come
 rxvt-unicode, konsole, gnome-terminal, ...). La combinazione tasti in
@@ -242,7 +242,7 @@ Un'altra soluzione è spostare la lista nick in alto o in basso, per esempio:
 === Come posso cliccare su URL lunghi (più di una riga)?
 
 // TRANSLATION MISSING
-With WeeChat ≥ 1.0, you can use the bare display (default key: key[alt-!]).
+With WeeChat ≥ 1.0, you can use the bare display (default key: key[alt-l]).
 
 Con le impostazioni predefinite, WeeChat mostra l'ora ed il prefisso per ogni
 riga e le barre opzionali intorno all'area di chat. Per facilitare il clic

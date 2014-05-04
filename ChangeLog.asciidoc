@@ -69,7 +69,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: add options "-beep" and "-current" in command /print
 * core: allow empty arguments for command /print
 * core: add bare display mode (for easy text selection and click on URLs), new
-  key: key[alt-!], new option "bare" in command /window, new options:
+  key: key[alt-l], new option "bare" in command /window, new options:
   weechat.look.bare_display_exit_on_input and
   weechat.look.bare_display_time_format
 * core: fix freeze/crash in gnutls (bug #41576)
