@@ -8,7 +8,7 @@ before_install:
 script:
     - mkdir build
     - cd build
-    - cmake ..
+    - cmake .. -DENABLE_MAN=ON -DENABLE_DOC=ON
     - make
     - sudo make install
 
