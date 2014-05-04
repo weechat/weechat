@@ -3,13 +3,13 @@
 :email: flashcode@flashtux.org
 :lang: en
 
-
 WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat
 environment for many operating systems. Everything can be done with a keyboard.
 It is customizable and extensible with scripts.
 
 Homepage: http://weechat.org/
 
+image:https://travis-ci.org/weechat/weechat.svg?branch=master["Build Status", link="https://travis-ci.org/weechat/weechat"]
 
 == Features
 
