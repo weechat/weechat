@@ -2,7 +2,7 @@ language: c
 
 before_install:
     - sudo apt-get update -qq
-    - sudo apt-get -y install devscripts equivs
+    - sudo apt-get -y install devscripts equivs python-virtualenv virtualenvwrapper
     - sudo mk-build-deps -i debian/control
 
 script:
@@ -11,6 +11,10 @@ script:
     - cmake .. -DENABLE_MAN=ON -DENABLE_DOC=ON
     - make
     - sudo make install
+    - mkvirtualenv msgcheck
+    - pip install msgcheck
+    - cd ..
+    - msgcheck po/*.po
 
 after_success:
     - weechat --help
