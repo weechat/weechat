@@ -2,7 +2,7 @@ language: c
 
 before_install:
     - sudo apt-get update -qq
-    - sudo echo 'APT::Install-Recommends "false"' >>/etc/apt/apt.conf
+    - echo 'APT::Install-Recommends "false"' | sudo tee -a /etc/apt/apt.conf
     - sudo apt-get -y install devscripts equivs python-pip libenchant-dev
     - sudo mk-build-deps -i debian/control
     - sudo pip install msgcheck
