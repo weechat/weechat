@@ -13,7 +13,7 @@
        -del <id>|-all [<id>...]
 
    -list: zeigt laufende Befehle an
-     -sh: es wird die shell um Befehle auszuführen (WARNUNG: Diese Option sollte nur verwendet werden, falls alle Argumente unbedenklich sind, siehe Option -nosh)
+     -sh: es wird die shell verwendet um Befehle auszuführen (WARNUNG: Diese Option sollte nur verwendet werden, falls alle Argumente unbedenklich sind, siehe Option -nosh)
    -nosh: die shell wird nicht verwendet um Befehle auszuführen (wird benötigt, falls der Befehl mit sensiblen Daten hantiert. Zum Beispiel der Inhalt einer Nachricht eines anderen Users)
      -bg: führt Prozess im Hintergrund aus: gibt weder eine Prozessausgabe noch einen Rückgabewert aus (nicht kompatibel mit Optionen -o/-n)
    -nobg: gibt Prozessausgabe und Rückgabewert aus (Standardverhalten)

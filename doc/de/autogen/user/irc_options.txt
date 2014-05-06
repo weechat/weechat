@@ -204,7 +204,7 @@
 ** Werte: on, off (Standardwert: `on`)
 
 * [[option_irc.look.join_auto_add_chantype]] *irc.look.join_auto_add_chantype*
-** Beschreibung: `automatically add channel type in front of channel name on command /join if the channel name does not start with a valid channel type for the server; for example: "/join weechat" will in fact send: "/join #weechat"`
+** Beschreibung: `es wird automatisch der Channel-Typ dem Namen vorangestellt, wenn der Befehl /join genutzt wird und der Channel-Name kein gültigen Typ besitzt; Beispiel: "/join weechat" wird als: "/join #weechat" versendet`
 ** Typ: boolesch
 ** Werte: on, off (Standardwert: `off`)
 
