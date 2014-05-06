@@ -97,6 +97,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * alias: change default command for alias /beep to "/print -beep"
 * exec: add exec plugin: new command /exec and file exec.conf
 * guile: fix module used after unload of a script
+* irc: add option irc.look.join_auto_add_chantype (closes #65)
 * irc: add alias "whois" for target buffer of messages 401/402 (closes #54)
 * irc: add tag with host ("host_xxx") in IRC messages displayed (task #12018)
 * irc: allow many fingerprints in server option ssl_fingerprint (closes #49)

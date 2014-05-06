@@ -75,6 +75,7 @@ struct t_config_option *irc_config_look_item_channel_modes_hide_args;
 struct t_config_option *irc_config_look_item_display_server;
 struct t_config_option *irc_config_look_item_nick_modes;
 struct t_config_option *irc_config_look_item_nick_prefix;
+struct t_config_option *irc_config_look_join_auto_add_chantype;
 struct t_config_option *irc_config_look_msgbuffer_fallback;
 struct t_config_option *irc_config_look_new_channel_position;
 struct t_config_option *irc_config_look_new_pv_position;
@@ -2443,6 +2444,15 @@ irc_config_init ()
         N_("display nick prefix in bar item \"input_prompt\""),
         NULL, 0, 0, "on", NULL, 0, NULL, NULL,
         &irc_config_change_bar_item_input_prompt, NULL, NULL, NULL);
+    irc_config_look_join_auto_add_chantype = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "join_auto_add_chantype", "boolean",
+        N_("automatically add channel type in front of channel name on "
+           "command /join if the channel name does not start with a valid "
+           "channel type for the server; for example: \"/join weechat\" will "
+           "in fact send: \"/join #weechat\""),
+        NULL, 0, 0, "off", NULL, 0, NULL, NULL,
+        NULL, NULL, NULL, NULL);
     irc_config_look_msgbuffer_fallback = weechat_config_new_option (
         irc_config_file, ptr_section,
         "msgbuffer_fallback", "integer",

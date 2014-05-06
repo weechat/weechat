@@ -203,6 +203,11 @@
 ** typ: bool
 ** wartości: on, off (domyślna wartość: `on`)
 
+* [[option_irc.look.join_auto_add_chantype]] *irc.look.join_auto_add_chantype*
+** opis: `automatically add channel type in front of channel name on command /join if the channel name does not start with a valid channel type for the server; for example: "/join weechat" will in fact send: "/join #weechat"`
+** typ: bool
+** wartości: on, off (domyślna wartość: `off`)
+
 * [[option_irc.look.msgbuffer_fallback]] *irc.look.msgbuffer_fallback*
 ** opis: `domyślny bufor docelowy dla bufora wiadomości, kiedy cel jest prywatny i nie odnaleziono tego prywatnego bufora`
 ** typ: liczba

@@ -203,6 +203,11 @@
 ** type: booléen
 ** valeurs: on, off (valeur par défaut: `on`)
 
+* [[option_irc.look.join_auto_add_chantype]] *irc.look.join_auto_add_chantype*
+** description: `ajouter automatiquement le type de canal devant le nom du canal sur la commande /join si le nom du canal ne commence pas par un type de canal valide pour le serveur ; par exemple "/join weechat" enverra en fait : "/join #weechat"`
+** type: booléen
+** valeurs: on, off (valeur par défaut: `off`)
+
 * [[option_irc.look.msgbuffer_fallback]] *irc.look.msgbuffer_fallback*
 ** description: `tampon cible par défaut pour les options msgbuffer quand la cible est "private" et que le tampon privé n'est pas trouvé`
 ** type: entier

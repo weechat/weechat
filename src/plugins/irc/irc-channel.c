@@ -464,6 +464,39 @@ irc_channel_is_channel (struct t_irc_server *server, const char *string)
 }
 
 /*
+ * Returns a string with a channel type to add in front of a channel name,
+ * if it doesn't have a valid channel type for the given server.
+ *
+ * It returns an empty string if the channel already has a valid channel type,
+ * or if the option irc.look.join_auto_add_chantype is off.
+ */
+
+const char *
+irc_channel_get_auto_chantype (struct t_irc_server *server,
+                               const char *channel_name)
+{
+    static char chantype[2];
+
+    chantype[0] = '\0';
+    chantype[1] = '\0';
+
+    if (weechat_config_boolean (irc_config_look_join_auto_add_chantype)
+        && !irc_channel_is_channel (server, channel_name)
+        && server->chantypes
+        && server->chantypes[0])
+    {
+        /*
+         * use '#' if it's in chantypes (anywhere in the string), because it is
+         * the most common channel type, and fallback on first channel type
+         */
+        chantype[0] = (strchr (server->chantypes, '#')) ?
+            '#' : server->chantypes[0];
+    }
+
+    return chantype;
+}
+
+/*
  * Removes away for all nicks on a channel.
  */
 

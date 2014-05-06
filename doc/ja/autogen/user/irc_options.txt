@@ -203,6 +203,11 @@
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `on`)
 
+* [[option_irc.look.join_auto_add_chantype]] *irc.look.join_auto_add_chantype*
+** 説明: `automatically add channel type in front of channel name on command /join if the channel name does not start with a valid channel type for the server; for example: "/join weechat" will in fact send: "/join #weechat"`
+** タイプ: ブール
+** 値: on, off (デフォルト値: `off`)
+
 * [[option_irc.look.msgbuffer_fallback]] *irc.look.msgbuffer_fallback*
 ** 説明: `ターゲットがプライベートでプライベートバッファが見つからない場合の msgbuffer オプション用のデフォルトのターゲットバッファ`
 ** タイプ: 整数

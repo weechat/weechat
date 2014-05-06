@@ -96,6 +96,8 @@ extern struct t_irc_channel *irc_channel_search (struct t_irc_server *server,
                                                  const char *channel_name);
 extern int irc_channel_is_channel (struct t_irc_server *server,
                                    const char *string);
+extern const char *irc_channel_get_auto_chantype (struct t_irc_server *server,
+                                                  const char *channel_name);
 extern void irc_channel_remove_away (struct t_irc_server *server,
                                      struct t_irc_channel *channel);
 extern void irc_channel_check_away (struct t_irc_server *server,

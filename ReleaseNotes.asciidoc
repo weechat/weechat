@@ -17,6 +17,18 @@ http://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 == Version 1.0 (under dev)
 
+=== Channel type not added by default on /join
+
+The channel type is not any more automatically added to a channel name on join
+(for example `/join weechat` will not send `/join #weechat`).
+
+If you are lazy and want to automatically add the channel type, you can turn on
+the new option:
+
+----
+/set irc.look.join_auto_add_chantype on
+----
+
 === Hide IRC channel modes arguments
 
 The option 'irc.look.item_channel_modes_hide_key' has been renamed to

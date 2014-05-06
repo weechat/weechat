@@ -2224,9 +2224,6 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
         free (new_args);
     }
 
-    /*
-     * add "#" in front of each channel if no prefix is given
-     */
     if (channels)
     {
         length = strlen (arguments) + num_channels + 1;
@@ -2236,7 +2233,7 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
             if (manual_join)
             {
                 snprintf (new_args, length, "%s%s",
-                          (irc_channel_is_channel (server, channels[0])) ? "" : "#",
+                          irc_channel_get_auto_chantype (server, channels[0]),
                           channels[0]);
                 ptr_channel = irc_channel_search (server, new_args);
                 if (ptr_channel)
@@ -2255,10 +2252,8 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
                 if (i > 0)
                     strcat (new_args, ",");
                 pos_channel = new_args + strlen (new_args);
-                if (!irc_channel_is_channel (server, channels[i]))
-                {
-                    strcat (new_args, "#");
-                }
+                strcat (new_args,
+                        irc_channel_get_auto_chantype (server, channels[i]));
                 strcat (new_args, channels[i]);
                 if (manual_join || noswitch)
                 {
