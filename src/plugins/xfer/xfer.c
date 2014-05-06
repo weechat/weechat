@@ -527,7 +527,7 @@ xfer_nick_auto_accepted (const char *server, const char *nick)
     {
         for (i = 0; i < num_nicks; i++)
         {
-            pos = strchr (nicks[i], '.');
+            pos = strrchr (nicks[i], '.');
             if (pos)
             {
                 if ((weechat_strncasecmp (server, nicks[i], pos - nicks[i]) == 0)

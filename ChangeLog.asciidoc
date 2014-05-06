@@ -139,6 +139,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * scripts: fix crash when a signal is received with type "int" and NULL pointer
   in signal_data
 * trigger: add trigger plugin: new command /trigger and file trigger.conf
+* xfer: fix problem with option xfer.file.auto_accept_nicks when the server
+  name contains dots
 * xfer: fix freeze/problems when sending empty files with DCC (closes #53)
 * xfer: fix connection to remote host in DCC receive on Mac OS X (closes #25)
 * xfer: remove bind on xfer.network.own_ip (closes #5)
