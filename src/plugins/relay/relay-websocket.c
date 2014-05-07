@@ -145,7 +145,7 @@ relay_websocket_client_handshake_valid (struct t_relay_client *client)
     value = weechat_hashtable_get (client->http_headers, "Upgrade");
     if (!value)
         return -1;
-    if (strcmp (value, "websocket") != 0)
+    if (weechat_strcasecmp (value, "websocket") != 0)
         return -1;
 
     /* check if we have header "Sec-WebSocket-Key" with non-empty value */
