@@ -139,7 +139,7 @@
 ** valori: on, off (valore predefinito: `on`)
 
 * [[option_irc.look.display_join_message]] *irc.look.display_join_message*
-** descrizione: `comma-separated list of messages to display after joining a channel: 329 = channel creation date, 332 = topic, 333 = nick/date for topic, 353 = names on channel, 366 = names count`
+** descrizione: `comma-separated list of messages to display after joining a channel: 324 = channel modes, 329 = channel creation date, 332 = topic, 333 = nick/date for topic, 353 = names on channel, 366 = names count`
 ** tipo: stringa
 ** valori: qualsiasi stringa (valore predefinito: `"329,332,333,366"`)
 

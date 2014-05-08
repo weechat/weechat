@@ -3048,21 +3048,31 @@ IRC_PROTOCOL_CALLBACK(324)
                                          ptr_channel->modes);
         }
     }
-    weechat_printf_date_tags (irc_msgbuffer_get_target_buffer (server, NULL,
-                                                               command, NULL,
-                                                               (ptr_channel) ? ptr_channel->buffer : NULL),
-                              date,
-                              irc_protocol_tags (command, "irc_numeric", NULL,
-                                                 address),
-                              _("%sMode %s%s %s[%s%s%s]"),
-                              weechat_prefix ("network"),
-                              IRC_COLOR_CHAT_CHANNEL,
-                              argv[3],
-                              IRC_COLOR_CHAT_DELIMITERS,
-                              IRC_COLOR_RESET,
-                              (argc > 4) ?
-                              ((argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]) : "",
-                              IRC_COLOR_CHAT_DELIMITERS);
+    if (!ptr_channel
+        || (weechat_hashtable_has_key (ptr_channel->join_msg_received, command)
+            || weechat_hashtable_has_key (irc_config_hashtable_display_join_message, command)))
+    {
+        weechat_printf_date_tags (
+            irc_msgbuffer_get_target_buffer (
+                server, NULL,
+                command, NULL,
+                (ptr_channel) ? ptr_channel->buffer : NULL),
+            date,
+            irc_protocol_tags (command, "irc_numeric", NULL,
+                               address),
+            _("%sMode %s%s %s[%s%s%s]"),
+            weechat_prefix ("network"),
+            IRC_COLOR_CHAT_CHANNEL,
+            argv[3],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            (argc > 4) ?
+            ((argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]) : "",
+            IRC_COLOR_CHAT_DELIMITERS);
+    }
+
+    if (ptr_channel)
+        weechat_hashtable_set (ptr_channel->join_msg_received, command, "1");
 
     return WEECHAT_RC_OK;
 }
