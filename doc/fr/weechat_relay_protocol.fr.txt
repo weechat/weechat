@@ -557,6 +557,9 @@ Les identifiants réservés par WeeChat :
 | _buffer_title_changed | buffers / buffer | hdata : buffer |
   Titre du tampon changé | Changer le titre du tampon
 
+| _buffer_cleared | buffer | hdata : buffer |
+  Tampon qui est vidé | Vider le tampon
+
 | _buffer_type_changed | buffer | hdata : buffer |
   Type de tampon changé | Changer le type de tampon
 
@@ -866,6 +869,37 @@ hda:
     number: 3
     full_name: 'irc.freenode.#weechat'
     title: 'Welcome on #weechat!  http://weechat.org/'
+----
+
+[[message_buffer_cleared]]
+==== _buffer_cleared
+
+_WeeChat ≥ 1.0._
+
+Ce message est envoyé au client lorsque le signal "buffer_cleared" est envoyé
+par WeeChat.
+
+Données envoyées dans le hdata :
+
+[width="100%",cols="3m,2,10",options="header"]
+|===
+| Nom       | Type   | Description
+| number    | entier | Numéro de tampon (≥ 1)
+| full_name | chaîne | Nom complet (exemple : 'irc.freenode.#weechat')
+|===
+
+Exemple : tampon 'irc.freenode.#weechat' vidé :
+
+[source,python]
+----
+id: '_buffer_cleared'
+hda:
+  keys: {'number': 'int', 'full_name': 'str'}
+  path: ['buffer']
+  item 1:
+    __path: ['0x4a715d0']
+    number: 3
+    full_name: 'irc.freenode.#weechat'
 ----
 
 [[message_buffer_type_changed]]

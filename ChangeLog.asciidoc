@@ -129,7 +129,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * python: fix interpreter used after unload of a script
 * relay: fix client disconnection on empty websocket frames received (PONG)
 * relay: add support of Internet Explorer websocket (closes #73)
-* relay: add messages "_buffer_hidden" and "_buffer_unhidden"
+* relay: add messages "_buffer_cleared", "_buffer_hidden" and
+  "_buffer_unhidden"
 * relay: fix crash on /upgrade received from a client (weechat protocol)
 * relay: add info "relay_client_count" with optional status name as argument
 * relay: add signals "relay_client_xxx" for client status changes (closes #2)

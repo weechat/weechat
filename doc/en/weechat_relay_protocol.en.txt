@@ -539,6 +539,9 @@ WeeChat reserved identifiers:
 | _buffer_title_changed | buffers / buffer | hdata: buffer |
   Title of buffer changed | Change title of buffer
 
+| _buffer_cleared | buffer | hdata: buffer |
+  Buffer cleared | Clear buffer
+
 | _buffer_type_changed | buffer | hdata: buffer |
   Type of buffer changed | Change type of buffer
 
@@ -848,6 +851,37 @@ hda:
     number: 3
     full_name: 'irc.freenode.#weechat'
     title: 'Welcome on #weechat!  http://weechat.org/'
+----
+
+[[message_buffer_cleared]]
+==== _buffer_cleared
+
+_WeeChat ≥ 1.0._
+
+This message is sent to the client when the signal "buffer_cleared" is sent by
+WeeChat.
+
+Data sent as hdata:
+
+[width="100%",cols="3m,2,10",options="header"]
+|===
+| Name      | Type    | Description
+| number    | integer | Buffer number (≥ 1)
+| full_name | string  | Full name (example: 'irc.freenode.#weechat')
+|===
+
+Example: buffer 'irc.freenode.#weechat' has been cleared:
+
+[source,python]
+----
+id: '_buffer_cleared'
+hda:
+  keys: {'number': 'int', 'full_name': 'str'}
+  path: ['buffer']
+  item 1:
+    __path: ['0x4a715d0']
+    number: 3
+    full_name: 'irc.freenode.#weechat'
 ----
 
 [[message_buffer_type_changed]]
