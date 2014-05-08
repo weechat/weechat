@@ -396,6 +396,366 @@ upgrade_weechat_save ()
 }
 
 /*
+ * Reads a buffer from infolist.
+ */
+
+void
+upgrade_weechat_read_buffer (struct t_infolist *infolist)
+{
+    struct t_gui_buffer *ptr_buffer;
+    const char *key, *var_name, *name, *plugin_name;
+    const char *str;
+    char option_name[64], *option_key, *option_var;
+    int index, length, main_buffer;
+
+    plugin_name = infolist_string (infolist, "plugin_name");
+    name = infolist_string (infolist, "name");
+    gui_layout_buffer_add (upgrade_layout,
+                           plugin_name, name,
+                           infolist_integer (infolist, "number"));
+    main_buffer = gui_buffer_is_main (plugin_name, name);
+    if (main_buffer)
+    {
+        /* use WeeChat main buffer */
+        upgrade_current_buffer = gui_buffers;
+    }
+    else
+    {
+        /* create buffer it it's not main buffer */
+        upgrade_current_buffer = gui_buffer_new (NULL,
+                                                 infolist_string (infolist,
+                                                                  "name"),
+                                                 NULL, NULL,
+                                                 NULL, NULL);
+    }
+    if (!upgrade_current_buffer)
+        return;
+
+    ptr_buffer = upgrade_current_buffer;
+
+    if (infolist_integer (infolist, "current_buffer"))
+        upgrade_set_current_buffer = ptr_buffer;
+
+    /* name for upgrade */
+    if (ptr_buffer->plugin_name_for_upgrade)
+        free (ptr_buffer->plugin_name_for_upgrade);
+    ptr_buffer->plugin_name_for_upgrade =
+        strdup (infolist_string (infolist, "plugin_name"));
+
+    /* full name */
+    gui_buffer_build_full_name (ptr_buffer);
+
+    /* short name */
+    if (ptr_buffer->short_name)
+        free (ptr_buffer->short_name);
+    str = infolist_string (infolist, "short_name");
+    ptr_buffer->short_name = (str) ? strdup (str) : NULL;
+
+    /* buffer type */
+    ptr_buffer->type = infolist_integer (infolist, "type");
+
+    /* notify level */
+    ptr_buffer->notify = infolist_integer (infolist, "notify");
+
+    /* "hidden" is new in WeeChat 1.0 */
+    if (infolist_search_var (infolist, "hidden"))
+        ptr_buffer->hidden = infolist_integer (infolist, "hidden");
+    else
+        ptr_buffer->hidden = 0;
+
+    /* day change */
+    if (infolist_search_var (infolist, "day_change"))
+        ptr_buffer->day_change = infolist_integer (infolist, "day_change");
+    else
+        ptr_buffer->day_change = 1;
+
+    /* "clear" is new in WeeChat 1.0 */
+    if (infolist_search_var (infolist, "clear"))
+        ptr_buffer->clear = infolist_integer (infolist, "clear");
+    else
+        ptr_buffer->clear = (ptr_buffer->type == GUI_BUFFER_TYPE_FREE) ? 0 : 1;
+
+    /* "filter" is new in WeeChat 1.0 */
+    if (infolist_search_var (infolist, "filter"))
+        ptr_buffer->filter = infolist_integer (infolist, "filter");
+    else
+        ptr_buffer->filter = 1;
+
+    /* nicklist */
+    ptr_buffer->nicklist_case_sensitive =
+        infolist_integer (infolist, "nicklist_case_sensitive");
+    ptr_buffer->nicklist_display_groups =
+        infolist_integer (infolist, "nicklist_display_groups");
+
+    /* title */
+    if (!main_buffer)
+    {
+        if (ptr_buffer->title)
+            free (ptr_buffer->title);
+        str = infolist_string (infolist, "title");
+        ptr_buffer->title = (str) ? strdup (str) : NULL;
+    }
+
+    /* first line not read */
+    ptr_buffer->lines->first_line_not_read =
+        infolist_integer (infolist, "first_line_not_read");
+
+    /* time for each line */
+    ptr_buffer->time_for_each_line =
+        infolist_integer (infolist, "time_for_each_line");
+
+    /* input */
+    ptr_buffer->input = infolist_integer (infolist, "input");
+    ptr_buffer->input_get_unknown_commands =
+        infolist_integer (infolist, "input_get_unknown_commands");
+    if (infolist_integer (infolist, "input_buffer_alloc") > 0)
+    {
+        ptr_buffer->input_buffer =
+            malloc (infolist_integer (infolist, "input_buffer_alloc"));
+        if (ptr_buffer->input_buffer)
+        {
+            ptr_buffer->input_buffer_size =
+                infolist_integer (infolist, "input_buffer_size");
+            ptr_buffer->input_buffer_length =
+                infolist_integer (infolist, "input_buffer_length");
+            ptr_buffer->input_buffer_pos =
+                infolist_integer (infolist, "input_buffer_pos");
+            ptr_buffer->input_buffer_1st_display =
+                infolist_integer (infolist, "input_buffer_1st_display");
+            if (infolist_string (infolist, "input_buffer"))
+                strcpy (ptr_buffer->input_buffer,
+                        infolist_string (infolist, "input_buffer"));
+            else
+                ptr_buffer->input_buffer[0] = '\0';
+        }
+    }
+
+    /* text search */
+    ptr_buffer->text_search = infolist_integer (infolist, "text_search");
+    ptr_buffer->text_search_exact = infolist_integer (infolist,
+                                                      "text_search_exact");
+    ptr_buffer->text_search_found = infolist_integer (infolist,
+                                                      "text_search_found");
+    if (ptr_buffer->text_search_input)
+        free (ptr_buffer->text_search_input);
+    str = infolist_string (infolist, "text_search_input");
+    ptr_buffer->text_search_input = (str) ? strdup (str) : NULL;
+
+    /* highlight options */
+    gui_buffer_set_highlight_words (
+        ptr_buffer, infolist_string (infolist, "highlight_words"));
+    gui_buffer_set_highlight_regex (
+        ptr_buffer, infolist_string (infolist, "highlight_regex"));
+    if (infolist_search_var (infolist,
+                             "highlight_tags_restrict"))
+    {
+        /* WeeChat >= 0.4.3 */
+        gui_buffer_set_highlight_tags_restrict (
+            ptr_buffer, infolist_string (infolist, "highlight_tags_restrict"));
+        gui_buffer_set_highlight_tags (
+            ptr_buffer, infolist_string (infolist, "highlight_tags"));
+    }
+    else
+    {
+        /* WeeChat <= 0.4.2 */
+        gui_buffer_set_highlight_tags_restrict (
+            ptr_buffer, infolist_string (infolist, "highlight_tags"));
+    }
+
+    /* hotlist max level nicks */
+    gui_buffer_set_hotlist_max_level_nicks (
+        ptr_buffer, infolist_string (infolist, "hotlist_max_level_nicks"));
+
+    /* local keys */
+    index = 0;
+    while (1)
+    {
+        snprintf (option_name, sizeof (option_name), "key_%05d", index);
+        key = infolist_string (infolist, option_name);
+        if (!key)
+            break;
+        length = 16 + strlen (key) + 1;
+        option_key = malloc (length);
+        if (option_key)
+        {
+            snprintf (option_key, length, "key_bind_%s", key);
+            snprintf (option_name, sizeof (option_name),
+                      "key_command_%05d", index);
+            gui_buffer_set (ptr_buffer, option_key,
+                            infolist_string (infolist, option_name));
+            free (option_key);
+        }
+        index++;
+    }
+
+    /* local variables */
+    index = 0;
+    while (1)
+    {
+        snprintf (option_name, sizeof (option_name),
+                  "localvar_name_%05d", index);
+        var_name = infolist_string (infolist, option_name);
+        if (!var_name)
+            break;
+        length = 32 + strlen (var_name) + 1;
+        option_var = malloc (length);
+        if (option_var)
+        {
+            snprintf (option_var, length, "localvar_set_%s", var_name);
+            snprintf (option_name, sizeof (option_name),
+                      "localvar_value_%05d", index);
+            gui_buffer_set (ptr_buffer, option_var,
+                            infolist_string (infolist, option_name));
+            free (option_var);
+        }
+        index++;
+    }
+}
+
+/*
+ * Reads a buffer line from infolist.
+ */
+
+void
+upgrade_weechat_read_buffer_line (struct t_infolist *infolist)
+{
+    struct t_gui_line *new_line;
+
+    if (!upgrade_current_buffer)
+        return;
+
+    switch (upgrade_current_buffer->type)
+    {
+        case GUI_BUFFER_TYPE_FORMATTED:
+            new_line = gui_line_add (upgrade_current_buffer,
+                                     infolist_time (infolist, "date"),
+                                     infolist_time (infolist, "date_printed"),
+                                     infolist_string (infolist, "tags"),
+                                     infolist_string (infolist, "prefix"),
+                                     infolist_string (infolist, "message"));
+            if (new_line)
+            {
+                new_line->data->highlight = infolist_integer (infolist,
+                                                              "highlight");
+                if (infolist_integer (infolist, "last_read_line"))
+                    upgrade_current_buffer->lines->last_read_line = new_line;
+            }
+            break;
+        case GUI_BUFFER_TYPE_FREE:
+            gui_line_add_y (upgrade_current_buffer,
+                            infolist_integer (infolist, "y"),
+                            infolist_string (infolist, "message"));
+            break;
+        case GUI_BUFFER_NUM_TYPES:
+            break;
+    }
+}
+
+/*
+ * Reads a nicklist from infolist.
+ */
+
+void
+upgrade_weechat_read_nicklist (struct t_infolist *infolist)
+{
+    struct t_gui_nick_group *ptr_group;
+    const char *type, *name, *group_name;
+
+    if (!upgrade_current_buffer)
+        return;
+
+    upgrade_current_buffer->nicklist = 1;
+    ptr_group = NULL;
+    type = infolist_string (infolist, "type");
+    if (type)
+    {
+        if (strcmp (type, "group") == 0)
+        {
+            name = infolist_string (infolist, "name");
+            if (name && (strcmp (name, "root") != 0))
+            {
+                group_name = infolist_string (infolist, "parent_name");
+                if (group_name)
+                {
+                    ptr_group = gui_nicklist_search_group (
+                        upgrade_current_buffer, NULL, group_name);
+                }
+                gui_nicklist_add_group (upgrade_current_buffer,
+                                        ptr_group,
+                                        name,
+                                        infolist_string (infolist, "color"),
+                                        infolist_integer (infolist, "visible"));
+            }
+        }
+        else if (strcmp (type, "nick") == 0)
+        {
+            group_name = infolist_string (infolist, "group_name");
+            if (group_name)
+                ptr_group = gui_nicklist_search_group (upgrade_current_buffer,
+                                                       NULL,
+                                                       group_name);
+            gui_nicklist_add_nick (upgrade_current_buffer,
+                                   ptr_group,
+                                   infolist_string (infolist, "name"),
+                                   infolist_string (infolist, "color"),
+                                   infolist_string (infolist, "prefix"),
+                                   infolist_string (infolist, "prefix_color"),
+                                   infolist_integer (infolist, "visible"));
+        }
+    }
+}
+
+/*
+ * Reads hotlist from infolist.
+ */
+
+void
+upgrade_weechat_read_hotlist (struct t_infolist *infolist)
+{
+    const char *plugin_name, *buffer_name;
+    char option_name[64];
+    struct t_gui_buffer *ptr_buffer;
+    struct t_gui_hotlist *new_hotlist;
+    struct timeval creation_time;
+    void *buf;
+    int i, size;
+
+    if (!hotlist_reset)
+    {
+        gui_hotlist_clear ();
+        hotlist_reset = 1;
+    }
+    plugin_name = infolist_string (infolist, "plugin_name");
+    buffer_name = infolist_string (infolist, "buffer_name");
+    if (plugin_name && buffer_name)
+    {
+        ptr_buffer = gui_buffer_search_by_name (plugin_name,
+                                                buffer_name);
+        if (ptr_buffer)
+        {
+            buf = infolist_buffer (infolist, "creation_time", &size);
+            if (buf)
+            {
+                memcpy (&creation_time, buf, size);
+                new_hotlist = gui_hotlist_add (ptr_buffer,
+                                               infolist_integer (infolist, "priority"),
+                                               &creation_time);
+                if (new_hotlist)
+                {
+                    for (i = 0; i < GUI_HOTLIST_NUM_PRIORITIES; i++)
+                    {
+                        snprintf (option_name, sizeof (option_name),
+                                  "count_%02d", i);
+                        new_hotlist->count[i] = infolist_integer (infolist,
+                                                                  option_name);
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*
  * Reads WeeChat upgrade file.
  */
 
@@ -405,17 +765,6 @@ upgrade_weechat_read_cb (void *data,
                          int object_id,
                          struct t_infolist *infolist)
 {
-    const char *key, *var_name, *type, *name, *group_name, *plugin_name;
-    const char *buffer_name, *str;
-    char option_name[64], *option_key, *option_var;
-    struct t_gui_nick_group *ptr_group;
-    struct t_gui_buffer *ptr_buffer;
-    struct t_gui_line *new_line;
-    struct t_gui_hotlist *new_hotlist;
-    struct timeval creation_time;
-    void *buf;
-    int i, size, index, length;
-
     /* make C compiler happy */
     (void) data;
     (void) upgrade_file;
@@ -437,293 +786,13 @@ upgrade_weechat_read_cb (void *data,
                 }
                 break;
             case UPGRADE_WEECHAT_TYPE_BUFFER:
-                plugin_name = infolist_string (infolist, "plugin_name");
-                name = infolist_string (infolist, "name");
-                gui_layout_buffer_add (upgrade_layout,
-                                       plugin_name, name,
-                                       infolist_integer (infolist, "number"));
-                if (gui_buffer_is_main (plugin_name, name))
-                {
-                    /* use WeeChat main buffer */
-                    upgrade_current_buffer = gui_buffers;
-                }
-                else
-                {
-                    /* create buffer */
-                    upgrade_current_buffer = gui_buffer_new (
-                        NULL,
-                        infolist_string (infolist, "name"),
-                        NULL, NULL,
-                        NULL, NULL);
-                }
-                if (upgrade_current_buffer)
-                {
-                    if (infolist_integer (infolist, "current_buffer"))
-                        upgrade_set_current_buffer = upgrade_current_buffer;
-                    /* name for upgrade */
-                    if (upgrade_current_buffer->plugin_name_for_upgrade)
-                        free (upgrade_current_buffer->plugin_name_for_upgrade);
-                    upgrade_current_buffer->plugin_name_for_upgrade =
-                        strdup (infolist_string (infolist, "plugin_name"));
-                    /* full name */
-                    gui_buffer_build_full_name (upgrade_current_buffer);
-                    /* short name */
-                    if (upgrade_current_buffer->short_name)
-                        free (upgrade_current_buffer->short_name);
-                    str = infolist_string (infolist, "short_name");
-                    upgrade_current_buffer->short_name = (str) ?
-                        strdup (str) : NULL;
-                    /* buffer type */
-                    upgrade_current_buffer->type =
-                        infolist_integer (infolist, "type");
-                    /* notify level */
-                    upgrade_current_buffer->notify =
-                        infolist_integer (infolist, "notify");
-                    /* "hidden" is new in WeeChat 1.0 */
-                    if (infolist_search_var (infolist, "hidden"))
-                    {
-                        upgrade_current_buffer->hidden =
-                            infolist_integer (infolist, "hidden");
-                    }
-                    else
-                    {
-                        upgrade_current_buffer->hidden = 0;
-                    }
-                    /* day change */
-                    if (infolist_search_var (infolist, "day_change"))
-                    {
-                        upgrade_current_buffer->day_change =
-                            infolist_integer (infolist, "day_change");
-                    }
-                    else
-                    {
-                        upgrade_current_buffer->day_change = 1;
-                    }
-                    /* "clear" is new in WeeChat 1.0 */
-                    if (infolist_search_var (infolist, "clear"))
-                    {
-                        upgrade_current_buffer->clear =
-                            infolist_integer (infolist, "clear");
-                    }
-                    else
-                    {
-                        upgrade_current_buffer->clear =
-                            (upgrade_current_buffer->type == GUI_BUFFER_TYPE_FREE) ?
-                            0 : 1;
-                    }
-                    /* "filter" is new in WeeChat 1.0 */
-                    if (infolist_search_var (infolist, "filter"))
-                    {
-                        upgrade_current_buffer->filter =
-                            infolist_integer (infolist, "filter");
-                    }
-                    else
-                    {
-                        upgrade_current_buffer->filter = 1;
-                    }
-                    /* nicklist */
-                    upgrade_current_buffer->nicklist_case_sensitive =
-                        infolist_integer (infolist, "nicklist_case_sensitive");
-                    upgrade_current_buffer->nicklist_display_groups =
-                        infolist_integer (infolist, "nicklist_display_groups");
-                    /* title */
-                    if (upgrade_current_buffer->title)
-                        free (upgrade_current_buffer->title);
-                    str = infolist_string (infolist, "title");
-                    upgrade_current_buffer->title = (str) ? strdup (str) : NULL;
-                    /* first line not read */
-                    upgrade_current_buffer->lines->first_line_not_read =
-                        infolist_integer (infolist, "first_line_not_read");
-                    /* time for each line */
-                    upgrade_current_buffer->time_for_each_line =
-                        infolist_integer (infolist, "time_for_each_line");
-                    /* input */
-                    upgrade_current_buffer->input =
-                        infolist_integer (infolist, "input");
-                    upgrade_current_buffer->input_get_unknown_commands =
-                        infolist_integer (infolist, "input_get_unknown_commands");
-                    if (infolist_integer (infolist, "input_buffer_alloc") > 0)
-                    {
-                        upgrade_current_buffer->input_buffer =
-                            malloc (infolist_integer (infolist, "input_buffer_alloc"));
-                        if (upgrade_current_buffer->input_buffer)
-                        {
-                            upgrade_current_buffer->input_buffer_size =
-                                infolist_integer (infolist, "input_buffer_size");
-                            upgrade_current_buffer->input_buffer_length =
-                                infolist_integer (infolist, "input_buffer_length");
-                            upgrade_current_buffer->input_buffer_pos =
-                                infolist_integer (infolist, "input_buffer_pos");
-                            upgrade_current_buffer->input_buffer_1st_display =
-                                infolist_integer (infolist, "input_buffer_1st_display");
-                            if (infolist_string (infolist, "input_buffer"))
-                                strcpy (upgrade_current_buffer->input_buffer,
-                                        infolist_string (infolist, "input_buffer"));
-                            else
-                                upgrade_current_buffer->input_buffer[0] = '\0';
-                        }
-                    }
-                    /* text search */
-                    upgrade_current_buffer->text_search =
-                        infolist_integer (infolist, "text_search");
-                    upgrade_current_buffer->text_search_exact =
-                        infolist_integer (infolist, "text_search_exact");
-                    upgrade_current_buffer->text_search_found =
-                        infolist_integer (infolist, "text_search_found");
-                    if (upgrade_current_buffer->text_search_input)
-                        free (upgrade_current_buffer->text_search_input);
-                    str = infolist_string (infolist, "text_search_input");
-                    upgrade_current_buffer->text_search_input = (str) ?
-                        strdup (str) : NULL;
-                    /* highlight options */
-                    gui_buffer_set_highlight_words (upgrade_current_buffer,
-                                                    infolist_string (infolist, "highlight_words"));
-                    gui_buffer_set_highlight_regex (upgrade_current_buffer,
-                                                    infolist_string (infolist, "highlight_regex"));
-                    if (infolist_search_var (infolist,
-                                             "highlight_tags_restrict"))
-                    {
-                        /* WeeChat >= 0.4.3 */
-                        gui_buffer_set_highlight_tags_restrict (upgrade_current_buffer,
-                                                                infolist_string (infolist,
-                                                                                 "highlight_tags_restrict"));
-                        gui_buffer_set_highlight_tags (upgrade_current_buffer,
-                                                       infolist_string (infolist,
-                                                                        "highlight_tags"));
-                    }
-                    else
-                    {
-                        /* WeeChat <= 0.4.2 */
-                        gui_buffer_set_highlight_tags_restrict (upgrade_current_buffer,
-                                                                infolist_string (infolist, "highlight_tags"));
-                    }
-                    /* hotlist max level nicks */
-                    gui_buffer_set_hotlist_max_level_nicks (upgrade_current_buffer,
-                                                            infolist_string (infolist, "hotlist_max_level_nicks"));
-                    /* local keys */
-                    index = 0;
-                    while (1)
-                    {
-                        snprintf (option_name, sizeof (option_name),
-                                  "key_%05d", index);
-                        key = infolist_string (infolist, option_name);
-                        if (!key)
-                            break;
-                        length = 16 + strlen (key) + 1;
-                        option_key = malloc (length);
-                        if (option_key)
-                        {
-                            snprintf (option_key, length, "key_bind_%s", key);
-                            snprintf (option_name, sizeof (option_name),
-                                      "key_command_%05d", index);
-                            gui_buffer_set (upgrade_current_buffer,
-                                            option_key,
-                                            infolist_string (infolist, option_name));
-                            free (option_key);
-                        }
-                        index++;
-                    }
-                    /* local variables */
-                    index = 0;
-                    while (1)
-                    {
-                        snprintf (option_name, sizeof (option_name),
-                                  "localvar_name_%05d", index);
-                        var_name = infolist_string (infolist, option_name);
-                        if (!var_name)
-                            break;
-                        length = 32 + strlen (var_name) + 1;
-                        option_var = malloc (length);
-                        if (option_var)
-                        {
-                            snprintf (option_var, length, "localvar_set_%s", var_name);
-                            snprintf (option_name, sizeof (option_name),
-                                      "localvar_value_%05d", index);
-                            gui_buffer_set (upgrade_current_buffer,
-                                            option_var,
-                                            infolist_string (infolist, option_name));
-                            free (option_var);
-                        }
-                        index++;
-                    }
-                }
+                upgrade_weechat_read_buffer (infolist);
                 break;
             case UPGRADE_WEECHAT_TYPE_BUFFER_LINE:
-                /* add line to current buffer */
-                if (upgrade_current_buffer)
-                {
-                    switch (upgrade_current_buffer->type)
-                    {
-                        case GUI_BUFFER_TYPE_FORMATTED:
-                            new_line = gui_line_add (
-                                upgrade_current_buffer,
-                                infolist_time (infolist, "date"),
-                                infolist_time (infolist, "date_printed"),
-                                infolist_string (infolist, "tags"),
-                                infolist_string (infolist, "prefix"),
-                                infolist_string (infolist, "message"));
-                            if (new_line)
-                            {
-                                new_line->data->highlight = infolist_integer (infolist, "highlight");
-                                if (infolist_integer (infolist, "last_read_line"))
-                                    upgrade_current_buffer->lines->last_read_line = new_line;
-                            }
-                            break;
-                        case GUI_BUFFER_TYPE_FREE:
-                            gui_line_add_y (
-                                upgrade_current_buffer,
-                                infolist_integer (infolist, "y"),
-                                infolist_string (infolist, "message"));
-                            break;
-                        case GUI_BUFFER_NUM_TYPES:
-                            break;
-                    }
-                }
+                upgrade_weechat_read_buffer_line (infolist);
                 break;
             case UPGRADE_WEECHAT_TYPE_NICKLIST:
-                if (upgrade_current_buffer)
-                {
-                    upgrade_current_buffer->nicklist = 1;
-                    ptr_group = NULL;
-                    type = infolist_string (infolist, "type");
-                    if (type)
-                    {
-                        if (strcmp (type, "group") == 0)
-                        {
-                            name = infolist_string (infolist, "name");
-                            if (name && (strcmp (name, "root") != 0))
-                            {
-                                group_name = infolist_string (infolist, "parent_name");
-                                if (group_name)
-                                    ptr_group = gui_nicklist_search_group (upgrade_current_buffer,
-                                                                           NULL,
-                                                                           group_name);
-                                gui_nicklist_add_group (
-                                    upgrade_current_buffer,
-                                    ptr_group,
-                                    name,
-                                    infolist_string (infolist, "color"),
-                                    infolist_integer (infolist, "visible"));
-                            }
-                        }
-                        else if (strcmp (type, "nick") == 0)
-                        {
-                            group_name = infolist_string (infolist, "group_name");
-                            if (group_name)
-                                ptr_group = gui_nicklist_search_group (upgrade_current_buffer,
-                                                                       NULL,
-                                                                       group_name);
-                            gui_nicklist_add_nick (
-                                upgrade_current_buffer,
-                                ptr_group,
-                                infolist_string (infolist, "name"),
-                                infolist_string (infolist, "color"),
-                                infolist_string (infolist, "prefix"),
-                                infolist_string (infolist, "prefix_color"),
-                                infolist_integer (infolist, "visible"));
-                        }
-                    }
-                }
+                upgrade_weechat_read_nicklist (infolist);
                 break;
             case UPGRADE_WEECHAT_TYPE_MISC:
                 weechat_first_start_time = infolist_time (infolist, "start_time");
@@ -731,39 +800,7 @@ upgrade_weechat_read_cb (void *data,
                 upgrade_set_current_window = infolist_integer (infolist, "current_window_number");
                 break;
             case UPGRADE_WEECHAT_TYPE_HOTLIST:
-                if (!hotlist_reset)
-                {
-                    gui_hotlist_clear ();
-                    hotlist_reset = 1;
-                }
-                plugin_name = infolist_string (infolist, "plugin_name");
-                buffer_name = infolist_string (infolist, "buffer_name");
-                if (plugin_name && buffer_name)
-                {
-                    ptr_buffer = gui_buffer_search_by_name (plugin_name,
-                                                            buffer_name);
-                    if (ptr_buffer)
-                    {
-                        buf = infolist_buffer (infolist, "creation_time", &size);
-                        if (buf)
-                        {
-                            memcpy (&creation_time, buf, size);
-                            new_hotlist = gui_hotlist_add (ptr_buffer,
-                                                           infolist_integer (infolist, "priority"),
-                                                           &creation_time);
-                            if (new_hotlist)
-                            {
-                                for (i = 0; i < GUI_HOTLIST_NUM_PRIORITIES; i++)
-                                {
-                                    snprintf (option_name, sizeof (option_name),
-                                              "count_%02d", i);
-                                    new_hotlist->count[i] = infolist_integer (infolist,
-                                                                              option_name);
-                                }
-                            }
-                        }
-                    }
-                }
+                upgrade_weechat_read_hotlist (infolist);
                 break;
             case UPGRADE_WEECHAT_TYPE_LAYOUT_WINDOW:
                 gui_layout_window_add (&upgrade_layout->layout_windows,
