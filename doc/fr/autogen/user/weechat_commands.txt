@@ -318,6 +318,7 @@ Exemples (conditions) :
 étiquettes : liste d'étiquettes, séparées par des virgules, par exemple : "irc_join,irc_part,irc_quit"
              - "et" logique : utilisez "+" entre les étiquettes (par exemple : "nick_toto+irc_action")
              - le caractère joker "*" est autorisé
+             - si l'étiquette commence par '!', alors elle est exclue et ne doit PAS être dans le message
      regex : expression régulière POSIX étendue à rechercher dans la ligne
              - utiliser '\t' pour séparer le préfixe du message, les caractères spéciaux comme '|' doivent être échappés : '\|'
              - si l'expression régulière commence par '!' alors le résultat est inversé (utiliser '\!' pour démarrer par '!')

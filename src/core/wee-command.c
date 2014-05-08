@@ -7076,6 +7076,8 @@ command_init ()
            "         - logical \"and\": use \"+\" between tags (for example: "
            "\"nick_toto+irc_action\")\n"
            "         - wildcard \"*\" is allowed\n"
+           "         - if tag starts with '!', then it is excluded and must "
+           "NOT be in message\n"
            "  regex: POSIX extended regular expression to search in line\n"
            "         - use '\\t' to separate prefix from message, special chars "
            "like '|' must be escaped: '\\|'\n"

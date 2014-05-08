@@ -318,6 +318,7 @@ disable: disable filters
    tags: comma separated list of tags, for example "irc_join,irc_part,irc_quit"
          - logical "and": use "+" between tags (for example: "nick_toto+irc_action")
          - wildcard "*" is allowed
+         - if tag starts with '!', then it is excluded and must NOT be in message
   regex: POSIX extended regular expression to search in line
          - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
          - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
