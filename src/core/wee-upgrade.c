@@ -406,7 +406,7 @@ upgrade_weechat_read_cb (void *data,
                          struct t_infolist *infolist)
 {
     const char *key, *var_name, *type, *name, *group_name, *plugin_name;
-    const char *buffer_name;
+    const char *buffer_name, *str;
     char option_name[64], *option_key, *option_var;
     struct t_gui_nick_group *ptr_group;
     struct t_gui_buffer *ptr_buffer;
@@ -449,7 +449,7 @@ upgrade_weechat_read_cb (void *data,
                 }
                 else
                 {
-                    /* create buffer if it's not WeeChat main buffer */
+                    /* create buffer */
                     upgrade_current_buffer = gui_buffer_new (
                         NULL,
                         infolist_string (infolist, "name"),
@@ -460,14 +460,23 @@ upgrade_weechat_read_cb (void *data,
                 {
                     if (infolist_integer (infolist, "current_buffer"))
                         upgrade_set_current_buffer = upgrade_current_buffer;
+                    /* name for upgrade */
+                    if (upgrade_current_buffer->plugin_name_for_upgrade)
+                        free (upgrade_current_buffer->plugin_name_for_upgrade);
                     upgrade_current_buffer->plugin_name_for_upgrade =
                         strdup (infolist_string (infolist, "plugin_name"));
+                    /* full name */
                     gui_buffer_build_full_name (upgrade_current_buffer);
-                    upgrade_current_buffer->short_name =
-                        (infolist_string (infolist, "short_name")) ?
-                        strdup (infolist_string (infolist, "short_name")) : NULL;
+                    /* short name */
+                    if (upgrade_current_buffer->short_name)
+                        free (upgrade_current_buffer->short_name);
+                    str = infolist_string (infolist, "short_name");
+                    upgrade_current_buffer->short_name = (str) ?
+                        strdup (str) : NULL;
+                    /* buffer type */
                     upgrade_current_buffer->type =
                         infolist_integer (infolist, "type");
+                    /* notify level */
                     upgrade_current_buffer->notify =
                         infolist_integer (infolist, "notify");
                     /* "hidden" is new in WeeChat 1.0 */
@@ -480,6 +489,7 @@ upgrade_weechat_read_cb (void *data,
                     {
                         upgrade_current_buffer->hidden = 0;
                     }
+                    /* day change */
                     if (infolist_search_var (infolist, "day_change"))
                     {
                         upgrade_current_buffer->day_change =
@@ -511,17 +521,23 @@ upgrade_weechat_read_cb (void *data,
                     {
                         upgrade_current_buffer->filter = 1;
                     }
+                    /* nicklist */
                     upgrade_current_buffer->nicklist_case_sensitive =
                         infolist_integer (infolist, "nicklist_case_sensitive");
                     upgrade_current_buffer->nicklist_display_groups =
                         infolist_integer (infolist, "nicklist_display_groups");
-                    upgrade_current_buffer->title =
-                        (infolist_string (infolist, "title")) ?
-                        strdup (infolist_string (infolist, "title")) : NULL;
+                    /* title */
+                    if (upgrade_current_buffer->title)
+                        free (upgrade_current_buffer->title);
+                    str = infolist_string (infolist, "title");
+                    upgrade_current_buffer->title = (str) ? strdup (str) : NULL;
+                    /* first line not read */
                     upgrade_current_buffer->lines->first_line_not_read =
                         infolist_integer (infolist, "first_line_not_read");
+                    /* time for each line */
                     upgrade_current_buffer->time_for_each_line =
                         infolist_integer (infolist, "time_for_each_line");
+                    /* input */
                     upgrade_current_buffer->input =
                         infolist_integer (infolist, "input");
                     upgrade_current_buffer->input_get_unknown_commands =
@@ -547,15 +563,19 @@ upgrade_weechat_read_cb (void *data,
                                 upgrade_current_buffer->input_buffer[0] = '\0';
                         }
                     }
+                    /* text search */
                     upgrade_current_buffer->text_search =
                         infolist_integer (infolist, "text_search");
                     upgrade_current_buffer->text_search_exact =
                         infolist_integer (infolist, "text_search_exact");
                     upgrade_current_buffer->text_search_found =
                         infolist_integer (infolist, "text_search_found");
-                    if (infolist_string (infolist, "text_search_input"))
-                        upgrade_current_buffer->text_search_input =
-                            strdup (infolist_string (infolist, "text_search_input"));
+                    if (upgrade_current_buffer->text_search_input)
+                        free (upgrade_current_buffer->text_search_input);
+                    str = infolist_string (infolist, "text_search_input");
+                    upgrade_current_buffer->text_search_input = (str) ?
+                        strdup (str) : NULL;
+                    /* highlight options */
                     gui_buffer_set_highlight_words (upgrade_current_buffer,
                                                     infolist_string (infolist, "highlight_words"));
                     gui_buffer_set_highlight_regex (upgrade_current_buffer,
@@ -577,8 +597,10 @@ upgrade_weechat_read_cb (void *data,
                         gui_buffer_set_highlight_tags_restrict (upgrade_current_buffer,
                                                                 infolist_string (infolist, "highlight_tags"));
                     }
+                    /* hotlist max level nicks */
                     gui_buffer_set_hotlist_max_level_nicks (upgrade_current_buffer,
                                                             infolist_string (infolist, "hotlist_max_level_nicks"));
+                    /* local keys */
                     index = 0;
                     while (1)
                     {
@@ -601,6 +623,7 @@ upgrade_weechat_read_cb (void *data,
                         }
                         index++;
                     }
+                    /* local variables */
                     index = 0;
                     while (1)
                     {
