@@ -490,10 +490,15 @@ relay_client_recv_cb (void *arg_client, int fd)
                                                &decoded_length);
             if (decoded_length == 0)
             {
-                /* When decoded length is 0, assume client sent a PONG frame.
+                /*
+                 * When decoded length is 0, assume client sent a PONG frame.
                  *
-                 *  RFC 6455 Section 5.5.3
-                 *  "A Pong frame MAY be sent unsolicited.  This serves as a unidirectional heartbeat.  A response to an unsolicited Pong frame is not expected."
+                 * RFC 6455 Section 5.5.3:
+                 *
+                 *   "A Pong frame MAY be sent unsolicited.  This serves as a
+                 *   unidirectional heartbeat.  A response to an unsolicited
+                 *   Pong
+                 *   frame is not expected."
                  */
                 return WEECHAT_RC_OK;
             }
