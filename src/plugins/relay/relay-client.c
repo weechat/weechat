@@ -488,7 +488,16 @@ relay_client_recv_cb (void *arg_client, int fd)
                                                (unsigned long long)num_read,
                                                (unsigned char *)decoded,
                                                &decoded_length);
-            if (!rc || (decoded_length == 0))
+            if (decoded_length == 0)
+            {
+                /* When decoded length is 0, assume client sent a PONG frame.
+                 *
+                 *  RFC 6455 Section 5.5.3
+                 *  "A Pong frame MAY be sent unsolicited.  This serves as a unidirectional heartbeat.  A response to an unsolicited Pong frame is not expected."
+                 */
+                return WEECHAT_RC_OK;
+            }
+            if (!rc)
             {
                 /* error when decoding frame: close connection */
                 weechat_printf_tags (NULL, "relay_client",
