@@ -114,7 +114,6 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * irc: add command /unquiet (closes #36)
 * irc: add command /allpv (task #13111)
 * irc: fix truncated read on socket with SSL (bug #41558)
-* irc: add "#" before any channel in /join, even /join 0 (closes #20)
 * irc: display output of CAP LIST in server buffer
 * irc: fix colors in message with CTCP reply sent to another user
 * irc: evaluate content of server options "username" and "realname"
