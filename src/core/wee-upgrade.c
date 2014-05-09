@@ -487,7 +487,7 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
     ptr_buffer->nicklist_display_groups =
         infolist_integer (infolist, "nicklist_display_groups");
 
-    /* title */
+    /* title (not for main buffer, because there's the latest version) */
     if (!main_buffer)
     {
         if (ptr_buffer->title)
