@@ -7551,6 +7551,8 @@ hook = weechat.hook_connect("", "my.server.org", 1234, 1, 0, "",
 
 ==== weechat_hook_print
 
+_Updated in 0.4.3 and 1.0._
+
 Hook a message printed.
 
 Prototype:
@@ -7606,6 +7608,12 @@ Return value:
 
 * pointer to new hook, NULL if error occurred
 
+[IMPORTANT]
+In scripts, with WeeChat ≥ 1.0, the callback arguments 'displayed' and
+'highlight' are integers (with WeeChat ≤ 0.4.3, they were strings). +
+To be compatible with all versions, it is recommended to convert the argument
+to integer before testing it, for example in Python: "`if int(highlight):`".
+
 C example:
 
 [source,C]
@@ -7634,7 +7642,8 @@ hook = weechat.hook_print(buffer, tags, message, strip_colors, callback, callbac
 
 # example
 def my_print_cb(data, buffer, date, tags, displayed, highlight, prefix, message):
-    # ...
+    if int(highlight):
+        # ...
     return weechat.WEECHAT_RC_OK
 
 # catch all messages, on all buffers, without color

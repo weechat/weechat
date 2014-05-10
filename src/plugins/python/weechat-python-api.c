@@ -2438,15 +2438,15 @@ weechat_python_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
         func_argv[3] = weechat_string_build_with_split_string (tags, ",");
         if (!func_argv[3])
             func_argv[3] = strdup ("");
-        func_argv[4] = (displayed) ? strdup ("1") : strdup ("0");
-        func_argv[5] = (highlight) ? strdup ("1") : strdup ("0");
+        func_argv[4] = PyLong_FromLong((long)displayed);
+        func_argv[5] = PyLong_FromLong((long)highlight);
         func_argv[6] = (prefix) ? (char *)prefix : empty_arg;
         func_argv[7] = (message) ? (char *)message : empty_arg;
 
         rc = (int *) weechat_python_exec (script_callback->script,
                                           WEECHAT_SCRIPT_EXEC_INT,
                                           script_callback->function,
-                                          "ssssssss", func_argv);
+                                          "ssssOOss", func_argv);
 
         if (!rc)
             ret = WEECHAT_RC_ERROR;
@@ -2460,9 +2460,13 @@ weechat_python_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
         if (func_argv[3])
             free (func_argv[3]);
         if (func_argv[4])
-            free (func_argv[4]);
+        {
+            Py_XDECREF((PyObject *)func_argv[4]);
+        }
         if (func_argv[5])
-            free (func_argv[5]);
+        {
+            Py_XDECREF((PyObject *)func_argv[5]);
+        }
 
         return ret;
     }

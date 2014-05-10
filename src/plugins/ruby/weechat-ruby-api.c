@@ -2848,15 +2848,15 @@ weechat_ruby_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
         func_argv[3] = weechat_string_build_with_split_string (tags, ",");
         if (!func_argv[3])
             func_argv[3] = strdup ("");
-        func_argv[4] = (displayed) ? strdup ("1") : strdup ("0");
-        func_argv[5] = (highlight) ? strdup ("1") : strdup ("0");
+        func_argv[4] = &displayed;
+        func_argv[5] = &highlight;
         func_argv[6] = (prefix) ? (char *)prefix : empty_arg;
         func_argv[7] = (message) ? (char *)message : empty_arg;
 
         rc = (int *) weechat_ruby_exec (script_callback->script,
                                         WEECHAT_SCRIPT_EXEC_INT,
                                         script_callback->function,
-                                        "ssssssss", func_argv);
+                                        "ssssiiss", func_argv);
 
         if (!rc)
             ret = WEECHAT_RC_ERROR;
@@ -2869,10 +2869,6 @@ weechat_ruby_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
             free (func_argv[1]);
         if (func_argv[3])
             free (func_argv[3]);
-        if (func_argv[4])
-            free (func_argv[4]);
-        if (func_argv[5])
-            free (func_argv[5]);
 
         return ret;
     }

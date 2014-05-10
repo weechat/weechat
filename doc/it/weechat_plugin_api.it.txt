@@ -7682,6 +7682,9 @@ hook = weechat.hook_connect("", "my.server.org", 1234, 1, 0, "",
 
 ==== weechat_hook_print
 
+// TRANSLATION MISSING
+_Updated in 0.4.3 and 1.0._
+
 Hook su un messaggio stampato.
 
 Prototipo:
@@ -7741,6 +7744,13 @@ Valore restituito:
 
 * puntatore al nuovo hook, NULL in caso di errore
 
+// TRANSLATION MISSING
+[IMPORTANT]
+In scripts, with WeeChat ≥ 1.0, the callback arguments 'displayed' and
+'highlight' are integers (with WeeChat ≤ 0.4.3, they were strings). +
+To be compatible with all versions, it is recommended to convert the argument
+to integer before testing it, for example in Python: "`if int(highlight):`".
+
 Esempio in C:
 
 [source,C]
@@ -7769,7 +7779,8 @@ hook = weechat.hook_print(buffer, tags, message, strip_colors, callback, callbac
 
 # esempio
 def my_print_cb(data, buffer, date, tags, displayed, highlight, prefix, message):
-    # ...
+    if int(highlight):
+        # ...
     return weechat.WEECHAT_RC_OK
 
 # cattura tutti i messaggi, su tutti i buffer, senza colore

@@ -79,6 +79,8 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * core: add signals "key_combo_{default|search|cursor}"
 * core: display a warning in case of inconsistency between the options
   weechat.look.save_{config|layout}_on_exit
+* api: change type of arguments displayed/highlight in hook_print callback from
+  string to integer (in scripts)
 * api: allow wildcard "*" inside the mask in function string_match
 * api: allow value "-1" for property "hotlist" in function buffer_set (to remove
   a buffer from hotlist)

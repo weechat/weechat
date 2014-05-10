@@ -7683,6 +7683,8 @@ hook = weechat.hook_connect("", "my.server.org", 1234, 1, 0, "",
 
 ==== weechat_hook_print
 
+_Mis à jour dans la 0.4.3 et 1.0._
+
 Intercepter un message affiché.
 
 Prototype :
@@ -7741,6 +7743,13 @@ Valeur de retour :
 
 * pointeur vers le nouveau "hook", NULL en cas d'erreur
 
+[IMPORTANT]
+Dans les scripts, avec WeeChat ≥ 1.0, les paramètres du callback 'displayed' et
+'highlight' sont des entiers (avec WeeChat ≤ 0.4.3, ils étaient des chaînes). +
+Pour être compatible avec toutes les versions, il est recommandé de convertir
+le paramètre en entier avant de le tester, par exemple en Python :
+"`if int(highlight):`".
+
 Exemple en C :
 
 [source,C]
@@ -7769,7 +7778,8 @@ hook = weechat.hook_print(buffer, tags, message, strip_colors, callback, callbac
 
 # exemple
 def my_print_cb(data, buffer, date, tags, displayed, highlight, prefix, message):
-    # ...
+    if int(highlight):
+        # ...
     return weechat.WEECHAT_RC_OK
 
 # intercepter tous les messages, de tous les tampons, sans couleur

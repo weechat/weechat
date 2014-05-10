@@ -7545,6 +7545,8 @@ hook = weechat.hook_connect("", "my.server.org", 1234, 1, 0, "",
 
 ==== weechat_hook_print
 
+_Updated in 0.4.3 and 1.0_
+
 メッセージの表示をフックする。
 
 プロトタイプ:
@@ -7600,6 +7602,13 @@ struct t_hook *weechat_hook_print (struct t_gui_buffer *buffer,
 
 * 新しいフックへのポインタ、エラーが起きた場合は NULL
 
+// TRANSLATION MISSING
+[IMPORTANT]
+In scripts, with WeeChat ≥ 1.0, the callback arguments 'displayed' and
+'highlight' are integers (with WeeChat ≤ 0.4.3, they were strings). +
+To be compatible with all versions, it is recommended to convert the argument
+to integer before testing it, for example in Python: "`if int(highlight):`".
+
 C 言語での使用例:
 
 [source,C]
@@ -7628,7 +7637,8 @@ hook = weechat.hook_print(buffer, tags, message, strip_colors, callback, callbac
 
 # 例
 def my_print_cb(data, buffer, date, tags, displayed, highlight, prefix, message):
-    # ...
+    if int(highlight):
+        # ...
     return weechat.WEECHAT_RC_OK
 
 # catch all messages, on all buffers, without color
