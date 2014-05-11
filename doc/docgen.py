@@ -267,16 +267,14 @@ def get_hdata():
                         var_hdata = ', hdata: "{0}"'.format(var_hdata)
                     type_string = weechat.hdata_get_var_type_string(ptr_hdata,
                                                                     key)
-                    hdata2.append({'offset': var_offset,
-                                   'text': '\'{0}\' ({1})'.format(key,
-                                                                  type_string),
-                                   'textlong': '\'{0}\' ({1}{2}{3})'
-                                   ''.format(key, type_string, var_array_size,
-                                             var_hdata),
-                                   'update': weechat.hdata_update(
-                                       ptr_hdata,
-                                       '',
-                                       {'__update_allowed': key})})
+                    hdata2.append({
+                        'offset': var_offset,
+                        'text': '\'{0}\' ({1})'.format(key, type_string),
+                        'textlong': '\'{0}\' ({1}{2}{3})'.format(
+                            key, type_string, var_array_size, var_hdata),
+                        'update': weechat.hdata_update(
+                            ptr_hdata, '', {'__update_allowed': key}),
+                    })
                 hdata2 = sorted(hdata2, key=itemgetter('offset'))
                 for item in hdata2:
                     variables += '*** {0}\n'.format(item['textlong'])
@@ -326,14 +324,13 @@ def get_url_options():
     url_options = []
     infolist = weechat.infolist_get('url_options', '', '')
     while weechat.infolist_next(infolist):
-        url_options.append(
-            {
-                'name': weechat.infolist_string(infolist, 'name').lower(),
-                'option': weechat.infolist_integer(infolist, 'option'),
-                'type': weechat.infolist_string(infolist, 'type'),
-                'constants': weechat.infolist_string(infolist, 'constants')
-                .lower().replace(',', ', ')
-            })
+        url_options.append({
+            'name': weechat.infolist_string(infolist, 'name').lower(),
+            'option': weechat.infolist_integer(infolist, 'option'),
+            'type': weechat.infolist_string(infolist, 'type'),
+            'constants': weechat.infolist_string(
+                infolist, 'constants').lower().replace(',', ', ')
+        })
     weechat.infolist_free(infolist)
     return url_options
 
