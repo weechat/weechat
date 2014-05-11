@@ -1,5 +1,9 @@
 language: c
 
+compiler:
+    - gcc
+    - clang
+
 before_script:
     - echo 'APT::Install-Recommends "false";' | sudo tee -a /etc/apt/apt.conf
     - sudo apt-get update -qq
