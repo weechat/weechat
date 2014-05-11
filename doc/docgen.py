@@ -16,22 +16,24 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-#
-# Documentation generator for WeeChat: build include files with commands,
-# options, infos, infolists, hdata and completions for WeeChat core and
-# plugins.
-#
-# Instructions to build config files yourself in WeeChat directories (replace
-# all paths with your path to WeeChat):
-#     1.  run WeeChat and load this script, with following command:
-#           /python load ~/src/weechat/doc/docgen.py
-#     2.  change path to build in your doc/ directory:
-#           /set plugins.var.python.docgen.path "~/src/weechat/doc"
-#     3.  run docgen command:
-#           /docgen
-# Note: it is recommended to load only this script when building doc.
-# Files should be in ~/src/weechat/doc/xx/autogen/ (where xx is language).
-#
+"""
+Documentation generator for WeeChat: build include files with commands,
+options, infos, infolists, hdata and completions for WeeChat core and
+plugins.
+
+Instructions to build config files yourself in WeeChat directories (replace
+all paths with your path to WeeChat):
+    1.  run WeeChat and load this script, with following command:
+          /python load ~/src/weechat/doc/docgen.py
+    2.  change path to build in your doc/ directory:
+          /set plugins.var.python.docgen.path "~/src/weechat/doc"
+    3.  run docgen command:
+          /docgen
+Note: it is recommended to load only this script when building doc.
+Files should be in ~/src/weechat/doc/xx/autogen/ (where xx is language).
+"""
+
+from __future__ import print_function
 
 SCRIPT_NAME = 'docgen'
 SCRIPT_AUTHOR = 'Sébastien Helleu <flashcode@flashtux.org>'
@@ -41,14 +43,14 @@ SCRIPT_DESC = 'Documentation generator for WeeChat'
 
 SCRIPT_COMMAND = 'docgen'
 
-import_ok = True
+IMPORT_OK = True
 
 try:
-    import weechat
+    import weechat  # pylint: disable=import-error
 except ImportError:
     print('This script must be run under WeeChat.')
     print('Get WeeChat now at: http://www.weechat.org/')
-    import_ok = False
+    IMPORT_OK = False
 
 try:
     import gettext
@@ -59,7 +61,7 @@ try:
     from operator import itemgetter
 except ImportError as message:
     print('Missing package(s) for {0}: {1}'.format(SCRIPT_NAME, message))
-    import_ok = False
+    IMPORT_OK = False
 
 # default path where doc files will be written (should be doc/ in sources
 # package tree)
@@ -73,7 +75,7 @@ except ImportError as message:
 DEFAULT_PATH = '~/src/weechat/doc'
 
 # list of locales for which we want to build doc files to include
-locale_list = ('en_US', 'fr_FR', 'it_IT', 'de_DE', 'ja_JP', 'pl_PL')
+LOCALE_LIST = ('en_US', 'fr_FR', 'it_IT', 'de_DE', 'ja_JP', 'pl_PL')
 
 # all commands/options/.. of following plugins will produce a file
 # non-listed plugins will be ignored
@@ -82,7 +84,7 @@ locale_list = ('en_US', 'fr_FR', 'it_IT', 'de_DE', 'ja_JP', 'pl_PL')
 # if plugin is listed without "c", that means plugin has only one command
 # /name (where "name" is name of plugin)
 # Note: we consider core is a plugin called "weechat"
-plugin_list = {
+PLUGIN_LIST = {
     'sec': 'o',
     'weechat': 'co',
     'alias': '',
@@ -105,29 +107,29 @@ plugin_list = {
 }
 
 # options to ignore
-ignore_options = (
-    'aspell\.dict\..*',
-    'aspell\.option\..*',
-    'charset\.decode\..*',
-    'charset\.encode\..*',
-    'irc\.msgbuffer\..*',
-    'irc\.ctcp\..*',
-    'irc\.ignore\..*',
-    'irc\.server\..*',
-    'jabber\.server\..*',
-    'logger\.level\..*',
-    'logger\.mask\..*',
-    'relay\.port\..*',
-    'trigger\.trigger\..*',
-    'weechat\.palette\..*',
-    'weechat\.proxy\..*',
-    'weechat\.bar\..*',
-    'weechat\.debug\..*',
-    'weechat\.notify\..*',
+IGNORE_OPTIONS = (
+    r'aspell\.dict\..*',
+    r'aspell\.option\..*',
+    r'charset\.decode\..*',
+    r'charset\.encode\..*',
+    r'irc\.msgbuffer\..*',
+    r'irc\.ctcp\..*',
+    r'irc\.ignore\..*',
+    r'irc\.server\..*',
+    r'jabber\.server\..*',
+    r'logger\.level\..*',
+    r'logger\.mask\..*',
+    r'relay\.port\..*',
+    r'trigger\.trigger\..*',
+    r'weechat\.palette\..*',
+    r'weechat\.proxy\..*',
+    r'weechat\.bar\..*',
+    r'weechat\.debug\..*',
+    r'weechat\.notify\..*',
 )
 
 # completions to ignore
-ignore_completions_items = (
+IGNORE_COMPLETIONS_ITEMS = (
     'docgen.*',
     'jabber.*',
     'weeget.*',
@@ -138,14 +140,13 @@ def get_commands():
     """
     Get list of commands in a dict with 3 indexes: plugin, command, xxx.
     """
-    global plugin_list
     commands = defaultdict(lambda: defaultdict(defaultdict))
     infolist = weechat.infolist_get('hook', '', 'command')
     while weechat.infolist_next(infolist):
         plugin = weechat.infolist_string(infolist, 'plugin_name') or 'weechat'
-        if plugin in plugin_list:
+        if plugin in PLUGIN_LIST:
             command = weechat.infolist_string(infolist, 'command')
-            if command == plugin or 'c' in plugin_list[plugin]:
+            if command == plugin or 'c' in PLUGIN_LIST[plugin]:
                 for key in ('description', 'args', 'args_description',
                             'completion'):
                     commands[plugin][command][key] = \
@@ -159,15 +160,14 @@ def get_options():
     Get list of config options in a dict with 4 indexes: config,
     section, option, xxx.
     """
-    global plugin_list, ignore_options
     options = \
         defaultdict(lambda: defaultdict(lambda: defaultdict(defaultdict)))
     infolist = weechat.infolist_get('option', '', '')
     while weechat.infolist_next(infolist):
         full_name = weechat.infolist_string(infolist, 'full_name')
-        if not re.search('|'.join(ignore_options), full_name):
+        if not re.search('|'.join(IGNORE_OPTIONS), full_name):
             config = weechat.infolist_string(infolist, 'config_name')
-            if config in plugin_list and 'o' in plugin_list[config]:
+            if config in PLUGIN_LIST and 'o' in PLUGIN_LIST[config]:
                 section = weechat.infolist_string(infolist, 'section_name')
                 option = weechat.infolist_string(infolist, 'option_name')
                 for key in ('type', 'string_values', 'default_value',
@@ -232,6 +232,7 @@ def get_infolists():
     return infolists
 
 
+# pylint: disable=too-many-locals
 def get_hdata():
     """
     Get list of hdata hooked by plugins in a dict with 3 indexes:
@@ -266,15 +267,16 @@ def get_hdata():
                         var_hdata = ', hdata: "{0}"'.format(var_hdata)
                     type_string = weechat.hdata_get_var_type_string(ptr_hdata,
                                                                     key)
-                    d = {'__update_allowed': key}
                     hdata2.append({'offset': var_offset,
                                    'text': '\'{0}\' ({1})'.format(key,
                                                                   type_string),
                                    'textlong': '\'{0}\' ({1}{2}{3})'
                                    ''.format(key, type_string, var_array_size,
                                              var_hdata),
-                                   'update': weechat.hdata_update(ptr_hdata,
-                                                                  '', d)})
+                                   'update': weechat.hdata_update(
+                                       ptr_hdata,
+                                       '',
+                                       {'__update_allowed': key})})
                 hdata2 = sorted(hdata2, key=itemgetter('offset'))
                 for item in hdata2:
                     variables += '*** {0}\n'.format(item['textlong'])
@@ -303,12 +305,11 @@ def get_completions():
     Get list of completions hooked by plugins in a dict with 3 indexes:
     plugin, item, xxx.
     """
-    global ignore_completions_items
     completions = defaultdict(lambda: defaultdict(defaultdict))
     infolist = weechat.infolist_get('hook', '', 'completion')
     while weechat.infolist_next(infolist):
         completion_item = weechat.infolist_string(infolist, 'completion_item')
-        if not re.search('|'.join(ignore_completions_items), completion_item):
+        if not re.search('|'.join(IGNORE_COMPLETIONS_ITEMS), completion_item):
             plugin = weechat.infolist_string(infolist, 'plugin_name') or \
                 'weechat'
             completions[plugin][completion_item]['description'] = \
@@ -340,12 +341,14 @@ def get_url_options():
 def update_file(oldfile, newfile, num_files, num_files_updated, obj):
     """Update a doc file."""
     try:
-        shaold = hashlib.sha224(open(oldfile, 'r').read()).hexdigest()
-    except:
+        with open(oldfile, 'r') as _file:
+            shaold = hashlib.sha224(_file.read()).hexdigest()
+    except IOError:
         shaold = ''
     try:
-        shanew = hashlib.sha224(open(newfile, 'r').read()).hexdigest()
-    except:
+        with open(newfile, 'r') as _file:
+            shanew = hashlib.sha224(_file.read()).hexdigest()
+    except IOError:
         shanew = ''
     if shaold != shanew:
         if os.path.exists(oldfile):
@@ -362,13 +365,13 @@ def update_file(oldfile, newfile, num_files, num_files_updated, obj):
     num_files[obj] += 1
 
 
-def docgen_cmd_cb(data, buffer, args):
+# pylint: disable=too-many-locals, too-many-branches, too-many-statements
+def docgen_cmd_cb(data, buf, args):
     """Callback for /docgen command."""
-    global locale_list
     if args:
         locales = args.split(' ')
     else:
-        locales = locale_list
+        locales = LOCALE_LIST
     commands = get_commands()
     options = get_options()
     infos = get_infos()
@@ -387,6 +390,7 @@ def docgen_cmd_cb(data, buffer, args):
     num_files = defaultdict(int)
     num_files_updated = defaultdict(int)
 
+    # pylint: disable=undefined-variable
     translate = lambda s: (s and _(s)) or s
     escape = lambda s: s.replace('|', '\\|')
 
@@ -395,10 +399,11 @@ def docgen_cmd_cb(data, buffer, args):
             if key != 'total2':
                 num_files[key] = 0
                 num_files_updated[key] = 0
-        t = gettext.translation('weechat',
-                                weechat.info_get('weechat_localedir', ''),
-                                languages=[locale + '.UTF-8'], fallback=True)
-        t.install()
+        trans = gettext.translation('weechat',
+                                    weechat.info_get('weechat_localedir', ''),
+                                    languages=[locale + '.UTF-8'],
+                                    fallback=True)
+        trans.install()
         directory = path + '/' + locale[0:2] + '/autogen'
         if not os.path.isdir(directory):
             weechat.prnt('',
@@ -410,27 +415,27 @@ def docgen_cmd_cb(data, buffer, args):
         for plugin in commands:
             filename = directory + '/user/' + plugin + '_commands.txt'
             tmpfilename = filename + '.tmp'
-            f = open(tmpfilename, 'w')
+            _file = open(tmpfilename, 'w')
             for command in sorted(commands[plugin]):
                 _cmd = commands[plugin][command]
                 args = translate(_cmd['args'])
                 args_formats = args.split(' || ')
                 desc = translate(_cmd['description'])
                 args_desc = translate(_cmd['args_description'])
-                f.write('[[command_{0}_{1}]]\n'.format(plugin, command))
-                f.write('[command]*`{0}`* {1}::\n\n'.format(command, desc))
-                f.write('----\n')
+                _file.write('[[command_{0}_{1}]]\n'.format(plugin, command))
+                _file.write('[command]*`{0}`* {1}::\n\n'.format(command, desc))
+                _file.write('----\n')
                 prefix = '/' + command + '  '
                 if args_formats != ['']:
                     for fmt in args_formats:
-                        f.write(prefix + fmt + '\n')
+                        _file.write(prefix + fmt + '\n')
                         prefix = ' ' * len(prefix)
                 if args_desc:
-                    f.write('\n')
+                    _file.write('\n')
                     for line in args_desc.split('\n'):
-                        f.write(line + '\n')
-                f.write('----\n\n')
-            f.close()
+                        _file.write(line + '\n')
+                _file.write('----\n\n')
+            _file.close()
             update_file(filename, tmpfilename, num_files, num_files_updated,
                         'commands')
 
@@ -438,7 +443,7 @@ def docgen_cmd_cb(data, buffer, args):
         for config in options:
             filename = directory + '/user/' + config + '_options.txt'
             tmpfilename = filename + '.tmp'
-            f = open(tmpfilename, 'w')
+            _file = open(tmpfilename, 'w')
             for section in sorted(options[config]):
                 for option in sorted(options[config][section]):
                     _opt = options[config][section][option]
@@ -481,96 +486,98 @@ def docgen_cmd_cb(data, buffer, args):
                                    'only, not background): \"*\" for bold, '
                                    '\"!\" for reverse, \"/\" for italic, '
                                    '\"_\" for underline')
-                    f.write('* [[option_{0}.{1}.{2}]] *{3}.{4}.{5}*\n'
-                            ''.format(config, section, option, config, section,
-                                      option))
-                    f.write('** {0}: `{1}`\n'.format(_('description'), desc))
-                    f.write('** {0}: {1}\n'.format(_('type'), type_nls))
-                    f.write('** {0}: {1} ({2}: `{3}`)\n'
-                            ''.format(_('values'), values, _('default value'),
-                                      default_value))
+                    _file.write('* [[option_{0}.{1}.{2}]] *{3}.{4}.{5}*\n'
+                                ''.format(config, section, option, config,
+                                          section, option))
+                    _file.write('** {0}: `{1}`\n'.format(_('description'),
+                                                         desc))
+                    _file.write('** {0}: {1}\n'.format(_('type'), type_nls))
+                    _file.write('** {0}: {1} ({2}: `{3}`)\n'
+                                ''.format(_('values'), values,
+                                          _('default value'), default_value))
                     if null_value_allowed:
-                        f.write('** {0}\n'
-                                ''.format(_('undefined value allowed (null)')))
-                    f.write('\n')
-            f.close()
+                        _file.write('** {0}\n'
+                                    ''.format(
+                                        _('undefined value allowed (null)')))
+                    _file.write('\n')
+            _file.close()
             update_file(filename, tmpfilename, num_files, num_files_updated,
                         'options')
 
         # write infos hooked
         filename = directory + '/plugin_api/infos.txt'
         tmpfilename = filename + '.tmp'
-        f = open(tmpfilename, 'w')
-        f.write('[width="100%",cols="^1,^2,6,6",options="header"]\n')
-        f.write('|===\n')
-        f.write('| {0} | {1} | {2} | {3}\n\n'
-                ''.format(_('Plugin'), _('Name'), _('Description'),
-                          _('Arguments')))
+        _file = open(tmpfilename, 'w')
+        _file.write('[width="100%",cols="^1,^2,6,6",options="header"]\n')
+        _file.write('|===\n')
+        _file.write('| {0} | {1} | {2} | {3}\n\n'
+                    ''.format(_('Plugin'), _('Name'), _('Description'),
+                              _('Arguments')))
         for plugin in sorted(infos):
             for info in sorted(infos[plugin]):
                 _inf = infos[plugin][info]
                 desc = translate(_inf['description'])
                 args_desc = translate(_inf['args_description'] or '-')
-                f.write('| {0} | {1} | {2} | {3}\n\n'
-                        ''.format(escape(plugin), escape(info),
-                                  escape(desc), escape(args_desc)))
-        f.write('|===\n')
-        f.close()
+                _file.write('| {0} | {1} | {2} | {3}\n\n'
+                            ''.format(escape(plugin), escape(info),
+                                      escape(desc), escape(args_desc)))
+        _file.write('|===\n')
+        _file.close()
         update_file(filename, tmpfilename, num_files, num_files_updated,
                     'infos')
 
         # write infos (hashtable) hooked
         filename = directory + '/plugin_api/infos_hashtable.txt'
         tmpfilename = filename + '.tmp'
-        f = open(tmpfilename, 'w')
-        f.write('[width="100%",cols="^1,^2,6,6,6",options="header"]\n')
-        f.write('|===\n')
-        f.write('| {0} | {1} | {2} | {3} | {4}\n\n'
-                ''.format(_('Plugin'), _('Name'), _('Description'),
-                          _('Hashtable (input)'), _('Hashtable (output)')))
+        _file = open(tmpfilename, 'w')
+        _file.write('[width="100%",cols="^1,^2,6,6,6",options="header"]\n')
+        _file.write('|===\n')
+        _file.write('| {0} | {1} | {2} | {3} | {4}\n\n'
+                    ''.format(_('Plugin'), _('Name'), _('Description'),
+                              _('Hashtable (input)'), _('Hashtable (output)')))
         for plugin in sorted(infos_hashtable):
             for info in sorted(infos_hashtable[plugin]):
                 _inh = infos_hashtable[plugin][info]
                 desc = translate(_inh['description'])
                 args_desc = translate(_inh['args_description'])
                 output_desc = translate(_inh['output_description']) or '-'
-                f.write('| {0} | {1} | {2} | {3} | {4}\n\n'
-                        ''.format(escape(plugin), escape(info),
-                                  escape(desc), escape(args_desc),
-                                  escape(output_desc)))
-        f.write('|===\n')
-        f.close()
+                _file.write('| {0} | {1} | {2} | {3} | {4}\n\n'
+                            ''.format(escape(plugin), escape(info),
+                                      escape(desc), escape(args_desc),
+                                      escape(output_desc)))
+        _file.write('|===\n')
+        _file.close()
         update_file(filename, tmpfilename, num_files, num_files_updated,
                     'infos_hashtable')
 
         # write infolists hooked
         filename = directory + '/plugin_api/infolists.txt'
         tmpfilename = filename + '.tmp'
-        f = open(tmpfilename, 'w')
-        f.write('[width="100%",cols="^1,^2,5,5,5",options="header"]\n')
-        f.write('|===\n')
-        f.write('| {0} | {1} | {2} | {3} | {4}\n\n'
-                ''.format(_('Plugin'), _('Name'), _('Description'),
-                          _('Pointer'), _('Arguments')))
+        _file = open(tmpfilename, 'w')
+        _file.write('[width="100%",cols="^1,^2,5,5,5",options="header"]\n')
+        _file.write('|===\n')
+        _file.write('| {0} | {1} | {2} | {3} | {4}\n\n'
+                    ''.format(_('Plugin'), _('Name'), _('Description'),
+                              _('Pointer'), _('Arguments')))
         for plugin in sorted(infolists):
             for infolist in sorted(infolists[plugin]):
                 _inl = infolists[plugin][infolist]
                 desc = translate(_inl['description'])
                 pointer_desc = translate(_inl['pointer_description']) or '-'
                 args_desc = translate(_inl['args_description']) or '-'
-                f.write('| {0} | {1} | {2} | {3} | {4}\n\n'
-                        ''.format(escape(plugin), escape(infolist),
-                                  escape(desc), escape(pointer_desc),
-                                  escape(args_desc)))
-        f.write('|===\n')
-        f.close()
+                _file.write('| {0} | {1} | {2} | {3} | {4}\n\n'
+                            ''.format(escape(plugin), escape(infolist),
+                                      escape(desc), escape(pointer_desc),
+                                      escape(args_desc)))
+        _file.write('|===\n')
+        _file.close()
         update_file(filename, tmpfilename, num_files, num_files_updated,
                     'infolists')
 
         # write hdata hooked
         filename = directory + '/plugin_api/hdata.txt'
         tmpfilename = filename + '.tmp'
-        f = open(tmpfilename, 'w')
+        _file = open(tmpfilename, 'w')
         for plugin in sorted(hdata):
             for hdata_name in sorted(hdata[plugin]):
                 _hda = hdata[plugin][hdata_name]
@@ -578,57 +585,62 @@ def docgen_cmd_cb(data, buffer, args):
                 variables = _hda['vars']
                 variables_update = _hda['vars_update']
                 lists = _hda['lists']
-                f.write('* \'{0}\': {1}\n'.format(escape(hdata_name),
-                                                  escape(desc)))
-                f.write('** {0}: {1}\n'.format(_('plugin'), escape(plugin)))
-                f.write('** {0}:\n{1}'.format(_('variables'),
-                                              escape(variables)))
+                _file.write('* \'{0}\': {1}\n'.format(escape(hdata_name),
+                                                      escape(desc)))
+                _file.write('** {0}: {1}\n'.format(_('plugin'),
+                                                   escape(plugin)))
+                _file.write('** {0}:\n{1}'.format(_('variables'),
+                                                  escape(variables)))
                 if variables_update:
-                    f.write('** {0}:\n{1}'.format(_('update allowed'),
-                                                  escape(variables_update)))
+                    _file.write('** {0}:\n{1}'.format(
+                        _('update allowed'),
+                        escape(variables_update)))
                 if lists:
-                    f.write('** {0}:\n{1}'.format(_('lists'), escape(lists)))
-        f.close()
+                    _file.write('** {0}:\n{1}'.format(_('lists'),
+                                                      escape(lists)))
+        _file.close()
         update_file(filename, tmpfilename, num_files, num_files_updated,
                     'hdata')
 
         # write completions hooked
         filename = directory + '/plugin_api/completions.txt'
         tmpfilename = filename + '.tmp'
-        f = open(tmpfilename, 'w')
-        f.write('[width="65%",cols="^1,^2,8",options="header"]\n')
-        f.write('|===\n')
-        f.write('| {0} | {1} | {2}\n\n'
-                ''.format(_('Plugin'), _('Name'), _('Description')))
+        _file = open(tmpfilename, 'w')
+        _file.write('[width="65%",cols="^1,^2,8",options="header"]\n')
+        _file.write('|===\n')
+        _file.write('| {0} | {1} | {2}\n\n'
+                    ''.format(_('Plugin'), _('Name'), _('Description')))
         for plugin in sorted(completions):
             for completion_item in sorted(completions[plugin]):
                 _cmp = completions[plugin][completion_item]
                 desc = translate(_cmp['description'])
-                f.write('| {0} | {1} | {2}\n\n'
-                        ''.format(escape(plugin), escape(completion_item),
-                                  escape(desc)))
-        f.write('|===\n')
-        f.close()
+                _file.write('| {0} | {1} | {2}\n\n'
+                            ''.format(escape(plugin), escape(completion_item),
+                                      escape(desc)))
+        _file.write('|===\n')
+        _file.close()
         update_file(filename, tmpfilename, num_files, num_files_updated,
                     'completions')
 
         # write url options
         filename = directory + '/plugin_api/url_options.txt'
         tmpfilename = filename + '.tmp'
-        f = open(tmpfilename, 'w')
-        f.write('[width="100%",cols="2,^1,7",options="header"]\n')
-        f.write('|===\n')
-        f.write('| {0} | {1} | {2}\n\n'
-                ''.format(_('Option'), _('Type'), _('Constants') + ' ^(1)^'))
+        _file = open(tmpfilename, 'w')
+        _file.write('[width="100%",cols="2,^1,7",options="header"]\n')
+        _file.write('|===\n')
+        _file.write('| {0} | {1} | {2}\n\n'
+                    ''.format(_('Option'), _('Type'),
+                              _('Constants') + ' ^(1)^'))
         for option in url_options:
             constants = option['constants']
             if constants:
                 constants = ' ' + constants
-            f.write('| {0} | {1} |{2}\n\n'
-                    ''.format(escape(option['name']), escape(option['type']),
-                              escape(constants)))
-        f.write('|===\n')
-        f.close()
+            _file.write('| {0} | {1} |{2}\n\n'
+                        ''.format(escape(option['name']),
+                                  escape(option['type']),
+                                  escape(constants)))
+        _file.write('|===\n')
+        _file.close()
         update_file(filename, tmpfilename, num_files, num_files_updated,
                     'url_options')
 
@@ -666,16 +678,15 @@ def docgen_cmd_cb(data, buffer, args):
     return weechat.WEECHAT_RC_OK
 
 
-def docgen_completion_cb(data, completion_item, buffer, completion):
+def docgen_completion_cb(data, completion_item, buf, completion):
     """Callback for completion."""
-    global locale_list
-    for locale in locale_list:
+    for locale in LOCALE_LIST:
         weechat.hook_completion_list_add(completion, locale, 0,
                                          weechat.WEECHAT_LIST_POS_SORT)
     return weechat.WEECHAT_RC_OK
 
 
-if __name__ == '__main__' and import_ok:
+if __name__ == '__main__' and IMPORT_OK:
     if weechat.register(SCRIPT_NAME, SCRIPT_AUTHOR, SCRIPT_VERSION,
                         SCRIPT_LICENSE, SCRIPT_DESC, '', ''):
         weechat.hook_command(SCRIPT_COMMAND,
