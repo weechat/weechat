@@ -2563,11 +2563,19 @@ irc_command_kill (void *data, struct t_gui_buffer *buffer, int argc,
     /* make C compiler happy */
     (void) data;
 
-    if (argc < 3)
+    if (argc < 2)
         return WEECHAT_RC_ERROR;
 
-    irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                      "KILL %s :%s", argv[1], argv_eol[2]);
+    if (argc < 3)
+    {
+        irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                          "KILL %s", argv[1]);
+    }
+    else
+    {
+        irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                          "KILL %s :%s", argv[1], argv_eol[2]);
+    }
 
     return WEECHAT_RC_OK;
 }
@@ -6002,7 +6010,7 @@ irc_command_init ()
     weechat_hook_command (
         "kill",
         N_("close client-server connection"),
-        N_("<nick> <reason>"),
+        N_("<nick> [<reason>]"),
         N_("  nick: nick\n"
            "reason: reason"),
         "%(nicks) %-", &irc_command_kill, NULL);

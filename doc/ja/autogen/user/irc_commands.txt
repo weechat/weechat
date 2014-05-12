@@ -319,7 +319,7 @@ channel: チャンネル名
 [command]*`kill`* クライアント - サーバの接続を閉じる::
 
 ----
-/kill  <nick> <reason>
+/kill  <nick> [<reason>]
 
   nick: ニックネーム
 reason: 理由

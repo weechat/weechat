@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-05-08 11:17+0200\n"
+"POT-Creation-Date: 2014-05-12 23:06+0200\n"
 "PO-Revision-Date: 2014-04-05 16:12+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5141,7 +5141,7 @@ msgid "close client-server connection"
 msgstr "kliens-szerver kapcsolat bezárása"
 
 #, fuzzy
-msgid "<nick> <reason>"
+msgid "<nick> [<reason>]"
 msgstr "név szöveg"
 
 #, fuzzy
@@ -5554,6 +5554,10 @@ msgstr "felhasználó erőszakos eltávolítása a szobából"
 #, fuzzy
 msgid "force a user to quit server with a reason"
 msgstr "felhasználó erőszakos eltávolítása a szobából"
+
+#, fuzzy
+msgid "<nick> <reason>"
+msgstr "név szöveg"
 
 msgid "register a new service"
 msgstr "új szolgáltatás regisztrálása"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-05-08 11:17+0200\n"
+"POT-Creation-Date: 2014-05-12 23:06+0200\n"
 "PO-Revision-Date: 2014-04-19 13:08+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6015,7 +6015,8 @@ msgstr ""
 msgid "close client-server connection"
 msgstr "chiude connessione client-server"
 
-msgid "<nick> <reason>"
+#, fuzzy
+msgid "<nick> [<reason>]"
 msgstr "<nick> <motivo>"
 
 msgid ""
@@ -6444,6 +6445,9 @@ msgstr "forza un utente a lasciare uno o più canali"
 
 msgid "force a user to quit server with a reason"
 msgstr "forza un utente ad abbandonare il server con un motivo"
+
+msgid "<nick> <reason>"
+msgstr "<nick> <motivo>"
 
 msgid "register a new service"
 msgstr "registra un nuovo servizio"

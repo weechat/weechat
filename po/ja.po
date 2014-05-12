@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-05-08 11:17+0200\n"
+"POT-Creation-Date: 2014-05-12 23:06+0200\n"
 "PO-Revision-Date: 2014-04-21 00:44+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/translation_ja>\n"
@@ -6101,7 +6101,8 @@ msgstr ""
 msgid "close client-server connection"
 msgstr "クライアント - サーバの接続を閉じる"
 
-msgid "<nick> <reason>"
+#, fuzzy
+msgid "<nick> [<reason>]"
 msgstr "<nick> <reason>"
 
 msgid ""
@@ -6520,6 +6521,9 @@ msgstr "強制的にユーザをチャンネルから退出"
 
 msgid "force a user to quit server with a reason"
 msgstr "ある理由で強制的にユーザをサーバから切断"
+
+msgid "<nick> <reason>"
+msgstr "<nick> <reason>"
 
 msgid "register a new service"
 msgstr "新しいサービスを登録"

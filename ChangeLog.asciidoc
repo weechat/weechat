@@ -101,6 +101,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * alias: change default command for alias /beep to "/print -beep"
 * exec: add exec plugin: new command /exec and file exec.conf
 * guile: fix module used after unload of a script
+* irc: make reason optional in command /kill
 * irc: add support of message 324 (channel modes) in option
   irc.look.display_join_message (closes #75)
 * irc: add option irc.look.join_auto_add_chantype (closes #65)

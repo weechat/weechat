@@ -319,7 +319,7 @@ Exemple :
 [command]*`kill`* fermer la connexion client-serveur::
 
 ----
-/kill  <pseudo> <raison>
+/kill  <pseudo> [<raison>]
 
 pseudo : pseudo
 raison : raison

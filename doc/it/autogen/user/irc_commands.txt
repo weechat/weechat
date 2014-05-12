@@ -319,7 +319,7 @@ Example:
 [command]*`kill`* chiude connessione client-server::
 
 ----
-/kill  <nick> <motivo>
+/kill  <nick> [<reason>]
 
   nick: nick
 motivo: motivo
