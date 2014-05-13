@@ -31,42 +31,47 @@ struct t_config_file *alias_config_file = NULL;
 struct t_config_section *alias_config_section_cmd = NULL;
 struct t_config_section *alias_config_section_completion = NULL;
 
-char *alias_default_list[][2] =
-{ { "AAWAY",   "allserv /away"        },
-  { "AME",     "allchan /me"          },
-  { "AMSG",    "allchan /msg *"       },
-  { "ANICK",   "allserv /nick"        },
-  { "BEEP",    "print -beep"          },
-  { "BYE",     "quit"                 },
-  { "C",       "buffer clear"         },
-  { "CL",      "buffer clear"         },
-  { "CLOSE",   "buffer close"         },
-  { "CHAT",    "dcc chat"             },
-  { "EXIT",    "quit"                 },
-  { "IG",      "ignore"               },
-  { "J",       "join"                 },
-  { "K",       "kick"                 },
-  { "KB",      "kickban"              },
-  { "LEAVE",   "part"                 },
-  { "M",       "msg"                  },
-  { "MUB",     "unban *"              },
-  { "N",       "names"                },
-  { "Q",       "query"                },
-  { "REDRAW",  "window refresh"       },
-  { "SAY",     "msg *"                },
-  { "SIGNOFF", "quit"                 },
-  { "T",       "topic"                },
-  { "UB",      "unban"                },
-  { "UMODE",   "mode $nick"           },
-  { "V",       "command core version" },
-  { "W",       "who"                  },
-  { "WC",      "window merge"         },
-  { "WI",      "whois"                },
-  { "WII",     "whois $1 $1"          },
-  { "WW",      "whowas"               },
-  { NULL,      NULL                   },
+char *alias_default_cmd[][2] =
+{ { "AAWAY",   "allserv /away"                       },
+  { "AME",     "allchan /me"                         },
+  { "AMSG",    "allchan /msg *"                      },
+  { "ANICK",   "allserv /nick"                       },
+  { "BEEP",    "print -beep"                         },
+  { "BYE",     "quit"                                },
+  { "C",       "buffer clear"                        },
+  { "CL",      "buffer clear"                        },
+  { "CLOSE",   "buffer close"                        },
+  { "CHAT",    "dcc chat"                            },
+  { "EXIT",    "quit"                                },
+  { "IG",      "ignore"                              },
+  { "J",       "join"                                },
+  { "K",       "kick"                                },
+  { "KB",      "kickban"                             },
+  { "LEAVE",   "part"                                },
+  { "M",       "msg"                                 },
+  { "MUB",     "unban *"                             },
+  { "MSGBUF", "command -buffer $1 * /input send $2-" },
+  { "N",       "names"                               },
+  { "Q",       "query"                               },
+  { "REDRAW",  "window refresh"                      },
+  { "SAY",     "msg *"                               },
+  { "SIGNOFF", "quit"                                },
+  { "T",       "topic"                               },
+  { "UB",      "unban"                               },
+  { "UMODE",   "mode $nick"                          },
+  { "V",       "command core version"                },
+  { "W",       "who"                                 },
+  { "WC",      "window merge"                        },
+  { "WI",      "whois"                               },
+  { "WII",     "whois $1 $1"                         },
+  { "WW",      "whowas"                              },
+  { NULL,      NULL                                  },
 };
 
+char *alias_default_completion[][2] =
+{ { "MSGBUF", "%(buffers_plugins_names)" },
+  { NULL,     NULL                       },
+};
 
 /*
  * Callback for changes on options in section "cmd" (command).
@@ -188,11 +193,11 @@ alias_config_cmd_write_default_cb (void *data,
     if (!weechat_config_write_line (config_file, section_name, NULL))
         return WEECHAT_CONFIG_WRITE_ERROR;
 
-    for (i = 0; alias_default_list[i][0]; i++)
+    for (i = 0; alias_default_cmd[i][0]; i++)
     {
         if (!weechat_config_write_line (config_file,
-                                        alias_default_list[i][0],
-                                        "\"%s\"", alias_default_list[i][1]))
+                                        alias_default_cmd[i][0],
+                                        "\"%s\"", alias_default_cmd[i][1]))
             return WEECHAT_CONFIG_WRITE_ERROR;
     }
 
@@ -254,6 +259,34 @@ alias_config_cmd_create_option_cb (void *data,
     }
 
     return rc;
+}
+
+/*
+ * Writes default completions in configuration file in section "completion".
+ */
+
+int
+alias_config_completion_write_default_cb (void *data,
+                                          struct t_config_file *config_file,
+                                          const char *section_name)
+{
+    int i;
+
+    /* make C compiler happy */
+    (void) data;
+
+    if (!weechat_config_write_line (config_file, section_name, NULL))
+        return WEECHAT_CONFIG_WRITE_ERROR;
+
+    for (i = 0; alias_default_completion[i][0]; i++)
+    {
+        if (!weechat_config_write_line (config_file,
+                                        alias_default_completion[i][0],
+                                        "\"%s\"", alias_default_completion[i][1]))
+            return WEECHAT_CONFIG_WRITE_ERROR;
+    }
+
+    return WEECHAT_CONFIG_WRITE_OK;
 }
 
 /*
@@ -348,7 +381,7 @@ alias_config_init ()
                                               1, 1,
                                               NULL, NULL,
                                               NULL, NULL,
-                                              NULL, NULL,
+                                              &alias_config_completion_write_default_cb, NULL,
                                               &alias_config_completion_create_option_cb, NULL,
                                               NULL, NULL);
     if (!ptr_section)
