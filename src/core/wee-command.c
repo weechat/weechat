@@ -2995,6 +2995,8 @@ COMMAND_CALLBACK(input)
         if (argc > 2)
             gui_input_insert (buffer, argv_eol[2]);
     }
+    else if (string_strcasecmp (argv[1], "send") == 0)
+        input_data (buffer, argv_eol[2]);
     else if (string_strcasecmp (argv[1], "undo") == 0)
         gui_input_undo (buffer);
     else if (string_strcasecmp (argv[1], "redo") == 0)
@@ -7233,6 +7235,7 @@ command_init ()
            "  zoom_merged_buffer: zoom on merged buffer\n"
            "  insert: insert text in command line (escaped chars are allowed, "
            "see /help print)\n"
+           "  send: send text to the buffer\n"
            "  paste_start: start paste (bracketed paste mode)\n"
            "  paste_stop: stop paste (bracketed paste mode)\n"
            "\n"
@@ -7248,7 +7251,7 @@ command_init ()
         "jump_next_visited_buffer|hotlist_clear|grab_key|grab_key_command|"
         "grab_mouse|grab_mouse_area|set_unread|set_unread_current_buffer|"
         "switch_active_buffer|switch_active_buffer_previous|zoom_merged_buffer|"
-        "insert|paste_start|paste_stop",
+        "insert|send|paste_start|paste_stop",
         &command_input, NULL);
     hook_command (
         NULL, "key",

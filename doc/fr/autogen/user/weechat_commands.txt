@@ -433,6 +433,7 @@ liste des actions :
   switch_active_buffer_previous : basculer vers le tampon mélangé précédent
   zoom_merged_buffer : zoom sur le tampon mélangé
   insert : insérer du texte dans la ligne de commande (les caractères échappés sont autorisés, voir /help print)
+  send : envoyer du texte au tampon
   paste_start : début de collage (mode "bracketed paste")
   paste_stop : fin de collage (mode "bracketed paste")
 
