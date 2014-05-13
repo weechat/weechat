@@ -829,7 +829,8 @@ completion_list_add_plugins_commands_cb (void *data,
                                          struct t_gui_buffer *buffer,
                                          struct t_gui_completion *completion)
 {
-    char *pos_space, *plugin_name;
+    char **argv;
+    int argc;
     struct t_weechat_plugin *ptr_plugin;
     struct t_hook *ptr_hook;
 
@@ -840,23 +841,20 @@ completion_list_add_plugins_commands_cb (void *data,
 
     if (completion->args)
     {
-        pos_space = strchr (completion->args, ' ');
-        if (pos_space)
-            plugin_name = string_strndup (completion->args,
-                                          pos_space - completion->args);
-        else
-            plugin_name = strdup (completion->args);
+        argv = string_split (completion->args, " ", 0, 0, &argc);
+        if (!argv)
+            return WEECHAT_RC_OK;
 
-        if (plugin_name)
+        if (argc > 0)
         {
             ptr_plugin = NULL;
-            if (string_strcasecmp (plugin_name, PLUGIN_CORE) != 0)
+            if (string_strcasecmp (argv[argc - 1], PLUGIN_CORE) != 0)
             {
                 /*
                  * plugin name is different from "core", then search it in
                  * plugin list
                  */
-                ptr_plugin = plugin_search (plugin_name);
+                ptr_plugin = plugin_search (argv[argc - 1]);
                 if (!ptr_plugin)
                     return WEECHAT_RC_OK;
             }
@@ -873,8 +871,8 @@ completion_list_add_plugins_commands_cb (void *data,
                                              0, WEECHAT_LIST_POS_SORT);
                 }
             }
-            free (plugin_name);
         }
+        string_free_split( argv);
     }
 
     return WEECHAT_RC_OK;
