@@ -167,10 +167,11 @@ Examples:
 [command]*`command`* esegui comando o plugin di WeeChat esplicito::
 
 ----
-/command  <plugin> <comando>
+/command  [-buffer <name>] <plugin> <command>
 
- plugin: nome plugin ('core' per il comando interno di WeeChat)
-comando: comando da eseguire (una '/' viene aggiunta automaticamente se non trovata all'inizio del comando)
+-buffer: execute the command on this buffer
+ plugin: execute the command from this plugin; 'core' for a WeeChat command, '*' for automatic plugin (it depends on the buffer where the command is executed)
+command: command to execute (a '/' is automatically added if not found at beginning of command)
 ----
 
 [[command_weechat_cursor]]

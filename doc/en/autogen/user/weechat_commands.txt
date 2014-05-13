@@ -167,9 +167,10 @@ Examples:
 [command]*`command`* launch explicit WeeChat or plugin command::
 
 ----
-/command  <plugin> <command>
+/command  [-buffer <name>] <plugin> <command>
 
- plugin: plugin name ('core' for WeeChat internal command)
+-buffer: execute the command on this buffer
+ plugin: execute the command from this plugin; 'core' for a WeeChat command, '*' for automatic plugin (it depends on the buffer where the command is executed)
 command: command to execute (a '/' is automatically added if not found at beginning of command)
 ----
 

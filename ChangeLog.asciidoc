@@ -15,6 +15,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 == Version 1.0 (under dev)
 
+* core: add option "-buffer" in command /command (closes #67)
 * core: add support of negated tags in filters (with '!')
   (closes #72, closes #74)
 * core: fix restoration of core buffer properties after /upgrade

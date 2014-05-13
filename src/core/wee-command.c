@@ -1491,9 +1491,10 @@ COMMAND_CALLBACK(color)
 
 COMMAND_CALLBACK(command)
 {
-    int length;
+    int length, index_args, any_plugin;
     char *command;
     struct t_weechat_plugin *ptr_plugin;
+    struct t_gui_buffer *ptr_buffer;
 
     /* make C compiler happy */
     (void) data;
@@ -1501,30 +1502,48 @@ COMMAND_CALLBACK(command)
     if (argc < 3)
         return WEECHAT_RC_ERROR;
 
+    ptr_buffer = buffer;
+    index_args = 1;
+    any_plugin = 0;
     ptr_plugin = NULL;
-    if (string_strcasecmp (argv[1], PLUGIN_CORE) != 0)
+
+    if ((argc >= 5) && (string_strcasecmp (argv[1], "-buffer") == 0))
     {
-        ptr_plugin = plugin_search (argv[1]);
+        ptr_buffer = gui_buffer_search_by_full_name (argv[2]);
+        if (!ptr_buffer)
+            ptr_buffer = buffer;
+        index_args = 3;
+    }
+
+    if (strcmp (argv[index_args], "*") == 0)
+    {
+        any_plugin = 1;
+        ptr_plugin = ptr_buffer->plugin;
+    }
+    else if (string_strcasecmp (argv[index_args], PLUGIN_CORE) != 0)
+    {
+        ptr_plugin = plugin_search (argv[index_args]);
         if (!ptr_plugin)
         {
             gui_chat_printf (NULL, _("%sPlugin \"%s\" not found"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             argv[1]);
+                             argv[index_args]);
             return WEECHAT_RC_OK;
         }
     }
-    if (string_is_command_char (argv_eol[2]))
+    if (string_is_command_char (argv_eol[index_args + 1]))
     {
-        input_exec_command (buffer, 0, ptr_plugin, argv_eol[2]);
+        input_exec_command (ptr_buffer, any_plugin, ptr_plugin,
+                            argv_eol[index_args + 1]);
     }
     else
     {
-        length = strlen (argv_eol[2]) + 2;
+        length = strlen (argv_eol[index_args + 1]) + 2;
         command = malloc (length);
         if (command)
         {
-            snprintf (command, length, "/%s", argv_eol[2]);
-            input_exec_command (buffer, 0, ptr_plugin, command);
+            snprintf (command, length, "/%s", argv_eol[index_args + 1]);
+            input_exec_command (ptr_buffer, any_plugin, ptr_plugin, command);
             free (command);
         }
     }
@@ -6893,11 +6912,16 @@ command_init ()
     hook_command (
         NULL, "50000|command",
         N_("launch explicit WeeChat or plugin command"),
-        N_("<plugin> <command>"),
-        N_(" plugin: plugin name ('core' for WeeChat internal command)\n"
+        N_("[-buffer <name>] <plugin> <command>"),
+        N_("-buffer: execute the command on this buffer\n"
+           " plugin: execute the command from this plugin; 'core' for a "
+           "WeeChat command, '*' for automatic plugin (it depends on the "
+           "buffer where the command is executed)\n"
            "command: command to execute (a '/' is automatically added if not "
            "found at beginning of command)"),
-        "%(plugins_names)|" PLUGIN_CORE " %(plugins_commands)",
+        "-buffer %(buffers_plugins_names) "
+        "%(plugins_names)|" PLUGIN_CORE " %(plugins_commands)"
+        " || %(plugins_names)|" PLUGIN_CORE " %(plugins_commands)",
         &command_command, NULL);
     hook_command (
         NULL, "cursor",

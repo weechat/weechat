@@ -167,10 +167,11 @@ Examples:
 [command]*`command`* wywołaj wyraźnie komendę WeeChat lub wtyczki::
 
 ----
-/command  <wtyczka> <komenda>
+/command  [-buffer <name>] <plugin> <command>
 
- wtyczka: nazwa wtyczki ('core' dla wewnętrznych komend WeeChat )
-komenda: komenda do wywołania ( '/' jest automatycznie dodawane jeśli nie występuje na początku komendy)
+-buffer: execute the command on this buffer
+ plugin: execute the command from this plugin; 'core' for a WeeChat command, '*' for automatic plugin (it depends on the buffer where the command is executed)
+command: command to execute (a '/' is automatically added if not found at beginning of command)
 ----
 
 [[command_weechat_cursor]]
