@@ -384,7 +384,7 @@
 ** Werte: 0 .. 604800 (Standardwert: `60`)
 
 * [[option_irc.network.lag_max]] *irc.network.lag_max*
-** Beschreibung: `maximale Verzögerung (in Sekunden): sollte die maximale Verzögerung erreicht werden geht WeeChat davon aus, dass die Antwort (pong)  des Servers nicht mehr empfangen wird. Die Verzögerung wird dann nicht weiter gezählt (0 = es wird ewig gewartet)`
+** Beschreibung: `maximale Verzögerung (in Sekunden): sollte die maximale Verzögerung erreicht werden geht WeeChat davon aus, dass die Antwort (pong) des Servers nicht mehr empfangen wird. Die Verzögerung wird dann nicht weiter gezählt (0 = es wird ewig gewartet)`
 ** Typ: integer
 ** Werte: 0 .. 604800 (Standardwert: `1800`)
 
