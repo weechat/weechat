@@ -4333,6 +4333,7 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
         free (server->nick_modes);
         server->nick_modes = NULL;
         weechat_bar_item_update ("input_prompt");
+        weechat_bar_item_update ("irc_nick_modes");
     }
     server->cap_away_notify = 0;
     server->is_away = 0;

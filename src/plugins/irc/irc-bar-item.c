@@ -504,6 +504,45 @@ irc_bar_item_input_prompt (void *data, struct t_gui_bar_item *item,
 }
 
 /*
+ * Returns content of bar item "nick_modes": bar item with nick modes.
+ */
+
+char *
+irc_bar_item_nick_modes (void *data, struct t_gui_bar_item *item,
+                         struct t_gui_window *window,
+                         struct t_gui_buffer *buffer,
+                         struct t_hashtable *extra_info)
+{
+    struct t_irc_server *server;
+    char *buf;
+    int length;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) item;
+    (void) window;
+    (void) extra_info;
+
+    if (!buffer)
+        return NULL;
+
+    irc_buffer_get_server_and_channel (buffer, &server, NULL);
+    if (!server || !server->nick_modes || !server->nick_modes[0])
+        return NULL;
+
+    length = 64 + strlen (server->nick_modes) + 1;
+    buf = malloc (length);
+    if (buf)
+    {
+        snprintf (buf, length, "%s%s",
+                  IRC_COLOR_ITEM_NICK_MODES,
+                  server->nick_modes);
+    }
+
+    return buf;
+}
+
+/*
  * Focus on nicklist.
  */
 
@@ -570,6 +609,7 @@ irc_bar_item_buffer_switch (void *data, const char *signal,
     weechat_bar_item_update ("irc_channel");
     weechat_bar_item_update ("lag");
     weechat_bar_item_update ("input_prompt");
+    weechat_bar_item_update ("irc_nick_modes");
 
     return WEECHAT_RC_OK;
 }
@@ -589,6 +629,7 @@ irc_bar_item_init ()
     weechat_bar_item_new ("irc_channel", &irc_bar_item_channel, NULL);
     weechat_bar_item_new ("lag", &irc_bar_item_lag, NULL);
     weechat_bar_item_new ("input_prompt", &irc_bar_item_input_prompt, NULL);
+    weechat_bar_item_new ("irc_nick_modes", &irc_bar_item_nick_modes, NULL);
     weechat_hook_focus ("buffer_nicklist",
                         &irc_bar_item_focus_buffer_nicklist, NULL);
     weechat_hook_signal ("buffer_switch",

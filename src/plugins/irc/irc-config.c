@@ -719,6 +719,22 @@ irc_config_change_color_item_lag (void *data,
 }
 
 /*
+ * Callback for changes on option "irc.color.item_nick_modes".
+ */
+
+void
+irc_config_change_color_item_nick_modes (void *data,
+                                         struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+
+    weechat_bar_item_update ("input_prompt");
+    weechat_bar_item_update ("irc_nick_modes");
+}
+
+/*
  * Callback for changes on option "irc.color.mirc_remap".
  */
 
@@ -2714,7 +2730,7 @@ irc_config_init ()
         "item_nick_modes", "color",
         N_("color for nick modes in bar item \"input_prompt\""),
         NULL, -1, 0, "default", NULL, 0, NULL, NULL,
-        &irc_config_change_bar_item_input_prompt, NULL, NULL, NULL);
+        &irc_config_change_color_item_nick_modes, NULL, NULL, NULL);
     irc_config_color_message_join = weechat_config_new_option (
         irc_config_file, ptr_section,
         "message_join", "color",
