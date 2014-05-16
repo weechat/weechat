@@ -610,6 +610,7 @@ irc_config_change_look_item_display_server (void *data,
 
     weechat_bar_item_update ("buffer_plugin");
     weechat_bar_item_update ("buffer_name");
+    weechat_bar_item_update ("buffer_short_name");
 }
 
 /*

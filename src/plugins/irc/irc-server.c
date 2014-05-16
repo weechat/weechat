@@ -4047,6 +4047,7 @@ irc_server_connect (struct t_irc_server *server)
     }
 
     weechat_bar_item_update ("buffer_name");
+    weechat_bar_item_update ("buffer_short_name");
 
     irc_server_set_index_current_address (server,
                                           server->index_current_address);

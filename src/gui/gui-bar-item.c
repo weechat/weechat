@@ -59,9 +59,9 @@ struct t_gui_bar_item *last_gui_bar_item = NULL; /* last bar item           */
 char *gui_bar_item_names[GUI_BAR_NUM_ITEMS] =
 { "input_paste", "input_prompt", "input_search", "input_text", "time",
   "buffer_count", "buffer_last_number", "buffer_plugin", "buffer_number",
-  "buffer_name", "buffer_modes", "buffer_filter", "buffer_zoom",
-  "buffer_nicklist_count", "scroll", "hotlist", "completion", "buffer_title",
-  "buffer_nicklist", "window_number"
+  "buffer_name", "buffer_short_name", "buffer_modes", "buffer_filter",
+  "buffer_zoom", "buffer_nicklist_count", "scroll", "hotlist", "completion",
+  "buffer_title", "buffer_nicklist", "window_number"
 };
 char *gui_bar_items_default_for_bars[][2] =
 { { GUI_BAR_DEFAULT_NAME_INPUT,
@@ -1056,10 +1056,41 @@ gui_bar_item_default_buffer_name (void *data, struct t_gui_bar_item *item,
         return NULL;
 
     snprintf (str_name, sizeof (str_name), "%s%s",
-              gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_status_name))),
+              gui_color_get_custom (
+                  gui_color_get_name (CONFIG_COLOR(config_color_status_name))),
               buffer->name);
 
     return strdup (str_name);
+}
+
+/*
+ * Default item for short name of buffer.
+ */
+
+char *
+gui_bar_item_default_buffer_short_name (void *data,
+                                        struct t_gui_bar_item *item,
+                                        struct t_gui_window *window,
+                                        struct t_gui_buffer *buffer,
+                                        struct t_hashtable *extra_info)
+{
+    char str_short_name[256];
+
+    /* make C compiler happy */
+    (void) data;
+    (void) item;
+    (void) window;
+    (void) extra_info;
+
+    if (!buffer)
+        return NULL;
+
+    snprintf (str_short_name, sizeof (str_short_name), "%s%s",
+              gui_color_get_custom (
+                  gui_color_get_name (CONFIG_COLOR(config_color_status_name))),
+              buffer->short_name);
+
+    return strdup (str_short_name);
 }
 
 /*
@@ -1975,6 +2006,19 @@ gui_bar_item_init ()
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NAME]);
     gui_bar_item_hook_signal ("buffer_moved",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NAME]);
+
+    /* buffer short name */
+    gui_bar_item_new (NULL,
+                      gui_bar_item_names[GUI_BAR_ITEM_BUFFER_SHORT_NAME],
+                      &gui_bar_item_default_buffer_short_name, NULL);
+    gui_bar_item_hook_signal ("window_switch",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_SHORT_NAME]);
+    gui_bar_item_hook_signal ("buffer_switch",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_SHORT_NAME]);
+    gui_bar_item_hook_signal ("buffer_renamed",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_SHORT_NAME]);
+    gui_bar_item_hook_signal ("buffer_moved",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_SHORT_NAME]);
 
     /* buffer modes */
     gui_bar_item_new (NULL,
