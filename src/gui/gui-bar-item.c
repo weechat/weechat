@@ -1088,7 +1088,7 @@ gui_bar_item_default_buffer_short_name (void *data,
     snprintf (str_short_name, sizeof (str_short_name), "%s%s",
               gui_color_get_custom (
                   gui_color_get_name (CONFIG_COLOR(config_color_status_name))),
-              buffer->short_name);
+              gui_buffer_get_short_name (buffer));
 
     return strdup (str_short_name);
 }
