@@ -462,6 +462,14 @@ key[shift]).
 [[irc_ssl_connection]]
 === Mam problemy podczas połączenia z serwerem używającym SSL, co mogę zrobić?
 
+// TRANSLATION MISSING
+If you are using Mac OS X, you must install `curl-ca-bundle` and set the path
+to certificates in WeeChat:
+
+----
+/set weechat.network.gnutls_ca_file "/usr/local/opt/curl-ca-bundle/share/ca-bundle.crt"
+----
+
 Jeśli widzisz błędy gnutls, możesz użyć innej wielkości klucza
 Diffie-Hellman (domyślnie 2048):
 
