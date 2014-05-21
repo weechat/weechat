@@ -695,6 +695,12 @@ IRC_PROTOCOL_CALLBACK(join)
             irc_channel_display_nick_back_in_pv (server, ptr_nick, nick);
     }
 
+    if (local_join)
+    {
+        weechat_bar_item_update ("buffer_name");
+        weechat_bar_item_update ("buffer_short_name");
+    }
+
     return WEECHAT_RC_OK;
 }
 
@@ -802,6 +808,9 @@ IRC_PROTOCOL_CALLBACK(kick)
                                         ptr_channel);
             }
         }
+
+        weechat_bar_item_update ("buffer_name");
+        weechat_bar_item_update ("buffer_short_name");
     }
     else
     {
@@ -883,6 +892,9 @@ IRC_PROTOCOL_CALLBACK(kill)
              * more
              */
             irc_nick_free_all (server, ptr_channel);
+
+            weechat_bar_item_update ("buffer_name");
+            weechat_bar_item_update ("buffer_short_name");
         }
         else
         {
@@ -1565,6 +1577,8 @@ IRC_PROTOCOL_CALLBACK(part)
                     else
                         ptr_channel->part = 1;
                 }
+                weechat_bar_item_update ("buffer_name");
+                weechat_bar_item_update ("buffer_short_name");
             }
             else
             {
