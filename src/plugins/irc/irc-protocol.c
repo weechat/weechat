@@ -1366,7 +1366,7 @@ IRC_PROTOCOL_CALLBACK(notice)
                 }
                 else
                 {
-                    if (address && address[0])
+                    if (address && address[0] && (strcmp (nick, address) != 0))
                     {
                         weechat_printf_date_tags (ptr_buffer,
                                                   date,
