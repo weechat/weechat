@@ -907,7 +907,8 @@ gui_color_buffer_display ()
             else
             {
                 snprintf (str_color, sizeof (str_color),
-                          "%c%c%02d %s",
+                          "%c %c%c%02d%s",
+                          GUI_COLOR_RESET_CHAR,
                           GUI_COLOR_COLOR_CHAR,
                           GUI_COLOR_FG_CHAR,
                           i,
@@ -947,7 +948,8 @@ gui_color_buffer_display ()
                 else
                 {
                     snprintf (str_color, sizeof (str_color),
-                              "%s %s",
+                              "%c %s%s",
+                              GUI_COLOR_RESET_CHAR,
                               gui_color_get_custom (items[i]),
                               items[i]);
                 }
