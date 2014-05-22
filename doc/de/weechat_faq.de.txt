@@ -479,9 +479,8 @@ einen Text im Terminal markieren oder einfügen, als sei die Mausunterstützung 
 [[irc_ssl_connection]]
 === Es treten Probleme bei einer Serververbindung mittels SSL auf. Was kann ich tun?
 
-// TRANSLATION MISSING
-If you are using Mac OS X, you must install `curl-ca-bundle` and set the path
-to certificates in WeeChat:
+Unter Mac OS X muss das Paket `curl-ca-bundle` installiert werden und der Pfad auf
+das entsprechende Zertifikat zeigen:
 
 ----
 /set weechat.network.gnutls_ca_file "/usr/local/opt/curl-ca-bundle/share/ca-bundle.crt"
