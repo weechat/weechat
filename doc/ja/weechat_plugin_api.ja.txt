@@ -7545,7 +7545,7 @@ hook = weechat.hook_connect("", "my.server.org", 1234, 1, 0, "",
 
 ==== weechat_hook_print
 
-_WeeChat バージョン 0.3.4 と 1.0 で更新_
+_WeeChat バージョン 0.4.3 と 1.0 で更新_
 
 メッセージの表示をフックする。
 
