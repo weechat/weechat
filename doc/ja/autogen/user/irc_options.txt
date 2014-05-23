@@ -139,7 +139,7 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_irc.look.display_join_message]] *irc.look.display_join_message*
-** 説明: `comma-separated list of messages to display after joining a channel: 324 = channel modes, 329 = channel creation date, 332 = topic, 333 = nick/date for topic, 353 = names on channel, 366 = names count`
+** 説明: `チャンネルに参加した後に表示するメッセージのコンマ区切りリスト: 324 = チャンネルモード、329 = チャンネル作成日、332 = トピック、333 = トピックを作成したニックネームおよび日付、353 = チャンネル参加者リスト、366 = 参加人数`
 ** タイプ: 文字列
 ** 値: 未制約文字列 (デフォルト値: `"329,332,333,366"`)
 
@@ -204,7 +204,7 @@
 ** 値: on, off (デフォルト値: `on`)
 
 * [[option_irc.look.join_auto_add_chantype]] *irc.look.join_auto_add_chantype*
-** 説明: `automatically add channel type in front of channel name on command /join if the channel name does not start with a valid channel type for the server; for example: "/join weechat" will in fact send: "/join #weechat"`
+** 説明: `/join コマンドに与えたチャンネル名の最初にそのサーバで有効なチャンネルタイプが付けられていなかった場合、チャンネル名の前にチャンネルタイプを自動追加する; 例: "/join weechat" とした場合、実際に送信されるコマンドは "/join #weechat" になります`
 ** タイプ: ブール
 ** 値: on, off (デフォルト値: `off`)
 

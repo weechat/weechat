@@ -169,9 +169,9 @@ rgb2term: RGB 色をターミナル色 (0-255) に変換
 ----
 /command  [-buffer <name>] <plugin> <command>
 
--buffer: execute the command on this buffer
- plugin: execute the command from this plugin; 'core' for a WeeChat command, '*' for automatic plugin (it depends on the buffer where the command is executed)
-command: command to execute (a '/' is automatically added if not found at beginning of command)
+-buffer: このバッファでコマンドを実行
+ plugin: このプラグインからコマンドを実行; 'core' は WeeChat コマンド、'*' は自動的にプラグインを選択 (このコマンドを実行したバッファに依存)
+command: 実行するコマンド (コマンドの最初に '/' が無い場合はこれを自動的に追加します)
 ----
 
 [[command_weechat_cursor]]
@@ -302,55 +302,55 @@ hdata と変数の名前については、"プラグイン API リファレン�
          rename <name> <new_name>
          del <name>|-all
 
-   list: list all filters
- enable: enable filters (filters are enabled by default)
-disable: disable filters
- toggle: toggle filters
-   name: filter name ("@" = enable/disable all filters in current buffer)
-    add: add a filter
- rename: rename a filter
-    del: delete a filter
-   -all: delete all filters
- buffer: comma separated list of buffers where filter is active:
-         - this is full name including plugin (example: "irc.freenode.#weechat")
-         - "*" means all buffers
-         - a name starting with '!' is excluded
-         - wildcard "*" is allowed
-   tags: comma separated list of tags, for example "irc_join,irc_part,irc_quit"
-         - logical "and": use "+" between tags (for example: "nick_toto+irc_action")
-         - wildcard "*" is allowed
-         - if tag starts with '!', then it is excluded and must NOT be in message
-  regex: POSIX extended regular expression to search in line
-         - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
-         - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
-         - two regular expressions are created: one for prefix and one for message
-         - regex are case insensitive, they can start by "(?-i)" to become case sensitive
+   list: 全てのフィルタをリストアップ
+ enable: フィルタを有効化 (フィルタはデフォルトで有効になっています)
+disable: フィルタを無効化
+ toggle: フィルタの有効無効を切り替え
+   name: フィルタの名前 ("@" = 現在のバッファに設定されている全てのフィルタを有効化/無効化)
+    add: フィルタを追加
+ rename: フィルタをリネーム
+    del: フィルタを削除
+   -all: 全てのフィルタを削除
+ buffer: フィルタが有効化されているバッファのコンマ区切りリスト:
+         - これはプラグイン名を含む完全な名前です (例えば: "irc.freenode.#weechat")
+         - "*" は全てのバッファを意味します
+         - 名前が '!' から始まるものは除外されます
+         - ワイルドカード '*' を使うことができます
+   tags: タグのコンマ区切りリスト、例えば "irc_join,irc_part,irc_quit"
+         - 論理積 "and": タグ同士を "+" でつなげてください (例えば: "nick_toto+irc_action")
+         - ワイルドカード '*' を使うことができます
+         - タグを '!' で始めると、そのタグが付けられたメッセージとそのタグを含むメッセージはフィルタされません
+  regex: 行単位検索の正規表現
+         - '\t' を使うと、プレフィックスをメッセージから分離できます。'|' 等の特別な文字は '\|' のようにエスケープしなければいけません
+         - 正規表現の最初に '!' が含まれる場合は、マッチ結果が反転されます (最初の '!' にマッチさせたければ、'\!' を使ってください)
+         - 2 種類の正規表現があります: 一方はプレフィックス用、他方はメッセージ用
+         - 正規表現は大文字小文字を区別しません、"(?-i)" から始まる場合は区別します
 
-The default key alt+'=' toggles filtering on/off.
+デフォルトではキー alt+'=' でフィルタリングの on/off を切り替えられます。
 
-Tags most commonly used:
-  no_filter, no_highlight, no_log, log0..log9 (log level),
-  notify_none, notify_message, notify_private, notify_highlight,
-  nick_xxx (xxx is nick in message), prefix_nick_ccc (ccc is color of nick),
-  host_xxx (xxx is username + host in message),
-  irc_xxx (xxx is command name or number, see /server raw or /debug tags),
-  irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
-To see tags for lines in buffers: /debug tags
+よく使われるタグ:
+  no_filter、no_highlight、no_log、log0..log9 (ログレベル)、
+  notify_none、notify_message、notify_private、notify_highlight、
+  nick_xxx (xxx はメッセージのニックネーム部分)、prefix_nick_ccc (ccc はニックネームの色)、
+  host_xxx (xxx はメッセージのユーザ名 + ホスト名部分)、
+  irc_xxx (xxx はコマンド名又は番号、/server raw または /debug tags で確認)、
+  irc_numeric、irc_error、irc_action、irc_ctcp、irc_ctcp_reply、irc_smart_filter、away_info。
+バッファ内でタグを見るには: /debug tags
 
-Examples:
-  use IRC smart filter on all buffers:
+例:
+  全てのバッファで IRC スマートフィルタを使用:
     /filter add irc_smart * irc_smart_filter *
-  use IRC smart filter on all buffers except those with "#weechat" in name:
+  名前に "#weechat" を含むバッファを除いた全てのバッファで IRC スマートフィルタを使用:
     /filter add irc_smart *,!*#weechat* irc_smart_filter *
-  filter all IRC join/part/quit messages:
+  全ての IRC join/part/quit メッセージをフィルタ:
     /filter add joinquit * irc_join,irc_part,irc_quit *
-  filter nicks displayed when joining channels or with /names:
+  チャンネルに入った時や /names で表示されるニックネームをフィルタ:
     /filter add nicks * irc_366 *
-  filter nick "toto" on IRC channel #weechat:
+  IRC チャンネル #weechat で "toto" を含むニックネームをフィルタ:
     /filter add toto irc.freenode.#weechat nick_toto *
-  filter IRC join/action messages from nick "toto":
+  ニックネーム "toto" からの IRC の参加/アクションメッセージをフィルタ:
     /filter add toto * nick_toto+irc_join,nick_toto+irc_action *
-  filter lines containing "weechat sucks" on IRC channel #weechat:
+  IRC チャンネル #weechat で "weechat sucks" を含む行をフィルタ:
     /filter add sucks irc.freenode.#weechat * weechat sucks
 ----
 
@@ -386,58 +386,58 @@ value: 表示する履歴エントリの数
 ----
 /input  <action> [<arguments>]
 
-list of actions:
-  return: simulate key "enter"
-  complete_next: complete word with next completion
-  complete_previous: complete word with previous completion
-  search_text: search text in buffer
-  search_switch_case: switch exact case for search
-  search_switch_regex: switch search type: string/regular expression
-  search_switch_where: switch search in messages/prefixes
-  search_previous: search previous line
-  search_next: search next line
-  search_stop: stop search
-  delete_previous_char: delete previous char
-  delete_next_char: delete next char
-  delete_previous_word: delete previous word
-  delete_next_word: delete next word
-  delete_beginning_of_line: delete from beginning of line until cursor
-  delete_end_of_line: delete from cursor until end of line
-  delete_line: delete entire line
-  clipboard_paste: paste from clipboard
-  transpose_chars: transpose two chars
-  undo: undo last command line action
-  redo: redo last command line action
-  move_beginning_of_line: move cursor to beginning of line
-  move_end_of_line: move cursor to end of line
-  move_previous_char: move cursor to previous char
-  move_next_char: move cursor to next char
-  move_previous_word: move cursor to previous word
-  move_next_word: move cursor to next word
-  history_previous: recall previous command in current buffer history
-  history_next: recall next command in current buffer history
-  history_global_previous: recall previous command in global history
-  history_global_next: recall next command in global history
-  jump_smart: jump to next buffer with activity
-  jump_last_buffer_displayed: jump to last buffer displayed (before last jump to a buffer)
-  jump_previously_visited_buffer: jump to previously visited buffer
-  jump_next_visited_buffer: jump to next visited buffer
-  hotlist_clear: clear hotlist
-  grab_key: grab a key (optional argument: delay for end of grab, default is 500 milliseconds)
-  grab_key_command: grab a key with its associated command (optional argument: delay for end of grab, default is 500 milliseconds)
-  grab_mouse: grab mouse event code
-  grab_mouse_area: grab mouse event code with area
-  set_unread: set unread marker for all buffers
-  set_unread_current_buffer: set unread marker for current buffer
-  switch_active_buffer: switch to next merged buffer
-  switch_active_buffer_previous: switch to previous merged buffer
-  zoom_merged_buffer: zoom on merged buffer
-  insert: insert text in command line (escaped chars are allowed, see /help print)
-  send: send text to the buffer
-  paste_start: start paste (bracketed paste mode)
-  paste_stop: stop paste (bracketed paste mode)
+アクションリスト:
+  return: "enter" キーをシミュレート
+  complete_next: 次の補完候補で単語を補完
+  complete_previous: 一つ前の補完候補で単語を補完
+  search_text: バッファ内のテキストを検索
+  search_switch_case: 完全一致検索に変更
+  search_switch_regex: 検索タイプの切り替え: 文字列/正規表現
+  search_switch_where: 検索範囲の切り替え: メッセージ/プレフィックス
+  search_previous: 一つ前の行を検索
+  search_next: 次の行を検索
+  search_stop: 検索を終了
+  delete_previous_char: 一つ前の文字を削除
+  delete_next_char: 次の文字を削除
+  delete_previous_word: 一つ前の単語を削除
+  delete_next_word: 次の単語を削除
+  delete_beginning_of_line: 行の最初からカーソル位置までを削除
+  delete_end_of_line: カーソルから行の最後までを削除
+  delete_line: 行を削除
+  clipboard_paste: クリップボードから貼り付け
+  transpose_chars: 2 つの文字を入れ替え
+  undo: 最新のコマンドラインアクションまで元に戻す
+  redo: 最新のコマンドラインアクションまでやり直す
+  move_beginning_of_line: カーソルを行頭に移動
+  move_end_of_line: カーソルを行末まで移動
+  move_previous_char: カーソルを一つ前の文字に移動
+  move_next_char: カーソルを次の文字に移動
+  move_previous_word: カーソルを一つ前の単語に移動
+  move_next_word: カーソルを次の単語に移動
+  history_previous: 現在のバッファ履歴のひとつ前のコマンドを再呼び出し
+  history_next: 現在のバッファ履歴の次のコマンドを再呼び出し
+  history_global_previous: グローバル履歴の一つ前のコマンドを再呼び出し
+  history_global_next: グローバル履歴の次のコマンドを再呼び出し
+  jump_smart: 次のアクティブバッファに飛ぶ
+  jump_last_buffer_displayed: 表示されている最後のバッファに移動 (最新のバッファ移動の一つ前に表示されていたバッファ)
+  jump_previously_visited_buffer: 一つ前に訪れたバッファに移動
+  jump_next_visited_buffer: 次に訪れたバッファに移動
+  hotlist_clear: ホットリストを消去
+  grab_key: キーを横取り (任意引数: 最後の横取りからの遅延時間、デフォルトは 500 ミリ秒)
+  grab_key_command: あるコマンドに関連してキーを横取り (任意引数: 最後の横取りからの遅延時間、デフォルトは 500 ミリ秒)
+  grab_mouse: grab マウスイベントコードを横取り
+  grab_mouse_area: 範囲指定のマウスイベントコードを横取り
+  set_unread: 全てのバッファに対して未読マーカーを設定
+  set_unread_current_buffer: 現在のバッファに対して未読マーカーを設定
+  switch_active_buffer: 次のマージされたバッファに移動
+  switch_active_buffer_previous: 一つ前のマージされたバッファに移動
+  zoom_merged_buffer: マージされたバッファにズーム
+  insert: コマンドラインにテキストを挿入 (エスケープ文字も可、/help print を参照)
+  send: バッファにテキストを送信
+  paste_start: ペーストの開始 (括弧付きペーストモード)
+  paste_stop: ペーストの終了 (括弧付きペーストモード)
 
-This command is used by key bindings or plugins.
+これらのコマンドはキーバインドかプラグインで利用できます。
 ----
 
 [[command_weechat_key]]
