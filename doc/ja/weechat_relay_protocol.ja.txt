@@ -540,9 +540,8 @@ WeeChat の予約識別子:
 | _buffer_title_changed | buffers / buffer | hdata: buffer |
   バッファのタイトル変更 | バッファのタイトルを変更
 
-// TRANSLATION MISSING
 | _buffer_cleared | buffer | hdata: buffer |
-  Buffer cleared | Clear buffer
+  バッファのクリア | バッファをクリア
 
 | _buffer_type_changed | buffer | hdata: buffer |
   バッファの種類変更 | バッファの種類を変更
@@ -872,8 +871,7 @@ hdata として送られるデータ:
 | full_name | string  | 完全な名前 (例: 'irc.freenode.#weechat')
 |===
 
-// TRANSLATION MISSING
-Example: buffer 'irc.freenode.#weechat' has been cleared:
+例: バッファ 'irc.freenode.#weechat' をクリア:
 
 [source,python]
 ----
