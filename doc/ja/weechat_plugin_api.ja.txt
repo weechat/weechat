@@ -7545,7 +7545,7 @@ hook = weechat.hook_connect("", "my.server.org", 1234, 1, 0, "",
 
 ==== weechat_hook_print
 
-_Updated in 0.4.3 and 1.0_
+_WeeChat バージョン 0.3.4 と 1.0 で更新_
 
 メッセージの表示をフックする。
 
@@ -7602,12 +7602,11 @@ struct t_hook *weechat_hook_print (struct t_gui_buffer *buffer,
 
 * 新しいフックへのポインタ、エラーが起きた場合は NULL
 
-// TRANSLATION MISSING
 [IMPORTANT]
-In scripts, with WeeChat ≥ 1.0, the callback arguments 'displayed' and
-'highlight' are integers (with WeeChat ≤ 0.4.3, they were strings). +
-To be compatible with all versions, it is recommended to convert the argument
-to integer before testing it, for example in Python: "`if int(highlight):`".
+WeeChat バージョン 1.0 以上では、スクリプトのコールバック引数 'displayed'
+と 'highlight' は整数です (WeeChat バージョン 0.4.3 以下では文字列でした)。 +
+すべてのバージョンで互換性を持たせるためには、引数を使う前に整数に変換することをお勧めします、Python
+を使った例: "`if int(highlight):`"。
 
 C 言語での使用例:
 
