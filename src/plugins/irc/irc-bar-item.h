@@ -20,6 +20,7 @@
 #ifndef WEECHAT_IRC_BAR_ITEM_H
 #define WEECHAT_IRC_BAR_ITEM_H 1
 
+extern void irc_bar_item_update_channel ();
 extern void irc_bar_item_init ();
 
 #endif /* WEECHAT_IRC_BAR_ITEM_H */

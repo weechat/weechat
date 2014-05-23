@@ -40,6 +40,7 @@
 #include "../weechat-plugin.h"
 #include "irc.h"
 #include "irc-protocol.h"
+#include "irc-bar-item.h"
 #include "irc-buffer.h"
 #include "irc-channel.h"
 #include "irc-color.h"
@@ -696,10 +697,7 @@ IRC_PROTOCOL_CALLBACK(join)
     }
 
     if (local_join)
-    {
-        weechat_bar_item_update ("buffer_name");
-        weechat_bar_item_update ("buffer_short_name");
-    }
+        irc_bar_item_update_channel ();
 
     return WEECHAT_RC_OK;
 }
@@ -809,8 +807,7 @@ IRC_PROTOCOL_CALLBACK(kick)
             }
         }
 
-        weechat_bar_item_update ("buffer_name");
-        weechat_bar_item_update ("buffer_short_name");
+        irc_bar_item_update_channel ();
     }
     else
     {
@@ -893,8 +890,7 @@ IRC_PROTOCOL_CALLBACK(kill)
              */
             irc_nick_free_all (server, ptr_channel);
 
-            weechat_bar_item_update ("buffer_name");
-            weechat_bar_item_update ("buffer_short_name");
+            irc_bar_item_update_channel ();
         }
         else
         {
@@ -1577,8 +1573,7 @@ IRC_PROTOCOL_CALLBACK(part)
                     else
                         ptr_channel->part = 1;
                 }
-                weechat_bar_item_update ("buffer_name");
-                weechat_bar_item_update ("buffer_short_name");
+                irc_bar_item_update_channel ();
             }
             else
             {

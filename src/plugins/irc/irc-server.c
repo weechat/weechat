@@ -49,6 +49,7 @@
 #include "../weechat-plugin.h"
 #include "irc.h"
 #include "irc-server.h"
+#include "irc-bar-item.h"
 #include "irc-buffer.h"
 #include "irc-channel.h"
 #include "irc-color.h"
@@ -4046,8 +4047,7 @@ irc_server_connect (struct t_irc_server *server)
         weechat_buffer_set (server->buffer, "display", "auto");
     }
 
-    weechat_bar_item_update ("buffer_name");
-    weechat_bar_item_update ("buffer_short_name");
+    irc_bar_item_update_channel ();
 
     irc_server_set_index_current_address (server,
                                           server->index_current_address);

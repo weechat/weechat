@@ -647,6 +647,18 @@ irc_bar_item_buffer_switch (void *data, const char *signal,
 }
 
 /*
+ * Updates bar items with the channel.
+ */
+
+void
+irc_bar_item_update_channel ()
+{
+    weechat_bar_item_update ("buffer_name");
+    weechat_bar_item_update ("buffer_short_name");
+    weechat_bar_item_update ("irc_channel");
+}
+
+/*
  * Initializes IRC bar items.
  */
 
