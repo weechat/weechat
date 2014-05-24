@@ -462,7 +462,10 @@ relay_config_reload (void *data, struct t_config_file *config_file)
     /* make C compiler happy */
     (void) data;
 
-    return  weechat_config_reload (config_file);
+    weechat_config_section_free_options (relay_config_section_port);
+    relay_server_free_all ();
+
+    return weechat_config_reload (config_file);
 }
 
 /*

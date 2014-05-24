@@ -138,6 +138,7 @@ http://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 * lua: fix interpreter used after unload of a script
 * perl: fix context used after unload of a script
 * python: fix interpreter used after unload of a script
+* relay: remove warning on /reload of relay.conf when ports are defined
 * relay: fix client disconnection on empty websocket frames received (PONG)
 * relay: add support of Internet Explorer websocket (closes #73)
 * relay: add messages "_buffer_cleared", "_buffer_hidden" and
