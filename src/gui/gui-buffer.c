@@ -78,14 +78,14 @@ char *gui_buffer_notify_string[GUI_BUFFER_NUM_NOTIFY] =
 char *gui_buffer_properties_get_integer[] =
 { "number", "layout_number", "layout_number_merge_order", "type", "notify",
   "num_displayed", "active", "hidden", "zoomed", "print_hooks_enabled",
-  "day_change", "clear", "filter", "lines_hidden", "prefix_max_length",
-  "time_for_each_line", "nicklist", "nicklist_case_sensitive",
-  "nicklist_max_length", "nicklist_display_groups", "nicklist_count",
-  "nicklist_groups_count", "nicklist_nicks_count", "nicklist_visible_count",
-  "input", "input_get_unknown_commands", "input_size", "input_length",
-  "input_pos", "input_1st_display", "num_history", "text_search",
-  "text_search_exact", "text_search_regex", "text_search_where",
-  "text_search_found",
+  "day_change", "clear", "filter", "closing", "lines_hidden",
+  "prefix_max_length", "time_for_each_line", "nicklist",
+  "nicklist_case_sensitive", "nicklist_max_length", "nicklist_display_groups",
+  "nicklist_count", "nicklist_groups_count", "nicklist_nicks_count",
+  "nicklist_visible_count", "input", "input_get_unknown_commands",
+  "input_size", "input_length", "input_pos", "input_1st_display",
+  "num_history", "text_search", "text_search_exact", "text_search_regex",
+  "text_search_where", "text_search_found",
   NULL
 };
 char *gui_buffer_properties_get_string[] =
@@ -603,6 +603,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
     /* close callback */
     new_buffer->close_callback = close_callback;
     new_buffer->close_callback_data = close_callback_data;
+    new_buffer->closing = 0;
 
     /* title */
     new_buffer->title = NULL;
@@ -995,6 +996,8 @@ gui_buffer_get_integer (struct t_gui_buffer *buffer, const char *property)
             return buffer->clear;
         else if (string_strcasecmp (property, "filter") == 0)
             return buffer->filter;
+        else if (string_strcasecmp (property, "closing") == 0)
+            return buffer->closing;
         else if (string_strcasecmp (property, "lines_hidden") == 0)
             return buffer->lines->lines_hidden;
         else if (string_strcasecmp (property, "prefix_max_length") == 0)
@@ -2515,6 +2518,8 @@ gui_buffer_close (struct t_gui_buffer *buffer)
     int index, i;
     struct t_gui_buffer_visited *ptr_buffer_visited;
 
+    buffer->closing = 1;
+
     (void) hook_signal_send ("buffer_closing",
                              WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 
@@ -3964,6 +3969,7 @@ gui_buffer_hdata_buffer_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_gui_buffer, filter, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, close_callback, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, close_callback_data, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_buffer, closing, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, title, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, own_lines, POINTER, 0, NULL, "lines");
         HDATA_VAR(struct t_gui_buffer, mixed_lines, POINTER, 0, NULL, "lines");
@@ -4145,6 +4151,8 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
     if (!infolist_new_var_integer (ptr_item, "clear", buffer->clear))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "filter", buffer->filter))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "closing", buffer->closing))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "first_line_not_read", buffer->lines->first_line_not_read))
         return 0;
@@ -4358,6 +4366,7 @@ gui_buffer_print_log ()
         log_printf ("  filter. . . . . . . . . : %d",    ptr_buffer->filter);
         log_printf ("  close_callback. . . . . : 0x%lx", ptr_buffer->close_callback);
         log_printf ("  close_callback_data . . : 0x%lx", ptr_buffer->close_callback_data);
+        log_printf ("  closing . . . . . . . . : %d",    ptr_buffer->closing);
         log_printf ("  title . . . . . . . . . : '%s'",  ptr_buffer->title);
         log_printf ("  own_lines . . . . . . . : 0x%lx", ptr_buffer->own_lines);
         gui_lines_print_log (ptr_buffer->own_lines);

@@ -109,6 +109,7 @@ struct t_gui_buffer
     int (*close_callback)(void *data,  /* called when buffer is closed      */
                           struct t_gui_buffer *buffer);
     void *close_callback_data;         /* data for callback                 */
+    int closing;                       /* 1 if the buffer is being closed   */
 
     /* buffer title */
     char *title;                       /* buffer title                      */
