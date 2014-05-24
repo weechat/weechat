@@ -68,8 +68,8 @@ extern void relay_weechat_msg_add_pointer (struct t_relay_weechat_msg *msg,
                                            void *pointer);
 extern void relay_weechat_msg_add_time (struct t_relay_weechat_msg *msg,
                                         time_t time);
-extern void relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
-                                         const char *path, const char *keys);
+extern int relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
+                                        const char *path, const char *keys);
 extern void relay_weechat_msg_add_infolist (struct t_relay_weechat_msg *msg,
                                             const char *name,
                                             void *pointer,

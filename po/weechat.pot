@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.4.1-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-05-13 22:26+0200\n"
+"POT-Creation-Date: 2014-05-24 18:00+0200\n"
 "PO-Revision-Date: 2013-02-14 18:20+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7764,6 +7764,14 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: not enough memory for listening on new port"
+msgstr ""
+
+#, c-format
+msgid "%s: invalid pointer in hdata path: \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s: invalid buffer pointer in message: \"%s %s\""
 msgstr ""
 
 #, c-format

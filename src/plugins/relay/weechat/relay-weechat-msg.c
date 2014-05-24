@@ -541,9 +541,13 @@ relay_weechat_msg_add_hdata_path (struct t_relay_weechat_msg *msg,
  *
  * Argument keys is optional: if not NULL, comma-separated list of keys to
  * return for hdata.
+ *
+ * Returns:
+ *   1: hdata added to message
+ *   0: error (hdata NOT added to message)
  */
 
-void
+int
 relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
                              const char *path, const char *keys)
 {
@@ -553,8 +557,10 @@ relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
     const char *hdata_name, *array_size;
     void *pointer, **path_pointers;
     long unsigned int value;
-    int num_keys, num_path, i, type, pos_count, count, rc;
+    int rc, num_keys, num_path, i, type, pos_count, count, rc_sscanf;
     uint32_t count32;
+
+    rc = 0;
 
     hdata_head = NULL;
     list_keys = NULL;
@@ -587,9 +593,23 @@ relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
         pos[0] = '\0';
     if (strncmp (list_path[0], "0x", 2) == 0)
     {
-        rc = sscanf (list_path[0], "%lx", &value);
-        if ((rc != EOF) && (rc != 0))
+        rc_sscanf = sscanf (list_path[0], "%lx", &value);
+        if ((rc_sscanf != EOF) && (rc_sscanf != 0))
+        {
             pointer = (void *)value;
+            if (!weechat_hdata_check_pointer (ptr_hdata_head, NULL, pointer))
+            {
+                if (weechat_relay_plugin->debug >= 1)
+                {
+                    weechat_printf (NULL,
+                                    _("%s: invalid pointer in hdata path: "
+                                      "\"%s\""),
+                                    RELAY_PLUGIN_NAME,
+                                    path);
+                }
+                goto end;
+            }
+        }
     }
     else
         pointer = weechat_hdata_get_list (ptr_hdata_head, list_path[0]);
@@ -709,6 +729,8 @@ relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
     count32 = htonl ((uint32_t)count);
     relay_weechat_msg_set_bytes (msg, pos_count, &count32, 4);
 
+    rc = 1;
+
 end:
     if (list_keys)
         weechat_string_free_split (list_keys);
@@ -720,6 +742,8 @@ end:
         free (path_returned);
     if (hdata_head)
         free (hdata_head);
+
+    return rc;
 }
 
 /*

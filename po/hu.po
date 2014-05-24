@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-05-13 22:26+0200\n"
+"POT-Creation-Date: 2014-05-24 18:00+0200\n"
 "PO-Revision-Date: 2014-04-05 16:12+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8692,6 +8692,14 @@ msgstr "%s nem sikerült a csatornát létrehozni\n"
 #, fuzzy, c-format
 msgid "%s%s: not enough memory for listening on new port"
 msgstr "%s nincs elegendő memória új DCC számára\n"
+
+#, fuzzy, c-format
+msgid "%s: invalid pointer in hdata path: \"%s\""
+msgstr "%s nem sikerült a(z) \"%s\" billentyűparancsot visszavonni\n"
+
+#, fuzzy, c-format
+msgid "%s: invalid buffer pointer in message: \"%s %s\""
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 #, fuzzy, c-format
 msgid "%s%s: failed to execute command \"%s\" for client %s%s%s"

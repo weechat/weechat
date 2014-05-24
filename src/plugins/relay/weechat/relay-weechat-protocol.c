@@ -215,9 +215,11 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(hdata)
     msg = relay_weechat_msg_new (id);
     if (msg)
     {
-        relay_weechat_msg_add_hdata (msg, argv[0],
-                                     (argc > 1) ? argv_eol[1] : NULL);
-        relay_weechat_msg_send (client, msg);
+        if (relay_weechat_msg_add_hdata (msg, argv[0],
+                                         (argc > 1) ? argv_eol[1] : NULL))
+        {
+            relay_weechat_msg_send (client, msg);
+        }
         relay_weechat_msg_free (msg);
     }
 
@@ -311,7 +313,18 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(nicklist)
     {
         ptr_buffer = relay_weechat_protocol_get_buffer (argv[0]);
         if (!ptr_buffer)
+        {
+            if (weechat_relay_plugin->debug >= 1)
+            {
+                weechat_printf (NULL,
+                                _("%s: invalid buffer pointer in message: "
+                                  "\"%s %s\""),
+                                RELAY_PLUGIN_NAME,
+                                command,
+                                argv_eol[0]);
+            }
             return WEECHAT_RC_OK;
+        }
     }
 
     msg = relay_weechat_msg_new (id);
@@ -379,26 +392,37 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(input)
     RELAY_WEECHAT_PROTOCOL_MIN_ARGS(2);
 
     ptr_buffer = relay_weechat_protocol_get_buffer (argv[0]);
-    if (ptr_buffer)
+    if (!ptr_buffer)
     {
-        pos = strchr (argv_eol[0], ' ');
-        if (pos)
+        if (weechat_relay_plugin->debug >= 1)
         {
-            /*
-             * use a timer to execute the command after we go back in the
-             * WeeChat main loop (some commands like /upgrade executed now can
-             * cause a crash)
-             */
-            timer_args = malloc (2 * sizeof (*timer_args));
-            if (timer_args)
-            {
-                timer_args[0] = strdup (weechat_buffer_get_string (ptr_buffer,
-                                                                   "full_name"));
-                timer_args[1] = strdup (pos + 1);
-                weechat_hook_timer (1, 0, 1,
-                                    &relay_weechat_protocol_input_timer_cb,
-                                    timer_args);
-            }
+            weechat_printf (NULL,
+                            _("%s: invalid buffer pointer in message: "
+                              "\"%s %s\""),
+                            RELAY_PLUGIN_NAME,
+                            command,
+                            argv_eol[0]);
+        }
+        return WEECHAT_RC_OK;
+    }
+
+    pos = strchr (argv_eol[0], ' ');
+    if (pos)
+    {
+        /*
+         * use a timer to execute the command after we go back in the
+         * WeeChat main loop (some commands like /upgrade executed now can
+         * cause a crash)
+         */
+        timer_args = malloc (2 * sizeof (*timer_args));
+        if (timer_args)
+        {
+            timer_args[0] = strdup (weechat_buffer_get_string (ptr_buffer,
+                                                               "full_name"));
+            timer_args[1] = strdup (pos + 1);
+            weechat_hook_timer (1, 0, 1,
+                                &relay_weechat_protocol_input_timer_cb,
+                                timer_args);
         }
     }
 

@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-05-13 22:26+0200\n"
+"POT-Creation-Date: 2014-05-24 18:00+0200\n"
 "PO-Revision-Date: 2014-04-19 13:08+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9608,6 +9608,14 @@ msgstr "%s: escuchando en el puerto %d (repetidor: %s, %s, max %d clientes)"
 #, c-format
 msgid "%s%s: not enough memory for listening on new port"
 msgstr "%s%s: no hay memoria suficiente para escuchar en un nuevo puerto"
+
+#, fuzzy, c-format
+msgid "%s: invalid pointer in hdata path: \"%s\""
+msgstr "%sError: no se pudo deshacer el atajo \"%s\""
+
+#, fuzzy, c-format
+msgid "%s: invalid buffer pointer in message: \"%s %s\""
+msgstr "%s%s: set de caracteres inválido: \"%s\""
 
 #, c-format
 msgid "%s%s: failed to execute command \"%s\" for client %s%s%s"

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2014-05-13 22:26+0200\n"
+"POT-Creation-Date: 2014-05-24 18:00+0200\n"
 "PO-Revision-Date: 2014-04-05 16:12+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8717,6 +8717,14 @@ msgstr "%s невозможно создать сокет\n"
 #, fuzzy, c-format
 msgid "%s%s: not enough memory for listening on new port"
 msgstr "%s недостаточно памяти для нового DCC\n"
+
+#, fuzzy, c-format
+msgid "%s: invalid pointer in hdata path: \"%s\""
+msgstr "%s не могу отвязать клавишу \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s: invalid buffer pointer in message: \"%s %s\""
+msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%s%s: failed to execute command \"%s\" for client %s%s%s"
