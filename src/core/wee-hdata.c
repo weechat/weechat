@@ -73,6 +73,21 @@ hdata_free_var (struct t_hashtable *hashtable,
 }
 
 /*
+ * Frees a hdata list.
+ */
+
+void
+hdata_free_list (struct t_hashtable *hashtable,
+                 const void *key, void *value)
+{
+    /* make C compiler happy */
+    (void) hashtable;
+    (void) key;
+
+    free (value);
+}
+
+/*
  * Creates a new hdata.
  *
  * Returns pointer to new hdata, NULL if error.
@@ -111,6 +126,7 @@ hdata_new (struct t_weechat_plugin *plugin, const char *hdata_name,
                                               WEECHAT_HASHTABLE_POINTER,
                                               NULL,
                                               NULL);
+        new_hdata->hash_list->callback_free_value = &hdata_free_list;
         hashtable_set (weechat_hdata, hdata_name, new_hdata);
         new_hdata->create_allowed = create_allowed;
         new_hdata->delete_allowed = delete_allowed;
@@ -153,12 +169,21 @@ hdata_new_var (struct t_hdata *hdata, const char *name, int offset, int type,
  */
 
 void
-hdata_new_list (struct t_hdata *hdata, const char *name, void *pointer)
+hdata_new_list (struct t_hdata *hdata, const char *name, void *pointer,
+                int flags)
 {
+    struct t_hdata_list *list;
+
     if (!hdata || !name)
         return;
 
-    hashtable_set (hdata->hash_list, name, pointer);
+    list = malloc (sizeof (*list));
+    if (list)
+    {
+        list->pointer = pointer;
+        list->flags = flags;
+        hashtable_set (hdata->hash_list, name, list);
+    }
 }
 
 /*
@@ -399,20 +424,20 @@ hdata_get_var_at_offset (struct t_hdata *hdata, void *pointer, int offset)
 void *
 hdata_get_list (struct t_hdata *hdata, const char *name)
 {
-    void *ptr_value;
+    struct t_hdata_list *ptr_list;
 
     if (!hdata || !name)
         return NULL;
 
-    ptr_value = hashtable_get (hdata->hash_list, name);
-    if (ptr_value)
-        return *((void **)ptr_value);
+    ptr_list = hashtable_get (hdata->hash_list, name);
+    if (ptr_list)
+        return *((void **)(ptr_list->pointer));
 
     return NULL;
 }
 
 /*
- * Checks if a pointer is valid for a given hdata/list.
+ * Checks if a pointer is in the list.
  *
  * Returns:
  *   1: pointer exists in list
@@ -420,15 +445,16 @@ hdata_get_list (struct t_hdata *hdata, const char *name)
  */
 
 int
-hdata_check_pointer (struct t_hdata *hdata, void *list, void *pointer)
+hdata_check_pointer_in_list (struct t_hdata *hdata, void *list, void *pointer)
 {
     void *ptr_current;
 
-    if (!hdata || !list || !pointer)
+    if (!hdata || !pointer)
         return 0;
 
     if (pointer == list)
         return 1;
+
     ptr_current = list;
     while (ptr_current)
     {
@@ -438,6 +464,83 @@ hdata_check_pointer (struct t_hdata *hdata, void *list, void *pointer)
     }
 
     return 0;
+}
+
+/*
+ * Checks if a pointer is in a list with flag "check_pointers".
+ */
+
+void
+hdata_check_pointer_map_cb (void *data, struct t_hashtable *hashtable,
+                            const void *key, const void *value)
+{
+    void **pointers, *pointer, **num_lists, **found;
+    struct t_hdata *ptr_hdata;
+    struct t_hdata_list *ptr_list;
+
+    /* make C compiler happy */
+    (void) hashtable;
+    (void) key;
+
+    pointers = (void **)data;
+    ptr_hdata = pointers[0];
+    pointer = pointers[1];
+    num_lists = &pointers[2];
+    found = &pointers[3];
+
+    /* pointer already found in another list? just exit */
+    if (*found)
+        return;
+
+    ptr_list = (struct t_hdata_list *)value;
+    if (!ptr_list || !(ptr_list->flags & WEECHAT_HDATA_LIST_CHECK_POINTERS))
+        return;
+
+    *found = (void *)((unsigned long int)hdata_check_pointer_in_list (
+                          ptr_hdata,
+                          *((void **)(ptr_list->pointer)),
+                          pointer));
+    (*num_lists)++;
+}
+
+/*
+ * Checks if a pointer is valid for a given hdata/list.
+ *
+ * If argument "list" is NULL, the check is made with all lists in hdata
+ * that have flag "check_pointers". If no list is defined with this flag,
+ * the pointer is considered valid (so this function returns 1); if the
+ * pointer is not found in any list, this function returns 0.
+ *
+ * Returns:
+ *   1: pointer exists in the given list (or a list with check_pointers flag)
+ *   0: pointer does not exist
+ */
+
+int
+hdata_check_pointer (struct t_hdata *hdata, void *list, void *pointer)
+{
+    void *pointers[4];
+
+    if (!hdata || !pointer)
+        return 0;
+
+    if (list)
+    {
+        /* search pointer in the given list */
+        return hdata_check_pointer_in_list (hdata, list, pointer);
+    }
+    else
+    {
+        /* search pointer in all lists with flag "check_pointers" */
+        pointers[0] = hdata;
+        pointers[1] = pointer;
+        pointers[2] = 0;        /* number of lists with flag check_pointers */
+        pointers[3] = 0;        /* pointer found? (0/1) */
+        hashtable_map (hdata->hash_list,
+                       &hdata_check_pointer_map_cb,
+                       pointers);
+        return ((pointers[2] == 0) || pointers[3]) ? 1 : 0;
+    }
 }
 
 /*

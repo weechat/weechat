@@ -636,8 +636,8 @@ proxy_hdata_proxy_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_proxy, options, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_proxy, prev_proxy, POINTER, 0, NULL, hdata_name);
         HDATA_VAR(struct t_proxy, next_proxy, POINTER, 0, NULL, hdata_name);
-        HDATA_LIST(weechat_proxies);
-        HDATA_LIST(last_weechat_proxy);
+        HDATA_LIST(weechat_proxies, WEECHAT_HDATA_LIST_CHECK_POINTERS);
+        HDATA_LIST(last_weechat_proxy, 0);
     }
     return hdata;
 }

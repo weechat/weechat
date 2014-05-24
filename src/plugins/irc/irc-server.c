@@ -4904,8 +4904,8 @@ irc_server_hdata_server_cb (void *data, const char *hdata_name)
         WEECHAT_HDATA_VAR(struct t_irc_server, last_channel, POINTER, 0, NULL, "irc_channel");
         WEECHAT_HDATA_VAR(struct t_irc_server, prev_server, POINTER, 0, NULL, hdata_name);
         WEECHAT_HDATA_VAR(struct t_irc_server, next_server, POINTER, 0, NULL, hdata_name);
-        WEECHAT_HDATA_LIST(irc_servers);
-        WEECHAT_HDATA_LIST(last_irc_server);
+        WEECHAT_HDATA_LIST(irc_servers, WEECHAT_HDATA_LIST_CHECK_POINTERS);
+        WEECHAT_HDATA_LIST(last_irc_server, 0);
     }
     return hdata;
 }

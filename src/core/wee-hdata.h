@@ -25,7 +25,8 @@
     hdata_new_var (hdata, #__name, offsetof (__struct, __name),         \
                    WEECHAT_HDATA_##__type, __update_allowed,            \
                    __array_size, __hdata_name)
-#define HDATA_LIST(__name) hdata_new_list (hdata, #__name, &(__name));
+#define HDATA_LIST(__name, __flags)                                     \
+    hdata_new_list (hdata, #__name, &(__name), __flags);
 
 struct t_hdata_var
 {
@@ -34,6 +35,12 @@ struct t_hdata_var
     char update_allowed;               /* update allowed?                   */
     char *array_size;                  /* array size                        */
     char *hdata_name;                  /* hdata name                        */
+};
+
+struct t_hdata_list
+{
+    void *pointer;                     /* list pointer                      */
+    int flags;                         /* flags for list                    */
 };
 
 struct t_hdata
@@ -79,7 +86,7 @@ extern void hdata_new_var (struct t_hdata *hdata, const char *name, int offset,
                            int type, int update_allowed, const char *array_size,
                            const char *hdata_name);
 extern void hdata_new_list (struct t_hdata *hdata, const char *name,
-                            void *pointer);
+                            void *pointer, int flags);
 extern int hdata_get_var_offset (struct t_hdata *hdata, const char *name);
 extern int hdata_get_var_type (struct t_hdata *hdata, const char *name);
 extern const char *hdata_get_var_type_string (struct t_hdata *hdata,

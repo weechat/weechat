@@ -13811,7 +13811,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== weechat_hdata_new_list
 
-_WeeChat ≥ 0.3.6._
+_WeeChat ≥ 0.3.6, mis à jour dans la 1.0._
 
 Créer un nouveau pointer vers une liste dans le hdata.
 
@@ -13819,7 +13819,7 @@ Prototype :
 
 [source,C]
 ----
-void weechat_hdata_new_list (struct t_hdata *hdata, const char *name, void *pointer);
+void weechat_hdata_new_list (struct t_hdata *hdata, const char *name, void *pointer, int flags);
 ----
 
 Paramètres :
@@ -13827,6 +13827,9 @@ Paramètres :
 * 'hdata' : pointeur vers le hdata
 * 'name' : nom de la variable
 * 'pointer' : pointeur vers la liste
+* 'flags' : combinaison des valeurs suivantes : _(WeeChat ≥ 1.0)_
+** 'WEECHAT_HDATA_LIST_CHECK_POINTERS' : liste utilisée pour vérifier les
+   pointeurs
 
 Exemple en C :
 
@@ -13854,16 +13857,16 @@ weechat_hdata_new_var (hdata, "string_split", offsetof (struct t_myplugin_list, 
 weechat_hdata_new_var (hdata, "prev", offsetof (struct t_myplugin_list, prev), WEECHAT_HDATA_POINTER, NULL, "myplugin_list");
 weechat_hdata_new_var (hdata, "next", offsetof (struct t_myplugin_list, next), WEECHAT_HDATA_POINTER, NULL, "myplugin_list");
 
-weechat_hdata_new_list (hdata, "buffers", &buffers);
-weechat_hdata_new_list (hdata, "last_buffer", &last_buffer);
+weechat_hdata_new_list (hdata, "buffers", &buffers, WEECHAT_HDATA_LIST_CHECK_POINTERS);
+weechat_hdata_new_list (hdata, "last_buffer", &last_buffer, 0);
 ----
 
 La macro "WEECHAT_HDATA_LIST" peut être utilisée pour raccourcir le code :
 
 [source,C]
 ----
-WEECHAT_HDATA_LIST(buffers);
-WEECHAT_HDATA_LIST(last_buffer);
+WEECHAT_HDATA_LIST(buffers, WEECHAT_HDATA_LIST_CHECK_POINTERS);
+WEECHAT_HDATA_LIST(last_buffer, 0);
 ----
 
 [NOTE]
@@ -14305,7 +14308,7 @@ buffers = weechat.hdata_get_list(hdata, "gui_buffers")
 
 ==== weechat_hdata_check_pointer
 
-_WeeChat ≥ 0.3.7._
+_WeeChat ≥ 0.3.7, mis à jour dans la 1.0._
 
 Vérifier si un pointeur est valide pour un hdata et un pointeur de liste.
 
@@ -14319,7 +14322,11 @@ int weechat_hdata_check_pointer (struct t_hdata *hdata, void *list, void *pointe
 Paramètres :
 
 * 'hdata' : pointeur vers le hdata
-* 'list' : pointeur vers une liste
+* 'list' : pointeur vers une liste; si NULL _(WeeChat ≥ 1.0)_, le pointeur est
+  vérifié avec les listes dans le hdata qui ont le drapeau
+  "vérifier les pointeurs" (voir
+  <<_weechat_hdata_new_list,weechat_hdata_new_list>>), et s'il n'y a pas de
+  telle liste, le pointeur est considéré comme valide
 * 'pointer' : pointeur à vérifier
 
 Valeur de retour :

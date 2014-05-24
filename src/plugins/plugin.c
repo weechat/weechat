@@ -1247,8 +1247,8 @@ plugin_hdata_plugin_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_weechat_plugin, debug, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_weechat_plugin, prev_plugin, POINTER, 0, NULL, hdata_name);
         HDATA_VAR(struct t_weechat_plugin, next_plugin, POINTER, 0, NULL, hdata_name);
-        HDATA_LIST(weechat_plugins);
-        HDATA_LIST(last_weechat_plugin);
+        HDATA_LIST(weechat_plugins, WEECHAT_HDATA_LIST_CHECK_POINTERS);
+        HDATA_LIST(last_weechat_plugin, 0);
     }
     return hdata;
 }

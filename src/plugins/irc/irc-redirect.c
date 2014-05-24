@@ -1007,8 +1007,8 @@ irc_redirect_hdata_redirect_pattern_cb (void *data, const char *hdata_name)
         WEECHAT_HDATA_VAR(struct t_irc_redirect_pattern, cmd_extra, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_redirect_pattern, prev_redirect, POINTER, 0, NULL, hdata_name);
         WEECHAT_HDATA_VAR(struct t_irc_redirect_pattern, next_redirect, POINTER, 0, NULL, hdata_name);
-        WEECHAT_HDATA_LIST(irc_redirect_patterns);
-        WEECHAT_HDATA_LIST(last_irc_redirect_pattern);
+        WEECHAT_HDATA_LIST(irc_redirect_patterns, WEECHAT_HDATA_LIST_CHECK_POINTERS);
+        WEECHAT_HDATA_LIST(last_irc_redirect_pattern, 0);
     }
     return hdata;
 }

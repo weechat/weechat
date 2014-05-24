@@ -1520,8 +1520,8 @@ script_repo_hdata_script_cb (void *data, const char *hdata_name)
         WEECHAT_HDATA_VAR(struct t_script_repo, install_order, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_script_repo, prev_script, POINTER, 0, NULL, hdata_name);
         WEECHAT_HDATA_VAR(struct t_script_repo, next_script, POINTER, 0, NULL, hdata_name);
-        WEECHAT_HDATA_LIST(scripts_repo);
-        WEECHAT_HDATA_LIST(last_script_repo);
+        WEECHAT_HDATA_LIST(scripts_repo, WEECHAT_HDATA_LIST_CHECK_POINTERS);
+        WEECHAT_HDATA_LIST(last_script_repo, 0);
     }
     return hdata;
 }

@@ -4024,9 +4024,9 @@ gui_buffer_hdata_buffer_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_gui_buffer, local_variables, HASHTABLE, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, prev_buffer, POINTER, 0, NULL, hdata_name);
         HDATA_VAR(struct t_gui_buffer, next_buffer, POINTER, 0, NULL, hdata_name);
-        HDATA_LIST(gui_buffers);
-        HDATA_LIST(last_gui_buffer);
-        HDATA_LIST(gui_buffer_last_displayed);
+        HDATA_LIST(gui_buffers, WEECHAT_HDATA_LIST_CHECK_POINTERS);
+        HDATA_LIST(last_gui_buffer, 0);
+        HDATA_LIST(gui_buffer_last_displayed, 0);
     }
     return hdata;
 }
@@ -4074,8 +4074,8 @@ gui_buffer_hdata_buffer_visited_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_gui_buffer_visited, buffer, POINTER, 0, NULL, "buffer");
         HDATA_VAR(struct t_gui_buffer_visited, prev_buffer, POINTER, 0, NULL, hdata_name);
         HDATA_VAR(struct t_gui_buffer_visited, next_buffer, POINTER, 0, NULL, hdata_name);
-        HDATA_LIST(gui_buffers_visited);
-        HDATA_LIST(last_gui_buffer_visited);
+        HDATA_LIST(gui_buffers_visited, WEECHAT_HDATA_LIST_CHECK_POINTERS);
+        HDATA_LIST(last_gui_buffer_visited, 0);
     }
     return hdata;
 }

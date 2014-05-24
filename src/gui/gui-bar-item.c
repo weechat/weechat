@@ -2174,8 +2174,8 @@ gui_bar_item_hdata_bar_item_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_gui_bar_item, build_callback_data, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_bar_item, prev_item, POINTER, 0, NULL, hdata_name);
         HDATA_VAR(struct t_gui_bar_item, next_item, POINTER, 0, NULL, hdata_name);
-        HDATA_LIST(gui_bar_items);
-        HDATA_LIST(last_gui_bar_item);
+        HDATA_LIST(gui_bar_items, WEECHAT_HDATA_LIST_CHECK_POINTERS);
+        HDATA_LIST(last_gui_bar_item, 0);
     }
     return hdata;
 }

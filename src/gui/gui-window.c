@@ -1760,9 +1760,9 @@ gui_window_hdata_window_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_gui_window, ptr_tree, POINTER, 0, NULL, "window_tree");
         HDATA_VAR(struct t_gui_window, prev_window, POINTER, 0, NULL, hdata_name);
         HDATA_VAR(struct t_gui_window, next_window, POINTER, 0, NULL, hdata_name);
-        HDATA_LIST(gui_windows);
-        HDATA_LIST(last_gui_window);
-        HDATA_LIST(gui_current_window);
+        HDATA_LIST(gui_windows, WEECHAT_HDATA_LIST_CHECK_POINTERS);
+        HDATA_LIST(last_gui_window, 0);
+        HDATA_LIST(gui_current_window, 0);
     }
     return hdata;
 }
@@ -1817,7 +1817,7 @@ gui_window_hdata_window_tree_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_gui_window_tree, child1, POINTER, 0, NULL, hdata_name);
         HDATA_VAR(struct t_gui_window_tree, child2, POINTER, 0, NULL, hdata_name);
         HDATA_VAR(struct t_gui_window_tree, window, POINTER, 0, NULL, "window");
-        HDATA_LIST(gui_windows_tree);
+        HDATA_LIST(gui_windows_tree, 0);
     }
     return hdata;
 }

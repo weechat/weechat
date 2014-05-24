@@ -516,8 +516,8 @@ gui_filter_hdata_filter_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_gui_filter, regex_message, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_filter, prev_filter, POINTER, 0, NULL, hdata_name);
         HDATA_VAR(struct t_gui_filter, next_filter, POINTER, 0, NULL, hdata_name);
-        HDATA_LIST(gui_filters);
-        HDATA_LIST(last_gui_filter);
+        HDATA_LIST(gui_filters, WEECHAT_HDATA_LIST_CHECK_POINTERS);
+        HDATA_LIST(last_gui_filter, 0);
     }
     return hdata;
 }

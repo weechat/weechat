@@ -13931,7 +13931,8 @@ Questa funzione non è disponibile nelle API per lo scripting.
 
 ==== weechat_hdata_new_list
 
-_WeeChat ≥ 0.3.6._
+// TRANSLATION MISSING
+_WeeChat ≥ 0.3.6, updated in 1.0._
 
 Crea una nuovo puntatore alla lista in hdata.
 
@@ -13939,7 +13940,7 @@ Prototipo:
 
 [source,C]
 ----
-void weechat_hdata_new_list (struct t_hdata *hdata, const char *name, void *pointer);
+void weechat_hdata_new_list (struct t_hdata *hdata, const char *name, void *pointer, int flags);
 ----
 
 Argomenti:
@@ -13947,6 +13948,9 @@ Argomenti:
 * 'hdata': puntatore hdata
 * 'name': nome delal variabile
 * 'pointer': puntatore alla lista
+// TRANSLATION MISSING
+* 'flags': combination of following values: _(WeeChat ≥ 1.0)_
+** 'WEECHAT_HDATA_LIST_CHECK_POINTERS': list used to check pointers
 
 Esempio in C:
 
@@ -13974,16 +13978,16 @@ weechat_hdata_new_var (hdata, "string_split", offsetof (struct t_myplugin_list, 
 weechat_hdata_new_var (hdata, "prev", offsetof (struct t_myplugin_list, prev), WEECHAT_HDATA_POINTER, NULL, "myplugin_list");
 weechat_hdata_new_var (hdata, "next", offsetof (struct t_myplugin_list, next), WEECHAT_HDATA_POINTER, NULL, "myplugin_list");
 
-weechat_hdata_new_list (hdata, "buffers", &buffers);
-weechat_hdata_new_list (hdata, "last_buffer", &last_buffer);
+weechat_hdata_new_list (hdata, "buffers", &buffers, WEECHAT_HDATA_LIST_CHECK_POINTERS);
+weechat_hdata_new_list (hdata, "last_buffer", &last_buffer, 0);
 ----
 
 La macro "WEECHAT_HDATA_LIST" può essere usata per accorciare il codice:
 
 [source,C]
 ----
-WEECHAT_HDATA_LIST(buffers);
-WEECHAT_HDATA_LIST(last_buffer);
+WEECHAT_HDATA_LIST(buffers, WEECHAT_HDATA_LIST_CHECK_POINTERS);
+WEECHAT_HDATA_LIST(last_buffer, 0);
 ----
 
 [NOTE]
@@ -14428,7 +14432,8 @@ buffers = weechat.hdata_get_list(hdata, "gui_buffers")
 
 ==== weechat_hdata_check_pointer
 
-_WeeChat ≥ 0.3.7._
+// TRANSLATION MISSING
+_WeeChat ≥ 0.3.7, updated in 1.0._
 
 Verifica se un puntatore è valido per un hdata e un puntatore della lista.
 
@@ -14442,7 +14447,11 @@ int weechat_hdata_check_pointer (struct t_hdata *hdata, void *list, void *pointe
 Argomenti:
 
 * 'hdata': puntatore hdata
-* 'list': puntatore alla lista
+// TRANSLATION MISSING
+* 'list': puntatore alla lista; if NULL _(WeeChat ≥ 1.0)_, the pointer is
+  checked with the lists in hdata that have flag "check pointers" (see
+  <<_weechat_hdata_new_list,weechat_hdata_new_list>>), and if no such list
+  exists, the pointer is considered as valid
 * 'pointer': puntatore da verificare
 
 Valore restituito:

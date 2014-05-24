@@ -540,8 +540,8 @@ gui_hotlist_hdata_hotlist_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_gui_hotlist, count, INTEGER, 0, GUI_HOTLIST_NUM_PRIORITIES_STR, NULL);
         HDATA_VAR(struct t_gui_hotlist, prev_hotlist, POINTER, 0, NULL, hdata_name);
         HDATA_VAR(struct t_gui_hotlist, next_hotlist, POINTER, 0, NULL, hdata_name);
-        HDATA_LIST(gui_hotlist);
-        HDATA_LIST(last_gui_hotlist);
+        HDATA_LIST(gui_hotlist, WEECHAT_HDATA_LIST_CHECK_POINTERS);
+        HDATA_LIST(last_gui_hotlist, 0);
     }
     return hdata;
 }

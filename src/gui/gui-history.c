@@ -291,8 +291,8 @@ gui_history_hdata_history_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_gui_history, text, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_history, prev_history, POINTER, 0, NULL, hdata_name);
         HDATA_VAR(struct t_gui_history, next_history, POINTER, 0, NULL, hdata_name);
-        HDATA_LIST(gui_history);
-        HDATA_LIST(last_gui_history);
+        HDATA_LIST(gui_history, WEECHAT_HDATA_LIST_CHECK_POINTERS);
+        HDATA_LIST(last_gui_history, 0);
     }
     return hdata;
 }

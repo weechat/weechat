@@ -2718,8 +2718,8 @@ config_file_hdata_config_file_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_config_file, last_section, POINTER, 0, NULL, "config_section");
         HDATA_VAR(struct t_config_file, prev_config, POINTER, 0, NULL, hdata_name);
         HDATA_VAR(struct t_config_file, next_config, POINTER, 0, NULL, hdata_name);
-        HDATA_LIST(config_files);
-        HDATA_LIST(last_config_file);
+        HDATA_LIST(config_files, WEECHAT_HDATA_LIST_CHECK_POINTERS);
+        HDATA_LIST(last_config_file, 0);
     }
     return hdata;
 }

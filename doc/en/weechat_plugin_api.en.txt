@@ -13547,7 +13547,7 @@ This function is not available in scripting API.
 
 ==== weechat_hdata_new_list
 
-_WeeChat ≥ 0.3.6._
+_WeeChat ≥ 0.3.6, updated in 1.0._
 
 Create a new list pointer in hdata.
 
@@ -13555,7 +13555,7 @@ Prototype:
 
 [source,C]
 ----
-void weechat_hdata_new_list (struct t_hdata *hdata, const char *name, void *pointer);
+void weechat_hdata_new_list (struct t_hdata *hdata, const char *name, void *pointer, int flags);
 ----
 
 Arguments:
@@ -13563,6 +13563,8 @@ Arguments:
 * 'hdata': hdata pointer
 * 'name': variable name
 * 'pointer': list pointer
+* 'flags': combination of following values: _(WeeChat ≥ 1.0)_
+** 'WEECHAT_HDATA_LIST_CHECK_POINTERS': list used to check pointers
 
 C example:
 
@@ -13590,16 +13592,16 @@ weechat_hdata_new_var (hdata, "string_split", offsetof (struct t_myplugin_list, 
 weechat_hdata_new_var (hdata, "prev", offsetof (struct t_myplugin_list, prev), WEECHAT_HDATA_POINTER, NULL, "myplugin_list");
 weechat_hdata_new_var (hdata, "next", offsetof (struct t_myplugin_list, next), WEECHAT_HDATA_POINTER, NULL, "myplugin_list");
 
-weechat_hdata_new_list (hdata, "buffers", &buffers);
-weechat_hdata_new_list (hdata, "last_buffer", &last_buffer);
+weechat_hdata_new_list (hdata, "buffers", &buffers, WEECHAT_HDATA_LIST_CHECK_POINTERS);
+weechat_hdata_new_list (hdata, "last_buffer", &last_buffer, 0);
 ----
 
 The macro "WEECHAT_HDATA_LIST" can be used to shorten code:
 
 [source,C]
 ----
-WEECHAT_HDATA_LIST(buffers);
-WEECHAT_HDATA_LIST(last_buffer);
+WEECHAT_HDATA_LIST(buffers, WEECHAT_HDATA_LIST_CHECK_POINTERS);
+WEECHAT_HDATA_LIST(last_buffer, 0);
 ----
 
 [NOTE]
@@ -14037,7 +14039,7 @@ buffers = weechat.hdata_get_list(hdata, "gui_buffers")
 
 ==== weechat_hdata_check_pointer
 
-_WeeChat ≥ 0.3.7._
+_WeeChat ≥ 0.3.7, updated in 1.0._
 
 Check if a pointer is valid for a hdata and a list pointer.
 
@@ -14051,7 +14053,10 @@ int weechat_hdata_check_pointer (struct t_hdata *hdata, void *list, void *pointe
 Arguments:
 
 * 'hdata': hdata pointer
-* 'list': list pointer
+* 'list': list pointer; if NULL _(WeeChat ≥ 1.0)_, the pointer is checked with
+  the lists in hdata that have flag "check pointers" (see
+  <<_weechat_hdata_new_list,weechat_hdata_new_list>>), and if no such list
+  exists, the pointer is considered as valid
 * 'pointer': pointer to check
 
 Return value:

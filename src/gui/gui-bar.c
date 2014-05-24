@@ -2280,8 +2280,8 @@ gui_bar_hdata_bar_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_gui_bar, bar_refresh_needed, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_bar, prev_bar, POINTER, 0, NULL, hdata_name);
         HDATA_VAR(struct t_gui_bar, next_bar, POINTER, 0, NULL, hdata_name);
-        HDATA_LIST(gui_bars);
-        HDATA_LIST(last_gui_bar);
+        HDATA_LIST(gui_bars, WEECHAT_HDATA_LIST_CHECK_POINTERS);
+        HDATA_LIST(last_gui_bar, 0);
     }
     return hdata;
 }

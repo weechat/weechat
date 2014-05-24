@@ -326,8 +326,8 @@ irc_ignore_hdata_ignore_cb (void *data, const char *hdata_name)
         WEECHAT_HDATA_VAR(struct t_irc_ignore, channel, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_ignore, prev_ignore, POINTER, 0, NULL, hdata_name);
         WEECHAT_HDATA_VAR(struct t_irc_ignore, next_ignore, POINTER, 0, NULL, hdata_name);
-        WEECHAT_HDATA_LIST(irc_ignore_list);
-        WEECHAT_HDATA_LIST(last_irc_ignore);
+        WEECHAT_HDATA_LIST(irc_ignore_list, WEECHAT_HDATA_LIST_CHECK_POINTERS);
+        WEECHAT_HDATA_LIST(last_irc_ignore, 0);
     }
     return hdata;
 }

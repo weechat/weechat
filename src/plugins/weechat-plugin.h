@@ -57,7 +57,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20140313-01"
+#define WEECHAT_PLUGIN_API_VERSION "20140524-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -124,6 +124,9 @@ struct timeval;
 #define WEECHAT_HDATA_TIME                          6
 #define WEECHAT_HDATA_HASHTABLE                     7
 #define WEECHAT_HDATA_SHARED_STRING                 8
+
+/* flags for hdata lists */
+#define WEECHAT_HDATA_LIST_CHECK_POINTERS           1
 
 /* buffer hotlist */
 #define WEECHAT_HOTLIST_LOW                         "0"
@@ -879,7 +882,7 @@ struct t_weechat_plugin
                            int type, int update_allowed, const char *array_size,
                            const char *hdata_name);
     void (*hdata_new_list) (struct t_hdata *hdata, const char *name,
-                            void *pointer);
+                            void *pointer, int flags);
     struct t_hdata *(*hdata_get) (struct t_weechat_plugin *plugin,
                                   const char *hdata_name);
     int (*hdata_get_var_offset) (struct t_hdata *hdata, const char *name);
@@ -1685,10 +1688,10 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_hdata_new_var (hdata, #__name, offsetof (__struct, __name), \
                            WEECHAT_HDATA_##__type, __update_allowed,    \
                            __array_size, __hdata_name)
-#define weechat_hdata_new_list(__hdata, __name, __pointer)              \
-    weechat_plugin->hdata_new_list(__hdata, __name, __pointer)
-#define WEECHAT_HDATA_LIST(__name)                                      \
-    weechat_hdata_new_list (hdata, #__name, &(__name));
+#define weechat_hdata_new_list(__hdata, __name, __pointer, __flags)     \
+    weechat_plugin->hdata_new_list(__hdata, __name, __pointer, __flags)
+#define WEECHAT_HDATA_LIST(__name, __flags)                             \
+    weechat_hdata_new_list (hdata, #__name, &(__name), __flags);
 #define weechat_hdata_get(__hdata_name)                                 \
     weechat_plugin->hdata_get(weechat_plugin, __hdata_name)
 #define weechat_hdata_get_var_offset(__hdata, __name)                   \

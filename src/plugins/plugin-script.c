@@ -1380,8 +1380,9 @@ plugin_script_hdata_script (struct t_weechat_plugin *weechat_plugin,
         WEECHAT_HDATA_VAR(struct t_plugin_script, unloading, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_plugin_script, prev_script, POINTER, 0, NULL, hdata_name);
         WEECHAT_HDATA_VAR(struct t_plugin_script, next_script, POINTER, 0, NULL, hdata_name);
-        weechat_hdata_new_list (hdata, "scripts", scripts);
-        weechat_hdata_new_list (hdata, "last_script", last_script);
+        weechat_hdata_new_list (hdata, "scripts", scripts,
+                                WEECHAT_HDATA_LIST_CHECK_POINTERS);
+        weechat_hdata_new_list (hdata, "last_script", last_script, 0);
     }
     return hdata;
 }

@@ -954,9 +954,9 @@ gui_layout_hdata_layout_cb (void *data, const char *hdata_name)
         HDATA_VAR(struct t_gui_layout, internal_id_current_window, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_layout, prev_layout, POINTER, 0, NULL, hdata_name);
         HDATA_VAR(struct t_gui_layout, next_layout, POINTER, 0, NULL, hdata_name);
-        HDATA_LIST(gui_layouts);
-        HDATA_LIST(last_gui_layout);
-        HDATA_LIST(gui_layout_current);
+        HDATA_LIST(gui_layouts, WEECHAT_HDATA_LIST_CHECK_POINTERS);
+        HDATA_LIST(last_gui_layout, 0);
+        HDATA_LIST(gui_layout_current, 0);
     }
     return hdata;
 }
