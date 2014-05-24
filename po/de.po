@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2014-05-24 18:00+0200\n"
-"PO-Revision-Date: 2014-05-13 23:58+0100\n"
+"PO-Revision-Date: 2014-05-24 22:41+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
 "Language: de_DE\n"
@@ -10437,13 +10437,13 @@ msgstr "%s: Lausche am Port %d (Relay: %s,%s, Max.: %d Clients)"
 msgid "%s%s: not enough memory for listening on new port"
 msgstr "%s%s: Nicht genug Speicher um an einem neuen Port zu lauschen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: invalid pointer in hdata path: \"%s\""
-msgstr "%s%s: ungültiger Rückgabewert \"%s\""
+msgstr "%s: ungültiger Pointer inm hdata-Pfad: \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: invalid buffer pointer in message: \"%s %s\""
-msgstr "%s%s: ungültige Verbindungsadresse \"%s\" für %s"
+msgstr "%s: ungültiger Buffer-Pointer in Nachricht: \"%s %s\""
 
 #, c-format
 msgid "%s%s: failed to execute command \"%s\" for client %s%s%s"
