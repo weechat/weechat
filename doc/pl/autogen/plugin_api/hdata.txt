@@ -498,6 +498,7 @@
 *** 'filter' (integer)
 *** 'close_callback' (pointer)
 *** 'close_callback_data' (pointer)
+*** 'closing' (integer)
 *** 'title' (string)
 *** 'own_lines' (pointer, hdata: "lines")
 *** 'mixed_lines' (pointer, hdata: "lines")
