@@ -22,25 +22,31 @@
 # Build tarballs (.tar.gz and .tar.bz2) for WeeChat using git-archive.
 #
 # Syntax:
-#    makedist.sh <version> <tree-ish>
+#    makedist.sh <version> <tree-ish> [<path>]
 #
-#       version : WeeChat version, for example 0.3.9 or 0.4.0-dev
-#       tree-ish: git tree-ish (optional, defaults to HEAD), example: v0.3.9
+#      version : WeeChat version, for example 0.3.9 or 0.4.0-dev
+#      tree-ish: git tree-ish (optional, defaults to HEAD), example: v0.3.9
+#      path    : where to put packages (optional, default is current directory)
 #
 
-if [ $# -eq 0 ]; then
-    echo "Syntax: $0 <version> <tree-ish>"
+if [ $# -lt 2 ]; then
+    echo "Syntax: $0 <version> <tree-ish> [<path>]"
     exit 1
 fi
 
 VERSION=$1
 TREEISH=${2:-HEAD}
+OUTPATH="."
+
+if [ $# -ge 3 ]; then
+    OUTPATH=$3
+fi
 
 PREFIX="weechat-${VERSION}/"
 FILE="weechat-${VERSION}.tar"
 
 echo "Building file ${FILE}.bz2"
-git archive --prefix=${PREFIX} ${TREEISH} | bzip2 -c >${FILE}.bz2
+git archive --prefix=${PREFIX} ${TREEISH} | bzip2 -c >${OUTPATH}/${FILE}.bz2
 
 echo "Building file ${FILE}.gz"
-git archive --prefix=${PREFIX} ${TREEISH} | gzip -c >${FILE}.gz
+git archive --prefix=${PREFIX} ${TREEISH} | gzip -c >${OUTPATH}/${FILE}.gz
